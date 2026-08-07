@@ -29,7 +29,7 @@ from .effects import IceType
 from .state import Combatant, Skill, SkillEffect
 
 if TYPE_CHECKING:
-    from .state import CombatState
+    pass
 
 __all__ = [
     "BOSS_PROFILES",

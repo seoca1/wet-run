@@ -38,12 +38,14 @@ def _tick_status_effects(state: CombatState, target: Combatant) -> list[str]:
 
 def _tick_alarm(state: CombatState) -> None:
     """Increment alarm_level when ALARM_TICK_INTERVAL_MS has elapsed."""
+    from .depth.personality import get_alarm_multiplier
     from .state import ALARM_MAX_LEVEL, ALARM_TICK_INTERVAL_MS
 
     target = state.target
     if target is None:
         return
-    tick_interval = ALARM_TICK_INTERVAL_MS / max(0.01, target.alarm_speed)
+    alarm_mult = get_alarm_multiplier(target)
+    tick_interval = ALARM_TICK_INTERVAL_MS / max(0.01, target.alarm_speed * alarm_mult)
     if state.tick_ms - state.last_alarm_tick_ms >= tick_interval:
         state.alarm_level += 1
         state.last_alarm_tick_ms = state.tick_ms

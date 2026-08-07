@@ -56,6 +56,8 @@ class SkillEffect(StrEnum):
     COUNTER = "counter"
     LIFESTEAL = "lifesteal"
     POISON = "poison"
+    SILENCE = "silence"
+    SLOW = "slow"
 
 
 @dataclass(frozen=True, slots=True)
@@ -151,6 +153,10 @@ class Combatant:
     # Aggression tier (ADR-0148). Determines enemy skill use probability.
     # Valid values: "passive" / "standard" / "aggressive" / "boss".
     aggression: str = "standard"
+    # Personality archetype (ADR-0161). Determines skill selection +
+    # state reactions + pressure dynamics. Independent of aggression.
+    # Valid values: "aggressive" / "defensive" / "stealth" / "support".
+    personality: str = "aggressive"
 
     def is_alive(self) -> bool:
         return self.hp > 0

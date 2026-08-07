@@ -230,6 +230,9 @@ def _calculate_damage(
     is_crit = False
     if can_crit:
         crit_chance = CRIT_CHANCE
+        from .depth.personality import get_crit_bonus
+
+        crit_chance += get_crit_bonus(attacker)
         if state.last_skill_used and state.last_skill_used.crit_bonus > 0:
             crit_chance += state.last_skill_used.crit_bonus
         if state.last_skill_used is not None and state.last_skill_used.role is not None:

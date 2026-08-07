@@ -5213,3 +5213,5 @@ User "continue" 후 작은 진단:
 
 ### Follow-up (선택)
 - `audit_vault.py` 에 symlink resolution 추가 (`Path.resolve(strict=False)` 후 `readlink` 또는 `Path(f).readlink().parent` 사용) → 4 false positive 제거 가능. workspace-wide lint hygiene 개선.
+
+**세션 종료 (2026-08-07)**.

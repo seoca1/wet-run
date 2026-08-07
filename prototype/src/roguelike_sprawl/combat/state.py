@@ -53,6 +53,7 @@ __all__ = [
     "StatusEffect",
     "TICK_MS",
     "WEAKNESS_BY_ICE",
+    "_record_event",
     "get_combat_pressure",
     "step_combat",
     "tick_dixie_ally",
@@ -362,12 +363,12 @@ def tick_dixie_ally(combat_state: CombatState, app_state: AppState) -> None:
     combat_state.dixie_last_attack_ms = combat_state.tick_ms
 
 
-from .state_transitions import step_combat  # noqa: E402
 from .state_effects import _record_event  # noqa: E402,F401
+from .state_effects import apply_enemy_skill as _apply_enemy_skill  # noqa: E402,F401
 from .state_transitions import (  # noqa: E402,F401
     _check_boss_phase_transition,
     _tick_alarm,
     _tick_combo,
     _tick_status_effects,
+    step_combat,  # noqa: E402
 )
-from .state_effects import apply_enemy_skill as _apply_enemy_skill  # noqa: E402,F401

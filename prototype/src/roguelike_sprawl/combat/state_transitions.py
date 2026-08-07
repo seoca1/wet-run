@@ -10,7 +10,7 @@ dependency at module load.
 
 from __future__ import annotations
 
-from .state_models import AUTO_ATTACK_INTERVAL_MS, Combatant, CombatState, TICK_MS
+from .state_models import AUTO_ATTACK_INTERVAL_MS, TICK_MS, Combatant, CombatState
 
 __all__ = [
     "_check_boss_phase_transition",

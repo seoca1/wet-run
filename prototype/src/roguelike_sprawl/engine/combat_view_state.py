@@ -126,6 +126,7 @@ def start_combat(
 
     # Build enemy combatant from the actual ICE on this node.
     # IceKind.NONE → defensive fallback to "standard".
+    from ..combat.multi_enemy import encounter_count_for_grade
     from ..matrix.node import IceKind
 
     ice_kind_value = ice_node.ice.value if ice_node.ice is not IceKind.NONE else "standard"
@@ -136,6 +137,17 @@ def start_combat(
         # Unknown ICE id (data gap) — fall back to standard rather than crash.
         enemy = build_ice_enemy("standard", ice_registry)
         ice_kind_id = "standard"
+    # ADR-0153: multi-encounter — create N-1 additional enemies based on player grade
+    encounter_n = encounter_count_for_grade(state.player_grade)
+    enemies_list = [enemy]
+    for _ in range(encounter_n - 1):
+        try:
+            additional = build_ice_enemy(ice_kind_id, ice_registry)
+        except KeyError:
+            additional = build_ice_enemy("standard", ice_registry)
+        enemies_list.append(additional)
+    if encounter_n > 1:
+        state.status_messages.append(f">>> ENCOUNTER: 1v{encounter_n} ({encounter_n} enemies)")
     state.combat_effects.clear()
     # Map ice_kind string to IceType enum
     try:
@@ -143,7 +155,7 @@ def start_combat(
     except ValueError:
         ice_type = IceType.STANDARD
     spawn_ice_intro(state.combat_effects, ice_type, enemy.name)
-    cs = CombatState(player=player, enemy=enemy)
+    cs = CombatState(player=player, enemies=tuple(enemies_list))
 
     if is_boss(ice_type) and cs.enemy is not None:
         profile = get_boss_profile(ice_type)
@@ -189,6 +201,14 @@ def _end_combat(state: AppState, combat_state: CombatState) -> None:
         state.status_messages.append(">>> VICTORY! Gained: 1x ICE Shard")
         state.status_messages.append(">>> Gained: 50 credits")
 
+        # Salvage menu (ADR-0014 + ADR-0147): queue a 3-way choice
+        # (HEAL/FRAG/CRED/SKIP) for the next interaction cycle. The
+        # menu UI itself is rendered in a follow-up cycle; for now we
+        # set the flag so downstream code (and tests) know a choice is
+        # pending and the defaults can be applied if the user dismisses
+        # without picking.
+        state.pending_salvage = True
+
         # Phase 6+: defeating ICE in a faction's server boosts that
         # faction's rep (you successfully infiltrated their space).
         # Reverse-direction targets (opposing factions) lose rep.
@@ -231,12 +251,20 @@ def _end_combat(state: AppState, combat_state: CombatState) -> None:
         _check_post_combat_event(state, "standard_ice_victory")
     elif combat_state.outcome == "defeat":
         # Player died — Pillar 3: The Flatline
+        from ..combat.boss_phase4 import apply_death_taunt
         from ..run import ensure_run_state
         from .death import trigger_death
 
         run_state = ensure_run_state(state)
         run_state.mark_failed()
         trigger_death(state, reason="ICE breach")
+        # ADR-0149: Boss death taunt. Applied after trigger_death so the
+        # DEATH screen shows the taunt line as the boss's last words.
+        boss_id = ""
+        if combat_state.enemy is not None:
+            boss_id = combat_state.enemy.id
+        if boss_id:
+            apply_death_taunt(combat_state, state, boss_id)
     else:
         # Disengage (player fled)
         state.screen = ScreenKind.MATRIX

@@ -420,7 +420,13 @@ class TestPaletteIntegration:
 
     def test_bosses_module_uses_palette(self) -> None:
         """Bosses module should reference palette palettes."""
-        from roguelike_sprawl.combat import bosses
+        from roguelike_sprawl.combat import bosses, bosses_cinematic
 
-        source = open(bosses.__file__).read()
-        assert "ICE_GOLIATH_PALETTE" in source or "ICE_BLACK_PALETTE" in source
+        source = bosses.__file__
+        assert source is not None
+        with open(source) as f:
+            bosses_src = f.read()
+        with open(bosses_cinematic.__file__) as f:
+            cinematic_src = f.read()
+        combined = bosses_src + cinematic_src
+        assert "ICE_GOLIATH_PALETTE" in combined or "ICE_BLACK_PALETTE" in combined

@@ -57,20 +57,25 @@ MAX_TIER = 6
 
 
 def calculate_ppl(loadout: Loadout) -> int:
-    """Compute PPL for a loadout (ADR-0012, F1-1 rebalanced).
+    """Compute PPL for a loadout (ADR-0012, F1-1 rebalanced, ADR-0155 master bonus).
 
-    Formula: (deck * 3) + sum(prog * 2) + wetware + (construct * 1).
+    Formula: (deck * 3) + sum(prog * 2) + wetware + (construct * 1)
+             + (10 if deck_tier == MAX_TIER else 0).
 
     F1-1 reduced the construct multiplier from 3× to 1× to compress the
     5-up curve (was 9.4× of 1-up, now ~7.5×). 1-up PPL is unchanged at 8.
-    For T6 master gear the same formula applies — T6 simply produces
-    higher PPL naturally via the multiplier (e.g. T6 deck → 18 PPL).
+    ADR-0155 adds a +10 master tier bonus for T6 (MAX_TIER) deck to
+    close the NG+ Grade 5→6 growth 1.20x→1.35x balance issue.
+    T6 PPL: 78 → 88 (1.35x from T5's 65).
     """
     ppl = loadout.deck_tier * 3
     ppl += sum(p.tier for p in loadout.programs) * 2
     ppl += loadout.wetware_tier
     if loadout.construct_tier > 0:
         ppl += loadout.construct_tier
+    # ADR-0155: master tier bonus (Grade 6 deck) — +10 PPL
+    if loadout.deck_tier == MAX_TIER:
+        ppl += 10
     return ppl
 
 

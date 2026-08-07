@@ -83,14 +83,19 @@ def test_ppl_invalid_program_tier_rejected() -> None:
 
 
 def test_ppl_t6_master_deck_supported() -> None:
-    """Grade 6 master tier (T6) deck gives 18 PPL alone (6*3)."""
+    """Grade 6 master tier (T6) deck gives 18 PPL + 10 master bonus = 28 PPL alone.
+
+    ADR-0155: T6 deck receives a +10 master tier bonus to close the
+    NG+ Grade 5→6 growth 1.20x→1.35x balance issue.
+    """
     loadout = Loadout(
         deck_tier=6,
         programs=(_prog("omniscient", 6),),
         wetware_tier=6,
         construct_tier=6,
     )
-    assert calculate_ppl(loadout) == 42
+    # 6*3 + 6*2 + 6 + 6 + 10 (master bonus) = 52
+    assert calculate_ppl(loadout) == 52
 
 
 def test_ppl_t6_full_loadout_outperforms_t5() -> None:
@@ -167,3 +172,59 @@ def test_ppl_mixed_tiers_with_t6_program() -> None:
     )
     # 4*3 + (6+2)*2 + 4 + 0 = 12 + 16 + 4 = 32
     assert calculate_ppl(loadout) == 32
+
+
+def test_ppl_master_tier_bonus_only_for_t6_deck() -> None:
+    """ADR-0155: +10 master tier bonus applies ONLY when deck_tier == MAX_TIER (6).
+
+    T4 and T5 loadouts with T6 programs/wetware/construct do NOT receive
+    the bonus — the bonus is gated on the deck tier specifically.
+    """
+    t4_with_t6_program = Loadout(
+        deck_tier=4,
+        programs=(_prog("master_program", 6),),
+        wetware_tier=6,
+        construct_tier=6,
+    )
+    # 4*3 + 6*2 + 6 + 6 = 12 + 12 + 6 + 6 = 36 (NO master bonus)
+    assert calculate_ppl(t4_with_t6_program) == 36
+
+    t5_with_t6_construct = Loadout(
+        deck_tier=5,
+        programs=(_prog("kraken", 5), _prog("goliath", 5)),
+        wetware_tier=5,
+        construct_tier=6,
+    )
+    # 5*3 + (5+5)*2 + 5 + 6 = 15 + 20 + 5 + 6 = 46 (NO master bonus)
+    assert calculate_ppl(t5_with_t6_construct) == 46
+
+
+def test_ppl_grade_5_to_6_growth_is_1_35x() -> None:
+    """ADR-0155: T5→T6 growth is now 1.35x (was 1.20x).
+
+    This validates the NG+ Grade 5→6 balance issue is resolved:
+    T6 typical loadout (88 PPL) / T5 typical loadout (65 PPL) = 1.35x.
+    """
+    t5 = Loadout(
+        deck_tier=5,
+        programs=(_prog("kraken", 5), _prog("goliath", 5), _prog("wisp", 5), _prog("wardrone", 5)),
+        wetware_tier=5,
+        construct_tier=5,
+    )
+    t6 = Loadout(
+        deck_tier=6,
+        programs=(
+            _prog("omniscient", 6),
+            _prog("kraken", 6),
+            _prog("goliath", 6),
+            _prog("wisp", 6),
+        ),
+        wetware_tier=6,
+        construct_tier=6,
+    )
+    # T5: 5*3 + (5+5+5+5)*2 + 5 + 5 = 15 + 40 + 5 + 5 = 65
+    assert calculate_ppl(t5) == 65
+    # T6: 6*3 + (6+6+6+6)*2 + 6 + 6 + 10 (master bonus) = 18 + 48 + 6 + 6 + 10 = 88
+    assert calculate_ppl(t6) == 88
+    # Growth ratio: 88 / 65 = 1.35x
+    assert abs(calculate_ppl(t6) / calculate_ppl(t5) - 1.35) < 0.01

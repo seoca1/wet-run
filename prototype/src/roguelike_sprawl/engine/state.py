@@ -221,6 +221,23 @@ class AppState:
     faction_tension_triggered: set[str] = field(default_factory=set)
     alarm_level: int = 0
     tempo_mode: str = "normal"
+    # In-run salvage fragments (ADR-0147). Reset on death (Pillar 4 in-run only).
+    salvage_fragments: int = 0
+    # Pending salvage menu flag (ADR-0147). Set by _end_combat on victory.
+    pending_salvage: bool = False
+    # Boss Phase 4 one-shot guard (ADR-0149). Set true on Phase 4 trigger.
+    phase4_triggered: bool = False
+    # Current boss Phase 4 mechanic name (ADR-0149). None until triggered.
+    boss_phase4_mechanic: str | None = None
+    # Boss death taunt (ADR-0149). Set on player death by boss. None otherwise.
+    death_taunt: str | None = None
+    # Boss intro enhancement (ADR-0149). Set on boss encounter. None otherwise.
+    boss_intro_enhancement: object = None  # BossIntroEnhancement | None
+    # Purchased intel item ids (ADR-0151). One-shot per item_id per run.
+    # Pillar 4 in-run only — reset on death.
+    purchased_intel_items: list[str] = field(default_factory=list)
+    # Faction event probability boost (ADR-0151). Set by faction_rumor item.
+    faction_tension_probability_boost: float = 0.0
     # Player is dead (flatline); True until reset
     is_dead: bool = False
     # Death reason (e.g. "Combat", "ICE breach", "Jack-out failure")

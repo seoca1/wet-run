@@ -12,7 +12,8 @@
 ## PPL 곡선 (검증됨)
 
 ```
-PPL = deck_tier * 3 + sum(prog_tier * 2) + wetware_tier + construct_tier * 3
+PPL = deck_tier * 3 + sum(prog_tier * 2) + wetware_tier + construct_tier
+     + (10 if deck_tier == MAX_TIER else 0)  // ADR-0155 master tier bonus
 ```
 
 | Grade | deck | programs | wetware | construct | **PPL** |
@@ -22,10 +23,13 @@ PPL = deck_tier * 3 + sum(prog_tier * 2) + wetware_tier + construct_tier * 3
 | 3 (숙련) | T3 | Wisp T3, Goliath T3 (×2) | T3 | — | **24** |
 | 4 (베테랑) | T4 | Wisp T4, Goliath T4, Wardrone T4 (×3) | T4 | — | **40** |
 | 5 (전설) | T5 | Kraken T5, Goliath T5, Wisp T5, Wardrone T5 (×4) | T5 | Dixie T5 | **65** |
-| 6 (마스터, Arc 5 finale) | T6 | Master programs (T6) (×4) | T6 | Dixie T6 | **78** |
+| 6 (마스터, Arc 5 finale) | T6 | Master programs (T6) (×4) | T6 | Dixie T6 | **88** ⭐ |
 
 > **2026-07-27 sync (ADR-0130)**: F1-1 rebalance (2026-07-22, construct 3×→1×) 적용 후 코드 기준 값.
 > Grade 5 PPL: 75 → 65. Grade 6 PPL: 120+ → 78 (공식 결과).
+>
+> **2026-08-07 sync (ADR-0155)**: Master tier bonus (+10 for T6 deck) 적용 후 코드 기준 값.
+> Grade 6 PPL: 78 → **88** (1.20x → 1.35x growth, NG+ balance 해결).
 
 ### Grade 6 (Master) — Arc 5 Finale
 
@@ -37,17 +41,17 @@ T6 장비 3종이 `equipment/equipment.py` 에 추가됨:
 
 Loadout tier 검증: `0..6` 까지 허용. `MAX_TIER = 6` 상수.
 
-PPL 공식 (F1-1 후): `deck*3 + sum(prog*2) + wetware + construct*1`
+PPL 공식 (F1-1 + ADR-0155 후): `deck*3 + sum(prog*2) + wetware + construct*1 + (10 if deck==MAX_TIER else 0)`
 
-PPL 성장 곡선 (코드 기준):
+PPL 성장 곡선 (코드 기준, ADR-0155 적용):
 - 1 → 2: 8 → 16 (**2.00x**)
 - 2 → 3: 16 → 24 (**1.50x**)
 - 3 → 4: 24 → 40 (**1.67x**)
 - 4 → 5: 40 → 65 (**1.62x**)
-- 5 → 6: 65 → 78 (**1.20x**) ⚠
+- 5 → 6: 65 → 88 (**1.35x**) ⭐ NG+ balance 해결 (ADR-0155)
 
-> **잔존 이슈 (P2)**: Grade 5→6 성장이 1.20x로 정체. Master tier *특별함* 부족.
-> Option 2 (Grade 6 강화) 는 ADR-0130 범위 외. v1.0.0+ 별도 ADR-0131+ 에서 분리.
+> **해결 (ADR-0155, 2026-08-07)**: Grade 5→6 성장이 1.20x → 1.35x 로 개선. Master tier *특별함* 확보.
+> NG+ (Salvation Phase, ADR-0090) 의 *다음 런* 보완 완료. 잔존 이슈 해결됨.
 
 ## ZDR 베이스 (ZoneDepth)
 
@@ -146,14 +150,14 @@ dmg = dmg_base + dmg_per_grade * max(0, player_grade - ice_tier)
 
 ## 알려진 이슈 / 미래 작업
 
-- **Grade 6 (Arc 5 finale)**: `grade_max=6` 미션 2개 (neuromancer_merger, zion_express). 
+- **Grade 6 (Arc 5 finale)**: `grade_max=6` 미션 14개 (2026-08-07 verified: bigend_laney_lunch, case_meets_cayce, coolhunter_laney_tokyo, core_memory_dump, finn_final_reckoning, mollys_final_razor, neuromancer_merger, salvation_wigan_zavijava, ta_3jane_betrayal, ta_straylight_archive, ta_wintermute_direct, wintermute_negotiation, wintermute_witness, zion_express). 대부분 `grade_min=5` (master tier 진입). 1개만 `grade_min=6` (ta_wintermute_direct, true master-only).
   Grade 6 PPL 공식 미정의 — 현재는 Grade 5 로 처리 (PPL=75 한계).
-  → Phase 6: Grade 6 PPL 정의 (master tier)
+  → Phase 6+: Grade 6 PPL 정의 (master tier)
 - **low-PPL 디스크립션시 점프**: Grade 1 PPL=8 → Core ZDR=12 즉시 DEADLY.
   → 의도된 난이도이나 시각적 표시 강화 필요 (P2 #7)
 - **Status threshold 비선형**: ratio 0.499 vs 0.5 가 다른 카테고리
   → 0.499 = FUTILE, 0.5 = DEADLY. 미세한 차이가 큰 결과.
-  → Phase 6: threshold smoothing 검토
+  → Phase 6+: threshold smoothing 검토
 
 ## 검증
 

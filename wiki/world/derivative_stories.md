@@ -2,7 +2,7 @@
 
 > **이 페이지는 Fiction 프로젝트의 이차 창작 단편을 게임 미션과 연결합니다.**
 
-**현재 상태 (2026-07-30 갱신)**: `prototype/data/missions/missions.json` 기준 **111 미션** 정의됨. 이 중 **110 미션 매핑 완료** (1 미션 매핑 누락 — 아래 "매핑 누락" 섹션 참조).
+**현재 상태 (2026-08-07 갱신)**: `prototype/data/missions/missions.json` 기준 **111 미션** 정의됨. **모든 111 미션 매핑 완료** (2026-07-30 `chevette_run` → `chevette_nightshift_run` 정정 후 unmapped 0건). 단편 stem 카운트: dashboard `dataset_health.json` 기준 **150 EN + 150 KO = 300 entries** (Fiction filesystem 상에는 139 unique stems per language).
 
 **캐노니컬 정보 소스**: `prototype/data/missions/missions.json` (각 미션의 `story.source` 필드가 단편 stem 참조)
 
@@ -190,5 +190,6 @@ PYEOF
 
 ## 갱신 이력
 
+- **2026-08-07**: 단편 카운트 정정 (242 → 300, dashboard `dataset_health.json` 기준). 모든 111 미션 매핑 확인 (110 → 111, `chevette_nightshift_run` 매핑 후).
 - **2026-07-30**: 47→110 미션 매핑 (전체 갱신 — 2026-07-21 이후 추가된 64+ 미션 반영)
 - **2026-07-21**: 초기 47 미션 매핑

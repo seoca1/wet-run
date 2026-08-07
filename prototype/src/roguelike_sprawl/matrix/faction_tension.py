@@ -125,8 +125,9 @@ def apply_faction_tension(state: Any, event: FactionTensionEvent) -> FactionTens
     if event.is_positive:
         current_credits = getattr(state, "credits", 0) or 0
         state.credits = current_credits + POSITIVE_CREDITS
-        current_salvage = getattr(state, "salvage_fragments", 0) or 0
-        state.salvage_fragments = current_salvage + POSITIVE_SALVAGE
+        # ADR-0147: salvage_fragments is now a formal AppState field
+        # (default 0). Direct attribute access preferred over getattr.
+        state.salvage_fragments = (getattr(state, "salvage_fragments", 0) or 0) + POSITIVE_SALVAGE
         msg = (
             f">>> Faction tension: {event.faction.value} assistance — "
             f"+{POSITIVE_CREDITS} credits, +{POSITIVE_SALVAGE} salvage fragment"

@@ -70,6 +70,15 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0144 | combat/effects Split — Data Extraction | **Accepted** | 2026-08-05 | P2 (Build Health) |
 | 0145 | combat/effects_vfx Split — 3-Way Concern Split | **Accepted** | 2026-08-05 | P2 (Build Health) |
 | 0146 | Stage Flow — black_market & ghost_encounter 전이 추가 (Validator FAIL 해결) | **Accepted** | 2026-08-05 | P2 (The Matrix) |
+| 0147 | Data Salvage — Phase 6+ Completion (HEAL + FRAG + CRED + alarm trade-off) | **Accepted** | 2026-08-07 | P1 (Cycle 1 of A+B+C) |
+| 0148 | Combat Depth Expansion (counter window + defense stackable + companion skills + aggression tiers) | **Accepted** | 2026-08-07 | P1 (Cycle 2 of A+B+C) |
+| 0149 | Boss Phase 4 Finale (per-boss mechanics + death taunts + intro enhancement) | **Accepted** | 2026-08-07 | P1 (Cycle 3 of A+B+C) |
+| 0150 | Module Split — `depth.py` + `boss_phase4.py` (ADR-0110 follow-up) | **Accepted** | 2026-08-07 | P2 (Cycle 4 of A+B+C) |
+| 0151 | Info Market Intel Items — CRED Consumption (3 items, close salvage trade-off) | **Accepted** | 2026-08-07 | P1 (Cycle 6, v1.2.0+ bridge) |
+| 0152 | Multi-Enemy Encounters (1v2/1v3) + HEAL Rebalance 20%→15% | **Accepted** | 2026-08-07 | P1 (Cycle 8, v1.2.0+ core) |
+| 0153 | Matrix Encounter Spawn Integration (1v1/1v2/1v3) | **Accepted** | 2026-08-07 | P1 (Cycle 9, v1.2.0+ bridge) |
+| 0154 | Faction Expansion (faction_rumor 4 factions) + i18n (ja/zh) | **Accepted** | 2026-08-07 | P2 (Cycle 10, v1.2.0+ polish) |
+| 0155 | NG+ Grade 5→6 PPL Actual Rebalance (T6 master tier bonus +10) | **Accepted** | 2026-08-07 | P2 (Cycle 11, v1.2.0+ balance) |
 | 0104 | GN Save Slot 확장 (3 슬롯) | **Accepted (2026-07-25)** | 2026-06-21 | P2 |
 
 ### 2026-07-01 통합 작업 (P1~P4 + B)

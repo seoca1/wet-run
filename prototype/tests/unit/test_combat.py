@@ -1669,8 +1669,8 @@ def test_multi_ice_victory_only_when_all_dead() -> None:
     assert state.outcome == "victory"
 
 
-def test_multi_ice_player_attacks_current_target_only() -> None:
-    """Player auto-attacks should only hit state.target, not all enemies."""
+def test_multi_ice_player_attacks_all_alive_enemies() -> None:
+    """ADR-0152 multi-enemy: player auto-attack hits ALL alive enemies."""
     p = build_default_player(max_hp=10_000, max_ap=6, programs=ProgramRegistry({}))
     p.auto_attack_damage = 50
     e1 = _enemy(max_hp=1000, base_damage=0)
@@ -1680,8 +1680,10 @@ def test_multi_ice_player_attacks_current_target_only() -> None:
     for _ in range(AUTO_ATTACK_INTERVAL_MS // 100):
         step_combat(state)
 
+    # ADR-0152: player auto-attack hits all alive enemies in sequence
+    # (not just state.target). Both e1 and e2 should have taken damage.
     assert e1.hp < 1000  # target took damage
-    assert e2.hp == 1000  # non-target untouched
+    assert e2.hp < 1000  # non-target ALSO took damage (multi-enemy)
 
 
 def test_multi_ice_backward_compat_single_enemy_victory() -> None:

@@ -2,7 +2,7 @@
 
 위키/디자인/결정/테스트 페이지 카탈로그. LLM Wiki 표준 패턴.
 
-**현재 상태**: Phase 5+6 (Vertical Slice + Expansion) 완료. **3835 tests pass** (462 skipped, 1 xfailed, 4 xpassed; **4302 collected**). **111 missions** / **242 short stories** (137 EN + 105 KO) / **14 stages**. 5 arcs (1-5) × 12 grade ranges. Novel Hook Dispatch (ADR-0061) + Novel Integration (런타임 연동) + BRIEFING/TRAVEL/BYPASS_SECURITY/BLACK_MARKET/GHOST_ENCOUNTER stages.
+**현재 상태**: Phase 5+6 (Vertical Slice + Expansion) 완료. **3835 tests pass** (462 skipped, 1 xfailed, 4 xpassed; **4302 collected**). **111 missions** / **300 short stories** (150 EN + 150 KO) / **14 stages**. 5 arcs (1-5) × 12 grade ranges. Novel Hook Dispatch (ADR-0061) + Novel Integration (런타임 연동) + BRIEFING/TRAVEL/BYPASS_SECURITY/BLACK_MARKET/GHOST_ENCOUNTER stages. **2026-08-07 audit-tool fix**: `tools/audit_sprawl.py` path resolution 2-line 수정 → false orphan 10건 해소 (15 → 5, all expected). Working tree clean, 1 commit unpushed (`b87f330`).
 
 ## 메타
 - [README](README.md) - 프로젝트 개요
@@ -33,7 +33,7 @@
 - [Glossary](wiki/world/glossary.md) - 용어 사전
 - [Style Guide](wiki/world/style_guide.md) - 톤과 미적 가이드
 - [Boss ICE Reference](wiki/world/boss-ice-reference.md) - **Phase B-3 5개 보스 ICE 프로필 + AoE/미니언 스폰 (2026-07-26)**
-- [Derivative Stories](wiki/world/derivative_stories.md) - **이차 창작 단편 매핑 (105 KO + 137 EN = 242 stories / 111 missions mapped)**
+- [Derivative Stories](wiki/world/derivative_stories.md) - **이차 창작 단편 매핑 (150 KO + 150 EN = 300 stories / 111 missions mapped, ADR-0051 schema)**
 - [Cross-Project Integration](wiki/world/cross-project-integration.md) - **Fiction ↔ roguelike_sprawl 양방향 통합 (Phase α-J)**
 
 > **Primary source**: `../../../Fiction/wiki/` — 깁슨 원작 분석 (Sprawl Trilogy, characters, settings). 게임 wiki는 게임용 요약.
@@ -66,7 +66,7 @@
 - [Story vs Stage Comparison](design/scenario/story-stage-comparison.md) - **단편소설/그래픽노블/게임스테이지 비교표**
 - [Game Structure (5-Chapter Architecture)](design/scenario/game-structure.md) - **챕터/Arc/Prologue 용어 재정의 + 5챕터 설계**
 - [Chapter Progress Tracker](design/scenario/chapter-progress.md) - **15챕터 구현 진도 추적표**
-- [Session Handover](SESSION_HANDOVER.md) - **다른 세션 인수인계 (현재 상태, 다음 작업 후보, 함정)**
+- [Session Handover (v0.8.0, archived)](_archive/sessions/SESSION_HANDOVER_v0.8.0_2026-07-25.md) - **다른 세션 인수인계 (구버전 v0.8.0 — 현재 상태는 [SESSION_SUMMARY_2026-08-06.md](./SESSION_SUMMARY_2026-08-06.md) 참조)**
 
 ## 결정 기록 (Decisions)
 - [Index](decisions/README.md) - 모든 ADR 목록
@@ -130,17 +130,17 @@
 - [decisions/0011-ascii-portraits](decisions/0011-ascii-portraits.md) — ASCII 초상화 (Accepted)
 - [decisions/0012-difficulty-rating](decisions/0012-difficulty-rating.md) — PPL/ZDR 난이도 등급 (Accepted)
 - [decisions/0013-story-events](decisions/0013-story-events.md) — 스토리 이벤트 시스템 (Accepted)
-- [decisions/0014-data-salvage](decisions/0014-data-salvage.md) — 데이터 살비지 (Draft)
-- [decisions/0015-crafting-system](decisions/0015-crafting-system.md) — 제작 시스템 (Draft)
-- [decisions/0016-jockey-avatar](decisions/0016-jockey-avatar.md) — 자키 아바타 (Draft)
-- [decisions/0017-mission-material-integration](decisions/0017-mission-material-integration.md) — 미션-재료 통합 (Draft)
-- [decisions/0018-combat-animation](decisions/0018-combat-animation.md) — 전투 애니메이션 (Draft)
-- [decisions/0019-combat-aftermath-subtitles](decisions/0019-combat-aftermath-subtitles.md) — 전투 후일담 + 한글 자막 (Draft)
-- [decisions/0020-fog-of-war-exploration](decisions/0020-fog-of-war-exploration.md) — 안개/탐험 메카닉 (Draft)
+- [decisions/0014-data-salvage](decisions/0014-data-salvage.md) — 데이터 살비지 (Accepted, auto-converted 2026-08-05)
+- [decisions/0015-crafting-system](decisions/0015-crafting-system.md) — 제작 시스템 (Accepted, auto-converted 2026-08-05)
+- [decisions/0016-jockey-avatar](decisions/0016-jockey-avatar.md) — 자키 아바타 (Accepted, auto-converted 2026-08-05)
+- [decisions/0017-mission-material-integration](decisions/0017-mission-material-integration.md) — 미션-재료 통합 (Accepted, auto-converted 2026-08-05)
+- [decisions/0018-combat-animation](decisions/0018-combat-animation.md) — 전투 애니메이션 (Accepted, auto-converted 2026-08-05)
+- [decisions/0019-combat-aftermath-subtitles](decisions/0019-combat-aftermath-subtitles.md) — 전투 후일담 + 한글 자막 (Accepted, auto-converted 2026-08-05)
+- [decisions/0020-fog-of-war-exploration](decisions/0020-fog-of-war-exploration.md) — 안개/탐험 메카닉 (Accepted, auto-converted 2026-08-05)
 - [decisions/0030-github-utilization](decisions/0030-github-utilization.md) — GitHub 활용 전략 (Accepted)
-- [decisions/0031-original-scenario-integration](decisions/0031-original-scenario-integration.md) — 오리지널 시나리오 통합 (Draft)
-- [decisions/0032-graphic-novel-mode](decisions/0032-graphic-novel-mode.md) — 그래픽 노블 모드 (Draft)
-- [decisions/0040-death-restart-cycle](decisions/0040-death-restart-cycle.md) — 사망-재시작 사이클 (Draft)
+- [decisions/0031-original-scenario-integration](decisions/0031-original-scenario-integration.md) — 오리지널 시나리오 통합 (Accepted, auto-converted 2026-08-05)
+- [decisions/0032-graphic-novel-mode](decisions/0032-graphic-novel-mode.md) — 그래픽 노블 모드 (Accepted, auto-converted 2026-08-05)
+- [decisions/0040-death-restart-cycle](decisions/0040-death-restart-cycle.md) — 사망-재시작 사이클 (Accepted, auto-converted 2026-08-05)
 - [decisions/0041-graphic-novel-content-expansion](decisions/0041-graphic-novel-content-expansion.md) — GN 콘텐츠 4× 확장 (Accepted)
 - [decisions/0042-chapter-title-cards](decisions/0042-chapter-title-cards.md) — 챕터 타이틀 카드 + fade (Accepted)
 - [decisions/0043-sound-cue-integration](decisions/0043-sound-cue-integration.md) — 사운드 큐 매핑 (Accepted)
@@ -148,9 +148,9 @@
 - [decisions/0046-graphic-novel-ending-b](decisions/0046-graphic-novel-ending-b.md) — 엔딩 B 분기 (Accepted)
 - [decisions/0047-text-visibility-typed-messages](decisions/0047-text-visibility-typed-messages.md) — 카테고리형 메시지 (Accepted)
 - [decisions/0048-gn-ending-menu-and-save-migration](decisions/0048-gn-ending-menu-and-save-migration.md) — GN 엔딩 메뉴 + save 마이그레이션 (Accepted)
-- [decisions/0049-graphic-novel-ending-c](decisions/0049-graphic-novel-ending-c.md) — 엔딩 C (소멸/망각/파괴) (Draft)
-- [decisions/0050-boss-ice-system](decisions/0050-boss-ice-system.md) — Boss ICE 3-phase (Draft)
-- [decisions/0051-mission-story-metadata](decisions/0051-mission-story-metadata.md) — 미션-단편 메타데이터 (Draft)
+- [decisions/0049-graphic-novel-ending-c](decisions/0049-graphic-novel-ending-c.md) — 엔딩 C (소멸/망각/파괴) (Accepted, auto-converted 2026-08-05)
+- [decisions/0050-boss-ice-system](decisions/0050-boss-ice-system.md) — Boss ICE 3-phase (Accepted, auto-converted 2026-08-05)
+- [decisions/0051-mission-story-metadata](decisions/0051-mission-story-metadata.md) — 미션-단편 메타데이터 (Accepted, auto-converted 2026-08-05)
 - [decisions/0052-short-story-expansion-plan](decisions/0052-short-story-expansion-plan.md) — 단편 확장 플랜 A~E (Accepted, All Complete)
 - [decisions/0060-dungeon-exploration-redesign](decisions/0060-dungeon-exploration-redesign.md) — NetHack BSP 미로 (Accepted 2026-06-30)
 - [decisions/0061-novel-integration-architecture](decisions/0061-novel-integration-architecture.md) — Novel Hook Dispatch 4-layer (Accepted 2026-06-30)
@@ -170,6 +170,19 @@
 - [decisions/0133-graphic-novel-view-split](decisions/0133-graphic-novel-view-split.md) — GN view 분리 (Accepted)
 - [decisions/0140-engagement-layer](decisions/0140-engagement-layer.md) — Engagement Layer (Top 3 partial, Accepted)
 - [decisions/0141-additional-module-splits](decisions/0141-additional-module-splits.md) — 추가 모듈 분할 (Top 2 partial, Accepted)
+- [decisions/0142-graphic-novel-view-split-v2](decisions/0142-graphic-novel-view-split-v2.md) — GN view split v2 implementation (Accepted 2026-08-05)
+- [decisions/0143-combat-view-split](decisions/0143-combat-view-split.md) — combat_view split implementation (Accepted 2026-08-05)
+- [decisions/0144-combat-effects-split](decisions/0144-combat-effects-split.md) — combat/effects data extraction (Accepted 2026-08-05)
+- [decisions/0145-effects-vfx-split](decisions/0145-effects-vfx-split.md) — combat/effects_vfx 3-way split (Accepted 2026-08-05)
+- [decisions/0146-stage-flow-transitions](decisions/0146-stage-flow-transitions.md) — Stage Flow (black_market & ghost_encounter, Accepted 2026-08-05)
+- [decisions/0147-data-salvage-phase6](decisions/0147-data-salvage-phase6.md) — Data Salvage Phase 6+ (HEAL + FRAG + CRED + alarm trade-off, Cycle 1 of A+B+C, Accepted 2026-08-07)
+- [decisions/0148-combat-depth-expansion](decisions/0148-combat-depth-expansion.md) — Combat Depth (counter + defense + companion + aggression, Cycle 2 of A+B+C, Accepted 2026-08-07)
+- [decisions/0149-boss-phase4-finale](decisions/0149-boss-phase4-finale.md) — Boss Phase 4 Finale (per-boss mechanics + death taunts + intro, Cycle 3 of A+B+C, Accepted 2026-08-07)
+- [decisions/0150-module-split-depth-boss-phase4](decisions/0150-module-split-depth-boss-phase4.md) — Module Split (depth/boss_phase4 sub-packages, Cycle 4 of A+B+C, Accepted 2026-08-07)
+- [decisions/0151-info-market-intel-items](decisions/0151-info-market-intel-items.md) — Info Market Intel Items (3 items, Cycle 6 v1.2.0+ bridge, Accepted 2026-08-07)
+- [decisions/0152-multi-enemy-encounters](decisions/0152-multi-enemy-encounters.md) — Multi-Enemy Encounters (1v2/1v3 + HEAL rebalance, Cycle 8 v1.2.0+ core, Accepted 2026-08-07)
+- [decisions/0153-matrix-encounter-spawn](decisions/0153-matrix-encounter-spawn.md) — Matrix Encounter Spawn Integration (1v1/1v2/1v3, Cycle 9 v1.2.0+ bridge, Accepted 2026-08-07)
+- [decisions/0154-faction-expansion-i18n](decisions/0154-faction-expansion-i18n.md) — Faction Expansion (faction_rumor 4 factions + i18n ja/zh, Cycle 10 v1.2.0+ polish, Accepted 2026-08-07)
 - [decisions/template](decisions/template.md) — ADR 작성 템플릿 (NNNN-short-title.md)
 
 ### 디자인 (Design — added 35)

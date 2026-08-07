@@ -384,29 +384,32 @@ def step_combat(state: CombatState) -> None:
 
     _check_boss_phase_transition(state)
 
-    # Auto-attack: player (targets current enemy)
+    # Auto-attack: player (hits all alive enemies, ADR-0152 multi-enemy)
     if state.tick_ms - state.last_player_attack_ms >= AUTO_ATTACK_INTERVAL_MS:
         if not state.player.is_stunned():
-            target = state.target
-            if target is not None and target.hp > 0:
+            from .multi_enemy import all_alive_enemies
+
+            alive = all_alive_enemies(state)
+            if alive:
                 base_dmg = state.player.auto_attack_damage
-                dmg, is_crit = _calculate_damage(state, base_dmg, state.player, target)
-                applied = _apply_damage(state, target, dmg)
+                for target in alive:
+                    dmg, is_crit = _calculate_damage(state, base_dmg, state.player, target)
+                    applied = _apply_damage(state, target, dmg)
+
+                    crit_text = " CRITICAL HIT!" if is_crit else ""
+                    state.push(f"You strike {target.name} for {applied} damage.{crit_text}")
+                    state.player_combo += 1
+                    state.combo_last_hit_ms = state.tick_ms
+                    state.stats.damage_dealt += applied
+                    if is_crit:
+                        state.stats.crits_landed += 1
+                state.stats.max_combo_reached = max(
+                    state.stats.max_combo_reached, state.player_combo
+                )
                 state.last_player_attack_ms = state.tick_ms
                 state.last_event = "player_attack"
                 state.last_event_color = (200, 200, 200)
                 state.last_event_tick = state.tick_ms
-
-                crit_text = " CRITICAL HIT!" if is_crit else ""
-                state.push(f"You strike {target.name} for {applied} damage.{crit_text}")
-                state.player_combo += 1
-                state.combo_last_hit_ms = state.tick_ms
-                state.stats.damage_dealt += applied
-                if is_crit:
-                    state.stats.crits_landed += 1
-                state.stats.max_combo_reached = max(
-                    state.stats.max_combo_reached, state.player_combo
-                )
         else:
             state.push("You are stunned and cannot attack!")
             state.last_player_attack_ms = state.tick_ms
@@ -445,9 +448,11 @@ def step_combat(state: CombatState) -> None:
                 if is_crit:
                     state.stats.crits_received += 1
 
-                # ICE-side skill use: aggressive enemies occasionally use skills
+                # ICE-side skill use: aggression-tier-aware probability (ADR-0148).
                 if enemy.skills and enemy.hp > 0:
-                    if enemy.alive_skills_available() and state.rng.random() < 0.15:
+                    from .depth import enemy_should_use_skill
+
+                    if enemy.alive_skills_available() and enemy_should_use_skill(enemy, state.rng):
                         skill = enemy.choose_skill(state.rng)
                         if skill is not None:
                             _apply_enemy_skill(state, enemy, skill)
@@ -785,10 +790,17 @@ def _apply_enemy_skill(state: CombatState, enemy: Combatant, skill: Skill) -> No
     Wraps the existing player skill handlers by temporarily using the
     enemy as the "player" (attacker) and the actual player as the
     "target". Reuses damage calculations via _calculate_damage.
+
+    ADR-0148: opens a 200ms counter window after enemy skill use.
     """
+    from .depth import open_counter_window
+
     state.last_skill_used = skill
     state.stats.skills_used += 1
     state.push(f"!! {enemy.name} uses {skill.name}!")
+    # Open counter window (ADR-0148). Player can use a COUNTER skill
+    # in the next 200ms (2 ticks at TICK_MS=100) for 2x damage + stun.
+    open_counter_window(state)
     # Damage skills: calculate with enemy as attacker
     if skill.effect in (
         SkillEffect.ATTACK,
@@ -847,7 +859,13 @@ def tick_dixie_ally(combat_state: CombatState, app_state: AppState) -> None:
     Only active when the player toggled Dixie from dialog-only to combat ally.
     Ephemeral: relies on ``app_state.construct_companion_active`` (Pillar 4 compliant,
     no meta-progression; resets on AppState() construction).
+
+    ADR-0148: Dixie can also use [[decompile]] / [[icebreaker_overdrive]] skills,
+    chosen via dixie_choose_skill (probabilistic AI). Each skill use is gated
+    by ALLY_AUTO_ATTACK_INTERVAL_MS cooldown.
     """
+    from .depth import dixie_choose_skill, dixie_use_skill
+
     if not getattr(app_state, "construct_companion_active", False):
         return
     if combat_state.finished:
@@ -855,9 +873,18 @@ def tick_dixie_ally(combat_state: CombatState, app_state: AppState) -> None:
     target = combat_state.target
     if target is None or target.hp <= 0:
         return
-    last = getattr(combat_state, "_dixie_last_attack_ms", 0)
+    last = combat_state.dixie_last_attack_ms
     if combat_state.tick_ms - last < ALLY_AUTO_ATTACK_INTERVAL_MS:
+        return
+    # ADR-0148: companion skill auto-pick (decompile / icebreaker_overdrive).
+    # If no skill picked, fall back to plain auto-attack.
+    skill_id = dixie_choose_skill(combat_state, app_state, combat_state.rng)
+    if skill_id is not None and dixie_use_skill(
+        combat_state, app_state, skill_id, combat_state.rng
+    ):
+        combat_state.dixie_last_attack_ms = combat_state.tick_ms
         return
     _apply_damage(combat_state, target, DIXIE_ALLY_DAMAGE)
     combat_state.push(f">>> Dixie strikes {target.id} for {DIXIE_ALLY_DAMAGE}")
+    combat_state.dixie_last_attack_ms = combat_state.tick_ms
     combat_state._dixie_last_attack_ms = combat_state.tick_ms  # type: ignore[attr-defined]

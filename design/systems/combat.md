@@ -148,8 +148,8 @@ ADR-0003의 핵심. 한 줄 요약: **실시간 자동 공격 + 메뉴로 강력
 ICE 격파. 잔여 데이터 회수 가능.
 
 > HEAL    +20% max HP (T1 = +20, T3 = +30)
-  FRAG    program fragment (Phase 6+)
-  CRED    credits (Phase 6+)
+  FRAG    +1 salvage fragment (in-run unlock; alarm ≥3 시 50% 감소)
+  CRED    +30 credits, alarm -1 (alarm ≥3 시 50% 감소)
   SKIP    no reward
 
 ↑/↓ select, ENTER confirm
@@ -162,11 +162,14 @@ ICE 격파. 잔여 데이터 회수 가능.
 - 회복량: `round(max_hp * 0.20)`, 최소 1
 - HP가 max인 상태에서 HEAL 선택 → "no damage to repair" 메시지 + 회복 0 (자원 낭비 알림)
 
-### Phase 6+ 확장
+### Phase 6+ 확장 (ADR-0147, v1.1.0+ Cycle 1)
 
-- **FRAG**: program 1개 unlock (런 내 — unlock이 런 내에 머무름, 메타 X)
-- **CRED**: Info Market (픽서 construct)에서 정보 구매 — 미션 목표 힌트, alarm 감소 아이템 등
-- 디시전 트레이드오프: HEAL 즉시 vs FRAG/CRED 장기 보상
+- **HEAL**: 변경 없음 (20% max HP, tier-scaled, max-cap alert)
+- **FRAG**: +1 `state.salvage_fragments` (in-run unlock, death 시 loss — Pillar 4 정합)
+- **CRED**: +30 `state.credits` + `-1 state.alarm_level` (clamped ≥ 0, Pillar 1 weight)
+- **SKIP**: 보상 없음 (전략적 선택)
+- **Alarm trade-off** (Pillar 1 weight): `state.alarm_level >= 3` 이면 FRAG/CRED yield 50% 감소 (rounded down, min 0)
+- **3-way decision trade-off**: HEAL 즉시 회복 vs FRAG in-run unlock vs CRED + alarm relief. Alarm level 이 trade-off 결정에 영향.
 
 ### Disengage / Death
 
@@ -227,6 +230,60 @@ Skills available (AP 4/6):
 - **상호작용**: 적 공격 시 화면 흔들림 효과 (ASCII)
 - **ICE 격파**: portrait fade-out (선택)
 
+## Combat Depth Expansion (ADR-0148, v1.1.0+ Cycle 2)
+
+> Cycle 1 (ADR-0147) 의 alarm-aware salvage 가 본 ADR 의 Pillar 1 weight 보완. 4 sub-feature 가 1v1 의 단조로움 해소.
+
+### Counter Window
+
+적의 skill 사용 직후 **200ms** 동안 player 의 `SkillEffect.COUNTER` skill 사용 가능. counter-attack 성공 시 2x damage + 0.5s stun. 시간 정지 (RT-MS 의 "reactive gameplay").
+
+```
+>>> ICE Watchdog uses "trace"!
+>>> COUNTER WINDOW (200ms)!
+[Space] → Counter-Strike (2x damage + stun)
+```
+
+**Pillar 정합**:
+- P3 (The Flatline): HEAL 변화 없음, *기술적* 깊이 추가.
+- P5 (The Style): 깁슨 "counter-trace" 어휘.
+
+### Defense Stackable + Duration
+
+3가지 defense program 의 stackable + duration 로직:
+
+| Program | Shield | Duration | Special |
+|---|---|---|---|
+| **Wisp** (T1) | +1 | 5s | Stackable, duration refresh |
+| **Shield** (T1) | +3 | 1-hit | One-shot (consumed on attack) |
+| **Wardrone** (T4) | +2 | 10s | + auto-counter (5s cool down) |
+
+`state.shield` (전역 카운터) + per-status shield (`StatusEffect.is_shield=True`). Multiple Wisp stacks → cumulative shield + latest duration.
+
+### Companion Skills (Dixie)
+
+`construct_companion_active = True` 일 때 Dixie 가 skill 사용 가능:
+
+| Skill | AP | 효과 |
+|---|---|---|
+| `[[decompile]]` | 1 | target 의 attack_bonus -1 (3s) |
+| `[[icebreaker_overdrive]]` | 3 | target 에 50 데미지 + damage_up 5s |
+
+Pillar 4 (The Build) in-run only (death = loss). construct_whisper UI 와 연동 (Pillar 5: construct = digital ghost).
+
+### ICE Aggression Tiers
+
+`ice_kind` 별 4-tier aggression (skill use probability):
+
+| Tier | Probability | 예시 |
+|---|---|---|
+| PASSIVE | 5% | tutorial ICE, low-grade |
+| STANDARD | 15% | watchdogs, standard, patrol |
+| AGGRESSIVE | 35% | black, goliath, hunter |
+| BOSS | 50% | wintermute, neuromancer, ta_prime |
+
+`data/combat/ice_types.json` 의 `aggression` field. Cycle 3 (ADR-0149) 의 Boss Phase 4 의 scripted mechanic 기반.
+
 ## PPL & ZDR 통합 (ADR-0012)
 
 ### Combat 진입 전
@@ -255,6 +312,136 @@ Skills available (AP 4/6):
 | 0.75 - 1.0 | TOUGH | yellow | 불리 |
 | 0.5 - 0.75 | DEADLY | red | 매우 위험 |
 | < 0.5 | FUTILE | dark_red | 자살행위 |
+
+## Boss Phase 4 Finale (ADR-0149, v1.1.0+ Cycle 3 of A+B+C)
+
+> Cycle 1 (ADR-0147) 의 alarm-aware salvage + Cycle 2 (ADR-0148) 의 aggression tier 기반. 5 주요 boss 의 *climactic finale*.
+
+### Phase 4 Trigger
+
+HP ≤ 15% 시 1회 scripted mechanic 발동. `phase4_triggered` flag 로 one-shot 보장.
+
+### Per-Boss Mechanics
+
+| Boss | Mechanic | 효과 |
+|---|---|---|
+| **Wintermute** | `personality_drift` | player 의 attack_bonus 50% 감소 (3s) |
+| **T-A Prime** | `family_vote` | AoE damage 20 + construct companion 있으면 +10 |
+| **Neuromancer** | `construct_merge` | boss HP 20% 회복 + attack +2 (3s) |
+| **Goliath Prime** | `ground_slam` | player stun 1s + screen shake |
+| **Black ICE Lord** | `glitch_burst` | 3 random status effects (3s each) |
+
+### Death Taunts (Pillar 3)
+
+Player 사망 시 boss 의 마지막 한마디 (5 boss × 2-3 lines):
+
+| Boss | Taunt (EN sample) |
+|---|---|
+| Wintermute | "I see you, cowboy. Your pattern is mine." |
+| T-A Prime | "Family consensus: you are not welcome." |
+| Neuromancer | "We are the merger. You are the remainder." |
+| Goliath Prime | "Ground... settles... all." |
+| Black ICE Lord | "Glitch. Catch. Static. You." |
+
+### Intro Enhancement
+
+3-stage text overlay on boss encounter:
+1. **Stage 1**: `[BOSS NAME]`
+2. **Stage 2**: `role` (e.g. `WINTERMUTE // neural intruder`)
+3. **Stage 3**: `warning` (e.g. `data vulnerable. personal trace detected.`)
+
+Pillar 정합:
+- P1: 15% trigger, 1회, mechanic 은 HP 추가 (*not* buff) — anti-pattern 회피.
+- P3: death taunts 가 Pillar 3 weight 강화.
+- P4: Phase 4 mechanic 보상 = ADR-0147 salvage 통합.
+- P5: 5 unique 깁슨 어휘 (construct, family, merger, ground, glitch).
+
+## Info Market Intel Items (ADR-0151, Cycle 6)
+
+> ADR-0147 §Phase 6+ 의 "CRED: Info Market 에서 정보 구매" deferred item 구현. 3-way salvage trade-off 의 CRED branch 완성.
+
+3 intel items purchasable with CRED at the Info Market (픽서 construct):
+
+| Item | Price | 효과 | Pillar |
+|---|---|---|---|
+| **alarm_reducer** | 30 credits | `state.alarm_level -= 2` (clamped ≥ 0) | P1 (Run) |
+| **mission_hint** | 40 credits | 현재 미션 objective data node 위치 status message 표시 | P1 (Run) |
+| **faction_rumor** | 50 credits | 다음 faction event 확률 +25% (faction_tension) | P5 (Style) |
+
+### Purchase Flow
+
+```
+>>> Alarm Reducer: 30 credits. Purchase? [Y/n]
+>>> CRED spent: 30 (50 → 20)
+>>> Alarm level: 4 → 2 (Pillar 1 weight 감소)
+```
+
+### Pillar 정합
+
+- **P1 (The Run)**: alarm_reducer + mission_hint → run weight 감소 (information advantage)
+- **P4 (The Build)**: in-run only (death = loss via `AppState` reset)
+- **P5 (The Style)**: faction_rumor → 깁슨 "construct echo" 어휘 강화
+
+### 기존 인프라 재사용
+
+- `crafting/info_market.py` 의 `InfoMarket` 클래스 + `MarketItem` + `purchase()` + faction discount
+- `AppState.credits: int` + `AppState.inventory: dict[str, int]`
+- `engine/hub.py` 의 market display
+
+### 신규 모듈
+
+- `combat/intel_items.py` (~150 LOC): `apply_intel_item(state, item_id)` + 3 item definitions
+- `AppState.purchased_intel_items: list[str]` 필드 (one-shot per item_id tracking)
+
+## Multi-Enemy Encounters (ADR-0152, Cycle 8)
+
+> Cycle 2 Option 1 의 deferred multi-enemy 구현. ADR-0147 (alarm-aware salvage) + ADR-0148 (intel alarm) + ADR-0151 (intel alarm_reducer) 가 1vN 의 Pillar 3 weight 보완.
+
+### Encounter Count by Grade
+
+| Grade | Enemies | Description |
+|---|---|---|
+| 1-2 | 1 | Novice, tutorial |
+| 3-4 | 2 | Intermediate, pack |
+| 5-6 | 3 | Veteran, swarm |
+
+점진적 난이도 curve: Grade 1-2 에서 1v1 으로 시작, Grade 3 부터 1v2, Grade 5 부터 1v3.
+
+### Player Auto-Attack (Multi-Enemy)
+
+Player 의 auto-attack 은 **모든 alive enemy** 를 순차 공격 (ADR-0152 §Consequences.3). 매 auto-attack tick 마다:
+
+```
+for target in all_alive_enemies(state):
+    dmg, is_crit = _calculate_damage(state, base_dmg, player, target)
+    applied = _apply_damage(state, target, dmg)
+    state.push(f"You strike {target.name} for {applied} damage.")
+```
+
+Player 가 Tab key 로 `cycle_target` 호출 → `target_index` 순환 (dead enemy skip).
+
+### HEAL Rebalance 20% → 15% (ADR-0152 §Consequences.2)
+
+1vN 에서 HEAL 20% 가 *trivial* (3명 damage → 1회 HEAL로 60 회복 = damage 1회당 HEAL 1회 보상) 되는 문제. HEAL_PCT 0.20 → **0.15** 로 rebalance:
+
+| Tier | Old (20%) | New (15%) |
+|---|---|---|
+| T1 (100 max) | +20 | +15 |
+| T3 (150 max) | +30 | +22 (banker's rounding 22.5 → 22) |
+| T5 (300 max) | +60 | +45 |
+
+Pillar 3 (The Flatline) weight 보존: 1vN 에서 HEAL 1회로 *3명 damage 보상 불가* → player 가 더 strategic 해야 함.
+
+### Pillar 정합
+
+- **P1 (The Run)**: 1vN alarm accumulate → alarm-aware salvage (ADR-0147) + intel alarm_reducer (ADR-0151) 가 보완.
+- **P3 (The Flatline)**: HEAL 15% + 1-of-4 choice → Pillar 3 weight 보존 (1vN 에서 trivial 방지).
+- **P5 (The Style)**: 깁슨 어휘 + multi-enemy 묘사 ("swarm", "pack", "encircle").
+
+### 신규 모듈
+
+- `combat/multi_enemy.py` (~115 LOC): `cycle_target` + `all_alive_enemies` + `encounter_count_for_grade` + `auto_attack_all_alive`
+- 기존 `CombatState.enemies` + `target_index` 인프라 100% 재사용
 
 ## 구현 가이드
 

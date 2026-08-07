@@ -145,6 +145,9 @@ class Combatant:
     ice_resistance: float = 0.0
     alarm_speed: float = 1.0
     current_phase: int = 1
+    # Aggression tier (ADR-0148). Determines enemy skill use probability.
+    # Valid values: "passive" / "standard" / "aggressive" / "boss".
+    aggression: str = "standard"
 
     def is_alive(self) -> bool:
         return self.hp > 0
@@ -229,6 +232,16 @@ class CombatState:
     alarm_level: int = 0
     last_alarm_tick_ms: int = 0
     stats: CombatStats = field(default_factory=CombatStats)
+    # Counter-attack window deadline (ADR-0148). 0 = no window open.
+    # When tick_ms reaches this value, the window is closed.
+    counter_window_open_ms: int = 0
+    # Last tick_ms when Dixie companion auto-attacked/skilled.
+    # ADR-0148: formal field (was previously dynamic attribute).
+    dixie_last_attack_ms: int = -2000
+    # Last tick_ms when Wardrone auto-counter fired (ADR-0148).
+    wardrone_last_counter_ms: int = -5000
+    # Current boss Phase 4 mechanic (ADR-0149). None until triggered.
+    boss_phase4_mechanic: str | None = None
 
     def __post_init__(self) -> None:
         if not self.enemies and self.enemy is not None:

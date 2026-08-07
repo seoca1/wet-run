@@ -126,7 +126,11 @@ class TestTickDixieAlly:
         assert cs.enemy.hp == original_hp
 
     def test_attacks_when_construct_companion_active(self) -> None:
-        """When enabled, Dixie strikes the target for DIXIE_ALLY_DAMAGE."""
+        """When enabled, Dixie strikes the target.
+
+        ADR-0148: Dixie may use a companion skill (icebreaker_overdrive 50 dmg
+        when target HP >= 80) OR plain auto-attack (5 dmg). Accept either.
+        """
         from roguelike_sprawl.combat.state import DIXIE_ALLY_DAMAGE
 
         app = AppState()
@@ -135,7 +139,9 @@ class TestTickDixieAlly:
         original_hp = cs.enemy.hp
         cs.tick_ms = DIXIE_ALLY_DAMAGE + 5000
         tick_dixie_ally(cs, app)
-        assert cs.enemy.hp == original_hp - DIXIE_ALLY_DAMAGE
+        # Either 5 (auto-attack) or 50 (icebreaker_overdrive).
+        damage_dealt = original_hp - cs.enemy.hp
+        assert damage_dealt in (DIXIE_ALLY_DAMAGE, 50)
 
     def test_no_op_when_combat_finished(self) -> None:
         """If combat ended, Dixie doesn't attack."""
@@ -176,7 +182,8 @@ class TestTickDixieAlly:
         hp_after_first = cs.enemy.hp
         tick_dixie_ally(cs, app)
         assert cs.enemy.hp == hp_after_first
-        assert original_hp - hp_after_first == DIXIE_ALLY_DAMAGE
+        # First call deals either 5 (auto-attack) or 50 (icebreaker).
+        assert original_hp - hp_after_first in (DIXIE_ALLY_DAMAGE, 50)
 
 
 __all__ = [

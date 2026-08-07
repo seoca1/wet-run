@@ -2,6 +2,8 @@
 
 ## 변경 이력 (Recent)
 
+- **2026-08-07 (audit tool fix, commit `b87f330`)**: `tools/audit_sprawl.py` path resolution mismatch 수정 — `ROOT` 와 `files` 를 `.resolve()` 처리하여 markdown link 의 relative/absolute 차이로 인한 false orphan 10건 해소. Wiki orphans 15 → **5** (모두 expected: `wiki/lore/README.md` subdirectory index + 4× `memory_*.md` 의도적 episodic log). Project 0 broken links, `find_broken_links.py` 0 broken, `pytest` 3835 pass (regression 없음). Workspace `audit_vault.py` CLEAN 유지. HEAD = `b87f330`.
+- **2026-08-07 (data sync)**: `prototype/data/game_facts.json` regenerated via `scripts/sync_dashboard_facts.py` — `test_count_collected` 2943 → **3319** (now collected-count, not passed-count, per recent test infra upgrade), `_generated_at` 2026-08-01 → 2026-08-07. ADR-0051 schema: 111/111 missions fully compliant. Mission/ICE/program count verified consistent across data sources.
 - **2026-08-06**: 8 atomic commits from 2026-08-05 dirty-tree closure — deps (+lock), dashboard regen (21 files), 7 obsolete test deletions (-2,060 lines), docs refresh (10 log entries + AGENTS.md menu sync + 14 ADR metadata), 5 new docs files (dungeon_events + scripts/README + tools/README + SESSION_SUMMARY_2026-08-06 + audit archive), 10 new test files (+2,632 lines coverage), code changes (3 src + 7 test mods + 2 tool scripts). Test count: **3835 passed, 462 skipped, 1 xfailed, 4 xpassed** (was 3441 pre-session). ruff clean, mypy 0 errors (159 files). HEAD = `b125246`. See `SESSION_SUMMARY_2026-08-06.md`.
 - **2026-08-05 cycle-audit**: 11 cycles of cleanup, 5 real bugs fixed, 14 Draft ADRs → Accepted, coverage 68.8% → 73.36%, ADR-0142 (graphic_novel 3-way split), ADR-0143 (combat_view 4-way split), ADR-0144 (effects data extraction), ADR-0145 (effects_vfx 3-way split), ADR-0146 (stage flow transitions). HEAD = `314fd5c`. See `SESSION_SUMMARY_2026-08-05_cycle-audit.md`.
 - **2026-08-05 multi-project**: 14 commits across 4 projects (Fiction + Language + typing_language + roguelike_sprawl). 9 roguelike_sprawl commits: Cycle 4 polish + scene-data fix + Gibson 4× expansion data drift fix (62 duration + 11 KO + hvac_hum cue). HEAD locked at 89 ahead of origin/main.
@@ -71,13 +73,13 @@
 ```
 Phase 0: 문서 시스템 기반       [완료]
     ↓
-Phase 1: 세계관 정리 (World Bible)
+Phase 1: 세계관 정리 (World Bible) [완료]
     ↓
-Phase 2: 디자인 명세 작성
+Phase 2: 디자인 명세 작성         [완료 14/14 + 7 testcases]
     ↓
-Phase 3: 핵심 기술 결정         [현재 대기]
+Phase 3: 핵심 기술 결정           [완료 8/8 ADR Accepted]
     ↓
-Phase 4: 개발 환경 구축 (코드 스켈레톤)
+Phase 4: 개발 환경 구축 (코드 스켈레톤) [완료]
     ↓
 Phase 5: 핵심 시스템 프로토타입 (Vertical Slice)
     ↓
@@ -126,6 +128,8 @@ Phase 7: 알파 빌드
 
 **목표**: 게임의 디자인을 명문화. 사용자가 직접 수정 가능한 "활성 스펙".
 
+**상태**: ✅ 14/14 design docs + 7 system testcases 작성 완료 (2026-08-07 verified)
+
 **완료 조건**:
 - [x] `design/pillars.md` - 디자인 기둥 (5개, Pillar 2 강화됨)
 - [x] `design/core_loop.md` - 매크로/미시 루프 (Hub도 cyberspace 안)
@@ -142,17 +146,17 @@ Phase 7: 알파 빌드
 - [x] `design/systems/animations.md` (신규, ADR-0018)
 - [x] `design/systems/aftermath.md` (신규, ADR-0019)
 - [x] `design/systems/exploration.md` (신규, ADR-0020)
-- [ ] `design/systems/progression.md` - 진행/레벨업 명세 (Item Tier T1~T5 + PPL)
-- [ ] `design/systems/economy.md` - 재화/거래 명세
+- [x] `design/systems/progression.md` - 진행/레벨업 명세 (Item Tier T1~T5 + PPL)
+- [x] `design/systems/economy.md` - 재화/거래 명세
 - [x] `design/systems/crafting.md` - **3-tier 재료 & 조합 시스템 (ADR-0015)**
 - [x] `design/systems/avatar.md` - **자키 아바타 — 스탯 시각화 (ADR-0016)**
-- [ ] `design/systems/inventory.md` - 인벤토리/장비 명세 (티어 시스템 + PPL 계산)
-- [ ] `design/systems/dialogue.md` - NPC/대화 명세
-- [ ] `design/systems/procgen.md` - 절차적 생성 명세 (ZDR 매핑)
-- [ ] `design/systems/story-archive.md` - Story/News 시스템 명세 (ADR-0009)
-- [ ] `design/systems/i18n.md` - i18n 시스템 명세 (ADR-0010)
-- [ ] `design/balance/` - 밸런스 노트 (PPL 공식, ZDR 공식, 티어별 stat)
-- [ ] `testcases/` 에 시스템별 시나리오 작성
+- [x] `design/systems/inventory.md` - 인벤토리/장비 명세 (티어 시스템 + PPL 계산)
+- [x] `design/systems/dialogue.md` - NPC/대화 명세
+- [x] `design/systems/procgen.md` - 절차적 생성 명세 (ZDR 매핑)
+- [x] `design/systems/story-archive.md` - Story/News 시스템 명세 (ADR-0009)
+- [x] `design/systems/i18n.md` - i18n 시스템 명세 (ADR-0010)
+- [x] `design/balance/` - 밸런스 노트 (`ppl_zdr_balance.md` — PPL 공식, ZDR 공식, 티어별 stat)
+- [x] `testcases/` 에 시스템별 시나리오 작성 (6 system testcase + `TC-SYSTEM-STAGE-FLOW` + `combat/salvage` + `mission-material`)
 
 ### Phase 2 콘텐츠 우선순위 (ADR-0010)
 1. **Plot bones** (필수) — `story_skeleton.md` ✓
@@ -327,8 +331,8 @@ Phase 7: 알파 빌드
 ## 현재 위치
 
 **현재 Phase**: **Phase 7 완료 (2026-07-07), Phase 10 작업 중, ADR-0120 Phase 2 완료 (2026-07-12)**
-**누적 테스트**: **2983 passed** + 679 skipped (2026-07-12, 4 commits 추가 후)
-**검증 상태**: ruff check ✅ / ruff format ✅ / mypy strict ✅ (121 source files) / interrogate 88.7% PASS
+**누적 테스트**: **3835 passed** + 462 skipped + 1 xfailed + 4 xpassed (2026-08-07 audit-tool fix 후)
+**검증 상태**: ruff check ✅ / ruff format ✅ / mypy strict ✅ (159 source files) / pytest 3835 pass / coverage 87.9% / `tools/audit_sprawl.py` 0 broken, 5 expected orphans / `tools/find_broken_links.py` 0 broken
 
 **Phase 6+ 사이클 요약 (2026-07-04)**:
 - **lint/mypy 174 errors → 0** (29c3eeb) — 43 files 변경, +717/-645 lines

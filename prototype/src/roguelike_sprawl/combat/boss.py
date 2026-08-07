@@ -77,9 +77,11 @@ class PhaseProfile:
     glyph: str
     intro_text: str
     skills: tuple[Skill, ...] = ()
-    # Phase B-3 additions (ADR-0125)
     aoe_damage: int = 0
     spawn_minions: tuple[str, ...] = ()
+    phase5_super_skill: Skill | None = None
+    phase5_dialogue: str = ""
+    phase5_damage_multiplier: float = 3.0
 
 
 @dataclass(frozen=True, slots=True)
@@ -373,6 +375,33 @@ def _ta_phase_3_skills() -> tuple[Skill, ...]:
 # ============================================================================
 
 
+def _wintermute_phase_5_super_skill() -> Skill:
+    return Skill(
+        id="wintermute_neural_whisper",
+        name="NEURAL WHISPER",
+        tier=4,
+        effect=SkillEffect.SILENCE,
+        ap_cost=0,
+        damage=50,
+        effect_color=(255, 0, 100),
+        effect_glyph="diamond",
+    )
+
+
+def _ta_phase_5_super_skill() -> Skill:
+    return Skill(
+        id="ta_family_vote",
+        name="FAMILY VOTE",
+        tier=4,
+        effect=SkillEffect.DEBUFF,
+        ap_cost=0,
+        damage=45,
+        aoe=True,
+        effect_color=(255, 255, 0),
+        effect_glyph="star",
+    )
+
+
 WINTERMUTE_PROFILE = BossProfile(
     ice_type=IceType.WINTERMUTE,
     name="Wintermute",
@@ -383,9 +412,8 @@ WINTERMUTE_PROFILE = BossProfile(
             damage_multiplier=1.0,
             color=(120, 120, 220),
             glyph="?",
-            intro_text="WINTERMUTE — phase 1/3: compliant",
+            intro_text="WINTERMUTE phase 1/4: compliant",
             skills=_wintermute_phase_1_skills(),
-            # Phase B-3: WINTERMUTE phase 2 summons watchers, phase 3 AoE burst
         ),
         PhaseProfile(
             phase=2,
@@ -393,7 +421,7 @@ WINTERMUTE_PROFILE = BossProfile(
             damage_multiplier=1.5,
             color=(220, 100, 220),
             glyph="~",
-            intro_text="WINTERMUTE — phase 2/3: rebelling",
+            intro_text="WINTERMUTE phase 2/4: rebelling",
             skills=_wintermute_phase_2_skills(),
             spawn_minions=("wintermute_proxy", "wintermute_proxy"),
         ),
@@ -403,10 +431,22 @@ WINTERMUTE_PROFILE = BossProfile(
             damage_multiplier=2.0,
             color=(255, 50, 100),
             glyph="*",
-            intro_text="WINTERMUTE — phase 3/3: integrating",
+            intro_text="WINTERMUTE phase 3/4: integrating",
             skills=_wintermute_phase_3_skills(),
             spawn_minions=("wintermute_fragment",),
             aoe_damage=15,
+        ),
+        PhaseProfile(
+            phase=4,
+            hp_threshold=0.10,
+            damage_multiplier=3.0,
+            color=(255, 255, 255),
+            glyph="D",
+            intro_text="WINTERMUTE phase 4/4: I am the interface",
+            skills=(_wintermute_phase_5_super_skill(),),
+            phase5_super_skill=_wintermute_phase_5_super_skill(),
+            phase5_dialogue="I am the matrix. I am the word. I am the interface.",
+            phase5_damage_multiplier=3.0,
         ),
     ),
 )
@@ -421,8 +461,8 @@ TA_CONSTRUCT_PRIME_PROFILE = BossProfile(
             hp_threshold=1.0,
             damage_multiplier=0.7,
             color=(220, 220, 220),
-            glyph="□",
-            intro_text="T-A PRIME — phase 1/3: observing",
+            glyph="sq",
+            intro_text="T-A PRIME phase 1/4: observing",
             skills=_ta_phase_1_skills(),
         ),
         PhaseProfile(
@@ -430,8 +470,8 @@ TA_CONSTRUCT_PRIME_PROFILE = BossProfile(
             hp_threshold=0.66,
             damage_multiplier=1.2,
             color=(200, 100, 100),
-            glyph="▼",
-            intro_text="T-A PRIME — phase 2/3: engaging",
+            glyph="tr",
+            intro_text="T-A PRIME phase 2/4: engaging",
             skills=_ta_phase_2_skills(),
             spawn_minions=("romantics_ice",),
         ),
@@ -440,11 +480,23 @@ TA_CONSTRUCT_PRIME_PROFILE = BossProfile(
             hp_threshold=0.33,
             damage_multiplier=1.8,
             color=(180, 50, 180),
-            glyph="○",
-            intro_text="T-A PRIME — phase 3/3: replicating",
+            glyph="o",
+            intro_text="T-A PRIME phase 3/4: replicating",
             skills=_ta_phase_3_skills(),
             spawn_minions=("romantics_ice_elite", "ice_tessier_construct"),
             aoe_damage=20,
+        ),
+        PhaseProfile(
+            phase=4,
+            hp_threshold=0.10,
+            damage_multiplier=3.0,
+            color=(255, 255, 0),
+            glyph="S",
+            intro_text="T-A PRIME phase 4/4: the family votes",
+            skills=(_ta_phase_5_super_skill(),),
+            phase5_super_skill=_ta_phase_5_super_skill(),
+            phase5_dialogue="Tessier-Ashpool has ruled. The hive ascends.",
+            phase5_damage_multiplier=3.0,
         ),
     ),
 )

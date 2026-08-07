@@ -117,23 +117,23 @@ class TestCombatantCurrentPhase:
 class TestBossProfiles:
     def test_wintermute_profile_exists(self) -> None:
         assert WINTERMUTE_PROFILE.ice_type == IceType.WINTERMUTE
-        assert WINTERMUTE_PROFILE.max_phases == 3
+        assert WINTERMUTE_PROFILE.max_phases == 4
 
     def test_ta_profile_exists(self) -> None:
         assert TA_CONSTRUCT_PRIME_PROFILE.ice_type == IceType.TA_CONSTRUCT_PRIME
-        assert TA_CONSTRUCT_PRIME_PROFILE.max_phases == 3
+        assert TA_CONSTRUCT_PRIME_PROFILE.max_phases == 4
 
     def test_wintermute_damage_multipliers(self) -> None:
         mults = [p.damage_multiplier for p in WINTERMUTE_PROFILE.phases]
-        assert mults == [1.0, 1.5, 2.0]
+        assert mults == [1.0, 1.5, 2.0, 3.0]
 
     def test_ta_damage_multipliers(self) -> None:
         mults = [p.damage_multiplier for p in TA_CONSTRUCT_PRIME_PROFILE.phases]
-        assert mults == [0.7, 1.2, 1.8]
+        assert mults == [0.7, 1.2, 1.8, 3.0]
 
     def test_wintermute_thresholds(self) -> None:
         thresholds = [p.hp_threshold for p in WINTERMUTE_PROFILE.phases]
-        assert thresholds == [1.0, 0.66, 0.33]
+        assert thresholds == [1.0, 0.66, 0.33, 0.10]
 
     def test_boss_profiles_dict_has_both(self) -> None:
         assert IceType.WINTERMUTE in BOSS_PROFILES
@@ -194,16 +194,16 @@ class TestCurrentPhase:
         phase = current_phase(boss, WINTERMUTE_PROFILE)
         assert phase.phase == 3
 
-    def test_zero_hp_is_phase_3(self) -> None:
+    def test_zero_hp_is_phase_4(self) -> None:
         boss = _make_combatant(hp=0, max_hp=100)
         phase = current_phase(boss, WINTERMUTE_PROFILE)
-        assert phase.phase == 3
+        assert phase.phase == 4
 
     def test_zero_max_hp_returns_last_phase(self) -> None:
         # Defensive: avoid division by zero
         boss = _make_combatant(hp=0, max_hp=0)
         phase = current_phase(boss, WINTERMUTE_PROFILE)
-        assert phase.phase == 3
+        assert phase.phase == 4
 
     def test_exactly_at_phase_2_threshold(self) -> None:
         # HP 66/100 = 0.66 exactly → phase 2 (≤ threshold)
@@ -217,17 +217,17 @@ class TestCurrentPhase:
         phase = current_phase(boss, WINTERMUTE_PROFILE)
         assert phase.phase == 3
 
-    def test_negative_hp_is_phase_3(self) -> None:
+    def test_negative_hp_is_phase_4(self) -> None:
         # hp=-10, max_hp=100 → hp_ratio = -0.1 ≤ all thresholds
         boss = _make_combatant(hp=-10, max_hp=100)
         phase = current_phase(boss, WINTERMUTE_PROFILE)
-        assert phase.phase == 3
+        assert phase.phase == 4
 
-    def test_negative_max_hp_is_phase_3(self) -> None:
+    def test_negative_max_hp_is_phase_4(self) -> None:
         # hp=0, max_hp=-100 → hp_ratio = -0.0 (negative zero), ≤ all thresholds
         boss = _make_combatant(hp=0, max_hp=-100)
         phase = current_phase(boss, WINTERMUTE_PROFILE)
-        assert phase.phase == 3
+        assert phase.phase == 4
 
     def test_hp_exceeds_max_hp_stays_phase_1(self) -> None:
         # hp=101, max_hp=100 → hp_ratio = 1.01 > 1.0 (phase 1 threshold)
@@ -254,7 +254,7 @@ class TestPhaseTransition:
         assert new.phase == 3
 
     def test_no_transition_when_already_max(self) -> None:
-        boss = _make_combatant(hp=0, current_phase=3)
+        boss = _make_combatant(hp=0, current_phase=4)
         assert phase_transition(boss, WINTERMUTE_PROFILE) is None
 
     def test_skip_transition_phase_1_to_3(self) -> None:

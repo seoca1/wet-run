@@ -22,6 +22,7 @@ from .effects import (
     IceType,
 )
 from .palette import GLITCH_COLOR
+from .state import Combatant
 
 # ----------------------------------------------------------------------------
 # Boss data structures
@@ -38,21 +39,20 @@ class BossPhase:
 
     index: int
     name: str
-    hp_threshold_pct: int  # 0-100, phase activates when HP% <= this
-    intro_line: str  # Korean text shown on transition
-    color: tuple[int, int, int]
+    hp_threshold_pct: int = 0  # 0-100, phase activates when HP% <= this
+    intro_line: str = ""  # Korean text shown on transition
+    color: tuple[int, int, int] = (255, 255, 255)
     attack_bonus_pct: int = 0  # +X% attack vs previous phase
     speed_bonus_pct: int = 0  # +X% attack speed
     screen_shake_intensity: float = 0.0  # Shake on phase change
     special_ability: str | None = None  # e.g. "ground_slam", "glitch_burst"
-    # Phase B-3: AoE attack damage at phase transition
     aoe_damage: int = 0  # Damage dealt to player at phase start (0 = no AoE)
-    # Phase B-3: minion spawn — phase spawns these ICE IDs as adds
     spawn_minions: tuple[str, ...] = ()  # ICE ids spawned at phase start
-    # Phase B-3: VFX theme for this phase
-    vfx_theme: str = (
-        "default"  # "default", "wintermute", "goliath", "black_ice", "watchdog", "ta_construct"
-    )
+    vfx_theme: str = "default"
+    skills: tuple[object, ...] = ()
+    phase5_super_skill: object | None = None
+    phase5_dialogue: str = ""
+    phase5_damage_multiplier: float = 3.0
 
 
 @dataclass(frozen=True, slots=True)
@@ -292,6 +292,27 @@ def get_next_phase(spec: BossSpec, current_hp_pct: int) -> BossPhase | None:
     return None
 
 
+def should_trigger_phase_5(boss: Combatant, current_phase: BossPhase) -> bool:
+    """Return True if boss should enter Phase 5 (Last Stand).
+
+    Phase 5 triggers when currently in phase 4, HP < 10%, and the
+    phase has phase5_super_skill configured.
+    """
+    if current_phase.index != 4:
+        return False
+    if boss.max_hp <= 0:
+        return False
+    if current_phase.phase5_super_skill is None:
+        return False
+    result: bool = boss.hp / boss.max_hp < 0.10
+    return result
+
+
+def boss_phase_5_dialogue(phase: BossPhase) -> str:
+    """Return the Phase 5 (Last Stand) dialogue for a phase."""
+    return phase.phase5_dialogue
+
+
 def apply_phase_buff(phase: BossPhase, base_attack: int, base_speed_ms: int) -> tuple[int, int]:
     """Apply a phase's stat buff to base attack and attack speed.
 
@@ -318,8 +339,10 @@ def boss_epilogue_lines(spec: BossSpec) -> tuple[str, ...]:
 from .bosses_cinematic import (  # noqa: E402,F401
     boss_death_sequence,
     boss_intro_sequence,
+    boss_phase_5_sequence,
     boss_phase_transition,
     spawn_boss_death,
     spawn_boss_intro,
+    spawn_boss_phase5,
     spawn_boss_phase_transition,
 )

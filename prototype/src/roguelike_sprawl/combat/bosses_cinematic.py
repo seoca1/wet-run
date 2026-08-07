@@ -15,9 +15,11 @@ from .palette import GLITCH_COLOR
 __all__ = [
     "boss_death_sequence",
     "boss_intro_sequence",
+    "boss_phase_5_sequence",
     "boss_phase_transition",
     "spawn_boss_death",
     "spawn_boss_intro",
+    "spawn_boss_phase5",
     "spawn_boss_phase_transition",
 ]
 
@@ -47,7 +49,7 @@ def boss_intro_sequence(spec: BossSpec) -> CinematicSequence:
         duration = 800 if (i == 0 or i == len(spec.intro_lines) - 1) else 500
         phases.append((line, color, duration))
 
-    return CinematicSequence(name=f"boss_intro_{spec.id}", phases=tuple(phases))
+    return CinematicSequence(name=f"boss_intro_{spec.name}", phases=tuple(phases))
 
 
 def boss_phase_transition(spec: BossSpec, new_phase: BossPhase) -> CinematicSequence:
@@ -85,7 +87,7 @@ def boss_phase_transition(spec: BossSpec, new_phase: BossPhase) -> CinematicSequ
     phases.append(("···", (200, 200, 200), 200))
 
     return CinematicSequence(
-        name=f"boss_phase_{spec.id}_{new_phase.index}",
+        name=f"boss_phase_{spec.name}_{new_phase.index}",
         phases=tuple(phases),
     )
 
@@ -241,6 +243,40 @@ def spawn_boss_phase_transition(
     effects.shake.trigger(intensity=new_phase.screen_shake_intensity, duration_ms=400)
 
 
+def boss_phase_5_sequence(spec: BossSpec, phase: BossPhase) -> CinematicSequence:
+    """Phase 5 (Last Stand) cinematic — boss delivers final dialogue + fires super-skill."""
+    assert phase.phase5_dialogue, "Phase 5 requires phase5_dialogue"
+    dialogue = phase.phase5_dialogue
+    super_skill = phase.phase5_super_skill
+    super_skill_name = getattr(super_skill, "name", "FINAL") if super_skill else "FINAL"
+
+    phases: list[tuple[str, tuple[int, int, int], int]] = [
+        ("▓▓▓▓▓▓", (255, 255, 255), 100),
+        ("██ LAST STAND ██", (255, 255, 255), 400),
+        (f"[ {spec.name} ]", phase.color, 300),
+        (f"\"{dialogue}\"", phase.color, 1200),
+        (f"▸ {super_skill_name}", (255, 100, 100), 600),
+        ("·····", (200, 200, 200), 300),
+    ]
+
+    return CinematicSequence(
+        name=f"boss_phase5_{spec.name}",
+        phases=tuple(phases),
+    )
+
+
+def spawn_boss_phase5(
+    effects: CombatEffects,
+    spec: BossSpec,
+    phase: BossPhase,
+) -> None:
+    """Spawn the Phase 5 (Last Stand) cinematic."""
+    seq = boss_phase_5_sequence(spec, phase)
+    effects.cinematic = seq
+    effects.slow_motion_ms = seq.total_duration_ms
+    effects.shake.trigger(intensity=6.0, duration_ms=900)
+
+
 def spawn_boss_death(effects: CombatEffects, spec: BossSpec) -> None:
     """Spawn the BOSS death sequence (multi-stage)."""
     sequences = boss_death_sequence(spec)
@@ -253,7 +289,7 @@ def spawn_boss_death(effects: CombatEffects, spec: BossSpec) -> None:
         for line in epilogue:
             combined_phases.append((line, (200, 200, 200), 600))
         effects.cinematic = CinematicSequence(
-            name=f"boss_death_{spec.id}",
+            name=f"boss_death_{spec.name}",
             phases=tuple(combined_phases),
         )
         effects.slow_motion_ms = 0

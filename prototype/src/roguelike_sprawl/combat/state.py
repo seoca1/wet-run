@@ -219,6 +219,10 @@ def _calculate_damage(
 
     dmg = int(dmg)
 
+    from .status_effects import get_vulnerability_multiplier
+
+    dmg = int(dmg * get_vulnerability_multiplier(defender))
+
     dmg += attacker.get_attack_bonus()
 
     dmg = max(0, dmg - defender.get_defense_bonus())
@@ -324,12 +328,16 @@ def use_skill(state: CombatState, skill: Skill) -> bool:
 
 def _skill_prerequisites_ok(state: CombatState, skill: Skill) -> bool:
     """Return True iff the skill can fire (not finished, enough AP,
-    not on cooldown)."""
+    not on cooldown, not silenced)."""
     if state.finished:
         return False
     if skill.ap_cost > state.player.ap:
         return False
     if state.skill_cooldowns.get(skill.id, 0) > 0:
+        return False
+    from .status_effects import is_silenced
+
+    if is_silenced(state.player):
         return False
     return True
 

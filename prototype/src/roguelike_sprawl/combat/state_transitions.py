@@ -155,7 +155,11 @@ def step_combat(state: CombatState) -> None:
             state.last_player_attack_ms = state.tick_ms
 
     # Auto-attack: each enemy (with shield absorption, skip if stunned)
-    if state.tick_ms - state.last_enemy_attack_ms >= AUTO_ATTACK_INTERVAL_MS:
+    from .status_effects import get_slow_multiplier
+
+    slow_mult = get_slow_multiplier(state.player)
+    effective_enemy_interval = AUTO_ATTACK_INTERVAL_MS / max(0.01, slow_mult)
+    if state.tick_ms - state.last_enemy_attack_ms >= effective_enemy_interval:
         for enemy in state.enemies:
             if enemy.hp <= 0:
                 continue

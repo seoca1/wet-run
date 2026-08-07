@@ -97,6 +97,9 @@ class StatusEffect:
     is_stunned: bool = False
     is_staggered: bool = False
     is_shield: bool = False
+    slow_pct: int = 0
+    is_silenced: bool = False
+    vulnerability_pct: int = 0
 
 
 @dataclass

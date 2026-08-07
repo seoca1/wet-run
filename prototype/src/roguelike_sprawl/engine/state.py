@@ -224,6 +224,8 @@ class AppState:
     encounter_multiplier: int = 1
     heal_disabled: bool = False
     skill_filter: str | None = None
+    # Mission Archetypes (ADR-0164): rules applied per-mission.
+    active_archetype: str | None = None
     near_miss_triggered: bool = False
     faction_tension_triggered: set[str] = field(default_factory=set)
     alarm_level: int = 0

@@ -8,7 +8,7 @@ import re
 from pathlib import Path
 from collections import defaultdict, Counter
 
-ROOT = Path(".")
+ROOT = Path(".").resolve()
 EXCLUDE = {".git", "node_modules", ".obsidian", ".pytest_cache", "__pycache__", "_archive", "_inventory", ".venv"}
 
 # AGENTS.md §4.1: cross-project Fiction wiki is the canonical reference for
@@ -41,7 +41,7 @@ def _build_fiction_stem_index() -> dict[str, Path]:
 
 
 def main():
-    files = [p for p in md_files()]
+    files = [p.resolve() for p in md_files()]
     fiction_stems = _build_fiction_stem_index()
     anchor_index = {}
     for p in files:

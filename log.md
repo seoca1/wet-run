@@ -1,3 +1,58 @@
+## [2026-08-07] fix(tool) | audit_sprawl.py — path resolution mismatch in orphan detection
+
+**Status**: ✅ 완료 — orphan count 15 → 5 (-10), pytest 3835 pass (regression 없음), audit_vault.py CLEAN.
+
+### 배경
+사용자 요청 "Check roguelike_sprawl project" → 프로젝트 status audit 도중 `tools/audit_sprawl.py` 가 15 wiki orphans 보고. 2026-08-06 log entry 에서 "이미 해결된 상태 — 추가 작업 불필요" 로 분류했으나, 사용자 follow-up 으로 tool 자체 검토.
+
+### Bug 분석
+`audit_sprawl.py` 의 path resolution mismatch:
+- `files = [p for p in md_files()]` (line 44) — `ROOT.rglob()` 의 상대 path (`Path("wiki/world/glossary.md")`)
+- `target_path = (f.parent / target).resolve()` (line 101) — 절대 path
+- `inbound[target_path]` dict 의 key 는 절대 path
+- `inbound.get(p)` (line 109) — `p` 는 상대 path → **key mismatch → dict lookup 실패 → false orphan**
+
+결과: `index.md` 의 `[Glossary](wiki/world/glossary.md)` 같은 markdown link 가 inbound 로 카운트되지만, 동일 파일의 relative/absolute 차이로 lookup fail → 모든 wiki/world/* pages 가 false orphan 으로 보고됨.
+
+### 변경 (`tools/audit_sprawl.py`)
+2-line 변경:
+- `ROOT = Path(".")` → `ROOT = Path(".").resolve()` (line 11)
+- `files = [p for p in md_files()]` → `files = [p.resolve() for p in md_files()]` (line 44)
+
+이제 모든 `files` 가 절대 path → `inbound[target_path]` 와 1:1 매칭 → markdown link 가 정확히 inbound 로 카운트됨.
+
+### 검증
+| Check | Before | After |
+|---|---|---|
+| `audit_sprawl.py` Wiki orphans | 15 | **5** (-10) |
+| `audit_sprawl.py` Broken links | 0 | 0 |
+| `audit_vault.py` (workspace) | CLEAN | **CLEAN** |
+| `pytest tests/` | 3835 passed | **3835 passed** (regression 없음) |
+| `find_broken_links.py` | 0 broken | 0 broken |
+
+### 잔여 5 orphans (모두 expected)
+| 페이지 | 분류 |
+|---|---|
+| `wiki/lore/README.md` | subdirectory index (entry-point) |
+| `wiki/lore/memory_anomaly_log_01.md` | episodic memory log (NEXT_SESSION_TODO §3.4) |
+| `wiki/lore/memory_construct_cache_01.md` | episodic memory log |
+| `wiki/lore/memory_dead_channel_01.md` | episodic memory log |
+| `wiki/lore/memory_signal_echo_01.md` | episodic memory log |
+
+4 memory logs 는 `NEXT_SESSION_TODO.md` §3.4 의 documented intentional orphan (의도적 보존). 1 lore/README 는 subdirectory entry-point 으로 inbound 불필요.
+
+### 영향
+- **Tool 동작 변경**: orphan detection 이 markdown link 을 정확히 카운트 (path resolution 일치)
+- **Cross-project consistency**: Fiction `wiki_health_check.py` 의 동일 패턴 fix 와 동등한 효과 — 두 프로젝트 tool 모두 markdown link 를 inbound 로 인식
+- **Future 작업**: 5 잔여 orphan 은 의도적 보존 — 추가 작업 불필요
+
+### 참조
+- workspace `audit_vault.py` line 91 (MDLINK URL filter 컨벤션)
+- 동일 패턴 fix: Fiction `tools/wiki_health_check.py` 2026-08-07 session
+- `NEXT_SESSION_TODO.md` §3.4 (4× memory_*.md 의도적 보존)
+
+---
+
 ## [2026-08-06] chore | 2026-08-05 dirty tree 8-way atomic commit session closure
 
 **Status**: ✅ 완료 — 8 atomic commits landed. Working tree clean. All validators pass.

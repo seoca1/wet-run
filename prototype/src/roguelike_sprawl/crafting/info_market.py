@@ -237,6 +237,18 @@ class InfoMarket:
         if not hasattr(state, "inventory") or state.inventory is None:
             state.inventory = {}
         state.inventory[inv_key] = state.inventory.get(inv_key, 0) + 1
+        # ADR-0151 follow-up (Cycle 7): intel items auto-apply effect
+        # on purchase. The apply_intel_item function reads/writes
+        # AppState fields (alarm_level, purchased_intel_items, etc.)
+        # and is one-shot per item_id.
+        from ..combat.intel_items import IntelItemId, apply_intel_item
+
+        if item_id in {
+            IntelItemId.ALARM_REDUCER,
+            IntelItemId.MISSION_HINT,
+            IntelItemId.FACTION_RUMOR,
+        }:
+            apply_intel_item(state, item_id, state)
         return state.credits
 
     @staticmethod

@@ -226,6 +226,9 @@ class AppState:
     skill_filter: str | None = None
     # Mission Archetypes (ADR-0164): rules applied per-mission.
     active_archetype: str | None = None
+    # Random Matrix Events (ADR-0165): mid-run surprises.
+    active_events: tuple[str, ...] = ()
+    event_log: list[str] = field(default_factory=list)
     near_miss_triggered: bool = False
     faction_tension_triggered: set[str] = field(default_factory=set)
     alarm_level: int = 0

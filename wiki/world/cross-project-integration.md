@@ -3,10 +3,11 @@ title:
   en: "Cross-Project Integration: Fiction ↔ roguelike_sprawl"
   ko: "크로스 프로젝트 통합: Fiction ↔ 로그라이크 스프롤"
 created: 2026-07-26
-phase: "Phase α-J completion summary (cross-project + combat + UI refactor)"
+updated: 2026-08-08
+phase: "Phase 83 (post-Fiction-Phase-73-82 propagation)"
 description:
-  en: "How roguelike_sprawl integrates with the Fiction derivative short story corpus. Two-way link mechanics, validation, and known orphan references."
-  ko: "로그라이크 스프롤이 Fiction 파생 단편 코퍼스와 어떻게 통합되는지 정리. 양방향 링크 메커니즘, 검증, 알려진 orphan 참조."
+  en: "How roguelike_sprawl integrates with the Fiction derivative short story corpus. Two-way link mechanics, validation, and known orphan references. Updated 2026-08-08 to reflect Fiction Phase 73-82 corpus deepening + ADR-0017 backfill + verbatim text audit + 6th synthesis page (Operative-Class Across Trilogies)."
+  ko: "로그라이크 스프롤이 Fiction 파생 단편 코퍼스와 어떻게 통합되는지 정리. 양방향 링크 메커니즘, 검증, 알려진 orphan 참조. 2026-08-08 Fiction Phase 73-82 코퍼스 확장 + ADR-0017 백필 + verbatim 텍스트 감사 + 6번째 신서시스 페이지 반영 갱신."
 language: en
 related:
   - "[[sprawl_universe]]"
@@ -83,12 +84,33 @@ runs `verify_story_links.py` which checks:
 - Every `game_mission_id` in Fiction resolves to a real mission_id
 - No orphan references (broken links either direction)
 
-**Current state** (as of 2026-07-26):
+**Current state** (as of 2026-07-26 → **updated 2026-08-08**):
 - 33/33 mission sources resolve correctly
 - 102 Fiction stories declare game_mission_id
 - 0 orphan references (informational: 17 missions intentionally have
   no Fiction source — Bridge/Blue Ant characters, out of scope per
   AGENTS.md §4.0)
+
+**Updated 2026-08-08 (Phase 83)** — Fiction wiki Phase 73-82 expansion reflected:
+- Phase 73: 9 *Burning Chrome* stories deepened with 18 short-story-specific sections (schema §2 closure)
+- Phase 74: Johnny Mnemonic + 3jane-tessier-ashpool deepened (4 sections + 2 stub markers cleared from index)
+- Phase 75: Agrippa (1992 artist's book) deepened (2 sections)
+- Phase 76: Burning Chrome (collection) overview deepened (2 sections)
+- Phase 77: New synthesis page — **Short Fiction as Corpus Foundation** (216 lines, 12 works × foundational-pattern mapping)
+- Phase 78: ADR-0017 + 150 KO file `source_word_count` backfill (Phase 61 outstanding debt fully resolved)
+- Phase 79-80: Sterling + Gibson author page deepening (cross-author parity, 2 sections each)
+- Phase 81: Verbatim text audit (6 multi-sentence quote paraphrases, 24/24 novels §4-compliant)
+- Phase 82: New synthesis page — **Operative-Class Across the Four Trilogies** (197 lines, 4-era operative-class evolution)
+
+**Cross-project integrity status** (post Fiction Phase 73-82):
+- All Fiction wiki pages cited by roguelike_sprawl wiki remain valid (no Fiction edits removed referenced content)
+- ADR-0017 added `source_word_count` field to 150 KO derivative files — game-mission references via `game_mission_id` continue to resolve
+- Verbatim text audit (Phase 81) paraphrased 6 multi-sentence quote blocks across 4 novels — game mission text unchanged
+- New synthesis pages (Phase 77 + 82) provide roguelike_sprawl cross-references for short-fiction corpus foundation + operative-class evolution
+
+**Cross-references to Fiction synthesis pages** (Phase 83 enhancement):
+- [../../../../Fiction/wiki/concepts/short-fiction-as-corpus-foundation.md](../../../../Fiction/wiki/concepts/short-fiction-as-corpus-foundation.md) — 12 short-fiction works as the corpus's foundational substrate
+- [../../../../Fiction/wiki/concepts/operative-class-across-trilogies.md](../../../../Fiction/wiki/concepts/operative-class-across-trilogies.md) — operative-class evolution (console cowboys → couriers → coolhunters → peripherals)
 
 ## GN scene ↔ mission linkage (Phase β-2 + Phase G)
 

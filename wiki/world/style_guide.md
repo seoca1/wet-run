@@ -3,6 +3,8 @@
 > **Primary source**: `../../../../Fiction/wiki/authors/william-gibson.md` (글쓰기 스타일), `../../../../Fiction/wiki/works/` (원문 인용 예시)
 >
 > 본 가이드는 게임 텍스트 작성 규칙. 깁슨 원문의 톤/리듬은 Fiction wiki 참조.
+>
+> **2026-08-08 갱신 (Phase 83)**: Primary source `william-gibson.md` 가 Phase 80 으로 cyberpunk-founder + evolutionary-arc sections 추가됨 (673 words). Gibson's four-trilogy evolution (Sprawl → Bridge → Blue Ant → Jackpot) 가 스타일이 변화하는 방식의 authoritative source. 게임의 4-era 톤 적응 (Sprawl cyberpunk / Bridge ambient / Blue Ant brand-saturated / Jackpot peripheral) 의 reference.
 
 ## 핵심 톤
 

@@ -3,6 +3,8 @@
 > **Primary source**: `../../../../Fiction/wiki/settings/cyberspace.md` (깊은 분석), `../../../../Fiction/wiki/works/neuromancer.md` (원문 인용)
 >
 > 본 페이지는 게임용 요약. 원작의 모든 디테일은 Fiction wiki 참조.
+>
+> **2026-08-08 갱신 (Phase 83)**: Cyberspace coinage 의 원본 — Fiction wiki `burning-chrome-story.md` (Phase 73 심화로 2 sections 추가: "The 1982 Coinage of 'Cyberspace'" + "Jack-Bobby-Rikki Triangle as Origin-Cast") 가 본 게임의 메인 플레이 공간의 기원 분석 source. 게임 미션 (예: `aleph_fragment`, `tutorial_maze`, `ice_run`) 의 cyberspace 톤 / ICE 적응 의 reference.
 
 깁슨 소설에서 가장 중요한 컨셉. 우리 게임의 메인 플레이 공간.
 

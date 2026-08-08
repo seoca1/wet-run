@@ -2,7 +2,17 @@
 
 > **이 페이지는 Fiction 프로젝트의 이차 창작 단편을 게임 미션과 연결합니다.**
 
-**현재 상태 (2026-08-07 갱신)**: `prototype/data/missions/missions.json` 기준 **111 미션** 정의됨. **모든 111 미션 매핑 완료** (2026-07-30 `chevette_run` → `chevette_nightshift_run` 정정 후 unmapped 0건). 단편 stem 카운트: dashboard `dataset_health.json` 기준 **150 EN + 150 KO = 300 entries** (Fiction filesystem 상에는 139 unique stems per language).
+**현재 상태 (2026-08-08 갱신 — Phase 83 propagation)**: `prototype/data/missions/missions.json` 기준 **111 미션** 정의됨. **모든 111 미션 매핑 완료** (2026-07-30 `chevette_run` → `chevette_nightshift_run` 정정 후 unmapped 0건). 단편 stem 카운트: dashboard `dataset_health.json` 기준 **150 EN + 150 KO = 300 entries** (Fiction filesystem 상에는 139 unique stems per language).
+
+**Fiction Phase 73-82 영향 (2026-08-08)** — 게임 미션 매핑에 직접 영향:
+- **Phase 73** schema §2 단편 심화 — 9 *Burning Chrome* stories (incl. `case_jackout-30sec`, `first_jack` 미션 매핑 stem 포함) + 18 short-story-specific sections
+- **Phase 74** stub cleanup — Johnny Mnemonic + 3jane-tessier-ashpool 4 sections; index ⚠️ STUB markers 2개 cleared (Johnny Mnemonic + 3jane 모두 non-stub 으로 재분류됨)
+- **Phase 78** ADR-0017 backfill — **150 KO 파일 모두 `source_word_count` 필드 추가** (Phase 61 outstanding debt 해결). Game-side 영향: KO 번역 provenance 메타데이터 보존; `story.source` 매핑 무영향
+- **Phase 81** verbatim text audit — 6 multi-sentence quote blocks paraphrased (게임 미션 텍스트 변경 없음, wiki 분석만 영향)
+
+**Story-side cross-references** (Phase 73-82에서 강화된 분석):
+- Johnny Mnemonic (1981) — Phase 74 심화 → [johnny-mnemonic](../../../../Fiction/wiki/works/johnny-mnemonic.md) 2,853 → 4,853 words + foundational 분석 (Shotgun-in-Adidas-Bag prose; Molly's first appearance)
+- 3jane-tessier-ashpool (1982) — Phase 74 심화 → [3jane-tessier-ashpool](../../../../Fiction/wiki/works/3jane-tessier-ashpool.md) 3,334 → 3,987 words (cipher-vs-curriculum; Freeside-as-orbital-womb)
 
 **캐노니컬 정보 소스**: `prototype/data/missions/missions.json` (각 미션의 `story.source` 필드가 단편 stem 참조)
 

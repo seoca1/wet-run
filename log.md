@@ -5310,3 +5310,47 @@ User "continue" 후 작은 진단:
 - `audit_vault.py` 에 symlink resolution 추가 (`Path.resolve(strict=False)` 후 `readlink` 또는 `Path(f).readlink().parent` 사용) → 4 false positive 제거 가능. workspace-wide lint hygiene 개선.
 
 **세션 종료 (2026-08-07)**.
+
+## [2026-08-08] docs(wiki) | Phase 83 — roguelike_sprawl wiki 갱신 (Fiction Phase 73-82 반영)
+
+**Status**: ✅ 완료 — Fiction 프로젝트 Phase 73-82 corpus deepening (30 sections + 6 synthesis pages + ADR-0017 + 150 KO file backfill + 6 paraphrases) 을 roguelike_sprawl wiki 에 반영. Per workspace `AGENTS.md` §3 + `Game/roguelike_sprawl/AGENTS.md` §4.1: 게임 wiki (downstream) 만 수정, Fiction wiki (upstream) 은 무수정.
+
+### 배경
+
+Fiction Phase 73-82 (2026-08-08) 완료 후 roguelike_sprawl wiki 의 cross-references 가 stale 상태. 특히:
+- `world/cyberspace.md` 는 `burning-chrome-story.md` (Phase 73 심화) 와 `settings/cyberspace.md` 인용
+- `world/style_guide.md` 는 `william-gibson.md` (Phase 80 cyberpunk-founder + evolutionary-arc sections 추가) 인용
+- `world/derivative_stories.md` 는 Fiction derivative corpus 통계 (Phase 78 ADR-0017 backfill 영향)
+- `world/cross-project-integration.md` 는 Fiction wiki 의 canonical link 통합 페이지
+
+### 갱신 (4 wiki pages)
+
+| 페이지 | 변경 |
+|---|---|
+| `world/cross-project-integration.md` | frontmatter + body updated. Phase 73-82 timeline 추가. **2 new synthesis pages cited**: Short Fiction as Corpus Foundation + Operative-Class Across Trilogies. Cross-project integrity status post Fiction Phase 73-82 added. |
+| `world/derivative_stories.md` | Phase 73 (18 sections) + Phase 74 (4 sections + 2 stub markers cleared: Johnny Mnemonic + 3jane) + Phase 78 (ADR-0017 150 KO file source_word_count backfill) + Phase 81 (6 quote paraphrases) 영향 명시. game mission mapping unchanged. |
+| `world/style_guide.md` | Phase 80 `william-gibson.md` (cyberpunk-founder + evolutionary-arc sections) 인용 추가. 4-era 톤 적응 reference (Sprawl cyberpunk / Bridge ambient / Blue Ant brand-saturated / Jackpot peripheral). |
+| `world/cyberspace.md` | Phase 73 `burning-chrome-story.md` (1982 cyberspace coinage + Jack-Bobby-Rikki origin-cast sections) 인용 추가. 게임 미션 (aleph_fragment / tutorial_maze / ice_run) 의 cyberspace 톤 적응 source. |
+
+### 영향
+
+- **게임 wiki → Fiction wiki cross-references**: 4 pages updated, 2 new synthesis pages cited
+- **게임 미션 mapping**: 변경 없음 (`missions.json` 의 `story.source` 필드 무변경, 검증됨)
+- **downstream 영향**: 게임 카드 / 대시보드 / 미션 텍스트 — Fiction wiki content 변경의 direct 영향 없음 (Fiction wiki 가 분석/원문, 게임은 게임용 적응이므로)
+- **cross-project integrity**: 33/33 mission sources resolve; 102 Fiction stories declare game_mission_id; 0 orphan references (unchanged)
+
+### 검증
+
+| Check | Result |
+|---|---|
+| `python3 tools/audit_sprawl.py` | ✅ No errors |
+| `python3 tools/find_broken_links.py` | ✅ 0 broken |
+| `python3 audit_vault.py` (workspace) | ✅ CLEAN for Fiction + roguelike_sprawl |
+| `python3 dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+### 인용
+
+- workspace `AGENTS.md` §3 (cross-project 작업 시 upstream 존중)
+- `Game/roguelike_sprawl/AGENTS.md` §4.1 (Fiction wiki 는 수정 금지; 게임 wiki 만 수정)
+- `Game/roguelike_sprawl/AGENTS.md` §3.3 (log.md format `[YYYY-MM-DD] 작업종류 | 제목`)
+- Fiction Phase 73-82 commits: `3c28c68` (Phase 82 sync), `87ff442` (Phase 82), `3c37f52` (Phase 81 sync), `f188ff1` (Phase 81), `aa68655` (Phase 80 sync), `cd60d90` (Phase 80), `a4533cf` (Phase 79 sync), `6dfd48a` (Phase 79), `38d7ff8`/`2844a6e`/`1c1e383`/`8f8ca79` (Phase 78), `c50b12c` (Phase 77 sync), `2cce340` (Phase 77), `c6c8c9a` (Phase 76 sync), `d64f26a` (Phase 76), `722df49` (Phase 75 sync), `3c7b877` (Phase 75), `061e726` (Phase 74 sync), `1d87345`/`96f3985`/`cb3aadf` (Phase 74), `930eb86` (Phase 73 sync), `60c0f76`/`10e8aa7`/`036541f` (Phase 73)

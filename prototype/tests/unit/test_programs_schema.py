@@ -18,8 +18,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-VALID_TYPES = {"attack", "defense", "detect", "utility"}
-VALID_ROLES = {"burst", "strike", "sustain", "guard", "utility"}
+VALID_TYPES = {"attack", "defense", "detect", "utility", "support"}
+VALID_ROLES = {"burst", "strike", "sustain", "guard", "utility", "support"}
 
 
 def test_every_program_has_role_field(data_dir: Path) -> None:
@@ -54,6 +54,7 @@ def test_role_aligns_with_type(data_dir: Path) -> None:
         "attack": {"burst", "strike", "sustain"},
         "defense": {"guard"},
         "detect": {"utility"},
+        "support": {"support"},
         "utility": {"utility"},
     }
 

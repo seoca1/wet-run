@@ -51,6 +51,7 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0060 | Dungeon Exploration Redesign (NetHack + VFX) | **Accepted** | 2026-06-30 | P2 |
 | 0061 | Novel Integration Architecture (Hook 디스패치) | **Accepted** | 2026-06-30 | P2 |
 | 0090 | Salvation Phase Integration (9자 × epilogue + ChapterState 3개 + Stage 1개) | **Accepted** | 2026-07-07 | P2 |
+| 0104 | GN Save Slot 확장 (3 슬롯) | **Accepted (2026-07-25)** | 2026-06-21 | P2 |
 | 0101 | Fiction Metadata 보강 계획 (status report, not ADR) | (status doc) | — | P3 |
 | 0102 | v1.0.0 Release Decision | **Accepted** | 2026-07-08 | P2 |
 | 0103 | Dungeon-only Mode — `D` 토글 제거, `matrix_view` 폐기 | **Accepted** | 2026-07-10 | P2 (The Matrix) |
@@ -79,7 +80,38 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0153 | Matrix Encounter Spawn Integration (1v1/1v2/1v3) | **Accepted** | 2026-08-07 | P1 (Cycle 9, v1.2.0+ bridge) |
 | 0154 | Faction Expansion (faction_rumor 4 factions) + i18n (ja/zh) | **Accepted** | 2026-08-07 | P2 (Cycle 10, v1.2.0+ polish) |
 | 0155 | NG+ Grade 5→6 PPL Actual Rebalance (T6 master tier bonus +10) | **Accepted** | 2026-08-07 | P2 (Cycle 11, v1.2.0+ balance) |
-| 0104 | GN Save Slot 확장 (3 슬롯) | **Accepted (2026-07-25)** | 2026-06-21 | P2 |
+| 0156 | Combat State Module Split (state.py 890 → 3 files) | **Accepted** | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
+| 0157 | Combat Boss Module Split (boss.py 724 → 2 files) | **Accepted** | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
+| 0158 | Combat Combo Module Split (combo.py 685 → 2 files) | **Accepted** | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
+| 0159 | Combat Bosses Cinematic Module Split (bosses.py 627 → 2 files) | **Accepted** | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
+| 0160 | Status Effects System Expansion (DoT/Stun/Slow/Silence/Vulnerability) | **Accepted** | 2026-08-07 | P1 (The Build, Pillar 3 weight) |
+| 0161 | ICE Personality Archetypes (4 behaviors beyond aggression) | **Accepted** | 2026-08-07 | P2 (Pillar 5 variety, Pillar 3 weight via different pressure) |
+| 0162 | Boss Phase 4 Last Stand | **Accepted** | 2026-08-07 | P2 (Pillar 1 climax, Pillar 5 finale) |
+| 0163 | Run Mutators System (5+ modifiers) | **Accepted** | 2026-08-07 | P1 (Pillar 1 run variety, Pillar 4 meta progression) |
+| 0164 | Mission Archetypes (4 mission types) | **Accepted** | 2026-08-07 | P1 (Pillar 1 run variety) |
+| 0165 | Random Matrix Events (4-6 mid-run surprises) | **Accepted** | 2026-08-07 | P2 (Pillar 1 variety, Pillar 5 atmosphere) |
+| 0166 | Phase 6 Arc (Aftermath - Post-Ending NG+ Content) | **Accepted** | 2026-08-07 | P2 (Pillar 1 endgame, Pillar 4 meta progression) |
+| 0167 | Mission Expansion (15 → 25 missions) | **Accepted** | 2026-08-07 | P2 (Pillar 1 content variety, Pillar 5 progression) |
+| 0168 | Death Taunts Library (Per-Boss + Per-ICE) | **Accepted** | 2026-08-07 | P1 (Pillar 5 style, Pillar 3 death weight) |
+| 0169 | Combat Cinematics (Per Boss Phase Intro) | **Accepted** | 2026-08-07 | P2 (Pillar 5 style, Pillar 1 climax) |
+| 0170 | Gibson Fluff Library (200+ Status Messages) | **Accepted** | 2026-08-07 | P1 (Pillar 5 style) |
+| 0171 | ASCII Battle Portrait Evolution | **Accepted** | 2026-08-07 | P2 (Pillar 5 style, Pillar 3 visual feedback) |
+| 0172 | Cyberdeck Customization (8 Program Slots) | **Accepted** | 2026-08-08 | P1 (Pillar 4 Build depth) |
+| 0173 | Wetware Augments (6 Passive Slots) | **Accepted** | 2026-08-08 | P1 (Pillar 4 Build depth) |
+| 0174 | Meta-Progression (Persistent Unlocks) | **Accepted** | 2026-08-08 | P1 (Pillar 1 replay value) |
+| 0175 | Tutorial System (3-Act Onboarding) | **Accepted** | 2026-08-08 | P2 (Pillar 1 learning curve) |
+| 0176 | Achievement System (60+ Achievements) | **Accepted** | 2026-08-08 | P2 (Pillar 1 replay value) |
+| 0177 | Breach Protocol (Matrix Hacking Minigame) | **Accepted** | 2026-08-08 | P1 (Pillar 2 Matrix, Pillar 5 style) |
+| 0178 | Deck Building (6/8/10 Slot Limits) | **Accepted** | 2026-08-08 | P1 (Pillar 4 Build depth) |
+| 0179 | Status Effects v2 (Bleed, Fatigue, Confused, Terrified) | **Accepted** | 2026-08-08 | P2 (Pillar 3 depth) |
+| 0180 | Boss Expansion (+3 Boss Profiles) | **Accepted** | 2026-08-08 | P2 (Pillar 1 variety, Pillar 5 atmosphere) |
+| 0181 | Combo System v2 (Player-Triggered Finisher Combos) | **Accepted** | 2026-08-08 | P2 (Pillar 5 style, Pillar 4 build) |
+| 0182 | Run Replay System (Record + Playback) | **Accepted** | 2026-08-08 | P2 (Pillar 1 replay, Pillar 5 style) |
+| 0183 | Accessibility (Colorblind 3 Modes, Text Size, Input Remapping) | **Accepted** | 2026-08-08 | P2 (Pillar 1 inclusivity + Pillar 5 style) |
+| 0184 | Telemetry (Anonymous Player Behavior Tracking) | **Accepted** | 2026-08-08 | P3 (Pillar 4 balance + Pillar 1 tuning) |
+| 0185 | Save/Load Migration v2 (Versioned, Cloud-Ready) | **Accepted** | 2026-08-08 | P2 (Pillar 1 persistence + Pillar 4 carry) |
+| 0186 | Performance Optimization (Frame Rate, Memory) | **Accepted** | 2026-08-08 | P3 (Pillar 1 smoothness) |
+| 0187 | Boss Phase 5 Expansion (Last Stand) | **Accepted** | 2026-08-08 | P2 (Pillar 1 climax, Pillar 5 finale) |
 
 ### 2026-07-01 통합 작업 (P1~P4 + B)
 
@@ -205,3 +237,9 @@ i18n + Content Pipeline:
 - **테스트**: `test_graphic_novel_save.py` (slot API + 마이그레이션) — ruff ✅, mypy ✅
 - **코드 주석 보강**: `state.py:88, 265` — "ADR-0051 infra + ADR-0104 extension" 명시
 - **Decisions**: Option 1 (3 슬롯 고정) — 9 결말 조합 시도 (3 chars × 3 endings) 인프라
+
+## ADR 인덱스 보강 (2026-08-08)
+
+- **0162 번호 충돌 해결** (2026-08-08): 두 파일이 동일 번호 `0162` 사용 중이었음. `0162-boss-phase-4.md`(canonical, 6 references)와 `0162-boss-phase-5.md`(no references, content는 Phase 5 expansion). 미참조 파일을 `0187-boss-phase-5-expansion.md`로 번호 이동. canonical 0162 title은 content 일치하도록 "Boss Phase 5 Last Stand" → "Boss Phase 4 Last Stand" 수정. 6 references 모두 그대로 유지 (참조 대상 변경 없음).
+- **신규 ADR 31개 인덱스 추가** (2026-08-07~08): 0156–0186 (v1.2.0+ 후속 + v1.3.0+ Tracks E/F/G). 인덱스 누락 상태였음 — 본 동기화로 README 인덱스 최신화 완료. ADR 총 88개 (Accepted/Revised/Superseded 모두 포함, status docs 제외).
+- **ADR-0162 title fix**: content는 Phase 4 mechanics를 설명하지만 title이 "Boss Phase 5 Last Stand"로 잘못 표기되어 있었음. Content와 일치하도록 "Boss Phase 4 Last Stand"로 수정.

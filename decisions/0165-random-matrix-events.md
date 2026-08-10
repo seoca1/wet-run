@@ -4,7 +4,7 @@
 **날짜**: 2026-08-07
 **결정자**: 사용자
 **우선순위**: P2 (Pillar 1 variety, Pillar 5 atmosphere)
-**관련**: [ADR-0013 — Story Events System](./0013-story-events-system.md), [ADR-0061 — Novel Integration Architecture](./0061-novel-integration-architecture.md), [ADR-0163 — Run Mutators](./0163-run-mutators.md), [ADR-0164 — Mission Archetypes](./0164-mission-archetypes.md)
+**관련**: [ADR-0013 — Story Events System](./0013-story-events.md), [ADR-0061 — Novel Integration Architecture](./0061-novel-integration-architecture.md), [ADR-0163 — Run Mutators](./0163-run-mutators.md), [ADR-0164 — Mission Archetypes](./0164-mission-archetypes.md)
 
 ## 컨텍스트 (Context)
 

@@ -132,6 +132,56 @@ class JobBoard:
             in (MissionRepStatus.AVAILABLE, MissionRepStatus.LOCKED_GRADE)
         )
 
+    def select_weighted(
+        self,
+        state,
+        available: tuple[Mission, ...] | None = None,
+        seed: int | None = None,
+    ) -> Mission | None:
+        """Select a mission using random_rules weighting (ADR-0188).
+
+        Applies 19 random selection rules from random_selection_rules.json
+        to weight the available missions for the current run state.
+
+        Args:
+            state: Player/AppState with reputation and progression data.
+            available: Optional pre-filtered mission list. If None,
+                uses ``available_for()`` with grade from state.
+            seed: Optional random seed for deterministic selection.
+
+        Returns:
+            Selected mission, or None if no missions available.
+        """
+        from .random_rules import get_random_mission
+
+        if available is None:
+            grade = getattr(state, "grade", 1)
+            reputation = getattr(state, "reputation", None)
+            available = self.available_for(grade, reputation)
+
+        if not available:
+            return None
+
+        mission_ids = [m.id for m in available]
+        selected_id = get_random_mission(state, mission_ids, seed=seed)
+        if selected_id is None:
+            return None
+        return self.get(selected_id)
+
+    def select_by_faction(
+        self,
+        faction: str,
+        grade: int,
+        reputation: ReputationState | None = None,
+    ) -> tuple[Mission, ...]:
+        """Return available missions for a specific faction's fixer.
+
+        Applies random_rules' faction-weighted selection to bias
+        toward missions from the requested faction.
+        """
+        available = self.available_for(grade, reputation)
+        return tuple(m for m in available if m.fixer == faction)
+
     def locked_for(self, reputation: ReputationState | None) -> tuple[Mission, ...]:
         """Return missions locked out by the player's reputation.
 

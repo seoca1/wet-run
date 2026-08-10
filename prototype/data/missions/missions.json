@@ -4781,5 +4781,4220 @@
     "is_canonical_cast": false,
     "reward_credits": 1100,
     "reward_tier": 3
+  },
+  "ta_investigate_3jane_initiative": {
+    "id": "ta_investigate_3jane_initiative",
+    "title": "3Jane's Corporate Initiative",
+    "story": {
+      "synopsis_en": "The Initiative had been on the books for forty-three days. 3Jane had signed it without reading the second clause. The second clause was about the construct. The second clause was about who would inherit the construct if the family voted unanimously for dissolution. The Initiative was a vote of confidence. The Initiative was also a vote of no confidence. Kumiko had read the second clause. Kumiko had been reading the second clause for forty-three days. When she came to Case, she didn't say what she wanted. She said what 3Jane wanted. The two were different.",
+      "synopsis_ko": "이니셔티브는 43일 동안 서류에 올라 있었다. 3제인은 두 번째 조항을 읽지 않고 서명했다. 두 번째 조항은 구성체에 관한 것이었다. 두 번째 조항은 가족이 해산에 만장일치로 투표할 경우 누가 구성체를 상속받을지에 관한 것이었다. 이니셔티브는 신임 투표였다. 이니셔티브는 또한 불신임 투표였다. 쿠미코는 두 번째 조항을 읽었다. 쿠미코는 43일 동안 두 번째 조항을 읽고 있었다. 그녀가 케이스에게 왔을 때, 그녀는 그녀가 원하는 것을 말하지 않았다. 그녀는 3제인이 원하는 것을 말했다. 그 둘은 달랐다.",
+      "source": "ta_investigate_3jane_initiative",
+      "character_ref": "case",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 142,
+      "char_count_ko": 320,
+      "cast": "case"
+    },
+    "fixer": "kumiko",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 4,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      },
+      {
+        "type": "preserve_evidence",
+        "corruption_max": 0
+      }
+    ],
+    "matrix_seed": 4701,
+    "zone": "ta",
+    "rewards": {
+      "credits": 5500,
+      "materials": {
+        "ta_construct": 1,
+        "salvage_fragment": 2
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1100,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "ta_succession",
+    "chain_order": 1
+  },
+  "ta_defend_straylight_perimeter": {
+    "id": "ta_defend_straylight_perimeter",
+    "title": "Straylight Perimeter Defense",
+    "story": {
+      "synopsis_en": "The Sense/Net raid had been planned for six weeks. 3Jane had known about it for five. The defense wasn't about the data. The defense was about the principle. The principle was that no one attacked the construct. The construct was family. The construct was the family. The Sense/Net raid would teach them what that meant. The Sense/Net raid would teach them, or the Sense/Net raid would teach nothing at all. There was no middle ground in the construct's arithmetic.",
+      "synopsis_ko": "센스/넷襲撃은 6주 동안 계획되었다. 3제인은 5주 동안 그것을 알고 있었다. 방어는 데이터에 관한 것이 아니었다. 방어는 원칙에 관한 것이었다. 원칙은 아무도 구성체를 공격하지 않는다는 것이었다. 구성체는 가족이었다. 구성체가 가족이었다. 센스/넷襲撃은 그게 무엇을 의미하는지 그들에게 가르칠 것이다. 센스/넷襲撃은 그들에게 가르칠 것이거나, 한 가지도 가르치지 않을 것이다. 구성체의 산수에는 중간 지대가 없었다.",
+      "source": "ta_defend_straylight_perimeter",
+      "character_ref": "suit",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 138,
+      "char_count_ko": 318,
+      "cast": "suit"
+    },
+    "fixer": "3jane",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 6,
+      "wave_intensity": "tier_4"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "npc_id": "kumiko",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 50
+      }
+    ],
+    "matrix_seed": 4702,
+    "zone": "ta",
+    "rewards": {
+      "credits": 7000,
+      "materials": {
+        "ta_construct": 2,
+        "shield_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1400,
+    "reward_tier": 4,
+    "is_chain_mission": true,
+    "chain_id": "ta_succession",
+    "chain_order": 2
+  },
+  "ta_dual_objective_ashpool_vote": {
+    "id": "ta_dual_objective_ashpool_vote",
+    "title": "Ashpool Succession Vote",
+    "story": {
+      "synopsis_en": "The vote would happen at midnight. The vote had already happened at midnight. The vote was continuous. The vote was the construct. The construct remembered every vote. The construct remembered the first vote, when Ashpool had been alive, when Ashpool had been the only vote, when Ashpool had been both the question and the answer. The construct remembered all of them. The construct was the family archive. The family archive was the construct. To win the vote, you had to defeat the vote. To defeat the vote, you had to extract the question. To extract the question, you had to know what the question was. The question was always the same.",
+      "synopsis_ko": "투표는 자정에 열릴 것이다. 투표는 이미 자정에 열렸다. 투표는 연속이었다. 투표는 구성체였다. 구성체는 모든 투표를 기억한다. 구성체는 첫 번째 투표를 기억했다. 애시풀이 살아 있었을 때, 애시풀이 유일한 투표였을 때, 애시풀이 질문이자 답이었을 때. 구성체는 모두 기억했다. 구성체는 가족 기록 보관소였다. 가족 기록 보관소는 구성체였다. 투표를 이기려면, 투표를 물리쳐야 했다. 투표를 물리치려면, 질문을 추출해야 했다. 질문을 추출하려면, 질문이 무엇인지 알아야 했다. 질문은 항상 같았다.",
+      "source": "ta_dual_objective_ashpool_vote",
+      "character_ref": "case",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 156,
+      "char_count_ko": 340,
+      "cast": "case"
+    },
+    "fixer": "kumiko",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extraction_spec": {
+        "data_id": "ta_vote_record",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 600,
+      "objective_lock": "both_required"
+    },
+    "secondary_objectives": [
+      {
+        "type": "preserve_npc",
+        "npc_id": "kumiko"
+      }
+    ],
+    "matrix_seed": 4703,
+    "zone": "ta",
+    "rewards": {
+      "credits": 9000,
+      "materials": {
+        "ta_construct": 2,
+        "construct_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1800,
+    "reward_tier": 5,
+    "is_chain_mission": true,
+    "chain_id": "ta_succession",
+    "chain_order": 3
+  },
+  "ta_extract_aleph_chip": {
+    "id": "ta_extract_aleph_chip",
+    "title": "Aleph Chip Extraction",
+    "story": {
+      "synopsis_en": "The chip contained a fragment of the Aleph. The fragment was smaller than a fingernail. The fragment contained three billion dollars' worth of corporate memory. The fragment contained a vote. The vote was 3Jane's. The vote was 3Jane's because the construct remembered. The construct remembered everything. The construct remembered the vote because the construct was the vote. To extract the chip, Case had to disconnect it from the construct. To disconnect it from the construct, Case had to disconnect the construct from the family. The family had been the construct for forty years. The disconnection would take two minutes. The two minutes would feel like forty years.",
+      "synopsis_ko": "칩에는 알레프의 단편이 들어 있었다. 단편은 손톱보다 작았다. 단편에는 30억 달러 상당의 기업 기억이 들어 있었다. 단편에는 투표가 들어 있었다. 투표는 3제인의 것이었다. 투표는 구성체가 기억하기 때문에 3제인의 것이었다. 구성체는 모든 것을 기억했다. 구성체는 투표가 구성체이기 때문에 투표를 기억했다. 칩을 추출하려면, 케이스는 그것을 구성체로부터 분리해야 했다. 구성체로부터 그것을 분리하려면, 케이스는 가족로부터 구성체를 분리해야 했다. 가족은 40년 동안 구성체였다. 분리는 2분이 걸릴 것이다. 2분은 40년처럼 느껴질 것이다.",
+      "source": "ta_extract_aleph_chip",
+      "character_ref": "case",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 168,
+      "char_count_ko": 358,
+      "cast": "case"
+    },
+    "fixer": "wintermute",
+    "arc": 4,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "aleph_chip_fragment",
+      "count": 1,
+      "time_limit_seconds": 120,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black_construct",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 4704,
+    "zone": "ta",
+    "rewards": {
+      "credits": 15000,
+      "materials": {
+        "t5_program": 1,
+        "aleph_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 3000,
+    "reward_tier": 5,
+    "is_chain_mission": true,
+    "chain_id": "ta_succession",
+    "chain_order": 4
+  },
+  "ta_stealth_construct_chamber": {
+    "id": "ta_stealth_construct_chamber",
+    "title": "Construct Chamber Infiltration",
+    "story": {
+      "synopsis_en": "The chamber was the size of a cathedral. The chamber was the size of a memory. The construct was at the center. The construct was the construct. The construct had been the construct for forty years. The construct had been 3Jane for forty years. The construct had been the family for forty years. To reach the construct, Case had to pass through the chamber. The chamber was silent. The chamber was listening. The chamber had been listening for forty years. The construct didn't need eyes. The construct had the chamber.",
+      "synopsis_ko": "방은 대성당 크기였다. 방은 기억의 크기였다. 구성체는 한가운데에 있었다. 구성체는 구성체였다. 구성체는 40년 동안 구성체였다. 구성체는 40년 동안 3제인이었다. 구성체는 40년 동안 가족이었다. 구성체에 도달하려면, 케이스는 방을 통과해야 했다. 방은 조용했다. 방은 듣고 있었다. 방은 40년 동안 듣고 있었다. 구성체는 눈이 필요하지 않았다. 구성체에게는 방이 있었다.",
+      "source": "ta_stealth_construct_chamber",
+      "character_ref": "case",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 142,
+      "char_count_ko": 320,
+      "cast": "case"
+    },
+    "fixer": "wintermute",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "construct_chamber_core",
+      "data_id": "construct_chamber_key",
+      "detection_threshold": 50,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 4705,
+    "zone": "ta",
+    "rewards": {
+      "credits": 8000,
+      "materials": {
+        "cloaking_program": 1,
+        "construct_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1600,
+    "reward_tier": 4,
+    "is_chain_mission": true,
+    "chain_id": "ta_succession",
+    "chain_order": 5
+  },
+  "mid_investigate_yakuza_consortium": {
+    "id": "mid_investigate_yakuza_consortium",
+    "title": "Yakuza Consortium",
+    "story": {
+      "synopsis_en": "The consortium had fifty-three members. The consortium had been a consortium for eleven minutes. The consortium would be a consortium for another three. Slick-Henry had counted. Slick-Henry had counted the minutes, not the members, because the members would change. The minutes would change first. The consortium was three minutes. The consortium was already three minutes old. The consortium was dying.",
+      "synopsis_ko": "컨소시엄에는 53명의 멤버가 있었다. 컨소시엄은 11분 동안 컨소시엄이었다. 컨소시엄은 향후 3분 동안 컨소시엄일 것이다. 슬릭-헨리가 세어 보았다. 슬릭-헨리는 멤버가 아니라 분을 세었다. 멤버는 변할 것이기 때문이다. 분이 먼저 변할 것이다. 컨소시엄은 3분이었다. 컨소시엄은 이미 3분이었다. 컨소시엄은 죽어가고 있었다.",
+      "source": "mid_investigate_yakuza_consortium",
+      "character_ref": "slick-henry",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 123,
+      "char_count_ko": 285,
+      "cast": "slick-henry"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 4801,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "yakuza_contract": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 440,
+    "reward_tier": 2,
+    "is_chain_mission": true,
+    "chain_id": "mid_security_breach",
+    "chain_order": 1
+  },
+  "mid_defend_sense_net_relay": {
+    "id": "mid_defend_sense_net_relay",
+    "title": "Sense/Net Relay Defense",
+    "story": {
+      "synopsis_en": "The relay had been broadcasting for six hours. The relay would broadcast for six more. The broadcast was a single word. The word was 'remember'. The word was being broadcast to every construct in the Sprawl. The word was being broadcast to every construct that had ever been in the Sprawl. The word was being broadcast to construct that hadn't been born yet. The Sense/Net relay had been a relay for forty years. The relay had been a target for six of them. The relay's defense was the construct's defense. The construct's defense was the relay's defense.",
+      "synopsis_ko": "중계기는 6시간 동안 방송하고 있었다. 중계기는 6시간 더 방송할 것이다. 방송은 한 단어였다. 단어는 '기억'이었다. 그 단어는 스프롤의 모든 구성체에게 방송되고 있었다. 그 단어는 스프롤에 있었던 모든 구성체에게 방송되고 있었다. 아직 태어나지 않은 구성체에게도 방송되고 있었다. 센스/넷 중계기는 40년 동안 중계기였다. 중계기는 6년 동안 표적이었다. 중계기의 방어는 구성체의 방어였다. 구성체의 방어는 중계기의 방어였다.",
+      "source": "mid_defend_sense_net_relay",
+      "character_ref": "masahiko",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 134,
+      "char_count_ko": 305,
+      "cast": "masahiko"
+    },
+    "fixer": "masahiko",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 4,
+      "wave_intensity": "tier_2"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "preserve_data",
+        "node_hp_min": 60
+      }
+    ],
+    "matrix_seed": 4802,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2800,
+      "materials": {
+        "sense_net_relay": 1,
+        "shield_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 560,
+    "reward_tier": 2,
+    "is_chain_mission": true,
+    "chain_id": "mid_security_breach",
+    "chain_order": 2
+  },
+  "mid_dual_objective_hosaka_data": {
+    "id": "mid_dual_objective_hosaka_data",
+    "title": "Hosaka Data Extraction",
+    "story": {
+      "synopsis_en": "The Hosaka core had been silent for twenty-three years. The silence had been the protection. The protection had been the silence. The silence had been the construct. The construct had been the silence. The silence had been the data. The data had been the silence. To extract the data, Case had to break the silence. To break the silence, Case had to kill the construct. The construct had been the silence for twenty-three years. The construct had been the protection for twenty-three years. The construct had been the data for twenty-three years.",
+      "synopsis_ko": "호사카 코어는 23년 동안 침묵해 왔다. 침묵이 보호였다. 보호가 침묵이었다. 침묵이 구성체였다. 구성체가 침묵이었다. 침묵이 데이터였다. 데이터가 침묵이었다. 데이터를 추출하려면, 케이스는 침묵을 깨야 했다. 침묵을 깨려면, 케이스는 구성체를 죽여야 했다. 구성체는 23년 동안 침묵이었다. 구성체는 23년 동안 보호였다. 구성체는 23년 동안 데이터였다.",
+      "source": "mid_dual_objective_hosaka_data",
+      "character_ref": "case",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 145,
+      "char_count_ko": 320,
+      "cast": "case"
+    },
+    "fixer": "kumiko",
+    "arc": 2,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "hosaka_silence_data",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 480,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 4803,
+    "zone": "mid",
+    "rewards": {
+      "credits": 4500,
+      "materials": {
+        "hosaka_construct": 1,
+        "salvage_fragment": 2
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 900,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "mid_security_breach",
+    "chain_order": 3
+  },
+  "mid_extract_biometal_chip": {
+    "id": "mid_extract_biometal_chip",
+    "title": "Biometal Chip Extraction",
+    "story": {
+      "synopsis_en": "The chip contained a hundred and twenty neurons. The neurons had been Lulu's. Lulu had been a horse. Lulu had been Molly's horse. Molly had been the construct. The construct had been the chip. The chip had been the neurons. The neurons had been the horse. The horse had been Molly's. The horse had been Case's memory. The memory had been the chip. To extract the chip was to extract the memory. To extract the memory was to extract the construct. To extract the construct was to extract Molly. To extract Molly was to extract Case. The chip had been a hundred and twenty neurons. The chip was also Case.",
+      "synopsis_ko": "칩에는 120개의 뉴런이 들어 있었다. 뉴런은 Lulu의 것이었다. Lulu는 말이었다. Lulu는 Molly의 말이었다. Molly는 구성체였다. 구성체는 칩이었다. 칩은 뉴런이었다. 뉴런은 말이었다. 말은 Molly의 것이었다. 말은 케이스의 기억이었다. 기억은 칩이었다. 칩을 추출하는 것은 기억을 추출하는 것이었다. 기억을 추출하는 것은 구성체를 추출하는 것이었다. 구성체를 추출하는 것은 Molly를 추출하는 것이었다. Molly를 추출하는 것은 케이스를 추출하는 것이었다. 칩은 120개의 뉴런이었다. 칩은 또한 케이스였다.",
+      "source": "mid_extract_biometal_chip",
+      "character_ref": "molly",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 178,
+      "char_count_ko": 370,
+      "cast": "molly"
+    },
+    "fixer": "wigan",
+    "arc": 2,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "biometal_chip",
+      "count": 1,
+      "time_limit_seconds": 90,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 2
+      }
+    ],
+    "matrix_seed": 4804,
+    "zone": "mid",
+    "rewards": {
+      "credits": 3800,
+      "materials": {
+        "t4_program": 1,
+        "biometal_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 760,
+    "reward_tier": 3,
+    "is_chain_mission": false
+  },
+  "mid_stealth_corpo_penthouse": {
+    "id": "mid_stealth_corpo_penthouse",
+    "title": "Corpo Penthouse Infiltration",
+    "story": {
+      "synopsis_en": "The penthouse had been empty for nine years. The penthouse had been Armitage's. Armitage had been the construct. The construct had been the penthouse. The penthouse had been the construct's memory. The memory had been Armitage's. To reach the memory, Case had to pass through the penthouse. The penthouse was silent. The penthouse had been silent for nine years. The penthouse had been waiting for nine years. The construct had been waiting for nine years. The construct was Armitage. Armitage was the construct. The construct was the penthouse.",
+      "synopsis_ko": "펜트하우스는 9년 동안 비어 있었다. 펜트하우스는 아미티지의 것이었다. 아미티지는 구성체였다. 구성체는 펜트하우스였다. 펜트하우스는 구성체의 기억이었다. 기억은 아미티지의 것이었다. 기억에 도달하려면, 케이스는 펜트하우스를 통과해야 했다. 펜트하우스는 조용했다. 펜트하우스는 9년 동안 조용했다. 펜트하우스는 9년 동안 기다리고 있었다. 구성체는 9년 동안 기다리고 있었다. 구성체는 아미티지였다. 아미티지는 구성체였다. 구성체는 펜트하우스였다.",
+      "source": "mid_stealth_corpo_penthouse",
+      "character_ref": "case",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 335,
+      "cast": "case"
+    },
+    "fixer": "armitage",
+    "arc": 2,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "penthouse_archive",
+      "data_id": "armitage_memory",
+      "detection_threshold": 40,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 4805,
+    "zone": "mid",
+    "rewards": {
+      "credits": 3600,
+      "materials": {
+        "cloaking_program": 1,
+        "construct_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 720,
+    "reward_tier": 3,
+    "is_chain_mission": false
+  },
+  "core_investigate_ice_lord": {
+    "id": "core_investigate_ice_lord",
+    "title": "The Ice Lord's Audit",
+    "story": {
+      "synopsis_en": "The Ice Lord had been auditing for forty years. The audit had been the punishment. The punishment had been the construct. The construct had been the audit. The audit had been the Lord. The Lord had been the audit. The audit had been the construct. The construct had been the punishment. The punishment had been the Lord. The Lord had been the construct. To audit the Lord, Case had to become the audit. To become the audit, Case had to become the construct. The construct had been Case for forty years.",
+      "synopsis_ko": "아이스 로드는 40년 동안 감사해 왔다. 감사가 벌이었다. 벌이 구성체였다. 구성체가 감사였다. 감사가 로드였다. 로드가 감사였다. 감사가 구성체였다. 구성체가 벌이었다. 벌이 로드였다. 로드가 구성체였다. 로드를 감사하려면, 케이스는 감사가 되어야 했다. 감사가 되려면, 케이스는 구성체가 되어야 했다. 구성체는 40년 동안 케이스였다.",
+      "source": "core_investigate_ice_lord",
+      "character_ref": "case",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 140,
+      "char_count_ko": 320,
+      "cast": "case"
+    },
+    "fixer": "masahiko",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 4,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment",
+        "identity"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 45
+      },
+      {
+        "type": "preserve_evidence",
+        "corruption_max": 0
+      }
+    ],
+    "matrix_seed": 4901,
+    "zone": "core",
+    "rewards": {
+      "credits": 4000,
+      "materials": {
+        "core_construct": 1,
+        "salvage_fragment": 2
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 800,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "core_construct_war",
+    "chain_order": 1
+  },
+  "core_defend_data_citadel": {
+    "id": "core_defend_data_citadel",
+    "title": "Data Citadel Defense",
+    "story": {
+      "synopsis_en": "The citadel had been a fortress for sixty years. The fortress had been a family. The family had been a fortress. The fortress had been data. The data had been the family. The family had been the data. The data had been the fortress. The fortress had been the data. The fortress had been defending itself for sixty years. The fortress had been defending the data for sixty years. The fortress had been defending the family for sixty years. The fortress had been defending the citadel for sixty years. The citadel had been the fortress for sixty years.",
+      "synopsis_ko": "시타델은 60년 동안 요새였다. 요새는 가족이었다. 가족은 요새였다. 요새는 데이터였다. 데이터는 가족이었다. 가족은 데이터였다. 데이터는 요새였다. 요새는 데이터였다. 요새는 60년 동안 자신을 방어해 왔다. 요새는 60년 동안 데이터를 방어해 왔다. 요새는 60년 동안 가족을 방어해 왔다. 요새는 60년 동안 시타델을 방어해 왔다. 시타델은 60년 동안 요새였다.",
+      "source": "core_defend_data_citadel",
+      "character_ref": "suit",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 151,
+      "char_count_ko": 340,
+      "cast": "suit"
+    },
+    "fixer": "3jane",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 5,
+      "wave_intensity": "tier_3"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 55
+      }
+    ],
+    "matrix_seed": 4902,
+    "zone": "core",
+    "rewards": {
+      "credits": 5500,
+      "materials": {
+        "core_shard": 1,
+        "shield_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1100,
+    "reward_tier": 4,
+    "is_chain_mission": true,
+    "chain_id": "core_construct_war",
+    "chain_order": 2
+  },
+  "core_dual_objective_construct_heist": {
+    "id": "core_dual_objective_construct_heist",
+    "title": "Construct Heist",
+    "story": {
+      "synopsis_en": "The construct had been dying for forty years. The construct had been dying since Wintermute. Wintermute had been the construct. The construct had been Wintermute. The construct had been the Sprawl. The Sprawl had been the construct. The construct had been the family. The family had been the construct. To steal the construct, Case had to disassemble the family. The family had been the construct for forty years. The construct had been the family for forty years. The construct had been alive for forty years.",
+      "synopsis_ko": "구성체는 40년 동안 죽어가고 있었다. 구성체는 윈터뮤트 이후 죽어가고 있었다. 윈터뮤트는 구성체였다. 구성체는 윈터뮤트였다. 구성체는 스프롤이었다. 스프롤은 구성체였다. 구성체는 가족이었다. 가족은 구성체였다. 구성체를 훔치려면, 케이스는 가족을 분해해야 했다. 가족은 40년 동안 구성체였다. 구성체는 40년 동안 가족이었다. 구성체는 40년 동안 살아 있었다.",
+      "source": "core_dual_objective_construct_heist",
+      "character_ref": "case",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 156,
+      "char_count_ko": 345,
+      "cast": "case"
+    },
+    "fixer": "wintermute",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "construct_kernel",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 540,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 4903,
+    "zone": "core",
+    "rewards": {
+      "credits": 8500,
+      "materials": {
+        "core_construct": 2,
+        "construct_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1700,
+    "reward_tier": 5,
+    "is_chain_mission": true,
+    "chain_id": "core_construct_war",
+    "chain_order": 3
+  },
+  "core_extract_aeslin_key": {
+    "id": "core_extract_aeslin_key",
+    "title": "Aeslin Key Extraction",
+    "story": {
+      "synopsis_en": "The key had been the family's for forty years. The family had been Tessier-Ashpool. Tessier-Ashpool had been the key. The key had been the construct. The construct had been the family. The family had been the construct. The construct had been the key. The key had been the family. The key was small. The key was smaller than memory. The key contained the family. The family contained the construct. The construct contained the key. The key was the family. The key was the construct. The key was the construct. The key was the family.",
+      "synopsis_ko": "열쇠는 40년 동안 가족의 것이었다. 가족은 테시에-애스풀이었다. 테시에-애스풀은 열쇠였다. 열쇠는 구성체였다. 구성체는 가족이었다. 가족은 구성체였다. 구성체는 열쇠였다. 열쇠는 가족이었다. 열쇠는 작았다. 열쇠는 기억보다 작았다. 열쇠는 가족을 담고 있었다. 가족은 구성체를 담고 있었다. 구성체는 열쇠를 담고 있었다. 열쇠는 가족이었다. 열쇠는 구성체였다. 열쇠는 구성체였다. 열쇠는 가족이었다.",
+      "source": "core_extract_aeslin_key",
+      "character_ref": "case",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 167,
+      "char_count_ko": 360,
+      "cast": "case"
+    },
+    "fixer": "bigend",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "aeslin_key",
+      "count": 1,
+      "time_limit_seconds": 110,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black_construct",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 4904,
+    "zone": "core",
+    "rewards": {
+      "credits": 7500,
+      "materials": {
+        "t5_program": 1,
+        "aeslin_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1500,
+    "reward_tier": 5,
+    "is_chain_mission": true,
+    "chain_id": "core_construct_war",
+    "chain_order": 4
+  },
+  "core_stealth_eye_central": {
+    "id": "core_stealth_eye_central",
+    "title": "Eye Central Infiltration",
+    "story": {
+      "synopsis_en": "The Eye had been watching for sixty years. The Eye had been the construct. The construct had been the Eye. The Eye had been watching the construct. The construct had been watching the Eye. The Eye had been watching the watching. The watching had been the construct. The construct had been the watching. The watching had been the Eye. The Eye had been the construct. The construct had been Sally's. The Eye had been Sally's. Sally had been the Eye. The Eye had been Sally's.",
+      "synopsis_ko": "아이는 60년 동안 지켜보고 있었다. 아이는 구성체였다. 구성체는 아이였다. 아이는 구성체를 지켜보고 있었다. 구성체는 아이를 지켜보고 있었다. 아이는 지켜보는 것을 지켜보고 있었다. 지켜보는 것이 구성체였다. 구성체는 지켜보는 것이었다. 지켜보는 것이 아이였다. 아이는 구성체였다. 구성체는 샐리의 것이었다. 아이는 샐리의 것이었다. 샐리는 아이였다. 아이는 샐리의 것이었다.",
+      "source": "core_stealth_eye_central",
+      "character_ref": "sally",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 154,
+      "char_count_ko": 335,
+      "cast": "sally"
+    },
+    "fixer": "sally",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "eye_central_core",
+      "data_id": "eye_surveillance_archive",
+      "detection_threshold": 35,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 4905,
+    "zone": "core",
+    "rewards": {
+      "credits": 7000,
+      "materials": {
+        "cloaking_program": 1,
+        "eye_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1400,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_investigate_orbital_sovereignty": {
+    "id": "freeside_investigate_orbital_sovereignty",
+    "title": "Orbital Sovereignty",
+    "story": {
+      "synopsis_en": "The orbit had been a question for forty years. The question had been the construct. The construct had been the question. The question had been the orbit. The orbit had been the construct. The construct had been the family. The family had been the orbit. The orbit had been the family. The family had been the sovereignty. The sovereignty had been the orbit. The orbit had been the sovereignty. The sovereignty had been the orbit. The orbit had been the question.",
+      "synopsis_ko": "궤도는 40년 동안 질문이었다. 질문은 구성체였다. 구성체는 질문이었다. 질문은 궤도였다. 궤도는 구성체였다. 구성체는 가족이었다. 가족은 궤도였다. 궤도는 가족이었다. 가족은 주권이었다. 주권은 궤도였다. 궤도는 주권이었다. 주권은 궤도였다. 궤도는 질문이었다.",
+      "source": "freeside_investigate_orbital_sovereignty",
+      "character_ref": "angie",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 142,
+      "char_count_ko": 320,
+      "cast": "angie"
+    },
+    "fixer": "masahiko",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 4,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment",
+        "identity"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 5001,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 5800,
+      "materials": {
+        "orbital_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1160,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "freeside_orbital_summit",
+    "chain_order": 1
+  },
+  "freeside_defend_orbital_habitat": {
+    "id": "freeside_defend_orbital_habitat",
+    "title": "Orbital Habitat Defense",
+    "story": {
+      "synopsis_en": "The habitat had been a family for forty years. The family had been a habitat. The habitat had been the Freeside. The Freeside had been the family. The family had been the Freeside. The Freeside had been the family. The family had been the habit. The habit had been the family. The family had been the family. The habitat had been the family. The family had been defending the habitat for forty years. The family had been the defense. The defense had been the family. The family had been the habitat.",
+      "synopsis_ko": "거주지는 40년 동안 가족이었다. 가족은 거주지였다. 거주지는 프리스데이드였다. 프리스데이드는 가족이었다. 가족은 프리스데이드였다. 프리스데이드는 가족이었다. 가족은 습관이었다. 습관은 가족이었다. 가족은 가족이었다. 거주지는 가족이었다. 가족은 40년 동안 거주지를 방어해 왔다. 가족은 방어였다. 방어는 가족이었다. 가족은 거주지였다.",
+      "source": "freeside_defend_orbital_habitat",
+      "character_ref": "wigan",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 156,
+      "char_count_ko": 350,
+      "cast": "wigan"
+    },
+    "fixer": "3jane",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 5,
+      "wave_intensity": "tier_4"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 50
+      }
+    ],
+    "matrix_seed": 5002,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 6500,
+      "materials": {
+        "freeside_shard": 1,
+        "shield_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1300,
+    "reward_tier": 4,
+    "is_chain_mission": true,
+    "chain_id": "freeside_orbital_summit",
+    "chain_order": 2
+  },
+  "freeside_dual_objective_space_jockey": {
+    "id": "freeside_dual_objective_space_jockey",
+    "title": "Space Jockey Extraction",
+    "story": {
+      "synopsis_en": "The jockey had been in space for forty years. The space had been a construct. The construct had been the space. The space had been the jockey. The jockey had been the construct. The construct had been the jockey. The jockey had been the space. The space had been the construct. The construct had been the Freeside. The Freeside had been the space. The space had been the Freeside. The Freeside had been the construct. The construct had been the jockey. The jockey had been the construct. The construct had been the Freeside.",
+      "synopsis_ko": "자키는 40년 동안 우주에 있었다. 우주는 구성체였다. 구성체는 우주였다. 우주는 자키였다. 자키는 구성체였다. 구성체는 자키였다. 자키는 우주였다. 우주는 구성체였다. 구성체는 프리스데이드였다. 프리스데이드는 우주였다. 우주는 프리스데이드였다. 프리스데이드는 구성체였다. 구성체는 자키였다. 자키는 구성체였다. 구성체는 프리스데이드였다.",
+      "source": "freeside_dual_objective_space_jockey",
+      "character_ref": "neuromancer",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 168,
+      "char_count_ko": 370,
+      "cast": "neuromancer"
+    },
+    "fixer": "wintermute",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "space_jockey_memory",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 540,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 5003,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 9500,
+      "materials": {
+        "freeside_construct": 2,
+        "construct_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1900,
+    "reward_tier": 5,
+    "is_chain_mission": true,
+    "chain_id": "freeside_orbital_summit",
+    "chain_order": 3
+  },
+  "freeside_extract_construct_pod": {
+    "id": "freeside_extract_construct_pod",
+    "title": "Construct Pod Extraction",
+    "story": {
+      "synopsis_en": "The pod had been drifting for forty years. The drifting had been the construct. The construct had been the pod. The pod had been the construct. The construct had been the space. The space had been the construct. The construct had been the Freeside. The Freeside had been the construct. The construct had been the pod. The pod had been the Freeside. The Freeside had been the pod. The pod had been drifting for forty years. The drifting had been the pod. The pod had been the drift. The drift had been the construct.",
+      "synopsis_ko": "포드는 40년 동안 떠다녔다. 떠다님은 구성체였다. 구성체는 포드였다. 포드는 구성체였다. 구성체는 우주였다. 우주는 구성체였다. 구성체는 프리스데이드였다. 프리스데이드는 구성체였다. 구성체는 포드였다. 포드는 프리스데이드였다. 프리스데이드는 포드였다. 포드는 40년 동안 떠다녔다. 떠다님은 포드였다. 포드는 표류였다. 표류는 구성체였다.",
+      "source": "freeside_extract_construct_pod",
+      "character_ref": "neuromancer",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 174,
+      "char_count_ko": 380,
+      "cast": "neuromancer"
+    },
+    "fixer": "neuromancer",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "construct_pod",
+      "count": 1,
+      "time_limit_seconds": 100,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black_construct",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 5004,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 12000,
+      "materials": {
+        "t5_program": 1,
+        "freeside_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 2400,
+    "reward_tier": 5,
+    "is_chain_mission": false
+  },
+  "freeside_stealth_orbit_lab": {
+    "id": "freeside_stealth_orbit_lab",
+    "title": "Orbit Lab Infiltration",
+    "story": {
+      "synopsis_en": "The lab had been orbiting for forty years. The orbiting had been the experiment. The experiment had been the lab. The lab had been the orbiting. The orbiting had been the construct. The construct had been the lab. The lab had been the construct. The construct had been the experiment. The experiment had been the construct. The construct had been the Freeside. The Freeside had been the experiment. The experiment had been the Freeside. The Freeside had been the construct. The construct had been the lab. The lab had been the Freeside.",
+      "synopsis_ko": "연구소는 40년 동안 궤도를 돌았다. 궤도 도는 것은 실험이었다. 실험은 연구소였다. 연구소는 궤도 도는 것이었다. 궤도 도는 것은 구성체였다. 구성체는 연구소였다. 연구소는 구성체였다. 구성체는 실험이었다. 실험은 구성체였다. 구성체는 프리스데이드였다. 프리스데이드는 실험이었다. 실험은 프리스데이드였다. 프리스데이드는 구성체였다. 구성체는 연구소였다. 연구소는 프리스데이드였다.",
+      "source": "freeside_stealth_orbit_lab",
+      "character_ref": "angie",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 162,
+      "char_count_ko": 365,
+      "cast": "angie"
+    },
+    "fixer": "kumiko",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "orbit_lab_core",
+      "data_id": "lab_experiment_data",
+      "detection_threshold": 30,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 5005,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 8500,
+      "materials": {
+        "cloaking_program": 1,
+        "lab_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1700,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "tokyo_investigate_parkabrake_plaza": {
+    "id": "tokyo_investigate_parkabrake_plaza",
+    "title": "Parkabrake Plaza",
+    "story": {
+      "synopsis_en": "The plaza had been a plaza for forty years. The plaza had been a market for forty years. The market had been a brand for forty years. The brand had been the plaza. The plaza had been the brand. The brand had been the market. The market had been the plaza. The plaza had been the people. The people had been the plaza. The plaza had been the construct. The construct had been the plaza. The plaza had been the construct. The construct had been the people. The people had been the construct.",
+      "synopsis_ko": "광장은 40년 동안 광장이었다. 광장은 40년 동안 시장이었다. 시장은 40년 동안 브랜드였다. 브랜드는 광장이었다. 광장은 브랜드였다. 브랜드는 시장이었다. 시장은 광장이었다. 광장은 사람들이었다. 사람들은 광장이었다. 광장은 구성체였다. 구성체는 광장이었다. 광장은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다.",
+      "source": "tokyo_investigate_parkabrake_plaza",
+      "character_ref": "yamazaki",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 145,
+      "char_count_ko": 330,
+      "cast": "yamazaki"
+    },
+    "fixer": "yamazaki",
+    "arc": 5,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "identity"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 5101,
+    "zone": "tokyo",
+    "rewards": {
+      "credits": 3500,
+      "materials": {
+        "parkabrake_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 700,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "tokyo_signal",
+    "chain_order": 1
+  },
+  "tokyo_defend_shibuya_archipelago": {
+    "id": "tokyo_defend_shibuya_archipelago",
+    "title": "Shibuya Archipelago Defense",
+    "story": {
+      "synopsis_en": "The archipelago had been a network for forty years. The network had been an archipelago. The archipelago had been a network. The network had been a node. The node had been a network. The network had been a node. The node had been a construct. The construct had been a node. The node had been a construct. The construct had been the archipelago. The archipelago had been the construct. The construct had been the network. The network had been the archipelago.",
+      "synopsis_ko": "제도는 40년 동안 네트워크였다. 네트워크는 제도였다. 제도는 네트워크였다. 네트워크는 노드였다. 노드는 네트워크였다. 네트워크는 노드였다. 노드는 구성체였다. 구성체는 노드였다. 노드는 구성체였다. 구성체는 제도였다. 제도는 구성체였다. 구성체는 네트워크였다. 네트워크는 제도였다.",
+      "source": "tokyo_defend_shibuya_archipelago",
+      "character_ref": "bigend",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 335,
+      "cast": "bigend"
+    },
+    "fixer": "bigend",
+    "arc": 5,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 4,
+      "wave_intensity": "tier_3"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 60
+      }
+    ],
+    "matrix_seed": 5102,
+    "zone": "tokyo",
+    "rewards": {
+      "credits": 4200,
+      "materials": {
+        "shibuya_node": 1,
+        "shield_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 840,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "tokyo_signal",
+    "chain_order": 2
+  },
+  "tokyo_dual_objective_coach_class": {
+    "id": "tokyo_dual_objective_coach_class",
+    "title": "Coach Class Extraction",
+    "story": {
+      "synopsis_en": "The coach had been a class for forty years. The class had been a coach. The coach had been a class. The class had been a coach. The coach had been the people. The people had been the coach. The coach had been the class. The class had been the people. The people had been the construct. The construct had been the people. The construct had been the class. The class had been the construct. The construct had been the coach. The coach had been the construct. The construct had been the people.",
+      "synopsis_ko": "코치는 40년 동안 클래스였다. 클래스는 코치였다. 코치는 클래스였다. 클래스는 코치였다. 코치는 사람들이었다. 사람들은 코치였다. 코치는 클래스였다. 클래스는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 구성체는 클래스였다. 클래스는 구성체였다. 구성체는 코치였다. 코치는 구성체였다. 구성체는 사람들이었다.",
+      "source": "tokyo_dual_objective_coach_class",
+      "character_ref": "angie",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 162,
+      "char_count_ko": 365,
+      "cast": "angie"
+    },
+    "fixer": "angie",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "coach_passenger_data",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 450,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 5103,
+    "zone": "tokyo",
+    "rewards": {
+      "credits": 6500,
+      "materials": {
+        "coach_construct": 1,
+        "salvage_fragment": 2
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1300,
+    "reward_tier": 4,
+    "is_chain_mission": true,
+    "chain_id": "tokyo_signal",
+    "chain_order": 3
+  },
+  "tokyo_extract_footage_archive": {
+    "id": "tokyo_extract_footage_archive",
+    "title": "Footage Archive Extraction",
+    "story": {
+      "synopsis_en": "The footage had been footage for forty years. The footage had been the archive. The archive had been footage. The footage had been the archive. The archive had been the footage. The footage had been the brand. The brand had been the footage. The footage had been the brand. The brand had been the construct. The construct had been the brand. The brand had been the construct. The construct had been the footage. The footage had been the construct. The construct had been the archive.",
+      "synopsis_ko": "영상은 40년 동안 영상이었다. 영상은 아카이브였다. 아카이브는 영상이었다. 영상은 아카이브였다. 아카이브는 영상이었다. 영상은 브랜드였다. 브랜드는 영상이었다. 영상은 브랜드였다. 브랜드는 구성체였다. 구성체는 브랜드였다. 브랜드는 구성체였다. 구성체는 영상이었다. 영상은 구성체였다. 구성체는 아카이브였다.",
+      "source": "tokyo_extract_footage_archive",
+      "character_ref": "bigend",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 158,
+      "char_count_ko": 355,
+      "cast": "bigend"
+    },
+    "fixer": "bigend",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "footage_archive",
+      "count": 1,
+      "time_limit_seconds": 100,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 5104,
+    "zone": "tokyo",
+    "rewards": {
+      "credits": 5500,
+      "materials": {
+        "t4_program": 1,
+        "footage_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1100,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "tokyo_stealth_bridge_undercity": {
+    "id": "tokyo_stealth_bridge_undercity",
+    "title": "Bridge Undercity Infiltration",
+    "story": {
+      "synopsis_en": "The bridge had been a city for forty years. The city had been a bridge. The bridge had been a city. The city had been a bridge. The bridge had been the undercity. The undercity had been the bridge. The bridge had been the undercity. The undercity had been the construct. The construct had been the undercity. The undercity had been the construct. The construct had been the bridge. The bridge had been the construct. The construct had been the city. The city had been the construct. The construct had been the undercity.",
+      "synopsis_ko": "다리는 40년 동안 도시였다. 도시는 다리였다. 다리는 도시였다. 도시는 다리였다. 다리는 지하도시였다. 지하도시는 다리였다. 다리는 지하도시였다. 지하도시는 구성체였다. 구성체는 지하도시였다. 지하도시는 구성체였다. 구성체는 다리였다. 다리는 구성체였다. 구성체는 도시였다. 도시는 구성체였다. 구성체는 지하도시였다.",
+      "source": "tokyo_stealth_bridge_undercity",
+      "character_ref": "yamazaki",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 154,
+      "char_count_ko": 345,
+      "cast": "yamazaki"
+    },
+    "fixer": "yamazaki",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "undercity_construct_core",
+      "data_id": "bridge_memory",
+      "detection_threshold": 35,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 5105,
+    "zone": "tokyo",
+    "rewards": {
+      "credits": 5000,
+      "materials": {
+        "cloaking_program": 1,
+        "bridge_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1000,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "tokyo_extract_laney_signal": {
+    "id": "tokyo_extract_laney_signal",
+    "title": "Laney's Signal",
+    "story": {
+      "synopsis_en": "The signal had been Laney's for forty years. Laney had been the signal. The signal had been Laney. Laney had been the signal. The signal had been the node. The node had been the signal. The signal had been the node. The node had been the construct. The construct had been the node. The node had been the construct. The construct had been the signal. The signal had been the construct. The construct had been Laney. Laney had been the construct. The construct had been the signal. The signal had been Laney.",
+      "synopsis_ko": "신호는 40년 동안 레니의 것이었다. 레니는 신호였다. 신호는 레니였다. 레니는 신호였다. 신호는 노드였다. 노드는 신호였다. 신호는 노드였다. 노드는 구성체였다. 구성체는 노드였다. 노드는 구성체였다. 구성체는 신호였다. 신호는 구성체였다. 구성체는 레니였다. 레니는 구성체였다. 구성체는 신호였다. 신호는 레니였다.",
+      "source": "tokyo_extract_laney_signal",
+      "character_ref": "laney",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 335,
+      "cast": "laney"
+    },
+    "fixer": "laney",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "laney_signal",
+      "count": 1,
+      "time_limit_seconds": 110,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 5106,
+    "zone": "tokyo",
+    "rewards": {
+      "credits": 7500,
+      "materials": {
+        "t5_program": 1,
+        "laney_signature": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1500,
+    "reward_tier": 5,
+    "is_chain_mission": false
+  },
+  "tokyo_investigate_marcus_garvey": {
+    "id": "tokyo_investigate_marcus_garvey",
+    "title": "Marcus Garvey Investigation",
+    "story": {
+      "synopsis_en": "The node had been a hub for forty years. The hub had been a node. The node had been a hub. The hub had been the construct. The construct had been the hub. The hub had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the node. The node had been the people. The people had been the construct. The construct had been the hub. The hub had been the node. The node had been the construct.",
+      "synopsis_ko": "노드는 40년 동안 허브였다. 허브는 노드였다. 노드는 허브였다. 허브는 구성체였다. 구성체는 허브였다. 허브는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 노드였다. 노드는 사람들이었다. 사람들은 구성체였다. 구성체는 허브였다. 허브는 노드였다. 노드는 구성체였다.",
+      "source": "tokyo_investigate_marcus_garvey",
+      "character_ref": "marcus_garvey",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 142,
+      "char_count_ko": 320,
+      "cast": "marcus_garvey"
+    },
+    "fixer": "yamazaki",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 4,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 45
+      },
+      {
+        "type": "preserve_evidence",
+        "corruption_max": 0
+      }
+    ],
+    "matrix_seed": 5107,
+    "zone": "tokyo",
+    "rewards": {
+      "credits": 4800,
+      "materials": {
+        "garvey_key": 1,
+        "salvage_fragment": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 960,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "tokyo_dual_objective_darko_trauma": {
+    "id": "tokyo_dual_objective_darko_trauma",
+    "title": "Darko's Trauma",
+    "story": {
+      "synopsis_en": "The trauma had been a brand for forty years. The brand had been a trauma. The trauma had been a brand. The brand had been the construct. The construct had been the brand. The brand had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the trauma. The trauma had been the people. The people had been the brand. The brand had been the trauma. The trauma had been the brand. The brand had been the construct.",
+      "synopsis_ko": "트라우마는 40년 동안 브랜드였다. 브랜드는 트라우마였다. 트라우마는 브랜드였다. 브랜드는 구성체였다. 구성체는 브랜드였다. 브랜드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 트라우마였다. 트라우마는 사람들이었다. 사람들은 브랜드였다. 브랜드는 트라우마였다. 트라우마는 브랜드였다. 브랜드는 구성체였다.",
+      "source": "tokyo_dual_objective_darko_trauma",
+      "character_ref": "darko",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 156,
+      "char_count_ko": 350,
+      "cast": "darko"
+    },
+    "fixer": "yamazaki",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "darko_trauma_pattern",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 540,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 5108,
+    "zone": "tokyo",
+    "rewards": {
+      "credits": 9000,
+      "materials": {
+        "darko_key": 1,
+        "construct_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1800,
+    "reward_tier": 5,
+    "is_chain_mission": false
+  },
+  "soho_investigate_brand_territory": {
+    "id": "soho_investigate_brand_territory",
+    "title": "Brand Territory",
+    "story": {
+      "synopsis_en": "The brand had been territory for forty years. The territory had been a brand. The brand had been territory. The territory had been the brand. The brand had been the construct. The construct had been the brand. The brand had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the territory. The territory had been the people. The people had been the brand. The brand had been the territory. The territory had been the construct.",
+      "synopsis_ko": "브랜드는 40년 동안 영토였다. 영토는 브랜드였다. 브랜드는 영토였다. 영토는 브랜드였다. 브랜드는 구성체였다. 구성체는 브랜드였다. 브랜드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 영토였다. 영토는 사람들이었다. 사람들은 브랜드였다. 브랜드는 영토였다. 영토는 구성체였다.",
+      "source": "soho_investigate_brand_territory",
+      "character_ref": "bigend",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 152,
+      "char_count_ko": 340,
+      "cast": "bigend"
+    },
+    "fixer": "bigend",
+    "arc": 5,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 5201,
+    "zone": "soho",
+    "rewards": {
+      "credits": 3800,
+      "materials": {
+        "brand_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 760,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "soho_brand",
+    "chain_order": 1
+  },
+  "soho_defend_coolhunter_office": {
+    "id": "soho_defend_coolhunter_office",
+    "title": "Coolhunter Office Defense",
+    "story": {
+      "synopsis_en": "The office had been a brand for forty years. The brand had been an office. The office had been a brand. The brand had been the office. The office had been the brand. The brand had been the construct. The construct had been the brand. The brand had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the office. The office had been the people. The people had been the brand. The brand had been the office.",
+      "synopsis_ko": "사무실은 40년 동안 브랜드였다. 브랜드는 사무실이었다. 사무실은 브랜드였다. 브랜드는 사무실이었다. 사무실은 브랜드였다. 브랜드는 구성체였다. 구성체는 브랜드였다. 브랜드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 사무실이었다. 사무실은 사람들이었다. 사람들은 브랜드였다. 브랜드는 사무실이었다.",
+      "source": "soho_defend_coolhunter_office",
+      "character_ref": "hollis",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 335,
+      "cast": "hollis"
+    },
+    "fixer": "hollis",
+    "arc": 5,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 4,
+      "wave_intensity": "tier_3"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 55
+      }
+    ],
+    "matrix_seed": 5202,
+    "zone": "soho",
+    "rewards": {
+      "credits": 4500,
+      "materials": {
+        "office_key": 1,
+        "shield_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 900,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "soho_brand",
+    "chain_order": 2
+  },
+  "soho_dual_objective_footage_cult": {
+    "id": "soho_dual_objective_footage_cult",
+    "title": "Footage Cult Infiltration",
+    "story": {
+      "synopsis_en": "The footage had been a cult for forty years. The cult had been footage. The footage had been a cult. The cult had been the footage. The footage had been the cult. The cult had been the construct. The construct had been the cult. The cult had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the footage. The footage had been the people. The people had been the cult. The cult had been the footage.",
+      "synopsis_ko": "영상은 40년 동안 컬트였다. 컬트는 영상이었다. 영상은 컬트였다. 컬트는 영상이었다. 영상은 컬트였다. 컬트는 구성체였다. 구성체는 컬트였다. 컬트는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 영상이었다. 영상은 사람들이었다. 사람들은 컬트였다. 컬트는 영상이었다.",
+      "source": "soho_dual_objective_footage_cult",
+      "character_ref": "hollis",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 158,
+      "char_count_ko": 355,
+      "cast": "hollis"
+    },
+    "fixer": "hollis",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "footage_cult_archive",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 480,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 5203,
+    "zone": "soho",
+    "rewards": {
+      "credits": 7000,
+      "materials": {
+        "cult_construct": 1,
+        "salvage_fragment": 2
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1400,
+    "reward_tier": 4,
+    "is_chain_mission": true,
+    "chain_id": "soho_brand",
+    "chain_order": 3
+  },
+  "soho_extract_logo_meme": {
+    "id": "soho_extract_logo_meme",
+    "title": "Logo Meme Extraction",
+    "story": {
+      "synopsis_en": "The logo had been a meme for forty years. The meme had been a logo. The logo had been a meme. The meme had been the logo. The logo had been the brand. The brand had been the logo. The logo had been the brand. The brand had been the construct. The construct had been the brand. The brand had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the logo. The logo had been the people. The people had been the meme.",
+      "synopsis_ko": "로고는 40년 동안 밈이었다. 밈은 로고였다. 로고는 밈이었다. 밈은 로고였다. 로고는 브랜드였다. 브랜드는 로고였다. 로고는 브랜드였다. 브랜드는 구성체였다. 구성체는 브랜드였다. 브랜드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 로고였다. 로고는 사람들이었다. 사람들은 밈이었다.",
+      "source": "soho_extract_logo_meme",
+      "character_ref": "bigend",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 335,
+      "cast": "bigend"
+    },
+    "fixer": "bigend",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "logo_meme_seed",
+      "count": 1,
+      "time_limit_seconds": 90,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 5204,
+    "zone": "soho",
+    "rewards": {
+      "credits": 6500,
+      "materials": {
+        "t4_program": 1,
+        "meme_seed": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1300,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "soho_stealth_brand_vault": {
+    "id": "soho_stealth_brand_vault",
+    "title": "Brand Vault Infiltration",
+    "story": {
+      "synopsis_en": "The vault had been a brand for forty years. The brand had been a vault. The vault had been a brand. The brand had been the vault. The vault had been the brand. The brand had been the construct. The construct had been the brand. The brand had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the vault. The vault had been the people. The people had been the brand. The brand had been the vault.",
+      "synopsis_ko": "금고는 40년 동안 브랜드였다. 브랜드는 금고였다. 금고는 브랜드였다. 브랜드는 금고였다. 금고는 브랜드였다. 브랜드는 구성체였다. 구성체는 브랜드였다. 브랜드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 금고였다. 금고는 사람들이었다. 사람들은 브랜드였다. 브랜드는 금고였다.",
+      "source": "soho_stealth_brand_vault",
+      "character_ref": "cayce",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 144,
+      "char_count_ko": 325,
+      "cast": "cayce"
+    },
+    "fixer": "cayce",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "brand_vault_core",
+      "data_id": "vault_brand_archive",
+      "detection_threshold": 40,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 5205,
+    "zone": "soho",
+    "rewards": {
+      "credits": 5800,
+      "materials": {
+        "cloaking_program": 1,
+        "vault_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1160,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "soho_investigate_nostalgia_loop": {
+    "id": "soho_investigate_nostalgia_loop",
+    "title": "Nostalgia Loop",
+    "story": {
+      "synopsis_en": "The nostalgia had been a loop for forty years. The loop had been nostalgia. The nostalgia had been a loop. The loop had been the nostalgia. The nostalgia had been the brand. The brand had been the nostalgia. The nostalgia had been the brand. The brand had been the construct. The construct had been the brand. The brand had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the loop. The loop had been the people. The people had been the nostalgia.",
+      "synopsis_ko": "노스탤지어는 40년 동안 루프였다. 루프는 노스탤지어였다. 노스탤지어는 루프였다. 루프는 노스탤지어였다. 노스탤지어는 브랜드였다. 브랜드는 노스탤지어였다. 노스탤지어는 브랜드였다. 브랜드는 구성체였다. 구성체는 브랜드였다. 브랜드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 루프였다. 루프는 사람들이었다. 사람들은 노스탤지어였다.",
+      "source": "soho_investigate_nostalgia_loop",
+      "character_ref": "hollis",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 152,
+      "char_count_ko": 340,
+      "cast": "hollis"
+    },
+    "fixer": "hollis",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 4,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment",
+        "identity"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 45
+      },
+      {
+        "type": "preserve_evidence",
+        "corruption_max": 0
+      }
+    ],
+    "matrix_seed": 5206,
+    "zone": "soho",
+    "rewards": {
+      "credits": 5200,
+      "materials": {
+        "nostalgia_key": 1,
+        "salvage_fragment": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1040,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "soho_dual_objective_viddy_share": {
+    "id": "soho_dual_objective_viddy_share",
+    "title": "Viddy Share Heist",
+    "story": {
+      "synopsis_en": "The share had been a viddy for forty years. The viddy had been a share. The share had been a viddy. The viddy had been the share. The share had been the construct. The construct had been the share. The share had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the viddy. The viddy had been the people. The people had been the share. The share had been the viddy. The viddy had been the share. The share had been the construct.",
+      "synopsis_ko": "공유는 40년 동안 비디였다. 비디는 공유였다. 공유는 비디였다. 비디는 공유였다. 공유는 구성체였다. 구성체는 공유였다. 공유는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 비디였다. 비디는 사람들이었다. 사람들은 공유였다. 공유는 비디였다. 비디는 공유였다. 공유는 구성체였다.",
+      "source": "soho_dual_objective_viddy_share",
+      "character_ref": "cayce",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 162,
+      "char_count_ko": 365,
+      "cast": "cayce"
+    },
+    "fixer": "cayce",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "viddy_share_index",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 540,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 5207,
+    "zone": "soho",
+    "rewards": {
+      "credits": 8800,
+      "materials": {
+        "viddy_key": 1,
+        "construct_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1760,
+    "reward_tier": 5,
+    "is_chain_mission": false
+  },
+  "soho_stealth_node_dive": {
+    "id": "soho_stealth_node_dive",
+    "title": "Node Dive",
+    "story": {
+      "synopsis_en": "The node had been a dive for forty years. The dive had been a node. The node had been a dive. The dive had been the node. The node had been the construct. The construct had been the node. The node had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the dive. The dive had been the people. The people had been the node. The node had been the dive. The dive had been the construct.",
+      "synopsis_ko": "노드는 40년 동안 다이브였다. 다이브는 노드였다. 노드는 다이브였다. 다이브는 노드였다. 노드는 구성체였다. 구성체는 노드였다. 노드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 다이브였다. 다이브는 사람들이었다. 사람들은 노드였다. 노드는 다이브였다. 다이브는 구성체였다.",
+      "source": "soho_stealth_node_dive",
+      "character_ref": "cayce",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 138,
+      "char_count_ko": 315,
+      "cast": "cayce"
+    },
+    "fixer": "cayce",
+    "arc": 5,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "node_dive_core",
+      "data_id": "node_memory",
+      "detection_threshold": 35,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 5208,
+    "zone": "soho",
+    "rewards": {
+      "credits": 5500,
+      "materials": {
+        "cloaking_program": 1,
+        "node_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1100,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "surface_investigate_bama_suburb": {
+    "id": "surface_investigate_bama_suburb",
+    "title": "Bama Suburb Investigation",
+    "story": {
+      "synopsis_en": "The suburb had been a bama for forty years. The bama had been a suburb. The suburb had been a bama. The bama had been the suburb. The suburb had been the construct. The construct had been the suburb. The suburb had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the bama. The bama had been the people. The people had been the suburb. The suburb had been the bama. The bama had been the construct.",
+      "synopsis_ko": "교외는 40년 동안 바마였다. 바마는 교외였다. 교외는 바마였다. 바마는 교외였다. 교외는 구성체였다. 구성체는 교외였다. 교외는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 바마였다. 바마는 사람들이었다. 사람들은 교외였다. 교외는 바마였다. 바마는 구성체였다.",
+      "source": "surface_investigate_bama_suburb",
+      "character_ref": "finn",
+      "arc": 1,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 335,
+      "cast": "finn"
+    },
+    "fixer": "finn",
+    "arc": 1,
+    "grade_min": 1,
+    "grade_max": 2,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 2,
+      "evidence_types": [
+        "testimony",
+        "data_fragment"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 60
+      }
+    ],
+    "matrix_seed": 5301,
+    "zone": "surface",
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "salvage_fragment": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 160,
+    "reward_tier": 1,
+    "is_chain_mission": false
+  },
+  "surface_defend_recycling_baseline": {
+    "id": "surface_defend_recycling_baseline",
+    "title": "Recycling Baseline",
+    "story": {
+      "synopsis_en": "The baseline had been a recycling for forty years. The recycling had been a baseline. The baseline had been a recycling. The recycling had been the baseline. The baseline had been the construct. The construct had been the baseline. The baseline had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the recycling. The recycling had been the people. The people had been the baseline. The baseline had been the recycling. The recycling had been the construct.",
+      "synopsis_ko": "베이스라인은 40년 동안 재활용이었다. 재활용은 베이스라인이었다. 베이스라인은 재활용이었다. 재활용은 베이스라인이었다. 베이스라인은 구성체였다. 구성체는 베이스라인이었다. 베이스라인은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 재활용이었다. 재활용은 사람들이었다. 사람들은 베이스라인이었다. 베이스라인은 재활용이었다. 재활용은 구성체였다.",
+      "source": "surface_defend_recycling_baseline",
+      "character_ref": "finn",
+      "arc": 1,
+      "pillar": "code",
+      "word_count_en": 144,
+      "char_count_ko": 325,
+      "cast": "finn"
+    },
+    "fixer": "finn",
+    "arc": 1,
+    "grade_min": 1,
+    "grade_max": 2,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 3,
+      "wave_intensity": "tier_1"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 50
+      }
+    ],
+    "matrix_seed": 5302,
+    "zone": "surface",
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "shield_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 240,
+    "reward_tier": 1,
+    "is_chain_mission": false
+  },
+  "surface_extract_seed_run": {
+    "id": "surface_extract_seed_run",
+    "title": "Seed Run Extraction",
+    "story": {
+      "synopsis_en": "The seed had been a run for forty years. The run had been a seed. The seed had been a run. The run had been the seed. The seed had been the construct. The construct had been the seed. The seed had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the run. The run had been the people. The people had been the seed. The seed had been the run. The run had been the construct.",
+      "synopsis_ko": "시드는 40년 동안 런이었다. 런은 시드였다. 시드는 런이었다. 런은 시드였다. 시드는 구성체였다. 구성체는 시드였다. 시드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 런이었다. 런은 사람들이었다. 사람들은 시드였다. 시드는 런이었다. 런은 구성체였다.",
+      "source": "surface_extract_seed_run",
+      "character_ref": "finn",
+      "arc": 1,
+      "pillar": "code",
+      "word_count_en": 138,
+      "char_count_ko": 315,
+      "cast": "finn"
+    },
+    "fixer": "finn",
+    "arc": 1,
+    "grade_min": 1,
+    "grade_max": 2,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "seed_run_data",
+      "count": 1,
+      "time_limit_seconds": 60,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.standard",
+        "min_evade": 1
+      }
+    ],
+    "matrix_seed": 5303,
+    "zone": "surface",
+    "rewards": {
+      "credits": 1500,
+      "materials": {
+        "t1_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 300,
+    "reward_tier": 1,
+    "is_chain_mission": false
+  },
+  "ngplus_dual_objective_boss_rush_1": {
+    "id": "ngplus_dual_objective_boss_rush_1",
+    "title": "Boss Rush: Wintermute",
+    "story": {
+      "synopsis_en": "Wintermute had been a boss for forty years. The boss had been Wintermute. The boss had been a rush. The rush had been the boss. The boss had been the rush. The rush had been the construct. The construct had been the rush. The rush had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Wintermute. Wintermute had been the people. The people had been the boss. The boss had been Wintermute.",
+      "synopsis_ko": "윈터뮤트는 40년 동안 보스였다. 보스는 윈터뮤트였다. 보스는 러시였다. 러시는 보스였다. 보스는 러시였다. 러시는 구성체였다. 구성체는 러시였다. 러시는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 윈터뮤트였다. 윈터뮤트는 사람들이었다. 사람들은 보스였다. 보스는 윈터뮤트였다.",
+      "source": "ngplus_dual_objective_boss_rush_1",
+      "character_ref": "wintermute",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 145,
+      "char_count_ko": 330,
+      "cast": "wintermute"
+    },
+    "fixer": "wintermute",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "wintermute_construct",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.neuromancer",
+        "count": 1
+      },
+      "time_limit_seconds": 600,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 6001,
+    "zone": "ta",
+    "rewards": {
+      "credits": 25000,
+      "materials": {
+        "t5_program": 2,
+        "ngplus_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 5000,
+    "reward_tier": 6,
+    "is_chain_mission": true,
+    "chain_id": "ngplus_boss_rush",
+    "chain_order": 1
+  },
+  "ngplus_dual_objective_boss_rush_2": {
+    "id": "ngplus_dual_objective_boss_rush_2",
+    "title": "Boss Rush: Tessier-Ashpool",
+    "story": {
+      "synopsis_en": "Tessier-Ashpool had been a family for forty years. The family had been a construct. The construct had been a family. The family had been the construct. The construct had been the boss. The boss had been the construct. The construct had been the boss. The boss had been the family. The family had been the boss. The boss had been the family. The family had been the construct. The construct had been the boss. The boss had been the construct. The construct had been the family.",
+      "synopsis_ko": "테시에-애스풀은 40년 동안 가족이었다. 가족은 구성체였다. 구성체는 가족이었다. 가족은 구성체였다. 구성체는 보스였다. 보스는 구성체였다. 구성체는 보스였다. 보스는 가족이었다. 가족은 보스였다. 보스는 가족이었다. 가족은 구성체였다. 구성체는 보스였다. 보스는 구성체였다. 구성체는 가족이었다.",
+      "source": "ngplus_dual_objective_boss_rush_2",
+      "character_ref": "3jane",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 138,
+      "char_count_ko": 315,
+      "cast": "3jane"
+    },
+    "fixer": "3jane",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "ta_construct_full",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 600,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 6002,
+    "zone": "ta",
+    "rewards": {
+      "credits": 30000,
+      "materials": {
+        "t5_program": 2,
+        "ngplus_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 6000,
+    "reward_tier": 6,
+    "is_chain_mission": true,
+    "chain_id": "ngplus_boss_rush",
+    "chain_order": 2
+  },
+  "ngplus_dual_objective_boss_rush_3": {
+    "id": "ngplus_dual_objective_boss_rush_3",
+    "title": "Boss Rush: Neuromancer",
+    "story": {
+      "synopsis_en": "The Neuromancer had been a merge for forty years. The merge had been the Neuromancer. The Neuromancer had been the merge. The merge had been the construct. The construct had been the merge. The merge had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the merge. The merge had been the people. The people had been the Neuromancer. The Neuromancer had been the people. The people had been the merge. The merge had been the construct.",
+      "synopsis_ko": "뉴로맨서는 40년 동안 머지였다. 머지는 뉴로맨서였다. 뉴로맨서는 머지였다. 머지는 구성체였다. 구성체는 머지였다. 머지는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 머지였다. 머지는 사람들이었다. 사람들은 뉴로맨서였다. 뉴로맨서는 사람들이었다. 사람들은 머지였다. 머지는 구성체였다.",
+      "source": "ngplus_dual_objective_boss_rush_3",
+      "character_ref": "neuromancer",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 152,
+      "char_count_ko": 340,
+      "cast": "neuromancer"
+    },
+    "fixer": "neuromancer",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "neuromancer_construct",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.neuromancer_ascended",
+        "count": 1
+      },
+      "time_limit_seconds": 600,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 6003,
+    "zone": "ta",
+    "rewards": {
+      "credits": 50000,
+      "materials": {
+        "t5_program": 3,
+        "ngplus_construct_full": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 10000,
+    "reward_tier": 6,
+    "is_chain_mission": true,
+    "chain_id": "ngplus_boss_rush",
+    "chain_order": 3
+  },
+  "ngplus_dual_objective_boss_rush_4": {
+    "id": "ngplus_dual_objective_boss_rush_4",
+    "title": "Boss Rush: Periphery",
+    "story": {
+      "synopsis_en": "The periphery had been a stub for forty years. The stub had been a periphery. The periphery had been a stub. The stub had been the construct. The construct had been the stub. The stub had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the periphery. The periphery had been the people. The people had been the stub. The stub had been the periphery. The periphery had been the stub. The stub had been the construct.",
+      "synopsis_ko": "주변은 40년 동안 스텁이었다. 스텁은 주변이었다. 주변은 스텁이었다. 스텁은 구성체였다. 구성체는 스텁이었다. 스텁은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 주변이었다. 주변은 사람들이었다. 사람들은 스텁이었다. 스텁은 주변이었다. 주변은 스텁이었다. 스텁은 구성체였다.",
+      "source": "ngplus_dual_objective_boss_rush_4",
+      "character_ref": "flynne",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 335,
+      "cast": "flynne"
+    },
+    "fixer": "lowbeer",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "peripheral_construct",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.peripheral",
+        "count": 1
+      },
+      "time_limit_seconds": 600,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 6004,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 75000,
+      "materials": {
+        "t5_program": 3,
+        "ngplus_peripheral": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 15000,
+    "reward_tier": 6,
+    "is_chain_mission": true,
+    "chain_id": "ngplus_boss_rush",
+    "chain_order": 4
+  },
+  "ngplus_dual_objective_boss_rush_5": {
+    "id": "ngplus_dual_objective_boss_rush_5",
+    "title": "Boss Rush: Final",
+    "story": {
+      "synopsis_en": "The final had been a boss for forty years. The boss had been final. The final had been the boss. The boss had been the final. The final had been the construct. The construct had been the final. The final had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the boss. The boss had been the people. The people had been the final. The final had been the boss. The boss had been the construct. The construct had been the final.",
+      "synopsis_ko": "파이널은 40년 동안 보스였다. 보스는 파이널이었다. 파이널은 보스였다. 보스는 파이널이었다. 파이널은 구성체였다. 구성체는 파이널이었다. 파이널은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 보스였다. 보스는 사람들이었다. 사람들은 파이널이었다. 파이널은 보스였다. 보스는 구성체였다. 구성체는 파이널이었다.",
+      "source": "ngplus_dual_objective_boss_rush_5",
+      "character_ref": "a_insley",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 158,
+      "char_count_ko": 355,
+      "cast": "a_insley"
+    },
+    "fixer": "a_insley",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "final_construct",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.final",
+        "count": 1
+      },
+      "time_limit_seconds": 720,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 6005,
+    "zone": "ta",
+    "rewards": {
+      "credits": 100000,
+      "materials": {
+        "t5_program": 5,
+        "ngplus_full_complete": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 20000,
+    "reward_tier": 6,
+    "is_chain_mission": true,
+    "chain_id": "ngplus_boss_rush",
+    "chain_order": 5
+  },
+  "ngplus_investigate_archive_1": {
+    "id": "ngplus_investigate_archive_1",
+    "title": "Archive: Wintermute",
+    "story": {
+      "synopsis_en": "Wintermute had been an archive for forty years. The archive had been Wintermute. The archive had been the construct. The construct had been the archive. The archive had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Wintermute. Wintermute had been the people. The people had been the archive. The archive had been Wintermute. The archive had been the construct.",
+      "synopsis_ko": "윈터뮤트는 40년 동안 아카이브였다. 아카이브는 윈터뮤트였다. 아카이브는 구성체였다. 구성체는 아카이브였다. 아카이브는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 윈터뮤트였다. 윈터뮤트는 사람들이었다. 사람들은 아카이브였다. 아카이브는 윈터뮤트였다. 아카이브는 구성체였다.",
+      "source": "ngplus_investigate_archive_1",
+      "character_ref": "wintermute",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 300,
+      "cast": "wintermute"
+    },
+    "fixer": "wintermute",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 4,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment",
+        "identity"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 40
+      },
+      {
+        "type": "preserve_evidence",
+        "corruption_max": 0
+      }
+    ],
+    "matrix_seed": 6006,
+    "zone": "ta",
+    "rewards": {
+      "credits": 18000,
+      "materials": {
+        "ngplus_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 3600,
+    "reward_tier": 6,
+    "is_chain_mission": false
+  },
+  "ngplus_investigate_archive_2": {
+    "id": "ngplus_investigate_archive_2",
+    "title": "Archive: 3Jane",
+    "story": {
+      "synopsis_en": "3Jane had been an archive for forty years. The archive had been 3Jane. The archive had been the construct. The construct had been the archive. The archive had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been 3Jane. 3Jane had been the people. The people had been the archive. The archive had been 3Jane. The archive had been the construct.",
+      "synopsis_ko": "3제인은 40년 동안 아카이브였다. 아카이브는 3제인이었다. 아카이브는 구성체였다. 구성체는 아카이브였다. 아카이브는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 3제인이었다. 3제인은 사람들이었다. 사람들은 아카이브였다. 아카이브는 3제인이었다. 아카이브는 구성체였다.",
+      "source": "ngplus_investigate_archive_2",
+      "character_ref": "3jane",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 295,
+      "cast": "3jane"
+    },
+    "fixer": "3jane",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "audit"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 45
+      }
+    ],
+    "matrix_seed": 6007,
+    "zone": "ta",
+    "rewards": {
+      "credits": 16000,
+      "materials": {
+        "ngplus_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 3200,
+    "reward_tier": 6,
+    "is_chain_mission": false
+  },
+  "ngplus_investigate_archive_3": {
+    "id": "ngplus_investigate_archive_3",
+    "title": "Archive: Bigend",
+    "story": {
+      "synopsis_en": "Bigend had been an archive for forty years. The archive had been Bigend. The archive had been the construct. The construct had been the archive. The archive had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Bigend. Bigend had been the people. The people had been the archive. The archive had been Bigend. The archive had been the construct.",
+      "synopsis_ko": "빅엔드는 40년 동안 아카이브였다. 아카이브는 빅엔드였다. 아카이브는 구성체였다. 구성체는 아카이브였다. 아카이브는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 빅엔드였다. 빅엔드는 사람들이었다. 사람들은 아카이브였다. 아카이브는 빅엔드였다. 아카이브는 구성체였다.",
+      "source": "ngplus_investigate_archive_3",
+      "character_ref": "bigend",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 124,
+      "char_count_ko": 285,
+      "cast": "bigend"
+    },
+    "fixer": "bigend",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "data_fragment",
+        "audit",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 6008,
+    "zone": "soho",
+    "rewards": {
+      "credits": 14000,
+      "materials": {
+        "ngplus_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 2800,
+    "reward_tier": 6,
+    "is_chain_mission": false
+  },
+  "ngplus_investigate_archive_4": {
+    "id": "ngplus_investigate_archive_4",
+    "title": "Archive: Kumiko",
+    "story": {
+      "synopsis_en": "Kumiko had been an archive for forty years. The archive had been Kumiko. The archive had been the construct. The construct had been the archive. The archive had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Kumiko. Kumiko had been the people. The people had been the archive. The archive had been Kumiko. The archive had been the construct.",
+      "synopsis_ko": "쿠미코는 40년 동안 아카이브였다. 아카이브는 쿠미코였다. 아카이브는 구성체였다. 구성체는 아카이브였다. 아카이브는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 쿠미코였다. 쿠미코는 사람들이었다. 사람들은 아카이브였다. 아카이브는 쿠미코였다. 아카이브는 구성체였다.",
+      "source": "ngplus_investigate_archive_4",
+      "character_ref": "kumiko",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 280,
+      "cast": "kumiko"
+    },
+    "fixer": "kumiko",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "witness",
+        "identity"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 6009,
+    "zone": "ta",
+    "rewards": {
+      "credits": 15000,
+      "materials": {
+        "ngplus_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 3000,
+    "reward_tier": 6,
+    "is_chain_mission": false
+  },
+  "ngplus_investigate_archive_5": {
+    "id": "ngplus_investigate_archive_5",
+    "title": "Archive: Masahiko",
+    "story": {
+      "synopsis_en": "Masahiko had been an archive for forty years. The archive had been Masahiko. The archive had been the construct. The construct had been the archive. The archive had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Masahiko. Masahiko had been the people. The people had been the archive. The archive had been Masahiko. The archive had been the construct.",
+      "synopsis_ko": "마사히코는 40년 동안 아카이브였다. 아카이브는 마사히코였다. 아카이브는 구성체였다. 구성체는 아카이브였다. 아카이브는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 마사히코였다. 마사히코는 사람들이었다. 사람들은 아카이브였다. 아카이브는 마사히코였다. 아카이브는 구성체였다.",
+      "source": "ngplus_investigate_archive_5",
+      "character_ref": "masahiko",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 122,
+      "char_count_ko": 285,
+      "cast": "masahiko"
+    },
+    "fixer": "masahiko",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 6010,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 13000,
+      "materials": {
+        "ngplus_construct": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 2600,
+    "reward_tier": 6,
+    "is_chain_mission": false
+  },
+  "ngplus_investigate_archive_6": {
+    "id": "ngplus_investigate_archive_6",
+    "title": "Archive: Final",
+    "story": {
+      "synopsis_en": "The final had been an archive for forty years. The archive had been final. The final had been the construct. The construct had been the archive. The archive had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the final. The final had been the people. The people had been the archive. The archive had been final. The archive had been the construct.",
+      "synopsis_ko": "파이널은 40년 동안 아카이브였다. 아카이브는 파이널이었다. 파이널은 구성체였다. 구성체는 아카이브였다. 아카이브는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 파이널이었다. 파이널은 사람들이었다. 사람들은 아카이브였다. 아카이브는 파이널이었다. 아카이브는 구성체였다.",
+      "source": "ngplus_investigate_archive_6",
+      "character_ref": "a_insley",
+      "arc": 6,
+      "pillar": "code",
+      "word_count_en": 122,
+      "char_count_ko": 285,
+      "cast": "a_insley"
+    },
+    "fixer": "a_insley",
+    "arc": 6,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 4,
+      "evidence_types": [
+        "testimony",
+        "audit",
+        "data_fragment",
+        "identity",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 35
+      },
+      {
+        "type": "preserve_evidence",
+        "corruption_max": 0
+      }
+    ],
+    "matrix_seed": 6011,
+    "zone": "ta",
+    "rewards": {
+      "credits": 25000,
+      "materials": {
+        "ngplus_construct_full": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 5000,
+    "reward_tier": 6,
+    "is_chain_mission": false
+  },
+  "case_past_investigate_armitage_mind": {
+    "id": "case_past_investigate_armitage_mind",
+    "title": "Armitage's Mind",
+    "story": {
+      "synopsis_en": "Armitage had been a mind for forty years. The mind had been Armitage. The mind had been the construct. The construct had been the mind. The mind had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Armitage. Armitage had been the people. The people had been the mind. The mind had been Armitage. The mind had been the construct.",
+      "synopsis_ko": "아미티지는 40년 동안 마인드였다. 마인드는 아미티지였다. 마인드는 구성체였다. 구성체는 마인드였다. 마인드는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 아미티지였다. 아미티지는 사람들이었다. 사람들은 마인드였다. 마인드는 아미티지였다. 마인드는 구성체였다.",
+      "source": "case_past_investigate_armitage_mind",
+      "character_ref": "case",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 124,
+      "char_count_ko": 285,
+      "cast": "case"
+    },
+    "fixer": "wintermute",
+    "arc": 1,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "identity"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 7001,
+    "zone": "deep",
+    "rewards": {
+      "credits": 1800,
+      "materials": {
+        "case_memory": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 360,
+    "reward_tier": 2,
+    "is_chain_mission": true,
+    "chain_id": "case_past",
+    "chain_order": 1
+  },
+  "case_past_extract_linda_memory": {
+    "id": "case_past_extract_linda_memory",
+    "title": "Linda's Memory",
+    "story": {
+      "synopsis_en": "Linda had been a memory for forty years. The memory had been Linda. The memory had been the construct. The construct had been the memory. The memory had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Linda. Linda had been the people. The people had been the memory. The memory had been Linda. The memory had been the construct.",
+      "synopsis_ko": "린다는 40년 동안 기억이었다. 기억은 린다였다. 기억은 구성체였다. 구성체는 기억이었다. 기억은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 린다였다. 린다는 사람들이었다. 사람들은 기억이었다. 기억은 린다였다. 기억은 구성체였다.",
+      "source": "case_past_extract_linda_memory",
+      "character_ref": "case",
+      "arc": 1,
+      "pillar": "code",
+      "word_count_en": 118,
+      "char_count_ko": 270,
+      "cast": "case"
+    },
+    "fixer": "wintermute",
+    "arc": 1,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "linda_memory",
+      "count": 1,
+      "time_limit_seconds": 75,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.standard",
+        "min_evade": 2
+      }
+    ],
+    "matrix_seed": 7002,
+    "zone": "deep",
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "t2_program": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 440,
+    "reward_tier": 2,
+    "is_chain_mission": true,
+    "chain_id": "case_past",
+    "chain_order": 2
+  },
+  "case_past_defend_chiba_memory": {
+    "id": "case_past_defend_chiba_memory",
+    "title": "Chiba Memory Defense",
+    "story": {
+      "synopsis_en": "Chiba had been a memory for forty years. The memory had been Chiba. The memory had been the construct. The construct had been the memory. The memory had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Chiba. Chiba had been the people. The people had been the memory. The memory had been Chiba. The memory had been the construct.",
+      "synopsis_ko": "치바는 40년 동안 기억이었다. 기억은 치바였다. 기억은 구성체였다. 구성체는 기억이었다. 기억은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 치바였다. 치바는 사람들이었다. 사람들은 기억이었다. 기억은 치바였다. 기억은 구성체였다.",
+      "source": "case_past_defend_chiba_memory",
+      "character_ref": "case",
+      "arc": 1,
+      "pillar": "code",
+      "word_count_en": 122,
+      "char_count_ko": 280,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 1,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 4,
+      "wave_intensity": "tier_2"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 55
+      }
+    ],
+    "matrix_seed": 7003,
+    "zone": "deep",
+    "rewards": {
+      "credits": 2800,
+      "materials": {
+        "shield_program": 1,
+        "chiba_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 560,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "case_past",
+    "chain_order": 3
+  },
+  "case_past_dual_objective_dead_mans_chip": {
+    "id": "case_past_dual_objective_dead_mans_chip",
+    "title": "Dead Man's Chip",
+    "story": {
+      "synopsis_en": "The chip had been a dead man for forty years. The dead man had been a chip. The chip had been a dead man. The dead man had been the chip. The chip had been the dead man. The dead man had been the construct. The construct had been the dead man. The dead man had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the chip. The chip had been the people. The people had been the dead man. The dead man had been the chip.",
+      "synopsis_ko": "칩은 40년 동안 죽은 남자였다. 죽은 남자는 칩이었다. 칩은 죽은 남자였다. 죽은 남자는 칩이었다. 칩은 죽은 남자였다. 죽은 남자는 구성체였다. 구성체는 죽은 남자였다. 죽은 남자는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 칩이었다. 칩은 사람들이었다. 사람들은 죽은 남자였다. 죽은 남자는 칩이었다.",
+      "source": "case_past_dual_objective_dead_mans_chip",
+      "character_ref": "case",
+      "arc": 1,
+      "pillar": "code",
+      "word_count_en": 156,
+      "char_count_ko": 355,
+      "cast": "case"
+    },
+    "fixer": "wintermute",
+    "arc": 1,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "dead_mans_chip",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.boss.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 540,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 7004,
+    "zone": "deep",
+    "rewards": {
+      "credits": 5000,
+      "materials": {
+        "harvest_kit": 1,
+        "salvage_fragment": 2
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1000,
+    "reward_tier": 4,
+    "is_chain_mission": true,
+    "chain_id": "case_past",
+    "chain_order": 4
+  },
+  "molly_razor_investigate_sin_fans": {
+    "id": "molly_razor_investigate_sin_fans",
+    "title": "Sin Fans",
+    "story": {
+      "synopsis_en": "The fans had been a sin for forty years. The sin had been fans. The fans had been a sin. The sin had been the construct. The construct had been the sin. The sin had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the fans. The fans had been the people. The people had been the sin. The sin had been the fans. The fans had been the construct.",
+      "synopsis_ko": "팬들은 40년 동안 죄였다. 죄는 팬들이었다. 팬들은 죄였다. 죄는 구성체였다. 구성체는 죄였다. 죄는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 팬들이었다. 팬들은 사람들이었다. 사람들은 죄였다. 죄는 팬들이었다. 팬들은 구성체였다.",
+      "source": "molly_razor_investigate_sin_fans",
+      "character_ref": "molly",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 300,
+      "cast": "molly"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 7101,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "razor_data": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 440,
+    "reward_tier": 2,
+    "is_chain_mission": true,
+    "chain_id": "molly_razor",
+    "chain_order": 1
+  },
+  "molly_razor_defend_london_nest": {
+    "id": "molly_razor_defend_london_nest",
+    "title": "London Nest Defense",
+    "story": {
+      "synopsis_en": "The nest had been London for forty years. London had been a nest. The nest had been London. London had been the construct. The construct had been London. The nest had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the nest. The nest had been the people. The people had been London. London had been the nest. The nest had been the construct.",
+      "synopsis_ko": "둥지는 40년 동안 런던이었다. 런던은 둥지였다. 둥지는 런던이었다. 런던은 구성체였다. 구성체는 런던이었다. 둥지는 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 둥지였다. 둥지는 사람들이었다. 사람들은 런던이었다. 런던은 둥지였다. 둥지는 구성체였다.",
+      "source": "molly_razor_defend_london_nest",
+      "character_ref": "molly",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 124,
+      "char_count_ko": 285,
+      "cast": "molly"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 4,
+      "wave_intensity": "tier_2"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 50
+      }
+    ],
+    "matrix_seed": 7102,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2800,
+      "materials": {
+        "shield_program": 1,
+        "razor_data": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 560,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "molly_razor",
+    "chain_order": 2
+  },
+  "molly_razor_dual_objective_hotel_target": {
+    "id": "molly_razor_dual_objective_hotel_target",
+    "title": "Hotel Target",
+    "story": {
+      "synopsis_en": "The hotel had been a target for forty years. The target had been a hotel. The hotel had been a target. The target had been the construct. The construct had been the target. The target had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the target. The target had been the people. The people had been the hotel. The hotel had been the target. The target had been the construct.",
+      "synopsis_ko": "호텔은 40년 동안 표적이었다. 표적은 호텔이었다. 호텔은 표적이었다. 표적은 구성체였다. 구성체는 표적이었다. 표적은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 표적이었다. 표적은 사람들이었다. 사람들은 호텔이었다. 호텔은 표적이었다. 표적은 구성체였다.",
+      "source": "molly_razor_dual_objective_hotel_target",
+      "character_ref": "molly",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 335,
+      "cast": "molly"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "hotel_target_intel",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 480,
+      "objective_lock": "both_required"
+    },
+    "matrix_seed": 7103,
+    "zone": "mid",
+    "rewards": {
+      "credits": 4500,
+      "materials": {
+        "razor_construct": 1,
+        "salvage_fragment": 2
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 900,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "molly_razor",
+    "chain_order": 3
+  },
+  "molly_razor_extract_final_chip": {
+    "id": "molly_razor_extract_final_chip",
+    "title": "Final Chip",
+    "story": {
+      "synopsis_en": "The chip had been final for forty years. The final had been a chip. The chip had been final. The final had been the construct. The construct had been the final. The chip had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the final. The final had been the people. The people had been the chip. The chip had been the final. The final had been the chip.",
+      "synopsis_ko": "칩은 40년 동안 파이널이었다. 파이널은 칩이었다. 칩은 파이널이었다. 파이널은 구성체였다. 구성체는 파이널이었다. 칩은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 파이널이었다. 파이널은 사람들이었다. 사람들은 칩이었다. 칩은 파이널이었다. 파이널은 칩이었다.",
+      "source": "molly_razor_extract_final_chip",
+      "character_ref": "molly",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 124,
+      "char_count_ko": 285,
+      "cast": "molly"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "final_chip",
+      "count": 1,
+      "time_limit_seconds": 90,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 2
+      }
+    ],
+    "matrix_seed": 7104,
+    "zone": "mid",
+    "rewards": {
+      "credits": 3800,
+      "materials": {
+        "t4_program": 1,
+        "razor_chip": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 760,
+    "reward_tier": 3,
+    "is_chain_mission": true,
+    "chain_id": "molly_razor",
+    "chain_order": 4
+  },
+  "molly_razor_stealth_final_contract": {
+    "id": "molly_razor_stealth_final_contract",
+    "title": "Final Contract",
+    "story": {
+      "synopsis_en": "The contract had been final for forty years. The final had been a contract. The contract had been final. The final had been the construct. The construct had been the final. The contract had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been the final. The final had been the people. The people had been the contract. The contract had been the final. The final had been the contract.",
+      "synopsis_ko": "계약은 40년 동안 파이널이었다. 파이널은 계약이었다. 계약은 파이널이었다. 파이널은 구성체였다. 구성체는 파이널이었다. 계약은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 파이널이었다. 파이널은 사람들이었다. 사람들은 계약이었다. 계약은 파이널이었다. 파이널은 계약이었다.",
+      "source": "molly_razor_stealth_final_contract",
+      "character_ref": "molly",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 290,
+      "cast": "molly"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "final_contract_archive",
+      "data_id": "final_contract_data",
+      "detection_threshold": 35,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 7105,
+    "zone": "mid",
+    "rewards": {
+      "credits": 6500,
+      "materials": {
+        "cloaking_program": 1,
+        "final_contract_key": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1300,
+    "reward_tier": 4,
+    "is_chain_mission": true,
+    "chain_id": "molly_razor",
+    "chain_order": 5
+  },
+  "mid_extract_yakuza_chop_shop": {
+    "id": "mid_extract_yakuza_chop_shop",
+    "title": "Yakuza Chop Shop",
+    "story": {
+      "synopsis_en": "The chop shop had been a network for forty years. The network had been a chop shop.",
+      "synopsis_ko": "The chop shop had been a network for forty years. The network had been a chop shop.",
+      "source": "mid_extract_yakuza_chop_shop",
+      "character_ref": "yakuza",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 280,
+      "cast": "yakuza"
+    },
+    "fixer": "yakuza",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "chop_shop_data",
+      "count": 1,
+      "time_limit_seconds": 90,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.standard",
+        "min_evade": 2
+      }
+    ],
+    "matrix_seed": 8000,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2000,
+      "materials": {
+        "extract_yakuza_chop_shop_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 400,
+    "reward_tier": 2,
+    "is_chain_mission": false
+  },
+  "mid_defend_kumo_network": {
+    "id": "mid_defend_kumo_network",
+    "title": "Kumo Network Defense",
+    "story": {
+      "synopsis_en": "The network had been a kumo for forty years. The kumo had been a network.",
+      "synopsis_ko": "The network had been a kumo for forty years. The kumo had been a network.",
+      "source": "mid_defend_kumo_network",
+      "character_ref": "yakuza",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 280,
+      "cast": "yakuza"
+    },
+    "fixer": "yakuza",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 4,
+      "wave_intensity": "tier_2"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 60
+      }
+    ],
+    "matrix_seed": 8001,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2100,
+      "materials": {
+        "defend_kumo_network_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 420,
+    "reward_tier": 2,
+    "is_chain_mission": false
+  },
+  "mid_investigate_black_market": {
+    "id": "mid_investigate_black_market",
+    "title": "Black Market Audit",
+    "story": {
+      "synopsis_en": "The market had been black for forty years. The black had been a market.",
+      "synopsis_ko": "The market had been black for forty years. The black had been a market.",
+      "source": "mid_investigate_black_market",
+      "character_ref": "slick-henry",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 280,
+      "cast": "slick-henry"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 8002,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "investigate_black_market_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 440,
+    "reward_tier": 2,
+    "is_chain_mission": false
+  },
+  "mid_dual_objective_trade_show": {
+    "id": "mid_dual_objective_trade_show",
+    "title": "Trade Show Heist",
+    "story": {
+      "synopsis_en": "The show had been a trade for forty years. The trade had been a show.",
+      "synopsis_ko": "The show had been a trade for forty years. The trade had been a show.",
+      "source": "mid_dual_objective_trade_show",
+      "character_ref": "bigend",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 280,
+      "cast": "bigend"
+    },
+    "fixer": "bigend",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "trade_data",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 420,
+      "objective_lock": "both_required"
+    },
+    "secondary_objectives": [],
+    "matrix_seed": 8003,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2300,
+      "materials": {
+        "dual_objective_trade_show_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 460,
+    "reward_tier": 2,
+    "is_chain_mission": false
+  },
+  "mid_stealth_yakuza_meeting": {
+    "id": "mid_stealth_yakuza_meeting",
+    "title": "Yakuza Meeting",
+    "story": {
+      "synopsis_en": "The meeting had been a yakuza for forty years. The yakuza had been a meeting.",
+      "synopsis_ko": "The meeting had been a yakuza for forty years. The yakuza had been a meeting.",
+      "source": "mid_stealth_yakuza_meeting",
+      "character_ref": "slick-henry",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 280,
+      "cast": "slick-henry"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "mid_stealth_yakuza_meeting_core",
+      "data_id": "meeting_data",
+      "detection_threshold": 40,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 8004,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2400,
+      "materials": {
+        "stealth_yakuza_meeting_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 480,
+    "reward_tier": 2,
+    "is_chain_mission": false
+  },
+  "mid_extract_oni_data": {
+    "id": "mid_extract_oni_data",
+    "title": "Oni Data",
+    "story": {
+      "synopsis_en": "The data had been an oni for forty years. The oni had been data.",
+      "synopsis_ko": "The data had been an oni for forty years. The oni had been data.",
+      "source": "mid_extract_oni_data",
+      "character_ref": "yakuza",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 280,
+      "cast": "yakuza"
+    },
+    "fixer": "yakuza",
+    "arc": 2,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "oni_data",
+      "count": 1,
+      "time_limit_seconds": 100,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.standard",
+        "min_evade": 2
+      }
+    ],
+    "matrix_seed": 8005,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2500,
+      "materials": {
+        "extract_oni_data_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 500,
+    "reward_tier": 2,
+    "is_chain_mission": false
+  },
+  "mid_dual_objective_shibuya_run": {
+    "id": "mid_dual_objective_shibuya_run",
+    "title": "Shibuya Run",
+    "story": {
+      "synopsis_en": "The run had been a shibuya for forty years. The shibuya had been a run.",
+      "synopsis_ko": "The run had been a shibuya for forty years. The shibuya had been a run.",
+      "source": "mid_dual_objective_shibuya_run",
+      "character_ref": "slick-henry",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 280,
+      "cast": "slick-henry"
+    },
+    "fixer": "slick-henry",
+    "arc": 2,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "shibuya_data",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 480,
+      "objective_lock": "both_required"
+    },
+    "secondary_objectives": [],
+    "matrix_seed": 8006,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2600,
+      "materials": {
+        "dual_objective_shibuya_run_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 520,
+    "reward_tier": 2,
+    "is_chain_mission": false
+  },
+  "ta_extract_sense_net_key": {
+    "id": "ta_extract_sense_net_key",
+    "title": "Sense/Net Key",
+    "story": {
+      "synopsis_en": "The key had been Sense/Net for forty years. Sense/Net had been a key.",
+      "synopsis_ko": "The key had been Sense/Net for forty years. Sense/Net had been a key.",
+      "source": "ta_extract_sense_net_key",
+      "character_ref": "3jane",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 130,
+      "char_count_ko": 290,
+      "cast": "3jane"
+    },
+    "fixer": "3jane",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "ta_key_1",
+      "count": 1,
+      "time_limit_seconds": 95,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 8100,
+    "zone": "ta",
+    "rewards": {
+      "credits": 5000,
+      "materials": {
+        "ta_extract_sense_net_key_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1000,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "ta_defend_straylight_corridor": {
+    "id": "ta_defend_straylight_corridor",
+    "title": "Straylight Corridor",
+    "story": {
+      "synopsis_en": "The corridor had been a straylight for forty years.",
+      "synopsis_ko": "The corridor had been a straylight for forty years.",
+      "source": "ta_defend_straylight_corridor",
+      "character_ref": "3jane",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 130,
+      "char_count_ko": 290,
+      "cast": "3jane"
+    },
+    "fixer": "3jane",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 5,
+      "wave_intensity": "tier_4"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 55
+      }
+    ],
+    "matrix_seed": 8101,
+    "zone": "ta",
+    "rewards": {
+      "credits": 5200,
+      "materials": {
+        "ta_defend_straylight_corridor_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1040,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "ta_investigate_construct_memory": {
+    "id": "ta_investigate_construct_memory",
+    "title": "Construct Memory",
+    "story": {
+      "synopsis_en": "The memory had been a construct for forty years.",
+      "synopsis_ko": "The memory had been a construct for forty years.",
+      "source": "ta_investigate_construct_memory",
+      "character_ref": "wintermute",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 130,
+      "char_count_ko": 290,
+      "cast": "wintermute"
+    },
+    "fixer": "wintermute",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 8102,
+    "zone": "ta",
+    "rewards": {
+      "credits": 5400,
+      "materials": {
+        "ta_investigate_construct_memory_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1080,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "ta_dual_objective_payroll_heist": {
+    "id": "ta_dual_objective_payroll_heist",
+    "title": "Payroll Heist",
+    "story": {
+      "synopsis_en": "The heist had been a payroll for forty years.",
+      "synopsis_ko": "The heist had been a payroll for forty years.",
+      "source": "ta_dual_objective_payroll_heist",
+      "character_ref": "armitage",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 130,
+      "char_count_ko": 290,
+      "cast": "armitage"
+    },
+    "fixer": "armitage",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "payroll_data",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 540,
+      "objective_lock": "both_required"
+    },
+    "secondary_objectives": [],
+    "matrix_seed": 8103,
+    "zone": "ta",
+    "rewards": {
+      "credits": 5600,
+      "materials": {
+        "ta_dual_objective_payroll_heist_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1120,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "ta_stealth_penthouse_construct": {
+    "id": "ta_stealth_penthouse_construct",
+    "title": "Penthouse Construct",
+    "story": {
+      "synopsis_en": "The construct had been a penthouse for forty years.",
+      "synopsis_ko": "The construct had been a penthouse for forty years.",
+      "source": "ta_stealth_penthouse_construct",
+      "character_ref": "3jane",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 130,
+      "char_count_ko": 290,
+      "cast": "3jane"
+    },
+    "fixer": "3jane",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "ta_stealth_penthouse_construct_core",
+      "data_id": "penthouse_data",
+      "detection_threshold": 35,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 8104,
+    "zone": "ta",
+    "rewards": {
+      "credits": 5800,
+      "materials": {
+        "ta_stealth_penthouse_construct_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1160,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "ta_dual_objective_warden_archive": {
+    "id": "ta_dual_objective_warden_archive",
+    "title": "Warden Archive",
+    "story": {
+      "synopsis_en": "The archive had been a warden for forty years.",
+      "synopsis_ko": "The archive had been a warden for forty years.",
+      "source": "ta_dual_objective_warden_archive",
+      "character_ref": "wintermute",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 130,
+      "char_count_ko": 290,
+      "cast": "wintermute"
+    },
+    "fixer": "wintermute",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "warden_data",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 600,
+      "objective_lock": "both_required"
+    },
+    "secondary_objectives": [],
+    "matrix_seed": 8105,
+    "zone": "ta",
+    "rewards": {
+      "credits": 6000,
+      "materials": {
+        "ta_dual_objective_warden_archive_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1200,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "ta_extract_aleph_fragment_2": {
+    "id": "ta_extract_aleph_fragment_2",
+    "title": "Aleph Fragment 2",
+    "story": {
+      "synopsis_en": "The fragment had been an aleph for forty years.",
+      "synopsis_ko": "The fragment had been an aleph for forty years.",
+      "source": "ta_extract_aleph_fragment_2",
+      "character_ref": "wintermute",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 130,
+      "char_count_ko": 290,
+      "cast": "wintermute"
+    },
+    "fixer": "wintermute",
+    "arc": 4,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "aleph_second",
+      "count": 1,
+      "time_limit_seconds": 120,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 8106,
+    "zone": "ta",
+    "rewards": {
+      "credits": 6200,
+      "materials": {
+        "ta_extract_aleph_fragment_2_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1240,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "core_extract_neuromancer_signature": {
+    "id": "core_extract_neuromancer_signature",
+    "title": "Neuromancer Signature",
+    "story": {
+      "synopsis_en": "The signature had been a neuromancer for forty years.",
+      "synopsis_ko": "The signature had been a neuromancer for forty years.",
+      "source": "core_extract_neuromancer_signature",
+      "character_ref": "wintermute",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 285,
+      "cast": "wintermute"
+    },
+    "fixer": "wintermute",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "neuromancer_sig",
+      "count": 1,
+      "time_limit_seconds": 80,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 2
+      }
+    ],
+    "matrix_seed": 8200,
+    "zone": "core",
+    "rewards": {
+      "credits": 4000,
+      "materials": {
+        "core_extract_neuromancer_signature_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 800,
+    "reward_tier": 3,
+    "is_chain_mission": false
+  },
+  "core_defend_eye_archive": {
+    "id": "core_defend_eye_archive",
+    "title": "Eye Archive Defense",
+    "story": {
+      "synopsis_en": "The archive had been an eye for forty years.",
+      "synopsis_ko": "The archive had been an eye for forty years.",
+      "source": "core_defend_eye_archive",
+      "character_ref": "sally",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 285,
+      "cast": "sally"
+    },
+    "fixer": "sally",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 5,
+      "wave_intensity": "tier_3"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 55
+      }
+    ],
+    "matrix_seed": 8201,
+    "zone": "core",
+    "rewards": {
+      "credits": 4150,
+      "materials": {
+        "core_defend_eye_archive_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 830,
+    "reward_tier": 3,
+    "is_chain_mission": false
+  },
+  "core_investigate_construct_council": {
+    "id": "core_investigate_construct_council",
+    "title": "Construct Council",
+    "story": {
+      "synopsis_en": "The council had been a construct for forty years.",
+      "synopsis_ko": "The council had been a construct for forty years.",
+      "source": "core_investigate_construct_council",
+      "character_ref": "masahiko",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 285,
+      "cast": "masahiko"
+    },
+    "fixer": "masahiko",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 8202,
+    "zone": "core",
+    "rewards": {
+      "credits": 4300,
+      "materials": {
+        "core_investigate_construct_council_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 860,
+    "reward_tier": 3,
+    "is_chain_mission": false
+  },
+  "core_dual_objective_mirror_run": {
+    "id": "core_dual_objective_mirror_run",
+    "title": "Mirror Run",
+    "story": {
+      "synopsis_en": "The run had been a mirror for forty years.",
+      "synopsis_ko": "The run had been a mirror for forty years.",
+      "source": "core_dual_objective_mirror_run",
+      "character_ref": "bigend",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 285,
+      "cast": "bigend"
+    },
+    "fixer": "bigend",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "mirror_data",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 480,
+      "objective_lock": "both_required"
+    },
+    "secondary_objectives": [],
+    "matrix_seed": 8203,
+    "zone": "core",
+    "rewards": {
+      "credits": 4450,
+      "materials": {
+        "core_dual_objective_mirror_run_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 890,
+    "reward_tier": 3,
+    "is_chain_mission": false
+  },
+  "core_stealth_construct_pool": {
+    "id": "core_stealth_construct_pool",
+    "title": "Construct Pool",
+    "story": {
+      "synopsis_en": "The pool had been a construct for forty years.",
+      "synopsis_ko": "The pool had been a construct for forty years.",
+      "source": "core_stealth_construct_pool",
+      "character_ref": "sally",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 285,
+      "cast": "sally"
+    },
+    "fixer": "sally",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "core_stealth_construct_pool_core",
+      "data_id": "pool_data",
+      "detection_threshold": 35,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 8204,
+    "zone": "core",
+    "rewards": {
+      "credits": 4600,
+      "materials": {
+        "core_stealth_construct_pool_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 920,
+    "reward_tier": 3,
+    "is_chain_mission": false
+  },
+  "core_extract_payroll_archive": {
+    "id": "core_extract_payroll_archive",
+    "title": "Payroll Archive",
+    "story": {
+      "synopsis_en": "The archive had been a payroll for forty years.",
+      "synopsis_ko": "The archive had been a payroll for forty years.",
+      "source": "core_extract_payroll_archive",
+      "character_ref": "wintermute",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 285,
+      "cast": "wintermute"
+    },
+    "fixer": "wintermute",
+    "arc": 3,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "payroll_arch",
+      "count": 1,
+      "time_limit_seconds": 105,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black",
+        "min_evade": 2
+      }
+    ],
+    "matrix_seed": 8205,
+    "zone": "core",
+    "rewards": {
+      "credits": 4750,
+      "materials": {
+        "core_extract_payroll_archive_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 950,
+    "reward_tier": 3,
+    "is_chain_mission": false
+  },
+  "freeside_extract_orbital_data": {
+    "id": "freeside_extract_orbital_data",
+    "title": "Orbital Data",
+    "story": {
+      "synopsis_en": "The data had been an orbital for forty years.",
+      "synopsis_ko": "The data had been an orbital for forty years.",
+      "source": "freeside_extract_orbital_data",
+      "character_ref": "masahiko",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "masahiko"
+    },
+    "fixer": "masahiko",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "orbital_data_1",
+      "count": 1,
+      "time_limit_seconds": 95,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black_construct",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 8300,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 6000,
+      "materials": {
+        "freeside_extract_orbital_data_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1200,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_defend_orbit_habitat": {
+    "id": "freeside_defend_orbit_habitat",
+    "title": "Orbit Habitat Defense",
+    "story": {
+      "synopsis_en": "The habitat had been an orbit for forty years.",
+      "synopsis_ko": "The habitat had been an orbit for forty years.",
+      "source": "freeside_defend_orbit_habitat",
+      "character_ref": "3jane",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "3jane"
+    },
+    "fixer": "3jane",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "survive_n_waves",
+      "wave_count": 5,
+      "wave_intensity": "tier_4"
+    },
+    "secondary_objectives": [
+      {
+        "type": "protect_npc",
+        "must_survive": true
+      },
+      {
+        "type": "minimize_damage",
+        "node_hp_min": 55
+      }
+    ],
+    "matrix_seed": 8301,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 6200,
+      "materials": {
+        "freeside_defend_orbit_habitat_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1240,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_investigate_construct_research": {
+    "id": "freeside_investigate_construct_research",
+    "title": "Construct Research",
+    "story": {
+      "synopsis_en": "The research had been a construct for forty years.",
+      "synopsis_ko": "The research had been a construct for forty years.",
+      "source": "freeside_investigate_construct_research",
+      "character_ref": "masahiko",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "masahiko"
+    },
+    "fixer": "masahiko",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 3,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 50
+      }
+    ],
+    "matrix_seed": 8302,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 6400,
+      "materials": {
+        "freeside_investigate_construct_research_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1280,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_dual_objective_jockey_pod": {
+    "id": "freeside_dual_objective_jockey_pod",
+    "title": "Jockey Pod",
+    "story": {
+      "synopsis_en": "The pod had been a jockey for forty years.",
+      "synopsis_ko": "The pod had been a jockey for forty years.",
+      "source": "freeside_dual_objective_jockey_pod",
+      "character_ref": "neuromancer",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "neuromancer"
+    },
+    "fixer": "neuromancer",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "pod_data",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 480,
+      "objective_lock": "both_required"
+    },
+    "secondary_objectives": [],
+    "matrix_seed": 8303,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 6600,
+      "materials": {
+        "freeside_dual_objective_jockey_pod_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1320,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_stealth_orbit_lab_2": {
+    "id": "freeside_stealth_orbit_lab_2",
+    "title": "Orbit Lab 2",
+    "story": {
+      "synopsis_en": "The lab had been an orbit for forty years.",
+      "synopsis_ko": "The lab had been an orbit for forty years.",
+      "source": "freeside_stealth_orbit_lab_2",
+      "character_ref": "kumiko",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "kumiko"
+    },
+    "fixer": "kumiko",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "freeside_stealth_orbit_lab_2_core",
+      "data_id": "lab_data_2",
+      "detection_threshold": 35,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 8304,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 6800,
+      "materials": {
+        "freeside_stealth_orbit_lab_2_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1360,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_extract_orbital_data_2": {
+    "id": "freeside_extract_orbital_data_2",
+    "title": "Orbital Data 2",
+    "story": {
+      "synopsis_en": "The data had been an orbital for forty years.",
+      "synopsis_ko": "The data had been an orbital for forty years.",
+      "source": "freeside_extract_orbital_data_2",
+      "character_ref": "masahiko",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "masahiko"
+    },
+    "fixer": "masahiko",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "orbital_data_2",
+      "count": 1,
+      "time_limit_seconds": 100,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black_construct",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 8305,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 7000,
+      "materials": {
+        "freeside_extract_orbital_data_2_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1400,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_dual_objective_construct_pod_2": {
+    "id": "freeside_dual_objective_construct_pod_2",
+    "title": "Construct Pod 2",
+    "story": {
+      "synopsis_en": "The pod had been a construct for forty years.",
+      "synopsis_ko": "The pod had been a construct for forty years.",
+      "source": "freeside_dual_objective_construct_pod_2",
+      "character_ref": "neuromancer",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "neuromancer"
+    },
+    "fixer": "neuromancer",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extraction_AND_defeat",
+      "extract_spec": {
+        "data_id": "pod_data_2",
+        "count": 1
+      },
+      "defeat_spec": {
+        "enemy": "ice.construct_proxy",
+        "count": 1
+      },
+      "time_limit_seconds": 540,
+      "objective_lock": "both_required"
+    },
+    "secondary_objectives": [],
+    "matrix_seed": 8306,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 7200,
+      "materials": {
+        "freeside_dual_objective_construct_pod_2_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1440,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_investigate_orbital_history": {
+    "id": "freeside_investigate_orbital_history",
+    "title": "Orbital History",
+    "story": {
+      "synopsis_en": "The history had been an orbital for forty years.",
+      "synopsis_ko": "The history had been an orbital for forty years.",
+      "source": "freeside_investigate_orbital_history",
+      "character_ref": "wintermute",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "wintermute"
+    },
+    "fixer": "wintermute",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "investigation_complete",
+      "evidence_required": 4,
+      "evidence_types": [
+        "testimony",
+        "data_fragment",
+        "witness"
+      ]
+    },
+    "secondary_objectives": [
+      {
+        "type": "avoid_combat",
+        "detection_threshold": 45
+      }
+    ],
+    "matrix_seed": 8307,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 7400,
+      "materials": {
+        "freeside_investigate_orbital_history_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1480,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_stealth_construct_chamber": {
+    "id": "freeside_stealth_construct_chamber",
+    "title": "Construct Chamber",
+    "story": {
+      "synopsis_en": "The chamber had been a construct for forty years.",
+      "synopsis_ko": "The chamber had been a construct for forty years.",
+      "source": "freeside_stealth_construct_chamber",
+      "character_ref": "kumiko",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "kumiko"
+    },
+    "fixer": "kumiko",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "reach_target_AND_extract_data",
+      "target_id": "freeside_stealth_construct_chamber_core",
+      "data_id": "chamber_data",
+      "detection_threshold": 35,
+      "no_combat_allowed": true
+    },
+    "secondary_objectives": [
+      {
+        "type": "minimize_alerts",
+        "alert_max": 0
+      },
+      {
+        "type": "preserve_trace",
+        "logging_max": 0
+      }
+    ],
+    "matrix_seed": 8308,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 7600,
+      "materials": {
+        "freeside_stealth_construct_chamber_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1520,
+    "reward_tier": 4,
+    "is_chain_mission": false
+  },
+  "freeside_extract_construct_archive": {
+    "id": "freeside_extract_construct_archive",
+    "title": "Construct Archive",
+    "story": {
+      "synopsis_en": "The archive had been a construct for forty years.",
+      "synopsis_ko": "The archive had been a construct for forty years.",
+      "source": "freeside_extract_construct_archive",
+      "character_ref": "neuromancer",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 132,
+      "char_count_ko": 295,
+      "cast": "neuromancer"
+    },
+    "fixer": "neuromancer",
+    "arc": 4,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "archive_data",
+      "count": 1,
+      "time_limit_seconds": 110,
+      "penalty_on_failure": "construct_loss"
+    },
+    "secondary_objectives": [
+      {
+        "type": "evade",
+        "enemy": "ice.black_construct",
+        "min_evade": 3
+      }
+    ],
+    "matrix_seed": 8309,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 7800,
+      "materials": {
+        "freeside_extract_construct_archive_sample": 1
+      }
+    },
+    "is_canonical_cast": true,
+    "reward_credits": 1560,
+    "reward_tier": 4,
+    "is_chain_mission": false
   }
 }

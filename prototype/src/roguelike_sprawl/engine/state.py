@@ -193,6 +193,12 @@ class AppState:
     # Story event fields (ADR-0019)
     story_aftermath_id: str = "aftermath_black_ice"
     story_importance: str = "major"
+    # Deck size (ADR-0178): light / standard / heavy
+    # Controls program slots + AP regen + cooldown modifiers.
+    deck_size: str = "standard"
+    # Telemetry session (ADR-0184): opt-in only, aggregated data only
+    telemetry_opt_in: bool = False
+    telemetry: object = None
     # Display fields (filled by the demo / shell)
     player_ppl: int = 0
     player_hp: int = 0

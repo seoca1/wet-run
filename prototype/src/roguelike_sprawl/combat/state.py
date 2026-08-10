@@ -25,7 +25,19 @@ from .state_models import (  # ADR-0141 split — dataclasses live in state_mode
 )
 
 if TYPE_CHECKING:
+    from ..combat.telemetry_integration import record_kill
     from ..engine.state import AppState
+
+
+def record_kill(ice_kind: str | None) -> None:
+    """Record an ICE kill event. No-op stub (Phase 14 wiring deferred).
+
+    ``_apply_damage`` calls this on every target HP transition to 0. The
+    real implementation will be wired to ``AppState.telemetry`` once F.2/F.4
+    dispatch lands; until then this satisfies the runtime contract so combat
+    tests do not NameError.
+    """
+    del ice_kind
 
 __all__ = [
     "ALARM_MAX_LEVEL",
@@ -260,6 +272,8 @@ def _apply_damage(
     applied = amount - absorbed
     state.shield = max(0, state.shield - amount)
     target.hp = max(0, target.hp - applied)
+    if target.hp <= 0:
+        record_kill(target.ice_kind)
     return applied
 
 

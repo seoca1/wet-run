@@ -390,3 +390,90 @@ graph = mission_to_graph(missions[0], character_ref="veteran")
 ```bash
 PYTHONPATH=src .venv/bin/python scripts/play_mission_mapping.py
 ```
+
+---
+
+## Phase 11 확장 (ADR-0188) — Mission Type Expansion
+
+Phase 11 introduces 5 new mission types + mission chains. All extensions are **additive** (existing 111 missions unchanged).
+
+### New Mission Types
+
+See `mission-types.md` for full taxonomy. Summary:
+
+| 타입 | 메카닉 | 조건 | 보상 |
+| --- | --- | --- | --- |
+| `investigation_complete` | 다단계 증거 수집 (no combat) | scan/decrypt programs | CRED + reputation + program |
+| `survive_n_waves` | N waves 방어 + NPC 보호 | shield/defense programs | CRED + programs + meta |
+| `extraction_AND_defeat` | 동시 2 objective | multi-task capability | CRED × 2 + combo bonus |
+| `extract_data` (high-risk variant) | 시간 제한 (120s) + construct_loss | T3+ programs | CRED × 3 + T5 program |
+| `reach_target_AND_extract_data` | stealth only (no combat) | cloak/decrypt programs | CRED + cloaking_program |
+
+### Mission Chains (ADR-0188, mission-chains.md)
+
+8 chains of 3-5 missions each. Unlock mid-game, unique rewards, higher stakes.
+
+**ta_succession chain** (sample, 5 missions):
+1. `ta_investigate_3jane_initiative` (investigation) — intro
+2. `ta_defend_straylight_perimeter` (defense) — escalation (midpoint save)
+3. `ta_dual_objective_ashpool_vote` (dual-objective) — climax
+4. `ta_extract_aleph_chip` (extraction_v2) — revelation
+5. `ta_stealth_construct_chamber` (stealth) — resolution
+
+Chain reward: `ta_construct_full` + reputation +25 + 50000 credits + achievement `succession_complete`.
+
+### Zone Distribution (Post-Phase 11 Target)
+
+| Zone | Phase 10 | Phase 11 Target | Delta |
+|---|---|---|---|
+| surface | 32 | 35+ | +3 |
+| mid | 11 | 35+ | +24 |
+| deep | 36 | 36 | 0 |
+| core | 12 | 30+ | +18 |
+| ta | 8 (now 13) | 35+ | +22 |
+| freeside | 7 | 30+ | +23 |
+| tokyo (Bridge) | 3 | 10+ | +7 |
+| soho (Blue Ant) | 2 | 10+ | +8 |
+
+**Current state (2026-08-08)**: 116 missions (was 111), TA zone: 13 (was 8). Phase 11 in progress.
+
+### 데이터 스키마 확장
+
+`Mission` dataclass added fields:
+- `is_chain_mission: bool` — chain participation flag
+- `chain_id: str | None` — chain identifier
+- `chain_order: int | None` — position in chain
+
+`Objective` dataclass added fields:
+- Investigation: `evidence_required`, `evidence_types`
+- Defense: `wave_count`, `wave_intensity`, `must_survive`, `node_hp_min`
+- Dual-objective: `extract_spec`, `defeat_spec`, `time_limit_seconds`, `objective_lock`
+- Extraction_v2: `time_limit_seconds`, `penalty_on_failure`
+- Stealth: `detection_threshold`, `no_combat_allowed`, `target_id`, `alert_max`, `logging_max`
+
+`MissionChain` dataclass (new):
+- `chain_id`, `chain_name`, `chain_type`, `chain_arc`
+- `unlock_condition`, `missions`, `chain_reward`, `chain_failure`
+- `chain_midpoint_save`, `chain_estimated_time_minutes`
+
+### 상호 운용성 (Interoperability)
+
+- **기존 111 missions**: 0 변경, 그대로 작동
+- **신규 5 missions**: TA zone, chain 통합 (ta_succession)
+- **확장 5+ types**: `investigation_*, defeat_*, dual_*, extraction_v2, stealth_*`
+- **체인**: 1 chain (ta_succession) + 7 plans (faction 3 + character 3 + story 2)
+
+### 검증
+
+- `make test`: 33 passed (10 legacy + 23 new = 100%)
+- `make lint`: ruff check clean
+- `make typecheck`: mypy strict 0 errors
+- Schema: additive, no breaking changes
+
+### 관련 문서
+
+- `mission-types.md` — 5 new types 상세
+- `mission-chains.md` — chain 메카닉
+- `decisions/0188-mission-expansion.md` — ADR (Accepted)
+- `testcases/missions/new-types.md` — 6 testcases
+- `prototype/tests/unit/test_mission_types_v2.py` — 23 new tests

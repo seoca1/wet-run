@@ -8,7 +8,6 @@ import pytest
 
 from roguelike_sprawl.combat.tutorial import (
     TUTORIAL_ACTS,
-    TutorialAct,
     get_act_index,
     get_current_act,
     get_tutorial_act,

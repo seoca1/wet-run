@@ -1,19 +1,66 @@
-"""Mission data model (ADR-0010, ADR-0017, story_skeleton.md)."""
+"""Mission data model (ADR-0010, ADR-0017, ADR-0188, story_skeleton.md).
+
+Phase 11 additions per ADR-0188:
+- 5 new mission types: investigation, defense, dual_objective, extraction_v2, stealth
+- MissionChain class for chained missions
+- Extended Objective schema with type-specific fields
+"""
 
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import StrEnum
 
 from ..matrix.node import ZoneDepth
 
 
+class MissionType(StrEnum):
+    """Mission type taxonomy (ADR-0188, mission-types.md).
+
+    Existing types (Phase 1-9):
+        EXTRACT_DATA: Pull data from cyberspace
+        DEFEAT: Defeat target ICE/boss
+        DELIVER: Physical delivery
+        ...
+
+    New types (Phase 11):
+        INVESTIGATION: Multi-stage intel-gathering (no combat)
+        DEFENSE: Survive N waves, protect NPC
+        DUAL_OBJECTIVE: Two simultaneous primaries
+        EXTRACTION_V2: High-risk extraction with timer
+        STEALTH: Avoid detection entirely
+    """
+
+    # Existing 6+ types
+    EXTRACT_DATA = "extract_data"
+    DEFEAT = "defeat"
+    DELIVER = "deliver"
+    CRAFT_ITEM = "craft_item"
+    COLLECT_MATERIAL = "collect_material"
+    AUDIT = "audit"
+    INVESTIGATION = "investigation"
+    DELIVER_MATERIAL = "deliver_material"
+    DATA_ANALYSIS = "data_analysis"
+    PATCH_ICE_VULNERABILITY = "patch_ice_vulnerability"
+
+    # New 5 types (Phase 11)
+    INVESTIGATION_COMPLETE = "investigation_complete"
+    SURVIVE_N_WAVES = "survive_n_waves"
+    EXTRACTION_AND_DEFEAT = "extraction_AND_defeat"
+    REACH_TARGET_AND_EXTRACT_DATA = "reach_target_AND_extract_data"
+
+
 @dataclass(frozen=True, slots=True)
 class Objective:
-    """A single mission objective (ADR-0017).
+    """A single mission objective (ADR-0017, ADR-0188).
 
-    ``type`` is one of:
-        "extract_data", "collect_material", "deliver_material",
-        "defeat", "craft_item", "hunt", "salvage".
+    Existing fields from ADR-0017:
+        type, count, material, enemy, data_id, item_type, tier_level
+
+    New fields for Phase 11 types:
+        evidence_required, evidence_types, wave_count, wave_intensity,
+        time_limit_seconds, detection_threshold, no_combat_allowed,
+        extract_spec, defeat_spec, target_id, objective_lock, etc.
     """
 
     type: str
@@ -23,6 +70,37 @@ class Objective:
     data_id: str | None = None
     item_type: str | None = None
     tier_level: int | None = None
+
+    # Phase 11 fields — investigation type
+    evidence_required: int | None = None
+    evidence_types: tuple[str, ...] = ()
+
+    # Phase 11 fields — defense type
+    wave_count: int | None = None
+    wave_intensity: str | None = None
+
+    # Phase 11 fields — extraction_v2 / dual-objective
+    time_limit_seconds: int | None = None
+    penalty_on_failure: str | None = None
+    extract_spec: dict | None = None
+    defeat_spec: dict | None = None
+    objective_lock: str | None = None
+
+    # Phase 11 fields — stealth type
+    detection_threshold: int | None = None
+    no_combat_allowed: bool = False
+    target_id: str | None = None
+    alert_max: int | None = None
+    logging_max: int | None = None
+    min_evade: int | None = None
+    must_survive: bool = False
+    node_hp_min: int | None = None
+    corruption_max: int | None = None
+
+    # Phase 11 fields — chain integration
+    chain_id: str | None = None
+    chain_order: int | None = None
+    chain_role: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,11 +113,11 @@ class Rewards:
 
 @dataclass(frozen=True, slots=True)
 class Mission:
-    """A single cyberspace run definition (ADR-0010, ADR-0017).
+    """A single cyberspace run definition (ADR-0010, ADR-0017, ADR-0188).
 
     Supports both the legacy fields (``objective``, ``reward_tier``,
     ``reward_credits``) and the new structured objectives / rewards
-    introduced by ADR-0017.
+    introduced by ADR-0017, plus Phase 11 mission types.
     """
 
     id: str
@@ -57,6 +135,11 @@ class Mission:
     secondary_objectives: tuple[Objective, ...] = ()
     rewards: Rewards | None = None
 
+    # Phase 11 fields (chain integration)
+    is_chain_mission: bool = False
+    chain_id: str | None = None
+    chain_order: int | None = None
+
     def __post_init__(self) -> None:
         if not self.id:
             raise ValueError("Mission id must be non-empty")
@@ -68,6 +151,8 @@ class Mission:
             raise ValueError(f"reward_tier must be 1..6, got {self.reward_tier}")
         if self.reward_credits < 0:
             raise ValueError("reward_credits must be >= 0")
+        if self.is_chain_mission and not self.chain_id:
+            raise ValueError("chain_mission must have chain_id")
 
     def primary_type(self) -> str:
         """Return the primary objective type, defaulting to 'extract_data'."""
@@ -105,3 +190,77 @@ class Mission:
             return 0.0
         current = progress.get(self.primary_objective.type, 0)
         return min(1.0, current / required)
+
+
+# ----- Phase 11: Mission Chains (ADR-0188) -----
+
+
+@dataclass(frozen=True, slots=True)
+class ChainMission:
+    """A single mission entry within a chain (ADR-0188)."""
+
+    id: str
+    order: int
+    type: str  # e.g., "investigation", "defense"
+    chain_role: str  # "intro" | "escalation" | "climax" | "revelation" | "resolution"
+
+
+@dataclass(frozen=True, slots=True)
+class ChainUnlockCondition:
+    """Unlock condition for a chain (ADR-0188)."""
+
+    arc_progress_min: int | None = None
+    faction_reputation: dict[str, int] = field(default_factory=dict)
+    min_grade: int | None = None
+    prerequisite_chain: str | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class ChainReward:
+    """Chain-wide reward (ADR-0188)."""
+
+    construct_unlock: str | None = None
+    reputation_bonus: dict[str, int] = field(default_factory=dict)
+    credits: int = 0
+    achievement: str | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class ChainFailure:
+    """Chain-wide failure penalty (ADR-0188)."""
+
+    reputation_penalty: dict[str, int] = field(default_factory=dict)
+    construct_lock: str | None = None
+    achievement: str | None = None
+
+
+@dataclass(frozen=True, slots=True)
+class MissionChain:
+    """A 3-5 mission narrative chain (ADR-0188, mission-chains.md).
+
+    Chains unlock mid-game, provide unique rewards, and have higher stakes
+    than single missions (chain failure = significant penalty).
+    """
+
+    chain_id: str
+    chain_name: str
+    chain_type: str  # "faction_driven" | "character_driven" | "story_driven"
+    chain_arc: int
+    unlock_condition: ChainUnlockCondition
+    missions: tuple[ChainMission, ...]
+    chain_reward: ChainReward
+    chain_failure: ChainFailure
+    chain_midpoint_save: bool = True
+    chain_estimated_time_minutes: int = 60
+
+    def __post_init__(self) -> None:
+        if not self.chain_id:
+            raise ValueError("chain_id must be non-empty")
+        if not 3 <= len(self.missions) <= 5:
+            raise ValueError(f"chain must have 3-5 missions, got {len(self.missions)}")
+        if self.chain_type not in ("faction_driven", "character_driven", "story_driven"):
+            raise ValueError(f"invalid chain_type: {self.chain_type}")
+
+    def sequence(self) -> tuple[ChainMission, ...]:
+        """Return missions in order."""
+        return tuple(sorted(self.missions, key=lambda m: m.order))

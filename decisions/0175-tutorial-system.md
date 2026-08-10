@@ -4,7 +4,7 @@
 **날짜**: 2026-08-08
 **결정자**: 사용자
 **우선순위**: P2 (Pillar 1 learning curve)
-**관련**: [ADR-0019 — Story Events System](./0019-story-events-system.md), [ADR-0162 — Boss Phase 5 Last Stand](./0162-boss-phase-4.md), [ADR-0174 — Meta-Progression](./0174-meta-progression.md)
+**관련**: [ADR-0013 — Story Events System](./0013-story-events.md), [ADR-0162 — Boss Phase 5 Last Stand](./0162-boss-phase-4.md), [ADR-0174 — Meta-Progression](./0174-meta-progression.md)
 
 ## 컨텍스트 (Context)
 

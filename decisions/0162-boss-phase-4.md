@@ -1,4 +1,4 @@
-# ADR-0162: Boss Phase 5 Last Stand
+# ADR-0162: Boss Phase 4 Last Stand
 
 **상태**: Accepted
 **날짜**: 2026-08-07

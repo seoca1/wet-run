@@ -21,6 +21,9 @@ Thumbs.db
 *.swp
 *~
 
+# Tool session state
+.omo/
+
 # Secrets (CRITICAL — never commit)
 .env
 

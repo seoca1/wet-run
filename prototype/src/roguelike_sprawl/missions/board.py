@@ -134,7 +134,7 @@ class JobBoard:
 
     def select_weighted(
         self,
-        state,
+        state: object,
         available: tuple[Mission, ...] | None = None,
         seed: int | None = None,
     ) -> Mission | None:

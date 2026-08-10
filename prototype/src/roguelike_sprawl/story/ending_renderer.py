@@ -12,6 +12,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 DATA_PATH = Path(__file__).parent.parent.parent.parent / "data" / "story" / "endings.json"
 
@@ -48,9 +49,9 @@ class EndingRenderer:
 
     def __init__(self, data_path: Path | None = None) -> None:
         self._path = data_path or DATA_PATH
-        self._endings_cache: dict[str, dict] | None = None
+        self._endings_cache: dict[str, dict[str, Any]] | None = None
 
-    def _load_endings(self) -> dict[str, dict]:
+    def _load_endings(self) -> dict[str, dict[str, Any]]:
         if self._endings_cache is None:
             with open(self._path) as f:
                 data = json.load(f)
@@ -113,7 +114,7 @@ class EndingRenderer:
             scenes=(scene,),
         )
 
-    def _to_scene(self, ending: dict) -> EndingScene:
+    def _to_scene(self, ending: dict[str, Any]) -> EndingScene:
         reward = ending.get("reward", {})
         if not isinstance(reward, dict):
             reward = {}

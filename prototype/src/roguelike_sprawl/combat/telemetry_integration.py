@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
+from typing import Any
 
 from .telemetry import (
     TELEMETRY_EVENT_TYPES,
@@ -62,7 +63,7 @@ class TelemetryIntegrator:
     def record(
         self,
         event_type: str,
-        data: dict | None = None,
+        data: dict[str, Any] | None = None,
         timestamp_ms: int | None = None,
     ) -> TelemetrySession:
         """Record a telemetry event."""

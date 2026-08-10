@@ -10,6 +10,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import StrEnum
+from typing import Any
 
 from ..matrix.node import ZoneDepth
 
@@ -82,8 +83,8 @@ class Objective:
     # Phase 11 fields — extraction_v2 / dual-objective
     time_limit_seconds: int | None = None
     penalty_on_failure: str | None = None
-    extract_spec: dict | None = None
-    defeat_spec: dict | None = None
+    extract_spec: dict[str, Any] | None = None
+    defeat_spec: dict[str, Any] | None = None
     objective_lock: str | None = None
 
     # Phase 11 fields — stealth type

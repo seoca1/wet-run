@@ -10,7 +10,7 @@ import json
 import random
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, cast
 
 if TYPE_CHECKING:
     pass
@@ -29,16 +29,16 @@ class RuleResult:
     active: bool = True
 
 
-def _load_rules() -> list[dict]:
+def _load_rules() -> list[dict[str, Any]]:
     """Load rules from random_selection_rules.json."""
     with open(DATA_PATH) as f:
-        return json.load(f).get("rules", [])
+        return cast(list[dict[str, Any]], json.load(f).get("rules", []))
 
 
-_RULES_CACHE: list[dict] | None = None
+_RULES_CACHE: list[dict[str, Any]] | None = None
 
 
-def _get_rules() -> list[dict]:
+def _get_rules() -> list[dict[str, Any]]:
     """Lazy-loaded rules cache."""
     global _RULES_CACHE
     if _RULES_CACHE is None:
@@ -51,7 +51,7 @@ def get_total_rules() -> int:
     return len(_get_rules())
 
 
-def get_rule_by_id(rule_id: str) -> dict | None:
+def get_rule_by_id(rule_id: str) -> dict[str, Any] | None:
     """Return a rule by id."""
     for r in _get_rules():
         if r["rule_id"] == rule_id:
@@ -59,12 +59,12 @@ def get_rule_by_id(rule_id: str) -> dict | None:
     return None
 
 
-def get_rules_by_trigger_state(state) -> list[dict]:
+def get_rules_by_trigger_state(state: object) -> list[dict[str, Any]]:
     """Return rules whose trigger_condition is met for the current state."""
     return [r for r in _get_rules() if _is_trigger_met(r, state)]
 
 
-def _is_trigger_met(rule: dict, state) -> bool:
+def _is_trigger_met(rule: dict[str, Any], state: object) -> bool:
     """Check if a rule's trigger_condition is met."""
     condition = rule.get("trigger", "")
     if not condition:
@@ -128,7 +128,7 @@ def _is_trigger_met(rule: dict, state) -> bool:
     return False
 
 
-def apply_rule(rule_id: str, state, all_missions: list[str]) -> RuleResult:
+def apply_rule(rule_id: str, state: object, all_missions: list[str]) -> RuleResult:
     """Apply a specific rule and return the selected missions.
 
     Args:
@@ -151,7 +151,7 @@ def apply_rule(rule_id: str, state, all_missions: list[str]) -> RuleResult:
     return RuleResult(rule_id, tuple(selected), weight)
 
 
-def _compute_weight_modifier(rule: dict, state) -> float:
+def _compute_weight_modifier(rule: dict[str, Any], state: object) -> float:
     """Compute the weight modifier from the rule."""
     modifier_str = rule.get("weight_modifier", "1.0")
     if isinstance(modifier_str, str):
@@ -175,7 +175,7 @@ def _compute_weight_modifier(rule: dict, state) -> float:
     return 1.0
 
 
-def _select_missions(rule: dict, state, all_missions: list[str], weight: float) -> list[str]:
+def _select_missions(rule: dict[str, Any], state: object, all_missions: list[str], weight: float) -> list[str]:
     """Select missions based on the rule's scope."""
     scope = rule.get("scope", "")
     affected = rule.get("affected_missions", "all")
@@ -199,25 +199,25 @@ def _select_missions(rule: dict, state, all_missions: list[str], weight: float) 
     return list(all_missions)
 
 
-def get_all_active_rules(state) -> list[dict]:
+def get_all_active_rules(state: object) -> list[dict[str, object]]:
     """Return all rules whose trigger_condition is met."""
     return get_rules_by_trigger_state(state)
 
 
-def simulate_random_event(state, seed: int | None = None) -> bool:
+def simulate_random_event(state: object, seed: int | None = None) -> bool:
     """Simulate a random event trigger (1d20 >= 18 by default).
 
     Returns:
         True if the random event should trigger.
     """
     if seed is not None:
-        rng = random.Random(seed)
+        rng: random.Random = random.Random(seed)
     else:
-        rng = random
+        rng = random.Random()
     return rng.randint(1, 20) >= 18
 
 
-def calculate_weight_bonus(state, faction: str) -> float:
+def calculate_weight_bonus(state: object, faction: str) -> float:
     """Calculate faction-weighted bonus based on reputation."""
     rep_key = f"{faction}_rep"
     rep = getattr(state, rep_key, 0)
@@ -230,7 +230,7 @@ def calculate_weight_bonus(state, faction: str) -> float:
     return 1.0
 
 
-def get_random_mission(state, available_missions: list[str], seed: int | None = None) -> str | None:
+def get_random_mission(state: object, available_missions: list[str], seed: int | None = None) -> str | None:
     """Get a random mission using all active rules' weights.
 
     Args:
@@ -245,9 +245,9 @@ def get_random_mission(state, available_missions: list[str], seed: int | None = 
         return None
 
     if seed is not None:
-        rng = random.Random(seed)
+        rng: random.Random = random.Random(seed)
     else:
-        rng = random
+        rng = random.Random()
 
     active_rules = get_all_active_rules(state)
     weights = [_compute_weight_modifier(r, state) for r in active_rules]

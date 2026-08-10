@@ -9,7 +9,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 if TYPE_CHECKING:
     pass
@@ -33,17 +33,17 @@ class EndingResult:
     ng_plus_unlocked: bool
 
 
-def _load_endings() -> dict:
+def _load_endings() -> dict[str, Any]:
     """Load endings from endings.json."""
     with open(DATA_PATH) as f:
         data = json.load(f)
     return {k: v for k, v in data.items() if not k.startswith("_")}
 
 
-_ENDINGS_CACHE: dict[str, dict] | None = None
+_ENDINGS_CACHE: dict[str, dict[str, Any]] | None = None
 
 
-def _get_endings() -> dict[str, dict]:
+def _get_endings() -> dict[str, dict[str, Any]]:
     """Lazy-loaded endings cache."""
     global _ENDINGS_CACHE
     if _ENDINGS_CACHE is None:
@@ -51,27 +51,27 @@ def _get_endings() -> dict[str, dict]:
     return _ENDINGS_CACHE
 
 
-def get_ending(ending_id: str) -> dict | None:
+def get_ending(ending_id: str) -> dict[str, Any] | None:
     """Return an ending definition by id."""
     return _get_endings().get(ending_id)
 
 
-def get_endings_by_character(character_ref: str) -> list[dict]:
+def get_endings_by_character(character_ref: str) -> list[dict[str, Any]]:
     """Return all endings for a specific character."""
     return [e for e in _get_endings().values() if e.get("character_ref") == character_ref]
 
 
-def get_ng_plus_endings() -> list[dict]:
+def get_ng_plus_endings() -> list[dict[str, Any]]:
     """Return all NG+ (arc 6) endings."""
     return [e for e in _get_endings().values() if e.get("arc") == 6]
 
 
-def get_endings_by_type(ending_type: str) -> list[dict]:
+def get_endings_by_type(ending_type: str) -> list[dict[str, Any]]:
     """Return all endings of a given type (redemption, sacrifice, etc.)."""
     return [e for e in _get_endings().values() if e.get("type") == ending_type]
 
 
-def _check_single_condition(condition: str, state) -> bool:
+def _check_single_condition(condition: str, state: object) -> bool:
     """Check a single (non-compound) trigger condition."""
     condition = condition.strip()
     if condition == "salvation_complete":
@@ -116,14 +116,14 @@ def _check_single_condition(condition: str, state) -> bool:
     return False
 
 
-def is_trigger_condition_met(ending: dict, state) -> bool:
+def is_trigger_condition_met(ending: dict[str, Any], state: object) -> bool:
     """Check if an ending's trigger_condition is satisfied.
 
     Supports compound conditions (AND-joined with ``+``).
 
     Args:
         ending: Ending definition from endings.json.
-        state: AppState (or dict-like) with player progression data.
+        state: AppState (or dict[str, Any]-like) with player progression data.
 
     Returns:
         True if the trigger condition is met.
@@ -139,7 +139,7 @@ def is_trigger_condition_met(ending: dict, state) -> bool:
     return _check_single_condition(condition, state)
 
 
-def check_ending_eligibility(ending_id: str, state) -> bool:
+def check_ending_eligibility(ending_id: str, state: object) -> bool:
     """Check if player is eligible for a specific ending."""
     ending = get_ending(ending_id)
     if ending is None:
@@ -147,7 +147,7 @@ def check_ending_eligibility(ending_id: str, state) -> bool:
     return is_trigger_condition_met(ending, state)
 
 
-def process_ending(ending_id: str, state) -> EndingResult:
+def process_ending(ending_id: str, state: object) -> EndingResult:
     """Process an ending choice and apply its rewards.
 
     Args:

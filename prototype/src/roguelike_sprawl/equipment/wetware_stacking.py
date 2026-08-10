@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 DATA_PATH = Path(__file__).parent.parent.parent.parent / "data" / "equipment" / "wetware.json"
 
@@ -31,16 +32,16 @@ class StackedWetware:
     augment_count: int = 0
 
 
-def _load_augments() -> dict:
+def _load_augments() -> dict[str, Any]:
     """Load wetware augments from wetware.json."""
     with open(DATA_PATH) as f:
         return {k: v for k, v in json.load(f).items() if not k.startswith("_")}
 
 
-_AUGMENTS_CACHE: dict[str, dict] | None = None
+_AUGMENTS_CACHE: dict[str, dict[str, Any]] | None = None
 
 
-def _get_augments() -> dict[str, dict]:
+def _get_augments() -> dict[str, dict[str, Any]]:
     """Lazy-loaded augments cache."""
     global _AUGMENTS_CACHE
     if _AUGMENTS_CACHE is None:
@@ -48,17 +49,17 @@ def _get_augments() -> dict[str, dict]:
     return _AUGMENTS_CACHE
 
 
-def get_augment(augment_id: str) -> dict | None:
+def get_augment(augment_id: str) -> dict[str, Any] | None:
     """Return an augment definition by id."""
     return _get_augments().get(augment_id)
 
 
-def get_all_augments() -> list[dict]:
+def get_all_augments() -> list[dict[str, Any]]:
     """Return all augments."""
     return list(_get_augments().values())
 
 
-def get_augments_by_type(augment_type: str) -> list[dict]:
+def get_augments_by_type(augment_type: str) -> list[dict[str, Any]]:
     """Return augments of a specific type."""
     return [a for a in _get_augments().values() if a.get("type") == augment_type]
 
@@ -122,7 +123,7 @@ def stack_wetware(augment_ids: list[str]) -> StackedWetware:
     return stacked
 
 
-def _aug_bonus(augment: dict, key: str) -> float:
+def _aug_bonus(augment: dict[str, Any], key: str) -> float:
     """Extract a bonus value from an augment, defaulting to 0.0."""
     val = augment.get(key, 0.0)
     return float(val) if val is not None else 0.0
@@ -138,7 +139,7 @@ def get_augment_count() -> int:
     return len(_get_augments())
 
 
-def get_new_stat_augments() -> list[dict]:
+def get_new_stat_augments() -> list[dict[str, Any]]:
     """Return augments that introduce new stats (mana, armor, focus)."""
     return [a for a in _get_augments().values() if a.get("is_new_stat") is True]
 

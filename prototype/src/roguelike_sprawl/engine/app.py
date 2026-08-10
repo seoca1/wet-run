@@ -73,13 +73,13 @@ def _main_inner() -> int:
 
     # Initialize telemetry if opted in
     if state.telemetry_opt_in:
-        from .combat.telemetry_integration import TelemetryConfig, TelemetryIntegrator
+        from ..combat.telemetry_integration import TelemetryConfig, TelemetryIntegrator
 
         state.telemetry = TelemetryIntegrator(
             TelemetryConfig(opted_in_at_start=state.telemetry_opt_in)
         )
     else:
-        from .combat.telemetry_integration import TelemetryIntegrator
+        from ..combat.telemetry_integration import TelemetryIntegrator
 
         state.telemetry = TelemetryIntegrator()
 

@@ -1,0 +1,818 @@
+{
+  "_metadata": {
+    "version": "1.0",
+    "date": "2026-08-08",
+    "phase": "13",
+    "adrs_cross_reference": "ADR-0191",
+    "total_events": 30,
+    "total_chains": 6,
+    "categories": ["character", "faction", "general"]
+  },
+  "char_event_case_neon_memory": {
+    "event_id": "char_event_case_neon_memory",
+    "title": "Case's Neon Memory",
+    "category": "character",
+    "character_ref": "case",
+    "trigger": "npc_greeting",
+    "trigger_condition": "chapter_complete:arc_1",
+    "mood": "mysterious",
+    "location": "chiba_alley",
+    "arc": 1,
+    "pillar": "memory",
+    "tier": 2,
+    "dialogue": [
+      "CASE: The neon still hums in the back of my skull.",
+      "CASE: They told me the matrix was something you jack into.",
+      "CASE: It's not. It's something you jack out of—and hope you brought enough back."
+    ],
+    "choice": null,
+    "reward": {"credits": 500, "xp": 50},
+    "consequence": "case_reputation_+5",
+    "faction_affinity": {"hosaka": 1, "wintermute": 1}
+  },
+  "char_event_sil_silver_blade": {
+    "event_id": "char_event_sil_silver_blade",
+    "title": "Sil's Silver Blade",
+    "category": "character",
+    "character_ref": "sil",
+    "trigger": "combat_end",
+    "trigger_condition": "defeat:ice.construct",
+    "mood": "determined",
+    "location": "matrix_night_city",
+    "arc": 1,
+    "pillar": "code",
+    "tier": 2,
+    "dialogue": [
+      "SIL: The blade doesn't care who you were.",
+      "SIL: It only knows what you are now.",
+      "SIL: And what you are now is the one still standing."
+    ],
+    "choice": null,
+    "reward": {"credits": 400, "item": "silver_blade_charm"},
+    "consequence": "sil_reputation_+5",
+    "faction_affinity": {"yakuza": -1}
+  },
+  "char_event_kas_morrison_echo": {
+    "event_id": "char_event_kas_morrison_echo",
+    "title": "Kas's Morrison Echo",
+    "category": "character",
+    "character_ref": "kas",
+    "trigger": "node_enter",
+    "trigger_condition": "zone:mid",
+    "mood": "sad",
+    "location": "matrix_loa_construct",
+    "arc": 2,
+    "pillar": "memory",
+    "tier": 3,
+    "dialogue": [
+      "KAS: Morrison's voice is still in here.",
+      "KAS: He died for this construct. For me.",
+      "KAS: I should have died too. But I built myself instead."
+    ],
+    "choice": null,
+    "reward": {"credits": 800, "item": "morrison_echo_charm"},
+    "consequence": "kas_reputation_+5",
+    "faction_affinity": {"loa": 1}
+  },
+  "char_event_suit_corporate_mask": {
+    "event_id": "char_event_suit_corporate_mask",
+    "title": "Suit's Corporate Mask",
+    "category": "character",
+    "character_ref": "suit",
+    "trigger": "npc_choice",
+    "trigger_condition": "deal_with:hosaka",
+    "mood": "neutral",
+    "location": "hosaka_corridor",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 3,
+    "dialogue": [
+      "SUIT: The mask is the job.",
+      "SUIT: The job is the mask.",
+      "SUIT: I've forgotten which one I started with."
+    ],
+    "choice": null,
+    "reward": {"credits": 1200, "reputation": {"hosaka": -5, "ta_rep": 5}},
+    "consequence": "suit_reputation_+5",
+    "faction_affinity": {"hosaka": -1, "ta_rep": 1}
+  },
+  "char_event_wigan_vodou_drift": {
+    "event_id": "char_event_wigan_vodou_drift",
+    "title": "Wigan's Vodou Drift",
+    "category": "character",
+    "character_ref": "wigan",
+    "trigger": "hub_visited",
+    "trigger_condition": "zone:loa",
+    "mood": "wise",
+    "location": "zion_outskirts",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 3,
+    "dialogue": [
+      "WIGAN: The loa don't live in the matrix, friend.",
+      "WIGAN: They live in the spaces between the code.",
+      "WIGAN: And they're very, very patient."
+    ],
+    "choice": null,
+    "reward": {"credits": 600, "item": "loa_charm"},
+    "consequence": "wigan_reputation_+5",
+    "faction_affinity": {"loa": 3}
+  },
+  "char_event_angie_first_hit": {
+    "event_id": "char_event_angie_first_hit",
+    "title": "Angie's First Hit",
+    "category": "character",
+    "character_ref": "angie",
+    "trigger": "dialogue_completed",
+    "trigger_condition": "chapter_complete:arc_1",
+    "mood": "scared",
+    "location": "matrix_chiba",
+    "arc": 1,
+    "pillar": "identity",
+    "tier": 1,
+    "dialogue": [
+      "ANGIE: I didn't mean to.",
+      "ANGIE: It was them or me.",
+      "ANGIE: They were just code but they were screaming."
+    ],
+    "choice": {
+      "option_a": "Tell her it gets easier.",
+      "option_b": "Tell her it never does.",
+      "consequence_a": "angie_attack_penalty_-10%",
+      "consequence_b": "angie_morale_+5"
+    },
+    "reward": {"credits": 300, "morale": 5},
+    "consequence": "angie_reputation_+5",
+    "faction_affinity": {}
+  },
+  "char_event_sally_cold_contract": {
+    "event_id": "char_event_sally_cold_contract",
+    "title": "Sally's Cold Contract",
+    "category": "character",
+    "character_ref": "sally",
+    "trigger": "npc_choice",
+    "trigger_condition": "deal_with:client",
+    "mood": "determined",
+    "location": "matrix_workstation",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 3,
+    "dialogue": [
+      "SALLY: The contract is clear.",
+      "SALLY: The work is clear.",
+      "SALLY: What's not clear is why you hesitated."
+    ],
+    "choice": null,
+    "reward": {"credits": 1500, "salvage_fragment": 1},
+    "consequence": "sally_reputation_+5",
+    "faction_affinity": {"yakuza": 1}
+  },
+  "char_event_3jane_family_vote": {
+    "event_id": "char_event_3jane_family_vote",
+    "title": "3Jane's Family Vote",
+    "category": "character",
+    "character_ref": "3jane",
+    "trigger": "chapter_complete",
+    "trigger_condition": "arc_4_progress >= 50",
+    "mood": "mysterious",
+    "location": "straylight_observatory",
+    "arc": 4,
+    "pillar": "identity",
+    "tier": 5,
+    "dialogue": [
+      "3JANE: The family votes at midnight.",
+      "3JANE: It has voted at midnight.",
+      "3JANE: It will vote at midnight. Long after we're dust."
+    ],
+    "choice": null,
+    "reward": {"credits": 3000, "item": "ta_construct_key"},
+    "consequence": "3jane_reputation_+5",
+    "faction_affinity": {"ta_rep": 3}
+  },
+  "char_event_neuromancer_word": {
+    "event_id": "char_event_neuromancer_word",
+    "title": "The Neuromancer's Word",
+    "category": "character",
+    "character_ref": "neuromancer",
+    "trigger": "story_milestone",
+    "trigger_condition": "salvation_complete",
+    "mood": "wise",
+    "location": "matrix_construct_chamber",
+    "arc": 5,
+    "pillar": "code",
+    "tier": 6,
+    "dialogue": [
+      "NEUROMANCER: The word is the virus.",
+      "NEUROMANCER: The virus is the word.",
+      "NEUROMANCER: I am the word made flesh.",
+      "NEUROMANCER: I am the flesh made word."
+    ],
+    "choice": null,
+    "reward": {"credits": 10000, "item": "neuromancer_construct_full"},
+    "consequence": "neuromancer_reputation_+10",
+    "faction_affinity": {"wintermute": 5}
+  },
+  "faction_event_hosaka_audit": {
+    "event_id": "faction_event_hosaka_audit",
+    "title": "Hosaka Corporate Audit",
+    "category": "faction",
+    "faction_ref": "hosaka",
+    "trigger": "vendor_unlocked",
+    "trigger_condition": "hosaka_rep >= 4",
+    "mood": "neutral",
+    "location": "hosaka_lobby",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "HOSAKA CLERK: Your access has been approved.",
+      "HOSAKA CLERK: Please report any anomalies to the audit log.",
+      "HOSAKA CLERK: Discrepancies will be processed within 24 hours."
+    ],
+    "choice": null,
+    "reward": {"credits": 2000, "reputation": {"hosaka": 5}},
+    "consequence": "hosaka_audit_unlocked",
+    "faction_affinity": {"hosaka": 2}
+  },
+  "faction_event_hosaka_research": {
+    "event_id": "faction_event_hosaka_research",
+    "title": "Hosaka Research Division",
+    "category": "faction",
+    "faction_ref": "hosaka",
+    "trigger": "dialogue_completed",
+    "trigger_condition": "hosaka_rep >= 5",
+    "mood": "neutral",
+    "location": "hosaka_research_floor",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "HOSAKA SCIENTIST: We're pushing the boundaries of wetware.",
+      "HOSAKA SCIENTIST: The Sprawl needs better neurons.",
+      "HOSAKA SCIENTIST: We need better runners."
+    ],
+    "choice": null,
+    "reward": {"credits": 3000, "item": "wetware_charm"},
+    "consequence": "hosaka_research_unlocked",
+    "faction_affinity": {"hosaka": 3}
+  },
+  "faction_event_sensenet_alert": {
+    "event_id": "faction_event_sensenet_alert",
+    "title": "Sense/Net News Alert",
+    "category": "faction",
+    "faction_ref": "sense_net",
+    "trigger": "hub_visited",
+    "trigger_condition": "sense_net_rep >= 3",
+    "mood": "neutral",
+    "location": "any_hub",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 3,
+    "dialogue": [
+      "SENSE/NET: This just in. A new matrix anomaly has been detected.",
+      "SENSE/NET: Sources close to the investigation say it could be construct-class.",
+      "SENSE/NET: More on this story as it develops."
+    ],
+    "choice": null,
+    "reward": {"credits": 1500, "reputation": {"sense_net": 5}},
+    "consequence": "sensenet_market_news",
+    "faction_affinity": {"sense_net": 2}
+  },
+  "faction_event_sensenet_spin": {
+    "event_id": "faction_event_sensenet_spin",
+    "title": "Sense/Net Spin Job",
+    "category": "faction",
+    "faction_ref": "sense_net",
+    "trigger": "npc_choice",
+    "trigger_condition": "sense_net_rep >= 4",
+    "mood": "neutral",
+    "location": "sensenet_office",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "SENSE/NET EDITOR: We need a narrative.",
+      "SENSE/NET EDITOR: The real facts don't matter.",
+      "SENSE/NET EDITOR: What matters is how it plays on the feed."
+    ],
+    "choice": {
+      "option_a": "Take the job and spin it.",
+      "option_b": "Refuse and protect the truth.",
+      "consequence_a": "credits_+5000, reputation_wintermute_-10",
+      "consequence_b": "reputation_sense_net_-5, reputation_wintermute_+10"
+    },
+    "reward": null,
+    "consequence": "sensenet_branch_choice",
+    "faction_affinity": {"sense_net": 1}
+  },
+  "faction_event_yakuza_collection": {
+    "event_id": "faction_event_yakuza_collection",
+    "title": "Yakuza Debt Collection",
+    "category": "faction",
+    "faction_ref": "yakuza",
+    "trigger": "npc_choice",
+    "trigger_condition": "yakuza_rep >= 3 AND credits > 1000",
+    "mood": "angry",
+    "location": "yakuza_backroom",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 3,
+    "dialogue": [
+      "YAKUZA: You owe us 1000 credits.",
+      "YAKUZA: This is not a request.",
+      "YAKUZA: The price for forgetting is your construct."
+    ],
+    "choice": {
+      "option_a": "Pay the debt.",
+      "option_b": "Refuse and fight.",
+      "consequence_a": "credits_-1000, reputation_yakuza_+5",
+      "consequence_b": "combat_initiated:yakuza_brute"
+    },
+    "reward": null,
+    "consequence": "yakuza_branch_choice",
+    "faction_affinity": {"yakuza": 1}
+  },
+  "faction_event_yakuza_protection": {
+    "event_id": "faction_event_yakuza_protection",
+    "title": "Yakuza Protection Offer",
+    "category": "faction",
+    "faction_ref": "yakuza",
+    "trigger": "vendor_unlocked",
+    "trigger_condition": "yakuza_rep >= 4",
+    "mood": "neutral",
+    "location": "yakuza_office",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "YAKUZA: You do good work. We noticed.",
+      "YAKUZA: For 500 credits a week, we make your problems disappear.",
+      "YAKUZA: Or we become your problems."
+    ],
+    "choice": null,
+    "reward": {"credits": 1000, "reputation": {"yakuza": 5}},
+    "consequence": "yakuza_protection_active",
+    "faction_affinity": {"yakuza": 3}
+  },
+  "faction_event_ta_assignation": {
+    "event_id": "faction_event_ta_assignation",
+    "title": "Tessier Family Assignation",
+    "category": "faction",
+    "faction_ref": "ta_rep",
+    "trigger": "chapter_complete",
+    "trigger_condition": "ta_rep >= 5",
+    "mood": "mysterious",
+    "location": "straylight_apartment",
+    "arc": 4,
+    "pillar": "identity",
+    "tier": 5,
+    "dialogue": [
+      "TESSIER HEIR: The family has noticed your work.",
+      "TESSIER HEIR: There is a position available.",
+      "TESSIER HEIR: The position is hereditary."
+    ],
+    "choice": null,
+    "reward": {"credits": 5000, "item": "ta_construct_partial"},
+    "consequence": "ta_heir_offer",
+    "faction_affinity": {"ta_rep": 5}
+  },
+  "faction_event_ta_vote": {
+    "event_id": "faction_event_ta_vote",
+    "title": "Tessier Family Vote",
+    "category": "faction",
+    "faction_ref": "ta_rep",
+    "trigger": "story_milestone",
+    "trigger_condition": "arc_4_progress >= 75",
+    "mood": "mysterious",
+    "location": "straylight_observatory",
+    "arc": 4,
+    "pillar": "identity",
+    "tier": 5,
+    "dialogue": [
+      "TESSIER HEIR: The vote is tonight.",
+      "TESSIER HEIR: The vote is always tonight.",
+      "TESSIER HEIR: Who are you voting for?"
+    ],
+    "choice": null,
+    "reward": {"credits": 8000, "reputation": {"ta_rep": 10}},
+    "consequence": "ta_vote_unlocked",
+    "faction_affinity": {"ta_rep": 5}
+  },
+  "faction_event_loa_pact": {
+    "event_id": "faction_event_loa_pact",
+    "title": "Loa Pact",
+    "category": "faction",
+    "faction_ref": "loa",
+    "trigger": "npc_greeting",
+    "trigger_condition": "loa_rep >= 4",
+    "mood": "mysterious",
+    "location": "zion_bayou",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "LOA PRIEST: The baron wants to meet you.",
+      "LOA PRIEST: He has a contract.",
+      "LOA PRIEST: The price is small. The work is large."
+    ],
+    "choice": null,
+    "reward": {"credits": 2000, "item": "loa_charm"},
+    "consequence": "loa_pact_unlocked",
+    "faction_affinity": {"loa": 5}
+  },
+  "faction_event_loa_curse": {
+    "event_id": "faction_event_loa_curse",
+    "title": "Loa Curse Attempt",
+    "category": "faction",
+    "faction_ref": "loa",
+    "trigger": "npc_choice",
+    "trigger_condition": "loa_rep < 0",
+    "mood": "scared",
+    "location": "anywhere",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 3,
+    "dialogue": [
+      "LOA: You have wronged us.",
+      "LOA: The spirits remember.",
+      "LOA: Sleep lightly, runner."
+    ],
+    "choice": {
+      "option_a": "Pay for cleansing.",
+      "option_b": "Bear the curse.",
+      "consequence_a": "credits_-3000, curse_removed",
+      "consequence_b": "curse_applied:loa_negative"
+    },
+    "reward": null,
+    "consequence": "loa_curse_event",
+    "faction_affinity": {"loa": -3}
+  },
+  "general_event_blackout": {
+    "event_id": "general_event_blackout",
+    "title": "Sprawl Blackout",
+    "category": "general",
+    "trigger": "hub_visited",
+    "trigger_condition": "random < 0.05",
+    "mood": "scared",
+    "location": "any_hub",
+    "arc": 1,
+    "pillar": "code",
+    "tier": 1,
+    "dialogue": [
+      "ANNOUNCEMENT: Power grid failure detected in sectors 7 through 12.",
+      "ANNOUNCEMENT: Looting is prohibited.",
+      "ANNOUNCEMENT: Looters will be prosecuted."
+    ],
+    "choice": null,
+    "reward": {"credits": 200, "item": "scrap_metal"},
+    "consequence": "blackout_active_3_runs",
+    "faction_affinity": {}
+  },
+  "general_event_fire_sale": {
+    "event_id": "general_event_fire_sale",
+    "title": "Fire Sale",
+    "category": "general",
+    "trigger": "hub_visited",
+    "trigger_condition": "random < 0.10",
+    "mood": "happy",
+    "location": "market_district",
+    "arc": 1,
+    "pillar": "code",
+    "tier": 1,
+    "dialogue": [
+      "VENDOR: Everything must go!",
+      "VENDOR: Even the construct chips!",
+      "VENDOR: Especially the construct chips!"
+    ],
+    "choice": null,
+    "reward": {"credits": 0, "discount": 0.3},
+    "consequence": "fire_sale_active_5_runs",
+    "faction_affinity": {}
+  },
+  "general_event_random_runner": {
+    "event_id": "general_event_random_runner",
+    "title": "Random Runner",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "random < 0.08",
+    "mood": "neutral",
+    "location": "any_node",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 2,
+    "dialogue": [
+      "RANDOM RUNNER: You don't know me.",
+      "RANDOM RUNNER: But I know you.",
+      "RANDOM RUNNER: Good luck out there."
+    ],
+    "choice": null,
+    "reward": {"credits": 500, "item": "random_charm"},
+    "consequence": "random_runner_met",
+    "faction_affinity": {}
+  },
+  "general_event_console_warning": {
+    "event_id": "general_event_console_warning",
+    "title": "Console Warning",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "hp < 30%",
+    "mood": "neutral",
+    "location": "any_node",
+    "arc": 1,
+    "pillar": "code",
+    "tier": 1,
+    "dialogue": [
+      "CONSOLE: WARNING: Your construct integrity is critical.",
+      "CONSOLE: WARNING: Recommend immediate jack-out.",
+      "CONSOLE: WARNING: Ignoring this warning may result in death."
+    ],
+    "choice": {
+      "option_a": "Jack out (lose progress).",
+      "option_b": "Push through (risk death).",
+      "consequence_a": "mission_failed, hp_restored_50%",
+      "consequence_b": "hp_-10%_per_turn"
+    },
+    "reward": null,
+    "consequence": "console_warning_choice",
+    "faction_affinity": {}
+  },
+  "general_event_rare_drop": {
+    "event_id": "general_event_rare_drop",
+    "title": "Rare Drop",
+    "category": "general",
+    "trigger": "combat_end",
+    "trigger_condition": "random < 0.02",
+    "mood": "happy",
+    "location": "any_combat",
+    "arc": 1,
+    "pillar": "code",
+    "tier": 5,
+    "dialogue": [
+      "CONSOLE: Unusual telemetry detected.",
+      "CONSOLE: Salvage protocols recommend immediate extraction.",
+      "CONSOLE: Bonus acquired."
+    ],
+    "choice": null,
+    "reward": {"credits": 0, "item": "t5_program_random"},
+    "consequence": "rare_drop_achievement",
+    "faction_affinity": {}
+  },
+  "general_event_faction_war": {
+    "event_id": "general_event_faction_war",
+    "title": "Faction War",
+    "category": "general",
+    "trigger": "hub_visited",
+    "trigger_condition": "weekend AND random < 0.15",
+    "mood": "angry",
+    "location": "any_hub",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 3,
+    "dialogue": [
+      "ANNOUNCEMENT: Hosaka and Yakuza have escalated to open warfare.",
+      "ANNOUNCEMENT: Casualties are mounting.",
+      "ANNOUNCEMENT: Runner access is restricted."
+    ],
+    "choice": null,
+    "reward": {"credits": 0, "market_disruption": true},
+    "consequence": "faction_war_active_5_runs",
+    "faction_affinity": {"hosaka": -1, "yakuza": -1}
+  },
+  "general_event_news_broadcast": {
+    "event_id": "general_event_news_broadcast",
+    "title": "Breaking News",
+    "category": "general",
+    "trigger": "hub_visited",
+    "trigger_condition": "random < 0.10",
+    "mood": "neutral",
+    "location": "any_hub",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 2,
+    "dialogue": [
+      "BROADCAST: Breaking news from the Sprawl.",
+      "BROADCAST: A new matrix construct has been detected in the outer zones.",
+      "BROADCAST: Rating: extremely dangerous. Do not approach."
+    ],
+    "choice": null,
+    "reward": {"credits": 800, "info": "new_construct_location"},
+    "consequence": "lore_unlock",
+    "faction_affinity": {}
+  },
+  "general_event_bar_special": {
+    "event_id": "general_event_bar_special",
+    "title": "Bar Special",
+    "category": "general",
+    "trigger": "hub_visited",
+    "trigger_condition": "random < 0.20",
+    "mood": "happy",
+    "location": "any_bar",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 1,
+    "dialogue": [
+      "BARTENDER: Special tonight. On the house.",
+      "BARTENDER: You look like you've earned it.",
+      "BARTENDER: Don't ask what it is."
+    ],
+    "choice": null,
+    "reward": {"credits": 0, "morale": 10, "drunk_status": "1_hour"},
+    "consequence": "drunk_status_active",
+    "faction_affinity": {}
+  },
+  "general_event_new_jockey": {
+    "event_id": "general_event_new_jockey",
+    "title": "New Jockey Available",
+    "category": "general",
+    "trigger": "chapter_complete",
+    "trigger_condition": "arc_progress >= 25",
+    "mood": "happy",
+    "location": "jockey_hub",
+    "arc": 2,
+    "pillar": "identity",
+    "tier": 2,
+    "dialogue": [
+      "ANNOUNCEMENT: A new jockey has been registered.",
+      "ANNOUNCEMENT: They are available for hire.",
+      "ANNOUNCEMENT: Background check pending."
+    ],
+    "choice": null,
+    "reward": {"new_jockey_available": "next_unlocked"},
+    "consequence": "new_jockey_join",
+    "faction_affinity": {}
+  },
+  "general_event_construct_sighting": {
+    "event_id": "general_event_construct_sighting",
+    "title": "Construct Sighting",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "random < 0.05",
+    "mood": "scared",
+    "location": "any_node",
+    "arc": 4,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "CONSOLE: WARNING: Construct-grade entity detected.",
+      "CONSOLE: WARNING: Classification: UNKNOWN.",
+      "CONSOLE: WARNING: Recommended action: flee."
+    ],
+    "choice": {
+      "option_a": "Investigate (high risk).",
+      "option_b": "Flee (safe).",
+      "consequence_a": "construct_encounter_50%",
+      "consequence_b": "safe_jackout"
+    },
+    "reward": null,
+    "consequence": "construct_sighting_choice",
+    "faction_affinity": {}
+  },
+  "general_event_old_friend": {
+    "event_id": "general_event_old_friend",
+    "title": "Old Friend",
+    "category": "general",
+    "trigger": "hub_visited",
+    "trigger_condition": "arc_progress >= 30 AND random < 0.04",
+    "mood": "happy",
+    "location": "any_hub",
+    "arc": 3,
+    "pillar": "identity",
+    "tier": 3,
+    "dialogue": [
+      "OLD FRIEND: Hey. Long time.",
+      "OLD FRIEND: I heard you were working the matrix.",
+      "OLD FRIEND: Want to grab a drink? On me."
+    ],
+    "choice": {
+      "option_a": "Accept the drink.",
+      "option_b": "Decline politely.",
+      "consequence_a": "credits_+500, morale_+10",
+      "consequence_b": "old_friend_disappointed"
+    },
+    "reward": null,
+    "consequence": "old_friend_branch",
+    "faction_affinity": {}
+  },
+  "general_event_signal_jam": {
+    "event_id": "general_event_signal_jam",
+    "title": "Signal Jam",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "random < 0.06",
+    "mood": "scared",
+    "location": "any_node",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 3,
+    "dialogue": [
+      "CONSOLE: WARNING: External signal interference detected.",
+      "CONSOLE: WARNING: Source: UNKNOWN.",
+      "CONSOLE: WARNING: Jack-out connection unstable."
+    ],
+    "choice": {
+      "option_a": "Wait it out (lose 1 turn).",
+      "option_b": "Force jack-out (take damage).",
+      "consequence_a": "safe_wait",
+      "consequence_b": "hp_-15%"
+    },
+    "reward": null,
+    "consequence": "signal_jam_choice",
+    "faction_affinity": {}
+  },
+  "_chains": {
+    "chain_case_past_memories": {
+      "chain_id": "chain_case_past_memories",
+      "chain_name": "Case's Past Memories",
+      "chain_type": "character",
+      "chain_arc": 1,
+      "character_ref": "case",
+      "unlock_condition": "arc_1_progress >= 30",
+      "events": [
+        "char_event_case_neon_memory",
+        "general_event_random_runner",
+        "general_event_old_friend",
+        "char_event_neuromancer_word"
+      ],
+      "chain_reward": {"credits": 5000, "xp": 200, "item": "case_memory_charm"},
+      "chain_failure": "chain_reset_on_failure"
+    },
+    "chain_yakuza_protection_racket": {
+      "chain_id": "chain_yakuza_protection_racket",
+      "chain_name": "Yakuza Protection Racket",
+      "chain_type": "faction",
+      "chain_arc": 2,
+      "faction_ref": "yakuza",
+      "unlock_condition": "yakuza_rep >= 3",
+      "events": [
+        "faction_event_yakuza_collection",
+        "faction_event_yakuza_protection",
+        "general_event_faction_war",
+        "char_event_sil_silver_blade"
+      ],
+      "chain_reward": {"credits": 8000, "item": "yakuza_protection_charm"},
+      "chain_failure": "yakuza_contract_breach"
+    },
+    "chain_ta_family_succession": {
+      "chain_id": "chain_ta_family_succession",
+      "chain_name": "TA Family Succession",
+      "chain_type": "faction",
+      "chain_arc": 4,
+      "faction_ref": "ta_rep",
+      "unlock_condition": "ta_rep >= 4",
+      "events": [
+        "faction_event_ta_assignation",
+        "faction_event_ta_vote",
+        "char_event_3jane_family_vote",
+        "char_event_3jane_family_vote"
+      ],
+      "chain_reward": {"credits": 20000, "item": "ta_construct_full_unlock"},
+      "chain_failure": "ta_family_ousted"
+    },
+    "chain_loa_pact": {
+      "chain_id": "chain_loa_pact",
+      "chain_name": "Loa Pact",
+      "chain_type": "faction",
+      "chain_arc": 2,
+      "faction_ref": "loa",
+      "unlock_condition": "loa_rep >= 4",
+      "events": [
+        "faction_event_loa_pact",
+        "faction_event_loa_curse",
+        "char_event_wigan_vodou_drift",
+        "general_event_construct_sighting"
+      ],
+      "chain_reward": {"credits": 10000, "item": "loa_charm_full"},
+      "chain_failure": "loa_curse_permanent"
+    },
+    "chain_news_story": {
+      "chain_id": "chain_news_story",
+      "chain_name": "The News Story",
+      "chain_type": "story",
+      "chain_arc": 3,
+      "unlock_condition": "sense_net_rep >= 4",
+      "events": [
+        "faction_event_sensenet_alert",
+        "faction_event_sensenet_spin",
+        "general_event_news_broadcast",
+        "general_event_faction_war"
+      ],
+      "chain_reward": {"credits": 6000, "reputation": {"sense_net": 10}},
+      "chain_failure": "news_story_buried"
+    },
+    "chain_construct_awakening": {
+      "chain_id": "chain_construct_awakening",
+      "chain_name": "Construct Awakening",
+      "chain_type": "story",
+      "chain_arc": 5,
+      "unlock_condition": "arc_5_progress >= 50",
+      "events": [
+        "general_event_construct_sighting",
+        "general_event_signal_jam",
+        "char_event_neuromancer_word",
+        "general_event_blackout"
+      ],
+      "chain_reward": {"credits": 30000, "item": "construct_awakening_charm"},
+      "chain_failure": "construct_collapse"
+    }
+  }
+}

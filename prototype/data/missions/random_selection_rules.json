@@ -1,0 +1,163 @@
+{
+  "rules": [
+    {
+      "rule_id": "faction_weighted",
+      "name": "Faction-Weighted Selection",
+      "description": "Missions from a faction with high reputation (>4) appear 80% more often",
+      "trigger": "player_grade >= 3",
+      "weight_formula": "faction_weight = base_weight + (rep * 0.2)",
+      "affected_missions": "all"
+    },
+    {
+      "rule_id": "zone_restricted",
+      "name": "Zone-Restricted Run",
+      "description": "Once a player picks a zone, all missions come from that zone for the run",
+      "trigger": "player_picks_zone",
+      "scope": "run_wide",
+      "affected_missions": "all"
+    },
+    {
+      "rule_id": "time_of_day",
+      "name": "Time-of-Day Variation",
+      "description": "Day vs night missions vary by in-game hour",
+      "trigger": "in_game_hour",
+      "scope": "mission_session",
+      "weight_modifier": "day_mission +20% (06:00-18:00), night_mission +20% (18:00-06:00)",
+      "affected_missions": "all"
+    },
+    {
+      "rule_id": "boss_blocked",
+      "name": "Post-Boss Cooldown",
+      "description": "After defeating a boss, no boss-zone missions for 2 runs",
+      "trigger": "boss_defeated",
+      "scope": "run_x2",
+      "affected_missions": "boss_zone (ta, core, freeside NG+)"
+    },
+    {
+      "rule_id": "character_locked",
+      "name": "Character-Locked Missions",
+      "description": "Each character has 5-10 signature missions that only spawn for them",
+      "trigger": "selected_jockey",
+      "scope": "character_specific",
+      "affected_missions": "character_locked subset (40+ missions)"
+    },
+    {
+      "rule_id": "random_event",
+      "name": "Random Event Trigger",
+      "description": "1-in-20 chance to trigger a special event mission",
+      "trigger": "1d20 >= 18",
+      "scope": "any_mission",
+      "affected_missions": "event_missions (axial specials)"
+    },
+    {
+      "rule_id": "seasonal",
+      "name": "Seasonal Mission Adjustment",
+      "description": "Season changes (every 10 in-game days) shift faction weightings",
+      "trigger": "season_change",
+      "scope": "10_day_cycle",
+      "affected_missions": "all"
+    },
+    {
+      "rule_id": "player_level",
+      "name": "Player-Level Filtering",
+      "description": "Grade 5+ players see 60% harder missions",
+      "trigger": "player_grade >= 5",
+      "weight_modifier": "high_difficulty +60%",
+      "affected_missions": "all"
+    },
+    {
+      "rule_id": "difficulty_spike",
+      "name": "Difficulty Spike Recovery",
+      "description": "After 3 consecutive failures, spawn 1 easy mission",
+      "trigger": "consecutive_failures >= 3",
+      "scope": "next_mission",
+      "affected_missions": "easy_missions (grade 1-2)"
+    },
+    {
+      "rule_id": "chain_unlocked",
+      "name": "Chain-Unlocked Bonus",
+      "description": "After completing a chain, related faction missions appear more often",
+      "trigger": "chain_complete",
+      "duration": "5_runs",
+      "affected_missions": "chain_faction_missions"
+    },
+    {
+      "rule_id": "reputation_gate",
+      "name": "Reputation Gate",
+      "description": "Tier 5+ reputation unlocks elite faction missions",
+      "trigger": "faction_rep >= 5",
+      "affected_missions": "elite_missions (high-grade)"
+    },
+    {
+      "rule_id": "construct_aware",
+      "name": "Construct-Aware Selection",
+      "description": "If player has unlocked a construct, missions involving that construct appear more often",
+      "trigger": "has_construct",
+      "weight_modifier": "construct_specific +50%",
+      "affected_missions": "construct_related"
+    },
+    {
+      "rule_id": "fixer_match",
+      "name": "Fixer-Match Bonus",
+      "description": "Missions from recently-used fixer appear 30% more often for 3 runs",
+      "trigger": "mission_complete (fixer_used)",
+      "duration": "3_runs",
+      "affected_missions": "same_fixer_missions"
+    },
+    {
+      "rule_id": "deck_synergy",
+      "name": "Deck Synergy Boost",
+      "description": "Missions matching deck archetypes get 20% boost",
+      "trigger": "deck_archetype_choice",
+      "affected_missions": "synergy_missions"
+    },
+    {
+      "rule_id": "chain_failure_recovery",
+      "name": "Chain Failure Recovery",
+      "description": "After chain failure, salvage missions appear (reduced rewards)",
+      "trigger": "chain_failed",
+      "duration": "3_runs",
+      "affected_missions": "salvage_missions"
+    },
+    {
+      "rule_id": "construct_loss_buff",
+      "name": "Construct Loss Buff",
+      "description": "After construct loss, recovery missions appear with bonus rewards",
+      "trigger": "construct_lost",
+      "duration": "5_runs",
+      "affected_missions": "recovery_missions"
+    },
+    {
+      "rule_id": "salvage_spree",
+      "name": "Salvage Spree",
+      "description": "After 3+ high-credit salvages, mission credit rewards increase 25%",
+      "trigger": "consecutive_high_salvages >= 3",
+      "duration": "5_runs",
+      "affected_missions": "all"
+    },
+    {
+      "rule_id": "hour_cycle",
+      "name": "Hour-Cycle Pattern",
+      "description": "Within a run, missions shift from investigation to defense to extraction as hours progress",
+      "trigger": "in_game_hour",
+      "weight_modifier": "hour % 8 -> mission type weighting",
+      "affected_missions": "all"
+    },
+    {
+      "rule_id": "completion_bonus",
+      "name": "Completion Bonus Streak",
+      "description": "10+ consecutive mission completions trigger bonus missions",
+      "trigger": "consecutive_completions >= 10",
+      "affected_missions": "bonus_missions (rare_rewards)"
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "date": "2026-08-08",
+    "phase": "11",
+    "total_rules": 19,
+    "adrs_cross_reference": "ADR-0188",
+    "implementation_status": "designed",
+    "implementation_location": "missions/random_selection.py (planned)"
+  }
+}

@@ -54,10 +54,13 @@ class TestMissionsStoryMetadata:
     def test_arc_range(self, missions):
         for mid, m in missions.items():
             arc = m["story"]["arc"]
-            assert 1 <= arc <= 5, f"{mid}: arc={arc} out of range 1-5"
+            assert 1 <= arc <= 6, f"{mid}: arc={arc} out of range 1-6"
 
     def test_character_ref_valid(self, missions):
-        valid_chars = {"novice", "veteran", "heretic", "suit"}
+        facts_path = MISSIONS_PATH.parent.parent.parent / "data" / "game_facts.json"
+        with facts_path.open(encoding="utf-8") as f:
+            facts = json.load(f)
+        valid_chars = set(facts.get("character_ids", []))
         for mid, m in missions.items():
             char = m["story"]["character_ref"]
             assert char in valid_chars, f"{mid}: character_ref={char} not in {valid_chars}"
@@ -163,7 +166,7 @@ class TestMissionsStoryMetadata:
 
     def test_each_arc_represented(self, missions):
         arcs = {m["story"]["arc"] for m in missions.values()}
-        assert arcs == {1, 2, 3, 4, 5}, f"Not all arcs 1-5 represented: {arcs}"
+        assert arcs == {1, 2, 3, 4, 5, 6}, f"Not all arcs 1-6 represented: {arcs}"
 
     def test_arc_top_level_matches_story_arc(self, missions):
         mismatches = []

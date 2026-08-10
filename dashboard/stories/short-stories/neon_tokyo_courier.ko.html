@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네온 도쿄 쿠리어 — Roguelike Sprawl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../glossary.css">
+    <link rel="stylesheet" href="../../missions.css">
+    <link rel="stylesheet" href="../../reading-position.css">
+    <link rel="stylesheet" href="../../sync-scroll.css">
+    <link rel="stylesheet" href="../../print.css" media="print">
+    <link rel="stylesheet" href="../../reader-controls.css">
+    <style>
+        :root { --bg-color: #faf8f5; --text-color: #2c2c2c; --accent-color: #e94560; --meta-color: #666666; --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif; --max-width: 680px; --line-height: 1.8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-serif); line-height: var(--line-height); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge { display: inline-block; font-family: monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-color); background: #1a1a2e15; padding: 0.25rem 0.75rem; border-radius: 2px; margin-bottom: 1rem; text-decoration: none; }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 { font-size: 1.4rem; font-weight: 600; color: var(--accent-color); margin: 2.5rem 0 1rem; }
+        .story-body blockquote { font-style: italic; color: var(--meta-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin: 2rem 0; }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+        .lang-indicator { position: fixed; top: 1rem; right: 1rem; font-family: monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--meta-color); background: var(--bg-color); padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7; }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="neon_tokyo_courier.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <a class="character-badge" href="../../../../../Fiction/wiki/characters/case.md" target="_blank" rel="noopener" title="Open wiki page">케이 (K)</a>
+            <h1 class="story-title">네온 도쿄 쿠리어</h1>
+            
+            <div class="story-meta">
+                <span>828 words</span>
+                <span>Sprawl #0.3 (arc-1, neon-tokyo-courier)</span>
+                <span>Arc 1</span>
+                <span>Standalone</span>
+            </div>
+        </header>
+        <article class="story-body">
+<h2>Tokyo Courier Run</h2>
+<h2>Introduction</h2>
+<blockquote><p>*"The sky above the port was the color of television, tuned to a dead channel."*</p></blockquote>
+<blockquote><p>— Gibson, Neuromancer, Chapter 1</p></blockquote>
+<p>The fixie had no gears. That was the point. In a city where every bike, every car, every drone had something electronic stitched into it, a pure mechanical bike was invisible. No chip to ping, no transponder to track. The only thing on the fixie that could be tracked was me, and that was the part I was being paid for.</p>
+<p>The rain started in Shibuya. It always starts in Shibuya — the neon pulls it out of the sky the way a fridge pulls the cold out of the room. I tightened the strap on the package and rode. The package was warm against my back. Warmer than a normal warm. Warmer than a person. As if something inside it was running, or thinking, or both.</p>
+<h2>Development</h2>
+<p>The package had come through the Sprawl Hole at three in the morning, no sender, no return. The Finn — not my usual Finn, a different Finn, a Finn I did not have a name for yet — had put it in my hand and said: do not open it. Do not ask what is inside. Take it to a drop point in Shibuya, near the old Godzilla head, before 0700. He had paid me in cash. Cash, in 2026. I did not ask.</p>
+<p>I rode out of the Sprawl and into the post-quake districts. The quake had been eight years ago, but Tokyo still showed the seams. Whole blocks were propped up on temporary scaffolds that had become permanent. Some streets were still cordoned off. Others had been quietly filled in with prefab concrete and a kind of resigned neon that said: this is what we are now.</p>
+<p>I took the long way, through the back alleys of Dogenzaka. There were fewer cameras there, and fewer Yakuza scouts, and the rain had not yet washed the smell of the night markets off the gutters. I passed a stall where a woman was frying something in oil, and the steam rose into the rain and disappeared. The package against my back hummed, very faintly. A sound I could feel in my teeth more than hear.</p>
+<h2>Climax</h2>
+<p>The Yakuza found me in the second alley.</p>
+<p>Three of them on scooters, no plates, headlamps off. They came up fast and boxed me against a wall. The lead one — short, bald, a scar across his eyebrow — got off and walked toward me. He had a hand inside his jacket. He was not smiling.</p>
+<p>"The package," he said.</p>
+<p>I did not have the package. Not on my back, anyway. I had dropped it, three blocks back, into a delivery locker that the package had told me about. I did not know how it had told me. A vibration, a sequence of warmth pulses against my spine. The way a mother talks to a baby through the wall of a womb.</p>
+<p>I shrugged.</p>
+<p>He searched me. He did not find it. He was angry. He asked me where it was. I told him I had lost it, in the rain, somewhere between here and there. He hit me once, hard, across the jaw. The world went white for a second. Then it came back, gray, with neon at the edges.</p>
+<p>"You will regret this," he said.</p>
+<p>Then they left. I stood there, in the rain, leaning against the wall. My jaw hurt. The locker was two blocks east. I did not go to the locker. The package would know what to do.</p>
+<h2>Denouement</h2>
+<p>I made it to a phone booth near the old Godzilla head at 0640. The Finn — my real Finn, this time — was on the line. He did not ask if I had delivered. He asked if I was alive. I said yes. He said: then it is done. He said: the package will take care of itself. He said: do not go back to the locker.</p>
+<p>I did not go back to the locker. I rode the fixie home through the rain, and the rain washed the blood off my chin, and by the time I reached the Sprawl, the package had already done whatever it had wanted to do. I never learned what was inside it. I never wanted to know. Some packages carry data. Some packages carry fate. Some packages carry the kind of thing that knows where it is going, and you are just the muscle.</p>
+<p>The fixie is still in my apartment. I do not ride it anymore. The Kombinat put a chip on it after the fact, the way they put chips on everything. But the package is gone. And the lockers in Shibuya are still locked, even now, eight years later, in a city that has forgotten most of its locks.</p>
+<p>I do not ride the fixie. But I keep it.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Roguelike Sprawl — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+    <script src="../glossary.js"></script>
+    <script src="../../reading-position.js"></script>
+    <script src="../../sync-scroll.js"></script>
+    <div class="print-footer">Roguelike Sprawl — Gibson Sprawl 3부작 기반 로그라이크 — 2026 © wiki/site attribution</div>
+    <script src="../../reader-controls.js"></script>
+    <script src="../../stats.js"></script>
+</body>
+</html>

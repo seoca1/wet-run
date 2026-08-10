@@ -2763,5 +2763,100 @@
       }
     ],
     "ice_kind": "goliath"
+  },
+  "black_construct": {
+    "name": "ICE — Black Construct",
+    "portrait": "ice.black",
+    "hp_base": 220,
+    "hp_per_grade": 30,
+    "dmg_base": 12,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 6,
+    "speed": 4,
+    "skills": [
+      "construct_proxy",
+      "ice_pierce",
+      "data_corrupt"
+    ],
+    "resistance": 0.4,
+    "variant": "black",
+    "base_type": "construct",
+    "loot_table": [
+      {
+        "item": "ice_construct",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "t5_program",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "black_construct"
+  },
+  "construct_proxy": {
+    "name": "ICE — Construct Proxy",
+    "portrait": "ice.construct",
+    "hp_base": 180,
+    "hp_per_grade": 25,
+    "dmg_base": 9,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 5,
+    "speed": 5,
+    "skills": [
+      "construct_proxy",
+      "ice_break"
+    ],
+    "resistance": 0.35,
+    "variant": "proxy",
+    "base_type": "construct",
+    "loot_table": [
+      {
+        "item": "ice_construct",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "t4_program",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct_proxy"
+  },
+  "aleph": {
+    "name": "ICE — Aleph Fragment",
+    "portrait": "ice.aleph",
+    "hp_base": 320,
+    "hp_per_grade": 40,
+    "dmg_base": 15,
+    "dmg_per_grade": 4,
+    "tier": 6,
+    "defense": 7,
+    "speed": 5,
+    "skills": [
+      "aleph_fragment",
+      "matrix_merge",
+      "ice_pierce"
+    ],
+    "resistance": 0.5,
+    "variant": "aleph",
+    "base_type": "ta_construct",
+    "loot_table": [
+      {
+        "item": "aleph_shard",
+        "chance": 1.0,
+        "quantity": 1
+      },
+      {
+        "item": "t6_program",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "aleph"
   }
 }

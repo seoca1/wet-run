@@ -78,9 +78,9 @@ class TelemetryIntegrator:
         """Record a death event."""
         self.record("death", {"ice_type": ice_type, "turn": turn})
 
-    def record_kill(self, ice_kind: str, turn: int = 0) -> None:
+    def record_kill(self, ice_type: str, turn: int = 0) -> None:
         """Record an ICE kill event (called from combat state when target HP <= 0)."""
-        self.record("kill", {"ice_kind": ice_kind, "turn": turn})
+        self.record("kill", {"ice_type": ice_type, "turn": turn})
 
     def record_deck_chosen(self, deck_size: str) -> None:
         """Record a deck choice event."""

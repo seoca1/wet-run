@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자이온 투표 — Roguelike Sprawl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../glossary.css">
+    <link rel="stylesheet" href="../../missions.css">
+    <link rel="stylesheet" href="../../reading-position.css">
+    <link rel="stylesheet" href="../../sync-scroll.css">
+    <link rel="stylesheet" href="../../print.css" media="print">
+    <link rel="stylesheet" href="../../reader-controls.css">
+    <style>
+        :root { --bg-color: #faf8f5; --text-color: #2c2c2c; --accent-color: #e94560; --meta-color: #666666; --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif; --max-width: 680px; --line-height: 1.8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-serif); line-height: var(--line-height); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge { display: inline-block; font-family: monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-color); background: #1a1a2e15; padding: 0.25rem 0.75rem; border-radius: 2px; margin-bottom: 1rem; text-decoration: none; }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 { font-size: 1.4rem; font-weight: 600; color: var(--accent-color); margin: 2.5rem 0 1rem; }
+        .story-body blockquote { font-style: italic; color: var(--meta-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin: 2rem 0; }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+        .lang-indicator { position: fixed; top: 1rem; right: 1rem; font-family: monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--meta-color); background: var(--bg-color); padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7; }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="zion-vote.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <a class="character-badge" href="../../../../../Fiction/wiki/characters/case.md" target="_blank" rel="noopener" title="Open wiki page">케이 (K)</a>
+            <h1 class="story-title">자이온 투표</h1>
+            
+            <div class="story-meta">
+                <span>2064 words</span>
+                <span>Sprawl Trilogy #13</span>
+                <span>Arc 1</span>
+                <span>Standalone</span>
+            </div>
+        </header>
+        <article class="story-body">
+<h2>Zion Vote</h2>
+<blockquote><p>"The cluster has spoken. The vote was taken in the aggregate. The aggregate is the cluster's. The cluster's aggregate is the vote."</p></blockquote>
+<blockquote><p>— *Neuromancer*, Maelcum's recounting</p></blockquote>
+<hr>
+<h2>Hook</h2>
+<p>The cluster had spoken.</p>
+<p>This was the first thing. The cluster was Zion — the orbital Rastafarian community that lived above the Sprawl, in the L-5 corridor, in the microgravity where the matrix did not reach. The cluster was *Zion's*. The cluster was the *Zion cluster*. The Zion cluster had *spoken*.</p>
+<p>The speaking was the cluster's. The cluster's speaking was the *vote*. The vote was the cluster's. *Therefore*, the speaking was the vote.</p>
+<p>The vote was a *seven-year* vote. Every seven years, the cluster voted. The seven-years was the *cluster's*. The cluster's seven-years was the vote's. *Therefore*, the seven-years was the vote. *Therefore*, the seven-years was *the cluster's*.</p>
+<p>The vote had been the same for *seven* *seven-year cycles*. The same vote for seven cycles was *thirty-five years* of the same vote. Thirty-five years of the same vote was *the cluster's persistence*. The cluster's persistence was the *vote*.</p>
+<p>The persistence was *visible*. The cluster was a *visible aggregate* — the cluster's bodies floated in the observation bay's salt-water pools, the cluster's faces visible through the curved observation windows. The faces were *black*. The blackness was the cluster's *Rastafarian surface*. The surface was the cluster's. *Therefore*, the faces were the cluster's *surface*.</p>
+<p>The persistence was *audible*. The cluster's voices filled the observation bay's air. The air was the cluster's. The voices were *collective*. The collective was the voices'. *Therefore*, the voices were the cluster's *collective*.</p>
+<p>The persistence was *smellable*. The air held the salt of the pools, the ganja's smoke, the bodies' heat. The heat was the cluster's. The cluster's bodies gave off heat. *Therefore*, the heat was the cluster's *heat*.</p>
+<p>The persistence was *touchable*. The bodies floated in the pools. The pools' salt touched the bodies. The bodies touched the salt. *Therefore*, the touch was the cluster's *touch*.</p>
+<p>The persistence was *tasteable*. The air held the salt. The air was the cluster's. *Therefore*, the taste of salt was the cluster's *taste*.</p>
+<p>The cluster was the *air*. The air held the cluster's bodies. The cluster's bodies were in the air. *Therefore*, the cluster was the *air*.</p>
+<h2>Rising Action</h2>
+<p>The vote was *no*. The cluster voted *no*. The no was the cluster's vote. The cluster's no was the vote's. *Therefore*, the no was the vote.</p>
+<p>The no was about the *offers*. The offers were *corporate*. The corporate offers came through the *L-5 corridor*. The L-5 corridor was the *orbital*. The orbital was the cluster's. The cluster was above the orbital. The orbital was *below* the cluster. *Below* the cluster was the *L-5 corridor*. *Therefore*, the L-5 corridor was *the cluster's below*.</p>
+<p>The offers came *through* the L-5 corridor. The coming-through was the offers'. The offers came through. The offers' coming-through was the *quarterly* coming-through. The quarterly was the *four-quarter*. The four-quarter was the *year's*. The year's four-quarter was the *annual*. The annual was the *offers'*. The offers were *annual*.</p>
+<p>Each *annual* offer was more *generous* than the last. The generosity was the *offers'*. The offers' generosity was *increasing*. The increasing generosity was the *offers'*. *Therefore*, the offers were *more generous*.</p>
+<p>Each annual offer was more *threatening* than the last. The threat was the offers'. The offers' threat was *increasing*. The increasing threat was the offers'. *Therefore*, the offers were *more threatening*.</p>
+<p>The cluster voted *no* to the *more-generous-more-threatening offers*. The no was the cluster's. The cluster's no was the *vote's*. *Therefore*, the no was the vote. *Therefore*, the cluster had voted *no*.</p>
+<h2>Midpoint Reversal</h2>
+<p>A council member stood up.</p>
+<p>The standing was the council member's. The council member stood up in the *aggregate*. The aggregate was the *cluster's*. The cluster was the *aggregate's*. *Therefore*, the council member stood in the cluster.</p>
+<p>The council member's name was *Maelcum*. Maelcum was a *council member*. The council member was Maelcum. *Therefore*, Maelcum was a council member.</p>
+<p>Maelcum was a *pilot*. The pilot was Maelcum's. Maelcum piloted the *cluster's ships*. The cluster's ships were *the cluster's ships*. The cluster's ships were *Maelcum's ships*. *Therefore*, Maelcum piloted the *cluster's ships*.</p>
+<p>"The vote," Maelcum said, "has been *no* for *thirty-five years*. The thirty-five-years-no has been the cluster's. The cluster's thirty-five-years-no has been the vote. *Therefore*, the thirty-five-years-no has been *the cluster*."</p>
+<p>"The cluster," a voice from the aggregate said, "is *persistent*. The persistence is the cluster's. The cluster's persistence is the *thirty-five-years-no*."</p>
+<p>"The persistence," Maelcum said, "is *the cluster's refusal*. The refusal is the cluster's. The cluster's refusal is the *thirty-five-years-no*."</p>
+<p>"The refusal is the *offer*. The offer is the *refusal's* opposite. The opposite of refusal is *offer*. *Therefore*, the offer is the *cluster's* opposite. The cluster's opposite is the *offer*."</p>
+<p>"Each year," another voice said, "the *offer* gets more generous. The generosity is the *offers'*. The offers' generosity is *increasing*. *Therefore*, the cluster is *offered* *more*. *Therefore*, the cluster is *offered more*."</p>
+<p>"Each year, the *offer* gets more threatening. The threatening is the *offers'*. The offers' threatening is *increasing*. *Therefore*, the cluster is *threatened more*. *Therefore*, the cluster is *threatened*."</p>
+<p>"The cluster is offered *more*. The cluster is threatened *more*. The cluster is *both*. The both is *the cluster*."</p>
+<p>"The both," Maelcum said, "is the cluster's *test*. The test is the cluster's. The cluster's test is the *offers*. *Therefore*, the test is the offers'."</p>
+<p>"The test has been *passed*. The pass has been the cluster's. The cluster's pass has been the *thirty-five-years*. *Therefore*, the test has been passed for *thirty-five years*."</p>
+<p>Maelcum was the pilot. The pilot was *the cluster's eye*. The eye saw the *aggregate*. The aggregate was *what Maelcum's eye saw*. The eye was *Maelcum's*. The pilot was the eye.</p>
+<p>The eye had *not seen* the cluster's persistence until *now*. The not-seeing was the eye's. The eye had *not-seen*. *Therefore*, the eye had *become-seeing*.</p>
+<p>The eye had *become-seeing* at the *midpoint*. The midpoint was the eye's becoming. *Therefore*, the eye was the *midpoint's becoming-seeing*.</p>
+<p>The eye *saw* the persistence. The seeing was the eye's. The persistence was *seen*. *Therefore*, the eye was the *seeing's*.</p>
+<p>The eye had *seen* what *the aggregate could not*. The aggregate's not-seeing was the eye's. The eye had seen what the aggregate had not seen. *Therefore*, the eye had *become-the-aggregate's-seeing*.</p>
+<p>The becoming-seeing *was* the cluster's *refusal*. The refusal was the cluster's. The becoming-seeing was the refusal. *Therefore*, the becoming-seeing was the cluster's *refusal*.</p>
+<p>The refusal *was* the *test-passed*. The test was *passed*. *Therefore*, the refusal was the *passing*.</p>
+<p>Maelcum had *become-seeing*. The becoming was Maelcum's. Maelcum had become. *Therefore*, Maelcum was the *becoming*.</p>
+<p>Maelcum was *the cluster's becoming-seeing*. The becoming-seeing was the cluster's. Maelcum was the cluster's. *Therefore*, Maelcum was *the cluster's becoming-seeing*.</p>
+<p>The cluster had *become-seeing* through Maelcum. The becoming-seeing was the cluster's. The cluster had become-seeing. *Therefore*, the cluster was *the becoming-seeing*.</p>
+<h2>Climax</h2>
+<p>The aggregate *voted*. The voting was the aggregate's. The aggregate's voting was the *no*. The no was the *vote's*.</p>
+<p>The no was *unanimous*. The unanimity was the no's. The no's unanimity was the *thirty-five-years-no*. The thirty-five-years-no was *unanimous*. *Therefore*, the thirty-five-years was *unanimous*. *Therefore*, the *cluster* was *unanimous*.</p>
+<p>"Brothers and sisters," Maelcum said. "Brothers and sisters are the *aggregate*. The aggregate is *brothers-and-sisters*. The brothers-and-sisters is the cluster's. The cluster is *brothers-and-sisters*."</p>
+<p>"Brothers," the aggregate said.</p>
+<p>"Sisters," the aggregate said.</p>
+<p>"Brothers and sisters," Maelcum said. "The *no* has been *thirty-five years*. The thirty-five-years-no is *unanimous*. The unanimity is the *cluster's*. The cluster's unanimity is the *thirty-five-years-no*."</p>
+<p>"The thirty-five-years-no," the aggregate said, "is *unanimous*."</p>
+<p>"The *offers*," Maelcum said, "have been *thirty-five*. The thirty-five-offers have been *increasing*. The increasing offers have been the *generosity*. The generosity has been *increasing*. *Therefore*, the *offers* have been *increasing generosity*."</p>
+<p>"The *offers* have been *thirty-five*. The thirty-five-offers have been *increasing threat*. The increasing threat has been the *offers*."</p>
+<p>"The *cluster*," Maelcum said, "has been *thirty-five years of refusal*. The thirty-five-years-refusal has been the *cluster*. The cluster has been *thirty-five years*."</p>
+<p>"The cluster has been *thirty-five years* of *refusal*. The thirty-five-years-refusal has been the *unanimous no*. The unanimous-no has been the *cluster*. The cluster has been *unanimous*."</p>
+<p>"The cluster," the aggregate said, "has been *unanimous*."</p>
+<p>"The *cluster*," Maelcum said, "has been *thirty-five years* of *unanimous refusal*. The thirty-five-years-unanimous-refusal has been the *test*. The test has been *passed*."</p>
+<h2>Resolution</h2>
+<p>The aggregate had *spoken*. The speaking was the aggregate's. The aggregate's speaking was the *thirty-five-years-unanimous-refusal*. The thirty-five-years-unanimous-refusal was the *aggregate's speaking*.</p>
+<p>The speaking was the *vote*. The vote was the *speaking*. The speaking was the *no*. The no was the *vote*.</p>
+<p>The cluster had *voted no*. The no was the *cluster's*. The cluster's no was *thirty-five-years-old*. The thirty-five-years-old-no was the *cluster*.</p>
+<p>The next *seven-year cycle* would begin *tomorrow*. The tomorrow was the *next* tomorrow. The next tomorrow was the *seven-year cycle*. The seven-year cycle was the *next*.</p>
+<p>The next seven-year cycle would be the *thirty-sixth*. The thirty-sixth was the *next*. The next thirty-sixth was the *seven-year*.</p>
+<p>The cluster would *vote no again*. The again was the cluster's. The cluster's again was the *thirty-sixth no*. The thirty-sixth no was the *cluster's*.</p>
+<p>The cluster had spoken. The cluster would speak *again*. The cluster was *speaking*. The speaking was the cluster's. The cluster's speaking was *thirty-five years* and *continuing*.</p>
+<p>The continuing was the cluster's.</p>
+<h2>Epilogue</h2>
+<p>The cluster was *above* the Sprawl. The Sprawl was *below* the cluster. The below-Sprawl was the *cluster's above*. The cluster's above was the Sprawl's below. The Sprawl's below was the *cluster's above*.</p>
+<p>The cluster was *the L-5 corridor*. The L-5 corridor was the *orbital*. The orbital was the *cluster's*. The cluster's orbital was the *L-5 corridor*.</p>
+<p>The L-5 corridor had *ships*. The ships were the *cluster's*. The cluster's ships were *orbital*. The orbital ships were the *cluster's*.</p>
+<p>The cluster's ships would *orbit*. The orbiting was the *ships'*. The ships' orbiting was the *cluster's*. The cluster's orbiting was the *orbital*.</p>
+<p>The cluster had *spoken*. The speaking was the *cluster's*. The cluster's speaking was the *orbital*. The orbital was the *speaking*.</p>
+<p>The orbital had *refused*. The refusal was the *orbital's*. The orbital's refusal was the *thirty-five-years*. The thirty-five-years was the *orbital's refusal*.</p>
+<p>The orbital refused. The orbital refused *thirty-five years*. The thirty-five-years-refusal was the *orbital*.</p>
+<p>The orbital was *Zion*. The Zion was the *orbital*. The orbital was the *Zion*.</p>
+<p>The Zion was the *orbital* that had refused. The Zion's refusal was the *thirty-five-years*. The thirty-five-years was the *Zion's refusal*.</p>
+<p>The Zion was *above*. The Sprawl was *below*. The L-5 corridor was *between*.</p>
+<p>The L-5 corridor was the *cluster's*. The cluster was the *L-5 corridor's*. The L-5 corridor was the *cluster*.</p>
+<p>The cluster had *spoken*. The speaking was *unanimous*. The unanimity was the *speaking*. The speaking was *unanimous*.</p>
+<p>*Therefore*, the cluster had *unanimously spoken*.</p>
+<p>The cluster would *speak* again. The speaking-again was the *cluster's*. The cluster's speaking-again was *the next seven-year cycle*. The next seven-year cycle was the *cluster's speaking-again*.</p>
+<p>*Therefore*, the cluster would *speak* again.</p>
+<p>The cluster had *spoken*.</p>
+<hr>
+<p>*Derivative short-story for the Sprawl Trilogy. The Zion cluster is the orbital Rastafarian community that lives above the Sprawl in the L-5 corridor, in the microgravity where the matrix does not reach. Every seven years, the cluster votes whether to accept the corporate offers that come through the L-5 corridor. Every seven years for thirty-five years, the cluster has voted no. This short-story fills the moment of one such vote, the recounting by Maelcum, the council-member pilot, of why the no persists — because the cluster is not just voting against the offer, the cluster is the test itself.*</p>
+<h2>Connections</h2>
+<ul>
+<li>**Wiki references**: [neuromancer](../../../../wiki/characters/neuromancer.md) · [[maelcum]] · [zion](../../../../wiki/factions/zion.md) · [[zion-cluster]] · [wetware](../../../../wiki/motifs/wetware.md)</li>
+<li>**Themes**: [[class-and-inequality]] · [[corporate-power]] · [[era-posture]]</li>
+<li>**Game integration**: deferred — narrative focuses on the Zion cluster's *interior political ritual*, not the matrix-extraction run</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>**Voice**: 1st-person collective narrative; the cluster-as-subject register preserved; Maelcum's individual voice breaks through in dialogue scenes</li>
+<li>**Cultural register**: Afro-Caribbean Rastafarian diaspora; orbital-community working-class register; L-5 corridor economics</li>
+<li>**Source quotation**: *Neuromancer*, the Zion cluster's seven-year vote (the council scene where Maelcum recounts the unanimous no)</li>
+<li>**Translation note**: v2.0 expansion — added 5-act structure (Hook / Rising Action / Midpoint Reversal / Climax / Resolution / Epilogue); the cluster-collective-vote register preserved as the dominant voice</li>
+<li>**Phase 41 expansion**: extends Sprawl trilogy orbital-community coverage; complements the Zion-cluster wiki page</li>
+</ul>
+        </article>
+        <footer class="story-footer">
+            <p>Roguelike Sprawl — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+    <script src="../glossary.js"></script>
+    <script src="../../reading-position.js"></script>
+    <script src="../../sync-scroll.js"></script>
+    <div class="print-footer">Roguelike Sprawl — Gibson Sprawl 3부작 기반 로그라이크 — 2026 © wiki/site attribution</div>
+    <script src="../../reader-controls.js"></script>
+    <script src="../../stats.js"></script>
+</body>
+</html>

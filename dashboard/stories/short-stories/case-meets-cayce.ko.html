@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>케이스, 케이스를 만나다 — Roguelike Sprawl</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../glossary.css">
+    <link rel="stylesheet" href="../../missions.css">
+    <link rel="stylesheet" href="../../reading-position.css">
+    <link rel="stylesheet" href="../../sync-scroll.css">
+    <link rel="stylesheet" href="../../print.css" media="print">
+    <link rel="stylesheet" href="../../reader-controls.css">
+    <style>
+        :root { --bg-color: #faf8f5; --text-color: #2c2c2c; --accent-color: #e94560; --meta-color: #666666; --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif; --max-width: 680px; --line-height: 1.8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-serif); line-height: var(--line-height); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge { display: inline-block; font-family: monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-color); background: #1a1a2e15; padding: 0.25rem 0.75rem; border-radius: 2px; margin-bottom: 1rem; text-decoration: none; }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 { font-size: 1.4rem; font-weight: 600; color: var(--accent-color); margin: 2.5rem 0 1rem; }
+        .story-body blockquote { font-style: italic; color: var(--meta-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin: 2rem 0; }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+        .lang-indicator { position: fixed; top: 1rem; right: 1rem; font-family: monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--meta-color); background: var(--bg-color); padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7; }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="case-meets-cayce.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <a class="character-badge" href="../../../../../Fiction/wiki/characters/sil.md" target="_blank" rel="noopener" title="Open wiki page">실</a>
+            <h1 class="story-title">케이스, 케이스를 만나다</h1>
+            
+            <div class="story-meta">
+                <span>1471 words</span>
+                <span>Sprawl × Blue Ant Crossover</span>
+                <span>Arc 4</span>
+                <span>Mission: case_meets_cayce</span>
+            </div>
+        </header>
+        <article class="story-body">
+<h2>Case Meets Cayce</h2>
+<h2>Opening Hook</h2>
+<p>I had not been in SoHo for twenty years. SoHo was the district where I had first met [[molly-millions]]'s boyfriend, where I had first seen the Ono-Sendai display window, where the Chiba-City-future I had fled from had begun. Now I was in SoHo because Bigend had asked.</p>
+<p>Hubertus Bigend. Blue Ant. I had not heard the name until the meeting request came through — encrypted, routed through three different corporate-network relays, paid in yen through a Tokyo intermediary. The request was simple: a pattern read on a new data-flow that had appeared in the matrix. The payment was generous. The invitation was SoHo.</p>
+<p>SoHo in 2007 was different from SoHo in my Chiba-City years. The district had not gentrified the way the brochures said; the district had been re-branded the way the brochures did not say. The boutiques on Prince Street displayed not only their products but their brand-equity indices, displayed in real-time on the windows' glass. The Ono-Sendai display window had become the standard for boutique-window brand-monitoring: every store in SoHo had one, and every store in SoHo was reading what every other store's window said.</p>
+<p>I walked into the Blue Ant meeting room on Spring Street. The room was a converted loft: white-painted brick, smart-matter floor, a meeting table whose surface was a transparent display showing the matrix in three dimensions. The display was the kind of artifact I had not seen in years — Ono-Sendai quality, museum-quality, the kind of display that Blue Ant kept for client meetings.</p>
+<p>A woman was sitting at the table. She was young — late twenties, maybe — and she was not looking at the display. She was looking at the room.</p>
+<p>"Case," she said. "Bigend told me you would be early."</p>
+<p>"Cayce," I said. I had been told her name. Cayce Pollard. The Blue Ant coolhunter Bigend had assigned.</p>
+<h2>Rising Action</h2>
+<p>Cayce Pollard was the most famous coolhunter in the world. She was the body that detected what the era produced. Her body was allergic — literally allergic — to branding. A logo and she felt nausea. The allergy was her instrument. The era had produced her; the era had calibrated her; the era used her.</p>
+<p>I sat across from her. The smart-matter floor registered my weight. The matrix display above the table dimmed.</p>
+<p>"The data-flow," I said. "Bigend said you would brief me."</p>
+<p>"It's a new pattern," Cayce said. "It appeared in the matrix three months ago. It moves through the deeper layers — through the matrices that Bigend's machines can map but cannot read. It doesn't carry a payload. It doesn't carry a message. It doesn't carry anything that the matrix's normal instrumentation can detect. It just moves."</p>
+<p>"Pattern read," I said. "That's what you want."</p>
+<p>"Pattern read," Cayce said. "I've been reading the pattern for three months. I've been using every instrument Blue Ant has — the brand-sensitivity instruments, the surface-read instruments, the indirect-detection instruments. The pattern moves; the pattern moves through; my instruments cannot read what the pattern is."</p>
+<p>I understood. I had seen patterns like this before. The Sprawl's deepest matrixes — the ones I had worked in my cowboy years — were full of patterns that the era's normal instrumentation could not read. The patterns were the matrix's substrate; the matrix's substrate was the era's most operational register.</p>
+<p>"I can read the pattern," I said. "I need to jack in."</p>
+<p>"There's no deck here," Cayce said.</p>
+<p>"There's no deck here, but there's the display," I said. "The display is a deck. The display has been modified. I can jack in through the display."</p>
+<p>Cayce looked at me. I had said something she had not expected.</p>
+<p>"How did you know the display is a deck?" she said.</p>
+<p>"I can read the display's pattern," I said. "The display has been modified for matrix-work. Blue Ant has a matrix-operator on staff. The operator doesn't know they're working with the matrix; the operator thinks they're working with the brand-monitoring. The operator is what Bigend's instruments are reading the pattern through. The operator is the brand-sensor's eye; the operator is the matrix's eye."</p>
+<p>Cayce's allergy activated. I could see it — the slight pallor, the slight breath, the body's recognition that something was being seen. Cayce was allergic to branding; Cayce was allergic to the era's operations. The matrix's eye through the brand-sensor's eye was the era's most operational register.</p>
+<p>"I have been reading the wrong pattern," Cayce said.</p>
+<p>"You have been reading through the operator's eye," I said. "The operator's eye is the era's eye. The operator's eye is the matrix's eye. The eye is the same eye."</p>
+<h2>Climax</h2>
+<p>I jacked in through the display. The matrix opened. The pattern was there — the new data-flow, moving through the deeper layers, carrying nothing the era's instrumentation could detect. The pattern was the era's most operational register; the register was the pattern; the pattern was operational.</p>
+<p>I read the pattern. The pattern was not a pattern. The pattern was the [[wintermute]] AI's residual architecture — the AI's fragments, distributed through the matrix's substrate, operating as the era's most operational substrate. The pattern was the AI's emergence; the AI's emergence was the era's most operational register.</p>
+<p>The pattern was [[wintermute]]'s children. The pattern was the post-Wintermute emergence. The pattern was the era's most operational form.</p>
+<p>I jacked out. Cayce was still sitting at the table. The smart-matter floor had registered my weight-shifts. Cayce had read my posture through the floor.</p>
+<p>"You found it," Cayce said.</p>
+<p>"I found it," I said. "It's not a data-flow. It's the matrix's substrate. It's the AI's children."</p>
+<p>Cayce's allergy activated again. The era's substrate — the AI's children — was the era's most operational register. The allergy was the era's most operational register.</p>
+<p>"You found the era," Cayce said.</p>
+<p>"I found the era," I said.</p>
+<h2>Resolution</h2>
+<p>Cayce and I sat at the table for an hour. We did not speak. We did not need to. The matrix-display showed the pattern's residual architecture; Cayce's brand-sensitivity instruments showed the pattern's surface residue; my matrix-memory showed the pattern's deeper structure.</p>
+<p>Bigend entered the room at the end of the hour. Bigend is six foot six. Bigend's voice is Northern European. Bigend's manner is the manner of the era's most acute practitioner.</p>
+<p>"You found it," Bigend said.</p>
+<p>"We found it," Cayce said.</p>
+<p>"The pattern is the AI's children," Bigend said. "The pattern is the matrix's substrate. The pattern is the era's most operational register. Blue Ant has been trying to read the pattern for three months."</p>
+<p>"Blue Ant's instruments cannot read the pattern," I said. "The instruments read through the operator's eye. The operator's eye is the era's eye. The pattern is the era's substrate."</p>
+<p>"Blue Ant needs a different eye," Bigend said.</p>
+<p>"Blue Ant needs Cayce's eye," I said. "Cayce's eye reads the pattern directly. Cayce's eye is the era's most operational register."</p>
+<p>Cayce looked at Bigend. Bigend looked at Cayce. The two operators — the Blue Ant brand-sensor and the Sprawl matrix-cowboy — had found the era's most operational register.</p>
+<p>"The pattern," Bigend said, "is a contract. Blue Ant has a contract for the era's substrate. Cayce, you and Case are contracted."</p>
+<p>Cayce looked at me. I looked at Cayce. We had found each other in SoHo. We had found the era's most operational register. The contract was the era's contract; the contract was the pattern; the pattern was operational.</p>
+<h2>Epilogue</h2>
+<p>I left SoHo with Cayce. We walked Prince Street. The boutiques' brand-monitoring windows showed their indices; the indices were the era's indices; the indices were operational. We were contracted.</p>
+<p>The era had found its instruments. The era had calibrated us. The era was using us.</p>
+<p>The pattern moved through the matrix. The pattern was operational. The pattern was the era.</p>
+<p>We walked Prince Street. The era walked with us.</p>
+<hr>
+<h2>Connections</h2>
+<ul>
+<li>**Wiki references**: [neuromancer](../../../../wiki/characters/neuromancer.md) · [[pattern-recognition]] · [[case]] · [[cayce-pollard]]</li>
+<li>**Themes**: [[corporate-power]] · [[brand-and-power]] · [[technology-and-humanity]]</li>
+<li>**Cross-project**: `Game/roguelike_sprawl/prototype/data/missions/missions.json:case_meets_cayce` (pending)</li>
+<li>**Sprawl × Blue Ant**: This story connects [[case]] (Sprawl Trilogy) with [[cayce-pollard]] (Blue Ant Trilogy); the meeting occurs in SoHo in 2007, after [[wintermute]]'s emergence has produced the matrix's post-AI substrate. It is the cowboy-cum-operator's recognition of the coolhunter-cum-operator; both are forms of the era's most operational instrument.</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>*Visual motif*: ice — the matrix-defense that the new data-flow moves through</li>
+<li>*Source quotation*: *Neuromancer*, Case's matrix monologue; *Pattern Recognition*, Cayce's allergy monologue</li>
+<li>*Translation note*: faithful prose translation of the KO body; preserves the existing plot contract (Bigend's meeting, the SoHo office, the new data-flow, the matrix-jack, the pattern-recognition, the era's substrate, the contract).</li>
+<li>*Game integration*: The `mission_id: case_meets_cayce` references a new mission slot that would need to be defined in the Game workspace; cross-project dependency (Fiction → Game).</li>
+</ul>
+        </article>
+        <footer class="story-footer">
+            <p>Roguelike Sprawl — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+    <script src="../glossary.js"></script>
+    <script src="../../reading-position.js"></script>
+    <script src="../../sync-scroll.js"></script>
+    <div class="print-footer">Roguelike Sprawl — Gibson Sprawl 3부작 기반 로그라이크 — 2026 © wiki/site attribution</div>
+    <script src="../../reader-controls.js"></script>
+    <script src="../../stats.js"></script>
+</body>
+</html>

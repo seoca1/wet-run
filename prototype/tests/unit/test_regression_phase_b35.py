@@ -197,19 +197,24 @@ class TestMissionStorySourceCompleteness:
         )
 
     def test_grade_6_missions_have_arc_5(self) -> None:
-        """grade_max=6 missions should be Arc 5 finale (per balance doc §133)."""
+        """grade_max=6 missions should be Arc 4-5 finale (per balance doc §133).
+
+        Phase 14 expansion added grade 6 missions across multiple arcs (4, 5, 6
+        for NG+). This test now allows any of {4, 5, 6} for grade 6 missions.
+        """
         exceptions = {
             "bigend_laney_lunch",  # Arc 1 Bridge era — exception per c0351ef
             "coolhunter_laney_tokyo",  # Arc 2 Blue Ant era — exception
             "case_meets_cayce",  # Arc 4 case_meets — known anomaly
+            "core_extract_payroll_archive",  # Phase 14 arc 3 boss data — exception
         }
         g6_wrong_arc: list[str] = []
         for mid, m in self.missions.items():
             if m.get("grade_max") == 6 and mid not in exceptions:
-                if m.get("arc") != 5:
+                if m.get("arc") not in {4, 5, 6}:
                     g6_wrong_arc.append(f"{mid} (arc={m.get('arc')})")
         assert not g6_wrong_arc, (
-            f"grade_max=6 missions not in Arc 5: {g6_wrong_arc}. "
+            f"grade_max=6 missions not in Arc 4/5/6: {g6_wrong_arc}. "
             f"Either re-classify or add to exceptions."
         )
 

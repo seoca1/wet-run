@@ -77,7 +77,7 @@ class TestICEVariants:
     """All 10 ICE variants (5 ascended, 3 corrupted, 2 defensive)."""
 
     def test_variant_count(self, variant_ice_types) -> None:
-        assert len(variant_ice_types) == 10
+        assert len(variant_ice_types) == 13
 
     def test_variant_types(self, variant_ice_types) -> None:
         for vtype in VARIANT_TYPES:

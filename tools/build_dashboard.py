@@ -307,7 +307,7 @@ def load_mission_stats(repo: Path) -> dict[str, object]:
         "references": 0,
         "arcs": 0,
         "chapters": 0,
-        "characters": ["Case", "Sil", "Kas", "Armitage"],
+        "characters": [],
         "aftermath_events": 0,
         "reactions": 0,
         "reaction_characters": [],
@@ -397,14 +397,33 @@ def load_mission_stats(repo: Path) -> dict[str, object]:
         out["complete_pairs"] = len(stems_en & stems_ko)
         out["quotes"] = out["complete_pairs"]
         out["references"] = out["complete_pairs"]
-    for c in ("case", "sil", "kas", "suit"):
+    for c in _character_ids_from_facts(repo):
         p = repo / "prototype" / "data" / "story" / "chapters" / f"{c}.json"
         if not p.exists():
             p = repo / "prototype" / "data" / "chapters" / f"{c}.json"
         if p.exists():
             out["arcs"] += 1
             out["chapters"] += 1
+    out["characters"] = [c.capitalize() for c in _character_ids_from_facts(repo)]
     return out
+
+
+def _character_ids_from_facts(repo: Path) -> tuple[str, ...]:
+    """Return the character ids from game_facts.json (single source of truth).
+
+    Phase 14 expanded the cast from 4 main jockeys to 27 named characters;
+    this function replaces the hardcoded ``("case", "sil", "kas", "suit")``
+    tuple that previously capped the character counter.
+    """
+    facts_path = repo / "prototype" / "data" / "game_facts.json"
+    if not facts_path.exists():
+        return ("case", "sil", "kas", "suit")
+    try:
+        facts = json.loads(facts_path.read_text(encoding="utf-8"))
+        ids = facts.get("character_ids", [])
+        return tuple(ids) if ids else ("case", "sil", "kas", "suit")
+    except (json.JSONDecodeError, OSError):
+        return ("case", "sil", "kas", "suit")
 
 
 def _collect_event_trigger_names(repo: Path) -> list[str]:

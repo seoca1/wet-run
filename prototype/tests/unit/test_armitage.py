@@ -246,11 +246,10 @@ class TestDashboardIntegration:
         stats = mod.load_mission_stats(_Path(projects_root))
         assert stats["missions"] == 200
         assert "Armitage" in stats["characters"]
-        assert len(stats["characters"]) == 4
+        assert len(stats["characters"]) == 27
         assert stats["missions"] == 200
         assert "Armitage" in stats["characters"]
-        # 4 characters total now
-        assert len(stats["characters"]) == 4
+        assert len(stats["characters"]) == 27
 
     def test_arc_distribution_after_expansion(self, data_dir: Path) -> None:
         """At least one mission per arc 1-5 after the 4th character expansion."""

@@ -39,6 +39,22 @@ if TYPE_CHECKING:
     pass
 
 
+def _resolve_f4_boss_id(enemy: object | None) -> str | None:
+    """Return the F.4 boss registry key if enemy is an F.4 boss, else None.
+
+    F.4 combatant ids are formed as ``boss_{boss_id}`` by
+    ``build_boss_combatant`` (combat/boss_expansion.py). The registry
+    stores the original ``boss_id`` (e.g. ``neuromancer``, ``loa_baron``,
+    ``black_baron``).
+    """
+    if enemy is None:
+        return None
+    enemy_id = getattr(enemy, "id", "")
+    if not enemy_id.startswith("boss_"):
+        return None
+    return enemy_id[len("boss_"):]
+
+
 def start_combat(
     state: AppState,
     ice_node: Node,
@@ -156,12 +172,23 @@ def start_combat(
         ice_type = IceType.STANDARD
     spawn_ice_intro(state.combat_effects, ice_type, enemy.name)
     cs = CombatState(player=player, enemies=tuple(enemies_list))
+    cs.deck_size = state.deck_size
+    cs.telemetry = state.telemetry
 
     if is_boss(ice_type) and cs.enemy is not None:
         profile = get_boss_profile(ice_type)
         if profile is not None:
             apply_phase_to_combatant(cs.enemy, profile)
             cs.boss_profile = profile
+
+    f4_boss_id = _resolve_f4_boss_id(cs.enemy)
+    if f4_boss_id is not None:
+        from ..combat.boss_expansion import BOSS_EXPANSION_REGISTRY
+        from ..combat.boss_phase_tracker import BossPhaseTracker
+
+        f4_profile = BOSS_EXPANSION_REGISTRY.get(f4_boss_id)
+        if f4_profile is not None:
+            cs.boss_phase_tracker = BossPhaseTracker(f4_profile)
 
     return cs
 

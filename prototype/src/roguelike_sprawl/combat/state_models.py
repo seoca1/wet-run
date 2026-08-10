@@ -236,6 +236,9 @@ class CombatState:
     last_event_tick: int = 0
     player_combo: int = 0
     enemy_combo: int = 0
+    telemetry: object = None
+    boss_phase_tracker: object = None
+    deck_size: str = "standard"
     combo_last_hit_ms: int = 0
     boss_profile: BossProfile | None = None
     alarm_level: int = 0

@@ -29,13 +29,13 @@ if TYPE_CHECKING:
     from ..engine.state import AppState
 
 
-def record_kill(ice_kind: str | None) -> None:
+def record_kill(ice_kind: str | None) -> None:  # type: ignore[misc]
     """Record an ICE kill event. No-op stub (Phase 14 wiring deferred).
 
     ``_apply_damage`` calls this on every target HP transition to 0. The
-    real implementation will be wired to ``AppState.telemetry`` once F.2/F.4
-    dispatch lands; until then this satisfies the runtime contract so combat
-    tests do not NameError.
+    real implementation is wired to ``AppState.telemetry`` (see the
+    block in ``_apply_damage`` below); this local no-op satisfies the
+    runtime contract so combat tests do not NameError.
     """
     del ice_kind
 
@@ -273,7 +273,23 @@ def _apply_damage(
     state.shield = max(0, state.shield - amount)
     target.hp = max(0, target.hp - applied)
     if target.hp <= 0:
-        record_kill(target.ice_kind)
+        record_kill(target.ice_kind)  # type: ignore[arg-type]
+        if state.telemetry is not None:
+            from typing import cast
+
+            from .telemetry_integration import TelemetryIntegrator
+
+            ice_kind = target.ice_kind or "unknown"
+            cast(TelemetryIntegrator, state.telemetry).record_kill(ice_kind)
+        if state.boss_phase_tracker is not None and target.ice_kind:
+            if target.ice_kind.startswith("boss_"):
+                from typing import cast
+
+                from .boss_phase_tracker import BossPhaseTracker
+
+                tracker = cast(BossPhaseTracker, state.boss_phase_tracker)
+                if tracker.should_transition(target.hp, target.max_hp):
+                    tracker.transition()
     return applied
 
 

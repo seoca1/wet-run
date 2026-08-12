@@ -304,7 +304,9 @@ def get_mission_for_scene(scene_id: str, jockey: str, repo_root: Path) -> dict[s
     return {"id": mid, **mission}
 
 
-def get_fiction_story_for_mission(mission_id: str, repo_root: Path, source: str | None = None) -> dict[str, object] | None:
+def get_fiction_story_for_mission(
+    mission_id: str, repo_root: Path, source: str | None = None
+) -> dict[str, object] | None:
     """Resolve mission_id → Fiction derivative story metadata.
 
     Looks up the Fiction file declared via game_mission_id frontmatter
@@ -337,7 +339,7 @@ def get_fiction_story_for_mission(mission_id: str, repo_root: Path, source: str 
     novel_subdirs = ("short-stories", "novelettes", "novellas")
     derivative_root = repo_root / "Fiction" / "derivative"
 
-    candidates: list[tuple[int, dict[str, object]]] = []
+    candidates: list[tuple[int, tuple[Path, str, str, str]]] = []
     mission_id_alt_pattern = re.compile(
         r"^\s*mission_id:\s*['\"]?([^'\"\n]+?)['\"]?\s*$", re.MULTILINE
     )

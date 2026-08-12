@@ -56,7 +56,14 @@ class TestEndingCounts:
 
     def test_ending_types(self) -> None:
         counts = get_ending_count_by_type()
-        required = ["redemption", "sacrifice", "transcendence", "betrayal", "absolution", "integration"]
+        required = [
+            "redemption",
+            "sacrifice",
+            "transcendence",
+            "betrayal",
+            "absolution",
+            "integration",
+        ]
         for t in required:
             assert t in counts, f"Missing ending type: {t}"
 

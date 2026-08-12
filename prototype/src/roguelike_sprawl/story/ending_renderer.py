@@ -55,9 +55,7 @@ class EndingRenderer:
         if self._endings_cache is None:
             with open(self._path) as f:
                 data = json.load(f)
-            self._endings_cache = {
-                k: v for k, v in data.items() if not k.startswith("_")
-            }
+            self._endings_cache = {k: v for k, v in data.items() if not k.startswith("_")}
         return self._endings_cache
 
     def get_ending(self, ending_id: str) -> EndingScene | None:
@@ -78,18 +76,12 @@ class EndingRenderer:
     def get_by_type(self, ending_type: str) -> tuple[EndingScene, ...]:
         """Return all endings of a given type."""
         return tuple(
-            self._to_scene(e)
-            for e in self._load_endings().values()
-            if e.get("type") == ending_type
+            self._to_scene(e) for e in self._load_endings().values() if e.get("type") == ending_type
         )
 
     def get_ng_plus_endings(self) -> tuple[EndingScene, ...]:
         """Return NG+ (arc 6) endings."""
-        return tuple(
-            self._to_scene(e)
-            for e in self._load_endings().values()
-            if e.get("arc") == 6
-        )
+        return tuple(self._to_scene(e) for e in self._load_endings().values() if e.get("arc") == 6)
 
     def get_all(self) -> tuple[EndingScene, ...]:
         """Return all endings as scenes."""
@@ -128,7 +120,9 @@ class EndingRenderer:
             reward_credits=reward.get("credits", 0) if isinstance(reward, dict) else 0,
             reputation_changes=reward.get("reputation", {}) if isinstance(reward, dict) else {},
             achievement=ending.get("achievement"),
-            permanent_death=reward.get("permanent_death", False) if isinstance(reward, dict) else False,
+            permanent_death=reward.get("permanent_death", False)
+            if isinstance(reward, dict)
+            else False,
             ng_plus_unlocked=ending.get("arc", 1) == 6,
         )
 
@@ -142,9 +136,7 @@ class EndingRenderer:
         if scene.reward_credits > 0:
             body += f"Reward: {scene.reward_credits} credits\n"
         if scene.reputation_changes:
-            changes = ", ".join(
-                f"{k}: {v:+d}" for k, v in scene.reputation_changes.items()
-            )
+            changes = ", ".join(f"{k}: {v:+d}" for k, v in scene.reputation_changes.items())
             body += f"Reputation: {changes}\n"
         if scene.achievement:
             body += f"Achievement: {scene.achievement}\n"

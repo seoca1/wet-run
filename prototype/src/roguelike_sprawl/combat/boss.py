@@ -633,7 +633,6 @@ def apply_phase_to_combatant(boss: Combatant, profile: BossProfile) -> PhaseProf
     return phase
 
 
-
 # Re-export AI/AoE/minion functions from boss_ai.py for backwards compatibility
 from .boss_ai import (  # noqa: E402,F401
     apply_phase_aoe,

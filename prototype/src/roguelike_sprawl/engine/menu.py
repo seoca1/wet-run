@@ -322,12 +322,13 @@ def handle_graphic_novel_ending_menu_input(
     n_count = len(endings)
     back_keys = [getattr(KeySym, f"N{i}") for i in range(1, n_count + 1)]
     # Find the back key (first N-key not used by an ending option)
+    back_sym: KeySym | None = None
     for i in range(1, n_count + 2):
         sym = getattr(KeySym, f"N{i}")
         if sym not in back_keys:
             back_sym = sym
             break
-    if event.sym is back_sym:
+    if back_sym is not None and event.sym is back_sym:
         return "back"
     for i, ending in enumerate(endings, start=1):
         if event.sym is getattr(KeySym, f"N{i}"):

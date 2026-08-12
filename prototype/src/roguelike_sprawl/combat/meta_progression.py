@@ -126,20 +126,12 @@ def get_meta_unlocks() -> tuple[MetaUnlock, ...]:
 
 def get_unlocked_ids() -> set[str]:
     """Return set of unlocked ids (unlocks with progress >= goal)."""
-    return {
-        uid
-        for uid, unlock in META_UNLOCKS.items()
-        if unlock.progress >= unlock.goal
-    }
+    return {uid for uid, unlock in META_UNLOCKS.items() if unlock.progress >= unlock.goal}
 
 
 def get_locked_ids() -> set[str]:
     """Return set of unlocked ids (unlocks with progress < goal)."""
-    return {
-        uid
-        for uid, unlock in META_UNLOCKS.items()
-        if unlock.progress < unlock.goal
-    }
+    return {uid for uid, unlock in META_UNLOCKS.items() if unlock.progress < unlock.goal}
 
 
 def get_meta_progress(unlock_id: str) -> MetaUnlock | None:

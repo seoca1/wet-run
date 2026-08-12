@@ -113,7 +113,10 @@ def test_has_finisher() -> None:
 
 
 def test_threshold_progression() -> None:
-    thresholds = [f.combo_threshold for f in sorted(FINISHER_REGISTRY.values(), key=lambda f: f.combo_threshold)]
+    thresholds = [
+        f.combo_threshold
+        for f in sorted(FINISHER_REGISTRY.values(), key=lambda f: f.combo_threshold)
+    ]
     assert thresholds == [5, 8, 12, 15]
 
 

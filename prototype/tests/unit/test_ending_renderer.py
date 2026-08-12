@@ -130,6 +130,7 @@ class TestEndingRendererRender:
     def test_render_no_special_consequences(self) -> None:
         renderer = EndingRenderer()
         from roguelike_sprawl.story.endings import get_ending
+
         ending = get_ending("ending_case_sacrifice")
         if ending is None or ending.get("reward", {}).get("credits", 0) > 0:
             sequence = renderer.render("ending_case_absolution")

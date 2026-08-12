@@ -32,9 +32,15 @@ def chains(events_data) -> dict:
 CHARACTERS = ["case", "sil", "kas", "suit", "wigan", "angie", "sally", "3jane", "neuromancer"]
 FACTIONS = ["hosaka", "sense_net", "yakuza", "ta_rep", "loa"]
 TRIGGERS = [
-    "npc_choice", "npc_greeting", "combat_end", "node_enter",
-    "story_milestone", "chapter_complete", "vendor_unlocked",
-    "hub_visited", "dialogue_completed",
+    "npc_choice",
+    "npc_greeting",
+    "combat_end",
+    "node_enter",
+    "story_milestone",
+    "chapter_complete",
+    "vendor_unlocked",
+    "hub_visited",
+    "dialogue_completed",
 ]
 
 

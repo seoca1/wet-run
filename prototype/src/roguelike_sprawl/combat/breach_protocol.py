@@ -10,7 +10,23 @@ from __future__ import annotations
 import random
 from dataclasses import dataclass
 
-DAEMON_VALUES: tuple[str, ...] = ("1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F")
+DAEMON_VALUES: tuple[str, ...] = (
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+)
 DEFAULT_GRID_COLS = 7
 DEFAULT_SEQUENCE_LENGTH = 3
 DEFAULT_TIMER_MS = 10_000

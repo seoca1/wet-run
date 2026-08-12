@@ -57,8 +57,13 @@ class TestTelemetryEventTypes:
 
     def test_supported_events(self) -> None:
         types = [
-            "death", "kill", "deck_chosen", "mutator_chosen",
-            "boss_reached", "mission_completed", "run_completed",
+            "death",
+            "kill",
+            "deck_chosen",
+            "mutator_chosen",
+            "boss_reached",
+            "mission_completed",
+            "run_completed",
         ]
         for t in types:
             assert should_record_event(t) is True

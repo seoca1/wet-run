@@ -16,7 +16,9 @@ if TYPE_CHECKING:
     pass
 
 
-DATA_PATH = Path(__file__).parent.parent.parent.parent / "data" / "missions" / "random_selection_rules.json"
+DATA_PATH = (
+    Path(__file__).parent.parent.parent.parent / "data" / "missions" / "random_selection_rules.json"
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -175,7 +177,9 @@ def _compute_weight_modifier(rule: dict[str, Any], state: object) -> float:
     return 1.0
 
 
-def _select_missions(rule: dict[str, Any], state: object, all_missions: list[str], weight: float) -> list[str]:
+def _select_missions(
+    rule: dict[str, Any], state: object, all_missions: list[str], weight: float
+) -> list[str]:
     """Select missions based on the rule's scope."""
     scope = rule.get("scope", "")
     affected = rule.get("affected_missions", "all")
@@ -230,7 +234,9 @@ def calculate_weight_bonus(state: object, faction: str) -> float:
     return 1.0
 
 
-def get_random_mission(state: object, available_missions: list[str], seed: int | None = None) -> str | None:
+def get_random_mission(
+    state: object, available_missions: list[str], seed: int | None = None
+) -> str | None:
     """Get a random mission using all active rules' weights.
 
     Args:

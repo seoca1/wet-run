@@ -97,9 +97,7 @@ def is_mutator_active(app_state: AppState, mutator: RunMutator) -> bool:
 
 def get_active_mutators(app_state: AppState) -> tuple[RunMutator, ...]:
     """Return the active mutators list."""
-    result: tuple[RunMutator, ...] = tuple(
-        RunMutator(m) for m in app_state.active_mutators
-    )
+    result: tuple[RunMutator, ...] = tuple(RunMutator(m) for m in app_state.active_mutators)
     return result
 
 

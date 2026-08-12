@@ -254,7 +254,7 @@ def boss_phase_5_sequence(spec: BossSpec, phase: BossPhase) -> CinematicSequence
         ("▓▓▓▓▓▓", (255, 255, 255), 100),
         ("██ LAST STAND ██", (255, 255, 255), 400),
         (f"[ {spec.name} ]", phase.color, 300),
-        (f"\"{dialogue}\"", phase.color, 1200),
+        (f'"{dialogue}"', phase.color, 1200),
         (f"▸ {super_skill_name}", (255, 100, 100), 600),
         ("·····", (200, 200, 200), 300),
     ]

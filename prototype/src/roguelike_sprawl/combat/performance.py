@@ -102,9 +102,7 @@ def is_under_memory_budget(snapshot: PerfSnapshot, budget_mb: float) -> bool:
     return snapshot.memory_mb <= budget_mb
 
 
-def is_frame_time_acceptable(
-    snapshot: PerfSnapshot, target_ms: float = 16.67
-) -> bool:
+def is_frame_time_acceptable(snapshot: PerfSnapshot, target_ms: float = 16.67) -> bool:
     """Return True if frame time is under target (60fps = 16.67ms)."""
     return snapshot.frame_time_ms <= target_ms
 

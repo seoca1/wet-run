@@ -191,9 +191,7 @@ def test_extraction_v2_mission_creation() -> None:
             time_limit_seconds=120,
             penalty_on_failure="construct_loss",
         ),
-        secondary_objectives=(
-            Objective(type="evade", enemy="ice.black_construct", min_evade=3),
-        ),
+        secondary_objectives=(Objective(type="evade", enemy="ice.black_construct", min_evade=3),),
     )
     assert m.primary_objective is not None
     assert m.primary_objective.time_limit_seconds == 120
@@ -321,11 +319,30 @@ def test_mission_chain_ta_succession() -> None:
             min_grade=4,
         ),
         missions=(
-            ChainMission(id="ta_investigate_3jane_initiative", order=1, type="investigation", chain_role="intro"),
-            ChainMission(id="ta_defend_straylight_perimeter", order=2, type="defense", chain_role="escalation"),
-            ChainMission(id="ta_dual_objective_ashpool_vote", order=3, type="dual_objective", chain_role="climax"),
-            ChainMission(id="ta_extract_aleph_chip", order=4, type="extraction_v2", chain_role="revelation"),
-            ChainMission(id="ta_stealth_construct_chamber", order=5, type="stealth", chain_role="resolution"),
+            ChainMission(
+                id="ta_investigate_3jane_initiative",
+                order=1,
+                type="investigation",
+                chain_role="intro",
+            ),
+            ChainMission(
+                id="ta_defend_straylight_perimeter",
+                order=2,
+                type="defense",
+                chain_role="escalation",
+            ),
+            ChainMission(
+                id="ta_dual_objective_ashpool_vote",
+                order=3,
+                type="dual_objective",
+                chain_role="climax",
+            ),
+            ChainMission(
+                id="ta_extract_aleph_chip", order=4, type="extraction_v2", chain_role="revelation"
+            ),
+            ChainMission(
+                id="ta_stealth_construct_chamber", order=5, type="stealth", chain_role="resolution"
+            ),
         ),
         chain_reward=ChainReward(
             construct_unlock="ta_construct_full",
@@ -392,8 +409,7 @@ def test_chain_too_long_rejected() -> None:
             chain_arc=1,
             unlock_condition=ChainUnlockCondition(),
             missions=tuple(
-                ChainMission(id=f"m{i}", order=i, type="x", chain_role="x")
-                for i in range(1, 7)
+                ChainMission(id=f"m{i}", order=i, type="x", chain_role="x") for i in range(1, 7)
             ),
             chain_reward=ChainReward(),
             chain_failure=ChainFailure(),

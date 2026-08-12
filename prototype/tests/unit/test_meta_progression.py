@@ -116,10 +116,6 @@ def test_all_categories_present() -> None:
 def test_record_progress_then_check() -> None:
     # ghost_deck requires 5 stealth wins
     record_meta_progress("ghost_deck", 3)
-    assert not check_unlock_condition("win_5_stealth_runs", {
-        "win_5_stealth_runs": 0
-    })
+    assert not check_unlock_condition("win_5_stealth_runs", {"win_5_stealth_runs": 0})
     # After 5 wins, unlock triggers
-    assert check_unlock_condition("win_5_stealth_runs", {
-        "win_5_stealth_runs": 5
-    })
+    assert check_unlock_condition("win_5_stealth_runs", {"win_5_stealth_runs": 5})

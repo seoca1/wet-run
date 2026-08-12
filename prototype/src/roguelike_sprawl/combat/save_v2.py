@@ -43,9 +43,7 @@ def migrate_save(data: dict[str, object]) -> SaveData:
     if version >= SAVE_SCHEMA_VERSION:
         player: dict[str, object] = cast(dict[str, object], data.get("player_data", {}))
         meta: dict[str, object] = cast(dict[str, object], data.get("meta_data", {}))
-        replay: dict[str, object] | None = cast(
-            dict[str, object] | None, data.get("replay_data")
-        )
+        replay: dict[str, object] | None = cast(dict[str, object] | None, data.get("replay_data"))
         return SaveData(
             schema_version=cast(int, data.get("schema_version", SAVE_SCHEMA_VERSION)),
             player_data=player,
@@ -62,9 +60,7 @@ def migrate_save(data: dict[str, object]) -> SaveData:
         data["schema_version"] = 2
     player2: dict[str, object] = cast(dict[str, object], data.get("player_data", {}))
     meta2: dict[str, object] = cast(dict[str, object], data.get("meta_data", {}))
-    replay2: dict[str, object] | None = cast(
-        dict[str, object] | None, data.get("replay_data")
-    )
+    replay2: dict[str, object] | None = cast(dict[str, object] | None, data.get("replay_data"))
     return SaveData(
         schema_version=SAVE_SCHEMA_VERSION,
         player_data=player2,

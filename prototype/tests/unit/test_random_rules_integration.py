@@ -96,10 +96,14 @@ class TestJobBoardSelectWeighted:
     def test_select_weighted_respects_grade(self, tmp_path: Path) -> None:
         board = _make_board(["m_low", "m_high"], tmp_path)
         board._missions["m_low"] = replace(
-            board._missions["m_low"], grade_min=1, grade_max=2,
+            board._missions["m_low"],
+            grade_min=1,
+            grade_max=2,
         )
         board._missions["m_high"] = replace(
-            board._missions["m_high"], grade_min=5, grade_max=6,
+            board._missions["m_high"],
+            grade_min=5,
+            grade_max=6,
         )
         state = DummyState(grade=1)
         for _ in range(10):
@@ -121,10 +125,12 @@ class TestJobBoardSelectByFaction:
     def test_select_by_faction_filters_correctly(self, tmp_path: Path) -> None:
         board = _make_board(["m_finn", "m_yakuza", "m_finn2"], tmp_path)
         board._missions["m_yakuza"] = replace(
-            board._missions["m_yakuza"], fixer="yakuza",
+            board._missions["m_yakuza"],
+            fixer="yakuza",
         )
         board._missions["m_finn2"] = replace(
-            board._missions["m_finn2"], fixer="finn",
+            board._missions["m_finn2"],
+            fixer="finn",
         )
         result = board.select_by_faction("finn", 1)
         assert len(result) == 2
@@ -144,7 +150,9 @@ class TestJobBoardIntegration:
         board = _make_board(["m1", "m2", "m3"], tmp_path)
         for m_id in ["m1", "m2", "m3"]:
             board._missions[m_id] = replace(
-                board._missions[m_id], grade_min=3, grade_max=4,
+                board._missions[m_id],
+                grade_min=3,
+                grade_max=4,
             )
         state = DummyState(grade=3)
         result = board.select_weighted(state, seed=42)

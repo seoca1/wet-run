@@ -328,8 +328,6 @@ def apply_phase_buff(phase: BossPhase, base_attack: int, base_speed_ms: int) -> 
 # ----------------------------------------------------------------------------
 
 
-
-
 # Re-export cinematic + spawner functions from bosses_cinematic.py for backwards compat
 def boss_epilogue_lines(spec: BossSpec) -> tuple[str, ...]:
     """Return the BOSS's death dialogue."""

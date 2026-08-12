@@ -111,9 +111,7 @@ class TestRuleApplication:
 
     def test_apply_rule_with_missions(self) -> None:
         state = MockState(faction_rep=5)
-        result = apply_rule(
-            "reputation_gate", state, ["m1", "m2", "m3", "m4", "m5"]
-        )
+        result = apply_rule("reputation_gate", state, ["m1", "m2", "m3", "m4", "m5"])
         assert result.rule_id == "reputation_gate"
         assert result.active is True
         assert len(result.selected_missions) > 0

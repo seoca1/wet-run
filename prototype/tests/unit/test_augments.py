@@ -113,8 +113,6 @@ def test_augment_values_are_coherent() -> None:
     """Effect values should be reasonable for their type."""
     for aug in AUGMENT_REGISTRY.values():
         if aug.effect_type in ("crit", "dodge", "stealth", "speed"):
-            assert -1.0 <= aug.effect_value <= 1.0, (
-                f"{aug.id}: bad value {aug.effect_value}"
-            )
+            assert -1.0 <= aug.effect_value <= 1.0, f"{aug.id}: bad value {aug.effect_value}"
         if aug.effect_type in ("ap_regen", "max_ap", "max_hp"):
             assert aug.effect_value > 0, f"{aug.id}: bad value {aug.effect_value}"

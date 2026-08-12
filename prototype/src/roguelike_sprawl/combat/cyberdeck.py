@@ -22,9 +22,7 @@ class Cyberdeck:
 
     def __post_init__(self) -> None:
         if len(self.name) > MAX_DECK_NAME_LENGTH:
-            raise ValueError(
-                f"Deck name too long: {len(self.name)} > {MAX_DECK_NAME_LENGTH}"
-            )
+            raise ValueError(f"Deck name too long: {len(self.name)} > {MAX_DECK_NAME_LENGTH}")
 
 
 def create_deck(name: str, program_ids: list[str] | None = None) -> Cyberdeck:
@@ -43,7 +41,9 @@ def validate_deck(deck: Cyberdeck, max_slots: int = DEFAULT_DECK_SLOTS) -> bool:
     return True
 
 
-def add_program_to_deck(deck: Cyberdeck, program_id: str, max_slots: int = DEFAULT_DECK_SLOTS) -> Cyberdeck:
+def add_program_to_deck(
+    deck: Cyberdeck, program_id: str, max_slots: int = DEFAULT_DECK_SLOTS
+) -> Cyberdeck:
     """Add a program to the deck. Returns a new deck (frozen)."""
     if program_id in deck.program_ids:
         raise ValueError(f"Program {program_id} already in deck")

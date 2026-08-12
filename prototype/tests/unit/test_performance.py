@@ -40,6 +40,7 @@ def test_take_snapshot_timestamp_positive() -> None:
 def test_measure_frame_time() -> None:
     def noop() -> None:
         pass
+
     duration = measure_frame_time(noop)
     assert duration >= 0.0
 

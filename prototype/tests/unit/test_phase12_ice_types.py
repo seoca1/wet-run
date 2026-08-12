@@ -64,12 +64,24 @@ class TestFactionICE:
 
     def test_hosaka_faction_ice(self, faction_ice_types) -> None:
         hosaka = [k for k, v in faction_ice_types.items() if v.get("faction") == "hosaka"]
-        expected = ["hosaka_analyst", "hosaka_collector", "hosaka_courier", "hosaka_terminal", "hosaka_defender"]
+        expected = [
+            "hosaka_analyst",
+            "hosaka_collector",
+            "hosaka_courier",
+            "hosaka_terminal",
+            "hosaka_defender",
+        ]
         assert sorted(hosaka) == sorted(expected)
 
     def test_sense_net_faction_ice(self, faction_ice_types) -> None:
         sense_net = [k for k, v in faction_ice_types.items() if v.get("faction") == "sense_net"]
-        expected = ["sense_net_alert", "sense_net_archive", "sense_net_spin", "sense_net_informer", "sense_net_reporter"]
+        expected = [
+            "sense_net_alert",
+            "sense_net_archive",
+            "sense_net_spin",
+            "sense_net_informer",
+            "sense_net_reporter",
+        ]
         assert sorted(sense_net) == sorted(expected)
 
 
@@ -94,9 +106,9 @@ class TestICEVariants:
         for ice_id, ice in variant_ice_types.items():
             if ice.get("variant") == "corrupted":
                 skills = ice.get("skills", [])
-                assert any(
-                    any(kw in s for kw in corruption_keywords) for s in skills
-                ), f"{ice_id}: corrupted needs at least one corruption-related skill, got {skills}"
+                assert any(any(kw in s for kw in corruption_keywords) for s in skills), (
+                    f"{ice_id}: corrupted needs at least one corruption-related skill, got {skills}"
+                )
 
     def test_defensive_hariants_have_shield_skill(self, variant_ice_types) -> None:
         for ice_id, ice in variant_ice_types.items():

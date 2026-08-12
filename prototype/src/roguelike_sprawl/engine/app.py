@@ -90,9 +90,7 @@ def _main_inner() -> int:
         title=config.SCREEN_TITLE,
         vsync=True,
     ) as context:
-        root_console = tcod.console.Console(
-            config.SCREEN_WIDTH, config.SCREEN_HEIGHT, order="F"
-        )
+        root_console = tcod.console.Console(config.SCREEN_WIDTH, config.SCREEN_HEIGHT, order="F")
 
         running = True
         last_time = time.monotonic()
@@ -120,10 +118,7 @@ def _main_inner() -> int:
                 context.present(root_console)
 
                 for event in tcod.event.wait():
-                    if (
-                        isinstance(event, tcod.event.WindowEvent)
-                        and event.type == "WindowClose"
-                    ):
+                    if isinstance(event, tcod.event.WindowEvent) and event.type == "WindowClose":
                         running = False
                         break
                     result = _handle_input(
@@ -143,7 +138,6 @@ def _main_inner() -> int:
                 return 1
 
         return 0
-
 
 
 def _render_cyberspace_map(console: tcod.console.Console, t: Translator, state: AppState) -> None:

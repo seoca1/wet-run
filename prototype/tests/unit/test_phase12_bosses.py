@@ -29,17 +29,28 @@ class TestZoneBosses:
         assert len(zone_bosses) == 10, f"Expected 10 bosses, got {len(zone_bosses)}"
 
     def test_one_zone_boss_per_zone(self, zone_bosses) -> None:
-        zone_boss_ids = ["dj_cyberspace", "sense_net_sentinel", "hosaka_memory_vault",
-                         "locus_construct", "tessier_child", "orbit_ghost"]
+        zone_boss_ids = [
+            "dj_cyberspace",
+            "sense_net_sentinel",
+            "hosaka_memory_vault",
+            "locus_construct",
+            "tessier_child",
+            "orbit_ghost",
+        ]
         for boss_id, zone in zip(zone_boss_ids, ZONES):
             assert boss_id in zone_bosses, f"Missing {boss_id}"
             assert zone_bosses[boss_id]["zone"] == zone, f"{boss_id}: expected zone {zone}"
 
     def test_zone_boss_required_fields(self, zone_bosses) -> None:
         for zone in ZONES:
-            boss_id = {"surface": "dj_cyberspace", "deep": "sense_net_sentinel",
-                       "mid": "hosaka_memory_vault", "core": "locus_construct",
-                       "ta": "tessier_child", "freeside": "orbit_ghost"}[zone]
+            boss_id = {
+                "surface": "dj_cyberspace",
+                "deep": "sense_net_sentinel",
+                "mid": "hosaka_memory_vault",
+                "core": "locus_construct",
+                "ta": "tessier_child",
+                "freeside": "orbit_ghost",
+            }[zone]
             boss = zone_bosses[boss_id]
             assert "name" in boss
             assert "hp_base" in boss

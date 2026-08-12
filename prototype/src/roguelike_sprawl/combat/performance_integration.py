@@ -108,12 +108,10 @@ class PerfTracker:
         ticks = self.get_tick_profiles()
         report = build_report(snapshots)
         frame_violations = sum(
-            1 for s in snapshots
-            if not is_frame_time_acceptable(s, self._frame_budget_ms)
+            1 for s in snapshots if not is_frame_time_acceptable(s, self._frame_budget_ms)
         )
         mem_violations = sum(
-            1 for s in snapshots
-            if not is_under_memory_budget(s, self._memory_budget_mb)
+            1 for s in snapshots if not is_under_memory_budget(s, self._memory_budget_mb)
         )
         return SessionProfiler(
             snapshots=snapshots,

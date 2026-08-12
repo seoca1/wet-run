@@ -60,7 +60,14 @@ class TestEndings:
 
     def test_ending_types_present(self, endings) -> None:
         types = {e.get("type") for e in endings.values()}
-        for required in ["redemption", "sacrifice", "transcendence", "betrayal", "absolution", "integration"]:
+        for required in [
+            "redemption",
+            "sacrifice",
+            "transcendence",
+            "betrayal",
+            "absolution",
+            "integration",
+        ]:
             assert required in types, f"Missing ending type: {required}"
 
     def test_ending_required_fields(self, endings) -> None:
@@ -86,9 +93,26 @@ class TestPrograms:
         assert len(programs_data) >= 27, f"Expected 27+ programs, got {len(programs_data)}"
 
     def test_new_programs_18_per_adr(self, programs_data) -> None:
-        new_programs = ["ward", "decoy", "reflect", "barrier", "scan", "decrypt",
-                        "cloak", "trace", "echo", "exploit", "payload", "backdoor",
-                        "surge", "boost", "repair", "heal", "salvage", "inspire"]
+        new_programs = [
+            "ward",
+            "decoy",
+            "reflect",
+            "barrier",
+            "scan",
+            "decrypt",
+            "cloak",
+            "trace",
+            "echo",
+            "exploit",
+            "payload",
+            "backdoor",
+            "surge",
+            "boost",
+            "repair",
+            "heal",
+            "salvage",
+            "inspire",
+        ]
         for p in new_programs:
             assert p in programs_data, f"Missing new program: {p}"
 
@@ -151,9 +175,18 @@ class TestWetwareAugments:
         assert len(wetware) == 10, f"Expected 10 augments, got {len(wetware)}"
 
     def test_required_augments(self, wetware) -> None:
-        required = ["ap_regen_lv3", "crit_lv3", "dodge_lv3", "max_hp_lv3",
-                    "healing_lv3", "shield_lv3", "speed_lv3",
-                    "mana_lv3", "armor_lv3", "focus_lv3"]
+        required = [
+            "ap_regen_lv3",
+            "crit_lv3",
+            "dodge_lv3",
+            "max_hp_lv3",
+            "healing_lv3",
+            "shield_lv3",
+            "speed_lv3",
+            "mana_lv3",
+            "armor_lv3",
+            "focus_lv3",
+        ]
         for aug in required:
             assert aug in wetware, f"Missing augment: {aug}"
 

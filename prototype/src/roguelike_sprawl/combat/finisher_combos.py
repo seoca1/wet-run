@@ -86,9 +86,7 @@ def get_highest_combo_finisher(combo_count: int) -> FinisherCombo | None:
 
 def list_available_finishers(combo_count: int) -> tuple[FinisherCombo, ...]:
     """Return all finishers available at this combo count."""
-    return tuple(
-        f for f in FINISHER_REGISTRY.values() if combo_count >= f.combo_threshold
-    )
+    return tuple(f for f in FINISHER_REGISTRY.values() if combo_count >= f.combo_threshold)
 
 
 def can_trigger_finisher(

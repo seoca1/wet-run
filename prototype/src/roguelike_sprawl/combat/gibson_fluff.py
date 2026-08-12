@@ -184,8 +184,6 @@ FLUFF_MESSAGES: dict[str, tuple[FluffMessage, ...]] = {
 }
 
 
-
-
 # Extra combat fluff to reach 200+ (Gibson tone)
 EXTRA_COMBAT = (
     _m("combat_hit", "player_to_ice", "Your deck *spits*. The construct catches."),
@@ -463,7 +461,6 @@ EXTRA_ENCOUNTER = (
 )
 
 
-
 # Merge extra messages into the registry (post-processing to avoid
 # self-reference during dict literal definition).
 _extras_map = {
@@ -481,6 +478,7 @@ _extras_map = {
 for _cat, _extra in _extras_map.items():
     FLUFF_MESSAGES[_cat] = FLUFF_MESSAGES[_cat] + _extra
 del _extras_map, _cat, _extra
+
 
 def get_fluff(category: str, rng: random.Random) -> str | None:
     """Return a weighted random fluff message for a category, or None."""

@@ -60,9 +60,7 @@ def record_event(
     )
 
 
-def get_replay_events_by_type(
-    replay: RunReplay, event_type: str
-) -> tuple[ReplayEvent, ...]:
+def get_replay_events_by_type(replay: RunReplay, event_type: str) -> tuple[ReplayEvent, ...]:
     """Return all events of a given type."""
     return tuple(e for e in replay.events if e.event_type == event_type)
 

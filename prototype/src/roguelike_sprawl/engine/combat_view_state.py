@@ -52,7 +52,7 @@ def _resolve_f4_boss_id(enemy: object | None) -> str | None:
     enemy_id = getattr(enemy, "id", "")
     if not enemy_id.startswith("boss_"):
         return None
-    return enemy_id[len("boss_"):]
+    return enemy_id[len("boss_") :]
 
 
 def start_combat(

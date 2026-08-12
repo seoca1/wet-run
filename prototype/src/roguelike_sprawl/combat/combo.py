@@ -500,7 +500,6 @@ class TimingBar:
         return 0.0 < (1.0 - combo.window_progress) < 0.25
 
 
-
 # ----------------------------------------------------------------------------
 # Combo Finishers (special moves at high stages)
 # ----------------------------------------------------------------------------
@@ -587,7 +586,6 @@ def get_finisher_for_stage(stage: ComboStage) -> ComboFinisher | None:
 # ----------------------------------------------------------------------------
 # Full combo HUD (avatar + counter + timing bar)
 # ----------------------------------------------------------------------------
-
 
 
 # Re-export rendering functions from combo_window.py for backwards compat

@@ -70,9 +70,7 @@ class TelemetryIntegrator:
         if event_type not in TELEMETRY_EVENT_TYPES:
             return self._session
         ts = timestamp_ms if timestamp_ms is not None else int(time.time() * 1000)
-        self._session = record_telemetry_event(
-            self._session, event_type, data, ts
-        )
+        self._session = record_telemetry_event(self._session, event_type, data, ts)
         return self._session
 
     def record_death(self, ice_type: str, turn: int = 0) -> None:

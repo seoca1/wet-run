@@ -147,6 +147,7 @@ def test_all_boss_have_color() -> None:
 
 def test_build_boss_combatant_neuromancer() -> None:
     from roguelike_sprawl.combat.boss_expansion import build_boss_combatant
+
     c = build_boss_combatant(NEUROMANCER_PROFILE)
     assert c.id == "neuromancer"
     assert c.name == "Neuromancer"
@@ -159,6 +160,7 @@ def test_build_boss_combatant_neuromancer() -> None:
 
 def test_build_boss_combatant_loa_baron() -> None:
     from roguelike_sprawl.combat.boss_expansion import build_boss_combatant
+
     c = build_boss_combatant(LOA_BARON_PROFILE)
     assert c.id == "loa_baron"
     assert c.hp == 300
@@ -168,6 +170,7 @@ def test_build_boss_combatant_loa_baron() -> None:
 
 def test_build_boss_combatant_black_baron() -> None:
     from roguelike_sprawl.combat.boss_expansion import build_boss_combatant
+
     c = build_boss_combatant(BLACK_BARON_PROFILE)
     assert c.id == "black_baron"
     assert c.hp == 250
@@ -177,6 +180,7 @@ def test_build_boss_combatant_black_baron() -> None:
 
 def test_build_boss_combatant_grade_scaling() -> None:
     from roguelike_sprawl.combat.boss_expansion import build_boss_combatant
+
     c_grade_1 = build_boss_combatant(NEUROMANCER_PROFILE, player_grade=1)
     c_grade_5 = build_boss_combatant(NEUROMANCER_PROFILE, player_grade=5)
     assert c_grade_5.hp > c_grade_1.hp
@@ -185,6 +189,7 @@ def test_build_boss_combatant_grade_scaling() -> None:
 
 def test_build_boss_combatant_no_grade() -> None:
     from roguelike_sprawl.combat.boss_expansion import build_boss_combatant
+
     c = build_boss_combatant(NEUROMANCER_PROFILE)
     assert c.hp == 400
     assert c.auto_attack_damage == 18
@@ -192,6 +197,7 @@ def test_build_boss_combatant_no_grade() -> None:
 
 def test_build_boss_combatant_all_three_bosses() -> None:
     from roguelike_sprawl.combat.boss_expansion import BOSS_EXPANSION_REGISTRY, build_boss_combatant
+
     for boss_id, profile in BOSS_EXPANSION_REGISTRY.items():
         c = build_boss_combatant(profile)
         assert c.id == boss_id

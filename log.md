@@ -7429,3 +7429,18 @@ After 39 rounds, **all data issues in the resolver's scope are now fixed.** The 
 **Mission resolution: 175 → 200/200 (100%)** — the resolver handles every mission correctly.
 
 The 200 `derivative_type` empty fields remain, but those are likely a derived field (calculated from char count) rather than stored data. Out of session scope.
+
+## [2026-08-12] SESSION CLOSE — roguelike_sprawl multi-round sweep
+
+**Status**: ✅ SESSION CLOSED — 1 atomic commit (ddb3426, 29 files). Push pending.
+
+### Final state
+
+- 4843 tests pass
+- 0 broken links
+- story_resolver 4 improvements (filename match, mission_id field, source param, ranking)
+- Mission resolution: 200/200 (100%)
+- All 24 story_resolver tests pass
+- 8+ tools got .tone-prompt.md filter
+
+**세션 종료 (2026-08-12) — roguelike_sprawl AI-scope work complete.**

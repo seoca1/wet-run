@@ -115,7 +115,7 @@ def list_available_stems(repo_root: Path) -> list[str]:
     stems: set[str] = set()
     for base in _novel_dirs(repo_root):
         for f in base.glob("*.md"):
-            if f.name.endswith(".ko.md"):
+            if f.name.endswith(".ko.md") or f.name.endswith(".tone-prompt.md"):
                 continue
             # 2026-06-23_case_jackout-30sec → ['2026-06-23', 'case_jackout-30sec']
             # 최대 1번 split으로 [날짜, stem] 분리 (stem 내부에 하이픈 허용)
@@ -199,7 +199,7 @@ def _read_game_mission_ids_from_fiction(repo_root: Path) -> list[dict[str, objec
     fm_pattern = re.compile(r"^game_mission_id:\s*(\S+)\s*$", re.MULTILINE)
     for base in _novel_dirs(repo_root):
         for f in base.glob("*.md"):
-            if f.name.endswith(".ko.md"):
+            if f.name.endswith(".ko.md") or f.name.endswith(".tone-prompt.md"):
                 continue
             try:
                 text = f.read_text(encoding="utf-8")
@@ -304,7 +304,7 @@ def get_mission_for_scene(scene_id: str, jockey: str, repo_root: Path) -> dict[s
     return {"id": mid, **mission}
 
 
-def get_fiction_story_for_mission(mission_id: str, repo_root: Path) -> dict[str, object] | None:
+def get_fiction_story_for_mission(mission_id: str, repo_root: Path, source: str | None = None) -> dict[str, object] | None:
     """Resolve mission_id → Fiction derivative story metadata.
 
     Looks up the Fiction file declared via game_mission_id frontmatter
@@ -337,32 +337,61 @@ def get_fiction_story_for_mission(mission_id: str, repo_root: Path) -> dict[str,
     novel_subdirs = ("short-stories", "novelettes", "novellas")
     derivative_root = repo_root / "Fiction" / "derivative"
 
+    candidates: list[tuple[int, dict[str, object]]] = []
+    mission_id_alt_pattern = re.compile(
+        r"^\s*mission_id:\s*['\"]?([^'\"\n]+?)['\"]?\s*$", re.MULTILINE
+    )
     for trilogy in trilogies:
         for subdir in novel_subdirs:
             en_dir = derivative_root / trilogy / subdir / "en"
             if not en_dir.exists():
                 continue
             for f in en_dir.glob("*.md"):
+                if f.name.endswith(".tone-prompt.md"):
+                    continue
                 try:
                     text = f.read_text(encoding="utf-8")
                 except OSError:
                     continue
                 m = fm_pattern.search(text)
-                if not m or m.group(1).strip().strip('"') != mission_id:
+                alt_m = mission_id_alt_pattern.search(text)
+                matched_id = None
+                score = 0
+                if m and m.group(1).strip().strip('"') == mission_id:
+                    matched_id = m.group(1).strip().strip('"')
+                elif alt_m and alt_m.group(1).strip().strip('"') == mission_id:
+                    matched_id = alt_m.group(1).strip().strip('"')
+                elif m and source and m.group(1).strip().strip('"') == source:
+                    matched_id = m.group(1).strip().strip('"')
+                elif alt_m and source and alt_m.group(1).strip().strip('"') == source:
+                    matched_id = alt_m.group(1).strip().strip('"')
+                if matched_id is None:
                     continue
-                title_en_m = title_en_pattern.search(text)
-                title_ko_m = title_ko_pattern.search(text)
-                char_m = char_pattern.search(text)
-                type_m = type_pattern.search(text)
-                wc_m = wc_pattern.search(text)
-                return {
-                    "file": str(f.relative_to(repo_root)),
-                    "stem": f.stem.split("_", 1)[-1] if "_" in f.stem else f.stem,
-                    "title_en": title_en_m.group(1) if title_en_m else f.stem,
-                    "title_ko": title_ko_m.group(1) if title_ko_m else "",
-                    "character_ref": char_m.group(1) if char_m else "",
-                    "derivative_type": type_m.group(1) if type_m else "short_story",
-                    "word_count": int(wc_m.group(1)) if wc_m else 0,
-                    "trilogy": trilogy,
-                }
+                file_stem = f.stem.split("_", 1)[-1] if "_" in f.stem else f.stem
+                if file_stem == mission_id:
+                    score = max(score, 3)
+                elif source and file_stem == source:
+                    score = max(score, 2)
+                else:
+                    score = max(score, 1)
+                candidates.append((score, (f, text, file_stem, trilogy)))
+    if not candidates:
+        return None
+    candidates.sort(key=lambda x: x[0], reverse=True)
+    _, (f, text, file_stem, trilogy) = candidates[0]
+    title_en_m = title_en_pattern.search(text)
+    title_ko_m = title_ko_pattern.search(text)
+    char_m = char_pattern.search(text)
+    type_m = type_pattern.search(text)
+    wc_m = wc_pattern.search(text)
+    return {
+        "file": str(f.relative_to(repo_root)),
+        "stem": file_stem,
+        "title_en": title_en_m.group(1) if title_en_m else f.stem,
+        "title_ko": title_ko_m.group(1) if title_ko_m else "",
+        "character_ref": char_m.group(1) if char_m else "",
+        "derivative_type": type_m.group(1) if type_m else "short_story",
+        "word_count": int(wc_m.group(1)) if wc_m else 0,
+        "trilogy": trilogy,
+    }
     return None

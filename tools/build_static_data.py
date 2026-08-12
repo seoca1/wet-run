@@ -77,7 +77,7 @@ def load_all_stories() -> tuple[dict, dict]:
     for src_dir in (SPRAWL_EN_DIR, SPRAWL_NV_EN_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.md")):
-                if not f.name.endswith(".ko.md"):
+                if not f.name.endswith(".ko.md") and not f.name.endswith(".tone-prompt.md"):
                     en_out[f.stem] = parse_story(f.read_text(encoding="utf-8"), "en")
     for src_dir in (SPRAWL_KO_DIR, SPRAWL_NV_KO_DIR):
         if src_dir.exists():
@@ -88,7 +88,7 @@ def load_all_stories() -> tuple[dict, dict]:
     for src_dir in (BRIDGE_EN_DIR, BRIDGE_NV_EN_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.md")):
-                if not f.name.endswith(".ko.md"):
+                if not f.name.endswith(".ko.md") and not f.name.endswith(".tone-prompt.md"):
                     en_out[f.stem] = parse_story(f.read_text(encoding="utf-8"), "en")
     for src_dir in (BRIDGE_KO_DIR, BRIDGE_NV_KO_DIR):
         if src_dir.exists():
@@ -99,7 +99,7 @@ def load_all_stories() -> tuple[dict, dict]:
     for src_dir in (BLUE_ANT_EN_DIR, BLUE_ANT_NV_EN_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.md")):
-                if not f.name.endswith(".ko.md"):
+                if not f.name.endswith(".ko.md") and not f.name.endswith(".tone-prompt.md"):
                     en_out[f.stem] = parse_story(f.read_text(encoding="utf-8"), "en")
     for src_dir in (BLUE_ANT_KO_DIR, BLUE_ANT_NV_KO_DIR):
         if src_dir.exists():
@@ -198,17 +198,17 @@ def gen_search_index(en_stories: dict, ko_stories: dict,
             for f in d.glob("*.md"):
                 stem = f.stem.replace(".ko", "")
                 if "bridge" in str(d).lower() or any("bridge" in p.name for p in [d]):
-                    if f.suffix == ".md":
+                    if f.suffix == ".md" and not f.name.endswith(".tone-prompt.md"):
                         bridge_stems.add(stem)
     for d in (BLUE_ANT_EN_DIR, BLUE_ANT_NV_EN_DIR):
         if d.exists():
             for f in d.glob("*.md"):
-                if f.suffix == ".md":
+                if f.suffix == ".md" and not f.name.endswith(".tone-prompt.md"):
                     blueant_stems.add(f.stem)
     for d in (SPRAWL_EN_DIR, SPRAWL_NV_EN_DIR):
         if d.exists():
             for f in d.glob("*.md"):
-                if f.suffix == ".md":
+                if f.suffix == ".md" and not f.name.endswith(".tone-prompt.md"):
                     sprawl_stems.add(f.stem)
 
     for stem, info in en_stories.items():

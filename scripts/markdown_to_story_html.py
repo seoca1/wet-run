@@ -376,7 +376,7 @@ def main():
     # CONTENT_EXPANSION added 5 stories in 2026-07-01).  See the
     # dashboard validation follow-up for details.
     en_files = sorted(
-        f for f in source_dir.glob('20*-*-*_*.md') if '.ko.' not in f.name
+        f for f in source_dir.glob('20*-*-*_*.md') if '.ko.' not in f.name and '.tone-prompt' not in f.name
     )
     ko_files = sorted(source_dir.glob('20*-*-*_*.ko.md'))
 

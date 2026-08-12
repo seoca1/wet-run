@@ -96,7 +96,7 @@ def main() -> int:
     untouched = 0
 
     for path in sorted(fiction.glob("*.md")):
-        if path.stem.endswith(".ko"):
+        if path.stem.endswith(".ko") or path.stem.endswith(".tone-prompt"):
             continue
         stem = date_prefix.sub("", path.stem)
         mission_id = src_to_mission.get(stem)

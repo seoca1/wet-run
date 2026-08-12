@@ -32,6 +32,14 @@
 
 > **경고**: Fiction wiki (`../../../../Fiction/wiki/`)는 이 프로젝트의 **읽기 전용** primary source입니다. 절대 수정하지 마세요.
 
+## 메모리 조각 (lore/)
+
+게임 진행 중 발견하는 ambient lore 단편 (ADR-0140, Engagement Layer Phase 1). 25% 확률로 Matrix node 진입 시 `>>> Memory fragment recovered: [title]` 표시 후 `wiki/lore/` 에 영구 저장. 손실 없는 collection 동기.
+
+- [Memory Fragments — Sprawl 지성체 회수 기록](lore/README.md) — 메커니즘 + 카테고리 (Signal Echo / Construct Cache / Anomaly Log / Dead Channel)
+
+> 4개 fragment 파일 (`memory_anomaly_log_01`, `memory_construct_cache_01`, `memory_dead_channel_01`, `memory_signal_echo_01`)은 **in-game discovery 전용** — 의도적으로 index 미노출. 자키가 직접 회수해야 wiki에 등장.
+
 ## 라이선스
 
 본 프로젝트는 [MIT License](../LICENSE) 하에 공개됩니다.

@@ -134,7 +134,7 @@ def load_library_stats(repo: Path) -> dict[str, object]:
         """
         if not dir_path.exists():
             return set(), {}, {}, {}
-        md_files = list(dir_path.glob("*.md"))
+        md_files = [f for f in dir_path.glob("*.md") if not f.name.endswith(".tone-prompt.md")]
         stems: set[str] = set()
         per_stem_titles: dict[str, dict[str, str]] = {}
         derivative_types: dict[str, str] = {}

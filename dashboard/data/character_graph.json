@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated": "2026-08-06T05:42:46.175354+00:00",
+  "generated": "2026-08-12T16:14:48.242287+00:00",
   "characters": [
     {
       "id": "case",
@@ -678,7 +678,7 @@
     }
   ],
   "enrichment": {
-    "wiki_char_pages_scanned": 98,
+    "wiki_char_pages_scanned": 106,
     "relationships_from_wiki": 14
   }
 }

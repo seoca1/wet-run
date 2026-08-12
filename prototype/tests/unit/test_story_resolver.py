@@ -200,12 +200,12 @@ class TestGetFictionStoryForMission:
         assert result["title_en"] == "The First Walk"
 
     def test_out_of_scope_mission(self) -> None:
-        """Bridge/Blue Ant mission (no Fiction source) → None."""
+        """Mission that exists in missions.json but has no Fiction derivative file → None."""
         from roguelike_sprawl.data.story_resolver import (
             get_fiction_story_for_mission,
         )
 
-        result = get_fiction_story_for_mission("idoru_wedding", ROOT_PROJECT)
+        result = get_fiction_story_for_mission("nonexistent_mission_for_test_xyz", ROOT_PROJECT)
         assert result is None
 
     def test_nonexistent_mission(self) -> None:

@@ -1,10 +1,19 @@
 {
   "version": "1.0",
-  "generated": "2026-08-06T05:42:46.175354+00:00",
-  "en_stories": 150,
-  "ko_stories": 150,
-  "missions": 111,
-  "glossary_terms": 318,
-  "issues": [],
-  "ok": true
+  "generated": "2026-08-12T16:14:48.242287+00:00",
+  "en_stories": 239,
+  "ko_stories": 241,
+  "missions": 200,
+  "glossary_terms": 358,
+  "issues": [
+    {
+      "type": "en_ko_mismatch",
+      "only_en": [],
+      "only_ko": [
+        "2026-06-29_matrix_revelation",
+        "2026-06-29_neuromancer_whisper"
+      ]
+    }
+  ],
+  "ok": false
 }

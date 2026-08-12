@@ -228,19 +228,18 @@ def verify_save_load(slot: int) -> int:
         assert ui_state.screen is ScreenKind.SAVE_LOAD
         print(f"    ✓ enter_save_load: screen={ui_state.screen.value}")
 
-    # Navigation: up arrow (1 -> 5)
     import tcod.event
 
+    from roguelike_sprawl.engine.save_manager import MAX_SLOTS
     event = tcod.event.KeyDown(sym=tcod.event.KeySym.UP, mod=0, scancode=0)
     save_load_view.handle_save_load_input(event, ui_state)
-    assert ui_state.save_load_selected == 5
-    print(f"    ✓ UP arrow: slot 1 -> 5 (wrap)")
+    assert ui_state.save_load_selected == MAX_SLOTS
+    print(f"    ✓ UP arrow: slot 1 -> {MAX_SLOTS} (wrap)")
 
-    # Down arrow (5 -> 1)
     event = tcod.event.KeyDown(sym=tcod.event.KeySym.DOWN, mod=0, scancode=0)
     save_load_view.handle_save_load_input(event, ui_state)
     assert ui_state.save_load_selected == 1
-    print(f"    ✓ DOWN arrow: slot 5 -> 1 (wrap)")
+    print(f"    ✓ DOWN arrow: slot {MAX_SLOTS} -> 1 (wrap)")
 
     # Number key jump
     event = tcod.event.KeyDown(sym=tcod.event.KeySym.N3, mod=0, scancode=0)
@@ -259,8 +258,9 @@ def verify_save_load(slot: int) -> int:
         assert ui_state.credits == 777
         print(f"    ✓ ENTER load slot 1: credits={ui_state.credits}, screen={ui_state.screen.value}")
 
-    # Render (no crash)
     import tcod.console
+
+    from roguelike_sprawl.i18n import Translator
 
     ui_state2 = AppState()
     ui_state2.save_load_selected = 2
@@ -268,7 +268,7 @@ def verify_save_load(slot: int) -> int:
         mock_cls.return_value = manager
         save_load_view.enter_save_load(ui_state2)
         console = tcod.console.Console(80, 50, order="F")
-        save_load_view.render_save_load(console, ui_state2)
+        save_load_view.render_save_load(console, ui_state2, Translator("en"))
         print("    ✓ render_save_load: no crash")
 
     # Cleanup

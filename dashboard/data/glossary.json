@@ -1,9 +1,10 @@
 {
   "version": "1.0",
-  "generated": "2026-08-06T05:42:46.175354+00:00",
+  "generated": "2026-08-12T16:14:48.242287+00:00",
   "wiki_base": "../../../Fiction/wiki/",
-  "term_count": 318,
+  "term_count": 358,
   "terms": [
+    "Gibson Virtual Light-era Interview (Dublin, October 1, 1993)",
     "working class ridership and late capitalist substrate",
     "Mona Lisa / \"Molly Millions\" (Mona Lisa Overdrive)",
     "William Gibson Reading Order & World Overview",
@@ -12,17 +13,25 @@
     "Bobby Quine (The Post-Merger Cowboy)",
     "Kas (Jokey — Heretic Console Cowboy)",
     "3Jane Tessier-Ashpool (short story)",
+    "Disney Land with the Death Penalty",
+    "Thirteen Views of a Cardboard City",
+    "short fiction as corpus foundation",
     "Ashpool (Tessier-Ashpool founder)",
     "Heretic (Jokey — The Declaration)",
     "Sally Shears (The Revealed Molly)",
     "Wigan Ludgate (The Uploaded Body)",
+    "operative class across trilogies",
+    "synthetic intelligence in gibson",
     "Armitage (Colonel Willie Corto)",
     "Novice (Jokey — The First Jack)",
     "Veteran (Jokey — The Old Score)",
     "Brown (Holland Windgate Brown)",
+    "recurring themes across gibson",
+    "sprawl universe complete guide",
     "Dixie Flatline (McCoy Pauley)",
     "Johnny Mnemonic (short story)",
     "Sally Shears (Molly Millions)",
+    "gibsons evolution as a writer",
     "Bobby Newmark (\"Count Zero\")",
     "Chia Pet McKenzie (차이 펫 맥켄지)",
     "Colin Laney (Bridge version)",
@@ -103,6 +112,7 @@
     "corporate warfare",
     "gibsons evolution",
     "jackie count zero",
+    "japan traditional",
     "new york blue ant",
     "sleeve technology",
     "turner count zero",
@@ -117,43 +127,58 @@
     "smoke and shadow",
     "sprawl to bridge",
     "villa straylight",
+    "Ainsley Lowbeer",
     "Jackpot Trilogy",
     "Masahiko (마사히코)",
     "Rei Toi (Idoru)",
     "Yamazaki (야마자키)",
+    "blue ant london",
+    "blue ant method",
     "brand and power",
     "bridge squatter",
     "brown operation",
     "corporate power",
+    "courier network",
     "havana locative",
     "hubertus bigend",
     "idolu the idoru",
     "johnny mnemonic",
     "panther moderns",
     "reflex boosters",
+    "sprawl_universe",
     "tessier ashpool",
     "Andrew Pollard",
     "Burning Chrome",
     "New Rose Hotel",
-    "The Peripheral",
     "Wendell Wright",
+    "Wilf Netherton",
     "ai as pantheon",
     "angie mitchell",
     "bridge courier",
+    "bridge trilogy",
     "damien vorcees",
+    "dead mans chip",
     "dixie flatline",
+    "market economy",
     "maryalice wake",
     "molly millions",
     "nanotechnology",
     "rom constructs",
+    "the peripheral",
     "Russian Mafia",
     "blue ant soho",
     "bobby newmark",
+    "brand_allergy",
+    "brand_economy",
+    "burton fisher",
     "cayce pollard",
     "cortical stem",
+    "flynne fisher",
     "kumiko yanaka",
+    "marcus garvey",
     "mirror lenses",
     "mona lisa mlo",
+    "mosfet flynne",
     "peter riviera",
     "post cold war",
     "reasons cycle",
@@ -169,10 +194,13 @@
     "Robin Lanier",
     "The Projects",
     "Yukio Yanaka",
+    "black market",
     "cortex hound",
+    "data economy",
     "dermal armor",
     "gift economy",
     "hollis henry",
+    "hub protocol",
     "locative art",
     "maas biolabs",
     "mesh network",
@@ -190,6 +218,7 @@
     "chickenhead",
     "colin ghost",
     "colin laney",
+    "coolhunting",
     "josef virek",
     "loa oracles",
     "lost decade",
@@ -210,12 +239,14 @@
     "night city",
     "ono sendai",
     "parkabrake",
+    "straylight",
     "the bridge",
     "the matrix",
     "the sprawl",
     "urban life",
     "voodoo loa",
     "wintermute",
+    "A. Insley",
     "Boone Chu",
     "Linda Lee",
     "Petty San",
@@ -224,6 +255,7 @@
     "post 9 11",
     "razorgirl",
     "sense net",
+    "stub time",
     "the aleph",
     "the boxes",
     "yakushi 8",
@@ -233,6 +265,7 @@
     "Dogfight",
     "Ridgeway",
     "armitage",
+    "biometal",
     "blue ant",
     "flatline",
     "fontaine",
@@ -256,21 +289,27 @@
     "Maelcum",
     "ashpool",
     "biosoft",
+    "bioware",
+    "clanton",
     "concept",
+    "courier",
     "footage",
     "god box",
     "heretic",
+    "lowbeer",
     "milgrim",
     "reasons",
     "rei toi",
+    "shibuya",
     "simstim",
     "skinner",
     "the rez",
     "wetware",
-    "Agency",
     "Jackie",
     "Lo (로)",
+    "Rydell",
     "Turner",
+    "agency",
     "bisoft",
     "fandom",
     "hosaka",
@@ -286,6 +325,7 @@
     "yakuza",
     "3jane",
     "Alain",
+    "Darko",
     "Laney",
     "Lucas",
     "Marly",
@@ -324,10 +364,20 @@
     "lo"
   ],
   "map": {
+    "black market": {
+      "page": "concepts/black-market.md",
+      "tooltip": "black market",
+      "text": "black market"
+    },
     "yakushi 8": {
       "page": "concepts/yakushi-8.md",
       "tooltip": "yakushi 8",
       "text": "yakushi 8"
+    },
+    "short fiction as corpus foundation": {
+      "page": "concepts/short-fiction-as-corpus-foundation.md",
+      "tooltip": "short fiction as corpus foundation",
+      "text": "short fiction as corpus foundation"
     },
     "bigend methodology": {
       "page": "concepts/bigend-methodology.md",
@@ -348,6 +398,11 @@
       "page": "concepts/skinny.md",
       "tooltip": "skinny",
       "text": "skinny"
+    },
+    "sprawl universe complete guide": {
+      "page": "concepts/sprawl-universe-complete-guide.md",
+      "tooltip": "sprawl universe complete guide",
+      "text": "sprawl universe complete guide"
     },
     "brown operation": {
       "page": "concepts/brown-operation.md",
@@ -374,6 +429,11 @@
       "tooltip": "construct",
       "text": "construct"
     },
+    "biometal": {
+      "page": "concepts/biometal.md",
+      "tooltip": "biometal",
+      "text": "biometal"
+    },
     "idol": {
       "page": "concepts/idol.md",
       "tooltip": "idol",
@@ -388,6 +448,11 @@
       "page": "concepts/nodal-points.md",
       "tooltip": "nodal points",
       "text": "nodal points"
+    },
+    "stub time": {
+      "page": "concepts/stub-time.md",
+      "tooltip": "stub time",
+      "text": "stub time"
     },
     "idu ru": {
       "page": "concepts/idu-ru.md",
@@ -414,6 +479,11 @@
       "tooltip": "ono sendai",
       "text": "ono sendai"
     },
+    "market economy": {
+      "page": "concepts/market-economy.md",
+      "tooltip": "market economy",
+      "text": "market economy"
+    },
     "structural monitoring": {
       "page": "concepts/structural-monitoring.md",
       "tooltip": "structural monitoring",
@@ -423,6 +493,11 @@
       "page": "concepts/connection.md",
       "tooltip": "connection",
       "text": "connection"
+    },
+    "shibuya": {
+      "page": "concepts/shibuya.md",
+      "tooltip": "shibuya",
+      "text": "shibuya"
     },
     "wintermute neuromancer merge": {
       "page": "concepts/wintermute-neuromancer-merge.md",
@@ -474,6 +549,11 @@
       "tooltip": "simstim",
       "text": "simstim"
     },
+    "coolhunting": {
+      "page": "concepts/coolhunting.md",
+      "tooltip": "coolhunting",
+      "text": "coolhunting"
+    },
     "cortex hound": {
       "page": "concepts/cortex-hound.md",
       "tooltip": "cortex hound",
@@ -484,6 +564,11 @@
       "tooltip": "surface mail",
       "text": "surface mail"
     },
+    "blue ant method": {
+      "page": "concepts/blue-ant-method.md",
+      "tooltip": "blue ant method",
+      "text": "blue ant method"
+    },
     "gift economy": {
       "page": "concepts/gift-economy.md",
       "tooltip": "gift economy",
@@ -493,6 +578,16 @@
       "page": "concepts/infrastructure-as-patron.md",
       "tooltip": "infrastructure as patron",
       "text": "infrastructure as patron"
+    },
+    "synthetic intelligence in gibson": {
+      "page": "concepts/synthetic-intelligence-in-gibson.md",
+      "tooltip": "synthetic intelligence in gibson",
+      "text": "synthetic intelligence in gibson"
+    },
+    "dead mans chip": {
+      "page": "concepts/dead-mans-chip.md",
+      "tooltip": "dead mans chip",
+      "text": "dead mans chip"
     },
     "aleph": {
       "page": "concepts/aleph.md",
@@ -564,10 +659,20 @@
       "tooltip": "cyberspace",
       "text": "cyberspace"
     },
+    "hub protocol": {
+      "page": "concepts/hub-protocol.md",
+      "tooltip": "hub protocol",
+      "text": "hub protocol"
+    },
     "the boxes": {
       "page": "concepts/the-boxes.md",
       "tooltip": "the boxes",
       "text": "the boxes"
+    },
+    "recurring themes across gibson": {
+      "page": "concepts/recurring-themes-across-gibson.md",
+      "tooltip": "recurring themes across gibson",
+      "text": "recurring themes across gibson"
     },
     "footage": {
       "page": "concepts/footage.md",
@@ -583,6 +688,11 @@
       "page": "concepts/fontaine.md",
       "tooltip": "fontaine",
       "text": "fontaine"
+    },
+    "mosfet flynne": {
+      "page": "concepts/mosfet-flynne.md",
+      "tooltip": "mosfet flynne",
+      "text": "mosfet flynne"
     },
     "holland windgate brown": {
       "page": "concepts/holland-windgate-brown.md",
@@ -619,6 +729,11 @@
       "tooltip": "nanotechnology",
       "text": "nanotechnology"
     },
+    "gibsons evolution as a writer": {
+      "page": "concepts/gibsons-evolution-as-a-writer.md",
+      "tooltip": "gibsons evolution as a writer",
+      "text": "gibsons evolution as a writer"
+    },
     "cortical stem": {
       "page": "concepts/cortical-stem.md",
       "tooltip": "cortical stem",
@@ -649,6 +764,11 @@
       "tooltip": "chickenhead",
       "text": "chickenhead"
     },
+    "courier network": {
+      "page": "concepts/courier-network.md",
+      "tooltip": "courier network",
+      "text": "courier network"
+    },
     "lo rez": {
       "page": "concepts/lo-rez.md",
       "tooltip": "lo rez",
@@ -669,10 +789,35 @@
       "tooltip": "trauma squads",
       "text": "trauma squads"
     },
+    "brand_allergy": {
+      "page": "concepts/brand_allergy.md",
+      "tooltip": "brand_allergy",
+      "text": "brand_allergy"
+    },
     "voodoo": {
       "page": "concepts/voodoo.md",
       "tooltip": "voodoo",
       "text": "voodoo"
+    },
+    "bioware": {
+      "page": "concepts/bioware.md",
+      "tooltip": "bioware",
+      "text": "bioware"
+    },
+    "japan traditional": {
+      "page": "concepts/japan-traditional.md",
+      "tooltip": "japan traditional",
+      "text": "japan traditional"
+    },
+    "data economy": {
+      "page": "concepts/data-economy.md",
+      "tooltip": "data economy",
+      "text": "data economy"
+    },
+    "courier": {
+      "page": "concepts/courier.md",
+      "tooltip": "courier",
+      "text": "courier"
     },
     "reasons cycle": {
       "page": "concepts/reasons-cycle.md",
@@ -688,6 +833,11 @@
       "page": "concepts/fido.md",
       "tooltip": "fido",
       "text": "fido"
+    },
+    "brand_economy": {
+      "page": "concepts/brand_economy.md",
+      "tooltip": "brand_economy",
+      "text": "brand_economy"
     },
     "smart matter": {
       "page": "concepts/smart-matter.md",
@@ -783,6 +933,11 @@
       "page": "concepts/fandom.md",
       "tooltip": "fandom",
       "text": "fandom"
+    },
+    "operative class across trilogies": {
+      "page": "concepts/operative-class-across-trilogies.md",
+      "tooltip": "operative class across trilogies",
+      "text": "operative class across trilogies"
     },
     "reasons": {
       "page": "concepts/reasons.md",
@@ -993,6 +1148,11 @@
       "page": "characters/sally-shears.md",
       "tooltip": "Sally Shears (Molly Millions)",
       "text": "Sally Shears (Molly Millions)"
+    },
+    "johnny mnemonic": {
+      "page": "characters/sally-shears.md",
+      "tooltip": "johnny mnemonic",
+      "text": "johnny mnemonic"
     },
     "molly millions": {
       "page": "characters/sally-shears.md",
@@ -1224,15 +1384,40 @@
       "tooltip": "constructs",
       "text": "constructs"
     },
+    "rydell": {
+      "page": "characters/rydell.md",
+      "tooltip": "Rydell",
+      "text": "Rydell"
+    },
+    "virtual light": {
+      "page": "characters/rydell.md",
+      "tooltip": "virtual light",
+      "text": "virtual light"
+    },
+    "marcus garvey": {
+      "page": "characters/rydell.md",
+      "tooltip": "marcus garvey",
+      "text": "marcus garvey"
+    },
+    "colin laney": {
+      "page": "characters/rydell.md",
+      "tooltip": "colin laney",
+      "text": "colin laney"
+    },
+    "bridge trilogy": {
+      "page": "characters/rydell.md",
+      "tooltip": "bridge trilogy",
+      "text": "bridge trilogy"
+    },
+    "the bridge": {
+      "page": "characters/rydell.md",
+      "tooltip": "the bridge",
+      "text": "the bridge"
+    },
     "keith harada": {
       "page": "characters/keith-harada.md",
       "tooltip": "Keith Harada",
       "text": "Keith Harada"
-    },
-    "colin laney": {
-      "page": "characters/keith-harada.md",
-      "tooltip": "colin laney",
-      "text": "colin laney"
     },
     "rei toi": {
       "page": "characters/keith-harada.md",
@@ -1309,6 +1494,16 @@
       "tooltip": "shinya",
       "text": "shinya"
     },
+    "a. insley": {
+      "page": "characters/a-insley.md",
+      "tooltip": "A. Insley",
+      "text": "A. Insley"
+    },
+    "blue ant london": {
+      "page": "characters/a-insley.md",
+      "tooltip": "blue ant london",
+      "text": "blue ant london"
+    },
     "zavijava (β virginis)": {
       "page": "characters/zavijava.md",
       "tooltip": "Zavijava (β Virginis)",
@@ -1343,11 +1538,6 @@
       "page": "characters/zavijava.md",
       "tooltip": "technology and spirituality",
       "text": "technology and spirituality"
-    },
-    "the bridge": {
-      "page": "characters/zavijava.md",
-      "tooltip": "the bridge",
-      "text": "the bridge"
     },
     "pagan (parkabrake)": {
       "page": "characters/pagan.md",
@@ -1414,11 +1604,6 @@
       "tooltip": "identity and doubles",
       "text": "identity and doubles"
     },
-    "virtual light": {
-      "page": "characters/chevette-washington.md",
-      "tooltip": "virtual light",
-      "text": "virtual light"
-    },
     "skinner": {
       "page": "characters/chevette-washington.md",
       "tooltip": "skinner",
@@ -1479,11 +1664,6 @@
       "tooltip": "Marly",
       "text": "Marly"
     },
-    "johnny mnemonic": {
-      "page": "characters/molly-millions.md",
-      "tooltip": "johnny mnemonic",
-      "text": "johnny mnemonic"
-    },
     "independence vs connection": {
       "page": "characters/molly-millions.md",
       "tooltip": "independence vs connection",
@@ -1539,6 +1719,31 @@
       "tooltip": "Sally Shears (The Revealed Molly)",
       "text": "Sally Shears (The Revealed Molly)"
     },
+    "wilf netherton": {
+      "page": "characters/wilf-netherton.md",
+      "tooltip": "Wilf Netherton",
+      "text": "Wilf Netherton"
+    },
+    "the peripheral": {
+      "page": "characters/wilf-netherton.md",
+      "tooltip": "the peripheral",
+      "text": "the peripheral"
+    },
+    "agency": {
+      "page": "characters/wilf-netherton.md",
+      "tooltip": "agency",
+      "text": "agency"
+    },
+    "flynne fisher": {
+      "page": "characters/wilf-netherton.md",
+      "tooltip": "flynne fisher",
+      "text": "flynne fisher"
+    },
+    "lowbeer": {
+      "page": "characters/wilf-netherton.md",
+      "tooltip": "lowbeer",
+      "text": "lowbeer"
+    },
     "post cold war": {
       "page": "characters/milgrim.md",
       "tooltip": "post cold war",
@@ -1573,6 +1778,16 @@
       "page": "characters/boone-chu.md",
       "tooltip": "Boone Chu",
       "text": "Boone Chu"
+    },
+    "burton fisher": {
+      "page": "characters/flynne-fisher.md",
+      "tooltip": "burton fisher",
+      "text": "burton fisher"
+    },
+    "clanton": {
+      "page": "characters/flynne-fisher.md",
+      "tooltip": "clanton",
+      "text": "clanton"
     },
     "lady 3jane tessier-ashpool": {
       "page": "characters/3jane.md",
@@ -1724,6 +1939,11 @@
       "tooltip": "Yamazaki (야마자키)",
       "text": "Yamazaki (야마자키)"
     },
+    "darko": {
+      "page": "characters/darko.md",
+      "tooltip": "Darko",
+      "text": "Darko"
+    },
     "rei toi (idoru)": {
       "page": "characters/rei-toi.md",
       "tooltip": "Rei Toi (Idoru)",
@@ -1733,6 +1953,11 @@
       "page": "characters/colin-laney.md",
       "tooltip": "Colin Laney (Bridge version)",
       "text": "Colin Laney (Bridge version)"
+    },
+    "ainsley lowbeer": {
+      "page": "characters/lowbeer.md",
+      "tooltip": "Ainsley Lowbeer",
+      "text": "Ainsley Lowbeer"
     },
     "alain": {
       "page": "characters/alain.md",
@@ -1779,15 +2004,15 @@
       "tooltip": "The Difference Engine",
       "text": "The Difference Engine"
     },
+    "gibson virtual light-era interview (dublin, october 1, 1993)": {
+      "page": "works/gibson-virtual-light-interview.md",
+      "tooltip": "Gibson Virtual Light-era Interview (Dublin, October 1, 1993)",
+      "text": "Gibson Virtual Light-era Interview (Dublin, October 1, 1993)"
+    },
     "william gibson reading order & world overview": {
       "page": "works/gibson-reading-order.md",
       "tooltip": "William Gibson Reading Order & World Overview",
       "text": "William Gibson Reading Order & World Overview"
-    },
-    "the peripheral": {
-      "page": "works/the-peripheral.md",
-      "tooltip": "The Peripheral",
-      "text": "The Peripheral"
     },
     "the bridge trilogy": {
       "page": "works/bridge-trilogy.md",
@@ -1829,6 +2054,11 @@
       "tooltip": "3Jane Tessier-Ashpool (short story)",
       "text": "3Jane Tessier-Ashpool (short story)"
     },
+    "disney land with the death penalty": {
+      "page": "works/disney-land-with-the-death-penalty.md",
+      "tooltip": "Disney Land with the Death Penalty",
+      "text": "Disney Land with the Death Penalty"
+    },
     "red star, winter orbit": {
       "page": "works/red-star-winter-orbit.md",
       "tooltip": "Red Star, Winter Orbit",
@@ -1853,11 +2083,6 @@
       "page": "works/hinterlands.md",
       "tooltip": "Hinterlands",
       "text": "Hinterlands"
-    },
-    "agency": {
-      "page": "works/agency.md",
-      "tooltip": "Agency",
-      "text": "Agency"
     },
     "agrippa": {
       "page": "works/agrippa.md",
@@ -1889,10 +2114,20 @@
       "tooltip": "Construct Narrative Arc (Updated 2026-07-13)",
       "text": "Construct Narrative Arc (Updated 2026-07-13)"
     },
+    "thirteen views of a cardboard city": {
+      "page": "works/thirteen-views-of-a-cardboard-city.md",
+      "tooltip": "Thirteen Views of a Cardboard City",
+      "text": "Thirteen Views of a Cardboard City"
+    },
     "istanbul": {
       "page": "settings/istanbul.md",
       "tooltip": "istanbul",
       "text": "istanbul"
+    },
+    "straylight": {
+      "page": "settings/straylight.md",
+      "tooltip": "straylight",
+      "text": "straylight"
     },
     "blue ant soho": {
       "page": "settings/blue-ant-soho.md",
@@ -1913,6 +2148,11 @@
       "page": "settings/cheba.md",
       "tooltip": "cheba",
       "text": "cheba"
+    },
+    "sprawl_universe": {
+      "page": "settings/sprawl_universe.md",
+      "tooltip": "sprawl_universe",
+      "text": "sprawl_universe"
     }
   }
 }

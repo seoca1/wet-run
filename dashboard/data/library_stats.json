@@ -1,6 +1,6 @@
 {
-  "short_stories_en": 80,
-  "short_stories_ko": 80,
+  "short_stories_en": 169,
+  "short_stories_ko": 169,
   "novelettes_en": 26,
   "novelettes_ko": 26,
   "hook_kinds": 6,
@@ -15,9 +15,9 @@
   "layers": 4,
   "tests_passing": 39,
   "code_lines_approx": 900,
-  "_generated_at": "2026-08-10T23:48:26",
-  "stories_with_mission_link": 100,
-  "catalog_entries": 106,
+  "_generated_at": "2026-08-13T01:14:47",
+  "stories_with_mission_link": 189,
+  "catalog_entries": 195,
   "catalog_entries_list": [
     {
       "stem": "aleph_fragment",
@@ -97,6 +97,34 @@
       "game_mission_id": "first_jack"
     },
     {
+      "stem": "case_past_defend_chiba_memory",
+      "type": "short_story",
+      "title_en": "Case Past Defend Chiba Memory",
+      "title_ko": "Case Past Defend Chiba Memory",
+      "game_mission_id": "case_past_defend_chiba_memory"
+    },
+    {
+      "stem": "case_past_dual_objective_dead_mans_chip",
+      "type": "short_story",
+      "title_en": "Case Past Dual Objective Dead Mans Chip",
+      "title_ko": "Case Past Dual Objective Dead Mans Chip",
+      "game_mission_id": "case_past_dual_objective_dead_mans_chip"
+    },
+    {
+      "stem": "case_past_extract_linda_memory",
+      "type": "short_story",
+      "title_en": "Case Past Extract Linda Memory",
+      "title_ko": "Case Past Extract Linda Memory",
+      "game_mission_id": "case_past_extract_linda_memory"
+    },
+    {
+      "stem": "case_past_investigate_armitage_mind",
+      "type": "short_story",
+      "title_en": "Case Past Investigate Armitage Mind",
+      "title_ko": "Case Past Investigate Armitage Mind",
+      "game_mission_id": "case_past_investigate_armitage_mind"
+    },
+    {
       "stem": "casey_leaves",
       "type": "short_story",
       "title_en": "Casey Leaves",
@@ -132,11 +160,88 @@
       "game_mission_id": "aleph_fragment"
     },
     {
+      "stem": "core_defend_data_citadel",
+      "type": "short_story",
+      "title_en": "Core Defend Data Citadel",
+      "title_ko": "Core Defend Data Citadel",
+      "game_mission_id": "core_defend_data_citadel"
+    },
+    {
+      "stem": "core_defend_eye_archive",
+      "type": "short_story",
+      "title_en": "Core Defend Eye Archive",
+      "title_ko": "Core Defend Eye Archive",
+      "game_mission_id": "core_defend_eye_archive"
+    },
+    {
+      "stem": "core_dual_objective_construct_heist",
+      "type": "short_story",
+      "title_en": "Core Dual Objective Construct Heist",
+      "title_ko": "Core Dual Objective Construct Heist",
+      "game_mission_id": "core_dual_objective_construct_heist"
+    },
+    {
+      "stem": "core_dual_objective_mirror_run",
+      "type": "short_story",
+      "title_en": "Core Dual Objective Mirror Run",
+      "title_ko": "Core Dual Objective Mirror Run",
+      "game_mission_id": "core_dual_objective_mirror_run"
+    },
+    {
+      "stem": "core_extract_aeslin_key",
+      "type": "short_story",
+      "title_en": "Core Extract Aeslin Key",
+      "title_ko": "Core Extract Aeslin Key",
+      "game_mission_id": "core_extract_aeslin_key"
+    },
+    {
+      "stem": "core_extract_neuromancer_signature",
+      "type": "short_story",
+      "title_en": "Core Extract Neuromancer Signature",
+      "title_ko": "Core Extract Neuromancer Signature",
+      "game_mission_id": "core_extract_neuromancer_signature"
+    },
+    {
+      "stem": "core_extract_payroll_archive",
+      "type": "short_story",
+      "title_en": "Core Extract Payroll Archive",
+      "title_ko": "Core Extract Payroll Archive",
+      "game_mission_id": "core_extract_payroll_archive"
+    },
+    {
+      "stem": "core_investigate_construct_council",
+      "type": "short_story",
+      "title_en": "Core Investigate Construct Council",
+      "title_ko": "Core Investigate Construct Council",
+      "game_mission_id": "core_investigate_construct_council"
+    },
+    {
+      "stem": "core_investigate_ice_lord",
+      "type": "short_story",
+      "title_en": "Core Investigate Ice Lord",
+      "title_ko": "Core Investigate Ice Lord",
+      "game_mission_id": "core_investigate_ice_lord"
+    },
+    {
       "stem": "core_memory_dump",
       "type": "short_story",
       "title_en": "Core Memory Dump",
       "title_ko": "=== 이야기 본문 (stub) ===",
       "game_mission_id": "core_memory_dump"
+    },
+    {
+      "stem": "core_stealth_construct_pool",
+      "type": "short_story",
+      "title_en": "Core Stealth Construct Pool",
+      "title_ko": "Core Stealth Construct Pool",
+      "game_mission_id": "core_stealth_construct_pool"
+    },
+    {
+      "stem": "core_stealth_eye_central",
+      "type": "short_story",
+      "title_en": "Core Stealth Eye Central",
+      "title_ko": "Core Stealth Eye Central",
+      "game_mission_id": "core_stealth_eye_central"
     },
     {
       "stem": "cortex_hound_recovery",
@@ -230,11 +335,116 @@
       "game_mission_id": "flatline_call"
     },
     {
+      "stem": "freeside_defend_orbit_habitat",
+      "type": "short_story",
+      "title_en": "Freeside Defend Orbit Habitat",
+      "title_ko": "Freeside Defend Orbit Habitat",
+      "game_mission_id": "freeside_defend_orbit_habitat"
+    },
+    {
+      "stem": "freeside_defend_orbital_habitat",
+      "type": "short_story",
+      "title_en": "Freeside Defend Orbital Habitat",
+      "title_ko": "Freeside Defend Orbital Habitat",
+      "game_mission_id": "freeside_defend_orbital_habitat"
+    },
+    {
+      "stem": "freeside_dual_objective_construct_pod_2",
+      "type": "short_story",
+      "title_en": "Freeside Dual Objective Construct Pod 2",
+      "title_ko": "Freeside Dual Objective Construct Pod 2",
+      "game_mission_id": "freeside_dual_objective_construct_pod_2"
+    },
+    {
+      "stem": "freeside_dual_objective_jockey_pod",
+      "type": "short_story",
+      "title_en": "Freeside Dual Objective Jockey Pod",
+      "title_ko": "Freeside Dual Objective Jockey Pod",
+      "game_mission_id": "freeside_dual_objective_jockey_pod"
+    },
+    {
+      "stem": "freeside_dual_objective_space_jockey",
+      "type": "short_story",
+      "title_en": "Freeside Dual Objective Space Jockey",
+      "title_ko": "Freeside Dual Objective Space Jockey",
+      "game_mission_id": "freeside_dual_objective_space_jockey"
+    },
+    {
+      "stem": "freeside_extract_construct_archive",
+      "type": "short_story",
+      "title_en": "Freeside Extract Construct Archive",
+      "title_ko": "Freeside Extract Construct Archive",
+      "game_mission_id": "freeside_extract_construct_archive"
+    },
+    {
+      "stem": "freeside_extract_construct_pod",
+      "type": "short_story",
+      "title_en": "Freeside Extract Construct Pod",
+      "title_ko": "Freeside Extract Construct Pod",
+      "game_mission_id": "freeside_extract_construct_pod"
+    },
+    {
+      "stem": "freeside_extract_orbital_data",
+      "type": "short_story",
+      "title_en": "Freeside Extract Orbital Data",
+      "title_ko": "Freeside Extract Orbital Data",
+      "game_mission_id": "freeside_extract_orbital_data"
+    },
+    {
+      "stem": "freeside_extract_orbital_data_2",
+      "type": "short_story",
+      "title_en": "Freeside Extract Orbital Data 2",
+      "title_ko": "Freeside Extract Orbital Data 2",
+      "game_mission_id": "freeside_extract_orbital_data_2"
+    },
+    {
+      "stem": "freeside_investigate_construct_research",
+      "type": "short_story",
+      "title_en": "Freeside Investigate Construct Research",
+      "title_ko": "Freeside Investigate Construct Research",
+      "game_mission_id": "freeside_investigate_construct_research"
+    },
+    {
+      "stem": "freeside_investigate_orbital_history",
+      "type": "short_story",
+      "title_en": "Freeside Investigate Orbital History",
+      "title_ko": "Freeside Investigate Orbital History",
+      "game_mission_id": "freeside_investigate_orbital_history"
+    },
+    {
+      "stem": "freeside_investigate_orbital_sovereignty",
+      "type": "short_story",
+      "title_en": "Freeside Investigate Orbital Sovereignty",
+      "title_ko": "Freeside Investigate Orbital Sovereignty",
+      "game_mission_id": "freeside_investigate_orbital_sovereignty"
+    },
+    {
       "stem": "freeside_payroll",
       "type": "short_story",
       "title_en": "Freeside Payroll",
       "title_ko": "=== 이야기 본문 ===",
       "game_mission_id": "freeside_payroll"
+    },
+    {
+      "stem": "freeside_stealth_construct_chamber",
+      "type": "short_story",
+      "title_en": "Freeside Stealth Construct Chamber",
+      "title_ko": "Freeside Stealth Construct Chamber",
+      "game_mission_id": "freeside_stealth_construct_chamber"
+    },
+    {
+      "stem": "freeside_stealth_orbit_lab",
+      "type": "short_story",
+      "title_en": "Freeside Stealth Orbit Lab",
+      "title_ko": "Freeside Stealth Orbit Lab",
+      "game_mission_id": "freeside_stealth_orbit_lab"
+    },
+    {
+      "stem": "freeside_stealth_orbit_lab_2",
+      "type": "short_story",
+      "title_en": "Freeside Stealth Orbit Lab 2",
+      "title_ko": "Freeside Stealth Orbit Lab 2",
+      "game_mission_id": "freeside_stealth_orbit_lab_2"
     },
     {
       "stem": "g_boys_arc",
@@ -345,8 +555,92 @@
       "stem": "matrix_revelation",
       "type": "short_story",
       "title_en": "Matrix Revelation",
-      "title_ko": "매트릭스 계시",
+      "title_ko": "Matrix Revelation",
       "game_mission_id": "matrix_revelation"
+    },
+    {
+      "stem": "mid_defend_kumo_network",
+      "type": "short_story",
+      "title_en": "Mid Defend Kumo Network",
+      "title_ko": "Mid Defend Kumo Network",
+      "game_mission_id": "mid_defend_kumo_network"
+    },
+    {
+      "stem": "mid_defend_sense_net_relay",
+      "type": "short_story",
+      "title_en": "Mid Defend Sense Net Relay",
+      "title_ko": "Mid Defend Sense Net Relay",
+      "game_mission_id": "mid_defend_sense_net_relay"
+    },
+    {
+      "stem": "mid_dual_objective_hosaka_data",
+      "type": "short_story",
+      "title_en": "Mid Dual Objective Hosaka Data",
+      "title_ko": "Mid Dual Objective Hosaka Data",
+      "game_mission_id": "mid_dual_objective_hosaka_data"
+    },
+    {
+      "stem": "mid_dual_objective_shibuya_run",
+      "type": "short_story",
+      "title_en": "Mid Dual Objective Shibuya Run",
+      "title_ko": "Mid Dual Objective Shibuya Run",
+      "game_mission_id": "mid_dual_objective_shibuya_run"
+    },
+    {
+      "stem": "mid_dual_objective_trade_show",
+      "type": "short_story",
+      "title_en": "Mid Dual Objective Trade Show",
+      "title_ko": "Mid Dual Objective Trade Show",
+      "game_mission_id": "mid_dual_objective_trade_show"
+    },
+    {
+      "stem": "mid_extract_biometal_chip",
+      "type": "short_story",
+      "title_en": "Mid Extract Biometal Chip",
+      "title_ko": "Mid Extract Biometal Chip",
+      "game_mission_id": "mid_extract_biometal_chip"
+    },
+    {
+      "stem": "mid_extract_oni_data",
+      "type": "short_story",
+      "title_en": "Mid Extract Oni Data",
+      "title_ko": "Mid Extract Oni Data",
+      "game_mission_id": "mid_extract_oni_data"
+    },
+    {
+      "stem": "mid_extract_yakuza_chop_shop",
+      "type": "short_story",
+      "title_en": "Mid Extract Yakuza Chop Shop",
+      "title_ko": "Mid Extract Yakuza Chop Shop",
+      "game_mission_id": "mid_extract_yakuza_chop_shop"
+    },
+    {
+      "stem": "mid_investigate_black_market",
+      "type": "short_story",
+      "title_en": "Mid Investigate Black Market",
+      "title_ko": "Mid Investigate Black Market",
+      "game_mission_id": "mid_investigate_black_market"
+    },
+    {
+      "stem": "mid_investigate_yakuza_consortium",
+      "type": "short_story",
+      "title_en": "Mid Investigate Yakuza Consortium",
+      "title_ko": "Mid Investigate Yakuza Consortium",
+      "game_mission_id": "mid_investigate_yakuza_consortium"
+    },
+    {
+      "stem": "mid_stealth_corpo_penthouse",
+      "type": "short_story",
+      "title_en": "Mid Stealth Corpo Penthouse",
+      "title_ko": "Mid Stealth Corpo Penthouse",
+      "game_mission_id": "mid_stealth_corpo_penthouse"
+    },
+    {
+      "stem": "mid_stealth_yakuza_meeting",
+      "type": "short_story",
+      "title_en": "Mid Stealth Yakuza Meeting",
+      "title_ko": "Mid Stealth Yakuza Meeting",
+      "game_mission_id": "mid_stealth_yakuza_meeting"
     },
     {
       "stem": "molly_decides",
@@ -361,6 +655,41 @@
       "title_en": "Molly Meets Casey",
       "title_ko": "Molly가 Casey를 만나다 (Molly Meets Casey)",
       "game_mission_id": "first_contact"
+    },
+    {
+      "stem": "molly_razor_defend_london_nest",
+      "type": "short_story",
+      "title_en": "Molly Razor Defend London Nest",
+      "title_ko": "Molly Razor Defend London Nest",
+      "game_mission_id": "molly_razor_defend_london_nest"
+    },
+    {
+      "stem": "molly_razor_dual_objective_hotel_target",
+      "type": "short_story",
+      "title_en": "Molly Razor Dual Objective Hotel Target",
+      "title_ko": "Molly Razor Dual Objective Hotel Target",
+      "game_mission_id": "molly_razor_dual_objective_hotel_target"
+    },
+    {
+      "stem": "molly_razor_extract_final_chip",
+      "type": "short_story",
+      "title_en": "Molly Razor Extract Final Chip",
+      "title_ko": "Molly Razor Extract Final Chip",
+      "game_mission_id": "molly_razor_extract_final_chip"
+    },
+    {
+      "stem": "molly_razor_investigate_sin_fans",
+      "type": "short_story",
+      "title_en": "Molly Razor Investigate Sin Fans",
+      "title_ko": "Molly Razor Investigate Sin Fans",
+      "game_mission_id": "molly_razor_investigate_sin_fans"
+    },
+    {
+      "stem": "molly_razor_stealth_final_contract",
+      "type": "short_story",
+      "title_en": "Molly Razor Stealth Final Contract",
+      "title_ko": "Molly Razor Stealth Final Contract",
+      "game_mission_id": "molly_razor_stealth_final_contract"
     },
     {
       "stem": "molly_returns",
@@ -415,8 +744,85 @@
       "stem": "neuromancer_whisper",
       "type": "short_story",
       "title_en": "Neuromancer Whisper",
-      "title_ko": "뉴로맨서 속삭임",
+      "title_ko": "Neuromancer Whisper",
       "game_mission_id": "neuromancer_whisper"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_1",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 1",
+      "title_ko": "Ngplus Dual Objective Boss Rush 1",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_1"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_2",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 2",
+      "title_ko": "Ngplus Dual Objective Boss Rush 2",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_2"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_3",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 3",
+      "title_ko": "Ngplus Dual Objective Boss Rush 3",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_3"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_4",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 4",
+      "title_ko": "Ngplus Dual Objective Boss Rush 4",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_4"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_5",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 5",
+      "title_ko": "Ngplus Dual Objective Boss Rush 5",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_5"
+    },
+    {
+      "stem": "ngplus_investigate_archive_1",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 1",
+      "title_ko": "Ngplus Investigate Archive 1",
+      "game_mission_id": "ngplus_investigate_archive_1"
+    },
+    {
+      "stem": "ngplus_investigate_archive_2",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 2",
+      "title_ko": "Ngplus Investigate Archive 2",
+      "game_mission_id": "ngplus_investigate_archive_2"
+    },
+    {
+      "stem": "ngplus_investigate_archive_3",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 3",
+      "title_ko": "Ngplus Investigate Archive 3",
+      "game_mission_id": "ngplus_investigate_archive_3"
+    },
+    {
+      "stem": "ngplus_investigate_archive_4",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 4",
+      "title_ko": "Ngplus Investigate Archive 4",
+      "game_mission_id": "ngplus_investigate_archive_4"
+    },
+    {
+      "stem": "ngplus_investigate_archive_5",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 5",
+      "title_ko": "Ngplus Investigate Archive 5",
+      "game_mission_id": "ngplus_investigate_archive_5"
+    },
+    {
+      "stem": "ngplus_investigate_archive_6",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 6",
+      "title_ko": "Ngplus Investigate Archive 6",
+      "game_mission_id": "ngplus_investigate_archive_6"
     },
     {
       "stem": "ono_sendai_repair",
@@ -503,6 +909,62 @@
       "game_mission_id": "soho_blackout"
     },
     {
+      "stem": "soho_defend_coolhunter_office",
+      "type": "short_story",
+      "title_en": "Soho Defend Coolhunter Office",
+      "title_ko": "Soho Defend Coolhunter Office",
+      "game_mission_id": "soho_defend_coolhunter_office"
+    },
+    {
+      "stem": "soho_dual_objective_footage_cult",
+      "type": "short_story",
+      "title_en": "Soho Dual Objective Footage Cult",
+      "title_ko": "Soho Dual Objective Footage Cult",
+      "game_mission_id": "soho_dual_objective_footage_cult"
+    },
+    {
+      "stem": "soho_dual_objective_viddy_share",
+      "type": "short_story",
+      "title_en": "Soho Dual Objective Viddy Share",
+      "title_ko": "Soho Dual Objective Viddy Share",
+      "game_mission_id": "soho_dual_objective_viddy_share"
+    },
+    {
+      "stem": "soho_extract_logo_meme",
+      "type": "short_story",
+      "title_en": "Soho Extract Logo Meme",
+      "title_ko": "Soho Extract Logo Meme",
+      "game_mission_id": "soho_extract_logo_meme"
+    },
+    {
+      "stem": "soho_investigate_brand_territory",
+      "type": "short_story",
+      "title_en": "Soho Investigate Brand Territory",
+      "title_ko": "Soho Investigate Brand Territory",
+      "game_mission_id": "soho_investigate_brand_territory"
+    },
+    {
+      "stem": "soho_investigate_nostalgia_loop",
+      "type": "short_story",
+      "title_en": "Soho Investigate Nostalgia Loop",
+      "title_ko": "Soho Investigate Nostalgia Loop",
+      "game_mission_id": "soho_investigate_nostalgia_loop"
+    },
+    {
+      "stem": "soho_stealth_brand_vault",
+      "type": "short_story",
+      "title_en": "Soho Stealth Brand Vault",
+      "title_ko": "Soho Stealth Brand Vault",
+      "game_mission_id": "soho_stealth_brand_vault"
+    },
+    {
+      "stem": "soho_stealth_node_dive",
+      "type": "short_story",
+      "title_en": "Soho Stealth Node Dive",
+      "title_ko": "Soho Stealth Node Dive",
+      "game_mission_id": "soho_stealth_node_dive"
+    },
+    {
       "stem": "straylight_approach",
       "type": "short_story",
       "title_en": "Straylight Approach",
@@ -515,6 +977,27 @@
       "title_en": "Straylight Inquiry",
       "title_ko": "=== 이야기 본문 ===",
       "game_mission_id": "straylight_inquiry"
+    },
+    {
+      "stem": "surface_defend_recycling_baseline",
+      "type": "short_story",
+      "title_en": "Surface Defend Recycling Baseline",
+      "title_ko": "Surface Defend Recycling Baseline",
+      "game_mission_id": "surface_defend_recycling_baseline"
+    },
+    {
+      "stem": "surface_extract_seed_run",
+      "type": "short_story",
+      "title_en": "Surface Extract Seed Run",
+      "title_ko": "Surface Extract Seed Run",
+      "game_mission_id": "surface_extract_seed_run"
+    },
+    {
+      "stem": "surface_investigate_bama_suburb",
+      "type": "short_story",
+      "title_en": "Surface Investigate Bama Suburb",
+      "title_ko": "Surface Investigate Bama Suburb",
+      "game_mission_id": "surface_investigate_bama_suburb"
     },
     {
       "stem": "surface_mail_run",
@@ -531,11 +1014,95 @@
       "game_mission_id": "ta_defection"
     },
     {
+      "stem": "ta_defend_straylight_corridor",
+      "type": "short_story",
+      "title_en": "Ta Defend Straylight Corridor",
+      "title_ko": "Ta Defend Straylight Corridor",
+      "game_mission_id": "ta_defend_straylight_corridor"
+    },
+    {
+      "stem": "ta_defend_straylight_perimeter",
+      "type": "short_story",
+      "title_en": "Ta Defend Straylight Perimeter",
+      "title_ko": "Ta Defend Straylight Perimeter",
+      "game_mission_id": "ta_defend_straylight_perimeter"
+    },
+    {
+      "stem": "ta_dual_objective_ashpool_vote",
+      "type": "short_story",
+      "title_en": "Ta Dual Objective Ashpool Vote",
+      "title_ko": "Ta Dual Objective Ashpool Vote",
+      "game_mission_id": "ta_dual_objective_ashpool_vote"
+    },
+    {
+      "stem": "ta_dual_objective_payroll_heist",
+      "type": "short_story",
+      "title_en": "Ta Dual Objective Payroll Heist",
+      "title_ko": "Ta Dual Objective Payroll Heist",
+      "game_mission_id": "ta_dual_objective_payroll_heist"
+    },
+    {
+      "stem": "ta_dual_objective_warden_archive",
+      "type": "short_story",
+      "title_en": "Ta Dual Objective Warden Archive",
+      "title_ko": "Ta Dual Objective Warden Archive",
+      "game_mission_id": "ta_dual_objective_warden_archive"
+    },
+    {
+      "stem": "ta_extract_aleph_chip",
+      "type": "short_story",
+      "title_en": "Ta Extract Aleph Chip",
+      "title_ko": "Ta Extract Aleph Chip",
+      "game_mission_id": "ta_extract_aleph_chip"
+    },
+    {
+      "stem": "ta_extract_aleph_fragment_2",
+      "type": "short_story",
+      "title_en": "Ta Extract Aleph Fragment 2",
+      "title_ko": "Ta Extract Aleph Fragment 2",
+      "game_mission_id": "ta_extract_aleph_fragment_2"
+    },
+    {
+      "stem": "ta_extract_sense_net_key",
+      "type": "short_story",
+      "title_en": "Ta Extract Sense Net Key",
+      "title_ko": "Ta Extract Sense Net Key",
+      "game_mission_id": "ta_extract_sense_net_key"
+    },
+    {
       "stem": "ta_heist",
       "type": "short_story",
       "title_en": "Ta Heist",
       "title_ko": "T-A 강도",
       "game_mission_id": "ta_heist"
+    },
+    {
+      "stem": "ta_investigate_3jane_initiative",
+      "type": "short_story",
+      "title_en": "Ta Investigate 3Jane Initiative",
+      "title_ko": "Ta Investigate 3Jane Initiative",
+      "game_mission_id": "ta_investigate_3jane_initiative"
+    },
+    {
+      "stem": "ta_investigate_construct_memory",
+      "type": "short_story",
+      "title_en": "Ta Investigate Construct Memory",
+      "title_ko": "Ta Investigate Construct Memory",
+      "game_mission_id": "ta_investigate_construct_memory"
+    },
+    {
+      "stem": "ta_stealth_construct_chamber",
+      "type": "short_story",
+      "title_en": "Ta Stealth Construct Chamber",
+      "title_ko": "Ta Stealth Construct Chamber",
+      "game_mission_id": "ta_stealth_construct_chamber"
+    },
+    {
+      "stem": "ta_stealth_penthouse_construct",
+      "type": "short_story",
+      "title_en": "Ta Stealth Penthouse Construct",
+      "title_ko": "Ta Stealth Penthouse Construct",
+      "game_mission_id": "ta_stealth_penthouse_construct"
     },
     {
       "stem": "tessier_archive",
@@ -608,11 +1175,67 @@
       "game_mission_id": "threjane_family_log"
     },
     {
+      "stem": "tokyo_defend_shibuya_archipelago",
+      "type": "short_story",
+      "title_en": "Tokyo Defend Shibuya Archipelago",
+      "title_ko": "Tokyo Defend Shibuya Archipelago",
+      "game_mission_id": "tokyo_defend_shibuya_archipelago"
+    },
+    {
+      "stem": "tokyo_dual_objective_coach_class",
+      "type": "short_story",
+      "title_en": "Tokyo Dual Objective Coach Class",
+      "title_ko": "Tokyo Dual Objective Coach Class",
+      "game_mission_id": "tokyo_dual_objective_coach_class"
+    },
+    {
+      "stem": "tokyo_dual_objective_darko_trauma",
+      "type": "short_story",
+      "title_en": "Tokyo Dual Objective Darko Trauma",
+      "title_ko": "Tokyo Dual Objective Darko Trauma",
+      "game_mission_id": "tokyo_dual_objective_darko_trauma"
+    },
+    {
+      "stem": "tokyo_extract_footage_archive",
+      "type": "short_story",
+      "title_en": "Tokyo Extract Footage Archive",
+      "title_ko": "Tokyo Extract Footage Archive",
+      "game_mission_id": "tokyo_extract_footage_archive"
+    },
+    {
+      "stem": "tokyo_extract_laney_signal",
+      "type": "short_story",
+      "title_en": "Tokyo Extract Laney Signal",
+      "title_ko": "Tokyo Extract Laney Signal",
+      "game_mission_id": "tokyo_extract_laney_signal"
+    },
+    {
+      "stem": "tokyo_investigate_marcus_garvey",
+      "type": "short_story",
+      "title_en": "Tokyo Investigate Marcus Garvey",
+      "title_ko": "Tokyo Investigate Marcus Garvey",
+      "game_mission_id": "tokyo_investigate_marcus_garvey"
+    },
+    {
+      "stem": "tokyo_investigate_parkabrake_plaza",
+      "type": "short_story",
+      "title_en": "Tokyo Investigate Parkabrake Plaza",
+      "title_ko": "Tokyo Investigate Parkabrake Plaza",
+      "game_mission_id": "tokyo_investigate_parkabrake_plaza"
+    },
+    {
       "stem": "tokyo_pachinko_run",
       "type": "short_story",
       "title_en": "Tokyo Pachinko Run",
       "title_ko": "=== 이야기 본문 ===",
       "game_mission_id": "tokyo_pachinko_run"
+    },
+    {
+      "stem": "tokyo_stealth_bridge_undercity",
+      "type": "short_story",
+      "title_en": "Tokyo Stealth Bridge Undercity",
+      "title_ko": "Tokyo Stealth Bridge Undercity",
+      "game_mission_id": "tokyo_stealth_bridge_undercity"
     },
     {
       "stem": "trauma_squads_audit",

@@ -20,6 +20,8 @@ import random
 from dataclasses import dataclass
 from enum import StrEnum
 
+from typing_extensions import override
+
 from .graph import Edge, MatrixGraph
 from .node import Faction, IceKind, Node, NodeKind, ZoneDepth
 
@@ -243,9 +245,11 @@ class _BspNode:
     # Identity-based hash/equality so instances are deduplicated by id()
     # when used as dict keys or sorted.  Required because @dataclass(slots=True)
     # disables synthesized __eq__/__hash__ on slotted classes.
+    @override
     def __hash__(self) -> int:
         return id(self)
 
+    @override
     def __eq__(self, other: object) -> bool:
         return self is other
 

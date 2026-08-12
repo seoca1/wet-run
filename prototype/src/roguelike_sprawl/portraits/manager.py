@@ -10,6 +10,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from typing_extensions import override
+
 # Color name to RGB tuple mapping
 COLOR_NAMES: dict[str, tuple[int, int, int]] = {
     "red": (255, 0, 64),
@@ -77,5 +79,6 @@ class PortraitManager:
     def __len__(self) -> int:
         return len(self._portraits)
 
+    @override
     def __repr__(self) -> str:
         return f"PortraitManager({len(self._portraits)} portraits)"

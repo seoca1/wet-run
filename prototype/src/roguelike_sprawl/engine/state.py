@@ -12,6 +12,8 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import TYPE_CHECKING
 
+from typing_extensions import override
+
 from ..combat.effects import CombatEffects
 from ..combat.state import CombatState
 from ..lore import ConstructWhisper, MemoryFragmentTracker
@@ -45,22 +47,27 @@ class StatusMessageList(UserList[str]):
         if len(self.data) > STATUS_MESSAGES_MAX:
             self.data = self.data[-STATUS_MESSAGES_MAX:]
 
+    @override
     def append(self, item: str) -> None:
         self.data.append(item)
         self._enforce_cap()
 
+    @override
     def extend(self, items: Iterable[str]) -> None:
         self.data.extend(items)
         self._enforce_cap()
 
+    @override
     def insert(self, i: int, item: str) -> None:
         self.data.insert(i, item)
         self._enforce_cap()
 
+    @override
     def __setitem__(self, i: int | slice, value: str | Iterable[str]) -> None:  # type: ignore[override]
         self.data[i] = value  # type: ignore[index,assignment]
         self._enforce_cap()
 
+    @override
     def __iadd__(self, other: Iterable[str]) -> StatusMessageList:
         self.data.extend(other)
         self._enforce_cap()

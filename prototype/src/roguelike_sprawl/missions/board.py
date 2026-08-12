@@ -14,6 +14,8 @@ from enum import StrEnum
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from typing_extensions import override
+
 from ..matrix.node import ZoneDepth
 from .mission import Mission, Objective, Rewards
 
@@ -234,6 +236,7 @@ class JobBoard:
     def __contains__(self, mission_id: object) -> bool:
         return isinstance(mission_id, str) and mission_id in self._missions
 
+    @override
     def __repr__(self) -> str:
         return f"JobBoard({len(self._missions)} missions)"
 

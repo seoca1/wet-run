@@ -7,6 +7,8 @@ from collections.abc import Iterator
 from dataclasses import dataclass
 from typing import cast
 
+from typing_extensions import override
+
 from .node import Node, NodeKind
 
 
@@ -89,6 +91,7 @@ class MatrixGraph:
     def __len__(self) -> int:
         return len(self.nodes)
 
+    @override
     def __repr__(self) -> str:
         return f"MatrixGraph(nodes={len(self.nodes)}, edges={len(self.edges)}, entry={self.entry_id!r})"
 

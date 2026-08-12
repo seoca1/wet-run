@@ -9,6 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import StrEnum
 
+from typing_extensions import override
+
 
 class EquipSlot(StrEnum):
     """Body locations for cyberpunk gear.
@@ -114,6 +116,7 @@ class Equipment:
     def is_t1_or_better(self) -> bool:
         return self.tier.value != "T0"
 
+    @override
     def __repr__(self) -> str:
         return f"{self.name} ({self.tier.value} {self.category.value})"
 

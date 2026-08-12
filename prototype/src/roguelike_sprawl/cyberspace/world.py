@@ -13,6 +13,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from enum import StrEnum
 
+from typing_extensions import override
+
 
 class WorldId(StrEnum):
     """Major locations in the Sprawl."""
@@ -54,6 +56,7 @@ class Server:
     description: str
     mission_id: str | None = None  # If this server is a mission target
 
+    @override
     def __repr__(self) -> str:
         return f"Server({self.id}: {self.name})"
 

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from collections.abc import Iterator
 
+from typing_extensions import override
+
 from .entity import Entity
 
 
@@ -56,5 +58,6 @@ class World:
     def __contains__(self, entity_id: object) -> bool:
         return entity_id in self._entities
 
+    @override
     def __repr__(self) -> str:
         return f"World({len(self._entities)} entities)"

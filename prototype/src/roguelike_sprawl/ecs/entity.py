@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+from typing_extensions import override
+
 
 class Entity:
     """An entity is identified by id and holds a dict of components.
@@ -37,14 +39,17 @@ class Entity:
         """Remove and return a component, or None if absent."""
         return self.components.pop(name, None)
 
+    @override
     def __repr__(self) -> str:
         comps = ", ".join(f"{k}={type(v).__name__}" for k, v in self.components.items())
         return f"Entity(id={self.id!r}, {comps})"
 
+    @override
     def __eq__(self, other: object) -> bool:
         if not isinstance(other, Entity):
             return NotImplemented
         return self.id == other.id
 
+    @override
     def __hash__(self) -> int:
         return hash(self.id)

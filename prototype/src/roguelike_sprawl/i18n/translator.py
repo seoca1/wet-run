@@ -11,6 +11,8 @@ import string
 from pathlib import Path
 from typing import Any
 
+from typing_extensions import override
+
 
 def _format_template(template: str, kwargs: dict[str, Any]) -> str:
     """Format ``template`` with ``kwargs``; missing fields render as ``<name>``.
@@ -114,5 +116,6 @@ class Translator:
             value = value[part]
         return isinstance(value, str)
 
+    @override
     def __repr__(self) -> str:
         return f"Translator(lang={self.lang!r}, keys={len(self._data)})"

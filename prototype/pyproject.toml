@@ -23,6 +23,7 @@ classifiers = [
 dependencies = [
     "tcod>=16.0",
     "pyyaml",
+    "typing-extensions>=4.0",
 ]
 
 [project.optional-dependencies]
@@ -78,7 +79,7 @@ files = ["src/roguelike_sprawl"]
 warn_unused_ignores = true
 warn_redundant_casts = true
 disallow_untyped_defs = true
-enable_error_code = ["possibly-undefined"]
+enable_error_code = ["possibly-undefined", "explicit-override"]
 
 [tool.pytest.ini_options]
 minversion = "7.0"

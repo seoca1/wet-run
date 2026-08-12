@@ -24,6 +24,8 @@ from __future__ import annotations
 from collections.abc import Callable
 from typing import Any
 
+from typing_extensions import override
+
 from ..matrix.graph import MatrixGraph
 from .entity import Entity
 from .room_entity import (
@@ -171,6 +173,7 @@ class DungeonSystem:
     def mission_id(self) -> str:
         return self._mission_id
 
+    @override
     def __repr__(self) -> str:
         cleared = len(self.cleared_rooms())
         visited = len(self.visited_rooms())

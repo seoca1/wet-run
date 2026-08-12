@@ -1,3 +1,52 @@
+## [2026-08-13] chore(mypy) | enable possibly-undefined + fix 3 type errors (commit 47e275c)
+
+**Status**: ✅ 완료 — Track A (data quality) no-op (false premises in NEXT_SESSION_TODO), Track B mostly no-op (tcod already 21.2.1, Python 3.14.6 already works). Only B5 had real work: 3 mypy strict errors fixed.
+
+### Findings (NEXT_SESSION_TODO 🟡 items re-verified)
+
+| Item | Plan | Actual | Action |
+|---|---|---|---|
+| 200 empty `story.derivative_type` in missions.json | Fill via arc heuristic | Field does not exist in missions.json (lives in derivative fiction frontmatter) | No-op |
+| 9 mis-pointed `story.source` | Fix mis-pointed refs | 27 source-vs-mission-id mismatches exist by design; **all 27 resolve correctly** to Fiction derivative files | No-op |
+| Coverage 38% → 50% | Add tests | Actual coverage is **75.73%** (pyproject.toml comment stale) | No-op |
+| Mission metadata completeness (ADR-0051) | Audit | **All 200 missions complete** (synopsis_en/ko, source, character_ref, arc, pillar, word_count_en, char_count_ko all present) | No-op |
+
+### Track B modernization
+
+| Item | Plan | Actual | Action |
+|---|---|---|---|
+| B1: Python 3.14 compat | Add to CI matrix | System already running 3.14.6, **all 4843 tests pass** | No-op (no change needed) |
+| B2: tcod ≥16.0 → ≥19.0 | Upgrade | **Already at 21.2.1** (latest) | No-op |
+| B3: uv lock refresh | Re-resolve | Lock present (Aug 5 2026), deps current | No-op |
+| B5: mypy --enable-error-code + fixes | Enable extras | Enabled `possibly-undefined`, fixed 3 errors | Done (commit 47e275c) |
+
+### B5 fixes (real work)
+
+1. `pyproject.toml`: `enable_error_code = ["possibly-undefined"]`
+2. `data/story_resolver.py:340`: candidates list type `dict` → `tuple[Path, str, str, str]` (was lying about its contents)
+3. `engine/menu.py:330`: `back_sym` may be unassigned if loop never finds unused N-key — initialized to `None`, guarded comparison
+
+### Validation
+
+- ruff ✅ 0 errors
+- mypy ✅ 0 errors (211 source files)
+- pytest ✅ 4843 passed + 462 skipped + 1 xfailed
+- audit_sprawl.py ✅ 0 broken links, 4 expected orphans
+
+### Files changed (commit 47e275c)
+
+- 40 files (mostly ruff format reformatting)
+- Semantic changes: 3 files (pyproject.toml + 2 source files)
+- Insertions: 404 / Deletions: 228
+
+### Next steps (recommendation)
+
+- Update NEXT_SESSION_TODO.md (workspace-level) to reflect roguelike_sprawl 🟡 items are not actual issues
+- Re-run Cycle-A skill for @override / explicit-override fixes (~18 cosmetic changes) as separate session if desired
+- Push commits with GH_TOKEN rotation (user action)
+
+---
+
 ## [2026-08-08] feat(meta) | Phase 14 COMPLETE — 22 endings, 30 programs, 2 sets, 10 augments, 111 tests pass
 
 **Status**: ✅ 완료 — Phase 14 (Endings + Programs) target 18+ endings and 30+ programs achieved. 22 endings (6 types × 10 characters + 3 NG+), 30 programs (18 new + 9 existing + 3 basic), 2 equipment sets (Ghost + Architect), 10 wetware augments. 111 tests pass, 0 regressions.

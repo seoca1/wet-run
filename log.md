@@ -47,6 +47,36 @@
 
 ---
 
+## [2026-08-13] chore(mypy) | enable explicit-override + @override on 17 dunder methods (commit 9bfacec)
+
+**Status**: ✅ 완료 — Followed up deferred @override / explicit-override work from 47e275c. Added @override to 17 dunder methods across 11 source files. typing_extensions added as runtime dep for Python 3.11 compat.
+
+### Files modified
+
+- equipment/equipment.py, ecs/{entity,world,dungeon_system}.py
+- cyberspace/world.py, i18n/translator.py
+- matrix/{graph,dungeon_generator}.py, missions/board.py
+- portraits/manager.py, engine/state.py
+- pyproject.toml (typing-extensions dep + enable_error_code: explicit-override)
+- uv.lock (dep added)
+
+### Notable exceptions
+
+- `dungeon_generator._BspNode.__lt__` NOT marked @override (object has no __lt__; it's a sort key)
+- `engine/state.StatusMessageList.__setitem__` keeps `# type: ignore[override]` (intentionally permissive signature)
+
+### Companion commit (workspace)
+
+- `5a14255` docs(workspace): close roguelike_sprawl 🟡 items — re-verified 2026-08-13
+
+### Validation
+
+- ruff ✅ 0 errors
+- mypy ✅ 0 errors (211 source files, strict + possibly-undefined + explicit-override)
+- pytest ✅ 4843 passed + 462 skipped + 1 xfailed
+
+---
+
 ## [2026-08-08] feat(meta) | Phase 14 COMPLETE — 22 endings, 30 programs, 2 sets, 10 augments, 111 tests pass
 
 **Status**: ✅ 완료 — Phase 14 (Endings + Programs) target 18+ endings and 30+ programs achieved. 22 endings (6 types × 10 characters + 3 NG+), 30 programs (18 new + 9 existing + 3 basic), 2 equipment sets (Ghost + Architect), 10 wetware augments. 111 tests pass, 0 regressions.

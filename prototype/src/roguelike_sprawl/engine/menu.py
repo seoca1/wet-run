@@ -37,8 +37,9 @@ OPTION_CREDITS = 5
 OPTION_HALL_OF_DEAD = 6  # Hall of Dead Jockeys (ADR-0040)
 OPTION_HELP = 7  # Help screen (Phase 7: tutorial/onboarding)
 OPTION_ENDINGS = 8  # Endings browser (Phase 15)
+OPTION_STATS = 9  # Telemetry stats (Phase 17, requires telemetry_opt_in)
 
-MENU_OPTION_COUNT = 8
+MENU_OPTION_COUNT = 9
 
 
 def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -> None:
@@ -59,6 +60,7 @@ def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -
 
     # Main area: 7 menu options (ADR-0032 + ADR-0040 + Phase 7)
     has_save = getattr(state, "has_save", False)
+    stats_enabled = getattr(state, "telemetry_opt_in", False)
     options = [
         (OPTION_NEW_RUN, t("menu.new_run")),
         (OPTION_GRAPHIC_NOVEL, t("menu.graphic_novel")),
@@ -68,12 +70,17 @@ def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -
         (OPTION_HALL_OF_DEAD, t("menu.hall_of_dead")),
         (OPTION_HELP, t("menu.help")),
         (OPTION_ENDINGS, t("menu.endings")),
+        (OPTION_STATS, t("stats.menu_label")),
     ]
     y = main_r.y + 1
     selected = getattr(state, "menu_selected_index", 0)
-    for i, (_key, label) in enumerate(options):
-        # Dim disabled options (e.g. Continue when no save)
-        dim = i + 1 == OPTION_CONTINUE and not has_save
+    for i, (key, label) in enumerate(options):
+        # Dim disabled options (Continue when no save; Stats when opt-out).
+        dim = (key == OPTION_CONTINUE and not has_save) or (
+            key == OPTION_STATS and not stats_enabled
+        )
+        if dim:
+            label = f"{label} (opt-in)"
         is_selected = i == selected
         marker = "▸ " if is_selected else "  "
         fg = (100, 100, 100) if dim else ((255, 255, 0) if is_selected else (200, 200, 200))
@@ -138,6 +145,14 @@ def _select_menu_option(state: AppState, index: int) -> None:
     elif index == 7:
         state.screen = ScreenKind.ENDINGS_BROWSER
         state.endings_selected = 0
+    elif index == 8:
+        # Phase 17: gated by telemetry_opt_in. The disabled label in
+        # render_menu already warns ("opt-in"), but the action itself
+        # is a no-op when the player hasn't opted in.
+        if getattr(state, "telemetry_opt_in", False):
+            state.screen = ScreenKind.TELEMETRY_STATS
+        else:
+            state.message = "Stats require telemetry opt-in (Settings)"
 
 
 def handle_menu_input(event: tcod.event.Event, state: AppState) -> bool:
@@ -182,6 +197,9 @@ def handle_menu_input(event: tcod.event.Event, state: AppState) -> bool:
         elif event.sym is KeySym.N8:
             state.menu_selected_index = 7
             _select_menu_option(state, 7)
+        elif event.sym is KeySym.N9:
+            state.menu_selected_index = 8
+            _select_menu_option(state, 8)
     return True
 
 
@@ -770,4 +788,104 @@ def handle_endings_browser_input(event: object, state: AppState) -> bool:
             if event.sym in (tcod.event.KeySym.DOWN, tcod.event.KeySym.S):
                 state.endings_selected = (selected + 1) % total
                 return True
+    return True
+
+
+def render_telemetry_summary(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+    """Render the TELEMETRY_STATS screen (Phase 17, ADR-0184).
+
+    Read-only display of aggregated run statistics. Opt-in guard:
+    the screen is only reachable when ``state.telemetry_opt_in`` is
+    True (enforced in ``_select_menu_option``). We double-check here
+    so a state-internal bug cannot leak aggregate data to an
+    opt-out player.
+    """
+    from ..combat.telemetry_integration import TelemetryIntegrator
+
+    console.clear()
+    width = console.width
+    title = t("stats.title")
+    console.print(0, 0, "═" * width)
+    console.print((width - len(title)) // 2, 0, f" {title} ")
+    console.print(0, 1, "─" * width)
+    subtitle = t("stats.subtitle")
+    console.print((width - len(subtitle)) // 2, 3, subtitle, fg=(180, 180, 100))
+
+    if not getattr(state, "telemetry_opt_in", False):
+        console.print(
+            x=4,
+            y=6,
+            string="(Telemetry is OFF — opt in via Settings to see stats.)",
+            fg=(200, 100, 100),
+        )
+        _stats_footer(console, t, width)
+        return
+
+    integrator = getattr(state, "telemetry", None)
+    if not isinstance(integrator, TelemetryIntegrator):
+        console.print(x=4, y=6, string=t("stats.empty"), fg=(150, 150, 150))
+        _stats_footer(console, t, width)
+        return
+
+    y = 5
+    console.print(x=2, y=y, string=t("stats.section_meta"), fg=(180, 180, 100))
+    y += 1
+    total = integrator.get_event_count()
+    console.print(
+        x=4,
+        y=y,
+        string=t("stats.total_events", n=total),
+        fg=(200, 200, 200),
+    )
+    y += 2
+
+    deaths = integrator.aggregate_death_rates()
+    kills = integrator.aggregate_kill_counts()
+    decks = integrator.aggregate_deck_distribution()
+    mutators = integrator.aggregate_mutator_choices()
+
+    for section_label, data in (
+        (t("stats.section_deaths"), deaths),
+        (t("stats.section_kills"), kills),
+        (t("stats.section_deck"), decks),
+        (t("stats.section_mutator"), mutators),
+    ):
+        console.print(x=2, y=y, string=section_label, fg=(180, 180, 100))
+        y += 1
+        if not data:
+            console.print(x=4, y=y, string="(none)", fg=(120, 120, 120))
+            y += 1
+        else:
+            for key, count in sorted(data.items()):
+                console.print(
+                    x=4,
+                    y=y,
+                    string=f"  {key}: {count}",
+                    fg=(200, 200, 200),
+                )
+                y += 1
+        y += 1
+
+    _stats_footer(console, t, width)
+
+
+def _stats_footer(console: tcod.console.Console, t: Translator, width: int) -> None:
+    """Draw the standard footer for the telemetry stats screen."""
+    console.print(0, console.height - 1, "═" * width)
+    controls = t("stats.controls")
+    console.print((width - len(controls)) // 2, console.height - 1, f" {controls} ")
+
+
+def handle_telemetry_stats_input(event: object, state: AppState) -> bool:
+    """Handle input on TELEMETRY_STATS screen.
+
+    The screen is read-only — ESC / Q returns to the main menu. No
+    navigation arrows needed (each section is short, fits on screen).
+    """
+    import tcod.event
+
+    if isinstance(event, tcod.event.KeyDown):
+        if event.sym in (tcod.event.KeySym.ESCAPE, tcod.event.KeySym.Q):
+            state.screen = ScreenKind.MENU
+            return True
     return True

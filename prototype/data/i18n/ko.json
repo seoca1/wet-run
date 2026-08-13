@@ -784,6 +784,19 @@
     "chain_chain_news_story_name": "뉴스 기사",
     "chain_chain_construct_awakening_name": "구성체 각성"
   },
+  "stats": {
+    "menu_label": "통계 — 텔레메트리 요약",
+    "title": "텔레메트리 요약",
+    "subtitle": "런 통계 집계 (옵트인 전용)",
+    "empty": "기록된 이벤트가 없습니다.",
+    "section_deaths": "ICE 유형별 사망",
+    "section_kills": "ICE 유형별 처치",
+    "section_deck": "데크 선택",
+    "section_mutator": "변이체 선택",
+    "section_meta": "메타",
+    "total_events": "총 이벤트: {n}",
+    "controls": "[ESC] 메뉴로 돌아가기"
+  },
   "endings_programs": {
     "ending_ending_case_redemption_title": "케이스의 구원",
     "ending_ending_case_redemption_description": "Case chooses to help Wintermute find its other half. The matrix becomes a place of healing.",

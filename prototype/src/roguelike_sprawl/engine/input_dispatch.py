@@ -210,6 +210,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         ScreenKind.HELP: help_view.handle_help_input,
         ScreenKind.SETTINGS: settings_view.handle_settings_input,
         ScreenKind.ENDINGS_BROWSER: menu_screen.handle_endings_browser_input,
+        ScreenKind.TELEMETRY_STATS: menu_screen.handle_telemetry_stats_input,
         ScreenKind.SALVATION_INTRO: salvation_view.handle_salvation_intro_input,
         ScreenKind.SALVATION_EPILOGUE: salvation_view.handle_salvation_epilogue_input,
         ScreenKind.SALVATION_ENDING: salvation_view.handle_salvation_ending_input,

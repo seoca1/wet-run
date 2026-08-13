@@ -219,6 +219,16 @@ def _calculate_damage(
                 dmg *= phase_def.damage_multiplier
                 break
 
+    # Phase 17: F.4 boss phase damage multiplier (ADR-0180, 0190).
+    # F.4 bosses use boss_phase_tracker instead of boss_profile.
+    if attacker.team == "enemy" and state.boss_phase_tracker is not None:
+        from typing import cast
+
+        from .boss_phase_tracker import BossPhaseTracker
+
+        f4_tracker = cast(BossPhaseTracker, state.boss_phase_tracker)
+        dmg *= f4_tracker.get_damage_multiplier()
+
     dmg = int(dmg)
 
     from .status_effects import get_vulnerability_multiplier

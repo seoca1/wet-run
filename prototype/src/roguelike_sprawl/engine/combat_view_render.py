@@ -261,7 +261,7 @@ def _draw_combatants(
     hp_bar = _hp_bar(enemy.hp, enemy.max_hp, width=20)
     console.print(x=x, y=y, string=hp_bar, fg=(255, 100, 100))
 
-    # Boss Phase Info (Phase 15)
+    # Boss Phase Info (Phase 15 + Phase 17 transition flash)
     if combat_state.boss_phase_tracker is not None:
         from typing import cast
 
@@ -271,7 +271,19 @@ def _draw_combatants(
         progress = tracker.get_progress(enemy.hp, enemy.max_hp)
         y += 1
         phase_str = f"PHASE {progress.phase_index + 1}/{tracker.total_phases}"
-        console.print(x=x, y=y, string=phase_str, fg=(255, 255, 0))
+        # Phase 17: flash the phase color for ~1.5s after a transition so
+        # the player notices the change before the badge settles.
+        flash_age_ms = combat_state.tick_ms - combat_state.phase_change_ms
+        phase_color = combat_state.phase_change_color
+        if flash_age_ms < 1500 and combat_state.phase_change_ms > 0:
+            intensity = max(0.0, 1.0 - flash_age_ms / 1500.0)
+            base = (255, 255, 0)
+            phase_color = (
+                int(base[0] * (1 - intensity) + phase_color[0] * intensity),
+                int(base[1] * (1 - intensity) + phase_color[1] * intensity),
+                int(base[2] * (1 - intensity) + phase_color[2] * intensity),
+            )
+        console.print(x=x, y=y, string=phase_str, fg=phase_color)
         if not progress.is_last_phase:
             y += 1
             next_str = f"NEXT: {int(progress.hp_threshold * 100)}% HP"

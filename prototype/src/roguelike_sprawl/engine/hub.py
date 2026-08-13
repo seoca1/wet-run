@@ -78,6 +78,14 @@ def render_hub(console: tcod.console.Console, t: Translator, state: AppState) ->
             f"ZDR: {zdr}  Status: {status.value.upper()}",
             f"Reward: T{selected.reward_tier} + {selected.reward_credits} cr",
         ]
+        # Phase 17: annotate the selected mission with the random rule
+        # that drove the recommendation (set by select_weighted).
+        selected_rule_id = getattr(state, "last_rule_id", None)
+        if selected_rule_id is not None:
+            detail_lines.append("")
+            detail_lines.append(f"Rule: {selected_rule_id}")
+            if getattr(state, "show_active_rules", False):
+                _append_active_rules(detail_lines, state)
         # Phase β-1: Fiction cross-reference link (if available)
         from pathlib import Path as _Path
 
@@ -617,6 +625,25 @@ def _preview_zdr(mission: Mission) -> int:
 
     faction = Faction.SENSE_NET  # Arc 1 default
     return calculate_zdr(mission.zone, faction=faction)
+
+
+def _append_active_rules(detail_lines: list[str], state: AppState) -> None:
+    """Append a short active-rules annotation to the hub side panel.
+
+    Phase 17: When ``state.show_active_rules`` is True, list all rules
+    whose trigger is currently satisfied for the player. The annotation
+    is short (max 5 lines) so the side panel never overflows.
+    """
+    from ..missions.random_rules import get_all_active_rules
+
+    active = get_all_active_rules(state)
+    if not active:
+        detail_lines.append("(no active rules)")
+        return
+    detail_lines.append("Active rules:")
+    for rule in active[:5]:
+        rule_id = str(rule.get("rule_id", "unknown"))
+        detail_lines.append(f"  - {rule_id}")
 
 
 def handle_hub_input(event: tcod.event.Event, state: AppState) -> bool:

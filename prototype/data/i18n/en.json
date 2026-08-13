@@ -784,6 +784,19 @@
     "chain_chain_news_story_name": "The News Story",
     "chain_chain_construct_awakening_name": "Construct Awakening"
   },
+  "stats": {
+    "menu_label": "Stats — Telemetry Summary",
+    "title": "TELEMETRY SUMMARY",
+    "subtitle": "Aggregated run statistics (opt-in only)",
+    "empty": "No events recorded yet.",
+    "section_deaths": "Deaths by ICE type",
+    "section_kills": "Kills by ICE type",
+    "section_deck": "Deck choices",
+    "section_mutator": "Mutator choices",
+    "section_meta": "Meta",
+    "total_events": "Total events: {n}",
+    "controls": "[ESC] Back to menu"
+  },
   "endings_programs": {
     "ending_ending_case_redemption_title": "Case's Redemption",
     "ending_ending_case_redemption_description": "Case chooses to help Wintermute find its other half. The matrix becomes a place of healing.",

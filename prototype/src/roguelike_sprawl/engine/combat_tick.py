@@ -47,6 +47,9 @@ def maybe_boss_phase_transition(
                 cs.push(f">>> {new_phase_f4.intro_text}")
                 # Apply F.4 phase effects
                 cs.enemy.current_phase = tracker.current_phase_index + 1
+                # Phase 17: record transition timestamp for UI flash.
+                cs.phase_change_ms = cs.tick_ms
+                cs.phase_change_color = new_phase_f4.color
                 try:
                     ice_type = _effects.IceType(cs.enemy.id)
                 except ValueError:
@@ -73,6 +76,9 @@ def maybe_boss_phase_transition(
     if new_phase is not None:
         _boss.apply_phase_to_combatant(cs.enemy, cs.boss_profile)
         cs.push(f">>> {new_phase.intro_text}")
+        # Phase 17: record transition timestamp for UI flash.
+        cs.phase_change_ms = cs.tick_ms
+        cs.phase_change_color = new_phase.color
         # Phase H: B-3 spawn_minions — adds on phase change
         if new_phase.spawn_minions and ice_registry is not None and program_registry is not None:
             spawned = _boss.spawn_phase_minions(

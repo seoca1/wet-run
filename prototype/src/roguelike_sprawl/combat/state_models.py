@@ -254,6 +254,14 @@ class CombatState:
     wardrone_last_counter_ms: int = -5000
     # Current boss Phase 4 mechanic (ADR-0149). None until triggered.
     boss_phase4_mechanic: str | None = None
+    # Phase 17: timestamp (tick_ms) of the most recent boss phase
+    # transition. UI uses this to render a brief color-shift on the
+    # phase badge so the player notices the change. 0 = no recent
+    # transition (or never transitioned).
+    phase_change_ms: int = 0
+    # Phase 17: color of the most recent phase transition (used by the
+    # UI color-shift flash). Defaults to yellow when unset.
+    phase_change_color: tuple[int, int, int] = (255, 255, 0)
 
     def __post_init__(self) -> None:
         if not self.enemies and self.enemy is not None:

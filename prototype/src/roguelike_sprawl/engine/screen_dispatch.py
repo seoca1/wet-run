@@ -243,6 +243,7 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
         ScreenKind.HELP: help_view.render_help,
         ScreenKind.SETTINGS: settings_view.render_settings,
         ScreenKind.ENDINGS_BROWSER: menu_screen.render_endings_browser,
+        ScreenKind.TELEMETRY_STATS: menu_screen.render_telemetry_summary,
         ScreenKind.SALVATION_INTRO: salvation_view.render_salvation_intro,
         ScreenKind.SALVATION_EPILOGUE: salvation_view.render_salvation_epilogue,
         ScreenKind.SALVATION_ENDING: salvation_view.render_salvation_ending,

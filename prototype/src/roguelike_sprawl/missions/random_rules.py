@@ -247,6 +247,29 @@ def get_random_mission(
     Returns:
         Selected mission ID or None if no missions available.
     """
+    result = get_random_mission_with_rule(state, available_missions, seed=seed)
+    if result is None:
+        return None
+    return result[0]
+
+
+def get_random_mission_with_rule(
+    state: object, available_missions: list[str], seed: int | None = None
+) -> tuple[str, str | None] | None:
+    """Get a random mission AND the rule_id that selected it.
+
+    Phase 17: exposes the rule_id so the UI can show why a mission was
+    selected (e.g. "Selected by rule: faction_weighted").
+
+    Args:
+        state: Player state.
+        available_missions: List of available mission IDs.
+        seed: Optional random seed.
+
+    Returns:
+        Tuple of (selected mission ID, rule_id) or None if no missions.
+        rule_id is None when no active rules fired (uniform random pick).
+    """
     if not available_missions:
         return None
 
@@ -264,8 +287,7 @@ def get_random_mission(
     for rule, weight in zip(active_rules, weights, strict=False):
         cumulative += weight
         if pick <= cumulative:
-            affected = rule.get("affected_missions", "all")
-            if affected == "all":
-                return rng.choice(available_missions)
-            return rng.choice(available_missions)
-    return rng.choice(available_missions)
+            rule_id = str(rule.get("rule_id", "unknown"))
+            return rng.choice(available_missions), rule_id
+    # Out-of-rules fallback (no active rules) — uniform random pick.
+    return rng.choice(available_missions), None

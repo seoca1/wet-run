@@ -1,3 +1,46 @@
+## [2026-08-13] feat(ui) | Phase 17 — UI exposure for engine integrations (F.4 boss phases, random rules, telemetry stats)
+
+**Status**: ✅ 완료 — Three engine integrations from Phase 15/16 now visible to the player. No engine refactor; only UI exposure + 1 new screen.
+
+### Item 1: F.4 boss phase transitions in real combat
+- `combat/state.py:_calculate_damage` now reads `boss_phase_tracker.get_damage_multiplier()` for enemy attacks (F.4 path), matching the existing legacy `boss_profile` path.
+- `CombatState` extended with `phase_change_ms: int` and `phase_change_color: tuple[int,int,int]` (defaults: 0 / yellow).
+- `engine/combat_tick.py:maybe_boss_phase_transition` writes both fields on transition (covers both F.4 and legacy `boss_profile` paths).
+- `engine/combat_view_render.py:_draw_combatants` blends yellow → phase color over 1.5s after a transition, so the player notices the phase badge shift.
+- 14 new tests in `test_f4_boss_phase_combat.py` (damage multiplier, transition timing, UI flash math, 3-boss coverage).
+
+### Item 2: Random rules UI display
+- `missions/random_rules.py` exports `get_random_mission_with_rule()` returning `(mission_id, rule_id)`.
+- `missions/board.py:JobBoard.select_weighted` writes the firing rule_id to `state.last_rule_id` (guarded by `hasattr` for test dummy states).
+- `engine/hub.py:render_hub` appends a "Rule: <rule_id>" line to the Mission Details side panel.
+- `engine/hub.py:_append_active_rules` (debug helper) lists up to 5 currently active rules when `state.show_active_rules` is True.
+- 9 new tests in `test_random_rules_ui.py` (state writes, dummy-state tolerance, side-panel annotation, helper capping).
+
+### Item 3: Telemetry summary screen
+- `ScreenKind.TELEMETRY_STATS` enum value added; `OPTION_STATS = 9` and `MENU_OPTION_COUNT = 9` (test_help.py updated to match).
+- `render_telemetry_summary()` + `handle_telemetry_stats_input()` in `engine/menu.py` (~120 LOC).
+- `engine/screen_dispatch.py` and `engine/input_dispatch.py` wired.
+- Opt-in guard double-enforced: `_select_menu_option` refuses to navigate to the screen when `telemetry_opt_in=False`, AND the renderer shows an opt-out message even if state is mismatched.
+- i18n keys added in `data/i18n/en.json` + `ko.json` (10 keys per language).
+- 14 new tests in `test_telemetry_summary.py` (menu dispatch, opt-in guard, render with/without data, input handler).
+
+### Files modified
+- 11 source files + 2 i18n + 1 test_help update + 3 new test files = 17 files
+- 261 insertions / 15 deletions
+
+### Validation
+- ruff ✅ 0 errors (auto-formatted 1 file)
+- mypy strict ✅ 0 errors (211 source files)
+- pytest ✅ **4916 passed** (4879 baseline + 37 new) + 462 skipped + 1 xfailed (pre-existing flaky)
+- audit_vault.py ✅ 0 broken
+- mixed_language_audit.py ✅ 0 violations
+- dashboard_pipeline_audit.py ✅ 0 errors
+
+### Committed as
+- see `git log --oneline -1` (commit on main branch, 2026-08-13).
+
+---
+
 ## [2026-08-13] chore(mypy) | enable possibly-undefined + fix 3 type errors (commit 47e275c)
 
 **Status**: ✅ 완료 — Track A (data quality) no-op (false premises in NEXT_SESSION_TODO), Track B mostly no-op (tcod already 21.2.1, Python 3.14.6 already works). Only B5 had real work: 3 mypy strict errors fixed.

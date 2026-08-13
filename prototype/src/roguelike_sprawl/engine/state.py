@@ -129,6 +129,7 @@ class ScreenKind(StrEnum):
     HELP = "help"  # Help screen — controls, concepts, how to play
     SETTINGS = "settings"  # Settings screen — audio, colorblind, keymap (Phase 7)
     ENDINGS_BROWSER = "endings_browser"  # Browse unlocked endings (Phase 15)
+    TELEMETRY_STATS = "telemetry_stats"  # Aggregated player stats (Phase 17)
 
 
 # A grade-1 (1-up) loadout: Ono-Sendai 4 (T1) + Wisp (T1) + Standard (T1).
@@ -351,6 +352,13 @@ class AppState:
     colorblind_mode: bool = False  # colorblind-friendly palette toggle
     telemetry_opt_in: bool = False  # telemetry opt-in toggle (Phase 15)
     perf_hud_enabled: bool = False  # performance HUD toggle (Phase 15)
+    # Phase 17: rule_id of the random_rules entry that fired on the
+    # last JobBoard.select_weighted call. None until first selection.
+    last_rule_id: str | None = None
+    # Phase 17: dev/debug flag — when True, the Hub shows the active
+    # rules in the side panel (in addition to the selected mission's
+    # rule annotation). Default False: rule metadata is opt-in.
+    show_active_rules: bool = False
     perf_tracker: PerfTracker | None = None  # PerfTracker (Phase 15)
     deck_select_index: int = 1  # selected index in DECK_SELECT screen (Phase 15)
     endings_selected: int = 0  # selected index in ENDINGS_BROWSER screen (Phase 15)

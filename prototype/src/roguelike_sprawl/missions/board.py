@@ -154,7 +154,7 @@ class JobBoard:
         Returns:
             Selected mission, or None if no missions available.
         """
-        from .random_rules import get_random_mission
+        from .random_rules import get_random_mission_with_rule
 
         if available is None:
             grade = getattr(state, "grade", 1)
@@ -165,9 +165,16 @@ class JobBoard:
             return None
 
         mission_ids = [m.id for m in available]
-        selected_id = get_random_mission(state, mission_ids, seed=seed)
-        if selected_id is None:
+        result = get_random_mission_with_rule(state, mission_ids, seed=seed)
+        if result is None:
             return None
+        selected_id, rule_id = result
+        # Phase 17: tag the state with the rule that fired so the Hub UI
+        # can annotate the highlighted mission. Production state
+        # (AppState) has the field; dummy test states without it are
+        # simply skipped via getattr → attribute guard.
+        if hasattr(state, "last_rule_id"):
+            state.last_rule_id = rule_id
         return self.get(selected_id)
 
     def select_by_faction(

@@ -7658,3 +7658,76 @@ The 200 `derivative_type` empty fields remain, but those are likely a derived fi
 - `engine/save_manager.py` — save metadata + restore
 
 **Phase 16 closed. 4879 tests pass, 0 regressions. No commits pending user authorization.**
+
+[2026-08-13] docs(design) | Phase 18 — audit + update design docs for Phase 15-17 features
+
+**Status**: ✅ 완료 — 10 design docs audited, 5 surgically updated to reflect Phase 15-17 features. 0 broken wikilinks. No code changes.
+
+### Docs audited
+
+| Doc | Phase 15-17 gaps found |
+|---|---|
+| `design/GDD.md` | No mention of deck picker / telemetry opt-in / boss phase UI / random rules UI / telemetry stats / endings persistence |
+| `design/core_loop.md` | Macro loop missing 8-option main menu + Deck Select step + STATS option |
+| `design/systems/combat.md` | F.4 boss phase UI transitions (1.5s blend, phase_change_ms/color) not documented; deck_size section absent |
+| `design/systems/missions.md` | Phase 11 random rules defined but Phase 16 select_weighted engine wiring + Phase 17 UI display missing |
+| `design/systems/inventory.md` | Phase 15 wetware stacking display + equipment/wetware_stacking.py reference absent |
+| `design/glossary.md` | No gaps (high-level, design unchanged) |
+| `design/pillars.md` | No gaps (pillars stable across Phase 15-17) |
+| `design/systems/progression.md` | No gaps (NG+ docs complete) |
+| `design/systems/dungeon_events.md` | Low priority (orthogonal to Phase 15-17) |
+| `design/systems/mission-types.md` | Low priority (taxonomy doc, not a wiring doc) |
+
+### Docs updated (5)
+
+- **design/GDD.md** — added "한 런의 구조" with deck picker + random rules bias; new "Phase 15-17 신규 시스템" table covering all 6 features + telemetry event firing sites; new "Phase 18 Audit Trail" section
+- **design/core_loop.md** — updated 매크로 루프 to 8-option main menu + Deck Select screen + Phase 16-17 telemetry triggers
+- **design/systems/combat.md** — added Phase 17 UI 노출 subsection under F.4 Boss Phase 4; expanded 모듈 구조 with state_models.py / boss_phase_tracker.py / telemetry_integration.py; new "Deck Size Selection" section
+- **design/systems/missions.md** — new "Phase 16-17 확장 — Random Rules Engine + UI Wiring" section with Hub ENTER/number-key fallback, state.last_rule_id, side panel Rule annotation
+- **design/systems/inventory.md** — new "Wetware Stacking (Phase 15)" section with stack_wetware mechanics + equipment_view.py:184-202 call site + Pillar 4/5 정합
+
+### Cross-reference verification
+
+All technical references in updated docs verified against current code:
+- `JobBoard.select_weighted` ✅ in `missions/board.py`
+- `TelemetryIntegrator.record_death` / `record_run_completed` / `record_deck_chosen` / `record_boss_reached` / `record_mission_completed` ✅ in `combat/telemetry_integration.py`
+- `BossPhaseTracker.get_damage_multiplier` ✅ in `combat/boss_phase_tracker.py`
+- `CombatState.phase_change_ms` + `phase_change_color` ✅ in `combat/state_models.py`
+- `state.telemetry_opt_in` ✅ in `engine/state.py:353`
+- `state.deck_size` (light/standard/heavy) ✅ in `engine/menu.py:699`
+- `equipment/wetware_stacking.py::stack_wetware` ✅ called in `equipment_view.py:184-202`
+- `ending_choice` round-trip ✅ in `engine/save_manager.py`
+- `ScreenKind.TELEMETRY_STATS` + `OPTION_STATS = 9` ✅ in `engine/screen_dispatch.py` + `engine/menu.py:40`
+
+### Validation
+
+| Check | Result |
+|---|---|
+| `ruff format` | ✅ clean (465 files unchanged) |
+| `ruff check` | ✅ 0 errors |
+| `mypy src/` (strict) | ✅ 0 errors (211 source files) |
+| `pytest` | ✅ 4916 passed + 462 skipped + 1 xfailed (baseline preserved) |
+| `audit_vault.py` (workspace) | ✅ 0 broken links |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+| Wikilink check (5 touched docs) | ✅ 0 broken |
+
+### Files modified (5)
+
+- `design/GDD.md` (44 insertions / 8 deletions)
+- `design/core_loop.md` (17 insertions / 9 deletions)
+- `design/systems/combat.md` (55 insertions / 1 deletion)
+- `design/systems/inventory.md` (39 insertions / 0 deletions)
+- `design/systems/missions.md` (47 insertions / 0 deletions)
+
+Total: 5 files, 202 insertions / 18 deletions.
+
+### Design decisions preserved
+
+- Gibson-flavored tone intact throughout (no rewrites, surgical additions only)
+- CJK contamination: 0 violations per `mixed_language_audit.py`
+- No code changes (docs only)
+- No fabricated technical details — every feature reference traced to a real implementation
+- Accepted ADRs unchanged (no decisions/ modifications)
+
+**Phase 18 closed. Docs in sync with Phase 15-17 code. 5 docs updated, 0 broken links, all validation gates green.**

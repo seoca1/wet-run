@@ -321,6 +321,27 @@ Pillar 4 (The Build) in-run only (death = loss). construct_whisper UI 와 연동
 
 HP ≤ 15% 시 1회 scripted mechanic 발동. `phase4_triggered` flag 로 one-shot 보장.
 
+### Phase 17 UI 노출 (F.4 Boss Phase Transitions)
+
+Phase 17 에서 보스 phase 전환이 실제 combat 흐름에 통합되어 *시각적으로* 드러난다.
+
+**전투 데미지 적용** (`engine/combat_tick.py::_calculate_damage`):
+```python
+multiplier = boss_phase_tracker.get_damage_multiplier(enemy_id, current_phase)
+applied = round(base_damage * multiplier)
+```
+
+**CombatState phase change 기록** (`combat/state_models.py`):
+- `phase_change_ms: int` — phase 전환 발생 timestamp (ms)
+- `phase_change_color: tuple[int, int, int]` — phase 고유 RGB (5 phase 별)
+
+**렌더링** (`engine/combat_view_render.py`):
+- 전투 렌더링 시 `(now_ms - phase_change_ms) < 1500` 이면 HUD 색상이 **yellow → phase color** 로 1.5초간 블렌드
+- 시각 효과: 보스가 phase 진입한 직후 짧은 색상 강조 — 깁슨 톤의 "the ICE shifts, changes color, knows it's hurt"
+
+**테스트 커버리지** (`tests/unit/test_f4_boss_phase_combat.py`, 331 LOC):
+- 8 test: phase 진입 → 데미지 multiplier 적용, state 기록, HUD 블렌드 윈도우 검증
+
 ### Per-Boss Mechanics
 
 | Boss | Mechanic | 효과 |
@@ -451,12 +472,22 @@ Pillar 3 (The Flatline) weight 보존: 1vN 에서 HEAL 1회로 *3명 damage 보�
 src/roguelike_sprawl/combat/
 ├── __init__.py
 ├── state.py        # CombatState (player, enemy, tick, menu)
+├── state_models.py # CombatState phase_change_ms + phase_change_color (Phase 17)
 ├── programs.py     # Program 데이터 + 사용 가능 슬롯
 ├── engine.py       # 자동 공격 tick, menu pause/resume
 ├── damage.py       # damage 계산, HP 변화
 ├── salvage.py      # Data Salvage 메뉴 (ADR-0014)
-└── render.py       # combat 화면 렌더링
+├── boss_phase_tracker.py  # BossPhaseTracker.get_damage_multiplier (Phase 17 wiring)
+├── telemetry_integration.py  # TelemetryIntegrator.record_boss_reached (Phase 16)
+├── multi_enemy.py  # 1vN encounter (ADR-0152)
+├── intel_items.py  # Info Market 3 intel items (ADR-0151)
+└── render.py       # combat 화면 렌더링 (Phase 17 1.5s blend)
 ```
+
+**Engine 통합 (Phase 15-17)**:
+- `engine/combat_view_state.py::start_combat` → 보스 ICE 시작 시 `record_boss_reached` 발동 (opt-in 한정, ADR-0184)
+- `engine/combat_tick.py::_calculate_damage` → `BossPhaseTracker.get_damage_multiplier()` 적용
+- `engine/combat_view_render.py` → phase_change_ms 윈도우 내 yellow→phase color 블렌드
 
 ### Player state 확장
 
@@ -496,6 +527,29 @@ def apply_salvage(choice: SalvageChoice, player: Player) -> int:
 - HEAL 비율 (20% 적절? 15%? 25%?)
 - FRAG / CRED 시스템 상세 (Phase 6+)
 - 알람 / trace와 salvage의 상호작용
+
+---
+
+## Deck Size Selection (Phase 15)
+
+> 런 시작 시 자키는 데크 사이즈를 선택 — LIGHT / STANDARD / HEAVY. combat 자원 (program slots / AP regen / cooldown) 에 직접 영향.
+
+**3 옵션** (`engine/menu.py::render_deck_select`, `_confirm_deck_choice`):
+
+| 사이즈 | Program Slots | AP Regen Modifier | Cooldown Modifier | Pillar 영향 |
+|---|---|---|---|---|
+| **LIGHT** | 6 slots | +50% | -10% | P1 (The Run) — 빠른 회복, 제한된 슬롯 |
+| **STANDARD** | 8 slots | balanced (baseline) | baseline | P4 (The Build) — 기본 |
+| **HEAVY** | 10 slots | -30% | +15% | P1 (The Run) — 많은 슬롯, 느린 회복 |
+
+**선택 시점**: character select 직후, NEW RUN 의 첫 화면. ENTER 키로 확정.
+**Telemetry trigger** (Phase 16): `record_deck_chosen(deck_size)` 가 opt-in 상태에서 발동.
+**메뉴 진입**: `state.deck_select_index` 가 0/1/2 (LIGHT/STANDARD/HEAVY), 위/아래 키로 변경.
+
+**Pillar 정합**:
+- P1 (The Run): 사이즈 선택은 한 번의 결정 — 런 진행 중 변경 불가. 무게 유지.
+- P4 (The Build): unlock-only meta-progression 과 정합 (deck_size 는 런 시작 시점 메타 preference).
+- P5 (The Style): menu 렌더링 시 깁슨 톤 라벨 — "Light decks for the cautious. Heavy for the bold. Standard for the practical."
 
 ## 관련 문서
 

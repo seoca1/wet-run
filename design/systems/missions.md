@@ -470,6 +470,53 @@ Chain reward: `ta_construct_full` + reputation +25 + 50000 credits + achievement
 - `make typecheck`: mypy strict 0 errors
 - Schema: additive, no breaking changes
 
+---
+
+## Phase 16-17 확장 — Random Rules Engine + UI Wiring
+
+Phase 11 의 19 random selection rules 가 **실제 게임 흐름**에 통합되었다.
+
+### Engine Wiring (Phase 16)
+
+`JobBoard.select_weighted(state)` 가 Round 4 에서 정의되었으나 호출되지 않던 상태였다. Phase 16 에서 Hub 진입 흐름에 wired:
+
+- **Hub ENTER (no mission in flight)**: `engine/hub.py::handle_hub_input` 이 `ENTER` 키를 받으면 `JobBoard.select_weighted(state)` 호출 → 추천 의뢰의 cursor 위치로 점프. 결과적으로 reputation / NG+ / chain unlock 상태를 반영한 *bias* 가 적용된 cursor 이동.
+- **Number-key fallback**: 의뢰 범위 밖 숫자 입력 시 `select_weighted` 가 모든 available mission 에 대해 weighted pick → 결과 미션으로 cursor 이동.
+- **상태 기록**: 발동된 rule 의 ID 가 `state.last_rule_id: str` 에 저장 (UI 표시용).
+
+### UI Display (Phase 17)
+
+Hub Mission Details side panel 이 `state.last_rule_id` 를 읽어 다음과 같이 표시:
+
+```
+──────────────────────────────────────────────────────
+  Mission Details
+──────────────────────────────────────────────────────
+  Ice Run
+  Zone: SURFACE  Grade: 1-up  PPL: 12 vs ZDR 8
+  Status: MATCH (1.5x)
+  
+  Objective: collect 5 ice shards
+  
+  Rule: surface_grade1_finn_bias   ← random rule 주석 (Phase 17)
+  
+  Reward: 500 credits, 2× data_fragment
+──────────────────────────────────────────────────────
+```
+
+**디버그용 active rules listing**: `_append_active_rules` 헬퍼가 Hub 화면 푸터에 현재 발동 가능한 모든 rule 을 한 줄씩 표시 (개발자 + alpha tester 용). 일반 사용자에게는 off.
+
+### Pillar 정합
+
+- **P1 (The Run)**: 한 런 = 한 미션의 무게 유지. Random rules 는 *어떤 미션을 추천할지* 만 결정 — 미션 결과에는 영향 없음.
+- **P4 (The Build)**: 메타 진행 (reputation, NG+) 의 *soft* 반영. 자키 등급 / unlock 상태가 자연스럽게 Hub 추천에 반영.
+- **P5 (The Style)**: rule ID 의 깁슨 어휘 — `surface_grade1_finn_bias`, `faction_rep_yakuza_locked`, `ng_plus_chain_unlock` 등. 픽서 construct 의 *직관적 추천*.
+
+### 테스트 커버리지
+
+- `tests/unit/test_phase16_random_rules_engine_integration.py` (7 tests) — Hub ENTER / number-key fallback 이 `select_weighted` 호출, 가중치 차이가 cursor 에 반영
+- `tests/unit/test_random_rules_ui.py` (256 LOC) — Hub side panel 의 `Rule: <rule_id>` 표시, opt-in / opt-out 케이스
+
 ### 관련 문서
 
 - `mission-types.md` — 5 new types 상세

@@ -1,6 +1,6 @@
 # Game Design Document (GDD)
 
-> **Last updated**: 2026-08-03 (Cycle 0 pre-release polish — content count sync from 2026-07-08 baseline)
+> **Last updated**: 2026-08-13 (Phase 18 docs audit — Phase 15-17 feature notes added)
 > **Version**: v1.0.0
 
 ## 1. Concept
@@ -39,18 +39,40 @@
 ## 3. Game Structure
 
 ### 한 런의 구조
-- **Job Board**: 3~7개 의뢰 중 선택
+- **Deck Select (Phase 15)**: 런 시작 시 데크 사이즈 선택 — LIGHT (6 slots, +50% AP regen, -10% cooldowns) / STANDARD (8 slots, balanced, default) / HEAVY (10 slots, -30% AP regen, +15% cooldowns). 자키의 런-스타일 결정.
+- **Job Board**: 3~7개 의뢰 중 선택 (Phase 16: `JobBoard.select_weighted` 가 reputation / NG+ / chain unlocks 반영해 추천 의뢰 편향)
 - **Prep**: 데크/프로그램/웨웨어 로드
 - **Infiltration**: 메트스페이스 → 매트릭스 진입
-- **Matrix Run**: 미션 수행
+- **Matrix Run**: 미션 수행 (Phase 17: F.4 보스 phase 진입 시 1.5s yellow→phase color 블렌드, `BossPhaseTracker.get_damage_multiplier()` 가 데미지에 반영)
 - **Extraction**: 매트릭스 이탈
-- **Reward**: 보상 획득 또는 death
+- **Reward**: 보상 획득 또는 death (Phase 16: 성공 시 `record_run_completed` telemetry trigger — opt-in 한정)
 
 ### 메타 진행
 - 새 데크 unlock (Ono-Sendai Cyberspace 7, SAMSARA 등)
 - 새 프로그램 unlock (Goliath, Kraken, Wisp, Wardrone 등)
 - 새 construct unlock (Dixie 류, 픽스처 AI)
 - 의뢰 라인 / 클라이언트 진행 (light, optional)
+
+### Phase 15-17 신규 시스템 (런 사이 흐름)
+
+| 시스템 | 설명 | Phase |
+|---|---|---|
+| **Deck Size Picker** | NEW RUN 시작 시 LIGHT/STANDARD/HEAVY 3종 선택. AP regen / cooldown modifier 로 런 스타일을 결정 | 15 |
+| **Telemetry Opt-In** | SETTINGS 의 toggle (`state.telemetry_opt_in`). off 시 모든 telemetry event 가 no-op (방어적 double-guard) | 15 |
+| **Wetware Stacking Display** | EQUIPMENT 화면에 동일 wetware ID 다중 보유 시 누적 보너스 표시 (`equipment/wetware_stacking.py::stack_wetware`) | 15 |
+| **Endings Browser** | 메뉴에서 EndingRenderer 진입, 해금된 엔딩 scene 을 ASCII 카드로 열람 (ADR-0192) | 15 |
+| **Performance HUD** | F-key 토글. `PerfTracker` 가 FPS / tick 시간 표시 (개발자 + alpha tester 용) | 15 |
+| **F.4 Boss Phase UI** | 보스 phase 진입 시 1.5초 yellow → phase color 블렌드. `CombatState.phase_change_ms` + `phase_change_color` 기록. 데미지는 `BossPhaseTracker.get_damage_multiplier()` 반영 | 15 + 17 |
+| **Random Rules UI** | Hub ENTER 시 `JobBoard.select_weighted` 가 발동한 `rule_id` 를 `state.last_rule_id` 에 기록. Mission Details side panel 에 `Rule: <rule_id>` 주석. 디버그용 `_append_active_rules` 활성 룰 목록 | 16 + 17 |
+| **Telemetry Summary Screen** | 메뉴 8번째 옵션 STATS. `OPTION_STATS=9`, opt-in off 시 dimmed. `render_telemetry_summary()` 가 `aggregate_death_rates` / `aggregate_kill_counts` / `aggregate_deck_distribution` / `aggregate_mutator_choices` 표시 | 17 |
+| **Endings Persistence** | `ending_choice` 가 save metadata 에 직렬화, `restore_state()` 가 복원 (legacy save 호환) | 16 |
+
+**Telemetry event firing sites** (Phase 16, opt-in 한정):
+- `engine/death.py::trigger_death` → `record_death` + `record_run_completed` (failed run)
+- `engine/reward_view.py::return_to_hub_from_reward` → `record_run_completed` (successful run)
+- `engine/combat_view_state.py::start_combat` → `record_boss_reached` (boss ICE)
+- `engine/menu.py::handle_deck_select_input` → `record_deck_chosen` (ENTER 확정 시)
+- `engine/mission_completion.py::complete_mission` → `record_mission_completed`
 
 ### 난이도 모드 (Difficulty Modes)
 
@@ -249,3 +271,17 @@
 `pillars.md` 참조. 명시적으로 만들지 않을 것들:
 
 - Loot grind, Multiplayer, Skins, Daily login, Infinite scaling, Prestige, Mobile/F2P
+
+---
+
+## 9. Phase 18 Audit Trail
+
+Phase 15-17 동안 추가된 6개 engine 통합 (deck picker / telemetry opt-in / wetware stacking / F.4 boss phases / random rules / endings persistence) 와 3개 UI 노출 (F.4 phase UI / random rules UI / telemetry stats) 이 본 문서에 반영됨.
+
+**이전 known issues**:
+- Content totals 가 v1.0.0 (2026-08-03) 기준 — Phase 11 의 200 mission 으로 확장되었으나 본 섹션은 의도적으로 v1.0.0 베이스라인 유지.
+- 로드맵 항목 `Hardcore mode` (Phase 4 polish) 은 §3 Game Structure 에서 별도 다룸.
+
+**후속 예정** (Phase 19+):
+- Phase 14 에서 wired 되지 않은 `integrate_with_game_loop` per-tick profiler (ADR-0184 partial) — gameplay 영향 없이 보류.
+- Run mutator UI (mutator selection 결과만 telemetry 집계, 현재는 보너스 선택 메뉴만 노출).

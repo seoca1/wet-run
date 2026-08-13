@@ -144,6 +144,45 @@ equip_program_power → Combatant.equip_program_power
 | EquipmentLoadout | `equipment/equipment.py:389-429` |
 | 전투 통합 | `engine/combat_view.py:820-903` |
 | Hub 4-panel 표시 | `engine/hub.py:_draw_avatar_panel` |
+| Wetware Stacking (Phase 15) | `equipment/wetware_stacking.py` + `engine/equipment_view.py:184-202` |
+
+---
+
+## Wetware Stacking (Phase 15)
+
+자키가 동일 wetware ID 를 인벤토리에 다수 보유 시 누적 보너스가 적용된다. Pillar 4 (The Build) 의 *장착 도구* 표현.
+
+### 메카닉
+
+`equipment/wetware_stacking.py::stack_wetware(wetware_ids: list[str])` 가 보유 wetware ID 리스트를 받아 누적된 `EquipStats` 보너스를 계산한다. 같은 wetware ID 가 N 개 있으면 보너스 × N (또는 비선형 누적 곡선 — v1.1.0 follow-up).
+
+### Equipment View 표시
+
+`engine/equipment_view.py::_render_total_stats_panel` (line 184-202) 가 호출:
+
+```python
+# Phase 15: wetware stacking
+wetware_ids = []
+inventory = getattr(state, "inventory", {})
+if inventory:
+    from ..equipment.wetware_stacking import get_all_augments
+    all_aug_ids = get_all_augments()
+    wetware_ids = [k for k in inventory.keys() if k in all_aug_ids]
+stacked = stack_wetware(wetware_ids)
+```
+
+장비 view 의 `Total Stats` 패널에 stacked 보너스가 12 필드 `EquipStats` 와 함께 표시된다 (예: stacked attack_bonus = +3, hp_bonus = +12).
+
+### Pillar 정합
+
+- **P4 (The Build)**: "장비와 도구"의 직접적 표현 — wetware N개 = 누적. 메타 진행과 *직교* (death 시 reset, in-run only).
+- **P5 (The Style)**: HUD 에 `[wetware stack: +3 atk]` 짧은 한 줄로 깁슨 톤.
+
+### 향후 확장 (v1.2.0+ backlog)
+
+- 비선형 누적 곡선 (예: 3개 초과 시 0.5× decay)
+- Wetware 별 stacking cap (예: 같은 wetware max 5개)
+- Per-tier scaling (T1 wetware 1× vs T4 wetware 2.5×)
 
 ## 미래 작업 (Phase 6+)
 

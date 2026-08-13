@@ -5,26 +5,34 @@
 > **중요 (ADR-0009)**: meatspace는 절대 시각화되지 않음. Hub (Job Board, Prep, 픽서 대화)는 모두 cyberspace 안의 텍스트 인터페이스.
 
 ```
-[메인 메뉴] (real-world UI)
-    |   - New Run
-    |   - Story Archive (ADR-0009)
-    |   - Settings
-    |   - Quit
+[메인 메뉴] (real-world UI, 8 options, Phase 17)
+    |   - 1. NEW RUN              (자키 선택)
+    |   - 2. GRAPHIC NOVEL        (ADR-0032, 스토리 자동재생)
+    |   - 3. CONTINUE             (마지막 세이브 로드)
+    |   - 4. SETTINGS             (telemetry opt-in, accessibility 등)
+    |   - 5. CREDITS
+    |   - 6. HALL OF DEAD         (자키 아카이브, ADR-0040)
+    |   - 7. HELP                 (Phase 7 온보딩)
+    |   - 8. STATS                (Phase 17, telemetry opt-in 시 활성)
+    v
+[Character Select] ---> 자키 선택 (NG+ 가능 시 N-key 토글)
+    v
+[Deck Select] (Phase 15) ---> LIGHT / STANDARD / HEAVY 중 선택
     v
 [Hub: Cyberspace Construct] (text-based)
     |   - 픽서 construct (의뢰 briefing)
-    |   - Job Board (의뢰 선택)
+    |   - Job Board (의뢰 선택, Phase 16: select_weighted cursor bias)
     |   - Deck Config (프로그램/웨웨어)
     |   - Info Market (의뢰 정보 구매)
     v
 [Run: 매트릭스 진입]
     |   (text transition: "you jack in. the world goes gray.")
     v
-[Matrix Phase] ---> 해킹, 전투, 데이터 탈취
+[Matrix Phase] ---> 해킹, 전투, 데이터 탈취 (Phase 17: F.4 보스 phase 진입 시 HUD 1.5s 블렌드)
     v
 [Extraction / Death]
-    |   (성공: "you pull out, heart racing.")
-    |   (실패: "you flatline. static. silence.")
+    |   (성공: "you pull out, heart racing." Phase 16: record_run_completed opt-in)
+    |   (실패: "you flatline. static. silence." Phase 16: record_death + record_run_completed opt-in)
     v
 [Result + Story] ---> 보상, 새 story
     v

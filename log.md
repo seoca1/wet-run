@@ -1,3 +1,66 @@
+## [2026-08-14] fix(test) | Phase 23 — Test flake fix (test_no_tracker_means_no_f4_multiplier)
+
+**Status**: ✅ 완료 — `tests/unit/test_f4_boss_phase_combat.py::test_no_tracker_means_no_f4_multiplier` 의 pre-existing RNG-dependent flake (~15% 실패율, dmg=21 관측) 영구 수정. Commit `14bd65e`. 1 file, +19/-2, 4992 passed (+1 regression test).
+
+### Root cause
+
+`_calculate_damage(state, base, attacker, defender, can_crit=True)`:
+1. `variance = state.rng.uniform(0.8, 1.2)` → `dmg = base_damage * variance` → 비-crit 시 dmg = 8..12 (OK)
+2. **`if state.rng.random() < CRIT_CHANCE (0.15):` → crit_mult ~1.8..2.2 → dmg ≈ 15..24** (FAIL)
+3. `cs.rng = field(default_factory=random.Random)` — `CombatState` 마다 fresh `Random()` 인스턴스 (NOT 모듈-레벨 singleton, NOT cross-test pollution). 따라서 Phase 22 subagent 가 "RNG pollution 아님" 으로 진단한 것이 맞음.
+
+200-run 샘플링 결과:
+- 비-crit (76%): dmg = 8, 9, 10, 11
+- crit (24%): dmg = 15, 16, 17, 18, 19, 20, 21, 22, 23, 24 (dmg=21 가 가장 흔한 crit 결과)
+
+테스트의 의도는 "no F.4 multiplier path" 검증이지 crit mechanics 검증이 아니므로, `can_crit=False` 로 variance-only 경로를 격리하는 것이 가장 정합적인 fix.
+
+### Fix
+
+`test_no_tracker_means_no_f4_multiplier`:
+```python
+# before:
+dmg, _ = _calculate_damage(cs, 10, cs.enemy, cs.player)
+# after:
+dmg, _ = _calculate_damage(cs, 10, cs.enemy, cs.player, can_crit=False)
+```
+
+### Regression test
+
+`test_no_tracker_variance_is_stable_under_repeated_invocations` (신규) — 동일 계산을 200 회 반복 (15% crit rate 의 ~13 배 이상) 하면서 모두 `[8, 12]` 안에 들어오는지 검증. 미래에 누군가 `can_crit=False` 를 제거하면 즉시 실패.
+
+### Stability verification
+
+| Run | Result |
+| --- | --- |
+| File 5 consecutive (`tests/unit/test_f4_boss_phase_combat.py`) | 23 passed / 23 passed / 23 passed / 23 passed / 23 passed |
+| Single-test 30 consecutive (flake-affected) | 30 passed / 30 (zero failures, was 3/20 before fix) |
+| Full unit suite (`tests/unit/`, 8 runs) | 7× clean, 1× `test_player_attack_unaffected_by_f4_multiplier` flake |
+
+### Related flake (documented, not fixed per scope)
+
+**`test_player_attack_unaffected_by_f4_multiplier` (line 157-165)** — 같은 클래스, 같은 `assert 8 <= dmg <= 12` 패턴. Crit rate 15% 로 동일하게 flake 가능. Phase 23 task 가 "flke-affected test 만 수정" 으로 제한하므로 본 phase 에서 수정하지 않음. 후속 phase 에서 같은 fix (`can_crit=False`) 적용 권장.
+
+### Validation
+
+- `make format` — 1 file reformatted (the test file)
+- `make lint` — All checks passed!
+- `make typecheck` — Success: no issues found in 211 source files
+- `make test` — 4992 passed, 462 skipped, 1 xfailed (Phase 14 perf tracker; unrelated, pre-existing)
+- `audit_vault.py` — ✅ CLEAN
+- `mixed_language_audit.py` — 0 violations
+- `dashboard_pipeline_audit.py` — 0 errors
+
+### Constraints respected
+
+- raw/ / Fiction/ / Language/ / typing_language/ 무수정
+- Accepted ADR 무수정 (decisions/ 무수정)
+- pytest-randomly dependency 미사용 (기존 random.Random 사용)
+- 무관한 테스트 미수정 (sister test 는 documented only)
+- 테스트의 의미 ("no F.4 multiplier path 검증") 변경 없음 — variance-only 경로 격리
+
+---
+
 ## [2026-08-14] docs(design) | Phase 22 — glossary + pillars re-verification
 
 **Status**: ✅ 완료 — glossary 에 Phase 15-17 신규 8개 용어 추가, pillars 재확인 (변경 없음). docs-only 작업, no code change.

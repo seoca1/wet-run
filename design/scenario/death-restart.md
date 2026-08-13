@@ -220,20 +220,32 @@ DEATH (X 머리, "PERMANENT DEATH" 표시)
 
 ### 6.6.1 trigger_death() 통합
 
-`engine/death.py::trigger_death()` (구현) — `_emit_telemetry_event` helper 로 두 이벤트를 *graceful* 트리거:
+`engine/death.py::trigger_death()` (구현, line 169-178) — `_emit_telemetry_event` helper (line 42) 로 두 이벤트를 *graceful* 트리거:
 
 ```python
-def trigger_death(state: AppState, ...) -> None:
-    # ... existing logic ...
-    _emit_telemetry_event(state, "record_death", cause=death_cause, ice_kind=ice_kind)
-    _emit_telemetry_event(state, "record_run_completed", outcome="failed", ...)
+# engine/death.py
+def _emit_telemetry_event(state, name, fn):
+    """Defense-in-depth: gate by opt-in, swallow exceptions."""
+    if not state.telemetry_opt_in:
+        return
+    try:
+        integrator = TelemetryIntegrator.from_state(state)
+        fn(integrator)
+    except Exception:
+        pass  # telemetry failure must not break death flow
+
+# trigger_death (line 169-178)
+_emit_telemetry_event(state, "record_death",
+    lambda i: i.record_death(reason))
+_emit_telemetry_event(state, "record_run_completed",
+    lambda i: i.record_run_completed(outcome="failed", ...))
 ```
 
 ### 6.6.2 데이터 흐름
 
 ```
 [사망]
-   ↓ trigger_death()
+   ↓ trigger_death()  (engine/death.py:169-178)
    ↓ _emit_telemetry_event (gated by state.telemetry_opt_in)
 combat.TelemetryIntegrator.record_death(...)
 combat.TelemetryIntegrator.record_run_completed(outcome="failed")
@@ -249,23 +261,28 @@ TELEMETRY_STATS 화면 렌더
 
 `state.ending_choice` (엔딩 A/B/C, ADR-0192 Phase 16) 와 *death flow* 는 직교 — DEATH_SUMMARY 에서 *엔딩 B/C (flatline)* 선택 시:
 - `state.ending_choice = "B"` (또는 "C") 저장
-- `engine/save_manager.py::SaveManager._serialize_metadata()` 가 metadata 에 직렬화
+- `engine/save_manager.py::SaveManager._serialize_metadata()` (line 502-509) 가 `metadata["ending_choice"]` 에 직렬화
+- `restore_state()` (line 570-573) 가 legacy save 호환 — 없는 키는 default 빈 string 으로 fallback
 - *죽은 자키* 의 `DeceasedJockey.ending_choice` 는 *Hall of Dead* 표시용으로 보존
 
 ### 6.6.4 검증 (test_telemetry_triggers.py, 21 tests)
 
 | Test Class | Coverage |
 | --- | --- |
-| `TestDeathTelemetryTriggers` (5) | `_emit_telemetry_event` 정상 호출, defense-in-depth (no-op when opt_out), 실패 격리 (예외 발생 안 함) |
-| `TestRunCompletedTelemetry` (4) | `record_run_completed` 호출, outcome="failed" 페이로드, death 직후 트리거 |
-| `TestEndToEndTelemetry` (4) | 전체 lifecycle: trigger_death → menu → STATS → aggregate |
-| `TestPayloadSchema` (8) | `record_death` / `record_run_completed` 페이로드 스키마 (cause, ice_kind, ms, etc.) |
+| `TestRecordDeathWiring` (3) | `_emit_telemetry_event` 정상 호출, defense-in-depth (no-op when opt_out), 실패 격리 (예외 발생 안 함) |
+| `TestRecordRunCompletedWiring` (3) | `record_run_completed` 호출, outcome="failed" 페이로드, death 직후 트리거 |
+| `TestRecordDeckChosenWiring` (1) | deck picker 의 record_deck_chosen 트리거 |
+| `TestRecordMissionCompletedWiring` (2) | mission completion 의 record_mission_completed 트리거 |
+| `TestRecordBossReachedWiring` (2) | boss combat 진입 시 record_boss_reached |
+| `TestRecordKillWiring` (2) | combat damage 시 record_kill |
+| `TestTelemetryEndToEnd` (8) | 전체 lifecycle: trigger_death → menu → STATS → aggregate + payload schema |
 
 ### 6.6.5 의도적 제약
 
 - **DEATH_SUMMARY 진입 시점에만 트리거** — death *flow* 진입 자체는 telemetry 와 무관 (spec).
 - **Graceful failure**: `_emit_telemetry_event` 가 예외를 raise 하지 않음 — telemetry 시스템 fail 이 death flow 자체를 깨지 않도록 defense-in-depth.
 - **옵트인 의무**: `state.telemetry_opt_in == False` 면 모든 record_* 함수가 no-op — death 자체는 항상 진행.
+- **세션 ephemeral**: telemetry_session / telemetry_opt_in / deck_size 는 *save metadata* 에 저장되지 않음 (Pillar 4 정합) — 매 런 새로 시작.
 
 ### 6.6.6 Pillar 정합
 

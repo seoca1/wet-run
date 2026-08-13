@@ -7839,3 +7839,101 @@ Total: 5 files, 202 insertions / 18 deletions.
 - Pillar 4 "ephemeral session preference" honored — telemetry_opt_in / deck_size / telemetry_session NOT in save metadata (intentional)
 
 **Phase 19 closed. Docs in sync with Phase 15-17 code. 5 docs updated, 0 broken links, all validation gates green.**
+
+## [2026-08-14] test(perf) | Phase 21 — Performance benchmarks + budget tests
+
+**Status**: ✅ 완료 — 34 new tests (25 benchmarks + 8 budget tests + 1 baseline-capture) added for Phase 11-20 systems. Test-only, no engine modifications.
+
+### Benchmarks added per category
+
+| Category | Bench tests | Budget tests | Notes |
+|---|---:|---:|---|
+| Combat | 5 | 3 | Tick (PPL 24), 5-grade progression, VFX step, 50-ICE boss fight, damage calc |
+| Mission | 5 | 1 | `select_weighted` (200 missions), `select_by_faction`, random rule chain (19 rules), chain validation (9 chains) |
+| Cyberspace | 7 | 2 | Matrix traversal (small/medium/large graphs), generation, layout, ICE spawn (50), hazard check, 60-tick sim |
+| Save/Load | 4 | 1 | Save serialize, load restore, cycle, metadata round-trip with `ending_choice`, list slots |
+| Telemetry | 4 | 1 | Aggregate 100 / 1000 events, 10 runs, record single event |
+| **Total** | **25** | **8** | Baseline-capture test in `TestPhase21Baseline::test_capture_all_baselines` prints 26 measurements via `pytest -s` |
+
+### Baseline measurements (mean ms per operation)
+
+| Operation | Mean (ms) | Budget (ms) | Headroom |
+|---|---:|---:|---:|
+| Combat tick (PPL 24 vs standard) | 0.004 | <5 | 1250× |
+| Combat 5-grade progression | 0.004 | <5 | 1388× |
+| Combat VFX step (5-layer, 50 particles) | 0.002 | <5 | 2500× |
+| Combat 50-ICE tick | 0.017 | <50 | 2994× |
+| Combat damage calc | 0.002 | <0.5 | 312× |
+| Combat 60-tick ICE sim | 0.052 | <50 | 970× |
+| Mission `select_weighted` (200) | 0.106 | <10 | 94× |
+| Mission `select_by_faction` | 0.100 | <5 | 50× |
+| Mission random rule apply | 0.011 | <5 | 438× |
+| Mission chain validation (9×3) | 0.001 | <5 | 4166× |
+| Matrix traversal (small ~7 nodes) | 0.002 | <1 | 588× |
+| Matrix traversal (medium ~30 nodes) | 0.006 | <5 | 806× |
+| Matrix traversal (large × 10 graphs) | 0.054 | <10 | 186× |
+| Matrix generation (Phase 5) | 0.027 | <20 | 754× |
+| `compute_layout` (BFS) | 0.008 | <5 | 641× |
+| ICE spawn (50) | 0.041 | <20 | 486× |
+| Hazard check (all events) | 0.001 | <1 | 1666× |
+| Save serialize (full AppState) | 0.221 | <100 | 452× |
+| Load restore (full AppState) | 2.705 | <100 | 36× |
+| Save+load cycle | 2.752 | <100 | 36× |
+| Save metadata round-trip (ending_choice) | 2.738 | <100 | 36× |
+| Save list slots (10 slots) | 0.050 | <50 | 994× |
+| Telemetry aggregate 100 events | 0.007 | <50 | 7692× |
+| Telemetry aggregate 1000 events | 0.069 | <100 | 1449× |
+| Telemetry record single event | 0.001 | <1 | 2000× |
+| Telemetry aggregate 10 runs | 0.028 | <50 | 1779× |
+
+**Bottlenecks (top 3 slowest by absolute mean)**:
+1. **Load restore** — 2.70 ms (dominated by AppState rebuild + matrix deserialize, 36× under budget)
+2. **Save+load cycle** — 2.75 ms (atomic temp-file dance accounts for most non-`step_combat` cost)
+3. **Mission `select_weighted` (200 missions)** — 0.11 ms (Hub hot path; budget <10ms is tight on purpose)
+
+### Budget tests (fail-fast regression gates)
+
+8 budget tests across 5 system categories — each asserts a single cold-call threshold that, if crossed, signals a Phase X regression:
+
+| Test | Budget | Catches |
+|---|---:|---|
+| `TestCombatBudget::test_combat_resolves_under_50ms` | 50 ms | `step_combat` O(n²) runaway |
+| `TestCombatBudget::test_damage_calc_under_1ms` | 100 ms / 100 calls | Damage formula importing heavyweight modules |
+| `TestCombatBudget::test_vfx_step_under_5ms` | 50 ms / 60 calls | VFX layer allocation churn |
+| `TestMissionBudget::test_mission_selection_under_10ms` | 10 ms | Hub hot path regression |
+| `TestCyberspaceBudget::test_matrix_generation_under_20ms` | 20 ms | O(n²) regression in `CyberspaceGenerator` (cf. 2026 P1 fix) |
+| `TestCyberspaceBudget::test_matrix_layout_under_5ms` | 5 ms | BFS layout accidental O(n²) |
+| `TestSaveLoadBudget::test_save_load_under_100ms` | 100 ms | Save serialize/deserialize regression |
+| `TestTelemetryBudget::test_telemetry_100_events_under_50ms` | 50 ms | Aggregation loop re-parsing JSON per event |
+
+### Performance report
+
+`docs/performance/phase21-benchmarks.md` (new) — full baseline table, bottleneck analysis, rationale per budget threshold, reproduction instructions (`pytest -s` regenerates the report).
+
+### Why no pytest-benchmark?
+
+Adding the dependency was unjustified — `time.perf_counter` + a small `_time_it` helper covers Phase 21's needs. If future phases want statistical analysis (median, p99), `pytest-benchmark` becomes worth its weight.
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 466 files unchanged |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 4991 passed, 462 skipped, 1 xfailed (4957 baseline preserved + 34 new tests) |
+| `audit_vault.py` | ⚠️ | 1 broken wikilink pre-existing in Fiction/wiki (out of scope) |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+Phase 21 test file cost: 0.41s for all 34 tests. Total test suite: 69.11s.
+
+### Design decisions preserved
+
+- No code changes (test + docs only)
+- No Accepted ADRs modified
+- No raw/ / Fiction/ / Language/ / typing_language/ touched
+- All thresholds calibrated against actual measurements (36× to 7692× headroom over current baselines)
+- Budget justification: each budget is documented in the Phase 21 report — increases must be approved via new ADR, not silent edits
+
+**Phase 21 closed. Every Phase 11-20 system is now measured (benchmarks) and protected (budgets). 1 commit, 34 tests, 0 engine changes.**

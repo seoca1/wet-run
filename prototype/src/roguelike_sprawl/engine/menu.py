@@ -16,6 +16,7 @@ import tcod.event
 from tcod.event import KeyDown, KeySym
 
 from ..i18n import Translator
+from ..story.ending_renderer import EndingRenderer
 from .layout import (
     RegionId,
     clear_region,
@@ -35,8 +36,9 @@ OPTION_SETTINGS = 4
 OPTION_CREDITS = 5
 OPTION_HALL_OF_DEAD = 6  # Hall of Dead Jockeys (ADR-0040)
 OPTION_HELP = 7  # Help screen (Phase 7: tutorial/onboarding)
+OPTION_ENDINGS = 8  # Endings browser (Phase 15)
 
-MENU_OPTION_COUNT = 7
+MENU_OPTION_COUNT = 8
 
 
 def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -> None:
@@ -65,6 +67,7 @@ def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -
         (OPTION_CREDITS, t("menu.credits")),
         (OPTION_HALL_OF_DEAD, t("menu.hall_of_dead")),
         (OPTION_HELP, t("menu.help")),
+        (OPTION_ENDINGS, t("menu.endings")),
     ]
     y = main_r.y + 1
     selected = getattr(state, "menu_selected_index", 0)
@@ -132,6 +135,9 @@ def _select_menu_option(state: AppState, index: int) -> None:
     elif index == 6:
         state.screen = ScreenKind.HELP
         state.help_page = 0
+    elif index == 7:
+        state.screen = ScreenKind.ENDINGS_BROWSER
+        state.endings_selected = 0
 
 
 def handle_menu_input(event: tcod.event.Event, state: AppState) -> bool:
@@ -173,6 +179,9 @@ def handle_menu_input(event: tcod.event.Event, state: AppState) -> bool:
         elif event.sym is KeySym.N7:
             state.menu_selected_index = 6
             _select_menu_option(state, 6)
+        elif event.sym is KeySym.N8:
+            state.menu_selected_index = 7
+            _select_menu_option(state, 7)
     return True
 
 
@@ -536,7 +545,8 @@ def handle_character_select_input(event: object, state: AppState) -> bool:
             if not state.ng_plus_unlocked:
                 state.ng_plus_active = False
             _load_chapter(state, char_id)
-            state.screen = ScreenKind.CHAPTER
+            state.screen = ScreenKind.DECK_SELECT
+            state.deck_select_index = 1  # Default to STANDARD
             return True
         if event.sym in (tcod.event.KeySym.N1, tcod.event.KeySym.N2, tcod.event.KeySym.N3):
             idx = int(event.sym.name[1]) - 1
@@ -547,7 +557,8 @@ def handle_character_select_input(event: object, state: AppState) -> bool:
             if not state.ng_plus_unlocked:
                 state.ng_plus_active = False
             _load_chapter(state, char_id)
-            state.screen = ScreenKind.CHAPTER
+            state.screen = ScreenKind.DECK_SELECT
+            state.deck_select_index = 1  # Default to STANDARD
             return True
     return True
 
@@ -591,4 +602,160 @@ def handle_ending_input(event: object, state: AppState) -> bool:
         if event.sym in (tcod.event.KeySym.ESCAPE, tcod.event.KeySym.Q):
             state.screen = ScreenKind.MENU
             return True
+    return True
+
+
+def render_deck_select(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+    """Render the DECK_SELECT screen — choose deck size (ADR-0178)."""
+    console.clear()
+    width = console.width
+
+    title = "데크 사이즈 선택" if t.lang == "ko" else "Choose Deck Size"
+    console.print(0, 0, "═" * width)
+    console.print((width - len(title)) // 2, 0, f" {title} ")
+    console.print(0, 1, "─" * width)
+
+    hint = "Deck size affects program slots, AP regen, and cooldowns."
+    if t.lang == "ko":
+        hint = "데크 사이즈는 프로그램 슬롯, AP 재생, 쿨다운에 영향을 줍니다."
+    console.print((width - len(hint)) // 2, 3, hint, fg=(180, 180, 100))
+
+    options = [
+        ("LIGHT", "light", "6 slots, +50% AP regen, -10% cooldowns"),
+        ("STANDARD", "standard", "8 slots, balanced"),
+        ("HEAVY", "heavy", "10 slots, -30% AP regen, +15% cooldowns"),
+    ]
+
+    selected = getattr(state, "deck_select_index", 1)
+    y = 6
+    for i, (name, _size_id, desc) in enumerate(options):
+        marker = "▶ " if i == selected else "  "
+        fg = (255, 255, 0) if i == selected else (200, 200, 200)
+        console.print(x=4, y=y + i * 4, string=f"{marker}[{i + 1}] {name}", fg=fg)
+        console.print(x=6, y=y + i * 4 + 1, string=desc, fg=(128, 128, 128))
+        console.print(x=6, y=y + i * 4 + 2, string="─" * 50, fg=(60, 60, 60))
+
+    footer_hint = "[↑↓] Navigate  [Enter] Confirm  [ESC] Back"
+    if t.lang == "ko":
+        footer_hint = "[↑↓] 이동  [Enter] 확인  [ESC] 뒤로"
+    console.print(0, console.height - 1, "═" * width)
+    console.print((width - len(footer_hint)) // 2, console.height - 1, f" {footer_hint} ")
+
+
+def handle_deck_select_input(event: object, state: AppState) -> bool:
+    """Handle input on DECK_SELECT screen."""
+    import tcod.event
+
+    if isinstance(event, tcod.event.KeyDown):
+        if event.sym in (tcod.event.KeySym.ESCAPE, tcod.event.KeySym.Q):
+            state.screen = ScreenKind.CHARACTER_SELECT
+            return True
+        if event.sym in (tcod.event.KeySym.UP, tcod.event.KeySym.W):
+            state.deck_select_index = (state.deck_select_index - 1) % 3
+            return True
+        if event.sym in (tcod.event.KeySym.DOWN, tcod.event.KeySym.S):
+            state.deck_select_index = (state.deck_select_index + 1) % 3
+            return True
+        if event.sym in (
+            tcod.event.KeySym.RETURN,
+            tcod.event.KeySym.KP_ENTER,
+            tcod.event.KeySym.SPACE,
+        ):
+            idx = state.deck_select_index
+            sizes = ["light", "standard", "heavy"]
+            state.deck_size = sizes[idx]
+            state.screen = ScreenKind.CHAPTER
+            return True
+        if event.sym in (tcod.event.KeySym.N1, tcod.event.KeySym.N2, tcod.event.KeySym.N3):
+            idx = int(event.sym.name[1]) - 1
+            state.deck_select_index = idx
+            sizes = ["light", "standard", "heavy"]
+            state.deck_size = sizes[idx]
+            state.screen = ScreenKind.CHAPTER
+            return True
+    return True
+
+
+def render_endings_browser(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+    """Render the ENDINGS_BROWSER screen — browse unlocked endings (Phase 15)."""
+    console.clear()
+    width = console.width
+
+    title = "엔딩 브라우저" if t.lang == "ko" else "Endings Browser"
+    console.print(0, 0, "═" * width)
+    console.print((width - len(title)) // 2, 0, f" {title} ")
+    console.print(0, 1, "─" * width)
+
+    renderer = EndingRenderer()
+    all_endings = renderer.get_all()
+
+    if not all_endings:
+        console.print(4, 4, "No endings found.", fg=(150, 150, 150))
+    else:
+        selected = getattr(state, "endings_selected", 0)
+        # Simple list with scrolling if needed
+        y_start = 3
+        max_visible = console.height - 10
+        offset = max(0, selected - max_visible + 1)
+
+        for i, ending in enumerate(all_endings[offset : offset + max_visible]):
+            idx = i + offset
+            is_selected = idx == selected
+            marker = "▶ " if is_selected else "  "
+            fg = (255, 255, 0) if is_selected else (200, 200, 200)
+            console.print(x=2, y=y_start + i, string=f"{marker}{ending.title}", fg=fg)
+
+        # Details for selected ending
+        if selected < len(all_endings):
+            e = all_endings[selected]
+            detail_y = y_start + max_visible + 1
+            console.print(x=2, y=detail_y, string="─" * (width - 4), fg=(60, 60, 60))
+            console.print(
+                x=2, y=detail_y + 1, string=f"Type: {e.ending_type.upper()}", fg=(150, 150, 150)
+            )
+            console.print(
+                x=2, y=detail_y + 2, string=f"Character: {e.character_ref}", fg=(150, 150, 150)
+            )
+
+            # Wrap description
+            desc_lines = []
+            words = e.description.split()
+            current_line = ""
+            for word in words:
+                if len(current_line) + len(word) + 1 < width - 6:
+                    current_line += word + " "
+                else:
+                    desc_lines.append(current_line.strip())
+                    current_line = word + " "
+            desc_lines.append(current_line.strip())
+
+            for i, line in enumerate(desc_lines[:3]):
+                console.print(x=2, y=detail_y + 3 + i, string=line, fg=(200, 200, 200))
+
+    footer_hint = "[↑↓] Navigate  [ESC] Back"
+    if t.lang == "ko":
+        footer_hint = "[↑↓] 이동  [ESC] 뒤로"
+    console.print(0, console.height - 1, "═" * width)
+    console.print((width - len(footer_hint)) // 2, console.height - 1, f" {footer_hint} ")
+
+
+def handle_endings_browser_input(event: object, state: AppState) -> bool:
+    """Handle input on ENDINGS_BROWSER screen."""
+    import tcod.event
+
+    if isinstance(event, tcod.event.KeyDown):
+        if event.sym in (tcod.event.KeySym.ESCAPE, tcod.event.KeySym.Q):
+            state.screen = ScreenKind.MENU
+            return True
+
+        renderer = EndingRenderer()
+        total = renderer.get_total()
+        if total > 0:
+            selected = getattr(state, "endings_selected", 0)
+            if event.sym in (tcod.event.KeySym.UP, tcod.event.KeySym.W):
+                state.endings_selected = (selected - 1) % total
+                return True
+            if event.sym in (tcod.event.KeySym.DOWN, tcod.event.KeySym.S):
+                state.endings_selected = (selected + 1) % total
+                return True
     return True

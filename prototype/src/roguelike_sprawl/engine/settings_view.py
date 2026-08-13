@@ -30,6 +30,7 @@ from .state import AppState, ScreenKind
 SETTINGS_OPTIONS = [
     ("audio", "Audio Volume"),
     ("colorblind", "Colorblind Mode"),
+    ("telemetry", "Telemetry Opt-in"),
     ("font_size", "Font Size"),
     ("high_contrast", "High Contrast"),
     ("keymap", "Keymap"),
@@ -94,6 +95,9 @@ def render_settings(
         elif opt_id == "colorblind":
             cb = getattr(state, "colorblind_mode", False)
             value_str = t("settings.on") if cb else t("settings.off")
+        elif opt_id == "telemetry":
+            tel = getattr(state, "telemetry_opt_in", False)
+            value_str = t("settings.on") if tel else t("settings.off")
         elif opt_id == "font_size":
             fs = getattr(state, "font_size", "normal")
             value_str = fs.capitalize()
@@ -158,6 +162,17 @@ def handle_settings_input(
         elif opt_id == "colorblind":
             current = getattr(state, "colorblind_mode", False)
             state.colorblind_mode = not current
+            return state
+        elif opt_id == "telemetry":
+            current = getattr(state, "telemetry_opt_in", False)
+            state.telemetry_opt_in = not current
+            # Update active telemetry integrator if it exists
+            if hasattr(state, "telemetry") and state.telemetry is not None:
+                from ..combat.telemetry_integration import TelemetryConfig, TelemetryIntegrator
+
+                state.telemetry = TelemetryIntegrator(
+                    TelemetryConfig(opted_in_at_start=state.telemetry_opt_in)
+                )
             return state
         elif opt_id == "font_size":
             cycle = ("small", "normal", "large")

@@ -31,8 +31,44 @@ def maybe_boss_phase_transition(
     production callers in app.py pass them in.
     """
     cs = state.combat_state
-    if cs is None or cs.boss_profile is None or cs.enemy is None or cs.finished:
+    if cs is None or cs.enemy is None or cs.finished:
         return
+
+    # F.4 Boss Phase Tracker (Phase 15)
+    if cs.boss_phase_tracker is not None:
+        from typing import cast
+
+        from ..combat.boss_phase_tracker import BossPhaseTracker
+
+        tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
+        if tracker.should_transition(cs.enemy.hp, cs.enemy.max_hp):
+            new_phase_f4 = tracker.transition()
+            if new_phase_f4:
+                cs.push(f">>> {new_phase_f4.intro_text}")
+                # Apply F.4 phase effects
+                cs.enemy.current_phase = tracker.current_phase_index + 1
+                try:
+                    ice_type = _effects.IceType(cs.enemy.id)
+                except ValueError:
+                    ice_type = _effects.IceType.BLACK
+
+                # Use existing transition VFX
+                from ..combat.boss import PhaseProfile
+
+                dummy_profile = PhaseProfile(
+                    phase=cs.enemy.current_phase,
+                    hp_threshold=new_phase_f4.hp_threshold,
+                    damage_multiplier=new_phase_f4.damage_multiplier,
+                    color=new_phase_f4.color,
+                    glyph=new_phase_f4.glyph,
+                    intro_text=new_phase_f4.intro_text,
+                )
+                combat_view.spawn_phase_transition(state.combat_effects, dummy_profile, ice_type)
+        return
+
+    if cs.boss_profile is None:
+        return
+
     new_phase = _boss.phase_transition(cs.enemy, cs.boss_profile)
     if new_phase is not None:
         _boss.apply_phase_to_combatant(cs.enemy, cs.boss_profile)

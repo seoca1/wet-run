@@ -42,7 +42,7 @@ class TestSettingsViewOptions:
         assert "high_contrast" in opt_ids
 
     def test_settings_options_count(self) -> None:
-        assert len(SETTINGS_OPTIONS) == 8
+        assert len(SETTINGS_OPTIONS) == 9
 
     def test_settings_options_includes_existing(self) -> None:
         opt_ids = [opt_id for opt_id, _ in SETTINGS_OPTIONS]

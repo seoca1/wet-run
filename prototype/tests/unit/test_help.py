@@ -53,4 +53,4 @@ class TestHelpMenuIntegration:
         from roguelike_sprawl.engine.menu import MENU_OPTION_COUNT, OPTION_HELP
 
         assert OPTION_HELP == 7
-        assert MENU_OPTION_COUNT == 7
+        assert MENU_OPTION_COUNT == 8

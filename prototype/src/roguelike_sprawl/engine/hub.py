@@ -154,6 +154,11 @@ def _draw_4panel(
     # Panel 2: Materials (top-right)
     _draw_materials_panel(console, main, x_offset=half_w, y_offset=0, width=half_w, state=state)
 
+    from .equipment_view import render_equipment_visualizer
+
+    side_r = Region(id=RegionId.SIDE, x=main.x + half_w, y=main.y, w=half_w, h=main.h)
+    render_equipment_visualizer(console, side_r, state.equipment_loadout, state.inventory)
+
     # Mid divider
     console.print(
         x=main.x,

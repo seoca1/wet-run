@@ -11,6 +11,7 @@ from ..equipment.equipment import (
     EquipmentLoadout,
     EquipSlot,
 )
+from ..equipment.wetware_stacking import stack_wetware
 from .layout import Region, clear_region
 
 
@@ -18,12 +19,13 @@ def render_equipment_visualizer(
     console: tcod.console.Console,
     region: Region,
     loadout: EquipmentLoadout,
+    inventory: dict[str, int] | None = None,
 ) -> None:
     """Render the player character with equipped gear.
 
     Shows:
     - ASCII character with equipment at each body slot
-    - Total stats summary
+    - Total stats summary (including wetware stacking)
     - Equipment list
     """
     clear_region(console, region)
@@ -43,7 +45,7 @@ def render_equipment_visualizer(
 
     # Stats summary
     y += 1
-    _draw_total_stats(console, x, y, loadout, max_w)
+    _draw_total_stats(console, x, y, loadout, inventory, max_w)
     y += 8
 
     # Equipment list
@@ -176,19 +178,39 @@ def _draw_total_stats(
     x: int,
     y: int,
     loadout: EquipmentLoadout,
+    inventory: dict[str, int] | None,
     max_w: int,
 ) -> None:
-    """Draw total stats from all equipped items."""
+    """Draw total stats from all equipped items + wetware stacking."""
     stats = loadout.total_stats()
+
+    # Wetware stacking (Phase 15)
+    wetware_ids = []
+    if inventory:
+        # Assume wetware IDs are in inventory with count > 0
+        # In a real run, we'd filter for actual wetware IDs
+        from ..equipment.wetware_stacking import get_all_augments
+
+        all_aug_ids = {a["id"] for a in get_all_augments()}
+        wetware_ids = [k for k in inventory.keys() if k in all_aug_ids]
+
+    stacked = stack_wetware(wetware_ids)
 
     console.print(x=x, y=y, string="─── STATS ───", fg=(100, 200, 255))
     y += 1
 
-    if stats.attack_bonus > 0:
-        console.print(x=x, y=y, string=f"ATK +{stats.attack_bonus}", fg=(255, 100, 100))
+    # Combine equipment stats with wetware bonuses
+    total_atk = stats.attack_bonus
+    total_crit = stats.crit_bonus_pct + int(stacked.crit_chance * 100)
+    total_hp = stats.hp_bonus + stacked.hp_bonus
+    total_ap_regen = stats.ap_regen_bonus_pct + int(stacked.ap_regen * 100)
+    total_shield = stats.shield_bonus + int(stacked.shield * 100)
+
+    if total_atk > 0:
+        console.print(x=x, y=y, string=f"ATK +{total_atk}", fg=(255, 100, 100))
         y += 1
-    if stats.crit_bonus_pct > 0:
-        console.print(x=x, y=y, string=f"CRIT +{stats.crit_bonus_pct}%", fg=(255, 255, 0))
+    if total_crit > 0:
+        console.print(x=x, y=y, string=f"CRIT +{total_crit}%", fg=(255, 255, 0))
         y += 1
     if stats.damage_bonus_pct > 0:
         console.print(x=x, y=y, string=f"DMG +{stats.damage_bonus_pct}%", fg=(255, 150, 100))
@@ -196,18 +218,27 @@ def _draw_total_stats(
     if stats.defense > 0:
         console.print(x=x, y=y, string=f"DEF +{stats.defense}", fg=(100, 200, 255))
         y += 1
-    if stats.hp_bonus > 0:
-        console.print(x=x, y=y, string=f"HP +{stats.hp_bonus}", fg=(255, 100, 100))
+    if total_hp > 0:
+        console.print(x=x, y=y, string=f"HP +{total_hp}", fg=(255, 100, 100))
         y += 1
-    if stats.shield_bonus > 0:
-        console.print(x=x, y=y, string=f"SHIELD +{stats.shield_bonus}", fg=(100, 200, 255))
+    if total_shield > 0:
+        console.print(x=x, y=y, string=f"SHIELD +{total_shield}", fg=(100, 200, 255))
         y += 1
     if stats.ap_bonus > 0:
         console.print(x=x, y=y, string=f"AP +{stats.ap_bonus}", fg=(0, 255, 255))
         y += 1
-    if stats.ap_regen_bonus_pct > 0:
-        console.print(x=x, y=y, string=f"AP REGEN +{stats.ap_regen_bonus_pct}%", fg=(0, 255, 255))
+    if total_ap_regen > 0:
+        console.print(x=x, y=y, string=f"AP REGEN +{total_ap_regen}%", fg=(0, 255, 255))
         y += 1
+
+    # New wetware stats (Phase 15)
+    if stacked.armor > 0:
+        console.print(x=x, y=y, string=f"ARMOR +{int(stacked.armor * 100)}%", fg=(150, 150, 150))
+        y += 1
+    if stacked.focus > 0:
+        console.print(x=x, y=y, string=f"FOCUS +{int(stacked.focus * 100)}%", fg=(200, 200, 100))
+        y += 1
+
     if stats.program_power > 0:
         console.print(x=x, y=y, string=f"PROG PWR +{stats.program_power}", fg=(200, 100, 255))
         y += 1
@@ -217,16 +248,18 @@ def _draw_total_stats(
 
     if not any(
         [
-            stats.attack_bonus,
-            stats.crit_bonus_pct,
+            total_atk,
+            total_crit,
             stats.damage_bonus_pct,
             stats.defense,
-            stats.hp_bonus,
-            stats.shield_bonus,
+            total_hp,
+            total_shield,
             stats.ap_bonus,
-            stats.ap_regen_bonus_pct,
+            total_ap_regen,
             stats.program_power,
             stats.ice_resistance,
+            stacked.armor,
+            stacked.focus,
         ]
     ):
         console.print(x=x, y=y, string="(no equipment)", fg=(100, 100, 100))

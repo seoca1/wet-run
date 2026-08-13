@@ -260,6 +260,23 @@ def _draw_combatants(
     y += 1
     hp_bar = _hp_bar(enemy.hp, enemy.max_hp, width=20)
     console.print(x=x, y=y, string=hp_bar, fg=(255, 100, 100))
+
+    # Boss Phase Info (Phase 15)
+    if combat_state.boss_phase_tracker is not None:
+        from typing import cast
+
+        from ..combat.boss_phase_tracker import BossPhaseTracker
+
+        tracker = cast(BossPhaseTracker, combat_state.boss_phase_tracker)
+        progress = tracker.get_progress(enemy.hp, enemy.max_hp)
+        y += 1
+        phase_str = f"PHASE {progress.phase_index + 1}/{tracker.total_phases}"
+        console.print(x=x, y=y, string=phase_str, fg=(255, 255, 0))
+        if not progress.is_last_phase:
+            y += 1
+            next_str = f"NEXT: {int(progress.hp_threshold * 100)}% HP"
+            console.print(x=x, y=y, string=next_str, fg=(200, 200, 0))
+
     y += 1
     console.print(x=x, y=y, string=f"ATK: {enemy.auto_attack_damage}", fg=(180, 180, 180))
 

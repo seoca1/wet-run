@@ -11,6 +11,7 @@ no-ops and don't appear in the dispatch table.
 
 from __future__ import annotations
 
+from ..combat.performance_integration import PerfTracker, integrate_with_game_loop
 from ..combat.registry import IceRegistry, ProgramRegistry
 from ..combat.state import step_combat, tick_dixie_ally
 from . import hacking_view
@@ -143,6 +144,23 @@ def tick_current_screen(
     Replaces the per-screen tick logic in _main_inner() (130 LOC) with
     a focused dispatch. Screens that don't need ticking are no-ops.
     """
+    if state.perf_tracker is None:
+        state.perf_tracker = PerfTracker()
+
+    def _tick_logic() -> None:
+        _do_tick_logic(state, delta_s, ice_registry, program_registry)
+
+    assert state.perf_tracker is not None
+    integrate_with_game_loop(state.perf_tracker, state.screen.value, _tick_logic)
+
+
+def _do_tick_logic(
+    state: AppState,
+    delta_s: float,
+    ice_registry: IceRegistry | None = None,
+    program_registry: ProgramRegistry | None = None,
+) -> None:
+    """Actual tick logic, wrapped by performance tracker."""
     screen = state.screen
     if screen is ScreenKind.GRAPHIC_NOVEL:
         _advance_graphic_novel(state, delta_s)

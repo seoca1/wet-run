@@ -18,6 +18,8 @@ unlocked missions persist. Only the current run is lost.
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import tcod.console
 
 from ..audio import sound_manager as _sm_module
@@ -30,6 +32,9 @@ from .jockey_history import (
 )
 from .settings_ui import get_volume
 from .state import AppState, ScreenKind
+
+if TYPE_CHECKING:
+    pass
 
 
 def _get_history() -> JockeyHistory:
@@ -244,7 +249,9 @@ def restart_with_new_jockey(state: AppState, new_character_id: str) -> None:
     state.player_hp = state.player_max_hp if state.player_max_hp > 0 else 100
     state.player_ppl = 0
     state.inventory = {}
-    state.equipment_loadout = None
+    from ..equipment.equipment import EquipmentLoadout
+
+    state.equipment_loadout = EquipmentLoadout()
     state.completed_missions = set()
     state.mission_progress = {}
 

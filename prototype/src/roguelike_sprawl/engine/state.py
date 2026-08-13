@@ -76,12 +76,17 @@ class StatusMessageList(UserList[str]):
 
 if TYPE_CHECKING:
     from ..audio import SoundConfig
+    from ..combat.boss_phase4.intro import BossIntroEnhancement
+    from ..combat.performance_integration import PerfTracker
+    from ..combat.telemetry_integration import TelemetryIntegrator
     from ..cyberspace.world import WorldMap
+    from ..equipment.equipment import EquipmentLoadout
     from ..run.state import RunState
     from .chapter_cutscene import ArcData, ChapterCutsceneState
     from .chapter_view import ChapterData
     from .event_story import EventRegistry, EventState
     from .graphic_novel_view import SceneData
+    from .hacking_view import HackingState
     from .npc_event import NPCState
     from .salvation import SalvationRunner, SalvationSelection
     from .story_cinematic import CinematicState
@@ -97,6 +102,7 @@ class ScreenKind(StrEnum):
     GRAPHIC_NOVEL = "graphic_novel"  # Auto-play graphic novel scenes (ADR-0032)
     SAVED_PROGRESS = "saved_progress"  # Save progress card after graphic novel (ADR-0032)
     CHARACTER_SELECT = "character_select"  # Original jockey pick (ADR-0031)
+    DECK_SELECT = "deck_select"  # Choose deck size (ADR-0178)
     CHAPTER = "chapter"  # Short-story chapter display (ADR-0031)
     HUB = "hub"
     MATRIX = "matrix"
@@ -122,6 +128,7 @@ class ScreenKind(StrEnum):
     SAVE_LOAD = "save_load"  # Save/Load slot browser (Hub)
     HELP = "help"  # Help screen — controls, concepts, how to play
     SETTINGS = "settings"  # Settings screen — audio, colorblind, keymap (Phase 7)
+    ENDINGS_BROWSER = "endings_browser"  # Browse unlocked endings (Phase 15)
 
 
 # A grade-1 (1-up) loadout: Ono-Sendai 4 (T1) + Wisp (T1) + Standard (T1).
@@ -131,6 +138,13 @@ DEFAULT_LOADOUT_T1 = Loadout(
     programs=(Program(id="wisp", name="Wisp", tier=1),),
     wetware_tier=1,
 )
+
+
+def _default_equipment_loadout() -> EquipmentLoadout:
+    """Default factory for equipment_loadout (Phase 15)."""
+    from ..equipment.equipment import EquipmentLoadout
+
+    return EquipmentLoadout()
 
 
 @dataclass
@@ -165,7 +179,7 @@ class AppState:
     cinematic_state: CinematicState | None = None
     # NPC encounter state. None until NPC encounter starts.
     npc_state: NPCState | None = None
-    hack_state: object | None = None
+    hack_state: HackingState | None = None
     hack_node_label: str = ""
     # NPC choice navigation (arrow key selection)
     npc_choice_index: int = 0
@@ -180,7 +194,9 @@ class AppState:
     # Player inventory (item_id -> count)
     inventory: dict[str, int] = field(default_factory=dict)
     # Equipped loadout (cyberpunk gear)
-    equipment_loadout: object = None  # EquipmentLoadout
+    equipment_loadout: EquipmentLoadout = field(
+        default_factory=_default_equipment_loadout
+    )  # EquipmentLoadout
     # Defeated nodes (node_id set) - removed from dungeon after combat
     defeated_nodes: set[str] = field(default_factory=set)
     # Extracted data nodes (node_id set) - data already collected
@@ -190,7 +206,7 @@ class AppState:
     # World map (World → Sector → Server hierarchy)
     world_map: WorldMap | None = None
     # Current server's subgraph (the explorable graph)
-    server_subgraph: object | None = None  # tuple[MatrixGraph, dict]
+    server_subgraph: tuple[MatrixGraph, dict[str, object]] | None = None
     # Server list (for the server browser)
     available_servers: list[str] = field(default_factory=list)
     # Selected server in browser
@@ -204,8 +220,7 @@ class AppState:
     # Controls program slots + AP regen + cooldown modifiers.
     deck_size: str = "standard"
     # Telemetry session (ADR-0184): opt-in only, aggregated data only
-    telemetry_opt_in: bool = False
-    telemetry: object = None
+    telemetry: TelemetryIntegrator | None = None
     # Display fields (filled by the demo / shell)
     player_ppl: int = 0
     player_hp: int = 0
@@ -257,7 +272,7 @@ class AppState:
     # Boss death taunt (ADR-0149). Set on player death by boss. None otherwise.
     death_taunt: str | None = None
     # Boss intro enhancement (ADR-0149). Set on boss encounter. None otherwise.
-    boss_intro_enhancement: object = None  # BossIntroEnhancement | None
+    boss_intro_enhancement: BossIntroEnhancement | None = None
     # Purchased intel item ids (ADR-0151). One-shot per item_id per run.
     # Pillar 4 in-run only — reset on death.
     purchased_intel_items: list[str] = field(default_factory=list)
@@ -334,6 +349,11 @@ class AppState:
     # Settings screen state (Phase 7)
     settings_selected: int = 0  # selected option index in SETTINGS screen
     colorblind_mode: bool = False  # colorblind-friendly palette toggle
+    telemetry_opt_in: bool = False  # telemetry opt-in toggle (Phase 15)
+    perf_hud_enabled: bool = False  # performance HUD toggle (Phase 15)
+    perf_tracker: PerfTracker | None = None  # PerfTracker (Phase 15)
+    deck_select_index: int = 1  # selected index in DECK_SELECT screen (Phase 15)
+    endings_selected: int = 0  # selected index in ENDINGS_BROWSER screen (Phase 15)
     # Accessibility settings (Cycle 3 polish)
     font_size: str = "normal"  # "small" / "normal" / "large"
     high_contrast: bool = False  # high-contrast palette toggle

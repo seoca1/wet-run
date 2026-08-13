@@ -185,6 +185,42 @@ def _render(
         ice_registry=ice_registry,
     )
 
+    if state.perf_hud_enabled:
+        _draw_perf_hud(console, state)
+
+
+def _draw_perf_hud(console: tcod.console.Console, state: AppState) -> None:
+    """Draw performance HUD overlay (Phase 15)."""
+    if state.perf_tracker is None:
+        return
+
+    from ..combat.performance_integration import PerfTracker
+
+    assert state.perf_tracker is not None
+    tracker: PerfTracker = state.perf_tracker
+    profiles = tracker.get_tick_profiles()
+    if not profiles:
+        return
+
+    last = profiles[-1]
+
+    # Draw in top-right corner
+    x = console.width - 30
+    y = 1
+    bg = (0, 0, 40)
+    fg = (0, 255, 0)
+
+    lines = [
+        "─── PERFORMANCE ───",
+        f"Tick: {last.tick_label}",
+        f"Frame: {last.frame_time_ms:.2f}ms",
+        f"Memory: {last.memory_mb:.2f}MB",
+        f"Objects: {last.object_count}",
+    ]
+
+    for i, line in enumerate(lines):
+        console.print(x=x, y=y + i, string=line.ljust(28), fg=fg, bg=bg)
+
 
 def _handle_global_hotkeys(
     event: object,
@@ -201,6 +237,12 @@ def _handle_global_hotkeys(
 
     if not isinstance(event, tcod.event.KeyDown):
         return None
+
+    if event.sym is tcod.event.KeySym.F3:
+        state.perf_hud_enabled = not state.perf_hud_enabled
+        label = "ENABLED" if state.perf_hud_enabled else "DISABLED"
+        state.status_messages.append(f">>> Performance HUD {label}")
+        return True
 
     if event.sym is tcod.event.KeySym.F5:
         from .save_manager import SaveManager, SaveSlotEmptyError

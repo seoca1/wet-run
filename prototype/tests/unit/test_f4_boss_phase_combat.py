@@ -147,10 +147,27 @@ class TestF4PhaseDamageMultiplier:
         """A non-F.4 combat (no boss_phase_tracker) skips the path."""
         cs = _make_combat_state()
         cs.boss_phase_tracker = None
-        # This should not raise and should match the base calculation.
-        dmg, _ = _calculate_damage(cs, 10, cs.enemy, cs.player)
+        # can_crit=False isolates the variance-only path so the 8..12
+        # bound is deterministic regardless of CRIT_CHANCE (15%).
+        # Without this, ~15% of runs crit and produce dmg ≈ 15..24.
+        dmg, _ = _calculate_damage(cs, 10, cs.enemy, cs.player, can_crit=False)
         # Variance: 0.8 to 1.2 → 8 to 12.
         assert 8 <= dmg <= 12
+
+    def test_no_tracker_variance_is_stable_under_repeated_invocations(self) -> None:
+        """Regression test for the pre-existing Phase 20/22 flake.
+
+        Runs the same calculation 200 times (well above the expected
+        ~15% crit rate) with can_crit=False and asserts every result
+        lands in the documented [8, 12] variance range. If a future
+        change reintroduces crit into this path, the test fails.
+        """
+        for _ in range(200):
+            cs = _make_combat_state()
+            cs.boss_phase_tracker = None
+            dmg, is_crit = _calculate_damage(cs, 10, cs.enemy, cs.player, can_crit=False)
+            assert not is_crit
+            assert 8 <= dmg <= 12
 
     def test_player_attack_unaffected_by_f4_multiplier(self) -> None:
         """The F.4 multiplier is enemy-attack-only."""

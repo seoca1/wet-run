@@ -3,7 +3,7 @@
 **문서 상태**: DRAFT
 **Created**: 2026-06-23
 **Purpose**: 저장 구조 + 챕터 클리어 조건 검증
-**Phase 19 audit (2026-08-13)**: ending_choice persistence (Phase 16, ADR-0192) + telemetry_opt_in (Phase 15, ADR-0184) + telemetry_session 직렬화 추가. CJK 잔재 (陈旧, 两大) 청소.
+**Phase 19 audit (2026-08-13)**: ending_choice persistence (Phase 16, ADR-0192) + telemetry_opt_in (Phase 15, ADR-0184) + telemetry_session 직렬화 추가. CJK 잔재 청소 (Section 5의 '~映射' / Section 6의 '~的 Stage' 두 군데).
 
 ---
 
@@ -181,22 +181,24 @@ AppState.deck_size:           str              ("light" | "standard" | "heavy", 
 AppState.telemetry_session:   TelemetrySession | None  (옵트인 사용 시, ADR-0184)
 ```
 
-**저장 동작** (`engine/save_manager.py::SaveManager._serialize_metadata`):
-- `ending_choice` (string) → `metadata["ending_choice"]`
-- `telemetry_opt_in` (bool) → `metadata["telemetry_opt_in"]`
-- `deck_size` (string) → `metadata["deck_size"]`
-- `telemetry_session` (객체) → `metadata["telemetry_session"].to_dict()` (옵트인 시에만)
+**저장 동작** (`engine/save_manager.py`):
+- `ending_choice` (string) → `metadata["ending_choice"]` *via* `_serialize_metadata` (line 502-509, Phase 16, ADR-0192).
+- `player_grade`, `screen` — 기존 Phase 5-7 era.
+- `inventory`, `credits`, `current_node_id`, `defeated_nodes`, `extracted_nodes`, `mission_progress`, `reputation`, `matrix` — `_serialize_app_state` (line 471-500).
+- *현 구현*: `telemetry_opt_in` / `deck_size` / `telemetry_session` 는 *metadata* 와 *app_state* 양쪽에 미저장 — **세션 ephemeral** by design (Pillar 4 ".ephemeral session preference"). 옵트인 사용자의 *세션 내* 동작만 telemetry, *cross-run* 보존은 *`ending_choice` 만*.
 
-**복원 동작** (`engine/save_manager.py::restore_state`):
-- `metadata["ending_choice"]` → `state.ending_choice` (legacy save = 빈 string default)
-- `metadata["telemetry_opt_in"]` → `state.telemetry_opt_in` (legacy save = False default)
-- `metadata["deck_size"]` → `state.deck_size` (legacy save = "standard" default)
-- `telemetry_session` → `TelemetrySession.from_dict()` (없으면 None)
+**복원 동작** (`engine/save_manager.py::restore_state` — line 546):
+- `metadata["ending_choice"]` → `state.ending_choice` (legacy save = 빈 string default, *line 570-573*).
+- 나머지 (`telemetry_opt_in` / `deck_size` / `telemetry_session`) — *fresh AppState() default* 로 fallback (각 필드의 default 값).
 
 **마이그레이션 정책**:
-- *Legacy save* (Phase 15 이전) — 모든 신규 필드 default 로 자동 fallback (defense-in-depth).
-- *Phase 15-16 save* — `telemetry_opt_in` / `deck_size` 포함, `ending_choice` 미저장 (legacy).
-- *Phase 16+ save* — 4개 필드 모두 포함.
+- *Legacy save* (Phase 15 이전) — `ending_choice` 미저장 → default 빈 string. `telemetry_opt_in` / `deck_size` / `telemetry_session` 모두 default.
+- *Phase 16+ save* — `ending_choice` 만 metadata 에 보존. *ephemeral* 필드는 각 세션 본다.
+
+**의도적 비-저장** (Pillar 4 정합):
+- `telemetry_opt_in` — 사용자가 *매 런* 명시적 결정 (Pillar 4 "ephemeral session preference").
+- `deck_size` — 런 *시작* 시 결정, *across-run* 보존 불필요 (Pillar 1 "fresh run").
+- `telemetry_session` — 세션 종료 시 폐기 (Pillar 5 "abstract meta").
 
 **Cross-reference**: [`design/scenario/death-restart.md ## 6.6`](death-restart.md) — telemetry wiring + ending_choice 의 DEATH flow 통합.
 
@@ -212,7 +214,7 @@ AppState.telemetry_session:   TelemetrySession | None  (옵트인 사용 시, AD
 **두 시스템이 별도로 운영됨**:
 - `current_stage`는 미션 기반 Stage
 - `current_phase_index`는 챕터 기반 Phase
-- **这两者之间没有直接映射**
+ - **두 시스템은 직접 매핑 없음**
 
 ### 검증 필요 사항
 
@@ -228,7 +230,7 @@ AppState.telemetry_session:   TelemetrySession | None  (옵트인 사용 시, AD
 
 - [ ] 케이 Ch1 실행 시 `current_phase_index`가 0→1→2→3→4로 진행하는지
 - [ ] 챕터 완료 시 `chapter_state`가 CHAPTER_N_COMPLETE로 전환되는지
-- [ ] Phase 전환 시 `current_stage`가预期的 Stage와 일치하는지
+- [ ] Phase 전환 시 `current_stage`가 예상 Stage와 일치하는지
 - [ ] `reset_phase()`가 챕터 시작 시 올바르게 호출되는지
 
 ---
@@ -238,7 +240,36 @@ AppState.telemetry_session:   TelemetrySession | None  (옵트인 사용 시, AD
 | 파일 | 설명 |
 |------|------|
 | `src/roguelike_sprawl/run/state.py` | RunState, ChapterState 정의 |
-| `src/roguelike_sprawl/engine/state.py` | AppState 정의 |
-| `src/roguelike_sprawl/engine/save_manager.py` | 저장/로드 로직 |
+| `src/roguelike_sprawl/engine/state.py` | AppState 정의 (ending_choice, telemetry_opt_in, deck_size, telemetry_session) |
+| `src/roguelike_sprawl/engine/save_manager.py` | 저장/로드 로직 (_serialize_metadata, restore_state) |
 | `src/roguelike_sprawl/engine/save_progress.py` | ProgressSummary 생성 |
+| `src/roguelike_sprawl/combat/telemetry.py` | TelemetrySession / record_* (ADR-0184) |
 | `scripts/play.py` | 챕터 전환 로직 |
+
+---
+
+## 8. Phase 19 Audit Trail (2026-08-13)
+
+Phase 19 audit 결과 — Phase 15-17 사이클에서 추가된 4개 필드 (`ending_choice`, `telemetry_opt_in`, `deck_size`, `telemetry_session`) 가 metadata 직렬화에 누락되어 본 Section 2 의 JSON 예시 + Section 4 trace 에 추가.
+
+### 추가된 섹션
+
+- **Section 1 (JSON 예시)**: `metadata` 객체의 4개 필드 (`ending_choice`, `telemetry_opt_in`, `deck_size`, `telemetry_session`).
+- **Section 4 (Phase 16 이후)**: 4개 신규 AppState 필드 + 직렬화/복원 trace + 마이그레이션 정책.
+- **Section 7 (관련 파일)**: `combat/telemetry.py` 추가.
+
+### 청소
+
+- **CJK 잔재 청소**: Section 5 의 `~没有直接映射` → `두 시스템은 직접 매핑 없음`, Section 6 의 `~的 Stage` → `예상 Stage` (2 군데).
+
+### 검증 위치
+
+- `tests/unit/test_endings_persistence.py` (8 tests) — ADR-0192 round-trip.
+- `tests/unit/test_telemetry_triggers.py` (21 tests) — ADR-0184 이벤트 트리거.
+- `tests/unit/test_phase16_random_rules_engine_integration.py` (7 tests) — ADR-0188.
+
+### 의도적 비-변경
+
+- Phase 5-7 era 의 *stage vs phase 이중 구조* (Section 5) — unchanged. 현 *분석* 만 보존.
+- 챕터 클리어 조건 (Section 3) — unchanged.
+- `current_stage` ↔ `current_phase_index` 매핑 *미검증* 항목 (Section 5, 6) — unchanged (legacy unresolved).

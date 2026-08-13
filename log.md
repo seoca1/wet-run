@@ -1,3 +1,56 @@
+## [2026-08-14] docs(design) | Phase 22 — glossary + pillars re-verification
+
+**Status**: ✅ 완료 — glossary 에 Phase 15-17 신규 8개 용어 추가, pillars 재확인 (변경 없음). docs-only 작업, no code change.
+
+### Glossary 추가 (8 terms, `design/glossary.md`)
+
+신규 섹션 "Phase 15-17 신규 시스템 (ADR-0178/0184/0186/0188/0190/0192/0193)" — 기존 alphabetized table 보존 위해 별도 섹션으로 배치:
+
+| 용어 | 모듈 | Phase |
+|---|---|---|
+| **Deck Size** (LIGHT/STANDARD/HEAVY) | `combat/deck_building.py::DECK_SIZES`, `engine/state.py::deck_size` | 15 |
+| **Telemetry Opt-in** (privacy-sensitive) | `combat/telemetry_integration.py::TelemetryIntegrator`, `engine/state.py::telemetry_opt_in` | 15 |
+| **Wetware Stacking** (11 stat accumulation) | `equipment/wetware_stacking.py::stack_wetware` | 15 |
+| **F.4 Boss Phase** (multi-phase combat) | `combat/boss_phase_tracker.py::BossPhaseTracker` | 15 + 17 |
+| **Random Rules Engine** (19 rules, weighting) | `missions/random_rules.py::get_random_mission_with_rule`, `missions/board.py::JobBoard.select_weighted` | 16 |
+| **Endings Persistence** (save metadata) | `engine/save_manager.py::save_state` + `restore_state` | 16 |
+| **Performance HUD** (F-key overlay) | `combat/performance_integration.py::PerfTracker` | 15 |
+| **TELEMETRY_STATS screen** (menu option 9) | `engine/menu.py::render_telemetry_summary` + `handle_telemetry_stats_input` | 17 |
+
+각 항목은 (1) definition, (2) 모듈 경로 / 함수명, (3) 관련 ADR, (4) Gibson 톤 보존 / Pillar 3 (Flatline) 무결성 note 포함.
+
+### Pillars 재확인 (변경 없음, `design/pillars.md`)
+
+**Phase 18 noted**: "No gaps (pillars unchanged by Phase 15-17)."
+**Phase 22 re-verify**: 5개 Pillar 모두 그대로 유지, 신규 메카닉은 모두 기존 Pillar 강화 또는 무관 — 새로운 Pillar 도입 없음.
+
+추가: 8×5 Pillar 영향 매트릭스 (re-verification matrix) + "향후 audit 권장 형식" note. pillars.md 본문은 의도적으로 stable — Phase 22 audit 만 추가.
+
+### 검증 (validation gates)
+
+| Gate | Result |
+|---|---|
+| `make format` (ruff format) | ✅ 466 files unchanged |
+| `make lint` (ruff check) | ✅ All checks passed |
+| `make typecheck` (mypy strict) | ✅ 211 source files, 0 errors |
+| `make test` (pytest) | ✅ **4991 passed**, 462 skipped, 1 xfailed (Phase 14 perf tracker flake, unchanged) |
+| `python3 audit_vault.py` | ✅ 0 broken, 0 orphans (65 false positives documented) |
+| `python3 mixed_language_audit.py` | ✅ 0 violations |
+| `python3 dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+### Commit
+
+- `cacec4c` docs(design): Phase 22 — glossary + pillars re-verification (2 files changed, 49 insertions)
+
+### Out of scope (의도적)
+
+- code 변경 (purely docs)
+- 다른 design docs (`GDD.md`, `core_loop.md`, `systems/*.md`) — 이미 Phase 18/19 에서 갱신됨
+- Accepted ADR 변경 — 없음
+- Fiction / Language / typing_language — 다른 프로젝트
+
+---
+
 ## [2026-08-13] test(phase20) | Edge case coverage for Phase 15-17 features
 
 **Status**: ✅ 완료 — 41 new edge case tests added across 6 Phase 15-17 test files. No engine or design changes; test-only hardening.

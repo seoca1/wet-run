@@ -37,7 +37,7 @@
 - dashboard_pipeline_audit.py ✅ 0 errors
 
 ### Committed as
-- see `git log --oneline -1` (commit on main branch, 2026-08-13).
+- `504cff1` — feat(ui): Phase 17 — UI exposure for engine integrations
 
 ---
 

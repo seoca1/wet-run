@@ -178,6 +178,29 @@
 | **REP** | Reputation |
 | **ICE** | Intrusion Countermeasures Electronics |
 
+## Phase 15-17 신규 시스템 (ADR-0178/0184/0186/0188/0190/0192/0193)
+
+> **2026-08-14 Phase 22 추가**: Phase 15-17 통합 라운드에서 추가된 8개 메카닉.
+> 기존 섹션은 안정적이므로, 신규 항목만 별도 섹션으로 추가 (alphabetized table 보존).
+> **pillars.md는 변경 없음** (Phase 22 audit로 재확인) — 모든 신규 시스템은 Pillar 1/2/4/5 강화, Pillar 3 (The Flatline) 무결성 유지.
+
+| 용어 | 정의 | 비고 |
+| --- | --- | --- |
+| **Deck Size** | 런 시작 시 선택하는 데크 사이즈 — LIGHT (6 slots, +50% AP regen, -10% cooldown) / STANDARD (8 slots, balanced, default) / HEAVY (10 slots, -30% AP regen, +15% cooldown). | `combat/deck_building.py::DECK_SIZES`, `engine/state.py::deck_size` |
+| **Telemetry Opt-in** | 플레이어가 SETTINGS 에서 명시적으로 활성화해야 동작하는 privacy-sensitive event tracking. opt-out 시 모든 telemetry record 가 no-op (방어적 double-guard — recorder 단 + render 단 양쪽 차단). | `combat/telemetry_integration.py::TelemetryIntegrator`, `engine/state.py::telemetry_opt_in` (default `False`), ADR-0184 |
+| **Wetware Stacking** | 동일 wetware ID 를 다중 보유 시 보너스를 누적. `stack_wetware(augment_ids)` 가 `StackedWetware` 반환 (11 stat — ap_regen / crit_chance / crit_damage / dodge / hp_bonus / healing / shield / speed / mana / armor / focus). cap: dodge/shield ≤0.95, healing/armor/focus/speed/ap_regen ≤1.0, hp/mana 는 additive (int). | `equipment/wetware_stacking.py::stack_wetware`, ADR-0193 |
+| **F.4 Boss Phase** | 확장 보스 (Neuromancer, Loa Baron, Black Baron) 의 다단계 전투 메카닉. 보스 HP 가 threshold 이하로 떨어지면 다음 phase 로 전환되며, 각 phase 는 고유 glyph / color / damage_multiplier / intro_text 를 가짐. `BossPhaseTracker` 가 transition 과 데미지 적용을 담당. | `combat/boss_phase_tracker.py::BossPhaseTracker`, `engine/combat_tick.py::maybe_boss_phase_transition`, ADR-0180/0190 |
+| **Random Rules Engine** | 의뢰 선택 시 발동 조건 (player grade, faction rep, construct 보유, consecutive failures 등) 에 따라 weight modifier 를 적용하는 19 규칙 엔진. `JobBoard.select_weighted` 가 발동한 `rule_id` 를 `state.last_rule_id` 에 기록하여 UI 가 "왜 이 의뢰가 뽑혔는가" 를 표시 가능. | `missions/random_rules.py::get_random_mission_with_rule`, `missions/board.py::JobBoard.select_weighted`, ADR-0188 |
+| **Endings Persistence** | 엔딩 선택 (`state.ending_choice`) 을 save metadata 에 직렬화하여 런 사이에 보존. `restore_state()` 가 legacy save 호환을 위해 metadata 에서 안전하게 복원 (없으면 빈 string 으로 fallback). | `engine/save_manager.py::save_state` + `restore_state` (ADR-0192) |
+| **Performance HUD** | F-key 토글로 활성화되는 개발자 / alpha tester 용 성능 오버레이. `PerfTracker` 가 매 game tick 의 frame_time / memory_mb / object_count 를 기록하고, `SessionProfiler` 가 frame_budget_violations + memory_budget_violations 를 집계. | `combat/performance_integration.py::PerfTracker`, ADR-0186 |
+| **TELEMETRY_STATS screen** | 메인 메뉴 9번째 옵션 — opt-in 플레이어에게만 노출되는 집계 stats 화면. death rate (by ICE type), kill count (by ICE type), deck 선택 분포, mutator 선택 분포 를 표시. opt-in off 시 메뉴 옵션이 dimmed 되고 진입 거부 (방어적 double-guard). | `engine/menu.py::render_telemetry_summary` + `handle_telemetry_stats_input`, `ScreenKind.TELEMETRY_STATS`, ADR-0184 |
+
+### Note
+
+- 위 8 항목은 모두 "player experience 의 강화" 로 추가됨 — 새로운 Pillar 를 도입하지 않음.
+- **Pillar 3 (The Flatline) 과의 관계**: Endings Persistence 는 sacrifice 엔딩의 무게를 보존하기 위해 필수 (런 종료 후에도 선택이 남아 있음). 다른 항목들은 모두 death weight 에 영향 없음.
+- **i18n**: 모든 신규 화면 (TELEMETRY_STATS, Endings Browser) 은 `data/i18n/{en,ko,ja,zh}.json` 에 키가 추가됨 — 기존 i18n 파이프라인 그대로 사용 (ADR-0010).
+
 ## 디자인 원칙
 
 이 용어들은 깁슨 톤을 따른다. 다른 사이버펑크 작품의 용어 (예: "netrunner", "aug")로 대체하지 않는다.

@@ -116,3 +116,29 @@
 - [ ] 비-기둥을 활성화하지 않는가?
 - [ ] **meatspace를 직접 묘사하고 있지 않은가?** (Pillar 2, ADR-0009)
 - [ ] **명시적 숫자 / 회피 옵션이 제공되는가?** (Pillar 1, ADR-0012)
+
+## Phase 22 audit (2026-08-14)
+
+> **Phase 18** (2026-08-13) noted: "No gaps (pillars unchanged by Phase 15-17)."
+> **Phase 22** (this update) re-verifies the same: Phase 15-17 신규 메카닉 (Deck Size, Telemetry Opt-in, Wetware Stacking, F.4 Boss Phase, Random Rules Engine, Endings Persistence, Performance HUD, TELEMETRY_STATS screen) **모두 기존 5개 Pillar 의 강화 또는 무관** — 새로운 Pillar 도입 / 기존 Pillar 수정 없음.
+
+### Re-verification matrix
+
+| 신규 메카닉 | Pillar 1 (Run) | Pillar 2 (Matrix) | Pillar 3 (Flatline) | Pillar 4 (Build) | Pillar 5 (Style) | 비-기둥 회피 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Deck Size (LIGHT/STANDARD/HEAVY) | ✓ 한 런 안 선택 | ✓ AP/cooldown 변동 | — 무관 | ✓ 빌드 핵심 선택 | — 중립 | ✓ |
+| Telemetry Opt-in | — 무관 | — 무관 | — 무관 | — 무관 | — opt-out 기본 | ✓ privacy-first |
+| Wetware Stacking | — 무관 | — 무관 | — 무관 | ✓ 누적 보너스 | — 중립 | ✓ |
+| F.4 Boss Phase | ✓ 런 내 진행 | ✓ 매트릭스 안 전투 | ✓ phase 전환 시 무게 ↑ | ✓ 보스별 빌드 대응 | ✓ phase 별 glyph/color | ✓ |
+| Random Rules Engine | ✓ 런 내 의뢰 편향 | — 무관 | — 무관 | — 의뢰 다양성 | — 중립 | ✓ |
+| Endings Persistence | — 무관 | — 무관 | ✓ sacrifice 엔딩 무게 보존 | — unlock 추적 | — 무관 | ✓ |
+| Performance HUD | — 무관 | — 무관 | — 무관 | — 무관 | — 디버그 전용 | ✓ |
+| TELEMETRY_STATS screen | — 무관 | — 무관 | — 무관 | — 메타 진행 보조 | — ASCII 집계 | ✓ |
+
+### 결론
+
+- **Pillar 변경**: 없음. 5개 Pillar 모두 그대로 유지.
+- **비-기둥 위반**: 없음. (Loot grind / Multiplayer / Cosmetics / Engagement / Infinite scaling / Prestige / Mobile-F2P 모두 회피.)
+- **ADR 영향**: 없음 (Pillar 자체는 ADR 이 아니라 design philosophy 문서; ADR-0009 / ADR-0012 / ADR-0178 등이 Pillar 와 1:1 매핑).
+
+향후 새 메카닉 추가 시 본 audit matrix 와 동일한 형식으로 영향 평가 권장.

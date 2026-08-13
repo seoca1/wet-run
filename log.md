@@ -1,3 +1,28 @@
+## [2026-08-13] test(phase20) | Edge case coverage for Phase 15-17 features
+
+**Status**: ✅ 완료 — 41 new edge case tests added across 6 Phase 15-17 test files. No engine or design changes; test-only hardening.
+
+### Tests added per category
+- **Random rules engine integration** (`test_phase16_random_rules_engine_integration.py`): +8 tests — empty mission list, all factions at 0 reputation, NG+ state (grade 6), rule conflicts with multi-rule fire, seed determinism across runs, large mission pool (150), grade-99 empty set, AppState last_rule_id field write
+- **Telemetry triggers** (`test_telemetry_triggers.py`): +8 tests — opt-in toggled mid-run (positive + negative cases), multiple deaths across runs, multi-kill aggregation, full mission_completed payload, run_completed after partial death, repeated boss_reached events, empty-reason death handling
+- **Endings persistence** (`test_endings_persistence.py`): +6 tests — corrupted JSON → SaveCorruptedError, empty save file → SaveCorruptedError, legacy save missing player_grade metadata, non-ASCII ending string round-trip, rapid concurrent saves overwrite cleanly, future-version SaveVersionMismatchError
+- **F.4 boss phase combat** (`test_f4_boss_phase_combat.py`): +8 tests — single-phase boss (is_last_phase from start), 12-phase long fight exact iteration count, exact HP-threshold edge (`hp_fraction == threshold`), damage multiplier at phase boundary, color shift diversity across 4 transitions, boss defeated at HP=0 mid-transition, tracker.reset() returns to phase 1, get_progress fraction validity
+- **Random rules UI** (`test_random_rules_ui.py`): +5 tests — no active rules (default display), special characters in last_rule_id, state mutation between picks, _append_active_rules idempotency, empty-state without board
+- **Telemetry summary** (`test_telemetry_summary.py`): +6 tests — first-run player (no events), 150+ event aggregation (75/75 split), 1000 identical kills (counter integrity), empty aggregates (all 4 helpers), opt-in toggle mid-session hides summary, unknown ice_type string in payload
+
+### Validation
+- baseline: 4916 passed (pre-existing flake in `test_no_tracker_means_no_f4_multiplier` is unrelated — reproduces on baseline without my changes)
+- after Phase 20: 4957 passed (+41 new tests, all deterministic)
+- `make format` ✅, `make lint` ✅ (ruff 0 errors), `make typecheck` ✅ (mypy strict 0 errors), `make test` ✅
+- `python3 audit_vault.py` ✅ (CLEAN, 65 dead refs + 0 orphans documented)
+- `python3 mixed_language_audit.py` ✅ (0 violations)
+- `python3 dashboard_pipeline_audit.py` ✅ (0 errors)
+
+### Commit
+- 07a2cd3 `test(phase20): edge case coverage for Phase 15-17 features` (6 files changed, 637 insertions)
+
+---
+
 ## [2026-08-13] feat(ui) | Phase 17 — UI exposure for engine integrations (F.4 boss phases, random rules, telemetry stats)
 
 **Status**: ✅ 완료 — Three engine integrations from Phase 15/16 now visible to the player. No engine refactor; only UI exposure + 1 new screen.

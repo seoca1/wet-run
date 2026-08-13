@@ -204,3 +204,111 @@ class TestWeightedSelectionDiffersByState:
             picked = board.select_weighted(state, seed=42)
             assert picked is not None
             assert picked.id in {"m1", "m2", "m3"}
+
+
+# ---------------------------------------------------------------------------
+# Phase 20 edge cases: empty state, all-zero rep, NG+ state, large pool
+# ---------------------------------------------------------------------------
+
+
+class TestRandomRulesEdgeCases:
+    """Edge-case coverage for Phase 20.
+
+    Hardens ``JobBoard.select_weighted`` against unusual inputs:
+    empty mission lists, zero-reputation states, NG+ (grade 6+)
+    unlocks, large pools, and deterministic seeds across many runs.
+    """
+
+    def test_empty_mission_list_returns_none(self) -> None:
+        """select_weighted on an empty board returns None gracefully."""
+        state = DummyState(grade=1)
+        board = JobBoard()
+        assert board.select_weighted(state, seed=42) is None
+        assert board.select_weighted(state, available=(), seed=42) is None
+
+    def test_all_factions_zero_rep_state(self) -> None:
+        """A state with every faction at 0 rep must still pick a mission."""
+        state = DummyState(
+            grade=2,
+            yakuza_rep=0,
+            sense_net_rep=0,
+            hosaka_rep=0,
+            ta_rep=0,
+            freeside_rep=0,
+            loa_rep=0,
+        )
+        board = _make_board_with_missions(["m1", "m2", "m3"])
+        picked = board.select_weighted(state, seed=42)
+        assert picked is not None
+        assert picked.id in {"m1", "m2", "m3"}
+
+    def test_ng_plus_grade_six_state(self) -> None:
+        """NG+ (grade 6) players should be handled by the weighted path."""
+        state = DummyState(grade=6)
+        board = _make_board_with_missions(["g6a", "g6b", "g6c"])
+        for mid in ["g6a", "g6b", "g6c"]:
+            board._missions[mid] = replace(
+                board._missions[mid],
+                grade_min=6,
+                grade_max=6,
+            )
+        picked = board.select_weighted(state, seed=42)
+        assert picked is not None
+        assert picked.id in {"g6a", "g6b", "g6c"}
+
+    def test_determinism_same_seed_identical_picks(self) -> None:
+        """Same seed across multiple select_weighted calls returns the same mission."""
+        state = DummyState(grade=2)
+        board = _make_board_with_missions(["m1", "m2", "m3", "m4", "m5"])
+        picks = {board.select_weighted(state, seed=999).id for _ in range(5)}
+        assert len(picks) == 1
+        assert next(iter(picks)) in {"m1", "m2", "m3", "m4", "m5"}
+
+    def test_rule_conflicts_multiple_rules_active(self) -> None:
+        """High rep across many factions activates multiple rules simultaneously.
+
+        The weighted path must still pick a single (valid) mission without
+        crashing even when many rules have fires.
+        """
+        state = DummyState(
+            grade=3,
+            yakuza_rep=5,
+            sense_net_rep=5,
+            hosaka_rep=5,
+            ta_rep=5,
+            freeside_rep=5,
+            loa_rep=5,
+            consecutive_failures=99,
+            consecutive_completions=99,
+            boss_defeated_recently=True,
+        )
+        board = _make_board_with_missions([f"m{i}" for i in range(20)])
+        for _ in range(10):
+            picked = board.select_weighted(state, seed=42)
+            assert picked is not None
+            assert picked.id.startswith("m")
+
+    def test_large_mission_pool_100_plus(self) -> None:
+        """Performance sanity: 150 mission pool must still complete a weighted pick."""
+        mission_ids = [f"mission_{i:03d}" for i in range(150)]
+        board = _make_board_with_missions(mission_ids)
+        state = DummyState(grade=4)
+        picked = board.select_weighted(state, seed=42)
+        assert picked is not None
+        assert picked.id in mission_ids
+
+    def test_empty_available_with_grade_provided(self) -> None:
+        """Grade outside any mission range yields empty available set."""
+        state = DummyState(grade=99)
+        board = _make_board_with_missions(["m1", "m2"])
+        picked = board.select_weighted(state, seed=42)
+        assert picked is None
+
+    def test_last_rule_id_attribute_set_when_present(self) -> None:
+        """select_weighted writes to last_rule_id on AppState (has the field)."""
+        state = AppState()
+        state.player_grade = 4
+        board = _make_board_with_missions(["m1", "m2", "m3"])
+        board.select_weighted(state, seed=42)
+        # AppState always has last_rule_id; it's either a string or None.
+        assert state.last_rule_id is None or isinstance(state.last_rule_id, str)

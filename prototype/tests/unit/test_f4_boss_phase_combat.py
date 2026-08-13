@@ -329,3 +329,135 @@ class TestF4PhaseCoverage:
         assert tracker.is_last_phase
         # Any HP level should not trigger another transition.
         assert not tracker.should_transition(1, 1000)
+
+
+# ---------------------------------------------------------------------------
+# Phase 20 edge cases: 1-phase boss, exact HP threshold, color transitions
+# ---------------------------------------------------------------------------
+
+
+class TestF4PhaseEdgeCases:
+    """Phase 20 edge cases for boss phase tracker.
+
+    Covers 1-phase bosses, exact threshold edge, color transitions,
+    and boss defeated mid-phase-transition.
+    """
+
+    def test_single_phase_boss_never_transitions(self) -> None:
+        """A boss with a single phase has is_last_phase True from the start."""
+        from roguelike_sprawl.combat.boss_expansion import BossPhase, BossProfile
+
+        single = BossProfile(
+            id="test_mini",
+            name="Mini Boss",
+            description="1-phase fixture",
+            hp_base=50,
+            damage_base=5,
+            defense=2,
+            tier=1,
+            phases=(
+                BossPhase(
+                    phase=1,
+                    hp_threshold=1.0,
+                    damage_multiplier=1.0,
+                    color=(0, 0, 0),
+                    glyph=".",
+                    intro_text="MINI",
+                ),
+            ),
+        )
+        tracker = BossPhaseTracker(single)
+        assert tracker.total_phases == 1
+        assert tracker.is_last_phase
+        assert not tracker.should_transition(0, 100)
+        assert tracker.transition() is None
+
+    def test_many_phase_boss_ten_plus(self) -> None:
+        """A boss with 12+ phases supports long fights."""
+        from roguelike_sprawl.combat.boss_expansion import BossPhase, BossProfile
+
+        many_phases = tuple(
+            BossPhase(
+                phase=i,
+                hp_threshold=max(0.05, 1.0 - i * 0.07),
+                damage_multiplier=1.0 + i * 0.1,
+                color=(i * 20 % 256, 0, 0),
+                glyph=str(i),
+                intro_text=f"PHASE {i}",
+            )
+            for i in range(1, 13)
+        )
+        big = BossProfile(
+            id="big_boss",
+            name="Big Boss",
+            description="12-phase fixture",
+            hp_base=1000,
+            damage_base=10,
+            defense=5,
+            tier=6,
+            phases=many_phases,
+        )
+        tracker = BossPhaseTracker(big)
+        assert tracker.total_phases == 12
+        count = 0
+        while not tracker.is_last_phase:
+            tracker.transition()
+            count += 1
+        assert count == 11
+
+    def test_should_transition_at_exact_threshold(self) -> None:
+        """Boss HP exactly at the transition threshold must fire a transition."""
+        cs = _make_combat_state(boss_hp=1000)
+        tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
+        assert tracker.should_transition(800, 1000)
+        tracker.transition()
+        assert not tracker.should_transition(800, 1000)
+
+    def test_damage_multiplier_at_phase_boundary(self) -> None:
+        """Damage multiplier at the exact phase boundary is the new phase's value."""
+        cs = _make_combat_state(boss_hp=600)
+        tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
+        tracker.transition()
+        multiplier = tracker.get_damage_multiplier()
+        assert multiplier > 1.0
+        assert isinstance(multiplier, float)
+
+    def test_phase_color_changes_per_transition(self) -> None:
+        """Color shifts across multiple phase transitions."""
+        cs = _make_combat_state(boss_hp=1000)
+        tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
+        colors_seen = {tracker.current_phase.color}
+        for _ in range(4):
+            tracker.transition()
+            colors_seen.add(tracker.current_phase.color)
+        assert len(colors_seen) >= 4
+
+    def test_boss_defeated_mid_phase_transition(self) -> None:
+        """A boss reduced to 0 HP mid-transition must not crash the tracker."""
+        cs = _make_combat_state(boss_hp=1000)
+        cs.enemy.hp = 0
+        tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
+        result = tracker.transition()
+        assert result is not None
+        assert tracker.get_damage_multiplier() > 0.0
+
+    def test_tracker_reset_returns_to_phase_one(self) -> None:
+        """BossPhaseTracker.reset() returns the tracker to the first phase."""
+        cs = _make_combat_state()
+        tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
+        tracker.transition()
+        tracker.transition()
+        assert tracker.current_phase_index == 2
+        tracker.reset()
+        assert tracker.current_phase_index == 0
+        assert tracker.current_phase.phase == 1
+
+    def test_get_progress_returns_valid_fractions(self) -> None:
+        """Phase progress fractions are within [0.0, 1.0]."""
+        cs = _make_combat_state(boss_hp=1000)
+        tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
+        progress = tracker.get_progress(500, 1000)
+        assert 0.0 <= progress.hp_fraction <= 1.0
+        assert 0.0 <= progress.progress_in_phase <= 1.0
+        assert not progress.is_last_phase
+        assert progress.phase_index == 0

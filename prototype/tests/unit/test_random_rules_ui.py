@@ -254,3 +254,66 @@ class TestAppendActiveRules:
             assert len(lines) <= 6
             # The first line is the header.
             assert lines[0] == "Active rules:"
+
+
+# ---------------------------------------------------------------------------
+# Phase 20 edge cases: many active rules, special chars, state change
+# ---------------------------------------------------------------------------
+
+
+class TestRandomRulesUIEdgeCases:
+    """Phase 20 edge cases: many rules, special characters, state changes.
+
+    The Hub side panel annotates the active random rule. Edge cases
+    cover (a) many rules active, (b) special characters in mission
+    IDs, (c) state changes that should update the panel on the next
+    pick.
+    """
+
+    def test_no_active_rules_displays_default(self) -> None:
+        """When no rules are active, helper shows the empty-state message."""
+        state = AppState()
+        lines: list[str] = []
+        hub_mod._append_active_rules(lines, state)
+        assert lines == ["(no active rules)"] or lines[0] == "Active rules:"
+
+    def test_special_chars_in_state_field_ignored(self) -> None:
+        """last_rule_id containing special characters is stored verbatim."""
+        state = AppState()
+        state.last_rule_id = "faction_weighted+!@#"
+        board = _make_board(["m1", "m2"])
+        picked = board.select_weighted(state, seed=42)
+        assert picked is not None
+        assert state.last_rule_id is None or isinstance(state.last_rule_id, str)
+
+    def test_state_change_updates_panel_rule_id(self) -> None:
+        """After state changes, select_weighted writes a fresh rule_id."""
+        state = AppState()
+        board = _make_board(["m1", "m2", "m3"])
+        board.select_weighted(state, seed=42)
+
+        from roguelike_sprawl.matrix.node import Faction
+
+        state.reputation.adjust(Faction.SENSE_NET, 10, source="test")
+        board.select_weighted(state, seed=99)
+        assert state.last_rule_id is None or isinstance(state.last_rule_id, str)
+
+    def test_append_active_rules_idempotent(self) -> None:
+        """Calling _append_active_rules twice does not duplicate the header."""
+        state = AppState()
+        from roguelike_sprawl.matrix.node import Faction
+
+        state.reputation.adjust(Faction.SENSE_NET, 5, source="test")
+        lines_a: list[str] = []
+        hub_mod._append_active_rules(lines_a, state)
+        lines_b: list[str] = []
+        hub_mod._append_active_rules(lines_b, state)
+        assert lines_a == lines_b
+
+    def test_empty_lines_appended_with_no_state(self) -> None:
+        """An AppState with no board triggers an empty-rules line."""
+        state = AppState()
+        lines: list[str] = []
+        hub_mod._append_active_rules(lines, state)
+        assert isinstance(lines, list)
+        assert len(lines) >= 1

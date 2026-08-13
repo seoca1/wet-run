@@ -241,3 +241,70 @@ class TestMenuRendersStatsLabel:
         state = _make_state(opt_in=False)
         menu_mod.render_menu(console, t, state)
         # No exception — the disabled state still renders cleanly.
+
+
+# ---------------------------------------------------------------------------
+# Phase 20 edge cases: first-run, many runs, extreme values, opt-in toggle
+# ---------------------------------------------------------------------------
+
+
+class TestTelemetrySummaryEdgeCases:
+    """Phase 20 edge cases for the aggregate / aggregate-render path.
+
+    Covers first-run (no events), 100+ aggregated events, extreme
+    integer values, and an opt-in toggle turning the summary off.
+    """
+
+    def test_first_run_no_events_renders(self) -> None:
+        """First-run player (opt-in but no events yet) renders the screen."""
+        console = _make_console()
+        t = _make_translator()
+        state = _make_state(opt_in=True)
+        menu_mod.render_telemetry_summary(console, t, state)
+        assert state.telemetry.get_event_count() == 0
+
+    def test_many_events_aggregate(self) -> None:
+        """100+ events across multiple types still aggregate correctly."""
+        state = _make_state(opt_in=True)
+        for i in range(150):
+            ice = "standard" if i % 2 == 0 else "watchdog"
+            state.telemetry.record_kill(ice, turn=i)
+        counts = state.telemetry.aggregate_kill_counts()
+        assert counts.get("standard", 0) == 75
+        assert counts.get("watchdog", 0) == 75
+
+    def test_aggregations_with_extreme_values(self) -> None:
+        """Aggregate counters handle large values without overflow."""
+        state = _make_state(opt_in=True)
+        for i in range(1000):
+            state.telemetry.record_kill("goliath", turn=i)
+        counts = state.telemetry.aggregate_kill_counts()
+        assert counts["goliath"] == 1000
+
+    def test_aggregations_zero_events(self) -> None:
+        """Aggregates on an empty session return empty dicts."""
+        state = _make_state(opt_in=True)
+        assert state.telemetry.aggregate_death_rates() == {}
+        assert state.telemetry.aggregate_kill_counts() == {}
+        assert state.telemetry.aggregate_deck_distribution() == {}
+        assert state.telemetry.aggregate_mutator_choices() == {}
+
+    def test_opt_in_toggle_disables_summary(self) -> None:
+        """Toggling opt-out mid-session hides the summary at render time."""
+        state = _make_state(opt_in=True)
+        state.telemetry.record_kill("standard", turn=1)
+        assert state.telemetry.aggregate_kill_counts() == {"standard": 1}
+
+        state.telemetry_opt_in = False
+        state.telemetry = TelemetryIntegrator(TelemetryConfig(opted_in_at_start=False))
+        console = _make_console()
+        t = _make_translator()
+        menu_mod.render_telemetry_summary(console, t, state)
+        assert state.telemetry.is_enabled() is False
+
+    def test_summary_handles_unknown_ice_type_string(self) -> None:
+        """Death with an unknown ice_type falls back to 'unknown'."""
+        state = _make_state(opt_in=True)
+        state.telemetry.record_death("alien_ice_unknown_xyz")
+        counts = state.telemetry.aggregate_death_rates()
+        assert "alien_ice_unknown_xyz" in counts

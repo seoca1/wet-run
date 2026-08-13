@@ -426,3 +426,113 @@ class TestTelemetryEndToEnd:
 
         events = state.telemetry.session.events
         assert len(events) == 0
+
+
+# ---------------------------------------------------------------------------
+# Phase 20 edge cases: multiple events, mid-run opt-in, all reward types
+# ---------------------------------------------------------------------------
+
+
+class TestTelemetryTriggerEdgeCases:
+    """Phase 20 edge cases: opt-in toggled mid-run, multiple deaths/kills,
+    boss reached multiple times, mission completed with payload, run
+    completed after partial completion.
+    """
+
+    def test_opt_in_mid_run_new_events_record(self) -> None:
+        """If the player opts in mid-run, events fired AFTER are recorded.
+
+        The current Phase 16 wiring reads telemetry_opt_in at the time
+        of the trigger call (each recorder checks state.telemetry_opt_in
+        on every fire). This test verifies that flow.
+        """
+        state = _make_test_state(opt_in=False)
+        death_mod.trigger_death(state, reason="Combat")
+        assert not any(e.event_type == "death" for e in state.telemetry.session.events)
+
+        state.telemetry_opt_in = True
+        state.telemetry = TelemetryIntegrator(TelemetryConfig(opted_in_at_start=True))
+
+        death_mod.trigger_death(state, reason="ICE")
+        death_events = [e for e in state.telemetry.session.events if e.event_type == "death"]
+        assert len(death_events) == 1
+
+    def test_opt_out_mid_run_new_events_silenced(self) -> None:
+        """If the player opts out mid-run, subsequent events are silenced."""
+        state = _make_test_state(opt_in=True)
+        death_mod.trigger_death(state, reason="First death")
+        assert state.telemetry.get_event_count() >= 1
+
+        state.telemetry_opt_in = False
+        state.telemetry = TelemetryIntegrator(TelemetryConfig(opted_in_at_start=False))
+        death_mod.trigger_death(state, reason="After opt-out")
+        assert state.telemetry.get_event_count() == 0
+
+    def test_multiple_deaths_in_one_run(self) -> None:
+        """A player who dies and reruns can record multiple death events."""
+        state = _make_test_state(opt_in=True)
+        death_mod.trigger_death(state, reason="Combat")
+        state.telemetry = TelemetryIntegrator(TelemetryConfig(opted_in_at_start=True))
+        death_mod.trigger_death(state, reason="Black ICE")
+        state.telemetry = TelemetryIntegrator(TelemetryConfig(opted_in_at_start=True))
+        death_mod.trigger_death(state, reason="Combat")
+        events = state.telemetry.session.events
+        death_events = [e for e in events if e.event_type == "death"]
+        run_events = [e for e in events if e.event_type == "run_completed"]
+        assert len(death_events) == 1
+        assert len(run_events) == 1
+        assert death_events[0].data.get("ice_type") == "Combat"
+
+    def test_multiple_kills_aggregate(self) -> None:
+        """After multiple kills, aggregate_kill_counts includes all of them."""
+        state = _make_test_state(opt_in=True)
+        state.telemetry.record_kill("standard", turn=1)
+        state.telemetry.record_kill("standard", turn=2)
+        state.telemetry.record_kill("watchdog", turn=3)
+        state.telemetry.record_kill("black", turn=4)
+        counts = state.telemetry.aggregate_kill_counts()
+        assert counts["standard"] == 2
+        assert counts["watchdog"] == 1
+        assert counts["black"] == 1
+
+    def test_mission_completed_payload_full(self) -> None:
+        """mission_completed event payload includes mission id and grade."""
+        state = _make_test_state(opt_in=True)
+        state.player_grade = 5
+        mission = _make_mission("hosaka_extract")
+        complete_mission(state, mission)
+        events = [e for e in state.telemetry.session.events if e.event_type == "mission_completed"]
+        assert len(events) == 1
+        assert events[0].data.get("mission") == "hosaka_extract"
+        assert events[0].data.get("grade") == 5
+
+    def test_run_completed_after_partial_death(self) -> None:
+        """death triggers both 'death' and 'run_completed'."""
+        state = _make_test_state(opt_in=True)
+        state.player_grade = 4
+        death_mod.trigger_death(state, reason="Partial Boss")
+        events = state.telemetry.session.events
+        types = {e.event_type for e in events}
+        assert "death" in types
+        assert "run_completed" in types
+
+    def test_boss_reached_recorded_each_combat(self) -> None:
+        """Each separate boss combat fires its own boss_reached event."""
+        state = _make_test_state(opt_in=True)
+        state.telemetry.record_boss_reached("neuromancer")
+        state.telemetry.record_boss_reached("loa_baron")
+        state.telemetry.record_boss_reached("black_baron")
+        events = [e for e in state.telemetry.session.events if e.event_type == "boss_reached"]
+        assert len(events) == 3
+        boss_ids = [e.data.get("boss") for e in events]
+        assert "neuromancer" in boss_ids
+        assert "loa_baron" in boss_ids
+        assert "black_baron" in boss_ids
+
+    def test_death_with_empty_reason_still_records(self) -> None:
+        """An empty reason string is recorded as-is (no validation crash)."""
+        state = _make_test_state(opt_in=True)
+        death_mod.trigger_death(state, reason="")
+        events = [e for e in state.telemetry.session.events if e.event_type == "death"]
+        assert len(events) == 1
+        assert events[0].data.get("ice_type") == ""

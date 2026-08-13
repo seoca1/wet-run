@@ -663,17 +663,29 @@ def handle_deck_select_input(event: object, state: AppState) -> bool:
         ):
             idx = state.deck_select_index
             sizes = ["light", "standard", "heavy"]
-            state.deck_size = sizes[idx]
+            _confirm_deck_choice(state, sizes[idx])
             state.screen = ScreenKind.CHAPTER
             return True
         if event.sym in (tcod.event.KeySym.N1, tcod.event.KeySym.N2, tcod.event.KeySym.N3):
             idx = int(event.sym.name[1]) - 1
             state.deck_select_index = idx
             sizes = ["light", "standard", "heavy"]
-            state.deck_size = sizes[idx]
+            _confirm_deck_choice(state, sizes[idx])
             state.screen = ScreenKind.CHAPTER
             return True
     return True
+
+
+def _confirm_deck_choice(state: AppState, deck_size: str) -> None:
+    """Persist the chosen deck size and emit telemetry (Phase 16)."""
+    state.deck_size = deck_size
+    if getattr(state, "telemetry_opt_in", False):
+        integrator = getattr(state, "telemetry", None)
+        if integrator is not None:
+            try:
+                integrator.record_deck_chosen(deck_size)
+            except Exception as exc:  # pragma: no cover - defensive
+                state.status_messages.append(f">>> Telemetry deck_chosen failed: {exc}")
 
 
 def render_endings_browser(console: tcod.console.Console, t: Translator, state: AppState) -> None:

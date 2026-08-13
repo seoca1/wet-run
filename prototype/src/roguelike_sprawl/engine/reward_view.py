@@ -102,6 +102,19 @@ def return_to_hub_from_reward(state: AppState) -> None:
     state.screen = ScreenKind.HUB
     state.status_messages.append(">>> Returned to hub. Ready for next job.")
 
+    # Phase 16: Successful runs emit ``run_completed`` before the state
+    # is reset for the next run. Failed runs are handled in death.py.
+    if getattr(state, "telemetry_opt_in", False):
+        integrator = getattr(state, "telemetry", None)
+        if integrator is not None:
+            try:
+                integrator.record_run_completed(
+                    run_id=str(state.total_runs + 1),
+                    grade=state.player_grade,
+                )
+            except Exception as exc:  # pragma: no cover - defensive
+                state.status_messages.append(f">>> Telemetry run_completed failed: {exc}")
+
 
 # --- Rendering ---
 

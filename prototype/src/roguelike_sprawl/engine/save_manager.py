@@ -504,6 +504,8 @@ class SaveManager:
         return {
             "player_grade": state.player_grade,
             "screen": state.screen.value,
+            # Phase 16: Persist ending choice across runs (ADR-0192).
+            "ending_choice": getattr(state, "ending_choice", ""),
         }
 
     def load(self, slot: int) -> SavedRun:
@@ -561,6 +563,14 @@ class SaveManager:
         self._restore_reputation(state, app_data)
         if saved.metadata.get("player_grade") is not None:
             state.player_grade = int(saved.metadata["player_grade"])
+        # Phase 16: restore ending choice across runs (ADR-0192).
+        # Only overwrite if the key is present in the saved metadata;
+        # legacy saves (pre-Phase 16) lack this key, in which case we
+        # keep the default empty string on the freshly-built app_state.
+        if "ending_choice" in saved.metadata:
+            ending_choice = saved.metadata["ending_choice"]
+            if isinstance(ending_choice, str):
+                state.ending_choice = ending_choice
 
         matrix_restored = self._restore_matrix(state, app_data)
         self._reset_transient_state(state)

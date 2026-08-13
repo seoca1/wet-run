@@ -181,6 +181,15 @@ def start_combat(
             apply_phase_to_combatant(cs.enemy, profile)
             cs.boss_profile = profile
 
+        # Phase 16: emit boss_reached telemetry event (opt-in only).
+        if getattr(state, "telemetry_opt_in", False):
+            integrator = getattr(state, "telemetry", None)
+            if integrator is not None:
+                try:
+                    integrator.record_boss_reached(ice_kind_id)
+                except Exception as exc:  # pragma: no cover - defensive
+                    state.status_messages.append(f">>> Telemetry boss_reached failed: {exc}")
+
     f4_boss_id = _resolve_f4_boss_id(cs.enemy)
     if f4_boss_id is not None:
         from ..combat.boss_expansion import BOSS_EXPANSION_REGISTRY

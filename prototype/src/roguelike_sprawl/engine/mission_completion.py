@@ -137,6 +137,18 @@ def complete_mission(state: AppState, mission: object) -> None:
     state.status_messages.append(f">>> MISSION COMPLETE: {mission.title}")
     state.status_messages.append(">>> Return to hub for next job")
 
+    # Phase 16: Telemetry (opt-in only).
+    if getattr(state, "telemetry_opt_in", False):
+        integrator = getattr(state, "telemetry", None)
+        if integrator is not None:
+            try:
+                integrator.record_mission_completed(mission.id, state.player_grade)
+                # Fires once per mission completion. The run-level
+                # event is emitted on death (failed) or when state
+                # transitions to Stage.COMPLETE in handle_event handlers.
+            except Exception as exc:  # pragma: no cover - defensive
+                state.status_messages.append(f">>> Telemetry mission_completed failed: {exc}")
+
 
 def update_mission_progress(
     state: AppState,

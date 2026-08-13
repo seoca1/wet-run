@@ -644,6 +644,23 @@ def handle_hub_input(event: tcod.event.Event, state: AppState) -> bool:
             idx = int(event.sym.name[1:]) - 1
             if 0 <= idx < len(available):
                 _start_mission(state, available[idx])
+            elif available:
+                # Phase 16 (ADR-0188): weighted fallback when no slice match.
+                picked = state.job_board.select_weighted(state, available=available)
+                if picked is not None:
+                    _start_mission(state, picked)
+        # Phase 16: ENTER at the hub (no mission in flight) biases the
+        # selection cursor via random_rules so the recommended job
+        # reflects the player's reputation / NG+ / chain unlocks.
+        if event.sym is KeySym.RETURN and state.current_mission is None:
+            available = state.job_board.available_for(state.player_grade)
+            if available:
+                picked = state.job_board.select_weighted(state, available=available)
+                if picked is not None:
+                    for i, m in enumerate(available):
+                        if m.id == picked.id:
+                            state.hub_selected_index = i
+                            break
     return True
 
 

@@ -7523,3 +7523,95 @@ The 200 `derivative_type` empty fields remain, but those are likely a derived fi
 - 8+ tools got .tone-prompt.md filter
 
 **세션 종료 (2026-08-12) — roguelike_sprawl AI-scope work complete.**
+
+[2026-08-13] feat(ui) | Phase 15 — UI integration (deck picker, telemetry, wetware display, boss phases, endings browser, perf HUD)
+- Wires 6 engine-integrated features into UI views.
+- Fixed partial work from crashed subagent (lint, mypy, test regressions).
+- Validation: ruff ✅, mypy strict ✅, pytest baseline preserved (4843+).
+- Commit: 1afe7b2
+
+[2026-08-13] feat(engine) | Phase 16 — wire random rules, telemetry events, endings persistence
+
+**Status**: ✅ 완료 — 3 deeper engine integrations wired into the game flow. 36 new tests pass (4879 total, +36 over baseline), 0 regressions.
+
+### Scope (Phase 16)
+
+**Goal**: Wire the integration-time logic that was designed in earlier rounds but not connected to the actual game flow.
+
+**Implementation** (3 categories):
+
+1. **Random Rules → JobBoard selection** (ADR-0188, Round 3+4 follow-up):
+   - `JobBoard.select_weighted()` was defined in Round 4 but never called.
+   - Hub hotkey `ENTER` (no mission in flight) now biases the cursor via `select_weighted` so the recommended job reflects the player's reputation / NG+ / chain unlocks.
+   - Out-of-range numeric hotkeys fall back to `select_weighted` across all available missions.
+   - `engine/hub.py` updated.
+
+2. **Telemetry events triggered** (Phase 15 Round 5 follow-up):
+   - `engine/death.py::trigger_death()` → `record_death` + `record_run_completed` (failed runs).
+   - `engine/reward_view.py::return_to_hub_from_reward()` → `record_run_completed` (successful runs).
+   - `engine/combat_view_state.py::start_combat()` → `record_boss_reached` for boss ICE.
+   - `engine/menu.py::handle_deck_select_input()` → `record_deck_chosen` on ENTER.
+   - `engine/mission_completion.py::complete_mission()` → `record_mission_completed`.
+   - All call sites gated by `state.telemetry_opt_in` (the underlying `record_telemetry_event` is also a no-op without opt-in, so the guard is defense-in-depth).
+   - `_emit_telemetry_event` helper in `death.py` for graceful failure handling.
+
+3. **Endings save/load persistence** (ADR-0192):
+   - `ending_choice` now included in save metadata via `SaveManager._serialize_metadata()`.
+   - `restore_state()` reads `metadata["ending_choice"]` and restores it on `AppState`.
+   - Legacy saves (pre-Phase 16 without the key) load without error — the fresh state's default empty string is preserved.
+   - `engine/save_manager.py` updated.
+
+### New tests (36 combined)
+
+| Module | Tests | Description |
+|---|--:|---|
+| test_phase16_random_rules_engine_integration.py | 7 | Hub ENTER / number-key fallback uses select_weighted, weighted pick differs with state |
+| test_telemetry_triggers.py | 21 | Each recorder fires only on opt-in, payload payload schema, end-to-end smoke |
+| test_endings_persistence.py | 8 | Round-trip save/load for A/B/C, legacy save compatibility, end-to-end via process_ending |
+| **Total** | **36** | |
+
+### Validation
+
+| Check | Result |
+|---|---|
+| `ruff format` | ✅ clean |
+| `ruff check` | ✅ 0 errors |
+| `mypy src/` (strict) | ✅ 0 errors (211 source files) |
+| `pytest` (all tests) | ✅ 4879 passed + 462 skipped + 1 xfailed (+36 new) |
+| `audit_vault.py` (workspace) | ✅ 0 broken |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+### Files modified (8)
+
+- `engine/hub.py` — ENTER + number-key fallback (17 lines)
+- `engine/death.py` — _emit_telemetry_event helper + record_death + record_run_completed (42 lines)
+- `engine/combat_view_state.py` — record_boss_reached (9 lines)
+- `engine/menu.py` — _confirm_deck_choice + record_deck_chosen (16 lines)
+- `engine/mission_completion.py` — record_mission_completed (12 lines)
+- `engine/reward_view.py` — record_run_completed (13 lines)
+- `engine/save_manager.py` — ending_choice metadata serialize + restore (10 lines)
+- `log.md` — this entry
+
+### New files (3)
+
+- `tests/unit/test_phase16_random_rules_engine_integration.py` (7 tests)
+- `tests/unit/test_telemetry_triggers.py` (21 tests)
+- `tests/unit/test_endings_persistence.py` (8 tests)
+
+### Deferred (out of Phase 16 scope)
+
+- **Per-frame profiling hook** — `integrate_with_game_loop` exists in `combat/performance_integration.py` but the per-tick call sites are not yet wired into `main_loop.py` tick dispatch.
+- **F.4 boss phase transitions** — Phase 4 structures are designed but not triggered in real combat flows.
+- **Game-loop wiring of `record_kill` per damage instance** — Round 5 already wires it in `combat/state.py::_apply_damage` (covered by `test_combat.py` baseline).
+
+### References
+
+- ADR-0188 (Mission Expansion) — random rules design
+- ADR-0184 (Telemetry) — event types + opt-in
+- ADR-0192 (Ending Expansion) — ending choice schema
+- `missions/random_rules.py` — 19 rules + get_random_mission
+- `combat/telemetry_integration.py` — TelemetryIntegrator
+- `engine/save_manager.py` — save metadata + restore
+
+**Phase 16 closed. 4879 tests pass, 0 regressions. No commits pending user authorization.**

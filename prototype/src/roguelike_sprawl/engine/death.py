@@ -34,7 +34,32 @@ from .settings_ui import get_volume
 from .state import AppState, ScreenKind
 
 if TYPE_CHECKING:
-    pass
+    from collections.abc import Callable
+
+    from ..combat.telemetry_integration import TelemetryIntegrator
+
+
+def _emit_telemetry_event(
+    state: AppState,
+    event_name: str,
+    recorder: Callable[[TelemetryIntegrator], None],
+) -> None:
+    """Fire a telemetry recorder only when the player opted in (Phase 16).
+
+    Args:
+        state: App state (carry ``telemetry_opt_in`` and ``telemetry``).
+        event_name: Human-readable name (used for graceful failure logs).
+        recorder: Callable invoked with the active TelemetryIntegrator.
+    """
+    if not getattr(state, "telemetry_opt_in", False):
+        return
+    integrator = getattr(state, "telemetry", None)
+    if integrator is None:
+        return
+    try:
+        recorder(integrator)
+    except Exception as exc:  # pragma: no cover - defensive
+        state.status_messages.append(f">>> Telemetry {event_name} failed: {exc}")
 
 
 def _get_history() -> JockeyHistory:
@@ -139,6 +164,21 @@ def trigger_death(state: AppState, reason: str = "Combat") -> None:
     state.screen = ScreenKind.DEATH
     state.status_messages.append(f">>> FLATLINE: {reason}")
     state.status_messages.append(">>> Press ENTER to jack out")
+
+    # Phase 16: Telemetry recorders — gated by player opt-in.
+    _emit_telemetry_event(
+        state,
+        "record_death",
+        lambda integrator: integrator.record_death(reason),
+    )
+    _emit_telemetry_event(
+        state,
+        "record_run_completed",
+        lambda integrator: integrator.record_run_completed(
+            run_id=str(state.total_runs),
+            grade=state.player_grade,
+        ),
+    )
 
     # Play defeat sound (if not already played)
     try:

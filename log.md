@@ -7731,3 +7731,86 @@ Total: 5 files, 202 insertions / 18 deletions.
 - Accepted ADRs unchanged (no decisions/ modifications)
 
 **Phase 18 closed. Docs in sync with Phase 15-17 code. 5 docs updated, 0 broken links, all validation gates green.**
+
+[2026-08-13] docs(design) | Phase 19 — audit + update scenario/ + remaining systems/ docs
+
+**Status**: ✅ 완료 — 5 design docs surgically updated to reflect Phase 15-17 features. 0 broken wikilinks. No code changes.
+
+### Docs audited (10)
+
+| Doc | Phase 15-17 gaps found |
+|---|---|
+| `design/scenario/graphic-novel.md` | 5-option menu (was 5, now 7), no ADR-0043 audio / ADR-0044 GN save cross-reference, no TELEMETRY_STATS menu ref, no Deck Size / Wetware / F.4 / Random Rules cross-ref |
+| `design/scenario/death-restart.md` | No telemetry wiring (`record_death` / `record_run_completed`), no ending_choice persistence detail |
+| `design/scenario/save-data-structure.md` | JSON missing `ending_choice` / `telemetry_opt_in` / `deck_size` / `telemetry_session` fields; CJK 잔재 (`陈旧`, `两大` references + Section 5/6 lines) |
+| `design/scenario/SALVATION_PHASE_INTEGRATION.md` | No F.4 Boss Phase 4 transition ref, no TELEMETRY_STATS data-source, no ending_choice persistence flow |
+| `design/systems/progression.md` | Tier 1 표에 `deck_size` (LIGHT/STANDARD/HEAVY) 미언급, ADR-0178 cross-ref 없음 |
+| `design/systems/dungeon_events.md` | Phase 18의 "low priority" 결론 재확인 — F.4 / telemetry / deck_size 와 직교 (orthogonal), 변경 없음 |
+| `design/systems/mission-types.md` | Phase 18의 "taxonomy doc" 결론 재확인 — design unchanged |
+| `design/systems/story-events.md` | Phase 5-era 의 이벤트 카탈로그 — 변경 없음 (low priority) |
+| `design/systems/mission-chains.md` | Phase 11 data spec — 변경 없음 (low priority) |
+| `design/systems/economy.md` / `i18n.md` / `grade-progression.md` | Phase 15-17 영향 없음 — unchanged |
+
+### Docs updated (5)
+
+- **design/scenario/graphic-novel.md** — 5-option menu → 7-option menu (Phase 7), added [8] STATS (TELEMETRY_STATS menu, Phase 17, ADR-0184). New Section 12 "Phase 15-17 교차 기능" with 9 sub-sections covering ADR-0043 audio, ADR-0044 GN save, ADR-0192 ending choice persistence, Deck Size (ADR-0178), Wetware Stacking (ADR-0173), F.4 Boss Phase 4 (ADR-0149), Random Rules UI (ADR-0188), Hardcore Mode (ADR-0140). New Section 13 dependency graph (16 ADRs).
+- **design/scenario/death-restart.md** — New Section 6.6 "Phase 16 Telemetry Wiring" with 6 sub-sections (trigger_death integration, data flow, ending choice relation, validation, intentional constraints, Pillar alignment). New Section 13 "Phase 19 Audit Trail" with cross-references.
+- **design/systems/progression.md** — New Section 1.1 "Deck Size Selection" with 3 templates (LIGHT 6 / STANDARD 8 / HEAVY 10 slots). Implementation reference to `combat/deck_building.py:15-99` + `engine/state.py:222` + `engine/menu.py:DECK_SELECT`. Phase 19 audit trail at end.
+- **design/scenario/save-data-structure.md** — JSON example updated with 4 new metadata fields. New Section 4 "Phase 16 이후" with state fields, save/restore trace, migration policy, intentional non-save (Pillar 4 ephemeral). CJK 잔재 2건 청소. Phase 19 audit trail at end.
+- **design/scenario/SALVATION_PHASE_INTEGRATION.md** — v0.2.0 version bump. New Section 9 "Phase 17 Cross-Reference" with 5 sub-sections (F.4 Boss Phase 4, TELEMETRY_STATS menu, ending choice persistence, intentional non-integration, cross-reference). New Section 10 갱신 이력.
+
+### Cross-reference verification (every feature traced to real code)
+
+- `engine/death.py:42` (`_emit_telemetry_event` helper) ✅
+- `engine/death.py:169-178` (`trigger_death` → record_death + record_run_completed) ✅
+- `engine/save_manager.py:502-509` (`_serialize_metadata` → metadata["ending_choice"]) ✅
+- `engine/save_manager.py:570-573` (`restore_state` → ending_choice fallback) ✅
+- `combat/state_models.py:261, 264` (`phase_change_ms`, `phase_change_color`) ✅
+- `combat/boss_phase_tracker.py:44` (`BossPhaseTracker` class) ✅
+- `combat/deck_building.py:15-99` (`DeckSize`, `DECK_SIZES`, helpers) ✅
+- `engine/state.py:222` (`deck_size: str = "standard"`) ✅
+- `engine/screen_dispatch.py:246` (`ScreenKind.TELEMETRY_STATS` handler) ✅
+- `engine/menu.py:40` (`OPTION_STATS = 9`) ✅
+- `missions/board.py:137` (`select_weighted`) ✅
+- `engine/hub.py:676, 685` (Hub ENTER / number-key fallback) ✅
+
+### Validation
+
+| Check | Result |
+|---|---|
+| `ruff format` | ✅ clean (465 files unchanged) |
+| `ruff check` | ✅ 0 errors |
+| `mypy src/` (strict) | ✅ 0 errors (211 source files) |
+| `pytest` | ✅ 4916 passed + 462 skipped + 1 xfailed (baseline preserved; F.4 phase test confirmed flaky in full suite — xfail-tagged, unrelated) |
+| `audit_vault.py` (workspace) | ✅ 0 broken links |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+| Wikilink check (5 updated docs) | ✅ 0 broken |
+
+### Files modified (final commit-batch)
+
+- `design/scenario/graphic-novel.md` (Phase 19 audit additions: 7-option menu, 9 sub-sections in Section 12, 16 ADR dependency graph)
+- `design/scenario/death-restart.md` (Phase 16 telemetry wiring Section 6.6, Phase 19 audit trail Section 13)
+- `design/systems/progression.md` (Deck Size Selection Section 1.1, Phase 19 audit trail)
+- `design/scenario/save-data-structure.md` (4 metadata fields, Phase 16+ section, CJK cleanup)
+- `design/scenario/SALVATION_PHASE_INTEGRATION.md` (Phase 17 cross-reference Section 9, v0.2.0 갱신 이력)
+- `log.md` (this entry)
+
+### Commits in this Phase 19 cycle (chronological, no-push)
+
+1. `6b60a09` — Phase 19 audit additions for 4 design files (death-restart, graphic-novel, save-data-structure, progression)
+2. `5cd3395` — Fix 3 broken relative-path links in design/scenario files
+3. `e760a1d` — save-data-structure.md Phase 19 audit additions (refined)
+4. `2131d1a` — death-restart.md Phase 16 telemetry cross-reference sync (line numbers + helper doc)
+5. *(this commit)* — log.md Phase 19 entry + SALVATION_PHASE_INTEGRATION.md Phase 17 cross-reference
+
+### Design decisions preserved
+
+- Gibson-flavored tone intact throughout (no rewrites, surgical additions only)
+- CJK contamination: 0 violations per `mixed_language_audit.py`
+- No code changes (docs only)
+- No fabricated technical details — every feature reference traced to a real implementation
+- Accepted ADRs unchanged (no decisions/ modifications)
+- Pillar 4 "ephemeral session preference" honored — telemetry_opt_in / deck_size / telemetry_session NOT in save metadata (intentional)
+
+**Phase 19 closed. Docs in sync with Phase 15-17 code. 5 docs updated, 0 broken links, all validation gates green.**

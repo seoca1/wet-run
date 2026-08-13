@@ -404,7 +404,7 @@ Phase 19 감사 (Phase 16 telemetry + Phase 16 ending_choice + Phase 17 TELEMETR
 ### 13.4 Cross-reference
 
 - [`design/scenario/graphic-novel.md ## 12.3 Ending Choice 영속성`](graphic-novel.md) — GN 의 엔딩 변종과 main flow 엔딩의 분리.
-- [`design/systems/combat.md ## F.4 Boss Phase 4`](../../systems/combat.md) — 보스 phase transition (death 흐름 진입 *전* 에 발생).
+- [`design/systems/combat.md ## F.4 Boss Phase 4`](../systems/combat.md) — 보스 phase transition (death 흐름 진입 *전* 에 발생).
 - [`design/systems/inventory.md`](../systems/inventory.md) — wetware stacking (death 시 인벤토리 손실 처리과 무관, 별도).
 - [`decisions/0184-telemetry.md`](../../decisions/0184-telemetry.md) — ADR 본문.
 - [`decisions/0192-ending-expansion.md`](../../decisions/0192-ending-expansion.md) — ADR 본문.

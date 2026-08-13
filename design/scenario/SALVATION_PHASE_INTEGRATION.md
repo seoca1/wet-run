@@ -1,8 +1,10 @@
 # Salvation Phase × Novel Story Staging — 연계성 분석 (2026-07-04)
 
-> **문서 버전**: 0.1.0
-> **최종 업데이트**: 2026-07-04
+> **문서 버전**: 0.2.0
+> **최종 업데이트**: 2026-08-13 (Phase 19 audit)
 > **관련**: `prototype/src/roguelike_sprawl/run/state.py`, `engine/chapter_cutscene.py`, `data/story/arcs/`, `data/scenes/`, `design/systems/stage_structure.json`
+>
+> **Phase 19 갱신**: F.4 Boss Phase 4 transition (Phase 17, ADR-0149) + TELEMETRY_STATS cross-reference (Phase 17, ADR-0184) + ending_choice persistence (Phase 16, ADR-0192) 추가.
 
 ---
 
@@ -331,6 +333,73 @@ state.ng_plus_active = not state.ng_plus_active
 
 ---
 
-**다음 단계**: Phase 9-A Salvation 통합 착수 (5-7일)
-**관련 의사결정**: `decisions/0090-salvation-phase.md` (신규 ADR 작성 필요)
-**v0.2.0**: 이 문서 — Salvation × Stage 연계성 분석
+## 9. Phase 17 Cross-Reference (2026-08-13)
+
+Salvation Phase 는 narrative culmination 단계 — Combat / Hub 사이클이 *모두 종료* 된 시점. 따라서 Phase 17 의 일부 신규 feature 는 *Salvation 이후* 에만 관측된다.
+
+### 9.1 F.4 Boss Phase 4 Transition (Phase 17, ADR-0149)
+
+Salvation Phase 직전 *마지막 보스* (CORE 의 Dixie 평파 / TA 의 3Jane / Freeside 의 Loa) 가 Phase 4 transition 을 트리거할 가능성. 보스 HP 70% / 40% / 15% threshold 에서 `BossPhaseTracker.get_damage_multiplier` 가 1.0× → 1.2× → 1.5× → 2.0× 로 가중.
+
+**CombatState 필드** (`combat/state_models.py:261, 264`):
+- `phase_change_ms: int = 0` — phase transition 시각적 blend 1.5초
+- `phase_change_color: tuple[int, int, int] = (255, 255, 0)` — phase 진입 시 강조 컬러
+
+**Salvation 통합**: Salvation 메뉴 진입 (F.4 보스 격파 후) 직전, 마지막 phase transition 의 *blend* 가 salvation_view 진입 시 자연스럽게 fade-out — UX 일관성.
+
+### 9.2 TELEMETRY_STATS 메뉴 (Phase 17, ADR-0184)
+
+Salvation Phase 완료 후 *메인메뉴 복귀* 시 사용자가 TELEMETRY_STATS 메뉴 (옵트인 시) 에서 다음 데이터 확인 가능:
+
+- `aggregate_death_rates(session)` — ICE 종류별 사망 횟수 (F.4 보스 포함)
+- `aggregate_kill_counts(session)` — ICE 종류별 격파 횟수
+- `aggregate_deck_distribution(session)` — LIGHT/STANDARD/HEAVY 분포 (Phase 15 + ADR-0178)
+
+**데이터 흐름**: Salvation Phase 의 *모든* telemetry 이벤트 (`record_death`, `record_run_completed`, `record_mission_completed`, `record_boss_reached`) 가 TELEMETRY_STATS 에서 노출. 옵트인 사용자는 Salvation 완료 후 *자신의 run* 의 통계를 볼 수 있음.
+
+### 9.3 Ending Choice 영속성 (Phase 16, ADR-0192)
+
+Salvation 완료 후 `state.ending_choice` ("A" / "B" / "C") 가 `engine/save_manager.py::SaveManager._serialize_metadata()` 로 직렬화. *다음 NEW RUN* 시 자동 복원 — `restore_state()` 가 legacy save 호환 처리.
+
+**Salvation-Restart Cycle**:
+```
+[Salvation Phase 완료]
+   ↓ state.ending_choice = "A" (또는 B/C)
+   ↓ save_metadata 직렬화
+[메인메뉴 복귀]
+   ↓ [NEW RUN] 선택
+   ↓ restore_state() → ending_choice 복원
+[새 런 — ending_choice 유지]
+```
+
+### 9.4 의도적 비-통합
+
+다음 Phase 17 신규 시스템은 *Salvation 중* 또는 *Salvation *직후* 와 무관 — feature 자체는 *integration* 되지 않음:
+
+- **Random Rules UI Annotation** (Phase 17, ADR-0188) — *Hub* 화면의 *사이드 패널* — Salvation Phase 중에는 Hub 진입 없음.
+- **Deck Size Picker** (Phase 15, ADR-0178) — *NEW RUN* 진입 시 결정 — Salvation 후 자동 reset.
+- **Wetware Stacking** (Phase 15, ADR-0173) — *장비* 시스템 — Salvation 시 모든 equipment 손실 (ADR-0040).
+
+### 9.5 Cross-reference
+
+- [`design/scenario/death-restart.md ## 6.6 Phase 16 Telemetry`](death-restart.md) — death → telemetry wiring.
+- [`design/scenario/save-data-structure.md ## Phase 16 이후`](save-data-structure.md) — ending_choice persistence.
+- [`design/systems/progression.md ## 1.1 Deck Size Selection`](../systems/progression.md) — LIGHT/STANDARD/HEAVY.
+- [`design/systems/combat.md ## F.4 Boss Phase 4`](../systems/combat.md) — phase transition 상세.
+- [`design/scenario/graphic-novel.md ## 12 Phase 15-17 교차 기능`](graphic-novel.md) — GN 모드 교차.
+
+---
+
+## 10. 갱신 이력
+
+| 버전 | 날짜 | 갱신 |
+|---|---|---|
+| 0.1.0 | 2026-07-04 | 초판 — Salvation × Stage 연계성 분석 |
+| 0.2.0 | 2026-08-13 | Phase 19 audit — Section 9 (Phase 17 cross-reference) 추가, F.4 Boss Phase 4 + TELEMETRY_STATS + ending_choice persistence 통합 |
+
+---
+
+**Salvation Phase × Phase 17 의 통합 상태**: ✅ 완료 (cross-reference).
+**다음 단계**: Phase 9-A Salvation 통합 착수 (5-7일) — 초기 proposed (legacy).
+**관련 의사결정**: `decisions/0090-salvation-phase.md` (신규 ADR 작성 필요), `decisions/0149-boss-phase-4.md`, `decisions/0184-telemetry.md`, `decisions/0192-ending-expansion.md`.
+**v0.2.0**: 이 문서 — Salvation × Stage 연계성 분석 + Phase 17 cross-reference.

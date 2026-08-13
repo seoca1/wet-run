@@ -3,6 +3,7 @@
 **문서 상태**: DRAFT
 **Created**: 2026-06-23
 **Purpose**: 저장 구조 + 챕터 클리어 조건 검증
+**Phase 19 audit (2026-08-13)**: ending_choice persistence (Phase 16, ADR-0192) + telemetry_opt_in (Phase 15, ADR-0184) + telemetry_session 직렬화 추가. CJK 잔재 (陈旧, 两大) 청소.
 
 ---
 
@@ -58,7 +59,15 @@
     "player_grade": 1,
     "screen": "matrix",
     "credits": 500,
-    "data_recovered": 2
+    "data_recovered": 2,
+    "ending_choice": "A",
+    "telemetry_opt_in": false,
+    "deck_size": "standard",
+    "telemetry_session": {
+      "session_id": "uuid-v4",
+      "events": [],
+      "opt_in": false
+    }
   }
 }
 ```
@@ -162,6 +171,34 @@ AppState.credits:             int              (현재 크레딧)
 AppState.inventory:            dict[str, int]   (아이템별 수량)
 AppState.player_grade:         int              (1~5, 등급)
 ```
+
+### Phase 16 이후 — ending_choice + telemetry_opt_in (ADR-0192 + ADR-0184)
+
+```
+AppState.ending_choice:       str              ("A" | "B" | "C" | "" — pending, ADR-0192)
+AppState.telemetry_opt_in:    bool             (False default, Phase 15)
+AppState.deck_size:           str              ("light" | "standard" | "heavy", ADR-0178)
+AppState.telemetry_session:   TelemetrySession | None  (옵트인 사용 시, ADR-0184)
+```
+
+**저장 동작** (`engine/save_manager.py::SaveManager._serialize_metadata`):
+- `ending_choice` (string) → `metadata["ending_choice"]`
+- `telemetry_opt_in` (bool) → `metadata["telemetry_opt_in"]`
+- `deck_size` (string) → `metadata["deck_size"]`
+- `telemetry_session` (객체) → `metadata["telemetry_session"].to_dict()` (옵트인 시에만)
+
+**복원 동작** (`engine/save_manager.py::restore_state`):
+- `metadata["ending_choice"]` → `state.ending_choice` (legacy save = 빈 string default)
+- `metadata["telemetry_opt_in"]` → `state.telemetry_opt_in` (legacy save = False default)
+- `metadata["deck_size"]` → `state.deck_size` (legacy save = "standard" default)
+- `telemetry_session` → `TelemetrySession.from_dict()` (없으면 None)
+
+**마이그레이션 정책**:
+- *Legacy save* (Phase 15 이전) — 모든 신규 필드 default 로 자동 fallback (defense-in-depth).
+- *Phase 15-16 save* — `telemetry_opt_in` / `deck_size` 포함, `ending_choice` 미저장 (legacy).
+- *Phase 16+ save* — 4개 필드 모두 포함.
+
+**Cross-reference**: [`design/scenario/death-restart.md ## 6.6`](death-restart.md) — telemetry wiring + ending_choice 의 DEATH flow 통합.
 
 ---
 

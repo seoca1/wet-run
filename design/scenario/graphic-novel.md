@@ -1,7 +1,9 @@
 # Graphic Novel Mode (그래픽 노블 자동플레이 모드)
 
 > **이 문서는 [`../../decisions/0032-graphic-novel-mode.md`](../../decisions/0032-graphic-novel-mode.md)의 디자인 명세.**
-> 메인메뉴 5 옵션 + 그래픽 노블 자동플레이 + 세이브 진도 회고.
+> 메인메뉴 7 옵션 (Phase 7 + ADR-0040) + 그래픽 노블 자동플레이 + 세이브 진도 회고.
+>
+> **Phase 19 audit (2026-08-13)**: 7-option menu (was 5), ADR-0043 audio + ADR-0044 GN save, TELEMETRY_STATS menu cross-reference.
 
 ## 1. 개요
 
@@ -40,7 +42,9 @@
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
-### 2.2 옵션 명세
+### 2.2 옵션 명세 (Phase 7 — 7 옵션)
+
+> **Phase 7 갱신 (ADR-0032 + ADR-0040 + HELP)**: 5 옵션 → 7 옵션 확장. Hall of Dead (ADR-0040) + HELP (온보딩) 추가.
 
 | # | 라벨 | 동작 | 조건 |
 | --- | --- | --- | --- |
@@ -49,6 +53,9 @@
 | 3 | CONTINUE | 세이브 슬롯 1 로드 → HUB | 세이브 있을 때만 활성 |
 | 4 | SETTINGS | SETTINGS 화면 | 항상 |
 | 5 | CREDITS | CREDITS 화면 | 항상 |
+| 6 | HALL OF DEAD | 자키 아카이브 (사망한 자키 목록) | ADR-0040, 항상 |
+| 7 | HELP | 조작법 / 컨셉 도움말 | Phase 7 온보딩, 항상 |
+| 8 | STATS | TELEMETRY_STATS 집계 화면 | `state.telemetry_opt_in == True` 일 때만 (Phase 17, ADR-0184) |
 
 ## 3. 그래픽 노블 메뉴
 
@@ -500,3 +507,76 @@ load_scene_chain(scenes_dir, character, *, shuffle=False, seed=None, ending="A")
 
 ### 그래픽 노블 저장
 `GNProgress` 에 `ending: str = "A"` 필드 추가.
+
+---
+
+## 12. Phase 15-17 교차 기능 (2026-08-13 audit)
+
+그래픽 노블 모드는 게임 메인 흐름과 직교로 동작하지만, Phase 15-17 사이클에서 추가된 일부 시스템과 *상태/저장* 레이어에서 연결된다.
+
+### 12.1 ADR-0043 — Scene Sound Cue
+
+`engine/graphic_novel_audio.py` (orphan module, ADR-0043). 씬 전환 시 사운드 큐 트리거 (`data/sounds/*.wav`, 46개 자동 생성 사운드). 본 자동플레이 모드는 별도 사운드 카드 (`bg_chat_room` rain, `jack_in_zap`, `jack_out_buzz` 등) 로 분리 — 일반 게임 사운드와 격리.
+
+### 12.2 ADR-0044 — GN Save / Restore
+
+`engine/graphic_novel_save.py` (ADR-0044). 3 슬롯 (`data/saves/gn_progress_slot_{1,2,3}.json`) + legacy `gn_progress.json` 마이그레이션. *이어서 보기* 옵션이 메인메뉴 [3] CONTINUE 와 직교 — GN 슬롯은 *auto-play 진행률*, 메인 슬롯은 *gameplay 진행률*.
+
+### 12.3 Ending Choice 영속성 (ADR-0192 + Phase 16)
+
+`AppState.ending_choice` (엔딩 A/B/C, 게임플레이 flow) 와 `GNProgress.ending` (그래픽 노블 데이터) 는 *별도 필드*:
+
+- `state.ending_choice` — gameplay flow 가 도달한 엔딩 (예: "A"). `engine/save_manager.py::SaveManager._serialize_metadata()` 가 save metadata 에 직렬화, `restore_state()` 가 복원 (Phase 16).
+- `GNProgress.ending` — 사용자가 GN 메뉴에서 *시청할* 엔딩 변종 (예: "A" / "B"). ADR-0048 + ADR-0049.
+
+그래픽 노블 메뉴에서 옵션 [6][7][8] (엔딩 B/C 변종) 진입 시 `GNProgress.ending` 사용. 메인 게임 엔딩 직후 *GN ending 자동 재생* 시에는 `state.ending_choice` 값을 fallback 으로 사용.
+
+### 12.4 TELEMETRY_STATS 메뉴 (Phase 17, ADR-0184)
+
+`ScreenKind.TELEMETRY_STATS` (메인메뉴 [8]). 메인메뉴에서 사용자가 `state.telemetry_opt_in == True` 일 때만 노출. 그래픽 노블 자체는 telemetry 이벤트 (`record_deck_chosen`, `record_run_completed`) 를 발생시키지만, *모드 자체* 는 STATS 화면 표시와 무관 — 별도 메뉴.
+
+### 12.5 Deck Size 선택 (Phase 15, ADR-0178)
+
+`state.deck_size: str = "standard"` (light / standard / heavy). 그래픽 노블 진입 *이전* — 즉 메인메뉴 [1] NEW RUN 진입 후 CHARACTER_SELECT 직전 — DECK_SELECT 화면에서 LIGHT/STANDARD/HEAVY 3 옵션 중 선택. GN 자동플레이는 *deck_size 와 무관* — 자동 재생 모드이므로 PPL / ZDR fight 가 없음.
+
+### 12.6 Wetware Stacking (Phase 15, ADR-0173)
+
+`equipment/wetware_stacking.py::stack_wetware()` — 6 슬롯 wetware 누적 효과. 그래픽 노블 자동재생 모드에서는 *장비 시스템 자체가 skip* — 자키는 prologue scene 의 기본 wetware 1 슬롯만 사용.
+
+### 12.7 F.4 Boss Phase Transitions (Phase 17, ADR-0149)
+
+`combat/boss_phase_tracker.py` + `combat/state_models.py::CombatState.phase_change_ms / phase_change_color`. 1.5초 phase transition blend — 보스 HP 70% / 40% / 15% threshold. 그래픽 노블은 *combat 자체가 없으므로* 영향 없음. 단, 화면 *연출* 측면에서 GN 종료 후 전투 진입 시 첫 phase transition 이 더 부드럽게 표시됨.
+
+### 12.8 Random Rules UI Annotation (Phase 17, ADR-0188)
+
+`engine/hub.py` 의 *Hub 사이드 패널* 에 `state.last_rule_id` 기반 추천 미션 annotation ("recommended by zone rep"). 그래픽 노블 진입 시점에는 *rule_id 가 reset* — 사용자가 *임의 미션* 그래픽 노블을 본 후 게임 복귀 시, 다시 rule 이 적용된 추천 mission 이 표시됨.
+
+### 12.9 Hardcore Mode (Phase 14, ADR-0140)
+
+`state.hardcore_mode` (1-life permadeath). 그래픽 노블 자동재생은 *무관* — GN 자체에는 메인 흐름의 revival / run 사이클이 없음. 단, Hardcore + Main Menu [6] HALL_OF_DEAD 동작 확인용으로 GN 진입 후 즉시 메인메뉴 복귀 시 정상 동작.
+
+---
+
+## 13. 의존성 그래프 (갱신)
+```
+┌────────────┐
+│ ADR-0032   │  ← 이 문서
+└────┬───────┘
+     │ depends on
+     ├──> ADR-0031 (Original Scenario)  ← 캐릭터/챕터 정의
+     ├──> ADR-0021 (Save/Load)          ← 진도 조회
+     ├──> ADR-0009 (Story/News)         ← meatspace 미표시
+     ├──> ADR-0011 (ASCII Portraits)    ← 포트레잇 시스템
+     ├──> ADR-0040 (Death Cycle)        ← Hall of Dead 메뉴 [6]
+     ├──> ADR-0043 (Sound Cue)          ← 씬별 WAV
+     ├──> ADR-0044 (GN Save)            ← 3 슬롯 + 이어서 읽기
+     ├──> ADR-0046-0049 (Ending B/C)    ← 9 결말 조합
+     ├──> ADR-0140 (Hardcore Mode)      ← 1-life permadeath (Phase 14)
+     ├──> ADR-0149 (Boss Phase 4)       ← 보스 phase transition (Phase 17)
+     ├──> ADR-0173 (Wetware)            ← 6 슬롯 (Phase 15 — GN 외)
+     ├──> ADR-0178 (Deck Building)      ← LIGHT/STANDARD/HEAVY (Phase 15)
+     ├──> ADR-0184 (Telemetry)          ← TELEMETRY_STATS (Phase 17)
+     ├──> ADR-0188 (Mission Expansion)  ← Random Rules UI (Phase 17)
+     ├──> ADR-0192 (Ending Expansion)   ← ending_choice 영속성 (Phase 16)
+     └──> ADR-0019 (Aftermath)          ← 4-importance
+```

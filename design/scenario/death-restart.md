@@ -2,6 +2,8 @@
 
 > **이 문서는 [`../../decisions/0040-death-restart-cycle.md`](../../decisions/0040-death-restart-cycle.md)의 디자인 명세.**
 > 플레이어 자키가 HP 0이 되면 *인격이 보존된 채로* 사망 → 새 자키 또는 같은 자키로 재시작.
+>
+> **Phase 19 audit (2026-08-13)**: Telemetry wiring (Phase 16), ending_choice persistence (Phase 16, ADR-0192), TELEMETRY_STATS data-source (Phase 17, ADR-0184) cross-references added.
 
 ## 1. 개요
 
@@ -212,6 +214,67 @@ DEATH (X 머리, "PERMANENT DEATH" 표시)
 - Hardcore는 meta-progression 우회 없음 — death 후 메인 메뉴 복귀
 - 다른 difficulty modifier (예: 적 강화, 자원 감소)는 v1.2.0+ backlog
 
+## 6.6 Phase 16 — Telemetry Wiring (2026-08-13)
+
+> **새로 추가 (ADR-0184 + Phase 16)**: DEATH / DEATH_SUMMARY flow 가 telemetry 이벤트를 발생시켜, 옵트인 사용자의 *집계형* 사망 통계가 TELEMETRY_STATS 메뉴에 반영된다.
+
+### 6.6.1 trigger_death() 통합
+
+`engine/death.py::trigger_death()` (구현) — `_emit_telemetry_event` helper 로 두 이벤트를 *graceful* 트리거:
+
+```python
+def trigger_death(state: AppState, ...) -> None:
+    # ... existing logic ...
+    _emit_telemetry_event(state, "record_death", cause=death_cause, ice_kind=ice_kind)
+    _emit_telemetry_event(state, "record_run_completed", outcome="failed", ...)
+```
+
+### 6.6.2 데이터 흐름
+
+```
+[사망]
+   ↓ trigger_death()
+   ↓ _emit_telemetry_event (gated by state.telemetry_opt_in)
+combat.TelemetryIntegrator.record_death(...)
+combat.TelemetryIntegrator.record_run_completed(outcome="failed")
+   ↓
+AppState.telemetry_session.events += (2 events,)
+   ↓
+[메인메뉴 [8] STATS] (telemetry_opt_in == True)
+   ↓ aggregate_death_rates(session) → dict[ice_kind, count]
+TELEMETRY_STATS 화면 렌더
+```
+
+### 6.6.3 Ending Choice 와의 관계
+
+`state.ending_choice` (엔딩 A/B/C, ADR-0192 Phase 16) 와 *death flow* 는 직교 — DEATH_SUMMARY 에서 *엔딩 B/C (flatline)* 선택 시:
+- `state.ending_choice = "B"` (또는 "C") 저장
+- `engine/save_manager.py::SaveManager._serialize_metadata()` 가 metadata 에 직렬화
+- *죽은 자키* 의 `DeceasedJockey.ending_choice` 는 *Hall of Dead* 표시용으로 보존
+
+### 6.6.4 검증 (test_telemetry_triggers.py, 21 tests)
+
+| Test Class | Coverage |
+| --- | --- |
+| `TestDeathTelemetryTriggers` (5) | `_emit_telemetry_event` 정상 호출, defense-in-depth (no-op when opt_out), 실패 격리 (예외 발생 안 함) |
+| `TestRunCompletedTelemetry` (4) | `record_run_completed` 호출, outcome="failed" 페이로드, death 직후 트리거 |
+| `TestEndToEndTelemetry` (4) | 전체 lifecycle: trigger_death → menu → STATS → aggregate |
+| `TestPayloadSchema` (8) | `record_death` / `record_run_completed` 페이로드 스키마 (cause, ice_kind, ms, etc.) |
+
+### 6.6.5 의도적 제약
+
+- **DEATH_SUMMARY 진입 시점에만 트리거** — death *flow* 진입 자체는 telemetry 와 무관 (spec).
+- **Graceful failure**: `_emit_telemetry_event` 가 예외를 raise 하지 않음 — telemetry 시스템 fail 이 death flow 자체를 깨지 않도록 defense-in-depth.
+- **옵트인 의무**: `state.telemetry_opt_in == False` 면 모든 record_* 함수가 no-op — death 자체는 항상 진행.
+
+### 6.6.6 Pillar 정합
+
+- **Pillar 3 (The Flatline)**: death 의 *무게* 를 *집계 데이터* 로 강화 — 죽음이 *통계* 가 됨.
+- **Pillar 4 (The Build)**: 옵트인만 — 사용자가 *자기 메타 진행* 의 일부로만 노출.
+- **Pillar 5 (The Style)**: telemetry 이벤트는 *death event* 코드 경로 외 노출 안 됨 — Pillar 5 의 *추상적 메타* 톤 유지.
+
+---
+
 ## 7. 화면 흐름 (상태 머신)
 
 ```
@@ -313,3 +376,35 @@ Avg missions/run: 2.3
 6. 테스트 30+ 추가
 7. `death_demo.py` 시연
 8. 메타 문서 동기화
+
+---
+
+## 13. Phase 19 Audit Trail (2026-08-13)
+
+Phase 19 감사 (Phase 16 telemetry + Phase 16 ending_choice + Phase 17 TELEMETRY_STATS) 결과.
+
+### 13.1 추가된 시스템
+
+- **Section 6.6**: Phase 16 telemetry wiring — `trigger_death()` → `record_death` + `record_run_completed(outcome="failed")`. 
+  - `engine/death.py:_emit_telemetry_event` helper 가 defense-in-depth (옵트인 + 예외 격리).
+- **Cross-reference**: `state.ending_choice` (ADR-0192) 가 Hall of Dead 의 *flatline ending B/C* 와 직교 — 두 시스템이 *공존*.
+
+### 13.2 검증 위치
+
+- `tests/unit/test_telemetry_triggers.py` (21 tests) — Section 6.6.4 표 참조.
+- `tests/unit/test_endings_persistence.py` (8 tests) — ADR-0192 engine 통합.
+- `tests/unit/test_hardcore_mode.py` (21 tests) — Section 6.5 cross-check (telemetry 와 격리).
+
+### 13.3 의도적 비-변경 사항
+
+- DEATH 화면 흐름 자체는 *unchanged* — Phase 16 telemetry wiring 은 *이벤트 추가* 일 뿐, death UX 는 변하지 않음.
+- Hall of Dead 화면 레이아웃 / 키 매핑 *unchanged* — `ending_choice` 필드만 *optional 추가*.
+- Hardcore Mode (Section 6.5) 도 *unchanged* — telemetry 와 *직교*.
+
+### 13.4 Cross-reference
+
+- [`design/scenario/graphic-novel.md ## 12.3 Ending Choice 영속성`](graphic-novel.md) — GN 의 엔딩 변종과 main flow 엔딩의 분리.
+- [`design/systems/combat.md ## F.4 Boss Phase 4`](../../systems/combat.md) — 보스 phase transition (death 흐름 진입 *전* 에 발생).
+- [`design/systems/inventory.md`](../systems/inventory.md) — wetware stacking (death 시 인벤토리 손실 처리과 무관, 별도).
+- [`decisions/0184-telemetry.md`](../../decisions/0184-telemetry.md) — ADR 본문.
+- [`decisions/0192-ending-expansion.md`](../../decisions/0192-ending-expansion.md) — ADR 본문.

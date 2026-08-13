@@ -3,6 +3,8 @@
 > **상위 결정**: `../../decisions/0008-progression-system.md` (Accepted, Revised)
 > **관련**: [grade-progression.md](./grade-progression.md) (등급 단계), [difficulty-rating.md](./difficulty-rating.md) (난이도), [crafting.md](./crafting.md) (제작), [economy.md](./economy.md) (재화)
 > **구현**: `../../prototype/src/roguelike_sprawl/matrix/ppl.py` (PPL 계산)
+>
+> **Phase 19 audit (2026-08-13)**: Deck Size 선택 (Phase 15, ADR-0178) — LIGHT/STANDARD/HEAVY 3 템플릿. Tier 1 의 *런 시작 시 결정* 모델에 추가.
 
 ## 목적
 
@@ -17,12 +19,52 @@
 | 요소 | 정의 | 변경 가능? |
 |---|---|---|
 | Deck tier | T1~T5 | ❌ (런 시작시 결정) |
+| **Deck size** (Phase 15, ADR-0178) | LIGHT / STANDARD / HEAVY | ❌ (런 시작시 결정) |
 | Programs | T1~T5 등급 매칭 | ❌ |
 | Wetware | T1~T5 | ❌ |
 | Construct | T0~T5 (0 = 없음) | ❌ |
 | HP / ATK | tier 기반 | ❌ |
 
 런 중 변경 가능한 것은 **인벤토리**와 **장비** (시간 한정 buff) 뿐.
+
+### 1.1 Deck Size Selection (Phase 15, ADR-0178)
+
+> **새로 추가 (Phase 15)**: 런 시작 시 *Deck tier* 외 *Deck size* 템플릿을 선택. 3가지 — LIGHT (얇은 슬롯, 빠른 빌드) / STANDARD (기본) / HEAVY (두꺼운 슬롯, 강력한 빌드).
+
+| Size | 슬롯 | 빌드 철학 | 추천 |
+|---|---|---|---|
+| **LIGHT** | 6 슬롯 | Wisp / Hammer / Strike 같은 *얇은* T1-T2 위주 | 첫 런, 빠른 클리어, data salvage 우선 |
+| **STANDARD** | 8 슬롯 | Goliath / Wisp / Hammer 균형 | 메타 기본값 (default), 모든 zone 진입 가능 |
+| **HEAVY** | 10 슬롯 | Kraken / Goliath / Wardrone + Dixie T5 | 후반부, 깊은 zone (CORE / TA), meta unlock 후 |
+
+**구현** (`combat/deck_building.py`):
+
+```python
+class DeckSize:
+    name: str
+    slots: int
+    description: str
+
+DECK_SIZES: dict[str, DeckSize] = {
+    "light": DeckSize("light", 6, "Quick build, thin slots"),
+    "standard": DeckSize("standard", 8, "Balanced — default"),
+    "heavy": DeckSize("heavy", 10, "Deep zone access, late game"),
+}
+
+def get_deck_size(size: str) -> DeckSize | None: ...
+def get_deck_sizes() -> tuple[DeckSize, ...]: ...
+```
+
+**AppState 필드**: `state.deck_size: str = "standard"` (default). `engine/menu.py:`의 DECK_SELECT 화면 (Phase 15 신규)에서 LIGHT/STANDARD/HEAVY 3 옵션 — ENTER 로 확정.
+
+**PPL 영향**: Deck size 는 *PPL 에 직접 영향 없음* — 슬롯 수만 변경. 실제 PPL 은 *선택된 program* 에 따라 좌우 (ADR-0012). 단, AVAILABLE 슬롯 수가 program 선택의 *상한* 이 되므로 *간접 효과* — HEAVY 는 강력한 Kraken T5 까지 동시 장착 가능.
+
+**Pillar 정합**:
+- **Pillar 1 (The Run)**: 런 *시작* 시 결정 — in-run immutable.
+- **Pillar 4 (The Build)**: 빌드 깊이의 *첫 축* — slot count 가 core mechanic.
+- **Pillar 5 (The Style)**: 라벨 명확 (`LIGHT` / `STANDARD` / `HEAVY`), UI ASCII 셰이프 (·W· / :W: / |W| / ▓W▓ / ★W★ — 기존 등급 게이팅과 동일).
+
+**Cross-reference**: [`design/systems/combat.md ## Deck Size Selection`](combat.md), [decisions/0178-deck-building.md](../../decisions/0178-deck-building.md).
 
 ### Tier 2: 메타 진행 (Meta Progression, 자키 등급)
 
@@ -154,9 +196,40 @@ locked 상태에서 `ng_plus_active = True`가 stale하게 남아있어도 캐�
 | 메타 진행 | `src/roguelike_sprawl/engine/death.py:220-267` (restart_with_new_jockey) |
 | 등급 곡선 | `design/systems/grade-progression.md` |
 | 제작 티어 | `src/roguelike_sprawl/programs/` + `data/crafting/` |
+| **Deck Size** (Phase 15) | `src/roguelike_sprawl/combat/deck_building.py:15-99` (DeckSize, DECK_SIZES) |
+| **Deck Size UI** | `src/roguelike_sprawl/engine/menu.py:DECK_SELECT` (Phase 15) |
+| **State.field** | `src/roguelike_sprawl/engine/state.py:222` (`deck_size: str = "standard"`) |
 
 ## 미래 작업 (Phase 6+)
 
 - **Persistent unlocks**: 자키 도감을 Hall of Dead 에서 영구 보존
 - **Custom deck editor**: 런 시작 전 데크 슬롯 자유 조합
 - **Achievement 보상**: 특정 조건 달성 시 추가 티어 unlock
+
+---
+
+## Phase 19 Audit Trail (2026-08-13)
+
+Phase 19 audit 결과 — Deck Size Selection (Phase 15, ADR-0178) 가 Tier 1 표에 누락되어 본 섹션 1.1 로 추가.
+
+### 추가된 섹션
+
+- **Section 1.1**: Deck Size Selection — 3 템플릿 (LIGHT 6 / STANDARD 8 / HEAVY 10).
+
+### 검증 위치
+
+- `src/roguelike_sprawl/combat/deck_building.py` — `DeckSize` / `DECK_SIZES` / `get_deck_size` / `get_deck_sizes` 4 API.
+- `src/roguelike_sprawl/engine/state.py:222` — `deck_size: str = "standard"` AppState 필드.
+- `src/roguelike_sprawl/engine/menu.py` — DECK_SELECT 화면 (Phase 15 통합 진입).
+
+### 변경 영향
+
+- **Tier 1 표**: `Deck size` 행 *추가* (기존 Deck tier / Programs / Wetware / Construct / HP&ATK 와 동일 결정 시점).
+- **PPL 공식**: *unchanged* — Deck size 는 *슬롯 수* 만 변경, PPL 계산과 직교.
+- **Cross-reference**: [decisions/0178-deck-building.md](../../decisions/0178-deck-building.md), [design/systems/combat.md ## Deck Size Selection](combat.md).
+
+### 의도적 비-변경
+
+- NG+ lifecycle (Section "NG+ 라이프사이클") — unchanged.
+- Hardcore Mode (death-restart.md ## 6.5) — unchanged.
+- 등급 곡선 (grade-progression.md) — unchanged.

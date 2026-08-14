@@ -1,3 +1,85 @@
+## [2026-08-14] feat+chore(polish) | Phase 27 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (ICE variant + zone boss) + 2 polish improvements. Commit `88aab5d`. 9 files, +337/-8, 5044 passed (+24 from Phase 26 baseline 5020).
+
+### 1. Content addition: peripheral_ascended ICE variant + The Peripheral Ascended zone boss
+
+`prototype/data/combat/ice_types.json` 에 `peripheral_ascended` 신규 엔트리 추가 (95 → 96 ICE types). `prototype/data/combat/zone_bosses.json` 에 `the_peripheral_ascended` 신규 boss 엔트리 추가 (10 → 11 bosses).
+
+- **Type**: ascended variant, base_type: the_peripheral, ice_kind: construct
+- **Tier 6 ascended (NG+ endgame)**: hp_base 850, hp_per_grade 120, dmg_base 30, dmg_per_grade 5, defense 17, speed 9, resistance 0.6
+- **Skills**: `stub_time`, `lowbeer_vision`, `peripheral_strike`, `timeline_collapse` — Jackpot timeline endgame boss (12 phases)
+- **Loot**: ice_shard (1.0, x10) + data_fragment (1.0, x6) + t6_program (0.9, x2) + peripheral_artifact (0.4, x1) + fragment.timeline_echo (0.15, x1)
+- **Boss unlock_condition**: `beat_the_peripheral + ngplus_active + post_salvation_complete`
+- 기존 ascended variant (`wintermute_ascended`, `ta_prime_ascended`, `neuromancer_ascended`) 와 동일한 패턴
+
+### 2. Polish: Typo-tolerant ICE error in `build_ice_enemy()`
+
+`src/roguelike_sprawl/combat/registry.py:411` — `difflib.get_close_matches` (cutoff=0.6, n=3) 으로 가장 가까운 ICE id 추천:
+
+```
+KeyError("Unknown ICE: 'standrd'. Available: ['ai_whisper', 'aleph', 'archive_sentinel', 'black', ...]. Did you mean: ['standard']?")
+```
+
+- `standrd` → `['standard']`
+- `wintermut_corrupted` → `['wintermute_corrupted']`
+- `xyz123notreal` → no suggestion (cutoff 0.6 미만)
+
+이전 (Phase 26): 단순 첫 10개 나열. 디버깅 시 사용자가 직접 grep 필요.
+
+### 3. Polish: Docstring additions to audio/
+
+- `audio/bgm_manager.py` (3 added): `BgmManager.__init__`, `is_muted` property, `volume` property
+- `audio/theme.py` (1 added): `ThemePlayer.__init__`
+- `audio/config.py` (1 added): `SoundConfig.__post_init__`
+
+Audio 모듈 interrogate coverage: **94.0% → 100.0%**. Vault-wide: **91.8% → 92.0%** (ADR-0120 80% baseline 위).
+
+### 4. Test coverage (+24)
+
+`prototype/tests/unit/test_phase27_peripheral_ascended.py` 신설 (18 tests):
+- **TestPeripheralAscended** (8): presence / metadata / stats higher than base / timeline_collapse skill / retains base skills / build_ice_enemy integration / loot has timeline_echo / grade scaling
+- **TestThePeripheralAscendedBoss** (5): presence / unlock condition / more phases than base / timeline_collapse skill / loot drops peripheral_artifact
+- **TestBuildIceEnemyErrorMessage** (6): raises KeyError / lists available ids / typo 'standrd' suggests 'standard' / typo 'wintermut_corrupted' suggests correct / unrelated id has no suggestion / known ICE resolves
+- **TestAudioDocstringCoverage** (5): bgm_manager init/is_muted/volume / theme __init__ / config __post_init__
+
+`test_phase12_ice_types.py:TestICEVariants::test_variant_count` (14 → 15).
+`test_phase12_bosses.py:TestZoneBosses::test_zone_bosses_count` (10 → 11), `test_ascended_bosses_count` (3 → 4), `test_zone_bosses_total` (10 → 11).
+
+### Validation
+
+| Gate | Result |
+|---|---|
+| `make format` | All files clean |
+| `make lint` | All checks passed! |
+| `make typecheck` | Success: no issues found in 211 source files |
+| `make test` | **5044 passed**, 463 skipped, 1 xfailed (Phase 14 perf tracker, unrelated) |
+| `interrogate` (audio) | 100.0% (was 94.0%) |
+| `interrogate` (vault-wide) | 92.0% (was 91.8%) |
+| `audit_vault.py` | 2 pre-existing Fiction link errors (unrelated, Phase 100 baseline) |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+Test delta: **+24** (5020 → 5044).
+
+### Files changed (9)
+
+```
+modified:   prototype/data/combat/ice_types.json                    (+48)
+modified:   prototype/data/combat/zone_bosses.json                  (+50)
+modified:   prototype/src/roguelike_sprawl/audio/bgm_manager.py     (+3)
+modified:   prototype/src/roguelike_sprawl/audio/config.py          (+1)
+modified:   prototype/src/roguelike_sprawl/audio/theme.py           (+1)
+modified:   prototype/src/roguelike_sprawl/combat/registry.py       (+4/-1)
+modified:   prototype/tests/unit/test_phase12_bosses.py             (+6/-6)
+modified:   prototype/tests/unit/test_phase12_ice_types.py          (+1/-1)
+created:    prototype/tests/unit/test_phase27_peripheral_ascended.py (+223)
+```
+
+Commit: **`88aab5d` feat+chore(polish): Phase 27 — Small content + polish**
+
+---
+
 ## [2026-08-14] feat+chore(polish) | Phase 26 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition + 3 polish improvements. Commit `83df5c8`. 6 files, +258/-3, 5020 passed (+17 from Phase 25 baseline 5003).

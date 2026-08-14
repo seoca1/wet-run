@@ -64,6 +64,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         prog: ProgramRegistry | None,
         ice: IceRegistry | None,
     ) -> bool:
+        """Graphic novel screen: forward scene / pause / menu navigation."""
         action = menu_screen.handle_graphic_novel_input(event, state)
         if action == "menu":
             state.screen = ScreenKind.MENU
@@ -85,6 +86,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         prog: ProgramRegistry | None,
         ice: IceRegistry | None,
     ) -> bool:
+        """Graphic novel ending menu: ESC/Q returns to main menu."""
         import tcod.event as _tcevent
 
         if isinstance(event, _tcevent.KeyDown):
@@ -99,6 +101,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         prog: ProgramRegistry | None,
         ice: IceRegistry | None,
     ) -> bool:
+        """Cyberspace map screen: ESC/Q returns to main menu."""
         import tcod.event as _tcevent
 
         if isinstance(event, _tcevent.KeyDown):
@@ -113,6 +116,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         prog: ProgramRegistry | None,
         ice: IceRegistry | None,
     ) -> bool:
+        """Arc-phase cinematic: advance on Space/Enter/Right, skip on S."""
         import tcod.event as _tcevent
 
         from .arc_phase import advance_arc_phase
@@ -141,6 +145,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         prog: ProgramRegistry | None,
         ice: IceRegistry | None,
     ) -> bool:
+        """Chapter view: delegate to chapter_view.handle_chapter_input."""
         chapter_view.handle_chapter_input(event, state)
         return True
 
@@ -150,6 +155,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         prog: ProgramRegistry | None,
         ice: IceRegistry | None,
     ) -> bool:
+        """Active story event: delegate to event_view when active_event is set."""
         if state.active_event is not None:
             return event_view.handle_event_input(event, state, state.active_event)
         return True
@@ -160,6 +166,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         prog: ProgramRegistry | None,
         ice: IceRegistry | None,
     ) -> bool:
+        """NPC dialogue: delegate to npc_view when npc_state is set."""
         if state.npc_state is not None:
             npc_view.handle_npc_input(event, state, state.npc_state)
         return True
@@ -170,6 +177,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         prog: ProgramRegistry | None,
         ice: IceRegistry | None,
     ) -> bool:
+        """Story cinematic: delegate to story_cinematic when cinematic_state is set."""
         if state.cinematic_state is not None:
             return story_cinematic.handle_cinematic_input(event, state, state.cinematic_state)
         return True

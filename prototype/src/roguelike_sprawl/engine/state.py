@@ -38,37 +38,44 @@ class StatusMessageList(UserList[str]):
     """
 
     def __init__(self, iterable: Iterable[str] | None = None) -> None:
+        """Initialize the list, optionally seeding from an iterable."""
         super().__init__()
         if iterable:
             self.data = list(iterable)
         self._enforce_cap()
 
     def _enforce_cap(self) -> None:
+        """Trim the list to ``STATUS_MESSAGES_MAX``, dropping the oldest entries first."""
         if len(self.data) > STATUS_MESSAGES_MAX:
             self.data = self.data[-STATUS_MESSAGES_MAX:]
 
     @override
     def append(self, item: str) -> None:
+        """Append a single message, then enforce the cap."""
         self.data.append(item)
         self._enforce_cap()
 
     @override
     def extend(self, items: Iterable[str]) -> None:
+        """Extend with multiple messages, then enforce the cap."""
         self.data.extend(items)
         self._enforce_cap()
 
     @override
     def insert(self, i: int, item: str) -> None:
+        """Insert at position ``i``, then enforce the cap."""
         self.data.insert(i, item)
         self._enforce_cap()
 
     @override
     def __setitem__(self, i: int | slice, value: str | Iterable[str]) -> None:  # type: ignore[override]
+        """Assign by index or slice, then enforce the cap."""
         self.data[i] = value  # type: ignore[index,assignment]
         self._enforce_cap()
 
     @override
     def __iadd__(self, other: Iterable[str]) -> StatusMessageList:
+        """In-place add (e.g. ``lst += other``), then enforce the cap."""
         self.data.extend(other)
         self._enforce_cap()
         return self

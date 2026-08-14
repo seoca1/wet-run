@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.0",
     "date": "2026-08-14",
-    "phase": "28",
+    "phase": "29",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 31,
+    "total_events": 33,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -746,6 +746,35 @@
     "consequence": "signal_jam_choice",
     "faction_affinity": {}
   },
+  "faction_event_yakuza_contract": {
+    "event_id": "faction_event_yakuza_contract",
+    "title": "Yakuza Contract Hit",
+    "category": "faction",
+    "faction_ref": "yakuza",
+    "trigger": "npc_choice",
+    "trigger_condition": "yakuza_rep >= 5 AND credits > 3000",
+    "mood": "determined",
+    "location": "yakuza_safe_house",
+    "arc": 2,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "YAKUZA: We need a runner. Quiet. No witnesses.",
+      "YAKUZA: Target is a debt-owing executive at Hosaka.",
+      "YAKUZA: Take the contract: 4000 credits, plus our protection for a month."
+    ],
+    "choice": {
+      "option_a": "Take the contract (gain 4000 credits, lose yakuza_rep_on_fail).",
+      "option_b": "Refuse (retain autonomy, lose yakuza_rep).",
+      "consequence_a": "yakuza_contract_active",
+      "consequence_b": "yakuza_branch_refused"
+    },
+    "reward": null,
+    "consequence": "yakuza_contract_branch",
+    "faction_affinity": {
+      "yakuza": 2
+    }
+  },
   "_chains": {
     "chain_case_past_memories": {
       "chain_id": "chain_case_past_memories",
@@ -773,6 +802,7 @@
       "events": [
         "faction_event_yakuza_collection",
         "faction_event_yakuza_protection",
+        "faction_event_yakuza_contract",
         "general_event_faction_war",
         "char_event_sil_silver_blade"
       ],

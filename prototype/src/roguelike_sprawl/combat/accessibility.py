@@ -53,7 +53,9 @@ def get_default_accessibility() -> AccessibilityConfig:
 def set_colorblind_mode(config: AccessibilityConfig, mode: str) -> AccessibilityConfig:
     """Set the colorblind mode."""
     if mode not in COLORBLIND_MODES:
-        raise ValueError(f"Invalid colorblind mode: {mode}")
+        raise ValueError(
+            f"Invalid colorblind mode: {mode!r} (must be one of: {list(COLORBLIND_MODES)})"
+        )
     return AccessibilityConfig(
         colorblind_mode=mode,
         text_size=config.text_size,
@@ -64,7 +66,7 @@ def set_colorblind_mode(config: AccessibilityConfig, mode: str) -> Accessibility
 def set_text_size(config: AccessibilityConfig, size: str) -> AccessibilityConfig:
     """Set the text size."""
     if size not in TEXT_SIZES:
-        raise ValueError(f"Invalid text size: {size}")
+        raise ValueError(f"Invalid text size: {size!r} (must be one of: {list(TEXT_SIZES)})")
     return AccessibilityConfig(
         colorblind_mode=config.colorblind_mode,
         text_size=size,

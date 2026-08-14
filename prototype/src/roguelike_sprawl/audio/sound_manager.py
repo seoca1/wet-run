@@ -98,6 +98,12 @@ class SoundManager:
     """
 
     def __init__(self, sounds_dir: Path | None = None, volume: float = 0.2):
+        """Initialize SoundManager with optional sounds directory and master volume.
+
+        Args:
+            sounds_dir: Directory containing WAV files. Defaults to data/sounds_test.
+            volume: Master volume in 0.0-1.0 range, clamped.
+        """
         self.sounds_dir = sounds_dir or Path("data/sounds_test")
         self.sounds_dir.mkdir(parents=True, exist_ok=True)
         self.volume = max(0.0, min(1.0, volume))
@@ -129,12 +135,15 @@ class SoundManager:
         return self._tool is not None
 
     def set_volume(self, volume: float) -> None:
+        """Set master volume, clamped to [0.0, 1.0]."""
         self.volume = max(0.0, min(1.0, volume))
 
     def set_mute(self, muted: bool) -> None:
+        """Set the global mute flag."""
         self.muted = muted
 
     def toggle_mute(self) -> bool:
+        """Flip the mute state; returns the new value."""
         self.muted = not self.muted
         return self.muted
 
@@ -187,6 +196,7 @@ class SoundManager:
         return self.play(sound_name, pitch=pitch)
 
     def _play_file(self, path: Path) -> bool:
+        """Dispatch playback to the platform-specific backend; False if no tool."""
         if self._tool == "afplay":
             return self._play_afplay(path)
         if self._tool == "aplay":
@@ -196,6 +206,7 @@ class SoundManager:
         return False
 
     def _play_afplay(self, path: Path) -> bool:
+        """macOS afplay backend; True if playback started."""
         try:
             with self._lock:
                 if self._process is not None and self._process.poll() is None:
@@ -211,6 +222,7 @@ class SoundManager:
             return False
 
     def _play_aplay(self, path: Path) -> bool:
+        """Linux aplay backend; True if playback started."""
         try:
             with self._lock:
                 if self._process is not None and self._process.poll() is None:
@@ -225,6 +237,7 @@ class SoundManager:
             return False
 
     def _play_winsound(self, path: Path) -> bool:
+        """Windows winsound backend (background thread); True if dispatched."""
         if not sys.platform.startswith("win"):
             return False
         try:
@@ -312,6 +325,7 @@ def is_available() -> bool:
 
 
 def list_sounds() -> list[str]:
+    """Return the list of sound names available for playback."""
     return get_sound_manager().list_sounds()
 
 

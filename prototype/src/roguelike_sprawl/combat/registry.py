@@ -23,10 +23,12 @@ class ProgramRegistry:
     __slots__ = ("_skills",)
 
     def __init__(self, skills: dict[str, Skill]) -> None:
+        """Initialize with a copy of the given skill mapping."""
         self._skills = dict(skills)
 
     @classmethod
     def load(cls, path: Path) -> ProgramRegistry:
+        """Load program skills from a JSON file, falling back to defaults."""
         if not path.exists():
             return cls(_default_skills())
         with path.open(encoding="utf-8") as f:
@@ -78,12 +80,15 @@ class ProgramRegistry:
         return cls(skills)
 
     def get(self, skill_id: str) -> Skill | None:
+        """Look up a skill by id; returns None if not registered."""
         return self._skills.get(skill_id)
 
     def __iter__(self) -> Iterator[Skill]:
+        """Iterate over all registered Skill values."""
         return iter(self._skills.values())
 
     def __len__(self) -> int:
+        """Return the number of registered skills."""
         return len(self._skills)
 
 
@@ -293,10 +298,12 @@ class IceRegistry:
     __slots__ = ("_ice",)
 
     def __init__(self, ice: dict[str, dict[str, int | str]]) -> None:
+        """Initialize with a copy of the given ICE template mapping."""
         self._ice = dict(ice)
 
     @classmethod
     def load(cls, path: Path) -> IceRegistry:
+        """Load ICE templates from a JSON file; empty registry if missing."""
         if not path.exists():
             return cls({})
         with path.open(encoding="utf-8") as f:
@@ -310,9 +317,11 @@ class IceRegistry:
         return cls(ice)
 
     def get(self, ice_id: str) -> dict[str, int | str] | None:
+        """Look up an ICE template by id; returns None if not registered."""
         return self._ice.get(ice_id)
 
     def __contains__(self, ice_id: object) -> bool:
+        """Return True if `ice_id` is a registered ICE template id."""
         return isinstance(ice_id, str) and ice_id in self._ice
 
 
@@ -398,7 +407,11 @@ def build_ice_enemy(
     """
     data = registry.get(ice_id)
     if data is None:
-        raise KeyError(f"Unknown ICE: {ice_id!r}")
+        available = sorted(registry._ice.keys())
+        raise KeyError(
+            f"Unknown ICE: {ice_id!r}. "
+            f"Available: {available[:10]}{'...' if len(available) > 10 else ''}"
+        )
     portrait_id = str(data.get("portrait", "ice.standard"))
     portrait = "▲ICE▲"
     color = (255, 0, 255)

@@ -85,12 +85,14 @@ class PhaseColorState:
     elapsed_ms: int = 0
 
     def set_phase(self, phase_index: int, color: tuple[int, int, int] | None = None) -> None:
+        """Start a 400ms transition to the given phase with optional accent color."""
         self.phase_index = phase_index
         self.custom_color = color
         self.transition_ms = 400
         self.elapsed_ms = 0
 
     def step(self, dt_ms: int) -> None:
+        """Advance the phase transition timer; transitions complete in 400ms."""
         if self.transition_ms > 0:
             self.elapsed_ms += dt_ms
             if self.elapsed_ms >= self.transition_ms:
@@ -98,6 +100,7 @@ class PhaseColorState:
 
     @property
     def transition_progress(self) -> float:
+        """Return 0.0-1.0 progress of the current phase transition (1.0 if idle)."""
         if self.transition_ms <= 0:
             return 1.0
         return min(1.0, self.elapsed_ms / self.transition_ms)
@@ -278,12 +281,14 @@ class BarFlash:
     is_active: bool = False
 
     def trigger(self, color: tuple[int, int, int], duration_ms: int = 200) -> None:
+        """Start a screen flash with the given RGB color and duration in ms."""
         self.color = color
         self.duration_ms = duration_ms
         self.elapsed_ms = 0
         self.is_active = True
 
     def step(self, dt_ms: int) -> None:
+        """Advance the flash timer; deactivate when duration expires."""
         if self.is_active:
             self.elapsed_ms += dt_ms
             if self.elapsed_ms >= self.duration_ms:
@@ -291,6 +296,7 @@ class BarFlash:
 
     @property
     def alpha(self) -> float:
+        """Return 0.0-1.0 fading alpha (1.0 just triggered, 0.0 expired/idle)."""
         if not self.is_active or self.duration_ms <= 0:
             return 0.0
         return max(0.0, 1.0 - self.elapsed_ms / self.duration_ms)
@@ -316,11 +322,13 @@ class CameraVignette:
     flash_elapsed_ms: int = 0
 
     def flash(self, intensity: float = 0.8, duration_ms: int = 400) -> None:
+        """Trigger a one-shot flash overlay with given intensity (0.0-1.0)."""
         self.flash_intensity = intensity
         self.flash_duration_ms = duration_ms
         self.flash_elapsed_ms = 0
 
     def step(self, dt_ms: int) -> None:
+        """Advance the flash timer; clear when duration expires."""
         if self.flash_duration_ms > 0:
             self.flash_elapsed_ms += dt_ms
             if self.flash_elapsed_ms >= self.flash_duration_ms:
@@ -329,6 +337,7 @@ class CameraVignette:
 
     @property
     def total_intensity(self) -> float:
+        """Return combined base + flash intensity, clamped to [0.0, 1.0]."""
         return min(1.0, self.intensity + self.flash_intensity)
 
 

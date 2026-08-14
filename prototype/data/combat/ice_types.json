@@ -2858,5 +2858,47 @@
       }
     ],
     "ice_kind": "aleph"
+  },
+  "wintermute_corrupted": {
+    "name": "ICE — Wintermute Corrupted",
+    "portrait": "ice.black",
+    "hp_base": 240,
+    "hp_per_grade": 35,
+    "dmg_base": 11,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 6,
+    "speed": 7,
+    "skills": [
+      "stack_corruption",
+      "ai_subversion",
+      "reality_distortion"
+    ],
+    "resistance": 0.4,
+    "variant": "corrupted",
+    "base_type": "wintermute",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1.0,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.7,
+        "quantity": 2
+      },
+      {
+        "item": "glitch_fragment",
+        "chance": 0.18,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.wintermute_echo",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "wintermute"
   }
 }

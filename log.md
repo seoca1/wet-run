@@ -1,3 +1,162 @@
+## [2026-08-15] feat+chore(polish) | Phase 34 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Hosaka Research Proposal event) + 3 polish improvements. Commit `a35b91c`. 6 files, +432/-8, 5164 passed (+22 from Phase 33 baseline 5142).
+
+### 1. Content addition: faction_event_hosaka_research_proposal
+
+`prototype/data/story/events.json` 에 `faction_event_hosaka_research_proposal` 신규 엔트리 추가 (36 → 37 events). Gibson-flavored Hosaka biotech R&D recruitment tone — 깁슨 원작의 Neuromancer 시대 Hosaka (Case의 고용주) 톤. Phase 30 maas_neuropozyne ICE (biotech underbelly) 와 Phase 33 maas_neuropozyne_market (street dealer) 가 뒷골목 biotech 이라면, Hosaka는 corporate R&D side of same theme:
+
+- **Category**: faction, faction_ref: hosaka, trigger: `npc_choice`, trigger_condition: `hosaka_rep >= 4 AND credits > 2500`
+- **Mood**: corporate, location: hosaka_research_sublevel, arc: 3, tier: 4, pillar: code
+- **Dialogue**: HOSAKA RECRUITER 메시지 ("Your deck signature is on file, runner." / "We are funding a longitudinal wetware study. Subjects are paid." / "The Sprawl's next generation of ICE will be designed by people like you. Or rather, against people like you.")
+- **Choice**: Sign the contract (credits_+2500, hosaka_research_subject_marker, hosaka_visibility_+1) vs. Walk away (stay_invisible_to_wetware_trials)
+- **Reward**: 2500 credits + 100 XP
+- **Consequence**: hosaka_research_contract_branch
+- **Faction affinity**: hosaka +2
+
+hosaka faction events: 2 → 3. Faction ICE/faction event parity: hosaka=3, sense_net=3, yakuza=3 (3-tied), ta_rep=2, loa=2, maas=1.
+
+### 2. Polish: Docstrings on combat/state_models.py
+
+19 docstrings 추가 (interrogate 27% → 100%). Lowest-coverage module in vault. Combatant methods + CombatState helpers:
+
+**Combatant methods (16)**:
+- `is_alive` — HP > 0
+- `is_stunned` / `is_staggered` — status checks
+- `consume_stagger` — one-shot clear
+- `get_attack_bonus` / `get_defense_bonus` — status buffs + equipment
+- `get_total_attack` — auto-attack + bonus
+- `get_ice_resistance_pct` / `get_crit_bonus_pct` / `get_damage_bonus_pct` — equipment percent bonuses
+- `get_program_power` / `get_total_shield_bonus` / `get_total_ap_bonus` / `get_total_hp_bonus` — equipment flat bonuses
+- `alive_skills_available` — bool check
+- `choose_skill` — deterministic RNG pick with None fallback
+
+**CombatState methods (3)**:
+- `__post_init__` — sync legacy `enemy` field with `enemies` tuple
+- `target` (property) — currently-targeted enemy or None
+- `push` — append + FIFO cap at 6 entries
+
+Vault-wide interrogate: **96.1% → 96.9%** (state_models.py contribution).
+
+### 3. Polish: Improved error messages on run/state.py
+
+`prototype/src/roguelike_sprawl/run/state.py` — `start_chapter` 와 `complete_chapter` 의 chapter_num ValueError 가 호출 메서드 이름과 명시적 valid range 표시:
+
+```python
+# before:
+raise ValueError(f"chapter_num must be 1..5, got {chapter_num}")
+# after (start_chapter):
+raise ValueError(
+    f"start_chapter: chapter_num must be 1..5, got {chapter_num} "
+    f"(valid: 1, 2, 3, 4, 5)"
+)
+```
+
+이전: 호출 context (어떤 메서드에서 throw) 알 수 없음. 이제 두 호출 지점을 grep 없이 즉시 식별 가능.
+
+### 4. Polish: Improved error messages on combat/cyberdeck.py
+
+`prototype/src/roguelike_sprawl/combat/cyberdeck.py` — `add_program_to_deck` / `remove_program_from_deck` ValueError 가 current program list + remediation hint 포함:
+
+```python
+# before:
+raise ValueError(f"Program {program_id} already in deck")
+raise ValueError(f"Deck full ({max_slots} slots)")
+raise ValueError(f"Program {program_id} not in deck")
+# after:
+raise ValueError(
+    f"Program {program_id!r} already in deck "
+    f"(current programs: {list(deck.program_ids)})"
+)
+raise ValueError(
+    f"Deck full ({max_slots} slots, "
+    f"already has {len(deck.program_ids)} programs). "
+    f"Remove a program before adding a new one."
+)
+raise ValueError(
+    f"Program {program_id!r} not in deck "
+    f"(current programs: {list(deck.program_ids)})"
+)
+```
+
+이전: 단순 id 나열 — 디버깅 시 현재 deck 상태 알 수 없음. 이제 현재 program list + (full deck의 경우) 해결 방안 표시.
+
+### 5. Test coverage (+22)
+
+`prototype/tests/unit/test_phase34_small_content_polish.py` (new file, 22 tests):
+
+**Content — TestHosakaResearchProposalEvent (7 tests)**:
+- `test_event_present` — event key present
+- `test_event_metadata` — event_id, title, faction_ref=hosaka, trigger, gates, arc, tier
+- `test_event_has_choice` — two-option choice with credit reward + marker
+- `test_event_dialogue_uses_gibson_tone` — Hosaka + wetware + Sprawl + ICE keywords
+- `test_event_faction_affinity` — hosaka +2
+- `test_event_consequence_sets_branch` — hosaka_research_contract_branch
+- `test_event_has_reward` — 2500 credits + 100 XP
+
+**Content — TestEventCountIncrement (4 tests)**:
+- `test_total_events_at_least_37` — total events >= 37
+- `test_metadata_total_events_updated` — metadata.phase == "34"
+- `test_total_chains_unchanged` — 6 chains (no new chain)
+- `test_hosaka_faction_has_three_events` — hosaka: 2 → 3 events
+
+**Polish — TestStateModelsDocstringCoverage (3 tests)**:
+- `test_all_combatant_methods_have_docstrings` — 16 Combatant methods
+- `test_combat_state_methods_have_docstrings` — 3 CombatState helpers
+- `test_interrogate_coverage_100` — interrogate sub-process verification
+
+**Polish — TestImprovedErrorMessages (5 tests)**:
+- `test_run_state_chapter_error_lists_valid_range` — start_chapter error names method + value + range
+- `test_run_state_complete_chapter_error_lists_valid_range` — complete_chapter analog
+- `test_cyberdeck_duplicate_program_error_lists_programs` — current programs in error
+- `test_cyberdeck_full_deck_error_suggests_removal` — slot count + remediation
+- `test_cyberdeck_remove_missing_program_error_lists_programs` — current programs in error
+
+**Smoke — TestStateModelsSmoke (3 tests)**:
+- `test_combatant_choose_skill_returns_valid_skill` — RNG-based skill pick
+- `test_combatant_is_alive` — HP > 0 check
+- `test_combat_state_push_caps_at_six` — FIFO log cap
+
+### 6. Forward-compat allowlist update
+
+`prototype/tests/unit/test_phase29_yakuza_contract.py`:
+- Updated phase allowlist from `("29", "31", "32", "33")` to `("29", "31", "32", "33", "34")` — avoids stale assertion when later phases bump the metadata version.
+
+### 7. Validation
+
+```
+$ make format       # ruff format, 3 files reformatted initially, then clean
+$ make lint         # ruff check — All checks passed!
+$ make typecheck    # mypy strict — Success: no issues found in 211 source files
+$ make test         # 5164 passed, 463 skipped, 1 xfailed (was 5142 — +22)
+$ python3 audit_vault.py                  # 2 pre-existing typing_language artifacts (out of scope per AGENTS.md §3)
+$ python3 mixed_language_audit.py         # 0 violations
+$ python3 dashboard_pipeline_audit.py     # 0 errors
+```
+
+### 8. Files changed
+
+- `prototype/data/story/events.json` — +31/-2 (new event + metadata bump)
+- `prototype/src/roguelike_sprawl/combat/cyberdeck.py` — +14/-3 (3 error messages)
+- `prototype/src/roguelike_sprawl/combat/state_models.py` — +31/-0 (19 docstrings)
+- `prototype/src/roguelike_sprawl/run/state.py` — +9/-2 (2 error messages)
+- `prototype/tests/unit/test_phase29_yakuza_contract.py` — +1/-1 (allowlist extension)
+- `prototype/tests/unit/test_phase34_small_content_polish.py` — new file, +354/-0 (22 new tests)
+
+Total: 6 files, +432/-8.
+
+### 9. Notes
+
+- No push (99 unpushed commits pending GH_TOKEN).
+- No raw/, Fiction/, Language/, Game/typing_language/ touched.
+- No ADR changes (existing ADRs preserved).
+- No new dependencies.
+- No type suppressions.
+- All 5142 baseline tests preserved + 22 new = 5164.
+- Docstring coverage: 96.1% → 96.9%.
+
+---
+
 ## [2026-08-15] feat+chore(polish) | Phase 33 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Maas BioLabs Black Market event) + 2 polish improvements. Commit `a167f95`. 7 files, +264/-6, 5142 passed (+16 from Phase 32 baseline 5126).

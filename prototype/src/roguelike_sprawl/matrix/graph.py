@@ -20,6 +20,11 @@ class Edge:
     dst: str
 
     def __post_init__(self) -> None:
+        """Validate Edge endpoints: both non-empty and not a self-loop.
+
+        Raises:
+            ValueError: If src or dst is empty, or if src equals dst.
+        """
         if not self.src or not self.dst:
             raise ValueError("Edge endpoints must be non-empty")
         if self.src == self.dst:
@@ -47,6 +52,12 @@ class MatrixGraph:
     entry_id: str
 
     def __post_init__(self) -> None:
+        """Validate graph invariants: unique node ids, valid entry, valid edges.
+
+        Raises:
+            ValueError: If duplicate node ids, unknown entry_id, or edges
+                referencing nodes that are not in the graph.
+        """
         ids = {n.id for n in self.nodes}
         if len(ids) != len(self.nodes):
             raise ValueError("MatrixGraph: duplicate node ids")
@@ -83,16 +94,23 @@ class MatrixGraph:
         return [n for n in self.nodes if n.kind is NodeKind.EXIT]
 
     def __contains__(self, node_id: object) -> bool:
+        """Return True if a node with the given id is in the graph.
+
+        Non-string keys always return False (graph is keyed by string id).
+        """
         return isinstance(node_id, str) and any(n.id == node_id for n in self.nodes)
 
     def __iter__(self) -> Iterator[Node]:
+        """Iterate over nodes in insertion order (tuple is ordered)."""
         return iter(self.nodes)
 
     def __len__(self) -> int:
+        """Return the number of nodes in the graph."""
         return len(self.nodes)
 
     @override
     def __repr__(self) -> str:
+        """Return a compact developer-friendly summary of the graph."""
         return f"MatrixGraph(nodes={len(self.nodes)}, edges={len(self.edges)}, entry={self.entry_id!r})"
 
     def to_dict(self) -> dict[str, object]:

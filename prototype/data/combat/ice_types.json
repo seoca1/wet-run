@@ -1344,6 +1344,41 @@
     ],
     "ice_kind": "construct"
   },
+  "maas_neuropozyne": {
+    "name": "ICE — Maas Biolabs Neuropozyne (Tier-2 biotech defense)",
+    "portrait": "ice.standard",
+    "hp_base": 90,
+    "hp_per_grade": 16,
+    "dmg_base": 4,
+    "dmg_per_grade": 2,
+    "tier": 2,
+    "defense": 3,
+    "speed": 6,
+    "skills": [
+      "biofeedback",
+      "addiction_loop"
+    ],
+    "resistance": 0.2,
+    "faction": "maas",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "maas_neuropozyne_dose",
+        "chance": 0.08,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard"
+  },
   "wintermute_prime": {
     "name": "ICE — Wintermute Prime (boss-tier AI)",
     "portrait": "ice.standard",

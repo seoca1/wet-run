@@ -70,6 +70,7 @@ def _apply_aoe_damage(
 
 
 def _apply_damage_skill(state: CombatState, skill: Skill) -> None:
+    """Standard attack skill: damage the current target (or AOE if flagged)."""
     from .state import _apply_damage, _calculate_damage
 
     if skill.aoe:
@@ -86,6 +87,7 @@ def _apply_damage_skill(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_heavy_attack(state: CombatState, skill: Skill) -> None:
+    """Heavy attack skill: high-damage single-target or AOE, crit flavor 'DEVASTATING!'."""
     from .state import _apply_damage, _calculate_damage
 
     if skill.aoe:
@@ -102,6 +104,7 @@ def _apply_heavy_attack(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_pierce(state: CombatState, skill: Skill) -> None:
+    """Pierce skill: damage that bypasses target's shield (or AOE pierce)."""
     from .state import _apply_damage, _calculate_damage
 
     if skill.aoe:
@@ -118,6 +121,10 @@ def _apply_pierce(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_multi_hit(state: CombatState, skill: Skill) -> None:
+    """Multi-hit skill: deal skill.damage ``skill.hit_count`` times to one target.
+
+    Crits are disabled per hit to keep variance stable across rapid-fire attacks.
+    """
     from .state import _apply_damage, _calculate_damage
 
     target = state.target
@@ -135,6 +142,7 @@ def _apply_multi_hit(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_dot(state: CombatState, skill: Skill) -> None:
+    """Damage-over-time skill: immediate damage plus a burn status ticking for ``dot_duration_ms``."""
     from .state import _apply_damage, _calculate_damage
 
     if skill.aoe:
@@ -159,12 +167,14 @@ def _apply_dot(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_shield(state: CombatState, skill: Skill) -> None:
+    """Shield skill: add ``skill.shield`` to player shield pool (no cap)."""
     state.shield += skill.shield
     _record_event(state, "shield", skill.effect_color)
     state.push(f">> {skill.name}: +{skill.shield} shield! (Total: {state.shield})")
 
 
 def _apply_heal(state: CombatState, skill: Skill) -> None:
+    """Heal skill: restore ``skill.heal`` HP to player, capped at max_hp."""
     healed = min(skill.heal, state.player.max_hp - state.player.hp)
     state.player.hp = min(state.player.max_hp, state.player.hp + skill.heal)
     _record_event(state, "heal", skill.effect_color)
@@ -172,6 +182,7 @@ def _apply_heal(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_regen(state: CombatState, skill: Skill) -> None:
+    """Regen skill: apply a regen status that heals ``skill.heal // 10`` HP per tick."""
     state.player.statuses.append(
         StatusEffect(
             effect_id="regen",
@@ -184,6 +195,7 @@ def _apply_regen(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_buff(state: CombatState, skill: Skill) -> None:
+    """Buff skill: apply 'powered' status with +attack_bonus for buff_duration_ms."""
     state.player.statuses.append(
         StatusEffect(
             effect_id="powered",
@@ -196,6 +208,7 @@ def _apply_buff(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_debuff(state: CombatState, skill: Skill) -> None:
+    """Debuff skill: apply 'weakened' status (negative attack_bonus) to current target."""
     target = state.target
     if target is None:
         return
@@ -211,6 +224,7 @@ def _apply_debuff(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_stun(state: CombatState, skill: Skill) -> None:
+    """Stun skill: apply 'stun' status to current target for stun_duration_ms."""
     target = state.target
     if target is None:
         return
@@ -244,6 +258,12 @@ def _apply_stagger(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_detect(state: CombatState, skill: Skill) -> None:
+    """Detect skill: reveal current target's role-based weakness or HP/AP if unknown.
+
+    Looks up WEAKNESS_BY_ICE for target.ice_kind; if found, reports the role with
+    the largest damage multiplier (positive = weakness, negative = resistance).
+    Otherwise reports raw HP/AP. Always pushes a player-facing message.
+    """
     from .state import WEAKNESS_BY_ICE
 
     target = state.target
@@ -273,6 +293,7 @@ def _apply_detect(state: CombatState, skill: Skill) -> None:
 
 
 def _apply_lifesteal(state: CombatState, skill: Skill) -> None:
+    """Lifesteal skill: damage target then heal player for half the damage dealt (capped at max_hp)."""
     from .state import _apply_damage, _calculate_damage
 
     target = state.target

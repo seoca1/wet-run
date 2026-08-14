@@ -39,20 +39,34 @@ def variant_ice_types() -> dict:
     return variant_ice_types()
 
 
-FACTIONS = ["hosaka", "sense_net", "yakuza", "tessier_ashpool", "loa"]
+FACTIONS = ["hosaka", "sense_net", "yakuza", "tessier_ashpool", "loa", "maas"]
 VARIANT_TYPES = ["ascended", "corrupted", "defensive"]
 
 
 class TestFactionICE:
-    """All 25 faction-specific ICE types defined (5 per faction)."""
+    """All 26 faction-specific ICE types defined (5 per core faction + 1 maas).
+
+    Phase 30 added maas_neuropozyne — first ICE for the maas faction
+    (Count Zero's Maas Biolabs biotech megacorp). Faction count was 25
+    (5 factions × 5 ICE); Phase 30 increments to 26 (maas added with 1 ICE).
+    """
 
     def test_faction_ice_count(self, faction_ice_types) -> None:
-        assert len(faction_ice_types) == 25, f"Expected 25, got {len(faction_ice_types)}"
+        assert len(faction_ice_types) == 26, f"Expected 26, got {len(faction_ice_types)}"
 
     def test_faction_ice_per_faction(self, faction_ice_types) -> None:
-        for faction in FACTIONS:
+        # maas has 1 representative ICE (Phase 30 addition); other factions have 5.
+        per_faction_expected = {
+            "hosaka": 5,
+            "sense_net": 5,
+            "yakuza": 5,
+            "tessier_ashpool": 5,
+            "loa": 5,
+            "maas": 1,
+        }
+        for faction, expected in per_faction_expected.items():
             count = sum(1 for v in faction_ice_types.values() if v.get("faction") == faction)
-            assert count == 5, f"{faction}: expected 5, got {count}"
+            assert count == expected, f"{faction}: expected {expected}, got {count}"
 
     def test_faction_ice_required_fields(self, faction_ice_types) -> None:
         for ice_id, ice in faction_ice_types.items():

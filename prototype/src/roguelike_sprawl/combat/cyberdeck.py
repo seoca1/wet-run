@@ -46,9 +46,15 @@ def add_program_to_deck(
 ) -> Cyberdeck:
     """Add a program to the deck. Returns a new deck (frozen)."""
     if program_id in deck.program_ids:
-        raise ValueError(f"Program {program_id} already in deck")
+        raise ValueError(
+            f"Program {program_id!r} already in deck (current programs: {list(deck.program_ids)})"
+        )
     if len(deck.program_ids) >= max_slots:
-        raise ValueError(f"Deck full ({max_slots} slots)")
+        raise ValueError(
+            f"Deck full ({max_slots} slots, "
+            f"already has {len(deck.program_ids)} programs). "
+            f"Remove a program before adding a new one."
+        )
     new_ids = deck.program_ids + (program_id,)
     return Cyberdeck(
         name=deck.name,
@@ -60,7 +66,9 @@ def add_program_to_deck(
 def remove_program_from_deck(deck: Cyberdeck, program_id: str) -> Cyberdeck:
     """Remove a program from the deck. Returns a new deck."""
     if program_id not in deck.program_ids:
-        raise ValueError(f"Program {program_id} not in deck")
+        raise ValueError(
+            f"Program {program_id!r} not in deck (current programs: {list(deck.program_ids)})"
+        )
     new_ids = tuple(p for p in deck.program_ids if p != program_id)
     return Cyberdeck(
         name=deck.name,

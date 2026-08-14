@@ -683,7 +683,9 @@ class RunState:
         start_chapter_N() methods.
         """
         if not 1 <= chapter_num <= 5:
-            raise ValueError(f"chapter_num must be 1..5, got {chapter_num}")
+            raise ValueError(
+                f"start_chapter: chapter_num must be 1..5, got {chapter_num} (valid: 1, 2, 3, 4, 5)"
+            )
         new_state = ChapterState(f"in_chapter_{chapter_num}")
         self.chapter_state = new_state
         self.current_stage = Stage.PENDING
@@ -697,7 +699,10 @@ class RunState:
         methods.
         """
         if not 1 <= chapter_num <= 5:
-            raise ValueError(f"chapter_num must be 1..5, got {chapter_num}")
+            raise ValueError(
+                f"complete_chapter: chapter_num must be 1..5, got {chapter_num} "
+                f"(valid: 1, 2, 3, 4, 5)"
+            )
         complete_state = ChapterState(f"chapter_{chapter_num}_complete")
         self.chapter_state = complete_state
 

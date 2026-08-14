@@ -159,53 +159,76 @@ class Combatant:
     personality: str = "aggressive"
 
     def is_alive(self) -> bool:
+        """Return True if HP is greater than zero."""
         return self.hp > 0
 
     def is_stunned(self) -> bool:
+        """Return True if any active status has is_stunned set."""
         return any(s.is_stunned for s in self.statuses)
 
     def is_staggered(self) -> bool:
+        """Return True if any active status has is_staggered set."""
         return any(s.is_staggered for s in self.statuses)
 
     def consume_stagger(self) -> None:
+        """Remove all stagger statuses from this combatant (one-shot clear)."""
         self.statuses = [s for s in self.statuses if not s.is_staggered]
 
     def get_attack_bonus(self) -> int:
+        """Return total attack bonus: buff statuses + equipment attack bonus."""
         buffs = sum(s.attack_bonus for s in self.statuses)
         return buffs + self.equip_attack_bonus
 
     def get_defense_bonus(self) -> int:
+        """Return total defense bonus: buff statuses + equipment defense bonus."""
         buffs = sum(s.defense_bonus for s in self.statuses)
         return buffs + self.equip_defense_bonus
 
     def get_total_attack(self) -> int:
+        """Return effective attack: base auto-attack damage + attack bonus."""
         return self.auto_attack_damage + self.get_attack_bonus()
 
     def get_ice_resistance_pct(self) -> int:
+        """Return ICE resistance percent from equipment (0-100)."""
         return self.equip_ice_resistance
 
     def get_crit_bonus_pct(self) -> int:
+        """Return crit chance bonus percent from equipment."""
         return self.equip_crit_bonus_pct
 
     def get_damage_bonus_pct(self) -> int:
+        """Return damage bonus percent from equipment."""
         return self.equip_damage_bonus_pct
 
     def get_program_power(self) -> int:
+        """Return flat program power bonus from equipment."""
         return self.equip_program_power
 
     def get_total_shield_bonus(self) -> int:
+        """Return shield bonus from equipment."""
         return self.equip_shield_bonus
 
     def get_total_ap_bonus(self) -> int:
+        """Return AP bonus from equipment."""
         return self.equip_ap_bonus
 
     def get_total_hp_bonus(self) -> int:
+        """Return max-HP bonus from equipment."""
         return self.equip_hp_bonus
 
     def alive_skills_available(self) -> bool:
+        """Return True if the combatant has any skills equipped."""
         return bool(self.skills)
 
     def choose_skill(self, rng: random.Random) -> Skill | None:
+        """Pick a random skill from this combatant's skill list.
+
+        Args:
+            rng: Deterministic RNG source (use the state's rng for replay).
+
+        Returns:
+            The chosen Skill, or None if no skills are equipped.
+        """
         if not self.skills:
             return None
         idx = rng.randrange(len(self.skills))
@@ -264,6 +287,12 @@ class CombatState:
     phase_change_color: tuple[int, int, int] = (255, 255, 0)
 
     def __post_init__(self) -> None:
+        """Sync the legacy single-enemy field with the enemies tuple.
+
+        Either ``enemy`` or ``enemies`` may be provided at construction; this
+        ensures both views stay consistent (the first slot of ``enemies``
+        always mirrors ``enemy``).
+        """
         if not self.enemies and self.enemy is not None:
             self.enemies = (self.enemy,)
         elif self.enemies and self.enemy is None:
@@ -271,11 +300,13 @@ class CombatState:
 
     @property
     def target(self) -> Combatant | None:
+        """Return the currently-targeted enemy (None if no enemies)."""
         if not self.enemies:
             return None
         return self.enemies[self.target_index]
 
     def push(self, msg: str) -> None:
+        """Append a log message, capping the log at 6 entries (FIFO)."""
         self.log.append(msg)
         if len(self.log) > 6:
             self.log.pop(0)

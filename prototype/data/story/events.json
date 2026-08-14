@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.1",
     "date": "2026-08-15",
-    "phase": "33",
+    "phase": "34",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 36,
+    "total_events": 37,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -853,6 +853,33 @@
     "reward": null,
     "consequence": "maas_market_choice",
     "faction_affinity": {"maas": 2}
+  },
+  "faction_event_hosaka_research_proposal": {
+    "event_id": "faction_event_hosaka_research_proposal",
+    "title": "Hosaka Research Proposal",
+    "category": "faction",
+    "faction_ref": "hosaka",
+    "trigger": "npc_choice",
+    "trigger_condition": "hosaka_rep >= 4 AND credits > 2500",
+    "mood": "corporate",
+    "location": "hosaka_research_sublevel",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "HOSAKA RECRUITER: Your deck signature is on file, runner.",
+      "HOSAKA RECRUITER: We are funding a longitudinal wetware study. Subjects are paid.",
+      "HOSAKA RECRUITER: The Sprawl's next generation of ICE will be designed by people like you. Or rather, against people like you."
+    ],
+    "choice": {
+      "option_a": "Sign the contract (2500 credits, hosaka_research_subject_marker).",
+      "option_b": "Walk away and stay off the wetware grid.",
+      "consequence_a": "credits_+2500, hosaka_research_subject_marker, hosaka_visibility_+1",
+      "consequence_b": "hosaka_research_declined, stay_invisible_to_wetware_trials"
+    },
+    "reward": {"credits": 2500, "xp": 100},
+    "consequence": "hosaka_research_contract_branch",
+    "faction_affinity": {"hosaka": 2}
   },
   "_chains": {
     "chain_case_past_memories": {

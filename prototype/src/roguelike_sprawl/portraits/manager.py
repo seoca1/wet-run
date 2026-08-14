@@ -45,6 +45,7 @@ class PortraitManager:
     __slots__ = ("_portraits",)
 
     def __init__(self, data_dir: Path | None = None) -> None:
+        """Create a PortraitManager; load from ``data_dir/portraits.json`` if given."""
         self._portraits: dict[str, dict[str, Any]] = {}
         if data_dir is not None:
             self._load(data_dir)

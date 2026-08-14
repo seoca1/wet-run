@@ -77,6 +77,7 @@ class JobBoard:
     __slots__ = ("_missions",)
 
     def __init__(self, missions: tuple[Mission, ...] = ()) -> None:
+        """Create a JobBoard pre-populated with ``missions`` (indexed by id)."""
         self._missions = {m.id: m for m in missions}
 
     @classmethod

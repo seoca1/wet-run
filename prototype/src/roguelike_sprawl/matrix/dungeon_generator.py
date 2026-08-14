@@ -254,6 +254,7 @@ class _BspNode:
         return self is other
 
     def __lt__(self, other: object) -> bool:
+        """Identity-based ordering for use in ``heapq`` / sorted containers."""
         return id(self) < id(other) if isinstance(other, _BspNode) else NotImplemented
 
     @property

@@ -292,18 +292,22 @@ def stop_all() -> None:
 
 
 def set_volume(volume: float) -> None:
+    """Set master volume (0.0-1.0) on the global SoundManager."""
     get_sound_manager().set_volume(volume)
 
 
 def set_mute(muted: bool) -> None:
+    """Mute or unmute audio globally via the SoundManager."""
     get_sound_manager().set_mute(muted)
 
 
 def toggle_mute() -> bool:
+    """Toggle the global mute state; returns the new muted state."""
     return get_sound_manager().toggle_mute()
 
 
 def is_available() -> bool:
+    """Return True if the current platform has a working audio backend."""
     return get_sound_manager().is_available()
 
 

@@ -528,12 +528,15 @@ class EquipmentRegistry:
         return cls(default_equipment)
 
     def get(self, equip_id: str) -> Equipment | None:
+        """Look up an equipment by id; returns None if not registered."""
         return self._equipment.get(equip_id)
 
     def all(self) -> list[Equipment]:
+        """Return every registered equipment."""
         return list(self._equipment.values())
 
     def by_slot(self, slot: EquipSlot) -> list[Equipment]:
+        """Return all registered equipment for the given slot."""
         return [e for e in self._equipment.values() if e.slot == slot]
 
 

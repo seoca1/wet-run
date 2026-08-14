@@ -63,6 +63,7 @@ class Translator:
     __slots__ = ("lang", "_data")
 
     def __init__(self, lang: str, data_dir: Path | None = None) -> None:
+        """Create a Translator for ``lang``; loads from ``data_dir/{lang}.json`` if given."""
         self.lang = lang
         self._data: dict[str, Any] = {}
         if data_dir is not None:

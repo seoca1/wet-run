@@ -68,6 +68,7 @@ class ExplorationState:
         return Visibility.UNKNOWN
 
     def is_scanned(self, node_id: str) -> bool:
+        """Return True if the player has probed/scanned this node."""
         return node_id in self.scanned
 
     def discoverable_now(self, graph: MatrixGraph) -> list[str]:

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import pytest
+
 
 class TestSoundManager:
     """Tests for SoundManager class."""
@@ -133,3 +135,26 @@ class TestSoundCategories:
         assert sound_manager.AMBIENT == "ambient"
         assert sound_manager.VOICE == "voice"
         assert sound_manager.MUSIC == "music"
+
+
+class TestPhase31WAVGeneration:
+    """Phase 31 — _generate_wav raises ValueError for unknown waveform kind."""
+
+    def test_generate_wav_valid_kinds(self, tmp_path: Path) -> None:
+        """_generate_wav accepts all three waveform kinds."""
+        from roguelike_sprawl.audio.sound_manager import _generate_wav
+
+        for kind in ("sine", "square", "noise"):
+            path = tmp_path / f"test_{kind}.wav"
+            _generate_wav(path, freq=440, duration_ms=50, kind=kind)
+            assert path.exists()
+            assert path.stat().st_size > 0
+
+    def test_generate_wav_rejects_unknown_kind(self, tmp_path: Path) -> None:
+        """_generate_wav raises ValueError with a clear message for unknown kind."""
+        from roguelike_sprawl.audio.sound_manager import _generate_wav
+
+        path = tmp_path / "bad.wav"
+        with pytest.raises(ValueError, match="Unknown WAV kind"):
+            _generate_wav(path, freq=440, duration_ms=50, kind="sawtooth")
+        assert not path.exists()

@@ -1,10 +1,10 @@
 {
   "_metadata": {
     "version": "1.0",
-    "date": "2026-08-14",
-    "phase": "29",
+    "date": "2026-08-15",
+    "phase": "31",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 33,
+    "total_events": 34,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -494,6 +494,32 @@
     "reward": {"credits": 200, "item": "scrap_metal"},
     "consequence": "blackout_active_3_runs",
     "faction_affinity": {}
+  },
+  "general_event_neuropozyne_withdrawal": {
+    "event_id": "general_event_neuropozyne_withdrawal",
+    "title": "Neuropozyne Withdrawal",
+    "category": "general",
+    "trigger": "combat_start",
+    "trigger_condition": "hp < 50% AND has_status:dependent OR random < 0.03",
+    "mood": "shaky",
+    "location": "any_combat",
+    "arc": 3,
+    "pillar": "memory",
+    "tier": 3,
+    "dialogue": [
+      "WETWARE: WARNING: Neuropozyne levels critical.",
+      "WETWARE: WARNING: Withdrawal symptoms in 3... 2... 1...",
+      "RUNNER: Not now. Not in the middle of a run."
+    ],
+    "choice": {
+      "option_a": "Push through (lose 10 HP, keep fighting).",
+      "option_b": "Jack out (abort combat, full HP).",
+      "consequence_a": "hp_-10%, neuropozyne_tolerance_+1",
+      "consequence_b": "mission_failed, neuropozyne_tolerance_reset"
+    },
+    "reward": null,
+    "consequence": "neuropozyne_withdrawal_choice",
+    "faction_affinity": {"maas": 1}
   },
   "general_event_fire_sale": {
     "event_id": "general_event_fire_sale",

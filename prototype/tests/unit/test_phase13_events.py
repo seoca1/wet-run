@@ -35,6 +35,7 @@ TRIGGERS = [
     "npc_choice",
     "npc_greeting",
     "combat_end",
+    "combat_start",
     "node_enter",
     "story_milestone",
     "chapter_complete",
@@ -60,7 +61,7 @@ class TestEventCounts:
 
     def test_general_events(self, events) -> None:
         general_events = [k for k, v in events.items() if v.get("category") == "general"]
-        assert len(general_events) >= 11, f"Expected 11+ general events, got {len(general_events)}"
+        assert len(general_events) >= 12, f"Expected 12+ general events, got {len(general_events)}"
 
 
 class TestCharacterEvents:
@@ -177,3 +178,54 @@ class TestTotalEvents:
             for event_id in chain["events"]:
                 chain_events.add(event_id)
         assert len(chain_events) >= 10, f"Need 10+ unique chain events, got {len(chain_events)}"
+
+
+class TestPhase31NeuropozyneEvent:
+    """Phase 31 — Neuropozyne Withdrawal general event (Gibson-flavored biotech crisis)."""
+
+    EVENT_ID = "general_event_neuropozyne_withdrawal"
+
+    def test_event_exists(self, events) -> None:
+        assert self.EVENT_ID in events, f"Missing {self.EVENT_ID} (Phase 31 addition)"
+
+    def test_event_metadata(self, events) -> None:
+        event = events[self.EVENT_ID]
+        assert event["event_id"] == self.EVENT_ID
+        assert event["category"] == "general"
+        assert event["title"] == "Neuropozyne Withdrawal"
+        assert event["arc"] == 3
+        assert event["tier"] == 3
+
+    def test_event_trigger(self, events) -> None:
+        event = events[self.EVENT_ID]
+        assert event["trigger"] in TRIGGERS, f"trigger '{event['trigger']}' not in {TRIGGERS}"
+        assert event["trigger"] == "combat_start"
+
+    def test_event_has_choice(self, events) -> None:
+        """Withdrawal must offer a binary survival choice (Gibson: addiction / cost)."""
+        event = events[self.EVENT_ID]
+        assert event["choice"] is not None, "Phase 31 event must have a choice"
+        assert "option_a" in event["choice"]
+        assert "option_b" in event["choice"]
+        assert "consequence_a" in event["choice"]
+        assert "consequence_b" in event["choice"]
+
+    def test_event_dialogue_uses_wetware_voice(self, events) -> None:
+        """Dialogue should use the Gibson-style cyberpunk biotech warning voice."""
+        event = events[self.EVENT_ID]
+        dialogue_text = " ".join(event["dialogue"]).lower()
+        assert "wetware" in dialogue_text
+        assert "neuropozyne" in dialogue_text
+        assert "warning" in dialogue_text
+
+    def test_event_has_maas_affinity(self, events) -> None:
+        """Connects to the maas faction (Phase 30 maas_neuropozyne ICE)."""
+        event = events[self.EVENT_ID]
+        assert event["faction_affinity"].get("maas") == 1, (
+            "Phase 31 event should boost maas affinity"
+        )
+
+    def test_event_metadata_count_updated(self, events_data) -> None:
+        """_metadata.total_events should reflect 34 after Phase 31 add."""
+        total = events_data["_metadata"]["total_events"]
+        assert total >= 34, f"Expected total_events >= 34, got {total}"

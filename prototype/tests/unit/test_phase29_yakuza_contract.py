@@ -133,7 +133,7 @@ class TestChainYakuzaUpdate:
 
 
 class TestEventCountIncrement:
-    """Phase 29 bumps total event count from 32 to 33."""
+    """Phase 29 bumped total event count from 32 to 33 (Phase 31 now 34)."""
 
     def test_total_events_at_least_33(self, events: dict) -> None:
         assert len(events) >= 33, f"Phase 29 target 33, got {len(events)}"
@@ -143,9 +143,10 @@ class TestEventCountIncrement:
         yakuza = [v for v in events.values() if v.get("faction_ref") == "yakuza"]
         assert len(yakuza) == 3, f"Expected 3 yakuza events, got {len(yakuza)}"
 
-    def test_metadata_total_events_updated(self, metadata: dict) -> None:
-        assert metadata["total_events"] == 33
-        assert metadata["phase"] == "29"
+    def test_metadata_total_events_at_least_33(self, metadata: dict) -> None:
+        """_metadata.total_events reflects the current count (>= 33 after Phase 31)."""
+        assert metadata["total_events"] >= 33
+        assert metadata["phase"] in ("29", "31")
 
 
 # ---------------------------------------------------------------------------

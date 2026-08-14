@@ -363,8 +363,26 @@ def safe_play_with_config(sound_name: str, config: SoundConfig) -> bool:
         return False
 
 
+_VALID_WAV_KINDS = ("sine", "square", "noise")
+
+
 def _generate_wav(path: Path, freq: int, duration_ms: int, kind: str) -> None:
-    """Generate a placeholder WAV file with a synthesized tone."""
+    """Generate a placeholder WAV file with a synthesized tone.
+
+    Args:
+        path: Destination WAV file path.
+        freq: Tone frequency in Hz. Only relevant for ``sine``/``square`` kinds.
+        duration_ms: Duration in milliseconds.
+        kind: Waveform shape — one of ``"sine"``, ``"square"``, ``"noise"``.
+
+    Raises:
+        ValueError: If ``kind`` is not one of the supported waveform shapes.
+    """
+    if kind not in _VALID_WAV_KINDS:
+        raise ValueError(
+            f"Unknown WAV kind: {kind!r} (expected one of {_VALID_WAV_KINDS})"
+        )
+
     sample_rate = 22050
     n_samples = int(sample_rate * duration_ms / 1000)
     amplitude = int(32767 * 0.3)
@@ -381,10 +399,8 @@ def _generate_wav(path: Path, freq: int, duration_ms: int, kind: str) -> None:
                 sample = amplitude * math.sin(2 * math.pi * freq * t)
             elif kind == "square":
                 sample = amplitude if math.sin(2 * math.pi * freq * t) >= 0 else -amplitude
-            elif kind == "noise":
+            else:  # "noise"
                 sample = amplitude * (random.random() * 2 - 1)
-            else:
-                sample = 0
 
             # Apply fade in/out
             fade = min(i, n_samples - i, sample_rate // 20)

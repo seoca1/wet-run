@@ -165,6 +165,7 @@ class Particle:
 
     @property
     def is_alive(self) -> bool:
+        """True while particle has remaining life_ms."""
         return self.life_ms < self.max_life_ms
 
     @property
@@ -182,6 +183,7 @@ class ParticleSystem:
     particles: list[Particle] = field(default_factory=list)
 
     def spawn(self, particle: Particle) -> None:
+        """Append a single particle to the active list."""
         self.particles.append(particle)
 
     def spawn_burst(
@@ -237,11 +239,13 @@ class ParticleSystem:
             )
 
     def step(self, dt_ms: int) -> None:
+        """Advance every particle by dt_ms and drop expired ones."""
         for p in self.particles:
             p.step(dt_ms)
         self.particles = [p for p in self.particles if p.is_alive]
 
     def clear(self) -> None:
+        """Remove all particles immediately."""
         self.particles.clear()
 
 
@@ -308,12 +312,14 @@ class FloatingNumber:
     is_crit: bool = False
 
     def step(self, dt_ms: int) -> None:
+        """Advance the number's life and float it upward."""
         self.life_ms += dt_ms
         # Float upward over time
         self.y -= 0.03 * dt_ms
 
     @property
     def is_alive(self) -> bool:
+        """True while the number has remaining life_ms."""
         return self.life_ms < self.max_life_ms
 
     @property
@@ -344,16 +350,19 @@ class HitFlash:
     def trigger(
         self, color: tuple[int, int, int] = (255, 255, 255), duration_ms: int = 120
     ) -> None:
+        """Start a new tile-level flash; replaces any existing flash."""
         self.color = color
         self.duration_ms = duration_ms
         self.elapsed_ms = 0
 
     def step(self, dt_ms: int) -> None:
+        """Advance elapsed_ms while the flash is active."""
         if self.duration_ms > 0:
             self.elapsed_ms += dt_ms
 
     @property
     def is_active(self) -> bool:
+        """True while the flash has remaining time."""
         return self.elapsed_ms < self.duration_ms
 
     @property
@@ -386,11 +395,13 @@ class ScreenFlash:
         self.elapsed_ms = 0
 
     def step(self, dt_ms: int) -> None:
+        """Advance elapsed_ms while the screen flash is active."""
         if self.duration_ms > 0:
             self.elapsed_ms += dt_ms
 
     @property
     def is_active(self) -> bool:
+        """True while the screen flash has remaining time."""
         return self.elapsed_ms < self.duration_ms
 
     @property
@@ -428,12 +439,14 @@ class CinematicSequence:
     _phase_index: int = 0
 
     def step(self, dt_ms: int) -> None:
+        """Advance elapsed_ms; no-op once finished."""
         if self.is_finished:
             return
         self.elapsed_ms += dt_ms
 
     @property
     def current_phase(self) -> tuple[str, tuple[int, int, int], int] | None:
+        """Return the active (text, color, duration_ms) phase, or None when finished."""
         if self.is_finished:
             return None
         cumulative = 0
@@ -445,10 +458,12 @@ class CinematicSequence:
 
     @property
     def is_finished(self) -> bool:
+        """True when elapsed_ms has covered all phase durations."""
         return self.elapsed_ms >= self.total_duration_ms
 
     @property
     def total_duration_ms(self) -> int:
+        """Sum of all phase durations."""
         return sum(p[2] for p in self.phases)
 
 
@@ -478,6 +493,7 @@ class ComboCounter:
         return self.count
 
     def reset(self) -> None:
+        """Clear combo count and last-hit timestamp."""
         self.count = 0
         self.last_hit_ms = 0
 

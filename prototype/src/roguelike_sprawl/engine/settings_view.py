@@ -41,14 +41,17 @@ SETTINGS_OPTIONS = [
 
 
 def _get_volume() -> float:
+    """Return the current master volume from the global SoundManager."""
     return sound_manager.get_sound_manager().volume
 
 
 def _set_volume(volume: float) -> None:
+    """Set the master volume, clamped to [0.0, 1.0]."""
     sound_manager.set_volume(max(0.0, min(1.0, volume)))
 
 
 def _adjust_volume(delta: float) -> float:
+    """Adjust the master volume by ``delta`` and return the new clamped value."""
     sm = sound_manager.get_sound_manager()
     new_vol = max(0.0, min(1.0, sm.volume + delta))
     sm.set_volume(new_vol)

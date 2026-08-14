@@ -74,6 +74,7 @@ class ThemePlayer:
     """
 
     def __init__(self, sounds_dir: Path) -> None:
+        """Initialize a theme player that reads WAV files from ``sounds_dir``."""
         self.sounds_dir = sounds_dir
         self._current_theme: str | None = None
         self._process: object | None = None  # subprocess.Popen

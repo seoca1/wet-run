@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 from collections.abc import Iterator
+from difflib import get_close_matches
 from pathlib import Path
 
 from ..matrix.ppl import Loadout, Program
@@ -408,9 +409,11 @@ def build_ice_enemy(
     data = registry.get(ice_id)
     if data is None:
         available = sorted(registry._ice.keys())
+        suggestions = get_close_matches(ice_id, available, n=3, cutoff=0.6)
+        hint = f" Did you mean: {suggestions}?" if suggestions else ""
         raise KeyError(
             f"Unknown ICE: {ice_id!r}. "
-            f"Available: {available[:10]}{'...' if len(available) > 10 else ''}"
+            f"Available: {available[:10]}{'...' if len(available) > 10 else ''}.{hint}"
         )
     portrait_id = str(data.get("portrait", "ice.standard"))
     portrait = "▲ICE▲"

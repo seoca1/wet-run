@@ -122,6 +122,7 @@ class SoundConfig:
     category_enabled: dict[str, bool] = None  # type: ignore[assignment]
 
     def __post_init__(self) -> None:
+        """Initialize default per-category enabled flags if not provided."""
         if self.category_enabled is None:
             # Initialize with default category settings
             self.category_enabled = {

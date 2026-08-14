@@ -399,5 +399,55 @@
       }
     ],
     "ice_kind": "construct"
+  },
+  "the_peripheral_ascended": {
+    "name": "The Peripheral Ascended",
+    "portrait": "ice.boss",
+    "hp_base": 850,
+    "hp_per_grade": 120,
+    "dmg_base": 30,
+    "dmg_per_grade": 5,
+    "tier": 6,
+    "defense": 17,
+    "speed": 9,
+    "skills": [
+      "stub_time",
+      "lowbeer_vision",
+      "peripheral_strike",
+      "timeline_collapse"
+    ],
+    "resistance": 0.6,
+    "phase_count": 12,
+    "description": "The Peripheral fully ascended across all stub timelines. Twelve phases of causality collapse. The endgame boss.",
+    "unlock_condition": "beat_the_peripheral + ngplus_active + post_salvation_complete",
+    "drop_table": "peripheral_artifact_full",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1.0,
+        "quantity": 10
+      },
+      {
+        "item": "data_fragment",
+        "chance": 1.0,
+        "quantity": 6
+      },
+      {
+        "item": "t6_program",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "peripheral_artifact",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.timeline_echo",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct"
   }
 }

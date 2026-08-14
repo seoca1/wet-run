@@ -57,6 +57,7 @@ class BgmManager:
     """
 
     def __init__(self) -> None:
+        """Initialize an empty BGM manager with default settings."""
         self._screen_themes: dict[str, str] = {}
         self._settings = BgmSettings()
         self._registered = False
@@ -169,10 +170,12 @@ class BgmManager:
 
     @property
     def is_muted(self) -> bool:
+        """Whether BGM is currently muted."""
         return self._settings.muted
 
     @property
     def volume(self) -> float:
+        """Current BGM volume (0.0 to 1.0)."""
         return self._settings.volume
 
     @property

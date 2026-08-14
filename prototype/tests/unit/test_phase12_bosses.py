@@ -26,7 +26,7 @@ class TestZoneBosses:
     """6 zone-bosses, one per zone."""
 
     def test_zone_bosses_count(self, zone_bosses) -> None:
-        assert len(zone_bosses) == 10, f"Expected 10 bosses, got {len(zone_bosses)}"
+        assert len(zone_bosses) == 11, f"Expected 11 bosses, got {len(zone_bosses)}"
 
     def test_one_zone_boss_per_zone(self, zone_bosses) -> None:
         zone_boss_ids = [
@@ -70,11 +70,11 @@ class TestZoneBosses:
 
 
 class TestAscendedBosses:
-    """3 ascended boss variants (Wintermute, TA Prime, Neuromancer)."""
+    """4 ascended boss variants (Wintermute, TA Prime, Neuromancer, Peripheral)."""
 
     def test_ascended_bosses_count(self, zone_bosses) -> None:
         ascended = [k for k, v in zone_bosses.items() if v.get("name", "").endswith("Ascended")]
-        assert len(ascended) == 3, f"Expected 3 ascended bosses, got {len(ascended)}"
+        assert len(ascended) == 4, f"Expected 4 ascended bosses, got {len(ascended)}"
 
     def test_ascended_required_names(self, zone_bosses) -> None:
         for name in ["Wintermute Ascended", "TA Prime Ascended", "Neuromancer Ascended"]:
@@ -117,12 +117,12 @@ class TestSecretBoss:
 class TestTotalBosses:
     """Total boss count.
 
-    Zone bosses: 6 + Ascended: 3 + Secret: 1 = 10 total. Integration with F.4 registry
-    (Neuromancer, Loa Baron, Black Baron) raises boss_expansion.py to 13.
+    Zone bosses: 6 + Ascended: 4 + Secret: 1 = 11 total. Integration with F.4 registry
+    (Neuromancer, Loa Baron, Black Baron) raises boss_expansion.py to 14.
     """
 
     def test_zone_bosses_total(self, zone_bosses) -> None:
-        assert len(zone_bosses) == 10
+        assert len(zone_bosses) == 11
 
     def test_tier_distribution(self, zone_bosses) -> None:
         tiers = [b["tier"] for b in zone_bosses.values()]

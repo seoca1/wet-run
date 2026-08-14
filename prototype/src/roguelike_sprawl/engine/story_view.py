@@ -60,6 +60,11 @@ class StoryRegistry:
 
     @classmethod
     def load(cls, data_dir: Path) -> StoryRegistry:
+        """Load aftermath + reactions from the standard data paths.
+
+        Missing or malformed files degrade silently to empty registries
+        so callers always get a usable ``StoryRegistry``.
+        """
         aftermaths_path = data_dir / "story" / "aftermath.json"
         reactions_path = data_dir / "story" / "reactions.json"
         return cls(
@@ -68,13 +73,16 @@ class StoryRegistry:
         )
 
     def get_aftermath(self, aftermath_id: str) -> Aftermath | None:
+        """Return the Aftermath for ``aftermath_id``, or None if absent."""
         return self.aftermaths.get(aftermath_id)
 
     def get_reaction(self, reaction_id: str) -> Reaction | None:
+        """Return the Reaction for ``reaction_id``, or None if absent."""
         return self.reactions.get(reaction_id)
 
 
 def _load_aftermaths(path: Path) -> dict[str, Aftermath]:
+    """Load aftermaths from ``path`` (silent fallback to empty if missing/malformed)."""
     if not path.exists():
         return {}
     with path.open(encoding="utf-8") as f:
@@ -104,6 +112,7 @@ def _load_aftermaths(path: Path) -> dict[str, Aftermath]:
 
 
 def _load_reactions(path: Path) -> dict[str, Reaction]:
+    """Load reactions from ``path`` (silent fallback to empty if missing/malformed)."""
     if not path.exists():
         return {}
     with path.open(encoding="utf-8") as f:

@@ -91,7 +91,9 @@ def register_hook_action(kind: HookKind, action: HookAction) -> None:
     package ``__init__``.
     """
     if kind not in _HOOK_REGISTRY:
-        raise ValueError(f"Unknown HookKind: {kind!r}")
+        raise ValueError(
+            f"Unknown HookKind: {kind!r} (must be one of: {[k.name for k in HookKind]})"
+        )
     _HOOK_REGISTRY[kind].append(action)
 
 

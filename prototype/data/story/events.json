@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.1",
     "date": "2026-08-15",
-    "phase": "32",
+    "phase": "33",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 35,
+    "total_events": 36,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -826,6 +826,33 @@
     "reward": {"credits": 1200, "xp": 80},
     "consequence": "zion_ping_received",
     "faction_affinity": {"zion": 2, "wintermute": 1}
+  },
+  "faction_event_maas_neuropozyne_market": {
+    "event_id": "faction_event_maas_neuropozyne_market",
+    "title": "Maas BioLabs Black Market",
+    "category": "faction",
+    "faction_ref": "maas",
+    "trigger": "npc_choice",
+    "trigger_condition": "maas_rep >= 2 AND credits > 1500",
+    "mood": "shaky",
+    "location": "chiba_back_alley",
+    "arc": 3,
+    "pillar": "code",
+    "tier": 4,
+    "dialogue": [
+      "MAAS DEALER: You look strung out, runner.",
+      "MAAS DEALER: Fresh dose. No questions. No paperwork.",
+      "MAAS DEALER: The Sprawl runs on neuropozyne. We just run the market."
+    ],
+    "choice": {
+      "option_a": "Buy the dose (1500 credits, hp_restore_50%).",
+      "option_b": "Walk away cold turkey.",
+      "consequence_a": "credits_-1500, hp_restored_50%, maas_debt_marker",
+      "consequence_b": "neuropozyne_withdrawal_saved_for_later"
+    },
+    "reward": null,
+    "consequence": "maas_market_choice",
+    "faction_affinity": {"maas": 2}
   },
   "_chains": {
     "chain_case_past_memories": {

@@ -81,7 +81,10 @@ def make_status_v2(effect_type: str, duration_ms: int = 0, value: float = 0.0) -
     """Create a status effect v2 instance with overrides."""
     template = STATUS_V2_REGISTRY.get(effect_type)
     if template is None:
-        raise ValueError(f"Unknown status effect type: {effect_type}")
+        raise ValueError(
+            f"Unknown status effect type: {effect_type!r} "
+            f"(must be one of: {sorted(STATUS_V2_REGISTRY.keys())})"
+        )
     if duration_ms <= 0:
         duration_ms = template.duration_ms
     return StatusEffectV2(

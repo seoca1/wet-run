@@ -143,7 +143,9 @@ def record_meta_progress(unlock_id: str, amount: int = 1) -> MetaUnlock:
     """Record progress toward an unlock. Returns updated unlock."""
     unlock = META_UNLOCKS.get(unlock_id)
     if unlock is None:
-        raise ValueError(f"Unknown unlock: {unlock_id}")
+        raise ValueError(
+            f"Unknown unlock: {unlock_id!r} (must be one of: {sorted(META_UNLOCKS.keys())})"
+        )
     new_unlock = MetaUnlock(
         id=unlock.id,
         name=unlock.name,

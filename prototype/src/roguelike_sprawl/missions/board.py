@@ -236,16 +236,20 @@ class JobBoard:
         return MissionRepStatus.AVAILABLE
 
     def __iter__(self) -> Iterator[Mission]:
+        """Iterate over every registered mission in insertion order."""
         return iter(self._missions.values())
 
     def __len__(self) -> int:
+        """Return the count of registered missions."""
         return len(self._missions)
 
     def __contains__(self, mission_id: object) -> bool:
+        """Return True if ``mission_id`` is registered (string-coerced)."""
         return isinstance(mission_id, str) and mission_id in self._missions
 
     @override
     def __repr__(self) -> str:
+        """Return a debug representation including mission count."""
         return f"JobBoard({len(self._missions)} missions)"
 
 
@@ -335,6 +339,12 @@ def _parse_mission(value: dict[str, object]) -> Mission | None:
 
 
 def _opt_int(value: object, default: int) -> int | None:
+    """Coerce a JSON value to ``int`` or return ``None``.
+
+    Bools are excluded (they are not numeric in our model). Strings
+    are parsed via ``int()``; any ``TypeError`` / ``ValueError`` yields
+    ``None``.
+    """
     if value is None or isinstance(value, bool):
         return None
     if isinstance(value, int):
@@ -348,6 +358,7 @@ def _opt_int(value: object, default: int) -> int | None:
 
 
 def _opt_str(value: object) -> str | None:
+    """Coerce a JSON value to ``str`` or return ``None`` for ``None``."""
     if value is None:
         return None
     return str(value)

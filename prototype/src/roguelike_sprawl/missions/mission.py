@@ -258,9 +258,15 @@ class MissionChain:
         if not self.chain_id:
             raise ValueError("chain_id must be non-empty")
         if not 3 <= len(self.missions) <= 5:
-            raise ValueError(f"chain must have 3-5 missions, got {len(self.missions)}")
+            raise ValueError(
+                f"chain must have 3-5 missions, got {len(self.missions)} "
+                "(see Phase 13 event chains in events.json: _chains section)"
+            )
         if self.chain_type not in ("faction_driven", "character_driven", "story_driven"):
-            raise ValueError(f"invalid chain_type: {self.chain_type}")
+            raise ValueError(
+                f"invalid chain_type: {self.chain_type!r} "
+                "(must be one of: faction_driven, character_driven, story_driven)"
+            )
 
     def sequence(self) -> tuple[ChainMission, ...]:
         """Return missions in order."""

@@ -1,10 +1,10 @@
 {
   "_metadata": {
     "version": "1.0",
-    "date": "2026-08-08",
-    "phase": "13",
+    "date": "2026-08-14",
+    "phase": "28",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 30,
+    "total_events": 31,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -304,6 +304,33 @@
     "reward": null,
     "consequence": "sensenet_branch_choice",
     "faction_affinity": {"sense_net": 1}
+  },
+  "faction_event_sensenet_classified": {
+    "event_id": "faction_event_sensenet_classified",
+    "title": "Sense/Net Classified Files",
+    "category": "faction",
+    "faction_ref": "sense_net",
+    "trigger": "npc_choice",
+    "trigger_condition": "sense_net_rep >= 5",
+    "mood": "mysterious",
+    "location": "sensenet_archive_sublevel",
+    "arc": 3,
+    "pillar": "memory",
+    "tier": 5,
+    "dialogue": [
+      "ARCHIVIST: We archive everything, runner. Every credit. Every construct. Every wetware ID.",
+      "ARCHIVIST: The Sprawl's memory lives here. The Sprawl's ghosts too.",
+      "ARCHIVIST: You want to know what we have on you? That costs extra. Privacy doesn't."
+    ],
+    "choice": {
+      "option_a": "Buy your classified file.",
+      "option_b": "Walk away and stay invisible.",
+      "consequence_a": "credits_-2000, classified_file_unlocked",
+      "consequence_b": "sensenet_profile_intact"
+    },
+    "reward": null,
+    "consequence": "sensenet_classified_branch",
+    "faction_affinity": {"sense_net": 2}
   },
   "faction_event_yakuza_collection": {
     "event_id": "faction_event_yakuza_collection",
@@ -792,6 +819,7 @@
       "unlock_condition": "sense_net_rep >= 4",
       "events": [
         "faction_event_sensenet_alert",
+        "faction_event_sensenet_classified",
         "faction_event_sensenet_spin",
         "general_event_news_broadcast",
         "general_event_faction_war"

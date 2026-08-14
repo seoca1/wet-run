@@ -51,6 +51,11 @@ class PortraitManager:
             self._load(data_dir)
 
     def _load(self, data_dir: Path) -> None:
+        """Load portraits from ``data_dir/portraits.json`` (silent no-op if missing).
+
+        Each portrait entry is normalised so the ``color`` field becomes
+        an RGB tuple via :func:`parse_color`.
+        """
         path = data_dir / "portraits.json"
         if not path.exists():
             return
@@ -78,8 +83,10 @@ class PortraitManager:
         return entity_id in self._portraits
 
     def __len__(self) -> int:
+        """Return the count of registered portraits."""
         return len(self._portraits)
 
     @override
     def __repr__(self) -> str:
+        """Return a debug representation including portrait count."""
         return f"PortraitManager({len(self._portraits)} portraits)"

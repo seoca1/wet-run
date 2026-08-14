@@ -1,3 +1,55 @@
+## [2026-08-14] fix(test) | Phase 24 — Related flake fix (test_player_attack_unaffected_by_f4_multiplier)
+
+**Status**: ✅ 완료 — Phase 23 이 미루었던 sister flake `test_player_attack_unaffected_by_f4_multiplier` 영구 수정. Commit `fa3aaf2`. 1 file, +25/-1, 4993 passed (+1 regression test).
+
+### Root cause
+
+Phase 23 과 동일한 CRIT_CHANCE 문제. `_calculate_damage(cs, 10, cs.player, cs.enemy)` 호출에서 `can_crit=True` 가 default 이므로 ~15% 의 경우 crit 가 발동해 `dmg ≈ 15..24` 가 되어 `[8, 12]` bound 를 깸. Phase 23 이 `test_no_tracker_means_no_f4_multiplier` 는 고쳤지만, 같은 파일/같은 클래스의 sister test `test_player_attack_unaffected_by_f4_multiplier` 는 "Phase 23 scope 외" 로 보류. 본 phase 에서 정리.
+
+테스트의 의도는 "F.4 multiplier 가 enemy-attack-only 이다" 검증이지 crit mechanics 검증이 아니므로, `can_crit=False` 로 variance-only 경로를 격리하는 것이 가장 정합적인 fix.
+
+### Fix
+
+`test_player_attack_unaffected_by_f4_multiplier`:
+```python
+# before:
+dmg, _ = _calculate_damage(cs, 10, cs.player, cs.enemy)
+# after:
+dmg, _ = _calculate_damage(cs, 10, cs.player, cs.enemy, can_crit=False)
+```
+설명용 inline comment 추가 (Phase 23 패턴과 동일).
+
+### Regression test
+
+`test_player_attack_variance_is_stable_under_repeated_invocations` (신규) — 동일 시나리오 (phase-2 boss, player attacks boss) 를 200 회 반복하면서 모두 `[8, 12]` 안에 들어오고 `is_crit == False` 인지 검증. Phase 23 regression test 와 동일 패턴.
+
+### Stability verification
+
+| Run | Result |
+| --- | --- |
+| Pre-fix reproduction (10 runs) | 2 failures / 10 (20% flake, dmg ≈ 21) |
+| Post-fix single-test 30 consecutive | 30 passed / 30 (zero failures) |
+| File 5 consecutive (`tests/unit/test_f4_boss_phase_combat.py`) | 24 passed × 5 (23 → 24 with regression test) |
+| Full unit suite | 4993 passed, 462 skipped, 1 xfailed (baseline 4992 + 1) |
+
+### Related flake scan
+
+```bash
+grep -rn 'assert 8 <= dmg' prototype/tests/unit/
+```
+
+결과: 4 hits 모두 `test_f4_boss_phase_combat.py` 내부이며 모두 `can_crit=False` 와 함께 사용 중 (lines 155, 170, 185, 204). 다른 테스트 파일에는 동일 패턴 없음. 추가 flake 없음.
+
+### Validation
+
+- `make format` — 466 files left unchanged
+- `make lint` — All checks passed!
+- `make typecheck` — Success: no issues found in 211 source files
+- `make test` — 4993 passed, 462 skipped, 1 xfailed (Phase 14 perf tracker; unrelated, pre-existing)
+- `mixed_language_audit.py` — ✅ 0 violations
+- `dashboard_pipeline_audit.py` — ✅ 0 errors
+- `audit_vault.py` — 2 pre-existing broken links (Fiction wiki + Language wiki/French/index.md), out of roguelike_sprawl scope (workspace rule: 다른 프로젝트의 raw/wiki 수정 금지). Phase 24 신규 broken 없음.
+
 ## [2026-08-14] fix(test) | Phase 23 — Test flake fix (test_no_tracker_means_no_f4_multiplier)
 
 **Status**: ✅ 완료 — `tests/unit/test_f4_boss_phase_combat.py::test_no_tracker_means_no_f4_multiplier` 의 pre-existing RNG-dependent flake (~15% 실패율, dmg=21 관측) 영구 수정. Commit `14bd65e`. 1 file, +19/-2, 4992 passed (+1 regression test).

@@ -175,9 +175,33 @@ class TestF4PhaseDamageMultiplier:
         tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
         tracker.transition()  # phase 2, multiplier > 1.0
         # Player attacks the boss — must not be inflated.
-        dmg, _ = _calculate_damage(cs, 10, cs.player, cs.enemy)
+        # can_crit=False isolates the variance-only path so the 8..12
+        # bound is deterministic regardless of CRIT_CHANCE (15%).
+        # Without this, ~15% of runs crit and produce dmg ≈ 15..24
+        # (same pre-existing flake pattern as test_no_tracker_means_no_f4_multiplier,
+        # fixed in Phase 23).
+        dmg, _ = _calculate_damage(cs, 10, cs.player, cs.enemy, can_crit=False)
         # Variance: 0.8 to 1.2 → 8 to 12.
         assert 8 <= dmg <= 12
+
+    def test_player_attack_variance_is_stable_under_repeated_invocations(self) -> None:
+        """Regression test for the Phase 24 sister flake.
+
+        Phase 23 fixed test_no_tracker_means_no_f4_multiplier; this test
+        is the regression for its sister scenario (player attack must not
+        be inflated by the F.4 multiplier even on a phase-2 boss). Runs
+        the same calculation 200 times (well above the ~15% crit rate)
+        with can_crit=False and asserts every result lands in the [8, 12]
+        variance range. If a future change reintroduces crit into this
+        path, the test fails.
+        """
+        for _ in range(200):
+            cs = _make_combat_state()
+            tracker = cast(BossPhaseTracker, cs.boss_phase_tracker)
+            tracker.transition()  # phase 2, multiplier > 1.0
+            dmg, is_crit = _calculate_damage(cs, 10, cs.player, cs.enemy, can_crit=False)
+            assert not is_crit
+            assert 8 <= dmg <= 12
 
 
 # ---------------------------------------------------------------------------

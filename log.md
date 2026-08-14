@@ -1,3 +1,84 @@
+## [2026-08-14] feat+chore(polish) | Phase 26 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition + 3 polish improvements. Commit `83df5c8`. 6 files, +258/-3, 5020 passed (+17 from Phase 25 baseline 5003).
+
+### 1. Content addition: wintermute_corrupted ICE variant
+
+`prototype/data/combat/ice_types.json` 에 `wintermute_corrupted` 신규 엔트리 추가 (94 → 95 ICE types).
+
+- **Type**: corrupted variant, base_type: wintermute, ice_kind: wintermute
+- **Tier 5 elite**: hp_base 240, hp_per_grade 35, dmg_base 11, dmg_per_grade 3, defense 6, speed 7, resistance 0.4
+- **Skills**: `stack_corruption`, `ai_subversion`, `reality_distortion` — 깁슨 톤 (Neuromancer's AI core corrupted)
+- **Loot**: ice_shard (1.0, x3) + data_fragment (0.7, x2) + glitch_fragment (0.18, x1) + fragment.wintermute_echo (0.1, x1)
+- 기존 corrupted variant (`standard_corrupted`, `raven_corrupted`, `black_corrupted`) 와 동일한 패턴
+
+### 2. Docstring polish (3 modules, 25 docstrings added)
+
+`combat/registry.py` (9 added, 55% → 100%):
+- `IceRegistry.__init__` / `load` / `get` / `__contains__`
+- `ProgramRegistry.__init__` / `load` / `get` / `__iter__` / `__len__`
+
+`audio/sound_manager.py` (7 added, 70% → 100%):
+- `SoundManager.__init__` / `set_volume` / `set_mute` / `toggle_mute`
+- `SoundManager._play_file` / `_play_afplay` / `_play_aplay` / `_play_winsound`
+- `list_sounds` module-level function
+
+`combat/hud.py` (9 added, 65% → 100%):
+- `PhaseColorState.set_phase` / `step` / `transition_progress`
+- `BarFlash.trigger` / `step` / `alpha`
+- `CameraVignette.flash` / `step` / `total_intensity`
+
+Interrogate: **90.5% → 91.8%** (ADR-0120 80% baseline 위).
+
+### 3. Error message polish: build_ice_enemy()
+
+`src/roguelike_sprawl/combat/registry.py:412` — 알 수 없는 ICE id 입력 시 `KeyError` 에 사용 가능한 ICE id 목록 (alphabetical first 10) 포함:
+
+```
+KeyError("Unknown ICE: 'foo'. Available: ['ai_whisper', 'aleph', 'archive_sentinel', 'black', ...]")
+```
+
+이전: `KeyError("Unknown ICE: 'foo'")` — 디버깅 시 grep 필요.
+
+### 4. Test coverage (+17)
+
+`prototype/tests/unit/test_phase26_wintermute_corrupted.py` 신설 (17 tests):
+- **TestWintermuteCorrupted** (8): presence / metadata / stats range / corruption skill / ai_subversion signature / build_ice_enemy integration / loot has glitch_fragment / grade scaling
+- **TestBuildIceEnemyErrorMessage** (3): raises KeyError / lists available ids / known ICE resolves
+- **TestDocstringCoverage** (6): registry class+methods / sound_manager module+methods / hud dataclass methods
+
+`test_phase12_ice_types.py:TestICEVariants::test_variant_count` 의 assertion 갱신 (13 → 14) — wintermute_corrupted 가 14번째 variant.
+
+### Validation
+
+| Gate | Result |
+|---|---|
+| `make format` | All files clean (1 reformatted in first run) |
+| `make lint` | All checks passed! |
+| `make typecheck` | Success: no issues found in 211 source files |
+| `make test` | **5020 passed**, 463 skipped, 1 xfailed (Phase 14 perf tracker, unrelated) |
+| `interrogate` | 91.8% (was 90.5%) ✅ |
+| `audit_vault.py` | 2 pre-existing Fiction link errors (unrelated, Phase 100 baseline) |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+Test delta: **+17** (5003 → 5020).
+
+### Files changed (6)
+
+```
+modified:   prototype/data/combat/ice_types.json                (+42)
+modified:   prototype/src/roguelike_sprawl/audio/sound_manager.py (+14)
+modified:   prototype/src/roguelike_sprawl/combat/hud.py        (+9)
+modified:   prototype/src/roguelike_sprawl/combat/registry.py   (+15/-3)
+modified:   prototype/tests/unit/test_phase12_ice_types.py      (+2/-2)
+created:    prototype/tests/unit/test_phase26_wintermute_corrupted.py (+178)
+```
+
+Commit: **`83df5c8` feat+chore(polish): Phase 26 — Small content + polish**
+
+---
+
 ## [2026-08-14] chore(polish) | Phase 25 — Small improvements
 
 **Status**: ✅ 완료 — 4가지 영역 polish (테스트 인프라 / 모듈 사이즈 정책 / docstring / CI 검증). Commit `4de981c`. 10 files, +412/-1, 5003 passed (+10 from Phase 24 baseline 4993).

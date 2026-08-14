@@ -1,3 +1,96 @@
+## [2026-08-15] feat+chore(polish) | Phase 30 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Maas Biolabs Neuropozyne ICE) + 2 polish improvements. Commit `1700971`. 5 files, +278/-5, 5095 passed (+13 from Phase 29 baseline 5082).
+
+### 1. Content addition: maas_neuropozyne ICE
+
+`prototype/data/combat/ice_types.json` 에 `maas_neuropozyne` 신규 엔트리 추가 (96 → 97 ICE). Gibson-flavored "Maas Biolabs biotech defense" tone — fills the missing maas faction representation:
+
+- **Type**: faction ICE, faction: maas, tier 2, kind: standard, ice_kind: standard
+- **Stats**: hp_base 90 / dmg_base 4 / defense 3 / speed 6 (tier-2 baseline)
+- **Skills**: `biofeedback`, `addiction_loop` (biotech + neuropozyne withdrawal — Count Zero)
+- **Portrait**: ice.standard
+- **Loot**: ice_shard (70%), data_fragment (40%), rare `maas_neuropozyne_dose` (8%)
+
+`maas` faction: 0 → 1 ICE. Faction ICE totals: hosaka=5, sense_net=5, yakuza=5, tessier_ashpool=5, loa=5, **maas=1**. `build_ice_enemy("maas_neuropozyne", registry)` 검증 완료 — 정상 combatant 생성, player_grade 기반 스케일링 작동.
+
+### 2. Polish: Docstring additions to matrix/graph.py
+
+8 docstrings 추가 (interrogate 68% → 100%). Edge + MatrixGraph dunders and validation:
+
+- `Edge.__post_init__` — endpoint + self-loop validation (raises ValueError)
+- `MatrixGraph.__post_init__` — unique node ids + valid entry/edges invariants
+- `MatrixGraph.__contains__` — string-keyed membership test
+- `MatrixGraph.__iter__` — iteration in tuple insertion order
+- `MatrixGraph.__len__` — node count
+- `MatrixGraph.__repr__` — compact developer-friendly summary
+
+Vault-wide interrogate: **93.1% → 93.2%** (graph.py contribution).
+
+### 3. Polish: Docstring additions to combat/state_effects.py
+
+13 docstrings 추가 (interrogate 32% → 100%). All private `_apply_*` skill handlers documented per SkillEffect enum:
+
+- `_apply_damage_skill` — standard attack (AOE-aware)
+- `_apply_heavy_attack` — high-damage with 'DEVASTATING!' crit flavor (AOE-aware)
+- `_apply_pierce` — shield-bypassing damage (AOE-aware)
+- `_apply_multi_hit` — N strikes, crits disabled per hit for stable variance
+- `_apply_dot` — immediate damage + burn status (AOE-aware)
+- `_apply_shield` — adds to shield pool, no cap
+- `_apply_heal` — restore HP, capped at max_hp
+- `_apply_regen` — apply regen status healing skill.heal//10 per tick
+- `_apply_buff` — apply 'powered' status with attack_bonus
+- `_apply_debuff` — apply 'weakened' status (negative attack_bonus) to target
+- `_apply_stun` — apply stun status for stun_duration_ms
+- `_apply_detect` — reveal role-based weakness or HP/AP fallback
+- `_apply_lifesteal` — damage target then heal player for half damage dealt
+
+Vault-wide interrogate: **93.2% → 93.9%** (state_effects.py contribution).
+
+### 4. Test coverage (+13)
+
+`prototype/tests/unit/test_phase30_maas_neuropozyne.py` 신설 (13 tests):
+- **TestMaasNeuropozyne** (6): presence / metadata / Gibson-tone skills (biofeedback, addiction_loop) / loot drops dose / builds combatant / scales with grade
+- **TestIceCountIncrement** (3): total ICE >= 97 / maas faction represented (1 ICE) / tier-2 confirmation
+- **TestGraphDocstringCoverage** (2): all 6 dunder methods have docstrings / interrogate 100%
+- **TestStateEffectsDocstringCoverage** (2): all 13 _apply_* handlers have docstrings / interrogate 100%
+
+`prototype/tests/unit/test_phase12_ice_types.py` updated:
+- `FACTIONS` list extended: `["hosaka", "sense_net", "yakuza", "tessier_ashpool", "loa", "maas"]`
+- `test_faction_ice_count`: 25 → 26
+- `test_faction_ice_per_faction`: switched to per-faction dict (5 each for 5 core, 1 for maas)
+
+### Validation
+
+| Gate | Result |
+|---|---|
+| `make format` | All files clean (1 reformatted in first run, then clean) |
+| `make lint` (ruff) | All checks passed! |
+| `make typecheck` (mypy strict) | Success: no issues found in 211 source files |
+| `make test` (pytest) | **5095 passed**, 463 skipped, 1 xfailed (Phase 14 perf tracker, unrelated) |
+| `interrogate` (graph.py) | 100.0% (was 68%) |
+| `interrogate` (state_effects.py) | 100.0% (was 32%) |
+| `interrogate` (vault-wide) | 93.9% (was 93.1%) |
+| `audit_vault.py` | 2 pre-existing broken links in Game/typing_language (out of roguelike_sprawl scope per workspace AGENTS.md) |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+Test delta: **+13** (5082 → 5095).
+
+### Files changed (5)
+
+```
+modified:   prototype/data/combat/ice_types.json                          (+26)
+modified:   prototype/src/roguelike_sprawl/matrix/graph.py               (+18/-2)
+modified:   prototype/src/roguelike_sprawl/combat/state_effects.py        (+24)
+modified:   prototype/tests/unit/test_phase12_ice_types.py               (+9/-3)
+created:    prototype/tests/unit/test_phase30_maas_neuropozyne.py         (+200)
+```
+
+Commit: **`1700971` feat+chore(polish): Phase 30 — Small content + polish**
+
+---
+
 ## [2026-08-14] feat+chore(polish) | Phase 29 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Yakuza Contract Hit event) + 3 polish improvements. Commit `302ec63`. 6 files, +351/-6, 5082 passed (+20 from Phase 28 baseline 5062).

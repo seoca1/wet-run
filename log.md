@@ -1,3 +1,104 @@
+## [2026-08-14] feat+chore(polish) | Phase 29 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Yakuza Contract Hit event) + 3 polish improvements. Commit `302ec63`. 6 files, +351/-6, 5082 passed (+20 from Phase 28 baseline 5062).
+
+### 1. Content addition: faction_event_yakuza_contract
+
+`prototype/data/story/events.json` 에 `faction_event_yakuza_contract` 신규 엔트리 추가 (32 → 33 events). Gibson-flavored "yakuza hire runners for wetwork" tone:
+
+- **Type**: faction event, faction_ref: yakuza, tier 4, arc 2, mood: determined, pillar: code
+- **Trigger**: npc_choice, trigger_condition: `yakuza_rep >= 5 AND credits > 3000` (compound — mirrors yakuza_collection's gate pattern)
+- **Location**: yakuza_safe_house
+- **Dialogue** ("We need a runner. Quiet. No witnesses." — yakuza as silent contract brokers)
+- **Choice**: Take contract (4000 credits + 1-month protection) vs. Refuse (retain autonomy)
+- **Consequence**: yakuza_contract_branch
+- **Faction affinity**: yakuza +2
+
+`chain_yakuza_protection_racket` 의 5번째 event로 추가 (4 → 5 events, max chain length 5). Positioned chronologically as 3rd event (after collection, protection) — rep gates escalate 3 → 4 → 5. yakuza faction events: 2 → 3 (parity with sense_net at 3).
+
+### 2. Polish: Docstring additions to engine/input_dispatch.py
+
+8 docstrings 추가 (interrogate 33% → 100%). 8 nested handler functions in `_build_input_dispatch`:
+- `_gn_screen` — Graphic novel forward/pause/menu navigation
+- `_gn_ending` — Graphic novel ending menu ESC/Q
+- `_cyberspace_map` — Cyberspace map ESC/Q
+- `_arc_phase` — Arc-phase cinematic Space/Enter/Right/S handling
+- `_chapter` — Chapter view delegation
+- `_event` — Active story event delegation
+- `_npc` — NPC dialogue delegation
+- `_cinematic` — Story cinematic delegation
+
+Vault-wide interrogate: **92.4% → 93.1%** (ADR-0120 80% baseline 위).
+
+### 3. Polish: Docstring additions to engine/state.py
+
+7 docstrings 추가 (interrogate 42% → 100%). StatusMessageList methods:
+- `__init__` / `_enforce_cap` — initialization + cap enforcement
+- `append` / `extend` / `insert` — write methods (each enforces cap)
+- `__setitem__` / `__iadd__` — dunder assignments (each enforces cap)
+
+### 4. Polish: Improved error messages in combat/accessibility.py
+
+`prototype/src/roguelike_sprawl/combat/accessibility.py:53-72` — invalid value errors now list the valid value set:
+
+```python
+# before:
+raise ValueError(f"Invalid colorblind mode: {mode}")
+raise ValueError(f"Invalid text size: {size}")
+
+# after:
+raise ValueError(
+    f"Invalid colorblind mode: {mode!r} (must be one of: {list(COLORBLIND_MODES)})"
+)
+raise ValueError(
+    f"Invalid text size: {size!r} (must be one of: {list(TEXT_SIZES)})"
+)
+```
+
+이전: 단순 `f"Invalid colorblind mode: {mode}"` — 디버깅 시 grep 필요. 이제 사용 가능한 모드 명시.
+
+### 5. Test coverage (+20)
+
+`prototype/tests/unit/test_phase29_yakuza_contract.py` 신설 (20 tests):
+- **TestYakuzaContractEvent** (6): presence / metadata / has_choice / Gibson-tone dialogue (Hosaka reference) / faction affinity yakuza +2 / consequence sets branch
+- **TestChainYakuzaUpdate** (3): chain includes new event / length within 3-5 bounds / event position (collection → protection → contract)
+- **TestEventCountIncrement** (3): total >= 33 / yakuza faction has 3 events / metadata phase=29 + total_events=33
+- **TestInputDispatchDocstringCoverage** (2): all 8 handlers have docstrings / interrogate 100%
+- **TestStateDocstringCoverage** (2): StatusMessageList methods have docstrings / interrogate 100%
+- **TestAccessibilityErrorMessages** (4): colorblind mode error lists valid modes / text size error lists valid sizes / valid colorblind mode still works / valid text size still works
+
+### Validation
+
+| Gate | Result |
+|---|---|
+| `make format` | All files clean (2 reformatted in first run, then clean) |
+| `make lint` | All checks passed! |
+| `make typecheck` | Success: no issues found in 211 source files |
+| `make test` | **5082 passed**, 463 skipped, 1 xfailed (Phase 14 perf tracker, unrelated) |
+| `interrogate` (input_dispatch) | 100.0% (was 33%) |
+| `interrogate` (state) | 100.0% (was 42%) |
+| `interrogate` (vault-wide) | 93.1% (was 92.4%) |
+| `audit_vault.py` | 1 pre-existing typing_language link error (unrelated; roguelike_sprawl scope clean) |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+Test delta: **+20** (5062 → 5082).
+
+### Files changed (6)
+
+```
+modified:   prototype/data/story/events.json                         (+33/-1)
+modified:   prototype/src/roguelike_sprawl/combat/accessibility.py   (+4/-2)
+modified:   prototype/src/roguelike_sprawl/engine/input_dispatch.py  (+8)
+modified:   prototype/src/roguelike_sprawl/engine/state.py            (+7)
+modified:   prototype/tests/unit/test_phase28_classified_event.py    (+4/-2)
+created:    prototype/tests/unit/test_phase29_yakuza_contract.py     (+296)
+```
+
+Commit: **`302ec63` feat+chore(polish): Phase 29 — Small content + polish**
+
+---
+
 ## [2026-08-14] feat+chore(polish) | Phase 28 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Sense/Net Classified Files event) + 3 polish improvements. Commit `789c566`. 5 files, +301/-5, 5062 passed (+18 from Phase 27 baseline 5044).

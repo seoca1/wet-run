@@ -59,6 +59,12 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
     from .graphic_novel_view import render_graphic_novel_screen
 
     def _arc_phase(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the ARC_PHASE screen — the inner beats/phases of a chapter.
+
+        Defensive fallbacks render error messages for missing arc, exhausted
+        chapter list, or exhausted phase list before delegating to
+        ``phase_view.render_arc_phase``.
+        """
         if state.current_arc is None:
             console.clear(bg=(0, 0, 0))
             console.print(x=2, y=2, string="=== NO ARC DATA ===", fg=(255, 0, 0))
@@ -86,6 +92,11 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
         )
 
     def _cyberspace_map(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the CYBERSPACE_MAP screen — top-down node graph.
+
+        Defensive fallback renders an error if ``state.world_map`` is missing,
+        otherwise delegates to ``cyberspace_map_view.render_cyberspace_map``.
+        """
         if not hasattr(state, "world_map") or state.world_map is None:
             console.clear(bg=(0, 0, 0))
             console.print(x=2, y=2, string="=== NO WORLD DATA ===", fg=(255, 0, 0))
@@ -98,23 +109,28 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
         cyberspace_map_view.render_cyberspace_map(console, state)
 
     def _graphic_novel_menu(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the GRAPHIC_NOVEL_MENU screen — prologue/character pick list."""
         has_save = getattr(state, "has_save", False)
         graphic_novel_view.render_graphic_novel_menu(console, t, state.gn_menu_selected, has_save)
 
     def _graphic_novel_ending(
         console: tcod.console.Console, t: Translator, state: AppState
     ) -> None:
+        """Render the GRAPHIC_NOVEL_ENDING_MENU screen — post-story ending picker."""
         graphic_novel_view.render_graphic_novel_ending_menu(
             console, t, state.gn_mode, state.menu_selected_index
         )
 
     def _gn_screen(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the active GRAPHIC_NOVEL screen — auto-playing story scenes."""
         render_graphic_novel_screen(console, state, t)
 
     def _hub(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the HUB screen — Sprawl city central menu between missions."""
         hub_screen.render_hub(console, t, state)
 
     def _npc(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the NPC dialog screen, or an error if ``state.npc_state`` is missing."""
         if state.npc_state is not None:
             npc_view.render_npc(console, t, state, state.npc_state)
         else:
@@ -122,6 +138,7 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
             console.print(x=2, y=2, string="=== NO NPC STATE ===", fg=(255, 0, 0))
 
     def _event(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the EVENT screen (story event dialog) or an error if no event is active."""
         if state.active_event is not None:
             event_view.render_event_story(console, t, state, state.active_event)
         else:
@@ -129,10 +146,12 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
             console.print(x=2, y=2, string="=== NO ACTIVE EVENT ===", fg=(255, 0, 0))
 
     def _story(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the STORY screen — aftermath or story registry from story_aftermath_id."""
         registry = story_screen.StoryRegistry.load(config.DATA_DIR)
         story_screen.render_story(console, state, registry, state.story_aftermath_id)
 
     def _chapter(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the CHAPTER screen (typed-reveal cinematic) or error if chapter_data is None."""
         if state.chapter_data:
             chapter_view.render_chapter(
                 console,
@@ -146,6 +165,7 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
             console.print(x=2, y=2, string="=== NO CHAPTER DATA ===", fg=(255, 0, 0))
 
     def _saved_progress(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the SAVED_PROGRESS screen — last save summary with i18n title/options."""
         save_dir = config.DATA_DIR / "saves"
         summary = save_progress.get_progress_summary(save_dir=save_dir)
         console.clear()
@@ -190,9 +210,11 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
         prog_registry: ProgramRegistry | None = None,
         ice_registry: IceRegistry | None = None,
     ) -> None:
+        """Render the MATRIX screen — dungeon/matrix node grid with program/ICE registries."""
         dungeon_view.render_dungeon_matrix(console, t, state, prog_registry, ice_registry)
 
     def _combat(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the COMBAT screen (RT-MS) or error if combat_state is missing."""
         if state.combat_state is not None:
             from . import combat_view
 
@@ -203,6 +225,7 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
             console.print(x=2, y=4, string="No combat state loaded", fg=(128, 128, 128))
 
     def _cinematic(console: tcod.console.Console, t: Translator, state: AppState) -> None:
+        """Render the CINEMATIC screen (story_cinematic) or error if cinematic_state is missing."""
         if state.cinematic_state is not None:
             elapsed_ms = int(state.demo_elapsed_s * 1000)
             story_cinematic.render_cinematic(console, t, state, state.cinematic_state, elapsed_ms)

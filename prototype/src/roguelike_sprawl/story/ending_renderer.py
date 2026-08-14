@@ -48,10 +48,12 @@ class EndingRenderer:
     """Renders endings from endings.json into scene objects."""
 
     def __init__(self, data_path: Path | None = None) -> None:
+        """Initialize renderer; ``data_path`` defaults to data/story/endings.json."""
         self._path = data_path or DATA_PATH
         self._endings_cache: dict[str, dict[str, Any]] | None = None
 
     def _load_endings(self) -> dict[str, dict[str, Any]]:
+        """Load and cache raw endings JSON, skipping metadata keys that start with '_'."""
         if self._endings_cache is None:
             with open(self._path) as f:
                 data = json.load(f)
@@ -107,6 +109,11 @@ class EndingRenderer:
         )
 
     def _to_scene(self, ending: dict[str, Any]) -> EndingScene:
+        """Convert a raw endings.json dict into a typed EndingScene dataclass.
+
+        Defaults missing fields to safe values (empty string, 0, empty dict,
+        None) so downstream renderers never see KeyError.
+        """
         reward = ending.get("reward", {})
         if not isinstance(reward, dict):
             reward = {}
@@ -127,10 +134,12 @@ class EndingRenderer:
         )
 
     def _render_intro(self, scene: EndingScene) -> str:
+        """Render the intro line: title + ending type tag + [NG+] marker + description."""
         ng_plus = " [NG+]" if scene.ng_plus_unlocked else ""
         return f"{scene.title} ({scene.ending_type.upper()}){ng_plus}\n{scene.description}"
 
     def _render_body(self, scene: EndingScene) -> str:
+        """Render the body block: character, arc, rewards, achievements, permanent-death flag."""
         body = f"Character: {scene.character_ref}\n"
         body += f"Arc: {scene.arc}\n"
         if scene.reward_credits > 0:
@@ -145,6 +154,10 @@ class EndingRenderer:
         return body.rstrip()
 
     def _render_consequences(self, scene: EndingScene) -> str:
+        """Render the consequences summary as '; '-joined bullets.
+
+        Returns "No special consequences" when none of the trigger flags apply.
+        """
         consequences = []
         if scene.permanent_death:
             consequences.append("Ending triggers permanent death")

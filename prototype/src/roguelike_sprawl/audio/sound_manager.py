@@ -379,9 +379,7 @@ def _generate_wav(path: Path, freq: int, duration_ms: int, kind: str) -> None:
         ValueError: If ``kind`` is not one of the supported waveform shapes.
     """
     if kind not in _VALID_WAV_KINDS:
-        raise ValueError(
-            f"Unknown WAV kind: {kind!r} (expected one of {_VALID_WAV_KINDS})"
-        )
+        raise ValueError(f"Unknown WAV kind: {kind!r} (expected one of {_VALID_WAV_KINDS})")
 
     sample_rate = 22050
     n_samples = int(sample_rate * duration_ms / 1000)

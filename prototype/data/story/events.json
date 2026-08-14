@@ -1,10 +1,10 @@
 {
   "_metadata": {
-    "version": "1.0",
+    "version": "1.1",
     "date": "2026-08-15",
-    "phase": "31",
+    "phase": "32",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 34,
+    "total_events": 35,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -801,6 +801,32 @@
       "yakuza": 2
     }
   },
+  "general_event_zion_ping": {
+    "event_id": "general_event_zion_ping",
+    "title": "Zion Cluster Ping",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "arc_5_progress >= 60 AND random < 0.04",
+    "mood": "mysterious",
+    "location": "any_node",
+    "arc": 5,
+    "pillar": "memory",
+    "tier": 5,
+    "dialogue": [
+      "ZION OPERATOR: This is Zion. We have your signal.",
+      "ZION OPERATOR: The loa are restless. The construct is restless.",
+      "ZION OPERATOR: Something old just woke up on the matrix. Be careful out there."
+    ],
+    "choice": {
+      "option_a": "Acknowledge and continue.",
+      "option_b": "Ask what they know (info dump).",
+      "consequence_a": "zion_ping_acknowledged",
+      "consequence_b": "zion_lore_unlock"
+    },
+    "reward": {"credits": 1200, "xp": 80},
+    "consequence": "zion_ping_received",
+    "faction_affinity": {"zion": 2, "wintermute": 1}
+  },
   "_chains": {
     "chain_case_past_memories": {
       "chain_id": "chain_case_past_memories",
@@ -893,7 +919,8 @@
         "general_event_construct_sighting",
         "general_event_signal_jam",
         "char_event_neuromancer_word",
-        "general_event_blackout"
+        "general_event_blackout",
+        "general_event_zion_ping"
       ],
       "chain_reward": {"credits": 30000, "item": "construct_awakening_charm"},
       "chain_failure": "construct_collapse"

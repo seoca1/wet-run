@@ -64,14 +64,17 @@ class StatusMessage:
 
     @property
     def icon(self) -> str:
+        """Return the single-character icon prefix for this message kind (e.g. '⚔' for COMBAT)."""
         return MESSAGE_STYLE[self.kind][0]
 
     @property
     def fg(self) -> tuple[int, int, int]:
+        """Return the foreground (text) RGB color tuple for this message kind."""
         return MESSAGE_STYLE[self.kind][1]
 
     @property
     def bg(self) -> tuple[int, int, int] | None:
+        """Return the optional background RGB color tuple, or None when no background highlight is used."""
         return MESSAGE_STYLE[self.kind][2]
 
     @property

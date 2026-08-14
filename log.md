@@ -1,3 +1,79 @@
+## [2026-08-14] chore(polish) | Phase 25 — Small improvements
+
+**Status**: ✅ 완료 — 4가지 영역 polish (테스트 인프라 / 모듈 사이즈 정책 / docstring / CI 검증). Commit `4de981c`. 10 files, +412/-1, 5003 passed (+10 from Phase 24 baseline 4993).
+
+### 1. Test infrastructure polish (conftest.py)
+
+`prototype/tests/conftest.py` 확장:
+- **`seeded_rng`** fixture: 결정적 `random.Random(0)` 제공
+- **`_isolate_random_seed`** (autouse): 모듈 레벨 `random` 상태를 test 시작/끝에 snapshot/restore (cross-test pollution 방지)
+- **`make_player`** factory: `build_default_player` wrapper — HP/AP/damage kwargs
+- **`make_ice_enemy`** factory: 기본 ICE Combatant 빌더
+- **`make_combat_state`** factory: seeded CombatState + player/enemy 통합 빌더 — 20+ combat test 파일의 ~15-line boilerplate 제거
+- 8개 smoke tests (`tests/unit/test_conftest_fixtures.py`) — fixture 계약 검증
+
+`make_combat_state` 의 `rng` 인자가 default `random.Random(0)` 이므로 test 간 재현 가능. 기존 test 는 opt-in (요청 안 함) — 회귀 위험 0.
+
+### 2. Module size policy enforcement (ADR-0110)
+
+`tests/unit/test_module_size_policy.py` 신설 — 3 tests:
+- `test_no_module_exceeds_1000_loc_without_adr` — ADR-0110 Consequences 의 "1000+ LOC: 신규 ADR 필수" 를 pytest 로 enforce
+- `test_known_oversize_module_still_justified` — exempt set 의 항목이 여전히 존재하고 999+ LOC 인지 sanity check (parametrized)
+- `test_oversize_threshold_is_999_loc` — threshold 상수 자체가 ADR-0110 wording 과 일치하는지 defensive check
+
+`KNOWN_OVERSIZE_MODULES = frozenset()` (현재 비어있음 — Phase 5+ module splits [ADR-0141, 0156, 0157, 0158, 0159] 완료). Future large modules 는 CI 에서 자동 차단.
+
+### 3. Docstring coverage (12 추가)
+
+Public API 에 짧은 docstring 추가:
+- `audio/sound_manager.py` (4): `set_volume` / `set_mute` / `toggle_mute` / `is_available`
+- `equipment/equipment.py` (3): `EquipmentRegistry.get` / `all` / `by_slot`
+- `i18n/translator.py` (1): `Translator.__init__`
+- `matrix/dungeon_generator.py` (1): `_BspNode.__lt__`
+- `matrix/exploration.py` (1): `ExplorationState.is_scanned`
+- `missions/board.py` (1): `JobBoard.__init__`
+- `portraits/manager.py` (1): `PortraitManager.__init__`
+
+Interrogate coverage: **90.0% → 90.5%** (ADR-0120 80% baseline 위, 12 missing docs closed). Private `_apply_*` / `_parse_*` helpers 는 의도적으로 제외 (low coverage on internals is OK).
+
+### 4. CI verification
+
+`.github/workflows/ci.yml` 검토 — 이미 `lint + format + typecheck + test` (macOS/Windows 매트릭스) 커버. 변경 없음. Module size enforcement 는 이제 unit test 로 통합되어 PR 차단 가능.
+
+### Validation
+
+| Gate | Result |
+|---|---|
+| `make format` | 1 file reformatted (conftest.py import order) |
+| `make lint` | All checks passed! |
+| `make typecheck` | Success: no issues found in 211 source files |
+| `make test` | **5003 passed**, 463 skipped, 1 xfailed (Phase 14 perf tracker, unrelated) |
+| `interrogate` | 90.5% (was 90.0%) ✅ |
+| `audit_vault.py` | ✅ 0 broken |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+Test delta: **+10** (8 fixture smoke tests + 2 module size tests; 1 parametrized skip because exempt set empty). 4993 + 10 = 5003.
+
+### Files changed (10)
+
+```
+modified:   prototype/src/roguelike_sprawl/audio/sound_manager.py    (+4)
+modified:   prototype/src/roguelike_sprawl/equipment/equipment.py    (+3)
+modified:   prototype/src/roguelike_sprawl/i18n/translator.py         (+1)
+modified:   prototype/src/roguelike_sprawl/matrix/dungeon_generator.py (+1)
+modified:   prototype/src/roguelike_sprawl/matrix/exploration.py      (+1)
+modified:   prototype/src/roguelike_sprawl/missions/board.py          (+1)
+modified:   prototype/src/roguelike_sprawl/portraits/manager.py       (+1)
+modified:   prototype/tests/conftest.py                              (+184/-1)
+created:    prototype/tests/unit/test_conftest_fixtures.py           (+89)
+created:    prototype/tests/unit/test_module_size_policy.py          (+127)
+```
+
+Commit: **`4de981c` chore(polish): Phase 25 — Small improvements**
+
+---
+
 ## [2026-08-14] fix(test) | Phase 24 — Related flake fix (test_player_attack_unaffected_by_f4_multiplier)
 
 **Status**: ✅ 완료 — Phase 23 이 미루었던 sister flake `test_player_attack_unaffected_by_f4_multiplier` 영구 수정. Commit `fa3aaf2`. 1 file, +25/-1, 4993 passed (+1 regression test).

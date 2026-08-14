@@ -95,6 +95,144 @@ Total: 7 files, +151/-12.
 
 ---
 
+## [2026-08-15] feat+chore(polish) | Phase 32 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Zion Cluster Ping event) + 3 polish improvements. Commit `2fa8b2e`. 7 files, +344/-8, 5126 passed (+22 from Phase 31 baseline 5104).
+
+### 1. Content addition: general_event_zion_ping
+
+`prototype/data/story/events.json` 에 `general_event_zion_ping` 신규 엔트리 추가 (34 → 35 events). Gibson-flavored Zion off-matrix uplink 이벤트 — Count Zero 시대의 Zion과 마침내 연결:
+
+- **Category**: general, trigger: `node_enter`, condition: `arc_5_progress >= 60 AND random < 0.04`
+- **Mood**: mysterious, location: any_node, arc: 5, tier: 5
+- **Dialogue**: ZION OPERATOR 메시지 ("This is Zion. We have your signal." / "The loa are restless. The construct is restless." / "Something old just woke up on the matrix. Be careful out there.")
+- **Choice**: Acknowledge and continue (zion_ping_acknowledged) vs. Ask what they know (zion_lore_unlock, info dump)
+- **Reward**: 1200 credits + 80 XP
+- **Faction affinity**: zion +2, wintermute +1
+- **Chain integration**: `chain_construct_awakening` extended (4 → 5 events, max). zion_ping appears last (highest arc gate at arc_5_progress >= 60).
+
+### 2. Polish: Docstrings on engine/screen_dispatch.py
+
+14 docstrings 추가 (interrogate 18% → 100%). Nested render handler closures in `_build_dispatch`:
+
+- `_arc_phase` — inner beats/phases of a chapter
+- `_cyberspace_map` — top-down node graph
+- `_graphic_novel_menu` — prologue/character pick list
+- `_graphic_novel_ending` — post-story ending picker
+- `_gn_screen` — auto-playing story scenes
+- `_hub` — Sprawl city central menu
+- `_npc` — NPC dialog with missing-state fallback
+- `_event` — story event dialog
+- `_story` — aftermath / story registry
+- `_chapter` — typed-reveal cinematic
+- `_saved_progress` — last save summary with i18n
+- `_matrix` — dungeon/matrix node grid
+- `_combat` — RT-MS combat with missing-state fallback
+- `_cinematic` — story_cinematic renderer
+
+### 3. Polish: Docstrings on story/ending_renderer.py
+
+6 docstrings 추가 (interrogate 65% → 100%). EndingRenderer private methods:
+
+- `__init__` — initialize with default data path
+- `_load_endings` — load and cache raw endings JSON, skip metadata keys
+- `_to_scene` — convert raw dict to typed EndingScene dataclass
+- `_render_intro` — title + ending type tag + [NG+] marker + description
+- `_render_body` — character, arc, rewards, achievements, permanent-death
+- `_render_consequences` — '; '-joined bullets with empty-state fallback
+
+### 4. Polish: Docstrings on engine/status_message.py
+
+3 docstrings 추가 (interrogate 70% → 100%). StatusMessage property docstrings:
+
+- `icon` — single-character icon prefix per message kind
+- `fg` — foreground RGB color tuple
+- `bg` — optional background RGB or None
+
+Vault-wide interrogate: **94.8% → 95.9%** (three files now 100%).
+
+### 5. Polish: Forward-compat allowlist in Phase 29 tests
+
+`prototype/tests/unit/test_phase29_yakuza_contract.py`:
+- Updated `test_metadata_total_events_at_least_33` phase allowlist from `("29", "31")` to `("29", "31", "32")` — avoids stale assertion when later phases bump the metadata version.
+
+`prototype/src/roguelike_sprawl/audio/sound_manager.py`:
+- 1-line ruff format re-wrap (the `_generate_wav` ValueError was reflowed to a single line; no behavior change).
+
+### 6. Test coverage (+22)
+
+`prototype/tests/unit/test_phase32_small_content_polish.py` (new file, 22 tests):
+
+**Content — TestZionPingEvent (7 tests)**:
+- `test_event_present` — event key present
+- `test_event_metadata` — event_id, title, category, trigger, tier, arc
+- `test_event_has_choice` — two-option choice with consequences
+- `test_event_dialogue_uses_gibson_tone` — zion + loa + construct keywords
+- `test_event_reward_grants_credits_and_xp` — 1200 credits + 80 XP
+- `test_event_faction_affinity` — zion +2, wintermute +1
+- `test_event_consequence_sets_branch` — zion_ping_received
+
+**Content — TestChainConstructAwakeningUpdate (3 tests)**:
+- `test_chain_construct_awakening_includes_new_event` — new event in chain
+- `test_chain_construct_awakening_length_within_bounds` — 3-5 events
+- `test_chain_construct_awakening_event_position` — zion_ping appears last (highest arc gate)
+
+**Content — TestEventCountIncrement (3 tests)**:
+- `test_total_events_at_least_35` — total events >= 35
+- `test_metadata_total_events_updated` — metadata.phase >= 32
+- `test_total_chains_unchanged` — 6 chains (no new chain, just extension)
+
+**Polish — TestScreenDispatchDocstringCoverage (2 tests)**:
+- `test_all_fourteen_handlers_have_docstrings` — all 14 nested handlers found in source
+- `test_interrogate_coverage_100` — interrogate missing == 0
+
+**Polish — TestEndingRendererDocstringCoverage (5 tests)**:
+- `test_init_has_docstring` — EndingRenderer.__init__
+- `test_load_endings_has_docstring` — EndingRenderer._load_endings
+- `test_to_scene_has_docstring` — EndingRenderer._to_scene
+- `test_render_helpers_have_docstrings` — 3 render helpers
+- `test_interrogate_coverage_100` — interrogate missing == 0
+
+**Polish — TestStatusMessageDocstringCoverage (2 tests)**:
+- `test_status_message_properties_have_docstrings` — 3 StatusMessage properties
+- `test_interrogate_coverage_100` — interrogate missing == 0
+
+### 7. Validation
+
+```
+$ make format       # ruff format, 1 file reformatted (sound_manager.py value error)
+$ make lint         # ruff check — All checks passed!
+$ make typecheck    # mypy strict — Success: no issues found in 211 source files
+$ make test         # 5126 passed, 463 skipped, 1 xfailed (was 5104 — +22)
+$ python3 audit_vault.py                  # 2 pre-existing typing_language artifacts (out of scope per AGENTS.md §3)
+$ python3 mixed_language_audit.py         # 0 violations
+$ python3 dashboard_pipeline_audit.py     # 0 errors
+```
+
+### 8. Files changed
+
+- `prototype/data/story/events.json` — +33/-2 (new event + metadata bump + chain extension)
+- `prototype/src/roguelike_sprawl/engine/screen_dispatch.py` — +23/-0 (14 docstrings)
+- `prototype/src/roguelike_sprawl/story/ending_renderer.py` — +13/-0 (6 docstrings)
+- `prototype/src/roguelike_sprawl/engine/status_message.py` — +3/-0 (3 property docstrings)
+- `prototype/src/roguelike_sprawl/audio/sound_manager.py` — +2/-2 (ruff format re-wrap)
+- `prototype/tests/unit/test_phase29_yakuza_contract.py` — +1/-1 (allowlist extension)
+- `prototype/tests/unit/test_phase32_small_content_polish.py` — new file, 269/-0 (22 new tests)
+
+Total: 7 files, +344/-8.
+
+### 9. Notes
+
+- No push (97 unpushed commits pending GH_TOKEN).
+- No raw/, Fiction/, Language/, Game/typing_language/ touched.
+- No ADR changes (existing ADRs preserved).
+- No new dependencies.
+- No type suppressions.
+- All 5104 baseline tests preserved + 22 new = 5126.
+- Docstring coverage: 94.8% → 95.9% (three modules at 100%).
+
+---
+
 ## [2026-08-15] feat+chore(polish) | Phase 30 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Maas Biolabs Neuropozyne ICE) + 2 polish improvements. Commit `1700971`. 5 files, +278/-5, 5095 passed (+13 from Phase 29 baseline 5082).

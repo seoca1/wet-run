@@ -1,3 +1,110 @@
+## [2026-08-15] feat+chore(polish) | Phase 33 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Maas BioLabs Black Market event) + 2 polish improvements. Commit `a167f95`. 7 files, +264/-6, 5142 passed (+16 from Phase 32 baseline 5126).
+
+### 1. Content addition: faction_event_maas_neuropozyne_market
+
+`prototype/data/story/events.json` 에 `faction_event_maas_neuropozyne_market` 신규 엔트리 추가 (35 → 36 events). Gibson-flavored Count Zero 시대 Maas BioLabs black market dealer tone — maas faction 첫 faction event (0 → 1), Phase 30의 maas_neuropozyne ICE와 Phase 31의 neuropozyne_withdrawal event를 biotech addiction arc 으로 연결:
+
+- **Category**: faction, faction_ref: maas, trigger: `npc_choice`, trigger_condition: `maas_rep >= 2 AND credits > 1500`
+- **Mood**: shaky, location: chiba_back_alley, arc: 3, tier: 4
+- **Dialogue**: MAAS DEALER 메시지 ("You look strung out, runner." / "Fresh dose. No questions. No paperwork." / "The Sprawl runs on neuropozyne. We just run the market.")
+- **Choice**: Buy the dose (credits_-1500, hp_restored_50%, maas_debt_marker) vs. Walk away cold turkey (neuropozyne_withdrawal_saved_for_later)
+- **Consequence**: maas_market_choice
+- **Faction affinity**: maas +2
+- maas faction events: 0 → 1.
+
+### 2. Polish: Docstrings on engine/story_view.py
+
+5 docstrings 추가 (interrogate 67% → 100%). StoryRegistry methods + module-level load helpers:
+
+- `StoryRegistry.load` — load aftermath + reactions from standard data paths (silent fallback)
+- `StoryRegistry.get_aftermath` — get aftermath by id, None if absent
+- `StoryRegistry.get_reaction` — get reaction by id, None if absent
+- `_load_aftermaths` — silent fallback to empty dict on missing/malformed
+- `_load_reactions` — silent fallback to empty dict on missing/malformed
+
+Vault-wide interrogate: **95.9% → 96.1%** (story_view.py contribution).
+
+### 3. Polish: Improved error messages on 3 modules
+
+Phase 26/29/31 패턴 (valid values 명시) 3개 모듈 적용:
+
+- `combat/status_effects_v2.py:make_status_v2` — `Unknown status effect type: X (must be one of: [...])`
+- `combat/meta_progression.py:record_meta_progress` — `Unknown unlock: X (must be one of: [...])` (backward-compat: "Unknown unlock" substring preserved)
+- `novel/hooks.py:register_hook_action` — `Unknown HookKind: X (must be one of: [HookKind names])`
+
+이전: 단순 `f"Unknown X: {x}"` — 디버깅 시 grep 필요. 이제 사용 가능한 값 명시.
+
+### 4. Test coverage (+16)
+
+`prototype/tests/unit/test_phase33_small_content_polish.py` (new file, 16 tests):
+
+**Content — TestMaasNeuropozyneMarketEvent (6 tests)**:
+- `test_event_present` — event key present
+- `test_event_metadata` — event_id, title, faction_ref=maas, trigger, gates, arc, tier
+- `test_event_has_choice` — two-option choice with credit cost + hp restore
+- `test_event_dialogue_uses_gibson_tone` — Maas + neuropozyne + Sprawl keywords
+- `test_event_faction_affinity` — maas +2
+- `test_event_consequence_sets_branch` — maas_market_choice
+
+**Content — TestEventCountIncrement (4 tests)**:
+- `test_total_events_at_least_36` — total events >= 36
+- `test_metadata_total_events_updated` — metadata.phase >= 33
+- `test_total_chains_unchanged` — 6 chains (no new chain)
+- `test_maas_faction_has_one_event` — maas has 1 faction event (was 0)
+
+**Polish — TestStoryViewDocstringCoverage (3 tests)**:
+- `test_story_registry_methods_have_docstrings` — 3 StoryRegistry methods
+- `test_load_helpers_have_docstrings` — 2 _load_* helpers
+- `test_interrogate_coverage_100` — interrogate missing == 0
+
+**Polish — TestImprovedErrorMessages (3 tests)**:
+- `test_status_effects_v2_error_lists_valid_types` — ValueError mentions valid types
+- `test_meta_progression_error_lists_valid_unlock_ids` — backward compat ("Unknown unlock" still matches) + new "must be one of"
+- `test_register_hook_action_error_lists_valid_hookkinds` — ValueError mentions valid HookKind names
+
+### 5. Forward-compat allowlist update
+
+`prototype/tests/unit/test_phase29_yakuza_contract.py`:
+- Updated phase allowlist from `("29", "31", "32")` to `("29", "31", "32", "33")` — avoids stale assertion when later phases bump the metadata version.
+
+### 6. Validation
+
+```
+$ make format       # ruff format, 2 files reformatted initially, then clean
+$ make lint         # ruff check — All checks passed!
+$ make typecheck    # mypy strict — Success: no issues found in 211 source files
+$ make test         # 5142 passed, 463 skipped, 1 xfailed (was 5126 — +16)
+$ python3 audit_vault.py                  # 2 pre-existing typing_language artifacts (out of scope per AGENTS.md §3)
+$ python3 mixed_language_audit.py         # 0 violations
+$ python3 dashboard_pipeline_audit.py     # 0 errors
+```
+
+### 7. Files changed
+
+- `prototype/data/story/events.json` — +28/-3 (new event + metadata bump)
+- `prototype/src/roguelike_sprawl/combat/meta_progression.py` — +3/-1 (error message)
+- `prototype/src/roguelike_sprawl/combat/status_effects_v2.py` — +4/-1 (error message)
+- `prototype/src/roguelike_sprawl/engine/story_view.py` — +9/-0 (5 docstrings)
+- `prototype/src/roguelike_sprawl/novel/hooks.py` — +3/-1 (error message)
+- `prototype/tests/unit/test_phase29_yakuza_contract.py` — +1/-1 (allowlist extension)
+- `prototype/tests/unit/test_phase33_small_content_polish.py` — new file, +216/-0 (16 new tests)
+
+Total: 7 files, +264/-6.
+
+### 8. Notes
+
+- No push (98 unpushed commits pending GH_TOKEN).
+- No raw/, Fiction/, Language/, Game/typing_language/ touched.
+- No ADR changes (existing ADRs preserved).
+- No new dependencies.
+- No type suppressions (only `# type: ignore[arg-type]` for the test fake-enum).
+- All 5126 baseline tests preserved + 16 new = 5142.
+- Docstring coverage: 95.9% → 96.1%.
+
+---
+
 ## [2026-08-15] feat+chore(polish) | Phase 31 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Neuropozyne Withdrawal event) + 3 polish improvements. Commit `42631c8`. 7 files, +151/-12, 5104 passed (+9 from Phase 30 baseline 5095).

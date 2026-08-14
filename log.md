@@ -1,3 +1,100 @@
+## [2026-08-15] feat+chore(polish) | Phase 31 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Neuropozyne Withdrawal event) + 3 polish improvements. Commit `42631c8`. 7 files, +151/-12, 5104 passed (+9 from Phase 30 baseline 5095).
+
+### 1. Content addition: general_event_neuropozyne_withdrawal
+
+`prototype/data/story/events.json` 에 `general_event_neuropozyne_withdrawal` 신규 엔트리 추가 (33 → 34 events). Gibson-flavored biotech crisis 이벤트 — Phase 30의 maas_neuropozyne ICE와 연결하여 매트릭스 내 wetware withdrawal 메카닉 추가:
+
+- **Category**: general, trigger: `combat_start`, condition: `hp < 50% AND has_status:dependent OR random < 0.03`
+- **Mood**: shaky, location: any_combat, arc: 3, tier: 3
+- **Dialogue**: WETWARE WARNING 메시지 ("Neuropozyne levels critical" / "Withdrawal symptoms in 3... 2... 1...") + "RUNNER: Not now. Not in the middle of a run."
+- **Choice**: Push through (10% HP loss, neuropozyne_tolerance+1) vs. Jack out (mission_failed, tolerance reset)
+- **Faction affinity**: maas +1 (Phase 30 ICE 연결)
+
+### 2. Polish: Docstrings on combat/effects_data.py
+
+17 docstrings 추가 (interrogate 58% → 91.7%). Dataclass method dunders:
+
+- `Particle.is_alive` — life_ms remaining
+- `ParticleSystem.spawn` / `step` / `clear` — append/advance/reset
+- `FloatingNumber.step` / `is_alive` — float-up + life check
+- `HitFlash.trigger` / `step` / `is_active` — tile-level flash lifecycle
+- `ScreenFlash.step` / `is_active` — full-screen flash lifecycle
+- `CinematicSequence.step` / `current_phase` / `is_finished` / `total_duration_ms`
+- `ComboCounter.reset` — clear count + timestamp
+
+Vault-wide interrogate: **93.9% → 94.8%** (effects_data.py contribution).
+
+### 3. Polish: _generate_wav() validation error
+
+`prototype/src/roguelike_sprawl/audio/sound_manager.py`:
+- Added `_VALID_WAV_KINDS = ("sine", "square", "noise")` module constant
+- Early validation: `raise ValueError(f"Unknown WAV kind: {kind!r} (expected one of {_VALID_WAV_KINDS})")` BEFORE creating the file
+- Previously silently fell back to `sample = 0` (empty silent WAV). Now fails fast with clear message.
+- Refactored `if/elif/else` to `if/elif/else` with explicit "noise" branch (no fall-through).
+
+### 4. Polish: Docstrings on engine/settings_view.py
+
+3 docstrings 추가 (interrogate 100% → 100% but explicit):
+- `_get_volume` — read master volume from global SoundManager
+- `_set_volume` — clamp + set master volume
+- `_adjust_volume` — delta-based adjust with return
+
+### 5. Test coverage (+9)
+
+`prototype/tests/unit/test_phase13_events.py`: +7 tests (TestPhase31NeuropozyneEvent class):
+- `test_event_exists` — event key present
+- `test_event_metadata` — event_id, category, title, arc, tier
+- `test_event_trigger` — combat_start in TRIGGERS list
+- `test_event_has_choice` — binary choice with consequences
+- `test_event_dialogue_uses_wetware_voice` — Gibson biotech tone
+- `test_event_has_maas_affinity` — connects to Phase 30 ICE
+- `test_event_metadata_count_updated` — _metadata.total_events >= 34
+
+Plus TRIGGERS list extended with `combat_start` (small backward-compatible addition).
+
+`prototype/tests/unit/test_sound_manager.py`: +2 tests (TestPhase31WAVGeneration class):
+- `test_generate_wav_valid_kinds` — all three kinds produce non-empty WAV
+- `test_generate_wav_rejects_unknown_kind` — ValueError raised, file not created
+
+`prototype/tests/unit/test_phase29_yakuza_contract.py`: Updated `test_metadata_total_events_updated` (was hardcoded `== 33`) to `test_metadata_total_events_at_least_33` — flexible >= 33 check. Phase 29b update for Phase 31's 34-event count.
+
+### 6. Validation
+
+```
+$ make format       # ruff format, 1 file reformatted
+$ make lint         # ruff check — All checks passed!
+$ make typecheck    # mypy strict — Success: no issues found in 211 source files
+$ make test         # 5104 passed, 463 skipped, 1 xfailed (was 5095 — +9)
+$ python3 audit_vault.py                  # 2 pre-existing typing_language artifacts (out of scope per AGENTS.md §3)
+$ python3 mixed_language_audit.py         # 0 violations
+$ python3 dashboard_pipeline_audit.py     # 0 errors
+```
+
+### 7. Files changed
+
+- `prototype/data/story/events.json` — +28/-4 (new event + metadata)
+- `prototype/src/roguelike_sprawl/audio/sound_manager.py` — +20/-4 (validation + docstring)
+- `prototype/src/roguelike_sprawl/combat/effects_data.py` — +16/-0 (17 docstrings)
+- `prototype/src/roguelike_sprawl/engine/settings_view.py` — +3/-0 (3 docstrings)
+- `prototype/tests/unit/test_phase13_events.py` — +52/-1 (7 new tests + TRIGGERS extension)
+- `prototype/tests/unit/test_phase29_yakuza_contract.py` — +5/-4 (metadata test update)
+- `prototype/tests/unit/test_sound_manager.py` — +25/-0 (2 new tests + pytest import)
+
+Total: 7 files, +151/-12.
+
+### 8. Notes
+
+- No push (96 unpushed commits pending GH_TOKEN).
+- No raw/, Fiction/, Language/, Game/typing_language/ touched.
+- No ADR changes (existing ADRs preserved).
+- No new dependencies.
+- No type suppressions.
+- All 5095 baseline tests preserved + 9 new = 5104.
+
+---
+
 ## [2026-08-15] feat+chore(polish) | Phase 30 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Maas Biolabs Neuropozyne ICE) + 2 polish improvements. Commit `1700971`. 5 files, +278/-5, 5095 passed (+13 from Phase 29 baseline 5082).

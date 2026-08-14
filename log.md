@@ -1,3 +1,95 @@
+## [2026-08-14] feat+chore(polish) | Phase 28 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Sense/Net Classified Files event) + 3 polish improvements. Commit `789c566`. 5 files, +301/-5, 5062 passed (+18 from Phase 27 baseline 5044).
+
+### 1. Content addition: faction_event_sensenet_classified
+
+`prototype/data/story/events.json` 에 `faction_event_sensenet_classified` 신규 엔트리 추가 (30 → 31 events). Gibson-flavored "Sense/Net archives everything" tone:
+
+- **Type**: faction event, faction_ref: sense_net, tier 5, arc 3, pillar: memory
+- **Trigger**: npc_choice, trigger_condition: sense_net_rep >= 5
+- **Location**: sensenet_archive_sublevel, mood: mysterious
+- **Dialogue** ("We archive everything, runner. Every credit. Every construct. Every wetware ID.")
+- **Choice**: Buy classified file (cost 2000 credits, unlocks profile) vs. Walk away (profile intact)
+- **Consequence**: sensenet_classified_branch
+- **Faction affinity**: sense_net +2
+
+`chain_news_story` (Phase 13) 의 5번째 event로 추가 (4 → 5 events, max chain length 5). Positioned chronologically between `sensenet_alert` and `sensenet_spin` — archivist encounter bridges the public alert and the editor's spin job. sense_net faction events: 2 → 3.
+
+### 2. Polish: Docstring additions to portraits/manager.py
+
+3 docstrings 추가 (interrogate 67% → 100%):
+
+- `PortraitManager._load` — load portraits from data_dir/portraits.json (silent no-op if missing)
+- `PortraitManager.__len__` — count of registered portraits
+- `PortraitManager.__repr__` — debug repr with count
+
+Vault-wide interrogate: **92.0% → 92.4%** (ADR-0120 80% baseline 위).
+
+### 3. Polish: Docstring additions to missions/board.py
+
+6 docstrings 추가 (interrogate 59% → 86%):
+
+- `JobBoard.__iter__` / `__len__` / `__contains__` / `__repr__` — dunder contracts
+- `_opt_int` / `_opt_str` — module-level coercion helpers
+
+Private `_parse_objective` / `_parse_rewards` / `_parse_mission` (3 helpers) 은 의도적으로 제외 (Phase 25 ADR-0110 policy: private `_apply_*` / `_parse_*` helpers OK with low coverage).
+
+### 4. Polish: Improved error messages in MissionChain.__post_init__
+
+`prototype/src/roguelike_sprawl/missions/mission.py:260-269` — value error messages now include remediation hints:
+
+```
+chain must have 3-5 missions, got 0 (see Phase 13 event chains in events.json: _chains section)
+```
+
+```
+invalid chain_type: 'bogus_type' (must be one of: faction_driven, character_driven, story_driven)
+```
+
+이전: 단순 `f"chain must have 3-5 missions, got {len(self.missions)}"` — 디버깅 시 grep 필요. 이제 events.json 위치 + 가능한 값 명시.
+
+### 5. Test coverage (+18)
+
+`prototype/tests/unit/test_phase28_classified_event.py` 신설 (18 tests):
+- **TestSensenetClassifiedEvent** (5): presence / metadata / has_choice / Gibson-tone dialogue ("archive" + "sprawl") / consequence sets branch
+- **TestChainNewsStoryUpdate** (3): chain includes new event / length within 3-5 bounds / event order (alert → classified → spin)
+- **TestEventCountIncrement** (3): total >= 31 / sense_net faction has 3 events / metadata phase=28 + total_events=31
+- **TestPortraitDocstringCoverage** (2): _load has docstring / dunders have docstrings
+- **TestJobBoardDocstringCoverage** (2): JobBoard dunders have docstrings / _opt helpers have docstrings
+- **TestChainErrorMessages** (3): length error mentions events.json / type error lists 3 valid values / valid chain still constructs
+
+### Validation
+
+| Gate | Result |
+|---|---|
+| `make format` | All files clean (1 reformatted, then clean) |
+| `make lint` | All checks passed! |
+| `make typecheck` | Success: no issues found in 211 source files |
+| `make test` | **5062 passed**, 463 skipped, 1 xfailed (Phase 14 perf tracker, unrelated) |
+| `interrogate` (portraits) | 100.0% (was 67%) |
+| `interrogate` (board) | 86.4% (was 59%) |
+| `interrogate` (vault-wide) | 92.4% (was 92.0%) |
+| `audit_vault.py` | 4 pre-existing Fiction link errors (unrelated, Phase 100 baseline; roguelike_sprawl scope clean) |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+Test delta: **+18** (5044 → 5062).
+
+### Files changed (5)
+
+```
+modified:   prototype/data/story/events.json                       (+25/-1)
+modified:   prototype/src/roguelike_sprawl/missions/board.py       (+12)
+modified:   prototype/src/roguelike_sprawl/missions/mission.py     (+5/-2)
+modified:   prototype/src/roguelike_sprawl/portraits/manager.py    (+9/-1)
+created:    prototype/tests/unit/test_phase28_classified_event.py  (+251)
+```
+
+Commit: **`789c566` feat+chore(polish): Phase 28 — Small content + polish**
+
+---
+
 ## [2026-08-14] feat+chore(polish) | Phase 27 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (ICE variant + zone boss) + 2 polish improvements. Commit `88aab5d`. 9 files, +337/-8, 5044 passed (+24 from Phase 26 baseline 5020).

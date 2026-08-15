@@ -105,6 +105,10 @@ Phase 34/35/36/37/29 forward-compat allowlists extended to include `"38"`:
 
 Phase 38 이 metadata version 을 "37" → "38" 로 bump 했으므로 5 개 forward-compat assertion 모두 allowlist 확장 필요.
 
+---
+
+## [2026-08-15] feat+chore(polish) | Phase 37 — Small content + polish
+
 **Status**: ✅ 완료 — 1 content addition (3Jane's Puppet Show event) + 5 polish improvements. Commit `28eacfb`. 11 files, +426/-6, 5228 passed (+23 from Phase 36 baseline 5205).
 
 ### 1. Content addition: general_event_3jane_puppet_show

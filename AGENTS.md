@@ -112,6 +112,20 @@
 - **의존성 관리**: pyproject.toml + uv (또는 pip)
 - **빌드 백엔드**: hatchling
 
+### 테스트 / 린트 / 타입체크 실행 경로 (canonical)
+
+**반드시 `prototype/` 디렉토리에서 실행** — 프로젝트 루트에 있는 `.venv/`는 pytest만 있고 ruff/mypy/interrogate/typing_extensions가 없음. 절대 경로 (예: `/.../prototype/.venv/bin/pytest`)는 다른 Python 인터프리터를 사용해 11+ false-positive 실패를 보임.
+
+```bash
+cd prototype
+make all          # format + lint + typecheck + test
+make test         # pytest only (5281 → 5307 passing, 463 → 365 skipped)
+make lint         # ruff
+make typecheck    # mypy --strict
+```
+
+또는 직접 실행 시 `prototype/.venv/bin/...` 절대 경로 대신 `cd prototype &&` 후 상대 경로 사용.
+
 ### 디렉토리 구조 (Phase 4 확정)
 
 코드 프로젝트는 `prototype/` 하위. 디자인 문서와 분리.

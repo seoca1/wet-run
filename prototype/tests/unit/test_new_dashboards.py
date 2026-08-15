@@ -19,23 +19,19 @@ CYBERSPACE_HTML = DASHBOARD_DIR / "cyberspace.html"
 class TestSoundDashboard:
     """sound.html structure."""
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_exists(self) -> None:
         assert SOUND_HTML.exists()
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_6_category_cards(self) -> None:
         html = SOUND_HTML.read_text(encoding="utf-8")
         for cat in ("THEME", "EVENTS", "KEYS", "COMBAT", "MOVEMENT", "ITEMS"):
             assert cat in html, f"Missing category: {cat}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_5_themes(self) -> None:
         html = SOUND_HTML.read_text(encoding="utf-8")
         for theme in ("matrix_rain", "cyberspace", "chiba", "sense_net", "finn_office"):
             assert theme in html, f"Missing theme: {theme}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_27_sounds_listed(self) -> None:
         html = SOUND_HTML.read_text(encoding="utf-8")
         # Count combat sounds (12)
@@ -54,23 +50,20 @@ class TestSoundDashboard:
         assert "story_text_typing" in html
         assert "story_dialogue_advance" in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_key_bindings(self) -> None:
         html = SOUND_HTML.read_text(encoding="utf-8")
         for key in ("M", "T", "E", "K", "B", "V", "I"):
             assert f"<code>{key}</code>" in html, f"Missing key: {key}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_default_volume_20(self) -> None:
         html = SOUND_HTML.read_text(encoding="utf-8")
         assert "20%" in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_keys_default_off(self) -> None:
         html = SOUND_HTML.read_text(encoding="utf-8")
         assert "OFF" in html  # Keys default OFF
 
-    @pytest.mark.skip(reason="top nav updated 2026-07-10 with new dashboard pages")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_top_nav(self) -> None:
         html = SOUND_HTML.read_text(encoding="utf-8")
         assert 'class="current">🔊 Sound' in html
@@ -78,7 +71,6 @@ class TestSoundDashboard:
         assert 'href="equipment.html"' in html
         assert 'href="cyberspace.html"' in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_engine_integration_section(self) -> None:
         html = SOUND_HTML.read_text(encoding="utf-8")
         for mod in ("story_cinematic", "combat_view", "matrix_view", "death"):
@@ -88,17 +80,14 @@ class TestSoundDashboard:
 class TestCombatDashboard:
     """combat.html structure."""
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_exists(self) -> None:
         assert COMBAT_HTML.exists()
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_5_ice_types(self) -> None:
         html = COMBAT_HTML.read_text(encoding="utf-8")
         for ice in ("standard", "watchdog", "goliath", "black", "construct"):
             assert ice in html, f"Missing ICE: {ice}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_14_skill_effects(self) -> None:
         html = COMBAT_HTML.read_text(encoding="utf-8")
         for effect in (
@@ -120,24 +109,21 @@ class TestCombatDashboard:
         ):
             assert effect in html, f"Missing effect: {effect}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_rtms_label(self) -> None:
         html = COMBAT_HTML.read_text(encoding="utf-8")
         assert "RT-MS" in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_ppl_zdr(self) -> None:
         html = COMBAT_HTML.read_text(encoding="utf-8")
         assert "PPL" in html
         assert "ZDR" in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_combat_sounds(self) -> None:
         html = COMBAT_HTML.read_text(encoding="utf-8")
         for snd in ("combat_hit_normal", "combat_victory", "combat_defeat"):
             assert snd in html
 
-    @pytest.mark.skip(reason="top nav updated 2026-07-10 with new dashboard pages")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_top_nav(self) -> None:
         html = COMBAT_HTML.read_text(encoding="utf-8")
         assert 'class="current">⚔ Combat' in html
@@ -145,7 +131,6 @@ class TestCombatDashboard:
         assert 'href="equipment.html"' in html
         assert 'href="cyberspace.html"' in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_ice_stats_aligned_with_json(self) -> None:
         """HP values match data/combat/ice_types.json."""
         with (DATA_DIR / "combat" / "ice_types.json").open() as f:
@@ -160,15 +145,13 @@ class TestCombatDashboard:
             assert str(dmg) in html
 
 
-@pytest.mark.skip(reason="equipment.html merged into player.html#equipment 2026-07-10")
 class TestEquipmentDashboard:
     """equipment.html structure."""
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_exists(self) -> None:
         assert EQUIPMENT_HTML.exists()
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_8_body_slots(self) -> None:
         html = EQUIPMENT_HTML.read_text(encoding="utf-8")
         for slot in (
@@ -183,13 +166,13 @@ class TestEquipmentDashboard:
         ):
             assert slot in html, f"Missing slot: {slot}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_6_tiers(self) -> None:
         html = EQUIPMENT_HTML.read_text(encoding="utf-8")
         for tier in ("T1", "T2", "T3", "T4", "T5", "T6"):
             assert f">{tier}<" in html, f"Missing tier: {tier}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_9_tech_types(self) -> None:
         html = EQUIPMENT_HTML.read_text(encoding="utf-8")
         for tech in (
@@ -205,7 +188,7 @@ class TestEquipmentDashboard:
         ):
             assert tech in html, f"Missing tech: {tech}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_3_tier_crafting(self) -> None:
         html = EQUIPMENT_HTML.read_text(encoding="utf-8")
         assert "Tier 1" in html
@@ -213,7 +196,7 @@ class TestEquipmentDashboard:
         assert "Tier 3" in html
         assert "raw → 4 components → final" in html or "5 raw" in html
 
-    @pytest.mark.skip(reason="top nav updated 2026-07-10 with new dashboard pages")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_top_nav(self) -> None:
         html = EQUIPMENT_HTML.read_text(encoding="utf-8")
         assert 'class="current">📦 Equipment' in html
@@ -221,7 +204,7 @@ class TestEquipmentDashboard:
         assert 'href="combat.html"' in html
         assert 'href="cyberspace.html"' in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_hub_integration(self) -> None:
         html = EQUIPMENT_HTML.read_text(encoding="utf-8")
         assert "Hub" in html
@@ -230,7 +213,7 @@ class TestEquipmentDashboard:
         assert "Panel 3" in html
         assert "Panel 4" in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_equipment_sounds(self) -> None:
         html = EQUIPMENT_HTML.read_text(encoding="utf-8")
         for snd in ("items_equip", "items_pickup", "items_cant"):
@@ -240,23 +223,19 @@ class TestEquipmentDashboard:
 class TestCyberspaceDashboard:
     """cyberspace.html structure."""
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_exists(self) -> None:
         assert CYBERSPACE_HTML.exists()
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_2_worlds(self) -> None:
         html = CYBERSPACE_HTML.read_text(encoding="utf-8")
         assert "chiba" in html
         assert "night_city" in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_4_sectors(self) -> None:
         html = CYBERSPACE_HTML.read_text(encoding="utf-8")
         for sector in ("Sense/Net", "Public Grid", "Arasaka", "Militech"):
             assert sector in html, f"Missing sector: {sector}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_6_servers(self) -> None:
         html = CYBERSPACE_HTML.read_text(encoding="utf-8")
         for srv in (
@@ -269,24 +248,20 @@ class TestCyberspaceDashboard:
         ):
             assert srv in html, f"Missing server: {srv}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_8_node_types(self) -> None:
         html = CYBERSPACE_HTML.read_text(encoding="utf-8")
         for node in ("ENTRY", "DATA", "ICE", "CONSTRUCT", "SYSTEM", "ROUTER", "CORE", "EXIT"):
             assert node in html, f"Missing node: {node}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_4_zone_depths(self) -> None:
         html = CYBERSPACE_HTML.read_text(encoding="utf-8")
         for zone in ("SURFACE", "MID", "CORE", "TA"):
             assert zone in html, f"Missing zone: {zone}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_4_tier_hierarchy(self) -> None:
         html = CYBERSPACE_HTML.read_text(encoding="utf-8")
         assert "World → Sector → Server → Node" in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_worlds_match_json(self) -> None:
         """Worlds/sectors count from worlds.json matches dashboard."""
         with (DATA_DIR / "cyberspace" / "worlds.json").open() as f:
@@ -296,7 +271,7 @@ class TestCyberspaceDashboard:
             assert wid in html
             assert w["name"] in html
 
-    @pytest.mark.skip(reason="top nav updated 2026-07-10 with new dashboard pages")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_has_top_nav(self) -> None:
         html = CYBERSPACE_HTML.read_text(encoding="utf-8")
         assert 'class="current">🌐 Cyberspace' in html
@@ -304,7 +279,6 @@ class TestCyberspaceDashboard:
         assert 'href="combat.html"' in html
         assert 'href="equipment.html"' in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_has_movement_sounds(self) -> None:
         html = CYBERSPACE_HTML.read_text(encoding="utf-8")
         for snd in (
@@ -316,11 +290,10 @@ class TestCyberspaceDashboard:
             assert snd in html
 
 
-@pytest.mark.skip(reason="navigation paths changed after dashboard restructure 2026-07-10")
 class TestNavigationConsistency:
     """All 4 new dashboards have consistent navigation."""
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_all_link_each_other(self) -> None:
         """Each new dashboard links to the other 3."""
         new_dashboards = [SOUND_HTML, COMBAT_HTML, EQUIPMENT_HTML, CYBERSPACE_HTML]
@@ -334,13 +307,13 @@ class TestNavigationConsistency:
                     f"{path.name} should link to {other_name}.html"
                 )
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_all_link_to_roguelike_submenu(self) -> None:
         for path in [SOUND_HTML, COMBAT_HTML, EQUIPMENT_HTML, CYBERSPACE_HTML]:
             html = path.read_text(encoding="utf-8")
             assert 'href="index.html"' in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_all_link_to_hub(self) -> None:
         for path in [SOUND_HTML, COMBAT_HTML, EQUIPMENT_HTML, CYBERSPACE_HTML]:
             html = path.read_text(encoding="utf-8")
@@ -349,14 +322,13 @@ class TestNavigationConsistency:
             assert 'id="projects-hub-link"' in html
             assert 'href="../../"' in html
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
+    @pytest.mark.skip(reason="tests check pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
     def test_submenu_links_to_new_dashboards(self) -> None:
         """Submenu (index.html) now links to the 4 new dashboards."""
         submenu = (DASHBOARD_DIR / "index.html").read_text(encoding="utf-8")
         for dash in ("sound.html", "combat.html", "cyberspace.html", "equipment.html"):
             assert f'href="{dash}"' in submenu, f"Submenu missing link to {dash}"
 
-    @pytest.mark.skip(reason="dashboard restructured 2026-07-10")
     def test_submenu_drops_tbd_label(self) -> None:
         """Submenu no longer marks new dashboards as TBD."""
         submenu = (DASHBOARD_DIR / "index.html").read_text(encoding="utf-8")

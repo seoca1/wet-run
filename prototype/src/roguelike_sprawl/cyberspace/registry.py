@@ -12,6 +12,7 @@ class WorldRegistry:
     """Registry for loading and accessing the world hierarchy."""
 
     def __init__(self, world_map: WorldMap | None = None) -> None:
+        """Initialize the registry; pass an existing ``WorldMap`` or start with an empty one."""
         self.world_map = world_map or WorldMap()
 
     @classmethod

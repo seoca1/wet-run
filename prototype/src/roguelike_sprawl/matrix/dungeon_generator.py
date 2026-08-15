@@ -155,6 +155,7 @@ class DungeonGenerator:
         # Define connections — every room connects to its 4 cardinal neighbors
         # (x,y) connects to (x±1,y) and (x,y±1) where those rooms exist
         def edge_pairs() -> list[Edge]:
+            """Build bidirectional Edge list from cardinal-adjacent rooms."""
             pairs: list[tuple[str, str]] = []
             ids_at: dict[tuple[int, int], str] = {(r.x, r.y): r.id for r in rooms}
             for r in rooms:
@@ -247,10 +248,12 @@ class _BspNode:
     # disables synthesized __eq__/__hash__ on slotted classes.
     @override
     def __hash__(self) -> int:
+        """Identity-based hash; required because ``slots=True`` disables the synthesized version."""
         return id(self)
 
     @override
     def __eq__(self, other: object) -> bool:
+        """Identity-based equality; only equal to itself."""
         return self is other
 
     def __lt__(self, other: object) -> bool:
@@ -259,6 +262,7 @@ class _BspNode:
 
     @property
     def is_leaf(self) -> bool:
+        """True if this node has no children (i.e. holds a room)."""
         return self.left is None and self.right is None
 
     def center(self) -> tuple[int, int]:
@@ -516,12 +520,14 @@ class ProceduralDungeonGenerator:
         parent = list(range(len(leaves)))
 
         def find(i: int) -> int:
+            """Find the root of ``i`` in the Union-Find forest with path compression."""
             while parent[i] != i:
                 parent[i] = parent[parent[i]]
                 i = parent[i]
             return i
 
         def union(a: int, b: int) -> bool:
+            """Union two sets; returns True if a merge happened, False if already same set."""
             ra, rb = find(a), find(b)
             if ra == rb:
                 return False
@@ -712,6 +718,7 @@ class ProceduralDungeonGenerator:
         return nodes
 
     def _faction_for(self, character_ref: str) -> Faction:
+        """Map a character_ref to its default dungeon faction."""
         return {
             "novice": Faction.NONE,
             "veteran": Faction.SENSE_NET,

@@ -529,9 +529,11 @@ class AchievementState:
         self.progress[ach_id] = value
 
     def is_unlocked(self, ach_id: str) -> bool:
+        """Return True if the achievement has been unlocked by the player."""
         return ach_id in self.unlocked_ids
 
     def get_progress(self, ach_id: str) -> int:
+        """Return the current progress value for a progressive achievement (0 if none)."""
         return self.progress.get(ach_id, 0)
 
     def consume_notification(self) -> Achievement | None:
@@ -563,12 +565,15 @@ class AchievementState:
         return stats
 
     def get_total_unlocked(self) -> int:
+        """Return the count of currently unlocked achievements."""
         return len(self.unlocked_ids)
 
     def get_total_available(self) -> int:
+        """Return the total number of achievements that exist in the catalog."""
         return len(ALL_ACHIEVEMENTS)
 
     def get_completion_pct(self) -> float:
+        """Return the completion percentage (0.0-100.0) for unlocked vs available."""
         total = self.get_total_available()
         if total == 0:
             return 0.0

@@ -39,6 +39,7 @@ class Loadout:
     construct_tier: int = 0
 
     def __post_init__(self) -> None:
+        """Validate that all tier values are within the 0-6 system range."""
         for name, tier in (
             ("deck_tier", self.deck_tier),
             ("wetware_tier", self.wetware_tier),

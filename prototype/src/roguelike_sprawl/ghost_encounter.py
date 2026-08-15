@@ -24,6 +24,13 @@ from enum import StrEnum
 
 
 class GhostChoice(StrEnum):
+    """Player's choice on encountering a Loa ghost in the matrix.
+
+    TALK: engage the construct and earn its data fragment + faction rep.
+    FIGHT: high-risk combat against the Loa.
+    LEAVE: safe but no reward.
+    """
+
     TALK = "talk"
     FIGHT = "fight"
     LEAVE = "leave"

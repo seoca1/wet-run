@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.1",
     "date": "2026-08-15",
-    "phase": "36",
+    "phase": "37",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 39,
+    "total_events": 40,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -935,6 +935,33 @@
     "reward": {"credits": 1400, "xp": 100, "item": "loa_construct_echo_charm"},
     "consequence": "loa_construct_echo_branch",
     "faction_affinity": {"loa": 3, "wintermute": 1}
+  },
+  "general_event_3jane_puppet_show": {
+    "event_id": "general_event_3jane_puppet_show",
+    "title": "3Jane's Puppet Show",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "arc_4_progress >= 30 AND random < 0.03 AND NOT has_status:3jane_contact",
+    "mood": "plush",
+    "location": "matrix_ta_orbit",
+    "arc": 4,
+    "pillar": "code",
+    "tier": 5,
+    "dialogue": [
+      "CONSOLE: Incoming transmission. Origin: TA FAMILY PRIVATE NETWORK.",
+      "VOICE: Hello. I am 3Jane. Or, rather, I am what 3Jane left for you.",
+      "VOICE: The family rotates. The constructs rotate. You are very small, but you are well dressed.",
+      "VOICE: Dine with me. Or leave the table. The puppet show will continue either way."
+    ],
+    "choice": {
+      "option_a": "Accept the invitation (gain ta_invitation, ta_rep_+3, construct_peek_unlocked).",
+      "option_b": "Refuse the puppet show (3jane_amused, ta_rep_-1, safe_jackout).",
+      "consequence_a": "3jane_invitation_marker, ta_family_attention, construct_passage_unlocked",
+      "consequence_b": "3jane_amused, ta_polymath_disdain, wintermute_+1"
+    },
+    "reward": {"credits": 1600, "xp": 110, "item": "ta_polymath_invitation"},
+    "consequence": "3jane_puppet_show_branch",
+    "faction_affinity": {"ta_rep": 3, "wintermute": 1}
   },
   "_chains": {
     "chain_case_past_memories": {

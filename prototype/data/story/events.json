@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.1",
     "date": "2026-08-15",
-    "phase": "37",
+    "phase": "38",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 40,
+    "total_events": 41,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -962,6 +962,33 @@
     "reward": {"credits": 1600, "xp": 110, "item": "ta_polymath_invitation"},
     "consequence": "3jane_puppet_show_branch",
     "faction_affinity": {"ta_rep": 3, "wintermute": 1}
+  },
+  "general_event_freeside_kumiko_invitation": {
+    "event_id": "general_event_freeside_kumiko_invitation",
+    "title": "Kumiko's Tea Ceremony",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "arc_5_progress >= 40 AND random < 0.03 AND NOT has_status:freeside_contact",
+    "mood": "graceful",
+    "location": "matrix_freeside_orbit",
+    "arc": 5,
+    "pillar": "memory",
+    "tier": 5,
+    "dialogue": [
+      "CONSOLE: Handshake initiated. Origin: FREESIDE — Villa Straylight guest quarters.",
+      "VOICE: I am Kumiko. I have been waiting for someone who knows what tea means.",
+      "VOICE: My father kept a zoo of constructs. I left it behind. The orbit remembers, but the orbit does not love.",
+      "VOICE: Will you sit with me? Or will you keep moving, the way everyone keeps moving?"
+    ],
+    "choice": {
+      "option_a": "Accept the tea ceremony (gain freeside_passage, ta_rep_+2, loa_+2, construct_memory_unlocked).",
+      "option_b": "Decline politely (kumiko_respectful, safe_jackout, no affinity shift).",
+      "consequence_a": "kumiko_tea_marker, ta_family_memory, construct_remembrance_unlock",
+      "consequence_b": "kumiko_respectful_dismissal, freeside_silent_passage"
+    },
+    "reward": {"credits": 1800, "xp": 120, "item": "kumiko_tea_charm"},
+    "consequence": "freeside_kumiko_tea_branch",
+    "faction_affinity": {"ta_rep": 2, "loa": 2}
   },
   "_chains": {
     "chain_case_past_memories": {

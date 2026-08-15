@@ -64,6 +64,13 @@ STEALTH_ALARM_MULTIPLIER = 0.5
 
 
 def _combatant_personality(combatant: Combatant) -> PersonalityLevel:
+    """Resolve a combatant's personality attribute to a PersonalityLevel.
+
+    Coerces raw string values (e.g. from JSON data) into the enum and
+    falls back to AGGRESSIVE when the attribute is missing, malformed,
+    or holds an unrecognized value. This guarantees downstream
+    personality checks always receive a valid enum member.
+    """
     raw = getattr(combatant, "personality", None)
     if raw is None:
         return PersonalityLevel.AGGRESSIVE

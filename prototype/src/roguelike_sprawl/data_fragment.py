@@ -16,10 +16,16 @@ from enum import StrEnum
 
 
 class FragmentRarity(StrEnum):
-    COMMON = "common"
-    UNCOMMON = "uncommon"
-    RARE = "rare"
-    LEGENDARY = "legendary"
+    """Rarity tier for a data fragment — affects gallery visual style.
+
+    Ordered from most common to most legendary. Drives the fragment
+    gallery's border color and unlock animation.
+    """
+
+    COMMON = "common"  # Frequent drops, surface-level lore.
+    UNCOMMON = "uncommon"  # Mid-tier missions, named-npc drops.
+    RARE = "rare"  # Boss-tier or end-of-chain drops.
+    LEGENDARY = "legendary"  # Construct / story-critical fragments.
 
 
 @dataclass(frozen=True, slots=True)

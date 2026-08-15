@@ -19,13 +19,13 @@ from enum import StrEnum
 class ArtStyle(StrEnum):
     """Visual style for the ASCII art."""
 
-    NEON = "neon"  # Bright cyan/magenta cyberpunk
-    GLITCH = "glitch"  # Corrupted, distorted
-    SHADOW = "shadow"  # Dim, mysterious
-    FIRE = "fire"  # Red/orange, intense
-    MATRIX = "matrix"  # Green, code-rain style
-    GHOST = "ghost"  # Faded, ethereal
-    STATIC = "static"  # TV static / noise
+    NEON = "neon"  # Bright cyan/magenta cyberpunk — default runner style.
+    GLITCH = "glitch"  # Corrupted, distorted — damaged construct echo.
+    SHADOW = "shadow"  # Dim, mysterious — pre-reveal scene.
+    FIRE = "fire"  # Red/orange, intense — boss / combat climax.
+    MATRIX = "matrix"  # Green, code-rain style — cyberspace node intro.
+    GHOST = "ghost"  # Faded, ethereal — construct memory / Loa encounter.
+    STATIC = "static"  # TV static / noise — jack-in / jack-out transition.
 
 
 @dataclass(frozen=True, slots=True)
@@ -44,6 +44,7 @@ class AsciiArt:
 
     @property
     def height(self) -> int:
+        """Height in visual rows (one per line tuple)."""
         return len(self.lines)
 
 

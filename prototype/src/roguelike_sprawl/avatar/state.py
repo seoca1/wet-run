@@ -16,19 +16,23 @@ class Status(Enum):
     Determines avatar body pose (Pillar 3 visualization).
     """
 
-    SAFE = "safe"  # PPL >> ZDR
-    MATCH = "match"  # PPL ~= ZDR
-    TOUGH = "tough"  # PPL slightly < ZDR
-    DEADLY = "deadly"  # PPL << ZDR
-    FUTILE = "futile"  # Nearly dead
+    SAFE = "safe"  # PPL >> ZDR — runner is in control of the deck.
+    MATCH = "match"  # PPL ~= ZDR — even contest.
+    TOUGH = "tough"  # PPL slightly < ZDR — taking real damage.
+    DEADLY = "deadly"  # PPL << ZDR — close to flatline.
+    FUTILE = "futile"  # Nearly dead — every program costs more than it saves.
 
 
 class ConstructKind(Enum):
-    """Construct companion types (echoes)."""
+    """Construct companion types (echoes).
 
-    DIXIE = "D"
-    LOA = "L"
-    THREE_JANE = "J"
+    Each value is a single-letter glyph used in avatar rendering to
+    mark which companion is currently riding alongside the runner.
+    """
+
+    DIXIE = "D"  # Dixie Flatline — Case's construct from Neuromancer.
+    LOA = "L"  # Loa construct — Count Zero / MLO vodou echoes.
+    THREE_JANE = "J"  # 3Jane's echo — Tessier-Ashpool construct memory.
 
 
 @dataclass(frozen=True, slots=True)
@@ -85,7 +89,9 @@ class AvatarLines:
     width: int = 0
 
     def __iter__(self) -> Iterator[tuple[str, tuple[int, int, int]]]:
+        """Yield each rendered (text, color) line in order."""
         return iter(self.lines)
 
     def __len__(self) -> int:
+        """Return the number of rendered lines (1 per visual row)."""
         return len(self.lines)

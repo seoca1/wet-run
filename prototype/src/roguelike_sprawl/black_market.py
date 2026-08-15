@@ -18,6 +18,8 @@ from enum import StrEnum
 
 
 class BlackMarketCategory(StrEnum):
+    """Market sections available in the Hub-side vendor."""
+
     PROGRAMS = "programs"  # Combat programs (Strike, Hammer, Virus, Wisp)
     DECK_UPGRADES = "deck_upgrades"  # T1 → T2 → T3 deck tier upgrades
     INTEL = "intel"  # Mission hints, zone maps, NPC profiles

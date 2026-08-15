@@ -41,15 +41,18 @@ class Entity:
 
     @override
     def __repr__(self) -> str:
+        """Render a debug-friendly representation (id + component type names)."""
         comps = ", ".join(f"{k}={type(v).__name__}" for k, v in self.components.items())
         return f"Entity(id={self.id!r}, {comps})"
 
     @override
     def __eq__(self, other: object) -> bool:
+        """Two entities are equal iff their ids match (component-agnostic)."""
         if not isinstance(other, Entity):
             return NotImplemented
         return self.id == other.id
 
     @override
     def __hash__(self) -> int:
+        """Hash by id; matches equality semantics for set/dict usage."""
         return hash(self.id)

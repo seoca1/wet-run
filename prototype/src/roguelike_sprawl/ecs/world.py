@@ -15,6 +15,7 @@ class World:
     __slots__ = ("_entities",)
 
     def __init__(self) -> None:
+        """Initialize an empty world with no entities."""
         self._entities: dict[str, Entity] = {}
 
     def add(self, entity: Entity) -> Entity:
@@ -50,14 +51,18 @@ class World:
         self._entities.clear()
 
     def __iter__(self) -> Iterator[Entity]:
+        """Iterate all entities in insertion order."""
         return iter(self._entities.values())
 
     def __len__(self) -> int:
+        """Return the number of entities in the world."""
         return len(self._entities)
 
     def __contains__(self, entity_id: object) -> bool:
+        """Return True if an entity with the given id is in the world."""
         return entity_id in self._entities
 
     @override
     def __repr__(self) -> str:
+        """Render a debug-friendly representation (entity count)."""
         return f"World({len(self._entities)} entities)"

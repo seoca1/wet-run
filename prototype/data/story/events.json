@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.1",
     "date": "2026-08-15",
-    "phase": "35",
+    "phase": "36",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 38,
+    "total_events": 39,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -907,6 +907,34 @@
     "reward": {"credits": 1800, "xp": 120, "item": "wintermute_fragment"},
     "consequence": "wintermute_bargain_branch",
     "faction_affinity": {"wintermute": 3, "ta_rep": -1}
+  },
+  "general_event_loa_construct_echo": {
+    "event_id": "general_event_loa_construct_echo",
+    "title": "Loa Construct Echo",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "arc_4_progress >= 25 AND random < 0.04 AND NOT has_status:loa_construct_echo",
+    "mood": "shaky",
+    "location": "matrix_loa_construct",
+    "arc": 4,
+    "pillar": "memory",
+    "tier": 5,
+    "dialogue": [
+      "CONSOLE: WARNING: Construct echo detected.",
+      "CONSOLE: WARNING: Source: dead jockey construct. Dixie?",
+      "CONSOLE: WARNING: Pattern matches Morrison's last recorded wetware ID.",
+      "VOICE: I died in here. I am still in here. The loa keep me.",
+      "VOICE: Carry this. Or leave it. The matrix remembers either way."
+    ],
+    "choice": {
+      "option_a": "Carry the loa construct echo (gain loa_echo_charm, loa_rep_+3).",
+      "option_b": "Sever the echo and walk on (loa_rep_-1, safe_jackout).",
+      "consequence_a": "loa_construct_echo_marker, construct_whisper_unlocked, loa_+3",
+      "consequence_b": "loa_disrespected, loa_curse_risk_hint"
+    },
+    "reward": {"credits": 1400, "xp": 100, "item": "loa_construct_echo_charm"},
+    "consequence": "loa_construct_echo_branch",
+    "faction_affinity": {"loa": 3, "wintermute": 1}
   },
   "_chains": {
     "chain_case_past_memories": {

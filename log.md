@@ -1,3 +1,127 @@
+## [2026-08-15] feat+chore(polish) | Phase 37 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (3Jane's Puppet Show event) + 5 polish improvements. Commit `28eacfb`. 11 files, +426/-6, 5228 passed (+23 from Phase 36 baseline 5205).
+
+### 1. Content addition: general_event_3jane_puppet_show
+
+`prototype/data/story/events.json` 에 `general_event_3jane_puppet_show` 신규 엔트리 추가 (39 → 40 events). Gibson-flavored Count Zero-era Tessier-Ashpool / 3Jane encounter — arc 4 mid-arc TA orbit event. 깁슨 원작에서 3Jane 은 puppet show 비유를 통해 등장하는 TA 패밀리 멤버 — "the family rotates" / "the puppet show continues" 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_4_progress >= 30 AND random < 0.03 AND NOT has_status:3jane_contact`
+- **Mood**: plush, location: matrix_ta_orbit, arc: 4, tier: 5, pillar: code
+- **Dialogue**: CONSOLE TRANSMISSION (TA FAMILY PRIVATE NETWORK) + 3JANE VOICE ("I am 3Jane. Or, rather, I am what 3Jane left for you." / "The family rotates. The constructs rotate. You are very small, but you are well dressed." / "Dine with me. Or leave the table. The puppet show will continue either way.")
+- **Choice**: Accept the invitation (ta_invitation, ta_rep_+3, construct_peek_unlocked) vs. Refuse the puppet show (3jane_amused, ta_rep_-1, safe_jackout, wintermute_+1)
+- **Reward**: 1600 credits + 110 XP + ta_polymath_invitation
+- **Consequence**: 3jane_puppet_show_branch
+- **Faction affinity**: ta_rep +3, wintermute +1 (3Jane/Wintermute connection in Count Zero)
+
+Phase 35 (wintermute +3, ta_rep -1), Phase 36 (loa +3, wintermute +1) 와 대칭적으로 ta_rep +3 + wintermute +1 — 세 패스 모두 다른 large-faction affinity 를 강조.
+
+### 2. Polish: Docstrings on achievements.py
+
+5 docstrings 추가 — `AchievementState` 의 minor getter contract 명시:
+
+- `AchievementState.is_unlocked` — unlock membership test
+- `AchievementState.get_progress` — progressive achievement value (0 default)
+- `AchievementState.get_total_unlocked` — count of unlocked
+- `AchievementState.get_total_available` — total catalog size
+- `AchievementState.get_completion_pct` — 0.0-100.0 percentage
+
+`achievements.py` interrogate: **81% → 100%**.
+
+### 3. Polish: Docstrings on matrix/dungeon_generator.py
+
+7 docstrings 추가 — BSP partitioning 의 identity-based semantics 와 internal helpers 의 contract 명시:
+
+- `_BspNode.__hash__` — identity-based hash (slots=True 가 disable 한 것을 보완)
+- `_BspNode.__eq__` — identity-only equality
+- `_BspNode.is_leaf` — no-children check
+- `DungeonGenerator.generate` 중 inside `edge_pairs` — bidirectional edge build from cardinal neighbors
+- `ProceduralDungeonGenerator._connect_adjacent` 중 `find` — Union-Find path compression
+- `ProceduralDungeonGenerator._connect_adjacent` 중 `union` — Union-Find merge with bool return
+- `ProceduralDungeonGenerator._faction_for` — character_ref → Faction mapping
+
+`matrix/dungeon_generator.py` interrogate: **78% → 100%**.
+
+### 4. Polish: Docstrings on ghost_encounter.py + cyberspace/registry.py + matrix/ppl.py
+
+3 docstrings 추가 — 작은 모듈의 contract 명시:
+
+- `GhostChoice` enum — TALK/FIGHT/LEAVE 의 vendor semantics (talk/fight/leave keyword 포함)
+- `WorldRegistry.__init__` — optional WorldMap pass-through
+- `Loadout.__post_init__` — 0..6 tier range validation
+
+`ghost_encounter.py` interrogate: **75% → 100%**.
+`cyberspace/registry.py` interrogate: **83% → 100%**.
+`matrix/ppl.py` interrogate: **83% → 100%**.
+
+Vault-wide interrogate: **97.6% → 98.3%**.
+
+### 5. Test coverage (+23)
+
+`prototype/tests/unit/test_phase37_small_content_polish.py` (new file, 23 tests):
+
+**Content — TestThreeJanePuppetShowEvent (7 tests)**:
+- `test_event_present` — event key present
+- `test_event_metadata` — event_id, title, arc 4, tier 5, pillar code, location TA orbit, trigger arc_4_progress gate
+- `test_event_has_choice` — two-option choice, accept = ta invitation, refuse = safe jackout
+- `test_event_dialogue_uses_gibson_tone` — 3Jane/family/construct/puppet/small/dress keywords
+- `test_event_faction_affinity` — ta_rep +3, wintermute +1
+- `test_event_consequence_sets_branch` — 3jane_puppet_show_branch
+- `test_event_has_reward` — 1600 credits + 110 XP + ta_polymath_invitation
+
+**Content — TestEventCountIncrement (3 tests)**:
+- `test_total_events_at_least_40` — events >= 40
+- `test_metadata_total_events_updated` — phase in ('37',)
+- `test_total_chains_unchanged` — 6 chains
+
+**Polish — TestAchievementsDocstringCoverage (2 tests)**:
+- `test_achievement_state_methods_have_docstrings` — 5 AchievementState methods
+- `test_interrogate_achievements_at_100` — interrogate 100% (was 81%)
+
+**Polish — TestDungeonGeneratorDocstringCoverage (3 tests)**:
+- `test_bsp_node_dunder_methods_have_docstrings` — _BspNode.__hash__/__eq__/is_leaf
+- `test_faction_for_has_docstring` — ProceduralDungeonGenerator._faction_for
+- `test_interrogate_dungeon_generator_at_100` — interrogate 100% (was 78%)
+
+**Polish — TestSmallModuleDocstringCoverage (3 tests)**:
+- `test_ghost_choice_has_docstring` — GhostChoice covers talk/fight/leave
+- `test_registry_init_has_docstring` — WorldRegistry.__init__
+- `test_ppl_post_init_has_docstring` — Loadout.__post_init__
+
+**Smoke — TestPhase37Smoke (5 tests)**:
+- `test_achievement_state_methods_behavior_intact` — unlock/progress/counters intact
+- `test_bsp_node_dunder_methods_behavior_intact` — identity hash/eq, is_leaf, set semantics
+- `test_ghost_choice_string_values_unchanged` — StrEnum values intact
+- `test_ppl_post_init_validates_tier` — ValueError on tier > 6
+- `test_registry_init_accepts_optional_world_map` — default and pass-through
+
+### 6. Forward-compat allowlist updates
+
+- `test_phase29_yakuza_contract.py`: phase allowlist extended `("29", "31", "32", "33", "34", "35", "36")` → `("29", "31", "32", "33", "34", "35", "36", "37")` — avoids stale assertion when later phases bump the metadata version.
+- `test_phase34_small_content_polish.py:test_metadata_total_events_updated` — extended allowlist `("34", "35", "36")` → `("34", "35", "36", "37")`.
+- `test_phase35_small_content_polish.py:test_metadata_total_events_updated` — extended allowlist `("35", "36")` → `("35", "36", "37")`.
+- `test_phase36_small_content_polish.py:test_metadata_total_events_updated` — extended allowlist `("36",)` → `("36", "37")`.
+
+(같은 패턴 as Phase 29/32/33/34/35/36.)
+
+### 7. Validation results
+
+- `make format` ✅ (1 file reformatted: events.json)
+- `make lint` ✅ (ruff)
+- `make typecheck` ✅ (mypy strict, 211 files, 0 issues)
+- `make test` ✅ (5228 passed, 463 skipped, 1 xfailed; +23 from 5205 baseline)
+- `python3 audit_vault.py` ✅ (2 pre-existing typing_language unrelated)
+- `python3 mixed_language_audit.py` ✅ (0 violations)
+- `python3 dashboard_pipeline_audit.py` ✅ (0 errors)
+
+### 8. Files changed
+
+```
+[main 28eacfb] feat+chore(polish): Phase 37 — Small content + polish
+ 11 files changed, 426 insertions(+), 6 deletions(-)
+ create mode 100644 prototype/tests/unit/test_phase37_small_content_polish.py
+```
+
 ## [2026-08-15] feat+chore(polish) | Phase 36 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Loa Construct Echo event) + 3 polish improvements. Commit `98c219c`. 8 files, +401/-5, 5205 passed (+19 from Phase 35 baseline 5186).

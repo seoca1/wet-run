@@ -67,6 +67,13 @@ class NovelDispatcher:
         text_provider: TextProvider | None = None,
         dry_run: bool = False,
     ) -> None:
+        """Bind a catalog + manifest and pick a text source.
+
+        ``text_provider`` defaults to a fresh ``TextProvider`` so the
+        dispatcher works in tests without setup. ``dry_run=True``
+        suppresses side-effects (file writes, telemetry) so callers
+        can preview a dispatch without committing to it.
+        """
         self.catalog = catalog
         self.manifest = manifest
         self.text_provider = text_provider or TextProvider()

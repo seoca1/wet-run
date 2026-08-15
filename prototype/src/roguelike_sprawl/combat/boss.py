@@ -94,6 +94,7 @@ class BossProfile:
 
     @property
     def max_phases(self) -> int:
+        """Return the total number of phases declared in this boss profile."""
         return len(self.phases)
 
 
@@ -376,6 +377,12 @@ def _ta_phase_3_skills() -> tuple[Skill, ...]:
 
 
 def _wintermute_phase_5_super_skill() -> Skill:
+    """Wintermute's final-phase super skill — neural-pattern silence.
+
+    Count Zero-inspired: bypasses AP cost to invoke a cortical override
+    that temporarily silences the runner's program slot. High direct
+    damage (50) layered with the SILENCE effect for tactical pressure.
+    """
     return Skill(
         id="wintermute_neural_whisper",
         name="NEURAL WHISPER",
@@ -389,6 +396,13 @@ def _wintermute_phase_5_super_skill() -> Skill:
 
 
 def _ta_phase_5_super_skill() -> Skill:
+    """Tessier-Ashpool family final-phase super skill — AoE DEBUFF + heavy damage.
+
+    Mona Lisa Overdrive-inspired: the family acts in concert, voting
+    the runner down across the whole combat. AoE marker means every
+    party member takes the debuff; tier-4 base puts it past mid-game
+    defenses.
+    """
     return Skill(
         id="ta_family_vote",
         name="FAMILY VOTE",

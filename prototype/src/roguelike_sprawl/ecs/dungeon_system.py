@@ -55,6 +55,13 @@ class DungeonSystem:
     )
 
     def __init__(self, world: World, mission_id: str = "") -> None:
+        """Bind the system to a ``World`` and tag it with the current mission.
+
+        ``mission_id`` is a label only — it surfaces in ``__repr__`` and
+        through ``mission_id()`` so save logs and debug output can
+        distinguish concurrent dungeons. Hook lists are empty by default;
+        call ``add_*_hook`` to subscribe.
+        """
         self._world: World = world
         self._mission_id: str = mission_id
         self._on_enter_hooks: list[Callable[[Entity], None]] = []
@@ -171,10 +178,12 @@ class DungeonSystem:
         return [e.id for e in self._world.find(COMP_VISITED) if e.get(COMP_VISITED)]
 
     def mission_id(self) -> str:
+        """Return the mission label passed to ``__init__`` (empty string if none)."""
         return self._mission_id
 
     @override
     def __repr__(self) -> str:
+        """Compact debug summary: mission tag, entity count, visited/cleared totals."""
         cleared = len(self.cleared_rooms())
         visited = len(self.visited_rooms())
         return (

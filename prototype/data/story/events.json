@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.1",
     "date": "2026-08-15",
-    "phase": "38",
+    "phase": "39",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 41,
+    "total_events": 42,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -989,6 +989,33 @@
     "reward": {"credits": 1800, "xp": 120, "item": "kumiko_tea_charm"},
     "consequence": "freeside_kumiko_tea_branch",
     "faction_affinity": {"ta_rep": 2, "loa": 2}
+  },
+  "general_event_spn_handoff": {
+    "event_id": "general_event_spn_handoff",
+    "title": "Stolen Personality Handoff",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "arc_2_progress >= 35 AND random < 0.04 AND NOT has_status:spn_broker",
+    "mood": "shady",
+    "location": "matrix_chiba_backroom",
+    "arc": 2,
+    "pillar": "identity",
+    "tier": 4,
+    "dialogue": [
+      "CONSOLE: Incoming handshake. Origin: ANONYMOUS — simstim personality broker.",
+      "BROKER: You move in the right zip codes, runner.",
+      "BROKER: I have a piece of somebody. Famous. They want out. You carry it. You forget you carried it.",
+      "BROKER: The money is the easy part. The weight is the rest."
+    ],
+    "choice": {
+      "option_a": "Accept the personality handoff (gain stolen_identity, credits_+2000, reputation_yakuza_+2, mind_fragment_marker).",
+      "option_b": "Refuse and walk away (broker_resentful, safe_jackout, no affinity shift).",
+      "consequence_a": "spn_broker_marker, identity_carried_3_runs, yakuza_+2, low_tier_rep_+1",
+      "consequence_b": "spn_broker_blacklisted, safe_jackout, no_loa_curse_risk"
+    },
+    "reward": {"credits": 2000, "xp": 90, "item": "stolen_personality_charm"},
+    "consequence": "spn_handoff_branch",
+    "faction_affinity": {"yakuza": 2, "loa": 1}
   },
   "_chains": {
     "chain_case_past_memories": {

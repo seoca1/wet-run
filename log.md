@@ -1,4 +1,109 @@
-## [2026-08-15] feat+chore(polish) | Phase 37 — Small content + polish
+## [2026-08-15] feat+chore(polish) | Phase 38 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Kumiko's Tea Ceremony event) + 4 polish improvements (4 modules → 100% interrogate coverage). Commit `87e71e1`. 11 files, +524/-27, 5255 passed (+27 from Phase 37 baseline 5228).
+
+### 1. Content addition: general_event_freeside_kumiko_invitation
+
+`prototype/data/story/events.json` 에 `general_event_freeside_kumiko_invitation` 신규 엔트리 추가 (40 → 41 events). Gibson-flavored Count Zero / Mona Lisa Overdrive-era Freeside encounter — arc 5 mid-arc Freeside orbital event. 깁슨 원작에서 Kumiko (Wigan Ludlow의 딸, Tessier-Ashpool 가족의 일원) 은 Straylight를 떠나 Freeside 궤도에 정착한 캐릭터 — Count Zero에서 등장하고 MLO에서 다시 등장.
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_5_progress >= 40 AND random < 0.03 AND NOT has_status:freeside_contact`
+- **Mood**: graceful, location: matrix_freeside_orbit, arc: 5, tier: 5, pillar: memory
+- **Dialogue**: CONSOLE TRANSMISSION (FREESIDE — Villa Straylight guest quarters) + KUMIKO VOICE ("I am Kumiko. I have been waiting for someone who knows what tea means." / "My father kept a zoo of constructs. I left it behind. The orbit remembers, but the orbit does not love." / "Will you sit with me? Or will you keep moving, the way everyone keeps moving?")
+- **Choice**: Accept the tea ceremony (kumiko_tea_marker, ta_family_memory, construct_remembrance_unlock, ta_rep_+2, loa_+2) vs. Decline politely (kumiko_respectful_dismissal, freeside_silent_passage, safe_jackout)
+- **Reward**: 1800 credits + 120 XP + kumiko_tea_charm
+- **Consequence**: freeside_kumiko_tea_branch
+- **Faction affinity**: ta_rep +2, loa +2 — Kumiko의 TA origins 와 Count Zero의 Loa-construct 연결 강조
+
+Phase 35 (wintermute +3, ta_rep -1), Phase 36 (loa +3, wintermute +1), Phase 37 (ta_rep +3, wintermute +1) 와 대칭적으로 네 번째 large-faction affinity variant — 각 phase 가 서로 다른 두 faction 의 결합을 강조.
+
+### 2. Polish: Docstrings on avatar/state.py
+
+4 docstrings 추가 — `Status`/`ConstructKind` enum 멤버 + `AvatarLines` dunder methods 의 contract 명시:
+
+- `Status` enum members (SAFE/MATCH/TOUGH/DEADLY/FUTILE) — 각 멤버의 PPL/ZDR ratio semantics
+- `ConstructKind` enum members (DIXIE/LOA/THREE_JANE) — 각 glyph 의 Gibson-tone 의미 (Dixie Flatline, Loa construct, 3Jane echo)
+- `AvatarLines.__iter__` — 각 rendered (text, color) line yield contract
+- `AvatarLines.__len__` — visual row count contract
+
+`avatar/state.py` interrogate: **80% → 100%**.
+
+### 3. Polish: Docstrings on data_fragment.py
+
+5 docstrings 추가 — `FragmentRarity` enum 멤버 + class docstring 의 rarity tier 의미 명시:
+
+- `FragmentRarity` class — rarity tier 가 gallery border color + unlock animation 에 영향
+- `FragmentRarity.COMMON/UNCOMMON/RARE/LEGENDARY` — 각 멤버의 drop frequency + lore depth
+
+`data_fragment.py` interrogate: **88% → 100%**.
+
+### 4. Polish: Docstrings on combat/depth/personality.py + engine/cinematic_art.py
+
+6 docstrings 추가 — `_combatant_personality` helper 와 `ArtStyle`/`AsciiArt` 의 contract 명시:
+
+- `_combatant_personality` — AGGRESSIVE fallback contract (missing/malformed/unrecognized 모두 AGGRESSIVE 반환 보장)
+- `ArtStyle` enum members (NEON/GLITCH/SHADOW/FIRE/MATRIX/GHOST/STATIC) — 각 멤버의 Gibson-tone scene context (default runner style, damaged construct echo, pre-reveal, boss climax, cyberspace node intro, Loa encounter, jack-in/jack-out transition)
+- `AsciiArt.height` — visual row count contract
+
+`combat/depth/personality.py` interrogate: **88% → 100%**.
+`engine/cinematic_art.py` interrogate: **89% → 100%**.
+
+Vault-wide interrogate: **98.6% → 98.8%** (+0.2 pp).
+
+### 5. Test coverage (+27)
+
+`prototype/tests/unit/test_phase38_small_content_polish.py` (new file, 27 tests):
+
+**Content — TestFreesideKumikoInvitationEvent (8 tests)**:
+- `test_event_present` — event key present
+- `test_event_metadata` — event_id, title, arc 5, tier 5, pillar memory, location Freeside orbit, trigger arc_5_progress gate
+- `test_event_has_choice` — two-option choice, accept = tea ceremony, refuse = respectful dismissal
+- `test_event_dialogue_uses_gibson_tone` — Kumiko/Freeside/tea/father/construct signature phrases
+- `test_event_faction_affinity` — ta_rep +2, loa +2
+- `test_event_consequence_sets_branch` — freeside_kumiko_tea_branch
+- `test_event_has_reward` — 1800 credits + 120 XP + kumiko_tea_charm
+- `test_event_mood` — graceful
+
+**Content — TestEventCountIncrement (3 tests)**:
+- `test_total_events_at_least_41` — events >= 41
+- `test_metadata_total_events_updated` — phase in ('38',)
+- `test_total_chains_unchanged` — 6 chains
+
+**Polish — TestAvatarStateDocstringCoverage (3 tests)**:
+- `test_status_enum_members_have_docstrings` — Status class + 5 members, PPL/ZDR semantics
+- `test_construct_kind_enum_members_have_docstrings` — ConstructKind class + 3 members, Gibson character mentions
+- `test_interrogate_avatar_state_at_100` — interrogate 100% (was 80%)
+
+**Polish — TestDataFragmentDocstringCoverage (3 tests)**:
+- `test_fragment_rarity_class_has_docstring` — rarity + gallery/visual keywords
+- `test_fragment_rarity_members_present` — 4 members present
+- `test_interrogate_data_fragment_at_100` — interrogate 100% (was 88%)
+
+**Polish — TestPersonalityHelperDocstringCoverage (2 tests)**:
+- `test_combatant_personality_helper_has_docstring` — AGGRESSIVE fallback contract
+- `test_interrogate_personality_at_100` — interrogate 100% (was 88%)
+
+**Polish — TestCinematicArtDocstringCoverage (3 tests)**:
+- `test_art_style_class_has_docstring` — ArtStyle class docstring
+- `test_art_style_members_have_inline_docs` — Gibson-tone inline comments (default runner style, boss climax, cyberspace node intro, construct memory / Loa encounter)
+- `test_interrogate_cinematic_art_at_100` — interrogate 100% (was 89%)
+
+**Smoke — TestPhase38Smoke (5 tests)**:
+- `test_status_enum_members_still_work` — Status enum values intact, 5 members
+- `test_construct_kind_enum_members_still_work` — ConstructKind D/L/J glyphs intact
+- `test_fragment_rarity_string_values_unchanged` — StrEnum values intact
+- `test_combatant_personality_fallback_still_works` — missing/str "stealth"/bad string all return correct enum
+- `test_art_style_enum_members_still_work` — ArtStyle StrEnum values intact, 7 members
+
+### 6. Forward-compat allowlist updates
+
+Phase 34/35/36/37/29 forward-compat allowlists extended to include `"38"`:
+- `test_phase29_yakuza_contract.py`: `("29", "31", "32", "33", "34", "35", "36", "37")` → `("29", "31", "32", "33", "34", "35", "36", "37", "38")`
+- `test_phase34_small_content_polish.py`: `("34", "35", "36", "37")` → `("34", "35", "36", "37", "38")`
+- `test_phase35_small_content_polish.py`: `("35", "36", "37")` → `("35", "36", "37", "38")`
+- `test_phase36_small_content_polish.py`: `("36", "37")` → `("36", "37", "38")`
+- `test_phase37_small_content_polish.py`: `("37",)` → `("37", "38")`
+
+Phase 38 이 metadata version 을 "37" → "38" 로 bump 했으므로 5 개 forward-compat assertion 모두 allowlist 확장 필요.
 
 **Status**: ✅ 완료 — 1 content addition (3Jane's Puppet Show event) + 5 polish improvements. Commit `28eacfb`. 11 files, +426/-6, 5228 passed (+23 from Phase 36 baseline 5205).
 

@@ -122,7 +122,8 @@ class TestEventCountIncrement:
 
     def test_metadata_total_events_updated(self, metadata: dict) -> None:
         assert metadata["total_events"] >= 37
-        assert metadata["phase"] == "34"
+        # Forward-compat: later phases (35+) may bump metadata.phase.
+        assert metadata["phase"] in ("34", "35")
 
     def test_total_chains_unchanged(self, metadata: dict) -> None:
         """Phase 34 does not add new chains — only events."""

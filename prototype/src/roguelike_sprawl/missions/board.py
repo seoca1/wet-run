@@ -254,6 +254,13 @@ class JobBoard:
 
 
 def _parse_objective(raw: object) -> Objective | None:
+    """Parse a single objective dict from JSON.
+
+    Returns None when ``raw`` is not a dict or any required coercion
+    fails (e.g. ``tier_level`` / ``count`` not coercible to int). The
+    booleans-are-not-ints guard excludes JSON ``true``/``false`` from
+    being silently treated as 1/0.
+    """
     if not isinstance(raw, dict):
         return None
     try:
@@ -285,6 +292,11 @@ def _parse_objective(raw: object) -> Objective | None:
 
 
 def _parse_rewards(raw: object) -> Rewards | None:
+    """Parse a rewards dict into :class:`Rewards`.
+
+    Returns None if ``raw`` is not a dict. Materials are coerced via
+    ``_opt_int`` and only string keys are kept.
+    """
     if not isinstance(raw, dict):
         return None
     credits_value = _opt_int(raw.get("credits"), 0) or 0
@@ -299,6 +311,13 @@ def _parse_rewards(raw: object) -> Rewards | None:
 
 
 def _parse_mission(value: dict[str, object]) -> Mission | None:
+    """Parse a single mission entry from JSON.
+
+    Falls back to ``extract_data`` primary and ``Rewards(0, {})`` if
+    the new structured fields are missing (legacy ADR-0010 entries).
+    Returns None when ``id`` / ``title`` / ``fixer`` / ``zone`` keys
+    are missing or malformed.
+    """
     try:
         primary = _parse_objective(value.get("primary_objective"))
         secondary_raw = value.get("secondary_objectives", ())

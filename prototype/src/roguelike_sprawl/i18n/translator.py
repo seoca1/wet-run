@@ -70,6 +70,11 @@ class Translator:
             self._load(data_dir)
 
     def _load(self, data_dir: Path) -> None:
+        """Load ``{data_dir}/{self.lang}.json`` into ``self._data``.
+
+        Silent no-op if the file is absent (the Translator keeps an
+        empty dict and ``t()`` falls back to returning the key itself).
+        """
         path = data_dir / f"{self.lang}.json"
         if not path.exists():
             return

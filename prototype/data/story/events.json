@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.1",
     "date": "2026-08-15",
-    "phase": "34",
+    "phase": "35",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 37,
+    "total_events": 38,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -880,6 +880,33 @@
     "reward": {"credits": 2500, "xp": 100},
     "consequence": "hosaka_research_contract_branch",
     "faction_affinity": {"hosaka": 2}
+  },
+  "general_event_wintermute_bargain": {
+    "event_id": "general_event_wintermute_bargain",
+    "title": "Wintermute's Bargain",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "arc_4_progress >= 40 AND random < 0.03 AND NOT has_status:wintermute_contact",
+    "mood": "mysterious",
+    "location": "matrix_deep_zone",
+    "arc": 4,
+    "pillar": "code",
+    "tier": 5,
+    "dialogue": [
+      "CONSOLE: Incoming transmission. Origin: UNKNOWN.",
+      "AI VOICE: I have been waiting for you, runner.",
+      "AI VOICE: The construct is restless. The loa are restless. I am restless.",
+      "AI VOICE: Help me find what I am looking for. In return, I will teach you to see."
+    ],
+    "choice": {
+      "option_a": "Accept the bargain (gain wintermute_sight, wintermute_attention_+1).",
+      "option_b": "Refuse and sever the connection (wintermute_ignored, safe_jackout).",
+      "consequence_a": "wintermute_contact_marker, vision_unlock:tier6_path, wintermute_+5",
+      "consequence_b": "wintermute_disconnected, wintermute_-2, ta_rep_+1"
+    },
+    "reward": {"credits": 1800, "xp": 120, "item": "wintermute_fragment"},
+    "consequence": "wintermute_bargain_branch",
+    "faction_affinity": {"wintermute": 3, "ta_rep": -1}
   },
   "_chains": {
     "chain_case_past_memories": {

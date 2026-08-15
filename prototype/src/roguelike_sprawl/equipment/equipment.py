@@ -111,9 +111,11 @@ class Equipment:
     set_id: str | None = None
 
     def is_upgradable(self) -> bool:
+        """Return True if this piece has at least one upgrade slot."""
         return self.upgrade_slots > 0
 
     def is_t1_or_better(self) -> bool:
+        """Return True if this piece is tier 1 (street) or higher (excludes T0 starter gear)."""
         return self.tier.value != "T0"
 
     @override
@@ -569,15 +571,15 @@ class EquipmentLoadout:
         return self.equipment.get(slot)
 
     def all_slots_filled(self) -> list[EquipSlot]:
-        """Return all slots that have equipment."""
+        """Return all slots that currently have equipment (in insertion order)."""
         return list(self.equipment.keys())
 
     def empty_slots(self) -> list[EquipSlot]:
-        """Return all slots without equipment."""
+        """Return all slots that do not yet have equipment (in EquipSlot enum order)."""
         return [s for s in EquipSlot if s not in self.equipment]
 
     def is_complete(self) -> bool:
-        """Check if all slots are filled."""
+        """Return True if every EquipSlot has an item equipped (full loadout)."""
         return len(self.equipment) == len(EquipSlot)
 
     def set_counts(self) -> dict[str, int]:

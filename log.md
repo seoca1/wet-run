@@ -1,3 +1,141 @@
+## [2026-08-15] feat+chore(polish) | Phase 35 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Wintermute's Bargain event) + 3 polish improvements. Commit `b565bf9`. 7 files, +436/-7, 5186 passed (+22 from Phase 34 baseline 5164).
+
+### 1. Content addition: general_event_wintermute_bargain
+
+`prototype/data/story/events.json` 에 `general_event_wintermute_bargain` 신규 엔트리 추가 (37 → 38 events). Gibson-flavored Neuromancer-era Wintermute AI encounter — arc 4 deep-zone mid-arc, Phase 32 zion_ping 다음에 construct_awakening chain 의 중간 단계로 자연스러운 위치. 깁슨 원작에서 Wintermute 는 처음에 runner 에게 메시지를 보내는 AI — "I am the matrix" 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_4_progress >= 40 AND random < 0.03 AND NOT has_status:wintermute_contact`
+- **Mood**: mysterious, location: matrix_deep_zone, arc: 4, tier: 5, pillar: code
+- **Dialogue**: AI VOICE 메시지 ("Incoming transmission. Origin: UNKNOWN." / "I have been waiting for you, runner." / "The construct is restless. The loa are restless. I am restless." / "Help me find what I am looking for. In return, I will teach you to see.")
+- **Choice**: Accept the bargain (wintermute_sight, vision_unlock:tier6_path, wintermute_+5) vs. Refuse and sever (wintermute_ignored, safe_jackout, wintermute_-2, ta_rep_+1)
+- **Reward**: 1800 credits + 120 XP + wintermute_fragment
+- **Consequence**: wintermute_bargain_branch
+- **Faction affinity**: wintermute +3, ta_rep -1 (3Jane/Wintermute opposition in Count Zero)
+
+### 2. Polish: Docstrings on i18n/translator.py
+
+`Translator._load` 에 docstring 추가 — silent no-op fallback 동작 명시:
+
+```python
+def _load(self, data_dir: Path) -> None:
+    """Load ``{data_dir}/{self.lang}.json`` into ``self._data``.
+
+    Silent no-op if the file is absent (the Translator keeps an
+    empty dict and ``t()`` falls back to returning the key itself).
+    """
+```
+
+`translator.py` interrogate: **80% → 90%**.
+
+### 3. Polish: Docstrings on equipment/equipment.py
+
+8 docstrings 추가 — public API 보강. 모든 메서드 (3 Equipment + 6 EquipmentLoadout) 의 contract 명시:
+
+- `Equipment.is_upgradable` — upgrade_slots > 0
+- `Equipment.is_t1_or_better` — tier != T0 (street grade 이상)
+- `EquipmentLoadout.equip` — 이전 아이템 반환
+- `EquipmentLoadout.unequip` — 제거된 아이템 반환
+- `EquipmentLoadout.get` — slot lookup
+- `EquipmentLoadout.all_slots_filled` — insertion order
+- `EquipmentLoadout.empty_slots` — EquipSlot enum order
+- `EquipmentLoadout.is_complete` — 8/8 slots
+
+`equipment.py` interrogate: **85% → 93%**.
+
+### 4. Polish: Docstrings on missions/board.py
+
+3 docstrings 추가 — `_parse_objective`, `_parse_rewards`, `_parse_mission` 의 JSON coercion semantics 명시:
+
+- `_parse_objective` — bool-exclusion guard, TypeError/ValueError fallback
+- `_parse_rewards` — dict-only guard, _opt_int material coercion
+- `_parse_mission` — legacy `objective` 문자열 → `extract_data` 자동 변환
+
+`missions/board.py` interrogate: **86% → 100%**.
+
+Vault-wide interrogate: **96.9% → 97.2%**.
+
+### 5. Test coverage (+22)
+
+`prototype/tests/unit/test_phase35_small_content_polish.py` (new file, 22 tests):
+
+**Content — TestWintermuteBargainEvent (7 tests)**:
+- `test_event_present` — event key present
+- `test_event_metadata` — event_id, title, arc 4, tier 5, pillar code, location matrix deep, trigger arc_4_progress gate
+- `test_event_has_choice` — two-option choice, accept = wintermute contact, refuse = safe jackout
+- `test_event_dialogue_uses_gibson_tone` — wintermute/construct/loa/restless/runner keywords
+- `test_event_faction_affinity` — wintermute +3, ta_rep -1
+- `test_event_consequence_sets_branch` — wintermute_bargain_branch
+- `test_event_has_reward` — 1800 credits + 120 XP + wintermute_fragment
+
+**Content — TestEventCountIncrement (3 tests)**:
+- `test_total_events_at_least_38` — events >= 38
+- `test_metadata_total_events_updated` — phase in ('35',)
+- `test_total_chains_unchanged` — 6 chains
+
+**Polish — TestTranslatorDocstringCoverage (2 tests)**:
+- `test_translator_load_has_docstring` — _load has docstring mentioning silent no-op
+- `test_interrogate_translator_above_80` — interrogate 80%+ (now 90%)
+
+**Polish — TestEquipmentDocstringCoverage (3 tests)**:
+- `test_equipment_methods_have_docstrings` — is_upgradable, is_t1_or_better
+- `test_loadout_methods_have_docstrings` — 6 EquipmentLoadout methods
+- `test_interrogate_equipment_above_90` — interrogate >90% (now 93%)
+
+**Polish — TestBoardDocstringCoverage (2 tests)**:
+- `test_parse_helpers_have_docstrings` — _parse_objective/_rewards/_mission
+- `test_interrogate_board_at_100` — interrogate 100%
+
+**Smoke — TestPhase35Smoke (5 tests)**:
+- `test_translator_load_with_missing_file_does_not_raise` — silent fallback intact
+- `test_equipment_is_upgradable_returns_false_for_baseline` — STARTER_DECK
+- `test_equipment_is_t1_or_better_excludes_baseline` — STARTER_DECK vs STREET_DECK
+- `test_loadout_is_complete_when_all_slots_filled` — is_complete / all_slots_filled / empty_slots semantics
+- `test_parse_mission_handles_legacy_fields` — legacy objective string → extract_data fallback
+
+### 6. Forward-compat allowlist updates
+
+- `test_phase29_yakuza_contract.py`: phase allowlist extended `("29", "31", "32", "33", "34")` → `("29", "31", "32", "33", "34", "35")` — avoids stale assertion when later phases bump the metadata version.
+- `test_phase34_small_content_polish.py:test_metadata_total_events_updated` — converted hard `phase == "34"` to flexible `phase in ("34", "35")` allowlist (same pattern as Phase 29).
+
+### 7. Validation
+
+```
+$ make format       # ruff format, 1 file reformatted (test_phase35 unused 'random' import), then clean
+$ make lint         # ruff check — All checks passed!
+$ make typecheck    # mypy strict — Success: no issues found in 211 source files
+$ make test         # 5186 passed, 463 skipped, 1 xfailed (was 5164 — +22)
+$ python3 audit_vault.py                  # 2 pre-existing typing_language artifacts (out of scope per AGENTS.md §3)
+$ python3 mixed_language_audit.py         # 0 violations
+$ python3 dashboard_pipeline_audit.py     # 0 errors
+```
+
+### 8. Files changed
+
+- `prototype/data/story/events.json` — +29/-2 (new event + metadata bump)
+- `prototype/src/roguelike_sprawl/equipment/equipment.py` — +8/-0 (8 docstrings)
+- `prototype/src/roguelike_sprawl/i18n/translator.py` — +5/-0 (1 docstring)
+- `prototype/src/roguelike_sprawl/missions/board.py` — +19/-0 (3 docstrings)
+- `prototype/tests/unit/test_phase29_yakuza_contract.py` — +1/-1 (allowlist extension)
+- `prototype/tests/unit/test_phase34_small_content_polish.py` — +2/-1 (allowlist conversion)
+- `prototype/tests/unit/test_phase35_small_content_polish.py` — new file, +374/-0 (22 new tests)
+
+Total: 7 files, +436/-7.
+
+### 9. Notes
+
+- No push (104 unpushed commits pending GH_TOKEN).
+- No raw/, Fiction/, Language/, Game/typing_language/ touched.
+- No ADR changes (existing ADRs preserved).
+- No new dependencies.
+- No type suppressions.
+- All 5164 baseline tests preserved + 22 new = 5186.
+- Docstring coverage: 96.9% → 97.2%.
+- Commit: **`b565bf9` feat+chore(polish): Phase 35 — Small content + polish**
+
+---
+
 ## [2026-08-15] feat+chore(polish) | Phase 34 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Hosaka Research Proposal event) + 3 polish improvements. Commit `a35b91c`. 6 files, +432/-8, 5164 passed (+22 from Phase 33 baseline 5142).

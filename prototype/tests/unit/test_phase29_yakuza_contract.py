@@ -146,7 +146,7 @@ class TestEventCountIncrement:
     def test_metadata_total_events_at_least_33(self, metadata: dict) -> None:
         """_metadata.total_events reflects the current count (>= 33 after Phase 31)."""
         assert metadata["total_events"] >= 33
-        assert metadata["phase"] in ("29", "31", "32", "33", "34")
+        assert metadata["phase"] in ("29", "31", "32", "33", "34", "35")
 
 
 # ---------------------------------------------------------------------------

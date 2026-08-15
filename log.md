@@ -1,3 +1,118 @@
+## [2026-08-15] feat+chore(polish) | Phase 36 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Loa Construct Echo event) + 3 polish improvements. Commit `98c219c`. 8 files, +401/-5, 5205 passed (+19 from Phase 35 baseline 5186).
+
+### 1. Content addition: general_event_loa_construct_echo
+
+`prototype/data/story/events.json` 에 `general_event_loa_construct_echo` 신규 엔트리 추가 (38 → 39 events). Gibson-flavored Count Zero / Mona Lisa Overdrive-era construct echo encounter — arc 4 deep-loa-construct mid-arc, Phase 32 construct_awakening chain 의 중간 단계. 깁슨 원작에서 Dixie/Morrison 은 construct 로 보존/지속되는 존재 — "the loa keep me" 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_4_progress >= 25 AND random < 0.04 AND NOT has_status:loa_construct_echo`
+- **Mood**: shaky, location: matrix_loa_construct, arc: 4, tier: 5, pillar: memory
+- **Dialogue**: CONSOLE WARNING (Dixie? / Morrison's last recorded wetware ID) + VOICE ("I died in here. I am still in here. The loa keep me." / "Carry this. Or leave it. The matrix remembers either way.")
+- **Choice**: Carry the loa construct echo (loa_echo_charm, construct_whisper_unlocked, loa_+3) vs. Sever the echo and walk on (loa_disrespected, loa_curse_risk_hint)
+- **Reward**: 1400 credits + 100 XP + loa_construct_echo_charm
+- **Consequence**: loa_construct_echo_branch
+- **Faction affinity**: loa +3, wintermute +1 (construct echo carries both loa and AI-construct weight)
+
+### 2. Polish: Docstrings on ecs/world.py
+
+5 docstrings 추가 — World 의 dunder methods contract 명시:
+
+- `World.__init__` — empty entities dict
+- `World.__iter__` — insertion order
+- `World.__len__` — entity count
+- `World.__contains__` — id membership check
+- `World.__repr__` — entity count debug format
+
+`ecs/world.py` interrogate: **58.3% → 100%**.
+
+### 3. Polish: Docstring on BlackMarketCategory enum
+
+`BlackMarketCategory` 에 docstring 추가 — StrEnum 세션 정의:
+
+```python
+class BlackMarketCategory(StrEnum):
+    """Market sections available in the Hub-side vendor."""
+    PROGRAMS = "programs"
+    DECK_UPGRADES = "deck_upgrades"
+    INTEL = "intel"
+```
+
+`black_market.py` interrogate: **66.7% → 100%**.
+
+### 4. Polish: Docstrings on ecs/entity.py
+
+3 docstrings 추가 — Entity 의 identity/equality/hash semantics 명시:
+
+- `Entity.__repr__` — id + component type names
+- `Entity.__eq__` — id-only (component-agnostic)
+- `Entity.__hash__` — hash by id (matches equality)
+
+`ecs/entity.py` interrogate: **66.7% → 100%**.
+
+Vault-wide interrogate: **97.2% → 97.6%**.
+
+### 5. Test coverage (+19)
+
+`prototype/tests/unit/test_phase36_small_content_polish.py` (new file, 19 tests):
+
+**Content — TestLoaConstructEchoEvent (7 tests)**:
+- `test_event_present` — event key present
+- `test_event_metadata` — event_id, title, arc 4, tier 5, pillar memory, location loa/construct, trigger arc_4_progress gate
+- `test_event_has_choice` — two-option choice, carry = loa construct echo, sever = safe jackout
+- `test_event_dialogue_uses_gibson_tone` — construct/dixie/morrison/loa/died/echo keywords
+- `test_event_faction_affinity` — loa +3, wintermute +1
+- `test_event_consequence_sets_branch` — loa_construct_echo_branch
+- `test_event_has_reward` — 1400 credits + 100 XP + loa_construct_echo_charm
+
+**Content — TestEventCountIncrement (3 tests)**:
+- `test_total_events_at_least_39` — events >= 39
+- `test_metadata_total_events_updated` — phase in ('36',)
+- `test_total_chains_unchanged` — 6 chains
+
+**Polish — TestEcsWorldDocstringCoverage (2 tests)**:
+- `test_world_dunder_methods_have_docstrings` — __init__/__iter__/__len__/__contains__/__repr__
+- `test_interrogate_world_at_100` — interrogate 100% (was 58.3%)
+
+**Polish — TestBlackMarketDocstringCoverage (2 tests)**:
+- `test_black_market_category_has_docstring` — BlackMarketCategory has docstring
+- `test_interrogate_black_market_at_100` — interrogate 100% (was 66.7%)
+
+**Polish — TestEcsEntityDocstringCoverage (2 tests)**:
+- `test_entity_dunder_methods_have_docstrings` — __repr__/__eq__/__hash__
+- `test_interrogate_entity_at_100` — interrogate 100% (was 66.7%)
+
+**Smoke — TestPhase36Smoke (3 tests)**:
+- `test_world_dunder_methods_behavior_intact` — World.add/iter/len/contains/repr semantics
+- `test_entity_dunder_methods_behavior_intact` — Entity.eq/hash/set semantics
+- `test_black_market_category_str_values_unchanged` — StrEnum values intact
+
+### 6. Forward-compat allowlist updates
+
+- `test_phase29_yakuza_contract.py`: phase allowlist extended `("29", "31", "32", "33", "34", "35")` → `("29", "31", "32", "33", "34", "35", "36")` — avoids stale assertion when later phases bump the metadata version.
+- `test_phase34_small_content_polish.py:test_metadata_total_events_updated` — extended allowlist `("34", "35")` → `("34", "35", "36")`.
+- `test_phase35_small_content_polish.py:test_metadata_total_events_updated` — extended allowlist `("35",)` → `("35", "36")`.
+
+(같은 패턴 as Phase 29/32/33/34/35.)
+
+### 7. Validation results
+
+- `make format` ✅ (1 file reformatted: events.json)
+- `make lint` ✅ (ruff)
+- `make typecheck` ✅ (mypy strict, 211 files, 0 issues)
+- `make test` ✅ (5205 passed, 463 skipped, 1 xfailed; +19 from 5186 baseline)
+- `python3 audit_vault.py` ✅ (2 pre-existing unrelated)
+- `python3 mixed_language_audit.py` ✅ (0 violations)
+- `python3 dashboard_pipeline_audit.py` ✅ (0 errors)
+
+### 8. Files changed
+
+```
+[main 98c219c] feat+chore(polish): Phase 36 — Small content + polish
+ 8 files changed, 401 insertions(+), 5 deletions(-)
+ create mode 100644 prototype/tests/unit/test_phase36_small_content_polish.py
+```
+
 ## [2026-08-15] feat+chore(polish) | Phase 35 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Wintermute's Bargain event) + 3 polish improvements. Commit `b565bf9`. 7 files, +436/-7, 5186 passed (+22 from Phase 34 baseline 5164).

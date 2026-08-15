@@ -1,3 +1,50 @@
+## [2026-08-15] feat+chore(polish) | Phase 39 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Stolen Personality Handoff event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `c862eea`. 11 files, +486/-8, 5281 passed (+26 from Phase 38 baseline 5255).
+
+### 1. Content addition: general_event_spn_handoff
+
+`prototype/data/story/events.json` 에 `general_event_spn_handoff` 신규 엔트리 추가 (41 → 42 events). Gibson-flavored Count Zero-era arc 2 Chiba back-room event — Count Zero 소설이 Bobby Quine이라는 SPN(simstim personality)을 인질로 잡는 장면에서 시작하는 것을 차용. 익명의 simstim personality broker가 runner에게 "a piece of somebody" 를 건네며, 들고 다닌다는 것은 3 runs 동안 mind fragment marker를 짊어지는 의미. 깁슨 식 identity-pillar 접근 — 누가 당신인지 정하는 것은 당신이 누구의 목소리를 들고 다녔느냐.
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_2_progress >= 35 AND random < 0.04 AND NOT has_status:spn_broker`
+- **Mood**: shady, location: matrix_chiba_backroom, arc: 2, tier: 4, pillar: identity
+- **Choice**: accept (gain stolen_identity, credits +2000, yakuza_rep +2, loa +1, mind_fragment_marker) vs refuse (broker_resentful, safe_jackout, no affinity shift)
+- **Reward**: 2000 credits + 90 XP + stolen_personality_charm
+- **Faction affinity**: yakuza +2 (broker network), loa +1 (borrowed personality's spectral memory — Count Zero의 construct/memory 주제)
+- **메타데이터**: phase 38 → 39, total_events 41 → 42, total_chains 6 unchanged
+
+### 2. Polish — 3 modules → 100% docstring coverage
+
+`ecs/dungeon_system.py` (83% → 100%) — `DungeonSystem.__init__` / `.mission_id` / `.__repr__` 3개 메서드 docstring 추가. world + mission_id 바인딩 계약과 debug repr 형식 명시.
+
+`combat/boss.py` (87% → 100%) — `BossProfile.max_phases` property + `_wintermute_phase_5_super_skill` (Count Zero 영감: SILENCE effect + 50 damage cortical override) + `_ta_phase_5_super_skill` (Mona Lisa Overdrive 영감: AoE DEBUFF + 45 damage family vote) docstring 추가. Gibson 인용 명시.
+
+`novel/dispatcher.py` (86% → 100%) — `NovelDispatcher.__init__` docstring 추가. catalog + manifest + text_provider fallback + dry_run contract 명시.
+
+### 3. Vault-wide interrogate
+
+98.5% → 98.9% (32 → 25 missed). 게이트 통과 (최소 80%, ADR-0120).
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 테스트의 `metadata["phase"] in (...)` allowlist에 "39" 추가. 메타데이터 phase bump가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 38이 적용한 패턴 동일).
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 480 files unchanged, 1 reformatted (Phase 39 test) |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5281 passed (+26 from Phase 38 baseline 5255), 463 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 2 pre-existing issues in `Game/typing_language/log.md` out of scope |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 39 closed. 1 new Gibson-flavored event (Count Zero SPN handoff), 3 modules polished to 100% interrogate coverage, 5281 tests passing.** Commit `c862eea` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-15] feat+chore(polish) | Phase 38 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Kumiko's Tea Ceremony event) + 4 polish improvements (4 modules → 100% interrogate coverage). Commit `87e71e1`. 11 files, +524/-27, 5255 passed (+27 from Phase 37 baseline 5228).

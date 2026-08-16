@@ -1,3 +1,54 @@
+## [2026-08-16] feat+chore(polish) | Phase 43 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Neon Jack-Out event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `5a3a2c2`. 15 files, +472/-11, 5416 passed (+25 over Phase 42 baseline 5391).
+
+### 1. Content addition: general_event_neon_jack_out
+
+`prototype/data/story/events.json` 에 `general_event_neon_jack_out` 신규 엔트리 추가 (45 → 46 events). Gibson-flavored arc 2 mid-arc "exit pattern echo" event — runner's Jack-Out sequence matches an archived construct_fragment's exit pattern. 깁슨 스프롤 3부작의 recurring motif (Case 의 simulation hangover, Molly 의 razorgirl backtalk, loa-tech construct residue) 의 arc 2 mid-arc 변형. 러너의 deck 이 archived construct 의 exit pattern 을 replay 하기 시작 — 깁슨의 matrix 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_2_progress >= 25 AND random < 0.05 AND NOT has_status:neon_jack_out_seen`
+- **Mood**: nervous, location: matrix_chiba_backroom, arc: 2, tier: 3, pillar: code
+- **Dialogue**: CONSOLE / RUNNER 메시지 ("Jack-Out sequence initiated. Source: local deck." / "That's not my exit. Mine is shorter." / "Exit pattern length matches archived run. Source: construct_fragment." / "A construct doesn't jack out. A construct keeps running until somebody cuts the line." / "Recommended action: ride the echo or sever it now. The deck will decide for you if you wait.")
+- **Choice**: Ride the echo (ta_rep_+1, archived_exit_pattern_unlocked, identity_marker_kept) vs Sever the line (loa_+1, clean_jackout_recorded, construct_whisper_locked)
+- **Reward**: 0 credits + 60 XP + neon_jack_out_charm
+- **Consequence**: neon_jack_out_branch
+- **Faction affinity**: ta_rep +1 AND loa +1 (ride-echo yields T-A biometric wetware source; sever-echo yields loa construct resonance)
+- **메타데이터**: phase 42 → 43, total_events 45 → 46, total_chains 6 unchanged
+
+Phase 41 (deck_static, arc 1 loa-only), 42 (wetware_echo, arc 3 ta_rep+loa) 와 동일 arc / 절개 식 패턴 — Phase 43 은 arc 2 mid-arc (>= 25%) 의 첫 등장 이벤트로, pillar code (vs 41 memory 의 static_fragment, 42 memory 의 wetware echo) — construct 의 exit pattern 이라는 'code' 주제의 matrix_chiba_backroom 톤. 향후 arc 4 late-arc construct_resolution 이벤트 (현재 chain_construct_awakening 의 construct_sighting, signal_jam 등이 arc 4-5 에 있음) 와 mirror 관계.
+
+### 2. Polish — 3 modules → 100% docstring coverage
+
+`combat/boss_phase_tracker.py` (97% → 100%) — `BossPhaseTracker.__init__` docstring 추가. phase 0 binding contract: stores boss profile reference + initializes phase index at 0 (boss always opens on first phase). Phase progression driven by `get_progress()` + renderer's transition logic — constructor 는 pre-compute 하지 않고 boss profile 의 own thresholds 에 위임.
+
+`combat/performance_integration.py` (95% → 100%) — `PerfTracker.__init__` docstring 추가. `frame_budget_ms=16.67` (60fps) + `memory_budget_mb=100.0` defaults 가 `build_session_report()` 의 violation flag threshold 로 사용되는 contract 명시. internal buffers (`_snapshots`, `_tick_profiles`, `_index`) 시작 empty → `record_tick()` 가 유일한 mutator. Re-instantiating 이 budget thresholds 변경 시 `reset()` 보다 cheap.
+
+`matrix/exploration.py` (94% → 100%) — `ExplorationState.__post_init__` docstring 추가. seed initial state from `current`: starting node marked discovered + path 에 append (path 비어있거나 tail 이 current 가 아닐 때만). Renderer 가 `path[-1]` 읽을 때 stale tail 보지 않도록 invariant 유지.
+
+### 3. Vault-wide interrogate
+
+99.5% → 99.7% (11 → 7 missed). 게이트 통과 (최소 80%, ADR-0120). 3 polished module 기여. 7 remaining missed 는 module 구조상 의도적 (private nested helpers / 1-line dunder methods).
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 / 40 / 41 / 42 테스트의 `metadata["phase"] in (...)` allowlist 에 "43" 추가. 메타데이터 phase bump 가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 42 가 적용한 패턴 동일).
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 2 files reformatted (allowlist line-wrap), 481 unchanged |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5416 passed (+25 over Phase 42 baseline 5391), 365 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 0 broken |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 43 closed. 1 new Gibson-flavored Neon Jack-Out event (arc 2 mid-arc construct-exit-echo, pillar code), 3 modules polished to 100% interrogate coverage, 5416 tests passing.** Commit `5a3a2c2` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-16] feat+chore(polish) | Phase 42 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Wetware Echo event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `a4d653e`. 14 files, +1933/-1155, 5391 passed (+34 over Phase 41 baseline 5357).

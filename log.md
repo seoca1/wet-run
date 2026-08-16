@@ -1,3 +1,58 @@
+## [2026-08-16] feat+chore(polish) | Phase 40 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Chiba Hotel Aftermath event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `3d1c6af`. 15 files, +554/-25, 5333 passed (+19 over pre-Phase-40 on-disk baseline 5314; +52 over Phase 39 log baseline 5281 due to intervening 0058e5a obsolete-test cleanup).
+
+### 1. Content addition: general_event_chiba_hotel_aftermath
+
+`prototype/data/story/events.json` 에 `general_event_chiba_hotel_aftermath` 신규 엔트리 추가 (42 → 43 events). Gibson-flavored Chi-city clinic aftermath — arc 5 late-arc (>= 50%), tier 5, pillar identity, mood shaky. 깁슨 원작의 Neuromancer / Count Zero Chi XXXII hotel recovery 톤 — "Romantic Coma" 후 깨어나서 상태가 half-cooked wetware인 시점:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_5_progress >= 50 AND hp_pct < 0.30 AND random < 0.04 AND NOT has_status:chiba_clinic_deal`
+- **Mood**: shaky, location: chiba_back_alley_clinic, arc: 5, tier: 5, pillar: identity
+- **Dialogue**: CLINIC FIXER 메시지 ("Long enough. Three days. You came in on a meat-wagon." / "The deck is toast. The wetware is fried. You should be dead." / "But somebody paid your tab, runner. Somebody who wants you back in the matrix." / "The clinic doesn't ask. The clinic patches and forgets. That is the only wisdom left in Chiba.")
+- **Choice**: Take the clinic deal (wetware_repaired_for_arc6, credits_-400, identity_marker_kept, ta_rep_+1, construct_peek_unlocked) vs Walk out bleeding (identity_stripped_low, loa_endurance_seen, construct_whisper_locked)
+- **Reward**: 0 credits + 110 XP + chiba_clinic_charm
+- **Consequence**: chiba_hotel_aftermath_branch
+- **Faction affinity**: ta_rep +1 (TA-adjacent fixer paid the tab) + loa +1 (loa recognizes endurance either path)
+- **메타데이터**: phase 39 → 40, total_events 42 → 43, total_chains 6 unchanged
+
+Phase 35 (wintermute +3, ta_rep -1), Phase 36 (loa +3, wintermute +1), Phase 37 (ta_rep +3, wintermute +1), Phase 38 (ta_rep +2, loa +2), Phase 39 (yakuza +2, loa +1) 와 동일 arc 5 / 절개 식 패턴 — Phase 40 은 arc 5 후반 (>= 50%) 의 첫 등장 이벤트로 operative 가 된 Chi-city clinic 패턴.
+
+### 2. Polish — 3 modules → 100% docstring coverage
+
+`matrix/node.py` (88% → 100%) — `Node.__post_init__` docstring 추가. 3가지 검증 invariants: (1) non-empty id/label, (2) ICE 노드는 IceKind != NONE 필수, (3) anomaly 플래그는 DATA 노드만 가능 (ADR-0140 P2.6).
+
+`missions/mission.py` (88% → 100%) — `Mission.__post_init__` 와 `MissionChain.__post_init__` 2개 docstring 추가. Mission: arc 1..5, grade range 1..6, reward_tier 1..6, reward_credits >= 0. MissionChain: non-empty chain_id, 3-5 missions, chain_type in {faction_driven, character_driven, story_driven}.
+
+`engine/dungeon_view.py` (83% → 100%) — `_handle_cardinal_movement` 와 `_handle_backtrack` 2개 docstring 추가. cardinal: arrow-key/vi hjkl neighbour traversal + entry-handling delegation. backtrack: path-pop semantics with rewind of current_node_id.
+
+### 3. Vault-wide interrogate
+
+98.9% → 99.1% (25 → 19 missed). 게이트 통과 (최소 80%, ADR-0120). 3 polished module 기여.
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 테스트의 `metadata["phase"] in (...)` allowlist에 "40" 추가. 메타데이터 phase bump가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 39가 적용한 패턴 동일).
+
+### 5. Pre-existing format reformat (bonus)
+
+`make format` 의 정상 동작 결과로 `tests/unit/test_new_dashboards.py`, `test_pages_deploy.py`, `test_settings_dashboard.py` 의 long `@pytest.mark.skip(reason=...)` decorator arguments 가 multi-line 로 wrap 됨. 순수 whitespace 변화, semantic 변화 0. 사전 format drift 정리 효과.
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 4 files reformatted, 476 unchanged |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5333 passed (+19 over pre-Phase-40 on-disk baseline 5314), 365 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 0 broken |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 40 closed. 1 new Gibson-flavored Chiba clinic event (arc 5 late-arc wetware-aftermath), 3 modules polished to 100% interrogate coverage, 5333 tests passing.** Commit `3d1c6af` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-15] feat+chore(polish) | Phase 39 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Stolen Personality Handoff event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `c862eea`. 11 files, +486/-8, 5281 passed (+26 from Phase 38 baseline 5255).

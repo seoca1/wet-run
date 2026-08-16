@@ -39,17 +39,32 @@ class Loadout:
     construct_tier: int = 0
 
     def __post_init__(self) -> None:
-        """Validate that all tier values are within the 0-6 system range."""
+        """Validate that all tier values are within the 0-6 system range.
+
+        Raises:
+            ValueError: If a loadout-level tier (deck / wetware / construct)
+                falls outside 0..6, or if any program tier falls outside
+                1..6. The message includes the offending field name and
+                value (plus the offending program id) so JSON-data
+                authors can locate the bad row quickly when ``Loadout``
+                construction fails.
+        """
         for name, tier in (
             ("deck_tier", self.deck_tier),
             ("wetware_tier", self.wetware_tier),
             ("construct_tier", self.construct_tier),
         ):
             if not 0 <= tier <= 6:
-                raise ValueError(f"{name} must be in 0..6, got {tier}")
+                raise ValueError(
+                    f"Loadout.{name} must be in 0..6, got {tier} "
+                    "(0 = absent, 1..5 = normal T1..T5, 6 = master T6)"
+                )
         for p in self.programs:
             if not 1 <= p.tier <= 6:
-                raise ValueError(f"program {p.id!r} tier must be in 1..6, got {p.tier}")
+                raise ValueError(
+                    f"program {p.id!r} tier must be in 1..6, got {p.tier} "
+                    "(programs must be >= T1; use 0 only for construct_tier)"
+                )
 
 
 # Maximum tier supported across the system. Use this constant to

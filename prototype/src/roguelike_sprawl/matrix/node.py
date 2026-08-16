@@ -109,16 +109,31 @@ class Node:
 
     def __post_init__(self) -> None:
         """Validate Node invariants: non-empty id/label, ICE nodes need IceKind!=NONE,
-        anomaly flag only valid for DATA nodes (ADR-0140 P2.6)."""
+        anomaly flag only valid for DATA nodes (ADR-0140 P2.6).
+
+        Raises:
+            ValueError: If the id or label is empty, if an ICE node has no
+                ``IceKind``, or if the anomaly flag is set on a non-DATA
+                node. The message includes the offending node id, the
+                offending field value, and (for ICE-node errors) the
+                expected set of ``IceKind`` values so JSON-data authors
+                can locate the bad row quickly.
+        """
         if not self.id:
             raise ValueError("Node id must be non-empty")
         if not self.label:
             raise ValueError(f"Node {self.id!r}: label must be non-empty")
         # ice nodes should have an IceKind != NONE
         if self.kind is NodeKind.ICE and self.ice is IceKind.NONE:
-            raise ValueError(f"ICE node {self.id!r} must have an IceKind != NONE")
+            raise ValueError(
+                f"ICE node {self.id!r} (kind={self.kind.value}) must have "
+                f"an IceKind != NONE (expected one of: "
+                f"{[k.value for k in IceKind if k is not IceKind.NONE]})"
+            )
         # anomaly flag is only valid for DATA nodes (ADR-0140)
         if self.is_anomaly and self.kind is not NodeKind.DATA:
             raise ValueError(
-                f"Non-DATA node {self.id!r} (kind={self.kind.value}) cannot be anomaly"
+                f"Non-DATA node {self.id!r} (kind={self.kind.value}) cannot be anomaly "
+                f"(anomaly flag is only valid for NodeKind.DATA per ADR-0140 P2.6; "
+                f"expected kind={NodeKind.DATA.value})"
             )

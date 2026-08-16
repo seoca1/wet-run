@@ -296,11 +296,20 @@ class SaveManager:
 
         Manual slots are 1..MAX_SLOTS (slot_{N}.json).
         AUTO_SAVE_SLOT (0) uses a separate autosave.json file.
+
+        Raises:
+            ValueError: If ``slot`` is outside the valid range. The message
+                includes the offending value, the valid range, and the
+                ``AUTO_SAVE_SLOT`` alias so callers can self-diagnose
+                off-by-one mistakes without reading the constants.
         """
         if slot == AUTO_SAVE_SLOT:
             return self.save_dir / AUTO_SAVE_FILENAME
         if not 1 <= slot <= MAX_SLOTS:
-            raise ValueError(f"slot must be 1..{MAX_SLOTS}, got {slot}")
+            raise ValueError(
+                f"slot must be 1..{MAX_SLOTS} "
+                f"(or AUTO_SAVE_SLOT={AUTO_SAVE_SLOT} for autosave), got {slot}"
+            )
         return self.save_dir / f"slot_{slot}.json"
 
     def has_save(self, slot: int) -> bool:

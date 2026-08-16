@@ -137,6 +137,7 @@ class TestEventCountIncrement:
             "44",
             "45",
             "46",
+            "47",
         )
 
     def test_total_chains_unchanged(self, metadata: dict) -> None:

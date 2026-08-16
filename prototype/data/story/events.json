@@ -1429,12 +1429,47 @@
             "ta_rep": 1
         }
     },
+    "general_event_hosaka_archive_audit": {
+        "event_id": "general_event_hosaka_archive_audit",
+        "title": "Hosaka Archive Audit",
+        "category": "general",
+        "trigger": "node_enter",
+        "trigger_condition": "arc_4_progress >= 30 AND random < 0.04 AND NOT has_status:hosaka_audit_seen",
+        "mood": "clinical",
+        "location": "matrix_hosaka_orbit",
+        "arc": 4,
+        "pillar": "code",
+        "tier": 4,
+        "dialogue": [
+            "CONSOLE: Incoming handshake. Origin: HOSAKA — Sense/Net corp matrix, audit subdome.",
+            "HOSAKA VOICE: Runner. Your passport file is sixty-two days out of date.",
+            "HOSAKA VOICE: We are obliging. We are filing. We are keeping the audit trail smooth.",
+            "HOSAKA VOICE: Submit to the audit or decline the audit. The Sprawl runs on what we file.",
+            "CONSOLE: Recommended action: submit to the audit or decline the audit. Hosaka does not skip a page."
+        ],
+        "choice": {
+            "option_a": "Submit to the audit (hosaka_+2, sense_net_marker_kept, construct_whisper_unlocked, audit_pass_carried_2_runs).",
+            "option_b": "Decline the audit (hosaka_-1, audit_refused_marker, identity_marker_low, safe_jackout, wintermute_+1).",
+            "consequence_a": "hosaka_audit_submitted, hosaka_+2, sense_net_+1, construct_passage_unlocked, audit_pass_carried_2_runs",
+            "consequence_b": "hosaka_audit_declined, hosaka_-1, identity_marker_low, safe_jackout, wintermute_+1, audit_refused_marker"
+        },
+        "reward": {
+            "credits": 0,
+            "xp": 80,
+            "item": "hosaka_audit_charm"
+        },
+        "consequence": "hosaka_archive_audit_branch",
+        "faction_affinity": {
+            "hosaka": 2,
+            "sense_net": 1
+        }
+    },
     "_metadata": {
         "version": "1.1",
         "date": "2026-08-17",
-        "phase": "46",
+        "phase": "47",
         "adrs_cross_reference": "ADR-0191",
-        "total_events": 49,
+        "total_events": 50,
         "total_chains": 6,
         "categories": [
             "character",

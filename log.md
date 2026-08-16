@@ -1,3 +1,58 @@
+## [2026-08-17] feat+chore(polish) | Phase 45 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Straylight's Phantom Family event) + 3 polish improvements (3 modules — 2 docstrings covering the last 2 MISSED entries + 1 type annotation). Commit `39ba092`. 17 files, +510/-17, 5472 passed (+27 over Phase 44 baseline 5445).
+
+### 1. Content addition: general_event_straylight_phantom_family
+
+`prototype/data/story/events.json` 에 `general_event_straylight_phantom_family` 신규 엔트리 추가 (47 → 48 events). Gibson-flavored Count Zero / Mona Lisa Overdrive-era arc 4 mid-arc TA phantom family handshake — 깁슨 원작에서 3Jane 과 TA 가족의 "the family rotates" / "the vote is always tonight" 모티프 (Count Zero / MLO) 의 arc 4 mid-arc 변형. 러너가 TA FAMILY ARCHIVE 로부터 phantom seat (외부인을 위해 setting 되지 않은 자리이지만 이제 setting 되는) 핸드셰이크 수신 — 깁슨의 Straylight 페밀리 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_4_progress >= 20 AND random < 0.04 AND NOT has_status:straylight_phantom_seen`
+- **Mood**: shaky, location: matrix_ta_orbit, arc: 4, tier: 4, pillar: code
+- **Dialogue**: CONSOLE / VOICE 메시지 ("Incoming handshake. Origin: TA FAMILY ARCHIVE — Straylight guest quarters." / "Welcome home. You were not expected, but you were hoped for." / "The family has voted on your arrival. The vote was not unanimous. The vote is never unanimous." / "Sit at our table. Eat at our table. Leave nothing at our table we did not give you." / "Recommended action: accept the phantom seat or step back from the table. The family will not set it twice.")
+- **Choice**: Accept the phantom seat (ta_rep_+2, identity_marker_kept, construct_passage_unlocked, phantom_seat_carried_2_runs) vs Step back from the table (ta_rep_-1, phantom_disrespected, construct_whisper_locked, wintermute_+1)
+- **Reward**: 0 credits + 90 XP + straylight_phantom_charm
+- **Consequence**: straylight_phantom_family_branch
+- **Faction affinity**: ta_rep +2 AND wintermute +1 (accept-seat yields T-A family attention + construct passage; step-back yields T-A noticed-leaving penalty + Wintermute AI-half autonomy approval)
+- **메타데이터**: phase 44 → 45, total_events 47 → 48, total_chains 6 unchanged
+
+Phase 35 (wintermute +3 / ta_rep -1), 36 (loa +3 / wintermute +1), 37 (ta_rep +3 / wintermute +1) 의 arc 4 family / AI 변형 와 38 (freeside kumiko, ta_rep +2 / loa +2), 40 (chiba hotel aftermath, ta_rep +1 / loa +1) 의 arc 5 TA-orbit 변형 사이의 arc 4 mid-arc 단계 — pillar code (vs 35-37 의 code, 38-40 의 memory/identity) — TA family phantom seat 의 'code' 주제 matrix_ta_orbit 톤. Phase 44 arc 4 late-arc (>= 60%) 의 loa_construct_memory_surge (identity) 와 arc 4 mid-arc (>= 20%) 의 straylight_phantom_family (code) 가 arc 4 양쪽 spectrum 의 pillar 다름 (identity vs code) 으로 mirror 관계.
+
+### 2. Polish — 3 modules (2 docstrings + 1 type annotation)
+
+**`cyberspace/world.py`** — `Server.__repr__` docstring 추가 (이전 MISSED 항목). 짧은 단일 라인 repr 의 rationale 명시: crash dumps / debug logs / cyberspace browser 용도. `id` + `name` 만 포함 (sector / difficulty / mission_id 는 stack trace 가독성을 위해 의도적 제외).
+
+**`avatar/renderer.py`** — `_render_color_for_status` docstring 추가 (이전 MISSED 항목). Status → body tint 매핑 contract 명시: SAFE / MATCH / TOUGH 는 `COL_BODY_NORMAL` (차분한 팔레트) 공유, DEADLY 는 `COL_BODY_LOW` (red) 로 deepening, FUTILE 는 `COL_BODY_FUTILE` 로 fall-through — 예상치 못한 status 도 일관된 (dark) body 를 paint.
+
+**`audio/sound_manager.py`** — `SoundManager.__init__` return type annotation 추가 (`-> None`). 의도적 type annotation 으로 audio 모듈의 typed-init contract 의 다른 멤버 들 과의 일관성 유지. ANN204 규칙이 미래에 활성화되어도 깨지지 않도록 future-proofing.
+
+### 3. Vault-wide interrogate
+
+99.9% → **100.0%** (2 → 0 missed). 게이트 통과 (최소 80%, ADR-0120). 3 polished module 중 2개 (Server.__repr__, _render_color_for_status) 가 직접 MISSED 항목 해제. Audio module 의 type annotation 도 깨끗한 docstring class 의 ANN204 compliance 강화.
+
+### 4. Phase 44 vault interrogate test 회귀 fix
+
+Phase 44 의 `TestVaultWideInterrogate::test_vault_wide_interrogate_at_99_9` 가 hardcoded `"99." in output` 어서션 (Phase 44 의 99.9% 보존). Phase 45 polish 가 99.9% → 100.0% 으로 올렸으므로 Phase 44 테스트가 fail 됨 (`"100.0%"` 에 `"99."` 없음). regex 기반 의 `actual_pct >= 99.9` 어서션 으로 강건 forward-compat 으로 갱신 — Phase 41/42 forward-compat 패턴과 동일.
+
+### 5. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 / 40 / 41 / 42 / 43 / 44 테스트의 `metadata["phase"] in (...)` allowlist 에 "45" 추가. 메타데이터 phase bump 가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 44 가 적용한 패턴 동일).
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 2 files reformatted (events.json + test_phase45 imports), 483 unchanged |
+| `make lint` (ruff) | ✅ | All checks passed (1 file: 5 import-sort issues auto-fixed) |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5472 passed (+27 over Phase 44 baseline 5445), 365 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 0 broken (CLEAN) |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 45 closed. 1 new Gibson-flavored Straylight Phantom Family event (arc 4 mid-arc phantom-seat, pillar code), 3 polish improvements (2 docstrings for last MISSED entries + 1 type annotation), 5472 tests passing, vault interrogate 99.9% → 100.0%.** Commit `39ba092` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-17] feat+chore(polish) | Phase 44 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Loa Construct Memory Surge event) + 5 polish improvements (5 modules → 100% interrogate coverage). Commit `b3cc283`. 18 files, +671/-13, 5445 passed (+29 over Phase 43 baseline 5416).

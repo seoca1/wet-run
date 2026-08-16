@@ -1,3 +1,70 @@
+## [2026-08-17] feat+chore(polish) | Phase 47 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Hosaka Archive Audit event) + 3 polish improvements (3 modules — error message clarity for save_manager / ppl / node). Commit `1fcc2d7`. 19 files, +629/-19, 5541 passed (+33 over Phase 46 baseline 5508).
+
+### 1. Content addition: general_event_hosaka_archive_audit
+
+`prototype/data/story/events.json` 에 `general_event_hosaka_archive_audit` 신규 엔트리 추가 (49 → 50 events). Gibson-flavored Count Zero / Mona Lisa Overdrive-era arc 4 mid-arc Hosaka Sense/Net corp matrix audit — 깁슨 원작에서 Sense/Net 의 wetware-passport audit / "the Sprawl runs on what we file" 모티프 (Neuromancer / Count Zero) 의 arc 4 mid-arc 변형. 러너가 HOSAKA corp matrix, audit subdome 으로부터 passport audit 핸드셰이크 수신 — 깁슨의 Hosaka 톤 (Neuromancer Sense/Net 본거, corporate AI-mama):
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_4_progress >= 30 AND random < 0.04 AND NOT has_status:hosaka_audit_seen`
+- **Mood**: clinical, location: matrix_hosaka_orbit, arc: 4, tier: 4, pillar: code
+- **Dialogue**: HOSAKA VOICE 메시지 ("Runner. Your passport file is sixty-two days out of date." / "We are obliging. We are filing. We are keeping the audit trail smooth." / "Submit to the audit or decline the audit. The Sprawl runs on what we file.")
+- **Choice**: Submit to the audit (hosaka_+2, sense_net_+1, construct_passage_unlocked, audit_pass_carried_2_runs) vs Decline the audit (hosaka_-1, identity_marker_low, safe_jackout, wintermute_+1, audit_refused_marker)
+- **Reward**: 0 credits + 80 XP + hosaka_audit_charm
+- **Consequence**: hosaka_archive_audit_branch
+- **Faction affinity**: hosaka +2 AND sense_net +1 (submit-audit yields Hosaka corp approval + corp passage; decline-audit yields Hosaka untrust + Wintermute AI-half autonomy)
+- **메타데이터**: phase 46 → 47, total_events 49 → 50, total_chains 6 unchanged
+
+Phase 46 의 maas_neuropozyne ICE / Maas ledger event (Faction affinity maas + 2 / ta_rep + 1) 와 동일 corporate-ledger motif 의 Gibson-flavored counterpart — Phase 46 가 Maas 의 "wetware blood archive" 이었다면 Phase 47 는 Hosaka 의 "passport file audit" — 둘 다 "The Sprawl runs on what we [remember / file]" 의 변형. 깁슨의 Count Zero / MLO 의 Hosaka Sense/Net 과 Maas BioLabs 의 병렬적 archive-trust 구조 (둘 다 corporate entity, 둘 다 runner's identity / wetware 를 archive, 둘 다 친절하지만 poisonous). Phase 35 (wintermute +3), 36 (loa +3), 37 (ta_rep +3), 38 (ta_rep +2 + loa +2), 39 (yakuza +2 + loa +1), 40 (ta_rep +1 + loa +1), 41 (loa +1), 42 (ta_rep +1 + loa +1), 43 (ta_rep +1 + loa +1), 44 (loa +2 + ta_rep +1), 45 (ta_rep +2 + wintermute +1), 46 (maas +2 + ta_rep +1) 와 동일 arc 4 / 절개 식 패턴 — Phase 47 은 arc 4 mid-arc (>= 30%) 의 첫 hosaka+sense_net encounter 로, narrative seed cost 가 0 이고 faction 분기 (submit / decline) 가 hosaka + sense_net 양쪽 으로 갈라지는 양면성. 동시에 Phase 46 maas 와 arc 4 mid-arc spectrum 의 양극 (Maas ledger = memory, Hosaka audit = code) 의 mirror 관계.
+
+### 2. Polish — 3 modules (error message clarity)
+
+**`engine/save_manager.py`** — `SaveManager._slot_path` 의 `ValueError` 메시지 개선. 기존 "slot must be 1..MAX_SLOTS, got N" 에 AUTO_SAVE_SLOT alias hint 추가:
+
+- 기존: `"slot must be 1..10, got 99"`.
+- 신규: `"slot must be 1..10 (or AUTO_SAVE_SLOT=0 for autosave), got 99"`.
+- slot 0 vs slot 1 off-by-one mistake 의 self-diagnosis 즉시 가능 (autosave 가 slot 0 임을 caller 가 constants 를 읽지 않고도 파악).
+- Docstring: explicit `Raises: ValueError:` 섹션 추가 (out-of-range slot 시 발생).
+
+**`matrix/ppl.py`** — `Loadout.__post_init__` 의 4 개 `ValueError` 메시지에 Loadout. prefix + tier-range semantics 추가.
+
+- 기존: `"deck_tier must be in 0..6, got 7"`.
+- 신규: `"Loadout.deck_tier must be in 0..6, got 7 (0 = absent, 1..5 = normal T1..T5, 6 = master T6)"`.
+- 동일 패턴이 `wetware_tier`, `construct_tier` (loadout-level) 와 program-tier (id + `>= T1` hint) 모두에 적용.
+- Docstring: explicit `Raises: ValueError:` 섹션 추가 (loadout-level tier 또는 program-tier 가 system range 외부일 때 발생).
+
+**`matrix/node.py`** — `Node.__post_init__` 의 2 개 `ValueError` 메시지에 available-enum 힌트 추가.
+
+- 기존 (ICE-node): `"ICE node 'n1' must have an IceKind != NONE"`.
+- 신규: `"ICE node 'n1' (kind=ice) must have an IceKind != NONE (expected one of: ['standard', 'watchdog', 'black'])"`.
+- 기존 (anomaly flag): `"Non-DATA node 'n1' (kind=system) cannot be anomaly"`.
+- 신규: `"Non-DATA node 'n1' (kind=system) cannot be anomaly (anomaly flag is only valid for NodeKind.DATA per ADR-0140 P2.6; expected kind=data)"`.
+- Docstring: explicit `Raises: ValueError:` 섹션 추가.
+
+### 3. Vault-wide interrogate
+
+100.0% 유지 (Phase 46 plateau). Phase 47 polish 는 error message / docstring 'Raises:' 섹션 추가만, 신규 함수 / 클래스 없음 — vault coverage 그대로.
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 / 40 / 41 / 42 / 43 / 44 / 45 / 46 테스트의 `metadata["phase"] in (...)` allowlist 에 "47" 추가 (14 forward-compat updates, 12 single-line + 2 multi-line). 메타데이터 phase bump 가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 46 이 적용한 패턴 동일).
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 1 file reformatted (test_phase47 imports), 486 unchanged |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5541 passed (+33 over Phase 46 baseline 5508), 365 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 0 broken (CLEAN, 67 false-positive artifacts) |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 47 closed. 1 new Gibson-flavored Hosaka Archive Audit event (arc 4 mid-arc Hosaka passport audit, pillar code), 3 polish improvements (error message clarity for save_manager / ppl / node), 5541 tests passing, vault interrogate stable at 100.0%.** Commit `1fcc2d7` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-17] feat+chore(polish) | Phase 46 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Maas BioLabs Ledger event) + 3 polish improvements (3 modules — error message clarity for cyberdeck / registry / mission validation). Commit `c787249`. 18 files, +763/-29, 5508 passed (+36 over Phase 45 baseline 5472).

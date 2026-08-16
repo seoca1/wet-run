@@ -1,3 +1,71 @@
+## [2026-08-17] feat+chore(polish) | Phase 46 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Maas BioLabs Ledger event) + 3 polish improvements (3 modules — error message clarity for cyberdeck / registry / mission validation). Commit `c787249`. 18 files, +763/-29, 5508 passed (+36 over Phase 45 baseline 5472).
+
+### 1. Content addition: general_event_maas_neuropozyne_ledger
+
+`prototype/data/story/events.json` 에 `general_event_maas_neuropozyne_ledger` 신규 엔트리 추가 (48 → 49 events). Gibson-flavored Count Zero / Mona Lisa Overdrive-era Maas BioLabs debt ledger event — 깁슨 원작에서 Maas BioLabs 의 wetware-ID archive / neuropozyne empire / "the Sprawl runs on what we remember" 모티프 (Count Zero / MLO) 의 arc 4 mid-arc 변형. 러너가 MAAS BIOLABS 의 clinical back-room terminal 로부터 ledger handshake 수신 — 깁슨의 Maas 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_4_progress >= 35 AND random < 0.04 AND NOT has_status:maas_ledger_seen`
+- **Mood**: shaky, location: matrix_chiba_backroom, arc: 4, tier: 4, pillar: memory
+- **Dialogue**: MAAS BIOLABS CLERK 메시지 ("Runner. Your file is open. You owe us four runs and a blood panel." / "We archive the doses. We archive the wetware. We archive the names." / "Settle the ledger or carry it. The Sprawl runs on what we remember.")
+- **Choice**: Settle the ledger (credits_-1200, ta_rep_+1, construct_passage_unlocked, maas_debt_marker_cleared) vs Carry the marker (maas_+2, ledger_carried_3_runs, identity_marker_low, construct_whisper_locked, neuropozyne_dose_retained)
+- **Reward**: 0 credits + 85 XP + maas_ledger_charm
+- **Consequence**: maas_neuropozyne_ledger_branch
+- **Faction affinity**: maas +2 AND ta_rep +1 (settle-ledger yields TA family attention + construct passage; carry-marker yields Maas loyalty + construct whisper lost)
+- **메타데이터**: phase 45 → 46, total_events 48 → 49, total_chains 6 unchanged
+
+Phase 30 의 maas_neuropozyne ICE type (Faction affinity maas + 1) 의 companion 으로 같은 "Maas debt" theme 의 narrative mirror — Phase 30 가 ICE combat encounter 였다면 Phase 46 는 dialogue overlay. Phase 35 (wintermute +3), 36 (loa +3), 37 (ta_rep +3), 38 (ta_rep +2 + loa +2), 39 (yakuza +2 + loa +1), 40 (ta_rep +1 + loa +1), 41 (loa +1), 42 (ta_rep +1 + loa +1), 43 (ta_rep +1 + loa +1), 44 (loa +2 + ta_rep +1), 45 (ta_rep +2 + wintermute +1) 와 동일 arc 4 / 절개 식 패턴 — Phase 46 은 arc 4 mid-arc (>= 35%) 의 첫 maas-only encounter 로, narrative seed cost 가 0 이고 faction 분기 (settle / carry) 가 ta_rep + maas 양쪽 으로 갈라지는 양면성. phase 30 의 maas ICE combat 와 Phase 39 yakuza+loa 의 mid-arc structure 사이의 Maas 문학적 변형.
+
+### 2. Polish — 3 modules (error message clarity)
+
+**`combat/cyberdeck.py`** — `add_program_to_deck` 와 `remove_program_from_deck` 의 `ValueError` 메시지 개선. 기존 짧은 "Program X already in deck (current programs: [...])" 에 operation context + next-step hint 추가:
+
+- `add_program_to_deck` (duplicate): `; the deck is frozen — call remove_program_from_deck first to swap.` 추가 — caller 가 다음에 무엇을 해야 하는지 즉시 파악.
+- `add_program_to_deck` (deck full): 현재 program list 를 명시적으로 포함 (`programs: [...]`) — 어떤 program 을 remove 할지 결정 가능.
+- `remove_program_from_deck` (not present): `; check for case mismatch or that the program was not already removed.` 추가 — case-mismatch / stale-id 버그 진단 즉시 가능.
+- 양 함수 모두 `Raises: ValueError:` 섹션을 docstring 에 추가.
+
+**`combat/registry.py`** — `build_ice_enemy` docstring + `KeyError` 메시지 개선.
+
+- Docstring: explicit `Raises: KeyError:` 섹션 추가 (registry 조회 실패 시 발생) + `player_grade` 스케일링 / optional `portraits` / future `program_registry` 의 정확한 역할 명시.
+- `KeyError`: 메시지에 `(total N registered, see ice_types.json)` 추가 — caller 가 total count 와 JSON source path 를 즉시 확인 가능.
+
+**`missions/mission.py`** — `Mission.__post_init__` 의 5 개 `ValueError` 메시지에 offending value + mission_id 추가.
+
+- 기존: `"arc must be 1..5, got 6"`.
+- 신규: `"arc must be in 1..5, got 6 (mission_id="m_bad")"`.
+- 동일 패턴이 `reward_tier`, `reward_credits` (negative), `grade_min..grade_max` (min > max), `chain_mission but no chain_id`, `empty id` 모두에 적용.
+- JSON-data 저자가 `missions.json` 로드 실패 시 bad row 를 빠르게 식별 가능.
+
+### 3. Vault-wide interrogate
+
+100.0% 유지 (Phase 45 plateau, 0 missed). Phase 46 polish 는 error message / docstring 'Raises:' 섹션 추가만, 신규 함수 / 클래스 없음 — vault coverage 그대로.
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 / 40 / 41 / 42 / 43 / 44 / 45 테스트의 `metadata["phase"] in (...)` allowlist 에 "46" 추가 (12 forward-compat updates, 2 edit-style + 10 single-line). 메타데이터 phase bump 가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 45 가 적용한 패턴 동일).
+
+### 5. Phase 40 forward-compat test regex flexibility
+
+Phase 40 의 `test_mission_post_init_rejects_bad_arc` 가 hardcoded `"arc must be 1..5"` 어서션. Phase 46 polish 가 메시지를 `"arc must be in 1..5"` 으로 변경했으므로 regex 기반 의 `r"arc must be.*1..5"` 어서션 으로 강건 forward-compat 갱신 — Phase 41/42/45 forward-compat 패턴과 동일.
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 2 files reformatted (test_phase46 imports, events.json), 484 unchanged |
+| `make lint` (ruff) | ✅ | All checks passed (4 PT011 broad-ValueError fixes, 1 unused-import fix) |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5508 passed (+36 over Phase 45 baseline 5472), 365 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 0 broken (CLEAN, 67 false-positive artifacts) |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 46 closed. 1 new Gibson-flavored Maas BioLabs Ledger event (arc 4 mid-arc maas debt dialogue, pillar memory), 3 polish improvements (error message clarity for cyberdeck / registry / mission validation), 5508 tests passing, vault interrogate stable at 100.0%.** Commit `c787249` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-17] feat+chore(polish) | Phase 45 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Straylight's Phantom Family event) + 3 polish improvements (3 modules — 2 docstrings covering the last 2 MISSED entries + 1 type annotation). Commit `39ba092`. 17 files, +510/-17, 5472 passed (+27 over Phase 44 baseline 5445).

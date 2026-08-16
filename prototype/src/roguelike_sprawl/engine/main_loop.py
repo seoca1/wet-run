@@ -148,6 +148,14 @@ def tick_current_screen(
         state.perf_tracker = PerfTracker()
 
     def _tick_logic() -> None:
+        """Focused per-tick dispatch — defers to ``_do_tick_logic`` once.
+
+        The closure exists so ``integrate_with_game_loop`` receives a
+        single zero-arg callable for perf-tracker instrumentation,
+        rather than the broader ``tick_current_screen`` signature
+        (state + delta_s + registries). Screens that don't need
+        ticking remain no-ops.
+        """
         _do_tick_logic(state, delta_s, ice_registry, program_registry)
 
     assert state.perf_tracker is not None

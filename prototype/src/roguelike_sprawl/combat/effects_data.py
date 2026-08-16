@@ -273,6 +273,13 @@ class ScreenShake:
         self.elapsed_ms = 0
 
     def step(self, dt_ms: int) -> None:
+        """Advance the shake timeline by ``dt_ms`` milliseconds.
+
+        No-op when intensity is already zero (inactive shake). When the
+        elapsed time meets or exceeds ``duration_ms`` the shake is reset
+        (intensity=0, duration_ms=0, elapsed_ms=0) so subsequent
+        ``start()`` calls begin from a clean slate.
+        """
         if self.intensity <= 0:
             return
         self.elapsed_ms += dt_ms
@@ -324,11 +331,24 @@ class FloatingNumber:
 
     @property
     def text(self) -> str:
+        """Render the damage number, bracketed with ``!`` for crits.
+
+        Critical hits display as ``!42!`` (symmetric emphasis) while
+        normal hits display as ``42``. The bracketing is a Gibson-flavored
+        visual cue that matches the screen-flash and shake intensities
+        raised on crit.
+        """
         prefix = "!" if self.is_crit else ""
         return f"{prefix}{self.value}{prefix}"
 
     @property
     def alpha(self) -> float:
+        """Fade-out factor in ``[0.0, 1.0]`` as the number nears max life.
+
+        Returns 0.0 when ``max_life_ms == 0`` (degenerate lifetime,
+        no fade). Otherwise ``max(0.0, 1.0 - life_ms / max_life_ms)`` —
+        full opacity at spawn, zero at expiry.
+        """
         if self.max_life_ms == 0:
             return 0.0
         return max(0.0, 1.0 - self.life_ms / self.max_life_ms)
@@ -367,6 +387,12 @@ class HitFlash:
 
     @property
     def alpha(self) -> float:
+        """Fade-out factor in ``[0.0, 1.0]`` as the flash decays.
+
+        Returns 0.0 when ``duration_ms == 0`` (degenerate lifetime). The
+        flash fades linearly from full opacity at spawn to zero at
+        expiry, in lockstep with the underlying animation timer.
+        """
         if self.duration_ms == 0:
             return 0.0
         return max(0.0, 1.0 - self.elapsed_ms / self.duration_ms)

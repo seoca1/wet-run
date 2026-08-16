@@ -120,6 +120,12 @@ class Equipment:
 
     @override
     def __repr__(self) -> str:
+        """Return a debug-friendly ``name (tier category)`` summary.
+
+        Used by debug sessions and combat telemetry to surface
+        which piece is in play without the full stat block. Example:
+        ``Ono-Sendai Cyberspace 7 (T0_BASELINE HARDWARE)``.
+        """
         return f"{self.name} ({self.tier.value} {self.category.value})"
 
 
@@ -495,6 +501,14 @@ class EquipmentRegistry:
     """Lookup for equipment by ID."""
 
     def __init__(self, equipment: dict[str, Equipment] | None = None) -> None:
+        """Initialize registry from an optional id->Equipment mapping.
+
+        A defensive ``dict(equipment or {})`` copy ensures callers can
+        safely mutate their source dict without poisoning the registry
+        (and vice versa). An empty mapping is a valid initial state —
+        callers typically populate via ``load_default()`` or manual
+        ``Equipment(...)`` insertion.
+        """
         self._equipment: dict[str, Equipment] = dict(equipment or {})
 
     @classmethod

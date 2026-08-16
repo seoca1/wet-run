@@ -59,15 +59,23 @@ def validate_deck(deck: Cyberdeck, max_slots: int = DEFAULT_DECK_SLOTS) -> bool:
 def add_program_to_deck(
     deck: Cyberdeck, program_id: str, max_slots: int = DEFAULT_DECK_SLOTS
 ) -> Cyberdeck:
-    """Add a program to the deck. Returns a new deck (frozen)."""
+    """Add a program to the deck. Returns a new deck (frozen).
+
+    Raises:
+        ValueError: If the program is already in the deck (idempotent call),
+            or if the deck has reached ``max_slots``. Both messages include
+            the current program list so the caller can decide which program
+            to remove before retrying.
+    """
     if program_id in deck.program_ids:
         raise ValueError(
-            f"Program {program_id!r} already in deck (current programs: {list(deck.program_ids)})"
+            f"Program {program_id!r} already in deck (current programs: {list(deck.program_ids)}); "
+            "the deck is frozen — call remove_program_from_deck first to swap."
         )
     if len(deck.program_ids) >= max_slots:
         raise ValueError(
             f"Deck full ({max_slots} slots, "
-            f"already has {len(deck.program_ids)} programs). "
+            f"already has {len(deck.program_ids)} programs: {list(deck.program_ids)}). "
             f"Remove a program before adding a new one."
         )
     new_ids = deck.program_ids + (program_id,)
@@ -79,10 +87,17 @@ def add_program_to_deck(
 
 
 def remove_program_from_deck(deck: Cyberdeck, program_id: str) -> Cyberdeck:
-    """Remove a program from the deck. Returns a new deck."""
+    """Remove a program from the deck. Returns a new deck.
+
+    Raises:
+        ValueError: If the program is not in the deck (typo or already-removed).
+            The message includes the current program list to help diagnose
+            case-mismatch or stale-id bugs in the caller.
+    """
     if program_id not in deck.program_ids:
         raise ValueError(
-            f"Program {program_id!r} not in deck (current programs: {list(deck.program_ids)})"
+            f"Program {program_id!r} not in deck (current programs: {list(deck.program_ids)}); "
+            "check for case mismatch or that the program was not already removed."
         )
     new_ids = tuple(p for p in deck.program_ids if p != program_id)
     return Cyberdeck(

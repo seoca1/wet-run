@@ -402,9 +402,17 @@ def build_ice_enemy(
 ) -> Combatant:
     """Build an ICE enemy from the registry.
 
-    If player_grade is provided, stats are scaled according to the difficulty formula.
-    Phase B-1: optional program_registry loads ICE skills from ice_types.json
-    "skills" field (currently unused; reserved for future boss/elite ICE).
+    If ``player_grade`` is provided, stats are scaled according to the
+    difficulty formula (see ``get_scaled_ice_stats``). The optional
+    ``portraits`` manager resolves the ICE's ASCII portrait and color;
+    the optional ``program_registry`` is reserved for future boss/elite
+    ICE skills (Phase B-1; currently unused).
+
+    Raises:
+        KeyError: If ``ice_id`` is not in the registry. The message
+            includes the first 10 registered ids and a closest-match
+            suggestion (difflib ``get_close_matches``) to help debug
+            typos in mission spawn tables.
     """
     data = registry.get(ice_id)
     if data is None:
@@ -413,7 +421,8 @@ def build_ice_enemy(
         hint = f" Did you mean: {suggestions}?" if suggestions else ""
         raise KeyError(
             f"Unknown ICE: {ice_id!r}. "
-            f"Available: {available[:10]}{'...' if len(available) > 10 else ''}.{hint}"
+            f"Available: {available[:10]}{'...' if len(available) > 10 else ''} "
+            f"(total {len(available)} registered, see ice_types.json).{hint}"
         )
     portrait_id = str(data.get("portrait", "ice.standard"))
     portrait = "▲ICE▲"

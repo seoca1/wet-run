@@ -1394,12 +1394,47 @@
             "wintermute": 1
         }
     },
+    "general_event_maas_neuropozyne_ledger": {
+        "event_id": "general_event_maas_neuropozyne_ledger",
+        "title": "Maas BioLabs Ledger",
+        "category": "general",
+        "trigger": "node_enter",
+        "trigger_condition": "arc_4_progress >= 35 AND random < 0.04 AND NOT has_status:maas_ledger_seen",
+        "mood": "shaky",
+        "location": "matrix_chiba_backroom",
+        "arc": 4,
+        "pillar": "memory",
+        "tier": 4,
+        "dialogue": [
+            "CONSOLE: Incoming handshake. Origin: MAAS BIOLABS — clinical back-room terminal.",
+            "MAAS CLERK: Runner. Your file is open. You owe us four runs and a blood panel.",
+            "MAAS CLERK: We archive the doses. We archive the wetware. We archive the names.",
+            "MAAS CLERK: Settle the ledger or carry it. The Sprawl runs on what we remember.",
+            "CONSOLE: Recommended action: settle the ledger or carry the marker. Maas does not forget twice."
+        ],
+        "choice": {
+            "option_a": "Settle the ledger (credits_-1200, maas_debt_marker_cleared, ta_rep_+1, construct_peek_unlocked).",
+            "option_b": "Carry the marker (maas_+2, ledger_carried_3_runs, identity_marker_low, construct_whisper_locked).",
+            "consequence_a": "maas_ledger_settled, maas_debt_marker_cleared, ta_rep_+1, construct_passage_unlocked",
+            "consequence_b": "maas_ledger_carried, maas_+2, ledger_marker_kept, construct_whisper_locked, neuropozyne_dose_retained"
+        },
+        "reward": {
+            "credits": 0,
+            "xp": 85,
+            "item": "maas_ledger_charm"
+        },
+        "consequence": "maas_neuropozyne_ledger_branch",
+        "faction_affinity": {
+            "maas": 2,
+            "ta_rep": 1
+        }
+    },
     "_metadata": {
         "version": "1.1",
         "date": "2026-08-17",
-        "phase": "45",
+        "phase": "46",
         "adrs_cross_reference": "ADR-0191",
-        "total_events": 48,
+        "total_events": 49,
         "total_chains": 6,
         "categories": [
             "character",

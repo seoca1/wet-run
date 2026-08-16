@@ -143,19 +143,34 @@ class Mission:
 
     def __post_init__(self) -> None:
         """Validate Mission invariants: non-empty id, arc in 1..5, grade range 1..6,
-        reward_tier 1..6, reward_credits >= 0."""
+        reward_tier 1..6, reward_credits >= 0.
+
+        All error messages include the offending value (or pair of values
+        for the grade-range check) so JSON-data authors can locate the
+        bad row quickly when ``missions.json`` fails to load.
+        """
         if not self.id:
-            raise ValueError("Mission id must be non-empty")
+            raise ValueError("Mission id must be non-empty (got empty string)")
         if not 1 <= self.arc <= 5:
-            raise ValueError(f"arc must be 1..5, got {self.arc}")
+            raise ValueError(f"arc must be in 1..5, got {self.arc} (mission_id={self.id!r})")
         if not 1 <= self.grade_min <= self.grade_max <= 6:
-            raise ValueError(f"invalid grade range {self.grade_min}..{self.grade_max}")
+            raise ValueError(
+                f"invalid grade range {self.grade_min}..{self.grade_max} "
+                "(both bounds must be in 1..6 with grade_min <= grade_max) "
+                f"(mission_id={self.id!r})"
+            )
         if not 1 <= self.reward_tier <= 6:
-            raise ValueError(f"reward_tier must be 1..6, got {self.reward_tier}")
+            raise ValueError(
+                f"reward_tier must be in 1..6, got {self.reward_tier} (mission_id={self.id!r})"
+            )
         if self.reward_credits < 0:
-            raise ValueError("reward_credits must be >= 0")
+            raise ValueError(
+                f"reward_credits must be >= 0, got {self.reward_credits} (mission_id={self.id!r})"
+            )
         if self.is_chain_mission and not self.chain_id:
-            raise ValueError("chain_mission must have chain_id")
+            raise ValueError(
+                f"chain_mission must have a non-empty chain_id (mission_id={self.id!r})"
+            )
 
     def primary_type(self) -> str:
         """Return the primary objective type, defaulting to 'extract_data'."""

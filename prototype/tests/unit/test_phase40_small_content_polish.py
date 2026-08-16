@@ -156,7 +156,7 @@ class TestEventCountIncrement:
     def test_metadata_total_events_updated(self, metadata: dict) -> None:
         assert metadata["total_events"] >= 43
         # Forward-compat allowlist (mirrors Phase 29/32..39 pattern)
-        assert metadata["phase"] in ("40", "41", "42", "43", "44", "45")
+        assert metadata["phase"] in ("40", "41", "42", "43", "44", "45", "46")
 
     def test_total_chains_unchanged(self, metadata: dict) -> None:
         """Phase 40 does not add new chains — only events."""
@@ -363,7 +363,7 @@ class TestPhase40Smoke:
         """Mission.__post_init__ rejects arc > 5 (validation preserved)."""
         from roguelike_sprawl.missions.mission import Mission
 
-        with pytest.raises(ValueError, match="arc must be 1..5"):
+        with pytest.raises(ValueError, match="arc must be.*1..5"):
             Mission(
                 id="m_bad",
                 title="t",

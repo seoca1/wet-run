@@ -176,7 +176,7 @@ class TestEventCountIncrement:
     def test_metadata_total_events_updated(self, metadata: dict) -> None:
         assert metadata["total_events"] >= 47
         # Forward-compat allowlist (mirrors Phase 29/34..43 pattern)
-        assert metadata["phase"] in ("44",)
+        assert metadata["phase"] in ("44", "45")
 
     def test_total_chains_unchanged(self, metadata: dict) -> None:
         """Phase 44 does not add new chains — only events."""
@@ -544,10 +544,10 @@ class TestPhase44Smoke:
 
 
 class TestVaultWideInterrogate:
-    """Phase 44 vault-wide interrogate >= 99.7% (was 99.7%)."""
+    """Phase 44 vault-wide interrogate >= 99.9% (was 99.7%)."""
 
     def test_vault_wide_interrogate_at_99_9(self) -> None:
-        """Vault-wide interrogate coverage >= 99.7%."""
+        """Vault-wide interrogate coverage >= 99.9%."""
         import subprocess
 
         result = subprocess.run(
@@ -563,7 +563,14 @@ class TestVaultWideInterrogate:
         )
         # parse the percentage from the result line
         # e.g. "---------------- RESULT: PASSED (minimum: 80.0%, actual: 99.9%) ----------------"
+        # Phase 45 polish brought coverage to 100.0% so accept any value >= 99.9%.
         output = result.stdout + result.stderr
-        assert "99." in output
-        # Sanity: pass / above minimum
         assert "PASSED" in output
+        # Sanity: pass / above minimum
+        # Extract "actual: X.X%" and assert X.X >= 99.9
+        import re
+
+        m = re.search(r"actual:\s*([\d.]+)%", output)
+        assert m is not None, f"Could not parse interrogate actual pct from output:\n{output}"
+        actual_pct = float(m.group(1))
+        assert actual_pct >= 99.9, f"interrogate actual {actual_pct}% < 99.9%"

@@ -162,6 +162,7 @@ class TestEventCountIncrement:
             "42",
             "43",
             "44",
+            "45",
         )
 
 

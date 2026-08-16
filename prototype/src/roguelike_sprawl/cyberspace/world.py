@@ -58,6 +58,14 @@ class Server:
 
     @override
     def __repr__(self) -> str:
+        """Return a debug-friendly ``Server(id: name)`` summary.
+
+        Deliberately short — used in crash dumps, debug logs, and the
+        cyberspace browser. Includes ``id`` (programmatic identifier)
+        and ``name`` (display) but excludes ``sector`` / ``difficulty``
+        / ``mission_id`` to keep the repr single-line and stack-trace
+        friendly when chasing bugs.
+        """
         return f"Server({self.id}: {self.name})"
 
 

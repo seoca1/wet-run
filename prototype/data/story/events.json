@@ -1359,12 +1359,47 @@
             "ta_rep": 1
         }
     },
+    "general_event_straylight_phantom_family": {
+        "event_id": "general_event_straylight_phantom_family",
+        "title": "Straylight's Phantom Family",
+        "category": "general",
+        "trigger": "node_enter",
+        "trigger_condition": "arc_4_progress >= 20 AND random < 0.04 AND NOT has_status:straylight_phantom_seen",
+        "mood": "shaky",
+        "location": "matrix_ta_orbit",
+        "arc": 4,
+        "pillar": "code",
+        "tier": 4,
+        "dialogue": [
+            "CONSOLE: Incoming handshake. Origin: TA FAMILY ARCHIVE — Straylight guest quarters.",
+            "VOICE: Welcome home. You were not expected, but you were hoped for.",
+            "VOICE: The family has voted on your arrival. The vote was not unanimous. The vote is never unanimous.",
+            "VOICE: Sit at our table. Eat at our table. Leave nothing at our table we did not give you.",
+            "CONSOLE: Recommended action: accept the phantom seat or step back from the table. The family will not set it twice."
+        ],
+        "choice": {
+            "option_a": "Accept the phantom seat (gain phantom_family_marker, ta_rep_+2, construct_passage_unlocked).",
+            "option_b": "Step back from the table (ta_rep_-1, safe_jackout, phantom_disrespected).",
+            "consequence_a": "straylight_phantom_seat_accepted, ta_rep_+2, identity_marker_kept, phantom_seat_carried_2_runs",
+            "consequence_b": "straylight_phantom_seat_declined, phantom_disrespected, ta_rep_-1, construct_whisper_locked, wintermute_+1"
+        },
+        "reward": {
+            "credits": 0,
+            "xp": 90,
+            "item": "straylight_phantom_charm"
+        },
+        "consequence": "straylight_phantom_family_branch",
+        "faction_affinity": {
+            "ta_rep": 2,
+            "wintermute": 1
+        }
+    },
     "_metadata": {
         "version": "1.1",
         "date": "2026-08-17",
-        "phase": "44",
+        "phase": "45",
         "adrs_cross_reference": "ADR-0191",
-        "total_events": 47,
+        "total_events": 48,
         "total_chains": 6,
         "categories": [
             "character",

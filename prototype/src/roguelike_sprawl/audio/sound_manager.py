@@ -97,7 +97,7 @@ class SoundManager:
     Falls back to silent no-op if no system audio tool is available.
     """
 
-    def __init__(self, sounds_dir: Path | None = None, volume: float = 0.2):
+    def __init__(self, sounds_dir: Path | None = None, volume: float = 0.2) -> None:
         """Initialize SoundManager with optional sounds directory and master volume.
 
         Args:

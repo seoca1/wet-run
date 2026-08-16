@@ -89,6 +89,14 @@ def _render_body_pose(state: AvatarState) -> tuple[str, str, tuple[int, int, int
 
 
 def _render_color_for_status(status: Status) -> tuple[int, int, int]:
+    """Map AvatarState ``Status`` → body tint RGB.
+
+    SAFE / MATCH / TOUGH share the calm ``COL_BODY_NORMAL`` palette —
+    these are the three non-critical states. DEADLY deepens to
+    ``COL_BODY_LOW`` (red) and the implicit FUTILE fallback returns the
+    dimmer ``COL_BODY_FUTILE`` so a never-seen status still paints a
+    coherent (dark) body rather than raising.
+    """
     if status in (Status.SAFE, Status.MATCH):
         return COL_BODY_NORMAL
     if status is Status.TOUGH:

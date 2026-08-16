@@ -261,6 +261,14 @@ class ChapterCutsceneState:
 
     @property
     def current_line(self) -> DialogueLine:
+        """Return the dialogue line the player is currently seeing.
+
+        Index is 0-based and bounded by ``len(self.scene.dialogue)``.
+        Callers advance it via :meth:`advance` (auto on
+        :meth:`tick` expiry); reading the property does not mutate
+        ``dialogue_index``, so it is safe to call from render code
+        without affecting playback.
+        """
         return self.scene.dialogue[self.dialogue_index]
 
     def advance(self) -> None:

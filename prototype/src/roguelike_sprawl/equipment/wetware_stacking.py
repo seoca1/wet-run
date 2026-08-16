@@ -70,6 +70,14 @@ def count_tier3_augments(augment_ids: list[str]) -> int:
 
 
 def _is_tier3(augment_id: str) -> bool:
+    """Return True when the augment exists in the registry AND is tier 3.
+
+    Missing ids (no entry in :func:`get_augments`) safely return
+    ``False`` so callers like :func:`count_tier3_augments` do not have
+    to pre-validate the id list. The check uses string comparison
+    (``aug.get("tier") == 3``) so augment entries with a missing or
+    ``None`` tier fall through to ``False``.
+    """
     aug = get_augment(augment_id)
     if aug is None:
         return False

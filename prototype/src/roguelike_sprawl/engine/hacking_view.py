@@ -287,6 +287,15 @@ def _apply_hack_reward(state: AppState, outcome: str | None) -> None:
 
 
 def _clear_hack_state(state: AppState) -> None:
+    """Remove the hack attributes from the state to return to Matrix.
+
+    Uses :func:`hasattr` per attribute so the call is a no-op when the
+    state never entered the hack screen (e.g. an event was cancelled
+    before ``start_hack`` ran). Both attributes are removed together
+    so the next :func:`start_hack` always sees a clean slate and
+    ``getattr(state, "hack_state", None)`` returns ``None`` from the
+    matrix dispatcher.
+    """
     for attr in ("hack_state", "hack_node_label"):
         if hasattr(state, attr):
             delattr(state, attr)

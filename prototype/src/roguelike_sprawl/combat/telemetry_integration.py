@@ -41,6 +41,15 @@ class TelemetryIntegrator:
     """High-level telemetry wrapper for game integration."""
 
     def __init__(self, config: TelemetryConfig | None = None) -> None:
+        """Open a session with the supplied config (or default opt-out).
+
+        ``config.opted_in_at_start`` is forwarded to
+        :func:`start_telemetry_session` so the opt-in flag is honored
+        exactly once at construction; subsequent ``record_*`` calls do
+        not re-evaluate opt-in. A ``None`` config yields a fresh
+        :class:`TelemetryConfig()` defaulting to opt-out — telemetry is
+        an opt-in capability, not a default background beacon.
+        """
         self._session: TelemetrySession = start_telemetry_session(
             opt_in=config.opted_in_at_start if config else False
         )

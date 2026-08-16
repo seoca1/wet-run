@@ -383,6 +383,13 @@ class StageAvatar:
     frame_label: str  # e.g. "1/5", "2/5"
 
     def get_frame(self, pulse_active: bool = False, special: bool = False) -> str:
+        """Return the ASCII icon for the current animation frame.
+
+        Selection order: ``special`` (highest priority) > ``pulse_active`` >
+        idle. ``special`` is reserved for stage-up or finisher flashes;
+        ``pulse_active`` lights the icon when the player is in the
+        combo-timing window; otherwise the calm idle glyph is used.
+        """
         if special:
             return self.icon_special
         if pulse_active:

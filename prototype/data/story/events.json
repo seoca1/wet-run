@@ -1324,12 +1324,47 @@
             "loa": 1
         }
     },
+    "general_event_loa_construct_memory_surge": {
+        "event_id": "general_event_loa_construct_memory_surge",
+        "title": "Loa Construct Memory Surge",
+        "category": "general",
+        "trigger": "node_enter",
+        "trigger_condition": "arc_4_progress >= 60 AND random < 0.04 AND NOT has_status:loa_memory_surge_seen",
+        "mood": "haunted",
+        "location": "matrix_loa_construct",
+        "arc": 4,
+        "pillar": "identity",
+        "tier": 5,
+        "dialogue": [
+            "CONSOLE: Construct buffer overflow. Source: loa_pact_fragment.",
+            "RUNNER: That face is mine. That voice is mine. That name is not.",
+            "CONSOLE: Identity bleed detected. Confidence: 0.73. Stored memory: 7 runs.",
+            "RUNNER: The loa keep what the construct keeps. I am the guest here.",
+            "CONSOLE: Recommended action: accept the bleed or anchor the self. The construct will not ask twice."
+        ],
+        "choice": {
+            "option_a": "Accept the bleed (loa_+2, construct_memory_carried, identity_marker_low, construct_voice_unlock:tier6_path).",
+            "option_b": "Anchor the self (ta_rep_+1, identity_reinforced, bleed_severed, loa_-1).",
+            "consequence_a": "loa_memory_surge_accepted, loa_+2, construct_memory_carried, identity_bleed_logged",
+            "consequence_b": "loa_memory_surge_anchored, ta_rep_+1, identity_marker_kept, loa_-1, construct_whisper_locked"
+        },
+        "reward": {
+            "credits": 0,
+            "xp": 100,
+            "item": "loa_construct_memory_surge_charm"
+        },
+        "consequence": "loa_construct_memory_surge_branch",
+        "faction_affinity": {
+            "loa": 2,
+            "ta_rep": 1
+        }
+    },
     "_metadata": {
         "version": "1.1",
-        "date": "2026-08-16",
-        "phase": "43",
+        "date": "2026-08-17",
+        "phase": "44",
         "adrs_cross_reference": "ADR-0191",
-        "total_events": 46,
+        "total_events": 47,
         "total_chains": 6,
         "categories": [
             "character",

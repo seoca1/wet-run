@@ -1,3 +1,54 @@
+## [2026-08-16] feat+chore(polish) | Phase 41 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Ghost in the Deck event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `0aec81e`. 13 files, +435/-10, 5357 passed (+24 over Phase 40 baseline 5333).
+
+### 1. Content addition: general_event_deck_static
+
+`prototype/data/story/events.json` 에 `general_event_deck_static` 신규 엔트리 추가 (43 → 44 events). Gibson-flavored Count Zero / Neuromancer precursor "ghost in the deck" arc 1 early-encounter overlay. 깁슨의 matrix 짙은 톤 — construct fragment 같은 잔여물이 wetware 를 타고 집으로 따라온다는 설정. 데크가 자기도 모르게 phantom command 를 돌리기 시작. 두 갈래 선택: purge (clean code path, no faction shift, slot penalty 3 runs) vs keep static (loa +1, recurring identity marker, construct_whisper_locked later).
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_1_progress >= 10 AND random < 0.05 AND NOT has_status:deck_static_seen`
+- **Mood**: paranoid, location: surface_grid, arc: 1, tier: 1, pillar: code
+- **Dialogue**: CONSOLE / RUNNER 메시지 ("Unscheduled process detected. Origin: SELF." / "That's not mine. I didn't jack that." / "Process name: residual_construct_fragment. Size: 0. Weight: 0." / "Weight is never zero. That's just what the matrix says when it wants you to keep going." / "Recommend immediate deck purge. Or do not. The deck will keep its opinions.")
+- **Choice**: Run the deck purge (slot penalty 3 runs, residual_cleaned, no_loa_curse_risk) vs Keep the static (deck_static_marker, loa_+1, construct_residual_carried, identity_marker_low)
+- **Reward**: 0 credits + 40 XP + static_fragment_charm
+- **Consequence**: deck_static_branch
+- **Faction affinity**: loa +1 only (loa = construct resonance, preserving the residual is the loa path)
+- **메타데이터**: phase 40 → 41, total_events 43 → 44, total_chains 6 unchanged
+
+Phase 35 (wintermute +3), 36 (loa +3), 37 (ta_rep +3), 38 (ta_rep +2 + loa +2), 39 (yakuza +2 + loa +1), 40 (ta_rep +1 + loa +1) 와 같은 arc 1 / 절개 식 패턴 — Phase 41 은 arc 1 early-arc (>= 10%) 의 첫 등장 이벤트로, narrative seed cost 가 0 인 construct-residual 톤. purge 와 keep 의 clean-code / loa-curse dichotomy 가 arc 5 late-arc 치유 이벤트 (Phase 40 chiba_hotel_aftermath) 의 mirror — 같은 "wetware recovery" 의 low-arc / high-arc 대응.
+
+### 2. Polish — 3 modules → 100% docstring coverage
+
+`combat/cyberdeck.py` (90% → 100%) — `Cyberdeck.__post_init__` docstring 추가. 검증 invariants (name <= MAX_DECK_NAME_LENGTH=32) + `program_ids` 검증은 `validate_deck()` / `add_program_to_deck()` 으로 위임되어 constructor 가 cheap 하게 유지되는 contract 명시.
+
+`combat/gibson_fluff.py` (90% → 100%) — `_m` factory docstring 추가. 200+ line literal `FLUFF_MESSAGES` 테이블 shorthand + `weight=1.0` default + override 용도 (rare drops / crits) 명시.
+
+`i18n/translator.py` (90% → 100%) — `Translator.__repr__` docstring 추가. `len(self._data)` 가 debug session 에서 JSON load 가 full dict 인지 empty dict 인지 즉시 확인할 수 있는 정보를 제공한다는 점.
+
+### 3. Vault-wide interrogate
+
+99.1% → 99.2% (20 → 17 missed). 게이트 통과 (최소 80%, ADR-0120). 3 polished module 기여.
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 / 40 테스트의 `metadata["phase"] in (...)` allowlist에 "41" 추가. 메타데이터 phase bump가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 40이 적용한 패턴 동일).
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 481 files unchanged |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5357 passed (+24 over Phase 40 baseline 5333), 365 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 0 broken |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 41 closed. 1 new Gibson-flavored Ghost in the Deck event (arc 1 early-arc construct-residual), 3 modules polished to 100% interrogate coverage, 5357 tests passing.** Commit `0aec81e` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-16] feat+chore(polish) | Phase 40 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Chiba Hotel Aftermath event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `3d1c6af`. 15 files, +554/-25, 5333 passed (+19 over pre-Phase-40 on-disk baseline 5314; +52 over Phase 39 log baseline 5281 due to intervening 0058e5a obsolete-test cleanup).

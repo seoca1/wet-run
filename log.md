@@ -1,3 +1,54 @@
+## [2026-08-16] feat+chore(polish) | Phase 42 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Wetware Echo event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `a4d653e`. 14 files, +1933/-1155, 5391 passed (+34 over Phase 41 baseline 5357).
+
+### 1. Content addition: general_event_wetware_echo
+
+`prototype/data/story/events.json` 에 `general_event_wetware_echo` 신규 엔트리 추가 (44 → 45 events). Gibson-flavored arc 3 mid-arc wetware echo — 깁슨 스프롤 3부작의 recurring motif (Molly 의 razorgirl backtalk, Case 의 simulation hangover, loa-tech construct residue). 러너의 wetware 가 archived input sequence 를 replay 하기 시작 — 깁슨의 0.91 과 matrix 의 0.91 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_3_progress >= 30 AND random < 0.05 AND NOT has_status:wetware_echo_seen AND hp_pct < 0.70`
+- **Mood**: paranoid, location: mid_grid, arc: 3, tier: 3, pillar: memory
+- **Dialogue**: WETWARE / RUNNER 메시지 ("Replay detected. Source: local. Age: 4 runs." / "That's not my hand. My hand is on the deck." / "Input sequence matches archived run. Confidence: 0.91." / "0.91 is not 1.0. The matrix is full of 0.91." / "Recommended action: file the echo or burn it out. The deck will keep replaying either way.")
+- **Choice**: File the echo (wetware_echo_filed, ta_rep_+1, archived_echo_recall_unlocked) vs Burn it out (wetware_echo_burned, loa_+1, construct_residual_carried, wetware_marks_seen)
+- **Reward**: 0 credits + 80 XP + wetware_echo_charm
+- **Consequence**: wetware_echo_branch
+- **Faction affinity**: ta_rep +1 AND loa +1 (file-echo yields T-A biometric source; burn-echo yields loa construct resonance)
+- **메타데이터**: phase 41 → 42, total_events 44 → 45, total_chains 6 unchanged
+
+Phase 41 (deck_static, arc 1 loa-only) 가 surface-tier construct residual 의 precursor 였다면, Phase 42 (wetware_echo, arc 3 ta_rep+loa) 는 mid-tier 에서 같은 motif 의 양면성 — ta_rep 와 loa 양쪽 으로 갈라지는 choice 구조. 향후 arc 5 late-arc construct_resolution 이벤트 (현재 chiba_hotel_aftermath 가 arc 5 에 있음) 와 mirror 관계.
+
+### 2. Polish — 3 modules → 100% docstring coverage
+
+`equipment/equipment.py` (93% → 100%) — `Equipment.__repr__` 와 `EquipmentRegistry.__init__` 2개 docstring 추가. repr: debug-friendly `name (tier category)` summary + Ono-Sendai 예시. init: defensive `dict(equipment or {})` copy 가 caller 의 source dict 변경 으로부터 registry 를 보호하고 빈 mapping 이 valid initial state 임을 명시.
+
+`combat/effects_data.py` (92% → 100%) — 4개 docstring 추가. `ScreenShake.step`: no-op when intensity=0, 만료 시 reset to clean slate. `FloatingNumber.text`: crit 시 `!42!` symmetric bracketing, 일반 hit 은 `42`. `FloatingNumber.alpha`: degenerate max_life_ms=0 → 0.0, full opacity at spawn, zero at expiry. `HitFlash.alpha`: Flash 타이머 와 lockstep 되는 linear fade-out.
+
+`engine/main_loop.py` (90% → 100%) — `_tick_logic` nested closure docstring 추가. broader `tick_current_screen` signature 대신 `integrate_with_game_loop` 가 perf-tracker instrumentation 용으로 받는 zero-arg callable rationale + screen-specific no-op contract 명시.
+
+### 3. Vault-wide interrogate
+
+99.2% → 99.5% (17 → 11 missed). 게이트 통과 (최소 80%, ADR-0120). 3 polished module 기여.
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 / 40 / 41 테스트의 `metadata["phase"] in (...)` allowlist 에 "42" 추가. 메타데이터 phase bump 가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 41 이 적용한 패턴 동일).
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 482 files unchanged |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5391 passed (+34 over Phase 41 baseline 5357), 365 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 0 broken |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 42 closed. 1 new Gibson-flavored Wetware Echo event (arc 3 mid-arc ta_rep+loa split), 3 modules polished to 100% interrogate coverage, 5391 tests passing.** Commit `a4d653e` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-16] feat+chore(polish) | Phase 41 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Ghost in the Deck event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `0aec81e`. 13 files, +435/-10, 5357 passed (+24 over Phase 40 baseline 5333).

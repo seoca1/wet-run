@@ -45,6 +45,15 @@ class BossPhaseTracker:
     """Tracks phase transitions for an F.4 boss profile."""
 
     def __init__(self, boss_profile: BossProfile) -> None:
+        """Bind the tracker to a boss profile and seed at phase 0.
+
+        Stores the boss profile reference and initializes the
+        phase index at 0 (the boss always opens combat on its first
+        phase). Phase progression is driven by `get_progress()` and
+        the renderer's phase-transition logic; this constructor does
+        not pre-compute any phase metadata (delegated to the boss
+        profile's own thresholds).
+        """
         self._boss = boss_profile
         self._current_phase_index = 0
 

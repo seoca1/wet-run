@@ -166,7 +166,7 @@ class TestEventCountIncrement:
     def test_metadata_total_events_updated(self, metadata: dict) -> None:
         assert metadata["total_events"] >= 45
         # Forward-compat allowlist (mirrors Phase 29/34..41 pattern)
-        assert metadata["phase"] in ("42",)
+        assert metadata["phase"] in ("42", "43")
 
     def test_total_chains_unchanged(self, metadata: dict) -> None:
         """Phase 42 does not add new chains — only events."""

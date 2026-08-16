@@ -32,6 +32,14 @@ class ExplorationState:
     path: list[str] = field(default_factory=list)
 
     def __post_init__(self) -> None:
+        """Seed initial state from `current`.
+
+        If ``current`` is set, mark the starting node as discovered
+        and append it to the visit path (only when the path is empty
+        or doesn't already end there). This keeps the path list
+        consistent with the discovery set on construction so renderers
+        that read ``path[-1]`` never see a stale tail.
+        """
         if self.current:
             self.discovered.add(self.current)
         if self.current and (not self.path or self.path[-1] != self.current):

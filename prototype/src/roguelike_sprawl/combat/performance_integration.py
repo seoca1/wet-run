@@ -53,6 +53,17 @@ class PerfTracker:
     """Tracks performance snapshots during a game session."""
 
     def __init__(self, frame_budget_ms: float = 16.67, memory_budget_mb: float = 100.0) -> None:
+        """Initialize empty snapshot buffers and budget thresholds.
+
+        ``frame_budget_ms`` defaults to ~60fps (16.67ms) and
+        ``memory_budget_mb`` defaults to a 100MB ceiling — both used
+        by ``build_session_report()`` to flag violations. Internal
+        buffers (``_snapshots``, ``_tick_profiles``, ``_index``)
+        start empty so ``record_tick()`` is the only mutator after
+        construction. Re-instantiating is cheaper than calling
+        ``reset()`` when the budget thresholds change between
+        sessions.
+        """
         self._snapshots: list[PerfSnapshot] = []
         self._tick_profiles: list[TickProfile] = []
         self._frame_budget_ms = frame_budget_ms

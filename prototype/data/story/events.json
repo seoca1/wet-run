@@ -1289,12 +1289,47 @@
             "loa": 1
         }
     },
+    "general_event_neon_jack_out": {
+        "event_id": "general_event_neon_jack_out",
+        "title": "Neon Jack-Out",
+        "category": "general",
+        "trigger": "node_enter",
+        "trigger_condition": "arc_2_progress >= 25 AND random < 0.05 AND NOT has_status:neon_jack_out_seen",
+        "mood": "nervous",
+        "location": "matrix_chiba_backroom",
+        "arc": 2,
+        "pillar": "code",
+        "tier": 3,
+        "dialogue": [
+            "CONSOLE: Jack-Out sequence initiated. Source: local deck.",
+            "RUNNER: That's not my exit. Mine is shorter.",
+            "CONSOLE: Exit pattern length matches archived run. Source: construct_fragment.",
+            "RUNNER: A construct doesn't jack out. A construct keeps running until somebody cuts the line.",
+            "CONSOLE: Recommended action: ride the echo or sever it now. The deck will decide for you if you wait."
+        ],
+        "choice": {
+            "option_a": "Ride the echo (ta_rep_+1, exit_pattern_logged, identity_marker_kept).",
+            "option_b": "Sever the line (loa_+1, clean_exit_pattern, construct_whisper_locked).",
+            "consequence_a": "neon_jack_out_filed, ta_rep_+1, archived_exit_pattern_unlocked",
+            "consequence_b": "neon_jack_out_severed, loa_+1, clean_jackout_recorded, exit_pattern_kept"
+        },
+        "reward": {
+            "credits": 0,
+            "xp": 60,
+            "item": "neon_jack_out_charm"
+        },
+        "consequence": "neon_jack_out_branch",
+        "faction_affinity": {
+            "ta_rep": 1,
+            "loa": 1
+        }
+    },
     "_metadata": {
         "version": "1.1",
         "date": "2026-08-16",
-        "phase": "42",
+        "phase": "43",
         "adrs_cross_reference": "ADR-0191",
-        "total_events": 45,
+        "total_events": 46,
         "total_chains": 6,
         "categories": [
             "character",

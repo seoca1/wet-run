@@ -108,6 +108,8 @@ class Node:
     y: int = 0
 
     def __post_init__(self) -> None:
+        """Validate Node invariants: non-empty id/label, ICE nodes need IceKind!=NONE,
+        anomaly flag only valid for DATA nodes (ADR-0140 P2.6)."""
         if not self.id:
             raise ValueError("Node id must be non-empty")
         if not self.label:

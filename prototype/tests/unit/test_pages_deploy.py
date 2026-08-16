@@ -129,7 +129,9 @@ def test_index_links_to_graphic_novel() -> None:
     assert "graphic-novel.html" in text, "index.html should link to graphic-novel.html"
 
 
-@pytest.mark.skip(reason="tests test pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)")
+@pytest.mark.skip(
+    reason="tests test pre-restructure structure (obsolete after 2026-07-10 dashboard restructure)"
+)
 def test_all_game_dashboards_link_to_graphic_novel() -> None:
     """All game dashboards should also link to graphic-novel.html.
 

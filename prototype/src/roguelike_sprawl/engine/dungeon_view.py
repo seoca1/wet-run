@@ -564,6 +564,11 @@ def _handle_cardinal_movement(
     prog_registry: ProgramRegistry | None,
     ice_registry: IceRegistry | None,
 ) -> None:
+    """Handle arrow-key / vi-style hjkl movement through matrix nodes.
+
+    Advances the runner to the chosen cardinal neighbor and delegates
+    entry-handling (traps, random combat, room entry) to the appropriate
+    subtree. Looks up programs/ICE via registries for any triggered events."""
     matrix = state.matrix
     if matrix is None or state.current_node_id is None:
         return
@@ -657,6 +662,10 @@ def _handle_backtrack(
     prog_registry: ProgramRegistry | None,
     ice_registry: IceRegistry | None,
 ) -> None:
+    """Pop one node off the exploration path and rewind current_node_id.
+
+    Used when a runner chooses to retreat from deeper zones instead of pushing
+    forward. Appends a status message if there is nothing to backtrack to."""
     if state.matrix is None or state.current_node_id is None:
         return
     if state.exploration is None or len(state.exploration.path) < 2:

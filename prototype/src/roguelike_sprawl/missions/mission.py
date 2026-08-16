@@ -142,6 +142,8 @@ class Mission:
     chain_order: int | None = None
 
     def __post_init__(self) -> None:
+        """Validate Mission invariants: non-empty id, arc in 1..5, grade range 1..6,
+        reward_tier 1..6, reward_credits >= 0."""
         if not self.id:
             raise ValueError("Mission id must be non-empty")
         if not 1 <= self.arc <= 5:
@@ -255,6 +257,8 @@ class MissionChain:
     chain_estimated_time_minutes: int = 60
 
     def __post_init__(self) -> None:
+        """Validate MissionChain invariants: non-empty chain_id, 3-5 missions in chain,
+        chain_type in {faction_driven, character_driven, story_driven}."""
         if not self.chain_id:
             raise ValueError("chain_id must be non-empty")
         if not 3 <= len(self.missions) <= 5:

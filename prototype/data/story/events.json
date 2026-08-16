@@ -2,9 +2,9 @@
   "_metadata": {
     "version": "1.1",
     "date": "2026-08-15",
-    "phase": "39",
+    "phase": "40",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 42,
+    "total_events": 43,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -962,6 +962,35 @@
     "reward": {"credits": 1600, "xp": 110, "item": "ta_polymath_invitation"},
     "consequence": "3jane_puppet_show_branch",
     "faction_affinity": {"ta_rep": 3, "wintermute": 1}
+  },
+  "general_event_chiba_hotel_aftermath": {
+    "event_id": "general_event_chiba_hotel_aftermath",
+    "title": "Chiba Hotel Aftermath",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "arc_5_progress >= 50 AND hp_pct < 0.30 AND random < 0.04 AND NOT has_status:chiba_clinic_deal",
+    "mood": "shaky",
+    "location": "chiba_back_alley_clinic",
+    "arc": 5,
+    "pillar": "identity",
+    "tier": 5,
+    "dialogue": [
+      "RUNNER: Where... how long was I out?",
+      "CLINIC FIXER: Long enough. Three days. You came in on a meat-wagon.",
+      "CLINIC FIXER: The deck is toast. The wetware is fried. You should be dead.",
+      "CLINIC FIXER: But somebody paid your tab, runner. Somebody who wants you back in the matrix.",
+      "RUNNER: Who?",
+      "CLINIC FIXER: The clinic doesn't ask. The clinic patches and forgets. That is the only wisdom left in Chiba."
+    ],
+    "choice": {
+      "option_a": "Take the clinic deal: repaired wetware, identity_marker, credits_-400, ta_rep_+1, construct_peek_unlocked.",
+      "option_b": "Walk out bleeding: keep credits, identity_stripped, loa_+1, but construct_whisper_lost.",
+      "consequence_a": "chiba_clinic_marker, wetware_repaired_for_arc6, ta_rep_+1, identity_marker_kept",
+      "consequence_b": "identity_stripped_low, loa_endurance_seen, construct_whisper_locked"
+    },
+    "reward": {"credits": 0, "xp": 110, "item": "chiba_clinic_charm"},
+    "consequence": "chiba_hotel_aftermath_branch",
+    "faction_affinity": {"ta_rep": 1, "loa": 1}
   },
   "general_event_freeside_kumiko_invitation": {
     "event_id": "general_event_freeside_kumiko_invitation",

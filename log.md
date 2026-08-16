@@ -1,3 +1,58 @@
+## [2026-08-17] feat+chore(polish) | Phase 44 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Loa Construct Memory Surge event) + 5 polish improvements (5 modules → 100% interrogate coverage). Commit `b3cc283`. 18 files, +671/-13, 5445 passed (+29 over Phase 43 baseline 5416).
+
+### 1. Content addition: general_event_loa_construct_memory_surge
+
+`prototype/data/story/events.json` 에 `general_event_loa_construct_memory_surge` 신규 엔트리 추가 (46 → 47 events). Gibson-flavored arc 4 late-arc (>= 60%) construct identity bleed event — Count Zero / Mona Lisa Overdrive 의 construct-SPN exchange 톤. 러너의 identity buffer 가 loa construct 의 archived memory 로 overflow 되기 시작 — 깁슨의 sim hangover / construct bleed 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_4_progress >= 60 AND random < 0.04 AND NOT has_status:loa_memory_surge_seen`
+- **Mood**: haunted, location: matrix_loa_construct, arc: 4, tier: 5, pillar: identity
+- **Dialogue**: CONSOLE / RUNNER 메시지 ("Construct buffer overflow. Source: loa_pact_fragment." / "That face is mine. That voice is mine. That name is not." / "Identity bleed detected. Confidence: 0.73. Stored memory: 7 runs." / "The loa keep what the construct keeps. I am the guest here." / "Recommended action: accept the bleed or anchor the self. The construct will not ask twice.")
+- **Choice**: Accept the bleed (loa_+2, construct_memory_carried, identity_bleed_logged, construct_voice_unlock:tier6_path) vs Anchor the self (ta_rep_+1, identity_marker_kept, construct_whisper_locked, loa_-1)
+- **Reward**: 0 credits + 100 XP + loa_construct_memory_surge_charm
+- **Consequence**: loa_construct_memory_surge_branch
+- **Faction affinity**: loa +2 AND ta_rep +1 (accept-bleed yields loa construct resonance; anchor-self yields T-A-flavored identity reinforcement and severs loa)
+- **메타데이터**: phase 43 → 44, total_events 46 → 47, total_chains 6 unchanged
+
+Phase 41 (deck_static, arc 1 loa-only), 42 (wetware_echo, arc 3 ta_rep+loa), 43 (neon_jack_out, arc 2 ta_rep+loa) 와 동일 arc / 절개 식 패턴 — Phase 44 는 arc 4 후반 (>= 60%) 의 첫 등장 이벤트로 pillar identity (vs 41 code 의 static_fragment, 42 memory 의 wetware echo, 43 code 의 construct exit pattern) — construct 의 archived memory 가 identity buffer 에 새는 'identity' 주제의 matrix_loa_construct 톤. 향후 arc 5 late-arc construct_resolution 이벤트 (현재 chain_construct_awakening 의 construct_sighting, signal_jam 등이 arc 4-5 에 있음) 와 mirror 관계.
+
+### 2. Polish — 5 modules → 100% docstring coverage
+
+`combat/combo.py` (96% → 100%) — `StageAvatar.get_frame` docstring 추가. priority order 명시: `special` (highest) > `pulse_active` > idle. `special` 은 stage-up / finisher flash 용, `pulse_active` 는 combo-timing window 안의 icon lighting, 그 외는 idle glyph.
+
+`combat/telemetry_integration.py` (96% → 100%) — `TelemetryIntegrator.__init__` docstring 추가. `config.opted_in_at_start` 가 `start_telemetry_session` 으로 forwarding 되어 opt-in flag 가 construction 시점에 한 번만 평가되고 이후 `record_*` 호출에서는 재평가되지 않는 contract. `None` config 는 opt-out 기본값 (telemetry 가 기본 background beacon 이 아니라 opt-in capability 임을 강조).
+
+`engine/chapter_cutscene.py` (94% → 100%) — `ChapterCutsceneState.current_line` docstring 추가. property 가 0-based index 로 `len(self.scene.dialogue)` 범위 안의 dialogue line 반환, render 코드에서 호출해도 playback 에 영향 없도록 non-mutating read contract 명시. `advance()` 호출이 tick expiry 시 자동 진행.
+
+`engine/hacking_view.py` (91% → 100%) — `_clear_hack_state` docstring 추가. `hasattr` 가드 덕분에 hack screen 에 진입하지 않은 상태에서도 safe (e.g. event 가 `start_hack` 실행 전에 cancel). 두 attribute 모두 함께 제거해서 다음 `start_hack` 호출 시 항상 clean slate 보장.
+
+`equipment/wetware_stacking.py` (94% → 100%) — `_is_tier3` docstring 추가. missing id (registry 에 없음) 가 안전하게 `False` 반환 → `count_tier3_augments` 같은 caller 가 pre-validation 불필요. `aug.get("tier") == 3` 문자열 비교여서 missing/None tier 도 `False` 로 fall-through.
+
+### 3. Vault-wide interrogate
+
+99.7% → 99.9% (7 → 2 missed). 게이트 통과 (최소 80%, ADR-0120). 5 polished module 기여. 2 remaining missed 는 module 구조상 의도적 (private nested helpers in different module).
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 / 40 / 41 / 42 / 43 테스트의 `metadata["phase"] in (...)` allowlist 에 "44" 추가. 메타데이터 phase bump 가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 43 이 적용한 패턴 동일).
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 2 files reformatted (allowlist line-wrap), 482 unchanged |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5445 passed (+29 over Phase 43 baseline 5416), 365 skipped, 1 xfailed |
+| `audit_vault.py` | ✅ | 0 broken (CLEAN, 67 false-positive artifacts in audit reports) |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 44 closed. 1 new Gibson-flavored Loa Construct Memory Surge event (arc 4 late-arc identity-bleed, pillar identity), 5 modules polished to 100% interrogate coverage, 5445 tests passing.** Commit `b3cc283` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-16] feat+chore(polish) | Phase 43 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Neon Jack-Out event) + 3 polish improvements (3 modules → 100% interrogate coverage). Commit `5a3a2c2`. 15 files, +472/-11, 5416 passed (+25 over Phase 42 baseline 5391).

@@ -21,6 +21,21 @@ class Cyberdeck:
     passive_bonus: dict[str, int] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
+        """Validate deck invariants on construction.
+
+        Invariants enforced:
+        - `name` length must be <= ``MAX_DECK_NAME_LENGTH`` (32 chars).
+          Long names are rejected because the deck name is rendered in
+          HUD chrome and the briefing screen; longer strings break the
+          layout. The error message includes both the actual length and
+          the limit so the player can correct the loadout quickly.
+
+        Note: `program_ids` and `passive_bonus` are NOT validated here.
+        Program uniqueness and slot count are enforced by
+        `validate_deck()` / `add_program_to_deck()` so the constructor
+        can stay cheap (no set-intersection cost on every dataplass
+        construction).
+        """
         if len(self.name) > MAX_DECK_NAME_LENGTH:
             raise ValueError(f"Deck name too long: {len(self.name)} > {MAX_DECK_NAME_LENGTH}")
 

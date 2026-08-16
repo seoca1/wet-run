@@ -21,6 +21,15 @@ class FluffMessage:
 
 
 def _m(category: str, context: str, text: str, weight: float = 1.0) -> FluffMessage:
+    """Build a :class:`FluffMessage` for the static ``FLUFF_MESSAGES`` table.
+
+    Shorthand factory used by the 200+ line literal at module scope. Keeps
+    the message table readable (one line per message) versus the noise of
+    `FluffMessage(category=..., context=..., text=..., weight=...)` per row.
+
+    Weight defaults to 1.0; messages can override to bias the random
+    sampler toward memorable lines (rare drops, lethal crits, etc.).
+    """
     return FluffMessage(category=category, context=context, text=text, weight=weight)
 
 

@@ -124,4 +124,11 @@ class Translator:
 
     @override
     def __repr__(self) -> str:
+        """Return a debug repr showing the active locale and total key count.
+
+        Includes ``len(self._data)`` so a debug session can quickly tell
+        whether a Translator loaded a full dictionary (English ~hundreds
+        of keys) or fell back to an empty dict because the JSON file
+        was missing or unparseable.
+        """
         return f"Translator(lang={self.lang!r}, keys={len(self._data)})"

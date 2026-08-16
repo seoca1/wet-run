@@ -1,10 +1,10 @@
 {
   "_metadata": {
     "version": "1.1",
-    "date": "2026-08-15",
-    "phase": "40",
+    "date": "2026-08-16",
+    "phase": "41",
     "adrs_cross_reference": "ADR-0191",
-    "total_events": 43,
+    "total_events": 44,
     "total_chains": 6,
     "categories": ["character", "faction", "general"]
   },
@@ -1045,6 +1045,34 @@
     "reward": {"credits": 2000, "xp": 90, "item": "stolen_personality_charm"},
     "consequence": "spn_handoff_branch",
     "faction_affinity": {"yakuza": 2, "loa": 1}
+  },
+  "general_event_deck_static": {
+    "event_id": "general_event_deck_static",
+    "title": "Ghost in the Deck",
+    "category": "general",
+    "trigger": "node_enter",
+    "trigger_condition": "arc_1_progress >= 10 AND random < 0.05 AND NOT has_status:deck_static_seen",
+    "mood": "paranoid",
+    "location": "surface_grid",
+    "arc": 1,
+    "pillar": "code",
+    "tier": 1,
+    "dialogue": [
+      "CONSOLE: Unscheduled process detected. Origin: SELF.",
+      "RUNNER: That's not mine. I didn't jack that.",
+      "CONSOLE: Process name: residual_construct_fragment. Size: 0. Weight: 0.",
+      "RUNNER: Weight is never zero. That's just what the matrix says when it wants you to keep going.",
+      "CONSOLE: Recommend immediate deck purge. Or do not. The deck will keep its opinions."
+    ],
+    "choice": {
+      "option_a": "Run the deck purge (lose 1 program slot for 3 runs, but lose the residual — clean code path, no faction shift).",
+      "option_b": "Keep the static (gain loa_+1, deck_static_seen marker, residual may surface again later, construct_whisper_locked).",
+      "consequence_a": "deck_purge_3_runs, residual_cleaned, no_loa_curse_risk",
+      "consequence_b": "deck_static_marker, loa_+1, construct_residual_carried, identity_marker_low"
+    },
+    "reward": {"credits": 0, "xp": 40, "item": "static_fragment_charm"},
+    "consequence": "deck_static_branch",
+    "faction_affinity": {"loa": 1}
   },
   "_chains": {
     "chain_case_past_memories": {

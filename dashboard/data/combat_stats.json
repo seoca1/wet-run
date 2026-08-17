@@ -1,5 +1,5 @@
 {
-  "ice_types_total": 94,
+  "ice_types_total": 97,
   "ice_types_grades": 0,
   "ice_grades_list": [
     "standard",
@@ -48,6 +48,7 @@
     "zombie",
     "hellhound",
     "morrison_echo",
+    "maas_neuropozyne",
     "wintermute_prime",
     "ice_tessier_construct",
     "ice_neuromancer_warden",
@@ -95,7 +96,9 @@
     "goliath_defensive",
     "black_construct",
     "construct_proxy",
-    "aleph"
+    "aleph",
+    "wintermute_corrupted",
+    "peripheral_ascended"
   ],
   "skill_effects_total": 14,
   "skill_effect_animations_total": 0,
@@ -103,5 +106,5 @@
   "combat_mode": "RT-MS",
   "ppl_version": "v1",
   "zdr_version": "v1",
-  "_generated_at": "2026-08-13T01:14:47"
+  "_generated_at": "2026-08-17T19:21:45"
 }

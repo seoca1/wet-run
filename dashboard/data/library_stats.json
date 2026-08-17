@@ -15,10 +15,24 @@
   "layers": 4,
   "tests_passing": 39,
   "code_lines_approx": 900,
-  "_generated_at": "2026-08-13T01:14:47",
-  "stories_with_mission_link": 189,
-  "catalog_entries": 195,
+  "_generated_at": "2026-08-17T19:21:45",
+  "stories_with_mission_link": 236,
+  "catalog_entries": 242,
   "catalog_entries_list": [
+    {
+      "stem": "3janes_garden",
+      "type": "short-story",
+      "title_en": "3Jane's Garden",
+      "title_ko": "",
+      "game_mission_id": "3janes_garden_phase_b5"
+    },
+    {
+      "stem": "alains_last_forgery",
+      "type": "short-story",
+      "title_en": "Alain's Last Forgery",
+      "title_ko": "",
+      "game_mission_id": "alains_last_forgery_phase_b56"
+    },
     {
       "stem": "aleph_fragment",
       "type": "short_story",
@@ -27,11 +41,25 @@
       "game_mission_id": "aleph_fragment"
     },
     {
+      "stem": "alephs_doorway",
+      "type": "short-story",
+      "title_en": "The Aleph's Doorway",
+      "title_ko": "",
+      "game_mission_id": "alephs_doorway_phase_b5"
+    },
+    {
       "stem": "angie_leopard_tracking",
       "type": "short_story",
       "title_en": "Angie Leopard Tracking",
       "title_ko": "=== 이야기 본문 ===",
       "game_mission_id": "angie_leopard_tracking"
+    },
+    {
+      "stem": "angies_dolls",
+      "type": "short-story",
+      "title_en": "Angie's Dolls",
+      "title_ko": "",
+      "game_mission_id": "angies_dolls_phase_b55"
     },
     {
       "stem": "armitage_infiltration",
@@ -48,6 +76,20 @@
       "game_mission_id": "armitage_infiltration_2"
     },
     {
+      "stem": "armitages_construction",
+      "type": "short-story",
+      "title_en": "Armitage's Construction",
+      "title_ko": "",
+      "game_mission_id": "armitages_construction_phase_b5"
+    },
+    {
+      "stem": "ashpools_breath",
+      "type": "short-story",
+      "title_en": "Ashpool's Breath",
+      "title_ko": "",
+      "game_mission_id": "ashpools_breath_phase_b57"
+    },
+    {
       "stem": "bama_statework",
       "type": "novelette",
       "title_en": "Bama Statework",
@@ -62,6 +104,13 @@
       "game_mission_id": "beijing_memory_courier"
     },
     {
+      "stem": "bigends_catalog",
+      "type": "short-story",
+      "title_en": "Bigend's Catalog",
+      "title_ko": "",
+      "game_mission_id": "bigends_catalog_phase_b5"
+    },
+    {
       "stem": "bing_statework",
       "type": "novelette",
       "title_en": "Bing Statework",
@@ -74,6 +123,27 @@
       "title_en": "Black Ice Dream",
       "title_ko": "블랙 아이스 드림",
       "game_mission_id": "black_ice_dream"
+    },
+    {
+      "stem": "bobbys_construct",
+      "type": "short-story",
+      "title_en": "Bobby's Construct",
+      "title_ko": "",
+      "game_mission_id": "bobbys_construct_phase_b54"
+    },
+    {
+      "stem": "bobbys_initiation",
+      "type": "short-story",
+      "title_en": "Bobby's Initiation",
+      "title_ko": "",
+      "game_mission_id": "bobbys_initiation_phase_b5"
+    },
+    {
+      "stem": "bonephone_static",
+      "type": "short-story",
+      "title_en": "Bonephone Static",
+      "title_ko": "",
+      "game_mission_id": "bonephone_static_phase_b5"
     },
     {
       "stem": "bridge-recognition",
@@ -132,6 +202,27 @@
       "game_mission_id": "flatline_call"
     },
     {
+      "stem": "cayce_threshold",
+      "type": "short-story",
+      "title_en": "Cayce's Threshold",
+      "title_ko": "",
+      "game_mission_id": "cayce_threshold_phase_b5"
+    },
+    {
+      "stem": "cherrys_dollhouse",
+      "type": "short-story",
+      "title_en": "Cherry's Dollhouse",
+      "title_ko": "",
+      "game_mission_id": "cherrys_dollhouse_phase_b55"
+    },
+    {
+      "stem": "chiba_pulse",
+      "type": "short-story",
+      "title_en": "Chiba Pulse",
+      "title_ko": "",
+      "game_mission_id": "chiba_pulse_phase_b5"
+    },
+    {
       "stem": "chickenhead_rickshaw_run",
       "type": "short_story",
       "title_en": "Chickenhead Rickshaw Run",
@@ -158,6 +249,13 @@
       "title_en": "Construct Named",
       "title_ko": "콘스트럭트의 이름 (Construct Named)",
       "game_mission_id": "aleph_fragment"
+    },
+    {
+      "stem": "conways_communion",
+      "type": "short-story",
+      "title_en": "Conway's Communion",
+      "title_ko": "",
+      "game_mission_id": "conways_communion_phase_b5"
     },
     {
       "stem": "core_defend_data_citadel",
@@ -251,11 +349,25 @@
       "game_mission_id": "cortex_hound_recovery"
     },
     {
+      "stem": "cortos_briefing",
+      "type": "short-story",
+      "title_en": "Corto's Briefing",
+      "title_ko": "",
+      "game_mission_id": "cortos_briefing_phase_b56"
+    },
+    {
       "stem": "data_retrieval",
       "type": "short_story",
       "title_en": "Data Retrieval",
       "title_ko": "데이터 회수",
       "game_mission_id": "data_retrieval"
+    },
+    {
+      "stem": "dixies_archive",
+      "type": "short-story",
+      "title_en": "Dixie's Archive",
+      "title_ko": "",
+      "game_mission_id": "dixies_archive_phase_b5"
     },
     {
       "stem": "dixies_choice",
@@ -298,6 +410,13 @@
       "title_en": "Finn Final Reckoning",
       "title_ko": "=== 이야기 본문 ===",
       "game_mission_id": "finn_final_reckoning"
+    },
+    {
+      "stem": "finn_stall",
+      "type": "short-story",
+      "title_en": "The Finn's Stall",
+      "title_ko": "",
+      "game_mission_id": "finn_stall_phase_b5"
     },
     {
       "stem": "finns_factory_labour",
@@ -468,6 +587,20 @@
       "game_mission_id": "hideo_contract"
     },
     {
+      "stem": "hideos_shrine",
+      "type": "short-story",
+      "title_en": "Hideo's Shrine",
+      "title_ko": "",
+      "game_mission_id": "hideos_shrine_phase_b5"
+    },
+    {
+      "stem": "hiltons_dispatch",
+      "type": "short-story",
+      "title_en": "Hilton's Dispatch",
+      "title_ko": "",
+      "game_mission_id": "hiltons_dispatch_phase_b57"
+    },
+    {
       "stem": "hosaka_core",
       "type": "short_story",
       "title_en": "Hosaka Core",
@@ -510,6 +643,20 @@
       "game_mission_id": "idoru_wedding_arc"
     },
     {
+      "stem": "idorus_distribution",
+      "type": "short-story",
+      "title_en": "The Idoru's Distribution",
+      "title_ko": "",
+      "game_mission_id": "idorus_distribution_phase_b5"
+    },
+    {
+      "stem": "judges_maintenance",
+      "type": "short-story",
+      "title_en": "The Judge's Maintenance",
+      "title_ko": "",
+      "game_mission_id": "judges_maintenance_phase_b5"
+    },
+    {
       "stem": "kumiko_manarase-midnight",
       "type": "short_story",
       "title_en": "Kumiko Manarase-Midnight",
@@ -517,11 +664,32 @@
       "game_mission_id": "craft_job"
     },
     {
+      "stem": "kumikos_lacquer",
+      "type": "short-story",
+      "title_en": "Kumiko's Lacquer",
+      "title_ko": "",
+      "game_mission_id": "kumikos_lacquer_phase_b5"
+    },
+    {
+      "stem": "lady_3janes_heir",
+      "type": "short-story",
+      "title_en": "Lady 3Jane's Heir",
+      "title_ko": "",
+      "game_mission_id": "lady_3janes_heir_phase_b57"
+    },
+    {
       "stem": "laney_node_signal_run",
       "type": "short_story",
       "title_en": "Laney Node Signal Run",
       "title_ko": "노드 인식자 (Nodal Perceiver)",
       "game_mission_id": "laney_node_signal_run"
+    },
+    {
+      "stem": "laney_pattern",
+      "type": "short-story",
+      "title_en": "Laney's Pattern",
+      "title_ko": "",
+      "game_mission_id": "laney_pattern_phase_b5"
     },
     {
       "stem": "loa_voodoo_contact",
@@ -536,6 +704,20 @@
       "title_en": "Maas Heist",
       "title_ko": "마스 바이오랩스 강탈",
       "game_mission_id": "maas_heist"
+    },
+    {
+      "stem": "maelcums_zion",
+      "type": "short-story",
+      "title_en": "Maelcum's Zion",
+      "title_ko": "",
+      "game_mission_id": "maelcums_zion_phase_b5"
+    },
+    {
+      "stem": "marie_france_reverie",
+      "type": "short-story",
+      "title_en": "Marie-France Reverie",
+      "title_ko": "",
+      "game_mission_id": "marie_france_reverie_phase_b5"
     },
     {
       "stem": "marly_louisiana-god",
@@ -643,6 +825,13 @@
       "game_mission_id": "mid_stealth_yakuza_meeting"
     },
     {
+      "stem": "milgrim_vocabulary",
+      "type": "short-story",
+      "title_en": "Milgrim's Vocabulary",
+      "title_ko": "",
+      "game_mission_id": "milgrim_vocabulary_phase_b5"
+    },
+    {
       "stem": "molly_decides",
       "type": "novelette",
       "title_en": "Molly Decides",
@@ -699,11 +888,25 @@
       "game_mission_id": "mollys_final_razor"
     },
     {
+      "stem": "mollys_extraction",
+      "type": "short-story",
+      "title_en": "Molly's Extraction",
+      "title_ko": "",
+      "game_mission_id": "mollys_extraction_phase_b54"
+    },
+    {
       "stem": "mollys_final_razor",
       "type": "short_story",
       "title_en": "Mollys Final Razor",
       "title_ko": "=== 이야기 본문 ===",
       "game_mission_id": "mollys_final_razor"
+    },
+    {
+      "stem": "mollys_hands",
+      "type": "short-story",
+      "title_en": "Molly's Hands",
+      "title_ko": "",
+      "game_mission_id": "mollys_hands_phase_b5"
     },
     {
       "stem": "mollys_market",
@@ -718,6 +921,13 @@
       "title_en": "Mollys Razor",
       "title_ko": "몰리의 면도칼",
       "game_mission_id": "mollys_razor"
+    },
+    {
+      "stem": "mona_lisas_dispatch",
+      "type": "short-story",
+      "title_en": "Mona Lisa's Dispatch",
+      "title_ko": "",
+      "game_mission_id": "mona_lisas_dispatch_phase_b57"
     },
     {
       "stem": "neon_tokyo_courier",
@@ -746,6 +956,13 @@
       "title_en": "Neuromancer Whisper",
       "title_ko": "Neuromancer Whisper",
       "game_mission_id": "neuromancer_whisper"
+    },
+    {
+      "stem": "new_rose_hotel",
+      "type": "short-story",
+      "title_en": "New Rose Hotel",
+      "title_ko": "",
+      "game_mission_id": "new_rose_hotel_phase_b5"
     },
     {
       "stem": "ngplus_dual_objective_boss_rush_1",
@@ -832,6 +1049,13 @@
       "game_mission_id": "ono_sendai_repair"
     },
     {
+      "stem": "pacos_brussels_run",
+      "type": "short-story",
+      "title_en": "Paco's Brussels Run",
+      "title_ko": "",
+      "game_mission_id": "pacos_brussels_run_phase_b57"
+    },
+    {
       "stem": "pan_mannerist_audit",
       "type": "novelette",
       "title_en": "Pan Mannerist Audit",
@@ -846,11 +1070,53 @@
       "game_mission_id": "panther_negotiate"
     },
     {
+      "stem": "parkabrakess_footage",
+      "type": "short-story",
+      "title_en": "Parkabrake's Footage",
+      "title_ko": "",
+      "game_mission_id": "parkabrakess_footage_phase_b5"
+    },
+    {
+      "stem": "petals_gallery",
+      "type": "short-story",
+      "title_en": "Petal's Gallery",
+      "title_ko": "",
+      "game_mission_id": "petals_gallery_phase_b56"
+    },
+    {
+      "stem": "peter_2s_pact",
+      "type": "short-story",
+      "title_en": "Peter 2's Pact",
+      "title_ko": "",
+      "game_mission_id": "peter_2s_pact_phase_b57"
+    },
+    {
+      "stem": "ratzias_surgery",
+      "type": "short-story",
+      "title_en": "Ratzia's Surgery",
+      "title_ko": "",
+      "game_mission_id": "ratzias_surgery_phase_b5"
+    },
+    {
       "stem": "razor_work",
       "type": "short_story",
       "title_en": "Razor Work",
       "title_ko": "=== 이야기 본문 ===",
       "game_mission_id": "razor_work"
+    },
+    {
+      "stem": "rivieras_hologram",
+      "type": "short-story",
+      "title_en": "Riviera's Hologram",
+      "title_ko": "",
+      "game_mission_id": "rivieras_hologram_phase_b55"
+    },
+    {
+      "stem": "rydell_baseline",
+      "type": "short-story",
+      "title_en": "Rydell's Baseline",
+      "title_ko": "",
+      "game_mission_id": "rydell_baseline_phase_b5"
     },
     {
       "stem": "sally_construct_market",
@@ -872,6 +1138,13 @@
       "title_en": "Sally Sandii-3Am",
       "title_ko": "로즈 호텔, 새벽 3시",
       "game_mission_id": "sally_sandii_3am"
+    },
+    {
+      "stem": "sallys_doorway",
+      "type": "short-story",
+      "title_en": "Sally's Doorway",
+      "title_ko": "",
+      "game_mission_id": "sallys_doorway_phase_b54"
     },
     {
       "stem": "salvation_wigan_zavijava",
@@ -900,6 +1173,20 @@
       "title_en": "Sense Net Trace",
       "title_ko": "센스/넷 추적",
       "game_mission_id": "sense_net_tip"
+    },
+    {
+      "stem": "sils_last_delivery",
+      "type": "short-story",
+      "title_en": "Sil's Last Delivery",
+      "title_ko": "",
+      "game_mission_id": "sils_last_delivery_phase_b5"
+    },
+    {
+      "stem": "slicks_nightshift",
+      "type": "short-story",
+      "title_en": "Slick's Nightshift",
+      "title_ko": "",
+      "game_mission_id": "slicks_nightshift_phase_b5"
     },
     {
       "stem": "soho_blackout",
@@ -1259,11 +1546,25 @@
       "game_mission_id": "tutorial_maze"
     },
     {
+      "stem": "two_a_days_tuesday",
+      "type": "short-story",
+      "title_en": "Two-A-Day's Tuesday",
+      "title_ko": "",
+      "game_mission_id": "two_a_days_tuesday_phase_b5"
+    },
+    {
       "stem": "vegas_stakeout",
       "type": "short_story",
       "title_en": "Vegas Stakeout",
       "title_ko": "베가스 스테이크아웃",
       "game_mission_id": "vegas_stakeout"
+    },
+    {
+      "stem": "virek_gallery",
+      "type": "short-story",
+      "title_en": "Virek's Gallery",
+      "title_ko": "",
+      "game_mission_id": "virek_gallery_phase_b5"
     },
     {
       "stem": "voodoo_zoneload",
@@ -1292,6 +1593,13 @@
       "title_en": "Wigan Construct Reach",
       "title_ko": "=== 이야기 본문 ===",
       "game_mission_id": "wigan_construct_reach"
+    },
+    {
+      "stem": "wigan_dossier",
+      "type": "short-story",
+      "title_en": "Wigan's Dossier",
+      "title_ko": "",
+      "game_mission_id": "wigan_dossier_phase_b5"
     },
     {
       "stem": "wigan_zavijava",
@@ -1329,6 +1637,13 @@
       "game_mission_id": "wintermute_witness"
     },
     {
+      "stem": "wintermutes_hive",
+      "type": "short-story",
+      "title_en": "Wintermute's Hive",
+      "title_ko": "",
+      "game_mission_id": "wintermutes_hive_phase_b5"
+    },
+    {
       "stem": "winters_child",
       "type": "short_story",
       "title_en": "Winters Child",
@@ -1343,6 +1658,13 @@
       "game_mission_id": "neuromancer_first_ping"
     },
     {
+      "stem": "wire_song",
+      "type": "short-story",
+      "title_en": "The Wire-Song",
+      "title_ko": "",
+      "game_mission_id": "wire_song_phase_b5"
+    },
+    {
       "stem": "working_class_ridership_arc",
       "type": "short_story",
       "title_en": "Working Class Ridership Arc",
@@ -1355,6 +1677,13 @@
       "title_en": "Yakuza Deal",
       "title_ko": "야쿠자 거래",
       "game_mission_id": "yakuza_deal"
+    },
+    {
+      "stem": "yamazaki_inventory",
+      "type": "short-story",
+      "title_en": "Yamazaki's Inventory",
+      "title_ko": "",
+      "game_mission_id": "yamazaki_inventory_phase_b5"
     },
     {
       "stem": "zaibatsu_statework",

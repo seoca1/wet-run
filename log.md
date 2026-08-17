@@ -1,61 +1,110 @@
-## [2026-08-17] chore(rename) | Project rename — Roguelike Sprawl → Wet Run
+## [2026-08-17] feat(dashboard+rename) | Post-rename game + dashboard surface update
 
-**Status**: ✅ 완료 — Project-wide display name rename (스코프 A). Python 패키지, 디렉토리 이름, 모든 .md/.html/.yml 파일의 display name 토큰 일괄 갱신. **5577 passed** (1 pre-existing portrait-size 회귀, rename 무관), ruff ✅, mypy strict ✅, uv sync OK (shebang 자동 갱신 via venv 재생성).
+**Status**: ✅ 완료 — 게임 코드 + 대시보드 chrome + dashboard data rebuild. 3 commits (`581486d`, `c668aa5`, `bf809c5`). 567 files changed cumulatively. 5577 passed, ruff ✅, mypy strict ✅, audit_vault.py CLEAN.
 
-### 1. 변경 요약
+### 1. Game core display name (5 files)
 
-- **Display name**: `Roguelike Sprawl` → `Wet Run`
-- **Python 패키지**: `roguelike_sprawl` → `wet_run` (디렉토리 `prototype/src/roguelike_sprawl/` → `prototype/src/wet_run/`)
-- **pyproject.toml**: `name = "roguelike-sprawl"` → `name = "wet-run"`, 스크립트 엔트리 `roguelike-sprawl` / `rs` → `wet-run` / `wr`
-- **워크스페이스 디렉토리**: `Game/roguelike_sprawl/` → `Game/wet_run/`
-- **모든 import 문**: 257 Python files (`from roguelike_sprawl...` → `from wet_run...`)
-- **메타 문서 display name**: 378 files (스코프 A는 historical `_archive/`, `CHANGELOG.md`, `SETUP_LOG.md` 제외 — Q3 결정으로 historical 보존)
-- **워크스페이스 외부 cross-reference**: 287 files (`Projects/AGENTS.md`, `INDEX.md`, `log.md`, `NEXT_SESSION_TODO.md`, `PHASE_1-26_INTEGRATION_REPORT.md`, `audit_vault.py`, `Language/log.md`, `decisions/README.md`, `Game/_publish/scripts/sync_dashboard_cards.py` 등)
-- **GitHub URL**: **보존** (Q2 미해결 — GitHub repo는 아직 `seoca1/roguelike-sprawl` 이름 유지). README/INDEX/docs 등에서 URL 그대로.
+게임 윈도우 + About screen 에 표시되는 게임 이름 일관성 강화. 이전 commit (`ae83d00`)에서 디렉토리/Python 패키지명은 변경됐지만, 사용자에게 직접 보이는 게임 이름은 일부 남아 있었음.
 
-### 2. 적용 범위
+| 파일 | 변경 |
+|---|---|
+| `prototype/src/wet_run/__init__.py` | docstring `"Roguelike Sprawl"` → `"Wet Run"` |
+| `prototype/src/wet_run/settings.py` | `GAME_NAME = "Roguelike Sprawl"` → `"Wet Run"` |
+| `prototype/src/wet_run/engine/config.py` | `SCREEN_TITLE = "Roguelike Sprawl"` → `"Wet Run"` (게임 윈도우 title) |
+| `prototype/src/wet_run/audio/__init__.py` | docstring |
+| `prototype/src/wet_run/audio/sound_manager.py` | docstring |
 
-| 카테고리 | 파일 수 | 처리 |
-|------|------|------|
-| Python source | 255+ | import 문 일괄 갱신 |
-| Python tests | 257+ | import 문 + 절대 path 일괄 갱신 |
-| Python tools/scripts | 4+31 | path + module name 갱신 |
-| YAML/CI | 6 | package path 갱신 |
-| Markdown (display name) | 378 | `Roguelike Sprawl` → `Wet Run` |
-| Markdown (workspace) | 287 | cross-reference 갱신 |
-| HTML (dashboard) | (378에 포함) | chrome title/footer 갱신 |
-| Historical (보존) | _archive/, CHANGELOG.md, SETUP_LOG.md | 그대로 |
-| GitHub URL | 모든 docs | 그대로 (Q2 미해결) |
+사용자가 게임 시작 시 보는 윈도우 titlebar는 이제 `Wet Run` 으로 표시.
 
-### 3. 검증
+### 2. Dashboard HTML chrome (548 files)
+
+대시보드 전체 (`dashboard/`) 의 HTML chrome (검색엔진/소셜 메타) + 게임 내 러닝 텍스트 외곽 갱신:
+
+- **521 short-story HTML**: `<title>` suffix `"— Roguelike Sprawl"` → `"— Wet Run"`
+- **17 dashboard 페이지** (index, character-graph, cyberspace, search, mission-flow, stories-browse, player, missions, library, jokey, combat, dungeon, play, sound, settings, graphic-novel, reading-stats): canonical URL, og:url, og:image, twitter:image URL의 `roguelike-sprawl` → `wet-run`
+- **footer chrome**: `"Roguelike Sprawl — Derivative Fiction"` → `"Wet Run — Derivative Fiction"` (521 footer)
+- **print footer**: 단편 e-book print footer 갱신
+
+Q3 정책 (historical 보존) 준수 — `_archive/`, `CHANGELOG.md`, `SETUP_LOG.md`, **단편 본문(prose content)** 의 cross-references는 그대로 유지.
+
+### 3. Dashboard data + scripts (3 files)
+
+| 파일 | 변경 |
+|---|---|
+| `dashboard/data/data_index.json` | `"repo": "/Users/emilio/projects/Projects/Game/wet_run"` |
+| `dashboard/data/run_stats.json` | `"source": "prototype/src/wet_run/run/state.py"` (build_dashboard.py 재실행으로 자동 갱신) |
+| `dashboard/scripts/import_minimax_track.sh` | `SND` 절대 path |
+
+### 4. Test contract updates (3 files)
+
+이전 commit들에서 변경된 chrome/suffix에 맞춰 test contract 갱신:
+
+- `prototype/tests/integration/test_dashboard_integrity.py`: `title_clean.replace(" — Roguelike Sprawl", "")` → `" — Wet Run"`
+- `prototype/tests/integration/check_dashboard.py`: 동일 contract
+- `prototype/tests/unit/test_settings_data.py`: `assert GAME_NAME == "Wet Run"`
+
+### 5. Code-side references (6 files, commit `c668aa5`)
+
+prototype 코드/스크립트에서 남아있던 옛 이름 reference 일괄 정리:
+
+- `prototype/Makefile`: `uv run roguelike-sprawl` → `uv run wet-run`
+- `prototype/scripts/combat_grades_demo.py`: 헤더 배너
+- `prototype/scripts/demo_full_flow.py`: console title
+- `prototype/scripts/generate_story_html.py`: HTML title + footer templates
+- `prototype/tests/unit/test_dashboard_meta.py`: expected OG URL (`seoca1.github.io/wet-run/`)
+- `design/systems/stage_structure.json`: `"module": "wet_run.data_fragment"`
+
+### 6. Dashboard data rebuild (13 files, commit `bf809c5`)
+
+`tools/build_dashboard.py` 실행으로 13 stats JSON 모두 최신 게임 데이터로 재생성:
+
+- character_stats, combat_stats, cyberspace_stats, data_index, design_system
+- event_dialogues_stats, faction_stats, index_stats, journey_stats
+- library_stats, mission_stats, run_stats, stages_stats
+
+**Notable updates**:
+- `library_stats.json`: `stories_with_mission_link` 189 → **236** (47 new)
+- `library_stats.json`: `catalog_entries` 195 → **242** (47 new)
+- `run_stats.json`: `_generated_at` 2026-08-13 → 2026-08-17 (refresh)
+- `run_stats.json`: `source` path 자동 `wet_run` (template 자체가 이미 갱신됨)
+
+### 7. Validation
 
 | Gate | Status | Notes |
 |---|---|---|
-| `uv sync` | ✅ | wet-run 패키지 정상 빌드, uv.lock 자동 갱신 |
+| `make test` | ✅ | 5577 passed, 365 skipped, 1 xfailed (pre-existing portrait 회귀, rename 무관) |
 | `make lint` (ruff) | ✅ | All checks passed |
-| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
-| `make test` (pytest) | ✅ | **5577 passed**, 365 skipped, 1 xfailed (portrait-size pre-existing 회귀 1개는 rename 무관) |
-| `.venv 재생성` | ✅ | 옛 `.venv/bin/interrogate` shebang (`/Game/roguelike_sprawl/`) 깨졌음 → `rm -rf .venv && uv sync --all-extras` 로 해결 |
+| `make typecheck` (mypy strict) | ✅ | 0 errors in 211 source files |
+| `tools/audit_sprawl.py` | ✅ | 0 broken, 4 orphan (의도적 lore fragments) |
+| `tools/find_broken_links.py` | ✅ | 0 broken |
+| `python3 audit_vault.py` (workspace) | ✅ | CLEAN |
 
-### 4. Pre-existing 실패 (rename과 무관)
+### 8. Pre-existing 이슈 (rename 무관)
 
-- `tests/unit/test_armitage.py::TestArmitagePortraits::test_portraits_have_10x14_grid` — `data/art/portraits/portraits.json` 의 실제 portrait size가 `[10, 12]` 로 변경되었는데 테스트는 `[10, 14]` 가정. Phase 45 이후 portrait 변경 회귀로 보이며 본 세션 범 외.
+- `tests/unit/test_armitage.py::TestArmitagePortraits::test_portraits_have_10x14_grid` — portrait actual size `[10, 12]` vs test expected `[10, 14]`. Phase 45 이후 data-driven 변경으로 보이며 본 세션 범위 외.
 
-### 5. GitHub repo rename (별 후속 — Q2 미해결)
+### 9. WetRun commit history (이번 세션)
 
-GitHub repo는 여전히 `seoca1/roguelike-sprawl` 입니다. 다음 사용자 작업 후속 필요:
-- GitHub Settings → Rename repository → `seoca1/wet-run`
-- rename 후 README/INDEX/docs의 `github.com/seoca1/wet-run` → `github.com/seoca1/wet-run` 일괄 갱신
-- Pages URL `seoca1.github.io/wet-run` → `seoca1.github.io/wet-run` 자동 적용
-- GH_TOKEN rotation 후 push 가능
+```
+bf809c5 feat(dashboard): rebuild stats JSON via build_dashboard.py
+c668aa5 chore(rename): update remaining code references to Wet Run
+581486d feat(rename): update game + dashboard display name to Wet Run
+3dce6bb docs(wet_run): update GitHub URLs after repo rename
+ae83d00 chore(rename): Roguelike Sprawl → Wet Run (project-wide display name)
+```
 
-### 6. Out-of-scope (preserved)
+### 10. Out of scope (preserved)
 
-- `_archive/sessions/*.md` — historical session summaries (그대로)
-- `CHANGELOG.md` — version history (그대로)
-- `SETUP_LOG.md` — setup log (그대로)
-- `dashboard/stories/*.html` — 게임 내 러닝 텍스트 (그대로, display chrome만 갱신)
-- GitHub repo 이름 + URL — Q2 결정 후 별도 세션
-- No push (user handles GH_TOKEN rotation)
+- 단편 HTML 본문 — 게임 내 러닝 텍스트이므로 보존 (Q3 default)
+- `_archive/`, `CHANGELOG.md`, `SETUP_LOG.md` — historical
+- `dashboard/stories/*.html` 단편 본문 cross-references
+- GitHub repo URL — Q2 deferred 후속 (GH_TOKEN rotation 후 push)
+
+### 11. Push 상태
+
+**5 commits ahead of origin** (post-rename). GH_TOKEN rotation 후 user action:
+- `git push origin main` (5 commits)
+
+Total cumulative rename + dashboard update: ~580 files, 5 commits, 0 regressions, 0 broken wikilinks.
 
 ---

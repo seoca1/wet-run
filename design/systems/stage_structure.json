@@ -377,7 +377,7 @@
       "name_ko": "데이터 프래그먼트 수집",
       "description_en": "v0.5 game play: collectible lore items found in missions. Each fragment unlocks a wiki page and provides narrative context for the Sprawl universe.",
       "description_ko": "v0.5 게임 플레이: 미션에서 발견되는 수집형 로어 아이템. 각 프래그먼트는 위키 페이지를 해제하고 스프롤 세계관에 대한 서사적 맥락을 제공한다.",
-      "module": "roguelike_sprawl.data_fragment",
+      "module": "wet_run.data_fragment",
       "appstate_field": "data_fragments",
       "catalog_size": 5,
       "rarity_tiers": [

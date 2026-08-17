@@ -12,7 +12,7 @@ download-font: ## Download the libtcod font (one-time)
 	uv run python scripts/download_font.py
 
 run: ## Run the game (hello-world)
-	uv run roguelike-sprawl
+	uv run wet-run
 
 prologue: ## Play the prologue cinematic
 	uv run python scripts/prologue.py

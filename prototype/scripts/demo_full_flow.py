@@ -392,7 +392,7 @@ def run_full_flow(args: argparse.Namespace) -> int:
     state.screen = ScreenKind.MENU
     console.clear()
     console.print(2, 2, "═══ CREDITS ═══")
-    console.print(2, 5, "  Roguelike Sprawl")
+    console.print(2, 5, "  Wet Run")
     console.print(2, 7, "  A cyberpunk roguelike inspired by")
     console.print(2, 8, "  William Gibson's Sprawl Trilogy.")
     console.print(2, 11, "  Development: AI Agent + Human")

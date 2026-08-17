@@ -108,7 +108,7 @@ def test_dashboard_og_url_matches(filename: str) -> None:
         pytest.skip(f"{filename} not found")
     html = path.read_text(encoding="utf-8")
     expected_path = "" if filename == "index.html" else filename
-    expected = f"https://seoca1.github.io/roguelike-sprawl/{expected_path}"
+    expected = f"https://seoca1.github.io/wet-run/{expected_path}"
     assert expected in html, f"{filename} OG URL mismatch (expected {expected})"
 
 

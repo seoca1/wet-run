@@ -250,7 +250,7 @@ def main() -> None:
     scenarios_to_run = [args.scenario] if args.scenario else ["A", "B", "C"]
 
     print("=" * 60)
-    print("Roguelike Sprawl - Difficulty Verification Demo")
+    print("Wet Run - Difficulty Verification Demo")
     print("=" * 60)
 
     for sid in scenarios_to_run:

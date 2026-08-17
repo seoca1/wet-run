@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.combat import (
+from wet_run.combat import (
     Combatant,
     CombatState,
     IceRegistry,
@@ -17,7 +17,7 @@ from roguelike_sprawl.combat import (
     step_combat,
     use_skill,
 )
-from roguelike_sprawl.combat.state import (
+from wet_run.combat.state import (
     ALARM_MAX_LEVEL,
     ALARM_TICK_INTERVAL_MS,
     AUTO_ATTACK_INTERVAL_MS,
@@ -245,9 +245,9 @@ def test_start_combat_uses_node_ice_kind(data_dir: Path) -> None:
     the enemy, not hardcoded 'standard'. Pre-fix: every node spawned the
     same Standard ICE regardless of node.ice value.
     """
-    from roguelike_sprawl.engine import combat_view
-    from roguelike_sprawl.engine.state import AppState
-    from roguelike_sprawl.matrix.node import IceKind, Node, NodeKind, ZoneDepth
+    from wet_run.engine import combat_view
+    from wet_run.engine.state import AppState
+    from wet_run.matrix.node import IceKind, Node, NodeKind, ZoneDepth
 
     ice_reg = IceRegistry.load(data_dir / "combat" / "ice_types.json")
     prog_reg = ProgramRegistry.load(data_dir / "programs" / "programs.json")
@@ -325,9 +325,9 @@ def test_vfx_overlay_no_afterimage() -> None:
     """
     import tcod.console
 
-    from roguelike_sprawl.combat.effects import CombatEffects
-    from roguelike_sprawl.engine.combat_view import _draw_vfx_overlay
-    from roguelike_sprawl.engine.layout import Region, RegionId
+    from wet_run.combat.effects import CombatEffects
+    from wet_run.engine.combat_view import _draw_vfx_overlay
+    from wet_run.engine.layout import Region, RegionId
 
     console = tcod.console.Console(30, 20)
     region = Region(id=RegionId.MAIN, x=5, y=3, w=20, h=14)
@@ -363,7 +363,7 @@ def test_vfx_overlay_no_afterimage() -> None:
 
 def test_weakness_matrix_has_all_ice_kinds() -> None:
     """Every known ICE kind must appear in WEAKNESS_BY_ICE."""
-    from roguelike_sprawl.combat.state import WEAKNESS_BY_ICE
+    from wet_run.combat.state import WEAKNESS_BY_ICE
 
     expected = {
         "standard",
@@ -381,7 +381,7 @@ def test_weakness_matrix_has_all_ice_kinds() -> None:
 
 def test_weakness_matrix_each_entry_has_all_roles() -> None:
     """Each ICE entry must define all five roles."""
-    from roguelike_sprawl.combat.state import WEAKNESS_BY_ICE
+    from wet_run.combat.state import WEAKNESS_BY_ICE
 
     roles = {"strike", "burst", "guard", "utility", "sustain"}
     for ice_kind, mapping in WEAKNESS_BY_ICE.items():
@@ -391,7 +391,7 @@ def test_weakness_matrix_each_entry_has_all_roles() -> None:
 
 def test_weakness_matrix_multipliers_in_range() -> None:
     """All multipliers must be in (0.0, 2.0]."""
-    from roguelike_sprawl.combat.state import WEAKNESS_BY_ICE
+    from wet_run.combat.state import WEAKNESS_BY_ICE
 
     for ice_kind, mapping in WEAKNESS_BY_ICE.items():
         for role, mult in mapping.items():
@@ -399,7 +399,7 @@ def test_weakness_matrix_multipliers_in_range() -> None:
 
 
 def test_default_weakness_multiplier_is_neutral() -> None:
-    from roguelike_sprawl.combat.state import DEFAULT_WEAKNESS_MULTIPLIER
+    from wet_run.combat.state import DEFAULT_WEAKNESS_MULTIPLIER
 
     assert DEFAULT_WEAKNESS_MULTIPLIER == 1.0
 
@@ -425,7 +425,7 @@ def _enemy_with_kind(ice_kind: str | None, resistance: float = 0.0) -> Combatant
 
 def test_weakness_strike_vs_standard_deals_more_damage() -> None:
     """strike role vs standard ICE → 1.5× multiplier applies."""
-    from roguelike_sprawl.combat.state import WEAKNESS_BY_ICE
+    from wet_run.combat.state import WEAKNESS_BY_ICE
 
     assert WEAKNESS_BY_ICE["standard"]["strike"] == 1.5
 
@@ -445,7 +445,7 @@ def test_weakness_strike_vs_standard_deals_more_damage() -> None:
 
 def test_resistance_sustain_vs_standard_deals_less_damage() -> None:
     """sustain role vs standard ICE → 0.8× multiplier applies."""
-    from roguelike_sprawl.combat.state import WEAKNESS_BY_ICE
+    from wet_run.combat.state import WEAKNESS_BY_ICE
 
     assert WEAKNESS_BY_ICE["standard"]["sustain"] == 0.8
 
@@ -619,7 +619,7 @@ def test_build_ice_enemy_sets_ice_kind_and_resistance(data_dir: Path) -> None:
 
 
 def test_alarm_constants_defined() -> None:
-    from roguelike_sprawl.combat.state import (
+    from wet_run.combat.state import (
         ALARM_MAX_LEVEL,
         ALARM_TICK_INTERVAL_MS,
     )
@@ -746,7 +746,7 @@ def _guard_skill() -> Skill:
 
 
 def test_role_synergy_constants_defined() -> None:
-    from roguelike_sprawl.combat.state import ROLE_SYNERGY_BONUSES
+    from wet_run.combat.state import ROLE_SYNERGY_BONUSES
 
     assert ROLE_SYNERGY_BONUSES[1] == 1.0
     assert ROLE_SYNERGY_BONUSES[2] == 1.15
@@ -855,7 +855,7 @@ def test_role_synergy_composes_with_weakness() -> None:
 
 def test_role_synergy_count_helper() -> None:
     """_count_player_role_synergy returns count of same-role skills."""
-    from roguelike_sprawl.combat.state import _count_player_role_synergy
+    from wet_run.combat.state import _count_player_role_synergy
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     p.skills = (_strike_skill(), _strike_skill(), _burst_skill())
@@ -877,7 +877,7 @@ def test_role_synergy_count_helper() -> None:
 
 
 def test_alarm_speed_by_ice_constant_defined() -> None:
-    from roguelike_sprawl.combat.state import ALARM_SPEED_BY_ICE
+    from wet_run.combat.state import ALARM_SPEED_BY_ICE
 
     assert "standard" in ALARM_SPEED_BY_ICE
     assert "wintermute" in ALARM_SPEED_BY_ICE
@@ -886,7 +886,7 @@ def test_alarm_speed_by_ice_constant_defined() -> None:
 
 
 def test_alarm_speed_default_is_one() -> None:
-    from roguelike_sprawl.combat.state import DEFAULT_ALARM_SPEED
+    from wet_run.combat.state import DEFAULT_ALARM_SPEED
 
     assert DEFAULT_ALARM_SPEED == 1.0
 
@@ -950,7 +950,7 @@ def test_wintermute_flatlines_before_standard() -> None:
 
 
 def test_combo_bonuses_constant_defined() -> None:
-    from roguelike_sprawl.combat.state import COMBO_BONUSES, COMBO_WINDOW_MS
+    from wet_run.combat.state import COMBO_BONUSES, COMBO_WINDOW_MS
 
     assert COMBO_BONUSES[1] == 1.0
     assert COMBO_BONUSES[3] == 1.2
@@ -969,7 +969,7 @@ def test_combo_starts_at_zero() -> None:
 
 def test_combo_no_bonus_at_one_or_two_hits() -> None:
     """Combo of 1-2 hits → 1.0× (no bonus)."""
-    from roguelike_sprawl.combat.state import COMBO_BONUSES
+    from wet_run.combat.state import COMBO_BONUSES
 
     assert COMBO_BONUSES[1] == 1.0
     assert COMBO_BONUSES[2] == 1.0
@@ -1026,7 +1026,7 @@ def test_combo_increments_on_player_hit() -> None:
 
 def test_combo_resets_after_window_expires() -> None:
     """If no hit lands within COMBO_WINDOW_MS, combo resets to 0."""
-    from roguelike_sprawl.combat.state import _tick_combo
+    from wet_run.combat.state import _tick_combo
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     e = _enemy(max_hp=10_000, base_damage=0)
@@ -1042,7 +1042,7 @@ def test_combo_resets_after_window_expires() -> None:
 
 def test_combo_does_not_reset_within_window() -> None:
     """If a hit lands within COMBO_WINDOW_MS, combo persists."""
-    from roguelike_sprawl.combat.state import _tick_combo
+    from wet_run.combat.state import _tick_combo
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     e = _enemy(max_hp=10_000, base_damage=0)
@@ -1094,8 +1094,8 @@ def test_combo_composes_with_weakness() -> None:
 
 
 def _two_phase_profile() -> object:
-    from roguelike_sprawl.combat.boss import BossProfile, PhaseProfile
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.boss import BossProfile, PhaseProfile
+    from wet_run.combat.effects import IceType
 
     return BossProfile(
         ice_type=IceType.WINTERMUTE,
@@ -1188,8 +1188,8 @@ def test_boss_phase_does_not_regress() -> None:
 
 def test_boss_phase_three_phase_progression() -> None:
     """Boss with 3 phases should advance 1 → 2 → 3 as HP drops."""
-    from roguelike_sprawl.combat.boss import BossProfile, PhaseProfile
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.boss import BossProfile, PhaseProfile
+    from wet_run.combat.effects import IceType
 
     three_phase = BossProfile(
         ice_type=IceType.WINTERMUTE,
@@ -1273,8 +1273,8 @@ def test_boss_phase_damage_no_profile_uses_base() -> None:
 
 def test_boss_phase_3_damage_uses_60pct_increase() -> None:
     """Boss with phase 3 at 1.6× multiplier deals 1.6× damage."""
-    from roguelike_sprawl.combat.boss import BossProfile, PhaseProfile
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.boss import BossProfile, PhaseProfile
+    from wet_run.combat.effects import IceType
 
     profile = BossProfile(
         ice_type=IceType.WINTERMUTE,
@@ -1305,7 +1305,7 @@ def test_boss_phase_3_damage_uses_60pct_increase() -> None:
 
 def test_combat_pressure_baseline() -> None:
     """At combat start, all multipliers should be neutral (1.0×)."""
-    from roguelike_sprawl.combat.state import get_combat_pressure
+    from wet_run.combat.state import get_combat_pressure
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     e = _enemy_with_kind(None)
@@ -1323,7 +1323,7 @@ def test_combat_pressure_baseline() -> None:
 
 def test_combat_pressure_reflects_alarm() -> None:
     """Alarm level / max / fraction should be reflected in pressure dict."""
-    from roguelike_sprawl.combat.state import get_combat_pressure
+    from wet_run.combat.state import get_combat_pressure
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     e = _enemy_with_kind(None)
@@ -1337,7 +1337,7 @@ def test_combat_pressure_reflects_alarm() -> None:
 
 def test_combat_pressure_reflects_combo_and_synergy() -> None:
     """Combo count and synergy should be reflected in pressure dict."""
-    from roguelike_sprawl.combat.state import get_combat_pressure
+    from wet_run.combat.state import get_combat_pressure
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     p.skills = (_strike_skill(), _strike_skill(), _strike_skill())
@@ -1355,7 +1355,7 @@ def test_combat_pressure_reflects_combo_and_synergy() -> None:
 
 def test_combat_pressure_reflects_weakness() -> None:
     """Weakness multiplier should reflect ICE kind × skill role."""
-    from roguelike_sprawl.combat.state import get_combat_pressure
+    from wet_run.combat.state import get_combat_pressure
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     p.skills = (_strike_skill(),)
@@ -1369,7 +1369,7 @@ def test_combat_pressure_reflects_weakness() -> None:
 
 def test_combat_pressure_reflects_boss_phase() -> None:
     """boss_phase should be 0 if no profile, else enemy.current_phase."""
-    from roguelike_sprawl.combat.state import get_combat_pressure
+    from wet_run.combat.state import get_combat_pressure
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     e = _enemy_with_kind(None)
@@ -1387,7 +1387,7 @@ def test_combat_pressure_reflects_boss_phase() -> None:
 
 def test_combat_pressure_reflects_ice_resistance() -> None:
     """ice_resistance field should be reflected directly."""
-    from roguelike_sprawl.combat.state import get_combat_pressure
+    from wet_run.combat.state import get_combat_pressure
 
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
     e = _enemy_with_kind(None, resistance=0.3)
@@ -1398,7 +1398,7 @@ def test_combat_pressure_reflects_ice_resistance() -> None:
 
 
 def test_role_crit_bonuses_constant_defined() -> None:
-    from roguelike_sprawl.combat.state import ROLE_CRIT_BONUSES
+    from wet_run.combat.state import ROLE_CRIT_BONUSES
 
     assert ROLE_CRIT_BONUSES["burst"] == 0.10
     assert ROLE_CRIT_BONUSES["strike"] == 0.05
@@ -1408,7 +1408,7 @@ def test_role_crit_bonuses_constant_defined() -> None:
 
 def test_role_crit_bonus_applies_to_burst_skill() -> None:
     """Burst role skills get +10% crit chance."""
-    from roguelike_sprawl.combat.state import ROLE_CRIT_BONUSES
+    from wet_run.combat.state import ROLE_CRIT_BONUSES
 
     assert ROLE_CRIT_BONUSES["burst"] == 0.10
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
@@ -1430,7 +1430,7 @@ def test_role_crit_bonus_applies_to_burst_skill() -> None:
 
 def test_role_crit_bonus_does_not_apply_to_guard() -> None:
     """Guard role skills get no role-based crit bonus."""
-    from roguelike_sprawl.combat.state import ROLE_CRIT_BONUSES
+    from wet_run.combat.state import ROLE_CRIT_BONUSES
 
     assert ROLE_CRIT_BONUSES["guard"] == 0.0
     p = build_default_player(max_hp=100, max_ap=6, programs=ProgramRegistry({}))
@@ -1469,7 +1469,7 @@ def test_role_crit_bonus_unknown_role_treated_as_zero() -> None:
 
 
 def test_crit_variance_constants_defined() -> None:
-    from roguelike_sprawl.combat.state import (
+    from wet_run.combat.state import (
         CRIT_MULTIPLIER_MAX,
         CRIT_MULTIPLIER_MIN,
     )
@@ -1481,7 +1481,7 @@ def test_crit_variance_constants_defined() -> None:
 
 def test_crit_variance_in_range_across_samples() -> None:
     """Over many crits, damage multipliers should span MIN-MAX range."""
-    from roguelike_sprawl.combat.state import (
+    from wet_run.combat.state import (
         CRIT_MULTIPLIER_MAX,
         CRIT_MULTIPLIER_MIN,
         DAMAGE_VARIANCE_MAX,
@@ -1509,7 +1509,7 @@ def test_crit_variance_in_range_across_samples() -> None:
 
 def test_crit_variance_single_sample_in_range() -> None:
     """A single crit sample should fall within CRIT_MULTIPLIER_MIN × variance × base."""
-    from roguelike_sprawl.combat.state import (
+    from wet_run.combat.state import (
         CRIT_MULTIPLIER_MAX,
         CRIT_MULTIPLIER_MIN,
     )
@@ -1601,7 +1601,7 @@ def test_combat_stats_max_combo_tracked() -> None:
 
 def test_combat_stats_peak_alarm_tracked() -> None:
     """peak_alarm_level should reflect highest alarm reached."""
-    from roguelike_sprawl.combat.state import ALARM_TICK_INTERVAL_MS
+    from wet_run.combat.state import ALARM_TICK_INTERVAL_MS
 
     p = build_default_player(max_hp=10_000, max_ap=6, programs=ProgramRegistry({}))
     e = _enemy(max_hp=10_000, base_damage=0)
@@ -1842,7 +1842,7 @@ def _stagger_skill(damage: int = 30) -> Skill:
 
 
 def test_stagger_constant_defined() -> None:
-    from roguelike_sprawl.combat.state import STAGGER_DURATION_MS
+    from wet_run.combat.state import STAGGER_DURATION_MS
 
     assert STAGGER_DURATION_MS == 1500
 
@@ -1898,7 +1898,7 @@ def test_stagger_clears_after_first_skipped_attack() -> None:
 
 def test_stagger_aoe_skips_all_enemies() -> None:
     """AOE stagger (future) would skip all enemies; here we verify multi-enemy stagger works."""
-    from roguelike_sprawl.combat.state import (
+    from wet_run.combat.state import (
         STAGGER_DURATION_MS,
     )
 

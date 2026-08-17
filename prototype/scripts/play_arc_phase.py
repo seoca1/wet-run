@@ -30,9 +30,9 @@ import tcod.event
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.chapter_cutscene import load_arc
-from roguelike_sprawl.engine.phase_view import render_arc_phase, tick_arc_phase
-from roguelike_sprawl.i18n import Translator
+from wet_run.engine.chapter_cutscene import load_arc
+from wet_run.engine.phase_view import render_arc_phase, tick_arc_phase
+from wet_run.i18n import Translator
 
 
 class PhaseDemoState:

@@ -26,7 +26,7 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.combat.boss import (  # noqa: E402
+from wet_run.combat.boss import (  # noqa: E402
     TA_CONSTRUCT_PRIME_PROFILE,
     WINTERMUTE_PROFILE,
     current_phase,
@@ -34,12 +34,12 @@ from roguelike_sprawl.combat.boss import (  # noqa: E402
     phase_skills,
     phase_transition,
 )
-from roguelike_sprawl.combat.effects import (  # noqa: E402
+from wet_run.combat.effects import (  # noqa: E402
     IceType,
     boss_phase_transition_sequence,
     ice_intro_sequence,
 )
-from roguelike_sprawl.combat.state import Combatant  # noqa: E402
+from wet_run.combat.state import Combatant  # noqa: E402
 
 SCREEN_W = 80
 SCREEN_H = 30

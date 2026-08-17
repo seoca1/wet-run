@@ -138,10 +138,10 @@ Faction reputation 은:
 ## 영향 받는 항목 (예정)
 
 수락 시 (Option 1):
-- `src/roguelike_sprawl/run/meta_state.py` (신규) — `MetaState` dataclass
-- `src/roguelike_sprawl/engine/meta_state_manager.py` (신규) — load/save/migration
-- `src/roguelike_sprawl/engine/state.py` — 부트스트랩 hook
-- `src/roguelike_sprawl/engine/save_manager.py` — 명시적 promote (default off, opt-in)
+- `src/wet_run/run/meta_state.py` (신규) — `MetaState` dataclass
+- `src/wet_run/engine/meta_state_manager.py` (신규) — load/save/migration
+- `src/wet_run/engine/state.py` — 부트스트랩 hook
+- `src/wet_run/engine/save_manager.py` — 명시적 promote (default off, opt-in)
 - `tests/unit/test_meta_state.py` (신규) — 30+ tests
 - `design/systems/reputation.md` (또는 `progression.md`) — 문서 보강
 - `log.md` 기록
@@ -154,11 +154,11 @@ Faction reputation 은:
 **Option 1 Accepted** (2026-07-27). 세부 옵션: 사망 페널티 없음, Hardcore 격리 비활성.
 
 ### 적용된 변경
-1. **신규 파일**: `src/roguelike_sprawl/run/meta_state.py`
+1. **신규 파일**: `src/wet_run/run/meta_state.py`
    - `MetaState` dataclass: version, reputation, future_buckets
    - `to_dict()` / `from_dict()` roundtrip with forward-compatible future_buckets
    - `promote_from_run()` API: history merge (no double-counting, score clamped per-event ±25)
-2. **신규 파일**: `src/roguelike_sprawl/engine/meta_state_manager.py`
+2. **신규 파일**: `src/wet_run/engine/meta_state_manager.py`
    - `load_meta_state()`: missing/corrupt → empty default
    - `save_meta_state()`: atomic write (temp + rename + fsync)
    - `default_meta_state_path()`: `data/saves/meta_state.json`

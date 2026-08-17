@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.ecs.entity import Entity
-from roguelike_sprawl.ecs.world import World
+from wet_run.ecs.entity import Entity
+from wet_run.ecs.world import World
 
 
 def test_entity_creation() -> None:

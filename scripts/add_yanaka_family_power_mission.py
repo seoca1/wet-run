@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'yanaka_family_power_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'yanaka_family_power_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 45 — Yukio Yanaka character page (wiki/characters/yukio-yanaka.md).
 Suit-arc, Arc 5: corporate-statework scenario on Yanaka family-power.

@@ -9,8 +9,8 @@ Covers:
 
 from __future__ import annotations
 
-from roguelike_sprawl.combat.state import Combatant, CombatState, tick_dixie_ally
-from roguelike_sprawl.engine.state import AppState
+from wet_run.combat.state import Combatant, CombatState, tick_dixie_ally
+from wet_run.engine.state import AppState
 
 
 def _make_enemy() -> Combatant:
@@ -131,7 +131,7 @@ class TestTickDixieAlly:
         ADR-0148: Dixie may use a companion skill (icebreaker_overdrive 50 dmg
         when target HP >= 80) OR plain auto-attack (5 dmg). Accept either.
         """
-        from roguelike_sprawl.combat.state import DIXIE_ALLY_DAMAGE
+        from wet_run.combat.state import DIXIE_ALLY_DAMAGE
 
         app = AppState()
         app.construct_companion_active = True
@@ -145,7 +145,7 @@ class TestTickDixieAlly:
 
     def test_no_op_when_combat_finished(self) -> None:
         """If combat ended, Dixie doesn't attack."""
-        from roguelike_sprawl.combat.state import DIXIE_ALLY_DAMAGE
+        from wet_run.combat.state import DIXIE_ALLY_DAMAGE
 
         app = AppState()
         app.construct_companion_active = True
@@ -158,7 +158,7 @@ class TestTickDixieAlly:
 
     def test_no_op_when_target_is_dead(self) -> None:
         """If target hp <= 0, Dixie doesn't attack."""
-        from roguelike_sprawl.combat.state import DIXIE_ALLY_DAMAGE
+        from wet_run.combat.state import DIXIE_ALLY_DAMAGE
 
         app = AppState()
         app.construct_companion_active = True
@@ -171,7 +171,7 @@ class TestTickDixieAlly:
 
     def test_respects_attack_interval(self) -> None:
         """Dixie does not attack on every tick (interval respected)."""
-        from roguelike_sprawl.combat.state import DIXIE_ALLY_DAMAGE
+        from wet_run.combat.state import DIXIE_ALLY_DAMAGE
 
         app = AppState()
         app.construct_companion_active = True

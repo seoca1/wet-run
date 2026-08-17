@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.status_effects_v2 import (
+from wet_run.combat.status_effects_v2 import (
     StatusEffectV2,
     apply_bleed,
     apply_confused,

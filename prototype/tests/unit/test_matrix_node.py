@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.matrix.node import (
+from wet_run.matrix.node import (
     AlarmLevel,
     Faction,
     IceKind,
@@ -12,7 +12,7 @@ from roguelike_sprawl.matrix.node import (
     NodeKind,
     ZoneDepth,
 )
-from roguelike_sprawl.matrix.zdr import (
+from wet_run.matrix.zdr import (
     Status,
     base_zdr,
     calculate_status,

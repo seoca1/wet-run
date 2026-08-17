@@ -3,12 +3,12 @@
 **Document Type**: Design specification (companion to `missions.md`)
 **Status**: Active (Phase 11 implementation)
 **Date**: 2026-08-08
-**Owner**: roguelike_sprawl Phase 11
+**Owner**: wet_run Phase 11
 **Related**: [ADR-0188 — Mission Expansion](../../decisions/0188-mission-expansion.md), `missions.md`, `missions.json`
 
 ## Overview
 
-This document defines the complete mission type taxonomy used in roguelike_sprawl. It catalogs:
+This document defines the complete mission type taxonomy used in wet_run. It catalogs:
 - **Existing types** (already in `missions.json`, refined documentation)
 - **New types** (introduced in Phase 11 per ADR-0188)
 - **Type interaction rules** (multi-type missions, chains, outcomes)

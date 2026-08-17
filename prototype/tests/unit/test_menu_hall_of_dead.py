@@ -18,15 +18,15 @@ from tcod.event import KeyDown, KeySym, Modifier, Scancode
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine.menu import (  # noqa: E402
+from wet_run.engine.menu import (  # noqa: E402
     OPTION_CREDITS,
     OPTION_HALL_OF_DEAD,
     OPTION_NEW_RUN,
     handle_menu_input,
     render_menu,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind  # noqa: E402
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.engine.state import AppState, ScreenKind  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 
 @pytest.fixture

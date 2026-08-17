@@ -15,14 +15,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.matrix.dungeon_generator import RoomType  # noqa: E402
-from roguelike_sprawl.matrix.mission_mapper import (  # noqa: E402
+from wet_run.matrix.dungeon_generator import RoomType  # noqa: E402
+from wet_run.matrix.mission_mapper import (  # noqa: E402
     _keyword_rooms,
     _mission_text,
     missions_to_rooms,
 )
-from roguelike_sprawl.matrix.node import ZoneDepth  # noqa: E402
-from roguelike_sprawl.missions.mission import Mission, Objective  # noqa: E402
+from wet_run.matrix.node import ZoneDepth  # noqa: E402
+from wet_run.missions.mission import Mission, Objective  # noqa: E402
 
 
 def _mission(
@@ -158,14 +158,14 @@ class TestArcScaling:
 
     def test_arc_clamped_high(self) -> None:
         # Test the helper directly (Mission rejects invalid arcs at construction)
-        from roguelike_sprawl.matrix.mission_mapper import _arc_target
+        from wet_run.matrix.mission_mapper import _arc_target
 
         clamped = _arc_target(7)
         normal = _arc_target(5)
         assert clamped == normal
 
     def test_arc_clamped_low(self) -> None:
-        from roguelike_sprawl.matrix.mission_mapper import _arc_target
+        from wet_run.matrix.mission_mapper import _arc_target
 
         clamped = _arc_target(0)
         normal = _arc_target(1)
@@ -215,7 +215,7 @@ class TestRealMissions:
     def test_all_29_missions_produce_valid_sequences(self) -> None:
         from pathlib import Path
 
-        from roguelike_sprawl.missions.board import JobBoard
+        from wet_run.missions.board import JobBoard
 
         board = JobBoard.load(
             Path(__file__).parent.parent.parent / "data" / "missions" / "missions.json"
@@ -249,8 +249,8 @@ class TestBridgeToGraph:
     """``mission_to_graph`` combines ``missions_to_rooms`` + BSP generator."""
 
     def test_returns_matrix_graph(self) -> None:
-        from roguelike_sprawl.matrix.graph import MatrixGraph
-        from roguelike_sprawl.matrix.mission_mapper import mission_to_graph
+        from wet_run.matrix.graph import MatrixGraph
+        from wet_run.matrix.mission_mapper import mission_to_graph
 
         m = _mission(
             arc=3,
@@ -262,20 +262,20 @@ class TestBridgeToGraph:
         assert isinstance(graph, MatrixGraph)
 
     def test_entry_is_entry_node(self) -> None:
-        from roguelike_sprawl.matrix.mission_mapper import mission_to_graph
+        from wet_run.matrix.mission_mapper import mission_to_graph
 
         m = _mission(arc=3, title="x", objective="", mission_id="t1")
         graph = mission_to_graph(m, character_ref="veteran", seed=42)
         entry = graph.get(graph.entry_id)
         assert entry is not None
         # Map RoomType -> NodeKind for comparison.
-        from roguelike_sprawl.matrix.node import NodeKind
+        from wet_run.matrix.node import NodeKind
 
         assert entry.kind is NodeKind.ENTRY
 
     def test_exit_node_exists(self) -> None:
-        from roguelike_sprawl.matrix.mission_mapper import mission_to_graph
-        from roguelike_sprawl.matrix.node import NodeKind
+        from wet_run.matrix.mission_mapper import mission_to_graph
+        from wet_run.matrix.node import NodeKind
 
         m = _mission(arc=3, title="x", objective="", mission_id="t2")
         graph = mission_to_graph(m, character_ref="veteran", seed=42)
@@ -284,7 +284,7 @@ class TestBridgeToGraph:
 
     def test_outline_kinds_applied(self) -> None:
         """Outline determines the first N node kinds."""
-        from roguelike_sprawl.matrix.mission_mapper import (
+        from wet_run.matrix.mission_mapper import (
             mission_to_graph,
             missions_to_rooms,
         )
@@ -323,7 +323,7 @@ class TestBridgeToGraph:
             assert kind.value == expected_kind, f"node {i}: outline={target}, node={kind.value}"
 
     def test_seeds_use_mission_matrix_seed_when_none(self) -> None:
-        from roguelike_sprawl.matrix.mission_mapper import mission_to_graph
+        from wet_run.matrix.mission_mapper import mission_to_graph
 
         # Same mission_id + same matrix_seed ⇒ same graph.
         m1 = _mission(
@@ -349,7 +349,7 @@ class TestBridgeToGraph:
         assert ids_a == ids_b
 
     def test_explicit_seed_overrides_matrix_seed(self) -> None:
-        from roguelike_sprawl.matrix.mission_mapper import mission_to_graph
+        from wet_run.matrix.mission_mapper import mission_to_graph
 
         m = _mission(
             arc=3,

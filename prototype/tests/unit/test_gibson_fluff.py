@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.combat.gibson_fluff import (
+from wet_run.combat.gibson_fluff import (
     FLUFF_MESSAGES,
     FluffMessage,
     add_fluff,

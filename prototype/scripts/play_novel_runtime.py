@@ -35,13 +35,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from roguelike_sprawl.engine.state import AppState  # noqa: E402
-from roguelike_sprawl.novel import (  # noqa: E402
+from wet_run.engine.state import AppState  # noqa: E402
+from wet_run.novel import (  # noqa: E402
     NovelCatalog,
     dispatch_for_state,
     load_novel_runtime,
 )
-from roguelike_sprawl.novel.hooks import (  # noqa: E402
+from wet_run.novel.hooks import (  # noqa: E402
     HookKind,
     register_default_actions,
 )

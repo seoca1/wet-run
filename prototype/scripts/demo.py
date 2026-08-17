@@ -27,20 +27,20 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine import hub, matrix_view, menu
-from roguelike_sprawl.engine.chapter_cutscene import get_arc_for_character
-from roguelike_sprawl.engine.chapter_view import chapter_for_character, tick_chapter
-from roguelike_sprawl.engine.graphic_novel_view import (
+from wet_run.engine import hub, matrix_view, menu
+from wet_run.engine.chapter_cutscene import get_arc_for_character
+from wet_run.engine.chapter_view import chapter_for_character, tick_chapter
+from wet_run.engine.graphic_novel_view import (
     Background,
     Portrait,
     SceneData,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.i18n import Translator
-from roguelike_sprawl.matrix import MatrixGenerator
-from roguelike_sprawl.matrix.ppl import calculate_ppl
-from roguelike_sprawl.matrix.zdr import node_status, node_zdr
-from roguelike_sprawl.missions import JobBoard, Mission
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.i18n import Translator
+from wet_run.matrix import MatrixGenerator
+from wet_run.matrix.ppl import calculate_ppl
+from wet_run.matrix.zdr import node_status, node_zdr
+from wet_run.missions import JobBoard, Mission
 
 # Graphic novel art cache
 _demo_gn_cache: dict[str, Background | Portrait | list[SceneData] | None] = {}
@@ -71,18 +71,18 @@ def render_frame(
     if state.screen is ScreenKind.MENU:
         menu.render_menu(console, t, state)
     elif state.screen is ScreenKind.GRAPHIC_NOVEL_MENU:
-        from roguelike_sprawl.engine import graphic_novel_view
+        from wet_run.engine import graphic_novel_view
 
         graphic_novel_view.render_graphic_novel_menu(console, t, selected_index=0, has_save=False)
     elif state.screen is ScreenKind.GRAPHIC_NOVEL_ENDING_MENU:
-        from roguelike_sprawl.engine import graphic_novel_view
+        from wet_run.engine import graphic_novel_view
 
         graphic_novel_view.render_graphic_novel_ending_menu(
             console, t, character=state.gn_mode, selected_index=0
         )
     elif state.screen is ScreenKind.GRAPHIC_NOVEL and data_dir is not None:
         # Inline graphic novel frame renderer (mirrors play.py).
-        from roguelike_sprawl.engine.graphic_novel_view import (
+        from wet_run.engine.graphic_novel_view import (
             dialogue_typed_chars,
             load_background,
             load_portrait,
@@ -166,7 +166,7 @@ def render_frame(
                         if state.gn_scene_index >= len(chain):
                             state.screen = ScreenKind.SAVED_PROGRESS
     elif state.screen is ScreenKind.SAVED_PROGRESS:
-        from roguelike_sprawl.engine import save_progress as sp
+        from wet_run.engine import save_progress as sp
 
         console.clear()
         summary = sp.get_progress_summary(save_dir=data_dir / "saves" if data_dir else None)
@@ -184,7 +184,7 @@ def render_frame(
         console.print(2, 8, "  3. 카스 (Kas) — Heretic    'I'm here to burn it all down.'")
         console.print(2, 11, f"  → Auto-selected: {state.character_id}")
     elif state.screen is ScreenKind.CHAPTER and data_dir is not None:
-        from roguelike_sprawl.engine import chapter_view
+        from wet_run.engine import chapter_view
 
         chapter = chapter_for_character(state.character_id, data_dir)
         state.chapter_elapsed_ms += 100  # ~10fps tick
@@ -197,7 +197,7 @@ def render_frame(
     elif state.screen is ScreenKind.HUB:
         hub.render_hub(console, t, state)
     elif state.screen is ScreenKind.CYBERSPACE_BROWSER and data_dir is not None:
-        from roguelike_sprawl.engine import cyberspace_browser as cb_screen
+        from wet_run.engine import cyberspace_browser as cb_screen
 
         cb_screen.render_cyberspace_browser(console, t, state)
     elif state.screen is ScreenKind.CYBERSPACE_MAP:
@@ -227,7 +227,7 @@ def render_frame(
             console.print(2, 4, "No world map loaded.")
         console.print(2, console.height - 3, "[ESC] Back to Hub")
     elif state.screen is ScreenKind.ARC_PHASE and state.current_arc is not None:
-        from roguelike_sprawl.engine import phase_view
+        from wet_run.engine import phase_view
 
         arc = state.current_arc
         if state.current_chapter_index < len(arc.chapters):
@@ -244,7 +244,7 @@ def render_frame(
                     t,
                 )
     elif state.screen is ScreenKind.NPC:
-        from roguelike_sprawl.engine import npc_view
+        from wet_run.engine import npc_view
 
         if state.npc_state is not None:
             npc_view.render_npc(console, t, state, state.npc_state)
@@ -252,7 +252,7 @@ def render_frame(
             console.clear()
             console.print(2, 2, "=== NO NPC STATE ===")
     elif state.screen is ScreenKind.EVENT:
-        from roguelike_sprawl.engine import event_view
+        from wet_run.engine import event_view
 
         if state.active_event is not None:
             event_view.render_event_story(console, t, state, state.active_event)
@@ -260,7 +260,7 @@ def render_frame(
             console.clear()
             console.print(2, 2, "=== NO ACTIVE EVENT ===")
     elif state.screen is ScreenKind.STORY and data_dir is not None:
-        from roguelike_sprawl.engine import story_view as story_screen
+        from wet_run.engine import story_view as story_screen
 
         registry = story_screen.StoryRegistry.load(data_dir)
         story_screen.render_story(console, state, registry, state.story_aftermath_id)
@@ -348,7 +348,7 @@ def _step_auto(
         state.chapter_typed_chars = 0
         # Load arc data (same as _load_chapter in menu.py)
         try:
-            from roguelike_sprawl.engine import config as config_mod
+            from wet_run.engine import config as config_mod
 
             state.current_arc = get_arc_for_character(config_mod.DATA_DIR, state.character_id)
         except Exception:
@@ -423,7 +423,7 @@ def _step_auto(
     if state.screen is ScreenKind.HUB:
         if not missions:
             return "No jobs for your grade. Sit tight."
-        from roguelike_sprawl.matrix.exploration import ExplorationState
+        from wet_run.matrix.exploration import ExplorationState
 
         m = missions[mission_idx[0] % len(missions)]
         state.current_mission = m

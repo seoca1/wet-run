@@ -48,7 +48,7 @@ def _find_repo() -> Path:
 
 
 REPO = _find_repo()
-_PROJECTS_ROOT = Path("/Users/emilio/projects/Projects/Game/roguelike_sprawl")
+_PROJECTS_ROOT = Path("/Users/emilio/projects/Projects/Game/wet_run")
 
 
 @pytest.fixture
@@ -208,7 +208,7 @@ class TestCollectEventTriggerNames:
 
     def test_handles_unparseable_source(self, tmp_path: Path) -> None:
         """If source exists but has no EventTrigger class, fall back."""
-        bogus = tmp_path / "src" / "roguelike_sprawl" / "engine"
+        bogus = tmp_path / "src" / "wet_run" / "engine"
         bogus.mkdir(parents=True)
         (bogus / "event_story.py").write_text("# no enum here\n", encoding="utf-8")
         triggers = _collect_event_trigger_names(tmp_path)

@@ -20,8 +20,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.audio.sound_manager import DEFAULT_SOUNDS  # noqa: E402
-from roguelike_sprawl.engine.graphic_novel_audio import (  # noqa: E402
+from wet_run.audio.sound_manager import DEFAULT_SOUNDS  # noqa: E402
+from wet_run.engine.graphic_novel_audio import (  # noqa: E402
     SCENE_SOUND_MAP,
     get_category,
     play_once,
@@ -160,7 +160,7 @@ class TestPlayOnce:
         mgr = _MockSoundManager()
         first = play_once(mgr, "loa_drum")
         second = play_once(mgr, "loa_drum")
-        from roguelike_sprawl.engine.graphic_novel_audio import _played_cache
+        from wet_run.engine.graphic_novel_audio import _played_cache
 
         assert first is True
         assert second is False  # cached, not played again
@@ -171,7 +171,7 @@ class TestPlayOnce:
         mgr = _MockSoundManager()
         play_once(mgr, "loa_drum")
         play_once(mgr, "matrix_rain")
-        from roguelike_sprawl.engine.graphic_novel_audio import _played_cache
+        from wet_run.engine.graphic_novel_audio import _played_cache
 
         assert mgr.played == ["theme/loa_drum", "theme/matrix_rain"]
         assert "loa_drum" in _played_cache
@@ -180,7 +180,7 @@ class TestPlayOnce:
     def test_play_once_reset_clears_cache(self) -> None:
         mgr = _MockSoundManager()
         play_once(mgr, "loa_drum")
-        from roguelike_sprawl.engine.graphic_novel_audio import _played_cache
+        from wet_run.engine.graphic_novel_audio import _played_cache
 
         assert "loa_drum" in _played_cache
         play_once(mgr, None, reset=True)
@@ -191,7 +191,7 @@ class TestPlayOnce:
     def test_play_once_with_none_manager_does_not_cache(self) -> None:
         """When manager is None, no cache entry is created (sound never played)."""
         play_once(None, "loa_drum")
-        from roguelike_sprawl.engine.graphic_novel_audio import _played_cache
+        from wet_run.engine.graphic_novel_audio import _played_cache
 
         # With None manager, play_scene_sound returns False,
         # so nothing is cached.

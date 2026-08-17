@@ -127,7 +127,7 @@
 
 ### 1. 신규 모듈
 
-`prototype/src/roguelike_sprawl/combat/depth.py` (NEW, ~200 LOC):
+`prototype/src/wet_run/combat/depth.py` (NEW, ~200 LOC):
 
 ```python
 """Combat depth expansion (ADR-0148).
@@ -204,11 +204,11 @@
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/combat/depth.py` (NEW)
-- `prototype/src/roguelike_sprawl/combat/__init__.py` (re-exports)
-- `prototype/src/roguelike_sprawl/combat/state.py` (_apply_shield, _apply_enemy_skill, step_combat patches)
-- `prototype/src/roguelike_sprawl/combat/state_models.py` (Combatant.aggression, CombatState counter fields)
-- `prototype/src/roguelike_sprawl/data/combat/ice_types.json` (aggression field)
+- `prototype/src/wet_run/combat/depth.py` (NEW)
+- `prototype/src/wet_run/combat/__init__.py` (re-exports)
+- `prototype/src/wet_run/combat/state.py` (_apply_shield, _apply_enemy_skill, step_combat patches)
+- `prototype/src/wet_run/combat/state_models.py` (Combatant.aggression, CombatState counter fields)
+- `prototype/src/wet_run/data/combat/ice_types.json` (aggression field)
 - `prototype/data/i18n/{en,ko}.json` (combat 섹션)
 - `prototype/tests/unit/test_combat_depth.py` (NEW)
 - `design/systems/combat.md` (Counter / Defense Stackable / Companion Skills / Aggression sections)
@@ -230,7 +230,7 @@
 
 - 2026-08-07: Draft 작성 (Cycle 2 of A+B+C)
 - 2026-08-07: Accepted (Option 3, 사용자 Cycle 2 채택)
-  - 구현: `prototype/src/roguelike_sprawl/combat/depth.py` (NEW, 311 LOC, ADR-0110 250 ceiling 의 124% — 분할 검토 필요)
+  - 구현: `prototype/src/wet_run/combat/depth.py` (NEW, 311 LOC, ADR-0110 250 ceiling 의 124% — 분할 검토 필요)
   - 패치: `combat/state.py` (`_apply_enemy_skill`, `step_combat`, `tick_dixie_ally`)
   - 신규 필드: `CombatState.counter_window_open_ms`, `dixie_last_attack_ms`, `wardrone_last_counter_ms`; `Combatant.aggression`
   - 테스트: `tests/unit/test_combat_depth.py` (NEW, 41 tests pass)

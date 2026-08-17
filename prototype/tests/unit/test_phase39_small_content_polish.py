@@ -165,7 +165,7 @@ class TestDungeonSystemDocstringCoverage:
     """Phase 39 polish — DungeonSystem.__init__/mission_id/__repr__ docs (83% -> 100%)."""
 
     def test_dungeon_system_init_has_docstring(self) -> None:
-        from roguelike_sprawl.ecs.dungeon_system import DungeonSystem
+        from wet_run.ecs.dungeon_system import DungeonSystem
 
         assert DungeonSystem.__init__.__doc__ is not None
         assert DungeonSystem.__init__.__doc__.strip()
@@ -175,13 +175,13 @@ class TestDungeonSystemDocstringCoverage:
         assert "mission" in doc_lower
 
     def test_dungeon_system_mission_id_has_docstring(self) -> None:
-        from roguelike_sprawl.ecs.dungeon_system import DungeonSystem
+        from wet_run.ecs.dungeon_system import DungeonSystem
 
         assert DungeonSystem.mission_id.__doc__ is not None
         assert DungeonSystem.mission_id.__doc__.strip()
 
     def test_dungeon_system_repr_has_docstring(self) -> None:
-        from roguelike_sprawl.ecs.dungeon_system import DungeonSystem
+        from wet_run.ecs.dungeon_system import DungeonSystem
 
         assert DungeonSystem.__repr__.__doc__ is not None
         assert DungeonSystem.__repr__.__doc__.strip()
@@ -198,7 +198,7 @@ class TestDungeonSystemDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/ecs/dungeon_system.py",
+                "src/wet_run/ecs/dungeon_system.py",
             ],
             capture_output=True,
             text=True,
@@ -220,14 +220,14 @@ class TestBossDocstringCoverage:
     """Phase 39 polish — max_phases + 2 phase-5 super skills (87% -> 100%)."""
 
     def test_boss_profile_max_phases_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.boss import BossProfile
+        from wet_run.combat.boss import BossProfile
 
         assert BossProfile.max_phases.__doc__ is not None
         assert BossProfile.max_phases.__doc__.strip()
 
     def test_wintermute_phase_5_super_skill_has_docstring(self) -> None:
         """Wintermute's phase-5 super — Count Zero neural whisper."""
-        from roguelike_sprawl.combat.boss import _wintermute_phase_5_super_skill
+        from wet_run.combat.boss import _wintermute_phase_5_super_skill
 
         doc = _wintermute_phase_5_super_skill.__doc__
         assert doc is not None
@@ -237,7 +237,7 @@ class TestBossDocstringCoverage:
 
     def test_ta_phase_5_super_skill_has_docstring(self) -> None:
         """Tessier-Ashpool's phase-5 super — Mona Lisa Overdrive family vote."""
-        from roguelike_sprawl.combat.boss import _ta_phase_5_super_skill
+        from wet_run.combat.boss import _ta_phase_5_super_skill
 
         doc = _ta_phase_5_super_skill.__doc__
         assert doc is not None
@@ -257,7 +257,7 @@ class TestBossDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/boss.py",
+                "src/wet_run/combat/boss.py",
             ],
             capture_output=True,
             text=True,
@@ -279,7 +279,7 @@ class TestDispatcherDocstringCoverage:
     """Phase 39 polish — NovelDispatcher.__init__ docstring (86% -> 100%)."""
 
     def test_novel_dispatcher_init_has_docstring(self) -> None:
-        from roguelike_sprawl.novel.dispatcher import NovelDispatcher
+        from wet_run.novel.dispatcher import NovelDispatcher
 
         doc = NovelDispatcher.__init__.__doc__
         assert doc is not None
@@ -302,7 +302,7 @@ class TestDispatcherDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/novel/dispatcher.py",
+                "src/wet_run/novel/dispatcher.py",
             ],
             capture_output=True,
             text=True,
@@ -325,8 +325,8 @@ class TestPhase39Smoke:
 
     def test_dungeon_system_init_unchanged(self) -> None:
         """DungeonSystem.__init__ semantics intact after docstring addition."""
-        from roguelike_sprawl.ecs.dungeon_system import DungeonSystem
-        from roguelike_sprawl.ecs.world import World
+        from wet_run.ecs.dungeon_system import DungeonSystem
+        from wet_run.ecs.world import World
 
         world = World()
         sys = DungeonSystem(world, mission_id="test_phase39")
@@ -336,8 +336,8 @@ class TestPhase39Smoke:
 
     def test_dungeon_system_repr_format(self) -> None:
         """__repr__ format unchanged after docstring addition."""
-        from roguelike_sprawl.ecs.dungeon_system import DungeonSystem
-        from roguelike_sprawl.ecs.world import World
+        from wet_run.ecs.dungeon_system import DungeonSystem
+        from wet_run.ecs.world import World
 
         world = World()
         sys = DungeonSystem(world, mission_id="repr_test")
@@ -349,8 +349,8 @@ class TestPhase39Smoke:
 
     def test_boss_profile_max_phases_intact(self) -> None:
         """BossProfile.max_phases still returns phase count after docstring addition."""
-        from roguelike_sprawl.combat.boss import BossProfile, PhaseProfile
-        from roguelike_sprawl.combat.effects import IceType
+        from wet_run.combat.boss import BossProfile, PhaseProfile
+        from wet_run.combat.effects import IceType
 
         phases = (
             PhaseProfile(
@@ -386,7 +386,7 @@ class TestPhase39Smoke:
 
     def test_phase5_super_skills_construct(self) -> None:
         """Wintermute + TA phase-5 super skills still construct correctly."""
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             _ta_phase_5_super_skill,
             _wintermute_phase_5_super_skill,
         )
@@ -404,9 +404,9 @@ class TestPhase39Smoke:
 
     def test_novel_dispatcher_init_unchanged(self) -> None:
         """NovelDispatcher.__init__ semantics intact after docstring addition."""
-        from roguelike_sprawl.novel.catalog import NovelCatalog
-        from roguelike_sprawl.novel.dispatcher import NovelDispatcher
-        from roguelike_sprawl.novel.manifest import NovelManifest
+        from wet_run.novel.catalog import NovelCatalog
+        from wet_run.novel.dispatcher import NovelDispatcher
+        from wet_run.novel.manifest import NovelManifest
 
         catalog = NovelCatalog(repo_root=Path(__file__).parent.parent.parent)
         manifest = NovelManifest()

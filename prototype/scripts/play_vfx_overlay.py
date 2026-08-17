@@ -27,7 +27,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from roguelike_sprawl.combat.effects import (  # noqa: E402
+from wet_run.combat.effects import (  # noqa: E402
     CombatEffects,  # noqa: E402
     spawn_data_acquired,
     spawn_jackin_glitch,

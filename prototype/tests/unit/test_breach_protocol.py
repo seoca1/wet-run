@@ -7,7 +7,7 @@ import random
 
 import pytest
 
-from roguelike_sprawl.combat.breach_protocol import (
+from wet_run.combat.breach_protocol import (
     DAEMON_VALUES,
     BreachProtocol,
     check_solution,

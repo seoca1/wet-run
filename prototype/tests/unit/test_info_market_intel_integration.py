@@ -21,8 +21,8 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.crafting.info_market import InfoMarket
-from roguelike_sprawl.engine.state import AppState
+from wet_run.crafting.info_market import InfoMarket
+from wet_run.engine.state import AppState
 
 
 @pytest.fixture(autouse=True)
@@ -98,7 +98,7 @@ class TestIntelItemPurchaseIntegration:
         self, data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
         """Purchase alarm_reducer → alarm -2 + inventory + purchased_intel_items."""
-        from roguelike_sprawl.engine import config as _engine_config
+        from wet_run.engine import config as _engine_config
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         market = InfoMarket.load_default(data_dir / "crafting" / "market.json")
@@ -119,7 +119,7 @@ class TestIntelItemPurchaseIntegration:
         self, data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
         """Purchase mission_hint → status message + inventory + purchased_intel_items."""
-        from roguelike_sprawl.engine import config as _engine_config
+        from wet_run.engine import config as _engine_config
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         market = InfoMarket.load_default(data_dir / "crafting" / "market.json")
@@ -139,7 +139,7 @@ class TestIntelItemPurchaseIntegration:
         self, data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
         """Purchase faction_rumor → faction_tension_probability_boost += 0.25."""
-        from roguelike_sprawl.engine import config as _engine_config
+        from wet_run.engine import config as _engine_config
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         market = InfoMarket.load_default(data_dir / "crafting" / "market.json")
@@ -157,7 +157,7 @@ class TestIntelItemPurchaseIntegration:
         self, data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
         """Purchase t1_program → inventory only, NO intel effect."""
-        from roguelike_sprawl.engine import config as _engine_config
+        from wet_run.engine import config as _engine_config
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         market = InfoMarket.load_default(data_dir / "crafting" / "market.json")
@@ -179,7 +179,7 @@ class TestIntelItemPurchaseIntegration:
         self, data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
         """Purchase with insufficient credits → returns None, NO effect applied."""
-        from roguelike_sprawl.engine import config as _engine_config
+        from wet_run.engine import config as _engine_config
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         market = InfoMarket.load_default(data_dir / "crafting" / "market.json")
@@ -198,7 +198,7 @@ class TestIntelItemPurchaseIntegration:
         self, data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
         """Second purchase of same intel item → returns None (one-shot)."""
-        from roguelike_sprawl.engine import config as _engine_config
+        from wet_run.engine import config as _engine_config
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         market = InfoMarket.load_default(data_dir / "crafting" / "market.json")

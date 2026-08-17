@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.missions import JobBoard, Mission
+from wet_run.matrix.node import ZoneDepth
+from wet_run.missions import JobBoard, Mission
 
 
 def test_mission_creation() -> None:

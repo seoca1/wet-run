@@ -1,13 +1,13 @@
 # Balance Audit — Phase E-3
 
 > **Generated**: 2026-07-26
-> **Scope**: roguelike_sprawl playable missions × 6 grades × PPL formula
+> **Scope**: wet_run playable missions × 6 grades × PPL formula
 > **Tool**: Phase E-3 data analysis (no gameplay changes)
 > **Status**: Informational — recommendations to inform future balancing
 
 ## Executive Summary
 
-The roguelike_sprawl mission roster has **94 playable missions** (missions with Fiction source — Bridge/Blue Ant excluded per AGENTS.md §4.0). Coverage is balanced across grades 1-6, but Grade 6 has only 1 mission (significant under-representation). Reward credits field is currently unset for all missions (0 across the board).
+The wet_run mission roster has **94 playable missions** (missions with Fiction source — Bridge/Blue Ant excluded per AGENTS.md §4.0). Coverage is balanced across grades 1-6, but Grade 6 has only 1 mission (significant under-representation). Reward credits field is currently unset for all missions (0 across the board).
 
 ## Mission Distribution by Grade
 

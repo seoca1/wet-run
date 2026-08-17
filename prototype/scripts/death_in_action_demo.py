@@ -34,23 +34,23 @@ import tcod.console
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from roguelike_sprawl.combat.bundle import create_bundle  # noqa: E402
-from roguelike_sprawl.combat.registry import IceRegistry  # noqa: E402
-from roguelike_sprawl.combat.state import (  # noqa: E402
+from wet_run.combat.bundle import create_bundle  # noqa: E402
+from wet_run.combat.registry import IceRegistry  # noqa: E402
+from wet_run.combat.state import (  # noqa: E402
     Combatant,
     CombatState,
     step_combat,
 )
-from roguelike_sprawl.engine import death  # noqa: E402
-from roguelike_sprawl.engine.death import (  # noqa: E402
+from wet_run.engine import death  # noqa: E402
+from wet_run.engine.death import (  # noqa: E402
     handle_death_summary_choice,
     render_death_screen,
     render_death_summary_screen,
     render_hall_of_dead_screen,
     trigger_death,
 )
-from roguelike_sprawl.engine.jockey_history import JockeyHistory  # noqa: E402
-from roguelike_sprawl.engine.state import AppState, ScreenKind  # noqa: E402
+from wet_run.engine.jockey_history import JockeyHistory  # noqa: E402
+from wet_run.engine.state import AppState, ScreenKind  # noqa: E402
 
 
 def _console_to_text(console: tcod.console.Console) -> str:
@@ -287,7 +287,7 @@ def main() -> int:
     print("─" * 80)
     if combat_state.outcome == "defeat" and not state.is_dead:
         # Simulate what _end_combat does on defeat
-        from roguelike_sprawl.run.helpers import ensure_run_state
+        from wet_run.run.helpers import ensure_run_state
 
         run_state = ensure_run_state(state)
         run_state.mark_failed()

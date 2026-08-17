@@ -22,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from roguelike_sprawl.combat.effects import (  # noqa: E402
+from wet_run.combat.effects import (  # noqa: E402
     SKILL_EFFECT_ANIMATIONS,
     CombatEffects,
     IceType,

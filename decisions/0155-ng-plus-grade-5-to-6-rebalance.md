@@ -180,7 +180,7 @@ return ppl
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/matrix/ppl.py` (2 line patch)
+- `prototype/src/wet_run/matrix/ppl.py` (2 line patch)
 - `design/balance/ppl_zdr_balance.md` (T6 PPL value update, 2 rows)
 - `prototype/tests/unit/test_matrix_ppl.py` (2 tests, T6 expected value update)
 - `log.md` (Cycle 11 entry)

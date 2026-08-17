@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to roguelike_sprawl will be documented in this file.
+All notable changes to wet_run will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
@@ -53,7 +53,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - `coolhunter_laney_tokyo` → `coolhunter-laney-tokyo`
   - `tokyo_courier_run` → `tokyo-courier-run`
 
-### Cross-Project Integration (Fiction ↔ roguelike_sprawl)
+### Cross-Project Integration (Fiction ↔ wet_run)
 
 - **Phase α** (initial bidirectional): 100 Fiction stories now linked to
   missions via `game_mission_id` frontmatter; missions declare Fiction
@@ -243,14 +243,14 @@ uv run python scripts/verify_story_links.py  # 0 orphans
 #### Memory Fragments (Phase 1)
 - **신규**: `wiki/lore/` (4 fragments + README)
 - **신규**: `data/lore/encounter_table.json` (zone/grade/faction matrix)
-- **신규**: `src/roguelike_sprawl/lore/memory_fragment.py` + `fragment_tracker.py` + `fragment_hook.py`
+- **신규**: `src/wet_run/lore/memory_fragment.py` + `fragment_tracker.py` + `fragment_hook.py`
 - **Wired**: cyberspace_view.py:519 hook 호출
 - **Per-run cap**: 6 fragments (ADR-0140 default)
 - **Tests**: 27 (12 memory_fragment + 9 fragment_tracker + 6 fragment_hook)
 
 #### Construct Whisper (Phase 2)
-- **신규**: `src/roguelike_sprawl/lore/construct_whisper.py` (faction-tier-gated hints)
-- **신규**: `src/roguelike_sprawl/lore/construct_whisper_hook.py` (combat integration)
+- **신규**: `src/wet_run/lore/construct_whisper.py` (faction-tier-gated hints)
+- **신규**: `src/wet_run/lore/construct_whisper_hook.py` (combat integration)
 - **HINTS_BY_FACTION**: 4 factions × 3 tiers = 12 hints
 - **Per-run cap**: 5 whispers (1 per faction)
 - **Tests**: 22 (14 core + 8 hook)
@@ -258,12 +258,12 @@ uv run python scripts/verify_story_links.py  # 0 orphans
 ### Module Splits (ADR-0141 Partial — Top 2)
 
 #### matrix_view.py split (Phase 3)
-- **신규**: `src/roguelike_sprawl/engine/matrix_minimap.py` (115 LOC)
+- **신규**: `src/wet_run/engine/matrix_minimap.py` (115 LOC)
 - **Extracted**: `_draw_minimap`, `_draw_breadcrumb`, `_draw_mobility_stats`, `_KIND_LABEL`, `_short_kind`
 - matrix_view.py: 1121 → **1047 LOC**
 
 #### combat/state.py split (Phase 4)
-- **신규**: `src/roguelike_sprawl/combat/state_models.py` (250 LOC)
+- **신규**: `src/wet_run/combat/state_models.py` (250 LOC)
 - **Extracted**: `SkillEffect`, `Skill`, `StatusEffect`, `CombatStats`, `Combatant`, `CombatState`
 - combat/state.py: 1075 → **859 LOC**
 - **Bug fix**: `equip_defense` kwarg → `equip_defense_bonus` (combat_view.py:1038)
@@ -281,7 +281,7 @@ uv run python scripts/verify_story_links.py  # 0 orphans
 ### User Action Required
 
 - [ ] `git push origin main`
-- [ ] `twine upload dist/roguelike_sprawl-1.1.0a1*`
+- [ ] `twine upload dist/wet_run-1.1.0a1*`
 - [ ] Notion 발행
 
 ---
@@ -307,8 +307,8 @@ uv run python scripts/verify_story_links.py  # 0 orphans
 
 ### Phase 3: Meta State File (ADR-0131 Accepted Option 1)
 
-- **신규 모듈**: `src/roguelike_sprawl/run/meta_state.py` — `MetaState` dataclass (cross-run persistence)
-- **신규 모듈**: `src/roguelike_sprawl/engine/meta_state_manager.py` — atomic load/save + migration
+- **신규 모듈**: `src/wet_run/run/meta_state.py` — `MetaState` dataclass (cross-run persistence)
+- **신규 모듈**: `src/wet_run/engine/meta_state_manager.py` — atomic load/save + migration
 - **신규 테스트**: `tests/unit/test_meta_state.py` (27 tests, 5 classes)
 - Schema: `{version: 1, reputation: {...}, future_buckets: {...}}` — forward-compat 확장 가능
 - 사망 페널티 없음 (깁슨 톤 "trust persists"), Hardcore mode 격리 비활성 (v1.1.0+ 검토)
@@ -317,16 +317,16 @@ uv run python scripts/verify_story_links.py  # 0 orphans
 ### Phase 4: Module Split (ADR-0133 Accepted)
 
 - `graphic_novel_view.py` 1594 → **1272 LOC** (split)
-- **신규 모듈**: `src/roguelike_sprawl/engine/graphic_novel_data.py` (123 LOC) — Portrait, Background, DialogueLine, SceneData
-- **신규 모듈**: `src/roguelike_sprawl/engine/graphic_novel_loaders.py` (262 LOC) — JSON parsing + scene/art loaders
+- **신규 모듈**: `src/wet_run/engine/graphic_novel_data.py` (123 LOC) — Portrait, Background, DialogueLine, SceneData
+- **신규 모듈**: `src/wet_run/engine/graphic_novel_loaders.py` (262 LOC) — JSON parsing + scene/art loaders
 - Backward compat: 기존 import (`from .graphic_novel_view import SceneData, load_prologue_chain` 등) 변경 없이 동작. `__all__` 명시 + `# noqa: F401`
 - 보류: `combat/effects.py` (1246 LOC, ADR-0112), `combat_view.py` (1053 LOC, ADR-0113) — v1.1.0+ 후속
 
 ### Phase 5: Release Engineering
 
 - **Version**: `1.0.0-alpha.1` → **`1.0.0`**
-- Wheel: 400KB (`dist/roguelike_sprawl-1.0.0-py3-none-any.whl`)
-- Tarball: 3.7MB (`dist/roguelike_sprawl-1.0.0.tar.gz`)
+- Wheel: 400KB (`dist/wet_run-1.0.0-py3-none-any.whl`)
+- Tarball: 3.7MB (`dist/wet_run-1.0.0.tar.gz`)
 - Tests: **3178 passed** (+27 from Phase 3, +23 from Phase 2, +50 total), 592 skipped
 - ruff check ✓ / ruff format ✓ / mypy strict ✓ (134 source files)
 - Python 3.11, 3.12; macOS + Windows
@@ -415,10 +415,10 @@ Phase 14 registry-only → fully integrated. F.2 (deck building), F.4 (boss expa
 - `test_armitage.py` stats['missions'] 111 → 200
 - `test_performance_integration.py::test_session_profiler_no_issues` `@pytest.mark.xfail(strict=False)`
 
-### Commits (8 roguelike_sprawl + 1 typing_language + 1 Fiction = 10 total)
+### Commits (8 wet_run + 1 typing_language + 1 Fiction = 10 total)
 
 ```
-roguelike_sprawl:
+wet_run:
   205efd4 feat(meta): Phase 14 v1.3.0+ — Endings + Programs + Equipment + Story events + Boss expansion
   dd530ea style: engine green-up + Phase 14 wiring + lint/type/test cleanup
   448c07d data(test): Phase 14 metadata backfill + test updates for 200-mission scale
@@ -440,10 +440,10 @@ Fiction:
 
 ### 인용
 
-- `Game/roguelike_sprawl/AGENTS.md` §3.3 (log format), §9 (log on commit)
+- `Game/wet_run/AGENTS.md` §3.3 (log format), §9 (log on commit)
 - workspace `AGENTS.md` §3 (no auto-commit), §5 (log 기록), §6.5 (INDEX.md canonical doc)
-- `Game/roguelike_sprawl/SESSION_SUMMARY_2026-08-10.md` (full session summary, 129 lines)
-- `Game/roguelike_sprawl/log.md` (2026-08-10 entry)
+- `Game/wet_run/SESSION_SUMMARY_2026-08-10.md` (full session summary, 129 lines)
+- `Game/wet_run/log.md` (2026-08-10 entry)
 - workspace `log.md` (2026-08-10 phase 7 entry)
 - workspace `INDEX.md` (2026-08-10 update + new section)
 

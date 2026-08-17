@@ -23,7 +23,7 @@ The original combat_view.py (972 LOC) is split into 4 modules:
     - combat_view_state (NEW, ~280 LOC): start/end + reputation + ICE removal
     - combat_view (this file, ~80 LOC): thin coordinator + re-exports
 
-External imports of ``from roguelike_sprawl.engine.combat_view import X``
+External imports of ``from wet_run.engine.combat_view import X``
 continue to work via re-exports (ADR-0110 + ADR-0143 backward compat).
 """
 

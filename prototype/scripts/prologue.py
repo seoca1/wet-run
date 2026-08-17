@@ -21,14 +21,14 @@ import tcod.console
 import tcod.context
 import tcod.tileset
 
-from roguelike_sprawl.engine import config, story_cinematic
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.engine.story_cinematic import (
+from wet_run.engine import config, story_cinematic
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.engine.story_cinematic import (
     BRIEFING_FINN_SCENE,
     PROLOGUE_SCENE,
     CinematicState,
 )
-from roguelike_sprawl.i18n import Translator
+from wet_run.i18n import Translator
 
 
 def main() -> int:
@@ -59,7 +59,7 @@ def main() -> int:
 
     # Override typing speed if requested
     if args.speed != "normal":
-        from roguelike_sprawl.engine.story_cinematic import StoryLine, TextSpeed
+        from wet_run.engine.story_cinematic import StoryLine, TextSpeed
 
         speed_map = {
             "instant": TextSpeed.INSTANT,

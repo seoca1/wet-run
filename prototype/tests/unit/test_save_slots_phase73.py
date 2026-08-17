@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.engine.save_manager import (
+from wet_run.engine.save_manager import (
     AUTO_SAVE_FILENAME,
     AUTO_SAVE_SLOT,
     MAX_SLOTS,
@@ -88,10 +88,10 @@ class TestAutoSave:
 @pytest.fixture
 def app_state():
     """AppState with a run in progress for save/load tests."""
-    from roguelike_sprawl.engine.state import AppState
-    from roguelike_sprawl.matrix.node import ZoneDepth
-    from roguelike_sprawl.missions.mission import Mission, Rewards
-    from roguelike_sprawl.run.helpers import start_run
+    from wet_run.engine.state import AppState
+    from wet_run.matrix.node import ZoneDepth
+    from wet_run.missions.mission import Mission, Rewards
+    from wet_run.run.helpers import start_run
 
     state = AppState()
     state.inventory = {}

@@ -20,7 +20,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.combat.bosses import (
+from wet_run.combat.bosses import (
     ALL_BOSSES,
     BLACK_ICE_LORD,
     GOLIATH_PRIME,
@@ -38,9 +38,9 @@ from roguelike_sprawl.combat.bosses import (
     spawn_boss_intro,
     spawn_boss_phase_transition,
 )
-from roguelike_sprawl.combat.effects import CombatEffects, IceType
-from roguelike_sprawl.combat.registry import ProgramRegistry, build_default_player
-from roguelike_sprawl.combat.state import Combatant, CombatState
+from wet_run.combat.effects import CombatEffects, IceType
+from wet_run.combat.registry import ProgramRegistry, build_default_player
+from wet_run.combat.state import Combatant, CombatState
 
 ALL_BOSS_IDS = ["goliath_prime", "black_ice_lord", "watchdog_alpha"]
 
@@ -490,11 +490,11 @@ class TestBossB3Enhancements:
 
     def test_spawn_phase_minions_appends_to_state_enemies(self) -> None:
         """spawn_phase_minions() adds minion Combatants to state.enemies."""
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             PhaseProfile,
             spawn_phase_minions,
         )
-        from roguelike_sprawl.combat.registry import (
+        from wet_run.combat.registry import (
             IceRegistry,
             ProgramRegistry,
         )
@@ -525,11 +525,11 @@ class TestBossB3Enhancements:
 
     def test_spawn_phase_minions_invalid_id_skipped(self) -> None:
         """Invalid ICE id in spawn_minions is silently skipped (no crash)."""
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             PhaseProfile,
             spawn_phase_minions,
         )
-        from roguelike_sprawl.combat.registry import (
+        from wet_run.combat.registry import (
             IceRegistry,
             ProgramRegistry,
         )
@@ -556,7 +556,7 @@ class TestBossB3Enhancements:
 
     def test_apply_phase_aoe_decreases_player_hp(self) -> None:
         """apply_phase_aoe() applies aoe_damage to player and returns it."""
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             PhaseProfile,
             apply_phase_aoe,
         )
@@ -580,11 +580,11 @@ class TestBossB3Enhancements:
 
     def test_apply_phase_aoe_triggers_visual_effects(self) -> None:
         """Phase B-3.5: apply_phase_aoe triggers screen shake + hit flash."""
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             PhaseProfile,
             apply_phase_aoe,
         )
-        from roguelike_sprawl.combat.effects import CombatEffects
+        from wet_run.combat.effects import CombatEffects
 
         phase = PhaseProfile(
             phase=3,
@@ -606,7 +606,7 @@ class TestBossB3Enhancements:
 
     def test_apply_phase_aoe_zero_damage_noop(self) -> None:
         """apply_phase_aoe() with aoe_damage=0 deals nothing."""
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             PhaseProfile,
             apply_phase_aoe,
         )
@@ -630,7 +630,7 @@ class TestBossB3Enhancements:
 
     def test_wintermute_phase_3_has_aoe_and_minion(self) -> None:
         """WINTERMUTE phase 3 should have aoe_damage + spawn_minions populated."""
-        from roguelike_sprawl.combat.boss import WINTERMUTE_PROFILE
+        from wet_run.combat.boss import WINTERMUTE_PROFILE
 
         phase_3 = WINTERMUTE_PROFILE.phases[2]
         assert phase_3.aoe_damage > 0
@@ -638,7 +638,7 @@ class TestBossB3Enhancements:
 
     def test_ta_prime_phase_3_has_aoe_and_minion(self) -> None:
         """T-A CONSTRUCT PRIME phase 3 should have aoe_damage + spawn_minions."""
-        from roguelike_sprawl.combat.boss import TA_CONSTRUCT_PRIME_PROFILE
+        from wet_run.combat.boss import TA_CONSTRUCT_PRIME_PROFILE
 
         phase_3 = TA_CONSTRUCT_PRIME_PROFILE.phases[2]
         assert phase_3.aoe_damage > 0
@@ -677,13 +677,13 @@ class TestBossB3IntegrationFlow:
     def _drive_to_phase(boss, profile, state, target_phase):
         from pathlib import Path as _Path
 
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             apply_phase_aoe,
             apply_phase_to_combatant,
             current_phase,
             spawn_phase_minions,
         )
-        from roguelike_sprawl.combat.registry import (
+        from wet_run.combat.registry import (
             IceRegistry,
             ProgramRegistry,
         )
@@ -730,8 +730,8 @@ class TestBossB3IntegrationFlow:
 
     def test_wintermute_full_phase_flow(self) -> None:
         """WINTERMUTE: phase 1->2 summons proxies, phase 2->3 summons fragment + AoE 15."""
-        from roguelike_sprawl.combat.boss import WINTERMUTE_PROFILE
-        from roguelike_sprawl.combat.effects import CombatEffects
+        from wet_run.combat.boss import WINTERMUTE_PROFILE
+        from wet_run.combat.effects import CombatEffects
 
         boss = Combatant(
             id="wintermute",
@@ -763,8 +763,8 @@ class TestBossB3IntegrationFlow:
         assert state.combat_effects.shake.intensity > 0
 
     def test_ta_prime_phase_3_20_aoe_and_2_minions(self) -> None:
-        from roguelike_sprawl.combat.boss import TA_CONSTRUCT_PRIME_PROFILE
-        from roguelike_sprawl.combat.effects import CombatEffects
+        from wet_run.combat.boss import TA_CONSTRUCT_PRIME_PROFILE
+        from wet_run.combat.effects import CombatEffects
 
         boss = Combatant(
             id="ta_prime",
@@ -793,8 +793,8 @@ class TestBossB3IntegrationFlow:
         assert len(state.enemies) == 4
 
     def test_goliath_phase_3_25_aoe_highest(self) -> None:
-        from roguelike_sprawl.combat.bosses import GOLIATH_PRIME
-        from roguelike_sprawl.combat.effects import CombatEffects
+        from wet_run.combat.bosses import GOLIATH_PRIME
+        from wet_run.combat.effects import CombatEffects
 
         boss = Combatant(
             id="goliath_prime",
@@ -818,8 +818,8 @@ class TestBossB3IntegrationFlow:
         assert GOLIATH_PRIME.phases[3].aoe_damage == 25
 
     def test_black_ice_lord_phase_1_construct_spawn(self) -> None:
-        from roguelike_sprawl.combat.bosses import BLACK_ICE_LORD
-        from roguelike_sprawl.combat.effects import CombatEffects
+        from wet_run.combat.bosses import BLACK_ICE_LORD
+        from wet_run.combat.effects import CombatEffects
 
         boss = Combatant(
             id="black_ice_lord",
@@ -841,7 +841,7 @@ class TestBossB3IntegrationFlow:
         assert len(state.enemies) == 2
 
     def test_watchdog_alpha_no_aoe(self) -> None:
-        from roguelike_sprawl.combat.bosses import WATCHDOG_ALPHA
+        from wet_run.combat.bosses import WATCHDOG_ALPHA
 
         for ph in WATCHDOG_ALPHA.phases:
             assert ph.aoe_damage == 0
@@ -855,8 +855,8 @@ class TestScaleMinionSpawn:
     """Tests for M3: dynamic minion spawn intensity scaling (ADR-0125)."""
 
     def test_empty_phase_returns_empty(self) -> None:
-        from roguelike_sprawl.combat.boss import PhaseProfile, scale_minion_spawn
-        from roguelike_sprawl.combat.state_models import Combatant, CombatState
+        from wet_run.combat.boss import PhaseProfile, scale_minion_spawn
+        from wet_run.combat.state_models import Combatant, CombatState
 
         phase = PhaseProfile(
             phase=1,
@@ -873,8 +873,8 @@ class TestScaleMinionSpawn:
         assert result == ()
 
     def test_returns_subset_of_base_list(self) -> None:
-        from roguelike_sprawl.combat.boss import PhaseProfile, scale_minion_spawn
-        from roguelike_sprawl.combat.state_models import Combatant, CombatState
+        from wet_run.combat.boss import PhaseProfile, scale_minion_spawn
+        from wet_run.combat.state_models import Combatant, CombatState
 
         phase = PhaseProfile(
             phase=2,
@@ -904,8 +904,8 @@ class TestBossAiChoosePhaseEffect:
     """Tests for M4: boss AI decision logic (ADR-0125)."""
 
     def test_no_effects_returns_none(self) -> None:
-        from roguelike_sprawl.combat.boss import PhaseProfile, boss_ai_choose_phase_effect
-        from roguelike_sprawl.combat.state_models import Combatant, CombatState
+        from wet_run.combat.boss import PhaseProfile, boss_ai_choose_phase_effect
+        from wet_run.combat.state_models import Combatant, CombatState
 
         phase = PhaseProfile(
             phase=1,
@@ -920,8 +920,8 @@ class TestBossAiChoosePhaseEffect:
         assert boss_ai_choose_phase_effect(phase, state) == "none"
 
     def test_low_hp_player_picks_aoe(self) -> None:
-        from roguelike_sprawl.combat.boss import PhaseProfile, boss_ai_choose_phase_effect
-        from roguelike_sprawl.combat.state_models import Combatant, CombatState
+        from wet_run.combat.boss import PhaseProfile, boss_ai_choose_phase_effect
+        from wet_run.combat.state_models import Combatant, CombatState
 
         phase = PhaseProfile(
             phase=2,
@@ -938,8 +938,8 @@ class TestBossAiChoosePhaseEffect:
         assert boss_ai_choose_phase_effect(phase, state) == "aoe"
 
     def test_high_hp_player_picks_spawn(self) -> None:
-        from roguelike_sprawl.combat.boss import PhaseProfile, boss_ai_choose_phase_effect
-        from roguelike_sprawl.combat.state_models import Combatant, CombatState
+        from wet_run.combat.boss import PhaseProfile, boss_ai_choose_phase_effect
+        from wet_run.combat.state_models import Combatant, CombatState
 
         phase = PhaseProfile(
             phase=2,

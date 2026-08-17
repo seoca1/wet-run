@@ -30,9 +30,9 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine import graphic_novel_view
-from roguelike_sprawl.engine.graphic_novel_audio import play_once as play_sound_once
-from roguelike_sprawl.engine.graphic_novel_save import (
+from wet_run.engine import graphic_novel_view
+from wet_run.engine.graphic_novel_audio import play_once as play_sound_once
+from wet_run.engine.graphic_novel_save import (
     GNProgress,
     GNSaveEmptyError,
     list_save_slots,
@@ -40,7 +40,7 @@ from roguelike_sprawl.engine.graphic_novel_save import (
     make_progress,
     save_gn_progress_slot,
 )
-from roguelike_sprawl.engine.graphic_novel_view import (
+from wet_run.engine.graphic_novel_view import (
     dialogue_typed_chars,
     load_background,
     load_portrait,
@@ -49,7 +49,7 @@ from roguelike_sprawl.engine.graphic_novel_view import (
     render_chapter_card,
     render_scene,
 )
-from roguelike_sprawl.i18n import Translator
+from wet_run.i18n import Translator
 
 # Chapter card timing (ms)
 CHAPTER_CARD_DURATION_MS = 2500  # How long the chapter card stays visible
@@ -163,7 +163,7 @@ def main() -> int:
     sound_manager = None
     if args.with_sound and not args.mute:
         try:
-            from roguelike_sprawl.audio.sound_manager import SoundManager
+            from wet_run.audio.sound_manager import SoundManager
 
             sound_manager = SoundManager(
                 sounds_dir=data_dir / "sounds_test",

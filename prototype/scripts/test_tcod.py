@@ -17,7 +17,7 @@ import tcod.console
 import tcod.context
 import tcod.tileset
 
-from roguelike_sprawl.engine import config
+from wet_run.engine import config
 
 
 def main() -> int:

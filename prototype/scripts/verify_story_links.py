@@ -17,12 +17,12 @@ import sys
 from pathlib import Path
 
 # 프로젝트 루트: 이 스크립트는 prototype/scripts/ 아래에 있으므로 4단계 상위
-ROOT = Path(__file__).resolve().parents[3]  # scripts -> prototype -> roguelike_sprawl -> Game
+ROOT = Path(__file__).resolve().parents[3]  # scripts -> prototype -> wet_run -> Game
 ROOT = ROOT.parent  # Game의 부모 = Projects/
 
-sys.path.insert(0, str(ROOT / "Game" / "roguelike_sprawl" / "prototype" / "src"))
+sys.path.insert(0, str(ROOT / "Game" / "wet_run" / "prototype" / "src"))
 
-from roguelike_sprawl.data.story_resolver import (  # type: ignore[import-not-found]  # noqa: E402
+from wet_run.data.story_resolver import (  # type: ignore[import-not-found]  # noqa: E402
     list_available_stems,
     validate_game_mission_id_links,
     validate_mission_sources,
@@ -36,7 +36,7 @@ def main() -> int:
         type=Path,
         default=ROOT
         / "Game"
-        / "roguelike_sprawl"
+        / "wet_run"
         / "prototype"
         / "data"
         / "missions"
@@ -90,7 +90,7 @@ def main() -> int:
                 continue
             print(f"  {r['mission_id']:<20} {r['source']:<28} {en:<8} {ko:<8} {issues}")
         print()
-        print("Cross-project: Fiction → roguelike_sprawl mission links")
+        print("Cross-project: Fiction → wet_run mission links")
         gmi_issues = sum(1 for r in gmi_report if r["issues"])
         gmi_ok = len(gmi_report) - gmi_issues
         print(f"  Fiction stories with game_mission_id: {len(gmi_report)}")

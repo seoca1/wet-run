@@ -24,15 +24,15 @@ from tcod.event import KeySym
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine import matrix_view  # noqa: E402
-from roguelike_sprawl.engine.layout import Region  # noqa: E402
-from roguelike_sprawl.engine.matrix_view import _draw_box  # noqa: E402
-from roguelike_sprawl.engine.matrix_view_input import (  # noqa: E402
+from wet_run.engine import matrix_view  # noqa: E402
+from wet_run.engine.layout import Region  # noqa: E402
+from wet_run.engine.matrix_view import _draw_box  # noqa: E402
+from wet_run.engine.matrix_view_input import (  # noqa: E402
     _DIRECTION_LABELS,
     _DIRECTION_VECTORS,
     _handle_movement,
 )
-from roguelike_sprawl.matrix import (  # noqa: E402
+from wet_run.matrix import (  # noqa: E402
     Edge,
     MatrixGraph,
     Node,
@@ -109,7 +109,7 @@ def simple_grid_matrix() -> MatrixGraph:
         (0,1) - (1,1) - (2,1)
           |     ...
     """
-    from roguelike_sprawl.matrix.node import (
+    from wet_run.matrix.node import (
         AlarmLevel,
         Faction,
         IceKind,
@@ -154,7 +154,7 @@ def simple_grid_matrix() -> MatrixGraph:
 @pytest.fixture
 def state_at_center(simple_grid_matrix: MatrixGraph):
     """Create an AppState positioned at center (1,1) of the simple grid."""
-    from roguelike_sprawl.engine.state import AppState
+    from wet_run.engine.state import AppState
 
     state = AppState()
     state.matrix = simple_grid_matrix
@@ -252,7 +252,7 @@ class TestHandleMovementFallback:
         Build a star graph: center → 4 corners (NE, NW, SE, SW only).
         Pressing RIGHT should pick the best of NE/SE (both equally close).
         """
-        from roguelike_sprawl.matrix.node import (
+        from wet_run.matrix.node import (
             AlarmLevel,
             Faction,
             IceKind,
@@ -313,7 +313,7 @@ class TestHandleMovementFallback:
             Edge(src="center", dst="sw"),
         ]
         m = MatrixGraph(nodes=tuple(nodes), edges=tuple(edges), entry_id="center")
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         s = AppState()
         s.matrix = m
@@ -339,7 +339,7 @@ class TestHandleMovementUnknown:
         assert state_at_center.current_node_id == before
 
     def test_no_matrix_is_noop(self) -> None:
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         s = AppState()
         s.matrix = None

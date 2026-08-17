@@ -50,30 +50,30 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine import hub, matrix_view, menu, story_view
-from roguelike_sprawl.engine.chapter_cutscene import (
+from wet_run.engine import hub, matrix_view, menu, story_view
+from wet_run.engine.chapter_cutscene import (
     CombatData,
     get_arc_for_character,
     get_chapter,
 )
-from roguelike_sprawl.engine.chapter_view import chapter_for_character, tick_chapter
-from roguelike_sprawl.engine.graphic_novel_view import (
+from wet_run.engine.chapter_view import chapter_for_character, tick_chapter
+from wet_run.engine.graphic_novel_view import (
     Background,
     Portrait,
     SceneData,
 )
-from roguelike_sprawl.engine.salvation import (
+from wet_run.engine.salvation import (
     SalvationRunner,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.engine.story_view import StoryRegistry
-from roguelike_sprawl.i18n import Translator
-from roguelike_sprawl.matrix.exploration import ExplorationState
-from roguelike_sprawl.matrix.generator import MatrixGenerator
-from roguelike_sprawl.matrix.ppl import calculate_ppl
-from roguelike_sprawl.matrix.zdr import node_status, node_zdr
-from roguelike_sprawl.missions import JobBoard
-from roguelike_sprawl.run import ChapterState, Stage, ensure_run_state
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.engine.story_view import StoryRegistry
+from wet_run.i18n import Translator
+from wet_run.matrix.exploration import ExplorationState
+from wet_run.matrix.generator import MatrixGenerator
+from wet_run.matrix.ppl import calculate_ppl
+from wet_run.matrix.zdr import node_status, node_zdr
+from wet_run.missions import JobBoard
+from wet_run.run import ChapterState, Stage, ensure_run_state
 
 
 def _setup(args: argparse.Namespace) -> tuple[AppState, Translator, StoryRegistry]:
@@ -112,8 +112,8 @@ def _render_current(
     if state.screen is ScreenKind.MENU:
         menu.render_menu(console, t, state)
     elif state.screen is ScreenKind.GRAPHIC_NOVEL_MENU:
-        from roguelike_sprawl.engine import graphic_novel_view
-        from roguelike_sprawl.engine.graphic_novel_save import list_save_slots
+        from wet_run.engine import graphic_novel_view
+        from wet_run.engine.graphic_novel_save import list_save_slots
 
         gn_save_dir = Path(__file__).parent.parent / "data" / "saves"
         slots = list_save_slots(save_dir=gn_save_dir)
@@ -125,7 +125,7 @@ def _render_current(
     elif state.screen is ScreenKind.GRAPHIC_NOVEL:
         _render_graphic_novel_frame(console, state, t, elapsed)
     elif state.screen is ScreenKind.SAVED_PROGRESS:
-        from roguelike_sprawl.engine import save_progress as sp
+        from wet_run.engine import save_progress as sp
 
         console.clear()
         summary = sp.get_progress_summary(save_dir=Path(__file__).parent.parent / "saves")
@@ -145,7 +145,7 @@ def _render_current(
         console.print(2, 11, f"  → Auto-selected: {state.character_id}")
     elif state.screen is ScreenKind.CHAPTER:
         # Render the chapter typing effect
-        from roguelike_sprawl.engine import chapter_view
+        from wet_run.engine import chapter_view
 
         chapter = chapter_for_character(state.character_id, Path(__file__).parent.parent / "data")
         state.chapter_elapsed_ms = elapsed * 1000
@@ -157,7 +157,7 @@ def _render_current(
         )
     elif state.screen is ScreenKind.ARC_PHASE:
         # Render arc phase with beats
-        from roguelike_sprawl.engine.phase_view import render_arc_phase, tick_arc_phase
+        from wet_run.engine.phase_view import render_arc_phase, tick_arc_phase
 
         if state.current_arc is not None:
             chapter = state.current_arc.chapters[state.current_chapter_index]
@@ -217,7 +217,7 @@ def _render_current(
             )
     elif state.chapter_cutscene_state is not None:
         # Render chapter cutscene (overlaid on current screen)
-        from roguelike_sprawl.engine.chapter_cutscene import render_cutscene_frame
+        from wet_run.engine.chapter_cutscene import render_cutscene_frame
 
         cs_state = state.chapter_cutscene_state
         dt_ms = int(elapsed * 1000) - int((elapsed - 0.4) * 1000)
@@ -229,7 +229,7 @@ def _render_current(
         layout = matrix_view.get_layout(state.matrix)
         matrix_view.render_matrix(console, t, state, layout)
     elif state.screen is ScreenKind.HACK:
-        from roguelike_sprawl.engine import hacking_view
+        from wet_run.engine import hacking_view
 
         hacking_view.step_hack(state, elapsed)
         hacking_view.render_hack(console, t, state)
@@ -248,7 +248,7 @@ def _render_current(
 
 def _render_ending(console: tcod.console.Console, state: AppState, t: Translator) -> None:
     """Render the ending screen."""
-    from roguelike_sprawl.engine.original_story import get_ending_description
+    from wet_run.engine.original_story import get_ending_description
 
     width, height = console.width, console.height
     console.clear()
@@ -329,7 +329,7 @@ def _get_scene_chain(state: AppState, data_dir: Path) -> list[SceneData]:
 
     ADR-0048: chain depends on ``state.gn_ending_choice`` (A/B) too.
     """
-    from roguelike_sprawl.engine.graphic_novel_view import (
+    from wet_run.engine.graphic_novel_view import (
         load_prologue_chain,
         load_scene_chain,
     )
@@ -354,7 +354,7 @@ def _render_graphic_novel_frame(
     elapsed: float,
 ) -> None:
     """Render one frame of the graphic novel (auto-pilot mode)."""
-    from roguelike_sprawl.engine.graphic_novel_view import (
+    from wet_run.engine.graphic_novel_view import (
         dialogue_typed_chars,
         load_background,
         load_portrait,
@@ -577,7 +577,7 @@ def _action_salvation_intro(state: AppState, choice: str) -> str:
         # Map 1-9 → character_id
         choices = list(
             __import__(
-                "roguelike_sprawl.engine.salvation", fromlist=["list_available_epilogues"]
+                "wet_run.engine.salvation", fromlist=["list_available_epilogues"]
             ).list_available_epilogues()
         )
         if int(choice) > len(choices):
@@ -668,7 +668,7 @@ def _resolve_arc_combat(state: AppState, combat_data: CombatData) -> str:
 def _start_chapter_cutscene(state: AppState, scene_id: str, scenes_dir: Path) -> bool:
     """Load a GN scene as a chapter cutscene. Returns True on success."""
     try:
-        from roguelike_sprawl.engine.chapter_cutscene import ChapterCutsceneState, load_scene
+        from wet_run.engine.chapter_cutscene import ChapterCutsceneState, load_scene
 
         scene = load_scene(scenes_dir, scene_id)
         state.chapter_cutscene_state = ChapterCutsceneState(scene=scene)
@@ -770,7 +770,7 @@ def _action_hub(state: AppState) -> str:
             if (
                 char
                 in __import__(
-                    "roguelike_sprawl.engine.salvation", fromlist=["SALVATION_EPILOGUES"]
+                    "wet_run.engine.salvation", fromlist=["SALVATION_EPILOGUES"]
                 ).SALVATION_EPILOGUES
             ):
                 runner.choose_epilogue(char)
@@ -987,7 +987,7 @@ def _list_missions() -> int:
     Imported lazily so the GUI playthrough is unaffected when the
     --list-missions flag is absent.
     """
-    from roguelike_sprawl.missions import JobBoard
+    from wet_run.missions import JobBoard
 
     p = Path(__file__).resolve().parents[1] / "data" / "missions" / "missions.json"
     board = JobBoard.load(p)
@@ -1243,7 +1243,7 @@ def main() -> int:
                     if not hasattr(state, "_hack_result_shown_at"):
                         state._hack_result_shown_at = elapsed
                     elif elapsed - state._hack_result_shown_at > 2.0:
-                        from roguelike_sprawl.engine import hacking_view
+                        from wet_run.engine import hacking_view
 
                         state.screen = ScreenKind.MATRIX
                         hacking_view._clear_hack_state(state)
@@ -1254,7 +1254,7 @@ def main() -> int:
                     if not hasattr(state, "_hack_started_at"):
                         state._hack_started_at = elapsed
                     elif elapsed - state._hack_started_at > 1.0:
-                        from roguelike_sprawl.engine import hacking_view
+                        from wet_run.engine import hacking_view
 
                         hacking_view._execute_probe(hack_state)
                         hacking_view._apply_hack_reward(state, hack_state.outcome)

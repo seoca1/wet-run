@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.combat.mission_archetypes import (
+from wet_run.combat.mission_archetypes import (
     MISSION_ARCHETYPES,
     MissionArchetype,
     alarm_per_kill,
@@ -17,7 +17,7 @@ from roguelike_sprawl.combat.mission_archetypes import (
     partial_pay_percent,
     wave_count,
 )
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.state import AppState
 
 
 def make_app_state() -> AppState:

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from tcod.event import KeySym
 
-from roguelike_sprawl.cyberspace.world import (
+from wet_run.cyberspace.world import (
     Sector,
     SectorId,
     Server,
@@ -12,12 +12,12 @@ from roguelike_sprawl.cyberspace.world import (
     WorldId,
     WorldMap,
 )
-from roguelike_sprawl.engine import cyberspace_browser
-from roguelike_sprawl.engine.cyberspace_browser import (
+from wet_run.engine import cyberspace_browser
+from wet_run.engine.cyberspace_browser import (
     _cycle_sector,
     _cycle_world,
 )
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.state import AppState
 
 
 def _make_test_worldmap() -> WorldMap:
@@ -307,7 +307,7 @@ class TestBrowserInput:
         wm.set_location(WorldId("chiba"), SectorId("sense_net"), None)
         state = AppState()
         state.world_map = wm
-        from roguelike_sprawl.engine.state import ScreenKind
+        from wet_run.engine.state import ScreenKind
 
         state.screen = ScreenKind.CYBERSPACE_BROWSER
 

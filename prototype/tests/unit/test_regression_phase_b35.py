@@ -28,15 +28,15 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.combat.boss import (
+from wet_run.combat.boss import (
     BOSS_VFX_THEMES,
     ICE_TYPE_TO_VFX_KEY,
     apply_phase_aoe,
     get_vfx_config,
 )
-from roguelike_sprawl.combat.effects import IceType
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.matrix.zdr import _BASE_ZDR
+from wet_run.combat.effects import IceType
+from wet_run.matrix.node import ZoneDepth
+from wet_run.matrix.zdr import _BASE_ZDR
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
@@ -236,13 +236,13 @@ class TestViewLayerImportSmoke:
     @pytest.mark.parametrize(
         "module_path",
         [
-            "roguelike_sprawl.engine.equipment_view",
-            "roguelike_sprawl.engine.story_view",
-            "roguelike_sprawl.engine.event_view",
-            "roguelike_sprawl.engine.cyberspace_view",
-            "roguelike_sprawl.engine.dungeon_view",
-            "roguelike_sprawl.engine.phase_view",
-            "roguelike_sprawl.engine.save_load_view",
+            "wet_run.engine.equipment_view",
+            "wet_run.engine.story_view",
+            "wet_run.engine.event_view",
+            "wet_run.engine.cyberspace_view",
+            "wet_run.engine.dungeon_view",
+            "wet_run.engine.phase_view",
+            "wet_run.engine.save_load_view",
         ],
     )
     def test_view_module_importable(self, module_path: str) -> None:

@@ -28,7 +28,7 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.combat import (
+from wet_run.combat import (
     CombatState,
     IceRegistry,
     ProgramRegistry,
@@ -37,10 +37,10 @@ from roguelike_sprawl.combat import (
     step_combat,
     use_skill,
 )
-from roguelike_sprawl.combat.state import Skill
-from roguelike_sprawl.matrix.ppl import Loadout, Program, calculate_ppl
-from roguelike_sprawl.matrix.zdr import Status, calculate_status, status_color
-from roguelike_sprawl.portraits import PortraitManager
+from wet_run.combat.state import Skill
+from wet_run.matrix.ppl import Loadout, Program, calculate_ppl
+from wet_run.matrix.zdr import Status, calculate_status, status_color
+from wet_run.portraits import PortraitManager
 
 
 def _load_loadout_for_ppl(ppl: int) -> Loadout:

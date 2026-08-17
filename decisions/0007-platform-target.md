@@ -94,7 +94,7 @@
 - **macOS**: 네이티브 (arm64 + x86_64, universal2)
 - **Windows**: 네이티브 (x86_64)
 - **분배**: PyInstaller 또는 Nuitka로 단일 실행 파일
-  - 또는 `python -m roguelike_sprawl` (Python 설치 가정)
+  - 또는 `python -m wet_run` (Python 설치 가정)
   - 결정 보류 (Poetry + pipx 또는 PyInstaller 중)
 
 ### CI / CD

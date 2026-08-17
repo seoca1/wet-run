@@ -4,7 +4,7 @@ Requires MINIMAX_API_KEY environment variable.
 Sign up: https://platform.minimaxi.com/
 
 Usage:
-    from roguelike_sprawl.audio.minimax_music import generate_theme_bgm
+    from wet_run.audio.minimax_music import generate_theme_bgm
     audio_bytes = generate_theme_bgm("matrix_rain")
     (Path("sounds") / "theme_matrix_rain.wav").write_bytes(audio_bytes)
 """

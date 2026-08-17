@@ -1,6 +1,6 @@
-# 🎮 Roguelike Sprawl - Demo Playthrough Guide
+# 🎮 Wet Run - Demo Playthrough Guide
 
-Welcome to **Roguelike Sprawl**, a cyberpunk roguelike inspired by William Gibson's Sprawl Trilogy.
+Welcome to **Wet Run**, a cyberpunk roguelike inspired by William Gibson's Sprawl Trilogy.
 
 This guide will walk you through playing the full demo from prologue to first combat.
 
@@ -9,7 +9,7 @@ This guide will walk you through playing the full demo from prologue to first co
 ## 📋 Quick Start
 
 ```bash
-cd Game/roguelike_sprawl/prototype
+cd Game/wet_run/prototype
 make demo
 ```
 
@@ -307,7 +307,7 @@ Follow this checklist to experience all features:
 **Solution**: Font charmap issue (already fixed in latest version)
 ```bash
 # Verify fix is applied
-grep "CHARMAP_TCOD" src/roguelike_sprawl/engine/app.py
+grep "CHARMAP_TCOD" src/wet_run/engine/app.py
 ```
 
 ### Window doesn't open
@@ -374,7 +374,7 @@ Opens test window with alphabet and sample text.
 
 ## 🎬 Enjoy the Demo!
 
-You're now ready to experience the full Roguelike Sprawl demo.
+You're now ready to experience the full Wet Run demo.
 
 **"The sky above the port was the color of television, tuned to a dead channel."**
 

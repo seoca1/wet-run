@@ -13,7 +13,7 @@
 
 1. **`graphic_novel.py`의 path 버그**:
    ```python
-   sounds_dir=data_dir / ".." / "sounds_test"  # → Game/roguelike_sprawl/prototype/sounds_test (X)
+   sounds_dir=data_dir / ".." / "sounds_test"  # → Game/wet_run/prototype/sounds_test (X)
    ```
    data 부모 디렉토리를 가리켜서 **sound 파일을 못 찾음**.
 
@@ -68,7 +68,7 @@
 
 ## 영향 받는 항목
 - `prototype/scripts/graphic_novel.py` — `sounds_dir` path fix
-- `prototype/src/roguelike_sprawl/engine/graphic_novel_audio.py` — `shibuya_traffic` 매핑 추가
+- `prototype/src/wet_run/engine/graphic_novel_audio.py` — `shibuya_traffic` 매핑 추가
 - `prototype/tests/unit/test_graphic_novel_audio.py` — 신규 테스트 23개
 
 ## 매핑 테이블 (15개 cue)

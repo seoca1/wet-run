@@ -19,7 +19,7 @@ from pathlib import Path
 SOUNDS_DIR = Path(__file__).resolve().parent.parent / "dashboard" / "sounds"
 if not SOUNDS_DIR.exists():
     # Fallback: workspace root
-    SOUNDS_DIR = Path("/Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds")
+    SOUNDS_DIR = Path("/Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds")
 
 
 def analyze(wav_path: Path) -> dict:

@@ -233,7 +233,7 @@ class TestSaveManagerSlotPathErrorMessage:
 
     def test_slot_path_message_mentions_auto_save_slot(self, tmp_path: Path) -> None:
         """Out-of-range slot ValueError mentions AUTO_SAVE_SLOT alias."""
-        from roguelike_sprawl.engine.save_manager import SaveManager
+        from wet_run.engine.save_manager import SaveManager
 
         manager = SaveManager(save_dir=tmp_path)
         with pytest.raises(ValueError, match=r"slot must be.*AUTO_SAVE_SLOT.*got 99") as exc_info:
@@ -246,7 +246,7 @@ class TestSaveManagerSlotPathErrorMessage:
 
     def test_slot_path_message_negative_includes_auto_save_hint(self, tmp_path: Path) -> None:
         """Negative slot also gets the AUTO_SAVE_SLOT hint."""
-        from roguelike_sprawl.engine.save_manager import SaveManager
+        from wet_run.engine.save_manager import SaveManager
 
         manager = SaveManager(save_dir=tmp_path)
         with pytest.raises(ValueError, match=r"AUTO_SAVE_SLOT=0"):
@@ -254,7 +254,7 @@ class TestSaveManagerSlotPathErrorMessage:
 
     def test_slot_path_docstring_has_raises_section(self, tmp_path: Path) -> None:
         """_slot_path docstring includes a Raises: section."""
-        from roguelike_sprawl.engine.save_manager import SaveManager
+        from wet_run.engine.save_manager import SaveManager
 
         manager = SaveManager(save_dir=tmp_path)
         # Method docstring (bound to instance)
@@ -265,7 +265,7 @@ class TestSaveManagerSlotPathErrorMessage:
 
     def test_slot_path_valid_slot_still_works(self, tmp_path: Path) -> None:
         """Valid slot (1..MAX_SLOTS) still returns a path."""
-        from roguelike_sprawl.engine.save_manager import SaveManager
+        from wet_run.engine.save_manager import SaveManager
 
         manager = SaveManager(save_dir=tmp_path)
         path = manager._slot_path(1)
@@ -295,7 +295,7 @@ class TestLoadoutPostInitErrorMessages:
 
     def test_loadout_post_init_bad_deck_tier_includes_semantics(self) -> None:
         """Deck-tier ValueError includes the tier range semantics."""
-        from roguelike_sprawl.matrix.ppl import Loadout
+        from wet_run.matrix.ppl import Loadout
 
         with pytest.raises(ValueError, match=r"Loadout\.deck_tier must be in 0\.\.6") as exc_info:
             Loadout(deck_tier=7, programs=(), wetware_tier=1)
@@ -308,21 +308,21 @@ class TestLoadoutPostInitErrorMessages:
 
     def test_loadout_post_init_bad_wetware_tier_includes_field(self) -> None:
         """Wetware-tier ValueError includes the Loadout.wetware_tier prefix."""
-        from roguelike_sprawl.matrix.ppl import Loadout
+        from wet_run.matrix.ppl import Loadout
 
         with pytest.raises(ValueError, match=r"Loadout\.wetware_tier must be in 0\.\.6"):
             Loadout(deck_tier=1, programs=(), wetware_tier=99)
 
     def test_loadout_post_init_bad_construct_tier_includes_field(self) -> None:
         """Construct-tier ValueError includes the Loadout.construct_tier prefix."""
-        from roguelike_sprawl.matrix.ppl import Loadout
+        from wet_run.matrix.ppl import Loadout
 
         with pytest.raises(ValueError, match=r"Loadout\.construct_tier must be in 0\.\.6"):
             Loadout(deck_tier=1, programs=(), wetware_tier=1, construct_tier=-1)
 
     def test_loadout_post_init_bad_program_tier_includes_id_and_hint(self) -> None:
         """Program-tier ValueError includes the program id and the >= T1 hint."""
-        from roguelike_sprawl.matrix.ppl import Loadout, Program
+        from wet_run.matrix.ppl import Loadout, Program
 
         with pytest.raises(
             ValueError, match=r"program 'warp_rider' tier must be in 1\.\.6, got 9"
@@ -339,7 +339,7 @@ class TestLoadoutPostInitErrorMessages:
 
     def test_loadout_post_init_valid_still_constructible(self) -> None:
         """A valid Loadout can still be constructed after the polish."""
-        from roguelike_sprawl.matrix.ppl import Loadout
+        from wet_run.matrix.ppl import Loadout
 
         loadout = Loadout(deck_tier=1, programs=(), wetware_tier=1)
         assert loadout.deck_tier == 1
@@ -368,7 +368,7 @@ class TestNodePostInitErrorMessages:
 
     def test_node_post_init_ice_kind_none_includes_available_kinds(self) -> None:
         """ICE-node ValueError lists the available IceKind values."""
-        from roguelike_sprawl.matrix.node import IceKind, Node, NodeKind, ZoneDepth
+        from wet_run.matrix.node import IceKind, Node, NodeKind, ZoneDepth
 
         with pytest.raises(
             ValueError, match=r"ICE node 'n_ice'.*must have an IceKind != NONE"
@@ -388,7 +388,7 @@ class TestNodePostInitErrorMessages:
 
     def test_node_post_init_anomaly_flag_includes_expected_kind(self) -> None:
         """Anomaly-flag ValueError names the expected NodeKind.DATA."""
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         with pytest.raises(ValueError, match=r"Non-DATA node 'n_sys'") as exc_info:
             Node(
@@ -405,21 +405,21 @@ class TestNodePostInitErrorMessages:
 
     def test_node_post_init_empty_id_message_preserved(self) -> None:
         """Empty-id ValueError still rejects the empty-id contract."""
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         with pytest.raises(ValueError, match=r"Node id must be non-empty"):
             Node(id="", label="x", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
 
     def test_node_post_init_empty_label_message_preserved(self) -> None:
         """Empty-label ValueError still names the offending node id."""
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         with pytest.raises(ValueError, match=r"Node 'n2': label must be non-empty"):
             Node(id="n2", label="", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
 
     def test_node_post_init_valid_node_still_constructible(self) -> None:
         """A valid Node can still be constructed after the polish."""
-        from roguelike_sprawl.matrix.node import IceKind, Node, NodeKind, ZoneDepth
+        from wet_run.matrix.node import IceKind, Node, NodeKind, ZoneDepth
 
         node = Node(
             id="n_valid",
@@ -492,14 +492,14 @@ class TestPhase47Smoke:
 
     def test_loadout_valid_with_construct_tier_zero(self) -> None:
         """Loadout with construct_tier=0 (absent) still validates."""
-        from roguelike_sprawl.matrix.ppl import Loadout
+        from wet_run.matrix.ppl import Loadout
 
         loadout = Loadout(deck_tier=6, programs=(), wetware_tier=6, construct_tier=0)
         assert loadout.construct_tier == 0
 
     def test_save_manager_valid_slot_paths_for_all_manual_slots(self, tmp_path: Path) -> None:
         """All manual slots (1..MAX_SLOTS) still produce valid paths."""
-        from roguelike_sprawl.engine.save_manager import MAX_SLOTS, SaveManager
+        from wet_run.engine.save_manager import MAX_SLOTS, SaveManager
 
         manager = SaveManager(save_dir=tmp_path)
         for slot in range(1, MAX_SLOTS + 1):
@@ -508,7 +508,7 @@ class TestPhase47Smoke:
 
     def test_node_data_node_with_anomaly_still_constructible(self) -> None:
         """DATA node with anomaly=True still constructs (ADR-0140 P2.6)."""
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         node = Node(
             id="n_anomaly",

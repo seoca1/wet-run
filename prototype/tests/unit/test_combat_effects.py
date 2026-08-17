@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.combat.effects import (
+from wet_run.combat.effects import (
     DAMAGE_COLOR,
     HEAL_COLOR,
     Animation,
@@ -611,14 +611,14 @@ class TestScreenFlash:
     """Tests for full-screen flash effect (ADR-0125 follow-up: AoE visual effect)."""
 
     def test_initial_state_inactive(self) -> None:
-        from roguelike_sprawl.combat.effects import ScreenFlash
+        from wet_run.combat.effects import ScreenFlash
 
         sf = ScreenFlash()
         assert sf.is_active is False
         assert sf.alpha == 0.0
 
     def test_trigger_activates_flash(self) -> None:
-        from roguelike_sprawl.combat.effects import ScreenFlash
+        from wet_run.combat.effects import ScreenFlash
 
         sf = ScreenFlash()
         sf.trigger(color=(255, 80, 80), duration_ms=200)
@@ -627,14 +627,14 @@ class TestScreenFlash:
         assert sf.color == (255, 80, 80)
 
     def test_attack_phase_holds_full_alpha(self) -> None:
-        from roguelike_sprawl.combat.effects import ScreenFlash
+        from wet_run.combat.effects import ScreenFlash
 
         sf = ScreenFlash(duration_ms=200)
         sf.elapsed_ms = 20  # 10% progress, within attack phase
         assert sf.alpha == 1.0
 
     def test_fade_phase_eases_out(self) -> None:
-        from roguelike_sprawl.combat.effects import ScreenFlash
+        from wet_run.combat.effects import ScreenFlash
 
         sf = ScreenFlash(duration_ms=100)
         sf.elapsed_ms = 80  # 80% progress, deep in fade
@@ -643,7 +643,7 @@ class TestScreenFlash:
         assert 0.4 < sf.alpha < 0.5
 
     def test_expires_after_duration(self) -> None:
-        from roguelike_sprawl.combat.effects import ScreenFlash
+        from wet_run.combat.effects import ScreenFlash
 
         sf = ScreenFlash(duration_ms=100)
         sf.step(100)
@@ -651,7 +651,7 @@ class TestScreenFlash:
         assert sf.alpha == 0.0
 
     def test_spawn_aoe_screen_flash_triggers_both(self) -> None:
-        from roguelike_sprawl.combat.effects import (
+        from wet_run.combat.effects import (
             CombatEffects,
             spawn_aoe_screen_flash,
         )

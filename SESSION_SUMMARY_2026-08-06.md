@@ -20,11 +20,11 @@ Carry-over closure from 2026-08-05 multi-project commit session + 2026-08-05 cyc
 | 1 | `d620ade` | chore(deps): update pyproject.toml + uv.lock + .gitignore |
 | 2 | `2508551` | chore(dashboard): regenerate dashboard data + build artifacts |
 | 3 | `8be2b4a` | refactor(tests): delete 7 obsolete test files (consolidation) |
-| 4 | `8aecad3` | docs(refresh): roguelike_sprawl 2026-08-05 documentation sync |
+| 4 | `8aecad3` | docs(refresh): wet_run 2026-08-05 documentation sync |
 | 5 | `57ea956` | docs(design): add dungeon_events + scripts/README + tools/README |
 | 6 | `0a79417` | test(coverage): 10 new test files + TC-SYSTEM-STAGE-FLOW (Coverage Round 2-7) |
 | 7 | `c2b24d3` | docs(audit): 2026-08-05 cycle-audit session summary + 4 audit reports archive |
-| 8 | `208fc4e` | feat/fix/refactor: roguelike_sprawl 2026-08-05 code changes |
+| 8 | `208fc4e` | feat/fix/refactor: wet_run 2026-08-05 code changes |
 | - | `65ed42e` | docs(log): 2026-08-06 session closure — this entry's commit |
 
 ## Substantive content
@@ -63,10 +63,10 @@ Carry-over closure from 2026-08-05 multi-project commit session + 2026-08-05 cyc
 - `tools/README.md` (+4 lines)
 
 ### Modified code files
-- `prototype/src/roguelike_sprawl/audio/bgm_manager.py` (-3 lines)
-- `prototype/src/roguelike_sprawl/audio/minimax_music.py` (+3 lines)
-- `prototype/src/roguelike_sprawl/engine/save_load_view.py` (+10 lines, Cycle 6 bugfix)
-- `prototype/src/roguelike_sprawl/audio/__init__.py + scripts/validate_stage_structure.py`
+- `prototype/src/wet_run/audio/bgm_manager.py` (-3 lines)
+- `prototype/src/wet_run/audio/minimax_music.py` (+3 lines)
+- `prototype/src/wet_run/engine/save_load_view.py` (+10 lines, Cycle 6 bugfix)
+- `prototype/src/wet_run/audio/__init__.py + scripts/validate_stage_structure.py`
 - `tools/audit_sprawl.py` (+22 lines)
 - `tools/find_broken_links.py` (+78 lines)
 
@@ -113,7 +113,7 @@ Carry-over closure from 2026-08-05 multi-project commit session + 2026-08-05 cyc
 
 ## Cross-project context
 
-This was a roguelike_sprawl-focused session, but the user's "Do all remaining items" directive also triggered:
+This was a wet_run-focused session, but the user's "Do all remaining items" directive also triggered:
 - **Fiction**: 7 commits (Tier 1 + Tier 2 + frontmatter + archive + wikilink fix)
 - **Language**: 4 commits (Spanish vocabulary KO translations + log entries)
 - **typing_language**: 1 commit (build artifact revert log entry)
@@ -132,7 +132,7 @@ See workspace `log.md` 2026-08-06 entry + `NEXT_SESSION_TODO.md` refresh for ful
 | Priority | Item | Description |
 |---|---|---|
 | 🔴 HIGH | `gh auth login` → `git push` | 97 commits pushable after token refresh |
-| 🟡 MED | `PyPI publish` (roguelike_sprawl v1.1.0) | After `PYPI_TOKEN` configured |
+| 🟡 MED | `PyPI publish` (wet_run v1.1.0) | After `PYPI_TOKEN` configured |
 | 🟡 MED | `Notion sync` | After `NOTION_TOKEN` configured |
 | 🟢 LOW | Code coverage round 8+ | Continue improvement from 73% → 80%+ |
 | 🟢 LOW | Migration of `_archive/audits/` to root `_archive/` | Consistency with workspace convention |

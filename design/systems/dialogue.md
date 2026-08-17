@@ -1,7 +1,7 @@
 # System: Dialogue & NPCs (대화 · NPC)
 
 > **관련**: [aftermath.md](./aftermath.md) (전투 후일담), [story-events.md](./story-events.md) (이벤트)
-> **구현**: `../../prototype/src/roguelike_sprawl/engine/npc_event.py`, `npc_view.py`
+> **구현**: `../../prototype/src/wet_run/engine/npc_event.py`, `npc_view.py`
 > **데이터**: `../../design/story/event_dialogues.json` (NPC + dialogue catalog)
 
 ## 목적

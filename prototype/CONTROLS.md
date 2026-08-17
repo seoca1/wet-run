@@ -1,4 +1,4 @@
-# 🎮 Roguelike Sprawl - Controls Reference
+# 🎮 Wet Run - Controls Reference
 
 Quick reference for all game controls.
 
@@ -145,7 +145,7 @@ Expert players can use **1-9 number keys** for quick access without navigation.
 상태 천이 시 자동 dispatch 됩니다. 등록/확장은 Python API 만 사용:
 
 ```python
-from roguelike_sprawl.novel.hooks import register_hook_action, HookKind
+from wet_run.novel.hooks import register_hook_action, HookKind
 
 def my_action(ctx, app_state):
     ...

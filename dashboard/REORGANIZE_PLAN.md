@@ -63,7 +63,7 @@
 │           ├── novellas/           ← (empty — 미사용)
 │           └── INDEX.md            ← 카탈로그 인덱스
 │
-└── Game/roguelike_sprawl/
+└── Game/wet_run/
     ├── design/                     ← 게임 디자인 문서
     │   ├── GDD.md
     │   ├── CHARACTER_PATHS.md
@@ -122,7 +122,7 @@
 ### 3.2 새로운 대시보드 카테고리 (4개)
 
 ```
-Roguelike Sprawl Dashboard
+Wet Run Dashboard
 ├── Hub (index.html)
 │
 ├── 📖 Story Project        ← [현재: story.html + story_read.html 통합]

@@ -63,7 +63,7 @@ class Combatant:
 ### Public API additions
 
 ```python
-from roguelike_sprawl.combat.depth.personality import (
+from wet_run.combat.depth.personality import (
     PersonalityLevel,
     select_skill_by_personality,
     should_defensive_act,

@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.matrix.faction_tension import (
+from wet_run.matrix.faction_tension import (
     FACTION_TENSION_PROBABILITY,
     NEGATIVE_ALARM_DELTA,
     NEGATIVE_THRESHOLD,
@@ -30,8 +30,8 @@ from roguelike_sprawl.matrix.faction_tension import (
     get_faction_rep,
     should_trigger,
 )
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.run.reputation import ReputationState
+from wet_run.matrix.node import Faction
+from wet_run.run.reputation import ReputationState
 
 
 class TestTriggerProbability:

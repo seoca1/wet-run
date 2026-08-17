@@ -517,8 +517,8 @@ def load_portrait(data: dict) -> Portrait:
 - [Console Arrays](https://python-tcod.readthedocs.io/en/latest/tcod/console.html#console-arrays)
 
 ### 10.3 Existing Codebase
-- `prototype/src/roguelike_sprawl/portraits/manager.py` — Portrait loading
-- `prototype/src/roguelike_sprawl/engine/graphic_novel_view.py` — Rendering
+- `prototype/src/wet_run/portraits/manager.py` — Portrait loading
+- `prototype/src/wet_run/engine/graphic_novel_view.py` — Rendering
 - `prototype/data/art/portraits/portraits.json` — Current ASCII portraits
 - `decisions/0011-ascii-portraits.md` — ADR for portrait system
 

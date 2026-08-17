@@ -2,15 +2,15 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.combat.state import Combatant, CombatState
-from roguelike_sprawl.engine.action_menu import _execute_action as am_execute
-from roguelike_sprawl.engine.combat_view import _end_combat
-from roguelike_sprawl.engine.npc_event import DialogueLine, NPCEvent, NPCState
-from roguelike_sprawl.engine.npc_view import _advance_dialogue
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.matrix.graph import MatrixGraph
-from roguelike_sprawl.matrix.node import IceKind, Node, NodeKind, ZoneDepth
-from roguelike_sprawl.run import (
+from wet_run.combat.state import Combatant, CombatState
+from wet_run.engine.action_menu import _execute_action as am_execute
+from wet_run.engine.combat_view import _end_combat
+from wet_run.engine.npc_event import DialogueLine, NPCEvent, NPCState
+from wet_run.engine.npc_view import _advance_dialogue
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.matrix.graph import MatrixGraph
+from wet_run.matrix.node import IceKind, Node, NodeKind, ZoneDepth
+from wet_run.run import (
     RunState,
     Stage,
     ensure_run_state,
@@ -156,7 +156,7 @@ class TestExtractAdvancesStage:
 
     def test_extract_advances_to_defeat_ice(self) -> None:
         """Extracting data at the right node moves to DEFEAT_ICE."""
-        from roguelike_sprawl.combat.registry import IceRegistry, ProgramRegistry
+        from wet_run.combat.registry import IceRegistry, ProgramRegistry
 
         state = AppState()
         state.run_state = RunState(current_stage=Stage.EXTRACT_DATA)
@@ -176,7 +176,7 @@ class TestExtractAdvancesStage:
 
     def test_extract_during_wrong_stage_no_advance(self) -> None:
         """Extract during DEFEAT_ICE doesn't auto-advance to COMPLETE."""
-        from roguelike_sprawl.combat.registry import IceRegistry, ProgramRegistry
+        from wet_run.combat.registry import IceRegistry, ProgramRegistry
 
         state = AppState()
         state.run_state = RunState(current_stage=Stage.DEFEAT_ICE)
@@ -194,7 +194,7 @@ class TestExtractAdvancesStage:
 
     def test_extract_at_wrong_node_does_not_advance(self) -> None:
         """Extracting from a non-data node doesn't advance."""
-        from roguelike_sprawl.combat.registry import IceRegistry, ProgramRegistry
+        from wet_run.combat.registry import IceRegistry, ProgramRegistry
 
         state = AppState()
         state.run_state = RunState(current_stage=Stage.EXTRACT_DATA)
@@ -273,7 +273,7 @@ class TestRunStateDrivesAutoTarget:
 
     def test_resolve_target_meet_npc(self) -> None:
         """During MEET_NPC, target is the CONSTRUCT node."""
-        from roguelike_sprawl.run import resolve_target_for_stage
+        from wet_run.run import resolve_target_for_stage
 
         state = AppState()
         state.run_state = RunState(current_stage=Stage.MEET_NPC)
@@ -283,7 +283,7 @@ class TestRunStateDrivesAutoTarget:
 
     def test_resolve_target_extract_data(self) -> None:
         """During EXTRACT_DATA, target is the DATA node."""
-        from roguelike_sprawl.run import resolve_target_for_stage
+        from wet_run.run import resolve_target_for_stage
 
         state = AppState()
         state.run_state = RunState(current_stage=Stage.EXTRACT_DATA)
@@ -293,7 +293,7 @@ class TestRunStateDrivesAutoTarget:
 
     def test_resolve_target_defeat_ice(self) -> None:
         """During DEFEAT_ICE, target is the ICE node."""
-        from roguelike_sprawl.run import resolve_target_for_stage
+        from wet_run.run import resolve_target_for_stage
 
         state = AppState()
         state.run_state = RunState(current_stage=Stage.DEFEAT_ICE)
@@ -303,7 +303,7 @@ class TestRunStateDrivesAutoTarget:
 
     def test_resolve_target_complete(self) -> None:
         """During COMPLETE, no target (run done)."""
-        from roguelike_sprawl.run import resolve_target_for_stage
+        from wet_run.run import resolve_target_for_stage
 
         state = AppState()
         state.run_state = RunState(current_stage=Stage.COMPLETE)
@@ -317,7 +317,7 @@ class TestRunStateFullFlow:
 
     def test_full_happy_path(self) -> None:
         """Simulate the full stage progression through a successful run."""
-        from roguelike_sprawl.combat.registry import IceRegistry, ProgramRegistry
+        from wet_run.combat.registry import IceRegistry, ProgramRegistry
 
         state = AppState()
         state.run_state = ensure_run_state(state)

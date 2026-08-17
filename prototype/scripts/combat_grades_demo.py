@@ -17,14 +17,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.combat import (
+from wet_run.combat import (
     CombatState,
     IceRegistry,
     build_default_player,
     build_ice_enemy,
     step_combat,
 )
-from roguelike_sprawl.matrix.ppl import Loadout, Program, calculate_ppl
+from wet_run.matrix.ppl import Loadout, Program, calculate_ppl
 
 DEMO_SCENARIOS = {
     "A": {

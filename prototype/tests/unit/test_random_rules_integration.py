@@ -6,7 +6,7 @@ import json
 from dataclasses import dataclass, replace
 from pathlib import Path
 
-from roguelike_sprawl.missions.board import JobBoard
+from wet_run.missions.board import JobBoard
 
 
 def _make_mission(mid: str, grade_min: int = 1, grade_max: int = 6, fixer: str = "finn"):

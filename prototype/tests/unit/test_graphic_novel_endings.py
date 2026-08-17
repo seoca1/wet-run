@@ -17,7 +17,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
+from wet_run.engine.graphic_novel_view import (  # noqa: E402
     SceneData,
     load_prologue_chain,
     load_scene_chain,

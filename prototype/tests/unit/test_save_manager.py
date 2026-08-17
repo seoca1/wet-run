@@ -21,7 +21,7 @@ from unittest.mock import patch
 
 import pytest
 
-from roguelike_sprawl.engine import (
+from wet_run.engine import (
     AppState,
     SaveCorruptedError,
     SaveError,
@@ -31,10 +31,10 @@ from roguelike_sprawl.engine import (
     SaveVersionMismatchError,
     ScreenKind,
 )
-from roguelike_sprawl.engine.save_manager import SAVE_FORMAT_VERSION
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.missions.mission import Mission, Rewards
-from roguelike_sprawl.run import Stage, start_run
+from wet_run.engine.save_manager import SAVE_FORMAT_VERSION
+from wet_run.matrix.node import ZoneDepth
+from wet_run.missions.mission import Mission, Rewards
+from wet_run.run import Stage, start_run
 
 
 def _make_state(
@@ -239,7 +239,7 @@ class TestRestoreState:
 
     def test_restores_reputation(self, save_dir: Path) -> None:
         """Faction reputation persists across save/restore."""
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.matrix.node import Faction
 
         manager = SaveManager(save_dir=save_dir)
         state = _make_state(credits=500)
@@ -258,7 +258,7 @@ class TestRestoreState:
 
     def test_restores_reputation_missing_field(self, save_dir: Path) -> None:
         """Legacy save without reputation field → empty state, no crash."""
-        from roguelike_sprawl.run.reputation import ReputationState
+        from wet_run.run.reputation import ReputationState
 
         manager = SaveManager(save_dir=save_dir)
         # Manually save with no reputation field (simulating old save)
@@ -487,16 +487,16 @@ class TestDefaultSaveDir:
 
     def test_linux_uses_xdg(self) -> None:
         with patch.dict(os.environ, {"XDG_DATA_HOME": "/custom/data"}, clear=False):
-            from roguelike_sprawl.engine.save_manager import _default_save_dir
+            from wet_run.engine.save_manager import _default_save_dir
 
             path = _default_save_dir()
-            assert "roguelike_sprawl" in str(path)
+            assert "wet_run" in str(path)
             assert "saves" in str(path)
 
     def test_linux_falls_back_to_local_share(self) -> None:
         env = {k: v for k, v in os.environ.items() if k != "XDG_DATA_HOME"}
         with patch.dict(os.environ, env, clear=True):
-            from roguelike_sprawl.engine.save_manager import _default_save_dir
+            from wet_run.engine.save_manager import _default_save_dir
 
             path = _default_save_dir()
             assert ".local" in str(path) or "share" in str(path)
@@ -542,7 +542,7 @@ class TestSaveMigration:
 
     def test_unknown_version_still_raises(self, save_dir: Path) -> None:
         """Version with no migration path → SaveVersionMismatchError."""
-        from roguelike_sprawl.engine.save_manager import (
+        from wet_run.engine.save_manager import (
             _migrate_save_data,
         )
 
@@ -553,7 +553,7 @@ class TestSaveMigration:
 
     def test_current_version_passes_through_unchanged(self, save_dir: Path) -> None:
         """Current version bypasses migration (no-op roundtrip)."""
-        from roguelike_sprawl.engine.save_manager import _migrate_save_data
+        from wet_run.engine.save_manager import _migrate_save_data
 
         data = {"version": SAVE_FORMAT_VERSION, "saved_at": "x"}
         out = _migrate_save_data(data)

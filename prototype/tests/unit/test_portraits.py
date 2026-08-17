@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from roguelike_sprawl.portraits import PortraitManager
-from roguelike_sprawl.portraits.manager import parse_color
+from wet_run.portraits import PortraitManager
+from wet_run.portraits.manager import parse_color
 
 
 def test_parse_color_named() -> None:

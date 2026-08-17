@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.battle_portraits import (
+from wet_run.combat.battle_portraits import (
     BOSS_PHASE_COLORS,
     HP_THRESHOLDS,
     ICE_COLORS,

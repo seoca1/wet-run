@@ -1,7 +1,7 @@
 # System: Economy (재화 · 거래)
 
 > **관련**: [progression.md](./progression.md) (메타 진행), [crafting.md](./crafting.md) (제작), [missions.md](./missions.md) (의뢰)
-> **구현**: `../../prototype/src/roguelike_sprawl/missions/board.py` (rewards), `data/missions/missions.json` (실제 보상)
+> **구현**: `../../prototype/src/wet_run/missions/board.py` (rewards), `data/missions/missions.json` (실제 보상)
 
 ## 목적
 
@@ -95,9 +95,9 @@ credits = arc * 800 + (grade - 1) * 300
 |---|---|
 | 미션 보상 | `data/missions/missions.json` (`rewards.credits`) |
 | 재료 | `data/crafting/materials.json` |
-| 인벤토리 | `src/roguelike_sprawl/engine/state.py` (AppState.inventory) |
-| Credits 필드 | `src/roguelike_sprawl/engine/state.py:148` |
-| HEAL Pack | `src/roguelike_sprawl/combat/effects.py` (ItemKind.HEAL) |
+| 인벤토리 | `src/wet_run/engine/state.py` (AppState.inventory) |
+| Credits 필드 | `src/wet_run/engine/state.py:148` |
+| HEAL Pack | `src/wet_run/combat/effects.py` (ItemKind.HEAL) |
 
 ## 미래 작업 (Phase 6+)
 

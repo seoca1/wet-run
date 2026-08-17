@@ -5,14 +5,14 @@ from __future__ import annotations
 
 def test_import_main_package() -> None:
     """The main package can be imported."""
-    import roguelike_sprawl  # noqa: F401
+    import wet_run  # noqa: F401
 
-    assert roguelike_sprawl.__version__ == "0.1.0"
+    assert wet_run.__version__ == "0.1.0"
 
 
 def test_import_subpackages() -> None:
     """All major subpackages can be imported."""
-    from roguelike_sprawl import (
+    from wet_run import (
         data,  # noqa: F401
         ecs,  # noqa: F401
         engine,  # noqa: F401
@@ -23,7 +23,7 @@ def test_import_subpackages() -> None:
 
 def test_engine_config_constants() -> None:
     """Engine config exposes the expected constants."""
-    from roguelike_sprawl.engine.config import (
+    from wet_run.engine.config import (
         DEFAULT_LANGUAGE,
         FONT_PATH,
         SCREEN_HEIGHT,

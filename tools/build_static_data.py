@@ -2,7 +2,7 @@
 """tools/build_static_data.py — Build dashboard data JSONs in one place.
 
 Sources:
-    Game/roguelike_sprawl/prototype/data/missions/missions.json
+    Game/wet_run/prototype/data/missions/missions.json
     Fiction/derivative/sprawl-trilogy/short-stories/{en,ko}/*.md
 
 Outputs (overwritten in place):
@@ -33,7 +33,7 @@ import sys
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[3]
-DASH = REPO / "Game/roguelike_sprawl/dashboard"
+DASH = REPO / "Game/wet_run/dashboard"
 DATA = DASH / "data"
 SPRAWL_EN_DIR = REPO / "Fiction/derivative/sprawl-trilogy/short-stories/en"
 SPRAWL_KO_DIR = REPO / "Fiction/derivative/sprawl-trilogy/short-stories/ko"
@@ -47,7 +47,7 @@ BLUE_ANT_EN_DIR = REPO / "Fiction/derivative/blue-ant/short-stories/en"
 BLUE_ANT_KO_DIR = REPO / "Fiction/derivative/blue-ant/short-stories/ko"
 BLUE_ANT_NV_EN_DIR = REPO / "Fiction/derivative/blue-ant/novelettes/en"
 BLUE_ANT_NV_KO_DIR = REPO / "Fiction/derivative/blue-ant/novelettes/ko"
-MISSIONS = REPO / "Game/roguelike_sprawl/prototype/data/missions/missions.json"
+MISSIONS = REPO / "Game/wet_run/prototype/data/missions/missions.json"
 GLOSSARY_WIKI = REPO / "Fiction/wiki"
 
 NOW = _dt.datetime.now(_dt.timezone.utc).isoformat()
@@ -266,7 +266,7 @@ def _story_entry(stem: str, info: dict, lang: str, mission_links: dict, trilogy:
 def gen_character_graph() -> dict:
     """Build character graph from wiki character pages — auto-extract
     Related Characters sections. Falls back to hand-curated base."""
-    base = REPO / "Game/roguelike_sprawl/dashboard/data/character_graph.json"
+    base = REPO / "Game/wet_run/dashboard/data/character_graph.json"
     if base.exists():
         try:
             existing = json.loads(base.read_text(encoding="utf-8"))

@@ -1,4 +1,4 @@
-# Roguelike Sprawl — Session Index
+# Wet Run — Session Index
 
 > **Latest session**: 2026-08-13 (mypy strict upgrade + NEXT_SESSION_TODO close-out) — see [SESSION_SUMMARY_2026-08-13.md](./SESSION_SUMMARY_2026-08-13.md)
 
@@ -31,6 +31,6 @@ This is an **index** file pointing to the most recent dated session snapshot. Pe
 |---|---|
 | Fiction wiki | `Fiction/wiki/log.md` |
 | Language wiki | `Language/log.md` |
-| Roguelike_sprawl | `Game/roguelike_sprawl/wiki/log.md` (project-wiki-level) |
+| Roguelike_sprawl | `Game/wet_run/wiki/log.md` (project-wiki-level) |
 
 Per project convention, today's per-project diagnostic passes were appended to each project's log.md during the session.

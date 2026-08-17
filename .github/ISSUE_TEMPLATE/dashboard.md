@@ -13,7 +13,7 @@ assignees: ''
 
 ## 📍 Target
 - [ ] Top hub (`Game/dashboard/index.html`)
-- [ ] Roguelike submenu (`roguelike_sprawl/dashboard/`)
+- [ ] Roguelike submenu (`wet_run/dashboard/`)
 - [ ] New sub-dashboard (e.g. Sound, Combat, Cyberspace, Equipment)
 - [ ] Other: ___
 

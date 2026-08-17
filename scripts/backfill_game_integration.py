@@ -22,7 +22,7 @@ migrate script: run once, commit the diff, never run again.
 
 Usage::
 
-    PROJECT=Game/roguelike_sprawl python scripts/backfill_game_integration.py
+    PROJECT=Game/wet_run python scripts/backfill_game_integration.py
 
 The script is intentionally **idempotent** — running it twice yields
 the same content.  Add a CI guard in

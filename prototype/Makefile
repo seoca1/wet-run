@@ -91,7 +91,7 @@ typecheck: ## Run mypy type checker
 	uv run mypy src/
 
 docstring-check: ## Measure docstring coverage (ADR-0120)
-	uv run interrogate -vv src/roguelike_sprawl
+	uv run interrogate -vv src/wet_run
 
 build: ## Build the package
 	uv build

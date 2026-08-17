@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.engine.graphic_novel_loaders import (
+from wet_run.engine.graphic_novel_loaders import (
     _parse_scene,
     load_background,
     load_portrait,

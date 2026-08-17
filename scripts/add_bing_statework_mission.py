@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'bing_statework' to roguelike_sprawl missions.json.
+"""Add new mission 'bing_statework' to wet_run missions.json.
 
 Pairs with Fiction Phase 32 — Bing concept page (wiki/concepts/bing.md).
 Heretic-arc, Arc 2: pharmacological-statework scenario on binged-state.

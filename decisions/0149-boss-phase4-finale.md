@@ -120,7 +120,7 @@
 
 ### 1. 신규 모듈
 
-`prototype/src/roguelike_sprawl/combat/boss_phase4.py` (NEW, ~200 LOC):
+`prototype/src/wet_run/combat/boss_phase4.py` (NEW, ~200 LOC):
 
 ```python
 """Boss Phase 4 Finale (ADR-0149).
@@ -200,12 +200,12 @@ Intro enhancement:
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/combat/boss_phase4.py` (NEW)
-- `prototype/src/roguelike_sprawl/combat/__init__.py` (re-exports)
-- `prototype/src/roguelike_sprawl/combat/boss.py` (BOSS_PROFILES Phase 4 mechanic 추가)
-- `prototype/src/roguelike_sprawl/engine/state.py` (AppState 확장)
-- `prototype/src/roguelike_sprawl/engine/combat_view_state.py` (defeat path death taunt)
-- `prototype/src/roguelike_sprawl/engine/main_loop.py` (intro enhancement trigger)
+- `prototype/src/wet_run/combat/boss_phase4.py` (NEW)
+- `prototype/src/wet_run/combat/__init__.py` (re-exports)
+- `prototype/src/wet_run/combat/boss.py` (BOSS_PROFILES Phase 4 mechanic 추가)
+- `prototype/src/wet_run/engine/state.py` (AppState 확장)
+- `prototype/src/wet_run/engine/combat_view_state.py` (defeat path death taunt)
+- `prototype/src/wet_run/engine/main_loop.py` (intro enhancement trigger)
 - `prototype/data/i18n/{en,ko}.json` (boss_phase4 섹션)
 - `prototype/tests/unit/test_boss_phase4.py` (NEW)
 - `design/systems/combat.md` (Boss Phase 4 Finale section)

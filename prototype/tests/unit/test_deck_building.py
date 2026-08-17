@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.deck_building import (
+from wet_run.combat.deck_building import (
     DECK_SIZES,
     get_ap_regen_bonus,
     get_cooldown_modifier,

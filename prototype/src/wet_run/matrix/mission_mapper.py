@@ -26,7 +26,7 @@ from __future__ import annotations
 from ..matrix.dungeon_generator import ProceduralDungeonGenerator, RoomType
 from .graph import MatrixGraph
 
-# Type hint only — Missions/Mission live in ``roguelike_sprawl.missions.mission``.
+# Type hint only — Missions/Mission live in ``wet_run.missions.mission``.
 # We intentionally accept the minimum interface (id, title, objective, arc,
 # primary_objective) via duck typing so this module has no hard import on
 # the missions package.  At call time we expect a Mission instance.

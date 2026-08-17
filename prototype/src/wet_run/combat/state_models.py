@@ -20,7 +20,7 @@ from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
 if TYPE_CHECKING:
-    from roguelike_sprawl.combat.boss import BossProfile
+    from wet_run.combat.boss import BossProfile
 
 TICK_MS = 100
 AUTO_ATTACK_INTERVAL_MS = 2000

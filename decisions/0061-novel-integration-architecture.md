@@ -239,7 +239,7 @@ register_hook_action(HookKind.MUSIC, my_music_action)
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/novel/` — 신규
+- `prototype/src/wet_run/novel/` — 신규
 - `prototype/tests/unit/test_novel.py` — 신규
 - `dashboard/` — 기존 (현재 영향 없음, 추후 Story/Novel 카드 갱신 가능)
 - `decisions/README.md` — ADR 인덱스 갱신

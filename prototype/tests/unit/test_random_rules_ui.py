@@ -18,10 +18,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from roguelike_sprawl.engine import hub as hub_mod
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.missions.board import JobBoard
-from roguelike_sprawl.missions.mission import Mission, Objective, Rewards
+from wet_run.engine import hub as hub_mod
+from wet_run.engine.state import AppState
+from wet_run.missions.board import JobBoard
+from wet_run.missions.mission import Mission, Objective, Rewards
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -91,7 +91,7 @@ class TestSelectWeightedRecordsRule:
 
     def test_writes_to_appstate(self) -> None:
         """AppState has the last_rule_id field — direct assignment works."""
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.matrix.node import Faction
 
         state = AppState()
         # Set sense_net_rep=5 to fire a faction_weighted rule.
@@ -201,7 +201,7 @@ class TestAppendActiveRules:
         no rules are active at all. We verify the structure (header
         + entries) rather than literal equality.
         """
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.matrix.node import Faction
 
         state = AppState()
         state.reputation.adjust(Faction.SENSE_NET, 0, source="test")
@@ -213,8 +213,8 @@ class TestAppendActiveRules:
 
     def test_active_rules_listed(self) -> None:
         """High sense_net_rep should activate faction_weighted."""
-        from roguelike_sprawl.matrix.node import Faction
-        from roguelike_sprawl.missions.random_rules import get_all_active_rules
+        from wet_run.matrix.node import Faction
+        from wet_run.missions.random_rules import get_all_active_rules
 
         state = AppState()
         state.reputation.adjust(Faction.SENSE_NET, 5, source="test")
@@ -230,8 +230,8 @@ class TestAppendActiveRules:
 
     def test_capped_at_five_rules(self) -> None:
         """The helper truncates to 5 rules to keep the side panel short."""
-        from roguelike_sprawl.matrix.node import Faction
-        from roguelike_sprawl.missions.random_rules import get_all_active_rules
+        from wet_run.matrix.node import Faction
+        from wet_run.missions.random_rules import get_all_active_rules
 
         state = AppState()
         # Force many rules to fire by maxing every available reputation.
@@ -292,7 +292,7 @@ class TestRandomRulesUIEdgeCases:
         board = _make_board(["m1", "m2", "m3"])
         board.select_weighted(state, seed=42)
 
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.matrix.node import Faction
 
         state.reputation.adjust(Faction.SENSE_NET, 10, source="test")
         board.select_weighted(state, seed=99)
@@ -301,7 +301,7 @@ class TestRandomRulesUIEdgeCases:
     def test_append_active_rules_idempotent(self) -> None:
         """Calling _append_active_rules twice does not duplicate the header."""
         state = AppState()
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.matrix.node import Faction
 
         state.reputation.adjust(Faction.SENSE_NET, 5, source="test")
         lines_a: list[str] = []

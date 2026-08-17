@@ -189,7 +189,7 @@ Tier 5 (Arc 5):                    Tier 5 (Arc 5):
 ## 데이터 출처
 
 ```
-Game/roguelike_sprawl/prototype/
+Game/wet_run/prototype/
 ├── data/
 │   ├── missions/missions.json           (29 미션, source: 검증 헬퍼 통과)
 │   ├── story/
@@ -199,7 +199,7 @@ Game/roguelike_sprawl/prototype/
 │   ├── programs/programs.json           (9개 프로그램/스킬)
 │   ├── jockeys/deceased.json            (Hall of Dead — 사망 자키 기록)
 │   └── i18n/{en,ko}.json                (UI 번역, 69 키)
-└── src/roguelike_sprawl/
+└── src/wet_run/
     └── engine/
         ├── chapter_view.py              (CHAPTER 화면 렌더링)
         └── original_story.py            (캐릭터 선택 + 엔딩 + 씬 테마)

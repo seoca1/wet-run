@@ -10,7 +10,7 @@ Covers:
 
 from __future__ import annotations
 
-from roguelike_sprawl.run import (
+from wet_run.run import (
     DEFAULT_FLOW,
     Stage,
     StageEvent,
@@ -24,7 +24,7 @@ from roguelike_sprawl.run import (
     start_run,
     validate_stage_transition,
 )
-from roguelike_sprawl.run.events import get_event_bus, reset_event_bus
+from wet_run.run.events import get_event_bus, reset_event_bus
 
 
 class TestNewStages:
@@ -484,7 +484,7 @@ class TestDataDrivenStageFlow:
         import json
         from pathlib import Path
 
-        from roguelike_sprawl.run.state import get_mission_flow
+        from wet_run.run.state import get_mission_flow
 
         # Load missions.json
         missions_path = Path(__file__).resolve().parents[2] / "data" / "missions" / "missions.json"
@@ -504,7 +504,7 @@ class TestDataDrivenStageFlow:
         import json
         from pathlib import Path
 
-        from roguelike_sprawl.run.state import get_mission_flow
+        from wet_run.run.state import get_mission_flow
 
         missions_path = Path(__file__).resolve().parents[2] / "data" / "missions" / "missions.json"
         with missions_path.open() as f:
@@ -520,7 +520,7 @@ class TestDataDrivenStageFlow:
         import json
         from pathlib import Path
 
-        from roguelike_sprawl.run.state import get_mission_flow
+        from wet_run.run.state import get_mission_flow
 
         missions_path = Path(__file__).resolve().parents[2] / "data" / "missions" / "missions.json"
         with missions_path.open() as f:
@@ -536,7 +536,7 @@ class TestDataDrivenStageFlow:
         import json
         from pathlib import Path
 
-        from roguelike_sprawl.run.state import get_mission_flow
+        from wet_run.run.state import get_mission_flow
 
         missions_path = Path(__file__).resolve().parents[2] / "data" / "missions" / "missions.json"
         with missions_path.open() as f:

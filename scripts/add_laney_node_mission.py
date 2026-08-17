@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'laney_node_signal_run' to roguelike_sprawl missions.json.
+"""Add new mission 'laney_node_signal_run' to wet_run missions.json.
 
 Pairs with Fiction Phase 41 — nodal-points concept + Bridge derivative
 (derivative/bridge-trilogy/short-stories/{en,ko}/2026-07-19_laney_node_signal.{md,.ko.md}).

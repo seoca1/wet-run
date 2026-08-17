@@ -1,4 +1,4 @@
-"""Tests for roguelike_sprawl.engine.crash_reporter — Phase 7 crash logger.
+"""Tests for wet_run.engine.crash_reporter — Phase 7 crash logger.
 
 Coverage: 100% target. Tests use tmp_path to avoid touching the real crash.log.
 """
@@ -8,7 +8,7 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import patch
 
-from roguelike_sprawl.engine.crash_reporter import (
+from wet_run.engine.crash_reporter import (
     CRASH_LOG_PATH,
     crash_report_path,
     report_crash,
@@ -17,7 +17,7 @@ from roguelike_sprawl.engine.crash_reporter import (
 
 def _format_state_for_test(state_obj=None) -> str:
     """Helper: invoke the private formatter for assertion-based testing."""
-    from roguelike_sprawl.engine.crash_reporter import _format_state_snapshot
+    from wet_run.engine.crash_reporter import _format_state_snapshot
 
     return _format_state_snapshot(state_obj)
 
@@ -79,7 +79,7 @@ class TestCrashReporter:
         log = tmp_path / "crash.log"
 
         # Mock CRASH_LOG_PATH to write into tmp
-        with patch("roguelike_sprawl.engine.crash_reporter.CRASH_LOG_PATH", log):
+        with patch("wet_run.engine.crash_reporter.CRASH_LOG_PATH", log):
             try:
                 raise ValueError("test exception")
             except ValueError as exc:
@@ -106,7 +106,7 @@ class TestCrashReporter:
             current_node_id = "node-42"
             job_board = None
 
-        with patch("roguelike_sprawl.engine.crash_reporter.CRASH_LOG_PATH", log):
+        with patch("wet_run.engine.crash_reporter.CRASH_LOG_PATH", log):
             try:
                 raise RuntimeError("oops")
             except RuntimeError as exc:
@@ -120,7 +120,7 @@ class TestCrashReporter:
         log = tmp_path / "crash.log"
         log.write_text("existing content\n", encoding="utf-8")
 
-        with patch("roguelike_sprawl.engine.crash_reporter.CRASH_LOG_PATH", log):
+        with patch("wet_run.engine.crash_reporter.CRASH_LOG_PATH", log):
             try:
                 raise KeyError("missing-key")
             except KeyError as exc:
@@ -133,7 +133,7 @@ class TestCrashReporter:
     def test_ensure_crash_dir_creates_parents(self, tmp_path: Path):
         log = tmp_path / "nested" / "deeper" / "crash.log"
 
-        with patch("roguelike_sprawl.engine.crash_reporter.CRASH_LOG_PATH", log):
+        with patch("wet_run.engine.crash_reporter.CRASH_LOG_PATH", log):
             try:
                 raise OSError("disk")
             except OSError as exc:

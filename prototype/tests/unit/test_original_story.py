@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.npc_event import (
+from wet_run.engine.npc_event import (
     ChoiceEffect,
     NPCState,
 )
-from roguelike_sprawl.engine.npc_view import _execute_choice
-from roguelike_sprawl.engine.original_story import (
+from wet_run.engine.npc_view import _execute_choice
+from wet_run.engine.original_story import (
     ALL_ORIGINAL_EVENTS,
     CHARACTER_SELECT_EVENT,
     HERETIC_PROLOGUE_EVENT,
@@ -16,7 +16,7 @@ from roguelike_sprawl.engine.original_story import (
     get_ending_description,
     get_prologue_for_character,
 )
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.state import AppState
 
 
 class TestCharacterSelectEvent:

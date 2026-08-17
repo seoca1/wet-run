@@ -10,8 +10,8 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-from roguelike_sprawl.engine.matrix_view import _draw_mobility_stats
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.matrix_view import _draw_mobility_stats
+from wet_run.engine.state import AppState
 
 
 class TestMobilityStatsDefaults:

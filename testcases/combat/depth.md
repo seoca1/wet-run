@@ -2,7 +2,7 @@
 
 > **관련**: `../../decisions/0148-combat-depth-expansion.md`, `../../decisions/0147-data-salvage-phase6.md`
 > **관련 design**: `../../design/systems/combat.md` §Combat Depth Expansion
-> **구현**: `../../prototype/src/roguelike_sprawl/combat/depth.py`
+> **구현**: `../../prototype/src/wet_run/combat/depth.py`
 
 전투 깊이 확장 — Counter Window, Defense Stackable, Companion Skills, ICE Aggression Tiers.
 

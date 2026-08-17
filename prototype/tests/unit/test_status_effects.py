@@ -4,9 +4,9 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.combat.state import Combatant, CombatState, Skill, SkillEffect
-from roguelike_sprawl.combat.state_models import StatusEffect
-from roguelike_sprawl.combat.status_effects import (
+from wet_run.combat.state import Combatant, CombatState, Skill, SkillEffect
+from wet_run.combat.state_models import StatusEffect
+from wet_run.combat.status_effects import (
     apply_silence,
     apply_slow,
     apply_vulnerable,
@@ -128,7 +128,7 @@ def test_is_silenced_returns_true_when_silence_status_expires() -> None:
 
 
 def test_silence_blocks_use_skill() -> None:
-    from roguelike_sprawl.combat.state import use_skill
+    from wet_run.combat.state import use_skill
 
     state = make_state()
     state.player.skills = [
@@ -147,7 +147,7 @@ def test_silence_blocks_use_skill() -> None:
 
 
 def test_vulnerability_applies_to_damage() -> None:
-    from roguelike_sprawl.combat.state import _calculate_damage
+    from wet_run.combat.state import _calculate_damage
 
     base_damage = 20
 
@@ -186,7 +186,7 @@ def test_vulnerability_applies_to_damage() -> None:
 
 
 def test_slow_does_not_affect_damage_calc() -> None:
-    from roguelike_sprawl.combat.state import _calculate_damage
+    from wet_run.combat.state import _calculate_damage
 
     state = make_state()
     attacker = state.player
@@ -207,7 +207,7 @@ def test_slow_does_not_affect_damage_calc() -> None:
 
 
 def test_status_effect_decays_in_tick() -> None:
-    from roguelike_sprawl.combat.state_transitions import _tick_status_effects
+    from wet_run.combat.state_transitions import _tick_status_effects
 
     state = make_state()
     apply_slow(state, state.player, slow_pct=30, duration_ms=100)

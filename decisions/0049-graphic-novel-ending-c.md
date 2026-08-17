@@ -129,10 +129,10 @@ ADR-0046 (엔딩 B) + ADR-0048 (메뉴/세이브 통합)으로 캐릭터당 2개
 - `data/scenes/sil/08_blank.json` (THE BLANK)
 - `data/scenes/kas/07_weapon.json` (THE WEAPON)
 - `data/scenes/kas/08_burn.json` (THE BURN)
-- `src/roguelike_sprawl/engine/graphic_novel_view.py`: `_ENDING_DESCRIPTIONS` 확장 (char × C), `available_endings()` 동적 옵션, `get_gn_ending_menu_options` N 옵션 지원
-- `src/roguelike_sprawl/engine/menu.py`: `handle_graphic_novel_ending_menu_input` 동적 키 매핑 (N1=A..N{count}={chr('A'+count-1)}, N{count+1}=back)
-- `src/roguelike_sprawl/engine/graphic_novel_save.py`: `GN_SAVE_VERSION 1.1.0 → 1.2.0`, `from_dict` accepts "C", forward-compat unknown → "A"
-- `src/roguelike_sprawl/engine/graphic_novel_audio.py`: SCENE_SOUND_MAP 확장 (theme_* + movement_neon_hum alias)
+- `src/wet_run/engine/graphic_novel_view.py`: `_ENDING_DESCRIPTIONS` 확장 (char × C), `available_endings()` 동적 옵션, `get_gn_ending_menu_options` N 옵션 지원
+- `src/wet_run/engine/menu.py`: `handle_graphic_novel_ending_menu_input` 동적 키 매핑 (N1=A..N{count}={chr('A'+count-1)}, N{count+1}=back)
+- `src/wet_run/engine/graphic_novel_save.py`: `GN_SAVE_VERSION 1.1.0 → 1.2.0`, `from_dict` accepts "C", forward-compat unknown → "A"
+- `src/wet_run/engine/graphic_novel_audio.py`: SCENE_SOUND_MAP 확장 (theme_* + movement_neon_hum alias)
 - `scripts/play.py`: `--ending {A,B,C}` CLI flag, `_action_graphic_novel_ending_menu` accepts C
 - `scripts/graphic_novel.py`: `--ending {A,B,C}` choices
 

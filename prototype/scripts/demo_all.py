@@ -29,8 +29,8 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine import graphic_novel_view, menu, save_progress
-from roguelike_sprawl.engine.graphic_novel_view import (
+from wet_run.engine import graphic_novel_view, menu, save_progress
+from wet_run.engine.graphic_novel_view import (
     dialogue_typed_chars,
     load_background,
     load_portrait,
@@ -38,9 +38,9 @@ from roguelike_sprawl.engine.graphic_novel_view import (
     load_scene_chain,
     render_scene,
 )
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.i18n import Translator
-from roguelike_sprawl.missions import JobBoard
+from wet_run.engine.state import AppState
+from wet_run.i18n import Translator
+from wet_run.missions import JobBoard
 
 # Art cache
 _demo_all_cache: dict[str, object] = {}

@@ -544,14 +544,14 @@ class RoomSystem(ECSSystem):
 
 | 항목 | 경로 |
 |---|---|
-| 던전 생성기 | `prototype/src/roguelike_sprawl/matrix/dungeon_generator.py` |
-| 던전 뷰 (미사용) | `prototype/src/roguelike_sprawl/engine/dungeon_view.py` |
-| 매트릭스 뷰 (현재) | `prototype/src/roguelike_sprawl/engine/matrix_view.py` |
-| 게임 루프 | `prototype/src/roguelike_sprawl/engine/app.py` |
+| 던전 생성기 | `prototype/src/wet_run/matrix/dungeon_generator.py` |
+| 던전 뷰 (미사용) | `prototype/src/wet_run/engine/dungeon_view.py` |
+| 매트릭스 뷰 (현재) | `prototype/src/wet_run/engine/matrix_view.py` |
+| 게임 루프 | `prototype/src/wet_run/engine/app.py` |
 | 미션 데이터 | `prototype/data/missions/missions.json` |
 | 챕터 데이터 | `prototype/data/story/chapters/{case,sil,kas}.json` |
-| ECS | `prototype/src/roguelike_sprawl/ecs/` |
-| 정규화 헬퍼 | `prototype/src/roguelike_sprawl/data/story_resolver.py` |
+| ECS | `prototype/src/wet_run/ecs/` |
+| 정규화 헬퍼 | `prototype/src/wet_run/data/story_resolver.py` |
 | 검증 CLI | `prototype/scripts/verify_story_links.py` |
 
 ---
@@ -562,7 +562,7 @@ Phase 1 + 1.5 완료. 다음 세션은 Phase 2 (절차적 BSP 미로).
 
 ```bash
 # 1. 환경 활성화
-cd /Users/emilio/projects/Projects/Game/roguelike_sprawl/prototype
+cd /Users/emilio/projects/Projects/Game/wet_run/prototype
 
 # 2. 현재 상태 확인 (신규 VFX 테스트)
 .venv/bin/python -m pytest tests/unit/test_dungeon_view.py tests/unit/test_combat_vfx.py -v
@@ -570,7 +570,7 @@ cd /Users/emilio/projects/Projects/Game/roguelike_sprawl/prototype
 
 # 3. dungeon_mode 토글 검증
 .venv/bin/python -c "
-from src.roguelike_sprawl.engine.state import AppState, ScreenKind
+from src.wet_run.engine.state import AppState, ScreenKind
 s = AppState()
 print('dungeon_mode default:', s.dungeon_mode)  # False
 "

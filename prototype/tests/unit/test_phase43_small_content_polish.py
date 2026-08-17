@@ -186,7 +186,7 @@ class TestBossPhaseTrackerDocstringCoverage:
     """Phase 43 polish — BossPhaseTracker.__init__ (was MISSED)."""
 
     def test_boss_phase_tracker_init_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.boss_phase_tracker import BossPhaseTracker
+        from wet_run.combat.boss_phase_tracker import BossPhaseTracker
 
         doc = BossPhaseTracker.__init__.__doc__
         assert doc is not None
@@ -209,7 +209,7 @@ class TestBossPhaseTrackerDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/boss_phase_tracker.py",
+                "src/wet_run/combat/boss_phase_tracker.py",
             ],
             capture_output=True,
             text=True,
@@ -231,7 +231,7 @@ class TestPerfTrackerDocstringCoverage:
     """Phase 43 polish — PerfTracker.__init__ (was MISSED)."""
 
     def test_perf_tracker_init_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.performance_integration import PerfTracker
+        from wet_run.combat.performance_integration import PerfTracker
 
         doc = PerfTracker.__init__.__doc__
         assert doc is not None
@@ -253,7 +253,7 @@ class TestPerfTrackerDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/performance_integration.py",
+                "src/wet_run/combat/performance_integration.py",
             ],
             capture_output=True,
             text=True,
@@ -275,7 +275,7 @@ class TestExplorationStateDocstringCoverage:
     """Phase 43 polish — ExplorationState.__post_init__ (was MISSED)."""
 
     def test_exploration_state_post_init_has_docstring(self) -> None:
-        from roguelike_sprawl.matrix.exploration import ExplorationState
+        from wet_run.matrix.exploration import ExplorationState
 
         doc = ExplorationState.__post_init__.__doc__
         assert doc is not None
@@ -298,7 +298,7 @@ class TestExplorationStateDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/matrix/exploration.py",
+                "src/wet_run/matrix/exploration.py",
             ],
             capture_output=True,
             text=True,
@@ -321,11 +321,11 @@ class TestPhase43Smoke:
 
     def test_boss_phase_tracker_initial_state(self) -> None:
         """BossPhaseTracker.__init__ seeds at phase index 0."""
-        from roguelike_sprawl.combat.boss_expansion import (
+        from wet_run.combat.boss_expansion import (
             BossPhase,
             BossProfile,
         )
-        from roguelike_sprawl.combat.boss_phase_tracker import BossPhaseTracker
+        from wet_run.combat.boss_phase_tracker import BossPhaseTracker
 
         # Construct a minimal profile to avoid coupling to specific bosses
         minimal = BossProfile(
@@ -348,7 +348,7 @@ class TestPhase43Smoke:
 
     def test_perf_tracker_init_defaults(self) -> None:
         """PerfTracker.__init__ with no args uses 60fps / 100MB defaults."""
-        from roguelike_sprawl.combat.performance_integration import PerfTracker
+        from wet_run.combat.performance_integration import PerfTracker
 
         tracker = PerfTracker()
         assert tracker.snapshot_count() == 0
@@ -356,7 +356,7 @@ class TestPhase43Smoke:
 
     def test_perf_tracker_init_custom_budgets(self) -> None:
         """PerfTracker.__init__ accepts custom frame/memory budgets."""
-        from roguelike_sprawl.combat.performance_integration import PerfTracker
+        from wet_run.combat.performance_integration import PerfTracker
 
         tracker = PerfTracker(frame_budget_ms=33.0, memory_budget_mb=200.0)
         assert tracker.snapshot_count() == 0
@@ -364,7 +364,7 @@ class TestPhase43Smoke:
 
     def test_perf_tracker_record_tick_works(self) -> None:
         """PerfTracker.record_tick appends a profile and returns it."""
-        from roguelike_sprawl.combat.performance_integration import PerfTracker
+        from wet_run.combat.performance_integration import PerfTracker
 
         tracker = PerfTracker()
         profile = tracker.record_tick(label="test_tick", frame_time_ms=10.0)
@@ -374,7 +374,7 @@ class TestPhase43Smoke:
 
     def test_exploration_state_post_init_seeds_current(self) -> None:
         """ExplorationState.__post_init__ adds current to discovered + path."""
-        from roguelike_sprawl.matrix.exploration import ExplorationState
+        from wet_run.matrix.exploration import ExplorationState
 
         state = ExplorationState(current="node_a")
         assert "node_a" in state.discovered
@@ -382,7 +382,7 @@ class TestPhase43Smoke:
 
     def test_exploration_state_post_init_empty_current(self) -> None:
         """ExplorationState.__post_init__ no-op when current is empty string."""
-        from roguelike_sprawl.matrix.exploration import ExplorationState
+        from wet_run.matrix.exploration import ExplorationState
 
         state = ExplorationState(current="")
         assert state.discovered == set()
@@ -390,7 +390,7 @@ class TestPhase43Smoke:
 
     def test_exploration_state_post_init_dedup_path(self) -> None:
         """ExplorationState.__post_init__ does not duplicate current in path."""
-        from roguelike_sprawl.matrix.exploration import ExplorationState
+        from wet_run.matrix.exploration import ExplorationState
 
         state = ExplorationState(current="node_b", path=["node_b", "node_b"])
         # Constructor should not append if path[-1] == current

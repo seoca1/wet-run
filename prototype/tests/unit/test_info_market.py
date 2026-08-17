@@ -17,14 +17,14 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.crafting.info_market import (
+from wet_run.crafting.info_market import (
     _TIER_TO_MULTIPLIER,
     DISCOUNT_DENOM,
     InfoMarket,
     MarketItem,
 )
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.matrix.node import Faction
+from wet_run.engine.state import AppState
+from wet_run.matrix.node import Faction
 
 
 @pytest.fixture(autouse=True)
@@ -414,7 +414,7 @@ class TestHubIntegration:
     ) -> None:
         """When the player has a high rep with a market faction, the
         Hub status line should surface the discounted price."""
-        from roguelike_sprawl.engine import config as _engine_config
+        from wet_run.engine import config as _engine_config
 
         # DATA_DIR is the data/ directory itself; load_default joins
         # "crafting/market.json" onto it.
@@ -436,8 +436,8 @@ class TestMarketSummary:
     """The Hub's _render_market_summary formats the discount line."""
 
     def test_neutral_default(self, data_dir: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        from roguelike_sprawl.engine import config as _engine_config
-        from roguelike_sprawl.engine.hub import _render_market_summary
+        from wet_run.engine import config as _engine_config
+        from wet_run.engine.hub import _render_market_summary
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         state = AppState()
@@ -448,8 +448,8 @@ class TestMarketSummary:
         assert "neutral" in line
 
     def test_allied_shows_discount(self, data_dir: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        from roguelike_sprawl.engine import config as _engine_config
-        from roguelike_sprawl.engine.hub import _render_market_summary
+        from wet_run.engine import config as _engine_config
+        from wet_run.engine.hub import _render_market_summary
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         state = AppState()
@@ -461,8 +461,8 @@ class TestMarketSummary:
         assert "-50%" in line
 
     def test_hostile_shows_markup(self, data_dir: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-        from roguelike_sprawl.engine import config as _engine_config
-        from roguelike_sprawl.engine.hub import _render_market_summary
+        from wet_run.engine import config as _engine_config
+        from wet_run.engine.hub import _render_market_summary
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         state = AppState()
@@ -476,8 +476,8 @@ class TestMarketSummary:
     def test_legacy_state_returns_neutral(
         self, data_dir: Path, monkeypatch: pytest.MonkeyPatch
     ) -> None:
-        from roguelike_sprawl.engine import config as _engine_config
-        from roguelike_sprawl.engine.hub import _render_market_summary
+        from wet_run.engine import config as _engine_config
+        from wet_run.engine.hub import _render_market_summary
 
         monkeypatch.setattr(_engine_config, "DATA_DIR", data_dir, raising=False)
         state = AppState()

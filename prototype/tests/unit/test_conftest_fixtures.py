@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.combat.state_models import CombatState
+from wet_run.combat.state_models import CombatState
 
 
 def test_seeded_rng_is_deterministic(seeded_rng: random.Random) -> None:

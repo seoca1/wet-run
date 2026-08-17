@@ -182,7 +182,7 @@ class TestEquipmentDocstringCoverage:
     """Phase 42 polish — Equipment.__repr__ + EquipmentRegistry.__init__ (93% -> 100%)."""
 
     def test_equipment_repr_has_docstring(self) -> None:
-        from roguelike_sprawl.equipment.equipment import Equipment
+        from wet_run.equipment.equipment import Equipment
 
         doc = Equipment.__repr__.__doc__
         assert doc is not None
@@ -194,7 +194,7 @@ class TestEquipmentDocstringCoverage:
         assert "name" in doc_lower or "tier" in doc_lower or "category" in doc_lower
 
     def test_equipment_registry_init_has_docstring(self) -> None:
-        from roguelike_sprawl.equipment.equipment import EquipmentRegistry
+        from wet_run.equipment.equipment import EquipmentRegistry
 
         doc = EquipmentRegistry.__init__.__doc__
         assert doc is not None
@@ -217,7 +217,7 @@ class TestEquipmentDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/equipment/equipment.py",
+                "src/wet_run/equipment/equipment.py",
             ],
             capture_output=True,
             text=True,
@@ -239,7 +239,7 @@ class TestEffectsDataDocstringCoverage:
     """Phase 42 polish — 4 docstrings (92% -> 100%)."""
 
     def test_screen_shake_step_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.effects_data import ScreenShake
+        from wet_run.combat.effects_data import ScreenShake
 
         doc = ScreenShake.step.__doc__
         assert doc is not None
@@ -251,7 +251,7 @@ class TestEffectsDataDocstringCoverage:
         assert "no-op" in doc_lower or "inactive" in doc_lower or "zero" in doc_lower
 
     def test_floating_number_text_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.effects_data import FloatingNumber
+        from wet_run.combat.effects_data import FloatingNumber
 
         doc = FloatingNumber.text.__doc__
         assert doc is not None
@@ -261,7 +261,7 @@ class TestEffectsDataDocstringCoverage:
         assert "crit" in doc_lower or "bracket" in doc_lower or "!" in doc
 
     def test_floating_number_alpha_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.effects_data import FloatingNumber
+        from wet_run.combat.effects_data import FloatingNumber
 
         doc = FloatingNumber.alpha.__doc__
         assert doc is not None
@@ -271,7 +271,7 @@ class TestEffectsDataDocstringCoverage:
         assert "fade" in doc_lower or "alpha" in doc_lower or "opacity" in doc_lower
 
     def test_hit_flash_alpha_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.effects_data import HitFlash
+        from wet_run.combat.effects_data import HitFlash
 
         doc = HitFlash.alpha.__doc__
         assert doc is not None
@@ -292,7 +292,7 @@ class TestEffectsDataDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/effects_data.py",
+                "src/wet_run/combat/effects_data.py",
             ],
             capture_output=True,
             text=True,
@@ -325,7 +325,7 @@ class TestMainLoopDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/engine/main_loop.py",
+                "src/wet_run/engine/main_loop.py",
             ],
             capture_output=True,
             text=True,
@@ -348,7 +348,7 @@ class TestPhase42Smoke:
 
     def test_equipment_repr_format_preserved(self) -> None:
         """Equipment.__repr__ still returns 'name (tier category)'."""
-        from roguelike_sprawl.equipment.equipment import (
+        from wet_run.equipment.equipment import (
             STARTER_DECK,
             EquipCategory,
             EquipTier,
@@ -368,7 +368,7 @@ class TestPhase42Smoke:
 
     def test_equipment_registry_init_empty(self) -> None:
         """EquipmentRegistry.__init__() with no arg yields empty registry."""
-        from roguelike_sprawl.equipment.equipment import EquipmentRegistry
+        from wet_run.equipment.equipment import EquipmentRegistry
 
         reg = EquipmentRegistry()
         assert reg.all() == []
@@ -376,7 +376,7 @@ class TestPhase42Smoke:
 
     def test_equipment_registry_init_with_dict(self) -> None:
         """EquipmentRegistry.__init__(dict) copies input (defensive isolation)."""
-        from roguelike_sprawl.equipment.equipment import (
+        from wet_run.equipment.equipment import (
             STARTER_DECK,
             EquipmentRegistry,
         )
@@ -391,7 +391,7 @@ class TestPhase42Smoke:
 
     def test_screen_shake_step_zero_intensity_noop(self) -> None:
         """ScreenShake.step() with intensity=0 is a no-op (preserves invariants)."""
-        from roguelike_sprawl.combat.effects_data import ScreenShake
+        from wet_run.combat.effects_data import ScreenShake
 
         shake = ScreenShake()
         # Default state: intensity=0, duration_ms=0, elapsed_ms=0
@@ -402,7 +402,7 @@ class TestPhase42Smoke:
 
     def test_screen_shake_step_advances_and_resets(self) -> None:
         """ScreenShake.step() advances elapsed_ms and resets on expiry."""
-        from roguelike_sprawl.combat.effects_data import ScreenShake
+        from wet_run.combat.effects_data import ScreenShake
 
         shake = ScreenShake()
         shake.trigger(intensity=5.0, duration_ms=100)
@@ -418,7 +418,7 @@ class TestPhase42Smoke:
 
     def test_floating_number_text_normal(self) -> None:
         """FloatingNumber.text renders as bare value for non-crits."""
-        from roguelike_sprawl.combat.effects_data import DAMAGE_COLOR, FloatingNumber
+        from wet_run.combat.effects_data import DAMAGE_COLOR, FloatingNumber
 
         num = FloatingNumber(
             value=42, is_crit=False, x=0, y=0, max_life_ms=1000, color=DAMAGE_COLOR
@@ -427,21 +427,21 @@ class TestPhase42Smoke:
 
     def test_floating_number_text_crit(self) -> None:
         """FloatingNumber.text renders bracketed for crits (!42!)."""
-        from roguelike_sprawl.combat.effects_data import DAMAGE_COLOR, FloatingNumber
+        from wet_run.combat.effects_data import DAMAGE_COLOR, FloatingNumber
 
         num = FloatingNumber(value=42, is_crit=True, x=0, y=0, max_life_ms=1000, color=DAMAGE_COLOR)
         assert num.text == "!42!"
 
     def test_floating_number_alpha_at_spawn(self) -> None:
         """FloatingNumber.alpha is 1.0 at spawn (life_ms=0)."""
-        from roguelike_sprawl.combat.effects_data import DAMAGE_COLOR, FloatingNumber
+        from wet_run.combat.effects_data import DAMAGE_COLOR, FloatingNumber
 
         num = FloatingNumber(value=10, x=0, y=0, max_life_ms=1000, color=DAMAGE_COLOR)
         assert num.alpha == 1.0
 
     def test_floating_number_alpha_at_expiry(self) -> None:
         """FloatingNumber.alpha is 0.0 at expiry (life_ms=max_life_ms)."""
-        from roguelike_sprawl.combat.effects_data import DAMAGE_COLOR, FloatingNumber
+        from wet_run.combat.effects_data import DAMAGE_COLOR, FloatingNumber
 
         num = FloatingNumber(value=10, x=0, y=0, max_life_ms=1000, color=DAMAGE_COLOR)
         num.life_ms = 1000  # simulate expiry
@@ -449,14 +449,14 @@ class TestPhase42Smoke:
 
     def test_floating_number_alpha_zero_max_life(self) -> None:
         """FloatingNumber.alpha is 0.0 when max_life_ms=0 (degenerate)."""
-        from roguelike_sprawl.combat.effects_data import DAMAGE_COLOR, FloatingNumber
+        from wet_run.combat.effects_data import DAMAGE_COLOR, FloatingNumber
 
         num = FloatingNumber(value=10, x=0, y=0, max_life_ms=0, color=DAMAGE_COLOR)
         assert num.alpha == 0.0
 
     def test_hit_flash_alpha_at_spawn(self) -> None:
         """HitFlash.alpha is 1.0 at spawn (elapsed_ms=0)."""
-        from roguelike_sprawl.combat.effects_data import HitFlash
+        from wet_run.combat.effects_data import HitFlash
 
         flash = HitFlash()
         flash.trigger(duration_ms=120)
@@ -464,7 +464,7 @@ class TestPhase42Smoke:
 
     def test_hit_flash_alpha_at_expiry(self) -> None:
         """HitFlash.alpha is 0.0 at expiry (elapsed_ms=duration_ms)."""
-        from roguelike_sprawl.combat.effects_data import HitFlash
+        from wet_run.combat.effects_data import HitFlash
 
         flash = HitFlash()
         flash.trigger(duration_ms=120)
@@ -473,7 +473,7 @@ class TestPhase42Smoke:
 
     def test_hit_flash_alpha_zero_duration(self) -> None:
         """HitFlash.alpha is 0.0 when duration_ms=0 (degenerate)."""
-        from roguelike_sprawl.combat.effects_data import HitFlash
+        from wet_run.combat.effects_data import HitFlash
 
         flash = HitFlash()
         # Default duration_ms=0

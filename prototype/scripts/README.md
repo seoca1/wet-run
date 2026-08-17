@@ -1,10 +1,10 @@
 # Scripts 가이드 — 데모 / 검증 스크립트 실행법
 
 `prototype/scripts/` 하위의 모든 실행 스크립트를 목적별로 정리.
-모든 명령은 `Game/roguelike_sprawl/prototype` 디렉토리에서 실행한다고 가정.
+모든 명령은 `Game/wet_run/prototype` 디렉토리에서 실행한다고 가정.
 
 ```bash
-cd "/Users/emilio/projects/Projects/Game/roguelike_sprawl/prototype"
+cd "/Users/emilio/projects/Projects/Game/wet_run/prototype"
 ```
 
 ---
@@ -30,7 +30,7 @@ cd "/Users/emilio/projects/Projects/Game/roguelike_sprawl/prototype"
 ### ⚡ 가장 빠른 시작 (30초)
 
 ```bash
-cd "/Users/emilio/projects/Projects/Game/roguelike_sprawl/prototype"
+cd "/Users/emilio/projects/Projects/Game/wet_run/prototype"
 
 # 1. GUI 창에서 그래픽 노블 보기 (창 필요, 30초)
 make gn
@@ -693,7 +693,7 @@ uv run python scripts/test_tcod.py
 
 ```bash
 # 전체 스토리 검증 (37 stories)
-cd "/Users/emilio/projects/Projects/Game/roguelike_sprawl"
+cd "/Users/emilio/projects/Projects/Game/wet_run"
 uv run python scripts/validate_stories.py /Users/emilio/projects/Projects/Fiction/derivative/sprawl-trilogy/short-stories
 
 # 특정 스토리만
@@ -707,7 +707,7 @@ uv run python scripts/validate_stories.py /Users/emilio/projects/Projects/Fictio
 
 ```bash
 # 스테이지 구조 검증 (9 stages, 8 transitions, 15 missions)
-cd "/Users/emilio/projects/Projects/Game/roguelike_sprawl"
+cd "/Users/emilio/projects/Projects/Game/wet_run"
 uv run python scripts/validate_stage_structure.py
 ```
 

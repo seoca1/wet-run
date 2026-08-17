@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.combat.death_taunts import (
+from wet_run.combat.death_taunts import (
     DEATH_TAUNTS,
     DeathTaunt,
     add_taunt,

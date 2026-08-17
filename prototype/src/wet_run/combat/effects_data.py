@@ -14,7 +14,7 @@ Module structure (post ADR-0144):
     - combat/palette: color constants
 
 Backward compat: combat/effects.py re-exports everything, so existing
-imports of ``from roguelike_sprawl.combat.effects import X`` continue to
+imports of ``from wet_run.combat.effects import X`` continue to
 work via the facade.
 """
 

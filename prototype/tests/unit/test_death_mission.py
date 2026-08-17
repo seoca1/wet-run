@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from tcod.event import KeyDown, KeySym, Modifier, Scancode
 
-from roguelike_sprawl.engine import death as death_screen
-from roguelike_sprawl.engine import mission_completion
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.missions.board import JobBoard
-from roguelike_sprawl.missions.mission import Mission, Objective, Rewards
+from wet_run.engine import death as death_screen
+from wet_run.engine import mission_completion
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.matrix.node import ZoneDepth
+from wet_run.missions.board import JobBoard
+from wet_run.missions.mission import Mission, Objective, Rewards
 
 
 def _make_first_jack_mission() -> Mission:
@@ -442,7 +442,7 @@ class TestDeathInput:
 
     def test_m_toggles_mute(self) -> None:
         """M key toggles mute and shows message."""
-        from roguelike_sprawl.audio import sound_manager
+        from wet_run.audio import sound_manager
 
         initial = sound_manager.get_sound_manager().muted
         state = _make_test_state()

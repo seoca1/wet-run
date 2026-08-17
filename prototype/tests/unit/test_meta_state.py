@@ -12,15 +12,15 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from roguelike_sprawl.engine.meta_state_manager import (
+from wet_run.engine.meta_state_manager import (
     default_meta_state_path,
     load_meta_state,
     reset_meta_state,
     save_meta_state,
 )
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.run.meta_state import META_STATE_VERSION, MetaState
-from roguelike_sprawl.run.reputation import ReputationState
+from wet_run.matrix.node import Faction
+from wet_run.run.meta_state import META_STATE_VERSION, MetaState
+from wet_run.run.reputation import ReputationState
 
 # ============================================================================
 # MetaState dataclass tests
@@ -334,7 +334,7 @@ class TestAppStateHydration:
 
     def test_hydrate_app_state_from_meta_state(self, tmp_path: Path) -> None:
         """AppState.reputation = MetaState.reputation (delegation)."""
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         meta = MetaState()
         meta.reputation.adjust(Faction.HOSAKA, 20, source="test")

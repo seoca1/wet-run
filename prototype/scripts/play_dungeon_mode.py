@@ -26,9 +26,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from roguelike_sprawl.engine import dungeon_view  # noqa: E402
-from roguelike_sprawl.engine.state import AppState  # noqa: E402
-from roguelike_sprawl.matrix.dungeon_generator import (  # noqa: E402
+from wet_run.engine import dungeon_view  # noqa: E402
+from wet_run.engine.state import AppState  # noqa: E402
+from wet_run.matrix.dungeon_generator import (  # noqa: E402
     ProceduralDungeonGenerator,
 )
 

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from roguelike_sprawl.missions.random_rules import (
+from wet_run.missions.random_rules import (
     RuleResult,
     apply_rule,
     calculate_weight_bonus,

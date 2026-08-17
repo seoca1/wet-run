@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'eurydice_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'eurydice_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 47 — eurydice motif page (wiki/motifs/eurydice.md).
 Heretic-arc, Arc 2: underground-operative statework audit scenario.

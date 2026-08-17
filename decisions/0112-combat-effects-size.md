@@ -8,7 +8,7 @@
 
 ## 컨텍스트 (Context)
 
-`prototype/src/roguelike_sprawl/combat/effects.py` (1,246 LOC) 는 전투의 시각 효과 시스템:
+`prototype/src/wet_run/combat/effects.py` (1,246 LOC) 는 전투의 시각 효과 시스템:
 
 **현황**:
 - 28 functions, 12 classes, 8 imports

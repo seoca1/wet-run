@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.tutorial import (
+from wet_run.combat.tutorial import (
     TUTORIAL_ACTS,
     get_act_index,
     get_current_act,

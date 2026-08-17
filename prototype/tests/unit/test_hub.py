@@ -17,8 +17,8 @@ from __future__ import annotations
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from roguelike_sprawl.engine import hub
-from roguelike_sprawl.matrix import Faction
+from wet_run.engine import hub
+from wet_run.matrix import Faction
 
 # ---------------------------------------------------------------------------
 # _render_reputation_dots
@@ -81,13 +81,13 @@ class TestRenderReputationDots:
 
 class TestRenderMarketSummary:
     def test_returns_empty_when_market_unavailable(self, monkeypatch):
-        from roguelike_sprawl.engine import hub as hub_mod
+        from wet_run.engine import hub as hub_mod
 
         # Patch InfoMarket.load_default to raise.
         def _broken():
             raise OSError("no market data")
 
-        import roguelike_sprawl.crafting.info_market as im
+        import wet_run.crafting.info_market as im
 
         monkeypatch.setattr(im.InfoMarket, "load_default", staticmethod(_broken))
         state = SimpleNamespace(reputation=None)
@@ -95,7 +95,7 @@ class TestRenderMarketSummary:
         assert out == ""
 
     def test_returns_neutral_string_without_reputation(self, monkeypatch):
-        import roguelike_sprawl.crafting.info_market as im
+        import wet_run.crafting.info_market as im
 
         t1 = SimpleNamespace(base_price=100, faction=None, discounted_price=MagicMock())
         market = SimpleNamespace(get=MagicMock(return_value=t1))
@@ -107,7 +107,7 @@ class TestRenderMarketSummary:
         assert "neutral" in out
 
     def test_returns_discounted_string_with_faction(self, monkeypatch):
-        import roguelike_sprawl.crafting.info_market as im
+        import wet_run.crafting.info_market as im
 
         t1 = SimpleNamespace(
             base_price=100, faction=Faction.HOSAKA, discounted_price=MagicMock(return_value=50)
@@ -165,7 +165,7 @@ class TestMaterialGauge:
 class TestPreviewZdr:
     def test_returns_positive_int_for_valid_mission(self):
         # Use a real Mission instance from missions.json.
-        from roguelike_sprawl.missions.mission import ZoneDepth
+        from wet_run.missions.mission import ZoneDepth
 
         # A lightweight stub — we only need .zone.
         mission = MagicMock()

@@ -5,8 +5,8 @@ Validates the layout used by the matrix screen (80x50).
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.matrix_view import BOX_HEIGHT, BOX_WIDTH
-from roguelike_sprawl.matrix import MatrixGenerator, compute_layout
+from wet_run.engine.matrix_view import BOX_HEIGHT, BOX_WIDTH
+from wet_run.matrix import MatrixGenerator, compute_layout
 
 SCREEN_W = 80
 SCREEN_H = 50

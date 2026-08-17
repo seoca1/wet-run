@@ -53,7 +53,7 @@ Auto-save triggers:
 - Hub menu: Save / Load buttons
 
 Save slots: 5 slots, files in `<save_dir>/slot_N.json`.
-Default save dir: `~/.roguelike_sprawl/saves/` (cross-platform).
+Default save dir: `~/.wet_run/saves/` (cross-platform).
 """
 
 from __future__ import annotations
@@ -226,8 +226,8 @@ class SavedRun:
 def _default_save_dir() -> Path:
     """Return the platform-appropriate save directory.
 
-    - macOS/Linux: $XDG_DATA_HOME/roguelike_sprawl/saves/ or ~/.local/share/...
-    - Windows: %APPDATA%/roguelike_sprawl/saves/
+    - macOS/Linux: $XDG_DATA_HOME/wet_run/saves/ or ~/.local/share/...
+    - Windows: %APPDATA%/wet_run/saves/
     """
     system = platform.system()
     if system == "Windows":
@@ -239,7 +239,7 @@ def _default_save_dir() -> Path:
             base = xdg
         else:
             base = str(Path.home() / ".local" / "share")
-    return Path(base) / "roguelike_sprawl" / "saves"
+    return Path(base) / "wet_run" / "saves"
 
 
 def _log_save_warning(message: str) -> None:

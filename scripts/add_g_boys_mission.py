@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'g_boys_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'g_boys_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 53 — G-Boys faction page.
 Heretic-arc, Arc 3: kung-fu subculture class-statework scenario.

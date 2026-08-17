@@ -190,7 +190,7 @@ Pure ASCII 안에서 인물과 객체를 *시각적으로 식별*한다. Pillar 
 ### 코드 모듈
 
 ```python
-# prototype/roguelike_sprawl/portraits.py
+# prototype/wet_run/portraits.py
 def get_portrait(entity_id: str) -> Portrait:
     return portraits[entity_id]
 

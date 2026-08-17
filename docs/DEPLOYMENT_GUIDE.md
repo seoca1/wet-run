@@ -101,10 +101,10 @@ https://github.com/seoca1/roguelike-sprawl/actions
 curl -sI https://seoca1.github.io/roguelike-sprawl/
 
 # Pages API
-curl -s https://api.github.com/repos/seoca1/roguelike-sprawl/pages
+curl -s https://api.github.com/repos/seoca1/wet-run/pages
 
 # 최근 workflow run 상태
-gh run list --repo seoca1/roguelike-sprawl --limit 3
+gh run list --repo seoca1/wet-run --limit 3
 ```
 
 ### 4.3 캐시 무효화 (Hard Refresh)
@@ -162,7 +162,7 @@ git push origin --delete gh-pages  # 또는 force push
 다음은 1회만 필요했고, 이미 적용된 상태입니다:
 
 - ✅ GitHub Pages: `Settings → Pages → Source = Deploy from a branch, gh-pages / root`
-- ✅ Repository: `seoca1/roguelike-sprawl` (public)
+- ✅ Repository: `seoca1/wet-run` (public)
 - ✅ Workflow: `.github/workflows/pages.yml` (peaceiris/actions-gh-pages@v4)
 - ✅ `_pages` artifact: 8 dashboard HTML + design/ + favicon.svg
 
@@ -199,7 +199,7 @@ git push origin --delete gh-pages  # 또는 force push
 ## 10. 한계 (Limitations)
 
 - **빌드 시간**: push 후 1-2분. 즉시 반영 아님.
-- **퍼블릭 전용**: `seoca1/roguelike-sprawl`은 public. 비공개 repo는 GitHub Pro 필요.
+- **퍼블릭 전용**: `seoca1/wet-run`은 public. 비공개 repo는 GitHub Pro 필요.
 - **도메인**: `seoca1.github.io/roguelike-sprawl/`만 지원. 커스텀 도메인은 CNAME 추가 필요.
 
 ---

@@ -1,6 +1,6 @@
 """Tests for audio.theme — ThemePlayer + THEMES dict + singleton.
 
-Coverage target for src/roguelike_sprawl/audio/theme.py.
+Coverage target for src/wet_run/audio/theme.py.
 Real audio playback is mocked; we test the control/decision logic.
 """
 
@@ -11,8 +11,8 @@ from unittest.mock import patch
 
 import pytest
 
-from roguelike_sprawl.audio.config import SoundConfig
-from roguelike_sprawl.audio.theme import (
+from wet_run.audio.config import SoundConfig
+from wet_run.audio.theme import (
     DEFAULT_THEME,
     THEMES,
     ThemePlayer,
@@ -179,7 +179,7 @@ class TestOneShotFallback:
         """When theme file doesn't exist, try playing as a one-shot effect."""
         player = ThemePlayer(sounds_dir)
         # Patch the sound_manager's play_with_config to return True
-        with patch("roguelike_sprawl.audio.sound_manager.get_sound_manager") as mock_sm:
+        with patch("wet_run.audio.sound_manager.get_sound_manager") as mock_sm:
             mock_sm.return_value.play_with_config.return_value = True
             result = player.play(DEFAULT_THEME, config)
             # Result depends on whether fallback succeeds (sm mock returns True)
@@ -220,11 +220,11 @@ class TestStop:
 
 class TestSingleton:
     def test_get_theme_player_returns_instance(self):
-        import roguelike_sprawl.audio.theme as theme_module
+        import wet_run.audio.theme as theme_module
 
         theme_module._theme_player = None
 
-        with patch("roguelike_sprawl.audio.theme.get_sound_manager") as mock_sm:
+        with patch("wet_run.audio.theme.get_sound_manager") as mock_sm:
             mock_sm.return_value.sounds_dir = Path("/tmp/sounds")
             player1 = get_theme_player()
             player2 = get_theme_player()
@@ -232,11 +232,11 @@ class TestSingleton:
             mock_sm.assert_called_once()
 
     def test_get_after_reset_creates_new(self):
-        import roguelike_sprawl.audio.theme as theme_module
+        import wet_run.audio.theme as theme_module
 
         theme_module._theme_player = None
 
-        with patch("roguelike_sprawl.audio.theme.get_sound_manager") as mock_sm:
+        with patch("wet_run.audio.theme.get_sound_manager") as mock_sm:
             mock_sm.return_value.sounds_dir = Path("/tmp/sounds")
             player1 = get_theme_player()
             theme_module._theme_player = None
@@ -246,17 +246,17 @@ class TestSingleton:
 
 class TestConvenienceFunctions:
     def test_play_theme_convenience(self, tmp_path: Path):
-        import roguelike_sprawl.audio.theme as theme_module
+        import wet_run.audio.theme as theme_module
 
         theme_module._theme_player = None
 
-        with patch("roguelike_sprawl.audio.sound_manager.get_sound_manager"):
+        with patch("wet_run.audio.sound_manager.get_sound_manager"):
             config = _disabled_config()
             result = play_theme(DEFAULT_THEME, config)
             assert result is False  # disabled config returns False
 
     def test_stop_theme_convenience_no_crash(self):
-        import roguelike_sprawl.audio.theme as theme_module
+        import wet_run.audio.theme as theme_module
 
         theme_module._theme_player = None
         # Should not raise even when no theme player exists

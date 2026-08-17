@@ -172,7 +172,7 @@ class TestMatrixNodeDocstringCoverage:
     """Phase 40 polish — Node.__post_init__ docstring (88% -> 100%)."""
 
     def test_node_post_init_has_docstring(self) -> None:
-        from roguelike_sprawl.matrix.node import Node
+        from wet_run.matrix.node import Node
 
         doc = Node.__post_init__.__doc__
         assert doc is not None
@@ -197,7 +197,7 @@ class TestMatrixNodeDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/matrix/node.py",
+                "src/wet_run/matrix/node.py",
             ],
             capture_output=True,
             text=True,
@@ -219,7 +219,7 @@ class TestMissionsDocstringCoverage:
     """Phase 40 polish — Mission + MissionChain __post_init__ docs (88% -> 100%)."""
 
     def test_mission_post_init_has_docstring(self) -> None:
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.missions.mission import Mission
 
         doc = Mission.__post_init__.__doc__
         assert doc is not None
@@ -231,7 +231,7 @@ class TestMissionsDocstringCoverage:
         assert "reward" in doc_lower
 
     def test_mission_chain_post_init_has_docstring(self) -> None:
-        from roguelike_sprawl.missions.mission import MissionChain
+        from wet_run.missions.mission import MissionChain
 
         doc = MissionChain.__post_init__.__doc__
         assert doc is not None
@@ -256,7 +256,7 @@ class TestMissionsDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/missions/mission.py",
+                "src/wet_run/missions/mission.py",
             ],
             capture_output=True,
             text=True,
@@ -278,7 +278,7 @@ class TestDungeonViewDocstringCoverage:
     """Phase 40 polish — _handle_cardinal_movement + _handle_backtrack docs (83% -> 100%)."""
 
     def test_cardinal_movement_has_docstring(self) -> None:
-        from roguelike_sprawl.engine.dungeon_view import _handle_cardinal_movement
+        from wet_run.engine.dungeon_view import _handle_cardinal_movement
 
         doc = _handle_cardinal_movement.__doc__
         assert doc is not None
@@ -288,7 +288,7 @@ class TestDungeonViewDocstringCoverage:
         assert "movement" in doc_lower or "neighbor" in doc_lower or "arrow" in doc_lower
 
     def test_backtrack_has_docstring(self) -> None:
-        from roguelike_sprawl.engine.dungeon_view import _handle_backtrack
+        from wet_run.engine.dungeon_view import _handle_backtrack
 
         doc = _handle_backtrack.__doc__
         assert doc is not None
@@ -309,7 +309,7 @@ class TestDungeonViewDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/engine/dungeon_view.py",
+                "src/wet_run/engine/dungeon_view.py",
             ],
             capture_output=True,
             text=True,
@@ -332,7 +332,7 @@ class TestPhase40Smoke:
 
     def test_node_post_init_validates_empty_id(self) -> None:
         """Node.__post_init__ semantics intact after docstring addition (empty id rejected)."""
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         with pytest.raises(ValueError, match="Node id must be non-empty"):
             Node(
@@ -346,7 +346,7 @@ class TestPhase40Smoke:
 
     def test_node_post_init_validates_ice_needs_ice_kind(self) -> None:
         """ICE node without IceKind is rejected (validation preserved)."""
-        from roguelike_sprawl.matrix.node import IceKind, Node, NodeKind, ZoneDepth
+        from wet_run.matrix.node import IceKind, Node, NodeKind, ZoneDepth
 
         with pytest.raises(ValueError, match="ICE node"):
             Node(
@@ -361,7 +361,7 @@ class TestPhase40Smoke:
 
     def test_mission_post_init_rejects_bad_arc(self) -> None:
         """Mission.__post_init__ rejects arc > 5 (validation preserved)."""
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.missions.mission import Mission
 
         with pytest.raises(ValueError, match="arc must be.*1..5"):
             Mission(
@@ -377,7 +377,7 @@ class TestPhase40Smoke:
 
     def test_mission_post_init_rejects_negative_reward(self) -> None:
         """Mission.__post_init__ rejects negative reward_credits (validation preserved)."""
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.missions.mission import Mission
 
         with pytest.raises(ValueError, match="reward_credits"):
             Mission(
@@ -394,7 +394,7 @@ class TestPhase40Smoke:
 
     def test_mission_chain_post_init_rejects_short_chain(self) -> None:
         """MissionChain.__post_init__ rejects chains with <3 missions (validation preserved)."""
-        from roguelike_sprawl.missions.mission import (
+        from wet_run.missions.mission import (
             ChainFailure,
             ChainMission,
             ChainReward,
@@ -417,7 +417,7 @@ class TestPhase40Smoke:
 
     def test_mission_chain_post_init_rejects_bad_chain_type(self) -> None:
         """MissionChain.__post_init__ rejects invalid chain_type (validation preserved)."""
-        from roguelike_sprawl.missions.mission import (
+        from wet_run.missions.mission import (
             ChainFailure,
             ChainMission,
             ChainReward,

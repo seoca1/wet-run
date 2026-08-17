@@ -19,7 +19,7 @@ import pytest
 # Use the project_root / data_dir fixtures from conftest.py.
 # REPO is the project root (this prototype/) for build_dashboard
 # calls; the data_dir fixture from conftest covers other tests.
-REPO = Path("/Users/emilio/projects/Game/roguelike_sprawl/prototype")
+REPO = Path("/Users/emilio/projects/Projects/Game/wet_run/prototype")
 
 
 @pytest.fixture
@@ -226,7 +226,7 @@ class TestDashboardIntegration:
         # build_dashboard lives in the Projects-path tools/ dir
         # (not the Game path that hosts this test). Use the Projects
         # workspace root to find it.
-        projects_root = Path("/Users/emilio/projects/Projects/Game/roguelike_sprawl")
+        projects_root = Path("/Users/emilio/projects/Projects/Game/wet_run")
         if "build_dashboard" not in _sys.modules:
             _sys.path.insert(0, str(projects_root / "tools"))
             spec = importlib.util.spec_from_file_location(
@@ -287,8 +287,8 @@ class TestArmitageEndToEnd:
 
     def test_4_missions_diverse_faction_alignment(self, data_dir: Path) -> None:
         """4 missions span Hosaka → T-A (Armitage's character arc)."""
-        from roguelike_sprawl.engine.mission_completion import fixer_to_factions
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.engine.mission_completion import fixer_to_factions
+        from wet_run.matrix.node import Faction
 
         with (data_dir / "missions" / "missions.json").open(encoding="utf-8") as f:
             data = json.load(f)

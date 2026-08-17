@@ -12,8 +12,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from roguelike_sprawl.engine.chapter_view import chapter_for_character
-from roguelike_sprawl.engine.graphic_novel_view import (
+from wet_run.engine.chapter_view import chapter_for_character
+from wet_run.engine.graphic_novel_view import (
     GN_MENU_ANGIE,
     _character_label,
     available_endings,
@@ -60,7 +60,7 @@ class TestAngieMenuOption:
 
     def test_angie_in_menu_options_without_save(self) -> None:
         """9 total options: prologue + 6 chars + suit + wigan + angie + sally + back."""
-        from roguelike_sprawl.i18n import Translator
+        from wet_run.i18n import Translator
 
         t = Translator("en")
         options = get_gn_menu_options(t, has_save=False)
@@ -71,7 +71,7 @@ class TestAngieMenuOption:
         assert keys[6] == "7"
 
     def test_angie_in_menu_options_with_save(self) -> None:
-        from roguelike_sprawl.i18n import Translator
+        from wet_run.i18n import Translator
 
         t = Translator("en")
         options = get_gn_menu_options(t, has_save=True)
@@ -119,14 +119,14 @@ class TestAngieChapter:
 
 class TestPrologueWithAngie:
     def test_prologue_includes_angie(self) -> None:
-        from roguelike_sprawl.engine.graphic_novel_view import load_prologue_chain
+        from wet_run.engine.graphic_novel_view import load_prologue_chain
 
         chain = load_prologue_chain(SCENES_DIR, seed=42)
         angie_scenes = [s for s in chain if s.character == "angie"]
         assert len(angie_scenes) == 4
 
     def test_prologue_has_6_characters(self) -> None:
-        from roguelike_sprawl.engine.graphic_novel_view import load_prologue_chain
+        from wet_run.engine.graphic_novel_view import load_prologue_chain
 
         chain = load_prologue_chain(SCENES_DIR, seed=42)
         chars = {s.character for s in chain}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Project-scoped audit for Game/roguelike_sprawl/ — wikilink integrity check.
+"""Project-scoped audit for Game/wet_run/ — wikilink integrity check.
 
 Includes cross-project Fiction wiki resolution per AGENTS.md §4.1.
 """

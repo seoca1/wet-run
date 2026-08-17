@@ -13,7 +13,7 @@ narrative loop without requiring a full branching dialogue system.
 
 Example::
 
-    >>> from roguelike_sprawl.engine.npc_greeting import get_greeting
+    >>> from wet_run.engine.npc_greeting import get_greeting
     >>> greeting = get_greeting("finn", state)
     >>> greeting.line_en
     'Welcome to the Sprawl, cowboy.'

@@ -26,7 +26,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.audio import sound_manager
+from wet_run.audio import sound_manager
 
 
 def _play(name: str) -> None:

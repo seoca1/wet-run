@@ -1,21 +1,21 @@
 ---
 title:
-  en: "Cross-Project Integration: Fiction ↔ roguelike_sprawl"
+  en: "Cross-Project Integration: Fiction ↔ wet_run"
   ko: "크로스 프로젝트 통합: Fiction ↔ 로그라이크 스프롤"
 created: 2026-07-26
 updated: 2026-08-08
 phase: "Phase 83 (post-Fiction-Phase-73-82 propagation)"
 description:
-  en: "How roguelike_sprawl integrates with the Fiction derivative short story corpus. Two-way link mechanics, validation, and known orphan references. Updated 2026-08-08 to reflect Fiction Phase 73-82 corpus deepening + ADR-0017 backfill + verbatim text audit + 6th synthesis page (Operative-Class Across Trilogies)."
+  en: "How wet_run integrates with the Fiction derivative short story corpus. Two-way link mechanics, validation, and known orphan references. Updated 2026-08-08 to reflect Fiction Phase 73-82 corpus deepening + ADR-0017 backfill + verbatim text audit + 6th synthesis page (Operative-Class Across Trilogies)."
   ko: "로그라이크 스프롤이 Fiction 파생 단편 코퍼스와 어떻게 통합되는지 정리. 양방향 링크 메커니즘, 검증, 알려진 orphan 참조. 2026-08-08 Fiction Phase 73-82 코퍼스 확장 + ADR-0017 백필 + verbatim 텍스트 감사 + 6번째 신서시스 페이지 반영 갱신."
 language: en
 related:
   - "[[sprawl_universe]]"
   - "[[derivative_stories]]"
-  - "[[connections/roguelike_sprawl-missions|roguelike_sprawl-missions]]"
+  - "[[connections/wet_run-missions|wet_run-missions]]"
 ---
 
-# Cross-Project Integration: Fiction ↔ roguelike_sprawl
+# Cross-Project Integration: Fiction ↔ wet_run
 
 > **Phase α-J status (2026-07-26)**: Bidirectional link established.
 > 100 Fiction stories linked to missions, 81/81 GN scenes linked to missions,
@@ -25,7 +25,7 @@ related:
 
 ## Why this matters
 
-The roguelike_sprawl game references a Fiction derivative short story
+The wet_run game references a Fiction derivative short story
 for nearly every mission. The Fiction corpus was written first, and the
 game borrows narrative weight from it. Without a formal cross-project
 link, the two sides drift apart over time (orphan references, duplicate
@@ -53,14 +53,14 @@ stem (filename minus date prefix) that the mission is based on.
 }
 ```
 
-**Resolver**: `prototype/src/roguelike_sprawl/data/story_resolver.py` searches
+**Resolver**: `prototype/src/wet_run/data/story_resolver.py` searches
 Fiction derivative directories (sprawl-trilogy → bridge-trilogy → blue-ant)
 for the file. Falls back to default (first_jack) if not found.
 
 ## Link direction 2: Fiction → Mission (story declares its game link)
 
 **Mechanism**: Fiction `.md` file frontmatter `game_mission_id` field
-declares the roguelike_sprawl mission_id that the story belongs to.
+declares the wet_run mission_id that the story belongs to.
 
 **Example** (`aleph_fragment.md` Fiction file):
 ```yaml
@@ -68,7 +68,7 @@ declares the roguelike_sprawl mission_id that the story belongs to.
 title: Aleph Fragment
 game_mission_id: aleph_fragment
 series: 'Sprawl #4.4 (heretic arc-4)'
-source_text: Original story for Roguelike Sprawl
+source_text: Original story for Wet Run
 ---
 ```
 
@@ -103,10 +103,10 @@ runs `verify_story_links.py` which checks:
 - Phase 82: New synthesis page — **Operative-Class Across the Four Trilogies** (197 lines, 4-era operative-class evolution)
 
 **Cross-project integrity status** (post Fiction Phase 73-82):
-- All Fiction wiki pages cited by roguelike_sprawl wiki remain valid (no Fiction edits removed referenced content)
+- All Fiction wiki pages cited by wet_run wiki remain valid (no Fiction edits removed referenced content)
 - ADR-0017 added `source_word_count` field to 150 KO derivative files — game-mission references via `game_mission_id` continue to resolve
 - Verbatim text audit (Phase 81) paraphrased 6 multi-sentence quote blocks across 4 novels — game mission text unchanged
-- New synthesis pages (Phase 77 + 82) provide roguelike_sprawl cross-references for short-fiction corpus foundation + operative-class evolution
+- New synthesis pages (Phase 77 + 82) provide wet_run cross-references for short-fiction corpus foundation + operative-class evolution
 
 **Cross-references to Fiction synthesis pages** (Phase 83 enhancement):
 - [../../../../Fiction/wiki/concepts/short-fiction-as-corpus-foundation.md](../../../../Fiction/wiki/concepts/short-fiction-as-corpus-foundation.md) — 12 short-fiction works as the corpus's foundational substrate
@@ -148,7 +148,7 @@ record (also in fiction wiki: `orphan_source_stems.json`).
 ## Fiction wiki cross-reference
 
 The Fiction project wiki contains a corresponding index:
-`Fiction/wiki/connections/roguelike_sprawl-missions.md` — all 111 missions
+`Fiction/wiki/connections/wet_run-missions.md` — all 111 missions
 with their linked Fiction stories (94 linked + 17 informational).
 
 This is the **reverse index**: from Fiction's perspective, what missions
@@ -164,7 +164,7 @@ reference each story.
    ---
    game_mission_id: my_mission_id
    series: 'Sprawl #X.Y (arc-Z)'
-   source_text: Original story for Roguelike Sprawl
+   source_text: Original story for Wet Run
    ---
    ```
 3. Add a Korean `.ko.md` translation
@@ -242,8 +242,8 @@ recommendations. Key findings:
 
 - `prototype/data/missions/missions.json` (single source of truth for game)
 - `Fiction/derivative/sprawl-trilogy/{short-stories,novelettes}/` (Fiction source)
-- `prototype/src/roguelike_sprawl/data/story_resolver.py` (resolver implementation)
+- `prototype/src/wet_run/data/story_resolver.py` (resolver implementation)
 - `prototype/scripts/verify_story_links.py` (validator)
 - `prototype/docs/cross-project/orphan_source_stems.json` (historical record)
-- `Fiction/wiki/connections/roguelike_sprawl-missions.md` (reverse index)
+- `Fiction/wiki/connections/wet_run-missions.md` (reverse index)
 - `.github/workflows/cross-project-integrity.yml` (CI enforcement)

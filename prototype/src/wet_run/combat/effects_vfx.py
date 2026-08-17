@@ -20,7 +20,7 @@ Module structure (post ADR-0145):
   - combat/palette: color constants
 
 Backward compat: existing imports of
-``from roguelike_sprawl.combat.effects_vfx import X`` continue to work via
+``from wet_run.combat.effects_vfx import X`` continue to work via
 the re-exports below (no import site changes required).
 """
 

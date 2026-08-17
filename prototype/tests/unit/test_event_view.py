@@ -10,8 +10,8 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-from roguelike_sprawl.engine import event_view
-from roguelike_sprawl.engine.event_story import (
+from wet_run.engine import event_view
+from wet_run.engine.event_story import (
     CharacterArt,
     EventChoice,
     EventLine,
@@ -209,7 +209,7 @@ class TestRenderEventMain:
     def test_no_line_returns_silently(self) -> None:
         from types import SimpleNamespace
 
-        from roguelike_sprawl.engine import event_view
+        from wet_run.engine import event_view
 
         console = _FakeConsole()
         es = SimpleNamespace(
@@ -222,8 +222,8 @@ class TestRenderEventMain:
     def test_renders_art_then_dialogue_then_choices(self) -> None:
         from types import SimpleNamespace
 
-        from roguelike_sprawl.engine import event_view
-        from roguelike_sprawl.engine.event_story import (
+        from wet_run.engine import event_view
+        from wet_run.engine.event_story import (
             EventChoice,
             EventLine,
             EventStory,
@@ -271,7 +271,7 @@ class TestRenderEventMain:
 
 class TestDrawCharacterArt:
     def test_draws_each_art_line(self) -> None:
-        from roguelike_sprawl.engine import event_view
+        from wet_run.engine import event_view
 
         art = CharacterArt(
             character_id="case",
@@ -287,7 +287,7 @@ class TestDrawCharacterArt:
         assert "── CASE ──" in flat
 
     def test_respects_max_height(self) -> None:
-        from roguelike_sprawl.engine import event_view
+        from wet_run.engine import event_view
 
         art = CharacterArt(
             character_id="x",
@@ -303,8 +303,8 @@ class TestDrawCharacterArt:
 
 class TestDrawDialogue:
     def test_speaker_with_portrait(self) -> None:
-        from roguelike_sprawl.engine import event_view
-        from roguelike_sprawl.engine.event_story import EventLine
+        from wet_run.engine import event_view
+        from wet_run.engine.event_story import EventLine
 
         line = EventLine(speaker="Case", portrait="KC", text="Hi.", text_ko="안녕.")
         console = _FakeConsole()
@@ -314,8 +314,8 @@ class TestDrawDialogue:
         assert "안녕." in flat
 
     def test_speaker_without_portrait(self) -> None:
-        from roguelike_sprawl.engine import event_view
-        from roguelike_sprawl.engine.event_story import EventLine
+        from wet_run.engine import event_view
+        from wet_run.engine.event_story import EventLine
 
         line = EventLine(speaker="Finn", text="Got a job.", text_ko="작업 있어.")
         console = _FakeConsole()
@@ -329,8 +329,8 @@ class TestDrawChoices:
     def test_separator_above_choices(self) -> None:
         from types import SimpleNamespace
 
-        from roguelike_sprawl.engine import event_view
-        from roguelike_sprawl.engine.event_story import EventChoice, EventLine
+        from wet_run.engine import event_view
+        from wet_run.engine.event_story import EventChoice, EventLine
 
         line = EventLine(
             choices=(
@@ -351,8 +351,8 @@ class TestDrawChoices:
     def test_selected_choice_has_cursor_marker(self) -> None:
         from types import SimpleNamespace
 
-        from roguelike_sprawl.engine import event_view
-        from roguelike_sprawl.engine.event_story import EventChoice, EventLine
+        from wet_run.engine import event_view
+        from wet_run.engine.event_story import EventChoice, EventLine
 
         line = EventLine(
             choices=(

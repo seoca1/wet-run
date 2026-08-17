@@ -4,7 +4,7 @@ import json
 import subprocess
 from pathlib import Path
 
-PROJECT_ROOT = Path("/Users/emilio/projects/Projects/Game/roguelike_sprawl")
+PROJECT_ROOT = Path("/Users/emilio/projects/Projects/Game/wet_run")
 DATA_FILE = PROJECT_ROOT / "design/systems/stage_structure.json"
 VALIDATOR = PROJECT_ROOT / "scripts/validate_stage_structure.py"
 

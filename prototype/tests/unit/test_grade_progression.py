@@ -62,8 +62,8 @@ def test_5up_has_construct(grades_module) -> None:
 
 
 def test_run_one_grade_returns_expected_fields(grades_module) -> None:
-    from roguelike_sprawl.combat.registry import ProgramRegistry
-    from roguelike_sprawl.portraits import PortraitManager
+    from wet_run.combat.registry import ProgramRegistry
+    from wet_run.portraits import PortraitManager
 
     project_root = Path(__file__).parent.parent.parent
     data_dir = project_root / "data"
@@ -97,8 +97,8 @@ def test_run_one_grade_returns_expected_fields(grades_module) -> None:
 
 def test_run_one_grade_creates_fresh_enemy_per_call(grades_module) -> None:
     """The enemy is not the template; a fresh Combatant is built per call."""
-    from roguelike_sprawl.combat.registry import ProgramRegistry
-    from roguelike_sprawl.portraits import PortraitManager
+    from wet_run.combat.registry import ProgramRegistry
+    from wet_run.portraits import PortraitManager
 
     project_root = Path(__file__).parent.parent.parent
     data_dir = project_root / "data"
@@ -159,8 +159,8 @@ def test_aftermath_for_all_victory_grades(grades_module) -> None:
 
 def test_5up_dominates_1up(grades_module) -> None:
     """5-up clearly outperforms 1-up in time and damage taken."""
-    from roguelike_sprawl.combat.registry import ProgramRegistry
-    from roguelike_sprawl.portraits import PortraitManager
+    from wet_run.combat.registry import ProgramRegistry
+    from wet_run.portraits import PortraitManager
 
     project_root = Path(__file__).parent.parent.parent
     data_dir = project_root / "data"

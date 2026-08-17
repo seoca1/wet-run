@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.accessibility import (
+from wet_run.combat.accessibility import (
     TEXT_SIZES,
     AccessibilityConfig,
     get_color_palette,

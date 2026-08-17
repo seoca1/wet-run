@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'cayce_footage_audit_run' to roguelike_sprawl missions.json.
+"""Add new mission 'cayce_footage_audit_run' to wet_run missions.json.
 
 Pairs with Fiction Phase 34 — Cayce Footage Audit derivative
 (derivative/blue-ant/short-stories/{en,ko}/2026-07-19_cayce_footage_audit.{md,.ko.md}).

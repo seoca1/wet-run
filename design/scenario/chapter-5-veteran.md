@@ -293,8 +293,8 @@ Chapter 5는 **안개의 미학**으로 특징된다. 안개는:
 ### 9.1 구현 파일
 
 ```
-Game/roguelike_sprawl/prototype/
-├── src/roguelike_sprawl/
+Game/wet_run/prototype/
+├── src/wet_run/
 │   ├── story/
 │   │   └── chapter_fog.py  # Chapter 5 Fog 로직
 │   ├── engine/

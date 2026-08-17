@@ -12,13 +12,13 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.engine.npc_event import (
+from wet_run.engine.npc_event import (
     DIXIE_FLATLINE_EVENT,
     DialogueChoice,
     _evaluate_faction_gate,
 )
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.run.reputation import ReputationState
+from wet_run.matrix.node import Faction
+from wet_run.run.reputation import ReputationState
 
 # ============================================================================
 # _evaluate_faction_gate helper
@@ -190,7 +190,7 @@ class TestDixieEventHasFactionGatedChoices:
 
 class TestViewLayerFiltering:
     def test_visible_choices_count_at_neutral(self) -> None:
-        from roguelike_sprawl.run.reputation import ReputationState
+        from wet_run.run.reputation import ReputationState
 
         rep = ReputationState()
         first_line = DIXIE_FLATLINE_EVENT.lines[0]

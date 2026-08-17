@@ -121,7 +121,7 @@
 
 ### 1. 신규 모듈
 
-`prototype/src/roguelike_sprawl/combat/multi_enemy.py` (NEW, ~200 LOC):
+`prototype/src/wet_run/combat/multi_enemy.py` (NEW, ~200 LOC):
 
 ```python
 """Multi-enemy encounter support (ADR-0152, Cycle 8).
@@ -206,12 +206,12 @@ Functions:
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/combat/multi_enemy.py` (NEW)
-- `prototype/src/roguelike_sprawl/combat/__init__.py` (re-export)
-- `prototype/src/roguelike_sprawl/combat/state.py` (step_combat + use_skill patches)
-- `prototype/src/roguelike_sprawl/combat/salvage.py` (HEAL_PCT 0.20 → 0.15)
-- `prototype/src/roguelike_sprawl/matrix/encounter_spawn.py` (NEW) 또는 `matrix/node.py` patch
-- `prototype/src/roguelike_sprawl/engine/state.py` (AppState.encounter_count)
+- `prototype/src/wet_run/combat/multi_enemy.py` (NEW)
+- `prototype/src/wet_run/combat/__init__.py` (re-export)
+- `prototype/src/wet_run/combat/state.py` (step_combat + use_skill patches)
+- `prototype/src/wet_run/combat/salvage.py` (HEAL_PCT 0.20 → 0.15)
+- `prototype/src/wet_run/matrix/encounter_spawn.py` (NEW) 또는 `matrix/node.py` patch
+- `prototype/src/wet_run/engine/state.py` (AppState.encounter_count)
 - `prototype/data/i18n/{en,ko}.json` (combat 섹션 추가)
 - `prototype/tests/unit/test_multi_enemy.py` (NEW, 12+ tests)
 - `prototype/tests/unit/test_salvage_scenarios.py` (TC-001~004 expected value update)
@@ -236,7 +236,7 @@ Functions:
 
 - 2026-08-07: Draft 작성 (Cycle 8 of v1.2.0+)
 - 2026-08-07: Accepted (Option 1, 사용자 확인)
-  - 구현: `prototype/src/roguelike_sprawl/combat/multi_enemy.py` (NEW, 115 LOC, ADR-0110 46% of 250 ceiling)
+  - 구현: `prototype/src/wet_run/combat/multi_enemy.py` (NEW, 115 LOC, ADR-0110 46% of 250 ceiling)
   - HEAL rebalance: `combat/salvage.py::HEAL_PCT: 0.20 → 0.15` (Pillar 3 weight 보존)
   - Step combat patch: `state.py::step_combat` 의 player auto-attack → `for target in all_alive_enemies(state)` (모든 alive enemy 순차 공격)
   - 1 pre-existing test updated: `test_combat.py::test_multi_ice_player_attacks_current_target_only` → `test_multi_ice_player_attacks_all_alive_enemies` (이름 + assertion 변경)

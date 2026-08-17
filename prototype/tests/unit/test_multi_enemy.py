@@ -1,6 +1,6 @@
 """Automated tests for Multi-Enemy Encounters (ADR-0152, Cycle 8).
 
-Source spec: Game/roguelike_sprawl/testcases/combat/multi-enemy.md (TC-MULTI-001~012)
+Source spec: Game/wet_run/testcases/combat/multi-enemy.md (TC-MULTI-001~012)
 
 Multi-enemy encounter support:
 - cycle_target: Tab key cycles target_index through alive enemies
@@ -16,13 +16,13 @@ import random
 
 import pytest
 
-from roguelike_sprawl.combat.multi_enemy import (
+from wet_run.combat.multi_enemy import (
     ENCOUNTER_COUNT_BY_GRADE,
     all_alive_enemies,
     cycle_target,
     encounter_count_for_grade,
 )
-from roguelike_sprawl.combat.state import Combatant, CombatState
+from wet_run.combat.state import Combatant, CombatState
 
 
 def _make_player(*, hp: int = 100, max_hp: int = 100) -> Combatant:
@@ -134,7 +134,7 @@ class TestStepCombatMultiEnemy:
         state = CombatState(player=_make_player(), enemies=(e1, e2, e3), rng=random.Random(0))
         # Advance tick_ms past auto-attack interval
         state.tick_ms = 2500  # > AUTO_ATTACK_INTERVAL_MS (2000)
-        from roguelike_sprawl.combat.state import step_combat
+        from wet_run.combat.state import step_combat
 
         step_combat(state)
 
@@ -153,7 +153,7 @@ class TestStepCombatMultiEnemy:
         )
         state = CombatState(player=_make_player(), enemies=(e1, e2, e3), rng=random.Random(0))
         state.tick_ms = 2500
-        from roguelike_sprawl.combat.state import step_combat
+        from wet_run.combat.state import step_combat
 
         step_combat(state)
 
@@ -240,7 +240,7 @@ class TestMultiEnemyDamage:
         e1, e2 = _make_enemy(enemy_id="ice_1"), _make_enemy(enemy_id="ice_2")
         state = CombatState(player=_make_player(), enemies=(e1, e2), rng=random.Random(0))
         state.tick_ms = 2500
-        from roguelike_sprawl.combat.state import step_combat
+        from wet_run.combat.state import step_combat
 
         step_combat(state)
 
@@ -256,7 +256,7 @@ class TestMultiEnemyDamage:
             rng=random.Random(0),
         )
         state.tick_ms = 2500
-        from roguelike_sprawl.combat.state import step_combat
+        from wet_run.combat.state import step_combat
 
         step_combat(state)
 

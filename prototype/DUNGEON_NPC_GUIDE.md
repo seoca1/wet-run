@@ -44,9 +44,9 @@ Complete walkthrough of the new dungeon-style exploration and NPC dialogue syste
 같은 시드 + 같은 캐릭터 등급 = 같은 레이아웃 (재현 가능).
 
 ```python
-from roguelike_sprawl.matrix.dungeon_generator import ProceduralDungeonGenerator
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.engine import dungeon_view
+from wet_run.matrix.dungeon_generator import ProceduralDungeonGenerator
+from wet_run.engine.state import AppState
+from wet_run.engine import dungeon_view
 
 gen = ProceduralDungeonGenerator(min_leaf_size=2, room_padding=1)
 graph = gen.generate(seed=42, mission_grade=1, character_ref="veteran")

@@ -256,7 +256,7 @@ Screen: MATRIX (DUNGEON MODE)  ← 토글 후
 같은 `(seed, grade, ref)` = 동일 레이아웃 (재현 가능).
 
 ```python
-from roguelike_sprawl.matrix.dungeon_generator import ProceduralDungeonGenerator
+from wet_run.matrix.dungeon_generator import ProceduralDungeonGenerator
 
 gen = ProceduralDungeonGenerator(min_leaf_size=2, room_padding=1)
 graph = gen.generate(seed=42, mission_grade=1, character_ref="veteran")

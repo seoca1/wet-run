@@ -8,13 +8,13 @@ from __future__ import annotations
 
 import tcod.console  # type: ignore[import-untyped]
 
-from roguelike_sprawl.combat.state import CombatState  # type: ignore[import-untyped]
-from roguelike_sprawl.combat.state_models import (  # type: ignore[import-untyped]
+from wet_run.combat.state import CombatState  # type: ignore[import-untyped]
+from wet_run.combat.state_models import (  # type: ignore[import-untyped]
     Combatant,
     Skill,
     SkillEffect,
 )
-from roguelike_sprawl.engine.combat_view import (  # type: ignore[import-untyped]
+from wet_run.engine.combat_view import (  # type: ignore[import-untyped]
     COMBAT_REPUTATION,
     _can_use_skill,
     _check_post_combat_event,
@@ -28,9 +28,9 @@ from roguelike_sprawl.engine.combat_view import (  # type: ignore[import-untyped
     _hp_bar,
     _remove_node_from_graph,
 )
-from roguelike_sprawl.engine.layout import Region, RegionId  # type: ignore[import-untyped]
-from roguelike_sprawl.matrix.graph import Edge, MatrixGraph  # type: ignore[import-untyped]
-from roguelike_sprawl.matrix.node import (  # type: ignore[import-untyped]
+from wet_run.engine.layout import Region, RegionId  # type: ignore[import-untyped]
+from wet_run.matrix.graph import Edge, MatrixGraph  # type: ignore[import-untyped]
+from wet_run.matrix.node import (  # type: ignore[import-untyped]
     Faction,
     Node,
     NodeKind,
@@ -387,7 +387,7 @@ class TestDrawVfxOverlay:
 
     def test_smoke_runs_with_empty_combat_effects(self) -> None:
         """Empty CombatEffects (no hit_flash, no animations, no particles) → renders cleanly."""
-        from roguelike_sprawl.combat.effects_vfx import CombatEffects
+        from wet_run.combat.effects_vfx import CombatEffects
 
         console = self._make_console()
         region = Region(id=RegionId.MAIN, x=0, y=0, w=20, h=10)
@@ -396,7 +396,7 @@ class TestDrawVfxOverlay:
 
     def test_smoke_runs_with_nonzero_shake_offsets(self) -> None:
         """Shake offsets (5, 3) — exercises offset arithmetic in particles/floating_numbers."""
-        from roguelike_sprawl.combat.effects_vfx import CombatEffects
+        from wet_run.combat.effects_vfx import CombatEffects
 
         console = self._make_console()
         region = Region(id=RegionId.MAIN, x=0, y=0, w=20, h=10)
@@ -405,7 +405,7 @@ class TestDrawVfxOverlay:
 
     def test_smoke_runs_with_offset_region(self) -> None:
         """Region offset from origin (10, 5) — exercises region arithmetic."""
-        from roguelike_sprawl.combat.effects_vfx import CombatEffects
+        from wet_run.combat.effects_vfx import CombatEffects
 
         console = self._make_console(width=80, height=50)
         region = Region(id=RegionId.MAIN, x=10, y=5, w=20, h=10)
@@ -414,7 +414,7 @@ class TestDrawVfxOverlay:
 
     def test_smoke_runs_with_active_hit_flash(self) -> None:
         """HitFlash active → exercises the white overlay render branch."""
-        from roguelike_sprawl.combat.effects_vfx import CombatEffects, HitFlash
+        from wet_run.combat.effects_vfx import CombatEffects, HitFlash
 
         console = self._make_console()
         region = Region(id=RegionId.MAIN, x=0, y=0, w=20, h=10)
@@ -745,7 +745,7 @@ class TestDrawSkillsMenu:
 
     def test_renders_skills_basic_with_cooldown(self) -> None:
         """Basic render: 2 skills (1 selected, 1 on cooldown)."""
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         console = self._make_console()
         side_r = Region(id=RegionId.SIDE, x=80, y=0, w=20, h=30)
@@ -757,7 +757,7 @@ class TestDrawSkillsMenu:
 
     def test_renders_disabled_when_insufficient_ap(self) -> None:
         """Insufficient AP → disabled branch (dark gray, '[X AP]' status)."""
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         console = self._make_console()
         side_r = Region(id=RegionId.SIDE, x=80, y=0, w=20, h=30)
@@ -769,8 +769,8 @@ class TestDrawSkillsMenu:
 
     def test_renders_player_statuses(self) -> None:
         """Player with active statuses (e.g., burn DoT) → STATUS: section rendered."""
-        from roguelike_sprawl.combat.state_models import StatusEffect
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.combat.state_models import StatusEffect
+        from wet_run.engine.state import AppState
 
         console = self._make_console()
         side_r = Region(id=RegionId.SIDE, x=80, y=0, w=20, h=30)
@@ -812,7 +812,7 @@ class TestCheckPostCombatEvent:
 
     def test_initializes_event_registry_when_missing(self) -> None:
         """Fresh AppState has no _event_registry → call initializes it."""
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         state = AppState()
         assert not hasattr(state, "_event_registry") or state._event_registry is None
@@ -821,7 +821,7 @@ class TestCheckPostCombatEvent:
 
     def test_no_event_trigger_keeps_state(self) -> None:
         """Unknown trigger_id → check_event_trigger returns None → state.active_event unchanged."""
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         state = AppState()
         _check_post_combat_event(state, "unknown_trigger_id")

@@ -22,7 +22,7 @@ import tcod.console  # noqa: E402
 import tcod.event  # noqa: E402
 from tcod.event import KeyDown, KeySym  # noqa: E402
 
-from roguelike_sprawl.engine.menu import (  # noqa: E402
+from wet_run.engine.menu import (  # noqa: E402
     OPTION_CONTINUE,
     OPTION_CREDITS,
     OPTION_GRAPHIC_NOVEL,
@@ -34,8 +34,8 @@ from roguelike_sprawl.engine.menu import (  # noqa: E402
     handle_saved_progress_input,
     render_menu,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind  # noqa: E402
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.engine.state import AppState, ScreenKind  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
 

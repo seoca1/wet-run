@@ -150,7 +150,7 @@
 ### 디렉토리 구조 (Phase 4에서 확정)
 ```
 prototype/ (또는 src/)
-├── roguelike_sprawl/
+├── wet_run/
 │   ├── __init__.py
 │   ├── __main__.py
 │   ├── engine/        # tcod 관련 (window, render, input)

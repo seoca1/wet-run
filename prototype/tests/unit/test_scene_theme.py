@@ -6,8 +6,8 @@ Audio playback itself is tested via integration (not mocked here).
 
 from __future__ import annotations
 
-from roguelike_sprawl.audio.config import SoundConfig
-from roguelike_sprawl.engine.story_cinematic import (
+from wet_run.audio.config import SoundConfig
+from wet_run.engine.story_cinematic import (
     BRIEFING_FINN_SCENE,
     PROLOGUE_SCENE,
     CinematicState,
@@ -28,7 +28,7 @@ class TestSceneThemeField:
 
     def test_default_theme(self) -> None:
         """A scene without an explicit theme uses 'matrix_rain'."""
-        from roguelike_sprawl.engine.story_cinematic import StoryLine, StoryScene
+        from wet_run.engine.story_cinematic import StoryLine, StoryScene
 
         scene = StoryScene(
             id="test",
@@ -77,13 +77,13 @@ class TestThemeCategoryControl:
         config = SoundConfig()
         assert config.is_category_enabled(config.__class__) or True
         # Check via enum
-        from roguelike_sprawl.audio.config import SoundCategory
+        from wet_run.audio.config import SoundCategory
 
         assert config.is_category_enabled(SoundCategory.THEME) is True
 
     def test_disabling_theme(self) -> None:
         """Can disable THEME category."""
-        from roguelike_sprawl.audio.config import SoundCategory
+        from wet_run.audio.config import SoundCategory
 
         config = SoundConfig()
         config.set_category_enabled(SoundCategory.THEME, False)
@@ -98,13 +98,13 @@ class TestThemeIntegrationWithStep:
         # Disable THEME so we don't actually play audio
         from unittest.mock import patch
 
-        from roguelike_sprawl.audio.config import SoundCategory
-        from roguelike_sprawl.engine.story_cinematic import step_cinematic
+        from wet_run.audio.config import SoundCategory
+        from wet_run.engine.story_cinematic import step_cinematic
 
         config = SoundConfig()
         config.set_category_enabled(SoundCategory.THEME, False)
 
-        with patch("roguelike_sprawl.engine.story_cinematic.get_sound_config", return_value=config):
+        with patch("wet_run.engine.story_cinematic.get_sound_config", return_value=config):
             state = CinematicState(scene=PROLOGUE_SCENE)
             step_cinematic(state, elapsed_ms=100)
             # current_theme stays None when THEME is disabled
@@ -114,10 +114,10 @@ class TestThemeIntegrationWithStep:
         """Multiple step_cinematic calls don't change the theme."""
         from unittest.mock import patch
 
-        from roguelike_sprawl.engine.story_cinematic import step_cinematic
+        from wet_run.engine.story_cinematic import step_cinematic
 
         config = SoundConfig()
-        with patch("roguelike_sprawl.engine.story_cinematic.get_sound_config", return_value=config):
+        with patch("wet_run.engine.story_cinematic.get_sound_config", return_value=config):
             state = CinematicState(scene=PROLOGUE_SCENE)
             # Manually set theme (simulating first call succeeded)
             state.current_theme = "chiba"
@@ -130,10 +130,10 @@ class TestThemeIntegrationWithStep:
         """If scene changes, step_cinematic updates the theme."""
         from unittest.mock import patch
 
-        from roguelike_sprawl.engine.story_cinematic import step_cinematic
+        from wet_run.engine.story_cinematic import step_cinematic
 
         config = SoundConfig()
-        with patch("roguelike_sprawl.engine.story_cinematic.get_sound_config", return_value=config):
+        with patch("wet_run.engine.story_cinematic.get_sound_config", return_value=config):
             state = CinematicState(scene=PROLOGUE_SCENE)
             # Pretend we already have chiba playing
             state.current_theme = "chiba"

@@ -68,7 +68,7 @@ ADR-0041 (씬 콘텐츠 확장) 후, **긴 페이지** 가 가능해졌지만 **
 - 카드 스킵 옵션 (`--no-cards`) 제공으로 완화
 
 ## 영향 받는 항목
-- `prototype/src/roguelike_sprawl/engine/graphic_novel_view.py` — `render_chapter_card()`, `render_blank_transition()`, `_to_roman()`, `_character_label()`
+- `prototype/src/wet_run/engine/graphic_novel_view.py` — `render_chapter_card()`, `render_blank_transition()`, `_to_roman()`, `_character_label()`
 - `prototype/scripts/graphic_novel.py` — Phase state machine, `--no-cards`, `--card-ms` 옵션
 - `prototype/tests/unit/test_graphic_novel_chapter_cards.py` — 신규 테스트 37개
 

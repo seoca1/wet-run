@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.combat.run_mutators import (
+from wet_run.combat.run_mutators import (
     MUTATORS,
     RunMutator,
     apply_mutators,
@@ -16,7 +16,7 @@ from roguelike_sprawl.combat.run_mutators import (
     is_mutator_active,
     is_stealth_only,
 )
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.state import AppState
 
 
 def make_app_state() -> AppState:

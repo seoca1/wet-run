@@ -10,7 +10,7 @@ Covers:
 
 from __future__ import annotations
 
-from roguelike_sprawl.matrix.near_miss import (
+from wet_run.matrix.near_miss import (
     DEFAULT_NEAR_MISS_HP_THRESHOLD,
     NEAR_MISS_CREDITS,
     NEAR_MISS_SALVAGE,

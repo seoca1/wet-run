@@ -24,7 +24,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.chapter_cutscene import ArcData, BeatData, PhaseData, load_arc
+from wet_run.engine.chapter_cutscene import ArcData, BeatData, PhaseData, load_arc
 
 BEAT_TYPE_COLORS = {
     "interior_monologue": "\033[33m",  # Yellow

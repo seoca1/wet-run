@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'panther_negotiate' to roguelike_sprawl missions.json."""
+"""Add new mission 'panther_negotiate' to wet_run missions.json."""
 import json
 from pathlib import Path
 

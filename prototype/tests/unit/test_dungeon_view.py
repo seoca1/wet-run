@@ -16,10 +16,10 @@ from tcod.event import KeyDown, KeySym
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.combat.registry import IceRegistry, ProgramRegistry  # noqa: E402
-from roguelike_sprawl.engine import dungeon_view  # noqa: E402
-from roguelike_sprawl.engine.app import AppState, ScreenKind  # noqa: E402
-from roguelike_sprawl.matrix import (  # noqa: E402
+from wet_run.combat.registry import IceRegistry, ProgramRegistry  # noqa: E402
+from wet_run.engine import dungeon_view  # noqa: E402
+from wet_run.engine.app import AppState, ScreenKind  # noqa: E402
+from wet_run.matrix import (  # noqa: E402
     Edge,
     IceKind,
     MatrixGraph,
@@ -27,7 +27,7 @@ from roguelike_sprawl.matrix import (  # noqa: E402
     NodeKind,
     ZoneDepth,
 )
-from roguelike_sprawl.matrix.exploration import ExplorationState
+from wet_run.matrix.exploration import ExplorationState
 
 # ----------------------------------------------------------------------------
 # Fixtures
@@ -170,7 +170,7 @@ class TestCardinalMovementDungeon:
         assert s.current_node_id == "exit"
 
     def test_trap_damage_on_high_alarm_node_entry(self) -> None:
-        from roguelike_sprawl.matrix.node import AlarmLevel
+        from wet_run.matrix.node import AlarmLevel
 
         nodes = (
             Node(id="e", label="Entry", kind=NodeKind.ENTRY, zone=ZoneDepth.SURFACE),

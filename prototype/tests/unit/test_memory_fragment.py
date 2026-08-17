@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.lore.memory_fragment import (
+from wet_run.lore.memory_fragment import (
     MemoryFragmentPick,
     load_encounter_table,
     roll_memory_fragment,

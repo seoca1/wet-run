@@ -24,24 +24,24 @@ import tcod.context
 import tcod.event
 import tcod.tileset
 
-from roguelike_sprawl.combat.registry import IceRegistry, ProgramRegistry
-from roguelike_sprawl.combat.state import step_combat
-from roguelike_sprawl.engine import (
+from wet_run.combat.registry import IceRegistry, ProgramRegistry
+from wet_run.combat.state import step_combat
+from wet_run.engine import (
     combat_view,
     config,
     cyberspace_browser,
     hub,
     story_cinematic,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.engine.story_cinematic import (
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.engine.story_cinematic import (
     BRIEFING_FINN_SCENE,
     PROLOGUE_SCENE,
     CinematicState,
 )
-from roguelike_sprawl.i18n import Translator
-from roguelike_sprawl.matrix.node import NodeKind
-from roguelike_sprawl.missions import JobBoard
+from wet_run.i18n import Translator
+from wet_run.matrix.node import NodeKind
+from wet_run.missions import JobBoard
 
 
 def main() -> int:
@@ -93,7 +93,7 @@ def main() -> int:
         sys.stderr.write("ERROR: No font found (bitmap or TTF)\nRun: make download-font\n")
         return 1
 
-    from roguelike_sprawl.engine.font_loader import load_font
+    from wet_run.engine.font_loader import load_font
 
     tileset, _ = load_font()
 
@@ -105,7 +105,7 @@ def main() -> int:
     state.job_board = JobBoard.load(config.DATA_DIR / "missions" / "missions.json")
 
     # Initialize equipment with starting gear
-    from roguelike_sprawl.equipment.equipment import (
+    from wet_run.equipment.equipment import (
         STARTER_DECK,
         STARTER_HEADWARE,
         EquipmentLoadout,
@@ -136,7 +136,7 @@ def main() -> int:
 
         # Initialize RunState — the single source of truth for what
         # the player should be doing right now.
-        from roguelike_sprawl.run import ensure_run_state
+        from wet_run.run import ensure_run_state
 
         ensure_run_state(state)
 
@@ -179,7 +179,7 @@ def main() -> int:
                         # Wait 3 seconds to show result
                         time.sleep(3)
                         # Use _end_combat to handle rewards + ICE removal
-                        from roguelike_sprawl.engine.combat_view import _end_combat
+                        from wet_run.engine.combat_view import _end_combat
 
                         _end_combat(state, state.combat_state)
                         state.combat_state = None
@@ -197,7 +197,7 @@ def main() -> int:
             ):
                 # After 3 seconds, select first option and continue
                 if state.demo_step - last_npc_step > 180:  # ~3s at 60 FPS
-                    from roguelike_sprawl.engine import npc_view
+                    from wet_run.engine import npc_view
 
                     line = state.npc_state.event.get_line(state.npc_state.current_line_index)
                     if line and line.choices:
@@ -238,8 +238,8 @@ def main() -> int:
                         if state.demo_step - last_auto_step > 30:
                             from tcod.event import KeySym
 
-                            from roguelike_sprawl.engine import cyberspace_view
-                            from roguelike_sprawl.run import (
+                            from wet_run.engine import cyberspace_view
+                            from wet_run.run import (
                                 ObjectiveKind,
                                 ensure_run_state,
                                 resolve_target_for_stage,
@@ -261,7 +261,7 @@ def main() -> int:
                                     run_state.objective_kind() is ObjectiveKind.NPC
                                     and not npc_triggered
                                 ):
-                                    from roguelike_sprawl.engine.npc_event import (
+                                    from wet_run.engine.npc_event import (
                                         DIXIE_FLATLINE_EVENT,
                                         NPCState,
                                     )
@@ -271,7 +271,7 @@ def main() -> int:
                                     npc_triggered = True
                                     print(f"\n=== NPC ENCOUNTER: {current_node.label} ===")
                                 elif run_state.objective_kind() is ObjectiveKind.DATA:
-                                    from roguelike_sprawl.engine import action_menu
+                                    from wet_run.engine import action_menu
 
                                     action_menu._execute_action(
                                         state,
@@ -369,7 +369,7 @@ def _start_briefing(state: AppState, fast: bool, no_korean: bool = False) -> Non
 
 def _make_fast_scene(scene: story_cinematic.StoryScene) -> story_cinematic.StoryScene:
     """Convert scene to fast typing speed."""
-    from roguelike_sprawl.engine.story_cinematic import StoryLine, TextSpeed
+    from wet_run.engine.story_cinematic import StoryLine, TextSpeed
 
     new_lines = tuple(
         StoryLine(
@@ -439,13 +439,13 @@ def _story_mode_victory(state: AppState) -> None:
     state.status_messages.append(">>> Gained: 50 credits")
 
     # Progress mission objective (defeat)
-    from roguelike_sprawl.engine.mission_completion import update_mission_progress
+    from wet_run.engine.mission_completion import update_mission_progress
 
     update_mission_progress(state, "defeat", 1)
 
     # Advance RunState: if we're on the DEFEAT_ICE stage, this
     # victory satisfies the objective.
-    from roguelike_sprawl.run import Stage, check_combat_victory, ensure_run_state
+    from wet_run.run import Stage, check_combat_victory, ensure_run_state
 
     run_state = ensure_run_state(state)
     if check_combat_victory(run_state):
@@ -453,7 +453,7 @@ def _story_mode_victory(state: AppState) -> None:
         state.status_messages.append(f">>> Stage complete: {run_state.current_info().title}")
         if run_state.current_stage is Stage.JACK_OUT:
             # Jack out after ICE defeat
-            from roguelike_sprawl.engine.jack_out_view import enter_jack_out
+            from wet_run.engine.jack_out_view import enter_jack_out
 
             enter_jack_out(state)
             _defeat_current_ice_node(state)
@@ -473,7 +473,7 @@ def _defeat_current_ice_node(state: AppState) -> None:
     state.defeated_nodes.add(defeated_id)
     state.status_messages.append(f">>> ICE [{defeated_id}] destroyed")
     # Remove node from graph
-    from roguelike_sprawl.matrix.graph import MatrixGraph
+    from wet_run.matrix.graph import MatrixGraph
 
     state.matrix = MatrixGraph(
         nodes=tuple(n for n in state.matrix.nodes if n.id != defeated_id),
@@ -490,7 +490,7 @@ def _defeat_current_ice_node(state: AppState) -> None:
 
 def _start_matrix(state: AppState) -> None:
     """Start the matrix screen via cyberspace browser."""
-    from roguelike_sprawl.cyberspace.registry import WorldRegistry
+    from wet_run.cyberspace.registry import WorldRegistry
 
     # Load first mission
     available = state.job_board.available_for(state.player_grade)
@@ -551,21 +551,21 @@ def _render_demo(
     elif state.screen is ScreenKind.HUB:
         hub.render_hub(console, t, state)
     elif state.screen is ScreenKind.CYBERSPACE_BROWSER:
-        from roguelike_sprawl.engine import cyberspace_browser
+        from wet_run.engine import cyberspace_browser
 
         cyberspace_browser.render_cyberspace_browser(console, t, state)
     elif state.screen is ScreenKind.MATRIX:
         # Use cyberspace-style rendering (scrolling graph)
-        from roguelike_sprawl.engine import cyberspace_view
+        from wet_run.engine import cyberspace_view
 
         cyberspace_view.render_cyberspace(console, t, state, prog_registry, ice_registry)
     elif state.screen is ScreenKind.NPC:
-        from roguelike_sprawl.engine import npc_view
+        from wet_run.engine import npc_view
 
         if state.npc_state is not None:
             npc_view.render_npc(console, t, state, state.npc_state)
     elif state.screen is ScreenKind.EVENT:
-        from roguelike_sprawl.engine import event_view
+        from wet_run.engine import event_view
 
         if state.active_event is not None:
             event_view.render_event_story(console, t, state, state.active_event)
@@ -613,14 +613,14 @@ def _handle_demo_input(
             _start_matrix(state)
         return True
     elif state.screen is ScreenKind.CYBERSPACE_BROWSER:
-        from roguelike_sprawl.engine import cyberspace_browser
+        from wet_run.engine import cyberspace_browser
 
         result = cyberspace_browser.handle_browser_input(event, state)
         # In demo mode, auto-jack into selected server after a moment
         return result
     elif state.screen is ScreenKind.MATRIX:
         # Use cyberspace-style input handler
-        from roguelike_sprawl.engine import cyberspace_view
+        from wet_run.engine import cyberspace_view
 
         result = cyberspace_view.handle_cyberspace_input(event, state, prog_registry, ice_registry)
 
@@ -639,13 +639,13 @@ def _handle_demo_input(
 
         return result
     elif state.screen is ScreenKind.NPC:
-        from roguelike_sprawl.engine import npc_view
+        from wet_run.engine import npc_view
 
         if state.npc_state is not None:
             return npc_view.handle_npc_input(event, state, state.npc_state)
         return True
     elif state.screen is ScreenKind.EVENT:
-        from roguelike_sprawl.engine import event_view
+        from wet_run.engine import event_view
 
         if state.active_event is not None:
             return event_view.handle_event_input(event, state, state.active_event)

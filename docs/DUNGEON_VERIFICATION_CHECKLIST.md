@@ -17,11 +17,11 @@
 
 - [ ] **dungeon_view 컴파일 통과**
   ```bash
-  .venv/bin/python -c "from prototype.src.roguelike_sprawl.engine import dungeon_view; print('OK')"
+  .venv/bin/python -c "from prototype.src.wet_run.engine import dungeon_view; print('OK')"
   ```
 - [ ] **dungeon_generator 컴파일 통과**
   ```bash
-  .venv/bin/python -c "from prototype.src.roguelike_sprawl.matrix.dungeon_generator import DungeonGenerator; g = DungeonGenerator(); print(g.generate(42))"
+  .venv/bin/python -c "from prototype.src.wet_run.matrix.dungeon_generator import DungeonGenerator; g = DungeonGenerator(); print(g.generate(42))"
   ```
 - [ ] **기존 matrix 테스트 통과**
   ```bash
@@ -416,7 +416,7 @@
 
 ### 로컬
 
-- [ ] `python -m roguelike_sprawl` 정상 실행
+- [ ] `python -m wet_run` 정상 실행
 - [ ] `python prototype/scripts/play.py` 정상
 - [ ] `python prototype/scripts/verify_story_links.py` 통과
 - [ ] 모든 단위 테스트 통과
@@ -531,7 +531,7 @@
 ### 즉시 시작 가능
 
 ```bash
-cd /Users/emilio/projects/Projects/Game/roguelike_sprawl
+cd /Users/emilio/projects/Projects/Game/wet_run
 source prototype/.venv/bin/activate
 pytest prototype/tests/unit/test_matrix_generator.py -q
 # → 통과 후 Phase 1 시작

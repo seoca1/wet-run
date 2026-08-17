@@ -1,13 +1,13 @@
 # ⚡ Quick Start - Get to Combat in 30 Seconds
 
-Fast track to experiencing combat in Roguelike Sprawl.
+Fast track to experiencing combat in Wet Run.
 
 ---
 
 ## 🚀 Fastest Method (Auto-pilot)
 
 ```bash
-cd Game/roguelike_sprawl/prototype
+cd Game/wet_run/prototype
 make demo
 ```
 
@@ -97,7 +97,7 @@ Copy-paste this checklist:
 Phase 1-5 (ADR-0060, ADR-0061) 가 추가한 핵심 게임플레이를 **창 없이** 빠르게 검증:
 
 ```bash
-cd Game/roguelike_sprawl/prototype
+cd Game/wet_run/prototype
 
 # Phase 1 — Dungeon Mode toggle (D 키) + BSP 절차적 미로
 PYTHONPATH=src .venv/bin/python scripts/play_dungeon_mode.py

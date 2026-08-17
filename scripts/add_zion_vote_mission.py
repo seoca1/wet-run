@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'zion_vote_observation' to roguelike_sprawl missions.json.
+"""Add new mission 'zion_vote_observation' to wet_run missions.json.
 
 Pairs with Fiction Phase 28 — Zion Vote derivative
 (derivative/sprawl-trilogy/short-stories/{en,ko}/2026-07-19_zion-vote.{md,.ko.md}).

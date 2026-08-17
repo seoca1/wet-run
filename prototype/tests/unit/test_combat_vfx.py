@@ -19,7 +19,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 
-from roguelike_sprawl.combat.effects import (  # noqa: E402
+from wet_run.combat.effects import (  # noqa: E402
     CombatEffects,
     spawn_data_acquired,
     spawn_jackin_glitch,

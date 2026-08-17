@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.combat.matrix_events import (
+from wet_run.combat.matrix_events import (
     MATRIX_EVENTS,
     MatrixEvent,
     check_event_trigger,
@@ -22,7 +22,7 @@ from roguelike_sprawl.combat.matrix_events import (
     is_patron_offer_active,
     trigger_event,
 )
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.state import AppState
 
 
 def make_app_state() -> AppState:

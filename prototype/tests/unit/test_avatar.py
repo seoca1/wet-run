@@ -8,8 +8,8 @@ class TestAvatarHead:
 
     def test_full_hp_renders_green_eyes(self) -> None:
         """100% HP shows ◉P◉ (full integrity)."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(hp=100, max_hp=100, ppl=10, zdr=5)
         rendered = render_avatar_lines(state)
@@ -19,8 +19,8 @@ class TestAvatarHead:
 
     def test_mid_hp_renders_tilted(self) -> None:
         """50% HP shows tilted head (◉P/)."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(hp=50, max_hp=100, ppl=10, zdr=10)
         rendered = render_avatar_lines(state)
@@ -29,8 +29,8 @@ class TestAvatarHead:
 
     def test_low_hp_renders_damaged(self) -> None:
         """25% HP shows damaged head (◉Px)."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(hp=20, max_hp=100, ppl=5, zdr=15)
         rendered = render_avatar_lines(state)
@@ -39,8 +39,8 @@ class TestAvatarHead:
 
     def test_zero_hp_renders_x_flatline(self) -> None:
         """0% HP shows X (flatline)."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(hp=0, max_hp=100, ppl=10, zdr=5)
         rendered = render_avatar_lines(state)
@@ -53,8 +53,8 @@ class TestAvatarStatus:
 
     def test_safe_status_upright(self) -> None:
         """PPL >> ZDR shows upright body."""
-        from roguelike_sprawl.avatar import Status, build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import Status, build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(hp=100, max_hp=100, ppl=20, zdr=5)
         assert state.status is Status.SAFE
@@ -64,14 +64,14 @@ class TestAvatarStatus:
 
     def test_deadly_status_crouched(self) -> None:
         """PPL << ZDR shows crouched body."""
-        from roguelike_sprawl.avatar import Status, build_avatar_state
+        from wet_run.avatar import Status, build_avatar_state
 
         state = build_avatar_state(hp=50, max_hp=100, ppl=5, zdr=20)
         assert state.status in (Status.DEADLY, Status.FUTILE)
 
     def test_futile_status_at_zero_hp(self) -> None:
         """0 HP forces FUTILE status regardless of PPL/ZDR."""
-        from roguelike_sprawl.avatar import Status, build_avatar_state
+        from wet_run.avatar import Status, build_avatar_state
 
         state = build_avatar_state(hp=0, max_hp=100, ppl=20, zdr=5)
         assert state.status is Status.FUTILE
@@ -82,8 +82,8 @@ class TestAvatarPrograms:
 
     def test_t5_renders_starred(self) -> None:
         """T5 program shows ★W★."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -99,8 +99,8 @@ class TestAvatarPrograms:
 
     def test_t1_renders_faded(self) -> None:
         """T1 program shows ·W·."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -115,8 +115,8 @@ class TestAvatarPrograms:
 
     def test_depleted_renders_tilde(self) -> None:
         """Depleted program shows ~W~."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -131,8 +131,8 @@ class TestAvatarPrograms:
 
     def test_empty_slot_renders_locked(self) -> None:
         """Empty program slot (tier=0) shows ═══ (locked)."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -152,8 +152,8 @@ class TestAvatarDeck:
 
     def test_deck_tier_4(self) -> None:
         """T4 deck shows ║DK4║."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -168,8 +168,8 @@ class TestAvatarDeck:
 
     def test_deck_no_tier(self) -> None:
         """T0 deck shows ║X║ (broken)."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -188,8 +188,8 @@ class TestAvatarWetware:
 
     def test_t3_wetware_has_3_cells(self) -> None:
         """T3 wetware shows 3 ▓ cells."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -204,8 +204,8 @@ class TestAvatarWetware:
 
     def test_t5_wetware_has_5_cells(self) -> None:
         """T5 wetware shows 5 ▓ cells."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -224,8 +224,8 @@ class TestAvatarConstruct:
 
     def test_dixie_construct(self) -> None:
         """Dixie construct shows ◆D◆."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -241,8 +241,8 @@ class TestAvatarConstruct:
 
     def test_no_construct_omits_line(self) -> None:
         """No construct does not add a line."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -257,8 +257,8 @@ class TestAvatarConstruct:
 
     def test_with_construct_adds_line(self) -> None:
         """With construct: 7 lines."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -276,8 +276,8 @@ class TestAvatarIntegration:
 
     def test_full_loadout(self) -> None:
         """PPL 25, HP 100% — full loadout example from spec."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=100,
@@ -303,8 +303,8 @@ class TestAvatarIntegration:
 
     def test_damaged_50pct(self) -> None:
         """50% HP, TOUGH status — damaged example from spec."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=50,
@@ -324,8 +324,8 @@ class TestAvatarIntegration:
 
     def test_critical_25pct_with_lost_program(self) -> None:
         """25% HP, 1 program lost, DEADLY status."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=25,
@@ -343,8 +343,8 @@ class TestAvatarIntegration:
 
     def test_dead_avatar_has_x_head(self) -> None:
         """Death shows X head (flatline)."""
-        from roguelike_sprawl.avatar import build_avatar_state
-        from roguelike_sprawl.avatar.renderer import render_avatar_lines
+        from wet_run.avatar import build_avatar_state
+        from wet_run.avatar.renderer import render_avatar_lines
 
         state = build_avatar_state(
             hp=0,
@@ -366,42 +366,42 @@ class TestAvatarStateProperties:
 
     def test_hp_pct_full(self) -> None:
         """100% HP returns 1.0."""
-        from roguelike_sprawl.avatar import build_avatar_state
+        from wet_run.avatar import build_avatar_state
 
         state = build_avatar_state(hp=100, max_hp=100, ppl=10, zdr=5)
         assert state.hp_pct == 1.0
 
     def test_hp_pct_half(self) -> None:
         """50% HP returns 0.5."""
-        from roguelike_sprawl.avatar import build_avatar_state
+        from wet_run.avatar import build_avatar_state
 
         state = build_avatar_state(hp=50, max_hp=100, ppl=10, zdr=5)
         assert state.hp_pct == 0.5
 
     def test_hp_pct_zero_max(self) -> None:
         """max_hp=0 returns 0.0 (avoids div by zero)."""
-        from roguelike_sprawl.avatar import build_avatar_state
+        from wet_run.avatar import build_avatar_state
 
         state = build_avatar_state(hp=0, max_hp=0, ppl=10, zdr=5)
         assert state.hp_pct == 0.0
 
     def test_hp_clamped_to_one(self) -> None:
         """HP > max_hp clamped to 1.0."""
-        from roguelike_sprawl.avatar import build_avatar_state
+        from wet_run.avatar import build_avatar_state
 
         state = build_avatar_state(hp=150, max_hp=100, ppl=10, zdr=5)
         assert state.hp_pct == 1.0
 
     def test_is_dead_at_zero(self) -> None:
         """is_dead True at 0 HP."""
-        from roguelike_sprawl.avatar import build_avatar_state
+        from wet_run.avatar import build_avatar_state
 
         state = build_avatar_state(hp=0, max_hp=100, ppl=10, zdr=5)
         assert state.is_dead is True
 
     def test_is_dead_false_at_positive_hp(self) -> None:
         """is_dead False at positive HP."""
-        from roguelike_sprawl.avatar import build_avatar_state
+        from wet_run.avatar import build_avatar_state
 
         state = build_avatar_state(hp=1, max_hp=100, ppl=10, zdr=5)
         assert state.is_dead is False

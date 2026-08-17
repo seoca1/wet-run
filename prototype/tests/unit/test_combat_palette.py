@@ -13,15 +13,15 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.combat.bundle import CombatEffectsBundle, create_bundle
-from roguelike_sprawl.combat.combo import (
+from wet_run.combat.bundle import CombatEffectsBundle, create_bundle
+from wet_run.combat.combo import (
     ALL_STAGES,
     CHAIN,
     FLURRY,
     RAMPAGE,
     WARMUP,
 )
-from roguelike_sprawl.combat.palette import (
+from wet_run.combat.palette import (
     BUFF_COLOR,
     CRIT_COLOR,
     DAMAGE_COLOR,
@@ -245,7 +245,7 @@ class TestGetColorForPhase:
 
 class TestGetColorForComboStage:
     def test_valid_indices(self) -> None:
-        from roguelike_sprawl.combat.palette import COMBO_STAGE_COLORS
+        from wet_run.combat.palette import COMBO_STAGE_COLORS
 
         for i in range(5):
             assert get_color_for_combo_stage(i) == COMBO_STAGE_COLORS[i]
@@ -398,7 +398,7 @@ class TestCombatEffectsBundle:
 class TestPaletteIntegration:
     def test_combo_module_uses_palette(self) -> None:
         """All ComboStage colors should match palette values."""
-        from roguelike_sprawl.combat.palette import COMBO_STAGE_COLORS
+        from wet_run.combat.palette import COMBO_STAGE_COLORS
 
         for stage in ALL_STAGES:
             assert stage.color == COMBO_STAGE_COLORS[stage.index]
@@ -406,21 +406,21 @@ class TestPaletteIntegration:
     def test_hud_module_uses_palette(self) -> None:
         """HUD module should import from palette (no local redefinition)."""
         # Check that the module file imports from palette
-        from roguelike_sprawl.combat import hud
+        from wet_run.combat import hud
 
         source = open(hud.__file__).read()
         assert "from .palette import" in source
 
     def test_effects_module_uses_palette(self) -> None:
         """Effects module should import from palette (no local redefinition)."""
-        from roguelike_sprawl.combat import effects
+        from wet_run.combat import effects
 
         source = open(effects.__file__).read()
         assert "from .palette import" in source
 
     def test_bosses_module_uses_palette(self) -> None:
         """Bosses module should reference palette palettes."""
-        from roguelike_sprawl.combat import bosses, bosses_cinematic
+        from wet_run.combat import bosses, bosses_cinematic
 
         source = bosses.__file__
         assert source is not None

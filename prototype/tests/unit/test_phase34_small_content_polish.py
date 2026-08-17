@@ -166,7 +166,7 @@ class TestStateModelsDocstringCoverage:
     """
 
     def test_all_combatant_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.combat.state_models import Combatant
+        from wet_run.combat.state_models import Combatant
 
         # All 15 Combatant methods (is_alive, is_stunned, is_staggered,
         # consume_stagger, get_attack_bonus, get_defense_bonus,
@@ -198,7 +198,7 @@ class TestStateModelsDocstringCoverage:
             assert method.__doc__.strip(), f"Combatant.{name} has empty docstring"
 
     def test_combat_state_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.combat.state_models import CombatState
+        from wet_run.combat.state_models import CombatState
 
         # CombatState methods needing docstrings: __post_init__, target (property), push
         assert CombatState.__post_init__.__doc__ is not None
@@ -220,7 +220,7 @@ class TestStateModelsDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/state_models.py",
+                "src/wet_run/combat/state_models.py",
             ],
             capture_output=True,
             text=True,
@@ -242,7 +242,7 @@ class TestImprovedErrorMessages:
 
     def test_run_state_chapter_error_lists_valid_range(self) -> None:
         """run/state.py start_chapter ValueError now names the method and lists valid chapters."""
-        from roguelike_sprawl.run.state import RunState
+        from wet_run.run.state import RunState
 
         run = RunState()
         with pytest.raises(ValueError, match="start_chapter") as excinfo:
@@ -257,7 +257,7 @@ class TestImprovedErrorMessages:
 
     def test_run_state_complete_chapter_error_lists_valid_range(self) -> None:
         """run/state.py complete_chapter ValueError now names the method."""
-        from roguelike_sprawl.run.state import RunState
+        from wet_run.run.state import RunState
 
         run = RunState()
         with pytest.raises(ValueError, match="complete_chapter") as excinfo:
@@ -269,7 +269,7 @@ class TestImprovedErrorMessages:
 
     def test_cyberdeck_duplicate_program_error_lists_programs(self) -> None:
         """cyberdeck.py add_program_to_deck ValueError now lists current programs."""
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             add_program_to_deck,
             create_deck,
         )
@@ -285,7 +285,7 @@ class TestImprovedErrorMessages:
 
     def test_cyberdeck_full_deck_error_suggests_removal(self) -> None:
         """cyberdeck.py add_program_to_deck ValueError now suggests removing a program."""
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             DEFAULT_DECK_SLOTS,
             add_program_to_deck,
             create_deck,
@@ -303,7 +303,7 @@ class TestImprovedErrorMessages:
 
     def test_cyberdeck_remove_missing_program_error_lists_programs(self) -> None:
         """cyberdeck.py remove_program_from_deck ValueError now lists current programs."""
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             create_deck,
             remove_program_from_deck,
         )
@@ -327,7 +327,7 @@ class TestStateModelsSmoke:
     """Smoke tests for the now-documented Combatant/CombatState methods."""
 
     def test_combatant_choose_skill_returns_valid_skill(self) -> None:
-        from roguelike_sprawl.combat.state_models import Combatant, Skill, SkillEffect
+        from wet_run.combat.state_models import Combatant, Skill, SkillEffect
 
         skill = Skill(
             id="probe",
@@ -350,7 +350,7 @@ class TestStateModelsSmoke:
         assert chosen is skill
 
     def test_combatant_is_alive(self) -> None:
-        from roguelike_sprawl.combat.state_models import Combatant
+        from wet_run.combat.state_models import Combatant
 
         c = Combatant(id="e1", name="X", portrait="x", color=(0, 0, 0), hp=0, max_hp=100)
         assert not c.is_alive()
@@ -358,7 +358,7 @@ class TestStateModelsSmoke:
         assert c2.is_alive()
 
     def test_combat_state_push_caps_at_six(self) -> None:
-        from roguelike_sprawl.combat.state_models import Combatant, CombatState
+        from wet_run.combat.state_models import Combatant, CombatState
 
         player = Combatant(id="p", name="P", portrait="p", color=(0, 0, 0), hp=100, max_hp=100)
         cs = CombatState(player=player)

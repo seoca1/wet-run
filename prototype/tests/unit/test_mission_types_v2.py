@@ -13,8 +13,8 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.missions.mission import (
+from wet_run.matrix.node import ZoneDepth
+from wet_run.missions.mission import (
     ChainFailure,
     ChainMission,
     ChainReward,

@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from tcod.event import KeyDown, KeySym, Modifier, Scancode
 
-from roguelike_sprawl.engine.state import AppState, ScreenKind
+from wet_run.engine.state import AppState, ScreenKind
 
 
 class TestNGPlusFields:
@@ -141,7 +141,7 @@ class TestNGPlusMenuUI:
         Even if a stale True value existed, confirming a character on a locked
         run clears ng_plus_active (Pillar 4: lock gate enforcement).
         """
-        from roguelike_sprawl.engine.menu import handle_character_select_input
+        from wet_run.engine.menu import handle_character_select_input
 
         state = AppState()
         state.ng_plus_unlocked = False
@@ -153,7 +153,7 @@ class TestNGPlusMenuUI:
 
     def test_unlocked_run_preserves_toggle_state(self) -> None:
         """When unlocked, the player's toggle is preserved through character confirm."""
-        from roguelike_sprawl.engine.menu import handle_character_select_input
+        from wet_run.engine.menu import handle_character_select_input
 
         state = AppState()
         state.ng_plus_unlocked = True
@@ -165,7 +165,7 @@ class TestNGPlusMenuUI:
 
     def test_n_key_toggles_when_unlocked(self) -> None:
         """Pressing N in CHARACTER_SELECT toggles ng_plus_active when unlocked."""
-        from roguelike_sprawl.engine.menu import handle_character_select_input
+        from wet_run.engine.menu import handle_character_select_input
 
         state = AppState()
         state.ng_plus_unlocked = True
@@ -180,7 +180,7 @@ class TestNGPlusMenuUI:
 
     def test_n_key_noop_when_locked(self) -> None:
         """Pressing N when locked does nothing (can't toggle into an un-unlocked mode)."""
-        from roguelike_sprawl.engine.menu import handle_character_select_input
+        from wet_run.engine.menu import handle_character_select_input
 
         state = AppState()
         state.ng_plus_unlocked = False
@@ -198,8 +198,8 @@ class TestNGPlusMenuRender:
         """Locked mode: render shows no NG+ indicator (smoke test)."""
         import tcod.console
 
-        from roguelike_sprawl.engine.menu import render_character_select
-        from roguelike_sprawl.i18n.translator import Translator
+        from wet_run.engine.menu import render_character_select
+        from wet_run.i18n.translator import Translator
 
         state = AppState()
         state.screen = ScreenKind.CHARACTER_SELECT
@@ -211,8 +211,8 @@ class TestNGPlusMenuRender:
         """Unlocked but inactive: render shows NG+ MODE: OFF (smoke test)."""
         import tcod.console
 
-        from roguelike_sprawl.engine.menu import render_character_select
-        from roguelike_sprawl.i18n.translator import Translator
+        from wet_run.engine.menu import render_character_select
+        from wet_run.i18n.translator import Translator
 
         state = AppState()
         state.screen = ScreenKind.CHARACTER_SELECT
@@ -226,8 +226,8 @@ class TestNGPlusMenuRender:
         """Unlocked + active: render shows NG+ MODE: ON (smoke test)."""
         import tcod.console
 
-        from roguelike_sprawl.engine.menu import render_character_select
-        from roguelike_sprawl.i18n.translator import Translator
+        from wet_run.engine.menu import render_character_select
+        from wet_run.i18n.translator import Translator
 
         state = AppState()
         state.screen = ScreenKind.CHARACTER_SELECT

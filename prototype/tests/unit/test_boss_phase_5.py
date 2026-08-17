@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.combat.boss import BOSS_PROFILES
-from roguelike_sprawl.combat.bosses import BossPhase, should_trigger_phase_5
-from roguelike_sprawl.combat.bosses_cinematic import (
+from wet_run.combat.boss import BOSS_PROFILES
+from wet_run.combat.bosses import BossPhase, should_trigger_phase_5
+from wet_run.combat.bosses_cinematic import (
     boss_phase_5_sequence,
     spawn_boss_phase5,
 )
-from roguelike_sprawl.combat.effects import CombatEffects
-from roguelike_sprawl.combat.state import Combatant
+from wet_run.combat.effects import CombatEffects
+from wet_run.combat.state import Combatant
 
 
 def make_boss(hp: int = 100, max_hp: int = 1000) -> Combatant:
@@ -75,7 +75,7 @@ def test_should_not_trigger_phase_5_no_super_skill() -> None:
 
 
 def test_wintermute_profile_has_phase_5() -> None:
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.effects import IceType
 
     profile = BOSS_PROFILES[IceType.WINTERMUTE]
     assert profile.max_phases >= 4
@@ -85,7 +85,7 @@ def test_wintermute_profile_has_phase_5() -> None:
 
 
 def test_ta_construct_profile_has_phase_5() -> None:
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.effects import IceType
 
     profile = BOSS_PROFILES[IceType.TA_CONSTRUCT_PRIME]
     assert profile.max_phases >= 4
@@ -95,7 +95,7 @@ def test_ta_construct_profile_has_phase_5() -> None:
 
 
 def test_phase_5_super_skill_is_heavy() -> None:
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.effects import IceType
 
     profile = BOSS_PROFILES[IceType.WINTERMUTE]
     phase_4 = profile.phases[3]
@@ -106,7 +106,7 @@ def test_phase_5_super_skill_is_heavy() -> None:
 
 
 def test_phase_5_damage_multiplier_at_least_3() -> None:
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.effects import IceType
 
     for profile in [BOSS_PROFILES[IceType.WINTERMUTE], BOSS_PROFILES[IceType.TA_CONSTRUCT_PRIME]]:
         phase_4 = profile.phases[3]
@@ -114,7 +114,7 @@ def test_phase_5_damage_multiplier_at_least_3() -> None:
 
 
 def test_boss_phase_5_sequence_includes_dialogue() -> None:
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.effects import IceType
 
     profile = BOSS_PROFILES[IceType.WINTERMUTE]
     phase_4 = profile.phases[3]
@@ -125,7 +125,7 @@ def test_boss_phase_5_sequence_includes_dialogue() -> None:
 
 
 def test_boss_phase_5_sequence_includes_super_skill_name() -> None:
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.effects import IceType
 
     profile = BOSS_PROFILES[IceType.TA_CONSTRUCT_PRIME]
     phase_4 = profile.phases[3]
@@ -137,7 +137,7 @@ def test_boss_phase_5_sequence_includes_super_skill_name() -> None:
 
 
 def test_spawn_boss_phase5_sets_cinematic() -> None:
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.effects import IceType
 
     profile = BOSS_PROFILES[IceType.WINTERMUTE]
     phase_4 = profile.phases[3]
@@ -149,7 +149,7 @@ def test_spawn_boss_phase5_sets_cinematic() -> None:
 
 
 def test_boss_phase_5_super_skill_id_unique() -> None:
-    from roguelike_sprawl.combat.effects import IceType
+    from wet_run.combat.effects import IceType
 
     wm = BOSS_PROFILES[IceType.WINTERMUTE].phases[3].phase5_super_skill
     ta = BOSS_PROFILES[IceType.TA_CONSTRUCT_PRIME].phases[3].phase5_super_skill

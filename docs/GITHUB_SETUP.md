@@ -1,4 +1,4 @@
-# GitHub 설정 실행 가이드 (Roguelike Sprawl)
+# GitHub 설정 실행 가이드 (Wet Run)
 
 > 이 문서는 `decisions/0011-github-utilization.md`의 **실행 부분**만 다룹니다.
 > 5분 Git 초기화 → 10분 저장소 생성 → 자동 CI/Pages.
@@ -20,7 +20,7 @@
 ## 🚀 Step 1: Git 초기화 (5분)
 
 ```bash
-cd /Users/emilio/projects/Projects/Game/roguelike_sprawl
+cd /Users/emilio/projects/Projects/Game/wet_run
 
 # .gitignore 확인 (있다면) — Python + 대시보드 산출물 제외
 # 이미 있다면 OK
@@ -33,7 +33,7 @@ git branch -M main
 # 첫 commit
 git add .
 git status  # 너무 많이 들어갔는지 확인
-git commit -m "feat: initial commit - Roguelike Sprawl v0.5.0
+git commit -m "feat: initial commit - Wet Run v0.5.0
 
 Phase 1-5 complete:
 - 578 unit tests passing
@@ -48,7 +48,7 @@ Phase 1-5 complete:
 
 1. https://github.com/new 접속
 2. **소유자**: 본인 계정 (예: `seoca1`)
-3. **저장소 이름**: `roguelike-sprawl` (또는 결정한 이름)
+3. **저장소 이름**: `wet-run` (또는 결정한 이름)
 4. **설명**: `🌆 깁슨 스프롤 3부작 기반 로그라이크 · Python + tcod`
 5. **공개 범위**: Public 또는 Private 선택
 6. ⚠️ **README, .gitignore, license 모두 체크 해제** (이미 있음)
@@ -57,7 +57,7 @@ Phase 1-5 complete:
 ## 🔗 Step 3: 원격 연결 + Push (2분)
 
 ```bash
-cd /Users/emilio/projects/Projects/Game/roguelike_sprawl
+cd /Users/emilio/projects/Projects/Game/wet_run
 
 # 원격 추가
 git remote add origin https://github.com/seoca1/roguelike-sprawl.git
@@ -86,12 +86,12 @@ Push 후 자동으로 Actions 탭에서 실행됨.
 
 배포 완료 후:
 - 대시보드: `https://seoca1.github.io/roguelike-sprawl/`
-- Roguelike submenu: `https://seoca1.github.io/roguelike-sprawl/roguelike_sprawl/`
+- Roguelike submenu: `https://seoca1.github.io/roguelike-sprawl/wet_run/`
 
 ## 🏷️ Step 6: 첫 Release (5분)
 
 ```bash
-cd /Users/emilio/projects/Projects/Game/roguelike_sprawl
+cd /Users/emilio/projects/Projects/Game/wet_run
 
 # 태그 생성
 git tag -a v0.5.0 -m "v0.5.0 - Phase 1-5 complete
@@ -114,7 +114,7 @@ GitHub → Releases → 새 release 자동 생성됨. 편집 가능.
 
 1. GitHub 저장소 → **Projects** 탭
 2. "New project" → "Board" 선택
-3. 이름: `Roguelike Sprawl Roadmap`
+3. 이름: `Wet Run Roadmap`
 4. 컬럼 추가: `Backlog` / `In Progress` / `Review` / `Done`
 5. 첫 카드 추가: `Phase 6 - 엔딩 확장`
 

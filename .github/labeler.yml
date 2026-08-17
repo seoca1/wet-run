@@ -63,7 +63,7 @@ i18n:
 
 python:
   - "*.py"
-  - "src/roguelike_sprawl/"
+  - "src/wet_run/"
 html:
   - "*.html"
   - "dashboard/"

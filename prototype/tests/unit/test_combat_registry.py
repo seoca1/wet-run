@@ -17,7 +17,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.combat.registry import (
+from wet_run.combat.registry import (
     IceRegistry,
     ProgramRegistry,
     _default_skills,

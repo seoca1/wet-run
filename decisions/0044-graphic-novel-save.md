@@ -74,8 +74,8 @@
 - 체인 길이 변경 시 (씬 추가/삭제) sanity check로 fallback — warn 메시지 출력하고 처음부터
 
 ## 영향 받는 항목
-- `prototype/src/roguelike_sprawl/engine/graphic_novel_save.py` — 신규 모듈
-- `prototype/src/roguelike_sprawl/engine/graphic_novel_view.py` — `get_gn_menu_options()`, `get_gn_menu_key()`, GN_MENU_* 상수
+- `prototype/src/wet_run/engine/graphic_novel_save.py` — 신규 모듈
+- `prototype/src/wet_run/engine/graphic_novel_view.py` — `get_gn_menu_options()`, `get_gn_menu_key()`, GN_MENU_* 상수
 - `prototype/scripts/graphic_novel.py` — `--continue`, `--no-save` flag, save on exit
 - `prototype/tests/unit/test_graphic_novel_save.py` — 신규 테스트 24개
 

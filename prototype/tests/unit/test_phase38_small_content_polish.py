@@ -178,7 +178,7 @@ class TestAvatarStateDocstringCoverage:
     """Phase 38 polish — Status + ConstructKind enum members gained docstrings (80% -> 100%)."""
 
     def test_status_enum_members_have_docstrings(self) -> None:
-        from roguelike_sprawl.avatar.state import Status
+        from wet_run.avatar.state import Status
 
         # Status class docstring describes PPL/ZDR ratio semantics
         assert Status.__doc__ is not None
@@ -189,7 +189,7 @@ class TestAvatarStateDocstringCoverage:
             assert hasattr(Status, member), f"Status.{member} missing"
 
     def test_construct_kind_enum_members_have_docstrings(self) -> None:
-        from roguelike_sprawl.avatar.state import ConstructKind
+        from wet_run.avatar.state import ConstructKind
 
         # ConstructKind class docstring describes companion glyph semantics
         assert ConstructKind.__doc__ is not None
@@ -200,7 +200,7 @@ class TestAvatarStateDocstringCoverage:
         assert hasattr(ConstructKind, "THREE_JANE")
         # Verify the Gibson-flavored comment markers are present
         src = (
-            Path(__file__).parent.parent.parent / "src" / "roguelike_sprawl" / "avatar" / "state.py"
+            Path(__file__).parent.parent.parent / "src" / "wet_run" / "avatar" / "state.py"
         )
         text = src.read_text(encoding="utf-8")
         # The new docstrings should mention Gibson characters
@@ -219,7 +219,7 @@ class TestAvatarStateDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/avatar/state.py",
+                "src/wet_run/avatar/state.py",
             ],
             capture_output=True,
             text=True,
@@ -241,7 +241,7 @@ class TestDataFragmentDocstringCoverage:
     """Phase 38 polish — FragmentRarity enum members gained docstrings (88% -> 100%)."""
 
     def test_fragment_rarity_class_has_docstring(self) -> None:
-        from roguelike_sprawl.data_fragment import FragmentRarity
+        from wet_run.data_fragment import FragmentRarity
 
         # Class docstring should describe rarity semantics + gallery impact
         assert FragmentRarity.__doc__ is not None
@@ -253,7 +253,7 @@ class TestDataFragmentDocstringCoverage:
         )
 
     def test_fragment_rarity_members_present(self) -> None:
-        from roguelike_sprawl.data_fragment import FragmentRarity
+        from wet_run.data_fragment import FragmentRarity
 
         for member in ("COMMON", "UNCOMMON", "RARE", "LEGENDARY"):
             assert hasattr(FragmentRarity, member), f"FragmentRarity.{member} missing"
@@ -270,7 +270,7 @@ class TestDataFragmentDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/data_fragment.py",
+                "src/wet_run/data_fragment.py",
             ],
             capture_output=True,
             text=True,
@@ -292,7 +292,7 @@ class TestPersonalityHelperDocstringCoverage:
     """Phase 38 polish — _combatant_personality helper gained docstring (88% -> 100%)."""
 
     def test_combatant_personality_helper_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.depth.personality import (
+        from wet_run.combat.depth.personality import (
             _combatant_personality,
         )
 
@@ -315,7 +315,7 @@ class TestPersonalityHelperDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/depth/personality.py",
+                "src/wet_run/combat/depth/personality.py",
             ],
             capture_output=True,
             text=True,
@@ -338,7 +338,7 @@ class TestCinematicArtDocstringCoverage:
     """Phase 38 polish — ArtStyle enum members gained docstrings (89% -> 100%)."""
 
     def test_art_style_class_has_docstring(self) -> None:
-        from roguelike_sprawl.engine.cinematic_art import ArtStyle
+        from wet_run.engine.cinematic_art import ArtStyle
 
         assert ArtStyle.__doc__ is not None
         assert ArtStyle.__doc__.strip()
@@ -348,7 +348,7 @@ class TestCinematicArtDocstringCoverage:
         src = (
             Path(__file__).parent.parent.parent
             / "src"
-            / "roguelike_sprawl"
+            / "wet_run"
             / "engine"
             / "cinematic_art.py"
         )
@@ -372,7 +372,7 @@ class TestCinematicArtDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/engine/cinematic_art.py",
+                "src/wet_run/engine/cinematic_art.py",
             ],
             capture_output=True,
             text=True,
@@ -395,7 +395,7 @@ class TestPhase38Smoke:
 
     def test_status_enum_members_still_work(self) -> None:
         """Status enum members and PPL/ZDR semantics intact after docstring addition."""
-        from roguelike_sprawl.avatar.state import Status
+        from wet_run.avatar.state import Status
 
         # All five statuses still present with correct values
         assert Status.SAFE.value == "safe"
@@ -409,7 +409,7 @@ class TestPhase38Smoke:
 
     def test_construct_kind_enum_members_still_work(self) -> None:
         """ConstructKind enum members and glyph codes intact after docstring addition."""
-        from roguelike_sprawl.avatar.state import ConstructKind
+        from wet_run.avatar.state import ConstructKind
 
         assert ConstructKind.DIXIE.value == "D"
         assert ConstructKind.LOA.value == "L"
@@ -417,7 +417,7 @@ class TestPhase38Smoke:
 
     def test_fragment_rarity_string_values_unchanged(self) -> None:
         """FragmentRarity string values preserved after docstring addition."""
-        from roguelike_sprawl.data_fragment import FragmentRarity
+        from wet_run.data_fragment import FragmentRarity
 
         assert FragmentRarity.COMMON.value == "common"
         assert FragmentRarity.UNCOMMON.value == "uncommon"
@@ -426,7 +426,7 @@ class TestPhase38Smoke:
 
     def test_combatant_personality_fallback_still_works(self) -> None:
         """_combatant_personality fallback contract intact after docstring addition."""
-        from roguelike_sprawl.combat.depth.personality import (
+        from wet_run.combat.depth.personality import (
             PersonalityLevel,
             _combatant_personality,
         )
@@ -451,7 +451,7 @@ class TestPhase38Smoke:
 
     def test_art_style_enum_members_still_work(self) -> None:
         """ArtStyle enum members intact after docstring addition."""
-        from roguelike_sprawl.engine.cinematic_art import ArtStyle
+        from wet_run.engine.cinematic_art import ArtStyle
 
         assert ArtStyle.NEON.value == "neon"
         assert ArtStyle.GLITCH.value == "glitch"

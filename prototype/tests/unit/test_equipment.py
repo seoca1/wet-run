@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.equipment.equipment import (
+from wet_run.equipment.equipment import (
     ARASAKA_DECK,
     CHROME_GLOVES,
     CORPORATE_DECK,
@@ -215,7 +215,7 @@ class TestEquipmentLoadout:
         loadout = EquipmentLoadout()
         loadout.equip(STARTER_DECK)
         # Equip another deck in same slot
-        from roguelike_sprawl.equipment.equipment import STREET_DECK
+        from wet_run.equipment.equipment import STREET_DECK
 
         previous = loadout.equip(STREET_DECK)
         assert previous is STARTER_DECK
@@ -266,7 +266,7 @@ class TestEquipmentLoadout:
         assert total.attack_bonus == 0
 
     def test_total_stats_aggregates_multiple_items(self) -> None:
-        from roguelike_sprawl.equipment.equipment import (
+        from wet_run.equipment.equipment import (
             CHROME_GLOVES,
             MILITECH_EYES,
         )
@@ -383,7 +383,7 @@ class TestStatAggregation:
 
     def test_grants_skill_id_uses_first_non_empty(self) -> None:
         """When two items grant a skill, the first non-None wins."""
-        from roguelike_sprawl.equipment.equipment import _add_stats
+        from wet_run.equipment.equipment import _add_stats
 
         a = EquipStats(grants_skill_id="alpha")
         b = EquipStats(grants_skill_id="beta")
@@ -391,14 +391,14 @@ class TestStatAggregation:
         assert _add_stats(a, b).grants_skill_id == "alpha"
 
     def test_grants_skill_id_falls_back_to_second(self) -> None:
-        from roguelike_sprawl.equipment.equipment import _add_stats
+        from wet_run.equipment.equipment import _add_stats
 
         a = EquipStats(grants_skill_id=None)
         b = EquipStats(grants_skill_id="beta")
         assert _add_stats(a, b).grants_skill_id == "beta"
 
     def test_extra_effect_concatenates(self) -> None:
-        from roguelike_sprawl.equipment.equipment import _add_stats
+        from wet_run.equipment.equipment import _add_stats
 
         a = EquipStats(extra_effect="Heals 2 HP/turn")
         b = EquipStats(extra_effect="+Stealth")
@@ -408,7 +408,7 @@ class TestStatAggregation:
         assert ", " in combined.extra_effect
 
     def test_extra_effect_filters_empty(self) -> None:
-        from roguelike_sprawl.equipment.equipment import _add_stats
+        from wet_run.equipment.equipment import _add_stats
 
         a = EquipStats(extra_effect="Heals")
         b = EquipStats(extra_effect="")
@@ -477,7 +477,7 @@ class TestSetBonuses:
         loadout.equip(STREET_DECK)  # T1 ono_sendai (replaces in DECK slot)
         # Now DECK slot has STREET_DECK only (ono_sendai count=1).
         # Add Militech eyes + gloves for a separate set.
-        from roguelike_sprawl.equipment.equipment import CHROME_GLOVES, MILITECH_EYES
+        from wet_run.equipment.equipment import CHROME_GLOVES, MILITECH_EYES
 
         loadout.equip(MILITECH_EYES)  # militech
         loadout.equip(CHROME_GLOVES)  # militech

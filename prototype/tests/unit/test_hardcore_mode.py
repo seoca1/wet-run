@@ -13,12 +13,12 @@ from __future__ import annotations
 import pytest
 from tcod.event import KeyDown, KeySym, Modifier, Scancode
 
-from roguelike_sprawl.engine.death import (
+from wet_run.engine.death import (
     handle_death_input,
     handle_death_summary_choice,
     restart_with_new_jockey,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
+from wet_run.engine.state import AppState, ScreenKind
 
 
 class TestHardcoreModeField:
@@ -200,7 +200,7 @@ class TestHardcoreDeathScreenRender:
         state.player_max_hp = 100
         state.player_ppl = 10
         console = tcod.console.Console(width=80, height=50)
-        from roguelike_sprawl.engine.death import render_death_screen
+        from wet_run.engine.death import render_death_screen
 
         render_death_screen(console, state)
 
@@ -215,7 +215,7 @@ class TestHardcoreDeathScreenRender:
         state.player_max_hp = 100
         state.player_ppl = 10
         console = tcod.console.Console(width=80, height=50)
-        from roguelike_sprawl.engine.death import render_death_screen
+        from wet_run.engine.death import render_death_screen
 
         render_death_screen(console, state)
 

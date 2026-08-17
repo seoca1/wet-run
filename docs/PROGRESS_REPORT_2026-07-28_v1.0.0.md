@@ -13,8 +13,8 @@
 - **Tests**: 3178 passed (+50 신규), 592 skipped, 0 failed
 - **mypy**: 134 source files, 0 errors
 - **ruff**: All checks passed
-- **Wheel**: 400KB (`dist/roguelike_sprawl-1.0.0-py3-none-any.whl`)
-- **Tarball**: 3.7MB (`dist/roguelike_sprawl-1.0.0.tar.gz`)
+- **Wheel**: 400KB (`dist/wet_run-1.0.0-py3-none-any.whl`)
+- **Tarball**: 3.7MB (`dist/wet_run-1.0.0.tar.gz`)
 
 ---
 
@@ -43,10 +43,10 @@
 ## 신규 산출물 (이번 사이클)
 
 ### 코드 (3 신규 파일)
-- `src/roguelike_sprawl/run/meta_state.py` (108 LOC)
-- `src/roguelike_sprawl/engine/meta_state_manager.py` (78 LOC)
-- `src/roguelike_sprawl/engine/graphic_novel_data.py` (123 LOC)
-- `src/roguelike_sprawl/engine/graphic_novel_loaders.py` (262 LOC)
+- `src/wet_run/run/meta_state.py` (108 LOC)
+- `src/wet_run/engine/meta_state_manager.py` (78 LOC)
+- `src/wet_run/engine/graphic_novel_data.py` (123 LOC)
+- `src/wet_run/engine/graphic_novel_loaders.py` (262 LOC)
 
 ### 문서 (5 신규)
 - `docs/audits/2026-07-27_balance.md` — Balance audit
@@ -64,7 +64,7 @@
 - `design/balance/ppl_zdr_balance.md`: Grade 5 PPL 75→65, Grade 6 PPL 120+→78
 - `design/systems/grade-progression.md`: Grade 5 PPL 60→65, Grade 6 row 추가
 - `prototype/scripts/combat_grades.py`: 코멘트 "8 → 65 (~8x)"
-- `src/roguelike_sprawl/engine/graphic_novel_view.py`: 1594 → 1272 LOC
+- `src/wet_run/engine/graphic_novel_view.py`: 1594 → 1272 LOC
 - `CHANGELOG.md`: v1.0.0 entry
 
 ---
@@ -74,7 +74,7 @@
 | 작업 | 명령 |
 |---|---|
 | Git push | `cd /Users/emilio/projects/Projects && git push origin main` |
-| PyPI 업로드 | `cd Game/roguelike_sprawl/prototype && twine upload dist/roguelike_sprawl-1.0.0*` |
+| PyPI 업로드 | `cd Game/wet_run/prototype && twine upload dist/wet_run-1.0.0*` |
 | Notion 발행 | NOTION_TOKEN 설정 후 docs/NOTION_IMPORT.md 절차 |
 
 ---

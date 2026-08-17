@@ -7,9 +7,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.ecs.dungeon_system import DungeonSystem, attach_dungeon_to_state
-from roguelike_sprawl.ecs.entity import Entity
-from roguelike_sprawl.ecs.room_entity import (
+from wet_run.ecs.dungeon_system import DungeonSystem, attach_dungeon_to_state
+from wet_run.ecs.entity import Entity
+from wet_run.ecs.room_entity import (
     COMP_CLEARED,
     COMP_H,
     COMP_ICE_KIND,
@@ -24,9 +24,9 @@ from roguelike_sprawl.ecs.room_entity import (
     node_to_entity,
     room_to_entity,
 )
-from roguelike_sprawl.ecs.world import World
-from roguelike_sprawl.matrix import Edge, IceKind, MatrixGraph, Node, NodeKind, ZoneDepth
-from roguelike_sprawl.matrix.dungeon_generator import RoomType
+from wet_run.ecs.world import World
+from wet_run.matrix import Edge, IceKind, MatrixGraph, Node, NodeKind, ZoneDepth
+from wet_run.matrix.dungeon_generator import RoomType
 
 # ============================================================================
 # Helpers
@@ -341,8 +341,8 @@ class TestMissionToECSIntegration:
     """End-to-end: mission → outline → BSP → ECS."""
 
     def test_full_pipeline(self) -> None:
-        from roguelike_sprawl.matrix.mission_mapper import mission_to_graph
-        from roguelike_sprawl.missions.mission import Mission, Objective
+        from wet_run.matrix.mission_mapper import mission_to_graph
+        from wet_run.missions.mission import Mission, Objective
 
         m = Mission(
             id="first_jack",
@@ -372,8 +372,8 @@ class TestMissionToECSIntegration:
         assert exit_count == 1
 
     def test_clear_data_room_via_system(self) -> None:
-        from roguelike_sprawl.matrix.mission_mapper import mission_to_graph
-        from roguelike_sprawl.missions.mission import Mission, Objective
+        from wet_run.matrix.mission_mapper import mission_to_graph
+        from wet_run.missions.mission import Mission, Objective
 
         m = Mission(
             id="data_run",

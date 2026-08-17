@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.cyberdeck import (
+from wet_run.combat.cyberdeck import (
     DEFAULT_DECK_SLOTS,
     MAX_DECK_NAME_LENGTH,
     Cyberdeck,

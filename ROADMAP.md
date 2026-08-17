@@ -1,4 +1,4 @@
-# Roguelike Sprawl - 단계별 계획 (Roadmap)
+# Wet Run - 단계별 계획 (Roadmap)
 
 ## 변경 이력 (Recent)
 
@@ -7,8 +7,8 @@
 - **2026-08-07 (data sync)**: `prototype/data/game_facts.json` regenerated via `scripts/sync_dashboard_facts.py` — `test_count_collected` 2943 → **3319** (now collected-count, not passed-count, per recent test infra upgrade), `_generated_at` 2026-08-01 → 2026-08-07. ADR-0051 schema: 111/111 missions fully compliant. Mission/ICE/program count verified consistent across data sources.
 - **2026-08-06**: 8 atomic commits from 2026-08-05 dirty-tree closure — deps (+lock), dashboard regen (21 files), 7 obsolete test deletions (-2,060 lines), docs refresh (10 log entries + AGENTS.md menu sync + 14 ADR metadata), 5 new docs files (dungeon_events + scripts/README + tools/README + SESSION_SUMMARY_2026-08-06 + audit archive), 10 new test files (+2,632 lines coverage), code changes (3 src + 7 test mods + 2 tool scripts). Test count: **3835 passed, 462 skipped, 1 xfailed, 4 xpassed** (was 3441 pre-session). ruff clean, mypy 0 errors (159 files). HEAD = `b125246`. See `SESSION_SUMMARY_2026-08-06.md`.
 - **2026-08-05 cycle-audit**: 11 cycles of cleanup, 5 real bugs fixed, 14 Draft ADRs → Accepted, coverage 68.8% → 73.36%, ADR-0142 (graphic_novel 3-way split), ADR-0143 (combat_view 4-way split), ADR-0144 (effects data extraction), ADR-0145 (effects_vfx 3-way split), ADR-0146 (stage flow transitions). HEAD = `314fd5c`. See `SESSION_SUMMARY_2026-08-05_cycle-audit.md`.
-- **2026-08-05 multi-project**: 14 commits across 4 projects (Fiction + Language + typing_language + roguelike_sprawl). 9 roguelike_sprawl commits: Cycle 4 polish + scene-data fix + Gibson 4× expansion data drift fix (62 duration + 11 KO + hvac_hum cue). HEAD locked at 89 ahead of origin/main.
-- **2026-08-03**: roguelike_sprawl v1.1.0 Cycle 1+2+3+4(3/3) — Engagement Layer P2/P3 (Variable Reward Nodes, Near-Miss Extraction, Faction Tension, Auto-Play Tempo, Master Whisper) + Module Health 3/4 split + BGM + Accessibility + Cycle 4 final (Hardcore + NG+ + Construct companion). 3441 tests pass.
+- **2026-08-05 multi-project**: 14 commits across 4 projects (Fiction + Language + typing_language + wet_run). 9 wet_run commits: Cycle 4 polish + scene-data fix + Gibson 4× expansion data drift fix (62 duration + 11 KO + hvac_hum cue). HEAD locked at 89 ahead of origin/main.
+- **2026-08-03**: wet_run v1.1.0 Cycle 1+2+3+4(3/3) — Engagement Layer P2/P3 (Variable Reward Nodes, Near-Miss Extraction, Faction Tension, Auto-Play Tempo, Master Whisper) + Module Health 3/4 split + BGM + Accessibility + Cycle 4 final (Hardcore + NG+ + Construct companion). 3441 tests pass.
 - **2026-07-12**: ADR-0120 Phase 2 — **28 docstring 보강**, 7 모듈 100% 달성 (graphic_novel_view / matrix_view / graphic_novel_save / event_story / layout / novel/catalog / novel/manifest), **interrogate 86.8% → 88.7%** — **2983 tests pass** 유지 (4 atomic commits push: 90719b2 docs / 5e3b19a 1000+LOC / cea388c engine / 4ecb082 novel, HEAD = `4ecb082`)
 - **2026-07-12**: 헬스 체크 (5-way audit) + 4-step remediation + ADR 정책 (0103/0110/0111/0112/0113/0120) + docstring Phase 1 (interrogate 자동화) — **2983 tests pass** (32 commits, HEAD `b9889c7`)
 - **2026-07-11**: BGM v3 (12 tracks 미니맥스 외부 생성) + dashboard audio 검증 + wiki audit (journey 12 broken → 0) + video generation guide + Notion 페이지 정리 + lint fix (F541) — **2983 tests pass** (A. dashboard integrity 테스트 2개 복원으로 +2)
@@ -195,7 +195,7 @@ Phase 7: 알파 빌드
 
 **완료 조건**:
 - [x] `prototype/` 에 프로젝트 스켈레톤 생성 (uv + pyproject.toml)
-- [x] `src/roguelike_sprawl/` 디렉토리 구조 확정 (engine, ecs, i18n, portraits, data)
+- [x] `src/wet_run/` 디렉토리 구조 확정 (engine, ecs, i18n, portraits, data)
 - [x] 빌드 시스템 셋업 (hatchling + uv)
 - [x] 테스트 프레임워크 셋업 (pytest, 27 tests passing)
 - [x] 린트/포맷터 셋업 (ruff check + format)

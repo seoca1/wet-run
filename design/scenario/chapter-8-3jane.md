@@ -295,8 +295,8 @@ Chapter 8은 **가족의 미학**으로 특징된다. 가족은:
 ### 9.1 구현 파일
 
 ```
-Game/roguelike_sprawl/prototype/
-├── src/roguelike_sprawl/
+Game/wet_run/prototype/
+├── src/wet_run/
 │   ├── story/
 │   │   └── chapter_villa.py  # Chapter 8 Villa 로직
 │   ├── engine/

@@ -205,7 +205,7 @@ class TestSoundManagerInitReturnType:
     """
 
     def test_sound_manager_init_has_return_annotation(self) -> None:
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sig = inspect.signature(SoundManager.__init__)
         assert sig.return_annotation is not None
@@ -219,7 +219,7 @@ class TestSoundManagerInitReturnType:
 
     def test_sound_manager_init_default_args_intact(self) -> None:
         """Adding -> None must not shift default args (sounds_dir, volume)."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sig = inspect.signature(SoundManager.__init__)
         params = list(sig.parameters.values())
@@ -249,7 +249,7 @@ class TestServerReprDocstringCoverage:
     """
 
     def test_server_repr_has_docstring(self) -> None:
-        from roguelike_sprawl.cyberspace.world import Server
+        from wet_run.cyberspace.world import Server
 
         doc = Server.__repr__.__doc__
         assert doc is not None
@@ -257,7 +257,7 @@ class TestServerReprDocstringCoverage:
 
     def test_server_repr_docstring_mentions_debug(self) -> None:
         """The docstring should explicitly reference its debug role."""
-        from roguelike_sprawl.cyberspace.world import Server
+        from wet_run.cyberspace.world import Server
 
         doc = Server.__repr__.__doc__
         assert doc is not None
@@ -267,7 +267,7 @@ class TestServerReprDocstringCoverage:
 
     def test_server_repr_format_intact(self) -> None:
         """Server(id: name) — the literal repr format must be unchanged."""
-        from roguelike_sprawl.cyberspace.world import SectorId, Server
+        from wet_run.cyberspace.world import SectorId, Server
 
         server = Server(
             id="hosaka_main",
@@ -296,7 +296,7 @@ class TestRenderColorForStatusDocstringCoverage:
     """
 
     def test_render_color_for_status_has_docstring(self) -> None:
-        from roguelike_sprawl.avatar.renderer import _render_color_for_status
+        from wet_run.avatar.renderer import _render_color_for_status
 
         doc = _render_color_for_status.__doc__
         assert doc is not None
@@ -304,7 +304,7 @@ class TestRenderColorForStatusDocstringCoverage:
 
     def test_render_color_for_status_docstring_mentions_palette(self) -> None:
         """The docstring should describe the palette mapping contract."""
-        from roguelike_sprawl.avatar.renderer import _render_color_for_status
+        from wet_run.avatar.renderer import _render_color_for_status
 
         doc = _render_color_for_status.__doc__
         assert doc is not None
@@ -317,21 +317,21 @@ class TestRenderColorForStatusDocstringCoverage:
 
     def test_render_color_for_status_safe_returns_normal(self) -> None:
         """SAFE → COL_BODY_NORMAL (the calm palette)."""
-        from roguelike_sprawl.avatar.renderer import (
+        from wet_run.avatar.renderer import (
             COL_BODY_NORMAL,
             _render_color_for_status,
         )
-        from roguelike_sprawl.avatar.state import Status
+        from wet_run.avatar.state import Status
 
         assert _render_color_for_status(Status.SAFE) == COL_BODY_NORMAL
 
     def test_render_color_for_status_deadly_returns_low(self) -> None:
         """DEADLY → COL_BODY_LOW (the red deepening)."""
-        from roguelike_sprawl.avatar.renderer import (
+        from wet_run.avatar.renderer import (
             COL_BODY_LOW,
             _render_color_for_status,
         )
-        from roguelike_sprawl.avatar.state import Status
+        from wet_run.avatar.state import Status
 
         assert _render_color_for_status(Status.DEADLY) == COL_BODY_LOW
 
@@ -394,13 +394,13 @@ class TestPhase45Smoke:
 
     def test_sound_manager_importable_after_polish(self) -> None:
         """SoundManager module importable after __init__ annotation change."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         assert hasattr(SoundManager, "__init__")
 
     def test_server_dataclass_constructible(self) -> None:
         """Server dataclass still constructible after __repr__ docstring."""
-        from roguelike_sprawl.cyberspace.world import SectorId, Server
+        from wet_run.cyberspace.world import SectorId, Server
 
         server = Server(
             id="sense_news",
@@ -414,7 +414,7 @@ class TestPhase45Smoke:
 
     def test_avatar_renderer_module_intact(self) -> None:
         """avatar.renderer module imports cleanly after docstring polish."""
-        from roguelike_sprawl.avatar.renderer import (  # noqa: F401
+        from wet_run.avatar.renderer import (  # noqa: F401
             _render_color_for_status,
         )
 

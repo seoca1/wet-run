@@ -1,4 +1,4 @@
-# Roguelike Sprawl — Session Summary 2026-08-05 (Cycle 7+ Audit & Cleanup)
+# Wet Run — Session Summary 2026-08-05 (Cycle 7+ Audit & Cleanup)
 
 > **Closed**: 2026-08-05 · **Iteration**: User-requested "do all remaining items" + "continue" x11 rounds · **Status**: All quality gates green; ADRs locked; audits consistent
 
@@ -126,9 +126,9 @@ interrogate:   ✅ 87.9% docstring coverage (target 80%)
 - `tools/audit_sprawl.py` (cross-project Fiction wiki resolution + m.group(2) fix)
 - `tools/find_broken_links.py` (cycle 1 — was already done)
 - `prototype/scripts/README.md` (+9 scripts section)
-- `prototype/src/roguelike_sprawl/audio/bgm_manager.py` (ruff format)
-- `prototype/src/roguelike_sprawl/audio/minimax_music.py` (mypy fixes)
-- `prototype/src/roguelike_sprawl/engine/save_load_view.py` (signature fix)
+- `prototype/src/wet_run/audio/bgm_manager.py` (ruff format)
+- `prototype/src/wet_run/audio/minimax_music.py` (mypy fixes)
+- `prototype/src/wet_run/engine/save_load_view.py` (signature fix)
 - `prototype/pyproject.toml` (`requests>=2.28` dev-dep)
 - `prototype/tests/unit/test_save_load_view.py` (3 call sites updated for t param)
 - `dashboard/stories/journey.html` + `episode-reader.html` (navigation fixes)
@@ -211,4 +211,4 @@ Final audit state:
 **v1.1.0 final** ready pending: user-driven Stage flow decision + PyPI release action.
 EOF
 echo "wrote cycle 7+ session summary"
-wc -l /Users/emilio/projects/Projects/Game/roguelike_sprawl/SESSION_SUMMARY_2026-08-05_cycle-audit.md
+wc -l /Users/emilio/projects/Projects/Game/wet_run/SESSION_SUMMARY_2026-08-05_cycle-audit.md

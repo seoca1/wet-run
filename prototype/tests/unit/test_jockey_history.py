@@ -20,7 +20,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine.jockey_history import (  # noqa: E402
+from wet_run.engine.jockey_history import (  # noqa: E402
     DEFAULT_SAVE_PATH,
     EPITAPHS,
     DeceasedJockey,

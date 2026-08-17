@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.matrix.graph import Edge, MatrixGraph, compute_layout
-from roguelike_sprawl.matrix.node import (
+from wet_run.matrix.graph import Edge, MatrixGraph, compute_layout
+from wet_run.matrix.node import (
     AlarmLevel,
     Faction,
     IceKind,
@@ -243,10 +243,10 @@ class TestSaveManagerWithMatrix:
     """SaveManager roundtrip preserves matrix graph."""
 
     def test_save_and_restore_matrix(self, tmp_path) -> None:
-        from roguelike_sprawl.engine import AppState, SaveManager
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission, Rewards
-        from roguelike_sprawl.run import Stage, start_run
+        from wet_run.engine import AppState, SaveManager
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission, Rewards
+        from wet_run.run import Stage, start_run
 
         # Set up state with matrix
         state = AppState()
@@ -282,10 +282,10 @@ class TestSaveManagerWithMatrix:
         assert new_state.matrix.is_connected("entry", "data1")
 
     def test_restore_screen_for_cyberspace_with_matrix(self, tmp_path) -> None:
-        from roguelike_sprawl.engine import AppState, SaveManager, ScreenKind
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission, Rewards
-        from roguelike_sprawl.run import Stage, start_run
+        from wet_run.engine import AppState, SaveManager, ScreenKind
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission, Rewards
+        from wet_run.run import Stage, start_run
 
         state = AppState()
         state.run_state = start_run("first_jack")
@@ -313,10 +313,10 @@ class TestSaveManagerWithMatrix:
         assert new_state.screen is ScreenKind.MATRIX
 
     def test_restore_without_matrix_goes_to_hub(self, tmp_path) -> None:
-        from roguelike_sprawl.engine import AppState, SaveManager, ScreenKind
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission, Rewards
-        from roguelike_sprawl.run import Stage, start_run
+        from wet_run.engine import AppState, SaveManager, ScreenKind
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission, Rewards
+        from wet_run.run import Stage, start_run
 
         # Save with matrix
         state = AppState()
@@ -356,10 +356,10 @@ class TestSaveManagerWithMatrix:
         assert new_state.screen is ScreenKind.HUB
 
     def test_matrix_layouts_recomputed_on_restore(self, tmp_path) -> None:
-        from roguelike_sprawl.engine import AppState, SaveManager
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission, Rewards
-        from roguelike_sprawl.run import Stage, start_run
+        from wet_run.engine import AppState, SaveManager
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission, Rewards
+        from wet_run.run import Stage, start_run
 
         state = AppState()
         state.run_state = start_run("first_jack")

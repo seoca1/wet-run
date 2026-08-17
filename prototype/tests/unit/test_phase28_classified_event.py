@@ -15,7 +15,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.missions.mission import (
+from wet_run.missions.mission import (
     ChainFailure,
     ChainMission,
     ChainReward,
@@ -157,13 +157,13 @@ class TestPortraitDocstringCoverage:
     """portraits/manager.py — interrogate 100% (was 67% pre-Phase 28)."""
 
     def test_load_has_docstring(self) -> None:
-        from roguelike_sprawl.portraits.manager import PortraitManager
+        from wet_run.portraits.manager import PortraitManager
 
         assert PortraitManager._load.__doc__ is not None
         assert "portraits.json" in PortraitManager._load.__doc__.lower()
 
     def test_dunder_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.portraits.manager import PortraitManager
+        from wet_run.portraits.manager import PortraitManager
 
         assert PortraitManager.__len__.__doc__ is not None
         assert PortraitManager.__repr__.__doc__ is not None
@@ -178,7 +178,7 @@ class TestJobBoardDocstringCoverage:
     """missions/board.py — interrogate >=80% per file (was 59% pre-Phase 28)."""
 
     def test_dunder_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.missions.board import JobBoard
+        from wet_run.missions.board import JobBoard
 
         assert JobBoard.__iter__.__doc__ is not None
         assert JobBoard.__len__.__doc__ is not None
@@ -186,7 +186,7 @@ class TestJobBoardDocstringCoverage:
         assert JobBoard.__repr__.__doc__ is not None
 
     def test_opt_helpers_have_docstrings(self) -> None:
-        from roguelike_sprawl.missions import board
+        from wet_run.missions import board
 
         assert board._opt_int.__doc__ is not None
         assert board._opt_str.__doc__ is not None

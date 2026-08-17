@@ -97,7 +97,7 @@
 
 ### 1. 신규 모듈
 
-`prototype/src/roguelike_sprawl/combat/salvage.py` (NEW, ~120 LOC):
+`prototype/src/wet_run/combat/salvage.py` (NEW, ~120 LOC):
 
 ```python
 """Data Salvage menu (ADR-0014 + ADR-0147).
@@ -169,11 +169,11 @@ state.pending_salvage = False  # menu dismissed
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/combat/salvage.py` (NEW)
-- `prototype/src/roguelike_sprawl/combat/__init__.py` (re-export SalvageChoice, apply_salvage)
-- `prototype/src/roguelike_sprawl/engine/state.py` (AppState.salvage_fragments 공식화)
-- `prototype/src/roguelike_sprawl/engine/combat_view_state.py` (_end_combat 5-line patch)
-- `prototype/src/roguelike_sprawl/matrix/faction_tension.py` (getattr → direct attribute)
+- `prototype/src/wet_run/combat/salvage.py` (NEW)
+- `prototype/src/wet_run/combat/__init__.py` (re-export SalvageChoice, apply_salvage)
+- `prototype/src/wet_run/engine/state.py` (AppState.salvage_fragments 공식화)
+- `prototype/src/wet_run/engine/combat_view_state.py` (_end_combat 5-line patch)
+- `prototype/src/wet_run/matrix/faction_tension.py` (getattr → direct attribute)
 - `prototype/data/i18n/en.json` (salvage 섹션)
 - `prototype/data/i18n/ko.json` (salvage 섹션, 한글)
 - `prototype/tests/unit/test_salvage_scenarios.py` (xfail → pass + 6 new)
@@ -196,7 +196,7 @@ state.pending_salvage = False  # menu dismissed
 
 - 2026-08-07: Draft 작성 (사용자 Option A+B+C 승인 후 Option A 부분)
 - 2026-08-07: Accepted (Option 2 — 사용자가 "A+B+C" 경로 채택, 본 ADR 은 A 의 일부)
-  - 구현: `prototype/src/roguelike_sprawl/combat/salvage.py` (NEW, 137 LOC, ADR-0110 ceiling 250 의 55%)
+  - 구현: `prototype/src/wet_run/combat/salvage.py` (NEW, 137 LOC, ADR-0110 ceiling 250 의 55%)
   - 테스트: `test_salvage_scenarios.py` 32 tests pass (4 xfail→pass + 28 new)
   - 검증: ruff clean, mypy 0 errors (160 src files), pytest 3867 pass (was 3835, +32)
   - i18n: en/ko.json `salvage` 섹션 신규 (16 keys each)

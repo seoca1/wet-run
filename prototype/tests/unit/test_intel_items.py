@@ -1,6 +1,6 @@
 """Automated tests for Info Market Intel Items (ADR-0151, Cycle 6).
 
-Source spec: Game/roguelike_sprawl/testcases/combat/info-market.md (TC-INTEL-001 ~ 012)
+Source spec: Game/wet_run/testcases/combat/info-market.md (TC-INTEL-001 ~ 012)
 
 Three intel items purchasable with CRED:
 - alarm_reducer (30 credits): alarm_level -= 2 (clamped >= 0)
@@ -12,7 +12,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.combat.intel_items import (
+from wet_run.combat.intel_items import (
     ALARM_FLOOR,
     ALARM_REDUCER_DELTA,
     ALARM_REDUCER_PRICE,

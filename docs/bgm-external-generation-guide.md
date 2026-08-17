@@ -311,7 +311,7 @@ theme_manarase_drone.wav
 ffmpeg -i "downloaded_theme_matrix_rain.mp3" \
   -ar 44100 -ac 2 -c:a pcm_s16le \
   -af "loudnorm=I=-16:TP=-1.5:LRA=11" \
-  "/Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/theme_matrix_rain.wav"
+  "/Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/theme_matrix_rain.wav"
 
 # 12개 일괄 변환 (bash 루프)
 cd ~/Downloads/udio_exports
@@ -320,7 +320,7 @@ for f in *.mp3 *.m4a; do
   ffmpeg -y -i "$f" \
     -ar 44100 -ac 2 -c:a pcm_s16le \
     -af "loudnorm=I=-16:TP=-1.5:LRA=11" \
-    "/Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/${base}.wav"
+    "/Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/${base}.wav"
 done
 ```
 
@@ -328,7 +328,7 @@ done
 
 ```bash
 # 12개 WAV 일괄 검증
-python3 /Users/emilio/projects/Projects/Game/roguelike_sprawl/scripts/verify_sounds.py
+python3 /Users/emilio/projects/Projects/Game/wet_run/scripts/verify_sounds.py
 
 # 각 트랙 청취
 python3 /Users/emilio/projects/Projects/scripts/verify_sounds.py --play-all
@@ -345,8 +345,8 @@ python3 /Users/emilio/projects/Projects/scripts/verify_sounds.py --play-all
 
 ```bash
 # 기존 v2 디렉토리 백업 (검증된 fallback)
-mv /Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/v2 \
-   /Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/v2_20260711_enhanced
+mv /Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/v2 \
+   /Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/v2_20260711_enhanced
 
 # 새 트랙들은 이미 Step 4 에서 sounds/ 에 들어감
 # sound.html 은 자동으로 새 파일 사용 (파일명이 같으므로)
@@ -360,13 +360,13 @@ open http://localhost:8765/sound.html
 
 ```bash
 # 새 트랙 백업 + 즉시 롤백
-mkdir -p /Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/v3_ext
-cp /Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/theme_*.wav \
-   /Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/v3_ext/
+mkdir -p /Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/v3_ext
+cp /Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/theme_*.wav \
+   /Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/v3_ext/
 
 # v2 로 되돌리기 (ffmpeg 강화 버전)
-cp /Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/v2_20260711_enhanced/theme_*.wav \
-   /Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds/
+cp /Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/v2_20260711_enhanced/theme_*.wav \
+   /Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds/
 
 # v1 (원본) 로 완전 롤백 (이미 사라졌으면 git 에서)
 # git checkout dashboard/sounds/theme_*.wav

@@ -38,7 +38,7 @@ from typing import Any
 
 import pytest
 
-from roguelike_sprawl.combat import (
+from wet_run.combat import (
     Combatant,
     CombatState,
     IceRegistry,
@@ -47,18 +47,18 @@ from roguelike_sprawl.combat import (
     build_ice_enemy,
     step_combat,
 )
-from roguelike_sprawl.combat.effects_data import (
+from wet_run.combat.effects_data import (
     Animation,
     AnimationFrame,
     FloatingNumber,
 )
-from roguelike_sprawl.combat.effects_vfx_compose import CombatEffects
-from roguelike_sprawl.combat.matrix_events import (
+from wet_run.combat.effects_vfx_compose import CombatEffects
+from wet_run.combat.matrix_events import (
     MATRIX_EVENTS,
     check_event_trigger,
 )
-from roguelike_sprawl.combat.state import _calculate_damage
-from roguelike_sprawl.combat.telemetry import (
+from wet_run.combat.state import _calculate_damage
+from wet_run.combat.telemetry import (
     TelemetrySession,
     aggregate_death_rates,
     aggregate_deck_distribution,
@@ -67,14 +67,14 @@ from roguelike_sprawl.combat.telemetry import (
     record_telemetry_event,
     start_telemetry_session,
 )
-from roguelike_sprawl.engine import AppState, SaveManager
-from roguelike_sprawl.engine.save_manager import SAVE_FORMAT_VERSION
-from roguelike_sprawl.matrix.cyberspace_generator import CyberspaceGenerator
-from roguelike_sprawl.matrix.generator import MatrixGenerator
-from roguelike_sprawl.matrix.graph import compute_layout
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.missions.board import JobBoard
-from roguelike_sprawl.missions.mission import (
+from wet_run.engine import AppState, SaveManager
+from wet_run.engine.save_manager import SAVE_FORMAT_VERSION
+from wet_run.matrix.cyberspace_generator import CyberspaceGenerator
+from wet_run.matrix.generator import MatrixGenerator
+from wet_run.matrix.graph import compute_layout
+from wet_run.matrix.node import ZoneDepth
+from wet_run.missions.board import JobBoard
+from wet_run.missions.mission import (
     ChainFailure,
     ChainMission,
     ChainReward,
@@ -83,12 +83,12 @@ from roguelike_sprawl.missions.mission import (
     MissionChain,
     Rewards,
 )
-from roguelike_sprawl.missions.random_rules import (
+from wet_run.missions.random_rules import (
     apply_rule,
     get_random_mission_with_rule,
     get_total_rules,
 )
-from roguelike_sprawl.run import Stage, start_run
+from wet_run.run import Stage, start_run
 
 # ---------------------------------------------------------------------------
 # Helpers — timing + state fixtures
@@ -398,7 +398,7 @@ class TestMissionBench:
 
     def test_apply_rule_single(self) -> None:
         """Single rule application (warm-path)."""
-        from roguelike_sprawl.missions.random_rules import get_rule_by_id
+        from wet_run.missions.random_rules import get_rule_by_id
 
         rules_total = get_total_rules()
         if rules_total == 0:

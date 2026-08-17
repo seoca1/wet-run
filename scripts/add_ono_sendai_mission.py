@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'ono_sendai_repair' to roguelike_sprawl missions.json.
+"""Add new mission 'ono_sendai_repair' to wet_run missions.json.
 
 Pairs with Fiction Phase 24 — Ono-Sendai concept page (wiki/concepts/ono-sendai.md).
 Novice-arc, Arc 1: Case's pre-recruitment deck-repair scenario in Chiba.

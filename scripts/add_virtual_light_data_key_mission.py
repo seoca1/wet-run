@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'virtual_light_data_key_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'virtual_light_data_key_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 49 — Virtual Light source-summary.
 Novice-arc, Arc 1: working-class-matrix-operator data-delivery scenario on

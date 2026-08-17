@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'trauma_squads_pair_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'trauma_squads_pair_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 43 — trauma-squads motif + trauma-squads-and-cortex-hound
 connection pages.

@@ -36,7 +36,7 @@ from typing import Any
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.graphic_novel_save import (
+from wet_run.engine.graphic_novel_save import (
     GN_SAVE_SLOTS,
     GNProgress,
     GNSaveEmptyError,

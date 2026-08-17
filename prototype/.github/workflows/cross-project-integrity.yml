@@ -45,9 +45,9 @@ jobs:
 
       - name: Fiction→Game mission link lint
         # Verifies every Fiction frontmatter `game_mission_id` references
-        # a real roguelike_sprawl mission. Phase α cross-project integrity.
+        # a real wet_run mission. Phase α cross-project integrity.
         # Exits 1 on any orphan (mission_id in Fiction not in missions.json).
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv run python scripts/verify_story_links.py
 
   game-verify:
@@ -63,23 +63,23 @@ jobs:
           { version: "latest" }
 
       - name: Sync dependencies
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv sync --all-extras
 
       - name: Download font
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv run python scripts/download_font.py
 
       - name: verify_missions
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv run python scripts/verify_story_links.py
 
       - name: verify_facts
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv run python ../scripts/sync_dashboard_facts.py
 
       - name: Run tests
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv run pytest -q
 
   lint:
@@ -95,19 +95,19 @@ jobs:
           { version: "latest" }
 
       - name: Sync dependencies
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv sync --all-extras
 
       - name: ruff check
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv run ruff check .
 
       - name: ruff format check
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv run ruff format --check .
 
       - name: mypy
-        working-directory: Game/roguelike_sprawl/prototype
+        working-directory: Game/wet_run/prototype
         run: uv run mypy src/ || true  # mypy is best-effort, see ADR-0110
 
   integrity-summary:

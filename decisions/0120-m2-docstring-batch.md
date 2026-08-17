@@ -119,7 +119,7 @@ combat_view 1,053) 중 3 모듈은 "보유 사유 + docstring 보강" 으로 정
 
 | 모듈 | Coverage |
 |---|---:|
-| 전체 (`src/roguelike_sprawl/`) | **86.8% PASS** |
+| 전체 (`src/wet_run/`) | **86.8% PASS** |
 | 최악 (graphic_novel_view.py) | 2% (46/47 누락) |
 | 차악 (matrix_view.py) | 12% (29/33 누락) |
 | 그 외 90%+ 커버리지 다수 | — |

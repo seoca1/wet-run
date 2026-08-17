@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'hosaka_terminal_supply' to roguelike_sprawl missions.json.
+"""Add new mission 'hosaka_terminal_supply' to wet_run missions.json.
 
 Pairs with Fiction Phase 25 — Hosaka concept page (wiki/concepts/hosaka.md).
 Novice-arc, Arc 1: working-class matrix-operator terminal-acquisition scenario.

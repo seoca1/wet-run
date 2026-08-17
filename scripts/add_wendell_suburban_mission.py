@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'wendell_suburban_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'wendell_suburban_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 51 — wendell-wright character page.
 Novice-arc, Arc 1: late-Capitalist working-class-aspirant procedural.

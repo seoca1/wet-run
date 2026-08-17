@@ -18,12 +18,12 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.engine.mission_completion import FIXER_REPUTATION
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.missions import JobBoard
-from roguelike_sprawl.missions.board import MissionRepStatus
-from roguelike_sprawl.missions.mission import Mission, Objective, Rewards
-from roguelike_sprawl.run.reputation import ReputationState
+from wet_run.engine.mission_completion import FIXER_REPUTATION
+from wet_run.matrix.node import Faction
+from wet_run.missions import JobBoard
+from wet_run.missions.board import MissionRepStatus
+from wet_run.missions.mission import Mission, Objective, Rewards
+from wet_run.run.reputation import ReputationState
 
 # ============================================================================
 # Helpers

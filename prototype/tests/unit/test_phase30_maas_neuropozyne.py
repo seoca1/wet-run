@@ -15,7 +15,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.combat import IceRegistry, build_ice_enemy
+from wet_run.combat import IceRegistry, build_ice_enemy
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data" / "combat"
 
@@ -120,7 +120,7 @@ class TestGraphDocstringCoverage:
 
     def test_dunder_methods_have_docstrings(self) -> None:
         """MatrixGraph + Edge dunder methods all need docstrings."""
-        from roguelike_sprawl.matrix.graph import Edge, MatrixGraph
+        from wet_run.matrix.graph import Edge, MatrixGraph
 
         # Edge dunders
         assert Edge.__post_init__.__doc__, "Edge.__post_init__ missing docstring"
@@ -136,7 +136,7 @@ class TestGraphDocstringCoverage:
         """graph.py reaches 100% interrogate coverage."""
         from interrogate.coverage import InterrogateCoverage
 
-        ic = InterrogateCoverage(paths=["src/roguelike_sprawl/matrix/graph.py"])
+        ic = InterrogateCoverage(paths=["src/wet_run/matrix/graph.py"])
         result = ic.get_coverage()
         file_result = result.file_results[0]
         assert file_result.missing == 0, f"graph.py has {file_result.missing} missing docstrings"
@@ -152,7 +152,7 @@ class TestStateEffectsDocstringCoverage:
 
     def test_skill_handlers_have_docstrings(self) -> None:
         """All 13 private _apply_* skill handlers need docstrings."""
-        from roguelike_sprawl.combat import state_effects
+        from wet_run.combat import state_effects
 
         handler_names = [
             "_apply_damage_skill",
@@ -177,7 +177,7 @@ class TestStateEffectsDocstringCoverage:
         """state_effects.py reaches 100% interrogate coverage."""
         from interrogate.coverage import InterrogateCoverage
 
-        ic = InterrogateCoverage(paths=["src/roguelike_sprawl/combat/state_effects.py"])
+        ic = InterrogateCoverage(paths=["src/wet_run/combat/state_effects.py"])
         result = ic.get_coverage()
         file_result = result.file_results[0]
         assert file_result.missing == 0, (

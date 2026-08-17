@@ -9,7 +9,7 @@ ADR-0110 (Accepted 2026-07-12) enforces a three-tier module size policy:
   rationale)
 
 This test enforces the 1000+ LOC threshold by scanning every source
-file under ``src/roguelike_sprawl/`` and asserting none exceeds
+file under ``src/wet_run/`` and asserting none exceeds
 999 LOC. The threshold is the hard ceiling from ADR-0110 — files
 over 999 LOC would mandate a follow-up ADR, and the existence of any
 such file today would mean the policy is being violated.
@@ -32,7 +32,7 @@ from pathlib import Path
 
 import pytest
 
-SRC_ROOT = Path(__file__).parent.parent.parent / "src" / "roguelike_sprawl"
+SRC_ROOT = Path(__file__).parent.parent.parent / "src" / "wet_run"
 
 # Files above 999 LOC that have been justified via ADR-0110 follow-up.
 # Currently empty (Phase 5+ splits complete); keep as the regression
@@ -66,7 +66,7 @@ def _over_threshold() -> list[tuple[str, int]]:
 def test_no_module_exceeds_1000_loc_without_adr() -> None:
     """ADR-0110 §Consequences: 1000+ LOC modules require a follow-up ADR.
 
-    Enforce the policy: every ``.py`` file under ``src/roguelike_sprawl/``
+    Enforce the policy: every ``.py`` file under ``src/wet_run/``
     must be at most 999 LOC unless exempted via a documented ADR. Failures
     here mean a new large module was added without going through the
     ADR-0110 process — file a follow-up ADR (ADR-0xxx) and either split

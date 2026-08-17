@@ -1,6 +1,6 @@
 """Tests for engine.cyberspace_map_view — World/Sector/Server tree renderer.
 
-Coverage target for src/roguelike_sprawl/engine/cyberspace_map_view.py.
+Coverage target for src/wet_run/engine/cyberspace_map_view.py.
 """
 
 from __future__ import annotations
@@ -9,7 +9,7 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from roguelike_sprawl.cyberspace.world import (
+from wet_run.cyberspace.world import (
     Sector,
     SectorId,
     Server,
@@ -17,8 +17,8 @@ from roguelike_sprawl.cyberspace.world import (
     WorldId,
     WorldMap,
 )
-from roguelike_sprawl.engine.cyberspace_map_view import render_cyberspace_map
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.cyberspace_map_view import render_cyberspace_map
+from wet_run.engine.state import AppState
 
 
 def _make_console(width: int = 80, height: int = 30) -> MagicMock:

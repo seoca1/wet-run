@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.replay import (
+from wet_run.combat.replay import (
     export_replay_json,
     get_replay_duration,
     get_replay_event_at,

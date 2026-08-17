@@ -13,8 +13,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from roguelike_sprawl.audio.config import SoundCategory
-from roguelike_sprawl.audio.sound_manager import get_sound_config
+from wet_run.audio.config import SoundCategory
+from wet_run.audio.sound_manager import get_sound_config
 
 
 def _make_keydown(sym: object) -> MagicMock:
@@ -30,13 +30,13 @@ class TestKeyBindingLogic:
     def setup_method(self) -> None:
         """Reset SoundConfig to defaults before each test."""
         # Force the singleton to be created with default settings
-        import roguelike_sprawl.audio
+        import wet_run.audio
 
-        roguelike_sprawl.audio._manager = None  # type: ignore[attr-defined]
+        wet_run.audio._manager = None  # type: ignore[attr-defined]
         cfg = get_sound_config()
         cfg.muted = False
         cfg.master_volume = 0.2
-        from roguelike_sprawl.audio.config import DEFAULT_CATEGORY_ENABLED
+        from wet_run.audio.config import DEFAULT_CATEGORY_ENABLED
 
         for cat, enabled in DEFAULT_CATEGORY_ENABLED.items():
             cfg.set_category_enabled(cat, enabled)
@@ -48,7 +48,7 @@ class TestKeyBindingLogic:
 
     def test_toggle_category_via_helper(self) -> None:
         """toggle_category() helper actually toggles the singleton config."""
-        from roguelike_sprawl.engine.settings_ui import toggle_category
+        from wet_run.engine.settings_ui import toggle_category
 
         config = get_sound_config()
         # THEME is ON by default
@@ -59,7 +59,7 @@ class TestKeyBindingLogic:
 
     def test_toggle_k_from_off(self) -> None:
         """K key toggles KEYS from default OFF to ON."""
-        from roguelike_sprawl.engine.settings_ui import toggle_category
+        from wet_run.engine.settings_ui import toggle_category
 
         config = get_sound_config()
         # KEYS is OFF by default
@@ -78,8 +78,8 @@ class TestKeyBindingLogic:
 
     def test_volume_up(self) -> None:
         """Volume up via adjust_volume(+0.1)."""
-        from roguelike_sprawl.audio import sound_manager
-        from roguelike_sprawl.engine.settings_ui import adjust_volume
+        from wet_run.audio import sound_manager
+        from wet_run.engine.settings_ui import adjust_volume
 
         sm = sound_manager.get_sound_manager()
         sm.set_volume(0.5)
@@ -88,8 +88,8 @@ class TestKeyBindingLogic:
 
     def test_volume_down(self) -> None:
         """Volume down via adjust_volume(-0.1)."""
-        from roguelike_sprawl.audio import sound_manager
-        from roguelike_sprawl.engine.settings_ui import adjust_volume
+        from wet_run.audio import sound_manager
+        from wet_run.engine.settings_ui import adjust_volume
 
         sm = sound_manager.get_sound_manager()
         sm.set_volume(0.5)
@@ -98,7 +98,7 @@ class TestKeyBindingLogic:
 
     def test_all_six_categories_toggleable(self) -> None:
         """All 6 categories can be toggled via helper."""
-        from roguelike_sprawl.engine.settings_ui import toggle_category
+        from wet_run.engine.settings_ui import toggle_category
 
         config = get_sound_config()
         for cat in SoundCategory:
@@ -113,14 +113,14 @@ class TestCategoryKeyBindings:
 
     def test_all_keys_unique(self) -> None:
         """All 6 category keys are unique."""
-        from roguelike_sprawl.audio.config import CATEGORY_KEY_BINDINGS
+        from wet_run.audio.config import CATEGORY_KEY_BINDINGS
 
         keys = list(CATEGORY_KEY_BINDINGS.values())
         assert len(keys) == len(set(keys))
 
     def test_keys_are_single_chars(self) -> None:
         """All keys are single characters."""
-        from roguelike_sprawl.audio.config import CATEGORY_KEY_BINDINGS
+        from wet_run.audio.config import CATEGORY_KEY_BINDINGS
 
         for key in CATEGORY_KEY_BINDINGS.values():
             assert len(key) == 1
@@ -128,7 +128,7 @@ class TestCategoryKeyBindings:
 
     def test_t_maps_to_theme(self) -> None:
         """Pressing T maps to THEME category."""
-        from roguelike_sprawl.audio.config import CATEGORY_KEY_BINDINGS
+        from wet_run.audio.config import CATEGORY_KEY_BINDINGS
 
         for cat, key in CATEGORY_KEY_BINDINGS.items():
             if key == "T":
@@ -139,7 +139,7 @@ class TestCategoryKeyBindings:
 
     def test_e_maps_to_events(self) -> None:
         """Pressing E maps to EVENTS category."""
-        from roguelike_sprawl.audio.config import CATEGORY_KEY_BINDINGS
+        from wet_run.audio.config import CATEGORY_KEY_BINDINGS
 
         for cat, key in CATEGORY_KEY_BINDINGS.items():
             if key == "E":
@@ -150,7 +150,7 @@ class TestCategoryKeyBindings:
 
     def test_k_maps_to_keys(self) -> None:
         """Pressing K maps to KEYS category."""
-        from roguelike_sprawl.audio.config import CATEGORY_KEY_BINDINGS
+        from wet_run.audio.config import CATEGORY_KEY_BINDINGS
 
         for cat, key in CATEGORY_KEY_BINDINGS.items():
             if key == "K":
@@ -161,7 +161,7 @@ class TestCategoryKeyBindings:
 
     def test_b_maps_to_combat(self) -> None:
         """Pressing B maps to COMBAT category."""
-        from roguelike_sprawl.audio.config import CATEGORY_KEY_BINDINGS
+        from wet_run.audio.config import CATEGORY_KEY_BINDINGS
 
         for cat, key in CATEGORY_KEY_BINDINGS.items():
             if key == "B":
@@ -172,7 +172,7 @@ class TestCategoryKeyBindings:
 
     def test_v_maps_to_movement(self) -> None:
         """Pressing V maps to MOVEMENT category."""
-        from roguelike_sprawl.audio.config import CATEGORY_KEY_BINDINGS
+        from wet_run.audio.config import CATEGORY_KEY_BINDINGS
 
         for cat, key in CATEGORY_KEY_BINDINGS.items():
             if key == "V":
@@ -183,7 +183,7 @@ class TestCategoryKeyBindings:
 
     def test_i_maps_to_items(self) -> None:
         """Pressing I maps to ITEMS category."""
-        from roguelike_sprawl.audio.config import CATEGORY_KEY_BINDINGS
+        from wet_run.audio.config import CATEGORY_KEY_BINDINGS
 
         for cat, key in CATEGORY_KEY_BINDINGS.items():
             if key == "I":
@@ -198,8 +198,8 @@ class TestVolumePropagation:
 
     def test_adjust_volume_changes_manager(self) -> None:
         """adjust_volume() updates both config and SoundManager."""
-        from roguelike_sprawl.audio import sound_manager
-        from roguelike_sprawl.engine.settings_ui import adjust_volume
+        from wet_run.audio import sound_manager
+        from wet_run.engine.settings_ui import adjust_volume
 
         sm = sound_manager.get_sound_manager()
         sm.set_volume(0.3)
@@ -210,8 +210,8 @@ class TestVolumePropagation:
 
     def test_volume_clamped_high(self) -> None:
         """Volume cannot exceed 1.0."""
-        from roguelike_sprawl.audio import sound_manager
-        from roguelike_sprawl.engine.settings_ui import adjust_volume
+        from wet_run.audio import sound_manager
+        from wet_run.engine.settings_ui import adjust_volume
 
         sm = sound_manager.get_sound_manager()
         sm.set_volume(0.95)
@@ -220,8 +220,8 @@ class TestVolumePropagation:
 
     def test_volume_clamped_low(self) -> None:
         """Volume cannot go below 0.0."""
-        from roguelike_sprawl.audio import sound_manager
-        from roguelike_sprawl.engine.settings_ui import adjust_volume
+        from wet_run.audio import sound_manager
+        from wet_run.engine.settings_ui import adjust_volume
 
         sm = sound_manager.get_sound_manager()
         sm.set_volume(0.05)

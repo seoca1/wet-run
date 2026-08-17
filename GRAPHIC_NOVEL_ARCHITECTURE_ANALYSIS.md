@@ -405,7 +405,7 @@ def _apply_card_fade(console, width, card_y_start, fade: float):
 
 **Comparison**:
 
-| Feature | Traditional VN | Roguelike Sprawl GN |
+| Feature | Traditional VN | Wet Run GN |
 |---------|----------------|---------------------|
 | Art size | 1920×1080 (full screen) | 10×14 (corner inset) |
 | Art style | Anime/realistic | ASCII symbols |
@@ -584,7 +584,7 @@ def _apply_card_fade(console, width, card_y_start, fade: float):
 
 ### 7.4 Recommended Path
 
-**For Roguelike Sprawl**:
+**For Wet Run**:
 - ✅ **Keep ASCII for now** — The system is solid, and ASCII fits the cyberpunk aesthetic
 - ✅ **Improve art quality** — Commission better ASCII art (or use AI tools)
 - ⚠️ **Consider hybrid approach later** — If visual impact becomes a priority
@@ -637,9 +637,9 @@ def _apply_card_fade(console, width, card_y_start, fade: float):
 
 | File | Purpose |
 |------|---------|
-| `src/roguelike_sprawl/engine/graphic_novel_view.py` | Core rendering (1,448 lines) |
-| `src/roguelike_sprawl/engine/graphic_novel_audio.py` | Sound cue mapping (144 lines) |
-| `src/roguelike_sprawl/engine/graphic_novel_save.py` | Save/load (556 lines) |
+| `src/wet_run/engine/graphic_novel_view.py` | Core rendering (1,448 lines) |
+| `src/wet_run/engine/graphic_novel_audio.py` | Sound cue mapping (144 lines) |
+| `src/wet_run/engine/graphic_novel_save.py` | Save/load (556 lines) |
 | `data/scenes/{character}/*.json` | Scene data (81 files) |
 | `data/art/portraits/portraits.json` | Portrait art (18 portraits, 469 lines) |
 | `data/art/backgrounds/backgrounds.json` | Background art (13 backgrounds, 378 lines) |

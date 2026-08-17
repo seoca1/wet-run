@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.performance import (
+from wet_run.combat.performance import (
     PerfReport,
     PerfSnapshot,
     build_report,

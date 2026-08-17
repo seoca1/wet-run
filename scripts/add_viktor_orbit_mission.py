@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'viktor_orbit_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'viktor_orbit_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 56 — Viktor character page.
 Novice-arc, Arc 1: orbit-rigger procedural scenario.

@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.arc6 import (
+from wet_run.combat.arc6 import (
     ARC6_MISSIONS,
     arc6_mission_count,
     arc6_mission_ids,

@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.lore import (
+from wet_run.lore import (
     HINTS_BY_FACTION,
     WHISPER_UNLOCK_TIER,
     ConstructWhisper,
     get_hint_for_faction,
 )
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.run.reputation import ReputationState
+from wet_run.matrix.node import Faction
+from wet_run.run.reputation import ReputationState
 
 
 class TestConstructWhisperBasics:

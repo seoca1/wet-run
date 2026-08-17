@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'chevette_nightshift_run' to roguelike_sprawl missions.json.
+"""Add new mission 'chevette_nightshift_run' to wet_run missions.json.
 
 Pairs with Fiction Phase 33 — Chevette Nightshift derivative
 (derivative/bridge-trilogy/short-stories/{en,ko}/2026-07-19_chevette_nightshift.{md,.ko.md}).

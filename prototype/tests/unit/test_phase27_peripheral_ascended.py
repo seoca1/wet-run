@@ -16,7 +16,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.combat import IceRegistry, build_ice_enemy
+from wet_run.combat import IceRegistry, build_ice_enemy
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data" / "combat"
 
@@ -198,26 +198,26 @@ class TestAudioDocstringCoverage:
     """Verify Phase 27 docstring additions on audio/bgm_manager, theme, config."""
 
     def test_bgm_manager_init_has_docstring(self) -> None:
-        from roguelike_sprawl.audio.bgm_manager import BgmManager
+        from wet_run.audio.bgm_manager import BgmManager
 
         assert BgmManager.__init__.__doc__, "BgmManager.__init__ missing docstring"
 
     def test_bgm_manager_is_muted_has_docstring(self) -> None:
-        from roguelike_sprawl.audio.bgm_manager import BgmManager
+        from wet_run.audio.bgm_manager import BgmManager
 
         assert BgmManager.is_muted.fget.__doc__, "BgmManager.is_muted missing docstring"
 
     def test_bgm_manager_volume_has_docstring(self) -> None:
-        from roguelike_sprawl.audio.bgm_manager import BgmManager
+        from wet_run.audio.bgm_manager import BgmManager
 
         assert BgmManager.volume.fget.__doc__, "BgmManager.volume missing docstring"
 
     def test_theme_player_init_has_docstring(self) -> None:
-        from roguelike_sprawl.audio.theme import ThemePlayer
+        from wet_run.audio.theme import ThemePlayer
 
         assert ThemePlayer.__init__.__doc__, "ThemePlayer.__init__ missing docstring"
 
     def test_sound_config_post_init_has_docstring(self) -> None:
-        from roguelike_sprawl.audio.config import SoundConfig
+        from wet_run.audio.config import SoundConfig
 
         assert SoundConfig.__post_init__.__doc__, "SoundConfig.__post_init__ missing docstring"

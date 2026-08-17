@@ -15,7 +15,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine.save_progress import (  # noqa: E402
+from wet_run.engine.save_progress import (  # noqa: E402
     ProgressSummary,
     _grade_label,
     get_progress_summary,

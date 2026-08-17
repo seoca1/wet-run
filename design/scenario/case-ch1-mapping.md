@@ -119,7 +119,7 @@ fetch('../data/story/arcs/chapter_flow.json')
 ```
 
 **연동 파일**:
-- `prototype/src/roguelike_sprawl/engine/chapter_cutscene.py` — `PhaseData`에 `combat`, `gain`, `loss` 필드 추가
+- `prototype/src/wet_run/engine/chapter_cutscene.py` — `PhaseData`에 `combat`, `gain`, `loss` 필드 추가
 - `prototype/data/story/arcs/case_arc.json` — phases에 story-specific 메타데이터 추가
 - `dashboard/story.html` — 챕터 흐름 뷰어 섹션 추가
 - `.github/workflows/pages.yml` — `dashboard/data/` 디렉토리 복사 추가

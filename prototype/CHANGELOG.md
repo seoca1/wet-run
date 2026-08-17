@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Status**: Production/Stable (5)
 **HEAD**: `633e38e` (origin/main)
-**PyPI**: https://pypi.org/project/roguelike-sprawl/
+**PyPI**: https://pypi.org/project/wet-run/
 
 ### Highlights
 
@@ -61,7 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0b1] - 2026-07-08
 
 **Status**: Beta (4)
-**PyPI**: https://pypi.org/project/roguelike-sprawl/1.0.0b1/
+**PyPI**: https://pypi.org/project/wet-run/1.0.0b1/
 
 ### Highlights
 
@@ -334,7 +334,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added - Audio Integration (Phases 1-6 Complete)
 
-#### **SoundManager Core** (`src/roguelike_sprawl/audio/sound_manager.py`)
+#### **SoundManager Core** (`src/wet_run/audio/sound_manager.py`)
 - 267 lines, zero external Python dependencies
 - Cross-platform: macOS (afplay), Linux (aplay), Windows (winsound)
 - Auto-generates 27 placeholder WAVs on first use (synthesized via `wave` module)
@@ -349,7 +349,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Movement** (4): nav_step, jack_in, jack_out, nav_block
 - **Items** (3): equip, pickup, cant
 
-#### **Settings UI** (`src/roguelike_sprawl/engine/settings_ui.py`)
+#### **Settings UI** (`src/wet_run/engine/settings_ui.py`)
 - `get_volume()`, `set_volume()`, `adjust_volume(±delta)` helpers
 - `is_muted()`, `toggle_mute()` helpers
 - `render_settings_overlay()` for HUD display
@@ -398,7 +398,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added - Avatar System
 
-#### **`src/roguelike_sprawl/avatar/`** module
+#### **`src/wet_run/avatar/`** module
 - `state.py` - Data models: AvatarState, ProgramSlot, Status, ConstructKind, AvatarLines
 - `renderer.py` - Pure ASCII stick-figure renderer with color palette
 - `__init__.py` - Public API exports

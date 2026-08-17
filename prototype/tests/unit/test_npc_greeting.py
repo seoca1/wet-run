@@ -10,14 +10,14 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.engine.npc_greeting import (
+from wet_run.engine.npc_greeting import (
     NPC_GREETINGS,
     ReputationGreeting,
     get_greeting,
     get_greeting_text,
 )
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.matrix.node import Faction
+from wet_run.engine.state import AppState
+from wet_run.matrix.node import Faction
 
 # ============================================================================
 # ReputationGreeting.matches()
@@ -228,7 +228,7 @@ class TestHubIntegration:
     """The Hub subtitle uses the Finn greeting to surface reputation."""
 
     def test_hub_subtitle_uses_default_greeting_when_neutral(self) -> None:
-        from roguelike_sprawl.engine.npc_greeting import get_greeting_text
+        from wet_run.engine.npc_greeting import get_greeting_text
 
         state = AppState()
         # Neutral → default greeting ("Welcome to the Sprawl, cowboy")
@@ -236,7 +236,7 @@ class TestHubIntegration:
         assert "cowboy" in greeting.lower() or "sprawl" in greeting.lower()
 
     def test_hub_subtitle_uses_faction_greeting(self) -> None:
-        from roguelike_sprawl.engine.npc_greeting import get_greeting_text
+        from wet_run.engine.npc_greeting import get_greeting_text
 
         state = AppState()
         # Push Maas to HOSTILE so Finn warns about them

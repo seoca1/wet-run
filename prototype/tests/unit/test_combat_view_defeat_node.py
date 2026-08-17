@@ -10,12 +10,12 @@ Tests all branches:
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.combat_view import (  # type: ignore[import-untyped]
+from wet_run.engine.combat_view import (  # type: ignore[import-untyped]
     _defeat_current_ice_node,
 )
-from roguelike_sprawl.engine.state import AppState  # type: ignore[import-untyped]
-from roguelike_sprawl.matrix.graph import Edge, MatrixGraph  # type: ignore[import-untyped]
-from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth  # type: ignore[import-untyped]
+from wet_run.engine.state import AppState  # type: ignore[import-untyped]
+from wet_run.matrix.graph import Edge, MatrixGraph  # type: ignore[import-untyped]
+from wet_run.matrix.node import Node, NodeKind, ZoneDepth  # type: ignore[import-untyped]
 
 
 def _make_node(id: str, kind: NodeKind = NodeKind.DATA) -> Node:

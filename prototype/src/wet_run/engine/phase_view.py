@@ -16,11 +16,11 @@ from typing import Any
 
 import tcod.console
 
-from roguelike_sprawl.engine.chapter_cutscene import PhaseData
+from wet_run.engine.chapter_cutscene import PhaseData
 
 if True:
-    from roguelike_sprawl.engine.state import AppState
-    from roguelike_sprawl.i18n import Translator
+    from wet_run.engine.state import AppState
+    from wet_run.i18n import Translator
 
 BEAT_TYPE_COLORS = {
     "interior_monologue": (200, 150, 50),

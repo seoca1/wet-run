@@ -1,13 +1,13 @@
 # Session Summary — 2026-08-03 (Diagnostics + Fiction Lift Streak)
 
 > **세션 ID**: 2026-08-03-multi-project-diagnostics
-> **세션 범위**: Vault + 3 project wikis (Fiction · Language · roguelike_sprawl) deep-diagnostic + 8 lifts + 1 synthesis-page + dashboard refresh
+> **세션 범위**: Vault + 3 project wikis (Fiction · Language · wet_run) deep-diagnostic + 8 lifts + 1 synthesis-page + dashboard refresh
 > **Vault audit**: `audit_vault.py` STATUS ✅ CLEAN (exit 0) — 1613 files, 0 broken, 0 orphans
 > **Fiction novel_check**: A=6 **B=12** C=6 D=0 F=0 (24 novels — 8 C-works lifted today)
 > **Dashboard**: 19/19 active stat JSONs fresh (2026-08-03)
-> **테스트**: roguelike_sprawl pytest baseline 3278 passed / 664 skipped (no regressions touched)
-> **mypy**: roguelike_sprawl 142 source files · 0 errors
-> **ruff**: roguelike_sprawl All checks passed
+> **테스트**: wet_run pytest baseline 3278 passed / 664 skipped (no regressions touched)
+> **mypy**: wet_run 142 source files · 0 errors
+> **ruff**: wet_run All checks passed
 
 ---
 
@@ -36,7 +36,7 @@
 |---|---|
 | 5 KO derivative files CJK residual fix | 5 |
 | `wiki/index.md` duplicate work entries removed (new-rose-hotel, red-star-winter-orbit) | 1 |
-| Per-project log entries (Fiction · Language · Game/roguelike_sprawl/wiki) | 3 |
+| Per-project log entries (Fiction · Language · Game/wet_run/wiki) | 3 |
 | `BROKEN_WIKILINKS_2026-07-11.md` archived to `_archive/` with closure header | 1 |
 | `novel_check.py` exclude_stems updated (Jackpot novels added to `--all` + jackpot-trilogy overview excluded) | 1 |
 | Dashboard `build_dashboard.py` + `build_static_data.py` runs (refreshed 17 active stat JSONs) | 0 file edits (data refresh) |
@@ -127,10 +127,10 @@ D: 1 → 0 (-1 — agrippa lifted to B)
 - `audit_vault.py`: ✅ CLEAN
 - `vault/Fiction` 작업: 완료 (8 lifts + 1 synthesis + 5 KO fix + 1 dedup)
 - `vault/Language`: 유지 (passive verification 만 — `audit_vault.py` 결과 활용)
-- `vault/Game/roguelike_sprawl`: 유지 (passive verification, pytest baseline 유지)
+- `vault/Game/wet_run`: 유지 (passive verification, pytest baseline 유지)
 - `vault/dashboard`: 완료 (17 stat JSON refreshed — 2 builders 실행)
 - workspace cross-project 정리: `Language/wiki/_inventory/_archive/BROKEN_WIKILINKS_2026-07-11.md` archive with closure note
 
 ---
 
-> **향후 housekeeping (out of session scope)**: 4 short-story lifts (mirror canonical-section pathway), Language wiki orphans (~33), roguelike_sprawl wiki `lore/` orphans (5 — 의도된 in-game fragments), workspace meta (AGENTS.md 갱신, SETUP_LOG.md 정리) — 모두 본인 scope 외.
+> **향후 housekeeping (out of session scope)**: 4 short-story lifts (mirror canonical-section pathway), Language wiki orphans (~33), wet_run wiki `lore/` orphans (5 — 의도된 in-game fragments), workspace meta (AGENTS.md 갱신, SETUP_LOG.md 정리) — 모두 본인 scope 외.

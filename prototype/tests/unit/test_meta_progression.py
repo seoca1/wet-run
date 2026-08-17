@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.meta_progression import (
+from wet_run.combat.meta_progression import (
     META_UNLOCKS,
     MetaUnlock,
     check_unlock_condition,

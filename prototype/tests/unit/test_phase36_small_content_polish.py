@@ -168,7 +168,7 @@ class TestEcsWorldDocstringCoverage:
     """Phase 36 polish — World.__init__/__iter__/__len__/__contains__/__repr__ docstrings (58.3% -> 100%)."""
 
     def test_world_dunder_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.ecs.world import World
+        from wet_run.ecs.world import World
 
         # Methods that gained docstrings in Phase 36
         method_names = ["__init__", "__iter__", "__len__", "__contains__", "__repr__"]
@@ -189,7 +189,7 @@ class TestEcsWorldDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/ecs/world.py",
+                "src/wet_run/ecs/world.py",
             ],
             capture_output=True,
             text=True,
@@ -221,7 +221,7 @@ class TestBlackMarketDocstringCoverage:
     """Phase 36 polish — BlackMarketCategory enum gained a docstring (66.7% -> 100%)."""
 
     def test_black_market_category_has_docstring(self) -> None:
-        from roguelike_sprawl.black_market import BlackMarketCategory
+        from wet_run.black_market import BlackMarketCategory
 
         assert BlackMarketCategory.__doc__ is not None, "BlackMarketCategory missing docstring"
         assert BlackMarketCategory.__doc__.strip(), "BlackMarketCategory has empty docstring"
@@ -243,7 +243,7 @@ class TestBlackMarketDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/black_market.py",
+                "src/wet_run/black_market.py",
             ],
             capture_output=True,
             text=True,
@@ -266,7 +266,7 @@ class TestEcsEntityDocstringCoverage:
     """Phase 36 polish — Entity.__repr__/__eq__/__hash__ gained docstrings (66.7% -> 100%)."""
 
     def test_entity_dunder_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.ecs.entity import Entity
+        from wet_run.ecs.entity import Entity
 
         # Methods that gained docstrings in Phase 36
         method_names = ["__repr__", "__eq__", "__hash__"]
@@ -287,7 +287,7 @@ class TestEcsEntityDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/ecs/entity.py",
+                "src/wet_run/ecs/entity.py",
             ],
             capture_output=True,
             text=True,
@@ -311,8 +311,8 @@ class TestPhase36Smoke:
 
     def test_world_dunder_methods_behavior_intact(self) -> None:
         """World.__iter__/__len__/__contains__/__repr__ still work after docstring addition."""
-        from roguelike_sprawl.ecs.entity import Entity
-        from roguelike_sprawl.ecs.world import World
+        from wet_run.ecs.entity import Entity
+        from wet_run.ecs.world import World
 
         world = World()
         assert len(world) == 0
@@ -334,7 +334,7 @@ class TestPhase36Smoke:
 
     def test_entity_dunder_methods_behavior_intact(self) -> None:
         """Entity.__repr__/__eq__/__hash__ still work after docstring addition."""
-        from roguelike_sprawl.ecs.entity import Entity
+        from wet_run.ecs.entity import Entity
 
         e1 = Entity("foo", hp=10)
         e2 = Entity("foo", hp=20)  # Different components but same id
@@ -359,7 +359,7 @@ class TestPhase36Smoke:
 
     def test_black_market_category_str_values_unchanged(self) -> None:
         """BlackMarketCategory string values preserved after docstring addition."""
-        from roguelike_sprawl.black_market import BlackMarketCategory, list_by_category
+        from wet_run.black_market import BlackMarketCategory, list_by_category
 
         # Enum values are stable string contracts
         assert BlackMarketCategory.PROGRAMS == "programs"

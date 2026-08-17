@@ -288,8 +288,8 @@ Chapter 6은 **수호의 미학**으로 특징된다. 수호는:
 ### 9.1 구현 파일
 
 ```
-Game/roguelike_sprawl/prototype/
-├── src/roguelike_sprawl/
+Game/wet_run/prototype/
+├── src/wet_run/
 │   ├── story/
 │   │   └── chapter_scaffold.py  # Chapter 6 Scaffold 로직
 │   ├── engine/

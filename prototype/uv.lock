@@ -734,40 +734,6 @@ wheels = [
 ]
 
 [[package]]
-name = "roguelike-sprawl"
-version = "1.1.0a1"
-source = { editable = "." }
-dependencies = [
-    { name = "pyyaml" },
-    { name = "tcod" },
-    { name = "typing-extensions" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "interrogate" },
-    { name = "mypy" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "requests" },
-    { name = "ruff" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "interrogate", marker = "extra == 'dev'", specifier = ">=1.7" },
-    { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.0" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
-    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
-    { name = "pyyaml" },
-    { name = "requests", marker = "extra == 'dev'", specifier = ">=2.28" },
-    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.1.0" },
-    { name = "tcod", specifier = ">=16.0" },
-    { name = "typing-extensions", specifier = ">=4.0" },
-]
-provides-extras = ["dev"]
-
-[[package]]
 name = "ruff"
 version = "0.15.17"
 source = { registry = "https://pypi.org/simple" }
@@ -903,3 +869,37 @@ sdist = { url = "https://files.pythonhosted.org/packages/53/0c/06f8b233b8fd13b9e
 wheels = [
     { url = "https://files.pythonhosted.org/packages/7f/3e/5db95bcf282c52709639744ca2a8b149baccf648e39c8cc87553df9eae0c/urllib3-2.7.0-py3-none-any.whl", hash = "sha256:9fb4c81ebbb1ce9531cce37674bbc6f1360472bc18ca9a553ede278ef7276897", size = 131087, upload-time = "2026-05-07T16:13:17.151Z" },
 ]
+
+[[package]]
+name = "wet-run"
+version = "1.1.0a1"
+source = { editable = "." }
+dependencies = [
+    { name = "pyyaml" },
+    { name = "tcod" },
+    { name = "typing-extensions" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "interrogate" },
+    { name = "mypy" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "requests" },
+    { name = "ruff" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "interrogate", marker = "extra == 'dev'", specifier = ">=1.7" },
+    { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.0" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=7.0" },
+    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=4.0" },
+    { name = "pyyaml" },
+    { name = "requests", marker = "extra == 'dev'", specifier = ">=2.28" },
+    { name = "ruff", marker = "extra == 'dev'", specifier = ">=0.1.0" },
+    { name = "tcod", specifier = ">=16.0" },
+    { name = "typing-extensions", specifier = ">=4.0" },
+]
+provides-extras = ["dev"]

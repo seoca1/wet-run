@@ -1,6 +1,6 @@
-"""Tests for roguelike_sprawl.settings (data module) — GameSettings dataclass + helpers.
+"""Tests for wet_run.settings (data module) — GameSettings dataclass + helpers.
 
-Coverage target for src/roguelike_sprawl/settings.py.
+Coverage target for src/wet_run/settings.py.
 Note: tests/unit/test_settings.py is for engine.settings_view UI module — different module.
 """
 
@@ -11,7 +11,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.settings import (
+from wet_run.settings import (
     GAME_AUTHOR,
     GAME_NAME,
     GAME_VERSION,

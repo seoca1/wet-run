@@ -271,8 +271,8 @@ The Finn NPC 이벤트:
 ### 9.1 구현 파일
 
 ```
-Game/roguelike_sprawl/prototype/
-├── src/roguelike_sprawl/
+Game/wet_run/prototype/
+├── src/wet_run/
 │   ├── story/
 │   │   └── chapter_bridge.py  # Chapter 4 Bridge 로직
 │   ├── engine/

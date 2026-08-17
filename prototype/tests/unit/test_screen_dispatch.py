@@ -1,6 +1,6 @@
 """Tests for engine.screen_dispatch — Screen→render dispatch table.
 
-Coverage target for src/roguelike_sprawl/engine/screen_dispatch.py.
+Coverage target for src/wet_run/engine/screen_dispatch.py.
 Tests focus on the dispatch table structure and render_current_screen's flow logic.
 The inner view functions (complex tcod-based renderers) are tested elsewhere.
 """
@@ -11,17 +11,17 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from roguelike_sprawl.engine.screen_dispatch import (
+from wet_run.engine.screen_dispatch import (
     _build_dispatch,
     render_current_screen,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
+from wet_run.engine.state import AppState, ScreenKind
 
 
 @pytest.fixture(autouse=True)
 def _reset_dispatch_cache():
     """Reset module-level dispatch cache before each test."""
-    import roguelike_sprawl.engine.screen_dispatch as sd
+    import wet_run.engine.screen_dispatch as sd
 
     sd._DISPATCH = None
     yield
@@ -104,13 +104,13 @@ class TestBuildDispatch:
 
 class TestLazyDispatch:
     def test_dispatch_starts_none(self):
-        import roguelike_sprawl.engine.screen_dispatch as sd
+        import wet_run.engine.screen_dispatch as sd
 
         sd._DISPATCH = None
         assert sd._DISPATCH is None
 
     def test_render_current_screen_initializes_dispatch(self):
-        import roguelike_sprawl.engine.screen_dispatch as sd
+        import wet_run.engine.screen_dispatch as sd
 
         sd._DISPATCH = None
         console = _make_console()
@@ -139,7 +139,7 @@ class TestRenderCurrentScreen:
         t = _make_translator()
 
         # Patch the dispatch table to NOT contain MENU
-        with patch("roguelike_sprawl.engine.screen_dispatch._DISPATCH", new={}):
+        with patch("wet_run.engine.screen_dispatch._DISPATCH", new={}):
             render_current_screen(console, t, state)
             console.clear.assert_called()
             # Look for "NO RENDERER" message in any print call
@@ -161,7 +161,7 @@ class TestRenderCurrentScreen:
         # Patch _DISPATCH with a known callable
         mock_render = MagicMock()
         with patch(
-            "roguelike_sprawl.engine.screen_dispatch._DISPATCH", new={ScreenKind.MENU: mock_render}
+            "wet_run.engine.screen_dispatch._DISPATCH", new={ScreenKind.MENU: mock_render}
         ):
             render_current_screen(console, t, state)
             mock_render.assert_called_once_with(console, t, state)
@@ -182,7 +182,7 @@ class TestRenderCurrentScreen:
         ice_mock = MagicMock()
 
         with patch(
-            "roguelike_sprawl.engine.screen_dispatch._DISPATCH",
+            "wet_run.engine.screen_dispatch._DISPATCH",
             new={ScreenKind.MATRIX: mock_render},
         ):
             render_current_screen(console, t, state, prog_registry=prog_mock, ice_registry=ice_mock)
@@ -201,7 +201,7 @@ class TestRenderCurrentScreen:
         mock_render = MagicMock()
 
         with patch(
-            "roguelike_sprawl.engine.screen_dispatch._DISPATCH", new={ScreenKind.HUB: mock_render}
+            "wet_run.engine.screen_dispatch._DISPATCH", new={ScreenKind.HUB: mock_render}
         ):
             render_current_screen(
                 console,
@@ -228,7 +228,7 @@ class TestIntegrationDispatch:
         2 args instead of expected 3). Those bugs are surfaced via TypeError here
         and can be addressed separately.
         """
-        import roguelike_sprawl.engine.screen_dispatch as sd
+        import wet_run.engine.screen_dispatch as sd
 
         sd._DISPATCH = None
         console = _make_console()
@@ -247,7 +247,7 @@ class TestIntegrationDispatch:
 
     def test_no_significant_exceptions_in_normal_screens(self):
         """MENU / HUB / HELP / SETTINGS should render without exceptions."""
-        import roguelike_sprawl.engine.screen_dispatch as sd
+        import wet_run.engine.screen_dispatch as sd
 
         sd._DISPATCH = None
         console = _make_console()

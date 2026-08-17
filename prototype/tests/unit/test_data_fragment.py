@@ -10,7 +10,7 @@ Covers:
 
 from __future__ import annotations
 
-from roguelike_sprawl.data_fragment import (
+from wet_run.data_fragment import (
     FRAGMENT_CATALOG,
     FragmentRarity,
     collect_fragment,
@@ -19,8 +19,8 @@ from roguelike_sprawl.data_fragment import (
     list_collected,
     list_uncollected,
 )
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.run.state import Stage
+from wet_run.engine.state import AppState
+from wet_run.run.state import Stage
 
 
 class TestFragmentCatalog:

@@ -21,14 +21,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.audio.config import (
+from wet_run.audio.config import (
     CATEGORY_KEY_BINDINGS,
     SOUND_CATEGORY_MAP,
     SoundCategory,
     SoundConfig,
     category_label,
 )
-from roguelike_sprawl.audio.sound_manager import DEFAULT_SOUNDS
+from wet_run.audio.sound_manager import DEFAULT_SOUNDS
 
 ANSI_RESET = "\033[0m"
 ANSI_BOLD = "\033[1m"

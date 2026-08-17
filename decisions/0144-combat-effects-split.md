@@ -134,4 +134,4 @@ effects.py 와 effects_vfx.py 양쪽 import 한 곳 (예: `from . import effects
 
 *ADR-0144 closes the ADR-0112 § 향후 split 계획 deferred work (effects.py facade 축소) + eliminates the effects.py ↔ effects_vfx.py circular import.*
 
-*ADR-0142 + ADR-0143 + ADR-0144 establish the "view/data extraction" pattern for monolithic modules in roguelike_sprawl engine.*
+*ADR-0142 + ADR-0143 + ADR-0144 establish the "view/data extraction" pattern for monolithic modules in wet_run engine.*

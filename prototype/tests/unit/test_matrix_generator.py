@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.matrix.generator import MatrixGenerator
-from roguelike_sprawl.matrix.node import NodeKind
+from wet_run.matrix.generator import MatrixGenerator
+from wet_run.matrix.node import NodeKind
 
 
 def test_generator_grade_1_small_graph() -> None:
@@ -58,7 +58,7 @@ def test_generator_entry_is_reachable() -> None:
 
 def test_generator_all_nodes_in_surface_zone() -> None:
     """Phase 5: grade-1 missions are Surface only."""
-    from roguelike_sprawl.matrix.node import ZoneDepth
+    from wet_run.matrix.node import ZoneDepth
 
     gen = MatrixGenerator()
     g = gen.generate(seed=1, mission_grade=1)

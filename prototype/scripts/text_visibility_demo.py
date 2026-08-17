@@ -21,7 +21,7 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.layout import (  # noqa: E402
+from wet_run.engine.layout import (  # noqa: E402
     Region,
     RegionId,
     draw_footer,
@@ -29,20 +29,20 @@ from roguelike_sprawl.engine.layout import (  # noqa: E402
     draw_title,
     make_shell,
 )
-from roguelike_sprawl.engine.matrix_view import (  # noqa: E402
+from wet_run.engine.matrix_view import (  # noqa: E402
     _last_layout,
     render_matrix,
 )
-from roguelike_sprawl.engine.state import AppState  # noqa: E402
-from roguelike_sprawl.engine.status_message import (  # noqa: E402
+from wet_run.engine.state import AppState  # noqa: E402
+from wet_run.engine.status_message import (  # noqa: E402
     MESSAGE_STYLE,
     MessageKind,
     StatusMessage,
 )
-from roguelike_sprawl.i18n import Translator  # noqa: E402
-from roguelike_sprawl.matrix import Edge  # noqa: E402
-from roguelike_sprawl.matrix.graph import MatrixGraph  # noqa: E402
-from roguelike_sprawl.matrix.node import (  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
+from wet_run.matrix import Edge  # noqa: E402
+from wet_run.matrix.graph import MatrixGraph  # noqa: E402
+from wet_run.matrix.node import (  # noqa: E402
     AlarmLevel,
     Faction,
     IceKind,
@@ -262,7 +262,7 @@ def render_scene2_kind_showcase(console: tcod.console.Console) -> None:
 
 def render_scene3_gn_prose(console: tcod.console.Console) -> None:
     """Show GN prose with new cream color + speaker heading."""
-    from roguelike_sprawl.engine.graphic_novel_view import _parse_scene
+    from wet_run.engine.graphic_novel_view import _parse_scene
 
     console.clear()
     draw_title(
@@ -293,7 +293,7 @@ def render_scene3_gn_prose(console: tcod.console.Console) -> None:
     text = sd.dialogue[0].text_en
     body_y = 6
     body_bottom = SCREEN_H - 4
-    from roguelike_sprawl.engine.graphic_novel_view import NOVEL_LEFT_MARGIN, NOVEL_RIGHT_MARGIN
+    from wet_run.engine.graphic_novel_view import NOVEL_LEFT_MARGIN, NOVEL_RIGHT_MARGIN
 
     body_width = SCREEN_W - NOVEL_LEFT_MARGIN - NOVEL_RIGHT_MARGIN
     prose_fg = (232, 230, 220)  # The new color!

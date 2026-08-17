@@ -12,8 +12,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from roguelike_sprawl.engine.chapter_view import chapter_for_character
-from roguelike_sprawl.engine.graphic_novel_view import (
+from wet_run.engine.chapter_view import chapter_for_character
+from wet_run.engine.graphic_novel_view import (
     GN_MENU_SUIT,
     _character_label,
     available_endings,
@@ -59,7 +59,7 @@ class TestSuitMenuOption:
 
     def test_suit_in_menu_options_without_save(self) -> None:
         """8 visible options: prologue + 6 chars + suit + back = 9 (Phase 8 added sally)."""
-        from roguelike_sprawl.i18n import Translator
+        from wet_run.i18n import Translator
 
         t = Translator("en")
         options = get_gn_menu_options(t, has_save=False)
@@ -70,7 +70,7 @@ class TestSuitMenuOption:
         assert keys[4] == "5"
 
     def test_suit_in_menu_options_with_save(self) -> None:
-        from roguelike_sprawl.i18n import Translator
+        from wet_run.i18n import Translator
 
         t = Translator("en")
         options = get_gn_menu_options(t, has_save=True)
@@ -124,7 +124,7 @@ class TestSuitChapter:
 class TestPrologueWithSuit:
     def test_prologue_includes_suit(self) -> None:
         """Prologue chain should include 4 suit scenes when ending='A'."""
-        from roguelike_sprawl.engine.graphic_novel_view import load_prologue_chain
+        from wet_run.engine.graphic_novel_view import load_prologue_chain
 
         chain = load_prologue_chain(SCENES_DIR, seed=42)
         suit_scenes = [s for s in chain if s.character == "suit"]

@@ -120,7 +120,7 @@ ADR-0110 채택 후, 1000+ LOC 모듈 중 매트릭스 view 가 runtime 미사�
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/engine/graphic_novel_view.py` (1,510 LOC)
+- `prototype/src/wet_run/engine/graphic_novel_view.py` (1,510 LOC)
 - 영향 테스트: `tests/unit/test_graphic_novel_view.py` (8 files, 40+ tests)
 - 영향 ADR: 0032 / 0041 / 0042 / 0043 / 0044 / 0046 / 0048 / 0049 (8건)
 

@@ -1,6 +1,6 @@
 """Tests for audio.minimax_music — MiniMax Music API client.
 
-Coverage target for src/roguelike_sprawl/audio/minimax_music.py.
+Coverage target for src/wet_run/audio/minimax_music.py.
 The HTTP `requests` calls are mocked so no network access is required.
 """
 
@@ -34,9 +34,9 @@ def mm_module(monkeypatch):
 def _reload_with_key(monkeypatch, monkeypatch_key: str):
     """Reload minimax_music with the given API key."""
     monkeypatch.setenv("MINIMAX_API_KEY", monkeypatch_key)
-    if "roguelike_sprawl.audio.minimax_music" in __import__("sys").modules:
-        del __import__("sys").modules["roguelike_sprawl.audio.minimax_music"]
-    return importlib.import_module("roguelike_sprawl.audio.minimax_music")
+    if "wet_run.audio.minimax_music" in __import__("sys").modules:
+        del __import__("sys").modules["wet_run.audio.minimax_music"]
+    return importlib.import_module("wet_run.audio.minimax_music")
 
 
 # ----------------------------------------------------------------------------
@@ -133,9 +133,9 @@ class TestGenerateMusic:
 
         with (
             patch(
-                "roguelike_sprawl.audio.minimax_music.requests.post", return_value=mock_post_resp
+                "wet_run.audio.minimax_music.requests.post", return_value=mock_post_resp
             ),
-            patch("roguelike_sprawl.audio.minimax_music.requests.get", return_value=mock_get_resp),
+            patch("wet_run.audio.minimax_music.requests.get", return_value=mock_get_resp),
         ):
             result = mm.generate_music("matrix_rain prompt")
 
@@ -154,7 +154,7 @@ class TestGenerateMusic:
         mock_resp.status_code = 200
         mock_resp.json.return_value = {"data": {"audio_base64": encoded}}
 
-        with patch("roguelike_sprawl.audio.minimax_music.requests.post", return_value=mock_resp):
+        with patch("wet_run.audio.minimax_music.requests.post", return_value=mock_resp):
             result = mm.generate_music("prompt")
 
         assert result == audio_bytes
@@ -167,7 +167,7 @@ class TestGenerateMusic:
         mock_resp.status_code = 500
         mock_resp.text = "Internal Server Error"
 
-        with patch("roguelike_sprawl.audio.minimax_music.requests.post", return_value=mock_resp):
+        with patch("wet_run.audio.minimax_music.requests.post", return_value=mock_resp):
             result = mm.generate_music("prompt")
 
         assert result is None
@@ -180,7 +180,7 @@ class TestGenerateMusic:
         mock_resp.status_code = 200
         mock_resp.json.return_value = {"unexpected": "shape"}
 
-        with patch("roguelike_sprawl.audio.minimax_music.requests.post", return_value=mock_resp):
+        with patch("wet_run.audio.minimax_music.requests.post", return_value=mock_resp):
             result = mm.generate_music("prompt")
 
         assert result is None
@@ -190,7 +190,7 @@ class TestGenerateMusic:
         mm = _reload_with_key(monkeypatch, monkeypatch_key="sk-test-1234567890")
 
         with patch(
-            "roguelike_sprawl.audio.minimax_music.requests.post", side_effect=Exception("boom")
+            "wet_run.audio.minimax_music.requests.post", side_effect=Exception("boom")
         ):
             result = mm.generate_music("prompt")
 
@@ -205,7 +205,7 @@ class TestGenerateMusic:
         mock_resp.text = ""
 
         with patch(
-            "roguelike_sprawl.audio.minimax_music.requests.post", return_value=mock_resp
+            "wet_run.audio.minimax_music.requests.post", return_value=mock_resp
         ) as mock_post:
             mm.generate_music("test", duration_seconds=45)
 

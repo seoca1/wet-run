@@ -8,19 +8,19 @@
 <meta name="author" content="emilio">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="canonical" href="https://seoca1.github.io/roguelike-sprawl/combat.html">
-<meta property="og:title" content="Combat (RT-MS) — Roguelike Sprawl">
+<meta property="og:title" content="Combat (RT-MS) — Wet Run">
 <meta property="og:description" content="Real-Time with Menu Skills 전투 시스템. 15 스킬 효과, 5 ICE 카테고리 · 41 변형, PPL/ZDR 난이도 시스템.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://seoca1.github.io/roguelike-sprawl/combat.html">
 <meta property="og:image" content="https://seoca1.github.io/roguelike-sprawl/favicon.svg">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:site_name" content="Roguelike Sprawl">
+<meta property="og:site_name" content="Wet Run">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Combat (RT-MS) — Roguelike Sprawl">
+<meta name="twitter:title" content="Combat (RT-MS) — Wet Run">
 <meta name="twitter:description" content="Real-Time with Menu Skills 전투 시스템. 15 스킬 효과, 5 ICE 카테고리 · 41 변형, PPL/ZDR 난이도 시스템.">
 <meta name="twitter:image" content="https://seoca1.github.io/roguelike-sprawl/favicon.svg">
 <meta name="theme-color" content="#0a0e14">
-<title>Roguelike Sprawl — Combat Dashboard</title>
+<title>Wet Run — Combat Dashboard</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -169,7 +169,7 @@
 <div class="subtitle">
   RT-MS (Real-Time with Menu Skills) · 5 ICE 등급 · 15 스킬 효과 · 5 종족
   <br>
-  <code>src/roguelike_sprawl/combat/</code> · <code>data/combat/ice_types.json</code>
+  <code>src/wet_run/combat/</code> · <code>data/combat/ice_types.json</code>
 </div>
 
 <!-- Stats -->
@@ -409,14 +409,14 @@ if PPL &lt; ZDR:  TOUGH/DEADLY (어려움)</div>
 </div>
 
 <div class="footer">
-  Roguelike Sprawl — Combat Dashboard<br>
-  <code>src/roguelike_sprawl/combat/</code> · <code>data/combat/ice_types.json</code> · RT-MS
+  Wet Run — Combat Dashboard<br>
+  <code>src/wet_run/combat/</code> · <code>data/combat/ice_types.json</code> · RT-MS
 </div>
 
 <div class="container">
 <h2>🎬 VFX (시각 효과) — 5-Layer System</h2>
 <p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
-  <code>src/roguelike_sprawl/combat/effects.py</code> — 모든 스킬·ICE·크리티컬에 ASCII 애니메이션, 파티클, 스크린 셰이크, 시네마틱 인트로/데스 시퀀스.
+  <code>src/wet_run/combat/effects.py</code> — 모든 스킬·ICE·크리티컬에 ASCII 애니메이션, 파티클, 스크린 셰이크, 시네마틱 인트로/데스 시퀀스.
 </p>
 
 <div class="vfx-grid">
@@ -526,7 +526,7 @@ if PPL &lt; ZDR:  TOUGH/DEADLY (어려움)</div>
 <div class="container">
 <h2>👑 BOSS ICE (다단계 페이즈 보스)</h2>
 <p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
-  <code>src/roguelike_sprawl/combat/bosses.py</code> — 3 BOSS × 다단계 페이즈 × 확장된 시네마틱.
+  <code>src/wet_run/combat/bosses.py</code> — 3 BOSS × 다단계 페이즈 × 확장된 시네마틱.
   각 BOSS는 3-4 단계로 전환되며, 단계마다 공격력·속도·특수능력이 강화됩니다.
 </p>
 
@@ -640,7 +640,7 @@ if PPL &lt; ZDR:  TOUGH/DEADLY (어려움)</div>
 <div class="container">
 <h2>📊 HP 바 & 카메라 연출 (HUD)</h2>
 <p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
-  <code>src/roguelike_sprawl/combat/hud.py</code> — 2단 HP 바, 임계치 경고, 보스 페이즈 색, 카메라 vignette. 600ms 펄스, 200ms 데미지/힐 플래시, 0.7 vignette 강도.
+  <code>src/wet_run/combat/hud.py</code> — 2단 HP 바, 임계치 경고, 보스 페이즈 색, 카메라 vignette. 600ms 펄스, 200ms 데미지/힐 플래시, 0.7 vignette 강도.
 </p>
 
 <div class="hud-grid">
@@ -801,7 +801,7 @@ hud.step(dt_ms=50)  # 20 fps tick</code></pre>
 <div class="container">
 <h2>🔥 스킬 콤보 시스템</h2>
 <p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
-  <code>src/roguelike_sprawl/combat/combo.py</code> — 3.5초 안에 스킬을 연속 사용 시 보너스. 5 단계 (WARMUP → CHAIN → FLURRY → RAMPAGE → ANNIHILATION).
+  <code>src/wet_run/combat/combo.py</code> — 3.5초 안에 스킬을 연속 사용 시 보너스. 5 단계 (WARMUP → CHAIN → FLURRY → RAMPAGE → ANNIHILATION).
   데미지 +0% → +200%, AP 회복 0~3, 스크린 셰이크 0~4.0.
 </p>
 

@@ -17,7 +17,7 @@ import re
 import shutil
 from pathlib import Path
 
-SOUND_DIR = Path("/Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds")
+SOUND_DIR = Path("/Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds")
 SAS = shutil.which("SwitchAudioSource") or "/opt/homebrew/bin/SwitchAudioSource"
 
 

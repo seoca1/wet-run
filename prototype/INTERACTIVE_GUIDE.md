@@ -7,7 +7,7 @@
 ## 🚀 Quick Start - Play Now
 
 ```bash
-cd Game/roguelike_sprawl/prototype
+cd Game/wet_run/prototype
 make play
 ```
 
@@ -160,7 +160,7 @@ CINEMATIC  — 시네마틱 트리거 시       (cinematic_yield)
 확장 가능 — `register_hook_action(kind, fn)` 으로 새 hook 등록:
 
 ```python
-from roguelike_sprawl.novel.hooks import register_hook_action, HookKind
+from wet_run.novel.hooks import register_hook_action, HookKind
 
 def my_action(ctx, app_state):
     ...

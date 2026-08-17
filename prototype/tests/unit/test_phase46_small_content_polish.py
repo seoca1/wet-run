@@ -226,7 +226,7 @@ class TestCyberdeckErrorMessages:
 
     def test_add_program_already_present_message_mentions_swap(self) -> None:
         """Add-program-already-present ValueError mentions remove_program_from_deck."""
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             DEFAULT_DECK_SLOTS,
             Cyberdeck,
             add_program_to_deck,
@@ -238,7 +238,7 @@ class TestCyberdeckErrorMessages:
 
     def test_add_program_already_present_includes_current_programs(self) -> None:
         """The error message still includes the current program list."""
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             DEFAULT_DECK_SLOTS,
             Cyberdeck,
             add_program_to_deck,
@@ -250,7 +250,7 @@ class TestCyberdeckErrorMessages:
 
     def test_add_program_deck_full_message_includes_programs(self) -> None:
         """Deck-full ValueError includes the current program list."""
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             Cyberdeck,
             add_program_to_deck,
         )
@@ -264,7 +264,7 @@ class TestCyberdeckErrorMessages:
 
     def test_remove_program_not_present_message_mentions_case(self) -> None:
         """Remove-program-not-present ValueError mentions case mismatch."""
-        from roguelike_sprawl.combat.cyberdeck import Cyberdeck, remove_program_from_deck
+        from wet_run.combat.cyberdeck import Cyberdeck, remove_program_from_deck
 
         deck = Cyberdeck(name="d", program_ids=("deck_wrecker",))
         with pytest.raises(ValueError, match="check for case mismatch"):
@@ -272,7 +272,7 @@ class TestCyberdeckErrorMessages:
 
     def test_remove_program_not_present_includes_current_programs(self) -> None:
         """The error message still includes the current program list."""
-        from roguelike_sprawl.combat.cyberdeck import Cyberdeck, remove_program_from_deck
+        from wet_run.combat.cyberdeck import Cyberdeck, remove_program_from_deck
 
         deck = Cyberdeck(name="d", program_ids=("alpha", "beta"))
         with pytest.raises(ValueError, match=r"current programs.*alpha"):
@@ -280,7 +280,7 @@ class TestCyberdeckErrorMessages:
 
     def test_cyberdeck_docstrings_intact(self) -> None:
         """Both functions retain their docstrings after polish."""
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             add_program_to_deck,
             remove_program_from_deck,
         )
@@ -294,7 +294,7 @@ class TestCyberdeckErrorMessages:
         """Return type annotations remain Cyberdeck."""
         import typing
 
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             Cyberdeck,
             add_program_to_deck,
             remove_program_from_deck,
@@ -325,7 +325,7 @@ class TestBuildIceEnemyDocstringAndMessage:
 
     def test_build_ice_enemy_docstring_has_raises_section(self) -> None:
         """The docstring must include a Raises: section documenting KeyError."""
-        from roguelike_sprawl.combat.registry import build_ice_enemy
+        from wet_run.combat.registry import build_ice_enemy
 
         doc = build_ice_enemy.__doc__
         assert doc is not None
@@ -334,7 +334,7 @@ class TestBuildIceEnemyDocstringAndMessage:
 
     def test_build_ice_enemy_docstring_mentions_registry_and_scaling(self) -> None:
         """The docstring documents player_grade scaling and registry lookup."""
-        from roguelike_sprawl.combat.registry import build_ice_enemy
+        from wet_run.combat.registry import build_ice_enemy
 
         doc = build_ice_enemy.__doc__
         assert doc is not None
@@ -345,7 +345,7 @@ class TestBuildIceEnemyDocstringAndMessage:
 
     def test_build_ice_enemy_unknown_ice_keyerror_includes_total(self) -> None:
         """KeyError includes total available ICE count and JSON source path."""
-        from roguelike_sprawl.combat.registry import IceRegistry, build_ice_enemy
+        from wet_run.combat.registry import IceRegistry, build_ice_enemy
 
         registry = IceRegistry(
             {
@@ -363,7 +363,7 @@ class TestBuildIceEnemyDocstringAndMessage:
 
     def test_build_ice_enemy_unknown_ice_suggests_close_match(self) -> None:
         """KeyError still includes the 'Did you mean' suggestion."""
-        from roguelike_sprawl.combat.registry import IceRegistry, build_ice_enemy
+        from wet_run.combat.registry import IceRegistry, build_ice_enemy
 
         registry = IceRegistry(
             {
@@ -393,8 +393,8 @@ class TestMissionPostInitErrorMessages:
 
     def test_mission_post_init_bad_arc_includes_value_and_id(self) -> None:
         """Arc ValueError includes the offending value and the mission_id."""
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission
 
         with pytest.raises(ValueError, match=r"arc must be in 1\.\.5, got 6") as exc_info:
             Mission(
@@ -417,8 +417,8 @@ class TestMissionPostInitErrorMessages:
 
     def test_mission_post_init_bad_reward_tier_includes_value_and_id(self) -> None:
         """reward_tier ValueError includes the offending value and the mission_id."""
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission
 
         with pytest.raises(ValueError, match=r"reward_tier must be in 1\.\.6, got 7") as exc_info:
             Mission(
@@ -441,8 +441,8 @@ class TestMissionPostInitErrorMessages:
 
     def test_mission_post_init_negative_credits_includes_value_and_id(self) -> None:
         """reward_credits ValueError includes the offending value."""
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission
 
         with pytest.raises(ValueError, match=r"reward_credits must be >= 0") as exc_info:
             Mission(
@@ -465,8 +465,8 @@ class TestMissionPostInitErrorMessages:
 
     def test_mission_post_init_empty_id_message_preserved(self) -> None:
         """Empty-id ValueError still rejects non-empty id contract."""
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission
 
         with pytest.raises(ValueError, match=r"Mission id must be non-empty"):
             Mission(
@@ -485,8 +485,8 @@ class TestMissionPostInitErrorMessages:
 
     def test_mission_post_init_grade_range_includes_bounds(self) -> None:
         """Grade-range ValueError includes both bounds and the mission_id."""
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission
 
         with pytest.raises(ValueError, match=r"invalid grade range 4\.\.2") as exc_info:
             Mission(
@@ -571,7 +571,7 @@ class TestPhase46Smoke:
 
     def test_cyberdeck_add_and_remove_still_work(self) -> None:
         """add_program_to_deck + remove_program_from_deck still produce valid decks."""
-        from roguelike_sprawl.combat.cyberdeck import (
+        from wet_run.combat.cyberdeck import (
             Cyberdeck,
             add_program_to_deck,
             remove_program_from_deck,
@@ -585,7 +585,7 @@ class TestPhase46Smoke:
 
     def test_ice_registry_build_still_works_for_known_ice(self) -> None:
         """build_ice_enemy still builds Combatant for known ICE ids."""
-        from roguelike_sprawl.combat.registry import IceRegistry, build_ice_enemy
+        from wet_run.combat.registry import IceRegistry, build_ice_enemy
 
         registry = IceRegistry(
             {
@@ -605,8 +605,8 @@ class TestPhase46Smoke:
 
     def test_mission_post_init_valid_mission_still_constructible(self) -> None:
         """A valid Mission can still be constructed after the polish."""
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission
 
         m = Mission(
             id="m_smoke",
@@ -626,8 +626,8 @@ class TestPhase46Smoke:
 
     def test_phase40_arc_validation_test_still_passes(self) -> None:
         """Phase 40's test_mission_post_init_rejects_bad_arc regex still matches."""
-        from roguelike_sprawl.matrix.node import ZoneDepth
-        from roguelike_sprawl.missions.mission import Mission
+        from wet_run.matrix.node import ZoneDepth
+        from wet_run.missions.mission import Mission
 
         with pytest.raises(ValueError, match=r"arc must be.*1..5"):
             Mission(

@@ -20,19 +20,19 @@ from __future__ import annotations
 
 from typing import cast
 
-from roguelike_sprawl.combat.boss_expansion import (
+from wet_run.combat.boss_expansion import (
     BLACK_BARON_PROFILE,
     LOA_BARON_PROFILE,
     NEUROMANCER_PROFILE,
 )
-from roguelike_sprawl.combat.boss_phase_tracker import BossPhaseTracker
-from roguelike_sprawl.combat.state import (
+from wet_run.combat.boss_phase_tracker import BossPhaseTracker
+from wet_run.combat.state import (
     Combatant,
     CombatState,
     _calculate_damage,
 )
-from roguelike_sprawl.combat.state_models import Skill, SkillEffect
-from roguelike_sprawl.engine.combat_tick import maybe_boss_phase_transition
+from wet_run.combat.state_models import Skill, SkillEffect
+from wet_run.engine.combat_tick import maybe_boss_phase_transition
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -236,7 +236,7 @@ class TestF4PhaseTransitionTiming:
     def test_legacy_boss_profile_records_timing(self) -> None:
         """The legacy boss_profile path (Wintermute / T-A Prime) also
         records phase_change_ms when a transition fires."""
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             TA_CONSTRUCT_PRIME_PROFILE,
             apply_phase_to_combatant,
         )
@@ -386,7 +386,7 @@ class TestF4PhaseEdgeCases:
 
     def test_single_phase_boss_never_transitions(self) -> None:
         """A boss with a single phase has is_last_phase True from the start."""
-        from roguelike_sprawl.combat.boss_expansion import BossPhase, BossProfile
+        from wet_run.combat.boss_expansion import BossPhase, BossProfile
 
         single = BossProfile(
             id="test_mini",
@@ -415,7 +415,7 @@ class TestF4PhaseEdgeCases:
 
     def test_many_phase_boss_ten_plus(self) -> None:
         """A boss with 12+ phases supports long fights."""
-        from roguelike_sprawl.combat.boss_expansion import BossPhase, BossProfile
+        from wet_run.combat.boss_expansion import BossPhase, BossProfile
 
         many_phases = tuple(
             BossPhase(

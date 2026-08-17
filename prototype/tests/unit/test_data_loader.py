@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.data.loader import load_json
+from wet_run.data.loader import load_json
 
 
 class TestLoadJson:

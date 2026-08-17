@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.mission_expansion import (
+from wet_run.combat.mission_expansion import (
     EXPANSION_MISSIONS,
     expansion_mission_count,
     expansion_mission_ids,

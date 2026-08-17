@@ -37,30 +37,30 @@ import tcod.context
 import tcod.event
 import tcod.tileset
 
-from roguelike_sprawl.combat.registry import IceRegistry, ProgramRegistry
-from roguelike_sprawl.combat.state import step_combat
-from roguelike_sprawl.engine import (
+from wet_run.combat.registry import IceRegistry, ProgramRegistry
+from wet_run.combat.state import step_combat
+from wet_run.engine import (
     combat_view,
     config,
     hub,
     story_cinematic,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.engine.story_cinematic import (
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.engine.story_cinematic import (
     BRIEFING_FINN_SCENE,
     PROLOGUE_SCENE,
     CinematicState,
 )
-from roguelike_sprawl.i18n import Translator
-from roguelike_sprawl.matrix.node import NodeKind
-from roguelike_sprawl.missions import JobBoard
+from wet_run.i18n import Translator
+from wet_run.matrix.node import NodeKind
+from wet_run.missions import JobBoard
 
 
 def _safe_play(name: str) -> None:
     """Play a sound, swallowing all errors."""
     if not args.no_sound:
         try:
-            from roguelike_sprawl.audio import sound_manager
+            from wet_run.audio import sound_manager
 
             sound_manager.play(name)
         except Exception:
@@ -91,7 +91,7 @@ def main() -> int:
 
     # Set up sound volume
     if not args.no_sound:
-        from roguelike_sprawl.audio import sound_manager
+        from wet_run.audio import sound_manager
 
         sm = sound_manager.get_sound_manager()
         sm.set_volume(args.volume)
@@ -105,7 +105,7 @@ def main() -> int:
         sys.stderr.write("ERROR: No font found (bitmap or TTF)\nRun: make download-font\n")
         return 1
 
-    from roguelike_sprawl.engine.font_loader import load_font
+    from wet_run.engine.font_loader import load_font
 
     tileset, _ = load_font()
 
@@ -117,7 +117,7 @@ def main() -> int:
     state.job_board = JobBoard.load(config.DATA_DIR / "missions" / "missions.json")
 
     # Starting equipment
-    from roguelike_sprawl.equipment.equipment import (
+    from wet_run.equipment.equipment import (
         STARTER_DECK,
         STARTER_HEADWARE,
         EquipmentLoadout,
@@ -194,7 +194,7 @@ def main() -> int:
                         else:
                             _safe_play("combat/defeat")
                         time.sleep(2.5)
-                        from roguelike_sprawl.engine.combat_view import _end_combat
+                        from wet_run.engine.combat_view import _end_combat
 
                         _end_combat(state, state.combat_state)
                         state.combat_state = None
@@ -207,7 +207,7 @@ def main() -> int:
                 and state.npc_state is not None
             ):
                 if state.demo_step - last_npc_step > 180:
-                    from roguelike_sprawl.engine import npc_view
+                    from wet_run.engine import npc_view
 
                     _safe_play("story/dialogue_advance")
                     line = state.npc_state.event.get_line(state.npc_state.current_line_index)
@@ -227,7 +227,7 @@ def main() -> int:
                 # ~1.5s at 60 FPS — auto-jack in
                 from tcod.event import KeySym, Modifier, Scancode
 
-                from roguelike_sprawl.engine import cyberspace_browser as _cs_browser
+                from wet_run.engine import cyberspace_browser as _cs_browser
 
                 ev = tcod.event.KeyDown(
                     sym=KeySym.RETURN, scancode=Scancode.RETURN, mod=Modifier.NONE
@@ -255,7 +255,7 @@ def main() -> int:
                         if state.demo_step - last_auto_step > 30:
                             from tcod.event import KeySym
 
-                            from roguelike_sprawl.engine import cyberspace_view
+                            from wet_run.engine import cyberspace_view
 
                             npc_target = None
                             data_target = None
@@ -294,7 +294,7 @@ def main() -> int:
                                 and not visited_npc_dixie
                             ):
                                 if not npc_triggered:
-                                    from roguelike_sprawl.engine.npc_event import (
+                                    from wet_run.engine.npc_event import (
                                         DIXIE_FLATLINE_EVENT,
                                         NPCState,
                                     )
@@ -310,7 +310,7 @@ def main() -> int:
                                 and not visited_data
                             ):
                                 visited_data = True
-                                from roguelike_sprawl.engine import action_menu
+                                from wet_run.engine import action_menu
 
                                 _safe_play("items/pickup")
                                 action_menu._execute_action(
@@ -404,7 +404,7 @@ def _start_briefing(state: AppState, fast: bool, no_korean: bool = False) -> Non
 
 
 def _make_fast_scene(scene: story_cinematic.StoryScene) -> story_cinematic.StoryScene:
-    from roguelike_sprawl.engine.story_cinematic import StoryLine, TextSpeed
+    from wet_run.engine.story_cinematic import StoryLine, TextSpeed
 
     new_lines = tuple(
         StoryLine(
@@ -451,7 +451,7 @@ def _advance_demo_stage(
 
 
 def _start_matrix(state: AppState) -> None:
-    from roguelike_sprawl.cyberspace.registry import WorldRegistry
+    from wet_run.cyberspace.registry import WorldRegistry
 
     available = state.job_board.available_for(state.player_grade)
     if not available:
@@ -507,20 +507,20 @@ def _render_demo(
     elif state.screen is ScreenKind.HUB:
         hub.render_hub(console, t, state)
     elif state.screen is ScreenKind.CYBERSPACE_BROWSER:
-        from roguelike_sprawl.engine import cyberspace_browser
+        from wet_run.engine import cyberspace_browser
 
         cyberspace_browser.render_cyberspace_browser(console, t, state)
     elif state.screen is ScreenKind.MATRIX:
-        from roguelike_sprawl.engine import cyberspace_view
+        from wet_run.engine import cyberspace_view
 
         cyberspace_view.render_cyberspace(console, t, state, prog_registry, ice_registry)
     elif state.screen is ScreenKind.NPC:
-        from roguelike_sprawl.engine import npc_view
+        from wet_run.engine import npc_view
 
         if state.npc_state is not None:
             npc_view.render_npc(console, t, state, state.npc_state)
     elif state.screen is ScreenKind.EVENT:
-        from roguelike_sprawl.engine import event_view
+        from wet_run.engine import event_view
 
         if state.active_event is not None:
             event_view.render_event_story(console, t, state, state.active_event)
@@ -548,7 +548,7 @@ def _handle_demo_input(
 
     # Global mute toggle
     if event.sym is tcod.event.KeySym.M:
-        from roguelike_sprawl.audio import sound_manager
+        from wet_run.audio import sound_manager
 
         muted = sound_manager.toggle_mute()
         print(f"\n[SOUND] {'MUTED' if muted else 'UNMUTED'}")
@@ -572,7 +572,7 @@ def _handle_demo_input(
             _start_matrix(state)
         return True
     elif state.screen is ScreenKind.CYBERSPACE_BROWSER:
-        from roguelike_sprawl.engine import cyberspace_browser
+        from wet_run.engine import cyberspace_browser
 
         if event.sym in (tcod.event.KeySym.SPACE, tcod.event.KeySym.RETURN):
             _safe_play("movement/jack_in")
@@ -581,7 +581,7 @@ def _handle_demo_input(
         result = cyberspace_browser.handle_browser_input(event, state)
         return result
     elif state.screen is ScreenKind.MATRIX:
-        from roguelike_sprawl.engine import cyberspace_view
+        from wet_run.engine import cyberspace_view
 
         if event.sym in (
             tcod.event.KeySym.UP,
@@ -604,7 +604,7 @@ def _handle_demo_input(
                 state.action_menu_open = True
         return result
     elif state.screen is ScreenKind.NPC:
-        from roguelike_sprawl.engine import npc_view
+        from wet_run.engine import npc_view
 
         if event.sym in (tcod.event.KeySym.UP, tcod.event.KeySym.DOWN):
             _safe_play("ui/menu_select")
@@ -614,7 +614,7 @@ def _handle_demo_input(
             return npc_view.handle_npc_input(event, state, state.npc_state)
         return True
     elif state.screen is ScreenKind.EVENT:
-        from roguelike_sprawl.engine import event_view
+        from wet_run.engine import event_view
 
         if event.sym in (tcod.event.KeySym.SPACE, tcod.event.KeySym.RETURN):
             _safe_play("story/dialogue_advance")
@@ -622,7 +622,7 @@ def _handle_demo_input(
             return event_view.handle_event_input(event, state, state.active_event)
         return True
     elif state.screen is ScreenKind.COMBAT:
-        from roguelike_sprawl.audio import sound_manager
+        from wet_run.audio import sound_manager
 
         if state.combat_state is not None:
             if event.sym in (tcod.event.KeySym.UP, tcod.event.KeySym.DOWN):

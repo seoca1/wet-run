@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.audio.config import (
+from wet_run.audio.config import (
     CATEGORY_KEY_BINDINGS,
     DEFAULT_CATEGORY_ENABLED,
     SOUND_CATEGORY_MAP,
@@ -12,7 +12,7 @@ from roguelike_sprawl.audio.config import (
     SoundConfig,
     category_label,
 )
-from roguelike_sprawl.audio.sound_manager import DEFAULT_SOUNDS
+from wet_run.audio.sound_manager import DEFAULT_SOUNDS
 
 
 class TestSoundCategory:
@@ -326,7 +326,7 @@ class TestSoundManagerIntegration:
 
     def test_play_with_config_respects_master_mute(self) -> None:
         """play_with_config returns False when muted."""
-        from roguelike_sprawl.audio.sound_manager import get_sound_manager
+        from wet_run.audio.sound_manager import get_sound_manager
 
         sm = get_sound_manager()
         config = SoundConfig(muted=True)
@@ -335,7 +335,7 @@ class TestSoundManagerIntegration:
 
     def test_play_with_config_respects_category(self) -> None:
         """play_with_config returns False when category is disabled."""
-        from roguelike_sprawl.audio.sound_manager import get_sound_manager
+        from wet_run.audio.sound_manager import get_sound_manager
 
         sm = get_sound_manager()
         config = SoundConfig()
@@ -345,7 +345,7 @@ class TestSoundManagerIntegration:
 
     def test_play_with_config_enables_category(self) -> None:
         """play_with_config returns True when category is enabled and sound exists."""
-        from roguelike_sprawl.audio.sound_manager import get_sound_manager
+        from wet_run.audio.sound_manager import get_sound_manager
 
         sm = get_sound_manager()
         config = SoundConfig()
@@ -361,7 +361,7 @@ class TestSoundManagerIntegration:
 
     def test_keys_disabled_by_default_in_play_with_config(self) -> None:
         """play_with_config returns False for KEYS sounds by default."""
-        from roguelike_sprawl.audio.sound_manager import get_sound_manager
+        from wet_run.audio.sound_manager import get_sound_manager
 
         sm = get_sound_manager()
         config = SoundConfig()  # KEYS disabled by default
@@ -370,7 +370,7 @@ class TestSoundManagerIntegration:
 
     def test_safe_play_with_config(self) -> None:
         """safe_play_with_config uses the config and swallows errors."""
-        from roguelike_sprawl.audio.sound_manager import safe_play_with_config
+        from wet_run.audio.sound_manager import safe_play_with_config
 
         config = SoundConfig(muted=True)
         result = safe_play_with_config("combat/hit_normal", config)
@@ -382,7 +382,7 @@ class TestVolumePropagation:
 
     def test_set_volume_in_play_with_config(self) -> None:
         """play_with_config sets the manager's volume to config's value."""
-        from roguelike_sprawl.audio.sound_manager import get_sound_manager
+        from wet_run.audio.sound_manager import get_sound_manager
 
         sm = get_sound_manager()
         original_volume = sm.volume

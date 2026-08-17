@@ -1,6 +1,6 @@
 """Automated tests for combat depth expansion (ADR-0148).
 
-Source spec: Game/roguelike_sprawl/testcases/combat/depth.md (TC-DEPTH-001 ~ 015)
+Source spec: Game/wet_run/testcases/combat/depth.md (TC-DEPTH-001 ~ 015)
 
 Four sub-features:
 - Counter Window (200ms reactive gameplay)
@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.combat.depth import (
+from wet_run.combat.depth import (
     AGGRESSION_PROBABILITY,
     COUNTER_DAMAGE_MULTIPLIER,
     COUNTER_STUN_MS,
@@ -45,8 +45,8 @@ from roguelike_sprawl.combat.depth import (
     is_counter_window_open,
     open_counter_window,
 )
-from roguelike_sprawl.combat.state import Combatant, CombatState, Skill, SkillEffect
-from roguelike_sprawl.combat.state_models import StatusEffect
+from wet_run.combat.state import Combatant, CombatState, Skill, SkillEffect
+from wet_run.combat.state_models import StatusEffect
 
 TICK_MS = 100
 

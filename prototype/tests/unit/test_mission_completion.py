@@ -9,16 +9,16 @@ Covers:
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.mission_completion import (
+from wet_run.engine.mission_completion import (
     FIXER_REPUTATION,
     complete_mission,
     fixer_to_factions,
 )
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.missions import Mission
-from roguelike_sprawl.missions.mission import Rewards
-from roguelike_sprawl.run import start_run
+from wet_run.engine.state import AppState
+from wet_run.matrix.node import Faction
+from wet_run.missions import Mission
+from wet_run.missions.mission import Rewards
+from wet_run.run import start_run
 
 
 def _make_mission(mission_id: str = "test_mission", fixer: str = "finn") -> Mission:

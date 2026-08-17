@@ -24,7 +24,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine.graphic_novel_save import (  # noqa: E402
+from wet_run.engine.graphic_novel_save import (  # noqa: E402
     GN_SAVE_VERSION,
     GNProgress,
     delete_gn_progress,
@@ -32,17 +32,17 @@ from roguelike_sprawl.engine.graphic_novel_save import (  # noqa: E402
     make_progress,
     save_gn_progress,
 )
-from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
+from wet_run.engine.graphic_novel_view import (  # noqa: E402
     _ENDING_DESCRIPTIONS,
     available_endings,
     get_gn_ending_menu_options,
     load_scene_chain,
 )
-from roguelike_sprawl.engine.menu import (  # noqa: E402
+from wet_run.engine.menu import (  # noqa: E402
     handle_graphic_novel_ending_menu_input,
 )
-from roguelike_sprawl.engine.state import AppState  # noqa: E402
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.engine.state import AppState  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 # ============================================================================
 # Fixtures

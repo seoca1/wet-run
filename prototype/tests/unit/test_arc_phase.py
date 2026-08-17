@@ -1,18 +1,18 @@
 """Tests for engine.arc_phase — beat/phase/chapter transitions.
 
-Coverage target for src/roguelike_sprawl/engine/arc_phase.py.
+Coverage target for src/wet_run/engine/arc_phase.py.
 """
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.arc_phase import advance_arc_phase
-from roguelike_sprawl.engine.chapter_cutscene import (
+from wet_run.engine.arc_phase import advance_arc_phase
+from wet_run.engine.chapter_cutscene import (
     ArcData,
     BeatData,
     ChapterData,
     PhaseData,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
+from wet_run.engine.state import AppState, ScreenKind
 
 
 def _beat(beat_id: str = "b1", text_en: str = "Hello.", text_ko: str = "안녕.") -> BeatData:

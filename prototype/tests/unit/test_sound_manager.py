@@ -12,7 +12,7 @@ class TestSoundManager:
 
     def test_manager_creates_sounds_dir(self, tmp_path: Path) -> None:
         """SoundManager creates its sounds directory if missing."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sounds_dir = tmp_path / "new_sounds"
         SoundManager(sounds_dir=sounds_dir)
@@ -20,7 +20,7 @@ class TestSoundManager:
 
     def test_manager_auto_generates_wavs(self, tmp_path: Path) -> None:
         """SoundManager auto-generates WAVs for all default sounds."""
-        from roguelike_sprawl.audio.sound_manager import DEFAULT_SOUNDS, SoundManager
+        from wet_run.audio.sound_manager import DEFAULT_SOUNDS, SoundManager
 
         sounds_dir = tmp_path / "sounds"
         SoundManager(sounds_dir=sounds_dir)
@@ -31,7 +31,7 @@ class TestSoundManager:
 
     def test_is_available_returns_bool(self) -> None:
         """is_available() returns True on systems with afplay/aplay."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sm = SoundManager(sounds_dir=Path("data/sounds_test"))
         result = sm.is_available()
@@ -39,7 +39,7 @@ class TestSoundManager:
 
     def test_set_volume_clamps(self) -> None:
         """set_volume clamps to 0.0-1.0 range."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sm = SoundManager(sounds_dir=Path("data/sounds_test"))
         sm.set_volume(2.0)
@@ -51,7 +51,7 @@ class TestSoundManager:
 
     def test_mute_toggle(self) -> None:
         """toggle_mute flips muted state and returns new value."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sm = SoundManager(sounds_dir=Path("data/sounds_test"))
         assert sm.muted is False
@@ -63,7 +63,7 @@ class TestSoundManager:
 
     def test_play_unknown_sound_returns_false(self) -> None:
         """play() with unknown sound name returns False without raising."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sm = SoundManager(sounds_dir=Path("data/sounds_test"))
         result = sm.play("nonexistent/sound_name")
@@ -71,7 +71,7 @@ class TestSoundManager:
 
     def test_play_returns_bool_for_known_sound(self) -> None:
         """play() returns bool for known sounds (True if audio backend works)."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sm = SoundManager(sounds_dir=Path("data/sounds_test"))
         # Mute first to avoid actual playback
@@ -86,7 +86,7 @@ class TestSoundManager:
 
     def test_list_sounds_includes_all_categories(self) -> None:
         """list_sounds() returns all default sound names."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sm = SoundManager(sounds_dir=Path("data/sounds_test"))
         sounds = sm.list_sounds()
@@ -98,7 +98,7 @@ class TestSoundManager:
 
     def test_stop_all_does_not_raise(self) -> None:
         """stop_all() is safe to call when nothing is playing."""
-        from roguelike_sprawl.audio.sound_manager import SoundManager
+        from wet_run.audio.sound_manager import SoundManager
 
         sm = SoundManager(sounds_dir=Path("data/sounds_test"))
         sm.stop_all()  # Should not raise
@@ -110,7 +110,7 @@ class TestModuleFunctions:
 
     def test_get_sound_manager_returns_singleton(self) -> None:
         """get_sound_manager() returns the same instance on repeated calls."""
-        from roguelike_sprawl.audio import sound_manager
+        from wet_run.audio import sound_manager
 
         sm1 = sound_manager.get_sound_manager()
         sm2 = sound_manager.get_sound_manager()
@@ -118,7 +118,7 @@ class TestModuleFunctions:
 
     def test_safe_play_swallows_errors(self) -> None:
         """safe_play() returns False for unknown sounds, never raises."""
-        from roguelike_sprawl.audio import sound_manager
+        from wet_run.audio import sound_manager
 
         result = sound_manager.safe_play("nonexistent/sound")
         assert result is False
@@ -129,7 +129,7 @@ class TestSoundCategories:
 
     def test_categories_defined(self) -> None:
         """Sound category constants are exposed via audio module."""
-        from roguelike_sprawl.audio import sound_manager
+        from wet_run.audio import sound_manager
 
         assert sound_manager.SFX == "sfx"
         assert sound_manager.AMBIENT == "ambient"
@@ -142,7 +142,7 @@ class TestPhase31WAVGeneration:
 
     def test_generate_wav_valid_kinds(self, tmp_path: Path) -> None:
         """_generate_wav accepts all three waveform kinds."""
-        from roguelike_sprawl.audio.sound_manager import _generate_wav
+        from wet_run.audio.sound_manager import _generate_wav
 
         for kind in ("sine", "square", "noise"):
             path = tmp_path / f"test_{kind}.wav"
@@ -152,7 +152,7 @@ class TestPhase31WAVGeneration:
 
     def test_generate_wav_rejects_unknown_kind(self, tmp_path: Path) -> None:
         """_generate_wav raises ValueError with a clear message for unknown kind."""
-        from roguelike_sprawl.audio.sound_manager import _generate_wav
+        from wet_run.audio.sound_manager import _generate_wav
 
         path = tmp_path / "bad.wav"
         with pytest.raises(ValueError, match="Unknown WAV kind"):

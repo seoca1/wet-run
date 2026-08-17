@@ -7,7 +7,7 @@
 
 ## 1. 컨텍스트
 
-Roguelike Sprawl은 현재 Git 저장소가 아니다 (`.git/` 없음). 로컬 파일만 관리되어:
+Wet Run은 현재 Git 저장소가 아니다 (`.git/` 없음). 로컬 파일만 관리되어:
 - 코드 이력 추적 불가
 - CI/CD 파이프라인 없음
 - 외부 협업 불가
@@ -21,7 +21,7 @@ typing_language 프로젝트는 이미 다음을 구현해 참고할 수 있다:
 
 ## 2. 목표
 
-Roguelike Sprawl에 다음 역량 추가:
+Wet Run에 다음 역량 추가:
 
 | 목표 | 효과 |
 |---|---|
@@ -37,7 +37,7 @@ Roguelike Sprawl에 다음 역량 추가:
 
 | 항목 | 내용 |
 |---|---|
-| 저장소 | `seoca1/roguelike-sprawl` (1개) |
+| 저장소 | `seoca1/wet-run` (1개) |
 | CI | `.github/workflows/ci.yml` (test/lint/typecheck) + `deploy.yml` (Pages) |
 | Pages | 대시보드 정적 호스팅 (Python 빌드 불필요, 그대로) |
 | 장점 | 단순, typing_language과 동일한 패턴 |
@@ -47,7 +47,7 @@ Roguelike Sprawl에 다음 역량 추가:
 
 | 항목 | 내용 |
 |---|---|
-| 저장소 | `seoca1/roguelike-sprawl` + `seoca1/roguelike-sprawl-wiki` 등 분리 |
+| 저장소 | `seoca1/wet-run` + `seoca1/wet-run-wiki` 등 분리 |
 | 장점 | 게임 / 위키 / 디자인 명확히 분리 |
 | 단점 | 저장소 여러 개 관리 부담. 위키는 이미 `wiki/` 디렉토리에 있음 |
 
@@ -66,7 +66,7 @@ Roguelike Sprawl에 다음 역량 추가:
 ### 4.1 저장소 구조
 
 ```
-seoca1/roguelike-sprawl/
+seoca1/wet-run/
 ├── prototype/             # Python 게임 코드
 ├── dashboard/             # 대시보드 (정적)
 ├── design/                # GDD, 결정, 시스템 스펙
@@ -155,10 +155,10 @@ Phase 완료마다:
 ### Phase 0: Git 초기화 (즉시, 5분)
 
 ```bash
-cd /Users/emilio/projects/Projects/Game/roguelike_sprawl
+cd /Users/emilio/projects/Projects/Game/wet_run
 git init
 git add .
-git commit -m "feat: initial commit - Roguelike Sprawl Phase 1-5 complete
+git commit -m "feat: initial commit - Wet Run Phase 1-5 complete
 
 - 578 unit tests passing
 - Story system: 3 protagonists, 2 endings, 14 dialogues
@@ -170,7 +170,7 @@ git commit -m "feat: initial commit - Roguelike Sprawl Phase 1-5 complete
 ### Phase 1: GitHub 저장소 생성 (10분)
 
 1. https://github.com/new 접속
-2. Repository name: `roguelike-sprawl`
+2. Repository name: `wet-run`
 3. Description: "🌆 깁슨 스프롤 3부작 기반 로그라이크 · Python + tcod"
 4. Public / Private 선택
 5. **README, .gitignore, license 모두 추가 안 함** (이미 있음)
@@ -243,7 +243,7 @@ GitHub → Releases → Draft new release
 
 ## 7. 열린 질문 (Open Questions) — 결정됨 2026-07-04
 
-1. **저장소 이름**: ✅ `roguelike-sprawl` (remote URL 확인)
+1. **저장소 이름**: ✅ `wet-run` (remote URL 확인)
 2. **공개 범위**: ✅ **Public** — 대시보드 외부 공유, 깁슨 톤 연구자/관람자 모집
 3. **라이선스**: ✅ **MIT** — 깁슨 원작은 IP 유지, 본 프로젝트 코드/데이터는 MIT
 4. **대시보드 호스팅**: ✅ **GitHub Pages** (구현 완료)
@@ -251,7 +251,7 @@ GitHub → Releases → Draft new release
 
 ## 8. 열린 결정 사항 — 결정됨 2026-07-04
 
-- [x] 저장소 이름 확정: `roguelike-sprawl`
+- [x] 저장소 이름 확정: `wet-run`
 - [x] 공개/비공개 결정: Public (대시보드 공유)
 - [x] 라이선스 결정: MIT
 - [x] GitHub 계정: `seoca1` (typing_language 동일)

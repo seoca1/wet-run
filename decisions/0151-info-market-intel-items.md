@@ -117,7 +117,7 @@ ADR-0147 (Data Salvage Phase 6+) 의 3-way trade-off:
 
 ### 1. 신규 모듈
 
-`prototype/src/roguelike_sprawl/combat/intel_items.py` (NEW, ~150 LOC):
+`prototype/src/wet_run/combat/intel_items.py` (NEW, ~150 LOC):
 
 ```python
 """Info Market Intel Items (ADR-0151, Cycle 6).
@@ -207,12 +207,12 @@ Pillar 정합 (ADR-0151 §Consequences.7):
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/combat/intel_items.py` (NEW)
-- `prototype/src/roguelike_sprawl/combat/__init__.py` (re-export)
-- `prototype/src/roguelike_sprawl/crafting/info_market.py` (purchase hook)
-- `prototype/src/roguelike_sprawl/crafting/market.json` (3 new items)
-- `prototype/src/roguelike_sprawl/engine/state.py` (AppState.purchased_intel_items)
-- `prototype/src/roguelike_sprawl/engine/hub.py` (intel category display)
+- `prototype/src/wet_run/combat/intel_items.py` (NEW)
+- `prototype/src/wet_run/combat/__init__.py` (re-export)
+- `prototype/src/wet_run/crafting/info_market.py` (purchase hook)
+- `prototype/src/wet_run/crafting/market.json` (3 new items)
+- `prototype/src/wet_run/engine/state.py` (AppState.purchased_intel_items)
+- `prototype/src/wet_run/engine/hub.py` (intel category display)
 - `prototype/data/i18n/{en,ko}.json` (intel_items 섹션)
 - `prototype/tests/unit/test_intel_items.py` (NEW)
 - `design/systems/combat.md` (Intel Items section)
@@ -234,7 +234,7 @@ Pillar 정합 (ADR-0151 §Consequences.7):
 
 - 2026-08-07: Draft 작성 (Cycle 6 of v1.2.0+ bridge)
 - 2026-08-07: Accepted (Option 2, 사용자 확인)
-  - 구현: `prototype/src/roguelike_sprawl/combat/intel_items.py` (NEW, 195 LOC, ADR-0110 78%)
+  - 구현: `prototype/src/wet_run/combat/intel_items.py` (NEW, 195 LOC, ADR-0110 78%)
   - AppState: `purchased_intel_items: list[str]` + `faction_tension_probability_boost: float` 추가
   - 테스트: `tests/unit/test_intel_items.py` (NEW, 25 tests pass)
   - i18n: en/ko.json `intel_items` 섹션 신규 (13 keys each)

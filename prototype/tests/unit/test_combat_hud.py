@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.combat.hud import (
+from wet_run.combat.hud import (
     PHASE_COLORS,
     AlertLevel,
     BarFlash,
@@ -383,12 +383,12 @@ class TestCombatHUD:
 
 class TestColorPalette:
     def test_hp_high_is_green(self) -> None:
-        from roguelike_sprawl.combat.hud import HP_HIGH_COLOR
+        from wet_run.combat.hud import HP_HIGH_COLOR
 
         assert HP_HIGH_COLOR[1] > HP_HIGH_COLOR[0]
 
     def test_hp_crit_is_red(self) -> None:
-        from roguelike_sprawl.combat.hud import HP_CRIT_COLOR
+        from wet_run.combat.hud import HP_CRIT_COLOR
 
         assert HP_CRIT_COLOR[0] > HP_CRIT_COLOR[1]
 

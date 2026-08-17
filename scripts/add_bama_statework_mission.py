@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'bama_statework' to roguelike_sprawl missions.json.
+"""Add new mission 'bama_statework' to wet_run missions.json.
 
 Pairs with Fiction Phase 39 — BAMA concept page (wiki/concepts/bama.md).
 Suit-arc, Arc 5: corporate-statework on urban-megastructure working-class.

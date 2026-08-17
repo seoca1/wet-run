@@ -22,15 +22,15 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 import tcod.console  # noqa: E402
 
-from roguelike_sprawl.engine import chapter_view  # noqa: E402
-from roguelike_sprawl.engine.chapter_view import (  # noqa: E402
+from wet_run.engine import chapter_view  # noqa: E402
+from wet_run.engine.chapter_view import (  # noqa: E402
     ChapterData,
     chapter_for_character,
     load_chapter,
     render_chapter,
     tick_chapter,
 )
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data" / "story" / "chapters"
 
@@ -332,7 +332,7 @@ def test_three_chapters_have_different_themes() -> None:
 
 def test_original_story_chapter_info() -> None:
     """original_story.ChapterInfo is exposed."""
-    from roguelike_sprawl.engine import original_story
+    from wet_run.engine import original_story
 
     assert hasattr(original_story, "CHAPTER_INFO")
     assert hasattr(original_story, "get_chapter_info")
@@ -341,7 +341,7 @@ def test_original_story_chapter_info() -> None:
 
 def test_original_story_get_chapter_info() -> None:
     """get_chapter_info returns dict per character."""
-    from roguelike_sprawl.engine.original_story import get_chapter_info
+    from wet_run.engine.original_story import get_chapter_info
 
     for char in ("novice", "veteran", "heretic"):
         info = get_chapter_info(char)
@@ -353,7 +353,7 @@ def test_original_story_get_chapter_info() -> None:
 
 def test_original_story_list_characters() -> None:
     """list_characters returns all 3."""
-    from roguelike_sprawl.engine.original_story import list_characters
+    from wet_run.engine.original_story import list_characters
 
     chars = list_characters()
     assert chars == ["novice", "veteran", "heretic"]
@@ -376,7 +376,7 @@ class TestEpilogueSupplement:
 
     def test_epilogue_supplement_for_lookup(self) -> None:
         """epilogue_supplement_for() finds linked orphans."""
-        from roguelike_sprawl.engine.chapter_view import epilogue_supplement_for
+        from wet_run.engine.chapter_view import epilogue_supplement_for
 
         sups = epilogue_supplement_for("winters_child", DATA_DIR.parent.parent)
         assert len(sups) >= 1
@@ -384,13 +384,13 @@ class TestEpilogueSupplement:
 
     def test_epilogue_supplement_for_unknown(self) -> None:
         """Unknown stem → empty tuple."""
-        from roguelike_sprawl.engine.chapter_view import epilogue_supplement_for
+        from wet_run.engine.chapter_view import epilogue_supplement_for
 
         assert epilogue_supplement_for("nonexistent_stem", DATA_DIR) == ()
 
     def test_persona_to_chapter_mapping(self) -> None:
         """Verify persona → chapter file mapping."""
-        from roguelike_sprawl.engine.chapter_view import PERSONA_TO_CHAPTER
+        from wet_run.engine.chapter_view import PERSONA_TO_CHAPTER
 
         assert PERSONA_TO_CHAPTER["novice"] == "case"
         assert PERSONA_TO_CHAPTER["heretic"] == "kas"

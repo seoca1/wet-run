@@ -12,9 +12,9 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-from roguelike_sprawl.engine import phase_view
-from roguelike_sprawl.engine.chapter_cutscene import BeatData, PhaseData
-from roguelike_sprawl.i18n import Translator
+from wet_run.engine import phase_view
+from wet_run.engine.chapter_cutscene import BeatData, PhaseData
+from wet_run.i18n import Translator
 
 # ---------------------------------------------------------------------------
 # Helpers — a Console stub that records every print() call.

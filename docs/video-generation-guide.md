@@ -1,4 +1,4 @@
-# Video Generation Guide — Roguelike Sprawl (2026-07-11)
+# Video Generation Guide — Wet Run (2026-07-11)
 
 > MiniMax Hailuo 비디오 API 활용 검토 + 가이드.
 

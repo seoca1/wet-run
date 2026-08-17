@@ -1,6 +1,6 @@
-# Roguelike Sprawl - AI Agent Guide
+# Wet Run - AI Agent Guide
 
-이 문서는 `Game/roguelike_sprawl/`에서 작업하는 모든 AI 에이전트를 위한 작업 규약이다. 루트 `AGENTS.md`를 보완한다.
+이 문서는 `Game/wet_run/`(이전 명칭: `Game/wet_run/`)에서 작업하는 모든 AI 에이전트를 위한 작업 규약이다. 루트 `AGENTS.md`를 보완한다.
 
 ## 1. 프로젝트 개요
 
@@ -43,7 +43,7 @@
 
 ## 4. Sprawl 세계관 정확성 규칙
 
-> **2026-07-10 정책 변경**: 파생 소설을 Notion에 게시하지 **않는다**. 대신 `Game/roguelike_sprawl/dashboard/stories/` HTML 카드를 단일 진실 공급원으로 사용. 자세한 계획: `docs/progress/DASHBOARD_ENHANCEMENT_PLAN.md`.
+> **2026-07-10 정책 변경**: 파생 소설을 Notion에 게시하지 **않는다**. 대신 `Game/wet_run/dashboard/stories/` HTML 카드를 단일 진실 공급원으로 사용. 자세한 계획: `docs/progress/DASHBOARD_ENHANCEMENT_PLAN.md`.
 
 깁슨 원작의 톤과 용어를 정확히 살리는 것은 디자인의 일부다.
 
@@ -69,7 +69,7 @@
 게임의 세계관은 **`../../../../Fiction/wiki/`** (깁슨 분석 wiki)를 *Primary source*로 참조한다.
 (이는 `Projects/Fiction/wiki/` — Fiction 프로젝트의 위키 디렉토리)
 
-- 게임 wiki (`Game/roguelike_sprawl/wiki/world/`)는 게임용 요약/적응
+- 게임 wiki (`Game/wet_run/wiki/world/`)는 게임용 요약/적응
 - 깊은 분석/원문 인용/캐릭터 디테일은 Fiction wiki 참조
 - **절대 경로**: `../../../../Fiction/wiki/...` (위치: `wiki/` 하위 MD 파일 기준 4단계 상승)
 - AGENTS.md 기준 절대 경로: `../../../Fiction/wiki/...`
@@ -137,9 +137,9 @@ prototype/
 ├── Makefile                # 편의 명령
 ├── .gitignore, .editorconfig, .python-version
 ├── src/
-│   └── roguelike_sprawl/   # Python 패키지
+│   └── wet_run/   # Python 패키지
 │       ├── __init__.py
-│       ├── __main__.py     # python -m roguelike_sprawl
+│       ├── __main__.py     # python -m wet_run
 │       ├── engine/         # tcod 통합 (app, render, input, config)
 │       ├── ecs/            # ECS-lite (entity, world)
 │       ├── i18n/           # 번역 (translator)
@@ -357,7 +357,7 @@ uv run python scripts/play.py --lang ko
 
 Web UI에서 보드 생성:
 1. https://github.com/users/seoca1/projects → "New classic project"
-2. Name: "Roguelike Sprawl Development"
+2. Name: "Wet Run Development"
 3. Columns: Backlog / Ready / In Progress / Review / Done
 
 상세 가이드: [`docs/GITHUB_PROJECTS_SETUP.md`](./docs/GITHUB_PROJECTS_SETUP.md)

@@ -1,7 +1,7 @@
 # Prologue + Game Story Consistency & Quality Report
 
 > **Generated**: 2026-07-25  
-> **Repository**: roguelike-sprawl (v0.5.0, HEAD `02ee7b9`)  
+> **Repository**: wet-run (v0.5.0, HEAD `02ee7b9`)  
 > **Scope**: `prototype/data/story/` inventory, prologue/chapter quality, mission-story alignment
 
 ---

@@ -11,8 +11,8 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.engine import config as _engine_config
-from roguelike_sprawl.engine import hub
+from wet_run.engine import config as _engine_config
+from wet_run.engine import hub
 
 
 @pytest.fixture
@@ -85,7 +85,7 @@ class TestLoadRecipesData:
 
 class TestMaterialInventoryLookup:
     def test_inventory_lookup_uses_snake_case_key(self) -> None:
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         state = AppState()
         state.inventory = {"ice_shard": 7, "data_fragment": 3, "unrelated": 99}
@@ -196,7 +196,7 @@ class TestReputationDots:
     """Hub panel shows faction reputation as compact glyph strip."""
 
     def test_neutral_default(self) -> None:
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         state = AppState()
         line = hub._render_reputation_dots(state)
@@ -204,8 +204,8 @@ class TestReputationDots:
         assert line == "·····"
 
     def test_allied_faction_shows_star(self) -> None:
-        from roguelike_sprawl.engine.state import AppState
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.engine.state import AppState
+        from wet_run.matrix.node import Faction
 
         state = AppState()
         # Bypass clamp by setting score directly
@@ -215,8 +215,8 @@ class TestReputationDots:
         assert line.startswith("★")
 
     def test_hostile_faction_shows_x(self) -> None:
-        from roguelike_sprawl.engine.state import AppState
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.engine.state import AppState
+        from wet_run.matrix.node import Faction
 
         state = AppState()
         state.reputation.get(Faction.MAAS).score = -100  # OUTCAST
@@ -226,8 +226,8 @@ class TestReputationDots:
         assert parts[1] == "✗"
 
     def test_mixed_tiers_render_correctly(self) -> None:
-        from roguelike_sprawl.engine.state import AppState
-        from roguelike_sprawl.matrix.node import Faction
+        from wet_run.engine.state import AppState
+        from wet_run.matrix.node import Faction
 
         state = AppState()
         # Hosaka → TRUSTED (20), Maas → HOSTILE (-25), Sense/Net neutral
@@ -240,7 +240,7 @@ class TestReputationDots:
         assert parts[2] == "·"  # Sense/Net NEUTRAL
 
     def test_length_is_5_factions(self) -> None:
-        from roguelike_sprawl.engine.state import AppState
+        from wet_run.engine.state import AppState
 
         state = AppState()
         line = hub._render_reputation_dots(state)

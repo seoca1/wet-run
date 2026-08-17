@@ -106,8 +106,8 @@ VSCode 설치 → Remote SSH 확장 → `Ctrl+Shift+P` → "Remote-SSH: Connect 
 ssh your_username@<원격 IP>
 
 cd ~/projects/Projects
-git clone <repo-url> roguelike-sprawl
-cd roguelike-sprawl/prototype
+git clone <repo-url> wet-run
+cd wet-run/prototype
 
 # Python 의존성 설치
 uv sync --all-extras
@@ -129,7 +129,7 @@ uv run mypy src tests  # typecheck clean
 ### 로컬 작업
 
 ```bash
-cd ~/projects/Projects/roguelike-sprawl/prototype
+cd ~/projects/Projects/wet-run/prototype
 opencode
 ```
 
@@ -142,7 +142,7 @@ ssh your_username@<IP>
 tmux new-session -s dev
 
 # 세션 안에서
-cd ~/projects/Projects/roguelike-sprawl/prototype
+cd ~/projects/Projects/wet-run/prototype
 opencode
 ```
 
@@ -240,7 +240,7 @@ sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/sbin/sshd
 ### 정기 백업
 
 ```bash
-cd roguelike-sprawl
+cd wet-run
 git add -A
 git commit -m "wip: <설명>"
 git push origin main
@@ -289,8 +289,8 @@ uv sync    # 새 의존성 자동 반영
 
 ```bash
 brew install uv tmux tailscale && \
-  git clone <repo-url> roguelike-sprawl && \
-  cd roguelike-sprawl/prototype && \
+  git clone <repo-url> wet-run && \
+  cd wet-run/prototype && \
   uv sync --all-extras && \
   uv run python scripts/download_font.py && \
   uv run pytest

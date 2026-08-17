@@ -199,9 +199,9 @@ Player 가 exit node 도달 시 HP 가 threshold (default 80%) 이상으로 남�
 ### Cross-Reference (Near-Miss)
 
 - `decisions/0140-engagement-layer.md` — proposal status
-- `prototype/src/roguelike_sprawl/engine/state.py` — `AppState.near_miss_triggered`
-- `prototype/src/roguelike_sprawl/engine/cyberspace_view.py` — EXIT node hook
-- `prototype/src/roguelike_sprawl/matrix/near_miss.py` — implementation
+- `prototype/src/wet_run/engine/state.py` — `AppState.near_miss_triggered`
+- `prototype/src/wet_run/engine/cyberspace_view.py` — EXIT node hook
+- `prototype/src/wet_run/matrix/near_miss.py` — implementation
 
 ---
 
@@ -304,10 +304,10 @@ existing **FactionReputation** (ADR-0131) to resolve outcome:
 ### Cross-Reference (Faction Tension)
 
 - `decisions/0140-engagement-layer.md` — proposal status
-- `prototype/src/roguelike_sprawl/run/reputation.py` — FactionReputation source
-- `prototype/src/roguelike_sprawl/engine/state.py` — `AppState.faction_tension_triggered`
-- `prototype/src/roguelike_sprawl/engine/cyberspace_view.py` — DATA node hook
-- `prototype/src/roguelike_sprawl/matrix/faction_tension.py` — implementation
+- `prototype/src/wet_run/run/reputation.py` — FactionReputation source
+- `prototype/src/wet_run/engine/state.py` — `AppState.faction_tension_triggered`
+- `prototype/src/wet_run/engine/cyberspace_view.py` — DATA node hook
+- `prototype/src/wet_run/matrix/faction_tension.py` — implementation
 
 ---
 
@@ -389,9 +389,9 @@ Player가 graphic novel auto-play 중에 pacing 을 조정할 수 있다. 세 �
 ### Cross-Reference (Auto-Play Tempo)
 
 - `decisions/0140-engagement-layer.md` — proposal status
-- `prototype/src/roguelike_sprawl/engine/auto_play_tempo.py` — implementation
-- `prototype/src/roguelike_sprawl/engine/main_loop.py` — integration point
-- `prototype/src/roguelike_sprawl/engine/state.py` — `AppState.tempo_mode`
+- `prototype/src/wet_run/engine/auto_play_tempo.py` — implementation
+- `prototype/src/wet_run/engine/main_loop.py` — integration point
+- `prototype/src/wet_run/engine/state.py` — `AppState.tempo_mode`
 - `tests/unit/test_auto_play_tempo.py` — test coverage
 
 ---
@@ -479,9 +479,9 @@ hint — 더 깊은 통찰, 깁슨 톤의 "좋은 contractor 가 master 가 되�
 ### Cross-Reference (Grade 6 Master Whisper)
 
 - `decisions/0140-engagement-layer.md` — proposal status
-- `prototype/src/roguelike_sprawl/lore/construct_whisper.py` — `MASTER_HINTS_BY_FACTION`
-- `prototype/src/roguelike_sprawl/lore/construct_whisper_hook.py` — `is_player_master` check
-- `prototype/src/roguelike_sprawl/engine/state.py` — `AppState.player_grade`
+- `prototype/src/wet_run/lore/construct_whisper.py` — `MASTER_HINTS_BY_FACTION`
+- `prototype/src/wet_run/lore/construct_whisper_hook.py` — `is_player_master` check
+- `prototype/src/wet_run/engine/state.py` — `AppState.player_grade`
 - `tests/unit/test_grade_6_master_whisper.py` — test coverage
 
 ---
@@ -564,8 +564,8 @@ between themes. Wraps the existing `ThemePlayer` from `audio/theme.py`.
 ### Cross-Reference (BGM Manager)
 
 - `decisions/0140-engagement-layer.md` — Cycle 1 (complete)
-- `prototype/src/roguelike_sprawl/audio/theme.py` — `ThemePlayer`, `play_theme`, `stop_theme`
-- `prototype/src/roguelike_sprawl/audio/config.py` — `SoundConfig`
+- `prototype/src/wet_run/audio/theme.py` — `ThemePlayer`, `play_theme`, `stop_theme`
+- `prototype/src/wet_run/audio/config.py` — `SoundConfig`
 - `tests/unit/test_bgm_manager.py` — test coverage
 
 ---
@@ -633,8 +633,8 @@ metaprogression 과 일치 — ephemeral session preference, no meta-progression
 ### Cross-Reference (Accessibility)
 
 - `decisions/0140-engagement-layer.md` — Cycle 1 (complete)
-- `prototype/src/roguelike_sprawl/engine/state.py` — `AppState.font_size`, `AppState.high_contrast`
-- `prototype/src/roguelike_sprawl/engine/settings_view.py` — `SETTINGS_OPTIONS` (7 items)
+- `prototype/src/wet_run/engine/state.py` — `AppState.font_size`, `AppState.high_contrast`
+- `prototype/src/wet_run/engine/settings_view.py` — `SETTINGS_OPTIONS` (7 items)
 - `tests/unit/test_accessibility_settings.py` — test coverage
 
 ---
@@ -719,8 +719,8 @@ over).
 ### Cross-Reference (Hardcore Mode)
 
 - `decisions/0140-engagement-layer.md` — Cycle 1 (complete)
-- `prototype/src/roguelike_sprawl/engine/death.py` — `trigger_death`, `restart_with_new_jockey`
-- `prototype/src/roguelike_sprawl/engine/state.py` — `AppState.hardcore_mode`
+- `prototype/src/wet_run/engine/death.py` — `trigger_death`, `restart_with_new_jockey`
+- `prototype/src/wet_run/engine/state.py` — `AppState.hardcore_mode`
 - `tests/unit/test_hardcore_mode.py` — test coverage
 
 ---
@@ -810,7 +810,7 @@ Salvation Phase 종료 후 다시 시작할 수 있는 New Game+ 모드. Pillar 
 ### Cross-Reference (New Game+)
 
 - `decisions/0140-engagement-layer.md` — Cycle 1 (complete)
-- `prototype/src/roguelike_sprawl/engine/state.py` — `AppState.ng_plus_unlocked`, `AppState.ng_plus_active`
+- `prototype/src/wet_run/engine/state.py` — `AppState.ng_plus_unlocked`, `AppState.ng_plus_active`
 - `tests/unit/test_ng_plus.py` — test coverage
 
 ---
@@ -896,6 +896,6 @@ ephemeral session preference, no stat boost.
 ### Cross-Reference (Construct Companion)
 
 - `decisions/0140-engagement-layer.md` — Cycle 1 (complete)
-- `prototype/src/roguelike_sprawl/engine/state.py` — `AppState.construct_companion_active`
-- `prototype/src/roguelike_sprawl/engine/npc_event.py` — `Dixie Flatline` (dialog-only by default)
+- `prototype/src/wet_run/engine/state.py` — `AppState.construct_companion_active`
+- `prototype/src/wet_run/engine/npc_event.py` — `Dixie Flatline` (dialog-only by default)
 - `tests/unit/test_construct_companion.py` — test coverage

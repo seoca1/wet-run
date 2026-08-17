@@ -415,7 +415,7 @@ credits = arc × 800 + (grade - 1) × 300
 | `design/systems/stage_structure.json` | 9 stages, 15 missions, transitions |
 | `design/story/prologue_data.json` | 3 characters, prologue scenes, endings |
 | `design/story/characters.md` | 캐릭터 상세 설정 |
-| `prototype/src/roguelike_sprawl/run/state.py` | Run State 구현 (Stage enum) |
+| `prototype/src/wet_run/run/state.py` | Run State 구현 (Stage enum) |
 | `prototype/scripts/verify_postcombat.py` | Post-combat flow 검증 |
 
 ---

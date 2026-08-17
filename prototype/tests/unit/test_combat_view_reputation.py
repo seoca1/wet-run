@@ -11,13 +11,13 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-from roguelike_sprawl.engine.combat_view import (  # type: ignore[import-untyped]
+from wet_run.engine.combat_view import (  # type: ignore[import-untyped]
     COMBAT_REPUTATION,
     _apply_combat_reputation,
 )
-from roguelike_sprawl.engine.state import AppState  # type: ignore[import-untyped]
-from roguelike_sprawl.matrix.graph import MatrixGraph  # type: ignore[import-untyped]
-from roguelike_sprawl.matrix.node import (  # type: ignore[import-untyped]
+from wet_run.engine.state import AppState  # type: ignore[import-untyped]
+from wet_run.matrix.graph import MatrixGraph  # type: ignore[import-untyped]
+from wet_run.matrix.node import (  # type: ignore[import-untyped]
     Faction,
     Node,
     NodeKind,
@@ -49,7 +49,7 @@ class TestApplyCombatReputationEarlyReturns:
 
     def test_early_return_when_state_has_no_reputation(self) -> None:
         """State without reputation attribute → return silently, no crash."""
-        from roguelike_sprawl.combat.effects import IceType
+        from wet_run.combat.effects import IceType
 
         state = AppState()
         # Remove reputation attribute via delattr (with type: ignore)
@@ -60,7 +60,7 @@ class TestApplyCombatReputationEarlyReturns:
 
     def test_early_return_when_node_faction_is_none(self) -> None:
         """Node with Faction.NONE → return silently, no rep change."""
-        from roguelike_sprawl.combat.effects import IceType
+        from wet_run.combat.effects import IceType
 
         state = _make_state_with_node(Faction.NONE)
         # Set up reputation as MagicMock to detect any calls
@@ -70,7 +70,7 @@ class TestApplyCombatReputationEarlyReturns:
 
     def test_early_return_when_node_faction_not_in_combat_reputation(self) -> None:
         """Node faction not in COMBAT_REPUTATION (e.g., Faction.NONE variant) → return."""
-        from roguelike_sprawl.combat.effects import IceType
+        from wet_run.combat.effects import IceType
 
         # COMBAT_REPUTATION only has HOSAKA, MAAS, SENSE_NET, TA
         # Use Faction.NONE which is the canonical "not in dict" case
@@ -85,7 +85,7 @@ class TestApplyCombatReputationMain:
 
     def test_applies_reputation_delta_for_hosaka_node(self) -> None:
         """HOSAKA node → apply HOSAKA deltas (self=-3, MAAS=+1) to state.reputation."""
-        from roguelike_sprawl.combat.effects import IceType
+        from wet_run.combat.effects import IceType
 
         state = _make_state_with_node(Faction.HOSAKA)
         state.reputation = MagicMock()
@@ -99,7 +99,7 @@ class TestApplyCombatReputationMain:
 
     def test_appends_rep_shift_status_message(self) -> None:
         """Main behavior → status_messages gets ">>> Rep shifted: ..." entry."""
-        from roguelike_sprawl.combat.effects import IceType
+        from wet_run.combat.effects import IceType
 
         state = _make_state_with_node(Faction.MAAS)
         state.reputation = MagicMock()
@@ -111,7 +111,7 @@ class TestApplyCombatReputationMain:
 
     def test_ice_type_name_appears_in_status_message_source(self) -> None:
         """ice_type.name appears in the status message (combat source tracking)."""
-        from roguelike_sprawl.combat.effects import IceType
+        from wet_run.combat.effects import IceType
 
         state = _make_state_with_node(Faction.SENSE_NET)
         state.reputation = MagicMock()
@@ -125,7 +125,7 @@ class TestApplyCombatReputationMain:
 
     def test_only_iterates_over_known_factions(self) -> None:
         """COMBAT_REPUTATION dict size matches adjust call count for any faction."""
-        from roguelike_sprawl.combat.effects import IceType
+        from wet_run.combat.effects import IceType
 
         for faction in COMBAT_REPUTATION:
             state = _make_state_with_node(faction)

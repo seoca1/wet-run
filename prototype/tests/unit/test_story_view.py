@@ -14,8 +14,8 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.engine import story_view
-from roguelike_sprawl.engine.story_view import (
+from wet_run.engine import story_view
+from wet_run.engine.story_view import (
     StoryRegistry,
 )
 

@@ -11,8 +11,8 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.run.reputation import (
+from wet_run.matrix.node import Faction
+from wet_run.run.reputation import (
     DEFAULT_REPUTATION,
     MAX_DELTA_PER_EVENT,
     FactionReputation,

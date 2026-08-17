@@ -21,13 +21,13 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine.layout import (  # noqa: E402
+from wet_run.engine.layout import (  # noqa: E402
     Region,
     RegionId,
     draw_footer,
     draw_message_log,
 )
-from roguelike_sprawl.engine.status_message import (  # noqa: E402
+from wet_run.engine.status_message import (  # noqa: E402
     MESSAGE_STYLE,
     MessageKind,
     StatusMessage,
@@ -364,12 +364,12 @@ class TestMatrixViewIntegration:
         import sys
 
         sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
-        from roguelike_sprawl.engine.matrix_view import _last_layout, render_matrix
-        from roguelike_sprawl.engine.state import AppState
-        from roguelike_sprawl.i18n import Translator
-        from roguelike_sprawl.matrix import Edge
-        from roguelike_sprawl.matrix.graph import MatrixGraph
-        from roguelike_sprawl.matrix.node import (
+        from wet_run.engine.matrix_view import _last_layout, render_matrix
+        from wet_run.engine.state import AppState
+        from wet_run.i18n import Translator
+        from wet_run.matrix import Edge
+        from wet_run.matrix.graph import MatrixGraph
+        from wet_run.matrix.node import (
             AlarmLevel,
             Faction,
             IceKind,
@@ -417,14 +417,14 @@ class TestStatusMessageListCap:
     """
 
     def test_default_state_is_empty(self) -> None:
-        from roguelike_sprawl.engine.state import STATUS_MESSAGES_MAX, AppState
+        from wet_run.engine.state import STATUS_MESSAGES_MAX, AppState
 
         state = AppState()
         assert len(state.status_messages) == 0
         assert STATUS_MESSAGES_MAX > 0
 
     def test_append_under_cap_keeps_all(self) -> None:
-        from roguelike_sprawl.engine.state import STATUS_MESSAGES_MAX, StatusMessageList
+        from wet_run.engine.state import STATUS_MESSAGES_MAX, StatusMessageList
 
         msgs = StatusMessageList()
         for i in range(STATUS_MESSAGES_MAX - 1):
@@ -432,7 +432,7 @@ class TestStatusMessageListCap:
         assert len(msgs) == STATUS_MESSAGES_MAX - 1
 
     def test_append_at_cap_drops_oldest(self) -> None:
-        from roguelike_sprawl.engine.state import (
+        from wet_run.engine.state import (
             STATUS_MESSAGES_MAX,
             StatusMessageList,
         )
@@ -446,7 +446,7 @@ class TestStatusMessageListCap:
         assert msgs[-1] == f"msg {STATUS_MESSAGES_MAX + 49}"
 
     def test_extend_truncates(self) -> None:
-        from roguelike_sprawl.engine.state import (
+        from wet_run.engine.state import (
             STATUS_MESSAGES_MAX,
             StatusMessageList,
         )
@@ -459,7 +459,7 @@ class TestStatusMessageListCap:
 
     def test_appstate_long_session_stays_bounded(self) -> None:
         """Regression: long run doesn't accumulate messages unbounded."""
-        from roguelike_sprawl.engine.state import (
+        from wet_run.engine.state import (
             STATUS_MESSAGES_MAX,
             AppState,
         )

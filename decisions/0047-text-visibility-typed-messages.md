@@ -70,7 +70,7 @@
 
 ### 신규 모듈
 
-- **`src/roguelike_sprawl/engine/status_message.py`** (230 lines):
+- **`src/wet_run/engine/status_message.py`** (230 lines):
   - `MessageKind(IntEnum)`: DEBUG=0 / INFO=10 / MOVEMENT=20 / DIALOG=30 / COMBAT=40 / SUCCESS=42 / WARNING=44 / ERROR=50
   - `MESSAGE_STYLE`: 8종 (icon + fg + optional bg)
   - `StatusMessage` dataclass (`frozen=True, slots=True`): kind/icon/text/fg/bg/timestamp_ms
@@ -80,13 +80,13 @@
 
 ### 변경 모듈
 
-- **`src/roguelike_sprawl/engine/layout.py`** (~100 lines):
+- **`src/wet_run/engine/layout.py`** (~100 lines):
   - `draw_footer(..., use_styled: bool = True, status_messages: list[str] | None)`: 스타일드 모드 기본값
   - `draw_message_log(...)`: 사이드 패널용 다중 로그
   - WARNING/ERROR는 bg 하이라이트 (dark yellow / dark red)
-- **`src/roguelike_sprawl/engine/graphic_novel_view.py`**:
+- **`src/wet_run/engine/graphic_novel_view.py`**:
   - `render_scene()` prose body `fg = (232, 230, 220)` cream-white
-- **`src/roguelike_sprawl/engine/matrix_view.py`**:
+- **`src/wet_run/engine/matrix_view.py`**:
   - `render_matrix()` 사이드 패널에 메시지 로그 추가
 
 ### 신규 스크립트

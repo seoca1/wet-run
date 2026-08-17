@@ -12,8 +12,8 @@ Validates:
 
 from __future__ import annotations
 
-from roguelike_sprawl.run import Stage
-from roguelike_sprawl.run.state import (
+from wet_run.run import Stage
+from wet_run.run.state import (
     DEFAULT_FLOW,
     MISSION_FLOWS,
     get_mission_flow,

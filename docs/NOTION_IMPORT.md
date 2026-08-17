@@ -1,11 +1,11 @@
 ---
-title: Roguelike Sprawl - 프로젝트 가이드
+title: Wet Run - 프로젝트 가이드
 date: 2026-07-07
 tags: [game, gibson, cyberpunk, python]
 version: 0.6.0
 ---
 
-# Roguelike Sprawl - 프로젝트 가이드 (v0.6)
+# Wet Run - 프로젝트 가이드 (v0.6)
 
 ## 프로젝트 개요
 
@@ -188,7 +188,7 @@ uv run python scripts/play_novel_runtime.py
 ## 4. 시스템 아키텍처 (Phase 5+6)
 
 ```
-prototype/src/roguelike_sprawl/
+prototype/src/wet_run/
 ├── engine/         # 화면 렌더링 + 게임 루프
 │   ├── matrix_view.py       # 매트릭스 (D키 던전 토글)
 │   ├── graphic_novel_view.py  # GN 모드
@@ -299,7 +299,7 @@ uv run python scripts/validate_prologue_data.py
 ### 7.3 대시보드 빌드
 
 ```bash
-cd /Users/emilio/projects/Projects/Game/roguelike_sprawl
+cd /Users/emilio/projects/Projects/Game/wet_run
 python3 tools/build_dashboard.py
 # 10 stats JSON 자동 갱신 → dashboard/data/*.json
 ```

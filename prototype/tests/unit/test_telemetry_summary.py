@@ -19,13 +19,13 @@ from typing import TYPE_CHECKING
 import tcod.console
 import tcod.event
 
-from roguelike_sprawl.combat.telemetry_integration import (
+from wet_run.combat.telemetry_integration import (
     TelemetryConfig,
     TelemetryIntegrator,
 )
-from roguelike_sprawl.engine import menu as menu_mod
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.i18n import Translator
+from wet_run.engine import menu as menu_mod
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.i18n import Translator
 
 if TYPE_CHECKING:
     pass

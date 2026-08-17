@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import tcod.console
 
-from roguelike_sprawl.engine.cinematic_art import (
+from wet_run.engine.cinematic_art import (
     ARMITAGE,
     CHIBA_CITY,
     CYBERSPACE,
@@ -251,7 +251,7 @@ class TestRenderAsciiArt:
 
     def test_renders_to_console(self) -> None:
         """Art is rendered to console without errors."""
-        from roguelike_sprawl.engine.story_cinematic import _draw_ascii_art
+        from wet_run.engine.story_cinematic import _draw_ascii_art
 
         console = tcod.console.Console(30, 20, order="F")
         art = AsciiArt(
@@ -262,7 +262,7 @@ class TestRenderAsciiArt:
 
     def test_clips_to_max_width(self) -> None:
         """Art wider than max_w is clipped."""
-        from roguelike_sprawl.engine.story_cinematic import _draw_ascii_art
+        from wet_run.engine.story_cinematic import _draw_ascii_art
 
         console = tcod.console.Console(20, 10, order="F")
         art = AsciiArt(
@@ -274,7 +274,7 @@ class TestRenderAsciiArt:
 
     def test_clips_to_max_height(self) -> None:
         """Art taller than max_h is clipped."""
-        from roguelike_sprawl.engine.story_cinematic import _draw_ascii_art
+        from wet_run.engine.story_cinematic import _draw_ascii_art
 
         console = tcod.console.Console(30, 10, order="F")
         art = AsciiArt(
@@ -285,7 +285,7 @@ class TestRenderAsciiArt:
 
     def test_ghost_style_fades_color(self) -> None:
         """GHOST style produces 50% color."""
-        from roguelike_sprawl.engine.story_cinematic import _draw_ascii_art
+        from wet_run.engine.story_cinematic import _draw_ascii_art
 
         console = tcod.console.Console(30, 20, order="F")
         ghost_art = AsciiArt(
@@ -298,7 +298,7 @@ class TestRenderAsciiArt:
 
     def test_glitch_style_renders(self) -> None:
         """GLITCH style renders without errors."""
-        from roguelike_sprawl.engine.story_cinematic import _draw_ascii_art
+        from wet_run.engine.story_cinematic import _draw_ascii_art
 
         console = tcod.console.Console(30, 20, order="F")
         glitch_art = AsciiArt(
@@ -310,7 +310,7 @@ class TestRenderAsciiArt:
 
     def test_static_style_grayscale(self) -> None:
         """STATIC style uses grayscale."""
-        from roguelike_sprawl.engine.story_cinematic import _draw_ascii_art
+        from wet_run.engine.story_cinematic import _draw_ascii_art
 
         console = tcod.console.Console(30, 20, order="F")
         static_art = AsciiArt(

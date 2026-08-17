@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'zaibatsu_statework' to roguelike_sprawl missions.json.
+"""Add new mission 'zaibatsu_statework' to wet_run missions.json.
 
 Pairs with Fiction Phase 30 — Zaibatsu concept page (wiki/concepts/zaibatsu.md).
 Suit-arc, Arc 5: corporate-statework on zaibatsu-class industrial-class substrate.

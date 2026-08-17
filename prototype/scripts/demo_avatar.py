@@ -14,11 +14,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.avatar import (  # noqa: E402
+from wet_run.avatar import (  # noqa: E402
     Status,
     build_avatar_state,
 )
-from roguelike_sprawl.avatar.renderer import render_avatar_lines  # noqa: E402
+from wet_run.avatar.renderer import render_avatar_lines  # noqa: E402
 
 
 def main() -> int:

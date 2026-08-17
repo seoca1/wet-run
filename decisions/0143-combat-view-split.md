@@ -123,4 +123,4 @@ All tests pass — re-export 계약 유지.
 
 *ADR-0143 closes the ADR-0113 § 향후 split 계획 deferred work (v1.1.0+ → v1.1.0a1 cycle).*
 
-*ADR-0142 + ADR-0143 establish the "4-way coordinator split" pattern for monolithic view modules in roguelike_sprawl engine.*
+*ADR-0142 + ADR-0143 establish the "4-way coordinator split" pattern for monolithic view modules in wet_run engine.*

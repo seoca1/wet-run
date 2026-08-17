@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 import tcod.console  # noqa: E402
 
-from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
+from wet_run.engine.graphic_novel_view import (  # noqa: E402
     NOVEL_LEFT_MARGIN,
     NOVEL_RIGHT_MARGIN,
     DialogueLine,
@@ -28,7 +28,7 @@ from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
     render_scene,
     wrap_text_for_novel,
 )
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 # ============================================================================
 # wrap_text_for_novel

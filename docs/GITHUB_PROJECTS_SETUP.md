@@ -10,7 +10,7 @@
 
 1. Go to https://github.com/users/seoca1/projects
 2. Click **"New project"** → **"New classic project"**
-3. Project name: **Roguelike Sprawl Development**
+3. Project name: **Wet Run Development**
 4. Description: 깁슨 스프롤 3부작 기반 로그라이크 게임 개발 추적
 5. Visibility: **Public**
 6. Click **"Create project"**
@@ -79,7 +79,7 @@ brew install gh
 gh auth login
 
 # Create project
-gh project create --title "Roguelike Sprawl Development" --public
+gh project create --title "Wet Run Development" --public
 
 # Add initial cards
 gh project item-add 1 --owner seoca1 --url https://github.com/seoca1/roguelike-sprawl/issues/1

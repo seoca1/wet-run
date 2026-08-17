@@ -14,7 +14,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine.state import AppState  # noqa: E402
+from wet_run.engine.state import AppState  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Fixtures
@@ -44,8 +44,8 @@ class TestEndingChoiceRoundTrip:
     """Save ending_choice, restore on a fresh AppState, assert equality."""
 
     def test_empty_ending_choice_round_trips(self, save_dir: Path) -> None:
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
 
         sm = SaveManager(save_dir)
         original = _make_state(ending_choice="")
@@ -57,8 +57,8 @@ class TestEndingChoiceRoundTrip:
         assert loaded.ending_choice == ""
 
     def test_ending_a_round_trips(self, save_dir: Path) -> None:
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
 
         sm = SaveManager(save_dir)
         original = _make_state(ending_choice="A")
@@ -70,8 +70,8 @@ class TestEndingChoiceRoundTrip:
         assert loaded.ending_choice == "A"
 
     def test_ending_b_round_trips(self, save_dir: Path) -> None:
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
 
         sm = SaveManager(save_dir)
         original = _make_state(ending_choice="B")
@@ -83,8 +83,8 @@ class TestEndingChoiceRoundTrip:
         assert loaded.ending_choice == "B"
 
     def test_ending_c_round_trips(self, save_dir: Path) -> None:
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
 
         sm = SaveManager(save_dir)
         original = _make_state(ending_choice="C")
@@ -105,8 +105,8 @@ class TestEndingChoiceMetadata:
     """The save's metadata dict must contain ``ending_choice``."""
 
     def test_metadata_contains_ending_choice(self, save_dir: Path) -> None:
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
 
         sm = SaveManager(save_dir)
         original = _make_state(ending_choice="B")
@@ -118,8 +118,8 @@ class TestEndingChoiceMetadata:
         assert saved.metadata.get("ending_choice") == "B"
 
     def test_metadata_default_empty_string(self, save_dir: Path) -> None:
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
 
         sm = SaveManager(save_dir)
         original = _make_state(ending_choice="")
@@ -152,7 +152,7 @@ class TestLegacySaveBackwardCompat:
         """
         import json
 
-        from roguelike_sprawl.engine.save_manager import SaveManager
+        from wet_run.engine.save_manager import SaveManager
 
         # Hand-roll a legacy save file: no ``ending_choice`` metadata.
         legacy = {
@@ -203,9 +203,9 @@ class TestEndingChoiceEndToEnd:
     """Full flow: state.ending_choice set → save → load → verified."""
 
     def test_full_round_trip_with_process_ending(self, save_dir: Path) -> None:
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
-        from roguelike_sprawl.story.endings import process_ending
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
+        from wet_run.story.endings import process_ending
 
         # 1. Process an ending (this is how state.ending_choice gets set
         #    in the real game).
@@ -239,7 +239,7 @@ class TestEndingChoiceCorruptedSave:
 
     def test_corrupted_save_raises_clean_error(self, save_dir: Path) -> None:
         """A JSON-corrupted save file must raise SaveCorruptedError, not crash."""
-        from roguelike_sprawl.engine.save_manager import (
+        from wet_run.engine.save_manager import (
             SaveCorruptedError,
             SaveManager,
         )
@@ -252,7 +252,7 @@ class TestEndingChoiceCorruptedSave:
 
     def test_empty_save_file_raises_corrupted_error(self, save_dir: Path) -> None:
         """An empty save file produces a JSON decode error → SaveCorruptedError."""
-        from roguelike_sprawl.engine.save_manager import (
+        from wet_run.engine.save_manager import (
             SaveCorruptedError,
             SaveManager,
         )
@@ -271,7 +271,7 @@ class TestEndingChoiceLegacyMetadata:
         """Legacy save without player_grade metadata must still load."""
         import json
 
-        from roguelike_sprawl.engine.save_manager import SaveManager
+        from wet_run.engine.save_manager import SaveManager
 
         legacy = {
             "version": "0.1.0",
@@ -315,8 +315,8 @@ class TestEndingChoiceNonAsciiRoundTrip:
 
     def test_non_ascii_save_load_round_trip(self, save_dir: Path) -> None:
         """A save containing a non-ASCII ending string survives JSON round-trip."""
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
 
         sm = SaveManager(save_dir)
         original = _make_state(ending_choice="ending_케이스")
@@ -333,8 +333,8 @@ class TestEndingChoiceConcurrentSaves:
 
     def test_consecutive_saves_overwrite_cleanly(self, save_dir: Path) -> None:
         """Two saves in quick succession: the second overwrites the first."""
-        from roguelike_sprawl.engine.save_manager import SaveManager
-        from roguelike_sprawl.run import start_run
+        from wet_run.engine.save_manager import SaveManager
+        from wet_run.run import start_run
 
         sm = SaveManager(save_dir)
         state_a = _make_state(ending_choice="A")
@@ -357,7 +357,7 @@ class TestEndingChoiceVersionMismatch:
         """A save file with an unknown version string must raise VersionMismatchError."""
         import json
 
-        from roguelike_sprawl.engine.save_manager import (
+        from wet_run.engine.save_manager import (
             SaveManager,
             SaveVersionMismatchError,
         )

@@ -18,7 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 import tcod.console  # noqa: E402
 
-from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
+from wet_run.engine.graphic_novel_view import (  # noqa: E402
     SceneData,
     _character_label,
     _to_roman,

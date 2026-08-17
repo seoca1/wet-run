@@ -2,7 +2,7 @@
 
 > **관련**: `../../decisions/0151-info-market-intel-items.md`, `../../decisions/0147-data-salvage-phase6.md`
 > **관련 design**: `../../design/systems/combat.md` §Info Market Intel Items
-> **구현**: `../../prototype/src/roguelike_sprawl/combat/intel_items.py`
+> **구현**: `../../prototype/src/wet_run/combat/intel_items.py`
 
 3 intel items purchasable with CRED at the Info Market. Closes the salvage 3-way trade-off (HEAL / FRAG / CRED) by giving CRED a consumption path.
 

@@ -18,8 +18,8 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.engine import graphic_novel_save as gns
-from roguelike_sprawl.engine.graphic_novel_save import (
+from wet_run.engine import graphic_novel_save as gns
+from wet_run.engine.graphic_novel_save import (
     DEFAULT_SAVE_PATH,
     GN_SAVE_SLOTS,
     SAVE_SLOT_PATTERN,

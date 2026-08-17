@@ -2,7 +2,7 @@
 
 > **상위 결정**: `../../decisions/0008-progression-system.md` (Accepted, Revised)
 > **관련**: [crafting.md](./crafting.md) (제작), [progression.md](./progression.md) (메타 진행), [combat.md](./combat.md) (전투)
-> **구현**: `../../prototype/src/roguelike_sprawl/equipment/equipment.py`
+> **구현**: `../../prototype/src/wet_run/equipment/equipment.py`
 
 ## 목적
 

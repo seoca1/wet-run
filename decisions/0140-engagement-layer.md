@@ -107,9 +107,9 @@ v1.0.0 release 후 사용자 consultation (2026-07-28) 에서 게임 중독성/�
 ## 영향 받는 항목 (예정)
 
 수락 시:
-- `src/roguelike_sprawl/matrix/construct_whisper.py` (신규)
-- `src/roguelike_sprawl/engine/memory_fragment.py` (신규)
-- `src/roguelike_sprawl/engine/death_replay.py` (신규)
+- `src/wet_run/matrix/construct_whisper.py` (신규)
+- `src/wet_run/engine/memory_fragment.py` (신규)
+- `src/wet_run/engine/death_replay.py` (신규)
 - `combat/effects.py` 확장 (VFX hooks)
 - `matrix/generator.py` 확장 (anomaly nodes)
 - `design/systems/engagement.md` (신규 명세)
@@ -141,17 +141,17 @@ v1.0.0 release 후 사용자 consultation (2026-07-28) 에서 게임 중독성/�
 ### Phase 1 — Memory Fragments ✅
 - `wiki/lore/README.md` + 4 fragments (signal_echo, construct_cache, anomaly_log, dead_channel)
 - `data/lore/encounter_table.json` (4 fragments × zone/grade/faction 매트릭스)
-- `src/roguelike_sprawl/lore/memory_fragment.py` (roll_memory_fragment, load_encounter_table)
-- `src/roguelike_sprawl/lore/fragment_tracker.py` (per-run cap enforcement)
-- `src/roguelike_sprawl/lore/fragment_hook.py` (matrix integration helper)
-- `src/roguelike_sprawl/lore/__init__.py` (re-exports)
+- `src/wet_run/lore/memory_fragment.py` (roll_memory_fragment, load_encounter_table)
+- `src/wet_run/lore/fragment_tracker.py` (per-run cap enforcement)
+- `src/wet_run/lore/fragment_hook.py` (matrix integration helper)
+- `src/wet_run/lore/__init__.py` (re-exports)
 - AppState.memory_fragment_tracker 필드
 - cyberspace_view.py:519 hook 통합
 - **Tests**: 12 (memory_fragment) + 9 (fragment_tracker) + 6 (fragment_hook) = 27
 
 ### Phase 2 — Construct Whisper ✅
-- `src/roguelike_sprawl/lore/construct_whisper.py` (faction-tier-gated hints)
-- `src/roguelike_sprawl/lore/construct_whisper_hook.py` (combat integration)
+- `src/wet_run/lore/construct_whisper.py` (faction-tier-gated hints)
+- `src/wet_run/lore/construct_whisper_hook.py` (combat integration)
 - AppState.construct_whisper_tracker 필드
 - HINTS_BY_FACTION: 4 factions × 3 tiers = 12 hints
 - **Tests**: 14 (core) + 8 (hook) = 22

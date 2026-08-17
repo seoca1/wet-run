@@ -194,7 +194,7 @@ If user **approves**:
 3. Data files drafted (start with 1 zone, then scale)
 4. Design doc updates
 5. Tests + i18n
-6. Atomic commit (per roguelike_sprawl AGENTS.md §3.2 workflow)
+6. Atomic commit (per wet_run AGENTS.md §3.2 workflow)
 
 If user **adjusts**:
 - Resolve open questions

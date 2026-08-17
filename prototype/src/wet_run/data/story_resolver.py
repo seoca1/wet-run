@@ -223,7 +223,7 @@ def _read_game_mission_ids_from_fiction(repo_root: Path) -> list[dict[str, objec
 def validate_game_mission_id_links(
     missions: dict[str, dict[str, object]], repo_root: Path
 ) -> list[dict[str, object]]:
-    """Cross-project: Fiction frontmatter `game_mission_id` ↔ roguelike_sprawl missions.
+    """Cross-project: Fiction frontmatter `game_mission_id` ↔ wet_run missions.
 
     Reports Fiction stories that declare `game_mission_id` but the mission
     does not exist in missions.json (orphan). Stories without the field
@@ -267,7 +267,7 @@ def get_mission_for_scene(scene_id: str, jockey: str, repo_root: Path) -> dict[s
     scene_path = (
         repo_root
         / "Game"
-        / "roguelike_sprawl"
+        / "wet_run"
         / "prototype"
         / "data"
         / "scenes"
@@ -286,7 +286,7 @@ def get_mission_for_scene(scene_id: str, jockey: str, repo_root: Path) -> dict[s
     missions_path = (
         repo_root
         / "Game"
-        / "roguelike_sprawl"
+        / "wet_run"
         / "prototype"
         / "data"
         / "missions"

@@ -9,8 +9,8 @@ Covers:
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.settings_view import SETTINGS_OPTIONS
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.settings_view import SETTINGS_OPTIONS
+from wet_run.engine.state import AppState
 
 
 class TestAppStateAccessibility:

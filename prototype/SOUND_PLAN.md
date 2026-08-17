@@ -1,4 +1,4 @@
-# 🔊 Sound Integration Plan - Roguelike Sprawl
+# 🔊 Sound Integration Plan - Wet Run
 
 ## Overview
 
@@ -62,7 +62,7 @@ This plan adds sound effects to the game in **6 phases** over multiple sessions,
 **Goal**: Create a centralized sound playback system
 
 **Tasks**:
-- [x] Create `src/roguelike_sprawl/audio/sound_manager.py` (267 lines)
+- [x] Create `src/wet_run/audio/sound_manager.py` (267 lines)
 - [x] Implement `SoundManager` class:
   - `play(sound_name: str)` - Play a sound
   - `stop_all()` - Stop all sounds
@@ -336,7 +336,7 @@ Each phase should achieve:
 
 ```bash
 # Phase 1: Test libraries
-cd Game/roguelike_sprawl/prototype
+cd Game/wet_run/prototype
 uv run python scripts/test_sound_libraries.py
 
 # Phase 2: Create directory
@@ -356,7 +356,7 @@ If Phase 1-3 work, move to Phase 4 (story/UI sounds) which has highest player vi
 ### Phase Completion
 - [x] **Phase 1**: Library Evaluation — `afplay` (5.3ms latency) selected for macOS
 - [x] **Phase 2**: Sound Assets — 27 placeholder WAVs auto-generated via wave module
-- [x] **Phase 3**: SoundManager Core — `src/roguelike_sprawl/audio/sound_manager.py` (267 lines)
+- [x] **Phase 3**: SoundManager Core — `src/wet_run/audio/sound_manager.py` (267 lines)
 - [x] **Phase 4**: UI/Story Sounds — hooks in 6 engine modules
 - [x] **Phase 5**: Combat Sounds — 14 SkillEffect types mapped
 - [x] **Phase 6**: UI/Nav Polish — nav_step, nav_block, jack_in wired

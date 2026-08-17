@@ -192,7 +192,7 @@ class TestStageAvatarGetFrameDocstringCoverage:
     """Phase 44 polish — StageAvatar.get_frame (was MISSED)."""
 
     def test_stage_avatar_get_frame_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.combo import StageAvatar
+        from wet_run.combat.combo import StageAvatar
 
         doc = StageAvatar.get_frame.__doc__
         assert doc is not None
@@ -220,7 +220,7 @@ class TestStageAvatarGetFrameDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/combo.py",
+                "src/wet_run/combat/combo.py",
             ],
             capture_output=True,
             text=True,
@@ -242,7 +242,7 @@ class TestTelemetryIntegratorInitDocstringCoverage:
     """Phase 44 polish — TelemetryIntegrator.__init__ (was MISSED)."""
 
     def test_telemetry_integrator_init_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.telemetry_integration import TelemetryIntegrator
+        from wet_run.combat.telemetry_integration import TelemetryIntegrator
 
         doc = TelemetryIntegrator.__init__.__doc__
         assert doc is not None
@@ -263,7 +263,7 @@ class TestTelemetryIntegratorInitDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/telemetry_integration.py",
+                "src/wet_run/combat/telemetry_integration.py",
             ],
             capture_output=True,
             text=True,
@@ -285,7 +285,7 @@ class TestChapterCutsceneStateCurrentLineDocstringCoverage:
     """Phase 44 polish — ChapterCutsceneState.current_line (was MISSED)."""
 
     def test_chapter_cutscene_state_current_line_has_docstring(self) -> None:
-        from roguelike_sprawl.engine.chapter_cutscene import ChapterCutsceneState
+        from wet_run.engine.chapter_cutscene import ChapterCutsceneState
 
         doc = ChapterCutsceneState.current_line.__doc__
         assert doc is not None
@@ -306,7 +306,7 @@ class TestChapterCutsceneStateCurrentLineDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/engine/chapter_cutscene.py",
+                "src/wet_run/engine/chapter_cutscene.py",
             ],
             capture_output=True,
             text=True,
@@ -328,7 +328,7 @@ class TestClearHackStateDocstringCoverage:
     """Phase 44 polish — _clear_hack_state (was MISSED)."""
 
     def test_clear_hack_state_has_docstring(self) -> None:
-        from roguelike_sprawl.engine.hacking_view import _clear_hack_state
+        from wet_run.engine.hacking_view import _clear_hack_state
 
         doc = _clear_hack_state.__doc__
         assert doc is not None
@@ -354,7 +354,7 @@ class TestClearHackStateDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/engine/hacking_view.py",
+                "src/wet_run/engine/hacking_view.py",
             ],
             capture_output=True,
             text=True,
@@ -376,7 +376,7 @@ class TestIsTier3DocstringCoverage:
     """Phase 44 polish — _is_tier3 (was MISSED)."""
 
     def test_is_tier3_has_docstring(self) -> None:
-        from roguelike_sprawl.equipment.wetware_stacking import _is_tier3
+        from wet_run.equipment.wetware_stacking import _is_tier3
 
         doc = _is_tier3.__doc__
         assert doc is not None
@@ -397,7 +397,7 @@ class TestIsTier3DocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/equipment/wetware_stacking.py",
+                "src/wet_run/equipment/wetware_stacking.py",
             ],
             capture_output=True,
             text=True,
@@ -420,7 +420,7 @@ class TestPhase44Smoke:
 
     def test_stage_avatar_get_frame_idle(self) -> None:
         """StageAvatar.get_frame returns idle glyph when no flags set."""
-        from roguelike_sprawl.combat.combo import StageAvatar
+        from wet_run.combat.combo import StageAvatar
 
         av = StageAvatar(
             stage="WARMUP",
@@ -437,7 +437,7 @@ class TestPhase44Smoke:
 
     def test_telemetry_integrator_init_default(self) -> None:
         """TelemetryIntegrator.__init__ defaults to opt-out telemetry."""
-        from roguelike_sprawl.combat.telemetry_integration import TelemetryIntegrator
+        from wet_run.combat.telemetry_integration import TelemetryIntegrator
 
         integrator = TelemetryIntegrator()
         assert integrator.config.enabled is False
@@ -445,7 +445,7 @@ class TestPhase44Smoke:
 
     def test_telemetry_integrator_init_with_config(self) -> None:
         """TelemetryIntegrator.__init__ honors supplied config."""
-        from roguelike_sprawl.combat.telemetry_integration import (
+        from wet_run.combat.telemetry_integration import (
             TelemetryConfig,
             TelemetryIntegrator,
         )
@@ -457,12 +457,12 @@ class TestPhase44Smoke:
 
     def test_chapter_cutscene_state_current_line(self) -> None:
         """ChapterCutsceneState.current_line returns dialogue at index."""
-        from roguelike_sprawl.engine.chapter_cutscene import ChapterCutsceneState
+        from wet_run.engine.chapter_cutscene import ChapterCutsceneState
 
         # Minimal scene: build with a 2-line dialogue
         state = ChapterCutsceneState.__new__(ChapterCutsceneState)
         # Populate via dict-style to avoid the scene loader dependency
-        from roguelike_sprawl.engine.graphic_novel_data import (
+        from wet_run.engine.graphic_novel_data import (
             DialogueLine,
             SceneData,
         )
@@ -511,7 +511,7 @@ class TestPhase44Smoke:
         """_clear_hack_state removes both hack attrs."""
         from types import SimpleNamespace
 
-        from roguelike_sprawl.engine.hacking_view import _clear_hack_state
+        from wet_run.engine.hacking_view import _clear_hack_state
 
         state = SimpleNamespace(
             hack_state="mock",  # type: ignore[assignment]
@@ -525,7 +525,7 @@ class TestPhase44Smoke:
 
     def test_is_tier3_returns_true_for_tier3(self) -> None:
         """_is_tier3 returns True for registered tier-3 augments."""
-        from roguelike_sprawl.equipment.wetware_stacking import (
+        from wet_run.equipment.wetware_stacking import (
             _is_tier3,
             get_all_augments,
         )
@@ -555,7 +555,7 @@ class TestVaultWideInterrogate:
                 "uv",
                 "run",
                 "interrogate",
-                "src/roguelike_sprawl",
+                "src/wet_run",
             ],
             capture_output=True,
             text=True,

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'idoru_wedding_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'idoru_wedding_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 44 — Idoru source-summary (wiki/sources/idoru.md).
 Heretic-arc, Arc 3: post-cyberpunk cultural-religious scenario on the

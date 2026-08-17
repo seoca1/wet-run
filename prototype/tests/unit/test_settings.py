@@ -5,14 +5,14 @@ from __future__ import annotations
 import pytest
 from tcod.event import KeyDown, KeySym
 
-from roguelike_sprawl.engine.settings_view import (
+from wet_run.engine.settings_view import (
     SETTINGS_OPTIONS,
     _adjust_volume,
     _get_volume,
     _set_volume,
     handle_settings_input,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
+from wet_run.engine.state import AppState, ScreenKind
 
 
 class TestSettingsOptions:

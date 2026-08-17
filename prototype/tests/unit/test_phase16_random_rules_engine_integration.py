@@ -10,10 +10,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 
-from roguelike_sprawl.engine import hub as hub_mod
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.missions.board import JobBoard
-from roguelike_sprawl.missions.mission import Mission, Objective, Rewards
+from wet_run.engine import hub as hub_mod
+from wet_run.engine.state import AppState
+from wet_run.missions.board import JobBoard
+from wet_run.missions.mission import Mission, Objective, Rewards
 
 # ---------------------------------------------------------------------------
 # Helpers

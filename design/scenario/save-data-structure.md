@@ -239,11 +239,11 @@ AppState.telemetry_session:   TelemetrySession | None  (옵트인 사용 시, AD
 
 | 파일 | 설명 |
 |------|------|
-| `src/roguelike_sprawl/run/state.py` | RunState, ChapterState 정의 |
-| `src/roguelike_sprawl/engine/state.py` | AppState 정의 (ending_choice, telemetry_opt_in, deck_size, telemetry_session) |
-| `src/roguelike_sprawl/engine/save_manager.py` | 저장/로드 로직 (_serialize_metadata, restore_state) |
-| `src/roguelike_sprawl/engine/save_progress.py` | ProgressSummary 생성 |
-| `src/roguelike_sprawl/combat/telemetry.py` | TelemetrySession / record_* (ADR-0184) |
+| `src/wet_run/run/state.py` | RunState, ChapterState 정의 |
+| `src/wet_run/engine/state.py` | AppState 정의 (ending_choice, telemetry_opt_in, deck_size, telemetry_session) |
+| `src/wet_run/engine/save_manager.py` | 저장/로드 로직 (_serialize_metadata, restore_state) |
+| `src/wet_run/engine/save_progress.py` | ProgressSummary 생성 |
+| `src/wet_run/combat/telemetry.py` | TelemetrySession / record_* (ADR-0184) |
 | `scripts/play.py` | 챕터 전환 로직 |
 
 ---

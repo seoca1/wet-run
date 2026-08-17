@@ -7,7 +7,7 @@
 
 ## 컨텍스트 (Context)
 
-Phase 7 완료 상태 — 4146 테스트 통과, 9자키/72씬/47미션/41 ICE, 모든 ADR Accepted. 로컬 빌드 `roguelike_sprawl-1.0.0a1-py3-none-any.whl` 존재. v1.0.0으로 공식 태그 + PyPI 업로드 필요.
+Phase 7 완료 상태 — 4146 테스트 통과, 9자키/72씬/47미션/41 ICE, 모든 ADR Accepted. 로컬 빌드 `wet_run-1.0.0a1-py3-none-any.whl` 존재. v1.0.0으로 공식 태그 + PyPI 업로드 필요.
 
 ## 고려한 옵션
 
@@ -35,7 +35,7 @@ Phase 7 완료 상태 — 4146 테스트 통과, 9자키/72씬/47미션/41 ICE, 
 - **설명**: `version = "1.0.0"` 변경 → 빌드 → 태그 `v1.0.0` → PyPI 업로드
 - **장점**:
   - 가장 깔끔한 버전 넘버링
-  -pip installroguelike-sprawl` 로 최신 안정 버전 획득 가능
+  -pip installwet-run` 로 최신 안정 버전 획득 가능
 - **단점**:
   - 아직 alpha/beta 단계의 프로젝트를 "1.0.0 final"로 표시하는 것은 사용자 기대치 오해 가능
   - classifier `"Development Status :: 4 - Beta"` 또는 `"5 - Production/Stable"` 으로 변경 필요

@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.combat.deck_building import (
+from wet_run.combat.deck_building import (
     get_deck_size,
     get_deck_size_names,
     get_default_deck_size,
     is_valid_deck_size,
 )
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.state import AppState
 
 
 class TestDeckSizeIntegration:

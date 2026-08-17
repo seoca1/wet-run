@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.save_v2 import (
+from wet_run.combat.save_v2 import (
     SAVE_SCHEMA_VERSION,
     create_save_data,
     deserialize_save,

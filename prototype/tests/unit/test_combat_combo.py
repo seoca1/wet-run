@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.combat.combo import (
+from wet_run.combat.combo import (
     ALL_FINISHERS,
     ALL_STAGES,
     ANNIHILATION,

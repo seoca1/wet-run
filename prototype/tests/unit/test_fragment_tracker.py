@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.lore.fragment_tracker import MemoryFragmentTracker
+from wet_run.lore.fragment_tracker import MemoryFragmentTracker
 
 
 class TestMemoryFragmentTracker:

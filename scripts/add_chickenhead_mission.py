@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'chickenhead_rickshaw_run' to roguelike_sprawl missions.json.
+"""Add new mission 'chickenhead_rickshaw_run' to wet_run missions.json.
 
 Pairs with Fiction Phase 36 — Chickenhead concept page (wiki/concepts/chickenhead.md).
 Novice-arc, Arc 1: working-class rickshaw-driving procedural scenario.

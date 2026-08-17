@@ -346,10 +346,10 @@ Phase 3 (ADR-0060 의 Phase 3 부분) 는 `data/missions/missions.json` 의
 ### 함수
 
 ```python
-from roguelike_sprawl.matrix.mission_mapper import (
+from wet_run.matrix.mission_mapper import (
     missions_to_rooms, mission_to_graph,
 )
-from roguelike_sprawl.missions import JobBoard
+from wet_run.missions import JobBoard
 
 board = JobBoard.load("data/missions/missions.json")
 missions = tuple(board._missions.values())  # 16 entries (canonical)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'working_class_ridership_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'working_class_ridership_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 48 — working-class-ridership-and-late-capitalist-substrate
 connection page (wiki/connections/working-class-ridership-and-late-capitalist-substrate.md).

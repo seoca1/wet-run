@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.telemetry import (
+from wet_run.combat.telemetry import (
     TELEMETRY_EVENT_TYPES,
     aggregate_death_rates,
     aggregate_deck_distribution,

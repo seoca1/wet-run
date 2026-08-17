@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.equipment.wetware_stacking import (
+from wet_run.equipment.wetware_stacking import (
     StackedWetware,
     count_tier3_augments,
     get_all_augments,

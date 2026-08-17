@@ -1,7 +1,7 @@
-# Roguelike Sprawl — World Relationship Map
+# Wet Run — World Relationship Map
 
 **Last Updated**: 2026-06-23
-**Project**: Roguelike Sprawl
+**Project**: Wet Run
 **Purpose**: Document relationship between game fiction and Gibson's Sprawl Trilogy
 
 ---

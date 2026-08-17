@@ -6,12 +6,12 @@ import time
 
 import pytest
 
-from roguelike_sprawl.combat.performance import (
+from wet_run.combat.performance import (
     PerfSnapshot,
     is_frame_time_acceptable,
     is_under_memory_budget,
 )
-from roguelike_sprawl.combat.performance_integration import (
+from wet_run.combat.performance_integration import (
     PerfTracker,
     SessionProfiler,
     TickProfile,

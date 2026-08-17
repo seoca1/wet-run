@@ -1,6 +1,6 @@
 """Automated tests for Faction Expansion (ADR-0154, Cycle 10).
 
-Source spec: Game/roguelike_sprawl/decisions/0154-faction-expansion-i18n.md
+Source spec: Game/wet_run/decisions/0154-faction-expansion-i18n.md
 
 faction_rumor faction expansion:
 - 4 faction variants: hosaka, sense_net, yakuza, loa
@@ -15,7 +15,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.combat.intel_items import (
+from wet_run.combat.intel_items import (
     ALARM_REDUCER_DELTA,
     ALARM_REDUCER_PRICE,
     FACTION_RUMOR_FACTION,
@@ -161,25 +161,25 @@ class TestPPLGrowthTargets:
 
     def test_ppl_growth_targets_present(self) -> None:
         """PPL_GROWTH_TARGETS dict is present in multi_enemy module."""
-        from roguelike_sprawl.combat.multi_enemy import PPL_GROWTH_TARGETS
+        from wet_run.combat.multi_enemy import PPL_GROWTH_TARGETS
 
         assert isinstance(PPL_GROWTH_TARGETS, dict)
 
     def test_ppl_growth_targets_has_5_transitions(self) -> None:
         """5 growth transitions: 1->2, 2->3, 3->4, 4->5, 5->6."""
-        from roguelike_sprawl.combat.multi_enemy import PPL_GROWTH_TARGETS
+        from wet_run.combat.multi_enemy import PPL_GROWTH_TARGETS
 
         assert len(PPL_GROWTH_TARGETS) == 5
 
     def test_ppl_growth_5_to_6_is_stagnant(self) -> None:
         """Grade 5->6 is the NG+ balance issue (1.20x)."""
-        from roguelike_sprawl.combat.multi_enemy import PPL_GROWTH_TARGETS
+        from wet_run.combat.multi_enemy import PPL_GROWTH_TARGETS
 
         assert PPL_GROWTH_TARGETS.get("5->6") == 1.20
 
     def test_ppl_growth_1_to_2_is_largest(self) -> None:
         """Grade 1->2 is the largest growth (2.00x, novice to intermediate)."""
-        from roguelike_sprawl.combat.multi_enemy import PPL_GROWTH_TARGETS
+        from wet_run.combat.multi_enemy import PPL_GROWTH_TARGETS
 
         assert PPL_GROWTH_TARGETS.get("1->2") == 2.00
 

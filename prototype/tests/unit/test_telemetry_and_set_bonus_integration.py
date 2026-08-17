@@ -2,20 +2,20 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.combat.telemetry import TELEMETRY_EVENT_TYPES
-from roguelike_sprawl.combat.telemetry_integration import (
+from wet_run.combat.telemetry import TELEMETRY_EVENT_TYPES
+from wet_run.combat.telemetry_integration import (
     TelemetryConfig,
     TelemetryIntegrator,
     make_event,
     should_record_event,
 )
-from roguelike_sprawl.equipment.equipment import (
+from wet_run.equipment.equipment import (
     STARTER_DECK,
     STARTER_HEADWARE,
     EquipmentLoadout,
     EquipStats,
 )
-from roguelike_sprawl.equipment.set_bonus_integration import (
+from wet_run.equipment.set_bonus_integration import (
     SetBonusSummary,
     apply_set_bonuses_to_stats,
     calculate_set_bonus,

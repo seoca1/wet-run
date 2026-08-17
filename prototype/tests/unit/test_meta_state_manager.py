@@ -1,6 +1,6 @@
 """Tests for engine.meta_state_manager — disk persistence with atomic writes.
 
-Coverage target for src/roguelike_sprawl/engine/meta_state_manager.py.
+Coverage target for src/wet_run/engine/meta_state_manager.py.
 """
 
 from __future__ import annotations
@@ -8,15 +8,15 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from roguelike_sprawl.engine.meta_state_manager import (
+from wet_run.engine.meta_state_manager import (
     DEFAULT_META_STATE_FILENAME,
     default_meta_state_path,
     load_meta_state,
     reset_meta_state,
     save_meta_state,
 )
-from roguelike_sprawl.run.meta_state import META_STATE_VERSION, MetaState
-from roguelike_sprawl.run.reputation import ReputationState
+from wet_run.run.meta_state import META_STATE_VERSION, MetaState
+from wet_run.run.reputation import ReputationState
 
 # ----------------------------------------------------------------------------
 # default_meta_state_path

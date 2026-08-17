@@ -2,7 +2,7 @@
 
 > **상위 결정**: `../../decisions/0008-progression-system.md` (Accepted, Revised)
 > **관련**: [grade-progression.md](./grade-progression.md) (등급 단계), [difficulty-rating.md](./difficulty-rating.md) (난이도), [crafting.md](./crafting.md) (제작), [economy.md](./economy.md) (재화)
-> **구현**: `../../prototype/src/roguelike_sprawl/matrix/ppl.py` (PPL 계산)
+> **구현**: `../../prototype/src/wet_run/matrix/ppl.py` (PPL 계산)
 >
 > **Phase 19 audit (2026-08-13)**: Deck Size 선택 (Phase 15, ADR-0178) — LIGHT/STANDARD/HEAVY 3 템플릿. Tier 1 의 *런 시작 시 결정* 모델에 추가.
 
@@ -191,14 +191,14 @@ locked 상태에서 `ng_plus_active = True`가 stale하게 남아있어도 캐�
 
 | 요소 | 파일 |
 |---|---|
-| PPL 계산 | `src/roguelike_sprawl/matrix/ppl.py:42-57` |
-| Status 결정 | `src/roguelike_sprawl/matrix/zdr.py:84-100` |
-| 메타 진행 | `src/roguelike_sprawl/engine/death.py:220-267` (restart_with_new_jockey) |
+| PPL 계산 | `src/wet_run/matrix/ppl.py:42-57` |
+| Status 결정 | `src/wet_run/matrix/zdr.py:84-100` |
+| 메타 진행 | `src/wet_run/engine/death.py:220-267` (restart_with_new_jockey) |
 | 등급 곡선 | `design/systems/grade-progression.md` |
-| 제작 티어 | `src/roguelike_sprawl/programs/` + `data/crafting/` |
-| **Deck Size** (Phase 15) | `src/roguelike_sprawl/combat/deck_building.py:15-99` (DeckSize, DECK_SIZES) |
-| **Deck Size UI** | `src/roguelike_sprawl/engine/menu.py:DECK_SELECT` (Phase 15) |
-| **State.field** | `src/roguelike_sprawl/engine/state.py:222` (`deck_size: str = "standard"`) |
+| 제작 티어 | `src/wet_run/programs/` + `data/crafting/` |
+| **Deck Size** (Phase 15) | `src/wet_run/combat/deck_building.py:15-99` (DeckSize, DECK_SIZES) |
+| **Deck Size UI** | `src/wet_run/engine/menu.py:DECK_SELECT` (Phase 15) |
+| **State.field** | `src/wet_run/engine/state.py:222` (`deck_size: str = "standard"`) |
 
 ## 미래 작업 (Phase 6+)
 
@@ -218,9 +218,9 @@ Phase 19 audit 결과 — Deck Size Selection (Phase 15, ADR-0178) 가 Tier 1 �
 
 ### 검증 위치
 
-- `src/roguelike_sprawl/combat/deck_building.py` — `DeckSize` / `DECK_SIZES` / `get_deck_size` / `get_deck_sizes` 4 API.
-- `src/roguelike_sprawl/engine/state.py:222` — `deck_size: str = "standard"` AppState 필드.
-- `src/roguelike_sprawl/engine/menu.py` — DECK_SELECT 화면 (Phase 15 통합 진입).
+- `src/wet_run/combat/deck_building.py` — `DeckSize` / `DECK_SIZES` / `get_deck_size` / `get_deck_sizes` 4 API.
+- `src/wet_run/engine/state.py:222` — `deck_size: str = "standard"` AppState 필드.
+- `src/wet_run/engine/menu.py` — DECK_SELECT 화면 (Phase 15 통합 진입).
 
 ### 변경 영향
 

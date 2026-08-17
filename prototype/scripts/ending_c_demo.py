@@ -27,13 +27,13 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.graphic_novel_save import (  # noqa: E402
+from wet_run.engine.graphic_novel_save import (  # noqa: E402
     GN_SAVE_VERSION,
     load_gn_progress,
     make_progress,
     save_gn_progress,
 )
-from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
+from wet_run.engine.graphic_novel_view import (  # noqa: E402
     _ENDING_DESCRIPTIONS,
     _parse_scene,
     available_endings,
@@ -42,7 +42,7 @@ from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
     render_graphic_novel_ending_menu,
     render_scene,
 )
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 SCREEN_W = 80
 SCREEN_H = 30

@@ -1,7 +1,7 @@
 # System: Procedural Generation (절차적 생성)
 
 > **관련**: [hacking.md](./hacking.md) (매트릭스), [exploration.md](./exploration.md) (탐험), [difficulty-rating.md](./difficulty-rating.md) (PPL/ZDR)
-> **구현**: `../../prototype/src/roguelike_sprawl/matrix/dungeon_generator.py`
+> **구현**: `../../prototype/src/wet_run/matrix/dungeon_generator.py`
 > **ADR**: 0005 (cyberspace 표현), 0060 (NetHack BSP 던전 리디자인), 0061 (Novel Hook Dispatch)
 
 ## 목적

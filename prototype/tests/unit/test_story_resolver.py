@@ -9,13 +9,13 @@ import sys
 from pathlib import Path
 
 # 테스트 파일: prototype/tests/unit/test_xxx.py
-# resolve 후 parents: 0=unit, 1=tests, 2=prototype, 3=roguelike_sprawl, 4=Game, 5=Projects
+# resolve 후 parents: 0=unit, 1=tests, 2=prototype, 3=wet_run, 4=Game, 5=Projects
 ROOT_PROJECT = Path(__file__).resolve().parents[5]
-ROOT_PROTOTYPE = ROOT_PROJECT / "Game" / "roguelike_sprawl" / "prototype"
+ROOT_PROTOTYPE = ROOT_PROJECT / "Game" / "wet_run" / "prototype"
 
 sys.path.insert(0, str(ROOT_PROTOTYPE / "src"))
 
-from roguelike_sprawl.data.story_resolver import (  # type: ignore[import-not-found]  # noqa: E402
+from wet_run.data.story_resolver import (  # type: ignore[import-not-found]  # noqa: E402
     CANONICAL_DATES,
     list_available_stems,
     resolve_ko_translation,
@@ -123,7 +123,7 @@ class TestValidateMissionSources:
         missions_file = (
             ROOT_PROJECT
             / "Game"
-            / "roguelike_sprawl"
+            / "wet_run"
             / "prototype"
             / "data"
             / "missions"
@@ -176,7 +176,7 @@ class TestGetFictionStoryForMission:
 
     def test_known_mission_with_fiction(self) -> None:
         """aleph_fragment 미션 → Aleph Fragment Fiction."""
-        from roguelike_sprawl.data.story_resolver import (
+        from wet_run.data.story_resolver import (
             get_fiction_story_for_mission,
         )
 
@@ -189,7 +189,7 @@ class TestGetFictionStoryForMission:
 
     def test_mission_with_indirect_fiction(self) -> None:
         """first_jack mission_id → linked Fiction (Phase α Tier 1 mapping)."""
-        from roguelike_sprawl.data.story_resolver import (
+        from wet_run.data.story_resolver import (
             get_fiction_story_for_mission,
         )
 
@@ -201,7 +201,7 @@ class TestGetFictionStoryForMission:
 
     def test_out_of_scope_mission(self) -> None:
         """Mission that exists in missions.json but has no Fiction derivative file → None."""
-        from roguelike_sprawl.data.story_resolver import (
+        from wet_run.data.story_resolver import (
             get_fiction_story_for_mission,
         )
 
@@ -210,7 +210,7 @@ class TestGetFictionStoryForMission:
 
     def test_nonexistent_mission(self) -> None:
         """존재하지 않는 mission_id → None."""
-        from roguelike_sprawl.data.story_resolver import (
+        from wet_run.data.story_resolver import (
             get_fiction_story_for_mission,
         )
 
@@ -223,7 +223,7 @@ class TestGetMissionForScene:
 
     def test_scene_with_mission_id(self) -> None:
         """case/01_chattos.json → first_jack mission."""
-        from roguelike_sprawl.data.story_resolver import get_mission_for_scene
+        from wet_run.data.story_resolver import get_mission_for_scene
 
         result = get_mission_for_scene("01_chattos", "case", ROOT_PROJECT)
         assert result is not None
@@ -236,21 +236,21 @@ class TestGetMissionForScene:
         As of 2026-07-26, GN-81 achieved 81/81 mission_id coverage.
         This test now verifies a nonexistent scene file → None.
         """
-        from roguelike_sprawl.data.story_resolver import get_mission_for_scene
+        from wet_run.data.story_resolver import get_mission_for_scene
 
         result = get_mission_for_scene("nonexistent_scene_file", "angie", ROOT_PROJECT)
         assert result is None
 
     def test_nonexistent_scene(self) -> None:
         """존재하지 않는 scene 파일 → None."""
-        from roguelike_sprawl.data.story_resolver import get_mission_for_scene
+        from wet_run.data.story_resolver import get_mission_for_scene
 
         result = get_mission_for_scene("nonexistent", "case", ROOT_PROJECT)
         assert result is None
 
     def test_wigan_zavijava_scene(self) -> None:
         """wigan/01_zavijava.json — has mission_id (Phase G: 81/81 coverage)."""
-        from roguelike_sprawl.data.story_resolver import get_mission_for_scene
+        from wet_run.data.story_resolver import get_mission_for_scene
 
         # As of Phase G, 01_zavijava now carries mission_id=wigan_call
         result = get_mission_for_scene("01_zavijava", "wigan", ROOT_PROJECT)
@@ -259,7 +259,7 @@ class TestGetMissionForScene:
 
     def test_angie_zavijava_scene(self) -> None:
         """angie/04_zavijava.json → wigan_call (Phase β-2 mapping)."""
-        from roguelike_sprawl.data.story_resolver import get_mission_for_scene
+        from wet_run.data.story_resolver import get_mission_for_scene
 
         result = get_mission_for_scene("04_zavijava", "angie", ROOT_PROJECT)
         assert result is not None

@@ -113,14 +113,14 @@ ADR-0133 (graphic_novel_view.py split) 완료 후 module LOC 감사 결과:
 ## 영향 받는 항목 (예정)
 
 수락 시:
-- `src/roguelike_sprawl/matrix/render.py` (신규)
-- `src/roguelike_sprawl/matrix/minimap.py` (신규)
-- `src/roguelike_sprawl/matrix/fog.py` (신규)
-- `src/roguelike_sprawl/matrix/input.py` (신규)
-- `src/roguelike_sprawl/combat/state_models.py` (신규)
-- `src/roguelike_sprawl/combat/state_machine.py` (신규)
-- `src/roguelike_sprawl/combat/ai.py` (신규)
-- `src/roguelike_sprawl/combat/skill_resolution.py` (신규)
+- `src/wet_run/matrix/render.py` (신규)
+- `src/wet_run/matrix/minimap.py` (신규)
+- `src/wet_run/matrix/fog.py` (신규)
+- `src/wet_run/matrix/input.py` (신규)
+- `src/wet_run/combat/state_models.py` (신규)
+- `src/wet_run/combat/state_machine.py` (신규)
+- `src/wet_run/combat/ai.py` (신규)
+- `src/wet_run/combat/skill_resolution.py` (신규)
 - 기존 `matrix_view.py` / `combat/state.py` — re-export facade 또는 deprecated
 - `tests/` — 기존 테스트 호환 + 신규 모듈 테스트 추가
 
@@ -147,13 +147,13 @@ ADR-0133 (graphic_novel_view.py split) 완료 후 module LOC 감사 결과:
 **Option 1 Accepted (partial — Top 2 only)** (2026-07-28). 적용된 변경:
 
 ### Phase 3 — matrix_view.py split ✅
-- `src/roguelike_sprawl/engine/matrix_minimap.py` (신규, 115 LOC)
+- `src/wet_run/engine/matrix_minimap.py` (신규, 115 LOC)
 - 추출: `_draw_minimap`, `_draw_breadcrumb`, `_draw_mobility_stats`, `_KIND_LABEL`, `_short_kind`
 - matrix_view.py: 1121 → **1047 LOC** (-74)
 - Backward compat: `from .matrix_minimap import _short_kind` + `__all__` 유지
 
 ### Phase 4 — combat/state.py split ✅
-- `src/roguelike_sprawl/combat/state_models.py` (신규, 250 LOC)
+- `src/wet_run/combat/state_models.py` (신규, 250 LOC)
 - 추출: `SkillEffect`, `Skill`, `StatusEffect`, `CombatStats`, `Combatant`, `CombatState`
 - combat/state.py: 1075 → **859 LOC** (-216)
 - Backward compat: `from .state_models import ...` + `__all__` 유지

@@ -469,7 +469,7 @@ Pillar 3 (The Flatline) weight 보존: 1vN 에서 HEAL 1회로 *3명 damage 보�
 ### Phase 5+ Combat 모듈 구조
 
 ```
-src/roguelike_sprawl/combat/
+src/wet_run/combat/
 ├── __init__.py
 ├── state.py        # CombatState (player, enemy, tick, menu)
 ├── state_models.py # CombatState phase_change_ms + phase_change_color (Phase 17)

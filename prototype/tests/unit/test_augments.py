@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.augments import (
+from wet_run.combat.augments import (
     AUGMENT_REGISTRY,
     DEFAULT_AUGMENT_SLOTS,
     WetwareAugment,

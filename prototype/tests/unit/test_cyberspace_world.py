@@ -1,12 +1,12 @@
 """Tests for cyberspace.world — World / Sector / Server / WorldMap dataclasses.
 
-Coverage target for src/roguelike_sprawl/cyberspace/world.py.
+Coverage target for src/wet_run/cyberspace/world.py.
 Pure data model — no tcd / event / threading dependencies.
 """
 
 from __future__ import annotations
 
-from roguelike_sprawl.cyberspace.world import (
+from wet_run.cyberspace.world import (
     Sector,
     SectorId,
     Server,

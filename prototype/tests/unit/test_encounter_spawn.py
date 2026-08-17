@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.combat.multi_enemy import encounter_count_for_grade
+from wet_run.combat.multi_enemy import encounter_count_for_grade
 
 
 class TestEncounterSpawnIntegration:

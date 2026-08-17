@@ -187,7 +187,7 @@ class TestSkillEffectRegression:
 
     def test_matches_actual_skill_effect_enum(self) -> None:
         """Reported count must equal the SkillEffect enum size."""
-        from roguelike_sprawl.combat.state_models import SkillEffect  # type: ignore[import-untyped]
+        from wet_run.combat.state_models import SkillEffect  # type: ignore[import-untyped]
 
         count: int = sync_mod._count_skill_effects()
         assert count == len(list(SkillEffect))

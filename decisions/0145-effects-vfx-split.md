@@ -129,10 +129,10 @@ All tests pass — re-export 계약 유지.
 
 - `combat/effects_data.py` 507 LOC — 500 LOC PR rejection threshold 약간 상회. 추가 분할 검토 가능 (Animation primitives vs Particle vs ScreenFlash 분리). 현재 acceptable.
 - `combat/effects_vfx_compose.py` 350 LOC — Under 500 PR threshold. spawn functions 추가 시 재평가.
-- 다른 > 500 LOC 모듈 없음 — roguelike_sprawl engine 모듈 사이즈 정책 100% 준수.
+- 다른 > 500 LOC 모듈 없음 — wet_run engine 모듈 사이즈 정책 100% 준수.
 
 ---
 
 *ADR-0145 closes the ADR-0112 § 향후 split plan deferred work (effects_vfx.py 856 → 132 LOC facade).*
 
-*ADR-0142 + ADR-0143 + ADR-0144 + ADR-0145 establish the "coordinator + concern modules" pattern for monolithic modules in roguelike_sprawl engine.*
+*ADR-0142 + ADR-0143 + ADR-0144 + ADR-0145 establish the "coordinator + concern modules" pattern for monolithic modules in wet_run engine.*

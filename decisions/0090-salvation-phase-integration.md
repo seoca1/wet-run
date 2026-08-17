@@ -10,7 +10,7 @@
 
 ## 1. Context
 
-현재 roguelike_sprawl에는 3-layer story architecture가 존재한다:
+현재 wet_run에는 3-layer story architecture가 존재한다:
 
 1. **Arc (L1)** — 5챕터 × 5phases × 3-4beats (장편)
 2. **Chapter (L2)** — 챕터 단편 (Gibson 인용) (중편)
@@ -160,8 +160,8 @@ class Stage(StrEnum):
 - `design/scenario/SALVATION_PHASE_INTEGRATION.md` (v0.1.0) — 연계성 분석
 - `design/scenario/story-stage-comparison.md` — 단편소설 vs 게임 상태 비교
 - `design/scenario/chapter-progress.md` — 챕터 구현 진도
-- `prototype/src/roguelike_sprawl/run/state.py:89-110` — ChapterState enum
-- `prototype/src/roguelike_sprawl/engine/chapter_cutscene.py:98` — ending_type
+- `prototype/src/wet_run/run/state.py:89-110` — ChapterState enum
+- `prototype/src/wet_run/engine/chapter_cutscene.py:98` — ending_type
 - `prototype/data/systems/stage_structure.json` — 13 stages
 
 ---

@@ -8,7 +8,7 @@ Pillar 4 safe: ephemeral session preference (no meta-progression).
 Death does NOT preserve BGM state (new run = fresh start).
 
 Usage:
-    from roguelike_sprawl.audio.bgm_manager import get_bgm_manager
+    from wet_run.audio.bgm_manager import get_bgm_manager
     bgm = get_bgm_manager()
     bgm.register("MENU", "finn_office")
     bgm.register("HUB", "finn_office")

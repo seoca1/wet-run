@@ -1,10 +1,10 @@
 # Git Hooks
 
-Pre-commit hooks for roguelike_sprawl repository.
+Pre-commit hooks for wet_run repository.
 
 ## pre-commit (cross-project link validation)
 
-Validates that staged changes don't break the Fiction ↔ roguelike_sprawl
+Validates that staged changes don't break the Fiction ↔ wet_run
 cross-project links (mission.story.source, Fiction game_mission_id, GN
 scene mission_id). Runs `verify_story_links.py` on every commit.
 

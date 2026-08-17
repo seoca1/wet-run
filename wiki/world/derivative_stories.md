@@ -23,9 +23,9 @@ Fiction/derivative/{sprawl,bridge,blue-ant}-trilogy/short-stories/
   ├── en/  (영어 원문)
   └── ko/  (한국어 번역)
         ↓ (인간 큐레이션: synopsis 발췌)
-Game/roguelike_sprawl/prototype/data/missions/missions.json
+Game/wet_run/prototype/data/missions/missions.json
         ↓ (story.source 필드로 매핑)
-Game/roguelike_sprawl/prototype/data/story/chapters/{case,sil,kas,suit}.json
+Game/wet_run/prototype/data/story/chapters/{case,sil,kas,suit}.json
         ↓ (chapter_view.py가 렌더링)
 CHAPTER 화면 (그래픽 노블 모드)
         ↓
@@ -187,7 +187,7 @@ dashboard/stories/short-stories/*.html (정적 카드)
 python3 << 'PYEOF'
 import json
 from pathlib import Path
-missions = json.load(open('Game/roguelike_sprawl/prototype/data/missions/missions.json'))
+missions = json.load(open('Game/wet_run/prototype/data/missions/missions.json'))
 en_stems = set()
 for f in Path('Fiction/derivative').rglob('*/short-stories/en/*.md'):
     parts = f.stem.split('_', 3)

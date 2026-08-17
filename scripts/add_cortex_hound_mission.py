@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'cortex_hound_recovery' to roguelike_sprawl missions.json.
+"""Add new mission 'cortex_hound_recovery' to wet_run missions.json.
 
 Pairs with Fiction Phase 29 — Cortex-Hound concept page (wiki/concepts/cortex-hound.md).
 Novice-arc, Arc 1: pre-recursion Case-style clinical-recovery scenario.

@@ -1,9 +1,9 @@
-# Roguelike Sprawl — Improvement Log (2026-07-01)
+# Wet Run — Improvement Log (2026-07-01)
 
 > **상태**: Phase 5 (Vertical Slice) 완료 + Phase 6 (Content) 진입
 > **테스트**: **3442 pass** + 35 skip + 15 xfail · ruff / mypy strict 모두 green
 > **커밋 누적**: +27 (이번 사이클)
-> **대상**: `Game/roguelike_sprawl/` 깁슨 스프롤 로그라이크
+> **대상**: `Game/wet_run/` 깁슨 스프롤 로그라이크
 
 > **📌 헤더 노트 (2026-08-03)**: 본 문서는 2026-07-01 시점의 Phase 5→6 P0/P1/P2 cycle 결과입니다.
 > 이후 v1.0.0 (2026-07-28) polish + v1.1.0 prep (2026-07-28~) 으로 code/test/design 이 모두 갱신되었습니다.

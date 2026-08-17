@@ -1,14 +1,14 @@
-# Roguelike Sprawl Tools
+# Wet Run Tools
 
-> **Parent**: `Game/roguelike_sprawl/` Python roguelike project
+> **Parent**: `Game/wet_run/` Python roguelike project
 > **Updated**: 2026-07-28
 
-Python build and data-prep utilities for the roguelike_sprawl prototype.
+Python build and data-prep utilities for the wet_run prototype.
 
 ## Structure
 
 ```
-Game/roguelike_sprawl/tools/
+Game/wet_run/tools/
 ├── build_dashboard.py    # Build static dashboard JSON for GitHub Pages
 └── build_static_data.py  # Generate static game data (missions, items, etc.)
 ```
@@ -28,10 +28,10 @@ Both tools feed `data/` (consumed by prototype runtime) and `docs/dashboards/` (
 
 | Tool | Purpose | Usage |
 |------|---------|-------|
-| **`audit_sprawl.py`** | Project-scoped wikilink integrity check (broken links + orphans) | `cd Game/roguelike_sprawl && python3 tools/audit_sprawl.py` |
-| **`find_broken_links.py`** | Find broken wikilinks with file:line:target detail; resolves cross-project Fiction wiki references per AGENTS.md §4.1 | `cd Game/roguelike_sprawl && python3 tools/find_broken_links.py` |
+| **`audit_sprawl.py`** | Project-scoped wikilink integrity check (broken links + orphans) | `cd Game/wet_run && python3 tools/audit_sprawl.py` |
+| **`find_broken_links.py`** | Find broken wikilinks with file:line:target detail; resolves cross-project Fiction wiki references per AGENTS.md §4.1 | `cd Game/wet_run && python3 tools/find_broken_links.py` |
 
-> Both scripts use `ROOT = Path(".")` — must be run from `Game/roguelike_sprawl/` directory. `audit_sprawl.py` is the more comprehensive tool; `find_broken_links.py` provides detailed per-line output for debugging. Both include the vault-wide `audit_vault.py` cross-project resolution behavior (Fiction wiki).
+> Both scripts use `ROOT = Path(".")` — must be run from `Game/wet_run/` directory. `audit_sprawl.py` is the more comprehensive tool; `find_broken_links.py` provides detailed per-line output for debugging. Both include the vault-wide `audit_vault.py` cross-project resolution behavior (Fiction wiki).
 
 ## Conventions
 
@@ -41,6 +41,6 @@ Both tools feed `data/` (consumed by prototype runtime) and `docs/dashboards/` (
 
 ## See also
 
-- `Game/roguelike_sprawl/prototype/Makefile` — top-level build targets (`build-dashboard`, `build-data`)
-- `Game/roguelike_sprawl/CHANGELOG.md` — change history
-- `Game/roguelike_sprawl/wiki/index.md` — wiki navigation
+- `Game/wet_run/prototype/Makefile` — top-level build targets (`build-dashboard`, `build-data`)
+- `Game/wet_run/CHANGELOG.md` — change history
+- `Game/wet_run/wiki/index.md` — wiki navigation

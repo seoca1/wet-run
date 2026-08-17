@@ -2,7 +2,7 @@
 
 > **문서 버전**: 0.2.0
 > **최종 업데이트**: 2026-08-13 (Phase 19 audit)
-> **관련**: `prototype/src/roguelike_sprawl/run/state.py`, `engine/chapter_cutscene.py`, `data/story/arcs/`, `data/scenes/`, `design/systems/stage_structure.json`
+> **관련**: `prototype/src/wet_run/run/state.py`, `engine/chapter_cutscene.py`, `data/story/arcs/`, `data/scenes/`, `design/systems/stage_structure.json`
 >
 > **Phase 19 갱신**: F.4 Boss Phase 4 transition (Phase 17, ADR-0149) + TELEMETRY_STATS cross-reference (Phase 17, ADR-0184) + ending_choice persistence (Phase 16, ADR-0192) 추가.
 
@@ -327,8 +327,8 @@ state.ng_plus_active = not state.ng_plus_active
 
 - `prototype/data/story/arcs/case_arc.json` — 5챕터 × 5 phases × 3-4 beats
 - `prototype/data/systems/stage_structure.json` v0.4.0 — 13 stages
-- `prototype/src/roguelike_sprawl/run/state.py:680+` — ChapterState enum
-- `prototype/src/roguelike_sprawl/engine/chapter_cutscene.py:98` — ending_type
+- `prototype/src/wet_run/run/state.py:680+` — ChapterState enum
+- `prototype/src/wet_run/engine/chapter_cutscene.py:98` — ending_type
 - `prototype/data/scenes/{character}/` — 9자 × 8 씬
 
 ---

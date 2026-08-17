@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.matrix.ppl import Loadout, Program, calculate_ppl
+from wet_run.matrix.ppl import Loadout, Program, calculate_ppl
 
 
 def _prog(id_: str, tier: int) -> Program:
@@ -122,7 +122,7 @@ def test_ppl_t6_full_loadout_outperforms_t5() -> None:
 
 def test_grade_for_loadout_returns_max_tier() -> None:
     """grade_for_loadout() returns the maximum tier across all components."""
-    from roguelike_sprawl.matrix.ppl import grade_for_loadout
+    from wet_run.matrix.ppl import grade_for_loadout
 
     # All-T1 loadout
     assert (
@@ -158,7 +158,7 @@ def test_grade_for_loadout_returns_max_tier() -> None:
 
 def test_max_tier_constant() -> None:
     """MAX_TIER constant is 6 (T6 master)."""
-    from roguelike_sprawl.matrix.ppl import MAX_TIER
+    from wet_run.matrix.ppl import MAX_TIER
 
     assert MAX_TIER == 6
 

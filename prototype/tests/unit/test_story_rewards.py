@@ -12,9 +12,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.story import (
+from wet_run.engine.state import AppState
+from wet_run.matrix.node import Faction
+from wet_run.story import (
     RewardKind,
     StoryReward,
     apply_event_rewards,

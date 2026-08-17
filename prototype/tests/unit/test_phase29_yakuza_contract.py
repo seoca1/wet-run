@@ -184,7 +184,7 @@ class TestInputDispatchDocstringCoverage:
         # function names appear with docstrings.
         import inspect
 
-        from roguelike_sprawl.engine import input_dispatch
+        from wet_run.engine import input_dispatch
 
         module = input_dispatch
         # The 8 nested handler names
@@ -211,7 +211,7 @@ class TestInputDispatchDocstringCoverage:
         """input_dispatch.py reaches 100% interrogate coverage."""
         from interrogate.coverage import InterrogateCoverage
 
-        ic = InterrogateCoverage(paths=["src/roguelike_sprawl/engine/input_dispatch.py"])
+        ic = InterrogateCoverage(paths=["src/wet_run/engine/input_dispatch.py"])
         result = ic.get_coverage()
         file_result = result.file_results[0]
         assert file_result.missing == 0, (
@@ -229,7 +229,7 @@ class TestStateDocstringCoverage:
 
     def test_status_message_list_methods_have_docstrings(self) -> None:
         """All 6 StatusMessageList methods (dunders + helpers) need docstrings."""
-        from roguelike_sprawl.engine.state import StatusMessageList
+        from wet_run.engine.state import StatusMessageList
 
         method_names = [
             "__init__",
@@ -248,7 +248,7 @@ class TestStateDocstringCoverage:
         """state.py reaches 100% interrogate coverage."""
         from interrogate.coverage import InterrogateCoverage
 
-        ic = InterrogateCoverage(paths=["src/roguelike_sprawl/engine/state.py"])
+        ic = InterrogateCoverage(paths=["src/wet_run/engine/state.py"])
         result = ic.get_coverage()
         file_result = result.file_results[0]
         assert file_result.missing == 0, f"state.py has {file_result.missing} missing docstrings"
@@ -264,7 +264,7 @@ class TestAccessibilityErrorMessages:
 
     def test_colorblind_mode_error_lists_valid_modes(self) -> None:
         """Invalid colorblind mode error must list the valid set."""
-        from roguelike_sprawl.combat.accessibility import (
+        from wet_run.combat.accessibility import (
             AccessibilityConfig,
             set_colorblind_mode,
         )
@@ -280,7 +280,7 @@ class TestAccessibilityErrorMessages:
 
     def test_text_size_error_lists_valid_sizes(self) -> None:
         """Invalid text size error must list the valid set."""
-        from roguelike_sprawl.combat.accessibility import (
+        from wet_run.combat.accessibility import (
             AccessibilityConfig,
             set_text_size,
         )
@@ -294,7 +294,7 @@ class TestAccessibilityErrorMessages:
 
     def test_valid_colorblind_mode_still_works(self) -> None:
         """Regression check: valid input still returns a new config."""
-        from roguelike_sprawl.combat.accessibility import (
+        from wet_run.combat.accessibility import (
             AccessibilityConfig,
             set_colorblind_mode,
         )
@@ -306,7 +306,7 @@ class TestAccessibilityErrorMessages:
 
     def test_valid_text_size_still_works(self) -> None:
         """Regression check: valid input still returns a new config."""
-        from roguelike_sprawl.combat.accessibility import (
+        from wet_run.combat.accessibility import (
             AccessibilityConfig,
             set_text_size,
         )

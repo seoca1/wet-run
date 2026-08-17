@@ -5,8 +5,8 @@ title:
 created: 2026-07-26
 phase: "Phase G-I completion (B-3 enhancement)"
 description:
-  en: "All 5 boss ICE profiles in roguelike_sprawl with their phase progression, stats, and Phase B-3 features (AoE damage + minion spawn)."
-  ko: "roguelike_sprawl의 5개 보스 ICE 프로필: phase 진행, 스탯, Phase B-3 기능 (AoE 대미지 + 미니언 소환)."
+  en: "All 5 boss ICE profiles in wet_run with their phase progression, stats, and Phase B-3 features (AoE damage + minion spawn)."
+  ko: "wet_run의 5개 보스 ICE 프로필: phase 진행, 스탯, Phase B-3 기능 (AoE 대미지 + 미니언 소환)."
 language: en
 related:
   - "[[../decisions/0050-boss-ice-system]]"
@@ -21,7 +21,7 @@ related:
 
 ## Overview
 
-5 boss ICE types in roguelike_sprawl, each with 3-4 phases that transition
+5 boss ICE types in wet_run, each with 3-4 phases that transition
 based on HP threshold. Each phase has:
 - Stat modifiers (attack_bonus_pct, speed_bonus_pct)
 - Visual style (color, glyph, screen_shake_intensity)
@@ -139,8 +139,8 @@ Visual intensity scales with damage:
 
 ## Code References
 
-- `prototype/src/roguelike_sprawl/combat/boss.py` — PhaseProfile, BossProfile dataclasses, `spawn_phase_minions()`, `apply_phase_aoe()`, `_trigger_aoe_visuals()`
-- `prototype/src/roguelike_sprawl/combat/bosses.py` — GOLIATH_PRIME, BLACK_ICE_LORD, WATCHDOG_ALPHA BossSpec definitions
+- `prototype/src/wet_run/combat/boss.py` — PhaseProfile, BossProfile dataclasses, `spawn_phase_minions()`, `apply_phase_aoe()`, `_trigger_aoe_visuals()`
+- `prototype/src/wet_run/combat/bosses.py` — GOLIATH_PRIME, BLACK_ICE_LORD, WATCHDOG_ALPHA BossSpec definitions
 - `prototype/tests/unit/test_combat_bosses.py` — B-3 tests
 - `decisions/0125-boss-aoe-minion-spawn.md` — ADR for B-3 design
 - `prototype/docs/balance/E3-balance-audit.md` — Boss balance considerations

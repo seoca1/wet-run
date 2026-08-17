@@ -27,12 +27,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.cinematic_art import (
+from wet_run.engine.cinematic_art import (
     ArtStyle,
     get_scene_art,
     resolve_line_art,
 )
-from roguelike_sprawl.engine.story_cinematic import (
+from wet_run.engine.story_cinematic import (
     BRIEFING_FINN_SCENE,
     PROLOGUE_SCENE,
     StoryLine,

@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.engine.salvation import (
+from wet_run.engine.salvation import (
     SALVATION_ENDINGS,
     SALVATION_EPILOGUES,
     SalvationSelection,
@@ -201,7 +201,7 @@ class TestSalvationRunner:
     """SalvationRunner state machine."""
 
     def test_initial_state(self) -> None:
-        from roguelike_sprawl.engine.salvation import (
+        from wet_run.engine.salvation import (
             SALVATION_STATE_INTRO,
             SalvationRunner,
         )
@@ -212,7 +212,7 @@ class TestSalvationRunner:
         assert r.last_scene is None
 
     def test_choose_epilogue_transitions(self) -> None:
-        from roguelike_sprawl.engine.salvation import (
+        from wet_run.engine.salvation import (
             SALVATION_STATE_EPILOGUE,
             SalvationRunner,
         )
@@ -228,7 +228,7 @@ class TestSalvationRunner:
     def test_choose_epilogue_invalid_raises(self) -> None:
         import pytest
 
-        from roguelike_sprawl.engine.salvation import SalvationRunner
+        from wet_run.engine.salvation import SalvationRunner
 
         r = SalvationRunner()
         with pytest.raises(ValueError, match="Invalid epilogue character"):
@@ -237,7 +237,7 @@ class TestSalvationRunner:
     def test_set_state_validates(self) -> None:
         import pytest
 
-        from roguelike_sprawl.engine.salvation import SalvationRunner
+        from wet_run.engine.salvation import SalvationRunner
 
         r = SalvationRunner()
         with pytest.raises(ValueError, match="Invalid Salvation state"):
@@ -246,14 +246,14 @@ class TestSalvationRunner:
     def test_load_epilogue_requires_choice(self) -> None:
         import pytest
 
-        from roguelike_sprawl.engine.salvation import SalvationRunner
+        from wet_run.engine.salvation import SalvationRunner
 
         r = SalvationRunner()
         with pytest.raises(RuntimeError, match="No epilogue chosen"):
             r.load_epilogue(Path("data/scenes"))
 
     def test_load_epilogue_loads_scene(self) -> None:
-        from roguelike_sprawl.engine.salvation import SalvationRunner
+        from wet_run.engine.salvation import SalvationRunner
 
         r = SalvationRunner()
         r.choose_epilogue("neuromancer")
@@ -263,7 +263,7 @@ class TestSalvationRunner:
         assert r.last_scene is scene
 
     def test_complete_epilogue_transitions_to_done(self) -> None:
-        from roguelike_sprawl.engine.salvation import (
+        from wet_run.engine.salvation import (
             SALVATION_STATE_DONE,
             SalvationRunner,
         )
@@ -277,7 +277,7 @@ class TestSalvationRunner:
     def test_complete_epilogue_requires_choice(self) -> None:
         import pytest
 
-        from roguelike_sprawl.engine.salvation import SalvationRunner
+        from wet_run.engine.salvation import SalvationRunner
 
         r = SalvationRunner()
         with pytest.raises(RuntimeError, match="No epilogue chosen"):
@@ -286,7 +286,7 @@ class TestSalvationRunner:
     def test_choose_ending_invalid_raises(self) -> None:
         import pytest
 
-        from roguelike_sprawl.engine.salvation import SalvationRunner
+        from wet_run.engine.salvation import SalvationRunner
 
         r = SalvationRunner()
         r.choose_epilogue("case")
@@ -295,7 +295,7 @@ class TestSalvationRunner:
             r.choose_ending("D")
 
     def test_choose_ending_transitions_to_final(self) -> None:
-        from roguelike_sprawl.engine.salvation import (
+        from wet_run.engine.salvation import (
             SALVATION_STATE_FINAL,
             SalvationRunner,
         )
@@ -309,7 +309,7 @@ class TestSalvationRunner:
         assert r.selection.selected_at == 3
 
     def test_get_state_code_returns_current_state(self) -> None:
-        from roguelike_sprawl.engine.salvation import SalvationRunner
+        from wet_run.engine.salvation import SalvationRunner
 
         r = SalvationRunner()
         assert r.get_state_code() == "salvation_intro"
@@ -322,7 +322,7 @@ class TestSalvationRunner:
 
     def test_full_flow_ending_preserved_from_epilogue(self) -> None:
         """Choose epilogue, ending defaults to epilogue's tag, then override."""
-        from roguelike_sprawl.engine.salvation import SalvationRunner
+        from wet_run.engine.salvation import SalvationRunner
 
         # Kas has ending C
         r = SalvationRunner()
@@ -338,7 +338,7 @@ class TestFormatEpilogueText:
     """format_epilogue_text TUI display helper."""
 
     def test_format_with_scene_data(self) -> None:
-        from roguelike_sprawl.engine.salvation import (
+        from wet_run.engine.salvation import (
             SalvationRunner,
             format_epilogue_text,
         )
@@ -355,8 +355,8 @@ class TestFormatEpilogueText:
         """When dialogue is empty, return placeholder."""
 
         # Create a fake scene with empty dialogue
-        from roguelike_sprawl.engine.graphic_novel_view import SceneData
-        from roguelike_sprawl.engine.salvation import format_epilogue_text
+        from wet_run.engine.graphic_novel_view import SceneData
+        from wet_run.engine.salvation import format_epilogue_text
 
         scene = SceneData(
             id="fake",
@@ -374,7 +374,7 @@ class TestFormatEpilogueText:
         assert "Empty epilogue" in text
 
     def test_format_korean(self) -> None:
-        from roguelike_sprawl.engine.salvation import (
+        from wet_run.engine.salvation import (
             SalvationRunner,
             format_epilogue_text,
         )
@@ -392,7 +392,7 @@ class TestSalvationStates:
     """Salvation state constants and validation."""
 
     def test_valid_states_frozenset(self) -> None:
-        from roguelike_sprawl.engine.salvation import (
+        from wet_run.engine.salvation import (
             SALVATION_STATE_DONE,
             SALVATION_STATE_EPILOGUE,
             SALVATION_STATE_FINAL,

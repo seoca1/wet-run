@@ -68,10 +68,10 @@
 
 ## 영향 받는 항목
 - `prototype/data/scenes/{case,sil,kas}/05_*.json`, `06_*.json` — 6 새 씬
-- `prototype/src/roguelike_sprawl/engine/graphic_novel_view.py` — `load_scene_chain(ending=)`
+- `prototype/src/wet_run/engine/graphic_novel_view.py` — `load_scene_chain(ending=)`
 - `prototype/scripts/graphic_novel.py` — `--ending {a,b}` flag
-- `prototype/src/roguelike_sprawl/engine/state.py` — `gn_ending: str`
-- `prototype/src/roguelike_sprawl/engine/graphic_novel_save.py` — `ending` 필드
+- `prototype/src/wet_run/engine/state.py` — `gn_ending: str`
+- `prototype/src/wet_run/engine/graphic_novel_save.py` — `ending` 필드
 - `design/scenario/graphic-novel.md` — ending 구조 명시
 - `prototype/tests/unit/test_graphic_novel_endings.py` — 신규 테스트
 

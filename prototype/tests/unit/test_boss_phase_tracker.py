@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.combat.boss_expansion import (
+from wet_run.combat.boss_expansion import (
     BLACK_BARON_PROFILE,
     LOA_BARON_PROFILE,
     NEUROMANCER_PROFILE,
 )
-from roguelike_sprawl.combat.boss_phase_tracker import (
+from wet_run.combat.boss_phase_tracker import (
     BossPhaseTracker,
     PhaseProgress,
     get_all_f4_boss_ids,

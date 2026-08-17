@@ -32,8 +32,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from roguelike_sprawl.combat.bundle import CombatEffectsBundle, create_bundle  # noqa: E402
-from roguelike_sprawl.combat.effects import (  # noqa: E402
+from wet_run.combat.bundle import CombatEffectsBundle, create_bundle  # noqa: E402
+from wet_run.combat.effects import (  # noqa: E402
     SKILL_EFFECT_ANIMATIONS,
     IceType,
     spawn_critical,
@@ -41,8 +41,8 @@ from roguelike_sprawl.combat.effects import (  # noqa: E402
     spawn_ice_death,
     spawn_ice_intro,
 )
-from roguelike_sprawl.combat.hud import HealthState  # noqa: E402
-from roguelike_sprawl.combat.palette import (  # noqa: E402
+from wet_run.combat.hud import HealthState  # noqa: E402
+from wet_run.combat.palette import (  # noqa: E402
     CRIT_COLOR,
     HIT_FLASH_COLOR,
 )
@@ -245,7 +245,7 @@ def scene_palette_centralization() -> SceneResult:
     print("\n" + "═" * 80)
     print(" Scene 1: Palette Centralization")
     print("═" * 80)
-    import roguelike_sprawl.combat.palette as palette
+    import wet_run.combat.palette as palette
 
     # Required color symbols (constants in palette.py)
     required = [
@@ -382,7 +382,7 @@ def scene_hud_2tier(use_color: bool = True) -> SceneResult:
     print("\n" + "═" * 80)
     print(" Scene 7: Combat HUD (2-tier HP bars + low-HP warnings)")
     print("═" * 80)
-    from roguelike_sprawl.combat.hud import AlertLevel
+    from wet_run.combat.hud import AlertLevel
 
     bundle = create_bundle()
     bundle.setup_combat(

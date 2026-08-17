@@ -11,16 +11,16 @@ Covers:
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.auto_play_tempo import (
+from wet_run.engine.auto_play_tempo import (
     DEFAULT_TEMPO_MODE,
     TEMPO_MULTIPLIERS,
     TempoMode,
     cycle_tempo_mode,
     get_tempo_multiplier,
 )
-from roguelike_sprawl.engine.graphic_novel_data import DialogueLine, SceneData
-from roguelike_sprawl.engine.main_loop import _advance_graphic_novel
-from roguelike_sprawl.engine.state import ScreenKind
+from wet_run.engine.graphic_novel_data import DialogueLine, SceneData
+from wet_run.engine.main_loop import _advance_graphic_novel
+from wet_run.engine.state import ScreenKind
 
 
 class TestTempoMode:

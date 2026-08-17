@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'fukuoka_ridership_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'fukuoka_ridership_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 46 — fukuoka-okinawan setting page.
 Suit-arc, Arc 5: corporate-statework on working-class-ridership substrate.

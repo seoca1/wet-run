@@ -48,9 +48,9 @@ ADR-0060 Phase 1+1.5+2+3 완료 후 매트릭스 화면은 두 가지 view로 �
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/engine/matrix_view.py` — 폐기 또는 archive
-- `prototype/src/roguelike_sprawl/engine/app.py` — `D` 핸들러 제거
-- `prototype/src/roguelike_sprawl/engine/state.py` — `dungeon_mode` 필드 제거
+- `prototype/src/wet_run/engine/matrix_view.py` — 폐기 또는 archive
+- `prototype/src/wet_run/engine/app.py` — `D` 핸들러 제거
+- `prototype/src/wet_run/engine/state.py` — `dungeon_mode` 필드 제거
 - `prototype/tests/unit/test_dungeon_view.py` — toggle 테스트 클래스 정리
 
 ## 관련 결정

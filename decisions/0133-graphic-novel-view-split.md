@@ -98,7 +98,7 @@ graphic_novel_view.py 는 다음을 **재export**:
 - 동적 attribute (`combat_state._dixie_last_attack_ms`와 유사 패턴) 사용 시 mypy attr-defined 경고
 - 한 세션에 너무 많은 변경 금지 (AGENTS.md §6)
 
-**조치**: `git checkout prototype/src/roguelike_sprawl/engine/graphic_novel_view.py && rm graphic_novel_types.py graphic_novel_render.py graphic_novel_menu.py` — pre-split 상태로 복원.
+**조치**: `git checkout prototype/src/wet_run/engine/graphic_novel_view.py && rm graphic_novel_types.py graphic_novel_render.py graphic_novel_menu.py` — pre-split 상태로 복원.
 
 ### 향후 split 계획 (v1.2.0+ backlog)
 

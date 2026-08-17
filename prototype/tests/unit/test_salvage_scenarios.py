@@ -1,6 +1,6 @@
 """Automated tests mirroring testcases/combat/salvage.md (TC-COMBAT-001 ~ 012).
 
-Source spec: Game/roguelike_sprawl/testcases/combat/salvage.md
+Source spec: Game/wet_run/testcases/combat/salvage.md
 
 Status (2026-08-07, ADR-0147): HEAL/FRAG/CRED/SKIP all implemented in
 ``combat/salvage.py``. 4 previously-xfailed tests now pass; 8 new tests
@@ -21,7 +21,7 @@ Scope:
 
 from __future__ import annotations
 
-from roguelike_sprawl.combat.salvage import (
+from wet_run.combat.salvage import (
     ALARM_HIGH_THRESHOLD,
     CRED_ALARM_RELIEF,
     CRED_CREDITS,

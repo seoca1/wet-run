@@ -86,9 +86,9 @@
 
 ### Code 변경
 
-- `src/roguelike_sprawl/combat/state.py`: `Combatant` 필드 추가, `step_combat` phase check
-- `src/roguelike_sprawl/combat/effects.py`: `IceType.WINTERMUTE`, `IceType.TA_CONSTRUCT_PRIME`, `ice_intro_sequence` 확장
-- 신규: `src/roguelike_sprawl/combat/boss.py` — 보스 정의 + phase transition helpers
+- `src/wet_run/combat/state.py`: `Combatant` 필드 추가, `step_combat` phase check
+- `src/wet_run/combat/effects.py`: `IceType.WINTERMUTE`, `IceType.TA_CONSTRUCT_PRIME`, `ice_intro_sequence` 확장
+- 신규: `src/wet_run/combat/boss.py` — 보스 정의 + phase transition helpers
 
 ### Scripts
 
@@ -123,14 +123,14 @@
 ### 구현 결과
 
 **Code** (신규 + 변경):
-- `src/roguelike_sprawl/combat/boss.py` (신규, ~340 lines):
+- `src/wet_run/combat/boss.py` (신규, ~340 lines):
   - `PhaseProfile` (frozen dataclass): phase, hp_threshold, damage_multiplier, color, glyph, intro_text, skills
   - `BossProfile` (frozen): ice_type, name, phases
   - `WINTERMUTE_PROFILE`, `TA_CONSTRUCT_PRIME_PROFILE` 보스 정의
   - `BOSS_PROFILES: dict[IceType, BossProfile]`
   - 헬퍼: `is_boss`, `get_boss_profile`, `current_phase`, `phase_transition`, `phase_damage`, `phase_skills`, `phase_color`, `phase_glyph`, `apply_phase_to_combatant`
-- `src/roguelike_sprawl/combat/state.py`: `Combatant.current_phase: int = 1` 필드 추가 (default 1, 기존 combatant 호환)
-- `src/roguelike_sprawl/combat/effects.py`:
+- `src/wet_run/combat/state.py`: `Combatant.current_phase: int = 1` 필드 추가 (default 1, 기존 combatant 호환)
+- `src/wet_run/combat/effects.py`:
   - `IceType.WINTERMUTE`, `IceType.TA_CONSTRUCT_PRIME` 추가
   - `ice_intro_sequence()` 확장: WINTERMUTE (6 phases) + TA_PRIME (6 phases)
   - `ice_death_sequence()` 확장: WINTERMUTE (5 phases) + TA_PRIME (5 phases)

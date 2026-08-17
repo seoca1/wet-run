@@ -13,8 +13,8 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from roguelike_sprawl.engine import chapter_cutscene
-from roguelike_sprawl.engine.chapter_cutscene import (
+from wet_run.engine import chapter_cutscene
+from wet_run.engine.chapter_cutscene import (
     ArcData,
     CombatData,
     CutsceneRef,
@@ -287,7 +287,7 @@ class _FakeConsole:
 
 class TestRenderCutsceneFrame:
     def test_renders_english_title_and_typed_text(self) -> None:
-        from roguelike_sprawl.engine.graphic_novel_view import (
+        from wet_run.engine.graphic_novel_view import (
             DialogueLine,
             SceneData,
         )
@@ -341,7 +341,7 @@ class TestRenderCutsceneFrame:
         assert any("1/3" in s for s in console.prints)
 
     def test_uses_korean_text_when_lang_ko(self) -> None:
-        from roguelike_sprawl.engine.graphic_novel_view import (
+        from wet_run.engine.graphic_novel_view import (
             DialogueLine,
             SceneData,
         )

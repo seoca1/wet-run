@@ -71,7 +71,7 @@ def load_combat_stats(repo: Path) -> dict[str, object]:
             out["ice_types_total"] = len(data)
             out["ice_grades_list"] = list(data.keys())
 
-    ep = repo / "prototype" / "src" / "roguelike_sprawl" / "combat" / "effects.py"
+    ep = repo / "prototype" / "src" / "wet_run" / "combat" / "effects.py"
     if ep.exists():
         src = ep.read_text(encoding="utf-8")
         funcs = re.findall(r"^def\s+\w+_animation\b", src, re.M)
@@ -130,7 +130,7 @@ def load_library_stats(repo: Path) -> dict[str, object]:
         Returns (stems, titles, derivative_types, game_mission_ids).
         derivative_types maps stem -> 'short_story' or 'novelette' (from frontmatter).
         game_mission_ids maps stem -> mission id when the story is referenced by
-        roguelike_sprawl's missions.json (cross-project link, ADR-0042 + Phase α).
+        wet_run's missions.json (cross-project link, ADR-0042 + Phase α).
         """
         if not dir_path.exists():
             return set(), {}, {}, {}
@@ -446,7 +446,7 @@ def _collect_event_trigger_names(repo: Path) -> list[str]:
         "hub_visited",
         "dialogue_completed",
     ]
-    src = repo / "prototype" / "src" / "roguelike_sprawl" / "engine" / "event_story.py"
+    src = repo / "prototype" / "src" / "wet_run" / "engine" / "event_story.py"
     if not src.exists():
         return fallback
     try:
@@ -537,7 +537,7 @@ def load_stages_stats(repo: Path) -> dict[str, object]:
     }
 
     # Stage enum count
-    src = repo / "prototype" / "src" / "roguelike_sprawl" / "run" / "state.py"
+    src = repo / "prototype" / "src" / "wet_run" / "run" / "state.py"
     if src.exists():
         try:
             text = src.read_text(encoding="utf-8")
@@ -602,7 +602,7 @@ def load_run_stats(repo: Path) -> dict[str, object]:
         "source": "",
         "_generated_at": "",
     }
-    p = repo / "prototype" / "src" / "roguelike_sprawl" / "run" / "state.py"
+    p = repo / "prototype" / "src" / "wet_run" / "run" / "state.py"
     if not p.exists():
         return out
     out["source"] = str(p.relative_to(repo))
@@ -931,7 +931,7 @@ def load_cyberspace_stats(repo: Path) -> dict[str, object]:
                     for s in w.get("sectors", {}).values()
                     if isinstance(s, dict)
                 )
-    nk = repo / "prototype" / "src" / "roguelike_sprawl" / "matrix" / "node.py"
+    nk = repo / "prototype" / "src" / "wet_run" / "matrix" / "node.py"
     if nk.exists():
         src = nk.read_text(encoding="utf-8")
         out["node_kinds"] = len(re.findall(r"^\s+([A-Z_]+)\s*=\s*\"[a-z_]+\"\s*$", src, re.M))
@@ -1019,7 +1019,7 @@ def load_faction_stats(repo: Path) -> dict[str, object]:
     }
 
     # Faction enum from matrix/node.py
-    nk = repo / "prototype" / "src" / "roguelike_sprawl" / "matrix" / "node.py"
+    nk = repo / "prototype" / "src" / "wet_run" / "matrix" / "node.py"
     if nk.exists():
         try:
             src = nk.read_text(encoding="utf-8")
@@ -1039,7 +1039,7 @@ def load_faction_stats(repo: Path) -> dict[str, object]:
             pass
 
     # Tier thresholds and mechanics from run/reputation.py
-    rp = repo / "prototype" / "src" / "roguelike_sprawl" / "run" / "reputation.py"
+    rp = repo / "prototype" / "src" / "wet_run" / "run" / "reputation.py"
     if rp.exists():
         try:
             src = rp.read_text(encoding="utf-8")
@@ -1340,7 +1340,7 @@ def load_design_system(repo: Path) -> dict[str, object]:
             pass
 
     # Zone depths from matrix/node.py
-    nk = repo / "prototype" / "src" / "roguelike_sprawl" / "matrix" / "node.py"
+    nk = repo / "prototype" / "src" / "wet_run" / "matrix" / "node.py"
     if nk.exists():
         try:
             src = nk.read_text(encoding="utf-8")

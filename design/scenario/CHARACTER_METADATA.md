@@ -1,7 +1,7 @@
-# Roguelike Sprawl — Character Metadata
+# Wet Run — Character Metadata
 
 **Last Updated**: 2026-06-23
-**Project**: Roguelike Sprawl
+**Project**: Wet Run
 **Purpose**: Complete character documentation for game implementation
 
 ---

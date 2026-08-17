@@ -2,7 +2,7 @@
 
 > **관련**: `../../decisions/0149-boss-phase4-finale.md`, `../../decisions/0050-boss-ice-system.md`, `../../decisions/0125-boss-aoe-minion-spawn.md`
 > **관련 design**: `../../design/systems/combat.md` §Boss Phase 4 Finale
-> **구현**: `../../prototype/src/roguelike_sprawl/combat/boss_phase4.py`
+> **구현**: `../../prototype/src/wet_run/combat/boss_phase4.py`
 
 5 주요 boss 의 climactic finale — Phase 4 (HP ≤ 15%), Per-Boss Mechanics, Death Taunts, Intro Enhancement.
 

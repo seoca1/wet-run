@@ -20,22 +20,22 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.combat.state import (  # noqa: E402
+from wet_run.combat.state import (  # noqa: E402
     AUTO_ATTACK_INTERVAL_MS,
     TICK_MS,
     Combatant,
     CombatState,
     step_combat,
 )
-from roguelike_sprawl.engine.death import (  # noqa: E402
+from wet_run.engine.death import (  # noqa: E402
     advance_to_death_summary,
     restart_with_new_jockey,
     trigger_death,
 )
-from roguelike_sprawl.engine.jockey_history import (  # noqa: E402
+from wet_run.engine.jockey_history import (  # noqa: E402
     build_deceased_from_state,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind  # noqa: E402
+from wet_run.engine.state import AppState, ScreenKind  # noqa: E402
 
 # ---------------------------------------------------------------------------
 # Fixtures

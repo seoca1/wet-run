@@ -11,7 +11,7 @@ from enum import StrEnum
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from roguelike_sprawl.matrix.dungeon_generator import RoomType
+    from wet_run.matrix.dungeon_generator import RoomType
 
 
 class NodeKind(StrEnum):

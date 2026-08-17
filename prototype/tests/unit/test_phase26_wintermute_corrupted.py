@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pytest
 
-from roguelike_sprawl.combat import IceRegistry, build_ice_enemy
+from wet_run.combat import IceRegistry, build_ice_enemy
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data" / "combat"
 
@@ -136,29 +136,29 @@ class TestDocstringCoverage:
     """Verify Phase 26 docstring additions on registry/sound_manager/hud."""
 
     def test_ice_registry_class_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.registry import IceRegistry
+        from wet_run.combat.registry import IceRegistry
 
         assert IceRegistry.__doc__, "IceRegistry class missing docstring"
 
     def test_program_registry_class_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.registry import ProgramRegistry
+        from wet_run.combat.registry import ProgramRegistry
 
         assert ProgramRegistry.__doc__, "ProgramRegistry class missing docstring"
 
     def test_ice_registry_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.combat.registry import IceRegistry
+        from wet_run.combat.registry import IceRegistry
 
         for method_name in ("get", "__contains__"):
             method = getattr(IceRegistry, method_name)
             assert method.__doc__, f"IceRegistry.{method_name} missing docstring"
 
     def test_sound_manager_list_sounds_has_docstring(self) -> None:
-        from roguelike_sprawl.audio.sound_manager import list_sounds
+        from wet_run.audio.sound_manager import list_sounds
 
         assert list_sounds.__doc__, "list_sounds() missing docstring"
 
     def test_sound_manager_set_volume_has_docstring(self) -> None:
-        from roguelike_sprawl.audio.sound_manager import get_sound_manager
+        from wet_run.audio.sound_manager import get_sound_manager
 
         # inspect the bound method on the class (workaround for singleton __init__)
         cls = type(get_sound_manager())
@@ -168,7 +168,7 @@ class TestDocstringCoverage:
 
     def test_hud_dataclass_methods_have_docstrings(self) -> None:
         """HUD BarFlash / CameraVignette methods need docstrings."""
-        from roguelike_sprawl.combat.hud import BarFlash, CameraVignette
+        from wet_run.combat.hud import BarFlash, CameraVignette
 
         for cls in (BarFlash, CameraVignette):
             for method_name in ("trigger", "step", "flash"):

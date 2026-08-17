@@ -1,13 +1,13 @@
-# Roguelike Sprawl — Development Project
+# Wet Run — Development Project
 
-이 디렉토리는 `Game/roguelike_sprawl/` 게임 프로젝트의 **코드 베이스**입니다. 게임 디자인 문서(`../design/`, `../decisions/`, `../wiki/`)와는 별개.
+이 디렉토리는 `Game/wet_run/` 게임 프로젝트의 **코드 베이스**입니다. 게임 디자인 문서(`../design/`, `../decisions/`, `../wiki/`)와는 별개.
 
 ## 빠른 시작
 
 ### 1. 의존성 설치 (uv 사용, 권장)
 
 ```bash
-cd Game/roguelike_sprawl/prototype
+cd Game/wet_run/prototype
 uv sync --all-extras
 ```
 
@@ -24,7 +24,7 @@ make download-font
 ```bash
 make run
 # 또는
-uv run roguelike-sprawl
+uv run wet-run
 ```
 
 빈 tcod 윈도우가 열리고, "You jack in. The world goes gray." 메시지가 표시됩니다. ESC로 종료.
@@ -176,7 +176,7 @@ prototype/
 ├── .editorconfig
 ├── .python-version
 ├── src/
-│   └── roguelike_sprawl/   # Python 패키지
+│   └── wet_run/   # Python 패키지
 │       ├── __main__.py     # 진입점
 │       ├── engine/         # tcod 관련 (app, render, input, config)
 │       ├── ecs/            # ECS-lite (entity, world)

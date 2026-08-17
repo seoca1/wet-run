@@ -195,8 +195,8 @@ def load_portrait(data: dict) -> Portrait:
 ## References
 
 - **Full Research**: [`unicode-block-art.md`](./unicode-block-art.md) (11KB, comprehensive analysis)
-- **Current System**: `prototype/src/roguelike_sprawl/portraits/manager.py`
-- **Rendering**: `prototype/src/roguelike_sprawl/engine/graphic_novel_view.py`
+- **Current System**: `prototype/src/wet_run/portraits/manager.py`
+- **Rendering**: `prototype/src/wet_run/engine/graphic_novel_view.py`
 - **Data**: `prototype/data/art/portraits/portraits.json`
 - **ADRs**: ADR-0002 (Pure ASCII), ADR-0011 (ASCII Portraits), ADR-0032 (Graphic Novel Mode)
 

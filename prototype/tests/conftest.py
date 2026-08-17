@@ -96,7 +96,7 @@ def make_player():
         base_damage: int = 5,
         team: str = "player",
     ) -> object:
-        from roguelike_sprawl.combat.registry import build_default_player
+        from wet_run.combat.registry import build_default_player
 
         return build_default_player(
             max_hp=max_hp,
@@ -125,7 +125,7 @@ def make_ice_enemy():
         ice_id: str = "test_ice",
         ice_kind: str = "standard",
     ) -> object:
-        from roguelike_sprawl.combat.state_models import Combatant
+        from wet_run.combat.state_models import Combatant
 
         return Combatant(
             id=ice_id,
@@ -173,8 +173,8 @@ def make_combat_state():
         ice_kind: str = "standard",
         rng: random.Random | None = None,
     ) -> object:
-        from roguelike_sprawl.combat.registry import build_default_player
-        from roguelike_sprawl.combat.state_models import CombatState
+        from wet_run.combat.registry import build_default_player
+        from wet_run.combat.state_models import CombatState
 
         player = build_default_player(
             max_hp=player_hp,

@@ -57,8 +57,8 @@ Largest single release in project history. **15 tracks across 3 sub-tracks** (E.
 | A.6 | Push to remote | 43+ commits unpushed, GH_TOKEN invalid |
 
 Fallback artifacts preserved:
-- `/tmp/roguelike_sprawl_v1.2.0.bundle` (230M git bundle)
-- `/tmp/roguelike_sprawl_mirror.git` (289M local mirror)
+- `/tmp/wet_run_v1.2.0.bundle` (230M git bundle)
+- `/tmp/wet_run_mirror.git` (289M local mirror)
 - 4 patch files in `/tmp/`
 
 ## Validation

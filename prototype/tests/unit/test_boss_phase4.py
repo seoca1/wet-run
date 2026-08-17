@@ -1,6 +1,6 @@
 """Automated tests for Boss Phase 4 Finale (ADR-0149).
 
-Source spec: Game/roguelike_sprawl/testcases/combat/boss-phase4.md (TC-PHASE4-001 ~ 016)
+Source spec: Game/wet_run/testcases/combat/boss-phase4.md (TC-PHASE4-001 ~ 016)
 
 Four sub-features:
 - Phase 4 trigger at HP 15% (one-shot)
@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.combat.boss_phase4 import (
+from wet_run.combat.boss_phase4 import (
     CONSTRUCT_MERGE_ATTACK_BONUS,
     CONSTRUCT_MERGE_DURATION_MS,
     CONSTRUCT_MERGE_HEAL_PCT,
@@ -41,7 +41,7 @@ from roguelike_sprawl.combat.boss_phase4 import (
     should_trigger_phase4,
     trigger_phase4,
 )
-from roguelike_sprawl.combat.state import Combatant, CombatState
+from wet_run.combat.state import Combatant, CombatState
 
 
 def _make_player(*, hp: int = 100, max_hp: int = 100) -> Combatant:

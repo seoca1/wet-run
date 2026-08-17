@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.combat.depth.personality import (
+from wet_run.combat.depth.personality import (
     PersonalityLevel,
     get_alarm_multiplier,
     get_crit_bonus,
@@ -12,7 +12,7 @@ from roguelike_sprawl.combat.depth.personality import (
     should_defensive_act,
     should_target_ally,
 )
-from roguelike_sprawl.combat.state import Combatant, CombatState, Skill, SkillEffect
+from wet_run.combat.state import Combatant, CombatState, Skill, SkillEffect
 
 
 def make_ice(

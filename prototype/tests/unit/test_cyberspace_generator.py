@@ -17,11 +17,11 @@ import time
 
 import pytest
 
-from roguelike_sprawl.matrix.cyberspace_generator import (
+from wet_run.matrix.cyberspace_generator import (
     CyberspaceGenerator,
     _index_nodes_by_id,
 )
-from roguelike_sprawl.matrix.node import Node
+from wet_run.matrix.node import Node
 
 
 class TestIndexNodesById:

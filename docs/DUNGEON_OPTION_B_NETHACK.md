@@ -63,12 +63,12 @@
 
 ### 4-1. 구현 위치
 
-- **신규 함수**: `prototype/src/roguelike_sprawl/combat/effects.py`
+- **신규 함수**: `prototype/src/wet_run/combat/effects.py`
   - `spawn_jackin_glitch(effects: CombatEffects)` — 진입 글리치
   - `spawn_room_flash(effects, color)` — 룸 전환
   - `spawn_data_acquired(effects, x, y)` — 데이터 파티클
   - `spawn_jackout_whiteout(effects)` — 탈출 whiteout
-- **앱 통합**: `prototype/src/roguelike_sprawl/engine/app.py:_maybe_spawn_jackin_glitch`
+- **앱 통합**: `prototype/src/wet_run/engine/app.py:_maybe_spawn_jackin_glitch`
 - **토글**: 키 `D` (MATRIX 화면에서만 동작)
 - **데이터 흐름**: `AppState.combat_effects` → `combat_view.py` 가 렌더링 시 overlay
 

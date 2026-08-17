@@ -162,7 +162,7 @@ class TestScreenDispatchDocstringCoverage:
 
     def test_all_fourteen_handlers_have_docstrings(self) -> None:
         """The 14 nested render handlers in _build_dispatch all need docstrings."""
-        from roguelike_sprawl.engine import screen_dispatch
+        from wet_run.engine import screen_dispatch
 
         # The 14 nested handler names — each must have a docstring in source.
         handler_names = [
@@ -190,7 +190,7 @@ class TestScreenDispatchDocstringCoverage:
         """screen_dispatch.py reaches 100% interrogate coverage."""
         from interrogate.coverage import InterrogateCoverage
 
-        ic = InterrogateCoverage(paths=["src/roguelike_sprawl/engine/screen_dispatch.py"])
+        ic = InterrogateCoverage(paths=["src/wet_run/engine/screen_dispatch.py"])
         result = ic.get_coverage()
         file_result = result.file_results[0]
         assert file_result.missing == 0, (
@@ -207,23 +207,23 @@ class TestEndingRendererDocstringCoverage:
     """story/ending_renderer.py — interrogate 100% (was 65% pre-Phase 32)."""
 
     def test_init_has_docstring(self) -> None:
-        from roguelike_sprawl.story.ending_renderer import EndingRenderer
+        from wet_run.story.ending_renderer import EndingRenderer
 
         assert EndingRenderer.__init__.__doc__ is not None
 
     def test_load_endings_has_docstring(self) -> None:
-        from roguelike_sprawl.story.ending_renderer import EndingRenderer
+        from wet_run.story.ending_renderer import EndingRenderer
 
         assert EndingRenderer._load_endings.__doc__ is not None
 
     def test_to_scene_has_docstring(self) -> None:
-        from roguelike_sprawl.story.ending_renderer import EndingRenderer
+        from wet_run.story.ending_renderer import EndingRenderer
 
         assert EndingRenderer._to_scene.__doc__ is not None
 
     def test_render_helpers_have_docstrings(self) -> None:
         """All 3 render helpers (_render_intro/body/consequences) need docstrings."""
-        from roguelike_sprawl.story.ending_renderer import EndingRenderer
+        from wet_run.story.ending_renderer import EndingRenderer
 
         assert EndingRenderer._render_intro.__doc__ is not None
         assert EndingRenderer._render_body.__doc__ is not None
@@ -233,7 +233,7 @@ class TestEndingRendererDocstringCoverage:
         """ending_renderer.py reaches 100% interrogate coverage."""
         from interrogate.coverage import InterrogateCoverage
 
-        ic = InterrogateCoverage(paths=["src/roguelike_sprawl/story/ending_renderer.py"])
+        ic = InterrogateCoverage(paths=["src/wet_run/story/ending_renderer.py"])
         result = ic.get_coverage()
         file_result = result.file_results[0]
         assert file_result.missing == 0, (
@@ -251,7 +251,7 @@ class TestStatusMessageDocstringCoverage:
 
     def test_status_message_properties_have_docstrings(self) -> None:
         """All 3 StatusMessage properties (icon, fg, bg) need docstrings."""
-        from roguelike_sprawl.engine.status_message import StatusMessage
+        from wet_run.engine.status_message import StatusMessage
 
         assert StatusMessage.icon.fget is not None  # type: ignore[attr-defined]
         # Properties expose __doc__ via fget; we check the underlying docstring.
@@ -264,7 +264,7 @@ class TestStatusMessageDocstringCoverage:
         """status_message.py reaches 100% interrogate coverage."""
         from interrogate.coverage import InterrogateCoverage
 
-        ic = InterrogateCoverage(paths=["src/roguelike_sprawl/engine/status_message.py"])
+        ic = InterrogateCoverage(paths=["src/wet_run/engine/status_message.py"])
         result = ic.get_coverage()
         file_result = result.file_results[0]
         assert file_result.missing == 0, (

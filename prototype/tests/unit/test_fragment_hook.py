@@ -7,11 +7,11 @@ from dataclasses import dataclass, field
 
 import pytest
 
-from roguelike_sprawl.lore import (
+from wet_run.lore import (
     MemoryFragmentTracker,
     check_memory_fragment_on_node_entry,
 )
-from roguelike_sprawl.lore.memory_fragment import load_encounter_table
+from wet_run.lore.memory_fragment import load_encounter_table
 
 
 @dataclass

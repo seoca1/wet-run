@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.phase_cinematics import (
+from wet_run.combat.phase_cinematics import (
     PhaseCinematic,
     get_cinematic_phase_numbers,
     get_phase_cinematic,

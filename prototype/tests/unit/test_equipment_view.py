@@ -12,8 +12,8 @@ from types import SimpleNamespace
 
 import pytest
 
-from roguelike_sprawl.engine import equipment_view
-from roguelike_sprawl.equipment.equipment import EquipSlot
+from wet_run.engine import equipment_view
+from wet_run.equipment.equipment import EquipSlot
 
 # ---------------------------------------------------------------------------
 # _slot_short_label

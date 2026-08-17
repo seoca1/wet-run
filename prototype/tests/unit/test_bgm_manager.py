@@ -16,7 +16,7 @@ from unittest.mock import patch
 
 import pytest
 
-from roguelike_sprawl.audio.bgm_manager import (
+from wet_run.audio.bgm_manager import (
     DEFAULT_BGM_VOLUME,
     BgmManager,
     get_bgm_manager,
@@ -78,41 +78,41 @@ class TestThemePlayback:
 
     def test_play_for_screen_unknown_returns_false(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme") as mock_play:
+        with patch("wet_run.audio.bgm_manager.play_theme") as mock_play:
             assert bgm.play_for_screen("UNKNOWN_SCREEN") is False
             mock_play.assert_not_called()
 
     def test_play_theme_success(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme", return_value=True) as mock_play:
+        with patch("wet_run.audio.bgm_manager.play_theme", return_value=True) as mock_play:
             assert bgm.play_theme("matrix_rain") is True
             assert bgm.current_theme == "matrix_rain"
             mock_play.assert_called_once()
 
     def test_play_theme_unknown_returns_false(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme") as mock_play:
+        with patch("wet_run.audio.bgm_manager.play_theme") as mock_play:
             assert bgm.play_theme("nonexistent") is False
             mock_play.assert_not_called()
 
     def test_play_theme_while_muted_records_but_skips_audio(self) -> None:
         bgm = BgmManager()
         bgm.mute()
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme") as mock_play:
+        with patch("wet_run.audio.bgm_manager.play_theme") as mock_play:
             assert bgm.play_theme("matrix_rain") is True
             assert bgm.current_theme == "matrix_rain"
             mock_play.assert_not_called()
 
     def test_stop_calls_audio_stop(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.stop_theme") as mock_stop:
+        with patch("wet_run.audio.bgm_manager.stop_theme") as mock_stop:
             bgm.stop()
             assert bgm.current_theme is None
             mock_stop.assert_called_once()
 
     def test_fade_out_calls_stop(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.stop_theme") as mock_stop:
+        with patch("wet_run.audio.bgm_manager.stop_theme") as mock_stop:
             bgm.fade_out(duration_ms=500)
             assert bgm.current_theme is None
             mock_stop.assert_called_once()
@@ -142,7 +142,7 @@ class TestVolumeControl:
 
     def test_set_volume_with_current_theme_restarts(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme", return_value=True) as mock_play:
+        with patch("wet_run.audio.bgm_manager.play_theme", return_value=True) as mock_play:
             bgm.play_theme("matrix_rain")
             mock_play.reset_mock()
             bgm.set_volume(0.5)
@@ -158,16 +158,16 @@ class TestMuteControl:
 
     def test_mute_stops_playback(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme", return_value=True):
+        with patch("wet_run.audio.bgm_manager.play_theme", return_value=True):
             bgm.play_theme("matrix_rain")
-        with patch("roguelike_sprawl.audio.bgm_manager.stop_theme") as mock_stop:
+        with patch("wet_run.audio.bgm_manager.stop_theme") as mock_stop:
             bgm.mute()
             assert bgm.is_muted is True
             mock_stop.assert_called_once()
 
     def test_mute_idempotent(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.stop_theme") as mock_stop:
+        with patch("wet_run.audio.bgm_manager.stop_theme") as mock_stop:
             bgm.mute()
             mock_stop.reset_mock()
             bgm.mute()
@@ -175,9 +175,9 @@ class TestMuteControl:
 
     def test_unmute_does_not_auto_resume(self) -> None:
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme", return_value=True):
+        with patch("wet_run.audio.bgm_manager.play_theme", return_value=True):
             bgm.play_theme("matrix_rain")
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme") as mock_play:
+        with patch("wet_run.audio.bgm_manager.play_theme") as mock_play:
             bgm.unmute()
             assert bgm.is_muted is False
             mock_play.assert_not_called()
@@ -211,7 +211,7 @@ class TestPillar4Compliance:
     def test_no_meta_state_field(self) -> None:
         """BgmManager does not touch run.meta_state (ADR-0131)."""
         bgm = BgmManager()
-        with patch("roguelike_sprawl.audio.bgm_manager.play_theme", return_value=True):
+        with patch("wet_run.audio.bgm_manager.play_theme", return_value=True):
             bgm.play_theme("matrix_rain")
         assert not hasattr(bgm, "meta_state")
 

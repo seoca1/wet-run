@@ -283,8 +283,8 @@ Neuromancer는 *최후의 거부*다. 그의 거부는 *모든 것*이다.
 ### 9.1 구현 파일
 
 ```
-Game/roguelike_sprawl/prototype/
-├── src/roguelike_sprawl/
+Game/wet_run/prototype/
+├── src/wet_run/
 │   ├── story/
 │   │   └── chapter_final.py  # Chapter 9 Final 로직
 │   ├── engine/

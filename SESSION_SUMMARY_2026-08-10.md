@@ -1,6 +1,6 @@
 # SESSION_SUMMARY_2026-08-10.md
 
-**Session ID**: roguelike_sprawl Phase 14 v1.3.0+ integration
+**Session ID**: wet_run Phase 14 v1.3.0+ integration
 **Date**: 2026-08-10
 **Status**: ✅ 완료 — All mechanical work closed. 10 commits pending user authorization across 3 repos.
 
@@ -31,7 +31,7 @@ Phase 14 registry-only → fully integrated. Three integration points that the p
 
 ## Commits (10 across 3 repos, all pending user commit authorization per AGENTS.md §3)
 
-### roguelike_sprawl (8 commits)
+### wet_run (8 commits)
 
 1. `205efd4 feat(meta): Phase 14 v1.3.0+ — Endings + Programs + Equipment + Story events + Boss expansion`
 2. `dd530ea style: engine green-up + Phase 14 wiring + lint/type/test cleanup`
@@ -69,7 +69,7 @@ Phase 14 registry-only → fully integrated. Three integration points that the p
 
 ## Project log updates (committed)
 
-- `Game/roguelike_sprawl/log.md` — Added session entry for the 7 subsequent commits (post `dd530ea`): metadata backfill, F.2/F.4 wiring, mypy cleanup, character counter, dashboard regen, gitignore
+- `Game/wet_run/log.md` — Added session entry for the 7 subsequent commits (post `dd530ea`): metadata backfill, F.2/F.4 wiring, mypy cleanup, character counter, dashboard regen, gitignore
 - `Game/typing_language/log.md` — Already had 2026-08-10 entries (other session)
 - `Fiction/log.md` — Already had Phase 73-82 entries (other session)
 
@@ -86,29 +86,29 @@ Phase 14 registry-only → fully integrated. Three integration points that the p
 
 | Check | Result |
 |---|---|
-| `ruff check` (roguelike_sprawl) | ✅ All checks passed |
-| `mypy` (roguelike_sprawl) | ✅ 0 issues in 211 source files |
-| `pytest` (roguelike_sprawl) | ✅ 4843 passed, 462 skipped, 1 xfailed |
+| `ruff check` (wet_run) | ✅ All checks passed |
+| `mypy` (wet_run) | ✅ 0 issues in 211 source files |
+| `pytest` (wet_run) | ✅ 4843 passed, 462 skipped, 1 xfailed |
 | `audit_vault.py` (workspace) | ✅ CLEAN (0 broken, 0 orphan) |
 | `mixed_language_audit.py` (workspace) | ✅ 0 violations |
 | `dashboard_pipeline_audit.py` (workspace) | ✅ 0 errors |
 | `pytest tests/` (workspace) | ✅ 36 passed |
-| `Game/roguelike_sprawl` working tree | ✅ clean (only uncommitted log.md entry per §3) |
+| `Game/wet_run` working tree | ✅ clean (only uncommitted log.md entry per §3) |
 | `Game/typing_language` working tree | ✅ clean (only uncommitted log.md mods from other session) |
 | `Fiction` working tree | ✅ clean |
 | `workspace` working tree | ⚠️ 2 pre-existing mods + my log.md/INDEX.md entries + 1 untracked (NOT my work to commit per §3) |
 
 ## 인용 (references)
 
-- `Game/roguelike_sprawl/AGENTS.md` §3.3 (log format), §9 (log on commit)
+- `Game/wet_run/AGENTS.md` §3.3 (log format), §9 (log on commit)
 - workspace `AGENTS.md` §3 (no auto-commit), §5 (log 기록), §6.5 (INDEX.md canonical doc)
-- `Game/roguelike_sprawl/tools/build_dashboard.py` (42abf03 character refactor + c2bc40b regen)
-- `Game/roguelike_sprawl/prototype/src/roguelike_sprawl/engine/combat_view_state.py` (F.2/F.4 wiring)
-- `Game/roguelike_sprawl/prototype/src/roguelike_sprawl/combat/state.py` (telemetry wire-up)
-- `Game/roguelike_sprawl/prototype/src/roguelike_sprawl/combat/state_models.py` (CombatState fields)
-- `Game/roguelike_sprawl/prototype/src/roguelike_sprawl/combat/telemetry_integration.py` (key mismatch fix)
-- `Game/roguelike_sprawl/prototype/src/roguelike_sprawl/missions/random_rules.py` (Module→Random typing, dict type args)
-- `Game/roguelike_sprawl/log.md` (2026-08-10 entry, +74 lines)
+- `Game/wet_run/tools/build_dashboard.py` (42abf03 character refactor + c2bc40b regen)
+- `Game/wet_run/prototype/src/wet_run/engine/combat_view_state.py` (F.2/F.4 wiring)
+- `Game/wet_run/prototype/src/wet_run/combat/state.py` (telemetry wire-up)
+- `Game/wet_run/prototype/src/wet_run/combat/state_models.py` (CombatState fields)
+- `Game/wet_run/prototype/src/wet_run/combat/telemetry_integration.py` (key mismatch fix)
+- `Game/wet_run/prototype/src/wet_run/missions/random_rules.py` (Module→Random typing, dict type args)
+- `Game/wet_run/log.md` (2026-08-10 entry, +74 lines)
 - `Game/typing_language/log.md` (2026-08-10 entries)
 - `Fiction/log.md` (Phase 73-82 cumulative)
 - workspace `log.md` (2026-08-10 phase 7 entry)
@@ -120,10 +120,10 @@ Phase 14 registry-only → fully integrated. Three integration points that the p
 
 ## Per-project session logs (updated by this session)
 
-- `Game/roguelike_sprawl/log.md` — `## [2026-08-10] style+feat(engine) | Phase 14 post-greenup wiring + dashboard refactor + lint/type debt cleanup — 6 commits + 1 gitignore` (+74 lines)
+- `Game/wet_run/log.md` — `## [2026-08-10] style+feat(engine) | Phase 14 post-greenup wiring + dashboard refactor + lint/type debt cleanup — 6 commits + 1 gitignore` (+74 lines)
 - `Game/typing_language/log.md` — Phase 7 alpha entries (already updated by parallel session)
 - `Fiction/log.md` — Phase 73-82 cumulative entries (already updated by parallel session)
-- workspace `log.md` — `## [2026-08-10 (phase 7)] roguelike_sprawl Phase 14 v1.3.0+ integration + cross-project propagation`
+- workspace `log.md` — `## [2026-08-10 (phase 7)] wet_run Phase 14 v1.3.0+ integration + cross-project propagation`
 - workspace `INDEX.md` — Updated header date + prototype health numbers + new `## 📋 2026-08-10 작업 요약` section
 
 Per project convention, today's per-project diagnostic passes were appended to each project's log.md during the session.

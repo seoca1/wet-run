@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.help_view import HELP_PAGES
-from roguelike_sprawl.engine.state import AppState, ScreenKind
+from wet_run.engine.help_view import HELP_PAGES
+from wet_run.engine.state import AppState, ScreenKind
 
 
 class TestHelpPages:
@@ -50,7 +50,7 @@ class TestAppStateHelpPage:
 
 class TestHelpMenuIntegration:
     def test_menu_option_7_is_help(self) -> None:
-        from roguelike_sprawl.engine.menu import MENU_OPTION_COUNT, OPTION_HELP
+        from wet_run.engine.menu import MENU_OPTION_COUNT, OPTION_HELP
 
         assert OPTION_HELP == 7
         assert MENU_OPTION_COUNT == 9

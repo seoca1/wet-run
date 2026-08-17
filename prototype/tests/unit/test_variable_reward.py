@@ -13,15 +13,15 @@ from __future__ import annotations
 
 import random
 
-from roguelike_sprawl.matrix.anomaly_reward import (
+from wet_run.matrix.anomaly_reward import (
     AnomalyReward,
     AnomalyRewardKind,
     apply_anomaly_reward,
     check_anomaly_reward_on_node_entry,
     roll_anomaly_reward,
 )
-from roguelike_sprawl.matrix.generator import ANOMALY_PROBABILITY, MatrixGenerator
-from roguelike_sprawl.matrix.node import (
+from wet_run.matrix.generator import ANOMALY_PROBABILITY, MatrixGenerator
+from wet_run.matrix.node import (
     Faction,
     IceKind,
     Node,

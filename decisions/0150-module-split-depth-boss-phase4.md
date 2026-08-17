@@ -31,7 +31,7 @@ ADR-0110 (모듈 사이즈 정책) 의 권장 한도:
 4. **ADR-0110 정합**: 250 ceiling 준수가 "The Build" 의 Pillar 3.
 
 **기술 제약**:
-- 기존 `from roguelike_sprawl.combat.depth import ...` 사용처 (combat/__init__.py, state.py, test_combat_depth.py, test_construct_companion.py) **backward-compatible** 유지.
+- 기존 `from wet_run.combat.depth import ...` 사용처 (combat/__init__.py, state.py, test_combat_depth.py, test_construct_companion.py) **backward-compatible** 유지.
 - 신규 `depth/` sub-package 의 `__init__.py` 가 모든 symbol re-export.
 - `boss_phase4/` sub-package 도 동일 패턴.
 
@@ -88,7 +88,7 @@ ADR-0110 (모듈 사이즈 정책) 의 권장 한도:
 2. **Discoverability**: sub-feature 별 module — 신규 contributor 가 "counter window" 찾으려면 `depth/counter.py` 만 보면 됨.
 3. **Test isolation**: 향후 `test_depth_counter.py` + `test_depth_defense.py` + ... 분리 가능 (현재는 1 file 유지).
 4. **Future extensibility**: v1.2.0+ 에서 sub-feature 추가 시 1 file 만 영향 (예: `depth/counter.py` 에 *react_time* parameter 추가).
-5. **Backward-compatibility**: `combat/__init__.py` 의 re-export 가 모든 symbol 유지. 기존 `from roguelike_sprawl.combat.depth import ...` 코드 변경 불필요.
+5. **Backward-compatibility**: `combat/__init__.py` 의 re-export 가 모든 symbol 유지. 기존 `from wet_run.combat.depth import ...` 코드 변경 불필요.
 6. **Risk**: 변경 범위 중간 (9 new files, 2 old files removed) 이지만, 순수 리팩토링 (no behavior change) — 1000+ LOC 새 module 0.
 
 ## 사용자 결정 (Decision)
@@ -133,7 +133,7 @@ combat/boss_phase4/
 
 ### 5. Tests 갱신
 
-- `test_combat_depth.py` — `from roguelike_sprawl.combat.depth import ...` → 변경 없음 (sub-package `__init__.py` 가 re-export).
+- `test_combat_depth.py` — `from wet_run.combat.depth import ...` → 변경 없음 (sub-package `__init__.py` 가 re-export).
 - `test_boss_phase4.py` — 동일.
 - `test_construct_companion.py` — 동일.
 
@@ -149,13 +149,13 @@ combat/boss_phase4/
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/combat/depth.py` (removed)
-- `prototype/src/roguelike_sprawl/combat/depth/` (new sub-package, 5 files)
-- `prototype/src/roguelike_sprawl/combat/boss_phase4.py` (removed)
-- `prototype/src/roguelike_sprawl/combat/boss_phase4/` (new sub-package, 4 files)
-- `prototype/src/roguelike_sprawl/combat/__init__.py` (re-export 갱신)
-- `prototype/src/roguelike_sprawl/combat/state.py` (import path 변경 — `depth.counter` import)
-- `prototype/src/roguelike_sprawl/engine/combat_view_state.py` (import path 변경 — `boss_phase4.taunts` import)
+- `prototype/src/wet_run/combat/depth.py` (removed)
+- `prototype/src/wet_run/combat/depth/` (new sub-package, 5 files)
+- `prototype/src/wet_run/combat/boss_phase4.py` (removed)
+- `prototype/src/wet_run/combat/boss_phase4/` (new sub-package, 4 files)
+- `prototype/src/wet_run/combat/__init__.py` (re-export 갱신)
+- `prototype/src/wet_run/combat/state.py` (import path 변경 — `depth.counter` import)
+- `prototype/src/wet_run/engine/combat_view_state.py` (import path 변경 — `boss_phase4.taunts` import)
 - `prototype/tests/unit/test_combat_depth.py` (변경 없음, backward-compat)
 - `prototype/tests/unit/test_boss_phase4.py` (변경 없음, backward-compat)
 - `prototype/tests/unit/test_construct_companion.py` (변경 없음)

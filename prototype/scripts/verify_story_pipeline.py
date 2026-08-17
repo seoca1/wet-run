@@ -196,7 +196,7 @@ def verify_combat_system() -> dict:
     print(f"  ✅ ice_types: {len(ice_types)} types ({', '.join(ice_types)})")
 
     # Check registry functions
-    registry_path = PROTOTYPE / "src/roguelike_sprawl/combat/registry.py"
+    registry_path = PROTOTYPE / "src/wet_run/combat/registry.py"
     content = registry_path.read_text()
     functions = [line.strip() for line in content.splitlines() if "def " in line]
     results["registry_functions"] = functions

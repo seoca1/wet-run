@@ -175,7 +175,7 @@ class TestAchievementsDocstringCoverage:
     """Phase 37 polish — 5 AchievementState methods gained docstrings (81% -> 100%)."""
 
     def test_achievement_state_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.achievements import AchievementState
+        from wet_run.achievements import AchievementState
 
         method_names = [
             "is_unlocked",
@@ -201,7 +201,7 @@ class TestAchievementsDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/achievements.py",
+                "src/wet_run/achievements.py",
             ],
             capture_output=True,
             text=True,
@@ -231,7 +231,7 @@ class TestDungeonGeneratorDocstringCoverage:
     """Phase 37 polish — 7 items gained docstrings (78% -> 100%)."""
 
     def test_bsp_node_dunder_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.matrix.dungeon_generator import _BspNode
+        from wet_run.matrix.dungeon_generator import _BspNode
 
         # _BspNode.__hash__/__eq__/is_leaf gained docstrings
         for name in ("__hash__", "__eq__", "is_leaf"):
@@ -240,7 +240,7 @@ class TestDungeonGeneratorDocstringCoverage:
             assert attr.__doc__.strip(), f"_BspNode.{name} has empty docstring"
 
     def test_faction_for_has_docstring(self) -> None:
-        from roguelike_sprawl.matrix.dungeon_generator import ProceduralDungeonGenerator
+        from wet_run.matrix.dungeon_generator import ProceduralDungeonGenerator
 
         method = ProceduralDungeonGenerator._faction_for
         assert method.__doc__ is not None
@@ -258,7 +258,7 @@ class TestDungeonGeneratorDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/matrix/dungeon_generator.py",
+                "src/wet_run/matrix/dungeon_generator.py",
             ],
             capture_output=True,
             text=True,
@@ -282,7 +282,7 @@ class TestSmallModuleDocstringCoverage:
     """Phase 37 polish — GhostChoice / WorldRegistry.__init__ / Loadout.__post_init__ docs."""
 
     def test_ghost_choice_has_docstring(self) -> None:
-        from roguelike_sprawl.ghost_encounter import GhostChoice
+        from wet_run.ghost_encounter import GhostChoice
 
         assert GhostChoice.__doc__ is not None
         assert GhostChoice.__doc__.strip()
@@ -292,14 +292,14 @@ class TestSmallModuleDocstringCoverage:
         assert "leave" in GhostChoice.__doc__.lower()
 
     def test_registry_init_has_docstring(self) -> None:
-        from roguelike_sprawl.cyberspace.registry import WorldRegistry
+        from wet_run.cyberspace.registry import WorldRegistry
 
         init = WorldRegistry.__init__
         assert init.__doc__ is not None
         assert init.__doc__.strip()
 
     def test_ppl_post_init_has_docstring(self) -> None:
-        from roguelike_sprawl.matrix.ppl import Loadout
+        from wet_run.matrix.ppl import Loadout
 
         post_init = Loadout.__post_init__
         assert post_init.__doc__ is not None
@@ -316,7 +316,7 @@ class TestPhase37Smoke:
 
     def test_achievement_state_methods_behavior_intact(self) -> None:
         """AchievementState methods still work after docstring addition."""
-        from roguelike_sprawl.achievements import AchievementState
+        from wet_run.achievements import AchievementState
 
         state = AchievementState()
         assert state.get_total_unlocked() == 0
@@ -333,7 +333,7 @@ class TestPhase37Smoke:
 
     def test_bsp_node_dunder_methods_behavior_intact(self) -> None:
         """_BspNode.__hash__/__eq__/is_leaf still work after docstring addition."""
-        from roguelike_sprawl.matrix.dungeon_generator import _BspNode
+        from wet_run.matrix.dungeon_generator import _BspNode
 
         a = _BspNode(x=0, y=0, w=4, h=4)
         b = _BspNode(x=2, y=0, w=4, h=4)
@@ -350,7 +350,7 @@ class TestPhase37Smoke:
 
     def test_ghost_choice_string_values_unchanged(self) -> None:
         """GhostChoice string values preserved after docstring addition."""
-        from roguelike_sprawl.ghost_encounter import GhostChoice
+        from wet_run.ghost_encounter import GhostChoice
 
         assert GhostChoice.TALK == "talk"
         assert GhostChoice.FIGHT == "fight"
@@ -358,7 +358,7 @@ class TestPhase37Smoke:
 
     def test_ppl_post_init_validates_tier(self) -> None:
         """Loadout.__post_init__ still validates tier ranges after docstring addition."""
-        from roguelike_sprawl.matrix.ppl import Loadout, Program
+        from wet_run.matrix.ppl import Loadout, Program
 
         # Valid loadout
         loadout = Loadout(
@@ -372,8 +372,8 @@ class TestPhase37Smoke:
 
     def test_registry_init_accepts_optional_world_map(self) -> None:
         """WorldRegistry.__init__ still accepts optional WorldMap after docstring addition."""
-        from roguelike_sprawl.cyberspace.registry import WorldRegistry
-        from roguelike_sprawl.cyberspace.world import WorldMap
+        from wet_run.cyberspace.registry import WorldRegistry
+        from wet_run.cyberspace.world import WorldMap
 
         # Default: empty WorldMap
         reg1 = WorldRegistry()

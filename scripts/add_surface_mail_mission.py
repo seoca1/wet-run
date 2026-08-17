@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'surface_mail_run' to roguelike_sprawl missions.json.
+"""Add new mission 'surface_mail_run' to wet_run missions.json.
 
 Pairs with Fiction Phase 38 — Surface Mail concept page (wiki/concepts/surface-mail.md).
 Novice-arc, Arc 1: low-bandwidth physical-postal data-delivery procedural.

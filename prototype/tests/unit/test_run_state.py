@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.matrix.node import IceKind, NodeKind, ZoneDepth
-from roguelike_sprawl.run import (
+from wet_run.engine.state import AppState
+from wet_run.matrix.node import IceKind, NodeKind, ZoneDepth
+from wet_run.run import (
     DEFAULT_FLOW,
     ObjectiveKind,
     RunState,
@@ -383,7 +383,7 @@ class TestStartNewRun:
 
     def test_start_new_run_with_stage(self) -> None:
         """start_new_run accepts custom initial stage via start_run()."""
-        from roguelike_sprawl.run import start_run as _start_run
+        from wet_run.run import start_run as _start_run
 
         state = AppState()
         state.run_state = _start_run(initial_stage=Stage.DEFEAT_ICE)
@@ -395,7 +395,7 @@ class TestResolveTargetForStage:
 
     def _make_matrix(self):
         """Build a small matrix with NPC, DATA, ICE nodes."""
-        from roguelike_sprawl.matrix.node import Node
+        from wet_run.matrix.node import Node
 
         nodes = [
             Node(id="entry", label="Entry", kind=NodeKind.ENTRY, zone=ZoneDepth.SURFACE),
@@ -414,7 +414,7 @@ class TestResolveTargetForStage:
 
     def test_resolve_npc_target(self) -> None:
         """NPC stage finds CONSTRUCT node."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         nodes, edges = self._make_matrix()
         matrix = MatrixGraph(nodes=nodes, edges=edges, entry_id="entry")
@@ -426,7 +426,7 @@ class TestResolveTargetForStage:
 
     def test_resolve_data_target(self) -> None:
         """DATA stage finds DATA node."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         nodes, edges = self._make_matrix()
         matrix = MatrixGraph(nodes=nodes, edges=edges, entry_id="entry")
@@ -438,7 +438,7 @@ class TestResolveTargetForStage:
 
     def test_resolve_ice_target(self) -> None:
         """ICE stage finds ICE node."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         nodes, edges = self._make_matrix()
         matrix = MatrixGraph(nodes=nodes, edges=edges, entry_id="entry")
@@ -450,7 +450,7 @@ class TestResolveTargetForStage:
 
     def test_resolve_no_target_for_pending(self) -> None:
         """PENDING stage has no target."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         nodes, edges = self._make_matrix()
         matrix = MatrixGraph(nodes=nodes, edges=edges, entry_id="entry")
@@ -462,7 +462,7 @@ class TestResolveTargetForStage:
 
     def test_resolve_no_target_for_complete(self) -> None:
         """COMPLETE stage has no target."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         nodes, edges = self._make_matrix()
         matrix = MatrixGraph(nodes=nodes, edges=edges, entry_id="entry")
@@ -474,7 +474,7 @@ class TestResolveTargetForStage:
 
     def test_resolve_returns_none_for_empty_matrix(self) -> None:
         """Empty matrix returns None."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         matrix = MatrixGraph(nodes=(), edges=(), entry_id="")
         rs = RunState(current_stage=Stage.MEET_NPC)
@@ -485,8 +485,8 @@ class TestResolveTargetForStage:
 
     def test_resolve_returns_none_for_no_matching_node(self) -> None:
         """Matrix without matching node kind returns None."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
-        from roguelike_sprawl.matrix.node import Node
+        from wet_run.matrix.graph import MatrixGraph
+        from wet_run.matrix.node import Node
 
         nodes = [
             Node(id="entry", label="Entry", kind=NodeKind.ENTRY, zone=ZoneDepth.SURFACE),
@@ -503,8 +503,8 @@ class TestCheckObjectiveAtNode:
     """check_objective_at_node() validates stage completion."""
 
     def _make_matrix(self):
-        from roguelike_sprawl.matrix.graph import MatrixGraph
-        from roguelike_sprawl.matrix.node import Node
+        from wet_run.matrix.graph import MatrixGraph
+        from wet_run.matrix.node import Node
 
         nodes = (
             Node(id="entry", label="Entry", kind=NodeKind.ENTRY, zone=ZoneDepth.SURFACE),

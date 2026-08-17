@@ -18,7 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.cinematic_art import (
+from wet_run.engine.cinematic_art import (
     ARMITAGE,
     CASE,
     CHIBA_CITY,

@@ -8,7 +8,7 @@
 
 ## 컨텍스트 (Context)
 
-`prototype/src/roguelike_sprawl/combat/boss.py`와 `combat/bosses.py`의
+`prototype/src/wet_run/combat/boss.py`와 `combat/bosses.py`의
 BossPhase 시스템은 3단계까지의 다단계 전투를 지원하지만, **페이즈 전환 시점의
 추가 행동 (AoE 버스트, 미니언 소환) 이 없음**. 보스는 phase change 시 단순히
 스킬 풀과 색만 바뀌고, 광역 공격이나 동료 소환 같은 전략적 깊이 부족.

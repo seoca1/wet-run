@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'fido_statework' to roguelike_sprawl missions.json.
+"""Add new mission 'fido_statework' to wet_run missions.json.
 
 Pairs with Fiction Phase 35 — Fido concept page (wiki/concepts/fido.md).
 Suit-arc: corporate-statework on Fido's public-house AI.

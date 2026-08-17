@@ -1,7 +1,7 @@
 # Balance: PPL / ZDR (난이도 곡선 검증)
 
 > **관련**: [difficulty-rating.md](../systems/difficulty-rating.md), [grade-progression.md](../systems/grade-progression.md)
-> **구현**: `../../prototype/src/roguelike_sprawl/matrix/ppl.py`, `matrix/zdr.py`
+> **구현**: `../../prototype/src/wet_run/matrix/ppl.py`, `matrix/zdr.py`
 > **ADR**: 0012 (PPL/ZDR)
 
 ## 목적

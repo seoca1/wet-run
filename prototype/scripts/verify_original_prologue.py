@@ -20,16 +20,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.npc_event import NPCState
-from roguelike_sprawl.engine.npc_view import _execute_choice
-from roguelike_sprawl.engine.original_story import (
+from wet_run.engine.npc_event import NPCState
+from wet_run.engine.npc_view import _execute_choice
+from wet_run.engine.original_story import (
     CHARACTER_SELECT_EVENT,
     HERETIC_PROLOGUE_EVENT,
     NOVICE_PROLOGUE_EVENT,
     VETERAN_PROLOGUE_EVENT,
     get_ending_description,
 )
-from roguelike_sprawl.engine.state import AppState
+from wet_run.engine.state import AppState
 
 ANSI_RESET = "\033[0m"
 ANSI_BOLD = "\033[1m"

@@ -150,7 +150,7 @@ def system_attack(attacker, target, world):
 ### 디렉토리 (Phase 4에서 확정)
 ```
 prototype/
-├── roguelike_sprawl/
+├── wet_run/
 │   ├── engine/         # tcod / main loop
 │   ├── ecs/            # Entity, World, System decorators
 │   ├── matrix/         # 노드 그래프, 항해

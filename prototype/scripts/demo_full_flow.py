@@ -36,9 +36,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.combat.registry import IceRegistry, ProgramRegistry
-from roguelike_sprawl.combat.state import step_combat
-from roguelike_sprawl.engine import (
+from wet_run.combat.registry import IceRegistry, ProgramRegistry
+from wet_run.combat.state import step_combat
+from wet_run.engine import (
     combat_view,
     debrief_view,
     hub,
@@ -47,9 +47,9 @@ from roguelike_sprawl.engine import (
     menu,
     reward_view,
 )
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.i18n import Translator
-from roguelike_sprawl.run import Stage, start_run
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.i18n import Translator
+from wet_run.run import Stage, start_run
 
 
 def _console_to_text(console) -> str:
@@ -166,8 +166,8 @@ def run_full_flow(args: argparse.Namespace) -> int:
     _step("MATRIX — MEET_NPC (NPC construct dialogue)")
     state.screen = ScreenKind.MATRIX
     # Setup minimal matrix state
-    from roguelike_sprawl.matrix.exploration import ExplorationState
-    from roguelike_sprawl.matrix.generator import MatrixGenerator
+    from wet_run.matrix.exploration import ExplorationState
+    from wet_run.matrix.generator import MatrixGenerator
 
     gen = MatrixGenerator()
     matrix = gen.generate(seed=42, mission_grade=1)
@@ -225,8 +225,8 @@ def run_full_flow(args: argparse.Namespace) -> int:
         prog_reg = ProgramRegistry.load(data_dir / "programs" / "programs.json")
 
         # Create combat state
-        from roguelike_sprawl.combat.registry import build_default_player, build_ice_enemy
-        from roguelike_sprawl.combat.state import CombatState
+        from wet_run.combat.registry import build_default_player, build_ice_enemy
+        from wet_run.combat.state import CombatState
 
         player = build_default_player(loadout=None, max_hp=100, programs=prog_reg)
         ice = build_ice_enemy("standard", ice_reg, player_grade=1)

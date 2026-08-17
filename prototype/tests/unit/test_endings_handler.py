@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from roguelike_sprawl.story.endings import (
+from wet_run.story.endings import (
     EndingResult,
     check_ending_eligibility,
     get_ending,

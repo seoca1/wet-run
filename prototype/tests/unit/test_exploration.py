@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.matrix import ExplorationState, MatrixGenerator, Visibility
-from roguelike_sprawl.matrix.exploration import is_always_visible_kind
-from roguelike_sprawl.matrix.graph import MatrixGraph
-from roguelike_sprawl.matrix.node import NodeKind
+from wet_run.matrix import ExplorationState, MatrixGenerator, Visibility
+from wet_run.matrix.exploration import is_always_visible_kind
+from wet_run.matrix.graph import MatrixGraph
+from wet_run.matrix.node import NodeKind
 
 
 @pytest.fixture

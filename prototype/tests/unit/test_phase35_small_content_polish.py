@@ -170,7 +170,7 @@ class TestTranslatorDocstringCoverage:
     """Phase 35 polish — Translator._load gained a docstring (80% -> 90%)."""
 
     def test_translator_load_has_docstring(self) -> None:
-        from roguelike_sprawl.i18n.translator import Translator
+        from wet_run.i18n.translator import Translator
 
         method = Translator._load
         assert method.__doc__ is not None, "Translator._load missing docstring"
@@ -190,7 +190,7 @@ class TestTranslatorDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/i18n/translator.py",
+                "src/wet_run/i18n/translator.py",
             ],
             capture_output=True,
             text=True,
@@ -214,7 +214,7 @@ class TestEquipmentDocstringCoverage:
     """Phase 35 polish — 8 docstrings added to equipment/equipment.py."""
 
     def test_equipment_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.equipment.equipment import Equipment
+        from wet_run.equipment.equipment import Equipment
 
         # Methods that gained docstrings in Phase 35
         method_names = ["is_upgradable", "is_t1_or_better"]
@@ -224,7 +224,7 @@ class TestEquipmentDocstringCoverage:
             assert method.__doc__.strip(), f"Equipment.{name} has empty docstring"
 
     def test_loadout_methods_have_docstrings(self) -> None:
-        from roguelike_sprawl.equipment.equipment import EquipmentLoadout
+        from wet_run.equipment.equipment import EquipmentLoadout
 
         # Methods that gained docstrings in Phase 35
         method_names = [
@@ -252,7 +252,7 @@ class TestEquipmentDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/equipment/equipment.py",
+                "src/wet_run/equipment/equipment.py",
             ],
             capture_output=True,
             text=True,
@@ -273,7 +273,7 @@ class TestBoardDocstringCoverage:
     """Phase 35 polish — _parse_objective, _parse_rewards, _parse_mission gained docstrings."""
 
     def test_parse_helpers_have_docstrings(self) -> None:
-        from roguelike_sprawl.missions import board as board_module
+        from wet_run.missions import board as board_module
 
         for name in ("_parse_objective", "_parse_rewards", "_parse_mission"):
             func = getattr(board_module, name)
@@ -292,7 +292,7 @@ class TestBoardDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/missions/board.py",
+                "src/wet_run/missions/board.py",
             ],
             capture_output=True,
             text=True,
@@ -316,7 +316,7 @@ class TestPhase35Smoke:
 
     def test_translator_load_with_missing_file_does_not_raise(self) -> None:
         """Translator._load silent fallback still works after docstring addition."""
-        from roguelike_sprawl.i18n.translator import Translator
+        from wet_run.i18n.translator import Translator
 
         # Point at a non-existent data dir; must silently no-op
         translator = Translator("en", data_dir=Path("/tmp/does_not_exist_phase35_test"))
@@ -325,20 +325,20 @@ class TestPhase35Smoke:
         assert translator.t("missing.key") == "missing.key"
 
     def test_equipment_is_upgradable_returns_false_for_baseline(self) -> None:
-        from roguelike_sprawl.equipment.equipment import STARTER_DECK
+        from wet_run.equipment.equipment import STARTER_DECK
 
         # Baseline gear has 0 upgrade slots -> is_upgradable == False
         assert not STARTER_DECK.is_upgradable()
 
     def test_equipment_is_t1_or_better_excludes_baseline(self) -> None:
-        from roguelike_sprawl.equipment.equipment import STARTER_DECK, STREET_DECK
+        from wet_run.equipment.equipment import STARTER_DECK, STREET_DECK
 
         # T0 baseline returns False; T1 street returns True
         assert not STARTER_DECK.is_t1_or_better()
         assert STREET_DECK.is_t1_or_better()
 
     def test_loadout_is_complete_when_all_slots_filled(self) -> None:
-        from roguelike_sprawl.equipment.equipment import (
+        from wet_run.equipment.equipment import (
             STARTER_DECK,
             STARTER_HEADWARE,
             EquipmentLoadout,
@@ -367,7 +367,7 @@ class TestPhase35Smoke:
 
     def test_parse_mission_handles_legacy_fields(self) -> None:
         """_parse_mission docstring promises extract_data fallback for legacy entries."""
-        from roguelike_sprawl.missions.board import _parse_mission
+        from wet_run.missions.board import _parse_mission
 
         # Legacy mission entry (no primary_objective, no rewards — uses objective string)
         legacy = {

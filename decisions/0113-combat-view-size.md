@@ -8,7 +8,7 @@
 
 ## 컨텍스트 (Context)
 
-`prototype/src/roguelike_sprawl/engine/combat_view.py` (1,053 LOC) — 전투 화면 렌더링 + 입력 핸들러:
+`prototype/src/wet_run/engine/combat_view.py` (1,053 LOC) — 전투 화면 렌더링 + 입력 핸들러:
 
 **현황**:
 - 24 functions, 0 classes, 18 imports

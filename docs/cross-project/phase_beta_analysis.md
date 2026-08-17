@@ -1,12 +1,12 @@
 # Phase β — Mission / Story / Scene Unification Analysis
 
 > **Generated**: 2026-07-26 (Phase α follow-up)
-> **Scope**: Analyze overlap between three narrative layers for each roguelike_sprawl mission
+> **Scope**: Analyze overlap between three narrative layers for each wet_run mission
 > **Recommendation**: No content deduplication needed; possible UI integration improvements
 
 ## Executive Summary
 
-Each roguelike_sprawl mission can have **three independent narrative representations**:
+Each wet_run mission can have **three independent narrative representations**:
 
 | Layer | Source | Purpose | Size | Count |
 |---|---|---|---|---|
@@ -130,7 +130,7 @@ and provides flexible authoring.
 ## Cross-Reference Architecture
 
 ```
-roguelike_sprawl mission
+wet_run mission
 ├─ missions.json[story]
 │   ├─ synopsis_en         → HUB / Codex
 │   ├─ source              → Fiction stem

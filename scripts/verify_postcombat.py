@@ -22,11 +22,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine import debrief_view, jack_out_view, reward_view
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.missions.mission import Mission, Rewards
-from roguelike_sprawl.run import Stage, start_run
+from wet_run.engine import debrief_view, jack_out_view, reward_view
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.matrix.node import ZoneDepth
+from wet_run.missions.mission import Mission, Rewards
+from wet_run.run import Stage, start_run
 
 
 def make_mission(mission_id: str = "first_jack") -> Mission:

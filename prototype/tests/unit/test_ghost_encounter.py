@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.ghost_encounter import (
+from wet_run.ghost_encounter import (
     GHOST_CATALOG,
     GhostChoice,
     get_for_zone,

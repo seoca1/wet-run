@@ -10,7 +10,7 @@ related_docs: SESSION_SUMMARY.md (index), log.md, _archive/sessions/
 
 ## Scope
 
-Workspace-wide file reorganization affecting `Game/roguelike_sprawl/`:
+Workspace-wide file reorganization affecting `Game/wet_run/`:
 
 1. **Session summary archive** — 8 dated session snapshots + 2 old handover docs moved to `_archive/sessions/`
 2. **Python file consolidation** — 4 loose .py files moved to `tools/` and `scripts/`
@@ -27,7 +27,7 @@ Workspace-wide file reorganization affecting `Game/roguelike_sprawl/`:
 - `audit_sprawl.py` → `tools/audit_sprawl.py` — `ROOT=Path(".")`, cwd-based
 - `find_broken_links.py` → `tools/find_broken_links.py` — 0 refs, tools/ for discoverability
 - `scripts/audio-doctor.py` → `scripts/audio-doctor.py` — workspace scripts/ → project scripts/
-- `scripts/verify_sounds.py` → `scripts/verify_sounds.py` — internal path fixed (`parent.parent/Game/roguelike_sprawl/` → `parent.parent/`)
+- `scripts/verify_sounds.py` → `scripts/verify_sounds.py` — internal path fixed (`parent.parent/Game/wet_run/` → `parent.parent/`)
 
 ### Kept in place (3 files)
 - `SESSION_SUMMARY.md` — index pointer (AGENTS.md §8)
@@ -45,8 +45,8 @@ Workspace-wide file reorganization affecting `Game/roguelike_sprawl/`:
 
 | Check | Result |
 |---|---|
-| `tools/audit_sprawl.py` (from roguelike_sprawl/) | ✅ Same baseline orphan list |
-| `scripts/verify_sounds.py` (from roguelike_sprawl/) | ✅ Audio device output |
+| `tools/audit_sprawl.py` (from wet_run/) | ✅ Same baseline orphan list |
+| `scripts/verify_sounds.py` (from wet_run/) | ✅ Audio device output |
 | `tools/find_broken_links.py` | ✅ Broken link detail output |
 | `audit_vault.py` (vault-wide) | ✅ CLEAN (0 broken / 0 orphan) |
 

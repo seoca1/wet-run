@@ -34,7 +34,7 @@ def show_story() -> None:
     """Show story (Prologue + Briefing)."""
     section("1. CINEMATIC STORY (Prologue + Briefing)")
 
-    from roguelike_sprawl.engine.story_cinematic import (
+    from wet_run.engine.story_cinematic import (
         BRIEFING_FINN_SCENE,
         PROLOGUE_SCENE,
     )
@@ -60,7 +60,7 @@ def show_cyberspace_browser() -> None:
     """Show cyberspace browser with worlds/sectors/servers."""
     section("2. CYBERSPACE BROWSER (World/Sector/Server)")
 
-    from roguelike_sprawl.cyberspace.registry import WorldRegistry
+    from wet_run.cyberspace.registry import WorldRegistry
 
     WorldRegistry.load(Path("data/cyberspace/worlds.json"))
 
@@ -93,7 +93,7 @@ def show_cyberspace() -> None:
     """Show cyberspace graph view."""
     section("3. CYBERSPACE GRAPH (Scrolling View)")
 
-    from roguelike_sprawl.matrix.cyberspace_generator import CyberspaceGenerator
+    from wet_run.matrix.cyberspace_generator import CyberspaceGenerator
 
     gen = CyberspaceGenerator()
     graph, layouts = gen.generate(seed=42, mission_grade=1)
@@ -129,7 +129,7 @@ def show_npc_dialogue() -> None:
     """Show NPC dialogue with Korean text."""
     section("4. NPC DIALOGUE (Dixie Flatline)")
 
-    from roguelike_sprawl.engine.npc_event import DIXIE_FLATLINE_EVENT
+    from wet_run.engine.npc_event import DIXIE_FLATLINE_EVENT
 
     event = DIXIE_FLATLINE_EVENT
     line = event.lines[0]
@@ -159,7 +159,7 @@ def show_equipment_system() -> None:
     """Show equipment system."""
     section("5. EQUIPMENT SYSTEM (Cyberpunk Gear)")
 
-    from roguelike_sprawl.equipment.equipment import EquipmentRegistry
+    from wet_run.equipment.equipment import EquipmentRegistry
 
     reg = EquipmentRegistry.load_default()
     items = reg.all()
@@ -239,7 +239,7 @@ def show_combat() -> None:
 
     from pathlib import Path
 
-    from roguelike_sprawl.combat.registry import ProgramRegistry
+    from wet_run.combat.registry import ProgramRegistry
 
     reg = ProgramRegistry.load(Path("data/programs/programs.json"))
     list(reg)
@@ -286,7 +286,7 @@ def show_korean_font() -> None:
     """Show that Korean font is loaded."""
     section("7. KOREAN FONT SUPPORT (TTF)")
 
-    from roguelike_sprawl.engine.font_loader import is_korean_capable, load_font
+    from wet_run.engine.font_loader import is_korean_capable, load_font
 
     print(f"Korean capable: {is_korean_capable()}")
     print()
@@ -360,7 +360,7 @@ def show_event_stories() -> None:
     """Show event stories with character art."""
     section("10. EVENT STORIES (Character Art Cutscenes)")
 
-    from roguelike_sprawl.engine.event_story import (
+    from wet_run.engine.event_story import (
         CHIBACITY_ART,
         DIXIE_ART,
         ICE_GLYPH_ART,

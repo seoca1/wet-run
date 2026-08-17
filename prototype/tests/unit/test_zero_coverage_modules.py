@@ -13,10 +13,10 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from roguelike_sprawl.cyberspace.registry import WorldRegistry
-from roguelike_sprawl.cyberspace.server_generator import ServerSubgraphGenerator
-from roguelike_sprawl.cyberspace.world import WorldMap
-from roguelike_sprawl.engine import font_loader
+from wet_run.cyberspace.registry import WorldRegistry
+from wet_run.cyberspace.server_generator import ServerSubgraphGenerator
+from wet_run.cyberspace.world import WorldMap
+from wet_run.engine import font_loader
 
 # ---------------------------------------------------------------------------
 # font_loader.is_korean_capable
@@ -90,10 +90,10 @@ class TestLoadFont:
 
 
 class TestMainEntry:
-    """``python -m roguelike_sprawl`` invokes ``app.main()``."""
+    """``python -m wet_run`` invokes ``app.main()``."""
 
     def test_invokes_main_and_returns_exit_code(self) -> None:
-        from roguelike_sprawl import __main__ as entry
+        from wet_run import __main__ as entry
 
         with patch.object(entry, "main", return_value=0) as main_mock:
             rc = entry.main()
@@ -101,7 +101,7 @@ class TestMainEntry:
         main_mock.assert_called_once()
 
     def test_propagates_nonzero_exit_code(self) -> None:
-        from roguelike_sprawl import __main__ as entry
+        from wet_run import __main__ as entry
 
         with patch.object(entry, "main", return_value=2) as main_mock:
             rc = entry.main()
@@ -123,7 +123,7 @@ class TestServerSubgraphGenerator:
         fake_gen = MagicMock()
         fake_gen.generate.return_value = (fake_graph, fake_layouts)
         with patch(
-            "roguelike_sprawl.cyberspace.server_generator.CyberspaceGenerator",
+            "wet_run.cyberspace.server_generator.CyberspaceGenerator",
             return_value=fake_gen,
         ):
             sub = ServerSubgraphGenerator()

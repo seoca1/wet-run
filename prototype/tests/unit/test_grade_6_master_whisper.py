@@ -11,18 +11,18 @@ Covers:
 
 from __future__ import annotations
 
-from roguelike_sprawl.lore.construct_whisper import (
+from wet_run.lore.construct_whisper import (
     MASTER_GRADE_THRESHOLD,
     MASTER_HINTS_BY_FACTION,
     ConstructWhisper,
     get_master_hint_for_faction,
     is_player_master,
 )
-from roguelike_sprawl.lore.construct_whisper_hook import (
+from wet_run.lore.construct_whisper_hook import (
     check_construct_whisper_on_combat_start,
 )
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.run.reputation import ReputationState
+from wet_run.matrix.node import Faction
+from wet_run.run.reputation import ReputationState
 
 
 class TestMasterHintsTable:

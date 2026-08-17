@@ -16,8 +16,8 @@ from pathlib import Path
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.audio import sound_manager  # noqa: E402
-from roguelike_sprawl.audio.sound_manager import DEFAULT_SOUNDS  # noqa: E402
+from wet_run.audio import sound_manager  # noqa: E402
+from wet_run.audio.sound_manager import DEFAULT_SOUNDS  # noqa: E402
 
 
 def main() -> int:

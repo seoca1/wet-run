@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'boone_tokyo_electronics_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'boone_tokyo_electronics_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 52 — boone-chu character page.
 Suit-arc, Arc 5: corporate-statework on Tokyo-electronics-dealer class-image.

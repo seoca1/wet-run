@@ -22,7 +22,7 @@ from tcod.event import KeyDown, KeySym, Modifier, Scancode
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.engine.death import (  # noqa: E402
+from wet_run.engine.death import (  # noqa: E402
     advance_to_death_summary,
     build_deceased_jockey_from_state,
     handle_death_summary_choice,
@@ -33,8 +33,8 @@ from roguelike_sprawl.engine.death import (  # noqa: E402
     restart_with_new_jockey,
     trigger_death,
 )
-from roguelike_sprawl.engine.jockey_history import JockeyHistory  # noqa: E402
-from roguelike_sprawl.engine.state import AppState, ScreenKind  # noqa: E402
+from wet_run.engine.jockey_history import JockeyHistory  # noqa: E402
+from wet_run.engine.state import AppState, ScreenKind  # noqa: E402
 
 
 def _make_event(sym: KeySym) -> KeyDown:
@@ -63,7 +63,7 @@ def state() -> AppState:
 @pytest.fixture
 def tmp_history_path(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
     """Use tmp path for jockey history."""
-    from roguelike_sprawl.engine import death as death_mod
+    from wet_run.engine import death as death_mod
 
     path = tmp_path / "deceased.json"
 

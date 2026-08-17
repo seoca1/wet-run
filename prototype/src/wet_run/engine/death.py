@@ -503,7 +503,7 @@ def render_hall_of_dead_screen(
 
     Shows the archive of deceased jockeys.
     """
-    from roguelike_sprawl.i18n import Translator  # noqa: F401
+    from wet_run.i18n import Translator  # noqa: F401
 
     console.clear()
     history = _get_history()

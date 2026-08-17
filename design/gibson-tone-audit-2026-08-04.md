@@ -1,4 +1,4 @@
-# Gibson Tone Audit — Roguelike Sprawl Graphic Novel Scenes
+# Gibson Tone Audit — Wet Run Graphic Novel Scenes
 
 **Date**: 2026-08-04
 **Author**: Sisyphus (deep quality audit per NEXT_SESSION_TODO §3.7)
@@ -666,4 +666,4 @@ Per [`Fiction/wiki/connections/gibsons-writing-style.md`](../../../Fiction/wiki/
 
 ---
 
-*This audit was generated as part of ADR-0060 §3.7 "Roguelike Sprawl 그래픽 노블 톤 검증 (Gibson audit + 4× expansion per ADR-0032)". Initial sample of 2 scenes confirms strong Gibson alignment; broader sampling recommended before 4× expansion.*
+*This audit was generated as part of ADR-0060 §3.7 "Wet Run 그래픽 노블 톤 검증 (Gibson audit + 4× expansion per ADR-0032)". Initial sample of 2 scenes confirms strong Gibson alignment; broader sampling recommended before 4× expansion.*

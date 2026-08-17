@@ -12,8 +12,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from roguelike_sprawl.engine.chapter_view import chapter_for_character
-from roguelike_sprawl.engine.graphic_novel_view import (
+from wet_run.engine.chapter_view import chapter_for_character
+from wet_run.engine.graphic_novel_view import (
     GN_MENU_WIGAN,
     _character_label,
     available_endings,
@@ -60,7 +60,7 @@ class TestWiganMenuOption:
 
     def test_wigan_in_menu_options_without_save(self) -> None:
         """10 total options: prologue + 7 chars + suit + wigan + sally + back (Phase 9 added 3jane)."""
-        from roguelike_sprawl.i18n import Translator
+        from wet_run.i18n import Translator
 
         t = Translator("en")
         options = get_gn_menu_options(t, has_save=False)
@@ -71,7 +71,7 @@ class TestWiganMenuOption:
         assert keys[5] == "6"
 
     def test_wigan_in_menu_options_with_save(self) -> None:
-        from roguelike_sprawl.i18n import Translator
+        from wet_run.i18n import Translator
 
         t = Translator("en")
         options = get_gn_menu_options(t, has_save=True)
@@ -119,14 +119,14 @@ class TestWiganChapter:
 
 class TestPrologueWithWigan:
     def test_prologue_includes_wigan(self) -> None:
-        from roguelike_sprawl.engine.graphic_novel_view import load_prologue_chain
+        from wet_run.engine.graphic_novel_view import load_prologue_chain
 
         chain = load_prologue_chain(SCENES_DIR, seed=42)
         wigan_scenes = [s for s in chain if s.character == "wigan"]
         assert len(wigan_scenes) == 4
 
     def test_prologue_has_6_characters(self) -> None:
-        from roguelike_sprawl.engine.graphic_novel_view import load_prologue_chain
+        from wet_run.engine.graphic_novel_view import load_prologue_chain
 
         chain = load_prologue_chain(SCENES_DIR, seed=42)
         chars = {s.character for s in chain}

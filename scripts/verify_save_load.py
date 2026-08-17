@@ -23,16 +23,16 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine import (
+from wet_run.engine import (
     AppState,
     SaveManager,
     SaveSlotEmptyError,
     ScreenKind,
 )
-from roguelike_sprawl.engine import save_load_view
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.missions.mission import Mission, Rewards
-from roguelike_sprawl.run import Stage, start_run
+from wet_run.engine import save_load_view
+from wet_run.matrix.node import ZoneDepth
+from wet_run.missions.mission import Mission, Rewards
+from wet_run.run import Stage, start_run
 
 
 def _make_state() -> AppState:
@@ -176,8 +176,8 @@ def verify_save_load(slot: int) -> int:
     # 9b. Test matrix serialization roundtrip
     print()
     print("[9b] Matrix graph serialization")
-    from roguelike_sprawl.matrix.graph import Edge, MatrixGraph
-    from roguelike_sprawl.matrix.node import (
+    from wet_run.matrix.graph import Edge, MatrixGraph
+    from wet_run.matrix.node import (
         IceKind,
         Node,
         NodeKind,
@@ -230,7 +230,7 @@ def verify_save_load(slot: int) -> int:
 
     import tcod.event
 
-    from roguelike_sprawl.engine.save_manager import MAX_SLOTS
+    from wet_run.engine.save_manager import MAX_SLOTS
     event = tcod.event.KeyDown(sym=tcod.event.KeySym.UP, mod=0, scancode=0)
     save_load_view.handle_save_load_input(event, ui_state)
     assert ui_state.save_load_selected == MAX_SLOTS
@@ -260,7 +260,7 @@ def verify_save_load(slot: int) -> int:
 
     import tcod.console
 
-    from roguelike_sprawl.i18n import Translator
+    from wet_run.i18n import Translator
 
     ui_state2 = AppState()
     ui_state2.save_load_selected = 2

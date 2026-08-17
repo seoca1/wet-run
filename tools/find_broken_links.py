@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Find broken wikilinks in roguelike_sprawl with file:line:target detail.
+"""Find broken wikilinks in wet_run with file:line:target detail.
 
 Cross-project resolution: per AGENTS.md §4.1, game wikilinks resolve first to
 project-local files, then to the Fiction wiki cross-project reference
 (../../Fiction/wiki/ from project root). Only flags wikilinks that resolve
 to neither location.
 
-Must be run from `Game/roguelike_sprawl/` directory.
+Must be run from `Game/wet_run/` directory.
 """
 
 import re

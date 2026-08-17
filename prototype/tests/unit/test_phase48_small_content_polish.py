@@ -250,7 +250,7 @@ class TestMetaProgressionDocstring:
 
     def test_record_meta_progress_docstring_has_args_section(self) -> None:
         """record_meta_progress docstring includes an Args: section."""
-        from roguelike_sprawl.combat.meta_progression import record_meta_progress
+        from wet_run.combat.meta_progression import record_meta_progress
 
         doc = record_meta_progress.__doc__
         assert doc is not None
@@ -260,7 +260,7 @@ class TestMetaProgressionDocstring:
 
     def test_record_meta_progress_docstring_has_returns_section(self) -> None:
         """record_meta_progress docstring includes a Returns: section."""
-        from roguelike_sprawl.combat.meta_progression import record_meta_progress
+        from wet_run.combat.meta_progression import record_meta_progress
 
         doc = record_meta_progress.__doc__
         assert doc is not None
@@ -269,7 +269,7 @@ class TestMetaProgressionDocstring:
 
     def test_record_meta_progress_docstring_has_raises_section(self) -> None:
         """record_meta_progress docstring includes a Raises: ValueError section."""
-        from roguelike_sprawl.combat.meta_progression import record_meta_progress
+        from wet_run.combat.meta_progression import record_meta_progress
 
         doc = record_meta_progress.__doc__
         assert doc is not None
@@ -278,7 +278,7 @@ class TestMetaProgressionDocstring:
 
     def test_record_meta_progress_raises_value_error_for_unknown_id(self) -> None:
         """Unknown unlock_id still raises ValueError with the diagnostic hint."""
-        from roguelike_sprawl.combat.meta_progression import record_meta_progress
+        from wet_run.combat.meta_progression import record_meta_progress
 
         with pytest.raises(ValueError, match=r"Unknown unlock: 'not_a_real_unlock'") as exc_info:
             record_meta_progress("not_a_real_unlock", amount=1)
@@ -289,7 +289,7 @@ class TestMetaProgressionDocstring:
 
     def test_record_meta_progress_valid_id_still_works(self) -> None:
         """A valid unlock_id still records progress after the polish."""
-        from roguelike_sprawl.combat.meta_progression import record_meta_progress
+        from wet_run.combat.meta_progression import record_meta_progress
 
         unlock = record_meta_progress("tier6_program_1", amount=2)
         assert unlock.id == "tier6_program_1"
@@ -320,7 +320,7 @@ class TestStatusEffectsV2Docstring:
 
     def test_make_status_v2_docstring_has_args_section(self) -> None:
         """make_status_v2 docstring includes an Args: section."""
-        from roguelike_sprawl.combat.status_effects_v2 import make_status_v2
+        from wet_run.combat.status_effects_v2 import make_status_v2
 
         doc = make_status_v2.__doc__
         assert doc is not None
@@ -331,7 +331,7 @@ class TestStatusEffectsV2Docstring:
 
     def test_make_status_v2_docstring_has_returns_section(self) -> None:
         """make_status_v2 docstring includes a Returns: section."""
-        from roguelike_sprawl.combat.status_effects_v2 import make_status_v2
+        from wet_run.combat.status_effects_v2 import make_status_v2
 
         doc = make_status_v2.__doc__
         assert doc is not None
@@ -340,7 +340,7 @@ class TestStatusEffectsV2Docstring:
 
     def test_make_status_v2_docstring_has_raises_section(self) -> None:
         """make_status_v2 docstring includes a Raises: ValueError section."""
-        from roguelike_sprawl.combat.status_effects_v2 import make_status_v2
+        from wet_run.combat.status_effects_v2 import make_status_v2
 
         doc = make_status_v2.__doc__
         assert doc is not None
@@ -349,7 +349,7 @@ class TestStatusEffectsV2Docstring:
 
     def test_make_status_v2_raises_value_error_for_unknown_type(self) -> None:
         """Unknown effect_type still raises ValueError with the diagnostic hint."""
-        from roguelike_sprawl.combat.status_effects_v2 import make_status_v2
+        from wet_run.combat.status_effects_v2 import make_status_v2
 
         with pytest.raises(
             ValueError, match=r"Unknown status effect type: 'bogus_effect'"
@@ -362,7 +362,7 @@ class TestStatusEffectsV2Docstring:
 
     def test_make_status_v2_valid_type_still_works(self) -> None:
         """A valid effect_type still constructs after the polish."""
-        from roguelike_sprawl.combat.status_effects_v2 import make_status_v2
+        from wet_run.combat.status_effects_v2 import make_status_v2
 
         effect = make_status_v2("bleed", duration_ms=3000)
         assert effect.effect_type == "bleed"
@@ -402,8 +402,8 @@ class TestMatrixGraphPostInitErrorMessages:
 
     def test_duplicate_node_ids_includes_count(self) -> None:
         """Duplicate node-ids ValueError now includes unique vs total count."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.graph import MatrixGraph
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         n1 = Node(id="dup", label="A", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
         n2 = Node(id="dup", label="B", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
@@ -416,8 +416,8 @@ class TestMatrixGraphPostInitErrorMessages:
 
     def test_unknown_entry_id_includes_count_and_sample(self) -> None:
         """Unknown entry_id ValueError now includes the count of known ids + sample."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.graph import MatrixGraph
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         n1 = Node(id="alpha", label="A", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
         n2 = Node(id="bravo", label="B", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
@@ -434,8 +434,8 @@ class TestMatrixGraphPostInitErrorMessages:
 
     def test_unknown_edge_src_includes_count_and_sample(self) -> None:
         """Unknown edge.src ValueError now includes the count of known ids + sample."""
-        from roguelike_sprawl.matrix.graph import Edge, MatrixGraph
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.graph import Edge, MatrixGraph
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         n1 = Node(id="alpha", label="A", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
         n2 = Node(id="bravo", label="B", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
@@ -448,8 +448,8 @@ class TestMatrixGraphPostInitErrorMessages:
 
     def test_unknown_edge_dst_includes_count_and_sample(self) -> None:
         """Unknown edge.dst ValueError now includes the count of known ids + sample."""
-        from roguelike_sprawl.matrix.graph import Edge, MatrixGraph
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.graph import Edge, MatrixGraph
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         n1 = Node(id="alpha", label="A", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
         n2 = Node(id="bravo", label="B", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
@@ -462,7 +462,7 @@ class TestMatrixGraphPostInitErrorMessages:
 
     def test_from_dict_invalid_node_lists_expected_keys(self) -> None:
         """from_dict ValueError on non-dict node data lists expected keys."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         with pytest.raises(ValueError, match=r"invalid node data") as exc_info:
             MatrixGraph.from_dict({"nodes": ["not_a_dict"], "edges": [], "entry_id": "alpha"})
@@ -475,7 +475,7 @@ class TestMatrixGraphPostInitErrorMessages:
 
     def test_from_dict_invalid_edge_lists_expected_keys(self) -> None:
         """from_dict ValueError on non-dict edge data lists expected keys."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         with pytest.raises(ValueError, match=r"invalid edge data") as exc_info:
             MatrixGraph.from_dict({"nodes": [], "edges": ["not_a_dict"], "entry_id": "alpha"})
@@ -486,8 +486,8 @@ class TestMatrixGraphPostInitErrorMessages:
 
     def test_valid_matrix_graph_still_constructible(self) -> None:
         """A valid MatrixGraph can still be constructed after the polish."""
-        from roguelike_sprawl.matrix.graph import Edge, MatrixGraph
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.graph import Edge, MatrixGraph
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         n1 = Node(id="alpha", label="A", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
         n2 = Node(id="bravo", label="B", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
@@ -498,7 +498,7 @@ class TestMatrixGraphPostInitErrorMessages:
 
     def test_post_init_docstring_has_raises_section(self) -> None:
         """MatrixGraph.__post_init__ docstring includes a Raises: section."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
+        from wet_run.matrix.graph import MatrixGraph
 
         doc = MatrixGraph.__post_init__.__doc__
         assert doc is not None
@@ -566,7 +566,7 @@ class TestPhase48Smoke:
 
     def test_meta_progression_valid_unlock_still_recordable(self) -> None:
         """A valid unlock still records after the polish."""
-        from roguelike_sprawl.combat.meta_progression import (
+        from wet_run.combat.meta_progression import (
             META_UNLOCKS,
             record_meta_progress,
         )
@@ -578,7 +578,7 @@ class TestPhase48Smoke:
 
     def test_status_effect_v2_valid_type_still_creatable(self) -> None:
         """A valid effect_type still constructs after the polish."""
-        from roguelike_sprawl.combat.status_effects_v2 import make_status_v2
+        from wet_run.combat.status_effects_v2 import make_status_v2
 
         # All four built-in effect types should still work
         for etype in ("bleed", "fatigue", "confused", "terrified"):
@@ -587,8 +587,8 @@ class TestPhase48Smoke:
 
     def test_matrix_graph_valid_round_trip(self) -> None:
         """A valid MatrixGraph can still round-trip through dict after the polish."""
-        from roguelike_sprawl.matrix.graph import MatrixGraph
-        from roguelike_sprawl.matrix.node import Node, NodeKind, ZoneDepth
+        from wet_run.matrix.graph import MatrixGraph
+        from wet_run.matrix.node import Node, NodeKind, ZoneDepth
 
         n1 = Node(id="a", label="A", kind=NodeKind.DATA, zone=ZoneDepth.SURFACE)
         n2 = Node(id="b", label="B", kind=NodeKind.DATA, zone=ZoneDepth.DEEP)

@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.achievements import (
+from wet_run.achievements import (
     ACH_CENTURION,
     ACH_FIRST_BLOOD,
     ACH_GHOST_PROTOCOL,
@@ -405,7 +405,7 @@ class TestCheckMasteryEvent:
 
     def test_matrix_master_ppl_zdr_combined(self) -> None:
         """PPL + ZDR >= 60 (one fight) unlocks matrix_master."""
-        from roguelike_sprawl.achievements import (
+        from wet_run.achievements import (
             ACH_MATRIX_MASTER,
             check_mastery_event,
             check_matrix_master,
@@ -423,7 +423,7 @@ class TestCheckMasteryEvent:
 
     def test_true_hacker_unlocks_when_all_others_unlocked(self) -> None:
         """Unlocking every other achievement triggers true_hacker."""
-        from roguelike_sprawl.achievements import (
+        from wet_run.achievements import (
             ACH_TRUE_HACKER,
             ALL_ACHIEVEMENTS,
             check_true_hacker,
@@ -446,7 +446,7 @@ class TestCheckMasteryEvent:
         self,
     ) -> None:
         """Event-style call must NOT unlock true_hacker prematurely."""
-        from roguelike_sprawl.achievements import (
+        from wet_run.achievements import (
             ACH_MATRIX_MASTER,
             ACH_TRUE_HACKER,
             ALL_ACHIEVEMENTS,
@@ -471,7 +471,7 @@ class TestCheckMasteryEvent:
 
     def test_zdr_cleared_tracks_max(self) -> None:
         """Repeated zdr_cleared events keep the highest value."""
-        from roguelike_sprawl.achievements import check_mastery_event
+        from wet_run.achievements import check_mastery_event
 
         s = AchievementState()
         check_mastery_event(s, "zdr_cleared", value=10)
@@ -481,7 +481,7 @@ class TestCheckMasteryEvent:
 
     def test_combined_event_unlocks_true_hacker(self) -> None:
         """When all others unlocked, ppl_zdr_combined event triggers true_hacker."""
-        from roguelike_sprawl.achievements import (
+        from wet_run.achievements import (
             ACH_MATRIX_MASTER,
             ACH_TRUE_HACKER,
             ALL_ACHIEVEMENTS,

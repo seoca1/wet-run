@@ -174,7 +174,7 @@ class TestCyberdeckDocstringCoverage:
     """Phase 41 polish — Cyberdeck.__post_init__ docstring (90% -> 100%)."""
 
     def test_cyberdeck_post_init_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.cyberdeck import Cyberdeck
+        from wet_run.combat.cyberdeck import Cyberdeck
 
         doc = Cyberdeck.__post_init__.__doc__
         assert doc is not None
@@ -199,7 +199,7 @@ class TestCyberdeckDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/cyberdeck.py",
+                "src/wet_run/combat/cyberdeck.py",
             ],
             capture_output=True,
             text=True,
@@ -221,7 +221,7 @@ class TestGibsonFluffDocstringCoverage:
     """Phase 41 polish — _m factory docstring (90% -> 100%)."""
 
     def test_m_factory_has_docstring(self) -> None:
-        from roguelike_sprawl.combat.gibson_fluff import _m
+        from wet_run.combat.gibson_fluff import _m
 
         doc = _m.__doc__
         assert doc is not None
@@ -244,7 +244,7 @@ class TestGibsonFluffDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/combat/gibson_fluff.py",
+                "src/wet_run/combat/gibson_fluff.py",
             ],
             capture_output=True,
             text=True,
@@ -266,7 +266,7 @@ class TestTranslatorDocstringCoverage:
     """Phase 41 polish — Translator.__repr__ docstring (90% -> 100%)."""
 
     def test_repr_has_docstring(self) -> None:
-        from roguelike_sprawl.i18n.translator import Translator
+        from wet_run.i18n.translator import Translator
 
         doc = Translator.__repr__.__doc__
         assert doc is not None
@@ -289,7 +289,7 @@ class TestTranslatorDocstringCoverage:
                 "-m",
                 "interrogate",
                 "-vv",
-                "src/roguelike_sprawl/i18n/translator.py",
+                "src/wet_run/i18n/translator.py",
             ],
             capture_output=True,
             text=True,
@@ -312,14 +312,14 @@ class TestPhase41Smoke:
 
     def test_cyberdeck_post_init_validates_long_name(self) -> None:
         """Cyberdeck.__post_init__ rejects >32-char names (validation preserved)."""
-        from roguelike_sprawl.combat.cyberdeck import MAX_DECK_NAME_LENGTH, Cyberdeck
+        from wet_run.combat.cyberdeck import MAX_DECK_NAME_LENGTH, Cyberdeck
 
         with pytest.raises(ValueError, match="Deck name too long"):
             Cyberdeck(name="X" * (MAX_DECK_NAME_LENGTH + 1))
 
     def test_cyberdeck_short_name_accepted(self) -> None:
         """Cyberdeck.__post_init__ accepts <=32-char names (validation preserved)."""
-        from roguelike_sprawl.combat.cyberdeck import Cyberdeck
+        from wet_run.combat.cyberdeck import Cyberdeck
 
         deck = Cyberdeck(name="Cortex-7")
         assert deck.name == "Cortex-7"
@@ -327,7 +327,7 @@ class TestPhase41Smoke:
 
     def test_m_factory_returns_fluff_message(self) -> None:
         """_m factory still produces a FluffMessage with given kwargs."""
-        from roguelike_sprawl.combat.gibson_fluff import FluffMessage, _m
+        from wet_run.combat.gibson_fluff import FluffMessage, _m
 
         msg = _m("combat_hit", "player_to_ice", "Test message", weight=2.0)
         assert isinstance(msg, FluffMessage)
@@ -338,7 +338,7 @@ class TestPhase41Smoke:
 
     def test_m_factory_default_weight(self) -> None:
         """_m factory defaults weight to 1.0."""
-        from roguelike_sprawl.combat.gibson_fluff import FluffMessage, _m
+        from wet_run.combat.gibson_fluff import FluffMessage, _m
 
         msg = _m("combat_hit", "player_to_ice", "Default weight")
         assert isinstance(msg, FluffMessage)
@@ -346,7 +346,7 @@ class TestPhase41Smoke:
 
     def test_translator_repr_includes_lang_and_keys(self) -> None:
         """Translator.__repr__ returns lang + key count (validation preserved)."""
-        from roguelike_sprawl.i18n.translator import Translator
+        from wet_run.i18n.translator import Translator
 
         t = Translator(lang="en")
         rep = repr(t)
@@ -356,7 +356,7 @@ class TestPhase41Smoke:
 
     def test_translator_repr_with_loaded_data(self) -> None:
         """Translator.__repr__ reflects loaded data size after _load()."""
-        from roguelike_sprawl.i18n.translator import Translator
+        from wet_run.i18n.translator import Translator
 
         t = Translator(lang="en")
         t._data = {"a": 1, "b": 2, "c": 3}  # simulate loaded state

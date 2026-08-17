@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'tessier_sleeper_arc' to roguelike_sprawl missions.json.
+"""Add new mission 'tessier_sleeper_arc' to wet_run missions.json.
 
 Pairs with Fiction Phase 57 — tessier-ashpool-sleepers concept page.
 Suit-arc, Arc 5: corporate-statework on Tessier-Ashpool family-tyranny scenario.

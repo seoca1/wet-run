@@ -18,11 +18,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
-from roguelike_sprawl.matrix import (  # noqa: E402
+from wet_run.matrix import (  # noqa: E402
     MatrixGraph,
     NodeKind,
 )
-from roguelike_sprawl.matrix.dungeon_generator import (  # noqa: E402
+from wet_run.matrix.dungeon_generator import (  # noqa: E402
     DungeonGenerator,
     ProceduralDungeonGenerator,
 )

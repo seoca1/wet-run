@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from roguelike_sprawl.i18n import Translator
+from wet_run.i18n import Translator
 
 
 def test_translator_english(data_dir: Path) -> None:

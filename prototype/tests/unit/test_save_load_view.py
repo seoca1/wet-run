@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import tcod.event
 
-from roguelike_sprawl.engine import AppState, SaveManager, ScreenKind, save_load_view
-from roguelike_sprawl.matrix.node import ZoneDepth
-from roguelike_sprawl.missions.mission import Mission, Rewards
-from roguelike_sprawl.run import Stage, start_run
+from wet_run.engine import AppState, SaveManager, ScreenKind, save_load_view
+from wet_run.matrix.node import ZoneDepth
+from wet_run.missions.mission import Mission, Rewards
+from wet_run.run import Stage, start_run
 
 
 def _make_state() -> AppState:
@@ -291,7 +291,7 @@ class TestHubIntegration:
     """Hub L key opens save/load, ESC returns to hub."""
 
     def test_hub_l_key_opens_save_load(self) -> None:
-        from roguelike_sprawl.engine import hub as hub_screen
+        from wet_run.engine import hub as hub_screen
 
         state = AppState()
         state.screen = ScreenKind.HUB
@@ -300,7 +300,7 @@ class TestHubIntegration:
         assert state.screen is ScreenKind.SAVE_LOAD
 
     def test_hub_escape_returns_to_menu(self) -> None:
-        from roguelike_sprawl.engine import hub as hub_screen
+        from wet_run.engine import hub as hub_screen
 
         state = AppState()
         state.screen = ScreenKind.HUB

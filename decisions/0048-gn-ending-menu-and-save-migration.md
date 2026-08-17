@@ -144,10 +144,10 @@ MENU (5 옵션)
 ### 구현 결과
 
 **Code**:
-- `src/roguelike_sprawl/engine/state.py`: `ScreenKind.GRAPHIC_NOVEL_ENDING_MENU` + `gn_ending_choice: str = "A"`
-- `src/roguelike_sprawl/engine/menu.py`: `handle_graphic_novel_ending_menu_input()` (N1=A, N2=B, N3/ESC/Q=back)
-- `src/roguelike_sprawl/engine/graphic_novel_view.py`: `get_gn_ending_menu_options()`, `render_graphic_novel_ending_menu()`, 상수 `GN_ENDING_A/B/BACK`, `_ENDING_DESCRIPTIONS` per character
-- `src/roguelike_sprawl/engine/graphic_novel_save.py`: `GN_SAVE_VERSION = "1.1.0"`, `GNProgress.ending: str = "A"`, `make_progress(ending="A")`, `from_dict` v1.0.0 migration
+- `src/wet_run/engine/state.py`: `ScreenKind.GRAPHIC_NOVEL_ENDING_MENU` + `gn_ending_choice: str = "A"`
+- `src/wet_run/engine/menu.py`: `handle_graphic_novel_ending_menu_input()` (N1=A, N2=B, N3/ESC/Q=back)
+- `src/wet_run/engine/graphic_novel_view.py`: `get_gn_ending_menu_options()`, `render_graphic_novel_ending_menu()`, 상수 `GN_ENDING_A/B/BACK`, `_ENDING_DESCRIPTIONS` per character
+- `src/wet_run/engine/graphic_novel_save.py`: `GN_SAVE_VERSION = "1.1.0"`, `GNProgress.ending: str = "A"`, `make_progress(ending="A")`, `from_dict` v1.0.0 migration
 - `scripts/play.py`: `_action_graphic_novel_ending_menu()`, ending in cache key + chain load
 - `scripts/demo.py`: ending menu hop, render call, cache key
 - `scripts/demo_all.py`: cache key update

@@ -25,17 +25,17 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.combat import (
+from wet_run.combat import (
     CombatState,
     IceRegistry,
     ProgramRegistry,
     step_combat,
     use_skill,
 )
-from roguelike_sprawl.combat.state import Combatant, Skill
-from roguelike_sprawl.matrix.ppl import Loadout, Program, calculate_ppl
-from roguelike_sprawl.matrix.zdr import calculate_status, status_color
-from roguelike_sprawl.portraits import PortraitManager
+from wet_run.combat.state import Combatant, Skill
+from wet_run.matrix.ppl import Loadout, Program, calculate_ppl
+from wet_run.matrix.zdr import calculate_status, status_color
+from wet_run.portraits import PortraitManager
 
 # 5 grades per ADR-0008 + ADR-0012. PPL values are formula-consistent.
 GRADES: list[dict] = [

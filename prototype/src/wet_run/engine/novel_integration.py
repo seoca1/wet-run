@@ -67,7 +67,7 @@ def _find_missions_path() -> Path:
 
     root = _find_repo_root()
     candidate = (
-        root / "Game" / "roguelike_sprawl" / "prototype" / "data" / "missions" / "missions.json"
+        root / "Game" / "wet_run" / "prototype" / "data" / "missions" / "missions.json"
     )
     if candidate.exists():
         _MISSIONS_PATH = candidate

@@ -28,12 +28,12 @@ import tcod.event
 # Make src/ importable when running directly.
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine.graphic_novel_save import (  # noqa: E402
+from wet_run.engine.graphic_novel_save import (  # noqa: E402
     GN_SAVE_VERSION,
     make_progress,
     save_gn_progress,
 )
-from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
+from wet_run.engine.graphic_novel_view import (  # noqa: E402
     Background,
     Portrait,
     load_background,
@@ -42,7 +42,7 @@ from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
     render_graphic_novel_menu,
     render_scene,
 )
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 # ============================================================================
 # Constants
@@ -129,7 +129,7 @@ def scene_3_ending_b_scene(translator: Translator) -> None:
     """Render the first scene of CASE ending B (case/05_refusal.json)."""
     _section("SCENE 3 — First dialogue of CASE ending B (case/05_refusal.json)")
     scene_path = DATA_DIR / "scenes" / "case" / "05_refusal.json"
-    from roguelike_sprawl.engine.graphic_novel_view import _parse_scene
+    from wet_run.engine.graphic_novel_view import _parse_scene
 
     with scene_path.open(encoding="utf-8") as f:
         scene = _parse_scene(json.load(f))
@@ -242,7 +242,7 @@ def scene_5_all_chars_ending_b() -> None:
         save_gn_progress(progress, tmp_path)
 
         # Load and verify
-        from roguelike_sprawl.engine.graphic_novel_save import load_gn_progress
+        from wet_run.engine.graphic_novel_save import load_gn_progress
 
         loaded = load_gn_progress(tmp_path)
         assert loaded.ending == "B", f"{char_id}: ending not preserved"

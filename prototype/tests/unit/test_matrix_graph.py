@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import pytest
 
-from roguelike_sprawl.matrix.graph import Edge, MatrixGraph, compute_layout
-from roguelike_sprawl.matrix.node import (
+from wet_run.matrix.graph import Edge, MatrixGraph, compute_layout
+from wet_run.matrix.node import (
     IceKind,
     Node,
     NodeKind,

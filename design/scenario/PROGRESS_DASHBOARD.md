@@ -1,4 +1,4 @@
-# Roguelike Sprawl — Project Dashboard
+# Wet Run — Project Dashboard
 
 **Last Updated**: 2026-07-08 (Phase 7 완료 상태)
 **Project Phase**: Phase 7 완료 (2026-07-07)

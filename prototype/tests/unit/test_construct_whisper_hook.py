@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from roguelike_sprawl.lore import (
+from wet_run.lore import (
     ConstructWhisper,
     check_construct_whisper_on_combat_start,
 )
-from roguelike_sprawl.matrix.node import Faction
-from roguelike_sprawl.run.reputation import ReputationState
+from wet_run.matrix.node import Faction
+from wet_run.run.reputation import ReputationState
 
 
 @dataclass

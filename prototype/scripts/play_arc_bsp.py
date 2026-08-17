@@ -38,16 +38,16 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from roguelike_sprawl.ecs.dungeon_system import DungeonSystem  # noqa: E402
-from roguelike_sprawl.ecs.world import World  # noqa: E402
-from roguelike_sprawl.matrix.dungeon_generator import (  # noqa: E402
+from wet_run.ecs.dungeon_system import DungeonSystem  # noqa: E402
+from wet_run.ecs.world import World  # noqa: E402
+from wet_run.matrix.dungeon_generator import (  # noqa: E402
     ProceduralDungeonGenerator,
 )
-from roguelike_sprawl.matrix.mission_mapper import (  # noqa: E402
+from wet_run.matrix.mission_mapper import (  # noqa: E402
     mission_to_graph,
     missions_to_rooms,
 )
-from roguelike_sprawl.missions import JobBoard  # noqa: E402
+from wet_run.missions import JobBoard  # noqa: E402
 
 ARC_PREFIXES = {
     "novice": ("case", 1),

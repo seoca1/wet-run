@@ -20,8 +20,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 import tcod.console  # noqa: E402
 
-from roguelike_sprawl.engine import graphic_novel_view  # noqa: E402
-from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
+from wet_run.engine import graphic_novel_view  # noqa: E402
+from wet_run.engine.graphic_novel_view import (  # noqa: E402
     Background,
     DialogueLine,
     Portrait,
@@ -37,7 +37,7 @@ from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
     render_scene,
     scene_progress,
 )
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 DATA_DIR = Path(__file__).parent.parent.parent / "data"
 SCENES_DIR = DATA_DIR / "scenes"

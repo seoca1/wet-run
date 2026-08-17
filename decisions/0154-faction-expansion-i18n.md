@@ -166,8 +166,8 @@ PPL_GROWTH_TARGETS: dict[str, float] = {
 
 ## 영향 받는 항목
 
-- `prototype/src/roguelike_sprawl/combat/intel_items.py` (5 LOC patch)
-- `prototype/src/roguelike_sprawl/combat/multi_enemy.py` (3 LOC PPL growth comment)
+- `prototype/src/wet_run/combat/intel_items.py` (5 LOC patch)
+- `prototype/src/wet_run/combat/multi_enemy.py` (3 LOC PPL growth comment)
 - `prototype/data/i18n/ja.json` (NEW, ~92 keys)
 - `prototype/data/i18n/zh.json` (NEW, ~92 keys)
 - `prototype/tests/unit/test_faction_expansion.py` (NEW, 4-6 tests)

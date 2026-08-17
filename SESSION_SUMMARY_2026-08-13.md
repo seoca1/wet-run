@@ -9,10 +9,10 @@ Mypy strict-mode hardening pass. Track A (data quality) and most of Track B (dep
 | Commit | Subject | Files |
 |---|---|---|
 | `47e275c` | `chore(mypy): enable possibly-undefined + fix 3 type errors` | 40 |
-| `b542125` | `docs(roguelike_sprawl): log entry` | 1 |
+| `b542125` | `docs(wet_run): log entry` | 1 |
 | `9bfacec` | `chore(mypy): enable explicit-override + @override on 17 dunder methods` | 13 |
-| `b6f8681` | `docs(roguelike_sprawl): log entry` | 1 |
-| `5a14255` | `docs(workspace): close roguelike_sprawl 🟡 items` (workspace) | 1 |
+| `b6f8681` | `docs(wet_run): log entry` | 1 |
+| `5a14255` | `docs(workspace): close wet_run 🟡 items` (workspace) | 1 |
 
 ## Findings — NEXT_SESSION_TODO 🟡 re-verified
 
@@ -71,12 +71,12 @@ No new ADR required — all changes are tool/strictness improvements, not archit
 
 ## Pending (user action only)
 
-- `git push origin main` with GH_TOKEN rotation (5 commits across 2 repos: `Projects/` workspace + `Game/roguelike_sprawl/`)
+- `git push origin main` with GH_TOKEN rotation (5 commits across 2 repos: `Projects/` workspace + `Game/wet_run/`)
 
 ## Related docs
 
 - Workspace `NEXT_SESSION_TODO.md` (updated with re-verified findings)
-- `Game/roguelike_sprawl/log.md` (2 new entries for 2026-08-13)
+- `Game/wet_run/log.md` (2 new entries for 2026-08-13)
 
 ## Session stats
 

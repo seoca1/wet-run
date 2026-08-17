@@ -1,4 +1,4 @@
-# Roguelike Sprawl - Wiki Index
+# Wet Run - Wiki Index
 
 위키/디자인/결정/테스트 페이지 카탈로그. LLM Wiki 표준 패턴.
 
@@ -34,7 +34,7 @@
 - [Style Guide](wiki/world/style_guide.md) - 톤과 미적 가이드
 - [Boss ICE Reference](wiki/world/boss-ice-reference.md) - **Phase B-3 5개 보스 ICE 프로필 + AoE/미니언 스폰 (2026-07-26)**
 - [Derivative Stories](wiki/world/derivative_stories.md) - **이차 창작 단편 매핑 (150 KO + 150 EN = 300 stories / 111 missions mapped, ADR-0051 schema)**
-- [Cross-Project Integration](wiki/world/cross-project-integration.md) - **Fiction ↔ roguelike_sprawl 양방향 통합 (Phase α-J)**
+- [Cross-Project Integration](wiki/world/cross-project-integration.md) - **Fiction ↔ wet_run 양방향 통합 (Phase α-J)**
 
 > **Primary source**: `../../../Fiction/wiki/` — 깁슨 원작 분석 (Sprawl Trilogy, characters, settings). 게임 wiki는 게임용 요약.
 

@@ -24,17 +24,17 @@ import tcod.console
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from roguelike_sprawl.engine import death  # noqa: F401  # used for _get_history monkeypatch
-from roguelike_sprawl.engine.death import (
+from wet_run.engine import death  # noqa: F401  # used for _get_history monkeypatch
+from wet_run.engine.death import (
     handle_death_summary_choice,
     render_death_screen,
     render_death_summary_screen,
     render_hall_of_dead_screen,
     trigger_death,
 )
-from roguelike_sprawl.engine.jockey_history import JockeyHistory
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.i18n import Translator
+from wet_run.engine.jockey_history import JockeyHistory
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.i18n import Translator
 
 
 def _console_to_text(console: tcod.console.Console) -> str:
@@ -101,7 +101,7 @@ def main() -> int:
     console = tcod.console.Console(80, 30, order="F")
 
     # Patch JockeyHistory to use demo path
-    from roguelike_sprawl.engine import death as death_mod
+    from wet_run.engine import death as death_mod
 
     def _demo_history() -> JockeyHistory:
         # Load or create the demo archive
@@ -137,7 +137,7 @@ def main() -> int:
             render_death_screen(console, state)
         elif state.screen is ScreenKind.DEATH and state.is_dead:
             # Already dead — advance to DEATH_SUMMARY
-            from roguelike_sprawl.engine.death import advance_to_death_summary
+            from wet_run.engine.death import advance_to_death_summary
 
             advance_to_death_summary(state)
             screen = "DEATH_SUMMARY"

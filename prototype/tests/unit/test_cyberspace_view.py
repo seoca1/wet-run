@@ -11,8 +11,8 @@ from __future__ import annotations
 from types import SimpleNamespace
 from unittest.mock import MagicMock
 
-from roguelike_sprawl.engine import cyberspace_view
-from roguelike_sprawl.matrix import NodeKind
+from wet_run.engine import cyberspace_view
+from wet_run.matrix import NodeKind
 
 # ---------------------------------------------------------------------------
 # _is_visible
@@ -153,7 +153,7 @@ class _FakeConsole:
 
 class TestRenderCyberspaceSmoke:
     def test_renders_without_crash(self) -> None:
-        from roguelike_sprawl.matrix import Node
+        from wet_run.matrix import Node
 
         node = Node(
             id="n1",

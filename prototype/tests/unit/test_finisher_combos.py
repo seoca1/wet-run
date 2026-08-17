@@ -6,7 +6,7 @@ import dataclasses
 
 import pytest
 
-from roguelike_sprawl.combat.finisher_combos import (
+from wet_run.combat.finisher_combos import (
     FINISHER_REGISTRY,
     FinisherCombo,
     can_trigger_finisher,

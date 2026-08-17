@@ -15,8 +15,8 @@
 ```bash
 # 새 맥북에서 한 줄 요약
 brew install uv tmux tailscale && \
-  git clone <repo-url> roguelike-sprawl && \
-  cd roguelike-sprawl/prototype && \
+  git clone <repo-url> wet-run && \
+  cd wet-run/prototype && \
   uv sync --all-extras && \
   uv run python scripts/download_font.py && \
   uv run pytest
@@ -99,8 +99,8 @@ VSCode 설치 → Remote SSH 확장 → `Ctrl+Shift+P` → "Remote-SSH: Connect 
 ssh your_username@<원격 IP>
 
 cd ~/projects/Projects   # 또는 원하는 위치
-git clone <repo-url> roguelike-sprawl
-cd roguelike-sprawl/prototype
+git clone <repo-url> wet-run
+cd wet-run/prototype
 
 # Python 의존성 설치 (uv가 자동으로 venv 생성)
 uv sync --all-extras
@@ -121,7 +121,7 @@ uv run mypy src tests  # typecheck clean
 
 ### 로컬 작업 (터미널 직접)
 ```bash
-cd ~/projects/Projects/roguelike-sprawl/prototype
+cd ~/projects/Projects/wet-run/prototype
 opencode
 ```
 
@@ -133,7 +133,7 @@ ssh your_username@<IP>
 tmux new-session -s dev
 
 # 세션 안에서
-cd ~/projects/Projects/roguelike-sprawl/prototype
+cd ~/projects/Projects/wet-run/prototype
 opencode
 
 # 작업 중 SSH 끊김:
@@ -227,7 +227,7 @@ sudo /usr/libexec/ApplicationFirewall/socketfilterfw --add /usr/sbin/sshd
 
 ### 정기 백업 (git)
 ```bash
-cd roguelike-sprawl
+cd wet-run
 git add -A
 git commit -m "wip: <간단한 설명>"
 git push origin main

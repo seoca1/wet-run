@@ -328,8 +328,8 @@ def on_skill_attack(console: Console, program: Program, x: int, y: int) -> None:
 `CombatEffects` 컨테이너.
 
 ```python
-from roguelike_sprawl.combat.effects import CombatEffects
-from roguelike_sprawl.combat.effects import (
+from wet_run.combat.effects import CombatEffects
+from wet_run.combat.effects import (
     spawn_jackin_glitch, spawn_room_flash,
     spawn_data_acquired, spawn_jackout_whiteout,
 )

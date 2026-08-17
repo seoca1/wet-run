@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from tcod.event import KeyDown, KeySym, Modifier, Scancode
 
-from roguelike_sprawl.engine.state import AppState
-from roguelike_sprawl.engine.story_cinematic import (
+from wet_run.engine.state import AppState
+from wet_run.engine.story_cinematic import (
     PROLOGUE_SCENE,
     CinematicState,
     StoryLine,

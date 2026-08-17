@@ -360,7 +360,7 @@ def main():
     import argparse
     parser = argparse.ArgumentParser(description='Convert short story markdown to HTML')
     parser.add_argument('--source-dir', default='/Users/emilio/projects/Projects/Fiction/derivative/sprawl-trilogy/short-stories', help='Source markdown directory')
-    parser.add_argument('--output-dir', default='/Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/stories/short-stories', help='Output HTML directory')
+    parser.add_argument('--output-dir', default='/Users/emilio/projects/Projects/Game/wet_run/dashboard/stories/short-stories', help='Output HTML directory')
     parser.add_argument('--lang', choices=['en', 'ko', 'both'], default='both', help='Language to convert')
     args = parser.parse_args()
 

@@ -1,4 +1,4 @@
-# Roguelike Sprawl — 스테이터스 & 난이도 설계
+# Wet Run — 스테이터스 & 난이도 설계
 
 **문서 상태**: DRAFT
 **Created**: 2026-06-23
@@ -600,10 +600,10 @@ def predict_combat_time(player_ppl: int, enemies: list[EnemySpawn]) -> float:
 
 | 파일 | 변경사항 |
 |------|---------|
-| `src/roguelike_sprawl/combat/state.py` | CombatStats 확장 |
-| `src/roguelike_sprawl/combat/registry.py` | ICE 스케일링 로직 추가 |
+| `src/wet_run/combat/state.py` | CombatStats 확장 |
+| `src/wet_run/combat/registry.py` | ICE 스케일링 로직 추가 |
 | `data/combat/ice_types.json` | tier, hp_per_grade, dmg_per_grade 필드 추가 |
-| `src/roguelike_sprawl/engine/state.py` | PlayerProgression 추가 |
-| `src/roguelike_sprawl/engine/npc_event.py` | NPCStats 추가 |
-| `src/roguelike_sprawl/engine/phase.py` | StageConfig 정의 |
+| `src/wet_run/engine/state.py` | PlayerProgression 추가 |
+| `src/wet_run/engine/npc_event.py` | NPCStats 추가 |
+| `src/wet_run/engine/phase.py` | StageConfig 정의 |
 | `scripts/demo.py` | 시나리오별 초기 상태 함수 |

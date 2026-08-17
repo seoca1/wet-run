@@ -26,25 +26,25 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent / "src"))
 
 import tcod.console  # noqa: E402
 
-from roguelike_sprawl.engine.graphic_novel_save import (  # noqa: E402
+from wet_run.engine.graphic_novel_save import (  # noqa: E402
     GN_SAVE_VERSION,
     GNProgress,
     load_gn_progress,
     make_progress,
     save_gn_progress,
 )
-from roguelike_sprawl.engine.graphic_novel_view import (  # noqa: E402
+from wet_run.engine.graphic_novel_view import (  # noqa: E402
     GN_ENDING_A,
     GN_ENDING_B,
     GN_ENDING_BACK,
     get_gn_ending_menu_options,
     render_graphic_novel_ending_menu,
 )
-from roguelike_sprawl.engine.menu import (  # noqa: E402
+from wet_run.engine.menu import (  # noqa: E402
     handle_graphic_novel_ending_menu_input,
 )
-from roguelike_sprawl.engine.state import AppState  # noqa: E402
-from roguelike_sprawl.i18n import Translator  # noqa: E402
+from wet_run.engine.state import AppState  # noqa: E402
+from wet_run.i18n import Translator  # noqa: E402
 
 # ============================================================================
 # Fixtures
@@ -438,7 +438,7 @@ class TestEndingConstants:
 
 class TestScreenKind:
     def test_ending_menu_screen_exists(self) -> None:
-        from roguelike_sprawl.engine.state import ScreenKind
+        from wet_run.engine.state import ScreenKind
 
         assert hasattr(ScreenKind, "GRAPHIC_NOVEL_ENDING_MENU")
         assert ScreenKind.GRAPHIC_NOVEL_ENDING_MENU.value == "graphic_novel_ending_menu"

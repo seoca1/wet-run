@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from roguelike_sprawl.story.ending_renderer import (
+from wet_run.story.ending_renderer import (
     EndingRenderer,
     EndingScene,
     EndingSceneSequence,
@@ -129,7 +129,7 @@ class TestEndingRendererRender:
 
     def test_render_no_special_consequences(self) -> None:
         renderer = EndingRenderer()
-        from roguelike_sprawl.story.endings import get_ending
+        from wet_run.story.endings import get_ending
 
         ending = get_ending("ending_case_sacrifice")
         if ending is None or ending.get("reward", {}).get("credits", 0) > 0:

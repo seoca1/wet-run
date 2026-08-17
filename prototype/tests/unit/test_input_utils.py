@@ -15,7 +15,7 @@ from __future__ import annotations
 import pytest
 from tcod.event import KeySym
 
-from roguelike_sprawl.engine.input_utils import (  # type: ignore[import-untyped]
+from wet_run.engine.input_utils import (  # type: ignore[import-untyped]
     CANCEL_KEYS,
     CONFIRM_KEYS,
     QUIT_KEYS,

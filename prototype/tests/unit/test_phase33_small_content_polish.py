@@ -147,7 +147,7 @@ class TestStoryViewDocstringCoverage:
 
     def test_story_registry_methods_have_docstrings(self) -> None:
         """The 3 StoryRegistry methods (load, get_aftermath, get_reaction) need docstrings."""
-        from roguelike_sprawl.engine.story_view import StoryRegistry
+        from wet_run.engine.story_view import StoryRegistry
 
         assert StoryRegistry.load.__doc__ is not None
         assert StoryRegistry.get_aftermath.__doc__ is not None
@@ -155,7 +155,7 @@ class TestStoryViewDocstringCoverage:
 
     def test_load_helpers_have_docstrings(self) -> None:
         """The 2 module-level _load_* helpers need docstrings."""
-        from roguelike_sprawl.engine import story_view
+        from wet_run.engine import story_view
 
         assert story_view._load_aftermaths.__doc__ is not None
         assert story_view._load_reactions.__doc__ is not None
@@ -164,7 +164,7 @@ class TestStoryViewDocstringCoverage:
         """story_view.py reaches 100% interrogate coverage."""
         from interrogate.coverage import InterrogateCoverage
 
-        ic = InterrogateCoverage(paths=["src/roguelike_sprawl/engine/story_view.py"])
+        ic = InterrogateCoverage(paths=["src/wet_run/engine/story_view.py"])
         result = ic.get_coverage()
         file_result = result.file_results[0]
         assert file_result.missing == 0, (
@@ -182,7 +182,7 @@ class TestImprovedErrorMessages:
 
     def test_status_effects_v2_error_lists_valid_types(self) -> None:
         """make_status_v2 raises ValueError mentioning valid types."""
-        from roguelike_sprawl.combat.status_effects_v2 import make_status_v2
+        from wet_run.combat.status_effects_v2 import make_status_v2
 
         with pytest.raises(ValueError, match="must be one of") as exc_info:
             make_status_v2("nonexistent_status_xyz")
@@ -192,7 +192,7 @@ class TestImprovedErrorMessages:
 
     def test_meta_progression_error_lists_valid_unlock_ids(self) -> None:
         """record_meta_progress raises ValueError mentioning valid unlock ids."""
-        from roguelike_sprawl.combat.meta_progression import record_meta_progress
+        from wet_run.combat.meta_progression import record_meta_progress
 
         with pytest.raises(ValueError, match="Unknown unlock") as exc_info:
             record_meta_progress("nonexistent_unlock_xyz")
@@ -204,7 +204,7 @@ class TestImprovedErrorMessages:
 
     def test_register_hook_action_error_lists_valid_hookkinds(self) -> None:
         """register_hook_action raises ValueError mentioning valid HookKind names."""
-        from roguelike_sprawl.novel.hooks import register_hook_action
+        from wet_run.novel.hooks import register_hook_action
 
         # Use a non-HookKind sentinel via direct call (HookKind is an enum StrEnum)
         bogus_kind = type("BogusKind", (), {})()  # not a HookKind

@@ -16,17 +16,17 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
-from roguelike_sprawl.combat.telemetry import TELEMETRY_EVENT_TYPES
-from roguelike_sprawl.combat.telemetry_integration import (
+from wet_run.combat.telemetry import TELEMETRY_EVENT_TYPES
+from wet_run.combat.telemetry_integration import (
     TelemetryConfig,
     TelemetryIntegrator,
 )
-from roguelike_sprawl.engine import death as death_mod
-from roguelike_sprawl.engine import menu as menu_mod
-from roguelike_sprawl.engine import reward_view as reward_view_mod
-from roguelike_sprawl.engine.mission_completion import complete_mission
-from roguelike_sprawl.engine.state import AppState, ScreenKind
-from roguelike_sprawl.missions.mission import Mission, Objective, Rewards
+from wet_run.engine import death as death_mod
+from wet_run.engine import menu as menu_mod
+from wet_run.engine import reward_view as reward_view_mod
+from wet_run.engine.mission_completion import complete_mission
+from wet_run.engine.state import AppState, ScreenKind
+from wet_run.missions.mission import Mission, Objective, Rewards
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -141,7 +141,7 @@ class TestRecordRunCompletedWiring:
         state.current_mission = _make_mission("first_jack")
         # Stub run_state so the while-loop in return_to_hub_from_reward
         # terminates deterministically.
-        from roguelike_sprawl.run import Stage
+        from wet_run.run import Stage
 
         fake_run_state = SimpleNamespace(current_stage=Stage.REWARD)
 
@@ -159,7 +159,7 @@ class TestRecordRunCompletedWiring:
     def test_reward_no_opt_in_no_run_completed(self) -> None:
         state = _make_test_state(opt_in=False)
         state.current_mission = _make_mission("first_jack")
-        from roguelike_sprawl.run import Stage
+        from wet_run.run import Stage
 
         fake_run_state = SimpleNamespace(current_stage=Stage.REWARD)
 
@@ -278,14 +278,14 @@ class TestRecordBossReachedWiring:
         """
         from typing import cast
 
-        from roguelike_sprawl.combat.boss import (
+        from wet_run.combat.boss import (
             BOSS_PROFILES,
             PhaseProfile,
         )
-        from roguelike_sprawl.combat.effects_data import IceType
-        from roguelike_sprawl.combat.state_models import Combatant
-        from roguelike_sprawl.engine.combat_view_state import start_combat
-        from roguelike_sprawl.matrix.node import Faction, Node, NodeKind, ZoneDepth
+        from wet_run.combat.effects_data import IceType
+        from wet_run.combat.state_models import Combatant
+        from wet_run.engine.combat_view_state import start_combat
+        from wet_run.matrix.node import Faction, Node, NodeKind, ZoneDepth
 
         boss_kind = IceType(ice_kind_str) if ice_kind_str in {it.value for it in IceType} else None
         if boss_kind is None or boss_kind not in BOSS_PROFILES:
@@ -315,7 +315,7 @@ class TestRecordBossReachedWiring:
                 return None
 
         # Patch build_ice_enemy to return a simple Combatant.
-        import roguelike_sprawl.engine.combat_view_state as cvs
+        import wet_run.engine.combat_view_state as cvs
 
         original_build_ice_enemy = cvs.build_ice_enemy
         cvs.build_ice_enemy = lambda kind_id, _reg: Combatant(  # type: ignore[assignment]
@@ -373,7 +373,7 @@ class TestRecordKillWiring:
         actual recorder on ``TelemetryIntegrator.record_kill`` is the
         production path. Verify the stub doesn't crash (no opt-in logic
         is needed because telemetry.py guards internally)."""
-        from roguelike_sprawl.combat.telemetry_integration import record_kill
+        from wet_run.combat.telemetry_integration import record_kill
 
         record_kill("standard", turn=5)  # no exception
 

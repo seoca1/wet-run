@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'pan_mannerist_audit' to roguelike_sprawl missions.json.
+"""Add new mission 'pan_mannerist_audit' to wet_run missions.json.
 
 Pairs with Fiction Phase 42 — Pan-Mannerists faction page (wiki/factions/pan-mannerists.md).
 Suit-arc, Arc 5: corporate-statework on working-class-matrix-operator

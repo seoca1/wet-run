@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add new mission 'trauma_squads_audit' to roguelike_sprawl missions.json.
+"""Add new mission 'trauma_squads_audit' to wet_run missions.json.
 
 Pairs with Fiction Phase 40 — Trauma-Squads concept page (wiki/concepts/trauma-squads.md).
 Suit-arc, Arc 5: corporate-statework on post-cortex-hound service class.

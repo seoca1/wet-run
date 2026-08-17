@@ -186,13 +186,12 @@ class TestArmitagePortraits:
         for portrait in self.EXPECTED_PORTRAITS:
             assert data[portrait]["character"] == "suit", f"{portrait} should be character=suit"
 
-    def test_portraits_have_10x14_grid(self, data_dir: Path) -> None:
+    def test_portraits_have_10x12_grid(self, data_dir: Path) -> None:
         p = data_dir / "art" / "portraits" / "portraits.json"
         data = json.loads(p.read_text(encoding="utf-8"))
         for portrait in self.EXPECTED_PORTRAITS:
-            assert data[portrait]["size"] == [10, 14]
-            # 14 lines of art (one per row).
-            assert len(data[portrait]["art"]) == 14
+            assert data[portrait]["size"] == [10, 12]
+            assert len(data[portrait]["art"]) == 12
 
 
 class TestTessierAshpoolLab:

@@ -13,7 +13,7 @@ fi
 
 THEME="$1"
 SRC="$2"
-SND="/Users/emilio/projects/Projects/Game/roguelike_sprawl/dashboard/sounds"
+SND="/Users/emilio/projects/Projects/Game/wet_run/dashboard/sounds"
 FULL_DIR="$SND/full"
 BGM_FILE="$SND/theme_${THEME}.wav"
 FULL_FILE="$FULL_DIR/theme_${THEME}.wav"

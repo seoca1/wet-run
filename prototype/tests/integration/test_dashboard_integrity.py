@@ -79,7 +79,7 @@ def check_title_h1_match() -> list[str]:
         if not (title and h1):
             errors.append(f"  {html.name}: missing <title> or <h1>")
             continue
-        title_clean = title.group(1).replace(" — Roguelike Sprawl", "").strip()
+        title_clean = title.group(1).replace(" — Wet Run", "").strip()
         h1_clean = h1.group(1).strip()
         if title_clean != h1_clean:
             errors.append(f"  {html.name}: title={title_clean!r} != h1={h1_clean!r}")

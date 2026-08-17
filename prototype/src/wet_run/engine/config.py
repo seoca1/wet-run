@@ -9,7 +9,7 @@ from pathlib import Path
 # Screen
 SCREEN_WIDTH = 80
 SCREEN_HEIGHT = 50
-SCREEN_TITLE = "Roguelike Sprawl"
+SCREEN_TITLE = "Wet Run"
 
 # FPS target
 TARGET_FPS = 60

@@ -1,4 +1,4 @@
-"""Audio module for Roguelike Sprawl.
+"""Audio module for Wet Run.
 
 Provides sound playback with zero external dependencies.
 Uses subprocess + system tools (afplay on macOS, aplay on Linux).

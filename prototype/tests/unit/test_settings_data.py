@@ -537,7 +537,7 @@ class TestGetSettingsSummary:
 
 class TestVersionInfo:
     def test_constants(self):
-        assert GAME_NAME == "Roguelike Sprawl"
+        assert GAME_NAME == "Wet Run"
         assert GAME_AUTHOR == "emilio"
         assert isinstance(GAME_VERSION, str)
         assert len(GAME_VERSION) > 0

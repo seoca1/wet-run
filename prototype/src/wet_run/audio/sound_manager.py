@@ -1,4 +1,4 @@
-"""Sound manager for Roguelike Sprawl.
+"""Sound manager for Wet Run.
 
 Plays sound effects via subprocess + system tools:
 - macOS: afplay (built-in)

@@ -1,5 +1,5 @@
 {
-  "repo": "/Users/emilio/projects/Projects/Game/roguelike_sprawl",
+  "repo": "/Users/emilio/projects/Projects/Game/wet_run",
   "outputs": {
     "combat_stats.json": "dashboard/data/combat_stats.json",
     "library_stats.json": "dashboard/data/library_stats.json",

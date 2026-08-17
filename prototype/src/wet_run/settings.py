@@ -492,7 +492,7 @@ def get_settings_summary(settings: GameSettings) -> dict[str, Any]:
 
 
 GAME_VERSION = "0.5.0"
-GAME_NAME = "Roguelike Sprawl"
+GAME_NAME = "Wet Run"
 GAME_AUTHOR = "emilio"
 
 

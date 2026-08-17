@@ -1,7 +1,7 @@
 # Wet Run
 
-[![CI](https://github.com/seoca1/roguelike-sprawl/actions/workflows/ci.yml/badge.svg)](https://github.com/seoca1/roguelike-sprawl/actions)
-[![Pages](https://github.com/seoca1/roguelike-sprawl/actions/workflows/pages.yml/badge.svg)](https://seoca1.github.io/roguelike-sprawl/)
+[![CI](https://github.com/seoca1/wet-run/actions/workflows/ci.yml/badge.svg)](https://github.com/seoca1/wet-run/actions)
+[![Pages](https://github.com/seoca1/wet-run/actions/workflows/pages.yml/badge.svg)](https://seoca1.github.io/wet-run/)
 [![Tests](https://img.shields.io/badge/tests-5281%20passing-brightgreen)]()
 [![Lint](https://img.shields.io/badge/lint-ruff-blue)]()
 [![Typecheck](https://img.shields.io/badge/typecheck-mypy%20strict-blue)]()
@@ -11,7 +11,7 @@
 
 플레이어는 **콘솔 카우보이(console cowboy)**가 되어 사이버스페이스에 진입, ICE를 뚫고 데이터를 탈취하며 임무를 수행한다. 죽으면 끝. 그러나 더 좋은 데크(cyberdeck), 프로그램, 웨웨어(wetware), construct로 돌아와 더 깊이 들어간다.
 
-🌆 **Live Dashboard**: https://seoca1.github.io/roguelike-sprawl/
+🌆 **Live Dashboard**: https://seoca1.github.io/wet-run/
 
 ## 핵심 컨셉
 - 매 런은 "잡(job)" — 의뢰인의 의뢰, 타겟 시스템, 보상

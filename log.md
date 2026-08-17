@@ -45,8 +45,8 @@
 
 GitHub repo는 여전히 `seoca1/roguelike-sprawl` 입니다. 다음 사용자 작업 후속 필요:
 - GitHub Settings → Rename repository → `seoca1/wet-run`
-- rename 후 README/INDEX/docs의 `github.com/seoca1/roguelike-sprawl` → `github.com/seoca1/wet-run` 일괄 갱신
-- Pages URL `seoca1.github.io/roguelike-sprawl` → `seoca1.github.io/wet-run` 자동 적용
+- rename 후 README/INDEX/docs의 `github.com/seoca1/wet-run` → `github.com/seoca1/wet-run` 일괄 갱신
+- Pages URL `seoca1.github.io/wet-run` → `seoca1.github.io/wet-run` 자동 적용
 - GH_TOKEN rotation 후 push 가능
 
 ### 6. Out-of-scope (preserved)

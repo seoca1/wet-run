@@ -82,7 +82,7 @@ gh auth login
 gh project create --title "Wet Run Development" --public
 
 # Add initial cards
-gh project item-add 1 --owner seoca1 --url https://github.com/seoca1/roguelike-sprawl/issues/1
+gh project item-add 1 --owner seoca1 --url https://github.com/seoca1/wet-run/issues/1
 ```
 
 ### Auto-label (already enabled)

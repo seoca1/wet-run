@@ -60,7 +60,7 @@ Phase 1-5 complete:
 cd /Users/emilio/projects/Projects/Game/wet_run
 
 # 원격 추가
-git remote add origin https://github.com/seoca1/roguelike-sprawl.git
+git remote add origin https://github.com/seoca1/wet-run.git
 
 # 원격 확인
 git remote -v
@@ -85,8 +85,8 @@ Push 후 자동으로 Actions 탭에서 실행됨.
 3. (저장) — 자동 배포 시작
 
 배포 완료 후:
-- 대시보드: `https://seoca1.github.io/roguelike-sprawl/`
-- Roguelike submenu: `https://seoca1.github.io/roguelike-sprawl/wet_run/`
+- 대시보드: `https://seoca1.github.io/wet-run/`
+- Roguelike submenu: `https://seoca1.github.io/wet-run/wet_run/`
 
 ## 🏷️ Step 6: 첫 Release (5분)
 
@@ -134,7 +134,7 @@ GitHub → Releases → 새 release 자동 생성됨. 편집 가능.
 - [ ] `git log` 에 첫 commit 보임
 - [ ] GitHub 저장소에 모든 파일 push 완료
 - [ ] Actions 탭에서 CI 모두 통과 (초록 ✓)
-- [ ] Pages URL 작동 (`https://seoca1.github.io/roguelike-sprawl/`)
+- [ ] Pages URL 작동 (`https://seoca1.github.io/wet-run/`)
 - [ ] v0.5.0 Release 페이지 존재
 - [ ] 대시보드 5개 (Hub / Roguelike sub / Story / Stages / Typing) 모두 접속 가능
 

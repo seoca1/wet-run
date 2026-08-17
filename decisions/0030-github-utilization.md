@@ -174,7 +174,7 @@ git commit -m "feat: initial commit - Wet Run Phase 1-5 complete
 3. Description: "🌆 깁슨 스프롤 3부작 기반 로그라이크 · Python + tcod"
 4. Public / Private 선택
 5. **README, .gitignore, license 모두 추가 안 함** (이미 있음)
-6. `git remote add origin https://github.com/seoca1/roguelike-sprawl.git`
+6. `git remote add origin https://github.com/seoca1/wet-run.git`
 7. `git push -u origin main`
 
 ### Phase 2: CI 워크플로우 (15분)
@@ -225,7 +225,7 @@ GitHub → Releases → Draft new release
 ### 긍정적 (2026-07-04 시점)
 - ✅ **코드 이력 영구 보존**: `git log` 200+ 커밋, 모든 이전 세션 작업 추적 가능
 - ✅ **PR마다 자동 CI**: test/lint/typecheck 3-in-1, **4097 tests pass + ruff 0 + mypy 0** 보장
-- ✅ **대시보드 무료 호스팅**: `https://seoca1.github.io/roguelike-sprawl/` (GitHub Pages)
+- ✅ **대시보드 무료 호스팅**: `https://seoca1.github.io/wet-run/` (GitHub Pages)
 - ✅ **외부 협업자/관찰자 접근 가능**: Public 저장소
 - ✅ **typing_language와 일관된 워크플로우**: seoca1 계정, 동일 워크플로우 패턴
 - ✅ **MIT 라이선스**: 깁슨 IP 고지 명시, 깁슨 원작과 명확히 분리
@@ -262,7 +262,7 @@ GitHub → Releases → Draft new release
 | 항목 | 상태 |
 |---|---|
 | `git init` + 첫 commit | ✅ 완료 (typing_language 이전 세션에서) |
-| GitHub 원격 저장소 | ✅ `https://github.com/seoca1/roguelike-sprawl` |
+| GitHub 원격 저장소 | ✅ `https://github.com/seoca1/wet-run` |
 | `.github/workflows/ci.yml` | ✅ 존재 (test + lint + typecheck) |
 | `.github/workflows/pages.yml` | ✅ 존재 (대시보드 자동 배포) |
 | `.github/labeler.yml` | ✅ 존재 (12개 자동 라벨) |
@@ -282,7 +282,7 @@ GitHub → Releases → Draft new release
 - 라이트/다크 모드 토글
 - 한국어/영어 검색 지원 (Material 기본)
 - **Pages 워크플로우**: `mkdocs build` → `site/` → `_pages/wiki/` → `gh-pages` 브랜치
-- **배포 URL**: `https://seoca1.github.io/roguelike-sprawl/wiki/`
+- **배포 URL**: `https://seoca1.github.io/wet-run/wiki/`
 - 빌드 산출물: 8 HTML 페이지 (1 home + 6 world + 1 404), 약 2.9 MB
 
 ### 추후 보류

@@ -4,7 +4,7 @@
 
 ## TL;DR
 
-**`main` 브랜치에 push하는 순간, 1-2분 내로 https://seoca1.github.io/roguelike-sprawl/ 에 자동 반영됩니다.**
+**`main` 브랜치에 push하는 순간, 1-2분 내로 https://seoca1.github.io/wet-run/ 에 자동 반영됩니다.**
 
 수동 작업 0회. Pages UI 클릭 불필요. GitHub UI 로그인 불필요.
 
@@ -39,7 +39,7 @@ GitHub Actions 트리거 (조건: main push)
     ↓
 GitHub Pages 자동 감지 (Source: gh-pages)
     ↓ 1-2분
-라이브: https://seoca1.github.io/roguelike-sprawl/
+라이브: https://seoca1.github.io/wet-run/
 ```
 
 ## 2. 자동 트리거 조건
@@ -68,7 +68,7 @@ git commit -m "feat(dashboard): update story content"
 git push origin main
 
 # 4. 1-2분 대기
-# 5. https://seoca1.github.io/roguelike-sprawl/ 에서 확인
+# 5. https://seoca1.github.io/wet-run/ 에서 확인
 ```
 
 ### 3.2 새 Dashboard 추가
@@ -90,7 +90,7 @@ git push origin main
 
 ### 4.1 GitHub Actions UI
 ```
-https://github.com/seoca1/roguelike-sprawl/actions
+https://github.com/seoca1/wet-run/actions
 ```
 - ✅ 초록 = 배포 성공
 - ❌ 빨강 = 빌드 실패 (로그 확인)
@@ -98,7 +98,7 @@ https://github.com/seoca1/roguelike-sprawl/actions
 ### 4.2 CLI로 빠른 검증
 ```bash
 # Pages 사이트
-curl -sI https://seoca1.github.io/roguelike-sprawl/
+curl -sI https://seoca1.github.io/wet-run/
 
 # Pages API
 curl -s https://api.github.com/repos/seoca1/wet-run/pages
@@ -200,7 +200,7 @@ git push origin --delete gh-pages  # 또는 force push
 
 - **빌드 시간**: push 후 1-2분. 즉시 반영 아님.
 - **퍼블릭 전용**: `seoca1/wet-run`은 public. 비공개 repo는 GitHub Pro 필요.
-- **도메인**: `seoca1.github.io/roguelike-sprawl/`만 지원. 커스텀 도메인은 CNAME 추가 필요.
+- **도메인**: `seoca1.github.io/wet-run/`만 지원. 커스텀 도메인은 CNAME 추가 필요.
 
 ---
 

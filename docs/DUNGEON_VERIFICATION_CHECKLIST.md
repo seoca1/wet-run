@@ -427,7 +427,7 @@
 - [ ] CI typecheck 통과 (mypy strict)
 - [ ] CI test 통과 (pytest 2,257+)
 - [ ] **Dashboard Pages** 배포 통과
-- [ ] Live 사이트: https://seoca1.github.io/roguelike-sprawl/
+- [ ] Live 사이트: https://seoca1.github.io/wet-run/
 
 ### Live 사이트
 

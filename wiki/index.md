@@ -7,8 +7,8 @@
 
 ## 둘러보기
 
-- 🎮 **[게임 대시보드](https://seoca1.github.io/roguelike-sprawl/)** — 5개 대시보드 (Story, Stages, Combat, Equipment, Cyberspace)
-- 📖 **[GitHub 저장소](https://github.com/seoca1/roguelike-sprawl)** — 소스 코드, 이슈, 릴리스
+- 🎮 **[게임 대시보드](https://seoca1.github.io/wet-run/)** — 5개 대시보드 (Story, Stages, Combat, Equipment, Cyberspace)
+- 📖 **[GitHub 저장소](https://github.com/seoca1/wet-run)** — 소스 코드, 이슈, 릴리스
 - 🌐 **세계관 위키** — 사이버스페이스, Faction, Glossary, Style Guide
 - ⚙️ **디자인 노트** — GDD, Pillars, 시스템 명세
 - 📋 **결정 기록** — 60+ ADR (libtcod, RT-MS 전투, Faction Reputation 등)

@@ -55,19 +55,40 @@ class MatrixGraph:
         """Validate graph invariants: unique node ids, valid entry, valid edges.
 
         Raises:
-            ValueError: If duplicate node ids, unknown entry_id, or edges
-                referencing nodes that are not in the graph.
+            ValueError: Under any of the following conditions (each
+                message names the offending element so callers can
+                self-diagnose without reading source):
+                  * Duplicate node ids — message includes the count
+                    of unique ids vs. total node count.
+                  * ``entry_id`` is set but not present among the node
+                    ids — message lists the count of known ids.
+                  * An edge references a ``src`` or ``dst`` that is
+                    not among the node ids — message includes the
+                    count of known ids.
         """
         ids = {n.id for n in self.nodes}
         if len(ids) != len(self.nodes):
-            raise ValueError("MatrixGraph: duplicate node ids")
+            raise ValueError(
+                f"MatrixGraph: duplicate node ids "
+                f"(unique={len(ids)}, total={len(self.nodes)} — "
+                f"every node.id must be unique per ADR-0005)"
+            )
         if self.entry_id and self.entry_id not in ids:
-            raise ValueError(f"entry_id {self.entry_id!r} not in nodes")
+            raise ValueError(
+                f"MatrixGraph: entry_id {self.entry_id!r} not in nodes "
+                f"(known ids: {len(ids)}, sample: {sorted(ids)[:3]})"
+            )
         for e in self.edges:
             if e.src not in ids:
-                raise ValueError(f"edge src {e.src!r} not in nodes")
+                raise ValueError(
+                    f"MatrixGraph: edge src {e.src!r} not in nodes "
+                    f"(known ids: {len(ids)}, sample: {sorted(ids)[:3]})"
+                )
             if e.dst not in ids:
-                raise ValueError(f"edge dst {e.dst!r} not in nodes")
+                raise ValueError(
+                    f"MatrixGraph: edge dst {e.dst!r} not in nodes "
+                    f"(known ids: {len(ids)}, sample: {sorted(ids)[:3]})"
+                )
 
     def get(self, node_id: str) -> Node | None:
         """Return the Node with the given id, or None if absent."""
@@ -164,14 +185,21 @@ class MatrixGraph:
             if isinstance(n, dict):
                 nodes_data.append(n)
             else:
-                raise ValueError(f"Invalid node data: {n!r}")
+                raise ValueError(
+                    f"MatrixGraph.from_dict: invalid node data {n!r} "
+                    f"(expected dict with keys: id, kind, label, zone; "
+                    f"optional: ice, alarm, faction)"
+                )
 
         edges_data: list[dict[str, str]] = []
         for e in edges_raw:
             if isinstance(e, dict):
                 edges_data.append(e)
             else:
-                raise ValueError(f"Invalid edge data: {e!r}")
+                raise ValueError(
+                    f"MatrixGraph.from_dict: invalid edge data {e!r} "
+                    f"(expected dict with keys: src, dst)"
+                )
 
         nodes_list: list[Node] = []
         for n in nodes_data:

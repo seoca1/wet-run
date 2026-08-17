@@ -140,7 +140,27 @@ def get_meta_progress(unlock_id: str) -> MetaUnlock | None:
 
 
 def record_meta_progress(unlock_id: str, amount: int = 1) -> MetaUnlock:
-    """Record progress toward an unlock. Returns updated unlock."""
+    """Record progress toward an unlock. Returns updated unlock.
+
+    Args:
+        unlock_id: Identifier of the unlock (must be a key in
+            ``META_UNLOCKS``). See ``META_UNLOCKS.keys()`` for the
+            complete list of valid ids.
+        amount: Non-negative integer to add to the unlock's progress.
+            Defaults to 1. Cumulative progress is bounded by the
+            unlock's ``goal`` only at evaluation time — this call does
+            not clamp.
+
+    Returns:
+        The updated ``MetaUnlock`` instance (newly constructed with
+        ``progress = old.progress + amount``) now stored under
+        ``unlock_id`` in the module-level ``META_UNLOCKS`` registry.
+
+    Raises:
+        ValueError: If ``unlock_id`` is not registered in
+            ``META_UNLOCKS``. The message lists the valid ids so
+            callers can self-diagnose typos.
+    """
     unlock = META_UNLOCKS.get(unlock_id)
     if unlock is None:
         raise ValueError(

@@ -235,7 +235,7 @@ class TestMatrixSerializationEdgeCases:
             "edges": [],
             "entry_id": "",
         }
-        with pytest.raises(ValueError, match="Invalid node"):
+        with pytest.raises(ValueError, match=r"(?i)invalid node data"):
             MatrixGraph.from_dict(data)  # type: ignore[arg-type]
 
 

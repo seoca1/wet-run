@@ -1464,12 +1464,47 @@
             "sense_net": 1
         }
     },
+    "general_event_dixie_flatline_memory": {
+        "event_id": "general_event_dixie_flatline_memory",
+        "title": "Dixie Flatline Memory",
+        "category": "general",
+        "trigger": "node_enter",
+        "trigger_condition": "arc_4_progress >= 32 AND random < 0.04 AND NOT has_status:dixie_memory_seen",
+        "mood": "shaky",
+        "location": "matrix_deep_zone",
+        "arc": 4,
+        "pillar": "memory",
+        "tier": 4,
+        "dialogue": [
+            "CONSOLE: WARNING: ROM construct fragment detected. Origin: DEAD JOCKEY — construct chip, last user flatline 2017.",
+            "CONSOLE: WARNING: Source: ROM construct personality. Construct ID: DIXIE_FLATLINE_ARCHIVE.",
+            "DIXIE VOICE: Hey, kid. I knew your construct before you did. I died for it. I keep it warm.",
+            "DIXIE VOICE: Carry this memory or walk on. The matrix remembers either way.",
+            "CONSOLE: Recommended action: carry the construct memory or leave it. Dead ROM constructs do not offer twice."
+        ],
+        "choice": {
+            "option_a": "Carry the construct memory (wintermute_+2, ta_rep_+1, construct_memory_carried_2_runs, construct_peek_unlocked).",
+            "option_b": "Walk on and leave the memory (construct_ghost_dismissed, safe_jackout, identity_marker_low, hosaka_-1).",
+            "consequence_a": "dixie_memory_carried, wintermute_+2, ta_rep_+1, construct_memory_carried_2_runs, construct_peek_unlocked",
+            "consequence_b": "dixie_memory_dismissed, safe_jackout, identity_marker_low, hosaka_-1, construct_ghost_walked"
+        },
+        "reward": {
+            "credits": 0,
+            "xp": 90,
+            "item": "dixie_memory_charm"
+        },
+        "consequence": "dixie_flatline_memory_branch",
+        "faction_affinity": {
+            "wintermute": 2,
+            "ta_rep": 1
+        }
+    },
     "_metadata": {
         "version": "1.1",
         "date": "2026-08-17",
-        "phase": "47",
+        "phase": "48",
         "adrs_cross_reference": "ADR-0191",
-        "total_events": 50,
+        "total_events": 51,
         "total_chains": 6,
         "categories": [
             "character",

@@ -78,7 +78,28 @@ def has_status_v2(effect_id: str) -> bool:
 
 
 def make_status_v2(effect_type: str, duration_ms: int = 0, value: float = 0.0) -> StatusEffectV2:
-    """Create a status effect v2 instance with overrides."""
+    """Create a status effect v2 instance with overrides.
+
+    Args:
+        effect_type: Registry key (must be present in
+            ``STATUS_V2_REGISTRY``). See ``STATUS_V2_REGISTRY.keys()``
+            for the complete list of valid effect types — bleed,
+            fatigue, confused, terrified, etc.
+        duration_ms: Duration in milliseconds. If <= 0 the template's
+            default ``duration_ms`` is used.
+        value: Effect magnitude. If exactly ``0.0`` the template's
+            default ``value`` is used (so ``0`` is a sentinel for
+            "use template default" rather than "force value to zero").
+
+    Returns:
+        A new ``StatusEffectV2`` instance with the requested overrides
+        applied to the template fields.
+
+    Raises:
+        ValueError: If ``effect_type`` is not registered in
+            ``STATUS_V2_REGISTRY``. The message lists the valid keys
+            so callers can self-diagnose typos.
+    """
     template = STATUS_V2_REGISTRY.get(effect_type)
     if template is None:
         raise ValueError(

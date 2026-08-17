@@ -1,3 +1,78 @@
+## [2026-08-17] feat+chore(polish) | Phase 48 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Dixie Flatline Memory event) + 3 polish improvements (3 modules — docstring + error message clarity for meta_progression / status_effects_v2 / graph). Commit `2c71472`. 21 files, +742/-23, 5578 passed (+37 over Phase 47 baseline 5541).
+
+### 1. Content addition: general_event_dixie_flatline_memory
+
+`prototype/data/story/events.json` 에 `general_event_dixie_flatline_memory` 신규 엔트리 추가 (50 → 51 events). Gibson-flavored Count Zero / Neuromancer-era dead-ROM-construct memory event — 깁슨 원작에서 McCoy Pauley 의 "Dixie Flatline" construct-chip ROM personality (Neuromancer 의 핵심 모티프 — Case 의 죽은 construct 파트너, ROM-construct 공간에 저장된 personality, 러너에게 memory hint 를 속삭이는 recurring Sprawl-trilogy motif) 의 arc 4 mid-arc 변형. 러너가 matrix_deep_zone 의 dead-ROM-construct fragment 로부터 construct memory handshake 수신 — 깁슨의 construct / dead-jockey 톤:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_4_progress >= 32 AND random < 0.04 AND NOT has_status:dixie_memory_seen`
+- **Mood**: shaky, location: matrix_deep_zone, arc: 4, tier: 4, pillar: memory
+- **Dialogue**: CONSOLE WARNING (ROM construct fragment detected, dead jockey construct, DIXIE_FLATLINE_ARCHIVE) + DIXIE VOICE 메시지 ("Hey, kid. I knew your construct before you did. I died for it. I keep it warm." / "Carry this memory or walk on. The matrix remembers either way.")
+- **Choice**: Carry the construct memory (wintermute_+2, ta_rep_+1, construct_memory_carried_2_runs, construct_peek_unlocked) vs Walk on and leave the memory (construct_ghost_dismissed, safe_jackout, identity_marker_low, hosaka_-1)
+- **Reward**: 0 credits + 90 XP + dixie_memory_charm
+- **Consequence**: dixie_flatline_memory_branch
+- **Faction affinity**: wintermute +2 AND ta_rep +1 (carry-memory yields Wintermute construct-half trust + TA family construct acceptance; walk-on yields Hosaka corporate-disrespect + identity unmarked)
+- **메타데이터**: phase 47 → 48, total_events 50 → 51, total_chains 6 unchanged
+
+Phase 46 의 Maas BioLabs Ledger event (memory pillar, maas + ta_rep affinity), Phase 47 의 Hosaka Archive Audit event (code pillar, hosaka + sense_net affinity) 와 동일 arc 4 mid-arc corporate-archive motif 의 Gibson-flavored 셋째 counterpart — Phase 46 이 Maas 의 "wetware blood archive", Phase 47 이 Hosaka 의 "passport file audit" 이었다면 Phase 48 은 construct entity 의 "dead-ROM memory fragment" — 셋 다 "The Sprawl runs on what we [remember / file / construct]" 의 변형. 깁슨의 Count Zero / MLO 의 Hosaka Sense/Net, Maas BioLabs, 그리고 Neuromancer 의 Dixie Flatline 의 병렬적 archive-trust 구조 (셋 다 Sprawl 의 identity / wetware / construct 를 archive, 셋 다 친절하지만 poisonous, 셋 다 러너에게 binary fork 를 제시). Phase 35 (wintermute +3), 36 (loa +3), 37 (ta_rep +3), 38 (ta_rep +2 + loa +2), 39 (yakuza +2 + loa +1), 40 (ta_rep +1 + loa +1), 41 (loa +1), 42 (ta_rep +1 + loa +1), 43 (ta_rep +1 + loa +1), 44 (loa +2 + ta_rep +1), 45 (ta_rep +2 + wintermute +1), 46 (maas +2 + ta_rep +1), 47 (hosaka +2 + sense_net +1) 와 동일 arc 4 / 절개 식 패턴 — Phase 48 은 arc 4 mid-arc (>= 32%) 의 첫 wintermute+ta_rep encounter 로, narrative seed cost 가 0 이고 faction 분기 (carry / walk-on) 가 wintermute + ta_rep 양쪽 으로 갈라지는 양면성. 동시에 Phase 46 maas (memory ledger) + Phase 47 hosaka (code audit) + Phase 48 dixie (construct memory) 의 arc 4 mid-arc corporate-archive spectrum 의 셋째 (Maas ledger = memory, Hosaka audit = code, Dixie construct = memory-via-construct).
+
+### 2. Polish — 3 modules (docstring + error message clarity)
+
+**`combat/meta_progression.py`** — `record_meta_progress` 의 docstring 확장. 기존 "Record progress toward an unlock. Returns updated unlock." 한 줄 docstring 을 완전한 API contract 로 확장:
+
+- 기존: 한 줄 docstring, error message 자체는 이미 diagnostic hint 포함 (valid unlock ids list).
+- 신규: explicit `Args:` (unlock_id / amount + cumulative-progress-bounded-by-goal-only-at-evaluation-time semantics), `Returns:` (newly constructed MetaUnlock with progress increment, stored back in module-level META_UNLOCKS), `Raises: ValueError:` (unknown unlock_id + valid-ids hint) 섹션 추가.
+- 기존 error message ("Unknown unlock: 'X' (must be one of: [...])") 는 유지 — diagnostic clarity 가 이미 충분했으므로.
+
+**`combat/status_effects_v2.py`** — `make_status_v2` 의 docstring 확장. 기존 "Create a status effect v2 instance with overrides." 한 줄 docstring 을 완전한 API contract 로 확장:
+
+- 기존: 한 줄 docstring, error message 자체는 이미 diagnostic hint 포함 (valid effect types list).
+- 신규: explicit `Args:` (effect_type / duration_ms <= 0 → template default semantics, value == 0.0 → template default sentinel semantics), `Returns:` (new StatusEffectV2 instance), `Raises: ValueError:` (unknown effect_type + valid-types hint) 섹션 추가.
+- 기존 error message ("Unknown status effect type: 'X' (must be one of: [...])") 는 유지.
+
+**`matrix/graph.py`** — `MatrixGraph.__post_init__` 의 4 개 `ValueError` 메시지 + `from_dict` 의 2 개 `ValueError` 메시지 개선, plus docstring 확장.
+
+- 기존 (duplicate node ids): `"MatrixGraph: duplicate node ids"`.
+- 신규 (duplicate node ids): `"MatrixGraph: duplicate node ids (unique=N, total=M — every node.id must be unique per ADR-0005)"` — unique vs total count 가 caller 에게 즉시 보임, off-by-one / batch-import 중복 진단 가능.
+- 기존 (unknown entry_id): `"entry_id 'X' not in nodes"`.
+- 신규 (unknown entry_id): `"MatrixGraph: entry_id 'X' not in nodes (known ids: N, sample: [...])"` — known ids count + sorted sample (3 ids) 가 caller 에게 즉시 보임.
+- 동일 패턴이 `edge src` / `edge dst` ValueError 양쪽 모두에 적용.
+- 기존 (from_dict invalid node): `"Invalid node data: X"`.
+- 신규 (from_dict invalid node): `"MatrixGraph.from_dict: invalid node data X (expected dict with keys: id, kind, label, zone; optional: ice, alarm, faction)"` — JSON schema hint 가 caller 에게 즉시 보임.
+- 동일 패턴이 `from_dict invalid edge` 에도 적용 (`expected dict with keys: src, dst`).
+- Docstring: 기존 단일 `Raises: ValueError:` 문단을 per-condition breakdown 으로 확장 (duplicate / unknown entry / unknown edge.src / unknown edge.dst 각각에 대한 message-content 설명).
+- 기존 `from_dict` docstring 의 `Raises: ValueError:` �션은 유지 (per-condition breakdown 도 추가 검토 가능했지만 기존 한 줄이 이미 충분히 descriptive).
+
+### 3. Vault-wide interrogate
+
+100.0% 유지 (Phase 47 plateau). Phase 48 polish 는 docstring / error message 만, 신규 함수 / 클래스 없음 — vault coverage 그대로.
+
+### 4. Forward-compat allowlist (테스트 패턴 일관성)
+
+Phase 29 / 34 / 35 / 36 / 37 / 38 / 39 / 40 / 41 / 42 / 43 / 44 / 45 / 46 / 47 테스트의 `metadata["phase"] in (...)` allowlist 에 "48" 추가 (15 forward-compat updates, 5 multi-line + 10 single-line). 메타데이터 phase bump 가 이전 phase 테스트를 깨뜨리지 않도록 (Phase 35 → 47 이 적용한 패턴 동일).
+
+### 5. test_matrix_serialization 동기화
+
+`tests/unit/test_matrix_serialization.py::test_non_dict_node` 의 `match="Invalid node"` → `match=r"(?i)invalid node data"` 로 업데이트. Phase 48 polish #3 (matrix/graph.py from_dict) 의 새 error message 문구가 "invalid node data" 라서 test 의 substring 매치를 case-insensitive regex 로 정렬. 동일 파일의 `test_corrupted_node_missing_id` / `test_corrupted_node_invalid_kind` 는 기존 `try/except (KeyError, ValueError) as e: raise ValueError(f"Invalid node {n!r}: {e}")` 경로를 타므로 "Invalid node" substring 이 그대로 매치되어 변경 불필요.
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 2 files reformatted (graph.py + test_phase48_small_content_polish.py), 485 unchanged |
+| `make lint` (ruff) | ✅ | All checks passed (after removing unused Edge import) |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | 5578 passed (+37 over Phase 47 baseline 5541), 365 skipped, 1 xfailed |
+| interrogate | ✅ | 100.0% (Phase 47 plateau preserved) |
+| `audit_vault.py` | ✅ | 0 broken (CLEAN, 67 false-positive artifacts) |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+
+**Phase 48 closed. 1 new Gibson-flavored Dixie Flatline Memory event (arc 4 mid-arc dead-ROM-construct memory, pillar memory, wintermute+ta_rep affinity) — completes the Maas (memory/wetware ledger) + Hosaka (code/passport audit) + Dixie (memory/dead-ROM-construct) Gibson corporate-archive trilogy; 3 polish improvements (docstring API-contract clarity for meta_progression / status_effects_v2, error-message count+sample+keys clarity for graph); 5578 tests passing; vault interrogate stable at 100.0%.** Commit `2c71472` (no push — GH_TOKEN rotation pending).
+
+---
+
 ## [2026-08-17] feat+chore(polish) | Phase 47 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Hosaka Archive Audit event) + 3 polish improvements (3 modules — error message clarity for save_manager / ppl / node). Commit `1fcc2d7`. 19 files, +629/-19, 5541 passed (+33 over Phase 46 baseline 5508).

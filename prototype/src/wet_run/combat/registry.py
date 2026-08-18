@@ -408,12 +408,27 @@ def build_ice_enemy(
     the optional ``program_registry`` is reserved for future boss/elite
     ICE skills (Phase B-1; currently unused).
 
+    Boss ids (ADR-0190 F.4 integration — see
+    :func:`wet_run.combat.boss_dispatch.build_boss_combatant_from_id`)
+    are routed through the boss registries before the standard
+    ``IceRegistry`` lookup, so callers can pass any of the 11 zone
+    bosses from ``zone_bosses.json`` or the 3 F.4 profiles from
+    ``boss_expansion.py`` and get a properly-scoped Combatant.
+
     Raises:
         KeyError: If ``ice_id`` is not in the registry. The message
             includes the first 10 registered ids and a closest-match
             suggestion (difflib ``get_close_matches``) to help debug
             typos in mission spawn tables.
     """
+    from .boss_dispatch import build_boss_combatant_from_id
+
+    _boss_combatant = build_boss_combatant_from_id(
+        ice_id, player_grade=player_grade
+    )
+    if _boss_combatant is not None:
+        return _boss_combatant
+
     data = registry.get(ice_id)
     if data is None:
         available = sorted(registry._ice.keys())

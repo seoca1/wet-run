@@ -4,7 +4,7 @@
     "date": "2026-08-08",
     "phase": "14",
     "adrs_cross_reference": "ADR-0192",
-    "total_endings": 21,
+    "total_endings": 28,
     "types": ["redemption", "sacrifice", "transcendence", "betrayal", "absolution", "integration"]
   },
   "ending_case_redemption": {

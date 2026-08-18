@@ -1,3 +1,70 @@
+## [2026-08-18] chore(endings-closure) | ADR-0192 status sync + 6 character endings 보강
+
+**Status**: ✅ 완료 — Phase 14 (v1.3.0+) 가 commit `205efd4` (2026-08-10) 에 ADR-0192 를 end-to-end 로 구현 (22 endings, 6 types, 3 NG+, 56 tests) 했었음. 오늘 session 에서 ADR-0192 의 status sync + per-character 6 endings 추가.
+
+### 1. 발견 (Recon 결과)
+
+ADR-0192 의 implementation 이 이미 end-to-end 로 존재:
+- `data/story/endings.json` — 22 endings (Redemption × 2 / Sacrifice × 3 / Transcendence × 5 / Betrayal × 4 / Absolution × 4 / Integration × 4)
+- `src/wet_run/story/endings.py` (237 LOC) — registry + trigger detection + reward/achievement mutation (`EndingResult`)
+- `src/wet_run/story/ending_renderer.py` (179 LOC) — render helpers
+- 56 tests (test_endings_handler + test_ending_renderer + test_endings_persistence) — **PASSED**
+- 3 NG+ endings (Network / Construct / Peripheral) — `arc=6` + `character_ref="all"` + `salvation_complete + ngplus_active + ...` triggers
+
+잔존 gap:
+1. `_metadata.total_endings: 21` (stale vs actual 22)
+2. Per-character ending coverage uneven: case(6), 3jane(3), wigan(2), kas(2), angie(2), molly(1), sally(1), suit(1), neuromancer(1) — 대부분 자리는 1-2개씩만
+3. `graphic_novel_view.py` 가 `story.endings` 미연동 (typed ending이 in-game flow에 노출 안 됨 — 추후 통합 ADR)
+
+### 2. Cleanup commit
+
+- `_metadata.total_endings: 21 → 28` (6 additions 후 값)
+- 검증: import + 56 tests 그대로 PASS
+
+### 3. 6 character endings 보강
+
+각 char의 personality/type-fit 기준 선택:
+
+| Ending ID | Character | Type | Arc | Trigger | Reward |
+|---|---|---|---|---|---|
+| `ending_molly_redemption` | molly | redemption | 2 | `defeat_yakuza_leader + ally_with:armitage` | 3,500cr + morale 100 + retirement_charm |
+| `ending_sally_integration` | sally | integration | 3 | `complete_marlys_window + construct_awakening` | 7,500cr + construct_link |
+| `ending_suit_betrayal` | suit | betrayal | 2 | `complete_hosaka_contract + ally_with:ta_rep` | 25,000cr + hosaka_rep+50 |
+| `ending_neuromancer_absolution` | neuromancer | absolution | 4 | `ta_vote_complete + all_constructs_merged` | 6,000cr + morale 100 |
+| `ending_angie_transcendence` | angie | transcendence | 3 | `complete_big_mama + construct_awakening` | 5,000cr + sky_charm |
+| `ending_wigan_sacrifice` | wigan | sacrifice | 4 | `construct_awakening + hp_below + ngplus_active` | 0cr + permanent_death + loa_relic |
+
+Triggers 모두 `_check_single_condition` 가 인식하는 형식 (engine 검증).
+
+### 4. 갱신 후 분포
+
+| Character | Count |
+|---|---:|
+| case | 6 (full) |
+| 3jane | 3 (1 universal NG+) |
+| wigan / angie | 3 each |
+| molly / sally / suit / neuromancer / kas | 2 each |
+| all (NG+) | 3 |
+| **Total** | **28** |
+
+By type: redemption × 3, sacrifice × 4, transcendence × 6, betrayal × 5, absolution × 5, integration × 5
+
+### 5. 검증
+
+- `pytest tests/unit/test_endings_*` — **56 passed**
+- Full suite: **5,580 passed** (vs 5,580 baseline) — **0 new failures** by my changes
+- 기존 13 failures (death_extended, pages_deploy, interrogate coverage) — 모두 baseline 부터 존재 (ADR-0192 와 무관, 별도 정리 필요)
+- import: `get_total_endings() == 28`, `by_char / by_type` 갱신 확인
+- 6 new entries schema 검증 (모든 required 필드 존재)
+- `_metadata.total_endings: 28` 동기화
+
+### 인용
+
+- ADR-0192 (Ending Expansion, Axis 5) — Accepted 2026-08-08, implementation 2026-08-10 commit `205efd4`
+- 6 ADR goals: 6 ending types × 9 chars + 3 NG+ — 본 세션은 1 char × 6 representatives + 메타 sync
+
+---
+
 ## [2026-08-18] chore(rename-cleanup) | Dashboard + prototype — ROGUELIKE SPRAWL → Wet Run (5 atomic commits)
 
 **Status**: ✅ 완료 — Project Rename scope A (commit `ae83d00`) 가 `wiki/` `design/` 까지만 적용됐고 dashboard + prototype 일부 (chrome / story metadata / i18n / demos) 가 누락됐던 잔존 영역 정리. **232 파일**, **5 atomic commits**. 0 test change, 0 regression. GitHub Pages push 전에 정합성 확보.

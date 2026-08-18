@@ -1,3 +1,57 @@
+## [2026-08-18] docs(session-close) | Phase 14 Axis closure sweep final — SESSION_SUMMARY_2026-08-18 + index.md 동기화
+
+**Status**: ✅ 완료 — Session 종료 문서화. Phase 14 v1.3.0+ 의 Axis 5 (Endings) / 4 (Boss F.4) / 6 (Programs/Equipment) 의 recon-기반 closure 8 commits 의 결과를 canonical 문서 (SESSION_SUMMARY_2026-08-18.md) 으로 consolidate. 세션-인덱스 (SESSION_SUMMARY.md) + 프로젝트 wiki-index (index.md) 도 동기화.
+
+### 1. 신규 / 변경 문서
+
+| File | Size | 책임 |
+|---|---:|---|
+| `SESSION_SUMMARY_2026-08-18.md` (NEW) | ~7KB | 오늘 세션 8 commits + axes 5/4/6 closure + 후속 backlog 종합 |
+| `SESSION_SUMMARY.md` | updated | latest-세션 pointer → 2026-08-18; summary blurb 갱신; recent sessions 테이블에 2026-08-18 row 추가 |
+| `index.md` | +8 lines 시스템, +10 lines tests | 신규 combat artifacts (`boss_dispatch.py` / `boss_registry.py`) 및 신규/기존 test 파일 카탈로그 entries |
+| `log.md` | 본 entry (이 항목) | AGENTS.md §9 "작업 종료 체크리스트" log 기록 |
+
+### 2. 신규 카탈로그 entries (index.md)
+
+#### 시스템 (Phase B 추가) — 추가
+- **Boss Dispatch** (`combat/boss_dispatch.py`) — ADR-0190
+- **Zone Boss Registry** (`combat/boss_registry.py`) — ADR-0190
+- **Boss F.4 Integration** — `combat/registry.py:build_ice_enemy` 가드
+
+#### 테스트 케이스 — 신규
+- Boss Registry / Boss Dispatch / Programs Schema / Wetware Stacking / Augments / Telemetry + Set Bonus Integration / Phase 14 Endings + Programs / Endings Handler / Endings Persistence / Ending Renderer
+
+### 3. 최종 상태 (origin 동기)
+
+| | Value |
+|---|---:|
+| Branch | `main`, ahead of origin = 0 |
+| Working tree | clean |
+| Total commits today | 8 (모두 push 완료) |
+| Closed ADRs (this session) | 0192 / 0190 / 0193 ("implementation closed" status) |
+| Backend (deferred) | Axis 1 (0188) / Axis 2 (0189) / Axis 3 (0191) / Track A module splits (0156-0159) |
+
+### 4. 다음 세션 handover 노트
+
+직전 세션 SESSION_SUMMARY 의 "Next-Session Backlog" 섹션 참조. 첫 진입점은 **Axis 1 (Mission Expansion)** — content-heavy (89+ missions + 5 types + 8 chains).
+
+### 5. 검증
+
+| Check | Result |
+|---|---|
+| `git log --oneline -8` | 8 commits 명확 / 순서 유지 |
+| `git status` | working tree clean |
+| `git rev-list --count origin/main..HEAD` | 0 (synced) |
+| `pytest tests/unit/ -q --no-header` | 5639 passed / 24 failed (baseline unchanged; pre-existing 24 = death_extended / pages_deploy / interrogate thresholds) |
+
+### 인용
+
+- [`SESSION_SUMMARY_2026-08-18.md`](./SESSION_SUMMARY_2026-08-18.md) — canonical today's session record
+- AGENTS.md §9 — 작업 종료 체크리스트
+- AGENTS.md §6.5 — workspace-level docs (`log.md` / `INDEX.md` / `SESSIONS/` cross-project)
+
+---
+
 ## [2026-08-18] chore(axis-6-closure) | ADR-0193 (Programs/Equipment) status sync — implementation in progress → closed
 
 **Status**: ✅ 완료 — 4번째 consecutive axis (5/4/6) recon 후 같은 패턴 확인: Phase 14 commit `205efd4` (2026-08-10) 가 이 axis 의 **데이터 + 엔진 wiring 모두** 이미 구현해 두었음. 본 entry 는 closure log 만.

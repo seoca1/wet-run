@@ -1,16 +1,17 @@
 # Wet Run — Session Index
 
-> **Latest session**: 2026-08-13 (mypy strict upgrade + NEXT_SESSION_TODO close-out) — see [SESSION_SUMMARY_2026-08-13.md](./SESSION_SUMMARY_2026-08-13.md)
+> **Latest session**: 2026-08-18 (Axis 5/4/6 closure + session-end docs) — see [SESSION_SUMMARY_2026-08-18.md](./SESSION_SUMMARY_2026-08-18.md)
 
 This is an **index** file pointing to the most recent dated session snapshot. Per project `AGENTS.md §9`, `SESSION_SUMMARY.md` should always point at the current/latest session.
 
-> **2026-08-13 mypy strict upgrade.** Track A (data quality) + most of Track B (dep modernization) were no-ops based on re-verified NEXT_SESSION_TODO 🟡 premises. Only B5 had real work: enabled `possibly-undefined` + `explicit-override`, fixed 1 latent bug (`engine/menu.py` `back_sym` undefined), added `@override` to 17 dunder methods across 11 files, added `typing-extensions` runtime dep. **1 real bug caught**. 5 atomic commits across 2 repos. Lint 0 / mypy 0 (3 strict modes) / pytest 4843 pass / audit 0 broken.
+> **2026-08-18 Axis closure sweep.** Three Phase 14 v1.3.0+ Axes (ADR-0192 / 0190 / 0193) recon'd as data+engine complete from commit `205efd4` (2026-08-10); session work reduced to closure logs + Axis 4 dispatch wiring. **8 commits pushed**: endings metadata sync + 6 character endings (Axis 5), zone boss registry + boss dispatch hook (Axis 4, 4 NEW files + `combat/registry.py:build_ice_enemy` guard), Axis 6 closure log. **+43 tests passing, 0 regressions**. Branch ahead of origin = 0, working tree clean.
 
 ## Recent sessions
 
 | Date | File | Summary |
 |---|---|---|
-| **2026-08-13 (mypy strict upgrade)** | [SESSION_SUMMARY_2026-08-13.md](./SESSION_SUMMARY_2026-08-13.md) | **LATEST.** Track A no-op (false premises), Track B mostly no-op (already modern), B5: mypy strict mode + @override. 1 real bug fixed in `engine/menu.py`. |
+| **2026-08-18 (Axis closure sweep)** | [SESSION_SUMMARY_2026-08-18.md](./SESSION_SUMMARY_2026-08-18.md) | **LATEST.** Axis 5 (Endings) + Axis 4 (Boss F.4) + Axis 6 (Programs/Equipment) closure. 8 commits. `combat/boss_dispatch.py` NEW + `combat/boss_registry.py` NEW + `build_ice_enemy` guard. +43 tests, 0 regressions. |
+| 2026-08-13 (mypy strict upgrade) | [SESSION_SUMMARY_2026-08-13.md](./SESSION_SUMMARY_2026-08-13.md) | Previous: Track A no-op (false premises), Track B mostly no-op (already modern), B5: mypy strict mode + @override. 1 real bug fixed in `engine/menu.py`. |
 | 2026-08-10 (Phase 14 integration) | [SESSION_SUMMARY_2026-08-10.md](./SESSION_SUMMARY_2026-08-10.md) | Previous: F.2/F.4 deep wiring + mypy 51→0 + ruff 116→0 + 178 metadata fields + 200+ dashboard cards. |
 | 2026-08-08 (v1.3.0+ release) | [SESSION_SUMMARY_2026-08-08.md](./SESSION_SUMMARY_2026-08-08.md) | Previous release: 15 tracks across E/F/G sub-tracks, 16 ADRs (0172–0186), +260 tests (4253→4513), 2 tracks cancelled (B.5, D.4 audio), 1 blocked (A.6 push). |
 | 2026-08-06 (dirty-tree closure) | [SESSION_SUMMARY_2026-08-06.md](./SESSION_SUMMARY_2026-08-06.md) | 8 atomic commits landed: deps + dashboard regen + 7 obsolete test deletions + docs refresh + design+scripts READMEs + 10 new test files + audit archive + code changes. |

@@ -244,6 +244,9 @@
 ## 시스템 (Phase B 추가)
 - **Novel Integration** (`engine/novel_integration.py`) — 미션 완료 시 `mission_to_stem` → `dispatch_for_state` 자동 호출
 - **Stage BRIEFING / TRAVEL / BYPASS_SECURITY** — 9 → 13 stages (CONTENT_EXPANSION Phase B)
+- **Boss Dispatch** (`combat/boss_dispatch.py`) — 11 zone bosses + 3 expansion bosses 통합 dispatch. `is_boss_id` / `build_boss_combatant_from_id` + tier-aware linear scaling (ADR-0190, 2026-08-18)
+- **Zone Boss Registry** (`combat/boss_registry.py`) — `zone_bosses.json` (11 entries) → typed `ZoneBossProfile` lookup. ADR-0190, 2026-08-18
+- **Boss F.4 Integration** — `combat/registry.py:build_ice_enemy` boss 가드 (zone_boss → boss_expansion → IceRegistry fallback)
 
 ## 데모 / 검증 스크립트
 - [Scripts 가이드](prototype/scripts/README.md) - **모든 데모/검증 스크립트 실행법 (27+ scripts, 추천 순서, 비교표)**
@@ -256,6 +259,16 @@
 - [Graphic Novel](prototype/scripts/graphic_novel.py) - 12-씬 그래픽 노블 자동플레이
 - [Play](prototype/scripts/play.py) - 빠른 자동플레이 (MENU → HUB → MATRIX → COMBAT)
 - [Combat → Death Integration Test](prototype/tests/unit/test_combat_to_death.py) - **전투 패배 → trigger_death → 새 자키 (11 tests)**
+- [Boss Registry](prototype/tests/unit/test_boss_registry.py) - **zone_bosses.json 11 entries → ZoneBossProfile lookup (27 tests, ADR-0190, 2026-08-18)**
+- [Boss Dispatch](prototype/tests/unit/test_boss_dispatch.py) - **14 boss IDs dispatch 통합 + tier-aware scaling + lazy-cache (43 tests, ADR-0190, 2026-08-18)**
+- [Programs Schema](prototype/tests/unit/test_programs_schema.py) - **programs.json 30 entries schema validity (ADR-0193)**
+- [Wetware Stacking](prototype/tests/unit/test_wetware_stacking.py) - **wetware.json 10 augments tier-3 + new stats 누적**
+- [Augments](prototype/tests/unit/test_augments.py) - **lv1/lv2/lv3 progression + new stats (ADR-0173, ADR-0193)**
+- [Telemetry + Set Bonus Integration](prototype/tests/unit/test_telemetry_and_set_bonus_integration.py) - **Ghost/Architect set bonus + telemetry 연동**
+- [Phase 14 Endings + Programs](prototype/tests/unit/test_phase14_endings_programs.py) - **Axis 5/6 통합 테스트 (Phase 14)**
+- [Endings Handler](prototype/tests/unit/test_endings_handler.py) - **21 endings trigger detect + reward/achievement handler (22 tests, ADR-0192)**
+- [Endings Persistence](prototype/tests/unit/test_endings_persistence.py) - **Save load + version migration + corruption tolerance (15 tests)**
+- [Ending Renderer](prototype/tests/unit/test_ending_renderer.py) - **rendering / queries / NG+ handling (19 tests, ADR-0192)**
 - [Graphic Novel Content Quality](prototype/tests/unit/test_graphic_novel_content_quality.py) - **12 씬 dialogue 길이/톤/한글 동기화 (76 tests, ADR-0041)**
 - [Graphic Novel Novel Layout](prototype/tests/unit/test_graphic_novel_novel_layout.py) - **30줄 페이지 layout + pagination (28 tests)**
 - [Graphic Novel Chapter Cards](prototype/tests/unit/test_graphic_novel_chapter_cards.py) - **챕터 타이틀 카드 + fade transition (37 tests, ADR-0042)**

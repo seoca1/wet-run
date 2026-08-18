@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "ROGUELIKE SPRAWL",
+    "title": "Wet Run",
     "subtitle": "A roguelike based on William Gibson's Sprawl trilogy",
     "controls": "[ESC] Quit  [Q] Quit",
     "phase": "Phase: {phase}"

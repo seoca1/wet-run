@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "ROGUELIKE SPRAWL",
+    "title": "Wet Run",
     "subtitle": "윌리엄 깁슨 스프롤 3부작 기반 로그라이크",
     "controls": "[ESC] 종료  [Q] 종료",
     "phase": "Phase: {phase}"

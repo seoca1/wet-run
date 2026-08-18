@@ -22,6 +22,7 @@ from ..matrix.graph import MatrixGraph
 from ..matrix.ppl import Loadout, Program
 from ..missions import JobBoard, Mission
 from ..run.reputation import ReputationState
+from ..run.memory_bank import MemoryBank
 
 # Maximum number of status messages retained in AppState.status_messages.
 # When the cap is exceeded, the oldest messages are dropped first.
@@ -250,6 +251,7 @@ class AppState:
     # Phase E-2: first-combat tutorial overlay (dismissed on Space)
     show_first_combat_tutorial: bool = True
     reputation: ReputationState = field(default_factory=ReputationState)
+    memory_bank: MemoryBank = field(default_factory=MemoryBank)
     memory_fragment_tracker: MemoryFragmentTracker = field(default_factory=MemoryFragmentTracker)
     construct_whisper_tracker: ConstructWhisper = field(default_factory=ConstructWhisper)
     anomaly_triggered: set[str] = field(default_factory=set)

@@ -32,6 +32,7 @@ from .jockey_history import (
 )
 from .settings_ui import get_volume
 from .state import AppState, ScreenKind
+from ..run.memory_bank import MemoryFragment
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -157,6 +158,12 @@ def trigger_death(state: AppState, reason: str = "Combat") -> None:
     Args:
         state: App state.
         reason: Why the player died (shown in death screen).
+
+    Side effects:
+        - Flatlines the current jockey (state.is_dead = True)
+        - Persists a memory fragment to ``state.memory_bank`` so the
+          next jockey can recall it from construct space
+        - Caps the bank at MAX_FRAGMENTS (FIFO eviction)
     """
     state.is_dead = True
     state.death_reason = reason
@@ -164,6 +171,24 @@ def trigger_death(state: AppState, reason: str = "Combat") -> None:
     state.screen = ScreenKind.DEATH
     state.status_messages.append(f">>> FLATLINE: {reason}")
     state.status_messages.append(">>> Press ENTER to jack out")
+
+    # Phase 51+: persist a memory fragment so the next jockey can
+    # recall it. Single fragment per death — keeps the bank tight
+    # and the narrative moment specific.
+    import time as _time
+
+    current_arc = 1
+    if state.current_mission is not None:
+        current_arc = max(1, min(5, state.current_mission.arc))
+    fragment = MemoryFragment(
+        text=(
+            f"Last thing I remember before flatline: {reason}. "
+            f"The construct kept the rest."
+        ),
+        arc=current_arc,
+        timestamp_ms=int(_time.time() * 1000),
+    )
+    state.memory_bank.add(fragment)
 
     # Phase 16: Telemetry recorders — gated by player opt-in.
     _emit_telemetry_event(

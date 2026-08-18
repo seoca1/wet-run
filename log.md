@@ -1,3 +1,71 @@
+## [2026-08-18] feat(combat) | F.4 dispatch integration — boss_dispatch.py + build_ice_enemy guard
+
+**Status**: ✅ 완료 — ADR-0190 (Phase 12 Axis 4) 의 **데이터 → dispatch wiring** closing commit. 이전 commit (4a7e97a) 가 zone_bosses.json 의 typed lookup 인프라 (ZoneBossRegistry) 만 만들었었음; 본 commit 는 combat dispatch 의 그 등록분을 실제로 호출하는 wiring 구현. ADR-0190 implementation in progress → **wiring closed**.
+
+### 1. 구현 (모듈 3종 + 테스트 70 케이스)
+
+**`prototype/src/wet_run/combat/boss_dispatch.py` (NEW, ~150 LOC)**
+- `is_boss_id(ice_id) -> bool` — 두 registry 통합 lookup (zone_bosses + boss_expansion). dispatch early-exit 가드용.
+- `build_boss_combatant_from_id(ice_id, *, player_grade=None) -> Combatant | None` — zone 경로 + boss_expansion 경로 순차 시도. None 으로 fall-through 신호.
+- `_zone_boss_to_combatant(profile, player_grade)` — ZoneBossProfile → Combatant 변환. tier-aware linear scaling: `hp = hp_base + hp_per_grade * max(0, player_grade - tier)`. 다운스케일 없음 (zone boss 는 초반 등급에서도 base 유지, 보스 조우의 roguelike convention).
+- `_get_zone_registry()` + `reset_zone_registry_cache()` — 모듈 레벨 lazy 캐시. import-time I/O 회피.
+
+**`prototype/src/wet_run/combat/registry.py` (~5 lines 추가)**
+`build_ice_enemy()` 의 첫 줄에 guard 추가:
+```python
+from .boss_dispatch import build_boss_combatant_from_id
+_boss_combatant = build_boss_combatant_from_id(ice_id, player_grade=player_grade)
+if _boss_combatant is not None:
+    return _boss_combatant
+data = registry.get(ice_id)
+```
+IceRegistry lookup 은 이제 fallback 경로. boss ids (14개: zone 11 + expansion 3) 는 전부 dispatch helper 가 처리. 비-boss ids 는 기존 코드 unchanged.
+
+**`prototype/tests/unit/test_boss_dispatch.py` (NEW, 43 tests)**
+- is_boss_id parametrized over 11 zone + 3 expansion ids + 6 standard ICE 비-matches + edge cases (empty string, non-string, unknown)
+- build_boss_combatant_from_id return Combatant / None 분기
+- Tier-aware scaling validation (dj_cyberspace: g=1 base, g=3 base, g=5 base+2*25=200, g=10 base+7*25=325; orbit_ghost tier=5 g=10 = 400+60*5=700)
+- Lazy-load 캐시 + reset helper
+- Registry parity (모든 zone boss entry 가 dispatch 로 빌드 가능)
+
+### 2. 안정성 검증
+
+| Check | Result |
+|---|---|
+| `ruff check src/wet_run/combat/{registry.py, boss_dispatch.py, boss_registry.py}` | ✅ All checks passed |
+| `mypy --strict src/wet_run/combat/boss_dispatch.py` | ✅ no issues found |
+| `pytest tests/unit/test_boss_dispatch.py` | ✅ **43 passed** |
+| Full suite baseline (without my changes) | 5596 passed / 24 failed |
+| Full suite with my changes | **5639 passed / 24 failed** |
+| Net delta | **+43 tests, 0 new failures** |
+| Smoke (build_ice_enemy routes correctly) | ✅ all 14 boss ids route via dispatch, standard ICE still via IceRegistry |
+
+### 3. 효과
+
+| Combatant lookup path | Before | After |
+|---|---|---|
+| `build_ice_enemy('standard', ...)` | IceRegistry → standard ICE | unchanged |
+| `build_ice_enemy('neuromancer', ...)` | IceRegistry → hp=320 ICE — Neuromancer (ADR-0180 무시) | **boss_dispatch → NEUROMANCER_PROFILE → hp=400 (6 phases)** |
+| `build_ice_enemy('dj_cyberspace', ...)` | KeyError (zone ids not in ice_types) | **boss_dispatch → ZoneBossProfile → hp=150 (zone tier=3)** |
+| `build_ice_enemy('the_peripheral', ...)` | KeyError | **boss_dispatch → hp=700 (tier=6 secret)** |
+
+→ 14 boss ids previously orphaned / non-boss-routed are now correctly dispatched with their declared tier, hp, dmg, defense, resistance.
+
+### 4. 추가 보류
+
+- **Combatant.skills 필드 비어있음** — zone boss 의 skills 리스트 (signal_jam, voodoo_king 등) 는 dispatch 단계에서 미적용. 후속 commit 에서 program_registry 와 연동.
+- **dialogue / cinematic** — boss 진입 시 화면 연출 (ADR-0050 boss intro / ADR-0169 combat cinematics) 은 별도 통합 영역.
+- **combat_view_state 의 is_boss() 후크** — WINTERMUTE/TA_CONSTRUCT_PRIME 만 처리. 본 commit 의 14 ids 도 같은 후크에 추가 후속 가능.
+
+### 인용
+
+- ADR-0190 (Boss Expansion + F.4 Integration, Axis 4) — Accepted 2026-08-08, **implementation closed** by this commit (data → dispatch wiring)
+- ADR-0180 (Boss Expansion v1.3.0+) — 3 profiles underlying `build_boss_combatant`
+- ADR-0050 (Boss ICE System) — original Phase 1 dispatch pattern
+- ADR-0110 (module size policy) — boss_dispatch 150 LOC < 250 soft limit
+
+---
+
 ## [2026-08-18] feat(combat) | Zone boss registry — load zone_bosses.json into typed lookup
 
 **Status**: ✅ 완료 — ADR-0190 (Phase 12 Axis 4 — zone-bosses part) 의 데이터 → 엔진 인프라. zone_bosses.json (11 entries — 6 zone + 3 ascended + 2 peripheral) 가 **이 commit 이전까지 zero code references** 였음. ZoneBossRegistry + ZoneBossProfile 도입으로 typed lookup 제공. 다음 commit 에서 combat dispatch 에 wiring 예정.

@@ -95,7 +95,16 @@ def complete_mission(state: AppState, mission: object) -> None:
 
     Args:
         state: App state.
-        mission: The Mission to complete.
+        mission: The Mission to complete. Must be a ``Mission``
+            instance; non-Mission callers are silently ignored
+            (returns without effect — see Phase 50 hardening).
+
+    Side effects:
+        - Credits added to ``state.credits``
+        - XP added via ``state.total_xp``
+        - Faction reputation updated per ``FACTION_REPUTATION`` map
+        - ``state.completed_missions`` recorded
+        - Items granted to ``state.inventory`` (with stack semantics)
     """
     # Import here to avoid circular import
     from ..missions.mission import Mission

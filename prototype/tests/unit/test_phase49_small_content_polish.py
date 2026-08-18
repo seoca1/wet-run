@@ -149,11 +149,11 @@ class TestZionLastBroadcastBranchUniqueness:
 
 def test_phase_49_metadata_present(metadata: dict) -> None:
     """metadata should report phase 49 (or 48) after the cycle."""
-    assert metadata["phase"] in ("48", "49")
+    assert metadata["phase"] in ("48", "49", "50")
 
 
 def test_phase_49_total_events_at_least_52(metadata: dict) -> None:
     """Phase 49 adds 1 event, so total_events >= 52."""
     assert metadata["total_events"] >= 52
     # Forward-compat allowlist (mirrors Phase 29/34..48 pattern)
-    assert metadata["phase"] in ("48", "49")
+    assert metadata["phase"] in ("48", "49", "50")

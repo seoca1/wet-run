@@ -1547,6 +1547,41 @@
             "ta_rep": 1
         }
     },
+    "general_event_screws_last_bargain": {
+        "event_id": "general_event_screws_last_bargain",
+        "title": "Screw's Last Bargain",
+        "category": "general",
+        "trigger": "node_enter",
+        "trigger_condition": "arc_5_progress >= 70 AND random < 0.04 AND NOT has_status:screw_bargain_seen",
+        "mood": "shaky",
+        "location": "matrix_freeside_orbit",
+        "arc": 5,
+        "pillar": "memory",
+        "tier": 5,
+        "dialogue": [
+            "SCREW: Hey, kid. Last time I cut a deal like this, the buyer ended up in a vat.",
+            "SCREW: Freeside passport, L5 orbit clearance, no questions. Cost: a memory.",
+            "SCREW: Not the boring ones. The ones you still flinch at. That's the going rate.",
+            "CONSOLE: Incoming handshake: FREESIDE_BLACKMARKET. Source: SCREW — fixer, Freeside orbit, unregistered.",
+            "CONSOLE: Trade a contested memory for passage, or walk and carry what you have."
+        ],
+        "choice": {
+            "option_a": "Pay the memory price (screw_pass_unlocked, freeside_clearance_+2, zion_affinity_-1, contested_memory_relinquished_2_runs).",
+            "option_b": "Walk — your memories are not for sale (freeside_walked, safe_jackout, identity_marker_high, maas_+1).",
+            "consequence_a": "screw_bargain_sealed, screw_pass_unlocked, freeside_clearance_+2, zion_affinity_-1, contested_memory_relinquished_2_runs, screw_witness_2_runs",
+            "consequence_b": "screw_bargain_refused, freeside_walked, safe_jackout, identity_marker_high, maas_+1, maas_oath_2_runs"
+        },
+        "reward": {
+            "credits": 0,
+            "xp": 120,
+            "item": "screw_freeside_charm"
+        },
+        "consequence": "screws_last_bargain_branch",
+        "faction_affinity": {
+            "freeside_clearance": 2,
+            "maas": 1
+        }
+    },
     "_chains": {
         "chain_case_past_memories": {
             "chain_id": "chain_case_past_memories",
@@ -1668,8 +1703,8 @@
         }
     },
     "_meta": {
-        "phase": "49",
-        "total_events": 53,
+        "phase": "50",
+        "total_events": 54,
         "chains": 6
     }
 }

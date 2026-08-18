@@ -547,7 +547,7 @@ def main() -> int:
     use_color = not args.no_color
 
     print("╔" + "═" * 78 + "╗")
-    print("║" + " ROGUELIKE SPRAWL — Combat Effects Verification ".center(78) + "║")
+    print("║" + " Wet Run — Combat Effects Verification ".center(78) + "║")
     print(
         "║" + " 5-Layer VFX · CombatEffectsBundle · ICE Cinematics · HUD · Combo ".center(78) + "║"
     )

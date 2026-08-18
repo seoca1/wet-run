@@ -68,7 +68,7 @@ def main() -> int:
     sm = sound_manager.get_sound_manager()
     sm.set_volume(args.volume)
 
-    _section("ROGUELIKE SPRAWL — Sound Demo (Headless)")
+    _section("Wet Run — Sound Demo (Headless)")
     print(f"Backend:  {sm._tool}")
     print(f"Volume:   {int(args.volume * 100)}%")
     print(f"Available: {sm.is_available()}")

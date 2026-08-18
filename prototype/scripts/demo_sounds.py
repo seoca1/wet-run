@@ -44,7 +44,7 @@ def main() -> int:
     sm = sound_manager.get_sound_manager()
 
     print("=" * 60)
-    print("  ROGUELIKE SPRAWL - Sound Demo")
+    print("  Wet Run - Sound Demo")
     print("=" * 60)
     print(f"Backend available: {sm.is_available()}")
     print(f"Volume: {int(sm.volume * 100)}%")

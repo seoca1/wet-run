@@ -545,7 +545,7 @@ def _render_demo(
     elif state.screen is ScreenKind.MENU:
         # Simple menu screen for demo
         console.clear(bg=(0, 0, 0))
-        console.print(x=35, y=20, string="ROGUELIKE SPRAWL", fg=(0, 255, 255))
+        console.print(x=35, y=20, string="Wet Run", fg=(0, 255, 255))
         console.print(x=30, y=22, string="Demo transitioning...", fg=(200, 200, 200))
         console.print(x=28, y=24, string="Press any key to continue", fg=(128, 128, 128))
     elif state.screen is ScreenKind.HUB:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pre-commit hook: validate roguelike_sprawl ↔ Fiction cross-project links.
+"""Pre-commit hook: validate wet_run ↔ Fiction cross-project links.
 
 Runs verify_story_links.py on staged changes to ensure no broken
 mission.source or game_mission_id references. Lightweight: only checks

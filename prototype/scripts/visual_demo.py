@@ -444,7 +444,7 @@ def main() -> int:
     print()
     print("╔══════════════════════════════════════════════════════════════════════════════╗")
     print("║                                                                                ║")
-    print("║              ROGUELIKE SPRAWL - COMPLETE VISUAL DEMO                          ║")
+    print("║              Wet Run - COMPLETE VISUAL DEMO                          ║")
     print("║              (William Gibson's Sprawl Trilogy)                                ║")
     print("║                                                                                ║")
     print("║  Phase 5+: Full game flow with Story + Combat + Equipment                    ║")

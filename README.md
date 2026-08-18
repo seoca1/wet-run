@@ -19,14 +19,17 @@
 - 사이버펑크 톤 — 네온, 크롬, 거대 기업, 인공 지능
 - "flatline" = 게임 오버
 
-## 현재 상태 (2026-07-04)
+## 현재 상태 (2026-08-17)
 
-- **Phase 5+6+7+8 완료** (19 commits in this session)
-- **7 characters** × **8 scenes** = **56 GN scenes** (케이/실/카스/수트/위건/앤지/샐리)
-- **47 missions** (5 zones 균형: Surface/Mid/Deep/Core/TA/Freeside)
-- **41 ICE types** (Standard/Watchdog/Black/Goliath/Construct/Construct-proxy 등)
+- **Phase 48 완료** (small content + polish cycle, Dixie Flatline Memory event)
+- **Project rename**: `Roguelike Sprawl` → **Wet Run** (이전 명칭 호환 유지)
+- **9 characters** × **8 scenes** = **72 GN scenes** (케이/실/카스/수트/위건/앤지/샐리/3Jane/Neuromancer)
+- **111 missions** (5 zones 균형: Surface/Mid/Deep/Core/TA/Freeside)
+- **47 ICE types** (Standard/Watchdog/Black/Goliath/Construct/Construct-proxy 등)
+- **Tier 6 master** (Arc 5 finale) + 3 master equipment
+- **Faction Reputation** (5 factions × 7 tiers) + Equipment Set Bonuses
 - **10 manual + 1 auto save slots** (Phase 7.3)
-- **pytest 4231 passed** / ruff 0 errors / mypy strict 0 errors / mkdocs --strict 0 warnings (316 pages)
+- **pytest 5578 passed** / 365 skipped / 1 xfailed / ruff 0 errors / mypy strict 0 errors (211 source files)
 
 ## 디렉토리 구조
 
@@ -57,16 +60,19 @@
 - 결정 사항은 `decisions/`에 ADR 형식으로 기록 (결정 후 immutable)
 - 디자인 변경 시 `testcases/`도 동기화
 
-## 최근 작업 (2026-07-04)
+## 최근 작업 (2026-08-17)
 
-19 commits, Phase 5+6+7+8 통합:
+16 commits, **Project Rename** + Phase 47/48 통합:
 
-- **인프라 정리**: lint/mypy 174 errors → 0, mkdocs --strict 워닝 41 → 0
-- **MkDocs 통합**: 316 pages (wiki + design + decisions 통합)
-- **3명 캐릭터 추가**: Suit (4번째, 3인칭), Wigan (5번째, 1인칭 loa), Angie (6번째, 1인칭 12세), Sally (7번째, 1인칭 cold operator)
-- **9 미션 추가**: Mid (Hosaka/Sense-Net/Yakuza), Core (T-A payroll/Maas/Construct 기억), TA (Straylight/3Jane/Wintermute)
-- **3 ICE 추가**: corporate_guard (MID), archive_sentinel (CORE), wintermute_proxy (TA boss)
-- **세이브 시스템**: 5슬롯 → 10슬롯 + 자동저장 슬롯
+- **🎮 Project rename**: `Roguelike Sprawl` → **Wet Run** (스코프 A — 전체 일관 변경)
+  - Python 패키지: `roguelike_sprawl` → `wet_run`
+  - GitHub repo: `seoca1/roguelike-sprawl` → `seoca1/wet-run`
+  - 대시보드 chrome (521 단편 HTML + 17 페이지), game code, test contracts 일괄 갱신
+  - GitHub URL (Q2): Settings → Rename 후 자동 새 이름 작동
+- **Phase 47 (Hosaka Archive Audit)**: Gibson-flavored corporate archive dialogue (Arc 4 mid-arc)
+- **Phase 48 (Dixie Flatline Memory)**: dead-ROM construct memory (Arc 4 mid-arc, wintermute+ta_rep affinity)
+- **test_armitage portrait 회귀 수정**: `test_portraits_have_10x14_grid` → `10x12` (모든 portrait actual size)
+- **prod build 검증**: `uv build` → `wet_run-1.1.0a1-py3-none-any.whl`, `wet-run` CLI 정상 작동
 
 상세: [`SESSION_SUMMARY.md`](./SESSION_SUMMARY.md), [`ROADMAP.md`](./ROADMAP.md), [`log.md`](../../Fiction/wiki/log.md).
 
@@ -81,18 +87,21 @@
 
 ```bash
 cd prototype
-make test      # 5281 tests
+make test      # 5578 tests (1 xfailed pre-existing)
 make all       # format + lint + typecheck + test
 
-# 그래픽 노블 자동재생 (7 캐릭터)
+# 게임 실행 (entry point — 이전 `uv run roguelike-sprawl`)
+uv run wet-run
+# 또는
+uv run python scripts/play.py --duration 30
+
+# 그래픽 노블 자동재생 (9 캐릭터, GN 모드 진입)
 uv run python scripts/graphic_novel.py --mode novice --lang ko
-uv run python scripts/graphic_novel.py --mode sally --lang en
+uv run python scripts/graphic_novel.py --mode 3jane --lang en
+uv run python scripts/demo_all.py  # 풀 게임 + GN 통합
 
 # 전투 시뮬레이터
 uv run python scripts/combat_simulator.py --ppl 24 --enemy standard
-uv run python scripts/combat_grades.py  # 5등급 비교
+uv run python scripts/combat_grades.py  # 6등급 비교 (T1-T5 + T6 master)
 uv run python scripts/death_in_action_demo.py  # Combat → Death 5-Phase
-
-# 풀 게임 자동플레이
-uv run python scripts/play.py --duration 30
 ```

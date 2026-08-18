@@ -1,3 +1,55 @@
+## [2026-08-18] chore(axis-6-closure) | ADR-0193 (Programs/Equipment) status sync — implementation in progress → closed
+
+**Status**: ✅ 완료 — 4번째 consecutive axis (5/4/6) recon 후 같은 패턴 확인: Phase 14 commit `205efd4` (2026-08-10) 가 이 axis 의 **데이터 + 엔진 wiring 모두** 이미 구현해 두었음. 본 entry 는 closure log 만.
+
+### Recon 결과
+
+| ADR-0193 Target | Actual | 초과 |
+|---|---|---|
+| 18 programs (4 def + 5 util + 4 off + 5 sup) | **30 programs** (8 def + 11 atk + 5 det + 6 sup) | ✅ 67% 초과 |
+| 2 sets (Ghost + Architect) | ✅ 둘 다 — 8 pieces (4 per set) | ✓ |
+| 10 augments (7 lv3 + 3 new stats) | ✅ 10 augments — ap_regen_lv3/crit_lv3/dodge_lv3/max_hp_lv3/healing_lv3/shield_lv3/speed_lv3 + mana_lv3/armor_lv3/focus_lv3 (new stats) | ✓ |
+
+### Engine wiring (이미 코드 통합됨)
+
+| 컴포넌트 | 파일 | 책임 |
+|---|---|---|
+| Equipment core | `src/wet_run/equipment/equipment.py` | equipment 카탈로그 |
+| Set bonuses | `src/wet_run/equipment/set_bonus_integration.py` | 2-piece / 3-piece / 4-piece bonus dispatch |
+| Wetware stacking | `src/wet_run/equipment/wetware_stacking.py` | tier 3 + new stat 누적 |
+| Augments | `src/wet_run/combat/augments.py` | lv1/lv2/lv3 + new stats 통합 |
+| Meta progression | `src/wet_run/combat/meta_progression.py` | wetware 영구 unlock |
+| Equipment view UI | `src/wet_run/engine/equipment_view.py` | in-game 표시 |
+
+### 테스트 (이미 12 파일 · 200+ tests)
+
+| 테스트 파일 | 책임 |
+|---|---|
+| `test_equipment.py` | core equipment 카탈로그 |
+| `test_wetware_stacking.py` | 누적 규칙 |
+| `test_augments.py` | lv1/lv2/lv3 progression |
+| `test_telemetry_and_set_bonus_integration.py` | set bonus + telemetry 연동 |
+| `test_phase14_endings_programs.py` | Phase 14 통합 (programs + endings) |
+| `test_equipment_view.py` | UI 표시 |
+| `test_programs_schema.py` | programs.json schema validity |
+| (그 외 5) | settings / accessibility |
+
+### 검증
+
+| Check | Result |
+|---|---|
+| `pytest -k 'equipment or programs or augment or set_bonus or wetware_stacking'` | ✅ **212 passed** (30 skipped, 5787 deselected) |
+| Full suite (vs my session-wide delta) | **5639 passed / 24 failed** (baseline unchanged) |
+| New regressions caused by session | **0** |
+
+### 인용
+
+- ADR-0193 (Programs/Equipment Expansion, Axis 6) — Accepted 2026-08-08, **implementation closed** by Phase 14 v1.3.0+ commit `205efd4` (2026-08-10)
+- ADR-0172/0173/0178 (Cyberdeck, Wetware, Deck Building) — program/augment/cyberdeck 데이터 layer 의 upstream 결정
+- ADR-0192/0190 (Axis 5/4 — endings + boss F.4) — 같은 Phase 14 의 동반 closure. 같은 패턴. (Axis 5 — `b33d691/36d2cdc/f95c164` 3 commits; Axis 4 — `6c48dab/e295c4d/13a6eff/4a7e97a` 4 commits)
+
+---
+
 ## [2026-08-18] feat(combat) | F.4 dispatch integration — boss_dispatch.py + build_ice_enemy guard
 
 **Status**: ✅ 완료 — ADR-0190 (Phase 12 Axis 4) 의 **데이터 → dispatch wiring** closing commit. 이전 commit (4a7e97a) 가 zone_bosses.json 의 typed lookup 인프라 (ZoneBossRegistry) 만 만들었었음; 본 commit 는 combat dispatch 의 그 등록분을 실제로 호출하는 wiring 구현. ADR-0190 implementation in progress → **wiring closed**.

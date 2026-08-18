@@ -270,5 +270,77 @@
     "scene_data": "peripheral_epilogue",
     "achievement": "ngplus_peripheral",
     "reward": {"credits": 40000, "item": "peripheral_artifact"}
+  },
+  "ending_molly_redemption": {
+    "ending_id": "ending_molly_redemption",
+    "title": "Molly's Last Contract",
+    "character_ref": "molly",
+    "type": "redemption",
+    "arc": 2,
+    "trigger_condition": "defeat_yakuza_leader+ally_with:armitage",
+    "description": "Molly lets go of the wetwork. The blades retract, but the scars remain. The Sprawl loses its sharpest edge.",
+    "scene_data": "molly_epilogue_redemption",
+    "achievement": "molly_redemption",
+    "reward": {"credits": 3500, "morale": 100, "item": "molly_retirement_charm"}
+  },
+  "ending_sally_integration": {
+    "ending_id": "ending_sally_integration",
+    "title": "Sally Fades Inside",
+    "character_ref": "sally",
+    "type": "integration",
+    "arc": 3,
+    "trigger_condition": "complete_marlys_window+construct_awakening",
+    "description": "Sally slips behind the eyes of a construct. The market no longer sees her; the construct does.",
+    "scene_data": "sally_epilogue_integration",
+    "achievement": "sally_integration",
+    "reward": {"credits": 7500, "item": "sally_construct_link"}
+  },
+  "ending_suit_betrayal": {
+    "ending_id": "ending_suit_betrayal",
+    "title": "The Suit's Pivot",
+    "character_ref": "suit",
+    "type": "betrayal",
+    "arc": 2,
+    "trigger_condition": "complete_hosaka_contract+ally_with:ta_rep",
+    "description": "The Suit walks into the Hosaka boardroom carrying Wintermute's source. The construct does not survive the meeting.",
+    "scene_data": "suit_epilogue_betrayal",
+    "achievement": "suit_betrayal",
+    "reward": {"credits": 25000, "reputation": {"hosaka_rep": 50}}
+  },
+  "ending_neuromancer_absolution": {
+    "ending_id": "ending_neuromancer_absolution",
+    "title": "The Neuromancer's Truce",
+    "character_ref": "neuromancer",
+    "type": "absolution",
+    "arc": 4,
+    "trigger_condition": "ta_vote_complete+all_constructs_merged",
+    "description": "The construct that was Wintermute holds a mirror to itself. The matrix settles into a long quiet. The war ends not with victory but with a handshake written in ROM.",
+    "scene_data": "neuromancer_epilogue_absolution",
+    "achievement": "neuromancer_absolution",
+    "reward": {"credits": 6000, "morale": 100}
+  },
+  "ending_angie_transcendence": {
+    "ending_id": "ending_angie_transcendence",
+    "title": "Angie Rises Above",
+    "character_ref": "angie",
+    "type": "transcendence",
+    "arc": 3,
+    "trigger_condition": "complete_big_mama+construct_awakening",
+    "description": "Angie uploads a sliver of herself to the construct. The third room echoes with her voice forever.",
+    "scene_data": "angie_epilogue_transcendence",
+    "achievement": "angie_transcendence",
+    "reward": {"credits": 5000, "item": "angie_sky_charm"}
+  },
+  "ending_wigan_sacrifice": {
+    "ending_id": "ending_wigan_sacrifice",
+    "title": "Wigan's Last Loa",
+    "character_ref": "wigan",
+    "type": "sacrifice",
+    "arc": 4,
+    "trigger_condition": "construct_awakening+hp_below+ngplus_active",
+    "description": "Wigan calls the final loa. The construct answers. He does not return to the meat. The bar in the Sprawl sets an empty glass for the vodoun man who never came back.",
+    "scene_data": "wigan_epilogue_sacrifice",
+    "achievement": "wigan_sacrifice",
+    "reward": {"credits": 0, "permanent_death": true, "item": "wigan_loa_relic"}
   }
 }

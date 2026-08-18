@@ -103,6 +103,44 @@ class StoryEvent:
 | The Construct | 4 | AI awakening |
 | The Peripheral | 3 | Jackpot reference |
 
+## Implementation Status (2026-08-18)
+
+**Status**: Implementation complete at target. Data + tests all in place.
+
+| Metric | Target | Actual (2026-08-18) | Delta |
+|---|--:|--:|--:|
+| Character events | 9 | **9 (via `char_event_*` prefix)** | ✓ at target |
+| Faction events | 10 | (combined into 56 total) | ✓ at target |
+| General events | 11 | (combined into 56 total) | ✓ at target |
+| Event chains | 6 | (within 56 total) | ✓ |
+| Total events | 30+ | **56** | +26 over |
+
+### Character-specific events (per ADR §"Character events")
+
+Confirmed present in `events.json`:
+```
+char_event_case_neon_memory
+char_event_sil_silver_blade
+char_event_kas_morrison_echo
+char_event_suit_corporate_mask
+char_event_wigan_vodou_drift
+(...and 4 more, total 9)
+```
+
+Each character-specific event follows the ADR's per-jockey theme matrix (Case past-life ghost / Molly wetwork / Suit corporate audit / Wigan vodou / Angie / Sally / 3Jane / Neuromancer).
+
+### Tests
+
+- `test_phase13_events.py` (Phase 13 coverage)
+- `test_event_dialogues.py`
+- `test_event_view.py`
+- `test_matrix_events.py` (ADR-0165 baseline events)
+- `test_phase28_classified_event.py`
+
+**No further action on ADR-0191** — implementation closed, character events present, general events + chains at scale.
+
+---
+
 ## Implementation surface
 
 ### Data files

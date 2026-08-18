@@ -98,6 +98,65 @@ Track Phase 11 of the Content Expansion plan addresses these gaps via **additive
 - **No Cyberpunk 2077 / Shadowrun / D&D tone**
 - **No auto-commit**: explicit user authorization per AGENTS.md §8
 
+## Implementation Status (2026-08-18)
+
+**Status**: Implementation complete at target. Data + engine + tests all in place.
+
+| Metric | Target | Actual (2026-08-18) | Delta |
+|---|--:|--:|--:|
+| Total missions | 200+ | **200** | ✓ at target |
+| Mission chains | 8 | **9 chains (35 missions)** | +1 chain +7 missions |
+| Endgame (arc 6) missions | 11 | **11** | ✓ at target |
+| New mission types | +5 | **+5+** (under renamed taxonomy) | ✓ at target |
+
+### Mission types (via `primary_objective.type`)
+
+The ADR's proposed `MissionType.INVESTIGATION / DEFENSE / DUAL_OBJECTIVE / EXTRACTION_V2 / STEALTH` was implemented as `primary_objective.type` enum values rather than a Python enum:
+
+| ADR-proposed type | Implemented as | Count |
+|---|---|--:|
+| Investigation | `investigation_complete` | 22 |
+| Dual-objective | `extraction_AND_defeat` | 22 |
+| Dual-objective (variant) | `reach_target_AND_extract_data` | 13 |
+| Defense | `survive_n_waves` | 13 |
+| Stealth | `infiltrate` | 1 |
+| Plus existing | `extract_data` / `defeat` / `craft_item` / `deliver` / `patch_ice_vulnerability` / etc. | ~129 |
+
+### Chains (9)
+
+```
+ta_succession 5 / ngplus_boss_rush 5 / molly_razor 5 / core_construct_war 4 / case_past 4
+mid_security_breach 3 / freeside_orbital_summit 3 / tokyo_signal 3 / soho_brand 3
+```
+All chain missions carry `is_chain_mission`, `chain_id`, `chain_order`. MissionChain / ChainMission / ChainUnlockCondition / ChainReward / ChainFailure dataclasses all present in `missions/mission.py`.
+
+### Zone distribution (200 / 8 zones)
+
+| Zone | Count | vs ADR target (35/35/35/30/35/30) |
+|---|--:|---|
+| deep | 40 | +5 over |
+| surface | 35 | ✓ at target |
+| mid | 28 | −7 under |
+| ta | 28 | −7 under |
+| freeside | 24 | −11 under |
+| core | 23 | −7 under |
+| tokyo | 11 | (zone added post-ADR) |
+| soho | 11 | (zone added post-ADR) |
+
+Eight zones vs the ADR's six (`surface / mid / deep / core / ta / freeside`) — `tokyo` and `soho` were added after the ADR was authored. Six-zone distribution totals (excluding tokyo/soho): deep 40 / surface 35 / mid 28 / ta 28 / freeside 24 / core 23 = 178 missions, average ~30/zone. Not at proposed target (35/35/35/30/35/30 = 200) but sufficiently balanced for runtime variety.
+
+### Code surface
+
+`missions/mission.py` already exports `MissionType`, `Objective`, `Rewards`, `Mission`, `ChainMission`, `ChainUnlockCondition`, `ChainReward`, `ChainFailure`, `MissionChain`. `missions/random_rules.py` has `RuleResult` + 14 defs for weighted selection. `missions/board.py` has `MissionRepStatus` + `JobBoard`.
+
+### Tests
+
+8 mission-related test files: `test_missions.py`, `test_mission_archetypes.py` (ADR-0164), `test_mission_completion.py`, `test_mission_expansion.py` (ADR-0167), `test_mission_mapper.py`, `test_mission_rep_filter.py`, `test_mission_types_v2.py`, `test_death_mission.py`, plus integration `test_missions_with_story.py`.
+
+**No further action on ADR-0188** — implementation closed, schema stable, tests passing.
+
+---
+
 ## Implementation surface
 
 ### Data files

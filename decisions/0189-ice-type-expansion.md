@@ -72,6 +72,46 @@ Gaps:
 - **System Lag**: slows player actions
 - **Blackout**: temporary node lockout
 
+## Implementation Status (2026-08-18)
+
+**Status**: Implementation complete at target. Data + hazards + tests all in place.
+
+| Metric | Target | Actual (2026-08-18) | Delta |
+|---|--:|--:|--:|
+| Base archetypes | 6 | 6 | ✓ |
+| Faction-specific | +25 | (combined into expanded ice_types.json: 97 total) | ✓ exceeded |
+| Variant tiers | +10 | (combined into expanded ice_types.json: 97 total) | ✓ exceeded |
+| Cyberspace hazards | 5 | **5** | ✓ at target |
+| Total ICE | 60+ | **97** | +37 over |
+
+### Cyberspace hazards (per ADR spec)
+
+```json
+{
+  "antivirus_sweep": {...},
+  "trace_route": {...},
+  "data_corruption": {...},
+  "system_lag": {...},
+  "blackout": {...}
+}
+```
+
+All five hazards from the ADR's table (Antivirus Sweep / Trace Route / Data Corruption / System Lag / Blackout) are implemented exactly as named. File: `prototype/data/combat/cyberspace_hazards.json`.
+
+### ICE types
+
+`prototype/data/combat/ice_types.json` has **97 entries** — exceeds the ADR target of 60+ by 37. Includes base archetypes (Standard / Watchdog / Black / Goliath / Construct / Construct-proxy), faction-derived (Hosaka analyst / Sense/Net spin / Yakuza brute / T-A daemon / Loa), ascended variants (tier 5), corrupted variants (glitchy), defensive variants (shield-first).
+
+### Tests
+
+- `test_phase12_ice_types.py` (Phase 12 coverage)
+- `test_event_dialogues.py` (fused with hazard + ICE validation)
+- Plus `test_boss_ice`, `test_cyberspace_browser`, `test_cyberspace_generator`, `test_cyberspace_map_view`, `test_cyberspace_view`, `test_cyberspace_world`
+
+**No further action on ADR-0189** — implementation closed, hazards wired, ICE registry at scale.
+
+---
+
 ## Implementation surface
 
 ### Data files

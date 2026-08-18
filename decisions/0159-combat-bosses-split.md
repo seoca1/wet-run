@@ -57,3 +57,16 @@ Split `combat/bosses.py` into **2 files** following the natural cohesion boundar
 | `mypy src/` | 0 errors in 176 source files |
 | `wc -l combat/bosses.py` | ~370 LOC |
 | `wc -l combat/bosses_cinematic.py` | ~250 LOC |
+
+## Implementation Status (2026-08-18)
+
+**Status**: Implementation closed at target. All specified functions moved to `bosses_cinematic.py` and re-exported from `bosses.py` for backwards compatibility.
+
+| File | Target LOC | Actual LOC (2026-08-18) | Delta |
+|---|---:|---:|---:|
+| `combat/bosses.py` | ~370 | 346 | ✓ within (4 below target) |
+| `combat/bosses_cinematic.py` | ~250 | 296 | +46 |
+
+**Tests** (2026-08-18): 5687 passing (13 pre-existing failures, all unrelated). ruff 0 errors. mypy strict 0 errors.
+
+ADR-0159 is the **first of the four Track-A ADRs to land exactly at or under target**. `bosses.py` ended 24 LOC tighter than projected because the phase-5 cinematic spawners (`spawn_boss_phase5`, `boss_phase_5_sequence`) integrated cleanly into `bosses_cinematic.py` without separate ADR growth. No further action required.

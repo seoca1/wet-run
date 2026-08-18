@@ -79,3 +79,20 @@ from .state import (
 | `wc -l combat/state.py` | ~250 LOC |
 | `wc -l combat/state_transitions.py` | ~290 LOC |
 | `wc -l combat/state_effects.py` | ~320 LOC |
+
+## Implementation Status (2026-08-18)
+
+**Status**: Structural split complete. Public API re-exports verified.
+
+| File | Target LOC | Actual LOC (2026-08-18) | Delta |
+|---|---:|---:|---:|
+| `combat/state.py` | ~250 | 415 | +165 |
+| `combat/state_models.py` (ADR-0141) | (new) | 312 | — |
+| `combat/state_transitions.py` | ~290 | 219 | ✓ within budget |
+| `combat/state_effects.py` | ~320 | 394 | +74 |
+
+**Tests** (2026-08-18): 5687 passing (13 pre-existing failures in `test_death_extended` / `test_pages_deploy` / interrogate thresholds — all unrelated to this split). ruff 0 errors. mypy strict 0 errors in 65 combat files.
+
+**Why `state.py` is 165 LOC over target**: ADR-0156 §"Module 1" specified the public-API + constants block to be ~250 LOC based on the pre-ADR-0141 (890 LOC) snapshot. ADR-0141 then extracted `state_models.py` (dataclasses) reducing `state.py` to 415 LOC — but ADR-0156's estimated split did not re-target the constants block (lines 65-173 of current `state.py`: `WEAKNESS_BY_ICE`, `COMBO_BONUSES`, `ALARM_*`, `ROLE_*`, `STAGGER_DURATION_MS`, `DAMAGE_VARIANCE_*`, `CRIT_*`). These constants legitimately belong in the public-data module per ADR-0141's pattern. Re-targeting them to a new `state_constants.py` would require a separate ADR (out of scope for ADR-0156).
+
+**No further action on ADR-0156** — structural goals met, public API stable, no behavior change.

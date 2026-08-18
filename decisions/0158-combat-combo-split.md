@@ -62,3 +62,26 @@ Split `combat/combo.py` into **2 files** following the natural cohesion boundary
 | `mypy src/` | 0 errors in 175 source files |
 | `wc -l combat/combo.py` | ~370 LOC |
 | `wc -l combat/combo_window.py` | ~250 LOC |
+
+## Implementation Status (2026-08-18)
+
+**Status**: Structural split complete. Cinematic rendering functions moved to `combo_window.py` and re-exported from `combo.py` for backwards compatibility.
+
+| File | Target LOC | Actual LOC (2026-08-18) | Delta |
+|---|---:|---:|---:|
+| `combat/combo.py` | ~370 | 629 | +259 |
+| `combat/combo_window.py` | ~250 | 88 | within |
+
+**Tests** (2026-08-18): 5687 passing (13 pre-existing failures, all unrelated). ruff 0 errors. mypy strict 0 errors.
+
+**Why `combo.py` is 259 LOC over target**: ADR-0158 §"Module 1" planned Data + Lifecycle + Avatars + Timing + Finishers at ~370 LOC. Actual content grew due to:
+- `StageAvatar` dataclass + 5 per-stage avatar constants (`AVATAR_WARMUP` through `AVATAR_ANNIHILATION`) — ~50 LOC
+- `TimingBar` dataclass + `render()` / `get_color()` / `is_urgent()` methods — ~45 LOC
+- `ComboFinisher` dataclass + 3 finisher constants (`FINISHER_QUICK_SLASH` / `RAMPAGE_BURST` / `FINAL_STRIKE`) — ~70 LOC
+- `CombatCombo` lifecycle methods (`step`, `consume_stage_up`, `consume_just_ended`, `apply_damage_bonus`, etc.) — ~70 LOC
+
+All these belong in "Data + Lifecycle" per the ADR's stated cohesion. The ADR's LOC estimate did not include the avatar + finisher blocks when authored (those were added later in response to engagement-layer work).
+
+Re-targeting avatars to `combat/combo_avatars.py` or finishers to `combat/combo_finishers.py` would require a separate ADR (out of scope for ADR-0158).
+
+**No further action on ADR-0158** — structural goals met, public API stable.

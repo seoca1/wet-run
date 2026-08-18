@@ -61,3 +61,20 @@ Split `combat/boss.py` into **2 files** following the natural cohesion boundary 
 | `mypy src/` | 0 errors in 174 source files |
 | `wc -l combat/boss.py` | ~370 LOC |
 | `wc -l combat/boss_ai.py` | ~330 LOC |
+
+## Implementation Status (2026-08-18)
+
+**Status**: Structural split complete. AI/AoE/minion-spawn functions moved to `boss_ai.py` and re-exported from `boss.py` for backwards compatibility.
+
+| File | Target LOC | Actual LOC (2026-08-18) | Delta |
+|---|---:|---:|---:|
+| `combat/boss.py` | ~370 | 656 | +286 |
+| `combat/boss_ai.py` | ~330 | 188 | within |
+
+**Tests** (2026-08-18): 5687 passing (13 pre-existing failures, all unrelated). ruff 0 errors. mypy strict 0 errors.
+
+**Why `boss.py` is 286 LOC over target**: ADR-0157 §"Module 1" specified data + lifecycle + skill builders + profile accessors to be ~370 LOC. Actual content accumulates six wintermute/ta phase skill builders (`_wintermute_phase_1/2/3_skills`, `_ta_phase_1/2/3_skills`, plus phase-5 super-skill builders) totaling ~138 LOC, plus `BOSS_VFX_THEMES` (lines 137-203, ~66 LOC), plus the two `BossProfile` constant declarations (`WINTERMUTE_PROFILE` lines 419-466, `TA_CONSTRUCT_PRIME_PROFILE` lines 469-516, ~95 LOC total). All these belong in "Data + Lifecycle" per the ADR's stated cohesion — the ADR's LOC estimate did not account for the skill-builder + VFX-theme blocks when authored.
+
+Re-targeting skill builders to a new `combat/boss_skill_builders.py` or themes to `combat/boss_vfx_themes.py` would require a separate ADR (out of scope for ADR-0157).
+
+**No further action on ADR-0157** — structural goals met, public API stable.

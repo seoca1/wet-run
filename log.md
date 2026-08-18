@@ -1,3 +1,54 @@
+## [2026-08-18] chore(rename-cleanup) | Dashboard + prototype — ROGUELIKE SPRAWL → Wet Run (5 atomic commits)
+
+**Status**: ✅ 완료 — Project Rename scope A (commit `ae83d00`) 가 `wiki/` `design/` 까지만 적용됐고 dashboard + prototype 일부 (chrome / story metadata / i18n / demos) 가 누락됐던 잔존 영역 정리. **232 파일**, **5 atomic commits**. 0 test change, 0 regression. GitHub Pages push 전에 정합성 확보.
+
+### Sweep 결과
+
+사용자 결정 (sweep 범위 + 보존 영역): **전면 (dashboard + prototype)**, **이름=Wet Run**, **메타 문서 보존 (log/CHANGELOG/README/SESSION_*/_archive)**, **decisions/0032 Accepted immutable 보존**.
+
+| 영역 | 정정 전 | 정정 후 |
+|---|---|---|
+| dashboard chrome `<h1>` (index, missions) | `🌆 ROGUELIKE SPRAWL` | `🌆 Wet Run` |
+| dashboard chrome UI labels (back-nav `◀ Roguelike`, current `🌆 Roguelike`) | 5 sites (combat/cyberspace/sound/settings/missions/index) | 0 |
+| dashboard story game-integration path (`Game/roguelike_sprawl/...`) | 213 .html | `Game/wet_run/...` (perl -pi sweep) |
+| prototype i18n `app.title` (en/ko/ja/zh.json) | `ROGUELIKE SPRAWL` | `Wet Run` |
+| prototype demo banners (6 demos) | `ROGUELIKE SPRAWL` banner | `Wet Run` banner |
+| prototype/scripts/git-hooks/pre-commit (docstring) | `validate roguelike_sprawl ↔ Fiction` | `validate wet_run ↔ Fiction` |
+
+### 보존 (사용자 결정)
+
+- `decisions/0032-graphic-novel-mode.md` (1 line) — Accepted immutable 규약
+- `log.md` (9 hits), `CHANGELOG.md` (4), `README.md` (5), `SETUP_LOG.md` (1)
+- `SESSION_SUMMARY*.md`, `SESSION_HANDOVER*.md`, `_archive/sessions/*`, `_archive/audits/*`
+- `prototype/CHANGELOG.md` (1 hit), meta `<meta name="keywords">` 의 `roguelike, cyberpunk, gibson, sprawl` (장르/설정 SEO)
+- 인게임 subtitle (`'A roguelike based on William Gibson's Sprawl trilogy'` 등): `'roguelike'`=장르, `'Sprawl'`=깁슨 3부작 — 사실 관계 명제, 변경 X
+
+### Commits (5 atomic, chronological)
+
+| # | Hash | Files | Type |
+|---:|---|---:|---|
+| 1 | `2e6d161` | 2 | `fix(dashboard): chrome <h1> titles — ROGUELIKE SPRAWL → Wet Run` |
+| 2 | `3f00b6a` | 6 | `fix(dashboard): chrome UI labels — Roguelike → Wet Run` |
+| 3 | `28ea7bf` | 213 | `fix(dashboard): story game-integration paths — roguelike_sprawl → wet_run` |
+| 4 | `b755ad1` | 4 | `fix(prototype): i18n app.title — ROGUELIKE SPRAWL → Wet Run (4 langs)` |
+| 5 | `0d4f8c3` | 7 | `fix(prototype): demo banners + pre-commit hook — ROGUELIKE SPRAWL → Wet Run` |
+
+### 검증
+
+- `grep -rln 'roguelike[\s_\-]?sprawl|ROGUELIKE SPRAWL' dashboard/ prototype/data/i18n/ prototype/scripts/{demo,visual,full,headless,combat_effects}_*.py prototype/scripts/git-hooks/pre-commit` → **0 hits**
+- `python3 -c "import json; json.load(open(file))"` × 4 i18n 파일 → **all OK**
+- `python3 -c "import ast; ast.parse(open(file))"` × 6 demo .py → **all OK**
+- 파일 인코딩 보존 (UTF-8 HTML), file count unchanged
+- 보존 영역 (decisions/0032, log.md, CHANGELOG.md, README.md, SETUP_LOG.md, _archive/, SESSION_SUMMARY*.md, prototype/CHANGELOG.md) — 그대로 유지 확인
+
+### 인용
+
+- ADR style: AGENTS.md §9 (작업 종료 체크리스트 — log.md 기록)
+- Rename history: commit `ae83d00 chore(rename): Roguelike Sprawl → Wet Run (project-wide display name)`
+- 사용자 의사결정: "A. 전면 / Wet Run (대문자 그대로) / 기록 보존 / 0032 보존"
+
+---
+
 ## [2026-08-17] feat+chore(polish) | Phase 50 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Screw's Last Bargain event) + 1 modules polished (mission_completion docstring) + 10 forward-compat allowlist updates (Phase 40..49). Commit `80e5d3b`. 13 files, +218/-14, **5604 passed** (+13 over Phase 49 baseline 5591), 365 skipped, 1 xfailed.

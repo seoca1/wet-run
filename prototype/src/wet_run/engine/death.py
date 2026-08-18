@@ -179,7 +179,11 @@ def trigger_death(state: AppState, reason: str = "Combat") -> None:
 
     current_arc = 1
     if state.current_mission is not None:
-        current_arc = max(1, min(5, state.current_mission.arc))
+        raw_arc = getattr(state.current_mission, "arc", 1)
+        try:
+            current_arc = max(1, min(5, int(raw_arc)))
+        except (TypeError, ValueError):
+            current_arc = 1
     fragment = MemoryFragment(
         text=(
             f"Last thing I remember before flatline: {reason}. "

@@ -1,3 +1,50 @@
+## [2026-08-18] feat(combat) | Zone boss registry — load zone_bosses.json into typed lookup
+
+**Status**: ✅ 완료 — ADR-0190 (Phase 12 Axis 4 — zone-bosses part) 의 데이터 → 엔진 인프라. zone_bosses.json (11 entries — 6 zone + 3 ascended + 2 peripheral) 가 **이 commit 이전까지 zero code references** 였음. ZoneBossRegistry + ZoneBossProfile 도입으로 typed lookup 제공. 다음 commit 에서 combat dispatch 에 wiring 예정.
+
+### 1. 발견 (Recon 결과)
+
+- `data/combat/zone_bosses.json` — **11 entries** (dj_cyberspace / sense_net_sentinel / hosaka_memory_vault / locus_construct / tessier_child / orbit_ghost + wintermute_ascended / ta_prime_ascended / neuromancer_ascended + the_peripheral / the_peripheral_ascended)
+- `combat/boss_expansion.py` — ADR-0180 의 3 profiles (NEUROMANCER / LOA_BARON / BLACK_BARON) 이미 정의됨 + 자체 `BOSS_EXPANSION_REGISTRY` 보유
+- `combat/registry.py:407` — `program_registry is None` 체크 부근에 "reserved for future boss/elite variants" 코멘트 — F.4 integration 의 자리 마련됨
+- **그러나 — 두 데이터 소스 모두 combat dispatch 에서 미사용 상태** (zero code imports; `combat_view_state.py` 만 NEUROMANCER_PROFILE 을 import 하나 instance 화는 미연결)
+
+### 2. 구현
+
+`prototype/src/wet_run/combat/boss_registry.py` (NEW, 194 LOC) — ADR-0110 의 250-LOC soft limit 안에 들어감:
+
+- `ZoneBossProfile`: frozen/slots dataclass, 16 필드 (boss_id / name / zone / tier / hp_base / hp_per_grade / dmg_base / dmg_per_grade / defense / speed / skills / resistance / phase_count / portrait / description / loot_table / ice_kind)
+- `ZoneBossRegistry`: id-indexed + zone-indexed (by-zone 결 list)
+  - `get(boss_id) -> ZoneBossProfile | None`
+  - `get_for_zone(zone) -> tuple[ZoneBossProfile, ...]`
+  - `list_all() / list_ids() / list_zones() / __len__ / __contains__`
+- `load_zone_boss_registry(path | None = None)`: metadata-key (`_*`) + non-dict + type-error entries silently skip (resilience against partial data corruption)
+
+### 3. 검증
+
+ruff + mypy strict + pytest 전체 통과:
+
+| Check | Result |
+|---|---|
+| `ruff check src/wet_run/combat/boss_registry.py tests/unit/test_boss_registry.py` | ✅ All checks passed |
+| `mypy --strict src/wet_run/combat/boss_registry.py` | ✅ Success: no issues found |
+| `pytest tests/unit/test_boss_registry.py` | ✅ **27 passed** |
+| Full suite `pytest tests/unit/` | ✅ **5607 passed** (vs 5580 baseline, +27) |
+| 0 new failures | ✅ (13 baseline failures unrelated: death_extended, pages_deploy, interrogate coverage) |
+
+### 4. 다음 step (out of scope, 후속 commit)
+
+- **F.4 통합**: `combat/registry.py:build_ice_enemy` 에 zone boss branch 추가 — `ice_kind == "boss"` 인 경우 `ZoneBossRegistry.get(ice_id)` 또는 `boss_expansion.get_boss_profile(ice_id)` 으로 stat override. 모듈 분리 패턴으로 안전하게 추가.
+- **Dispatch wiring**: `combat_view_state.py` 가 zone boss 를 spawn 할 때 자동으로 올바른 stat / phase 적용.
+
+### 인용
+
+- ADR-0190 (Boss Expansion + F.4 Integration, Axis 4) — Accepted 2026-08-08, implementation in progress
+- ADR-0180 (Boss Expansion v1.3.0+) — 기존 3 boss profiles
+- ADR-0110 (module size policy) — 250/500 LOC soft/hard limit 준수
+
+---
+
 ## [2026-08-18] chore(endings-closure) | ADR-0192 status sync + 6 character endings 보강
 
 **Status**: ✅ 완료 — Phase 14 (v1.3.0+) 가 commit `205efd4` (2026-08-10) 에 ADR-0192 를 end-to-end 로 구현 (22 endings, 6 types, 3 NG+, 56 tests) 했었음. 오늘 session 에서 ADR-0192 의 status sync + per-character 6 endings 추가.

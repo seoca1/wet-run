@@ -87,6 +87,11 @@ def _is_tier3(augment_id: str) -> bool:
 def stack_wetware(augment_ids: list[str]) -> StackedWetware:
     """Stack multiple wetware augments using their bonuses.
 
+    Args:
+        augment_ids: List of wetware augment identifiers (e.g. ``["wv_synaptic_boost", "wv_adrenal_loop"]``).
+            Unknown IDs are silently ignored — the stacking math only
+            considers augments present in the registry.
+
     Stacking rules (Phase 14/ADR-0193):
     - ap_regen: additive (lv1 + lv2 + lv3)
     - crit_chance: additive

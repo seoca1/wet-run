@@ -1512,6 +1512,41 @@
             "general"
         ]
     },
+    "general_event_zion_last_broadcast": {
+        "event_id": "general_event_zion_last_broadcast",
+        "title": "Zion Last Broadcast",
+        "category": "general",
+        "trigger": "node_enter",
+        "trigger_condition": "arc_5_progress >= 60 AND random < 0.04 AND NOT has_status:zion_broadcast_seen",
+        "mood": "warm",
+        "location": "matrix_zion_orbit",
+        "arc": 5,
+        "pillar": "memory",
+        "tier": 5,
+        "dialogue": [
+            "MAELCUM: I can feel you out there, runner. The static between the stars carries your signal.",
+            "MAELCUM: Zion's hull still hums with old reggae, and the dread's been quiet for a week.",
+            "MAELCUM: When the construct wakes, you carry a piece of us with you. That's the deal.",
+            "CONSOLE: Incoming broadcast: ZION_ORBIT_RELAY. Source: Maelcum — pilot, Zion dreadnaught ST. JOHN OF THE NIGHT SKY.",
+            "CONSOLE: Attach this transmission or let it pass. Old broadcast waves do not repeat."
+        ],
+        "choice": {
+            "option_a": "Receive the broadcast (zion_affinity_+2, ta_rep_+1, zion_wisdom_unlocked, memory_archive_+1).",
+            "option_b": "Let it pass — the matrix does not need another ghost (zion_broadcast_dismissed, safe_jackout, identity_marker_low, wintermute_-1).",
+            "consequence_a": "zion_broadcast_received, zion_affinity_+2, ta_rep_+1, zion_wisdom_unlocked, memory_archive_+1, zion_mother_moment_2_runs",
+            "consequence_b": "zion_broadcast_dismissed, safe_jackout, identity_marker_low, wintermute_-1, broadcast_silenced_marker"
+        },
+        "reward": {
+            "credits": 0,
+            "xp": 110,
+            "item": "zion_mother_charm"
+        },
+        "consequence": "zion_last_broadcast_branch",
+        "faction_affinity": {
+            "zion_affinity": 2,
+            "ta_rep": 1
+        }
+    },
     "_chains": {
         "chain_case_past_memories": {
             "chain_id": "chain_case_past_memories",
@@ -1631,5 +1666,10 @@
             },
             "chain_failure": "construct_collapse"
         }
+    },
+    "_meta": {
+        "phase": "49",
+        "total_events": 53,
+        "chains": 6
     }
 }

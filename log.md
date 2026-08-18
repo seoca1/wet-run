@@ -1,3 +1,48 @@
+## [2026-08-17] feat+chore(polish) | Phase 49 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Zion Last Broadcast event) + 1 modules polished (wetware_stacking docstring) + 10 forward-compat allowlist updates (Phase 39..48). Commit `533244c`. 13 files, +214/-10, 5591 passed (+13 over Phase 48 baseline 5578).
+
+### 1. Content addition: general_event_zion_last_broadcast
+
+`prototype/data/story/events.json` 에 `general_event_zion_last_broadcast` 신규 엔트리 추가 (53 → 54 events). Gibson-flavored Arc 5 late-arc Maelcum broadcast from the Zion dreadnaught ST. JOHN OF THE NIGHT SKY — 깁슨 원작의 *Neuromancer* / *Mona Lisa Overdrive* 에서 Case 를 Zion 궤도로 데려다 주는 reggae dread 조종사 Maelcum 이, 후배 자키에게 마지막 wisdom / memory 를 broadcast 로 전달. 따뜻한 톤(warm), ZION_ORBIT_RELAY 의 dreadnaught broadcast:
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_5_progress >= 60 AND random < 0.04 AND NOT has_status:zion_broadcast_seen`
+- **Mood**: warm, location: matrix_zion_orbit, arc: 5, tier: 5, pillar: memory
+- **Dialogue**: MAELCUM VOICE 메시지 5개 + CONSOLE broadcast source log
+- **Choice**: Receive the broadcast (zion_affinity_+2, ta_rep_+1, zion_wisdom_unlocked, memory_archive_+1) vs Let it pass — the matrix does not need another ghost (safe_jackout, identity_marker_low, wintermute_-1, broadcast_silenced_marker)
+- **Reward**: 0 credits + 110 XP + zion_mother_charm
+- **Consequence**: zion_last_broadcast_branch (unique — global branch-id sweep)
+- **Faction affinity**: zion_affinity +2 AND ta_rep +1
+- **메타데이터**: phase 49 → 50, total_events 53 → 54, total_chains 6 unchanged
+
+### 2. Polish — 1 modules (wetware_stacking docstring)
+
+**`equipment/wetware_stacking.py`** — `stack_wetware()` docstring 확장. Args: 섹션 추가 (augment_ids + unknown IDs silently ignored note), Stacking rules 섹션 유지.
+
+### 3. Forward-compat allowlist (10 forward-compat updates)
+
+Phase 39..48 테스트의 `metadata["phase"] in (...)` allowlist 에 "49" 추가.
+
+### 4. test_phase49_small_content_polish.py (13 tests 신규)
+
+TestZionLastBroadcastEvent (11), TestZionLastBroadcastBranchUniqueness (1), test_phase_49_metadata + total_events (2).
+
+### Validation
+
+- make format: 변경 없음
+- make lint (ruff): All checks passed
+- make typecheck (mypy strict): 211 source files, 0 errors
+- make test (pytest): 5591 passed (+13), 365 skipped, 1 xfailed (pre-existing)
+- audit_vault.py: 0 broken (CLEAN)
+- dashboard_pipeline_audit.py: 0 errors
+- mixed_language_audit.py: 0 violations
+
+### 5. Push 상태
+
+8 commits ahead of origin (Phase 48 baseline + Phase 49). User action: GH_TOKEN rotation 후 `git push origin main`.
+
+---
+
 ## [2026-08-17] feat(dashboard+rename) | Post-rename game + dashboard surface update
 
 **Status**: ✅ 완료 — 게임 코드 + 대시보드 chrome + dashboard data rebuild. 3 commits (`581486d`, `c668aa5`, `bf809c5`). 567 files changed cumulatively. 5577 passed, ruff ✅, mypy strict ✅, audit_vault.py CLEAN.

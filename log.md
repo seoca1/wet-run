@@ -576,3 +576,137 @@ ae83d00 chore(rename): Roguelike Sprawl → Wet Run (project-wide display name)
 Total cumulative rename + dashboard update: ~580 files, 5 commits, 0 regressions, 0 broken wikilinks.
 
 ---
+
+## [2026-08-18] docs(sweep) | All 4-axis + Track A backlog reconciled — recon sweep of ADR-0156–0159, ADR-0188/0189/0191
+
+**Status**: ✅ 완료 — SESSION_SUMMARY_2026-08-18 §5 "Next-Session Backlog" 의 모든 항목 (Track A + Axis 1/2/3) 이 **implementation 완료 상태로 확인**되어 meta-closure entries 7 ADR 문서 (decisions/) 에 추가. 본 세션은 코드 작성 없이 docs-only 작업.
+
+### 1. Recon 결과 (한눈에)
+
+| 항목 | ADR target | 실제 (2026-08-18) | Status |
+|---|---:|---:|---|
+| **Track A.156** state.py 890 → 3 files | state.py ~250 / state_transitions ~290 / state_effects ~320 | state.py=415 / state_transitions=219 / state_effects=394 | ✅ structural done; +165 over (constants block 합법 잔존) |
+| **Track A.157** boss.py 724 → 2 files | boss.py ~370 / boss_ai ~330 | boss.py=656 / boss_ai=188 | ✅ structural done; +286 over (skill builders + VFX themes 합법 잔존) |
+| **Track A.158** combo.py 685 → 2 files | combo.py ~370 / combo_window ~250 | combo.py=629 / combo_window=88 | ✅ structural done; +259 over (avatars + finishers 합법 잔존) |
+| **Track A.159** bosses.py 627 → 2 files | bosses.py ~370 / bosses_cinematic ~250 | bosses.py=346 / bosses_cinematic=296 | ✅ **closed at target** (-24 / +46) |
+| **Axis 1** (ADR-0188) Mission Expansion | 200 missions / 8 chains / 11 endgame / +5 types | **200 missions / 9 chains (35) / 11 endgame / +5+ types** | ✅ **closed at target** |
+| **Axis 2** (ADR-0189) ICE Type Expansion | 60+ ICE / 5 cyberspace hazards | **97 ICE / 5 hazards** (`antivirus_sweep`, `trace_route`, `data_corruption`, `system_lag`, `blackout`) | ✅ **closed at target** |
+| **Axis 3** (ADR-0191) Story Events | 30+ events / 9 character-specific + 10 faction + chains | **56 events / 9 `char_event_*` + combined** | ✅ **closed at target** |
+
+**테스트 baseline**: 5687 passing / 13 failed (death_extended / pages_deploy / interrogate thresholds, 모두 pre-existing). ruff 0. mypy strict 0 errors in 65 combat files.
+
+### 2. ADR 문서 추가 (7 docs)
+
+| File | Section added | Note |
+|---|---|---|
+| `decisions/0156-combat-state-split.md` | Implementation Status (2026-08-18) | target vs actual LOC, residual content 합법성 |
+| `decisions/0157-combat-boss-split.md` | Implementation Status (2026-08-18) | skill builders + VFX themes 잔존 |
+| `decisions/0158-combat-combo-split.md` | Implementation Status (2026-08-18) | avatars + finishers 잔존 |
+| `decisions/0159-combat-bosses-split.md` | Implementation Status (2026-08-18) | **target met** |
+| `decisions/0188-mission-expansion.md` | Implementation Status (2026-08-18) | 200 missions / 9 chains / MissionChain dataclass present |
+| `decisions/0189-ice-type-expansion.md` | Implementation Status (2026-08-18) | 97 ICE / 5 hazards exact match |
+| `decisions/0191-story-events-expansion.md` | Implementation Status (2026-08-18) | 56 events / 9 char_event_* confirmed |
+
+각 섹션은 (a) ADR target vs actual metrics, (b) code surface presence 확인, (c) test files inventory. ADR 본문 (Decision / Consequences / Validation) 은 immutable.
+
+### 3. SESSION_SUMMARY_2026-08-18 §5 backlog 의 stale status
+
+2026-08-18 §5 SESSION_SUMMARY 의 "Next-Session Backlog" 섹션은 다음 4 항목을 deferred 로 표시했음:
+> - Axis 1 (Mission Expansion) — 89+ missions / 5 types / 8 chains. **Content-heavy**. Data not yet authored.
+> - Track A (Module splits) — 3-4 sessions, 4 modules > 1000 LOC. **Pure refactor**.
+> - Axis 2 (ICE Types) — hazards system not yet implemented.
+> - Axis 3 (Story Events) — chains routing incomplete.
+
+현실 (2026-08-18 recon):
+> - **모든 항목 코드 + 데이터 + 테스트 완료**. 4 axes 의 ADR 작성 시점 (2026-08-08~10) 부터 다음 10 일 동안 작업이 누적됨. SESSION_SUMMARY §5 의 "deferred" 표기는 stale — actual 는 implemented.
+
+이는 같은 날 (2026-08-18) Axis 5/4/6 closure sweep 에서 발견된 패턴의 확장: **ADR 은 accepted 상태로 filed 되었으나 implementation 이 ADR 작성 시점보다 빠르게 진행되어 작업 시점에 이미 shipped**.
+
+### 4. 다음 단계 handover
+
+1. **Track A + Axes 1/2/3**: 7 ADR docs implementation-status 섹션 추가 완료. 추가 코드 작업 없음. 신규 commit 없음 (docs-only).
+2. **Stale SESSION_SUMMARY 갱신** (사용자 판단): SESSION_SUMMARY_2026-08-18.md §5 의 "Next-Session Backlog" 섹션이 stale 임이 확인됨. 정정 필요 시 사용자 결정 — 본 entry 는 recon 만.
+3. **진짜 deferred 항목** (아직 식별 안됨): 코드 작성 deferred 가 아니라 ADR 작성이 안된 신규 작업 후보 (예: boss skill builders 별도 ADR, VFX themes 별도 ADR, constants 별도 ADR). 사용자 우선순위 결정 후 별도 세션.
+
+### 5. 인용
+
+- [`decisions/0156-combat-state-split.md`](./decisions/0156-combat-state-split.md) § Implementation Status
+- [`decisions/0157-combat-boss-split.md`](./decisions/0157-combat-boss-split.md) § Implementation Status
+- [`decisions/0158-combat-combo-split.md`](./decisions/0158-combat-combo-split.md) § Implementation Status
+- [`decisions/0159-combat-bosses-split.md`](./decisions/0159-combat-bosses-split.md) § Implementation Status
+- [`decisions/0188-mission-expansion.md`](./decisions/0188-mission-expansion.md) § Implementation Status
+- [`decisions/0189-ice-type-expansion.md`](./decisions/0189-ice-type-expansion.md) § Implementation Status
+- [`decisions/0191-story-events-expansion.md`](./decisions/0191-story-events-expansion.md) § Implementation Status
+
+---
+
+## [2026-08-18] docs(track-a) | Track A module splits ADR-0156/0157/0158/0159 closure + Axis 1 start (zone analysis pending)
+
+**Status**: ✅ 완료 — Track A ADR-0156/0157/0158/0159 의 implementation-status 섹션 4 문서를 decision 파일에 추가 (실제 LOC 측정값 + ADR target 과의 차이 분석 + 추가 ADR 필요 여부 명시). 본 session 에 **새 코드는 작성하지 않았음** — 작업 항목은 (a) Track A partial-split 분석 + (b) ADR docs 갱신 + (c) Axis 1 (Mission Expansion) 시작.
+
+### 1. Track A 분석 결과 (recon)
+
+기존 session summary (2026-08-18 §5) 에서는 Track A module splits 가 "4 modules > 1000 LOC: state.py 890 / boss.py 724 / combo.py 685 / bosses.py 627" 으로 요약되었으나, 실제 recon 결과:
+
+| ADR | 원본 측정 (ADR 작성 시점) | 2026-08-18 실제 | 결과 |
+|---|---|---|---|
+| **ADR-0156** state.py 890 → 3 files | state.py=415 / state_models=312 / state_transitions=219 / state_effects=394 | ✅ Structure complete. state.py 가 +165 LOC over (constants block 65-173 line 합법 잔존) |
+| **ADR-0157** boss.py 724 → 2 files | boss.py=656 / boss_ai.py=188 | ✅ Structure complete. boss.py +286 LOC over (skill builders + VFX themes 합법 잔존) |
+| **ADR-0158** combo.py 685 → 2 files | combo.py=629 / combo_window.py=88 | ✅ Structure complete. combo.py +259 LOC over (avatars + finishers 합법 잔존) |
+| **ADR-0159** bosses.py 627 → 2 files | bosses.py=346 / bosses_cinematic.py=296 | ✅ **Closed at target** (-24 vs target +46 over in cinematic) |
+
+모든 4 ADR 의 structural goal (split + re-export + public API stable) 은 달성됨. ADR 작성 시점 (2026-08-07) 이후 content 가 accent 했기 때문에 ADR target LOC 보다 더 큰 결과. 추가 분할 (skill builders / VFX themes / avatars / finishers / constants) 은 별도 ADR 필요.
+
+### 2. Validation (2026-08-18 baseline)
+
+| Check | Result |
+|---|---|
+| `ruff check combat/` | All checks passed |
+| `mypy --strict combat/` | 0 errors in 65 source files |
+| `pytest tests/ -q` | **5687 passed** / 13 failed (pre-existing) / 365 skipped / 1 xfailed |
+| Pre-existing failures | `test_death_extended.py` (3), `test_pages_deploy.py` (4), interrogate thresholds (6) — 모두 combat module split 과 무관 |
+
+### 3. ADR 문서 추가 (4 docs)
+
+| File | Action | Section added |
+|---|---|---|
+| `decisions/0156-combat-state-split.md` | edit | Implementation Status (2026-08-18) — 415 LOC vs target 250, +165 delta, constants block 설명 |
+| `decisions/0157-combat-boss-split.md` | edit | Implementation Status (2026-08-18) — 656 LOC vs target 370, +286 delta, skill builders + VFX themes 설명 |
+| `decisions/0158-combat-combo-split.md` | edit | Implementation Status (2026-08-18) — 629 LOC vs target 370, +259 delta, avatars + finishers 설명 |
+| `decisions/0159-combat-bosses-split.md` | edit | Implementation Status (2026-08-18) — 346 LOC vs target 370, -24 ✓ **closed at target** |
+
+각 섹션은 (a) 측정 LOC, (b) "왜 over-target 인지" 의 합리적 설명, (c) 추가 작업 필요 시 별도 ADR 권장 — 을 포함. ADR 본문 (Decision / Consequences) 은 변경하지 않음 (Accepted immutable).
+
+### 4. Axis 1 (Mission Expansion, ADR-0188) start — prep 단계
+
+ADR-0188 "Accepted (2026-08-08, user explicit "Begin Phase 11")" 상태. 본 session 에서는 본격 authoring 시작하지 않음. 이유:
+
+**Open Questions** (ADR-0188 §"열린 질문"):
+- Q1: Type names — "stealth" vs "infiltration"? (Recommend "stealth")
+- Q2: Chain unlock timing — after 3 or 5 missions? (Recommend 3)
+- Q3: Random mission weighting source? (Recommend initial stats +0.1/completion)
+- Q4: Zone distribution — proposed targets (35/35/35/30/35/30) OK?
+- Q5: Endgame shape — 11 specific missions or 1 chain + 10 random? (Recommend 1 chain + 10 random)
+
+89 missions authoring 시작 전에 위 5 질문에 대한 사용자 확인 필요 — user-action item. 본 entry 는 recon-only 단계.
+
+### 5. 다음 단계 handover
+
+1. **Track A**: 4 ADR docs implementation-status 섹션 추가 완료. 추가 코드 작업 없음. 신규 commit 없음 (docs-only 작업).
+2. **Axis 1**:
+   - **즉시 다음**: ADR-0188 Q1-Q5 해결 → 사용자 확인 (현재 entry 작성 시점에 question 도구로 확인 가능)
+   - **그 다음**: zone distribution analysis (`data/missions/missions.json` 파싱 + surface/mid/deep/core/TA/freeside count 집계)
+   - **그 다음**: 1 zone (예: Surface) 의 first batch authoring (10-15 missions of existing 6 types, schema 회귀 검증)
+   - **그 이후**: 4-6 sessions 걸쳐 89+ missions + 5 new types + 8 chains + 11 endgame missions authoring
+
+### 6. 인용
+
+- [`decisions/0156-combat-state-split.md`](./decisions/0156-combat-state-split.md) § Implementation Status
+- [`decisions/0157-combat-boss-split.md`](./decisions/0157-combat-boss-split.md) § Implementation Status
+- [`decisions/0158-combat-combo-split.md`](./decisions/0158-combat-combo-split.md) § Implementation Status
+- [`decisions/0159-combat-bosses-split.md`](./decisions/0159-combat-bosses-split.md) § Implementation Status
+- [`decisions/0188-mission-expansion.md`](./decisions/0188-mission-expansion.md) § 열린 질문
+- AGENTS.md §9 — 작업 종료 체크리스트
+- AGENTS.md §6.5 — workspace-level docs (`log.md` cross-project sync)
+
+---

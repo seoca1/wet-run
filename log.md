@@ -1,3 +1,87 @@
+## [2026-08-17] feat+chore(polish) | Phase 50 — Small content + polish
+
+**Status**: ✅ 완료 — 1 content addition (Screw's Last Bargain event) + 1 modules polished (mission_completion docstring) + 10 forward-compat allowlist updates (Phase 40..49). Commit `80e5d3b`. 13 files, +218/-14, **5604 passed** (+13 over Phase 49 baseline 5591), 365 skipped, 1 xfailed.
+
+### 1. Content addition: general_event_screws_last_bargain
+
+`prototype/data/story/events.json` 에 `general_event_screws_last_bargain` 신규 엔트리 추가 (53 → 54 events). Gibson-flavored Arc 5 late-arc Screw's Last Bargain from the Freeside black-market fixer — 깁슨 원작의 *Mona Lisa Overdrive* / *Count Zero* 의 Freeside orbit 여권조작꾼 Screw 가 주인공에게 마지막 거래 제안 (Freeside passport in exchange for a 'contested memory'). 위태/시바 / Zion 모두와 다른 Freeside 의 마지막 톤 (shaky):
+
+- **Category**: general, trigger: `node_enter`, trigger_condition: `arc_5_progress >= 70 AND random < 0.04 AND NOT has_status:screw_bargain_seen`
+- **Mood**: shaky, location: matrix_freeside_orbit, arc: 5, tier: 5, pillar: memory
+- **Dialogue**: SCREW VOICE 메시지 5개 ("Hey, kid. Last time I cut a deal like this, the buyer ended up in a vat." / "Freeside passport, L5 orbit clearance, no questions. Cost: a memory." / "Not the boring ones. The ones you still flinch at. That's the going rate.") + CONSOLE blackmarket log
+- **Choice**: Pay the memory price (screw_pass_unlocked, freeside_clearance_+2, zion_affinity_-1, contested_memory_relinquished_2_runs) vs Walk — your memories are not for sale (freeside_walked, safe_jackout, identity_marker_high, maas_+1)
+- **Reward**: 0 credits + 120 XP + screw_freeside_charm
+- **Consequence**: screws_last_bargain_branch (unique — global branch-id sweep)
+- **Faction affinity**: freeside_clearance +2 AND maas +1 (pay-bargain yields Freeside orbit passage + Maas protective approval of the refused bargain; walk-on yields the inverse — no orbit passage but Maas oath of contested memory protection)
+- **메타데이터**: phase 50 → 51, total_events 53 → 54, total_chains 6 unchanged
+
+Phase 49 의 Zion Last Broadcast event (Arc 5 late-arc, Maelcum wisdom transmission, zion_affinity + ta_rep affinity) 와 동일 arc-prefix + tone-pair — Phase 49 가 "Zion dread 의 reggae broadcast" (warm) 였다면, Phase 50 은 "Freeside black-market 의 passport bargain" (shaky). 둘 다 Arc 5 late-arc construct-passage pre-auth, 둘 다 last-message 모티프. Phase 49-50 가 "마지막 거래/전송" 의 짝.
+
+### 2. Polish — 1 modules (mission_completion docstring)
+
+**`engine/mission_completion.py`** — `complete_mission()` docstring 확장. 기존 2줄 docstring 을 완전한 API contract 로 확장:
+
+- 기존: "Award rewards and mark mission as complete." (2줄)
+- 신규: explicit `Args:` (state / mission) + `Side effects:` 섹션 (Credits / XP / Faction / completed_missions / items — 5 항목 명시) + silent no-op on non-Mission callers note
+- 기존 silent no-op 동작 (return without effect for non-Mission callers) 유지 — contract 자명화
+
+### 3. Forward-compat allowlist (10 forward-compat updates + bug fix)
+
+Phase 40..49 테스트의 `metadata["phase"] in (...)` allowlist 에 "50" 추가 (9 forward-compat updates + Phase 49 자체 forward-compat):
+
+- **Bug fix (incidental)**: `test_phase49_small_content_polish.py` 의 metadata fixture 가 `dict.get('phase', '49', '50')` 로 잘못 작성되어 있었음 — Python `dict.get()` 는 max 2 args. `dict.get('phase', '49')` 로 수정 (default 만).
+
+### 4. test_phase50_small_content_polish.py (13 tests 신규)
+
+- **`TestScrewsLastBargainEvent`**: 11 tests
+  - test_event_present
+  - test_event_metadata (arc/tier/pillar/location/mood)
+  - test_event_trigger (arc_5_progress >= 70, NOT has_status:screw_bargain_seen)
+  - test_event_dialogue (SCREW, Freeside reference)
+  - test_event_choice_a_screw (screw_pass_unlocked, freeside_clearance_+2, zion_affinity_-1, contested_memory_relinquished_2_runs)
+  - test_event_choice_b_maas (maas_+1, maas_oath_2_runs, identity_marker_high)
+  - test_event_faction_affinity (freeside_clearance == 2, maas == 1)
+  - test_event_rewards (screw_freeside_charm, xp 120)
+  - test_event_arc_5_partner (screws_last_bargain_branch)
+  - test_event_branch_is_unique
+- **`TestScrewsLastBargainBranchUniqueness`**: 1 test
+  - test_branch_id_unique_across_events (global branch-id sweep — 다른 events 와 branch id 충돌 없음 검증)
+- **`test_phase_50_metadata_present`** + **`test_phase_50_total_events_at_least_53`**: 2 tests
+  - Phase 50 metadata 가 존재하고 total_events >= 53 (screw 추가 후 54)
+
+### Validation
+
+| Gate | Status | Notes |
+|---|---|---|
+| `make format` | ✅ | 변경 없음 |
+| `make lint` (ruff) | ✅ | All checks passed |
+| `make typecheck` (mypy strict) | ✅ | Success: no issues found in 211 source files |
+| `make test` (pytest) | ✅ | **5604 passed** (+13 over Phase 49 baseline 5591), 365 skipped, 1 xfailed (pre-existing perf-tracker flake) |
+| interrogate | ✅ | 100.0% (Phase 49 plateau preserved) |
+| `audit_vault.py` | ✅ | 0 broken (CLEAN, 67 false-positive artifacts) |
+| `dashboard_pipeline_audit.py` | ✅ | 0 errors |
+| `mixed_language_audit.py` | ✅ | 0 violations |
+
+### 5. Out-of-scope (preserved)
+
+- `raw/` 수정 안 됨
+- Accepted ADR 수정 안 됨
+- 다른 프로젝트 손대지 않음
+- Push 안 함
+
+### 6. Forward-compat (테스트 패턴 일관성)
+
+Phase 40..49 테스트의 `metadata["phase"] in (...)` allowlist 에 "50" 추가 (10 forward-compat updates, 9 single-line + 1 bug fix in Phase 49). 메타데이터 phase bump 가 이전 phase 테스트를 깨뜨리지 않도록.
+
+### 7. Cumulative Phase 47..50
+
+- Phase 47 (Hosaka Archive Audit): Gibson Sense/Net archive dialogue, Arc 4 mid-arc
+- Phase 48 (Dixie Flatline Memory): Gibson dead-ROM construct, Arc 4 mid-arc
+- Phase 49 (Zion Last Broadcast): Gibson Maelcum reggae dread, Arc 5 late-arc warm
+- Phase 50 (Screw's Last Bargain): Gibson Freeside black-market, Arc 5 late-arc shaky
+
+---
+
 ## [2026-08-17] feat+chore(polish) | Phase 49 — Small content + polish
 
 **Status**: ✅ 완료 — 1 content addition (Zion Last Broadcast event) + 1 modules polished (wetware_stacking docstring) + 10 forward-compat allowlist updates (Phase 39..48). Commit `533244c`. 13 files, +214/-10, 5591 passed (+13 over Phase 48 baseline 5578).

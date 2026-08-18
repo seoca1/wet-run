@@ -1,6 +1,6 @@
 [project]
 name = "wet-run"
-version = "1.1.0a1"
+version = "1.1.0"
 description = "Wet Run — a cyberpunk roguelike set in William Gibson's Sprawl trilogy"
 readme = "README.md"
 requires-python = ">=3.11"

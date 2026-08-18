@@ -7,7 +7,7 @@ def test_import_main_package() -> None:
     """The main package can be imported."""
     import wet_run  # noqa: F401
 
-    assert wet_run.__version__ == "0.1.0"
+    assert wet_run.__version__ == "1.1.0"
 
 
 def test_import_subpackages() -> None:

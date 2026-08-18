@@ -4,6 +4,55 @@ All notable changes to wet_run will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.1.0] — 2026-08-17
+
+### Project Rename (Roguelike Sprawl → Wet Run)
+
+- **Display name**: `Roguelike Sprawl` → **Wet Run** (entire workspace)
+- **Python package**: `roguelike_sprawl` → `wet_run` (257 import statements)
+- **GitHub repo**: `seoca1/roguelike-sprawl` → `seoca1/wet-run`
+- **Dashboard chrome** (548 files): 521 short-stories + 17 dashboard pages
+  updated with new title/footer, canonical URL, og:image
+- **Game code**: `GAME_NAME`/`SCREEN_TITLE` constants
+- **Documentation**: README, log.md, AGENTS.md (cross-project references)
+
+### Phase 47 — Hosaka Archive Audit (small content + polish)
+
+- **Content**: `general_event_hosaka_archive_audit` (Arc 4 mid-arc, Gibson
+  Sense/Net passport file dialogue, hosaka + sense_net affinity)
+- **3 modules polished**: `save_manager.py`, `ppl.py`, `node.py`
+  (docstring API contract + error message clarity)
+- **Forward-compat allowlist** (10 forward-compat updates)
+
+### Phase 48 — Dixie Flatline Memory (small content + polish)
+
+- **Content**: `general_event_dixie_flatline_memory` (Arc 4 mid-arc, Gibson
+  dead-ROM construct memory event, wintermute + ta_rep affinity)
+- **3 modules polished**: `meta_progression.py`, `status_effects_v2.py`,
+  `graph.py` (docstring + error message clarity)
+- **Forward-compat allowlist** (10 forward-compat updates)
+- **test_armitage portrait regression fix**: `10x14` → `10x12`
+  (matches actual portrait data)
+
+### Phase 49 — Zion Last Broadcast (small content + polish)
+
+- **Content**: `general_event_zion_last_broadcast` (Arc 5 late-arc, Gibson
+  Maelcum broadcast from the Zion dreadnaught ST. JOHN OF THE NIGHT SKY,
+  warm mood, zion_affinity + ta_rep affinity)
+- **1 module polished**: `equipment/wetware_stacking.py`
+  (stack_wetware() docstring expanded with explicit Args)
+- **Forward-compat allowlist** (10 forward-compat updates)
+
+### Test & Validation
+
+- 5577 → **5591 tests passed** (+13 from Phase 49), 365 skipped,
+  1 xfailed (pre-existing perf-tracker flake)
+- ruff: All checks passed
+- mypy strict: 0 errors in 211 source files
+- audit_vault.py: 0 broken (CLEAN)
+- Production build: `uv build` → `wet_run-1.1.0-py3-none-any.whl`
+- CLI: `uv run wet-run` (entry point) verified
+
 ## [Unreleased] — Phase α-L (2026-07-26)
 
 ### Per-Boss VFX Themes (Phase B-3.5+, 2026-07-27)

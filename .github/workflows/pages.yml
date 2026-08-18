@@ -47,28 +47,22 @@ jobs:
       - name: Prepare gh-pages artifact
         run: |
           mkdir -p _pages
-          cp dashboard/index.html _pages/index.html
-          cp dashboard/missions.html _pages/missions.html
-          cp dashboard/stages.html _pages/stages.html
-          cp dashboard/library.html _pages/library.html
-          cp dashboard/sound.html _pages/sound.html
-          cp dashboard/combat.html _pages/combat.html
-          cp dashboard/equipment.html _pages/equipment.html
-          cp dashboard/cyberspace.html _pages/cyberspace.html
-          cp dashboard/achievements.html _pages/achievements.html
-          cp dashboard/settings.html _pages/settings.html
-          cp dashboard/graphic-novel.html _pages/graphic-novel.html
-          cp dashboard/favicon.svg _pages/favicon.svg
-          cp -r dashboard/sounds/ _pages/sounds/
-          cp -r dashboard/stories/ _pages/stories/
-          cp -r dashboard/data/ _pages/data/
-          cp -r design/ _pages/design/
+          # Dashboard: copy entire directory recursively (all HTML/JS/CSS/JSON/assets).
+          # Replaces prior file-by-file list which drifted as new pages were added
+          # (character-graph, mission-flow, jokey, dungeon, player, play, glossary.json, etc.).
+          cp -r dashboard/. _pages/
+          # Wiki (MkDocs Material build output) → /wiki/ sub-path
           cp -r site/ _pages/wiki/
+          # Sibling assets referenced by dashboard via fetch()
+          cp -r design/ _pages/design/
           cp -r Fiction/derivative/ _pages/Fiction/derivative/ 2>/dev/null || true
-          cp .nojekyll _pages/.nojekyll 2>/dev/null || touch _pages/.nojekyll
+          # Disable Jekyll processing on GitHub Pages
+          touch _pages/.nojekyll
           echo ""
           echo "Artifact contents:"
-          find _pages -type f | sort
+          find _pages -type f | sort | head -50
+          echo ""
+          echo "Total files: $(find _pages -type f | wc -l)"
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@329bcc8f12caed2cefe5a5b80781499a6f3b361b

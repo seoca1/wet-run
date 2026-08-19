@@ -4,11 +4,11 @@
 
 set -e
 
-REPO_URL="https://github.com/seoca1/roguelike-sprawl.git"
+REPO_URL="https://github.com/seoca1/wet-run.git"
 cd "$(dirname "$0")/.."
 
 echo "=========================================="
-echo "  Roguelike Sprawl — GitHub Push"
+echo "  Wet Run — GitHub Push"
 echo "=========================================="
 echo ""
 
@@ -62,10 +62,10 @@ echo "  ✅ Push complete!"
 echo "=========================================="
 echo ""
 echo "다음 단계:"
-echo "  1. https://github.com/seoca1/roguelike-sprawl 방문"
+echo "  1. https://github.com/seoca1/wet-run 방문"
 echo "  2. Settings → Pages → Source: GitHub Actions 선택"
 echo "  3. Actions 탭에서 CI 통과 확인"
 echo "  4. 5-10분 후 Pages URL 활성화:"
-echo "     https://seoca1.github.io/roguelike-sprawl/"
+echo "     https://seoca1.github.io/wet-run/"
 echo ""
-echo "첫 Issue 생성: https://github.com/seoca1/roguelike-sprawl/issues/new"
+echo "첫 Issue 생성: https://github.com/seoca1/wet-run/issues/new"

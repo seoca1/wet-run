@@ -1,4 +1,4 @@
-# Roguelike Sprawl - Setup Log
+# Wet Run - Setup Log
 
 ## [2026-06-17] init | 프로젝트 환경 구축
 

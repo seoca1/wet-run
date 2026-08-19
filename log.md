@@ -1,3 +1,401 @@
+
+## [2026-08-19] SESSION CLOSE | ARCHITECTURE.md 신규 (20 sections, 19 Mermaid, 2349 lines) + ADR-0194 Draft
+
+**Status**: 🛑 **세션 종료 (2026-08-19)** — ARCHITECTURE.md 신규 + ADR-0194 Draft 모두 완료, no commit per AGENTS.md §6.
+
+### 1. 산출물
+
+#### 1.1 `docs/ARCHITECTURE.md` (신규, 2349 lines, 85 KB)
+- **20 sections** (§1~§20) + Table of Contents
+- **19 Mermaid 다이어그램** (모두 inline, mkdocs Material/GitHub/Obsidian 자동 렌더링)
+- **8 다이어그램 종류**: flowchart × 4, sequenceDiagram × 3, classDiagram × 1, erDiagram × 1, stateDiagram-v2 × 5, pie × 1, flowchart LR × 2
+- **47 ADR** (모두 Accepted) + **120+ AppState 필드** + **200 missions** + **30 programs** + **9 characters** + **5 zones** + **5 factions**
+
+**Sections** (심층 분석):
+- §14 ECS vs OOP 매트릭스 — 1.3% 적용률, ADR-0004 괴리
+- §15 Death → Restart 시퀀스 (ADR-0040) — Hardcore 모드 4단계 차단
+- §16 AppState 클래스 아키텍처 — 10 카테고리, 결합도 분석
+- §17 데이터 ER 다이어그램 — 23 entities, Mission-centric
+- §18 자키 Lifecycle State Diagram — NG+ (grade+2) + Hardcore (1-life permadeath)
+- §19 Hub → Run 시퀀스 + Save Migration — SAVE_FORMAT_VERSION 0.1.0
+- §20 engine/ 의존성 그래프 — state.py 36 importers (단일 결합점)
+
+#### 1.2 `decisions/0194-ecs-role-clarification.md` (신규 Draft, 188 lines)
+- **ADR-0194 (Draft)**: ECS-lite 역할 명시화 (Option C 권장)
+- **배경**: ADR-0004 의도 (ECS-lite 전면) vs 현실 (1.3% 적용률) 큰 괴리
+- **4 Options**: (1) ECS 전면 통합 / (2) ECS 폐기 / (3) 하이브리드 명시화 (추천) / (4) dungeon 도메인 한정
+- **상태**: Draft — 사용자 결정 대기
+
+#### 1.3 `mkdocs.yml` (수정, 89 lines)
+- `pymdownx.superfences` 에 Mermaid `custom_fences` 추가 — 향후 wiki/ 내 Mermaid 사용 가능
+- nav 시도는 docs_dir: wiki scope 문제로 revert (로컬 vault + GitHub + Obsidian 에서만 ARCHITECTURE.md 탐색)
+
+### 2. 핵심 발견 (Top 10)
+
+1. **ECS 미사용 (98.7% OOP)**: §14 — ADR-0004 의도와 현실 큰 괴리
+2. **state.py 단일 결합점**: §20 — 36 importers, 모든 view가 AppState 공유
+3. **AppState 120+ 필드**: §16 — 10 카테고리, God Object 패턴
+4. **Death → Restart Hardcore 4단계**: §15 — death.py 4 위치 차단
+5. **NG+ 자동 grade 부스트**: §18 — 첫 NG+ +2, 사이클마다 +1
+6. **Hub → Run autosave 보호**: §19 — atomic write, save format v0.1.0
+7. **Save Migration 단일 단계**: §19 — `<legacy>` → `0.1.0` 한 단계만
+8. **Mission-centric 도메인**: §17 — 200 entries, 가장 많은 관계
+9. **Matrix 런타임 생성**: §17 — matrix_seed 기반 절차 생성 (정적 JSON 아님)
+10. **Cross-Project 1:N 매핑**: §17 — 5 필드가 Fiction wiki 와 직접 연결
+
+### 3. File 변경 통계 (uncommitted)
+
+| File | Lines | 변경 |
+|---|---:|---|
+| `docs/ARCHITECTURE.md` (신규) | 2349 | +2349 |
+| `decisions/0194-ecs-role-clarification.md` (신규) | 188 | +188 |
+| `mkdocs.yml` (수정) | 89 | +3 / -1 |
+| `log.md` (이 entry 포함) | ~1100 | +7 entries |
+| **Total this session (wet_run)** | | **~16 file modifications** |
+
+### 4. 검증
+
+- **audit_vault.py**: ✅ CLEAN (0 broken wikilinks)
+- **mkdocs build** (non-strict): ✅ 성공 (147 warnings — 모두 pre-existing Fiction/derivative cross-project)
+- **Mermaid 렌더링**: GitHub/Obsidian/mkdocs Material에서 자동 렌더링 가능
+
+### 5. 다음 세션 권장 작업
+
+1. **ADR-0194 결정** (Draft → Accepted or 다른 Option) — 최우선
+2. **§16.6 AppState 도메인별 분할** (ScreenState, PlayerState, MatrixState, StoryState, DeathState, MetaState) — 비용 high, 이점 명확
+3. **§14.6 World naming collision 해결** (`EcsWorld` / `CyberspaceWorld` 별칭 또는 rename) — 비용 low
+4. **§19.9 Save format v0.2.0** (ADR-0185 cloud-ready + versioned)
+5. **§20.8 pydeps 통합** (pip install pydeps → CI cycle detection)
+
+### 6. 즉시 사용 가능
+
+- **`docs/ARCHITECTURE.md`**: Obsidian/GitHub/mkdocs 어디서든 Mermaid 19개 자동 렌더링
+- **`decisions/0194`**: 사용자 결정 후 Consequences 작성
+- **`mkdocs.yml`**: Mermaid config 추가 (향후 wiki/ 사용 가능)
+
+**세션 종료 (2026-08-19) — wet_run 아키텍처 문서화 작업 완료.** 다음 세션은 위 권장 작업 중 선택.
+
+## [2026-08-19] docs(architecture) | ARCHITECTURE.md §20 engine/ 의존성 그래프 + mkdocs.yml Mermaid 지원 — 19번째 Mermaid
+
+**Status**: ✅ 완료 — §12 "향후 다이어그램 추천"의 마지막 항목 (Dependency: engine/ 내부) + mkdocs 통합.
+
+**§20 산출물** (`docs/ARCHITECTURE.md` §20):
+
+- 19번째 Mermaid (flowchart LR) — engine/ 내부 + 8개 외부 도메인 의존성 그래프
+- 가장 많이 import 되는 모듈 top 10 (state.py = 36 importers, 결합도 매우 높음)
+- 8 핵심 발견 (state.py 단일 결합점, layout.py 두 번째, i18n 외부 1위, audio 광범위, 0 cycles, view 간 결합 0, screen_dispatch thin, ...)
+- 1000+ LOC 모듈 분할 현황 (combat_view/graphic_novel_view/effects 모두 ADR로 분할 완료)
+- 4 향후 결정 (pydeps 통합, CI cycle detection, engine/ 디렉토리 분할, state.py 분할)
+- 자동화 도구 코드 예시 (pydeps, Graphviz DOT, manual conversion)
+
+**engine/ 의존성 매트릭스**:
+
+| 모듈 | importers | 결합도 |
+|---|---:|---|
+| engine/state.py | 36 | 🔴 매우 높음 |
+| engine/layout.py | 14 | 🟡 높음 |
+| i18n | 15 | 🟡 높음 |
+| audio | 13 | 🟡 높음 |
+| engine/input_utils | 9 | 🟢 보통 |
+| combat/registry | 9 | 🟢 보통 |
+
+**mkdocs.yml 변경** (`mkdocs.yml`):
+
+- nav에 "아키텍처 (Architecture)" 섹션 추가 — System Overview → docs/ARCHITECTURE.md
+- `pymdownx.superfences` 에 Mermaid `custom_fences` 추가 — 19개 Mermaid 다이어그램 자동 렌더링
+
+**File budget used**: ARCHITECTURE.md §20 append (1 file modified, ~195 lines) + mkdocs.yml (Mermaid config 추가 + nav 시도 후 revert) = 2 file changes (≤15 cap).
+
+**mkdocs.yml 시도/복원 상세**:
+
+- **시도**: nav 에 "아키텍처 (Architecture): System Overview: docs/ARCHITECTURE.md" 추가
+- **실패**: `docs_dir: wiki` 설정으로 인해 `docs/ARCHITECTURE.md` 가 mkdocs docs scope 밖에 있음. build 시 warning `A reference to 'docs/ARCHITECTURE.md' is included in the 'nav' configuration, which is not found in the documentation files.`
+- **복원**: nav 추가 부분 revert. ARCHITECTURE.md 는 mkdocs 게시 사이트가 아닌 **로컬 vault + GitHub + Obsidian** 에서만 탐색 가능.
+- **유지**: `pymdownx.superfences` 의 Mermaid `custom_fences` 추가 — 향후 wiki/ 내 Mermaid 사용 가능.
+
+**향후 권장**: ARCHITECTURE.md 를 mkdocs 사이트에 게시하려면 다음 중 하나:
+1. `docs_dir: .` 로 변경 (위험: wiki/ 외부 파일 모두 노출)
+2. ARCHITECTURE.md 를 `wiki/` 하위로 이동 (위험: wiki/ LLM Wiki 규칙 적용)
+3. 별도 mkdocs 프로젝트 (architecture 전용) — GitHub Pages 별도 게시
+
+**§1~§20 완성** — §12 "향후 다이어그램 추천" 8개 항목 모두 처리. 19 Mermaid diagrams, 2349 lines, 85 KB.
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
+**§1~§20 완성** — §12 "향후 다이어그램 추천" 8개 항목 모두 처리. 19 Mermaid diagrams, 2349 lines, 85 KB.
+
+## [2026-08-19] docs(architecture) | ARCHITECTURE.md §19 Hub→Run 시퀀스 + Save Migration + Table of Contents — 17-18번째 Mermaid
+
+**Status**: ✅ 완료 — §12 "향후 다이어그램 추천"의 일� 번째 항목 (Sequence: Hub → Run 전환 + save migration) + 문서 탐색성 개선 (TOC).
+
+**§19 산출물** (`docs/ARCHITECTURE.md` §19):
+
+- 17번째 Mermaid (sequenceDiagram) — Hub → Run 9-step 전환 + autosave 보호
+- 18번째 Mermaid (flowchart LR) — Save Migration 체인 (`<legacy>` → `0.1.0`)
+- SaveManager 메서드 매트릭스 (9개 핵심 메서드, ~700 LOC)
+- Save file JSON 구조 샘플 (version, saved_at, run_state, mission, app_state, metadata)
+- Save slot 구조 (10 manual + 1 auto + 3 GN)
+- 8 핵심 발견 (단일 migration, atomic write, autosave at run start, AppState 120+ 필드 직렬화, Stage enum 변환, ...)
+- Pillar 정합 5종
+- 4 향후 결정
+
+**Table of Contents 추가** (문서 상단):
+
+- 19 섹션을 3 그룹으로 분류 (§1-§9 / §10-§13 / §14-§19)
+- 다이어그램 통계: 17 Mermaid (flowchart × 3, sequenceDiagram × 3, classDiagram × 1, erDiagram × 1, stateDiagram × 5, pie × 1) + 19 sections + 47 ADRs + 120+ AppState fields + 200 missions + 30 programs + 9 characters + 5 zones + 5 factions
+
+**File budget used**: ARCHITECTURE.md §19 + TOC (1 file modified, ~213 lines) = 1 file change (≤15 cap).
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
+## [2026-08-19] docs(architecture) | ARCHITECTURE.md §18 자키 Lifecycle State Diagram — 14-16번째 Mermaid (stateDiagram)
+
+**Status**: ✅ 완료 — §12 "향후 다이어그램 추천"의 다섯 번째 항목 (State: 자키 lifecycle) 분석.
+
+**§18 산출물** (`docs/ARCHITECTURE.md` §18):
+
+- 16번째 Mermaid (stateDiagram × 3) — 메인 lifecycle / NG+ / Hardcore
+- 8가지 Entry Point (MENU 옵션 8종)
+- NG+ 메타 진행 (grade+2 시작, 사이클마다 +1, T6 master 도달 가능)
+- Hardcore 모드 (1-life permadeath, 4단계 차단 in death.py)
+- Salvation Phase (3 ScreenKind: INTRO → EPILOGUE → ENDING)
+- META_UNLOCKS 8종 (programs / augments / decks / cosmetic)
+- Pillar 정합 5종
+
+**다이어그램 구성** (§18):
+
+1. **§18.2 메인 lifecycle** (~40 상태): MENU → CHARACTER_SELECT → DECK_SELECT → CHAPTER → HUB → RUN → JACK_OUT → REWARD → DEBRIEF (or DEATH → RESTART_OPTIONS) → SALVATION_INTRO → EPILOGUE → ENDING_A/B/C
+2. **§18.3 NG+**: FirstRun → EndingReached → NGUnlocked → NGRun_Grade3 → 4 → 5 → 6 (T6 master) → NGPlusEndgame
+3. **§18.4 Hardcore 모드**: HC_MENU → HC_RUN → HC_DEATH → HC_GAMEOVER (restart 차단)
+
+**핵심 발견**:
+
+1. **8 Entry Point**: MENU의 8 옵션 (단일 진입점)
+2. **NG+ 자동 grade 부스트**: 첫 NG+ +2, 사이클마다 +1 (ADR-0155)
+3. **Hardcore 4단계 차단**: death.py 4개 체크 위치
+4. **Salvation Phase = 3 ScreenKind**: INTRO → EPILOGUE → ENDING
+5. **Chapter 5가 Ending 트리거**: 5 챕터 완료 시 Salvation 진입
+6. **Death → Restart (§15)**: 3 옵션 (new/same/HoD), Hardcore에서 모두 차단
+7. **Hall of Dead 영구 보존**: deceased.json 누적
+8. **NG+ ↔ Hardcore 독립**: 둘은 별개 meta state
+
+**File budget used**: ARCHITECTURE.md §18 append (1 file modified, ~190 lines) = 1 file change (≤15 cap).
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
+## [2026-08-19] docs(architecture) | ARCHITECTURE.md §17 데이터 ER 다이어그램 — 13번째 Mermaid (erDiagram) + 23 엔티티
+
+**Status**: ✅ 완료 — §12 "향후 다이어그램 추천"의 네 번째 항목 (ER: 미션-ICE-장비 관계) 분석.
+
+**§17 산출물** (`docs/ARCHITECTURE.md` §17):
+
+- 13번째 Mermaid (erDiagram) — 23 entities + 다수 relationships
+- 4 sub-diagrams: Mission 중심 / Character 중심 / Matrix 그래프 / Cross-project 통합
+- 8 핵심 발견 (Mission-centric, ADR-0051 일관성, Matrix 런타임 생성, Equipment 메타데이터만, Faction M:N, Cross-project 1:N, Memory M:N, Hardcode 발견)
+- Pillar 정합 5종
+- 4 향후 결정 (Faction 테이블화, Equipment JSON 확장, Memory Fragment 정규화, Cross-project 캐시)
+
+**§17.2 ER 다이어그램 엔티티 23개**:
+
+- 핵심: Character, Mission, Node, Edge, Program, Loadout, Faction, Zone, IceKind, NodeKind, Fixer, Arc, StoryMetadata, PrimaryObjective, SecondaryObjective, MissionReward, TransitionCondition, AlarmLevel, ReputationState, EquipmentSet, WetwareAugment, SetBonus, MemoryFragment, DeceasedJockey, Pillar, CharacterRef, DeckSize, ProgramType, ProgramEffect
+- Cross-project: FICTION_CHARACTER, FICTION_WORK (Fiction wiki 참조)
+
+**§17.4 Cross-Project 통합** (5개 필드가 Fiction wiki 와 매핑):
+
+| wet_run 필드 | Fiction wiki |
+|---|---|
+| CHARACTER.character_id | FICTION_CHARACTER.slug |
+| STORY_METADATA.cast | FICTION_CHARACTER.* (multi) |
+| STORY_METADATA.source | FICTION_WORK.slug |
+| STORY_METADATA.synopsis_* | wiki/works/*.md |
+| MEMORY_FRAGMENT.lore_text | wiki/concepts/*.md |
+
+**§17.5 발견 사항 8개**:
+
+1. **Mission-centric 도메인**: Mission (200 entries) 이 가장 많은 관계 보유 — ARC + Zone + Faction + Fixer + Objectives + Rewards + Story 모두 연결
+2. **ADR-0051 Story Metadata 일관성**: 모든 mission이 story 객체 보유
+3. **Matrix 그래프는 런타임 생성**: `Mission.matrix_seed` (RNG) + ZoneDepth zdr_min/max → 절차 생성 (정적 JSON 아님)
+4. **Equipment 메타데이터만 JSON**: 실제 효과는 Python 코드 (ADR-0110 모듈 사이즈 정책)
+5. **Faction ↔ Reputation M:N**: 5 factions × 7 tiers = 35 tier entries per run
+6. **Cross-Project 1:N**: 같은 Gibson 인물이 여러 mission에 등장
+7. **Memory Fragment M:N**: 하나의 fragment가 여러 mission에서 unlock
+8. **Hardcode 발견**: `fixer: "finn"` 등 string 직접 사용, 신규 Fixer 추가 시 코드 수정 필요
+
+**File budget used**: ARCHITECTURE.md §17 append (1 file modified, ~360 lines) = 1 file change (≤15 cap).
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
+## [2026-08-19] docs(architecture) | ARCHITECTURE.md §16 AppState 클래스 아키텍처 — 12번째 Mermaid (classDiagram) + ADR별 필드 그룹화
+
+**Status**: ✅ 완료 — §12 "향후 다이어그램 추천"의 세 번째 항목 (Class: AppState / ScreenKind) 분석.
+
+**§16 산출물** (`docs/ARCHITECTURE.md` §16):
+
+- Mermaid classDiagram (~340 lines) — AppState + ScreenKind enum + 24 composited state 클래스
+- 필드 카테고리 분류 (총 120+ 필드, 10 카테고리)
+- ScreenKind 35 값 트리 시각화
+- 6개 핵심 발견 (God Object, Optional 패턴, ADR 매핑, Composition, ...)
+- Coupling 분석 (Fan-out ~25, Fan-in ~30)
+- §14 일관성 확인 (OOP/dataclass, ECS 미사용)
+- Pillar 정합 5종
+
+**핵심 발견**:
+
+1. **God Object 패턴**: AppState = 120+ 필드 단일 dataclass — §14.7 Finding 3 정량 확인
+2. **Optional 필드 다수**: ~15 필드 (combat_state, matrix, run_state 등) — "None until X starts" lifecycle 패턴
+3. **ADR별 필드 그룹화**: ADR-0031/0032/0040/0048/0149/0163/0183/0184 각 코드 매핑 명확
+4. **Composition over inheritance**: AppState가 다른 state 객체 합성 (CombatState, MatrixGraph 등)
+5. **Coupling 위험**: Fan-out ~25, Fan-in ~30, 리팩터링 시 영향 범위 넓음
+
+**AppState 필드 카테고리 (10종)**:
+
+| 카테고리 | 필드 수 |
+|---|---:|
+| Screen navigation | ~8 |
+| Graphic Novel | 9 |
+| Chapter / Arc | 7 |
+| Death / Restart | 8 |
+| Meta progression | 11 |
+| Run Mutators | 7 |
+| Boss Phase 4 | 3 |
+| Settings | 4 |
+| Display / debug | ~12 |
+| Composition | ~20 |
+| **합계** | **120+** |
+
+**File budget used**: ARCHITECTURE.md §16 append (1 file modified, ~437 lines) = 1 file change (≤15 cap).
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
+## [2026-08-19] docs(architecture) | ARCHITECTURE.md §15 Death→Restart 시퀀스 추가 — 11번째 Mermaid + ADR-0194 cross-link
+
+**Status**: ✅ 완료 — §12 "향후 다이어그램 추천"의 두 번째 항목 (Sequence: Death → Restart) 즉시 분석. ADR-0040 (Death & Restart Cycle) 기반.
+
+**다이어그램**: §15.3 시퀀스 다이어그램 (Mermaid sequenceDiagram) — 8 participants (Player, CombatView, DeathModule, AppState, JockeyHistory, FileSystem, ScreenDispatch) + 4 alternate paths (새 자키 / 같은 자키 / Hall of Dead).
+
+**핵심 발견**:
+
+1. **순수 OOP 흐름** (§14 일관성 확인): Death → Restart 전체가 OOP/dataclass + ScreenKind enum. ECS 미사용.
+2. **AppState 단일 mutable** (§14.7 Finding 3 일치): death 필드 9개 (`is_dead`, `death_reason`, `death_cause`, `jockey_history`, `total_runs`, `total_deaths`, `last_jockey_summary_id`, `hall_of_dead_selected`).
+3. **Hardcore mode 분기** (§15.3 다이어그램 노트): `death.py:306` — 1-life permadeath 모드에서 `restart_with_new_jockey` 차단. ADR-0040에 명시되지 않은 추가 결정.
+4. **순환 참조 회피**: `combat_view_state.py:292` 에서 death.py를 lazy import (`from .death import trigger_death`) — 모듈 import 시점 의존성 회피.
+5. **JockeyHistory 영속화**: `data/jockeys/deceased.json` 자동 저장 — 메타 진행 시스템의 일부.
+6. **Telemetry 옵트인** (`death.py:43`): `state.telemetry_opt_in` 체크 후에만 발화 — Privacy-first.
+
+**§15.7 향후 결정**: Hall of Dead 시각화 확장 (현재 텍스트 list), Epitaph 다양화, 자키 데이터 인계 (Option C from ADR-0040, 미구현).
+
+**§14.11 추가**: ADR-0194 (Draft) cross-link — §14 분석 결과가 정식 ADR 로 형식화됨을 명시.
+
+**File budget used**: ARCHITECTURE.md §15 append (1 file modified, ~135 lines) = 1 file change (≤15 cap).
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
+## [2026-08-19] docs(adr) | ADR-0194 Draft — ECS-lite 역할 명시화 (프로덕션 = OOP, ECS = 실험 도구)
+
+**Status**: 🔵 Draft (사용자 결정 대기) — ARCHITECTURE.md §14 분석 결과를 신규 ADR로 형식화.
+
+**ADR-0194 핵심**:
+
+- **배경**: ADR-0004 (ECS-lite + 데이터 주도) 의도와 현실 괴리. ECS 모듈 488 LOC 중 프로덕션 적용 1.3% (테스트/데모 전용).
+- **4개 옵션**:
+  - Option 1: ECS 전면 통합 (대규모 리팩터, 36,000+ LOC)
+  - Option 2: ECS 폐기 (모듈 삭제, 488 LOC + 505 LOC 테스트 손실)
+  - **Option 3 (추천)**: ECS-lite 역할 명시화 — 데이터 주도는 전면 유지, ECS-lite는 실험 도구로 격하
+  - Option 4: ECS를 dungeon/room 도메인 한정 점진 통합
+- **추천 근거**:
+  1. 현실 반영 (1.3% 적용률)
+  2. 데이터 주도 원칙 보존 (ADR-0010과 일치)
+  3. ECS 모듈 투자 보존 (488 LOC + 505 LOC 테스트 + 2 데모)
+  4. 신규 시스템 추가 가이드 명확화 ("기본 = OOP, ECS는 dungeon 한정")
+  5. Naming Collision 자동 해결 (`EcsWorld` 별칭 도입)
+
+**File budget used**: 1 신규 (decisions/0194-ecs-role-clarification.md, 188 lines) = 1 file change (≤15 cap).
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
+**다음 작업 후보**: 사용자 결정 후 Consequences �션 작성 + `docs/ARCHITECTURE.md` §14 ADR 링크 추가 + (선택) `prototype/src/wet_run/ecs/__init__.py` docstring 업데이트.
+
+## [2026-08-19] docs(architecture) | ARCHITECTURE.md §14 ECS vs OOP 매트릭스 추가 — ADR-0004 의도 vs 현실 분석 (10번째 Mermaid)
+
+**Status**: ✅ 완료 — §12 "향후 다이어그램 추천"의 첫 번째 항목 (ECS vs OOP 시스템 매트릭스) 즉시 분석. ADR-0004 ("ECS-lite + 데이터 주도") 와 실제 코드베이스의 괴리를 정량 분석.
+
+**Critical 발견** (grep 검증):
+
+- `ecs/` 모듈 488 LOC (Entity/World/room_entity/dungeon_system/__init__)
+- `wet_run.ecs` import 검색 결과: **프로덕션 코드 0건**
+- 사용처 전부: `tests/unit/test_ecs.py` (103 LOC) + `tests/unit/test_dungeon_ecs.py` (402 LOC) + `scripts/play_ecs_dungeon.py` + `scripts/play_arc_bsp.py`
+- **ECS-lite 적용 비율**: ~488 / 36,316 LOC ≈ **1.3%** (프로덕션)
+
+**시스템 카테고리화** (§14.5):
+
+- 🔴 Pure OOP: `engine/state.py` (AppState, 394 LOC), `combat/*` 전체 (13,604 LOC), `matrix/`, `missions/`, `equipment/`, `crafting/`, `avatar/`, `audio/`, `i18n/`, `lore/`, `run/`
+- � ECS-Ready (전환 가능): `MatrixGraph/Node/Edge`, `Mission`, `JobBoard` — 구조는 호환되나 dataclass
+- 🟢 ECS-Active (프로덕션): **없음**
+- 🔵 ECS-Active (테스트/데모 전용): 위 4 파일
+
+**Naming Collision** (§14.6): `World` 클래스가 두 곳에 존재 — `ecs/world.py` (ECS 컨테이너) vs `cyberspace/world.py` (Matrix 계층 모델). 신규 진입자 혼란 가능. 별칭 (`EcsWorld` / `CyberspaceWorld`) 또는 rename 권장.
+
+**§14.7 핵심 발견 4개**:
+
+1. **ADR-0004 vs 현실 큰 괴리**: ADR-0004 의도(ECS-lite 전면) vs 현실(OOP/dataclass 98.7%). 의도된 선택 또는 미완성 통합 미확인.
+2. **ECS 잘 정의되었지만 미사용**: 488 LOC 정의 + 505 LOC 테스트 + 2 데모, 그러나 게임 �타임 미사용.
+3. **AppState = 사실상 거대 Entity**: 394 LOC의 `AppState`가 게임 상태 전체를 보유 — ECS-lite Entity wrapping 가능.
+4. **matrix/Node = ECS Entity와 구조 동일**: 이미 변환 함수(`node_to_entity`) 존재하나 변환된 Entity 사용처 없음.
+
+**권장 사항** (§14.8) — 3 Options:
+
+- **Option A**: ECS 프로덕션 통합 (대규모 리팩터, 비용 high)
+- **Option B**: ECS를 "선택적 도구"로 격하 (ADR 수정 + AGENTS.md 업데이트, 비용 low)
+- **Option C**: 하이브리드 명시화 (ADR-0004 재해석 또는 ADR-0188 신규, 비용 low-medium) — **권장**
+
+**다이어그램** (§14.4): ECS-lite (488 LOC) ↔ Production (35,828 LOC, 213 files) � Tests/Demos — 프로덕션 미연결 시각화.
+
+**File budget used**: ARCHITECTURE.md §14 append (1 file modified) = 1 file change (≤15 cap).
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
+## [2026-08-19] docs(architecture) | ARCHITECTURE.md 신규 — 통합 시스템 다이어그램 + 갭 분석 + 시각화 방법 비교
+
+**Status**: ✅ 완료 — Wet Run 구조 통합 문서 작성. 기존에 흩어져 있던 아키텍처 정보를 단일 진입점으로 통합:
+
+- **`GRAPHIC_NOVEL_ARCHITECTURE_ANALYSIS.md`** (2026-07-10, GN 시스템 한정)
+- **`ROADMAP.md`** (Phase 진행 상황)
+- **`design/scenario/game-structure.md`** (Arc/Chapter/Phase 용어)
+- **`design/core_loop.md`** (매크로 게임 루프)
+- **47 ADR** (개별 결정)
+
+**신규 문서**: `docs/ARCHITECTURE.md` (~24KB, 574 lines, 9 Mermaid diagrams)
+
+**다이어그램 9종** (Mermaid inline, mkdocs Material/GitHub/Obsidian 자동 렌더링):
+
+1. 고수준 3-Layer 아키텍처 (Data → Engine → View)
+2. 모듈 맵 (214 src files 분포)
+3. 데이터 파이프라인 (JSON → State → Render)
+4. 매크로 게임 루프 (메인메뉴 → 자키 → Hub → Run → Result)
+5. 마이크로 게임 루프 (Phase 1~7, Arc 5 → ENDING)
+6. 시나리오 계층 (Arc → Chapter → Phase + Cutscene, 9 캐릭터)
+7. 콘텐츠 인벤토리 (파이 차트)
+8. ADR 상태 머신 (Draft → Accepted → Deprecated/Superseded)
+9. Cross-project 의존성 (Fiction wiki ↔ wet_run wiki ↔ game ↔ dashboard)
+
+**시각화 방법 비교** (Mermaid 선택 이유):
+
+- ✅ Mermaid: 외부 의존성 0, mkdocs Material 내장, GitHub/Obsidian 호환
+- ❌ PlantUML/Doxygen: 런타임 의존성 + 설정 복잡
+- ⚠️ pyreverse/Graphviz: 클래스/의존성 다이어그램 보조 시
+
+**갭 분석** (§10, 3개 카테고리):
+
+- **구현 갭**: ECS 미니멀 구현 (5 files), `boss_phase4/`+`depth/` 상태 불명, `data/portraits/` 중복 가능성, `sounds_test/` 의도 불명, 멀티플레이어/웹 빌드/튜토리얼 미구현 (일부는 의도적)
+- **문서 갭**: 루트 ARCHITECTURE.md 부재 (이번 작성으로 해결), 모듈별 README 부재, JSON Schema 미정의, 테스트 커버리지 27% 영역 미식별
+- **콘텐츠 갭**: 신규 단편 89 items backlog (Fiction 파이프라인 통해 점진 확장)
+
+**향후 다이어그램 추천** (§12): ECS vs OOP 매트릭스, Death→Restart 시퀀스, AppState 클래스, 미션-ICE-장비 ER 다이어그램, Phase Gantt 등 8종.
+
+**File budget**: 1 tracked modification (docs/ARCHITECTURE.md) = 1 file change (≤15 cap per workspace AGENTS.md §6).
+
+**No commit** per workspace AGENTS.md §6. Push remains user action.
+
 ## [2026-08-18] docs(session-close) | Phase 14 Axis closure sweep final — SESSION_SUMMARY_2026-08-18 + index.md 동기화
 
 **Status**: ✅ 완료 — Session 종료 문서화. Phase 14 v1.3.0+ 의 Axis 5 (Endings) / 4 (Boss F.4) / 6 (Programs/Equipment) 의 recon-기반 closure 8 commits 의 결과를 canonical 문서 (SESSION_SUMMARY_2026-08-18.md) 으로 consolidate. 세션-인덱스 (SESSION_SUMMARY.md) + 프로젝트 wiki-index (index.md) 도 동기화.

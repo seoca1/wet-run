@@ -7,6 +7,8 @@ the result screen, and the graphic-novel memory channel.
 
 from __future__ import annotations
 
+import dataclasses
+
 import pytest
 
 from wet_run.run.memory_bank import (
@@ -45,7 +47,7 @@ class TestMemoryFragment:
             MemoryFragment(text="x", arc=1, timestamp_ms=0, strength=1.5)
 
     def test_is_immutable(self, base_fragment: MemoryFragment) -> None:
-        with pytest.raises(Exception):  # FrozenInstanceError or AttributeError
+        with pytest.raises((AttributeError, dataclasses.FrozenInstanceError)):
             base_fragment.text = "overwritten"  # type: ignore[misc]
 
 

@@ -109,9 +109,7 @@ def build_boss_combatant_from_id(
     return None
 
 
-def _zone_boss_to_combatant(
-    profile: ZoneBossProfile, *, player_grade: int | None
-) -> Combatant:
+def _zone_boss_to_combatant(profile: ZoneBossProfile, *, player_grade: int | None) -> Combatant:
     """Convert a :class:`ZoneBossProfile` into a dispatch :class:`Combatant`.
 
     Scaling formula — same linear branch as

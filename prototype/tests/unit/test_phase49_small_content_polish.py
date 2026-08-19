@@ -15,7 +15,6 @@ forward-compat still passes when the metadata phase is '49'.
 """
 
 import json
-import re
 from pathlib import Path
 
 import pytest

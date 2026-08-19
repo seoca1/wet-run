@@ -121,13 +121,7 @@ class TestValidateMissionSources:
     def test_real_missions_json(self) -> None:
         """실제 missions.json 검증 (모든 미션)."""
         missions_file = (
-            ROOT_PROJECT
-            / "Game"
-            / "wet_run"
-            / "prototype"
-            / "data"
-            / "missions"
-            / "missions.json"
+            ROOT_PROJECT / "Game" / "wet_run" / "prototype" / "data" / "missions" / "missions.json"
         )
         import json
 

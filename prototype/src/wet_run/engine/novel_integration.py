@@ -66,9 +66,7 @@ def _find_missions_path() -> Path:
         return _MISSIONS_PATH
 
     root = _find_repo_root()
-    candidate = (
-        root / "Game" / "wet_run" / "prototype" / "data" / "missions" / "missions.json"
-    )
+    candidate = root / "Game" / "wet_run" / "prototype" / "data" / "missions" / "missions.json"
     if candidate.exists():
         _MISSIONS_PATH = candidate
         return _MISSIONS_PATH

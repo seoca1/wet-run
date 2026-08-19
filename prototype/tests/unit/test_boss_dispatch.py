@@ -29,12 +29,12 @@ class TestIsBossIdZoneBosses:
     @pytest.mark.parametrize(
         "boss_id",
         [
-            "dj_cyberspace",        # tier=3 surface
-            "sense_net_sentinel",   # tier=4 deep
+            "dj_cyberspace",  # tier=3 surface
+            "sense_net_sentinel",  # tier=4 deep
             "hosaka_memory_vault",  # tier=4 mid
-            "locus_construct",      # tier=5 core
-            "tessier_child",        # tier=5 ta
-            "orbit_ghost",          # tier=5 freeside
+            "locus_construct",  # tier=5 core
+            "tessier_child",  # tier=5 ta
+            "orbit_ghost",  # tier=5 freeside
         ],
     )
     def test_per_zone_boss(self, boss_id: str) -> None:
@@ -43,10 +43,10 @@ class TestIsBossIdZoneBosses:
     @pytest.mark.parametrize(
         "boss_id",
         [
-            "wintermute_ascended",      # tier=5 (no zone)
-            "ta_prime_ascended",        # tier=5 (no zone)
-            "neuromancer_ascended",     # tier=5 (no zone)
-            "the_peripheral",           # tier=6 (secret)
+            "wintermute_ascended",  # tier=5 (no zone)
+            "ta_prime_ascended",  # tier=5 (no zone)
+            "neuromancer_ascended",  # tier=5 (no zone)
+            "the_peripheral",  # tier=6 (secret)
             "the_peripheral_ascended",  # tier=6 (ascended secret)
         ],
     )

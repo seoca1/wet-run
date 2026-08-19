@@ -199,9 +199,7 @@ class TestAvatarStateDocstringCoverage:
         assert hasattr(ConstructKind, "LOA")
         assert hasattr(ConstructKind, "THREE_JANE")
         # Verify the Gibson-flavored comment markers are present
-        src = (
-            Path(__file__).parent.parent.parent / "src" / "wet_run" / "avatar" / "state.py"
-        )
+        src = Path(__file__).parent.parent.parent / "src" / "wet_run" / "avatar" / "state.py"
         text = src.read_text(encoding="utf-8")
         # The new docstrings should mention Gibson characters
         assert "Dixie" in text or "Flatline" in text
@@ -346,11 +344,7 @@ class TestCinematicArtDocstringCoverage:
     def test_art_style_members_have_inline_docs(self) -> None:
         """Each ArtStyle member should have a Gibson-tone inline comment."""
         src = (
-            Path(__file__).parent.parent.parent
-            / "src"
-            / "wet_run"
-            / "engine"
-            / "cinematic_art.py"
+            Path(__file__).parent.parent.parent / "src" / "wet_run" / "engine" / "cinematic_art.py"
         )
         text = src.read_text(encoding="utf-8")
         # Each ArtStyle should have an inline comment with scene context

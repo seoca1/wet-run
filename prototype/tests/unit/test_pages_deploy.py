@@ -92,8 +92,9 @@ def test_pages_workflow_includes_all_dashboards() -> None:
     pages_yml = REPO_ROOT / ".github" / "workflows" / "pages.yml"
     text = pages_yml.read_text(encoding="utf-8")
     # Recursive copy of dashboard contents is the architectural intent.
-    assert "dashboard" in text and ("-r" in text or "recursive" in text.lower()), (
-        f"pages.yml must use a recursive copy of the dashboard directory"
+    assert "dashboard" in text
+    assert "-r" in text or "recursive" in text.lower(), (
+        "pages.yml must use a recursive copy of the dashboard directory"
     )
     # Each named dashboard file must exist on disk so recursive copy publishes it.
     for filename in DASHBOARD_HTML_FILES:

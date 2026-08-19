@@ -23,6 +23,7 @@ from typing import TYPE_CHECKING
 import tcod.console
 
 from ..audio import sound_manager as _sm_module
+from ..run.memory_bank import MemoryFragment
 from .jockey_history import (
     DeceasedJockey,
     JockeyHistory,
@@ -32,7 +33,6 @@ from .jockey_history import (
 )
 from .settings_ui import get_volume
 from .state import AppState, ScreenKind
-from ..run.memory_bank import MemoryFragment
 
 if TYPE_CHECKING:
     from collections.abc import Callable
@@ -185,10 +185,7 @@ def trigger_death(state: AppState, reason: str = "Combat") -> None:
         except (TypeError, ValueError):
             current_arc = 1
     fragment = MemoryFragment(
-        text=(
-            f"Last thing I remember before flatline: {reason}. "
-            f"The construct kept the rest."
-        ),
+        text=(f"Last thing I remember before flatline: {reason}. The construct kept the rest."),
         arc=current_arc,
         timestamp_ms=int(_time.time() * 1000),
     )

@@ -284,13 +284,7 @@ def get_mission_for_scene(scene_id: str, jockey: str, repo_root: Path) -> dict[s
     if not mid:
         return None
     missions_path = (
-        repo_root
-        / "Game"
-        / "wet_run"
-        / "prototype"
-        / "data"
-        / "missions"
-        / "missions.json"
+        repo_root / "Game" / "wet_run" / "prototype" / "data" / "missions" / "missions.json"
     )
     if not missions_path.exists():
         return None

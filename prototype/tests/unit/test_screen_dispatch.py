@@ -160,9 +160,7 @@ class TestRenderCurrentScreen:
 
         # Patch _DISPATCH with a known callable
         mock_render = MagicMock()
-        with patch(
-            "wet_run.engine.screen_dispatch._DISPATCH", new={ScreenKind.MENU: mock_render}
-        ):
+        with patch("wet_run.engine.screen_dispatch._DISPATCH", new={ScreenKind.MENU: mock_render}):
             render_current_screen(console, t, state)
             mock_render.assert_called_once_with(console, t, state)
 
@@ -200,9 +198,7 @@ class TestRenderCurrentScreen:
 
         mock_render = MagicMock()
 
-        with patch(
-            "wet_run.engine.screen_dispatch._DISPATCH", new={ScreenKind.HUB: mock_render}
-        ):
+        with patch("wet_run.engine.screen_dispatch._DISPATCH", new={ScreenKind.HUB: mock_render}):
             render_current_screen(
                 console,
                 t,

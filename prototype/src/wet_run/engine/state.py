@@ -21,8 +21,8 @@ from ..matrix.exploration import ExplorationState
 from ..matrix.graph import MatrixGraph
 from ..matrix.ppl import Loadout, Program
 from ..missions import JobBoard, Mission
-from ..run.reputation import ReputationState
 from ..run.memory_bank import MemoryBank
+from ..run.reputation import ReputationState
 
 # Maximum number of status messages retained in AppState.status_messages.
 # When the cap is exceeded, the oldest messages are dropped first.

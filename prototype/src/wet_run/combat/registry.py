@@ -423,9 +423,7 @@ def build_ice_enemy(
     """
     from .boss_dispatch import build_boss_combatant_from_id
 
-    _boss_combatant = build_boss_combatant_from_id(
-        ice_id, player_grade=player_grade
-    )
+    _boss_combatant = build_boss_combatant_from_id(ice_id, player_grade=player_grade)
     if _boss_combatant is not None:
         return _boss_combatant
 

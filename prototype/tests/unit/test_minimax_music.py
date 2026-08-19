@@ -132,9 +132,7 @@ class TestGenerateMusic:
         mock_get_resp.content = b"\xff\xfb\x90\x00" * 100  # fake MP3
 
         with (
-            patch(
-                "wet_run.audio.minimax_music.requests.post", return_value=mock_post_resp
-            ),
+            patch("wet_run.audio.minimax_music.requests.post", return_value=mock_post_resp),
             patch("wet_run.audio.minimax_music.requests.get", return_value=mock_get_resp),
         ):
             result = mm.generate_music("matrix_rain prompt")
@@ -189,9 +187,7 @@ class TestGenerateMusic:
         monkeypatch.setenv("MINIMAX_API_KEY", "sk-test-1234567890")
         mm = _reload_with_key(monkeypatch, monkeypatch_key="sk-test-1234567890")
 
-        with patch(
-            "wet_run.audio.minimax_music.requests.post", side_effect=Exception("boom")
-        ):
+        with patch("wet_run.audio.minimax_music.requests.post", side_effect=Exception("boom")):
             result = mm.generate_music("prompt")
 
         assert result is None

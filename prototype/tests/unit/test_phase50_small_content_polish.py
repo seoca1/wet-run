@@ -15,8 +15,6 @@ forward-compat still passes when the metadata phase is '50'.
 """
 
 import json
-import re
-from collections import OrderedDict
 from pathlib import Path
 
 import pytest

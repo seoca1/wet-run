@@ -14,9 +14,9 @@ import pytest
 
 from wet_run.engine.death import trigger_death
 from wet_run.engine.state import AppState
-from wet_run.missions.mission import Mission
 from wet_run.matrix.node import ZoneDepth
-from wet_run.run.memory_bank import MAX_FRAGMENTS, MemoryFragment
+from wet_run.missions.mission import Mission
+from wet_run.run.memory_bank import MAX_FRAGMENTS
 
 
 @pytest.fixture

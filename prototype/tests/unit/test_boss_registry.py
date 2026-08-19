@@ -56,10 +56,22 @@ class TestZoneBossProfileDataclass:
 
     def test_equality_by_all_fields(self) -> None:
         common = {
-            "name": "X", "zone": "a", "tier": 1, "hp_base": 10, "hp_per_grade": 0,
-            "dmg_base": 1, "dmg_per_grade": 0, "defense": 0, "speed": 0, "skills": (),
-            "resistance": 0.0, "phase_count": 1, "portrait": "ice.boss",
-            "description": "", "loot_table": (), "ice_kind": "boss",
+            "name": "X",
+            "zone": "a",
+            "tier": 1,
+            "hp_base": 10,
+            "hp_per_grade": 0,
+            "dmg_base": 1,
+            "dmg_per_grade": 0,
+            "defense": 0,
+            "speed": 0,
+            "skills": (),
+            "resistance": 0.0,
+            "phase_count": 1,
+            "portrait": "ice.boss",
+            "description": "",
+            "loot_table": (),
+            "ice_kind": "boss",
         }
         a = ZoneBossProfile(boss_id="x", **common)
         b = ZoneBossProfile(boss_id="x", **common)
@@ -239,9 +251,7 @@ class TestLoaderAgainstProjectFile:
             assert boss.hp_base > 0, f"bad hp_base in {boss.boss_id}"
             assert boss.dmg_base >= 0, f"bad dmg_base in {boss.boss_id}"
             assert boss.phase_count >= 1
-            assert 0.0 <= boss.resistance <= 1.0, (
-                f"resistance out of range for {boss.boss_id}"
-            )
+            assert 0.0 <= boss.resistance <= 1.0, f"resistance out of range for {boss.boss_id}"
 
 
 # ============================================================================
@@ -252,9 +262,11 @@ class TestLoaderAgainstProjectFile:
 class TestLoaderResilience:
     def test_metadata_keys_skipped(self, tmp_path: Path) -> None:
         f = tmp_path / "zb.json"
-        f.write_text(json.dumps(
-            {"_metadata": {"version": "1.0"}, "dj_cyberspace": {"name": "DJ", "tier": 3}}
-        ))
+        f.write_text(
+            json.dumps(
+                {"_metadata": {"version": "1.0"}, "dj_cyberspace": {"name": "DJ", "tier": 3}}
+            )
+        )
         reg = load_zone_boss_registry(f)
         assert len(reg) == 1
         assert reg.get("dj_cyberspace") is not None

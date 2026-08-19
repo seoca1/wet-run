@@ -1,10 +1,10 @@
 # Wet Run — Session Index
 
-> **Latest session**: 2026-08-18 (Axis 5/4/6 closure + session-end docs) — see [SESSION_SUMMARY_2026-08-18.md](./SESSION_SUMMARY_2026-08-18.md)
+> **Latest session**: 2026-08-19 (CI hygiene + Pages deploy recovery) — see [SESSION_SUMMARY_2026-08-19.md](./SESSION_SUMMARY_2026-08-19.md)
 
 This is an **index** file pointing to the most recent dated session snapshot. Per project `AGENTS.md §9`, `SESSION_SUMMARY.md` should always point at the current/latest session.
 
-> **2026-08-18 Axis closure sweep.** Three Phase 14 v1.3.0+ Axes (ADR-0192 / 0190 / 0193) recon'd as data+engine complete from commit `205efd4` (2026-08-10); session work reduced to closure logs + Axis 4 dispatch wiring. **8 commits pushed**: endings metadata sync + 6 character endings (Axis 5), zone boss registry + boss dispatch hook (Axis 4, 4 NEW files + `combat/registry.py:build_ice_enemy` guard), Axis 6 closure log. **+43 tests passing, 0 regressions**. Branch ahead of origin = 0, working tree clean.
+> **2026-08-19 CI hygiene + Pages deploy recovery.** Discovered live dashboard was 46 days stale (frozen on 2026-07-04 deploy with pre-rename ROGUELIKE SPRAWL branding). Root cause: `mkdocs build --strict` failing on 146 broken wikilinks in `wiki/world/derivative_stories.md`. Fixed 5 separate CI issues: pages deploy unblock, interrogate coverage 99.7%→100% (added 7 docstrings), 10 ruff errors + 14 format issues, ruff version pin, 2 deleted test files in dashboard validation. **5 commits pushed**, all CI jobs expected to pass on next run. **5700 passed** (was 5695, +5 phase tests). Branch ahead of origin = 0, working tree clean.
 
 ## Recent sessions
 

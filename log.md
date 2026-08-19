@@ -1312,3 +1312,37 @@ ADR-0188 "Accepted (2026-08-08, user explicit "Begin Phase 11")" 상태. 본 ses
 - AGENTS.md §6.5 — workspace-level docs (`log.md` cross-project sync)
 
 ---
+
+## [2026-08-18] rename | Phase 4 — Game/wet_run cross-references updated to Game/lingotype
+
+**Status**: ✅ PHASE 4 SESSION CLOSED. Per `.omo/plans/gaming-rename-lingotype.md` Phase 4. Active docs in Game/wet_run updated to reference Game/lingotype.
+
+### Changes
+
+| File | Type | Action |
+|---|---|---|
+| `decisions/0030-github-utilization.md` | Active ADR | Updated: 15 refs replaced `Game/typing_language`/`typing_language` → `Game/lingotype`/`lingotype` |
+| `docs/GITHUB_SETUP.md` | Active guide | Updated: 3 refs replaced |
+| `CHANGELOG.md` | Historical | Preserved (audit trail per workspace §6) |
+| `ROADMAP.md` | Historical | Preserved (audit trail) |
+| `SESSION_SUMMARY_2026-08-06.md` | Historical | Preserved |
+| `SESSION_SUMMARY_2026-08-10.md` | Historical | Preserved |
+| `site/search/search_index.json` | Auto-generated | Skipped (rebuild via wet_run pipeline) |
+
+### File budget
+
+- 2 tracked modifications (decisions/0030 + docs/GITHUB_SETUP)
+- + 1 workspace log append = 3 file changes (≤15 cap)
+
+### Migration progress
+
+- ✅ Phase 0: Plan + ADR-0013
+- ✅ Phase 1: Project-internal rename (Game/lingotype)
+- ✅ Phase 2: Source code slugs + tests + dist/
+- ✅ Phase 3: Workspace docs + Game/dashboard
+- ✅ Phase 4: Game/wet_run cross-references (this session)
+- ⏳ Phase 5: Language/ wiki bulk (DONE in next session as bulk script — see Projects/log)
+- � Phase 6: GitHub repo rename (user action)
+- ⏳ Phase 7: Verification + closeout
+
+**No commit** per workspace §6.

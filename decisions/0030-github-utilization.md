@@ -3,7 +3,7 @@
 > **상태**: **Accepted**
 > **날짜**: 2026-06-18 (Draft) → 2026-07-04 (Accepted)
 > **결정자**: 사용자
-> **관련**: `../../../../../Fiction/`, `typing_language` (참고 프로젝트)
+> **관련**: `../../../../../Fiction/`, `lingotype` (참고 프로젝트)
 
 ## 1. 컨텍스트
 
@@ -13,8 +13,8 @@ Wet Run은 현재 Git 저장소가 아니다 (`.git/` 없음). 로컬 파일만 
 - 외부 협업 불가
 - 대시보드 (`dashboard/`) 호스팅 불가
 
-typing_language 프로젝트는 이미 다음을 구현해 참고할 수 있다:
-- GitHub 저장소: `https://github.com/seoca1/typing-language.git`
+lingotype 프로젝트는 이미 다음을 구현해 참고할 수 있다:
+- GitHub 저장소: `https://github.com/seoca1/lingotype.git`
 - GitHub Actions CI (`.github/workflows/deploy.yml`)
 - GitHub Pages 자동 배포 (Vite 빌드 → Pages)
 - npm scripts: dev, build, test, lint, typecheck
@@ -33,14 +33,14 @@ Wet Run에 다음 역량 추가:
 
 ## 3. 옵션 비교
 
-### Option A: typing_language 미러 (단일 저장소)
+### Option A: lingotype 미러 (단일 저장소)
 
 | 항목 | 내용 |
 |---|---|
 | 저장소 | `seoca1/wet-run` (1개) |
 | CI | `.github/workflows/ci.yml` (test/lint/typecheck) + `deploy.yml` (Pages) |
 | Pages | 대시보드 정적 호스팅 (Python 빌드 불필요, 그대로) |
-| 장점 | 단순, typing_language과 동일한 패턴 |
+| 장점 | 단순, lingotype과 동일한 패턴 |
 | 단점 | 게임 코드 + 위키/디자인 단일 저장소 |
 
 ### Option B: 모노레포 (워크스페이스)
@@ -59,7 +59,7 @@ Wet Run에 다음 역량 추가:
 | 장점 | Git 이력만 확보 |
 | 단점 | 대시보드 공유 불가, 협업자 dashboard 접근 불가 |
 
-**추천**: **Option A** (typing_language과 동일 패턴, 단순, 효과적)
+**추천**: **Option A** (lingotype과 동일 패턴, 단순, 효과적)
 
 ## 4. 권장안 (Option A) 상세
 
@@ -227,18 +227,18 @@ GitHub → Releases → Draft new release
 - ✅ **PR마다 자동 CI**: test/lint/typecheck 3-in-1, **4097 tests pass + ruff 0 + mypy 0** 보장
 - ✅ **대시보드 무료 호스팅**: `https://seoca1.github.io/wet-run/` (GitHub Pages)
 - ✅ **외부 협업자/관찰자 접근 가능**: Public 저장소
-- ✅ **typing_language와 일관된 워크플로우**: seoca1 계정, 동일 워크플로우 패턴
+- ✅ **lingotype와 일관된 워크플로우**: seoca1 계정, 동일 워크플로우 패턴
 - ✅ **MIT 라이선스**: 깁슨 IP 고지 명시, 깁슨 원작과 명확히 분리
 - ✅ **MkDocs Wiki 호스팅**: 디자인 + 위키 + 결정을 단일 문서 사이트로 통합 가능
 
 ### 부정적
-- ❌ GitHub 계정/저장소 관리 부담 (typing_language 동일)
+- ❌ GitHub 계정/저장소 관리 부담 (lingotype 동일)
 - ❌ Public 시 코드 공개 (깁슨 톤 자키 커뮤니티 공개 의도)
 - ❌ Pages는 정적만 (대화형 게임은 별도 호스팅 필요 — 로컬 실행)
 - ❌ MkDocs 빌드는 별도 환경 필요 (Python + mkdocs-material 패키지)
 
 ### 중립
-- typing_language와 동일 패턴 → 학습 비용 0
+- lingotype와 동일 패턴 → 학습 비용 0
 - 깁슨 IP 분리 명시 → fan project로서의 법적 안전성 확보
 
 ## 7. 열린 질문 (Open Questions) — 결정됨 2026-07-04
@@ -254,14 +254,14 @@ GitHub → Releases → Draft new release
 - [x] 저장소 이름 확정: `wet-run`
 - [x] 공개/비공개 결정: Public (대시보드 공유)
 - [x] 라이선스 결정: MIT
-- [x] GitHub 계정: `seoca1` (typing_language 동일)
+- [x] GitHub 계정: `seoca1` (lingotype 동일)
 - [x] Wiki 도구: MkDocs Material
 
 ## 9. 구현 결과 (2026-07-04 Accepted 시점)
 
 | 항목 | 상태 |
 |---|---|
-| `git init` + 첫 commit | ✅ 완료 (typing_language 이전 세션에서) |
+| `git init` + 첫 commit | ✅ 완료 (lingotype 이전 세션에서) |
 | GitHub 원격 저장소 | ✅ `https://github.com/seoca1/wet-run` |
 | `.github/workflows/ci.yml` | ✅ 존재 (test + lint + typecheck) |
 | `.github/workflows/pages.yml` | ✅ 존재 (대시보드 자동 배포) |
@@ -300,8 +300,8 @@ GitHub → Releases → Draft new release
 
 ## 9. 참고
 
-- `typing_language/GITHUB_SETUP_GUIDE.md` - 14KB 상세 가이드
-- `typing_language/.github/workflows/deploy.yml` - Pages 배포 참고
+- `lingotype/GITHUB_SETUP_GUIDE.md` - 14KB 상세 가이드
+- `lingotype/.github/workflows/deploy.yml` - Pages 배포 참고
 - GitHub 공식 문서: https://docs.github.com/
 
 ## 10. 다음 단계

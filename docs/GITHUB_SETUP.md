@@ -5,7 +5,7 @@
 
 ## 📋 사전 준비 (한 번만)
 
-1. GitHub 계정 (typing_language와 동일 계정 사용 권장: `seoca1`)
+1. GitHub 계정 (lingotype와 동일 계정 사용 권장: `seoca1`)
 2. Git 설치 확인:
    ```bash
    git --version
@@ -170,5 +170,5 @@ git push origin main
 ## 🔗 참고
 
 - `decisions/0011-github-utilization.md` - 결정 문서
-- `../typing_language/GITHUB_SETUP_GUIDE.md` - 더 상세한 GitHub 가이드
+- `../lingotype/GITHUB_SETUP_GUIDE.md` - 더 상세한 GitHub 가이드
 - https://docs.github.com/ - 공식 문서

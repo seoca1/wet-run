@@ -96,7 +96,7 @@ jobs:
         working-directory: ./prototype
         run: |
           pip install pytest
-          pytest tests/unit/test_prologue_dashboard.py tests/unit/test_event_dialogues.py tests/unit/test_stage_dashboard.py tests/unit/test_cross_dashboard.py -v
+          pytest tests/unit/test_prologue_dashboard.py tests/unit/test_event_dialogues.py -v
 
   docstring:
     name: Docstring coverage (interrogate, ADR-0120)

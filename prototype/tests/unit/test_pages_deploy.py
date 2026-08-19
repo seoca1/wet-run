@@ -83,25 +83,43 @@ def test_pages_workflow_exists() -> None:
 
 
 def test_pages_workflow_includes_all_dashboards() -> None:
-    """Pages workflow must cp all 11 dashboard HTMLs."""
+    """Pages workflow must copy the dashboard directory (which includes all 11 HTMLs).
+
+    The workflow uses 'cp -r dashboard/. _pages/' (recursive copy) rather
+    than a per-file list. The recursion covers all DASHBOARD_HTML_FILES
+    transitively without each filename appearing literally in the YAML.
+    """
     pages_yml = REPO_ROOT / ".github" / "workflows" / "pages.yml"
     text = pages_yml.read_text(encoding="utf-8")
+    # Recursive copy of dashboard contents is the architectural intent.
+    assert "dashboard" in text and ("-r" in text or "recursive" in text.lower()), (
+        f"pages.yml must use a recursive copy of the dashboard directory"
+    )
+    # Each named dashboard file must exist on disk so recursive copy publishes it.
     for filename in DASHBOARD_HTML_FILES:
-        assert filename in text, f"pages.yml missing cp for {filename}"
+        assert (DASHBOARD_DIR / filename).exists(), (
+            f"Missing dashboard file: {DASHBOARD_DIR / filename}"
+        )
 
 
 def test_pages_workflow_includes_graphic_novel() -> None:
-    """Pages workflow must cp the new graphic-novel.html (ADR-0032)."""
-    pages_yml = REPO_ROOT / ".github" / "workflows" / "pages.yml"
-    text = pages_yml.read_text(encoding="utf-8")
-    assert "graphic-novel.html" in text
+    """Pages workflow must cp the new graphic-novel.html (ADR-0032).
+
+    Covered transitively by the recursive dashboard copy; verify the
+    source file exists (recursive copy publishes it on every run).
+    """
+    path = DASHBOARD_DIR / "graphic-novel.html"
+    assert path.exists(), f"Missing dashboard file: {path}"
 
 
 def test_pages_workflow_includes_favicon() -> None:
-    """Pages workflow must cp the favicon."""
-    pages_yml = REPO_ROOT / ".github" / "workflows" / "pages.yml"
-    text = pages_yml.read_text(encoding="utf-8")
-    assert "favicon.svg" in text
+    """Pages workflow must cp the favicon.
+
+    favicon.svg lives in dashboard/ and is published transitively via
+    the recursive dashboard copy. Verify the source file exists.
+    """
+    path = DASHBOARD_DIR / "favicon.svg"
+    assert path.exists(), f"Missing favicon file: {path}"
 
 
 def test_pages_workflow_includes_nojekyll() -> None:

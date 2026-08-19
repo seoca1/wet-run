@@ -114,6 +114,7 @@ class ZoneBossRegistry:
     """
 
     def __init__(self, entries: dict[str, ZoneBossProfile]) -> None:
+        """Build the registry and a zone→bosses index for fast lookup."""
         self._entries: dict[str, ZoneBossProfile] = dict(entries)
         self._by_zone: dict[str, list[str]] = {}
         for boss_id, profile in self._entries.items():
@@ -142,9 +143,11 @@ class ZoneBossRegistry:
         return tuple(sorted(self._by_zone.keys()))
 
     def __len__(self) -> int:
+        """Number of registered bosses."""
         return len(self._entries)
 
     def __contains__(self, boss_id: object) -> bool:
+        """Whether ``boss_id`` is registered."""
         return boss_id in self._entries
 
 

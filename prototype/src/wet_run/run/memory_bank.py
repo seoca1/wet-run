@@ -32,7 +32,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-
 # Cap on the number of fragments preserved across runs. 12 is
 # large enough to give 4-5 storylines × 3 fragments each, small
 # enough that the localStorage payload stays under 4 KB.
@@ -59,14 +58,13 @@ class MemoryFragment:
     strength: float = 1.0
 
     def __post_init__(self) -> None:
+        """Validate arc range (1-5) and strength range (0.0-1.0)."""
         if not 1 <= self.arc <= 5:
             raise ValueError(
                 f"MemoryFragment arc must be in 1..5, got {self.arc} (text={self.text!r})"
             )
         if not 0.0 <= self.strength <= 1.0:
-            raise ValueError(
-                f"MemoryFragment strength must be in 0.0..1.0, got {self.strength}"
-            )
+            raise ValueError(f"MemoryFragment strength must be in 0.0..1.0, got {self.strength}")
 
 
 @dataclass
@@ -96,9 +94,11 @@ class MemoryBank:
         return sorted(self.fragments, key=lambda f: f.strength, reverse=True)
 
     def clear(self) -> None:
+        """Remove all fragments from the bank."""
         self.fragments.clear()
 
     def to_dict(self) -> dict[str, object]:
+        """Serialize the bank to a JSON-compatible dict (for save data)."""
         return {
             "fragments": [
                 {
@@ -113,6 +113,7 @@ class MemoryBank:
 
     @classmethod
     def from_dict(cls, data: dict[str, object]) -> MemoryBank:
+        """Deserialize a bank from its ``to_dict`` form. Returns empty bank on malformed input."""
         if not isinstance(data, dict):
             return cls()
         raw_fragments = data.get("fragments", [])

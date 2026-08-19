@@ -28,7 +28,7 @@
 - [SESSION_SUMMARY_2026-08-03](SESSION_SUMMARY_2026-08-03.md) — Fiction diagnostics
 - [_archive/sessions/SESSION_SUMMARY_2026-07-28_v1.1.0a1](_archive/sessions/SESSION_SUMMARY_2026-07-28_v1.1.0a1.md) — v1.1.0a1
 - [_archive/sessions/SESSION_SUMMARY_2026-07-28](_archive/sessions/SESSION_SUMMARY_2026-07-28.md) — v1.0.0 FINAL
-- [SESSION_SUMMARY_2026-07-27](SESSION_SUMMARY_2026-07-27.md) — Phase 1 game balance
+- [_archive/sessions/SESSION_SUMMARY_2026-07-27](_archive/sessions/SESSION_SUMMARY_2026-07-27.md) — Phase 1 game balance
 - [SESSION_SUMMARY_2026-07-11](_archive/sessions/SESSION_SUMMARY_2026-07-11.md)
 - [SESSION_SUMMARY_2026-07-12](_archive/sessions/SESSION_SUMMARY_2026-07-12.md)
 - [SESSION_SUMMARY_2026-07-13](_archive/sessions/SESSION_SUMMARY_2026-07-13.md)

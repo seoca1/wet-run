@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
-      - run: pip install ruff
+      - run: pip install ruff==0.15.17
       - run: cd prototype && ruff check .
       - run: cd prototype && ruff format --check .
 

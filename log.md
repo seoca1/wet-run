@@ -1,4 +1,37 @@
 
+## [2026-08-19] dashboard | Game/dashboard v2.0 — 통합 허브 + 라이브 stats (cross-project hub)
+
+**Status**: ✅ **Game/dashboard v2.0.0 업그레이드 완료** — 워크스페이스 차원의 cross-project hub 재구축. 구 15KB 단일 프로토타입 (`roguelike_sprawl` 옛 이름) → Vite + TS strict + build-time aggregator 기반 모던 정적 사이트.
+
+### 변경 요약
+- **wet_run dashboard 링크 수정**: `Game/dashboard/index.html`이 이제 `../wet_run/dashboard/`로 정확히 연결 (구 `../roguelike_sprawl/` 링크 제거)
+- **라이브 stats 추가**: wet_run 5088 tests, 14 stages, 387 story lines, 5 NPCs, 47 missions — 모두 `Game/wet_run/prototype/tests/`, `stage_structure.json`, `prologue_data.json`, `event_dialogues.json`, `missions.json`에서 자동 집계
+- **Fiction Wiki 라이브 통합**: 476 pages, 19 ADRs (17 Accepted), last sync 2026-08-16 — Fiction wiki를 게임 월드 primary source로 유지
+- **GitHub Pages 워크플로우**: `.github/workflows/game-dashboard.yml` (workspace root, path filter `Game/dashboard/**`로 기존 `dashboard-build.yml`과 분리)
+
+### 신규 파일 (cross-project)
+- `Game/dashboard/{package.json,tsconfig.json,vite.config.ts,index.html,.gitignore,README.md}` (6)
+- `Game/dashboard/src/{main.ts,utils/theme.ts}` (2)
+- `Game/dashboard/src/components/{hero,project-card,stat-grid,cross-project,quick-links}.ts` (5)
+- `Game/dashboard/src/styles/{reset,theme,layout,components}.css` (4)
+- `Game/dashboard/scripts/{aggregate-stats.mjs,verify-data.mjs}` (2)
+- `Game/dashboard/public/{favicon.svg,data/dashboard-stats.json}` (2)
+- `.github/workflows/game-dashboard.yml` (1)
+- `.omo/plans/dashboard-upgrade.md` (Momus APPROVED plan)
+- `docs/notion-reflects/PROGRESS_REPORT_2026-08-19_NOTION_READY.md`
+
+### 검증
+- TypeScript strict: 0 errors
+- Vite build: 14 modules, JS 11.2KB + CSS 9.3KB (gzipped 4KB + 2KB)
+- Data verifier: 9 checks pass, 17 non-null fields
+- Path filter collision: 없음 (`Game/dashboard/**` vs `Game/wet_run/dashboard/**`)
+
+### 다음
+- Phase 7 closure: REPLACE_ME 삭제, INDEX.md + log.md 갱신 (이 작업)
+- 옵션: Phase 48+ 통합 시 wet_run 캐릭터 stats 동기화 (대시보드가 `Game/wet_run/dashboard/data/character_stats.json` 직접 fetch)
+
+---
+
 ## [2026-08-19] SESSION CLOSE (Part 2) | Notion 통합 — 명칭 변경 + Design Docs 66페이지 (3-tier)
 
 **Status**: 🛑 **세션 종료 (2026-08-19 Part 2)** — Notion 통합 + 명칭 일관성 4개 surface 모두 Wet Run 통일.

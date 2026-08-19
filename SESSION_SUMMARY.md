@@ -1,10 +1,12 @@
 # Wet Run — Session Index
 
-> **Latest session**: 2026-08-19 (CI hygiene + Pages deploy recovery) — see [SESSION_SUMMARY_2026-08-19.md](./SESSION_SUMMARY_2026-08-19.md)
+> **Latest session**: 2026-08-19 (Part 2: Notion 통합) — see [SESSION_SUMMARY_2026-08-19_notion.md](./SESSION_SUMMARY_2026-08-19_notion.md)
+>
+> Earlier same-day: [SESSION_SUMMARY_2026-08-19.md](./SESSION_SUMMARY_2026-08-19.md) (CI hygiene + Pages deploy recovery)
 
 This is an **index** file pointing to the most recent dated session snapshot. Per project `AGENTS.md §9`, `SESSION_SUMMARY.md` should always point at the current/latest session.
 
-> **2026-08-19 CI hygiene + Pages deploy recovery.** Discovered live dashboard was 46 days stale (frozen on 2026-07-04 deploy with pre-rename ROGUELIKE SPRAWL branding). Root cause: `mkdocs build --strict` failing on 146 broken wikilinks in `wiki/world/derivative_stories.md`. Fixed 5 separate CI issues: pages deploy unblock, interrogate coverage 99.7%→100% (added 7 docstrings), 10 ruff errors + 14 format issues, ruff version pin, 2 deleted test files in dashboard validation. **5 commits pushed**, all CI jobs expected to pass on next run. **5700 passed** (was 5695, +5 phase tests). Branch ahead of origin = 0, working tree clean.
+> **2026-08-19 Notion 통합 (Part 2).** Continued same-day work after CI/Pages recovery. Created `PROGRESS_REPORT_2026-08-19_NOTION_READY` (54 blocks) matching the established `_NOTION_READY` pattern. Renamed Notion parent page "Roguelike Sprawl - 프로젝트 가이드" → **"Wet Run - 프로젝트 가이드"** with 5 body updates (H1, code block, 2 URL bullets) for naming consistency across GitHub/Pages/Python/Notion. **Created 66 design document pages in Notion** under new `📚 Design Documents` parent (3-tier: 13 direct + 53 nested) — full `Game/wet_run/design/` (66 files, 18,573 lines) now searchable from Notion. Built 2 reusable Python helpers (`md2notion.py`, `notion_helper.py`) at `/tmp/notion-payload/`. ~150 API calls in ~3 minutes. Branch ahead of origin = 6, working tree clean (after commit).
 
 ## Recent sessions
 

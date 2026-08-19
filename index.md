@@ -15,12 +15,23 @@
 - [prototype/](../prototype/) - **Phase 4: 코드 프로젝트**
 
 ## 세션 / 릴리스 노트
+- [SESSION_SUMMARY_2026-08-19_notion](SESSION_SUMMARY_2026-08-19_notion.md) — **LATEST.** Notion 통합 (66 design pages, 명칭 통일)
+- [SESSION_SUMMARY_2026-08-19](SESSION_SUMMARY_2026-08-19.md) — CI hygiene + Pages deploy 복구 (46d stale → live)
+- [SESSION_SUMMARY_2026-08-18](SESSION_SUMMARY_2026-08-18.md) — Axis 5/4/6 closure
+- [SESSION_SUMMARY_2026-08-13](SESSION_SUMMARY_2026-08-13.md) — mypy strict upgrade
+- [SESSION_SUMMARY_2026-08-10](SESSION_SUMMARY_2026-08-10.md) — Phase 14 v1.3.0+ integration
+- [SESSION_SUMMARY_2026-08-08](SESSION_SUMMARY_2026-08-08.md) — v1.3.0+ release
+- [SESSION_SUMMARY_2026-08-06](SESSION_SUMMARY_2026-08-06.md) — dirty-tree closure
+- [_archive/audits/session-close-2026-08-05](_archive/audits/session-close-2026-08-05.md) — 16-iteration audit
+- [SESSION_SUMMARY_2026-08-05_cycle-audit](SESSION_SUMMARY_2026-08-05_cycle-audit.md) — quality audit
+- [SESSION_SUMMARY_2026-08-05](SESSION_SUMMARY_2026-08-05.md) — workspace reorg
+- [SESSION_SUMMARY_2026-08-03](SESSION_SUMMARY_2026-08-03.md) — Fiction diagnostics
+- [_archive/sessions/SESSION_SUMMARY_2026-07-28_v1.1.0a1](_archive/sessions/SESSION_SUMMARY_2026-07-28_v1.1.0a1.md) — v1.1.0a1
+- [_archive/sessions/SESSION_SUMMARY_2026-07-28](_archive/sessions/SESSION_SUMMARY_2026-07-28.md) — v1.0.0 FINAL
+- [SESSION_SUMMARY_2026-07-27](SESSION_SUMMARY_2026-07-27.md) — Phase 1 game balance
 - [SESSION_SUMMARY_2026-07-11](_archive/sessions/SESSION_SUMMARY_2026-07-11.md)
 - [SESSION_SUMMARY_2026-07-12](_archive/sessions/SESSION_SUMMARY_2026-07-12.md)
 - [SESSION_SUMMARY_2026-07-13](_archive/sessions/SESSION_SUMMARY_2026-07-13.md)
-- [SESSION_SUMMARY_2026-07-27](_archive/sessions/SESSION_SUMMARY_2026-07-27.md) — v0.9.0 (per-boss VFX + mypy 0)
-- [SESSION_SUMMARY_2026-07-28](_archive/sessions/SESSION_SUMMARY_2026-07-28.md) — **v1.0.0 FINAL** (게임성 점검 5-phase)
-- [docs/PROGRESS_REPORT_2026-07-28_v1.0.0](docs/PROGRESS_REPORT_2026-07-28_v1.0.0.md) - Notion 발행용
 
 ## 대시보드
 - [dashboard/DESIGN_METADATA_PLAN](dashboard/DESIGN_METADATA_PLAN.md) - 메타데이터 설계

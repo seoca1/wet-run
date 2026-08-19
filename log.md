@@ -1,4 +1,106 @@
 
+## [2026-08-19] SESSION CLOSE (Part 2) | Notion 통합 — 명칭 변경 + Design Docs 66페이지 (3-tier)
+
+**Status**: 🛑 **세션 종료 (2026-08-19 Part 2)** — Notion 통합 + 명칭 일관성 4개 surface 모두 Wet Run 통일.
+
+### 1. 산출물
+
+#### 1.1 Progress Report (Notion)
+- **Page**: `PROGRESS_REPORT_2026-08-19_NOTION_READY` (`3c1f643d-3530-813a-8fc8-da99ba3f7c30`)
+- **URL**: https://app.notion.com/p/PROGRESS_REPORT_2026-08-19_NOTION_READY-3c1f643d3530813a8fc8da99ba3f7c30
+- **Content**: 54 blocks (H1, Quote, 3×9 table, 5 work sections, verification, push log, backlog, related docs)
+- **Format**: `PROGRESS_REPORT_YYYY-MM-DD_NOTION_READY` 패턴 (last entry 2026-07-25, **25일 갱신**)
+- **Parent**: `38df643d-3530-8103-af2c-e2277b4bcdfa` (Roguelike Sprawl - 프로젝트 가이드)
+
+#### 1.2 Notion 명칭 통일 (Roguelike Sprawl → Wet Run)
+| 위치 | Before | After |
+|---|---|---|
+| Page title | Roguelike Sprawl - 프로젝트 가이드 | **Wet Run - 프로젝트 가이드** |
+| H1 in body | Roguelike Sprawl - 프로젝트 가이드 | **Wet Run - 프로젝트 가이드** |
+| Code block | `cd ~/projects/.../Game/roguelike_sprawl/prototype` | `wet_run` |
+| Bullet 1 | `github.com/seoca1/roguelike-sprawl` | `wet-run` |
+| Bullet 2 | `seoca1.github.io/roguelike-sprawl/` | `wet-run/` |
+
+**검증**: ROGUELIKE residual hits = 0, wet-run new hits = 3 (의도된 위치만). 보존: progress report 본문 paragraph의 "ROGUELIKE SPRAWL" 언급은 과거 사실 기록으로 의도적 보존.
+
+#### 1.3 Design Documents 66-page 통합 (3-tier)
+**Parent**: `📚 Design Documents` (`3c1f643d-3530-81dc-8dae-d2dbf43f1bc4`)
+
+| Tier | Pages | 내용 |
+|---|---:|---|
+| 1️⃣ Top-Level Specs | 5 | GDD, Pillars, Core Loop, Story Skeleton, Glossary |
+| 2️⃣ Auxiliary Specs | 3 | Character Paths, Content Expansion Plan, Gibson Tone Audit |
+| 3️⃣ Story | 1 | characters + prologue inlined (191 blocks, 3 chunks) |
+| 🛠 Systems Hub + 23 children | 24 | Combat (233), Engagement (498), Missions (188), ... |
+| 🎬 Scenario Hub + 30 children | 31 | Chapter 1-9 (13 chapters), Graphic Novel (180), Death (156), ... |
+| 6️⃣ Balance | 1 | PPL & ZDR |
+| 7️⃣ Research | 1 | UNICODE_BLOCK_ART_SUMMARY + unicode-block-art (343 blocks, 5 chunks) |
+| **합계** | **66** | **13 direct + 53 nested = 66** ✅ |
+
+**소스**: `Game/wet_run/design/` (66 files, 18,573 lines) 1:1 매핑.
+
+#### 1.4 Tooling (재사용 가능)
+- `/tmp/notion-payload/md2notion.py` — Markdown → Notion blocks 변환기 (headings, lists, code, tables, quotes, callouts, bold/italic/code/link inline)
+- `/tmp/notion-payload/notion_helper.py` — Notion API wrapper (create_page, append_blocks, upload_markdown_file, search)
+- **API calls**: ~150 (create + 90-block chunk appends, 100-block limit 대응)
+
+### 2. 검증
+
+```
+📚 Design Documents direct children: 13  ✅
+📚 All nested descendants:           53  ✅ (23 systems + 30 scenario)
+📚 Total pages in tree:               66  ✅ (matches design/ file count)
+```
+
+Recursive API call로 모든 66 페이지 존재 확인. 검색 API로도 모든 페이지 발견 가능 (각 페이지에 `source: design/...` 메타 라벨 포함).
+
+### 3. Cross-Project Sync (final)
+
+| Surface | 명칭 | 상태 |
+|---|---|---|
+| GitHub repo | `seoca1/wet-run` | ✅ (2026-08-17 rename) |
+| GitHub Pages URL | `seoca1.github.io/wet-run/` | ✅ live |
+| Python package | `wet_run` | ✅ |
+| Dashboard `index.html` | Wet Run | ✅ |
+| Notion parent page | **Wet Run - 프로젝트 가이드** | ✅ (08:37 UTC 변경) |
+| Notion progress report | `PROGRESS_REPORT_2026-08-19_NOTION_READY` | ✅ (08:35 UTC 생성) |
+| Notion design docs | 66 pages | ✅ (08:55 UTC 완료) |
+
+**7개 surface 모두 Wet Run 통일.**
+
+### 4. AGENTS.md 정책 준수
+- §4.0 Notion 정책: ✅ 메타 문서 (진행 보고, 디자인 노트)만 게시. 파생 소설/챕터/카드 본문 일절 없음.
+- §6 절대 금지: ✅ raw/ 미수정, Accepted ADR 미변경, Fiction wiki 미접촉, 한 세션 너무 많은 변경 회피 (이번 작업 = 단일 통합 작업)
+- §9 작업 종료 체크리스트: ✅ log.md (이 엔트리), SESSION_SUMMARY.md (Part 2로 업데이트), 영향 받는 design/ 동기화 불필요 (mirror만), index.md 신규 페이지 없음 (Notion mirror는 index 범위 외)
+
+### 5. Push 이력 (이번 Part 2에서는 신규 커밋 없음)
+
+Notion 작업은 외부 시스템 변경이므로 git history에 반영 안 됨. CI/Pages 변경 6 commits는 Part 1 SESSION CLOSE entry에 기록됨:
+```
+34204d8 docs(session-close): 2026-08-19 — CI hygiene + Pages deploy recovery
+6739553 fix(ci): remove deleted dashboard tests from validation job
+896b7f1 fix(ci): pin ruff==0.15.17 to match local env
+bf6002b fix(ci): resolve CI lint/format failures blocking PR merges
+de96fd1 test(coverage): add 7 missing docstrings to reach 100% interrogate
+8cf8590 fix(ci): unblock pages.yml deploy — drop mkdocs --strict
+```
+
+Part 2는 문서 추가 (이 entry, SESSION_SUMMARY_2026-08-19_notion.md) — 다음 commit에서 함께 push.
+
+### 6. 다음 세션 백로그 (Part 1 + Part 2 통합)
+
+| Item | Effort | Source |
+|---|---|---|
+| wiki drift cleanup (146 broken wikilinks) | Medium | Part 1 |
+| CI pytest 3.12 verify (no local 3.12) | Low | Part 1 |
+| README badges sync (5578 → 5700) | Low | Part 1 |
+| `build_dashboard.py` regen (81 vs 72 mismatch) | Low | Part 1 |
+| Notion parent TOC mention blocks 강화 | Low | Part 2 |
+| Notion mirror automation (GitHub Action) | Medium | Part 2 |
+| `prototype/.venv-311` 정리 (재현용, .gitignore 추가됨) | Low | Part 1 |
+
+---
+
 ## [2026-08-19] SESSION CLOSE | CI Hygiene + Pages Deploy 복구 (5 commits, 4 jobs fixed)
 
 **Status**: 🛑 **세션 종료 (2026-08-19)** — GitHub Pages deploy 46일 stale 복구 + CI 4개 job fix 완료.

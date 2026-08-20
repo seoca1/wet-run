@@ -43,3 +43,7 @@ prototype/data/saves/*.json
 dashboard/sounds/*.v1_backup.wav
 dashboard/sounds/*_v1_orig.wav
 prototype/.venv-311/
+
+# Orphan sounds_test/ at repo root (untracked 2026-08-20 — Issue #1 cleanup)
+# Canonical path is prototype/data/sounds_test/ (used by sound_manager + graphic_novel + minimax_bgms)
+data/sounds_test/

@@ -1346,3 +1346,28 @@ ADR-0188 "Accepted (2026-08-08, user explicit "Begin Phase 11")" 상태. 본 ses
 - ⏳ Phase 7: Verification + closeout
 
 **No commit** per workspace §6.
+
+## [2026-08-20] cleanup | Issue #1 — orphan `data/sounds_test/` untrack + local delete
+
+**Status**: ✅ **2.2 MB tracked orphan 제거 완료** (wet_run git). `Game/wet_run/data/sounds_test/` (46개 WAV, 2.3MB)는 정본 `prototype/data/sounds_test/` (61MB)와 중복이며, source code 어디에서도 참조되지 않음 (전체 17개 참조 모두 `prototype/data/sounds_test/` 또는 `__file__.parent/sounds_test` 경로 사용).
+
+### 변경
+- **Untrack** (wet_run git): `git rm -r --cached data/sounds_test/` — 46 files
+- **.gitignore 강제**: `data/sounds_test/` 패턴 추가 (재추적 방지)
+- **로컬 삭제**: `rm -rf data/sounds_test/` (2.3MB 디스크 회수)
+- **Diff** (커밋 대기): `.gitignore` +4 lines, `data/sounds_test/*` -46 files (binary)
+
+### 검증
+- sound_manager 테스트: 37/37 passed
+- graphic_novel_audio 테스트: 포함 (위 37에 합산)
+- 전체 pytest: **5700 passed, 0 failed**, 365 skipped, 1 xfailed (baseline과 동일)
+- ruff: All checks passed
+- mypy (src/wet_run): 0 errors
+
+### 미해결
+- **Issue #2** (REVIEW): `prototype/sounds_test/` (7.3MB, combat WAVs 사본) — `upgrade_sounds.py`가 다른 경로 사용 중, 코드 동작 변경 검토 필요
+- **Issue #3** (REVIEW): theme_* WAV 3종 다른 버전 — 정본 ADR로 명시 필요
+- **Issue #4** (장기 검토): Git LFS 마이그레이션 (오디오 321MB)
+- **/data/** 경계 (workspace AGENTS.md §2): workspace 루트 `/data/`와 wet_run `/data/` 분리 — 별도 정리 필요 시 ADR-0195+ 후보
+
+**No commit** per workspace §6 (사용자 커밋 대기).

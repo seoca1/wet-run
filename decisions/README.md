@@ -112,6 +112,13 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0185 | Save/Load Migration v2 (Versioned, Cloud-Ready) | **Accepted** | 2026-08-08 | P2 (Pillar 1 persistence + Pillar 4 carry) |
 | 0186 | Performance Optimization (Frame Rate, Memory) | **Accepted** | 2026-08-08 | P3 (Pillar 1 smoothness) |
 | 0187 | Boss Phase 5 Expansion (Last Stand) | **Accepted** | 2026-08-08 | P2 (Pillar 1 climax, Pillar 5 finale) |
+| 0188 | Mission Expansion (Phase 11 — Content Expansion, Axis 1) | **Accepted** | 2026-08-08 | P1 (Pillar 1 run variety) |
+| 0189 | ICE Type Expansion (Phase 12 — Content Expansion, Axis 2) | **Accepted** | 2026-08-08 | P2 (Pillar 3 combat variety + Pillar 5 atmosphere) |
+| 0190 | Boss Expansion + F.4 Integration (Phase 12 — Content Expansion, Axis 4) | **Accepted** | 2026-08-08 | P1 (Pillar 1 climax + Pillar 5 finale) |
+| 0191 | Story Events Expansion (Phase 13 — Content Expansion, Axis 3) | **Accepted** | 2026-08-08 | P2 (Pillar 5 atmosphere + Pillar 1 variety) |
+| 0192 | Ending Expansion (Phase 14 — Content Expansion, Axis 5) | **Accepted** | 2026-08-08 | P2 (Pillar 1 replay value + Pillar 5 closure) |
+| 0193 | Programs/Equipment Expansion (Phase 14 — Content Expansion, Axis 6) | **Accepted** | 2026-08-08 | P2 (Pillar 4 Build depth + Pillar 5 style) |
+| 0194 | ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구) | **Draft** | 2026-08-19 | P3 (The Build, 아키텍처 명료화) |
 
 ### 2026-07-01 통합 작업 (P1~P4 + B)
 
@@ -242,4 +249,5 @@ i18n + Content Pipeline:
 
 - **0162 번호 충돌 해결** (2026-08-08): 두 파일이 동일 번호 `0162` 사용 중이었음. `0162-boss-phase-4.md`(canonical, 6 references)와 `0162-boss-phase-5.md`(no references, content는 Phase 5 expansion). 미참조 파일을 `0187-boss-phase-5-expansion.md`로 번호 이동. canonical 0162 title은 content 일치하도록 "Boss Phase 5 Last Stand" → "Boss Phase 4 Last Stand" 수정. 6 references 모두 그대로 유지 (참조 대상 변경 없음).
 - **신규 ADR 31개 인덱스 추가** (2026-08-07~08): 0156–0186 (v1.2.0+ 후속 + v1.3.0+ Tracks E/F/G). 인덱스 누락 상태였음 — 본 동기화로 README 인덱스 최신화 완료. ADR 총 88개 (Accepted/Revised/Superseded 모두 포함, status docs 제외).
+- **신규 ADR 7개 인덱스 추가** (2026-08-08~19): 0188–0194 (Phase 11~14 Content Expansion Axes 1~6 + ADR-0194 ECS-lite 역할 명시화). 7 ADR 파일은 2026-08-08~19 사이 생성되었으나 README 인덱스 누락 상태였음 — 본 동기화로 README 인덱스 최신화 완료. ADR 총 **106개** (Accepted/Revised/Draft 모두 포함, status docs 2개 제외).
 - **ADR-0162 title fix**: content는 Phase 4 mechanics를 설명하지만 title이 "Boss Phase 5 Last Stand"로 잘못 표기되어 있었음. Content와 일치하도록 "Boss Phase 4 Last Stand"로 수정.

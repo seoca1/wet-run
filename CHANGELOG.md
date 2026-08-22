@@ -4,6 +4,65 @@ All notable changes to wet_run will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.0] — 2026-08-20 — Game Quality Upgrade (Tracks A + B + D)
+
+### Track A — Foundation Health (7 items)
+
+- **A.1 ADR Implementation Status sweep**: 40 ADRs (0147-0193) reconciled with `## Implementation Status (2026-08-20)` sections (31 ✅ + 9 🟡 Partial)
+- **A.2 README count reconciliation**: 5281→5700 tests, 72→81 GN scenes, 211→214 source files
+- **A.3 Wiki drift fix**: 146→0 broken mkdocs links (22 files stripped), `pages.yml` re-enables `mkdocs build --strict`
+- **A.4 Top-5 module splits (ADR-0110)**: 4272 LOC across 5 monolithic files → 21 sub-modules + 3 shims, all ≤500 LOC
+  - `achievements.py` 943 → catalog 447 / registry 349 / models 193 + 153 shim
+  - `engine/menu.py` 891 → gn_menu 446 / pre_run 278 / main_menu 200 (file deleted, package `__init__.py` is public)
+  - `matrix/dungeon_generator.py` 862 → procedural_layout 420 / procedural 167 / procedural_bsp 161 / handcrafted 139 / models 108 + 117 shim
+  - `run/state.py` 815 → models 452 / run_state 324 + 37 shim
+  - `engine/gn_render.py` 761 → scene 357 / card 230 / text 159 (file deleted, package `__init__.py` is public)
+- **A.5 Test failure categorization**: 8 pre-existing failures auto-resolved (already fixed in 2026-08-19 session)
+- **A.6 ADR-0195 Implementation Workflow Draft**: 130-line ADR filed + indexed (awaiting user acceptance)
+- **A.7 Sounds hygiene Issue #2**: canonical `data/sounds_test/` path consolidated, `upgrade_sounds.py:12` fixed, 7.4MB dup `prototype/sounds_test/` deleted
+
+### Track B — Player-Facing Polish (10 items)
+
+- **B.7 Battle Portraits (ADR-0171)**: `get_portrait()` wired into combat render (HP-aware portraits replace static `enemy.portrait`)
+- **Gibson Fluff (ADR-0170)**: `push_fluff()` helper + "encounter" category in `start_combat`
+- **Death Taunts (ADR-0168)**: `get_taunt(ice_type.value, combat_state.rng)` in `_end_combat` (boss + per-ICE taunts on victory)
+- **Combat Cinematics (ADR-0169)**: `phase_intro_sequence()` on boss phase transitions
+- **Matrix Events (ADR-0165)**: `check_event_trigger` + `trigger_event` loop after node visit (6 mid-run surprises now fire)
+- **Run Mutators (ADR-0163)**: `is_heal_disabled` check in salvage HEAL branch (TYPE_CHECKING guard for circular import fix)
+- **Mission Archetypes (ADR-0164)**: `partial_pay_percent` scales `complete_mission` credits
+- **Mission Expansion (ADR-0167)**: registry accessible (6 missions in `combat/mission_expansion.py`); board wiring = data authoring deferred
+- **Phase 6 Arc (ADR-0166)**: registry accessible (4 missions in `combat/arc6.py`); board wiring = data authoring deferred
+- **Coverage matrix**: `docs/audits/adr_coverage_matrix_2026-08-20.md` (5.7 kB, 33 ✅ wired + 2 🟡 partial data authoring)
+
+### Track C — Content Depth (verified, no new authoring)
+
+- Missions: 200 (target met per ADR-0188)
+- ICE types: 97 (target met per ADR-0189)
+- Programs: 30 (target met per ADR-0193)
+- Endings: 29 (target met per ADR-0192)
+- GN scenes: 81 (9 chars × 9 scenes)
+
+### Track D — Meta & Aftermath (5 items, 4 ✅ + 1 🟡)
+
+- **D.1 Faction Reputation Cross-Run (ADR-0131)**: ✅ opt-in by design — `meta_state.py` + `meta_state_manager.py` + 27 unit tests; bootstrap hook intentionally deferred per ADR §"잔존 작업"
+- **D.2 Phase 6 Arc**: 🟡 registry ready, missions.json data authoring deferred
+- **D.3 Run Replay (ADR-0182)**: ✅ — `replay.py` (139 LOC) with record/query/export/import
+- **D.4 Meta-Progression (ADR-0174)**: ✅ — `meta_progression.py` (212 LOC) with 4 categories
+- **D.5 Endings Persistence (ADR-0192)**: ✅ — 29 entries + `ending_renderer.py` (179 LOC)
+
+### Verification
+
+- `pytest tests/` → 5700 passed / 365 skipped / 1 xfailed / 0 failed
+- `ruff check src/wet_run/` → All checks passed (230 source files)
+- `mypy --strict src/wet_run/` → Success: no issues found (230 source files)
+- `mkdocs build --strict` → 0 warnings
+- ADR-0110 module-size policy: 21/21 sub-modules ≤500 LOC
+
+### Known Limitations
+
+- Git LFS migration (321MB audio) deferred to a future release — `D4` decision pending
+- Phase 6 Arc (ADR-0166) and Mission Expansion (ADR-0167) missions.json integration requires content authoring
+
 ## [1.1.0] — 2026-08-17
 
 ### Project Rename (Roguelike Sprawl → Wet Run)

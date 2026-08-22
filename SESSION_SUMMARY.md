@@ -1,8 +1,10 @@
 # Wet Run — Session Index
 
-> **Latest session**: 2026-08-19 (Part 2: Notion 통합) — see [SESSION_SUMMARY_2026-08-19_notion.md](./SESSION_SUMMARY_2026-08-19_notion.md)
+> **Latest session**: 2026-08-20 (Track A: Foundation Health) — see [SESSION_SUMMARY_2026-08-20.md](./SESSION_SUMMARY_2026-08-20.md)
 >
-> Earlier same-day: [SESSION_SUMMARY_2026-08-19.md](./SESSION_SUMMARY_2026-08-19.md) (CI hygiene + Pages deploy recovery)
+> Previous: [SESSION_SUMMARY_2026-08-19_notion.md](./SESSION_SUMMARY_2026-08-19_notion.md) (Notion 통합)
+>
+> Earlier: [SESSION_SUMMARY_2026-08-19.md](./SESSION_SUMMARY_2026-08-19.md) (CI hygiene + Pages deploy recovery)
 
 This is an **index** file pointing to the most recent dated session snapshot. Per project `AGENTS.md §9`, `SESSION_SUMMARY.md` should always point at the current/latest session.
 
@@ -12,7 +14,10 @@ This is an **index** file pointing to the most recent dated session snapshot. Pe
 
 | Date | File | Summary |
 |---|---|---|
-| **2026-08-18 (Axis closure sweep)** | [SESSION_SUMMARY_2026-08-18.md](./SESSION_SUMMARY_2026-08-18.md) | **LATEST.** Axis 5 (Endings) + Axis 4 (Boss F.4) + Axis 6 (Programs/Equipment) closure. 8 commits. `combat/boss_dispatch.py` NEW + `combat/boss_registry.py` NEW + `build_ice_enemy` guard. +43 tests, 0 regressions. |
+| **2026-08-20 (Tracks A+B+C+D+E: Full Quality Upgrade)** | [SESSION_SUMMARY_2026-08-20.md](./SESSION_SUMMARY_2026-08-20.md) | **LATEST.** All 5 tracks of the Quality Upgrade Plan executed in single session: A.4 module splits (5 parallel agents), B.9 ADR integrations wired, C content verified at target (200/97/30/29/81), D.5 meta & aftermath verified, E.4 release prep (CHANGELOG [1.4.0] + version bump 1.1.0→1.4.0). 0 commits (working tree dirty, ~37 files). Operational releases (PyPI/GitHub/LFS) deferred to user. |
+| 2026-08-19 (Notion 통합 Part 2) | [SESSION_SUMMARY_2026-08-19_notion.md](./SESSION_SUMMARY_2026-08-19_notion.md) | Previous: 66 design doc pages in Notion (3-tier), 5 body updates, ~150 API calls. |
+| 2026-08-19 (CI hygiene + Pages deploy) | [SESSION_SUMMARY_2026-08-19.md](./SESSION_SUMMARY_2026-08-19.md) | Previous: 5 root causes fixed (Pages deploy 46d stale, interrogate, ruff lint/format, dashboard validation). 5700 passed baseline restored. |
+| **2026-08-18 (Axis closure sweep)** | [SESSION_SUMMARY_2026-08-18.md](./SESSION_SUMMARY_2026-08-18.md) | Previous: Axis 5 (Endings) + Axis 4 (Boss F.4) + Axis 6 (Programs/Equipment) closure. 8 commits. `combat/boss_dispatch.py` NEW + `combat/boss_registry.py` NEW + `build_ice_enemy` guard. +43 tests, 0 regressions. |
 | 2026-08-13 (mypy strict upgrade) | [SESSION_SUMMARY_2026-08-13.md](./SESSION_SUMMARY_2026-08-13.md) | Previous: Track A no-op (false premises), Track B mostly no-op (already modern), B5: mypy strict mode + @override. 1 real bug fixed in `engine/menu.py`. |
 | 2026-08-10 (Phase 14 integration) | [SESSION_SUMMARY_2026-08-10.md](./SESSION_SUMMARY_2026-08-10.md) | Previous: F.2/F.4 deep wiring + mypy 51→0 + ruff 116→0 + 178 metadata fields + 200+ dashboard cards. |
 | 2026-08-08 (v1.3.0+ release) | [SESSION_SUMMARY_2026-08-08.md](./SESSION_SUMMARY_2026-08-08.md) | Previous release: 15 tracks across E/F/G sub-tracks, 16 ADRs (0172–0186), +260 tests (4253→4513), 2 tracks cancelled (B.5, D.4 audio), 1 blocked (A.6 push). |

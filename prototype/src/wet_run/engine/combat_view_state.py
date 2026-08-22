@@ -21,6 +21,7 @@ from typing import TYPE_CHECKING
 
 from ..audio import safe_play
 from ..combat.boss import PhaseProfile, apply_phase_to_combatant, get_boss_profile, is_boss
+from ..combat.death_taunts import get_taunt
 from ..combat.effects import (
     CombatEffects,
     IceType,
@@ -28,6 +29,7 @@ from ..combat.effects import (
     spawn_ice_death,
     spawn_ice_intro,
 )
+from ..combat.gibson_fluff import push_fluff
 from ..combat.registry import IceRegistry, ProgramRegistry, build_ice_enemy
 from ..combat.state import Combatant, CombatState, Skill
 from ..matrix.graph import MatrixGraph
@@ -199,6 +201,8 @@ def start_combat(
         if f4_profile is not None:
             cs.boss_phase_tracker = BossPhaseTracker(f4_profile)
 
+    push_fluff(state, "encounter")
+
     return cs
 
 
@@ -236,6 +240,9 @@ def _end_combat(state: AppState, combat_state: CombatState) -> None:
         state.inventory["ice_shard"] = state.inventory.get("ice_shard", 0) + 1
         state.status_messages.append(">>> VICTORY! Gained: 1x ICE Shard")
         state.status_messages.append(">>> Gained: 50 credits")
+        taunt = get_taunt(ice_type.value, combat_state.rng)
+        if taunt is not None:
+            state.status_messages.append(taunt)
 
         # Salvage menu (ADR-0014 + ADR-0147): queue a 3-way choice
         # (HEAL/FRAG/CRED/SKIP) for the next interaction cycle. The

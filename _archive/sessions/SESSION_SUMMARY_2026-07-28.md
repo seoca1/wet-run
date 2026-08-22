@@ -44,7 +44,7 @@
 - 보상 곡선 공식 vs 실제 55~96% → **ADR-0132+** (보상 곡선 재설계)
 
 ### 산출물
-- [`docs/audits/2026-07-27_balance.md`](../../docs/audits/2026-07-27_balance.md)
+- `docs/audits/2026-07-27_balance.md`
 - [`decisions/0130-balance-audit-and-ppl-sync.md`](../../decisions/0130-balance-audit-and-ppl-sync.md)
 
 ---

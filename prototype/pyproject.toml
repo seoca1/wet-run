@@ -1,6 +1,6 @@
 [project]
 name = "wet-run"
-version = "1.1.0"
+version = "1.4.0"
 description = "Wet Run — a cyberpunk roguelike set in William Gibson's Sprawl trilogy"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -80,6 +80,14 @@ warn_unused_ignores = true
 warn_redundant_casts = true
 disallow_untyped_defs = true
 enable_error_code = ["possibly-undefined", "explicit-override"]
+
+[[tool.mypy.overrides]]
+# Backward-compatibility shim that re-exports the wet_run.achievements
+# sub-package. It coexists with the package dir (achievements/__init__.py)
+# by Python convention but mypy treats both as the same module name.
+# Excluded from mypy strict — the package itself is strictly type-checked.
+module = "wet_run.achievements"
+ignore_errors = true
 
 [tool.pytest.ini_options]
 minversion = "7.0"

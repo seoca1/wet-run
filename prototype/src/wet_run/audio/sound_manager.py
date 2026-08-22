@@ -7,6 +7,16 @@ Plays sound effects via subprocess + system tools:
 
 Generates placeholder WAV files on first use if missing.
 Zero external Python dependencies (uses only standard library).
+
+Canonical audio paths (Issue #2/3 resolution 2026-08-20):
+- Game loads WAVs from `prototype/data/sounds_test/` (default `data/sounds_test`)
+- `scripts/upgrade_sounds.py` writes generated WAVs to the same path
+- `Game/wet_run/dashboard/sounds/` and `dashboard/sounds/v2/` are dashboard-only
+  BGM assets, separate from gameplay SFX (different content/sizes)
+- `Game/wet_run/prototype/sounds_test/` (top-level) was removed 2026-08-20 (was
+  duplicate of canonical path; upgrade_sounds.py previously pointed to wrong dir)
+- Audio LFS migration decision deferred per `.omo/plans/QUALITY_UPGRADE_PLAN_2026-08-20.md`
+  D4 → Track E
 """
 
 from __future__ import annotations

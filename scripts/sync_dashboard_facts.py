@@ -73,14 +73,17 @@ def _arc_stats() -> tuple[list[int], dict[str, int]]:
 
 
 def _count_stages() -> int:
-    """Count Stage enum values in run/state.py."""
-    if not STATE_PY.exists():
+    """Count Stage enum values in run/state.py (shim) or run/state/models.py."""
+    STATE_MODELS_PY = STATE_PY.parent / "state" / "models.py"
+    sources: list[Path] = [p for p in (STATE_PY, STATE_MODELS_PY) if p.exists()]
+    if not sources:
         return 0
-    text = STATE_PY.read_text(encoding="utf-8")
-    m = re.search(r"class Stage\(StrEnum\)[\s\S]+?(\nclass |\Z)", text)
-    if not m:
-        return 0
-    return len(re.findall(r'=\s*"', m.group(0)))
+    for src in sources:
+        text = src.read_text(encoding="utf-8")
+        m = re.search(r"class Stage\(StrEnum\)[\s\S]+?(\nclass |\Z)", text)
+        if m:
+            return len(re.findall(r'=\s*"', m.group(0)))
+    return 0
 
 
 def _count_ice() -> int:

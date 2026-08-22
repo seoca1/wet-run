@@ -243,10 +243,10 @@ class TestDashboardIntegration:
         from pathlib import Path as _Path
 
         stats = mod.load_mission_stats(_Path(projects_root))
-        assert stats["missions"] == 200
+        assert stats["missions"] == 209
         assert "Armitage" in stats["characters"]
         assert len(stats["characters"]) == 27
-        assert stats["missions"] == 200
+        assert stats["missions"] == 209
         assert "Armitage" in stats["characters"]
         assert len(stats["characters"]) == 27
 

@@ -15,17 +15,17 @@
 - [prototype/](../prototype/) - **Phase 4: 코드 프로젝트**
 
 ## 세션 / 릴리스 노트
-- [SESSION_SUMMARY_2026-08-19_notion](SESSION_SUMMARY_2026-08-19_notion.md) — **LATEST.** Notion 통합 (66 design pages, 명칭 통일)
-- [SESSION_SUMMARY_2026-08-19](SESSION_SUMMARY_2026-08-19.md) — CI hygiene + Pages deploy 복구 (46d stale → live)
-- [SESSION_SUMMARY_2026-08-18](SESSION_SUMMARY_2026-08-18.md) — Axis 5/4/6 closure
-- [SESSION_SUMMARY_2026-08-13](SESSION_SUMMARY_2026-08-13.md) — mypy strict upgrade
-- [SESSION_SUMMARY_2026-08-10](SESSION_SUMMARY_2026-08-10.md) — Phase 14 v1.3.0+ integration
-- [SESSION_SUMMARY_2026-08-08](SESSION_SUMMARY_2026-08-08.md) — v1.3.0+ release
-- [SESSION_SUMMARY_2026-08-06](SESSION_SUMMARY_2026-08-06.md) — dirty-tree closure
+- SESSION_SUMMARY_2026-08-19_notion — **LATEST.** Notion 통합 (66 design pages, 명칭 통일)
+- SESSION_SUMMARY_2026-08-19 — CI hygiene + Pages deploy 복구 (46d stale → live)
+- SESSION_SUMMARY_2026-08-18 — Axis 5/4/6 closure
+- SESSION_SUMMARY_2026-08-13 — mypy strict upgrade
+- SESSION_SUMMARY_2026-08-10 — Phase 14 v1.3.0+ integration
+- SESSION_SUMMARY_2026-08-08 — v1.3.0+ release
+- SESSION_SUMMARY_2026-08-06 — dirty-tree closure
 - [_archive/audits/session-close-2026-08-05](_archive/audits/session-close-2026-08-05.md) — 16-iteration audit
-- [SESSION_SUMMARY_2026-08-05_cycle-audit](SESSION_SUMMARY_2026-08-05_cycle-audit.md) — quality audit
-- [SESSION_SUMMARY_2026-08-05](SESSION_SUMMARY_2026-08-05.md) — workspace reorg
-- [SESSION_SUMMARY_2026-08-03](SESSION_SUMMARY_2026-08-03.md) — Fiction diagnostics
+- SESSION_SUMMARY_2026-08-05_cycle-audit — quality audit
+- SESSION_SUMMARY_2026-08-05 — workspace reorg
+- SESSION_SUMMARY_2026-08-03 — Fiction diagnostics
 - [_archive/sessions/SESSION_SUMMARY_2026-07-28_v1.1.0a1](_archive/sessions/SESSION_SUMMARY_2026-07-28_v1.1.0a1.md) — v1.1.0a1
 - [_archive/sessions/SESSION_SUMMARY_2026-07-28](_archive/sessions/SESSION_SUMMARY_2026-07-28.md) — v1.0.0 FINAL
 - [_archive/sessions/SESSION_SUMMARY_2026-07-27](_archive/sessions/SESSION_SUMMARY_2026-07-27.md) — Phase 1 game balance
@@ -38,45 +38,45 @@
 - [dashboard/REORGANIZE_PLAN](dashboard/REORGANIZE_PLAN.md) - 재구성 계획
 
 ## 세계관 (World)
-- [Sprawl Universe](wiki/world/sprawl_universe.md) - 시간/공간, 기본 컨셉
-- [Cyberspace](../../Fiction/wiki/settings/cyberspace.md) - 매트릭스의 정의와 작동
-- [Factions](wiki/world/factions.md) - 주요 세력
-- [Glossary](wiki/world/glossary.md) - 용어 사전
-- [Style Guide](wiki/world/style_guide.md) - 톤과 미적 가이드
-- [Boss ICE Reference](wiki/world/boss-ice-reference.md) - **Phase B-3 5개 보스 ICE 프로필 + AoE/미니언 스폰 (2026-07-26)**
-- [Derivative Stories](wiki/world/derivative_stories.md) - **이차 창작 단편 매핑 (150 KO + 150 EN = 300 stories / 111 missions mapped, ADR-0051 schema)**
-- [Cross-Project Integration](wiki/world/cross-project-integration.md) - **Fiction ↔ wet_run 양방향 통합 (Phase α-J)**
+- Sprawl Universe - 시간/공간, 기본 컨셉
+- Cyberspace - 매트릭스의 정의와 작동
+- Factions - 주요 세력
+- Glossary - 용어 사전
+- Style Guide - 톤과 미적 가이드
+- Boss ICE Reference - **Phase B-3 5개 보스 ICE 프로필 + AoE/미니언 스폰 (2026-07-26)**
+- Derivative Stories - **이차 창작 단편 매핑 (150 KO + 150 EN = 300 stories / 111 missions mapped, ADR-0051 schema)**
+- Cross-Project Integration - **Fiction ↔ wet_run 양방향 통합 (Phase α-J)**
 
 > **Primary source**: `../../../Fiction/wiki/` — 깁슨 원작 분석 (Sprawl Trilogy, characters, settings). 게임 wiki는 게임용 요약.
 
 ## 디자인 (Design)
-- [Pillars](design/pillars.md) - 디자인 기둥
-- [Core Loop](design/core_loop.md) - 핵심 게임 루프
-- [Character Paths](design/CHARACTER_PATHS.md) - **3캐릭터 × 15미션 진행 경로 (2026-06-25 신규)**
-- [GDD](design/GDD.md) - Game Design Document
-- [Glossary](design/glossary.md) - 게임 용어
-- [Story Skeleton](design/story_skeleton.md) - **주요 줄기 뼈대 (5 arcs + 4+ endings)**
-- [Systems: ASCII Portraits](design/systems/ascii-portraits.md) - **인물/객체 시각 식별**
-- [Systems: Difficulty Rating (PPL & ZDR)](design/systems/difficulty-rating.md) - **전투 난이도 가시화**
-- [Systems: Story Events](design/systems/story-events.md) - **소설 스토리 부가 이벤트**
-- [Systems: Hacking (Cyberspace / Matrix)](design/systems/hacking.md) - **매트릭스 / 해킹 시스템 (Phase 5 신규)**
-- [Systems: Combat (RT-MS + Data Salvage)](design/systems/combat.md) - **전투 + 전투 승리 보상 (ADR-0003 + ADR-0014)**
-- [Systems: Crafting (Material & 조합)](design/systems/crafting.md) - **3-tier 재료 & 조합 시스템 (ADR-0015)**
-- [Systems: Jockey Avatar (스탯 시각화)](design/systems/avatar.md) - **자키 아바타, 부위별 stat 표현 (ADR-0016)**
-- [Systems: Missions (미션-재료 통합)](design/systems/missions.md) - **미션 시스템 + Hub 4-패널 + Recipe 트리 (ADR-0017)**
-- [Systems: Animations (전투 ASCII 애니메이션)](design/systems/animations.md) - **Normal vs Skill ASCII 애니메이션 (ADR-0018)**
-- [Systems: Aftermath & Subtitles (전투 후일담 & 한글 자막)](design/systems/aftermath.md) - **전투 후일담 + 소설 인물 반응 + 한글 자막 (ADR-0019)**
-- [Systems: Grade Progression (5단계 전투 검증)](design/systems/grade-progression.md) - **자키 등급 1~5 전투 & 결과 이벤트 (ADR-0008 + ADR-0019)**
-- [Systems: Exploration (Fog of War)](design/systems/exploration.md) - **안개 / 탐험 메카닉 (ADR-0020)**
-- [Scenario Overview](design/scenario/README.md) - **오리지널 시나리오 통합 (ADR-0031)**
-- [Chapter 1: 케이 (Novice)](design/scenario/chapter-1-novice.md) - **첫 잭인**
-- [Chapter 2: 실 (Veteran)](design/scenario/chapter-2-veteran.md) - **오래된 의문**
-- [Chapter 3: 카스 (Heretic)](design/scenario/chapter-3-heretic.md) - **선언**
-- [Graphic Novel Mode](design/scenario/graphic-novel.md) - **그래픽 노블 자동플레이 (ADR-0032, 0041 톤 가이드라인 §10)**
-- [Death & Restart Cycle](design/scenario/death-restart.md) - **자키 사이클 + Hall of Dead (ADR-0040)**
-- [Story vs Stage Comparison](design/scenario/story-stage-comparison.md) - **단편소설/그래픽노블/게임스테이지 비교표**
-- [Game Structure (5-Chapter Architecture)](design/scenario/game-structure.md) - **챕터/Arc/Prologue 용어 재정의 + 5챕터 설계**
-- [Chapter Progress Tracker](design/scenario/chapter-progress.md) - **15챕터 구현 진도 추적표**
+- Pillars - 디자인 기둥
+- Core Loop - 핵심 게임 루프
+- Character Paths - **3캐릭터 × 15미션 진행 경로 (2026-06-25 신규)**
+- GDD - Game Design Document
+- Glossary - 게임 용어
+- Story Skeleton - **주요 줄기 뼈대 (5 arcs + 4+ endings)**
+- Systems: ASCII Portraits - **인물/객체 시각 식별**
+- Systems: Difficulty Rating (PPL & ZDR) - **전투 난이도 가시화**
+- Systems: Story Events - **소설 스토리 부가 이벤트**
+- Systems: Hacking (Cyberspace / Matrix) - **매트릭스 / 해킹 시스템 (Phase 5 신규)**
+- Systems: Combat (RT-MS + Data Salvage) - **전투 + 전투 승리 보상 (ADR-0003 + ADR-0014)**
+- Systems: Crafting (Material & 조합) - **3-tier 재료 & 조합 시스템 (ADR-0015)**
+- Systems: Jockey Avatar (스탯 시각화) - **자키 아바타, 부위별 stat 표현 (ADR-0016)**
+- Systems: Missions (미션-재료 통합) - **미션 시스템 + Hub 4-패널 + Recipe 트리 (ADR-0017)**
+- Systems: Animations (전투 ASCII 애니메이션) - **Normal vs Skill ASCII 애니메이션 (ADR-0018)**
+- Systems: Aftermath & Subtitles (전투 후일담 & 한글 자막) - **전투 후일담 + 소설 인물 반응 + 한글 자막 (ADR-0019)**
+- Systems: Grade Progression (5단계 전투 검증) - **자키 등급 1~5 전투 & 결과 이벤트 (ADR-0008 + ADR-0019)**
+- Systems: Exploration (Fog of War) - **안개 / 탐험 메카닉 (ADR-0020)**
+- Scenario Overview - **오리지널 시나리오 통합 (ADR-0031)**
+- Chapter 1: 케이 (Novice) - **첫 잭인**
+- Chapter 2: 실 (Veteran) - **오래된 의문**
+- Chapter 3: 카스 (Heretic) - **선언**
+- Graphic Novel Mode - **그래픽 노블 자동플레이 (ADR-0032, 0041 톤 가이드라인 §10)**
+- Death & Restart Cycle - **자키 사이클 + Hall of Dead (ADR-0040)**
+- Story vs Stage Comparison - **단편소설/그래픽노블/게임스테이지 비교표**
+- Game Structure (5-Chapter Architecture) - **챕터/Arc/Prologue 용어 재정의 + 5챕터 설계**
+- Chapter Progress Tracker - **15챕터 구현 진도 추적표**
 - [Session Handover (v0.8.0, archived)](_archive/sessions/SESSION_HANDOVER_v0.8.0_2026-07-25.md) - **다른 세션 인수인계 (구버전 v0.8.0 — 현재 상태는 [SESSION_SUMMARY_2026-08-06.md](./SESSION_SUMMARY_2026-08-06.md) 참조)**
 
 ## 결정 기록 (Decisions)
@@ -197,41 +197,41 @@
 - [decisions/template](decisions/template.md) — ADR 작성 템플릿 (NNNN-short-title.md)
 
 ### 디자인 (Design — added 35)
-- [design/CONTENT_EXPANSION_PLAN](design/CONTENT_EXPANSION_PLAN.md) — 콘텐츠 확장 플랜 (2026-06-25)
-- [design/research/unicode-block-art](design/research/unicode-block-art.md) — 유니코드 블록 아트 조사 (2026-07-10)
-- [design/research/UNICODE_BLOCK_ART_SUMMARY](design/research/UNICODE_BLOCK_ART_SUMMARY.md) — 유니코드 블록 아트 요약 (2026-07-10)
-- [design/balance/ppl_zdr_balance](design/balance/ppl_zdr_balance.md) — PPL/ZDR 밸런스 노트
-- [design/scenario/CHARACTER_METADATA](design/scenario/CHARACTER_METADATA.md) — 캐릭터 메타데이터 명세 (2026-06-23)
-- [design/scenario/chapter-4-bridge](design/scenario/chapter-4-bridge.md) — Chapter 4: Bridge
-- [design/scenario/chapter-4-suit](design/scenario/chapter-4-suit.md) — Chapter 4: Suit
-- [design/scenario/chapter-5-veteran](design/scenario/chapter-5-veteran.md) — Chapter 5: Veteran
-- [design/scenario/chapter-5-wigan](design/scenario/chapter-5-wigan.md) — Chapter 5: Wigan
-- [design/scenario/chapter-6-angie](design/scenario/chapter-6-angie.md) — Chapter 6: Angie
-- [design/scenario/chapter-6-veteran](design/scenario/chapter-6-veteran.md) — Chapter 6: Veteran
-- [design/scenario/chapter-7-sally](design/scenario/chapter-7-sally.md) — Chapter 7: Sally
-- [design/scenario/chapter-7-suit](design/scenario/chapter-7-suit.md) — Chapter 7: Suit
-- [design/scenario/chapter-8-3jane](design/scenario/chapter-8-3jane.md) — Chapter 8: 3Jane
-- [design/scenario/chapter-9-neuromancer](design/scenario/chapter-9-neuromancer.md) — Chapter 9: Neuromancer
-- [design/scenario/case-ch1-mapping](design/scenario/case-ch1-mapping.md) — Case Ch1 매핑 (UPDATED)
-- [design/scenario/case-ch1-expansion-plan](design/scenario/case-ch1-expansion-plan.md) — Case Ch1 확장 플랜 (DRAFT)
-- [design/scenario/short-story-metadata-schema](design/scenario/short-story-metadata-schema.md) — 단편 메타데이터 스키마
-- [design/scenario/short-story-metadata-design](design/scenario/short-story-metadata-design.md) — 단편 메타데이터 설계 (DRAFT)
-- [design/scenario/stat-difficulty-design](design/scenario/stat-difficulty-design.md) — 스탯/난이도 설계 (DRAFT)
-- [design/scenario/WORLD_RELATIONSHIP](design/scenario/WORLD_RELATIONSHIP.md) — 세계관 관계 (2026-06-23)
-- [design/scenario/zone-expansion](design/scenario/zone-expansion.md) — 존 확장 (v0.1.0)
-- [design/scenario/PROGRESS_DASHBOARD](design/scenario/PROGRESS_DASHBOARD.md) — 시나리오 진도 대시보드 (Phase 7 완료, 2026-07-08)
-- [design/scenario/SALVATION_PHASE_INTEGRATION](design/scenario/SALVATION_PHASE_INTEGRATION.md) — Salvation 단계 통합 (v0.1-0.1.0)
-- [design/scenario/save-data-structure](design/scenario/save-data-structure.md) — 세이브 데이터 구조 (DRAFT)
-- [design/systems/i18n](design/systems/i18n.md) — 국제화 시스템
-- [design/systems/dialogue](design/systems/dialogue.md) — 대화 시스템
-- [design/systems/inventory](design/systems/inventory.md) — 인벤토리 시스템 (ADR-0008 상속)
-- [design/systems/story-archive](design/systems/story-archive.md) — 스토리 아카이브 시스템
-- [design/systems/dungeon_events](design/systems/dungeon_events.md) — 던전 이벤트 시스템 (ADR-0060 상속)
-- [design/systems/economy](design/systems/economy.md) — 경제 시스템
-- [design/systems/progression](design/systems/progression.md) — 메타 진행 시스템 (ADR-0008 상속)
-- [design/systems/procgen](design/systems/procgen.md) — 절차적 생성 시스템
-- [design/story/prologue](design/story/prologue.md) — 프롤로그 — 오리지널 주인공 3인
-- [design/story/characters](design/story/characters.md) — 캐릭터 명세 — 오리지널 주인공 3인
+- design/CONTENT_EXPANSION_PLAN — 콘텐츠 확장 플랜 (2026-06-25)
+- design/research/unicode-block-art — 유니코드 블록 아트 조사 (2026-07-10)
+- design/research/UNICODE_BLOCK_ART_SUMMARY — 유니코드 블록 아트 요약 (2026-07-10)
+- design/balance/ppl_zdr_balance — PPL/ZDR 밸런스 노트
+- design/scenario/CHARACTER_METADATA — 캐릭터 메타데이터 명세 (2026-06-23)
+- design/scenario/chapter-4-bridge — Chapter 4: Bridge
+- design/scenario/chapter-4-suit — Chapter 4: Suit
+- design/scenario/chapter-5-veteran — Chapter 5: Veteran
+- design/scenario/chapter-5-wigan — Chapter 5: Wigan
+- design/scenario/chapter-6-angie — Chapter 6: Angie
+- design/scenario/chapter-6-veteran — Chapter 6: Veteran
+- design/scenario/chapter-7-sally — Chapter 7: Sally
+- design/scenario/chapter-7-suit — Chapter 7: Suit
+- design/scenario/chapter-8-3jane — Chapter 8: 3Jane
+- design/scenario/chapter-9-neuromancer — Chapter 9: Neuromancer
+- design/scenario/case-ch1-mapping — Case Ch1 매핑 (UPDATED)
+- design/scenario/case-ch1-expansion-plan — Case Ch1 확장 플랜 (DRAFT)
+- design/scenario/short-story-metadata-schema — 단편 메타데이터 스키마
+- design/scenario/short-story-metadata-design — 단편 메타데이터 설계 (DRAFT)
+- design/scenario/stat-difficulty-design — 스탯/난이도 설계 (DRAFT)
+- design/scenario/WORLD_RELATIONSHIP — 세계관 관계 (2026-06-23)
+- design/scenario/zone-expansion — 존 확장 (v0.1.0)
+- design/scenario/PROGRESS_DASHBOARD — 시나리오 진도 대시보드 (Phase 7 완료, 2026-07-08)
+- design/scenario/SALVATION_PHASE_INTEGRATION — Salvation 단계 통합 (v0.1-0.1.0)
+- design/scenario/save-data-structure — 세이브 데이터 구조 (DRAFT)
+- design/systems/i18n — 국제화 시스템
+- design/systems/dialogue — 대화 시스템
+- design/systems/inventory — 인벤토리 시스템 (ADR-0008 상속)
+- design/systems/story-archive — 스토리 아카이브 시스템
+- design/systems/dungeon_events — 던전 이벤트 시스템 (ADR-0060 상속)
+- design/systems/economy — 경제 시스템
+- design/systems/progression — 메타 진행 시스템 (ADR-0008 상속)
+- design/systems/procgen — 절차적 생성 시스템
+- design/story/prologue — 프롤로그 — 오리지널 주인공 3인
+- design/story/characters — 캐릭터 명세 — 오리지널 주인공 3인
 
 ## 테스트 케이스
 - [Index](testcases/README.md) - 모든 테스트 시나리오

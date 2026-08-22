@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/seoca1/wet-run/actions/workflows/ci.yml/badge.svg)](https://github.com/seoca1/wet-run/actions)
 [![Pages](https://github.com/seoca1/wet-run/actions/workflows/pages.yml/badge.svg)](https://seoca1.github.io/wet-run/)
-[![Tests](https://img.shields.io/badge/tests-5281%20passing-brightgreen)]()
+[![Tests](https://img.shields.io/badge/tests-5700%20passing-brightgreen)]()
 [![Lint](https://img.shields.io/badge/lint-ruff-blue)]()
 [![Typecheck](https://img.shields.io/badge/typecheck-mypy%20strict-blue)]()
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue)]()
@@ -23,13 +23,13 @@
 
 - **Phase 48 완료** (small content + polish cycle, Dixie Flatline Memory event)
 - **Project rename**: `Roguelike Sprawl` → **Wet Run** (이전 명칭 호환 유지)
-- **9 characters** × **8 scenes** = **72 GN scenes** (케이/실/카스/수트/위건/앤지/샐리/3Jane/Neuromancer)
+- **9 characters** × **9 scenes** = **81 GN scenes** (케이/실/카스/수트/위건/앤지/샐리/3Jane/Neuromancer)
 - **111 missions** (5 zones 균형: Surface/Mid/Deep/Core/TA/Freeside)
 - **47 ICE types** (Standard/Watchdog/Black/Goliath/Construct/Construct-proxy 등)
 - **Tier 6 master** (Arc 5 finale) + 3 master equipment
 - **Faction Reputation** (5 factions × 7 tiers) + Equipment Set Bonuses
 - **10 manual + 1 auto save slots** (Phase 7.3)
-- **pytest 5578 passed** / 365 skipped / 1 xfailed / ruff 0 errors / mypy strict 0 errors (211 source files)
+- **pytest 5700 passed** / 365 skipped / 1 xfailed / ruff 0 errors / mypy strict 0 errors (214 source files)
 
 ## 디렉토리 구조
 
@@ -74,7 +74,7 @@
 - **test_armitage portrait 회귀 수정**: `test_portraits_have_10x14_grid` → `10x12` (모든 portrait actual size)
 - **prod build 검증**: `uv build` → `wet_run-1.1.0a1-py3-none-any.whl`, `wet-run` CLI 정상 작동
 
-상세: [`SESSION_SUMMARY.md`](./SESSION_SUMMARY.md), [`ROADMAP.md`](./ROADMAP.md), [`log.md`](../../Fiction/wiki/log.md).
+상세: [`SESSION_SUMMARY.md`](./SESSION_SUMMARY.md), [`ROADMAP.md`](./ROADMAP.md), `log.md`.
 
 ## 개발 추적
 
@@ -87,7 +87,7 @@
 
 ```bash
 cd prototype
-make test      # 5578 tests (1 xfailed pre-existing)
+make test      # 5700 tests (1 xfailed pre-existing)
 make all       # format + lint + typecheck + test
 
 # 게임 실행 (entry point — 이전 `uv run roguelike-sprawl`)

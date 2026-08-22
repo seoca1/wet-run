@@ -4,7 +4,7 @@
 **날짜**: 2026-08-08
 **결정자**: 사용자
 **우선순위**: P1 (Pillar 1 climax + Pillar 5 finale)
-**관련**: [ADR-0050 — Boss ICE System](./0050-boss-ice-system.md), [ADR-0149 — Boss Phase 4 Finale](./0149-boss-phase4-finale.md), [ADR-0180 — Boss Expansion v1.3.0+](./0180-boss-expansion.md), [ADR-0187 — Boss Phase 5 Expansion](./0187-boss-phase-5-expansion.md), [.omo/plans/expand-roguelike-game-contents.md](../../../.omo/plans/expand-roguelike-game-contents.md)
+**관련**: [ADR-0050 — Boss ICE System](./0050-boss-ice-system.md), [ADR-0149 — Boss Phase 4 Finale](./0149-boss-phase4-finale.md), [ADR-0180 — Boss Expansion v1.3.0+](./0180-boss-expansion.md), [ADR-0187 — Boss Phase 5 Expansion](./0187-boss-phase-5-expansion.md), .omo/plans/expand-roguelike-game-contents.md
 
 ## 컨텍스트 (Context)
 
@@ -149,11 +149,31 @@ Integration: `combat_view_state.py:134` (`build_ice_enemy()`) routes to boss pro
 ## 다음 단계
 
 If approved:
-1. F.4 integration (highest priority — completes existing ADR)
-2. Zone-boss design (1 per zone)
-3. Ascended variants (3 bosses)
-4. Secret boss (post-Salvation)
-5. Dialogue content (Gibson voice)
-6. Tests + design docs
-7. i18n
-8. Atomic commit
+   1. F.4 integration (highest priority — completes existing ADR)
+   2. Zone-boss design (1 per zone)
+   3. Ascended variants (3 bosses)
+   4. Secret boss (post-Salvation)
+   5. Dialogue content (Gibson voice)
+   6. Tests + design docs
+   7. i18n
+   8. Atomic commit
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/boss_expansion.py` — 3 F.4 profiles registered in `BOSS_EXPANSION_REGISTRY` (Neuromancer, Loa Baron, Black Baron), with `build_boss_combatant` builder
+- `prototype/src/wet_run/combat/boss_registry.py:31-197` — `ZoneBossProfile` dataclass + `ZoneBossRegistry` + `load_zone_boss_registry` typed loader (frozen dataclass, slots=True)
+- `prototype/src/wet_run/combat/boss_dispatch.py:1-151` — F.4 wiring point: `is_boss_id()` + `build_boss_combatant_from_id()` with documented lookup order (zone-bosses first, then boss_expansion); guards `combat.registry.build_ice_enemy`
+- `prototype/data/combat/zone_bosses.json` — 11 entries: 6 zone-bosses (`dj_cyberspace`, `sense_net_sentinel`, `hosaka_memory_vault`, `locus_construct`, `tessier_child`, `orbit_ghost`) + 3 ascended (`wintermute_ascended`, `ta_prime_ascended`, `neuromancer_ascended`) + 2 peripheral (`the_peripheral`, `the_peripheral_ascended`)
+- `prototype/tests/unit/test_boss_registry.py:33-301` — 27 tests across 6 classes (profile dataclass, parsing, ordering, project-file load, resilience)
+- `prototype/tests/unit/test_boss_dispatch.py:28-241` — 23 tests across 9 classes (is_boss_id by source, scaling, lazy registry, parity)
+- `prototype/tests/unit/test_boss_expansion.py` — per-boss profile coverage for F.4 trio
+- `prototype/tests/unit/test_phase12_bosses.py:75-130` — ascended count + names + unlock + Peripheral tier-6 + 10-phase + Salvation-gated + artifact-drop checks
+- `prototype/tests/unit/test_phase27_peripheral_ascended.py:54-223` — 24 tests: Peripheral Ascended metadata, stats scaling, timeline-collapse skill, base-skill retention, loot (timeline_echo), grade scaling
+- `prototype/tests/unit/test_f4_boss_phase_combat.py` — F.4 integration combat-flow coverage
+
+**Notes**: Full Option 3 scope delivered. F.4 trio + 6 zone-bosses + 3 ascended + 2 peripheral endgame bosses = 14 boss profiles reachable via `is_boss_id`. `the_peripheral_ascended` (Phase 27) extends beyond the original 13-target table — bonus content consistent with ADR-0190 "post-Salvation, NG+ exclusive" intent.
+
+**No further action on ADR-0190** — implementation closed.

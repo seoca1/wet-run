@@ -101,3 +101,21 @@ their own difficulty curve. Mutators compose (e.g., LOW_HP + DOUBLE_ALARM = extr
 | `pytest tests/` | 4113 + ~15 = ~4128 pass |
 | `ruff check` | All checks passed |
 | `mypy src/` | 0 errors in 180+ source files |
+
+## Implementation Status (2026-08-20)
+
+**Status**: 🟡 Partial
+
+**Evidence**:
+- `prototype/src/wet_run/combat/run_mutators.py:15` — `RunMutator` StrEnum with all 5 mutators (LOW_HP, DOUBLE_ALARM, ICE_X2, NO_HEAL, STEALTH_ONLY)
+- `prototype/src/wet_run/combat/run_mutators.py:25` — `MUTATORS` registry dict with `name`/`description`/`icon` per mutator (Gibson-flavored names: "FRAGILE WETWARE", "HOT TRACE", "POPULATED GRID", "DEAD MAN WALKING", "GHOST PROTOCOL")
+- `prototype/src/wet_run/combat/run_mutators.py:59` — `apply_mutators(app_state, mutators)` sets AppState fields (player_max_hp halved, alarm_speed_multiplier=2, encounter_multiplier=2, heal_disabled, skill_filter)
+- `prototype/src/wet_run/combat/run_mutators.py:77` — `clear_mutators` for idempotency
+- `prototype/src/wet_run/combat/run_mutators.py:93` — `is_mutator_active(app_state, mutator)` check helper
+- `prototype/src/wet_run/combat/run_mutators.py:104-128` — accessors: `get_alarm_multiplier`, `get_encounter_multiplier`, `is_heal_disabled`, `is_stealth_only`, `hp_multiplier`
+- `prototype/src/wet_run/engine/state.py:259-264` — `AppState` fields: `active_mutators`, `alarm_speed_multiplier`, `encounter_multiplier`, `heal_disabled`, `skill_filter`
+- `prototype/tests/unit/test_run_mutators.py:1` — 154 LOC covering apply, clear, accessors, integration with AppState
+
+**Notes**: Module + AppState schema + accessors all in place. However, downstream consumers don't yet read mutator state: `is_heal_disabled` is NOT consulted in `combat/salvage.py`, `get_alarm_multiplier`/`alarm_speed_multiplier` is NOT applied in `combat/state_transitions.py::_tick_alarm`, `encounter_multiplier` is NOT consulted in matrix encounter spawn, and `skill_filter` is NOT enforced in `combat/state.py::use_skill`. Search for these symbols across `src/wet_run/` returns hits only in `run_mutators.py` and `engine/state.py`. The mutator system is a **declarative scaffold** — applying a mutator sets the flag, but combat/salvage/matrix code currently ignores it.
+
+**Open items**: Wire `is_heal_disabled()` into `combat/salvage.py` HEAL option; wire `alarm_speed_multiplier` into `_tick_alarm`; wire `encounter_multiplier` into matrix spawn; wire `skill_filter == "stealth_only"` check in `use_skill`. Without these, the 5 mutators have no observable in-game effect.

@@ -131,10 +131,31 @@ Programs are TOOLS (per ADR-0172), not stat boosts.
 ## 다음 단계
 
 If approved:
-1. Program design (18 new, Gibson-named)
-2. Set design (Ghost + Architect)
-3. Augment design (10 new, tier 3 + new stats)
-4. Data files
-5. Tests + design docs
-6. i18n
-7. Atomic commit
+   1. Program design (18 new, Gibson-named)
+   2. Set design (Ghost + Architect)
+   3. Augment design (10 new, tier 3 + new stats)
+   4. Data files
+   5. Tests + design docs
+   6. i18n
+   7. Atomic commit
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/data/programs/programs.json` — 30 program entries (vs 30+ target); 18 new per ADR-0193 + 9 existing pre-ADR base; `_metadata` references ADR-0193
+- `prototype/src/wet_run/equipment/equipment.py` + `set_bonus_integration.py` + `wetware_stacking.py` — 3 source modules extend registry, set-bonus resolution, and wetware tier-3 stacking logic
+- `prototype/data/equipment/sets.json:1-9` — `_metadata`: `total_sets: 2`, `set_themes: ['ghost', 'architect']`, `total_items: 8`; both new sets fully populated with pieces + set_bonus_2/3/4_piece
+- `prototype/data/equipment/sets.json` — `ghost_set` (Stealth + counter-intrusion, 4 pieces incl. ghost_deck/ghost_wetware/ghost_body with evasion + crit_evasion) + `architect_set` (Matrix control + program power)
+- `prototype/data/equipment/wetware.json:1-2` — `_metadata`: `total_augments: 10`, `categories: ['tier3_existing', 'new_stats']`; references ADR-0193
+- `prototype/data/equipment/wetware.json` — 10 augments: 7 tier-3 extensions (`ap_regen_lv3`, `crit_lv3`, `dodge_lv3`, `max_hp_lv3`, `healing_lv3`, `shield_lv3`, `speed_lv3`) + 3 new-stat augments (`mana_lv3`, `armor_lv3`, `focus_lv3` with `is_new_stat: true`)
+- `prototype/tests/unit/test_phase14_endings_programs.py:89-209` — 4 classes (TestPrograms, TestEquipmentSets, TestWetwareAugments, TestTotals): program count ≥27, 18 new programs present, ghost_set + architect_set with 2/3/4-piece bonuses, 10 augments with 3 `is_new_stat` flagged
+- `prototype/tests/unit/test_programs_schema.py` — 6 tests for program schema validation
+- `prototype/tests/unit/test_equipment.py` — 52 tests for equipment view + set mechanics
+- `prototype/tests/unit/test_wetware_stacking.py` — 34 tests for augment stacking with lv1/lv2/lv3 tiers
+- `prototype/tests/unit/test_telemetry_and_set_bonus_integration.py` — integration coverage for set-bonus telemetry
+
+**Notes**: Program count (30) hits the 30+ target exactly. Both Ghost + Architect sets present with 4-piece bonus tiers. All 10 wetware augments in 3+ tier-3 + 3 new-stat configuration as designed. Stat-bloat mitigation (mana/armor/focus augment-only per §"열린 질문" Q4 recommendation) honored — no system-wide stat changes.
+
+**No further action on ADR-0193** — implementation closed.

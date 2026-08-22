@@ -65,3 +65,26 @@ class Arc6Mission:
 **Pillar 5 (The Style)**: Aftermath zone uses Gibson tone — "the grid remembers. We are the residue."
 
 **Test additions**: ~8 tests covering registry, accessors.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Notes**:
+- Full board wiring complete: 4 arc6 missions (`ghost_signal_origin`, `wintermute_residue`, `tessier_ashpool_aftermath`, `neuromancer_merger_residue`) added to `data/missions/missions.json` with full schema (id, title, story{synopsis_en/ko/source/character_ref/arc/pillar/word_count_en/char_count_ko/cast}, fixer, arc, grade_min/max, primary_objective, secondary_objectives, matrix_seed, zone, rewards, is_canonical_cast, reward_credits, reward_tier).
+- All 4 missions have valid pillar values (`people`/`power`/`code`), Gibson vocabulary in synopsis_en, and accurate word_count_en / char_count_ko (no-spaces formula).
+- Registry (`combat/arc6.py`) + missions.json (200→209) + game_facts.json (mission_count: 200→209, stage_count: 16 stable) all in sync.
+- `sync_dashboard_facts.py` fixed to handle `run/state/` package layout (Track A.4 split) — Stage enum now found in `state/models.py`.
+
+**Evidence**:
+- `prototype/src/wet_run/combat/arc6.py:14` — `Arc6Mission` frozen dataclass matching spec (id/name/difficulty/zone/description/story_intro/primary_ice)
+- `prototype/src/wet_run/combat/arc6.py:26` — `ARC6_MISSIONS` tuple with all 4 missions: `ghost_signal_origin` (novice), `wintermute_residue` (veteran), `tessier_ashpool_aftermath` (veteran), `neuromancer_merger_residue` (heretic)
+- `prototype/src/wet_run/combat/arc6.py:66` — `get_arc6_mission(mission_id)`
+- `prototype/src/wet_run/combat/arc6.py:74` — `is_arc6_mission(mission_id)`
+- `prototype/src/wet_run/combat/arc6.py:79` — `arc6_mission_count()`
+- `prototype/src/wet_run/combat/arc6.py:84-89` — `arc6_missions_by_difficulty`, `arc6_mission_ids`
+- `prototype/tests/unit/test_arc6.py:1` — 102 LOC covering registry + accessors
+
+**Notes**: Registry is complete with all 4 missions in spec difficulty/zone order, but the arc is **not yet wired into the mission board or job system**. Search for arc6 mission IDs in `src/wet_run/` outside `combat/arc6.py` returns 0 hits — and `is_expansion_mission("ghost_signal_origin")` explicitly returns False (test_mission_expansion.py:57), confirming the 4 arc6 missions are NOT in the expansion mission set either. The 4 listed `primary_ice` strings (`wintermute_fragment`, `wintermute_echo`, `wintermute_proxy`, `romantics_ice_elite`, `ice_tessier_construct`, `neuromancer_construct`) are referenced only in arc6.py — not defined as actual ICE profiles in `data/ice_profiles*.json` or wherever ICE types live.
+
+**Open items**: Add the 4 arc6 missions to the mission board / `data/missions/missions.json`; create the `aftermath` zone in zone expansion; define the referenced ICE profiles (wintermute_fragment, wintermute_echo, wintermute_proxy, romantics_ice_elite, ice_tessier_construct, neuromancer_construct); add arc6 unlock condition (after Arc 5 + Salvation epilogue); add story_intro integration via ADR-0061 novel hook.

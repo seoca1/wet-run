@@ -54,3 +54,23 @@ def get_cooldown_modifier(size: str) -> float
 **Pillar 5 (Style)**: Light/Heavy naming evokes cyberpunk aesthetic.
 
 **Tests**: 8+ tests covering deck sizes, accessors, defaults.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/deck_building.py:15` — `class DeckSize` dataclass (frozen, slots) with `name/slots/ap_regen_bonus/cooldown_modifier`
+- `prototype/src/wet_run/combat/deck_building.py:46` — `get_deck_size(size) -> DeckSize | None`
+- `prototype/src/wet_run/combat/deck_building.py:51` — `get_deck_sizes() -> tuple[DeckSize, ...]` (returns LIGHT/STANDARD/HEAVY)
+- `prototype/src/wet_run/combat/deck_building.py:56` — `get_slot_limit(size) -> int` (6/8/10)
+- `prototype/src/wet_run/combat/deck_building.py:64` — `get_ap_regen_bonus(size) -> float`
+- `prototype/src/wet_run/combat/deck_building.py:72` — `get_cooldown_modifier(size) -> float`
+- `prototype/src/wet_run/combat/deck_building.py:80` — `get_deck_size_names()`
+- `prototype/src/wet_run/combat/deck_building.py:85-90` — `is_valid_deck_size`, `get_default_deck_size`
+- `prototype/tests/unit/test_deck_building.py` — **15 tests** collected (ADR target: 8+)
+- `prototype/tests/unit/test_deck_building_integration.py` — **12 tests** collected (engine integration coverage)
+
+**Notes**: All 5 ADR-spec public APIs implemented verbatim. The 3 deck sizes (LIGHT 6/+0.5 AP regen / STANDARD 8/0.0 / HEAVY 10/-0.3) match the ADR §"Deck sizes" table exactly, including the implied cooldown modifiers (-10%/0%/+15% per ADR §"Deck sizes"). Cooldown modifier wiring verified via `get_cooldown_modifier` getter. Integration test file separately covers engine wiring.
+
+**No further action on ADR-0178** — implementation closed, public API stable, tests passing.

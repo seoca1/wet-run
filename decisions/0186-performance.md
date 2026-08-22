@@ -52,3 +52,22 @@ def measure_frame_time(fn) -> float
 **Pillar 1 (Run)**: Performance bottlenecks identified.
 
 **Tests**: 8+ tests covering snapshot, report, memory.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/performance.py:16-26` — `class PerfSnapshot` dataclass with `label/timestamp_ms/frame_time_ms/memory_mb/object_count` (frozen, slots)
+- `prototype/src/wet_run/combat/performance.py:27-34` — `class PerfReport` with `snapshots/avg_frame_time_ms/peak_memory_mb/total_objects`
+- `prototype/src/wet_run/combat/performance.py:36-42` — `get_current_memory_mb()`, `count_objects()` introspection helpers
+- `prototype/src/wet_run/combat/performance.py:47-66` — `take_snapshot(label, frame_time_ms=0.0)`, `measure_frame_time(fn) -> float`
+- `prototype/src/wet_run/combat/performance.py:66-105` — `build_report(snapshots)`, `get_slowest_snapshot`, `get_peak_memory_snapshot`, `is_under_memory_budget(snapshot, budget_mb)`, `is_frame_time_acceptable(snapshot, target_ms=16.67)` — budget helpers
+- `prototype/src/wet_run/combat/performance_integration.py:25-158` — `TickProfile`, `SessionProfiler`, `PerfTracker`, `collect_current_snapshot`, `measure_and_record`, `integrate_with_game_loop` — engine integration
+- `prototype/src/wet_run/engine/main_loop.py` — imports `PerfTracker`, `integrate_with_game_loop` (engine wiring)
+- `prototype/tests/unit/test_performance.py` — **20 tests** collected (ADR target: 8+)
+- `prototype/tests/unit/test_performance_integration.py` — **25 tests** collected (integration coverage)
+
+**Notes**: All 6 ADR-spec public APIs implemented + 3 budget helpers (`is_under_memory_budget`, `is_frame_time_acceptable`, `get_slowest_snapshot`, `get_peak_memory_snapshot`). Frame-time default target 16.67ms (60 FPS) per ADR §"Consequences" Pillar 1. Performance integration layer wires into main game loop.
+
+**No further action on ADR-0186** — implementation closed, public API stable, tests passing.

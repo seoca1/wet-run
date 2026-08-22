@@ -59,3 +59,25 @@ class PhaseProfile:
 **Pillar 5 (The Style)**: Phase 4 dialogue uses Gibson "I am the interface" / "we are the message" tone.
 
 **Test additions**: 12 new tests covering trigger conditions, cinematic content, super-skill application, profile data.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented (with superset coverage)
+
+**Evidence**:
+- `prototype/src/wet_run/combat/boss_phase4/__init__.py:1` — public package re-exporting `should_trigger_phase4`, `trigger_phase4`, `apply_personality_drift`, `apply_family_vote`, `apply_construct_merge`, `apply_ground_slam`, `apply_glitch_burst`, `apply_phase4_mechanic`, `boss_intro_text`, `taunt_for`
+- `prototype/src/wet_run/combat/boss_phase4/trigger.py:22` — `PHASE4_HP_THRESHOLD = 0.15` (15% per ADR-0149 cycle 5, tightened from spec's 10%)
+- `prototype/src/wet_run/combat/boss_phase4/trigger.py:35` — `should_trigger_phase4(boss, max_boss_hp)` (HP-fraction check)
+- `prototype/src/wet_run/combat/boss_phase4/trigger.py:44` — `trigger_phase4(state, app_state, boss_id)` (one-shot flag guard)
+- `prototype/src/wet_run/combat/boss_phase4/mechanics.py:45` — `apply_personality_drift` (Wintermute)
+- `prototype/src/wet_run/combat/boss_phase4/mechanics.py:66` — `apply_family_vote` (T-A Prime)
+- `prototype/src/wet_run/combat/boss_phase4/mechanics.py` — also `apply_construct_merge` (Neuromancer), `apply_ground_slam` (Goliath), `apply_glitch_burst` (Black ICE Lord) — 5 bosses vs spec's 2
+- `prototype/src/wet_run/combat/boss_phase4/intro.py:35` — `BOSS_INTRO` dict with 3-stage intro per boss
+- `prototype/src/wet_run/combat/boss_phase4/taunts.py` — `taunt_for(boss_id)` returns Gibson death taunt
+- `prototype/tests/unit/test_boss_phase4.py:1` — 495 LOC covering trigger, mechanics, intro, taunts
+- `prototype/tests/unit/test_boss_phase_5.py:1` — 158 LOC (v1.2.0+ super-skills follow-up)
+- `prototype/tests/unit/test_f4_boss_phase_combat.py:1` — 504 LOC end-to-end combat integration
+
+**Notes**: Implementation went above spec: 5 bosses (Wintermute/TA/Neuromancer/Goliath/Black ICE) with distinct mechanics, plus 3-stage intro overlay (ADR-0149 cycle 5 deliverables). HP threshold is 15% (ADR-0149) rather than spec's 10%, both per ADR-0149 §Consequences.7. Profile dataclass kept in dedicated `boss_phase4/mechanics.py` constants rather than mutating `combat/boss.py::PhaseProfile` — cleaner separation per ADR-0150 split principle.
+
+**No further action on ADR-0162** — implementation closed.

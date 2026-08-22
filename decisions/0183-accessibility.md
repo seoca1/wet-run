@@ -56,3 +56,22 @@ def get_text_size_factor(size: str) -> float
 **Pillar 5 (Style)**: Accessibility as artistic choice, not compromise.
 
 **Tests**: 10+ tests covering config, colorblind palettes, text size, remapping.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/accessibility.py:40-46` — `class AccessibilityConfig` dataclass with `colorblind_mode` (default "none"), `text_size` (default "medium"), `input_remapping` (default dict)
+- `prototype/src/wet_run/combat/accessibility.py:48` — `get_default_accessibility()`
+- `prototype/src/wet_run/combat/accessibility.py:53` — `set_colorblind_mode(config, mode)` with validation
+- `prototype/src/wet_run/combat/accessibility.py:66` — `set_text_size(config, size)`
+- `prototype/src/wet_run/combat/accessibility.py:77` — `remap_key(config, action, key)`
+- `prototype/src/wet_run/combat/accessibility.py:88` — `get_color_palette(mode) -> dict[str, tuple[int, int, int]]` for 3 colorblind modes (deuteranopia/protanopia/tritanopia) per ADR §"Colorblind palettes"
+- `prototype/src/wet_run/combat/accessibility.py:93-113` — `get_text_size_factor`, `is_colorblind_mode`, `is_text_size`, `get_colorblind_modes`, `get_text_sizes`
+- `prototype/tests/unit/test_accessibility.py` — **21 tests** collected (ADR target: 10+)
+- `prototype/tests/unit/test_accessibility_settings.py` — additional settings-integration coverage
+
+**Notes**: All 3 accessibility modes (colorblind / text size / input remapping) implemented per ADR §"Decision" verbatim. Colorblind palette table includes all 4 entries (none / deuteranopia / protanopia / tritanopia). `COLORBLIND_MODES` constant defined in module.
+
+**No further action on ADR-0183** — implementation closed, public API stable, tests passing.

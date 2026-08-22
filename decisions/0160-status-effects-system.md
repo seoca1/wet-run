@@ -118,3 +118,25 @@ vocabulary ("your wetware stutters", "you are *out of phase*").
 | `ruff check` | All checks passed |
 | `mypy src/` | 0 errors in 178+ source files |
 | `wc -l combat/status_effects.py` | ~150 LOC (new module) |
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/status_effects.py:26` — `apply_slow(state, target, slow_pct, duration_ms)` adds `slow` StatusEffect
+- `prototype/src/wet_run/combat/status_effects.py:38` — `apply_silence(state, target, duration_ms)` adds `silence` StatusEffect
+- `prototype/src/wet_run/combat/status_effects.py:50` — `apply_vulnerable(state, target, vuln_pct, duration_ms)` adds `vulnerable` StatusEffect
+- `prototype/src/wet_run/combat/status_effects.py:64` — `get_slow_multiplier()` composes multiplicatively
+- `prototype/src/wet_run/combat/status_effects.py:76` — `get_vulnerability_multiplier()` composes multiplicatively
+- `prototype/src/wet_run/combat/status_effects.py:88` — `is_silenced()` boolean read consumer
+- `prototype/src/wet_run/combat/state_models.py` — `StatusEffect` extended with `slow_pct`, `is_silenced`, `vulnerability_pct` fields
+- `prototype/src/wet_run/combat/state.py:236` — `_calculate_damage` applies `get_vulnerability_multiplier(defender)`
+- `prototype/src/wet_run/combat/state.py:373` — `use_skill` checks `is_silenced(state.player)` before allowing skill use
+- `prototype/src/wet_run/combat/state_transitions.py:162` — combat tick respects `get_slow_multiplier(state.player)`
+- `prototype/tests/unit/test_status_effects.py:1` — 241 LOC dedicated tests covering application + tick + composition for all 5 effects
+- `prototype/tests/unit/test_status_effects_v2.py:1` — 137 LOC additional v2 effects coverage (Bleed/Fatigue/Confused/Terrified, ADR-0179)
+
+**Notes**: Module came in under target at 93 LOC (target ~150). All 3 new effect_ids (`slow`, `silence`, `vulnerable`) wired into state.py damage calc, state_transitions tick loop, and state.py use_skill. v2 extension (ADR-0179) followed naturally on top of this vocabulary.
+
+**No further action on ADR-0160** — implementation closed.

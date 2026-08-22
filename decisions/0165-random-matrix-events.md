@@ -85,3 +85,21 @@ class AppState:
 **Pillar 5 (The Style)**: Event names use Gibson atmosphere ("GHOST_SIGNAL — *the grid remembers*").
 
 **Test additions**: ~12 tests covering trigger logic, application, state.
+
+## Implementation Status (2026-08-20)
+
+**Status**: 🟡 Partial
+
+**Evidence**:
+- `prototype/src/wet_run/combat/matrix_events.py:14` — `MatrixEvent` StrEnum with all 6 events (GHOST_SIGNAL, ICE_PATROL, HEIST_WINDOW, PATRON_OFFER, NETWORK_BLACKOUT, FAKE_DATA)
+- `prototype/src/wet_run/combat/matrix_events.py:25` — `MATRIX_EVENTS` registry with `trigger_chance` per event (0.05/0.08/0.03/0.05/0.02/0.05 — matches ADR probabilities)
+- `prototype/src/wet_run/combat/matrix_events.py:75` — `check_event_trigger(rng, event)` probability check
+- `prototype/src/wet_run/combat/matrix_events.py:81` — `trigger_event(app_state, event)` appends to `active_events` + `event_log`
+- `prototype/src/wet_run/combat/matrix_events.py:91-134` — `get_active_events`, `is_event_active`, plus per-event predicates `is_heist_window_active`, `is_network_blackout_active`, `is_ice_patrol_active`, `is_fake_data_active`, `is_ghost_signal_active`, `is_patron_offer_active`
+- `prototype/src/wet_run/combat/matrix_events.py:137-145` — `clear_event` / `clear_all_events`
+- `prototype/src/wet_run/engine/state.py` — `AppState.active_events` and `AppState.event_log` fields added
+- `prototype/tests/unit/test_matrix_events.py:1` — 150 LOC covering trigger probability, apply, predicates, clear
+
+**Notes**: Module + AppState schema + accessors + per-event predicates all in place. Same pattern as ADR-0163/0164 — the per-node trigger call site is not yet wired into matrix encounter generation, and downstream consumers (alarm tick for NETWORK_BLACKOUT, encounter spawn for ICE_PATROL, salvage payout for HEIST_WINDOW, etc.) don't yet read the predicates. Matrix random events remain a **declarative scaffold**.
+
+**Open items**: Wire per-node trigger into matrix encounter generator (call `check_event_trigger` after computing next node); wire `is_heist_window_active` into CRED payout (×2); wire `is_network_blackout_active` into alarm tick skip; wire `is_ice_patrol_active` into encounter spawn (1v2); wire `is_fake_data_active` into alarm spike on data extraction; wire `is_patron_offer_active` into hub/matrix purchase prompt; wire `is_ghost_signal_active` into next-ICE info reveal.

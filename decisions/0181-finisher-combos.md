@@ -55,3 +55,18 @@ def can_trigger_finisher(combo_count: int, finisher_id: str, last_trigger_ms: in
 **Pillar 4 (Build)**: Combo decks reward high-combo play.
 
 **Tests**: 10+ tests covering combo thresholds, triggers, cooldowns.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/finisher_combos.py:13-22` — `class FinisherCombo` dataclass (frozen, slots) with `id/name/combo_threshold/damage_multiplier/effect_type/cooldown_ms`
+- `prototype/src/wet_run/combat/finisher_combos.py:24-58` — `FINISHER_REGISTRY` dict with 4 finishers per ADR §"Finishers" table: `burst` (threshold 5, 2.0x, "burst", 3000ms), `pierce` (8, 1.5x, "pierce", 4000ms), `silence` (12, 1.0x, "silence", 5000ms), `burn` (15, 2.5x, "burn", 6000ms)
+- `prototype/src/wet_run/combat/finisher_combos.py:60-87` — `get_finisher`, `list_finishers`, `get_finisher_count`, `get_highest_combo_finisher`
+- `prototype/src/wet_run/combat/finisher_combos.py:92` — `can_trigger_finisher(combo_count, finisher_id, last_trigger_ms, current_ms)` — ADR signature match
+- `prototype/tests/unit/test_finisher_combos.py` — **23 tests** collected (ADR target: 10+)
+
+**Notes**: All 4 finishers match ADR §"Finishers" table verbatim (thresholds, multipliers, effect types, cooldowns). `get_available_finisher` (singular, ADR spec) was renamed to `get_highest_combo_finisher` + `list_available_finishers` (plural) — provides both the highest and the full set, slight semantic enrichment over ADR.
+
+**No further action on ADR-0181** — implementation closed, public API stable, tests passing.

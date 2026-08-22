@@ -196,6 +196,28 @@ return ppl
 - ADR-0154 — Faction Expansion (PPL growth targets documentation, this cycle completes the actual rebalance)
 - ADR-0090 — Salvation Phase Integration (NG+ narrative 기반)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/matrix/ppl.py:72` — `MAX_TIER = 6` constant
+- `prototype/src/wet_run/matrix/ppl.py:79` — docstring: `+ (10 if deck_tier == MAX_TIER else 0)` — bonus spec
+- `prototype/src/wet_run/matrix/ppl.py:83` — ADR-0155 reference in module docstring
+- `prototype/src/wet_run/matrix/ppl.py:92-93` — `# ADR-0155: master tier bonus (Grade 6 deck) — +10 PPL` + `if loadout.deck_tier == MAX_TIER: ppl += 10`
+- `prototype/src/wet_run/matrix/ppl.py:8` — module-level docstring: `T6 — master tier for Arc 5 finale missions (Grade 6)`
+- `prototype/tests/unit/test_matrix_ppl.py:85` — `test_ppl_t6_master_deck_supported` — T6 deck = 18 PPL + 10 master bonus = 28 PPL alone
+- `prototype/tests/unit/test_matrix_ppl.py:88` — `# ADR-0155: T6 deck receives a +10 master tier bonus`
+- `prototype/tests/unit/test_matrix_ppl.py:97` — full T6 loadout: `6*3 + 6*2 + 6 + 6 + 10 (master bonus) = 52`
+- `prototype/tests/unit/test_matrix_ppl.py:102` — `test_ppl_master_strictly_higher_than_t5` — T6 > T5 assertion
+- `prototype/tests/unit/test_matrix_ppl.py:120` — `assert calculate_ppl(t6) > calculate_ppl(t5)`
+- `prototype/tests/unit/test_matrix_ppl.py:160` — `test_max_tier_constant_is_six` — `MAX_TIER == 6` invariant
+- `prototype/tests/unit/test_matrix_ppl.py:1-230` — 14 tests covering T6 bonus + T5 unchanged + edge cases
+
+**Notes**: 2-line patch in `matrix/ppl.py::calculate_ppl` per ADR-0155 §Consequences.1. T6 PPL now: 78 → 88 (1.20x → 1.35x from T5). The tests verify T6 full loadout = 52 PPL (deck 18 + programs 12 + wetware 6 + construct 6 + master bonus 10). T5 PPL unchanged (53 baseline). All 14 tests pass. PPL_GROWTH_TARGETS dict in `combat/multi_enemy.py` documents the 1.35x growth target.
+
+**No further action on ADR-0155** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (Cycle 11 of v1.2.0+ balance)

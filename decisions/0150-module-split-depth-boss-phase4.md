@@ -174,6 +174,33 @@ combat/boss_phase4/
 - ADR-0148 — Combat Depth Expansion (depth.py 의 원본)
 - ADR-0149 — Boss Phase 4 Finale (boss_phase4.py 의 원본)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/depth/` (sub-package, 6 files) — replaces `combat/depth.py`:
+  - `__init__.py:1-98` — re-exports + dispatch
+  - `counter.py:1-88` — counter window logic
+  - `defense.py:1-147` — Wisp/Shield/Wardrone stackable defense
+  - `companion.py:1-135` — Dixie companion skills
+  - `aggression.py:1-74` — ICE aggression tier probability
+  - `personality.py:1-166` — ICE personality aggregation (extra, post-ADR)
+- `prototype/src/wet_run/combat/boss_phase4/` (sub-package, 5 files) — replaces `combat/boss_phase4.py`:
+  - `__init__.py:1-94` — re-exports + `apply_phase4_mechanic` dispatch
+  - `mechanics.py:1-212` — 5 Phase 4 mechanics
+  - `intro.py:1-116` — boss intro enhancement
+  - `taunts.py:1-83` — death taunts library
+  - `trigger.py:1-83` — trigger logic (extra, post-ADR)
+- `prototype/src/wet_run/combat/__init__.py` — re-exports both sub-packages (backward-compat preserved)
+- `prototype/tests/unit/test_combat_depth.py:1-501` — 41 tests (unchanged import path)
+- `prototype/tests/unit/test_boss_phase4.py:1-495` — 49 tests (unchanged import path)
+- `prototype/tests/unit/test_construct_companion.py` — unchanged
+
+**Notes**: All 7 planned files shipped (4 depth + 3 boss_phase4). Two extra files (`depth/personality.py` 166 LOC, `boss_phase4/trigger.py` 83 LOC) added in subsequent work — see ADR-0148 / ADR-0149 Implementation Status notes. Single-file depth.py and boss_phase4.py no longer exist (sub-packages only). All ADR-0110 LOC ceilings met (each file < 250 LOC, maxboss_phase4/mechanics.py 212).
+
+**No further action on ADR-0150** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (ADR-0148 + ADR-0149 follow-up, A+B+C plan 후속)

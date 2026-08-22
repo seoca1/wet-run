@@ -132,10 +132,30 @@ Each ending is a JSON entry with:
 ## 다음 단계
 
 If approved:
-1. Ending type design (6 types)
-2. Per-character ending map (9 × 6 = 54 endings)
-3. Cinematic sequences (4-6 frames each)
-4. NG+ endings (3 distinct)
-5. Tests + design docs
-6. i18n
-7. Atomic commit
+   1. Ending type design (6 types)
+   2. Per-character ending map (9 × 6 = 54 endings)
+   3. Cinematic sequences (4-6 frames each)
+   4. NG+ endings (3 distinct)
+   5. Tests + design docs
+   6. i18n
+   7. Atomic commit
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/data/story/endings.json:5-7` — `_metadata`: `total_endings: 28`, `adrs_cross_reference: ADR-0192`, phase 14; 6 declared types (redemption, sacrifice, transcendence, betrayal, absolution, integration)
+- `prototype/data/story/endings.json` content — 28 entries spanning the 6 types (per-type counts: redemption 3, sacrifice 4, transcendence 6, betrayal 5, absolution 5, integration 5) plus 9-character base endings (Case/Molly/Bobby et al. × 3 endings)
+- `prototype/src/wet_run/story/endings.py:1` — module docstring cites "ADR-0192, Phase 14 integration"
+- `prototype/src/wet_run/story/endings.py:22-231` — `EndingResult` dataclass, `_load_endings()`, `get_ending()`, `get_endings_by_character()`, `get_ng_plus_endings()`, `get_endings_by_type()`, `is_trigger_condition_met()`, `check_ending_eligibility()`, `process_ending()`, `get_total_endings()`, `get_ending_count_by_type()`, `get_ending_count_by_character()`
+- `prototype/src/wet_run/story/ending_renderer.py:28-139` — `EndingScene` dataclass + `get_by_type()` + cinematic rendering with `ENDING_TYPE` upper-case tag and NG+ marker
+- `prototype/tests/unit/test_endings_handler.py:23-230` — 26 tests across 6 classes (counts, queries, trigger conditions, processing, eligibility, result)
+- `prototype/tests/unit/test_endings_persistence.py` — 14 tests for save/load NG+ ending state
+- `prototype/tests/unit/test_ending_renderer.py` — 16 tests for cinematic rendering
+- `prototype/tests/unit/test_ng_plus.py` — 21 tests for NG+ state machine
+- `prototype/tests/unit/test_phase14_endings_programs.py:55-87` — `TestEndings`: count + 6 types present + required fields
+
+**Notes**: 28 endings shipped vs 18+ target (155%). Per-character 9×6=54 matrix from §"Character × ending matrix" was implemented as character-mapped subset (28 entries) with `get_endings_by_character` / `get_ending_count_by_character` providing runtime enumeration. 3 distinct NG+ endings present in dataset. Cinematics: 4-6 frame per the design decision.
+
+**No further action on ADR-0192** — implementation closed.

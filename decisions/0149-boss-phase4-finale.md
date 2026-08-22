@@ -224,6 +224,28 @@ Intro enhancement:
 - ADR-0090 — Salvation Phase Integration (per-boss mechanic 의 narrative 기반)
 - ADR-0040 — Death & Restart Cycle (death taunt 통합)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/boss_phase4/__init__.py:1-94` — sub-package re-exports (note: `boss_phase4.py` was split into sub-package by ADR-0150)
+- `prototype/src/wet_run/combat/boss_phase4/mechanics.py:1-212` — `should_trigger_phase4`, `trigger_phase4`, `apply_personality_drift`, `apply_family_vote`, `apply_construct_merge`, `apply_ground_slam`, `apply_glitch_burst`, `Phase4Mechanic` enum
+- `prototype/src/wet_run/combat/boss_phase4/intro.py:1-116` — `get_boss_intro`, `apply_boss_intro_enhancement`, `BossIntroEnhancement` dataclass, `BOSS_INTRO`
+- `prototype/src/wet_run/combat/boss_phase4/taunts.py:1-83` — `pick_death_taunt`, `apply_death_taunt`, `DEATH_TAUNTS`, `_BOSS_ALIASES`
+- `prototype/src/wet_run/combat/boss_phase4/trigger.py:1-83` — extra module (post-ADR-0150 split, trigger logic separate from mechanics)
+- `prototype/src/wet_run/engine/state.py:279` — `AppState.phase4_triggered: bool = False` (one-shot flag)
+- `prototype/src/wet_run/engine/state.py:283` — `AppState.death_taunt: str | None = None`
+- `prototype/src/wet_run/engine/state.py:285` — `AppState.boss_intro_enhancement: BossIntroEnhancement | None = None`
+- `prototype/src/wet_run/combat/boss.py` — `BOSS_PROFILES` extended with per-boss Phase 4 mechanic
+- `prototype/tests/unit/test_boss_phase4.py:1-495` — 49 tests covering 5 mechanics + death taunts + intro enhancement
+- `prototype/data/i18n/en.json:197` — `boss_phase4` section with intro_stage_1/2/3 + death_taunt_* + per-mechanic messages
+- `prototype/data/i18n/ko.json:197` — Korean translations of boss_phase4 section
+
+**Notes**: All 4 sub-features (Phase 4 finale, per-boss mechanics, death taunts, intro enhancement) shipped. The ADR's spec listed 5 bosses (wintermute/ta_prime/neuromancer/goliath_prime/black_ice_lord) with 5 unique mechanics (PERSONALITY_DRIFT/FAMILY_VOTE/CONSTRUCT_MERGE/GROUND_SLAM/GLITCH_BURST) — all implemented. The `boss_phase4/trigger.py` module (83 LOC) is an extra file beyond ADR-0150's spec — separates trigger logic from mechanics.
+
+**No further action on ADR-0149** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (Cycle 3 of A+B+C)

@@ -59,3 +59,18 @@ def apply_terrified(target: Combatant, duration_ms: int) -> StatusEffectV2
 **Pillar 4 (Build)**: Antivirus / cleanse augments become valuable.
 
 **Tests**: 10+ tests covering each effect type, registry, helpers.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/status_effects_v2.py:13` — `class StatusEffectV2` dataclass with `id/name/effect_type/duration_ms/value`
+- `prototype/src/wet_run/combat/status_effects_v2.py:24-50` — registry defines all 4 effects per ADR §"Effects" table: bleed (5 HP/tick, 5000ms), fatigue (-0.5 AP regen, 8000ms), confused (0.25 miss-chance, 6000ms), terrified (+0.25 damage taken, 4000ms)
+- `prototype/src/wet_run/combat/status_effects_v2.py:120-137` — `apply_bleed`, `apply_fatigue`, `apply_confused`, `apply_terrified` factory functions
+- `prototype/src/wet_run/combat/status_effects_v2.py` — also exports `make_status_v2`, `get_status_v2`, `list_status_v2`, `get_status_v2_by_type`
+- `prototype/tests/unit/test_status_effects_v2.py` — **20 tests** collected (ADR target: 10+)
+
+**Notes**: All 4 effects (Bleed, Fatigue, Confused, Terrified) implemented with default durations and values exactly per ADR §"Effects" table. The ADR's API spec `apply_bleed(target: Combatant, duration_ms)` was simplified to `apply_bleed(duration_ms: int)` in implementation — the duration override pattern is preserved (defaults baked in). Status-effect engine integration handled by `combat/state_effects.py` (`_tick_status_effects` per ADR-0160 base).
+
+**No further action on ADR-0179** — implementation closed, public API stable, tests passing.

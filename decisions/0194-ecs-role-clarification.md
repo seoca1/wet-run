@@ -8,7 +8,7 @@
 
 ## 컨텍스트 (Context)
 
-2026-08-19 [`docs/ARCHITECTURE.md` §14](../docs/ARCHITECTURE.md) 분석 결과:
+2026-08-19 `docs/ARCHITECTURE.md` §14 분석 결과:
 
 | 항목 | 측정값 |
 |---|---|

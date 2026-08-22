@@ -201,6 +201,26 @@ cs = CombatState(player=player, enemies=tuple(enemies_list))
 - ADR-0110 — 모듈 사이즈 정책 (신규 모듈 0개, ADR-0110 정합)
 - ADR-0090 — Salvation Phase Integration (narrative 기반)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/engine/combat_view_state.py:145` — `from ..combat.multi_enemy import encounter_count_for_grade` (import at integration point)
+- `prototype/src/wet_run/engine/combat_view_state.py:151` — `enemy = build_ice_enemy(ice_kind_id, ice_registry)` (primary enemy)
+- `prototype/src/wet_run/engine/combat_view_state.py:154` — `build_ice_enemy("standard", ice_registry)` (KeyError fallback, defensive)
+- `prototype/src/wet_run/engine/combat_view_state.py:157` — `encounter_n = encounter_count_for_grade(state.player_grade)` (Grade-based 1v1/1v2/1v3)
+- `prototype/src/wet_run/engine/combat_view_state.py:161` — `additional = build_ice_enemy(ice_kind_id, ice_registry)` (additional enemies)
+- `prototype/src/wet_run/engine/combat_view_state.py:163` — `build_ice_enemy("standard", ice_registry)` (KeyError fallback)
+- `prototype/src/wet_run/combat/multi_enemy.py:51` — `encounter_count_for_grade` definition (Cycle 8, reused by Cycle 9)
+- `prototype/src/wet_run/combat/state_models.py` — `CombatState.enemies: tuple[Combatant, ...]` (multi-enemy container, pre-existing)
+- `prototype/tests/unit/test_encounter_spawn.py:1-129` — 14 tests covering Grade 1-2/3-4/5-6 → 1v1/1v2/1v3 + edge cases (grade=0, grade=7, grade=-5, grade=8)
+- `prototype/data/i18n/{en,ko,ja,zh}.json` — `multi_enemy` section with `encounter_1v1`/`encounter_1v2`/`encounter_1v3` (reused from ADR-0152)
+
+**Notes**: 8-line patch in `start_combat` per ADR-0153 §Consequences.1 — verified to be present (import + 4-line for-loop + CombatState construction). No new node schema (`Node.ice_kind: str` unchanged) — data-driven approach deferred. All tests passing per `test_encounter_spawn.py` (14 tests). Status message `>>> ENCOUNTER: 1v{N}` is appended to `state.status_messages` per ADR spec.
+
+**No further action on ADR-0153** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (Cycle 9 of v1.2.0+ bridge)

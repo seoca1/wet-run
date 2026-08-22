@@ -63,3 +63,23 @@ def get_breach_reward(difficulty: int) -> BreachReward
 **Pillar 3 (Flatline)**: Time pressure adds weight — failure costs alarm.
 
 **Tests**: 12+ tests covering grid generation, daemon selection, solution checking, rewards.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/breach_protocol.py:36` — `class BreachProtocol` dataclass with `grid`, `target_sequence`, `timer_ms`, `difficulty`
+- `prototype/src/wet_run/combat/breach_protocol.py:46` — `class BreachReward` for reward type spec
+- `prototype/src/wet_run/combat/breach_protocol.py:63` — `create_breach(difficulty, rng)` — factory
+- `prototype/src/wet_run/combat/breach_protocol.py:83` — `select_daemon(protocol, row, col)`
+- `prototype/src/wet_run/combat/breach_protocol.py:93` — `check_solution(protocol, selections)`
+- `prototype/src/wet_run/combat/breach_protocol.py:106` — `get_remaining_time(protocol, elapsed_ms)`
+- `prototype/src/wet_run/combat/breach_protocol.py:111` — `is_timer_expired(protocol, elapsed_ms)`
+- `prototype/src/wet_run/combat/breach_protocol.py:116` — `get_breach_reward(difficulty)`
+- `prototype/src/wet_run/combat/breach_protocol.py:121-146` — `get_grid_size`, `get_daemon_count`, `progress_ratio`, `get_max_difficulty`, `has_valid_reward`
+- `prototype/tests/unit/test_breach_protocol.py` — **22 tests** collected (ADR target: 12+)
+
+**Notes**: All ADR-spec public APIs implemented. Daemon values (hex-like 1-9, A-F) and 5-tier reward table (alarm_reduce, armor_break, silence, ap_restore, all_effects) per ADR §"BreachReward types" are wired into `get_breach_reward(difficulty)`.
+
+**No further action on ADR-0177** — implementation closed, public API stable, tests passing.

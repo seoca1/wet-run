@@ -74,9 +74,9 @@ Wet Run의 오리지널 시나리오는 다음 자산을 보유하고 있으나 
 
 | 캐릭터 | 단편 | 원작 | 게임 동기 |
 | --- | --- | --- | --- |
-| **케이 (K) — Novice** | [잭아웃 후 30초](../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md) | Neuromancer (Case 1인칭) | "돈이 필요하다. 첫 의뢰. 손이 떨린다." |
-| **실 (Sil) — Veteran** | [루이지아나의 신](../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md) | Count Zero (Marly 3인칭) | "Mara의 죽음. Tessier-Ashpool에 대한 복수. 베테랑의 무게." |
-| **카스 (Kas) — Heretic** | [매나리사의 자정](../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md) | Mona Lisa Overdrive (Kumiko 3인칭) | "Loa 네트워크. Sprawl의 바퀴를 부수러 왔다." |
+| **케이 (K) — Novice** | 잭아웃 후 30초 | Neuromancer (Case 1인칭) | "돈이 필요하다. 첫 의뢰. 손이 떨린다." |
+| **실 (Sil) — Veteran** | 루이지아나의 신 | Count Zero (Marly 3인칭) | "Mara의 죽음. Tessier-Ashpool에 대한 복수. 베테랑의 무게." |
+| **카스 (Kas) — Heretic** | 매나리사의 자정 | Mona Lisa Overdrive (Kumiko 3인칭) | "Loa 네트워크. Sprawl의 바퀴를 부수러 왔다." |
 
 ### 4.2 시나리오 흐름
 

@@ -62,3 +62,20 @@ def import_replay_json(json_str: str) -> RunReplay
 **Pillar 5 (Style)**: Replay mode is a learning tool.
 
 **Tests**: 10+ tests covering record, query, export, import.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/replay.py:15-23` — `class ReplayEvent` dataclass with `timestamp_ms/event_type/data`
+- `prototype/src/wet_run/combat/replay.py:24-32` — `class RunReplay` dataclass with `run_id/character_id/events/total_duration_ms`
+- `prototype/src/wet_run/combat/replay.py:33` — `start_replay(character_id) -> RunReplay`
+- `prototype/src/wet_run/combat/replay.py:43-62` — `record_event(replay, event_type, data, timestamp_ms)` — append-only immutable event recording
+- `prototype/src/wet_run/combat/replay.py:63-82` — `get_replay_events_by_type`, `get_replay_duration`, `get_replay_event_count`, `get_replay_event_types`
+- `prototype/src/wet_run/combat/replay.py:83-108` — `export_replay_json`, `import_replay_json` (round-trip serialization)
+- `prototype/tests/unit/test_replay.py` — **15 tests** collected (ADR target: 10+)
+
+**Notes**: All 7 ADR-spec public APIs implemented. ADR §"Event types" (combat_start / skill_used / damage / death / victory / phase_change) handled as free-form `event_type` strings in registry — extensible beyond ADR's 6 named types. JSON export/import round-trip tested.
+
+**No further action on ADR-0182** — implementation closed, public API stable, tests passing.

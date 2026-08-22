@@ -226,6 +226,30 @@
 - ADR-0110 — 모듈 사이즈 정책 (depth.py ~200 LOC, 250 ceiling 의 80%)
 - (예정) ADR-0149 — Boss Phase 4 Finale (Cycle 3, 본 ADR 의 aggression tier 기반)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/depth/__init__.py:1-98` — sub-package re-exports (note: `depth.py` was split into a sub-package by ADR-0150)
+- `prototype/src/wet_run/combat/depth/counter.py:1-88` — `open_counter_window`, `apply_counter_attack`, `COUNTER_WINDOW_MS`, `COUNTER_DAMAGE_MULTIPLIER`, `COUNTER_STUN_MS`
+- `prototype/src/wet_run/combat/depth/defense.py:1-147` — `apply_wisp`, `apply_shield_barrier`, `apply_wardrone`, `tick_defense_durations`, `DefenseProgram` enum
+- `prototype/src/wet_run/combat/depth/companion.py:1-135` — `dixie_use_skill`, `dixie_choose_skill`, `CompanionSkillId` (DECOMPILE/ICEBREAKER_OVERDRIVE)
+- `prototype/src/wet_run/combat/depth/aggression.py:1-74` — `AggressionLevel` (PASSIVE/STANDARD/AGGRESSIVE/BOSS), `_skill_use_probability`
+- `prototype/src/wet_run/combat/depth/personality.py:1-166` — extra module (post-ADR-0150 split, ICE personality aggregation)
+- `prototype/src/wet_run/combat/state_models.py:155` — `Combatant.aggression: str = "standard"` field
+- `prototype/src/wet_run/combat/state_models.py:272` — `counter_window_open_ms: int = 0`
+- `prototype/src/wet_run/combat/state_models.py:275` — `dixie_last_attack_ms: int = -2000`
+- `prototype/src/wet_run/combat/state_models.py:277` — `wardrone_last_counter_ms: int = -5000`
+- `prototype/src/wet_run/combat/__init__.py` — re-exports all depth sub-package symbols (backward-compat)
+- `prototype/tests/unit/test_combat_depth.py:1-501` — 41 tests covering 4 sub-features
+- `prototype/data/i18n/en.json:130` — `combat` section with `counter_window_open`, `counter_window_used`, `wisp_applied`, `wardrone_applied`, `dixie_decompile`, `dixie_icebreaker`, `passive_ice`, `aggressive_ice`
+- `prototype/data/i18n/ko.json:130` — Korean translations of combat section
+
+**Notes**: Implementation delivered via `combat/depth.py` (originally 311 LOC, then split into sub-package by ADR-0150). All 4 sub-features (counter window, defense stackable, companion skills, aggression tiers) wired. The `depth/personality.py` module (166 LOC) is an extra file beyond the original ADR-0150 spec — covers ICE personality aggregation (predecessor to ADR-0161 ICE Personality Archetypes).
+
+**No further action on ADR-0148** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (Cycle 2 of A+B+C)

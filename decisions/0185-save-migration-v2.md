@@ -54,3 +54,20 @@ def needs_migration(json_str: str) -> bool
 **Pillar 4 (Build)**: Meta-progression persists cleanly.
 
 **Tests**: 10+ tests covering migration, serialization, versioning.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/save_v2.py:13` — `SAVE_SCHEMA_VERSION = 2` (ADR exact match)
+- `prototype/src/wet_run/combat/save_v2.py:17-24` — `class SaveData` dataclass with `schema_version/player_data/meta_data/replay_data` (frozen, slots)
+- `prototype/src/wet_run/combat/save_v2.py:26-33` — `create_save_data(player_data, meta_data, replay_data=None)` — factory
+- `prototype/src/wet_run/combat/save_v2.py:40-67` — `migrate_save(data) -> SaveData` — handles v0→v1 and v1→v2 transitions per ADR §"Migration paths"
+- `prototype/src/wet_run/combat/save_v2.py:72-85` — `serialize_save(data) -> str`, `deserialize_save(json_str) -> SaveData` (with auto-migration)
+- `prototype/src/wet_run/combat/save_v2.py:89-98` — `get_save_version(json_str)`, `needs_migration(json_str)`, `get_current_version()` helpers
+- `prototype/tests/unit/test_save_v2.py` — **17 tests** collected (ADR target: 10+)
+
+**Notes**: All 5 ADR-spec public APIs implemented verbatim. Migration logic covers v0→v1 (metadata conversion) and v1→v2 (replay_data field addition) per ADR §"Migration paths". `replay_data` field defaults to `None` and is omitted from serialization when absent — cloud-ready JSON shape.
+
+**No further action on ADR-0185** — implementation closed, public API stable, tests passing.

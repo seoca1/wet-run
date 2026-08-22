@@ -88,3 +88,21 @@ adapt their build to the archetype.
 | `pytest tests/` | 4130 + ~12 = ~4142 pass |
 | `ruff check` | All checks passed |
 | `mypy src/` | 0 errors in 180+ source files |
+
+## Implementation Status (2026-08-20)
+
+**Status**: 🟡 Partial
+
+**Evidence**:
+- `prototype/src/wet_run/combat/mission_archetypes.py:17` — `MissionArchetype` StrEnum with STEALTH/RACE/EXTRACTION/DEFENSE
+- `prototype/src/wet_run/combat/mission_archetypes.py:26` — `MISSION_ARCHETYPES` registry with rules dict per archetype (alarm_per_kill, time_limit, fast_clear_bonus, partial_pay, etc.)
+- `prototype/src/wet_run/combat/mission_archetypes.py:64` — `apply_archetype(app_state, archetype)` sets `AppState.active_archetype`
+- `prototype/src/wet_run/combat/mission_archetypes.py:70` — `clear_archetype(app_state)` resets
+- `prototype/src/wet_run/combat/mission_archetypes.py:75-91` — `is_archetype_active`, `get_active_archetype`, `get_archetype_rules` accessors
+- `prototype/src/wet_run/combat/mission_archetypes.py:95-127` — per-archetype parameter helpers: `alarm_per_kill`, `fast_clear_bonus_per_ten_seconds`, `partial_pay_percent`, `friendly_node_hp`, `wave_count`
+- `prototype/src/wet_run/engine/state.py` — `AppState.active_archetype` field added
+- `prototype/tests/unit/test_mission_archetypes.py:1` — 136 LOC covering apply/clear/accessors/parameter helpers
+
+**Notes**: Module + AppState schema + accessors + per-archetype parameter helpers all in place. Similar to ADR-0163, downstream consumers don't read `active_archetype`: `is_archetype_active`, `alarm_per_kill`, `fast_clear_bonus_per_ten_seconds`, `partial_pay_percent`, `friendly_node_hp`, and `wave_count` are defined but not yet consulted by combat/alarm tick/salvage/mission-completion code. The archetype system is a **declarative scaffold**.
+
+**Open items**: Wire `alarm_per_kill` into alarm tick on enemy kill (STEALTH); wire `fast_clear_bonus_per_ten_seconds` into mission completion timer (RACE); wire `partial_pay_percent` into extraction multi-objective payout (EXTRACTION); wire `friendly_node_hp` + `wave_count` into a defense-mode spawning/HP-tracking path (DEFENSE).

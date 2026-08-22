@@ -232,6 +232,27 @@ Functions:
 - ADR-0110 — 모듈 사이즈 정책 (250 권장)
 - ADR-0090 — Salvation Phase Integration (multi-enemy 의 narrative 기반)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/multi_enemy.py:51` — `encounter_count_for_grade(grade) -> int` (Grade 1-2: 1, 3-4: 2, 5-6: 3)
+- `prototype/src/wet_run/combat/multi_enemy.py:61` — `all_alive_enemies(state)` — list of hp > 0 combatants
+- `prototype/src/wet_run/combat/multi_enemy.py:70` — `cycle_target(state)` — Tab key rotates target_index
+- `prototype/src/wet_run/combat/salvage.py:40` — `HEAL_PCT: float = 0.15` (rebalanced from 0.20 per ADR-0152)
+- `prototype/src/wet_run/combat/salvage.py:4` — docstring cites ADR-0152 rebalance
+- `prototype/src/wet_run/combat/state.py` — `step_combat` player auto-attack loops `all_alive_enemies(state)` (ADR-0152 patch)
+- `prototype/src/wet_run/combat/state.py` — `use_skill` multi-target dispatch (`is_aoe` flag)
+- `prototype/src/wet_run/combat/__init__.py` — re-exports `cycle_target`, `all_alive_enemies`, `encounter_count_for_grade`
+- `prototype/tests/unit/test_multi_enemy.py:1-292` — 17 test methods (class-based: TestCycleTarget, TestStepCombatMultiEnemy, TestEncounterCountForGrade, etc.)
+- `prototype/tests/unit/test_salvage_scenarios.py:1-361` — 32 tests, TC-001~004 + TC-007 + TC-011 expected values updated to 15% HEAL
+- `prototype/data/i18n/en.json` — `multi_enemy` section (en + ko + ja + zh) with `encounter_1v1`/`encounter_1v2`/`encounter_1v3`/`target_cycled`/`aoe_damage`/`all_enemies_down`
+
+**Notes**: All 6 sub-features shipped: cycle_target, all_alive_enemies, multi-target auto-attack, AoE skill dispatch, HEAL rebalance 0.20 → 0.15, and matrix encounter_spawn integration (ADR-0153). The matrix spawn integration is documented separately in ADR-0153 since it lives in `engine/combat_view_state.py`. HEAL_PCT = 0.15 is consistent across all salvage code/test paths.
+
+**No further action on ADR-0152** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (Cycle 8 of v1.2.0+)

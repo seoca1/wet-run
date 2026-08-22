@@ -183,6 +183,28 @@ PPL_GROWTH_TARGETS: dict[str, float] = {
 - ADR-0010 — i18n + Content Pipeline (다국어 확장 기반)
 - ADR-0110 — 모듈 사이즈 정책 (신규 모듈 0개, ADR-0110 정합)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/intel_items.py:42-46` — `FACTION_RUMOR_FACTIONS: dict[str, str]` mapping 4 variants (hosaka/sense_net/yakuza/loa)
+- `prototype/src/wet_run/combat/intel_items.py:35` — `FACTION_RUMOR_FACTION: str = "loa"` (backward-compat default)
+- `prototype/src/wet_run/combat/intel_items.py:126` — `apply_faction_rumor(state, app_state)` accepts faction_id parameter
+- `prototype/src/wet_run/combat/multi_enemy.py` — `PPL_GROWTH_TARGETS` dict documenting Grade 1→2 (2.00x), 2→3 (1.50x), 3→4 (1.67x), 4→5 (1.62x), 5→6 (1.20x)
+- `prototype/data/i18n/ja.json:109` — `salvage` section (Cycle 1, 16 keys)
+- `prototype/data/i18n/ja.json:130` — `combat` section (Cycle 2, 15 keys)
+- `prototype/data/i18n/ja.json:197` — `boss_phase4` section (Cycle 3, 38 keys)
+- `prototype/data/i18n/ja.json:237` — `intel_items` section (Cycle 6, 13 keys)
+- `prototype/data/i18n/ja.json` — `multi_enemy` section (Cycle 8, 10 keys)
+- `prototype/data/i18n/zh.json:109/130/197/237` — same 5 sections (zh translations)
+- `prototype/tests/unit/test_faction_expansion.py:1-218` — 22 tests covering 4 faction_rumor variants + backward-compat + apply flow
+- `prototype/tests/unit/test_faction_expansion.py:79-88` — asserts each faction_rumor variant maps to correct faction
+
+**Notes**: All 3 sub-features shipped: (1) faction_rumor 4 variants via `FACTION_RUMOR_FACTIONS` dict, (2) PPL growth targets documentation in `combat/multi_enemy.py`, (3) ja.json + zh.json i18n extension (5 sections × 2 langs = 184 keys). PPL Grade 5→6 actual rebalance (88 target) is handled by ADR-0155 (Cycle 11). All 4 languages (en/ko/ja/zh) fully populated for salvage, combat, boss_phase4, intel_items, multi_enemy sections.
+
+**No further action on ADR-0154** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (Cycle 10 of v1.2.0+ bridge)

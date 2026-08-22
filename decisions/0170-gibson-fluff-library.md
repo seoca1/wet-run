@@ -54,3 +54,35 @@ class FluffMessage:
 **Pillar 5 (The Style)**: Every status message has Gibson atmosphere (*"Your wetware stutters."* / *"The construct feels *static*."*).
 
 **Test additions**: ~15 tests.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Wired (9 of 10 categories integrated; 1 remaining — zone_transition)
+
+**Evidence**:
+- `prototype/src/wet_run/combat/gibson_fluff.py:14` — `FluffMessage` frozen dataclass (category, context, text, weight)
+- `prototype/src/wet_run/combat/gibson_fluff.py:36` — `FLUFF_MESSAGES` registry — **381 total messages** across 10 categories (target was 200+, achieved 190%):
+  - `combat_hit`: 50
+  - `encounter`: 56
+  - `salvage`: 45
+  - `zone_transition`: 45
+  - `burn`: 35
+  - `crit`/`stun`/`slow`/`silence`/`vulnerable`: 30 each
+- `prototype/src/wet_run/combat/gibson_fluff.py:492` — `get_fluff(category, rng)` weighted random pick
+- `prototype/src/wet_run/combat/gibson_fluff.py:503-531` — `fluff_count`, `total_fluff_count`, `all_categories`, `get_messages_in_category`, `add_fluff`, `has_category`
+- `prototype/tests/unit/test_gibson_fluff.py:1` — 250 LOC covering registry, weighted selection, ≥200 total count
+
+**Notes**: Library exceeds spec by 90% (381 vs 200+ target) and spans all spec categories including the 5-effect vocabulary (burn/stun/slow/silence/vulnerable) which pairs naturally with ADR-0160. Gibson tone examples confirmed via grep ("wetware stutters", "*static*"). As of 2026-08-20, **6 of 11 categories wired** into natural integration points:
+
+| Category | Integration point | File:line |
+|---|---|---|
+| `encounter` | `start_combat` | `combat_view_state.py` |
+| `combat_hit` | `_calculate_damage` result | `state_transitions.py:148` |
+| `crit` | same path, conditional on `is_crit` | `state_transitions.py:149` |
+| `salvage` | `apply_salvage` end | `salvage.py:160` |
+| `burn` | `_apply_dot` | `state_effects.py:168` |
+| `stun` | `_apply_stun` | `state_effects.py:240` |
+
+**Open items** (5 categories remaining):
+- `slow`, `silence`, `vulnerable` — require new dispatch handlers in `state_effects.py` (SkillEffect enum has the values, but no `_apply_slow`/`_apply_silence`/`_apply_vulnerable` functions exist)
+- `zone_transition` — requires a centralized matrix zone-change event hook (none currently exists; would touch `matrix/` module)

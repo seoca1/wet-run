@@ -192,6 +192,26 @@ state.pending_salvage = False  # menu dismissed
 - ADR-0110 — 모듈 사이즈 정책 (250/500/1000 LOC) — 신규 salvage.py 120 LOC (250 ceiling 의 48%)
 - (예정) ADR-0148 — Combat Depth Expansion (Option B, 2026-08-08+)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/salvage.py:28` — `SalvageChoice` StrEnum with HEAL/FRAG/CRED/SKIP
+- `prototype/src/wet_run/combat/salvage.py:40` — `HEAL_PCT: float = 0.15` (rebalanced from 0.20 per ADR-0152)
+- `prototype/src/wet_run/combat/salvage.py:98` — `apply_salvage(state, choice)` core 4-way logc
+- `prototype/src/wet_run/combat/salvage.py:46-47` — `CRED_CREDITS: int = 30`, `CRED_ALARM_RELIEF: int = 1`
+- `prototype/src/wet_run/engine/state.py:275` — `AppState.salvage_fragments: int = 0` (formalized)
+- `prototype/src/wet_run/engine/state.py:277` — `AppState.pending_salvage: bool = False` (set on victory)
+- `prototype/src/wet_run/engine/combat_view_state.py:246` — `state.pending_salvage = True` set in `_end_combat`
+- `prototype/tests/unit/test_salvage_scenarios.py:1-361` — 32 tests (`def test_`) covering 4-way choice + alarm trade-off + tier scaling
+- `prototype/data/i18n/en.json:109` — `salvage` section with menu_title/options/alarm_high/etc.
+- `prototype/data/i18n/ko.json:109` — Korean translations of salvage section
+
+**Notes**: Implementation closes the ADR-0147 §Decision. Note that HEAL_PCT was subsequently rebalanced from 0.20 → 0.15 by ADR-0152 (Multi-Encounter) — `_heal_amount` and `HEAL_PCT` docstring both cite ADR-0152. The 4-way salvage choice is now wired (logic + i18n + tests); the in-game salvage menu UI is a separate concern (still uses prompt-based selection).
+
+**No further action on ADR-0147** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (사용자 Option A+B+C 승인 후 Option A 부분)

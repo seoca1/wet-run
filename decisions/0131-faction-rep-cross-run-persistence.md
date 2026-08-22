@@ -4,7 +4,7 @@
 **날짜**: 2026-07-27
 **결정자**: 사용자
 **우선순위**: P1 (IMPROVEMENTS.md §369 "다음 세션" 1순위)
-**연관**: ADR-0008 (Progression), ADR-0012 (PPL/ZDR), ADR-0017 (Mission-Material), ADR-0040 (Death & Restart), [Balance Audit 2026-07-27 §5](../docs/audits/2026-07-27_balance.md)
+**연관**: ADR-0008 (Progression), ADR-0012 (PPL/ZDR), ADR-0017 (Mission-Material), ADR-0040 (Death & Restart), Balance Audit 2026-07-27 §5
 
 ---
 
@@ -200,3 +200,26 @@ Faction reputation 은:
 
 - 2026-07-27: Draft 작성 (Phase 3 of 게임성 점검)
 - 2026-07-27: **Accepted (Option 1)** — 사용자 선택. 신규 파일 + 27 tests 추가
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented (opt-in by design)
+
+**Evidence**:
+- `prototype/src/wet_run/run/meta_state.py:26` — `class MetaState` frozen dataclass (version + reputation + future_buckets)
+- `prototype/src/wet_run/run/meta_state.py:46` — `reputation: ReputationState` field (canonical cross-run store)
+- `prototype/src/wet_run/run/meta_state.py:49` — `to_dict()` roundtrip with forward-compatible `future_buckets`
+- `prototype/src/wet_run/run/meta_state.py:58` — `from_dict()` with defensive parsing (missing/corrupt → empty)
+- `prototype/src/wet_run/run/meta_state.py:87` — `promote_from_run(run_reputation)` API: history merge with per-event ±25 clamp, no double-counting
+- `prototype/src/wet_run/engine/meta_state_manager.py:26` — `default_meta_state_path(data_dir)` (returns `data/saves/meta_state.json`)
+- `prototype/src/wet_run/engine/meta_state_manager.py:38` — `load_meta_state(path)` with missing/corrupt/forward-version defense
+- `prototype/src/wet_run/engine/meta_state_manager.py:69` — `save_meta_state(state, path)` with atomic write (temp + rename + fsync)
+- `prototype/src/wet_run/engine/meta_state_manager.py:99` — `reset_meta_state(path)`
+- `prototype/tests/unit/test_meta_state.py` — 27 unit tests (5 classes) covering load/save/migration/promote/atomic-write
+
+**Notes**:
+- Bootstrap hook in `engine/state.py` is **intentionally deferred** (per ADR §"잔존 작업" / v1.1.0+ 후속). Cross-run persistence is opt-in via explicit `promote_from_run()` call from `save_manager.py`.
+- Death penalty: **none** (per ADR §사용자 결정 — 깔끔한 첫 출시 우선)
+- Hardcore mode isolation: **disabled** (per ADR §사용자 결정 — v1.1.0+ 검토)
+
+**No further action on ADR-0131** — implementation closed (opt-in design satisfied).

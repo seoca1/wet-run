@@ -119,6 +119,7 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0192 | Ending Expansion (Phase 14 — Content Expansion, Axis 5) | **Accepted** | 2026-08-08 | P2 (Pillar 1 replay value + Pillar 5 closure) |
 | 0193 | Programs/Equipment Expansion (Phase 14 — Content Expansion, Axis 6) | **Accepted** | 2026-08-08 | P2 (Pillar 4 Build depth + Pillar 5 style) |
 | 0194 | ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구) | **Draft** | 2026-08-19 | P3 (The Build, 아키텍처 명료화) |
+| 0195 | Accepted ADR Implementation Status Workflow (섹션 의무화 + 인덱스 Impl 컬럼) | **Draft** | 2026-08-20 | P3 (The Build, 프로세스 명료화) |
 
 ### 2026-07-01 통합 작업 (P1~P4 + B)
 

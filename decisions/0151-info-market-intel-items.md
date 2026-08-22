@@ -230,6 +230,30 @@ Pillar 정합 (ADR-0151 §Consequences.7):
 - ADR-0110 — 모듈 사이즈 정책 (250 권장 ceiling)
 - ADR-0090 — Salvation Phase Integration (mission narrative 기반)
 
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/intel_items.py:35` — `FACTION_RUMOR_FACTION: str = "loa"` (backward-compat default)
+- `prototype/src/wet_run/combat/intel_items.py:42-46` — `FACTION_RUMOR_FACTIONS: dict[str, str]` with 4 variants (hosaka/sense_net/yakuza/loa)
+- `prototype/src/wet_run/combat/intel_items.py:53-55` — `IntelItemId` StrEnum (ALARM_REDUCER/MISSION_HINT/FACTION_RUMOR)
+- `prototype/src/wet_run/combat/intel_items.py:81` — `apply_alarm_reducer(state)` — alarm -2, clamped ≥ 0
+- `prototype/src/wet_run/combat/intel_items.py:95` — `apply_mission_hint(state)` — reveals current mission objective
+- `prototype/src/wet_run/combat/intel_items.py:126` — `apply_faction_rumor(state, app_state)` — faction event probability +25%
+- `prototype/src/wet_run/engine/state.py:288` — `AppState.purchased_intel_items: list[str]` field
+- `prototype/src/wet_run/engine/state.py:290` — `AppState.faction_tension_probability_boost: float = 0.0`
+- `prototype/src/wet_run/crafting/info_market.py:244` — `apply_intel_item` import hook (Category-aware purchase flow)
+- `prototype/tests/unit/test_intel_items.py:1-277` — 25 tests covering 3 items + one-shot + insufficient CRED + clamping
+- `prototype/data/i18n/en.json:237` — `intel_items` section with name/desc/applied messages for all 3 items
+- `prototype/data/i18n/ko.json:237` — Korean translations
+- `prototype/data/i18n/ja.json:237` — Japanese translations (post-ADR-0154 expansion)
+- `prototype/data/i18n/zh.json:237` — Chinese translations (post-ADR-0154 expansion)
+
+**Notes**: Note that intel items are hardcoded in `intel_items.py` (not in `crafting/market.json`). The 4-variant faction_rumor was added by ADR-0154 (Cycle 10). The ADR-0151 originally proposed a 3-item flat rate; the existing 30/40/50 credit prices are used. AppState fields in ADR-0151 spec both delivered.
+
+**No further action on ADR-0151** — implementation closed.
+
 ## 변경 이력
 
 - 2026-08-07: Draft 작성 (Cycle 6 of v1.2.0+ bridge)

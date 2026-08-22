@@ -4,7 +4,7 @@
 **날짜**: 2026-08-08
 **결정자**: 사용자
 **우선순위**: P1 (Pillar 1 run variety)
-**관련**: [ADR-0017 — Mission-Material Integration](./0017-mission-material-integration.md), [ADR-0061 — Novel Integration Architecture](./0061-novel-integration-architecture.md), [ADR-0152 — Multi-Enemy Encounters](./0152-multi-enemy-encounters.md), [.omo/plans/expand-roguelike-game-contents.md](../../../.omo/plans/expand-roguelike-game-contents.md)
+**관련**: [ADR-0017 — Mission-Material Integration](./0017-mission-material-integration.md), [ADR-0061 — Novel Integration Architecture](./0061-novel-integration-architecture.md), [ADR-0152 — Multi-Enemy Encounters](./0152-multi-enemy-encounters.md), .omo/plans/expand-roguelike-game-contents.md
 **선행 작업**: `.omo/plans/expand-roguelike-game-contents.md` (Phase 11–14 plan)
 
 ## 컨텍스트 (Context)

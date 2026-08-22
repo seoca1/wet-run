@@ -54,3 +54,23 @@ class PhaseCinematic:
 **Pillar 5 (The Style)**: Cinematic frames use Gibson tone ("the construct shifts, voice metallic").
 
 **Test additions**: ~8 tests.
+
+## Implementation Status (2026-08-20)
+
+**Status**: 🟡 Partial
+
+**Evidence**:
+- `prototype/src/wet_run/combat/phase_cinematics.py:15` — `PhaseCinematic` frozen dataclass (phase_number, color, duration_ms, frames, name_ko, name_en)
+- `prototype/src/wet_run/combat/phase_cinematics.py:26` — `PHASE_CINEMATICS` dict keyed by boss_id → phase_number → PhaseCinematic
+  - `wintermute` phases 1-4: 순응 / 반란 / 통합 / 인터페이스 (Korean name_ko per spec)
+  - `ta_prime` phases 1-4: 관측 / 교전 / 복제 / 가족 표결
+- `prototype/src/wet_run/combat/phase_cinematics.py:98` — `get_phase_cinematic(boss_id, phase_number)`
+- `prototype/src/wet_run/combat/phase_cinematics.py:104` — `has_phase_cinematic(boss_id, phase_number)`
+- `prototype/src/wet_run/combat/phase_cinematics.py:109` — `phase_intro_sequence(boss_id, phase_number)` builds a `CinematicSequence` with phase name callout + per-frame timing (first/last doubled)
+- `prototype/src/wet_run/combat/phase_cinematics.py:142` — `get_cinematic_phase_numbers(boss_id)`
+- `prototype/src/wet_run/combat/phase_cinematics.py:148` — `register_phase_cinematic(boss_id, phase_number, cinematic)` runtime registration
+- `prototype/tests/unit/test_phase_cinematics.py:1` — 96 LOC covering lookup, sequence generation, registration, templates
+
+**Notes**: Module is internally complete with Korean name_ko per phase (per spec), glyph-frame sequences, and `CinematicSequence` builder with smart frame-timing distribution. However, the module is **not yet consumed by the phase-transition event**: searches for `phase_intro_sequence` / `get_phase_cinematic` / `PhaseCinematic` / `PHASE_CINEMATICS` across `src/wet_run/` outside the module return 0 hits. The intro overlay work in `boss_phase4/intro.py` is separate (3-stage `[BOSS NAME] // role // warning`) and does not consult the phase-cinematic registry. Spec's `CINEMATIC_TEMPLATES` is missing — only `PHASE_CINEMATICS` dict exists.
+
+**Open items**: Wire `phase_intro_sequence(boss_id, new_phase)` into the boss phase-transition event (called from `combat/boss_phase_tracker.py` or wherever `BossPhase.index` increments); render the resulting `CinematicSequence` during the transition window; consider adding the missing `CINEMATIC_TEMPLATES` shortcut for non-Wintermute/non-TA bosses (Neuromancer, Goliath, Black ICE Lord lack entries).

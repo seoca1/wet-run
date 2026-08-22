@@ -102,3 +102,24 @@ each ICE archetype feels distinct.
 | `ruff check` | All checks passed |
 | `mypy src/` | 0 errors in 179+ source files |
 | `wc -l combat/depth/personality.py` | ~150 LOC (new module) |
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/depth/personality.py:20` — `PersonalityLevel(StrEnum)` with AGGRESSIVE/DEFENSIVE/STEALTH/SUPPORT
+- `prototype/src/wet_run/combat/depth/personality.py:61` — constants `DEFENSIVE_HP_THRESHOLD=0.5`, `AGGRESSIVE_CRIT_BONUS=0.05`, `STEALTH_ALARM_MULTIPLIER=0.5`
+- `prototype/src/wet_run/combat/depth/personality.py:85` — `should_defensive_act(combatant)` (DEFENSIVE + HP<50%)
+- `prototype/src/wet_run/combat/depth/personality.py:94` — `get_alarm_multiplier(combatant)` (STEALTH = 0.5)
+- `prototype/src/wet_run/combat/depth/personality.py:104` — `get_crit_bonus(combatant)` (AGGRESSIVE +5%)
+- `prototype/src/wet_run/combat/depth/personality.py:111` — `should_target_ally(combatant, state)` (SUPPORT + wounded ally)
+- `prototype/src/wet_run/combat/depth/personality.py:127` — `select_skill_by_personality(combatant, available_skills, state)` skill selector
+- `prototype/src/wet_run/combat/state_transitions.py:47` — alarm tick applies `get_alarm_multiplier(target)` (STEALTH halving)
+- `prototype/src/wet_run/combat/state.py:247` — crit roll applies `get_crit_bonus(attacker)` (AGGRESSIVE +5%)
+- `prototype/src/wet_run/combat/state_models.py` — `Combatant.personality: str` field added (per ADR schema)
+- `prototype/tests/unit/test_personality.py:1` — 233 LOC covering all 4 personalities + threshold/crit/alarm/target selection
+
+**Notes**: Module landed at 166 LOC, slightly over target ~150. `_combatant_personality` resolver gracefully falls back to AGGRESSIVE for missing/malformed values. skill selection path in `state_transitions` is via `select_skill_by_personality` per the decision spec.
+
+**No further action on ADR-0161** — implementation closed.

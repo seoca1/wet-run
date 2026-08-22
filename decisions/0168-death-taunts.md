@@ -53,3 +53,21 @@ class DeathTaunt:
 **Pillar 5 (The Style)**: Per-ICE taunts — "you floored a watchdog. It gibbers: 'pack... will hunt...'" — Gibson tone.
 
 **Test additions**: ~10 tests.
+
+## Implementation Status (2026-08-20)
+
+**Status**: 🟡 Partial
+
+**Evidence**:
+- `prototype/src/wet_run/combat/death_taunts.py:14` — `DeathTaunt` frozen dataclass (enemy_type, ice_name, text, rarity)
+- `prototype/src/wet_run/combat/death_taunts.py:23` — `DEATH_TAUNTS` registry keyed by ice_id with Gibson-toned taunts for: `watchdog` (3), `goliath` (3), `black` (3), `construct` (3), `wintermute` (4), `ta_prime` (2), `neuromancer` (2), `goliath_prime` (2), `black_ice_lord` (2), `standard` (2), `patrol` (2), `hunter` (2) — covers all spec categories + 5 boss types
+- `prototype/src/wet_run/combat/death_taunts.py:94` — `get_taunt(ice_id, rng)` rarity-weighted selection
+- `prototype/src/wet_run/combat/death_taunts.py:128` — `add_taunt` (spec called it `set_death_taunt`; renamed) and `register_taunts`
+- `prototype/src/wet_run/combat/boss_phase4/taunts.py:21` — separate `DEATH_TAUNTS` dict for 5 boss types
+- `prototype/src/wet_run/combat/boss_phase4/taunts.py:50` — `pick_death_taunt(boss_id, rng)`
+- `prototype/src/wet_run/combat/boss_phase4/taunts.py:66` — `apply_death_taunt(state, app_state, boss_id)` writes to `app_state.death_taunt`
+- `prototype/tests/unit/test_death_taunts.py:1` — 91 LOC covering registry, get_taunt, rarity, customization
+
+**Notes**: Library + registry + Gibson-flavored taunts for 9+ ICE types are all in place. Boss-side wiring is complete via `boss_phase4/taunts.apply_death_taunt` (consumed by `combat_to_death` flow). However, **per-ICE regular taunts are not yet hooked into the kill path**: `get_taunt` from `combat/death_taunts.py` has no call site in `combat/state.py` (kill handling), `combat/state_transitions.py`, or `combat/salvage.py`. Spec's `set_death_taunt` was renamed to `add_taunt` / `register_taunts` for API symmetry.
+
+**Open items**: Wire `get_taunt(enemy.ice_id, rng)` into the player-kills-ICE path in `combat/state.py` / `state_transitions.py` (after HP<=0 check); push the returned taunt text to `state.push()` or death summary; ensure regular kill taunts appear in post-combat death summary view.

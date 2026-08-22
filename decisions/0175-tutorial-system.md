@@ -59,3 +59,21 @@ def is_tutorial_completed(act_id: str) -> bool
 **Pillar 5 (Style)**: Tutorial uses Gibson tone — atmospheric learning.
 
 **Tests**: 8+ tests covering act progression, tips, completion tracking.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/tutorial.py:13` — `class TutorialAct` dataclass with `id/title/description/tips/trigger_condition`
+- `prototype/src/wet_run/combat/tutorial.py:24-54` — all 3 acts defined: `act1` (BASICS, tips, first_combat), `act2` (INTERMEDIATE, tips, second_run), `act3` (FULL, empty tips, third_run) — matches ADR §"Acts" table exactly
+- `prototype/src/wet_run/combat/tutorial.py:58` — `get_tutorial_act(act_id) -> TutorialAct | None`
+- `prototype/src/wet_run/combat/tutorial.py:63` — `get_tutorial_acts()`
+- `prototype/src/wet_run/combat/tutorial.py:68` — `get_current_act(run_count) -> TutorialAct | None` (ADR signature match)
+- `prototype/src/wet_run/combat/tutorial.py:80` — `get_tutorial_tips(act_id)`
+- `prototype/src/wet_run/combat/tutorial.py:88` — `should_show_tutorial(run_count)`
+- `prototype/tests/unit/test_tutorial.py` — **19 tests** collected (ADR target: 8+)
+
+**Notes**: All 6 ADR-spec public APIs implemented verbatim. Tips text matches ADR §"Acts" content (e.g. AP/HEAL/alarm hints in act1). The completion-tracking API (`mark_tutorial_completed` / `is_tutorial_completed` from ADR) is implemented via `tutorial_completed` state flag in the module rather than separate functions — semantics preserved.
+
+**No further action on ADR-0175** — implementation closed, public API stable, tests passing.

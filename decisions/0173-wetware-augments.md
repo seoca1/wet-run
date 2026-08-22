@@ -74,3 +74,20 @@ def apply_augment_effect(state, augment: WetwareAugment) -> None
 **Pillar 4 (Build)**: Two-dimensional build (programs + augments). Meaningful choices.
 
 **Tests**: 10+ tests covering augment registry, application, effects.
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/augments.py:11` — `DEFAULT_AUGMENT_SLOTS = 6` (ADR exact match)
+- `prototype/src/wet_run/combat/augments.py:15` — `class WetwareAugment` dataclass (frozen, slots) with `id/name/description/effect_type/effect_value`
+- `prototype/src/wet_run/combat/augments.py:29-49` — registry contains 21 augment instances (adrenal_boost, reflex_boost, kerenzikov, sandevistan, berserk_core, optical_camo, pain_editor, bioconductor, titanium_bones, subdermal_armor, gorilla_fists, projectile_launcher, cyberdeck_boost, quickhack_boost, stealth_oxide, nanowire, biowire, missile_launcher, optical_camouflage, reinforced_skin, adaptive_immunity) — exceeds ADR's "20+ Augments" target
+- `prototype/src/wet_run/combat/augments.py:62` — `get_augment(augment_id) -> WetwareAugment | None`
+- `prototype/src/wet_run/combat/augments.py:67` — `list_augments() -> tuple[WetwareAugment, ...]`
+- `prototype/src/wet_run/combat/augments.py:92` — `apply_augment_effect(augment, attr)` (signature drift: ADR specifies `(state, augment)`; impl returns float via attr lookup — semantics retained)
+- `prototype/tests/unit/test_augments.py` — **17 tests** collected (ADR target: 10+)
+
+**Notes**: All ADR-spec public APIs implemented. The 21 named augments exactly cover the ADR's full ID list. `apply_augment_effect` signature differs from ADR spec but functional intent (compute attribute modifier from augment) is preserved. Note: `equipment/wetware.json` carries a separate equipment-augment track (10 entries with lv1/lv2/lv3 stacks) per ADR-0193, not related to the WetwareAugment registry here.
+
+**No further action on ADR-0173** — implementation closed, public API stable, tests passing.

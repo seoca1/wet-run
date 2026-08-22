@@ -88,3 +88,21 @@ interface" / "we are the message" tone.
 | `pytest tests/` | 4101 + ~12 = ~4113 pass |
 | `ruff check` | All checks passed |
 | `mypy src/` | 0 errors in 180+ source files |
+
+## Implementation Status (2026-08-20)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/combat/boss.py:82-84` — `PhaseProfile` adds `phase5_super_skill`, `phase5_dialogue`, `phase5_damage_multiplier` (default 3.0)
+- `prototype/src/wet_run/combat/boss.py:461-463` — WINTERMUTE profile populates Phase 5 super-skill + "I am the matrix. I am the word. I am the interface." dialogue
+- `prototype/src/wet_run/combat/boss.py:511-513` — TA_CONSTRUCT_PRIME profile populates Phase 5 super-skill + "Tessier-Ashpool has ruled. The hive ascends." dialogue
+- `prototype/src/wet_run/combat/bosses.py:33-55` — `BossPhase` dataclass carries Phase 5 fields
+- `prototype/src/wet_run/combat/bosses.py:295-313` — `should_trigger_phase_5(boss, current_phase)` implements the 10% HP gate after Phase 4 with non-`None` super-skill guard
+- `prototype/src/wet_run/combat/bosses_cinematic.py:18-22, 246-274` — `boss_phase_5_sequence` builder + `spawn_boss_phase5` spawner exported
+- `prototype/tests/unit/test_boss_phase_5.py:29-158` — 12 dedicated tests covering trigger conditions, super-skill weight, multiplier, dialogue presence, spawn cinematic
+- `prototype/tests/unit/test_phase39_small_content_polish.py:399` — `test_phase5_super_skills_construct` regression check
+
+**Notes**: Phase 5 wired for both canonical bosses (Wintermute, T-A Prime). Damage multiplier ≥3.0 enforced by `test_phase_5_damage_multiplier_at_least_3`. Super-skill IDs unique across bosses via `test_boss_phase_5_super_skill_id_unique`. Cinematic ties into existing `CombatEffects` (shake + slow-motion).
+
+**No further action on ADR-0187** — implementation closed.

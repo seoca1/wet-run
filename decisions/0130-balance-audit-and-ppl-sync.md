@@ -4,7 +4,7 @@
 **날짜**: 2026-07-27
 **결정자**: 사용자
 **우선순위**: P1
-**연관**: [Balance Audit 2026-07-27](../docs/audits/2026-07-27_balance.md), ADR-0008 (Progression), ADR-0012 (PPL/ZDR), ADR-0014 (Data Salvage), F1-1 rebalance (2026-07-22)
+**연관**: Balance Audit 2026-07-27, ADR-0008 (Progression), ADR-0012 (PPL/ZDR), ADR-0014 (Data Salvage), F1-1 rebalance (2026-07-22)
 
 ---
 

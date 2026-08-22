@@ -1,7 +1,7 @@
 # Chapter 2: The Old Score (실, Veteran)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 2 명세.**
-> 캐릭터: **실 (Sil) — Veteran** · 동기: 복수 · 단편: [루이지아나의 신](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md)
+> 캐릭터: **실 (Sil) — Veteran** · 동기: 복수 · 단편: 루이지아나의 신
 
 ## 1. 캐릭터 프로필
 
@@ -176,8 +176,8 @@ Dixie Flatline (construct) 등장:
 
 ## 8. 관련 자산
 
-- 단편: [`../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md`](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md)
+- 단편: `../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md`
 - 미션 데이터: `data/missions/missions.json` (`watchdog_patrol`)
-- 위키: [`../../wiki/world/factions.md`](../../wiki/world/factions.md) (Tessier-Ashpool)
+- 위키: `../../wiki/world/factions.md` (Tessier-Ashpool)
 - 모듈: `engine/original_story.py:VETERAN_PROLOGUE_EVENT`
 - 단편 페이지: `dashboard/stories.html`

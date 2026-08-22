@@ -1,7 +1,7 @@
 # Chapter 5: Wigan Ludgate (위건, Vodou Construct)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 5 명세.**
-> 캐릭터: **위건 (Wigan) — Vodou Construct** · 동기: 회복 (자아) · 단편: [위건이 본 것](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_wigan_zavijava.md)
+> 캐릭터: **위건 (Wigan) — Vodou Construct** · 동기: 회복 (자아) · 단편: 위건이 본 것
 
 ## 1. 캐릭터 프로필
 

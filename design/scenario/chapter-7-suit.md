@@ -1,7 +1,7 @@
 # Chapter 7: The Node (야마자키, Suit)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 7 명세.**
-> 캐릭터: **야마자키 (Yamazaki) — Suit** · 동기: 통제 · 단편: [Kombinat Node Hack](../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-15_kombinat-node-hack.md)
+> 캐릭터: **야마자키 (Yamazaki) — Suit** · 동기: 통제 · 단편: Kombinat Node Hack
 
 ## 1. 캐릭터 프로필
 

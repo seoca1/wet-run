@@ -1,7 +1,7 @@
 # Chapter 6: The Scaffold (라이델, Veteran)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 6 명세.**
-> 캐릭터: **베리 라이델 (Berry Rydell) — Veteran** · 동기: 수호 · 단편: [Bridge Construct](../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-15_bridge-construct.md)
+> 캐릭터: **베리 라이델 (Berry Rydell) — Veteran** · 동기: 수호 · 단편: Bridge Construct
 
 ## 1. 캐릭터 프로필
 

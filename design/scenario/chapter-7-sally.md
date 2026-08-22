@@ -1,7 +1,7 @@
 # Chapter 7: Sally Shears (샐리, Market Operator)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 7 명세.**
-> 캐릭터: **샐리 시어스 (Sally Shears)** · 동기: 시장 지배 · 단편: [로즈 호텔, 새벽 3시](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_sally_sandii-3am.md)
+> 캐릭터: **샐리 시어스 (Sally Shears)** · 동기: 시장 지배 · 단편: 로즈 호텔, 새벽 3시
 
 ## 1. 캐릭터 프로필
 

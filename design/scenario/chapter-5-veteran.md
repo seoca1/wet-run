@@ -1,7 +1,7 @@
 # Chapter 5: The Fog (실, Veteran)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 5 명세.**
-> 캐릭터: **실 (Sil) — Veteran** · 동기: 의무 · 단편: [Tokyo Courier Run](../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-15_tokyo-courier-run.md)
+> 캐릭터: **실 (Sil) — Veteran** · 동기: 의무 · 단편: Tokyo Courier Run
 
 ## 1. 캐릭터 프로필
 

@@ -1,7 +1,7 @@
 # Chapter 4: The Bridge (셰벳, Novice)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 4 명세.**
-> 캐릭터: **셰벳 워싱턴 (Chevette) — Novice** · 동기: 소속감 · 단편: [셰벳 런](../../../../Fiction/derivative/bridge-trilogy/novelettes/en/2026-07-15_chevette-run.md)
+> 캐릭터: **셰벳 워싱턴 (Chevette) — Novice** · 동기: 소속감 · 단편: 셰벳 런
 
 ## 1. 캐릭터 프로필
 

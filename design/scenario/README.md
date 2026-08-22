@@ -9,9 +9,9 @@
 
 | 챕터 | 캐릭터 | 단편 | 동기 | 첫 의뢰 | 엔딩 |
 | --- | --- | --- | --- | --- | --- |
-| **1. The First Jack** | 케이 (Novice) | [잭아웃 후 30초](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md) | 돈 | Sense/Net 데이터 추출 | A: 태움 / B: 보관 |
-| **2. The Old Score** | 실 (Veteran) | [루이지아나의 신](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md) | 복수 | Tessier-Ashpool 계약 | A: 폭로 / B: 거래 |
-| **3. The Declaration** | 카스 (Heretic) | [매나리사의 자정](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md) | 전복 | Loa 네트워크 선언 | A: 선언 / B: 흡수 |
+| **1. The First Jack** | 케이 (Novice) | 잭아웃 후 30초 | 돈 | Sense/Net 데이터 추출 | A: 태움 / B: 보관 |
+| **2. The Old Score** | 실 (Veteran) | 루이지아나의 신 | 복수 | Tessier-Ashpool 계약 | A: 폭로 / B: 거래 |
+| **3. The Declaration** | 카스 (Heretic) | 매나리사의 자정 | 전복 | Loa 네트워크 선언 | A: 선언 / B: 흡수 |
 
 ## 2. 화면 흐름 (Screen Flow)
 

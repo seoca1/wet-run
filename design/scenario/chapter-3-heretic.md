@@ -1,7 +1,7 @@
 # Chapter 3: The Declaration (카스, Heretic)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 3 명세.**
-> 캐릭터: **카스 (Kas) — Heretic** · 동기: 전복 · 단편: [매나리사의 자정](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md)
+> 캐릭터: **카스 (Kas) — Heretic** · 동기: 전복 · 단편: 매나리사의 자정
 
 ## 1. 캐릭터 프로필
 
@@ -175,8 +175,8 @@ Dixie Flatline (construct) 등장:
 
 ## 8. 관련 자산
 
-- 단편: [`../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md`](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md)
+- 단편: `../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md`
 - 미션 데이터: `data/missions/missions.json` (`loa_broadcast` - 신규)
-- 위키: [`../../wiki/world/factions.md`](../../wiki/world/factions.md) (Loa/Vodou)
+- 위키: `../../wiki/world/factions.md` (Loa/Vodou)
 - 모듈: `engine/original_story.py:HERETIC_PROLOGUE_EVENT`
 - 단편 페이지: `dashboard/stories.html`

@@ -1,7 +1,7 @@
 # Chapter 8: The Villa (3Jane, Suit)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 8 명세.**
-> 캐릭터: **레이디 3제인 테시에르 애스풀 (Lady 3Jane Tessier-Ashpool) — Suit** · 동기: 유산 · 단편: [Tessier Archive / 3Jane Tessier-Ashpool 캐릭터 페이지](../../../../Fiction/wiki/characters/lady-3jane-tessier-ashpool.md)
+> 캐릭터: **레이디 3제인 테시에르 애스풀 (Lady 3Jane Tessier-Ashpool) — Suit** · 동기: 유산 · 단편: Tessier Archive / 3Jane Tessier-Ashpool 캐릭터 페이지
 
 ## 1. 캐릭터 프로필
 

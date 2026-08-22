@@ -2,14 +2,14 @@
 
 **Date**: 2026-08-04
 **Author**: Sisyphus (deep quality audit per NEXT_SESSION_TODO §3.7)
-**Scope**: Gibson 톤 검증 (Pillar 5) — verify graphic novel scenes match William Gibson's prose style per [`Fiction/wiki/connections/gibsons-writing-style.md`](../../../Fiction/wiki/connections/gibsons-writing-style.md)
+**Scope**: Gibson 톤 검증 (Pillar 5) — verify graphic novel scenes match William Gibson's prose style per `Fiction/wiki/connections/gibsons-writing-style.md`
 **Related ADR**: ADR-0032 (Graphic Novel Content Expansion — 4× scene dialogue)
 
 ---
 
 ## Gibson Style Principles (extracted from Fiction wiki)
 
-Per [`Fiction/wiki/connections/gibsons-writing-style.md`](../../../Fiction/wiki/connections/gibsons-writing-style.md), Gibson's prose combines:
+Per `Fiction/wiki/connections/gibsons-writing-style.md`, Gibson's prose combines:
 
 1. **Compressed Syntax**: Short, declarative, clause-heavy sentences. "Every sentence carries its weight; no sentence is decorative."
 2. **Sensory Anchoring**: Concrete sensory detail (sight, sound, touch, smell, taste). Speculative claims grounded in specific sensory markers.

@@ -1,7 +1,7 @@
 # Chapter 1: The First Jack (케이, Novice)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 1 명세.**
-> 캐릭터: **케이 (K) — Novice** · 동기: 돈 · 단편: [잭아웃 후 30초](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md)
+> 캐릭터: **케이 (K) — Novice** · 동기: 돈 · 단편: 잭아웃 후 30초
 
 ## 1. 캐릭터 프로필
 
@@ -179,8 +179,8 @@ Dixie Flatline (construct) 등장:
 
 ## 8. 관련 자산
 
-- 단편: [`../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md`](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md)
+- 단편: `../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md`
 - 미션 데이터: `data/missions/missions.json` (`first_jack`)
-- 위키: [`../../wiki/world/cyberspace.md`](../../../../Fiction/wiki/settings/cyberspace.md)
+- 위키: `../../wiki/world/cyberspace.md`
 - 모듈: `engine/original_story.py:NOVICE_PROLOGUE_EVENT`
 - 단편 페이지: `dashboard/stories.html`

@@ -1,7 +1,7 @@
 # Chapter 4: The Suit (수트, Corporate)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 4 명세.**
-> 캐릭터: **수트 (Suit) — Corporate** · 동기: 거래 · 단편: [아미티지 침투](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_armitage_infiltration.md)
+> 캐릭터: **수트 (Suit) — Corporate** · 동기: 거래 · 단편: 아미티지 침투
 
 ## 1. 캐릭터 프로필
 

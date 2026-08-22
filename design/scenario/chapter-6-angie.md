@@ -1,7 +1,7 @@
 # Chapter 6: Angie Mitchell (앤지, Loa Receiver)
 
 > **이 문서는 [`../scenario/README.md`](../scenario/README.md)의 Chapter 6 명세.**
-> 캐릭터: **앤지 미첼 (Angie Mitchell)** · 동기: 엄마 · 단편: [앤지의 엄마](../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_sally_sandii-3am.md)
+> 캐릭터: **앤지 미첼 (Angie Mitchell)** · 동기: 엄마 · 단편: 앤지의 엄마
 
 ## 1. 캐릭터 프로필
 

@@ -16,6 +16,7 @@ import tcod.event
 from tcod.event import KeyDown, KeySym
 
 from ..audio import safe_play
+from ..combat.gibson_fluff import push_fluff
 from ..combat.registry import IceRegistry, ProgramRegistry
 from ..i18n import Translator
 from ..lore import (
@@ -543,6 +544,7 @@ def _handle_cyberspace_movement(state: AppState, sym: KeySym) -> None:
         state.status_messages.append(
             f">>> Moved {direction_name} to {best_neighbor.label} ({best_neighbor.kind.value})"
         )
+        push_fluff(state, "zone_transition")
         faction_value = best_neighbor.faction.value
         faction_str = None if faction_value == "none" else faction_value
         check_memory_fragment_on_node_entry(

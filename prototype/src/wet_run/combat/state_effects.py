@@ -164,6 +164,8 @@ def _apply_dot(state: CombatState, skill: Skill) -> None:
     state.push(
         f">> {skill.name}: {applied} damage + burn ({skill.dot_damage}/s for {skill.dot_duration_ms // 1000}s)!"
     )
+    from .gibson_fluff import push_fluff
+    push_fluff(state, "burn")
 
 
 def _apply_shield(state: CombatState, skill: Skill) -> None:
@@ -237,6 +239,62 @@ def _apply_stun(state: CombatState, skill: Skill) -> None:
     )
     _record_event(state, "stun", skill.effect_color)
     state.push(f">> {skill.name}: {target.name} stunned for {skill.stun_duration_ms // 1000}s!")
+    from .gibson_fluff import push_fluff
+    push_fluff(state, "stun")
+
+
+def _apply_slow(state: CombatState, skill: Skill) -> None:
+    """Slow skill: apply 'slow' status to current target (slow_pct tick rate)."""
+    target = state.target
+    if target is None:
+        return
+    target.statuses.append(
+        StatusEffect(
+            effect_id="slow",
+            remaining_ms=skill.buff_duration_ms,
+            slow_pct=getattr(skill, "slow_pct", 50),
+        )
+    )
+    _record_event(state, "slow", skill.effect_color)
+    state.push(f">> {skill.name}: {target.name} slowed!")
+    from .gibson_fluff import push_fluff
+    push_fluff(state, "slow")
+
+
+def _apply_silence(state: CombatState, skill: Skill) -> None:
+    """Silence skill: apply 'silence' status (prevents skill use) to current target."""
+    target = state.target
+    if target is None:
+        return
+    target.statuses.append(
+        StatusEffect(
+            effect_id="silence",
+            remaining_ms=skill.buff_duration_ms,
+            is_silenced=True,
+        )
+    )
+    _record_event(state, "silence", skill.effect_color)
+    state.push(f">> {skill.name}: {target.name} silenced — no skill use!")
+    from .gibson_fluff import push_fluff
+    push_fluff(state, "silence")
+
+
+def _apply_vulnerability(state: CombatState, skill: Skill) -> None:
+    """Vulnerability skill: apply 'vulnerable' status (extra damage taken) to current target."""
+    target = state.target
+    if target is None:
+        return
+    target.statuses.append(
+        StatusEffect(
+            effect_id="vulnerable",
+            remaining_ms=skill.buff_duration_ms,
+            vulnerability_pct=getattr(skill, "vulnerability_pct", 25),
+        )
+    )
+    _record_event(state, "debuff", skill.effect_color)
+    state.push(f">> {skill.name}: {target.name} vulnerable (+damage taken)!")
+    from .gibson_fluff import push_fluff
+    push_fluff(state, "vulnerable")
 
 
 def _apply_stagger(state: CombatState, skill: Skill) -> None:
@@ -322,6 +380,9 @@ def dispatch_skill_effect(state: CombatState, skill: Skill) -> None:
         SkillEffect.BUFF: _apply_buff,
         SkillEffect.DEBUFF: _apply_debuff,
         SkillEffect.STUN: _apply_stun,
+        SkillEffect.SLOW: _apply_slow,
+        SkillEffect.SILENCE: _apply_silence,
+        SkillEffect.VULNERABLE: _apply_vulnerability,
         SkillEffect.STAGGER: _apply_stagger,
         SkillEffect.DETECT: _apply_detect,
         SkillEffect.LIFESTEAL: _apply_lifesteal,

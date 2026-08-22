@@ -58,6 +58,7 @@ class SkillEffect(StrEnum):
     POISON = "poison"
     SILENCE = "silence"
     SLOW = "slow"
+    VULNERABLE = "vulnerable"
 
 
 @dataclass(frozen=True, slots=True)

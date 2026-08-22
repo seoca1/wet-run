@@ -14,6 +14,7 @@ unlock next mission → repeat.
 
 from __future__ import annotations
 
+from ..combat.mission_archetypes import get_active_archetype, partial_pay_percent
 from ..matrix.node import Faction
 from ..run.reputation import MAX_DELTA_PER_EVENT
 from .state import AppState
@@ -114,6 +115,9 @@ def complete_mission(state: AppState, mission: object) -> None:
 
     # Award credits
     credits_amount = mission.reward_credits
+    archetype = get_active_archetype(state)
+    if archetype is not None:
+        credits_amount = int(credits_amount * partial_pay_percent(archetype) / 100)
     if credits_amount > 0:
         state.credits += credits_amount
         state.status_messages.append(f">>> +{credits_amount} credits")

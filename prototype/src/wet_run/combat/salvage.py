@@ -24,6 +24,9 @@ from __future__ import annotations
 from enum import StrEnum
 from typing import Any, Protocol
 
+from .gibson_fluff import push_fluff
+from .run_mutators import is_heal_disabled
+
 
 class SalvageChoice(StrEnum):
     """Player's choice from the post-victory salvage menu (ADR-0014)."""
@@ -118,6 +121,9 @@ def apply_salvage(state: _StateLike, choice: SalvageChoice) -> int:
         the current HP unchanged.
     """
     if choice is SalvageChoice.HEAL:
+        if is_heal_disabled(state):
+            _record_status(state, ">>> HEAL disabled by run mutator")
+            return state.hp
         heal = _heal_amount(state.max_hp)
         before = state.hp
         state.hp = min(state.max_hp, state.hp + heal)
@@ -151,6 +157,7 @@ def apply_salvage(state: _StateLike, choice: SalvageChoice) -> int:
 
     # SKIP: no state change
     _record_status(state, ">>> salvage skipped")
+    push_fluff(state, "salvage")
     return state.hp
 
 

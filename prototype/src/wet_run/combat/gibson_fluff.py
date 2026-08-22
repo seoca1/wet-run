@@ -500,6 +500,26 @@ def get_fluff(category: str, rng: random.Random) -> str | None:
     return messages[-1].text
 
 
+def push_fluff(state: object, category: str, rng: random.Random | None = None) -> bool:
+    """Push a random Gibson-fluff message onto state's status_messages list.
+
+    Returns True if a message was pushed, False if no message was available
+    or state has no status_messages attribute.
+    """
+    if rng is None:
+        rng = random.Random()
+    text = get_fluff(category, rng)
+    if text is None:
+        return False
+    status_list = getattr(state, "status_messages", None)
+    if status_list is None:
+        return False
+    if hasattr(status_list, "append"):
+        status_list.append(text)
+        return True
+    return False
+
+
 def fluff_count(category: str) -> int:
     """Return the number of messages registered for a category."""
     return len(FLUFF_MESSAGES.get(category, ()))

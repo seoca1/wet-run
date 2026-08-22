@@ -20,6 +20,7 @@ from __future__ import annotations
 import tcod.event
 from tcod.event import KeyDown, KeySym
 
+from ..combat.matrix_events import MatrixEvent, check_event_trigger, trigger_event
 from ..combat.registry import IceRegistry, ProgramRegistry
 from ..matrix import MatrixGraph, Node
 from . import action_menu
@@ -244,6 +245,11 @@ def _handle_movement(state: AppState, sym: KeySym) -> None:
         state.current_node_id = target.id
         if state.exploration is not None:
             state.exploration.visit(target.id)
+        rng = getattr(state, "rng", None)
+        if rng is not None:
+            for event in MatrixEvent:
+                if check_event_trigger(rng, event):
+                    trigger_event(state, event)
     else:
         direction = _DIRECTION_LABELS.get(sym, "?")
         state.status_messages.append(f">>> No node in direction {direction}")

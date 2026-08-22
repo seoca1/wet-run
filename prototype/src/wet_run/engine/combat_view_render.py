@@ -18,6 +18,7 @@ from typing import TYPE_CHECKING
 
 import tcod.console
 
+from ..combat.battle_portraits import get_portrait
 from ..combat.state import Skill
 from .layout import (
     Region,
@@ -252,7 +253,18 @@ def _draw_combatants(
     # Enemy (right side)
     x = main.x + main.w - 25
     y = main.y + 2
-    console.print(x=x, y=y, string=enemy.portrait, fg=enemy.color)
+    enemy_portrait = get_portrait(
+        ice_type=enemy.ice_kind or "standard",
+        hp_ratio=enemy.hp / max(enemy.max_hp, 1),
+        status_effect_ids=tuple(s.effect_id for s in enemy.statuses),
+        phase=enemy.current_phase,
+    )
+    console.print(
+        x=x,
+        y=y,
+        string=enemy_portrait.base_glyph + enemy_portrait.suffix,
+        fg=enemy_portrait.color,
+    )
     y += 1
     console.print(x=x, y=y, string=f"{enemy.name}", fg=(200, 200, 200))
     y += 1

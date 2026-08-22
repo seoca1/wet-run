@@ -10,6 +10,8 @@ dependency at module load.
 
 from __future__ import annotations
 
+from .gibson_fluff import push_fluff
+from .phase_cinematics import phase_intro_sequence
 from .state_models import AUTO_ATTACK_INTERVAL_MS, TICK_MS, Combatant, CombatState
 
 __all__ = [
@@ -80,6 +82,11 @@ def _check_boss_phase_transition(state: CombatState) -> None:
         old_phase = target.current_phase
         target.current_phase = target_phase
         state.push(f"{target.name} PHASE {old_phase} → {target_phase}")
+        if target.ice_kind is not None:
+            seq = phase_intro_sequence(target.ice_kind, target_phase)
+            if seq is not None:
+                for frame, _, _ in seq.phases:
+                    state.push(f"[cinematic] {frame}")
 
 
 def step_combat(state: CombatState) -> None:
@@ -140,6 +147,7 @@ def step_combat(state: CombatState) -> None:
 
                     crit_text = " CRITICAL HIT!" if is_crit else ""
                     state.push(f"You strike {target.name} for {applied} damage.{crit_text}")
+                    push_fluff(state, "crit" if is_crit else "combat_hit")
                     state.player_combo += 1
                     state.combo_last_hit_ms = state.tick_ms
                     state.stats.damage_dealt += applied

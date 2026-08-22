@@ -8,8 +8,10 @@ Pillar 4 (build variety).
 from __future__ import annotations
 
 from enum import StrEnum
+from typing import TYPE_CHECKING
 
-from ..engine.state import AppState
+if TYPE_CHECKING:
+    from ..engine.state import AppState
 
 
 class RunMutator(StrEnum):
@@ -111,9 +113,9 @@ def get_encounter_multiplier(app_state: AppState) -> int:
     return app_state.encounter_multiplier
 
 
-def is_heal_disabled(app_state: AppState) -> bool:
+def is_heal_disabled(app_state: object) -> bool:
     """Return True if HEAL salvage is disabled (NO_HEAL mutator)."""
-    return app_state.heal_disabled
+    return bool(getattr(app_state, "heal_disabled", False))
 
 
 def is_stealth_only(app_state: AppState) -> bool:

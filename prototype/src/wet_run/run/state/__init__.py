@@ -1,12 +1,11 @@
-"""Backward-compatible facade for the split run-state package."""
+"""Backward-compatible public exports for the run-state subpackage."""
 
-from .state import (
+from .models import (
     DEFAULT_FLOW,
     MISSION_FLOWS,
     ChapterState,
     ObjectiveKind,
     Phase,
-    RunState,
     Stage,
     StageInfo,
     StageSequence,
@@ -14,9 +13,9 @@ from .state import (
     get_mission_stage_count,
     get_next_stage_in_flow,
     get_stage_info,
-    start_run,
     validate_stage_transition,
 )
+from .run_state import RunState, start_run
 
 __all__ = [
     "DEFAULT_FLOW",

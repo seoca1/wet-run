@@ -1,0 +1,1836 @@
+{
+  "short_stories_en": 233,
+  "short_stories_ko": 229,
+  "novelettes_en": 26,
+  "novelettes_ko": 26,
+  "hook_kinds": 6,
+  "hook_kind_names": [
+    "narrative",
+    "excerpt",
+    "event",
+    "combat",
+    "item",
+    "cinematic"
+  ],
+  "layers": 4,
+  "tests_passing": 39,
+  "code_lines_approx": 900,
+  "_generated_at": "2026-08-21T20:55:43",
+  "stories_with_mission_link": 191,
+  "catalog_entries": 259,
+  "catalog_entries_list": [
+    {
+      "stem": "3jane_straylight-monopoly",
+      "type": "short_story",
+      "title_en": "3Jane Straylight-Monopoly",
+      "title_ko": "3제인의 스트레이라이트 독점 (3Jane's Straylight Monopoly)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "3janes_garden",
+      "type": "short_story",
+      "title_en": "3Janes Garden",
+      "title_ko": "3제인의 정원 (3Jane's Garden)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "8jean_cryogenic-memory",
+      "type": "short_story",
+      "title_en": "8Jean Cryogenic-Memory",
+      "title_ko": "8진의 냉동 수면 기억 (8Jean's Cryogenic Memory)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "alains_last_forgery",
+      "type": "short_story",
+      "title_en": "Alains Last Forgery",
+      "title_ko": "알랭의 마지막 위작 (Alain's Last Forgery)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "aleph_fragment",
+      "type": "short_story",
+      "title_en": "Aleph Fragment",
+      "title_ko": "알레프의 파편",
+      "game_mission_id": "aleph_fragment"
+    },
+    {
+      "stem": "alephs_doorway",
+      "type": "short_story",
+      "title_en": "Alephs Doorway",
+      "title_ko": "알레프의 문 (The Aleph's Doorway)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "angie_leopard_tracking",
+      "type": "short_story",
+      "title_en": "Angie Leopard Tracking",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "angie_leopard_tracking"
+    },
+    {
+      "stem": "angies_dolls",
+      "type": "short_story",
+      "title_en": "Angies Dolls",
+      "title_ko": "앤지의 인형들 (Angie's Dolls)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "armitage_corto-memory",
+      "type": "short_story",
+      "title_en": "Armitage Corto-Memory",
+      "title_ko": "아미티지의 코르토 기억 (Armitage's Corto Memory)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "armitage_infiltration",
+      "type": "short_story",
+      "title_en": "Armitage Infiltration",
+      "title_ko": "아미티지 침투",
+      "game_mission_id": "armitage_infiltration"
+    },
+    {
+      "stem": "armitage_infiltration_2",
+      "type": "short_story",
+      "title_en": "Armitage Infiltration 2",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "armitage_infiltration_2"
+    },
+    {
+      "stem": "armitages_construction",
+      "type": "short_story",
+      "title_en": "Armitages Construction",
+      "title_ko": "아미티지의 구성 (Armitage's Construction)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "ashpools_breath",
+      "type": "short_story",
+      "title_en": "Ashpools Breath",
+      "title_ko": "애시풀의 호흡 (Ashpool's Breath)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "bama_statework",
+      "type": "novelette",
+      "title_en": "Bama Statework",
+      "title_ko": "이야기 기록",
+      "game_mission_id": "bama_statework"
+    },
+    {
+      "stem": "beijing_memory_courier",
+      "type": "short_story",
+      "title_en": "Beijing Memory Courier",
+      "title_ko": "베이징 메모리 쿠리어 (Beijing Memory Courier)",
+      "game_mission_id": "beijing_memory_courier"
+    },
+    {
+      "stem": "bigends_catalog",
+      "type": "short_story",
+      "title_en": "Bigends Catalog",
+      "title_ko": "비겡의 카탈로그 (Bigend's Catalog)",
+      "game_mission_id": "bigends_catalog_phase_b5"
+    },
+    {
+      "stem": "bing_statework",
+      "type": "novelette",
+      "title_en": "Bing Statework",
+      "title_ko": "빙 국가-작업",
+      "game_mission_id": "bing_statework"
+    },
+    {
+      "stem": "black_ice_dream",
+      "type": "novelette",
+      "title_en": "Black Ice Dream",
+      "title_ko": "블랙 아이스 드림",
+      "game_mission_id": "black_ice_dream"
+    },
+    {
+      "stem": "bobby_newmarks_first_jar",
+      "type": "short_story",
+      "title_en": "Bobby Newmarks First Jar",
+      "title_ko": "바비 뉴마크의 첫 번째 병",
+      "game_mission_id": null
+    },
+    {
+      "stem": "bobbys_construct",
+      "type": "short_story",
+      "title_en": "Bobbys Construct",
+      "title_ko": "바비의 컨스트럭트 (Bobby's Construct)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "bobbys_initiation",
+      "type": "short_story",
+      "title_en": "Bobbys Initiation",
+      "title_ko": "바비의 입문 (Bobby's Initiation)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "bonephone_static",
+      "type": "short_story",
+      "title_en": "Bonephone Static",
+      "title_ko": "본폰 정적 (Bonephone Static)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "bridge-recognition",
+      "type": "short_story",
+      "title_en": "Bridge-Recognition",
+      "title_ko": "브리지 인식 (Bridge Recognition)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "case-meets-cayce",
+      "type": "short_story",
+      "title_en": "Case-Meets-Cayce",
+      "title_ko": "케이스, 케이스를 만나다",
+      "game_mission_id": "case_meets_cayce"
+    },
+    {
+      "stem": "case_jackout-30sec",
+      "type": "short_story",
+      "title_en": "Case Jackout-30Sec",
+      "title_ko": "잭아웃",
+      "game_mission_id": "first_jack"
+    },
+    {
+      "stem": "case_past_defend_chiba_memory",
+      "type": "short_story",
+      "title_en": "Case Past Defend Chiba Memory",
+      "title_ko": "Case Past Defend Chiba Memory",
+      "game_mission_id": "case_past_defend_chiba_memory"
+    },
+    {
+      "stem": "case_past_dual_objective_dead_mans_chip",
+      "type": "short_story",
+      "title_en": "Case Past Dual Objective Dead Mans Chip",
+      "title_ko": "Case Past Dual Objective Dead Mans Chip",
+      "game_mission_id": "case_past_dual_objective_dead_mans_chip"
+    },
+    {
+      "stem": "case_past_extract_linda_memory",
+      "type": "short_story",
+      "title_en": "Case Past Extract Linda Memory",
+      "title_ko": "Case Past Extract Linda Memory",
+      "game_mission_id": "case_past_extract_linda_memory"
+    },
+    {
+      "stem": "case_past_investigate_armitage_mind",
+      "type": "short_story",
+      "title_en": "Case Past Investigate Armitage Mind",
+      "title_ko": "Case Past Investigate Armitage Mind",
+      "game_mission_id": "case_past_investigate_armitage_mind"
+    },
+    {
+      "stem": "casey_leaves",
+      "type": "short_story",
+      "title_en": "Casey Leaves",
+      "title_ko": "Casey의 첫 밖 (Casey Leaves)",
+      "game_mission_id": "flatline_call"
+    },
+    {
+      "stem": "cayce_threshold",
+      "type": "short_story",
+      "title_en": "Cayce Threshold",
+      "title_ko": "케이스의 문턱 (Cayce's Threshold)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "cherrys_dollhouse",
+      "type": "short_story",
+      "title_en": "Cherrys Dollhouse",
+      "title_ko": "체리의 인형의 집 (Cherry's Dollhouse)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "chiba_pulse",
+      "type": "short_story",
+      "title_en": "Chiba Pulse",
+      "title_ko": "치바 펄스 (Chiba Pulse)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "chickenhead_rickshaw_run",
+      "type": "short_story",
+      "title_en": "Chickenhead Rickshaw Run",
+      "title_ko": "치킨헤드 인력거 (Chickenhead Rickshaw)",
+      "game_mission_id": "chickenhead_rickshaw_run"
+    },
+    {
+      "stem": "construct_asks",
+      "type": "short_story",
+      "title_en": "Construct Asks",
+      "title_ko": "콘스트럭트의 질문 (Construct Asks)",
+      "game_mission_id": "dixies_choice"
+    },
+    {
+      "stem": "construct_dawn",
+      "type": "short_story",
+      "title_en": "Construct Dawn",
+      "title_ko": "콘스트럭트의 새벽 (Construct Dawn)",
+      "game_mission_id": "construct_memory_rescue"
+    },
+    {
+      "stem": "construct_named",
+      "type": "novelette",
+      "title_en": "Construct Named",
+      "title_ko": "콘스트럭트의 이름 (Construct Named)",
+      "game_mission_id": "aleph_fragment"
+    },
+    {
+      "stem": "conways_communion",
+      "type": "short_story",
+      "title_en": "Conways Communion",
+      "title_ko": "컨웨이의 교감 (Conway's Communion)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "core_defend_data_citadel",
+      "type": "short_story",
+      "title_en": "Core Defend Data Citadel",
+      "title_ko": "Core Defend Data Citadel",
+      "game_mission_id": "core_defend_data_citadel"
+    },
+    {
+      "stem": "core_defend_eye_archive",
+      "type": "short_story",
+      "title_en": "Core Defend Eye Archive",
+      "title_ko": "Core Defend Eye Archive",
+      "game_mission_id": "core_defend_eye_archive"
+    },
+    {
+      "stem": "core_dual_objective_construct_heist",
+      "type": "short_story",
+      "title_en": "Core Dual Objective Construct Heist",
+      "title_ko": "Core Dual Objective Construct Heist",
+      "game_mission_id": "core_dual_objective_construct_heist"
+    },
+    {
+      "stem": "core_dual_objective_mirror_run",
+      "type": "short_story",
+      "title_en": "Core Dual Objective Mirror Run",
+      "title_ko": "Core Dual Objective Mirror Run",
+      "game_mission_id": "core_dual_objective_mirror_run"
+    },
+    {
+      "stem": "core_extract_aeslin_key",
+      "type": "short_story",
+      "title_en": "Core Extract Aeslin Key",
+      "title_ko": "Core Extract Aeslin Key",
+      "game_mission_id": "core_extract_aeslin_key"
+    },
+    {
+      "stem": "core_extract_neuromancer_signature",
+      "type": "short_story",
+      "title_en": "Core Extract Neuromancer Signature",
+      "title_ko": "Core Extract Neuromancer Signature",
+      "game_mission_id": "core_extract_neuromancer_signature"
+    },
+    {
+      "stem": "core_extract_payroll_archive",
+      "type": "short_story",
+      "title_en": "Core Extract Payroll Archive",
+      "title_ko": "Core Extract Payroll Archive",
+      "game_mission_id": "core_extract_payroll_archive"
+    },
+    {
+      "stem": "core_investigate_construct_council",
+      "type": "short_story",
+      "title_en": "Core Investigate Construct Council",
+      "title_ko": "Core Investigate Construct Council",
+      "game_mission_id": "core_investigate_construct_council"
+    },
+    {
+      "stem": "core_investigate_ice_lord",
+      "type": "short_story",
+      "title_en": "Core Investigate Ice Lord",
+      "title_ko": "Core Investigate Ice Lord",
+      "game_mission_id": "core_investigate_ice_lord"
+    },
+    {
+      "stem": "core_memory_dump",
+      "type": "short_story",
+      "title_en": "Core Memory Dump",
+      "title_ko": "=== 이야기 본문 (stub) ===",
+      "game_mission_id": "core_memory_dump"
+    },
+    {
+      "stem": "core_stealth_construct_pool",
+      "type": "short_story",
+      "title_en": "Core Stealth Construct Pool",
+      "title_ko": "Core Stealth Construct Pool",
+      "game_mission_id": "core_stealth_construct_pool"
+    },
+    {
+      "stem": "core_stealth_eye_central",
+      "type": "short_story",
+      "title_en": "Core Stealth Eye Central",
+      "title_ko": "Core Stealth Eye Central",
+      "game_mission_id": "core_stealth_eye_central"
+    },
+    {
+      "stem": "cortex_hound_recovery",
+      "type": "novelette",
+      "title_en": "Cortex Hound Recovery",
+      "title_ko": "치바 대기실",
+      "game_mission_id": "cortex_hound_recovery"
+    },
+    {
+      "stem": "cortos_briefing",
+      "type": "short_story",
+      "title_en": "Cortos Briefing",
+      "title_ko": "코르토의 브리핑 (Corto's Briefing)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "data_retrieval",
+      "type": "short_story",
+      "title_en": "Data Retrieval",
+      "title_ko": "데이터 회수",
+      "game_mission_id": "data_retrieval"
+    },
+    {
+      "stem": "dixies_archive",
+      "type": "short_story",
+      "title_en": "Dixies Archive",
+      "title_ko": "딕시의 아카이브 (Dixie's Archive)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "dixies_choice",
+      "type": "novelette",
+      "title_en": "Dixies Choice",
+      "title_ko": "디지의 선택",
+      "game_mission_id": "dixies_choice"
+    },
+    {
+      "stem": "dixies_last_run",
+      "type": "short_story",
+      "title_en": "Dixies Last Run",
+      "title_ko": "딕시의 마지막 달림",
+      "game_mission_id": "construct_memory_rescue"
+    },
+    {
+      "stem": "dixies_old_framing",
+      "type": "short_story",
+      "title_en": "Dixies Old Framing",
+      "title_ko": "딕시의 오래된 프레이밍",
+      "game_mission_id": null
+    },
+    {
+      "stem": "eurydice_arc",
+      "type": "short_story",
+      "title_en": "Eurydice Arc",
+      "title_ko": "Eurydice, 감사됨 (Eurydice, Audited)",
+      "game_mission_id": "eurydice_arc"
+    },
+    {
+      "stem": "fido_statework",
+      "type": "novelette",
+      "title_en": "Fido Statework",
+      "title_ko": "이야기 기록",
+      "game_mission_id": "fido_statework"
+    },
+    {
+      "stem": "finn_factory_labour_run",
+      "type": "novelette",
+      "title_en": "Finn Factory Labour Run",
+      "title_ko": "이야기 기록",
+      "game_mission_id": "finn_factory_labour_run"
+    },
+    {
+      "stem": "finn_final_reckoning",
+      "type": "short_story",
+      "title_en": "Finn Final Reckoning",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "finn_final_reckoning"
+    },
+    {
+      "stem": "finn_stall",
+      "type": "short_story",
+      "title_en": "Finn Stall",
+      "title_ko": "핀의 상점 (The Finn's Stall)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "finns_factory_labour",
+      "type": "short_story",
+      "title_en": "Finns Factory Labour",
+      "title_ko": "핀의 공장 노동 (Finn's Factory Labour)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "finns_room",
+      "type": "novelette",
+      "title_en": "Finns Room",
+      "title_ko": "핀의 방 (Finn's Room)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "first_contact",
+      "type": "short_story",
+      "title_en": "First Contact",
+      "title_ko": "퍼스트 컨택트",
+      "game_mission_id": "first_contact"
+    },
+    {
+      "stem": "first_trace",
+      "type": "short_story",
+      "title_en": "First Trace",
+      "title_ko": "First Trace",
+      "game_mission_id": "first_trace"
+    },
+    {
+      "stem": "flatline_again",
+      "type": "short_story",
+      "title_en": "Flatline Again",
+      "title_ko": "플랫라인 Again",
+      "game_mission_id": "flatline_call"
+    },
+    {
+      "stem": "freeside_defend_orbit_habitat",
+      "type": "short_story",
+      "title_en": "Freeside Defend Orbit Habitat",
+      "title_ko": "Freeside Defend Orbit Habitat",
+      "game_mission_id": "freeside_defend_orbit_habitat"
+    },
+    {
+      "stem": "freeside_defend_orbital_habitat",
+      "type": "short_story",
+      "title_en": "Freeside Defend Orbital Habitat",
+      "title_ko": "Freeside Defend Orbital Habitat",
+      "game_mission_id": "freeside_defend_orbital_habitat"
+    },
+    {
+      "stem": "freeside_dual_objective_construct_pod_2",
+      "type": "short_story",
+      "title_en": "Freeside Dual Objective Construct Pod 2",
+      "title_ko": "Freeside Dual Objective Construct Pod 2",
+      "game_mission_id": "freeside_dual_objective_construct_pod_2"
+    },
+    {
+      "stem": "freeside_dual_objective_jockey_pod",
+      "type": "short_story",
+      "title_en": "Freeside Dual Objective Jockey Pod",
+      "title_ko": "Freeside Dual Objective Jockey Pod",
+      "game_mission_id": "freeside_dual_objective_jockey_pod"
+    },
+    {
+      "stem": "freeside_dual_objective_space_jockey",
+      "type": "short_story",
+      "title_en": "Freeside Dual Objective Space Jockey",
+      "title_ko": "Freeside Dual Objective Space Jockey",
+      "game_mission_id": "freeside_dual_objective_space_jockey"
+    },
+    {
+      "stem": "freeside_extract_construct_archive",
+      "type": "short_story",
+      "title_en": "Freeside Extract Construct Archive",
+      "title_ko": "Freeside Extract Construct Archive",
+      "game_mission_id": "freeside_extract_construct_archive"
+    },
+    {
+      "stem": "freeside_extract_construct_pod",
+      "type": "short_story",
+      "title_en": "Freeside Extract Construct Pod",
+      "title_ko": "Freeside Extract Construct Pod",
+      "game_mission_id": "freeside_extract_construct_pod"
+    },
+    {
+      "stem": "freeside_extract_orbital_data",
+      "type": "short_story",
+      "title_en": "Freeside Extract Orbital Data",
+      "title_ko": "Freeside Extract Orbital Data",
+      "game_mission_id": "freeside_extract_orbital_data"
+    },
+    {
+      "stem": "freeside_extract_orbital_data_2",
+      "type": "short_story",
+      "title_en": "Freeside Extract Orbital Data 2",
+      "title_ko": "Freeside Extract Orbital Data 2",
+      "game_mission_id": "freeside_extract_orbital_data_2"
+    },
+    {
+      "stem": "freeside_investigate_construct_research",
+      "type": "short_story",
+      "title_en": "Freeside Investigate Construct Research",
+      "title_ko": "Freeside Investigate Construct Research",
+      "game_mission_id": "freeside_investigate_construct_research"
+    },
+    {
+      "stem": "freeside_investigate_orbital_history",
+      "type": "short_story",
+      "title_en": "Freeside Investigate Orbital History",
+      "title_ko": "Freeside Investigate Orbital History",
+      "game_mission_id": "freeside_investigate_orbital_history"
+    },
+    {
+      "stem": "freeside_investigate_orbital_sovereignty",
+      "type": "short_story",
+      "title_en": "Freeside Investigate Orbital Sovereignty",
+      "title_ko": "Freeside Investigate Orbital Sovereignty",
+      "game_mission_id": "freeside_investigate_orbital_sovereignty"
+    },
+    {
+      "stem": "freeside_payroll",
+      "type": "short_story",
+      "title_en": "Freeside Payroll",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "freeside_payroll"
+    },
+    {
+      "stem": "freeside_stealth_construct_chamber",
+      "type": "short_story",
+      "title_en": "Freeside Stealth Construct Chamber",
+      "title_ko": "Freeside Stealth Construct Chamber",
+      "game_mission_id": "freeside_stealth_construct_chamber"
+    },
+    {
+      "stem": "freeside_stealth_orbit_lab",
+      "type": "short_story",
+      "title_en": "Freeside Stealth Orbit Lab",
+      "title_ko": "Freeside Stealth Orbit Lab",
+      "game_mission_id": "freeside_stealth_orbit_lab"
+    },
+    {
+      "stem": "freeside_stealth_orbit_lab_2",
+      "type": "short_story",
+      "title_en": "Freeside Stealth Orbit Lab 2",
+      "title_ko": "Freeside Stealth Orbit Lab 2",
+      "game_mission_id": "freeside_stealth_orbit_lab_2"
+    },
+    {
+      "stem": "g_boys_arc",
+      "type": "novelette",
+      "title_en": "G Boys Arc",
+      "title_ko": "이야기 기록",
+      "game_mission_id": "g_boys_arc"
+    },
+    {
+      "stem": "ghost_signal",
+      "type": "short_story",
+      "title_en": "유령 신호",
+      "title_ko": "",
+      "game_mission_id": null
+    },
+    {
+      "stem": "heretic_loa_conscription",
+      "type": "novelette",
+      "title_en": "Heretic Loa Conscription",
+      "title_ko": "VODOO가 구성체를 편집하다",
+      "game_mission_id": "heretic_loa_conscription"
+    },
+    {
+      "stem": "hideo_contract",
+      "type": "short_story",
+      "title_en": "Hideo Contract",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "hideo_contract"
+    },
+    {
+      "stem": "hideo_cyberspace-acupuncture",
+      "type": "short_story",
+      "title_en": "Hideo Cyberspace-Acupuncture",
+      "title_ko": "히데오의 사이버스페이스 침술 (Hideo's Cyberspace Acupuncture)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "hideos_shrine",
+      "type": "short_story",
+      "title_en": "Hideos Shrine",
+      "title_ko": "히데요의 신사 (Hideo's Shrine)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "hiltons_dispatch",
+      "type": "short_story",
+      "title_en": "Hiltons Dispatch",
+      "title_ko": "힐턴의 배달 (Hilton's Dispatch)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "hosaka_after_hours",
+      "type": "short_story",
+      "title_en": "호사카 야간",
+      "title_ko": "",
+      "game_mission_id": null
+    },
+    {
+      "stem": "hosaka_core",
+      "type": "short_story",
+      "title_en": "Hosaka Core",
+      "title_ko": "호사카 코어 (Hosaka Core)",
+      "game_mission_id": "hosaka_core"
+    },
+    {
+      "stem": "hosaka_extraction",
+      "type": "short_story",
+      "title_en": "Hosaka Extraction",
+      "title_ko": "호사카 추출",
+      "game_mission_id": "hosaka_extraction"
+    },
+    {
+      "stem": "hosaka_terminal_supply",
+      "type": "novelette",
+      "title_en": "Hosaka Terminal Supply",
+      "title_ko": "Hosaka 페어링",
+      "game_mission_id": "hosaka_terminal_supply"
+    },
+    {
+      "stem": "hounds_arc",
+      "type": "short_story",
+      "title_en": "Hounds Arc",
+      "title_ko": "감사된 하운드들 (The Hounds Audited)",
+      "game_mission_id": "hounds_arc"
+    },
+    {
+      "stem": "ice_run",
+      "type": "short_story",
+      "title_en": "Ice Run",
+      "title_ko": "얼음 달콤 (Ice Run)",
+      "game_mission_id": "ice_run"
+    },
+    {
+      "stem": "idoru_wedding_arc",
+      "type": "short_story",
+      "title_en": "Idoru Wedding Arc",
+      "title_ko": "이도루 결혼 (The Idoru-Wedding)",
+      "game_mission_id": "idoru_wedding_arc"
+    },
+    {
+      "stem": "idorus_distribution",
+      "type": "short_story",
+      "title_en": "Idorus Distribution",
+      "title_ko": "이도루의 분포 (The Idoru's Distribution)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "jackies_pre_loa_showcase",
+      "type": "short_story",
+      "title_en": "Jackies Pre Loa Showcase",
+      "title_ko": "재키의 부두 이전 쇼케이스",
+      "game_mission_id": null
+    },
+    {
+      "stem": "judges_maintenance",
+      "type": "short_story",
+      "title_en": "Judges Maintenance",
+      "title_ko": "심판의 유지보수 (The Judge's Maintenance)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "kumiko_manarase-midnight",
+      "type": "short_story",
+      "title_en": "Kumiko Manarase-Midnight",
+      "title_ko": "자정의 매나리사",
+      "game_mission_id": "craft_job"
+    },
+    {
+      "stem": "kumikos_lacquer",
+      "type": "short_story",
+      "title_en": "Kumikos Lacquer",
+      "title_ko": "쿠미코의 옻칠 (Kumiko's Lacquer)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "lady_3janes_heir",
+      "type": "short_story",
+      "title_en": "Lady 3Janes Heir",
+      "title_ko": "레이디 3제인의 후계자 (Lady 3Jane's Heir)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "laney_node_signal_run",
+      "type": "short_story",
+      "title_en": "Laney Node Signal Run",
+      "title_ko": "노드 인식자 (Nodal Perceiver)",
+      "game_mission_id": "laney_node_signal_run"
+    },
+    {
+      "stem": "laney_pattern",
+      "type": "short_story",
+      "title_en": "Laney Pattern",
+      "title_ko": "레이니의 패턴 (Laney's Pattern)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "loa_voodoo_contact",
+      "type": "short_story",
+      "title_en": "Loa Voodoo Contact",
+      "title_ko": "부두 로아 연락",
+      "game_mission_id": "voodoo_loa_encounter"
+    },
+    {
+      "stem": "maas_heist",
+      "type": "short_story",
+      "title_en": "Maas Heist",
+      "title_ko": "마스 바이오랩스 강탈",
+      "game_mission_id": "maas_heist"
+    },
+    {
+      "stem": "maelcums_zion",
+      "type": "short_story",
+      "title_en": "Maelcums Zion",
+      "title_ko": "묵컴의 사이온 (Maelcum's Zion)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "marie_france_reverie",
+      "type": "short_story",
+      "title_en": "Marie France Reverie",
+      "title_ko": "마리-프랑스 몽상 (Marie-France Reverie)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "marly_louisiana-god",
+      "type": "short_story",
+      "title_en": "Marly Louisiana-God",
+      "title_ko": "루이지아나의 신",
+      "game_mission_id": "delivery_to_finn"
+    },
+    {
+      "stem": "marlys_window",
+      "type": "novelette",
+      "title_en": "Marlys Window",
+      "title_ko": "마를리, 비렉의 창에서 (Marly at Virek's Window)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "matrix_revelation",
+      "type": "short_story",
+      "title_en": "Matrix Revelation",
+      "title_ko": "Matrix Revelation",
+      "game_mission_id": "matrix_revelation"
+    },
+    {
+      "stem": "mid_defend_kumo_network",
+      "type": "short_story",
+      "title_en": "Mid Defend Kumo Network",
+      "title_ko": "Mid Defend Kumo Network",
+      "game_mission_id": "mid_defend_kumo_network"
+    },
+    {
+      "stem": "mid_defend_sense_net_relay",
+      "type": "short_story",
+      "title_en": "Mid Defend Sense Net Relay",
+      "title_ko": "Mid Defend Sense Net Relay",
+      "game_mission_id": "mid_defend_sense_net_relay"
+    },
+    {
+      "stem": "mid_dual_objective_hosaka_data",
+      "type": "short_story",
+      "title_en": "Mid Dual Objective Hosaka Data",
+      "title_ko": "Mid Dual Objective Hosaka Data",
+      "game_mission_id": "mid_dual_objective_hosaka_data"
+    },
+    {
+      "stem": "mid_dual_objective_shibuya_run",
+      "type": "short_story",
+      "title_en": "Mid Dual Objective Shibuya Run",
+      "title_ko": "Mid Dual Objective Shibuya Run",
+      "game_mission_id": "mid_dual_objective_shibuya_run"
+    },
+    {
+      "stem": "mid_dual_objective_trade_show",
+      "type": "short_story",
+      "title_en": "Mid Dual Objective Trade Show",
+      "title_ko": "Mid Dual Objective Trade Show",
+      "game_mission_id": "mid_dual_objective_trade_show"
+    },
+    {
+      "stem": "mid_extract_biometal_chip",
+      "type": "short_story",
+      "title_en": "Mid Extract Biometal Chip",
+      "title_ko": "Mid Extract Biometal Chip",
+      "game_mission_id": "mid_extract_biometal_chip"
+    },
+    {
+      "stem": "mid_extract_oni_data",
+      "type": "short_story",
+      "title_en": "Mid Extract Oni Data",
+      "title_ko": "Mid Extract Oni Data",
+      "game_mission_id": "mid_extract_oni_data"
+    },
+    {
+      "stem": "mid_extract_yakuza_chop_shop",
+      "type": "short_story",
+      "title_en": "Mid Extract Yakuza Chop Shop",
+      "title_ko": "Mid Extract Yakuza Chop Shop",
+      "game_mission_id": "mid_extract_yakuza_chop_shop"
+    },
+    {
+      "stem": "mid_investigate_black_market",
+      "type": "short_story",
+      "title_en": "Mid Investigate Black Market",
+      "title_ko": "Mid Investigate Black Market",
+      "game_mission_id": "mid_investigate_black_market"
+    },
+    {
+      "stem": "mid_investigate_yakuza_consortium",
+      "type": "short_story",
+      "title_en": "Mid Investigate Yakuza Consortium",
+      "title_ko": "Mid Investigate Yakuza Consortium",
+      "game_mission_id": "mid_investigate_yakuza_consortium"
+    },
+    {
+      "stem": "mid_stealth_corpo_penthouse",
+      "type": "short_story",
+      "title_en": "Mid Stealth Corpo Penthouse",
+      "title_ko": "Mid Stealth Corpo Penthouse",
+      "game_mission_id": "mid_stealth_corpo_penthouse"
+    },
+    {
+      "stem": "mid_stealth_yakuza_meeting",
+      "type": "short_story",
+      "title_en": "Mid Stealth Yakuza Meeting",
+      "title_ko": "Mid Stealth Yakuza Meeting",
+      "game_mission_id": "mid_stealth_yakuza_meeting"
+    },
+    {
+      "stem": "milgrim_vocabulary",
+      "type": "short_story",
+      "title_en": "Milgrim Vocabulary",
+      "title_ko": "밀그림의 어휘 (Milgrim's Vocabulary)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "molly_decides",
+      "type": "novelette",
+      "title_en": "Molly Decides",
+      "title_ko": "몰리의 결정",
+      "game_mission_id": "molly_decides"
+    },
+    {
+      "stem": "molly_meets_casey",
+      "type": "short_story",
+      "title_en": "Molly Meets Casey",
+      "title_ko": "Molly가 Casey를 만나다 (Molly Meets Casey)",
+      "game_mission_id": "first_contact"
+    },
+    {
+      "stem": "molly_razor_defend_london_nest",
+      "type": "short_story",
+      "title_en": "Molly Razor Defend London Nest",
+      "title_ko": "Molly Razor Defend London Nest",
+      "game_mission_id": "molly_razor_defend_london_nest"
+    },
+    {
+      "stem": "molly_razor_dual_objective_hotel_target",
+      "type": "short_story",
+      "title_en": "Molly Razor Dual Objective Hotel Target",
+      "title_ko": "Molly Razor Dual Objective Hotel Target",
+      "game_mission_id": "molly_razor_dual_objective_hotel_target"
+    },
+    {
+      "stem": "molly_razor_extract_final_chip",
+      "type": "short_story",
+      "title_en": "Molly Razor Extract Final Chip",
+      "title_ko": "Molly Razor Extract Final Chip",
+      "game_mission_id": "molly_razor_extract_final_chip"
+    },
+    {
+      "stem": "molly_razor_investigate_sin_fans",
+      "type": "short_story",
+      "title_en": "Molly Razor Investigate Sin Fans",
+      "title_ko": "Molly Razor Investigate Sin Fans",
+      "game_mission_id": "molly_razor_investigate_sin_fans"
+    },
+    {
+      "stem": "molly_razor_stealth_final_contract",
+      "type": "short_story",
+      "title_en": "Molly Razor Stealth Final Contract",
+      "title_ko": "Molly Razor Stealth Final Contract",
+      "game_mission_id": "molly_razor_stealth_final_contract"
+    },
+    {
+      "stem": "molly_returns",
+      "type": "short_story",
+      "title_en": "Molly Returns",
+      "title_ko": "몰리의 귀환 (Molly Returns)",
+      "game_mission_id": "mollys_final_razor"
+    },
+    {
+      "stem": "mollys_extraction",
+      "type": "short_story",
+      "title_en": "Mollys Extraction",
+      "title_ko": "몰리의 추출 (Molly's Extraction)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "mollys_final_razor",
+      "type": "short_story",
+      "title_en": "Mollys Final Razor",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "mollys_final_razor"
+    },
+    {
+      "stem": "mollys_hands",
+      "type": "short_story",
+      "title_en": "Mollys Hands",
+      "title_ko": "몰리의 손 (Molly's Hands)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "mollys_market",
+      "type": "short_story",
+      "title_en": "Mollys Market",
+      "title_ko": "몰리의 마켓",
+      "game_mission_id": "mollys_market"
+    },
+    {
+      "stem": "mollys_razor",
+      "type": "short_story",
+      "title_en": "Mollys Razor",
+      "title_ko": "몰리의 면도칼",
+      "game_mission_id": "mollys_razor"
+    },
+    {
+      "stem": "mona_lisas_dispatch",
+      "type": "short_story",
+      "title_en": "Mona Lisas Dispatch",
+      "title_ko": "모나리자의 배달 (Mona Lisa's Dispatch)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "monas_freeside_audit",
+      "type": "short_story",
+      "title_en": "Monas Freeside Audit",
+      "title_ko": "모나의 프리스타이드 점검",
+      "game_mission_id": null
+    },
+    {
+      "stem": "neon_tokyo_courier",
+      "type": "short_story",
+      "title_en": "Neon Tokyo Courier",
+      "title_ko": "도쿄 쿠리어 운반",
+      "game_mission_id": "tokyo_courier_run"
+    },
+    {
+      "stem": "neuromancer_first_ping",
+      "type": "short_story",
+      "title_en": "Neuromancer First Ping",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "neuromancer_first_ping"
+    },
+    {
+      "stem": "neuromancer_merger",
+      "type": "short_story",
+      "title_en": "Neuromancer Merger",
+      "title_ko": "뉴로맨서 합병",
+      "game_mission_id": "neuromancer_merger"
+    },
+    {
+      "stem": "neuromancer_whisper",
+      "type": "short_story",
+      "title_en": "Neuromancer Whisper",
+      "title_ko": "Neuromancer Whisper",
+      "game_mission_id": "neuromancer_whisper"
+    },
+    {
+      "stem": "new_rose_hotel",
+      "type": "short_story",
+      "title_en": "New Rose Hotel",
+      "title_ko": "뉴 로즈 호텔 (New Rose Hotel)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_1",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 1",
+      "title_ko": "Ngplus Dual Objective Boss Rush 1",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_1"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_2",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 2",
+      "title_ko": "Ngplus Dual Objective Boss Rush 2",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_2"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_3",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 3",
+      "title_ko": "Ngplus Dual Objective Boss Rush 3",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_3"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_4",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 4",
+      "title_ko": "Ngplus Dual Objective Boss Rush 4",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_4"
+    },
+    {
+      "stem": "ngplus_dual_objective_boss_rush_5",
+      "type": "short_story",
+      "title_en": "Ngplus Dual Objective Boss Rush 5",
+      "title_ko": "Ngplus Dual Objective Boss Rush 5",
+      "game_mission_id": "ngplus_dual_objective_boss_rush_5"
+    },
+    {
+      "stem": "ngplus_investigate_archive_1",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 1",
+      "title_ko": "Ngplus Investigate Archive 1",
+      "game_mission_id": "ngplus_investigate_archive_1"
+    },
+    {
+      "stem": "ngplus_investigate_archive_2",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 2",
+      "title_ko": "Ngplus Investigate Archive 2",
+      "game_mission_id": "ngplus_investigate_archive_2"
+    },
+    {
+      "stem": "ngplus_investigate_archive_3",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 3",
+      "title_ko": "Ngplus Investigate Archive 3",
+      "game_mission_id": "ngplus_investigate_archive_3"
+    },
+    {
+      "stem": "ngplus_investigate_archive_4",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 4",
+      "title_ko": "Ngplus Investigate Archive 4",
+      "game_mission_id": "ngplus_investigate_archive_4"
+    },
+    {
+      "stem": "ngplus_investigate_archive_5",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 5",
+      "title_ko": "Ngplus Investigate Archive 5",
+      "game_mission_id": "ngplus_investigate_archive_5"
+    },
+    {
+      "stem": "ngplus_investigate_archive_6",
+      "type": "short_story",
+      "title_en": "Ngplus Investigate Archive 6",
+      "title_ko": "Ngplus Investigate Archive 6",
+      "game_mission_id": "ngplus_investigate_archive_6"
+    },
+    {
+      "stem": "ono_sendai_repair",
+      "type": "novelette",
+      "title_en": "Ono Sendai Repair",
+      "title_ko": "80 퍼센트 기질",
+      "game_mission_id": "ono_sendai_repair"
+    },
+    {
+      "stem": "pacos_brussels_run",
+      "type": "short_story",
+      "title_en": "Pacos Brussels Run",
+      "title_ko": "파코의 브뤼셀 행 (Paco's Brussels Run)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "pan_mannerist_audit",
+      "type": "novelette",
+      "title_en": "Pan Mannerist Audit",
+      "title_ko": "이야기 기록",
+      "game_mission_id": "pan_mannerist_audit"
+    },
+    {
+      "stem": "panther_negotiate",
+      "type": "novelette",
+      "title_en": "Panther Negotiate",
+      "title_ko": "팬서 모던스의 리테이너",
+      "game_mission_id": "panther_negotiate"
+    },
+    {
+      "stem": "parkabrakess_footage",
+      "type": "short_story",
+      "title_en": "Parkabrakess Footage",
+      "title_ko": "파카브레이크의 푸티지 (Parkabrake's Footage)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "petals_gallery",
+      "type": "short_story",
+      "title_en": "Petals Gallery",
+      "title_ko": "페탈의 갤러리 (Petal's Gallery)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "peter-rivierey_modular-man",
+      "type": "short_story",
+      "title_en": "Peter-Rivierey Modular-Man",
+      "title_ko": "피터 리비에리의 모듈라 맨 (Peter Rivierey's Modular Man)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "peter_2s_pact",
+      "type": "short_story",
+      "title_en": "Peter 2S Pact",
+      "title_ko": "피터 2의 서약 (Peter 2's Pact)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "ratzias_surgery",
+      "type": "short_story",
+      "title_en": "Ratzias Surgery",
+      "title_ko": "라치아의 수술 (Ratzia's Surgery)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "razor_work",
+      "type": "short_story",
+      "title_en": "Razor Work",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "razor_work"
+    },
+    {
+      "stem": "rivieras_hologram",
+      "type": "short_story",
+      "title_en": "Rivieras Hologram",
+      "title_ko": "리비에라의 홀로그램 (Riviera's Hologram)",
+      "game_mission_id": "rivieras_hologram_phase_b55"
+    },
+    {
+      "stem": "rivieras_last_image",
+      "type": "short_story",
+      "title_en": "Rivieras Last Image",
+      "title_ko": "리비에라가 만들지 않은 이미지",
+      "game_mission_id": null
+    },
+    {
+      "stem": "rydell_baseline",
+      "type": "short_story",
+      "title_en": "Rydell Baseline",
+      "title_ko": "리델의 기준선 (Rydell's Baseline)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "sally_construct_market",
+      "type": "short_story",
+      "title_en": "Sally Construct Market",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "sally_construct_market"
+    },
+    {
+      "stem": "sally_returns",
+      "type": "short_story",
+      "title_en": "Sally Returns",
+      "title_ko": "살리의 귀환",
+      "game_mission_id": "sally_returns_arc3"
+    },
+    {
+      "stem": "sally_sandii-3am",
+      "type": "short_story",
+      "title_en": "Sally Sandii-3Am",
+      "title_ko": "로즈 호텔, 새벽 3시",
+      "game_mission_id": "sally_sandii_3am"
+    },
+    {
+      "stem": "sallys_doorway",
+      "type": "short_story",
+      "title_en": "Sallys Doorway",
+      "title_ko": "샐리의 문 (Sally's Doorway)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "sallys_third_garment",
+      "type": "short_story",
+      "title_en": "Sallys Third Garment",
+      "title_ko": "샐리의 세 번째 의상",
+      "game_mission_id": null
+    },
+    {
+      "stem": "salvation_wigan_zavijava",
+      "type": "short_story",
+      "title_en": "Salvation Wigan Zavijava",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "salvation_wigan_zavijava"
+    },
+    {
+      "stem": "sense_net_archive_intrusion",
+      "type": "short_story",
+      "title_en": "Sense Net Archive Intrusion",
+      "title_ko": "센스넷 데이터 보관소 침투",
+      "game_mission_id": "sense_net_archive_intrusion"
+    },
+    {
+      "stem": "sense_net_infiltration",
+      "type": "short_story",
+      "title_en": "Sense Net Infiltration",
+      "title_ko": "센스넷 침투",
+      "game_mission_id": "sense_net_infiltration"
+    },
+    {
+      "stem": "sense_net_trace",
+      "type": "short_story",
+      "title_en": "Sense Net Trace",
+      "title_ko": "센스/넷 추적",
+      "game_mission_id": "sense_net_tip"
+    },
+    {
+      "stem": "sils_last_delivery",
+      "type": "short_story",
+      "title_en": "Sils Last Delivery",
+      "title_ko": "실의 마지막 배달 (Sil's Last Delivery)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "slicks_nightshift",
+      "type": "short_story",
+      "title_en": "Slicks Nightshift",
+      "title_ko": "슬릭의 야간 교대 (Slick's Nightshift)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "soho_blackout",
+      "type": "short_story",
+      "title_en": "Soho Blackout",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "soho_blackout"
+    },
+    {
+      "stem": "soho_defend_coolhunter_office",
+      "type": "short_story",
+      "title_en": "Soho Defend Coolhunter Office",
+      "title_ko": "Soho Defend Coolhunter Office",
+      "game_mission_id": "soho_defend_coolhunter_office"
+    },
+    {
+      "stem": "soho_dual_objective_footage_cult",
+      "type": "short_story",
+      "title_en": "Soho Dual Objective Footage Cult",
+      "title_ko": "Soho Dual Objective Footage Cult",
+      "game_mission_id": "soho_dual_objective_footage_cult"
+    },
+    {
+      "stem": "soho_dual_objective_viddy_share",
+      "type": "short_story",
+      "title_en": "Soho Dual Objective Viddy Share",
+      "title_ko": "Soho Dual Objective Viddy Share",
+      "game_mission_id": "soho_dual_objective_viddy_share"
+    },
+    {
+      "stem": "soho_extract_logo_meme",
+      "type": "short_story",
+      "title_en": "Soho Extract Logo Meme",
+      "title_ko": "Soho Extract Logo Meme",
+      "game_mission_id": "soho_extract_logo_meme"
+    },
+    {
+      "stem": "soho_investigate_brand_territory",
+      "type": "short_story",
+      "title_en": "Soho Investigate Brand Territory",
+      "title_ko": "Soho Investigate Brand Territory",
+      "game_mission_id": "soho_investigate_brand_territory"
+    },
+    {
+      "stem": "soho_investigate_nostalgia_loop",
+      "type": "short_story",
+      "title_en": "Soho Investigate Nostalgia Loop",
+      "title_ko": "Soho Investigate Nostalgia Loop",
+      "game_mission_id": "soho_investigate_nostalgia_loop"
+    },
+    {
+      "stem": "soho_stealth_brand_vault",
+      "type": "short_story",
+      "title_en": "Soho Stealth Brand Vault",
+      "title_ko": "Soho Stealth Brand Vault",
+      "game_mission_id": "soho_stealth_brand_vault"
+    },
+    {
+      "stem": "soho_stealth_node_dive",
+      "type": "short_story",
+      "title_en": "Soho Stealth Node Dive",
+      "title_ko": "Soho Stealth Node Dive",
+      "game_mission_id": "soho_stealth_node_dive"
+    },
+    {
+      "stem": "straylight_approach",
+      "type": "short_story",
+      "title_en": "Straylight Approach",
+      "title_ko": "스트레이라이트 접근",
+      "game_mission_id": "straylight_approach"
+    },
+    {
+      "stem": "straylight_inquiry",
+      "type": "short_story",
+      "title_en": "Straylight Inquiry",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "straylight_inquiry"
+    },
+    {
+      "stem": "surface_defend_recycling_baseline",
+      "type": "short_story",
+      "title_en": "Surface Defend Recycling Baseline",
+      "title_ko": "Surface Defend Recycling Baseline",
+      "game_mission_id": "surface_defend_recycling_baseline"
+    },
+    {
+      "stem": "surface_extract_seed_run",
+      "type": "short_story",
+      "title_en": "Surface Extract Seed Run",
+      "title_ko": "Surface Extract Seed Run",
+      "game_mission_id": "surface_extract_seed_run"
+    },
+    {
+      "stem": "surface_investigate_bama_suburb",
+      "type": "short_story",
+      "title_en": "Surface Investigate Bama Suburb",
+      "title_ko": "Surface Investigate Bama Suburb",
+      "game_mission_id": "surface_investigate_bama_suburb"
+    },
+    {
+      "stem": "surface_mail_run",
+      "type": "short_story",
+      "title_en": "Surface Mail Run",
+      "title_ko": "저 대역폭 (The Low Bandwidth)",
+      "game_mission_id": "surface_mail_run"
+    },
+    {
+      "stem": "ta_defection",
+      "type": "short_story",
+      "title_en": "Ta Defection",
+      "title_ko": "T-A 이탈",
+      "game_mission_id": "ta_defection"
+    },
+    {
+      "stem": "ta_defend_straylight_corridor",
+      "type": "short_story",
+      "title_en": "Ta Defend Straylight Corridor",
+      "title_ko": "Ta Defend Straylight Corridor",
+      "game_mission_id": "ta_defend_straylight_corridor"
+    },
+    {
+      "stem": "ta_defend_straylight_perimeter",
+      "type": "short_story",
+      "title_en": "Ta Defend Straylight Perimeter",
+      "title_ko": "Ta Defend Straylight Perimeter",
+      "game_mission_id": "ta_defend_straylight_perimeter"
+    },
+    {
+      "stem": "ta_dual_objective_ashpool_vote",
+      "type": "short_story",
+      "title_en": "Ta Dual Objective Ashpool Vote",
+      "title_ko": "Ta Dual Objective Ashpool Vote",
+      "game_mission_id": "ta_dual_objective_ashpool_vote"
+    },
+    {
+      "stem": "ta_dual_objective_payroll_heist",
+      "type": "short_story",
+      "title_en": "Ta Dual Objective Payroll Heist",
+      "title_ko": "Ta Dual Objective Payroll Heist",
+      "game_mission_id": "ta_dual_objective_payroll_heist"
+    },
+    {
+      "stem": "ta_dual_objective_warden_archive",
+      "type": "short_story",
+      "title_en": "Ta Dual Objective Warden Archive",
+      "title_ko": "Ta Dual Objective Warden Archive",
+      "game_mission_id": "ta_dual_objective_warden_archive"
+    },
+    {
+      "stem": "ta_extract_aleph_chip",
+      "type": "short_story",
+      "title_en": "Ta Extract Aleph Chip",
+      "title_ko": "Ta Extract Aleph Chip",
+      "game_mission_id": "ta_extract_aleph_chip"
+    },
+    {
+      "stem": "ta_extract_aleph_fragment_2",
+      "type": "short_story",
+      "title_en": "Ta Extract Aleph Fragment 2",
+      "title_ko": "Ta Extract Aleph Fragment 2",
+      "game_mission_id": "ta_extract_aleph_fragment_2"
+    },
+    {
+      "stem": "ta_extract_sense_net_key",
+      "type": "short_story",
+      "title_en": "Ta Extract Sense Net Key",
+      "title_ko": "Ta Extract Sense Net Key",
+      "game_mission_id": "ta_extract_sense_net_key"
+    },
+    {
+      "stem": "ta_heist",
+      "type": "short_story",
+      "title_en": "Ta Heist",
+      "title_ko": "T-A 강도",
+      "game_mission_id": "ta_heist"
+    },
+    {
+      "stem": "ta_investigate_3jane_initiative",
+      "type": "short_story",
+      "title_en": "Ta Investigate 3Jane Initiative",
+      "title_ko": "Ta Investigate 3Jane Initiative",
+      "game_mission_id": "ta_investigate_3jane_initiative"
+    },
+    {
+      "stem": "ta_investigate_construct_memory",
+      "type": "short_story",
+      "title_en": "Ta Investigate Construct Memory",
+      "title_ko": "Ta Investigate Construct Memory",
+      "game_mission_id": "ta_investigate_construct_memory"
+    },
+    {
+      "stem": "ta_stealth_construct_chamber",
+      "type": "short_story",
+      "title_en": "Ta Stealth Construct Chamber",
+      "title_ko": "Ta Stealth Construct Chamber",
+      "game_mission_id": "ta_stealth_construct_chamber"
+    },
+    {
+      "stem": "ta_stealth_penthouse_construct",
+      "type": "short_story",
+      "title_en": "Ta Stealth Penthouse Construct",
+      "title_ko": "Ta Stealth Penthouse Construct",
+      "game_mission_id": "ta_stealth_penthouse_construct"
+    },
+    {
+      "stem": "tessier_archive",
+      "type": "short_story",
+      "title_en": "Tessier Archive",
+      "title_ko": "테시에 아카이브 (Tessier Archive)",
+      "game_mission_id": "ta_payroll_archive"
+    },
+    {
+      "stem": "tessier_ashpool_aftermath",
+      "type": "short_story",
+      "title_en": "테시에-애시풀: 여파",
+      "title_ko": "",
+      "game_mission_id": null
+    },
+    {
+      "stem": "tessier_sleeper_arc",
+      "type": "novelette",
+      "title_en": "Tessier Sleeper Arc",
+      "title_ko": "이야기 기록",
+      "game_mission_id": "tessier_sleeper_arc"
+    },
+    {
+      "stem": "the_answer",
+      "type": "short_story",
+      "title_en": "The Answer",
+      "title_ko": "The Answer",
+      "game_mission_id": "aleph_fragment"
+    },
+    {
+      "stem": "the_choice",
+      "type": "short_story",
+      "title_en": "The Choice",
+      "title_ko": "선택",
+      "game_mission_id": "final_choice"
+    },
+    {
+      "stem": "the_finns_first_table",
+      "type": "short_story",
+      "title_en": "The Finns First Table",
+      "title_ko": "핀의 첫 번째 테이블",
+      "game_mission_id": null
+    },
+    {
+      "stem": "the_first_walk",
+      "type": "short_story",
+      "title_en": "The First Walk",
+      "title_ko": "첫 발걸음 (The First Walk)",
+      "game_mission_id": "first_jack"
+    },
+    {
+      "stem": "the_fourth_word",
+      "type": "short_story",
+      "title_en": "The Fourth Word",
+      "title_ko": "The Fourth Word",
+      "game_mission_id": "first_trace"
+    },
+    {
+      "stem": "the_full_name",
+      "type": "novelette",
+      "title_en": "The Full Name",
+      "title_ko": "풀 네임 (The Full Name)",
+      "game_mission_id": "construct_memory_rescue"
+    },
+    {
+      "stem": "the_leaving",
+      "type": "novelette",
+      "title_en": "The Leaving",
+      "title_ko": "떠남 (The Leaving)",
+      "game_mission_id": "final_choice"
+    },
+    {
+      "stem": "the_naming",
+      "type": "novelette",
+      "title_en": "The Naming",
+      "title_ko": "이름 (The Naming)",
+      "game_mission_id": "aleph_fragment"
+    },
+    {
+      "stem": "threjane_family_log",
+      "type": "short_story",
+      "title_en": "Threjane Family Log",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "threjane_family_log"
+    },
+    {
+      "stem": "tokyo_defend_shibuya_archipelago",
+      "type": "short_story",
+      "title_en": "Tokyo Defend Shibuya Archipelago",
+      "title_ko": "Tokyo Defend Shibuya Archipelago",
+      "game_mission_id": "tokyo_defend_shibuya_archipelago"
+    },
+    {
+      "stem": "tokyo_dual_objective_coach_class",
+      "type": "short_story",
+      "title_en": "Tokyo Dual Objective Coach Class",
+      "title_ko": "Tokyo Dual Objective Coach Class",
+      "game_mission_id": "tokyo_dual_objective_coach_class"
+    },
+    {
+      "stem": "tokyo_dual_objective_darko_trauma",
+      "type": "short_story",
+      "title_en": "Tokyo Dual Objective Darko Trauma",
+      "title_ko": "Tokyo Dual Objective Darko Trauma",
+      "game_mission_id": "tokyo_dual_objective_darko_trauma"
+    },
+    {
+      "stem": "tokyo_extract_footage_archive",
+      "type": "short_story",
+      "title_en": "Tokyo Extract Footage Archive",
+      "title_ko": "Tokyo Extract Footage Archive",
+      "game_mission_id": "tokyo_extract_footage_archive"
+    },
+    {
+      "stem": "tokyo_extract_laney_signal",
+      "type": "short_story",
+      "title_en": "Tokyo Extract Laney Signal",
+      "title_ko": "Tokyo Extract Laney Signal",
+      "game_mission_id": "tokyo_extract_laney_signal"
+    },
+    {
+      "stem": "tokyo_investigate_marcus_garvey",
+      "type": "short_story",
+      "title_en": "Tokyo Investigate Marcus Garvey",
+      "title_ko": "Tokyo Investigate Marcus Garvey",
+      "game_mission_id": "tokyo_investigate_marcus_garvey"
+    },
+    {
+      "stem": "tokyo_investigate_parkabrake_plaza",
+      "type": "short_story",
+      "title_en": "Tokyo Investigate Parkabrake Plaza",
+      "title_ko": "Tokyo Investigate Parkabrake Plaza",
+      "game_mission_id": "tokyo_investigate_parkabrake_plaza"
+    },
+    {
+      "stem": "tokyo_pachinko_run",
+      "type": "short_story",
+      "title_en": "Tokyo Pachinko Run",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "tokyo_pachinko_run"
+    },
+    {
+      "stem": "tokyo_stealth_bridge_undercity",
+      "type": "short_story",
+      "title_en": "Tokyo Stealth Bridge Undercity",
+      "title_ko": "Tokyo Stealth Bridge Undercity",
+      "game_mission_id": "tokyo_stealth_bridge_undercity"
+    },
+    {
+      "stem": "trauma_squads_audit",
+      "type": "novelette",
+      "title_en": "Trauma Squads Audit",
+      "title_ko": "이야기 기록",
+      "game_mission_id": "trauma_squads_audit"
+    },
+    {
+      "stem": "trauma_squads_pair_arc",
+      "type": "short_story",
+      "title_en": "Trauma Squads Pair Arc",
+      "title_ko": "감사된 페어링 (The Pairing Audited)",
+      "game_mission_id": "trauma_squads_pair_arc"
+    },
+    {
+      "stem": "turners_squid_lullaby",
+      "type": "short_story",
+      "title_en": "Turners Squid Lullaby",
+      "title_ko": "터너의 오징어 자장가",
+      "game_mission_id": null
+    },
+    {
+      "stem": "tutorial_maze",
+      "type": "short_story",
+      "title_en": "Tutorial Maze",
+      "title_ko": "튜토리얼: 미로",
+      "game_mission_id": "tutorial_maze"
+    },
+    {
+      "stem": "two_a_days_tuesday",
+      "type": "short_story",
+      "title_en": "Two A Days Tuesday",
+      "title_ko": "투어데이의 화요일 (Two-A-Day's Tuesday)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "vegas_stakeout",
+      "type": "short_story",
+      "title_en": "Vegas Stakeout",
+      "title_ko": "베가스 스테이크아웃",
+      "game_mission_id": "vegas_stakeout"
+    },
+    {
+      "stem": "virek_gallery",
+      "type": "short_story",
+      "title_en": "Virek Gallery",
+      "title_ko": "비렉의 갤러리 (Virek's Gallery)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "voodoo_zoneload",
+      "type": "short_story",
+      "title_en": "Voodoo Zoneload",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "voodoo_zoneload"
+    },
+    {
+      "stem": "watchdog_patrol",
+      "type": "short_story",
+      "title_en": "Watchdog Patrol",
+      "title_ko": "워치독 순찰",
+      "game_mission_id": "watchdog_patrol"
+    },
+    {
+      "stem": "wigan_call",
+      "type": "short_story",
+      "title_en": "Wigan Call",
+      "title_ko": "위건의 호출",
+      "game_mission_id": "wigan_call"
+    },
+    {
+      "stem": "wigan_construct_reach",
+      "type": "short_story",
+      "title_en": "Wigan Construct Reach",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "wigan_construct_reach"
+    },
+    {
+      "stem": "wigan_dossier",
+      "type": "short_story",
+      "title_en": "Wigan Dossier",
+      "title_ko": "위건의 서류철 (Wigan's Dossier)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "wigan_zavijava",
+      "type": "novelette",
+      "title_en": "Wigan Zavijava",
+      "title_ko": "위건 자비야바",
+      "game_mission_id": null
+    },
+    {
+      "stem": "winter_infiltrate",
+      "type": "short_story",
+      "title_en": "Winter Infiltrate",
+      "title_ko": "윈터 침투",
+      "game_mission_id": "winter_infiltrate"
+    },
+    {
+      "stem": "wintermute_merger_run",
+      "type": "short_story",
+      "title_en": "Wintermute Merger Run",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "wintermute_merger_run"
+    },
+    {
+      "stem": "wintermute_negotiation",
+      "type": "short_story",
+      "title_en": "Wintermute Negotiation",
+      "title_ko": "윈터뮤트 협상",
+      "game_mission_id": "wintermute_negotiation"
+    },
+    {
+      "stem": "wintermute_residue",
+      "type": "short_story",
+      "title_en": "윈터뮤트 잔해",
+      "title_ko": "",
+      "game_mission_id": null
+    },
+    {
+      "stem": "wintermute_witness",
+      "type": "short_story",
+      "title_en": "Wintermute Witness",
+      "title_ko": "=== 이야기 본문 ===",
+      "game_mission_id": "wintermute_witness"
+    },
+    {
+      "stem": "wintermutes_hive",
+      "type": "short_story",
+      "title_en": "Wintermutes Hive",
+      "title_ko": "윈터뮤트의 하이브 (Wintermute's Hive)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "winters_child",
+      "type": "short_story",
+      "title_en": "Winters Child",
+      "title_ko": "윈터의 자식 (Winter's Child)",
+      "game_mission_id": "neuromancer_merger"
+    },
+    {
+      "stem": "winters_morning",
+      "type": "novelette",
+      "title_en": "Winters Morning",
+      "title_ko": "윈터의 아침 (Winter's Morning)",
+      "game_mission_id": "neuromancer_first_ping"
+    },
+    {
+      "stem": "wire_song",
+      "type": "short_story",
+      "title_en": "Wire Song",
+      "title_ko": "와이어 송 (The Wire-Song)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "working_class_ridership_arc",
+      "type": "short_story",
+      "title_en": "Working Class Ridership Arc",
+      "title_ko": "노동자 계급 승차 아크 (Working Class Ridership Arc)",
+      "game_mission_id": "working_class_ridership_arc"
+    },
+    {
+      "stem": "yakuza_deal",
+      "type": "short_story",
+      "title_en": "Yakuza Deal",
+      "title_ko": "야쿠자 거래",
+      "game_mission_id": "yakuza_deal"
+    },
+    {
+      "stem": "yamazaki_inventory",
+      "type": "short_story",
+      "title_en": "Yamazaki Inventory",
+      "title_ko": "야마자키의 목록 (Yamazaki's Inventory)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "zaibatsu_statework",
+      "type": "novelette",
+      "title_en": "Zaibatsu Statework",
+      "title_ko": "이야기 기록",
+      "game_mission_id": "zaibatsu_statework"
+    },
+    {
+      "stem": "zion-vote",
+      "type": "short_story",
+      "title_en": "Zion-Vote",
+      "title_ko": "자이온 투표 (Zion Vote)",
+      "game_mission_id": null
+    },
+    {
+      "stem": "zion_express",
+      "type": "short_story",
+      "title_en": "Zion Express",
+      "title_ko": "자이온 익스프레스",
+      "game_mission_id": "zion_express"
+    },
+    {
+      "stem": "zion_vote_observation",
+      "type": "novelette",
+      "title_en": "Zion Vote Observation",
+      "title_ko": "매 7년마다",
+      "game_mission_id": "zion_vote_observation"
+    }
+  ]
+}

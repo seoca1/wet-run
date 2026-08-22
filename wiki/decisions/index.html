@@ -1,0 +1,2658 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+        <link rel="prev" href="../design/systems/procgen/">
+      
+      
+        <link rel="next" href="../ROADMAP/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>개요 - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-index" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              개요
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../design/GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../design/systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        상태 범례
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정 목록
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="결정 목록">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2026-07-01-p1p4-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2026-07-01 통합 작업 (P1~P4 + B)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        우선순위 정의
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accepted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정이 다른 결정에 미치는 영향 (Accepted 결정으로 인한 제약)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accepted_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        일관성 (모두 Accepted)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결정 절차 (참고용)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        모든 결정 완료 — Phase 4 진입 가능
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pillar-2-5-adr-0009" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 2 / 5 추가 영향 (ADR-0009)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adr-0010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        콘텐츠 파이프라인 영향 (ADR-0010)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adr-2026-07-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR 인덱스 보강 (2026-07-25)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adr-0104-accepted-2026-07-25-sisyphus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-0104 Accepted (2026-07-25, Sisyphus + 사용자)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adr-2026-08-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR 인덱스 보강 (2026-08-08)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="adr-index">결정 기록 (ADR Index)<a class="headerlink" href="#adr-index" title="Permanent link">&para;</a></h1>
+<p>Architecture Decision Records. 모든 주요 결정은 여기 추적된다.</p>
+<h2 id="_1">상태 범례<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Draft</strong>: 작성 중, 사용자 결정 대기</li>
+<li><strong>Accepted</strong>: 결정됨. 변경 시 새 ADR 작성 필요</li>
+<li><strong>Deprecated</strong>: 더 이상 유효하지 않음. 사유 명시</li>
+<li><strong>Superseded by ADR-XXXX</strong>: 새 결정으로 대체됨</li>
+</ul>
+<h2 id="_2">결정 목록<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>번호</th>
+<th>제목</th>
+<th>상태</th>
+<th>날짜</th>
+<th>우선순위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0001</td>
+<td>엔진/프레임워크</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>0002</td>
+<td>비주얼 스타일</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>0003</td>
+<td>전투 시스템 (RT-MS)</td>
+<td><strong>Accepted (Revised)</strong></td>
+<td>2026-06-17</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0004</td>
+<td>코드 아키텍처</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>0005</td>
+<td>사이버스페이스 표현</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0006</td>
+<td>런 구조 (로그라이크 vs 로그라이트)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>0007</td>
+<td>플랫폼 타겟</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>0008</td>
+<td>진행 / 레벨업 시스템</td>
+<td><strong>Accepted (Revised)</strong></td>
+<td>2026-06-17</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0009</td>
+<td>Story / News 전달 시스템</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0010</td>
+<td>i18n + Content Pipeline</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0011</td>
+<td>ASCII Portraits (인물/객체 시각 식별)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0012</td>
+<td>Combat Difficulty &amp; Threat Level (PPL &amp; ZDR)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P0</td>
+</tr>
+<tr>
+<td>0013</td>
+<td>Story Events System (소설 스토리 이벤트)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-17</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0014</td>
+<td>Data Salvage (전투 승리 보상 — 데이터 회수)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-18</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0015</td>
+<td>Material &amp; Crafting System (재료 &amp; 조합)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-18</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0016</td>
+<td>Jockey Avatar (자키 아바타 — 스탯 시각화)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-18</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0017</td>
+<td>Mission-Material Integration (미션-재료 통합)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-18</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0018</td>
+<td>Combat Animation (전투 ASCII 애니메이션)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-18</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0019</td>
+<td>Combat Aftermath &amp; Immersive Subtitles (전투 후일담 &amp; 한글 자막)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-18</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0020</td>
+<td>Fog of War + Exploration (안개 / 탐험 메카닉)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-18</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0030</td>
+<td>GitHub Utilization Plan (GitHub 활용 계획)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-07-04</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0031</td>
+<td>Original Scenario Integration (단편 → 챕터 → 초반 플레이 통합)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-20</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0032</td>
+<td>Graphic Novel Auto-Play Mode + Main Menu 확장 (5 옵션)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-20</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0040</td>
+<td>Death &amp; Restart Cycle (자키 사이클 + Hall of Dead)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-20</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0041</td>
+<td>Graphic Novel Content Expansion (씬 dialogue 4× 확장)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-20</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0042</td>
+<td>Chapter Title Cards / Scene Transitions (로마 숫자 + fade)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-20</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0043</td>
+<td>Sound Cue Integration (15개 cue → file 매핑)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-20</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0044</td>
+<td>Graphic Novel Save/Restore (이어서 읽기)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-20</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0046</td>
+<td>Graphic Novel Ending B (대안 결말)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-21</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0047</td>
+<td>Text Visibility (Typed Status Messages)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-21</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0048</td>
+<td>GN Ending Menu + Save Migration 1.1.0</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-21</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0049</td>
+<td>Graphic Novel Ending C (3rd ending) + Save 1.2.0</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-21</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0050</td>
+<td>Boss ICE System (Wintermute + T-A Prime 3-phase)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-21</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0051</td>
+<td>Mission Story Metadata (미션 ↔ 단편 직접 매핑)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-22</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>0052</td>
+<td>Short Story Expansion Plan (단편 3편 보강)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-22</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0060</td>
+<td>Dungeon Exploration Redesign (NetHack + VFX)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-30</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0061</td>
+<td>Novel Integration Architecture (Hook 디스패치)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-06-30</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0090</td>
+<td>Salvation Phase Integration (9자 × epilogue + ChapterState 3개 + Stage 1개)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-07-07</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0104</td>
+<td>GN Save Slot 확장 (3 슬롯)</td>
+<td><strong>Accepted (2026-07-25)</strong></td>
+<td>2026-06-21</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0101</td>
+<td>Fiction Metadata 보강 계획 (status report, not ADR)</td>
+<td>(status doc)</td>
+<td>—</td>
+<td>P3</td>
+</tr>
+<tr>
+<td>0102</td>
+<td>v1.0.0 Release Decision</td>
+<td><strong>Accepted</strong></td>
+<td>2026-07-08</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>0103</td>
+<td>Dungeon-only Mode — <code>D</code> 토글 제거, <code>matrix_view</code> 폐기</td>
+<td><strong>Accepted</strong></td>
+<td>2026-07-10</td>
+<td>P2 (The Matrix)</td>
+</tr>
+<tr>
+<td>0110</td>
+<td>모듈 사이즈 정책 (현행 250 LOC)</td>
+<td><strong>Accepted (Option 4)</strong></td>
+<td>2026-07-12</td>
+<td>P3 (The Build)</td>
+</tr>
+<tr>
+<td>0111</td>
+<td>graphic_novel_view.py (1,510 LOC) — 정당화 or 분할</td>
+<td><strong>Accepted (Option 4)</strong></td>
+<td>2026-07-12</td>
+<td>P3 (The Build)</td>
+</tr>
+<tr>
+<td>0112</td>
+<td>combat/effects.py (1,246 LOC) — 5-Layer VFX 시스템</td>
+<td><strong>Accepted (Option 4)</strong></td>
+<td>2026-07-12</td>
+<td>P3 (The Build)</td>
+</tr>
+<tr>
+<td>0113</td>
+<td>combat_view.py (1,053 LOC) — 전투 화면 렌더링</td>
+<td><strong>Accepted (Option 4)</strong></td>
+<td>2026-07-12</td>
+<td>P3 (The Build)</td>
+</tr>
+<tr>
+<td>0120</td>
+<td>M2 14 파일 docstring 보강 — 일괄 작업</td>
+<td><strong>Accepted (Option 1)</strong></td>
+<td>2026-07-12</td>
+<td>P3 (The Build)</td>
+</tr>
+<tr>
+<td>0125</td>
+<td>Boss Phase AoE + Minion Spawn (Phase B-3 Enhancement)</td>
+<td><strong>Accepted (Option 4)</strong></td>
+<td>2026-07-26</td>
+<td>P3 (The Build)</td>
+</tr>
+<tr>
+<td>0130</td>
+<td>Balance Audit + PPL/보상 동기화 (Phase 1 정리)</td>
+<td><strong>Accepted (Option 1)</strong></td>
+<td>2026-07-27</td>
+<td>P1 (The Build)</td>
+</tr>
+<tr>
+<td>0131</td>
+<td>Faction Reputation Cross-Run Persistence (Meta Progression)</td>
+<td><strong>Accepted (Option 1)</strong></td>
+<td>2026-07-27</td>
+<td>P1 (The Build)</td>
+</tr>
+<tr>
+<td>0133</td>
+<td>graphic_novel_view.py Split — Implementation (Supplements ADR-0111)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-07-27</td>
+<td>P2 (Build Health)</td>
+</tr>
+<tr>
+<td>0140</td>
+<td>Engagement Layer for v1.1.0 (8 proposals)</td>
+<td><strong>Accepted (Option 1 partial — Top 3)</strong></td>
+<td>2026-07-28</td>
+<td>P2 (v1.1.0 후보)</td>
+</tr>
+<tr>
+<td>0141</td>
+<td>Additional Module Splits (matrix_view, combat/state)</td>
+<td><strong>Accepted (Option 1 partial — Top 2)</strong></td>
+<td>2026-07-28</td>
+<td>P3 (v1.1.0+ backlog)</td>
+</tr>
+<tr>
+<td>0142</td>
+<td>graphic_novel_view Split v2 — Implementation (3-way split)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-05</td>
+<td>P2 (Build Health)</td>
+</tr>
+<tr>
+<td>0143</td>
+<td>combat_view Split — Implementation (4-way split)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-05</td>
+<td>P2 (Build Health)</td>
+</tr>
+<tr>
+<td>0144</td>
+<td>combat/effects Split — Data Extraction</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-05</td>
+<td>P2 (Build Health)</td>
+</tr>
+<tr>
+<td>0145</td>
+<td>combat/effects_vfx Split — 3-Way Concern Split</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-05</td>
+<td>P2 (Build Health)</td>
+</tr>
+<tr>
+<td>0146</td>
+<td>Stage Flow — black_market &amp; ghost_encounter 전이 추가 (Validator FAIL 해결)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-05</td>
+<td>P2 (The Matrix)</td>
+</tr>
+<tr>
+<td>0147</td>
+<td>Data Salvage — Phase 6+ Completion (HEAL + FRAG + CRED + alarm trade-off)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Cycle 1 of A+B+C)</td>
+</tr>
+<tr>
+<td>0148</td>
+<td>Combat Depth Expansion (counter window + defense stackable + companion skills + aggression tiers)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Cycle 2 of A+B+C)</td>
+</tr>
+<tr>
+<td>0149</td>
+<td>Boss Phase 4 Finale (per-boss mechanics + death taunts + intro enhancement)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Cycle 3 of A+B+C)</td>
+</tr>
+<tr>
+<td>0150</td>
+<td>Module Split — <code>depth.py</code> + <code>boss_phase4.py</code> (ADR-0110 follow-up)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Cycle 4 of A+B+C)</td>
+</tr>
+<tr>
+<td>0151</td>
+<td>Info Market Intel Items — CRED Consumption (3 items, close salvage trade-off)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Cycle 6, v1.2.0+ bridge)</td>
+</tr>
+<tr>
+<td>0152</td>
+<td>Multi-Enemy Encounters (1v2/1v3) + HEAL Rebalance 20%→15%</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Cycle 8, v1.2.0+ core)</td>
+</tr>
+<tr>
+<td>0153</td>
+<td>Matrix Encounter Spawn Integration (1v1/1v2/1v3)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Cycle 9, v1.2.0+ bridge)</td>
+</tr>
+<tr>
+<td>0154</td>
+<td>Faction Expansion (faction_rumor 4 factions) + i18n (ja/zh)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Cycle 10, v1.2.0+ polish)</td>
+</tr>
+<tr>
+<td>0155</td>
+<td>NG+ Grade 5→6 PPL Actual Rebalance (T6 master tier bonus +10)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Cycle 11, v1.2.0+ balance)</td>
+</tr>
+<tr>
+<td>0156</td>
+<td>Combat State Module Split (state.py 890 → 3 files)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P3 (The Build, ADR-0110 follow-up)</td>
+</tr>
+<tr>
+<td>0157</td>
+<td>Combat Boss Module Split (boss.py 724 → 2 files)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P3 (The Build, ADR-0110 follow-up)</td>
+</tr>
+<tr>
+<td>0158</td>
+<td>Combat Combo Module Split (combo.py 685 → 2 files)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P3 (The Build, ADR-0110 follow-up)</td>
+</tr>
+<tr>
+<td>0159</td>
+<td>Combat Bosses Cinematic Module Split (bosses.py 627 → 2 files)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P3 (The Build, ADR-0110 follow-up)</td>
+</tr>
+<tr>
+<td>0160</td>
+<td>Status Effects System Expansion (DoT/Stun/Slow/Silence/Vulnerability)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (The Build, Pillar 3 weight)</td>
+</tr>
+<tr>
+<td>0161</td>
+<td>ICE Personality Archetypes (4 behaviors beyond aggression)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Pillar 5 variety, Pillar 3 weight via different pressure)</td>
+</tr>
+<tr>
+<td>0162</td>
+<td>Boss Phase 4 Last Stand</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Pillar 1 climax, Pillar 5 finale)</td>
+</tr>
+<tr>
+<td>0163</td>
+<td>Run Mutators System (5+ modifiers)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Pillar 1 run variety, Pillar 4 meta progression)</td>
+</tr>
+<tr>
+<td>0164</td>
+<td>Mission Archetypes (4 mission types)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Pillar 1 run variety)</td>
+</tr>
+<tr>
+<td>0165</td>
+<td>Random Matrix Events (4-6 mid-run surprises)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Pillar 1 variety, Pillar 5 atmosphere)</td>
+</tr>
+<tr>
+<td>0166</td>
+<td>Phase 6 Arc (Aftermath - Post-Ending NG+ Content)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Pillar 1 endgame, Pillar 4 meta progression)</td>
+</tr>
+<tr>
+<td>0167</td>
+<td>Mission Expansion (15 → 25 missions)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Pillar 1 content variety, Pillar 5 progression)</td>
+</tr>
+<tr>
+<td>0168</td>
+<td>Death Taunts Library (Per-Boss + Per-ICE)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Pillar 5 style, Pillar 3 death weight)</td>
+</tr>
+<tr>
+<td>0169</td>
+<td>Combat Cinematics (Per Boss Phase Intro)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Pillar 5 style, Pillar 1 climax)</td>
+</tr>
+<tr>
+<td>0170</td>
+<td>Gibson Fluff Library (200+ Status Messages)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P1 (Pillar 5 style)</td>
+</tr>
+<tr>
+<td>0171</td>
+<td>ASCII Battle Portrait Evolution</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-07</td>
+<td>P2 (Pillar 5 style, Pillar 3 visual feedback)</td>
+</tr>
+<tr>
+<td>0172</td>
+<td>Cyberdeck Customization (8 Program Slots)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P1 (Pillar 4 Build depth)</td>
+</tr>
+<tr>
+<td>0173</td>
+<td>Wetware Augments (6 Passive Slots)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P1 (Pillar 4 Build depth)</td>
+</tr>
+<tr>
+<td>0174</td>
+<td>Meta-Progression (Persistent Unlocks)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P1 (Pillar 1 replay value)</td>
+</tr>
+<tr>
+<td>0175</td>
+<td>Tutorial System (3-Act Onboarding)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 1 learning curve)</td>
+</tr>
+<tr>
+<td>0176</td>
+<td>Achievement System (60+ Achievements)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 1 replay value)</td>
+</tr>
+<tr>
+<td>0177</td>
+<td>Breach Protocol (Matrix Hacking Minigame)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P1 (Pillar 2 Matrix, Pillar 5 style)</td>
+</tr>
+<tr>
+<td>0178</td>
+<td>Deck Building (6/8/10 Slot Limits)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P1 (Pillar 4 Build depth)</td>
+</tr>
+<tr>
+<td>0179</td>
+<td>Status Effects v2 (Bleed, Fatigue, Confused, Terrified)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 3 depth)</td>
+</tr>
+<tr>
+<td>0180</td>
+<td>Boss Expansion (+3 Boss Profiles)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 1 variety, Pillar 5 atmosphere)</td>
+</tr>
+<tr>
+<td>0181</td>
+<td>Combo System v2 (Player-Triggered Finisher Combos)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 5 style, Pillar 4 build)</td>
+</tr>
+<tr>
+<td>0182</td>
+<td>Run Replay System (Record + Playback)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 1 replay, Pillar 5 style)</td>
+</tr>
+<tr>
+<td>0183</td>
+<td>Accessibility (Colorblind 3 Modes, Text Size, Input Remapping)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 1 inclusivity + Pillar 5 style)</td>
+</tr>
+<tr>
+<td>0184</td>
+<td>Telemetry (Anonymous Player Behavior Tracking)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P3 (Pillar 4 balance + Pillar 1 tuning)</td>
+</tr>
+<tr>
+<td>0185</td>
+<td>Save/Load Migration v2 (Versioned, Cloud-Ready)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 1 persistence + Pillar 4 carry)</td>
+</tr>
+<tr>
+<td>0186</td>
+<td>Performance Optimization (Frame Rate, Memory)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P3 (Pillar 1 smoothness)</td>
+</tr>
+<tr>
+<td>0187</td>
+<td>Boss Phase 5 Expansion (Last Stand)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 1 climax, Pillar 5 finale)</td>
+</tr>
+<tr>
+<td>0188</td>
+<td>Mission Expansion (Phase 11 — Content Expansion, Axis 1)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P1 (Pillar 1 run variety)</td>
+</tr>
+<tr>
+<td>0189</td>
+<td>ICE Type Expansion (Phase 12 — Content Expansion, Axis 2)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 3 combat variety + Pillar 5 atmosphere)</td>
+</tr>
+<tr>
+<td>0190</td>
+<td>Boss Expansion + F.4 Integration (Phase 12 — Content Expansion, Axis 4)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P1 (Pillar 1 climax + Pillar 5 finale)</td>
+</tr>
+<tr>
+<td>0191</td>
+<td>Story Events Expansion (Phase 13 — Content Expansion, Axis 3)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 5 atmosphere + Pillar 1 variety)</td>
+</tr>
+<tr>
+<td>0192</td>
+<td>Ending Expansion (Phase 14 — Content Expansion, Axis 5)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 1 replay value + Pillar 5 closure)</td>
+</tr>
+<tr>
+<td>0193</td>
+<td>Programs/Equipment Expansion (Phase 14 — Content Expansion, Axis 6)</td>
+<td><strong>Accepted</strong></td>
+<td>2026-08-08</td>
+<td>P2 (Pillar 4 Build depth + Pillar 5 style)</td>
+</tr>
+<tr>
+<td>0194</td>
+<td>ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구)</td>
+<td><strong>Draft</strong></td>
+<td>2026-08-19</td>
+<td>P3 (The Build, 아키텍처 명료화)</td>
+</tr>
+<tr>
+<td>0195</td>
+<td>Accepted ADR Implementation Status Workflow (섹션 의무화 + 인덱스 Impl 컬럼)</td>
+<td><strong>Draft</strong></td>
+<td>2026-08-20</td>
+<td>P3 (The Build, 프로세스 명료화)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2026-07-01-p1p4-b">2026-07-01 통합 작업 (P1~P4 + B)<a class="headerlink" href="#2026-07-01-p1p4-b" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>번호</th>
+<th>제목</th>
+<th>상태</th>
+<th>날짜</th>
+<th>우선순위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(—)</td>
+<td><strong>Stage BRIEFING / TRAVEL / BYPASS_SECURITY</strong> (Stage enum +3, 10→13)</td>
+<td><strong>Implemented</strong></td>
+<td>2026-07-01</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>(—)</td>
+<td><strong>Novel Integration 런타임 연동</strong> (<code>engine/novel_integration.py</code>, <code>mission_to_stem</code> + <code>dispatch_for_state</code>)</td>
+<td><strong>Implemented</strong></td>
+<td>2026-07-01</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>(—)</td>
+<td><strong>CONTENT_EXPANSION Phase A+ 신규 미션 5개</strong> (Arc 2-3: sense_net_infiltration, wigan_call, hosaka_core, straylight_approach, maas_heist)</td>
+<td><strong>Implemented</strong></td>
+<td>2026-07-01</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>(—)</td>
+<td><strong>KO 번역 한자 잔재 0건</strong> (missions/arcs/chapters/aftermath 일괄 정정)</td>
+<td><strong>Implemented</strong></td>
+<td>2026-07-01</td>
+<td>P1</td>
+</tr>
+<tr>
+<td>(—)</td>
+<td><strong><code>stage_structure.json</code> v0.4.0</strong> (stages 9→12, transitions 8→13)</td>
+<td><strong>Implemented</strong></td>
+<td>2026-07-01</td>
+<td>P2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_3">우선순위 정의<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>P0 (최우선)</strong>: 0001, 0002, 0004, 0006, 0007, 0012 — Phase 4 시작 전 결정 필요</li>
+<li><strong>P1</strong>: 0003, 0005, 0008, 0009, 0010, 0011, 0013, 0014, 0015, 0016, 0017, 0018, 0019, 0020 — Phase 5 시작 전 결정 필요</li>
+<li><strong>P2 (미정)</strong>: 추가 결정은 Phase 5 이후 또는 진행 중 발생 시 추가</li>
+</ul>
+<h2 id="accepted">결정이 다른 결정에 미치는 영향 (Accepted 결정으로 인한 제약)<a class="headerlink" href="#accepted" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>0001 → 0002</strong>: libtcod + Python → Pure ASCII와 자연스러움</li>
+<li><strong>0001 → 0004</strong>: Python → ECS-lite + 데이터 주도 권장</li>
+<li><strong>0001 → 0007</strong>: libtcod은 macOS + Windows 모두 네이티브</li>
+<li><strong>0002 → 0005</strong>: Pure ASCII → 노드 그래프 표현이 ASCII 기호로 가능</li>
+<li><strong>0003 → 0005</strong>: AP 턴 → 노드 간 이동이 AP 비용</li>
+<li><strong>0006 → 0008</strong>: 하이브리드 unlock → 자키 등급 시스템이 unlock 표현</li>
+<li><strong>0009</strong>: meatspace 미표시, Story Archive로만 외부 세계 전달</li>
+<li><strong>0014</strong>: HEAL 20% — Pillar 3 무게 유지; FRAG/CRED는 Phase 6+ 확장</li>
+<li><strong>0015</strong>: 3-tier crafting (5 raw → 4 components → final) — Pillar 4 직접 표현</li>
+<li><strong>0016</strong>: Stick Figure Avatar — 부위별 stat 표현 (HP 머리, programs 팔, deck 몸통, wetware 다리)</li>
+<li><strong>0017</strong>: Mission-Material Integration — 6 미션 타입, Hub 4-패널, Recipe 트리 뷰</li>
+<li><strong>0018</strong>: Combat Animation — 일반 240ms gray vs 스킬 600ms color, 깁슨 톤 글리치</li>
+</ul>
+<h2 id="accepted_1">일관성 (모두 Accepted)<a class="headerlink" href="#accepted_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>결정</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>언어</td>
+<td>Python 3.11+</td>
+</tr>
+<tr>
+<td>엔진</td>
+<td>python-tcod</td>
+</tr>
+<tr>
+<td>비주얼</td>
+<td>Pure ASCII</td>
+</tr>
+<tr>
+<td>아키텍처</td>
+<td>ECS-lite + 데이터 주도 (i18n 포함)</td>
+</tr>
+<tr>
+<td>런 구조</td>
+<td>하이브리드 (unlock만 메타)</td>
+</tr>
+<tr>
+<td>플랫폼</td>
+<td>macOS + Windows</td>
+</tr>
+<tr>
+<td>전투</td>
+<td>Real-Time + Menu Skills (RT-MS)</td>
+</tr>
+<tr>
+<td>매트릭스</td>
+<td>노드 그래프</td>
+</tr>
+<tr>
+<td>진행</td>
+<td>런 내 스탯 고정 + 자키 등급 (메타) + 아이템 티어 (T1~T5)</td>
+</tr>
+<tr>
+<td>meatspace</td>
+<td><em>절대 시각화되지 않음</em></td>
+</tr>
+<tr>
+<td>Story</td>
+<td>Story Archive로 전달</td>
+</tr>
+<tr>
+<td>i18n</td>
+<td>en (1차, 깁슨 톤) + ko (보조 번역/자막)</td>
+</tr>
+<tr>
+<td>Content</td>
+<td>데이터 주도, 반복 보강, plot bones 사전 정의</td>
+</tr>
+<tr>
+<td>Portrait</td>
+<td>ASCII / Unicode 기호 + 색상, cyberspace only</td>
+</tr>
+<tr>
+<td>Difficulty</td>
+<td>PPL (Player Power Level) &amp; ZDR (Zone Difficulty Rating)</td>
+</tr>
+<tr>
+<td>Events</td>
+<td>Story Events (소설 스토리 부가 콘텐츠)</td>
+</tr>
+<tr>
+<td>Combat Reward</td>
+<td>Data Salvage (HEAL 20%, FRAG/CRED Phase 6+)</td>
+</tr>
+<tr>
+<td>Crafting</td>
+<td>3-tier (5 raw → 4 components → program/item/construct)</td>
+</tr>
+<tr>
+<td>Stat Display</td>
+<td>Jockey Avatar (stick figure, 부위별 표현)</td>
+</tr>
+<tr>
+<td>Mission-Material</td>
+<td>6 미션 타입, Hub 4-패널 (Avatar/Materials/Recipes/Job Board)</td>
+</tr>
+<tr>
+<td>Combat Animation</td>
+<td>Normal 240ms gray vs Skill 600ms color, 깁슨 톤 글리치</td>
+</tr>
+<tr>
+<td>Aftermath</td>
+<td>전투 후일담 4 importance + 소설 인물 7명 반응 + 한글 자막</td>
+</tr>
+<tr>
+<td>Exploration</td>
+<td>Light Fog of War (현재+인접), 미니맵, breadcrumb</td>
+</tr>
+<tr>
+<td>Scenario (0031)</td>
+<td>단편 → 챕터 → 초반 플레이 통합 (12 씬 dialogue, 4 캐릭터 × 3-4 씬)</td>
+</tr>
+<tr>
+<td>Graphic Novel (0032)</td>
+<td>메인메뉴 5 옵션 + 12 씬 자동플레이 + Save Progress 카드</td>
+</tr>
+<tr>
+<td>Death Cycle (0040)</td>
+<td>DEATH/DEATH_SUMMARY/HALL_OF_DEAD + restart_with_new_jockey (3 옵션)</td>
+</tr>
+<tr>
+<td>Novel Layout (0041-0042)</td>
+<td>30줄 페이지 + chapter card I-XII + fade transition</td>
+</tr>
+<tr>
+<td>Audio (0043)</td>
+<td>15개 scene cue → file 매핑 (theme/movement 카테고리)</td>
+</tr>
+<tr>
+<td>GN Save (0044)</td>
+<td>GNProgress atomic save + CONTINUE READING 메뉴 + version 1.0.0</td>
+</tr>
+<tr>
+<td>Ending B (0046)</td>
+<td>6 씬 추가 (Case/Sil/Kas × 2) + SceneData.ending 필드 + <code>--ending {A,B}</code> CLI</td>
+</tr>
+<tr>
+<td>Text Visibility (0047)</td>
+<td>MessageKind 8종 + 아이콘/색상/bg 하이라이트 + GN prose cream color</td>
+</tr>
+<tr>
+<td>GN Ending Menu (0048)</td>
+<td>GRAPHIC_NOVEL_ENDING_MENU 화면 + GNProgress.ending + Save 1.0.0→1.1.0 마이그레이션</td>
+</tr>
+<tr>
+<td>Ending C (0049)</td>
+<td>6 신규 씬 (Disappear/Erase/Burn) + 메뉴 4옵션 + Save 1.1.0→1.2.0 + 9 결말 조합</td>
+</tr>
+<tr>
+<td>Boss ICE (0050)</td>
+<td>Wintermute + T-A Prime 보스 3-phase 시스템 + phase transition cinematics</td>
+</tr>
+<tr>
+<td>Mission Metadata (0051)</td>
+<td>미션마다 <code>story.{synopsis_en, synopsis_ko, source, character_ref, arc, pillar, word_count_en, char_count_ko}</code> 메타데이터 필수</td>
+</tr>
+<tr>
+<td>Story Expansion (0052)</td>
+<td>단편 17→35+ 확장 + frontmatter 강화 (wiki_references, game_integration, character_ref)</td>
+</tr>
+<tr>
+<td>Dungeon (0060)</td>
+<td>NetHack BSP 미로 + 4 VFX spawner + Mission→Room 매핑 (29 미션) + ECS 통합</td>
+</tr>
+<tr>
+<td>Novel Integration (0061)</td>
+<td>4-layer Hook 디스패치 (catalog/hooks/manifest/dispatcher) + 런타임 자동 호출 (<code>engine/novel_integration.py</code>)</td>
+</tr>
+<tr>
+<td>Salvation (0090)</td>
+<td>9자 × epilogue 씬 + SalvationRunner + ChapterState SALVATION_INTRO/EPILOGUE/DONE/FINAL + Stage SALVATION_EPILOGUE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_4">결정 절차 (참고용)<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ol>
+<li>AI가 ADR 작성 (Draft 상태)</li>
+<li>사용자가 결정 또는 수정 요청</li>
+<li>결정되면 Status를 "Accepted"로 변경</li>
+<li>Consequences 섹션 채우기</li>
+<li>영향 받는 design/ 시스템 명세 갱신</li>
+<li>log.md에 기록</li>
+</ol>
+<h2 id="phase-4">모든 결정 완료 — Phase 4 진입 가능<a class="headerlink" href="#phase-4" title="Permanent link">&para;</a></h2>
+<h2 id="pillar-2-5-adr-0009">Pillar 2 / 5 추가 영향 (ADR-0009)<a class="headerlink" href="#pillar-2-5-adr-0009" title="Permanent link">&para;</a></h2>
+<p>meatspace 미표시는 디자인 전반에 영향을 미친다:
+- <strong>Pillar 2</strong>: "The Matrix는 <em>유일한</em> 시각적 공간"으로 강화
+- <strong>Pillar 5</strong>: "mediated world" 톤 — 외부 세계는 항상 텍스트/뉴스/이야기로만
+- <strong>디자인 리뷰 체크리스트</strong>: "meatspace를 직접 묘사하고 있지 않은가?" 추가
+- <strong>세계관 wiki</strong>: "새 플레이어", "meatspace 미표시" 명시</p>
+<p>상세는 <code>decisions/0009-story-news-system.md</code> 참조.</p>
+<h2 id="adr-0010">콘텐츠 파이프라인 영향 (ADR-0010)<a class="headerlink" href="#adr-0010" title="Permanent link">&para;</a></h2>
+<p>i18n + Content Pipeline:
+- <strong>모든 텍스트는 i18n JSON</strong> — <code>data/i18n/{ko,en}.json</code>
+- <strong>모든 콘텐츠는 데이터</strong> — JSON / YAML
+- <strong>plot bones 사전 정의</strong> — <code>design/story_skeleton.md</code> (5 arcs + 4+ endings)
+- <strong>초반 미션 우선</strong> — Arc 1 (1-3 jobs)
+- <strong>반복 보강</strong> — 무한 side content, faction 뉴스, world events</p>
+<p>상세는 <code>decisions/0010-i18n-content-pipeline.md</code> 및 <code>design/story_skeleton.md</code> 참조.</p>
+<hr />
+<h2 id="adr-2026-07-25">ADR 인덱스 보강 (2026-07-25)<a class="headerlink" href="#adr-2026-07-25" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>0051 번호 충돌 해결</strong> (2026-07-25): 두 파일이 동일 번호 <code>0051</code> 사용 중이었음. Draft 파일 <code>0051-gn-save-slots.md</code>를 <code>0104-gn-save-slots.md</code>로 번호 이동. Accepted 결정(<code>0051-mission-story-metadata.md</code>) immutable 규칙 영향 없음.</li>
+<li><strong>0101-fiction-metadata-backfill.md</strong> (status document): 전통적 ADR 형식(status/날짜 라인) 미사용 — <code>Fiction</code> 메타데이터 보강 진행 상황 추적용 status report. ADR 카운트에서 제외하거나, 별도 "Status Reports" 절로 분리 검토 가능.</li>
+<li><strong>신규 ADR 8개 추가 (2026-07-08 ~ 2026-07-12)</strong>: 0102, 0103, 0110, 0111, 0112, 0113, 0120 + 0104-gn-save-slots.</li>
+</ul>
+<h2 id="adr-0104-accepted-2026-07-25-sisyphus">ADR-0104 Accepted (2026-07-25, Sisyphus + 사용자)<a class="headerlink" href="#adr-0104-accepted-2026-07-25-sisyphus" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Status</strong>: Draft → <strong>Accepted</strong></li>
+<li><strong>구현 검증 완료</strong>: 8개 파일에서 API 사용 중 (<code>engine/graphic_novel_save.py</code>, <code>state.py</code>, <code>app.py</code>, <code>menu.py</code>, <code>save_manager.py</code>, <code>scripts/graphic_novel.py</code>)</li>
+<li><strong>Save 파일</strong>: <code>data/saves/gn_progress_slot_{1,2,3}.json</code> (3개 slot 파일 존재) + legacy <code>gn_progress.json</code> (보존)</li>
+<li><strong>신규 도구</strong>: <code>prototype/scripts/save_slot_demo.py</code> (list / fill / load / delete / migrate / auto) — <code>--save-dir</code> 옵션으로 격리 테스트 가능</li>
+<li><strong>테스트</strong>: <code>test_graphic_novel_save.py</code> (slot API + 마이그레이션) — ruff ✅, mypy ✅</li>
+<li><strong>코드 주석 보강</strong>: <code>state.py:88, 265</code> — "ADR-0051 infra + ADR-0104 extension" 명시</li>
+<li><strong>Decisions</strong>: Option 1 (3 슬롯 고정) — 9 결말 조합 시도 (3 chars × 3 endings) 인프라</li>
+</ul>
+<h2 id="adr-2026-08-08">ADR 인덱스 보강 (2026-08-08)<a class="headerlink" href="#adr-2026-08-08" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>0162 번호 충돌 해결</strong> (2026-08-08): 두 파일이 동일 번호 <code>0162</code> 사용 중이었음. <code>0162-boss-phase-4.md</code>(canonical, 6 references)와 <code>0162-boss-phase-5.md</code>(no references, content는 Phase 5 expansion). 미참조 파일을 <code>0187-boss-phase-5-expansion.md</code>로 번호 이동. canonical 0162 title은 content 일치하도록 "Boss Phase 5 Last Stand" → "Boss Phase 4 Last Stand" 수정. 6 references 모두 그대로 유지 (참조 대상 변경 없음).</li>
+<li><strong>신규 ADR 31개 인덱스 추가</strong> (2026-08-07~08): 0156–0186 (v1.2.0+ 후속 + v1.3.0+ Tracks E/F/G). 인덱스 누락 상태였음 — 본 동기화로 README 인덱스 최신화 완료. ADR 총 88개 (Accepted/Revised/Superseded 모두 포함, status docs 제외).</li>
+<li><strong>신규 ADR 7개 인덱스 추가</strong> (2026-08-08~19): 0188–0194 (Phase 11~14 Content Expansion Axes 1~6 + ADR-0194 ECS-lite 역할 명시화). 7 ADR 파일은 2026-08-08~19 사이 생성되었으나 README 인덱스 누락 상태였음 — 본 동기화로 README 인덱스 최신화 완료. ADR 총 <strong>106개</strong> (Accepted/Revised/Draft 모두 포함, status docs 2개 제외).</li>
+<li><strong>ADR-0162 title fix</strong>: content는 Phase 4 mechanics를 설명하지만 title이 "Boss Phase 5 Last Stand"로 잘못 표기되어 있었음. Content와 일치하도록 "Boss Phase 4 Last Stand"로 수정.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

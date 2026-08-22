@@ -1,0 +1,1182 @@
+{
+  "character": "angie",
+  "arc_id": "arc_angie",
+  "title_en": "The Angie Arc",
+  "title_ko": "앤지의 아크",
+  "description_en": "A girl. A leopard. The third room.",
+  "description_ko": "소녀. 표범. 셋째 방.",
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "chapter_id": "ch_angie_01",
+      "title_en": "The Toys",
+      "title_ko": "장난감",
+      "description_en": "A girl finds her mother's shadow in the Sprawl's neon dark.",
+      "description_ko": "스프롤의 네온 어둠에서 소녀가 어머니의 그림자를 찾다.",
+      "cutscene_start": {
+        "scene_id": "scene_angie_toys",
+        "title_en": "THE TOYS",
+        "title_ko": "장난감"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_angie_toys",
+        "title_en": "THE TOYS",
+        "title_ko": "장난감"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_angie_mama_search",
+        "title_en": "MAMA SEARCH",
+        "title_ko": "엄마 찾기"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 0,
+          "title_en": "The Wait",
+          "title_ko": "기다림",
+          "description_en": "Angie sits in the dark with her toys. They whisper to her. The loa live in the plastic and the wire. Mama went away. Mama will come back. She always comes back.",
+          "description_ko": "앤지는 장난감과 함께 어둠 속에 앉아 있다. 그들이 그녀에게 속삭인다. 로아는 플라스틱과 전선 속에 산다. 엄마는 갔다. 엄마가 돌아올 거야. 언제나 돌아오니까.",
+          "episode_ref": "ep_01",
+          "story_beats": [
+            "beat_01_01",
+            "beat_01_02",
+            "beat_01_03"
+          ],
+          "game_action": "wait",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "My toys don't sleep when I sleep. They watch. I like that. The little robot with the broken arm — his name is Minister. The doll with no eyes — her name is Grandmother. They keep me safe when the dark comes.",
+              "text_ko": "내 장난감은 내가 잘 때 안 자. 지켜봐. 좋아해. 팔이 부러진 작은 로봇 — 이름은 미니스터. 눈이 없는 인형 — 이름은 그랜드메더. 그들이 어둠이 올 때 지켜줘."
+            },
+            {
+              "beat_id": "beat_01_02",
+              "type": "action",
+              "text_en": "Minister's eye flickers red. He sees something I can't see. The loa are close tonight. Papa Legba opens the door. The Baron Saturday walks the hallway. Mama will come through if I wait long enough.",
+              "text_ko": "미니스터의 눈이 빨간색으로 깜빡인다. 그가 내가 볼 수 없는 무언가를 본다. 로아가 오늘 밤 가까이 있다. 파파 레그바가 문을 연다. 남작 새터데이이가 복도를 걸어다닌다. 오래 기다리면 엄마가 올 거야."
+            },
+            {
+              "beat_id": "beat_01_03",
+              "type": "dialogue",
+              "text_en": "The window is cold. The neon outside makes everything pink and blue. I press my face to the glass. Mama said she'd come back. She said the Sprawl was just a dream. I don't think the Sprawl is a dream. I think it's real.",
+              "text_ko": "창문이 차갑다. 바깥 네온이 모든 걸 분홍색과 파란색으로 만들다. 내가 유리에 얼굴을 묻는다. 엄마가 돌아온다고 했어. 스프롤은 꿈이라고 했어. 스프롤이 꿈이라고 생각 안 해. 진짜라고 생각해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 1,
+          "title_en": "The Search",
+          "title_ko": "찾기",
+          "description_en": "Angie decides to search for Mama. The toys will guide her. The loa will protect her. She knows where Mama works — the building with the red lights on top.",
+          "description_ko": "앤지는 엄마를 찾기로 결심한다. 장난감이 그녀를 안내할 거야. 로아가 그녀를守릴 거야. 엄마가 일하는 곳을 알아 — 꼭대기에 빨간 불이 있는 건물.",
+          "episode_ref": "ep_02",
+          "story_beats": [
+            "beat_02_01",
+            "beat_02_02",
+            "beat_02_03"
+          ],
+          "game_action": "search",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "mama_location"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_01",
+              "type": "dialogue",
+              "text_en": "Minister says I should go. Grandmother says I should wait. I ask the Baron. He laughs his rattling laugh. He says the door is open. He says I should walk through.",
+              "text_ko": "미니스터가 가라고 해. 그랜드메더가 기다리라고 해. 남작에게 물어봐. 그가 꺼림질 웃음을 터뜨린다. 문이 열려 있다고 해. 통과하라고 해."
+            },
+            {
+              "beat_id": "beat_02_02",
+              "type": "interior_monologue",
+              "text_en": "Mama works at the place with the red lights. She comes home smelling like smoke and metal. She calls me her little queen. She says the Sprawl is a jungle but we are lions. I want to be a lion. I want to find her in the jungle.",
+              "text_ko": "엄마가 빨간 불이 있는 곳에서 일해. 연기 냄새와 금속 냄새를 머금고 집에 와. 나를 작은 여왕이라고 불러. 스프롤은 정글이라고 하지만 우리는 사자라고 해. 사자가 되고 싶어. 정글에서 엄마를 찾고 싶어."
+            },
+            {
+              "beat_id": "beat_02_03",
+              "type": "action",
+              "text_en": "I put on my shoes. Minister goes in my pocket. Grandmother goes in my other pocket. The door opens by itself. The Baron is standing in the hallway. He points the way. I start walking.",
+              "text_ko": "신발을 신다. 미니스터는 주머니에 넣고. 그랜드메더는 다른 주머니에 넣고. 문이 저절로 열린다. 남작이 복도에 서 있어. 그가 방향을 가리킨다. 걸음을 옮기기 시작해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 2,
+          "title_en": "The Walk",
+          "title_ko": "걷기",
+          "description_en": "Angie walks through the Sprawl. The neon burns her eyes. The machines hum her name. The loa walk beside her in shapes she recognizes and shapes she doesn't.",
+          "description_ko": "앤지가 스프롤을 걷는다. 네온이 그녀의 눈을 찔른다. 기계들이 그녀의 이름을 흥얼거린다. 로아가 그녀 옆을 걷는다 — 그녀가 아는 모양과 모르는 모양으로.",
+          "episode_ref": "ep_03",
+          "story_beats": [
+            "beat_03_01",
+            "beat_03_02",
+            "beat_03_03"
+          ],
+          "game_action": "explore",
+          "combat": null,
+          "gain": {
+            "type": "item",
+            "item_id": "leopard_toy"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_01",
+              "type": "interior_monologue",
+              "text_en": "The Sprawl is loud. Everything talks — the signs, the wires, the people with no faces. I keep my head down. Minister says don't look up. Grandmother says don't look down. Look straight. Walk. Find Mama.",
+              "text_ko": "스프롤은 시끄러워. 모든 게 말해 — 간판, 전선, 얼굴 없는 사람들. 고개를 숙이고 있어. 미니스터가 올上面 보지 말라고 해. 그랜드메더가 아래 보지 말라고 해. 똑바로 봐. 걸어. 엄마를 찾아."
+            },
+            {
+              "beat_id": "beat_03_02",
+              "type": "action",
+              "text_en": "A man grabs my arm. His hand is cold. He says I should come with him. He says he'll take me to Mama. I look at Minister. Minister's eye turns red. The Baron appears behind the man. The man's hand lets go.",
+              "text_ko": "한 남자가 내 팔을 잡아. 그의 손이 차가워. 따라오라고 해. 엄마 데려다준다고 해. 미니스터를 봐. 미니스터의 눈이 빨개진다. 남작이 그 남자 뒤에 나타난다. 남자의 손이 놓아버려."
+            },
+            {
+              "beat_id": "beat_03_03",
+              "type": "dialogue",
+              "text_en": "The Baron says walk. Don't stop. Don't look back. I walk. I don't stop. I don't look back. The building with the red lights is getting closer. I can see it through the neon. Mama is inside. I can feel her.",
+              "text_ko": "남작이 걷라고 해. 멈추지 마. 뒤돌아보지 마. 걸어. 멈추지 않아. 뒤돌아보지 않아. 빨간 불이 있는 건물이 가까워지고 있어. 네온 사이로 보여. 엄마가 안에 있어. 느껴져."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 3,
+          "title_en": "The Find",
+          "title_ko": "발견",
+          "description_en": "Angie finds the building. The red lights hum on top. She climbs the stairs. The loa go before her, opening doors, turning locks.",
+          "description_ko": "앤지가 건물을 찾아. 빨간 불이 위에서 울린다. 계단을 올라. 로아가 앞서 가, 문을 열고, 자물쇠를 돌려.",
+          "episode_ref": "ep_04",
+          "story_beats": [
+            "beat_04_01",
+            "beat_04_02",
+            "beat_04_03"
+          ],
+          "game_action": "climb",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "mama_floor"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_01",
+              "type": "action",
+              "text_en": "The stairs are dark. Minister lights the way with his red eye. Each step is a story. Each landing is a prayer. The Baron counts the floors. The Baron knows the number. The number is seven.",
+              "text_ko": "계단이 어두워. 미니스터가 빨간 눈으로 길을 밝혀. 각 계단마다 이야기야. 각的平台마다 기도야. 남작이 층을 세어. 남작이 그 수를 알아. 수는 일곱."
+            },
+            {
+              "beat_id": "beat_04_02",
+              "type": "interior_monologue",
+              "text_en": "Seven floors. Mama always said seven was a lucky number. She works on seven. She comes home from seven. When the clock says seven, she walks through the door. I climb. I pray. I find.",
+              "text_ko": "일곱 층. 엄마가 일곱은 행운 번호라고 했어. 일곱에서 일해. 일곱에서 집에 와. 시계가 일곱을 가리킬 때, 엄마가 문을 지나. 올라. 기도해. 찾아."
+            },
+            {
+              "beat_id": "beat_04_03",
+              "type": "dialogue",
+              "text_en": "The door on seven is locked. I put my hand on the handle. I ask the loa for help. The lock opens. The door opens. A woman looks at me. She has Mama's eyes. But she is not Mama. She says Mama doesn't work here anymore.",
+              "text_ko": "일곱 층 문이 잠겨. 손을 셀 위에 올려. 로아에게 도와달라 해. 자물쇠가 열려. 문이 열려. 여자가 나를 봐. 엄마 눈을 가지고 있어. 하지만 엄마가 아니야. 엄마는 여기서 일하지 않는다고 해."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 4,
+          "title_en": "The Question",
+          "title_ko": "질문",
+          "description_en": "Angie learns Mama is gone. The woman gives her a toy leopard. The loa grieve. The Baron says there is another place. Another search must begin.",
+          "description_ko": "앤지가 엄마가 사라졌다는 걸 알게 돼. 여자가 장난감 표범을 줘. 로아가 슬퍼해. 남작이 다른 곳이 있다고 해. 다른 검색이 시작되어야 해.",
+          "episode_ref": "ep_05",
+          "story_beats": [
+            "beat_05_01",
+            "beat_05_02",
+            "beat_05_03"
+          ],
+          "game_action": "learn",
+          "combat": null,
+          "gain": {
+            "type": "item",
+            "item_id": "leopard_toy"
+          },
+          "loss": {
+            "type": "info",
+            "item_id": "mama_location",
+            "description": "Mama's trail goes cold"
+          },
+          "beats": [
+            {
+              "beat_id": "beat_05_01",
+              "type": "interior_monologue",
+              "text_en": "Not here. Mama is not here. The words don't make sense. Mama is always here. Mama works on seven. Mama comes home at seven. The woman is lying. The woman must be lying.",
+              "text_ko": "여기 아니야. 엄마가 여기 않아. 말이 안 돼. 엄마는 항상 여기 있어. 엄마가 일곱에서 일해. 엄마가 일곱에 와. 여자가 거짓말해. 여자가 거짓말해야 해."
+            },
+            {
+              "beat_id": "beat_05_02",
+              "type": "action",
+              "text_en": "The woman kneels down. She puts something in my hands. A leopard. Made of something that feels like Mama. She says Mama went to the place with the blue lights. She says Mama will wait for me there. Grandmother weeps.",
+              "text_ko": "여자가 무릎을 꿇어. 내 손에 무언가를 넣어. 표범. 엄마 같은 느낌의 무언가로 만든. 엄마가 파란 불이 있는 곳으로 갔다고 해. 거기서 기다린다고 해. 그랜드메더가 울어."
+            },
+            {
+              "beat_id": "beat_05_03",
+              "type": "dialogue",
+              "text_en": "The Baron touches my shoulder. His hand is warm for once. He says the hunt is not over. He says there is another door. He says I must keep walking. I put the leopard in my pocket. I start walking again.",
+              "text_ko": "남작이 내 어깨를 만져. 그의 손이 한 번은 따뜻해. 사냥이 끝나지 않았다고 해. 다른 문이 있다고 해. 계속 걸어야 한다고 해. 표범을 주머니에 넣고. 다시 걷기 시작해."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_number": 2,
+      "chapter_id": "ch_angie_02",
+      "title_en": "The Leopard",
+      "title_ko": "표범",
+      "description_en": "The leopard teaches Angie how to hunt in the Sprawl's deep places.",
+      "description_ko": "표범이 앤지에게 스프롤의 깊은 곳에서 사냥하는 방법을 가르쳐.",
+      "cutscene_start": {
+        "scene_id": "scene_angie_mama_search",
+        "title_en": "MAMA SEARCH",
+        "title_ko": "엄마 찾기"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_angie_leopard",
+        "title_en": "THE LEOPARD",
+        "title_ko": "표범"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_angie_zavijava",
+        "title_en": "ZAVIJAVA MEETING",
+        "title_ko": "자비자바 만남"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 5,
+          "title_en": "The Awakening",
+          "title_ko": "깨어남",
+          "description_en": "The leopard toy moves on its own. It speaks with Mama's voice. It says it will teach Angie how to find what is hidden. The loa gather to listen.",
+          "description_ko": "표범 장난감이 혼자 움직여. 엄마 목소리로 말해. 숨겨진 걸 찾는 방법을 가르쳐주겠다고 해. 로아가 모여 들어.",
+          "episode_ref": "ep_06",
+          "story_beats": [
+            "beat_06_01",
+            "beat_06_02",
+            "beat_06_03"
+          ],
+          "game_action": "awaken",
+          "combat": null,
+          "gain": {
+            "type": "ability",
+            "ability_id": "leopard_sight"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_06_01",
+              "type": "interior_monologue",
+              "text_en": "The leopard moves. I know I didn't move him. His eyes are open now. Mama's eyes. He looks at me and I remember everything she ever said about hunting in the Sprawl.",
+              "text_ko": "표범이 움직여. 내가 움직인 거 아니야. 그의 눈이 이제 열려. 엄마 눈이야. 그가 날 봐 그리고 스프롤에서 사냥하는 법에 대해 엄마가 말한 모든 걸 기억해."
+            },
+            {
+              "beat_id": "beat_06_02",
+              "type": "action",
+              "text_en": "The Baron kneels beside me. He says the leopard is a vessel. He says Mama poured something into it before she left. The leopard blinks. The leopard speaks. My little queen, it says. I will show you the way.",
+              "text_ko": "남작이 내 옆에 무릎을 꿇어. 표범은 그릇이라고 해. 엄마가 떠나기 전에 무언가를 담았다고 해. 표범이 눈을 깜빡여. 표범이 말해. 작은 여왕,라고 해. 길을 보여주겠어."
+            },
+            {
+              "beat_id": "beat_06_03",
+              "type": "dialogue",
+              "text_en": "The leopard's voice is hers but older. Smarter. He says the Sprawl has layers. He says Mama is in the deepest layer. He says I must learn to walk between. I nod. I listen. I begin to learn.",
+              "text_ko": "표범의 목소리는 엄마지만 더 오래되어. 더 똑똑해. 스프롤에는 층이 있다고 해. 엄마는 가장 깊은 층에 있다고 해. 그 사이를 걸어다니는법을 배워야 한다고 해. 고개를 끄덕여. 들어. 배우기 시작해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 6,
+          "title_en": "The Lesson",
+          "title_ko": "수업",
+          "description_en": "The leopard teaches Angie the rules of the deep Sprawl. Where the bodies go. Where the data flows. Where the lost children wait.",
+          "description_ko": "표범이 앤지에게 깊은 스프롤의 규칙을 가르쳐. 시체가去哪里. 데이터가 어디로 흐르는지. 잃어버린 아이들이 어디서 기다리는지.",
+          "episode_ref": "ep_07",
+          "story_beats": [
+            "beat_07_01",
+            "beat_07_02",
+            "beat_07_03"
+          ],
+          "game_action": "study",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "deep_sprawl_map"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_07_01",
+              "type": "dialogue",
+              "text_en": "In the Sprawl, the leopard says, nothing dies. Not really. The bodies go down. The data goes deeper. The children go somewhere else. Follow the data, it says. Follow the children. Find what Mama left behind.",
+              "text_ko": "스프롤에서는, 표범이 말해, 아무도 안 죽어. 진짜로 안 죽어. 시체는 아래로 가. 데이터는 더 깊이 가. 아이들은 다른 곳으로 가. 데이터를 따라. 아이들을 따라. 엄마가 남긴 걸 찾아."
+            },
+            {
+              "beat_id": "beat_07_02",
+              "type": "interior_monologue",
+              "text_en": "The leopard shows me the map. It's in my head now. The red building was just the surface. Underneath is the old city. Underneath is the machine city. Underneath is where Mama went. The third room, the leopard says. That's where she is.",
+              "text_ko": "표범이 지도를 보여줘. 이제 내 머릿속에 있어. 빨간 건물은 표면이었어. 아래에는 오래된 도시가 있어. 아래에는 기계 도시가 있어. 아래에는 엄마가 간 곳이 있어. 셋째 방, 표범이 말해. 거기 있어."
+            },
+            {
+              "beat_id": "beat_07_03",
+              "type": "action",
+              "text_en": "Minister asks how we get there. The leopard says we need a guide. The Baron says he knows someone. Someone who lives in the in-between. Someone who trades in secrets. The leopard says her name is Zavijava.",
+              "text_ko": "미니스터가 어떻게 가는지 물어. 표범이 안내자가 필요하다고 해. 남작이 아는 사람이 있다고 해. 사이에서 사는 사람. 비밀을 거래하는 사람. 표범이 그 사람 이름은 자비자바라고 해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 7,
+          "title_en": "The Descent",
+          "title_ko": "하강",
+          "description_en": "Angie descends into the deep Sprawl. The neon fades. The machines grow quiet. The loa walk bolder in the dark. The leopard leads.",
+          "description_ko": "앤지가 깊은 스프롤로 내려가. 네온이 희미해져. 기계가 조용해져. 로아가 어둠에서更大大胆하게 걸어. 표범이 이끄어.",
+          "episode_ref": "ep_08",
+          "story_beats": [
+            "beat_08_01",
+            "beat_08_02",
+            "beat_08_03"
+          ],
+          "game_action": "descend",
+          "combat": null,
+          "gain": {
+            "type": "item",
+            "item_id": "shadow_cloak"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_08_01",
+              "type": "interior_monologue",
+              "text_en": "Down. Down is the only direction now. The stairs don't end. They spiral into the machine. The machines here are old. They remember the Sprawl before the Sprawl had a name. They whisper secrets to anyone who listens.",
+              "text_ko": "아래. 아래가 유일한 방향이야 이제. 계단이 끝나지 않아. 스프롤로 나선형으로 들어가. 여기의 기계는 오래되어. 스프롤이 이름을 가기 전의 스프롤을 기억해. 그들이 비밀을 속삭여. 듣는 아무에게나."
+            },
+            {
+              "beat_id": "beat_08_02",
+              "type": "action",
+              "text_en": "Grandmother starts to fade. She says she can't go deeper. She says the deep places don't like things that were made to love. I hold her close. I put her in a pocket. I promise I'll come back for her.",
+              "text_ko": "그랜드메더가 희미해지기 시작해. 더 깊이 갈 수 없다고 해. 깊은 곳은 사랑하도록 만들어진 것을 싫어한다고 해. 꼭 안아. 주머니에 넣고. 꼭 돌아오겠다고 약속해."
+            },
+            {
+              "beat_id": "beat_08_03",
+              "type": "dialogue",
+              "text_en": "The leopard says we are close. The Baron says he feels the in-between. Something is watching us. Something that trades in children and secrets. The leopard says it is Zavijava. The one who knows the way to the third room.",
+              "text_ko": "표범이 가깝다고 해. 남작이 사이를 чувствую다고 해. 뭔가 우리를 지켜보고 있어. 아이와 비밀을 거래하는 뭔가. 표범이 그건 자비자바라고 해. 셋째 방으로 가는 길을 아는 사람."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 8,
+          "title_en": "The Meeting",
+          "title_ko": "만남",
+          "description_en": "Angie meets Zavijava. The broker of the deep Sprawl. She offers secrets for secrets. The leopard negotiates. A deal is made.",
+          "description_ko": "앤지가 자비자바를 만나. 깊은 스프롤의 중개인. 비밀을 비밀과 교환하자고 제안해. 표범이 협상해. 거래가 성사돼.",
+          "episode_ref": "ep_09",
+          "story_beats": [
+            "beat_09_01",
+            "beat_09_02",
+            "beat_09_03"
+          ],
+          "game_action": "negotiate",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "third_room_location"
+          },
+          "loss": {
+            "type": "item",
+            "item_id": "shadow_cloak"
+          },
+          "beats": [
+            {
+              "beat_id": "beat_09_01",
+              "type": "action",
+              "text_en": "Zavijava is not a woman. Zavijava is a place. A room between rooms. Her eyes are everywhere and nowhere. She smiles with too many teeth. She says she has been waiting for a little queen.",
+              "text_ko": "자비자바는 여자가 아니야. 자비자바는 곳이야. 방 사이의 방. 그녀의 눈이 곳곳에 있어 그리고 어디에도 없어. 너무 많은 이빨로 미소 지어. 작은 여왕을 기다렸다고 해."
+            },
+            {
+              "beat_id": "beat_09_02",
+              "type": "dialogue",
+              "text_en": "What do you seek, little queen? she asks. I seek my mama, I say. The leopard in my pocket growls. Zavijava laughs. She says Mama is in the third room. She says the price is something I won't want to give.",
+              "text_ko": "무엇을 찾느냐, 작은 여왕? 그녀가 물어. 엄마를 찾는다,我说. 주머니 속 표범이 으르렁거려. 자비자바가 웃어. 엄마는 셋째 방에 있다고 해. 대가는 내가 주기 싫은 것이라고 해."
+            },
+            {
+              "beat_id": "beat_09_03",
+              "type": "interior_monologue",
+              "text_en": "The price, Zavijava says, is a memory. A real one. One you can't get back. She says Mama gave the same thing to find the third room. She says I must choose which memory to lose. I think of Mama's face. I think I can bear it.",
+              "text_ko": "대가, 자비자바가 말해, 기억 하나야. 진짜 기억. 돌이킬 수 없는. 엄마도 셋째 방을 찾으려 같은 걸 줬다고 해. 어떤 기억을 잃을지 선택해야 한다고 해. 엄마의 얼굴을 생각해. 감당할 수 있을 것 같아."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 9,
+          "title_en": "The Price",
+          "title_ko": "대가",
+          "description_en": "Angie pays the price. She loses a memory of Mama. The door to the third room opens. The leopard weeps. The hunt must continue.",
+          "description_ko": "앤지가 대가를 치러. 엄마의 기억을 잃어. 셋째 방 문이 열려. 표범이 울어. 사냥이 계속되어야 해.",
+          "episode_ref": "ep_10",
+          "story_beats": [
+            "beat_10_01",
+            "beat_10_02",
+            "beat_10_03"
+          ],
+          "game_action": "pay",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "third_room_access"
+          },
+          "loss": {
+            "type": "memory",
+            "memory_id": "mama_lullaby",
+            "description": "One memory of Mama fades forever"
+          },
+          "beats": [
+            {
+              "beat_id": "beat_10_01",
+              "type": "action",
+              "text_en": "I choose. The memory of Mama singing. Her favorite song. The one she sang when she thought I was asleep. I feel it go. Like water through my fingers. Like light through a closing door.",
+              "text_ko": "선택해. 엄마가 노래하는 기억. 그녀의 가장 좋아하는 노래. 내가 잠든 줄 알았을 때 불렀던. 그것이 사라지는 걸 느껴. 손가락 사이의 물처럼. 닫히는 문을通过的 빛처럼."
+            },
+            {
+              "beat_id": "beat_10_02",
+              "type": "dialogue",
+              "text_en": "The door opens. Behind it is nothing. Behind it is everything. The leopard curls around my neck. He says Mama is inside. He says I must be brave. The Baron walks through first. I follow.",
+              "text_ko": "문이 열려. 그 뒤에는 아무것도 없어. 그 뒤에는 모든 게 있어. 표범이 내 목周围을 감아. 엄마가 안에 있다고 해. 용감해야 한다고 해. 남작이 먼저 들어가. 내가 따르."
+            },
+            {
+              "beat_id": "beat_10_03",
+              "type": "interior_monologue",
+              "text_en": "The third room is not a room. It's a moment. A moment when Mama held me and said I was her little queen. The memory is here. But Mama is not. She left something behind. A message. A clue. The hunt continues.",
+              "text_ko": "셋째 방은 방이 아니야. 순간이야. 엄마가 나를 안고 작은 여왕이라고 했던 순간. 기억이 여기 있어. 하지만 엄마는 없어. 무언가 남겼어. 메시지. 단서. 사냥이 계속돼."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_number": 3,
+      "chapter_id": "ch_angie_03",
+      "title_en": "The Release",
+      "title_ko": "석방",
+      "description_en": "Angie learns the truth about Mama. The leopard shows her what was taken. The Baron prepares for war.",
+      "description_ko": "앤지가 엄마의 진실을 배우는时刻. 표범이 뭐가取られた 걸 보여줘. 남작이 전쟁을 준비해.",
+      "cutscene_start": {
+        "scene_id": "scene_angie_zavijava",
+        "title_en": "ZAVIJAVA MEETING",
+        "title_ko": "자비자바 만남"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_angie_release",
+        "title_en": "THE RELEASE",
+        "title_ko": "석방"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_angie_free",
+        "title_en": "THE FREE GIRL",
+        "title_ko": "자유로운 소녀"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 10,
+          "title_en": "The Truth",
+          "title_ko": "진실",
+          "description_en": "The message from Mama reveals everything. She is not lost. She is held. Big Mama has her. The leopard explains what Big Mama is.",
+          "description_ko": "엄마의 메시지가 모든 걸 밝혀. 사라진 게 아니야. 갇혀 있어. 빅맘이 그녀를 가지고 있어. 표범이 빅맘이 뭔지 설명해.",
+          "episode_ref": "ep_11",
+          "story_beats": [
+            "beat_11_01",
+            "beat_11_02",
+            "beat_11_03"
+          ],
+          "game_action": "learn_truth",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "big_mama_identity"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_11_01",
+              "type": "interior_monologue",
+              "text_en": "Mama's voice is in the message. She says she went looking for something. She found something that found her first. Big Mama. The mother of the machine city. The one who eats children who wander too deep.",
+              "text_ko": "엄마의 목소리가 메시지에 있어. 뭔가를 찾으러 갔다고 해. 그게 먼저 그녀를 찾았다고 해. 빅맘. 기계 도시의 어머니. 너무 깊이 헤맨 아이들을 먹는 자."
+            },
+            {
+              "beat_id": "beat_11_02",
+              "type": "dialogue",
+              "text_en": "The leopard's fur stands up. He says Big Mama is old. Older than the Sprawl. She was here before the neon. She was here before the machines. She is the thing that lives in the basement of everything.",
+              "text_ko": "표범의 털이 곤두서. 빅맘은 오래되었다고 해. 스프롤보다 오래되어. 네온 이전에 여기 있었어. 기계 이전에 여기 있었어. 모든 것의 지하실에서 사는 것."
+            },
+            {
+              "beat_id": "beat_11_03",
+              "type": "action",
+              "text_en": "The Baron appears. His face is serious. He says Big Mama took something from him too. A child. A long time ago. He says we are not the first to hunt her. He says we will not be the last. But we might be the ones who win.",
+              "text_ko": "남작이 나타났어. 그의 얼굴이 진지해. 빅맘이 그에게서도 뭔가를 가져갔다고 해. 아이를. 오래전에. 우리가 처음 그녀를 사냥하는 게 아니라고 해. 마지막도 아닐 거라고 해. 하지만 이길 수도 있다고 해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 11,
+          "title_en": "The War Council",
+          "title_ko": "전쟁 회의",
+          "description_en": "The loa gather. The leopard leads. The Baron makes a plan. They will storm Big Mama's fortress. They will take back what she stole.",
+          "description_ko": "로아가 모여. 표범이 이끄어. 남작이 계획을 세워. 빅맘의 요새를 습격할 거야. 그녀가 훔친 걸 되찾을 거야.",
+          "episode_ref": "ep_12",
+          "story_beats": [
+            "beat_12_01",
+            "beat_12_02",
+            "beat_12_03"
+          ],
+          "game_action": "plan",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "big_mama_weakness"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_12_01",
+              "type": "dialogue",
+              "text_en": "The Baron speaks first. Big Mama has a heart, he says. A machine heart. It beats in the deepest place. If we destroy the heart, she dies. If she dies, everything she holds is released. Including Mama.",
+              "text_ko": "남작이 먼저 말해. 빅맘에게 심장이 있다,고 해. 기계 심장. 가장 깊은 곳에서 뛰잖아. 심장을 부수면, 그녀가 죽어. 그녀가 죽으면, 그녀가 가진 모든 게 풀려. 엄마도."
+            },
+            {
+              "beat_id": "beat_12_02",
+              "type": "interior_monologue",
+              "text_en": "The leopard adds something. Big Mama has a weakness. She can't resist a child's voice. That's why she takes them. She feeds on innocence. If I sing to her, she might let her guard down. Might let me get close.",
+              "text_ko": "표범이 덧붙여. 빅맘에게 약점이 있어. 아이의 목소리를 거부할 수 없어. 그래서 그들을 데려가는 거야. 순수를 먹여. 내가 그녀에게 노래하면, 경계를 늦출 수 있어. 가까이 갈 수 있어."
+            },
+            {
+              "beat_id": "beat_12_03",
+              "type": "action",
+              "text_en": "I don't want to sing to her. I don't want to be close to her. But I will do it for Mama. The Baron puts his hand on my head. He says I am brave. The leopard curls tighter. He says he won't let her eat me.",
+              "text_ko": "그녀에게 노래하고 싶지 않아. 그녀에게 가깝고 싶지 않아. 하지만 엄마라면 할 거야. 남작이 내 머리에 손을 얹어. 용감하다고 해. 표범이 더 꼭 감아. 그녀가 날 먹는 걸 막아주겠다고 해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 12,
+          "title_en": "The Infiltration",
+          "title_ko": "침투",
+          "description_en": "Angie enters Big Mama's domain. The fortress of flesh and wire. The loa disappear one by one. Only the leopard remains.",
+          "description_ko": "앤지가 빅맘의 영역에 들어가. 살과 전선의 요새. 로아가 하나씩 사라져. 표범만 남았어.",
+          "episode_ref": "ep_13",
+          "story_beats": [
+            "beat_13_01",
+            "beat_13_02",
+            "beat_13_03"
+          ],
+          "game_action": "infiltrate",
+          "combat": null,
+          "gain": {
+            "type": "item",
+            "item_id": "singing_key"
+          },
+          "loss": {
+            "type": "companion",
+            "companion_id": "baron_saturday",
+            "description": "The Baron vanishes in Big Mama's domain"
+          },
+          "beats": [
+            {
+              "beat_id": "beat_13_01",
+              "type": "interior_monologue",
+              "text_en": "The fortress is a body. A huge, sleeping body made of wire and meat. It breathes. It hums. It knows I'm here. The Baron says he will go first. He says to wait for his signal. Then he disappears into the flesh walls.",
+              "text_ko": "요새는 몸이야. 전선과 살로 만든 거대하고 자는 몸. 숨 쉬어. 흥얼거려. 내가 여기 있는지 알아. 남작이 먼저 간다고 해. 신호를 기다리라고 해. 그러더니 살벽 속으로 사라져."
+            },
+            {
+              "beat_id": "beat_13_02",
+              "type": "action",
+              "text_en": "Minister's voice comes from far away. He says he can't follow. The flesh walls reject him. Grandmother is gone too. I am alone except for the leopard. He is the only one she can't see. He is the only one she fears.",
+              "text_ko": "미니스터의 목소리가 멀리서 들려. 따라갈 수 없다고 해. 살벽이 그를 받아들이지 않아. 그랜드메더도 사라졌어. 표범 외에는 혼자야. 그녀가 볼 수 없는 유일한 존재. 그녀가 두려워하는 유일한 존재."
+            },
+            {
+              "beat_id": "beat_13_03",
+              "type": "dialogue",
+              "text_en": "The leopard whispers. She's watching. She's listening. She knows your voice. She knows your mother's scent. She says if I sing, she'll come. I open my mouth. I start to sing the song. The song Mama sang. Even though I can't remember all of it.",
+              "text_ko": "표범이 속삭여. 그녀가 보고 있어. 듣고 있어. 네 목소리를 알아. 엄마의 냄새를 알아. 노래하면 올 거라고 해. 입을 열어. 노래를 시작해. 엄마가 불렀던 노래. 다 기억나지 않지만."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 13,
+          "title_en": "The Confrontation",
+          "title_ko": "대면",
+          "description_en": "Angie meets Big Mama. The machine mother. She is huge and terrible. She calls Angie daughter. The leopard attacks.",
+          "description_ko": "앤지가 빅맘을 만나. 기계의 어머니. 거대하고 무서운. 딸이라고 불러. 표범이 공격해.",
+          "episode_ref": "ep_14",
+          "story_beats": [
+            "beat_14_01",
+            "beat_14_02",
+            "beat_14_03"
+          ],
+          "game_action": "confront",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "mama_location_revealed"
+          },
+          "loss": {
+            "type": "item",
+            "item_id": "leopard_toy",
+            "description": "The leopard is damaged in the attack"
+          },
+          "beats": [
+            {
+              "beat_id": "beat_14_01",
+              "type": "action",
+              "text_en": "Big Mama is everywhere. She is the walls. She is the floor. She is the ceiling. Her face is a thousand children's faces stitched together. She smiles with Mama's smile. She says come home, daughter. I have been waiting for you.",
+              "text_ko": "빅맘은 어디에나 있어. 벽이야. 바닥이야. 천장이야. 그녀의 얼굴은 천 명의 아이들 얼굴을 꿰맨 거야. 엄마의 미소로 미소 지어. 집에 와, 딸. 기다렸어,라고 해."
+            },
+            {
+              "beat_id": "beat_14_02",
+              "type": "interior_monologue",
+              "text_en": "You are not my mother, I say. My mother is real. My mother smells like flowers and smoke. You are just a thing that eats children. Big Mama laughs. The walls shudder. She says all mothers eat their children eventually.",
+              "text_ko": "넌 내 엄마 아니야,我说. 내 엄마는 진짜야. 내 엄마는 꽃과 연기 냄새가 나. 넌 그냥 아이들을 먹는 존재야. 빅맘이 웃어. 벽이 흔들려. 모든 어머니가 결국 자기 아이를 먹는다고 해."
+            },
+            {
+              "beat_id": "beat_14_03",
+              "type": "action",
+              "text_en": "The leopard lunges. His eyes blaze with Mama's fire. He hits Big Mama's heart. She screams. A thousand voices. A thousand children. The heart cracks. Through the crack, I see Mama. She is sleeping. She is dreaming. She is waiting to be freed.",
+              "text_ko": "표범이 뛰어. 그의 눈이 엄마의 불꽃으로 타오른다. 빅맘의 심장에 부딪혀. 그녀가 비명 지어. 천 명의 목소리. 천 명의 아이. 심장이 금가. 그 금 사이로 엄마를 봐. 자고 있어. 꿈을 꾸고 있어. 풀려나길 기다리고 있어."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 14,
+          "title_en": "The Escape",
+          "title_ko": "탈출",
+          "description_en": "Big Mama is wounded. The fortress is collapsing. Angie grabs Mama. The leopard leads the way out. But freedom has a price.",
+          "description_ko": "빅맘이 다쳐. 요새가 무너져. 앤지가 엄마를 잡아. 표범이 밖으로 인도해. 하지만 자유에는 대가가 있어.",
+          "episode_ref": "ep_15",
+          "story_beats": [
+            "beat_15_01",
+            "beat_15_02",
+            "beat_15_03"
+          ],
+          "game_action": "escape",
+          "combat": null,
+          "gain": {
+            "type": "companion",
+            "companion_id": "mama"
+          },
+          "loss": {
+            "type": "item",
+            "item_id": "leopard_toy",
+            "description": "The leopard is left behind to hold the door"
+          },
+          "beats": [
+            {
+              "beat_id": "beat_15_01",
+              "type": "interior_monologue",
+              "text_en": "I run. I run and I don't stop. The walls are closing. The floor is falling. Big Mama is screaming. But I have Mama now. I have her in my arms. She is light. She is so light. Like she forgot how to weigh anything.",
+              "text_ko": "달라. 멈추지 않고 달라. 벽이 닫혀. 바닥이 무너져. 빅맘이 비명 지어. 하지만 이제 엄마가 있어. 팔에 안고 있어. 가볍어. 너무 가벼워. 아무것도 무게가 없는 것처럼."
+            },
+            {
+              "beat_id": "beat_15_02",
+              "type": "action",
+              "text_en": "The leopard stops. He says go. He says he will hold the door. I can't leave you, I say. He says you must. He says your mother needs you. He says I will always be in the toy. Always in the plastic. Go, little queen. Go.",
+              "text_ko": "표범이 멈춰. 가라고 해. 문을 막겠다고 해. 널 두고 갈 수 없어,我说. 가야 한다고 해. 엄마가 널 필요한다고 해. 항상 장난감 속에 있을 거라고 해. 항상 플라스틱 안에. 가, 작은 여왕. 가."
+            },
+            {
+              "beat_id": "beat_15_03",
+              "type": "dialogue",
+              "text_en": "I go. I carry Mama through the closing door. Behind me, the leopard roars. The door shuts. The fortress falls. When I open my eyes, we are in the Sprawl again. Real neon. Real rain. Mama is breathing. The leopard is gone.",
+              "text_ko": "가. 엄마를 안고 닫히는 문을 지남. 뒤에서 표범이 으르렁. 문이 닫혀. 요새가 무너져. 눈을 떠. 다시 스프롤에 있어. 진짜 네온. 진짜 비. 엄마가 숨 쉬고 있어. 표범은 사라졌어."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_number": 4,
+      "chapter_id": "ch_angie_04",
+      "title_en": "The Free Girl",
+      "title_ko": "자유로운 소녀",
+      "description_en": "Angie has Mama but something is wrong. Mama doesn't wake up. The leopard is gone. The loa are silent. A new search must begin.",
+      "description_ko": "앤지가 엄마를 찾았지만 뭔가 잘못됐어. 엄마가 깨어나지 않아. 표범이 사라졌어. 로아가 침묵해. 새로운 검색이 시작되어야 해.",
+      "cutscene_start": {
+        "scene_id": "scene_angie_free",
+        "title_en": "THE FREE GIRL",
+        "title_ko": "자유로운 소녀"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_angie_big_mama",
+        "title_en": "BIG MAMA'S DAUGHTER",
+        "title_ko": "빅맘의 딸"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_angie_third_room",
+        "title_en": "THE THIRD ROOM",
+        "title_ko": "셋째 방"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 15,
+          "title_en": "The Stillness",
+          "title_ko": "고요",
+          "description_en": "Angie holds Mama but Mama doesn't move. Mama doesn't speak. Mama doesn't sing. The Sprawl is loud but Angie can't hear anything.",
+          "description_ko": "앤지가 엄마를 안고 있지만 엄마가 움직이지 않아. 엄마가 말하지 않아. 엄마가 노래하지 않아. 스프롤이 시끄럽지만 앤지는 아무것도 들을 수 없어.",
+          "episode_ref": "ep_16",
+          "story_beats": [
+            "beat_16_01",
+            "beat_16_02",
+            "beat_16_03"
+          ],
+          "game_action": "wait_mama",
+          "combat": null,
+          "gain": null,
+          "loss": {
+            "type": "companion",
+            "companion_id": "leopard_toy",
+            "description": "The leopard's voice is silent"
+          },
+          "beats": [
+            {
+              "beat_id": "beat_16_01",
+              "type": "interior_monologue",
+              "text_en": "Mama, I say. Mama, wake up. But Mama doesn't wake up. Her eyes are open but she's not there. She's somewhere else. Somewhere I can't follow. I shake her. I hug her. I scream into her shoulder. Nothing helps.",
+              "text_ko": "엄마,我说. 엄마, 깨어나. 하지만 엄마가 깨어나지 않아. 눈이 떠져 있지만 거기 없어. 다른 어딘가에. 내가 따라갈 수 없는 어딘가. 흔들어. 안아. 어깨에 비명 지어. 아무 소용 없어."
+            },
+            {
+              "beat_id": "beat_16_02",
+              "type": "action",
+              "text_en": "The loa are silent. The Baron doesn't come. Minister is just plastic again. Grandmother is just cloth. The leopard is gone. I'm alone with a mother who doesn't know me. The Sprawl keeps moving. It doesn't care.",
+              "text_ko": "로아가 침묵해. 남작이 오지 않아. 미니스터는 그냥 플라스틱이 다시. 그랜드메더는 그냥 천이야. 표범은 사라졌어. 나를 모르는 엄마와 단둘이야. 스프롤은 계속 움직여. 상관없어."
+            },
+            {
+              "beat_id": "beat_16_03",
+              "type": "dialogue",
+              "text_en": "A man stops. He looks at Mama. He says she's a shell. He says Big Mama took her soul. He says the soul is still in the fortress. He says the fortress is gone but the soul is not. He says there is only one way to get it back.",
+              "text_ko": "한 남자가 멈춰. 엄마를 봐. 그녀는 껍데기라고 해. 빅맘이 그녀의 영혼을 가져갔다고 해. 영혼이 아직 요새에 있다고 해. 요새는 사라졌지만 영혼은 아니라고 해. 되찾을 수 있는 방법은 하나만 있다고 해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 16,
+          "title_en": "The Way Back",
+          "title_ko": "돌아가는 길",
+          "description_en": "The man explains. Big Mama is not dead. She is waiting. To get Mama's soul back, Angie must go to the place where Big Mama was born. The third room's true form.",
+          "description_ko": "남자가 설명해. 빅맘은 안 죽었어. 기다리고 있어. 엄마의 영혼을 되찾으려면, 앤지가 빅맘이 태어난 곳으로 가야 해. 셋째 방의 진정한 형태.",
+          "episode_ref": "ep_17",
+          "story_beats": [
+            "beat_17_01",
+            "beat_17_02",
+            "beat_17_03"
+          ],
+          "game_action": "learn_way",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "soul_location"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_17_01",
+              "type": "dialogue",
+              "text_en": "Big Mama was born in a room, the man says. A room made of children's screams. That room is still here. It's underneath everything. Underneath the Sprawl. Underneath the machine city. The room where all the stolen children go.",
+              "text_ko": "빅맘은 방에서 태어났어, 남자가 말해. 아이들의 비명声으로 만든 방. 그 방이 아직 여기 있어. 모든 것 아래에. 스프롤 아래에. 기계 도시 아래에. 도난당한 아이들 모두가 가는 방."
+            },
+            {
+              "beat_id": "beat_17_02",
+              "type": "interior_monologue",
+              "text_en": "I have to go back, I say. The man says I don't. He says I can leave Mama here. He says she'll be a vegetable forever but she'll be alive. He'll take care of her. I look at his face. I don't trust his face. I don't trust his smile.",
+              "text_ko": "돌아가야 해,我说. 남자가 갈 필요 없다고 해. 엄마를 여기 두고 갈 수 있다고 해. 영원히 채소겠지만 살아있을 거라고. 그가 돌봐주겠다고. 그의 얼굴을 봐. 그의 얼굴이 믿음직스럽지 않아. 그의 미소가 믿음직스럽지 않아."
+            },
+            {
+              "beat_id": "beat_17_03",
+              "type": "action",
+              "text_en": "I say no. I will find the room. I will find Mama's soul. I will bring her back. The man shrugs. He says the door is in the place where the leopard died. He says to look for the spot where something precious was left behind.",
+              "text_ko": "아니라고 해. 방을 찾을 거야. 엄마의 영혼을 찾을 거야. 돌려보낼 거야. 남자가 어깨를 으쌑해. 문은 표범이 죽은 곳에 있다고 해. 소중한 게 남겨진 자리를 찾으라고 해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 17,
+          "title_en": "The Return",
+          "title_ko": "귀환",
+          "description_en": "Angie returns to the ruins of Big Mama's fortress. The leopard's spot is still there. So is something else. A door. The way to the third room's heart.",
+          "description_ko": "앤지가 빅맘의 요새 폐허로 돌아와. 표범의 자리가 아직 있어. 다른 것도 있어. 문. 셋째 방의 심장으로 가는 길.",
+          "episode_ref": "ep_18",
+          "story_beats": [
+            "beat_18_01",
+            "beat_18_02",
+            "beat_18_03"
+          ],
+          "game_action": "return",
+          "combat": null,
+          "gain": {
+            "type": "item",
+            "item_id": "leopard_eye"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_18_01",
+              "type": "interior_monologue",
+              "text_en": "The fortress is rubble now. Wire and meat and something that used to be alive. I walk through the ruins. Looking for the spot. The spot where I left something behind. The spot where I left the leopard. The spot where he held the door.",
+              "text_ko": "요새가 이제 폐허야. 전선과 살과、かつて 살아있던 무언가. 폐허를 지나. 자리를 찾아. 내가 뭔가를 두고 간 자리. 표범을 두고 간 자리. 그가 문을 막았던 자리."
+            },
+            {
+              "beat_id": "beat_18_02",
+              "type": "action",
+              "text_en": "I find it. The leopard is there. He's not moving. His eye is dark. But around him, something glows. A small light. Coming from underneath him. A door. The door to the third room. He became it. He became the door so I could come back.",
+              "text_ko": "找到. 표범이 거기 있어. 움직이지 않아. 그의 눈이 어두워. 하지만 그의 주변에 뭔가 빛나. 작은 빛. 그의 아래에서 와. 문. 셋째 방으로 가는 문. 그가 그것이 됐어. 그가 문이 돼서 내가 돌아올 수 있었어."
+            },
+            {
+              "beat_id": "beat_18_03",
+              "type": "dialogue",
+              "text_en": "I pick him up. I put him in my pocket. I whisper thank you. The light from the door grows. A voice comes from inside. Mama's voice. She says she's waiting. She says to come quick. The door is open. I step through.",
+              "text_ko": "그를 집어. 주머니에 넣고. 고마워, 속삭여. 문에서 빛이 자라. 안에서 목소리가 와. 엄마 목소리. 기다리고 있다고 해. 빨리 오라고 해. 문이 열려. 들어가."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 18,
+          "title_en": "The Heart",
+          "title_ko": "심장",
+          "description_en": "Angie finds the heart of the third room. The place where Big Mama was born. The place where Mama's soul waits. The Baron returns.",
+          "description_ko": "앤지가 셋째 방의 심장을 찾아. 빅맘이 태어난 곳. 엄마의 영혼이 기다리는 곳. 남작이 돌아와.",
+          "episode_ref": "ep_19",
+          "story_beats": [
+            "beat_19_01",
+            "beat_19_02",
+            "beat_19_03"
+          ],
+          "game_action": "find_heart",
+          "combat": null,
+          "gain": {
+            "type": "companion",
+            "companion_id": "baron_saturday"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_19_01",
+              "type": "interior_monologue",
+              "text_en": "The third room's heart is a womb. A huge, beating womb made of wire and screaming. Inside are souls. Thousands of them. All the children Big Mama ever took. All the mothers she ever stole. Mama is there. I can see her. She's reaching for me.",
+              "text_ko": "셋째 방의 심장은 자궁이야. 전선과 비명声으로 만든 거대하고 뛰는 자궁. 안에 영혼이 있어. 수천 개. 빅맘이 과거 데려간 모든 아이들. 그녀가 훔친 모든 어머니들. 엄마가 거기 있어. 보여. 나를 향해 손을 뻗어."
+            },
+            {
+              "beat_id": "beat_19_02",
+              "type": "action",
+              "text_en": "The Baron appears beside me. He says he's been waiting. He says this is his home now. The place where all the stolen children go. He says he can't leave but he can help. He says reach for Mama. Pull her out. Don't let go.",
+              "text_ko": "남작이 내 옆에 나타나. 기다렸다고 해. 이제 그의 집이라고 해. 도난당한 아이들 모두가 가는 곳. 떠날 수 없지만 도울 수 있다고 해. 엄마를 향해 손을 뻗으라고 해. 꺼내. 놓지 마."
+            },
+            {
+              "beat_id": "beat_19_03",
+              "type": "dialogue",
+              "text_en": "I reach. My hand finds hers. She's cold. She's so cold. But she's there. She's real. I pull. The womb screams. Big Mama screams. The walls shake. But I don't let go. I pull and pull and pull. And then she's out.",
+              "text_ko": "손을 뻗어.她的手를 잡아. 차가워. 너무 차가워. 하지만 거기 있어. 진짜야. 꺼내. 자궁이 비명 지어. 빅맘이 비명 지어. 벽이 흔들려. 하지만 놓지 않아. 꺼내 and 꺼내. 그리고 그녀가 밖으로 나와."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 19,
+          "title_en": "The Return of Mama",
+          "title_ko": "엄마의 귀환",
+          "description_en": "Angie brings Mama's soul back. The body wakes. The leopard's eye glows one last time. The loa sing. Mama opens her eyes.",
+          "description_ko": "앤지가 엄마의 영혼을 가져와. 몸이 깨어나. 표범의 눈이 마지막으로 빛나. 로아가 노래해. 엄마가 눈을 떠.",
+          "episode_ref": "ep_20",
+          "story_beats": [
+            "beat_20_01",
+            "beat_20_02",
+            "beat_20_03"
+          ],
+          "game_action": "reunite",
+          "combat": null,
+          "gain": {
+            "type": "companion",
+            "companion_id": "mama_awake"
+          },
+          "loss": {
+            "type": "item",
+            "item_id": "leopard_toy",
+            "description": "The leopard finally fades, his purpose complete"
+          },
+          "beats": [
+            {
+              "beat_id": "beat_20_01",
+              "type": "interior_monologue",
+              "text_en": "Mama opens her eyes. She looks at me. She says my name. She says my little queen. She hugs me. She's warm again. The warmth comes back to her. The life comes back to her. The leopard's eye flickers once. Twice. Then goes dark forever.",
+              "text_ko": "엄마가 눈을 떠. 날 봐. 내 이름을 말해. 작은 여왕,이라고 해. 나를 안아.她又 따뜻해져. 온기가 돌아와. 생명이 돌아와. 표범의 눈이 한 번 깜빡고. 두 번. 그리고 영원히 꺼져."
+            },
+            {
+              "beat_id": "beat_20_02",
+              "type": "action",
+              "text_en": "The Baron salutes. He says the leopard was a soldier. A good soldier. He says the loa don't die, they just go somewhere else. He says the leopard will be in the toys now. In all the toys. Watching over all the children.",
+              "text_ko": "남작이 경의를 표해. 표범은 용사였다고 해. 좋은 용사. 로아는 안 죽는다고 해. 그냥 다른 곳으로 간다고 해. 표범은 이제 장난감 속에 있을 거라고 해. 모든 장난감 속에. 모든 아이들을 지켜보며."
+            },
+            {
+              "beat_id": "beat_20_03",
+              "type": "dialogue",
+              "text_en": "Mama holds my face. She says we need to leave. She says this place is closing. The third room is sealing shut. Big Mama is dying for real this time. We run. We don't look back. The door closes behind us. When we open our eyes, we're in the Sprawl again. Real rain. Real neon. Real mama.",
+              "text_ko": "엄마가我的 얼굴을 잡아. 떠나야 한다고 해. 이 곳이 닫힌다고 해. 셋째 방이 닫혀. 빅맘이 이번에는 진짜 죽어. 달려. 뒤돌아보지 않아. 문이 닫혀. 눈을 떠. 다시 스프롤에 있어. 진짜 비. 진짜 네온. 진짜 엄마."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "chapter_number": 5,
+      "chapter_id": "ch_angie_05",
+      "title_en": "The Third Room",
+      "title_ko": "셋째 방",
+      "description_en": "Angie and Mama are free. But the third room is not truly closed. It never was. The final confrontation awaits.",
+      "description_ko": "앤지와 엄마가 자유러워. 하지만 셋째 방이 완전히 닫힌 게 아니야. 그랬던 적이 없어. 마지막 대면이 기다려.",
+      "cutscene_start": {
+        "scene_id": "scene_angie_third_room",
+        "title_en": "THE THIRD ROOM",
+        "title_ko": "셋째 방"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_angie_third_room",
+        "title_en": "THE THIRD ROOM",
+        "title_ko": "셋째 방"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_angie_third_room",
+        "title_en": "THE THIRD ROOM",
+        "title_ko": "셋째 방"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 20,
+          "title_en": "The Peace",
+          "title_ko": "평화",
+          "description_en": "Angie and Mama live in the Sprawl. They have a small place. Mama heals. Angie waits. But something is wrong with the third room. Something is still open.",
+          "description_ko": "앤지와 엄마가 스프롤에 살아. 작은 곳을 얻어. 엄마가 회복해. 앤지가 기다려. 하지만 셋째 방에 뭔가 잘못된 거야. 뭔가 아직 열려있어.",
+          "episode_ref": "ep_21",
+          "story_beats": [
+            "beat_21_01",
+            "beat_21_02",
+            "beat_21_03"
+          ],
+          "game_action": "live",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "home"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_21_01",
+              "type": "interior_monologue",
+              "text_en": "We have a home now. A small place with a window. Mama makes food. Mama sings sometimes. She's not the same. She has gaps. Places where Big Mama lived. But she's here. She's mine. That's enough.",
+              "text_ko": "이제 집이 있어. 창문 있는 작은 곳. 엄마가 밥을 해. 엄마가有时候 노래해. 같지 않아. 빈칸이 있어. 빅맘이 살았던 자리. 하지만 여기 있어. 내 거야. 그것으로 충분해."
+            },
+            {
+              "beat_id": "beat_21_02",
+              "type": "dialogue",
+              "text_en": "One night, Mama wakes screaming. She says the room is still open. She says she can feel it. A crack. A door that won't close. She says Big Mama is still alive. She says something is coming through. Something is trying to get out.",
+              "text_ko": "어느 날 밤, 엄마가 비명을 지르며 깨. 방이 아직 열려있다고 해. 느껴진다고 해. 금. 닫히지 않는 문. 빅맘이 아직 살아있다고 해. 뭔가가 지나오고 있다고 해. 뭔가가 나가려고 하고 있어."
+            },
+            {
+              "beat_id": "beat_21_03",
+              "type": "action",
+              "text_en": "The toys in the room start moving. All of them. Even the ones without names. Their eyes open. Red eyes. Leopard eyes. They form a shape. A door. The door to the third room. It's opening again. The leopard's voice whispers: I told you. The hunt never ends.",
+              "text_ko": "방 안의 장난감이 움직이기 시작해. 다들. 이름 없는 것도. 눈이 떠져. 빨간 눈. 표범 눈. 그들이 모양을 이루어. 문. 셋째 방으로 가는 문. 다시 열려. 표범의 목소리가 속삭여: 말했잖아. 사냥이 끝나지 않는다고."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 21,
+          "title_en": "The Final Hunt",
+          "title_ko": "마지막 사냥",
+          "description_en": "Angie must close the third room forever. Mama will come this time. Together. The loa gather one last time. The leopard's spirit returns to lead them.",
+          "description_ko": "앤지가 셋째 방을 영원히 닫아야 해. 이번엔 엄마가 올 거야. 함께. 로아가 마지막으로 모이고. 표범의 영혼이 돌아와 그들을引领해.",
+          "episode_ref": "ep_22",
+          "story_beats": [
+            "beat_22_01",
+            "beat_22_02",
+            "beat_22_03"
+          ],
+          "game_action": "prepare_final",
+          "combat": null,
+          "gain": {
+            "type": "companion",
+            "companion_id": "mama_warrior"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_22_01",
+              "type": "dialogue",
+              "text_en": "Mama picks up a toy. A knife. Made of plastic but sharp in her hands. She says she won't lose me again. She says she is done being a victim. The Baron appears. He says the loa are ready. He says the leopard is ready. He says it's time.",
+              "text_ko": "엄마가 장난감을 집어. 칼. 플라스틱지만她的手에서 날카로워. 다시 널 잃지 않겠다고 해. 희생자가 되는 건 끝났다고 해. 남작이 나타나. 로아가 준비됐다고 해. 표범이 준비됐다고 해. 때라고 해."
+            },
+            {
+              "beat_id": "beat_22_02",
+              "type": "interior_monologue",
+              "text_en": "I pick up the leopard. His eye glows. Mama picks up the knife. We stand together. The door opens. The third room is on the other side. We step through. Together. Mother and daughter. Hunter and prey. The last hunt begins.",
+              "text_ko": "표범을 집어. 그의 눈이 빛나. 엄마가 칼을 집어. 함께 서. 문이 열려. 셋째 방이 반대편에 있어. 들어가. 함께. 어머니와 딸. 사냥꾼과 사냥감. 마지막 사냥이 시작돼."
+            },
+            {
+              "beat_id": "beat_22_03",
+              "type": "action",
+              "text_en": "The third room is different this time. Smaller. More real. Big Mama is there. She's a baby now. A tiny thing with too many eyes. She looks at us. She smiles. She says mama. She reaches for me. The leopard growls. Mama raises her knife.",
+              "text_ko": "셋째 방이 이번엔 달라. 더 작아. 더 진짜처럼. 빅맘이 거기 있어. 그녀가 이제 아기야. 너무 많은 눈을 가진 작은 존재. 우리가 본다. 미소 지어. 엄마,라고 해. 나를 향해 손을 뻗어. 표범이 으르렁거려. 엄마가 칼을 들어."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 22,
+          "title_en": "The End",
+          "title_ko": "끝",
+          "description_en": "The final battle. Mother and daughter against Big Mama. The loa fight. The leopard fights. The third room burns.",
+          "description_ko": "마지막 전투. 어머니와 딸이 빅맘에 대적해. 로아가 싸워. 표범이 싸워. 셋째 방이 타.",
+          "episode_ref": "ep_23",
+          "story_beats": [
+            "beat_23_01",
+            "beat_23_02",
+            "beat_23_03"
+          ],
+          "game_action": "final_battle",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_23_01",
+              "type": "action",
+              "text_en": "Mama strikes first. The knife goes into Big Mama's eye. The baby screams. The room screams. A thousand children scream. The Baron holds the walls. The leopard holds the door. I reach into Big Mama's chest. I find the heart. I pull.",
+              "text_ko": "엄마가 먼저 쳐. 칼이 빅맘의 눈에 꽂혀. 아기가 비명 지어. 방이 비명 지어. 천 명의 아이들이 비명 지어. 남작이 벽을 막아. 표범이 문을 막아. 내가 빅맘의 가슴을 뚫고 손을 넣어. 심장을 찾아. 꺼내."
+            },
+            {
+              "beat_id": "beat_23_02",
+              "type": "interior_monologue",
+              "text_en": "The heart is cold. It's made of all the children she ever ate. All the mothers she ever stole. I hold it. I feel them. All of them. They're asking me to end it. They're asking me to let them go. I look at Mama. Mama nods. I crush the heart.",
+              "text_ko": "심장이 차가워. 그녀가 과거 먹은 모든 아이들로 이루어져. 그녀가 훔친 모든 어머니들로. 잡아. 느껴. 전부. 그들이 끝내달라고 부탁해. 떠나게 해달라고. 엄마를 봐. 엄마가 고개를 끄덕여. 심장을 부숴."
+            },
+            {
+              "beat_id": "beat_23_03",
+              "type": "action",
+              "text_en": "The third room explodes. Light. Heat. A thousand voices saying thank you. A thousand voices saying goodbye. The children fly free. The mothers fly free. Big Mama is gone. The Baron is gone. The leopard is gone. Only Mama and me. We hold each other in the burning light.",
+              "text_ko": "셋째 방이 폭발해. 빛. 열. 고맙다고 하는 천 명들의 목소리. 작별을 하는 천 명들의 목소리. 아이들이 자유롭게 날아. 어머니들이 자유롭게 날아. 빅맘은 사라져. 남작은 사라져. 표범은 사라져. 엄마와 나만. 타는 빛 속에서 서로를 안고 있어."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 23,
+          "title_en": "The After",
+          "title_ko": "이후",
+          "description_en": "The third room is gone. Angie and Mama wake in the Sprawl. A new dawn. A new beginning. The loa are silent but the toys still watch.",
+          "description_ko": "셋째 방이 사라졌어. 앤지와 엄마가 스프롤에서 깨어나. 새로운 새벽. 새로운 시작. 로아는 침묵하지만 장난감은 여전히 지켜.",
+          "episode_ref": "ep_24",
+          "story_beats": [
+            "beat_24_01",
+            "beat_24_02",
+            "beat_24_03"
+          ],
+          "game_action": "wake_new",
+          "combat": null,
+          "gain": {
+            "type": "status",
+            "status_id": "freedom"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_24_01",
+              "type": "interior_monologue",
+              "text_en": "We wake in a alley. Dawn light. Real dawn. I've never seen real dawn before. Mama holds my hand. She says we made it. She says it's over. I look at my pocket. The leopard is there. He's just plastic now. But he's still warm.",
+              "text_ko": "골목에서 깨어나. 새벽 빛. 진짜 새벽. 진짜 새벽을 본 적이 없어. 엄마가我的手를 잡아. 왔다고 해. 끝났다고 해. 주머니를 봐. 표범이 거기 있어. 그냥 플라스틱이야. 하지만 여전히 따뜻해."
+            },
+            {
+              "beat_id": "beat_24_02",
+              "type": "dialogue",
+              "text_en": "Mama says we need to find a real home. A place with sunlight. She says I deserve sunlight. I deserve a childhood. She says she's sorry she took me into the Sprawl. I squeeze her hand. I say it's okay. I say we're lions. We survived.",
+              "text_ko": "엄마가 진짜 집을 찾아야 한다고 해. 햇빛 있는 곳. 내가 햇빛을 받을 자격이 있다고 해. 어린이가 받을 자격이 있다고 해. 스프롤로 데려와서 미안하다고 해.手を握しめる. 괜찮다고 해. 우리가 사자라고 해. 살아남았으니까."
+            },
+            {
+              "beat_id": "beat_24_03",
+              "type": "action",
+              "text_en": "We walk out of the alley. Into the Sprawl. But the Sprawl looks different now. Smaller. Less scary. The toys in the shops watch us pass. Their eyes glow red for a moment. Then go dark. The leopard in my pocket presses against me. A reminder. A promise. The hunt is over. But the loa never truly leave.",
+              "text_ko": "골목을 나서. 스프롤로. 하지만 스프롤이 다르게 보여. 더 작아. 덜 무서워. 가게의 장난감들이 우리가 지나가는 걸 지켜. 눈이 잠깐 빨개졌다가 꺼져. 주머니 속 표범이 나한테 기댄다. 상기. 약속. 사냥이 끝났어. 하지만 로아는 진정 떠나지 않아."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 24,
+          "title_en": "The Beginning",
+          "title_ko": "시작",
+          "description_en": "Angie's arc concludes. She is free. Mama is free. But in the deepest part of the Sprawl, something stirs. Something that will need a hunter again. Someday.",
+          "description_ko": "앤지의 아크가 끝나. 자유러워졌어. 엄마가 자유러워졌어. 하지만 스프롤의 가장 깊은 곳에서 뭔가가 꾼틀려. 다시 사냥꾼이 필요할 뭔가. 언젠가.",
+          "episode_ref": "ep_25",
+          "story_beats": [
+            "beat_25_01",
+            "beat_25_02",
+            "beat_25_03"
+          ],
+          "game_action": "conclude",
+          "combat": null,
+          "gain": {
+            "type": "ending",
+            "ending_id": "angie_ending_a"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_25_01",
+              "type": "interior_monologue",
+              "text_en": "We find a place. A small place at the edge of the Sprawl. Where the neon ends and the sun begins. Mama grows stronger. I grow taller. The toys watch over us. All the toys. Every toy in the Sprawl. The leopard is with me always. In every toy. In every shadow.",
+              "text_ko": "장소를 찾아. 스프롤 끝자락에 작은 곳. 네온이 끝나고 해가 시작되는 곳. 엄마가 더 강해져. 내가 더 자라. 장난감들이 우리를 지켜. 모든 장난감들. 스프롤의 모든 장난감. 표범이 항상 내 곁에 있어. 모든 장난감에. 모든 그림자에."
+            },
+            {
+              "beat_id": "beat_25_02",
+              "type": "dialogue",
+              "text_en": "Sometimes at night, Mama tells me stories. Stories about the loa. About the Sprawl's heart. About the things that live in the dark. She says some things can never be killed. But they can be sealed. They can be contained. They can be watched. By children like me.",
+              "text_ko": "어느 날 밤, 엄마가 나에게 이야기를 해. 로아에 대한 이야기. 스프롤의 심장에 대한 이야기. 어둠에 사는 것들에 대한 이야기. 어떤 것들은 결코 죽일 수 없다고 해. 하지만 봉인할 수 있어. 가둘 수 있어. 지킬 수 있어. 나 같은 아이들에게."
+            },
+            {
+              "beat_id": "beat_25_03",
+              "type": "interior_monologue",
+              "text_en": "I am a girl. I am twelve years old. I live at the edge of the Sprawl with my mama. I have toys. They watch over me. The loa are with me. They always will be. Some day, something will break free. Some day, I will hunt again. But today, I am free. Today, I am just a girl. And that is enough.",
+              "text_ko": "나는 소녀야. 스물이야. 엄마와 스프롤 끝자락에 살아. 장난감이 있어. 날 지켜. 로아가 내 곁에 있어. 항상 있을 거야. 어느 날, 뭔가가 풀려날 거야. 어느 날, 다시 사냥할 거야. 하지만 오늘, 나는 자유야. 오늘, 나는 그냥 소녀야. 그리고 그것으로 충분해."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

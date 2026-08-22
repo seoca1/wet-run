@@ -1,0 +1,2524 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Wet Run — 스테이터스 & 난이도 설계 - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wet-run" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Wet Run — 스테이터스 &amp; 난이도 설계
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 개요
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 개요">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 목표
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 기존 시스템 분석
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 플레이어 스테이터스
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 플레이어 스테이터스">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-grade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Grade 시스템 (기존 유지)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-ppl-player-power-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 PPL (Player Power Level) — 기존 유지
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-combat-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Combat Stats (기존 유지 + 확장)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-xp-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 XP &amp; 레벨업 시스템 (NEW)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-grade-ppl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Grade → PPL 권장 범위
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-enemyice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 적 (Enemy/ICE) 스테이터스
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 적 (Enemy/ICE) 스테이터스">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ice-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 ICE Tier 시스템 (확장)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-ice-hpdmg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 ICE HP/DMG 스케일 공식
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-ice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 기존 ICE 타입 스펙
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-npc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. NPC 스테이터스 (전투용)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. NPC 스테이터스 (전투용)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-npc-combat-stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 NPC Combat Stats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-npc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 주요 NPC 스펙
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 아이템 &amp; 장비 시스템
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 아이템 &amp; 장비 시스템">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-equipment-tier-grade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Equipment Tier → Grade 연관
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 스킬 트리 (Simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 아이템 드롭 &amp; 보상
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Stage 난이도 연동
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Stage 난이도 연동">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-phase-difficulty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Phase → Difficulty 매핑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-ch1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 케이 Ch1 스테이지 설계
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-ch2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 케이 Ch2 스테이지 설계
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-player-grade" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 적配置 공식 (Player Grade 기준)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 데모 검증용 초기 상태
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 데모 검증용 초기 상태">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 데모 시나리오별 초기 장비
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 데모 시나리오별 적 구성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 난이도 검증 공식
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 난이도 검증 공식">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-ppl-vs-enemy-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 PPL vs Enemy Power 비교
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 전투 시간 예측
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 권장 수치
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 구현 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 관련 파일
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="wet-run">Wet Run — 스테이터스 &amp; 난이도 설계<a class="headerlink" href="#wet-run" title="Permanent link">&para;</a></h1>
+<p><strong>문서 상태</strong>: DRAFT
+<strong>Created</strong>: 2026-06-23
+<strong>Purpose</strong>: 레벨/아이템/적/NPC 스테이터스 체계 + 스테이지 난이도 연동 설계</p>
+<hr />
+<h2 id="1">1. 개요<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="11">1.1 목표<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>목표</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>난이도 검증</strong></td>
+<td>플레이어 PPL vs 적 HP/DMG 균형 검증</td>
+</tr>
+<tr>
+<td><strong>레벨 체계 확립</strong></td>
+<td>Player Grade + PPL 기반 단계적 난이도</td>
+</tr>
+<tr>
+<td><strong>아이템/스킬 시스템</strong></td>
+<td>등급별 장비 &amp; 프로그램 조합</td>
+</tr>
+<tr>
+<td><strong>적/NPC 레벨링</strong></td>
+<td>각Enemy Tier × Player Grade → 적 HP/DMG 스케일</td>
+</tr>
+<tr>
+<td><strong>스테이지 연동</strong></td>
+<td>Phase별 적配置 + 보상 설계</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12">1.2 기존 시스템 분석<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<p><strong>현재 상태</strong>:
+- ✅ Grade 1-5 (미션 잠금 해제용)
+- ✅ PPL 계산식 (Deck/Program/Wetware/Construct 합산)
+- ✅ ICE 타입 5종 (HP/DMG/Tier 고정)
+- ✅ Skill 16종 (Registry 기반)
+- ✅ Equipment 14종 (Tier 0-3)
+- ❌ XP/레벨업 시스템 없음
+- ❌ 적 스케일링 없음 (고정 stat)
+- ❌ NPC 전투력 없음
+- ❌ Stage별 난이도 매핑 없음</p>
+<hr />
+<h2 id="2">2. 플레이어 스테이터스<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="21-grade">2.1 Grade 시스템 (기존 유지)<a class="headerlink" href="#21-grade" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">Grade</span> <span class="o">=</span> <span class="mf">1..5</span>  <span class="c1"># 미션 잠금용 (기존 그대로)</span>
+<span class="c1"># Grade 1: T0-T1 장비, 1-2 스킬</span>
+<span class="c1"># Grade 2: T1-T2 장비, 2-3 스킬</span>
+<span class="c1"># Grade 3: T2-T3 장비, 3-4 스킬</span>
+<span class="c1"># Grade 4: T3-T4 장비, 4-5 스킬</span>
+<span class="c1"># Grade 5: T4-T5 장비, 5+ 스킬</span>
+</code></pre></div>
+<h3 id="22-ppl-player-power-level">2.2 PPL (Player Power Level) — 기존 유지<a class="headerlink" href="#22-ppl-player-power-level" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">PPL</span> <span class="o">=</span> <span class="p">(</span><span class="n">deck_tier</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">Σ</span><span class="p">(</span><span class="n">program_tiers</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">wetware</span> <span class="o">+</span> <span class="p">(</span><span class="n">construct_tier</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># 예시:</span>
+<span class="c1"># T2_deck(6) + 3xT1_programs(6) + T2_wetware(2) + T1_construct(3) = PPL 17</span>
+</code></pre></div>
+<h3 id="23-combat-stats">2.3 Combat Stats (기존 유지 + 확장)<a class="headerlink" href="#23-combat-stats" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">CombatStats</span><span class="p">:</span>
+    <span class="n">max_hp</span><span class="p">:</span>     <span class="nb">int</span>    <span class="c1"># 체력</span>
+    <span class="n">hp</span><span class="p">:</span>         <span class="nb">int</span>    <span class="c1"># 현재 체력</span>
+    <span class="n">ap</span><span class="p">:</span>         <span class="nb">int</span>    <span class="c1"># 현재 AP</span>
+    <span class="n">max_ap</span><span class="p">:</span>     <span class="nb">int</span>    <span class="c1"># 최대 AP (기본 6)</span>
+    <span class="n">ap_regen</span><span class="p">:</span>   <span class="nb">int</span>    <span class="c1"># AP 회복량/tick</span>
+    <span class="n">attack</span><span class="p">:</span>     <span class="nb">int</span>    <span class="c1"># 공격력 (장비 보정 포함)</span>
+    <span class="n">defense</span><span class="p">:</span>    <span class="nb">int</span>    <span class="c1"># 방어력 (데미지 감면)</span>
+    <span class="n">crit_rate</span><span class="p">:</span>  <span class="nb">float</span>  <span class="c1"># 치명타율 (기본 15%)</span>
+    <span class="n">crit_dmg</span><span class="p">:</span>   <span class="nb">float</span>  <span class="c1"># 치명타 배율 (기본 2.0x)</span>
+    <span class="n">speed</span><span class="p">:</span>      <span class="nb">int</span>    <span class="c1"># 선제공격 여부 결정</span>
+
+    <span class="c1"># 내성</span>
+    <span class="n">ice_resist</span><span class="p">:</span> <span class="nb">float</span>  <span class="c1"># ICE 데미지 감면율 (기본 0%)</span>
+    <span class="n">shield</span><span class="p">:</span>     <span class="nb">int</span>    <span class="c1"># 현재 방패량</span>
+
+    <span class="c1"># 스킬</span>
+    <span class="n">skills</span><span class="p">:</span>     <span class="nb">tuple</span><span class="p">[</span><span class="n">SkillId</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="c1"># 장비/스킬트리에서 획득</span>
+</code></pre></div>
+<h3 id="24-xp-new">2.4 XP &amp; 레벨업 시스템 (NEW)<a class="headerlink" href="#24-xp-new" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">XP_TO_LEVEL</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>    <span class="c1"># Grade 1 → 2</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>    <span class="c1"># Grade 2 → 3</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>    <span class="c1"># Grade 3 → 4</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>   <span class="c1"># Grade 4 → 5</span>
+<span class="p">}</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PlayerProgression</span><span class="p">:</span>
+    <span class="n">xp</span><span class="p">:</span>           <span class="nb">int</span>       <span class="c1"># 현재 XP</span>
+    <span class="n">grade</span><span class="p">:</span>        <span class="nb">int</span>       <span class="c1"># 현재 Grade (1-5)</span>
+    <span class="n">skill_points</span><span class="p">:</span> <span class="nb">int</span>       <span class="c1"># 스킬 포인트 (레벨업 시 +1)</span>
+    <span class="n">unlocked_tiers</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="n">EquipTier</span><span class="p">]</span>  <span class="c1">#解锁的装备等级</span>
+
+    <span class="k">def</span> <span class="nf">add_xp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;XP 추가. Grade업 시 True 반환&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xp</span> <span class="o">+=</span> <span class="n">amount</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">xp</span> <span class="o">&gt;=</span> <span class="n">XP_TO_LEVEL</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">grade</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">grade</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grade</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">skill_points</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+<h3 id="25-grade-ppl">2.5 Grade → PPL 권장 범위<a class="headerlink" href="#25-grade-ppl" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Grade</th>
+<th>PPL Min</th>
+<th>PPL Max</th>
+<th>권장 적 Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>3</td>
+<td>12</td>
+<td>T1</td>
+</tr>
+<tr>
+<td>2</td>
+<td>10</td>
+<td>20</td>
+<td>T1-T2</td>
+</tr>
+<tr>
+<td>3</td>
+<td>18</td>
+<td>30</td>
+<td>T2-T3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>28</td>
+<td>42</td>
+<td>T3-T4</td>
+</tr>
+<tr>
+<td>5</td>
+<td>40</td>
+<td>60</td>
+<td>T4-T5</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-enemyice">3. 적 (Enemy/ICE) 스테이터스<a class="headerlink" href="#3-enemyice" title="Permanent link">&para;</a></h2>
+<h3 id="31-ice-tier">3.1 ICE Tier 시스템 (확장)<a class="headerlink" href="#31-ice-tier" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">ICETier</span> <span class="o">=</span> <span class="mf">1..5</span>  <span class="c1"># Player Grade와 대응</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ICEStats</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span>           <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span>         <span class="nb">str</span>
+    <span class="n">tier</span><span class="p">:</span>         <span class="nb">int</span>           <span class="c1"># 1-5 (Player Grade 대응)</span>
+    <span class="n">hp_base</span><span class="p">:</span>      <span class="nb">int</span>           <span class="c1"># 기본 HP</span>
+    <span class="n">hp_per_grade</span><span class="p">:</span> <span class="nb">int</span>           <span class="c1"># Grade당 HP 증가량</span>
+    <span class="n">dmg_base</span><span class="p">:</span>     <span class="nb">int</span>           <span class="c1"># 기본 공격력</span>
+    <span class="n">dmg_per_grade</span><span class="p">:</span> <span class="nb">int</span>          <span class="c1"># Grade당 공격력 증가량</span>
+    <span class="n">defense</span><span class="p">:</span>      <span class="nb">int</span>           <span class="c1"># 방어력</span>
+    <span class="n">speed</span><span class="p">:</span>        <span class="nb">int</span>           <span class="c1"># 속도 (AP 우선순위)</span>
+    <span class="n">skills</span><span class="p">:</span>       <span class="nb">tuple</span><span class="p">[</span><span class="n">SkillId</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="n">resistance</span><span class="p">:</span>   <span class="nb">float</span>         <span class="c1"># 특정 데미지 내성</span>
+    <span class="n">loot_table</span><span class="p">:</span>   <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>  <span class="c1"># 드롭 테이블</span>
+</code></pre></div>
+<h3 id="32-ice-hpdmg">3.2 ICE HP/DMG 스케일 공식<a class="headerlink" href="#32-ice-hpdmg" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_ice_stats</span><span class="p">(</span><span class="n">ice</span><span class="p">:</span> <span class="n">ICEStats</span><span class="p">,</span> <span class="n">player_grade</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Player Grade 기반 ICE 실제 HP/DMG 반환&quot;&quot;&quot;</span>
+    <span class="n">grade_diff</span> <span class="o">=</span> <span class="n">player_grade</span> <span class="o">-</span> <span class="n">ice</span><span class="o">.</span><span class="n">tier</span>
+
+    <span class="c1"># Grade가 높을수록 적 체력/공격력 증가</span>
+    <span class="n">hp</span> <span class="o">=</span> <span class="n">ice</span><span class="o">.</span><span class="n">hp_base</span> <span class="o">+</span> <span class="p">(</span><span class="n">ice</span><span class="o">.</span><span class="n">hp_per_grade</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">grade_diff</span><span class="p">))</span>
+    <span class="n">dmg</span> <span class="o">=</span> <span class="n">ice</span><span class="o">.</span><span class="n">dmg_base</span> <span class="o">+</span> <span class="p">(</span><span class="n">ice</span><span class="o">.</span><span class="n">dmg_per_grade</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">grade_diff</span><span class="p">))</span>
+
+    <span class="c1"># Grade가 낮으면 보정 (최소 70% 유지)</span>
+    <span class="k">if</span> <span class="n">grade_diff</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">+</span> <span class="p">(</span><span class="n">grade_diff</span> <span class="o">*</span> <span class="mf">0.15</span><span class="p">)</span>  <span class="c1"># -1 Grade = 85%, -2 = 70%</span>
+        <span class="n">hp</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hp</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">scale</span><span class="p">))</span>
+        <span class="n">dmg</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dmg</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">scale</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">hp</span><span class="p">,</span> <span class="n">dmg</span>
+
+<span class="c1"># 예시: Watchdog (tier=1, hp_base=50, dmg_base=2)</span>
+<span class="c1"># Player Grade 1: HP=50, DMG=2</span>
+<span class="c1"># Player Grade 3: HP=50+(2*2)=54, DMG=2+(1*2)=4</span>
+<span class="c1"># Player Grade 5: HP=50+(2*4)=58, DMG=2+(1*4)=6</span>
+</code></pre></div>
+<h3 id="33-ice">3.3 기존 ICE 타입 스펙<a class="headerlink" href="#33-ice" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;standard&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ICE — Standard&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;hp_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dmg_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;defense&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;watchdog&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ICE — Watchdog&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;hp_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dmg_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;defense&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;spider&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ICE — Spider&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;hp_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dmg_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;defense&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;black&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ICE — Black&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;hp_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dmg_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;defense&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;goliath&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ICE — Goliath&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">150</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;hp_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dmg_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;defense&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;dixie&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Construct — Dixie&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;hp_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dmg_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;defense&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;raven&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ICE — Raven&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;hp_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dmg_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;defense&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">7</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;wisp&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ICE — Wisp&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">35</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;hp_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;dmg_per_grade&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;defense&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;speed&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="4-npc">4. NPC 스테이터스 (전투용)<a class="headerlink" href="#4-npc" title="Permanent link">&para;</a></h2>
+<h3 id="41-npc-combat-stats">4.1 NPC Combat Stats<a class="headerlink" href="#41-npc-combat-stats" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">NPCStats</span><span class="p">:</span>
+    <span class="n">npc_id</span><span class="p">:</span>    <span class="n">NPCId</span>
+    <span class="n">name</span><span class="p">:</span>      <span class="nb">str</span>
+    <span class="n">tier</span><span class="p">:</span>      <span class="nb">int</span>           <span class="c1"># 1-5 (Player Grade 대응)</span>
+    <span class="n">hp_base</span><span class="p">:</span>   <span class="nb">int</span>
+    <span class="n">dmg_base</span><span class="p">:</span>  <span class="nb">int</span>
+    <span class="n">skills</span><span class="p">:</span>    <span class="nb">tuple</span><span class="p">[</span><span class="n">SkillId</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="n">ally</span><span class="p">:</span>      <span class="nb">bool</span>          <span class="c1"># True = 아군, False = 적대적</span>
+    <span class="n">dialogue</span><span class="p">:</span>  <span class="n">DialogueTree</span>  <span class="c1"># 기존 dialogue 시스템 재활용</span>
+</code></pre></div>
+<h3 id="42-npc">4.2 주요 NPC 스펙<a class="headerlink" href="#42-npc" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;FINN&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Finn&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;negotiate&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;data_theft&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;ally&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;MOLLY&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Molly&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">180</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;razor_attack&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;stealth&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;ally&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;DIXIE_FLATLINE&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Dixie Flatline&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">250</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;ice_breaker&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;construct_summon&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;ally&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;ARMITAGE&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Armitage&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;tier&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;hp_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;dmg_base&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;skills&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;tactical_support&quot;</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;ally&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="5">5. 아이템 &amp; 장비 시스템<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51-equipment-tier-grade">5.1 Equipment Tier → Grade 연관<a class="headerlink" href="#51-equipment-tier-grade" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">EquipTier</span><span class="p">:</span> <span class="n">enum</span><span class="p">:</span>
+    <span class="n">T0_BASELINE</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># 시작 장비 (Grade 1만)</span>
+    <span class="n">T1_STREET</span> <span class="o">=</span> <span class="mi">1</span>    <span class="c1"># Grade 1+</span>
+    <span class="n">T2_COMMERCIAL</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># Grade 2+</span>
+    <span class="n">T3_MILITECH</span> <span class="o">=</span> <span class="mi">3</span>     <span class="c1"># Grade 3+</span>
+    <span class="n">T4_CORPORATE</span> <span class="o">=</span> <span class="mi">4</span>    <span class="c1"># Grade 4+</span>
+    <span class="n">T5_EXPERIMENTAL</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># Grade 5 전용</span>
+
+<span class="c1"># Grade별 사용 가능한 Tier</span>
+<span class="n">GRADE_TIER_ACCESS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="mi">1</span><span class="p">:</span> <span class="p">{</span><span class="n">T0_BASELINE</span><span class="p">,</span> <span class="n">T1_STREET</span><span class="p">},</span>
+    <span class="mi">2</span><span class="p">:</span> <span class="p">{</span><span class="n">T1_STREET</span><span class="p">,</span> <span class="n">T2_COMMERCIAL</span><span class="p">},</span>
+    <span class="mi">3</span><span class="p">:</span> <span class="p">{</span><span class="n">T2_COMMERCIAL</span><span class="p">,</span> <span class="n">T3_MILITECH</span><span class="p">},</span>
+    <span class="mi">4</span><span class="p">:</span> <span class="p">{</span><span class="n">T3_MILITECH</span><span class="p">,</span> <span class="n">T4_CORPORATE</span><span class="p">},</span>
+    <span class="mi">5</span><span class="p">:</span> <span class="p">{</span><span class="n">T4_CORPORATE</span><span class="p">,</span> <span class="n">T5_EXPERIMENTAL</span><span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="52-simplified">5.2 스킬 트리 (Simplified)<a class="headerlink" href="#52-simplified" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">SKILL_TREE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Combat Branch</span>
+    <span class="s2">&quot;attack_1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Strike&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s2">&quot;attack_2&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Heavy Strike&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="s2">&quot;attack_3&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Devastate&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+    <span class="s2">&quot;crit_1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Precision&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s2">&quot;crit_2&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Deadly Aim&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+
+    <span class="c1"># Defense Branch</span>
+    <span class="s2">&quot;shield_1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Shield&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s2">&quot;shield_2&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Fortress&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="s2">&quot;heal_1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Repair&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s2">&quot;heal_2&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Emergency Repair&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+
+    <span class="c1"># ICE Branch</span>
+    <span class="s2">&quot;ice_break_1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ICE Crack&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s2">&quot;ice_break_2&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ICE Shatter&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="s2">&quot;ice_break_3&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ICE Annihilate&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+
+    <span class="c1"># Utility Branch</span>
+    <span class="s2">&quot;detect_1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Scan&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s2">&quot;speed_1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Haste&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="s2">&quot;lifesteal_1&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Drain&quot;</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;grade_req&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="53">5.3 아이템 드롭 &amp; 보상<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">LOOT_TABLES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;watchdog&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;ice_shard&quot;</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>    <span class="c1"># 80% chance, 1 item</span>
+        <span class="p">(</span><span class="s2">&quot;data_fragment&quot;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;black_ice&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;ice_shard&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;data_fragment&quot;</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;combat_module&quot;</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;goliath&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;ice_shard&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;combat_module&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;construct_shard&quot;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;boss_dixie&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;construct_shard&quot;</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;ice_construct&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">&quot;rom_echo&quot;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+    <span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="6-stage">6. Stage 난이도 연동<a class="headerlink" href="#6-stage" title="Permanent link">&para;</a></h2>
+<h3 id="61-phase-difficulty">6.1 Phase → Difficulty 매핑<a class="headerlink" href="#61-phase-difficulty" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">PhaseDifficulty</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;WAIT&quot;</span><span class="p">:</span>     <span class="s2">&quot;tutorial&quot;</span><span class="p">,</span>      <span class="c1"># 전투 없음, 연출만</span>
+    <span class="s2">&quot;BRIEFING&quot;</span><span class="p">:</span> <span class="s2">&quot;story&quot;</span><span class="p">,</span>          <span class="c1"># NPC 대화, 전투 없음</span>
+    <span class="s2">&quot;JACK_IN&quot;</span><span class="p">:</span>  <span class="s2">&quot;easy&quot;</span><span class="p">,</span>          <span class="c1"># T1 적 1-2기</span>
+    <span class="s2">&quot;EXTRACT&quot;</span><span class="p">:</span>  <span class="s2">&quot;normal&quot;</span><span class="p">,</span>        <span class="c1"># T1-T2 적 2-3기</span>
+    <span class="s2">&quot;DEBRIEF&quot;</span><span class="p">:</span>  <span class="s2">&quot;story&quot;</span><span class="p">,</span>          <span class="c1"># 전투 없음</span>
+<span class="p">}</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">StageConfig</span><span class="p">:</span>
+    <span class="n">phase</span><span class="p">:</span>       <span class="n">Phase</span>
+    <span class="n">difficulty</span><span class="p">:</span>  <span class="n">DifficultyLevel</span>
+    <span class="n">enemies</span><span class="p">:</span>     <span class="nb">list</span><span class="p">[</span><span class="n">EnemySpawn</span><span class="p">]</span>
+    <span class="n">loot</span><span class="p">:</span>        <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span>  <span class="c1"># item, chance, quantity</span>
+    <span class="n">xp_reward</span><span class="p">:</span>   <span class="nb">int</span>
+    <span class="n">credit_reward</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">narrative_beats</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="62-ch1">6.2 케이 Ch1 스테이지 설계<a class="headerlink" href="#62-ch1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>챕터 1: The First Run
+├── Phase 0: WAIT (CHATTO&#39;S 24/7)
+│   └── 난이도: tutorial
+│       └── 보상: XP 0, 크레딧 0
+│
+├── Phase 1: BRIEFING (Finn과의 미션 브리핑)
+│   └── 난이도: story
+│       └── 보상: XP 20 (대화 완료)
+│
+├── Phase 2: JACK_IN (Wisp T1 우회 + 탐색)
+│   └── 난이도: easy
+│       ├── 적: Wisp x1 (HP 35, DMG 2, T1)
+│       ├── 보상: XP 50, 크레딧 100
+│       └── 데이터 추출: +1 data_fragment
+│
+├── Phase 3: EXTRACT_DATA (Watchdog T1 격파 + 데이터 추출)
+│   └── 난이도: normal
+│       ├── 적: Watchdog x1 (HP 50, DMG 2, T1)
+│       │        Spider x1 (HP 40, DMG 4, T1) [선택]
+│       ├── 보상: XP 100, 크레딧 200
+│       └── 데이터: +2 data_fragment
+│
+└── Phase 4: DEBRIEF (재림크)
+    └── 난이도: story
+        └── 보상: XP 150 (챕터 완료), 크레딧 300, Grade 1→2 체크
+</code></pre></div>
+<h3 id="63-ch2">6.3 케이 Ch2 스테이지 설계<a class="headerlink" href="#63-ch2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>챕터 2: The Hunt
+├── Phase 0: JACK_IN (Raven x2, Standard x1)
+│   └── 난이도: easy-normal
+│       ├── 적: Raven x2 (HP 60, DMG 5, T2)
+│       │        Standard x1 (HP 80, DMG 3, T1)
+│       └── 보상: XP 120, 크레딧 250
+│
+├── Phase 1: HUNT (Black Ice T3 조우)
+│   └── 난이도: hard
+│       ├── 적: Black x1 (HP 200, DMG 8, T3)
+│       │        Standard x2 (HP 80, DMG 3, T1)
+│       └── 보상: XP 200, 크레딧 400
+│
+├── Phase 2: EXTRACT (Goliath T3 + 네비게이션 퍼즐)
+│   └── 난이도: hard
+│       ├── 적: Goliath x1 (HP 150, DMG 5, T3)
+│       │        Spider x2 (HP 40, DMG 4, T1)
+│       └── 보상: XP 300, 크레딧 500
+│
+└── Phase 3: DEBRIEF (재림크)
+    └── 보상: XP 400, 크레딧 800, Grade 2→3 체크
+</code></pre></div>
+<h3 id="64-player-grade">6.4 적配置 공식 (Player Grade 기준)<a class="headerlink" href="#64-player-grade" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">get_stage_enemies</span><span class="p">(</span><span class="n">phase</span><span class="p">:</span> <span class="n">Phase</span><span class="p">,</span> <span class="n">player_grade</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnemySpawn</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Phase와 Player Grade 기반 적 구성&quot;&quot;&quot;</span>
+
+    <span class="n">base_enemies</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">Phase</span><span class="o">.</span><span class="n">JACK_IN</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;wisp&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">player_grade</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)},</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="n">player_grade</span><span class="p">},</span>
+        <span class="p">],</span>
+        <span class="n">Phase</span><span class="o">.</span><span class="n">EXTRACT</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;watchdog&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">player_grade</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)},</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;spider&quot;</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;tier&quot;</span><span class="p">:</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">player_grade</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)},</span>
+        <span class="p">],</span>
+    <span class="p">}</span>
+
+    <span class="n">enemies</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">base_enemies</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">phase</span><span class="p">,</span> <span class="p">[]):</span>
+        <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]):</span>
+                <span class="n">enemies</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">EnemySpawn</span><span class="p">(</span>
+                    <span class="n">ice_id</span><span class="o">=</span><span class="n">e</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">],</span>
+                    <span class="n">tier</span><span class="o">=</span><span class="n">e</span><span class="p">[</span><span class="s2">&quot;tier&quot;</span><span class="p">],</span>
+                    <span class="n">scaled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>  <span class="c1"># Grade 기반 스케일 적용</span>
+                <span class="p">))</span>
+    <span class="k">return</span> <span class="n">enemies</span>
+</code></pre></div>
+<hr />
+<h2 id="7">7. 데모 검증용 초기 상태<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 데모 시나리오별 초기 장비<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<p><strong>데모 시나리오 A: Grade 1 (초보자)</strong>
+<div class="highlight"><pre><span></span><code><span class="n">demo_grade_1</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;grade&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s2">&quot;ppl&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;loadout&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;deck&quot;</span><span class="p">:</span> <span class="s2">&quot;T1_STREET_DECK&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;programs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;T1_ATTACK&quot;</span><span class="p">,</span> <span class="s2">&quot;T1_SHIELD&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;wetware&quot;</span><span class="p">:</span> <span class="s2">&quot;T1_WETWARE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;construct&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;skills&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;attack_1&quot;</span><span class="p">,</span> <span class="s2">&quot;shield_1&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;inventory&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ice_shard&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;data_fragment&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">},</span>
+    <span class="s2">&quot;credits&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>데모 시나리오 B: Grade 3 (중급자)</strong>
+<div class="highlight"><pre><span></span><code><span class="n">demo_grade_3</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;grade&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s2">&quot;ppl&quot;</span><span class="p">:</span> <span class="mi">22</span><span class="p">,</span>
+    <span class="s2">&quot;loadout&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;deck&quot;</span><span class="p">:</span> <span class="s2">&quot;T2_COMMERCIAL_DECK&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;programs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;T2_ATTACK&quot;</span><span class="p">,</span> <span class="s2">&quot;T1_SHIELD&quot;</span><span class="p">,</span> <span class="s2">&quot;T1_DETECT&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;wetware&quot;</span><span class="p">:</span> <span class="s2">&quot;T2_WETWARE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;construct&quot;</span><span class="p">:</span> <span class="s2">&quot;T1_CONSTRUCT&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;skills&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;attack_2&quot;</span><span class="p">,</span> <span class="s2">&quot;shield_2&quot;</span><span class="p">,</span> <span class="s2">&quot;heal_1&quot;</span><span class="p">,</span> <span class="s2">&quot;detect_1&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;inventory&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ice_shard&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;data_fragment&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;combat_module&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">},</span>
+    <span class="s2">&quot;credits&quot;</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>데모 시나리오 C: Grade 5 (고급자)</strong>
+<div class="highlight"><pre><span></span><code><span class="n">demo_grade_5</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;grade&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s2">&quot;ppl&quot;</span><span class="p">:</span> <span class="mi">45</span><span class="p">,</span>
+    <span class="s2">&quot;loadout&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;deck&quot;</span><span class="p">:</span> <span class="s2">&quot;T4_CORPORATE_DECK&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;programs&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;T3_ATTACK&quot;</span><span class="p">,</span> <span class="s2">&quot;T3_HEAVY&quot;</span><span class="p">,</span> <span class="s2">&quot;T2_SHIELD&quot;</span><span class="p">,</span> <span class="s2">&quot;T2_DETECT&quot;</span><span class="p">],</span>
+        <span class="s2">&quot;wetware&quot;</span><span class="p">:</span> <span class="s2">&quot;T3_WETWARE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;construct&quot;</span><span class="p">:</span> <span class="s2">&quot;T2_CONSTRUCT&quot;</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;skills&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;attack_3&quot;</span><span class="p">,</span> <span class="s2">&quot;heal_2&quot;</span><span class="p">,</span> <span class="s2">&quot;ice_break_2&quot;</span><span class="p">,</span> <span class="s2">&quot;lifesteal_1&quot;</span><span class="p">],</span>
+    <span class="s2">&quot;inventory&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;ice_shard&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;data_fragment&quot;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s2">&quot;combat_module&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;construct_shard&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+    <span class="s2">&quot;credits&quot;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="72">7.2 데모 시나리오별 적 구성<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>시나리오</th>
+<th>Grade</th>
+<th>PPL</th>
+<th>적 구성</th>
+<th>난이도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1</td>
+<td>5</td>
+<td>Wisp x1</td>
+<td>Easy</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+<td>22</td>
+<td>Watchdog x2, Spider x1</td>
+<td>Normal</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5</td>
+<td>45</td>
+<td>Black x1, Goliath x1</td>
+<td>Hard</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="8">8. 난이도 검증 공식<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="81-ppl-vs-enemy-power">8.1 PPL vs Enemy Power 비교<a class="headerlink" href="#81-ppl-vs-enemy-power" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">EnemyPower</span> <span class="o">=</span> <span class="n">Σ</span><span class="p">(</span><span class="n">HP_i</span> <span class="o">*</span> <span class="n">DMG_i</span><span class="p">)</span> <span class="o">/</span> <span class="n">적</span> <span class="n">수량</span>  <span class="c1"># 적 전체 전투력</span>
+
+<span class="n">PowerRatio</span> <span class="o">=</span> <span class="n">PlayerPPL</span> <span class="o">/</span> <span class="n">EnemyPower</span>
+
+<span class="c1"># 난이도判定:</span>
+<span class="c1"># &lt; 0.5: Very Hard (클리어 어려움)</span>
+<span class="c1"># 0.5 - 0.8: Hard (전략 필요)</span>
+<span class="c1"># 0.8 - 1.2: Normal (적절한 도전)</span>
+<span class="c1"># 1.2 - 1.5: Easy (여유)</span>
+<span class="c1"># &gt; 1.5: Very Easy (압도적)</span>
+</code></pre></div>
+<h3 id="82">8.2 전투 시간 예측<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">predict_combat_time</span><span class="p">(</span><span class="n">player_ppl</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">enemies</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnemySpawn</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;전투 예상 시간 (초)&quot;&quot;&quot;</span>
+    <span class="n">total_enemy_hp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">hp</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">enemies</span><span class="p">)</span>
+    <span class="n">player_dps</span> <span class="o">=</span> <span class="p">(</span><span class="n">player_pPL</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.5</span>  <span class="c1"># 대략적 DPS</span>
+
+    <span class="n">enemy_dps</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">dmg</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">enemies</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>  <span class="c1"># 적 총 DPS</span>
+    <span class="n">player_effective_hp</span> <span class="o">=</span> <span class="n">player</span><span class="o">.</span><span class="n">max_hp</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">enemy_dps</span> <span class="o">/</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="c1"># 상호 교전 시간</span>
+    <span class="n">time_to_kill</span> <span class="o">=</span> <span class="n">total_enemy_hp</span> <span class="o">/</span> <span class="n">player_dps</span>
+    <span class="n">time_to_die</span> <span class="o">=</span> <span class="n">player_effective_hp</span> <span class="o">/</span> <span class="n">enemy_dps</span>
+
+    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">time_to_kill</span><span class="p">,</span> <span class="n">time_to_die</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span>  <span class="c1"># tick 단위 변환</span>
+</code></pre></div>
+<h3 id="83">8.3 권장 수치<a class="headerlink" href="#83" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>Easy</th>
+<th>Normal</th>
+<th>Hard</th>
+<th>Very Hard</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PPL Ratio</td>
+<td>1.5+</td>
+<td>1.0-1.5</td>
+<td>0.7-1.0</td>
+<td>&lt;0.7</td>
+</tr>
+<tr>
+<td>전투 시간</td>
+<td>&lt;30s</td>
+<td>30-60s</td>
+<td>60-120s</td>
+<td>120s+</td>
+</tr>
+<tr>
+<td>회복 Items 필요</td>
+<td>0</td>
+<td>1-2</td>
+<td>2-3</td>
+<td>3+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="9">9. 구현 체크리스트<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[ ] <code>ICEStats</code> dataclass + <code>ice_types.json</code> 확장 (tier, hp_per_grade, dmg_per_grade)</li>
+<li>[ ] <code>ICEStats.get_scaled(grade)</code> 메서드</li>
+<li>[ ] <code>NPCStats</code> dataclass + NPC 전투력 데이터</li>
+<li>[ ] <code>PlayerProgression</code> (XP, skill_points)</li>
+<li>[ ] Grade → PPL 범위 검증 로직</li>
+<li>[ ] <code>get_stage_enemies(phase, grade)</code> 공식 구현</li>
+<li>[ ] 데모 시나리오별 초기 상태 설정 함수</li>
+<li>[ ] <code>PowerRatio</code> 난이도 계산</li>
+<li>[ ] UI에 Grade/PPL/적 Tier 표시</li>
+</ul>
+<hr />
+<h2 id="10">10. 관련 파일<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>변경사항</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/wet_run/combat/state.py</code></td>
+<td>CombatStats 확장</td>
+</tr>
+<tr>
+<td><code>src/wet_run/combat/registry.py</code></td>
+<td>ICE 스케일링 로직 추가</td>
+</tr>
+<tr>
+<td><code>data/combat/ice_types.json</code></td>
+<td>tier, hp_per_grade, dmg_per_grade 필드 추가</td>
+</tr>
+<tr>
+<td><code>src/wet_run/engine/state.py</code></td>
+<td>PlayerProgression 추가</td>
+</tr>
+<tr>
+<td><code>src/wet_run/engine/npc_event.py</code></td>
+<td>NPCStats 추가</td>
+</tr>
+<tr>
+<td><code>src/wet_run/engine/phase.py</code></td>
+<td>StageConfig 정의</td>
+</tr>
+<tr>
+<td><code>scripts/demo.py</code></td>
+<td>시나리오별 초기 상태 함수</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

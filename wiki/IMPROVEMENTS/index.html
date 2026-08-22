@@ -1,0 +1,2562 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Wet Run — Improvement Log (2026-07-01) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wet-run-improvement-log-2026-07-01" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Wet Run — Improvement Log (2026-07-01)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../design/GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../design/systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p0-blocking-issues-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P0 — Blocking Issues (3개)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="P0 — Blocking Issues (3개)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p0-1-zonedepth-enum-1329" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P0 #1: ZoneDepth enum 확장 — 13/29 미션 차단 해제
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p0-2-combat-hardcoded-ice-placeholder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P0 #2: Combat hardcoded ICE placeholder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p0-3-9-ice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P0 #3: 9개 누락 ICE 엔트리 추가
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p1-significant-gameplay-issues-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1 — Significant Gameplay Issues (8개)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="P1 — Significant Gameplay Issues (8개)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p1-save-format-migration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1: Save format migration 자동화
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p1-status-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1: Status message 무한 누적 방지
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p1-audio-theme-silent-exception-handlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1: Audio theme silent exception handlers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p1-action-menu-phase-6-stubs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1: Action menu Phase 6+ stubs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p1-i18n-format-args-fallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1: i18n format args 누락 fallback
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p1-hub-hardcoded-materialsrecipes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1: Hub hardcoded materials/recipes → 데이터 주도
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p1-equipmentpy-0-39-tests-untested" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1: Equipment.py 0 → 39 tests (이전 가장 큰 untested 모듈)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p1-outliers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P1: 보상 밸런스 outliers 수정
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p2-polish-content-maintainability-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 — Polish / Content / Maintainability (12개)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="P2 — Polish / Content / Maintainability (12개)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#p2-15-equipment-set-bonuses-3-2pc3pc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 #15: Equipment Set Bonuses (3개 세트 × 2pc/3pc)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2-16-19-polish" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 #16-19: 그래픽 노블 polish
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2-17-hub-perf-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 #17: Hub perf (JSON 파싱 캐싱)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2-18-material-gauge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 #18: Material gauge 비율 손실
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2-19-status-message-i18n-4-line-page-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 #19: Status message i18n 4-line page + 30줄 소설 페이지
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2-20-programs-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 #20: Programs role 분류
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2-13-death-restart-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 #13: Death → Restart cycle 회귀 테스트
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#p2-11-phase-2-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        P2 #11: Phase 2 디자인 문서 7개 신규
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-2-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 디자인 명세 100% 완료
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#grade-6-master-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        신규 시스템: Grade 6 Master Tier
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#faction-reputation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        신규 시스템: Faction Reputation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="신규 시스템: Faction Reputation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        컴포넌트
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7 단계 Tier
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hook-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hook 통합 (3곳)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#39-reputation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        회귀 테스트 39개 (reputation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equipment-set-bonuses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        신규 시스템: Equipment Set Bonuses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        성능 개선
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="성능 개선">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hub-materialsrecipes-json-p2-17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hub Materials/Recipes JSON 파싱 캐싱 (P2 #17)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cyberspace-generator-on2-on-adr-0060" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cyberspace generator O(n²) → O(n) (ADR-0060)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#save-manager-exception-narrowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Save Manager exception narrowing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        누적 테스트 통계
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="누적 테스트 통계">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#188" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        신규 회귀 테스트 188개 분포
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git 커밋 히스토리 (이번 사이클 27개)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6 콘텐츠 확장 — 기반 완료
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        누적 진행 종합
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        알려진 한계 (향후 작업)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="wet-run-improvement-log-2026-07-01">Wet Run — Improvement Log (2026-07-01)<a class="headerlink" href="#wet-run-improvement-log-2026-07-01" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>상태</strong>: Phase 5 (Vertical Slice) 완료 + Phase 6 (Content) 진입
+<strong>테스트</strong>: <strong>3442 pass</strong> + 35 skip + 15 xfail · ruff / mypy strict 모두 green
+<strong>커밋 누적</strong>: +27 (이번 사이클)
+<strong>대상</strong>: <code>Game/wet_run/</code> 깁슨 스프롤 로그라이크</p>
+<p><strong>📌 헤더 노트 (2026-08-03)</strong>: 본 문서는 2026-07-01 시점의 Phase 5→6 P0/P1/P2 cycle 결과입니다.
+이후 v1.0.0 (2026-07-28) polish + v1.1.0 prep (2026-07-28~) 으로 code/test/design 이 모두 갱신되었습니다.</p>
+<p><strong>현재 상태 (v1.0.0 FINAL, 2026-08-03)</strong>:
+- 3,278 tests pass / 664 skipped (vs 3,442 + 35 skip + 15 xfail at 2026-07-01)
+- 142 source files / 39,166 LOC (vs 108 files / 28,000 at 2026-07-01)
+- 5 ADRs 신규 (0125, 0130, 0131, 0133, 0140, 0141) — Engagement Layer + module splits
+- 111 missions / 58 ICE / 9 jockeys / 81 GN scenes (대폭 증가)
+- Dashboard 갱신: 17 stat JSON 2026-08-03 fresh</p>
+<p><strong>계획</strong>: 본 log.md 와 design/GDD.md 가 v1.0.0 상태로 sync 됨 (2026-08-03).
+Game quality assessment + upgrade plan (4-cycle roadmap) 진행 중.</p>
+</blockquote>
+<hr />
+<h2 id="_1">요약<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>이번 사이클에서 <strong>3개 P0 + 8개 P1 + 12개 P2 = 23개 이슈</strong> 해결.
+누적 테스트 <strong>3254 → 3442</strong> (+188 tests, +5.8%).</p>
+<p>핵심 결과:
+- <strong>신규 시스템 1개</strong> — Faction Reputation (설계 + 데이터 + 3-hook 통합)
+- <strong>신규 시스템 1개</strong> — Equipment Set Bonuses (3 세트 × 2pc/3pc)
+- <strong>신규 티어 1개</strong> — Grade 6 Master tier (T6 장비 3종)
+- <strong>P0 버그 3개</strong> — 미션 13개 차단 해제, 전투 ICE hardcoded placeholder, 9개 누락 ICE 추가
+- <strong>P1/P2 개선 9개</strong> — save migration, status message cap, action_menu, i18n format, hub data-driven, gauge overflow, programs role, DEATH_RESTART cycle, theme logging
+- <strong>디자인 문서 7개</strong> — Phase 2 디자인 명세 100% 완성
+- <strong>테스트 39개</strong> — equipment.py 0 → 39 (이전 가장 큰 untested 모듈 해소)</p>
+<hr />
+<h2 id="p0-blocking-issues-3">P0 — Blocking Issues (3개)<a class="headerlink" href="#p0-blocking-issues-3" title="Permanent link">&para;</a></h2>
+<h3 id="p0-1-zonedepth-enum-1329">P0 #1: ZoneDepth enum 확장 — 13/29 미션 차단 해제<a class="headerlink" href="#p0-1-zonedepth-enum-1329" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>matrix/node.py</code>, <code>matrix/zdr.py</code>, <code>missions/mission.py</code>, <code>data/missions/missions.json</code></li>
+<li><strong>문제</strong>: <code>ZoneDepth</code> enum이 <code>SURFACE/MID/CORE/TA</code> 4종만 지원했으나 13개 미션이 <code>deep</code>/<code>freeside</code> 사용 → <code>__post_init__</code> ValueError → <code>_parse_mission</code> 가 silently None 반환</li>
+<li><strong>해결</strong>: <code>DEEP</code>, <code>FREESIDE</code> 추가 + <code>zdr.py</code> 베이스 ZDR (DEEP=8, FREESIDE=30) + Mission 검증 <code>grade_max</code>/<code>reward_tier</code> 를 0..6 으로 확장</li>
+<li><strong>효과</strong>: 미션 16/29 → <strong>29/29 로딩</strong> (모든 미션 플레이 가능)</li>
+<li><strong>회귀</strong>: 4 tests (<code>test_job_board_loads_all_29_missions</code>, <code>_zones_all_valid</code>, <code>ZoneDepth has DEEP/FREESIDE</code>, <code>_filters_by_grade</code> g6 케이스)</li>
+</ul>
+<h3 id="p0-2-combat-hardcoded-ice-placeholder">P0 #2: Combat hardcoded ICE placeholder<a class="headerlink" href="#p0-2-combat-hardcoded-ice-placeholder" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>engine/combat_view.py:907</code></li>
+<li><strong>문제</strong>: <code>ice_kind = "standard"</code> 하드코딩으로 모든 ICE 노드가 동일한 Standard 적 스폰. 5종 ICE 타입 / 보스 시스템 (ADR-0050) / PPL·ZDR 밸런스 무력화</li>
+<li><strong>해결</strong>: <code>ice_node.ice.value</code> 사용 + <code>IceKind.NONE</code> 방어적 fallback + <code>KeyError</code> 시 Standard fallback</li>
+<li><strong>회귀</strong>: 2 tests (<code>test_start_combat_uses_node_ice_kind</code> Black/Watchdog 분기, <code>test_all_mission_ice_ids_resolve</code> 29 미션의 모든 <code>ice.X</code> 참조)</li>
+</ul>
+<h3 id="p0-3-9-ice">P0 #3: 9개 누락 ICE 엔트리 추가<a class="headerlink" href="#p0-3-9-ice" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>data/combat/ice_types.json</code></li>
+<li><strong>문제</strong>: 미션이 <code>ice.construct</code>, <code>ice.boss</code>, <code>ice.neuromancer</code> 등 9종 참조하지만 레지스트리에 없음 → <code>KeyError</code> 발생 가능</li>
+<li><strong>해결</strong>: 9개 신규 엔트리 (<code>construct</code>, <code>boss</code>, <code>revelation</code>, <code>neuromancer</code> T5, <code>ai_whisper</code>, <code>surveillance</code>, <code>wintermute</code> T4, <code>zion_defense</code>, <code>loa</code>)</li>
+<li><strong>효과</strong>: 미션 29개 중 23개가 이제 실제 ICE 노드 스폰 가능</li>
+</ul>
+<hr />
+<h2 id="p1-significant-gameplay-issues-8">P1 — Significant Gameplay Issues (8개)<a class="headerlink" href="#p1-significant-gameplay-issues-8" title="Permanent link">&para;</a></h2>
+<h3 id="p1-save-format-migration">P1: Save format migration 자동화<a class="headerlink" href="#p1-save-format-migration" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>engine/save_manager.py</code>, <code>engine/graphic_novel_save.py</code></li>
+<li><strong>문제</strong>: <code>SaveVersionMismatchError</code> 만 던지고 기존 세이브 폐기</li>
+<li><strong>해결</strong>: <code>_SAVE_MIGRATIONS</code> / <code>_GN_SAVE_MIGRATIONS</code> 체인 — <code>&lt;legacy&gt;</code> → 현재 버전까지 자동 업그레이드 (GN 1.0.0→1.1.0→1.2.0)</li>
+<li><strong>회귀</strong>: 4 tests (<code>test_legacy_save_without_version_loads</code>, <code>test_legacy_via_restore_state</code>, <code>test_unknown_version_still_raises</code>, <code>test_current_version_passes_through_unchanged</code>)</li>
+</ul>
+<h3 id="p1-status-message">P1: Status message 무한 누적 방지<a class="headerlink" href="#p1-status-message" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>engine/state.py</code></li>
+<li><strong>문제</strong>: 107 호출 사이트가 <code>state.status_messages.append(...)</code> 로 무한 누적. 긴 세션 메모리 누수</li>
+<li><strong>해결</strong>: <code>StatusMessageList(UserList[str])</code> 서브클래스 + <code>STATUS_MESSAGES_MAX = 100</code> cap. <code>append/extend/insert/__setitem__/__iadd__</code> 가 가장 오래된 항목부터 제거</li>
+<li><strong>회귀</strong>: 5 tests (under cap / at cap / extend truncate / empty / AppState 통합)</li>
+</ul>
+<h3 id="p1-audio-theme-silent-exception-handlers">P1: Audio theme silent exception handlers<a class="headerlink" href="#p1-audio-theme-silent-exception-handlers" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>audio/theme.py</code></li>
+<li><strong>문제</strong>: 5개 <code>except Exception: pass</code> 가 디버깅 불가능</li>
+<li><strong>해결</strong>: <code>_log_warning()</code> helper — lazy engine.logger import + stderr fallback, 5개 catch 지점 모두 로깅화</li>
+</ul>
+<h3 id="p1-action-menu-phase-6-stubs">P1: Action menu Phase 6+ stubs<a class="headerlink" href="#p1-action-menu-phase-6-stubs" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>engine/action_menu.py</code></li>
+<li><strong>문제</strong>: HACK / COMMUNICATE / ACCESS 메뉴 옵션이 "not yet implemented (Phase 6+)" 만 표시</li>
+<li><strong>해결</strong>: 각각 lightweight 동작:</li>
+<li>HACK (SYSTEM 노드): 1x Data Fragment + probe flavor</li>
+<li>COMMUNICATE (CONSTRUCT): narrative beat ("construct listens")</li>
+<li>ACCESS (CORE): next unvisited 노드를 <code>context_hint</code> 로 노출</li>
+<li><strong>효과</strong>: 플레이어가 모든 메뉴 옵션 시도 가능</li>
+</ul>
+<h3 id="p1-i18n-format-args-fallback">P1: i18n format args 누락 fallback<a class="headerlink" href="#p1-i18n-format-args-fallback" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>i18n/translator.py</code></li>
+<li><strong>문제</strong>: <code>t("Hello {name}")</code> 호출 시 누락된 kwargs 가 raw <code>{name}</code> 그대로 UI 노출</li>
+<li><strong>해결</strong>: <code>_format_template()</code> — <code>string.Formatter.parse()</code> 로 필드 식별, 누락 시 <code>&lt;name&gt;</code> 마커. 예외 절대 발생 안 함</li>
+<li><strong>회귀</strong>: 3 tests (existing 1 수정 + 2 추가: partial kwargs, no kwargs)</li>
+</ul>
+<h3 id="p1-hub-hardcoded-materialsrecipes">P1: Hub hardcoded materials/recipes → 데이터 주도<a class="headerlink" href="#p1-hub-hardcoded-materialsrecipes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>engine/hub.py</code>, <code>data/crafting/materials.json</code>, <code>data/crafting/recipes.json</code></li>
+<li><strong>문제</strong>: 4-panel Hub 중 Materials/Recipes 패널이 하드코딩된 placeholder 사용</li>
+<li><strong>해결</strong>: <code>data/crafting/{materials,recipes}.json</code> 신규 + <code>_load_materials_data()</code> / <code>_load_recipes_data()</code> loader + <code>_PLACEHOLDER_*</code> graceful fallback</li>
+<li><strong>회귀</strong>: 7 tests (real file load / fallback when missing / fallback when malformed / inventory lookup + 4 material gauge tests)</li>
+</ul>
+<h3 id="p1-equipmentpy-0-39-tests-untested">P1: Equipment.py 0 → 39 tests (이전 가장 큰 untested 모듈)<a class="headerlink" href="#p1-equipmentpy-0-39-tests-untested" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>equipment/equipment.py</code>, <code>tests/unit/test_equipment.py</code></li>
+<li><strong>문제</strong>: 447 lines, 18 items, 8 slots, 7 tiers — 테스트 0</li>
+<li><strong>해결</strong>: EquipStats / Equipment / EquipmentLoadout / EquipmentRegistry / 15 기본 장비 모두 커버</li>
+<li><strong>회귀</strong>: 39 tests</li>
+</ul>
+<h3 id="p1-outliers">P1: 보상 밸런스 outliers 수정<a class="headerlink" href="#p1-outliers" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>data/missions/missions.json</code></li>
+<li><strong>문제</strong>: <code>ta_heist</code> 5000 credits (T4 노이즈), <code>final_choice</code> 10000 credits (T5 2× 정상)</li>
+<li><strong>해결</strong>: ta_heist 3500, final_choice 5500 (각각 동급 정상 범위로)</li>
+</ul>
+<hr />
+<h2 id="p2-polish-content-maintainability-12">P2 — Polish / Content / Maintainability (12개)<a class="headerlink" href="#p2-polish-content-maintainability-12" title="Permanent link">&para;</a></h2>
+<h3 id="p2-15-equipment-set-bonuses-3-2pc3pc">P2 #15: Equipment Set Bonuses (3개 세트 × 2pc/3pc)<a class="headerlink" href="#p2-15-equipment-set-bonuses-3-2pc3pc" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>equipment/equipment.py</code></li>
+<li><strong>문제</strong>: <code>set_id</code> 필드 dataclass 에 존재하지만 모든 장비 None</li>
+<li><strong>해결</strong>:</li>
+<li><code>SET_BONUSES</code>: 3 세트 × 2 임계값 (ono_sendai / militech / arasaka)</li>
+<li><code>EquipmentLoadout.set_counts()</code>, <code>set_bonuses()</code>, <code>total_stats()</code> 가 자동 합산</li>
+<li><code>get_set_bonus(set_id, pieces_equipped)</code> helper</li>
+<li><strong>할당</strong>: STARTER_DECK + STREET_DECK + CORPORATE_DECK (ono_sendai), MILITECH_EYES + CHROME_GLOVES + MILITECH_DECK (militech), ARASAKA_DECK + KEREZNIKOV (arasaka)</li>
+<li><strong>회귀</strong>: 11 tests</li>
+</ul>
+<h3 id="p2-16-19-polish">P2 #16-19: 그래픽 노블 polish<a class="headerlink" href="#p2-16-19-polish" title="Permanent link">&para;</a></h3>
+<ul>
+<li>컷신 dialogue 4× 확장 (4188 → 16862 chars)</li>
+<li>챕터 카드 I-XII + fade transition</li>
+<li>15개 scene cue → file 매핑</li>
+<li>GNProgress atomic save + CONTINUE READING 메뉴</li>
+</ul>
+<h3 id="p2-17-hub-perf-json">P2 #17: Hub perf (JSON 파싱 캐싱)<a class="headerlink" href="#p2-17-hub-perf-json" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>engine/hub.py</code></li>
+<li><strong>문제</strong>: 매 render frame 마다 <code>_load_materials_data()</code> / <code>_load_recipes_data()</code> 가 JSON 파싱</li>
+<li><strong>해결</strong>: module-level <code>_MATERIALS_CACHE</code> / <code>_RECIPES_CACHE</code> + <code>force_reload=True</code> 옵션</li>
+<li><strong>회귀</strong>: 5 tests (cache populated / reused / force_reload bypasses / recipes / no repeated io)</li>
+</ul>
+<h3 id="p2-18-material-gauge">P2 #18: Material gauge 비율 손실<a class="headerlink" href="#p2-18-material-gauge" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>engine/hub.py:_material_gauge</code></li>
+<li><strong>문제</strong>: <code>7/3</code> 같은 overflow 케이스가 <code>5/0</code> 로 잘려서 손실</li>
+<li><strong>해결</strong>: <code>have/need</code> 비율 + ready 100% 표시 + overflow <code>+</code> marker</li>
+</ul>
+<h3 id="p2-19-status-message-i18n-4-line-page-30">P2 #19: Status message i18n 4-line page + 30줄 소설 페이지<a class="headerlink" href="#p2-19-status-message-i18n-4-line-page-30" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>engine/graphic_novel_view.py</code>, <code>chapter_cutscene.py</code></li>
+</ul>
+<h3 id="p2-20-programs-role">P2 #20: Programs role 분류<a class="headerlink" href="#p2-20-programs-role" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>data/programs/programs.json</code></li>
+<li><strong>해결</strong>: 9개 프로그램에 <code>role</code> 필드 (burst/strike/sustain/guard/utility) + 회귀 테스트</li>
+</ul>
+<h3 id="p2-13-death-restart-cycle">P2 #13: Death → Restart cycle 회귀 테스트<a class="headerlink" href="#p2-13-death-restart-cycle" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>파일</strong>: <code>tests/unit/test_run_state.py</code></li>
+<li><strong>신규</strong>: <code>TestDeathRestartCycle</code> 7 tests (full cycle / blocked at terminal / mark_advance no-op 등)</li>
+</ul>
+<h3 id="p2-11-phase-2-7">P2 #11: Phase 2 디자인 문서 7개 신규<a class="headerlink" href="#p2-11-phase-2-7" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>inventory.md</code> — 8 슬롯 × 8 카테고리 × 6(7) 티어 × 12 stats + 15(18) 장비</li>
+<li><code>dialogue.md</code> — 5 NPC + 스키마 + 트리거 + Dixie 동맹</li>
+<li><code>procgen.md</code> — 3-tier 절차적 생성 (BSP/Kruskal/Mission→Room)</li>
+<li><code>i18n.md</code> — Translator API + format kwargs + display modes</li>
+<li><code>story-archive.md</code> — 5 종류 + 4 importance + Hall of Dead</li>
+<li><code>progression.md</code> — 3-tier 구조 + PPL 공식 + Death 사이클</li>
+<li><code>balance/ppl_zdr_balance.md</code> — PPL 곡선 + ZDR 매트릭스 + 미션 보상 공식 vs 실제</li>
+</ul>
+<hr />
+<h2 id="phase-2-100">Phase 2 디자인 명세 100% 완료<a class="headerlink" href="#phase-2-100" title="Permanent link">&para;</a></h2>
+<p>ROADMAP 체크리스트의 모든 누락 문서 작성 완료:</p>
+<table>
+<thead>
+<tr>
+<th>문서</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inventory.md</code></td>
+<td>8 슬롯 × 8 카테고리 × 7 티어 × 12 stats</td>
+</tr>
+<tr>
+<td><code>dialogue.md</code></td>
+<td>NPC 5명 + 스키마 + 트리거</td>
+</tr>
+<tr>
+<td><code>procgen.md</code></td>
+<td>BSP/Kruskal/Mission→Room 3-tier</td>
+</tr>
+<tr>
+<td><code>i18n.md</code></td>
+<td>Translator + format args + modes</td>
+</tr>
+<tr>
+<td><code>story-archive.md</code></td>
+<td>5 kinds + Hall of Dead + Cinematic</td>
+</tr>
+<tr>
+<td><code>progression.md</code></td>
+<td>3-tier 진행 + PPL 공식</td>
+</tr>
+<tr>
+<td><code>balance/ppl_zdr_balance.md</code></td>
+<td>PPL/ZDR 곡선 + Grade 6</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="grade-6-master-tier">신규 시스템: Grade 6 Master Tier<a class="headerlink" href="#grade-6-master-tier" title="Permanent link">&para;</a></h2>
+<p>Arc 5 finale 미션 (<code>neuromancer_merger</code>, <code>zion_express</code>) 의 <code>grade_max=6</code> 이 도달 불가능했음. 해결:</p>
+<ul>
+<li><code>matrix/ppl.py</code>: tier 검증 0..6 + <code>MAX_TIER = 6</code> 상수 + <code>grade_for_loadout(loadout)</code> helper</li>
+<li><code>equipment/equipment.py</code>: <code>EquipTier.T6_MASTER</code> + 3개 마스터 장비 (<code>MASTER_DECK</code>, <code>MASTER_BODY</code>, <code>ZION_TRODES</code>)</li>
+<li><code>equipment/equipment.py</code>: <code>EquipmentRegistry.load_default()</code> 15 → <strong>18 items</strong></li>
+<li><strong>회귀</strong>: 6 tests (<code>test_ppl_t6_master_deck_supported</code>, <code>test_ppl_t6_full_loadout_outperforms_t5</code>, <code>test_grade_for_loadout_returns_max_tier</code>, <code>test_max_tier_constant</code>, <code>test_ppl_mixed_tiers_with_t6_program</code>, <code>test_default_registry_has_18_items</code>)</li>
+</ul>
+<hr />
+<h2 id="faction-reputation">신규 시스템: Faction Reputation<a class="headerlink" href="#faction-reputation" title="Permanent link">&para;</a></h2>
+<p>깁슨 스프롤의 5개 faction (Hosaka / Maas / Sense/Net / T-A / None) 별 자키 평판 추적.
+5개 디자인 문서에서 "future work" 로 표시된 핵심 시스템.</p>
+<h3 id="_2">컴포넌트<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>run/reputation.py</code></td>
+<td><code>FactionReputation</code>, <code>ReputationState</code>, <code>reputation_tier()</code>, <code>clamp_delta()</code></td>
+</tr>
+<tr>
+<td><code>engine/state.py:203</code></td>
+<td><code>AppState.reputation</code> 필드 (default empty)</td>
+</tr>
+<tr>
+<td><code>engine/save_manager.py:445,556</code></td>
+<td>save/restore 직렬화 + legacy 빈 처리</td>
+</tr>
+<tr>
+<td><code>engine/mission_completion.py:30-67</code></td>
+<td><code>FIXER_REPUTATION</code> 매핑 + <code>_apply_fixer_reputation()</code> hook</td>
+</tr>
+<tr>
+<td><code>engine/combat_view.py:769-808</code></td>
+<td><code>COMBAT_REPUTATION</code> 매핑 + <code>_apply_combat_reputation()</code> hook</td>
+</tr>
+<tr>
+<td><code>engine/hub.py</code></td>
+<td><code>_render_reputation_dots()</code> Avatar 패널 표시</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-tier">7 단계 Tier<a class="headerlink" href="#7-tier" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Score</th>
+<th>Tier</th>
+<th>Glyph</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">≥ 80</td>
+<td>ALLIED</td>
+<td>★</td>
+</tr>
+<tr>
+<td style="text-align: right;">≥ 50</td>
+<td>FRIENDLY</td>
+<td>●</td>
+</tr>
+<tr>
+<td style="text-align: right;">≥ 20</td>
+<td>TRUSTED</td>
+<td>○</td>
+</tr>
+<tr>
+<td style="text-align: right;">&gt; -20</td>
+<td>NEUTRAL</td>
+<td>·</td>
+</tr>
+<tr>
+<td style="text-align: right;">&gt; -50</td>
+<td>HOSTILE</td>
+<td>✗</td>
+</tr>
+<tr>
+<td style="text-align: right;">&gt; -80</td>
+<td>ENEMY</td>
+<td>✗</td>
+</tr>
+<tr>
+<td style="text-align: right;">≤ -80</td>
+<td>OUTCAST</td>
+<td>✗</td>
+</tr>
+</tbody>
+</table>
+<h3 id="hook-3">Hook 통합 (3곳)<a class="headerlink" href="#hook-3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Hook</th>
+<th>트리거</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Mission completion</strong></td>
+<td><code>complete_mission(state, mission)</code></td>
+<td>fixer별 faction 평판 조정 (finn: +5/+5, maas: +10/-3, sally: +10/-3, ta_rep: +10/-3, kumiko: +8, dixie: +3/-3, yakuza: 무)</td>
+</tr>
+<tr>
+<td><strong>Combat ICE defeat</strong></td>
+<td><code>_end_combat(state, combat_state)</code></td>
+<td>노드 faction의 server 침해 → 방어 -3, 적대 +1</td>
+</tr>
+<tr>
+<td><strong>Hub 시각화</strong></td>
+<td>Avatar 패널 render</td>
+<td><code>Rep: ●○·✗·</code> 5-faction strip</td>
+</tr>
+</tbody>
+</table>
+<h3 id="39-reputation">회귀 테스트 39개 (reputation)<a class="headerlink" href="#39-reputation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>TestClampDelta</code> (3), <code>TestReputationTier</code> (14), <code>TestFactionReputation</code> (7), <code>TestReputationState</code> (6), <code>TestSerialization</code> (7)</li>
+<li>추가로 <code>TestSaveManager::test_restores_reputation</code> (save roundtrip), <code>test_restores_reputation_missing_field</code> (legacy)</li>
+<li>추가로 <code>TestFactionReputationOnCompletion</code> (9), <code>TestFixerToFactions</code> (3), <code>TestFixerReputationTable</code> (2)</li>
+<li>추가로 <code>TestReputationDots</code> (5)</li>
+</ul>
+<hr />
+<h2 id="equipment-set-bonuses">신규 시스템: Equipment Set Bonuses<a class="headerlink" href="#equipment-set-bonuses" title="Permanent link">&para;</a></h2>
+<p>3개 코호트 세트 정의 + 2pc/3pc 임계값:</p>
+<table>
+<thead>
+<tr>
+<th>Set</th>
+<th>2pc 보너스</th>
+<th>3pc 보너스</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ono_sendai</strong></td>
+<td>program_power +10, crit +5%</td>
+<td>program_power +25, ap_regen +10%</td>
+</tr>
+<tr>
+<td><strong>militech</strong></td>
+<td>attack +5, crit +10%</td>
+<td>attack +15, crit +25%, shield +2</td>
+</tr>
+<tr>
+<td><strong>arasaka</strong></td>
+<td>defense +8, ice_res +15%</td>
+<td>defense +20, hp +30, ice_res +30%</td>
+</tr>
+</tbody>
+</table>
+<p>장비 할당:
+- ono_sendai: STARTER_DECK + STREET_DECK + CORPORATE_DECK (3pc 가능)
+- militech: MILITECH_EYES + CHROME_GLOVES + MILITECH_DECK (3pc 가능)
+- arasaka: ARASAKA_DECK + KEREZNIKOV (2pc만 가능)</p>
+<p>API:
+- <code>get_set_bonus(set_id, pieces_equipped)</code> → <code>EquipStats | None</code>
+- <code>EquipmentLoadout.set_counts()</code> → <code>dict[set_id, int]</code>
+- <code>EquipmentLoadout.set_bonuses()</code> → <code>list[EquipStats]</code>
+- <code>EquipmentLoadout.total_stats()</code> 가 자동 합산 (장비 + 세트 보너스)</p>
+<p><strong>회귀</strong>: 11 tests</p>
+<hr />
+<h2 id="_3">성능 개선<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="hub-materialsrecipes-json-p2-17">Hub Materials/Recipes JSON 파싱 캐싱 (P2 #17)<a class="headerlink" href="#hub-materialsrecipes-json-p2-17" title="Permanent link">&para;</a></h3>
+<ul>
+<li>이전: 매 프레임 JSON 파싱 (60fps × 16ms × 2 파일)</li>
+<li>이후: module-level cache, 첫 로드만 파싱</li>
+</ul>
+<h3 id="cyberspace-generator-on2-on-adr-0060">Cyberspace generator O(n²) → O(n) (ADR-0060)<a class="headerlink" href="#cyberspace-generator-on2-on-adr-0060" title="Permanent link">&para;</a></h3>
+<ul>
+<li>이전: <code>for i, n in enumerate(nodes): if n.id == c</code> ICE enforcement</li>
+<li>이후: <code>_index_nodes_by_id(nodes)</code> dict lookup (O(1))</li>
+<li>효과: 미션 생성 ~3초 → <strong>&lt;0.1초</strong></li>
+</ul>
+<h3 id="save-manager-exception-narrowing">Save Manager exception narrowing<a class="headerlink" href="#save-manager-exception-narrowing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>9개 broad <code>except Exception</code> → 5개 specific (OSError, KeyError, TypeError, ValueError, AttributeError)</li>
+<li><code>_log_save_warning()</code> helper 도입 — 정확한 예외 추적 + 디버깅 가능</li>
+</ul>
+<hr />
+<h2 id="_4">누적 테스트 통계<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>시작:  3254 tests (Phase 5 완료 시점, 2026-06-30)
+현재:  3442 tests (+188, +5.8%)
+
+테스트 파일: 84 → 86개
+소스 파일: 106 → 108개
+디자인 문서: 14 → 21개 (+50% 커버리지)
+</code></pre></div>
+<h3 id="188">신규 회귀 테스트 188개 분포<a class="headerlink" href="#188" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>카테고리</th>
+<th style="text-align: right;">테스트 수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mission metadata (test_missions_with_story)</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr>
+<td>Equipment (test_equipment)</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr>
+<td>Hub data + cache + reputation dots (test_hub_data_loading)</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr>
+<td>Programs schema (test_programs_schema)</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td>Reputation (test_reputation)</td>
+<td style="text-align: right;">37</td>
+</tr>
+<tr>
+<td>Save manager (test_save_manager)</td>
+<td style="text-align: right;">47 (+2 신규)</td>
+</tr>
+<tr>
+<td>Cyberspace generator (test_cyberspace_generator)</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr>
+<td>Mission completion + reputation hooks (test_mission_completion)</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr>
+<td>Death → Restart cycle (test_run_state)</td>
+<td style="text-align: right;">+7</td>
+</tr>
+<tr>
+<td>Save migration (test_save_manager)</td>
+<td style="text-align: right;">+4</td>
+</tr>
+<tr>
+<td>기타 회귀 (status cap, i18n format, action_menu)</td>
+<td style="text-align: right;">+13</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="git-27">Git 커밋 히스토리 (이번 사이클 27개)<a class="headerlink" href="#git-27" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>08441d1 → 3442 테스트 (현재)
+
+072ab9ee feat(hub): show faction reputation dots in avatar panel
+081d0d92 feat(combat): apply faction reputation after ICE defeat
+097af64 feat(missions): hook faction reputation into mission completion
+72ab9ee feat(hub): show faction reputation dots in avatar panel
+b5fd338 feat(reputation): faction reputation system with save persistence
+b142a19 fix(save): narrow 5 broad except Exception handlers in save_manager
+ce7ec5c perf(cyberspace): O(n²) → O(n) ICE enforcement via id index
+0611faf feat(achievements): unlock MATRIX_MASTER + TRUE_HACKER via PPL+ZDR
+db33c6d feat(equipment): 3 set bonuses (ono_sendai / militech / arasaka)
+180a56c perf(hub): cache materials/recipes JSON parse results (was per-frame)
+fc23289 docs(design): i18n + story-archive specs + Grade 6 in balance doc
+ba8f8a2 feat(ppl): Grade 6 master tier + 3 T6 equipment items
+6565d54 test(equipment): cover 8-slot / 6-tier / 15-item equipment system
+f4e0df4 docs(design): add inventory, dialogue, procgen, balance docs (Phase 2 complete)
+56a6d5d test(run_state): cover Death → Restart cycle (P2 #13)
+3d99f97 fix(hub): _material_gauge proportional + drop unused MutableSequence import
+adad95f feat(programs): add &#39;role&#39; field to programs.json (P2 #20)
+279207f docs: sync meta documents with current state (Phase 5 done, 3254 tests, ADR-0060/0061)
+... (이전 11개 커밋)
+</code></pre></div>
+<hr />
+<h2 id="phase-6">Phase 6 콘텐츠 확장 — 기반 완료<a class="headerlink" href="#phase-6" title="Permanent link">&para;</a></h2>
+<p>이번 사이클에서 다음 Phase 6 기능의 기반 구축:</p>
+<table>
+<thead>
+<tr>
+<th>기능</th>
+<th>기반</th>
+<th>후속 작업</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Faction-aware missions</strong></td>
+<td>✓ FactionReputation + 미션 완료 hook</td>
+<td>NPC 별 의뢰 잠금 해제</td>
+</tr>
+<tr>
+<td><strong>NPC faction 반응</strong></td>
+<td>✓ AppState.reputation 필드</td>
+<td>dialogue 에서 rep 기반 분기</td>
+</tr>
+<tr>
+<td><strong>Info Market faction 할인</strong></td>
+<td>✓ ReputationState.get()</td>
+<td>shop_price × (1 - rep/100)</td>
+</tr>
+<tr>
+<td><strong>미션 필터링</strong></td>
+<td>✓ Faction enum + 미션 29개</td>
+<td>board.available_for() 에 rep threshold</td>
+</tr>
+<tr>
+<td><strong>Boss 시스템</strong></td>
+<td>✓ ICE 9종 추가 + master tier</td>
+<td>Wintermute / T-A Prime 3-phase</td>
+</tr>
+</tbody>
+</table>
+<p><strong>다음 단계</strong> (Phase 6 권장):
+1. NPC dialogue 가 faction rep 에 따라 다른 응답 (Dialogue.md "Persistent reputation" 항목)
+2. Info Market 가격에 faction rep 할인 적용
+3. Mission Board 가 rep tier 별 미션 잠금 해제
+4. 사망 시 faction 호감도 영향</p>
+<hr />
+<h2 id="_5">누적 진행 종합<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>세션</th>
+<th>처리 항목</th>
+<th style="text-align: right;">누적 테스트</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>시작 (2026-06-30)</td>
+<td>Phase 5 완료</td>
+<td style="text-align: right;"><strong>3254</strong></td>
+</tr>
+<tr>
+<td>세션 1</td>
+<td>P0 #1-3 + P1 #4-8</td>
+<td style="text-align: right;">3260 (+6)</td>
+</tr>
+<tr>
+<td>세션 2</td>
+<td>P2 #15/17/19/14/12</td>
+<td style="text-align: right;">3281 (+21)</td>
+</tr>
+<tr>
+<td>세션 3</td>
+<td>P2 #18/13/20/11</td>
+<td style="text-align: right;">3300 (+19)</td>
+</tr>
+<tr>
+<td>세션 4</td>
+<td>equipment 39 tests + 4 design docs</td>
+<td style="text-align: right;">3339 (+39)</td>
+</tr>
+<tr>
+<td>세션 5</td>
+<td>Grade 6 master + 2 docs</td>
+<td style="text-align: right;">3345 (+6)</td>
+</tr>
+<tr>
+<td>세션 6</td>
+<td>Save exception narrowing + Reputation</td>
+<td style="text-align: right;">3417 (+72)</td>
+</tr>
+<tr>
+<td>세션 7</td>
+<td>Faction hooks (mission + combat + Hub)</td>
+<td style="text-align: right;"><strong>3442 (+25)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>총: +188 tests, 27 커밋, 7 디자인 문서, 2 신규 시스템, 3 P0 + 8 P1 + 12 P2 이슈 해결</strong></p>
+<hr />
+<h2 id="_6">알려진 한계 (향후 작업)<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>상태</th>
+<th>우선순위</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Equipment view 테스트</td>
+<td>0 → 미작성</td>
+<td>P2</td>
+</tr>
+<tr>
+<td>Story view / event_view / cyberspace_view 테스트</td>
+<td>0 → 미작성</td>
+<td>P2</td>
+</tr>
+<tr>
+<td><code>render_matrix</code> 249-line 함수 split</td>
+<td>P2</td>
+<td>낮음</td>
+</tr>
+<tr>
+<td><code>Save Manager</code> exception 더 narrow (현재 OSError 외)</td>
+<td>P3</td>
+<td>낮음</td>
+</tr>
+<tr>
+<td>NPC dialogue 의 faction rep 분기</td>
+<td>P1</td>
+<td>다음 세션</td>
+</tr>
+<tr>
+<td>Info Market faction 할인</td>
+<td>P2</td>
+<td>다음 세션</td>
+</tr>
+<tr>
+<td>Mission Board rep 잠금 해제</td>
+<td>P2</td>
+<td>다음 세션</td>
+</tr>
+<tr>
+<td>Persistence: faction rep 가 run 간 영속화</td>
+<td>부분 (save/load 만)</td>
+<td>P2</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

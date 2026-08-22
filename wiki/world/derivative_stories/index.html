@@ -1,0 +1,2519 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+        <link rel="prev" href="../style_guide/">
+      
+      
+        <link rel="next" href="../../design/GDD/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Derivative Stories - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#derivative-stories" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Derivative Stories
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연결 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        챕터 → 단편 매핑
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="챕터 → 단편 매핑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chapter-novice-k-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Novice (케이/K — 초짜) (31 미션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-veteran-sil-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Veteran (실/Sil — 베테랑) (24 미션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-heretic-kas-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Heretic (카스/Kas — 이단) (26 미션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-suit-uit-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Suit (스uit — 코퍼레이트) (29 미션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unmatched" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 매핑 누락 (Unmatched)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trilogy-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trilogy × Chapter 분포
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        검증 명령
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        갱신 이력
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연결 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        챕터 → 단편 매핑
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="챕터 → 단편 매핑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chapter-novice-k-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Novice (케이/K — 초짜) (31 미션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-veteran-sil-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Veteran (실/Sil — 베테랑) (24 미션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-heretic-kas-26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Heretic (카스/Kas — 이단) (26 미션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chapter-suit-uit-29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter Suit (스uit — 코퍼레이트) (29 미션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unmatched" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 매핑 누락 (Unmatched)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trilogy-chapter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trilogy × Chapter 분포
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        검증 명령
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        갱신 이력
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="derivative-stories">Derivative Stories (이차 창작 단편)<a class="headerlink" href="#derivative-stories" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>이 페이지는 Fiction 프로젝트의 이차 창작 단편을 게임 미션과 연결합니다.</strong></p>
+</blockquote>
+<p><strong>현재 상태 (2026-08-08 갱신 — Phase 83 propagation)</strong>: <code>prototype/data/missions/missions.json</code> 기준 <strong>111 미션</strong> 정의됨. <strong>모든 111 미션 매핑 완료</strong> (2026-07-30 <code>chevette_run</code> → <code>chevette_nightshift_run</code> 정정 후 unmapped 0건). 단편 stem 카운트: dashboard <code>dataset_health.json</code> 기준 <strong>150 EN + 150 KO = 300 entries</strong> (Fiction filesystem 상에는 139 unique stems per language).</p>
+<p><strong>Fiction Phase 73-82 영향 (2026-08-08)</strong> — 게임 미션 매핑에 직접 영향:
+- <strong>Phase 73</strong> schema §2 단편 심화 — 9 <em>Burning Chrome</em> stories (incl. <code>case_jackout-30sec</code>, <code>first_jack</code> 미션 매핑 stem 포함) + 18 short-story-specific sections
+- <strong>Phase 74</strong> stub cleanup — Johnny Mnemonic + 3jane-tessier-ashpool 4 sections; index ⚠️ STUB markers 2개 cleared (Johnny Mnemonic + 3jane 모두 non-stub 으로 재분류됨)
+- <strong>Phase 78</strong> ADR-0017 backfill — <strong>150 KO 파일 모두 <code>source_word_count</code> 필드 추가</strong> (Phase 61 outstanding debt 해결). Game-side 영향: KO 번역 provenance 메타데이터 보존; <code>story.source</code> 매핑 무영향
+- <strong>Phase 81</strong> verbatim text audit — 6 multi-sentence quote blocks paraphrased (게임 미션 텍스트 변경 없음, wiki 분석만 영향)</p>
+<p><strong>Story-side cross-references</strong> (Phase 73-82에서 강화된 분석):
+- Johnny Mnemonic (1981) — Phase 74 심화 → johnny-mnemonic 2,853 → 4,853 words + foundational 분석 (Shotgun-in-Adidas-Bag prose; Molly's first appearance)
+- 3jane-tessier-ashpool (1982) — Phase 74 심화 → 3jane-tessier-ashpool 3,334 → 3,987 words (cipher-vs-curriculum; Freeside-as-orbital-womb)</p>
+<p><strong>캐노니컬 정보 소스</strong>: <code>prototype/data/missions/missions.json</code> (각 미션의 <code>story.source</code> 필드가 단편 stem 참조)</p>
+<h2 id="_1">연결 구조<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Fiction/derivative/{sprawl,bridge,blue-ant}-trilogy/short-stories/
+  ├── en/  (영어 원문)
+  └── ko/  (한국어 번역)
+        ↓ (인간 큐레이션: synopsis 발췌)
+Game/wet_run/prototype/data/missions/missions.json
+        ↓ (story.source 필드로 매핑)
+Game/wet_run/prototype/data/story/chapters/{case,sil,kas,suit}.json
+        ↓ (chapter_view.py가 렌더링)
+CHAPTER 화면 (그래픽 노블 모드)
+        ↓
+dashboard/stories/short-stories/*.html (정적 카드)
+</code></pre></div>
+<h2 id="_2">챕터 → 단편 매핑<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>총 110 미션 × 4 챕터 매핑</strong> (각 미션의 <code>character_ref</code> 필드 기준)</p>
+<h3 id="chapter-novice-k-31">Chapter Novice (케이/K — 초짜) (31 미션)<a class="headerlink" href="#chapter-novice-k-31" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>미션 ID</th>
+<th style="text-align: center;">Arc</th>
+<th>단편 stem</th>
+<th>단편 파일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chevette_nightshift_run</code></td>
+<td style="text-align: center;">1</td>
+<td><code>chevette_nightshift_run</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-19_chevette_nightshift_run.md</td>
+</tr>
+<tr>
+<td><code>chickenhead_rickshaw_run</code></td>
+<td style="text-align: center;">1</td>
+<td><code>chickenhead_rickshaw_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_chickenhead_rickshaw_run.md</td>
+</tr>
+<tr>
+<td><code>cortex_hound_recovery</code></td>
+<td style="text-align: center;">1</td>
+<td><code>cortex_hound_recovery</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_cortex_hound_recovery.md</td>
+</tr>
+<tr>
+<td><code>data_retrieval</code></td>
+<td style="text-align: center;">1</td>
+<td><code>data_retrieval</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-25_data_retrieval.md</td>
+</tr>
+<tr>
+<td><code>first_jack</code></td>
+<td style="text-align: center;">1</td>
+<td><code>case_jackout-30sec</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md</td>
+</tr>
+<tr>
+<td><code>hosaka_terminal_supply</code></td>
+<td style="text-align: center;">1</td>
+<td><code>hosaka_terminal_supply</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_hosaka_terminal_supply.md</td>
+</tr>
+<tr>
+<td><code>ice_run</code></td>
+<td style="text-align: center;">1</td>
+<td><code>ice_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_ice_run.md</td>
+</tr>
+<tr>
+<td><code>ono_sendai_repair</code></td>
+<td style="text-align: center;">1</td>
+<td><code>ono_sendai_repair</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_ono_sendai_repair.md</td>
+</tr>
+<tr>
+<td><code>razor_work</code></td>
+<td style="text-align: center;">1</td>
+<td><code>razor_work</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_razor_work.md</td>
+</tr>
+<tr>
+<td><code>soho_blackout</code></td>
+<td style="text-align: center;">1</td>
+<td><code>soho_blackout</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_soho_blackout.md</td>
+</tr>
+<tr>
+<td><code>surface_mail_run</code></td>
+<td style="text-align: center;">1</td>
+<td><code>surface_mail_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_surface_mail_run.md</td>
+</tr>
+<tr>
+<td><code>tokyo_courier_run</code></td>
+<td style="text-align: center;">1</td>
+<td><code>tokyo-courier-run</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-15_tokyo-courier-run.md</td>
+</tr>
+<tr>
+<td><code>tutorial_maze</code></td>
+<td style="text-align: center;">1</td>
+<td><code>tutorial_maze</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-25_tutorial_maze.md</td>
+</tr>
+<tr>
+<td><code>viktor_orbit_arc</code></td>
+<td style="text-align: center;">1</td>
+<td><code>viktor_orbit_arc</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-19_viktor_orbit_arc.md</td>
+</tr>
+<tr>
+<td><code>virtual_light_data_key_arc</code></td>
+<td style="text-align: center;">1</td>
+<td><code>virtual_light_data_key_arc</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-19_virtual_light_data_key_arc.md</td>
+</tr>
+<tr>
+<td><code>watchdog_patrol</code></td>
+<td style="text-align: center;">1</td>
+<td><code>watchdog_patrol</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_watchdog_patrol.md</td>
+</tr>
+<tr>
+<td><code>wendell_suburban_arc</code></td>
+<td style="text-align: center;">1</td>
+<td><code>wendell_suburban_arc</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-19_wendell_suburban_arc.md</td>
+</tr>
+<tr>
+<td><code>coolhunter_laney_tokyo</code></td>
+<td style="text-align: center;">2</td>
+<td><code>coolhunter-laney-tokyo</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-19_coolhunter-laney-tokyo.md</td>
+</tr>
+<tr>
+<td><code>first_trace</code></td>
+<td style="text-align: center;">2</td>
+<td><code>first_trace</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_first_trace.md</td>
+</tr>
+<tr>
+<td><code>flatline_call</code></td>
+<td style="text-align: center;">2</td>
+<td><code>flatline_again</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_flatline_again.md</td>
+</tr>
+<tr>
+<td><code>hosaka_corporate_infiltration</code></td>
+<td style="text-align: center;">2</td>
+<td><code>ta_defection</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_ta_defection.md</td>
+</tr>
+<tr>
+<td><code>sense_net_infiltration</code></td>
+<td style="text-align: center;">2</td>
+<td><code>sense_net_infiltration</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-01_sense_net_infiltration.md</td>
+</tr>
+<tr>
+<td><code>yakuza_loan_shark</code></td>
+<td style="text-align: center;">2</td>
+<td><code>yakuza_deal</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_yakuza_deal.md</td>
+</tr>
+<tr>
+<td><code>angie_leopard_tracking</code></td>
+<td style="text-align: center;">3</td>
+<td><code>angie_leopard_tracking</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_angie_leopard_tracking.md</td>
+</tr>
+<tr>
+<td><code>black_ice_dream</code></td>
+<td style="text-align: center;">3</td>
+<td><code>black_ice_dream</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_black_ice_dream.md</td>
+</tr>
+<tr>
+<td><code>hosaka_core</code></td>
+<td style="text-align: center;">3</td>
+<td><code>hosaka_core</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-01_hosaka_core.md</td>
+</tr>
+<tr>
+<td><code>maas_heist</code></td>
+<td style="text-align: center;">3</td>
+<td><code>maas_heist</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-01_maas_heist.md</td>
+</tr>
+<tr>
+<td><code>voodoo_loa_encounter</code></td>
+<td style="text-align: center;">4</td>
+<td><code>loa_voodoo_contact</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_loa_voodoo_contact.md</td>
+</tr>
+<tr>
+<td><code>mollys_final_razor</code></td>
+<td style="text-align: center;">5</td>
+<td><code>mollys_final_razor</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_mollys_final_razor.md</td>
+</tr>
+<tr>
+<td><code>final_choice</code></td>
+<td style="text-align: center;">5</td>
+<td><code>the_choice</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_the_choice.md</td>
+</tr>
+<tr>
+<td><code>zion_vote_observation</code></td>
+<td style="text-align: center;">5</td>
+<td><code>zion_vote_observation</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_zion_vote_observation.md</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chapter-veteran-sil-24">Chapter Veteran (실/Sil — 베테랑) (24 미션)<a class="headerlink" href="#chapter-veteran-sil-24" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>미션 ID</th>
+<th style="text-align: center;">Arc</th>
+<th>단편 stem</th>
+<th>단편 파일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>bigend_laney_lunch</code></td>
+<td style="text-align: center;">1</td>
+<td><code>bigend-laney-lunch</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-19_bigend-laney-lunch.md</td>
+</tr>
+<tr>
+<td><code>delivery_to_finn</code></td>
+<td style="text-align: center;">1</td>
+<td><code>marly_louisiana-god</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md</td>
+</tr>
+<tr>
+<td><code>first_contact</code></td>
+<td style="text-align: center;">2</td>
+<td><code>first_contact</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-25_first_contact.md</td>
+</tr>
+<tr>
+<td><code>hideo_contract</code></td>
+<td style="text-align: center;">2</td>
+<td><code>hideo_contract</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_hideo_contract.md</td>
+</tr>
+<tr>
+<td><code>laney_node_signal_run</code></td>
+<td style="text-align: center;">2</td>
+<td><code>laney_node_signal_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_laney_node_signal_run.md</td>
+</tr>
+<tr>
+<td><code>molly_decides</code></td>
+<td style="text-align: center;">2</td>
+<td><code>molly_decides</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-14_molly_decides.md</td>
+</tr>
+<tr>
+<td><code>mollys_market</code></td>
+<td style="text-align: center;">2</td>
+<td><code>mollys_market</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_mollys_market.md</td>
+</tr>
+<tr>
+<td><code>panther_negotiate</code></td>
+<td style="text-align: center;">2</td>
+<td><code>panther_negotiate</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_panther_negotiate.md</td>
+</tr>
+<tr>
+<td><code>sense_net_tip</code></td>
+<td style="text-align: center;">2</td>
+<td><code>sense_net_trace</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_sense_net_trace.md</td>
+</tr>
+<tr>
+<td><code>tokyo_pachinko_run</code></td>
+<td style="text-align: center;">2</td>
+<td><code>tokyo_pachinko_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_tokyo_pachinko_run.md</td>
+</tr>
+<tr>
+<td><code>bridge_scaffold</code></td>
+<td style="text-align: center;">3</td>
+<td><code>bridge-construct</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-15_bridge-construct.md</td>
+</tr>
+<tr>
+<td><code>mollys_razor</code></td>
+<td style="text-align: center;">3</td>
+<td><code>mollys_razor</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-08_mollys_razor.md</td>
+</tr>
+<tr>
+<td><code>sense_net_media_extract</code></td>
+<td style="text-align: center;">3</td>
+<td><code>hosaka_extraction</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_hosaka_extraction.md</td>
+</tr>
+<tr>
+<td><code>straylight_approach</code></td>
+<td style="text-align: center;">3</td>
+<td><code>straylight_approach</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-01_straylight_approach.md</td>
+</tr>
+<tr>
+<td><code>ta_heist</code></td>
+<td style="text-align: center;">3</td>
+<td><code>ta_heist</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-08_ta_heist.md</td>
+</tr>
+<tr>
+<td><code>vegas_stakeout</code></td>
+<td style="text-align: center;">3</td>
+<td><code>vegas_stakeout</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_vegas_stakeout.md</td>
+</tr>
+<tr>
+<td><code>case_meets_cayce</code></td>
+<td style="text-align: center;">4</td>
+<td><code>case-meets-cayce</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_case-meets-cayce.md</td>
+</tr>
+<tr>
+<td><code>dixies_choice</code></td>
+<td style="text-align: center;">4</td>
+<td><code>dixies_choice</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_dixies_choice.md</td>
+</tr>
+<tr>
+<td><code>dixies_offer</code></td>
+<td style="text-align: center;">4</td>
+<td><code>dixies_last_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_dixies_last_run.md</td>
+</tr>
+<tr>
+<td><code>ta_payroll_archive</code></td>
+<td style="text-align: center;">4</td>
+<td><code>straylight_approach</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-01_straylight_approach.md</td>
+</tr>
+<tr>
+<td><code>winter_infiltrate</code></td>
+<td style="text-align: center;">4</td>
+<td><code>winter_infiltrate</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_winter_infiltrate.md</td>
+</tr>
+<tr>
+<td><code>finn_final_reckoning</code></td>
+<td style="text-align: center;">5</td>
+<td><code>finn_final_reckoning</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_finn_final_reckoning.md</td>
+</tr>
+<tr>
+<td><code>ta_straylight_archive</code></td>
+<td style="text-align: center;">5</td>
+<td><code>straylight_approach</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-01_straylight_approach.md</td>
+</tr>
+<tr>
+<td><code>zion_express</code></td>
+<td style="text-align: center;">5</td>
+<td><code>zion_express</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_zion_express.md</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chapter-heretic-kas-26">Chapter Heretic (카스/Kas — 이단) (26 미션)<a class="headerlink" href="#chapter-heretic-kas-26" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>미션 ID</th>
+<th style="text-align: center;">Arc</th>
+<th>단편 stem</th>
+<th>단편 파일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>cayce_footage_audit_run</code></td>
+<td style="text-align: center;">1</td>
+<td><code>cayce_footage_audit_run</code></td>
+<td>../../../../Fiction/derivative/blue-ant/short-stories/en/2026-07-19_cayce_footage_audit_run.md</td>
+</tr>
+<tr>
+<td><code>bing_statework</code></td>
+<td style="text-align: center;">2</td>
+<td><code>bing_statework</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_bing_statework.md</td>
+</tr>
+<tr>
+<td><code>craft_job</code></td>
+<td style="text-align: center;">2</td>
+<td><code>kumiko_manarase-midnight</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md</td>
+</tr>
+<tr>
+<td><code>eurydice_arc</code></td>
+<td style="text-align: center;">2</td>
+<td><code>eurydice_arc</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_eurydice_arc.md</td>
+</tr>
+<tr>
+<td><code>idoru_wedding</code></td>
+<td style="text-align: center;">2</td>
+<td><code>idoru_wedding_arc</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_idoru_wedding_arc.md</td>
+</tr>
+<tr>
+<td><code>sally_sandii_3am</code></td>
+<td style="text-align: center;">2</td>
+<td><code>sally_sandii-3am</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_sally_sandii-3am.md</td>
+</tr>
+<tr>
+<td><code>wigan_call</code></td>
+<td style="text-align: center;">2</td>
+<td><code>wigan_call</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-01_wigan_call.md</td>
+</tr>
+<tr>
+<td><code>wigan_construct_reach</code></td>
+<td style="text-align: center;">2</td>
+<td><code>wigan_construct_reach</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_wigan_construct_reach.md</td>
+</tr>
+<tr>
+<td><code>yakuza_deal</code></td>
+<td style="text-align: center;">2</td>
+<td><code>yakuza_deal</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_yakuza_deal.md</td>
+</tr>
+<tr>
+<td><code>beijing_memory_courier</code></td>
+<td style="text-align: center;">3</td>
+<td><code>beijing_memory_courier</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-11_beijing_memory_courier.md</td>
+</tr>
+<tr>
+<td><code>g_boys_arc</code></td>
+<td style="text-align: center;">3</td>
+<td><code>g_boys_arc</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_g_boys_arc.md</td>
+</tr>
+<tr>
+<td><code>idoru_wedding_arc</code></td>
+<td style="text-align: center;">3</td>
+<td><code>idoru_wedding_arc</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_idoru_wedding_arc.md</td>
+</tr>
+<tr>
+<td><code>neuromancer_whisper</code></td>
+<td style="text-align: center;">3</td>
+<td><code>neuromancer_whisper</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/ko/2026-06-29_neuromancer_whisper.ko.md</td>
+</tr>
+<tr>
+<td><code>sally_returns_arc3</code></td>
+<td style="text-align: center;">3</td>
+<td><code>sally_returns</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_sally_returns.md</td>
+</tr>
+<tr>
+<td><code>voodoo_zoneload</code></td>
+<td style="text-align: center;">3</td>
+<td><code>voodoo_zoneload</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_voodoo_zoneload.md</td>
+</tr>
+<tr>
+<td><code>aleph_fragment</code></td>
+<td style="text-align: center;">4</td>
+<td><code>aleph_fragment</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-30_aleph_fragment.md</td>
+</tr>
+<tr>
+<td><code>heretic_loa_conscription</code></td>
+<td style="text-align: center;">4</td>
+<td><code>heretic_loa_conscription</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_heretic_loa_conscription.md</td>
+</tr>
+<tr>
+<td><code>maas_neural_extract</code></td>
+<td style="text-align: center;">4</td>
+<td><code>maas_heist</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-01_maas_heist.md</td>
+</tr>
+<tr>
+<td><code>matrix_revelation</code></td>
+<td style="text-align: center;">4</td>
+<td><code>matrix_revelation</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/ko/2026-06-29_matrix_revelation.ko.md</td>
+</tr>
+<tr>
+<td><code>sally_construct_market</code></td>
+<td style="text-align: center;">4</td>
+<td><code>sally_construct_market</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_sally_construct_market.md</td>
+</tr>
+<tr>
+<td><code>straylight_inquiry</code></td>
+<td style="text-align: center;">4</td>
+<td><code>straylight_inquiry</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_straylight_inquiry.md</td>
+</tr>
+<tr>
+<td><code>trauma_squads_pair_arc</code></td>
+<td style="text-align: center;">4</td>
+<td><code>trauma_squads_pair_arc</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_trauma_squads_pair_arc.md</td>
+</tr>
+<tr>
+<td><code>ta_3jane_betrayal</code></td>
+<td style="text-align: center;">5</td>
+<td><code>ta_defection</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_ta_defection.md</td>
+</tr>
+<tr>
+<td><code>construct_memory_rescue</code></td>
+<td style="text-align: center;">5</td>
+<td><code>dixies_last_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_dixies_last_run.md</td>
+</tr>
+<tr>
+<td><code>neuromancer_merger</code></td>
+<td style="text-align: center;">5</td>
+<td><code>neuromancer_merger</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_neuromancer_merger.md</td>
+</tr>
+<tr>
+<td><code>salvation_wigan_zavijava</code></td>
+<td style="text-align: center;">5</td>
+<td><code>salvation_wigan_zavijava</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_salvation_wigan_zavijava.md</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chapter-suit-uit-29">Chapter Suit (스uit — 코퍼레이트) (29 미션)<a class="headerlink" href="#chapter-suit-uit-29" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>미션 ID</th>
+<th style="text-align: center;">Arc</th>
+<th>단편 stem</th>
+<th>단편 파일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>threjane_family_log</code></td>
+<td style="text-align: center;">1</td>
+<td><code>threjane_family_log</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_threjane_family_log.md</td>
+</tr>
+<tr>
+<td><code>armitage_infiltration</code></td>
+<td style="text-align: center;">2</td>
+<td><code>armitage_infiltration</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_armitage_infiltration.md</td>
+</tr>
+<tr>
+<td><code>finn_factory_labour_run</code></td>
+<td style="text-align: center;">2</td>
+<td><code>finn_factory_labour_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_finn_factory_labour_run.md</td>
+</tr>
+<tr>
+<td><code>neuromancer_first_ping</code></td>
+<td style="text-align: center;">2</td>
+<td><code>neuromancer_first_ping</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_neuromancer_first_ping.md</td>
+</tr>
+<tr>
+<td><code>freeside_payroll</code></td>
+<td style="text-align: center;">3</td>
+<td><code>freeside_payroll</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_freeside_payroll.md</td>
+</tr>
+<tr>
+<td><code>hosaka_extraction</code></td>
+<td style="text-align: center;">3</td>
+<td><code>hosaka_extraction</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_hosaka_extraction.md</td>
+</tr>
+<tr>
+<td><code>armitage_infiltration_2</code></td>
+<td style="text-align: center;">4</td>
+<td><code>armitage_infiltration_2</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_armitage_infiltration_2.md</td>
+</tr>
+<tr>
+<td><code>kombinat_node_hack</code></td>
+<td style="text-align: center;">4</td>
+<td><code>kombinat-node-hack</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-15_kombinat-node-hack.md</td>
+</tr>
+<tr>
+<td><code>sense_net_archive_intrusion</code></td>
+<td style="text-align: center;">4</td>
+<td><code>sense_net_archive_intrusion</code></td>
+<td>../../../../Fiction/derivative/blue-ant/short-stories/en/2026-07-19_sense_net_archive_intrusion.md</td>
+</tr>
+<tr>
+<td><code>ta_defection</code></td>
+<td style="text-align: center;">4</td>
+<td><code>ta_defection</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_ta_defection.md</td>
+</tr>
+<tr>
+<td><code>wintermute_merger_run</code></td>
+<td style="text-align: center;">4</td>
+<td><code>wintermute_merger_run</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_wintermute_merger_run.md</td>
+</tr>
+<tr>
+<td><code>bama_statework</code></td>
+<td style="text-align: center;">5</td>
+<td><code>bama_statework</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_bama_statework.md</td>
+</tr>
+<tr>
+<td><code>boone_tokyo_electronics_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>boone_tokyo_electronics_arc</code></td>
+<td>../../../../Fiction/derivative/blue-ant/short-stories/en/2026-07-19_boone_tokyo_electronics_arc.md</td>
+</tr>
+<tr>
+<td><code>core_memory_dump</code></td>
+<td style="text-align: center;">5</td>
+<td><code>core_memory_dump</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_core_memory_dump.md</td>
+</tr>
+<tr>
+<td><code>fido_statework</code></td>
+<td style="text-align: center;">5</td>
+<td><code>fido_statework</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_fido_statework.md</td>
+</tr>
+<tr>
+<td><code>fukuoka_ridership_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>fukuoka_ridership_arc</code></td>
+<td>../../../../Fiction/derivative/blue-ant/short-stories/en/2026-07-19_fukuoka_ridership_arc.md</td>
+</tr>
+<tr>
+<td><code>hounds_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>hounds_arc</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_hounds_arc.md</td>
+</tr>
+<tr>
+<td><code>mona_bridge_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>mona_bridge_arc</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-19_mona_bridge_arc.md</td>
+</tr>
+<tr>
+<td><code>pacific_empire_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>pacific_empire_arc</code></td>
+<td>../../../../Fiction/derivative/blue-ant/short-stories/en/2026-07-19_pacific_empire_arc.md</td>
+</tr>
+<tr>
+<td><code>pan_mannerist_audit</code></td>
+<td style="text-align: center;">5</td>
+<td><code>pan_mannerist_audit</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_pan_mannerist_audit.md</td>
+</tr>
+<tr>
+<td><code>tessier_sleeper_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>tessier_sleeper_arc</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_tessier_sleeper_arc.md</td>
+</tr>
+<tr>
+<td><code>trauma_squads_audit</code></td>
+<td style="text-align: center;">5</td>
+<td><code>trauma_squads_audit</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_trauma_squads_audit.md</td>
+</tr>
+<tr>
+<td><code>w_anchor_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>w_anchor_arc</code></td>
+<td>../../../../Fiction/derivative/bridge-trilogy/short-stories/en/2026-07-19_w_anchor_arc.md</td>
+</tr>
+<tr>
+<td><code>ta_wintermute_direct</code></td>
+<td style="text-align: center;">5</td>
+<td><code>wintermute_negotiation</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_wintermute_negotiation.md</td>
+</tr>
+<tr>
+<td><code>wintermute_negotiation</code></td>
+<td style="text-align: center;">5</td>
+<td><code>wintermute_negotiation</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_wintermute_negotiation.md</td>
+</tr>
+<tr>
+<td><code>wintermute_witness</code></td>
+<td style="text-align: center;">5</td>
+<td><code>wintermute_witness</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-25_wintermute_witness.md</td>
+</tr>
+<tr>
+<td><code>working_class_ridership_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>working_class_ridership_arc</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_working_class_ridership_arc.md</td>
+</tr>
+<tr>
+<td><code>yanaka_family_power_arc</code></td>
+<td style="text-align: center;">5</td>
+<td><code>yanaka_family_power_arc</code></td>
+<td>../../../../Fiction/derivative/blue-ant/short-stories/en/2026-07-19_yanaka_family_power_arc.md</td>
+</tr>
+<tr>
+<td><code>zaibatsu_statework</code></td>
+<td style="text-align: center;">5</td>
+<td><code>zaibatsu_statework</code></td>
+<td>../../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-07-19_zaibatsu_statework.md</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="unmatched">⚠️ 매핑 누락 (Unmatched)<a class="headerlink" href="#unmatched" title="Permanent link">&para;</a></h2>
+<p><strong>None</strong> (모든 111 미션 매핑 완료 — <code>chevette_run</code> → <code>chevette_nightshift_run</code> stem 정정 2026-07-30)</p>
+<h2 id="trilogy-chapter">Trilogy × Chapter 분포<a class="headerlink" href="#trilogy-chapter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Trilogy</th>
+<th style="text-align: right;">Novice</th>
+<th style="text-align: right;">Veteran</th>
+<th style="text-align: right;">Heretic</th>
+<th style="text-align: right;">Suit</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>derivative</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">110</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">검증 명령<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="c1"># 매핑 검증</span>
+python3<span class="w"> </span><span class="s">&lt;&lt; &#39;PYEOF&#39;</span>
+<span class="s">import json</span>
+<span class="s">from pathlib import Path</span>
+<span class="s">missions = json.load(open(&#39;Game/wet_run/prototype/data/missions/missions.json&#39;))</span>
+<span class="s">en_stems = set()</span>
+<span class="s">for f in Path(&#39;Fiction/derivative&#39;).rglob(&#39;*/short-stories/en/*.md&#39;):</span>
+<span class="s">    parts = f.stem.split(&#39;_&#39;, 3)</span>
+<span class="s">    s = parts[3] if len(parts) &gt; 3 and parts[0].isdigit() else f.stem</span>
+<span class="s">    en_stems.add(s)</span>
+<span class="s">matched = sum(1 for m in missions.values() if m.get(&#39;story&#39;, {}).get(&#39;source&#39;) in en_stems)</span>
+<span class="s">print(f&quot;{matched}/{len(missions)} missions matched&quot;)</span>
+<span class="s">PYEOF</span>
+</code></pre></div>
+<h2 id="_4">갱신 이력<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>2026-08-07</strong>: 단편 카운트 정정 (242 → 300, dashboard <code>dataset_health.json</code> 기준). 모든 111 미션 매핑 확인 (110 → 111, <code>chevette_nightshift_run</code> 매핑 후).</li>
+<li><strong>2026-07-30</strong>: 47→110 미션 매핑 (전체 갱신 — 2026-07-21 이후 추가된 64+ 미션 반영)</li>
+<li><strong>2026-07-21</strong>: 초기 47 미션 매핑</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

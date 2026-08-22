@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>Wet Run — Settings</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #0a0e14;
+    color: #c5d4e3;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { color: #66ffcc; font-weight: 600; }
+  h1 { font-size: 32px; margin-bottom: 8px; text-shadow: 0 0 12px #66ffcc44; }
+  .subtitle { color: #6a7888; font-size: 14px; margin-bottom: 32px; }
+
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #0a0e14;
+    border-bottom: 1px solid #2a3540;
+    padding: 12px 0;
+    margin: -24px -24px 24px -24px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+  .top-nav a {
+    color: #6a7888;
+    text-decoration: none;
+    margin-right: 16px;
+    font-size: 13px;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .top-nav a:hover { background: #131a23; color: #66ffcc; }
+  .top-nav a.current { background: #1a2530; color: #ffaa55; }
+
+  .category {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .category-title {
+    color: #ffaa55;
+    font-size: 18px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2a3540;
+  }
+  .category-icon { margin-right: 8px; }
+  .settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .setting {
+    background: #0a0e14;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 12px 16px;
+  }
+  .setting-name {
+    color: #66ffcc;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .setting-value {
+    color: #ffaa55;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .setting-desc {
+    color: #8a9aa8;
+    font-size: 11px;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .setting-korean {
+    color: #c5d4e3;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .slider-bar {
+    height: 6px;
+    background: #2a3540;
+    border-radius: 3px;
+    margin-top: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slider-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #66ffcc 0%, #ffaa55 100%);
+    border-radius: 3px;
+  }
+  .toggle {
+    display: inline-block;
+    width: 48px;
+    height: 24px;
+    background: #2a3540;
+    border-radius: 12px;
+    position: relative;
+    margin-top: 8px;
+  }
+  .toggle-knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #6a7888;
+    border-radius: 50%;
+    transition: 0.15s;
+  }
+  .toggle.on { background: #66ffcc; }
+  .toggle.on .toggle-knob { left: 26px; background: #0a0e14; }
+  .toggle.off { background: #2a3540; }
+  .category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .category-tag {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: monospace;
+  }
+  .category-tag.on { background: #66ffcc; color: #0a0e14; }
+  .category-tag.off { background: #2a3540; color: #6a7888; text-decoration: line-through; }
+
+  .key-binding {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid #1a1f26;
+  }
+  .key-action { color: #c5d4e3; font-size: 12px; }
+  .key-value {
+    background: #2a3540;
+    color: #ffaa55;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-family: monospace;
+  }
+  .about-box {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+  .about-title {
+    color: #66ffcc;
+    font-size: 18px;
+    margin-bottom: 12px;
+  }
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+  .about-stat {
+    text-align: center;
+    padding: 12px;
+    background: #0a0e14;
+    border-radius: 4px;
+  }
+  .about-stat-value {
+    color: #ffaa55;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .about-stat-label {
+    color: #8a9aa8;
+    font-size: 10px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .footer {
+    color: #6a7888;
+    font-size: 11px;
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px solid #2a3540;
+  }
+  .footer code { color: #ffaa55; }
+</style>
+</head>
+<body>
+<div class="nav"><a href="index.html">← Dashboard Home</a></div>
+<div class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <a href="index.html">Wet Run</a>
+  <a href="missions.html">Story</a>
+  <a href="stages.html">Stages</a>
+  <a href="./jokey.html">🎭 Cast</a>
+  <a href="library.html">Stories</a>
+  <a href="./stories-browse.html">Browse</a>
+  <a href="graphic-novel.html">Graphic Novel</a>
+  <a href="sound.html">Sound</a>
+  <a href="combat.html">Combat</a>
+  <a href="./player.html#equipment">Equipment</a>
+  <a href="cyberspace.html">Cyberspace</a>
+  <a href="./player.html#achievements">Achievements</a>
+  <a href="settings.html" class="current">⚙ Settings</a>
+</div>
+
+<h1>⚙ 설정 (Settings)</h1>
+<p class="subtitle">
+  <code>src/wet_run/settings.py</code> — 6 카테고리, 30+ 설정.
+  조용한 기본값 (마스터 0.2), KEYS 카테고리 OFF, 한국어+영어 자막.
+</p>
+
+<div class="category">
+  <h2 class="category-title"><span class="category-icon">🔊</span> 오디오 (Audio)</h2>
+  <div class="settings-grid">
+
+    <div class="setting">
+      <div class="setting-name">Master Volume</div>
+      <div class="setting-value">20%</div>
+      <div class="setting-desc">전체 음량 (0.0-1.0)</div>
+      <div class="setting-korean">기본값: 0.2 (조용한 기본)</div>
+      <div class="slider-bar">
+        <div class="slider-fill" style="width: 20%;"></div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Music Volume</div>
+      <div class="setting-value">20%</div>
+      <div class="setting-desc">배경 음악 음량</div>
+      <div class="setting-korean">매트릭스/사이버펑크/시바/센스넷/핀 오피스</div>
+      <div class="slider-bar">
+        <div class="slider-fill" style="width: 20%;"></div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">SFX Volume</div>
+      <div class="setting-value">50%</div>
+      <div class="setting-desc">효과음 음량</div>
+      <div class="setting-korean">전투/이동/아이템 사운드</div>
+      <div class="slider-bar">
+        <div class="slider-fill" style="width: 50%;"></div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Voice Volume</div>
+      <div class="setting-value">50%</div>
+      <div class="setting-desc">음성 음량</div>
+      <div class="setting-korean">NPC/내레이션</div>
+      <div class="slider-bar">
+        <div class="slider-fill" style="width: 50%;"></div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Mute All</div>
+      <div class="setting-value">OFF</div>
+      <div class="toggle off">
+        <div class="toggle-knob"></div>
+      </div>
+    </div>
+
+    <div class="setting" style="grid-column: 1 / -1;">
+      <div class="setting-name">Sound Categories</div>
+      <div class="setting-desc">카테고리별 on/off</div>
+      <div class="category-tags">
+        <span class="category-tag on">✓ themes (매트릭스 레인 등)</span>
+        <span class="category-tag on">✓ events (전투 종료 등)</span>
+        <span class="category-tag off">✗ keys (기본 OFF)</span>
+        <span class="category-tag on">✓ combat (스킬·히트)</span>
+        <span class="category-tag on">✓ movement (이동·잭인)</span>
+        <span class="category-tag on">✓ items (인벤토리·구매)</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="category">
+  <h2 class="category-title"><span class="category-icon">🎨</span> 디스플레이 (Display)</h2>
+  <div class="settings-grid">
+
+    <div class="setting">
+      <div class="setting-name">Color Theme</div>
+      <div class="setting-value">matrix</div>
+      <div class="setting-desc">matrix / cyberpunk / mono</div>
+      <div class="setting-korean">기본: 매트릭스 (녹색/청록)</div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Animation Speed</div>
+      <div class="setting-value">1.0x</div>
+      <div class="setting-desc">애니메이션 속도 (0.5x - 2.0x)</div>
+      <div class="setting-korean">기본: 1.0x (보통)</div>
+      <div class="slider-bar">
+        <div class="slider-fill" style="width: 50%;"></div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Vignette Intensity</div>
+      <div class="setting-value">100%</div>
+      <div class="setting-desc">저HP 시 화면 가장자리 어두움 강도</div>
+      <div class="setting-korean">기본: 100% (max)</div>
+      <div class="slider-bar">
+        <div class="slider-fill" style="width: 100%;"></div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Show FPS</div>
+      <div class="setting-value">OFF</div>
+      <div class="toggle off">
+        <div class="toggle-knob"></div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Glyph Style</div>
+      <div class="setting-value">unicode</div>
+      <div class="setting-desc">ascii / unicode</div>
+      <div class="setting-korean">기본: unicode (블록 문자)</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="category">
+  <h2 class="category-title"><span class="category-icon">⌨</span> 입력 (Input)</h2>
+  <div class="settings-grid">
+
+    <div class="setting" style="grid-column: 1 / -1;">
+      <div class="setting-name">Key Bindings</div>
+      <div class="setting-desc">게임 동작 키 매핑</div>
+      <div style="margin-top: 12px;">
+        <div class="key-binding">
+          <span class="key-action">Confirm / 선택</span>
+          <span class="key-value">Return</span>
+        </div>
+        <div class="key-binding">
+          <span class="key-action">Cancel / 일시정지</span>
+          <span class="key-value">Escape</span>
+        </div>
+        <div class="key-binding">
+          <span class="key-action">↑ Up</span>
+          <span class="key-value">↑</span>
+        </div>
+        <div class="key-binding">
+          <span class="key-action">↓ Down</span>
+          <span class="key-value">↓</span>
+        </div>
+        <div class="key-binding">
+          <span class="key-action">← Left / → Right</span>
+          <span class="key-value">← →</span>
+        </div>
+        <div class="key-binding">
+          <span class="key-action">스킬 1-9</span>
+          <span class="key-value">1 2 3 4 5 6 7 8 9</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="category">
+  <h2 class="category-title"><span class="category-icon">🌐</span> 언어 (Language)</h2>
+  <div class="settings-grid">
+
+    <div class="setting">
+      <div class="setting-name">Language</div>
+      <div class="setting-value">both</div>
+      <div class="setting-desc">ko / en / both</div>
+      <div class="setting-korean">기본: both (한국어+영어)</div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Subtitle Mode</div>
+      <div class="setting-value">subtitle</div>
+      <div class="setting-desc">off / subtitle / replace</div>
+      <div class="setting-korean">기본: subtitle (영어+한글)</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="category">
+  <h2 class="category-title"><span class="category-icon">⚔</span> 게임플레이 (Gameplay)</h2>
+  <div class="settings-grid">
+
+    <div class="setting">
+      <div class="setting-name">Difficulty</div>
+      <div class="setting-value">normal</div>
+      <div class="setting-desc">easy / normal / hard / nightmare</div>
+      <div class="setting-korean">기본: normal (1.0x 데미지)</div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Damage Taken</div>
+      <div class="setting-value">1.0x</div>
+      <div class="setting-desc">받는 데미지 배율 (0.5-2.0)</div>
+      <div class="setting-korean">기본: 1.0x (보통)</div>
+      <div class="slider-bar">
+        <div class="slider-fill" style="width: 50%;"></div>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Combo Window</div>
+      <div class="setting-value">3500ms</div>
+      <div class="setting-desc">콤보 윈도우 (1000-10000ms)</div>
+      <div class="setting-korean">기본: 3500ms (3.5초)</div>
+    </div>
+
+    <div class="setting">
+      <div class="setting-name">Auto Save</div>
+      <div class="setting-value">ON</div>
+      <div class="toggle on">
+        <div class="toggle-knob"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="about-box">
+  <h2 class="about-title">ℹ️ 정보 (About)</h2>
+  <div class="settings-grid">
+    <div class="setting">
+      <div class="setting-name">Version</div>
+      <div class="setting-value">0.5.0</div>
+      <div class="setting-desc">현재 게임 버전</div>
+    </div>
+    <div class="setting">
+      <div class="setting-name">Author</div>
+      <div class="setting-value">emilio</div>
+      <div class="setting-desc">개발자</div>
+    </div>
+    <div class="setting">
+      <div class="setting-name">Schema</div>
+      <div class="setting-value">v1</div>
+      <div class="setting-desc">설정 스키마 버전</div>
+    </div>
+  </div>
+  <div class="about-stats">
+    <div class="about-stat">
+      <div class="about-stat-value">30+</div>
+      <div class="about-stat-label">Settings</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-value">28</div>
+      <div class="about-stat-label">Achievements</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-value">5</div>
+      <div class="about-stat-label">ICE Types</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-value">3</div>
+      <div class="about-stat-label">Bosses</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-value">15</div>
+      <div class="about-stat-label">Skill Effects</div>
+    </div>
+    <div class="about-stat">
+      <div class="about-stat-value">5</div>
+      <div class="about-stat-label">Combo Stages</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Wet Run — Settings Dashboard<br>
+  <code>src/wet_run/settings.py</code> · GameSettings · 6 categories · 30+ settings
+</div>
+
+</body>
+</html>

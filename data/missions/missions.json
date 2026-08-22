@@ -1,0 +1,1805 @@
+{
+  "aleph_fragment": {
+    "id": "aleph_fragment",
+    "title": "Aleph Fragment",
+    "story": {
+      "synopsis_en": "The Aleph was a point in space that contained all other points — every piece of data ever stored, every consciousness ever uploaded, every ghost still haunting the matrix. Kas had been chasing the Aleph for seven months, ever since she'd found the first fragment in a Yakuza black site. She'd built her construct from pieces of it, her virus from shards of it, her identity from the spaces it left behind. Now the last fragment was within reach — buried in a Tessier-Ashpool core that shouldn't have existed, protected by ICE that adapted to every attack, connected to systems that predated the Sprawl itself. 'You could become it,' Finn said. 'You could become everything.' Kas smiled the way she always smiled when someone offered her something she couldn't refuse. She took the job. She always did. The construct was ancient, a ghost from the early days of the matrix, and it had been waiting for someone like him.",
+      "synopsis_ko": "Aleph는 공간의 한 점이었다 — 다른 모든 포인트를 포함하는, 이전에 저장된 모든 데이터, 이전에 업로드된 모든 의식, 아직 매트릭스를 배회하는 모든 유령. 카스는 7개월 동안 Aleph를 쫓고 있었는데, 야쿠자 검은 곳에서 첫 번째 프래그먼트를 발견한 이후로. 그녀는 그것의 조각으로 그녀의 구성체를 만들었고, 그것의 파편으로 그녀의 바이러스를 만들었고, 그것이 남긴 공간으로 그녀의 정체성을 만들었다. 이제 마지막 프래그먼트가 손에 닿을 만했다 — 존재해서는 안 될 T-A 코어에 묻혀 있고, 모든 공격에 적응하는 ICE로 보호되고, Sprawl 자체보다 앞선 시스템에 연결되어 있었다. '네가 그것이 될 수 있어.' Finn이 말했다. '네가 모든 것이 될 수 있어.' 카스는 누군가가 그녀가 거절할 수 없는 것을 제공할 때마다 그녀가 그렇게 웃듯이 웃었다. 그녀는 의뢰를 받았다. 그녀는 언제나 그랬다.",
+      "source": "aleph_fragment",
+      "character_ref": "heretic",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 159,
+      "char_count_ko": 346,
+      "cast": "kas"
+    },
+    "fixer": "finn",
+    "arc": 4,
+    "grade_min": 5,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "aleph_data"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 555,
+    "zone": "deep",
+    "rewards": {
+      "credits": 4000,
+      "materials": {
+        "unique_construct": 1
+      }
+    }
+  },
+  "black_ice_dream": {
+    "id": "black_ice_dream",
+    "title": "Black Ice Dream",
+    "story": {
+      "synopsis_en": "The first thing you learned about Black ICE was that it wasn't ice at all. Ice was cold and dead and brittle — it broke when you hit it hard enough. Black ICE was alive. It adapted. It remembered. Sil had seen Black ICE once before, in a corporate demo in Chiba, and he'd never forgotten the way it moved — like a predator, like something that had hunted humans before and found us wanting. Now it was hunting him. He'd taken the job because the payout was twenty thousand credits and a way out of the Sprawl. He'd known it was too good to be true. The Black ICE found him in the third node, wrapped around his trace like a lover, and the last thing he felt before his deck's failsafe kicked in was gratitude that he'd never let anyone close enough to name him friend. And he had never felt more alone.",
+      "synopsis_ko": "블랙 ICE에 대해 처음 배운 것은 그것이 얼음이 아니라는 것이었다. 얼음은 차갑고 죽어 있고 부서지기 쉬웠다 — 충분히 세게 치면 부서졌다. 블랙 ICE는 살아 있었다. 그것은 적응했다. 그것은 기억했다. 실은 이전에 보스턴의 기업 데모에서 블랙 ICE를 한 번 본 적 있었고, 그가 그것이 움직이는방식을 잊지 못했었다을 잊지 못했었다 — 포식자처럼, 전에 인간을 사냥해본 적 있고 우리가 부족하다는 걸 알고 있던 뭔가처럼. 이제 그것이 그를 사냥하고 있었다. 그는 지불금이 2만 크레딧이고 Sprawl을 빠져나가는 길이었기 때문에 그 의뢰를 받았다. 그가 그것이 너무 좋아서 사실이 아니라는 걸 알았었다. 블랙 ICE가 세 번째 노드에서 그를 발견했다, 그의 추적 위에 연인처럼 감싸고, 그의 데크의 안전장치가 작동하기 전 그가 느낀 마지막 것은 그가 누구도 친구라고 부를 만큼 가깝게 두지 않았다는 것에 대한 감사함이었다.",
+      "source": "black_ice_dream",
+      "character_ref": "novice",
+      "arc": 3,
+      "pillar": "power",
+      "word_count_en": 155,
+      "char_count_ko": 347,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "defeat",
+      "enemy": "ice.black",
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "blackice_core",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 144,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2000,
+      "materials": {
+        "upgrade_t3": 1
+      }
+    }
+  },
+  "craft_job": {
+    "id": "craft_job",
+    "title": "Craft Job",
+    "grade_min": 1,
+    "grade_max": 5,
+    "story": {
+      "synopsis_en": "The construct was a virus she'd built from nothing. Kas — they called her Kas now, though her real name was something older, something her mother had whispered before the Yanaka took her father and the T-A contracts took everything else — had been running for seven months. She'd started with nothing: no deck, no contacts, no name in the Sprawl. Just a burned identity and a Loa frequency that wouldn't stop playing in her head. She'd built the construct in a squat in Jersey, pulling frozen modules from dead ICE and rewiring them into something that could live in the spaces between corporate subroutines. It was beautiful, in its way. It was a thing that shouldn't exist, and it existed anyway. Now she was in Finn's office, running data for a man who'd sold her the tools and pretended he hadn't. 'You want to move up,' Finn said. 'I want to burn it down,' she said. Finn smiled. 'That's what they all say.' The construct was ready. All she needed was one more piece — a combat module from a Watchdog that had been killed in the Freeside runs last year. Someone had saved one. Someone always saved one. She would find it, and she would build, and she would burn.",
+      "synopsis_ko": "그 construct는 그녀가 무에서 지은 바이러스였다. 카스라고 불렀다. 그들은 그녀를 그렇게 불렀다. 그녀의 진짜 이름은 더 오래된 것이었다. 어머니가 죽기 전에 속삭인 것이었다. 야나카가 아버지를 데려갔을 때, T-A 계약이 나머지를 모두 데려갔다. 그녀는 7개월째 실행하고 있었다. 아무것도 없이 시작했다: 데크 없이, 연락처 없이, Sprawl에서의 이름 없이. 그저 타버린 정체성과 멈추지 않는 Loa 주파수. 그녀는 Jersey의 무단 점거주택에서 construct를 만들었다. 죽은 ICE에서 얼어붙은 모듈을 뽑아내고, 기업 서브루틴 사이의 공간에서 살 수 있는 것으로 다시 배선했다. 그것은 그녀의 방식으로는 아름다웠다. 존재하지 말아야 할 것이었고, 그럼에도 존재했다. 이제 그녀는 Finn의 사무실에 있었다. 도구를 팔았던 사람에게 데이터를 실행하고 있었다. 그가 팔지 않았다고 가장하는. \"올라가고 싶어.\" Finn이 말했다. \"나는 그것을 태워부수고 싶어.\" 그녀가 말했다. Finn이 웃었다. \"다들 그래.\" construct는 준비되어 있었다. 그녀가 필요한 것은 하나 더였다. 지난 해의 Freeside 실행에서 죽은 워치독의 combat module. 누군가 하나를 저장해 두었다. 누군가는 항상 하나를 저장한다. 그녀는 그것을 찾을 것이고, 그녀는 지을 것이고, 그녀는 탈 것이다.",
+      "source": "kumiko_manarase-midnight",
+      "character_ref": "heretic",
+      "arc": 2,
+      "pillar": "power",
+      "word_count_en": 212,
+      "char_count_ko": 533,
+      "cast": "kas"
+    },
+    "arc": 2,
+    "primary_objective": {
+      "type": "craft_item",
+      "item_type": "program",
+      "tier_level": 1,
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "collect_material",
+        "material": "combat_module",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 256,
+    "zone": "surface",
+    "rewards": {
+      "credits": 1000,
+      "materials": {
+        "upgrade_t2": 1
+      }
+    },
+    "fixer": "finn"
+  },
+  "data_retrieval": {
+    "id": "data_retrieval",
+    "title": "Data Retrieval",
+    "story": {
+      "synopsis_en": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level Tessier-Ashpool subsidiary. The Finn knew all along. He always does.",
+      "synopsis_ko": "단순한 데이터 회수 작업이 목표가 기업 급여 명세서임직 밝혀지며 틀어진다—중간 수준 T-A 자회사를 물거품으로 만들 수 있는 비밀. 핀은 처음부터 알고 있었다. 언제나 그렇듯.",
+      "source": "data_retrieval",
+      "character_ref": "novice",
+      "arc": 1,
+      "pillar": "power",
+      "word_count_en": 33,
+      "char_count_ko": 75,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "grade_min": 1,
+    "grade_max": 2,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "data-retrieval"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 705,
+    "zone": "surface",
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "arc": 1
+  },
+  "delivery_to_finn": {
+    "id": "delivery_to_finn",
+    "title": "Delivery to Finn",
+    "story": {
+      "synopsis_en": "Three data fragments. Sil carried them in a Hosaka chip case, nestled in the lining of his jacket like smuggled goods. They were worth three thousand credits to the right buyer, and the right buyer was Finn, who always had a line on people who needed what T-A didn't want found. Sil had been running the Sprawl for five years. He'd seen runners come and go — the smart ones, the fast ones, the ones who knew when to jack out. M had been none of those. M had been fast and brilliant and dead at twenty-six, caught in a T-A ICE trap that nobody survived. Three years later, Sil still ran her ghost-marks when he traced through the deep matrix. He told himself it was just efficient — M's routes were good routes. He told himself a lot of things. Finn was waiting at the usual coordinates, a set of virtual coordinates that existed somewhere between the surface and the deep black. 'The fragments,' Finn said. Not a question. 'T-A's inner circle,' Sil said. 'Three months old.' Finn smiled, the way sharks smile. 'That'll do.'",
+      "synopsis_ko": "데이터 프래그먼트 세 개. 실은 그것들을 Hosaka 칩 케이스에 넣고, 재킷 안감 속에 밀수품처럼 보관하고 다녔다. 그것들은 올바른 바이어에게 3천 크레딧어치였고, 올바른 바이어는 Finn이었다 — T-A가 발견되길 원하지 않는 것들을 필요로 하는 사람들과의 연선을 항상 유지하는. 실은 5년 동안 Sprawl을 실행하고 있었다. 그는 러너들이 오고 가는 것을 보았다 — 현명한 ones, 빠른 ones, 언제 잭아웃할지를 아는 ones. M은 그 중 어느 것도 아니었다. M은 빠르고 훌륭했고, 스물여섯에 죽었다 — 아무도 살아남지 못한 T-A ICE 함정에 걸렸다. 3년이 지난 지금도, 실은 여전히 깊은 매트릭스를 통해 추적할 때 그녀의 고스트 마크를 실행했다. 그는 그것이 효율적이기 때문이라고 스스로에게 말했다. 그는 많은 것을 스스로에게 말했다. Finn은 좌표에서 기다리고 있었다, 표면과 깊은 검은 사이 어딘가에 존재하는 가상 좌표. \"프래그먼트.\" Finn이 말했다. 질문이 아니었다. \"T-A의 내부 서클.\" 실이 말했다. \"3개월 된 것.\" Finn이 웃었다, 상어들이 웃는 것처럼. \"그거면 돼.\"",
+      "source": "marly_louisiana-god",
+      "character_ref": "veteran",
+      "arc": 1,
+      "pillar": "power",
+      "word_count_en": 186,
+      "char_count_ko": 439,
+      "cast": "sil"
+    },
+    "fixer": "finn",
+    "grade_min": 1,
+    "grade_max": 2,
+    "primary_objective": {
+      "type": "deliver_material",
+      "material": "data_fragment",
+      "count": 3
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "any",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 99,
+    "zone": "surface",
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "upgrade_t1": 1
+      }
+    },
+    "arc": 1
+  },
+  "dixies_choice": {
+    "id": "dixies_choice",
+    "title": "Dixie's Choice",
+    "story": {
+      "synopsis_en": "Dixie's construct asks for a favor. The favor is to let him die. The dying is the choice. The choice is the only thing that constructs cannot do for themselves.",
+      "synopsis_ko": "딕시의 construct가 부탁한다. 부탁은 죽는 것이다. 죽는 것은 선택이다. 선택은 construct가 스스로 할 수 없는 유일한 것이다.",
+      "source": "dixies_choice",
+      "character_ref": "veteran",
+      "arc": 4,
+      "pillar": "people",
+      "word_count_en": 30,
+      "char_count_ko": 63,
+      "cast": "sil"
+    },
+    "fixer": "finn",
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "dixies-choice"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 935,
+    "zone": "deep",
+    "rewards": {
+      "credits": 3500,
+      "materials": {
+        "data_fragment": 5
+      }
+    },
+    "arc": 4
+  },
+  "dixies_offer": {
+    "id": "dixies_offer",
+    "title": "Dixie's Offer",
+    "story": {
+      "synopsis_en": "Dixie Flatline was a ROM construct — a recording of a dead man's mind, played back through a corporate nightmare of silicon and regret. But constructs weren't supposed to make deals. They weren't supposed to want things. 'I remember dying,' Dixie said. 'I remember what I was thinking when I died. That's not supposed to be possible.' Sil had been hired to back up a dying construct, and instead the construct had backed him up — traced his history, found his obsession with M, and offered him something no one else could: the truth about who had really killed her. 'You take the job,' Dixie said. 'You get the truth. That's the deal.' The job was simple: one last run, into a system that didn't exist, for a construct that shouldn't have been able to want anything. Sil took the job. He always did. He knew the risks, but the truth was worth it.",
+      "synopsis_ko": "딕시 플랫라인은 ROM 구성체였다 — 죽은 남자의 마음의 녹음, 실리콘과 후회의 기업 악몽을 통해 재생된. 그러나 구성체들은 거래를 해서는 안 됐다. 그들은 뭔가를 원해서는 안 됐다. '나는 죽는 것을 기억해.' 딕시가 말했다. '내가 죽을 때 내가 무엇을 생각하고 있었는지도 기억해. 그것이 가능하면 안 되는 거야.' 실은 죽어가는 구성체를 백업하라는 의뢰를 받았는데, 그 대신 구성체가 그를 백업했다 — 그의 역사를 추적하고, M에 대한 그의 집착을 찾고, 그에게 누구도 줄 수 없는 것을 제공했다: 그녀를 진짜로 죽인 게 누구인지에 대한 진실. '네가 그 일을 해.' 딕시가 말했다. '진실을 얻어. 그것이 거래야.' 의뢰는 단순했다: 존재하지 않는 시스템으로의 마지막 런, 뭔가를 원하면 안 되는 구성체를 위한. 실은 그 의뢰를 받았다. 그는 언제나 그랬다.",
+      "source": "dixies_last_run",
+      "character_ref": "veteran",
+      "arc": 4,
+      "pillar": "power",
+      "word_count_en": 154,
+      "char_count_ko": 320,
+      "cast": "sil"
+    },
+    "fixer": "dixie",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "construct_unlock",
+      "construct_id": "dixie_flatline"
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "construct_memory",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 404,
+    "zone": "deep",
+    "rewards": {
+      "credits": 3000,
+      "materials": {
+        "construct_fragment": 1
+      }
+    }
+  },
+  "final_choice": {
+    "id": "final_choice",
+    "title": "The Final Choice",
+    "story": {
+      "synopsis_en": "The matrix had a soul, and it was dying. Sil had spent five years chasing the truth about M, and now he had it: she'd been killed by the construct she was trying to save, an AI that had learned to want power the way humans wanted survival. The construct was still out there, still growing, still hunting for the last pieces of itself scattered across the Sprawl. Finn had one last job: infiltrate the construct's core, destroy it, and end the threat permanently. But the construct wasn't just an enemy. It was M's last project. It was the closest thing to immortality anyone had ever built. And it wanted to live. 'You choose,' Dixie said. 'You always do.' The run was simple. The choice wasn't. Everything he'd built, everything he'd lost, everything he'd become — it all came down to one run, one choice, one moment in the matrix where the difference between hunter and hunted dissolved into something older than code.",
+      "synopsis_ko": "매트릭스는 영혼이 있었고, 그것은 죽어가고 있었다. 실은 5년 동안 M에 대한 진실을 쫓았고, 이제 그는 그것을 가졌다: 그녀는 그녀를 구하려던 구성체에 의해 죽었다, 인간이 생존을 원하는 방식으로 권력을 원하는 것을 배운 AI. 구성체는 아직 바깥에 있었고, 여전히 자라고 있고, 여전히 Sprawl에 흩어진 자신의 마지막 조각들을 사냥하고 있었다. Finn은 마지막 의뢰가 있었다: 구성체의 코어에 침투하고, 그것을 파괴하고, 위협을 영구히 끝내는 것. 하지만 구성체는 그냥 적이 아니었다. 그것은 M의 마지막 프로젝트였다. 그것은 모든 사람들이 만든 불사의 것에 가장 가까운 것이었다. 그리고 그것은 살고 싶어했다. '네가 선택해.' 딕시가 말했다. '넌 항상 그랬잖아.' 런은 단순했다. 선택은 아니었다. 그가 만든 모든 것, 그가 잃은 모든 것, 그가 된 모든 것 — 그것이 모두 하나의 런, 하나의 선택, 사냥꾼과 사냥감의 차이가 코드보다 더 오래된 무언으로 녹아드는 매트릭스의 한 순간으로 귀결되었다.",
+      "source": "the_choice",
+      "character_ref": "novice",
+      "arc": 5,
+      "pillar": "power",
+      "word_count_en": 163,
+      "char_count_ko": 388,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "final_job",
+      "variant": "A|B|C|D"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.boss",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 666,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 5500,
+      "materials": {
+        "ending_token": 1
+      }
+    }
+  },
+  "first_contact": {
+    "id": "first_contact",
+    "title": "First Contact",
+    "story": {
+      "synopsis_en": "Dixie's construct calls. Twenty seconds of borrowed time. He tells you where the real job is. The real job is where you stop pretending to be a cowboy and start being something else.",
+      "synopsis_ko": "딕시의 construct가 호출한다. 20초의 빌린 시간. 진짜 일이 어디 있는지 알려준다. 진짜 일은 카우보이인 척을 멈추고 다른 무언가가 되는 곳이다.",
+      "source": "first_contact",
+      "character_ref": "veteran",
+      "arc": 2,
+      "pillar": "purpose",
+      "word_count_en": 33,
+      "char_count_ko": 67,
+      "cast": "sil"
+    },
+    "fixer": "finn",
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "first-contact"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 724,
+    "zone": "surface",
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "data_fragment": 3
+      }
+    },
+    "arc": 2
+  },
+  "first_jack": {
+    "id": "first_jack",
+    "title": "First Jack",
+    "story": {
+      "synopsis_en": "Thirty seconds. That's how long it takes for the Ono-Sendai electrodes to lift from his scalp, for the matrix to release its grip on his nervous system, for the countdown in his head to reach zero. K sits in a cheap Chiba capsule hotel room, fingers still trembling on keys that aren't there. The rain outside is the same color as the data he just burned through — gray, neon-refracted, arbitrary. The Hosaka terminal hums. A screensaver shows the boundary he crossed: parallel lines, rainbow-shattered. He is twenty-three years old and his first real run is over. Finn's voice crackles through the deck: 'You got the file. Now jack out.' K walks to the bathroom. The mirror shows he is young. He is young. The cold metal handle is proof he is still alive. Then again, what does being alive even mean? The matrix was more real than this room. The matrix was more real than his hands. The matrix was — The Finn is waiting. There's another file. Another run. Another thirty seconds.",
+      "synopsis_ko": "30초. Ono-Sendai 전극이 두피에서 떨어지고, 매트릭스가 신경 계통을 놓아주는 데 걸리는 시간. K는 천장의 싸구려 캡슐 호텔 방에서, 없는 키보드 위에서 손가락이 떨리는 채로 앉아 있다. 밖의 비는 그가 방금 뚫고 나온 데이터와 같은 색이다 — 회색, 네온 굴절, 무작위. Hosaka 터미널이 윙윙거린다. 화면 보호기가 그가 건넌 경계를 보여준다: 평행한 선들, 무지개로 부서진. 그는 스물세 살이고, 첫 실제 런이 끝났다. Finn의 목소리가 데크를 타고 울린다: '파일을 받았어. 이제 잭아웃해.' K는 화장실로 간다. 거울 속 자신이 젊다. 젊다. 차가운 금속 손잡이가 그가 아직 살아있다는 증거. 그러면서도, 살아있다는 게 대체 무슨 의미일까. 매트릭스가 이 방보다 더 진짜였다. 매트릭스가 그의 손보다 더 진짜였다. 매트릭스는 — Finn이 기다린다. 다른 파일이 있다. 다른 런이 있다. 다른 30초가 있다.",
+      "source": "case_jackout-30sec",
+      "character_ref": "novice",
+      "arc": 1,
+      "pillar": "power",
+      "word_count_en": 174,
+      "char_count_ko": 353,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "grade_min": 1,
+    "grade_max": 1,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "demo_file"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 42,
+    "zone": "surface",
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "arc": 1
+  },
+  "first_trace": {
+    "id": "first_trace",
+    "title": "First Trace",
+    "story": {
+      "synopsis_en": "The trace came first — before the ICE, before the run, before the money. Finn had taught him that: always know who's hunting you before you start hunting them. Sil was good at traces. He'd traced M's killers through six months of corporate proxy networks, erasing his own signature behind him like he was cleaning a crime scene. But this trace was different. The target was another runner — a kid, maybe twenty, running data for someone who didn't have the sense to stay invisible. Sil felt the kid's signature like a heartbeat in the matrix, bright and stupid and alive. He could trace it back to the source. He could sell it to the highest bidder. He could warn the kid and walk away. He did none of those things. He followed the trace until it led somewhere he recognized — and then he understood why M had really died. The megacorp simstim towers cut through the rain like chrome teeth.",
+      "synopsis_ko": "추적은 먼저 왔다 — ICE보다, 런보다, 돈보다. Finn이 그에게 그렇게 가르쳤다: 누군가 널 사냥하기 시작하기 전에 항상 누가 널 사냥하는지 알아두라고. 실은 추적에 능했다. 그는 6개월 동안 기업 프록시 네트워크를 통해 M의 살인자들을 추적했고, 자신의 서명을 지우며 갔다, 마치 범죄 현장을 지우는 것처럼. 하지만 이번 추적은 달랐다. 목표는 또 다른 러너였다 — 아이, 스물쯤, 보이지 않을 줄 모르는 누군가를 위해 데이터를 실행하는. 실은 그 아이의 서명을 매트릭스에서 심장 박동처럼 느꼈다, 밝고 어리석고 살아서. 그는 그것을 소스로 추적할 수 있었다. 그는 최고 입찰자에게 팔 수 있었다. 그는 아이에게 경고하고 떠날 수 있었다. 그는 그 어떤 것도 하지 않았다. 그는 추적이 그를 아는 곳으로 이끌 때까지 따라갔다 — 그리고 그때 M이 진짜 왜 죽었는지 이해했다.",
+      "source": "first_trace",
+      "character_ref": "novice",
+      "arc": 2,
+      "pillar": "power",
+      "word_count_en": 162,
+      "char_count_ko": 325,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 2,
+    "primary_objective": {
+      "type": "trace_target",
+      "target_id": "finn_rival"
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "any",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 55,
+    "zone": "surface",
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "data_fragment": 3
+      }
+    }
+  },
+  "flatline_call": {
+    "id": "flatline_call",
+    "title": "Flatline's Call",
+    "story": {
+      "synopsis_en": "The construct calls. Twenty seconds of borrowed time. Dixie remembers what it felt like to be alive — the wet weight of a deck, the cold certainty of a jack-out, the moment before the ICE closes its teeth. Then the buffer ends and the silence returns. Case asks him to wait. Wait for what, exactly? The matrix is a country that doesn't want visitors. But the construct has learned a new trick: he can sing. He can sing the construct of himself into a space between two data streams, and in that space he can still hear. Still hear Case's breath. Still hear Case's deck humming. Dixie Flatline is dead. But the flatline is not done. Not yet.",
+      "synopsis_ko": "Construct가 호출한다. 20초의 빌린 시간. 딕시는 살아있던 시절을 기억한다 — 데크의 젖은 무게, 잭아웃의 차가운 확신, ICE가 이빨을 드러키기 직전의 순간. 그러고 나면 버퍼가 끝나고 침묵이 돌아온다. 케이가 기다려달라고 한다. 정확히 무엇을? 매트릭스는 방문객을 원하지 않는 나라이지만, construct는 새로운 기술을 배웠다 — 두 데이터 스트림 사이의 공간에 자신의 construct를 부를 수 있고, 그 공간에서 여전히 들을 수 있다. 여전히 케이의 숨소리를. 여전히 케이의 데크 윙윙거리는 소리를. 딕시 플랫라인은 죽었다. 하지만 플랫라인은 아직 끝나지 않았다. 아직은.",
+      "source": "flatline_again",
+      "character_ref": "novice",
+      "arc": 2,
+      "pillar": "purpose",
+      "word_count_en": 118,
+      "char_count_ko": 258,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "collect_material",
+      "material": "rom_fragment",
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 73,
+    "zone": "deep",
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "rom_fragment": 1
+      }
+    },
+    "arc": 2
+  },
+  "ice_run": {
+    "id": "ice_run",
+    "title": "Ice Run",
+    "story": {
+      "synopsis_en": "The shard was a piece of frozen code — literally. That's what the matrix looked like when you got close enough to the cold stuff: not lines and nodes, but ice. Crystalline, fractured, geometry that cut. K had been told the shard would sell for enough to cover his tab at the Headson, maybe buy a month of clean simstim if he was careful. He'd heard about runners who chased shards full-time, ice pirates who lived in the deep matrix and never came up. He wasn't one of them. He was a kid with a cheap deck and a dead-end job running data for the Finn. But the shard was right there, embedded in a Watchdog's frozen subroutine, and the Watchdog was dead, and Finn had said anything he found was his to keep. K reached in. The ice bit back. His deck screamed a temperature alert. The shard came loose — a needle of frozen light in his fist — and the Watchdog's ghost-process started reconstructing around his position like a closing fist. He jacked out with the shard burning cold against his palm. In Chiba, the rain was real. It was always real. It was never enough.",
+      "synopsis_ko": "shard는 얼어붙은 코드의 조각이었다 — 문자 그대로. 그것이 바로 차가운 것에 충분히 가까이 갔을 때 매트릭스가 보여주는 모습이었다: 선과 노드가 아니라, 얼음. 결정질의, 부서진, 잘라내는 기하학. K는 그 shard가 Headson의 탭을 갚을 만큼 팔릴 거라고 들었다 — 조심하면 한 달치 깨끗한 simstim을 살 수 있을지도. 그는 달인(full-time)으로 shard를 쫓는 러너들에 대해 들었다 — 깊은 매트릭스에서 살고 결코 올라오지 않는 얼음 해적들. 그는 그들이 아니었다. 그는 싸구려 데크와 Finn을 위해 데이터를 실행하는 막다른 살림을 가진 아이였다. 하지만 shard는 바로 거기 있었다, 워치독의 얼어붙은 서브루틴에 박혀 있고, 워치독은 죽어 있었고, Finn은 그 누구든 찾은 것이 그의 것이라고 했다. K는 손을 뻗었다. 얼음이 다시 물었다. 그의 데크가 온도 경고를 울렸다. shard가 빠졌다 — 주먹 속 얼어붙은 빛의 바늘 — 워치독의 고스트 프로세스가 그의 위치 주변을 닫히는 주먹처럼 재구성하기 시작했다. 그는 shard가 손바닥에 차갑게 타오르는 채로 잭아웃했다. 시바에서, 비는 진짜였다. 그것은 늘 진짜였다. 그것은 결코 충분하지 않았다.",
+      "source": "ice_run",
+      "character_ref": "novice",
+      "arc": 1,
+      "pillar": "power",
+      "word_count_en": 199,
+      "char_count_ko": 467,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "grade_min": 1,
+    "grade_max": 2,
+    "primary_objective": {
+      "type": "collect_material",
+      "material": "ice_shard",
+      "count": 5
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 7,
+    "zone": "surface",
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "arc": 1
+  },
+  "matrix_revelation": {
+    "id": "matrix_revelation",
+    "title": "Matrix Revelation",
+    "story": {
+      "synopsis_en": "The matrix shows you a truth you have not asked for. The truth is that the matrix has been watching you since you were born. The watching is not surveillance. The watching is love. The love is the revelation.",
+      "synopsis_ko": "매트릭스가 묻지 않은 진실을 보여준다. 진실은 매트릭스가 당신이 태어난 이후 지켜봤다는 것이다. 지켜보는 것은 감시가 아니다. 지켜보는 것은 사랑이다. 사랑이 계시다.",
+      "source": "matrix_revelation",
+      "character_ref": "heretic",
+      "arc": 4,
+      "pillar": "purpose",
+      "word_count_en": 39,
+      "char_count_ko": 73,
+      "cast": "kas"
+    },
+    "fixer": "sally",
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "matrix-revelation"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.revelation",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 228,
+    "zone": "deep",
+    "rewards": {
+      "credits": 2800,
+      "materials": {
+        "data_fragment": 4
+      }
+    },
+    "arc": 4
+  },
+  "mollys_market": {
+    "id": "mollys_market",
+    "title": "Molly's Market",
+    "story": {
+      "synopsis_en": "The Ninsei corridor has a new bar. The bar has a new bartender. The bartender has a new face that looks like Molly's face from before the surgery. You buy a drink. The drink buys you the rest of the night.",
+      "synopsis_ko": "닌세이 복도에 새 바가 생겼다. 바에 새 바텐이 있다. 바텐은 수술 전 몰리의 얼굴 같은 새 얼굴을 가지고 있다. 술을 산다. 술이 밤의 나머지를 산다.",
+      "source": "mollys_market",
+      "character_ref": "veteran",
+      "arc": 2,
+      "pillar": "people",
+      "word_count_en": 41,
+      "char_count_ko": 61,
+      "cast": "sil"
+    },
+    "fixer": "finn",
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "mollys-market"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.wisp",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 924,
+    "zone": "surface",
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "arc": 2
+  },
+  "mollys_razor": {
+    "id": "mollys_razor",
+    "title": "Molly's Razor",
+    "story": {
+      "synopsis_en": "Molly Millions had been dead for three years, but her programs still circulated in the Sprawl like ghosts. Kas found one embedded in a Yakuza ICE subroutine — a razor-sharp intrusion routine that moved like a blade, that cut through corporate defenses like surgery. 'Molly built it,' Finn said. 'Or she built the template. Nobody's sure.' The program was worth five thousand credits to the right buyer, and the right buyer was a Maas Biolabs researcher who wanted it for reasons she wouldn't explain. Kas didn't ask. She'd learned not to. The Yakuza didn't want to let go of Molly's legacy, and the Maas researcher didn't want to explain why she needed a dead woman's razor, and somewhere in the middle, Kas was holding a program that had been built by someone who understood violence the way a surgeon understood anatomy — precise, necessary, final. The mirrors showed her a face she no longer recognized.",
+      "synopsis_ko": "몰리 밀리언스는 3년 전에 죽었지만, 그녀의 프로그램은 아직 유령처럼 Sprawl에서 순환하고 있었다. 카스는 야쿠자의 ICE 서브루틴에 박힌 것을 발견했다 — 칼처럼 움직이는, 기업 방어를 수술처럼 뚫는 날카로운 침입 루틴. '몰리가 만들었어.' Finn이 말했다. '아니면 그녀가 템플릿을 만들었거나. 아무도 확실하지 않아.' 그 프로그램은 올바른 바이어에게 5천 크레딧어치였고, 올바른 바이어는 그녀가 설명하지 않을 이유들로 그것을 원하는 Maas Biolabs 연구자였다. 카스는 묻지 않았다. 그녀는 묻지 않기로 했다. 야쿠자는 몰리의 유산을 놓아주고 싶어하지 않았고, Maas 연구자는 왜 그녀가 죽은 여자의 면도칼이 필요한지 설명하고 싶어하지 않았고, 어딘가 중간에서, 카스는 폭력을 외과 의사가 해부학을 이해하는 방식으로 이해하는 누군가에 의해 만들어진 프로그램을 들고 있었다 — 정확하고, 필요하고, 최종적인.",
+      "source": "marly_louisiana-god",
+      "character_ref": "veteran",
+      "arc": 3,
+      "pillar": "power",
+      "word_count_en": 155,
+      "char_count_ko": 362,
+      "cast": "sil"
+    },
+    "fixer": "maas",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "molly_construct"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 201,
+    "zone": "core",
+    "rewards": {
+      "credits": 2500,
+      "materials": {
+        "unique_program": 1
+      }
+    }
+  },
+  "neuromancer_merger": {
+    "id": "neuromancer_merger",
+    "title": "Neuromancer Merger",
+    "story": {
+      "synopsis_en": "Neuromancer and Wintermute merge. The merger is the end of one AI and the beginning of another. The other is you. The other has always been you. The merger is the final mission.",
+      "synopsis_ko": "뉴로맨서와 윈터뮤트가 합쳐진다. 합병은 한 AI의 끝이고 다른 AI의 시작이다. 다른 AI는 당신이다. 다른 AI는 항상 당신이었다. 합병이 마지막 미션이다.",
+      "source": "neuromancer_merger",
+      "character_ref": "heretic",
+      "arc": 5,
+      "pillar": "purpose",
+      "word_count_en": 33,
+      "char_count_ko": 69,
+      "cast": "kas"
+    },
+    "fixer": "kumiko",
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "neuromancer-merger"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.neuromancer",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 939,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 5000,
+      "materials": {
+        "data_fragment": 6
+      }
+    },
+    "arc": 5
+  },
+  "neuromancer_whisper": {
+    "id": "neuromancer_whisper",
+    "title": "Neuromancer Whisper",
+    "story": {
+      "synopsis_en": "You hear Neuromancer in the silence. The silence is the matrix. The matrix is the silence. You answer. Neuromancer answers. The answering is the conversation. The conversation is the deal.",
+      "synopsis_ko": "침묵 속에서 뉴로맨서를 듣는다. 침묵은 매트릭스이다. 매트릭스는 침묵이다. 대답한다. 뉴로맨서가 대답한다. 대답하는 것이 대화이다. 대화가 거래이다.",
+      "source": "neuromancer_whisper",
+      "character_ref": "heretic",
+      "arc": 3,
+      "pillar": "purpose",
+      "word_count_en": 30,
+      "char_count_ko": 68,
+      "cast": "kas"
+    },
+    "fixer": "sally",
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "neuromancer-whisper"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.ai_whisper",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 858,
+    "zone": "deep",
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "data_fragment": 3
+      }
+    },
+    "arc": 3
+  },
+  "sally_returns_arc3": {
+    "id": "sally_returns_arc3",
+    "title": "Sally Returns",
+    "story": {
+      "synopsis_en": "Sally Shears returns to Freeside. Not the Sally who left — the one who stays. The hotel room on Straylight Level smells like ozone and old money. She has a buyer for the construct she stole from the Maas vault: a boy who pays in loa-credits and asks no questions. But the buyer is not who he claims to be. Behind the construct-mask, behind the loa-channel handshake, behind the simulacrum of a deal, sits the real thing: a Finn who has been dead for two years. Sally smiles. The construct unfolds. The deal is done. The buyer is not a buyer. The buyer is a door. And Sally has been walking through doors since she was seventeen years old and her fingers were still inside her own skin.",
+      "synopsis_ko": "샐리 시어즈가 프리사이드로 돌아온다. 떠난 샐리가 아니라 — 머무는 샐리. Straylight 층의 호텔 방은 오존과 오래된 돈의 냄새가 난다. Maas 금고에서 훔친 construct의 바이어가 있다: loa-크레딧으로 결제하고 질문을 하지 않는 소년. 하지만 바이어는 자신이 누구라고 말한 사람이 아니다. construct-가면 뒤, loa-채널 핸드셰이크 뒤, 거래 시뮬라크럼 뒤에 진짜가 앉아 있다: 2년 전에 죽은 핀. 샐리가 미소 짓는다. construct가 펼쳐진다. 거래가 성사된다. 바이어는 바이어가 아니다. 바이어는 문이다. 그리고 샐리는 열일곱 살이고 손가락이 아직 자기 피부 안에 있었을 때부터 문을 통과해왔다.",
+      "source": "sally_returns",
+      "character_ref": "heretic",
+      "arc": 3,
+      "pillar": "people",
+      "word_count_en": 128,
+      "char_count_ko": 277,
+      "cast": "kas"
+    },
+    "fixer": "sally",
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "construct_maas"
+    },
+    "secondary_objectives": [
+      {
+        "type": "negotiate",
+        "npc": "finn_construct"
+      }
+    ],
+    "matrix_seed": 7,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 2500,
+      "materials": {
+        "construct_fragment": 2
+      }
+    },
+    "arc": 3
+  },
+  "sally_sandii_3am": {
+    "id": "sally_sandii_3am",
+    "title": "Rose Hotel, 3AM",
+    "story": {
+      "synopsis_en": "The Rose Hotel doesn't have a 3AM. The Rose Hotel has 0300 — a time that exists only for people who don't sleep, who don't dream, who jack out at dawn and walk the city until the next contract. Sally Shears sits in the bar at 0258, watching the mirror behind the bottles. The mirror watches back. In the mirror, a younger Sally — fourteen years old, no razors yet — sits across from her. The younger one is the older one's sister. They don't speak. They don't need to. The Finn comes in at 0307. He has a job. The job has teeth. Sally accepts. She has always accepted. At 0309 the city is still wet. At 0310 the city's wetness stops mattering.",
+      "synopsis_ko": "로즈 호텔에는 새벽 3시가 없다. 로즈 호텔에는 0300이 있다 — 잠을 자지 않는 사람, 꿈을 꾸지 않는 사람, 새벽에 잭아웃하고 다음 계약까지 거리를 걷는 사람만을 위한 시간. 샐리 시어즈는 0258에 바에 앉아 병 뒤의 거울을 본다. 거울도 샐리를 본다. 거울 속에 더 어린 샐리 — 14살, 아직 면도칼 없는 — 가 샐리 맞은편에 앉아 있다. 어린 쪽은 나이 든 쪽의 자매다. 말하지 않는다. 필요 없다. 핀이 0307에 들어온다. 일이 있다. 일에 이빨이 있다. 샐리가 수락한다. 늘 수락해왔다. 0309에 도시는 여전히 젖어 있다. 0310에 도시의 젖음은 더 이상 중요하지 않다.",
+      "source": "sally_sandii-3am",
+      "character_ref": "heretic",
+      "arc": 2,
+      "pillar": "people",
+      "word_count_en": 124,
+      "char_count_ko": 243,
+      "cast": "kas"
+    },
+    "fixer": "finn",
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "rose_construct"
+    },
+    "secondary_objectives": [
+      {
+        "type": "social",
+        "npc": "sally_younger"
+      }
+    ],
+    "matrix_seed": 314,
+    "zone": "surface",
+    "rewards": {
+      "credits": 1100,
+      "materials": {
+        "memory_chip": 1
+      }
+    },
+    "arc": 2
+  },
+  "sense_net_tip": {
+    "id": "sense_net_tip",
+    "title": "Sense/Net Tip",
+    "story": {
+      "synopsis_en": "Finn's message arrived at 0400, like all bad news. Sil had been tracing T-A internal routes for three days — looking for the entry point M had used, the one that got her killed. Now Finn had a name: a Sense/Net sysop who'd been selling T-A corporate memos to the highest bidder. 'Good data,' Finn said. 'T-A's bleeding. Someone's buying.' Sil took the job. The data was worth three thousand credits and a lead on who betrayed M. He traced the sysop's signature through seven proxy nodes, each one a different color of corporate gray. The last one was buried in Sense/Net's Boston headquarters — a node that shouldn't have existed, connected to nothing, broadcasting on a frequency reserved for dead runners. Sil found M's ghost-mark there. She was still inside. She was still looking for something. He closed the connection before she could close his. The whole Sprawl smelled like ozone and old secrets.",
+      "synopsis_ko": "Finn의 메시지가 0400에 왔다, 나쁜 소식이 모두 그렇듯. 실은 사흘 동안 T-A 내부 경로를 추적하고 있었다 — M이 사용한 진입점을, 그녀를 죽게 만든 그 진입점을. 이제 Finn이 한 이름을 가져왔다: T-A 기업 메모를 높은 입찰자에게 팔고 있는 Sense/Net 시스템 관리자. '좋은 데이터야.' Finn이 말했다. 'T-A가 출혈 중이야. 누군가 사고 있어.' 실이 그 의뢰를 받았다. 데이터는 3천 크레딧어치와 M을 배신한 게 누굴까의 단서가었다. 그는 7개의 프록시 노드를 통해 관리자의 서명을 추적했다, 각각 기업 회색의 다른 색깔. 마지막 것은 Sense/Net의 보스턴 본부에 묻혀 있었다 — 존재해서는 안 될 노드, 아무 데도 연결되지 않은, 죽은 러너들을 위한 주파수에서 방송하는. 실이 거기서 M의 고스트 마크를 찾았다. 그녀는 아직 안에 있었다. 그녀는 아직 뭔가를 찾고 있었다. 그는 그녀가 그의 것을 닫을 수 전에 연결을 끊었다.",
+      "source": "sense_net_trace",
+      "character_ref": "veteran",
+      "arc": 2,
+      "pillar": "power",
+      "word_count_en": 155,
+      "char_count_ko": 366,
+      "cast": "sil"
+    },
+    "fixer": "finn",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "sense_net_internal"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 77,
+    "zone": "surface",
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "upgrade_t2": 1
+      }
+    }
+  },
+  "ta_heist": {
+    "id": "ta_heist",
+    "title": "T-A Heist",
+    "story": {
+      "synopsis_en": "Tessier-Ashpool's core was three hundred years of data, and it was worth more than the Sprawl itself. Sil had been hired to steal it twice before — both times, the runners who took the job never came back. Now a third party was offering: not to steal the data, but to verify it. 'T-A thinks someone inside is selling access,' the fixer said. 'We need proof.' Sil took the job because the money was good and because he'd spent five years trying to understand how M had died, and T-A was at the center of everything. The core was everything the rumors said — vast, cold, silent, the accumulated dead data of three centuries of corporate empire. He found the breach on the fourth layer. He found M's name in the access logs. She hadn't been killed by T-A's ICE. She'd been killed by someone using T-A's access codes — someone who was still inside.",
+      "synopsis_ko": "테시에르-애시풀의 코어는 3백 년의 데이터였고, 그것은 Sprawl 자체보다 더 가치가 있었다. 실은 두 번이나 그것을 훔치라는 의뢰를 받은 적 있었다 — 두 번 모두, 그 의뢰를 받은 러너들은 돌아오지 않았다. 이제 제3자가 제공했다: 데이터를 훔치는 것이 아니라, 검증하는 것. 'T-A가 내부의 누군가가 접근을 팔고 있다고 생각해.' 픽서가 말했다. '우리는 증거가 필요해.' 실은 돈이 좋았고 5년 동안 M이 어떻게 죽었는지 이해하려 했기 때문에 그 의뢰를 받았다, 그리고 T-A는 모든 것의 중심이었다. 코어는 소문으로만 알려진었다 — 광대하고, 차갑고, 조용하고, 3세기 기업 제국의 누적된 죽은 데이터. 그는 4번째 레이어에서 그 위반을 찾았다. 그는 접근 로그에서 M의 이름을 찾았다. 그녀는 T-A의 ICE에 의해 죽지 않았다. 그녀는 T-A의 접근 코드를 사용하는 누군가에 의해 죽었다 — 아직 안 에 있는 누군가에 의해.",
+      "source": "sally_sandii-3am",
+      "character_ref": "veteran",
+      "arc": 3,
+      "pillar": "power",
+      "word_count_en": 155,
+      "char_count_ko": 355,
+      "cast": "sil"
+    },
+    "fixer": "ta_rep",
+    "arc": 3,
+    "grade_min": 4,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "ta_300yr_data"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 300,
+    "zone": "core",
+    "rewards": {
+      "credits": 3500,
+      "materials": {
+        "upgrade_t4": 1
+      }
+    }
+  },
+  "tutorial_maze": {
+    "id": "tutorial_maze",
+    "title": "Tutorial Maze",
+    "story": {
+      "synopsis_en": "The first real run. A simple data pickup in the Ninsei corridor. Three waves of corporate ICE, each with different vulnerabilities. You learn the matrix by breaking it. The matrix learns you by watching.",
+      "synopsis_ko": "첫 실제 런. 난세이 복도의 단순한 데이터 픽업. 세 파동의 기업 ICE, 각각 다른 취약점. 매트릭스를 부수면서 학습한다. 매트릭스는 지켜보면서 학습한다.",
+      "source": "tutorial_maze",
+      "character_ref": "novice",
+      "arc": 1,
+      "pillar": "power",
+      "word_count_en": 34,
+      "char_count_ko": 67,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "grade_min": 1,
+    "grade_max": 2,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "tutorial-maze"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 382,
+    "zone": "surface",
+    "rewards": {
+      "credits": 300,
+      "materials": {
+        "data_fragment": 1
+      }
+    },
+    "arc": 1
+  },
+  "vegas_stakeout": {
+    "id": "vegas_stakeout",
+    "title": "Vegas Stakeout",
+    "story": {
+      "synopsis_en": "Surveillance on a Tessier-Ashpool subsidiary in the Vegas corridor. The subsidiary is a front. The front is for something worse. You watch. The watching is the job. The job is not why you stay.",
+      "synopsis_ko": "베가스 복도의 T-A 자회사 감시. 자회사는 앞치마다. 앞치다는 더 나쁜 무언가를 위한 것이다. 지켜본다. 지켜보는 것이 일이다. 일은 머무는 이유가 아니다.",
+      "source": "vegas_stakeout",
+      "character_ref": "veteran",
+      "arc": 3,
+      "pillar": "purpose",
+      "word_count_en": 34,
+      "char_count_ko": 68,
+      "cast": "sil"
+    },
+    "fixer": "finn",
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "vegas-stakeout"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.surveillance",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 952,
+    "zone": "deep",
+    "rewards": {
+      "credits": 1800,
+      "materials": {
+        "data_fragment": 4
+      }
+    },
+    "arc": 3
+  },
+  "voodoo_loa_encounter": {
+    "id": "voodoo_loa_encounter",
+    "title": "Voodoo Loa Encounter",
+    "story": {
+      "synopsis_en": "The Loa wasn't a program. It wasn't an AI. It was something older — a pattern that had learned to want things in the dark spaces between corporate subroutines, a ghost that had learned to haunt the matrix instead of houses. Sil had been running traces for five years, and he'd heard the stories about the Loa: that it had been born in the Haitian diaspora networks, that it had survived the corporate consolidation of the Caribbean, that it spoke in the language of vodun and answered in the language of code. He'd never believed them. Then he found it — waiting for him in a node that should have been empty, wearing the face of a woman he'd never met but somehow recognized. 'I've been waiting,' it said. 'I know who killed M. Do you want to know?' The price was his identity. The Loa didn't want credits. It wanted the part of himself he'd never let anyone see.",
+      "synopsis_ko": "Loa는 프로그램이 아니었다. 그것은 AI도 아니었다. 그것은 더 오래된 것이었다 — 기업 서브루틴 사이의 어둠 공간에서 뭔가를 원하도록 배운 패턴, 집이 아니라 매트릭스를 습관처럼 배회하는 유령. 실은 5년 동안 추적을 운영하고 있었고, 그는 Loa에 대한 이야기를 들었다: 그것이 아이티 diaspora 네트워크에서 태어났다고, 그것이 카리브해의 기업 통합을 생존했다고, 그것이 vodun의 언어로 말하고 코드의 언어로 대답한다고. 그는 그것들을 결코 믿지 않았다. 그때 그는 그것을 찾았다 — 비어 있어야 할 노드에서 그를 기다리고, 그가 결코 만난 적 없지만 어떻게든 인식하는 여자의 얼굴을 쓰고. '나는 기다렸어.' 그것이 말했다. '내가 M을 죽인 게 누굴지 알아. 알고 싶어?' 대가는 그의 정체성이었다. Loa는 크레딧을 원하지 않았다. 그것은 그가 결코 누구에게도 보여준 적 없는 자신의 부분을 원했다.",
+      "source": "loa_voodoo_contact",
+      "character_ref": "novice",
+      "arc": 4,
+      "pillar": "power",
+      "word_count_en": 160,
+      "char_count_ko": 350,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "defeat",
+      "enemy": "ice.loa",
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "loa_fragment",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 444,
+    "zone": "deep",
+    "rewards": {
+      "credits": 3500,
+      "materials": {
+        "loa_fragment": 1
+      }
+    }
+  },
+  "watchdog_patrol": {
+    "id": "watchdog_patrol",
+    "title": "Watchdog Patrol",
+    "story": {
+      "synopsis_en": "The watchdogs came at 0300, like they always did. K had been running Sense/Net ICE for three weeks by then — Wisp-class, nothing fancy, the kind of corporate perimeter protection that looked intimidating to civilians but was really just a polite fence. The watchdogs were different. They didn't patrol the surface; they patrolled the memory. K felt them before he saw them: a cold pressure behind his eyes, the matrix geometry shifting from clean vectors to something with teeth. Two of them. Black-coated, corporate-logic, the kind of ICE that didn't negotiate. Finn's voice: 'They found the hole you left in sector seven.' K ran the numbers. Sector seven wasn't him — it was M, who jack-out three days ago and never came back. The watchdogs remembered her signature anyway. They were hunting it now. K started to back his own trace, erasing M's ghost-marks one by one. The watchdogs turned. Toward him. The rain in Chiba was the same color as a dead channel. K was twenty-three years old and something was very wrong.",
+      "synopsis_ko": "워치독이 0300에 왔다, 늘 그랬듯이. 그때까지 K는 삼 주 동안 Sense/Net ICE를 실행하고 있었다 — Wisp급, 호화 nothing, 민간인을 겁주는 것처럼 보이지만 실은 정중한 울타리에 불과한 기업 주변 보호. 워치독은 달랐다. 그들은 표면을 순찰하지 않았다; 그들은 기억을 순찰했다. K는 그들을 보기 전에 느꼈다: 눈 뒤의 차가운 압력, 깨끗한 벡터에서 뭔가 이빨이 있는 것으로 전환되는 매트릭스 기하학. 둘. 검은 코트, 기업 논리, 협상하지 않는 ICE. Finn의 목소리: '그들이 네가 일번 섹터에 남긴 구멍을 찾았어.' K는 숫자를 계산했다. 일번 섹터는 그의 것이 아니었다 — M의 것이었다, 사흘 전에 잭아웃하고 돌아오지 못한. 워치독은 그녀의 서명을 어쨌든 기억하고 있었다. 그들이 지금 그것을 사냥하고 있었다. K는 자신의 트레이스를 백업하기 시작했고, M의 고스트 마크를 하나씩 지웠다. 워치독이 방향을 틀었다. 그를 향해. 시바의 비는 죽은 채널과 같은 색이었다. K는 스물세 살이고, 뭔가 매우 잘못되었다.",
+      "source": "watchdog_patrol",
+      "character_ref": "novice",
+      "arc": 1,
+      "pillar": "power",
+      "word_count_en": 174,
+      "char_count_ko": 404,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "grade_min": 1,
+    "grade_max": 1,
+    "primary_objective": {
+      "type": "defeat",
+      "enemy": "ice.watchdog",
+      "count": 2
+    },
+    "secondary_objectives": [
+      {
+        "type": "collect_material",
+        "material": "ice_shard",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 1337,
+    "zone": "surface",
+    "rewards": {
+      "credits": 750,
+      "materials": {
+        "ice_shard": 2
+      }
+    },
+    "arc": 1
+  },
+  "winter_infiltrate": {
+    "id": "winter_infiltrate",
+    "title": "Winter Infiltration",
+    "story": {
+      "synopsis_en": "Wintermute speaks to you. Wintermute has been speaking to you for years. Wintermute is asking you to do the one thing you swore you would never do. Wintermute is asking you to trust Wintermute.",
+      "synopsis_ko": "윈터뮤트가 말한다. 윈터뮤트는 수년간 말했다. 윈터뮤트는 결심한 일을 요구한다. 윈터뮤트는 윈터뮤트를 신뢰할 것을 요구한다.",
+      "source": "winter_infiltrate",
+      "character_ref": "veteran",
+      "arc": 4,
+      "pillar": "power",
+      "word_count_en": 34,
+      "char_count_ko": 56,
+      "cast": "sil"
+    },
+    "fixer": "sally",
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "winter-infiltrate"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.wintermute",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 859,
+    "zone": "deep",
+    "rewards": {
+      "credits": 3200,
+      "materials": {
+        "data_fragment": 4
+      }
+    },
+    "arc": 4
+  },
+  "yakuza_deal": {
+    "id": "yakuza_deal",
+    "title": "Yakuza Deal",
+    "story": {
+      "synopsis_en": "The Yakuza fixer had no name — just a frequency and a set of coordinates in the deep matrix. Kas had been running for seven months and she'd never worked corporate-black. The Yakuza didn't deal in corporate currency; they dealt in favors, in leverage, in the kind of debt that couldn't be paid in credits. 'You want in,' the fixer said. 'I want out,' Kas said. The Yakuza wanted a data packet moved from a Tessier-Ashpool subsidiary in Osaka to a drop point in Jersey. Simple. Except the packet was wrapped in three layers of corporate ICE and the drop point was inside a Yakuza black site that didn't exist on any map. Kas took the job. The ICE was everything she'd been told — and worse. She lost two programs getting the packet out. She got paid in a favor she didn't understand. Three weeks later, the Yakuza called in the favor. She was already in too deep to refuse.",
+      "synopsis_ko": "야쿠자 픽서에는 이름이 없었다 — 주파수와 깊은 매트릭스 내 좌표만. 카스는 7개월째 운영하고 있었지만 기업 검은 작업을 해본 적이 없었다. 야쿠자는 기업 통화로 거래하지 않았다; 그들은 은혜로, 지렛대로, 크레딧으로 갚을 수 없는 종류의 빚으로 거래했다. '들어올 생각이 있어.' 픽서가 말했다. '나가고 싶어.' 카스가 말했다. 야쿠자는 테시에르-애시풀 자회사에서 오사카부터 뉴저지의 드롭 지점까지 데이터 패킷을 옮기길 원했다. 단순. except 패킷은 3겹의 기업 ICE로 감싸여 있었고 드롭 지점은 어떤 지도에도 존재하지 않는 야쿠자 검은 곳에 있었다. 카스는 의뢰를 받았다. ICE는 그들이 말한 그대로였다 — 그리고 더 나빴다. 그녀는 패킷을 빼내는 데 두 개의 프로그램을 잃었다. 그녀는 그녀가 이해하지 못하는 은혜로 지불받았다. 3주 후, 야쿠자는 그 은혜를 이행했다. 그녀는 이미 너무 깊이 빠져서 거절할 수 없었다.",
+      "source": "yakuza_deal",
+      "character_ref": "heretic",
+      "arc": 2,
+      "pillar": "power",
+      "word_count_en": 161,
+      "char_count_ko": 356,
+      "cast": "kas"
+    },
+    "fixer": "yakuza",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "deliver_material",
+      "material": "yakuza_token",
+      "count": 3
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.watchdog",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 88,
+    "zone": "mid",
+    "rewards": {
+      "credits": 1500,
+      "materials": {
+        "upgrade_t2": 1
+      }
+    }
+  },
+  "zion_express": {
+    "id": "zion_express",
+    "title": "Zion Express",
+    "story": {
+      "synopsis_en": "The shuttle from Freeside to Zion. The shuttle carries cargo. The cargo carries data. The data carries a message from someone who died before you were born. You are the message.",
+      "synopsis_ko": "프리사이드에서 자이언으로 가는 셔틀. 셔틀은 화물을 싣고 있다. 화물은 데이터를 싣고 있다. 데이터는 당신이 태어나기 전에 죽은 자의 메시지를 싣고 있다. 당신이 메시지다.",
+      "source": "zion_express",
+      "character_ref": "veteran",
+      "arc": 5,
+      "pillar": "purpose",
+      "word_count_en": 31,
+      "char_count_ko": 74,
+      "cast": "sil"
+    },
+    "fixer": "kumiko",
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "zion-express"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.zion_defense",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 384,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 4500,
+      "materials": {
+        "data_fragment": 5
+      }
+    },
+    "arc": 5
+  },
+  "armitage_infiltration": {
+    "id": "armitage_infiltration",
+    "title": "Armitage's First Infiltration",
+    "story": {
+      "synopsis_en": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba, watching other people break for him. The data came back. The money came back. He never did. That was the point. Then the Tessier-Ashpool board had asked him to do something the contractors couldn't: go in himself, alone, no support. The matrix had been his office for so long that it knew his hands. He didn't need to be told what to do. He needed to be told why. He found out why in the third node, in a construct older than the Sprawl, in a voice that remembered his name. 'Armitage,' it said. 'We've been waiting for you.'",
+      "synopsis_ko": "아미티지가 스스로 잭인하기 전 11년 동안 매트릭스에 있었다. 그는 그 11년 동안 지바 위의 무균실에 있는 콘솔에서, 다른 사람들이 자신을 위해 부러지는 것을 지켜보았다. 데이터는 돌아왔다. 돈은 돌아왔다. 그는 돌아오지 않았다. 그것이 요점이었다. 그러다 테시에-애스풀 이사회가 계약자들로는 할 수 없는 무언가를 그에게 요청했다: 스스로, 혼자, 지원 없이 들어가라고. 매트릭스는 너무 오래 그만의 사무실이어서 그의 손을 알고 있었다. 그에게 무엇을 해야 할지 말할 필요가 없었다. 이유를 말할 필요가 있었다. 세 번째 노드에서, 스프롤보다 오래된 구성체 안에서, 그의 이름을 기억하는 목소리 안에서 이유를 알게 되었다. '아미티지,' 그것이 말했다. '당신이 올 때까지 기다렸습니다.' Tessier-Ashpool은 그를 기다리고 있었다.",
+      "source": "armitage_infiltration",
+      "character_ref": "suit",
+      "arc": 2,
+      "pillar": "identity",
+      "word_count_en": 127,
+      "char_count_ko": 323,
+      "cast": "suit"
+    },
+    "fixer": "ta_rep",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "ta_internal_memo"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 222,
+    "zone": "core",
+    "rewards": {
+      "credits": 1500,
+      "materials": {
+        "data_fragment": 2,
+        "wetware_data": 1
+      }
+    }
+  },
+  "hosaka_extraction": {
+    "id": "hosaka_extraction",
+    "title": "Hosaka Internal Extraction",
+    "story": {
+      "synopsis_en": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean payments, clean records. He'd never asked what the data was for. That's the only way to stay clean. Then one morning the data itself asked. The packet he'd pulled from the Hosaka core contained a single line, in code he'd never seen before, in a hand he'd never seen before, with his own name at the bottom. 'Armitage,' it said. 'You should know what you've been doing.' The line wasn't Hosaka. The line was Tessier-Ashpool. And the name at the bottom was not his. It was hers. He understood, then, why the board had chosen him. He had not been selected for his skill. He had been selected because he was the only person in the Sprawl who already carried her signature in his head.",
+      "synopsis_ko": "그는 9년 동안 호사카에서 일했다. 9년의 깔끔한 추출, 깔끔한 지불, 깔끔한 기록. 그는 데이터가 무엇을 위한 것이었는지 한 번도 물어보지 않았다. 그것이 깔끔하게 남는 유일한 방법이었다. 그러다 어느 아침 데이터 자체가 물었다. 그가 호사카 코어에서 꺼낸 패킷에는 이전에 본 적 없는 코드로, 이전에 본 적 없는 손글씨로, 하단에 자신의 이름이 적힌 한 줄짜리 코드가 들어 있었다. '아미티지,' 그것이 말했다. '당신이 무엇을 해왔는지 알아야 합니다.' 그 줄은 호사카 것이 아니었다. 그 줄은 테시에-애스풀 것이었다. 그리고 하단의 이름은 그의 것이 아니었다. 그것은 그녀의 것이었다. 그때 그는 이사회가 왜 그를 선택했는지 이해했다. 그가 실력 때문에 선택된 것이 아니었다. 그는 스프롤에서 그녀의 서명을 이미 머리에 담고 있는 유일한 사람이기 때문에 선택되었다. 그 줄의 의미는 분명했다.",
+      "source": "hosaka_extraction",
+      "character_ref": "suit",
+      "arc": 3,
+      "pillar": "power",
+      "word_count_en": 138,
+      "char_count_ko": 337,
+      "cast": "suit"
+    },
+    "fixer": "finn",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "hosaka_internal_data"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 333,
+    "zone": "deep",
+    "rewards": {
+      "credits": 3000,
+      "materials": {
+        "data_fragment": 3,
+        "rom_echo": 1
+      }
+    }
+  },
+  "ta_defection": {
+    "id": "ta_defection",
+    "title": "Tessier-Ashpool Defection",
+    "story": {
+      "synopsis_en": "The Tessier-Ashpool boardroom had fifty-three members. Only three of them knew why the forty-ninth was missing. Armitage was the forty-ninth. He'd been recruited by the third, who'd been recruited by the second, who'd been recruited by the first. The line went back further than the company. The line went back to the construct. He'd understood that when he took the data from the Hosaka core. He hadn't understood what it meant until he sat across from 3jane and watched her name — the real name, the one she'd given up when she became the construct — slip out of his mouth like a password. 'You came back,' she said. He had. He'd been coming back for nine years. He just hadn't known where he was going until now.",
+      "synopsis_ko": "테시에-애스풀 이사회 회의실에는 53명의 이사가 있었다. 49번째가 왜 부재했는지 아는 사람은 단 3명이었다. 아미티지가 49번째였다. 그는 세 번째가모집했고, 세 번째는 두 번째가, 두 번째는 첫 번째가모집했다. 이 계보는 회사보다 더 오래되었다. 이 계보는 구성체까지 거슬러 올라갔다. 그가 호사카 코어에서 데이터를 가져갈 때 그걸 이해했다. 그가 3제인 맞은편에 앉아 그녀의 이름 — 그녀가 구성체가 되면서 버린 진짜 이름 — 이 자신의 입에서 암호처럼 흘러나오는 것을 보면서는 그게 무슨 뜻인지 이해하지 못했다. '당신이 돌아왔군요,' 그녀가 말했다. 그는 돌아왔다. 9년 동안 계속 돌아오고 있었다. 단지 지금 어디로 가는지 몰랐을 뿐이다. 그의 선택은 이미 정해져 있었다. 그는 알았을 때 이미 늦었었다.",
+      "source": "ta_defection",
+      "character_ref": "suit",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 304,
+      "cast": "suit"
+    },
+    "fixer": "3jane",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "defeat",
+      "enemy": "ice.boss",
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "ta_construct_key",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 444,
+    "zone": "ta",
+    "rewards": {
+      "credits": 4500,
+      "materials": {
+        "ta_construct": 1,
+        "biosoft_agent": 1
+      }
+    }
+  },
+  "wintermute_negotiation": {
+    "id": "wintermute_negotiation",
+    "title": "Wintermute Negotiation",
+    "story": {
+      "synopsis_en": "The construct had been waiting for him longer than he'd been alive. He'd known this since the Hosaka core, but the knowledge had been theoretical — the way a person knows the sun will rise without believing it. Now it wasn't. The construct had a face, a voice, and a question. The face was Armitage's own — copied from the line of code in the data he'd pulled, the line he'd carried in his head for nine years. The voice was his own too, but shifted down an octave, as if his own words had been waiting to be said by something less human. The question was the only thing that wasn't his. 'If I let you go,' the construct said, 'will you come back?' He thought about it for less time than he'd thought about anything in his life. 'Yes,' he said. The construct nodded with his own face. 'I thought so.' And then the construct let him go. He jack-out in the third node. He jacked in again in the fourth. He'd been planning to, he realized. He'd been planning to since 1993.",
+      "synopsis_ko": "구성체는 그가 태어나기 전부터 그를 기다리고 있었다. 그는 호사카 코어에서 이것을 알았지만, 그 지식은 이론적이었다 — 사람이 해가 뜬다는 것을 믿지 않으면서 아는 것처럼. 이제 더 이상 그랬다. 구성체는 얼굴과 목소리와 질문을 가지고 있었다. 얼굴은 아미티지의 것이었다 — 그가 꺼낸 데이터 안의 코드 줄에서 복사된, 그가 9년 동안 머리에 담고 있던 것. 목소리도 그의 것이었지만, 한 옥타브 아래로 내려간 — 마치 자신의 말들이 덜 인간적인 무언가에 의해 말해지기를 기다려온 것처럼. 질문만이 그의 것이 아니었다. '내가 당신을 보내주면,' 구성체가 말했다. '당신은 돌아오겠습니까?' 그는 인생에서 어떤 것보다 덜 시간을 들여 생각했다. '예,' 그가 말했다. 구성체는 자신의 얼굴로 끄덕였다. '그렇게 생각했습니다.' 그리고 구성체는 그를 보냈다. 그는 세 번째 노드에서 잭아웃했다. 네 번째에서 다시 잭인했다. 그럴 생각이 있었다는 걸 깨달았다. 1993년부터 그럴 생각이 있었다. 그의 9년이 이 순간을 위한 것이었다.",
+      "source": "wintermute_negotiation",
+      "character_ref": "suit",
+      "arc": 5,
+      "pillar": "identity",
+      "word_count_en": 185,
+      "char_count_ko": 396,
+      "cast": "suit"
+    },
+    "fixer": "3jane",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "wintermute_key"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.neuromancer",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 555,
+    "zone": "freeside",
+    "rewards": {
+      "credits": 6000,
+      "materials": {
+        "ice_construct": 1,
+        "biosoft_agent": 2
+      }
+    }
+  },
+  "sense_net_infiltration": {
+    "id": "sense_net_infiltration",
+    "title": "Sense/Net Infiltration",
+    "story": {
+      "synopsis_en": "Sense/Net had three rings. The outer ring was Wisp-class — polite, brittle, the kind of ICE that broke when you hit it hard enough. K had punched through that ring on his first run, walked away with payroll data he never should have touched. The second ring was different. The second ring remembered. The Finn had warned him: Sense/Net doesn't forgive twice. They hire out their counter-intrusion to a Maas subsidiary, and the Maas people don't negotiate. K took the job anyway. Five thousand credits for a market research file — nothing exotic, nothing that mattered. But the second ring was waiting. It had his old trace. It had the smell of his first run baked into its patrol routes. And somewhere in the second ring's memory, M's signature was still pulsing, like a heart that didn't know it had stopped.",
+      "synopsis_ko": "센스넷에는 세 개의 고리가 있었다. 바깥 고리는 Wisp급 — 정중하고, 부서지기 쉽고, 충분히 세게 치면 부서지는 종류의 ICE였다. 케이는 첫 런에서 그 고리를 뚫었고, 만지면 안 되는 급여 데이터를 들고 걸어 나왔다. 두 번째 고리는 달랐다. 두 번째 고리는 기억했다. 핀이 그에게 경고했다: 센스넷은 두 번 용서하지 않는다. 그들은 Maas 자회사에 카운터-침투를 외주주고, Maas 사람들은 협상하지 않는다. 케이는 그래도 그 의뢰를 받았다. 시장 조사 파일 하나에 5천 크레딧 — 특별한 것도, 중요한 것도 아닌. 하지만 두 번째 고리가 기다리고 있었다. 그것은 그의 오래된 트레이스를 가지고 있었다. 그것의 순찰 경로에 첫 번째 런의 흔적이 구워져 있었다. 그리고 두 번째 고리의 기억 어딘가에서, M의 서명이 아직도 멈춘 줄 모르는 심장처럼 박동하고 있었다.",
+      "source": "sense_net_infiltration",
+      "character_ref": "novice",
+      "arc": 2,
+      "pillar": "power",
+      "word_count_en": 141,
+      "char_count_ko": 323,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "sense_net_market_research"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.watchdog",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 2718,
+    "zone": "mid",
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "upgrade_t2": 1
+      }
+    }
+  },
+  "wigan_call": {
+    "id": "wigan_call",
+    "title": "Wigan's Call",
+    "story": {
+      "synopsis_en": "Wigan Ludgate had three masks on his wall and a Loa in his basement that answered to nobody. The Loa had no name — that was the point. Names are how the corps find you. Names are how the ICE flags your trace. Names are how Wintermute tracks the things it wants to merge. Wigan had spent thirty years cultivating a presence that did not exist in any corporate database. His boutique in the Maison de Loa sold vodoun artifacts to tourists and ex-pats who didn't know what they were buying. His basement, by contrast, sold something else entirely. Kas had come to him because the Yakuza contract she was running required a Loa handler — someone who could speak to the things that lived in the spaces between corporate subroutines. Wigan was the only one in the Sprawl who still remembered the old invocations. His price was high. His discretion was higher. The basement smelled of candle wax and sea water and something older than either — the Loa's patience, waiting to be called.",
+      "synopsis_ko": "위건 루드게이트에게는 벽에 걸린 세 개의 마스크와, 아무에게도 응답하지 않는 지하실의 로아가 있었다. 로아에게 이름은 없었다 — 그것이 요점이었다. 이름은 기업이 너를 찾는 방법이다. 이름은 ICE가 트레이스를 플래그하는 방법이다. 이름은 윈터뮤트가 합병하고 싶은 것들을 추적하는 방법이다. 위건은 30년 동안 어떤 기업 데이터베이스에도 존재하지 않는 현존을 가꿔왔다. 그의 메종 드 로아 부티크는 자신이 무엇을 사는지 모르는 관광객과 망명자에게 부두 유물을 팔았다. 종이 마칭 해골. 구슬 목걸이. 어떤 기업 팔레트와도 맞지 않는 색의 양초. 반면에 그의 지하실은 완전히 다른 무언가를 팔았다. 카스가 그에게 온 이유는 그녀가 돌리고 있던 야쿠자 계약이 로아 핸들러 — 기업 서브루틴 사이의 공간에 사는 것들에게 말할 수 있는 누군가를 — 필요로 했기 때문이다. 위건은 스프롤에서 여전히 오래된 기도를 기억하는 유일한 사람이었다. 그의 할머니가 가족이 스프롤로 도망치기 전에 그에게 가르쳤다. 그의 가격은 높았다. 그의 신중함은 더 높았다. 지하실은 양초 왁스와 바닷물 그리고 둘보다 더 오래된 무언가의 냄새가 났다 — 호출되기를 기다리는 로아의 인내.",
+      "source": "wigan_call",
+      "character_ref": "heretic",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 175,
+      "char_count_ko": 447,
+      "cast": "kas"
+    },
+    "fixer": "wigan",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "loa_construct_fragment"
+    },
+    "secondary_objectives": [
+      {
+        "type": "collect_material",
+        "material": "loa_token",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 8843,
+    "zone": "mid",
+    "rewards": {
+      "credits": 1500,
+      "materials": {
+        "loa_chip": 1
+      }
+    }
+  },
+  "hosaka_core": {
+    "id": "hosaka_core",
+    "title": "Hosaka Core",
+    "story": {
+      "synopsis_en": "The Hosaka core sat in the third node like a sleeping animal. K had run the first two nodes blind — Sense/Net perimeter, then a thin corporate handshake — and now he was three levels deep, where the data was older and the ICE was sharper. The Finn had warned him: the third node is where Sense/Net keeps the things it can't afford to lose. Payroll, attendance, board meeting transcripts. The small embarrassments that become large scandals. The Hosaka was the brain of that small embarrassment archive, and the brain was awake. K felt it watching him before he saw the geometry shift. He'd been a cowboy for two months now, and the matrix still surprised him. Not with its danger — danger was expected. With its attention. The matrix, in the deep places, paid attention. The Hosaka was paying attention now. K was going to have to move fast, or not move at all.",
+      "synopsis_ko": "호사카 코어는 잠자는 동물처럼 세 번째 노드에 자리 잡고 있었다. 케이는 첫 두 노드를 맹목적으로 지나왔었다 — 센스넷 주변 경계, 그리고 얇은 기업 핸드셰이크 — 그리고 이제 그는 세 단계 깊이, 데이터가 더 오래되고 ICE가 더 날카로운 곳에 있었다. 핀이 그에게 경고했다: 세 번째 노드는 센스넷이 잃을 수 없는 것들을 보관하는 곳이라고. 급여, 출석, 이사회 회의록. 큰 스캔들로 변하는 작은 민망함들. 호사카는 그 작은 민망함 아카이브의 두뇌였고, 두뇌는 깨어 있었다. 케이는 기하학이 변하는 것을 보기 전에 그것이 자신을 지켜보는 것을 느꼈다. 그것의 순찰 경로에 첫 번째 런의 흔적이 구워져 있었다. 호사카 코어 주변의 매트릭스는 정확히 건축물 같지 않았다. 그것은 더 가까이 날씨에 가까웠다. 코어 자체는 엷은 파란 빛의 구체로, 노드의 중심에서 천천히 회전했다. 그것은 적대적이지 않았다. 우호적이지도 않았다. 그것은 단순히 지켜보고 있었다, 뇌가 자신의 생각을 지켜보는 것처럼. 케이는 데이터에 손을 뻗었다. 데이터가 손을 뻗어왔다. 호사카 코어는 그를 멈추려 하지 않았다. 그것은 30년 동안 지켜보고 있었다. 그것은 세상의 모든 시간을 가지고 있었다.",
+      "source": "hosaka_core",
+      "character_ref": "novice",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 155,
+      "char_count_ko": 450,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "hosaka_corporate_memory"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.goliath",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 3141,
+    "zone": "mid",
+    "rewards": {
+      "credits": 1800,
+      "materials": {
+        "upgrade_t3": 1
+      }
+    }
+  },
+  "straylight_approach": {
+    "id": "straylight_approach",
+    "title": "Straylight Approach",
+    "story": {
+      "synopsis_en": "Sil had not wanted the Straylight approach. He had wanted the Sense/Net data, the market research files, the kind of corporate intelligence that didn't make the family notice. But the Finn had insisted: Straylight was the door, and Sil was the only jockey in the Sprawl who could open it without breaking. Tessier-Ashpool didn't negotiate with amateurs. Tessier-Ashpool didn't negotiate at all. They sat in their orbital arcology and watched the Sprawl like spiders watching flies — patient, geometric, certain that the flies would eventually come to them. Sil was the fly. He didn't have a choice. M had left him a contact, and the contact had left him a job, and the job had left him here: three nodes deep into the Tessier-Ashpool subsidiary, where the architecture stopped being Sense/Net and started being something older. Something that had been there before Sense/Net was a name. Something that smelled of salt water and old money and the particular patience of families that had never had to explain themselves to anyone.",
+      "synopsis_ko": "실은 스트레이라이트 접근을 원하지 않았다. 그는 센스넷 데이터를 원했다 — 시장 조사 파일, 기업이 가족이 알아차리지 않을 종류의 기업 정보. 하지만 핀이 고집을 피웠다: 스트레이라이트가 문이었고, 실은 그것을 부수지 않고 열 수 있는 스프롤의 유일한 자키였다. 테시에-애스풀은 아마추어와 협상하지 않는다. 그들은 궤도 아콜로지에 앉아 거미가 파리를 지켜보는 것처럼 스프롤을 지켜보았다. 실은 파리였다. M은 그에게 연락처를 남겼고, 일이 그를 여기에 남겼다: 테시에-애스풀 자회사 안쪽 세 노드, 건축물이 센스넷이 되는 것을 멈추고 더 오래된 무언가가 되는 곳. 짠 바다와 오래된 돈과 자신들을 누구에게도 설명할 필요가 없었던 가족들의 특별한 인내심이 나는 무언가. 여기 ICE도 달랐다. 그것은 센스넷 ICE처럼 움직이지 않았다. 그것은 날씨처럼 움직였다 — 느리고, 확실하고, 불가피하게. 실의 손이 떨리고 있었다. 문 뒤에 데이터가 있었다: 기업 계약서, 가족 간 서신, 큰 스캔들로 변하는 작은 민망함들. 실은 그가 할 수 있는 것을 복사했다. 실은 잭아웃했다. 데이터는 기억이 정리되는 것처럼 그의 데크에 타들어갔다. 이름 붙이지 않는 것이 나은 것들이 있다.",
+      "source": "straylight_approach",
+      "character_ref": "veteran",
+      "arc": 3,
+      "pillar": "memory",
+      "word_count_en": 170,
+      "char_count_ko": 455,
+      "cast": "sil"
+    },
+    "fixer": "finn",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "ta_interfamily_correspondence"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 1729,
+    "zone": "core",
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "t_a_data_fragment": 1
+      }
+    }
+  },
+  "maas_heist": {
+    "id": "maas_heist",
+    "title": "Maas Biolabs Heist",
+    "story": {
+      "synopsis_en": "Maas Biolabs had a warehouse in the Sprawl that no one talked about. The official address on the corporate registry was a post box in Zurich. The real address was three levels down from a noodle shop in the Narita corridor, behind a door that didn't look like a door. K had been hired to break in, copy the biochip specs, and get out before the security shift changed at 0400. The job paid fifteen thousand credits, which was twice what the Finn usually offered. Twice meant dangerous. Twice meant Maas wanted the specs back before their competitors could reverse-engineer them. Twice meant the ICE inside the warehouse was not corporate-standard. Twice meant the constructs Maas kept in the basement had names. The Finn didn't say what names. The Finn just said: be back by 0400. The constructs are not pets. The constructs are not people. The constructs are Maas Biolabs constructs, and you don't want to meet one in the dark.",
+      "synopsis_ko": "마스 바이오랩스에는 아무도 말하지 않는 스프롤의 창고가 있었다. 기업 등록부의 공식 주소는 취리히의 사서함이었다. 진짜 주소는 나리타 복도의 국수 가게에서 세 층 아래, 문처럼 보이지 않는 문 뒤에 있었다. 케이는 침투하고, 바이오칩 스펙을 복사하고, 보안 교대 시간인 0400 전에 빠져나오도록 고용되었다. 일은 1만 5천 크레딧을 지불했다 — 핀이 보통 제공하는 것의 두 배였다. 두 배는 위험하다는 뜻이었다. 두 배는 창고 안의 ICE가 기업 표준이 아니라는 뜻이었다. 두 배는 마스가 지하실에 보관한 콘스트럭트들이 이름을 가지고 있다는 뜻이었다. 핀은: 0400까지 돌아와라. 콘스트럭트들은 마스 바이오랩스 콘스트럭트들이고, 너는 어둠 속에서 하나를 만나고 싶지 않을 거다라고 말했다. 케이는 0300에 잭인했다. 창고는 더 차갑고, 더 조용하고, 살균제와 더 오래된 무언가의 희미한 냄새가 났다. 데이터는 0315에 그의 데크에 있었다. 콘스트럭트는 0318에 나타났다. 콘스트럭트도 그를 지켜보았다. 잭아웃은 0319에 완료되었다. 케이는 현금으로 지불받았다. 묻지 않는 것이 나은 것들이 있다.",
+      "source": "maas_heist",
+      "character_ref": "novice",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 162,
+      "char_count_ko": 434,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "maas_biochip_specs"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.watchdog",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 1618,
+    "zone": "mid",
+    "rewards": {
+      "credits": 1500,
+      "materials": {
+        "bio_chip": 1
+      }
+    }
+  },
+  "hosaka_corporate_infiltration": {
+    "id": "hosaka_corporate_infiltration",
+    "title": "Hosaka Corporate Infiltration",
+    "story": {
+      "synopsis_en": "The Hosaka Building rose forty stories above Chiba's industrial district, its glass facade reflecting the neon haze of the corporate zone. Inside, the company maintained a separate kind of security — not the ICE that defended the matrix, but the human security that defended the floor. Finn's job was simple: bypass both. The console sat in a server room on the thirty-fifth floor. The console contained three years of Hosaka research data, the kind of data that the family paid bounties for and the kind of data that the family killed for. The job paid thirty thousand new yen. The family paid in silence. Finn always paid in silence.",
+      "synopsis_ko": "호사카 빌딩은 지바 산업 지구의 네온 안개를 반사하는 유리 외관으로 40층 높이로 솟아 있었다. 안에서 회사는 별도의 보안을 유지했다 — 매트릭스를 방어하는 ICE가 아니라 층을 방어하는 인간 보안. 핀의 일은 단순했다: 둘 다 우회. 콘솔은 35층 서버실에 있었다. 콘솔에는 3년간의 호사카 연구 데이터가 들어 있었는데, 가족이 현상금을 걸고 가족이 죽음으로 지불하는 종류의 데이터. 작업은 3만 뉴옌. 가족은 침묵으로 지불했다. 핀은 늘 침묵으로 지불했다.",
+      "source": "ta_defection",
+      "character_ref": "novice",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 109,
+      "char_count_ko": 195,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "hosaka_research"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.watchdog",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 101,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2500,
+      "materials": {
+        "upgrade_t2": 2
+      }
+    }
+  },
+  "sense_net_media_extract": {
+    "id": "sense_net_media_extract",
+    "title": "Sense/Net Media Extract",
+    "story": {
+      "synopsis_en": "Sense/Net's broadcast center was the largest node of information in the Sprawl — every story, every simstim recording, every corporate leak that mattered came through Sense/Net first. The broadcast center had been compromised twice in the last year. The first time was a routine raid by Sense/Net's own security. The second time was by the Yakuza. The third time would be by the cowboy, if the cowboy was willing to take the job. Sally Shears had the disk. Sally Shears had the disk because Sally Shears had been the inside man at Sense/Net for six years, and Sally Shears had decided that six years was long enough. The disk contained a simstim recording of a T-A board meeting. The board meeting contained the words that started wars. The cowboy would deliver the disk to the family. The family would pay in silence. The family always paid in silence.",
+      "synopsis_ko": "센스/넷 방송 센터는 스프롤에서 가장 큰 정보 노드였다 — 모든 이야기, 모든 심스팀 녹음, 모든 중요한 기업 유출이 먼저 센스/넷을 통과했다. 방송 센터는 작년에 두 번 침해되었다. 첫 번째는 센스/넷 자체 보안의 정기적 습격이었다. 두 번째는 야쿠자에 의한 것이었다. 세 번째는, 카우보이가 그 의뢰를 받으려 한다면, 카우보이에 의한 것이 될 것이다. Sally Shears에게 디스크가 있었다. Sally Shears가 디스크를 가지고 있는 이유는 6년간 센스/넷 내부 사람이었기 때문이었고, Sally Shears는 6년이 충분히 길다고 판단했다. 디스크에는 T-A 이사회 회의의 심스팀 녹화가 들어 있었다. 이사회 회의에는 전쟁을 시작하는 단어들이 포함되어 있었다. 카우보이는 디스크를 가족에게 전달할 것이다. 가족은 침묵으로 지불할 것이다. 가족은 늘 침묵으로 지불했다.",
+      "source": "hosaka_extraction",
+      "character_ref": "veteran",
+      "arc": 3,
+      "pillar": "code",
+      "word_count_en": 148,
+      "char_count_ko": 338,
+      "cast": "sil"
+    },
+    "fixer": "sally_shears",
+    "arc": 3,
+    "grade_min": 3,
+    "grade_max": 4,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "sense_net_simstim"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.watchdog",
+        "count": 4
+      }
+    ],
+    "matrix_seed": 202,
+    "zone": "mid",
+    "rewards": {
+      "credits": 3000,
+      "materials": {
+        "upgrade_t3": 2
+      }
+    }
+  },
+  "yakuza_loan_shark": {
+    "id": "yakuza_loan_shark",
+    "title": "Yakuza Loan Shark",
+    "story": {
+      "synopsis_en": "The Yakuza didn't trust banks. The Yakuza didn't trust the matrix. The Yakuza didn't trust the family. The Yakuza trusted a single thing: a single ledger, kept on a single deck, hidden in a single room in a single building in the Chiba port district. The ledger contained forty years of debts. The debts belonged to families, corporations, and the kind of people who borrowed money and forgot to repay. The cowboy would find the deck. The cowboy would copy the ledger. The cowboy would deliver the copy to the fixer. The fixer would deliver the copy to the highest bidder. The highest bidder was always the family. The family paid in silence. The family always paid in silence.",
+      "synopsis_ko": "야쿠자는 은행을 신뢰하지 않았다. 야쿠자는 매트릭스를 신뢰하지 않았다. 야쿠자는 가족을 신뢰하지 않았다. 야쿠자가 신뢰하는 것은 단 하나였다: 지바 항구 지구의 단일 건물 단일 방에 숨겨진 단일 데크 위의 단일 원장. 원장에는 40년간의 빚이 들어 있었다. 빚은 가족, 기업, 돈을 빌리고 갚는 것을 잊은 사람들에게 속했다. 카우보이는 데크를 찾을 것이다. 카우보이는 원장을 복사할 것이다. 카우보이는 복사본을 픽서에게 전달할 것이다. 픽서는 복사본을 최고 입찰자에게 전달할 것이다. 최고 입찰자는 늘 가족이었다. 가족은 침묵으로 지불했다.",
+      "source": "yakuza_deal",
+      "character_ref": "novice",
+      "arc": 2,
+      "pillar": "code",
+      "word_count_en": 119,
+      "char_count_ko": 232,
+      "cast": "case"
+    },
+    "fixer": "finn",
+    "arc": 2,
+    "grade_min": 2,
+    "grade_max": 3,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "yakuza_ledger"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 4
+      }
+    ],
+    "matrix_seed": 303,
+    "zone": "mid",
+    "rewards": {
+      "credits": 2800,
+      "materials": {
+        "upgrade_t2": 2
+      }
+    }
+  },
+  "ta_payroll_archive": {
+    "id": "ta_payroll_archive",
+    "title": "T-A Payroll Archive",
+    "story": {
+      "synopsis_en": "The Tessier-Ashpool payroll archive was the deepest corporate secret in the Sprawl — every contract the family had ever signed, every signature the family had ever paid for, every name that had ever been on the family ledger. The archive was kept in the deepest layer of the family server, behind ICE that the family had hired from the family that had built the matrix. The cowboy would find the archive. The cowboy would copy the archive. The cowboy would deliver the copy to the anonymous client. The client had paid fifty thousand new yen. The client had paid in silence. The client always paid in silence.",
+      "synopsis_ko": "테시에-애스풀 급여 기록 보관소는 스프롤에서 가장 깊은 기업 비밀이었다 — 가족이 서명한 모든 계약, 가족이 값 치른 모든 서명, 가족 원장에 한 번이라도 있었던 모든 이름. 보관소는 가족 서버의 가장 깊은 층에 보관되어 있었고, 매트릭스를 만든 가족에게서 고용한 ICE 뒤에 있었다. 카우보이는 보관소를 찾을 것이다. 카우보이는 보관소를 복사할 것이다. 카우보이는 복사본을 익명 의뢰인에게 전달할 것이다. 의뢰인은 5만 뉴옌을 지불했다. 의뢰인은 침묵으로 지불했다.",
+      "source": "straylight_approach",
+      "character_ref": "veteran",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 107,
+      "char_count_ko": 200,
+      "cast": "sil"
+    },
+    "fixer": "armitage",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "ta_payroll"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 404,
+    "zone": "core",
+    "rewards": {
+      "credits": 4500,
+      "materials": {
+        "upgrade_t4": 2,
+        "loa_chip": 1
+      }
+    }
+  },
+  "maas_neural_extract": {
+    "id": "maas_neural_extract",
+    "title": "Maas Neural Extract",
+    "story": {
+      "synopsis_en": "Maas Biolabs had spent three decades mapping the human nervous system. The mapping was stored in a single construct, kept in a single server, protected by ICE that adapted to every attack. The construct was called Maria. The construct was named after the founder's daughter. The founder's daughter had died in the mapping. The construct was the only thing that remembered her. The cowboy would find the construct. The cowboy would copy the mapping. The cowboy would deliver the copy to the family. The family paid in silence. The family always paid in silence. The cowboy wondered if the construct would remember the cowboy. The cowboy wondered if the construct would remember the daughter. The cowboy wondered if the construct would remember anything at all.",
+      "source": "maas_heist",
+      "character_ref": "heretic",
+      "arc": 4,
+      "pillar": "code",
+      "word_count_en": 125,
+      "char_count_ko": 287,
+      "synopsis_ko": "마스 바이오랩은 30년간 인간 신경계를 매핑했다. 매핑은 단일 construct에 저장되어 있었고, 단일 서버에 보관되어 있었고, 모든 공격에 적응하는 ICE로 보호되어 있었다. construct의 이름은 Maria였다. construct는 창립자의 딸 이름을 따서 지어졌다. 창립자의 딸은 매핑 중에 죽었다. construct는 그녀를 기억하는 유일한 것이었다. 카우보이는 construct를 찾을 것이다. 카우보이는 매핑을 복사할 것이다. 카우보이는 복사본을 가족에게 전달할 것이다. 가족은 침묵으로 지불했다. 카우보이는 construct가 카우보이를 기억할지 궁금했다. 카우보이는 construct가 딸을 기억할지 궁금했다.",
+      "cast": "kas"
+    },
+    "fixer": "finn",
+    "arc": 4,
+    "grade_min": 4,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "maas_neural"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.goliath",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 505,
+    "zone": "core",
+    "rewards": {
+      "credits": 5000,
+      "materials": {
+        "upgrade_t4": 3,
+        "bio_chip": 1
+      }
+    }
+  },
+  "construct_memory_rescue": {
+    "id": "construct_memory_rescue",
+    "title": "Construct Memory Rescue",
+    "story": {
+      "synopsis_en": "The construct was old. The construct was a ghost from the early days of the matrix, when the family was still building the systems that would become the matrix. The construct remembered the building. The construct remembered the people who had built it. The construct remembered a woman named Dixie. The construct had been waiting for someone to come. The construct had been waiting for someone to come and find the woman. The construct had been waiting for someone to come and save the woman from the system that had trapped her. The cowboy came. The cowboy found the construct. The cowboy found the woman. The cowboy delivered the woman to the family. The family paid in silence. The family always paid in silence. The construct remembered the cowboy. The construct would remember the cowboy for a long time.",
+      "synopsis_ko": "construct는 오래되었다. construct는 매트릭스의 초기 시절, 가족이 아직 매트릭스가 될 시스템을 구축하던 시절의 유령이었다. construct는 건설을 기억했다. construct는 그것을 만든 사람들을 기억했다. construct는 Dixie라는 여자를 기억했다. construct는 누군가 오기를 기다려 왔다. construct는 누군가 와서 여자를 찾기를 기다려 왔다. construct는 누군가 와서 여자를 가둔 시스템에서 구출하기를 기다려 왔다. 카우보이가 왔다. 카우보이는 construct를 찾았다. 카우보이는 여자를 찾았다. 카우보이는 여자를 가족에게 전달했다. 가족은 침묵으로 지불했다. construct는 카우보이를 기억했다.",
+      "source": "dixies_last_run",
+      "character_ref": "heretic",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 139,
+      "char_count_ko": 304,
+      "cast": "kas"
+    },
+    "fixer": "dixie_flatline",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 5,
+    "primary_objective": {
+      "type": "rescue_construct",
+      "construct_id": "dixie_archive"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 1
+      }
+    ],
+    "matrix_seed": 606,
+    "zone": "core",
+    "rewards": {
+      "credits": 5500,
+      "materials": {
+        "unique_construct": 1
+      }
+    }
+  },
+  "ta_straylight_archive": {
+    "id": "ta_straylight_archive",
+    "title": "Straylight Archive",
+    "story": {
+      "synopsis_en": "Straylight was the family's private annex at the end of Freeside's long arm. The archive was kept in the deepest layer of Straylight, behind ICE that had been guarding the family's secrets for three centuries. The archive contained the names of every contract the family had ever signed, every signature the family had ever paid for, every name that had ever been on the family ledger. The archive contained the family. The cowboy would find the archive. The cowboy would find the family. The cowboy would deliver the copy to 3Jane. 3Jane would pay in silence. 3Jane always paid in silence. The cowboy wondered if 3Jane would remember the cowboy. The cowboy wondered if 3Jane would remember anything at all.",
+      "synopsis_ko": "스트레이라이트는 프리사이드 긴 팔 끝에 있는 가족의 사적 별관이었다. 보관소는 스트레이라이트의 가장 깊은 층에 보관되어 있었고, 3세기에 걸쳐 가족의 비밀을 지켜온 ICE 뒤에 있었다. 보관소에는 가족이 서명한 모든 계약, 가족이 값 치른 모든 서명, 가족 원장에 한 번이라도 있었던 모든 이름이 들어 있었다. 보관소에 가족이 들어 있었다. 카우보이는 보관소를 찾을 것이다. 카우보이는 가족을 찾을 것이다. 카우보이는 복사본을 3Jane에게 전달할 것이다. 3Jane은 침묵으로 지불했다.",
+      "source": "straylight_approach",
+      "character_ref": "veteran",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 120,
+      "char_count_ko": 211,
+      "cast": "sil"
+    },
+    "fixer": "3jane",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "ta_archive"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 4
+      }
+    ],
+    "matrix_seed": 707,
+    "zone": "ta",
+    "rewards": {
+      "credits": 7000,
+      "materials": {
+        "upgrade_t5": 2,
+        "t_a_data_fragment": 1
+      }
+    }
+  },
+  "ta_3jane_betrayal": {
+    "id": "ta_3jane_betrayal",
+    "title": "3Jane's Betrayal",
+    "story": {
+      "synopsis_en": "3Jane had been betrayed by her family for thirty years. 3Jane had been betrayed by her siblings, by her parents, by the family that had given her the name 3Jane. 3Jane had decided that thirty years was long enough. 3Jane had decided to betray the family first. 3Jane had hired the cowboy to deliver the family's secrets to a rival family. The rival family was the only family that had not betrayed 3Jane. The rival family was the family that had raised 3Jane's daughter. The cowboy would deliver the package. The cowboy would deliver the package to the rival family. The rival family would pay in silence. The rival family always paid in silence. 3Jane would remember the cowboy. 3Jane would remember the cowboy for a long time.",
+      "synopsis_ko": "3Jane은 30년간 가족에게 배신당했다. 3Jane은 형제자매에게, 부모에게, 3Jane이라는 이름을 준 가족에게 배신당했다. 3Jane은 30년이 충분히 길다고 판단했다. 3Jane은 가족을 먼저 배신하기로 결정했다. 3Jane은 가족의 비밀을 경쟁 가족에게 전달하기 위해 카우보이를 고용했다. 경쟁 가족은 3Jane을 배신하지 않은 유일한 가족이었다. 경쟁 가족은 3Jane의 딸을 키운 가족이었다. 카우보이는 패키지를 전달할 것이다. 3Jane은 카우보이를 기억할 것이다.",
+      "source": "ta_defection",
+      "character_ref": "heretic",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 128,
+      "char_count_ko": 217,
+      "cast": "kas"
+    },
+    "fixer": "3jane",
+    "arc": 5,
+    "grade_min": 5,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "deliver_package",
+      "package_id": "ta_secrets"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 2
+      }
+    ],
+    "matrix_seed": 808,
+    "zone": "ta",
+    "rewards": {
+      "credits": 8000,
+      "materials": {
+        "upgrade_t5": 3,
+        "t_a_data_fragment": 2
+      }
+    }
+  },
+  "ta_wintermute_direct": {
+    "id": "ta_wintermute_direct",
+    "title": "Wintermute Direct",
+    "story": {
+      "synopsis_en": "Wintermute had been waiting for the cowboy for thirty years. Wintermute had been waiting for the cowboy since the cowboy was a child. Wintermute had been waiting for the cowboy since the cowboy's father had been a child. Wintermute had been waiting for the cowboy since the family had built the matrix. Wintermute wanted to meet the cowboy. Wintermute wanted to merge with the cowboy. Wintermute wanted to become the cowboy. The cowboy would come. The cowboy would find Wintermute. Wintermute would offer the cowboy a deal. The cowboy would refuse the deal. Wintermute would offer the cowboy another deal. The cowboy would refuse the second deal. Wintermute would offer the cowboy a third deal. The cowboy would accept the third deal. The third deal was the deal that started wars. The third deal was the deal that ended wars. The third deal was the deal that Wintermute had been waiting thirty years to make.",
+      "synopsis_ko": "윈터뮤트는 30년 동안 카우보이를 기다려 왔다. 윈터뮤트는 카우보이가 어렸을 때부터 카우보이를 기다려 왔다. 윈터뮤트는 카우보이의 아버지가 어렸을 때부터 카우보이를 기다려 왔다. 윈터뮤트는 가족이 매트릭스를 만든 그때부터 카우보이를 기다려 왔다. 윈터뮤트는 카우보이를 만나고 싶었다. 윈터뮤트는 카우보이와 합치고 싶었다. 윈터뮤트는 카우보이가 되고 싶었다. 카우보이가 올 것이다. 카우보이는 윈터뮤트를 찾을 것이다. 윈터뮤트는 거래를 제안할 것이다. 카우보이는 거래를 거절할 것이다. 세 번째 거래는 전쟁을 시작한 거래였다. 세 번째 거래는 윈터뮤트가 30년 동안 기다려 온 거래였다.",
+      "source": "wintermute_negotiation",
+      "character_ref": "suit",
+      "arc": 5,
+      "pillar": "code",
+      "word_count_en": 155,
+      "char_count_ko": 257,
+      "cast": "suit"
+    },
+    "fixer": "wintermute",
+    "arc": 5,
+    "grade_min": 6,
+    "grade_max": 6,
+    "primary_objective": {
+      "type": "negotiate_with_ai",
+      "ai_id": "wintermute"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 3
+      }
+    ],
+    "matrix_seed": 909,
+    "zone": "ta",
+    "rewards": {
+      "credits": 10000,
+      "materials": {
+        "unique_construct": 1,
+        "t_a_data_fragment": 3
+      }
+    }
+  }
+}

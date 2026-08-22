@@ -1,0 +1,2445 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Wet Run — Project Dashboard - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#wet-run-project-dashboard" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Wet Run — Project Dashboard
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 구현 현황 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 캐릭터 출처
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 단편소설 → 스테이즈 → 이벤트 → 데모 파이프라인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 단편소설 → 스테이즈 → 이벤트 → 데모 파이프라인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        콘텐츠 출처
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        파이프라인 비교표
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        파이프라인 상태
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HTML 출력 파일
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#html_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대시보드 HTML 파일
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대시보드 동적 로딩
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 챕터별 구현 상태
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 챕터별 구현 상태">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#novice-case-neuromancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        케이 (Novice / Case) — 원작: Neuromancer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#veteran-sil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실 (Veteran / Sil)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#heretic-kas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        카스 (Heretic / Kas)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 완료된 작업 (전체)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-ice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. ICE 난이도 시스템
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. ICE 난이도 시스템">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        스케일링 공식
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ice-datacombatice_typesjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ICE 타입 데이터 (data/combat/ice_types.json)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scriptsverify_story_pipelinepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        검증 스크립트 (scripts/verify_story_pipeline.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ice-scriptscombat_grades_demopy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ICE 데모 시나리오 (scripts/combat_grades_demo.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 테스트 상태
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 테스트 상태">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        검증 파이프라인 스크립트
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 주요 결정 사항
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="wet-run-project-dashboard">Wet Run — Project Dashboard<a class="headerlink" href="#wet-run-project-dashboard" title="Permanent link">&para;</a></h1>
+<p><strong>Last Updated</strong>: 2026-07-08 (Phase 7 완료 상태)
+<strong>Project Phase</strong>: Phase 7 완료 (2026-07-07)
+<strong>참고</strong>: Phase 4 당시 작성. Phase 7 기준으로 부분 업데이트됨. 최신 전체 진도는 <code>chapter-progress.md</code> 참조.</p>
+<hr />
+<h2 id="1">1. 구현 현황 요약<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>현재</th>
+<th>목표</th>
+<th>진도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>플레이어블 챕터</td>
+<td><strong>31/45</strong></td>
+<td>45/45</td>
+<td><strong>69%</strong></td>
+</tr>
+<tr>
+<td>phases 데이터</td>
+<td>45/45 챕터</td>
+<td>45/45 챕터</td>
+<td><strong>100%</strong> ✅</td>
+</tr>
+<tr>
+<td>컷씬 참조</td>
+<td>41개</td>
+<td>45개</td>
+<td>91%</td>
+</tr>
+<tr>
+<td>Stories (단편소설)</td>
+<td><strong>39 stories</strong> (EN/KO pairs)</td>
+<td>—</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>미션 수</td>
+<td><strong>47 missions</strong></td>
+<td>—</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>GN 씬 (9자키)</td>
+<td><strong>72 scenes</strong> (9×8)</td>
+<td>72</td>
+<td><strong>100%</strong> ✅</td>
+</tr>
+<tr>
+<td>케이 전체 챕터</td>
+<td>✅ 25 eps, 103 beats, 8 combats</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>실 전체 챕터</td>
+<td>✅ 25 eps, 99 beats, 12 combats</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>카스 전체 챕터</td>
+<td>✅ 25 eps, 100 beats, 11 combats</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Chapter Flow 대시보드</td>
+<td>✅ 동적 로딩</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Story HTML</td>
+<td>✅ 78 files (EN↔KO)</td>
+<td>—</td>
+<td><strong>NEW</strong></td>
+</tr>
+<tr>
+<td>ICE 스케일링 시스템</td>
+<td>✅ 완비 (41 types)</td>
+<td>—</td>
+<td><strong>UPDATED</strong></td>
+</tr>
+<tr>
+<td>9자키 완전 통합</td>
+<td>✅ Phase 7~9</td>
+<td>—</td>
+<td><strong>NEW</strong></td>
+</tr>
+<tr>
+<td>검증 파이프라인 스크립트</td>
+<td>✅ scripts/verify_story_pipeline.py</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Player Status HUD</td>
+<td>✅ HP bar + Grade + PPL</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">2. 캐릭터 출처<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>캐릭터</th>
+<th>게임명</th>
+<th>원작</th>
+<th>출처</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Case</td>
+<td>케이 (K)</td>
+<td>Neuromancer (1984)</td>
+<td>깁슨 1부작</td>
+</tr>
+<tr>
+<td>Sil</td>
+<td>실 (Sil)</td>
+<td>Count Zero (1986)</td>
+<td>깁슨 2부작</td>
+</tr>
+<tr>
+<td>Kas</td>
+<td>카스 (Kas)</td>
+<td>Mona Lisa Overdrive (1988)</td>
+<td>깁슨 3부작</td>
+</tr>
+</tbody>
+</table>
+<p><strong>단편소설</strong>: 오리지널 확장 스토리 (원작 에피소드 기반 + 미션 디테일/전투/대화 오리지널)</p>
+<hr />
+<h2 id="3">3. 단편소설 → 스테이즈 → 이벤트 → 데모 파이프라인<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="_1">콘텐츠 출처<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>소스 파일</th>
+<th>출력</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>단편소설 (Short Stories)</td>
+<td><code>data/story/chapters/*_expanded.json</code></td>
+<td><code>dashboard/stories/*_{en,ko}.html</code></td>
+<td>E-book Reader HTML</td>
+</tr>
+<tr>
+<td>스테이즈 (Stages)</td>
+<td><code>dashboard/data/story/arcs/chapter_flow.json</code></td>
+<td>동적 로딩</td>
+<td>챕터 흐름 뷰어</td>
+</tr>
+<tr>
+<td>이벤트 (Events)</td>
+<td><code>data/story/arcs/*_arc.json</code></td>
+<td>play.py 게임 루프</td>
+<td>플레이어블 챕터</td>
+</tr>
+<tr>
+<td>그래픽 노블 씬 (GN Scenes)</td>
+<td><code>data/scenes/{case,sil,kas}/*.json</code></td>
+<td>게임 내 컷신</td>
+<td>컷신 재생</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">파이프라인 비교표<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+구분                   │        단편소설 (expanded.json)       │     스테이즈 (chapter_flow)      │     이벤트 (arc.json)       │   GN 씬
+──────────────────────│ episodes    beats  combats  │ chapters   phases  story_beats │ chapters   phases    beats │  count
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  CASE                │       25      103        8  │        5       25         103  │        5       25       103  │      8
+  SIL                 │       25       99       12  │        5       25          99  │        5       25        99  │      8
+  KAS                 │       25      100       11  │        5       25         100  │        5       25       100  │      8
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+  합계                  │       75      302       31  │       15       75         302  │       15       75       302  │     24
+═══════════════════════════════════════════════════════════════════════════════════════════════════════════════
+</code></pre></div>
+<h3 id="_3">파이프라인 상태<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>데이터</th>
+<th>상태</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>단편소설 작성</td>
+<td>expanded.json</td>
+<td>✅ 완전</td>
+<td>75 eps, 302 beats, 31 combats, Ch5 endings 포함</td>
+</tr>
+<tr>
+<td>스테이즈 매핑</td>
+<td>chapter_flow.json</td>
+<td>✅ 완전</td>
+<td>75 phases, story_beats 참조 존재</td>
+</tr>
+<tr>
+<td>이벤트 구현</td>
+<td>arc.json</td>
+<td>✅ 완전</td>
+<td>75 phases, 302 beats 매핑 완료</td>
+</tr>
+<tr>
+<td>HTML 출력</td>
+<td>dashboard/stories/</td>
+<td>✅ 완전</td>
+<td>6개 파일 (45-52KB each)</td>
+</tr>
+<tr>
+<td>Combat 시스템</td>
+<td>ice_types.json</td>
+<td>✅ 완전</td>
+<td>8 types, registry 완비</td>
+</tr>
+<tr>
+<td>검증 파이프라인</td>
+<td>scripts/verify_story_pipeline.py</td>
+<td>✅ 완전</td>
+<td>5단계 자동 검증</td>
+</tr>
+</tbody>
+</table>
+<p><strong>✅ Gap 해결</strong>: Story beats 302개 → Arc beats 302개 (0 beats 미매핑)</p>
+<h3 id="html">HTML 출력 파일<a class="headerlink" href="#html" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>dashboard/stories/
+├── case_en.html  (45KB) — 케이 전체 (25 episodes, 103 beats) ✅
+├── case_ko.html  (50KB) — 케이 전체 (KO)
+├── sil_en.html   (49KB) — 실 전체 (25 episodes, 99 beats) ✅
+├── sil_ko.html   (52KB) — 실 전체 (KO)
+├── kas_en.html   (44KB) — 카스 전체 (25 episodes, 100 beats) ✅
+└── kas_ko.html   (49KB) — 카스 전체 (KO)
+</code></pre></div>
+<p><strong>생성 명령</strong>: <code>uv run python scripts/generate_story_html.py --lang both</code></p>
+<h3 id="html_1">대시보드 HTML 파일<a class="headerlink" href="#html_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dashboard/index.html</code></td>
+<td>메인 대시보드 허브</td>
+</tr>
+<tr>
+<td><code>dashboard/combat.html</code></td>
+<td>RT-MS 전투 시스템</td>
+</tr>
+<tr>
+<td><code>dashboard/equipment.html</code></td>
+<td>장비 &amp; 제작 시스템</td>
+</tr>
+<tr>
+<td><code>dashboard/player.html</code></td>
+<td><strong>NEW</strong> 플레이어 스테이터스</td>
+</tr>
+<tr>
+<td><code>dashboard/story_read.html</code></td>
+<td><strong>NEW</strong> 에피소드/비트 단위 독서</td>
+</tr>
+<tr>
+<td><code>dashboard/cyberspace.html</code></td>
+<td>매트릭스 탐색 시스템</td>
+</tr>
+<tr>
+<td><code>dashboard/sound.html</code></td>
+<td>사운드 &amp; 음악</td>
+</tr>
+<tr>
+<td><code>dashboard/graphic-novel.html</code></td>
+<td>그래픽 노블 (ADR-0032)</td>
+</tr>
+<tr>
+<td><code>dashboard/story.html</code></td>
+<td>스토리 프로젝트 대시보드</td>
+</tr>
+<tr>
+<td><code>dashboard/stories.html</code></td>
+<td>단편소설_reader</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_4">대시보드 동적 로딩<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>출처</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dashboard/data/story/arcs/chapter_flow.json</code></td>
+<td>arc JSON + phases 메타데이터</td>
+<td>챕터 흐름 뷰어 동적 로딩</td>
+</tr>
+<tr>
+<td><code>dashboard/story.html</code></td>
+<td>챕터 흐름 섹션</td>
+<td>케이/실/카스 chapter flow 표시</td>
+</tr>
+<tr>
+<td><code>dashboard/stages.html</code></td>
+<td>챕터 흐름 섹션</td>
+<td>stages.html 내 chapter flow 표시</td>
+</tr>
+<tr>
+<td><code>dashboard/story_read.html</code></td>
+<td><code>*_expanded.json</code></td>
+<td>에피소드/비트 단위 독서</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3_1">3. 챕터별 구현 상태<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h2>
+<h3 id="novice-case-neuromancer">케이 (Novice / Case) — 원작: Neuromancer<a class="headerlink" href="#novice-case-neuromancer" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>챕터</th>
+<th style="text-align: center;">playable</th>
+<th style="text-align: center;">phases</th>
+<th style="text-align: center;">cutscenes</th>
+<th>상태</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prologue</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">1</td>
+<td>✅ Done</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 1</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">5 phases</td>
+<td style="text-align: center;">3</td>
+<td>✅ Done</td>
+<td><strong>메타데이터 완비</strong> (episodes/beats/combat)</td>
+</tr>
+<tr>
+<td>Chapter 2</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">5 phases</td>
+<td style="text-align: center;">3</td>
+<td>✅ Done</td>
+<td>generic phases</td>
+</tr>
+<tr>
+<td>Chapter 3</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 4</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 5</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="veteran-sil">실 (Veteran / Sil)<a class="headerlink" href="#veteran-sil" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>챕터</th>
+<th style="text-align: center;">playable</th>
+<th style="text-align: center;">phases</th>
+<th style="text-align: center;">cutscenes</th>
+<th>상태</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prologue</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">1</td>
+<td>✅ Done</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 1</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">5 phases</td>
+<td style="text-align: center;">3</td>
+<td>✅ Done</td>
+<td><strong>메타데이터 완비</strong> (episodes/beats/combat) (<strong>NEW</strong>)</td>
+</tr>
+<tr>
+<td>Chapter 2</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">5 phases</td>
+<td style="text-align: center;">3</td>
+<td>✅ Done</td>
+<td>generic phases</td>
+</tr>
+<tr>
+<td>Chapter 3</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 4</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 5</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="heretic-kas">카스 (Heretic / Kas)<a class="headerlink" href="#heretic-kas" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>챕터</th>
+<th style="text-align: center;">playable</th>
+<th style="text-align: center;">phases</th>
+<th style="text-align: center;">cutscenes</th>
+<th>상태</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prologue</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">—</td>
+<td style="text-align: center;">1</td>
+<td>✅ Done</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 1</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">5 phases</td>
+<td style="text-align: center;">3</td>
+<td>✅ Done</td>
+<td><strong>메타데이터 완비</strong> (episodes/beats/combat) (<strong>NEW</strong>)</td>
+</tr>
+<tr>
+<td>Chapter 2</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">5 phases</td>
+<td style="text-align: center;">3</td>
+<td>✅ Done</td>
+<td>generic phases</td>
+</tr>
+<tr>
+<td>Chapter 3</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 4</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+<tr>
+<td>Chapter 5</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td>⚪ Data only</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4">4. 완료된 작업 (전체)<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p><strong>스토리 파이프라인:</strong>
+- ✅ 단편소설 전체 (3캐릭 × 5챕터 = 75 episodes, 302 beats, 31 combats)
+- ✅ chapter_flow.json phases 매핑 (75 phases, story_beats 참조)
+- ✅ arc.json beats 매핑 (302 beats 완전 매핑)
+- ✅ PhaseData.beats 필드 추가 (BeatData 로딩)
+- ✅ phase_view.py 렌더러 (arc phases/beats tcod 출력)
+- ✅ HTML 스토리 출력 (6개 파일, 45-52KB each)</p>
+<p><strong>play.py 게임 루프:</strong>
+- ✅ ScreenKind.ARC_PHASE + AppState 필드 추가
+- ✅ CHAPTER → ARC_PHASE 전환
+- ✅ ARC_PHASE 렌더링 + auto-advance (3초/beat)
+- ✅ combat beat → story-mode auto-resolve (ICE Shard + 50cr)
+- ✅ ARC_PHASE → HUB 완료 흐름
+- ✅ GN "continue" → CHAPTER 연동 (SAVED_PROGRESS)
+- ✅ ENDING screen (ScreenKind.ENDING + 5초 후 auto-return to MENU)
+- ✅ GN 씬 cutscene_ref 연결 (arc JSON에 GN scene ID 매핑) <strong>NEW</strong></p>
+<p><strong>전투 시스템:</strong>
+- ✅ ICE 스케일링 시스템 (8 types + 21 enemy aliases, registry 완비)
+- ✅ ICE 스케일링 playground 검증 (combat_grades_demo.py)</p>
+<p><strong>기타:</strong>
+- ✅ 검증 파이프라인 (scripts/verify_story_pipeline.py)
+- ✅ Player Status HUD 개선 (status_panel.py + hub.py)
+- ✅ play_arc_chapter.py (console 데모)
+- ✅ play_arc_phase.py (tcod 데모)</p>
+<hr />
+<h2 id="5-ice">5. ICE 난이도 시스템<a class="headerlink" href="#5-ice" title="Permanent link">&para;</a></h2>
+<h3 id="_5">스케일링 공식<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Grade &gt; Tier: HP = hp_base + (hp_per_grade × Grade 차이)
+Grade &lt; Tier: HP = hp_base × max(0.7, 1.0 + (grade_diff × 0.15))
+</code></pre></div>
+<h3 id="ice-datacombatice_typesjson">ICE 타입 데이터 (<code>data/combat/ice_types.json</code>)<a class="headerlink" href="#ice-datacombatice_typesjson" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ICE</th>
+<th>Tier</th>
+<th>HP Base</th>
+<th>HP/Grade</th>
+<th>DMG Base</th>
+<th>DMG/Grade</th>
+<th>내성</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wisp</td>
+<td>1</td>
+<td>35</td>
+<td>5</td>
+<td>2</td>
+<td>0</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Standard</td>
+<td>1</td>
+<td>80</td>
+<td>15</td>
+<td>3</td>
+<td>1</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Watchdog</td>
+<td>1</td>
+<td>50</td>
+<td>10</td>
+<td>2</td>
+<td>1</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Spider</td>
+<td>1</td>
+<td>40</td>
+<td>8</td>
+<td>4</td>
+<td>1</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Raven</td>
+<td>2</td>
+<td>60</td>
+<td>12</td>
+<td>5</td>
+<td>2</td>
+<td>0%</td>
+</tr>
+<tr>
+<td>Black</td>
+<td>3</td>
+<td>200</td>
+<td>40</td>
+<td>8</td>
+<td>2</td>
+<td>20%</td>
+</tr>
+<tr>
+<td>Goliath</td>
+<td>3</td>
+<td>150</td>
+<td>30</td>
+<td>5</td>
+<td>2</td>
+<td>10%</td>
+</tr>
+<tr>
+<td>Dixie</td>
+<td>4</td>
+<td>300</td>
+<td>60</td>
+<td>6</td>
+<td>3</td>
+<td>30%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="scriptsverify_story_pipelinepy">검증 스크립트 (<code>scripts/verify_story_pipeline.py</code>)<a class="headerlink" href="#scriptsverify_story_pipelinepy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>scripts/verify_story_pipeline.py
+</code></pre></div>
+<p>출력:
+<div class="highlight"><pre><span></span><code>STEP 1: 단편소설 검증 (expanded.json) — ✅ PASS
+STEP 2: 스테이즈 검증 (chapter_flow.json) — ✅ PASS
+STEP 3: 이벤트 검증 (arc.json) — ✅ PASS (302 beats mapped)
+STEP 4: HTML 출력 검증 — ✅ PASS
+STEP 5: Combat 시스템 검증 — ✅ PASS
+
+Overall: ✅ PASS — Gap: 0 beats unmapped
+</code></pre></div></p>
+<h3 id="ice-scriptscombat_grades_demopy">ICE 데모 시나리오 (<code>scripts/combat_grades_demo.py</code>)<a class="headerlink" href="#ice-scriptscombat_grades_demopy" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>시나리오</th>
+<th>Grade</th>
+<th>PPL</th>
+<th>적</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1</td>
+<td>6</td>
+<td>Wisp x1</td>
+<td>victory (HP 92/100)</td>
+</tr>
+<tr>
+<td>B</td>
+<td>3</td>
+<td>22</td>
+<td>Watchdog+Spider</td>
+<td>시뮬레이션 필요</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5</td>
+<td>45</td>
+<td>Black+Goliath</td>
+<td>시뮬레이션 필요</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6">6. 테스트 상태<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>4106 passed ✅ (prototype/.venv pytest)
+ruff: All checks passed ✅
+mypy: 0 errors ✅
+</code></pre></div>
+<h3 id="_6">검증 파이프라인 스크립트<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 전체 검증 파이프라인 실행</span>
+uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>scripts/verify_story_pipeline.py
+
+<span class="c1"># 출력: Step 1-5 검증 + Gap Analysis + JSON 리포트</span>
+<span class="c1"># 리포트 저장: scripts/verification_report.json</span>
+</code></pre></div>
+<hr />
+<h2 id="7">7. 주요 결정 사항<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>ADR</th>
+<th>내용</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Phase = Stage alias</td>
+<td>backward compat 유지</td>
+<td>✅ Accepted</td>
+</tr>
+<tr>
+<td>ChapterState enum</td>
+<td>PROLOGUE → ENDING_A/B/C</td>
+<td>✅ Accepted</td>
+</tr>
+<tr>
+<td>is_playable 분기</td>
+<td>false = cutscene만 재생 후 스킵</td>
+<td>✅ Accepted</td>
+</tr>
+<tr>
+<td>cutscene_end 매핑</td>
+<td>다음 챕터 start scene 재사용</td>
+<td>✅ Accepted</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

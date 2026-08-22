@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-A Heist — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="ta_heist_ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Sil — Veteran_console_cowboy</div>
+            <h1 class="story-title">T-A Heist</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1480 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>*"The core was three hundred years of data, and it was worth more than the Sprawl itself."*</p></blockquote>
+<hr>
+<h2>Introduction</h2>
+<p>The Tessier-Ashpool core was everything the rumors said it was.</p>
+<p>Vast. Cold. Silent. A cathedral of dead data, running on hardware that predated the Sprawl by decades, cooled by systems that nobody understood anymore. The family had built it during the first wave of orbital expansion — three centuries of accumulated corporate memory, the complete dead archive of a dynasty that had bought and sold governments. The data itself was worthless. Everyone knew that. What mattered was the access — who could get in, who could query the archive, who could run a search on three hundred years of corporate history and come out with something useful.</p>
+<p>The access was what cost you. The access was what killed you.</p>
+<p>I'd been hired to steal it twice before. Both times, the runners who took the job never came back. The first time, it was a kid out of Chiba — young, fast, stupid. The kind of runner who thought speed could substitute for caution. He went into Freeside's private annex and never walked out. They found his deck three months later, washed up on the orbital debris catchers. The ROM was fried. The ICE had done its job.</p>
+<p>The second time, it was someone I knew. Not well — this business doesn't encourage friendship — but well enough that when I heard his name, I felt it. A chill that started in my chest and spread outward, the kind of cold you get when you're jacked in too long and your body forgets it's not already dead.</p>
+<p>Now a third party was offering: not to steal the data, but to verify it. Same core, same access, same ancient ICE. The difference was that this time, nobody was asking me to bring anything back. Just to look. Just to confirm what the client already suspected.</p>
+<p>That was the story, anyway.</p>
+<h2>Development</h2>
+<p>The Shimada-gumi had no comment. The Maas Biolabs subsidiary in Vegas had no comment. The fixer who brought me the job had a Finnish surname I didn't recognize and a payment structure that screamed dead drop.</p>
+<p>"T-A thinks someone inside is selling access," she said. "We need proof."</p>
+<p>"Proof of what?"</p>
+<p>"Who's buying. Who's selling. What's actually moving through the core that shouldn't be."</p>
+<p>I took the job because the money was good. I took the job because I'd spent five years trying to understand how M had died, and T-A was at the center of everything — her last run, her last mistake, the ICE that nobody survived. I told myself I was being professional. I told myself I wasn't looking for ghosts.</p>
+<p>The core was four layers deep in Freeside's private annex. The security was older than me — ROM-based, biometric-locked, the kind of architecture that hadn't been built in forty years. Tessier-Ashpool had stopped upgrading their internal systems sometime during the second generation. They didn't need to. The defenses they had were more than sufficient.</p>
+<p>I found the breach on the fourth layer.</p>
+<p>It wasn't a hole. It was a door, left open by someone who had legitimate access — credentials that hadn't been revoked, a code that still resolved. Someone inside T-A was selling time on their core to the highest bidder, and whoever they were, they'd been doing it long enough that their access codes were still active.</p>
+<p>I started pulling logs.</p>
+<h2>Climax</h2>
+<p>M's name was in the access records. Not her real name — the handle she'd used, the identity she'd built when she was running the deep black. M-7. Listed as active, forty-one months ago. Last entry: denied.</p>
+<p>The denial flag didn't make sense. M had been running for Tessier-Ashpool — the family's own ICE, their own architecture. She wouldn't have been denied access. She would have been welcomed.</p>
+<p>Unless she wasn't running for Tessier-Ashpool.</p>
+<p>Unless she was running against them.</p>
+<p>I followed the access chain backward, layer by layer, until I found what I was looking for. A second signature on the access log. The same credentials used to deny M's entry — used, three hours later, to access the same core. From a different node. From an internal terminal.</p>
+<p>Someone inside T-A had used their own access codes to deny M entry, then used those same codes to enter after she was gone.</p>
+<p>She hadn't been killed by the ICE. She'd been set up. Locked out of the system she'd given her life to, and then erased for knowing too much.</p>
+<p>The same access codes. Still active. Still resolving.</p>
+<p>Still inside.</p>
+<h2>Denouement</h2>
+<p>I pulled out of the core at 0400, my hands shaking from the effort of staying present in my body. When you've been deep in the black for hours, your body starts to feel like a prison. The cold of the core had followed me back — the particular chill of old data, old hardware, old secrets that nobody was ever supposed to find.</p>
+<p>The fixer was waiting in the usual coordinates — a virtual space that existed somewhere between the surface and the deep black, the kind of place where deals were made and trust was optional. She had a new face tonight, or maybe the same face with different lighting. Hard to tell with fixers.</p>
+<p>"Find anything?" she asked.</p>
+<p>"Find anything?" I repeated. "I found everything. I found M's name in the access logs."</p>
+<p>She went still. Not surprised — fixers don't get surprised — but still. Listening.</p>
+<p>"The codes," I said. "Someone inside T-A has them. Someone who was there when M died."</p>
+<p>"We'll look into it."</p>
+<p>"You're not listening. The codes are still active. The same codes that were used to deny M access, the same codes that were used three hours later to enter the core — they're still in the system. Whoever did this—"</p>
+<p>"Is still inside," she finished. "We know. That's why we hired you."</p>
+<p>She transferred the payment. Clean credits, untraceable, more than I'd made in three months. The numbers scrolled past in my display, and I thought about M — about the look on her face when she'd told me she was taking the job, about the way she'd laughed when I said it was suicide, about the last thing she'd said before she jacked in for the last time.</p>
+<p><em>The codes are clean</em>, she'd said. <em>The Finn checked them twice.</em></p>
+<p>The Finn had been wrong. Or the Finn had known. Either way, M was dead, and her killer was still inside T-A, and the codes were still active, and the core was still there — three hundred years of data, silent as a grave, waiting for the next runner who was stupid enough to take the job.</p>
+<p>I took the money.</p>
+<p>I went home.</p>
+<p>I didn't sleep.</p>
+<p>I sat in the dark of my room, in the Sprawl, listening to the hum of a hundred rigs running a hundred scams, and I thought about the codes. About how they were still active. About how the person who had used them was still inside.</p>
+<p>About how the Finn had checked them twice.</p>
+<p>I thought about calling the Finn. I thought about asking him why he'd checked them twice if he was going to let M walk into a trap. I thought about what he would say — the same thing he always said, which was nothing, because the Finn's silence was worth more than anyone else's words.</p>
+<p>I didn't call.</p>
+<p>I went to bed.</p>
+<p>I dreamed of the core — three hundred years of data, three hundred years of silence, three hundred years of a dynasty that had forgotten how to die. In the dream, M was there. She was young, the way she was in the old photographs, before she became what she became. She was standing at the edge of the core, looking at me, and her eyes were the color of a burning rig — Hosaka orange, the last thing you see before you see nothing at all.</p>
+<p>"Don't take the job," she said.</p>
+<p>The job was already done.</p>
+<p>I woke up at noon, sweating, my mouth tasting like copper, my deck still warm from running a trace I'd started in my sleep. The trace had gone cold hours ago. Whoever had used those codes was long gone — deeper into T-A's systems than I could follow, or out into the Sprawl with a new identity and a clean slate.</p>
+<p>Or still inside. Still waiting.</p>
+<p>The core was silent. The codes were still active.</p>
+<p>And somewhere in the Sprawl, the Finn was probably taking a meeting with someone who had a new job and a new face and the same old answer to every question that mattered.</p>
+<p>Don't ask, the Finn always said. Just run.</p>
+<p>I ran.</p>
+<p>I didn't look back.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

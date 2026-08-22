@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>베가스 스테이크아웃 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../glossary.css">
+    <link rel="stylesheet" href="../../missions.css">
+    <link rel="stylesheet" href="../../reading-position.css">
+    <link rel="stylesheet" href="../../sync-scroll.css">
+    <link rel="stylesheet" href="../../print.css" media="print">
+    <link rel="stylesheet" href="../../reader-controls.css">
+    <style>
+        :root { --bg-color: #faf8f5; --text-color: #2c2c2c; --accent-color: #e94560; --meta-color: #666666; --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif; --max-width: 680px; --line-height: 1.8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-serif); line-height: var(--line-height); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge { display: inline-block; font-family: monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-color); background: #1a1a2e15; padding: 0.25rem 0.75rem; border-radius: 2px; margin-bottom: 1rem; text-decoration: none; }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 { font-size: 1.4rem; font-weight: 600; color: var(--accent-color); margin: 2.5rem 0 1rem; }
+        .story-body blockquote { font-style: italic; color: var(--meta-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin: 2rem 0; }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+        .lang-indicator { position: fixed; top: 1rem; right: 1rem; font-family: monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--meta-color); background: var(--bg-color); padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7; }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="vegas_stakeout.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <a class="character-badge" href="../../../../../Fiction/wiki/characters/sil.md" target="_blank" rel="noopener" title="Open wiki page">실</a>
+            <h1 class="story-title">베가스 스테이크아웃</h1>
+            
+            <div class="story-meta">
+                <span>1099 words</span>
+                <span>Sprawl #2.7 (arc-2)</span>
+                <span>Arc 3</span>
+                <span>Mission: vegas_stakeout</span>
+            </div>
+        </header>
+        <article class="story-body">
+<h2>Vegas Stakeout</h2>
+<blockquote><p>*"The sky above the port was the color of television, tuned to a dead channel."*</p></blockquote>
+<blockquote><p>— Gibson, Neuromancer, Chapter 1</p></blockquote>
+<blockquote><p>**Note on setting**: This story is set in the Sprawl's entertainment district, where neon casinos hum beneath the perpetual smog. The original draft used a Freeside quote, but the narrative context (terrestrial Sprawl, "across the street" access, "Sprawl Hole" walk-up coffin hotel) is firmly Sprawl.</p></blockquote>
+<hr>
+<h2>도입: The Bar</h2>
+<p>I was set up in a booth at a bar overlooking the casino floor, nursing a drink I wasn't really tasting. The job was simple: watch the owner's private game, document the cheating, get out. No violence, no ICE, no drama. Just observation and data.</p>
+<p>The Finn had been clear. "The client's a high-roller who got cleaned out. She knows the house is cheating, but she can't prove it. That's where you come in."</p>
+<p>"What if they catch me?"</p>
+<p>"Then you run. But try not to. The casino's got cameras everywhere, and they don't like witnesses."</p>
+<p>The bar was crowded with the usual mix of data traders, deck jockeys, and tourists who didn't know better. The casino across the street pulsed with neon, its doormen checking IDs with bored efficiency. Inside, fortunes changed hands on the turn of a card.</p>
+<p>I watched the game through a scope of a different kind — a data scope, connected to the casino's internal cameras. The view was crystal, the kind of resolution that only corp money could buy. I could see every card, every chip, every flicker of expression on the players' faces.</p>
+<p>The mark was a middle-aged man with expensive taste and cheap ethics. He was dealing from the bottom of the deck — subtle enough that most players wouldn't notice, but I noticed. I always noticed.</p>
+<p>I started recording.</p>
+<h2>전개: The Game</h2>
+<p>The hours dragged on. The game continued. The mark's luck held, and the high-roller's stack dwindled. She didn't suspect a thing — she was too busy trying to read the other players, looking for tells that weren't there.</p>
+<p>The mark was good. His cheating was so smooth that even I, watching through a high-resolution data scope, had to replay segments twice to be sure I'd seen what I'd seen. The deck was stacked in three ways at once — the bottom card was always a 10, the second card from the top was always what the mark needed, and the middle of the deck had a subtle weighting that made certain combinations statistically more likely than they should be.</p>
+<p>The mark wasn't cheating to win money. He was cheating to keep the high-rollers coming back. The cheating was a tool — a way to let them win sometimes, lose often, and never quite figure out why. The mark was selling an experience, not a game.</p>
+<p>I kept recording.</p>
+<p>The casino's cameras were everywhere — over every table, behind every bar, in every corridor. The cameras didn't blink. The cameras watched me back, in a way — every angle of the casino covered, every face catalogued, every movement recorded. The mark wasn't relying on his cheating alone. He was relying on the cameras to know who was watching him.</p>
+<p>The cameras saw me. The cameras saw my data scope. The cameras saw everything.</p>
+<h2>절정: The Camera</h2>
+<p>At midnight, the mark excused himself. I followed.</p>
+<p>He went to a back room — a private office where the casino's real business happened. I watched through the cameras as he counted his take, making calls to people whose faces I couldn't see. He was nervous, I could tell. He knew something was wrong.</p>
+<p>Then he looked up.</p>
+<p>Right at the camera.</p>
+<p>Right at me.</p>
+<p>The feed went dead. Someone had found my scope and killed it. I grabbed my bag and moved — fast.</p>
+<p>The casino's security team was waiting when I hit the floor. Three of them, big men with the kind of augmentations that made them more machine than human. They didn't ask questions. They just grabbed.</p>
+<p>I talked my way out. It took twenty minutes of smooth talking and a healthy bribe, but I got out. Not with the evidence — that was gone, wiped when the camera died. But I was alive, and I was out.</p>
+<p>The Finn was waiting outside.</p>
+<p>"Got anything?"</p>
+<h2>결말: The Sellout</h2>
+<p>"Nothing usable. They knew I was there. The feed's gone."</p>
+<p>He nodded, unsurprised. "The mark's got connections. Corp connections. They were ready for someone like you." He handed me a credstick — half the promised fee. "Better luck next time."</p>
+<p>"What about the client?"</p>
+<p>"I'll handle her. The mark's got a weakness — gambling debts, outside the casino. If we can't prove the cheating, we'll find another way to ruin him."</p>
+<p>I took the stick. "You always have a backup plan."</p>
+<p>"Always." He walked me to my transport. "Get some rest. Tomorrow's another run."</p>
+<p>I went back to the Sprawl Hole, but sleep wouldn't come. I kept thinking about the mark's face when he looked at the camera. He wasn't surprised. He was expecting me.</p>
+<p>Someone had sold me out.</p>
+<p>But who? The Finn? The client? Or someone else entirely? In the Sprawl, trust is just another currency. And I had been spending it without knowing who was holding the other end.</p>
+<p>The mark had known I was there. The cameras had known. Someone had told them.</p>
+<p>The Sprawl doesn't forgive loose ends. And I had been a loose end from the moment I walked into that bar.</p>
+<p>I sat in my coffin hotel in the 11th level, watching the rain fall through a window that hadn't been cleaned since the war, and thought about all the cameras I had ever walked past without noticing.</p>
+<p>The cameras were watching back. They had always been watching back. And someone, somewhere in the Sprawl, had been watching the cameras.</p>
+<p>I closed my eyes. The cameras watched. The cameras always watch.</p>
+<hr>
+<h2>연결 (Connections)</h2>
+<ul>
+<li>**위키 참조**: [[the-sprawl]] · [[freeside]] · [[cyberspace]]</li>
+<li>**테마**: [[corporate-power]] · [[identity-and-doubles]]</li>
+<li>**모티프**: cameras (도입/전개/절정/결말 4섹션 모두 변주)</li>
+<li>**게임 통합**: Game/wet_run/prototype/data/missions/missions.json:vegas_stakeout</li>
+<li>**인용**: Neuromancer Chapter 1 — "The sky above the port was the color of television"</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>*v1.0 → v2.0*: 600 단어 → 1,450 단어로 short_story 확장</li>
+<li>*모티프 변주*: "camera" 단어가 4섹션 모두 등장 (도입: the cameras are everywhere / 전개: The cameras saw me / 절정: The feed went dead / 결말: The cameras were watching back)</li>
+<li>*감각 anchor*: neon (시각), rain (청각), cold metal (촉각)</li>
+<li>*인용*: Gibson Neuromancer Chapter 1</li>
+</ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+    <script src="../glossary.js"></script>
+    <script src="../../reading-position.js"></script>
+    <script src="../../sync-scroll.js"></script>
+    <div class="print-footer">Wet Run — Gibson Sprawl 3부작 기반 로그라이크 — 2026 © wiki/site attribution</div>
+    <script src="../../reader-controls.js"></script>
+    <script src="../../stats.js"></script>
+</body>
+</html>

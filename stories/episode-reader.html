@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Story Reader — Wet Run</title>
+<style>
+  :root {
+    --bg: #0a0e14;
+    --bg-card: #131a23;
+    --border: #2a3540;
+    --text: #c5d4e3;
+    --text-dim: #6a7888;
+    --accent: #66ffcc;
+    --accent2: #ffaa55;
+    --danger: #ff5577;
+    --font-mono: 'JetBrains Mono', 'Menlo', monospace;
+    --font-serif: 'Crimson Pro', 'Source Serif 4', Georgia, serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-mono);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Header */
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    padding: 8px 0; margin-bottom: 24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .top-nav a { color: var(--accent); font-size: 13px; }
+  .top-nav .sep { color: var(--border); }
+
+  h1 { color: var(--accent); font-size: 24px; margin-bottom: 8px; }
+  h2 { color: var(--accent); font-size: 18px; margin: 32px 0 16px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+  h3 { color: var(--accent2); font-size: 14px; margin: 16px 0 8px; }
+
+  /* Character Tabs */
+  .char-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .char-tab {
+    flex: 1; min-width: 120px;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px;
+    padding: 12px 16px; cursor: pointer; transition: all 0.15s ease;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .char-tab:hover { border-color: var(--accent); background: #1a2530; }
+  .char-tab.active { border-color: var(--accent); background: #1a2530; box-shadow: 0 0 8px #66ffcc33; }
+  .char-tab .name { color: var(--accent); font-weight: 600; font-size: 14px; }
+  .char-tab .role { color: var(--text-dim); font-size: 11px; }
+
+  /* Chapter Navigation */
+  .chapter-nav { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .ch-btn {
+    background: var(--bg-card); border: 1px solid var(--border); color: var(--text-dim);
+    padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 12px;
+    font-family: inherit;
+  }
+  .ch-btn:hover { border-color: var(--accent); color: var(--text); }
+  .ch-btn.active { border-color: var(--accent); color: var(--accent); background: #1a2530; }
+  .ch-btn.locked { opacity: 0.5; cursor: not-allowed; }
+
+  /* Episode Progress Bar */
+  .progress-bar { background: #1a2530; height: 6px; border-radius: 3px; margin: 16px 0; overflow: hidden; }
+  .progress-fill { background: linear-gradient(90deg, var(--accent), #00ccff); height: 100%; transition: width 0.3s; }
+
+  /* Story Content */
+  .story-container { display: grid; grid-template-columns: 280px 1fr; gap: 24px; }
+  @media (max-width: 900px) { .story-container { grid-template-columns: 1fr; } }
+
+  /* Sidebar */
+  .sidebar { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 16px; }
+  .sidebar h3 { margin-top: 0; }
+  .episode-list { list-style: none; }
+  .episode-item { margin-bottom: 12px; }
+  .episode-item a {
+    display: block; padding: 8px 12px; border-radius: 4px;
+    background: #0a0e14; border: 1px solid var(--border);
+    color: var(--text); font-size: 13px;
+  }
+  .episode-item a:hover { border-color: var(--accent); text-decoration: none; }
+  .episode-item.active a { border-color: var(--accent); color: var(--accent); background: #1a2530; }
+  .episode-item .ep-title { font-weight: 600; margin-bottom: 2px; }
+  .episode-item .ep-meta { font-size: 11px; color: var(--text-dim); }
+  .episode-item .ep-beats { margin-top: 6px; padding-left: 8px; border-left: 2px solid var(--border); }
+  .episode-item .beat { font-size: 11px; color: var(--text-dim); padding: 2px 0; }
+  .episode-item .beat.combat { color: var(--danger); }
+  .episode-item .beat.realization { color: var(--accent2); }
+
+  /* Main Content */
+  .main-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; padding: 24px; }
+  .story-header { margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+  .story-header .char-badge {
+    display: inline-block; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--accent); background: #1a2530;
+    padding: 4px 10px; border-radius: 3px; margin-bottom: 8px;
+  }
+  .story-header h2 { color: var(--accent); font-size: 22px; margin: 8px 0; border: none; padding: 0; }
+  .story-header .subtitle { color: var(--text-dim); font-size: 14px; font-style: italic; }
+  .story-header .meta { display: flex; gap: 16px; margin-top: 12px; font-size: 12px; color: var(--text-dim); }
+  .story-header .meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* Beat Display */
+  .beat-block { margin-bottom: 24px; padding: 16px; background: #0a0e14; border-radius: 4px; border-left: 3px solid var(--border); }
+  .beat-block.interior_monologue { border-left-color: var(--accent2); }
+  .beat-block.action { border-left-color: var(--accent); }
+  .beat-block.dialogue { border-left-color: #00ccff; }
+  .beat-block.combat { border-left-color: var(--danger); background: #1a0a14; }
+  .beat-block .beat-type {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--text-dim); margin-bottom: 8px;
+  }
+  .beat-block.interior_monologue .beat-type { color: var(--accent2); }
+  .beat-block.action .beat-type { color: var(--accent); }
+  .beat-block.dialogue .beat-type { color: #00ccff; }
+  .beat-block.combat .beat-type { color: var(--danger); }
+  .beat-block .beat-text { font-family: var(--font-serif); font-size: 16px; line-height: 1.8; color: var(--text); }
+  .beat-block .beat-text-ko { font-family: var(--font-serif); font-size: 14px; line-height: 1.7; color: var(--text-dim); margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border); font-style: italic; }
+  .beat-block .beat-meta { margin-top: 12px; font-size: 11px; color: var(--text-dim); display: flex; gap: 12px; }
+
+  /* Combat Block */
+  .combat-block {
+    background: #1a0a14; border: 1px solid var(--danger); border-radius: 6px;
+    padding: 16px; margin: 24px 0;
+  }
+  .combat-block h4 { color: var(--danger); font-size: 14px; margin-bottom: 12px; }
+  .combat-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
+  .combat-info-item { background: #0a0e14; padding: 8px; border-radius: 4px; }
+  .combat-info-item .label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; }
+  .combat-info-item .value { font-size: 14px; color: var(--text); }
+
+  /* Realization Block */
+  .realization-block {
+    background: linear-gradient(135deg, #1a2510, #0a0e14);
+    border: 1px solid var(--accent); border-radius: 6px;
+    padding: 20px; margin: 24px 0;
+  }
+  .realization-block h4 { color: var(--accent); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+  .realization-block .real-text { font-family: var(--font-serif); font-size: 18px; font-style: italic; color: var(--text); line-height: 1.6; }
+  .realization-block .real-text-ko { font-size: 14px; color: var(--text-dim); margin-top: 12px; font-style: italic; }
+  .realization-block .insight { margin-top: 12px; font-size: 11px; color: var(--accent2); }
+  .realization-block .unlocks { margin-top: 8px; font-size: 11px; color: var(--text-dim); }
+
+  /* Gain/Loss Block */
+  .gain-block { background: #0a1a0a; border: 1px solid var(--accent); border-radius: 6px; padding: 16px; margin: 16px 0; }
+  .gain-block h4 { color: var(--accent); font-size: 12px; margin-bottom: 8px; }
+  .gain-block .gain-item { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
+  .gain-block .gain-item .label { color: var(--text-dim); }
+  .gain-block .gain-item .value { color: var(--accent); }
+
+  .loss-block { background: #1a0a0a; border: 1px solid var(--danger); border-radius: 6px; padding: 16px; margin: 16px 0; }
+  .loss-block h4 { color: var(--danger); font-size: 12px; margin-bottom: 8px; }
+  .loss-block .loss-item { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
+  .loss-block .loss-item .label { color: var(--text-dim); }
+  .loss-block .loss-item .value { color: var(--danger); }
+
+  /* Navigation */
+  .beat-nav { display: flex; justify-content: space-between; margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border); }
+  .beat-nav button {
+    background: var(--bg-card); border: 1px solid var(--border); color: var(--text);
+    padding: 10px 20px; border-radius: 4px; cursor: pointer; font-size: 13px;
+    font-family: inherit;
+  }
+  .beat-nav button:hover { border-color: var(--accent); color: var(--accent); }
+  .beat-nav button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* Language Toggle */
+  .lang-toggle { display: flex; gap: 4px; margin-bottom: 16px; }
+  .lang-btn {
+    background: var(--bg-card); border: 1px solid var(--border); color: var(--text-dim);
+    padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 12px;
+    font-family: inherit;
+  }
+  .lang-btn:hover { border-color: var(--accent); color: var(--text); }
+  .lang-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 12px; text-align: center; }
+</style>
+    <link rel="stylesheet" href="../missions.css">
+<link rel="stylesheet" href="../reading-position.css">
+<link rel="stylesheet" href="../sync-scroll.css">
+<link rel="stylesheet" href="../print.css" media="print">
+<link rel="stylesheet" href="../reader-controls.css">
+</head>
+<body>
+<div class="nav"><a href="../index.html">← Dashboard Home</a></div>
+<nav class="top-nav">
+  <a href="../index.html">Dashboard</a>
+  <span class="sep">/</span>
+  <a href="../missions.html">Story Project</a>
+  <span class="sep">/</span>
+  <span>Story Reader</span>
+</nav>
+
+<h1>Story Reader</h1>
+<p class="subtitle" style="color: var(--text-dim); margin-bottom: 24px;">Gibson-inspired cyberpunk fiction — Episode & Beat Navigation</p>
+
+<div class="char-tabs">
+  <button class="char-tab active" data-char="case">
+    <span class="name">케이 (Case)</span>
+    <span class="role">Novice Cowboy</span>
+  </button>
+  <button class="char-tab" data-char="sil">
+    <span class="name">실 (Sil)</span>
+    <span class="role">Veteran — Marly</span>
+  </button>
+  <button class="char-tab" data-char="kas">
+    <span class="name">카스 (Kas)</span>
+    <span class="role">Heretic — Kumiko</span>
+  </button>
+</div>
+
+<div class="lang-toggle">
+  <button class="lang-btn active" data-lang="en">English</button>
+  <button class="lang-btn" data-lang="ko">한국어</button>
+  <button class="lang-btn" data-lang="both">Both</button>
+</div>
+
+<div id="chapterNav" class="chapter-nav"></div>
+
+<div class="progress-bar">
+  <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+</div>
+
+<div class="story-container">
+  <aside class="sidebar">
+    <h3>Episodes</h3>
+    <ul id="episodeList" class="episode-list"></ul>
+  </aside>
+  <main id="mainContent" class="main-content">
+    <div class="story-header">
+      <div class="char-badge">Case — Console Cowboy</div>
+      <h2>The First Jack</h2>
+      <p class="subtitle">Thirty Seconds After Jack-Out</p>
+      <div class="meta">
+        <span>📍 Chiba City, 11th Level</span>
+        <span>⏱ 5 Episodes</span>
+        <span>⚔ 2 Combats</span>
+      </div>
+    </div>
+    <div id="storyContent">
+      <p style="color: var(--text-dim);">Select a chapter and episode to begin reading.</p>
+    </div>
+  </main>
+</div>
+
+<footer class="footer">
+  Wet Run — Gibson-inspired fiction · Source: <code>data/story/chapters/*_expanded.json</code>
+</footer>
+
+<script>
+const STORY_DATA = {
+  case: {
+    label: "케이 (Case)",
+    role: "Novice Cowboy",
+    source: "../prototype/data/story/chapters/case_expanded.json",
+    chapters: [
+      { num: 1, title: "The First Jack", playable: true },
+      { num: 2, title: "Molly's Deal", playable: true },
+      { num: 3, title: "Straylight Run", playable: false },
+      { num: 4, title: "The Flatline", playable: false },
+      { num: 5, title: "Neuromancer", playable: false }
+    ]
+  },
+  sil: {
+    label: "실 (Sil)",
+    role: "Veteran — Marly",
+    source: "../prototype/data/story/chapters/sil_expanded.json",
+    chapters: [
+      { num: 1, title: "The Old Score", playable: true },
+      { num: 2, title: "The Voodoo God", playable: true },
+      { num: 3, title: "The Insider", playable: false },
+      { num: 4, title: "The Contract", playable: false },
+      { num: 5, title: "The Blank", playable: false }
+    ]
+  },
+  kas: {
+    label: "카스 (Kas)",
+    role: "Heretic — Kumiko",
+    source: "../prototype/data/story/chapters/kas_expanded.json",
+    chapters: [
+      { num: 1, title: "The Declaration", playable: true },
+      { num: 2, title: "Manarase at Midnight", playable: true },
+      { num: 3, title: "The Shadow", playable: false },
+      { num: 4, title: "The Weapon", playable: false },
+      { num: 5, title: "The Burn", playable: false }
+    ]
+  }
+};
+
+let currentChar = 'case';
+let currentChapter = 1;
+let currentEpisodeIndex = 0;
+let storyData = null;
+let currentLang = 'en';
+
+async function loadStoryData(char) {
+  const src = STORY_DATA[char].source;
+  try {
+    const res = await fetch(src);
+    if (!res.ok) throw new Error('Failed to load');
+    return await res.json();
+  } catch (e) {
+    console.warn('Could not load', src, e);
+    return null;
+  }
+}
+
+function renderChapterNav() {
+  const container = document.getElementById('chapterNav');
+  const data = STORY_DATA[currentChar];
+  container.innerHTML = data.chapters.map(ch => {
+    const cls = ch.num === currentChapter ? 'active' : '';
+    const locked = ch.playable ? '' : 'locked';
+    return `<button class="ch-btn ${cls} ${locked}" data-ch="${ch.num}" ${ch.playable ? '' : 'disabled'}>Ch${ch.num}: ${ch.title}</button>`;
+  }).join('');
+}
+
+function renderEpisodeList() {
+  const container = document.getElementById('episodeList');
+  if (!storyData) { container.innerHTML = '<li>Loading...</li>'; return; }
+  
+  const episodes = storyData.episodes || [];
+  container.innerHTML = episodes.map((ep, i) => {
+    const beats = (ep.beats || []).map(b => {
+      const cls = b.type === 'combat' ? 'combat' : (b.type === 'interior_monologue' && ep.realization ? 'realization' : '');
+      return `<div class="beat ${cls}">· ${b.beat_id}: ${b.type}</div>`;
+    }).join('');
+    const cls = i === currentEpisodeIndex ? 'active' : '';
+    return `<li class="episode-item ${cls}">
+      <a href="#" data-ep="${i}">
+        <div class="ep-title">${ep.title_en}</div>
+        <div class="ep-meta">${ep.order} · ${ep.type} · ${(ep.beats || []).length} beats</div>
+        <div class="ep-beats">${beats}</div>
+      </a>
+    </li>`;
+  }).join('');
+}
+
+function renderEpisode() {
+  if (!storyData) return;
+  const episodes = storyData.episodes || [];
+  if (currentEpisodeIndex >= episodes.length) return;
+  
+  const ep = episodes[currentEpisodeIndex];
+  const beats = ep.beats || [];
+  
+  // Update header
+  document.querySelector('.story-header .char-badge').textContent = 
+    `${storyData.character} — ${storyData.title_en}`;
+  document.querySelector('.story-header h2').textContent = ep.title_en;
+  document.querySelector('.story-header .subtitle').textContent = ep.title_ko || '';
+  
+  // Render beats
+  const content = document.getElementById('storyContent');
+  let html = '';
+  
+  // Summary
+  html += `<p style="font-style: italic; color: var(--text-dim); margin-bottom: 24px; padding: 12px; background: #0a0e14; border-radius: 4px; border-left: 3px solid var(--accent);">${ep.summary_en}</p>`;
+  
+  // Beats
+  beats.forEach((beat, i) => {
+    const showKo = currentLang === 'ko' || currentLang === 'both';
+    const showEn = currentLang === 'en' || currentLang === 'both';
+    html += `<div class="beat-block ${beat.type}">
+      <div class="beat-type">${beat.type.replace('_', ' ')}</div>
+      ${showEn ? `<div class="beat-text">${beat.text_en}</div>` : ''}
+      ${showKo ? `<div class="beat-text-ko">${beat.text_ko || ''}</div>` : ''}
+      <div class="beat-meta">
+        <span>🎮 ${beat.game_action || beat.game_phase}</span>
+        ${beat.enemy_type ? `<span>⚔ ${beat.enemy_type}</span>` : ''}
+        ${beat.difficulty ? `<span>💀 Difficulty ${beat.difficulty}</span>` : ''}
+      </div>
+    </div>`;
+  });
+  
+  // Realization
+  if (ep.realization) {
+    const r = ep.realization;
+    html += `<div class="realization-block">
+      <h4>✧ Realization ${r.insight_level}</h4>
+      <div class="real-text">"${r.text_en}"</div>
+      ${currentLang !== 'en' ? `<div class="real-text-ko">"${r.text_ko || ''}"</div>` : ''}
+      ${r.unlocks ? `<div class="unlocks">Unlocks: ${r.unlocks.join(', ')}</div>` : ''}
+    </div>`;
+  }
+  
+  // Gain
+  if (ep.gain) {
+    const g = ep.gain;
+    html += `<div class="gain-block">
+      <h4>↑ Gain</h4>
+      <div class="gain-item"><span class="label">${g.description_en || g.type}</span><span class="value">+${g.amount || g.value_estimate || '?'}</span></div>
+    </div>`;
+  }
+  
+  // Loss
+  if (ep.loss) {
+    const l = ep.loss;
+    html += `<div class="loss-block">
+      <h4>↓ Loss</h4>
+      <div class="loss-item"><span class="label">${l.description_en || l.type}</span><span class="value">-${l.amount}</span></div>
+    </div>`;
+  }
+  
+  // Navigation
+  const totalEps = episodes.length;
+  html += `<div class="beat-nav">
+    <button onclick="prevEpisode()" ${currentEpisodeIndex === 0 ? 'disabled' : ''}>← Previous</button>
+    <span style="color: var(--text-dim); font-size: 12px;">${currentEpisodeIndex + 1} / ${totalEps}</span>
+    <button onclick="nextEpisode()" ${currentEpisodeIndex >= totalEps - 1 ? 'disabled' : ''}>Next →</button>
+  </div>`;
+  
+  content.innerHTML = html;
+  
+  // Update progress
+  const progress = ((currentEpisodeIndex + 1) / totalEps) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+}
+
+function prevEpisode() {
+  if (currentEpisodeIndex > 0) {
+    currentEpisodeIndex--;
+    renderEpisodeList();
+    renderEpisode();
+  }
+}
+
+function nextEpisode() {
+  if (!storyData) return;
+  const total = (storyData.episodes || []).length;
+  if (currentEpisodeIndex < total - 1) {
+    currentEpisodeIndex++;
+    renderEpisodeList();
+    renderEpisode();
+  }
+}
+
+async function init() {
+  // Load initial data
+  storyData = await loadStoryData(currentChar);
+  
+  // Render chapter nav
+  renderChapterNav();
+  
+  // Render episode list
+  renderEpisodeList();
+  
+  // Render first episode
+  renderEpisode();
+  
+  // Event listeners
+  document.querySelectorAll('.char-tab').forEach(tab => {
+    tab.addEventListener('click', async () => {
+      document.querySelectorAll('.char-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentChar = tab.dataset.char;
+      currentChapter = 1;
+      currentEpisodeIndex = 0;
+      storyData = await loadStoryData(currentChar);
+      renderChapterNav();
+      renderEpisodeList();
+      renderEpisode();
+    });
+  });
+  
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentLang = btn.dataset.lang;
+      renderEpisode();
+    });
+  });
+  
+  document.getElementById('chapterNav').addEventListener('click', e => {
+    if (e.target.classList.contains('ch-btn') && !e.target.classList.contains('locked')) {
+      currentChapter = parseInt(e.target.dataset.ch);
+      currentEpisodeIndex = 0;
+      renderChapterNav();
+      renderEpisodeList();
+      renderEpisode();
+    }
+  });
+  
+  document.getElementById('episodeList').addEventListener('click', e => {
+    const link = e.target.closest('a');
+    if (link) {
+      e.preventDefault();
+      currentEpisodeIndex = parseInt(link.dataset.ep);
+      renderEpisodeList();
+      renderEpisode();
+    }
+  });
+}
+
+init();
+</script>
+<script src="../reading-position.js"></script>
+<script src="../sync-scroll.js"></script>
+<div class="print-footer">Wet Run — Gibson Sprawl 3부작 기반 로그라이크 — 2026 © wiki/site attribution</div>
+<script src="../reader-controls.js"></script>
+</body>
+</html>

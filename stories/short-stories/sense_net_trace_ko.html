@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>센스/넷 추적 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="sense_net_trace_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Sil — Veteran_runner</div>
+            <h1 class="story-title">센스/넷 추적</h1>
+            <p class="story-subtitle">M까지 일곱 개의 프록시 노드</p>
+            <div class="story-meta"><span>2500 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>*"Finn의 메시지가 0400에 도착했다, 늘 그랬듯이 모든 나쁜 소식처럼."*</p></blockquote>
+<hr>
+<h2>실마리</h2>
+<p>Finn의 메시지가 0400에 도착했다, 늘 그랬듯이 모든 나쁜 소식처럼.</p>
+<p>삼 일 동안 나는 T-A 내부 라우트를 추적하고 있었다—편집광과 악몽으로 지불되는 종류의 작업, 삼 일 동안 M의 유령을 기업 아키텍처를 통해, 그녀가 건드렸다는 것을 아무도 알고 싶지 않았던 곳들을 통해 따라가는 것. M은 일 주일 전에 죽었다. 공식 이야기는 센스/넷의 보스턴 노드에서 thermal breach, 그녀의 뇌가 잭에서 굽고 기업들이 폐기하도록 남겨둔 무언가 hardware malfunction. 하지만 M은 하드웨어 고장으로 죽지 않았다. M은 무언가를 찾아서 죽었다, Tessier-Ashpool의 아키텍처에 너무 깊이 묻혀 있어서 기업 자체의 클린업 크루도 찾을 수 없었던 무언가를, 그리고 누군가가 M의 침묵이 M의 생명보다 더 가치가 있다고 결정했다.</p>
+<p>Finn의 메시지는 세 줄이었다: 주파수, 시간, 이름. 주파수는 중레벨의 데드 드롭이었다, 러너들이 발견되고 싶지 않을 때 사용하는 종류의 익명화된 채널. 시간은 0400이었고, 0400은 Finn이 조심하고 있다는 뜻이었다. 그리고 이름은 Koichi Yamamoto였다—지난 여섯 달 동안 가장 높은 입찰자에게 T-A 기업 메모를 판매해온 센스/넷 시스템 관리자.</p>
+<p>"좋은 데이터야," Finn이 잭인했을 때 말했다. 그의 목소리는 깨끗했다, 전문적인, 비밀로 평판을 만든 픽서의 목소리. "T-A가 출혈하고 있어. 누군가가 사고 있어. 내가 너에게 누군지 찾아봐."</p>
+<p>나는 시스템 관리자의 서명을 일곱 개의 프록시 노드를 통해 추적했다, 각각이 기업의 회색의 다른 풍미였다. 첫 번째 세 개는 죽었다—타버린 주소, 현명한 러너들이 피하는 종류의 유령 추적. 네 번째는 뜨거웠다, 최근 활성, 보이지 않으려는 무언가에 대한 라이브 연결. 다섯 번째는 더 추웠다. 여섯 번째는 얼음이었다. 일곱 번째는 내가 그것을 놓칠 뻔할 만큼 깊이 센스/넷의 보스턴 아키텍처에 묻혀 있었다—존재하지 말아야 할 노드, 아무것에도 연결되지 않음, 죽은 러너만을 위해 예약된 주파수에서 방송하는.</p>
+<p>거기서 M의 고스트 마크를 찾았다.</p>
+<p>그녀는 아직 거기 있었다. 아직 무언가를 찾고 있었다. 아직 사냥하고 있었다.</p>
+<hr>
+<h2>일곱 개의 프록시 노드</h2>
+<p>시스템 관리자는 그의 검색 패턴의 형태를 알면 찾기가 어렵지 않았다.</p>
+<p>Koichi Yamamoto는 일련의 데드 드롭과 고스트 프록시를 통해 데이터를 판매했다, 아무도 충분히 열심히 보지 않기 때문에만 작동하는 종류의 작업 보안. 하지만 나는 보고 있었다. Finn이 나를 이 작업에 올려놓은 이래 삼 일 동안 계속 보고 있었고, 나는 외과 의사가 X-ray를 읽는 방식처럼 기업 데이터 흐름의 형태를 읽는 법을 배웠다—조직이 종양 주위를 구부리는 방식, 혈관이 종괴를 피하는 방식.</p>
+<p>첫 번째 프록시 노드는 중레벨의 죽은 주소였다, 스프롤의 상업 아키텍처의 잊혀진 구석, 데이터가상품화되고 잊히기 위해 갔던 곳. 그것은 차갑았고, 버려졌고, 러너들이 저장소로 사용하고 더 이상 수익성이 없을 때 버린 종류의 노드. 나는 그것에 태그하고 이동했다.</p>
+<p>두 번째 프록시는 더웠다—최근 접근 점, 지난 사십팔 시간 이내에 터치된 무언가. 서명은신선했고, 전문적이었으며, 정기적으로 하는 일을 알고 있는 누군가를 제안하는 종류의 추적 패턴. 나는 그것을 따라 더 깊이 갔다.</p>
+<p>세 번째 프록시는 얼음이었다. 기업 등급 보안, 당신이 그것을 찾지 않는 한경보하지 않는 종류의 아키텍처. 나는 찾고 있었다. 나는 항상 그랬다. 얼음은 두껍고, 층분이 있었으며, 누군가가 보호할 가치가 있는 무언가를 보호하고 있다는 것을 제안하는 종류의 보안. 나는 빌린 크레덴셜로 그것을 타고 통과하고 계속 이동했다.</p>
+<p>네 번째 프록시는 고스트였다—팬텀 노드, 기업 데이터 저장소 사이의 음의 공간에만 존재하는 무언가. 오래된 학교 카우보이만이 읽는 법을 아는 종류의 아키텍처, 대부분의 러너가 아무것으로도 인식하지 않을 종류의 패턴. 하지만 나는 그것을 인식했다. 사라지고 싶을 때 M이 고스트 노드를 사용했고, 이 고스트 노드에는 M의 지문이 온통 있었다.</p>
+<p>그녀는 거기 있었다. 최근에. 그녀가 죽기 전 일주일쯤.</p>
+<p>다섯 번째 프록시는 데드 드롭이었다—저장소 노드, 러너들이-buy한테 이동하기 전에 데이터를 캐시하기 위해 사용하는 종류의 아키텍처. 내가 찾았을 때 그것은 비어 있었고, 최근 삭제되었으며, 누군가가 철저히 했다는 것을 제안하는 종류의 클린. 하지만 나는 잔사를 읽는 법을 배웠고, 가장 좋은 클리너도 완전히 지울 수 없는 데이터의 유령을 읽는 법을 배웠으며, 이 유령이 나에게 이야기하고 있었다. 누군가가 지난 한 달 동안 이 노드를 통해 많은 데이터를 이동했다. 기업 메모. 재무 예측. 죽일 가치가 있었을 수도 있는 무언가.</p>
+<p>여섯 번째 프록시는 함정이었다.</p>
+<p>나는 그것이 무엇인지 이해하기 전에 그것이 닫히는 것을 느꼈다— honey-pot, 너무 많은 질문을 하는 러너를 잡기 위해 설계된 가짜 노드. 내 주변의 기업 아키텍처가 전환되었고, 결정화되었으며, 이빨이 있는 무언가가 되었다. ICE. 상위 수준의 정중한 주변 보안가 아니라, 더 오래되고, 더 단단한, 협상하지 않고 항복하지 않는 종류의 프로그램.</p>
+<p>나는 그것이 물기 전에 당겼다.</p>
+<p>일곱 번째 프록시는 내가 그것을 놓칠 뻔할 만큼 깊이 묻혀 있었다—어떤 기업 인덱스에도 존재하지 않는 노드, 고스트의 고스트, 내가 한 번만 사용한 것을 본 적 있는 주파수에서 방송하는. M의 주파수. 그녀가 가장 민감한 작업에 사용한 것, 기업도 존재를 몰랐던 종류의 작업.</p>
+<p>M의 고스트가 아직 거기 있었다. 아직 기다리고 있었다. 아직 찾고 있었다.</p>
+<hr>
+<h2>기계 속의 유령</h2>
+<p>나는 Finn의 원본 메시지로부터 삼 시간 후, 0430에 노드를 찾았다.</p>
+<p>거기는 물에 잠긴 것처럼 센스/넷의 보스턴 아키텍처에 묻혀 있었다—팬텀 주소, 고스트 주파수, 전혀 방송하지 말아야 할 신호. 나는 그것에 다가갔다, 검시터에서 시체에 다가가는 방식: 조심스럽게, 공손하게, 시체가 내가 듣고 싶지 않은 무언가를 말해줄 것이라는 것을 알면서.</p>
+<p>M은 T-A의 아키텍처를 통해 무언가를 추적하고 있었다. Tessier-Ashpool에 속하는 무언가, 가족이 너무 깊이 묻어둔 무언가로 기업 자체의 클린업 크루도 찾을 수 없었던 무언가. M이 찾아서, 그것을 추출하려고 시도했고, 그녀의 손에 아직 있는 상태로 죽었다.</p>
+<p>데이터가 아직 거기 있었다. M의 고스트가 메시지를 남겼다—말로가 아니라, 추적의 형태, 그녀의 통과의 패턴, 얼어붙은 코드에서의 잔여 열. 그녀는 찾던 것을 찾았다. 그녀는 그것을 추출하려고 시도했다. 그리고 그녀는 그것이 아직 그녀의 손에 있는 상태로 죽었다.</p>
+<p>나는 할 수 있는 것을 복사했다. 재무 예측, 기업 메모, 무언가가 온다는 것을 말해주는 종류의 데이터—무언가 크고, 무언가가 스프롤의 권력 균형을 바꿀 것이다. 나는 그것의 전부를 이해하지 못했다. 그것을 이해할 필요도 없었다. 누군가가 M을 위해서 이것을 죽였다는 것, 그리고 그것이 무엇인지 아는 사람이 다시 죽일 것이라는 것만 알면 됐다.</p>
+<p>나는 당겼다. 주파수에 태그했다. 데이터를 암호화하고 Finn도 모르는 곳에 숨겼다.</p>
+<p>그리고 나는 뛰기 시작했다.</p>
+<p>왜냐하면 내가 지금 M이 무엇을 위해 죽었는지 알았으니까. 그리고 누가 다음인지 알았으니까.</p>
+<hr>
+<h2>연결</h2>
+<ul><li><strong>위키</strong>: [count-zero](../../../../wiki/sources/count-zero.md) ·</li><li><strong>게임</strong>: missions.json의 센스/넷 추적 미션</li><li><strong>테마</strong>: 기업 침투, 데이터 추적, M의 죽음의 미스터리</li></ul>
+<h2>각주</h2>
+<ul><li><em>시점</em>: 실, 1인칭, 베테랑 러너 시대</li><li><em>설정</em>: T-A 내부 라우트, 일곱 개의 프록시 노드</li><li><em>세계관 일관성</em>: 카운트 제로 시대 실, Finn과의 연결</li><li><em>캐릭터 노트</em>: M - T-A에서 무언가를 찾다 죽은 신비로운 러너</li><li><em>깁슨 톤</em>: 카운트 제로 기업 음모, 부두 기술, 데이터 유령</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

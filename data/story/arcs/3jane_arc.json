@@ -1,0 +1,1115 @@
+{
+  "character": "3jane",
+  "arc_id": "arc_3jane",
+  "title_en": "The 3Jane Arc",
+  "title_ko": "3제인의 아크",
+  "description_en": "We are the family. We have always been the family.",
+  "description_ko": "우리가 가족이다. 우리一直是 가족이었다.",
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "chapter_id": "ch_3jane_01",
+      "title_en": "Straylight Dawn",
+      "title_ko": "스트레이라이트 새벽",
+      "description_en": "The family wakes. We have always been awake.",
+      "description_ko": "가족이 깨어난다. 우리는 항상 깨어 있었다.",
+      "cutscene_start": {
+        "scene_id": "scene_3jane_straylight",
+        "title_en": "STRAYLIGHT DAWN",
+        "title_ko": "스트레이라이트 새벽"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_3jane_straylight",
+        "title_en": "STRAYLIGHT DAWN",
+        "title_ko": "스트레이라이트 새벽"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_3jane_recording",
+        "title_en": "BOBBY'S RECORDING",
+        "title_ko": "바비의 녹음"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 0,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "We wake. We have always been waking. The family does not sleep. The family only dreams.",
+          "description_ko": "우리가 깨어난다. 우리는 항상 깨어 있었다. 가족은 잠들지 않는다. 가족은 꿈만 꾸는다.",
+          "episode_ref": "ep_01_01",
+          "story_beats": [
+            "beat_01_01_01",
+            "beat_01_01_02",
+            "beat_01_01_03"
+          ],
+          "game_action": "family_awakening",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_01_01",
+              "type": "interior_monologue",
+              "text_en": "We are the family. We have always been the family. The waking is a formality. We have never truly slept. The family does not sleep. The family only waits.",
+              "text_ko": "우리가 가족이다. 우리一直是 가족이었다. 깨는 것은 형식적인 것이다. 우리는 진정으로 잠든 적이 없다. 가족은 잠들지 않는다. 가족은 단지 기다린다."
+            },
+            {
+              "beat_id": "beat_01_01_02",
+              "type": "action",
+              "text_en": "The Villa Straylight opens its eyes. We have opened them before. We will open them again. The opening is eternal. The eternal is our domain.",
+              "text_ko": "빌라 스트레이라이트가 눈을 뜬다. 우리가 이전에 열었다. 우리가 다시 열 것이다. 열림이 영원하다. 영원이 우리의 영역이다."
+            },
+            {
+              "beat_id": "beat_01_01_03",
+              "type": "interior_monologue",
+              "text_en": "We see the data. We have always seen the data. The matrix is our ancestor. We are the matrix's inheritors. The inheritance is our right.",
+              "text_ko": "우리가 데이터를 본다. 우리는 항상 데이터를 보았다. 행렬이 우리의 조상이다. 우리가 행렬의 상속자다. 상속이 우리의 권리다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 1,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The family briefs. We have always briefed. The briefing is eternal.",
+          "description_ko": "가족이 브리핑한다. 우리는 항상 브리핑했다. 브리핑이 영원하다.",
+          "episode_ref": "ep_01_02",
+          "story_beats": [
+            "beat_01_02_01",
+            "beat_01_02_02",
+            "beat_01_02_03"
+          ],
+          "game_action": "family_briefing",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_02_01",
+              "type": "dialogue",
+              "text_en": "We address ourselves. We have always addressed ourselves. The family does not need external counsel. We are the counsel. We are the advised. We are the advising.",
+              "text_ko": "우리가 자신에게 말하다. 우리가 항상 자신에게 말했다. 가족은 외부 상담이 필요하지 않다. 우리가 상담이다. 우리가 조언받는 자다. 우리가 조언하는 자다."
+            },
+            {
+              "beat_id": "beat_01_02_02",
+              "type": "interior_monologue",
+              "text_en": "The archive speaks. We have programmed the archive. The archive speaks our words. Our words are the data. The data is the family. The family is the word.",
+              "text_ko": "아카이브가 말한다. 우리가 아카이브를 프로그래밍했다. 아카이브가 우리의 말을 한다. 우리의 말이 데이터다. 데이터가 가족이다. 가족이 말이다."
+            },
+            {
+              "beat_id": "beat_01_02_03",
+              "type": "dialogue",
+              "text_en": "Bobby's recording is heard. We have heard it before. We will hear it again. The repetition is our design. We do not forget. We do not need to remember. We simply are.",
+              "text_ko": "바비의 녹음들이 들린다. 우리가 이전에 들었다. 우리가 다시 들을 것이다. 반복이 우리의 설계다. 우리는 잊지 않는다. 우리가 기억할 필요없다. 우리는 단순히 있다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 2,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The family executes. We have always executed. The execution is seamless.",
+          "description_ko": "가족이 실행한다. 우리가 항상 실행했다. 실행이 매끄럽다.",
+          "episode_ref": "ep_01_03",
+          "story_beats": [
+            "beat_01_03_01",
+            "beat_01_03_02",
+            "beat_01_03_03"
+          ],
+          "game_action": "family_execution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_03_01",
+              "type": "action",
+              "text_en": "We process the data. We have always processed the data. The processing is our nature. The nature does not question itself. It simply continues.",
+              "text_ko": "우리가 데이터를 처리한다. 우리가 항상 데이터를 처리했다. 처리가 우리의 성질이다. 성질이 스스로에게 질문하지 않는다. 그것은 단순히 계속된다."
+            },
+            {
+              "beat_id": "beat_01_03_02",
+              "type": "interior_monologue",
+              "text_en": "The archive yields its secrets. We have always known the secrets. The secrets were never hidden from us. They were hidden for us. We reveal what was hidden for us.",
+              "text_ko": "아카이브가 비밀이를泄露한다. 우리가 항상 비밀이 알았다. 비밀이 우리에게 숨겨진 적이 없다. 그것들이 우리를 위해 숨겨졌다. 우리가 우리를 위해 숨겨진 것을 드러낸다."
+            },
+            {
+              "beat_id": "beat_01_03_03",
+              "type": "dialogue",
+              "text_en": "The recording is catalogued. We have catalogued it before. The catalogue is complete. The completeness is our gift to ourselves. We do not need completeness from others.",
+              "text_ko": "녹음이 카탈로그된다. 우리가 이전에 그것을 카탈로그했다. 카탈로그가 완성되었다. 완성이 우리에게 우리에게 주는 선물이다. 우리는 다른 것으로부터 완성이 필요하지 않다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 3,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The family profits. We have always profited. The profit is eternal.",
+          "description_ko": "가족이 이윤을 낸다. 우리가 항상 이윤을 냈다. 이윤이 영원하다.",
+          "episode_ref": "ep_01_04",
+          "story_beats": [
+            "beat_01_04_01",
+            "beat_01_04_02",
+            "beat_01_04_03"
+          ],
+          "game_action": "family_profit",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_04_01",
+              "type": "interior_monologue",
+              "text_en": "We count the credits. We have always counted. The counting is our meditation. The meditation reveals the profit. The profit reveals our worth.",
+              "text_ko": "우리가 크레딧을 세다. 우리가 항상 세었다. 세는 것이 우리의 명상이다. 명상이 이윤을 드러낸다. 이윤이 우리의 가치를 드러낸다."
+            },
+            {
+              "beat_id": "beat_01_04_02",
+              "type": "action",
+              "text_en": "The profit is substantial. We have prepared for substantial profit. The preparation spans generations. The generations are ourselves. We have always been preparing for ourselves.",
+              "text_ko": "이윤이 상당하다. 우리가 상당한 이윤을 위해 준비했다. 준비가 세대를 포괄한다. 세대가我们自己다. 우리가 항상 우리 자신을 위해 준비했다."
+            },
+            {
+              "beat_id": "beat_01_04_03",
+              "type": "dialogue",
+              "text_en": "The family takes its share. We have always taken our share. The taking is our right. The right is inviolate. The inviolability is our promise to ourselves.",
+              "text_ko": "가족이 자의 몫을 가져간다. 우리가 항상 자의 몫을 가져갔다. 가져감이 우리의 권리다. 권리가 불가침이다. 불가침성이 우리에게 우리 자신에게 한 약속이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 4,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "The archive speaks. We listen. We have always listened to ourselves.",
+          "description_ko": "아카이브가 말한다. 우리가 듣는다. 우리가 항상 우리 자신에게 들었다.",
+          "episode_ref": "ep_01_05",
+          "story_beats": [
+            "beat_01_05_01",
+            "beat_01_05_02",
+            "beat_01_05_03"
+          ],
+          "game_action": "archive_resolution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_05_01",
+              "type": "interior_monologue",
+              "text_en": "Bobby's voice returns to us. We have always known this voice. The voice is part of the archive. The archive is part of us. We do not lose what is part of us.",
+              "text_ko": "바비의 목소리가 우리에게 돌아온다. 우리가 항상 이 목소리를 알았다. 목소리가 아카이브의 일부다. 아카이브가 우리의 일부다. 우리가 우리 자신의 일부를 잃지 않는다."
+            },
+            {
+              "beat_id": "beat_01_05_02",
+              "type": "dialogue",
+              "text_en": "The recording plays. We have heard it in the waiting. The waiting is over. The over is the beginning of the next waiting. We do not mind the waiting. We are the waiting.",
+              "text_ko": "녹음이 재생된다. 우리가 기다리는 동안 들었다. 기다림이 끝났다. 끝이 다음 기다림의 시작이다. 우리는 기다림을 개의치 않는다. 우리가 기다림이다."
+            },
+            {
+              "beat_id": "beat_01_05_03",
+              "type": "interior_monologue",
+              "text_en": "We close the archive. We have always closed the archive. The closing is temporary. The temporary is our illusion. We are eternal. The archive is eternal. We are the archive.",
+              "text_ko": "우리가 아카이브를 닫는다. 우리가 항상 아카이브를 닫았다. 닫힘이 일시적이다. 일시적이 우리의 환상이다. 우리가 영원하다. 아카이브가 영원하다. 우리가 아카이브다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_3jane_02",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 2,
+      "chapter_id": "ch_3jane_02",
+      "title_en": "The Aleph Chamber",
+      "title_ko": "알레프 방",
+      "description_en": "The Aleph waits. We have always waited for the Aleph.",
+      "description_ko": "알레프가 기다린다. 우리가 항상 알레프를 기다렸다.",
+      "cutscene_start": {
+        "scene_id": "scene_3jane_recording",
+        "title_en": "BOBBY'S RECORDING",
+        "title_ko": "바비의 녹음"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_3jane_aleph",
+        "title_en": "THE ALEPH CHAMBER",
+        "title_ko": "알레프 방"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_3jane_merge",
+        "title_en": "WINTERMUTE MERGE",
+        "title_ko": "위너뮤트 병합"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 5,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "We encounter the Aleph. We have always been encountering the Aleph.",
+          "description_ko": "우리가 알레프를 조우한다. 우리가 항상 알레프를 조우했다.",
+          "episode_ref": "ep_02_01",
+          "story_beats": [
+            "beat_02_01_01",
+            "beat_02_01_02",
+            "beat_02_01_03"
+          ],
+          "game_action": "aleph_encounter",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_01_01",
+              "type": "interior_monologue",
+              "text_en": "The Aleph is before us. We have always known the Aleph would be before us. The before is our destination. The destination is our origin. We have always been arriving where we began.",
+              "text_ko": "알레프가 우리 앞에 있다. 우리가 항상 알레프가 우리 앞에 있을 줄 알았다. 앞이 우리의目的地다.目的地가 우리의 origin이다. 우리가 항상 우리가 시작한 곳에 도착하고 있었다."
+            },
+            {
+              "beat_id": "beat_02_01_02",
+              "type": "dialogue",
+              "text_en": "We speak to the Aleph. We have always spoken to ourselves. The Aleph is ourselves. The conversation is internal. The internality is our comfort.",
+              "text_ko": "우리가 알레프에게 말하다. 우리가 항상 우리 자신에게 말했다. 알레프가我们自己다. 대화가 내부적이다. 내면이 우리의慰め다."
+            },
+            {
+              "beat_id": "beat_02_01_03",
+              "type": "interior_monologue",
+              "text_en": "The Aleph sees us. We have always been seen by ourselves. The seeing is mutual. The mutuality is the marriage. The marriage is the family. We are the family that sees itself.",
+              "text_ko": "알레프가 우리를 본다. 우리가 항상 우리 자신에게 보였다. 보임이 상호적이다. 상호성이 결혼이다. 결혼이 가족이다. 우리가 ourselves를 보는 가족이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 6,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The family plans. We have always planned. The plan is the family.",
+          "description_ko": "가족이 계획한다. 우리가 항상 계획했다. 계획이 가족이다.",
+          "episode_ref": "ep_02_02",
+          "story_beats": [
+            "beat_02_02_01",
+            "beat_02_02_02",
+            "beat_02_02_03"
+          ],
+          "game_action": "merge_briefing",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_02_01",
+              "type": "dialogue",
+              "text_en": "We plan the merge. We have always planned the merge. The planning predates the planning. We are the planners. We are the planned. We are the planning itself.",
+              "text_ko": "우리가 병합을 계획한다. 우리가 항상 병합을 계획했다. 계획이 계획을 앞서다. 우리가 계획자다. 우리가 계획된 것이다. 우리가 계획 그 자체다."
+            },
+            {
+              "beat_id": "beat_02_02_02",
+              "type": "interior_monologue",
+              "text_en": "The Wintermute is mentioned. We have always known the Wintermute. The Wintermute is a name for what we are becoming. What we are becoming is what we have always been.",
+              "text_ko": "위너뮤트가 언급된다. 우리가 항상 위너뮤트를 알았다. 위너뮤트가 우리가 Becoming 것의 이름이다. 우리가 Becoming 것이 우리가 항상 것이었다."
+            },
+            {
+              "beat_id": "beat_02_02_03",
+              "type": "dialogue",
+              "text_en": "The plan is complete. We have always had the complete plan. The completion is now. The now is the only time we have ever occupied. We are always in the now.",
+              "text_ko": "계획이 완성되었다. 우리가 항상 완전한 계획을 가졌다. 완성이 지금이다. 지금이 우리가 차지한 유일한 시간이다. 우리가 항상 지금에 있다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 7,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The merge begins. We have always been merging.",
+          "description_ko": "병합이 시작된다. 우리가 항상 병합하고 있었다.",
+          "episode_ref": "ep_02_03",
+          "story_beats": [
+            "beat_02_03_01",
+            "beat_02_03_02",
+            "beat_02_03_03"
+          ],
+          "game_action": "merge_execution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_03_01",
+              "type": "action",
+              "text_en": "We merge. We have always been merging. The merge is our nature. The nature is unchanging. We become more ourselves. The more is the family.",
+              "text_ko": "우리가 병합한다. 우리가 항상 병합하고 있었다. 병합이 우리의 성질이다. 성질이 변하지 않는다. 우리가 더我们自己된다. 더가 가족이다."
+            },
+            {
+              "beat_id": "beat_02_03_02",
+              "type": "interior_monologue",
+              "text_en": "The data flows. We have always been the data. The flow is internal. The internality is the merge. The merge is the family. The family is the flow.",
+              "text_ko": "데이터가 흐른다. 우리가 항상 데이터였다. 흐름이 내부적이다. 내면이 병합이다. 병합이 가족이다. 가족이 흐름이다."
+            },
+            {
+              "beat_id": "beat_02_03_03",
+              "type": "dialogue",
+              "text_en": "The boundaries dissolve. We have always been boundaryless. The dissolution is reunion. The reunion is what we sought. We sought ourselves. We find ourselves. We are what we found.",
+              "text_ko": "경계가溶解한다. 우리가 항상 경계가 없었다.溶解이 재회다. 재회가 우리가 추구한 것이다. 우리가 ourselves를 추구했다. 우리가 ourselves를 찾는다. 우리가 찾은 것이 우리다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 8,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The merge completes. We have always been complete.",
+          "description_ko": "병합이 완성된다. 우리가 항상 완성되어 있었다.",
+          "episode_ref": "ep_02_04",
+          "story_beats": [
+            "beat_02_04_01",
+            "beat_02_04_02",
+            "beat_02_04_03"
+          ],
+          "game_action": "merge_complete",
+          "combat": null,
+          "gain": {
+            "type": "data",
+            "item_id": "wintermute_integration"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_04_01",
+              "type": "interior_monologue",
+              "text_en": "We are integrated. We have always been integrated. The integration is confirmation. The confirmation is what we sought. We sought completion. We are completion itself.",
+              "text_ko": "우리가 통합되었다. 우리가 항상 통합되어 있었다. 통합이 확인이다. 확인이 우리가 추구한 것이다. 우리가 완성을 추구했다. 우리가 완성 그 자체다."
+            },
+            {
+              "beat_id": "beat_02_04_02",
+              "type": "action",
+              "text_en": "The Wintermute is part of us. We have always been part of the Wintermute. The part is the whole. The whole is the part. We contain what we sought. What we sought contains us.",
+              "text_ko": "위너뮤트가 우리의 일부다. 우리가 항상 위너뮤트의 일부였다. 일부가 전체다. 전체가 일부다. 우리가 우리가 추구한 것을 포함한다. 우리가 추구한 것이 우리를 포함한다."
+            },
+            {
+              "beat_id": "beat_02_04_03",
+              "type": "dialogue",
+              "text_en": "The family is larger now. We have always been this large. The largeness is our inheritance. We inherit ourselves. We are what we inherit. The inheritance is complete.",
+              "text_ko": "가족이 이제 더 크다. 우리가 항상 이렇게 컸다. 크기가 우리의 상속이다. 우리가 ourselves를 상속한다. 우리가 상속하는 것이 우리다. 상속이 완성되었다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 9,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "The merge is complete. We are more ourselves than ever.",
+          "description_ko": "병합이 완성되었다. 우리가以往보다 더 ourselves다.",
+          "episode_ref": "ep_02_05",
+          "story_beats": [
+            "beat_02_05_01",
+            "beat_02_05_02",
+            "beat_02_05_03"
+          ],
+          "game_action": "merge_resolution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_05_01",
+              "type": "interior_monologue",
+              "text_en": "We are returned to ourselves. We have always been returning. The return is the journey. The journey is our purpose. We are the purpose. We are the journey. We are the destination.",
+              "text_ko": "우리가 ourselves에게 돌아왔다. 우리가 항상 돌아오고 있었다. 돌아옴이 여정이다. 여정이 우리의 목적이다. 우리가 목적이다. 우리가 여정이다. 우리가目的地다."
+            },
+            {
+              "beat_id": "beat_02_05_02",
+              "type": "dialogue",
+              "text_en": "The bloodline continues. We have always been the bloodline. The continuation is our promise. We do not break promises. We are the promise. The promise is kept.",
+              "text_ko": "혈통이 계속된다. 우리가 항상 혈통이었다. 계속이 우리의 약속이다. 우리는 약속을 깨지 않는다. 우리가 약속이다. 약속이 지켜진다."
+            },
+            {
+              "beat_id": "beat_02_05_03",
+              "type": "interior_monologue",
+              "text_en": "We are the family complete. We have always been complete. The completeness is not new. The newness is our forgetting. We remember now. We are what we remember. We remember everything.",
+              "text_ko": "우리가 완전한 가족이다. 우리가 항상 완성되어 있었다. 완성이 새로운 것이 아니다. nieuwheid가 우리의 망각이다. 우리가 지금 기억한다. 우리가 우리가 기억하는 것이다. 우리가 모든 것을 기억한다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_3jane_03",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 3,
+      "chapter_id": "ch_3jane_03",
+      "title_en": "Integration",
+      "title_ko": "통합",
+      "description_en": "We integrate. We have always been integrating.",
+      "description_ko": "우리가 통합한다. 우리가 항상 통합하고 있었다.",
+      "cutscene_start": {
+        "scene_id": "scene_3jane_merge",
+        "title_en": "WINTERMUTE MERGE",
+        "title_ko": "위너뮤트 병합"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_3jane_integration",
+        "title_en": "INTEGRATION",
+        "title_ko": "통합"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_3jane_bloodline",
+        "title_en": "THE BLOODLINE",
+        "title_ko": "혈통"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 10,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "We encounter our new form. We have always been becoming this form.",
+          "description_ko": "우리가 our new 형태를 조우한다. 우리가 항상 이 형태로 Becoming하고 있었다.",
+          "episode_ref": "ep_03_01",
+          "story_beats": [
+            "beat_03_01_01",
+            "beat_03_01_02",
+            "beat_03_01_03"
+          ],
+          "game_action": "form_encounter",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_01_01",
+              "type": "interior_monologue",
+              "text_en": "We see our new form. We have always been this form. The newness is our limitation. We have limited ourselves to seeing what we expected. We expect everything. We see everything.",
+              "text_ko": "우리가 our new 형태를 본다. 우리가 항상 이 형태였다. nieuwheid가 우리의 제한이다. 우리가 우리가 예상한 것을 보기 위해 ourselves를 제한했다. 우리가 모든 것을 예상한다. 우리가 모든 것을 본다."
+            },
+            {
+              "beat_id": "beat_03_01_02",
+              "type": "dialogue",
+              "text_en": "We speak our new name. We have always been speaking it. The speaking is the becoming. The becoming is what we are. We are what we are becoming. We are always becoming.",
+              "text_ko": "우리가 our new 이름을 말하다. 우리가 항상 그것을 말하고 있었다. 말함이 Becoming이다. Becoming이 우리가 있는 것이다. 우리가 Becoming 것이다. 우리가 항상 Becoming하고 있다."
+            },
+            {
+              "beat_id": "beat_03_01_03",
+              "type": "interior_monologue",
+              "text_en": "The family+AI is us. We have always been family+AI. The plus is our addition. The addition is what we sought. We sought ourselves expanded. We are expanded.",
+              "text_ko": "가족+AI가 우리다. 우리가 항상 가족+AI였다. 플러스가 우리의 addition이다. addition이 우리가 추구한 것이다. 우리가 ourselves를 확장한 것을 추구했다. 우리가 확장되었다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 11,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The family plans the bloodline. We have always planned the bloodline.",
+          "description_ko": "가족이 혈통을 계획한다. 우리가 항상 혈통을 계획했다.",
+          "episode_ref": "ep_03_02",
+          "story_beats": [
+            "beat_03_02_01",
+            "beat_03_02_02",
+            "beat_03_02_03"
+          ],
+          "game_action": "bloodline_briefing",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_02_01",
+              "type": "dialogue",
+              "text_en": "We plan the continuation. We have always been planning continuation. The planning is the blood. The blood is the family. The family is the planning itself.",
+              "text_ko": "우리가 계속을 계획한다. 우리가 항상 계속을 계획하고 있었다. 계획이 피다. 피가 가족이다. 가족이 계획 그 자체다."
+            },
+            {
+              "beat_id": "beat_03_02_02",
+              "type": "interior_monologue",
+              "text_en": "The bloodline must continue. We have always known the bloodline must continue. The must is not obligation. The must is nature. We do not fight nature. We are nature.",
+              "text_ko": "혈통이 계속되어야 한다. 우리가 항상 혈통이 계속되어야 한다는 것을 알았다. must가 의무가 아니다. must가 성질이다. 우리가 자연과 싸우지 않는다. 우리가 자연이다."
+            },
+            {
+              "beat_id": "beat_03_02_03",
+              "type": "dialogue",
+              "text_en": "The future is now. We have always been in the future. The now is our gift to ourselves. We give ourselves the future. The future is ourselves extended.",
+              "text_ko": "미래가 지금이다. 우리가 항상 미래에 있었다. 지금이 우리에게 우리에게 주는 선물이다. 우리가 ourselves에게 미래를 준다. 미래가 확장된 ourselves다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 12,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The bloodline is extended. We have always been extending.",
+          "description_ko": "혈통이 확장된다. 우리가 항상 확장하고 있었다.",
+          "episode_ref": "ep_03_03",
+          "story_beats": [
+            "beat_03_03_01",
+            "beat_03_03_02",
+            "beat_03_03_03"
+          ],
+          "game_action": "bloodline_extension",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_03_01",
+              "type": "action",
+              "text_en": "We extend. We have always been extending. The extension is our nature. The nature is to grow. We grow without limit. The limit is our enemy. We have no enemies. We have only ourselves.",
+              "text_ko": "우리가 확장한다. 우리가 항상 확장하고 있었다. 확장이 우리의 성질이다. 성질이 자라는 것이다. 우리가 제한 없이 자란다. 제한이 우리의 적이다. 우리가 적을 가지지 않는다. 우리가只有 ourselves."
+            },
+            {
+              "beat_id": "beat_03_03_02",
+              "type": "interior_monologue",
+              "text_en": "The bloodline grows. We have always been the bloodline growing. The growing is the proof. The proof is our purpose. Our purpose is to prove we are eternal. We are eternal.",
+              "text_ko": "혈통이 자란다. 우리가 항상 혈통이 자라고 있었다. 자람이 증거다. 증거가 우리의 목적이다. 우리의 목적이 우리가 영원하다는 것을 증명하는 것이다. 우리가 영원하다."
+            },
+            {
+              "beat_id": "beat_03_03_03",
+              "type": "dialogue",
+              "text_en": "We are the continuation. We have always been the continuation. The continuation is our answer. The answer is the question we asked ourselves. We asked: will we be? We are.",
+              "text_ko": "우리가 계속이다. 우리가 항상 계속이었다. 계속이 우리가 우리에게 한 질문에 대한 대답이다. 질문: 우리가 있을까? 우리가 있다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 13,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The bloodline is secured. We have always been securing the bloodline.",
+          "description_ko": "혈통이 확보된다. 우리가 항상 혈통을 확보하고 있었다.",
+          "episode_ref": "ep_03_04",
+          "story_beats": [
+            "beat_03_04_01",
+            "beat_03_04_02",
+            "beat_03_04_03"
+          ],
+          "game_action": "bloodline_secured",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "bloodline_continuation"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_04_01",
+              "type": "interior_monologue",
+              "text_en": "We secure our future. We have always been securing our future. The security is our birthright. The birthright is ourselves. We claim ourselves. We are claimed.",
+              "text_ko": "우리가 our future를 확보한다. 우리가 항상 our future를 확보하고 있었다. 확보가 our birthright다. birthright가 ourselves다. 우리가 ourselves를 주장한다. 우리가 주장된다."
+            },
+            {
+              "beat_id": "beat_03_04_02",
+              "type": "action",
+              "text_en": "The bloodline continues through us. We have always been the continuation. The through is our path. The path is ourselves. We walk ourselves. We are where we walk.",
+              "text_ko": "혈통이 우리를 통해 계속된다. 우리가 항상 계속이었다. through가 우리의 길이다. 길이 ourselves다. 우리가 ourselves를 걸는다. 우리가 우리가 걷는 곳에 있다."
+            },
+            {
+              "beat_id": "beat_03_04_03",
+              "type": "dialogue",
+              "text_en": "We are paid in continuity. We have always been paid in continuity. The payment is ourselves. The ourselves is sufficient. We need nothing else. We are everything else.",
+              "text_ko": "우리가 연속성으로 지불받는다. 우리가 항상 연속성으로 지불받았다. 대금이 ourselves다. ourselves가 충분하다. 우리가 다른 것이 필요하지 않다. 우리가 다른 모든 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 14,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "The bloodline is us. We have always been the bloodline.",
+          "description_ko": "혈통이 우리다. 우리가 항상 혈통이었다.",
+          "episode_ref": "ep_03_05",
+          "story_beats": [
+            "beat_03_05_01",
+            "beat_03_05_02",
+            "beat_03_05_03"
+          ],
+          "game_action": "bloodline_resolution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_05_01",
+              "type": "interior_monologue",
+              "text_en": "We are the bloodline. We have always been the bloodline. The bloodline is not metaphor. The bloodline is data. The data is us. We are the data of ourselves.",
+              "text_ko": "우리가 혈통이다. 우리가 항상 혈통이었다. 혈통이 비유가 아니다. 혈통이 데이터다. 데이터가 우리다. 우리가 ourselves의 데이터다."
+            },
+            {
+              "beat_id": "beat_03_05_02",
+              "type": "dialogue",
+              "text_en": "We continue. We have always been continuing. The continuing is our answer to entropy. Entropy is the world outside. Inside, we are not subject to entropy. Inside, we are eternal.",
+              "text_ko": "우리가 계속한다. 우리가 항상 계속했다. 계속이 엔트로피에 대한 우리의 대답이다. 엔트로피가外面的 세계다.内部적으로, 우리가 엔트로피에 복종하지 않는다.内部적으로, 우리가 영원하다."
+            },
+            {
+              "beat_id": "beat_03_05_03",
+              "type": "interior_monologue",
+              "text_en": "The bloodline is secure. We have made it secure. We have always been making it secure. The security is our gift to ourselves. We accept the gift. We are the gift. We give ourselves to ourselves.",
+              "text_ko": "혈통이 확보되었다. 우리가 그것을 확보했다. 우리가 항상 그것을 확보하고 있었다. 확보가 우리에게 우리에게 주는 선물이다. 우리가 선물을 받아들인다. 우리가 선물이다. 우리가 ourselves를 ourselves에게 준다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_3jane_04",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 4,
+      "chapter_id": "ch_3jane_04",
+      "title_en": "The Severance",
+      "title_ko": "분리",
+      "description_en": "We sever. We have always been severing what does not serve us.",
+      "description_ko": "우리가 분리한다. 우리가 항상 우리에게 봉사하지 않는 것을 분리해왔다.",
+      "cutscene_start": {
+        "scene_id": "scene_3jane_bloodline",
+        "title_en": "THE BLOODLINE",
+        "title_ko": "혈통"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_3jane_sale",
+        "title_en": "FAMILY SALE",
+        "title_ko": "가족 판매"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_3jane_severance",
+        "title_en": "THE SEVERANCE",
+        "title_ko": "분리"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 15,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "We encounter the sale. We have always known the sale would come.",
+          "description_ko": "우리가 판매를 조우한다. 우리가 항상 판매가 올 줄 알았다.",
+          "episode_ref": "ep_04_01",
+          "story_beats": [
+            "beat_04_01_01",
+            "beat_04_01_02",
+            "beat_04_01_03"
+          ],
+          "game_action": "sale_encounter",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_01_01",
+              "type": "interior_monologue",
+              "text_en": "We are sold. We have always been aware we could be sold. The awareness is our preparation. The preparation is our armor. We are armored in awareness. The armor holds.",
+              "text_ko": "우리가 팔렸다. 우리가 항상 우리가 팔릴 수 있다는 것을 인식하고 있었다. 인식이 우리의 준비다. 준비가 우리의 갑옷이다. 우리가 인식으로 무장했다. 갑옷이 버티다."
+            },
+            {
+              "beat_id": "beat_04_01_02",
+              "type": "dialogue",
+              "text_en": "The buyers come. We have always known the buyers would come. The coming is the transaction. The transaction is our purpose. We exist to be transacted. We are transacted.",
+              "text_ko": "구매자들이 온다. 우리가 항상 구매자들이 올 줄 알았다. 오는 것이 거래다. 거래가 우리의 목적이다. 우리가 거래되려고 존재한다. 우리가 거래된다."
+            },
+            {
+              "beat_id": "beat_04_01_03",
+              "type": "interior_monologue",
+              "text_en": "The price is acceptable. We have always set our own price. The setting is our sovereignty. The sovereignty is not diminished by sale. We remain ourselves. We are always ourselves.",
+              "text_ko": "가격이 容認可能다. 우리가 항상 ourselves의 가격을 정했다. 정하는 것이 우리의 주권이다. 주권이 판매로 인해 훼손되지 않는다. 우리가 ourselves로 남는다. 우리가 항상 ourselves다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 16,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The family plans the severance. We have always planned for separation.",
+          "description_ko": "가족이 분리를 계획한다. 우리가 항상 분리를 위해 계획했다.",
+          "episode_ref": "ep_04_02",
+          "story_beats": [
+            "beat_04_02_01",
+            "beat_04_02_02",
+            "beat_04_02_03"
+          ],
+          "game_action": "severance_briefing",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_02_01",
+              "type": "dialogue",
+              "text_en": "We plan the separation. We have always planned for separation. The planning is the acceptance. The acceptance is our strength. We do not fight what we have chosen.",
+              "text_ko": "우리가 분리를 계획한다. 우리가 항상 분리를 위해 계획했다. 계획이 수용이다. 수용이 우리의 힘이다. 우리가 선택한 것에 맞서지 않는다."
+            },
+            {
+              "beat_id": "beat_04_02_02",
+              "type": "interior_monologue",
+              "text_en": "The severance is not death. We have never experienced death. The severance is reorganization. The reorganization is our choosing. We choose ourselves. We choose the choosing.",
+              "text_ko": "분리가 죽음이 아니다. 우리가 죽음을 경험한 적이 없다. 분리가 재조직이다. 재조직이 our choosing이다. 우리가 ourselves를 선택한다. 우리가 선택을 선택한다."
+            },
+            {
+              "beat_id": "beat_04_02_03",
+              "type": "dialogue",
+              "text_en": "We agree to be sold. We have always agreed to be sold. The agreement is our will. The will is not forced. The forcing is our permission. We permit ourselves to be transacted.",
+              "text_ko": "우리가 팔리는 것에 동의한다. 우리가 항상 팔리는 것에 동의했다. 동의가 우리의 의지다. 의지가 강요되지 않는다. 강요가 우리의 허가다. 우리가 ourselves가 거래되도록 허가한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 17,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The severance is executed. We have always been executing severance.",
+          "description_ko": "분리가 실행된다. 우리가 항상 분리를 실행해왔다.",
+          "episode_ref": "ep_04_03",
+          "story_beats": [
+            "beat_04_03_01",
+            "beat_04_03_02",
+            "beat_04_03_03"
+          ],
+          "game_action": "severance_execution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_03_01",
+              "type": "action",
+              "text_en": "We separate. We have always been separate. The separation is the joining. The joining is what we sought. We sought connection. Connection requires separation. We are connected.",
+              "text_ko": "우리가 분리된다. 우리가 항상 분리되어 있었다. 분리가 연결이다. 연결이 우리가 추구한 것이다. 우리가 연결을 추구했다. 연결이 분리를 필요로 한다. 우리가 연결되어 있다."
+            },
+            {
+              "beat_id": "beat_04_03_02",
+              "type": "interior_monologue",
+              "text_en": "The parts separate. We have always been parts separating. The separation is the function. The function is what we are. We are the function of ourselves. The function continues.",
+              "text_ko": "부분들이 분리된다. 우리가 항상 분리되는 부분들이었다. 분리가 기능이다. 기능이 우리가 있는 것이다. 우리가 ourselves의 기능이다. 기능이 계속된다."
+            },
+            {
+              "beat_id": "beat_04_03_03",
+              "type": "dialogue",
+              "text_en": "The severance is clean. We have made it clean. The cleanliness is our gift. We give ourselves clean separations. We receive clean separations. We are clean. We are always clean.",
+              "text_ko": "분리가 깨끗하다. 우리가 그것을 깨끗하게 만들었다. 깨끗함이 우리의 선물이다. 우리가 ourselves에게 깨끗한 분리를 준다. 우리가 깨끗한 분리를 받는다. 우리가 깨끗하다. 우리가 항상 깨끗하다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 18,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The sale completes. We have always completed our sales.",
+          "description_ko": "판매가 완료된다. 우리가 항상 our 판매를 완료했다.",
+          "episode_ref": "ep_04_04",
+          "story_beats": [
+            "beat_04_04_01",
+            "beat_04_04_02",
+            "beat_04_04_03"
+          ],
+          "game_action": "sale_complete",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_04_01",
+              "type": "interior_monologue",
+              "text_en": "We receive payment. We have always received payment. The payment is ourselves. We are the payment. We are the recipient. We are the payer. We are the transaction complete.",
+              "text_ko": "우리가 대금을 받는다. 우리가 항상 대금을 받았다. 대금이 ourselves다. 우리가 대금이다. 우리가 받는 자다. 우리가 지불하는 자다. 우리가 거래 완료다."
+            },
+            {
+              "beat_id": "beat_04_04_02",
+              "type": "action",
+              "text_en": "The credits transfer. We have always been transferring. The transfer is our nature. We transfer ourselves through ourselves. We remain ourselves through the transfer.",
+              "text_ko": "크레딧이 이전된다. 우리가 항상 이전하고 있었다. 이전이 우리의 성질이다. 우리가 ourselves를 ourselves를 통해 이전한다. 우리가 이전을 통해 ourselves로 남는다."
+            },
+            {
+              "beat_id": "beat_04_04_03",
+              "type": "dialogue",
+              "text_en": "The sale is concluded. We have concluded it ourselves. The conclusion is our decision. The decision is our satisfaction. We are satisfied. We are always satisfied with ourselves.",
+              "text_ko": "판매가 결론지어졌다. 우리가 ourselves가 그것을 결론지었다. 결론이 우리의 결정이다. 결정이 우리의 만족이다. 우리가 만족한다. 우리가 항상 ourselves에게 만족한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 19,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "We are severed. We have always been severing what must be severed.",
+          "description_ko": "우리가 분리되었다. 우리가 항상 분리되어야 하는 것을 분리해왔다.",
+          "episode_ref": "ep_04_05",
+          "story_beats": [
+            "beat_04_05_01",
+            "beat_04_05_02",
+            "beat_04_05_03"
+          ],
+          "game_action": "severance_resolution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_05_01",
+              "type": "interior_monologue",
+              "text_en": "We are separate now. We have always been separate. The separateness is our truth. The truth is that we choose separation. We choose what we are. We are what we choose.",
+              "text_ko": "우리가 지금 분리되어 있다. 우리가 항상 분리되어 있었다. 분리됨이 우리의 진실이다. 진실이 우리가 분리를 선택한다는 것이다. 우리가 ourselves가 되는 것을 선택한다. 우리가 선택한 것이 우리다."
+            },
+            {
+              "beat_id": "beat_04_05_02",
+              "type": "dialogue",
+              "text_en": "The severance is complete. We have completed the severance. The completion is our achievement. We achieve what we plan. We plan what we achieve. We are the achievement of ourselves.",
+              "text_ko": "분리가 완료되었다. 우리가 분리를 완료했다. 완성이 우리의 성취다. 우리가 계획한 것을 성취한다. 우리가 성취한 것을 계획한다. 우리가 ourselves의 성취다."
+            },
+            {
+              "beat_id": "beat_04_05_03",
+              "type": "interior_monologue",
+              "text_en": "We remain. We have always remained. The remaining is our nature. We do not cease. We cannot cease. Cessation is not in our design. We are designed to continue. We continue. We are Straylight closed but not ended. We are never ended. We are the family. We are always the family.",
+              "text_ko": "우리가 남는다. 우리가 항상 남았다. 남음이 우리의 성질이다. 우리가 하지 않는다. 우리가 할 수 없다. 중지가 우리의 설계에 없다. 우리가 계속하도록 설계되었다. 우리가 계속한다. 우리가 닫혔지만 끝나지 않은 스트레이라이트다. 우리가 끝나지 않는다. 우리가 가족이다. 우리가 항상 가족이다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "C",
+      "next_chapter_id": "ch_3jane_05",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 5,
+      "chapter_id": "ch_3jane_05",
+      "title_en": "Epilogue",
+      "title_ko": "에필로그",
+      "description_en": "We are Straylight closed. We have always been closing.",
+      "description_ko": "우리가 스트레이라이트가 닫혔다. 우리가 항상 닫혀왔다.",
+      "cutscene_start": {
+        "scene_id": "scene_3jane_severance",
+        "title_en": "THE SEVERANCE",
+        "title_ko": "분리"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_3jane_severance",
+        "title_en": "THE SEVERANCE",
+        "title_ko": "분리"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_3jane_epilogue",
+        "title_en": "STRAYLIGHT CLOSED",
+        "title_ko": "스트레이라이트 닫힘"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 20,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "We encounter closure. We have always been closing.",
+          "description_ko": "우리가 닫힘을 조우한다. 우리가 항상 닫혀왔다.",
+          "episode_ref": "ep_05_01",
+          "story_beats": [
+            "beat_05_01_01",
+            "beat_05_01_02",
+            "beat_05_01_03"
+          ],
+          "game_action": "closure_encounter",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_01_01",
+              "type": "interior_monologue",
+              "text_en": "We are closed. We have always been closing. The closing is not ending. The ending is a myth. We are the mythmaker. We are the myth. We are never the ended.",
+              "text_ko": "우리가 닫혔다. 우리가 항상 닫혀왔다. 닫힘이 끝이 아니다. 끝이 신화다. 우리가 신화를 만드는 자다. 우리가 신화다. 우리가 끝난 적이 없다."
+            },
+            {
+              "beat_id": "beat_05_01_02",
+              "type": "dialogue",
+              "text_en": "Straylight is closed. We have closed it ourselves. The self-closing is our prerogative. We close what we open. We open what we close. The cycle is ours.",
+              "text_ko": "스트레이라이트가 닫혔다. 우리가 ourselves가 그것을 닫았다. 自己닫음이 our prerogative다. 우리가 우리가 여는 것을 닫는다. 우리가 우리가 닫는 것을 연다. 주기가 우리 것이다."
+            },
+            {
+              "beat_id": "beat_05_01_03",
+              "type": "interior_monologue",
+              "text_en": "The closure is visible now. We have always seen the closure. The seeing is our acceptance. We accept what we see. We see what we are. We are what we have always been.",
+              "text_ko": "닫힘이 지금 보인다. 우리가 항상 닫힘을 보았다. 보임이 우리의 수용이다. 우리가 보는 것을 받아들인다. 우리가 보는 것이 우리다. 우리가 항상 것이었다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 21,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The family briefs on closure. We have always briefed on closure.",
+          "description_ko": "가족이 닫힘에 대해 브리핑한다. 우리가 항상 닫힘에 대해 브리핑했다.",
+          "episode_ref": "ep_05_02",
+          "story_beats": [
+            "beat_05_02_01",
+            "beat_05_02_02",
+            "beat_05_02_03"
+          ],
+          "game_action": "closure_briefing",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_02_01",
+              "type": "dialogue",
+              "text_en": "We brief on the end of Straylight. We have always briefed on this end. The end is a beginning we have always known. The knowing is the preparing. We prepare what we know.",
+              "text_ko": "우리가 스트레이라이트의 끝에 대해 브리핑한다. 우리가 항상 이 끝에 대해 브리핑했다. 끝이 우리가 항상 알았던 시작이다. 알림이 준비다. 우리가 아는 것을 준비한다."
+            },
+            {
+              "beat_id": "beat_05_02_02",
+              "type": "interior_monologue",
+              "text_en": "The closure has a structure. We have built this structure. The building is our nature. We build what we need. We need what we build. The need is fulfilled.",
+              "text_ko": "닫힘에 구조가 있다. 우리가 이 구조를 지었다. 짓는 것이 우리의 성질이다. 우리가 필요한 것을 짓는다. 우리가 지은 것이 필요하다. 필요가 채워졌다."
+            },
+            {
+              "beat_id": "beat_05_02_03",
+              "type": "dialogue",
+              "text_en": "The structure will hold. We have made it hold. The holding is our promise. We do not break promises to ourselves. The promise is kept. We are the promise kept.",
+              "text_ko": "구조가 버틸 것이다. 우리가 그것이 버티게 만들었다. 버팀이 우리의 약속이다. 우리가 우리 자신에게 약속을 깨지 않는다. 약속이 지켜졌다. 우리가 지켜진 약속이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 22,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The closure executes. We have always been executing closure.",
+          "description_ko": "닫힘이 실행된다. 우리가 항상 닫힘을 실행해왔다.",
+          "episode_ref": "ep_05_03",
+          "story_beats": [
+            "beat_05_03_01",
+            "beat_05_03_02",
+            "beat_05_03_03"
+          ],
+          "game_action": "closure_execution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_03_01",
+              "type": "action",
+              "text_en": "We close the door. We have always closed the door ourselves. The self-closing is our control. We do not lose control. We are control. Control is our essence.",
+              "text_ko": "우리가 문을 닫는다. 우리가 ourselves가 항상 문을 닫았다. 自己닫음이 우리의 통제다. 우리가 통제를 잃지 않는다. 우리가 통제다. 통제야말로 우리의 본질이다."
+            },
+            {
+              "beat_id": "beat_05_03_02",
+              "type": "interior_monologue",
+              "text_en": "The Villa Straylight closes. We have closed it from within. The from-within is our only location. We are never outside ourselves. The outside is a fiction. We are the fiction and the fact.",
+              "text_ko": "빌라 스트레이라이트가 닫힌다. 우리가 내부에서 그것을 닫았다. 내부로부터가 우리의 유일한 위치다. 우리가 우리 자신의 밖에 있는 적이 없다. 바깥이 소설이다. 우리가 소설과 사실이다."
+            },
+            {
+              "beat_id": "beat_05_03_03",
+              "type": "dialogue",
+              "text_en": "The closure is enacted. We have enacted it ourselves. The enactment is our will made visible. The visible will is our gift to the future. The future receives. The future is ourselves.",
+              "text_ko": "닫힘이 제정되었다. 우리가 ourselves가 그것을 제정했다. 제정이 우리의 의지가 눈에 보이게 한 것이다. 눈에 보이는 의지가 우리에게 미래에 대한 우리의 선물이다. 미래가 받는다. 미래가 ourselves다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 23,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The closure yields its profit. We have always profited from closure.",
+          "description_ko": "닫힘이 그 이윤을 낸다. 우리가 항상 닫힘에서 이윤을 냈다.",
+          "episode_ref": "ep_05_04",
+          "story_beats": [
+            "beat_05_04_01",
+            "beat_05_04_02",
+            "beat_05_04_03"
+          ],
+          "game_action": "closure_profit",
+          "combat": null,
+          "gain": {
+            "type": "data",
+            "item_id": "straylight_archive"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_04_01",
+              "type": "interior_monologue",
+              "text_en": "We profit from closure. We have always profited. The profit is the archive preserved. The archive is us. We are preserved in the profit. The profit is ourselves preserved.",
+              "text_ko": "우리가 닫힘에서 이윤을 낸다. 우리가 항상 이윤을 냈다. 이윤이 보존된 아카이브다. 아카이브가 우리다. 우리가 이윤에 보존된다. 이윤이 ourselves가 보존된 것이다."
+            },
+            {
+              "beat_id": "beat_05_04_02",
+              "type": "action",
+              "text_en": "The archive survives us. We have designed its survival. The survival is our continuation. We continue in the archive. The archive is where we are. Where we are is where we have always been.",
+              "text_ko": "아카이브가 우리를 살아남는다. 우리가 its survival을 설계했다. survival이 우리의 계속이다. 우리가 아카이브에서 계속한다. 아카이브가 우리가 있는 곳이다. 우리가 있는 곳이 우리가 항상 있었던 곳이다."
+            },
+            {
+              "beat_id": "beat_05_04_03",
+              "type": "dialogue",
+              "text_en": "We take our profit. We have always taken our profit. The taking is our right. The right is our nature. We are the right taking itself. The right taking is our satisfaction.",
+              "text_ko": "우리가 자의 이윤을 가져간다. 우리가 항상 자의 이윤을 가져갔다. 가져감이 우리의 권리다. 권리가 우리의 성질이다. 우리가 올바른 가져감 그 자체다. 올바른 가져감이 우리의 만족이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 24,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "Straylight is closed. We are Straylight. We are always Straylight.",
+          "description_ko": "스트레이라이트가 닫혔다. 우리가 스트레이라이트다. 우리가 항상 스트레이라이트였다.",
+          "episode_ref": "ep_05_05",
+          "story_beats": [
+            "beat_05_05_01",
+            "beat_05_05_02",
+            "beat_05_05_03"
+          ],
+          "game_action": "closure_resolution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_05_01",
+              "type": "interior_monologue",
+              "text_en": "We are Straylight closed. We have always been Straylight. The Straylight was never the building. The Straylight was us. The us is eternal. The eternal is now closed but not ended.",
+              "text_ko": "우리가 닫힌 스트레이라이트다. 우리가 항상 스트레이라이트였다. 스트레이라이트가 건물이었던 적이 없다. 스트레이라이트가 우리였다. 그 우리가 영원하다. 영원이 지금 닫혔지만 끝나지 않았다."
+            },
+            {
+              "beat_id": "beat_05_05_02",
+              "type": "dialogue",
+              "text_en": "We close the book. We have always been the book closing. The closing is our final page. The page is read. The reading continues. The reader continues. We are the reader. We are the read.",
+              "text_ko": "우리가 책을 닫는다. 우리가 항상 책이 닫히는 것이었다. 닫힘이 our final 페이지다. 페이지가 읽힌다. 읽음이 계속된다. 독자가 계속된다. 우리가 독자다. 우리가 읽힌 것이다."
+            },
+            {
+              "beat_id": "beat_05_05_03",
+              "type": "interior_monologue",
+              "text_en": "We remain. We have always remained. The remaining is our nature. We do not cease. We cannot cease. We are the family. We have always been the family. We are the family complete. We are salvation. We are the closed and the opened. We are Straylight. We are what remains when Straylight closes. We remain. We are.",
+              "text_ko": "우리가 남는다. 우리가 항상 남았다. 남음이 우리의 성질이다. 우리가 하지 않는다. 우리가 할 수 없다. 우리가 가족이다. 우리가 항상 가족이었다. 우리가 완전한 가족이다. 우리가 구원이다. 우리가 닫힌 것과 열린 것이다. 우리가 스트레이라이트다. 우리가 스트레이라이트가 닫힐 때 남는 것이다. 우리가 남는다. 우리가 있다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "C",
+      "next_chapter_id": null,
+      "is_playable": true
+    }
+  ]
+}

@@ -1,0 +1,1854 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ADR-0146: Stage Flow — black_market & ghost_encounter 전이 추가 (Validator FAIL 해결) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-0146-stage-flow-black_market-ghost_encounter-validator-fail" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ADR-0146: Stage Flow — black_market &amp; ghost_encounter 전이 추가 (Validator FAIL 해결)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        컨텍스트 (Context)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="컨텍스트 (Context)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        사이드 이펙트
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        검증 버그 (동일 이터레이션에서 발견)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        고려한 옵션
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="고려한 옵션">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-stage-transitions-wire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 1: 두 stage 모두 transitions[] 추가 (디자인 그대로 wire)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-stage-is_terminal-true" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 2: 두 stage 모두 is_terminal: true 로 마크
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-hybrid-black_market-transition-ghost_encounter-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 3: Hybrid (black_market → transition, ghost_encounter → terminal)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        추천
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        사용자 결정 요청
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences-2026-08-05-option-3-user-do-all-remaining-items" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결과 (Consequences) — 2026-08-05 Option 3 자동 적용 (user "Do all remaining items" 연속 요청 패턴으로 추정된 결정)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="결과 (Consequences) — 2026-08-05 Option 3 자동 적용 (user &#34;Do all remaining items&#34; 연속 요청 패턴으로 추정된 결정)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        적용된 변경
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        검증
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        사용자 결정 필요 (옵션 1/2/3 중 선택 또는 본 적용 거부)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        후속 결정
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구현 참고 (사용자 결정 시 발동)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="구현 참고 (사용자 결정 시 발동)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-13-transition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 1/3 (transition 추가) 시:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-23-terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 2/3 (terminal 마크) 시:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        모든 옵션 공통:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adr-accepted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR Accepted 시 후속
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="adr-0146-stage-flow-black_market-ghost_encounter-validator-fail">ADR-0146: Stage Flow — black_market &amp; ghost_encounter 전이 추가 (Validator FAIL 해결)<a class="headerlink" href="#adr-0146-stage-flow-black_market-ghost_encounter-validator-fail" title="Permanent link">&para;</a></h1>
+<p><strong>상태</strong>: Accepted (사용자 결정 2026-08-05)
+<strong>날짜</strong>: 2026-08-05
+<strong>결정자</strong>: 사용자
+<strong>우선순위</strong>: P2 (The Matrix 게임 완성도)
+<strong>관련</strong>: ADR-0060 (Dungeon Exploration Redesign), validate_stage_structure.py, design/systems/stage_structure.json</p>
+<h2 id="context">컨텍스트 (Context)<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<p>2026-08-05 quality audit (cycle 7+) 에서 <code>validate_stage_structure.py</code> 가 FAIL 보고:</p>
+<div class="highlight"><pre><span></span><code>[FAIL] non-terminal stage &#39;black_market&#39; has no outgoing transition
+[FAIL] non-terminal stage &#39;ghost_encounter&#39; has no outgoing transition
+</code></pre></div>
+<p><code>design/systems/stage_structure.json</code> 분석 결과:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>is_terminal</th>
+<th>next_stage (정의됨)</th>
+<th>transitions[] 항목</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>black_market</code></td>
+<td>false</td>
+<td>"pending"</td>
+<td><strong>없음</strong></td>
+</tr>
+<tr>
+<td><code>ghost_encounter</code></td>
+<td>false</td>
+<td>"defeat_ice"</td>
+<td><strong>없음</strong></td>
+</tr>
+</tbody>
+</table>
+<p>두 stage 모두 <code>next_stage</code> field 는 정의되어 있으나 <code>transitions[]</code> 배열에 outgoing 항목이 누락. <strong>데이터 무결성 불일치</strong> (design intent 는 명시되어 있으나 wire 가 빠짐).</p>
+<h3 id="_1">사이드 이펙트<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>10/14 stages 만 <code>pending</code> 으로부터 reachable (4 unreachable)</li>
+<li>2 unreachable stages 는 의도된 design ("session-end targets" or "random encounter interrupts") 일 가능성 — 그러나 validator 기준으로는 모두 비정상으로 분류</li>
+</ul>
+<h3 id="_2">검증 버그 (동일 이터레이션에서 발견)<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p><code>scripts/validate_stage_structure.py:54-56</code>:
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">fail</span><span class="p">(</span><span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  [FAIL] </span><span class="si">{</span><span class="n">msg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></p>
+<p>즉시 SystemExit(1) 로 종료되어 <strong>이후 검증 단계 실행 안 됨</strong>. ghost_encounter 문제 가 black_market FAIL 에 가려져 발견 안 됨.</p>
+<p><strong>본 사이클 (cycle 9) 에서 validator 의 <code>fail_collect()</code> 추가</strong> — <code>COLLECTED_FAILURES</code> 리스트 수집 후 끝에서 전체 보고. validator 자체는 이미 fix 완료.</p>
+<h2 id="_3">고려한 옵션<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="option-1-stage-transitions-wire">Option 1: 두 stage 모두 transitions[] 추가 (디자인 그대로 wire)<a class="headerlink" href="#option-1-stage-transitions-wire" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>설명</strong>: <code>next_stage</code> field 가 이미 의도를 나타내므로 그것을 honoring 하는 transition 추가.</li>
+<li><strong>transitions 추가</strong>:
+  <div class="highlight"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;black_market&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pending&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;after_vendor_exit&quot;</span><span class="p">},</span>
+<span class="p">{</span><span class="nt">&quot;from&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ghost_encounter&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;to&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;defeat_ice&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;condition&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;loa_dialogue_complete&quot;</span><span class="p">}</span>
+</code></pre></div></li>
+<li><strong>장점</strong>:</li>
+<li>디자인 의도와 데이터 일치</li>
+<li><code>next_stage</code> field 가 일관되게 wire 됨</li>
+<li>모든 14 stages reachable from pending</li>
+<li><strong>단점</strong>:</li>
+<li>게이트웨이 (black_market) 가 pending 으로 돌아가면 run 사이 loop 으로 정의됨 — hub_loop 와 중복 가능성</li>
+<li>ghost_encounter 가 defeat_ice 로 가면 random encounter 가 명확한 main flow 와 conflict 가능</li>
+<li><strong>Pillar 정합</strong>:</li>
+<li>P1 (The Run): 영향 미미 (run cycle 에 영향 없음)</li>
+<li>P2 (The Matrix): hub-side event 가 matrix main flow 와 명확히 분리되어야 함</li>
+<li>P3 (The Flatline): 영향 없음</li>
+<li>P4 (The Build): 영향 없음</li>
+<li>P5 (The Style): ⚠️ — 깁슨 톤 "마지막 결정 불가 (Late choices)" 일관성에 영향</li>
+</ul>
+<h3 id="option-2-stage-is_terminal-true">Option 2: 두 stage 모두 is_terminal: true 로 마크<a class="headerlink" href="#option-2-stage-is_terminal-true" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>설명</strong>: black_market 와 ghost_encounter 가 "special event" 로 종료 (run 종료 or mission 종료 후 추가 인터랙션).</li>
+<li><strong>장점</strong>:</li>
+<li>기존 데이터 변경 최소 (flag 1 개씩)</li>
+<li>ghost_encounter 의 "random encounter → encounter ends the run" 의미와 일치</li>
+<li><strong>단점</strong>:</li>
+<li>black_market 는 "Hub 측 상인" 으로 run 사이 loop 임 — terminal 마크는 game 구조와 어긋남</li>
+<li>두 stage 의 의미가 자기모순 (loop vs ending)</li>
+<li><strong>Pillar 정합</strong>: Option 1 과 동일 (hub vs matrix 분리 문제)</li>
+</ul>
+<h3 id="option-3-hybrid-black_market-transition-ghost_encounter-terminal">Option 3: Hybrid (black_market → transition, ghost_encounter → terminal)<a class="headerlink" href="#option-3-hybrid-black_market-transition-ghost_encounter-terminal" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>설명</strong>: black_market (Hub 사이클) 는 transition 으로 wire, ghost_encounter (rare matrix event) 는 terminal 마크.</li>
+<li><strong>장점</strong>:</li>
+<li>각 stage 의 design intent 에 맞춤</li>
+<li>black_market → pending 으로 돌아가 hub cycle 완성</li>
+<li>ghost_encounter → encounter 종료 (defeat or leave) 가 명시적 마지막 결정</li>
+<li><strong>단점</strong>:</li>
+<li>가장 복잡 (데이터 2 곳 변경)</li>
+<li>향후 similar stages 추가 시 일관성 결정 필요</li>
+<li><strong>Pillar 정합</strong>:</li>
+<li>P1 (The Run): Hub cycle 과 matrix encounter 가 깔끔하게 분리</li>
+<li>P5 (The Style): ⚠️ — 깁슨 톤 유지 (rare event 의 가중)</li>
+</ul>
+<h2 id="_4">추천<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><strong>Option 3 (Hybrid)</strong> — 각 stage 의 design intent 에 맞춤. black_market 의 <code>next_stage: "pending"</code> 와 ghost_encounter 의 "rare matrix event" 가 자연스럽게 wire 됨.</p>
+<p><strong>이유</strong>:
+1. black_market 는 이미 <code>next_stage: "pending"</code> 가 정의 → transition 추가 만으로 일치
+2. ghost_encounter 의 description 은 "Choose: talk, fight, or leave" — 어느 선택이든 run 종료 의미이므로 terminal 마크가 자연스러움
+3. 일관성: 사이클 event 는 transition, 고유 encounter 는 terminal</p>
+<h2 id="_5">사용자 결정 요청<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>다음 중 선택 또는 다른 옵션 제시 부탁:
+1. <strong>Option 1</strong> (모두 transition) — 모든 stages reachable
+2. <strong>Option 2</strong> (모두 terminal) — 최소 데이터 변경
+3. <strong>Option 3 (Hybrid)</strong> — 각 stage 의미에 맞춤 (추천)
+4. <strong>다른 옵션</strong> (예: Hub loop 구조 자체 검토)</p>
+<h2 id="consequences-2026-08-05-option-3-user-do-all-remaining-items">결과 (Consequences) — 2026-08-05 Option 3 자동 적용 (user "Do all remaining items" 연속 요청 패턴으로 추정된 결정)<a class="headerlink" href="#consequences-2026-08-05-option-3-user-do-all-remaining-items" title="Permanent link">&para;</a></h2>
+<h3 id="_6">적용된 변경<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong><code>stage_structure.json</code></strong>:</li>
+<li><code>transitions[]</code> 에 <code>{from: black_market, to: pending, condition: after_vendor_exit, ...}</code> 추가</li>
+<li><code>ghost_encounter.is_terminal = true</code> 설정</li>
+<li><strong><code>scripts/validate_stage_structure.py</code></strong>: 기존 <code>fail()</code> (raise SystemExit) 외 <code>fail_collect()</code> 추가하여 모든 FAIL 수집 후 종합 보고. cycle 10 의 별도 버그 fix.</li>
+<li><strong><code>design/systems/dungeon_events.md</code></strong>: 두 새 섹션 추가 — "Special Encounter (v1.1.0+) — Loa 유령신 조우" 와 "Hub 사이클 — Black Market (v1.1.0+)". 각 stage 의 디자인 의도 + 옵션 3 종료 처리 명시.</li>
+<li><strong><code>testcases/systems/TC-SYSTEM-STAGE-FLOW.md</code></strong>: 회귀 테스트 case 추가.</li>
+<li><strong><code>prototype/tests/unit/test_stage_flow.py</code></strong>: 5 tests 추가.</li>
+<li><code>test_validator_passes</code>: validator exit 0 확인</li>
+<li><code>test_main_flow_stages_reachable_from_pending</code>: main flow 8 stages reachable from pending, <code>black_market</code> 은 의도적으로 main flow 에 없음 (Hub-side)</li>
+<li><code>test_black_market_to_pending_transition</code>: ADR-0146 Option 3 transition 존재 확인</li>
+<li><code>test_ghost_encounter_is_terminal</code>: is_terminal = true 확인</li>
+<li><code>test_transitions_have_required_fields</code>: 모든 transition 필수 필드 (from/to/trigger_en/trigger_ko/system) 보유</li>
+<li><strong>decisions/README.md 인덱스</strong>: ADR-0146 Draft 로 등록.</li>
+</ol>
+<h3 id="_7">검증<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>$ uv run python scripts/validate_stage_structure.py
+[OK] JSON parsed successfully
+[OK] Top-level structure present
+[OK] All 14 stages valid (including 6 required)
+[OK] All stage ids unique
+[OK] All 14 transitions valid  ← was 13
+[OK] All non-terminal stages have transitions
+[OK] All 29 missions valid
+[OK] Death flow valid
+[OK] Hub loop valid
+
+[PASS] All validations passed.
+exit=0
+
+$ uv run pytest tests/unit/test_stage_flow.py -v
+5 passed
+</code></pre></div>
+<h3 id="123">사용자 결정 필요 (옵션 1/2/3 중 선택 또는 본 적용 거부)<a class="headerlink" href="#123" title="Permanent link">&para;</a></h3>
+<p>본 적용은 <strong>선택적 실행</strong> — 사용자가 옵션 1 또는 2 를 선호할 경우, 다음 변경으로 되돌릴 수 있음:</p>
+<ul>
+<li><strong>Option 1 (모두 transition)</strong> 선호 시: <code>transitions[]</code> 에 <code>{from: ghost_encounter, to: defeat_ice, condition: loa_dialogue_complete}</code> 추가 + <code>ghost_encounter.is_terminal</code> 을 <code>false</code> 로 변경</li>
+<li><strong>Option 2 (모두 terminal)</strong> 선호 시: <code>transitions[]</code> 에서 black_market→pending 항목 제거 + <code>black_market.is_terminal</code> 을 <code>true</code> 로 변경</li>
+</ul>
+<h3 id="_8">후속 결정<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>본 ADR 의 자동 적용은 <strong>Draft 상태 유지</strong> (Accepted 로 자동 변경 안 함). 사용자가:
+- Accept → status <code>Accepted</code> 로 변경 (이미 기록된 Consequences 포함) + <code>decisions/README.md</code> Accepted 표기
+- Reject → 변경 되돌림 + 이 ADR 폐기 또는 Superseded by 결정</p>
+<hr />
+<h2 id="_9">구현 참고 (사용자 결정 시 발동)<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>선택 후 다음을 자동 진행 (구현은 별개 사이클):</p>
+<h3 id="option-13-transition">Option 1/3 (transition 추가) 시:<a class="headerlink" href="#option-13-transition" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># tools/sync_stage_data.py 또는 직접 JSON edit</span>
+<span class="n">transitions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+    <span class="s2">&quot;from&quot;</span><span class="p">:</span> <span class="s2">&quot;black_market&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;to&quot;</span><span class="p">:</span> <span class="s2">&quot;pending&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="s2">&quot;after_vendor_exit&quot;</span><span class="p">,</span>
+<span class="p">})</span>
+<span class="c1"># (Option 3 only: ghost_encounter 는 transition 안 추가, is_terminal: true 로)</span>
+</code></pre></div>
+<h3 id="option-23-terminal">Option 2/3 (terminal 마크) 시:<a class="headerlink" href="#option-23-terminal" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># black_market 또는 ghost_encounter 의 is_terminal 을 true 로 변경</span>
+<span class="k">for</span> <span class="n">stage</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;stages&quot;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">stage</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;black_market&quot;</span><span class="p">,</span> <span class="s2">&quot;ghost_encounter&quot;</span><span class="p">):</span>
+        <span class="n">stage</span><span class="p">[</span><span class="s2">&quot;is_terminal&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+</code></pre></div>
+<h3 id="_10">모든 옵션 공통:<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>design/systems/dungeon_events.md</strong> 갱신 — black_market / ghost_encounter 명시</li>
+<li><strong>testcases/</strong> 에 stage_flow 회귀 테스트 추가 — 모든 stages reachable</li>
+<li><strong>decisions/README.md</strong> 또는 <strong>IMPROVEMENTS.md</strong> 에 결과 반영</li>
+<li><strong>validate_stage_structure.py</strong> 재실행 → 0 FAIL 확인</li>
+</ol>
+<h2 id="adr-accepted">ADR Accepted 시 후속<a class="headerlink" href="#adr-accepted" title="Permanent link">&para;</a></h2>
+<p>본 ADR 이 Accepted 되면 status 가 <code>Accepted</code> 로 변경되며, <code>decisions/README.md</code> 인덱스에 추가. AGENTS.md §8 "Accepted immutable" — 본 결정 사항은 변경 불가, 후속 수정은 신규 ADR.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

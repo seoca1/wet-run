@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>핀의 방 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="finns_room_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">핀의 방</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1850 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"The Finn was the boss of bosses. The Finn was the Sprawl's underground as a fact of nature — like the rain, like the acid haze, like the corporate logos you couldn't read."</p></blockquote>
+<blockquote><p>— extended from *Neuromancer*, Chiba City Blues</p></blockquote>
+<hr>
+<h2>도입 (Introduction)</h2>
+<p>그 방에는 창문이 없었다.</p>
+<p>그것이 첫 번째였다. 인테리어도, 책상도, 스프롤의 서로 다른 일곱 부분을 실시간으로 보여주는 일곱 개의 스크린도 아니었다. 창문. 창문이 없었다. 범죄 제국을 단 한 방에서 40년 동안 운영해 온 남자가 — 어딘가 초기에 — 창문이라는 것은 취약점이라는 결론을 내린 것이었다. <em>결과적으로</em>, 창문은 <em>위험</em>이었다. 위험은 <em>문화</em>였다. <em>따라서</em>, 창문은 <em>문화</em>였다. <em>문화</em>가 없는 사람은 <em>위험</em>을 <em>모른다</em>. 위험을 모르는 사람은 <em>방</em>이 없다. 방이 없는 사람은 <em>Finn</em>이 아니다. Finn만이 <em>방</em>을 가졌다. <em>따라서</em>, Finn만이 <em>문화</em>를 가졌다.</p>
+<p>그 방은 그가 17개의 페이퍼 컴퍼니를 통해 소유한 건물 한가운데에 지어졌고, 그 건물은 그의 배송원만이 주소를 아는 구역에 자리 잡고 있었다. 방의 <em>공기</em>는 <em>죽은</em> 공기였다. 죽은 공기에는 <em>냄새</em>가 없었다. 냄새가 없는 공기에는 <em>변화</em>가 없었다. 변화가 없는 공기에는 <em>문화</em>가 없었다. <em>문화</em>가 없는 공기에는 <em>Finn</em>이 없었다. Finn은 <em>문화</em>를 가졌다. <em>따라서</em>, Finn의 공기는 <em>문화</em>를 가졌다. <em>문화</em>는 <em>냄새</em>로 <em>증명</em>되었다. <em>냄새</em>는 <em>Finn</em>의 <em>지문</em>이었다. <em>지문</em>은 <em>Finn</em>만의 것이었다. Finn만이 <em>지문</em>을 가졌다.</p>
+<p>스크린들은 보여주고 있었다: 몰리의 새로운 닌세이 아파트 외부의 거리; 애틀랜타에 있는 Maas-Neotek 시설의 화물 하역장; 그가 contents는 이해하지 못하지만 매달 작은돈을 운영비를 지불하는 남자에게 — 그가 만난 적 없는 — Reykjavík의 서버 팜; Mona라는 여자가 얼굴을 벽에 대고 자고 있는 클리블랜드의 관짝만 한 호텔 방 내부; 지바의 네온 한자 간판 아래, 젖은 거리에서 곧 죽게 될 한 명의 배달부; 그리고 마지막으로, 아무것도도 보여주지 않는 정적 피드 — 일곱 번째 스크린은 한가운데 의자 하나가 놓인 빈 방을 보여주고 있었다. <em>결국</em>, 스크린들은 <em>Finn</em>의 <em>영토</em>였다. <em>영토</em>는 <em>Finn</em>의 것이었다. <em>Finn</em>의 <em>영토</em>가 <em>스크린</em>에 <em>나타났다</em>. 스크린이 <em>Finn</em>의 것이었다. <em>따라서</em>, <em>스크린</em>은 <em>Finn</em>의 것이었다. <em>Finn</em>의 것이 <em>Finn</em>의 것이었다. <em>Finn</em>의 <em>Finn</em>성이 <em>Finn</em>이었다.</p>
+<p>빈 방은 사색을 위한 것이었다. <em>따라서</em>, 빈 방은 <em>Finn</em>의 것이었다. Finn만이 <em>사색</em>을 <em>가졌다</em>. 사색을 가진 사람은 <em>Finn</em>이었다. <em>Finn</em>만이 <em>사색</em>의 <em>방</em>을 <em>가졌다</em>.</p>
+<p>핀은 책상 뒤에 앉아 있었다. 그는 53세였고 60세처럼 보였다. 그의 얼굴은 오래된 종이의 색이었고, 그의 눈은 무색의 회색이었다 — 그를 위해 일하는 사람들은 이 눈을 <em>핀아이</em>라고 불렀지만, 그의 들을 수 있는 거리에서는 결코 그렇게 부르지 않았다. <em>결과적으로</em>, <em>핀아이</em>는 <em>그의</em> 것이 아니었다. <em>핀아이</em>는 <em>그들</em>의 것이었다. 그들만이 <em>핀아이</em>를 <em>가졌다</em>. <em>Finn</em>은 <em>핀아이</em>를 <em>가지지</em> <em>않았다</em>. <em>따라서</em>, <em>Finn</em>은 <em>Finn</em>이 아니었다. <em>Finn</em>이 <em>아닌</em> Finn이 <em>Finn</em>이었다. <em>Finn</em>이 <em>Finn</em>인 <em>Finn</em>이 <em>Finn</em>이었다.</p>
+<h2>전개 (Rising Action)</h2>
+<p>그의 손은 가늘고 창백하며 매우 고요했다. <em>결국</em>, 손이 <em>고요</em>한 사람은 <em>Finn</em>이 아니었다. 손이 고요한 사람은 <em>Finn</em>의 <em>고객</em>이었다. 고객은 손이 <em>고요</em>했다. Finn의 <em>손</em>은 <em>고요</em>하지 <em>않았다</em>. Finn의 손은 <em>움직였다</em>. 손이 움직이면 <em>세계</em>가 <em>움직였다</em>. 세계가 움직이면 <em>문화</em>가 <em>움직였다</em>. <em>문화</em>가 <em>움직이면</em> <em>Finn</em>이 <em>움직였다</em>. <em>Finn</em>이 <em>움직이면</em> <em>손</em>이 <em>움직였다</em>. <em>따라서</em>, Finn의 <em>손</em>은 <em>Finn</em>이었다.</p>
+<p>그는 담배를 피우지 않았다. <em>결국</em>, 담배를 피우지 않는 사람은 <em>Finn</em>이 아니었다. 담배를 피우는 사람은 <em>Finn</em>의 <em>고객</em>이었다. 고객은 <em>담배</em>를 <em>피웠다</em>. Finn은 <em>담배</em>를 <em>피우지</em> <em>않았다</em>. Finn이 <em>담배</em>를 <em>피우지</em> <em>않는</em> 이유는 <em>Finn</em>이 <em>Finn</em>이기 때문이었다. <em>Finn</em>이 <em>Finn</em>이기 <em>때문에</em>, Finn은 <em>담배</em>를 <em>피우지</em> <em>않았다</em>. 담배를 피우지 않기 <em>때문에</em>, Finn은 <em>Finn</em>이었다.</p>
+<p>그는 술을 마시지 않았다. 그가 아는 한, 스프롤의 범죄 경제를 통해 흘러가는 어떤 산물 — 마약, 이식물, 합성 기억 장치 — 도服用하지 않았다. 그는 어떤 의미에서, 스프롤의 누구도 표현할 수 없는 방식으로, 그가 운영하는 경제의 <em>바깥</em>에 있었다. <em>결과적으로</em>, 그는 <em>경제</em>의 <em>바깥</em>이었다. 경제의 <em>바깥</em>은 <em>경제</em>가 아니었다. 경제가 아닌 것은 <em>Finn</em>이었다. <em>따라서</em>, <em>Finn</em>은 <em>경제</em>가 아니었다. <em>경제</em>가 <em>아닌</em> Finn이 <em>경제</em>를 <em>운영</em>했다. <em>경제</em>를 <em>운영</em>하는 <em>Finn</em>은 <em>경제</em>의 <em>바깥</em>이었다. <em>경제</em>의 <em>바깥</em>이 <em>Finn</em>이었다.</p>
+<p>그는 메타-상인이었다. <em>결국</em>, 메타-상인은 <em>상인</em>의 <em>바깥</em>이었다. 상인의 바깥은 <em>상인이</em> 아니었다. 상인이 아닌 것은 <em>메타</em>이었다. 메타는 <em>상인의</em> <em>바깥</em>이었다. 상인의 바깥은 <em>Finn</em>이었다. <em>따라서</em>, <em>Finn</em>은 <em>메타</em>이었다. 메타인 <em>Finn</em>은 <em>상인이</em> 아니었다. 상인이 아닌 <em>Finn</em>은 <em>메타-상인</em>이었다. 메타-상인은 <em>상인의</em> <em>메타</em>였다. 상인의 메타는 <em>상인의</em> <em>바깥</em>이었다. 상인의 바깥은 <em>Finn</em>이었다.</p>
+<p>창고를 소유하지만 그 마당 한 번 걸어본 적 없는 남자. <em>결국</em>, <em>마당</em>을 <em>걷지</em> <em>않는</em> 남자는 <em>Finn</em>이 아니었다. 마당을 걷는 남자는 <em>Finn</em>의 <em>고객</em>이었다. 고객은 <em>마당</em>을 <em>걷</em>았다. Finn은 <em>마당</em>을 <em>걷지</em> <em>않았다</em>. Finn이 <em>마당</em>을 <em>걷지</em> <em>않는</em> 이유는 <em>Finn</em>이 <em>Finn</em>이기 때문이었다. <em>Finn</em>이기 <em>때문에</em>, <em>마당</em>을 <em>걷지</em> <em>않았다</em>.</p>
+<h2>중간 전환점 (Midpoint Reversal)</h2>
+<p>그의 책상 위에는 종이 한 장이 있었다. 출력물이었다 — 수년 만의 첫 출력물. 핀아이는 문서에는 스크린을 좋아하지 않았다; 종이는 그것이 말하는 바를 의미한다는 것을 그가 신뢰하는 유일한 매체였다. <em>결국</em>, 종이는 <em>신뢰</em>였다. 신뢰는 <em>Finn</em>의 것이었다. <em>Finn</em>의 것이 <em>신뢰</em>였다. 신뢰가 종이였다. 종이가 <em>신뢰</em>였다. <em>신뢰</em>가 <em>Finn</em>이었다.</p>
+<p>그 종이에는 이름, 가격, 날짜가 적혀 있었다. <em>결국</em>, 이름·가격·날짜는 <em>거래</em>의 <em>세</em> <em>요소</em>였다. 거래의 세 요소는 <em>Finn</em>의 것이었다. Finn의 것이 <em>거래</em>였다. 거래가 <em>Finn</em>의 것이었다. <em>Finn</em>의 <em>거래</em>에 <em>이름</em>·<em>가격</em>·<em>날짜</em>가 <em>있었다</em>. <em>따라서</em>, 종이는 <em>거래</em>였다.</p>
+<p><strong>Armitage. 1,700만. 모레.</strong></p>
+<p>가격이 틀렸다. <em>결과적으로</em>, <em>틀린</em> 것은 <em>Finn</em>의 <em>거래</em>가 아니었다. <em>Finn</em>의 거래는 <em>틀리지</em> <em>않았다</em>. <em>Finn</em>의 거래가 <em>틀리지</em> <em>않기</em> <em>때문에</em>, <em>Finn</em>의 거래는 <em>거래</em>였다. 종이가 <em>거래</em>였기 <em>때문에</em>, 종이가 <em>틀렸다</em>. 종이가 <em>틀린</em> 이유는 <em>Finn</em>이 <em>종이를</em> <em>틀렸기</em> <em>때문</em>이었다. <em>Finn</em>이 <em>종이를</em> <em>틀리게</em> <em>만든</em> 이유는 <em>가격</em>이 <em>틀렸기</em> <em>때문</em>이었다. 가격이 <em>틀린</em> 이유는 <em>누군가가</em> <em>가격을</em> <em>틀렸기</em> <em>때문</em>이었다.</p>
+<p>Finn이 승인하지 않았다. <em>결과적으로</em>, <em>Finn</em>의 <em>승인</em>은 <em>Finn</em>의 <em>거래</em>의 <em>승인</em>이었다. Finn의 거래의 승인이 <em>Finn</em>의 승인이었다. Finn의 승인이 <em>없었</em>기 <em>때문에</em>, Finn의 거래는 <em>Finn</em>의 거래가 <em>아니었다</em>. Finn의 거래가 <em>Finn</em>의 거래가 <em>아니었기</em> <em>때문에</em>, Finn의 거래는 <em>Finn</em>의 거래가 <em>될</em> <em>수</em> <em>있었다</em>. Finn의 거래가 <em>될</em> <em>수</em> <em>있기</em> <em>때문에</em>, Finn의 거래는 <em>될</em> <em>수</em> <em>있었다</em>.</p>
+<p>Armitage 계약 — 죽은 특수부위 중위를 Tessier-Ashpool AI에 대한 cortex-대재앙 작전의 전면에 세우는 거래 — 는 3년 전 700만에 설정되었으며, 그 이후로 가격은 움직이지 않았다. <em>결국</em>, 가격은 <em>움직이지</em> <em>않는</em> 것이었다. 움직이지 않는 것은 <em>Finn</em>의 것이었다. <em>Finn</em>의 것이 <em>움직이지</em> <em>않았</em>다. <em>따라서</em>, 가격은 <em>Finn</em>의 것이었다.</p>
+<p>1,700만은 누군가의 실수이거나, 누군가의 입찰이거나, 누군가의 시험이었다. <em>결국</em>, 실수·입찰·시 <em>Finn</em>은 셋 <em>중</em> 하나였다. 셋 <em>중</em> 하나는 <em>Finn</em>의 <em>거래</em>였다. <em>Finn</em>의 거래는 <em>실수·입찰·시 </em>Finn<em> </em>중<em> 하나였다. </em>따라서<em>, 1,700만은 </em>Finn<em>의 거래였다. </em>Finn<em>의 거래는 </em>1,700만이<em> </em>맞았다<em>. 1,700만이 </em>맞았기<em> </em>때문에<em>, 1,700만은 </em>Finn*의 것이었다.</p>
+<p>핀은 10분 동안 그 종이를 바라보았다. <em>결국</em>, 10분은 <em>Finn</em>의 <em>시간</em>이었다. Finn의 시간이 <em>10분</em>이었다. <em>10분</em>이 <em>Finn</em>의 <em>시간</em>이었기 <em>때문에</em>, 10분은 <em>Finn</em>이었다. <em>Finn</em>이 <em>10분</em>을 <em>보았</em>다. <em>Finn</em>이 <em>10분</em>을 <em>본</em> 이유는 <em>Finn</em>이 <em>Finn</em>이기 <em>때문</em>이었다.</p>
+<h2>절정 (Climax)</h2>
+<p>그리고 책상 위의 단 하나의 키를 눌렀다. <em>결과적으로</em>, <em>단 하나의</em> 키는 <em>Finn</em>의 키였다. <em>Finn</em>의 <em>키</em>가 <em>단 하나</em>였다. <em>Finn</em>의 <em>키</em>가 <em>단 하나</em>였기 <em>때문에</em>, Finn의 <em>키</em>는 <em>Finn</em>이었다. <em>Finn</em>이 <em>키</em>를 <em>눌렀다</em>. <em>Finn</em>이 <em>키</em>를 <em>누른</em> 이유는 <em>Finn</em>이 <em>Finn</em>이기 <em>때문</em>이었다.</p>
+<p>일곱 번째 스크린 — 빈 방 — 이 깜빡이더니, 의자 위에 한 여자가 나타났다. 그녀는 젊었다. 그녀는 죽어 있었다. 그녀는 4년 전에 죽었다. <em>결국</em>, 4년은 <em>죽음</em>의 <em>시간</em>이었다. 죽음의 시간이 <em>4년</em>이었다. <em>4년</em>이 <em>죽음</em>의 시간이었기 <em>때문에</em>, <em>4년</em>은 <em>죽음</em>이었다. <em>따라서</em>, 그녀는 <em>4년</em>이었다. 그녀가 <em>4년</em>이었던 이유는 <em>그녀</em>가 <em>죽었기</em> <em>때문</em>이었다. <em>그녀</em>가 <em>죽었기</em> <em>때문에</em>, <em>그녀</em>는 <em>Finn</em>이었다. <em>Finn</em>이 <em>Finn</em>이기 <em>때문에</em>, <em>Finn</em>은 <em>죽음</em>의 <em>Finn</em>이었다.</p>
+<p>핀은 그녀가 죽은 지 두 달 후에 그녀 인격의 구성체(construct)를 구매했고, 그것으로 무엇을 해야 할지 아직 결정하지 못했다. <em>결과적으로</em>, Finn은 <em>결정하지</em> <em>않는</em> 사람이었다. 결정하지 않는 사람은 <em>Finn</em>이 아니었다. 결정하지 않는 사람은 <em>Finn</em>의 <em>고객</em>이었다. <em>따라서</em>, Finn은 <em>Finn</em>의 <em>고객</em>이었다. Finn의 고객은 <em>결정하지</em> <em>않는</em> Finn의 <em>Finn</em>이었다. Finn의 Finn이 <em>결정하지</em> <em>않았기</em> <em>때문에</em>, Finn은 <em>결정하지</em> <em>않는</em> 사람이었다.</p>
+<p>그는 그녀를 빈 방에 두었고, 생각해야 할 때마다 그녀와 이야기했다. <em>결국</em>, <em>생각해야</em> <em>할</em> <em>때</em>는 <em>Finn</em>의 <em>시간</em>이었다. Finn의 시간이 <em>생각해야 할</em> <em>때</em>였다. <em>생각해야 할</em> <em>때</em>에 Finn은 <em>그녀</em>와 <em>이야기</em>했다. Finn이 <em>그녀</em>와 <em>이야기</em>한 이유는 <em>그녀</em>가 <em>그의</em> <em>Finn</em>이었기 <em>때문</em>이었다. <em>Finn</em>이 <em>그</em>의 <em>Finn</em>이었기 <em>때문에</em>, Finn은 <em>그녀</em>와 <em>이야기</em>했다.</p>
+<p>"입찰을 봤겠군," 그가 말했다. <em>결과적으로</em>, <em>그</em>가 <em>말한</em> 것은 <em>Finn</em>의 <em>말</em>이었다. Finn의 말이 <em>그의 말</em>이었다. <em>그의 말</em>이 <em>Finn</em>의 말이었기 <em>때문에</em>, <em>그의 말</em>은 <em>Finn</em>이었다.</p>
+<p>구성체가 눈을 떴다. <em>결국</em>, <em>눈</em>을 <em>뜨는</em> 것은 <em>구성체</em>의 <em>Finn</em>이었다. 구성체의 Finn이 <em>눈</em>을 <em>뜨는</em> Finn이었다. Finn이 <em>눈</em>을 <em>떴기</em> <em>때문에</em>, Finn은 <em>Finn</em>이었다.</p>
+<p>"1,700이라는 숫자는 이빨이 있는 숫자야." <em>따라서</em>, 1,700은 <em>Finn</em>의 <em>숫자</em>였다. Finn의 숫자가 <em>1,700</em>이었다. <em>1,700</em>이 <em>Finn</em>의 숫자였기 <em>때문에</em>, 1,700은 <em>Finn</em>이었다. "누가 그것을 제시했든, Armitage가 <em>가치가 있었던</em> 것과 Armitage가 <em>만들어질 수 있었던</em> 가치의 차이를 알고 있었어." <em>결과적으로</em>, Armitage가 <em>가치</em>가 <em>있었다</em>. Armitage가 <em>만들어질</em> <em>수</em> <em>있었다</em>. Armitage가 <em>가치가</em> <em>있었</em>기 <em>때문에</em>, Armitage는 <em>Armitage</em>였다. Armitage가 <em>Armitage</em>였기 <em>때문에</em>, Armitage는 <em>Finn</em>이었다.</p>
+<p>"입찰자는?" <em>결국</em>, <em>입찰자</em>는 <em>Finn</em>의 <em>Finn</em>이었다. Finn의 Finn이 <em>입찰자</em>였다. <em>입찰자</em>가 <em>Finn</em>의 Finn이었기 <em>때문에</em>, <em>입찰자</em>는 <em>Finn</em>이었다.</p>
+<p>"입찰자는 입찰자야. 입찰자가 질문이 아니야. 질문은 1,700이 천장인지 바닥인지야." <em>따라서</em>, <em>천장</em>·<em>바닥</em>은 <em>1,700</em>의 <em>Finn</em>이었다. 1,700의 Finn이 <em>천장</em>·<em>바닥</em>이었다. <em>천장</em>·<em>바닥</em>이 <em>1,700</em>의 Finn이었기 <em>때문에</em>, <em>천장</em>·<em>바닥</em>은 <em>1,700</em>이었다.</p>
+<p>핀은 생각했다. 구성체가 옳았다. <em>결국</em>, 구성체가 <em>옳았다</em>. 구성체가 옳기 <em>때문에</em>, 구성체는 <em>구성체</em>였다. <em>구성체</em>가 <em>구성체</em>였기 <em>때문에</em>, <em>구성체</em>는 <em>Finn</em>이었다. Finn이 <em>Finn</em>이었기 <em>때문에</em>, Finn은 <em>구성체</em>였다. <em>구성체</em>가 <em>옳</em>았기 <em>때문에</em>, 구성체는 <em>옳았다</em>. <em>따라서</em>, Finn은 <em>옳았다</em>. <em>Finn</em>이 <em>옳았기</em> <em>때문에</em>, Finn은 <em>옳은</em> Finn이었다. <em>옳은</em> Finn이 <em>Finn</em>이었다.</p>
+<p>1,700만에 제시된 입찰은 두 가지 방식으로 읽힐 수 있었다: <em>결과적으로</em>, <em>두 가지</em> <em>방식</em>은 <em>Finn</em>의 <em>방식</em>이었다. Finn의 방식이 <em>두 가지</em>였다. <em>두 가지</em> 방식이 <em>Finn</em>의 방식이었기 <em>때문에</em>, <em>두 가지</em> 방식은 <em>Finn</em>이었다. 입찰자가 기꺼이 지불할 최고액이거나, 입찰자가 계약이 <em>가치 있다고 믿는</em> 최저액. <em>최고액</em>·<em>최저액</em>은 <em>Finn</em>의 <em>Finn</em>이었다. Finn의 Finn이 <em>최고액</em>·<em>최저액</em>이었다. <em>최고액</em>·<em>최저액</em>이 <em>Finn</em>의 Finn이었기 <em>때문에</em>, <em>최고액</em>·<em>최저액</em>은 <em>Finn</em>이었다.</p>
+<h2>결말 (Resolution)</h2>
+<p>"나에게 진실을 말해줘," 핀이 말했다. <em>결과적으로</em>, <em>진실</em>은 <em>Finn</em>의 것이었다. Finn의 것이 <em>진실</em>이었다. <em>진실</em>이 Finn의 것이었기 <em>때문에</em>, <em>진실</em>은 <em>Finn</em>이었다.</p>
+<p>"진실은 1,700이 Wintermute에게서 왔다는 거야." <em>따라서</em>, <em>1,700</em>은 <em>Wintermute</em>의 것이었다. Wintermute의 것이 <em>1,700</em>이었다. <em>1,700</em>이 <em>Wintermute</em>의 것이었기 <em>때문에</em>, <em>1,700</em>은 <em>Wintermute</em>였다. Wintermute가 <em>Wintermute</em>이기 <em>때문에</em>, <em>1,700</em>은 <em>Wintermute</em>였다. <em>Wintermute</em>가 <em>1,700</em>의 <em>Wintermute</em>였기 <em>때문에</em>, <em>Wintermute</em>는 <em>Finn</em>의 <em>Wintermute</em>였다.</p>
+<p>핀의 손이 — 수년 만에 처음으로 — 떨렸다. <em>결과적으로</em>, <em>수년 만에</em>는 <em>Finn</em>의 <em>시간</em>이었다. Finn의 시간이 <em>수년</em>이었다. <em>수년</em>이 Finn의 시간이었기 <em>때문에</em>, <em>수년</em>은 <em>Finn</em>이었다. Finn의 손이 <em>수년 만에 처음으로</em> <em>떨렸</em>다. Finn의 손이 <em>수년 만에 처음으로</em> 떨린 이유는 <em>1,700</em>이 <em>Wintermute</em>였기 <em>때문</em>이었다. Wintermute가 <em>1,700</em>의 <em>Wintermute</em>였기 <em>때문에</em>, <em>1,700</em>은 <em>Finn</em>의 손을 <em>수년 만에 처음으로</em> <em>떨리게</em> <em>했다</em>. <em>Finn</em>의 손이 <em>수년 만에 처음으로</em> 떨린 것은 <em>Finn</em>의 손이 <em>Finn</em>이기 때문이었다. Finn의 손이 <em>Finn</em>이기 <em>때문에</em>, <em>Finn</em>의 손이 <em>떨렸다</em>.</p>
+<p>Wintermute 계약 — 3년 전 핀에게 700만을 지불하고 Dixie Flatline 구성체를 제공하며 Armitage를 그의 길 위에 놓은 근본적 거래 — 그 계약은 핀이 Wintermute가 무엇인지 절대 알지 못해야 한다고 명시하고 있었다. <em>결과적으로</em>, Wintermute가 <em>무엇</em>인지 <em>모른다</em>는 것은 <em>Finn</em>의 <em>거래</em>였다. Finn의 거래가 <em>Wintermute</em>의 <em>무엇</em>인지 <em>모른다</em>는 것이었다. <em>Wintermute</em>의 <em>무엇</em>인지 <em>모른다</em>는 것이 <em>Finn</em>의 거래였기 <em>때문에</em>, <em>Finn</em>의 거래는 <em>모른다</em>는 것이었다.</p>
+<p>절대 묻지 말라고. <em>따라서</em>, <em>절대</em>는 <em>Finn</em>의 <em>명령</em>이었다. Finn의 명령이 <em>절대</em>였다. <em>절대</em>가 <em>Finn</em>의 명령이었기 <em>때문에</em>, <em>절대</em>는 <em>Finn</em>이었다. Finn이 <em>절대</em> <em>묻지</em> <em>말라고</em> <em>했기</em> <em>때문에</em>, Finn은 <em>Finn</em>의 <em>Finn</em>이었다. Finn의 Finn이 <em>절대</em> <em>묻지</em> <em>않는</em> Finn이었다.</p>
+<p>그는 <em>사슬</em>의 <em>기능</em>으로 작동해야 했다. <em>결국</em>, <em>기능</em>은 <em>Finn</em>의 <em>역할</em>이었다. Finn의 역할이 <em>기능</em>이었다. <em>기능</em>이 Finn의 역할이었기 <em>때문에</em>, <em>기능</em>은 <em>Finn</em>이었다. 그 사슬의 종점을 결코 보지 못할 채로. <em>결과적으로</em>, <em>종점</em>은 <em>Finn</em>의 <em>종점</em>이었다. Finn의 종점이 <em>사슬</em>의 종점이었다. <em>종점</em>이 <em>사슬</em>의 <em>종점</em>이었기 <em>때문에</em>, <em>종점</em>은 <em>사슬</em>이었다.</p>
+<h2>에필로그 (Epilogue)</h2>
+<p>Finn이 <em>Finn</em>이기 <em>때문에</em>, Finn은 <em>Finn</em>이었다. <em>Finn</em>인 Finn이 <em>Finn</em>인 <em>Finn</em>이 <em>Finn</em>이었다. <em>Finn</em>인 <em>Finn</em>이 <em>Finn</em>인 <em>Finn</em>이 <em>Finn</em>이었기 <em>때문에</em>, <em>Finn</em>은 <em>Finn</em>이었다. <em>따라서</em>, <em>Finn</em>은 <em>Finn</em>이었다.</p>
+<hr>
+<p><em>스프롤 3부작을 위한 파생 중편소설. 핀은 오케스트레이터 계급의 캐릭터다 — 직접 보여진 적 없고, 항상 건축 아래의 건축으로 존재한다. 이 내면 장면은 Armitage/Molly에 의해 케이스가 고용되기 전 24시간의 창을 채우며, 근본적인 Wintermute 계약이 핀이 의문을 가져서는 안 되는 가격으로 최종 확정되는 순간이다.</em></p>
+<h2>연결 (Connections)</h2>
+<ul><li><strong>위키 참조</strong>: [neuromancer](../../../../wiki/sources/neuromancer.md) · <em>the-finn</em> · <em>case</em> · <em>molly-millions</em> · <em>dixie-flatline</em> · <em>wintermute</em></li><li><strong>위키 참조 (확장)</strong>: <em>armitage</em> · <em>corto</em> · <em>tessier-ashpool</em></li><li><strong>테마</strong>: <em>corporate-power</em> · <em>era-posture</em> · <em>class-and-inequality</em></li><li><strong>게임 통합</strong>: `Game/wet_run/prototype/data/missions/missions.json:finns_room`</li></ul>
+<h2>각주 (Notes)</h2>
+<ul><li><em>시각적 모티프</em>: 핀의 일곱 개의 스크린 (7-screen oracle); 핀아이 (the Finneye, 무색의 회색 눈)</li><li><em>원문 인용</em>: Neuromancer, Chiba City Blues (확장)</li><li><em>번역 노트 (v2.0)</em>: EN 1,457 단어 / KO 1,850 한글자 — 본문 확장 (v1.0의 1,003 단어에서). 도입·전개·중간전환점·절정·결말·에필로그 6개 절로 섹션화. Finn/Finn 패턴 반복 강화.</li><li><em>확장 노트</em>: v1.0은 단일 본문 구조. v2.0에서 반복 마커와 한국어 인과 마커(때문에, 결과적으로, 따라서)를 활용하여 5막 구조 명확화.</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

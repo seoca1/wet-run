@@ -1,0 +1,386 @@
+{
+  "design_pillars": [
+    {
+      "id": 1,
+      "name": "The Run",
+      "tagline_ko": "한 번의 침투, 명확한 끝",
+      "tagline_en": "One run, one job, one clear ending",
+      "color": "#66ffcc",
+      "mechanics_ko": [
+        "job 단위 진행",
+        "PPL/ZDR 난이도 명시",
+        "Story Events"
+      ],
+      "anti_these_ko": [
+        "무한 진행 모드",
+        "일일 미션",
+        "강제 진입"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "The Matrix",
+      "tagline_ko": "사이버스페이스가 유일한 시각적 공간",
+      "tagline_en": "Cyberspace is the only visual space",
+      "color": "#00ccff",
+      "mechanics_ko": [
+        "meatspace 절대 시각화 안함",
+        "ASCII portrait는 cyberspace 안의 존재만"
+      ],
+      "anti_these_ko": [
+        "meatspace 메인 게임",
+        "현실 세계 직접 묘사"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "The Flatline",
+      "tagline_ko": "죽음에 진짜 무게",
+      "tagline_en": "Death has real weight",
+      "color": "#ff5555",
+      "mechanics_ko": [
+        "평시 캐릭터 Loss",
+        "리스폰 없음",
+        "메타 진행은 공격적이지 않음"
+      ],
+      "anti_these_ko": [
+        "리스폰/부활",
+        "가벼운 죽음 페널티",
+        "death = positive"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "The Build",
+      "tagline_ko": "런 사이 진행은 더 좋은 도구로",
+      "tagline_en": "Between runs, better tools",
+      "color": "#ffaa55",
+      "mechanics_ko": [
+        "레벨업 = 아이템/장비 티어 (T1-T6)",
+        "combat 강도는 program tier에 비례"
+      ],
+      "anti_these_ko": [
+        "스탯 누적",
+        "XP/레벨 시스템",
+        "지속적 난이도 하락"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "The Style",
+      "tagline_ko": "사이버펑크 미학 — 네온, 크롬, 가죽",
+      "tagline_en": "Cyberpunk aesthetics — neon, chrome, leather",
+      "color": "#9b59b6",
+      "mechanics_ko": [
+        "깁슨 톤 정확히",
+        "거칠고 비관적",
+        "mediated world"
+      ],
+      "anti_these_ko": [
+        "미니멀/유토피아 미래",
+        "Cyberpunk 2077 톤",
+        "화려한 비주얼"
+      ]
+    }
+  ],
+  "anti_patterns": [
+    {
+      "id": "AP-1",
+      "name": "Loot Grind",
+      "desc_ko": "무한히 강한 적 = 무한히 좋은 loot"
+    },
+    {
+      "id": "AP-2",
+      "name": "Multiplayer/Social",
+      "desc_ko": "1인칭 솔로 경험"
+    },
+    {
+      "id": "AP-3",
+      "name": "Skins/Cosmetics",
+      "desc_ko": "시각적 다양성보다 의미"
+    },
+    {
+      "id": "AP-4",
+      "name": "Daily Login",
+      "desc_ko": "게임이 사용자 시간을 빼앗지 않음"
+    },
+    {
+      "id": "AP-5",
+      "name": "Infinite Scaling",
+      "desc_ko": "적이 계속 강해지는 시스템"
+    },
+    {
+      "id": "AP-6",
+      "name": "Prestige",
+      "desc_ko": "반복 플레이를 위한 인위적 시스템"
+    },
+    {
+      "id": "AP-7",
+      "name": "Mobile/F2P",
+      "desc_ko": "PC/Mac 솔로 게임"
+    }
+  ],
+  "core_loop": {
+    "macro_ko": "Hub → Run(매트릭스 진입) → Extraction/Death → Result → Hub",
+    "stages": [
+      "PENDING",
+      "BRIEFING",
+      "TRAVEL",
+      "MEET_NPC",
+      "EXTRACT_DATA",
+      "BYPASS_SECURITY",
+      "DEFEAT_ICE",
+      "JACK_OUT",
+      "REWARD",
+      "DEBRIEF",
+      "COMPLETE",
+      "DEATH_RESTART",
+      "FAILED",
+      "SALVATION_EPILOGUE"
+    ],
+    "micro_ko": "Navigation → Node 발견 → Decision → Action → Combat(RT-MS) → State Update",
+    "alarm_levels": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "combat": {
+      "name": "RT-MS (Real-Time Missile Storm)",
+      "desc_ko": "실시간 자동 공격 + 메뉴 스킬",
+      "tick_rate": "1 attack / 2초, 양쪽 동시",
+      "skill_count": 14,
+      "skill_effect_animations": 15,
+      "ice_types": 41,
+      "programs_count": 9
+    }
+  },
+  "difficulty_system": {
+    "ppl_zdr": {
+      "desc_ko": "전투 전/중 위험 명시화 시스템",
+      "ppl_desc_ko": "Player Power Level — 자키의 현재 힘 (데크/프로그램 티어 합산)",
+      "zdr_desc_ko": "Zone Difficulty Rating — 현재 zone의 위험",
+      "status": [
+        {
+          "name": "SAFE",
+          "ratio": "PPL > ZDR*1.5",
+          "color": "#66ffcc"
+        },
+        {
+          "name": "MATCH",
+          "ratio": "ZDR*0.8 < PPL <= ZDR*1.5",
+          "color": "#00ccff"
+        },
+        {
+          "name": "TOUGH",
+          "ratio": "ZDR*0.5 < PPL <= ZDR*0.8",
+          "color": "#ffaa55"
+        },
+        {
+          "name": "DEADLY",
+          "ratio": "ZDR*0.25 < PPL <= ZDR*0.5",
+          "color": "#ff5555"
+        },
+        {
+          "name": "FUTILE",
+          "ratio": "PPL <= ZDR*0.25",
+          "color": "#ff0000"
+        }
+      ]
+    },
+    "grade_progression": {
+      "grades": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "max_tier": 6
+    }
+  },
+  "tier_system": {
+    "max_tier": 6,
+    "programs_count": 9,
+    "program_tiers": {
+      "T1": [
+        "wisp",
+        "strike",
+        "shield",
+        "probe",
+        "scan",
+        "heal",
+        "inspire",
+        "rewind",
+        "ice_break",
+        "sweep"
+      ],
+      "T2": [
+        "hammer",
+        "virus",
+        "ward",
+        "decoy",
+        "decrypt",
+        "cloak",
+        "trace",
+        "backdoor",
+        "boost",
+        "repair",
+        "salvage"
+      ],
+      "T3": [
+        "goliath",
+        "reflect",
+        "barrier",
+        "echo",
+        "exploit",
+        "payload",
+        "surge"
+      ],
+      "T4": [
+        "wardrone"
+      ],
+      "T5": [
+        "kraken"
+      ]
+    }
+  },
+  "mission_distribution": {
+    "by_pillar": {
+      "code": 125,
+      "identity": 3,
+      "purpose": 20,
+      "memory": 3,
+      "power": 45,
+      "people": 13
+    },
+    "by_arc": {
+      "1": 30,
+      "2": 43,
+      "3": 30,
+      "4": 45,
+      "5": 46,
+      "6": 15
+    },
+    "by_zone": {
+      "aftermath": 4,
+      "core": 25,
+      "deep": 40,
+      "freeside": 24,
+      "mid": 29,
+      "soho": 11,
+      "surface": 37,
+      "ta": 28,
+      "tokyo": 11
+    },
+    "by_grade_range": {
+      "grade_1-1": 2,
+      "grade_1-2": 23,
+      "grade_1-3": 1,
+      "grade_1-5": 1,
+      "grade_2-2": 1,
+      "grade_2-3": 28,
+      "grade_3-4": 37,
+      "grade_4-4": 1,
+      "grade_4-5": 49,
+      "grade_5-5": 19,
+      "grade_5-6": 32,
+      "grade_6-6": 15
+    }
+  },
+  "world_hierarchy": {
+    "worlds": [
+      {
+        "id": "chiba",
+        "name": "Chiba City",
+        "sectors": [
+          {
+            "id": "sense_net",
+            "name": "Sense/Net",
+            "server_count": 2
+          },
+          {
+            "id": "public_grid",
+            "name": "Public Grid",
+            "server_count": 2
+          }
+        ]
+      },
+      {
+        "id": "night_city",
+        "name": "Night City",
+        "sectors": [
+          {
+            "id": "arasaka",
+            "name": "Arasaka",
+            "server_count": 1
+          },
+          {
+            "id": "militech",
+            "name": "Militech",
+            "server_count": 1
+          }
+        ]
+      }
+    ],
+    "world_count": 2,
+    "sector_count": 4,
+    "server_count": 6,
+    "zone_depths": 8,
+    "world_names": [
+      "Chiba City",
+      "Night City"
+    ]
+  },
+  "alarm_system": {
+    "levels": [
+      {
+        "level": 0,
+        "name_ko": "평온",
+        "ice_ko": "없음",
+        "risk_ko": "없음"
+      },
+      {
+        "level": 1,
+        "name_ko": "인지",
+        "ice_ko": "기본 배치",
+        "risk_ko": "낮음"
+      },
+      {
+        "level": 2,
+        "name_ko": "정찰",
+        "ice_ko": "watchdog",
+        "risk_ko": "중간"
+      },
+      {
+        "level": 3,
+        "name_ko": "추적",
+        "ice_ko": "hellhound",
+        "risk_ko": "높음"
+      },
+      {
+        "level": 4,
+        "name_ko": "黑色ICE",
+        "ice_ko": "black ICE, trace 진행",
+        "risk_ko": "매우 높음"
+      },
+      {
+        "level": 5,
+        "name_ko": "trace 완료",
+        "ice_ko": "flatline 임박",
+        "risk_ko": "치명적"
+      }
+    ]
+  },
+  "_source_files": [
+    "design/pillars.md",
+    "design/core_loop.md",
+    "prototype/data/missions/missions.json",
+    "prototype/data/programs/programs.json",
+    "prototype/data/cyberspace/worlds.json"
+  ],
+  "_generated_at": "2026-08-21T20:55:44"
+}

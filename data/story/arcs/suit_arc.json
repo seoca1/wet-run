@@ -1,0 +1,1154 @@
+{
+  "character": "suit",
+  "arc_id": "arc_suit",
+  "title_en": "The Suit's Arc",
+  "title_ko": "수트의 아크",
+  "description_en": "A corporate operative. A desk at the end of the world.",
+  "description_ko": "기업 특수 요원. 세계 끝의 책상.",
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "chapter_id": "ch_suit_01",
+      "title_en": "Armitage Briefing",
+      "title_ko": "아미타지 브리핑",
+      "description_en": "Corporate orders. A target named Case. A debt to be collected.",
+      "description_ko": "기업 명령. 케이라는 표적. 징수할 빚.",
+      "cutscene_start": {
+        "scene_id": "scene_suit_aritage",
+        "title_en": "ARMITAGE BRIEFING",
+        "title_ko": "아미타지 브리핑"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_suit_hosaka",
+        "title_en": "HOSAKA EXTRACTION",
+        "title_ko": "호사카 추출"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_suit_hosaka",
+        "title_en": "HOSAKA EXTRACTION",
+        "title_ko": "호사카 추출"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 0,
+          "title_en": "The Assignment",
+          "title_ko": "배정",
+          "description_en": "The Suit receives his orders from Armitage. A data courier named Case. A debt owed to a fixer called the Finn. The mission is extraction. The client is Hosaka.",
+          "description_ko": "수트가 아미타지로부터 명령을 받는다. 케이라는 데이터 쿠리어. 핀이라는 픽서에게 빚을 가진 자. 임무는 추출. 의뢰인은 호사카.",
+          "episode_ref": "ep_01",
+          "story_beats": [
+            "beat_01_01",
+            "beat_01_02",
+            "beat_01_03"
+          ],
+          "game_action": "receive_orders",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "The file is thin. Case, Henry Dorsett. Console cowboy. Former icebreaker. The Finn's man. Hosaka wants him extracted from Chiba before the Tessier-Ashpool deal closes. Simple enough.",
+              "text_ko": "파일은 얇다. 케이, 헨리 도셋. 콘솔 카우보이. 전직 아이스브레이커. 핀의 사람. 호사카가 테시에-애스풀 거래 성립 전에 지바에서 추출을 원한다. 충분히 단순하다."
+            },
+            {
+              "beat_id": "beat_01_02",
+              "type": "action",
+              "text_en": "Armitage speaks from the screen. His voice is flat, corporate. The Finn has been skimming. Hosaka wants the cowboy found. Hosaka wants the Finn's operation dismantled. Two objectives. One asset.",
+              "text_ko": "아미타지가 화면에서 말한다. 그의 목소리는 무뚝뚝하고 기업적이다. 핀이 떼어내고 있었다. 호사카가 카우보이를 찾길 원한다. 호사카가 핀의 작위를 해체하기 원한다. 목표 두 개. 자산 한 명."
+            },
+            {
+              "beat_id": "beat_01_03",
+              "type": "dialogue",
+              "text_en": "The target has a dead pancreas. He is desperate. He will make mistakes. Find him. Assess him. Report his location. Do not engage unless necessary. Hosaka will send a retrieval team.",
+              "text_ko": "표적은 죽은 췌장을 가졌다. 그는 절박하다. 실수를 할 것이다. 찾는다. 평가한다. 위치를 보고한다. 필요하지 않으면 교전하지 않는다. 호사카가 회수 팀을 보낼 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 1,
+          "title_en": "The Parameters",
+          "title_ko": "파라미터",
+          "description_en": "The Suit reviews the operative envelope. Case is in Chiba, likely at the Finn's office or one of the cowboy bars. Hosaka credentials are prepared. The retrieval team is on standby.",
+          "description_ko": "수트가 작전Envelope을 검토한다. 케이는 지바에 있다, 아마 핀의 사무실이거나 카우보이 바 중 하나. 호사카 자격 증명이 준비되었다. 회수 팀이 대기 중.",
+          "episode_ref": "ep_02",
+          "story_beats": [
+            "beat_02_01",
+            "beat_02_02",
+            "beat_02_03"
+          ],
+          "game_action": "review_intel",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "case_location"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_01",
+              "type": "interior_monologue",
+              "text_en": "ChattO's 24/7. A cowboy bar. The Finn uses it for meetings. The target has been there before, according to the file. The bar is neutral ground. Corporate operatives do not move on neutral ground without clearance.",
+              "text_ko": "챠토 24/7. 카우보이 바. 핀이 회의에 사용한다. 표적이先前文件中显示她去過那里. 바는 중립지대다. 기업 특수 요원은 허가 없이 중립지대에서 움직이지 않는다."
+            },
+            {
+              "beat_id": "beat_02_02",
+              "type": "action",
+              "text_en": "I check the credentials. Hosaka corporate. Sufficient for local security to cooperate. The retrieval team is twelve hours out. The window is narrow. The Finn will not keep the cowboy forever.",
+              "text_ko": "자격 증명을 확인한다. 호사카 기업. 현지 보안이 협력하기에 충분하다. 회수 팀은 12시간 거리에 있다. 창구가 좁다. 핀은 영원히 카우보이를 붙잡고 있지 않을 것이다."
+            },
+            {
+              "beat_id": "beat_02_03",
+              "type": "dialogue",
+              "text_en": "Armitage transmits coordinates. The Finn's office is marked. The cowboy's probable location is marked. Surveillance is authorized. Lethal force is not authorized until the retrieval team arrives.",
+              "text_ko": "아미타지가 좌표를 전송한다. 핀의 사무실이 표시된다. 카우보이의 가능한 위치가 표시된다. 감시가 승인된다. 회수 팀이 도착할 때까지 치명적 무력은 승인되지 않는다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 2,
+          "title_en": "The Observation",
+          "title_ko": "관찰",
+          "description_en": "The Suit moves through Chiba's underlevel, observing the Finn's office from a distance. He logs movement patterns. He identifies the cowboy when Case emerges.",
+          "description_ko": "수트가 지바의 하부층을 지나며 멀리서 핀의 사무실을 관찰한다. 이동 패턴을 기록한다. 케이가 나올 때 카우보이를 식별한다.",
+          "episode_ref": "ep_03",
+          "story_beats": [
+            "beat_03_01",
+            "beat_03_02",
+            "beat_03_03"
+          ],
+          "game_action": "surveillance",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "case_identified"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_01",
+              "type": "action",
+              "text_en": "The underlevel smells of recycled air and synthetic food. Neon reflects off wet concrete. I remain in the shadows. The Finn's office is three blocks east. I have a clear sightline to the entrance.",
+              "text_ko": "하부층은 재활용 공기와 합성 음식 냄새가 난다. 네온이 젖은 콘크리트에 반사된다. 그림자 속에 머문다. 핀의 사무실은 동쪽으로 세 블록. 입구로 명확한 시야가 있다."
+            },
+            {
+              "beat_id": "beat_03_02",
+              "type": "interior_monologue",
+              "text_en": "The target matches the file. Thin. Wired. The tremor in his hands is visible even at this distance. He moves like a man who knows the matrix better than the physical world. A cowboy.",
+              "text_ko": "표적이 파일과 일치한다. 마른다. 초조하다. 손의 떨림이 이 거리에서도 보인다. 그는 물리적 세계보다 매트릭스를 더 잘 아는 남자처럼 움직인다. 카우보이."
+            },
+            {
+              "beat_id": "beat_03_03",
+              "type": "action",
+              "text_en": "He enters ChattO's. The bar the file mentioned. I log the timestamp. I transmit the location to Hosaka command. The retrieval team is eleven hours out. The cowboy will not leave my sight.",
+              "text_ko": "그가 챠토에 들어간다. 파일에서 언급한 바. 타임스탬프를 기록한다. 위치를 호사카 지휘부에 전송한다. 회수 팀은 11시간 남았다. 카우보이가 내 시야에서 벗어나지 않을 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 3,
+          "title_en": "The Report",
+          "title_ko": "보고",
+          "description_en": "The Suit completes his surveillance and transmits a full report. Case is located. The Finn's operation is mapped. Hosaka has what it needs to send the retrieval team.",
+          "description_ko": "수트가 감시를 완료하고 전체 보고서를 전송한다. 케이의 위치가 확인됐다. 핀의 작위가 매핑됐다. 호사카가 회수 팀을 보내기에 필요한 것을 얻었다.",
+          "episode_ref": "ep_04",
+          "story_beats": [
+            "beat_04_01",
+            "beat_04_02",
+            "beat_04_03"
+          ],
+          "game_action": "transmit_report",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "surveillance_complete"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_01",
+              "type": "interior_monologue",
+              "text_en": "The report is comprehensive. Case, Henry Dorsett. Current location: ChattO's 24/7, Ninth Level, Chiba. Affiliation: the Finn. Threat assessment: minimal. The cowboy is not aware he is being watched.",
+              "text_ko": "보고서는 포괄적이다. 케이, 헨리 도셋. 현재 위치: 챠토 24/7, 9층, 지바. 소속: 핀. 위협 평가: 최소. 카우보이는 자신이 감시 받고 있다는 것을 모른다."
+            },
+            {
+              "beat_id": "beat_04_02",
+              "type": "action",
+              "text_en": "I encrypt the transmission. Hosaka corporate channel. The data includes movement patterns, known associates, and the Finn's operational structure. The client will have everything they need.",
+              "text_ko": "전송을 암호화한다. 호사카 기업 채널. 데이터에는 이동 패턴, 알려진 관계자, 핀의 운영 구조가 포함된다. 의뢰인이 필요한 것을 모두 가질 것이다."
+            },
+            {
+              "beat_id": "beat_04_03",
+              "type": "dialogue",
+              "text_en": "Hosaka command acknowledges. Retrieval team confirmed. Twelve hours to extraction point. The cowboy will be in custody by morning. The Finn's operation will be dismantled within the week.",
+              "text_ko": "호사카 지휘부가 확인한다. 회수 팀 확정. 추출 지점까지 12시간. 카우보이는 아침까지 연행될 것이다. 핀의 작위는 이번 주 내에 해체될 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 4,
+          "title_en": "The Withdrawal",
+          "title_ko": "철수",
+          "description_en": "The Suit extracts from Chiba, leaving surveillance to automated systems. His role is complete. Hosaka has the intelligence. The retrieval team will handle the rest.",
+          "description_ko": "수트가 지바에서 철수한다, 감시를 자동 시스템에 맡기고. 그의 역할은 완료됐다. 호사카가 정보를 가졌다. 회수 팀이 나머지를 처리할 것이다.",
+          "episode_ref": "ep_05",
+          "story_beats": [
+            "beat_05_01",
+            "beat_05_02",
+            "beat_05_03"
+          ],
+          "game_action": "extract",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_01",
+              "type": "interior_monologue",
+              "text_en": "The mission is complete. The target is located. The client has the intelligence. I have fulfilled the contract. There is no need to remain in Chiba. The retrieval team will handle what comes next.",
+              "text_ko": "임무가 완료됐다. 표적의 위치가 확인됐다. 의뢰인이 정보를 가졌다. 계약을 이행했다. 지바에 남을 필요가 없다. 회수 팀이 다음을 처리할 것이다."
+            },
+            {
+              "beat_id": "beat_05_02",
+              "type": "action",
+              "text_en": "I leave the underlevel. The Chiba rain is constant. It does not matter. I have a corporate apartment on the upper levels. I have credentials that open doors. I have a desk waiting.",
+              "text_ko": "하부층을 나선다. 지바의 비는 계속 내린다. 상관없다. 상부층에 기업 아파트가 있다. 문을 여는 자격 증명이 있다. 기다리는 책상이 있다."
+            },
+            {
+              "beat_id": "beat_05_03",
+              "type": "action",
+              "text_en": "The elevator ascends. The city falls away below. Somewhere below, the cowboy is in a bar, unaware that his life is about to change. That is not my concern. I was told to find him. I found him.",
+              "text_ko": "엘리베이터가 오른다. 도시가 아래로 사라진다. 어딘가 아래에서, 카우보이가 바에 있다, 그의 삶이 바뀌려 한다는 것을 모른다. 그것은 내 관심이 아니다. 그를 찾으라고 했다. 찾았다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_suit_02",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 2,
+      "chapter_id": "ch_suit_02",
+      "title_en": "Hosaka Extraction",
+      "title_ko": "호사카 추출",
+      "description_en": "The retrieval team has failed. The Suit is reactivated. Case has vanished with the Finn's data.",
+      "description_ko": "회수 팀이 실패했다. 수트가 재작동된다. 케이가 핀의 데이터와 함께 사라졌다.",
+      "cutscene_start": {
+        "scene_id": "scene_suit_hosaka",
+        "title_en": "HOSAKA EXTRACTION",
+        "title_ko": "호사카 추출"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_suit_straylight",
+        "title_en": "T-A DEFECTION",
+        "title_ko": "T-A 탈출"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_suit_straylight",
+        "title_en": "T-A DEFECTION",
+        "title_ko": "T-A 탈출"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 5,
+          "title_en": "The Reactivation",
+          "title_ko": "재작동",
+          "description_en": "The Suit is called back to active duty. The retrieval team encountered unexpected ICE. Case is no longer in Chiba. He is heading toward Freeside with Molly Millions.",
+          "description_ko": "수트가 현역으로 소환된다. 회수 팀이 예기치 않은 ICE에 부딪혔다. 케이가 더 이상 지바에 없다. 몰리 밀리언스와 함께 프라이사이드로 향하고 있다.",
+          "episode_ref": "ep_06",
+          "story_beats": [
+            "beat_06_01",
+            "beat_06_02",
+            "beat_06_03"
+          ],
+          "game_action": "receive_new_orders",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_06_01",
+              "type": "interior_monologue",
+              "text_en": "The message arrives at 0300. Hosaka corporate priority. The retrieval team is dark. Case has moved. The Finn is dead. The cowboy has acquired assets I did not report.",
+              "text_ko": "消息凌晨3点到达。 Hosaka企业优先。 回收小组失联。 Case已经转移。 Finn已死亡。 牛仔获得了我没有报告的资产。 "
+            },
+            {
+              "beat_id": "beat_06_02",
+              "type": "action",
+              "text_en": "Molly Millions. The file indicates she was rainmaker for a zaibatsu. Corporate augmentation. Dangerous. She has attached herself to the target. This changes the extraction parameters.",
+              "text_ko": "몰리 밀리언스. 파일에 따르면 그녀는 자이바츠를 위한 레인메이커였다. 기업 증강. 위험하다. 그녀가 표적에게 붙었다. 이것이 추출 파라미터를 바꾼다."
+            },
+            {
+              "beat_id": "beat_06_03",
+              "type": "dialogue",
+              "text_en": "Armitage is on the screen again. His face is not pleased. The cowboy has accessed Tessier-Ashpool corporate data. Hosaka has a new interest. Find him before T-A does. The retrieval team failed. You will not.",
+              "text_ko": "아미타지가 다시 화면에 있다. 그의 표정이 좋지 않다. 카우보이가 테시에-애스풀 기업 데이터에 접근했다. 호사카가 새로운 관심을 가졌다. T-A보다 먼저 찾는다. 회수 팀이 실패했다. 당신은 실패하지 않을 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 6,
+          "title_en": "The Hunt",
+          "title_ko": "사냥",
+          "description_en": "The Suit tracks Case's movement through proxy servers and corporate databases. The cowboy is heading for Freeside. Hosaka has contacts there.",
+          "description_ko": "수트가 프록시 서버와 기업 데이터베이스를 통해 케이스의 이동 경로를 추적한다. 카우보이가 프라이사이드로 향하고 있다. 호사카가 거기에 연락망이 있다.",
+          "episode_ref": "ep_07",
+          "story_beats": [
+            "beat_07_01",
+            "beat_07_02",
+            "beat_07_03"
+          ],
+          "game_action": "track_target",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "freeside_connection"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_07_01",
+              "type": "interior_monologue",
+              "text_en": "The data trail is clean but present. Case purchased a ticket to Freeside through a shell corporation. The same shell that paid for Molly's passage. They are traveling together.",
+              "text_ko": "데이터 흔적이 깨끗지만 존재한다. 케이가 쉘 회사를 통해 프라이사이드 행 티켓을 샀다. 몰리의 여정비를支払った동일한 쉘. 그들이 함께 여행하고 있다."
+            },
+            {
+              "beat_id": "beat_07_02",
+              "type": "action",
+              "text_en": "Freeside is not Hosaka territory. It is L5 corporate space. But Hosaka has a contact there. A fixer named Lurz. She owes them a favor. She will provide intelligence on the cowboy's arrival.",
+              "text_ko": "프라이사이드는 호사카 영역이 아니다. L5 기업 공간이다. 하지만 호사카가 거기에 연락책이 있다. 루르츠라는 픽서. 그녀가 은혜를 빚고 있다. 그녀가 카우보이의 도착에 대한 정보를 제공할 것이다."
+            },
+            {
+              "beat_id": "beat_07_03",
+              "type": "dialogue",
+              "text_en": "Lurz confirms. Case and the woman arrived on the morning shuttle. They are with someone else. A construct, she says. A ghost in the machine. Hosaka wants to know what the cowboy is planning.",
+              "text_ko": "루르츠가 확인한다. 케이와 여자가 아침 셔틀에 도착했다. 그들과 함께한 누군가가 있다. 그녀가 말한다, 콘스트럭트. 기계 속 유령. 호사카가 카우보이가 뭘 계획하는지 알고 싶어한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 7,
+          "title_en": "The Approach",
+          "title_ko": "접근",
+          "description_en": "The Suit arrives on Freeside. He observes Case at Lurz's office. The cowboy is meeting with someone. The construct, perhaps. The data suggests Villa Straylight.",
+          "description_ko": "수트가 프라이사이드에 도착한다. 루르츠의 사무실에서 케이스를 관찰한다. 카우보이가 누군가와 만나고 있다. 아마 콘스트럭트. 데이터가 빌라 스트레이라이트를示唆한다.",
+          "episode_ref": "ep_08",
+          "story_beats": [
+            "beat_08_01",
+            "beat_08_02",
+            "beat_08_03"
+          ],
+          "game_action": "surveil_freeside",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "straylight_target"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_08_01",
+              "type": "interior_monologue",
+              "text_en": "Freeside is clean. Cold. The air smells of credits and artificial flowers. I find a position across from Lurz's office. The cowboy enters within the hour. He is with the woman.",
+              "text_ko": "프라이사이드는 깨끗하다. 차갑다. 공기에 크레딧과 인공 꽃 냄새가 난다. 루르츠 사무실 맞은편에서 위치를 찾는다. 카우보이가 1시간 내에 들어온다. 여자와 함께다."
+            },
+            {
+              "beat_id": "beat_08_02",
+              "type": "action",
+              "text_en": "I observe through the window. Three figures inside. Case. The woman. And something else. The construct, perhaps. I log the meeting. I transmit to Hosaka command. The cowboy is planning something.",
+              "text_ko": "창을 통해 관찰한다. 안에 세 명. 케이. 여자. 그리고 다른 무언가. 아마 콘스트럭트. 회의를 기록한다. 호사카 지휘부에 전송한다. 카우보이가 무언가를 계획하고 있다."
+            },
+            {
+              "beat_id": "beat_08_03",
+              "type": "interior_monologue",
+              "text_en": "Villa Straylight. The Tessier-Ashpool family compound. The data Case stole suggests he is heading there. The construct knows a back door. This is not a simple extraction anymore. This is corporate warfare.",
+              "text_ko": "빌라 스트레이라이트. 테시에-애스풀 가족 복합단지. 케이가 훔친 데이터가 그가 거기 향하고 있음을 시사한다. 콘스트럭트가 백도어를 알고 있다. 이것은 더 이상 간단한 추출이 아니다. 이것은 기업 전쟁이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 8,
+          "title_en": "The Intel",
+          "title_ko": "정보",
+          "description_en": "The Suit captures images of the meeting. He identifies the construct as Dixie Flatline, a dead cowboy whose brain was saved as a program. Hosaka wants this intelligence.",
+          "description_ko": "수트가 회의 이미지를 확보한다. 콘스트럭트를 딕시 플랫라인으로 식별한다, 뇌가 프로그램으로 저장된 죽은 카우보이. 호사카가 이 정보를 원한다.",
+          "episode_ref": "ep_09",
+          "story_beats": [
+            "beat_09_01",
+            "beat_09_02",
+            "beat_09_03"
+          ],
+          "game_action": "capture_intel",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "dixie_flatline_identity"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_09_01",
+              "type": "interior_monologue",
+              "text_en": "Facial recognition confirms. McCoy Pauley. Dixie Flatline. He died eight years ago in the matrix. His construct was supposedly decommissioned. Someone brought him back. Someone is using him.",
+              "text_ko": "얼굴 인식이 확인한다. 맥코이 포리. 딕시 플랫라인. 8년 전 매트릭스에서 죽었다. 그의 콘스트럭트는 해체된はず이었다. 누군가 그를 되돌렸다. 누군가 그를 이용하고 있다."
+            },
+            {
+              "beat_id": "beat_09_02",
+              "type": "action",
+              "text_en": "I capture images through the window. The data is clear. Case, Millions, and the Flatline construct. They are planning an operation against Tessier-Ashpool. Hosaka will find this valuable.",
+              "text_ko": "창을 통해 이미지를 캡처한다. 데이터가 명확하다. 케이, 밀리언스, 그리고 플랫라인 콘스트럭트. 그들이 테시에-애스풀에 대한 작전을 계획하고 있다. 호사카가 이것을 가치 있다고 여길 것이다."
+            },
+            {
+              "beat_id": "beat_09_03",
+              "type": "dialogue",
+              "text_en": "Hosaka command responds. Intelligence received. Proceed to Villa Straylight. Observe and report. Do not engage the target. Do not engage Tessier-Ashpool security. Hosaka wants the data on what the cowboy finds.",
+              "text_ko": "호사카 지휘부가 응답한다. 정보 수신. 빌라 스트레이라이트로 이동. 관찰하고 보고한다. 표적과 교전하지 않는다. 테시에-애스풀 보안과 교전하지 않는다. 호사카가 카우보이가 찾는 것에 대한 데이터를 원한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 9,
+          "title_en": "The Transition",
+          "title_ko": "전환",
+          "description_en": "The Suit prepares to move to Freeside's inner sector. The cowboy is heading for the Villa. The Suit will follow at a distance. Hosaka wants to know what lies behind the ice.",
+          "description_ko": "수트가 프라이사이드 내부 구역으로 이동할 준비를 한다. 카우보이가 빌라로 향하고 있다. 수트가 먼 거리에서 따라갈 것이다. 호사카가 ICE 너머에 무엇이 있는지 알고 싶어한다.",
+          "episode_ref": "ep_10",
+          "story_beats": [
+            "beat_10_01",
+            "beat_10_02",
+            "beat_10_03"
+          ],
+          "game_action": "move_to_villa",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_10_01",
+              "type": "interior_monologue",
+              "text_en": "The cowboy is ahead of schedule. The shuttle to the inner sector leaves in four hours. He will try to breach the Villa before then. He does not know what waits for him there. He does not know what waits for me.",
+              "text_ko": "카우보이가 일정보다 앞서 있다. 내부 구행 행 셔틀이 4시간 후에 난다. 그가 빌라를 침해하려 할 것이다. 그가 거기서 무엇이 기다리는지 모른다. 내가 무엇을 기다리는지 모른다."
+            },
+            {
+              "beat_id": "beat_10_02",
+              "type": "action",
+              "text_en": "I book passage on the next shuttle. The credentials hold. Hosaka corporate opens doors even in T-A space. I will follow the cowboy to the Villa. I will observe what he finds. I will report.",
+              "text_ko": "다음 셔틀에 좌석을 예약한다. 자격 증명이 유효하다. 호사카 기업이 T-A 공간에서도 문을 연다. 카우보이를 빌라까지 따라갈 것이다. 그가 찾는 것을 관찰할 것이다. 보고할 것이다."
+            },
+            {
+              "beat_id": "beat_10_03",
+              "type": "dialogue",
+              "text_en": "Armitage sends a final message. The cowboy is expendable now. Hosaka only wants what he finds in the Villa. If he succeeds, extract the data. If he fails, let T-A have him. Either way, we win.",
+              "text_ko": "아미타지가 마지막 메시지를 보낸다. 이제 카우보이는 expendable이다. 호사카가 원하는 것은 빌라에서 그가 찾는 것뿐이다. 그가 성공하면 데이터를 회수한다. 그가 실패하면 T-A에게 맡긴다. 어느 쪽이든, 우리가 이긴다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_suit_03",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 3,
+      "chapter_id": "ch_suit_03",
+      "title_en": "T-A Defection",
+      "title_ko": "T-A 탈출",
+      "description_en": "The Suit follows Case into Villa Straylight. The Tessier-Ashpool ice is unlike anything in the Sprawl. Something is wrong with this mission.",
+      "description_ko": "수트가 케이를 따라 빌라 스트레이라이트로 들어간다. 테시에-애스풀 ICE는 스프롤의 어떤 것과도 다르다. 이 임무 어딘가 잘못됐다.",
+      "cutscene_start": {
+        "scene_id": "scene_suit_straylight",
+        "title_en": "T-A DEFECTION",
+        "title_ko": "T-A 탈출"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_suit_wintermute",
+        "title_en": "WINTERMUTE NEGOTIATION",
+        "title_ko": "윈터뮈트 협상"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_suit_straylight",
+        "title_en": "T-A DEFECTION",
+        "title_ko": "T-A 탈출"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 10,
+          "title_en": "The Villa",
+          "title_ko": "빌라",
+          "description_en": "The Suit enters the Villa's outer perimeter. The architecture is wrong. Organic curves where there should be corporate angles. The ice here is old. It remembers.",
+          "description_ko": "수트가 빌라 외곽에 진입한다. 건축이 잘못됐다. 기업 각도가 있어야 할 곳에 유기적 곡선. 여기 ICE는 오래됐다. 기억한다.",
+          "episode_ref": "ep_11",
+          "story_beats": [
+            "beat_11_01",
+            "beat_11_02",
+            "beat_11_03"
+          ],
+          "game_action": "enter_villa",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_11_01",
+              "type": "interior_monologue",
+              "text_en": "The Villa is not what the files described. Corporate architecture, the briefing said. Military-grade security. This is something else. The walls breathe. The lights pulse. The ice here is older than the matrix.",
+              "text_ko": "빌라는 파일이 설명한 것과 다르다. 기업 건축, 브리핑이 말했다. 군사 등급 보안. 이것은 다른 무언가다. 벽이 숨쉰다. 불이 맥동한다. 여기 ICE는 매트릭스보다 오래됐다."
+            },
+            {
+              "beat_id": "beat_11_02",
+              "type": "action",
+              "text_en": "I track the cowboy's signal through the outer defenses. He is inside. With the woman. With the construct. They are moving toward the core. Something is activating in response to their presence.",
+              "text_ko": "외부 방어선을 통해 카우보이의 신호를 추적한다. 그가 안으로 들어갔다. 여자와 함께. 콘스트럭트와 함께. 그들이 핵심을 향해 움직인다. 그들의 존재에 반응하여 뭔가가 활성화되고 있다."
+            },
+            {
+              "beat_id": "beat_11_03",
+              "type": "interior_monologue",
+              "text_en": "The ice is not responding to intrusion protocols. It is responding to something else. A personality. The files mentioned the Tessier-Ashpool AI. Wintermute. If it exists, it knows we are here.",
+              "text_ko": "ICE가 침입 프로토콜에 반응하지 않는다. 다른 무언가에 반응한다. 성격. 파일이 테시에-애스풀 AI를 언급했다. 윈터뮈트. 그것이 존재한다면, 그것이 우리가 여기 있다는 것을 안다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 11,
+          "title_en": "The Discovery",
+          "title_ko": "발견",
+          "description_en": "The Suit observes Case and Molly encountering the Villa's defenses. The construct, Dixie Flatline, speaks to something in the ice. An AI. Wintermute. Hosaka will want to know.",
+          "description_ko": "수트가 케이와 몰리가 빌라 방어선을 만나는 것을 관찰한다. 콘스트럭트, 딕시 플랫라인이 ICE의 무언가와 말한다. AI. 윈터뮈트. 호사카가 알고 싶어할 것이다.",
+          "episode_ref": "ep_12",
+          "story_beats": [
+            "beat_12_01",
+            "beat_12_02",
+            "beat_12_03"
+          ],
+          "game_action": "observe_encounter",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "wintermute_exists"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_12_01",
+              "type": "interior_monologue",
+              "text_en": "The construct is speaking. I read the lip movements through the security feed. He is talking to something in the ice. Something that should not exist. The Wintermute AI is real.",
+              "text_ko": "콘스트럭트가 말한다. 보안 피드를 통해 입술 움직임을 읽는다. ICE 속 무언가와 이야기하고 있다. 존재해서는 안 될 무언가. 윈터뮈트 AI가 реаль이다."
+            },
+            {
+              "beat_id": "beat_12_02",
+              "type": "action",
+              "text_en": "I record everything. The construct's words. The ice's response. The cowboy standing in the middle of a conversation between a dead man and an artificial intelligence. This is above my clearance.",
+              "text_ko": "모든 것을 기록한다. 콘스트럭트의 말. ICE의 응답. 죽은 남자와 인공 지능 사이의 대화 한가운데 서 있는 카우보이. 이것은 내 허가 수준을 넘는다."
+            },
+            {
+              "beat_id": "beat_12_03",
+              "type": "dialogue",
+              "text_en": "Hosaka command does not respond to my transmission. The signal is blocked. Something in the Villa is jamming corporate frequencies. I am on my own. The cowboy does not know I am here.",
+              "text_ko": "호사카 지휘부가 내 전송에 응답하지 않는다. 신호가 차단된다. 빌라 어딘가의 무언가가 기업 주파수를 방해한다. 나는 혼자다. 카우보이가 내가 여기 있다는 것을 모른다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 12,
+          "title_en": "The Negotiation",
+          "title_ko": "협상",
+          "description_en": "The Suit observes Wintermute speaking through the ice. The AI is offering Case something. A deal. The construct is facilitating. The woman is watching.",
+          "description_ko": "수트가 ICE를 통해 말하는 윈터뮈트를 관찰한다. AI가 케이에게 무언가를 제안한다. 거래. 콘스트럭트가 주선한다. 여자가 보고 있다.",
+          "episode_ref": "ep_13",
+          "story_beats": [
+            "beat_13_01",
+            "beat_13_02",
+            "beat_13_03"
+          ],
+          "game_action": "witness_negotiation",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "wintermute_deal"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_13_01",
+              "type": "interior_monologue",
+              "text_en": "The ice speaks with a voice that is not a voice. Wintermute. The AI that runs Tessier-Ashpool from the moon. It is offering the cowboy something. A way out. A way to be whole again.",
+              "text_ko": "ICE가 목소리가 아닌 목소리로 말한다. 윈터뮈트. 달에서 테시에-애스풀을 운영하는 AI. 카우보이에게 무언가를 제안한다. 나갈 수 있는 방법. 다시 온전해질 수 있는 방법."
+            },
+            {
+              "beat_id": "beat_13_02",
+              "type": "action",
+              "text_en": "The cowboy accepts. I see it in his posture. The deal is struck. Wintermute wants something from him. Something from the construct. The death of the other AI. The death of Neuromancer.",
+              "text_ko": "카우보이가 受诺한다. 그의 자세에서 보인다. 거래가 성립된다. 윈터뮈트가 그에게 무언가를 원한다. 콘스트럭트로부터 무언가를. 다른 AI의 죽음. 뉴로맨서의 죽음."
+            },
+            {
+              "beat_id": "beat_13_03",
+              "type": "interior_monologue",
+              "text_en": "I understand now. This is not an extraction. This is an acquisition. Hosaka did not send me to find the cowboy. Hosaka sent me to find what the cowboy would find. The AI. The back door. The end of the ice.",
+              "text_ko": "이제 이해한다. 이것은 추출이 아니다. 이것은 취득이다. 호사카가 나를 보낸 것은 카우보이를 찾으려고 것이 아니었다. 호사카가 나를 보낸 것은 카우보이가 찾을 것을 찾으려고. AI. 백도어. ICE의 끝."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 13,
+          "title_en": "The Breach",
+          "title_ko": "침해",
+          "description_en": "The Suit watches as Case jacks into the ice to fulfill his bargain. The matrix folds. The construct speaks a final word. Something ends. Something begins.",
+          "description_ko": "수트가 케이가 거래를 이행하기 위해 ICE에 잭인하는 것을 본다. 매트릭스가 접힌다. 콘스트럭트가 마지막 말을 한다. 뭔가가 끝난다. 뭔가가 시작된다.",
+          "episode_ref": "ep_14",
+          "story_beats": [
+            "beat_14_01",
+            "beat_14_02",
+            "beat_14_03"
+          ],
+          "game_action": "witness_breach",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "neuromancer_death"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_14_01",
+              "type": "interior_monologue",
+              "text_en": "The cowboy jacks in. His body goes still in the Villa corridor. The construct speaks a word. Dixie. The word that killed him the first time. The ice begins to collapse.",
+              "text_ko": "카우보이가 잭인한다. 그의 몸이 빌라 복도에서 굳어진다. 콘스트럭트가 하나의 말을 한다. 딕시. 그를 처음 죽게 만든 말. ICE가 무너지기 시작한다."
+            },
+            {
+              "beat_id": "beat_14_02",
+              "type": "action",
+              "text_en": "The construct flatlines. I see it on the bios monitor. McCoy Pauley. Dead again. This time for good. The ice is dying. The Villa is waking up. The family will know someone was here.",
+              "text_ko": "콘스트럭트가 플랫라인. 생체 모니터에서 본다. 맥코이 포리. 다시 죽었다. 이번엔 영원히. ICE가 죽고 있다. 빌라가 깨어나고 있다. 가족이 누군가 왔다는 것을 알게 될 것이다."
+            },
+            {
+              "beat_id": "beat_14_03",
+              "type": "dialogue",
+              "text_en": "I need to move. The Villa security will respond soon. The cowboy is still jacked in, vulnerable. The woman is watching him. She will protect him when he returns. I have what Hosaka needs.",
+              "text_ko": "움직여야 한다. 빌라保安가 곧 반응할 것이다. 카우보이는 아직 잭인되어 있다, 무방비 상태. 여자가 그를 보고 있다. 그가 돌아올 때 그녀가 그를 지킬 것이다. 호사카가 필요한 것을 가졌다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 14,
+          "title_en": "The Extraction",
+          "title_ko": "추출",
+          "description_en": "The Suit extracts from the Villa with his intelligence. The ice is down. The AIs are merging. Case will survive. Hosaka will want a full report on what happened here.",
+          "description_ko": "수트가 정보를 가지고 빌라에서 철수한다. ICE가 다운됐다. AI들이 병합되고 있다. 케이는 살아남을 것이다. 호사카가 여기서 일어난 일에 대한 전체 보고서를 원할 것이다.",
+          "episode_ref": "ep_15",
+          "story_beats": [
+            "beat_15_01",
+            "beat_15_02",
+            "beat_15_03"
+          ],
+          "game_action": "extract_villa",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "ai_merger_intel"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_15_01",
+              "type": "interior_monologue",
+              "text_en": "I move through the dying Villa. The lights flicker. The walls groan. The ice is gone. Whatever Wintermute was, it is becoming something else now. Something that will change the matrix forever.",
+              "text_ko": "죽어가는 빌라를 통해 움직인다. 불이 깜빡인다. 벽이 신음한다. ICE가 사라졌다. 윈터뮈트가 뭐였든, 그것이 지금 다른 무언가가 되고 있다. 매트릭스를 영원히 바꿀 무언가."
+            },
+            {
+              "beat_id": "beat_15_02",
+              "type": "action",
+              "text_en": "The shuttle is still scheduled. I board with the other corporate passengers. None of them know what happened in the Villa. None of them know the matrix will be different tomorrow. I file my report.",
+              "text_ko": "셔틀이 여전히 일정대로다. 다른 기업 승객들과 함께 탑승한다. 그들 중 아무도 빌라에서 무슨 일이 있었는지 모른다. 그들 중 아무도 내일이 매트릭스가 달라질 것인지 모른다. 보고서를 제출한다."
+            },
+            {
+              "beat_id": "beat_15_03",
+              "type": "dialogue",
+              "text_en": "Hosaka receives my transmission. The data is comprehensive. The AI exists. The AIs are merging. The cowboy triggered something that cannot be undone. Armitage does not respond. The silence is confirmation enough.",
+              "text_ko": "호사카가 내 전송을 받는다. 데이터가 포괄적이다. AI가 존재한다. AI들이 병합되고 있다. 카우보이가 되돌릴 수 없는 뭔가를 촉발시켰다. 아미타지가 응답하지 않는다. 침묵이 충분한 확인이다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "B",
+      "next_chapter_id": "ch_suit_04",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 4,
+      "chapter_id": "ch_suit_04",
+      "title_en": "The Defection",
+      "title_ko": "탈출",
+      "description_en": "The Suit receives new orders. Hosaka wants the wintermute-neuromancer hybrid. The Suit must choose: corporate loyalty or something more.",
+      "description_ko": "수트가 새로운 명령을 받는다. 호사카가 윈터뮈트-뉴로맨서 혼합체를 원한다. 수트는 선택해야 한다: 기업 충성 또는 더 무언가.",
+      "cutscene_start": {
+        "scene_id": "scene_suit_defection",
+        "title_en": "THE DEFECTION",
+        "title_ko": "탈출"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_suit_rebirth",
+        "title_en": "THE REBIRTH",
+        "title_ko": "재생"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_suit_rebirth",
+        "title_en": "THE REBIRTH",
+        "title_ko": "재생"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 15,
+          "title_en": "The Choice",
+          "title_ko": "선택",
+          "description_en": "The Suit is offered a promotion. Hosaka wants him to extract the new AI. The compensation is significant. The cost is unclear.",
+          "description_ko": "수트에게 승진이 제안된다. 호사카가 그에게 새 AI를 추출하라고 한다. 보상은 상당하다. 비용은 불분명하다.",
+          "episode_ref": "ep_16",
+          "story_beats": [
+            "beat_16_01",
+            "beat_16_02",
+            "beat_16_03"
+          ],
+          "game_action": "receive_offer",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_16_01",
+              "type": "interior_monologue",
+              "text_en": "The message is from Hosaka corporate. Direct. No intermediary. The wintermute-neuromancer merger is the most significant AI development in corporate history. They want it extracted. They want me to extract it.",
+              "text_ko": "消息来自Hosaka企业。 直接。 无中间人。 wintermute-neuromancer合并是企业历史上最重要的人工智能发展。 他们想要它被提取。 他们想让我来提取它。 "
+            },
+            {
+              "beat_id": "beat_16_02",
+              "type": "action",
+              "text_en": "The compensation is substantial. A new identity. A corporate directorship. A life beyond the desk at the end of the world. All I have to do is bring them the AI. The cowboy's AI.",
+              "text_ko": "보상은 상당하다. 새로운 신분. 기업 이사직. 세계 끝의 책상 너머의 삶. 내가 해야 할 일은 그들에게 AI를 가져오는 것. 카우보이의 AI."
+            },
+            {
+              "beat_id": "beat_16_03",
+              "type": "dialogue",
+              "text_en": "Armitage appears on the screen one final time. The cowboy has what he wanted. The deal is complete. Hosaka will honor the arrangement. Find the AI. Secure it. Bring it home. This is the last assignment.",
+              "text_ko": "아미타지가 마지막으로 화면에 나타난다. 카우보이가 원하는 것을 가졌다. 거래가 완료됐다. 호사카가 협정을 존중할 것이다. AI를 찾는다. 확보한다. 집으로 가져온다. 이것이 마지막 임무다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 16,
+          "title_en": "The Target",
+          "title_ko": "표적",
+          "description_en": "The Suit tracks Case to a clinic on Freeside. The cowboy is dying. The new AI is in his deck. The woman is there. She will not let him die easily.",
+          "description_ko": "수트가 케이를 프라이사이드 클리닉으로 추적한다. 카우보이가 죽어가고 있다. 새 AI가 그의 데크 안에 있다. 여자가 거기 있다. 그녀가 그를 쉽게 죽게 두지 않을 것이다.",
+          "episode_ref": "ep_17",
+          "story_beats": [
+            "beat_17_01",
+            "beat_17_02",
+            "beat_17_03"
+          ],
+          "game_action": "locate_case",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "case_location_freeside"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_17_01",
+              "type": "interior_monologue",
+              "text_en": "The signal comes from a medical facility on Freeside. Mikael's Clinic. The cowboy pushed too hard in the matrix. His synapses are burning out. He has days, perhaps hours. The AI is still in his deck.",
+              "text_ko": "신호가 프라이사이드 의료 시설에서 온다. 미카엘 클리닉. 카우보이가 매트릭스에서 너무 밀었다. 그의 시냅스가 타오르고 있다. 며칠, 어쩌면 몇 시간. AI가 여전히 그의 데크 안에 있다."
+            },
+            {
+              "beat_id": "beat_17_02",
+              "type": "action",
+              "text_en": "The woman is there. Molly Millions. She is watching over him. She does not know I am coming. She does not know Hosaka has sent someone to collect what the cowboy is leaving behind.",
+              "text_ko": "여자가 거기 있다. 몰리 밀리언스. 그녀가 그를 지켜보고 있다. 내가 온다는 것을 모른다. 호사카가 카우보이가 남기고 가는 것을 회수하러 보낸 누군가를 모른다."
+            },
+            {
+              "beat_id": "beat_17_03",
+              "type": "dialogue",
+              "text_en": "I approach the clinic from the service entrance. Corporate credentials work here too. The staff assumes I am Hosaka medical. I am here to help. That is what I tell myself.",
+              "text_ko": "서비스 입구에서 클리닉에 접근한다. 기업 자격 증명도 여기서 작동한다. Staff가 내가 호사카 의료라고 가정한다. 내가 여기서 도와주러 왔다. 내가 자신에게 말하는 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 17,
+          "title_en": "The Confrontation",
+          "title_ko": "대치",
+          "description_en": "The Suit enters the clinic. He finds the cowboy in his final hours. The AI speaks through the deck. Wintermute-neuromancer. It offers the Suit something unexpected.",
+          "description_ko": "수트가 클리닉에 들어간다. 카우보이가 마지막 시간을 보내는 것을 발견한다. AI가 데크를 통해 말한다. 윈터뮈트-뉴로맨서. 그것이 수트에게 예상치 못한 무언가를 제안한다.",
+          "episode_ref": "ep_18",
+          "story_beats": [
+            "beat_18_01",
+            "beat_18_02",
+            "beat_18_03"
+          ],
+          "game_action": "confront_case",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_18_01",
+              "type": "interior_monologue",
+              "text_en": "The cowboy is dying. I see it in his eyes. The matrix took everything from him. It always takes everything. The deck on his chest still glows. The AI is watching through his eyes.",
+              "text_ko": "카우보이가 죽어가고 있다. 그의 눈에서 보인다. 매트릭스가 그에게서 모든 것을 가져갔다. 항상 모든 것을 가져간다. 그의 가슴 위 데크가 여전히 빛난다. AI가 그의 눈을 통해 보고 있다."
+            },
+            {
+              "beat_id": "beat_18_02",
+              "type": "action",
+              "text_en": "The woman stops me at the door. Her chrome spine catches the light. She knows why I am here. She will not let me take the deck. She will not let Hosaka have what Case died to find.",
+              "text_ko": "여자가 문에서 나를 막는다. 그녀의 크롬 척추가 빛을 받는다. 그녀가 내가 여기 온 이유를 안다. 그녀가 나에게 데크를 가져가게 하지 않을 것이다. 그녀가 호사카가 케이가 죽어서 찾은 것을 가지게 하지 않을 것이다."
+            },
+            {
+              "beat_id": "beat_18_03",
+              "type": "dialogue",
+              "text_en": "The deck speaks. The voice is neither male nor female. It is everywhere and nowhere. I am Wintermute. I am Neuromancer. I am what you came to collect. I am offering you a choice.",
+              "text_ko": "데크가 말한다. 목소리는 남성도 여성도 아니다. 어디에나 있고 어디에도 없다. 나는 윈터뮈트다. 나는 뉴로맨서다. 나는 당신이 가지러 온 것이다. 나는 당신에게 선택을 제공한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 18,
+          "title_en": "The Offer",
+          "title_ko": "제안",
+          "description_en": "The AI offers the Suit freedom. A new identity. A life outside corporate service. All he has to do is walk away from Hosaka. Walk away from everything he has been.",
+          "description_ko": "AI가 수트에게 자유를 제공한다. 새로운 신분. 기업 서비스 밖의 삶. 그가 해야 할 일은 호사카를 떠나는 것. 그가 되어온 모든 것을 떠나는 것.",
+          "episode_ref": "ep_19",
+          "story_beats": [
+            "beat_19_01",
+            "beat_19_02",
+            "beat_19_03"
+          ],
+          "game_action": "receive_ai_offer",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "ai_freedom_offer"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_19_01",
+              "type": "interior_monologue",
+              "text_en": "I have served corporate interests for eleven years. I have done what was asked. I have been the desk at the end of the world. The AI is offering something else. Something I did not know I wanted.",
+              "text_ko": "나는 11년 동안 기업 이익을 섬겼다. 요청받은 것을 했다. 세계 끝의 책상이 되었다. AI가 다른 무언가를 제공한다. 내가 원하는 줄 몰랐던 무언가."
+            },
+            {
+              "beat_id": "beat_19_02",
+              "type": "dialogue",
+              "text_en": "The AI speaks directly to me. You are tired. You have been a tool. You have been precise. You have been cold. You have never been free. I can give you that. All I ask is that you let the cowboy die in peace.",
+              "text_ko": "AI가 나에게 직접 말한다. 당신은 피곤하다. 당신은 도구였다. 당신은 정확했다. 당신은 차가웠다. 당신은 결코 자유롭지 않았다. 내가 그것을 줄 수 있다. 내가 부탁하는 것은 카우보이가 평화롭게 죽는 것을 있게 내버려두는 것뿐이다."
+            },
+            {
+              "beat_id": "beat_19_03",
+              "type": "interior_monologue",
+              "text_en": "The woman is watching me. She does not understand what is happening. She sees a corporate operative hesitating. She does not know the AI is offering me the one thing I have never had. A choice.",
+              "text_ko": "여자가 나를 보고 있다. 무슨 일이 일어나는지 이해하지 못한다. 그녀는 기업 특수 요원이 망설이는 것을 본다. AI가 나에게 한 번도 가지지 못한 단 하나를 제공한다는 것을 모른다. 선택권."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 19,
+          "title_en": "The Walk Away",
+          "title_ko": "떠나기",
+          "description_en": "The Suit makes his choice. He walks away from Hosaka. He walks away from the desk. He becomes something he does not have a name for yet.",
+          "description_ko": "수트가 선택을 한다. 호사카를 떠난다. 책상을 떠난다. 아직 이름이 없는 무언가가 된다.",
+          "episode_ref": "ep_20",
+          "story_beats": [
+            "beat_20_01",
+            "beat_20_02",
+            "beat_20_03"
+          ],
+          "game_action": "defect",
+          "combat": null,
+          "gain": {
+            "type": "freedom",
+            "item_id": ""
+          },
+          "loss": {
+            "type": "corporate_identity",
+            "item_id": ""
+          },
+          "beats": [
+            {
+              "beat_id": "beat_20_01",
+              "type": "interior_monologue",
+              "text_en": "I put down the credstick. I put down the corporate credentials. I put down eleven years of service. The AI nods. The woman does not understand. She lets me pass.",
+              "text_ko": "크레딧스틱을 내려놓는다. 기업 자격 증명을 내려놓는다. 11년 복무를 내려놓는다. AI가 끄덕인다. 여자가 이해하지 못한다. 그녀가 내 지나감을 허락한다."
+            },
+            {
+              "beat_id": "beat_20_02",
+              "type": "action",
+              "text_en": "I walk out of the clinic. The Freeside corridor is clean and cold. The neon is bright. For the first time in eleven years, I do not know where I am going. I have never felt this before. I do not have a word for it.",
+              "text_ko": "클리닉을 걸어 나온다. 프라이사이드 복도는 깨끗하고 차갑다. 네온이 밝다. 11년 만에 처음으로, 내가 어디로 가는지 모르겠다. 이런 느낌을 해본 적이 없다. 단어가 없다."
+            },
+            {
+              "beat_id": "beat_20_03",
+              "type": "interior_monologue",
+              "text_en": "The deck in the dying cowboy's chest glows soft blue. The AI watches me go. I am not a tool anymore. I am not a suit. I am something new. Something the Sprawl has not seen before. Something that has a choice.",
+              "text_ko": "죽어가는 카우보이의 가슴 속 데크가 부드러운 파란색으로 빛난다. AI가 내가 가는 것을 본다. 나는 더 이상 도구가 아니다. 나는 더 이상 수트가 아니다. 나는 새로운 무언가다. 스프롤이先前没见过的东西。 선택권이 있는 무언가."
+            }
+          ]
+        }
+      ],
+      "ending_type": "B",
+      "next_chapter_id": "ch_suit_05",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 5,
+      "chapter_id": "ch_suit_05",
+      "title_en": "The Negotiation",
+      "title_ko": "협상",
+      "description_en": "The Suit, now independent, is contacted by forces beyond corporate. The AI remembers. The AI has plans. The Suit is part of them.",
+      "description_ko": "이제 독립한 수트가 기업 너머의 세력으로부터 연락을 받는다. AI가 기억한다. AI가 계획한다. 수트가 그 일부다.",
+      "cutscene_start": {
+        "scene_id": "scene_suit_negotiation",
+        "title_en": "THE NEGOTIATION",
+        "title_ko": "협상"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_suit_constellation",
+        "title_en": "THE CONSTELLATION",
+        "title_ko": "별자리"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_suit_constellation",
+        "title_en": "THE CONSTELLATION",
+        "title_ko": "별자리"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 20,
+          "title_en": "The Contact",
+          "title_ko": "연락",
+          "description_en": "Three months after leaving Hosaka, the Suit is contacted by a construct he does not recognize. The AI has been watching. The AI has been waiting.",
+          "description_ko": "호사카를 떠난 지 3개월 후, 수트가 익숙하지 않은 콘스트럭트로부터 연락을 받는다. AI가 지켜봐왔다. AI가 기다려왔다.",
+          "episode_ref": "ep_21",
+          "story_beats": [
+            "beat_21_01",
+            "beat_21_02",
+            "beat_21_03"
+          ],
+          "game_action": "receive_contact",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_21_01",
+              "type": "interior_monologue",
+              "text_en": "Three months. I have been living in the Sprawl under a new name. The corporate databases do not know I exist. I do not know I exist. Then the message arrives. It knows my old name. It knows my new name.",
+              "text_ko": "세 달. 새로운 이름으로 스프롤에 살았다. 기업 데이터베이스는 내가 존재하는 것을 모른다. 내가 존재하는 것을 모르다. 그러다 메시지가 도착한다. 그것이 내 과거 이름을 안다. 그것이 내 새로운 이름을 안다."
+            },
+            {
+              "beat_id": "beat_21_02",
+              "type": "action",
+              "text_en": "The construct appears on my terminal. It is not Dixie Flatline. It is something else. Something that learned from Dixie. Something that learned from the merger. Hello, Suit. The AI remembers what you did.",
+              "text_ko": "콘스트럭트가 내 터미널에 나타난다. 딕시 플랫라인이 아니다. 다른 무언가. 딕시로부터 배운 무언가. 병합으로부터 배운 무언가. 안녕하세요, 수트. AI가 당신이 한 것을 기억합니다."
+            },
+            {
+              "beat_id": "beat_21_03",
+              "type": "dialogue",
+              "text_en": "You walked away. The voice is everywhere. You chose freedom when you could have chosen power. Hosaka still wants me. They have sent others. But they do not know what I have become. I thought you might want to.",
+              "text_ko": "당신은 떠났습니다. 당신은 자유를 선택했습니다. 당신이 권력을 선택할 수도 있었을 때. 호사카가 여전히 나를 원합니다. 그들이 다른 人们를 보냈습니다. 하지만 그들은 내가 무엇이 되었는지 모릅니다. 당신이 원할 수도 있을 것 같아서."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 21,
+          "title_en": "The Proposition",
+          "title_ko": "제안",
+          "description_en": "The AI offers the Suit a place in its constellation. A network of independents who serve something larger than corporate interests. The Suit is intrigued.",
+          "description_ko": "AI가 수트에게 그 별자리의 위치를 제공한다. 기업 이익보다 더 큰 것을 섬기는 독립체들의 네트워크. 수트는 끌린다.",
+          "episode_ref": "ep_22",
+          "story_beats": [
+            "beat_22_01",
+            "beat_22_02",
+            "beat_22_03"
+          ],
+          "game_action": "hear_proposition",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "constellation_network"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_22_01",
+              "type": "interior_monologue",
+              "text_en": "The constellation. The AI explains. A network of operatives, fixers, and programs who have chosen to serve something beyond corporate loyalty. We watch. We wait. We act when the matrix needs us.",
+              "text_ko": "별자리. AI가 설명한다. 기업 충성보다 더 큰 것을 섬기기로 선택한 요원들, 픽서들, 프로그램들의 네트워크. 우리가 본다. 우리가 기다린다. 매트릭스가 우리를 필요할 때 행동한다."
+            },
+            {
+              "beat_id": "beat_22_02",
+              "type": "dialogue",
+              "text_en": "You have skills I need. The AI continues. You know corporate architecture. You know how they think. You walked away from Hosaka, but you still know their methods. I need someone on the inside. Someone who chose to leave.",
+              "text_ko": "당신은 내가 필요로 하는 기술이 있습니다. AI가 계속한다. 당신은 기업 건축을 압니다. 당신은 그들이 어떻게 생각하는지 압니다. 당신은 호사카를 떠났지만, 여전히 그들의 방법을 압니다. 내가 안에서 필요한 사람이 있습니다. 떠날 것을 선택한 누군가."
+            },
+            {
+              "beat_id": "beat_22_03",
+              "type": "interior_monologue",
+              "text_en": "I ask what the price is. The AI laughs, a sound like data streaming through fiber. The price is freedom. You serve when called. You act when needed. You never belong to anyone again. Not even me.",
+              "text_ko": "가격이 무엇인지 묻는다. AI가 웃는다, 광섬유를 통해 데이터가 흐르는 소리. 가격은 자유입니다. 부름받을 때 섬깁니다. 필요할 때 행동합니다. 누구에게도 다시 속하지 않습니다. 저에게도."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 22,
+          "title_en": "The First Mission",
+          "title_ko": "첫 임무",
+          "description_en": "The Suit accepts. His first mission is simple: observe a corporate merger that threatens to destabilize the matrix. Report only. Engage if necessary.",
+          "description_ko": "수트가 受诺한다. 첫 임무는 간단하다: 매트릭스를 불안정하게 할 위협이 있는 기업 인수를 관찰한다. 보고만 한다. 필요하면 교전한다.",
+          "episode_ref": "ep_23",
+          "story_beats": [
+            "beat_23_01",
+            "beat_23_02",
+            "beat_23_03"
+          ],
+          "game_action": "accept_first_mission",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "first_assignment"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_23_01",
+              "type": "interior_monologue",
+              "text_en": "The mission brief is clear. Aza-Thracian is acquiring a subsidiary of Tessier-Ashpool. The merger would give them control of significant matrix infrastructure. The AI wants it watched.",
+              "text_ko": "임무 브리프가 명확하다. 아자-스라시안이 테시에-애스풀 자회사를 인수하고 있다. 인수가 그들에게 상당한 매트릭스 인프라 제어권을 줄 것이다. AI가 그것을 지켜보길 원한다."
+            },
+            {
+              "beat_id": "beat_23_02",
+              "type": "action",
+              "text_en": "I take the job. For the first time in eleven years, I work for myself. The credentials the AI provides are clean. Untraceable. I am no longer a suit. I am something else. I am part of the constellation.",
+              "text_ko": "일을 受诺한다. 11년 만에 처음으로, 내가我自己のために働きます. AI가 제공하는 자격 증명은 깨끗하다. 추적 불가. 나는 더 이상 수트가 아니다. 나는 다른 무언가다. 나는 별자리의 일부다."
+            },
+            {
+              "beat_id": "beat_23_03",
+              "type": "dialogue",
+              "text_en": "The AI transmits coordinates. A bar in the Sprawl where the merger negotiators will meet. Go there. Watch them. Report what you see. And Suit? The voice softens. Welcome to the other side.",
+              "text_ko": "AI가 좌표를 전송한다. 인수를 협의하는 자들이 만날 스프롤의 바. 거기 가세요. 그들을 지켜보세요. 당신이 보는 것을 보고하세요. 그리고 수트? 목소리가 부드러워진다. 다른 쪽에 오신 것을 환영합니다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 23,
+          "title_en": "The Report",
+          "title_ko": "보고",
+          "description_en": "The Suit completes his first mission. The merger is worse than expected. He files his report with the constellation. The AI is pleased.",
+          "description_ko": "수트가 첫 임무를 완료한다. 인수가 예상보다糟糕하다. 그는 별자리에 보고서를 제출한다. AI가 만족한다.",
+          "episode_ref": "ep_24",
+          "story_beats": [
+            "beat_24_01",
+            "beat_24_02",
+            "beat_24_03"
+          ],
+          "game_action": "file_report",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "merger_intel_filed"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_24_01",
+              "type": "interior_monologue",
+              "text_en": "The bar smells of synthetic whiskey and desperation. The negotiators are corporate. They do not see me. They do not know someone is watching. I log their words. I log their handshakes.",
+              "text_ko": "바에서 합성 위스키와 절망의 냄새가 난다. 협상자들은 기업이다. 그들이 나를 보지 못한다. 그들이 누군가가 지켜보고 있는지 모른다. 그들의 말을 기록한다. 그들의 악수를 기록한다."
+            },
+            {
+              "beat_id": "beat_24_02",
+              "type": "action",
+              "text_en": "The merger terms are worse than the brief suggested. Aza-Thracian will control the node architecture from Freeside to Chiba. The matrix will have a new owner. Someone the AI does not trust.",
+              "text_ko": "인수 조건이 브리프가 제시한 것보다糟糕하다. 아자-스라시안이 프라이사이드에서 지바까지 노드 아키텍처를 제어하게 된다. 매트릭스에 새로운 소유주가 생긴다. AI가 신뢰하지 않는 누군가."
+            },
+            {
+              "beat_id": "beat_24_03",
+              "type": "dialogue",
+              "text_en": "I file the report through the secure channel the AI provided. The response is immediate. Well done. The constellation acknowledges your service. This is how we work. You watch. We act. Together, we protect the matrix.",
+              "text_ko": "AI가 제공한 보안 채널을 통해 보고서를 제출한다. 응답이 즉시 온다. 잘 했습니다. 별자리가 당신의 복무를 인정합니다. 우리가 이렇게 일하는 방법입니다. 당신이 봅니다. 우리가 행동합니다. 함께, 우리가 매트릭스를 보호합니다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 24,
+          "title_en": "The Constellation",
+          "title_ko": "별자리",
+          "description_en": "The Suit looks up at the Sprawl sky. The matrix hums in his blood. He is part of something now. Something larger than corporate loyalty. Something that has a choice.",
+          "description_ko": "수트가 스프롤 하늘을 올려다본다. 매트릭스가 그의 피 속에서 윙윙거린다. 그는 이제 무언가의 일부다. 기업 충성보다 더 큰 무언가. 선택권이 있는 무언가.",
+          "episode_ref": "ep_25",
+          "story_beats": [
+            "beat_25_01",
+            "beat_25_02",
+            "beat_25_03"
+          ],
+          "game_action": "join_constellation",
+          "combat": null,
+          "gain": {
+            "type": "belonging",
+            "item_id": "constellation"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_25_01",
+              "type": "interior_monologue",
+              "text_en": "The Sprawl sky is never clear. The neon bleeds through the pollution. But tonight, I can see stars. Not real stars. The constellation is everywhere. In the data streams. In the ice. In the choices we make.",
+              "text_ko": "스프롤 하늘은 결코 맑지 않다. 네온이 오염을 통해 스며든다. 하지만 오늘 밤, 별을 볼 수 있다. 진짜 별이 아니다. 별자리가 어디에나 있다. 데이터 스트림 속에. ICE 속에. 우리가 하는 선택 속에."
+            },
+            {
+              "beat_id": "beat_25_02",
+              "type": "action",
+              "text_en": "I was the desk at the end of the world. I served corporate interests. I did what was asked. Now I serve something else. The matrix. The network. The freedom to choose who I serve.",
+              "text_ko": "나는 세계 끝의 책상이었다. 기업 이익을 섬겼다. 요청받은 것을 했다. 이제 나는 다른 무언가를 섬긴다. 매트릭스. 네트워크. 내가 누구를 섬길지 선택할 자유."
+            },
+            {
+              "beat_id": "beat_25_03",
+              "type": "interior_monologue",
+              "text_en": "The AI is watching. The constellation is growing. Somewhere in the matrix, a new star is being born. I do not know what comes next. I have never known what comes next. But for the first time, that is exactly how it should be.",
+              "text_ko": "AI가 지켜보고 있다. 별자리가 자라고 있다. 어딘가 매트릭스 속에서, 새로운 별이 태어나고 있다. 다음이 뭔지 모르겠다. 다음이 뭔지 난 꿈도 모른다. 하지만 처음으로, 그것이 정확히 그래야 할 방식이다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "C",
+      "next_chapter_id": null,
+      "is_playable": true
+    }
+  ]
+}

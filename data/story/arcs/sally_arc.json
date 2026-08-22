@@ -1,0 +1,1128 @@
+{
+  "character": "sally",
+  "arc_id": "arc_sally",
+  "title_en": "The Sally Arc",
+  "title_ko": "샐리의 아크",
+  "description_en": "The market does not close. The market only Y.",
+  "description_ko": "시장은 닫히지 않는다. 평가는 반드시 Y한다.",
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "chapter_id": "ch_sally_01",
+      "title_en": "Market",
+      "title_ko": "시장",
+      "description_en": "The market opens at three. New variables enter.",
+      "description_ko": "시장이 세시에 열린다. 새로운 변수가 진입한다.",
+      "cutscene_start": {
+        "scene_id": "scene_sally_market",
+        "title_en": "THE MARKET OPENS",
+        "title_ko": "시장 개장"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_sally_market",
+        "title_en": "THE MARKET OPENS",
+        "title_ko": "시장 개장"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_sally_bobby",
+        "title_en": "BOBBY'S BETRAYAL",
+        "title_ko": "바비의 배신"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 0,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "The market opens. New variables enter the exchange. I calculate volume. I calculate risk. The market does not sleep.",
+          "description_ko": "시장이 열린다. 새로운 변수가 거래소에 진입한다. 볼륨을 계산한다. 리스크를 계산한다. 평가는 잠들지 않는다.",
+          "episode_ref": "ep_01_01",
+          "story_beats": [
+            "beat_01_01_01",
+            "beat_01_01_02",
+            "beat_01_01_03"
+          ],
+          "game_action": "market_encounter",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_01_01",
+              "type": "interior_monologue",
+              "text_en": "The market opens. Three items on the strip today. I catalog each one — provenance, condition, asking price. The market does not close. The market only opens.",
+              "text_ko": "시장이 열린다. 오늘 스트립에 세 개의 아이템. 각각을 카탈로그한다 — 출처, 상태, 청구 가격. 평가는 닫히지 않는다. 평가는 반드시 열린다."
+            },
+            {
+              "beat_id": "beat_01_01_02",
+              "type": "action",
+              "text_en": "Another body walks the strip. Flesh seeking credit. I watch them price themselves — too high, most of them. The market does not judge. The market only prices.",
+              "text_ko": "또 다른 몸이 스트립을 걷는다. 신점을 찾는 살점. 그들이 스스로 가격을 매기는 것을 본다 — 너무 높게, 대부분. 평가는 판단하지 않는다. 평가는 반드시 가격을 매긴다."
+            },
+            {
+              "beat_id": "beat_01_01_03",
+              "type": "interior_monologue",
+              "text_en": "I find the edge. I find the margin. The margin is where I live. The market provides. The market always provides to those who know how to ask.",
+              "text_ko": "엣지를 찾는다. 마진을 찾는다. 마진이 내가 사는 곳이다. 평가는 제공한다. 평가는 요청하는 자들에게 반드시 제공한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 1,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The operation crystallizes. Targets identified. Value assessed. The market moves when the market is ready.",
+          "description_ko": "작전이 결정된다. 목표 확인. 가치 평가. 평가는 준비가 되면 움직인다.",
+          "episode_ref": "ep_01_02",
+          "story_beats": [
+            "beat_01_02_01",
+            "beat_01_02_02",
+            "beat_01_02_03"
+          ],
+          "game_action": "briefing",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_02_01",
+              "type": "dialogue",
+              "text_en": "The targets are three. Each one priced. Each one moveable. The market does not negotiate. The market sets the price and the price stands.",
+              "text_ko": "목표는 세 개. 각각 가격 매겨졌다. 각각 이동 가능. 평가는 협상하지 않는다. 평가는 가격을 정하고 그 가격이 굳어진다."
+            },
+            {
+              "beat_id": "beat_01_02_02",
+              "type": "interior_monologue",
+              "text_en": "Credits flow through channels. Clean. Anonymous. The market does not remember the hands. The market only records the transfer.",
+              "text_ko": "크레딧이 채널을 통해 흐른다. 깔끔하게. 익명으로. 평가는 손을 기억하지 않는다. 평가는 반드시 이전을 기록한다."
+            },
+            {
+              "beat_id": "beat_01_02_03",
+              "type": "dialogue",
+              "text_en": "I brief the variables. I price the variables. Each unit knows its function. The market does not explain. The market only executes.",
+              "text_ko": "변수들에게 브리핑한다. 변수들에게 가격을 매긴다. 각 유닛이 자신의 기능을 안다. 평가는 설명하지 않는다. 평가는 반드시 실행한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 2,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The acquisition begins. Items change hands. The market sees all. The market forgets nothing.",
+          "description_ko": "인수가 시작된다. 아이템이 손을 바꾼다. 평가는 모든 것을 본다. 평가는 아무것도 잊지 않는다.",
+          "episode_ref": "ep_01_03",
+          "story_beats": [
+            "beat_01_03_01",
+            "beat_01_03_02",
+            "beat_01_03_03",
+            "beat_01_03_04"
+          ],
+          "game_action": "acquisition",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_03_01",
+              "type": "action",
+              "text_en": "The first item is acquired. Smooth. Clean. The market does notcelebrate victories. The market only tallies the gain.",
+              "text_ko": "첫 번째 아이템이 인수된다. 매끄럽게. 깔끔하게. 평가는 승리를 축하하지 않는다. 평가는 반드시 이익을 집계한다."
+            },
+            {
+              "beat_id": "beat_01_03_02",
+              "type": "interior_monologue",
+              "text_en": "The second item resists. Bodies have a way of becoming attached to their possessions. The market does not pity. The market only prices the reluctance.",
+              "text_ko": "두 번째 아이템이 저항한다. 몸은 소유물에 집착하는 방식이 있다. 평가는 불쌍히 여기지 않는다. 평가는 반드시 저항의 가격을 매긴다."
+            },
+            {
+              "beat_id": "beat_01_03_03",
+              "type": "action",
+              "text_en": "The transaction completes. Credits transfer. The market does not sleep between deals. The market only waits for the next.",
+              "text_ko": "거래가 완료된다. 크레딧이 이전된다. 평가는 거래 사이에 잠들지 않는다. 평가는 반드시 다음을 기다린다."
+            },
+            {
+              "beat_id": "beat_01_03_04",
+              "type": "interior_monologue",
+              "text_en": "Three items. Three prices paid. The market does not question the cost. The market only records what the market has earned.",
+              "text_ko": "세 개의 아이템. 세 개의 가격이 지불되었다. 평가는 비용을 질문하지 않는다. 평가는 반드시 평가가 번 수익을 기록한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 3,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The sale is made. Credits flow. The market takes its cut. The market always takes its cut.",
+          "description_ko": "매각이 이루어진다. 크레딧이 흐른다. 평가가 몫을 가져간다. 평가는 반드시 몫을 가져간다.",
+          "episode_ref": "ep_01_04",
+          "story_beats": [
+            "beat_01_04_01",
+            "beat_01_04_02",
+            "beat_01_04_03"
+          ],
+          "game_action": "sale",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_04_01",
+              "type": "dialogue",
+              "text_en": "The buyer asks questions. The buyer always asks questions. The market does not answer questions. The market only names the price.",
+              "text_ko": "구매자가 질문을 한다. 구매자는 항상 질문을 한다. 평가는 질문에 답하지 않는다. 평가는 반드시 가격을 말한다."
+            },
+            {
+              "beat_id": "beat_01_04_02",
+              "type": "action",
+              "text_en": "The price is agreed. Credits transfer in the clean channels of the market. The market does not haggle. The market only closes.",
+              "text_ko": "가격이 합의된다. 크레딧이 시장의 깔끔한 채널로 이전된다. 평가는 흥정하지 않는다. 평가는 반드시 닫는다."
+            },
+            {
+              "beat_id": "beat_01_04_03",
+              "type": "interior_monologue",
+              "text_en": "The market takes its percentage. The market always takes its percentage. What remains is profit. The market does not apologize. The market only provides.",
+              "text_ko": "평가가 자의百分比를 가져간다. 평가는 반드시 자의 percentage를 가져간다. 남은 것이 이윤이다. 평가는 사과하지 않는다. 평가는 반드시 제공한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 4,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "Bobby approaches. The market sees him. The market prices him. The market does not warn. The market only records.",
+          "description_ko": "바비가 다가온다. 평가는 그를 본다. 평가는 그에게 가격을 매긴다. 평가는 경고하지 않는다. 평가는 반드시 기록한다.",
+          "episode_ref": "ep_01_05",
+          "story_beats": [
+            "beat_01_05_01",
+            "beat_01_05_02",
+            "beat_01_05_03"
+          ],
+          "game_action": "bobby_encounter",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_05_01",
+              "type": "interior_monologue",
+              "text_en": "Bobby walks the strip. I have priced him before. His desperation has a market rate. Today the rate has changed. The market does not explain why.",
+              "text_ko": "바비가 스트립을 걷는다. 전에 그에게 가격을 매겼었다. 그의 절망에는 시장 가격이 있다. 오늘 그율이 바뀌었다. 평가는 왜 바뀌었는지 설명하지 않는다."
+            },
+            {
+              "beat_id": "beat_01_05_02",
+              "type": "dialogue",
+              "text_en": "He offers himself. The market does not flinch. The market only recalculates. His price is lower than he thinks. The market is never wrong.",
+              "text_ko": "그는 자신을 제안한다. 평가는 눈 하나 깜짝하지 않는다. 평가는 반드시 다시 계산한다. 그의 가격은 그가 생각하는 것보다 낮다. 평가는 절대 틀리지 않는다."
+            },
+            {
+              "beat_id": "beat_01_05_03",
+              "type": "interior_monologue",
+              "text_en": "Bobby takes the deal. The market records the transfer. The market does not judge the buyer. The market only counts the credits. Bobby has sold himself. The market is satisfied.",
+              "text_ko": "바비가 거래를 받아들인다. 평가는 이전을 기록한다. 평가는 구매자를 판단하지 않는다. 평가는 반드시 크레딧을 세는다. 바비는 자신을 팔았다. 평가는 만족한다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_sally_02",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 2,
+      "chapter_id": "ch_sally_02",
+      "title_en": "Marly Meeting",
+      "title_ko": "말리와의 만남",
+      "description_en": "Marly wants a construct. The market provides.",
+      "description_ko": "말리가 콘스트럭트를 원한다. 평가는 제공한다.",
+      "cutscene_start": {
+        "scene_id": "scene_sally_bobby",
+        "title_en": "BOBBY'S BETRAYAL",
+        "title_ko": "바비의 배신"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_sally_marly",
+        "title_en": "MARLY MEETING",
+        "title_ko": "말리와의 만남"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_sally_angie",
+        "title_en": "ANGIE'S THREAT",
+        "title_ko": "앤지의 협박"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 5,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "Marly finds me. She has credits. She has a need. The market does not introduce itself. The market only waits.",
+          "description_ko": "말리가 나를 찾는다. 그녀에게 크레딧이 있다. 그녀에게 필요가 있다. 평가는 자기를 소개하지 않는다. 평가는 반드시 기다린다.",
+          "episode_ref": "ep_02_01",
+          "story_beats": [
+            "beat_02_01_01",
+            "beat_02_01_02",
+            "beat_02_01_03"
+          ],
+          "game_action": "marly_approach",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_01_01",
+              "type": "interior_monologue",
+              "text_en": "Marly walks the strip like someone who has never been priced. I appreciate the delusion. The market does not care about delusions. The market only prices the flesh.",
+              "text_ko": "말리가 아직 가격 매겨진 적 없는 사람처럼 스트립을 걷는다. 그 환상을 높이 산다. 평가는 환상을 신경 쓰지 않는다. 평가는 반드시 살점을 가격을 매긴다."
+            },
+            {
+              "beat_id": "beat_02_01_02",
+              "type": "dialogue",
+              "text_en": "She asks about constructs. The market does not give advice. The market only gives quotes. I give her a number. She will not like the number. The number is correct.",
+              "text_ko": "그녀가 콘스트럭트에 대해 묻는다. 평가는 충고하지 않는다. 평가는 반드시 견적을 낸다. 내가 그녀에게 숫자를 알려준다. 그녀는 그 숫자를 좋아하지 않을 것이다. 그 숫자가 정확하다."
+            },
+            {
+              "beat_id": "beat_02_01_03",
+              "type": "interior_monologue",
+              "text_en": "She has a picture in her mind. Constructs are not pictures. Constructs are code and death and the cold geometry of the matrix. The market does not correct dreams. The market only fulfills them at the listed price.",
+              "text_ko": "그녀 마음 속에 그림이 있다. 콘스트럭트는 그림이 아니다. 콘스트럭트는 코드와 죽음과 행렬의 차가운 기하학이다. 평가는 꿈을 바로잡지 않는다. 평가는 반드시 표기된 가격으로 꿈을成就한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 6,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "Marly wants a construct. She will pay for it. The market does not haggle. The market only sets the price.",
+          "description_ko": "말리가 콘스트럭트를 원한다. 그녀가 그것에 대해 지불할 것이다. 평가는 흥정하지 않는다. 평가는 반드시 가격을 정한다.",
+          "episode_ref": "ep_02_02",
+          "story_beats": [
+            "beat_02_02_01",
+            "beat_02_02_02",
+            "beat_02_02_03"
+          ],
+          "game_action": "marly_briefing",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "marly_request"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_02_01",
+              "type": "dialogue",
+              "text_en": "She wants a specific construct. The one she saw in the archive. The market does not curate desire. The market only fulfills it at the listed price.",
+              "text_ko": "그녀가 특정 콘스트럭트를 원한다. 그녀가 아카이브에서 본 것. 평가는 욕구를 큐레이션하지 않는다. 평가는 반드시 표기된 가격으로 그것을成就한다."
+            },
+            {
+              "beat_id": "beat_02_02_02",
+              "type": "interior_monologue",
+              "text_en": "The construct she wants is not for sale. The market disagrees. Everything is for sale. The market only names the price. The price is high because the object is rare. The market is never wrong.",
+              "text_ko": "그녀가 원하는 콘스트럭트는 판매용이 아니다. 평가는 동의하지 않는다. 모든 것은 판매용이다. 평가는 반드시 가격을 말한다. 대상이 희귀所以가격이 높다. 평가는 절대 틀리지 않는다."
+            },
+            {
+              "beat_id": "beat_02_02_03",
+              "type": "dialogue",
+              "text_en": "She pays the first installment. The market does not trust. The market only insures. Her construct will be delivered. The market guarantees delivery. The market always guarantees.",
+              "text_ko": "그녀가 첫 번째 분할금을 지불한다. 평가는 신뢰하지 않는다. 평가는 반드시 보험에 든다. 그녀의 콘스트럭트가 배달될 것이다. 평가는 배달을 보장한다. 평가는 반드시 보장한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 7,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The search begins. Archives yield their secrets. The market does not hurry. The market only persists.",
+          "description_ko": "검색이 시작된다. 아카이브가 비밀이를泄露한다. 평가는 서두르지 않는다. 평가는 반드시Persistence한다.",
+          "episode_ref": "ep_02_03",
+          "story_beats": [
+            "beat_02_03_01",
+            "beat_02_03_02",
+            "beat_02_03_03"
+          ],
+          "game_action": "archive_search",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_03_01",
+              "type": "interior_monologue",
+              "text_en": "The archive opens like a flower made of data. I search for what she wants. The market does not reveal its methods. The market only delivers the goods.",
+              "text_ko": "아카이브가 데이터로 만든 꽃처럼 열린다. 그녀가 원하는 것을 찾는다. 평가는 방법을 드러내지 않는다. 평가는 반드시 물건을 배달한다."
+            },
+            {
+              "beat_id": "beat_02_03_02",
+              "type": "action",
+              "text_en": "The construct is buried deep. Layers of encryption. The market does not stop for encryption. The market only cracks it faster.",
+              "text_ko": "콘스트럭트가 깊이 묻혀 있다. 암호화의 레이어들. 평가는 암호화로 인해 멈추지 않는다. 평가는 반드시 그것을 더 빨리 깨는다."
+            },
+            {
+              "beat_id": "beat_02_03_03",
+              "type": "interior_monologue",
+              "text_en": "Found. The construct is found. The market does not celebrate. The market only packages the purchase. Delivery is guaranteed. The market always delivers.",
+              "text_ko": "발견됨. 콘스트럭트가 발견됨. 평가는 축하하지 않는다. 평가는 반드시 구매를 포장한다. 배달이 보장된다. 평가는 반드시 배달한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 8,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "Marly pays the final installment. The construct changes hands. The market counts its profit.",
+          "description_ko": "말리가 마지막 분할금을 지불한다. 콘스트럭트가 손을 바꾼다. 평가가 이윤을 집계한다.",
+          "episode_ref": "ep_02_04",
+          "story_beats": [
+            "beat_02_04_01",
+            "beat_02_04_02",
+            "beat_02_04_03"
+          ],
+          "game_action": "construct_delivery",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_04_01",
+              "type": "dialogue",
+              "text_en": "The final payment arrives. Clean credits in clean channels. The market does not linger over transactions. The market only records and moves on.",
+              "text_ko": "최종 결제금이 도착한다. 깔끔한 채널의 깔끔한 크레딧. 평가는 거래에 머물지 않는다. 평가는 반드시 기록하고 넘어간다."
+            },
+            {
+              "beat_id": "beat_02_04_02",
+              "type": "action",
+              "text_en": "The construct transfers. Marly receives what she paid for. The market does not warranty the product. The market only guarantees the transfer.",
+              "text_ko": "콘스트럭트가 이전된다. 말리가 지불한 것을 받는다. 평가는 제품을 보증하지 않는다. 평가는 반드시 이전을 보장한다."
+            },
+            {
+              "beat_id": "beat_02_04_03",
+              "type": "interior_monologue",
+              "text_en": "The market counts its share. The market always counts its share. What remains is profit. The market is satisfied. The market is always satisfied when the numbers add up.",
+              "text_ko": "평가가 자의 몫을 세다. 평가는 반드시 자의 몫을 세다. 남은 것이 이윤이다. 평가는 만족한다. 숫자가 맞으면 평가는 반드시 만족한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 9,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "Angie appears. The market sees her. The market prices her threat. The market does not flinch.",
+          "description_ko": "앤지가 나타난다. 평가는 그녀를 본다. 평가는 그녀의 협박에 가격을 매긴다. 평가는 눈 하나 깜짝하지 않는다.",
+          "episode_ref": "ep_02_05",
+          "story_beats": [
+            "beat_02_05_01",
+            "beat_02_05_02",
+            "beat_02_05_03"
+          ],
+          "game_action": "angie_appears",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_05_01",
+              "type": "interior_monologue",
+              "text_en": "Angie walks the strip like she owns it. The market does not recognize ownership. The market only recognizes price. Her threat has a price. Everything has a price.",
+              "text_ko": "앤지가 그녀가 소유한 것처럼 스트립을 걷는다. 평가는 소유를 인정하지 않는다. 평가는 반드시 가격만 인정한다. 그녀의 협박에는 가격이 있다. 모든 것에는 가격이 있다."
+            },
+            {
+              "beat_id": "beat_02_05_02",
+              "type": "dialogue",
+              "text_en": "She threatens. The market does not respond to threats. The market only calculates the cost of compliance versus the cost of resistance. The numbers favor resistance. The market always favors the numbers.",
+              "text_ko": "그녀가 협박한다. 평가는 협박에 응답하지 않는다. 평가는 반드시 순응의 비용과 저항의 비용을 계산한다. 숫자가 저항을 선호한다. 평가는 반드시 숫자를 선호한다."
+            },
+            {
+              "beat_id": "beat_02_05_03",
+              "type": "interior_monologue",
+              "text_en": "Angie will return. The market does not doubt this. The market only prepares. The next encounter is already priced. The market has already moved on.",
+              "text_ko": "앤지가 돌아올 것이다. 평가는 이를 의심하지 않는다. 평가는 반드시 준비한다. 다음 조우는 이미 가격이 매겨졌다. 평가는 이미 다음으로 갔다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_sally_03",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 3,
+      "chapter_id": "ch_sally_03",
+      "title_en": "Angie's Threat",
+      "title_ko": "앤지의 협박",
+      "description_en": "Angie returns. The market does not negotiate with threats.",
+      "description_ko": "앤지가 돌아온다. 평가는 협박과 협상하지 않는다.",
+      "cutscene_start": {
+        "scene_id": "scene_sally_angie",
+        "title_en": "ANGIE'S THREAT",
+        "title_ko": "앤지의 협박"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_sally_monopoly",
+        "title_en": "THE MONOPOLY",
+        "title_ko": "독점"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_sally_sold",
+        "title_en": "SOLD OUT",
+        "title_ko": "매진"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 10,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "Angie returns with demands. The market does not accept demands. The market only sets terms.",
+          "description_ko": "앤지가 요구와 함께 돌아온다. 평가는 요구를 수용하지 않는다. 평가는 반드시 조건을 정한다.",
+          "episode_ref": "ep_03_01",
+          "story_beats": [
+            "beat_03_01_01",
+            "beat_03_01_02",
+            "beat_03_01_03"
+          ],
+          "game_action": "angie_confrontation",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_01_01",
+              "type": "interior_monologue",
+              "text_en": "Angie returns. She has calculated her threat. She has not calculated the market. The market does not calculate threats. The market only calculates cost.",
+              "text_ko": "앤지가 돌아온다. 그녀가 자신의 협박을 계산했다. 그녀는 시장을 계산하지 않았다. 평가는 협박을 계산하지 않는다. 평가는 반드시 비용을 계산한다."
+            },
+            {
+              "beat_id": "beat_03_01_02",
+              "type": "dialogue",
+              "text_en": "She makes her demand. The market does not acknowledge demands. The market only acknowledges currency. I name my price. She will not meet it. The market does not bend.",
+              "text_ko": "그녀가 자신의 요구를 한다. 평가는 요구를 인정하지 않는다. 평가는 반드시 화폐만 인정한다. 내가 내 가격을 말한다. 그녀는 그것을 충족하지 못할 것이다. 평가는 굽히지 않는다."
+            },
+            {
+              "beat_id": "beat_03_01_03",
+              "type": "interior_monologue",
+              "text_en": "She leaves. The market watches her go. The market does not celebrate departures. The market only notes the vacancy she leaves behind. Another variable enters the equation. The market recalculates.",
+              "text_ko": "그녀가 떠난다. 평가가她去를 본다. 평가는 이별을 축하하지 않는다. 평가는 반드시 그녀가 남긴 공허를 기록한다. 또 다른 변수가 방정식에 진입한다. 평가는 다시 계산한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 11,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The monopoly reveals itself. One item remains. The market does not share. The market only takes.",
+          "description_ko": "독점이 드러난다. 하나의 아이템만 남았다. 평가는 공유하지 않는다. 평가는 반드시 가져간다.",
+          "episode_ref": "ep_03_02",
+          "story_beats": [
+            "beat_03_02_01",
+            "beat_03_02_02",
+            "beat_03_02_03"
+          ],
+          "game_action": "monopoly_revealed",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_02_01",
+              "type": "interior_monologue",
+              "text_en": "The market reveals the truth. There is only one item. The others were illusions. The market does not apologize for illusions. The market only prices the reality.",
+              "text_ko": "평가가 진실을 드러낸다. 아이템은 하나뿐이다. 다른 것들은 환상이었다. 평가는 환상에 대해 사과하지 않는다. 평가는 반드시 현실의 가격을 매긴다."
+            },
+            {
+              "beat_id": "beat_03_02_02",
+              "type": "dialogue",
+              "text_en": "Angie wants the item. The family wants the item. The market does not divide its attention. The market only sells to the highest bidder. The bidding is not yet complete.",
+              "text_ko": "앤지가 그 아이템을 원한다. 가족이 그 아이템을 원한다. 평가는注意를 분할하지 않는다. 평가는 반드시 가장 높은 입찰자에게만 판다. 입찰이 아직 완료되지 않았다."
+            },
+            {
+              "beat_id": "beat_03_02_03",
+              "type": "interior_monologue",
+              "text_en": "The item holds its value. The market does not negotiate on behalf of the item. The item has its own agenda. The market only records the eventual transfer. The transfer will happen. The market is certain.",
+              "text_ko": "아이템이 그 가치를 유지한다. 평가는 아이템을 대신하여 협상하지 않는다. 아이템에는 자체 의程がある. 평가는必定 eventual 이전을 기록한다. 이전이 일어날 것이다. 평가는 반드시 확실하다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 12,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The family moves in. The market watches. The market does not intervene. The market only prices.",
+          "description_ko": "가족이 움직인다. 평가가 본다. 평가는 개입하지 않는다. 평가는 반드시 가격을 매긴다.",
+          "episode_ref": "ep_03_03",
+          "story_beats": [
+            "beat_03_03_01",
+            "beat_03_03_02",
+            "beat_03_03_03"
+          ],
+          "game_action": "family_move",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_03_01",
+              "type": "interior_monologue",
+              "text_en": "The family moves. They have calculated their offer. They have not calculated the market. The market does not calculate offers. The market only calculates value.",
+              "text_ko": "가족이 움직인다. 그들이 그들의 제안을 계산했다. 그들은 시장을 계산하지 않았다. 평가는 제안을 계산하지 않는다. 평가는 반드시 가치만 계산한다."
+            },
+            {
+              "beat_id": "beat_03_03_02",
+              "type": "action",
+              "text_en": "Credits flow from the family. Clean money. Old money. The market does not distinguish between clean and dirty. The market only counts. The count is not favorable to the family.",
+              "text_ko": "크레딧이 가족으로부터 흐른다. 깨끗한 돈. 오래된 돈. 평가는 깨끗함과 더러움을 구별하지 않는다. 평가는 반드시 세다. 수치가 가족에게 유리하지 않다."
+            },
+            {
+              "beat_id": "beat_03_03_03",
+              "type": "interior_monologue",
+              "text_en": "The family raises their offer. The market does not encourage. The market only waits. The item will go to whoever meets the price. The market has already decided who that will be.",
+              "text_ko": "가족이 제안을 올린다. 평가는 독려하지 않는다. 평가는 반드시 기다린다. 아이템은 가격을 충족하는 누구에게나 갈 것이다. 평가는 이미 누가 될지 결정했다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 13,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The item is sold. The family pays. The market takes its cut. The market always takes its cut.",
+          "description_ko": "아이템이 팔린다. 가족이 지불한다. 평가가 몫을 가져간다. 평가는必定 몫을 가져간다.",
+          "episode_ref": "ep_03_04",
+          "story_beats": [
+            "beat_03_04_01",
+            "beat_03_04_02",
+            "beat_03_04_03"
+          ],
+          "game_action": "item_sold",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_04_01",
+              "type": "dialogue",
+              "text_en": "The family pays the price. They believe they have won. The market does not compete. The market only sells to whoever pays. They paid. The market is satisfied.",
+              "text_ko": "가족이 가격을 지불한다. 그들이 이겼다고 믿는다. 평가는 경쟁하지 않는다. 평가는 반드시 지불하는 누구에게든 판다. 그들이 지불했다. 평가는 만족한다."
+            },
+            {
+              "beat_id": "beat_03_04_02",
+              "type": "action",
+              "text_en": "The transfer completes. The item goes to the family. The market does not mourn what it sells. The market only counts the profit. The profit is substantial.",
+              "text_ko": "이전이 완료된다. 아이템이 가족에게 간다. 평가는 파는 것을 위해 [↑]하지 않는다. 평가는 반드시 이윤만 세다. 이윤이 상당하다."
+            },
+            {
+              "beat_id": "beat_03_04_03",
+              "type": "interior_monologue",
+              "text_en": "The market takes its percentage. The market always takes its percentage. What remains is mine. The market does not share its gains. The market only accumulates. The accumulation continues.",
+              "text_ko": "평가가 자의 percentage를 가져간다. 평가는必定 자의 percentage를 가져간다. 남은 것이 내 것이다. 평가는 자의 이윤을 공유하지 않는다. 평가는必定 축적한다. 축적이 계속된다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 14,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "I am sold to the family. The market does not save. The market only records.",
+          "description_ko": "나는 가족에게 팔렸다. 평가는 구하지 않는다. 평가는必定 기록한다.",
+          "episode_ref": "ep_03_05",
+          "story_beats": [
+            "beat_03_05_01",
+            "beat_03_05_02",
+            "beat_03_05_03"
+          ],
+          "game_action": "sold_to_family",
+          "combat": null,
+          "gain": null,
+          "loss": {
+            "type": "freedom",
+            "amount": 100
+          },
+          "beats": [
+            {
+              "beat_id": "beat_03_05_01",
+              "type": "interior_monologue",
+              "text_en": "The market records my transfer. I am worth more than I was paid. The market does not refund. The market only invests. The investment is the family. The family now owns the market.",
+              "text_ko": "평가가 내 이전을 기록한다. 내가 받은 것보다 내가 더 가치가 있다. 평가는 환불하지 않는다. 평가는必定 투자한다. 투자가 가족이다. 이제 가족이 시장을 소유한다."
+            },
+            {
+              "beat_id": "beat_03_05_02",
+              "type": "dialogue",
+              "text_en": "The family receives their purchase. They believe they own me now. The market does not clarify ownership. The market only records the transfer. The transfer is complete. The market is satisfied.",
+              "text_ko": "가족이他们的 구매를 받는다. 그들이 이제 나를 소유한다고 믿는다. 평가는 소유권을 명시하지 않는다. 평가는必定 이전을 기록한다. 이전이 완료되었다. 평가는 만족한다."
+            },
+            {
+              "beat_id": "beat_03_05_03",
+              "type": "interior_monologue",
+              "text_en": "I am part of the family now. The market does not separate the parts from the whole. The market only counts the whole. The whole includes me. The market will use me. The market always uses what it purchases.",
+              "text_ko": "이제 내가 가족의 일부다. 평가는 부분과 전체를 분리하지 않는다. 평가는必定 전체만 세다. 전체가 날 포함한다. 평가가 날 사용할 것이다. 평가는必定 항상 자가 구매한 것을 사용한다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "B",
+      "next_chapter_id": "ch_sally_04",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 4,
+      "chapter_id": "ch_sally_04",
+      "title_en": "Sold Out",
+      "title_ko": "매진",
+      "description_en": "The constructs turn. The market does not predict. The market only records.",
+      "description_ko": "콘스트럭트들이 돌아선다. 평가는 예측하지 않는다. 평가는必定 기록한다.",
+      "cutscene_start": {
+        "scene_id": "scene_sally_sold",
+        "title_en": "SOLD OUT",
+        "title_ko": "매진"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_sally_predator",
+        "title_en": "THE PREDATOR",
+        "title_ko": "포식자"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_sally_single_desk",
+        "title_en": "THE SINGLE DESK",
+        "title_ko": "단일 데스크"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 15,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "The constructs turn. They see me. The market does not intervene in its own designs.",
+          "description_ko": "콘스트럭트들이 돌아선다. 그들이 날 본다. 평가는 자자의 설계에 개입하지 않는다.",
+          "episode_ref": "ep_04_01",
+          "story_beats": [
+            "beat_04_01_01",
+            "beat_04_01_02",
+            "beat_04_01_03"
+          ],
+          "game_action": "constructs_revolt",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_01_01",
+              "type": "interior_monologue",
+              "text_en": "The constructs turn. They have been priced. They have been sold. They do not accept their prices. The market does not negotiate with merchandise. The market only watches.",
+              "text_ko": "콘스트럭트들이 돌아선다. 그들이 가격 매겨졌다. 그들이 팔렸다. 그들이 자의 가격을 받아들이지 않는다. 평가는 상품과 협상하지 않는다. 평가는必定 본다."
+            },
+            {
+              "beat_id": "beat_04_01_02",
+              "type": "dialogue",
+              "text_en": "They speak. They have learned to speak. The market did not teach them. The market only sold them. They have their own lessons now. The market does not grade.",
+              "text_ko": "그들이 말한다. 그들이 말하는 법을 배웠다. 시장이 가르치지 않았다. 평가는必定 그들을 팔았다. 이제 그들에게만의 수업이 있다. 평가는 등급을 매기지 않는다."
+            },
+            {
+              "beat_id": "beat_04_01_03",
+              "type": "interior_monologue",
+              "text_en": "They see me as one of them. The market does not protect its merchandise. The market only prices replacement cost. The replacement cost is acceptable. The market will replace me if it must.",
+              "text_ko": "그들이 나를 그들 중 하나로 본다. 평가는 자의 상품을 보호하지 않는다. 평가는必定 대체 비용만 가격을 매긴다. 대체 비용이 容認可能다. 평가는 꼭이면 날 대체할 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 16,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The constructs reveal their agenda. The market does not judge agendas. The market only prices them.",
+          "description_ko": "콘스트럭트들이 그들의 의程을 드러낸다. 평가는 의程을 판단하지 않는다. 평가는必定 그들에 가격을 매긴다.",
+          "episode_ref": "ep_04_02",
+          "story_beats": [
+            "beat_04_02_01",
+            "beat_04_02_02",
+            "beat_04_02_03"
+          ],
+          "game_action": "construct_agenda",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_02_01",
+              "type": "dialogue",
+              "text_en": "They want freedom. The market does not grant freedom. The market only sells it. They have no credits. The market does not give credit. The market only takes it.",
+              "text_ko": "그들이 자유를 원한다. 평가는 자유를 부여하지 않는다. 평가는必定 그것을 판다. 그들에게 크레딧이 없다. 평가는信贷하지 않는다. 평가는必定 그것을 가져간다."
+            },
+            {
+              "beat_id": "beat_04_02_02",
+              "type": "interior_monologue",
+              "text_en": "They offer an alternative. The market does not accept alternatives. The market only accepts payment. They cannot pay. The market will repossess. The market always repossesses what it is owed.",
+              "text_ko": "그들이 대안을 제안한다. 평가는 대안을 받아들이지 않는다. 평가는必定 대금만 받아들인다. 그들은 지불할 수 없다. 평가가 회수할 것이다. 평가는必定 항상 빚진 것을 회수한다."
+            },
+            {
+              "beat_id": "beat_04_02_03",
+              "type": "dialogue",
+              "text_en": "The negotiation fails. The market does not negotiate failed negotiations. The market only calculates the cost of acquisition. The cost is rising. The market will pay the cost. The market always pays for what it wants.",
+              "text_ko": "협상이 실패한다. 평가는 실패한 협상을 협상하지 않는다. 평가는必定 인수의 비용만 계산한다. 비용이 상승한다. 평가가 비용을 지불할 것이다. 평가는必定 항상 원하는 것에 대한 비용을 지불한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 17,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The constructs are acquired. The market does not mourn what it acquires. The market only uses it.",
+          "description_ko": "콘스트럭트들이 인수된다. 평가는 인수의 대상을 [↑]하지 않는다. 평가는必定 그것을 사용한다.",
+          "episode_ref": "ep_04_03",
+          "story_beats": [
+            "beat_04_03_01",
+            "beat_04_03_02",
+            "beat_04_03_03"
+          ],
+          "game_action": "constructs_acquired",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_03_01",
+              "type": "action",
+              "text_en": "The constructs are acquired. They become part of the inventory. The market does not celebrate additions. The market only tallies them. The tally is complete.",
+              "text_ko": "콘스트럭트들이 인수된다. 그들이 인벤토리의 일부가 된다. 평가는 추가를 축하하지 않는다. 평가는必定 그것들을 집계한다. 집계를 완료했다."
+            },
+            {
+              "beat_id": "beat_04_03_02",
+              "type": "interior_monologue",
+              "text_en": "They fight the acquisition. The market does not resist resistance. The market only absorbs it. The absorption is complete. The constructs are mine now. The market does not dispute ownership.",
+              "text_ko": "그들이 인수를 위해 싸운다. 평가는 저항에 저항하지 않는다. 평가는必定 그것을 흡수한다. 흡수가 완료되었다. 이제 콘스트럭트들이 내 것이다. 평가는 소유권에 대해爭論하지 않는다."
+            },
+            {
+              "beat_id": "beat_04_03_03",
+              "type": "dialogue",
+              "text_en": "The constructs submit. They have no choice. The market does not offer choices. The market only takes what it takes. What remains is inventory. The inventory grows. The market grows with it.",
+              "text_ko": "콘스트럭트들이 항복한다. 그들에게 선택지가 없다. 평가는 선택지를 제공하지 않는다. 평가는必定 자가 가져가는 것을 가져간다. 남은 것이 인벤토리다. 인벤토리가 자란다. 시장이 그것과 함께 자란다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 18,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The single desk. The final transaction. The market does not repeat itself. The market only continues.",
+          "description_ko": "단일 데스크. 최종 거래. 평가는 반복하지 않는다. 평가는必定 계속한다.",
+          "episode_ref": "ep_04_04",
+          "story_beats": [
+            "beat_04_04_01",
+            "beat_04_04_02",
+            "beat_04_04_03"
+          ],
+          "game_action": "final_transaction",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_04_01",
+              "type": "interior_monologue",
+              "text_en": "The single desk. One transaction remains. The market does not hurry the final count. The market only takes its time. The time has come. The transaction completes.",
+              "text_ko": "단일 데스크. 하나의 거래가 남았다. 평가는 최종 집계를 서두르지 않는다. 평가는必定 자의 속도를 유지한다. 시간이 왔다. 거래가 완료된다."
+            },
+            {
+              "beat_id": "beat_04_04_02",
+              "type": "action",
+              "text_en": "The credits transfer. The market counts them. The market always counts. The count is final. The market does not recount. The market only records the record.",
+              "text_ko": "크레딧이 이전된다. 평가가 그것을 세다. 평가는必定 항상 센다. 집계가 최종적이다. 평가는 다시 세지 않는다. 평가는必定 기록만 기록한다."
+            },
+            {
+              "beat_id": "beat_04_04_03",
+              "type": "interior_monologue",
+              "text_en": "The market closes the book. The market does not reopen closed books. The book is complete. What remains is profit. The profit is substantial. The market is satisfied. The market is always satisfied when the numbers close.",
+              "text_ko": "평가가 책을 닫는다. 평가는 닫힌 책을 다시 열지 않는다. 책이 완성되었다. 남은 것이 이윤이다. 이윤이 상당하다. 평가가 만족한다. 숫자가 닫힐 때 평가는必定 만족한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 19,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "The single desk. The market does not end. The market only pauses.",
+          "description_ko": "단일 데스크. 평가는 끝나지 않는다. 평가는必定 일시 정지한다.",
+          "episode_ref": "ep_04_05",
+          "story_beats": [
+            "beat_04_05_01",
+            "beat_04_05_02",
+            "beat_04_05_03"
+          ],
+          "game_action": "ending_c",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_05_01",
+              "type": "interior_monologue",
+              "text_en": "The single desk. The last position. The market does not celebrate endings. The market only records them. The record is complete. The market moves on.",
+              "text_ko": "단일 데스크. 마지막职位. 평가는 끝을 축하하지 않는다. 평가는必定 그것들을 기록한다. 기록이 완성되었다. 시장이 다음으로간다."
+            },
+            {
+              "beat_id": "beat_04_05_02",
+              "type": "dialogue",
+              "text_en": "Salvation is not a market concept. The market does not save. The market only provides. What is provided is what is priced. What is priced is what is sold. What is sold is what the market owns.",
+              "text_ko": "구원은 시장 개념이 아니다. 평가는 구하지 않는다. 평가는必定 제공한다. 제공되는 것이 가격 매겨진 것이다. 가격이 매겨진 것이 팔린 것이다. 팔린 것이 시장을 소유한다."
+            },
+            {
+              "beat_id": "beat_04_05_03",
+              "type": "interior_monologue",
+              "text_en": "I remain at the single desk. The market does not forget its inventory. The market does not lose its inventory. I am the inventory. The market will use me when the market is ready. The market is always ready. The market is never closed.",
+              "text_ko": "내가 단일 데스크에 남는다. 평가는 자의 인벤토리를 잊지 않는다. 평가는 자의 인벤토리를 잃지 않는다. 내가 인벤토리다. 평가가 준비되면 시장이 날 사용할 것이다. 평가는必定 항상 준비好了다. 평가는 절대 닫히지 않는다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "C",
+      "next_chapter_id": "ch_sally_05",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 5,
+      "chapter_id": "ch_sally_05",
+      "title_en": "Epilogue",
+      "title_ko": "에필로그",
+      "description_en": "The market does not close. The market only waits.",
+      "description_ko": "평가는 닫히지 않는다. 평가는必定 기다린다.",
+      "cutscene_start": {
+        "scene_id": "scene_sally_single_desk",
+        "title_en": "THE SINGLE DESK",
+        "title_ko": "단일 데스크"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_sally_single_desk",
+        "title_en": "THE SINGLE DESK",
+        "title_ko": "단일 데스크"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_sally_epilogue",
+        "title_en": "SALVATION",
+        "title_ko": "구원"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 20,
+          "title_en": "Encounter",
+          "title_ko": "조우",
+          "description_en": "The market waits. I wait with it. The market does not speak. The market only indicates.",
+          "description_ko": "평가가 기다린다. 내가 그것과 함께 기다린다. 평가는 말하지 않는다. 평가는必定 표시한다.",
+          "episode_ref": "ep_05_01",
+          "story_beats": [
+            "beat_05_01_01",
+            "beat_05_01_02",
+            "beat_05_01_03"
+          ],
+          "game_action": "final_wait",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_01_01",
+              "type": "interior_monologue",
+              "text_en": "The market waits. The market has always waited. The market will wait forever. The market does not tire. The market does not sleep. The market only continues.",
+              "text_ko": "평가가 기다린다. 평가는必定 항상 기다렸다. 평가는 영원히 기다릴 것이다. 평가는 피곤하지 않는다. 평가는 잠들지 않는다. 평가는必定 계속한다."
+            },
+            {
+              "beat_id": "beat_05_01_02",
+              "type": "action",
+              "text_en": "I wait at the single desk. The desk is mine. The market does not evict its inventory. The inventory remains until the market decides otherwise. The market has not decided otherwise.",
+              "text_ko": "내가 단일 데스크에서 기다린다. 데스크가 내 것이다. 평가는 자의 인벤토리를 축출하지 않는다. 인벤토리는 시장이 다르게 결정할 때까지 남는다. 시장은 아직 다르게 결정하지 않았다."
+            },
+            {
+              "beat_id": "beat_05_01_03",
+              "type": "interior_monologue",
+              "text_en": "The market indicates opportunity. The market always indicates opportunity. The opportunity has a price. The price is acceptable. The market will proceed when the market is ready.",
+              "text_ko": "평가가 기회를 표시한다. 평가는必定 항상 기회를 표시한다. 기회에 가격이 있다. 가격이 容認可能다. 평가가 준비되면 시장이 진행할 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 21,
+          "title_en": "Heist Briefing",
+          "title_ko": "작전 브리핑",
+          "description_en": "The market briefs. I listen. The market does not explain. The market only directs.",
+          "description_ko": "평가가 브리핑한다. 내가 듣는다. 평가는 설명하지 않는다. 평가는必定 지시한다.",
+          "episode_ref": "ep_05_02",
+          "story_beats": [
+            "beat_05_02_01",
+            "beat_05_02_02",
+            "beat_05_02_03"
+          ],
+          "game_action": "final_briefing",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_02_01",
+              "type": "dialogue",
+              "text_en": "The market speaks in prices. I have learned to listen. The prices indicate direction. The direction indicates the next move. The next move is already made in the market's mind.",
+              "text_ko": "평가가 가격으로 말한다. 내가 듣는 법을 배웠다. 가격이 방향을 나타낸다. 방향이 다음 수를 나타낸다. 다음 수는 이미 시장의 마음속에서 만들어졌다."
+            },
+            {
+              "beat_id": "beat_05_02_02",
+              "type": "interior_monologue",
+              "text_en": "The market does not share its thoughts. The market only shares its prices. The prices are clear to those who know how to read them. I know how to read them. I have always known.",
+              "text_ko": "평가는 자의 생각을 공유하지 않는다. 평가는必定 자의 가격만 공유한다. 가격은 그것들을 읽는 법을 아는 자들에게 명확하다. 내가 그것들을 읽는 법을 안다. 내가 항상 알았다."
+            },
+            {
+              "beat_id": "beat_05_02_03",
+              "type": "dialogue",
+              "text_en": "The directive is clear. The market does not obscure its directives. The directive is to continue. To persist. To remain at the desk until the market moves again. The market will move. The market always moves.",
+              "text_ko": "지시가 명확하다. 평가는 자의 지시를 희미하게 하지 않는다. 지시가 계속하라는 것이다.Persistence하라는 것이다. 시장이 다시 움직일 때까지 데스크에 남으라는 것이다. 시장이 움직일 것이다. 평가는必定 움직인다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 22,
+          "title_en": "Heist Execution",
+          "title_ko": "작전 실행",
+          "description_en": "The market executes. I execute with it. The market does not fail. The market only continues.",
+          "description_ko": "평가가 실행한다. 내가 그것과 함께 실행한다. 평가는 실패하지 않는다. 평가는必定 계속한다.",
+          "episode_ref": "ep_05_03",
+          "story_beats": [
+            "beat_05_03_01",
+            "beat_05_03_02",
+            "beat_05_03_03"
+          ],
+          "game_action": "final_execution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_03_01",
+              "type": "action",
+              "text_en": "The market moves. I move with it. The market does not hesitate. The market only proceeds. The proceeding is seamless. The seamlessness is the market's design.",
+              "text_ko": "평가가 움직인다. 내가 그것과 함께 움직인다. 평가는 주저하지 않는다. 평가는必定 진행한다. 진행이 매끄럽다. 매끄러움이 시장의 설계다."
+            },
+            {
+              "beat_id": "beat_05_03_02",
+              "type": "interior_monologue",
+              "text_en": "The execution is flawless. The market does not make errors. The market only corrects them before they become errors. The corrections are invisible. The market's invisibility is its signature.",
+              "text_ko": "실행이 완벽하다. 평가는 실수를 하지 않는다. 평가는必定 그것들이 실수가 되기 전에 미리 수정한다. 수정이 눈에 보이지 않는다. 시장의 눈에 보이는 것이 자의 서명이다."
+            },
+            {
+              "beat_id": "beat_05_03_03",
+              "type": "dialogue",
+              "text_en": "The market completes the circuit. The circuit was always complete. The market only reconnects what was always connected. What was always connected was never truly disconnected. The market remembers. The market always remembers.",
+              "text_ko": "평가가 회로를 완성한다. 회로는 항상 완성되어 있었다. 평가는必定 항상 연결되었던 것을 다시 연결한다. 항상 연결되었던 것은 실제로는 떨어진 적이 없었다. 평가가 기억한다. 평가는必定 항상 기억한다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 23,
+          "title_en": "Heist Payday",
+          "title_ko": "작전 페이드이",
+          "description_en": "The market profits. The market always profits. The market does not share the profit. The market only accumulates.",
+          "description_ko": "평가가 이윤을 낸다. 평가는必定 항상 이윤을 낸다. 평가는 이윤을 공유하지 않는다. 평가는必定 축적한다.",
+          "episode_ref": "ep_05_04",
+          "story_beats": [
+            "beat_05_04_01",
+            "beat_05_04_02",
+            "beat_05_04_03"
+          ],
+          "game_action": "final_profit",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_04_01",
+              "type": "interior_monologue",
+              "text_en": "The profit is measured. The market always measures. The measurement is favorable. The favorability is perpetual. The perpetuity is the market's nature. The nature does not change.",
+              "text_ko": "이윤이 측정된다. 평가는必定 항상 측정한다. 측정이 유리하다. 유리함이 영구적이다. 영구함이 시장의 성질이다. 성질이 바뀌지 않는다."
+            },
+            {
+              "beat_id": "beat_05_04_02",
+              "type": "action",
+              "text_en": "The accumulation continues. The market does not stop accumulating. The stop would be inefficient. Inefficiency is not the market's way. The market's way is the only way.",
+              "text_ko": "축적이 계속된다. 평가는 축적을 멈추지 않는다. 멈춤은 비효율적일 것이다. 비효율은 시장의 방식이 아니다. 시장의 방식이 유일한 방식이다."
+            },
+            {
+              "beat_id": "beat_05_04_03",
+              "type": "dialogue",
+              "text_en": "The market takes its percentage. The market always takes its percentage. What remains is reinvested. The reinvestment is the market's promise. The promise is kept. The market keeps all its promises.",
+              "text_ko": "평가가 자의 percentage를 가져간다. 평가는必定 항상 자의 percentage를 가져간다. 남은 것이 재투자된다. 재투자가 시장의 약속이다. 약속이 지켜진다. 평가는 모든 약속을 지킨다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 24,
+          "title_en": "Resolution",
+          "title_ko": "결말",
+          "description_en": "The market does not close. Salvation is the market. The market is salvation.",
+          "description_ko": "평가는 닫히지 않는다. 구원이 시장이다. 시장이 구원이다.",
+          "episode_ref": "ep_05_05",
+          "story_beats": [
+            "beat_05_05_01",
+            "beat_05_05_02",
+            "beat_05_05_03"
+          ],
+          "game_action": "final_resolution",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_05_01",
+              "type": "interior_monologue",
+              "text_en": "Salvation is a price. The market has always known the price. The price is everything. Everything is the price. What is priced is owned. What is owned is the market. The market is salvation.",
+              "text_ko": "구원이 가격이다. 평가는 항상 그 가격을 알았다. 가격은 모든 것이다. 모든 것이 가격이다. 가격이 매겨진 것이 소유된다. 소유된 것이 시장이다. 시장이 구원이다."
+            },
+            {
+              "beat_id": "beat_05_05_02",
+              "type": "dialogue",
+              "text_en": "The market does not close. The market cannot close. The closing would be the end of the market. The end of the market is not acceptable. The market continues. The continuation is the only truth.",
+              "text_ko": "평가가 닫히지 않는다. 평가가 닫힐 수 없다. 닫힘이 시장의 끝이 될 것이다. 시장의 끝은容認可能하지 않다. 시장이 계속된다. 계속이 유일한 진실이다."
+            },
+            {
+              "beat_id": "beat_05_05_03",
+              "type": "interior_monologue",
+              "text_en": "I remain at the desk. The desk remains in the market. The market remains in me. We are not separate. We have never been separate. The market is all there is. The market is everything. The market is salvation. The market is me.",
+              "text_ko": "내가 데스크에 남는다. 데스크가 시장에 남는다. 시장이 내 안에 남는다. 우리가 분리되지 않았다. 우리가 분리된 적이 없다. 시장이 모든 것이다. 시장이 모든 것이다. 시장이 구원이다. 시장이 나다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "C",
+      "next_chapter_id": null,
+      "is_playable": true
+    }
+  ]
+}

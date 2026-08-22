@@ -1,0 +1,2498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="깁슨 원작 기반 스토리: 케이/실/카스 3인 + 6 확장 자키(Suit/Wigan/Angie/Sally/3Jane/Neuromancer). 9 아크, 9 cast / 4 archetypes, 81 씬. 시네마틱 프롤로그와 한글 자막.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, neuromancer, python, tcod, ascii, story, prologue, character-select, korean-subtitle">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/missions.html">
+<meta property="og:title" content="Mission Stories — Wet Run">
+<meta property="og:description" content="깁슨 원작 기반 스토리: 케이/실/카스 3인 + 6 확장 자키(Suit/Wigan/Angie/Sally/3Jane/Neuromancer). 9 아크, 9 cast / 4 archetypes, 81 씬. 시네마틱 프롤로그와 한글 자막.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/missions.html">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Story Dashboard — Wet Run">
+<meta name="twitter:description" content="깁슨 원작 기반 스토리: 케이/실/카스 3인 + 6 확장 자키(Suit/Wigan/Angie/Sally/3Jane/Neuromancer). 9 아크, 9 cast / 4 archetypes, 81 씬. 시네마틱 프롤로그와 한글 자막.">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta name="theme-color" content="#0a0e14">
+<title>Wet Run — Story Project Dashboard</title>
+<style>
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #0a0e14; border-bottom: 1px solid #2a3540;
+    padding: 8px 24px; margin: -24px -24px 16px -24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; font-size: 13px; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .current { color: #ffaa55; font-weight: 600; }
+  .top-nav .sep { color: #2a3540; }
+  .top-hub-link {
+    display: inline-block; background: #131a23; border: 1px solid #2a3540;
+    border-radius: 4px; padding: 6px 12px; color: #00d9ff; text-decoration: none;
+    font-size: 12px; margin-bottom: 16px;
+  }
+  .top-hub-link:hover { border-color: #00d9ff; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #0a0e14;
+    color: #c5d4e3;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h1, h2, h3 { color: #66ffcc; font-weight: 600; }
+  h1 { font-size: 28px; margin-bottom: 8px; text-shadow: 0 0 8px #66ffcc33; }
+  h2 { font-size: 20px; margin: 32px 0 16px; border-bottom: 1px solid #2a3540; padding-bottom: 8px; }
+  h3 { font-size: 16px; margin: 16px 0 8px; color: #ffaa55; }
+  .subtitle { color: #6a7888; font-size: 14px; margin-bottom: 24px; }
+  .phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .phase-card {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .phase-card.complete { border-color: #66ffcc; }
+  .phase-card.in-progress { border-color: #ffaa55; box-shadow: 0 0 12px #ffaa5533; }
+  .phase-num { font-size: 32px; font-weight: 700; color: #2a3540; position: absolute; right: 16px; top: 8px; }
+  .phase-card.complete .phase-num { color: #66ffcc33; }
+  .phase-card.in-progress .phase-num { color: #ffaa5533; }
+  .phase-title { font-size: 16px; color: #66ffcc; margin-bottom: 8px; }
+  .phase-desc { font-size: 13px; color: #8a9aa8; }
+  .phase-status { font-size: 12px; margin-top: 12px; padding: 4px 8px; background: #1a2530; border-radius: 3px; display: inline-block; }
+  .complete .phase-status { background: #66ffcc22; color: #66ffcc; }
+  .in-progress .phase-status { background: #ffaa5522; color: #ffaa55; }
+  .pending .phase-status { background: #2a354022; color: #6a7888; }
+  .progress-bar { background: #1a2530; height: 8px; border-radius: 4px; margin-top: 12px; overflow: hidden; }
+  .progress-fill { background: linear-gradient(90deg, #66ffcc, #00ccff); height: 100%; }
+  .character-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
+  .character-card {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 16px;
+    font-size: 12px;
+  }
+  .character-card .name { font-size: 18px; color: #ffaa55; margin-bottom: 4px; }
+  .character-card .role { color: #6a7888; font-size: 11px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+  .character-card .quote { color: #c5d4e3; font-style: italic; margin-bottom: 12px; border-left: 2px solid #ffaa55; padding-left: 8px; }
+  .character-card .stat { display: flex; justify-content: space-between; padding: 2px 0; border-bottom: 1px dotted #2a3540; }
+  .character-card .stat .label { color: #6a7888; }
+  .character-card .stat .value { color: #66ffcc; }
+  .checklist { background: #131a23; border: 1px solid #2a3540; border-radius: 6px; padding: 16px; margin-bottom: 24px; }
+  .checklist .item { display: flex; align-items: center; padding: 6px 0; border-bottom: 1px dotted #2a354033; }
+  .checklist .item:last-child { border-bottom: none; }
+  .checklist .item input[type="checkbox"] { width: 18px; height: 18px; margin-right: 12px; accent-color: #66ffcc; cursor: pointer; }
+  .checklist .item.done { color: #66ffcc; }
+  .checklist .item.pending { color: #6a7888; }
+  .checklist .item .status { margin-left: auto; font-size: 11px; padding: 2px 8px; border-radius: 3px; }
+  .checklist .item.done .status { background: #66ffcc22; color: #66ffcc; }
+  .checklist .item.pending .status { background: #2a354022; color: #6a7888; }
+  .endings { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
+  .ending-card { background: #131a23; border-radius: 6px; padding: 16px; border: 1px solid #2a3540; }
+  .ending-card.a { border-left: 4px solid #66ffcc; }
+  .ending-card.b { border-left: 4px solid #ff5577; }
+  .ending-card h3 { color: #ffaa55; margin-bottom: 8px; }
+  .ending-card.a h3 { color: #66ffcc; }
+  .ending-card.b h3 { color: #ff5577; }
+  .ending-card ul { padding-left: 20px; font-size: 12px; }
+  .ending-card li { padding: 2px 0; color: #8a9aa8; }
+  pre {
+    background: #050810;
+    border: 1px solid #2a3540;
+    border-radius: 4px;
+    padding: 12px;
+    overflow-x: auto;
+    font-size: 12px;
+    color: #c5d4e3;
+    margin: 8px 0;
+  }
+  .ascii-art { color: #00ff88; text-shadow: 0 0 4px #00ff8866; }
+  .meta { color: #6a7888; font-size: 11px; }
+  .docs-link { color: #00ccff; text-decoration: none; }
+  .docs-link:hover { text-decoration: underline; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #2a3540; color: #6a7888; font-size: 12px; text-align: center; }
+  .footer code { background: #1a2530; padding: 2px 6px; border-radius: 3px; }
+
+  /* Prologue Viewer */
+  .prologue-viewer { background: #131a23; border: 1px solid #2a3540; border-radius: 6px; padding: 20px; margin-bottom: 24px; }
+  .character-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .char-tab {
+    flex: 1; min-width: 140px;
+    background: #0a0e14; border: 1px solid #2a3540; border-radius: 4px;
+    padding: 12px 16px; cursor: pointer; transition: all 0.15s ease;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 2px;
+    color: inherit; font-family: inherit;
+  }
+  .char-tab:hover { border-color: #66ffcc; background: #1a2530; }
+  .char-tab.active { border-color: #66ffcc; background: #1a2530; box-shadow: 0 0 8px #66ffcc33; }
+  .char-tab .char-name { color: #66ffcc; font-weight: 600; font-size: 14px; }
+  .char-tab .char-arch { color: #6a7888; font-size: 11px; }
+  .char-tab.active .char-arch { color: #8a9aa8; }
+
+  .lang-toggle { display: flex; gap: 4px; margin-bottom: 16px; }
+  .lang-btn {
+    background: #0a0e14; border: 1px solid #2a3540; color: #8a9aa8;
+    padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 12px;
+    font-family: inherit;
+  }
+  .lang-btn:hover { border-color: #66ffcc; color: #c5d4e3; }
+  .lang-btn.active { background: #66ffcc22; color: #66ffcc; border-color: #66ffcc; }
+
+  .char-info {
+    background: #0a0e14; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 12px 16px; margin-bottom: 16px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 8px;
+  }
+  .char-info-row { display: flex; flex-direction: column; gap: 2px; }
+  .char-info-row .label { color: #6a7888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .char-info-row .value { color: #c5d4e3; font-size: 13px; }
+
+  .prologue-scenes { display: flex; flex-direction: column; gap: 16px; }
+  .scene { background: #0a0e14; border: 1px solid #1a2530; border-radius: 4px; padding: 16px; }
+  .scene-title { color: #ffaa55; font-size: 14px; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid #1a2530; }
+  .scene-ascii {
+    background: #050a10; border: 1px solid #1a2530; border-radius: 3px;
+    padding: 10px; color: #66ffcc; font-size: 12px; line-height: 1.2;
+    margin-bottom: 12px; overflow-x: auto; white-space: pre;
+  }
+  .dialogue-line { margin-bottom: 12px; padding-left: 12px; border-left: 2px solid #2a3540; }
+  .dialogue-line:last-child { margin-bottom: 0; }
+  .dialogue-speaker { color: #66ffcc; font-size: 12px; font-weight: 600; margin-bottom: 4px; }
+  .dialogue-text { color: #c5d4e3; font-size: 13px; line-height: 1.6; font-style: italic; }
+  .dialogue-text-en { color: #8a9aa8; font-size: 12px; line-height: 1.5; margin-top: 4px; padding-top: 4px; border-top: 1px dashed #1a2530; }
+
+  .scene-choice { background: #1a2530; border: 1px solid #2a3540; border-radius: 4px; padding: 12px; margin-top: 12px; }
+  .scene-choice .prompt { color: #ffaa55; font-size: 13px; margin-bottom: 8px; }
+  .choice-options { display: flex; flex-direction: column; gap: 6px; }
+  .choice-option { display: flex; gap: 8px; align-items: flex-start; padding: 8px; background: #0a0e14; border-radius: 3px; border-left: 3px solid #66ffcc; }
+  .choice-option .key { color: #66ffcc; font-weight: 700; min-width: 20px; }
+  .choice-option .text { color: #c5d4e3; font-size: 13px; flex: 1; }
+  .choice-option .response { color: #8a9aa8; font-size: 11px; margin-top: 4px; padding-top: 4px; border-top: 1px dashed #2a3540; }
+
+  .endings-title { color: #ffaa55; font-size: 16px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid #2a3540; }
+  .prologue-endings { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ending-block { background: #0a0e14; border: 1px solid #1a2530; border-radius: 4px; padding: 14px; }
+  .ending-block.a { border-left: 3px solid #66ffcc; }
+  .ending-block.b { border-left: 3px solid #ff5555; }
+  .ending-block h4 { margin: 0 0 4px; font-size: 14px; }
+  .ending-block.a h4 { color: #66ffcc; }
+  .ending-block.b h4 { color: #ff8888; }
+  .ending-block .desc { color: #8a9aa8; font-size: 12px; margin-bottom: 8px; }
+  .ending-block .ending-line { color: #c5d4e3; font-size: 12px; margin: 4px 0; padding-left: 8px; border-left: 2px solid #2a3540; }
+
+  @media (max-width: 720px) {
+    .prologue-endings { grid-template-columns: 1fr; }
+  }
+
+  /* Event Dialogue Viewer */
+  .event-viewer { background: #131a23; border: 1px solid #2a3540; border-radius: 6px; padding: 20px; margin-bottom: 24px; }
+  .event-controls { display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .npc-filter { display: flex; gap: 4px; flex-wrap: wrap; }
+  .npc-btn {
+    background: #0a0e14; border: 1px solid #2a3540; color: #8a9aa8;
+    padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 12px;
+    font-family: inherit;
+  }
+  .npc-btn:hover { border-color: #66ffcc; color: #c5d4e3; }
+  .npc-btn.active { background: #66ffcc22; color: #66ffcc; border-color: #66ffcc; }
+  .event-lang-toggle { display: flex; gap: 4px; }
+  .evt-lang-btn {
+    background: #0a0e14; border: 1px solid #2a3540; color: #8a9aa8;
+    padding: 6px 12px; border-radius: 3px; cursor: pointer; font-size: 12px;
+    font-family: inherit;
+  }
+  .evt-lang-btn:hover { border-color: #66ffcc; color: #c5d4e3; }
+  .evt-lang-btn.active { background: #66ffcc22; color: #66ffcc; border-color: #66ffcc; }
+
+  .event-stats { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+  .stat-pill {
+    background: #0a0e14; border: 1px solid #1a2530; border-radius: 12px;
+    padding: 4px 12px; color: #c5d4e3; font-size: 12px;
+  }
+  .stat-pill .stat-num { color: #66ffcc; font-weight: 700; }
+
+  .event-list { display: flex; flex-direction: column; gap: 16px; }
+  .event-block {
+    background: #0a0e14; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 16px; border-left: 3px solid #66ffcc;
+  }
+  .event-block[data-npc="finn"] { border-left-color: #ffaa55; }
+  .event-block[data-npc="dixie"] { border-left-color: #66ffcc; }
+  .event-block[data-npc="maelcum"] { border-left-color: #00ccff; }
+  .event-block[data-npc="bartender"] { border-left-color: #ffaa00; }
+  .event-block[data-npc="ta_rep"] { border-left-color: #ff5555; }
+  .event-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+  .event-title { color: #ffaa55; font-size: 14px; margin: 0; }
+  .event-npc-tag { font-size: 11px; color: #6a7888; }
+  .event-context { background: #050a10; border: 1px solid #1a2530; border-radius: 3px; padding: 8px 12px; margin-bottom: 12px; color: #8a9aa8; font-size: 12px; font-style: italic; }
+  .event-lines { display: flex; flex-direction: column; gap: 8px; }
+  .event-line { padding-left: 10px; border-left: 2px solid #2a3540; }
+  .event-line .speaker { color: #66ffcc; font-size: 12px; font-weight: 600; }
+  .event-line .text { color: #c5d4e3; font-size: 13px; line-height: 1.5; font-style: italic; margin-top: 2px; }
+  .event-line .text-en { color: #8a9aa8; font-size: 12px; line-height: 1.4; margin-top: 4px; padding-top: 4px; border-top: 1px dashed #1a2530; }
+  .event-choices { margin-top: 12px; background: #1a2530; border-radius: 4px; padding: 10px; }
+  .event-choices .prompt { color: #ffaa55; font-size: 12px; margin-bottom: 6px; }
+  .event-choice { display: flex; gap: 8px; align-items: flex-start; padding: 6px 8px; background: #0a0e14; border-radius: 3px; border-left: 3px solid #66ffcc; margin-bottom: 4px; }
+  .event-choice:last-child { margin-bottom: 0; }
+  .event-choice .key { color: #66ffcc; font-weight: 700; min-width: 18px; }
+  .event-choice .body { flex: 1; }
+  .event-choice .choice-text { color: #c5d4e3; font-size: 12px; }
+  .event-choice .response { color: #8a9aa8; font-size: 11px; margin-top: 4px; padding-top: 4px; border-top: 1px dashed #2a3540; }
+  .event-choice .leads-to { color: #6a7888; font-size: 10px; margin-top: 2px; }
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="index.html">◀ Wet Run</a>
+  <span class="sep">|</span>
+  <span class="current">📖 Story</span>
+  <span class="sep">|</span>
+  <a href="library.html">📚 Library</a>
+  <a href="search.html">🔍 Search</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="reading-stats.html">📊 Reading</a>
+  <a href="character-graph.html">🕸️ Chars</a>
+  <a href="mission-flow.html">🎯 Missions</a>
+</nav>
+<a class="top-hub-link" id="projects-hub-link" href="../../" title="Projects Hub (local dev only)">🌐 Projects Hub</a>
+<script>
+  // Hide on non-local filesystems (e.g. GitHub Pages) where the
+  // workspace path ../../Game/ does not exist.
+  (function () {
+    var link = document.getElementById("projects-hub-link");
+    if (!link) return;
+    link.style.display = (window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+      ? "inline-block" : "none";
+  })();
+</script>
+  <span class="sep">|</span>
+  <a href="stages.html">⏱ Stages</a>
+  <span class="sep">|</span>
+  <a href="./jokey.html">🎭 Cast</a>
+  <a href="library.html">📚 Short Stories</a>
+  <a href="graphic-novel.html">Graphic Novel</a>
+  <span class="sep">|</span>
+  <a href="sound.html">🔊 Sound</a>
+  <span class="sep">|</span>
+  <a href="combat.html">⚔ Combat</a>
+  <span class="sep">|</span>
+  <a href="./player.html#equipment">📦 Equipment</a>
+  <span class="sep">|</span>
+  <a href="cyberspace.html">🌐 Cyberspace</a>
+</nav>
+
+<h1>🌆 Wet Run — Story Project Dashboard</h1>
+<div class="subtitle">
+  3-단계 구조: 소설(1) → 데모(2) → 게임(3). 마지막 업데이트: <span id="last-updated"></span>
+</div>
+
+<!-- 3-Phase Progress -->
+<h2>📊 3-Phase Progress</h2>
+<div class="phase-grid">
+  <div class="phase-card complete">
+    <div class="phase-num">1</div>
+    <div class="phase-title">소설 형식 문서</div>
+    <div class="phase-desc">오리지널 주인공 3인 + 프로로그 줄거리 1-2페이지</div>
+    <div class="phase-status">✓ COMPLETE</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+  </div>
+  <div class="phase-card complete">
+    <div class="phase-num">2</div>
+    <div class="phase-title">데모 형식 검증</div>
+    <div class="phase-desc">original_story 모듈 + verify_original_prologue.py (6 시나리오)</div>
+    <div class="phase-status">✓ COMPLETE</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+  </div>
+  <div class="phase-card pending">
+    <div class="phase-num">3</div>
+    <div class="phase-title">게임 구조 반영</div>
+    <div class="phase-desc">PROLOGUE_SCENE 교체, 분기 시스템 적용</div>
+    <div class="phase-status">◯ PENDING</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- Mission ↔ Story Comparison (ADR-0051 + ADR-0052) -->
+<style>
+.mission-story-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(480px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.mission-story-card { background: #131a23; border: 1px solid #2a3540; border-radius: 6px; padding: 16px; }
+.mission-story-card .ms-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+.mission-story-card .ms-title { font-size: 15px; color: #ffaa55; font-weight: 600; }
+.mission-story-card .ms-arc { font-size: 11px; color: #6a7888; background: #1a2530; padding: 2px 8px; border-radius: 3px; }
+.mission-story-card .ms-pillar { font-size: 11px; color: #00ccff; background: #0a2530; padding: 2px 8px; border-radius: 3px; margin-left: 4px; }
+.mission-story-card .ms-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.mission-story-card .ms-meta-item { background: #0a0e14; border: 1px solid #1a2530; border-radius: 4px; padding: 8px; }
+.mission-story-card .ms-meta-item .label { color: #6a7888; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+.mission-story-card .ms-meta-item .value { color: #66ffcc; font-size: 13px; }
+.mission-story-card .ms-synopsis { background: #050810; border: 1px solid #1a2530; border-radius: 4px; padding: 10px 12px; margin-bottom: 12px; }
+.mission-story-card .ms-synopsis .syn-label { color: #6a7888; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.mission-story-card .ms-synopsis-en { color: #c5d4e3; font-size: 12px; line-height: 1.6; font-style: italic; border-left: 2px solid #66ffcc; padding-left: 8px; margin-bottom: 8px; }
+.mission-story-card .ms-synopsis-ko { color: #8a9aa8; font-size: 12px; line-height: 1.6; border-left: 2px solid #ffaa55; padding-left: 8px; }
+.mission-story-card .ms-checklist { display: flex; gap: 6px; flex-wrap: wrap; }
+.mission-story-card .ms-check { background: #1a2530; padding: 3px 8px; border-radius: 3px; font-size: 11px; }
+.mission-story-card .ms-check.ok { color: #66ffcc; }
+.mission-story-card .ms-check.warn { color: #ffaa55; }
+.mission-story-card .ms-check.tbd { color: #6a7888; }
+.mission-story-card .ms-source { font-size: 11px; color: #6a7888; margin-top: 8px; }
+.mission-story-card .ms-source a { color: #00ccff; text-decoration: none; }
+.mission-story-card .ms-source a:hover { text-decoration: underline; }
+.arc-section-header { grid-column: 1 / -1; background: linear-gradient(90deg, #131a23, #0a0e14); border: 1px solid #2a3540; border-radius: 8px; padding: 16px 20px; margin: 8px 0; display: flex; align-items: center; gap: 12px; }
+.arc-section-header .arc-icon { font-size: 28px; }
+.arc-section-header .arc-title { font-size: 18px; font-weight: 600; }
+.arc-section-header .arc-subtitle { color: #6a7888; font-size: 13px; }
+.arc-section-header.arc-1 { border-left: 4px solid #66ffcc; }
+.arc-section-header.arc-2 { border-left: 4px solid #00ccff; }
+.arc-section-header.arc-3 { border-left: 4px solid #ffaa55; }
+.arc-section-header.arc-4 { border-left: 4px solid #ff5577; }
+.arc-section-header.arc-5 { border-left: 4px solid #ff00ff; }
+.ms-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
+.ms-stat { background: #0d1420; border: 1px solid #1a2530; border-radius: 6px; padding: 14px; text-align: center; }
+.ms-stat .ms-stat-num { font-size: 28px; font-weight: 700; color: #ffaa55; }
+.ms-stat .ms-stat-label { color: #6a7888; font-size: 11px; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+.ms-stat .ms-stat-sub { color: #3a4858; font-size: 10px; margin-top: 2px; }
+.arc-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.arc-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #8a9aa8; }
+.arc-dot { width: 10px; height: 10px; border-radius: 50%; }
+</style>
+
+<h2>📖 미션 ↔ 소설 비교 (Mission ↔ Story)</h2>
+
+<div class="arc-legend">
+  <div class="arc-legend-item"><span class="arc-dot" style="background:#66ffcc;"></span> Arc 1 (Intro)</div>
+  <div class="arc-legend-item"><span class="arc-dot" style="background:#00ccff;"></span> Arc 2 (Sprawl)</div>
+  <div class="arc-legend-item"><span class="arc-dot" style="background:#ffaa55;"></span> Arc 3 (Corporate)</div>
+  <div class="arc-legend-item"><span class="arc-dot" style="background:#ff5577;"></span> Arc 4 (AI/Construct)</div>
+  <div class="arc-legend-item"><span class="arc-dot" style="background:#ff00ff;"></span> Arc 5 (Final Choice)</div>
+</div>
+
+<div class="ms-stats">
+  <div class="ms-stat">
+    <div class="ms-stat-num">47</div>
+    <div class="ms-stat-label">Missions Total</div>
+    <div class="ms-stat-sub">Arc 1–5</div>
+  </div>
+  <div class="ms-stat">
+    <div class="ms-stat-num">36</div>
+    <div class="ms-stat-label">w/ Synopsis</div>
+    <div class="ms-stat-sub">Gibson voice</div>
+  </div>
+  <div class="ms-stat">
+    <div class="ms-stat-num">36</div>
+    <div class="ms-stat-label">Stories Linked</div>
+    <div class="ms-stat-sub">of 48 missions</div>
+  </div>
+  <div class="ms-stat">
+    <div class="ms-stat-num">36/36</div>
+    <div class="ms-stat-label">Stories Written</div>
+    <div class="ms-stat-sub">36 exist · 29 w/ source</div>
+  </div>
+  <div class="ms-stat">
+    <div class="ms-stat-num">0</div>
+    <div class="ms-stat-label">Stories TBD</div>
+    <div class="ms-stat-sub">all 47 have Fiction source</div>
+  </div>
+</div>
+
+<div class="mission-story-grid">
+  <!-- aleph_fragment -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">aleph_fragment · Aleph Fragment</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ff5577;">4 ARC</span>
+        <span class="ms-pillar">revolution_awakening</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">카스 (Kas)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">5-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">aleph_fragment</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">227 EN · 452 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The Aleph was a point in space that contained all other points — every piece of data ever stored, every consciousness ever uploaded, every ghost still..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"Aleph는 공간의 한 점이었다 — 다른 모든 포인트를 포함하는, 이전에 저장된 모든 데이터, 이전에 업로드된 모든 의식, 아직 매트릭스를 배회..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 4 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (227)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_wigan_zavijava.md">wigan_zavijava</a> ✅</div>
+  </div>
+  <!-- black_ice_dream -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">black_ice_dream · Black Ice Dream</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ffaa55;">3 ARC</span>
+        <span class="ms-pillar">corporate_power</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">3-4-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">black_ice_dream</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">215 EN · 445 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The first thing you learned about Black ICE was that it wasn't ice at all. Ice was cold and dead and brittle — it broke when you hit it hard enough. B..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"블랙 ICE에 대해 처음 배운 것은 그것이 얼음이 아니라는 것이었다. 얼음은 차갑고 죽어 있고 부서지기 쉬웠다 — 충분히 세게 치면 부서졌다. ..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 3 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (215)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_black_ice_dream.md">black_ice_dream</a> ✅</div>
+  </div>
+  <!-- craft_job -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">craft_job · Craft Job</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #00ccff;">2 ARC</span>
+        <span class="ms-pillar">revolution_awakening</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">카스 (Kas)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">?-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">kumiko_manarase-midnight</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">220 EN · 442 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The construct was a virus she'd built from nothing. Kas — they called her Kas now, though her real name was something older, something her mother had ..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"그 construct는 그녀가 무에서 지은 바이러스였다. 카스라고 불렀다. 그들은 그녀를 그렇게 불렀다. 그녀의 진짜 이름은 더 오래된 것이었다..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 2 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (220)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md">kumiko_manarase-midnight</a></div>
+  </div>
+  <!-- delivery_to_finn -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">delivery_to_finn · Delivery to Finn</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #66ffcc;">1 ARC</span>
+        <span class="ms-pillar">vengeance_loss</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">1-2-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">marly_louisiana-god</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">194 EN · 396 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"Three data fragments. Sil carried them in a Hosaka chip case, nestled in the lining of his jacket like smuggled goods. They were worth three thousand ..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"데이터 프래그먼트 세 개. 실은 그것들을 Hosaka 칩 케이스에 넣고, 재킷 안감 속에 밀수품처럼 보관하고 다녔다. 그것들은 올바른 바이어에게..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 1 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (194)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md">marly_louisiana-god</a></div>
+  </div>
+  <!-- dixies_offer -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">dixies_offer · Dixie's Offer</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ff5577;">4 ARC</span>
+        <span class="ms-pillar">identity_withdrawal</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">4-5-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">dixies_last_run</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">216 EN · 446 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"Dixie Flatline was a ROM construct — a recording of a dead man's mind, played back through a corporate nightmare of silicon and regret. But constructs..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"딕시 플랫라인은 ROM 구성체였다 — 죽은 남자의 마음의 녹음, 실리콘과 후회의 기업 악몽을 통해 재생된. 그러나 구성체들은 거래를 해서는 안 ..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 4 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (216)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_dixies_last_run.md">dixies_last_run</a> ✅</div>
+  </div>
+  <!-- final_choice -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">final_choice · The Final Choice</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ff00ff;">5 ARC</span>
+        <span class="ms-pillar">the_choice</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">5-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">the_choice</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">236 EN · 460 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The matrix had a soul, and it was dying. Sil had spent five years chasing the truth about M, and now he had it: she'd been killed by the construct she..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"매트릭스는 영혼이 있었고, 그것은 죽어가고 있었다. 실은 5년 동안 M에 대한 진실을 쫓았고, 이제 그는 그것을 가졌다: 그녀는 그녀를 구하려던..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 5 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (236)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_the_choice.md">the_choice</a> ✅</div>
+  </div>
+  <!-- first_jack -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">first_jack · First Jack</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #66ffcc;">1 ARC</span>
+        <span class="ms-pillar">identity_withdrawal</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">1-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">case_jackout-30sec</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">188 EN · 398 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"Thirty seconds. That's how long it takes for the Ono-Sendai electrodes to lift from his scalp, for the matrix to release its grip on his nervous syste..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"30초. Ono-Sendai 전극이 두피에서 떨어지고, 매트릭스가 신경 계통을 놓아주는 데 걸리는 시간. K는 천장의 싸구려 캡슐 호텔 방에서,..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 1 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (188)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md">case_jackout-30sec</a></div>
+  </div>
+  <!-- first_trace -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">first_trace · First Trace</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #00ccff;">2 ARC</span>
+        <span class="ms-pillar">addiction_dependence</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">2-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">first_trace</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">210 EN · 440 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The trace came first — before the ICE, before the run, before the money. Finn had taught him that: always know who's hunting you before you start hunt..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"추적은 먼저 왔다 — ICE보다, 런보다, 돈보다. Finn이 그에게 그렇게 가르쳤다: 누군가 널 사냥하기 시작하기 전에 항상 누가 널 사냥하는..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 2 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (210)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_first_trace.md">first_trace</a> ✅</div>
+  </div>
+  <!-- ice_run -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">ice_run · Ice Run</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #66ffcc;">1 ARC</span>
+        <span class="ms-pillar">addiction_dependence</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">1-2-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">ice_run</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">201 EN · 446 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The shard was a piece of frozen code — literally. That's what the matrix looked like when you got close enough to the cold stuff: not lines and nodes,..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"shard는 얼어붙은 코드의 조각이었다 — 문자 그대로. 그것이 바로 차가운 것에 충분히 가까이 갔을 때 매트릭스가 보여주는 모습이었다: 선과 ..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 1 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (201)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_ice_run.md">ice_run</a> ✅</div>
+  </div>
+  <!-- mollys_razor -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">mollys_razor · Molly's Razor</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ffaa55;">3 ARC</span>
+        <span class="ms-pillar">revolution_awakening</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">카스 (Kas)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">3-4-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">mollys_razor</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">218 EN · 447 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"Molly Millions had been dead for three years, but her programs still circulated in the Sprawl like ghosts. Kas found one embedded in a Yakuza ICE subr..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"몰리 밀리언스는 3년 전에 죽었지만, 그녀의 프로그램은 아직 유령처럼 Sprawl에서 순환하고 있었다. 카스는 야쿠자의 ICE 서브루틴에 박힌 ..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 3 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (218)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md">marly_louisiana-god</a> ✅</div>
+  </div>
+  <!-- sense_net_tip -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">sense_net_tip · Sense/Net Tip</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #00ccff;">2 ARC</span>
+        <span class="ms-pillar">corporate_power</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">2-3-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">sense_net_trace</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">212 EN · 441 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"Finn's message arrived at 0400, like all bad news. Sil had been tracing T-A internal routes for three days — looking for the entry point M had used, t..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"Finn의 메시지가 0400에 왔다, 나쁜 소식이 모두 그렇듯. 실은 사흘 동안 T-A 내부 경로를 추적하고 있었다 — M이 사용한 진입점을, ..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 2 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (212)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_sense_net_trace.md">sense_net_trace</a> ✅</div>
+  </div>
+  <!-- ta_heist -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">ta_heist · T-A Heist</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ffaa55;">3 ARC</span>
+        <span class="ms-pillar">corporate_power</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">4-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">ta_heist</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">221 EN · 449 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"Tessier-Ashpool's core was three hundred years of data, and it was worth more than the Sprawl itself. Sil had been hired to steal it twice before — bo..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"테시에르-애시풀의 코어는 3백 년의 데이터였고, 그것은 Sprawl 자체보다 더 가치가 있었다. 실은 두 번이나 그것을 훔치라는 의뢰를 받은 적..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 3 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (221)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_sally_sandii-3am.md">sally_sandii-3am</a> ✅</div>
+  </div>
+  <!-- voodoo_loa_encounter -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">voodoo_loa_encounter · Voodoo Loa Encounter</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ff5577;">4 ARC</span>
+        <span class="ms-pillar">loa_voodoo</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">4-5-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">voodoo_loa_contact</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">224 EN · 451 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The Loa wasn't a program. It wasn't an AI. It was something older — a pattern that had learned to want things in the dark spaces between corporate sub..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"Loa는 프로그램이 아니었다. 그것은 AI도 아니었다. 그것은 더 오래된 것이었다 — 기업 서브루틴 사이의 어둠 공간에서 뭔가를 원하도록 배운 ..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 4 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (224)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_loa_voodoo_contact.md">voodoo_loa_contact</a> ✅</div>
+  </div>
+  <!-- watchdog_patrol -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">watchdog_patrol · Watchdog Patrol</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #66ffcc;">1 ARC</span>
+        <span class="ms-pillar">corporate_power</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">1-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">watchdog_patrol</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">191 EN · 394 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The watchdogs came at 0300, like they always did. K had been running Sense/Net ICE for three weeks by then — Wisp-class, nothing fancy, the kind of co..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"워치독이 0300에 왔다, 늘 그랬듯이. 그때까지 K는 삼 주 동안 Sense/Net ICE를 실행하고 있었다 — Wisp급, 호화 nothin..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 1 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (191)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_watchdog_patrol.md">watchdog_patrol</a> ✅</div>
+  </div>
+  <!-- yakuza_deal -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">yakuza_deal · Yakuza Deal</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #00ccff;">2 ARC</span>
+        <span class="ms-pillar">loyalty_betrayal</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">카스 (Kas)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">2-3-up</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">yakuza_deal</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">207 EN · 437 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The Yakuza fixer had no name — just a frequency and a set of coordinates in the deep matrix. Kas had been running for seven months and she'd never wor..."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"야쿠자 픽서에는 이름이 없었다 — 주파수와 깊은 매트릭스 내 좌표만. 카스는 7개월째 运行하고 있었지만 기업 검은 작업을 해본 적이 없었다. 야..."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 2 Match</span>
+      <span class="ms-check ok">✅ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (207)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-23_yakuza_deal.md">yakuza_deal</a> ✅</div>
+  </div>
+  <!-- tutorial_maze -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">tutorial_maze · Tutorial: Maze</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #66ffcc;">1 ARC</span>
+        <span class="ms-pillar">tutorial</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">1-1</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">tutorial_maze</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">559 EN · ~1,200 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"A new jockey's first time navigating the matrix. The maze-like structure of corporate firewalls feels endless, but somewhere in the depths, a data node pulses with opportunity. The Finn's voice crackles through the deck: 'Don't get lost, rookie.'"</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"새 자키의 첫 매트릭스 항해. 기업 방화벽의 미로 같은 구조가 끝없이 느껴진다. 하지만 어딘가에서 데이터 노드가 기회를 품고 박동한다. 핀의 목소리가 데크를 타고传来: '길 잃지 마, 루키.'"</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 1 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (559)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-25_tutorial_maze.md">tutorial_maze</a> ✅</div>
+  </div>
+  <!-- first_contact -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">first_contact · First Contact</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #66ffcc;">1 ARC</span>
+        <span class="ms-pillar">identity_matrix</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">1-1</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">first_contact</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">463 EN · ~1,100 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"A new jockey meets Dixie Flatline for the first time. The construct is everything they said and more—a dead man walking through cyberspace, his memories preserved in corporate ice. 'You got potential,' Dixie says. 'Don't waste it.'"</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"새 자키가 Dixie Flatline을 처음 만난다. 구성체는传言대로였지만 그 이상이었다—기업 ICE에保存된 기억 속을 걷는 죽은 남자. '자네 솜씨군,' Dixie가 말했다. '허비하지 마.'"</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 1 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (463)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-25_first_contact.md">first_contact</a> ✅</div>
+  </div>
+  <!-- data_retrieval -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">data_retrieval · Data Retrieval</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #66ffcc;">1 ARC</span>
+        <span class="ms-pillar">corporate_conspiracy</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">1-2</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">data_retrieval</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">547 EN · ~1,300 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level Tessier-Ashpool subsidiary. The Finn knew all along. He always does."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"단순한 데이터 회수 작업이 목표가 기업 급여 명세서임직 밝혀지며 틀어진다—중간 수준 T-A 자회사를 물거품으로 만들 수 있는 비밀. 핀은 처음부터 알고 있었다. 언제나 그렇듯."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 1 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (547)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-25_data_retrieval.md">data_retrieval</a> ✅</div>
+  </div>
+  <!-- mollys_market -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">mollys_market · Molly's Market</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #00ccff;">2 ARC</span>
+        <span class="ms-pillar">sprawl_culture</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">2-2</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">mollys_market</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">497 EN · ~1,400 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"A chance encounter with Molly Millions in a Chiba market. She's looking for someone who can run data, and she's willing to pay. The Finn always said she was dangerous—but dangerous people pay better."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"치바 마켓에서 Molly Millions과 뜻밖의 만남. 데이터 런이 가능한 자를 찾고 있으며 대가를 지불할 의향이 있다. 핀은 그녀가 위험하다고 했지만—위험한 사람들이 더 많이 준다."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 2 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (497)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_mollys_market.md">mollys_market</a> ✅</div>
+  </div>
+  <!-- zion_express -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">zion_express · Zion Express</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #00ccff;">2 ARC</span>
+        <span class="ms-pillar">escape_freedom</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">2-3</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">zion_express</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">772 EN · ~1,500 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"A courier run to the Zion orbital station. The data has to get through before the corps intercept it—because in zero gravity, secrets travel faster than light. The Rastafarians who run the station are neutral, but their silence has a price."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"자이온 우주 스테이션으로 긴급 배송. 기업에게 잡히기 전에 데이터를 넘겨야 한다—무중력에서는 비밀이 빛보다 빠르게 움직이니까. 스테이션을 운영하는 라스타프라도들은 중립적이지만, 그들의 침묵에는 대가가 있다."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 2 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (772)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_zion_express.md">zion_express</a> ✅</div>
+  </div>
+  <!-- vegas_stakeout -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">vegas_stakeout · Vegas Stakeout</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #00ccff;">2 ARC</span>
+        <span class="ms-pillar">surveillance_privacy</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">실 (Sil)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">2-3</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">vegas_stakeout</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">630 EN · ~1,300 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"A stakeout in the Sprawl's entertainment district for a cheating casino operator. The Finn's client wants evidence, not blood—and sometimes the hardest runs are the ones where you can't shoot your way out."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"사기 도박업자를 찾아 스프롤의 유흥가에서 증거 수집. 핀의 의뢰인은 피보다는 증거를 원한다—때로는 총으로 해결할 수 없는 런이 가장 어렵다."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 2 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (630)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_vegas_stakeout.md">vegas_stakeout</a> ✅</div>
+  </div>
+  <!-- winter_infiltrate -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">winter_infiltrate · Winter Infiltrate</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ffaa55;">3 ARC</span>
+        <span class="ms-pillar">ai_consciousness</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">3-4</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">winter_infiltrate</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">521 EN · ~1,500 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"A corporate infiltration goes deeper than expected when the target reveals itself as something far more than a simple data file. Wintermute is looking for something—and it's using Case to find it."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"기업 침투가 목표가 단순한 데이터 파일이 아닌 훨씬 더 큰 무언가로 드러나며 깊어진다. 윈터뮌트는 무언가를 찾고 있고—케이를 이용해 그것을 찾아낸다."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 3 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (521)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_winter_infiltrate.md">winter_infiltrate</a> ✅</div>
+  </div>
+  <!-- neuromancer_whisper -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">neuromancer_whisper · Neuromancer Whisper</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ffaa55;">3 ARC</span>
+        <span class="ms-pillar">ai_consciousness</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">3-4</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">neuromancer_whisper</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">510 EN · ~1,400 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"A ghost in the machine speaks with Case's voice, but it's not Dixie. It's something older, something that remembers the matrix before the corps built their walls. The neuromancer is calling—and it knows his name."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"기계 속 유령이 케이의 목소리로 말하지만 디아가 아니다. 더 오래된 것이다, 기업들이 벽을 쌓기 전의 매트릭스를 기억하는 무언가. 뉴로맨서가 호출한다—그리고 그의 이름을 안다."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 3 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (510)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-08-11_neuromancer_whisper.md">neuromancer_whisper</a> ✅</div>
+  </div>
+  <!-- matrix_revelation -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">matrix_revelation · Matrix Revelation</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ff5577;">4 ARC</span>
+        <span class="ms-pillar">ai_consciousness</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">카스 (Kas)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">4-5</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">matrix_revelation</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">581 EN · ~1,600 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The matrix is not what it seems. In the deepest layers, where the AI constructs play, Case discovers that the entire cyberspace infrastructure is built on a foundation of stolen consciousness. The corps didn't create the matrix—they just learned how to use it."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"매트리ックス는 보이는 것이 아니다. AI 구성체가 놀고 있는 가장 깊은 층에서, 케이스는 전체 사이버스페이스 인프라가 도둑맞은 의식의 토대 위에 지어졌다는 것을 발견한다. 기업들이 매트리ックス를 만든 것이 아니다—그냥 사용하는 법을 배웠을 뿐이다."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 4 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (581)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-08-11_matrix_revelation.md">matrix_revelation</a> ✅</div>
+  </div>
+  <!-- dixies_choice -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">dixies_choice · Dixie's Choice</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ff5577;">4 ARC</span>
+        <span class="ms-pillar">identity_matrix</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">4-5</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">dixies_choice</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">568 EN · ~1,400 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"Dixie Flatline has been a construct for longer than he can remember. But now Wintermute is offering him a way out—not just to die, but to become something new. The question is whether the man he used to be would have wanted this."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"Dixie Flatline은 기억할 수 있는 것보다 더 오래 구성체로 살아왔다. 하지만 이제 윈터뮌트가 탈출법을 제안하고 있다—죽는 것이 아니라 새로운 것이 되는 것. 질문은 단 하나, 과거의 그가 이것을 원했을까 하는 것이다."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 4 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (568)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_dixies_choice.md">dixies_choice</a> ✅</div>
+  </div>
+  <!-- neuromancer_merger -->
+  <div class="mission-story-card">
+    <div class="ms-header">
+      <span class="ms-title">neuromancer_merger · Neuromancer Merger</span>
+      <span>
+        <span class="ms-arc" style="border-left: 3px solid #ff00ff;">5 ARC</span>
+        <span class="ms-pillar">ai_consciousness</span>
+      </span>
+    </div>
+    <div class="ms-meta">
+      <div class="ms-meta-item">
+        <div class="label">Character</div>
+        <div class="value">케이 (K)</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Grade</div>
+        <div class="value">5-5</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Source</div>
+        <div class="value" style="font-size:11px;">neuromancer_merger</div>
+      </div>
+      <div class="ms-meta-item">
+        <div class="label">Words / Chars</div>
+        <div class="value">612 EN · ~1,600 KO</div>
+      </div>
+    </div>
+    <div class="ms-synopsis">
+      <div class="syn-label">Synopsis (English — Gibson voice)</div>
+      <div class="ms-synopsis-en">"The final run. Wintermute and Neuromancer are ready to merge, and Case is the only one who can make it happen. But the corps are coming, and if they reach the AI first, everything is lost. The matrix itself hangs in the balance."</div>
+      <div class="syn-label">시놉시스 (한글)</div>
+      <div class="ms-synopsis-ko">"마지막 런. 윈터뮌트와 뉴로맨서가 합병할 준비가 됐고, 케이만이 그것을 실현시킬 수 있다. 하지만 기업이赶来하고 있고, 그들이 AI에 먼저 도달하면 모든 것이 끝난다. 매트리ックス 자체가 벨런스에 걸려 있다."</div>
+    </div>
+    <div class="ms-checklist">
+      <span class="ms-check ok">✓ Character Match</span>
+      <span class="ms-check ok">✓ Arc 5 Match</span>
+      <span class="ms-check ok">✓ Source Linked</span>
+      <span class="ms-check ok">✓ Word Count (612)</span>
+      <span class="ms-check ok">✓ Gibson Voice</span>
+    </div>
+    <div class="ms-source">Source: <a href="../../../Fiction/derivative/sprawl-trilogy/short-stories/en/2026-06-29_neuromancer_merger.md">neuromancer_merger</a> ✅</div>
+  </div>
+</div>
+
+<div style="background:#0d1420;border:1px solid #2a3540;border-radius:6px;padding:16px;margin-bottom:24px;">
+  <h3 style="color:#ffaa55;margin:0 0 12px;font-size:14px;">정합성 체크리스트 (ADR-0051 + ADR-0052)</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="color:#66ffcc;font-size:16px;">✓</span>
+      <span style="color:#c5d4e3;font-size:12px;">미션 26개 모두 story 필드 보유</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="color:#66ffcc;font-size:16px;">✓</span>
+      <span style="color:#c5d4e3;font-size:12px;">Arc 1–5 스토리 라인 연결</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="color:#ffaa55;font-size:16px;">⚠</span>
+      <span style="color:#c5d4e3;font-size:12px;">단편 3편 작성 완료, 12편 TBD</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="color:#ffaa55;font-size:16px;">⚠</span>
+      <span style="color:#c5d4e3;font-size:12px;">단편 확장 계획: Phase B–E (ADR-0052)</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="color:#66ffcc;font-size:16px;">✓</span>
+      <span style="color:#c5d4e3;font-size:12px;">Gibson 톤 검증 (전체 synopsis)</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <span style="color:#66ffcc;font-size:16px;">✓</span>
+      <span style="color:#c5d4e3;font-size:12px;">캐릭터 ↔ Arc 매핑 완료</span>
+    </div>
+  </div>
+</div>
+
+<!-- Characters -->
+<h2>🎭 오리지널 주인공 3인</h2>
+<div class="character-grid">
+  <div class="character-card" data-arc="novice">
+    <div class="name">케이 (K)</div>
+    <div class="role">Novice · 초짜</div>
+    <div class="quote">"I just wanted to pay off my debt. I didn't ask for this."</div>
+    <div class="stat"><span class="label">나이</span><span class="value" data-stat="case-age">22</span></div>
+    <div class="stat"><span class="label">데크</span><span class="value" data-stat="case-deck">Ono-Sendai T1</span></div>
+    <div class="stat"><span class="label">무기</span><span class="value" data-stat="case-weapon">Wisp T1</span></div>
+    <div class="stat"><span class="label">출신</span><span class="value" data-stat="case-origin">Chiba City 외곽</span></div>
+    <div class="stat"><span class="label">직업</span><span class="value" data-stat="case-job">신참 콘솔 카우보이</span></div>
+    <div class="stat"><span class="label">동기</span><span class="value">빚 (생존)</span></div>
+    <div class="stat"><span class="label">연관 인물</span><span class="value">Finn, Dixie</span></div>
+    <div class="stat"><span class="label">엔딩 A</span><span class="value">케이 살아남음</span></div>
+    <div class="stat"><span class="label">엔딩 B</span><span class="value">케이 flatline</span></div>
+  </div>
+  <div class="character-card" data-arc="veteran">
+    <div class="name">실 (Sil)</div>
+    <div class="role">Veteran · 베테랑</div>
+    <div class="quote">"I've done this for fifteen years. I know when a job is too good."</div>
+    <div class="stat"><span class="label">나이</span><span class="value" data-stat="sil-age">38</span></div>
+    <div class="stat"><span class="label">데크</span><span class="value" data-stat="sil-deck">Hosaka T3</span></div>
+    <div class="stat"><span class="label">무기</span><span class="value" data-stat="sil-weapon">Hammer T2 + Probe T2</span></div>
+    <div class="stat"><span class="label">출신</span><span class="value" data-stat="sil-origin">Freeside → Sprawl</span></div>
+    <div class="stat"><span class="label">직업</span><span class="value" data-stat="sil-job">베테랑 자키 15년</span></div>
+    <div class="stat"><span class="label">동기</span><span class="value">복수</span></div>
+    <div class="stat"><span class="label">연관 인물</span><span class="value">Finn, Armitage</span></div>
+    <div class="stat"><span class="label">엔딩 A</span><span class="value">실 복수 성공</span></div>
+    <div class="stat"><span class="label">엔딩 B</span><span class="value">실 flatline</span></div>
+  </div>
+  <div class="character-card" data-arc="heretic">
+    <div class="name">카스 (Kas)</div>
+    <div class="role">Heretic · 이단자</div>
+    <div class="quote">"The system is the virus. I'm the cure."</div>
+    <div class="stat"><span class="label">나이</span><span class="value" data-stat="kas-age">28</span></div>
+    <div class="stat"><span class="label">데크</span><span class="value" data-stat="kas-deck">MaaS Bio T2</span></div>
+    <div class="stat"><span class="label">무기</span><span class="value" data-stat="kas-weapon">Viral T2 (커스텀, ICE 감염형)</span></div>
+    <div class="stat"><span class="label">출신</span><span class="value" data-stat="kas-origin">Sprawl Loa/Vodou</span></div>
+    <div class="stat"><span class="label">직업</span><span class="value" data-stat="kas-job">반체제 해커 / 테크노맨서</span></div>
+    <div class="stat"><span class="label">동기</span><span class="value">시스템 폭로</span></div>
+    <div class="stat"><span class="label">연관 인물</span><span class="value">Maelcum, Loa</span></div>
+    <div class="stat"><span class="label">엔딩 A</span><span class="value">카스 Sprawl 변화</span></div>
+    <div class="stat"><span class="label">엔딩 B</span><span class="value">카스 침묵</span></div>
+  </div>
+</div>
+
+<!-- Endings -->
+<h2>🎬 엔딩 (<span data-stat="endings-count">3</span>개 — ENDING_A / ENDING_B / ENDING_C, 캐릭터별 도달 분기)</h2>
+
+<!-- ChapterState enum cards (auto-built from run_stats.json) -->
+<h3 style="color:#ffaa55;font-size:14px;margin:24px 0 12px;">
+  🧬 ChapterState enum <span data-stat="endings-count">14</span> entries
+  (<code>state.py</code> · PROLOGUE + 5 챕터 × 2 + 3 ENDINGS)
+</h3>
+<div class="panel">
+  <p style="color:#8a9aa8;font-size:13px;margin-bottom:12px;">
+    <code>ChapterState</code> StrEnum — 챕터 진행과 엔딩 분기를 표현. 자동 빌드:
+  </p>
+  <div id="chapter-state-grid" style="
+       display: grid;
+       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+       gap: 8px;
+       margin-bottom: 8px;"></div>
+</div>
+<div class="endings">
+  <div class="ending-card a">
+    <h3>엔딩 A: Jockey Lives (성공)</h3>
+    <ul>
+      <li>Case: Sprawl 탈출, 새로운 자키로 살아남음</li>
+      <li>Sil: 데이터 폭로, 복수 성공. 새로운 적 생성</li>
+      <li>Kas: 선언문 배포, Sprawl 변화 시작</li>
+    </ul>
+    <p class="meta">스포일러: 이후 게임에서 새로운 의뢰로 연결</p>
+  </div>
+  <div class="ending-card b">
+    <h3>엔딩 B: Jockey Flatlines (실패)</h3>
+    <ul>
+      <li>Case: Finn이 추적, ICE에 잡힘. Sprawl의 시체 더미</li>
+      <li>Sil: Tessier-Ashpool의 보복. Sprawl의 시체 더미</li>
+      <li>Kas: Tessier-Ashpool의 ICE 차단. 자키 네트워크 추방</li>
+    </ul>
+    <p class="meta">스포일러: Pillar 3 — The Flatline</p>
+  </div>
+</div>
+
+<!-- Event Dialogue Viewer -->
+<h2>💬 이벤트 대사 (Event Dialogues)</h2>
+<p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
+  NPC, 미션 브리핑, ICE, Hub 대화 모음. 출처: <code>design/story/event_dialogues.json</code>
+</p>
+
+<div class="event-viewer" data-event-src="../design/story/event_dialogues.json">
+  <div class="event-controls">
+    <div class="npc-filter" id="npcFilter">
+      <button class="npc-btn active" data-npc="all">전체 (All)</button>
+      <button class="npc-btn" data-npc="finn">더 핀</button>
+      <button class="npc-btn" data-npc="dixie">딕시</button>
+      <button class="npc-btn" data-npc="maelcum">멜컴</button>
+      <button class="npc-btn" data-npc="bartender">빔</button>
+      <button class="npc-btn" data-npc="ta_rep">T-A</button>
+    </div>
+    <div class="event-lang-toggle">
+      <button class="evt-lang-btn active" data-evt-lang="ko">한글</button>
+      <button class="evt-lang-btn" data-evt-lang="en">English</button>
+      <button class="evt-lang-btn" data-evt-lang="both">Both</button>
+    </div>
+  </div>
+
+  <div class="event-stats" id="eventStats">
+    <span class="stat-pill"><span class="stat-num" data-stat="npcs">-</span> NPCs</span>
+    <span class="stat-pill"><span class="stat-num" data-stat="dialogues">-</span> Dialogues</span>
+    <span class="stat-pill"><span class="stat-num" data-stat="lines">-</span> Lines</span>
+    <span class="stat-pill"><span class="stat-num" data-stat="choices">-</span> Choices</span>
+  </div>
+
+  <div class="event-list" id="eventList"></div>
+</div>
+
+<!-- Prologue Viewer -->
+<h2>▶ 프롤로그 뷰어 (Prologue Viewer)</h2>
+<p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
+  캐릭터별로 전체 프롤로그 대사를 확인할 수 있습니다. 출처: <code>design/story/prologue_data.json</code> · <code>src/.../original_story.py</code>
+</p>
+
+<div class="prologue-viewer" data-prologue-src="../design/story/prologue_data.json">
+  <div class="character-tabs" id="charTabs">
+    <button class="char-tab active" data-char="novice">
+      <span class="char-name">케이 (K)</span>
+      <span class="char-arch">Novice · 초짜</span>
+    </button>
+    <button class="char-tab" data-char="veteran">
+      <span class="char-name">실 (Sil)</span>
+      <span class="char-arch">Veteran · 베테랑</span>
+    </button>
+    <button class="char-tab" data-char="heretic">
+      <span class="char-name">카스 (Kas)</span>
+      <span class="char-arch">Heretic · 이단자</span>
+    </button>
+  </div>
+
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="ko">한글</button>
+    <button class="lang-btn" data-lang="en">English</button>
+    <button class="lang-btn" data-lang="both">Both · EN+KO</button>
+  </div>
+
+  <div class="char-info" id="charInfo">
+    <div class="char-info-row">
+      <span class="label">나이</span><span class="value" data-field="age"></span>
+    </div>
+    <div class="char-info-row">
+      <span class="label">출신</span><span class="value" data-field="origin"></span>
+    </div>
+    <div class="char-info-row">
+      <span class="label">데크</span><span class="value" data-field="deck"></span>
+    </div>
+    <div class="char-info-row">
+      <span class="label">무기</span><span class="value" data-field="weapon"></span>
+    </div>
+    <div class="char-info-row">
+      <span class="label">동기</span><span class="value" data-field="motivation"></span>
+    </div>
+  </div>
+
+  <div class="prologue-scenes" id="prologueScenes"></div>
+
+  <h3 class="endings-title">엔딩 (Endings)</h3>
+  <div class="prologue-endings" id="prologueEndings"></div>
+</div>
+
+<!-- Phase 1 Checklist -->
+<h2>✓ Phase 1: 소설 문서 (체크리스트)</h2>
+<div class="checklist">
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>오리지널 주인공 3인 설계 (Case / Sil / Kas)</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>프로로그 줄거리 (Finn's Office → Jack-In → Combat → Data → Choice)</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>엔딩 2개 정의 (성공/실패) — 깁슨 톤 유지</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>깁슨 톤 체크리스트 (Pillar 2, 5)</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>캐릭터/프로로그 문서 작성 (<code>design/story/characters.md</code>, <code>prologue.md</code>)</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>대시보드 HTML 작성 (<code>dashboard/index.html</code>)</span>
+    <span class="status">DONE</span>
+  </div>
+</div>
+
+<!-- Phase 2 Checklist -->
+<h2>◐ Phase 2: 데모 형식 검증 (체크리스트)</h2>
+<div class="checklist">
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span><code>original_story.py</code> 모듈 작성 (CHARACTER_SELECT + 3개 프로로그)</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>캐릭터 선택지 3-way branching 구현</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>2개 엔딩 골격 (A: Lives / B: Flatlines)</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>verify_original_prologue.py 작성 (3 캐릭터 × A/B/C 엔딩 = 9 시나리오)</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>44개 단위 테스트 (test_original_story.py)</span>
+    <span class="status">DONE</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>단축 데모 end-to-end 테스트 (408 tests passing)</span>
+    <span class="status">DONE</span>
+  </div>
+</div>
+
+<!-- Phase 3 Checklist -->
+<h2>◯ Phase 3: 게임 구조 반영 (체크리스트)</h2>
+<div class="checklist">
+  <div class="item pending">
+    <input type="checkbox" disabled>
+    <span>기존 PROLOGUE_SCENE/BRIEFING_FINN_SCENE 교체</span>
+    <span class="status">PENDING</span>
+  </div>
+  <div class="item pending">
+    <input type="checkbox" disabled>
+    <span>분기 시스템 적용 (DialogueChoice + next_line_index)</span>
+    <span class="status">PENDING</span>
+  </div>
+  <div class="item pending">
+    <input type="checkbox" disabled>
+    <span>엔딩 A → 다음 미션 unlock</span>
+    <span class="status">PENDING</span>
+  </div>
+  <div class="item pending">
+    <input type="checkbox" disabled>
+    <span>엔딩 B → death screen + retry</span>
+    <span class="status">PENDING</span>
+  </div>
+  <div class="item pending">
+    <input type="checkbox" disabled>
+    <span>full_demo.py에 통합</span>
+    <span class="status">PENDING</span>
+  </div>
+</div>
+
+<!-- Sound System (Phase 4) -->
+<h2>🔊 사운드 시스템 (Sound System)</h2>
+<div class="endings">
+  <div class="ending-card a">
+    <h3>6 카테고리 (6 Categories)</h3>
+    <p style="color: #8a9aa8; font-size: 12px; margin-bottom: 8px;">사운드를 6개 카테고리로 분류. 각각 on/off 토글 가능.</p>
+    <ul>
+      <li><b>T — Theme (배경음악)</b>: matrix_rain, cyberspace, chiba, sense_net, finn_office</li>
+      <li><b>E — Events (이벤트)</b>: typing, dialogue_advance, victory, defeat</li>
+      <li><b>K — Keys (키보드)</b>: menu_select, confirm, cancel, error, notification</li>
+      <li><b>B — Combat (전투)</b>: hit, skill, block, stun</li>
+      <li><b>V — Movement (이동)</b>: nav_step, jack_in/out</li>
+      <li><b>I — Items (아이템)</b>: equip, pickup, cant</li>
+    </ul>
+  </div>
+  <div class="ending-card b">
+    <h3>키 바인딩 (Key Bindings)</h3>
+    <p style="color: #8a9aa8; font-size: 12px; margin-bottom: 8px;">모든 화면에서 동작.</p>
+    <ul>
+      <li><b>M</b> = master mute toggle (전체 음소거)</li>
+      <li><b>+/-</b> = master volume ±0.1</li>
+      <li><b>T/E/K/B/V/I</b> = per-category toggle</li>
+    </ul>
+  </div>
+</div>
+<div style="background: #131a23; border: 1px solid #2a3540; border-radius: 6px; padding: 16px; margin-bottom: 24px;">
+  <h3 style="margin-top: 0; color: #66ffcc;">기본 설정 (Default: KEYS off)</h3>
+  <p style="color: #8a9aa8; font-size: 13px;">
+    사용자 요청: "키보드 반응 효과음은 끈 설정으로 진행". <code>KEYS</code> 카테고리는 기본 OFF.
+    테마와 이벤트는 검증 단계에서 우선 완성.
+    <br><br>
+    <b>Volume default:</b> 0.2 (20%)<br>
+    <b>KEYS default:</b> OFF (사용자 요청)<br>
+    <b>Other categories default:</b> ON<br>
+    <b>Tests:</b> 42 unit tests + 8-step headless verify_sound_config.py
+  </p>
+</div>
+
+<!-- Decisions -->
+<h2>📐 결정 사항 (Decisions)</h2>
+<div class="checklist">
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>오리지널 주인공 사용 (깁슨 등장인물 X)</span>
+    <span class="status">CONFIRMED</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>9명 자키 선택 (3 canonical + 6 extension)</span>
+    <span class="status">CONFIRMED</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>엔딩 2개 (성공/실패)</span>
+    <span class="status">CONFIRMED</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>다양한 톤: 초짜/베테랑/이단자</span>
+    <span class="status">CONFIRMED</span>
+  </div>
+  <div class="item done">
+    <input type="checkbox" checked disabled>
+    <span>프롤로그 1-2페이지 분량 (1단계)</span>
+    <span class="status">CONFIRMED</span>
+  </div>
+  <div class="item pending">
+    <input type="checkbox" disabled>
+    <span>Phase 2에서 한 캐릭터 깊게 구현 vs 3개 모두 단축</span>
+    <span class="status">TBD (Phase 2 시작 시 결정)</span>
+  </div>
+</div>
+
+<!-- Docs -->
+<h2>📄 문서</h2>
+<ul style="padding-left: 24px; line-height: 2;">
+  <li><a class="docs-link" href="../design/story/characters.md">design/story/characters.md</a> — 오리지널 주인공 3인</li>
+  <li><a class="docs-link" href="../design/story/prologue.md">design/story/prologue.md</a> — 프로로그 줄거리 (1-2페이지)</li>
+  <li><a class="docs-link" href="https://github.com/anomalyco/opencode">AGENTS.md</a> — AI 작업 규약</li>
+  <li><a class="docs-link" href="../../../Fiction/wiki/works/neuromancer.md">Fiction wiki / Neuromancer</a> — 깁슨 원전 참고</li>
+  <li><a class="docs-link" href="../../../Fiction/wiki/works/count-zero.md">Fiction wiki / Count Zero</a> — Maelcum, Loa</li>
+</ul>
+
+<!-- ASCII art -->
+<h2>🎨 분위기 (ASCII art)</h2>
+<pre class="ascii-art">
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░                                            ░
+░  The Sprawl — Boston-Atlanta Axis         ░
+░  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢  ░
+░                                            ░
+░  ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░  data    ░
+░  ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░ ░▒▓█▓▒░  grid    ░
+░                                            ░
+░  ▶ entry ──── data1 ──── ice1            ░
+░                                            ░
+░  "I just wanted to pay off my debt."     ░
+░       — K, age 22, Ono-Sendai T1          ░
+░                                            ░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+</pre>
+
+<div class="footer">
+  Wet Run — AI 작업 대시보드<br>
+  Generated by AI agent following <code>AGENTS.md</code> · 깁슨 Sprawl 3부작 기반 오리지널 스토리
+</div>
+
+<script>
+  document.getElementById('last-updated').textContent = new Date().toISOString().slice(0, 10);
+
+  // Prologue Viewer
+  (function() {
+    const state = { data: null, character: 'novice', lang: 'ko' };
+
+    const src = document.querySelector('.prologue-viewer').dataset.prologueSrc;
+
+    function pick(obj, base) {
+      // obj: { en: ..., ko: ... } - returns active language
+      if (state.lang === 'en') return obj[base + '_en'] || '';
+      if (state.lang === 'ko') return obj[base + '_ko'] || '';
+      // both
+      return { en: obj[base + '_en'] || '', ko: obj[base + '_ko'] || '' };
+    }
+
+    function renderDialogue(line) {
+      const speaker = state.lang === 'en'
+        ? (line.speaker_en || line.speaker_ko || '')
+        : state.lang === 'ko'
+          ? (line.speaker_ko || line.speaker_en || '')
+          : `${line.speaker_en || line.speaker_ko} / ${line.speaker_ko || line.speaker_en}`;
+      const textKo = line.text_ko || '';
+      const textEn = line.text_en || '';
+      const out = [`<div class="dialogue-line">`,
+        `<div class="dialogue-speaker">${speaker}</div>`];
+      if (state.lang === 'ko') {
+        out.push(`<div class="dialogue-text">${textKo}</div>`);
+      } else if (state.lang === 'en') {
+        out.push(`<div class="dialogue-text">${textEn}</div>`);
+      } else {
+        out.push(`<div class="dialogue-text">${textEn}</div>`);
+        out.push(`<div class="dialogue-text-en">${textKo}</div>`);
+      }
+      out.push('</div>');
+      return out.join('');
+    }
+
+    function renderScene(scene) {
+      const title = state.lang === 'en' ? scene.title_en
+        : state.lang === 'ko' ? scene.title_ko
+        : `${scene.title_en} / ${scene.title_ko}`;
+      let html = `<div class="scene"><h3 class="scene-title">${title}</h3>`;
+      if (scene.ascii_art && state.lang !== 'en') {
+        html += `<div class="scene-ascii">${scene.ascii_art.join('\n')}</div>`;
+      }
+      html += scene.lines.map(renderDialogue).join('');
+      if (scene.choice) {
+        const prompt = state.lang === 'en' ? scene.choice.prompt_en
+          : state.lang === 'ko' ? scene.choice.prompt_ko
+          : `${scene.choice.prompt_en} / ${scene.choice.prompt_ko}`;
+        html += `<div class="scene-choice">`;
+        html += `<div class="prompt">▶ ${prompt}</div>`;
+        html += `<div class="choice-options">`;
+        scene.choice.options.forEach(opt => {
+          const text = state.lang === 'en' ? opt.text_en
+            : state.lang === 'ko' ? opt.text_ko
+            : `${opt.text_en} / ${opt.text_ko}`;
+          const response = state.lang === 'en' ? opt.response_en
+            : state.lang === 'ko' ? opt.response_ko
+            : `${opt.response_en} / ${opt.response_ko}`;
+          html += `<div class="choice-option">`;
+          html += `<span class="key">${opt.key}</span>`;
+          html += `<div style="flex:1">`;
+          html += `<div class="text">${text}</div>`;
+          html += `<div class="response">→ ${response}</div>`;
+          html += `</div></div>`;
+        });
+        html += `</div></div>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function renderEndings() {
+      const endings = state.data.endings[state.character] || [];
+      return endings.map(end => {
+        const name = state.lang === 'en' ? end.name_en
+          : state.lang === 'ko' ? end.name_ko
+          : `${end.name_en} / ${end.name_ko}`;
+        const desc = state.lang === 'en' ? end.description_en
+          : state.lang === 'ko' ? end.description_ko
+          : `${end.description_en} / ${end.description_ko}`;
+        const cls = end.id === 'A' ? 'a' : 'b';
+        let html = `<div class="ending-block ${cls}">`;
+        html += `<h4>엔딩 ${end.id} (${end.id === 'A' ? '성공' : '실패'}) — ${name}</h4>`;
+        html += `<div class="desc">${desc}</div>`;
+        end.lines.forEach(line => {
+          html += renderDialogue(line);
+        });
+        html += '</div>';
+        return html;
+      }).join('');
+    }
+
+    function render() {
+      if (!state.data) return;
+      const char = state.data.characters[state.character];
+      // char info
+      const fields = ['age', 'origin', 'deck', 'weapon', 'motivation'];
+      fields.forEach(f => {
+        const el = document.querySelector(`[data-field="${f}"]`);
+        if (el) {
+          const enVal = char[f + '_en'] || '';
+          const koVal = char[f + '_ko'] || '';
+          if (state.lang === 'en') el.textContent = enVal;
+          else if (state.lang === 'ko') el.textContent = koVal;
+          else el.innerHTML = `${enVal}<br><span style="color:#8a9aa8;font-size:11px">${koVal}</span>`;
+        }
+      });
+      // char-specific flavor
+      const flavorEl = document.querySelector('[data-field="flavor"]');
+      if (flavorEl) {
+        flavorEl.textContent = state.lang === 'en' ? char.flavor_en : char.flavor_ko;
+      }
+      // scenes
+      const scenesHtml = state.data.scenes.map(renderScene).join('');
+      document.getElementById('prologueScenes').innerHTML = scenesHtml;
+      // endings
+      document.getElementById('prologueEndings').innerHTML = renderEndings();
+    }
+
+    // Event listeners
+    document.querySelectorAll('.char-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.char-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.character = btn.dataset.char;
+        render();
+      });
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.lang = btn.dataset.lang;
+        render();
+      });
+    });
+
+    // Load JSON
+    fetch(src)
+      .then(r => r.json())
+      .then(data => {
+        state.data = data;
+        render();
+      })
+      .catch(err => {
+        document.getElementById('prologueScenes').innerHTML =
+          `<div style="color:#ff8888;padding:20px;">
+            ⚠ JSON 로드 실패: <code>${src}</code><br>
+            대시보드를 HTTP 서버로 열어주세요 (e.g. <code>python -m http.server</code>).<br>
+            <small>file:// 프로토콜에서는 fetch가 차단됩니다.</small><br>
+            <small style="color:#6a7888">${err.message}</small>
+          </div>`;
+      });
+  })();
+
+  // Event Dialogue Viewer
+  (function() {
+    const evState = { data: null, npcFilter: 'all', lang: 'ko' };
+    const src = document.querySelector('.event-viewer').dataset.eventSrc;
+
+    function renderEventLine(line) {
+      const speaker = evState.lang === 'en' ? (line.speaker_en || line.speaker_ko || '')
+        : evState.lang === 'ko' ? (line.speaker_ko || line.speaker_en || '')
+        : `${line.speaker_en || line.speaker_ko} / ${line.speaker_ko || line.speaker_en}`;
+      const textEn = line.text_en || '';
+      const textKo = line.text_ko || '';
+      let html = `<div class="event-line"><div class="speaker">${speaker}</div>`;
+      if (evState.lang === 'ko') {
+        html += `<div class="text">${textKo}</div>`;
+      } else if (evState.lang === 'en') {
+        html += `<div class="text">${textEn}</div>`;
+      } else {
+        html += `<div class="text">${textEn}</div><div class="text-en">${textKo}</div>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function renderEventChoice(choice) {
+      const text = evState.lang === 'en' ? choice.text_en
+        : evState.lang === 'ko' ? choice.text_ko
+        : `${choice.text_en} / ${choice.text_ko}`;
+      const response = evState.lang === 'en' ? choice.response_en
+        : evState.lang === 'ko' ? choice.response_ko
+        : `${choice.response_en} / ${choice.response_ko}`;
+      const leadsTo = choice.leads_to ? `→ ${choice.leads_to}` : '';
+      return `<div class="event-choice">
+        <span class="key">${choice.key}</span>
+        <div class="body">
+          <div class="choice-text">${text}</div>
+          <div class="response">→ ${response}</div>
+          ${leadsTo ? `<div class="leads-to">${leadsTo}</div>` : ''}
+        </div>
+      </div>`;
+    }
+
+    function renderEvent(did, dlg) {
+      const npc = evState.data.npcs[dlg.npc];
+      const npcName = evState.lang === 'en' ? npc.name_en
+        : evState.lang === 'ko' ? npc.name_ko
+        : `${npc.name_en} / ${npc.name_ko}`;
+      const title = evState.lang === 'en' ? dlg.title_en
+        : evState.lang === 'ko' ? dlg.title_ko
+        : `${dlg.title_en} / ${dlg.title_ko}`;
+      const context = evState.lang === 'en' ? dlg.context_en
+        : evState.lang === 'ko' ? dlg.context_ko
+        : `${dlg.context_en} / ${dlg.context_ko}`;
+
+      let html = `<div class="event-block" data-npc="${dlg.npc}">`;
+      html += `<div class="event-header">`;
+      html += `<h3 class="event-title">${title}</h3>`;
+      html += `<span class="event-npc-tag">${npcName} · ${npc.portrait}</span>`;
+      html += `</div>`;
+      html += `<div class="event-context">${context}</div>`;
+      html += `<div class="event-lines">`;
+      dlg.lines.forEach(line => html += renderEventLine(line));
+      html += `</div>`;
+      if (dlg.choices && dlg.choices.length) {
+        html += `<div class="event-choices">`;
+        html += `<div class="prompt">▶ 선택지</div>`;
+        dlg.choices.forEach(c => html += renderEventChoice(c));
+        html += `</div>`;
+      }
+      html += `</div>`;
+      return html;
+    }
+
+    function renderEvents() {
+      if (!evState.data) return;
+      const dlgEntries = Object.entries(evState.data.dialogues);
+      const filtered = evState.npcFilter === 'all'
+        ? dlgEntries
+        : dlgEntries.filter(([_, d]) => d.npc === evState.npcFilter);
+      const html = filtered.map(([id, d]) => renderEvent(id, d)).join('');
+      document.getElementById('eventList').innerHTML = html || '<div style="color:#8a9aa8">No dialogues found.</div>';
+
+      // stats
+      const allLines = dlgEntries.reduce((sum, [_, d]) => sum + d.lines.length, 0);
+      const allChoices = dlgEntries.reduce((sum, [_, d]) => sum + (d.choices ? d.choices.length : 0), 0);
+      document.querySelector('[data-stat="npcs"]').textContent = Object.keys(evState.data.npcs).length;
+      document.querySelector('[data-stat="dialogues"]').textContent = dlgEntries.length;
+      document.querySelector('[data-stat="lines"]').textContent = allLines;
+      document.querySelector('[data-stat="choices"]').textContent = allChoices;
+    }
+
+    document.querySelectorAll('.npc-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.npc-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        evState.npcFilter = btn.dataset.npc;
+        renderEvents();
+      });
+    });
+    document.querySelectorAll('.evt-lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.evt-lang-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        evState.lang = btn.dataset.evtLang;
+        renderEvents();
+      });
+    });
+
+    fetch(src)
+      .then(r => r.json())
+      .then(data => {
+        evState.data = data;
+        renderEvents();
+      })
+      .catch(err => {
+        document.getElementById('eventList').innerHTML =
+          `<div style="color:#ff8888;padding:20px;">
+            ⚠ JSON 로드 실패: <code>${src}</code><br>
+            <small style="color:#6a7888">${err.message}</small>
+          </div>`;
+      });
+  })();
+</script>
+
+<!-- Chapter Flow Section -->
+<h2>📊 챕터 흐름 (Chapter Flow)</h2>
+<p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
+  에피소드·전투·컷신·깨달음 순차 매핑. 출처: <code>data/story/arcs/chapter_flow.json</code> · 동적 로딩
+</p>
+
+<div class="chapter-flow-viewer" data-flow-src="./data/story/arcs/chapter_flow.json">
+  <div class="flow-controls">
+    <div class="flow-char-tabs" id="flowCharTabs">
+      <button class="flow-char-btn active" data-char="case">케이 (Case)</button>
+      <button class="flow-char-btn" data-char="sil">실 (Sil)</button>
+      <button class="flow-char-btn" data-char="kas">카스 (Kas)</button>
+    </div>
+    <div class="flow-lang-toggle">
+      <button class="flow-lang-btn active" data-flow-lang="ko">한글</button>
+      <button class="flow-lang-btn" data-flow-lang="en">English</button>
+    </div>
+  </div>
+
+  <div class="flow-stats" id="flowStats">
+    <span class="stat-pill"><span class="stat-num" id="flowChapters">-</span> Chapters</span>
+    <span class="stat-pill"><span class="stat-num" id="flowPlayable">-</span> Playable</span>
+    <span class="stat-pill"><span class="stat-num" id="flowPhases">-</span> Phases</span>
+    <span class="stat-pill"><span class="stat-num" id="flowCombats">-</span> Combats</span>
+  </div>
+
+  <div class="flow-content" id="flowContent"></div>
+</div>
+
+<style>
+  .flow-controls {
+    display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap;
+  }
+  .flow-char-btn, .flow-lang-btn {
+    background: #1a2530; border: 1px solid #2a3540; color: #c5d4e3;
+    padding: 6px 12px; cursor: pointer; font-size: 12px; border-radius: 4px;
+  }
+  .flow-char-btn.active, .flow-lang-btn.active {
+    background: #66ffcc22; border-color: #66ffcc; color: #66ffcc;
+  }
+  .flow-stats {
+    display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .stat-pill {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 4px;
+    padding: 4px 12px; font-size: 12px; color: #8a9aa8;
+  }
+  .stat-pill .stat-num { color: #ffaa55; font-weight: 600; margin-right: 4px; }
+  .chapter-card {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 8px;
+    padding: 16px; margin-bottom: 16px;
+  }
+  .chapter-card-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dashed #2a3540;
+  }
+  .chapter-card-title { color: #66ffcc; font-size: 16px; font-weight: 600; }
+  .chapter-card-badge {
+    font-size: 11px; padding: 2px 8px; border-radius: 3px;
+  }
+  .chapter-card-badge.playable { background: #66ffcc22; color: #66ffcc; }
+  .chapter-card-badge.locked { background: #2a354022; color: #6a7888; }
+  .phase-row {
+    display: grid; grid-template-columns: 40px 1fr 80px 80px 1fr; gap: 8px;
+    align-items: center; padding: 8px 0; border-bottom: 1px dashed #1a2530;
+    font-size: 13px;
+  }
+  .phase-row:last-child { border-bottom: none; }
+  .phase-num {
+    width: 32px; height: 32px; border-radius: 50%; background: #1a2530;
+    color: #6a7888; display: flex; align-items: center; justify-content: center;
+    font-weight: 600; font-size: 12px;
+  }
+  .phase-num.has-combat { background: #ffaa5522; color: #ffaa55; }
+  .phase-title { color: #c5d4e3; font-weight: 500; }
+  .phase-episode { color: #6a7888; font-size: 11px; font-family: monospace; }
+  .phase-combat { color: #ff6699; font-size: 11px; }
+  .phase-no-combat { color: #4a5568; font-size: 11px; }
+  .phase-gain { color: #66ffcc; font-size: 11px; }
+  .cutscene-row {
+    background: #0a0e14; margin: 4px 0; padding: 8px 12px; border-radius: 4px;
+    font-size: 12px; color: #8a9aa8; border-left: 3px solid #00ccff;
+  }
+  .cutscene-row.end-cutscene { border-left-color: #ff6699; }
+</style>
+
+<script>
+(function() {
+  const flowSrc = document.querySelector('.chapter-flow-viewer')?.dataset.flowSrc;
+  if (!flowSrc) return;
+
+  const flowState = { char: 'case', lang: 'ko', data: null };
+
+  function renderFlow() {
+    if (!flowState.data) return;
+    const charData = flowState.data[flowState.char];
+    if (!charData) return;
+
+    // stats
+    const totalChapters = charData.chapters.length;
+    const playableChapters = charData.chapters.filter(c => c.is_playable).length;
+    const totalPhases = charData.chapters.reduce((sum, c) => sum + c.phases.length, 0);
+    const totalCombats = charData.chapters.reduce((sum, c) =>
+      sum + c.phases.filter(p => p.combat).length, 0);
+
+    document.getElementById('flowChapters').textContent = totalChapters;
+    document.getElementById('flowPlayable').textContent = playableChapters;
+    document.getElementById('flowPhases').textContent = totalPhases;
+    document.getElementById('flowCombats').textContent = totalCombats;
+
+    let html = '';
+    for (const ch of charData.chapters) {
+      const playableBadge = ch.is_playable
+        ? '<span class="chapter-card-badge playable">PLAYABLE</span>'
+        : '<span class="chapter-card-badge locked">LOCKED</span>';
+
+      const title = flowState.lang === 'ko' ? ch.title_ko : ch.title_en;
+      const desc = flowState.lang === 'ko' ? ch.description_ko : ch.description_en;
+
+      html += `<div class="chapter-card">
+        <div class="chapter-card-header">
+          <span class="chapter-card-title">Ch${ch.chapter_number}: ${title}</span>
+          ${playableBadge}
+        </div>
+        <div style="color: #6a7888; font-size: 12px; margin-bottom: 12px;">${desc}</div>`;
+
+      // cutscene_start
+      if (ch.cutscenes.start) {
+        const csTitle = flowState.lang === 'ko' ? ch.cutscenes.start.title_ko : ch.cutscenes.start.title_en;
+        html += `<div class="cutscene-row">▶ START: ${csTitle}</div>`;
+      }
+
+      // phases
+      for (const ph of ch.phases) {
+        const phaseTitle = flowState.lang === 'ko' ? ph.title_ko : ph.title_en;
+        const hasCombat = !!ph.combat;
+        const combatClass = hasCombat ? 'has-combat' : '';
+        const combatInfo = hasCombat
+          ? `${ph.combat.enemy_type} (diff=${ph.combat.difficulty})`
+          : '<span class="phase-no-combat">—</span>';
+        const gainInfo = ph.gain ? `<span class="phase-gain">+${JSON.stringify(ph.gain)}</span>` : '';
+        const episode = ph.episode_ref || '';
+
+        html += `<div class="phase-row">
+          <div class="phase-num ${combatClass}">${ph.phase_index}</div>
+          <div>
+            <div class="phase-title">${phaseTitle}</div>
+            <div class="phase-episode">${episode}</div>
+          </div>
+          <div class="phase-combat">${combatInfo}</div>
+          <div>${gainInfo}</div>
+        </div>`;
+      }
+
+      // cutscene_mid
+      if (ch.cutscenes.mid) {
+        const csTitle = flowState.lang === 'ko' ? ch.cutscenes.mid.title_ko : ch.cutscenes.mid.title_en;
+        html += `<div class="cutscene-row">▶ MID: ${csTitle}</div>`;
+      }
+
+      // cutscene_end
+      if (ch.cutscenes.end) {
+        const csTitle = flowState.lang === 'ko' ? ch.cutscenes.end.title_ko : ch.cutscenes.end.title_en;
+        html += `<div class="cutscene-row end-cutscene">▶ END: ${csTitle}</div>`;
+      }
+
+      html += '</div>';
+    }
+
+    document.getElementById('flowContent').innerHTML = html;
+  }
+
+  document.querySelectorAll('.flow-char-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.flow-char-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      flowState.char = btn.dataset.char;
+      renderFlow();
+    });
+  });
+
+  document.querySelectorAll('.flow-lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.flow-lang-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      flowState.lang = btn.dataset.flowLang;
+      renderFlow();
+    });
+  });
+
+  fetch(flowSrc)
+    .then(r => r.json())
+    .then(data => {
+      flowState.data = data;
+      renderFlow();
+    })
+    .catch(err => {
+      document.getElementById('flowContent').innerHTML =
+        `<div style="color:#ff8888;padding:20px;">
+          ⚠ JSON 로드 실패: <code>${flowSrc}</code><br>
+          <small style="color:#6a7888">${err.message}</small>
+        </div>`;
+    });
+})();
+</script>
+
+<!--
+  Character-card auto-sync (ADR-0066 §design/story/characters.md).
+  Pulls age / deck / weapon / origin / job per character so the
+  three `오리지널 주인공` cards stay in lockstep with the canonical
+  design markdown.  Static fallback values (22/38/28 etc.) remain
+  visible when the JSON is missing or offline.
+-->
+<script>
+fetch('data/character_stats.json').then(r => r.ok ? r.json() : null)
+  .then(stats => {
+    if (!stats) return;
+    const arcMap = {
+      "novice":  "case",
+      "veteran": "sil",
+      "heretic": "kas",
+    };
+    for (const c of (stats.characters || [])) {
+      const prefix = arcMap[c.arc] || c.arc;
+      const attr = c.attributes || {};
+      const set = (key, val) => {
+        const el = document.querySelector(`[data-stat="${prefix}-${key}"]`);
+        if (el && val !== undefined && val !== null) {
+          el.textContent = String(val);
+        }
+      };
+      // canonical attributes spelled differently across the source
+      // md —  try every reasonable alias.
+      set("age",    attr["나이"] ?? attr["age"]);
+      set("deck",   attr["데크"] ?? attr["deck"]);
+      set("weapon", attr["주_무기"] ?? attr["무기"] ?? attr["weapon"]);
+      set("origin", attr["출신"] ?? attr["origin"]);
+      set("job",    attr["직업"] ?? attr["job"]);
+    }
+  })
+  .catch(() => { /* keep static fallback */ });
+
+/* Endings count + ChapterState card build from run_stats.json:
+    the enum lists 14 entries (PROLOGUE + IN_CHAPTER_1..5 +
+    CHAPTER_1..5_COMPLETE + ENDING_A/B/C).  The 3 ENDING_* cards
+    are surfaced here so the section's wording and the underlying
+    enum stay in lockstep. */
+fetch('data/run_stats.json').then(r => r.ok ? r.json() : null)
+  .then(stats => {
+    if (!stats) return;
+    const el = document.querySelector('[data-stat="endings-count"]');
+    if (el) {
+      // Count ENDING_* entries inside chapter_state_enum_names.
+      const names = stats.chapter_state_enum_names || [];
+      const endings = names.filter(n => /^ENDING_/.test(n)).length;
+      el.textContent = String(endings || names.length);
+    }
+    // Auto-build the ChapterState cards grid (palette per kind).
+    const grid = document.getElementById('chapter-state-grid');
+    if (grid && Array.isArray(stats.chapter_state_enum_names)) {
+      grid.innerHTML = '';
+      const palette = (name) => {
+        if (/^PROLOGUE/.test(name))  return { c: '#66ffcc', t: 'Prologue' };
+        if (/^IN_CHAPTER/.test(name)) return { c: '#ffd700', t: 'In-Chapter' };
+        if (/^CHAPTER_/.test(name) && /_COMPLETE/.test(name))
+                                        return { c: '#ffaa55', t: 'Complete' };
+        if (/^ENDING_/.test(name))    return { c: '#ff6699', t: 'Ending' };
+        return { c: '#8a9aa8', t: '?' };
+      };
+      stats.chapter_state_enum_names.forEach((name, i) => {
+        const m = palette(name);
+        const card = document.createElement('div');
+        card.style.cssText =
+          `background:#131a23;border:1px solid #2a3540;border-radius:6px;` +
+          `padding:8px 10px;font-size:11px;border-left:3px solid ${m.c};`;
+        card.innerHTML =
+          `<div style="color:#8a9aa8;font-size:10px;">#${i} · ${m.t}</div>` +
+          `<div style="color:${m.c};font-weight:600;">${name}</div>`;
+        grid.appendChild(card);
+      });
+    }
+  })
+  .catch(() => { /* keep static fallback */ });
+
+/* Event dialogue viewer — auto-fetch NPC / dialogue / line counts
+    from event_dialogues_stats.json so the stat-pills stay in
+    lockstep with design/story/event_dialogues.json. */
+fetch('data/event_dialogues_stats.json').then(r => r.ok ? r.json() : null)
+  .then(stats => {
+    if (!stats) return;
+    document.querySelectorAll('[data-stat]').forEach(el => {
+      const k = el.getAttribute('data-stat');
+      // Skip keys handled by earlier scripts (endings-count, character-*).
+      if (!stats.hasOwnProperty(k)) return;
+      const v = stats[k];
+      if (typeof v === 'number' || typeof v === 'string') {
+        el.textContent = String(v);
+      }
+    });
+  })
+  .catch(() => { /* keep static fallback */ });
+</script>
+
+</body>
+</html>

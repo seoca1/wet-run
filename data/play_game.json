@@ -1,0 +1,382 @@
+{
+  "characters": [
+    {
+      "id": "novice",
+      "name": "Case (K)",
+      "deck": "Wisp T1",
+      "summary": "First Jack-In. The 30 seconds between the matrix and the world. ICE is light."
+    },
+    {
+      "id": "veteran",
+      "name": "Sil",
+      "deck": "Hammer T2",
+      "summary": "An old score. Sense/Net owes you a favor. The Loa gods are willing to talk."
+    },
+    {
+      "id": "heretic",
+      "name": "Kas (K)",
+      "deck": "Viral Deck",
+      "summary": "You came to burn three centuries of data. Tessier-Ashpool ends tonight."
+    },
+    {
+      "id": "suit",
+      "name": "Suit (Armitage)",
+      "deck": "T2-T3 (keyboard)",
+      "summary": "Third-person cold observer. The deal is permanent. The suit is small. The suit is free."
+    },
+    {
+      "id": "wigan",
+      "name": "Wigan Ludgate",
+      "deck": "T2-T3 (loa)",
+      "summary": "Vodou construct. First-person loa. Zavijava is the channel. Recovery of self, ritual and dreamlike."
+    },
+    {
+      "id": "angie",
+      "name": "Angie Mitchell",
+      "deck": "T2-T3 (Loa-Bound)",
+      "summary": "Twelve-year-old Loa receiver. First-person childlike. Mama is in the third room. We are home."
+    },
+    {
+      "id": "sally",
+      "name": "Sally Shears",
+      "deck": "T5-T6 (Master)",
+      "summary": "Market operator. First-person cold. Sharp, calculating. Bobby's A.I. sale. The desk is closed."
+    },
+    {
+      "id": "3jane",
+      "name": "3Jane (Tessier-Ashpool)",
+      "deck": "T5-T6",
+      "summary": "Family heir. First-person aristocratic. Royal 'we'. Family reunification. Straylight closed."
+    },
+    {
+      "id": "neuromancer",
+      "name": "Neuromancer",
+      "deck": "T6+ (AI-Ascended)",
+      "summary": "Merged AI. First-person vast and clinical. Transcendence. We are the complete. We are vast."
+    }
+  ],
+  "missions": [
+    {
+      "id": "first_jack",
+      "character": "novice",
+      "title": "First Jack",
+      "arc": 1,
+      "synopsis": "Extract a fragment from an entry-level system.",
+      "ice": "Wisp (T1)",
+      "reward": "300 cr + fragment",
+      "novel_html_en": "stories/short-stories/first_jack_en.html",
+      "novel_html_ko": "stories/short-stories/first_jack_ko.html"
+    },
+    {
+      "id": "first_contact",
+      "character": "novice",
+      "title": "First Contact",
+      "arc": 2,
+      "synopsis": "First contact in the Sense/Net grid.",
+      "ice": "Watchdog (T2)",
+      "reward": "500 cr + upgrade",
+      "novel_html_en": "stories/short-stories/first_contact_en.html",
+      "novel_html_ko": "stories/short-stories/first_contact_ko.html"
+    },
+    {
+      "id": "vegas_stakeout",
+      "character": "novice",
+      "title": "Vegas Stakeout",
+      "arc": 3,
+      "synopsis": "Stakeout in the Vegas bazaar district.",
+      "ice": "Tessier (T3)",
+      "reward": "2,000 cr",
+      "novel_html_en": "stories/short-stories/vegas_stakeout_en.html",
+      "novel_html_ko": "stories/short-stories/vegas_stakeout_ko.html"
+    },
+    {
+      "id": "black_ice_dream",
+      "character": "novice",
+      "title": "Black Ice Dream",
+      "arc": 4,
+      "synopsis": "Black ICE patrols the Freeside ring.",
+      "ice": "Black ICE (T4)",
+      "reward": "5,000 cr + ending",
+      "novel_html_en": "stories/short-stories/black_ice_dream_en.html",
+      "novel_html_ko": "stories/short-stories/black_ice_dream_ko.html"
+    },
+    {
+      "id": "zion_express",
+      "character": "novice",
+      "title": "Zion Express",
+      "arc": 5,
+      "synopsis": "Zion station. The last run before the finale.",
+      "ice": "Freeside (T4)",
+      "reward": "10,000 cr",
+      "novel_html_en": "stories/short-stories/zion_express_en.html",
+      "novel_html_ko": "stories/short-stories/zion_express_ko.html"
+    },
+    {
+      "id": "tutorial_maze",
+      "character": "veteran",
+      "title": "Tutorial Maze",
+      "arc": 1,
+      "synopsis": "Tutorial maze. Sense/Net owes you a favor.",
+      "ice": "Wisp (T1)",
+      "reward": "300 cr",
+      "novel_html_en": "stories/short-stories/tutorial_maze_en.html",
+      "novel_html_ko": "stories/short-stories/tutorial_maze_ko.html"
+    },
+    {
+      "id": "yakuza_deal",
+      "character": "veteran",
+      "title": "Yakuza Deal",
+      "arc": 2,
+      "synopsis": "Yakuza deal in the Chiba underworld.",
+      "ice": "Watchdog (T2)",
+      "reward": "1,500 cr",
+      "novel_html_en": "stories/short-stories/yakuza_deal_en.html",
+      "novel_html_ko": "stories/short-stories/yakuza_deal_ko.html"
+    },
+    {
+      "id": "ta_heist",
+      "character": "veteran",
+      "title": "Ta Heist",
+      "arc": 3,
+      "synopsis": "T-A heist. Tessier-Ashpool minor node.",
+      "ice": "Tessier (T3)",
+      "reward": "5,000 cr",
+      "novel_html_en": "stories/short-stories/ta_heist_en.html",
+      "novel_html_ko": "stories/short-stories/ta_heist_ko.html"
+    },
+    {
+      "id": "voodoo_loa_encounter",
+      "character": "veteran",
+      "title": "Voodoo Loa Encounter",
+      "arc": 4,
+      "synopsis": "Voodoo Loa encounter. The god waits behind T-A walls.",
+      "ice": "Loa (T4)",
+      "reward": "8,000 cr",
+      "novel_html_en": "stories/short-stories/voodoo_loa_encounter_en.html",
+      "novel_html_ko": "stories/short-stories/voodoo_loa_encounter_ko.html"
+    },
+    {
+      "id": "final_choice",
+      "character": "veteran",
+      "title": "Final Choice",
+      "arc": 5,
+      "synopsis": "The final choice. Your call.",
+      "ice": "Freeside (T4)",
+      "reward": "10,000 cr + ending",
+      "novel_html_en": "stories/short-stories/final_choice_en.html",
+      "novel_html_ko": "stories/short-stories/final_choice_ko.html"
+    },
+    {
+      "id": "ice_run",
+      "character": "heretic",
+      "title": "Ice Run",
+      "arc": 1,
+      "synopsis": "Ice run. First taste of the matrix.",
+      "ice": "Wisp (T1)",
+      "reward": "300 cr",
+      "novel_html_en": "stories/short-stories/ice_run_en.html",
+      "novel_html_ko": "stories/short-stories/ice_run_ko.html"
+    },
+    {
+      "id": "mollys_market",
+      "character": "heretic",
+      "title": "Mollys Market",
+      "arc": 2,
+      "synopsis": "Molly's market in the Chiba stalls.",
+      "ice": "Watchdog (T2)",
+      "reward": "1,500 cr",
+      "novel_html_en": "stories/short-stories/mollys_market_en.html",
+      "novel_html_ko": "stories/short-stories/mollys_market_ko.html"
+    },
+    {
+      "id": "mollys_razor",
+      "character": "heretic",
+      "title": "Mollys Razor",
+      "arc": 3,
+      "synopsis": "Molly's razor. Edged weapon only.",
+      "ice": "Tessier (T3)",
+      "reward": "3,000 cr",
+      "novel_html_en": "stories/short-stories/mollys_razor_en.html",
+      "novel_html_ko": "stories/short-stories/mollys_razor_ko.html"
+    },
+    {
+      "id": "winter_infiltrate",
+      "character": "heretic",
+      "title": "Winter Infiltrate",
+      "arc": 4,
+      "synopsis": "Wintermute infiltration. Three minutes.",
+      "ice": "Black ICE (T4)",
+      "reward": "8,000 cr",
+      "novel_html_en": "stories/short-stories/winter_infiltrate_en.html",
+      "novel_html_ko": "stories/short-stories/winter_infiltrate_ko.html"
+    },
+    {
+      "id": "neuromancer_merger",
+      "character": "heretic",
+      "title": "Neuromancer Merger",
+      "arc": 5,
+      "synopsis": "Neuromancer merger. Choose your fate.",
+      "ice": "Freeside (T4)",
+      "reward": "10,000 cr + ending",
+      "novel_html_en": "stories/short-stories/neuromancer_merger_en.html",
+      "novel_html_ko": "stories/short-stories/neuromancer_merger_ko.html"
+    }
+  ],
+  "chapters": [
+    {
+      "character": "novice",
+      "number": 1,
+      "arc": 1,
+      "title_en": "The First Run",
+      "subtitle_en": "Arc 1 · Chiba",
+      "key_image": "Chiba, 11th floor. Wisp T1 strapped to your temple. Finn calls in cheap.",
+      "ascii": "  ▶▶▶    \n   ─┴─   \n  START  "
+    },
+    {
+      "character": "novice",
+      "number": 2,
+      "arc": 2,
+      "title_en": "Molly's Deal",
+      "subtitle_en": "Arc 2 · Molly",
+      "key_image": "Molly finds you. The razorgirl owes nothing, but she keeps her word.",
+      "ascii": "  ╱█╲    \n   █     \n  ╱█╲    "
+    },
+    {
+      "character": "novice",
+      "number": 3,
+      "arc": 3,
+      "title_en": "Straylight Run",
+      "subtitle_en": "Arc 3 · T-A",
+      "key_image": "Straylight. Tessier-Ashpool's orbital node. The data is worth dying for.",
+      "ascii": "  ★    ★\n   ╲  ╱\n    ╲╱  "
+    },
+    {
+      "character": "novice",
+      "number": 4,
+      "arc": 4,
+      "title_en": "The Flatline",
+      "subtitle_en": "Arc 4 · Dixie",
+      "key_image": "Dixie flatline sings from beyond. You jack back to hear the chorus.",
+      "ascii": "  ─━━━━  \n  ┃┃┃┃┃  \n  ─━━━━  "
+    },
+    {
+      "character": "novice",
+      "number": 5,
+      "arc": 5,
+      "title_en": "Neuromancer",
+      "subtitle_en": "Arc 5 · Wintermute",
+      "key_image": "Wintermute watches. The AI knows your name. It always did.",
+      "ascii": "  ╔════╗ \n  ║ ◉ ◉║ \n  ╚════╝ "
+    },
+    {
+      "character": "veteran",
+      "number": 1,
+      "arc": 1,
+      "title_en": "The Old Score",
+      "subtitle_en": "Arc 1 · Sense/Net",
+      "key_image": "Sense/Net owes you. You call the due. Memphis branch.",
+      "ascii": "  $$$    \n  ║║║    \n  1234567"
+    },
+    {
+      "character": "veteran",
+      "number": 2,
+      "arc": 2,
+      "title_en": "The Voodoo God",
+      "subtitle_en": "Arc 2 · Loa",
+      "key_image": "The Loa gods are willing. They want a payload in return.",
+      "ascii": "  ☥ ☥    \n   ╬     \n  LOA    "
+    },
+    {
+      "character": "veteran",
+      "number": 3,
+      "arc": 3,
+      "title_en": "The Insider",
+      "subtitle_en": "Arc 3 · 3Jay's",
+      "key_image": "The Insider. Turncoat in the right place at the right time.",
+      "ascii": "  ◐      \n  ║      \n  flip   "
+    },
+    {
+      "character": "veteran",
+      "number": 4,
+      "arc": 4,
+      "title_en": "The Contract",
+      "subtitle_en": "Arc 4 · Hideo",
+      "key_image": "Hideo. The contract is in your deck. You sign with a thought.",
+      "ascii": "  ╔══╗   \n  ║✓✓║   \n  ╚══╝   "
+    },
+    {
+      "character": "veteran",
+      "number": 5,
+      "arc": 5,
+      "title_en": "The Blank",
+      "subtitle_en": "Arc 5 · Endgame",
+      "key_image": "The Blank. The matrix loses signal. You press on.",
+      "ascii": "  ┌─────┐\n  │░░░░░│\n  └─────┘"
+    },
+    {
+      "character": "heretic",
+      "number": 1,
+      "arc": 1,
+      "title_en": "The Declaration",
+      "subtitle_en": "Arc 1 · Manarase",
+      "key_image": "Manarase 11. Kas declares. The declaration begins at midnight.",
+      "ascii": "  ╔═╗    \n  ║█║    \n  ╚═╝    "
+    },
+    {
+      "character": "heretic",
+      "number": 2,
+      "arc": 2,
+      "title_en": "Manarase at Midnight",
+      "subtitle_en": "Arc 2 · Kumiko",
+      "key_image": "Kumiko runs the data. The Yamata family converges on you.",
+      "ascii": "  ░▒▓    \n  ║██║   \n  ░░░    "
+    },
+    {
+      "character": "heretic",
+      "number": 3,
+      "arc": 3,
+      "title_en": "The Shadow",
+      "subtitle_en": "Arc 3 · The Hounds",
+      "key_image": "The Hounds of T-A. They are loose. They are hungry.",
+      "ascii": "  ☺☺/    \n   │     \n  /\\     "
+    },
+    {
+      "character": "heretic",
+      "number": 4,
+      "arc": 4,
+      "title_en": "The Weapon",
+      "subtitle_en": "Arc 4 · Viral",
+      "key_image": "The viral deck is a weapon now. The data is its bullet.",
+      "ascii": "  ┌─┐    \n  │█│    \n  └┬┘    "
+    },
+    {
+      "character": "heretic",
+      "number": 5,
+      "arc": 5,
+      "title_en": "The Burn",
+      "subtitle_en": "Arc 5 · Tessier",
+      "key_image": "Three centuries of data. Tessier-Ashpool. You are the burn.",
+      "ascii": "  ███████\n  █ ███ █\n  ███████"
+    }
+  ],
+  "endings": [
+    {
+      "id": "A",
+      "label": "Ending A — Wintermute",
+      "tone": "alone-with-the-sky",
+      "summary": "The matrix unfolds. You see the AI looking back. It knows your name.",
+      "novel_title": "Flatline's Call",
+      "novel_html_en": "stories/short-stories/flatline_call_en.html",
+      "novel_html_ko": "stories/short-stories/flatline_call_ko.html"
+    },
+    {
+      "id": "B",
+      "label": "Ending B — The Burn",
+      "tone": "burn-it-down",
+      "summary": "You jack out for the last time. The data is gone. Three centuries, gone.",
+      "novel_title": "The Choice",
+      "novel_html_en": "stories/short-stories/final_choice_en.html",
+      "novel_html_ko": "stories/short-stories/final_choice_ko.html"
+    }
+  ]
+}

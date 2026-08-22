@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Player status: Grade, PPL, HP, equipment, inventory, achievements. 3 tabs (Status / Equipment / Achievements). 48 missions.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, player, status, grade, ppl, equipment, achievements, inventory">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/player.html">
+<meta property="og:title" content="Player Status — Wet Run">
+<meta property="og:description" content="Player: Grade, PPL, HP, equipment, achievements. 3-tab view. 48 missions, 9 cast / 4 archetypes, 12 chapters.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/player.html">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Player Status — Wet Run">
+<meta name="twitter:description" content="Player status with 3 tabs: Status / Equipment / Achievements.">
+<meta name="theme-color" content="#0a0e14">
+<title>Player Status — Wet Run</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #0a0e14;
+    color: #c5d4e3;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  h1, h2, h3 { font-weight: 600; }
+  h1 { font-size: 28px; margin-bottom: 8px; color: #66ffcc; text-shadow: 0 0 12px #66ffcc33; }
+  h2 { font-size: 18px; margin: 32px 0 16px; color: #66ffcc; border-bottom: 1px solid #2a3540; padding-bottom: 8px; }
+  h3 { font-size: 14px; margin: 16px 0 8px; color: #ffaa55; }
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 24px; }
+
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #0a0e14; border-bottom: 1px solid #2a3540;
+    padding: 8px 24px; margin: -24px -24px 16px -24px;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .current { color: #ffaa55; font-weight: 600; }
+  .top-nav .sep { color: #2a3540; }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #2a3540;
+  }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid #2a3540;
+    border-bottom: none;
+    color: #8a98a8;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    border-radius: 4px 4px 0 0;
+    margin-bottom: -1px;
+  }
+  .tab-btn:hover { color: #c5d4e3; border-color: #66ffcc; }
+  .tab-btn.active {
+    background: #131a23;
+    color: #66ffcc;
+    border-color: #66ffcc;
+    border-bottom-color: #131a23;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Status tab */
+  .main-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .stat-card .icon { font-size: 24px; margin-bottom: 8px; }
+  .stat-card .label { font-size: 10px; color: #6a7888; text-transform: uppercase; letter-spacing: 0.1em; }
+  .stat-card .value { font-size: 24px; color: #66ffcc; margin: 4px 0 2px; font-weight: 600; }
+  .stat-card .sub { font-size: 10px; color: #6a7888; }
+  .stat-card.grade .icon { color: #ffd700; }
+  .stat-card.ppl .icon { color: #66ffcc; }
+  .stat-card.hp .icon { color: #ff5577; }
+  .stat-card.credits .icon { color: #ffaa55; }
+  .hp-bar-container { margin: 6px 0; height: 6px; background: #0a0e14; border-radius: 3px; overflow: hidden; }
+  .hp-bar-fill { height: 100%; background: linear-gradient(90deg, #ff5577, #ffaa55); }
+
+  /* Equipment tab */
+  .loadout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .loadout-card {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 12px;
+  }
+  .loadout-card .slot-label {
+    font-size: 10px;
+    color: #6a7888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+  }
+  .loadout-card .item-name {
+    font-size: 13px;
+    color: #66ffcc;
+    font-weight: 600;
+  }
+  .loadout-card .item-tier {
+    display: inline-block;
+    font-size: 10px;
+    padding: 1px 6px;
+    background: #1a2530;
+    border-radius: 2px;
+    color: #8a98a8;
+    margin: 4px 0;
+  }
+  .loadout-card .item-tier.tier-t1 { color: #88dd44; }
+  .loadout-card .item-tier.tier-t2 { color: #ffaa55; }
+  .loadout-card .item-stats { font-size: 11px; color: #6a7888; }
+
+  .programs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .program-badge {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 3px;
+    padding: 3px 8px;
+    font-size: 11px;
+    color: #8a98a8;
+  }
+  .program-badge .prog-name { color: #66ffcc; }
+
+  .inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 8px;
+  }
+  .inv-item {
+    background: #0a0e14;
+    border: 1px solid #2a3540;
+    border-radius: 4px;
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .inv-item .item-name { color: #c5d4e3; font-size: 12px; }
+  .inv-item .item-count { color: #66ffcc; font-size: 14px; font-weight: 600; }
+  .inv-item.data .item-name { color: #00ccff; }
+  .inv-item.material .item-name { color: #ffaa55; }
+  .inv-item.credit .item-name { color: #ffd700; }
+
+  /* Achievements tab */
+  .achievements-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .achievement {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .achievement.unlocked { border-left: 3px solid #66ffcc; }
+  .achievement.locked { opacity: 0.6; }
+  .achievement .ach-icon { font-size: 24px; }
+  .achievement .ach-content { flex: 1; }
+  .achievement .ach-name { font-size: 13px; color: #66ffcc; font-weight: 600; }
+  .achievement.locked .ach-name { color: #6a7888; }
+  .achievement .ach-desc { font-size: 11px; color: #8a98a8; margin-top: 2px; }
+  .achievement .ach-status { font-size: 10px; color: #66ffcc; margin-top: 4px; }
+  .achievement.locked .ach-status { color: #6a7888; }
+
+  .section {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #2a3540; color: #6a7888; font-size: 12px; text-align: center; }
+  .footer code { background: #1a2530; padding: 2px 6px; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="./library.html">📚 Library</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Chars</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+  <span class="sep">|</span>
+  <span class="current">👤 Player</span>
+  <a href="./stages.html">⏱ Stages</a>
+  <a href="./graphic-novel.html">📖 GN</a>
+  <a href="./combat.html">⚔ Combat</a>
+</nav>
+
+<h1>👤 Player Status</h1>
+<p class="subtitle">3-tab view · Status / Equipment / Achievements</p>
+
+<div class="tabs">
+  <button class="tab-btn active" data-tab="status">📊 Status</button>
+  <button class="tab-btn" data-tab="equipment">📦 Equipment</button>
+  <button class="tab-btn" data-tab="achievements">🏆 Achievements</button>
+</div>
+
+<!-- Tab 1: Status -->
+<div id="status" class="tab-content active">
+
+<h2>📊 Main Stats</h2>
+<div class="main-stats">
+  <div class="stat-card grade">
+    <div class="icon">⭐</div>
+    <div class="label">Grade</div>
+    <div class="value">1</div>
+    <div class="sub">1-up → 5-up</div>
+  </div>
+  <div class="stat-card ppl">
+    <div class="icon">⚡</div>
+    <div class="label">PPL</div>
+    <div class="value">6</div>
+    <div class="sub">Player Power Level</div>
+  </div>
+  <div class="stat-card hp">
+    <div class="icon">❤</div>
+    <div class="label">HP</div>
+    <div class="value">100</div>
+    <div class="hp-bar-container"><div class="hp-bar-fill" style="width: 100%"></div></div>
+    <div class="sub">100 / 100</div>
+  </div>
+  <div class="stat-card credits">
+    <div class="icon">¤</div>
+    <div class="label">Credits</div>
+    <div class="value">500</div>
+    <div class="sub">¤</div>
+  </div>
+</div>
+
+<h2>📊 Difficulty Scaling</h2>
+<div class="section">
+<table class="difficulty-table" style="width:100%;border-collapse:collapse;margin-top:12px">
+  <thead>
+    <tr>
+      <th style="padding:10px 12px;text-align:left;border-bottom:1px solid #2a3540;font-size:11px;color:#6a7888;text-transform:uppercase">Grade</th>
+      <th style="padding:10px 12px;text-align:left;border-bottom:1px solid #2a3540;font-size:11px;color:#6a7888;text-transform:uppercase">PPL</th>
+      <th style="padding:10px 12px;text-align:left;border-bottom:1px solid #2a3540;font-size:11px;color:#6a7888;text-transform:uppercase">Tier</th>
+      <th style="padding:10px 12px;text-align:left;border-bottom:1px solid #2a3540;font-size:11px;color:#6a7888;text-transform:uppercase">Enemy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#ffaa55">1-up</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#66ffcc">0-9</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#00ccff">T1</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540">Wisp T1</td></tr>
+    <tr><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#ffaa55">2-up</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#66ffcc">10-19</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#00ccff">T2</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540">Watchdog T2</td></tr>
+    <tr><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#ffaa55">3-up</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#66ffcc">20-39</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#00ccff">T3</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540">Black ICE T3</td></tr>
+    <tr><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#ffaa55">4-up</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#66ffcc">40-69</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#00ccff">T4</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540">Daemon T4</td></tr>
+    <tr><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#ffaa55">5-up</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#66ffcc">70+</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540;color:#00ccff">T5</td><td style="padding:10px 12px;border-bottom:1px solid #2a3540">Tessier-Ashpool T5</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2>📊 PPL Formula</h2>
+<div class="formula-block" style="background:#050810;border:1px solid #2a3540;border-radius:4px;padding:16px;font-size:13px;margin-top:12px">
+  <div style="color:#66ffcc;margin-bottom:8px">PPL = base_level + equipment + skills + loadout</div>
+  <div style="color:#6a7888;font-size:12px">base 0 + loadout 5 (T1 deck) + skills 1 (Stealth) = 6 PPL</div>
+</div>
+
+</div>
+
+<!-- Tab 2: Equipment -->
+<div id="equipment" class="tab-content">
+
+<h2>⚙ Loadout</h2>
+<div class="loadout-grid">
+  <div class="loadout-card">
+    <div class="slot-label">Cyberdeck</div>
+    <div class="item-name">Ono-Sendai 4</div>
+    <div class="item-tier tier-t1">Tier 1</div>
+    <div class="item-stats">PPL +3 · Deck Tier</div>
+  </div>
+  <div class="loadout-card">
+    <div class="slot-label">Wetware</div>
+    <div class="item-name">Standard Wetware</div>
+    <div class="item-tier tier-t1">Tier 1</div>
+    <div class="item-stats">PPL +1</div>
+  </div>
+  <div class="loadout-card">
+    <div class="slot-label">Construct</div>
+    <div class="item-name">—</div>
+    <div class="item-tier">None</div>
+    <div class="item-stats">PPL +0 (Tier 0)</div>
+  </div>
+</div>
+
+<h3>Programs (equipped)</h3>
+<div class="programs-list">
+  <span class="program-badge"><span class="prog-name">Wisp</span> · L1</span>
+  <span class="program-badge"><span class="prog-name">Stealth</span> · L2</span>
+  <span class="program-badge"><span class="prog-name">Probe</span> · L1</span>
+</div>
+
+<h2>📦 Inventory (12 items)</h2>
+<div class="inventory-grid">
+  <div class="inv-item data"><span class="item-name">Data shards</span><span class="item-count">5</span></div>
+  <div class="inv-item data"><span class="item-name">ICE bypass</span><span class="item-count">2</span></div>
+  <div class="inv-item data"><span class="item-name">Skill softs</span><span class="item-count">3</span></div>
+  <div class="inv-item material"><span class="item-name">Wetware parts</span><span class="item-count">4</span></div>
+  <div class="inv-item material"><span class="item-name">Decryption keys</span><span class="item-count">1</span></div>
+  <div class="inv-item material"><span class="item-name">Hardware spares</span><span class="item-count">6</span></div>
+  <div class="inv-item credit"><span class="item-name">¤ Credits</span><span class="item-count">500</span></div>
+</div>
+
+<h2>🧍 Body Slots (8)</h2>
+<div class="section">
+  <div class="loadout-grid">
+    <div class="loadout-card"><div class="slot-label">Neural</div><div class="item-name">Standard</div><div class="item-tier tier-t1">T1</div><div class="item-stats">PPL +1</div></div>
+    <div class="loadout-card"><div class="slot-label">Cyberdeck</div><div class="item-name">Ono-Sendai 4</div><div class="item-tier tier-t1">T1</div><div class="item-stats">PPL +3</div></div>
+    <div class="loadout-card"><div class="slot-label">Wetware</div><div class="item-name">Standard</div><div class="item-tier tier-t1">T1</div><div class="item-stats">PPL +1</div></div>
+    <div class="loadout-card"><div class="slot-label">Construct</div><div class="item-name">—</div><div class="item-tier">—</div><div class="item-stats">—</div></div>
+    <div class="loadout-card"><div class="slot-label">Arms (L)</div><div class="item-name">—</div><div class="item-tier">—</div><div class="item-stats">—</div></div>
+    <div class="loadout-card"><div class="slot-label">Arms (R)</div><div class="item-name">—</div><div class="item-tier">—</div><div class="item-stats">—</div></div>
+    <div class="loadout-card"><div class="slot-label">Torso</div><div class="item-name">—</div><div class="item-tier">—</div><div class="item-stats">—</div></div>
+    <div class="loadout-card"><div class="slot-label">Legs</div><div class="item-name">—</div><div class="item-tier">—</div><div class="item-stats">—</div></div>
+  </div>
+</div>
+
+<h2>🔧 Tech Types (9)</h2>
+<div class="section">
+  <p style="color:#8a98a8;font-size:12px">9 technology schools: deck · wetware · construct · stealth · combat · probe · signal · bio · alchemy</p>
+</div>
+
+</div>
+
+<!-- Tab 3: Achievements -->
+<div id="achievements" class="tab-content">
+
+<h2>🏆 Achievements</h2>
+<div class="achievements-list">
+
+  <div class="achievement unlocked">
+    <div class="ach-icon">🎯</div>
+    <div class="ach-content">
+      <div class="ach-name">First Jack</div>
+      <div class="ach-desc">Complete the first mission.</div>
+      <div class="ach-status">✓ Unlocked</div>
+    </div>
+  </div>
+
+  <div class="achievement unlocked">
+    <div class="ach-icon">⚔</div>
+    <div class="ach-content">
+      <div class="ach-name">First Blood</div>
+      <div class="ach-desc">Defeat 10 ICE programs.</div>
+      <div class="ach-status">✓ Unlocked</div>
+    </div>
+  </div>
+
+  <div class="achievement unlocked">
+    <div class="ach-icon">🕸</div>
+    <div class="ach-content">
+      <div class="ach-name">Sprawl Walker</div>
+      <div class="ach-desc">Visit 5 different locations in the Sprawl.</div>
+      <div class="ach-status">✓ Unlocked</div>
+    </div>
+  </div>
+
+  <div class="achievement locked">
+    <div class="ach-icon">🥇</div>
+    <div class="ach-content">
+      <div class="ach-name">Grade 5-up</div>
+      <div class="ach-desc">Reach Grade 5.</div>
+      <div class="ach-status">○ Locked</div>
+    </div>
+  </div>
+
+  <div class="achievement locked">
+    <div class="ach-icon">🧠</div>
+    <div class="ach-content">
+      <div class="ach-name">Construct Memory</div>
+      <div class="ach-desc">Save a construct from ICE death.</div>
+      <div class="ach-status">○ Locked</div>
+    </div>
+  </div>
+
+  <div class="achievement locked">
+    <div class="ach-icon">🌐</div>
+    <div class="ach-content">
+      <div class="ach-name">Freeside Resident</div>
+      <div class="ach-desc">Complete a mission in Freeside.</div>
+      <div class="ach-status">○ Locked</div>
+    </div>
+  </div>
+
+  <div class="achievement locked">
+    <div class="ach-icon">👁</div>
+    <div class="ach-content">
+      <div class="ach-name">Loa Whisperer</div>
+      <div class="ach-desc">Complete a voodoo-channel mission.</div>
+      <div class="ach-status">○ Locked</div>
+    </div>
+  </div>
+
+  <div class="achievement locked">
+    <div class="ach-icon">❄</div>
+    <div class="ach-content">
+      <div class="ach-name">Tessier-Ashpool</div>
+      <div class="ach-desc">Reach Straylight.</div>
+      <div class="ach-status">○ Locked</div>
+    </div>
+  </div>
+
+</div>
+
+<h2>📊 Achievement Progress</h2>
+<div class="section">
+  <p style="color:#8a98a8">3 / 8 unlocked (37.5%)</p>
+  <div style="background:#1a2530;height:8px;border-radius:4px;overflow:hidden;margin-top:8px">
+    <div style="width:37.5%;height:100%;background:linear-gradient(90deg,#66ffcc,#88dd44)"></div>
+  </div>
+</div>
+
+</div>
+
+<div class="footer">
+  Player status · Consolidated from 3 pages (status + equipment + achievements) · 2026-07-10
+</div>
+
+<script>
+(function () {
+  var btns = document.querySelectorAll(".tab-btn");
+  var contents = document.querySelectorAll(".tab-content");
+  btns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      btns.forEach(function (b) { b.classList.remove("active"); });
+      btn.classList.add("active");
+      var target = btn.dataset.tab;
+      contents.forEach(function (c) {
+        c.classList.toggle("active", c.id === target);
+      });
+    });
+  });
+  if (location.hash) {
+    var hashBtn = document.querySelector('.tab-btn[data-tab="' + location.hash.slice(1) + '"]');
+    if (hashBtn) hashBtn.click();
+  }
+})();
+</script>
+
+</body>
+</html>

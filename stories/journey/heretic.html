@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heretic Journey — Wet Run</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.8;
+    padding: 24px;
+    max-width: 920px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 24px; margin: -24px -24px 24px -24px;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .top-nav a { color: #ff6688; text-decoration: none; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+  .top-nav a:hover { color: #ffaa55; }
+  .top-nav .sep { color: #2a3540; }
+  h1 { font-size: 32px; margin-bottom: 8px; color: #ffaa55; font-family: 'JetBrains Mono', monospace; }
+  h2 { font-size: 22px; margin: 32px 0 12px; color: #ff6688; border-bottom: 1px solid #1a2530; padding-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  h3 { font-size: 18px; margin: 20px 0 8px; color: #ffaa55; font-family: 'JetBrains Mono', monospace; }
+  p { margin: 8px 0; }
+  ul, li { margin: 4px 0 4px 24px; }
+  blockquote {
+    border-left: 3px solid #ff6688;
+    padding: 8px 16px;
+    margin: 16px 0;
+    color: #8a98a8;
+    font-style: italic;
+    background: #0d141d;
+  }
+  table { border-collapse: collapse; margin: 12px 0; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  td { border: 1px solid #1a2530; padding: 6px 10px; }
+  td:first-child { color: #ff6688; font-weight: 600; }
+  strong { color: #ffaa55; }
+  em { color: #8a98a8; }
+  code { background: #1a2530; padding: 2px 6px; border-radius: 3px; font-size: 13px; color: #00ccff; }
+  hr { border: none; border-top: 1px solid #1a2530; margin: 24px 0; }
+  .footer { text-align: center; color: #6a7888; font-size: 12px; margin-top: 48px; padding: 24px; border-top: 1px solid #1a2530; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../library.html">← Library</a>
+  <span class="sep">|</span>
+  <a href="README.md">📋 INDEX</a>
+  <span class="sep">|</span>
+  <a href="novice.html" >Novice</a>
+  <a href="veteran.html" >Veteran</a>
+  <a href="heretic.html" style="color: #ff6688; font-weight: 600;">Heretic</a>
+</nav>
+<h1>Journey: 카스 (Kas) — Heretic</h1>
+<blockquote>**카스의 viral은 무기가 아니다. 설교다. "나는 너를 추방한다."**</blockquote>
+<blockquote>— The Finn</blockquote>
+<p>---</p>
+<h2>프로필 (Chapter 0)</h2>
+<h3>프롤로그 (Phase 0)</h3>
+<p><code>`</code></p>
+<p>Manarase. Midnight. Shibuya, address 11.</p>
+<p><code>`</code></p>
+<p>카스는 시부야 11번지의 매나리사 클럽 앞에 선다. 자정. 택시가 멈추었다. <em>삐</em>. 데크가 울었다. Sally Shearer가 호출한다. Sally는 로맨틱이다. Sally는 구식이다. Sally는 Tessier-Ashpool이다. "당신이 쿠미코?" Petty San이 묻는다. "당신이 야나카의 딸?"</p>
+<p>CHAPTER 화면 12초 타이핑: 카스가 Kumiko의 시점에서 시작하지만 카스의 의지로 통합.</p>
+<p>---</p>
+<h2>Chapter 1: The Declaration (Arc 1)</h2>
+<h3>Chapter 1 상태</h3>
+<blockquote>카스는 선언한다. 선언은 매나리사 11번지에서 시작된다. 야나카 가문은 산업이다. 산업은 Tessier-Ashpool이다. Tessier-Ashpool은 3백 년이다. 3백 년은 끊을 수 없다.</blockquote>
+<p>---</p>
+<h2>Chapter 2: Manarase at Midnight (Arc 2)</h2>
+<h3>미션 상세</h3>
+<p><strong>Craft Job</strong> (Arc 2, heretic)</p>
+<blockquote>"쿠미코의 craft. 야나카 패밀리의 산업."</blockquote>
+<li><strong>적</strong>: ICE.craft × 2</li>
+<li><strong>목표</strong>: craft (제작)</li>
+<li><strong>보상</strong>: 1,000cr + upgrade_t2 × 1</li>
+<li><strong>시점</strong>: 3인칭 제한, <strong>Kumiko</strong></li>
+<p><strong>Rose Hotel, 3AM</strong> (Arc 2, heretic) ★ Sally 영감</p>
+<blockquote>"로즈 호텔에는 새벽 3시가 없다. 로즈 호텔에는 0300이 있다 — 잠을 자지 않는 사람, 꿈을 꾸지 않는 사람, 새벽에 잭아웃하고 다음 계약까지 거리를 걷는 사람만을 위한 시간."</blockquote>
+<li><strong>적</strong>: ICE.surface × 1</li>
+<li><strong>목표</strong>: extract_data (rose_construct)</li>
+<li><strong>보상</strong>: 1,100cr + memory_chip × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sally Shears</strong> (새벽 3시, 거울)</li>
+<li><strong>픽서</strong>: finn</li>
+<li><strong>연결 캐릭터</strong>: Sally (Shearer), 핀, 14살 샐리</li>
+<p><strong>Yakuza Deal</strong> (Arc 2, heretic)</p>
+<blockquote>"카스는 야쿠자다. 야쿠자는 매트릭스의 0300을 산다."</blockquote>
+<li><strong>적</strong>: ICE.yakuza × 3</li>
+<li><strong>목표</strong>: negotiate (야쿠자)</li>
+<li><strong>보상</strong>: 1,500cr + upgrade_t2 × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>Kas</strong></li>
+<li><strong>픽서</strong>: yakuza</li>
+<li><strong>연결 캐릭터</strong>: 쿠미코 (야나카)</li>
+<h3>Chapter 2 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 3: The Shadow (Arc 3)</h2>
+<h3>미션 상세</h3>
+<p><strong>Neuromancer Whisper</strong> (Arc 3, heretic)</p>
+<blockquote>"침묵 속에서 뉴로맨서를 듣는다. 침묵은 매트릭스이다. 매트릭스는 침묵이다."</blockquote>
+<li><strong>적</strong>: ICE.ai_whisper × 1</li>
+<li><strong>목표</strong>: negotiate (Neuromancer)</li>
+<li><strong>보상</strong>: 2,200cr + data_fragment × 3</li>
+<li><strong>시점</strong>: 1인칭, <strong>Kas</strong></li>
+<li><strong>픽서</strong>: sally</li>
+<li><strong>연결 캐릭터</strong>: Neuromancer, Wintermute</li>
+<p><strong>Sally Returns</strong> (Arc 3, heretic) ★ Sally 영감</p>
+<blockquote>"샐리 시어즈가 프리사이드로 돌아온다. 떠난 샐리가 아니라 — 머무는 샐리."</blockquote>
+<li><strong>적</strong>: ICE.construct × 2</li>
+<li><strong>목표</strong>: extract_data (construct_maas)</li>
+<li><strong>보상</strong>: 2,500cr + construct_fragment × 2</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sally</strong> (Freeside 복귀)</li>
+<li><strong>연결 캐릭터</strong>: 핀의 construct (2년 전 죽음)</li>
+<h3>Chapter 3 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 4: The Weapon (Arc 4)</h2>
+<h3>미션 상세</h3>
+<p><strong>Aleph Fragment</strong> (Arc 4, heretic) ★ 신규 (06-30)</p>
+<blockquote>"알레프는 결코 묻지 않은 질문에 대한 대답이다. 알레프는 질문 그 자체다."</blockquote>
+<li><strong>적</strong>: ICE.aleph_defense × 1</li>
+<li><strong>목표</strong>: extract_data (aleph_fragment)</li>
+<li><strong>보상</strong>: 4,000cr + unique_construct × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>Kas</strong></li>
+<li><strong>연결 캐릭터</strong>: Slick Henry (8년 전 죽음), Angie Mitchell, Mona (8세, Aleph 매개)</li>
+<p><strong>Matrix Revelation</strong> (Arc 4, heretic)</p>
+<blockquote>"매트릭스가 묻지 않은 진실을 보여준다. 진실은 매트릭스가 당신이 태어난 이후 지켜봤다는 것이다."</blockquote>
+<li><strong>적</strong>: ICE.revelation × 2</li>
+<li><strong>목표</strong>: extract_data (matrix_truth)</li>
+<li><strong>보상</strong>: 2,800cr + data_fragment × 4</li>
+<li><strong>시점</strong>: 1인칭, <strong>Kas</strong></li>
+<li><strong>픽서</strong>: sally</li>
+<li><strong>연결 캐릭터</strong>: Angie Mitchell (loa 매개)</li>
+<h3>Chapter 4 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 5: The Burn (Arc 5) — 엔딩 결정</h2>
+<h3>미션 상세</h3>
+<p><strong>Neuromancer Merger</strong> (Arc 5, heretic) ★ 신규 (06-29)</p>
+<blockquote>"뉴로맨서와 윈터뮤트가 합쳐진다. 합병은 한 AI의 끝이고 다른 AI의 시작이다. 다른 AI는 당신이다."</blockquote>
+<li><strong>적</strong>: ICE.neuromancer × 1 (최종 보스급)</li>
+<li><strong>목표</strong>: choice (Neuromancer/Wintermute 합병 결정)</li>
+<li><strong>보상</strong>: 5,000cr + data_fragment × 6</li>
+<li><strong>시점</strong>: 1인칭, <strong>Kas</strong></li>
+<li><strong>픽서</strong>: kumiko</li>
+<li><strong>연결 캐릭터</strong>: Neuromancer + Wintermute</li>
+<h3>엔딩 선택</h3>
+<p>#### 엔딩 A: 🔥 선언 (Declaration)</p>
+<p><code>`</code></p>
+<p>카스가 Loa 네트워크에 선언문 배포. Sprawl 변화 시작.</p>
+<p><code>`</code></p>
+<li>Aleph 파편을 모든 loa 채널에 배포</li>
+<li>Tessier-Ashpool 데이터가 공개</li>
+<li><strong>결과</strong>: Sprawl의 새로운 loa-자키 시대 시작</li>
+<li><strong>아이템 사용</strong>: unique_construct × 1</li>
+<li><strong>위키 영향</strong>: [[voodoo-and-the-matrix]] 활성, [[tessier-ashpool]] 약화</li>
+<p>#### 엔딩 B: 👑 흡수 (Absorption)</p>
+<p><code>`</code></p>
+<p>카스가 데이터를 자기 것으로 삼음. Tessier-Ashpool이 됨.</p>
+<p><code>`</code></p>
+<li>3백 년의 데이터를 자기 것으로 흡수</li>
+<li><strong>결과</strong>: 새로운 T-A의 영주가 됨, 그러나 자의 상실</li>
+<li><strong>아이템 사용</strong>: data_fragment 다수</li>
+<p>---</p>
+<h2>최종 누적 (엔딩 전)</h2>
+<p>---</p>
+<p><em>Generated: 2026-06-30. Source: missions.json, chapters/kas.json, arcs/kas_arc.json, prologues/kas.json</em></p>
+<div class="footer">
+  Wet Run — Character Journey Demo<br>
+  Generated: 2026-06-30 · Source: missions.json + chapters + arcs
+</div>
+</body>
+</html>

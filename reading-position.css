@@ -1,0 +1,23 @@
+.resume-reading-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 10px 16px;
+  background: #e94560;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(233, 69, 96, 0.35);
+  z-index: 999;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+.resume-reading-btn:hover {
+  background: #ff5577;
+  transform: translateY(-1px);
+}
+@media print {
+  .resume-reading-btn { display: none !important; }
+}

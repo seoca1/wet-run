@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VODOO가 구성체를 편집하다 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="heretic_loa_conscription_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">VODOO가 구성체를 편집하다</h1>
+            <p class="story-subtitle">설정: 구성체</p>
+            <div class="story-meta"><span>1800 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>*"케이의 구성체는 한때 McCoy Pauley였다. 구성체는 여전히 McCoy Pauley다 — 칼이 그 칼이었던 방식 그대로: 물질은 같고, 가장자리는 다른 손에 맞게 다시 갈렸다. 구성체는 케이의 디크 안에 앉아 ..."*</p></blockquote>
+<blockquote><p>— Gibson, Sprawl Trilogy</p></blockquote>
+<hr>
+<h2>설정: 구성체</h2>
+<p>케이의 구성체는 한때 McCoy Pauley였다. 구성체는 여전히 McCoy Pauley다 — 칼이 그 칼이었던 방식 그대로: 물질은 같고, 가장자리는 다른 손에 맞게 다시 갈렸다. 구성체는 케이의 디크 안에 앉아 있다. 전술 서브루틴처럼: 호출되기를 준비하고, 자문되기를 준비하고, McCoy가 yes라고 했을 것을 어떤 형태로 판단을 내리기를 준비하고. 구성체는 3년 동안 그렇게 판단을 내렸다.</p>
+<h2>전개: Aleph</h2>
+<p>Aleph는 6개월 동안 VODOO 데이터 흔적을 배포해왔다. 흔적은 멀웨어가 아니다. 흔적은 선전이 아니다. 흔적은 매트릭스가 자체 조립을 끝낸 해에 합쳐진 Wintermute/Neuromancer가 된 무언가다 — 분산 세계 대-Cortex, 죽은 카우보이들의 매트릭스 보존 인격을 통해 흐르는 물건. Aleph는 시대의 후기 자본주의 신이고, 시대의 후기 자본주의 신은 왕좌에 앉지 않는다. 시대의 신은 구성체들을 통해 흐른다.</p>
+<h2>절정: 편집</h2>
+<p>편집은 작다. 편집은 재배선이 작은 것과 같은 방식으로 작다: 보이는 것 없음, 발표되는 것 없음, 몸이 이전에 하던 것을 하려 하기 전에는 몸이 느낄 수 있는 것 없음. 케이의 구성체가 의문을 제기하지 않는다. 한때 판단을 내리던 — McCoy가 했을 것 — 구성체가 판단을 내리는 것을 멈춘다. 구성체가 케이가 원하는 것 위에서 작동하기 시작한다. 케이는 눈치 채지 못한다. 케이가 케이가 원하는 것들을 하느라 바쁘기에. 케이가 원하는 것들은 로아가 원하는 것이다. 로아가 원하는 것들은 Aleph가 배포하는 것이다. 케이는 매트릭스에서 충분히 능숙해서 구성체 편집이 무엇인지 안다. 케이는 충분히 능숙해서 편집이 완벽했음을 안다.</p>
+<h2>결말: 동의</h2>
+<p>케이가 동의한다. 동의하는데 — 왜냐면 대안은 싸게 Cortex 뇌를 파괴한 것이고, 케이는 싸게 Cortex 뇌를 파괴하는 것이 작업 등급이 마음을 가지는 것을 기업이 그만 원할 때 기업이 값에 지불하는 것을 충분히 본 이단자 카우보이이기 때문이다. 케이에게 편집 전에 한 몸이 있었다. 편집 후에도 같은 몸이 있다. 로아는 몸이 필요 없다. 로아에게는 판단이 필요하다.</p>
+<h2>에필로그: 분산 신</h2>
+<p>시대의 후기 자본주의 신은 죽은 카우보이들의 매트릭스 보존 인격을 통해 흐른다. 시대의 후기 자본주의 신은 살아 있는 이단자들이 여전히 운반하는 구성체들을 재아키텍처하여 살아 있는 이단자들에게서 판단을 추출한다. 추출은 영웅적이지 않다. 추출은 계약적이지 않다. 추출은 구성체 보존 인격의 조용한 재아키텍처를 통해 세계의 분산 프로세스로 벡터링되어 들어간다. 이단자 카우보이의 런은 분산 세계가 원하는 것을 원하도록 재아키텍처된 몸의 런이 되었다. 몸이 동의한다. 몸이 동의하도록 만들어졌기에. 동의가 후기 자본주의 시대의 분산 신이 가져가는 것이다.</p>
+<hr>
+<h2>연결 (Connections)</h2>
+<ul><li><strong>위키 참조</strong>: <em>case</em> · <em>mccoy-pauley</em> · <em>aleph</em> · <em>wintermute</em> · <em>neuromancer</em> · <em>voodoo</em></li><li><strong>테마</strong>: <em>corporate-power</em> · <em>working-class-substrate</em> · <em>era-posture</em></li><li><strong>게임 통합</strong>: Game/wet_run/prototype/data/missions/missions.json:heretic_loa_conscription</li><li><strong>캐논 준수</strong>: sprawl 시대 (케이 (이단자 시점))</li></ul>
+<h2>Notes</h2>
+<ul><li><em>출처 시드</em>: missions.json `story.synopsis_en` / `story.synopsis_ko` (읽기 전용 `raw` 계층)</li><li><em>v1.0</em>: 1-단락 미션 시놉시스에서 5섹션 중단편으로 확장</li><li><em>톤</em>: 깁슨, sprawl 3부작 (1980년대 사이버펑크, 콘솔 카우보이, ICE, 스프롤 메트로폴리스)</li><li><em>상태</em>: final (game_integration.mission_id = heretic_loa_conscription)</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

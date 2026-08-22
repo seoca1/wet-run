@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Character Journeys Dashboard — 9 자키 (case/sil/kas/suit/wigan/angie/sally/3jane/neuromancer) 진행 데모. credits / mission / 엔딩 분기 자동 fetch.">
+<title>Character Journeys — Wet Run</title>
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/stories/journey/README.html">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #0a0e14; color: #c5d4e3; line-height: 1.6;
+    padding: 24px; max-width: 1000px; margin: 0 auto; min-height: 100vh;
+  }
+  h1, h2, h3 { color: #66ffcc; font-weight: 600; }
+  h1 { font-size: 28px; margin-bottom: 8px; text-shadow: 0 0 12px #66ffcc44; }
+  h2 { font-size: 20px; margin: 24px 0 12px; border-bottom: 1px solid #2a3540; padding-bottom: 8px; }
+  h3 { font-size: 16px; margin: 16px 0 8px; color: #ffaa55; }
+  a { color: #66ffcc; }
+  a:hover { color: #00ccff; }
+  pre { background: #0a0e14; border: 1px solid #2a3540; border-radius: 4px;
+        padding: 12px; overflow-x: auto; font-size: 12px; margin: 8px 0; }
+  code { background: #1a232c; padding: 2px 6px; border-radius: 3px; font-size: 11px; color: #ffd700; }
+  blockquote { border-left: 3px solid #66ffcc22; padding: 8px 16px;
+               color: #8a9aa8; margin: 12px 0; font-style: italic; }
+  hr { border: none; border-top: 1px dashed #2a3540; margin: 24px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
+  th, td { padding: 6px 10px; text-align: left; border-bottom: 1px solid #1a232c; }
+  th { color: #ffaa55; font-weight: 600; text-align: left; }
+  td { color: #c5d4e3; }
+  td:nth-child(7), th:nth-child(7) { text-align: right; }
+  td:nth-child(6), th:nth-child(6) { text-align: right; }
+  .nav { margin-bottom: 24px; font-size: 12px; color: #6a7888; }
+  .nav a { color: #6a7888; text-decoration: none; }
+  .nav a:hover { color: #66ffcc; }
+  .footnote { margin-top: 32px; padding: 12px; font-size: 11px; color: #6a7888;
+              border-top: 1px solid #2a3540; }
+  .char-card {
+    display: inline-block; background: #131a23; border: 1px solid #2a3540;
+    border-radius: 6px; padding: 12px 16px; margin: 4px; min-width: 240px;
+  }
+  .char-card .name { color: #66ffcc; font-weight: 600; font-size: 14px; }
+  .char-card .arc  { color: #ffaa55; font-size: 11px; margin: 2px 0 6px; }
+  .char-card .credits { color: #ffd700; font-size: 16px; font-weight: 600;
+                        text-shadow: 0 0 6px #ffaa5544; }
+  .char-card .meta  { font-size: 10px; color: #6a7888; margin-top: 6px; }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="../../index.html">← Dashboard Home</a>
+  · <a href="./novice.md">novice.md</a>
+  · <a href="./veteran.md">veteran.md</a>
+  · <a href="./heretic.md">heretic.md</a>
+</div>
+
+<h1>📖 Character Journeys</h1>
+
+<blockquote>
+  게임 진행 데모 스토리 — 챕터별 미션, 전투, 아이템, 엔딩 분기<br>
+  <strong>이 문서는 게임의 실제 미션/아크/챕터/엔딩 데이터를 기반으로 자동 생성되었습니다.</strong><br>
+  파생 소설(Fiction wiki 단편)과는 별개입니다.
+</blockquote>
+
+<hr>
+
+<h2>🎭 캐릭터 선택 <span style="font-size:13px;color:#6a7888;">(자동 fetch)</span></h2>
+
+<div style="margin: 8px 0;">
+  <div class="char-card">
+    <div class="name">케이 (K) — Novice</div>
+    <div class="arc">case_jackout-30sec · Neuromancer</div>
+    <div class="credits"><span data-stat="novice-credits">20,050</span>cr</div>
+    <div class="meta">
+      <span data-stat="novice-grade">5</span> · missions <span data-stat="novice-missions">10</span>/10
+    </div>
+  </div>
+  <div class="char-card">
+    <div class="name">실 (Sil) — Veteran</div>
+    <div class="arc">marly_louisiana-god · Count Zero</div>
+    <div class="credits"><span data-stat="veteran-credits">27,500</span>cr</div>
+    <div class="meta">
+      <span data-stat="veteran-grade">5</span> · missions <span data-stat="veteran-missions">11</span>/11
+    </div>
+  </div>
+  <div class="char-card">
+    <div class="name">카스 (Kas) — Heretic</div>
+    <div class="arc">kumiko_manarase-midnight · Mona Lisa Overdrive</div>
+    <div class="credits"><span data-stat="heretic-credits">20,100</span>cr</div>
+    <div class="meta">
+      <span data-stat="heretic-grade">5</span> · missions <span data-stat="heretic-missions">8</span>/8
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<h2>🧭 항목별 동기 / 핸드폰 / 픽서 비교</h2>
+<table>
+  <tr><th>지표</th><th>Novice (K)</th><th>Veteran (Sil)</th><th>Heretic (Kas)</th></tr>
+  <tr><td>시작 동기</td><td>돈</td><td>복수</td><td>전복</td></tr>
+  <tr><td>시작 핸드폰</td><td>Wisp T1</td><td>Hammer T2</td><td>Custom Viral</td></tr>
+  <tr><td>시작 credits</td><td>0</td><td>0</td><td>0</td></tr>
+  <tr><td>최종 credits</td><td><strong data-stat="novice-credits-v">20,050</strong></td>
+      <td><strong data-stat="veteran-credits-v">27,500</strong></td>
+      <td><strong data-stat="heretic-credits-v">20,100</strong></td></tr>
+  <tr><td>최종 등급</td><td>5</td><td>5</td><td>5</td></tr>
+  <tr><td>최종 핸드폰 (추정)</td><td>T3 Hammer</td><td>T4 Hammer</td><td>T4 + unique_construct</td></tr>
+  <tr><td>픽서 다양성</td><td>1 (Finn)</td><td>6</td><td>4</td></tr>
+  <tr><td>원작</td><td>Neuromancer</td><td>Count Zero</td><td>Mona Lisa Overdrive</td></tr>
+  <tr><td>엔딩 A (긍정)</td><td>🏃 Burn and Run</td><td>📢 Whistleblower</td><td>🔥 Declaration</td></tr>
+  <tr><td>엔딩 B (비관)</td><td>💀 The Flatline</td><td>💼 Business</td><td>👑 Absorption</td></tr>
+</table>
+
+<hr>
+
+<h2>🗺 게임 진행 흐름</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────┐
+│                  CHARACTER SELECT (The Finn)                  │
+│       "I need a jockey. Sense/Net, first run..."            │
+└─────┬─────────────────┬─────────────────┬───────────────────┘
+      │                 │                 │
+   ┌──▼──┐          ┌──▼──┐          ┌──▼──┐
+   │  K  │          │ Sil │          │ Kas │
+   │ Nov │          │ Vet │          │ Her │
+   └──┬──┘          └──┬──┘          └──┬──┘
+      │                 │                 │
+   [CHAPTER]        [CHAPTER]        [CHAPTER]
+   30 Seconds       Louisiana 11    Manarase
+   (Case 1인칭)      (Marly 3인칭)    (Kumiko 3인칭)
+      │                 │                 │
+   arc_case           arc_sil           arc_kas
+   10 missions        11 missions        8 missions
+   25 phases          25 phases         25 phases
+      │                 │                 │
+   [ HUB ↔ MATRIX → COMBAT → REWARD → DEBRIEF → ENDING ]
+</pre>
+
+<hr>
+
+<h2>📚 챕터 메타 정보</h2>
+
+<h3>Novice (chapter_novice)</h3>
+<ul style="margin-left: 20px;">
+  <li><strong>이름</strong>: The First Jack</li>
+  <li><strong>부제</strong>: Thirty Seconds After Jack-Out</li>
+  <li><strong>포트레잇</strong>: <code>art:case</code></li>
+  <li><strong>테마</strong>: matrix_rain</li>
+  <li><strong>duration_ms</strong>: 12000 (12초 타이핑)</li>
+  <li><strong>다음 화면</strong>: HUB</li>
+</ul>
+
+<h3>Veteran (chapter_veteran)</h3>
+<ul style="margin-left: 20px;">
+  <li><strong>이름</strong>: The Old Score</li>
+  <li><strong>부제</strong>: The Louisiana God</li>
+  <li><strong>포트레잇</strong>: <code>art:marly</code></li>
+  <li><strong>테마</strong>: cyberspace</li>
+  <li><strong>duration_ms</strong>: 12000</li>
+  <li><strong>다음 화면</strong>: HUB</li>
+</ul>
+
+<h3>Heretic (chapter_heretic)</h3>
+<ul style="margin-left: 20px;">
+  <li><strong>이름</strong>: The Declaration</li>
+  <li><strong>부제</strong>: Manarase at Midnight</li>
+  <li><strong>포트레잇</strong>: <code>art:kumiko</code></li>
+  <li><strong>테마</strong>: sense_net</li>
+  <li><strong>duration_ms</strong>: 12000</li>
+  <li><strong>다음 화면</strong>: HUB</li>
+</ul>
+
+<hr>
+
+<h2>🏆 엔딩 시스템</h2>
+<table>
+  <tr><th>캐릭터</th><th>엔딩 A (긍정)</th><th>엔딩 B (비관)</th></tr>
+  <tr><td>Novice</td><td>🏃 Burn and Run (탈출)</td><td>💀 The Flatline (사망)</td></tr>
+  <tr><td>Veteran</td><td>📢 Whistleblower (폭로)</td><td>💼 Business (사업)</td></tr>
+  <tr><td>Heretic</td><td>🔥 Declaration (선언)</td><td>👑 Absorption (흡수)</td></tr>
+</table>
+
+<hr>
+
+<h2>🎒 보상 시스템</h2>
+<table>
+  <tr><th>아이템</th><th>용도</th></tr>
+  <tr><td><code>data_fragment</code></td><td>데이터 추출 보상 (공통)</td></tr>
+  <tr><td><code>ice_shard</code></td><td>매트릭스 빙의 조각</td></tr>
+  <tr><td><code>rom_fragment</code></td><td>ROM construct 파편</td></tr>
+  <tr><td><code>loa_fragment</code></td><td>loa 매개체 파편</td></tr>
+  <tr><td><code>construct_fragment</code></td><td>construct 핵심</td></tr>
+  <tr><td><code>memory_chip</code></td><td>기억 저장</td></tr>
+  <tr><td><code>unique_construct</code> / <code>unique_program</code></td><td>희귀 아이템</td></tr>
+  <tr><td><code>upgrade_t1</code>~<code>t4</code></td><td>장비 업그레이드 (T1=초급, T4=최상급)</td></tr>
+  <tr><td><code>ending_token</code></td><td>엔딩 분기 결정</td></tr>
+</table>
+
+<hr>
+
+<h2>🔗 원본 마크다운</h2>
+<ul style="margin-left: 20px;">
+  <li><a href="./README.md"><code>README.md</code></a> — 이 페이지의 정적 마크다운 원본.</li>
+  <li><a href="./novice.md"><code>novice.md</code></a> · <a href="./veteran.md"><code>veteran.md</code></a> · <a href="./heretic.md"><code>heretic.md</code></a> — 캐릭터별 journey.</li>
+</ul>
+
+<div class="footnote">
+  <em>Generated: 2026-06-30. 자동 빌드:</em>
+  <code>tools/build_dashboard.py</code> → <code>dashboard/data/journey_stats.json</code>
+  <em>· 자동 fetch: <code>data/journey_stats.json</code> · 정수 카드 (credits / missions / grade) dynamic.</em>
+</div>
+
+<script>
+/* Auto-sync journey cards from build_dashboard.py output
+   (journey_stats.json).  When the JSON is missing the static
+   fallback values (20,050 / 27,500 / 20,100) stay visible. */
+fetch('../../data/journey_stats.json').then(r => r.ok ? r.json() : null)
+  .then(stats => {
+    if (!stats) return;
+    const set = (key, value) => {
+      const el = document.querySelector(`[data-stat="${key}"]`);
+      if (el && value !== undefined && value !== null) {
+        el.textContent = String(value);
+      }
+    };
+    for (const arc of ['novice', 'veteran', 'heretic']) {
+      const slot = stats[arc] || {};
+      if (typeof slot.credits === 'number') {
+        set(`${arc}-credits`,     slot.credits);
+        set(`${arc}-credits-v`,   slot.credits);
+      }
+      if (typeof slot.missions === 'number') {
+        set(`${arc}-missions`,    slot.missions);
+      }
+      if (typeof slot.final_grade === 'number' && slot.final_grade > 0) {
+        set(`${arc}-grade`,       slot.final_grade);
+      }
+    }
+  })
+  .catch(() => { /* keep static fallback */ });
+</script>
+
+</body>
+</html>

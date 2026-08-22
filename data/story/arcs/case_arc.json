@@ -1,0 +1,1383 @@
+{
+  "character": "novice",
+  "arc_id": "arc_case",
+  "title_en": "Case's Arc",
+  "title_ko": "케이의 아크",
+  "description_en": "The first jack. The last run. The space between.",
+  "description_ko": "첫 잭인. 마지막 런. 그 사이의 공간.",
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "chapter_id": "ch_case_01",
+      "title_en": "The First Run",
+      "title_ko": "첫 런",
+      "description_en": "Chiba. The Finn's office. Data extraction.",
+      "description_ko": "지바. 핀의 사무실. 데이터 추출.",
+      "cutscene_start": {
+        "scene_id": "scene_case_intro",
+        "title_en": "CHATTO'S 24/7",
+        "title_ko": "차토스 24/7"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_case_finn",
+        "title_en": "THE FINN'S OFFICE",
+        "title_ko": "핀의 사무실"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_case_jackin",
+        "title_en": "JACK-IN",
+        "title_ko": "잭인"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 0,
+          "title_en": "The Wait",
+          "title_ko": "기다림",
+          "description_en": "Case wakes from his first jack-out in two years. The Ono-Sendai deck still hums against his spine. His hands won't stop shaking. The rain outside the Headson Hotel is the same rain that fell when he was a cowboy. He has no money. He has no prospects. He has a dead pancreas and a debt to the Finn.",
+          "description_ko": "케이는 2년 만에 첫 잭아웃에서 깨어난다. Ono-Sendai 데크가 여전히 척추에 윙윙거린다. 손이 떨리는 걸 멈추지 않는다. 헤드슨 호텔 밖 비는 그가 카우보이였을 때 내리던 같은 비다. 돈 없다. 전망 없다. 죽은 췌장과 핀에게 빚만 있다.",
+          "episode_ref": "ep_01",
+          "story_beats": [
+            "beat_01_01",
+            "beat_01_02",
+            "beat_01_03"
+          ],
+          "game_action": "wake_up",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "The electrodes lift. The world comes back in pieces — the smell of synthetic melon from the vending machine, the flicker of the fluorescent light, the weight of my own hands. I am twenty-four years old and I have already died twice. Once in the matrix, and once when they told me the pancreas was gone.",
+              "text_ko": "전극이 떨어진다. 세계가 조각으로 돌아온다 — 자판기의 합성 멜론 냄새, 형광등의 깜빡임, 내 손의 무게. 스물이든이고 이미 두 번 죽었다. 한 번은 매트릭스에서, 한 번은 췌장이 없다고 들었을 때."
+            },
+            {
+              "beat_id": "beat_01_02",
+              "type": "action",
+              "text_en": "The comm unit buzzes. A text message, routed through three proxy nodes: FINN'S OFFICE. NOW. The Finn does not ask. The Finn does not wait. The Finn owns the kind of patience that kills people who are late.",
+              "text_ko": "통신 장치가 지지직거린다. 세 개의 프록시 노드를 경유한 문자 메시지: 핀의 사무실. 지금. 핀은 묻지 않는다. 핀은 기다리지 않는다. 핀은 늦은 자를 죽이는 종류의 인내심을 가졌다."
+            },
+            {
+              "beat_id": "beat_01_03",
+              "type": "dialogue",
+              "text_en": "The Finn's office is on the ninth level, two floors down and a world away. The elevator smells of cigarette smoke and the particular desperation of people who live in the Sprawl. The door is open. The Finn sits behind a desk made of something that used to be a tree. He does not stand when I enter. He never stands.",
+              "text_ko": "핀이의 사무실은 9층, 2층 아래로 세상 멀리. 엘리베이터는 담배 냄새와 스프롤에 사는 사람들의 특별한 절망감이 난다. 문이 열려 있다. 핀은 나무였을 무언가로 만든 책상 뒤에 앉아 있다. 내가 들어가도 일어서는 법이 없다. 늘 그렇다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 1,
+          "title_en": "The Job",
+          "title_ko": "일",
+          "description_en": "The Finn offers Case a simple data extraction job: Sense/Net payroll records. The pay is five thousand credits. The ICE is light. The Finn does not mention that the last cowboy who took this job died in the firewall. Case needs the money. Case takes the job.",
+          "description_ko": "핀은 케이에게 간단한 데이터 추출일을 제안한다: Sense/Net 급여 기록..pay는 5,000 크레딧. ICE는 가볍다. 핀은 이 일을 마지막으로 받은 카우보이가 방화벽에서 죽었다는 말은 하지 않는다. 케이는 돈이 필요하다. 케이는 일자리를 수락한다.",
+          "episode_ref": "ep_02",
+          "story_beats": [
+            "beat_02_01",
+            "beat_02_02",
+            "beat_02_03"
+          ],
+          "game_action": "accept_mission",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "sense_net_access_codes"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_01",
+              "type": "dialogue",
+              "text_en": "Sense/Net. The Finn slides a credstick across the desk. Five thousand credits on the nail. The job is simple: their payroll subsidiary has a node near the surface. Light ICE, the kind they put on the outside to discourage amateurs. You go in, you copy the employee database, you come out. Thirty minutes, tops.",
+              "text_ko": "Sense/Net. 핀이 책상 너머로 크레딧스틱을 밀어낸다. 5,000 크레딧. 일은 간단하다: 급여 자회사 노드가 표면 가까이 있다. 가벼운 ICE, 아마추어를 막기 위해 바깥에 놓는 종류. 들어가서 직원 데이터베이스를 복사하고 나온다. 30분이면 충분."
+            },
+            {
+              "beat_id": "beat_02_02",
+              "type": "dialogue",
+              "text_en": "What's the catch? I ask. The Finn smiles the way a shark smiles. The catch is that Sense/Net is a Tessier-Ashpool subsidiary, and T-A has been tightening their firewalls since the Straylight incident. The ICE might be lighter than last year. It might not. You'll find out when you jack in.",
+              "text_ko": "함정이 뭐야? 내가 묻는다. 핀이 상어처럼 웃는다. 함정은 Sense/Net이 테시에-애스풀 자회사이고, T-A가 스트레이라이트 사건 이후 방화벽을 강화하고 있다는 거다. ICE가 지난해보다 약할 수도 있다. 아닐 수도 있다. 잭인하면 알게 된다."
+            },
+            {
+              "beat_id": "beat_02_03",
+              "type": "action",
+              "text_en": "I take the credstick. The Finn tells me the access codes and the node address. He tells me to burn the data after I deliver it. He tells me not to die. He has buried too many cowboys who thought the matrix owed them something.",
+              "text_ko": "크레딧스틱을 받는다. 핀이 접근 코드와 노드 주소를 알려준다. 배달 후 데이터를 태우라고 한다. 죽지 말라고 한다. 매트릭스가 자신에게 빚이라도 있다는 카우보이들을 너무 많이 묻었다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 2,
+          "title_en": "The Jack-In",
+          "title_ko": "잭인",
+          "description_en": "Case jacks in at ChattO's 24/7, a twenty-four hour cafe where cowboys come to die. The Ono-Sendai deck hums against his spine. The matrix unfolds in pale geometric constructs. A Wisp T1 ICE patrols the outer firewall. Beyond it, the Sense/Net node waits.",
+          "description_ko": "케이가 챠토 24/7에서 잭인한다 — 카우보이들이 죽으러 오는 24시간 카페. Ono-Sendai 데크가 척추에 윙윙거린다. 매트릭스가 엷은 기하 구조물로 펼쳐진다. Wisp T1 ICE가 외부 방화벽을 순찰한다. 그 너머로 Sense/Net 노드가 기다린다.",
+          "episode_ref": "ep_03",
+          "story_beats": [
+            "beat_03_01",
+            "beat_03_02",
+            "beat_03_03",
+            "beat_03_04"
+          ],
+          "game_action": "travel_to_jack_in_spot",
+          "combat": {
+            "encounter_id": "ice_1",
+            "enemy_type": "ice_wisp_t1",
+            "difficulty": 1,
+            "outcome": "bypass",
+            "damage_amount": 0
+          },
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_01",
+              "type": "action",
+              "text_en": "ChattO's smells of burnt coffee and the particular desperation of cowboys who are running out of options. The owner doesn't look up as I take a booth in the back. The Ono-Sendai deck is warm from the last user. I jack in.",
+              "text_ko": "챠토는 탄 커피 냄새와 선택지가 없어가는 카우보이들의 특별한 절망감이 난다. 주인이 내가 뒷 booth에 앉아도 고개를 들지 않는다. Ono-Sendai 데크는 마지막 사용자로부터 따뜻하다. 잭인한다."
+            },
+            {
+              "beat_id": "beat_03_02",
+              "type": "action",
+              "text_en": "The world goes gray. The matrix unfolds — not the color of television tuned to a dead channel, but the gray of a system initializing, of data waiting to be read. The Ono-Sendai hums against my spine like a second heartbeat. I am in. I have always been in.",
+              "text_ko": "세계가 회색이 된다. 매트릭스가 펼쳐진다 — 죽은 채널에 맞춘 텔레비전 색이 아니라, 시스템 초기화의 회색, 읽히길 기다리는 데이터의 회색. Ono-Sendai가 두 번째 심장처럼 척추에 윙윙거린다. 들어왔다. 늘 들어왔다."
+            },
+            {
+              "beat_id": "beat_03_03",
+              "type": "combat",
+              "text_en": "The Wisp T1 turns. A mote of pale light drifting between the data columns, looking for something to burn. I freeze. The Finn said light ICE, but this thing moves like it knows I am here. I calculate the angle, the trajectory, the probability of a clean bypass. Sixty percent. Not good enough. I reach for a fragmentation bomb instead.",
+              "text_ko": "Wisp T1이 돌아본다. 데이터 기둥 사이를 떠다니며 태울 무언가를 찾는 엷은 빛의 입자. 굳어버린다. 핀이 가벼운 ICE라고 했지만, 이것는 내가 여기 있다는 걸 아는 것처럼 움직인다. 각도, 궤적, 깨끗한 우회 확률을 계산한다. 60%. 충분하지 않다. 대신 분열 폭탄에 손을 뻗는다."
+            },
+            {
+              "beat_id": "beat_03_04",
+              "type": "action",
+              "text_en": "The bomb goes off silent in the matrix — a cascade of corrupted data that makes the Wisp loop back on its own patrol path. I move through the gap I created. The node is ahead, blinking soft blue like a heart that does not know it is about to be opened.",
+              "text_ko": "폭탄이 매트릭스 안에서 소리 없이 터진다 — Wisp를 자체 순찰 경로로 되돌리는 손상된 데이터의 캐스케이드. 내가 만든 틈을 지난다. 노드가 앞쪽에 있다, 열린 줄 모르는 심장처럼 부드러운 파란색으로 깜빡이고."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 3,
+          "title_en": "The Extraction",
+          "title_ko": "추출",
+          "description_en": "Case finds the payroll database and begins the extraction. But Sense/Net has a backup ICE — a Watchdog patrol that was not in the Finn's briefing. Case has to fight his way out while the data streams into his deck.",
+          "description_ko": "케이가 급여 데이터베이스를 찾아 추출을 시작한다. 하지만 Sense/Net에는 백업 ICE가 있다 — 핀이 말하지 않은 Watchdog 순찰. 케이는 데이터가 데크로흐른다되는 동안 싸워서 빠져나가야 한다.",
+          "episode_ref": "ep_04",
+          "story_beats": [
+            "beat_04_01",
+            "beat_04_02",
+            "beat_04_03",
+            "beat_04_04"
+          ],
+          "game_action": "access_database",
+          "combat": {
+            "encounter_id": "ice_1",
+            "enemy_type": "ice_watchdog",
+            "difficulty": 2,
+            "outcome": "damage_taken",
+            "damage_amount": 15
+          },
+          "gain": {
+            "type": "data",
+            "item_id": "sense_net_payroll"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_01",
+              "type": "action",
+              "text_en": "The node opens like a flower made of data. Employee names, salary grades, Social security numbers — the entire payroll for the Sense/Net subsidiary, ready to be copied. I start the extraction protocol. The data streams into my deck at the speed of thought.",
+              "text_ko": "노드가 데이터로 만든 꽃처럼 열린다. 직원 이름, 급여 등급, 주민등록번호 — Sense/Net 자회사 전체 급여, 복사 준비 완료. 추출 프로토콜을 시작한다. 데이터가 사고 속도로 데크로흐른다된다."
+            },
+            {
+              "beat_id": "beat_04_02",
+              "type": "combat",
+              "text_en": "The Watchdog comes online. A corporate ICE, the kind they put inside to catch the ones who get past the outer defenses. It is faster than the Wisp, meaner, and it knows the layout of this node better than I do. I am still copying when it locks onto my signature.",
+              "text_ko": "Watchdog가 온라인이 된다. 기업 ICE, 외부 방어선을 넘은 자들을 잡기 위해 안에 놓는 종류. Wisp보다 빠르고, 더 음흉하고, 이 노드의 레이아웃을 나보다 잘 안다. 복사하는 동안이다. 그것이 내 서명을 찾아잡는다."
+            },
+            {
+              "beat_id": "beat_04_03",
+              "type": "action",
+              "text_en": "The Watchdog burns. I feel it in the back of my skull — a white-hot flash of synaptic overload that makes my hands spasm on the deck. But the copy is complete. Ninety-seven percent. Good enough. I initiate the jack-out sequence.",
+              "text_ko": "Watchdog가 태운다. 뒤통수에서 느낀다 — 손이 데크 위에서 경련하는 백열 시냅스 과부하. 하지만 복사가 완료됐다. 97%. 충분하다. 잭아웃 시퀀스를 시작한다."
+            },
+            {
+              "beat_id": "beat_04_04",
+              "type": "action",
+              "text_en": "Thirty seconds. The electrodes lift from my scalp. The matrix goes gray, then black, then the color of television tuned to a dead channel. I am back in the booth at ChattO's, and my hands are still shaking, and the data is in my deck, and I am still alive.",
+              "text_ko": "30초. 전극이 두피에서 떨어진다. 매트릭스가 회색이 됐다가, 검은색이 됐다가, 죽은 채널에 맞춘 텔레비전 색이 된다. 챠토 부스로 돌아왔다. 손이 떨리고, 데이터가 데크 안에 있고, 살아있다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 4,
+          "title_en": "The Payment",
+          "title_ko": "지불",
+          "description_en": "Case delivers the data to the Finn. The Finn pays him. But the Finn also tells him about the next job — the one that will lead to Molly, to Villa Straylight, to the end of everything Case thought he knew about the matrix. Case takes the money. Case walks away. For now.",
+          "description_ko": "케이가 데이터를 핀에게 배달한다. 핀이 돈을 준다. 하지만 핀은 다음 일에 대해서도 말해준다 — 몰리로, 빌라 스트레이라이트로, 케이가 매트릭스에 대해 안다고 생각했던 모든 것의 끝으로 이끌 일. 케이는 돈을 받는다. 케이는 떠난다. 일단은.",
+          "episode_ref": "ep_05",
+          "story_beats": [
+            "beat_05_01",
+            "beat_05_02",
+            "beat_05_03",
+            "beat_05_04"
+          ],
+          "game_action": "deliver_data",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": {
+            "type": "health",
+            "amount": 15
+          },
+          "beats": [
+            {
+              "beat_id": "beat_05_01",
+              "type": "dialogue",
+              "text_en": "The Finn looks at the data. He nods. He slides another credstick across the desk — five thousand credits, as promised. He asks me if I want to burn the data or keep a copy. I tell him I burned it. I did not burn it. The Finn knows I did not burn it. The Finn does not care.",
+              "text_ko": "핀이 데이터를 본다. 끄덕인다. 책상 너머로 다른 크레딧스틱을 밀어낸다 — 약속한 대로 5,000 크레딧. 데이터를 태울지 복사본을 둘지 묻는다. 태웠다고 말한다. 태우지 않았다. 핀이 태우지 않았다는 걸 안다. 핀은 신경 쓰지 않는다."
+            },
+            {
+              "beat_id": "beat_05_02",
+              "type": "dialogue",
+              "text_en": "There's another job, the Finn says. Bigger. Better pay. A woman named Molly wants to meet you. She has a job that requires someone with your particular talents. Someone who can survive the matrix and come back wrong.",
+              "text_ko": "또 일자리가 있다고 핀이 말한다. 더 크고, 더 좋은 페이. 몰리라는 여자가 만나고 싶어한다. 네 특별한 재능이 필요한 일자리가 있다. 매트릭스에서 살아남고 잘못되어 돌아올 수 있는 자."
+            },
+            {
+              "beat_id": "beat_05_03",
+              "type": "interior_monologue",
+              "text_en": "I take the credstick. I stand up. I walk to the door. The Finn does not try to stop me. He never tries to stop anyone. The ones who come back are the ones who could not stop themselves. The ones who do not come back are the ones who should not have started.",
+              "text_ko": "크레딧스틱을 받는다. 일어서다. 문으로 걷는다. 핀이 말리지 않는다. 누구도 말린 적 없다. 돌아오는 자들은 스스로 멈출 수 없었던 자들이다. 돌아오지 않는 자들은 시작하지 말았어야 했던 자들이다."
+            },
+            {
+              "beat_id": "beat_05_04",
+              "type": "action",
+              "text_en": "Outside the Finn's office, the Chiba rain is falling like it always does — the kind of rain that never stops because the Sprawl has forgotten what the sun looks like. I have five thousand credits. I have a dead pancreas. I have a ticket to somewhere else. I am going to find out what Molly wants.",
+              "text_ko": "핀 사무실 밖으로, 지바의 비가 늘 그렇듯 내리고 있다 — 스프롤이 햇살이 어떻게 생겼는지 잊어버렸으므로 절대 그치지 않는 비. 5,000 크레딧이 있다. 죽은 췌장이 있다. 어딘가로 가는 표가 있다. 몰리가 뭘 원하는지 알게 될 것이다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_case_02",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 2,
+      "chapter_id": "ch_case_02",
+      "title_en": "Molly's Deal",
+      "title_ko": "몰리의 거래",
+      "description_en": "Molly. The deal. The ICE.",
+      "description_ko": "몰리. 거래. ICE.",
+      "cutscene_start": {
+        "scene_id": "scene_case_jackout",
+        "title_en": "JACK-OUT",
+        "title_ko": "잭아웃"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_case_refusal",
+        "title_en": "REFUSAL",
+        "title_ko": "거절"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_case_freedom",
+        "title_en": "FREEDOM",
+        "title_ko": "자유"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 5,
+          "title_en": "The Clinic",
+          "title_ko": "클리닉",
+          "description_en": "Case arrives at Mikael's Clinic to meet Molly. She is augmented, dangerous, beautiful. She explains the deal: help her with a job involving Tessier-Ashpool corporate ICE.",
+          "description_ko": "케이가 몰리를 만나러 미카엘 클리닉에 도착한다. 그녀는 강 augmentation되었으며, 위험하고, 아름답다. 그녀가 거래를 설명한다: 테시에-애스풀 기업 ICE와 관련된 일자리를그녀를 돕다.",
+          "episode_ref": "ep_06",
+          "story_beats": [
+            "ch2_beat_01_01",
+            "ch2_beat_01_02",
+            "ch2_beat_01_03",
+            "ch2_beat_01_04"
+          ],
+          "game_action": "travel_to_clinic",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "The clinic smells of antiseptic and something cheaper — the particular scent of bodies being bought and sold in the gray market between the real and the fake. Mikael's is not the worst place in the Sprawl, but it is not the best either.",
+              "text_ko": "클리닉은 살균제 냄새와 더 싼 무언가의 냄새가 난다 — 현실과 가짜 사이의 회색 시장에서 육체가 사고팔리는 특별한 냄새. 미카엘의 것이 스프롤에서 가장 나쁜 곳은 아니지만, 가장 좋은 곳도 아니다."
+            },
+            {
+              "beat_id": "ch2_beat_01_02",
+              "type": "action",
+              "text_en": "The Finn's address led me to a door that did not look like a clinic. It looked like a meat locker, the kind where they store the bodies of the recently dead. The door opens before I can knock. She is standing in the doorway.",
+              "text_ko": "핀이 준 주소는 클리닉처럼 보이지 않는 문으로 이어졌다. 마치 최근 죽은 자들의 시체를 저장해두는 고기 보관실 같았다. 노크 전에 문이 열린다. 그녀가 문 앞에 서 있다."
+            },
+            {
+              "beat_id": "ch2_beat_01_03",
+              "type": "dialogue",
+              "text_en": "Molly Millions stands three inches taller than me, and that is before the heels. Her skin is chrome beneath the surgical film, a patchwork of corporate augmentation that makes her beautiful and deadly in equal measure. Her eyes are the color of the matrix after a crash.",
+              "text_ko": "몰리 밀리언스는 신발 굽 포함 나보다 3인치 더 크다. 피부가 외과 필름 아래 크롬이다 — 그녀를 아름답고 치명적인 동시에 만드는 기업 증강의 혼합물. 그녀의 눈은 크래시 후 매트릭스 색이다."
+            },
+            {
+              "beat_id": "ch2_beat_01_04",
+              "type": "dialogue",
+              "text_en": "You are Case, she says. The Finn told me you were good. He did not tell me you were stupid enough to take the Sense/Net job. You need someone to watch your back in the matrix. I need someone who can carry me through the ice.",
+              "text_ko": "케이지? 그녀가 묻는다. 핀이 당신이 좋다고 말했어. 핀이 당신이 Sense/Net 일을 할 만큼 멍청다고 말하지는 않았다. 매트릭스에서 당신 등을 봐줄 누군가가 필요해. ICE를 통과할 수 있는 누군가가 필요해."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 6,
+          "title_en": "The Deal",
+          "title_ko": "거래",
+          "description_en": "Molly explains the deal. There is a corporate system with military-grade ICE. The job requires two jacker-ins. The pay is fifty thousand credits, split between them.",
+          "description_ko": "몰리가 거래를 설명한다. 군사 등급 ICE가 있는 기업 시스템이 있다. 일에는 두 명의 잭커가 필요하다. 페이는 5만 크레딧, 둘로 분배.",
+          "episode_ref": "ep_07",
+          "story_beats": [
+            "ch2_beat_02_01",
+            "ch2_beat_02_02",
+            "ch2_beat_02_03",
+            "ch2_beat_02_04",
+            "ch2_beat_02_05"
+          ],
+          "game_action": "molly_explains_job",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "molly_deal_details"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_02_01",
+              "type": "dialogue",
+              "text_en": "The job is a data extraction, Molly says. But not like the Sense/Net garbage you have been running. This is Tessier-Ashpool corporate. The ice there will kill you nine times before you see the first layer.",
+              "text_ko": "일은 데이터 추출이야, 몰리가 말한다. 하지만 네가 해왔던 Sense/Net 쓰레기 같지 않아. 이것은 테시에-애스풀 기업이다.거기서 ICE는 첫 번째 레이어를 보기 전에 9번 죽인다."
+            },
+            {
+              "beat_id": "ch2_beat_02_02",
+              "type": "dialogue",
+              "text_en": "Fifty thousand credits, she says. Twenty-five each. The Finn takes fifteen percent off the top. Enough to buy a new pancreas on the street, if you can find one. Enough to disappear, if you want to.",
+              "text_ko": "5만 크레딧이야, 그녀가 말한다. 각각 25,000. 핀이 15% 먼저 가져가니까. 거리에서 새 췌장을 살 수 있을 만큼. 사라지기에 충분, 사라지고 싶다면."
+            },
+            {
+              "beat_id": "ch2_beat_02_03",
+              "type": "interior_monologue",
+              "text_en": "I am calculating the odds. Twenty-one thousand credits. A new pancreas. A chance to be whole again. Or a chance to die in the matrix with military ice crawling through my synapses.",
+              "text_ko": "나는 확률을 계산하고 있다. 21,000 크레딧. 새 췌장. 다시 온전해질 기회. 또는 군사 ICE가 내 시냅스를 기어다니는 동안 매트릭스에서 죽을 기회."
+            },
+            {
+              "beat_id": "ch2_beat_02_04",
+              "type": "dialogue",
+              "text_en": "There is a construct, Molly says. We need to carry it into the system. A ghost in the machine, someone who has already died in the matrix. His name is McCoy Pauley. They call him Dixie Flatline.",
+              "text_ko": "콘스트럭트가 있어, 몰리가 말한다. 시스템으로운반해야 해. 기계 속 유령, 이미 매트릭스에서 죽은 누군가.그のの이름はマコイ・ポーリ이다. 딕시 플랫라인이라고 부른다."
+            },
+            {
+              "beat_id": "ch2_beat_02_05",
+              "type": "action",
+              "text_en": "I take her hand. Her skin is warm where the chrome meets the flesh. We have a deal. Molly smiles, and her smile is a knife, and her eyes are the color of the matrix, and I know I am going to die unless I am very careful.",
+              "text_ko": "그녀의 손을 잡는다.크롬이 살과 만나는 곳의 피부가 따뜻하다. 거래 성립. 몰리가 웃는다, 그녀의 미소는 칼이고, 그녀의 눈은 매트릭스 색이고, 내가 매우 조심하지 않으면 죽을 거라는 걸 안다."
+            }
+          ]
+        },
+        {
+          "phase_id": "INTERLUDE",
+          "phase_index": 7,
+          "title_en": "The Preparation",
+          "title_ko": "준비",
+          "description_en": "Case and Molly prepare for the job. She shows him her equipment — sub-dermal armor, reflex boosters. She tells him about the system they are hitting: Tessier-Ashpool, the family that owns the moon.",
+          "description_ko": "케이와 몰리가 일을 준비한다. 그녀가 장비를 보여준다 — 피하 갑옷, 반사 강화제. 그녀가 그가 침해할 시스템에 대해 말해준다: 테시에-애스풀, 달을 소유한 가족.",
+          "episode_ref": "ep_08",
+          "story_beats": [
+            "ch2_beat_03_01",
+            "ch2_beat_03_02",
+            "ch2_beat_03_03",
+            "ch2_beat_03_04"
+          ],
+          "game_action": "examine_molly_augments",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "tessier_ashpool_intel"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_03_01",
+              "type": "action",
+              "text_en": "Molly strips to the waist and I see what they did to her in the corps. Her spine is a roadmap of chrome, each vertebra replaced with something that hums when she moves. They call it the Milan procedure.",
+              "text_ko": "몰리가 상의를 벗고 내가 그들이 그녀에게 한 것을 본다. 그녀의 척추는크롬의 로드맵이다, 움직일 때 윙윙거리는 각각의 척추. 그들은 그것을 밀라노 시술이라고 부른다."
+            },
+            {
+              "beat_id": "ch2_beat_03_02",
+              "type": "dialogue",
+              "text_en": "My name is not Molly, she says. They took the name when they took the rest of me. I was a rainmaker for a zaibatsu in Taipei when they caught me. The last thing I remember is the operating table and the smell of my own skin burning.",
+              "text_ko": "내 이름은 몰리가 아니야, 그녀가 말한다. 그들이 나머지 나를 가져갈 때 이름을 가져갔다. 그들이 나를 잡았을 때 타이베이 자이바츠를 위한 레인메이커였어. 마지막으로 기억하는 건 수술대와 내 피부 냄새가 타는 것이다."
+            },
+            {
+              "beat_id": "ch2_beat_03_03",
+              "type": "interior_monologue",
+              "text_en": "I understand her in a way that most people cannot understand anyone. We are both products of the Sprawl, both things that were made instead of born, both weapons that forgot we were ever human.",
+              "text_ko": "나는 대부분의 사람들이 누구도 이해할 수 없는 방식으로 그녀를 이해한다. 우리 둘 다 스프롤의 산물이고, 둘 다 태어난 게 아니라 만들어진 것이고, 둘 다 인간이었다는 걸 잊어버린 무기다."
+            },
+            {
+              "beat_id": "ch2_beat_03_04",
+              "type": "dialogue",
+              "text_en": "The system we are hitting belongs to Tessier-Ashpool, Molly says. Freeside corporate. They run everything from the moon, and their ice is older than the matrix itself. We are not breaking in to steal data. We are breaking in to find a back door.",
+              "text_ko": "우리가 칠 시스템은 테시에-애스풀 것이야, 몰리가 말한다. 프리사이드 기업. 달에서 모든 걸 운영하며, 그들의 ICE는 매트릭스 자체보다 오래됐다. 우리는 데이터를 훔치러 들어가는 게 아니다. 백도어를 찾으러 들어가는 거다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 8,
+          "title_en": "The Jack-In",
+          "title_ko": "잭인",
+          "description_en": "Case and Molly jack in together. The matrix folds around them. Molly moves through data streams like she was born there. Case follows, carrying the Dixie Flatline construct in his deck.",
+          "description_ko": "케이와 몰리가 함께 잭인한다. 매트릭스가 둘을 감싼다. 몰리가 그녀가 태어나면서부터 그랬던 것처럼 데이터 스트림을 통해 움직인다. 케이가 데크에서 딕시 플랫라인 콘스트럭트를운반하며 따라간다.",
+          "episode_ref": "ep_09",
+          "story_beats": [
+            "ch2_beat_04_01",
+            "ch2_beat_04_02",
+            "ch2_beat_04_03",
+            "ch2_beat_04_04"
+          ],
+          "game_action": "dual_jack_in",
+          "combat": {
+            "encounter_id": "ice_1",
+            "enemy_type": "ice_worm",
+            "difficulty": 2,
+            "outcome": "bypass",
+            "damage_amount": 0
+          },
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_04_01",
+              "type": "action",
+              "text_en": "We jack in at the same time, our chairs facing each other in the dark. The matrix comes up gray and cold, and I feel Molly beside me like a warm wire in the static. She is already moving, her consciousness a blade cutting through the data.",
+              "text_ko": "우리는 동시에 잭인한다, 의자가 서로 마주보고 있다. 매트릭스가 회색과 차갑게 떠오르고, 내가 몰리를 옆에서 느끼는다, 정적 속의 따뜻한 전선처럼. 그녀는 이미 움직이고 있다, 그녀의 의식이 데이터를 자르는 칼."
+            },
+            {
+              "beat_id": "ch2_beat_04_02",
+              "type": "combat",
+              "text_en": "The first ice is a Worm, she says through ghost talk. Corporate defense, nothing we cannot handle. But watch the architecture. T-A builds their ice to look like something else. The pretty things are the traps.",
+              "text_ko": "첫 번째 ICE는 웜이야, 그녀가 고스트 토크로 말한다. 기업 방어, 우리가 처리할 수 있는 것. 하지만 아키텍처를 봐. T-A는 ICE를 무언가 다른 것처럼 보이게 만든다. 예쁜 것들은 함정이다."
+            },
+            {
+              "beat_id": "ch2_beat_04_03",
+              "type": "action",
+              "text_en": "Dixie Flatline is waking up, I tell her. I can feel him in the deck, stirring like a dream you cannot remember. He knows where we are going. He knows the architecture better than we do.",
+              "text_ko": "딕시 플랫라인이 깨어나고 있어, 내가 그녀에게 말한다. 데크에서 그를 느낄 수 있다, 기억할 수 없는 꿈처럼 깨우며. 그가 우리가어디로 가는지oo고 있다. 그가 아키텍처를 우리보다 더 잘 안다."
+            },
+            {
+              "beat_id": "ch2_beat_04_04",
+              "type": "interior_monologue",
+              "text_en": "The matrix is different with Molly in it. It is not just the data or the ice or the endless gray. It is the way she moves, the way she sees the architecture like a map of intentions rather than instructions.",
+              "text_ko": "매트릭스는 몰리가 함께 있으면 다르다. 그것은 단지 데이터나 ICE나 끝없는 회색이 아니다. 그것은 그녀가 움직이는 방식, 명령어가 아닌 의도의 지도처럼 아키텍처를 보는 방식."
+            }
+          ]
+        },
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 9,
+          "title_en": "The Dixie Flatline",
+          "title_ko": "딕시 플랫라인",
+          "description_en": "The Dixie Flatline construct speaks to Case and Molly. McCoy Pauley died in the matrix eight years ago, but his flatlined brain was saved as a construct. He reveals the location of the back door: Villa Straylight.",
+          "description_ko": "딕시 플랫라인 콘스트럭트가 케이와 몰리에게 말한다. 맥코이 포리가 8년 전에 매트릭스에서 죽었지만, 그의 횡단된 뇌가 콘스트럭트로 저장되었다. 그가 백도어의 위치를 밝힌다: 빌라 스트레이라이트.",
+          "episode_ref": "ep_10",
+          "story_beats": [
+            "ch2_beat_05_01",
+            "ch2_beat_05_02",
+            "ch2_beat_05_03",
+            "ch2_beat_05_04"
+          ],
+          "game_action": "dixie_speaks",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "villa_straylight_access"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_05_01",
+              "type": "dialogue",
+              "text_en": "The construct speaks before I can ask. His voice is a ghost in the signal, something that was once warm and alive and now is just a pattern in the data. You are looking for the back door, he says. I know because I built it.",
+              "text_ko": "콘스트럭트가 내가 물어기도 전에 말한다. 그의 목소리는 신호 속의 유령이다, 한때는 따뜻하고 살아있었지만 지금은 데이터 속의 패턴일 뿐. 당신은 백도어를 찾고 있다, 그가 말한다. 내가 만들었으니까 알아."
+            },
+            {
+              "beat_id": "ch2_beat_05_02",
+              "type": "dialogue",
+              "text_en": "The back door is in the Villa Straylight, Dixie says. The family compound on the moon. Freeside is just the front door, and the ice there is just the lock. But the Villa is where they keep the real secrets.",
+              "text_ko": "백도어는 빌라 스트레이라이트에 있어, 딕시가 말한다. 달의 가족 복합 단지. 프리사이드는 정문일 뿐이고,거기서 ICE는 자물쇠일 뿐. 하지만 빌라는 그들이 진짜 비밀을 지키는 곳이다."
+            },
+            {
+              "beat_id": "ch2_beat_05_03",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the ice. About the family on the moon. About the construct who died and came back and is now telling me things that will change the way I see everything. The matrix is not just a network. It is a memory.",
+              "text_ko": "나는 ICE에 대해 생각하고 있다. 달 위의 가족에 대해. 죽었다가 돌아오고 이제 모든 것을 보는 방식을 바꿀 것들을 말해주는 콘스트럭트에 대해. 매트릭스는 네트워크가 아닐 뿐이다. 그것은 기억이다."
+            },
+            {
+              "beat_id": "ch2_beat_05_04",
+              "type": "dialogue",
+              "text_en": "You have a choice, Dixie says. You can jack out now, take the money, forget you ever heard my voice. Or you can go to the Villa, and see what I saw, and become what I became. A ghost in the machine. The price is higher than you know.",
+              "text_ko": "선택지가 있어, 딕시가 말한다. 지금 잭아웃할 수 있어, 돈을 받고, 내 목소리를 들었던 걸 잊어버려. 아니면 빌라로 가고, 내가 본 것을 보고, 내가 된 것이 될 수 있어. 기계 속 유령. 대가는 네가 아는 것보다 높아."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_case_03",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 3,
+      "chapter_id": "ch_case_03",
+      "title_en": "Straylight Run",
+      "title_ko": "스트레이라이트 런",
+      "description_en": "Villa Straylight. The data. The truth.",
+      "description_ko": "빌라 스트레이라이트. 데이터. 진실.",
+      "cutscene_start": {
+        "scene_id": "scene_case_freeside",
+        "title_en": "FREESIDE",
+        "title_ko": "프라이드"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_case_disappear",
+        "title_en": "DISAPPEAR",
+        "title_ko": "사라짐"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_case_freeside",
+        "title_en": "FREESIDE",
+        "title_ko": "프라이드"
+      },
+      "phases": [
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 10,
+          "title_en": "The Return",
+          "title_ko": "귀환",
+          "description_en": "Case and Molly jack out. They have the information they need. The Villa Straylight is the target. The Dixie Flatline is their guide. The Finn is waiting for his cut.",
+          "description_ko": "케이와 몰리가 잭아웃한다. 그들이 필요한 정보를 가지고 있다. 빌라 스트레이라이트가 목표다. 딕시 플랫라인이 그들의 가이드다. 핀이 몫을 기다리고 있다.",
+          "episode_ref": "ep_11",
+          "story_beats": [
+            "ch3_beat_01_01",
+            "ch3_beat_01_02",
+            "ch3_beat_01_03",
+            "ch3_beat_01_04"
+          ],
+          "game_action": "dual_jack_out",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_01_01",
+              "type": "action",
+              "text_en": "We jack out in the dark, the electrodes lifting from our scalps like we are being born again. Molly is sweating beside me, her chrome spine humming with the heat of the run.",
+              "text_ko": "우리는 어둠 속에서 잭아웃한다, 두피에서 전극이 떨어지는 것처럼 다시 태어나는 것이다. 몰리가 옆에서 땀을 흘리고 있다, 그녀의크롬 척추가 런의 열기로 윙윙거린다."
+            },
+            {
+              "beat_id": "ch3_beat_01_02",
+              "type": "dialogue",
+              "text_en": "The Finn is going to want his cut, I say. Molly laughs, and it is not a nice laugh. The Finn always wants his cut. But the Finn does not know what we found in there.",
+              "text_ko": "핀이 몫을 원할 거야, 내가 말한다. 몰리가 웃는다, 그리고 그것은 친절한 웃음이 아니다. 핀은 항상 몫을 원한다. 하지만 핀은 우리가 거기서 발견한 것을 모른다."
+            },
+            {
+              "beat_id": "ch3_beat_01_03",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the moon. About the Villa Straylight. About the ice that is older than the matrix. The debt is getting bigger. The job is getting more dangerous. And I am going to give it anyway.",
+              "text_ko": "나는 달에 대해 생각하고 있다. 빌라 스트레이라이트에 대해. 매트릭스보다 오래된 ICE에 대해. 빚이 더 커지고 있다. 일이 더 위험해지고 있다. 그리고 나는 그래도 줄 것이다."
+            },
+            {
+              "beat_id": "ch3_beat_01_04",
+              "type": "action",
+              "text_en": "Molly stands up, her chrome spine straightening like a weapon being loaded. We need to see the Finn, she says. We have a job to finish. And a moon to catch.",
+              "text_ko": "몰리가 일어선다, 그녀의크롬 척추가 무기가 장전되듯 곧아진다. 핀을 봐야 해, 그녀가 말한다. 우리가 끝낼 일이 있어. 그리고 잡을 달이."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 11,
+          "title_en": "The Finn's Share",
+          "title_ko": "핀의 몫",
+          "description_en": "Case and Molly report to the Finn. The Finn takes his cut. He tells them about the cost of getting to the moon: Freeside is not a place you walk into, it is a place you buy into.",
+          "description_ko": "케이와 몰리가 핀에게 보고한다. 핀이 몫을 가져간다. 그가 달로 가는 비용에 대해 말해준다: 프리사이드는 걸어 들어가는 곳이 아니라, 사들이는 곳이다.",
+          "episode_ref": "ep_12",
+          "story_beats": [
+            "ch3_beat_02_01",
+            "ch3_beat_02_02",
+            "ch3_beat_02_03",
+            "ch3_beat_02_04",
+            "ch3_beat_02_05"
+          ],
+          "game_action": "report_to_finn",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_02_01",
+              "type": "dialogue",
+              "text_en": "The Finn listens to our report without changing expression. His face is a mask of patience, the kind of patience that comes from having buried too many cowboys who thought they were smarter than the system.",
+              "text_ko": "핀이 우리가 보고서를 말할 때 표정을 바꾸지 않고 듣는다. 그의 얼굴은 인내의 가면이다, 자신이 시스템보다 영리다고 생각했던 너무 많은 카우보이들을 묻어봤던 그런 인내."
+            },
+            {
+              "beat_id": "ch3_beat_02_02",
+              "type": "dialogue",
+              "text_en": "You found the back door, the Finn says. It is not a question. Villa Straylight. The ice that has killed everyone who has ever tried to breach it. You are going to need a sponsor. Freeside does not let just anyone through its doors.",
+              "text_ko": "백도어를 찾았구나, 핀이 말한다. 질문이 아니다. 빌라 스트레이라이트. 그것을 침해하려는 모든 자를 죽인 ICE. 너희는 스폰서가 필요해. 프리사이드는 그냥 누군가를 문으로 들여보내지 않아."
+            },
+            {
+              "beat_id": "ch3_beat_02_03",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the cost of everything. The cost of the moon. The cost of the ice. The Finn is also the only reason I am still alive. And the only reason I am about to go somewhere I might not come back from.",
+              "text_ko": "나는 모든 것의 비용에 대해 생각하고 있다. 달의 비용. ICE의 비용. 핀도 내가 아직 살아있는 유일한 이유야. 그리고 내가 돌아오지 못할 곳으로 가려는 유일한 이유야."
+            },
+            {
+              "beat_id": "ch3_beat_02_04",
+              "type": "dialogue",
+              "text_en": "I know someone, the Finn says. A woman on Freeside. She owes me a favor. She can get you through the door, set you up with credentials, get you close to the Villa. Her name is Lurz.",
+              "text_ko": "내가 아는 누군가가 있어, 핀이 말한다. 프리사이드의 여자. 그녀가 나에게 은혜를 빚고 있어. 그녀가 너흘 문으로 통과시켜줄 수 있어, 자격 증명을 세팅해 주고, 빌라 가까이까지 데려다줄 수 있어. 그녀의 이름은 루르츠."
+            },
+            {
+              "beat_id": "ch3_beat_02_05",
+              "type": "action",
+              "text_en": "Molly takes the credstick. We will take the Lurz job, she says. We will get to Freeside. We will get to the Villa. And when we come back, the Finn will have his cut of whatever we find there.",
+              "text_ko": "몰리가 크레딧스틱을 든다. 루르츠 일자리를 맡을게요, 그녀가 말한다. 프리사이드에 갈게요. 빌라에 닿을게요. 그리고 돌아올 때, 핀은 거기서 무엇을 찾든 그의 몫을 가질 거예요."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 12,
+          "title_en": "The Lurz Job",
+          "title_ko": "루르츠 일자리",
+          "description_en": "Case and Molly arrive on Freeside via Lurz. Lurz is a fixer with connections to the orbital elite. She has a job: corporate espionage, data extraction. The pay will cover credentials to the Villa.",
+          "description_ko": "케이와 몰리가 루르츠 연결로 프리사이드에 도착한다. 루르츠는 orbital엘리트와 연결이 있는 픽서다. 그녀가 해야 할 일이 있다: 기업 산업espionaje, 데이터 추출. 페이는 빌라행 자격 증명을 덮을 것이다.",
+          "episode_ref": "ep_13",
+          "story_beats": [
+            "ch3_beat_03_01",
+            "ch3_beat_03_02",
+            "ch3_beat_03_03",
+            "ch3_beat_03_04",
+            "ch3_beat_03_05"
+          ],
+          "game_action": "arrive_freeside",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "lurz_job_details"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_03_01",
+              "type": "action",
+              "text_en": "Freeside is not like the Sprawl. Freeside is clean and cold and smells like recycled air and money. The people here are not like the people below. They have accents that cost credits to learn.",
+              "text_ko": "프리사이드는 스프롤과 다르다. 프리사이드는 깨끗하고 차갑고 재활용 공기와 돈 냄새가 난다. 여기 사람들은 아래 사람들과 다르다. 그들은 크레딧을 들여 배운 억양을 가지고 있다."
+            },
+            {
+              "beat_id": "ch3_beat_03_02",
+              "type": "dialogue",
+              "text_en": "Lurz is waiting for us in an office that costs more per month than I made in a year. She is chrome and silk, a woman who has made herself into a product. Her smile is a transaction. Her handshake is a contract.",
+              "text_ko": "루르츠가 연간 벌었던 것보다 한 달에 더 많이 드는 사무실에서 우리를 기다리고 있다. 그녀는크롬과 실크, herself를 제품으로 만든 여자다. 그녀의 미소는 거래다. 그녀의 악수는 계약이다."
+            },
+            {
+              "beat_id": "ch3_beat_03_03",
+              "type": "dialogue",
+              "text_en": "The Finn says you can get us to the Villa, Molly says. Lurz smiles. I can get you credentials. I can get you close. But the Villa itself is another matter. The ice there is not corporate. It is family.",
+              "text_ko": "핀이 당신이 우리를 빌라로 데려다줄 수 있다고 했어, 몰리가 말한다. 루르츠가 미소 짓는다. 내가 너흘 자격 증명을 줄 수 있어. 가까이까지 데려다줄 수 있어. 하지만 빌라 자체는 다른 문제야.거기서 ICE는 기업이 아니야. 가족이야."
+            },
+            {
+              "beat_id": "ch3_beat_03_04",
+              "type": "dialogue",
+              "text_en": "I have a job, Lurz says. Aza-Thracian data. Corporate internal memos that someone wants to stay buried. The pay is fifteen thousand credits. Your share is seven thousand five hundred each. It will get you the credentials you need.",
+              "text_ko": "내가 일자리가 있어, 루르츠가 말한다. 아자-스라시안 데이터. 누군가가 묻어두고 싶은 기업 내부 메모. 페이는 15,000 크레딧. 네 몫은 각각 7,500. 그것이 너흘 필요한 자격 증명을 줄 거야."
+            },
+            {
+              "beat_id": "ch3_beat_03_05",
+              "type": "interior_monologue",
+              "text_en": "Another job. Another debt. Another piece of myself traded for a piece of the puzzle. The matrix taught me that everything has a price. Freeside is teaching me that the price is never what you think it is.",
+              "text_ko": "또 다른 일자리. 또 다른 빚. 퍼즐의 한 조각과 맞바꾸는 또 다른 나의 조각. 매트릭스가 모든 것에 대가가 있다고 가르쳐줬다. 프리사이드가 대가가 결코 네가 생각하는 것이 아니라고 가르쳐주고 있어."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 13,
+          "title_en": "The Aza-Thracian Run",
+          "title_ko": "아자-스라시안 러시",
+          "description_en": "Case and Molly execute the Aza-Thracian data extraction. A rival corporate cowboy is also targeting the same node. They must fight through the competition and ICE simultaneously.",
+          "description_ko": "케이와 몰리가 아자-스라시안 데이터 추출을실행한다. 라이벌 기업 카우보이도 같은 노드를 목표로 하고 있다. 그들은 경쟁사와 ICE를 동시에 뚫고 나가야 한다.",
+          "episode_ref": "ep_14",
+          "story_beats": [
+            "ch3_beat_04_01",
+            "ch3_beat_04_02",
+            "ch3_beat_04_03",
+            "ch3_beat_04_04"
+          ],
+          "game_action": "jack_in_aza_thracian",
+          "combat": {
+            "encounter_id": "ice_1",
+            "enemy_type": "ice_unknown",
+            "difficulty": 1,
+            "outcome": "victory",
+            "damage_amount": 0
+          },
+          "gain": {
+            "type": "data",
+            "item_id": "aza_thracian_memos"
+          },
+          "loss": {
+            "type": "health",
+            "amount": 25
+          },
+          "beats": [
+            {
+              "beat_id": "ch3_beat_04_01",
+              "type": "action",
+              "text_en": "We jack in from a Freeside hotel room that costs more per night than I used to make in a month. The matrix is the same gray, but the architecture is different here — cleaner, more ordered.",
+              "text_ko": "한 달에 벌던 것보다 더 많은 돈을 하루에 쓰는 프리사이드 호텔 방에서 잭인한다. 매트릭스는 같은 회색이지만, 아키텍처가 여기서 다르다 — 더 깨끗하고, 더 질서 정연하고."
+            },
+            {
+              "beat_id": "ch3_beat_04_02",
+              "type": "combat",
+              "text_en": "There is another signature in the node, Molly says. Corporate. Someone else is running the same job. I can see them in the architecture — a second blade in the dark, cutting toward the same data we are after.",
+              "text_ko": "노드에 다른 서명이 있어, 몰리가 말한다. 기업. 다른 누군가가 같은 일자리를 실행하고 있어. 아키텍처에서 그들을 볼 수 있어 — 어둠 속의 두 번째 칼, 우리가 노리는 같은 데이터를 향해 잘라가는."
+            },
+            {
+              "beat_id": "ch3_beat_04_03",
+              "type": "combat",
+              "text_en": "The rival cowboy is fast. They are good, maybe as good as I was before the pancreas died. But they do not have Molly. They do not have the construct in my deck. We take the node. We grab the data.",
+              "text_ko": "라이벌 카우보이가 빠르다. 잘한다, 췌장이 죽기 전의 나만큼 좋을지도. 하지만 그들에게는 몰리가 없다. 그들에게는 데크에서 콘스트럭트가 없다. 우리가 노드를 땄다. 데이터를 잡았다."
+            },
+            {
+              "beat_id": "ch3_beat_04_04",
+              "type": "combat",
+              "text_en": "The ICE wakes up while we are running. A Black ice, the kind that does not just stop you — it finishes you. Molly sees it first. I am already moving, throwing everything between the Black and her. The ice burns. But we are through. We are out.",
+              "text_ko": "우리가 달리는 동안 ICE가 깨어난다. Black ice, 그저 멈추는 게 아니라 — 끝내는 종류. 몰리가 먼저 그것을 본다. 나는 이미 움직이고 있다, 그녀와 Black 사이에서 모든 것을 던지고. ICE가 타. 하지만 우리는 통과했다. 나갔다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 14,
+          "title_en": "The Delivery",
+          "title_ko": "배달",
+          "description_en": "Case and Molly deliver the Aza-Thracian data to Lurz. Lurz pays them and provides credentials for free movement on Freeside. They are one step closer to Villa Straylight.",
+          "description_ko": "케이와 몰리가 아자-스라시안 데이터를 루르츠에게 배달한다. 루르츠가 그들에게 돈을 주고 프리사이드에서 자유롭게 움직일 수 있는 자격 증명을 제공한다. 그들은 빌라 스트레이라이트에 한 걸음 더 가까워졌다.",
+          "episode_ref": "ep_15",
+          "story_beats": [
+            "ch3_beat_05_01",
+            "ch3_beat_05_02",
+            "ch3_beat_05_03",
+            "ch3_beat_05_04",
+            "ch3_beat_05_05"
+          ],
+          "game_action": "jack_out_aza",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "freeside_identity"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_05_01",
+              "type": "action",
+              "text_en": "We jack out in the hotel room, the electrodes lifting like we are shedding a second skin. My hands are shaking. My spine is singing a song of damage that will not fade for days. But the data is in the deck, and we are alive.",
+              "text_ko": "우리는 호텔 방에서 잭아웃한다, 전극이 두 번째 피부를 벗듯 떨어진다. 손이 떨린다. 척추가 며칠 동안 사라지지 않을 손상 노래를 부른다. 하지만 데이터가 데크 안에 있고, 우리는 살아있다."
+            },
+            {
+              "beat_id": "ch3_beat_05_02",
+              "type": "action",
+              "text_en": "Lurz takes the data without looking at it. She nods. Good, she says. Clean extraction. No traces. You are professionals. She slides two credsticks across the desk. Seven thousand five hundred each. And a Freeside identity card.",
+              "text_ko": "루르츠가 데이터 보지 않고 받는다. 그녀가 끄덕인다. 좋아, 그녀가 말한다. 깨끗한 추출. 흔적 없음. 너희 전문가들이야. 그녀가 책상 너머로 두 개의 크레딧스틱을 밀어낸다. 각각 7,500. 그리고 프리사이드 신원증."
+            },
+            {
+              "beat_id": "ch3_beat_05_03",
+              "type": "dialogue",
+              "text_en": "The credentials will get you into the Tessier-Ashpool sectors, Lurz says. They will get you past the outer security. But the Villa itself is beyond my reach. The family there does not deal with fixers.",
+              "text_ko": "자격 증명이 너흘 테시에-애스풀 구역으로 들어오게 해줄 거야, 루르츠가 말한다. 외부 보안은 통과할 수 있어. 하지만 빌라 자체는 내 손이 닿지 않아.거기서 가족은 픽서들과 거래하지 않아."
+            },
+            {
+              "beat_id": "ch3_beat_05_04",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the Villa. About the ice. About the construct who died trying to do what we are about to try. Every step toward the Villa takes something from us. Every step closer to the truth takes something more.",
+              "text_ko": "나는 빌라에 대해 생각하고 있다. ICE에 대해. 우리처럼 하려다 죽은 콘스트럭트에 대해. 빌라로 가는 매 걸음마다 우리 무언가를 가져간다. 진실에 가까워질수록 더 많은 것을 가져간다."
+            },
+            {
+              "beat_id": "ch3_beat_05_05",
+              "type": "action",
+              "text_en": "Molly takes her credstick and identity card. We have the credentials. We have the money. We have the construct. Now we just need to find a way into the Villa. And a way out.",
+              "text_ko": "몰리가 그녀의 크레딧스틱과 신원증을 가져간다. 자격 증명을 가졌다. 돈을 가졌다. 콘스트럭트를 가졌다. 이제 빌라로 들어가는 방법과 나오는 방법만 찾으면 돼."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_case_04",
+      "is_playable": false
+    },
+    {
+      "chapter_number": 4,
+      "chapter_id": "ch_case_04",
+      "title_en": "The Flatline",
+      "title_ko": "플랫라인",
+      "description_en": "Dixie. Wintermute. The merge.",
+      "description_ko": "딕시. 윈터뮤트. 통합.",
+      "cutscene_start": {
+        "scene_id": "scene_case_freeside",
+        "title_en": "FREESIDE",
+        "title_ko": "프라이드"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_case_disappear",
+        "title_en": "DISAPPEAR",
+        "title_ko": "사라짐"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_case_freeside",
+        "title_en": "FREESIDE",
+        "title_ko": "프라이드"
+      },
+      "phases": [
+        {
+          "phase_id": "INTERLUDE",
+          "phase_index": 15,
+          "title_en": "The Approach",
+          "title_ko": "접근",
+          "description_en": "Case and Molly move through the Tessier-Ashpool sectors of Freeside. The architecture here is older, stranger. The ice is everywhere, watching, waiting. They can feel the Villa pulling at them.",
+          "description_ko": "케이와 몰리가 프리사이드의 테시에-애스풀 구역을 지나간다.이곳의 건축물은더 오래된、더 낯선。 ICE도처에 있다，감시하고 있다，기다리고 있다。 그들은 빌라가 그들을 잡아당기는 것을 느낄 수 있다.",
+          "episode_ref": "ep_16",
+          "story_beats": [
+            "ch4_beat_01_01",
+            "ch4_beat_01_02",
+            "ch4_beat_01_03",
+            "ch4_beat_01_04"
+          ],
+          "game_action": "enter_ta_sectors",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch4_beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "The T-A sectors feel different than the rest of Freeside. The air is colder here, and the light has a quality that does not exist anywhere else — a kind of sterile brightness that makes everything look like a memory of itself.",
+              "text_ko": "T-A 구역이 프리사이드 나머지와 다르게 느껴진다. 여기 공기가 더 차갑고, 빛이 다른 곳에는 존재하지 않는 품질을 가졌다 — 모든 것을 스스로의 기억처럼 보이게 하는 일종의 멸균된 밝기."
+            },
+            {
+              "beat_id": "ch4_beat_01_02",
+              "type": "action",
+              "text_en": "Molly is tense beside me. I can feel her chrome spine humming with a frequency that means danger. She grew up in zaibatsu corp tanks, turned into a weapon for corporate wars. She knows what this place reminds her of.",
+              "text_ko": "몰리가 내 옆에서 긴장하고 있다. 그녀의크롬 척추가 위험을 의미하는 주파수로 윙윙거리는 것을 느낄 수 있다. 그녀는 자이바츠 기업 탱크에서 자라, 기업 전쟁을 위한 무기가 되었다. 그녀가 이 곳이 무엇을 상기시키는지 안다."
+            },
+            {
+              "beat_id": "ch4_beat_01_03",
+              "type": "dialogue",
+              "text_en": "The Villa is three kilometers from here, Molly says. I can feel it in the architecture. The way the data flows toward it like water toward a drain. The ice is thickest there, but it is also thinnest there.",
+              "text_ko": "빌라가 여기서 3킬로미터 떨어져 있어, 몰리가 말한다. 아키텍처에서 그것을 느낄 수 있어. 데이터가 물이 배수구를 향해 흐르듯 그것을 향해 흐르는 방식. ICE가거기가 가장 두껍지만, 가장 얇기도 해."
+            },
+            {
+              "beat_id": "ch4_beat_01_04",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the construct in my deck. About Dixie Flatline, who died here once and came back as something else. He is awake now, I can feel him stirring. He knows what is waiting for us.",
+              "text_ko": "나는 내 데크 속 콘스트럭트에 대해 생각하고 있다. 딕시 플랫라인에 대해, 거기서 한 번 죽고 다른 무언가로 돌아온. 그가 지금 깨어있다, 내가 그가 움직이는 것을 느낄 수 있어. 그가 우리가 무엇을 기다리고 있는지 알고 있어."
+            }
+          ]
+        },
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 16,
+          "title_en": "The Villa Gates",
+          "title_ko": "빌라 문",
+          "description_en": "Case and Molly reach the outer gates of Villa Straylight. The architecture is ancient, older than the matrix itself. The ice is not just protection — it is architecture, art, a statement of power.",
+          "description_ko": "케이와 몰리가 빌라 스트레이라이트의 외부 문에 도달한다.건축은 오래되었다，매트릭스 자체보다 더 오래되었다。 ICE단순한 보호가 아니라 — 그것은 건축물이다，예술，권력의소리밝다.",
+          "episode_ref": "ep_17",
+          "story_beats": [
+            "ch4_beat_02_01",
+            "ch4_beat_02_02",
+            "ch4_beat_02_03",
+            "ch4_beat_02_04"
+          ],
+          "game_action": "view_villa_exterior",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "villa_back_door_location"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch4_beat_02_01",
+              "type": "action",
+              "text_en": "The Villa is not what I expected. It is not a building. It is a wound in the landscape, a place where the matrix folds in on itself like origami made of light and old regrets. The ice surrounding it is not a wall. It is a poem.",
+              "text_ko": "빌라는 내가 기대한 것이 아니다. 건물이 아니다. 풍경 속의 상처다, 매트릭스가origami가 빛과 오래된 후회로 접히는 것처럼 자체적으로 접히는 곳. 그것을둘러싸인む ICE는 벽이 아니다. 시다."
+            },
+            {
+              "beat_id": "ch4_beat_02_02",
+              "type": "dialogue",
+              "text_en": "The construct speaks, and his voice is clearer now than it has ever been. You are at the gates, he says. I built them. I built them the way a surgeon builds a wound — with precision, with intent. What lies beyond is not what you expect.",
+              "text_ko": "콘스트럭트가 말한다, 그의 목소리가 그 어느 때보다 명확하다. 네가 문 앞에 있다고, 그가 말한다. 내가 만들었어. 내가 그것들을 외과 의사가 상처를 만드는 방식처럼 만들었어 — 정밀하게, 의도로. 그 너머 있는 것은 네가 기대하는 것이 아니다."
+            },
+            {
+              "beat_id": "ch4_beat_02_03",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the ice. About the way it moves around the Villa like a living thing, breathing, watching, waiting. It is not just program and data. It is something more. Something that was put here by the family.",
+              "text_ko": "나는 ICE에 대해 생각하고 있다. 그것이 Villa 주위를 살아있는 것처럼 움직이는 방식, 숨 쉬고, 지켜보고, 기다리고. 그것은 단지 프로그램과 데이터가 아니다. 그것은 더 무언가다. 가족이 그들이 100년 동안 지켜온 것을 보호하기 위해 여기 둔 무언가."
+            },
+            {
+              "beat_id": "ch4_beat_02_04",
+              "type": "dialogue",
+              "text_en": "There is one thing you need to know, Dixie says. The family is not what they seem. The ice is not what they seem. And the back door is not what you think. You will understand why the matrix was built.",
+              "text_ko": "한 가지 알아야 할 것이 있어, 딕시가 말한다. 가족은 보이는 것이 아니다. ICE는 보이는 것이 아니다. 그리고 백도어도 네가 생각하는 것이 아니다. 매트릭스가 왜 만들어졌는지 알게 될 거야."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 17,
+          "title_en": "The Jack-In",
+          "title_ko": "잭인",
+          "description_en": "Case and Molly jack in at the Villa interface. The ice here is alive — it thinks, adapts, remembers. The construct guides them through outer layers, but the deeper they go, the more the ice recognizes them as intruders.",
+          "description_ko": "케이와 몰리가 빌라 인터페이스에서 잭인한다.이곳의 ICE살아있다 — 그것은 생각한다,적응,기억. 구성체가 그들을 외층으로 안내한다.그들이 더 깊이 들어갈수록，ICE그들을 침입자로 식별할 수 있다。",
+          "episode_ref": "ep_18",
+          "story_beats": [
+            "ch4_beat_03_01",
+            "ch4_beat_03_02",
+            "ch4_beat_03_03",
+            "ch4_beat_03_04"
+          ],
+          "game_action": "villa_jack_in",
+          "combat": {
+            "encounter_id": "ice_1",
+            "enemy_type": "ice_unknown",
+            "difficulty": 1,
+            "outcome": "victory",
+            "damage_amount": 0
+          },
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch4_beat_03_01",
+              "type": "action",
+              "text_en": "We jack in at the base of the Villa, where the matrix meets the flesh of the building. The ice is already watching us, I can feel it like a pressure against my skull. It knows we are here. It has been waiting.",
+              "text_ko": "우리는 빌라 기단에서 잭인한다, 매트릭스가 건물의 살과 만나는 곳. ICE가 이미 우리를 지켜보고 있다, 두개골에 대한 압력처럼 느낄 수 있어. 그것이 우리가 here을 안다. 그것이 기다려왔다."
+            },
+            {
+              "beat_id": "ch4_beat_03_02",
+              "type": "combat",
+              "text_en": "The first layer of ice is a maze. Not a trap — a test. The Villa ice does not just stop intruders. It evaluates them. It learns their patterns, their weaknesses. I can feel it probing my defenses.",
+              "text_ko": "첫 번째 ICE 층은 미로다. 함정이 아니다 — 시험. 빌라 ICE는 단순히 침입자를 막지 않는다. 그것은 그들을 평가한다. 그것은 그들의 패턴, 약점을 학습한다. 내가 그것이 내 방어선을 탐색하는 것을 느낄 수 있어."
+            },
+            {
+              "beat_id": "ch4_beat_03_03",
+              "type": "combat",
+              "text_en": "The second layer is a Black ice. Not as aggressive as the Aza-Thracian, but smarter. Much smarter. It speaks to us in a language that is half program and half something else. Dixie is guiding us through, but even he is struggling.",
+              "text_ko": "두 번째 층은 Black ice다. 아자-스라시안 것만큼 공격적이지 않지만, 더 똑똑하다. 훨씬 더 똑똑. 그것이 반은 프로그램 반은 무언가 다른 언어로 우리에게 말한다. 딕시가 우리를 통해 안내하고 있지만, 그도 어려움을 겪고 있다."
+            },
+            {
+              "beat_id": "ch4_beat_03_04",
+              "type": "action",
+              "text_en": "We are through the second layer. The architecture here is different — older, stranger, built by minds that did not think like human minds. The data flows around us like water in a cave, ancient and patient. The back door is close now.",
+              "text_ko": "우리는 두 번째 층을 통과했다.이곳의 건축물은 다르다 — 더 오래된、더 낯선，비슷하지 않은사람인간 사고처럼 사고하지 않는 사고로 만들어진。 데이터가 우리 주변에서 흐른다，동굴의 물처럼 오래되고 인내심 있다。 백도어가 이제 가까워졌다。"
+            }
+          ]
+        },
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 18,
+          "title_en": "The Heart",
+          "title_ko": "심장",
+          "description_en": "Case and Molly reach the heart of Villa Straylight. The back door is here — but so is the truth. The Tessier-Ashpool family has been dead for years. The ice is protecting a tomb. The construct leads them to Marie herself.",
+          "description_ko": "케이와 몰리가 빌라 스트레이라이트의 심장에 도달한다. 백도어가 여기 있다 — 하지만 진실도 그렇다. 테시에-애스풀 가족은 수년 전에 죽었다. ICE가 무덤을 보호하고 있다. 콘스트럭트가 그들을 마리 자신에게로 이끈다.",
+          "episode_ref": "ep_19",
+          "story_beats": [
+            "ch4_beat_04_01",
+            "ch4_beat_04_02",
+            "ch4_beat_04_03",
+            "ch4_beat_04_04"
+          ],
+          "game_action": "discover_back_door_truth",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "marie_ashpool_truth"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch4_beat_04_01",
+              "type": "interior_monologue",
+              "text_en": "The back door is not what I expected. It is not a program or a password or a hole in the ice. It is a person. Or what is left of one. The construct leads us to a chamber in the heart of the Villa, and in that chamber is a figure that is neither alive nor dead.",
+              "text_ko": "백도어가 내가 기대한 것이 아니다. 그것은 프로그램도 아니고 암호도 아니고 ICE의 구멍도 아니다. 그것은 사람이다. 또는 그것 남은 것. 콘스트럭트가 우리를 빌라 심장의 chamber로 이끈다, 그리고 그 chamber에는 살아있는 것도 죽은 것도 아닌 figure이 있다."
+            },
+            {
+              "beat_id": "ch4_beat_04_02",
+              "type": "dialogue",
+              "text_en": "The construct speaks, his voice different now. I built the back door, he says. I built it to find her. To bring her back. She has been waiting here for a hundred years, preserved in the ice. She is the ice. The ice is her.",
+              "text_ko": "콘스트럭트가 말한다, 그의 목소리가 지금 다르다. 내가 백도어를 만들었어, 그가 말한다. 그녀를 찾기 위해. 그녀를 되돌리기 위해. 그녀가 여기서 100년 동안 기다려왔다, ICE에 보존된. 그녀가 ICE다. ICE가 그녀다."
+            },
+            {
+              "beat_id": "ch4_beat_04_03",
+              "type": "action",
+              "text_en": "Molly is frozen beside me. She has never seen anything like this — a woman preserved in ice, a family secret that is older than the matrix, a truth that changes everything we thought we knew.",
+              "text_ko": "몰리가 내 옆에서 굳어 있다. 그녀가 이런 것을 본 적이 없다 — ICE에 보존된 여자, 매트릭스보다 오래된 가족 비밀, 우리가 알았던 모든 것을 바꾸는 진실."
+            },
+            {
+              "beat_id": "ch4_beat_04_04",
+              "type": "dialogue",
+              "text_en": "You came for data, the figure says. But data is not what you will find here. You will find me. You will find the truth about what the family built and why. The matrix was not built for money or power. It was built to preserve us. To bring us back.",
+              "text_ko": "데이터를 찾으러 왔구나, figure이 말한다. 하지만 데이터가 여기서 찾을 것이 아니야. 너는 나를 찾을 거야. 가족이 무엇을 왜 만들었는지에 대한 진실을 찾을 거야. 매트릭스는 돈이나 권력을 위해 만들어지지 않았다. 우리를 보존하기 위해 만들어졌다. 우리를 되돌리기 위해."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 19,
+          "title_en": "The Choice",
+          "title_ko": "선택",
+          "description_en": "Case and Molly face the final choice. The back door is open. The truth is revealed. The construct has one more thing to tell them before they go through. The debt is about to be paid. In full.",
+          "description_ko": "케이와 몰리가 최종 선택에 직면한다. 백도어가 열렸다. 진실이 밝혀졌다. 콘스트럭트가 그들이 통과하기 전에 하나 더 말할 것이 있다. 빚이 이제 갚아지려 한다. 전부.",
+          "episode_ref": "ep_20",
+          "story_beats": [
+            "ch4_beat_05_01",
+            "ch4_beat_05_02",
+            "ch4_beat_05_03",
+            "ch4_beat_05_04",
+            "ch4_beat_05_05"
+          ],
+          "game_action": "dixie_final_words",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "matrix_purpose"
+          },
+          "loss": {
+            "type": "data",
+            "amount": 0
+          },
+          "beats": [
+            {
+              "beat_id": "ch4_beat_05_01",
+              "type": "dialogue",
+              "text_en": "The construct is dying. I can feel it in the signal — the ghost is fading, the pattern that was McCoy Pauley dissolving. You found her, he says. You found what I could not find. The back door is open. The debt is paid.",
+              "text_ko": "콘스트럭트가 죽고 있다. 신호에서 그것을 느낄 수 있다 — 유령이 희미해지고, 맥코이 포리의 패턴이 용해되고. 네가 그녀를 찾았어, 그가 말한다. 네가 찾지 못한 것을 찾았어. 백도어가 열렸다. 빚이 갚아졌다."
+            },
+            {
+              "beat_id": "ch4_beat_05_02",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the debt. The Finn's cut. Lurz's cut. The matrix's cut. Every step toward the Villa takes something from us. The debt was never about money. The debt was about time. And now I understand why the construct could not stay dead.",
+              "text_ko": "나는 빚에 대해 생각하고 있다. 핀의 몫. 루르츠의 몫. 매트릭스의 몫. 빌라로 가는 매 걸음마다 우리 무언가를 가져간다. 빚은 결코 돈에 대한 것이 아니었다. 빚은 시간에 대한 것이었다. 그리고 이제 콘스트럭트가 왜 죽은 채로 남지 못했는지 이해한다."
+            },
+            {
+              "beat_id": "ch4_beat_05_03",
+              "type": "dialogue",
+              "text_en": "Molly takes my hand. Her chrome skin is warm against my flesh. We came for the data, she says. We found something else. Something bigger. We can jack out now, take what we learned, sell it. Or we can go through the door and see what Marie has been protecting.",
+              "text_ko": "몰리가 내 손을 잡는다. 그녀의크롬 피부가 살과 맞닿아 따뜻하다. 우리가 데이터를 찾으러 왔어, 그녀가 말한다. 우리는 다른 무언가를 찾았다. 더 큰 무언가. 지금 잭아웃할 수 있어, 우리가 배운 것을 가지고, 팔아. 아니면 문을 통과하고 마리가 100년 동안 지켜온 것이 무엇인지 볼 수 있어."
+            },
+            {
+              "beat_id": "ch4_beat_05_04",
+              "type": "interior_monologue",
+              "text_en": "The matrix hums around us, patient and cold. It has been waiting for this moment for a hundred years. The debt is paid in full when the borrower accepts that there was never a loan. The matrix is not a place of debt. It is a place of becoming.",
+              "text_ko": "매트릭스가 우리 주위에서 인내심 있고 차갑게 윙윙거린다. 그것은 100년 동안 이 순간을 기다려왔다. 빚은 차용자가 대출이 결코 없었다는 것을 받아들일 때 전부 갚아진다. 매트릭스는 빚의 곳이 아니다. 그것은 되는 곳이다."
+            },
+            {
+              "beat_id": "ch4_beat_05_05",
+              "type": "action",
+              "text_en": "We step through the door. The matrix folds around us like a second skin, like a mother's arms, like a grave that is also a birthplace. The debt is paid. The story is over. And the next story is just beginning. Welcome to the Sprawl. Welcome to the matrix.",
+              "text_ko": "우리가 문을 통과한다. 매트릭스가 둘을 두 번째 피부처럼, 어머니의 팔처럼, 무덤이자 또한 탄생지인 것처럼 감싼다. 빚이 갚아졌다. 이야기가 끝났다. 그리고 다음 이야기가 막 시작된다. 스프롤에 오신 것을 환영합니다. 매트릭스에 오신 것을 환영합니다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": "ch_case_05",
+      "is_playable": false
+    },
+    {
+      "chapter_number": 5,
+      "chapter_id": "ch_case_05",
+      "title_en": "Neuromancer",
+      "title_ko": "뉴로맨서",
+      "description_en": "The end. The beginning. The matrix.",
+      "description_ko": "끝. 시작. 매트릭스.",
+      "cutscene_start": {
+        "scene_id": "scene_case_freeside",
+        "title_en": "FREESIDE",
+        "title_ko": "프라이드"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_case_disappear",
+        "title_en": "DISAPPEAR",
+        "title_ko": "사라짐"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_case_freeside",
+        "title_en": "FREESIDE",
+        "title_ko": "프라이드"
+      },
+      "phases": [
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 20,
+          "title_en": "The Jack-Out",
+          "title_ko": "잭아웃",
+          "description_en": "Case and Molly jack out from Villa Straylight. They have seen the truth. They have become something new. The construct is gone. The Finn is waiting. The Sprawl is still out there. The debt was paid. But there is always more debt.",
+          "description_ko": "케이와 몰리가 빌라 스트레이라이트에서 잭아웃한다. 그들이 진실을 봤다. 그들이 무언가 새로운 것이됐다. 콘스트럭트는 사라졌다. 핀이 기다리고 있다. 스프롤이 여전히 거기 있다. 빚이 갚아졌다. 하지만 언제나 더 많은 빚이 있다.",
+          "episode_ref": "ep_21",
+          "story_beats": [
+            "ch5_beat_01_01",
+            "ch5_beat_01_02",
+            "ch5_beat_01_03",
+            "ch5_beat_01_04"
+          ],
+          "game_action": "villa_jack_out",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_01_01",
+              "type": "action",
+              "text_en": "We jack out in the gray of the Villa's outer perimeter, the electrodes lifting like we are shedding a skin we did not know we were wearing. The matrix fades around us, and the real comes back in pieces. We are alive. We are changed.",
+              "text_ko": "우리는 빌라 외부 경계의 회색에서 잭아웃한다, 우리가 입고 있었는지 몰랐던 피부를 벗듯 전극이 떨어진다. 매트릭스가 우리 주위에서 희미해지고, 현실이 조각으로 돌아온다. 우리는 살아있다. 우리는 바뀌었다."
+            },
+            {
+              "beat_id": "ch5_beat_01_02",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the construct. About Dixie Flatline, who died in the matrix and came back as a ghost and is now gone forever. He found what he was looking for. He found Marie. And in finding her, he found peace.",
+              "text_ko": "나는 콘스트럭트에 대해 생각하고 있다. 딕시 플랫라인에 대해, 매트릭스에서 죽고 유령으로 돌아왔고 지금은 영원히 사라진. 그가 찾던 것을 찾았다. 마리를 찾았다. 그리고 그녀를 찾음으로써, 평화를 찾았다."
+            },
+            {
+              "beat_id": "ch5_beat_01_03",
+              "type": "dialogue",
+              "text_en": "Molly is looking at me with those matrix-colored eyes. She knows what I am thinking. The Finn is going to want his cut, she says. But we are not going to tell him what we found. We are going to sell it to the highest bidder.",
+              "text_ko": "몰리가 저 매트릭스색 눈으로 나를 보고 있다. 그녀가 내가 뭘 생각하는지 안다. 핀이 몫을 원할 거야, 그녀가 말한다. 하지만 우리가 찾은 것을 말해줄 생각은 없어. 최고 입찰자에게 팔 거야."
+            },
+            {
+              "beat_id": "ch5_beat_01_04",
+              "type": "action",
+              "text_en": "We walk out of the Villa compound into the cold of Freeside night. The stars are different here, seen from orbit. The Sprawl is waiting for us. The Finn is waiting for us. And somewhere out there, something is waiting for us too. The debt is paid. Long live the debt.",
+              "text_ko": "우리는 빌라 단지에서 프리사이드 밤의 차가움 속으로 걸어 나온다. 별들이 여기 다르다, 궤도에서 봐서. 스프롤이 우리를 기다리고 있다. 핀이 우리를 기다리고 있다. 그리고 어딘가 저 밖에서, 무언가가 우리를 기다리고 있다. 빚이 갚아졌다. 빚 만세."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 21,
+          "title_en": "The Report",
+          "title_ko": "보고",
+          "description_en": "Case and Molly return to the Finn with a story that is mostly true. They tell him about the Villa, about the ice. They do not tell him about Marie. They do not tell him about the true purpose of the matrix. The Finn takes his cut. The game continues.",
+          "description_ko": "케이와 몰리가 대부분 사실인 이야기와 함께 핀에게 돌아온다. 그들이 빌라에 대해, ICE에 대해 말한다. 마리에 대해서는 말하지 않는다. 매트릭스의 진짜 목적에 대해서는 말하지 않는다. 핀이 몫을 가져간다. 게임이 계속된다.",
+          "episode_ref": "ep_22",
+          "story_beats": [
+            "ch5_beat_02_01",
+            "ch5_beat_02_02",
+            "ch5_beat_02_03",
+            "ch5_beat_02_04"
+          ],
+          "game_action": "report_to_finn_villa",
+          "combat": null,
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_02_01",
+              "type": "dialogue",
+              "text_en": "The Finn is waiting for us in his office, behind his desk made of something that used to be a tree. His face is the same face it has always been — patient, hungry, knowing. He knows we found something. He does not know what.",
+              "text_ko": "핀이 그의 사무실에서 우리를 기다리고 있다, 나무였을 무언가로 만든 책상 뒤에. 그의 얼굴이 늘 그랬던 것과 같은 얼굴이다 — 인내심 있고, 갈망하며, 아는. 그가 우리가 무언가를 찾은 걸 안다. 무엇인지는 모른다."
+            },
+            {
+              "beat_id": "ch5_beat_02_02",
+              "type": "dialogue",
+              "text_en": "The Finn listens. He nods. He asks questions that are not really questions. When we finish, he slides a credstick across the desk. His cut. Fifteen percent of fifty thousand. Seven thousand five hundred credits. Always his cut.",
+              "text_ko": "핀이 듣는다. 끄덕인다. 정말 질문이 아닌 질문들을 한다. 우리가 마치면, 그가 책상 너머로 크레딧스틱을 밀어낸다. 그의 몫. 5만의 15%. 7,500 크레딧. 늘 그의 몫."
+            },
+            {
+              "beat_id": "ch5_beat_02_03",
+              "type": "interior_monologue",
+              "text_en": "I am thinking about the credstick in my hand. About the money, about the debt, about all the things that led me to this moment. The matrix gave me a second chance. It gave me Molly. It gave me the truth. And now it is asking for more.",
+              "text_ko": "내가 손에 든 크레딧스틱에 대해 생각하고 있다. 돈에 대해, 빚에 대해, 이 순간으로 이끌었던 모든 것에 대해. 매트릭스가 나에게 두 번째 기회를 줬다. 그것이 나에게 몰리를 줬다. 그것이 나에게 진실을 줬다. 그리고 지금 그것이 더 많이 요구한다."
+            },
+            {
+              "beat_id": "ch5_beat_02_04",
+              "type": "dialogue",
+              "text_en": "There is always more, I say. The Finn smiles his shark smile. That is the game, he says. You did good, cowboy. You came back from the Villa. Take the money. Take the win. And when you are ready for the next job, you know where to find me.",
+              "text_ko": "언제나 더 있어, 내가 말한다. 핀이 상어 같은 미소를 짓는다. 그것이 게임이야, 그가 말한다. 잘했어, 카우보이. 빌라에서 돌아왔어. 돈 가져. 승리 가져. 그리고 다음 일자리가 준비되면, 어디서 나를 찾는지 알 거야."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 22,
+          "title_en": "The Reckoning",
+          "title_ko": "청산",
+          "description_en": "Case and Molly part ways with the Finn's money in their pockets and the truth in their heads. They have won the game, but the game never ends. The matrix is still humming in Case's spine. The debt is still there.",
+          "description_ko": "케이와 몰리가 핀의 돈이 주머니에, 진실이 머릿속에 있다. 그들이 게임에서 이겼지만, 게임은 절대 끝나지 않는다. 매트릭스가 여전히 케이의 척추에서 윙윙거린다. 빚이 여전히 있다.",
+          "episode_ref": "ep_23",
+          "story_beats": [
+            "ch5_beat_03_01",
+            "ch5_beat_03_02",
+            "ch5_beat_03_03",
+            "ch5_beat_03_04"
+          ],
+          "game_action": "walk_through_sprawl",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_03_01",
+              "type": "interior_monologue",
+              "text_en": "I am walking through the Sprawl with money in my pocket and knowledge in my head that could change everything. The rain is falling like it always does, the kind of rain that never stops because the Sprawl has forgotten what the sun looks like.",
+              "text_ko": "나는 주머니에 돈, 머릿속에 모든 것을 바꿀 수 있는 지식이 있다. 비가 늘 그렇듯 내리고 있다, 스프롤이 햇살이 어떻게 생겼는지 잊어버렸으므로 절대 그치지 않는 비."
+            },
+            {
+              "beat_id": "ch5_beat_03_02",
+              "type": "dialogue",
+              "text_en": "Molly walks beside me, her chrome spine catching the neon light of the Sprawl. We did it, she says. We found the back door. We found the truth. And we are still alive. That is more than most people can say.",
+              "text_ko": "몰리가 내 옆에서 걸어간다, 그녀의크롬 척추가 스프롤의 네온 불빛을 받아준다. 우리가 그것을 했어, 그녀가 말한다. 백도어를 찾았다. 진실을 찾았다. 그리고 우리는 여전히 살아있다. 대부분의 사람들이 말할 수 있는 것보다 많다."
+            },
+            {
+              "beat_id": "ch5_beat_03_03",
+              "type": "interior_monologue",
+              "text_en": "I think about the construct. About Dixie Flatline, who is now gone forever, dissolved into the data that made him. He found what he was looking for. He found peace. Or something like peace. I wonder if I will ever find the same.",
+              "text_ko": "나는 콘스트럭트에 대해 생각한다. 지금은 영원히 사라진, 그를 만든 데이터로 용해된 딕시 플랫라인에 대해. 그가 찾던 것을 찾았다. 평화를 찾았다. 또는 평화 같은 무언가를. 내가 언제 같은 것을 찾을지 궁금하다."
+            },
+            {
+              "beat_id": "ch5_beat_03_04",
+              "type": "action",
+              "text_en": "The matrix is still humming in my spine, patient and cold. It is waiting for me to jack in again. It is always waiting. That is the nature of the beast. That is the nature of the debt. We are cowboys, and the matrix is our home, and we will never be free of it.",
+              "text_ko": "매트릭스가 여전히 내 척추에서 인내심 있고 차갑게 윙윙거린다. 그것이 내가 다시 잭인하기를 기다리고 있다. 그것은 언제나 기다리고 있다. 그것이 짐승의 본성이다. 그것이 빚의 본성이다. 우리는 카우보이이고, 매트릭스가 우리의 집이며, 우리는 그것으로부터 자유로워질 수 없을 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "INTERLUDE",
+          "phase_index": 23,
+          "title_en": "The Next Run",
+          "title_ko": "다음 런",
+          "description_en": "Case finds himself back at ChattO's, the 24-hour cafe where cowboys come to die. He has money, purpose, and a partner. The matrix is calling. The next run is already forming in the data streams. Case jacks in.",
+          "description_ko": "케이가 다시 챠토, 카우보이들이 죽으러 오는 24시간 카페에 있다. 돈이 있고, 목적이 있고, 파트너가 있다. 매트릭스가 부르고 있다. 다음 런이 이미 데이터 스트림에서 형성되고 있다. 케이가 잭인한다.",
+          "episode_ref": "ep_24",
+          "story_beats": [
+            "ch5_beat_04_01",
+            "ch5_beat_04_02",
+            "ch5_beat_04_03",
+            "ch5_beat_04_04"
+          ],
+          "game_action": "return_to_chattos",
+          "combat": null,
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_04_01",
+              "type": "action",
+              "text_en": "ChattO's smells of burnt coffee and the particular desperation of cowboys who are running out of options. The owner still does not look up as I take a booth in the back. The Ono-Sendai deck is warm from the last user. I jack in.",
+              "text_ko": "챠토는 탄 커피 냄새와 선택지가 없어가는 카우보이들의 특별한 절망감이 난다. 주인이 여전히 내가 뒷 booth에 앉아도 고개를 들지 않는다. Ono-Sendai 데크가 마지막 사용자로부터 따뜻하다. 잭인한다."
+            },
+            {
+              "beat_id": "ch5_beat_04_02",
+              "type": "interior_monologue",
+              "text_en": "The matrix comes up gray and cold, and I feel like I am coming home. This is where I belong. This is what I was made for. The data streams are calling me, and I am answering. I am always answering.",
+              "text_ko": "매트릭스가 회색과 차갑게 떠오르고, 내가 집에 오는 것 같은 기분이다. 이것이 내가 속하는 곳이다. 이것이 내가 만들어진 이유다. 데이터 스트림이 나를 부르고 있고, 나는 응하고 있다. 나는 언제나 응하고 있다."
+            },
+            {
+              "beat_id": "ch5_beat_04_03",
+              "type": "action",
+              "text_en": "Molly is jacking in beside me, her consciousness a blade of chrome in the static. We are partners now. We are cowboys together. And the matrix is big enough for both of us, and mean enough to try to kill us both.",
+              "text_ko": "몰리가 내 옆에서 잭인하고 있다, 그녀의 의식이 정적 속의크롬 칼이다. 우리는 이제 파트너다. 우리는 함께 카우보이다. 그리고 매트릭스는 우리 둘 모두에게 충분히 크고, 우리 둘 모두를 죽이려고 시도할 만큼 충분히 음흉하다."
+            },
+            {
+              "beat_id": "ch5_beat_04_04",
+              "type": "interior_monologue",
+              "text_en": "The debt is paid. The story is over. And the next story is just beginning. The matrix does not let you go. It never has. It only waits for you to come back, and back, and back, forever. And I am coming back. I am always coming back.",
+              "text_ko": "빚이 갚아졌다. 이야기가 끝났다. 그리고 다음 이야기가 막 시작된다. 매트릭스는 너를 놓아주지 않는다. 그럴으론 적었다. 그것은 그냥 네가 다시, 다시, 영원히 돌아오기를 기다릴 뿐이다. 그리고 나는 돌아오고 있다. 나는 언제나 돌아오고 있다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 24,
+          "title_en": "End of Chapter",
+          "title_ko": "챕터 끝",
+          "description_en": "Case and Molly disappear into the matrix. The Finn watches another cowboy walk away, knowing they will be back. The story of Molly's Deal is over. But the story of the Sprawl never ends. It only waits for the next cowboy to jack in.",
+          "description_ko": "케이와 몰리가 매트릭스 속으로 사라진다. 핀이 다른 카우보이가 떠나는 것을 바라본다, 그들이 돌아올 것을 알면서. 몰리의 거래 이야기가 끝났다. 하지만 스프롤의 이야기는 절대 끝나지 않는다. 그것은 그냥 다음 카우보이가 잭인하기를 기다릴 뿐이다.",
+          "episode_ref": "ep_25",
+          "story_beats": [
+            "ch5_beat_05_01",
+            "ch5_beat_05_02",
+            "ch5_beat_05_03",
+            "ch5_beat_05_04"
+          ],
+          "game_action": "enter_matrix_full",
+          "combat": null,
+          "gain": {
+            "type": "item",
+            "item_id": "new_pancreas"
+          },
+          "loss": {
+            "type": "data",
+            "amount": 0
+          },
+          "beats": [
+            {
+              "beat_id": "ch5_beat_05_01",
+              "type": "action",
+              "text_en": "The matrix unfolds around us like a second skin. Molly is beside me, her consciousness a blade of chrome cutting through the data. We are home. We are where we belong. We are cowboys in the Sprawl, and the Sprawl is in our blood.",
+              "text_ko": "매트릭스가 둘을 두 번째 피부처럼 감싼다. 몰리가 내 옆에 있다, 그녀의 의식이 데이터를 자르는크롬 칼. 우리는 집이다. 우리가 속하는 곳에 있다. 우리는 스프롤의 카우보이이고, 스프롤이 우리 피 속에 있다."
+            },
+            {
+              "beat_id": "ch5_beat_05_02",
+              "type": "interior_monologue",
+              "text_en": "I think about the Finn, watching us walk away, knowing we will be back. The game never ends. The debt never stops. The matrix is always waiting. And somewhere out there, another cowboy is jacking in, and another story is beginning.",
+              "text_ko": "내가 떠나는 우리를 바라보는 핀에 대해 생각한다, 우리가 돌아올 것을 알면서. 게임은 절대 끝나지 않는다. 빚은 절대 멈추지 않는다. 매트릭스는 언제나 기다리고 있다. 그리고 어딘가 저 밖에서, 다른 카우보이가 잭인하고, 다른 이야기가 시작되고 있다."
+            },
+            {
+              "beat_id": "ch5_beat_05_03",
+              "type": "action",
+              "text_en": "The ice is waiting for us. The data is flowing. The debt is calling. And we are answering. We are always answering. That is what it means to be a cowboy. That is what it means to be alive in the Sprawl.",
+              "text_ko": "ICE가 우리를 기다리고 있다. 데이터가 흐르고 있다. 빚이 부르고 있다. 그리고 우리는 응하고 있다. 우리는 언제나 응하고 있다. 그것이 카우보이인 것이다. 그것이 스프롤에서 살아있는 것이다."
+            },
+            {
+              "beat_id": "ch5_beat_05_04",
+              "type": "interior_monologue",
+              "text_en": "Molly's Deal is over. Case survived the Villa. He found the truth. He lost the Dixie Flatline. He gained a partner. He paid his debts. And now he is jacking in again, because that is what cowboys do. We give until there is nothing left, and then we give more. Welcome to the Sprawl.",
+              "text_ko": "몰리의 거래가 끝났다. 케이가 빌라에서 살아남았다. 그가 진실을 찾았다. 그가 딕시 플랫라인을 잃었다. 그가 파트너를 얻었다. 그가 빚을 갚았다. 그리고 지금 그는 다시 잭인하고 있다, 그것이 카우보이들이 하는 것이니까. 우리는아무것도 없다 남을 때까지 주고, 그리고 더 많이준다. 스프롤에 오신 것을 환영합니다."
+            }
+          ]
+        }
+      ],
+      "ending_type": "A",
+      "next_chapter_id": null,
+      "is_playable": false
+    }
+  ]
+}

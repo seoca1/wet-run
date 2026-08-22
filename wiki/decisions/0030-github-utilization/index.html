@@ -1,0 +1,2267 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ADR-0030: GitHub 활용 계획 (GitHub Utilization Plan) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-0030-github-github-utilization-plan" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ADR-0030: GitHub 활용 계획 (GitHub Utilization Plan)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 컨텍스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 목표
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 옵션 비교
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 옵션 비교">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-lingotype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A: lingotype 미러 (단일 저장소)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B: 모노레포 (워크스페이스)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-c-git-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option C: 외부 호스팅 + Git only
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-option-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 권장안 (Option A) 상세
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 권장안 (Option A) 상세">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 저장소 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-github-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 GitHub Actions 워크플로우
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 GitHub Actions 워크플로우">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-ci-githubworkflowsciyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A. CI 워크플로우 (.github/workflows/ci.yml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b-pages-githubworkflowspagesyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        B. Pages 배포 워크플로우 (.github/workflows/pages.yml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-issue-githublabeleryml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C. Issue 자동 라벨링 (.github/labeler.yml)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Branch 전략
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-github-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 GitHub Projects (보드)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-github-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 GitHub Releases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-github-wiki" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 GitHub Wiki
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-action-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 구현 단계 (Action Plan)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 구현 단계 (Action Plan)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-0-git-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0: Git 초기화 (즉시, 5분)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-github-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: GitHub 저장소 생성 (10분)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-ci-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: CI 워크플로우 (15분)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-pages-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Pages 배포 (10분)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-issue-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Issue 템플릿 + 라벨 (5분)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-5-projects-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Projects 보드 (5분)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-6-releases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6: Releases (선택)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 결과 (Consequences)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 결과 (Consequences)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2026-07-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        긍정적 (2026-07-04 시점)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        부정적
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        중립
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-open-questions-2026-07-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 열린 질문 (Open Questions) — 결정됨 2026-07-04
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-2026-07-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 열린 결정 사항 — 결정됨 2026-07-04
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-2026-07-04-accepted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 구현 결과 (2026-07-04 Accepted 시점)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 구현 결과 (2026-07-04 Accepted 시점)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wiki-mkdocs-material-pages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wiki 호스팅 결과 (MkDocs Material + Pages)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        추후 보류
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 참고
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="adr-0030-github-github-utilization-plan">ADR-0030: GitHub 활용 계획 (GitHub Utilization Plan)<a class="headerlink" href="#adr-0030-github-github-utilization-plan" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>상태</strong>: <strong>Accepted</strong>
+<strong>날짜</strong>: 2026-06-18 (Draft) → 2026-07-04 (Accepted)
+<strong>결정자</strong>: 사용자
+<strong>관련</strong>: <code>../../../../../Fiction/</code>, <code>lingotype</code> (참고 프로젝트)</p>
+</blockquote>
+<h2 id="1">1. 컨텍스트<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>Wet Run은 현재 Git 저장소가 아니다 (<code>.git/</code> 없음). 로컬 파일만 관리되어:
+- 코드 이력 추적 불가
+- CI/CD 파이프라인 없음
+- 외부 협업 불가
+- 대시보드 (<code>dashboard/</code>) 호스팅 불가</p>
+<p>lingotype 프로젝트는 이미 다음을 구현해 참고할 수 있다:
+- GitHub 저장소: <code>https://github.com/seoca1/lingotype.git</code>
+- GitHub Actions CI (<code>.github/workflows/deploy.yml</code>)
+- GitHub Pages 자동 배포 (Vite 빌드 → Pages)
+- npm scripts: dev, build, test, lint, typecheck</p>
+<h2 id="2">2. 목표<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>Wet Run에 다음 역량 추가:</p>
+<table>
+<thead>
+<tr>
+<th>목표</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git 버전 관리</td>
+<td>모든 변경 이력 추적, 안전한 롤백</td>
+</tr>
+<tr>
+<td>GitHub Actions CI</td>
+<td>PR마다 자동 test/lint/typecheck</td>
+</tr>
+<tr>
+<td>GitHub Pages 호스팅</td>
+<td>대시보드 5개 (index/story/stages + 상위 허브) 무료 호스팅</td>
+</tr>
+<tr>
+<td>Issue/Project 관리</td>
+<td>작업 추적, 우선순위</td>
+</tr>
+<tr>
+<td>Releases/태그</td>
+<td>버전 마일스톤 (Phase 1-6)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3">3. 옵션 비교<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="option-a-lingotype">Option A: lingotype 미러 (단일 저장소)<a class="headerlink" href="#option-a-lingotype" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>저장소</td>
+<td><code>seoca1/wet-run</code> (1개)</td>
+</tr>
+<tr>
+<td>CI</td>
+<td><code>.github/workflows/ci.yml</code> (test/lint/typecheck) + <code>deploy.yml</code> (Pages)</td>
+</tr>
+<tr>
+<td>Pages</td>
+<td>대시보드 정적 호스팅 (Python 빌드 불필요, 그대로)</td>
+</tr>
+<tr>
+<td>장점</td>
+<td>단순, lingotype과 동일한 패턴</td>
+</tr>
+<tr>
+<td>단점</td>
+<td>게임 코드 + 위키/디자인 단일 저장소</td>
+</tr>
+</tbody>
+</table>
+<h3 id="option-b">Option B: 모노레포 (워크스페이스)<a class="headerlink" href="#option-b" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>저장소</td>
+<td><code>seoca1/wet-run</code> + <code>seoca1/wet-run-wiki</code> 등 분리</td>
+</tr>
+<tr>
+<td>장점</td>
+<td>게임 / 위키 / 디자인 명확히 분리</td>
+</tr>
+<tr>
+<td>단점</td>
+<td>저장소 여러 개 관리 부담. 위키는 이미 <code>wiki/</code> 디렉토리에 있음</td>
+</tr>
+</tbody>
+</table>
+<h3 id="option-c-git-only">Option C: 외부 호스팅 + Git only<a class="headerlink" href="#option-c-git-only" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>저장소</td>
+<td>GitHub but Pages 없음, 로컬에서만 대시보드</td>
+</tr>
+<tr>
+<td>장점</td>
+<td>Git 이력만 확보</td>
+</tr>
+<tr>
+<td>단점</td>
+<td>대시보드 공유 불가, 협업자 dashboard 접근 불가</td>
+</tr>
+</tbody>
+</table>
+<p><strong>추천</strong>: <strong>Option A</strong> (lingotype과 동일 패턴, 단순, 효과적)</p>
+<h2 id="4-option-a">4. 권장안 (Option A) 상세<a class="headerlink" href="#4-option-a" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 저장소 구조<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>seoca1/wet-run/
+├── prototype/             # Python 게임 코드
+├── dashboard/             # 대시보드 (정적)
+├── design/                # GDD, 결정, 시스템 스펙
+├── wiki/                  # 위키
+├── raw/                   # 원본 자료 (read-only)
+├── testcases/             # 회귀 테스트 케이스
+├── decisions/             # ADR
+├── AGENTS.md              # AI 가이드
+├── README.md              # 프로젝트 소개
+├── ROADMAP.md             # 로드맵
+├── index.md               # 인덱스
+└── log.md                 # 작업 로그
+</code></pre></div>
+<h3 id="42-github-actions">4.2 GitHub Actions 워크플로우<a class="headerlink" href="#42-github-actions" title="Permanent link">&para;</a></h3>
+<h4 id="a-ci-githubworkflowsciyml">A. CI 워크플로우 (<code>.github/workflows/ci.yml</code>)<a class="headerlink" href="#a-ci-githubworkflowsciyml" title="Permanent link">&para;</a></h4>
+<p>PR / push마다 자동 실행:
+1. <code>setup-python</code> v3.11
+2. <code>pip install</code> 또는 <code>uv sync --all-extras</code>
+3. <code>make format</code> (검증)
+4. <code>make lint</code> (ruff)
+5. <code>make typecheck</code> (mypy strict)
+6. <code>make test</code> (pytest 578 tests)
+7. 코드 커버리지 리포트 업로드</p>
+<h4 id="b-pages-githubworkflowspagesyml">B. Pages 배포 워크플로우 (<code>.github/workflows/pages.yml</code>)<a class="headerlink" href="#b-pages-githubworkflowspagesyml" title="Permanent link">&para;</a></h4>
+<p>main/master push 시:
+1. Checkout
+2. Python 정적 검증 (선택)
+3. Pages artifact 업로드 (<code>dashboard/</code> + JSON 데이터)
+4. GitHub Pages 배포</p>
+<p>대시보드는 정적 HTML + JSON fetch이므로 Python 빌드 불필요. HTML을 그대로 Pages로 호스팅.</p>
+<h4 id="c-issue-githublabeleryml">C. Issue 자동 라벨링 (<code>.github/labeler.yml</code>)<a class="headerlink" href="#c-issue-githublabeleryml" title="Permanent link">&para;</a></h4>
+<p>PR/Issue 자동 분류:
+- <code>phase-1</code> ... <code>phase-6</code>
+- <code>prologue</code> / <code>event-dialogue</code> / <code>stage</code> / <code>dashboard</code>
+- <code>bug</code> / <code>enhancement</code> / <code>docs</code>
+- <code>python</code> / <code>html</code> / <code>json</code></p>
+<h3 id="43-branch">4.3 Branch 전략<a class="headerlink" href="#43-branch" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>main              # 안정. main에 머지 = 자동 Pages 배포
+├── develop       # 개발 통합
+├── feat/xxx      # 기능 단위
+├── fix/xxx       # 버그 수정
+└── docs/xxx      # 문서만
+</code></pre></div>
+<p>PR 규칙:
+- main 직접 push 금지
+- develop → main PR은 사용자 승인 필요
+- feat/fix → develop PR은 CI 통과 필요
+- Conventional Commits: <code>feat:</code>, <code>fix:</code>, <code>docs:</code>, <code>refactor:</code>, <code>test:</code>, <code>chore:</code></p>
+<h3 id="44-github-projects">4.4 GitHub Projects (보드)<a class="headerlink" href="#44-github-projects" title="Permanent link">&para;</a></h3>
+<p>3개 보드:</p>
+<table>
+<thead>
+<tr>
+<th>보드</th>
+<th>목적</th>
+<th>카드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Phase 6+ 작업</strong></td>
+<td>새 기능 (엔딩 확장, 추가 미션)</td>
+<td>이슈</td>
+</tr>
+<tr>
+<td><strong>버그</strong></td>
+<td>발견된 결함</td>
+<td>이슈</td>
+</tr>
+<tr>
+<td><strong>대시보드 작업</strong></td>
+<td>미구현 대시보드 (Sound, Combat, Cyberspace, Equipment)</td>
+<td>이슈</td>
+</tr>
+</tbody>
+</table>
+<h3 id="45-github-releases">4.5 GitHub Releases<a class="headerlink" href="#45-github-releases" title="Permanent link">&para;</a></h3>
+<p>Phase 완료마다:
+- <code>v0.1.0</code> - Phase 1 완료
+- <code>v0.2.0</code> - Phase 2 완료
+- ...
+- <code>v1.0.0</code> - Phase 6 완료 (정식 출시)</p>
+<h3 id="46-github-wiki">4.6 GitHub Wiki<a class="headerlink" href="#46-github-wiki" title="Permanent link">&para;</a></h3>
+<p>내부 위키는 이미 <code>wiki/</code> 디렉토리에 있음. <strong>GitHub Wiki는 비활성화</strong> 권장 (대신 MkDocs 또는 단순 md 호스팅).</p>
+<h2 id="5-action-plan">5. 구현 단계 (Action Plan)<a class="headerlink" href="#5-action-plan" title="Permanent link">&para;</a></h2>
+<h3 id="phase-0-git-5">Phase 0: Git 초기화 (즉시, 5분)<a class="headerlink" href="#phase-0-git-5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/Users/emilio/projects/Projects/Game/wet_run
+git<span class="w"> </span>init
+git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;feat: initial commit - Wet Run Phase 1-5 complete</span>
+
+<span class="s2">- 578 unit tests passing</span>
+<span class="s2">- Story system: 3 protagonists, 2 endings, 14 dialogues</span>
+<span class="s2">- Stage system: 6 stages, 3 missions, death flow</span>
+<span class="s2">- 3-tier dashboard (hub/sub/sub-sub)</span>
+<span class="s2">- Python 3.11+ tcod roguelike engine&quot;</span>
+</code></pre></div>
+<h3 id="phase-1-github-10">Phase 1: GitHub 저장소 생성 (10분)<a class="headerlink" href="#phase-1-github-10" title="Permanent link">&para;</a></h3>
+<ol>
+<li>https://github.com/new 접속</li>
+<li>Repository name: <code>wet-run</code></li>
+<li>Description: "🌆 깁슨 스프롤 3부작 기반 로그라이크 · Python + tcod"</li>
+<li>Public / Private 선택</li>
+<li><strong>README, .gitignore, license 모두 추가 안 함</strong> (이미 있음)</li>
+<li><code>git remote add origin https://github.com/seoca1/wet-run.git</code></li>
+<li><code>git push -u origin main</code></li>
+</ol>
+<h3 id="phase-2-ci-15">Phase 2: CI 워크플로우 (15분)<a class="headerlink" href="#phase-2-ci-15" title="Permanent link">&para;</a></h3>
+<p><code>.github/workflows/ci.yml</code> 작성:
+- Python 3.11 matrix
+- uv 설치
+- <code>make all</code> (format + lint + typecheck + test)
+- PR 코멘트로 결과 표시</p>
+<h3 id="phase-3-pages-10">Phase 3: Pages 배포 (10분)<a class="headerlink" href="#phase-3-pages-10" title="Permanent link">&para;</a></h3>
+<p><code>.github/workflows/pages.yml</code> 작성:
+- <code>actions/deploy-pages@v4</code>
+- <code>dashboard/</code> + <code>design/**/​*.json</code> 아티팩트
+- 환경: <code>github-pages</code></p>
+<p>Settings → Pages → Source: GitHub Actions</p>
+<h3 id="phase-4-issue-5">Phase 4: Issue 템플릿 + 라벨 (5분)<a class="headerlink" href="#phase-4-issue-5" title="Permanent link">&para;</a></h3>
+<p><code>.github/ISSUE_TEMPLATE/</code>:
+- <code>bug.md</code> - 버그 리포트
+- <code>feature.md</code> - 새 기능 요청
+- <code>dashboard.md</code> - 대시보드 추가 요청</p>
+<p>라벨 12개 (자동 적용):
+- phase-1..6, prologue/event/stage/dashboard, bug/enhancement/docs</p>
+<h3 id="phase-5-projects-5">Phase 5: Projects 보드 (5분)<a class="headerlink" href="#phase-5-projects-5" title="Permanent link">&para;</a></h3>
+<p>GitHub Projects 생성:
+- 컬럼: Backlog / In Progress / Review / Done
+- 이슈를 카드로 변환</p>
+<h3 id="phase-6-releases">Phase 6: Releases (선택)<a class="headerlink" href="#phase-6-releases" title="Permanent link">&para;</a></h3>
+<p><code>v0.5.0</code> 태그 생성 (현재 상태):
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>tag<span class="w"> </span>-a<span class="w"> </span>v0.5.0<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Phase 1-5 complete: prologue + 3-tier dashboard&quot;</span>
+git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>v0.5.0
+</code></pre></div></p>
+<p>GitHub → Releases → Draft new release</p>
+<h2 id="6-consequences">6. 결과 (Consequences)<a class="headerlink" href="#6-consequences" title="Permanent link">&para;</a></h2>
+<h3 id="2026-07-04">긍정적 (2026-07-04 시점)<a class="headerlink" href="#2026-07-04" title="Permanent link">&para;</a></h3>
+<ul>
+<li>✅ <strong>코드 이력 영구 보존</strong>: <code>git log</code> 200+ 커밋, 모든 이전 세션 작업 추적 가능</li>
+<li>✅ <strong>PR마다 자동 CI</strong>: test/lint/typecheck 3-in-1, <strong>4097 tests pass + ruff 0 + mypy 0</strong> 보장</li>
+<li>✅ <strong>대시보드 무료 호스팅</strong>: <code>https://seoca1.github.io/wet-run/</code> (GitHub Pages)</li>
+<li>✅ <strong>외부 협업자/관찰자 접근 가능</strong>: Public 저장소</li>
+<li>✅ <strong>lingotype와 일관된 워크플로우</strong>: seoca1 계정, 동일 워크플로우 패턴</li>
+<li>✅ <strong>MIT 라이선스</strong>: 깁슨 IP 고지 명시, 깁슨 원작과 명확히 분리</li>
+<li>✅ <strong>MkDocs Wiki 호스팅</strong>: 디자인 + 위키 + 결정을 단일 문서 사이트로 통합 가능</li>
+</ul>
+<h3 id="_1">부정적<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>❌ GitHub 계정/저장소 관리 부담 (lingotype 동일)</li>
+<li>❌ Public 시 코드 공개 (깁슨 톤 자키 커뮤니티 공개 의도)</li>
+<li>❌ Pages는 정적만 (대화형 게임은 별도 호스팅 필요 — 로컬 실행)</li>
+<li>❌ MkDocs 빌드는 별도 환경 필요 (Python + mkdocs-material 패키지)</li>
+</ul>
+<h3 id="_2">중립<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>lingotype와 동일 패턴 → 학습 비용 0</li>
+<li>깁슨 IP 분리 명시 → fan project로서의 법적 안전성 확보</li>
+</ul>
+<h2 id="7-open-questions-2026-07-04">7. 열린 질문 (Open Questions) — 결정됨 2026-07-04<a class="headerlink" href="#7-open-questions-2026-07-04" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>저장소 이름</strong>: ✅ <code>wet-run</code> (remote URL 확인)</li>
+<li><strong>공개 범위</strong>: ✅ <strong>Public</strong> — 대시보드 외부 공유, 깁슨 톤 연구자/관람자 모집</li>
+<li><strong>라이선스</strong>: ✅ <strong>MIT</strong> — 깁슨 원작은 IP 유지, 본 프로젝트 코드/데이터는 MIT</li>
+<li><strong>대시보드 호스팅</strong>: ✅ <strong>GitHub Pages</strong> (구현 완료)</li>
+<li><strong>Wiki 도구</strong>: ✅ <strong>MkDocs Material</strong> — wiki/ 디렉토리 그대로, mkdocs.yml로 호스팅</li>
+</ol>
+<h2 id="8-2026-07-04">8. 열린 결정 사항 — 결정됨 2026-07-04<a class="headerlink" href="#8-2026-07-04" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[x] 저장소 이름 확정: <code>wet-run</code></li>
+<li>[x] 공개/비공개 결정: Public (대시보드 공유)</li>
+<li>[x] 라이선스 결정: MIT</li>
+<li>[x] GitHub 계정: <code>seoca1</code> (lingotype 동일)</li>
+<li>[x] Wiki 도구: MkDocs Material</li>
+</ul>
+<h2 id="9-2026-07-04-accepted">9. 구현 결과 (2026-07-04 Accepted 시점)<a class="headerlink" href="#9-2026-07-04-accepted" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>git init</code> + 첫 commit</td>
+<td>✅ 완료 (lingotype 이전 세션에서)</td>
+</tr>
+<tr>
+<td>GitHub 원격 저장소</td>
+<td>✅ <code>https://github.com/seoca1/wet-run</code></td>
+</tr>
+<tr>
+<td><code>.github/workflows/ci.yml</code></td>
+<td>✅ 존재 (test + lint + typecheck)</td>
+</tr>
+<tr>
+<td><code>.github/workflows/pages.yml</code></td>
+<td>✅ 존재 (대시보드 자동 배포)</td>
+</tr>
+<tr>
+<td><code>.github/labeler.yml</code></td>
+<td>✅ 존재 (12개 자동 라벨)</td>
+</tr>
+<tr>
+<td><code>.github/ISSUE_TEMPLATE/</code></td>
+<td>✅ bug.md / dashboard.md / feature.md</td>
+</tr>
+<tr>
+<td><code>LICENSE</code> (MIT)</td>
+<td>✅ 신규 생성 (깁슨 IP 고지 포함)</td>
+</tr>
+<tr>
+<td><code>mkdocs.yml</code></td>
+<td>✅ 신규 생성 (wiki/ + design/ + decisions/ 통합)</td>
+</tr>
+<tr>
+<td><code>wiki/index.md</code></td>
+<td>✅ 신규 생성 (홈 + 둘러보기 + 라이선스 + 기여)</td>
+</tr>
+<tr>
+<td>MkDocs 빌드 + Pages 통합</td>
+<td>✅ <code>.github/workflows/pages.yml</code> 에 <code>mkdocs build</code> 단계 추가</td>
+</tr>
+<tr>
+<td><code>.gitignore</code> (루트)</td>
+<td>✅ 신규 생성 (site/, .venv-mkdocs, .env 등 제외)</td>
+</tr>
+<tr>
+<td><code>v0.5.0</code> 태그</td>
+<td>✅ 존재</td>
+</tr>
+<tr>
+<td>Branch 전략 (main / develop)</td>
+<td>✅ 부분 구현 (main/develop만, feat/*는 미사용)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="wiki-mkdocs-material-pages">Wiki 호스팅 결과 (MkDocs Material + Pages)<a class="headerlink" href="#wiki-mkdocs-material-pages" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>mkdocs.yml</code>에서 <code>wiki/</code> + <code>design/</code> + <code>decisions/</code> + <code>ROADMAP.md</code> + <code>log.md</code> 통합</li>
+<li>깁슨 톤에 어울리는 deep purple/purple 팔레트</li>
+<li>라이트/다크 모드 토글</li>
+<li>한국어/영어 검색 지원 (Material 기본)</li>
+<li><strong>Pages 워크플로우</strong>: <code>mkdocs build</code> → <code>site/</code> → <code>_pages/wiki/</code> → <code>gh-pages</code> 브랜치</li>
+<li><strong>배포 URL</strong>: <code>https://seoca1.github.io/wet-run/wiki/</code></li>
+<li>빌드 산출물: 8 HTML 페이지 (1 home + 6 world + 1 404), 약 2.9 MB</li>
+</ul>
+<h3 id="_3">추후 보류<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>✅ <strong>GitHub Projects 보드</strong> (2026-07-04 해소) — <code>docs/GITHUB_PROJECTS_SETUP.md</code> (수동 설정 가이드)</li>
+<li>v1.0.0 정식 release (Phase 6 완료 시)</li>
+<li>✅ <code>mkdocs --strict</code> 빌드 (2026-07-04 해소)</li>
+<li>워닝 41건 → 0건</li>
+<li>wiki/ 외부 콘텐츠 (design/, decisions/, ROADMAP.md, log.md, Fiction/) 심볼릭 링크로 통합</li>
+<li>glossary.md 앵커 (cyberdeck/program/construct/wetware/ice) 추가</li>
+<li>design/scenario/*.md Fiction 링크 depth 수정 (../../../../ → ../../)</li>
+<li>decisions/0031-original-scenario-integration.md Fiction 링크 depth 수정</li>
+<li><strong>결과</strong>: 316 HTML pages, 24 MB wiki 사이트</li>
+<li>Pages 워크플로우에서 <code>mkdocs build --strict</code> 사용</li>
+</ul>
+<h2 id="9">9. 참고<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>lingotype/GITHUB_SETUP_GUIDE.md</code> - 14KB 상세 가이드</li>
+<li><code>lingotype/.github/workflows/deploy.yml</code> - Pages 배포 참고</li>
+<li>GitHub 공식 문서: https://docs.github.com/</li>
+</ul>
+<h2 id="10">10. 다음 단계<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>사용자 결정 후:
+1. 저장소 이름/공개 범위/라이선스 확정
+2. <code>git init</code> + 첫 commit
+3. GitHub 저장소 생성
+4. CI/Pages 워크플로우 추가
+5. 첫 release (v0.5.0)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

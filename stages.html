@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="16 stages (PENDING→BRIEFING→TRAVEL→MEET_NPC→EXTRACT_DATA→BYPASS_SECURITY→DEFEAT_ICE→JACK_OUT→REWARD→DEBRIEF→COMPLETE) across 12 chapters × 9 cast. 209 missions mapped to phase structure.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, phase, progression, chapter, mission">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/stages.html">
+<title>Wet Run — Phase Flow (Chapters × Phases)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #0a0e14;
+    color: #c5d4e3;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  h1 { color: #66ffcc; font-size: 28px; margin-bottom: 6px; text-shadow: 0 0 8px #66ffcc33; }
+  h2 { color: #ffaa55; font-size: 18px; margin: 28px 0 12px; border-bottom: 1px solid #2a3540; padding-bottom: 6px; }
+  h3 { color: #88dd44; font-size: 15px; margin: 16px 0 8px; }
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 24px; }
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #0a0e14; border-bottom: 1px solid #2a3540;
+    padding: 8px 24px; margin: -24px -24px 16px -24px;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .current { color: #ffaa55; font-weight: 600; }
+  .top-nav .sep { color: #2a3540; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 4px;
+    padding: 12px;
+  }
+  .stat-card .label {
+    font-size: 10px;
+    color: #6a7888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .stat-card .value {
+    font-size: 24px;
+    color: #66ffcc;
+    margin: 4px 0 2px;
+    font-weight: 600;
+  }
+  .stat-card .sub {
+    font-size: 10px;
+    color: #6a7888;
+  }
+
+  .phase-flow {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .phase-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin: 8px 0;
+  }
+  .phase-node {
+    background: #0a0e14;
+    border: 2px solid;
+    border-radius: 6px;
+    padding: 8px 12px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .phase-node.standard { border-color: #66ffcc; color: #66ffcc; }
+  .phase-node.heist { border-color: #ffaa55; color: #ffaa55; }
+  .phase-node.special { border-color: #ff6699; color: #ff6699; }
+  .phase-node .pid { font-size: 11px; font-weight: 600; }
+  .phase-node .count {
+    font-size: 10px;
+    color: #6a7888;
+    margin-top: 2px;
+  }
+  .arrow {
+    color: #2a3540;
+    font-size: 18px;
+    margin: 0 4px;
+  }
+
+  .phase-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-bottom: 24px;
+  }
+  .phase-table th, .phase-table td {
+    text-align: left;
+    padding: 6px 10px;
+    border-bottom: 1px solid #1a2530;
+  }
+  .phase-table th {
+    color: #6a7888;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    font-weight: normal;
+  }
+  .phase-table tr:hover { background: #131a23; }
+  .bar {
+    display: inline-block;
+    height: 6px;
+    background: #66ffcc;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
+  .bar.heist { background: #ffaa55; }
+  .bar.special { background: #ff6699; }
+
+  .chapter-tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .chapter-tab {
+    background: #0a0e14;
+    border: 1px solid #2a3540;
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+    font-size: 11px;
+    color: #c5d4e3;
+    font-family: inherit;
+  }
+  .chapter-tab:hover { border-color: #66ffcc; }
+  .chapter-tab.active {
+    background: #66ffcc22;
+    color: #66ffcc;
+    border-color: #66ffcc;
+  }
+
+  .chapter-detail {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 6px;
+    padding: 16px;
+  }
+  .chapter-detail h3 {
+    margin-top: 0;
+  }
+  .chapter-phases {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+  .chapter-phase {
+    background: #0a0e14;
+    border: 1px solid;
+    border-radius: 3px;
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+  .chapter-phase.standard { border-color: #66ffcc; color: #66ffcc; }
+  .chapter-phase.heist { border-color: #ffaa55; color: #ffaa55; }
+  .chapter-phase.special { border-color: #ff6699; color: #ff6699; }
+  .chapter-phase .order { color: #6a7888; margin-right: 4px; }
+
+  .arc-pattern {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-radius: 4px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+  }
+  .arc-pattern .name {
+    color: #ffaa55;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .arc-pattern .phases {
+    color: #66ffcc;
+    font-size: 11px;
+  }
+  .arc-pattern .meta {
+    color: #6a7888;
+    font-size: 10px;
+    margin-top: 4px;
+  }
+
+  .info-banner {
+    background: #131a23;
+    border: 1px solid #2a3540;
+    border-left: 4px solid #66ffcc;
+    padding: 12px 16px;
+    margin-bottom: 24px;
+    font-size: 12px;
+  }
+  .info-banner strong { color: #66ffcc; }
+</style>
+<meta property="og:title" content="Wet Run — Dashboard">
+<meta property="og:description" content="Wet Run — Gibson Sprawl 3부작 기반 로그라이크">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/stages.html">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wet Run — Dashboard">
+<meta name="twitter:description" content="Wet Run — Gibson Sprawl 3부작 기반 로그라이크">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="./library.html">📚 Library</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Chars</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+  <span class="sep">•</span>
+  <span class="current">⏱ Phases</span>
+</nav>
+
+<h1>⏱ Phase Flow</h1>
+<p class="subtitle">Chapter phase progression · 7 phase types · 12 chapters × 9 cast</p>
+
+<div class="info-banner">
+  <strong>Data source:</strong> <code>arcs.json</code> + <code>chapters.json</code> ·
+  Each chapter has 5 phases; total <strong>225 phases</strong> across 45 chapter × phase rows.
+  <br>
+  <strong>Replaces:</strong> legacy 14-stage system (PENDING/BRIEFING/TRAVEL/MEET_NPC/...)
+  that no longer matches the game's actual progression.
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="label">Phase types</div>
+    <div class="value">7</div>
+    <div class="sub">ENCOUNTER + 4 HEIST_* + RESOLUTION + 2 special</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Chapters</div>
+    <div class="value">12</div>
+    <div class="sub">9 cast + 3 expanded</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Cast characters</div>
+    <div class="value">9</div>
+    <div class="sub">9-jokey system</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Missions</div>
+    <div class="value">47</div>
+    <div class="sub">4 archetypes</div>
+  </div>
+  <div class="stat-card">
+    <div class="label">Phase rows</div>
+    <div class="value">225</div>
+    <div class="sub">45 chapter × phase rows</div>
+  </div>
+</div>
+
+<h2>📊 Phase Distribution</h2>
+<table class="phase-table">
+  <thead>
+    <tr>
+      <th>Phase ID</th>
+      <th>Type</th>
+      <th>Distribution</th>
+      <th>Count</th>
+      <th>Coverage</th>
+    </tr>
+  </thead>
+  <tbody id="phase-dist-body"></tbody>
+</table>
+
+<h2>🔄 Standard 5-Phase Progression</h2>
+<div class="phase-flow">
+  <div class="phase-row">
+    <div class="phase-node standard">
+      <div class="pid">ENCOUNTER</div>
+      <div class="count">open scene</div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="phase-node heist">
+      <div class="pid">HEIST_BRIEFING</div>
+      <div class="count">plan & recruit</div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="phase-node heist">
+      <div class="pid">HEIST_EXECUTION</div>
+      <div class="count">action</div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="phase-node heist">
+      <div class="pid">HEIST_PAYDAY</div>
+      <div class="count">outcome</div>
+    </div>
+    <span class="arrow">→</span>
+    <div class="phase-node standard">
+      <div class="pid">RESOLUTION</div>
+      <div class="count">closure</div>
+    </div>
+  </div>
+  <p style="color:#6a7888;font-size:11px;margin-top:12px">
+    Standard 5-phase chapter progression. Special variants:
+    <span style="color:#ff6699">REVELATION</span> (3jane, angie, sally, wigan, neuromancer) replaces HEIST_PAYDAY
+    ·
+    <span style="color:#ff6699">INTERLUDE</span> (wigan, 3jane, sally) replaces one of the standard phases.
+  </p>
+</div>
+
+<h2>🎭 Arc Phase Patterns</h2>
+<div id="arc-patterns"></div>
+
+<h2>📂 Per-Chapter Phase Flow</h2>
+<div class="chapter-tabs" id="chapter-tabs"></div>
+<div class="chapter-detail" id="chapter-detail">
+  <p style="color:#6a7888">Select a chapter above to see its phase flow.</p>
+</div>
+
+<script>
+(async function () {
+  "use strict";
+
+  function escHtml(s) {
+    return String(s || "").replace(/[&<>"']/g, function (c) {
+      return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c];
+    });
+  }
+
+  function phaseClass(pid) {
+    if (pid === "ENCOUNTER" || pid === "RESOLUTION") return "standard";
+    if (pid.startsWith("HEIST")) return "heist";
+    return "special";
+  }
+
+  function loadData() {
+    return Promise.all([
+      fetch("data/story/arcs/arcs.json", { cache: "no-store" }).then(function (r) { return r.json(); }).catch(function () { return []; }),
+      fetch("data/story/arcs/chapter_flow.json", { cache: "no-store" }).then(function (r) { return r.json(); }).catch(function () { return {}; }),
+      fetch("data/missions/missions.json", { cache: "no-store" }).then(function (r) { return r.json(); }).catch(function () { return {}; }),
+    ]);
+  }
+
+  let allChapters = [];
+  let allMissions = {};
+
+  function renderPhaseDistribution() {
+    const dist = {};
+    for (const arc of allChapters) {
+      for (const ch of (arc.chapters || [])) {
+        for (const ph of (ch.phases || [])) {
+          const pid = ph.phase_id;
+          dist[pid] = (dist[pid] || 0) + 1;
+        }
+      }
+    }
+    const total = Object.values(dist).reduce(function (a, b) { return a + b; }, 0);
+    const order = ["ENCOUNTER", "HEIST_BRIEFING", "HEIST_EXECUTION", "HEIST_PAYDAY", "RESOLUTION", "INTERLUDE", "REVELATION"];
+    const sorted = order.filter(function (k) { return dist[k]; }).concat(
+      Object.keys(dist).filter(function (k) { return order.indexOf(k) < 0; })
+    );
+    const max = Math.max.apply(null, Object.values(dist));
+    const body = document.getElementById("phase-dist-body");
+    body.innerHTML = sorted.map(function (pid) {
+      const n = dist[pid] || 0;
+      const pct = (n / max) * 100;
+      const cls = phaseClass(pid);
+      return '<tr>' +
+        '<td><code>' + escHtml(pid) + '</code></td>' +
+        '<td><span style="color:#8a98a8;font-size:10px">' + cls + '</span></td>' +
+        '<td><span class="bar ' + cls + '" style="width:' + pct + '%"></span></td>' +
+        '<td><strong>' + n + '</strong></td>' +
+        '<td><span style="color:#6a7888">' + Math.round(n / total * 100) + '% of ' + total + '</span></td>' +
+        '</tr>';
+    }).join("");
+  }
+
+  function renderArcPatterns() {
+    const container = document.getElementById("arc-patterns");
+    container.innerHTML = allChapters.map(function (arc) {
+      const chapters = arc.chapters || [];
+      const totalChapters = chapters.length;
+      const allPhases = new Set();
+      chapters.forEach(function (ch) {
+        (ch.phases || []).forEach(function (p) { allPhases.add(p.phase_id); });
+      });
+      const missionCount = Object.values(allMissions).filter(function (m) {
+        return m.cast === arc.character;
+      }).length;
+      return '<div class="arc-pattern">' +
+        '<div class="name">' + escHtml(arc.character) + ' — ' + escHtml(arc.title_en || "") + '</div>' +
+        '<div class="phases">phases: ' + Array.from(allPhases).sort().join(" · ") + '</div>' +
+        '<div class="meta">' + totalChapters + ' chapters · ' + missionCount + ' missions · ' + allPhases.size + ' unique phase types</div>' +
+        '</div>';
+    }).join("");
+  }
+
+  let currentChapter = null;
+
+  function renderChapterDetail() {
+    const detail = document.getElementById("chapter-detail");
+    if (!currentChapter) {
+      detail.innerHTML = '<p style="color:#6a7888">Select a chapter above to see its phase flow.</p>';
+      return;
+    }
+    const ch = currentChapter.chapter;
+    const arc = currentChapter.arc;
+    const phases = ch.phases || [];
+    const missions = Object.entries(allMissions).filter(function (entry) {
+      return entry[1].cast === arc.character;
+    });
+    detail.innerHTML =
+      '<h3>' + escHtml(arc.character) + ' — ' + escHtml(ch.title_en) + ' <span style="color:#6a7888;font-size:12px;font-weight:normal">/ ' + escHtml(ch.title_ko || "") + '</span></h3>' +
+      '<p style="color:#8a98a8;font-size:12px;margin:0 0 12px">chapter_id: <code>' + escHtml(ch.chapter_id) + '</code> · chapter_number: ' + ch.chapter_number + '</p>' +
+      '<div class="chapter-phases">' + phases.map(function (p, i) {
+        const cls = phaseClass(p.phase_id);
+        return '<span class="chapter-phase ' + cls + '"><span class="order">' + (i + 1) + '.</span>' + escHtml(p.phase_id) + '</span>';
+      }).join('<span class="arrow">→</span>') + '</div>' +
+      '<p style="font-size:11px;color:#8a98a8;margin-top:8px">Missions using this cast (' + missions.length + '): ' +
+        missions.map(function (e) { return '<code>' + escHtml(e[0]) + '</code>'; }).slice(0, 5).join(", ") +
+        (missions.length > 5 ? ", ..." : "") +
+      '</p>';
+  }
+
+  function renderChapterTabs() {
+    const tabs = document.getElementById("chapter-tabs");
+    const items = [];
+    for (const arc of allChapters) {
+      for (const ch of (arc.chapters || [])) {
+        const n = (ch.phases || []).length;
+        const active = (items.length === 0) ? "active" : "";
+        items.push('<button class="chapter-tab ' + active + '" data-arc-id="' + escHtml(arc.arc_id) + '" data-chapter-id="' + escHtml(ch.chapter_id) + '">' + escHtml(arc.character) + ' · ' + escHtml(ch.chapter_id) + ' (' + n + ')</button>');
+      }
+    }
+    tabs.innerHTML = items.join("");
+    tabs.querySelectorAll(".chapter-tab").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        tabs.querySelectorAll(".chapter-tab").forEach(function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        const aid = btn.dataset.arcId;
+        const cid = btn.dataset.chapterId;
+        const arc = allChapters.find(function (a) { return a.arc_id === aid; });
+        if (arc) {
+          const ch = (arc.chapters || []).find(function (c) { return c.chapter_id === cid; });
+          if (ch) {
+            currentChapter = { chapter: ch, arc: arc };
+            renderChapterDetail();
+          }
+        }
+      });
+    });
+    if (items.length > 0) {
+      tabs.querySelector(".chapter-tab").click();
+    }
+  }
+
+  loadData().then(function (data) {
+    allChapters = data[0] || [];
+    if (data[2] && data[2].missions) {
+      allMissions = data[2].missions;
+    } else if (data[2] && typeof data[2] === "object" && Object.keys(data[2]).length) {
+      allMissions = data[2];
+    }
+    renderPhaseDistribution();
+    renderArcPatterns();
+    renderChapterTabs();
+  });
+})();
+</script>
+
+</body>
+</html>

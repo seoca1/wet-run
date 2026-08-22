@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutorial: Maze — Wet Run</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.7;
+    padding: 32px 24px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  h1 { color: #66ffcc; font-size: 28px; margin-bottom: 8px; line-height: 1.3; }
+  h2 { color: #66ffcc; font-size: 20px; margin: 28px 0 12px; border-bottom: 1px solid #1a2530; padding-bottom: 4px; }
+  h3 { color: #88dd44; font-size: 16px; margin: 20px 0 8px; }
+  p { margin-bottom: 14px; }
+  blockquote {
+    border-left: 3px solid #66ffcc;
+    padding: 8px 16px;
+    margin: 12px 0;
+    background: #0d1420;
+    color: #a8b8c8;
+    font-style: italic;
+  }
+  li { margin-left: 24px; margin-bottom: 6px; }
+  hr { border: none; border-top: 1px solid #1a2530; margin: 24px 0; }
+  a { color: #66ffcc; text-decoration: none; }
+  a:hover { color: #00ccff; text-decoration: underline; }
+  .meta {
+    font-size: 12px;
+    color: #6a7888;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #1a2530;
+  }
+  .nav { margin-bottom: 24px; }
+  .nav a { margin-right: 12px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="nav">
+  <a href="../stories-browse.html">📖 Browse</a>
+  <a href="../index.html">🌐 Hub</a>
+</div>
+<h1>Tutorial: Maze</h1>
+<div class="meta">
+  Sprawl #0.1 (tutorial) · 2026-06-25 · KO
+</div>
+<h1>튜토리얼: 미로</h1>
+<p>잭인에 대해 배운 첫 번째 것은 매트릭스가 보이는 것보다 더 크다는 것이다.</p>
+<p>meatspace와 다른 방식으로 보인다. 스프롤의 데이터 통로가 밤에 헬기에서 본 도시처럼 네온과 기하학으로 당신 앞에 펼쳐진다—수천 개의 기업 비밀의 전자기적 맥박으로 웅웅거리는. 당신의 덱이 그것을 당신의 웨트웨어가 처리할 수 있는 무언가로 번역하지만, 여전히 빛에 빠지는 것 같다.</p>
+<p>"준비됐어?" 핀의 목소리가 정적을 가른다. 그는 스프롤 홀의 오피스에서 보고 있다, 뒤편의 CRT가 깜빡이고. "이게 네 첫 런이야. 복잡하게 굴지 마."</p>
+<p>당신은 고개를 끄덕인다, 비록 그가 당신을 볼 수 없더라도. 관자놀이의 트로드가 잭의 익숙한 차가운 물림을 느끼며 맥동한다. 덱이 척추에 기대며 웅웅거린다—크로스오버하려고 한다는 것을 의미하는 그 특유의 주파수.</p>
+<p>그러자 도시가 바뀐다.</p>
+<p>이제 당신은 매트릭스 안에 있다. 진입 노드가 당신 주위로 풀려든다: 희미한 파란빛을 발하는 간단한 라우터. 여기서 데이터 스트림이 모든 방향으로 갈라진다. 기업 서버가 저멀리곳의 tower처럼 맥동한다. ICE 장벽이 당신 시야 끝에서 반짝인다. 어딘가 저기, 목표가 기다리고 있다.</p>
+<p>"경로는 간단해," 핀이 말한다. "초록 노드를 따라가. 빨강은 피해. 미로는 당신을 혼란스럽게 하려고 할 거야, 하지만 데이터는 항상 기업 쪽으로 흐른다. 경로를 찾아, 페이로드을 가져와, 잭 아웃해."</p>
+<p>당신은 움직인다.</p>
+<p>첫 번째 라우터는 쉽다. 두 번째는 조금 더 까다롭다. 당신은 그가 미로에 대해 말한 의미를 보기 시작한다—데이터 통로가 제Own 길로 뒤틀리고, 어디를 봐도 막다른 길. 매트릭스는 의심 많은 시소프들이 설계한 미로다, 아무도 아무것도 신뢰하지 않는.</p>
+<p>당신은 초록 노드를 찾는다. 그것이 제안하며 맥동한다. 당신은 그것을 향해 이동한다.</p>
+<p>방화벽. 당신은 덱이 플래그를 지정하기 전에 표준 ICE 장벽의 반짝임을 인식한다. 치명적이지는 않다, 아직은, 하지만 준비 없이 밀어붙이면 당신의 시야를 혼란스럽게 할 만큼. 당신은 뒤로 물러선다.</p>
+<p>핀의 목소리: "미로에는 이가 있어. 어디서 발을 디딜지 봐."</p>
+<p>당신은 배운다. 다음 경로가 열리고, 당신은 그것을 따른다. 초록 노드가 다른 초록 노드로 이어지고, 천천히 미로의 형태가 명확해진다. 무작위가 아니다—혼란 속에 패턴이 있다. 기업들은 그들의 보안을 계층적으로 구축하고, 미로는 당신을 멈추기보다 늦추려고 설계되었다.</p>
+<p>움직일 때다.</p>
+<p>세 번째 라우터는 더 깊숙이 있다. 데이터가 여기서 더 밝고, 더 긴급하게 빛난다. 목표가 어딘가 앞에서 맥동한다, 하지만 ICE도 마찬가지. 목덜미에서 기업 보안의 열기를 느낄 수 있다.</p>
+<p>그러다—경로가 보인다. 똑바로 통과.</p>
+<p>당신은 그것을 탄다.</p>
+<p>목표가 풀려든다: 데이터 노드, 아직 처리되지 않은 정보의 부드러운 빛을 머금고. 당신은 덱의 프로브로 손을 뻗어, 연결이 형성되는 것을 느낀다. 데이터가 물처럼 당신의 메모리로 미끄러져 들어온다.</p>
+<p>"가져왔어," 당신이 말한다.</p>
+<p>"좋아." 핀은 거의 감명받은 것처럼 보인다. "루키치고는 나쁘지 않아."</p>
+<p>당신은 크레딧을 주머니에 넣고 너무 기뻐 보이지를 않으려 한다. 다른 런이 있을 거다. 다른 미로가 있을 거다. 하지만 이건 당신의 것이었다.</p>
+</body>
+</html>

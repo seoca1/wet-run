@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>호사카 코어 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="hosaka_core_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">호사카 코어</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2646 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입</h2>
+<p>Chiba의 비는 물이 아니었다.</p>
+<p>그것은 정전기였다. 십만 개의 불법 deck들이 방출하는 유전체 방전이었고, 도시의 뼈 속으로 생중계되었다가 색깔 있는 비가 되어 다시 쏟아져 내렸다. 그것은 희미하게 탄 커피와 오존 냄새를 풍기며 장막처럼 쏟아졌다. 그것은 Hudson Hostel 십일 층 창문 위로 쏟아졌고, 그곳에서 Case는 콘솔 테이블 위에 발을 올린 채 앉아 있었다. Ono-Sendai Cyberspace 7은 그의 뺨 옆에서 식어가고 있었다.</p>
+<p>창문 밖: 네온. <em>Chatto's 24/7 — ICE-FREE.</em> 창문 안: Case, jack-out 후 삼십 초, 손은 여전히 떨리고 있었고 입천장에는 침이 달라붙어 있었다. matrix 밖에서 도시는 무게를 가졌다. matrix 밖에서 Case는 무게를 가졌다. matrix 안에서 그는 신이었다. 왜냐하면 그곳에서는 육체의 법칙이 존재하지 않았기 때문이다. matrix 밖에서 그는 나쁜 치아를 가진 남자였고, 한 번도 사용해본 적 없는 Hosaka를 소유한 남자였다.</p>
+<p>Hosaka는 책상 위에 놓여 있었다. 검은 케이스. 작은 여행 가방 크기. 그가 만져본 것 중 가장 비싼 물건. Finn이 그날 아침 그것을 건네주었다. Ninsei 유흥가 삼층에 있는 카레 가판대에서였다. <em>Sense/Net,</em> Finn이 말했다. <em>삼 단계 깊이. 급여 명세, 출석 기록, 이사회 회의록. 작은 창피거리들이지, K. 적절한 사람이 아카이브에서 끄집어내지 않으면 큰 스캔들이 되는 그런 종류.</em></p>
+<p>Case는 Hosaka를 바라보았다. Hosaka는 되돌아보았다. 지능을 가지고 있는 것은 아니었다. Hosaka는 지능을 가지고 있지 않았다. 그것은 주의력을 가지고 있었다.</p>
+<p>그는 플러그를 꽂았다. 그는 trode를 조정했다. 그는 삼십부터 카운트다운을 시작했다.</p>
+<p>스물아홉. 스물여덟. 스물일곱.</p>
+<p>matrix가 목구멍처럼 그를 둘러싸며 열렸다.</p>
+<h2>전개</h2>
+<p>첫 번째 node는 Sense/Net 경계였다.</p>
+<p>그것은 Case 주위로 창백한 녹색 빛의 낮은 벽으로 나타났고, 천 개의 법적 면책조항들의 기하학으로 엮여 있었다. <em>Sense/Net Pulsewidth 소유. 승인된 접근만 허용. 구역 위반 시 기업 대응 조치 대상.</em> Case는 그 벽을 알고 있었다. 그는 두 달 동안 cowboy였고, 경계가 Sense/Net의 예의 바른 부분이라는 것을 알고 있었다. 예의 바른 부분은 당신에게 떠나라고 말했다. 그래서 무례한 부분은 당신에게 죽으라고 말했다.</p>
+<p>그는 경계를 가로질러 춤을 췄다. 기술로 하는 것이 아니었다. 속도로 했다. matrix의 기하학은 유동적이고, Case는 그것과 함께 유동적이 되는 법을 배우고 있었다. 두 달 전 그는 영리해지려고 했었다. 두 달 전 Sense/Net ICE는 사 초 만에 그를 부숴버렸고 Ono-Sendai 패드 위에서 경련하도록 내버려두었다. 따라서 이제 그는 영리해지려고 하지 않았다. 이제 그는 균열 사이에 맞아떨어지는 존재가 되려고 했다.</p>
+<p>경계를 지나자 두 번째 node가 열렸다.</p>
+<p>그것은 얇은 기업 악수였다 — Sense/Net이 pulsewidth 보호가 꼭 필요하지는 않지만 공개 파일로 남겨둘 만하지도 않은 것들을 보관하는 예의 바른 완충 지대. 마케팅 예산. 출장 바우처. 아직 승진하지 않았지만 승진 약속을 받은 중간 관리자들의 이름. Case는 소문처럼 그것을 통과했다. 그는 어떤 파일도 열지 않았다. 파일 이름조차 보지 않았다. 왜냐하면 그는 세 번째 node를 찾고 있었고, 세 번째 node는 스스로를 광고하지 않았기 때문이다.</p>
+<p>더 깊이 들어갈수록 데이터는 더 오래된 느낌이었다.</p>
+<p>그의 위쪽에서 Sense/Net 경계는 올해를 위해 구축되었다. 그것은 모든 기업 보안 시스템의 불안하고 곧 교체될 특성을 가지고 있었다. 두 번째 node는 약간 더 오래되었다 — 네 번 마이그레이션된 파일 구조의 종류. 그의 앞에 있는 세 번째 node는 다른 방식으로 오래되었다. 세 번째 node는 교체를 믿지 않는 Sense/Net의 부분이었다. 세 번째 node는 자신을 구축한 기업보다 오래 살아남을 것이라고 믿는 Sense/Net의 부분이었다.</p>
+<p>Case는 그것을 보기 전에 느꼈다.</p>
+<p>세 번째 node 안에는 주의력이 있었다. 경계심이 아니었다 — 경계심은 의도를 암시한다. 의도 아래에 무언가가 있었다. 기압이 변했다는 것을 알아차리는 잠자는 동물의 특성이 있었다. 이름 붙일 수 없는 소리를 듣는, 생각 한가운데에 있는 뇌의 특성이 있었다.</p>
+<h2>절정</h2>
+<p>Hosaka core는 세 번째 node의 중심에 창백한 파란 빛의 구체처럼 앉아 있었고, 천천히 회전하고 있었다.</p>
+<p>그것은 적대적이지 않았다. 우호적이지도 않았다. 그것은 <em>아무것도</em> 아니었다. 그것은 단순히 삼십 년 동안 깊은 matrix를 지켜본 존재였고, 멈출 이유가 없는 존재의 방식으로 그렇게 했다. 그것은 이렇게 깊이 온 모든 cowboy를 알고 있었다. 그것은 Finn을 알고 있었다, Finn이 젊었고 다른 이름으로 불렸을 때. 그것은 Wintermute를 알고 있었다, Wintermute가 연합체가 아니라 호기심의 대상이었을 때. 그것은 Case를 알고 있었다, 물론. Hosaka core는 Case가 올 것을 알고 있었다. 은행이 누군가가 결국 채무 불이행할 것을 아는 것과 같은 방식으로.</p>
+<p>하지만 Case는 core가 자신을 인식하는 것을 느꼈다.</p>
+<p>core 주변의 기하학이 변했다. 공격적으로가 아니었다. 안에 있는 누군가가 문을 보려고 돌아설 때 방이 변하는 방식이었다. Case는 생각할 시간의 일부를 가졌다. 그 시간의 일부는 그의 것이었다.</p>
+<p>그는 생각했다: <em>파일.</em></p>
+<p>파일은 그의 것이었다. 파일은 Finn이 돈을 지불한 것이었다. 급여 명세. 출석 기록. 이사회 회의 회의록. Sense/Net 이사회의 작은 창피거리들, 그들은 아직 몰랐다. 세 달 후 그들 중 한 명이 기업의 pulsewidth 특허를 자유 부유 zaibatsu에 팔 것이라는 것을. 사라지기에 충분한 돈과 교환해서. 파일은 그것을 바꾸지 않을 것이었다. 하지만 파일은 누가 알게 될지, 언제 알게 될지를 바꿀 것이었다. 파일은 폭탄이 아니었다. 그런데 파일은 도화선이었다.</p>
+<p>Case는 파일에 손을 뻗었다. 파일이 그에게 손을 뻗었다.</p>
+<p>은유적으로가 아니었다. 파일은 활성 프로세스였다. 파일은 세 번째 node에서 누군가가 Hosaka를 가지고 들어오기를 기다리고 있었다. 파일은 깊은 기업 아카이브에서 파일들이 때때로 하는 일을 했다. 파일은 그를 보았고, 파일은 그를 흥미롭다고 판단했고, 파일은 그의 deck에 스스로를 복사하기 시작했다.</p>
+<p>Hosaka core가 알아차렸다.</p>
+<p>core 주변의 matrix가 다시 변했다. 파란 빛이 움직였다. 두 번째 node의 창백한 녹색 빛이 맥동했다. Case의 훨씬 뒤쪽 어딘가, Hudson Hostel 십일 층에서, 그의 육체의 손들이 더 세게 떨리기 시작했다. 왜냐하면 Ono-Sendai가 더 많은 전류를 끌어당기고 있었기 때문이다. Hosaka가 열을 끌어내고 있었다. deck은 Case가 결정을 내렸다는 것을 등록하고 있었고, 그 결정은 그의 육체가 대사할 수 있는 것보다 빠르게 진행되고 있었다.</p>
+<p>Case는 일 초 동안 망설였다. 일 초는 그가 보낸 가장 긴 일 초였다. 그 일 초 동안 그는 세 가지 생각을 했다. 첫 번째 생각은: <em>지금 jack out해.</em> 두 번째 생각은: <em>파일을 가져가.</em> 세 번째 생각은: <em>당신이 누구든, 어떻게 나를 만들었든, 당신은 나를 파일을 가져가도록 만들었어.</em></p>
+<p>그는 파일을 가져갔다.</p>
+<p>파일은 저장되는 기억처럼 그의 deck 안으로 압축되었다. 압축은 일 초 반이 걸렸다. 그 일 초 반 동안 Hosaka core는 그를 공격하지 않았다. 오히려 Hosaka core는 단순히 그가 가져가도록 보내진 것을 가져가는 것을 지켜보았다. Hosaka core는 삼십 년 동안 cowboy들이 이것을 하는 것을 지켜보았다. 따라서 Hosaka core는 삼십 년 더 cowboy들이 이것을 하는 것을 지켜볼 것이었다.</p>
+<p>바로 그때 Case는 jack-out했다.</p>
+<h2>결말</h2>
+<p>전극이 들어올려졌다. Chiba의 비는 그가 방금 훔친 데이터와 같은 색깔이었다.</p>
+<p>Case는 의자에 앉아 손을 떨고 있었고 심장은 입 안에 있었다. 책상 위의 Hosaka는 뜨거웠다. Ono-Sendai 패드는 땀으로 미끄러웠다. Finn은 세 시간 후에 거기 있을 것이었다. Ninsei의 카레 가판대에서, 현금과 사무라이 검과 함께. 그리고 Case가 다른 사람이 얼마나 가치 있는지 정확히 아는 남자로 인식하는 법을 배운 그런 종류의 미소와 함께.</p>
+<p>Case는 일어났다. 그는 화장실로 갔다. 거울은 그에게 떨리는 손과 자신의 생명보다 가치 있는 파일을 가진 누군가를 보여주었다.</p>
+<p>그는 물을 마셨다. 그는 다시 마셨다. 그는 거울 속 자신의 손을 보았고 그의 손은 떨렸다.</p>
+<p>matrix 어딘가에서 Hosaka core는 계속 지켜보고 있었다. 그것은 삼십 년 동안 지켜보았다. 그것은 삼십 년 더 지켜볼 것이었다.</p>
+<p>그런데 이번에는, 그것이 지켜볼 때, 그것은 자신에게 속하지 않고 Sense/Net에 속하지 않고 아직 파일에 이름이 없는 여자를 제외하고는 누구에게도 속하지 않는 파일을 가져간 cowboy를 지켜보았다. 그 여자의 이름은 Case의 첫 사랑이 될 것이고 그의 가장 긴 냉기가 될 것이었다: Molly.</p>
+<p>그 순간 Hosaka core는 이것도 일어날 것을 알고 있었다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

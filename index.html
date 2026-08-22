@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="윌리엄 깁슨 스프롤 3부작 세계관 기반 ASCII 로그라이크 게임. python-tcod, RT-MS 전투, 한국어 자막 지원.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, neuromancer, python, tcod, ascii, matrix, ice, deck, console-cowboy">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/">
+<meta property="og:title" content="Wet Run — 깁슨 스프롤 로그라이크">
+<meta property="og:description" content="윌리엄 깁슨 스프롤 3부작 세계관 기반 ASCII 로그라이크 게임. python-tcod, RT-MS 전투, 한국어 자막 지원.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Wet Run — 깁슨 스프롤 로그라이크">
+<meta name="twitter:description" content="윌리엄 깁슨 스프롤 3부작 세계관 기반 ASCII 로그라이크 게임. python-tcod, RT-MS 전투, 한국어 자막 지원.">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta name="theme-color" content="#0a0e14">
+<title>Wet Run — Project Dashboard Hub</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #0a0e14;
+    color: #c5d4e3;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { color: #66ffcc; font-weight: 600; }
+  h1 { font-size: 32px; margin-bottom: 8px; text-shadow: 0 0 12px #66ffcc44; }
+  .subtitle { color: #6a7888; font-size: 14px; margin-bottom: 32px; }
+
+  /* Hero / Header */
+  .hero {
+    text-align: center; padding: 32px 0 24px;
+    border-bottom: 1px solid #2a3540; margin-bottom: 32px;
+  }
+  .hero h1 { font-size: 36px; }
+  .hero .tag { color: #00ccff; font-size: 13px; margin-top: 8px; }
+
+  /* Menu grid */
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px; margin-bottom: 32px;
+  }
+  .menu-card {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 8px;
+    padding: 24px; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: all 0.15s ease; position: relative; overflow: hidden;
+  }
+  .menu-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #66ffcc, #00ccff);
+    opacity: 0; transition: opacity 0.15s;
+  }
+  .menu-card:hover {
+    border-color: #66ffcc; transform: translateY(-2px);
+    box-shadow: 0 4px 20px #66ffcc22;
+  }
+  .menu-card:hover::before { opacity: 1; }
+  .menu-card.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+  .menu-card .icon { font-size: 36px; }
+  .menu-card h3 { color: #66ffcc; font-size: 18px; margin: 0; }
+  .menu-card p { color: #8a9aa8; font-size: 13px; line-height: 1.5; flex: 1; }
+  .menu-card .stats { display: flex; gap: 8px; flex-wrap: wrap; }
+  .menu-card .stat {
+    background: #0a0e14; border: 1px solid #1a2530; border-radius: 3px;
+    padding: 2px 8px; font-size: 11px; color: #8a9aa8;
+  }
+  .menu-card .stat .num { color: #ffaa55; font-weight: 700; }
+  .menu-card .arrow {
+    color: #66ffcc; font-size: 14px; align-self: flex-end; margin-top: 4px;
+  }
+
+  /* Status panel */
+  .status-panel {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 8px;
+    padding: 20px; margin-bottom: 24px;
+  }
+  .status-panel h2 { color: #ffaa55; font-size: 16px; margin: 0 0 12px; }
+  .status-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;
+  }
+  .status-item {
+    background: #0a0e14; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 12px;
+  }
+  .status-item .label { color: #6a7888; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .status-item .value { color: #66ffcc; font-size: 24px; font-weight: 700; margin-top: 4px; }
+  .status-item .sub { color: #8a9aa8; font-size: 11px; margin-top: 2px; }
+
+  /* Phase progress */
+  .phases {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 8px;
+    padding: 20px; margin-bottom: 24px;
+  }
+  .phases h2 { color: #ffaa55; font-size: 16px; margin: 0 0 16px; }
+  .phase-row {
+    display: flex; align-items: center; gap: 12px; padding: 8px 0;
+    border-bottom: 1px dashed #1a2530;
+  }
+  .phase-row:last-child { border-bottom: none; }
+  .phase-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px;
+    background: #1a2530; color: #6a7888;
+  }
+  .phase-num.done { background: #66ffcc22; color: #66ffcc; }
+  .phase-num.active { background: #ffaa5522; color: #ffaa55; box-shadow: 0 0 8px #ffaa5544; }
+  .phase-info { flex: 1; }
+  .phase-info .name { color: #c5d4e3; font-size: 14px; }
+  .phase-info .desc { color: #6a7888; font-size: 12px; }
+  .phase-status { font-size: 11px; padding: 2px 8px; border-radius: 3px; }
+  .phase-status.done { background: #66ffcc22; color: #66ffcc; }
+  .phase-status.active { background: #ffaa5522; color: #ffaa55; }
+  .phase-status.pending { background: #2a354022; color: #6a7888; }
+
+  /* Quick links */
+  .quick-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .quick-link {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 4px;
+    padding: 8px 12px; color: #66ffcc; text-decoration: none; font-size: 12px;
+  }
+  .quick-link:hover { border-color: #66ffcc; }
+
+  .footer {
+    text-align: center; color: #6a7888; font-size: 12px; margin-top: 48px;
+    padding: 24px; border-top: 1px solid #2a3540;
+  }
+  .footer code { background: #1a2530; padding: 2px 6px; border-radius: 3px; }
+
+  .ascii-banner {
+    text-align: center; color: #66ffcc; font-size: 11px; line-height: 1.2;
+    margin: 16px 0; opacity: 0.6;
+  }
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #2a3540;
+    padding: 8px 24px; margin: -24px -24px 16px -24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; font-size: 13px; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .current { color: #ffaa55; font-weight: 600; }
+  .top-nav .sep { color: #2a3540; }
+  .top-hub-link {
+    display: inline-block; background: #131a23; border: 1px solid #2a3540;
+    border-radius: 4px; padding: 6px 12px; color: #00d9ff; text-decoration: none;
+    font-size: 12px; margin-bottom: 16px;
+  }
+  .top-hub-link:hover { border-color: #00d9ff; }
+</style>
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <span class="current">🌆 Wet Run</span>
+  <span class="sep">|</span>
+  <a href="./stories-browse.html">📚 Stories</a>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Characters</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+</nav>
+<a class="top-hub-link" id="projects-hub-link" href="../../" title="Projects Hub (local dev only)">🌐 Projects Hub</a>
+<script>
+  // Hide on non-local filesystems (e.g. GitHub Pages) where the
+  // workspace path ../../Game/ does not exist.
+  (function () {
+    var link = document.getElementById("projects-hub-link");
+    if (!link) return;
+    link.style.display = (window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+      ? "inline-block" : "none";
+  })();
+</script>
+
+<div class="hero">
+  <h1>🌆 Wet Run</h1>
+  <div class="tag">깁슨 스프롤 3부작 기반 로그라이크 · Project Dashboard Hub</div>
+  <pre class="ascii-banner">
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+  ░  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢  ░
+  ░  ░▒▓█ The Sprawl — Boston-Atlanta Axis ▓▒░  ░
+  ░  ░▒▓█ "The sky was the color of TV  ▓▒░  ░
+  ░  ░▒▓█  tuned to a dead channel."     ▓▒░  ░
+  ░  ░▒▓█   — William Gibson, 1984       ▓▒░  ░
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+  </pre>
+</div>
+
+<!-- Status panel -->
+<div class="status-panel">
+  <h2>📊 Project Status (프로젝트 상태)</h2>
+  <div class="status-grid">
+    <div class="status-item">
+      <div class="label">Tests</div>
+      <div class="value" id="stat-tests">—</div>
+      <div class="sub">passing</div>
+    </div>
+    <div class="status-item">
+      <div class="label">Story lines</div>
+      <div class="value" id="stat-lines">—</div>
+      <div class="sub">across all dialogues</div>
+    </div>
+    <div class="status-item">
+      <div class="label">NPCs</div>
+      <div class="value" id="stat-npcs">—</div>
+      <div class="sub">unique characters</div>
+    </div>
+    <div class="status-item">
+      <div class="label">Stages</div>
+      <div class="value" id="stat-stages">13</div>
+      <div class="sub">per Run</div>
+    </div>
+    <div class="status-item">
+      <div class="label">Missions</div>
+      <div class="value" id="stat-missions">—</div>
+      <div class="sub">Arc 1</div>
+    </div>
+    <div class="status-item">
+      <div class="label">Last updated</div>
+      <div class="value" id="stat-updated" style="font-size: 16px;">—</div>
+      <div class="sub" id="stat-updated-sub"></div>
+    </div>
+    <div class="status-item" style="border-color: #66ffcc;">
+      <div class="label">Release</div>
+      <div class="value" style="color: #66ffcc;">v1.4.0</div>
+      <div class="sub">2026-08-20 · Quality Upgrade</div>
+    </div>
+  </div>
+</div>
+
+<section id="release-highlights" style="margin:24px 0;padding:16px;background:#0d1420;border:1px solid #1a4d2e;border-radius:6px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <h2 style="margin:0;font-size:18px;color:#66ffcc">✨ v1.4.0 Highlights (2026-08-20)</h2>
+    <span style="font-size:11px;color:#6a7888">Game Quality Upgrade · Tracks A+B+D · 21 sub-modules</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;font-size:13px;color:#aabbcc;">
+    <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
+      <strong style="color:#66ffcc">🔧 Track A — Foundation Health</strong><br>
+      40 ADR Implementation Status sweep (31 ✅ + 9 🟡)<br>
+      5 module splits (4272 LOC → 21 sub-modules)
+    </div>
+    <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
+      <strong style="color:#66ffcc">⚔️ Track B — Player Polish</strong><br>
+      9 ADR integrations wired (battle portraits,<br>
+      fluff, death taunts, cinematic intros, events)
+    </div>
+    <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
+      <strong style="color:#66ffcc">📜 Track D — Meta & Aftermath</strong><br>
+      Faction rep cross-run (opt-in)<br>
+      Run replay · Meta-progression · 29 endings
+    </div>
+    <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
+      <strong style="color:#66ffcc">📚 Wiki &amp; Docs</strong><br>
+      146→0 broken mkdocs links (Track A.3)<br>
+      ADR coverage matrix + 0195 Draft workflow
+    </div>
+    <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
+      <strong style="color:#66ffcc">🐛 Bug Fixes</strong><br>
+      Module split split, + 5 real bug fixes<br>
+      (death.py arc, combat_view kwarg, etc.)
+    </div>
+    <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
+      <strong style="color:#66ffcc">🎯 Quality Gates</strong><br>
+      pytest 5700 pass · mypy 230 files 0 errors<br>
+      ruff check ✓ · mkdocs strict ✓ · 230 source files
+    </div>
+  </div>
+  <p style="margin:12px 0 0;font-size:11px;color:#6a7888">
+    Next: v1.4.0 final release — PyPI upload + GitHub tag + Git LFS decision (321MB audio).<br>
+    Remaining gaps: missions.json integration for arc6 (4 missions) + mission_expansion (6 missions) — content authoring.<br>
+    <a href="../CHANGELOG.md" style="color:#66ffcc">📜 CHANGELOG</a> ·
+    <a href="../log.md" style="color:#66ffcc">📋 Activity Log</a> ·
+    <a href="../docs/audits/adr_coverage_matrix_2026-08-20.md" style="color:#66ffcc">📊 Coverage Matrix</a>
+  </p>
+</section>
+
+<section id="continue-reading" style="margin:24px 0;padding:16px;background:#0d1420;border:1px solid #1a2530;border-radius:6px;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <h2 style="margin:0;font-size:18px;color:#ffaa55">📖 Continue Reading</h2>
+    <span style="font-size:11px;color:#6a7888">last 6 reads · localStorage only</span>
+  </div>
+  <div id="cr-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px"></div>
+  <p id="cr-empty" style="display:none;color:#6a7888;font-size:12px">No reading history yet. Try <a href="./stories-browse.html" style="color:#66ffcc">stories-browse.html</a> to get started.</p>
+</section>
+<script src="continue-reading.js"></script>
+
+<h2>📂 Dashboards (대시보드 메뉴)</h2>
+<div class="menu-grid">
+
+  <a class="menu-card" href="missions.html">
+    <div class="icon">📖</div>
+    <h3>Story Dashboard</h3>
+    <p>캐릭터, 프롤로그, NPC, 미션 브리핑, ICE, Hub 대화. 캐릭터별 탭 + 언어 토글. 디자인/구현 일관성 검증.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">4</span> 아크</span>
+      <span class="stat"><span class="num">9</span> 자키</span>
+      <span class="stat"><span class="num">5</span> NPC</span>
+      <span class="stat"><span class="num">14</span> 대화</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="stages.html">
+    <div class="icon">⏱</div>
+    <h3>Stage Dashboard</h3>
+    <p>Run 스테이지 흐름, 전이 트리거, 미션 정의, 사망 흐름, Hub 루프. 시스템 동작 검증 및 디버깅.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">14</span> stages</span>
+      <span class="stat"><span class="num">14</span> transitions</span>
+      <span class="stat"><span class="num">47</span> 미션</span>
+      <span class="stat"><span class="num">18</span> chapter states</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="stories-browse.html">
+    <div class="icon">📚</div>
+    <h3>Derivative Short Stories <span style="font-size:11px;color:#66ffcc">(UPDATED)</span></h3>
+    <p>깁슨 <strong style="color:#ff8844">Sprawl</strong> · <strong style="color:#88dd44">Bridge</strong> · <strong style="color:#66ffcc">Blue Ant</strong> 3부작 기반 <strong style="color:#66ffcc">127편</strong>. 게임 캐릭터 영감 출처. 미션 ↔ 단편 매핑. 트릴로지/캐릭터/언어 필터.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">127</span> cards</span>
+      <span class="stat"><span class="num">114</span> Sprawl</span>
+      <span class="stat"><span class="num">12</span> Bridge</span>
+      <span class="stat"><span class="num">1</span> Blue Ant</span>
+      <span class="stat"><span class="num">209</span> missions</span>
+    </div>
+  </a>
+  <div class="lang-toggle" style="margin-top:-8px;margin-bottom:24px;padding:8px 16px;border-left:2px solid #00ccff;background:#0a0e14cc">
+    <span style="color:#6a7888;font-size:11px">언어 / Language:</span>
+    <a href="./stories-browse.html?lang=en" style="color:#66ffcc;text-decoration:none;margin-left:8px;padding:4px 10px;border:1px solid #2a3540;border-radius:3px">🌐 EN (64)</a>
+    <a href="./stories-browse.html?lang=ko" style="color:#66ffcc;text-decoration:none;margin-left:8px;padding:4px 10px;border:1px solid #2a3540;border-radius:3px">🌐 KO (63)</a>
+    <span style="color:#6a7888;font-size:11px;margin-left:8px">→ browse with language pre-filtered</span>
+  </div>
+  <a class="menu-card" href="graphic-novel.html">
+    <div class="icon">📖</div>
+    <h3>Graphic Novel <span style="font-size:11px;color:#ff6699">(ADR-0032)</span></h3>
+    <p>81 씬 자동플레이 비주얼 노블 (9 cast / 4 archetypes × 9 씬). 배경 아트 + 캐릭터 포트레잇 + 대사 + 진행 바. 메뉴 5 옵션의 핵심 진입로.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">81</span> scenes</span>
+      <span class="stat"><span class="num">9</span> chars</span>
+      <span class="stat"><span class="num">18</span> portraits</span>
+      <span class="stat"><span class="num">13</span> bg</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="sound.html">
+    <div class="icon">🔊</div>
+    <h3>Sound Dashboard</h3>
+    <p>사운드 카테고리, 키 바인딩, 테마, 46 사운드, 엔진 통합.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">6</span> categories</span>
+      <span class="stat"><span class="num">46</span> sounds</span>
+      <span class="stat"><span class="num">5</span> themes</span>
+      <span class="stat"><span class="num">8</span> keys</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="combat.html">
+    <div class="icon">⚔</div>
+    <h3>Combat Dashboard</h3>
+    <p>RT-MS 전투, 41 ICE 타입, 15 스킬 효과, PPL/ZDR 시스템.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">41</span> ICE</span>
+      <span class="stat"><span class="num">14</span> effects</span>
+      <span class="stat"><span class="num">9</span> programs</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="player.html">
+    <div class="icon">👤</div>
+    <h3>Player Status <span style="font-size:11px;color:#ffaa55">(NEW)</span></h3>
+    <p>Grade · PPL · HP · Credits · Loadout · Inventory · Mission Progress · Difficulty Scaling.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">5</span> grades</span>
+      <span class="stat"><span class="num">8</span> ICE types</span>
+      <span class="stat"><span class="num">3</span> tiers</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="cyberspace.html">
+    <div class="icon">🌐</div>
+    <h3>Cyberspace Dashboard</h3>
+    <p>World → Sector → Server → Node 계층, 매트릭스 탐색.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">2</span> worlds</span>
+      <span class="stat"><span class="num">4</span> sectors</span>
+      <span class="stat"><span class="num">6</span> servers</span>
+      <span class="stat"><span class="num">8</span> nodes</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="./player.html#equipment">
+    <div class="icon">📦</div>
+    <h3>Equipment Dashboard</h3>
+    <p>8 슬롯, 6 등급, 9 기술 유형, 3-tier 제작.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">8</span> slots</span>
+      <span class="stat"><span class="num">6</span> tiers</span>
+      <span class="stat"><span class="num">9</span> types</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="dungeon.html">
+    <div class="icon">🏰</div>
+    <h3>Dungeon Exploration <span style="font-size:11px;color:#6a7888">(superseded)</span></h3>
+    <p>ADR-0060. NetHack 스타일 2D 룸 + BSP 절차 생성 + VFX 오버레이. 매트릭스 화면에서 키 <span style="color:#66ffcc;">D</span> 로 토글.</p>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="library.html">
+    <div class="icon">📖</div>
+    <h3>Novel Integration <span style="font-size:11px;color:#ffaa55">(NEW)</span></h3>
+    <p>ADR-0061. 소설 → 게임 Hook 디스패치 + 런타임 연동 (`engine/novel_integration.py`). 4-Layer (catalog/hooks/manifest/dispatcher). 미션 완료 시 자동 호출.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">50</span> tests</span>
+      <span class="stat"><span class="num">6</span> HookKind</span>
+      <span class="stat"><span class="num">4</span> NovelFormat</span>
+      <span class="stat"><span class="num">6</span> files</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="play.html">
+    <div class="icon">▶</div>
+    <h3>Play (Beta) <span style="font-size:11px;color:#ffaa55">(NEW)</span></h3>
+    <p>인터랙티브 챕터 데모. 9 cast / 4 archetypes × 5 챕터 × 48 미션 × A/B/C 엔딩 → 단편 발췌. 정적 HTML+JS (GitHub Pages 호환). 진짜 tcod 게임 루프는 백엔드 필요.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">47</span> 미션</span>
+      <span class="stat"><span class="num">9</span> 자키</span>
+      <span class="stat"><span class="num">18</span> 챕터</span>
+      <span class="stat"><span class="num">3</span> 엔딩</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="stories/episode-reader.html">
+    <div class="icon">📑</div>
+    <h3>Story Reader <span style="font-size:11px;color:#ffaa55;">(NEW)</span></h3>
+    <p>9 cast / 4 archetypes × 9 챕터 × 9 아크 chapter index. 챕터 카드 클릭 → EN/KO 챕터 excerpt 표시.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">4</span> 챕터</span>
+      <span class="stat"><span class="num">4</span> 아크</span>
+      <span class="stat"><span class="num">EN+KO</span></span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="./player.html#achievements">
+    <div class="icon">🏆</div>
+    <h3>Achievements</h3>
+    <p>업적 카탈로그. 전투/탐험/도구/경제/엔딩/메타 카테고리. 27 업적.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">27</span> 업적</span>
+      <span class="stat"><span class="num">6</span> 카테고리</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+  <a class="menu-card" href="settings.html">
+    <div class="icon">⚙</div>
+    <h3>Settings</h3>
+    <p>오디오 카테고리, 디스플레이, 게임플레이 설정. 키 바인딩 표.</p>
+    <div class="stats">
+      <span class="stat"><span class="num">6</span> audio</span>
+      <span class="stat"><span class="num">3</span> display</span>
+      <span class="stat"><span class="num">8</span> keys</span>
+    </div>
+    <div class="arrow">→</div>
+  </a>
+
+</div>
+
+<!-- Phase progress -->
+<div class="phases">
+  <h2>🛠 Project Phases (프로젝트 단계)</h2>
+  <div class="phase-row">
+    <div class="phase-num done">1</div>
+    <div class="phase-info">
+      <div class="name">Phase 1 — 소설 문서 (Story Document)</div>
+      <div class="desc">characters.md, prologue.md — 깁슨 톤의 오리지널 스토리</div>
+    </div>
+    <div class="phase-status done">DONE</div>
+  </div>
+  <div class="phase-row">
+    <div class="phase-num done">2</div>
+    <div class="phase-info">
+      <div class="name">Phase 2 — 데모 형식 검증 (Demo Format)</div>
+      <div class="desc">original_story.py — 3 캐릭터 × A/B/C 엔딩 = 9 시나리오</div>
+    </div>
+    <div class="phase-status done">DONE</div>
+  </div>
+  <div class="phase-row">
+    <div class="phase-num done">3</div>
+    <div class="phase-info">
+      <div class="name">Phase 3 — 게임 구조 (Game Structure)</div>
+      <div class="desc">전투, 매트릭스, 인벤토리, 미션 — RT-MS + ASCII + Korean TTF</div>
+    </div>
+    <div class="phase-status done">DONE</div>
+  </div>
+  <div class="phase-row">
+    <div class="phase-num done">4</div>
+    <div class="phase-info">
+      <div class="name">Phase 4 — 사운드 시스템 (Sound System)</div>
+      <div class="desc">6 categories, 46 sounds, 5 themes, key bindings</div>
+    </div>
+    <div class="phase-status done">DONE</div>
+  </div>
+  <div class="phase-row">
+    <div class="phase-num done">5</div>
+    <div class="phase-info">
+      <div class="name">Phase 5 — 통합 & 확장 (Integration)</div>
+      <div class="desc">original prologue 적용, 미션 시스템 Arc 1, 대시보드 확장</div>
+    </div>
+    <div class="phase-status done">DONE</div>
+  </div>
+  <div class="phase-row">
+    <div class="phase-num done">6</div>
+    <div class="phase-info">
+      <div class="name">Phase 6 — 콘텐츠 제작 (Content Production)</div>
+      <div class="desc">Suit 자키 4+4 씬, NPC dialogue + faction rep 연동</div>
+    </div>
+    <div class="phase-status done">DONE</div>
+  </div>
+  <div class="phase-row">
+    <div class="phase-num done">7</div>
+    <div class="phase-info">
+      <div class="name">Phase 7 — 알파 빌드 (Alpha Build)</div>
+      <div class="desc">9자키/81씬/47미션/41ICE · Help/Settings/Sound/Crash/Build/mypy 7/7 · 2983 tests</div>
+    </div>
+    <div class="phase-status done">DONE ★</div>
+  </div>
+  <div class="phase-row">
+    <div class="phase-num" style="background:#2a354022;color:#6a7888;">8</div>
+    <div class="phase-info">
+      <div class="name">Phase 8 — 베타 준비 (Beta Polish)</div>
+      <div class="desc">게임플레이 밸런스, 튜토리얼 마찰 해소, 퍼포먼스 최적화</div>
+    </div>
+    <div class="phase-status pending">NEXT</div>
+  </div>
+</div>
+
+<!-- Design System -->
+<div class="phases">
+  <h2>⚙️ Design System (설계 시스템)</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 20px;">
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:12px;text-align:center;">
+      <div style="color:#66ffcc;font-size:20px;font-weight:700;">5</div>
+      <div style="color:#6a7888;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Design Pillars</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:4px;">The Run · Matrix · Flatline · Build · Style</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:12px;text-align:center;">
+      <div style="color:#ff5555;font-size:20px;font-weight:700;">7</div>
+      <div style="color:#6a7888;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Anti-Patterns</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:4px;">Loot Grind · Multiplayer · Cosmetics · Daily</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:12px;text-align:center;">
+      <div style="color:#00ccff;font-size:20px;font-weight:700;">T1–T6</div>
+      <div style="color:#6a7888;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Tier System</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:4px;">9 programs · 6 grades · PPL/ZDR</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:12px;text-align:center;">
+      <div style="color:#ffaa55;font-size:20px;font-weight:700;">47</div>
+      <div style="color:#6a7888;font-size:11px;text-transform:uppercase;letter-spacing:1px;">Missions</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:4px;">Arc 1–5 · 6 zones · 6 pillars</div>
+    </div>
+  </div>
+
+  <h3 style="color:#ffaa55;font-size:13px;margin:16px 0 8px;">5 Design Pillars</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:16px;">
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:10px;border-left:3px solid #66ffcc;">
+      <div style="color:#66ffcc;font-size:12px;font-weight:600;">① The Run</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:2px;">한 번의 침투, 명확한 끝</div>
+      <div style="color:#6a7888;font-size:9px;margin-top:4px;">PPL/ZDR · Story Events</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:10px;border-left:3px solid #00ccff;">
+      <div style="color:#00ccff;font-size:12px;font-weight:600;">② The Matrix</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:2px;">유일한 시각적 공간</div>
+      <div style="color:#6a7888;font-size:9px;margin-top:4px;">meatspace 절대 불가</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:10px;border-left:3px solid #ff5555;">
+      <div style="color:#ff5555;font-size:12px;font-weight:600;">③ The Flatline</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:2px;">죽음에 진짜 무게</div>
+      <div style="color:#6a7888;font-size:9px;margin-top:4px;">리스폰 없음</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:10px;border-left:3px solid #ffaa55;">
+      <div style="color:#ffaa55;font-size:12px;font-weight:600;">④ The Build</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:2px;">더 좋은 도구로</div>
+      <div style="color:#6a7888;font-size:9px;margin-top:4px;">T1–T6 equipment tier</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:10px;border-left:3px solid #9b59b6;">
+      <div style="color:#9b59b6;font-size:12px;font-weight:600;">⑤ The Style</div>
+      <div style="color:#8a9aa8;font-size:10px;margin-top:2px;">네온, 크롬, 가죽</div>
+      <div style="color:#6a7888;font-size:9px;margin-top:4px;">깁슨 톤 정확히</div>
+    </div>
+  </div>
+
+  <h3 style="color:#ffaa55;font-size:13px;margin:16px 0 8px;">RT-MS Combat · PPL/ZDR · Alarm System</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;">
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:12px;">
+      <div style="color:#66ffcc;font-size:11px;font-weight:600;margin-bottom:6px;">RT-MS Combat</div>
+      <div style="color:#8a9aa8;font-size:10px;line-height:1.6;">
+        실시간 자동 공격 + 메뉴 스킬<br>
+        <span style="color:#6a7888;">tick: 1 attack / 2초</span><br>
+        <span style="color:#6a7888;">41 ICE types · 14 skill effects</span>
+      </div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:12px;">
+      <div style="color:#00ccff;font-size:11px;font-weight:600;margin-bottom:6px;">PPL / ZDR Status</div>
+      <div style="color:#8a9aa8;font-size:10px;line-height:1.6;">
+        <span style="color:#66ffcc;">SAFE</span> · <span style="color:#00ccff;">MATCH</span> · <span style="color:#ffaa55;">TOUGH</span><br>
+        <span style="color:#ff5555;">DEADLY</span> · <span style="color:#ff0000;">FUTILE</span>
+      </div>
+      <div style="color:#6a7888;font-size:9px;margin-top:4px;">전투 전/중 위험 명시화</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:12px;">
+      <div style="color:#ff5555;font-size:11px;font-weight:600;margin-bottom:6px;">Alarm / Trace</div>
+      <div style="color:#8a9aa8;font-size:10px;line-height:1.6;">
+        0 평온 → 5 flatline<br>
+        watchdog · hellhound · black ICE
+      </div>
+      <div style="color:#6a7888;font-size:9px;margin-top:4px;">6단계 알람 레벨</div>
+    </div>
+  </div>
+
+  <h3 style="color:#ffaa55;font-size:13px;margin:16px 0 8px;">Core Loop (매크로)</h3>
+  <pre style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:12px;font-size:10px;line-height:1.4;color:#8a9aa8;overflow-x:auto;">
+<span style="color:#66ffcc;">┌─────────────┐</span>    <span style="color:#ffaa55;">Hub</span> — 픽서construct · Job Board · Deck Config · Info Market
+<span style="color:#66ffcc;">│  MELEE  </span><span style="color:#ff5555;">→</span>  ────────────────────────────────────────────────
+<span style="color:#66ffcc;">└─────────────┘</span>
+       │
+<span style="color:#00ccff;">       ▼ jacked in. the world goes gray.</span>
+       │
+<span style="color:#ffaa55;">  ┌── Matrix Phase ──────────────────┐</span>
+<span style="color:#ffaa55;">  │</span>  Navigation → Node 발견 → Decision
+<span style="color:#ffaa55;">  │</span>  Action → Combat(RT-MS) → State Update
+<span style="color:#ffaa55;">  │</span>  Alarm 0→5 ─ trace 완료 → <span style="color:#ff5555;">flatline</span>
+<span style="color:#ffaa55;">  └───────────────────────────────────┘</span>
+       │
+<span style="color:#66ffcc;">  Extraction / Death</span>
+       │
+<span style="color:#00ccff;">  Result + Story ─ Hub로 복귀</span>
+  </pre>
+
+  <h3 style="color:#ffaa55;font-size:13px;margin:16px 0 8px;">Mission Distribution by Pillar</h3>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:4px;">
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:3px;padding:4px 10px;font-size:11px;">
+      <span style="color:#ff5555;">■</span> power <span style="color:#ffaa55;font-weight:600;">19</span>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:3px;padding:4px 10px;font-size:11px;">
+      <span style="color:#00ccff;">■</span> code <span style="color:#ffaa55;font-weight:600;">14</span>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:3px;padding:4px 10px;font-size:11px;">
+      <span style="color:#9b59b6;">■</span> purpose <span style="color:#ffaa55;font-weight:600;">7</span>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:3px;padding:4px 10px;font-size:11px;">
+      <span style="color:#66ffcc;">■</span> people <span style="color:#ffaa55;font-weight:600;">4</span>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:3px;padding:4px 10px;font-size:11px;">
+      identity <span style="color:#ffaa55;font-weight:600;">2</span>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:3px;padding:4px 10px;font-size:11px;">
+      memory <span style="color:#ffaa55;font-weight:600;">1</span>
+    </div>
+  </div>
+
+  <h3 style="color:#ffaa55;font-size:13px;margin:16px 0 8px;">5 Factions — Reputation System</h3>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:8px;">
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:8px;text-align:center;">
+      <div style="color:#00ccff;font-size:12px;font-weight:600;">HOSAKA</div>
+      <div style="color:#8a9aa8;font-size:9px;">日本기업</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:8px;text-align:center;">
+      <div style="color:#ff5555;font-size:12px;font-weight:600;">MAAS</div>
+      <div style="color:#8a9aa8;font-size:9px;">Biochip corp</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:8px;text-align:center;">
+      <div style="color:#66ffcc;font-size:12px;font-weight:600;">SENSE/NET</div>
+      <div style="color:#8a9aa8;font-size:9px;">미디어 기업</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:8px;text-align:center;">
+      <div style="color:#ffaa55;font-size:12px;font-weight:600;">T-A</div>
+      <div style="color:#8a9aa8;font-size:9px;">Tessier-Ashpool</div>
+    </div>
+    <div style="background:#0a0e14;border:1px solid #1a2530;border-radius:4px;padding:8px;text-align:center;">
+      <div style="color:#9b59b6;font-size:12px;font-weight:600;">NONE</div>
+      <div style="color:#8a9aa8;font-size:9px;">无所属</div>
+    </div>
+  </div>
+  <div style="font-size:9px;color:#6a7888;margin-bottom:4px;">
+    Reputation: <span style="color:#66ffcc;">ALLIED ≥80</span> · <span style="color:#00ccff;">FRIENDLY ≥50</span> · <span style="color:#66ffcc;">TRUSTED ≥20</span> · NEUTRAL · <span style="color:#ff5555;">HOSTILE ≤-20</span> · <span style="color:#ff0000;">ENEMY ≤-50</span>
+  </div>
+
+  <div style="margin-top:12px;font-size:10px;color:#6a7888;">
+    ⚠️ Anti-Patterns: Loot Grind · Multiplayer · Cosmetics · Daily Login · Infinite Scaling · Prestige · Mobile/F2P
+  </div>
+</div>
+
+<div style="text-align: center; margin: 24px 0;">
+  <h3 style="color: #6a7888; font-size: 12px; margin-bottom: 8px;">Quick Links</h3>
+  <div class="quick-links">
+    <a class="quick-link" href="../design/story/characters.md">📄 characters.md</a>
+    <a class="quick-link" href="../design/story/prologue.md">📄 prologue.md</a>
+    <a class="quick-link" href="../design/story/prologue_data.json">📊 prologue_data.json</a>
+    <a class="quick-link" href="../design/story/event_dialogues.json">📊 event_dialogues.json</a>
+    <a class="quick-link" href="../design/systems/stage_structure.json">📊 stage_structure.json</a>
+    <a class="quick-link" href="../ROADMAP.md">🗺 ROADMAP.md</a>
+    <a class="quick-link" href="../AGENTS.md">🤖 AGENTS.md</a>
+  </div>
+</div>
+
+<div class="footer">
+  Wet Run — Project Dashboard Hub · <code id="last-updated"></code><br>
+  깁슨 Sprawl 3부작 기반 오리지널 로그라이크
+</div>
+
+<script>
+  document.getElementById('last-updated').textContent = new Date().toISOString().slice(0, 10);
+
+  // Fetch stats from JSON files
+  async function loadStats() {
+    let totalLines = 0;
+    let totalNpcs = 0;
+    let totalStages = 0;
+    let totalMissions = 0;
+    try {
+      const proData = await fetch('../design/story/prologue_data.json').then(r => r.json());
+      totalLines += proData.scenes.reduce((s, sc) => s + sc.lines.length, 0);
+      // Endings lines
+      Object.values(proData.endings).forEach(ends => {
+        ends.forEach(e => { totalLines += e.lines.length; });
+      });
+      totalNpcs = 3; // The 3 protagonists
+    } catch (e) { /* ignore */ }
+    try {
+      const evtData = await fetch('../design/story/event_dialogues.json').then(r => r.json());
+      totalNpcs = Math.max(totalNpcs, Object.keys(evtData.npcs).length);
+      Object.values(evtData.dialogues).forEach(d => { totalLines += d.lines.length; });
+    } catch (e) { /* ignore */ }
+    try {
+      const stgData = await fetch('../design/systems/stage_structure.json').then(r => r.json());
+      totalStages = stgData.stages.length;
+      totalMissions = stgData.missions.length;
+    } catch (e) { /* ignore */ }
+    let totalTests = null;
+    try {
+      const idxStats = await fetch('data/index_stats.json').then(r => r.json());
+      if (idxStats && typeof idxStats.tests_total === 'number') {
+        totalTests = idxStats.tests_total;
+      }
+    } catch (e) { /* keep null */ }
+    document.getElementById('stat-tests').textContent =
+      totalTests !== null ? totalTests : '—';
+    document.getElementById('stat-lines').textContent = totalLines;
+    document.getElementById('stat-npcs').textContent = totalNpcs;
+    document.getElementById('stat-stages').textContent = totalStages;
+    document.getElementById('stat-missions').textContent = totalMissions;
+  }
+  loadStats();
+</script>
+</body>
+</html>

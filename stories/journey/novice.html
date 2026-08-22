@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novice Journey — Wet Run</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.8;
+    padding: 24px;
+    max-width: 920px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 24px; margin: -24px -24px 24px -24px;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+  .top-nav a:hover { color: #ffaa55; }
+  .top-nav .sep { color: #2a3540; }
+  h1 { font-size: 32px; margin-bottom: 8px; color: #ffaa55; font-family: 'JetBrains Mono', monospace; }
+  h2 { font-size: 22px; margin: 32px 0 12px; color: #66ffcc; border-bottom: 1px solid #1a2530; padding-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  h3 { font-size: 18px; margin: 20px 0 8px; color: #ffaa55; font-family: 'JetBrains Mono', monospace; }
+  p { margin: 8px 0; }
+  ul, li { margin: 4px 0 4px 24px; }
+  blockquote {
+    border-left: 3px solid #66ffcc;
+    padding: 8px 16px;
+    margin: 16px 0;
+    color: #8a98a8;
+    font-style: italic;
+    background: #0d141d;
+  }
+  table { border-collapse: collapse; margin: 12px 0; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  td { border: 1px solid #1a2530; padding: 6px 10px; }
+  td:first-child { color: #66ffcc; font-weight: 600; }
+  strong { color: #ffaa55; }
+  em { color: #8a98a8; }
+  code { background: #1a2530; padding: 2px 6px; border-radius: 3px; font-size: 13px; color: #00ccff; }
+  hr { border: none; border-top: 1px solid #1a2530; margin: 24px 0; }
+  .footer { text-align: center; color: #6a7888; font-size: 12px; margin-top: 48px; padding: 24px; border-top: 1px solid #1a2530; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../library.html">← Library</a>
+  <span class="sep">|</span>
+  <a href="README.md">📋 INDEX</a>
+  <span class="sep">|</span>
+  <a href="novice.html" style="color: #66ffcc; font-weight: 600;">Novice</a>
+  <a href="veteran.html" >Veteran</a>
+  <a href="heretic.html" >Heretic</a>
+</nav>
+<h1>Journey: 케이 (K) — Novice</h1>
+<blockquote>**그의 미션은 데이터를 태우는 것이다. 매트릭스는 그를 태우는 것이다.**</blockquote>
+<blockquote>— The Finn</blockquote>
+<p>---</p>
+<h2>프로필 (Chapter 0)</h2>
+<h3>프롤로그 (Phase 0)</h3>
+<p><code>`</code></p>
+<p>30 seconds. The Ono-Sendai electrodes lift from my scalp.</p>
+<p><code>`</code></p>
+<p>케이는 chiba의 11층 캡슐 호텔 방에서 잭아웃한다. 매트릭스가 끝났지만 매트릭스는 아직 거기 있다. 매트릭스가 끝났는데 <em>나</em>는 끝나지 않는다. 30초 후에 다시 인간이 된다. 30초가 30분 같다.</p>
+<p>핸드의 Hosaka 터미널, 없는 키보드 위에서 떨리는 손가락. 침이 입천장에 붙어 있다. "Finn's voice crackles through the deck: 'You got the file. Now jack out.'"</p>
+<p>---</p>
+<h2>Chapter 1: The First Run (Arc 1)</h2>
+<h3>미션 상세</h3>
+<p><strong>Data Retrieval</strong> (Arc 1, novice)</p>
+<blockquote>"단순한 데이터 회수 작업이 목표가 기업 급여 명세서임직 밝혀지며 틀어진다—중간 수준 T-A 자회사를 물거품으로 만들 수 있는 비밀. 핀은 처음부터 알고 있었다. 언제나 그렇듯."</blockquote>
+<li><strong>적</strong>: ICE.standard (1기)</li>
+<li><strong>목표</strong>: extract_data (target: 회사 급여 명세서)</li>
+<li><strong>보상</strong>: 500cr + data_fragment × 2</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<p><strong>Watchdog Patrol</strong> (Arc 1, novice)</p>
+<blockquote>"워치독이 0300에 왔다, 늘 그랬듯이...워치독은 기억을 순찰했다."</blockquote>
+<li><strong>적</strong>: ICE.watchdog (2기)</li>
+<li><strong>목표</strong>: defeat × 2</li>
+<li><strong>보상</strong>: 750cr + ice_shard × 2</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<p><strong>Ice Run</strong> (Arc 1, novice)</p>
+<blockquote>"shard는 얼어붙은 코드의 조각이었다 — 문자 그대로."</blockquote>
+<li><strong>적</strong>: ICE.collected</li>
+<li><strong>목표</strong>: collect_material (ice_shard × 5)</li>
+<li><strong>보상</strong>: 500cr + data_fragment × 2</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<p><strong>Tutorial Maze</strong> (Arc 1, novice)</p>
+<blockquote>"첫 실제 런. 난세이 복도의 단순한 데이터 픽업. 세 파동의 기업 ICE, 각각 다른 취약점."</blockquote>
+<li><strong>적</strong>: ICE.standard × 3 (wave)</li>
+<li><strong>목표</strong>: extract_data</li>
+<li><strong>보상</strong>: 300cr + data_fragment × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<p><strong>First Jack</strong> (Arc 1, novice) ⭐ 챕터 대표 미션</p>
+<blockquote>"30초. Ono-Sendai 사이버스페이스 7의 전극이 두피에서 떨어지는 동안에도, 내 손가락은 여전히 키를 두드리고 있었다."</blockquote>
+<li><strong>적</strong>: ICE.standard (1기)</li>
+<li><strong>목표</strong>: extract_data (demo_file)</li>
+<li><strong>보상</strong>: 500cr + data_fragment × 2</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<li><strong>특징</strong>: CHAPTER 화면 12초 타이핑 효과의 본편</li>
+<h3>Chapter 1 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 2: Molly's Deal (Arc 2)</h2>
+<h3>미션 상세</h3>
+<p><strong>First Trace</strong> (Arc 2, novice)</p>
+<blockquote>"첫 trace의 비는 비의 비다..."</blockquote>
+<li><strong>적</strong>: ICE.surface × 2</li>
+<li><strong>목표</strong>: extract_data</li>
+<li><strong>보상</strong>: 800cr + data_fragment × 3</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<p><strong>Flatline Call</strong> (Arc 2, novice) ★ Molly 영감</p>
+<blockquote>"딕시 플랫라인은 죽었다. 하지만 플랫라인은 아직 끝나지 않았다. 아직은."</blockquote>
+<li><strong>적</strong>: ICE.construct × 1</li>
+<li><strong>목표</strong>: collect_material (rom_fragment × 1)</li>
+<li><strong>보상</strong>: 1,200cr + rom_fragment × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong> (Dixie construct 콜)</li>
+<li><strong>연결 캐릭터</strong>: Dixie Flatline</li>
+<h3>Chapter 2 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 3: Straylight Run (Arc 3)</h2>
+<h3>미션 상세</h3>
+<p><strong>Black Ice Dream</strong> (Arc 3, novice)</p>
+<blockquote>"그가 가까이 갔을 때 매트릭스가 보여주는 모습이었다: 선과 노드가 아니라, 얼음. 결정질의, 부서진, 잘라내는 기하학."</blockquote>
+<li><strong>적</strong>: Black ICE (5기) — 치명적</li>
+<li><strong>목표</strong>: collect_material (ice_shard × 10)</li>
+<li><strong>보상</strong>: 2,000cr + upgrade_t3 × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<h3>Chapter 3 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 4: The Flatline (Arc 4)</h2>
+<h3>미션 상세</h3>
+<p><strong>Voodoo Loa Encounter</strong> (Arc 4, novice)</p>
+<blockquote>"당신 눈이 loa를 봤어요. 당신은 loa가 필요한 사람이에요."</blockquote>
+<li><strong>적</strong>: Loa-construct × 2</li>
+<li><strong>목표</strong>: negotiate (npc: loa)</li>
+<li><strong>보상</strong>: 3,500cr + loa_fragment × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<li><strong>연결 캐릭터</strong>: Angie Mitchell (loa 매개)</li>
+<h3>Chapter 4 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 5: Neuromancer (Arc 5) — 엔딩 결정</h2>
+<h3>미션 상세</h3>
+<p><strong>Final Choice</strong> (Arc 5, novice) ⭐ 챕터 대표 미션</p>
+<blockquote>"결정의 순간. 데이터는 핀의 것이 된다. 데이터는 케이의 것이 된다. 데이터는 누구의 것인가."</blockquote>
+<li><strong>적</strong>: Wintermute / Neuromancer (최종 ICE)</li>
+<li><strong>목표</strong>: choice (엔딩 분기)</li>
+<li><strong>보상</strong>: 10,000cr + ending_token × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>케이</strong></li>
+<h3>엔딩 선택</h3>
+<p>#### 엔딩 A: 🏃 Burn and Run (탈출)</p>
+<p><code>`</code></p>
+<p>케이가 데이터를 태우고 Sprawl을 떠남. 새로운 자키로 살아남음.</p>
+<p><code>`</code></p>
+<li>데이터 파일을 태운다</li>
+<li>핀의 추적을 따돌리고 Sprawl 밖으로</li>
+<li><strong>아이템 사용</strong>: ending_token × 1</li>
+<li><strong>결과</strong>: 자키 라이프 +1 (재시작 가능)</li>
+<p>#### 엔딩 B: 💀 The Flatline (사망)</p>
+<p><code>`</code></p>
+<p>케이가 데이터를 지키려다 Finn의 추적에 당함. Flatline.</p>
+<p><code>`</code></p>
+<li>핀이 데이터를 빼앗으려 한다</li>
+<li>케이가 거부 → 추적자 ICE에 둘러싸임</li>
+<li><strong>결과</strong>: 사망 → Hall of Dead 기록 → New Game+</li>
+<p>---</p>
+<h2>최종 누적 (엔딩 전)</h2>
+<h2>엔딩 통계 (선택 시)</h2>
+<p>---</p>
+<p><em>Generated: 2026-06-30. Source: missions.json, chapters/case.json, arcs/case_arc.json, prologues/case.json</em></p>
+<div class="footer">
+  Wet Run — Character Journey Demo<br>
+  Generated: 2026-06-30 · Source: missions.json + chapters + arcs
+</div>
+</body>
+</html>

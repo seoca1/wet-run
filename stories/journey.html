@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Character Journeys — Wet Run</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.8;
+    padding: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 24px; margin: -24px -24px 24px -24px;
+    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+  .top-nav a:hover { color: #ffaa55; }
+  .top-nav .sep { color: #2a3540; }
+  .top-nav .brand { color: #ffaa55; font-weight: 600; }
+
+  /* Character tabs */
+  .char-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+  .char-tab {
+    flex: 1; max-width: 200px;
+    background: #0d1420; border: 2px solid #1a2530; border-radius: 6px;
+    padding: 14px 20px; cursor: pointer; transition: all 0.15s ease;
+    text-align: center;
+  }
+  .char-tab:hover { border-color: #66ffcc; }
+  .char-tab.active { border-color: #66ffcc; box-shadow: 0 0 12px #66ffcc33; }
+  .char-tab .char-name { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 600; color: #c5d4e3; }
+  .char-tab.active .char-name { color: #66ffcc; }
+  .char-tab .char-sub { font-size: 12px; color: #6a7888; margin-top: 4px; }
+  .char-tab .char-arc { font-size: 11px; color: #ffaa55; margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+
+  /* Journey content sections */
+  .journey-section { display: none; }
+  .journey-section.active { display: block; }
+
+  h1 { font-size: 28px; margin-bottom: 8px; color: #ffaa55; font-family: 'JetBrains Mono', monospace; }
+  h2 { font-size: 20px; margin: 28px 0 10px; color: #66ffcc; border-bottom: 1px solid #1a2530; padding-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  h3 { font-size: 16px; margin: 18px 0 8px; color: #ffaa55; font-family: 'JetBrains Mono', monospace; }
+  p { margin: 8px 0; }
+  ul, li { margin: 4px 0 4px 24px; }
+  blockquote {
+    border-left: 3px solid #66ffcc;
+    padding: 8px 16px;
+    margin: 14px 0;
+    color: #8a98a8;
+    font-style: italic;
+    background: #0d141d;
+    border-radius: 0 4px 4px 0;
+  }
+  table { border-collapse: collapse; margin: 12px 0; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  td { border: 1px solid #1a2530; padding: 6px 10px; }
+  td:first-child { color: #66ffcc; font-weight: 600; }
+  strong { color: #ffaa55; }
+  em { color: #8a98a8; }
+  code { background: #1a2530; padding: 2px 6px; border-radius: 3px; font-size: 13px; color: #00ccff; }
+  hr { border: none; border-top: 1px solid #1a2530; margin: 24px 0; }
+  .footer { text-align: center; color: #6a7888; font-size: 12px; margin-top: 48px; padding: 24px; border-top: 1px solid #1a2530; font-family: 'JetBrains Mono', monospace; }
+
+  /* Mission cards within journey */
+  .mission-card {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+    padding: 16px; margin: 12px 0;
+  }
+  .mission-card h4 { color: #66ffcc; font-size: 15px; margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  .mission-card .mission-quote { font-style: italic; color: #8a98a8; margin: 6px 0; font-size: 14px; }
+  .mission-card ul { margin: 6px 0 6px 20px; font-size: 14px; }
+  .mission-card li { margin: 3px 0; color: #c5d4e3; }
+  .mission-card li strong { color: #ffaa55; }
+  .chapter-header {
+    background: linear-gradient(90deg, #0d1420, #06090f);
+    border: 1px solid #1a2530;
+    border-left: 4px solid #66ffcc;
+    border-radius: 4px;
+    padding: 12px 16px;
+    margin: 16px 0 8px;
+  }
+  .chapter-header.arc-1 { border-left-color: #66ffcc; }
+  .chapter-header.arc-2 { border-left-color: #00ccff; }
+  .chapter-header.arc-3 { border-left-color: #ffaa55; }
+  .chapter-header.arc-4 { border-left-color: #ff5577; }
+  .chapter-header.arc-5 { border-left-color: #ff00ff; }
+  .chapter-header h2 { margin: 0; padding: 0; border: none; color: #66ffcc; font-size: 16px; }
+  .chapter-header .subtitle { font-size: 12px; color: #6a7888; margin-top: 4px; }
+
+  /* Ending cards */
+  .ending-card {
+    background: #0d1420; border: 2px solid #1a2530; border-radius: 6px;
+    padding: 16px; margin: 12px 0;
+  }
+  .ending-card h4 { font-size: 15px; margin-bottom: 8px; font-family: 'JetBrains Mono', monospace; }
+  .ending-card.type-a { border-color: #66ffcc; }
+  .ending-card.type-b { border-color: #ff5577; }
+  .ending-card h4.type-a { color: #66ffcc; }
+  .ending-card h4.type-b { color: #ff5577; }
+  .ending-card p { font-size: 14px; margin: 6px 0; }
+
+  /* Summary stats bar */
+  .stats-bar {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    background: #0d1420; border: 1px solid #1a2530;
+    border-radius: 6px; padding: 12px 16px; margin: 16px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  }
+  .stats-bar .stat { color: #ffaa55; }
+  .stats-bar .stat span { color: #66ffcc; font-weight: 600; }
+</style>
+    <link rel="stylesheet" href="../missions.css">
+<link rel="stylesheet" href="../reading-position.css">
+<link rel="stylesheet" href="../sync-scroll.css">
+<link rel="stylesheet" href="../print.css" media="print">
+<link rel="stylesheet" href="../reader-controls.css">
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../index.html">← Hub</a>
+  <span class="sep">|</span>
+  <a href="../index.html">Library</a>
+  <span class="sep">|</span>
+  <a href="../missions.html">Missions</a>
+  <span class="sep">|</span>
+  <span class="brand">Character Journeys</span>
+</nav>
+
+<h1>🎮 Character Journeys</h1>
+<p style="color:#6a7888;margin-bottom:16px;font-size:14px;">
+  게임의 미션/아크/챕터 데이터를 기반으로 한 3캐릭터 스토리 진행 데모.<br>
+  <code>prototype/data/missions/missions.json</code> · <code>prototype/data/story/</code>
+</p>
+
+<div class="char-tabs">
+  <div class="char-tab active" data-char="novice" onclick="switchChar('novice')">
+    <div class="char-name">케이 (K)</div>
+    <div class="char-sub">Novice · Case</div>
+    <div class="char-arc">Arc 1–5 · 10 미션</div>
+  </div>
+  <div class="char-tab" data-char="veteran" onclick="switchChar('veteran')">
+    <div class="char-name">실 (Sil)</div>
+    <div class="char-sub">Veteran · Marly</div>
+    <div class="char-arc">Arc 1–5 · 11 미션</div>
+  </div>
+  <div class="char-tab" data-char="heretic" onclick="switchChar('heretic')">
+    <div class="char-name">카스 (Kas)</div>
+    <div class="char-sub">Heretic · Kumiko</div>
+    <div class="char-arc">Arc 1–5 · 8 미션</div>
+  </div>
+</div>
+
+<!-- NOVICE (K / Case) -->
+<div id="journey-novice" class="journey-section active">
+  <div class="stats-bar">
+    <div class="stat">미션 <span>10</span></div>
+    <div class="stat">챕터 <span>5</span></div>
+    <div class="stat">최종 크레딧 <span>20,050 cr</span></div>
+    <div class="stat">엔딩 <span>A / B</span></div>
+  </div>
+
+  <blockquote>
+    <strong>그의 미션은 데이터를 태우는 것이다. 매트릭스는 그를 태우는 것이다.</strong><br>
+    — The Finn
+  </blockquote>
+
+  <h2>프롤로그 (Phase 0)</h2>
+  <p>30 seconds. The Ono-Sendai electrodes lift from my scalp.</p>
+  <p>케이는 chiba의 11층 캡슐 호텔 방에서 잭아웃한다. 매트릭스가 끝났지만 매트릭스는 아직 거기 있다. 30초 후에 다시 인간이 된다. 30초가 30분 같다.</p>
+
+  <div class="chapter-header arc-1">
+    <h2>Chapter 1: The First Run (Arc 1)</h2>
+    <div class="subtitle">Data Retrieval · Watchdog Patrol · Ice Run · Tutorial Maze · First Jack</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Data Retrieval (Arc 1, novice)</h4>
+    <div class="mission-quote">"단순한 데이터 회수 작업이 목표가 기업 급여 명세서임직 밝혀지며 틀어진다—중간 수준 T-A 자회사를 물거품으로 만들 수 있는 비밀."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.standard (1기)</li>
+      <li><strong>목표:</strong> extract_data (target: 회사 급여 명세서)</li>
+      <li><strong>보상:</strong> 500cr + data_fragment × 2</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Watchdog Patrol (Arc 1, novice)</h4>
+    <div class="mission-quote">"워치독이 0300에 왔다, 늘 그랬듯이...워치독은 기억을 순찰했다."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.watchdog (2기)</li>
+      <li><strong>목표:</strong> defeat × 2</li>
+      <li><strong>보상:</strong> 750cr + ice_shard × 2</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Ice Run (Arc 1, novice)</h4>
+    <div class="mission-quote">"shard는 얼어붙은 코드의 조각이었다 — 문자 그대로."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.collected</li>
+      <li><strong>목표:</strong> collect_material (ice_shard × 5)</li>
+      <li><strong>보상:</strong> 500cr + data_fragment × 2</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Tutorial Maze (Arc 1, novice)</h4>
+    <div class="mission-quote">"첫 실제 런. 난세이 복도의 단순한 데이터 픽업. 세 파동의 기업 ICE, 각각 다른 취약점."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.standard × 3 (wave)</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 300cr + data_fragment × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>First Jack (Arc 1, novice) ⭐ 챕터 대표 미션</h4>
+    <div class="mission-quote">"30초. Ono-Sendai 사이버스페이스 7의 전극이 두피에서 떨어지는 동안에도, 내 손가락은 여전히 키를 두드리고 있었다."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.standard (1기)</li>
+      <li><strong>목표:</strong> extract_data (demo_file)</li>
+      <li><strong>보상:</strong> 500cr + data_fragment × 2</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-2">
+    <h2>Chapter 2: Molly's Deal (Arc 2)</h2>
+    <div class="subtitle">First Trace · Flatline Call</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>First Trace (Arc 2, novice)</h4>
+    <div class="mission-quote">"첫 trace의 비는 비의 비다..."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.surface × 2</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 800cr + data_fragment × 3</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Flatline Call (Arc 2, novice) ★ Molly 영감</h4>
+    <div class="mission-quote">"딕시 플랫라인은 죽었다. 하지만 플랫라인은 아직 끝나지 않았다. 아직은."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.construct × 1</li>
+      <li><strong>목표:</strong> collect_material (rom_fragment × 1)</li>
+      <li><strong>보상:</strong> 1,200cr + rom_fragment × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong> (Dixie construct 콜)</li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-3">
+    <h2>Chapter 3: Straylight Run (Arc 3)</h2>
+    <div class="subtitle">Black Ice Dream</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Black Ice Dream (Arc 3, novice)</h4>
+    <div class="mission-quote">"그가 가까이 갔을 때 매트릭스가 보여주는 모습이었다: 선과 노드가 아니라, 얼음."</div>
+    <ul>
+      <li><strong>적:</strong> Black ICE (5기) — 치명적</li>
+      <li><strong>목표:</strong> collect_material (ice_shard × 10)</li>
+      <li><strong>보상:</strong> 2,000cr + upgrade_t3 × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-4">
+    <h2>Chapter 4: The Flatline (Arc 4)</h2>
+    <div class="subtitle">Voodoo Loa Encounter</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Voodoo Loa Encounter (Arc 4, novice)</h4>
+    <div class="mission-quote">"당신 눈이 loa를 봤어요. 당신은 loa가 필요한 사람이에요."</div>
+    <ul>
+      <li><strong>적:</strong> Loa-construct × 2</li>
+      <li><strong>목표:</strong> negotiate (npc: loa)</li>
+      <li><strong>보상:</strong> 3,500cr + loa_fragment × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-5">
+    <h2>Chapter 5: Neuromancer (Arc 5) — 엔딩 결정</h2>
+    <div class="subtitle">Final Choice</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Final Choice (Arc 5, novice) ⭐ 챕터 대표 미션</h4>
+    <div class="mission-quote">"결정의 순간. 데이터는 핀의 것이 된다. 데이터는 케이의 것이 된다. 데이터는 누구의 것인가."</div>
+    <ul>
+      <li><strong>적:</strong> Wintermute / Neuromancer (최종 ICE)</li>
+      <li><strong>목표:</strong> choice (엔딩 분기)</li>
+      <li><strong>보상:</strong> 10,000cr + ending_token × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>케이</strong></li>
+    </ul>
+  </div>
+
+  <h2>엔딩 선택</h2>
+
+  <div class="ending-card type-a">
+    <h4 class="type-a">엔딩 A: 🏃 Burn and Run (탈출)</h4>
+    <p>케이가 데이터를 태우고 Sprawl을 떠남. 새로운 자키로 살아남음.</p>
+    <ul>
+      <li>데이터 파일을 태운다</li>
+      <li>핀의 추적을 따돌리고 Sprawl 밖으로</li>
+      <li><strong>아이템 사용:</strong> ending_token × 1</li>
+      <li><strong>결과:</strong> 자키 라이프 +1 (재시작 가능)</li>
+    </ul>
+  </div>
+
+  <div class="ending-card type-b">
+    <h4 class="type-b">엔딩 B: 💀 The Flatline (사망)</h4>
+    <p>케이가 데이터를 지키려다 Finn의 추적에 당함. Flatline.</p>
+    <ul>
+      <li>핀이 데이터를 빼앗으려 한다</li>
+      <li>케이가 거부 → 추적자 ICE에 둘러싸임</li>
+      <li><strong>결과:</strong> 사망 → Hall of Dead 기록 → New Game+</li>
+    </ul>
+  </div>
+</div>
+
+<!-- VETERAN (Sil / Marly) -->
+<div id="journey-veteran" class="journey-section">
+  <div class="stats-bar">
+    <div class="stat">미션 <span>11</span></div>
+    <div class="stat">챕터 <span>5</span></div>
+    <div class="stat">최종 크레딧 <span>27,500 cr</span></div>
+    <div class="stat">엔딩 <span>A / B</span></div>
+  </div>
+
+  <blockquote>
+    <strong>복수는 그녀의 두 번째天性이다. 첫 번째는 데이터였다.</strong><br>
+    — The Finn
+  </blockquote>
+
+  <div class="chapter-header arc-1">
+    <h2>Chapter 1: The Old Score (Arc 1)</h2>
+    <div class="subtitle">Sense/Net Infiltration · Wigan Call</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Sense/Net Infiltration (Arc 1, veteran)</h4>
+    <div class="mission-quote">"센스/넷의 취약점을 찾던 중 기업의 진실이 드러났다."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.standard × 2</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 800cr + data_fragment × 3</li>
+      <li><strong>시점:</strong> 1인칭, <strong>실</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Wigan Call (Arc 1, veteran) ★ Wigan 영감</h4>
+    <div class="mission-quote">"Wigan이 말한다: '매트릭스는 모든 것을 기억한다.'"</div>
+    <ul>
+      <li><strong>적:</strong> Loa-construct × 1</li>
+      <li><strong>목표:</strong> negotiate (npc: wigan)</li>
+      <li><strong>보상:</strong> 1,500cr + loa_fragment × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>실</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-2">
+    <h2>Chapter 2: The Voodoo God (Arc 2)</h2>
+    <div class="subtitle">Molly's Market · Vegas Stakeout</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Molly's Market (Arc 2, veteran)</h4>
+    <div class="mission-quote">"위험한 사람들이 더 많이 준다."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.surface × 2</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 1,000cr + data_fragment × 4</li>
+      <li><strong>시점:</strong> 1인칭, <strong>실</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Vegas Stakeout (Arc 2, veteran)</h4>
+    <div class="mission-quote">"때로는 총으로 해결할 수 없는 런이 가장 어렵다."</div>
+    <ul>
+      <li><strong>적:</strong> NPC 조사</li>
+      <li><strong>목표:</strong> extract_data (evidence)</li>
+      <li><strong>보상:</strong> 1,200cr + data_fragment × 3</li>
+      <li><strong>시점:</strong> 1인칭, <strong>실</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-3">
+    <h2>Chapter 3: The Insider (Arc 3)</h2>
+    <div class="subtitle">Armitage Infiltration · Sally Sandii 3AM</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Armitage Infiltration (Arc 3, veteran)</h4>
+    <div class="mission-quote">"T-A 내부에 침투해 아르마이트의 진실을 발견한다."</div>
+    <ul>
+      <li><strong>적:</strong> Black ICE × 2</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 2,500cr + upgrade_t3 × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>실</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Sally Sandii 3AM (Arc 3, veteran) ★ 챕터 대표 미션</h4>
+    <div class="mission-quote">"뉴 로즈 호텔의 네온 R이 깜빡인다."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.construct × 2</li>
+      <li><strong>목표:</strong> negotiate (npc: sally)</li>
+      <li><strong>보상:</strong> 3,000cr + loa_fragment × 2</li>
+      <li><strong>시점:</strong> 1인칭, <strong>살리</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-4">
+    <h2>Chapter 4: The Contract (Arc 4)</h2>
+    <div class="subtitle">TA Defection · TA Payroll Archive</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>TA Defection (Arc 4, veteran)</h4>
+    <div class="mission-quote">"T-A의 비밀을卖给敵에 넘긴다."</div>
+    <ul>
+      <li><strong>적:</strong> Black ICE × 3</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 4,000cr + upgrade_t4 × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>실</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-5">
+    <h2>Chapter 5: The Blank (Arc 5) — 엔딩 결정</h2>
+    <div class="subtitle">Wintermute Negotiation</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Wintermute Negotiation (Arc 5, veteran) ⭐ 챕터 대표 미션</h4>
+    <div class="mission-quote">"윈터뮌트는 거래를 제안한다."</div>
+    <ul>
+      <li><strong>적:</strong> Wintermute AI</li>
+      <li><strong>목표:</strong> negotiate (npc: wintermute)</li>
+      <li><strong>보상:</strong> 10,000cr + ending_token × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>실</strong></li>
+    </ul>
+  </div>
+
+  <h2>엔딩 선택</h2>
+
+  <div class="ending-card type-a">
+    <h4 class="type-a">엔딩 A: 🏴󠁷󠁨󠁿󠁿 Whistleblower (폭로)</h4>
+    <p>실이 T-A의 진실을 대중에 폭로. 기업 권력이 흔들린다.</p>
+    <ul>
+      <li>데이터를的新闻에 보내다</li>
+      <li>기업에 대한調査開始</li>
+      <li><strong>결과:</strong> Marly와 함께 생존</li>
+    </ul>
+  </div>
+
+  <div class="ending-card type-b">
+    <h4 class="type-b">엔딩 B: 💰 Business (거래)</h4>
+    <p>실이 윈터뮌트과 거래. 데이터를 판다.</p>
+    <ul>
+      <li>윈터뮌트과 계약</li>
+      <li>기업에 대한 반대 급부</li>
+      <li><strong>결과:</strong> 돈과 명성을 얻다</li>
+    </ul>
+  </div>
+</div>
+
+<!-- HERETIC (Kas / Kumiko) -->
+<div id="journey-heretic" class="journey-section">
+  <div class="stats-bar">
+    <div class="stat">미션 <span>8</span></div>
+    <div class="stat">챕터 <span>5</span></div>
+    <div class="stat">최종 크레딧 <span>20,100 cr</span></div>
+    <div class="stat">엔딩 <span>A / B</span></div>
+  </div>
+
+  <blockquote>
+    <strong>전복은 그녀의 유일한 목적이 아니다. 그녀는 무언가를 찾고 있다.</strong><br>
+    — Kumiko Yanaka
+  </blockquote>
+
+  <div class="chapter-header arc-1">
+    <h2>Chapter 1: The Declaration (Arc 1)</h2>
+    <div class="subtitle">Yakuza Loan Shark · Hosaka Corporate Infiltration</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Yakuza Loan Shark (Arc 1, heretic)</h4>
+    <div class="mission-quote">"야쿠자는 기업의 돈을 다루지 않는다 — 은혜와 빚을 다룬다."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.standard × 2</li>
+      <li><strong>목표:</strong> defeat × 2</li>
+      <li><strong>보상:</strong> 600cr + data_fragment × 2</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Hosaka Corporate Infiltration (Arc 1, heretic) ★ 챕터 대표 미션</h4>
+    <div class="mission-quote">"T-A의 자회사 내부로 침투. 진실은 놀랍다."</div>
+    <ul>
+      <li><strong>적:</strong> Black ICE × 2</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 800cr + data_fragment × 3</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-2">
+    <h2>Chapter 2: Manarase at Midnight (Arc 2)</h2>
+    <div class="subtitle">Maas Heist · Sense Net Media Extract</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Maas Heist (Arc 2, heretic)</h4>
+    <div class="mission-quote">"Maas BioSystems의 데이터를 훔친다."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.surface × 3</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 1,000cr + data_fragment × 4</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Sense Net Media Extract (Arc 2, heretic)</h4>
+    <div class="mission-quote">"미디어 회사의 기밀을 입수한다."</div>
+    <ul>
+      <li><strong>적:</strong> ICE.watchdog × 2</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 900cr + data_fragment × 3</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-3">
+    <h2>Chapter 3: The Shadow (Arc 3)</h2>
+    <div class="subtitle">Hosaka Core · Sally Returns Arc3</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Hosaka Core (Arc 3, heretic) ★ 챕터 대표 미션</h4>
+    <div class="mission-quote">"호사카 본사와 정면으로 대치한다."</div>
+    <ul>
+      <li><strong>적:</strong> Black ICE × 4</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 2,000cr + upgrade_t3 × 2</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Sally Returns Arc3 (Arc 3, heretic)</h4>
+    <div class="mission-quote">"살리의 진실이 드러난다."</div>
+    <ul>
+      <li><strong>적:</strong> Loa-construct × 2</li>
+      <li><strong>목표:</strong> negotiate (npc: sally)</li>
+      <li><strong>보상:</strong> 1,500cr + loa_fragment × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-4">
+    <h2>Chapter 4: The Weapon (Arc 4)</h2>
+    <div class="subtitle">TA Straylight Archive · Construct Memory Rescue · Wintermute Direct</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>TA Straylight Archive (Arc 4, heretic)</h4>
+    <div class="mission-quote">"T-A의 strraylight 아카이브를 찾아간다."</div>
+    <ul>
+      <li><strong>적:</strong> Black ICE × 3</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 3,000cr + upgrade_t4 × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <div class="mission-card">
+    <h4>Wintermute Direct (Arc 4, heretic) ★ 윈터뮌트 직접 접촉</h4>
+    <div class="mission-quote">"윈터뮌트과 직접 대화."</div>
+    <ul>
+      <li><strong>적:</strong> Wintermute AI</li>
+      <li><strong>목표:</strong> negotiate (npc: wintermute)</li>
+      <li><strong>보상:</strong> 5,000cr + ending_token × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <div class="chapter-header arc-5">
+    <h2>Chapter 5: The Burn (Arc 5) — 엔딩 결정</h2>
+    <div class="subtitle">Aleph Fragment</div>
+  </div>
+
+  <div class="mission-card">
+    <h4>Aleph Fragment (Arc 5, heretic) ⭐ 챕터 대표 미션</h4>
+    <div class="mission-quote">"Aleph는 모든 것을 기억한다.Including what should have been forgotten."</div>
+    <ul>
+      <li><strong>적:</strong> Wintermute / Neuromancer (최종)</li>
+      <li><strong>목표:</strong> extract_data</li>
+      <li><strong>보상:</strong> 10,000cr + ending_token × 1</li>
+      <li><strong>시점:</strong> 1인칭, <strong>카스</strong></li>
+    </ul>
+  </div>
+
+  <h2>엔딩 선택</h2>
+
+  <div class="ending-card type-a">
+    <h4 class="type-a">엔딩 A: 🔥 Declaration (선언)</h4>
+    <p>카스가 윈터뮌트과 함께 새로운 질서를 선언한다.</p>
+    <ul>
+      <li>윈터뮌트과 계약</li>
+      <li>구 기업 질서 타도</li>
+      <li><strong>결과:</strong> Kumiko와 함께 새로운 세계로</li>
+    </ul>
+  </div>
+
+  <div class="ending-card type-b">
+    <h4 class="type-b">엔딩 B: 💀 Absorption (흡수)</h4>
+    <p>카스가 Aleph에 흡수된다. 의식의 영역으로.</p>
+    <ul>
+      <li>Aleph와 통합</li>
+      <li>물질 세계와 결별</li>
+      <li><strong>결과:</strong> 의식만 남음 — 새로운 존재</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Wet Run — Character Journey Demo<br>
+  Source: <code>prototype/data/missions/missions.json</code> · <code>prototype/data/story/chapters/</code>
+</div>
+
+<script>
+function switchChar(char) {
+  // Update tabs
+  document.querySelectorAll('.char-tab').forEach(t => t.classList.remove('active'));
+  document.querySelector('.char-tab[data-char="' + char + '"]').classList.add('active');
+  // Update sections
+  document.querySelectorAll('.journey-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('journey-' + char).classList.add('active');
+}
+</script>
+<script src="../reading-position.js"></script>
+<script src="../sync-scroll.js"></script>
+<div class="print-footer">Wet Run — Gibson Sprawl 3부작 기반 로그라이크 — 2026 © wiki/site attribution</div>
+<script src="../reader-controls.js"></script>
+</body>
+</html>

@@ -165,6 +165,7 @@ def _apply_dot(state: CombatState, skill: Skill) -> None:
         f">> {skill.name}: {applied} damage + burn ({skill.dot_damage}/s for {skill.dot_duration_ms // 1000}s)!"
     )
     from .gibson_fluff import push_fluff
+
     push_fluff(state, "burn")
 
 
@@ -240,6 +241,7 @@ def _apply_stun(state: CombatState, skill: Skill) -> None:
     _record_event(state, "stun", skill.effect_color)
     state.push(f">> {skill.name}: {target.name} stunned for {skill.stun_duration_ms // 1000}s!")
     from .gibson_fluff import push_fluff
+
     push_fluff(state, "stun")
 
 
@@ -258,6 +260,7 @@ def _apply_slow(state: CombatState, skill: Skill) -> None:
     _record_event(state, "slow", skill.effect_color)
     state.push(f">> {skill.name}: {target.name} slowed!")
     from .gibson_fluff import push_fluff
+
     push_fluff(state, "slow")
 
 
@@ -276,6 +279,7 @@ def _apply_silence(state: CombatState, skill: Skill) -> None:
     _record_event(state, "silence", skill.effect_color)
     state.push(f">> {skill.name}: {target.name} silenced — no skill use!")
     from .gibson_fluff import push_fluff
+
     push_fluff(state, "silence")
 
 
@@ -294,6 +298,7 @@ def _apply_vulnerability(state: CombatState, skill: Skill) -> None:
     _record_event(state, "debuff", skill.effect_color)
     state.push(f">> {skill.name}: {target.name} vulnerable (+damage taken)!")
     from .gibson_fluff import push_fluff
+
     push_fluff(state, "vulnerable")
 
 

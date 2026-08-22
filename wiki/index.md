@@ -22,13 +22,13 @@
 | 페이지 | 주제 | Primary Source |
 |---|---|---|
 | [[cyberspace]] | 사이버스페이스 / 매트릭스 | `../../../../Fiction/wiki/settings/cyberspace.md` |
-| [factions](world/factions.md) | Faction (Tessier-Ashpool, Yakuza 등) | `../../../../Fiction/wiki/works/neuromancer.md` |
-| [glossary](world/glossary.md) | 용어집 (ICE, deck, construct 등) | `../../../../Fiction/wiki/works/` |
-| [style_guide](world/style_guide.md) | 글쓰기 스타일 가이드 | `../../../../Fiction/wiki/authors/william-gibson.md` |
-| [sprawl_universe](world/sprawl_universe.md) | Sprawl 세계관 개요 | `../../../../Fiction/wiki/works/` |
-| [derivative_stories](world/derivative_stories.md) | 2차 창작 단편 목록 | (자체 작성) |
-| [boss_ice_reference](world/boss-ice-reference.md) | 5개 보스 ICE 프로필 + Phase B-3 기능 | (Phase B-3) |
-| [cross-project-integration](world/cross-project-integration.md) | Fiction ↔ wet_run 양방향 통합 | (Phase α-J) |
+| factions | Faction (Tessier-Ashpool, Yakuza 등) | `../../../../Fiction/wiki/works/neuromancer.md` |
+| glossary | 용어집 (ICE, deck, construct 등) | `../../../../Fiction/wiki/works/` |
+| style_guide | 글쓰기 스타일 가이드 | `../../../../Fiction/wiki/authors/william-gibson.md` |
+| sprawl_universe | Sprawl 세계관 개요 | `../../../../Fiction/wiki/works/` |
+| derivative_stories | 2차 창작 단편 목록 | (자체 작성) |
+| boss_ice_reference | 5개 보스 ICE 프로필 + Phase B-3 기능 | (Phase B-3) |
+| cross-project-integration | Fiction ↔ wet_run 양방향 통합 | (Phase α-J) |
 
 > **경고**: Fiction wiki (`../../../../Fiction/wiki/`)는 이 프로젝트의 **읽기 전용** primary source입니다. 절대 수정하지 마세요.
 

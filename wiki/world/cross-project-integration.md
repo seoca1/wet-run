@@ -109,8 +109,8 @@ runs `verify_story_links.py` which checks:
 - New synthesis pages (Phase 77 + 82) provide wet_run cross-references for short-fiction corpus foundation + operative-class evolution
 
 **Cross-references to Fiction synthesis pages** (Phase 83 enhancement):
-- [../../../../Fiction/wiki/concepts/short-fiction-as-corpus-foundation.md](../../../../Fiction/wiki/concepts/short-fiction-as-corpus-foundation.md) — 12 short-fiction works as the corpus's foundational substrate
-- [../../../../Fiction/wiki/concepts/operative-class-across-trilogies.md](../../../../Fiction/wiki/concepts/operative-class-across-trilogies.md) — operative-class evolution (console cowboys → couriers → coolhunters → peripherals)
+- ../../../../Fiction/wiki/concepts/short-fiction-as-corpus-foundation.md — 12 short-fiction works as the corpus's foundational substrate
+- ../../../../Fiction/wiki/concepts/operative-class-across-trilogies.md — operative-class evolution (console cowboys → couriers → coolhunters → peripherals)
 
 ## GN scene ↔ mission linkage (Phase β-2 + Phase G)
 

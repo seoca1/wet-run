@@ -38,16 +38,24 @@ def _tick_status_effects(state: CombatState, target: Combatant) -> list[str]:
     return messages
 
 
-def _tick_alarm(state: CombatState) -> None:
-    """Increment alarm_level when ALARM_TICK_INTERVAL_MS has elapsed."""
+def _tick_alarm(state: CombatState, app_state: object = None) -> None:
+    """Increment alarm_level when ALARM_TICK_INTERVAL_MS has elapsed.
+
+    ``app_state`` is optional (forward-compat): when provided, the Run Mutator
+    ``alarm_speed_multiplier`` (ADR-0163) is composed with the personality-based
+    multiplier. When ``None`` or missing the field, defaults to 1.0 (no effect).
+    """
     from .depth.personality import get_alarm_multiplier
     from .state import ALARM_MAX_LEVEL, ALARM_TICK_INTERVAL_MS
 
     target = state.target
     if target is None:
         return
-    alarm_mult = get_alarm_multiplier(target)
-    tick_interval = ALARM_TICK_INTERVAL_MS / max(0.01, target.alarm_speed * alarm_mult)
+    personality_mult = get_alarm_multiplier(target)
+    mutator_mult = getattr(app_state, "alarm_speed_multiplier", 1.0)
+    tick_interval = ALARM_TICK_INTERVAL_MS / max(
+        0.01, target.alarm_speed * personality_mult * mutator_mult
+    )
     if state.tick_ms - state.last_alarm_tick_ms >= tick_interval:
         state.alarm_level += 1
         state.last_alarm_tick_ms = state.tick_ms
@@ -89,11 +97,16 @@ def _check_boss_phase_transition(state: CombatState) -> None:
                     state.push(f"[cinematic] {frame}")
 
 
-def step_combat(state: CombatState) -> None:
+def step_combat(state: CombatState, app_state: object = None) -> None:
     """Advance ``state`` by one tick (TICK_MS).
 
     Mutates ``state`` in place: applies auto-attacks, regenerates AP,
     resolves end conditions. Events are appended to ``state.log``.
+
+    ``app_state`` is optional (forward-compat): when provided, Run Mutator
+    fields (ADR-0163: ``alarm_speed_multiplier``) are respected by tick
+    consumers. Defaults to ``None`` (no mutator effect) so existing
+    single-arg callers keep working.
     """
     from .state import (
         ALARM_MAX_LEVEL,
@@ -129,7 +142,7 @@ def step_combat(state: CombatState) -> None:
             state.last_ap_regen_ms = state.tick_ms
 
     # Alarm / trace tick
-    _tick_alarm(state)
+    _tick_alarm(state, app_state)
     _tick_combo(state)
     _check_boss_phase_transition(state)
 

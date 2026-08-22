@@ -108,7 +108,7 @@ def _advance_combat(
     """Tick COMBAT: step_combat + boss phase transition + Dixie ally (Pillar 5)."""
     if state.combat_state is None:
         return
-    step_combat(state.combat_state)
+    step_combat(state.combat_state, state)
     tick_dixie_ally(state.combat_state, state)
     maybe_boss_phase_transition(
         state,

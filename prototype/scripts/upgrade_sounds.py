@@ -9,7 +9,7 @@ cyberpunk aesthetic: electronic, synthetic, slightly distorted.
 import subprocess
 from pathlib import Path
 
-SOUNDS_DIR = Path(__file__).parent / "sounds_test"
+SOUNDS_DIR = Path(__file__).parent.parent / "data" / "sounds_test"
 FFMPEG = "/opt/homebrew/bin/ffmpeg"
 FFPROBE = "/opt/homebrew/bin/ffprobe"
 
@@ -639,7 +639,7 @@ def generate_item_sound(output: Path, item_type: str = "pickup") -> bool:
 
 def main():
     """Generate all improved sound files."""
-    sounds_dir = Path(__file__).parent.parent / "sounds_test"
+    sounds_dir = Path(__file__).parent.parent / "data" / "sounds_test"
     sounds_dir.mkdir(exist_ok=True)
 
     print("Generating improved cyberpunk sounds using ffmpeg...")

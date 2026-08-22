@@ -1,10 +1,10 @@
 {
   "version": "1.0",
-  "generated": "2026-08-12T16:14:48.242287+00:00",
-  "en_stories": 239,
-  "ko_stories": 241,
-  "missions": 200,
-  "glossary_terms": 358,
+  "generated": "2026-08-21T11:57:49.048144+00:00",
+  "en_stories": 384,
+  "ko_stories": 386,
+  "missions": 209,
+  "glossary_terms": 372,
   "issues": [
     {
       "type": "en_ko_mismatch",

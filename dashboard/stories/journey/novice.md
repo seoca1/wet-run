@@ -14,7 +14,7 @@
 | 픽서 | The Finn |
 | 동기 | **돈.** "첫 번째 의뢰, 첫 번째 돈. ICE는 가볍다. Wisp급, 어쩌면 Hammer." |
 | 챕터 ID | `chapter_novice` |
-| 챕터 스크린 본문 | [neuromancer](../../../../../Fiction/wiki/characters/neuromancer.md) · [[case]] |
+| 챕터 스크린 본문 | neuromancer · [[case]] |
 | 모티프 | 30초 카운트다운 / 비 / 거울 / Ono-Sendai |
 | 시작 credits | 0 |
 | 시작 등급 | 1 |

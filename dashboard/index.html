@@ -236,54 +236,55 @@
     </div>
     <div class="status-item" style="border-color: #66ffcc;">
       <div class="label">Release</div>
-      <div class="value" style="color: #66ffcc;">v1.1.0a1</div>
-      <div class="sub">2026-07-28 · Engagement + Splits</div>
+      <div class="value" style="color: #66ffcc;">v1.4.0</div>
+      <div class="sub">2026-08-20 · Quality Upgrade</div>
     </div>
   </div>
 </div>
 
 <section id="release-highlights" style="margin:24px 0;padding:16px;background:#0d1420;border:1px solid #1a4d2e;border-radius:6px;">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-    <h2 style="margin:0;font-size:18px;color:#66ffcc">✨ v1.1.0a1 Highlights (2026-07-28)</h2>
-    <span style="font-size:11px;color:#6a7888">Engagement Layer Phase 1-2 · Module Splits Phase 3-4</span>
+    <h2 style="margin:0;font-size:18px;color:#66ffcc">✨ v1.4.0 Highlights (2026-08-20)</h2>
+    <span style="font-size:11px;color:#6a7888">Game Quality Upgrade · Tracks A+B+D · 21 sub-modules</span>
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;font-size:13px;color:#aabbcc;">
     <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
-      <strong style="color:#66ffcc">💾 Memory Fragments (Phase 1)</strong><br>
-      Ambient lore fragments (4 + encounter table)<br>
-      27 tests · matrix_view integration
+      <strong style="color:#66ffcc">🔧 Track A — Foundation Health</strong><br>
+      40 ADR Implementation Status sweep (31 ✅ + 9 🟡)<br>
+      5 module splits (4272 LOC → 21 sub-modules)
     </div>
     <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
-      <strong style="color:#66ffcc">🗣️ Construct Whisper (Phase 2)</strong><br>
-      Faction-tier-gated combat hints<br>
-      22 tests · 12 hint texts (4×3)
+      <strong style="color:#66ffcc">⚔️ Track B — Player Polish</strong><br>
+      9 ADR integrations wired (battle portraits,<br>
+      fluff, death taunts, cinematic intros, events)
     </div>
     <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
-      <strong style="color:#66ffcc">📦 matrix_view split (Phase 3)</strong><br>
-      matrix_minimap.py (115 LOC extracted)<br>
-      1121 → 1047 LOC (-74)
+      <strong style="color:#66ffcc">📜 Track D — Meta & Aftermath</strong><br>
+      Faction rep cross-run (opt-in)<br>
+      Run replay · Meta-progression · 29 endings
     </div>
     <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
-      <strong style="color:#66ffcc">📦 combat/state split (Phase 4)</strong><br>
-      state_models.py (250 LOC extracted)<br>
-      1075 → 859 LOC (-216)
+      <strong style="color:#66ffcc">📚 Wiki &amp; Docs</strong><br>
+      146→0 broken mkdocs links (Track A.3)<br>
+      ADR coverage matrix + 0195 Draft workflow
     </div>
     <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
-      <strong style="color:#66ffcc">🐛 Bug Fix</strong><br>
-      combat_view: equip_defense → equip_defense_bonus<br>
-      (latent kwarg mismatch resolved)
+      <strong style="color:#66ffcc">🐛 Bug Fixes</strong><br>
+      Module split split, + 5 real bug fixes<br>
+      (death.py arc, combat_view kwarg, etc.)
     </div>
     <div style="padding:10px;background:#0a0e14;border:1px solid #1a4d2e;border-radius:4px;">
       <strong style="color:#66ffcc">🎯 Quality Gates</strong><br>
-      pytest 3227 pass · mypy 142 files 0 errors<br>
-      ruff check ✓ · 71 new tests this cycle
+      pytest 5700 pass · mypy 230 files 0 errors<br>
+      ruff check ✓ · mkdocs strict ✓ · 230 source files
     </div>
   </div>
   <p style="margin:12px 0 0;font-size:11px;color:#6a7888">
-    Next: v1.1.0 final — ADR-0140 P2/P3 proposals (Variable Reward Nodes, Faction Tension,<br>
-    Auto-Play Tempo, Near-Miss, Death Replay) + remaining module splits.<br>
+    Next: v1.4.0 final release — PyPI upload + GitHub tag + Git LFS decision (321MB audio).<br>
+    Remaining gaps: missions.json integration for arc6 (4 missions) + mission_expansion (6 missions) — content authoring.<br>
     <a href="../CHANGELOG.md" style="color:#66ffcc">📜 CHANGELOG</a> ·
-    <a href="../log.md" style="color:#66ffcc">📋 Activity Log</a>
+    <a href="../log.md" style="color:#66ffcc">📋 Activity Log</a> ·
+    <a href="../docs/audits/adr_coverage_matrix_2026-08-20.md" style="color:#66ffcc">📊 Coverage Matrix</a>
   </p>
 </section>
 
@@ -335,7 +336,7 @@
       <span class="stat"><span class="num">114</span> Sprawl</span>
       <span class="stat"><span class="num">12</span> Bridge</span>
       <span class="stat"><span class="num">1</span> Blue Ant</span>
-      <span class="stat"><span class="num">200</span> missions</span>
+      <span class="stat"><span class="num">209</span> missions</span>
     </div>
   </a>
   <div class="lang-toggle" style="margin-top:-8px;margin-bottom:24px;padding:8px 16px;border-left:2px solid #00ccff;background:#0a0e14cc">

@@ -11,9 +11,9 @@
 
 | 핸들 | 챕터 | 픽서 | 동기 | 영감 원작 | 누적 credits | 미션 수 |
 |---|---|---|---|---|---:|---:|
-| **[케이 (K)](../../../../../Fiction/wiki/characters/novice.md)** — Novice | chapter_novice | The Finn | 돈 | Case (Neuromancer) | **<span data-stat="novice-credits-card">20,050</span>cr** | 10 |
-| **[실 (Sil)](../../../../../Fiction/wiki/characters/veteran.md)** — Veteran | chapter_veteran | Finn / 변동 | 복수 | Marly (Count Zero) | **<span data-stat="veteran-credits-card">27,500</span>cr** | 11 |
-| **[카스 (Kas)](../../../../../Fiction/wiki/characters/heretic.md)** — Heretic | chapter_heretic | Finn / Sally / Kumiko | 전복 | Kumiko (Mona Lisa Overdrive) | **<span data-stat="heretic-credits-card">20,100</span>cr** | 8 |
+| **케이 (K)** — Novice | chapter_novice | The Finn | 돈 | Case (Neuromancer) | **<span data-stat="novice-credits-card">20,050</span>cr** | 10 |
+| **실 (Sil)** — Veteran | chapter_veteran | Finn / 변동 | 복수 | Marly (Count Zero) | **<span data-stat="veteran-credits-card">27,500</span>cr** | 11 |
+| **카스 (Kas)** — Heretic | chapter_heretic | Finn / Sally / Kumiko | 전복 | Kumiko (Mona Lisa Overdrive) | **<span data-stat="heretic-credits-card">20,100</span>cr** | 8 |
 
 ---
 

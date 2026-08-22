@@ -14,7 +14,7 @@
 | 픽서 | The Finn (초기) → Sally → Kumiko |
 | 동기 | **전복.** "다 태우러 왔어. 매트릭스 전체를. 3백 년의 데이터를. Tessier-Ashpool을." |
 | 챕터 ID | `chapter_heretic` |
-| 챕터 스크린 본문 | [mona-lisa-overdrive](../../../../../Fiction/wiki/sources/mona-lisa-overdrive.md) · [[kumiko-yanaka]] · `yanaka-family` (위키 페이지 없음) |
+| 챕터 스크린 본문 | mona-lisa-overdrive · [[kumiko-yanaka]] · `yanaka-family` (위키 페이지 없음) |
 | 모티프 | 매나리사 / 자정 / 11번지 / 택시 / Sally Sendai / "바퀴" / loa / 선언문 |
 | 시작 credits | 0 |
 | 시작 등급 | 1 (그러나 혁명적 의지) |

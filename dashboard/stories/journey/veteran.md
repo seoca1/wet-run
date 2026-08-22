@@ -14,7 +14,7 @@
 | 픽서 | The Finn (초기) → 변동 (MaaS, ta_rep, sally, kumiko) |
 | 동기 | **복수.** "Mara의 죽음. Tessier-Ashpool에 대한 복수. 베테랑의 무게." |
 | 챕터 ID | `chapter_veteran` |
-| 챕터 스크린 본문 | [count-zero](../../../../../Fiction/wiki/sources/count-zero.md) · [[marly-krushkhova]] · `tessier-ashpool` (위키 페이지 없음) |
+| 챕터 스크린 본문 | count-zero · [[marly-krushkhova]] · `tessier-ashpool` (위키 페이지 없음) |
 | 모티프 | 마스크 / 73 Eridani / Zavijava / Mara의 죽음 / Tessier-Ashpool / 선언문 |
 | 시작 credits | 0 |
 | 시작 등급 | 1 (그러나 실전 경력 10+) |

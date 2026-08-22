@@ -1,15 +1,17 @@
 {
   "version": "1.0",
-  "generated": "2026-08-12T16:14:48.242287+00:00",
+  "generated": "2026-08-21T11:57:49.048144+00:00",
   "wiki_base": "../../../Fiction/wiki/",
-  "term_count": 358,
+  "term_count": 372,
   "terms": [
     "Gibson Virtual Light-era Interview (Dublin, October 1, 1993)",
     "working class ridership and late capitalist substrate",
+    "Dorotea Benedetti (Pattern Recognition Antagonist)",
     "Mona Lisa / \"Molly Millions\" (Mona Lisa Overdrive)",
     "William Gibson Reading Order & World Overview",
     "Colonel Willie Corto (The Original Armitage)",
     "Construct Narrative Arc (Updated 2026-07-13)",
+    "Gentry (Shape-Fixated Cyberspace Artist)",
     "Bobby Quine (The Post-Merger Cowboy)",
     "Kas (Jokey — Heretic Console Cowboy)",
     "3Jane Tessier-Ashpool (short story)",
@@ -19,6 +21,7 @@
     "Ashpool (Tessier-Ashpool founder)",
     "Heretic (Jokey — The Declaration)",
     "Sally Shears (The Revealed Molly)",
+    "Warbaby (Virtual Light Operative)",
     "Wigan Ludgate (The Uploaded Body)",
     "operative class across trilogies",
     "synthetic intelligence in gibson",
@@ -28,6 +31,7 @@
     "Brown (Holland Windgate Brown)",
     "recurring themes across gibson",
     "sprawl universe complete guide",
+    "Andrea (Marly's Paris Friend)",
     "Dixie Flatline (McCoy Pauley)",
     "Johnny Mnemonic (short story)",
     "Sally Shears (Molly Millions)",
@@ -44,7 +48,9 @@
     "identity and consciousness",
     "independence vs connection",
     "lady 3jane tessier ashpool",
+    "extraction and kidnapping",
     "improvised infrastructure",
+    "Tick (London Data-Thief)",
     "addiction and dependency",
     "aesthetic infrastructure",
     "criminality and survival",
@@ -66,7 +72,6 @@
     "working class substrate",
     "All Tomorrow's Parties",
     "Burning Chrome (story)",
-    "Colin (or \"the ghost\")",
     "Red Star, Winter Orbit",
     "Win Cabreira (윈 카브레이라)",
     "cyberspace as frontier",
@@ -77,6 +82,7 @@
     "ai in gibsons fiction",
     "all tomorrows parties",
     "autonomous governance",
+    "jackpot universe stub",
     "reality vs simulation",
     "structural monitoring",
     "Neuromancer (the AI)",
@@ -87,6 +93,7 @@
     "construct_5_sequence",
     "cultural engineering",
     "culture and creation",
+    "found art assemblage",
     "identity and doubles",
     "loa matrix construct",
     "water infrastructure",
@@ -101,6 +108,7 @@
     "Pagan (Parkabrake)",
     "The Belonging Kind",
     "The Bridge Trilogy",
+    "ambient technology",
     "bigend methodology",
     "bridge to blue ant",
     "kannon projections",
@@ -109,6 +117,7 @@
     "augmented reality",
     "body and identity",
     "brandless objects",
+    "chia pet mckenzie",
     "corporate warfare",
     "gibsons evolution",
     "jackie count zero",
@@ -132,6 +141,7 @@
     "Masahiko (마사히코)",
     "Rei Toi (Idoru)",
     "Yamazaki (야마자키)",
+    "art and visions",
     "blue ant london",
     "blue ant method",
     "brand and power",
@@ -191,7 +201,6 @@
     "Hilton Swift",
     "Keith Harada",
     "McCoy Pauley",
-    "Robin Lanier",
     "The Projects",
     "Yukio Yanaka",
     "black market",
@@ -205,6 +214,7 @@
     "maas biolabs",
     "mesh network",
     "nodal points",
+    "robin lanier",
     "sally shears",
     "smart matter",
     "surface mail",
@@ -212,7 +222,6 @@
     "zion cluster",
     "Hinterlands",
     "Little Bird",
-    "Roger Swain",
     "Shinya (시냐)",
     "bobby quine",
     "chickenhead",
@@ -223,10 +232,11 @@
     "loa oracles",
     "lost decade",
     "neuromancer",
+    "roger swain",
     "slick henry",
+    "the footage",
     "the moderns",
     "tokyo idoru",
-    "Kid Afrika",
     "Piper Hill",
     "Two-A-Days",
     "chiba city",
@@ -236,6 +246,7 @@
     "count zero",
     "cyberspace",
     "jacking in",
+    "kid afrika",
     "night city",
     "ono sendai",
     "parkabrake",
@@ -312,6 +323,7 @@
     "agency",
     "bisoft",
     "fandom",
+    "g boys",
     "hosaka",
     "hounds",
     "idi ru",
@@ -324,26 +336,28 @@
     "voodoo",
     "yakuza",
     "3jane",
-    "Alain",
+    "Colin",
     "Darko",
     "Laney",
     "Lucas",
     "Marly",
     "Petal",
+    "Prior",
     "Reina",
+    "alain",
     "aleph",
     "brown",
     "cheba",
     "hideo",
     "idoru",
     "motif",
-    "prior",
     "t ray",
     "theme",
     "Eddy",
     "Finn",
     "Mona",
     "Tito",
+    "Winn",
     "bama",
     "bing",
     "case",
@@ -383,6 +397,11 @@
       "page": "concepts/bigend-methodology.md",
       "tooltip": "bigend methodology",
       "text": "bigend methodology"
+    },
+    "ambient technology": {
+      "page": "concepts/ambient-technology.md",
+      "tooltip": "ambient technology",
+      "text": "ambient technology"
     },
     "water infrastructure": {
       "page": "concepts/water-infrastructure.md",
@@ -759,6 +778,11 @@
       "tooltip": "theme",
       "text": "theme"
     },
+    "the footage": {
+      "page": "concepts/the-footage.md",
+      "tooltip": "the footage",
+      "text": "the footage"
+    },
     "chickenhead": {
       "page": "concepts/chickenhead.md",
       "tooltip": "chickenhead",
@@ -1114,35 +1138,40 @@
       "tooltip": "dixie flatline",
       "text": "dixie flatline"
     },
-    "colin (or \"the ghost\")": {
+    "colin": {
       "page": "characters/colin-ghost.md",
-      "tooltip": "Colin (or \"the ghost\")",
-      "text": "Colin (or \"the ghost\")"
+      "tooltip": "Colin",
+      "text": "Colin"
     },
     "mona lisa overdrive": {
       "page": "characters/colin-ghost.md",
       "tooltip": "mona lisa overdrive",
       "text": "mona lisa overdrive"
     },
-    "slick henry": {
-      "page": "characters/colin-ghost.md",
-      "tooltip": "slick henry",
-      "text": "slick henry"
-    },
-    "mona lisa mlo": {
-      "page": "characters/colin-ghost.md",
-      "tooltip": "mona lisa mlo",
-      "text": "mona lisa mlo"
-    },
     "kumiko yanaka": {
       "page": "characters/colin-ghost.md",
       "tooltip": "kumiko yanaka",
       "text": "kumiko yanaka"
     },
-    "angie mitchell": {
+    "sally shears": {
       "page": "characters/colin-ghost.md",
-      "tooltip": "angie mitchell",
-      "text": "angie mitchell"
+      "tooltip": "sally shears",
+      "text": "sally shears"
+    },
+    "consciousness upload": {
+      "page": "characters/colin-ghost.md",
+      "tooltip": "consciousness upload",
+      "text": "consciousness upload"
+    },
+    "gender and power": {
+      "page": "characters/colin-ghost.md",
+      "tooltip": "gender and power",
+      "text": "gender and power"
+    },
+    "art and visions": {
+      "page": "characters/colin-ghost.md",
+      "tooltip": "art and visions",
+      "text": "art and visions"
     },
     "sally shears (molly millions)": {
       "page": "characters/sally-shears.md",
@@ -1168,11 +1197,6 @@
       "page": "characters/sally-shears.md",
       "tooltip": "corporate power",
       "text": "corporate power"
-    },
-    "gender and power": {
-      "page": "characters/sally-shears.md",
-      "tooltip": "gender and power",
-      "text": "gender and power"
     },
     "criminality and survival": {
       "page": "characters/sally-shears.md",
@@ -1334,6 +1358,11 @@
       "tooltip": "all tomorrows parties",
       "text": "all tomorrows parties"
     },
+    "angie mitchell": {
+      "page": "characters/the-aleph.md",
+      "tooltip": "angie mitchell",
+      "text": "angie mitchell"
+    },
     "cherry chesterfield": {
       "page": "characters/the-aleph.md",
       "tooltip": "cherry chesterfield",
@@ -1353,11 +1382,6 @@
       "page": "characters/wintermute.md",
       "tooltip": "the rez",
       "text": "the rez"
-    },
-    "sally shears": {
-      "page": "characters/wintermute.md",
-      "tooltip": "sally shears",
-      "text": "sally shears"
     },
     "artificial intelligence": {
       "page": "characters/wintermute.md",
@@ -1414,6 +1438,21 @@
       "tooltip": "the bridge",
       "text": "the bridge"
     },
+    "tick (london data-thief)": {
+      "page": "characters/tick.md",
+      "tooltip": "Tick (London Data-Thief)",
+      "text": "Tick (London Data-Thief)"
+    },
+    "robin lanier": {
+      "page": "characters/tick.md",
+      "tooltip": "robin lanier",
+      "text": "robin lanier"
+    },
+    "roger swain": {
+      "page": "characters/tick.md",
+      "tooltip": "roger swain",
+      "text": "roger swain"
+    },
     "keith harada": {
       "page": "characters/keith-harada.md",
       "tooltip": "Keith Harada",
@@ -1453,6 +1492,11 @@
       "page": "characters/hideo.md",
       "tooltip": "3jane",
       "text": "3jane"
+    },
+    "peter 2 tessier ashpool": {
+      "page": "characters/hideo.md",
+      "tooltip": "peter 2 tessier ashpool",
+      "text": "peter 2 tessier ashpool"
     },
     "yakuza": {
       "page": "characters/hideo.md",
@@ -1524,15 +1568,15 @@
       "tooltip": "bobby quine",
       "text": "bobby quine"
     },
+    "mona lisa mlo": {
+      "page": "characters/zavijava.md",
+      "tooltip": "mona lisa mlo",
+      "text": "mona lisa mlo"
+    },
     "ai as pantheon": {
       "page": "characters/zavijava.md",
       "tooltip": "ai as pantheon",
       "text": "ai as pantheon"
-    },
-    "consciousness upload": {
-      "page": "characters/zavijava.md",
-      "tooltip": "consciousness upload",
-      "text": "consciousness upload"
     },
     "technology and spirituality": {
       "page": "characters/zavijava.md",
@@ -1669,6 +1713,21 @@
       "tooltip": "independence vs connection",
       "text": "independence vs connection"
     },
+    "gentry (shape-fixated cyberspace artist)": {
+      "page": "characters/gentry.md",
+      "tooltip": "Gentry (Shape-Fixated Cyberspace Artist)",
+      "text": "Gentry (Shape-Fixated Cyberspace Artist)"
+    },
+    "slick henry": {
+      "page": "characters/gentry.md",
+      "tooltip": "slick henry",
+      "text": "slick henry"
+    },
+    "kid afrika": {
+      "page": "characters/gentry.md",
+      "tooltip": "kid afrika",
+      "text": "kid afrika"
+    },
     "the projects": {
       "page": "characters/the-projects.md",
       "tooltip": "The Projects",
@@ -1734,6 +1793,11 @@
       "tooltip": "agency",
       "text": "agency"
     },
+    "jackpot universe stub": {
+      "page": "characters/wilf-netherton.md",
+      "tooltip": "jackpot universe stub",
+      "text": "jackpot universe stub"
+    },
     "flynne fisher": {
       "page": "characters/wilf-netherton.md",
       "tooltip": "flynne fisher",
@@ -1763,11 +1827,6 @@
       "page": "characters/maryalice-wake.md",
       "tooltip": "bridge squatter",
       "text": "bridge squatter"
-    },
-    "roger swain": {
-      "page": "characters/roger-swain.md",
-      "tooltip": "Roger Swain",
-      "text": "Roger Swain"
     },
     "reina": {
       "page": "characters/reina.md",
@@ -1804,6 +1863,11 @@
       "tooltip": "Wendell Wright",
       "text": "Wendell Wright"
     },
+    "chia pet mckenzie": {
+      "page": "characters/wendell-wright.md",
+      "tooltip": "chia pet mckenzie",
+      "text": "chia pet mckenzie"
+    },
     "sil (jokey — veteran runner)": {
       "page": "characters/sil.md",
       "tooltip": "Sil (Jokey — Veteran Runner)",
@@ -1814,15 +1878,15 @@
       "tooltip": "Eddy",
       "text": "Eddy"
     },
-    "robin lanier": {
-      "page": "characters/robin-lanier.md",
-      "tooltip": "Robin Lanier",
-      "text": "Robin Lanier"
+    "winn": {
+      "page": "characters/winn.md",
+      "tooltip": "Winn",
+      "text": "Winn"
     },
-    "prior": {
-      "page": "characters/robin-lanier.md",
-      "tooltip": "prior",
-      "text": "prior"
+    "warbaby (virtual light operative)": {
+      "page": "characters/warbaby.md",
+      "tooltip": "Warbaby (Virtual Light Operative)",
+      "text": "Warbaby (Virtual Light Operative)"
     },
     "little bird": {
       "page": "characters/little-bird.md",
@@ -1879,6 +1943,16 @@
       "tooltip": "Yukio Yanaka",
       "text": "Yukio Yanaka"
     },
+    "andrea (marly's paris friend)": {
+      "page": "characters/andrea.md",
+      "tooltip": "Andrea (Marly's Paris Friend)",
+      "text": "Andrea (Marly's Paris Friend)"
+    },
+    "alain": {
+      "page": "characters/andrea.md",
+      "tooltip": "alain",
+      "text": "alain"
+    },
     "shinya (시냐)": {
       "page": "characters/shinya.md",
       "tooltip": "Shinya (시냐)",
@@ -1909,11 +1983,6 @@
       "tooltip": "Hilton Swift",
       "text": "Hilton Swift"
     },
-    "peter 2 tessier ashpool": {
-      "page": "characters/lady-3jane-tessier-ashpool.md",
-      "tooltip": "peter 2 tessier ashpool",
-      "text": "peter 2 tessier ashpool"
-    },
     "ashpool (tessier-ashpool founder)": {
       "page": "characters/ashpool.md",
       "tooltip": "Ashpool (Tessier-Ashpool founder)",
@@ -1923,6 +1992,11 @@
       "page": "characters/marly-krushkhova.md",
       "tooltip": "paco",
       "text": "paco"
+    },
+    "prior": {
+      "page": "characters/prior.md",
+      "tooltip": "Prior",
+      "text": "Prior"
     },
     "lo (로)": {
       "page": "characters/lo.md",
@@ -1959,15 +2033,20 @@
       "tooltip": "Ainsley Lowbeer",
       "text": "Ainsley Lowbeer"
     },
-    "alain": {
+    "extraction and kidnapping": {
       "page": "characters/alain.md",
-      "tooltip": "Alain",
-      "text": "Alain"
+      "tooltip": "extraction and kidnapping",
+      "text": "extraction and kidnapping"
     },
-    "colin ghost": {
-      "page": "characters/slick-henry.md",
-      "tooltip": "colin ghost",
-      "text": "colin ghost"
+    "found art assemblage": {
+      "page": "characters/alain.md",
+      "tooltip": "found art assemblage",
+      "text": "found art assemblage"
+    },
+    "dorotea benedetti (pattern recognition antagonist)": {
+      "page": "characters/dorotea-benedetti.md",
+      "tooltip": "Dorotea Benedetti (Pattern Recognition Antagonist)",
+      "text": "Dorotea Benedetti (Pattern Recognition Antagonist)"
     },
     "mona": {
       "page": "characters/mona.md",
@@ -1979,6 +2058,11 @@
       "tooltip": "Mona Lisa / \"Molly Millions\" (Mona Lisa Overdrive)",
       "text": "Mona Lisa / \"Molly Millions\" (Mona Lisa Overdrive)"
     },
+    "colin ghost": {
+      "page": "characters/mona-lisa-mlo.md",
+      "tooltip": "colin ghost",
+      "text": "colin ghost"
+    },
     "novice (jokey — the first jack)": {
       "page": "characters/novice.md",
       "tooltip": "Novice (Jokey — The First Jack)",
@@ -1989,10 +2073,10 @@
       "tooltip": "Beauvoir",
       "text": "Beauvoir"
     },
-    "kid afrika": {
+    "g boys": {
       "page": "characters/kid-afrika.md",
-      "tooltip": "Kid Afrika",
-      "text": "Kid Afrika"
+      "tooltip": "g boys",
+      "text": "g boys"
     },
     "suit (jokey — the suit)": {
       "page": "characters/suit.md",

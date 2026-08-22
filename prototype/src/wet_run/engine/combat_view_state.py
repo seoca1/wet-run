@@ -144,7 +144,7 @@ def start_combat(
 
     # Build enemy combatant from the actual ICE on this node.
     # IceKind.NONE → defensive fallback to "standard".
-    from ..combat.multi_enemy import encounter_count_for_grade
+    from ..combat.multi_enemy import encounter_count_for_state
     from ..matrix.node import IceKind
 
     ice_kind_value = ice_node.ice.value if ice_node.ice is not IceKind.NONE else "standard"
@@ -155,8 +155,12 @@ def start_combat(
         # Unknown ICE id (data gap) — fall back to standard rather than crash.
         enemy = build_ice_enemy("standard", ice_registry)
         ice_kind_id = "standard"
-    # ADR-0153: multi-encounter — create N-1 additional enemies based on player grade
-    encounter_n = encounter_count_for_grade(state.player_grade)
+    # ADR-0153: multi-encounter — create N-1 additional enemies based on player grade.
+    # ADR-0163 Run Mutator compose: ICE_X2 doubles encounter count (default 1 = no effect).
+    # ADR-0164 Mission Archetype compose: DEFENSE archetype overrides with wave_count.
+    encounter_n = encounter_count_for_state(state, state.player_grade) * getattr(
+        state, "encounter_multiplier", 1
+    )
     enemies_list = [enemy]
     for _ in range(encounter_n - 1):
         try:
@@ -176,6 +180,18 @@ def start_combat(
     cs = CombatState(player=player, enemies=tuple(enemies_list))
     cs.deck_size = state.deck_size
     cs.telemetry = state.telemetry
+    # Mission Archetype (ADR-0164): DEFENSE sets friendly-node HP at combat init.
+    from ..combat.mission_archetypes import MissionArchetype, friendly_node_hp
+
+    archetype_str = getattr(state, "active_archetype", None)
+    archetype_obj = None
+    if archetype_str is not None:
+        try:
+            archetype_obj = MissionArchetype(archetype_str)
+        except ValueError:
+            archetype_obj = None
+    hp_value = friendly_node_hp(archetype_obj) if archetype_obj is not None else 0
+    cs.friendly_node_hp = hp_value if hp_value > 0 else 100
 
     if is_boss(ice_type) and cs.enemy is not None:
         profile = get_boss_profile(ice_type)

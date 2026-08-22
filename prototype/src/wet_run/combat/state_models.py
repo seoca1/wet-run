@@ -286,6 +286,9 @@ class CombatState:
     # Phase 17: color of the most recent phase transition (used by the
     # UI color-shift flash). Defaults to yellow when unset.
     phase_change_color: tuple[int, int, int] = (255, 255, 0)
+    # Mission Archetype (ADR-0164): DEFENSE archetype HP pool for the
+    # friendly node the player is protecting. 100 default (legacy fallback).
+    friendly_node_hp: int = 100
 
     def __post_init__(self) -> None:
         """Sync the legacy single-enemy field with the enemies tuple.

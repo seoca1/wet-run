@@ -58,6 +58,27 @@ def encounter_count_for_grade(grade: int) -> int:
     return ENCOUNTER_COUNT_BY_GRADE.get(max(1, min(6, grade)), 1)
 
 
+def encounter_count_for_state(state: object, grade: int) -> int:
+    """Resolve encounter count from state, honoring Mission Archetype wave_count.
+
+    Falls back to :func:`encounter_count_for_grade` when no archetype is active
+    or when the helper returns a non-positive value. Default: 1.
+    """
+    from .mission_archetypes import MissionArchetype, wave_count
+
+    archetype_str = getattr(state, "active_archetype", None)
+    archetype_obj = None
+    if archetype_str is not None:
+        try:
+            archetype_obj = MissionArchetype(archetype_str)
+        except ValueError:
+            archetype_obj = None
+    waves = wave_count(archetype_obj) if archetype_obj is not None else 0
+    if waves > 0:
+        return waves
+    return encounter_count_for_grade(grade)
+
+
 def all_alive_enemies(state: CombatState) -> list[Combatant]:
     """Return a list of all enemies with hp > 0.
 
@@ -117,4 +138,5 @@ __all__ = [
     "auto_attack_all_alive",
     "cycle_target",
     "encounter_count_for_grade",
+    "encounter_count_for_state",
 ]

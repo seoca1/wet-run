@@ -274,6 +274,22 @@ def _apply_damage(
     target.hp = max(0, target.hp - applied)
     if target.hp <= 0:
         record_kill(target.ice_kind)  # type: ignore[arg-type]
+        # Mission Archetype (ADR-0164): STEALTH kills spike alarm.
+        from .mission_archetypes import alarm_per_kill
+
+        archetype_str = getattr(state, "mission_archetype", None)
+        archetype_obj = None
+        if archetype_str is not None:
+            from .mission_archetypes import MissionArchetype
+
+            try:
+                archetype_obj = MissionArchetype(archetype_str)
+            except ValueError:
+                archetype_obj = None
+        alarm_bump = alarm_per_kill(archetype_obj) if archetype_obj is not None else 1
+        if alarm_bump <= 0:
+            alarm_bump = 1
+        state.alarm_level = min(ALARM_MAX_LEVEL, state.alarm_level + alarm_bump)
         if state.telemetry is not None:
             from typing import cast
 

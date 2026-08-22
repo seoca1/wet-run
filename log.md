@@ -2238,3 +2238,25 @@ All artifacts ready. Wet Run v1.4.0 quality upgrade is complete and ready for re
 - `CHANGELOG.md` (v1.4.0)
 - `decisions/0195-adr-implementation-workflow.md` (workflow that drove the sweep)
 - `docs/audits/adr_coverage_matrix_2026-08-20.md` (Track A.1 ledger snapshot)
+
+[2026-08-22] upgrade | wire zone_transition fluff + ADR-0196 Accepted prep
+
+[2026-08-22] upgrade | wire mutator consumers (alarm_speed + encounter_multiplier)
+T1.2 of .omo/plans/wet-run-ui-visibility-upgrade.md. Composed Run Mutator fields
+(ADR-0163) at consumer sites: alarm tick (_tick_alarm in combat/state_transitions.py)
+multiplies personality_mult * app_state.alarm_speed_multiplier; encounter spawn
+(start_combat in engine/combat_view_state.py) multiplies encounter_n by
+app_state.encounter_multiplier. step_combat gained optional app_state kwarg
+(backwards-compat, 73 existing call sites unaffected). 5700 passed / 365 skipped /
+1 xfailed — baseline maintained.
+
+[2026-08-22] upgrade | wire archetype consumers (alarm_per_kill + friendly_node_hp + wave_count)
+T1.3 of .omo/plans/wet-run-ui-visibility-upgrade.md. Wired Mission Archetype helpers
+(ADR-0164) at consumer sites: alarm_per_kill bumps state.alarm_level inside _apply_damage
+death branch (combat/state.py); friendly_node_hp seeds CombatState.friendly_node_hp at
+combat init (engine/combat_view_state.py start_combat, default 100); wave_count composes
+with grade-based encounter count via new encounter_count_for_state helper
+(combat/multi_enemy.py). All sites use getattr(state, "active_archetype", None) and
+fall back to safe defaults (1 alarm / 100 HP / grade-based waves) when archetype is
+absent or unknown. 5700 passed / 365 skipped / 1 xfailed — baseline maintained.
+

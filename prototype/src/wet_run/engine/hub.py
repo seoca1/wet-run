@@ -16,6 +16,21 @@ import tcod.console
 import tcod.event
 from tcod.event import KeyDown, KeySym
 
+from ..combat.palette import (
+    DAMAGE_FLASH_COLOR,
+    DEFAULT_COLOR,
+    GLITCH_COLOR,
+    GRAY_64,
+    GRAY_160,
+    GRAY_MID,
+    GRAY_MID_LIGHT,
+    GREEN_PURE,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    ORANGE_BRIGHT,
+    PURPLE_LIGHT,
+    RED_LIGHT,
+    YELLOW_GOLD,
+)
 from ..i18n import Translator
 from ..matrix.node import Faction
 from ..matrix.ppl import calculate_ppl
@@ -172,7 +187,7 @@ def _draw_4panel(
         x=main.x,
         y=main.y + 8,
         string="─" * main.w,
-        fg=(64, 64, 64),
+        fg=GRAY_64,
     )
 
     # Panel 3: Recipes (bottom-left)
@@ -201,10 +216,10 @@ _REPUTATION_GLYPHS: dict[str, str] = {
 # "ghost" NONE for unaligned fixers).
 _REP_DISPLAY_ORDER: list[tuple[str, tuple[int, int, int]]] = [
     ("hosaka", (180, 50, 50)),  # red — corp
-    ("maas", (200, 150, 50)),  # amber — biz
+    ("maas", ORANGE_BRIGHT),  # amber — biz
     ("sense_net", (50, 200, 150)),  # teal — research
-    ("ta", (200, 50, 200)),  # magenta — T-A
-    ("none", (100, 100, 100)),  # grey — neutral
+    ("ta", PURPLE_LIGHT),  # magenta — T-A
+    ("none", GRAY_MID),  # grey — neutral
 ]
 
 
@@ -290,18 +305,18 @@ def _draw_avatar_panel(
     console.print(x=x, y=y, string="[Avatar]", fg=(180, 180, 180))
     y += 1
     # Simplified avatar (Phase 5: placeholder)
-    console.print(x=x, y=y, string="  ◉P◉", fg=(0, 255, 0))
+    console.print(x=x, y=y, string="  ◉P◉", fg=GREEN_PURE)
     y += 1
     console.print(x=x, y=y, string="  /|\\", fg=(180, 180, 180))
     y += 1
-    console.print(x=x, y=y, string=" ★W★", fg=(255, 0, 255))
+    console.print(x=x, y=y, string=" ★W★", fg=GLITCH_COLOR)
     y += 1
     console.print(
-        x=x, y=y, string="║DK" + str(state.player_loadout.deck_tier) + "║", fg=(200, 200, 200)
+        x=x, y=y, string="║DK" + str(state.player_loadout.deck_tier) + "║", fg=DEFAULT_COLOR
     )
     y += 1
-    console.print(x=x, y=y + 1, string=f"PPL: {ppl}", fg=(0, 255, 0))
-    console.print(x=x, y=y + 2, string=f"Grade: {state.player_grade}-up", fg=(200, 200, 200))
+    console.print(x=x, y=y + 1, string=f"PPL: {ppl}", fg=GREEN_PURE)
+    console.print(x=x, y=y + 2, string=f"Grade: {state.player_grade}-up", fg=DEFAULT_COLOR)
 
     # Phase 6+: faction reputation dots (compact display)
     # 5 factions: Hosaka, Maas, Sense/Net, TA, none — each shown
@@ -326,11 +341,11 @@ def _draw_avatar_panel(
     max_hp = state.player_max_hp if state.player_max_hp > 0 else 100
     hp_pct = (hp / max_hp * 100) if max_hp > 0 else 100
     if hp_pct > 60:
-        hp_color = (0, 255, 0)
+        hp_color = GREEN_PURE
     elif hp_pct > 30:
-        hp_color = (255, 200, 0)
+        hp_color = YELLOW_GOLD
     else:
-        hp_color = (255, 50, 50)
+        hp_color = DAMAGE_FLASH_COLOR
     bar_width = 8
     filled = int((hp / max_hp) * bar_width) if max_hp > 0 else 0
     bar = "[" + "=" * filled + " " * (bar_width - filled) + "]"
@@ -420,7 +435,7 @@ def _draw_materials_panel(
             x=x,
             y=y,
             string=f"{name[:14]:<14} {gauge} {have}/{need}",
-            fg=(160, 160, 160),
+            fg=GRAY_160,
         )
         y += 1
 
@@ -533,7 +548,7 @@ def _draw_recipes_panel(
         if y >= main.y + y_offset + 7:
             break
         status_str = "READY ✓" if ready else "need materials"
-        fg = (0, 255, 0) if ready else (128, 128, 128)
+        fg = GREEN_PURE if ready else GRAY_MID_LIGHT
         console.print(
             x=x,
             y=y,
@@ -571,10 +586,10 @@ def _draw_job_board_panel(
                 x=x,
                 y=y,
                 string=f"All {locked_count} jobs LOCKED (faction rep)",
-                fg=(200, 50, 50),
+                fg=RED_LIGHT,
             )
         else:
-            console.print(x=x, y=y, string="No jobs available", fg=(128, 128, 128))
+            console.print(x=x, y=y, string="No jobs available", fg=GRAY_MID_LIGHT)
         return
 
     for i, mission in enumerate(available):
@@ -584,7 +599,9 @@ def _draw_job_board_panel(
         status = calculate_status(ppl, zdr)
         color = status_color(status)
         prefix = ">" if i == state.hub_selected_index else " "
-        fg_title = (255, 255, 0) if i == state.hub_selected_index else (200, 200, 200)
+        fg_title = (
+            ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if i == state.hub_selected_index else DEFAULT_COLOR
+        )
 
         console.print(
             x=x,

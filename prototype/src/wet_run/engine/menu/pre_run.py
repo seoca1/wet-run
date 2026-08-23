@@ -12,6 +12,15 @@ from __future__ import annotations
 import tcod.console
 
 from ...i18n import Translator
+from ...combat.palette import (
+    COMBO_BAR_YELLOW,
+    DEFAULT_COLOR,
+    GRAY_120,
+    GRAY_DARK,
+    GRAY_MID_LIGHT,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    OLIVE,
+)
 from ..state import AppState, ScreenKind
 
 CHARACTER_OPTIONS = [
@@ -69,20 +78,20 @@ def render_character_select(console: tcod.console.Console, t: Translator, state:
     hint = "The Finn's offer: simple data extraction run. ICE is light."
     if t.lang == "ko":
         hint = "더 핀의 제안:简单的 데이터 추출 미션. ICE는 가벼울 거야."
-    console.print((width - len(hint)) // 2, 3, hint, fg=(180, 180, 100))
+    console.print((width - len(hint)) // 2, 3, hint, fg=OLIVE)
 
     selected = getattr(state, "character_select_index", 0)
     y = 6
     for i, (name, _char_id, desc) in enumerate(CHARACTER_OPTIONS):
         marker = "▶ " if i == selected else "  "
-        fg = (255, 255, 0) if i == selected else (200, 200, 200)
+        fg = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if i == selected else DEFAULT_COLOR
         console.print(x=4, y=y + i * 4, string=f"{marker}[{i + 1}] {name}", fg=fg)
-        console.print(x=6, y=y + i * 4 + 1, string=desc, fg=(128, 128, 128))
-        console.print(x=6, y=y + i * 4 + 2, string="─" * 50, fg=(60, 60, 60))
+        console.print(x=6, y=y + i * 4 + 1, string=desc, fg=GRAY_MID_LIGHT)
+        console.print(x=6, y=y + i * 4 + 2, string="─" * 50, fg=GRAY_DARK)
 
     if state.ng_plus_unlocked:
         ng_status = "NG+ MODE: ON" if state.ng_plus_active else "NG+ MODE: OFF"
-        ng_color = (255, 200, 80) if state.ng_plus_active else (120, 120, 120)
+        ng_color = COMBO_BAR_YELLOW if state.ng_plus_active else GRAY_120
         console.print(
             x=(width - len(ng_status)) // 2,
             y=console.height - 3,
@@ -178,7 +187,9 @@ def render_ending(console: tcod.console.Console, t: Translator, state: AppState)
         msg_en = "Ending not yet determined"
 
     msg = msg_ko if t.lang == "ko" else msg_en
-    console.print((width - len(msg)) // 2, height // 2 - 2, msg, fg=(255, 255, 0))
+    console.print(
+        (width - len(msg)) // 2, height // 2 - 2, msg, fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR
+    )
     hint = "[ESC] Return to menu"
     console.print(0, height - 1, "═" * width)
     console.print((width - len(hint)) // 2, height - 1, f" {hint} ")
@@ -208,7 +219,7 @@ def render_deck_select(console: tcod.console.Console, t: Translator, state: AppS
     hint = "Deck size affects program slots, AP regen, and cooldowns."
     if t.lang == "ko":
         hint = "데크 사이즈는 프로그램 슬롯, AP 재생, 쿨다운에 영향을 줍니다."
-    console.print((width - len(hint)) // 2, 3, hint, fg=(180, 180, 100))
+    console.print((width - len(hint)) // 2, 3, hint, fg=OLIVE)
 
     options = [
         ("LIGHT", "light", "6 slots, +50% AP regen, -10% cooldowns"),
@@ -220,10 +231,10 @@ def render_deck_select(console: tcod.console.Console, t: Translator, state: AppS
     y = 6
     for i, (name, _size_id, desc) in enumerate(options):
         marker = "▶ " if i == selected else "  "
-        fg = (255, 255, 0) if i == selected else (200, 200, 200)
+        fg = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if i == selected else DEFAULT_COLOR
         console.print(x=4, y=y + i * 4, string=f"{marker}[{i + 1}] {name}", fg=fg)
-        console.print(x=6, y=y + i * 4 + 1, string=desc, fg=(128, 128, 128))
-        console.print(x=6, y=y + i * 4 + 2, string="─" * 50, fg=(60, 60, 60))
+        console.print(x=6, y=y + i * 4 + 1, string=desc, fg=GRAY_MID_LIGHT)
+        console.print(x=6, y=y + i * 4 + 2, string="─" * 50, fg=GRAY_DARK)
 
     footer_hint = "[↑↓] Navigate  [Enter] Confirm  [ESC] Back"
     if t.lang == "ko":

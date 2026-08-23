@@ -15,6 +15,15 @@ import tcod.event
 from tcod.event import KeyDown, KeySym
 
 from ..audio import safe_play
+from ..combat.palette import (
+    CYAN_LIGHT,
+    CYAN_PURE,
+    GRAY_120,
+    GRAY_LIGHT,
+    GRAY_MID_DARK,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    TIER_GOLD,
+)
 from ..cyberspace.world import Sector, Server, World, WorldMap
 from ..i18n import Translator
 from .layout import (
@@ -104,17 +113,17 @@ def _render_browser_worlds(console: tcod.console.Console, main: Region, wm: Any)
     """
     y = main.y + 1
     bar = "=" * (main.w - 4)
-    console.print(x=main.x + 2, y=y, string=bar, fg=(0, 200, 200))
+    console.print(x=main.x + 2, y=y, string=bar, fg=CYAN_LIGHT)
     y += 1
-    console.print(x=main.x + 2, y=y, string=" WORLDS & SECTORS", fg=(0, 255, 255))
+    console.print(x=main.x + 2, y=y, string=" WORLDS & SECTORS", fg=CYAN_PURE)
     y += 1
-    console.print(x=main.x + 2, y=y, string=bar, fg=(0, 200, 200))
+    console.print(x=main.x + 2, y=y, string=bar, fg=CYAN_LIGHT)
     y += 1
 
     current_world = wm.current_world
     for world in wm.worlds.values():
         is_current_world = world.id is current_world
-        world_fg = (255, 255, 0) if is_current_world else (180, 180, 180)
+        world_fg = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if is_current_world else (180, 180, 180)
         world_marker = "\u25b6" if is_current_world else " "
         console.print(
             x=main.x + 2,
@@ -127,7 +136,7 @@ def _render_browser_worlds(console: tcod.console.Console, main: Region, wm: Any)
             x=main.x + 4,
             y=y,
             string=f"   {world.description[: main.w - 8]}",
-            fg=(120, 120, 120),
+            fg=GRAY_120,
         )
         y += 1
 
@@ -137,7 +146,7 @@ def _render_browser_worlds(console: tcod.console.Console, main: Region, wm: Any)
                 is_current_world and current_sector is not None and sector.id is current_sector
             )
             sector_marker = "\u2192" if is_current_sector else " "
-            sector_fg = (0, 255, 255) if is_current_sector else (150, 150, 150)
+            sector_fg = CYAN_PURE if is_current_sector else GRAY_LIGHT
             console.print(
                 x=main.x + 4,
                 y=y,
@@ -156,7 +165,7 @@ def _render_browser_servers(
     """Render the server list in the bottom half of the browser."""
     y = main.y + top_h + 2
     sep = "-" * (main.w - 4)
-    console.print(x=main.x + 2, y=y, string=sep, fg=(80, 80, 80))
+    console.print(x=main.x + 2, y=y, string=sep, fg=GRAY_MID_DARK)
     y += 1
 
     current_sector_obj = wm.get_current_sector()
@@ -167,19 +176,19 @@ def _render_browser_servers(
         x=main.x + 2,
         y=y,
         string=f" SERVERS in {current_sector_obj.name}:",
-        fg=(0, 255, 255),
+        fg=CYAN_PURE,
     )
     y += 1
-    console.print(x=main.x + 2, y=y, string=sep, fg=(80, 80, 80))
+    console.print(x=main.x + 2, y=y, string=sep, fg=GRAY_MID_DARK)
     y += 1
 
     for i, server in enumerate(current_sector_obj.servers):
         is_selected = i == state.selected_server_index
         marker = "\u25b6" if is_selected else " "
         if is_selected:
-            fg = (255, 255, 0)
+            fg = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR
         elif server.mission_id is not None:
-            fg = (255, 215, 0)
+            fg = TIER_GOLD
         else:
             fg = (180, 180, 180)
 

@@ -17,6 +17,21 @@ from tcod.event import KeyDown, KeySym
 
 from ..audio import safe_play
 from ..combat.gibson_fluff import push_fluff
+from ..combat.palette import (
+    DAMAGE_FLASH_COLOR,
+    DEFAULT_COLOR,
+    GLITCH_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    GRAY_DARK,
+    GRAY_LIGHT,
+    GRAY_MID,
+    GRAY_MID_LIGHT,
+    GREEN_PURE,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    PURPLE_ICE,
+    SHIELD_COLOR,
+    TIER_GOLD,
+)
 from ..combat.registry import IceRegistry, ProgramRegistry
 from ..i18n import Translator
 from ..lore import (
@@ -67,27 +82,27 @@ _ROOM_GLYPHS = {
 # Anomaly variant overrides (ADR-0140 P2.6 — Variable Reward Nodes).
 # Applied to is_anomaly DATA nodes for visual distinction.
 _ANOMALY_GLYPH = "◆"
-_ANOMALY_COLOR = (255, 100, 255)
+_ANOMALY_COLOR = PURPLE_ICE
 
 # Colors by node type
 _NODE_COLORS = {
-    NodeKind.ENTRY: (0, 255, 0),
-    NodeKind.EXIT: (0, 255, 0),
-    NodeKind.DATA: (255, 215, 0),
-    NodeKind.ICE: (255, 50, 50),
-    NodeKind.CONSTRUCT: (255, 0, 255),
-    NodeKind.ROUTER: (128, 128, 128),
-    NodeKind.SYSTEM: (100, 200, 255),
-    NodeKind.CORE: (255, 100, 255),
+    NodeKind.ENTRY: GREEN_PURE,
+    NodeKind.EXIT: GREEN_PURE,
+    NodeKind.DATA: TIER_GOLD,
+    NodeKind.ICE: DAMAGE_FLASH_COLOR,
+    NodeKind.CONSTRUCT: GLITCH_COLOR,
+    NodeKind.ROUTER: GRAY_MID_LIGHT,
+    NodeKind.SYSTEM: SHIELD_COLOR,
+    NodeKind.CORE: PURPLE_ICE,
 }
 
 # Depth level colors (for depth indicator)
 _DEPTH_COLORS = {
-    DepthLevel.SURFACE: (100, 100, 100),
-    DepthLevel.SHALLOW: (150, 150, 150),
-    DepthLevel.MID: (200, 200, 200),
+    DepthLevel.SURFACE: GRAY_MID,
+    DepthLevel.SHALLOW: GRAY_LIGHT,
+    DepthLevel.MID: DEFAULT_COLOR,
     DepthLevel.DEEP: (255, 200, 100),
-    DepthLevel.CORE: (255, 100, 100),
+    DepthLevel.CORE: GOLIATH_PARTICLE_COLOR,
 }
 
 
@@ -230,7 +245,7 @@ def _render_cyberspace_view(
             continue
 
         # Draw line (L-shaped or direct)
-        _draw_line(console, main, sx, sy, dx, dy, (60, 60, 60))
+        _draw_line(console, main, sx, sy, dx, dy, GRAY_DARK)
 
     # Then draw nodes on top
     for node in matrix.nodes:
@@ -272,7 +287,7 @@ def _draw_node(
     glyph = _ANOMALY_GLYPH if is_anomaly else _ROOM_GLYPHS.get(node.kind, "?")
 
     if is_current:
-        fg = (255, 255, 0)  # Yellow for current
+        fg = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR  # Yellow for current
         # Draw a border around current
         if main.contains(x - 2, y):
             console.print(x=x - 2, y=y, string="<", fg=fg)
@@ -289,7 +304,7 @@ def _draw_node(
         if is_anomaly:
             fg = _ANOMALY_COLOR
         else:
-            fg = _NODE_COLORS.get(node.kind, (200, 200, 200))
+            fg = _NODE_COLORS.get(node.kind, DEFAULT_COLOR)
         if main.contains(x, y):
             console.print(x=x, y=y, string=glyph, fg=fg)
 
@@ -367,7 +382,7 @@ def _draw_viewport_indicator(
     range_y = max(1, max_y - min_y)
 
     # Draw minimap border
-    fg_border = (60, 60, 60)
+    fg_border = GRAY_DARK
     console.print(x=minimap_x, y=minimap_y, string="┌" + "─" * (minimap_w - 2) + "┐", fg=fg_border)
     for yi in range(minimap_h - 2):
         console.print(x=minimap_x, y=minimap_y + 1 + yi, string="│", fg=fg_border)
@@ -392,7 +407,7 @@ def _draw_viewport_indicator(
             and minimap_y < my < minimap_y + minimap_h - 1
         ):
             glyph = _ROOM_GLYPHS.get(node.kind, "·")
-            color = _NODE_COLORS.get(node.kind, (100, 100, 100))
+            color = _NODE_COLORS.get(node.kind, GRAY_MID)
             console.print(x=mx, y=my, string=glyph, fg=color)
 
     # Draw camera viewport on minimap
@@ -403,7 +418,9 @@ def _draw_viewport_indicator(
 
     for x in range(max(minimap_x + 1, cam_x1), min(minimap_x + minimap_w - 2, cam_x2 + 1)):
         if minimap_y < minimap_y + minimap_h - 1 and minimap_y + minimap_h - 1 < console.height:
-            console.print(x=x, y=minimap_y + minimap_h - 2, string="─", fg=(255, 255, 0))
+            console.print(
+                x=x, y=minimap_y + minimap_h - 2, string="─", fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR
+            )
 
 
 # ============================================================================

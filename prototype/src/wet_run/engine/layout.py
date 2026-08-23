@@ -27,6 +27,16 @@ from typing import TYPE_CHECKING
 
 import tcod.console
 
+from ..combat.palette import (
+    DEFAULT_COLOR,
+    GRAY_96,
+    GRAY_160,
+    GRAY_BLACK,
+    GRAY_MID_DARK,
+    GRAY_MID_LIGHT,
+    HIT_FLASH_COLOR,
+)
+
 if TYPE_CHECKING:
     from .state import StatusMessageList
 
@@ -119,7 +129,7 @@ def clear_region(console: tcod.console.Console, region: Region) -> None:
     """Clear a region by writing spaces."""
     for y in range(region.y, min(region.y2 + 1, console.height)):
         for x in range(region.x, min(region.x2 + 1, console.width)):
-            console.print(x=x, y=y, string=" ", fg=(0, 0, 0))
+            console.print(x=x, y=y, string=" ", fg=GRAY_BLACK)
 
 
 def print_in_region(
@@ -128,7 +138,7 @@ def print_in_region(
     x: int,
     y: int,
     string: str,
-    fg: tuple[int, int, int] = (200, 200, 200),
+    fg: tuple[int, int, int] = DEFAULT_COLOR,
 ) -> None:
     """Print a string clipped to ``region``."""
     abs_x = region.x + x
@@ -150,7 +160,7 @@ def draw_dividers(
 
     Also draws a vertical divider between MAIN and STATUS_PANEL if shell is provided.
     """
-    fg = (96, 96, 96)
+    fg = GRAY_96
     for y in (2, 38, 44, 48):
         console.print(x=0, y=y, string="─" * SCREEN_WIDTH, fg=fg)
 
@@ -169,9 +179,9 @@ def draw_title(
     subtitle: str = "",
 ) -> None:
     """Render the title and optional subtitle in the TITLE region."""
-    console.print(x=2, y=0, string=f"== {title} ==", fg=(255, 255, 255))
+    console.print(x=2, y=0, string=f"== {title} ==", fg=HIT_FLASH_COLOR)
     if subtitle:
-        console.print(x=2, y=1, string=subtitle, fg=(128, 128, 128))
+        console.print(x=2, y=1, string=subtitle, fg=GRAY_MID_LIGHT)
 
 
 def draw_controls(
@@ -187,7 +197,7 @@ def draw_controls(
             x=2,
             y=region.y + i,
             string=line[: region.w - 4],
-            fg=(128, 128, 128),
+            fg=GRAY_MID_LIGHT,
         )
 
 
@@ -211,7 +221,7 @@ def draw_side(
             x=2,
             y=region.y + 1 + i,
             string=line[: region.w - 4],
-            fg=(160, 160, 160),
+            fg=GRAY_160,
         )
 
 
@@ -250,7 +260,7 @@ def draw_footer(
             console.print(x=2, y=region.y, string=text, fg=(180, 180, 180))
             div_x = 2 + len(text) + 1
             if div_x < region.w - 1:
-                console.print(x=div_x, y=region.y, string="│", fg=(80, 80, 80))
+                console.print(x=div_x, y=region.y, string="│", fg=GRAY_MID_DARK)
             msg_x = div_x + 2
             if last_msg.bg is not None:
                 for i in range(len(prefix)):
@@ -275,7 +285,7 @@ def draw_footer(
                 x=2,
                 y=region.y,
                 string=full_text[: region.w - 4],
-                fg=(160, 160, 160),
+                fg=GRAY_160,
             )
     else:
         console.print(x=2, y=region.y, string=text, fg=(180, 180, 180))
@@ -312,7 +322,7 @@ def draw_message_log(
         if show_empty:
             msg = "[no messages]"
             x = region.x + (region.w - len(msg)) // 2
-            console.print(x=x, y=region.y + region.h // 2, string=msg, fg=(96, 96, 96))
+            console.print(x=x, y=region.y + region.h // 2, string=msg, fg=GRAY_96)
         return
 
     # Convert to typed messages

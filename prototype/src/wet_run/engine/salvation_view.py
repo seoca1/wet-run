@@ -22,6 +22,18 @@ import tcod.console
 import tcod.event
 from tcod.event import KeyDown, KeySym
 
+from ..combat.palette import (
+    GOLIATH_PARTICLE_COLOR,
+    GRAY_120,
+    GRAY_LIGHT,
+    GRAY_MID,
+    GREEN_BRIGHT,
+    MAGENTA_PURPLE,
+    OLIVE,
+    TA_CONSTRUCT_P1_COLOR,
+    TA_CONSTRUCT_PARTICLE_COLOR,
+    WARM,
+)
 from ..i18n import Translator
 from ..run.state import RunState
 from .layout import RegionId, clear_region, draw_controls, draw_dividers, draw_footer, make_shell
@@ -53,17 +65,17 @@ def render_salvation_intro(
     draw_dividers(console)
 
     console.print(
-        title_r.x, title_r.y, " ══════════════════════════════════════════ ", fg=(180, 80, 255)
+        title_r.x, title_r.y, " ══════════════════════════════════════════ ", fg=MAGENTA_PURPLE
     )
     title = (
         t("salvation.title") if t.lang == "ko" else "=== SALVATION PHASE — Epilogue Selection ==="
     )
-    console.print(title_r.x + 2, title_r.y, title, fg=(180, 80, 255))
+    console.print(title_r.x + 2, title_r.y, title, fg=MAGENTA_PURPLE)
 
     lang = t.lang
     choices = list_available_epilogues(lang)
 
-    console.print(main_r.x + 2, main_r.y + 1, "[ Select your epilogue ]", fg=(200, 200, 100))
+    console.print(main_r.x + 2, main_r.y + 1, "[ Select your epilogue ]", fg=WARM)
     y = main_r.y + 3
     for i, (char_id, label) in enumerate(choices):
         entry = SALVATION_EPILOGUES[char_id]
@@ -78,7 +90,7 @@ def render_salvation_intro(
             main_r.x + 2,
             main_r.y + main_r.h - 3,
             f"Selected: {selection.character_id} | Ending: {selection.ending}",
-            fg=(100, 255, 100),
+            fg=GREEN_BRIGHT,
         )
 
     draw_controls(
@@ -171,13 +183,15 @@ def render_salvation_epilogue(
 
     runner: SalvationRunner | None = getattr(state, "salvation_runner", None)
     if runner is None or runner.selection is None:
-        console.print(main_r.x + 2, main_r.y + 2, "[ No epilogue selected ]", fg=(255, 100, 100))
+        console.print(
+            main_r.x + 2, main_r.y + 2, "[ No epilogue selected ]", fg=GOLIATH_PARTICLE_COLOR
+        )
         return
 
     char_id = runner.selection.character_id
 
     title = t("salvation.epilogue_title", default="=== EPILOGUE ===")
-    console.print(title_r.x + 2, title_r.y, title, fg=(180, 80, 255))
+    console.print(title_r.x + 2, title_r.y, title, fg=MAGENTA_PURPLE)
 
     entry = SALVATION_EPILOGUES.get(char_id, {})
     name_en = entry.get("name_en", char_id)
@@ -189,8 +203,10 @@ def render_salvation_epilogue(
     char_name = name_ko if is_ko else name_en
     tagline = tagline_ko if is_ko else tagline_en
 
-    console.print(main_r.x + 2, main_r.y + 2, f"Character: {char_name}", fg=(200, 200, 255))
-    console.print(main_r.x + 2, main_r.y + 4, tagline, fg=(180, 180, 100))
+    console.print(
+        main_r.x + 2, main_r.y + 2, f"Character: {char_name}", fg=TA_CONSTRUCT_PARTICLE_COLOR
+    )
+    console.print(main_r.x + 2, main_r.y + 4, tagline, fg=OLIVE)
 
     if hasattr(state, "salvation_scene_data") and state.salvation_scene_data:
         scene = state.salvation_scene_data
@@ -211,23 +227,23 @@ def render_salvation_epilogue(
             console.print(main_r.x + 2, main_r.y + 7, f"◆ {speaker}", fg=(200, 150, 100))
             y = main_r.y + 9
             for l2 in display_text.split("\n"):
-                console.print(main_r.x + 4, y, l2, fg=(220, 220, 220))
+                console.print(main_r.x + 4, y, l2, fg=TA_CONSTRUCT_P1_COLOR)
                 y += 1
                 if y >= main_r.y + main_r.h - 4:
                     break
 
             progress = f"[{idx + 1}/{len(dialogue)}]"
-            console.print(main_r.x + 2, main_r.y + main_r.h - 3, progress, fg=(100, 100, 100))
+            console.print(main_r.x + 2, main_r.y + main_r.h - 3, progress, fg=GRAY_MID)
         else:
             console.print(
                 main_r.x + 2,
                 main_r.y + main_r.h - 3,
                 "[ Press ENTER to continue ]",
-                fg=(100, 255, 100),
+                fg=GREEN_BRIGHT,
             )
     else:
         console.print(
-            main_r.x + 2, main_r.y + main_r.h - 4, "[ Loading epilogue... ]", fg=(150, 150, 150)
+            main_r.x + 2, main_r.y + main_r.h - 4, "[ Loading epilogue... ]", fg=GRAY_LIGHT
         )
 
     draw_controls(
@@ -326,7 +342,7 @@ def render_salvation_ending(
     draw_dividers(console)
 
     title = t("salvation.ending_title", default="=== SALVATION PHASE — Ending Selection ===")
-    console.print(title_r.x + 2, title_r.y, title, fg=(180, 80, 255))
+    console.print(title_r.x + 2, title_r.y, title, fg=MAGENTA_PURPLE)
 
     lang = t.lang
     ending_labels = {
@@ -345,7 +361,7 @@ def render_salvation_ending(
         main_r.x + 2,
         main_r.y + 2,
         f"Epilogue: {char_name_ko if is_ko else char_name_en}",
-        fg=(200, 200, 255),
+        fg=TA_CONSTRUCT_PARTICLE_COLOR,
     )
 
     y = main_r.y + 5
@@ -355,7 +371,7 @@ def render_salvation_ending(
         desc = t(f"salvation.ending_{ending.lower()}_desc", default="")
         console.print(main_r.x + 4, y, f"  [{ending}] {label}", fg=(180, 180, 180))
         if desc:
-            console.print(main_r.x + 6, y + 1, desc, fg=(120, 120, 120))
+            console.print(main_r.x + 6, y + 1, desc, fg=GRAY_120)
         y += 3
 
     draw_controls(

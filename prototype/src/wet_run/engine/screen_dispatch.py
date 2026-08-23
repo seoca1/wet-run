@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING
 
 import tcod.console
 
+from ..combat.palette import DYING_COLOR, GRAY_BLACK, GRAY_MID_LIGHT, OLIVE
 from ..combat.registry import IceRegistry, ProgramRegistry
 from .state import AppState, ScreenKind
 
@@ -66,19 +67,19 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
         ``phase_view.render_arc_phase``.
         """
         if state.current_arc is None:
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="=== NO ARC DATA ===", fg=(255, 0, 0))
-            console.print(x=2, y=4, string="Play through CHAPTER first.", fg=(128, 128, 128))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="=== NO ARC DATA ===", fg=DYING_COLOR)
+            console.print(x=2, y=4, string="Play through CHAPTER first.", fg=GRAY_MID_LIGHT)
             return
         arc = state.current_arc
         if state.current_chapter_index >= len(arc.chapters):
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="All arcs complete.", fg=(180, 180, 100))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="All arcs complete.", fg=OLIVE)
             return
         chapter = arc.chapters[state.current_chapter_index]
         if state.current_phase_index >= len(chapter.phases):
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="Arc complete.", fg=(180, 180, 100))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="Arc complete.", fg=OLIVE)
             return
         phase = chapter.phases[state.current_phase_index]
         phase_view.render_arc_phase(
@@ -98,11 +99,9 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
         otherwise delegates to ``cyberspace_map_view.render_cyberspace_map``.
         """
         if not hasattr(state, "world_map") or state.world_map is None:
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="=== NO WORLD DATA ===", fg=(255, 0, 0))
-            console.print(
-                x=2, y=4, string="Start a mission from the Hub first.", fg=(128, 128, 128)
-            )
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="=== NO WORLD DATA ===", fg=DYING_COLOR)
+            console.print(x=2, y=4, string="Start a mission from the Hub first.", fg=GRAY_MID_LIGHT)
             return
         from . import cyberspace_map_view
 
@@ -134,16 +133,16 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
         if state.npc_state is not None:
             npc_view.render_npc(console, t, state, state.npc_state)
         else:
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="=== NO NPC STATE ===", fg=(255, 0, 0))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="=== NO NPC STATE ===", fg=DYING_COLOR)
 
     def _event(console: tcod.console.Console, t: Translator, state: AppState) -> None:
         """Render the EVENT screen (story event dialog) or an error if no event is active."""
         if state.active_event is not None:
             event_view.render_event_story(console, t, state, state.active_event)
         else:
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="=== NO ACTIVE EVENT ===", fg=(255, 0, 0))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="=== NO ACTIVE EVENT ===", fg=DYING_COLOR)
 
     def _story(console: tcod.console.Console, t: Translator, state: AppState) -> None:
         """Render the STORY screen — aftermath or story registry from story_aftermath_id."""
@@ -161,8 +160,8 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
                 state.chapter_elapsed_ms,
             )
         else:
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="=== NO CHAPTER DATA ===", fg=(255, 0, 0))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="=== NO CHAPTER DATA ===", fg=DYING_COLOR)
 
     def _saved_progress(console: tcod.console.Console, t: Translator, state: AppState) -> None:
         """Render the SAVED_PROGRESS screen — last save summary with i18n title/options."""
@@ -220,9 +219,9 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
 
             combat_view.render_combat(console, t, state, state.combat_state)
         else:
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="=== COMBAT ERROR ===", fg=(255, 0, 0))
-            console.print(x=2, y=4, string="No combat state loaded", fg=(128, 128, 128))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="=== COMBAT ERROR ===", fg=DYING_COLOR)
+            console.print(x=2, y=4, string="No combat state loaded", fg=GRAY_MID_LIGHT)
 
     def _cinematic(console: tcod.console.Console, t: Translator, state: AppState) -> None:
         """Render the CINEMATIC screen (story_cinematic) or error if cinematic_state is missing."""
@@ -230,9 +229,9 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
             elapsed_ms = int(state.demo_elapsed_s * 1000)
             story_cinematic.render_cinematic(console, t, state, state.cinematic_state, elapsed_ms)
         else:
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="=== CINEMATIC ERROR ===", fg=(255, 0, 0))
-            console.print(x=2, y=4, string="No cinematic state loaded", fg=(128, 128, 128))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="=== CINEMATIC ERROR ===", fg=DYING_COLOR)
+            console.print(x=2, y=4, string="No cinematic state loaded", fg=GRAY_MID_LIGHT)
 
     return {
         ScreenKind.MENU: menu_screen.render_menu,
@@ -293,8 +292,8 @@ def render_current_screen(
         _DISPATCH = _build_dispatch()
     fn = _DISPATCH.get(state.screen)
     if fn is None:
-        console.clear(bg=(0, 0, 0))
-        console.print(x=2, y=2, string=f"=== NO RENDERER: {state.screen} ===", fg=(255, 0, 0))
+        console.clear(bg=GRAY_BLACK)
+        console.print(x=2, y=2, string=f"=== NO RENDERER: {state.screen} ===", fg=DYING_COLOR)
         return
     # Pass extra kwargs only to handlers that accept them (MATRIX, COMBAT)
     if state.screen in (ScreenKind.MATRIX,):

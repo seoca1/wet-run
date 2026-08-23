@@ -20,6 +20,15 @@ from tcod.event import KeyDown, KeySym
 
 from ...i18n import Translator
 from ...story.ending_renderer import EndingRenderer
+from ...combat.palette import (
+    DEFAULT_COLOR,
+    GRAY_120,
+    GRAY_DARK,
+    GRAY_LIGHT,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    OLIVE,
+    TA_CONSTRUCT_P2_COLOR,
+)
 from ..state import AppState, ScreenKind
 
 GN_MENU_OPTION_COUNT = 11
@@ -275,7 +284,7 @@ def render_endings_browser(console: tcod.console.Console, t: Translator, state: 
     all_endings = renderer.get_all()
 
     if not all_endings:
-        console.print(4, 4, "No endings found.", fg=(150, 150, 150))
+        console.print(4, 4, "No endings found.", fg=GRAY_LIGHT)
     else:
         selected = getattr(state, "endings_selected", 0)
         # Simple list with scrolling if needed
@@ -287,19 +296,19 @@ def render_endings_browser(console: tcod.console.Console, t: Translator, state: 
             idx = i + offset
             is_selected = idx == selected
             marker = "▶ " if is_selected else "  "
-            fg = (255, 255, 0) if is_selected else (200, 200, 200)
+            fg = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if is_selected else DEFAULT_COLOR
             console.print(x=2, y=y_start + i, string=f"{marker}{ending.title}", fg=fg)
 
         # Details for selected ending
         if selected < len(all_endings):
             e = all_endings[selected]
             detail_y = y_start + max_visible + 1
-            console.print(x=2, y=detail_y, string="─" * (width - 4), fg=(60, 60, 60))
+            console.print(x=2, y=detail_y, string="─" * (width - 4), fg=GRAY_DARK)
             console.print(
-                x=2, y=detail_y + 1, string=f"Type: {e.ending_type.upper()}", fg=(150, 150, 150)
+                x=2, y=detail_y + 1, string=f"Type: {e.ending_type.upper()}", fg=GRAY_LIGHT
             )
             console.print(
-                x=2, y=detail_y + 2, string=f"Character: {e.character_ref}", fg=(150, 150, 150)
+                x=2, y=detail_y + 2, string=f"Character: {e.character_ref}", fg=GRAY_LIGHT
             )
 
             # Wrap description
@@ -315,7 +324,7 @@ def render_endings_browser(console: tcod.console.Console, t: Translator, state: 
             desc_lines.append(current_line.strip())
 
             for i, line in enumerate(desc_lines[:3]):
-                console.print(x=2, y=detail_y + 3 + i, string=line, fg=(200, 200, 200))
+                console.print(x=2, y=detail_y + 3 + i, string=line, fg=DEFAULT_COLOR)
 
     footer_hint = "[↑↓] Navigate  [ESC] Back"
     if t.lang == "ko":
@@ -364,33 +373,33 @@ def render_telemetry_summary(console: tcod.console.Console, t: Translator, state
     console.print((width - len(title)) // 2, 0, f" {title} ")
     console.print(0, 1, "─" * width)
     subtitle = t("stats.subtitle")
-    console.print((width - len(subtitle)) // 2, 3, subtitle, fg=(180, 180, 100))
+    console.print((width - len(subtitle)) // 2, 3, subtitle, fg=OLIVE)
 
     if not getattr(state, "telemetry_opt_in", False):
         console.print(
             x=4,
             y=6,
             string="(Telemetry is OFF — opt in via Settings to see stats.)",
-            fg=(200, 100, 100),
+            fg=TA_CONSTRUCT_P2_COLOR,
         )
         _stats_footer(console, t, width)
         return
 
     integrator = getattr(state, "telemetry", None)
     if not isinstance(integrator, TelemetryIntegrator):
-        console.print(x=4, y=6, string=t("stats.empty"), fg=(150, 150, 150))
+        console.print(x=4, y=6, string=t("stats.empty"), fg=GRAY_LIGHT)
         _stats_footer(console, t, width)
         return
 
     y = 5
-    console.print(x=2, y=y, string=t("stats.section_meta"), fg=(180, 180, 100))
+    console.print(x=2, y=y, string=t("stats.section_meta"), fg=OLIVE)
     y += 1
     total = integrator.get_event_count()
     console.print(
         x=4,
         y=y,
         string=t("stats.total_events", n=total),
-        fg=(200, 200, 200),
+        fg=DEFAULT_COLOR,
     )
     y += 2
 
@@ -405,10 +414,10 @@ def render_telemetry_summary(console: tcod.console.Console, t: Translator, state
         (t("stats.section_deck"), decks),
         (t("stats.section_mutator"), mutators),
     ):
-        console.print(x=2, y=y, string=section_label, fg=(180, 180, 100))
+        console.print(x=2, y=y, string=section_label, fg=OLIVE)
         y += 1
         if not data:
-            console.print(x=4, y=y, string="(none)", fg=(120, 120, 120))
+            console.print(x=4, y=y, string="(none)", fg=GRAY_120)
             y += 1
         else:
             for key, count in sorted(data.items()):
@@ -416,7 +425,7 @@ def render_telemetry_summary(console: tcod.console.Console, t: Translator, state
                     x=4,
                     y=y,
                     string=f"  {key}: {count}",
-                    fg=(200, 200, 200),
+                    fg=DEFAULT_COLOR,
                 )
                 y += 1
         y += 1

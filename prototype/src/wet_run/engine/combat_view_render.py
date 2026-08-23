@@ -19,6 +19,24 @@ from typing import TYPE_CHECKING
 import tcod.console
 
 from ..combat.battle_portraits import get_portrait
+from ..combat.palette import (
+    CYAN_PURE,
+    DEFAULT_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    GRAY_160,
+    GRAY_BLACK,
+    GRAY_MID_DARK,
+    GRAY_MID_LIGHT,
+    GREEN_BRIGHT,
+    GREEN_PURE,
+    HIT_FLASH_COLOR,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    PROBE_COLOR,
+    SHIELD_COLOR,
+    STUN_COLOR,
+    WARM,
+    YELLOW_ORANGE,
+)
 from ..combat.state import Skill
 from .layout import (
     Region,
@@ -163,7 +181,7 @@ def _draw_vfx_overlay(
     # Clear the overlay area first to prevent afterimages (hit flash etc.)
     for y in range(ry, min(ry + rh, console.height)):
         for x in range(rx, min(rx + rw, console.width)):
-            console.print(x=x, y=y, string=" ", fg=(0, 0, 0), bg=(0, 0, 0))
+            console.print(x=x, y=y, string=" ", fg=GRAY_BLACK, bg=GRAY_BLACK)
 
     # Hit flash: white overlay with alpha fade
     if fx.hit_flash.is_active:
@@ -236,14 +254,14 @@ def _draw_combatants(
     y = main.y + 2
     console.print(x=x, y=y, string=player.portrait, fg=player.color)
     y += 1
-    console.print(x=x, y=y, string=f"{player.name}", fg=(200, 200, 200))
+    console.print(x=x, y=y, string=f"{player.name}", fg=DEFAULT_COLOR)
     y += 1
-    console.print(x=x, y=y, string=f"HP: {player.hp}/{player.max_hp}", fg=(0, 255, 0))
+    console.print(x=x, y=y, string=f"HP: {player.hp}/{player.max_hp}", fg=GREEN_PURE)
     y += 1
     hp_bar = _hp_bar(player.hp, player.max_hp, width=20)
-    console.print(x=x, y=y, string=hp_bar, fg=(0, 255, 0))
+    console.print(x=x, y=y, string=hp_bar, fg=GREEN_PURE)
     y += 1
-    console.print(x=x, y=y, string=f"AP: {player.ap}/{player.max_ap}", fg=(0, 200, 255))
+    console.print(x=x, y=y, string=f"AP: {player.ap}/{player.max_ap}", fg=PROBE_COLOR)
     y += 1
     console.print(x=x, y=y, string=f"ATK: {player.auto_attack_damage}", fg=(180, 180, 180))
     if combat_state.shield > 0:
@@ -252,7 +270,7 @@ def _draw_combatants(
             x=x,
             y=y,
             string=f"Shield: {combat_state.shield}",
-            fg=(0, 255, 255),
+            fg=CYAN_PURE,
         )
 
     # Enemy (right side)
@@ -271,12 +289,12 @@ def _draw_combatants(
         fg=enemy_portrait.color,
     )
     y += 1
-    console.print(x=x, y=y, string=f"{enemy.name}", fg=(200, 200, 200))
+    console.print(x=x, y=y, string=f"{enemy.name}", fg=DEFAULT_COLOR)
     y += 1
-    console.print(x=x, y=y, string=f"HP: {enemy.hp}/{enemy.max_hp}", fg=(255, 100, 100))
+    console.print(x=x, y=y, string=f"HP: {enemy.hp}/{enemy.max_hp}", fg=GOLIATH_PARTICLE_COLOR)
     y += 1
     hp_bar = _hp_bar(enemy.hp, enemy.max_hp, width=20)
-    console.print(x=x, y=y, string=hp_bar, fg=(255, 100, 100))
+    console.print(x=x, y=y, string=hp_bar, fg=GOLIATH_PARTICLE_COLOR)
 
     # Boss Phase Info (Phase 15 + Phase 17 transition flash)
     if combat_state.boss_phase_tracker is not None:
@@ -294,7 +312,7 @@ def _draw_combatants(
         phase_color = combat_state.phase_change_color
         if flash_age_ms < 1500 and combat_state.phase_change_ms > 0:
             intensity = max(0.0, 1.0 - flash_age_ms / 1500.0)
-            base = (255, 255, 0)
+            base = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR
             phase_color = (
                 int(base[0] * (1 - intensity) + phase_color[0] * intensity),
                 int(base[1] * (1 - intensity) + phase_color[1] * intensity),
@@ -389,22 +407,22 @@ def _draw_action_log(
         # Color code log entries
         line_lower = line.lower()
         if "critical" in line_lower or "devastating" in line_lower or "pierces" in line_lower:
-            fg = (255, 255, 0)  # Yellow for crit
+            fg = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR  # Yellow for crit
         elif "stun" in line_lower or "weakened" in line_lower:
-            fg = (255, 150, 0)  # Orange for CC
+            fg = YELLOW_ORANGE  # Orange for CC
         elif "burn" in line_lower or "poison" in line_lower:
-            fg = (100, 255, 100)  # Green for DoT
+            fg = GREEN_BRIGHT  # Green for DoT
         elif (
             "heal" in line_lower
             or "regen" in line_lower
             or "shield" in line_lower
             or "powered" in line_lower
         ):
-            fg = (100, 200, 255)  # Cyan for buffs
+            fg = SHIELD_COLOR  # Cyan for buffs
         elif "smash" in line_lower or "strikes" in line_lower:
-            fg = (255, 100, 100)  # Red for big attacks
+            fg = GOLIATH_PARTICLE_COLOR  # Red for big attacks
         elif "hit" in line_lower or "damage" in line_lower:
-            fg = (200, 200, 200)  # Gray for normal hits
+            fg = DEFAULT_COLOR  # Gray for normal hits
         else:
             fg = (180, 180, 180)
 
@@ -427,7 +445,7 @@ def _draw_skills_menu(
     x = side_r.x + 2
     y = side_r.y + 1
 
-    console.print(x=x, y=y, string="=== SKILLS ===", fg=(255, 255, 255))
+    console.print(x=x, y=y, string="=== SKILLS ===", fg=HIT_FLASH_COLOR)
     y += 2
 
     selected_index = state.combat_skill_index
@@ -447,16 +465,16 @@ def _draw_skills_menu(
 
         # Color and status based on state
         if cooldown_remaining > 0:
-            fg = (80, 80, 80)  # Dark gray for cooldown
+            fg = GRAY_MID_DARK  # Dark gray for cooldown
             status = f"[{cooldown_remaining / 1000:.1f}s]"
         elif is_disabled:
-            fg = (80, 80, 80)  # Dark gray for disabled (not enough AP)
+            fg = GRAY_MID_DARK  # Dark gray for disabled (not enough AP)
             status = f"[{skill.ap_cost} AP]"
         elif is_selected:
             fg = skill.effect_color  # Use skill's color
             status = f"[{skill.ap_cost} AP]"
         else:
-            fg = (200, 200, 200)  # Light gray for normal
+            fg = DEFAULT_COLOR  # Light gray for normal
             status = f"[{skill.ap_cost} AP]"
 
         # Build line: cursor + key + glyph + tier + name + status
@@ -483,17 +501,17 @@ def _draw_skills_menu(
         for status in statuses[:3]:
             secs_left = max(0, status.remaining_ms / 1000)
             line = f"  {status.effect_id}: {secs_left:.1f}s"
-            color = (200, 200, 100) if "burn" in status.effect_id else (100, 255, 100)
+            color = WARM if "burn" in status.effect_id else GREEN_BRIGHT
             console.print(x=x, y=y, string=line, fg=color)
             y += 1
 
     # Instructions
     y = side_r.y + side_r.h - 6
-    console.print(x=x, y=y, string="↑↓ Select  ENTER/SPACE Use", fg=(128, 128, 128))
+    console.print(x=x, y=y, string="↑↓ Select  ENTER/SPACE Use", fg=GRAY_MID_LIGHT)
     y += 1
-    console.print(x=x, y=y, string="1-9 Quick use", fg=(128, 128, 128))
+    console.print(x=x, y=y, string="1-9 Quick use", fg=GRAY_MID_LIGHT)
     y += 1
-    console.print(x=x, y=y, string="ESC Disengage", fg=(128, 128, 128))
+    console.print(x=x, y=y, string="ESC Disengage", fg=GRAY_MID_LIGHT)
 
 
 def _draw_first_combat_tutorial(console: tcod.console.Console, region: Region) -> None:
@@ -511,7 +529,7 @@ def _draw_first_combat_tutorial(console: tcod.console.Console, region: Region) -
         "[ESC] disengage",
     ]
     hint = "> Press 1-9 for skills"
-    border_color = (160, 160, 160)
+    border_color = GRAY_160
     box_w = max(len(line) for line in lines) + 2  # pad 1 on each side
     box_w = max(box_w, len(hint) + 2)
     cx = region.x + (region.w - box_w) // 2
@@ -525,7 +543,7 @@ def _draw_first_combat_tutorial(console: tcod.console.Console, region: Region) -
     )
     # Body: pipe-wrapped lines
     for i, line in enumerate(lines):
-        fg = (255, 255, 100) if i == 0 else (200, 200, 200)
+        fg = STUN_COLOR if i == 0 else DEFAULT_COLOR
         body = f"|{line.center(box_w - 2)}|"
         console.print(x=cx, y=cy + 1 + i, string=body, fg=fg)
     # Hint row (last interior row)

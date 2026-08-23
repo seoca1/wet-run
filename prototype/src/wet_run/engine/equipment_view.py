@@ -7,6 +7,21 @@ from __future__ import annotations
 
 import tcod.console
 
+from ..combat.palette import (
+    CYAN_PURE,
+    DEBUFF_COLOR,
+    DEFAULT_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    GRAY_120,
+    GRAY_LIGHT,
+    GRAY_MID,
+    GREEN_BRIGHT,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    MAGENTA_PINK,
+    SHIELD_COLOR,
+    WARM,
+    YELLOW_ORANGE,
+)
 from ..equipment.equipment import (
     EquipmentLoadout,
     EquipSlot,
@@ -36,7 +51,7 @@ def render_equipment_visualizer(
     max_w = region.w - 4
 
     # Title
-    console.print(x=x, y=y, string="═══ RIG ═══", fg=(100, 200, 255))
+    console.print(x=x, y=y, string="═══ RIG ═══", fg=SHIELD_COLOR)
     y += 1
 
     # Draw character with equipment
@@ -102,10 +117,10 @@ def _draw_character_with_gear(
     # Row 1: Empty
     # Row 2: Headware
     head_glyph = head.ascii_glyph if head else " o "
-    head_fg = head.ascii_color if head else (150, 150, 150)
+    head_fg = head.ascii_color if head else GRAY_LIGHT
     console.print(x=x + 5, y=y + 2, string=head_glyph, fg=head_fg)
     if head:
-        console.print(x=x + 9, y=y + 2, string=f"  ← {head.tier.value}", fg=(120, 120, 120))
+        console.print(x=x + 9, y=y + 2, string=f"  ← {head.tier.value}", fg=GRAY_120)
 
     # Row 3: Eyeware
     if eyes:
@@ -114,11 +129,11 @@ def _draw_character_with_gear(
         console.print(x=x + 4, y=y + 3, string=eye_str, fg=eye_fg)
         console.print(x=x + 4, y=y + 3, string="  ", fg=eye_fg)
     else:
-        console.print(x=x + 5, y=y + 3, string=" o ", fg=(150, 150, 150))
+        console.print(x=x + 5, y=y + 3, string=" o ", fg=GRAY_LIGHT)
 
     # Row 4: Torso (Bodysuit + Deck)
     body_glyph = body.ascii_glyph if body else "[|]"
-    body_fg = body.ascii_color if body else (150, 150, 150)
+    body_fg = body.ascii_color if body else GRAY_LIGHT
     console.print(x=x + 4, y=y + 4, string="─", fg=body_fg)
     console.print(x=x + 5, y=y + 4, string=body_glyph, fg=body_fg)
     console.print(x=x + 9, y=y + 4, string="─", fg=body_fg)
@@ -130,8 +145,8 @@ def _draw_character_with_gear(
     # Row 6: Arms (Gloves)
     arm_left = "/"
     arm_right = "\\"
-    console.print(x=x + 1, y=y + 6, string=arm_left, fg=(150, 150, 150))
-    console.print(x=x + 12, y=y + 6, string=arm_right, fg=(150, 150, 150))
+    console.print(x=x + 1, y=y + 6, string=arm_left, fg=GRAY_LIGHT)
+    console.print(x=x + 12, y=y + 6, string=arm_right, fg=GRAY_LIGHT)
 
     # Row 7: Gloves
     if gloves:
@@ -140,18 +155,18 @@ def _draw_character_with_gear(
         console.print(x=x, y=y + 7, string=glove_glyph, fg=glove_fg)
         console.print(x=x + 12, y=y + 7, string=glove_glyph, fg=glove_fg)
     else:
-        console.print(x=x, y=y + 7, string=" |", fg=(100, 100, 100))
-        console.print(x=x + 12, y=y + 7, string="| ", fg=(100, 100, 100))
+        console.print(x=x, y=y + 7, string=" |", fg=GRAY_MID)
+        console.print(x=x + 12, y=y + 7, string="| ", fg=GRAY_MID)
 
     # Row 8: Hips / Legs start
     leg_left = "/"
     leg_right = "\\"
-    console.print(x=x + 5, y=y + 8, string=leg_left, fg=(150, 150, 150))
-    console.print(x=x + 8, y=y + 8, string=leg_right, fg=(150, 150, 150))
+    console.print(x=x + 5, y=y + 8, string=leg_left, fg=GRAY_LIGHT)
+    console.print(x=x + 8, y=y + 8, string=leg_right, fg=GRAY_LIGHT)
 
     # Row 9: Legs
-    console.print(x=x + 4, y=y + 9, string="|", fg=(150, 150, 150))
-    console.print(x=x + 9, y=y + 9, string="|", fg=(150, 150, 150))
+    console.print(x=x + 4, y=y + 9, string="|", fg=GRAY_LIGHT)
+    console.print(x=x + 9, y=y + 9, string="|", fg=GRAY_LIGHT)
 
     # Row 10: Boots
     if boots:
@@ -160,13 +175,13 @@ def _draw_character_with_gear(
         console.print(x=x + 3, y=y + 10, string=boot_glyph, fg=boot_fg)
         console.print(x=x + 8, y=y + 10, string=boot_glyph, fg=boot_fg)
     else:
-        console.print(x=x + 3, y=y + 10, string="[ ]", fg=(100, 100, 100))
-        console.print(x=x + 8, y=y + 10, string="[ ]", fg=(100, 100, 100))
+        console.print(x=x + 3, y=y + 10, string="[ ]", fg=GRAY_MID)
+        console.print(x=x + 8, y=y + 10, string="[ ]", fg=GRAY_MID)
 
     # Right side indicators (deck, implant, trodes)
     if deck:
         console.print(x=x + 17, y=y + 3, string="[DECK]", fg=deck.ascii_color)
-        console.print(x=x + 17, y=y + 4, string=deck.tier.value, fg=(150, 150, 150))
+        console.print(x=x + 17, y=y + 4, string=deck.tier.value, fg=GRAY_LIGHT)
     if implant:
         console.print(x=x + 17, y=y + 6, string="[IMPL]", fg=implant.ascii_color)
     if trodes:
@@ -196,7 +211,7 @@ def _draw_total_stats(
 
     stacked = stack_wetware(wetware_ids)
 
-    console.print(x=x, y=y, string="─── STATS ───", fg=(100, 200, 255))
+    console.print(x=x, y=y, string="─── STATS ───", fg=SHIELD_COLOR)
     y += 1
 
     # Combine equipment stats with wetware bonuses
@@ -207,43 +222,43 @@ def _draw_total_stats(
     total_shield = stats.shield_bonus + int(stacked.shield * 100)
 
     if total_atk > 0:
-        console.print(x=x, y=y, string=f"ATK +{total_atk}", fg=(255, 100, 100))
+        console.print(x=x, y=y, string=f"ATK +{total_atk}", fg=GOLIATH_PARTICLE_COLOR)
         y += 1
     if total_crit > 0:
-        console.print(x=x, y=y, string=f"CRIT +{total_crit}%", fg=(255, 255, 0))
+        console.print(x=x, y=y, string=f"CRIT +{total_crit}%", fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR)
         y += 1
     if stats.damage_bonus_pct > 0:
         console.print(x=x, y=y, string=f"DMG +{stats.damage_bonus_pct}%", fg=(255, 150, 100))
         y += 1
     if stats.defense > 0:
-        console.print(x=x, y=y, string=f"DEF +{stats.defense}", fg=(100, 200, 255))
+        console.print(x=x, y=y, string=f"DEF +{stats.defense}", fg=SHIELD_COLOR)
         y += 1
     if total_hp > 0:
-        console.print(x=x, y=y, string=f"HP +{total_hp}", fg=(255, 100, 100))
+        console.print(x=x, y=y, string=f"HP +{total_hp}", fg=GOLIATH_PARTICLE_COLOR)
         y += 1
     if total_shield > 0:
-        console.print(x=x, y=y, string=f"SHIELD +{total_shield}", fg=(100, 200, 255))
+        console.print(x=x, y=y, string=f"SHIELD +{total_shield}", fg=SHIELD_COLOR)
         y += 1
     if stats.ap_bonus > 0:
-        console.print(x=x, y=y, string=f"AP +{stats.ap_bonus}", fg=(0, 255, 255))
+        console.print(x=x, y=y, string=f"AP +{stats.ap_bonus}", fg=CYAN_PURE)
         y += 1
     if total_ap_regen > 0:
-        console.print(x=x, y=y, string=f"AP REGEN +{total_ap_regen}%", fg=(0, 255, 255))
+        console.print(x=x, y=y, string=f"AP REGEN +{total_ap_regen}%", fg=CYAN_PURE)
         y += 1
 
     # New wetware stats (Phase 15)
     if stacked.armor > 0:
-        console.print(x=x, y=y, string=f"ARMOR +{int(stacked.armor * 100)}%", fg=(150, 150, 150))
+        console.print(x=x, y=y, string=f"ARMOR +{int(stacked.armor * 100)}%", fg=GRAY_LIGHT)
         y += 1
     if stacked.focus > 0:
-        console.print(x=x, y=y, string=f"FOCUS +{int(stacked.focus * 100)}%", fg=(200, 200, 100))
+        console.print(x=x, y=y, string=f"FOCUS +{int(stacked.focus * 100)}%", fg=WARM)
         y += 1
 
     if stats.program_power > 0:
-        console.print(x=x, y=y, string=f"PROG PWR +{stats.program_power}", fg=(200, 100, 255))
+        console.print(x=x, y=y, string=f"PROG PWR +{stats.program_power}", fg=DEBUFF_COLOR)
         y += 1
     if stats.ice_resistance > 0:
-        console.print(x=x, y=y, string=f"ICE RES +{stats.ice_resistance}%", fg=(100, 255, 100))
+        console.print(x=x, y=y, string=f"ICE RES +{stats.ice_resistance}%", fg=GREEN_BRIGHT)
         y += 1
 
     if not any(
@@ -262,7 +277,7 @@ def _draw_total_stats(
             stacked.focus,
         ]
     ):
-        console.print(x=x, y=y, string="(no equipment)", fg=(100, 100, 100))
+        console.print(x=x, y=y, string="(no equipment)", fg=GRAY_MID)
 
 
 def _draw_equipment_list(
@@ -274,7 +289,7 @@ def _draw_equipment_list(
     max_w: int,
 ) -> None:
     """Draw the list of equipped items."""
-    console.print(x=x, y=y, string="─── EQUIPPED ───", fg=(100, 200, 255))
+    console.print(x=x, y=y, string="─── EQUIPPED ───", fg=SHIELD_COLOR)
     y += 1
 
     for slot, equipment in loadout.equipment.items():
@@ -309,11 +324,11 @@ def _slot_short_label(slot: EquipSlot) -> str:
 def _tier_color(tier: object) -> tuple[int, int, int]:
     """Color by tier."""
     colors = {
-        "T0": (150, 150, 150),
+        "T0": GRAY_LIGHT,
         "T1": (100, 200, 100),
         "T2": (100, 150, 255),
-        "T3": (200, 100, 255),
-        "T4": (255, 150, 0),
-        "T5": (255, 50, 200),
+        "T3": DEBUFF_COLOR,
+        "T4": YELLOW_ORANGE,
+        "T5": MAGENTA_PINK,
     }
-    return colors.get(str(getattr(tier, "value", tier)), (200, 200, 200))
+    return colors.get(str(getattr(tier, "value", tier)), DEFAULT_COLOR)

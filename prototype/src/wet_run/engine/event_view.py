@@ -9,6 +9,17 @@ import tcod.console
 import tcod.event
 from tcod.event import KeyDown, KeySym
 
+from ..combat.palette import (
+    BUFF_COLOR,
+    CYAN_PURE,
+    DEFAULT_COLOR,
+    GRAY_MID_DARK,
+    HIT_FLASH_COLOR,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    OLIVE,
+    TA_CONSTRUCT_PARTICLE_COLOR,
+    WARM,
+)
 from ..i18n import Translator
 from .event_story import CharacterArt, EventChoice, EventLine, EventState
 from .input_utils import is_confirm_key
@@ -184,14 +195,14 @@ def _draw_dialogue(
             x=x,
             y=y,
             string=f"{line.portrait} {line.speaker}:",
-            fg=(255, 255, 0),
+            fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
         )
     elif line.speaker:
         console.print(
             x=x,
             y=y,
             string=f"{line.speaker}:",
-            fg=(255, 255, 0),
+            fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
         )
 
     # Korean speaker (if available)
@@ -200,7 +211,7 @@ def _draw_dialogue(
             x=x,
             y=y + 1,
             string=f"   {line.speaker_ko}",
-            fg=(200, 200, 100),
+            fg=WARM,
         )
 
     text_y = y + 3
@@ -226,7 +237,7 @@ def _draw_dialogue(
             y=text_y,
             text=line.text_ko,
             max_width=max_width,
-            color=(255, 220, 100),
+            color=BUFF_COLOR,
         )
 
     # Effect indicator
@@ -237,7 +248,7 @@ def _draw_dialogue(
                 x=x,
                 y=effect_y,
                 string=f"[{line.effect.upper()}]",
-                fg=(200, 200, 200),
+                fg=DEFAULT_COLOR,
             )
 
 
@@ -249,10 +260,10 @@ def main_height(console: tcod.console.Console) -> int:
 def _get_text_color(effect: str) -> tuple[int, int, int]:
     """Get text color based on effect."""
     if effect == "glitch":
-        return (200, 200, 255)
+        return TA_CONSTRUCT_PARTICLE_COLOR
     elif effect == "type":
-        return (200, 200, 200)
-    return (255, 255, 255)
+        return DEFAULT_COLOR
+    return HIT_FLASH_COLOR
 
 
 def _draw_text_wrapped(
@@ -261,7 +272,7 @@ def _draw_text_wrapped(
     y: int,
     text: str,
     max_width: int,
-    color: tuple[int, int, int] = (255, 255, 255),
+    color: tuple[int, int, int] = HIT_FLASH_COLOR,
 ) -> None:
     """Draw text with word wrapping."""
     if not text:
@@ -321,12 +332,12 @@ def _draw_choices(
     event_state: EventState,
 ) -> None:
     """Draw the dialogue choices."""
-    console.print(x=x, y=y - 1, string="─" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y - 1, string="─" * max_width, fg=GRAY_MID_DARK)
 
     for i, choice in enumerate(line.choices):
         is_selected = i == event_state.choice_index
         cursor = "▶" if is_selected else " "
-        fg = (0, 255, 255) if is_selected else (200, 200, 200)
+        fg = CYAN_PURE if is_selected else DEFAULT_COLOR
 
         # Choice text
         console.print(
@@ -342,7 +353,7 @@ def _draw_choices(
                 x=x + 4,
                 y=y + i + 1 if i < len(line.choices) - 1 else y + i,
                 string=f"     {choice.text_ko}",
-                fg=(180, 180, 100),
+                fg=OLIVE,
             )
 
 

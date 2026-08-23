@@ -17,6 +17,15 @@ import tcod.console
 import tcod.event
 
 from ..audio import sound_manager as _sm_module
+from ..combat.palette import (
+    DEFAULT_COLOR,
+    GRAY_120,
+    GRAY_BLACK,
+    GRAY_LIGHT,
+    GREEN_LIGHT,
+    SHIELD_COLOR,
+    WARM,
+)
 from ..run import Stage, start_run
 from . import config as _engine_config
 from .novel_integration import trigger_mission_completion_novel_hooks
@@ -127,7 +136,7 @@ def render_reward(console: tcod.console.Console, state: AppState) -> None:
     SCREEN_WIDTH = _engine_config.SCREEN_WIDTH  # noqa: N806
     SCREEN_HEIGHT = _engine_config.SCREEN_HEIGHT  # noqa: N806
 
-    console.clear(bg=(0, 0, 0))
+    console.clear(bg=GRAY_BLACK)
 
     box_x, box_y, box_w, box_h = _draw_reward_box(console, SCREEN_WIDTH)
 
@@ -157,20 +166,20 @@ def _draw_reward_box(console: Any, screen_width: int) -> tuple[int, int, int, in
         x=box_x,
         y=box_y,
         string=f"┌{box_border_h}┐",
-        fg=(0, 255, 100),
+        fg=GREEN_LIGHT,
     )
     for y in range(box_y + 1, box_y + box_h - 1):
         console.print(
             x=box_x,
             y=y,
             string=f"│{' ' * (box_w - 2)}│",
-            fg=(0, 255, 100),
+            fg=GREEN_LIGHT,
         )
     console.print(
         x=box_x,
         y=box_y + box_h - 1,
         string=f"└{box_border_h}┘",
-        fg=(0, 255, 100),
+        fg=GREEN_LIGHT,
     )
     return box_x, box_y, box_w, box_h
 
@@ -182,7 +191,7 @@ def _draw_reward_title(console: Any, box_x: int, box_y: int, box_w: int) -> None
         x=box_x + (box_w - len(title)) // 2,
         y=box_y + 1,
         string=title,
-        fg=(0, 255, 100),
+        fg=GREEN_LIGHT,
     )
 
 
@@ -216,13 +225,13 @@ def _draw_reward_credits(console: Any, box_x: int, box_y: int, state: Any) -> No
 def _draw_reward_materials(console: Any, box_x: int, box_y: int, state: Any) -> None:
     """List up to 4 inventory items; collapse the rest into a summary."""
     mat_y = box_y + 7
-    console.print(x=box_x + 4, y=mat_y, string="Materials:", fg=(200, 200, 200))
+    console.print(x=box_x + 4, y=mat_y, string="Materials:", fg=DEFAULT_COLOR)
     if not state.inventory:
         console.print(
             x=box_x + 4,
             y=mat_y + 1,
             string="  (none)",
-            fg=(150, 150, 150),
+            fg=GRAY_LIGHT,
         )
     else:
         for i, (mat_id, qty) in enumerate(sorted(state.inventory.items())):
@@ -231,7 +240,7 @@ def _draw_reward_materials(console: Any, box_x: int, box_y: int, state: Any) -> 
                 x=box_x + 4,
                 y=mat_y + 1 + i,
                 string=mat_line,
-                fg=(100, 200, 255),
+                fg=SHIELD_COLOR,
             )
             if i >= 3:
                 remaining = len(state.inventory) - 4
@@ -240,7 +249,7 @@ def _draw_reward_materials(console: Any, box_x: int, box_y: int, state: Any) -> 
                         x=box_x + 4,
                         y=mat_y + 2 + i,
                         string=f"  • ... and {remaining} more",
-                        fg=(150, 150, 150),
+                        fg=GRAY_LIGHT,
                     )
                 break
 
@@ -279,7 +288,7 @@ def _draw_aar_stats(console: Any, box_x: int, mat_y: int, state: Any) -> None:
         f"  Duration:        {cs.tick_ms // 1000}s",
     ]
     for i, line in enumerate(lines):
-        fg = (200, 200, 100) if i == 0 else (180, 180, 180)
+        fg = WARM if i == 0 else (180, 180, 180)
         console.print(
             x=box_x + 4,
             y=aar_y + i,
@@ -297,7 +306,7 @@ def _draw_reward_prompt(
         x=(screen_width - len(prompt)) // 2,
         y=box_y + box_h + 2,
         string=prompt,
-        fg=(200, 200, 200),
+        fg=DEFAULT_COLOR,
     )
 
 
@@ -310,7 +319,7 @@ def _draw_reward_status(console: Any, screen_height: int, state: Any) -> None:
             x=2,
             y=screen_height - 7 + i,
             string=msg,
-            fg=(120, 120, 120),
+            fg=GRAY_120,
         )
 
 

@@ -14,6 +14,14 @@ import tcod.event
 from tcod.event import KeyDown, KeySym
 
 from ..audio import safe_play
+from ..combat.palette import (
+    DEFAULT_COLOR,
+    GRAY_DARK,
+    HIT_FLASH_COLOR,
+    ICE_GLOW,
+    ICE_RED_DARK,
+    WARM_DARK,
+)
 from ..i18n import Translator
 from .input_utils import is_confirm_key
 from .layout import (
@@ -31,26 +39,26 @@ from .status_panel import render_status_panel
 
 # Zones across the probe bar (index 0–19, 20 positions)
 _HACK_ZONES: list[tuple[str, tuple[int, int, int]]] = [
-    ("DANGER", (220, 60, 60)),
-    ("DANGER", (220, 60, 60)),
-    ("DANGER", (220, 60, 60)),
-    ("CAUTION", (220, 180, 60)),
-    ("CAUTION", (220, 180, 60)),
-    ("CAUTION", (220, 180, 60)),
-    ("SAFE", (60, 220, 120)),
-    ("SAFE", (60, 220, 120)),
-    ("SAFE", (60, 220, 120)),
-    ("SAFE", (60, 220, 120)),
-    ("SAFE", (60, 220, 120)),
-    ("CAUTION", (220, 180, 60)),
-    ("CAUTION", (220, 180, 60)),
-    ("CAUTION", (220, 180, 60)),
-    ("DANGER", (220, 60, 60)),
-    ("DANGER", (220, 60, 60)),
-    ("DANGER", (220, 60, 60)),
-    ("DANGER", (220, 60, 60)),
-    ("DANGER", (220, 60, 60)),
-    ("DANGER", (220, 60, 60)),
+    ("DANGER", ICE_RED_DARK),
+    ("DANGER", ICE_RED_DARK),
+    ("DANGER", ICE_RED_DARK),
+    ("CAUTION", WARM_DARK),
+    ("CAUTION", WARM_DARK),
+    ("CAUTION", WARM_DARK),
+    ("SAFE", ICE_GLOW),
+    ("SAFE", ICE_GLOW),
+    ("SAFE", ICE_GLOW),
+    ("SAFE", ICE_GLOW),
+    ("SAFE", ICE_GLOW),
+    ("CAUTION", WARM_DARK),
+    ("CAUTION", WARM_DARK),
+    ("CAUTION", WARM_DARK),
+    ("DANGER", ICE_RED_DARK),
+    ("DANGER", ICE_RED_DARK),
+    ("DANGER", ICE_RED_DARK),
+    ("DANGER", ICE_RED_DARK),
+    ("DANGER", ICE_RED_DARK),
+    ("DANGER", ICE_RED_DARK),
 ]
 assert len(_HACK_ZONES) == 20
 
@@ -66,10 +74,10 @@ _RESULT_LABELS: dict[str, str] = {
     "fail": "FAIL — No reward",
 }
 _RESULT_COLORS: dict[str, tuple[int, int, int]] = {
-    "perfect": (60, 220, 120),
+    "perfect": ICE_GLOW,
     "good": (60, 180, 220),
-    "partial": (220, 180, 60),
-    "fail": (220, 60, 60),
+    "partial": WARM_DARK,
+    "fail": ICE_RED_DARK,
 }
 _RESULT_MESSAGES: dict[str, list[str]] = {
     "perfect": [
@@ -173,14 +181,14 @@ def _draw_probe_bar(
                 fg = zone_color
             elif i == indicator_pos:
                 ch = "▼"
-                fg = (255, 255, 255)
+                fg = HIT_FLASH_COLOR
             else:
                 ch = "─"
-                fg = (60, 60, 60)
+                fg = GRAY_DARK
         else:
             if i == indicator_pos:
                 ch = "▼"
-                fg = (255, 255, 255)
+                fg = HIT_FLASH_COLOR
             else:
                 ch = "─"
                 fg = zone_color
@@ -191,7 +199,7 @@ def _draw_probe_bar(
 
     if outcome is not None:
         result_label = _RESULT_LABELS.get(outcome, outcome)
-        result_color = _RESULT_COLORS.get(outcome, (200, 200, 200))
+        result_color = _RESULT_COLORS.get(outcome, DEFAULT_COLOR)
         console.print(x=bar_x, y=bar_y + 2, string=f"Result: {result_label}", fg=result_color)
 
 
@@ -207,7 +215,7 @@ def _draw_result_text(
     bar_x = main.x + 4
     bar_y = main.y + 5
     lines = _RESULT_MESSAGES.get(hack_state.outcome, [])
-    color = _RESULT_COLORS.get(hack_state.outcome, (200, 200, 200))
+    color = _RESULT_COLORS.get(hack_state.outcome, DEFAULT_COLOR)
     for i, line in enumerate(lines):
         console.print(x=bar_x, y=bar_y + i, string=line, fg=color)
 

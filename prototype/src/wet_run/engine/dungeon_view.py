@@ -10,6 +10,17 @@ import tcod.console
 import tcod.event
 from tcod.event import KeyDown, KeySym
 
+from ..combat.palette import (
+    CYAN_PURE,
+    DAMAGE_FLASH_COLOR,
+    DEFAULT_COLOR,
+    GLITCH_COLOR,
+    GRAY_MID_DARK,
+    GRAY_MID_LIGHT,
+    GREEN_PURE,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    TIER_GOLD,
+)
 from ..combat.registry import IceRegistry, ProgramRegistry
 from ..i18n import Translator
 from ..matrix import AlarmLevel, IceKind, MatrixGraph, Node, NodeKind, ZoneDepth
@@ -324,17 +335,17 @@ def _draw_room_cell(
     """Draw a single room cell."""
     # Border
     if is_current:
-        fg_border = (0, 255, 255)  # Cyan for current
+        fg_border = CYAN_PURE  # Cyan for current
     elif room_type is RoomType.ICE:
-        fg_border = (255, 50, 50)  # Red for ICE
+        fg_border = DAMAGE_FLASH_COLOR  # Red for ICE
     elif room_type is RoomType.DATA:
-        fg_border = (255, 215, 0)  # Gold for data
+        fg_border = TIER_GOLD  # Gold for data
     elif room_type is RoomType.NPC:
-        fg_border = (255, 0, 255)  # Magenta for NPC
+        fg_border = GLITCH_COLOR  # Magenta for NPC
     elif room_type is RoomType.EXIT:
-        fg_border = (0, 255, 0)  # Green for exit
+        fg_border = GREEN_PURE  # Green for exit
     else:
-        fg_border = (128, 128, 128)  # Gray
+        fg_border = GRAY_MID_LIGHT  # Gray
 
     # Top/bottom borders
     for xi in range(x, x + w):
@@ -381,7 +392,7 @@ def _draw_room_cell(
             x=x + 1,
             y=y + 1,
             string=f"{marker}{glyph}",
-            fg=(255, 255, 0) if is_current else (200, 200, 200),
+            fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if is_current else DEFAULT_COLOR,
         )
 
         # Label
@@ -391,7 +402,7 @@ def _draw_room_cell(
                 x=x + 1,
                 y=y + 2,
                 string=label,
-                fg=(255, 255, 0) if is_current else (200, 200, 200),
+                fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if is_current else DEFAULT_COLOR,
             )
 
 
@@ -412,7 +423,7 @@ def _draw_corridor(
     c2x = x2 + cell_w // 2
     c2y = y2 + cell_h // 2
 
-    fg = (80, 80, 80)
+    fg = GRAY_MID_DARK
 
     # Draw L-shaped path
     # Horizontal segment
@@ -447,7 +458,7 @@ def _render_linear_fallback(
         x=main.x + 2,
         y=main.y + 2,
         string="(dungeon layout unavailable)",
-        fg=(128, 128, 128),
+        fg=GRAY_MID_LIGHT,
     )
 
 

@@ -15,6 +15,18 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import StrEnum
 
+from ..combat.palette import (
+    CYAN_BRIGHT,
+    CYAN_LIGHT,
+    DEBUFF_COLOR,
+    DEFAULT_COLOR,
+    GREEN_PURE,
+    ICE_TYPE_NEUROMANCER_COLOR,
+    MAGENTA_BRIGHT,
+    PURPLE_ICE,
+    WINTERMUTE_P3_COLOR,
+)
+
 
 class ArtStyle(StrEnum):
     """Visual style for the ASCII art."""
@@ -33,7 +45,7 @@ class AsciiArt:
     """A piece of ASCII art with associated color/style."""
 
     lines: tuple[str, ...]
-    fg: tuple[int, int, int] = (200, 200, 200)
+    fg: tuple[int, int, int] = DEFAULT_COLOR
     bg: tuple[int, int, int] | None = None
     style: ArtStyle = ArtStyle.NEON
 
@@ -63,7 +75,7 @@ THE_FINN = AsciiArt(
         "    ╔╝ THE    ╚╗     ",
         "    ╚═══════════╝    ",
     ),
-    fg=(255, 100, 255),  # Magenta
+    fg=PURPLE_ICE,  # Magenta
     style=ArtStyle.NEON,
 )
 
@@ -77,7 +89,7 @@ DIXIE_FLATLINE = AsciiArt(
         "    ◊ construct ◊   ",
         "     ◊◊◊◊◊◊◊◊     ",
     ),
-    fg=(0, 200, 200),  # Cyan
+    fg=CYAN_LIGHT,  # Cyan
     style=ArtStyle.GHOST,
 )
 
@@ -105,7 +117,7 @@ MOLLY_MILLIONS = AsciiArt(
         "  ◆  razorgirl  ◆  ",
         "  ◆◆◆◆◆◆◆◆◆◆◆◆  ",
     ),
-    fg=(255, 50, 100),  # Hot pink
+    fg=WINTERMUTE_P3_COLOR,  # Hot pink
     style=ArtStyle.NEON,
 )
 
@@ -138,7 +150,7 @@ CHIBA_CITY = AsciiArt(
         "  █  ▀▀▀▀▀▀▀▀▀▀ █  ",
         "  ▀▀▀▀▀▀▀▀▀▀▀▀▀▀  ",
     ),
-    fg=(255, 0, 200),  # Magenta neon
+    fg=MAGENTA_BRIGHT,  # Magenta neon
     style=ArtStyle.NEON,
 )
 
@@ -154,7 +166,7 @@ CYBERSPACE = AsciiArt(
         "   ◆________◆   ",
         "    ╱╲╱╲╱╲╱╲    ",
     ),
-    fg=(0, 255, 200),  # Cyan
+    fg=CYAN_BRIGHT,  # Cyan
     style=ArtStyle.MATRIX,
 )
 
@@ -169,7 +181,7 @@ MATRIX_RAIN = AsciiArt(
         " ░ █ ░ █ ░ █ ░ █ ",
         " █ ░ █ ░ █ ░ █ ░ ",
     ),
-    fg=(0, 255, 0),  # Matrix green
+    fg=GREEN_PURE,  # Matrix green
     style=ArtStyle.MATRIX,
 )
 
@@ -183,7 +195,7 @@ SENSE_NET = AsciiArt(
         "  ║  ◥◣◥◣◥◣    ║  ",
         "  ╚══════════════╝  ",
     ),
-    fg=(200, 100, 255),  # Purple
+    fg=DEBUFF_COLOR,  # Purple
     style=ArtStyle.NEON,
 )
 
@@ -213,7 +225,7 @@ GLITCH_BURST = AsciiArt(
         " ░ ▒▓▒ ▀▄▓▒░ ▓ ",
         "   ░▒▓ ▀▄▒░▓▒   ",
     ),
-    fg=(255, 0, 100),
+    fg=ICE_TYPE_NEUROMANCER_COLOR,
     style=ArtStyle.GLITCH,
 )
 

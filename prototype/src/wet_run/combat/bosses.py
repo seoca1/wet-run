@@ -21,7 +21,14 @@ from dataclasses import dataclass
 from .effects import (
     IceType,
 )
-from .palette import GLITCH_COLOR
+from .palette import (
+    DAMAGE_FLASH_COLOR,
+    GLITCH_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    HIT_FLASH_COLOR,
+    ICE_TYPE_NEUROMANCER_COLOR,
+    ICE_TYPE_PATROL_COLOR,
+)
 from .state import Combatant
 
 # ----------------------------------------------------------------------------
@@ -41,7 +48,7 @@ class BossPhase:
     name: str
     hp_threshold_pct: int = 0  # 0-100, phase activates when HP% <= this
     intro_line: str = ""  # Korean text shown on transition
-    color: tuple[int, int, int] = (255, 255, 255)
+    color: tuple[int, int, int] = HIT_FLASH_COLOR
     attack_bonus_pct: int = 0  # +X% attack vs previous phase
     speed_bonus_pct: int = 0  # +X% attack speed
     screen_shake_intensity: float = 0.0  # Shake on phase change
@@ -116,7 +123,7 @@ GOLIATH_PRIME = BossSpec(
             name="격노",
             hp_threshold_pct=50,
             intro_line="▸ 격노 상태 돌입",
-            color=(255, 100, 100),
+            color=GOLIATH_PARTICLE_COLOR,
             attack_bonus_pct=40,
             speed_bonus_pct=20,
             screen_shake_intensity=3.0,
@@ -129,7 +136,7 @@ GOLIATH_PRIME = BossSpec(
             name="자폭",
             hp_threshold_pct=25,
             intro_line="▸ 자폭 시퀀스 시작",
-            color=(255, 50, 50),
+            color=DAMAGE_FLASH_COLOR,
             attack_bonus_pct=80,
             speed_bonus_pct=40,
             screen_shake_intensity=4.5,
@@ -169,7 +176,7 @@ BLACK_ICE_LORD = BossSpec(
             name="위장",
             hp_threshold_pct=100,
             intro_line="",
-            color=(180, 180, 200),
+            color=ICE_TYPE_PATROL_COLOR,
         ),
         BossPhase(
             index=1,
@@ -188,7 +195,7 @@ BLACK_ICE_LORD = BossSpec(
             name="붕괴",
             hp_threshold_pct=33,
             intro_line="▸ 코드 손상 — 무작위 공격",
-            color=(255, 0, 100),
+            color=ICE_TYPE_NEUROMANCER_COLOR,
             attack_bonus_pct=60,
             speed_bonus_pct=30,
             screen_shake_intensity=3.0,
@@ -233,7 +240,7 @@ WATCHDOG_ALPHA = BossSpec(
             name="분노",
             hp_threshold_pct=50,
             intro_line="▸ 무리 호출 — 공격 빈도 증가",
-            color=(255, 100, 100),
+            color=GOLIATH_PARTICLE_COLOR,
             attack_bonus_pct=25,
             speed_bonus_pct=50,
             screen_shake_intensity=2.5,
@@ -244,7 +251,7 @@ WATCHDOG_ALPHA = BossSpec(
             name="집중",
             hp_threshold_pct=20,
             intro_line="▸ 마지막 추적 — 결정타",
-            color=(255, 50, 50),
+            color=DAMAGE_FLASH_COLOR,
             attack_bonus_pct=100,
             speed_bonus_pct=20,
             screen_shake_intensity=3.5,

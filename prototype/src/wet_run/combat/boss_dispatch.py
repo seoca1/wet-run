@@ -34,6 +34,7 @@ from .boss_expansion import (
     build_boss_combatant as _build_expansion_boss_combatant,
 )
 from .boss_registry import ZoneBossProfile, ZoneBossRegistry, load_zone_boss_registry
+from .palette import MAGENTA_BRIGHT
 from .state import Combatant
 
 if TYPE_CHECKING:
@@ -136,7 +137,7 @@ def _zone_boss_to_combatant(profile: ZoneBossProfile, *, player_grade: int | Non
         id=profile.boss_id,
         name=profile.name,
         portrait="▲BOSS▲",
-        color=(255, 0, 200),
+        color=MAGENTA_BRIGHT,
         hp=hp,
         max_hp=hp,
         ap=0,

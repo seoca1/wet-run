@@ -16,6 +16,7 @@ from enum import StrEnum
 from typing import Any
 
 from ..state_models import CombatState
+from ...combat.palette import DEBUFF_COLOR, WARM
 
 
 class CompanionSkillId(StrEnum):
@@ -69,7 +70,7 @@ def dixie_use_skill(
                 attack_bonus=-DIXIE_DECOMPILE_ATTACK_REDUCTION,
             )
         )
-        _record_event(state, "decompile", (200, 200, 100))
+        _record_event(state, "decompile", WARM)
         state.push(
             f">>> Dixie decompiles {target.name}: "
             f"-{DIXIE_DECOMPILE_ATTACK_REDUCTION} attack "
@@ -85,7 +86,7 @@ def dixie_use_skill(
                 remaining_ms=DIXIE_ICEBREAKER_DURATION_MS,
             )
         )
-        _record_event(state, "icebreaker", (200, 100, 255))
+        _record_event(state, "icebreaker", DEBUFF_COLOR)
         state.push(
             f">>> Dixie icebreaker overdrive: {applied} damage + "
             f"damage-up {DIXIE_ICEBREAKER_DAMAGE_UP_PCT}% "

@@ -14,6 +14,8 @@ from typing import TYPE_CHECKING
 
 import tcod.console
 
+from .palette import TIER_GOLD
+
 if TYPE_CHECKING:
     from ..engine.layout import Region
     from ..engine.state import AppState
@@ -22,7 +24,7 @@ if TYPE_CHECKING:
 TOAST_DURATION_MS = 3000
 TOAST_HEIGHT = 4
 TOAST_BG = (20, 30, 50)
-TOAST_BORDER = (255, 215, 0)
+TOAST_BORDER = TIER_GOLD
 TOAST_TEXT = (240, 240, 240)
 
 

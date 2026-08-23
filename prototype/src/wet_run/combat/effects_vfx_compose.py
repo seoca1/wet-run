@@ -33,9 +33,19 @@ from .effects_data import (
 from .effects_vfx_animations import critical_hit_animation, get_animation_for_effect
 from .effects_vfx_cinematics import ice_death_sequence, ice_intro_sequence
 from .palette import (
+    BLACK_ICE_THEME_COLOR,
+    BUFF_COLOR,
+    COMBO_BAR_RED,
     CRIT_COLOR,
     DAMAGE_COLOR,
     HEAL_COLOR,
+    HIT_FLASH_COLOR,
+    ICE_TYPE_WATCHDOG_COLOR,
+    OLIVE,
+    TA_CONSTRUCT_P1_COLOR,
+    TIER_GOLD,
+    WINTERMUTE_P2_COLOR,
+    YELLOW_PALE,
 )
 
 
@@ -142,7 +152,7 @@ def spawn_hit_effects(
             target_x,
             target_y,
             chars=("•", "○", "◌"),
-            color=(180, 100, 220),
+            color=BLACK_ICE_THEME_COLOR,
             count=6,
             speed=20.0,
         )
@@ -170,7 +180,7 @@ def spawn_hit_effects(
         )
 
     # Layer 1: hit flash
-    flash_color = (255, 255, 255) if is_crit else (255, 220, 100)
+    flash_color = HIT_FLASH_COLOR if is_crit else BUFF_COLOR
     effects.hit_flash.trigger(color=flash_color, duration_ms=120)
 
     # Layer 1: screen shake (only for big hits)
@@ -200,7 +210,7 @@ def spawn_critical(effects: CombatEffects, x: float, y: float, damage: int) -> N
     effects.floating_numbers.append(
         FloatingNumber(x=x, y=y - 1.0, value=damage, color=CRIT_COLOR, is_crit=True)
     )
-    effects.hit_flash.trigger(color=(255, 255, 200), duration_ms=150)
+    effects.hit_flash.trigger(color=YELLOW_PALE, duration_ms=150)
     effects.shake.trigger(intensity=3.5, duration_ms=250)
     effects.slow_motion_ms = 250  # 250ms of slow-mo
 
@@ -240,7 +250,7 @@ def spawn_jackin_glitch(effects: CombatEffects) -> None:
         x=0.0,
         y=0.0,
         chars=("▒", "*", "+"),
-        color=(220, 100, 220),
+        color=WINTERMUTE_P2_COLOR,
         count=8,
         speed=30.0,
         life_ms=300,
@@ -252,7 +262,7 @@ def spawn_jackin_glitch(effects: CombatEffects) -> None:
         name="jackin",
         phases=(
             (">> JACKING IN...", (120, 220, 220), 180),
-            (">> SCANNING HOST...", (220, 180, 100), 180),
+            (">> SCANNING HOST...", ICE_TYPE_WATCHDOG_COLOR, 180),
             (">> CYBERSPACE LOADED", (180, 220, 120), 220),
         ),
     )
@@ -260,7 +270,7 @@ def spawn_jackin_glitch(effects: CombatEffects) -> None:
 
 def spawn_room_flash(
     effects: CombatEffects,
-    color: tuple[int, int, int] = (180, 180, 100),
+    color: tuple[int, int, int] = OLIVE,
 ) -> None:
     """Spawn a short color flash on room transition (Phase 1.5)."""
     effects.hit_flash.trigger(color=color, duration_ms=80)
@@ -278,7 +288,7 @@ def spawn_room_flash(
 
 def spawn_aoe_screen_flash(
     effects: CombatEffects,
-    color: tuple[int, int, int] = (255, 80, 80),
+    color: tuple[int, int, int] = COMBO_BAR_RED,
     duration_ms: int = 280,
 ) -> None:
     """Spawn a full-screen flash for AoE damage events (ADR-0125 follow-up).
@@ -296,17 +306,17 @@ def spawn_data_acquired(effects: CombatEffects, x: float = 0.0, y: float = 0.0) 
         x=x,
         y=y,
         chars=("$", "·", "+", "·"),
-        color=(255, 215, 0),
+        color=TIER_GOLD,
         count=14,
         speed=40.0,
         life_ms=500,
         spread=math.tau,
     )
-    effects.hit_flash.trigger(color=(255, 215, 0), duration_ms=120)
+    effects.hit_flash.trigger(color=TIER_GOLD, duration_ms=120)
     effects.cinematic = CinematicSequence(
         name="data_acquired",
         phases=(
-            (">> DATA FRAGMENT RECOVERED", (255, 215, 0), 280),
+            (">> DATA FRAGMENT RECOVERED", TIER_GOLD, 280),
             ("+ CREDITS + REPUTATION", (220, 220, 180), 200),
         ),
     )
@@ -314,12 +324,12 @@ def spawn_data_acquired(effects: CombatEffects, x: float = 0.0, y: float = 0.0) 
 
 def spawn_jackout_whiteout(effects: CombatEffects) -> None:
     """Spawn a 'jack-out' whiteout VFX on EXIT room (Phase 1.5)."""
-    effects.hit_flash.trigger(color=(255, 255, 255), duration_ms=260)
+    effects.hit_flash.trigger(color=HIT_FLASH_COLOR, duration_ms=260)
     effects.particles.spawn_burst(
         x=0.0,
         y=0.0,
         chars=("·", "+", "·"),
-        color=(220, 220, 220),
+        color=TA_CONSTRUCT_P1_COLOR,
         count=10,
         speed=20.0,
         life_ms=400,
@@ -328,7 +338,7 @@ def spawn_jackout_whiteout(effects: CombatEffects) -> None:
     effects.cinematic = CinematicSequence(
         name="jackout",
         phases=(
-            (">> JACKING OUT...", (220, 220, 220), 220),
+            (">> JACKING OUT...", TA_CONSTRUCT_P1_COLOR, 220),
             (">> CONNECTION SEVERED", (180, 180, 220), 220),
             (">> MATRIX CLOSED", (140, 140, 180), 200),
         ),

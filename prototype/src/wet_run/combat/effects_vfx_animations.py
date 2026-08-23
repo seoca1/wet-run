@@ -23,12 +23,21 @@ from .palette import (
     BUFF_COLOR,
     CRIT_COLOR,
     DAMAGE_COLOR,
+    DAMAGE_FLASH_COLOR,
     DEBUFF_COLOR,
     DEFAULT_COLOR,
+    GOLIATH_PARTICLE_COLOR,
     HEAL_COLOR,
+    HIT_FLASH_COLOR,
     ICE_BREAK_COLOR,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    ORANGE,
     SHIELD_COLOR,
     STUN_COLOR,
+    TA_CONSTRUCT_P2_COLOR,
+    WARM,
+    YELLOW_BRIGHT,
+    YELLOW_PALE,
 )
 
 
@@ -39,7 +48,7 @@ def attack_animation(damage: int = 0) -> Animation:
             AnimationFrame("[=>", DAMAGE_COLOR, 60),
             AnimationFrame("[==>", DAMAGE_COLOR, 60),
             AnimationFrame("[===>", CRIT_COLOR, 80),
-            AnimationFrame("[===>", (255, 255, 255), 60),  # flash
+            AnimationFrame("[===>", HIT_FLASH_COLOR, 60),  # flash
             AnimationFrame("[===>", DEFAULT_COLOR, 80),
         )
     )
@@ -52,7 +61,7 @@ def heavy_attack_animation() -> Animation:
             AnimationFrame("[<=", BUFF_COLOR, 200),  # charge
             AnimationFrame("[<==", BUFF_COLOR, 150),
             AnimationFrame("[<===", (255, 200, 50), 200),  # windup peak
-            AnimationFrame("[<<<<", (255, 100, 0), 80),  # slam
+            AnimationFrame("[<<<<", ORANGE, 80),  # slam
             AnimationFrame("[*<<<*", ICE_BREAK_COLOR, 120),  # impact
             AnimationFrame("·[<<<]·", (150, 150, 200), 150),  # shockwave
         )
@@ -63,10 +72,10 @@ def pierce_animation() -> Animation:
     """PIERCE: arrow passes through target."""
     return Animation(
         frames=(
-            AnimationFrame("---->", (200, 200, 100), 60),
+            AnimationFrame("---->", WARM, 60),
             AnimationFrame("----==>", (255, 200, 100), 60),
-            AnimationFrame("----==>", (255, 255, 255), 50),  # flash
-            AnimationFrame("----==>", (200, 200, 100), 60),
+            AnimationFrame("----==>", HIT_FLASH_COLOR, 50),  # flash
+            AnimationFrame("----==>", WARM, 60),
             AnimationFrame("---->", (150, 150, 100), 80),
         )
     )
@@ -77,9 +86,9 @@ def multi_hit_animation() -> Animation:
     return Animation(
         frames=(
             AnimationFrame("[>", DAMAGE_COLOR, 50),
-            AnimationFrame("[>", (255, 255, 255), 30),
+            AnimationFrame("[>", HIT_FLASH_COLOR, 30),
             AnimationFrame("[>>", DAMAGE_COLOR, 50),
-            AnimationFrame("[>>", (255, 255, 255), 30),
+            AnimationFrame("[>>", HIT_FLASH_COLOR, 30),
             AnimationFrame("[>>>", DAMAGE_COLOR, 50),
             AnimationFrame("[>>>", (255, 200, 100), 80),
         )
@@ -105,7 +114,7 @@ def shield_animation() -> Animation:
         frames=(
             AnimationFrame("·❖·", SHIELD_COLOR, 100),
             AnimationFrame("❖❖❖", (180, 230, 255), 100),
-            AnimationFrame("❖●❖", (255, 255, 255), 80),
+            AnimationFrame("❖●❖", HIT_FLASH_COLOR, 80),
             AnimationFrame("❖❖❖", SHIELD_COLOR, 100),
             AnimationFrame("·❖·", (100, 180, 230), 150),
         )
@@ -142,7 +151,7 @@ def buff_animation() -> Animation:
         frames=(
             AnimationFrame("·↑·", BUFF_COLOR, 100),
             AnimationFrame("·⇈·", (255, 240, 150), 100),
-            AnimationFrame("↑↑↑", (255, 255, 200), 100),
+            AnimationFrame("↑↑↑", YELLOW_PALE, 100),
             AnimationFrame("·⇈·", BUFF_COLOR, 100),
             AnimationFrame("·↑·", (200, 180, 100), 150),
         )
@@ -155,7 +164,7 @@ def debuff_animation() -> Animation:
         frames=(
             AnimationFrame("·↓·", DEBUFF_COLOR, 100),
             AnimationFrame("·⇊·", (230, 130, 255), 100),
-            AnimationFrame("↓↓↓", (200, 100, 255), 100),
+            AnimationFrame("↓↓↓", DEBUFF_COLOR, 100),
             AnimationFrame("·⇊·", DEBUFF_COLOR, 100),
             AnimationFrame("·↓·", (150, 80, 200), 150),
         )
@@ -168,7 +177,7 @@ def stun_animation() -> Animation:
         frames=(
             AnimationFrame("✦·✦", STUN_COLOR, 80),
             AnimationFrame("·✦·", (255, 255, 150), 80),
-            AnimationFrame("✦·✦", (255, 230, 100), 80),
+            AnimationFrame("✦·✦", YELLOW_BRIGHT, 80),
             AnimationFrame("·✦·", (255, 200, 50), 80),
             AnimationFrame("✦·✦", STUN_COLOR, 100),
         )
@@ -181,7 +190,7 @@ def counter_animation() -> Animation:
         frames=(
             AnimationFrame("❖<", SHIELD_COLOR, 80),
             AnimationFrame("❖<<", (200, 230, 255), 80),
-            AnimationFrame("❖✦<", (255, 255, 255), 60),
+            AnimationFrame("❖✦<", HIT_FLASH_COLOR, 60),
             AnimationFrame("<❖✦", DAMAGE_COLOR, 80),
             AnimationFrame("·❖·", (150, 200, 230), 120),
         )
@@ -193,7 +202,7 @@ def lifesteal_animation() -> Animation:
     return Animation(
         frames=(
             AnimationFrame("~~>", DAMAGE_COLOR, 80),
-            AnimationFrame("~~=>", (200, 100, 100), 80),
+            AnimationFrame("~~=>", TA_CONSTRUCT_P2_COLOR, 80),
             AnimationFrame("~~==>", (180, 80, 80), 80),
             AnimationFrame("·✦·", HEAL_COLOR, 100),
             AnimationFrame("·+·", (150, 255, 180), 150),
@@ -205,11 +214,11 @@ def detect_animation() -> Animation:
     """DETECT: scanning reticle."""
     return Animation(
         frames=(
-            AnimationFrame("[·]", (100, 200, 255), 100),
+            AnimationFrame("[·]", SHIELD_COLOR, 100),
             AnimationFrame("[<·>]", (150, 220, 255), 100),
             AnimationFrame("[<·>]", (200, 240, 255), 100),
-            AnimationFrame("[<!>]", (255, 255, 100), 100),
-            AnimationFrame("[·]", (100, 200, 255), 150),
+            AnimationFrame("[<!>]", STUN_COLOR, 100),
+            AnimationFrame("[·]", SHIELD_COLOR, 150),
         )
     )
 
@@ -244,10 +253,10 @@ def critical_hit_animation() -> Animation:
     """A multi-frame critical hit sequence with glitch."""
     return Animation(
         frames=(
-            AnimationFrame("!·!", (255, 100, 100), 60),
-            AnimationFrame("!!", (255, 50, 50), 60),
+            AnimationFrame("!·!", GOLIATH_PARTICLE_COLOR, 60),
+            AnimationFrame("!!", DAMAGE_FLASH_COLOR, 60),
             AnimationFrame("·!·", (255, 200, 100), 60),
-            AnimationFrame("!", (255, 255, 0), 80),
+            AnimationFrame("!", ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR, 80),
             AnimationFrame("!", (200, 200, 0), 100),
         )
     )

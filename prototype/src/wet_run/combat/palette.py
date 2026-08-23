@@ -63,6 +63,41 @@ GREEN_PURE: Final[tuple[int, int, int]] = (0, 255, 0)  # pure green (heal/regen)
 GREEN_BRIGHT: Final[tuple[int, int, int]] = (100, 255, 100)  # bright green (stim)
 
 # ----------------------------------------------------------------------------
+# Common VFX / cinematic phase colors (ICE intro ramps, transition flashes)
+# ----------------------------------------------------------------------------
+
+CYAN_PURE: Final[tuple[int, int, int]] = (0, 255, 255)  # pure cyan (ICE alert)
+CYAN_LIGHT: Final[tuple[int, int, int]] = (0, 200, 200)  # darker cyan
+CYAN_BRIGHT: Final[tuple[int, int, int]] = (0, 255, 200)  # cyan-green (success)
+GREEN_LIGHT: Final[tuple[int, int, int]] = (0, 255, 100)  # neon green (hack success)
+YELLOW_ORANGE: Final[tuple[int, int, int]] = (255, 150, 0)  # orange-yellow (warning)
+YELLOW_BRIGHT: Final[tuple[int, int, int]] = (255, 230, 100)  # bright yellow (caution)
+YELLOW_PALE: Final[tuple[int, int, int]] = (255, 255, 200)  # pale yellow (highlight)
+YELLOW_GOLD: Final[tuple[int, int, int]] = (255, 200, 0)  # gold (reward)
+ORANGE: Final[tuple[int, int, int]] = (255, 100, 0)  # pure orange (fire)
+ORANGE_BRIGHT: Final[tuple[int, int, int]] = (200, 150, 50)  # muted orange (warning fade)
+RED_DEEP: Final[tuple[int, int, int]] = (140, 0, 0)  # deep red (blood)
+RED_LIGHT: Final[tuple[int, int, int]] = (200, 50, 50)  # light red (damage indicator)
+RED_PINK: Final[tuple[int, int, int]] = (255, 50, 120)  # pink-red (wounded)
+RED_MAGENTA: Final[tuple[int, int, int]] = (200, 0, 100)  # red-magenta (dying)
+MAGENTA_BRIGHT: Final[tuple[int, int, int]] = (255, 0, 200)  # hot magenta (glitch)
+MAGENTA_PINK: Final[tuple[int, int, int]] = (255, 50, 200)  # pink-magenta (wintermute)
+MAGENTA_PURPLE: Final[tuple[int, int, int]] = (180, 80, 255)  # purple-magenta (ta_construct)
+MAGENTA_DEEP: Final[tuple[int, int, int]] = (200, 0, 200)  # deep magenta (boss death)
+PURPLE_LIGHT: Final[tuple[int, int, int]] = (200, 50, 200)  # pink-purple (ta_construct death)
+PURPLE_DEEP: Final[tuple[int, int, int]] = (200, 100, 220)  # boss purple (fallback)
+PURPLE_ICE: Final[tuple[int, int, int]] = (255, 100, 255)  # ice purple (black ICE)
+OLIVE: Final[tuple[int, int, int]] = (180, 180, 100)  # olive (ICE warning)
+SAND: Final[tuple[int, int, int]] = (180, 200, 100)  # sand (ICE passive)
+WARM: Final[tuple[int, int, int]] = (200, 200, 100)  # warm (ICE caution)
+WARM_DARK: Final[tuple[int, int, int]] = (220, 180, 60)  # dark warm (caution fade)
+ICE_GLOW: Final[tuple[int, int, int]] = (60, 220, 120)  # ice green-glow (ICE active)
+WINTERMUTE_FADE: Final[tuple[int, int, int]] = (220, 0, 220)  # wintermute final
+GRAY_96: Final[tuple[int, int, int]] = (96, 96, 96)  # mid gray (dim)
+GRAY_64: Final[tuple[int, int, int]] = (64, 64, 64)  # dark gray
+ICE_RED_DARK: Final[tuple[int, int, int]] = (220, 60, 60)  # ICE dark red (alert)
+
+# ----------------------------------------------------------------------------
 # Wintermute boss phase colors (3-tier escalation)
 # ----------------------------------------------------------------------------
 
@@ -293,12 +328,16 @@ def fade_color(
 
 
 __all__ = [
+    "BLACK_ICE_THEME_COLOR",
     "BUFF_COLOR",
     "COMBO_BAR_GREEN",
     "COMBO_BAR_RED",
     "COMBO_BAR_YELLOW",
     "COMBO_STAGE_COLORS",
     "CRIT_COLOR",
+    "CYAN_BRIGHT",
+    "CYAN_LIGHT",
+    "CYAN_PURE",
     "DAMAGE_COLOR",
     "DAMAGE_FLASH_COLOR",
     "DEBUFF_COLOR",
@@ -306,8 +345,12 @@ __all__ = [
     "DYING_COLOR",
     "FINISHER_COLORS",
     "GLITCH_COLOR",
+    "GOLIATH_PARTICLE_COLOR",
+    "GOLIATH_THEME_COLOR",
     "GRAY_120",
     "GRAY_160",
+    "GRAY_64",
+    "GRAY_96",
     "GRAY_BLACK",
     "GRAY_BRIGHT",
     "GRAY_DARK",
@@ -316,58 +359,77 @@ __all__ = [
     "GRAY_MID_DARK",
     "GRAY_MID_LIGHT",
     "GRAY_VERY_DARK",
-    "GOLIATH_PARTICLE_COLOR",
-    "GOLIATH_THEME_COLOR",
     "GREEN_BRIGHT",
+    "GREEN_LIGHT",
     "GREEN_PURE",
     "HEAL_COLOR",
     "HIT_FLASH_COLOR",
-    "BLACK_ICE_THEME_COLOR",
     "HP_CRIT_COLOR",
     "HP_HIGH_COLOR",
     "HP_LOW_COLOR",
     "HP_MID_COLOR",
+    "ICE_BLACK_PALETTE",
+    "ICE_BREAK_COLOR",
+    "ICE_CONSTRUCT_PALETTE",
+    "ICE_GLOW",
+    "ICE_GOLIATH_PALETTE",
+    "ICE_PALETTES",
+    "ICE_RED_DARK",
+    "ICE_STANDARD_PALETTE",
     "ICE_TYPE_BLACK_COLOR",
     "ICE_TYPE_CONSTRUCT_COLOR",
     "ICE_TYPE_NEUROMANCER_COLOR",
     "ICE_TYPE_PATROL_COLOR",
     "ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR",
     "ICE_TYPE_WATCHDOG_COLOR",
-    "LIFE_STEAL_COLOR",
-    "ICE_BLACK_PALETTE",
-    "ICE_BREAK_COLOR",
-    "ICE_CONSTRUCT_PALETTE",
-    "ICE_GOLIATH_PALETTE",
-    "ICE_PALETTES",
-    "ICE_STANDARD_PALETTE",
     "ICE_WATCHDOG_PALETTE",
     "JAMMER_COLOR",
+    "LIFE_STEAL_COLOR",
+    "MAGENTA_BRIGHT",
+    "MAGENTA_DEEP",
+    "MAGENTA_PINK",
+    "MAGENTA_PURPLE",
+    "OLIVE",
+    "ORANGE",
+    "ORANGE_BRIGHT",
     "PHASE_COLORS",
     "PROBE_COLOR",
+    "PURPLE_DEEP",
+    "PURPLE_ICE",
+    "PURPLE_LIGHT",
+    "RED_DEEP",
+    "RED_LIGHT",
+    "RED_MAGENTA",
+    "RED_PINK",
+    "SAND",
     "SHIELD_COLOR",
     "STUN_COLOR",
+    "TA_CONSTRUCT_P1_COLOR",
+    "TA_CONSTRUCT_P2_COLOR",
+    "TA_CONSTRUCT_P3_COLOR",
+    "TA_CONSTRUCT_P4_COLOR",
+    "TA_CONSTRUCT_PARTICLE_COLOR",
+    "TA_CONSTRUCT_THEME_COLOR",
     "TIER_BRONZE",
     "TIER_GOLD",
     "TIER_PLATINUM",
     "TIER_SILVER",
-    "TA_CONSTRUCT_P1_COLOR",
-    "TA_CONSTRUCT_PARTICLE_COLOR",
-    "TA_CONSTRUCT_P2_COLOR",
-    "TA_CONSTRUCT_P3_COLOR",
-    "TA_CONSTRUCT_P4_COLOR",
-    "TA_CONSTRUCT_THEME_COLOR",
-    "WATCHDOG_THEME_COLOR",
-    "WINTERMUTE_PARTICLE_COLOR",
-    "WINTERMUTE_THEME_COLOR",
-    "TA_CONSTRUCT_P2_COLOR",
-    "TA_CONSTRUCT_P3_COLOR",
-    "TA_CONSTRUCT_P4_COLOR",
     "VIGNETTE_COLOR",
+    "WARM",
+    "WARM_DARK",
+    "WATCHDOG_THEME_COLOR",
+    "WINTERMUTE_FADE",
     "WINTERMUTE_P1_COLOR",
     "WINTERMUTE_P2_COLOR",
     "WINTERMUTE_P3_COLOR",
     "WINTERMUTE_P4_COLOR",
+    "WINTERMUTE_PARTICLE_COLOR",
+    "WINTERMUTE_THEME_COLOR",
     "WISP_COLOR",
+    "YELLOW_BRIGHT",
+    "YELLOW_GOLD",
+    "YELLOW_ORANGE",
+    "YELLOW_PALE",
     "YELLOW_PURE",
     "fade_color",
     "get_color_for_combo_stage",

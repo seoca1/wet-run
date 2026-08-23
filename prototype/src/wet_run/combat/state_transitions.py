@@ -11,6 +11,7 @@ dependency at module load.
 from __future__ import annotations
 
 from .gibson_fluff import push_fluff
+from .palette import DEFAULT_COLOR, GOLIATH_PARTICLE_COLOR
 from .phase_cinematics import phase_intro_sequence
 from .state_models import AUTO_ATTACK_INTERVAL_MS, TICK_MS, Combatant, CombatState
 
@@ -171,7 +172,7 @@ def step_combat(state: CombatState, app_state: object = None) -> None:
                 )
                 state.last_player_attack_ms = state.tick_ms
                 state.last_event = "player_attack"
-                state.last_event_color = (200, 200, 200)
+                state.last_event_color = DEFAULT_COLOR
                 state.last_event_tick = state.tick_ms
         else:
             state.push("You are stunned and cannot attack!")
@@ -200,7 +201,7 @@ def step_combat(state: CombatState, app_state: object = None) -> None:
                 state.player.hp = max(0, state.player.hp - applied)
                 state.last_enemy_attack_ms = state.tick_ms
                 state.last_event = "enemy_attack"
-                state.last_event_color = (255, 100, 100)
+                state.last_event_color = GOLIATH_PARTICLE_COLOR
                 state.last_event_tick = state.tick_ms
 
                 crit_text = " CRITICAL HIT!" if is_crit else ""

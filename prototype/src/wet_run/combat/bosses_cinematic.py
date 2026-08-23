@@ -10,7 +10,30 @@ from __future__ import annotations
 
 from .bosses import BossPhase, BossSpec
 from .effects import CinematicSequence, CombatEffects, IceType
-from .palette import GLITCH_COLOR
+from .palette import (
+    DAMAGE_FLASH_COLOR,
+    DEFAULT_COLOR,
+    DYING_COLOR,
+    GLITCH_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    GRAY_DARK,
+    GRAY_MID,
+    GRAY_MID_DARK,
+    GRAY_VERY_DARK,
+    HIT_FLASH_COLOR,
+    ICE_TYPE_NEUROMANCER_COLOR,
+    ICE_TYPE_WATCHDOG_COLOR,
+    MAGENTA_DEEP,
+    ORANGE,
+    RED_LIGHT,
+    RED_MAGENTA,
+    STUN_COLOR,
+    TA_CONSTRUCT_P2_COLOR,
+    WARM,
+    YELLOW_GOLD,
+    YELLOW_ORANGE,
+    YELLOW_PALE,
+)
 
 __all__ = [
     "boss_death_sequence",
@@ -56,9 +79,9 @@ def boss_phase_transition(spec: BossSpec, new_phase: BossPhase) -> CinematicSequ
     """Cinematic when the BOSS transitions to a new phase."""
     phases: list[tuple[str, tuple[int, int, int], int]] = []
 
-    phases.append(("▒▒▒", (255, 255, 255), 80))
-    phases.append(("▓▓▓", (255, 200, 0), 80))
-    phases.append(("███", (255, 100, 0), 100))
+    phases.append(("▒▒▒", HIT_FLASH_COLOR, 80))
+    phases.append(("▓▓▓", YELLOW_GOLD, 80))
+    phases.append(("███", ORANGE, 100))
 
     phase_names = ["", "경계", "격노", "자폭", "최후"]
     phase_name = (
@@ -81,10 +104,10 @@ def boss_phase_transition(spec: BossSpec, new_phase: BossPhase) -> CinematicSequ
         ability_text = ability_names.get(
             new_phase.special_ability, f"▸ {new_phase.special_ability}"
         )
-        phases.append((ability_text, (255, 100, 100), 700))
+        phases.append((ability_text, GOLIATH_PARTICLE_COLOR, 700))
 
-    phases.append(("▓▓▓", (255, 255, 255), 100))
-    phases.append(("···", (200, 200, 200), 200))
+    phases.append(("▓▓▓", HIT_FLASH_COLOR, 100))
+    phases.append(("···", DEFAULT_COLOR, 200))
 
     return CinematicSequence(
         name=f"boss_phase_{spec.name}_{new_phase.index}",
@@ -115,34 +138,34 @@ def _goliath_death_sequence() -> list[CinematicSequence]:
     seq1 = CinematicSequence(
         name="goliath_dmg_phase",
         phases=(
-            ("[X_X]", (255, 100, 100), 100),
-            ("[X!X]", (255, 50, 50), 100),
-            ("[#_#]", (200, 100, 100), 150),
-            ("[╳_╳]", (200, 50, 50), 200),
+            ("[X_X]", GOLIATH_PARTICLE_COLOR, 100),
+            ("[X!X]", DAMAGE_FLASH_COLOR, 100),
+            ("[#_#]", TA_CONSTRUCT_P2_COLOR, 150),
+            ("[╳_╳]", RED_LIGHT, 200),
         ),
     )
     seq2 = CinematicSequence(
         name="goliath_crit_fail",
         phases=(
-            ("▓▓▓ 경고 ▓▓▓", (255, 200, 0), 300),
-            ("코어 보호 실패", (255, 150, 0), 400),
-            ("·····", (200, 100, 100), 300),
+            ("▓▓▓ 경고 ▓▓▓", YELLOW_GOLD, 300),
+            ("코어 보호 실패", YELLOW_ORANGE, 400),
+            ("·····", TA_CONSTRUCT_P2_COLOR, 300),
         ),
     )
     seq3 = CinematicSequence(
         name="goliath_core_exposure",
         phases=(
-            ("[___]", (255, 100, 100), 200),
-            ("[*_*]", (255, 200, 0), 250),
-            ("[*█*]", (255, 255, 100), 300),
+            ("[___]", GOLIATH_PARTICLE_COLOR, 200),
+            ("[*_*]", YELLOW_GOLD, 250),
+            ("[*█*]", STUN_COLOR, 300),
         ),
     )
     seq4 = CinematicSequence(
         name="goliath_final",
         phases=(
-            ("[*█*]", (255, 255, 200), 150),
-            ("[*▓*]", (200, 200, 100), 200),
-            ("·····", (100, 100, 100), 300),
+            ("[*█*]", YELLOW_PALE, 150),
+            ("[*▓*]", WARM, 200),
+            ("·····", GRAY_MID, 300),
         ),
     )
     return [seq1, seq2, seq3, seq4]
@@ -153,34 +176,34 @@ def _black_death_sequence() -> list[CinematicSequence]:
     seq1 = CinematicSequence(
         name="black_dmg_phase",
         phases=(
-            (f"[{GLITCH_COLOR[0]}ERR]", (255, 100, 0), 100),
-            ("[ERR]", (255, 0, 0), 100),
-            (f"[{GLITCH_COLOR[0]}?????]", (200, 0, 200), 150),
-            ("[▓▓▓▓▓]", (100, 100, 100), 200),
+            (f"[{GLITCH_COLOR[0]}ERR]", ORANGE, 100),
+            ("[ERR]", DYING_COLOR, 100),
+            (f"[{GLITCH_COLOR[0]}?????]", MAGENTA_DEEP, 150),
+            ("[▓▓▓▓▓]", GRAY_MID, 200),
         ),
     )
     seq2 = CinematicSequence(
         name="black_crit_fail",
         phases=(
-            ("▒ 권한 박탈 ▒", (255, 0, 100), 250),
-            ("[연결 손상]", (200, 0, 100), 300),
+            ("▒ 권한 박탈 ▒", ICE_TYPE_NEUROMANCER_COLOR, 250),
+            ("[연결 손상]", RED_MAGENTA, 300),
             ("·····", (100, 0, 100), 250),
         ),
     )
     seq3 = CinematicSequence(
         name="black_core_exposure",
         phases=(
-            ("[▒▒▒▒▒]", (80, 80, 80), 200),
-            ("[░░░░░]", (60, 60, 60), 250),
-            ("[_____]", (40, 40, 40), 300),
+            ("[▒▒▒▒▒]", GRAY_MID_DARK, 200),
+            ("[░░░░░]", GRAY_DARK, 250),
+            ("[_____]", GRAY_VERY_DARK, 300),
         ),
     )
     seq4 = CinematicSequence(
         name="black_final",
         phases=(
-            ("[_____]", (40, 40, 40), 200),
+            ("[_____]", GRAY_VERY_DARK, 200),
             ("· · ·", (30, 30, 30), 300),
-            ("[연결 종료]", (100, 100, 100), 400),
+            ("[연결 종료]", GRAY_MID, 400),
         ),
     )
     return [seq1, seq2, seq3, seq4]
@@ -191,8 +214,8 @@ def _watchdog_death_sequence() -> list[CinematicSequence]:
     seq1 = CinematicSequence(
         name="watchdog_dmg_phase",
         phases=(
-            ("[X_O]", (220, 180, 100), 150),
-            ("[X_X]", (200, 100, 100), 200),
+            ("[X_O]", ICE_TYPE_WATCHDOG_COLOR, 150),
+            ("[X_X]", TA_CONSTRUCT_P2_COLOR, 200),
             ("[X_X]", (150, 80, 80), 250),
         ),
     )
@@ -200,7 +223,7 @@ def _watchdog_death_sequence() -> list[CinematicSequence]:
         name="watchdog_crit_fail",
         phases=(
             ("...", (200, 150, 100), 200),
-            ("...woof?", (200, 100, 100), 400),
+            ("...woof?", TA_CONSTRUCT_P2_COLOR, 400),
             ("[system: target lost]", (180, 100, 100), 400),
         ),
     )
@@ -217,7 +240,7 @@ def _watchdog_death_sequence() -> list[CinematicSequence]:
         phases=(
             ("[·_·]", (60, 30, 30), 200),
             ("· · ·", (40, 20, 20), 400),
-            ("[추적 종료]", (100, 100, 100), 400),
+            ("[추적 종료]", GRAY_MID, 400),
         ),
     )
     return [seq1, seq2, seq3, seq4]
@@ -251,12 +274,12 @@ def boss_phase_5_sequence(spec: BossSpec, phase: BossPhase) -> CinematicSequence
     super_skill_name = getattr(super_skill, "name", "FINAL") if super_skill else "FINAL"
 
     phases: list[tuple[str, tuple[int, int, int], int]] = [
-        ("▓▓▓▓▓▓", (255, 255, 255), 100),
-        ("██ LAST STAND ██", (255, 255, 255), 400),
+        ("▓▓▓▓▓▓", HIT_FLASH_COLOR, 100),
+        ("██ LAST STAND ██", HIT_FLASH_COLOR, 400),
         (f"[ {spec.name} ]", phase.color, 300),
         (f'"{dialogue}"', phase.color, 1200),
-        (f"▸ {super_skill_name}", (255, 100, 100), 600),
-        ("·····", (200, 200, 200), 300),
+        (f"▸ {super_skill_name}", GOLIATH_PARTICLE_COLOR, 600),
+        ("·····", DEFAULT_COLOR, 300),
     ]
 
     return CinematicSequence(
@@ -287,7 +310,7 @@ def spawn_boss_death(effects: CombatEffects, spec: BossSpec) -> None:
         epilogue = boss_epilogue_lines(spec)
         combined_phases = list(first.phases)
         for line in epilogue:
-            combined_phases.append((line, (200, 200, 200), 600))
+            combined_phases.append((line, DEFAULT_COLOR, 600))
         effects.cinematic = CinematicSequence(
             name=f"boss_death_{spec.name}",
             phases=tuple(combined_phases),

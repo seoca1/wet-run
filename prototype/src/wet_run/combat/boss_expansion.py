@@ -8,6 +8,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from .palette import (
+    GLITCH_COLOR,
+    HIT_FLASH_COLOR,
+    HP_LOW_COLOR,
+    ICE_TYPE_NEUROMANCER_COLOR,
+    RED_PINK,
+)
 from .state import DEFAULT_ALARM_SPEED, Combatant
 
 
@@ -47,12 +54,12 @@ NEUROMANCER_PROFILE = BossProfile(
     defense=10,
     tier=5,
     phases=(
-        BossPhase(1, 1.0, 1.0, (255, 0, 100), "*", "NEUROMANCER — emerging"),
-        BossPhase(2, 0.8, 1.3, (255, 50, 120), "@", "NEUROMANCER — integrating"),
+        BossPhase(1, 1.0, 1.0, ICE_TYPE_NEUROMANCER_COLOR, "*", "NEUROMANCER — emerging"),
+        BossPhase(2, 0.8, 1.3, RED_PINK, "@", "NEUROMANCER — integrating"),
         BossPhase(3, 0.6, 1.6, (255, 100, 140), "#", "NEUROMANCER — spreading"),
         BossPhase(4, 0.4, 2.0, (255, 150, 160), "!", "NEUROMANCER — converging"),
         BossPhase(5, 0.2, 2.5, (255, 200, 180), "?", "NEUROMANCER — final"),
-        BossPhase(6, 0.1, 3.0, (255, 255, 255), "#", "NEUROMANCER — LAST STAND"),
+        BossPhase(6, 0.1, 3.0, HIT_FLASH_COLOR, "#", "NEUROMANCER — LAST STAND"),
     ),
 )
 
@@ -70,7 +77,7 @@ LOA_BARON_PROFILE = BossProfile(
         BossPhase(1, 1.0, 1.0, (180, 100, 50), "L", "LOA BARON — summoning"),
         BossPhase(2, 0.6, 1.4, (200, 100, 60), "X", "LOA BARON — binding"),
         BossPhase(3, 0.3, 1.8, (220, 100, 70), "Y", "LOA BARON — possessing"),
-        BossPhase(4, 0.1, 2.4, (255, 100, 80), "Z", "LOA BARON — dissolving"),
+        BossPhase(4, 0.1, 2.4, HP_LOW_COLOR, "Z", "LOA BARON — dissolving"),
     ),
 )
 
@@ -181,7 +188,7 @@ def build_boss_combatant(
         color = first_phase.color
     else:
         portrait_glyph = "*"
-        color = (255, 0, 255)
+        color = GLITCH_COLOR
 
     return Combatant(
         id=boss.id,

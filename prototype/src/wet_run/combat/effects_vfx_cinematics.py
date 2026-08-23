@@ -18,7 +18,32 @@ CombatEffects.step().
 from __future__ import annotations
 
 from .effects_data import CinematicSequence, IceType
-from .palette import DAMAGE_COLOR, GLITCH_COLOR
+from .palette import (
+    COMBO_BAR_RED,
+    DAMAGE_COLOR,
+    DAMAGE_FLASH_COLOR,
+    DEFAULT_COLOR,
+    DYING_COLOR,
+    GLITCH_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    GRAY_160,
+    GRAY_BRIGHT,
+    GRAY_LIGHT,
+    GRAY_MID,
+    GRAY_MID_DARK,
+    ICE_TYPE_PATROL_COLOR,
+    ICE_TYPE_WATCHDOG_COLOR,
+    MAGENTA_DEEP,
+    MAGENTA_PINK,
+    PURPLE_DEEP,
+    TA_CONSTRUCT_P1_COLOR,
+    TA_CONSTRUCT_P2_COLOR,
+    TA_CONSTRUCT_P3_COLOR,
+    WINTERMUTE_FADE,
+    WINTERMUTE_P1_COLOR,
+    WINTERMUTE_P2_COLOR,
+    WINTERMUTE_P3_COLOR,
+)
 
 
 def ice_intro_sequence(ice_type: IceType, name: str) -> CinematicSequence:
@@ -27,8 +52,8 @@ def ice_intro_sequence(ice_type: IceType, name: str) -> CinematicSequence:
         return CinematicSequence(
             name="standard_intro",
             phases=(
-                (f"[ {name} ]", (180, 180, 200), 300),
-                (f"[· {name} ·]", (200, 200, 220), 250),
+                (f"[ {name} ]", ICE_TYPE_PATROL_COLOR, 300),
+                (f"[· {name} ·]", GRAY_BRIGHT, 250),
                 (f"·· {name} ··", (220, 220, 240), 200),
                 (f"·· {name} ··", (240, 240, 255), 800),
             ),
@@ -39,7 +64,7 @@ def ice_intro_sequence(ice_type: IceType, name: str) -> CinematicSequence:
             phases=(
                 ("[ grrr... ]", (200, 150, 100), 250),
                 (f"[ {name} ]", (220, 170, 100), 200),
-                ("WOOF!", (255, 100, 100), 120),
+                ("WOOF!", GOLIATH_PARTICLE_COLOR, 120),
                 (f"·{name}·", (255, 150, 100), 200),
                 (f"·{name}·", (255, 200, 100), 800),
             ),
@@ -50,22 +75,22 @@ def ice_intro_sequence(ice_type: IceType, name: str) -> CinematicSequence:
             phases=(
                 ("...", (100, 100, 120), 300),
                 (f"[ {name} ]", (150, 150, 170), 200),
-                (f"[ {name} ]", (200, 100, 100), 100),
-                (f"··[{name}]··", (255, 80, 80), 100),
-                (f"··[{name}]··", (255, 50, 50), 1000),
+                (f"[ {name} ]", TA_CONSTRUCT_P2_COLOR, 100),
+                (f"··[{name}]··", COMBO_BAR_RED, 100),
+                (f"··[{name}]··", DAMAGE_FLASH_COLOR, 1000),
             ),
         )
     if ice_type == IceType.BLACK:
         return CinematicSequence(
             name="black_intro",
             phases=(
-                ("·▓▓▓·", (200, 200, 200), 200),
+                ("·▓▓▓·", DEFAULT_COLOR, 200),
                 ("·█▓█▓█·", (180, 180, 180), 150),
-                ("▓█▓▓█▓", (160, 160, 160), 150),
+                ("▓█▓▓█▓", GRAY_160, 150),
                 (f"[{name}]", GLITCH_COLOR, 100),
-                (f"[{name}]", (100, 100, 100), 100),
-                (f"[{name}]", (200, 0, 200), 100),
-                (f"[{name}]", (80, 80, 80), 1200),
+                (f"[{name}]", GRAY_MID, 100),
+                (f"[{name}]", MAGENTA_DEEP, 100),
+                (f"[{name}]", GRAY_MID_DARK, 1200),
             ),
         )
     # ADR-0050: Boss ICE multi-phase intros (BEFORE construct fall-through)
@@ -75,10 +100,10 @@ def ice_intro_sequence(ice_type: IceType, name: str) -> CinematicSequence:
             phases=(
                 ("...", (80, 80, 120), 300),
                 ("·?·", (100, 100, 150), 200),
-                (f"[ {name} ]", (120, 120, 220), 300),
+                (f"[ {name} ]", WINTERMUTE_P1_COLOR, 300),
                 (f"[ {name} ]", (140, 140, 240), 200),
                 (f"[ {name} ]", (160, 160, 255), 800),
-                ("PHASE 1/3: COMPLIANT", (120, 120, 220), 600),
+                ("PHASE 1/3: COMPLIANT", WINTERMUTE_P1_COLOR, 600),
             ),
         )
     if ice_type == IceType.TA_CONSTRUCT_PRIME:
@@ -86,11 +111,11 @@ def ice_intro_sequence(ice_type: IceType, name: str) -> CinematicSequence:
             name="ta_construct_prime_intro",
             phases=(
                 ("·[ ⚙ ]·", (150, 150, 180), 200),
-                ("·[ ⚙⚙ ]·", (180, 180, 200), 200),
-                (f"[ {name} ]", (200, 200, 220), 300),
+                ("·[ ⚙⚙ ]·", ICE_TYPE_PATROL_COLOR, 200),
+                (f"[ {name} ]", GRAY_BRIGHT, 300),
                 (f"[ {name} ]", (220, 220, 240), 300),
                 (f"[ {name} ]", (240, 240, 255), 800),
-                ("PHASE 1/3: OBSERVING", (220, 220, 220), 600),
+                ("PHASE 1/3: OBSERVING", TA_CONSTRUCT_P1_COLOR, 600),
             ),
         )
     # construct
@@ -98,8 +123,8 @@ def ice_intro_sequence(ice_type: IceType, name: str) -> CinematicSequence:
         name="construct_intro",
         phases=(
             ("·[ ⚙ ]·", (150, 150, 180), 200),
-            ("·[ ⚙ ]·", (180, 180, 200), 150),
-            ("[ ⚙⚙⚙ ]", (200, 200, 220), 200),
+            ("·[ ⚙ ]·", ICE_TYPE_PATROL_COLOR, 150),
+            ("[ ⚙⚙⚙ ]", GRAY_BRIGHT, 200),
             (f"[ {name} ]", (220, 220, 240), 250),
             (f"[ {name} ]", (240, 240, 255), 1000),
         ),
@@ -122,21 +147,21 @@ def boss_phase_transition_sequence(
             return CinematicSequence(
                 name="wintermute_phase_2_transition",
                 phases=(
-                    ("▓▓▓", (200, 200, 200), 100),
-                    ("▓█▓█▓", (220, 100, 220), 100),
-                    ("[ ADAPTING ]", (220, 100, 220), 300),
-                    (f"PHASE {phase}/{total_phases}: REBELLING", (220, 100, 220), 600),
-                    (f"PHASE {phase}/{total_phases}: REBELLING", (255, 50, 200), 600),
+                    ("▓▓▓", DEFAULT_COLOR, 100),
+                    ("▓█▓█▓", WINTERMUTE_P2_COLOR, 100),
+                    ("[ ADAPTING ]", WINTERMUTE_P2_COLOR, 300),
+                    (f"PHASE {phase}/{total_phases}: REBELLING", WINTERMUTE_P2_COLOR, 600),
+                    (f"PHASE {phase}/{total_phases}: REBELLING", MAGENTA_PINK, 600),
                 ),
             )
         # phase 3
         return CinematicSequence(
             name="wintermute_phase_3_transition",
             phases=(
-                ("█▓█▓█", (200, 200, 200), 100),
-                ("▓█▓▓█▓", (255, 50, 100), 100),
-                ("[ INTEGRATING ]", (255, 50, 100), 300),
-                (f"PHASE {phase}/{total_phases}: INTEGRATING", (255, 50, 100), 600),
+                ("█▓█▓█", DEFAULT_COLOR, 100),
+                ("▓█▓▓█▓", WINTERMUTE_P3_COLOR, 100),
+                ("[ INTEGRATING ]", WINTERMUTE_P3_COLOR, 300),
+                (f"PHASE {phase}/{total_phases}: INTEGRATING", WINTERMUTE_P3_COLOR, 600),
                 (f"PHASE {phase}/{total_phases}: INTEGRATING", (255, 0, 50), 800),
             ),
         )
@@ -145,26 +170,26 @@ def boss_phase_transition_sequence(
             return CinematicSequence(
                 name="ta_construct_prime_phase_2_transition",
                 phases=(
-                    ("⚙⚙⚙", (220, 220, 220), 200),
-                    ("⚙REPLICATING⚙", (200, 100, 100), 300),
-                    (f"PHASE {phase}/{total_phases}: ENGAGING", (200, 100, 100), 600),
-                    (f"PHASE {phase}/{total_phases}: ENGAGING", (255, 50, 50), 600),
+                    ("⚙⚙⚙", TA_CONSTRUCT_P1_COLOR, 200),
+                    ("⚙REPLICATING⚙", TA_CONSTRUCT_P2_COLOR, 300),
+                    (f"PHASE {phase}/{total_phases}: ENGAGING", TA_CONSTRUCT_P2_COLOR, 600),
+                    (f"PHASE {phase}/{total_phases}: ENGAGING", DAMAGE_FLASH_COLOR, 600),
                 ),
             )
         return CinematicSequence(
             name="ta_construct_prime_phase_3_transition",
             phases=(
-                ("⚙⚙⚙", (220, 220, 220), 200),
-                ("⚙OVERRIDING⚙", (180, 50, 180), 300),
-                (f"PHASE {phase}/{total_phases}: REPLICATING", (180, 50, 180), 600),
-                (f"PHASE {phase}/{total_phases}: REPLICATING", (220, 0, 220), 800),
+                ("⚙⚙⚙", TA_CONSTRUCT_P1_COLOR, 200),
+                ("⚙OVERRIDING⚙", TA_CONSTRUCT_P3_COLOR, 300),
+                (f"PHASE {phase}/{total_phases}: REPLICATING", TA_CONSTRUCT_P3_COLOR, 600),
+                (f"PHASE {phase}/{total_phases}: REPLICATING", WINTERMUTE_FADE, 800),
             ),
         )
     # Unknown boss — generic
     return CinematicSequence(
         name=f"{ice_type.value}_phase_{phase}_transition",
         phases=(
-            (f"PHASE {phase}/{total_phases}", (200, 200, 200), 600),
+            (f"PHASE {phase}/{total_phases}", DEFAULT_COLOR, 600),
             (f"PHASE {phase}/{total_phases}", (240, 240, 240), 600),
         ),
     )
@@ -177,9 +202,9 @@ def ice_death_sequence(ice_type: IceType) -> CinematicSequence:
             name="standard_death",
             phases=(
                 ("[X_X]", DAMAGE_COLOR, 100),
-                ("[>_>]", (200, 100, 100), 100),
-                ("[X_X]", (150, 150, 150), 100),
-                ("·[·]·", (200, 200, 200), 150),
+                ("[>_>]", TA_CONSTRUCT_P2_COLOR, 100),
+                ("[X_X]", GRAY_LIGHT, 100),
+                ("·[·]·", DEFAULT_COLOR, 150),
                 ("· · ·", (180, 180, 180), 200),
             ),
         )
@@ -187,21 +212,21 @@ def ice_death_sequence(ice_type: IceType) -> CinematicSequence:
         return CinematicSequence(
             name="watchdog_death",
             phases=(
-                ("woof...?", (220, 180, 100), 200),
+                ("woof...?", ICE_TYPE_WATCHDOG_COLOR, 200),
                 ("[X_O]", (200, 150, 100), 150),
                 ("[X_X]", (180, 100, 100), 150),
                 ("[X_X]", (150, 80, 80), 200),
-                ("· · ·", (200, 200, 200), 300),
+                ("· · ·", DEFAULT_COLOR, 300),
             ),
         )
     if ice_type == IceType.GOLIATH:
         return CinematicSequence(
             name="goliath_death",
             phases=(
-                ("[X_X]", (255, 100, 100), 100),
-                ("[X!X]", (255, 50, 50), 100),
-                ("[#_#]", (200, 100, 100), 150),
-                ("·[·]·", (200, 200, 200), 200),
+                ("[X_X]", GOLIATH_PARTICLE_COLOR, 100),
+                ("[X!X]", DAMAGE_FLASH_COLOR, 100),
+                ("[#_#]", TA_CONSTRUCT_P2_COLOR, 150),
+                ("·[·]·", DEFAULT_COLOR, 200),
                 ("· · ·", (180, 180, 180), 300),
             ),
         )
@@ -210,10 +235,10 @@ def ice_death_sequence(ice_type: IceType) -> CinematicSequence:
             name="black_death",
             phases=(
                 (f"[{GLITCH_COLOR}]", GLITCH_COLOR, 100),
-                ("[ERR]", (255, 0, 0), 100),
-                ("[___]", (100, 100, 100), 100),
-                ("[XXX]", (80, 80, 80), 150),
-                ("· · ·", (200, 200, 200), 300),
+                ("[ERR]", DYING_COLOR, 100),
+                ("[___]", GRAY_MID, 100),
+                ("[XXX]", GRAY_MID_DARK, 150),
+                ("· · ·", DEFAULT_COLOR, 300),
             ),
         )
     # construct
@@ -221,32 +246,32 @@ def ice_death_sequence(ice_type: IceType) -> CinematicSequence:
         return CinematicSequence(
             name="wintermute_death",
             phases=(
-                ("[▓▓▓]", (200, 100, 220), 100),
-                ("[???]", (255, 50, 200), 100),
+                ("[▓▓▓]", PURPLE_DEEP, 100),
+                ("[???]", MAGENTA_PINK, 100),
                 ("[XXX]", (200, 50, 100), 150),
-                ("·▓▓▓·", (100, 100, 100), 200),
-                ("· · ·", (200, 200, 200), 300),
+                ("·▓▓▓·", GRAY_MID, 200),
+                ("· · ·", DEFAULT_COLOR, 300),
             ),
         )
     if ice_type == IceType.TA_CONSTRUCT_PRIME:
         return CinematicSequence(
             name="ta_construct_prime_death",
             phases=(
-                ("[⚙⚙⚙]", (200, 100, 100), 100),
-                ("[⚠⚠⚠]", (180, 50, 180), 100),
-                ("[___]", (150, 150, 150), 150),
+                ("[⚙⚙⚙]", TA_CONSTRUCT_P2_COLOR, 100),
+                ("[⚠⚠⚠]", TA_CONSTRUCT_P3_COLOR, 100),
+                ("[___]", GRAY_LIGHT, 150),
                 ("·[ ]·", (180, 180, 180), 200),
-                ("· · ·", (200, 200, 200), 300),
+                ("· · ·", DEFAULT_COLOR, 300),
             ),
         )
     return CinematicSequence(
         name="construct_death",
         phases=(
-            ("[⚙X⚙]", (255, 100, 100), 100),
+            ("[⚙X⚙]", GOLIATH_PARTICLE_COLOR, 100),
             ("[⚠⚠⚠]", (255, 200, 100), 100),
-            ("[___]", (200, 200, 200), 150),
+            ("[___]", DEFAULT_COLOR, 150),
             ("·[ ]·", (180, 180, 180), 200),
-            ("· · ·", (200, 200, 200), 300),
+            ("· · ·", DEFAULT_COLOR, 300),
         ),
     )
 

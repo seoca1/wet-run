@@ -21,7 +21,7 @@ class Portrait:
         width: Portrait width in cells
         height: Portrait height in cells
         art: Tuple of art lines
-        palette: Mapping from color key to RGB tuple, e.g. {"default": (200,200,220), "eyes": (80,160,255)}
+        palette: Mapping from color key to RGB tuple, e.g. {"default": GRAY_BRIGHT, "eyes": (80,160,255)}
         char_colors: Mapping from character to palette key, e.g. {"◉": "eyes", "─": "default"}
     """
 

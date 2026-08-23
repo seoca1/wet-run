@@ -11,6 +11,7 @@ import json
 import random
 from pathlib import Path
 
+from ..combat.palette import GRAY_BRIGHT
 from .graphic_novel_data import (
     Background,
     DialogueLine,
@@ -22,7 +23,7 @@ from .graphic_novel_data import (
 def _parse_palette(raw_palette: object) -> dict[str, tuple[int, int, int]]:
     """Parse a palette dict from JSON: values can be RGB lists or palette-key strings."""
     if not raw_palette:
-        return {"default": (200, 200, 220)}
+        return {"default": GRAY_BRIGHT}
     result: dict[str, tuple[int, int, int]] = {}
     if isinstance(raw_palette, dict):
         for k, v in raw_palette.items():
@@ -30,7 +31,7 @@ def _parse_palette(raw_palette: object) -> dict[str, tuple[int, int, int]]:
                 result[k] = (v[0], v[1], v[2])
             elif isinstance(v, str) and v in result:
                 result[k] = result[v]
-    return result if result else {"default": (200, 200, 220)}
+    return result if result else {"default": GRAY_BRIGHT}
 
 
 def _parse_char_colors(raw: object) -> dict[str, str]:

@@ -12,6 +12,7 @@ import tcod.console
 
 from ..audio import sound_manager
 from ..audio.config import SoundCategory, SoundConfig
+from ..combat.palette import DEFAULT_COLOR
 
 
 def get_volume() -> float:
@@ -96,4 +97,4 @@ def render_settings_overlay(console: tcod.console.Console, x: int, y: int) -> No
     sm = sound_manager.get_sound_manager()
     mute_label = "MUTED" if sm.muted else "ON"
     vol_pct = int(sm.volume * 100)
-    console.print(x=x, y=y, string=f"Audio: {mute_label}  Volume: {vol_pct}%", fg=(200, 200, 200))
+    console.print(x=x, y=y, string=f"Audio: {mute_label}  Volume: {vol_pct}%", fg=DEFAULT_COLOR)

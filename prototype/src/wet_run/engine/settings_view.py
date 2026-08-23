@@ -16,6 +16,7 @@ from tcod.event import KeyDown, KeySym
 
 from ..audio import sound_manager
 from ..combat.accessibility import COLORBLIND_MODES
+from ..combat.palette import HIT_FLASH_COLOR
 from ..i18n import Translator
 from .layout import (
     RegionId,
@@ -85,7 +86,7 @@ def render_settings(
             break
 
         is_selected = i == selected
-        fg = (255, 255, 255) if is_selected else (180, 180, 180)
+        fg = HIT_FLASH_COLOR if is_selected else (180, 180, 180)
         prefix = ">" if is_selected else " "
         value_str = ""
 

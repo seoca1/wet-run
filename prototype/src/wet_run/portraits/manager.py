@@ -12,16 +12,25 @@ from typing import Any
 
 from typing_extensions import override
 
+from ..combat.palette import (
+    CYAN_PURE,
+    GLITCH_COLOR,
+    GRAY_MID_LIGHT,
+    GREEN_PURE,
+    HIT_FLASH_COLOR,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+)
+
 # Color name to RGB tuple mapping
 COLOR_NAMES: dict[str, tuple[int, int, int]] = {
     "red": (255, 0, 64),
-    "green": (0, 255, 0),
+    "green": GREEN_PURE,
     "blue": (0, 128, 255),
-    "yellow": (255, 255, 0),
-    "magenta": (255, 0, 255),
-    "cyan": (0, 255, 255),
-    "white": (255, 255, 255),
-    "gray": (128, 128, 128),
+    "yellow": ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    "magenta": GLITCH_COLOR,
+    "cyan": CYAN_PURE,
+    "white": HIT_FLASH_COLOR,
+    "gray": GRAY_MID_LIGHT,
     "dark_red": (128, 0, 32),
 }
 
@@ -31,8 +40,8 @@ def parse_color(value: str | tuple[int, int, int]) -> tuple[int, int, int]:
     if isinstance(value, (list, tuple)) and len(value) == 3:
         return (int(value[0]), int(value[1]), int(value[2]))
     if isinstance(value, str):
-        return COLOR_NAMES.get(value.lower(), (255, 255, 255))
-    return (255, 255, 255)
+        return COLOR_NAMES.get(value.lower(), HIT_FLASH_COLOR)
+    return HIT_FLASH_COLOR
 
 
 class PortraitManager:
@@ -73,7 +82,7 @@ class PortraitManager:
             entity_id,
             {
                 "ascii": "????",
-                "color": (255, 255, 255),
+                "color": HIT_FLASH_COLOR,
                 "name": entity_id,
             },
         )

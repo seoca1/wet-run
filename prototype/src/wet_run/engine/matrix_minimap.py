@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import tcod.console
 
+from ..combat.palette import GRAY_96
 from ..matrix import NodeKind
 from ..matrix.exploration import ExplorationState, Visibility
 from ..matrix.graph import MatrixGraph
@@ -94,7 +95,7 @@ def _draw_breadcrumb(
         x=side.x + 2,
         y=side.y2,
         string=f"Path: {path_text[: side.w - 10]}",
-        fg=(96, 96, 96),
+        fg=GRAY_96,
     )
 
 

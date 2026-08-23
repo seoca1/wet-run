@@ -17,6 +17,7 @@ from typing import TYPE_CHECKING
 
 import tcod.console
 
+from ...combat.palette import GRAY_BRIGHT
 from ..graphic_novel_data import (
     Background,
     DialogueLine,
@@ -193,7 +194,7 @@ def _draw_scene_portrait(
     bg_band_bottom = 14
     palette = portrait.palette
     char_colors = portrait.char_colors
-    default_color = palette.get("default", (200, 200, 220))
+    default_color = palette.get("default", GRAY_BRIGHT)
     # Dim background panel behind portrait
     for dy in range(portrait.height):
         y = py + dy

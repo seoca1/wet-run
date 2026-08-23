@@ -25,6 +25,17 @@ from typing import Any
 
 import tcod.console
 
+from ..combat.palette import (
+    CYAN_PURE,
+    DEFAULT_COLOR,
+    DYING_COLOR,
+    GRAY_64,
+    GRAY_96,
+    GRAY_120,
+    GRAY_BLACK,
+    GRAY_MID,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+)
 from ..combat.registry import IceRegistry, ProgramRegistry
 from ..i18n import Translator
 from ..matrix import (
@@ -149,13 +160,13 @@ def _resolve_box_style(
     """Pick colors and border glyphs based on whether this is the
     current node.  Returns ``(fg_box, border_chars, bg_label)``."""
     if is_current:
-        fg_box = (0, 255, 255)  # Bright cyan
+        fg_box = CYAN_PURE  # Bright cyan
         border_chars = {"corner": "#", "horiz": "=", "vert": "║"}
         bg_label = (0, 64, 64)  # Dark cyan
     else:
-        fg_box = (200, 200, 200)  # Gray
+        fg_box = DEFAULT_COLOR  # Gray
         border_chars = {"corner": "+", "horiz": "-", "vert": "|"}
-        bg_label = (0, 0, 0)  # Black
+        bg_label = GRAY_BLACK  # Black
     return fg_box, border_chars, bg_label
 
 
@@ -198,7 +209,7 @@ def _draw_box_content(
     inner_label = label[: BOX_INNER_W - 2].center(BOX_INNER_W - 2)
     zdr_text = f"{glyph}ZDR:{zdr:<3}".center(BOX_INNER_W)
     fg_status = status_color(status)
-    fg_label = (255, 255, 0) if is_current else (200, 200, 200)
+    fg_label = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if is_current else DEFAULT_COLOR
 
     if is_current:
         # Fill inner area with background color.
@@ -230,7 +241,7 @@ def _draw_box_external_markers(
 ) -> None:
     """Draw the bright-yellow "→ ← ↑ ↓" arrows + "[ YOU ]" label
     that visually mark the player's current node."""
-    marker_color = (255, 255, 0)
+    marker_color = ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR
     if abs_x > main.x:
         console.print(x=abs_x - 1, y=abs_y + 1, string=">", fg=marker_color)
     if abs_x + BOX_WIDTH < main.x2:
@@ -307,10 +318,10 @@ def _draw_box_fog(
     abs_x = main.x + col
     abs_y = main.y + row
     if visibility is Visibility.UNKNOWN:
-        console.print(x=abs_x + 4, y=abs_y + 1, string="?", fg=(64, 64, 64))
+        console.print(x=abs_x + 4, y=abs_y + 1, string="?", fg=GRAY_64)
         return
     if visibility is Visibility.ADJACENT:
-        dim = (120, 120, 120)
+        dim = GRAY_120
         if not main.contains(abs_x, abs_y):
             return
         for c in range(abs_x, abs_x + BOX_WIDTH):
@@ -323,13 +334,13 @@ def _draw_box_fog(
             x=abs_x + 1,
             y=abs_y + 1,
             string="?  ?".center(BOX_INNER_W),
-            fg=(100, 100, 100),
+            fg=GRAY_MID,
         )
         console.print(
             x=abs_x + 1,
             y=abs_y + 2,
             string="(adjacent)".center(BOX_INNER_W),
-            fg=(100, 100, 100),
+            fg=GRAY_MID,
         )
 
 
@@ -344,7 +355,7 @@ def _draw_edge_line(
     dx, dy = dst
     cnx, cny = main.x + sx + BOX_WIDTH, main.y + sy + 1
     tnx, tny = main.x + dx - 1, main.y + dy + 1
-    line_color = (96, 96, 96)
+    line_color = GRAY_96
     if cny == tny:
         if cnx < tnx:
             start, end = cnx + 1, tnx - 1
@@ -603,8 +614,8 @@ def render_matrix(
     """
     matrix = state.matrix
     if matrix is None or state.current_node_id is None:
-        console.clear(bg=(0, 0, 0))
-        console.print(x=2, y=2, string="(no matrix loaded)", fg=(255, 0, 0))
+        console.clear(bg=GRAY_BLACK)
+        console.print(x=2, y=2, string="(no matrix loaded)", fg=DYING_COLOR)
         return
 
     ppl = calculate_ppl(state.player_loadout)

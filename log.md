@@ -2300,3 +2300,7 @@ needed). Commit 6db0770. Evidence: .omo/evidence/task-5-wet-run-ui-visibility-up
 Plan: .omo/plans/wet-run-ui-visibility-upgrade.md T2.1.
 
 [2026-08-23] feat | T2.3 achievement unlock consumer + toast render (3s, top-right)
+
+[2026-08-23] docs | T3.1 tutorial overlay polish (box border + skill hints)
+
+[2026-08-23] refactor | T3.2 palette consistency audit (~570 RGB tuples refactored to palette imports across 70 files, 6 atomic commits: 38f4835/174a146/a472464/9fd75c8/6d5a4a8/fd3cdf1; palette.py expanded 36→109 unique colors with semantic names; 5714 tests pass; ruff 0; mypy strict 0)

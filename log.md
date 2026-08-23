@@ -2284,3 +2284,17 @@ _migrate_colorblind_field helper (True → "deuteranopia", False/missing →
 combat/accessibility.py NOT modified (closed per ADR-0183).
 5705 passed / 365 skipped / 1 xfailed — baseline 5700 + 5 new migration
 tests maintained. ruff + mypy strict clean.
+
+[2026-08-23] verify | T2.1 boss phase indicator (3 F.4 bosses verified)
+
+Verified combat_view_render.py:285-302 `phase_str` + NEXT render for the 3
+BossPhaseTracker bosses (neuromancer 1/6, loa_baron 1/4, black_baron 1/4)
+and confirmed clean-skip when tracker is None (wintermute / ta_construct_prime
+use phase logic directly in combat/boss.py). New TestDrawBossPhaseIndicator
+(5 render-path tests) in tests/unit/test_combat_view_helpers.py + headless
+harness scripts/boss_phase_indicator_check.py (mirrors T1.4 overlay check
+pattern, 241 LOC, 4 scenarios). 5710 passed (+5 vs 5705 baseline); ruff 0;
+mypy strict 0. combat_view_render.py / boss.py / boss_phase_tracker.py NOT
+modified (closed per Wave 3 plan); hud.py LOC 520 unchanged (no extraction
+needed). Commit 6db0770. Evidence: .omo/evidence/task-5-wet-run-ui-visibility-upgrade.txt.
+Plan: .omo/plans/wet-run-ui-visibility-upgrade.md T2.1.

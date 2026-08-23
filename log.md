@@ -2260,3 +2260,14 @@ with grade-based encounter count via new encounter_count_for_state helper
 fall back to safe defaults (1 alarm / 100 HP / grade-based waves) when archetype is
 absent or unknown. 5700 passed / 365 skipped / 1 xfailed — baseline maintained.
 
+[2026-08-22] verify | status-effect overlay icons (T1.4 headless harness)
+T1.4 of .omo/plans/wet-run-ui-visibility-upgrade.md. New headless harness
+prototype/scripts/combat_status_overlay_check.py (117 LOC, ruff/mypy clean) verifies
+combat/battle_portraits.py:get_status_overlay() composes correct glyph suffixes for
+burn (^) / stun (~) / slow (...) / silence (X) / vulnerable (!), and that get_portrait()
+integrates the overlay into BattlePortrait.suffix as " [<overlay>]" — the surface consumed
+by engine/combat_view_render.py:265. Verifies empty list -> empty suffix, invalid effect_id
+-> graceful skip, full set -> bracketed composite, zero statuses -> empty. No library edits
+(prototype/src/wet_run/combat/battle_portraits.py closed). Commit c36b469.
+5700 passed / 365 skipped / 1 xfailed — baseline maintained.
+

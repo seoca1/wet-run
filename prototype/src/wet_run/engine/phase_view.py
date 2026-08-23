@@ -18,12 +18,14 @@ import tcod.console
 
 from wet_run.engine.chapter_cutscene import PhaseData
 
+from ..combat.palette import HIT_FLASH_COLOR, ORANGE_BRIGHT
+
 if True:
     from wet_run.engine.state import AppState
     from wet_run.i18n import Translator
 
 BEAT_TYPE_COLORS = {
-    "interior_monologue": (200, 150, 50),
+    "interior_monologue": ORANGE_BRIGHT,
     "action": (80, 200, 120),
     "dialogue": (50, 180, 220),
     "combat": (220, 80, 80),
@@ -110,7 +112,7 @@ def render_arc_phase(
     text = beat.text_ko if is_ko else beat.text_en
     beat_type = beat.type
 
-    color = BEAT_TYPE_COLORS.get(beat_type, (255, 255, 255))
+    color = BEAT_TYPE_COLORS.get(beat_type, HIT_FLASH_COLOR)
 
     phase_title = phase.title_ko if is_ko else phase.title_en
 

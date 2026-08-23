@@ -13,6 +13,7 @@ from typing import Any
 
 import tcod.console
 
+from ..combat.palette import BUFF_COLOR, CYAN_PURE, HIT_FLASH_COLOR
 from .layout import (
     RegionId,
     clear_region,
@@ -221,7 +222,7 @@ def _draw_narrative(console: tcod.console.Console, main: Any, after: Any) -> int
             x=main.x + 2,
             y=main.y + y,
             string=f"> {line[: main.w - 4]}",
-            fg=(255, 255, 255),
+            fg=HIT_FLASH_COLOR,
         )
         y += 1
     y += 1
@@ -240,7 +241,7 @@ def _draw_narrative(console: tcod.console.Console, main: Any, after: Any) -> int
                 x=main.x + 2,
                 y=main.y + y,
                 string=f"> {line[: main.w - 4]}",
-                fg=(255, 220, 100),
+                fg=BUFF_COLOR,
             )
             y += 1
     return y
@@ -271,21 +272,21 @@ def _draw_reactions(
                 x=main.x + 2,
                 y=main.y + y,
                 string=f"[{react.character.title()}]",
-                fg=(0, 255, 255),
+                fg=CYAN_PURE,
             )
             y += 1
             console.print(
                 x=main.x + 4,
                 y=main.y + y,
                 string=f"> {react.text_en[: main.w - 6]}",
-                fg=(255, 255, 255),
+                fg=HIT_FLASH_COLOR,
             )
             y += 1
             console.print(
                 x=main.x + 4,
                 y=main.y + y,
                 string=f"> {react.text_ko[: main.w - 6]}",
-                fg=(255, 220, 100),
+                fg=BUFF_COLOR,
             )
             y += 1
     return y

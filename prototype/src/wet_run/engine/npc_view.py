@@ -12,6 +12,14 @@ import tcod.event
 from tcod.event import KeyDown, KeySym
 
 from ..audio import safe_play
+from ..combat.palette import (
+    BUFF_COLOR,
+    CYAN_PURE,
+    DEFAULT_COLOR,
+    GRAY_MID_DARK,
+    GRAY_MID_LIGHT,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+)
 from ..i18n import Translator
 from .input_utils import is_confirm_key
 from .layout import (
@@ -95,7 +103,7 @@ def _draw_dialogue(
     x = main.x + 2
     y = main.y + 1
     y = _draw_dialogue_header(console, main, line, x, y)
-    y = _draw_dialogue_text(console, main, line.text, x, y, (200, 200, 200))
+    y = _draw_dialogue_text(console, main, line.text, x, y, DEFAULT_COLOR)
     y = _draw_dialogue_korean(console, main, line, x, y)
     _draw_dialogue_choices_or_prompt(console, main, line, state, x, y)
 
@@ -114,7 +122,7 @@ def _draw_dialogue_header(
     """
     if not line.portrait:
         return y
-    console.print(x=x, y=y, string=line.portrait, fg=(0, 255, 255))
+    console.print(x=x, y=y, string=line.portrait, fg=CYAN_PURE)
     # Use Korean speaker name if available
     from . import config
     from .font_loader import is_korean_capable
@@ -127,9 +135,9 @@ def _draw_dialogue_header(
         and line.speaker_ko
     ):
         speaker_name = f"{line.speaker} ({line.speaker_ko})"
-    console.print(x=x + 5, y=y, string=speaker_name, fg=(255, 255, 0))
+    console.print(x=x + 5, y=y, string=speaker_name, fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR)
     y += 1
-    console.print(x=x, y=y, string="=" * (main.w - 4), fg=(80, 80, 80))
+    console.print(x=x, y=y, string="=" * (main.w - 4), fg=GRAY_MID_DARK)
     y += 2
     return y
 
@@ -162,7 +170,7 @@ def _draw_dialogue_korean(
             line.text_ko,
             x,
             y,
-            (255, 220, 100),
+            BUFF_COLOR,
         )
         + 1
     )
@@ -180,7 +188,7 @@ def _draw_dialogue_choices_or_prompt(
             x=x,
             y=y,
             string=">> Press any key to continue...",
-            fg=(128, 128, 128),
+            fg=GRAY_MID_LIGHT,
         )
         return
 
@@ -213,7 +221,7 @@ def _draw_dialogue_choices_or_prompt(
     for i, choice in enumerate(visible_choices):
         is_selected = i == state.npc_choice_index
         cursor = ">" if is_selected else " "
-        fg = (0, 255, 255) if is_selected else (200, 200, 200)
+        fg = CYAN_PURE if is_selected else DEFAULT_COLOR
         # Use Korean if available
         choice_text = choice.text
         if config.LANGUAGE_MODE == "ko" and choice.text_ko and is_korean_capable():

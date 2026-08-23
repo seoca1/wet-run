@@ -14,6 +14,7 @@ from __future__ import annotations
 import tcod.console
 import tcod.event
 
+from ..combat.palette import DEFAULT_COLOR, GRAY_120, GRAY_BLACK, ICE_TYPE_PATROL_COLOR, WARM
 from ..run import Stage
 from . import config as _engine_config
 from .state import AppState, ScreenKind
@@ -85,7 +86,7 @@ def render_debrief(console: tcod.console.Console, state: AppState) -> None:
     SCREEN_WIDTH = _engine_config.SCREEN_WIDTH  # noqa: N806
     SCREEN_HEIGHT = _engine_config.SCREEN_HEIGHT  # noqa: N806
 
-    console.clear(bg=(0, 0, 0))
+    console.clear(bg=GRAY_BLACK)
 
     # Title
     title = "DEBRIEF"
@@ -93,7 +94,7 @@ def render_debrief(console: tcod.console.Console, state: AppState) -> None:
         x=(SCREEN_WIDTH - len(title)) // 2,
         y=3,
         string=title,
-        fg=(200, 200, 100),
+        fg=WARM,
     )
 
     # Box
@@ -102,14 +103,14 @@ def render_debrief(console: tcod.console.Console, state: AppState) -> None:
     box_w = 60
     box_h = 8
 
-    console.print(x=box_x, y=box_y, string="┌" + "─" * (box_w - 2) + "┐", fg=(200, 200, 100))
+    console.print(x=box_x, y=box_y, string="┌" + "─" * (box_w - 2) + "┐", fg=WARM)
     for y in range(box_y + 1, box_y + box_h - 1):
-        console.print(x=box_x, y=y, string="│" + " " * (box_w - 2) + "│", fg=(200, 200, 100))
+        console.print(x=box_x, y=y, string="│" + " " * (box_w - 2) + "│", fg=WARM)
     console.print(
         x=box_x,
         y=box_y + box_h - 1,
         string="└" + "─" * (box_w - 2) + "┘",
-        fg=(200, 200, 100),
+        fg=WARM,
     )
 
     # Get message for current character
@@ -130,7 +131,7 @@ def render_debrief(console: tcod.console.Console, state: AppState) -> None:
                 x=box_x + 3,
                 y=line_y,
                 string=line,
-                fg=(180, 180, 200),
+                fg=ICE_TYPE_PATROL_COLOR,
             )
             line = word
             line_y += 1
@@ -141,7 +142,7 @@ def render_debrief(console: tcod.console.Console, state: AppState) -> None:
             x=box_x + 3,
             y=line_y,
             string=line,
-            fg=(180, 180, 200),
+            fg=ICE_TYPE_PATROL_COLOR,
         )
 
     # Prompt
@@ -150,7 +151,7 @@ def render_debrief(console: tcod.console.Console, state: AppState) -> None:
         x=(SCREEN_WIDTH - len(prompt)) // 2,
         y=box_y + box_h + 2,
         string=prompt,
-        fg=(200, 200, 200),
+        fg=DEFAULT_COLOR,
     )
 
     # Status
@@ -160,7 +161,7 @@ def render_debrief(console: tcod.console.Console, state: AppState) -> None:
                 x=2,
                 y=SCREEN_HEIGHT - 5 + i,
                 string=msg,
-                fg=(120, 120, 120),
+                fg=GRAY_120,
             )
 
 

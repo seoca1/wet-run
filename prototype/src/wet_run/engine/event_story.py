@@ -20,6 +20,15 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import TYPE_CHECKING
 
+from ..combat.palette import (
+    DEFAULT_COLOR,
+    DYING_COLOR,
+    GREEN_BRIGHT,
+    SHIELD_COLOR,
+    TA_CONSTRUCT_PARTICLE_COLOR,
+    TIER_GOLD,
+)
+
 if TYPE_CHECKING:
     from .state import AppState
 
@@ -73,7 +82,7 @@ class CharacterArt:
 
     character_id: str
     art_lines: tuple[str, ...]
-    color_hint: tuple[int, int, int] = (200, 200, 200)
+    color_hint: tuple[int, int, int] = DEFAULT_COLOR
     width: int = 20
     height: int = 20
 
@@ -200,7 +209,7 @@ THE_CASE_ART = CharacterArt(
         "    ╔╩╗╔╩╗      ",
         "    ╚╦╝╚╦╝      ",
     ),
-    color_hint=(200, 200, 255),
+    color_hint=TA_CONSTRUCT_PARTICLE_COLOR,
     width=15,
     height=15,
 )
@@ -244,7 +253,7 @@ DIXIE_ART = CharacterArt(
         "   └──┬┬──┘     ",
         "      ││       ",
     ),
-    color_hint=(100, 200, 255),
+    color_hint=SHIELD_COLOR,
     width=12,
     height=13,
 )
@@ -287,7 +296,7 @@ THE_FINN_ART = CharacterArt(
         "   └──┬┬──┘     ",
         "      ││       ",
     ),
-    color_hint=(255, 215, 0),
+    color_hint=TIER_GOLD,
     width=12,
     height=13,
 )
@@ -308,7 +317,7 @@ ICE_GLYPH_ART = CharacterArt(
         "       ║║       ",
         "       ║║       ",
     ),
-    color_hint=(255, 0, 0),
+    color_hint=DYING_COLOR,
     width=15,
     height=12,
 )
@@ -329,7 +338,7 @@ CHIBACITY_ART = CharacterArt(
         "  █      ██      █  ",
         "  █▄▄▄▄▄▄▄▄▄▄▄▄▄█  ",
     ),
-    color_hint=(100, 255, 100),
+    color_hint=GREEN_BRIGHT,
     width=18,
     height=12,
 )

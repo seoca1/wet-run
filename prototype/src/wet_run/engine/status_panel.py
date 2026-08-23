@@ -10,6 +10,21 @@ from typing import TYPE_CHECKING, Any
 
 import tcod.console
 
+from ..combat.palette import (
+    CYAN_LIGHT,
+    CYAN_PURE,
+    DAMAGE_FLASH_COLOR,
+    DEFAULT_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    GRAY_160,
+    GRAY_MID,
+    GRAY_MID_DARK,
+    GRAY_MID_LIGHT,
+    GREEN_PURE,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    SHIELD_COLOR,
+    TIER_GOLD,
+)
 from ..matrix.ppl import calculate_ppl
 from ..missions import Mission
 from .layout import Region, clear_region
@@ -68,7 +83,7 @@ def _draw_panel_border(
     region: Region,
 ) -> None:
     """Draw border around the panel."""
-    fg = (80, 80, 80)
+    fg = GRAY_MID_DARK
     # Corners
     console.print(x=region.x, y=region.y, string="+", fg=fg)
     console.print(x=region.x2, y=region.y, string="+", fg=fg)
@@ -97,7 +112,7 @@ def _draw_equipment_summary(
     y = _draw_equipment_header(console, x, y, max_width)
     loadout = getattr(state, "equipment_loadout", None)
     if loadout is None:
-        console.print(x=x, y=y, string="(no equipment)", fg=(100, 100, 100))
+        console.print(x=x, y=y, string="(no equipment)", fg=GRAY_MID)
         return y + 1
     y = _draw_equipment_slot_rows(console, x, y, loadout)
     return _draw_equipment_total(console, x, y, loadout)
@@ -116,11 +131,11 @@ def _draw_equipment_header(
 ) -> int:
     """Top + bottom section dividers plus the RIG label."""
     bar = "=" * (max_width - 1)
-    console.print(x=x, y=y, string=bar, fg=(100, 200, 255))
+    console.print(x=x, y=y, string=bar, fg=SHIELD_COLOR)
     y += 1
-    console.print(x=x, y=y, string=" RIG", fg=(100, 200, 255))
+    console.print(x=x, y=y, string=" RIG", fg=SHIELD_COLOR)
     y += 1
-    console.print(x=x, y=y, string=bar, fg=(100, 200, 255))
+    console.print(x=x, y=y, string=bar, fg=SHIELD_COLOR)
     y += 1
     return y
 
@@ -146,7 +161,7 @@ def _draw_equipment_slot_rows(console: tcod.console.Console, x: int, y: int, loa
     for slot, label in slot_labels:
         item = loadout.get(slot)
         if item is None:
-            console.print(x=x, y=y, string=f"{label}: {placeholder}", fg=(80, 80, 80))
+            console.print(x=x, y=y, string=f"{label}: {placeholder}", fg=GRAY_MID_DARK)
         else:
             console.print(
                 x=x,
@@ -172,9 +187,9 @@ def _draw_equipment_total(console: tcod.console.Console, x: int, y: int, loadout
         + stats.ice_resistance
     )
     if total_bonuses > 0:
-        console.print(x=x, y=y, string=f"Total: +{total_bonuses} bonus", fg=(0, 255, 0))
+        console.print(x=x, y=y, string=f"Total: +{total_bonuses} bonus", fg=GREEN_PURE)
     else:
-        console.print(x=x, y=y, string="Total: (no bonuses)", fg=(100, 100, 100))
+        console.print(x=x, y=y, string="Total: (no bonuses)", fg=GRAY_MID)
     y += 1
     return y
 
@@ -188,16 +203,16 @@ def _draw_player_stats(
 ) -> int:
     """Draw player stats section. Returns new y position."""
     # Section title
-    console.print(x=x, y=y, string="=" * max_width, fg=(0, 200, 200))
+    console.print(x=x, y=y, string="=" * max_width, fg=CYAN_LIGHT)
     y += 1
-    console.print(x=x, y=y, string=" PLAYER ", fg=(0, 255, 255))
+    console.print(x=x, y=y, string=" PLAYER ", fg=CYAN_PURE)
     y += 1
-    console.print(x=x, y=y, string="=" * max_width, fg=(0, 200, 200))
+    console.print(x=x, y=y, string="=" * max_width, fg=CYAN_LIGHT)
     y += 1
 
     # PPL (Player Power Level)
     ppl = calculate_ppl(state.player_loadout)
-    console.print(x=x, y=y, string=f"Grade: {state.player_grade}", fg=(200, 200, 200))
+    console.print(x=x, y=y, string=f"Grade: {state.player_grade}", fg=DEFAULT_COLOR)
     y += 1
     console.print(x=x, y=y, string=f"PPL:   {ppl}", fg=(180, 180, 180))
     y += 1
@@ -219,7 +234,7 @@ def _draw_player_stats(
             x=x,
             y=y,
             string=f"AP:    {player.ap}/{player.max_ap}",
-            fg=(0, 200, 200),
+            fg=CYAN_LIGHT,
         )
         y += 1
 
@@ -262,15 +277,15 @@ def _draw_current_screen(
     max_width: int,
 ) -> int:
     """Draw current screen info. Returns new y position."""
-    console.print(x=x, y=y, string="-" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y, string="-" * max_width, fg=GRAY_MID_DARK)
     y += 1
-    console.print(x=x, y=y, string=" WHERE ", fg=(0, 255, 255))
+    console.print(x=x, y=y, string=" WHERE ", fg=CYAN_PURE)
     y += 1
-    console.print(x=x, y=y, string="-" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y, string="-" * max_width, fg=GRAY_MID_DARK)
     y += 1
 
     screen_name = str(state.screen.value).upper()
-    console.print(x=x, y=y, string=f"Screen: {screen_name}", fg=(200, 200, 200))
+    console.print(x=x, y=y, string=f"Screen: {screen_name}", fg=DEFAULT_COLOR)
     y += 1
 
     # Screen-specific info
@@ -282,7 +297,7 @@ def _draw_current_screen(
                     x=x,
                     y=y,
                     string=f"At: {current.label[: max_width - 4]}",
-                    fg=(255, 255, 0),
+                    fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
                 )
                 y += 1
                 console.print(
@@ -307,7 +322,7 @@ def _draw_current_screen(
         enemy = state.combat_state.enemy
         if enemy is not None:
             console.print(
-                x=x, y=y, string=f"Enemy: {enemy.name[: max_width - 7]}", fg=(255, 100, 100)
+                x=x, y=y, string=f"Enemy: {enemy.name[: max_width - 7]}", fg=GOLIATH_PARTICLE_COLOR
             )
             y += 1
             hp_pct = (enemy.hp / enemy.max_hp * 100) if enemy.max_hp > 0 else 0
@@ -329,7 +344,7 @@ def _draw_current_screen(
             console.print(x=x, y=y, string="Scene:", fg=(180, 180, 180))
             y += 1
             scene_title = scene.title_en[: max_width - 1]
-            console.print(x=x, y=y, string=scene_title, fg=(255, 255, 0))
+            console.print(x=x, y=y, string=scene_title, fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR)
             y += 1
 
     return y
@@ -343,21 +358,21 @@ def _draw_mission_info(
     max_width: int,
 ) -> int:
     """Draw current mission. Returns new y position."""
-    console.print(x=x, y=y, string="-" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y, string="-" * max_width, fg=GRAY_MID_DARK)
     y += 1
-    console.print(x=x, y=y, string=" MISSION ", fg=(0, 255, 255))
+    console.print(x=x, y=y, string=" MISSION ", fg=CYAN_PURE)
     y += 1
-    console.print(x=x, y=y, string="-" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y, string="-" * max_width, fg=GRAY_MID_DARK)
     y += 1
 
     if state.current_mission is None:
-        console.print(x=x, y=y, string="(none active)", fg=(128, 128, 128))
+        console.print(x=x, y=y, string="(none active)", fg=GRAY_MID_LIGHT)
         y += 1
         return y
 
     mission: Mission = state.current_mission
     title = mission.title[: max_width - 1]
-    console.print(x=x, y=y, string=title, fg=(255, 255, 0))
+    console.print(x=x, y=y, string=title, fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR)
     y += 1
 
     if hasattr(mission, "client") and mission.client:
@@ -370,7 +385,7 @@ def _draw_mission_info(
             x=x,
             y=y,
             string=f"Reward: {mission.reward} cr",
-            fg=(255, 215, 0),
+            fg=TIER_GOLD,
         )
         y += 1
 
@@ -379,7 +394,7 @@ def _draw_mission_info(
         obj = mission.objective[: max_width - 1]
         console.print(x=x, y=y, string="Obj:", fg=(180, 180, 180))
         y += 1
-        console.print(x=x, y=y, string=obj, fg=(200, 200, 200))
+        console.print(x=x, y=y, string=obj, fg=DEFAULT_COLOR)
         y += 1
 
     return y
@@ -399,17 +414,17 @@ def _draw_inventory(
     if y + 5 >= panel_region.y2:
         return y
 
-    console.print(x=x, y=y, string="-" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y, string="-" * max_width, fg=GRAY_MID_DARK)
     y += 1
-    console.print(x=x, y=y, string=" INVENTORY ", fg=(0, 255, 255))
+    console.print(x=x, y=y, string=" INVENTORY ", fg=CYAN_PURE)
     y += 1
-    console.print(x=x, y=y, string="-" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y, string="-" * max_width, fg=GRAY_MID_DARK)
     y += 1
 
     # Get inventory from state (if exists)
     inventory = getattr(state, "inventory", None)
     if not inventory:
-        console.print(x=x, y=y, string="(empty)", fg=(128, 128, 128))
+        console.print(x=x, y=y, string="(empty)", fg=GRAY_MID_LIGHT)
         y += 1
         return y
 
@@ -417,7 +432,7 @@ def _draw_inventory(
     if isinstance(inventory, dict):
         items = list(inventory.items())[:3]  # Top 3
         if not items:
-            console.print(x=x, y=y, string="(empty)", fg=(128, 128, 128))
+            console.print(x=x, y=y, string="(empty)", fg=GRAY_MID_LIGHT)
             y += 1
             return y
 
@@ -430,10 +445,10 @@ def _draw_inventory(
                     name = mat.name
 
             line = f"{name[: max_width - 6]} x{count}"
-            console.print(x=x, y=y, string=line, fg=(200, 200, 200))
+            console.print(x=x, y=y, string=line, fg=DEFAULT_COLOR)
             y += 1
     else:
-        console.print(x=x, y=y, string=f"Items: {len(inventory)}", fg=(200, 200, 200))
+        console.print(x=x, y=y, string=f"Items: {len(inventory)}", fg=DEFAULT_COLOR)
         y += 1
 
     return y
@@ -452,18 +467,18 @@ def _draw_recent_activity(
     if y + 4 >= panel_region.y2:
         return
 
-    console.print(x=x, y=y, string="-" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y, string="-" * max_width, fg=GRAY_MID_DARK)
     y += 1
-    console.print(x=x, y=y, string=" ACTIVITY ", fg=(0, 255, 255))
+    console.print(x=x, y=y, string=" ACTIVITY ", fg=CYAN_PURE)
     y += 1
-    console.print(x=x, y=y, string="-" * max_width, fg=(80, 80, 80))
+    console.print(x=x, y=y, string="-" * max_width, fg=GRAY_MID_DARK)
     y += 1
 
     # Get recent status messages
     messages = state.status_messages[-3:]  # Last 3
 
     if not messages:
-        console.print(x=x, y=y, string="(no activity)", fg=(128, 128, 128))
+        console.print(x=x, y=y, string="(no activity)", fg=GRAY_MID_LIGHT)
         return
 
     for msg in messages:
@@ -472,7 +487,7 @@ def _draw_recent_activity(
         # Truncate message
         if len(msg) > max_width:
             msg = msg[: max_width - 3] + "..."
-        console.print(x=x, y=y, string=msg, fg=(160, 160, 160))
+        console.print(x=x, y=y, string=msg, fg=GRAY_160)
         y += 1
 
     # Audio status (bottom of panel)
@@ -480,20 +495,20 @@ def _draw_recent_activity(
     if y < panel_region.y2 - 2:
         mute_label = "MUTED" if is_muted() else "ON"
         vol_pct = int(get_volume() * 100)
-        console.print(x=x, y=y, string=" AUDIO ", fg=(0, 255, 255))
+        console.print(x=x, y=y, string=" AUDIO ", fg=CYAN_PURE)
         y += 1
         if y < panel_region.y2:
-            console.print(x=x, y=y, string=f"  {mute_label}  Vol:{vol_pct}%", fg=(160, 160, 160))
+            console.print(x=x, y=y, string=f"  {mute_label}  Vol:{vol_pct}%", fg=GRAY_160)
             y += 1
         if y < panel_region.y2:
-            console.print(x=x, y=y, string="  [M] mute  [+/-] vol", fg=(100, 100, 100))
+            console.print(x=x, y=y, string="  [M] mute  [+/-] vol", fg=GRAY_MID)
 
 
 def _get_hp_color(hp_pct: float) -> tuple[int, int, int]:
     """Get color based on HP percentage."""
     if hp_pct >= 70:
-        return (0, 255, 0)  # Green
+        return GREEN_PURE  # Green
     elif hp_pct >= 30:
-        return (255, 255, 0)  # Yellow
+        return ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR  # Yellow
     else:
-        return (255, 50, 50)  # Red
+        return DAMAGE_FLASH_COLOR  # Red

@@ -23,6 +23,7 @@ from typing import TYPE_CHECKING
 import tcod.console
 
 from ..audio import sound_manager as _sm_module
+from ..combat.palette import DEFAULT_COLOR, GRAY_BLACK, GRAY_MID, GRAY_MID_DARK, RED_DEEP
 from ..run.memory_bank import MemoryFragment
 from .jockey_history import (
     DeceasedJockey,
@@ -364,7 +365,7 @@ def render_death_screen(
     SCREEN_WIDTH = _engine_config.SCREEN_WIDTH  # noqa: N806
     SCREEN_HEIGHT = _engine_config.SCREEN_HEIGHT  # noqa: N806
 
-    console.clear(bg=(0, 0, 0))
+    console.clear(bg=GRAY_BLACK)
 
     if state.hardcore_mode:
         title = "PERMANENT DEATH"
@@ -372,7 +373,7 @@ def render_death_screen(
         subtitle = "1-life permadeath. No revival."
     else:
         title = "FLATLINE"
-        title_fg = (140, 0, 0)
+        title_fg = RED_DEEP
         subtitle = "Static. Silence."
 
     console.print(
@@ -385,7 +386,7 @@ def render_death_screen(
         x=(SCREEN_WIDTH - len(subtitle)) // 2,
         y=5,
         string=subtitle,
-        fg=(80, 80, 80),
+        fg=GRAY_MID_DARK,
     )
 
     # Avatar (X head, flatline state)
@@ -406,7 +407,7 @@ def render_death_screen(
         x=avatar_x - 1,
         y=avatar_y - 1,
         string="=" * (rendered.width + 2),
-        fg=(140, 0, 0),
+        fg=RED_DEEP,
     )
     for i, (text, color) in enumerate(rendered.lines):
         console.print(
@@ -419,7 +420,7 @@ def render_death_screen(
         x=avatar_x - 1,
         y=avatar_y + len(rendered.lines),
         string="=" * (rendered.width + 2),
-        fg=(140, 0, 0),
+        fg=RED_DEEP,
     )
 
     # Death reason
@@ -434,10 +435,10 @@ def render_death_screen(
     # Options
     if state.hardcore_mode:
         option1 = "[ENTER] Return to Menu"
-        option1_fg = (200, 200, 200)
+        option1_fg = DEFAULT_COLOR
     else:
         option1 = "[ENTER] Continue — See Summary"
-        option1_fg = (200, 200, 200)
+        option1_fg = DEFAULT_COLOR
     option2 = "[Q] Quit Game"
     console.print(
         x=(SCREEN_WIDTH - len(option1)) // 2,
@@ -449,7 +450,7 @@ def render_death_screen(
         x=(SCREEN_WIDTH - len(option2)) // 2,
         y=SCREEN_HEIGHT // 2 + 8,
         string=option2,
-        fg=(100, 100, 100),
+        fg=GRAY_MID,
     )
 
     # Volume indicator (bottom)
@@ -458,7 +459,7 @@ def render_death_screen(
         x=2,
         y=SCREEN_HEIGHT - 2,
         string=f"[M] mute  [+/-] vol: {vol_pct}%",
-        fg=(80, 80, 80),
+        fg=GRAY_MID_DARK,
     )
 
 

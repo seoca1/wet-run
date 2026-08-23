@@ -29,6 +29,7 @@ from typing import TYPE_CHECKING
 
 import tcod.console
 
+from ..combat.palette import DYING_COLOR, GRAY_BLACK
 from .gn_menu import (  # noqa: F401 - re-exports for backward compat (ADR-0111)
     _ENDING_DESCRIPTIONS,
     GN_ENDING_A,
@@ -156,11 +157,11 @@ def render_graphic_novel_screen(
                 paused=state.gn_paused,
             )
         else:
-            console.clear(bg=(0, 0, 0))
-            console.print(x=2, y=2, string="=== NO DIALOGUE ===", fg=(255, 0, 0))
+            console.clear(bg=GRAY_BLACK)
+            console.print(x=2, y=2, string="=== NO DIALOGUE ===", fg=DYING_COLOR)
     else:
-        console.clear(bg=(0, 0, 0))
-        console.print(x=2, y=2, string="=== NO SCENES LOADED ===", fg=(255, 0, 0))
+        console.clear(bg=GRAY_BLACK)
+        console.print(x=2, y=2, string="=== NO SCENES LOADED ===", fg=DYING_COLOR)
 
 
 def _console_to_text(console: tcod.console.Console) -> str:

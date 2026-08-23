@@ -20,6 +20,15 @@ import tcod.console
 import tcod.event
 
 from ..audio import sound_manager as _sm_module
+from ..combat.palette import (
+    CYAN_LIGHT,
+    DEFAULT_COLOR,
+    GRAY_120,
+    GRAY_BLACK,
+    GRAY_LIGHT,
+    GREEN_LIGHT,
+    SHIELD_COLOR,
+)
 from ..run import Stage
 from . import config as _engine_config
 from .state import AppState, ScreenKind
@@ -136,7 +145,7 @@ def render_jack_out(console: tcod.console.Console, state: AppState) -> None:
     SCREEN_WIDTH = _engine_config.SCREEN_WIDTH  # noqa: N806
     SCREEN_HEIGHT = _engine_config.SCREEN_HEIGHT  # noqa: N806
 
-    console.clear(bg=(0, 0, 0))
+    console.clear(bg=GRAY_BLACK)
 
     # Determine current frame based on time
     started = getattr(state, "jack_out_started_at", None)
@@ -157,7 +166,7 @@ def render_jack_out(console: tcod.console.Console, state: AppState) -> None:
             x=(SCREEN_WIDTH - len(line)) // 2,
             y=start_y + i,
             string=line,
-            fg=(100, 200, 255) if frame_idx < len(_ANIMATION_FRAMES) - 1 else (0, 255, 100),
+            fg=SHIELD_COLOR if frame_idx < len(_ANIMATION_FRAMES) - 1 else GREEN_LIGHT,
         )
 
     # Stage title
@@ -166,7 +175,7 @@ def render_jack_out(console: tcod.console.Console, state: AppState) -> None:
         x=(SCREEN_WIDTH - len(title)) // 2,
         y=2,
         string=title,
-        fg=(0, 200, 200),
+        fg=CYAN_LIGHT,
     )
 
     # Status message
@@ -176,7 +185,7 @@ def render_jack_out(console: tcod.console.Console, state: AppState) -> None:
             x=(SCREEN_WIDTH - len(msg)) // 2,
             y=SCREEN_HEIGHT - 6,
             string=msg,
-            fg=(150, 150, 150),
+            fg=GRAY_LIGHT,
         )
     else:
         # Final frame: show "press any key" prompt
@@ -192,7 +201,7 @@ def render_jack_out(console: tcod.console.Console, state: AppState) -> None:
             x=(SCREEN_WIDTH - len(prompt2)) // 2,
             y=SCREEN_HEIGHT - 6,
             string=prompt2,
-            fg=(200, 200, 200),
+            fg=DEFAULT_COLOR,
         )
 
     # Status panel
@@ -202,7 +211,7 @@ def render_jack_out(console: tcod.console.Console, state: AppState) -> None:
                 x=2,
                 y=SCREEN_HEIGHT - 3 + i,
                 string=msg,
-                fg=(120, 120, 120),
+                fg=GRAY_120,
             )
 
 

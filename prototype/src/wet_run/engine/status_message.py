@@ -21,6 +21,14 @@ import time
 from dataclasses import dataclass, field
 from enum import IntEnum
 
+from ..combat.palette import (
+    BUFF_COLOR,
+    COMBO_BAR_GREEN,
+    DEFAULT_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    GRAY_96,
+)
+
 
 class MessageKind(IntEnum):
     """Message severity/kind, ordered for sorting (higher = more important)."""
@@ -37,14 +45,14 @@ class MessageKind(IntEnum):
 
 # Visual config per kind: (icon, foreground RGB, background RGB or None)
 MESSAGE_STYLE: dict[MessageKind, tuple[str, tuple[int, int, int], tuple[int, int, int] | None]] = {
-    MessageKind.DEBUG: ("·", (96, 96, 96), None),
-    MessageKind.INFO: ("▸", (200, 200, 200), None),
+    MessageKind.DEBUG: ("·", GRAY_96, None),
+    MessageKind.INFO: ("▸", DEFAULT_COLOR, None),
     MessageKind.MOVEMENT: ("→", (160, 200, 255), None),
     MessageKind.DIALOG: ("❝", (220, 220, 180), None),
     MessageKind.COMBAT: ("⚔", (255, 180, 100), None),
-    MessageKind.SUCCESS: ("✓", (100, 230, 130), None),
-    MessageKind.WARNING: ("⚠", (255, 220, 100), (60, 50, 0)),
-    MessageKind.ERROR: ("✗", (255, 100, 100), (60, 20, 20)),
+    MessageKind.SUCCESS: ("✓", COMBO_BAR_GREEN, None),
+    MessageKind.WARNING: ("⚠", BUFF_COLOR, (60, 50, 0)),
+    MessageKind.ERROR: ("✗", GOLIATH_PARTICLE_COLOR, (60, 20, 20)),
 }
 
 

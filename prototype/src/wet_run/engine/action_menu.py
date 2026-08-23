@@ -22,6 +22,14 @@ import tcod.event
 from tcod.event import KeyDown, KeySym
 
 from ..audio import safe_play
+from ..combat.palette import (
+    CYAN_PURE,
+    DEFAULT_COLOR,
+    GRAY_MID,
+    GRAY_MID_DARK,
+    GRAY_MID_LIGHT,
+    HIT_FLASH_COLOR,
+)
 from ..combat.registry import IceRegistry, ProgramRegistry
 from ..i18n import Translator
 from ..matrix.node import Node, NodeKind
@@ -51,7 +59,7 @@ def render_action_menu(
     # Title
     x = menu_region.x + 2
     y = menu_region.y + 1
-    console.print(x=x, y=y, string=f"=== {node.label} ===", fg=(255, 255, 255))
+    console.print(x=x, y=y, string=f"=== {node.label} ===", fg=HIT_FLASH_COLOR)
     y += 1
     console.print(x=x, y=y, string=f"Kind: {node.kind.value}", fg=(180, 180, 180))
     y += 2
@@ -69,25 +77,25 @@ def render_action_menu(
 
         # Color coding
         if is_disabled:
-            fg = (80, 80, 80)  # Dark gray for disabled
+            fg = GRAY_MID_DARK  # Dark gray for disabled
             label_with_status = f"{label} [LOCKED]"
         elif is_selected:
-            fg = (0, 255, 255)  # Cyan for selected
+            fg = CYAN_PURE  # Cyan for selected
             label_with_status = label
         else:
-            fg = (200, 200, 200)  # Light gray for normal
+            fg = DEFAULT_COLOR  # Light gray for normal
             label_with_status = label
 
         console.print(x=x, y=y + i, string=f"{cursor} [{key}] {label_with_status}", fg=fg)
 
     # Footer
     y = menu_region.y + menu_region.h - 2
-    console.print(x=x, y=y, string="↑↓ Select  ENTER Confirm  ESC Cancel", fg=(128, 128, 128))
+    console.print(x=x, y=y, string="↑↓ Select  ENTER Confirm  ESC Cancel", fg=GRAY_MID_LIGHT)
 
 
 def _draw_box_border(console: tcod.console.Console, region: Region) -> None:
     """Draw a simple ASCII box border around the region."""
-    fg = (100, 100, 100)
+    fg = GRAY_MID
     # Corners
     console.print(x=region.x, y=region.y, string="+", fg=fg)
     console.print(x=region.x2, y=region.y, string="+", fg=fg)

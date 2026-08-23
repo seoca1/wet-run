@@ -31,6 +31,7 @@ from ..audio import (
     safe_play,
     stop_theme,
 )
+from ..combat.palette import BUFF_COLOR, CYAN_PURE, DYING_COLOR, HIT_FLASH_COLOR, OLIVE
 from ..i18n import Translator
 from .cinematic_art import AsciiArt, resolve_line_art
 from .graphic_novel_view import wrap_text_for_novel
@@ -149,7 +150,7 @@ def _draw_cinematic_art(
             x=main_r.x + 2,
             y=main_r.y + 3,
             string=current_line.portrait,
-            fg=(0, 255, 255),
+            fg=CYAN_PURE,
         )
 
 
@@ -176,7 +177,7 @@ def _render_cinematic_lines(
                 x=text_x,
                 y=y,
                 string=f"{line.portrait} {line.speaker.upper()}:",
-                fg=(0, 255, 255),
+                fg=CYAN_PURE,
             )
             y += 1
         elif line.speaker and (getattr(line, "portrait", "") or "").startswith("art:"):
@@ -184,7 +185,7 @@ def _render_cinematic_lines(
                 x=text_x,
                 y=y,
                 string=f">> {line.speaker.upper()}:",
-                fg=(0, 255, 255),
+                fg=CYAN_PURE,
             )
             y += 1
 
@@ -205,7 +206,7 @@ def _render_cinematic_lines(
             right_margin=0,
         )
         for line_text in wrapped_en:
-            console.print(x=text_x + 2, y=y, string=line_text, fg=(255, 255, 255))
+            console.print(x=text_x + 2, y=y, string=line_text, fg=HIT_FLASH_COLOR)
             y += 1
 
         # Korean subtitle (optional).
@@ -232,7 +233,7 @@ def _render_cinematic_lines(
                         x=text_x + 2,
                         y=y,
                         string=ko_line,
-                        fg=(255, 220, 100),
+                        fg=BUFF_COLOR,
                     )
                     y += 1
             elif text_ko:
@@ -240,7 +241,7 @@ def _render_cinematic_lines(
                     x=text_x + 2,
                     y=y,
                     string=f"[KO: {len(text_ko)} chars]",
-                    fg=(180, 180, 100),
+                    fg=OLIVE,
                 )
                 y += 1
         y += 1  # spacing between lines
@@ -382,7 +383,7 @@ def _draw_ascii_art(
         # Random color variation
         random.seed(y)
         if random.random() < 0.3:
-            fg = (255, 0, 0)
+            fg = DYING_COLOR
     elif art.style.value == "ghost":
         # Faded (50% color)
         fg = (art.fg[0] // 2, art.fg[1] // 2, art.fg[2] // 2)

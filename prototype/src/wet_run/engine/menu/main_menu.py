@@ -14,6 +14,7 @@ import tcod.event
 from tcod.event import KeyDown, KeySym
 
 from ...i18n import Translator
+from ...combat.palette import DEFAULT_COLOR, GRAY_MID, ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR
 from ..layout import (
     RegionId,
     clear_region,
@@ -80,7 +81,11 @@ def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -
             label = f"{label} (opt-in)"
         is_selected = i == selected
         marker = "▸ " if is_selected else "  "
-        fg = (100, 100, 100) if dim else ((255, 255, 0) if is_selected else (200, 200, 200))
+        fg = (
+            GRAY_MID
+            if dim
+            else (ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR if is_selected else DEFAULT_COLOR)
+        )
         console.print(
             x=main_r.x + 4,
             y=y + i * 2,
@@ -94,7 +99,7 @@ def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -
             x=main_r.x + 4,
             y=main_r.y + main_r.h - 4,
             string=f"> {state.message}",
-            fg=(255, 255, 0),
+            fg=ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
         )
 
     # Controls

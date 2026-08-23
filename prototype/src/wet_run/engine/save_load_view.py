@@ -18,6 +18,7 @@ from typing import TYPE_CHECKING, Any
 import tcod.console
 import tcod.event
 
+from ..combat.palette import GRAY_120, GRAY_BLACK, GRAY_LIGHT, SHIELD_COLOR, YELLOW_PALE
 from . import config as _engine_config
 from .save_manager import MAX_SLOTS, SaveError, SaveManager, SaveSlotEmptyError
 from .state import AppState, ScreenKind
@@ -117,7 +118,7 @@ def render_save_load(console: tcod.console.Console, state: AppState, t: Translat
     SCREEN_WIDTH = _engine_config.SCREEN_WIDTH  # noqa: N806
     SCREEN_HEIGHT = _engine_config.SCREEN_HEIGHT  # noqa: N806
 
-    console.clear(bg=(0, 0, 0))
+    console.clear(bg=GRAY_BLACK)
     _draw_save_load_header(console, SCREEN_WIDTH)
     manager = SaveManager()
     slots = manager.list_slots()
@@ -139,14 +140,14 @@ def _draw_save_load_header(console: Any, screen_width: int) -> None:
         x=(screen_width - len(title)) // 2,
         y=2,
         string=title,
-        fg=(100, 200, 255),
+        fg=SHIELD_COLOR,
     )
     subtitle = "Select a slot to load or delete"
     console.print(
         x=(screen_width - len(subtitle)) // 2,
         y=3,
         string=subtitle,
-        fg=(150, 150, 150),
+        fg=GRAY_LIGHT,
     )
 
 
@@ -166,7 +167,7 @@ def _draw_save_load_slots(
 
         if is_selected:
             border_color = (255, 200, 100)
-            text_color = (255, 255, 200)
+            text_color = YELLOW_PALE
         else:
             border_color = (80, 80, 100)
             text_color = (180, 180, 180)
@@ -253,7 +254,7 @@ def _draw_save_load_controls(console: Any, screen_width: int, screen_height: int
             x=(screen_width - len(line)) // 2,
             y=controls_y + i,
             string=line,
-            fg=(150, 150, 150),
+            fg=GRAY_LIGHT,
         )
 
 
@@ -269,7 +270,7 @@ def _draw_save_load_status(
             x=2,
             y=screen_height - 3 + i,
             string=msg,
-            fg=(120, 120, 120),
+            fg=GRAY_120,
         )
 
 

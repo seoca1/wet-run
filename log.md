@@ -2271,3 +2271,16 @@ by engine/combat_view_render.py:265. Verifies empty list -> empty suffix, invali
 (prototype/src/wet_run/combat/battle_portraits.py closed). Commit c36b469.
 5700 passed / 365 skipped / 1 xfailed — baseline maintained.
 
+
+## [2026-08-23] upgrade | T2.2 3-mode colorblind cycle + save v2→v3 migration (ADR-0196)
+
+Closes plan T2.2 (.omo/plans/wet-run-ui-visibility-upgrade.md lines 213-248).
+Wires Option A from ADR-0196 (Accepted 2026-08-22): AppState.colorblind_mode
+bool → str ("none" default), settings_view cycle (none → deuteranopia →
+protanopia → tritanopia → none), SAVE_SCHEMA_VERSION 2 → 3 with
+_migrate_colorblind_field helper (True → "deuteranopia", False/missing →
+"none", unknown → "none" fallback). 5 i18n keys added to en.json + ko.json
+(label/none/deuteranopia/protanopia/tritanopia). 8 files touched,
+combat/accessibility.py NOT modified (closed per ADR-0183).
+5705 passed / 365 skipped / 1 xfailed — baseline 5700 + 5 new migration
+tests maintained. ruff + mypy strict clean.

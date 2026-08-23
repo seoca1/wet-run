@@ -93,7 +93,12 @@
     "footer": "Phase 7 — Settings",
     "on": "ON",
     "off": "OFF",
-    "keymap_value": "See Help screen"
+    "keymap_value": "See Help screen",
+    "colorblind_label": "Colorblind Mode",
+    "colorblind_none": "None",
+    "colorblind_deuteranopia": "Deuteranopia (Red-Green)",
+    "colorblind_protanopia": "Protanopia (Red-Weak)",
+    "colorblind_tritanopia": "Tritanopia (Blue-Yellow)"
   },
   "salvation": {
     "title": "=== SALVATION PHASE — Epilogue Selection ===",

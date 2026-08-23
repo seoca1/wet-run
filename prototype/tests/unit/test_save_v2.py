@@ -20,8 +20,8 @@ from wet_run.combat.save_v2 import (
 
 
 def test_schema_version_constant() -> None:
-    assert SAVE_SCHEMA_VERSION == 2
-    assert get_schema_version() == 2
+    assert SAVE_SCHEMA_VERSION == 3
+    assert get_schema_version() == 3
 
 
 def test_create_save_data() -> None:
@@ -149,3 +149,67 @@ def test_serialize_deserialize_roundtrip() -> None:
     assert data2.player_data == data.player_data
     assert data2.meta_data == data.meta_data
     assert data2.schema_version == data.schema_version
+
+
+def test_migrate_v2_colorblind_true_to_deuteranopia() -> None:
+    """ADR-0196: legacy save v2 with colorblind_mode=True migrates to "deuteranopia"."""
+    v2_data = {
+        "schema_version": 2,
+        "player_data": {"hp": 100, "colorblind_mode": True},
+        "meta_data": {},
+        "replay_data": None,
+    }
+    migrated = migrate_save(v2_data)
+    assert migrated.schema_version == SAVE_SCHEMA_VERSION
+    assert migrated.player_data["colorblind_mode"] == "deuteranopia"
+    assert migrated.player_data["hp"] == 100
+
+
+def test_migrate_v2_colorblind_false_to_none() -> None:
+    """ADR-0196: legacy save v2 with colorblind_mode=False migrates to "none"."""
+    v2_data = {
+        "schema_version": 2,
+        "player_data": {"hp": 100, "colorblind_mode": False},
+        "meta_data": {},
+        "replay_data": None,
+    }
+    migrated = migrate_save(v2_data)
+    assert migrated.schema_version == SAVE_SCHEMA_VERSION
+    assert migrated.player_data["colorblind_mode"] == "none"
+
+
+def test_migrate_v2_colorblind_missing_to_none() -> None:
+    """ADR-0196: legacy save v2 without colorblind_mode field defaults to "none"."""
+    v2_data = {
+        "schema_version": 2,
+        "player_data": {"hp": 100},
+        "meta_data": {},
+        "replay_data": None,
+    }
+    migrated = migrate_save(v2_data)
+    assert migrated.schema_version == SAVE_SCHEMA_VERSION
+    assert migrated.player_data["colorblind_mode"] == "none"
+
+
+def test_migrate_v2_colorblind_unknown_value_to_none() -> None:
+    """ADR-0196: unrecognized colorblind string falls back to "none"."""
+    v2_data = {
+        "schema_version": 2,
+        "player_data": {"hp": 100, "colorblind_mode": "unknown"},
+        "meta_data": {},
+        "replay_data": None,
+    }
+    migrated = migrate_save(v2_data)
+    assert migrated.player_data["colorblind_mode"] == "none"
+
+
+def test_migrate_v3_colorblind_already_str_unchanged() -> None:
+    """v3 save with valid colorblind_mode str passes through unchanged."""
+    v3_data = {
+        "schema_version": 3,
+        "player_data": {"hp": 100, "colorblind_mode": "protanopia"},
+        "meta_data": {},
+        "replay_data": None,
+    }
+    migrated = migrate_save(v3_data)
+    assert migrated.player_data["colorblind_mode"] == "protanopia"

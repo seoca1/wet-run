@@ -358,7 +358,7 @@ class AppState:
     hall_of_dead_selected: int = 0  # selected index in HALL_OF_DEAD screen
     # Settings screen state (Phase 7)
     settings_selected: int = 0  # selected option index in SETTINGS screen
-    colorblind_mode: bool = False  # colorblind-friendly palette toggle
+    colorblind_mode: str = "none"  # one of COLORBLIND_MODES (ADR-0196)
     telemetry_opt_in: bool = False  # telemetry opt-in toggle (Phase 15)
     perf_hud_enabled: bool = False  # performance HUD toggle (Phase 15)
     # Phase 17: rule_id of the random_rules entry that fired on the

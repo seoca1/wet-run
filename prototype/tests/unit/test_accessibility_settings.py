@@ -24,10 +24,10 @@ class TestAppStateAccessibility:
         state = AppState()
         assert state.high_contrast is False
 
-    def test_colorblind_mode_default_still_false(self) -> None:
-        """Ensure existing colorblind_mode not regressed by this work."""
+    def test_colorblind_mode_default_is_none(self) -> None:
+        """ADR-0196: colorblind_mode default is "none" (one of COLORBLIND_MODES)."""
         state = AppState()
-        assert state.colorblind_mode is False
+        assert state.colorblind_mode == "none"
 
 
 class TestSettingsViewOptions:

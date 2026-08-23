@@ -2,7 +2,7 @@
 
 Options:
 - Audio Volume: +/- to adjust
-- Colorblind Mode: ON/OFF toggle
+- Colorblind Mode: cycle 4 values (ADR-0196): none → deuteranopia → protanopia → tritanopia
 - Keymap: display current controls (read-only)
 - Resolution: display current resolution
 - Back to Menu
@@ -15,6 +15,7 @@ import tcod.event
 from tcod.event import KeyDown, KeySym
 
 from ..audio import sound_manager
+from ..combat.accessibility import COLORBLIND_MODES
 from ..i18n import Translator
 from .layout import (
     RegionId,
@@ -96,8 +97,8 @@ def render_settings(
             bar = "[" + "=" * filled + " " * (bar_len - filled) + "]"
             value_str = f"{bar} {vol_pct}%"
         elif opt_id == "colorblind":
-            cb = getattr(state, "colorblind_mode", False)
-            value_str = t("settings.on") if cb else t("settings.off")
+            cb = getattr(state, "colorblind_mode", "none")
+            value_str = t(f"settings.colorblind_{cb}")
         elif opt_id == "telemetry":
             tel = getattr(state, "telemetry_opt_in", False)
             value_str = t("settings.on") if tel else t("settings.off")
@@ -163,8 +164,12 @@ def handle_settings_input(
             _adjust_volume(+0.1)
             return state
         elif opt_id == "colorblind":
-            current = getattr(state, "colorblind_mode", False)
-            state.colorblind_mode = not current
+            current = getattr(state, "colorblind_mode", "none")
+            try:
+                idx = COLORBLIND_MODES.index(current)
+            except ValueError:
+                idx = 0
+            state.colorblind_mode = COLORBLIND_MODES[(idx + 1) % len(COLORBLIND_MODES)]
             return state
         elif opt_id == "telemetry":
             current = getattr(state, "telemetry_opt_in", False)
@@ -214,8 +219,12 @@ def handle_settings_input(
             if opt_id == "audio":
                 _adjust_volume(+0.1)
             elif opt_id == "colorblind":
-                current = getattr(state, "colorblind_mode", False)
-                state.colorblind_mode = not current
+                current = getattr(state, "colorblind_mode", "none")
+                try:
+                    idx = COLORBLIND_MODES.index(current)
+                except ValueError:
+                    idx = 0
+                state.colorblind_mode = COLORBLIND_MODES[(idx + 1) % len(COLORBLIND_MODES)]
             elif opt_id == "back":
                 state.screen = ScreenKind.MENU
                 if hasattr(state, "settings_selected"):

@@ -51,9 +51,10 @@ class TestAppStateSettings:
         state.screen = ScreenKind.SETTINGS
         assert getattr(state, "settings_selected", 0) == 0
 
-    def test_colorblind_mode_defaults_to_false(self) -> None:
+    def test_colorblind_mode_defaults_to_none(self) -> None:
+        """ADR-0196: AppState.colorblind_mode default is the string "none"."""
         state = AppState()
-        assert getattr(state, "colorblind_mode", False) is False
+        assert getattr(state, "colorblind_mode", "none") == "none"
 
     def test_settings_selected_wraps_forward(self) -> None:
         state = AppState()
@@ -162,12 +163,13 @@ class TestHandleSettingsInput:
         finally:
             _set_volume(original)
 
-    def test_enter_on_colorblind_toggles(self, settings_state: AppState) -> None:
+    def test_enter_on_colorblind_cycles(self, settings_state: AppState) -> None:
+        """ADR-0196: ENTER on colorblind cycles to next value (none → deuteranopia)."""
         settings_state.settings_selected = 1  # colorblind
-        settings_state.colorblind_mode = False
+        settings_state.colorblind_mode = "none"
         result = handle_settings_input(self._key(KeySym.RETURN), settings_state)
         assert result is not None
-        assert result.colorblind_mode is True
+        assert result.colorblind_mode == "deuteranopia"
 
     def test_enter_on_back_returns_to_menu(self, settings_state: AppState) -> None:
         settings_state.settings_selected = 8  # back

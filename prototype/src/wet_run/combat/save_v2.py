@@ -1,7 +1,12 @@
-"""Save/Load Migration v2 (ADR-0185).
+"""Save/Load Migration v3 (ADR-0185, ADR-0196).
 
 Versioned save system. Saves include a schema version number that
 allows migration between versions.
+
+v2 → v3 (ADR-0196): ``player_data["colorblind_mode"]`` migrates from a
+plain ``bool`` to a 4-value ``str`` (one of ``COLORBLIND_MODES``).
+``bool=True`` maps to ``"deuteranopia"`` (most common form per ADR-0196
+recommendation) and ``bool=False`` maps to ``"none"``.
 """
 
 from __future__ import annotations
@@ -10,7 +15,9 @@ import json
 from dataclasses import dataclass
 from typing import cast
 
-SAVE_SCHEMA_VERSION = 2
+from .accessibility import COLORBLIND_MODES
+
+SAVE_SCHEMA_VERSION = 3
 
 
 @dataclass(frozen=True, slots=True)
@@ -58,6 +65,9 @@ def migrate_save(data: dict[str, object]) -> SaveData:
         if "replay_data" not in data:
             data["replay_data"] = None
         data["schema_version"] = 2
+    if version <= 2:
+        _migrate_colorblind_field(data)
+        data["schema_version"] = 3
     player2: dict[str, object] = cast(dict[str, object], data.get("player_data", {}))
     meta2: dict[str, object] = cast(dict[str, object], data.get("meta_data", {}))
     replay2: dict[str, object] | None = cast(dict[str, object] | None, data.get("replay_data"))
@@ -67,6 +77,27 @@ def migrate_save(data: dict[str, object]) -> SaveData:
         meta_data=meta2,
         replay_data=replay2,
     )
+
+
+def _migrate_colorblind_field(data: dict[str, object]) -> None:
+    """Convert ``player_data['colorblind_mode']`` from bool → str per ADR-0196.
+
+    In-place mutation. ``True``→``"deuteranopia"``, ``False``/missing→``"none"``,
+    any other unrecognized value falls back to ``"none"``.
+    """
+    player_data_raw = data.get("player_data")
+    player_data = (
+        cast(dict[str, object], player_data_raw) if isinstance(player_data_raw, dict) else {}
+    )
+    raw_value = player_data.get("colorblind_mode", False)
+    if isinstance(raw_value, bool):
+        migrated = "deuteranopia" if raw_value else "none"
+    elif isinstance(raw_value, str) and raw_value in COLORBLIND_MODES:
+        migrated = raw_value
+    else:
+        migrated = "none"
+    player_data["colorblind_mode"] = migrated
+    data["player_data"] = player_data
 
 
 def serialize_save(data: SaveData) -> str:

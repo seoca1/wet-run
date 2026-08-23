@@ -93,7 +93,12 @@
     "footer": "Phase 7 — 설정",
     "on": "켜기",
     "off": "끄기",
-    "keymap_value": "도움말 화면 참조"
+    "keymap_value": "도움말 화면 참조",
+    "colorblind_label": "색맹 모드",
+    "colorblind_none": "없음",
+    "colorblind_deuteranopia": "적록색맹 (Deuteranopia)",
+    "colorblind_protanopia": "적색약 (Protanopia)",
+    "colorblind_tritanopia": "청황색맹 (Tritanopia)"
   },
   "salvation": {
     "title": "=== 구원 단계 — 에필로그 선택 ===",

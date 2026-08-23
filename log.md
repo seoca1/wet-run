@@ -1,4 +1,6 @@
 
+## [2026-08-23] fix | F3 boot crash — dispatcher arity handling (1-line fix surfaced by Final Verification)
+
 ## [2026-08-19] dashboard | Game/dashboard v2.0 — 통합 허브 + 라이브 stats (cross-project hub)
 
 **Status**: ✅ **Game/dashboard v2.0.0 업그레이드 완료** — 워크스페이스 차원의 cross-project hub 재구축. 구 15KB 단일 프로토타입 (`roguelike_sprawl` 옛 이름) → Vite + TS strict + build-time aggregator 기반 모던 정적 사이트.

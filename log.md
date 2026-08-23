@@ -2298,3 +2298,5 @@ mypy strict 0. combat_view_render.py / boss.py / boss_phase_tracker.py NOT
 modified (closed per Wave 3 plan); hud.py LOC 520 unchanged (no extraction
 needed). Commit 6db0770. Evidence: .omo/evidence/task-5-wet-run-ui-visibility-upgrade.txt.
 Plan: .omo/plans/wet-run-ui-visibility-upgrade.md T2.1.
+
+[2026-08-23] feat | T2.3 achievement unlock consumer + toast render (3s, top-right)

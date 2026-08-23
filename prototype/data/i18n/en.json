@@ -931,5 +931,9 @@
     "wetware_armor_lv3_description": "Tier 3 armor. +25% damage reduction (new stat).",
     "wetware_focus_lv3_name": "Focus Lv3",
     "wetware_focus_lv3_description": "Tier 3 focus. +30% program power (new stat)."
+  },
+  "achievement": {
+    "toast_title": "Achievement Unlocked!",
+    "toast_reward": "+{credits} credits"
   }
 }

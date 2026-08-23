@@ -72,6 +72,11 @@ def render_combat(
     # Render persistent status panel
     render_status_panel(console, state, panel_r)
 
+    # T2.3: achievement toast overlay — top of status panel, 3s auto-dismiss.
+    from ..combat.achievement_toast_render import draw_achievement_toast
+
+    draw_achievement_toast(console, panel_r, t, state)
+
     # Title
     ppl = calculate_ppl(state.player_loadout)
     # Assume current_node_id points to the ICE node

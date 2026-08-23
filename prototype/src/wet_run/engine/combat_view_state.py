@@ -250,6 +250,8 @@ def _end_combat(state: AppState, combat_state: CombatState) -> None:
         spawn_ice_death(state.combat_effects, ice_type)
         # Play victory sound
         safe_play("combat/victory")
+        # T2.3: emit ice_killed achievement event (first_blood / centurion).
+        _emit_achievement_combat_event(state, combat_state, "ice_killed", value=1)
         # Award rewards: ICE Shard material + credits
         if not hasattr(state, "inventory") or state.inventory is None:
             state.inventory = {}
@@ -446,12 +448,28 @@ def _remove_node_from_graph(matrix: MatrixGraph | None, node_id: str) -> MatrixG
     )
 
 
+def _emit_achievement_combat_event(
+    state: AppState,
+    combat_state: CombatState,
+    event: str,
+    value: int = 0,
+) -> None:
+    """Forward a combat event to the achievement system. No-op when ``achievement_state`` is unset."""
+    ach_state = getattr(state, "achievement_state", None)
+    if ach_state is None:
+        return
+    from ..achievements.registry import check_combat_event
+
+    check_combat_event(ach_state, event, value=value, current_ms=int(combat_state.tick_ms))
+
+
 # Re-exported by combat_view for backward compat (ADR-0110).
 __all__ = [
     "COMBAT_REPUTATION",
     "_apply_combat_reputation",
     "_check_post_combat_event",
     "_defeat_current_ice_node",
+    "_emit_achievement_combat_event",
     "_end_combat",
     "_remove_node_from_graph",
     "spawn_phase_transition",

@@ -83,6 +83,7 @@ class StatusMessageList(UserList[str]):
 
 
 if TYPE_CHECKING:
+    from ..achievements.models import Achievement, AchievementState
     from ..audio import SoundConfig
     from ..combat.boss_phase4.intro import BossIntroEnhancement
     from ..combat.performance_integration import PerfTracker
@@ -297,6 +298,11 @@ class AppState:
     run_state: RunState | None = None
     # Sound configuration (per-category on/off + master volume)
     sound_config: SoundConfig | None = None
+    # T2.3: achievement progress, populated by trigger sites (combat / mission / jack-in).
+    achievement_state: AchievementState | None = None
+    # T2.3: achievement toast — render-loop consumer pops one at a time, dismisses after 3000ms.
+    toast_achievement: Achievement | None = None
+    toast_started_ms: int = 0
     # v0.5: Data Fragment collection (collectible lore from missions)
     # Set of collected fragment_ids. Each unlocks wiki lore and a discovery flag.
     data_fragments: set[str] = field(default_factory=set)

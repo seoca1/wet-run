@@ -150,6 +150,9 @@ def complete_mission(state: AppState, mission: object) -> None:
     state.status_messages.append(f">>> MISSION COMPLETE: {mission.title}")
     state.status_messages.append(">>> Return to hub for next job")
 
+    # T2.3: first-mission-complete achievement (story category).
+    _unlock_first_mission_complete(state)
+
     # Phase 16: Telemetry (opt-in only).
     if getattr(state, "telemetry_opt_in", False):
         integrator = getattr(state, "telemetry", None)
@@ -231,3 +234,30 @@ def get_mission_summary(state: AppState) -> str:
         required = m.primary_objective.count
         return f"{m.title} — {m.primary_objective.type} {current}/{required} ({pct}%)"
     return f"{m.title} — (no objective)"
+
+
+def _unlock_first_mission_complete(state: AppState) -> None:
+    """Unlock the story prologue achievement matching the player's character.
+
+    Maps ``character_id`` (novice / veteran / heretic + aliases) to
+    ``case_journey`` / ``sil_awakening`` / ``kas_rise``. No-op when
+    ``achievement_state`` is unset or character is unknown.
+    """
+    ach_state = getattr(state, "achievement_state", None)
+    if ach_state is None:
+        return
+    import time
+
+    char_to_ach: dict[str, str] = {
+        "novice": "case_journey",
+        "case": "case_journey",
+        "veteran": "sil_awakening",
+        "sil": "sil_awakening",
+        "heretic": "kas_rise",
+        "kas": "kas_rise",
+    }
+    ach_id = char_to_ach.get(getattr(state, "character_id", ""))
+    if ach_id is None:
+        return
+    current_ms = int(time.time() * 1000)
+    ach_state.unlock(ach_id, current_ms)

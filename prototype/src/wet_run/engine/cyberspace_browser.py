@@ -352,6 +352,9 @@ def _jack_into_server(state: AppState, server: Server) -> None:
     # Trigger entry event (chiba city intro) on first jack-in
     _check_entry_event(state)
 
+    # T2.3: first-jackin achievement (exploration category).
+    _emit_jack_in_event(state)
+
 
 def _check_entry_event(state: AppState) -> None:
     """Check if an entry event should trigger on jack-in."""
@@ -374,3 +377,16 @@ def _check_entry_event(state: AppState) -> None:
     if event is not None:
         state.active_event = EventState(event=event)
         state.screen = ScreenKind.EVENT
+
+
+def _emit_jack_in_event(state: AppState) -> None:
+    """Forward a jack-in exploration event. No-op when ``achievement_state`` is unset."""
+    ach_state = getattr(state, "achievement_state", None)
+    if ach_state is None:
+        return
+    import time
+
+    from ..achievements.registry import check_exploration_event
+
+    current_ms = int(time.time() * 1000)
+    check_exploration_event(ach_state, "jack_in", value=1, current_ms=current_ms)

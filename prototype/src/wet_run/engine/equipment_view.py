@@ -16,6 +16,7 @@ from ..combat.palette import (
     GRAY_LIGHT,
     GRAY_MID,
     GREEN_BRIGHT,
+    ICE_GREEN_GLOW,
     ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
     MAGENTA_PINK,
     SHIELD_COLOR,
@@ -325,7 +326,7 @@ def _tier_color(tier: object) -> tuple[int, int, int]:
     """Color by tier."""
     colors = {
         "T0": GRAY_LIGHT,
-        "T1": (100, 200, 100),
+        "T1": ICE_GREEN_GLOW,
         "T2": (100, 150, 255),
         "T3": DEBUFF_COLOR,
         "T4": YELLOW_ORANGE,

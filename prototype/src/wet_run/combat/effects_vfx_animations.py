@@ -30,7 +30,12 @@ from .palette import (
     HEAL_COLOR,
     HIT_FLASH_COLOR,
     ICE_BREAK_COLOR,
+    ICE_FADE_PURPLE,
+    ICE_GREEN_BRIGHT,
+    ICE_GREEN_PALE,
+    ICE_RED_FADED,
     ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    ICE_WARN_GOLD,
     ORANGE,
     SHIELD_COLOR,
     STUN_COLOR,
@@ -99,9 +104,9 @@ def dot_animation() -> Animation:
     """DOT/POISON: toxic particles around target."""
     return Animation(
         frames=(
-            AnimationFrame("(•*•)", (180, 100, 200), 100),
+            AnimationFrame("(•*•)", ICE_FADE_PURPLE, 100),
             AnimationFrame("(•••)", (200, 80, 220), 100),
-            AnimationFrame("·•••·", (180, 100, 200), 100),
+            AnimationFrame("·•••·", ICE_FADE_PURPLE, 100),
             AnimationFrame("(•••)", (160, 80, 200), 100),
             AnimationFrame("(•*•)", (140, 60, 180), 150),
         )
@@ -128,7 +133,7 @@ def heal_animation() -> Animation:
             AnimationFrame("·+·", HEAL_COLOR, 100),
             AnimationFrame("·✚·", (120, 255, 150), 100),
             AnimationFrame("·❀·", (200, 255, 220), 100),
-            AnimationFrame("+✚❀", (150, 255, 180), 100),
+            AnimationFrame("+✚❀", ICE_GREEN_PALE, 100),
             AnimationFrame("✚❀✚", (100, 255, 150), 150),
         )
     )
@@ -138,9 +143,9 @@ def regen_animation() -> Animation:
     """REGEN: gentle pulse of plus signs."""
     return Animation(
         frames=(
-            AnimationFrame("·+·", (120, 200, 150), 150),
+            AnimationFrame("·+·", ICE_GREEN_BRIGHT, 150),
             AnimationFrame("·+·", (150, 220, 170), 150),
-            AnimationFrame("·+·", (120, 200, 150), 150),
+            AnimationFrame("·+·", ICE_GREEN_BRIGHT, 150),
         )
     )
 
@@ -203,9 +208,9 @@ def lifesteal_animation() -> Animation:
         frames=(
             AnimationFrame("~~>", DAMAGE_COLOR, 80),
             AnimationFrame("~~=>", TA_CONSTRUCT_P2_COLOR, 80),
-            AnimationFrame("~~==>", (180, 80, 80), 80),
+            AnimationFrame("~~==>", ICE_RED_FADED, 80),
             AnimationFrame("·✦·", HEAL_COLOR, 100),
-            AnimationFrame("·+·", (150, 255, 180), 150),
+            AnimationFrame("·+·", ICE_GREEN_PALE, 150),
         )
     )
 
@@ -257,7 +262,7 @@ def critical_hit_animation() -> Animation:
             AnimationFrame("!!", DAMAGE_FLASH_COLOR, 60),
             AnimationFrame("·!·", (255, 200, 100), 60),
             AnimationFrame("!", ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR, 80),
-            AnimationFrame("!", (200, 200, 0), 100),
+            AnimationFrame("!", ICE_WARN_GOLD, 100),
         )
     )
 

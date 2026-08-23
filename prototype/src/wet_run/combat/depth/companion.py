@@ -15,8 +15,8 @@ import random
 from enum import StrEnum
 from typing import Any
 
-from ..state_models import CombatState
 from ...combat.palette import DEBUFF_COLOR, WARM
+from ..state_models import CombatState
 
 
 class CompanionSkillId(StrEnum):

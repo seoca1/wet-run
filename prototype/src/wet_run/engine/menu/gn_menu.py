@@ -18,8 +18,6 @@ import tcod.console
 import tcod.event
 from tcod.event import KeyDown, KeySym
 
-from ...i18n import Translator
-from ...story.ending_renderer import EndingRenderer
 from ...combat.palette import (
     DEFAULT_COLOR,
     GRAY_120,
@@ -29,6 +27,8 @@ from ...combat.palette import (
     OLIVE,
     TA_CONSTRUCT_P2_COLOR,
 )
+from ...i18n import Translator
+from ...story.ending_renderer import EndingRenderer
 from ..state import AppState, ScreenKind
 
 GN_MENU_OPTION_COUNT = 11

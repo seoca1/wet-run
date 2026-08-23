@@ -40,7 +40,9 @@ from .palette import (
     DAMAGE_COLOR,
     HEAL_COLOR,
     HIT_FLASH_COLOR,
+    ICE_CYAN_DIM,
     ICE_TYPE_WATCHDOG_COLOR,
+    ICE_YELLOW_WARM,
     OLIVE,
     TA_CONSTRUCT_P1_COLOR,
     TIER_GOLD,
@@ -240,7 +242,7 @@ def spawn_jackin_glitch(effects: CombatEffects) -> None:
         x=0.0,
         y=0.0,
         chars=("▓", "▒", "░", "+", "·", "/", "\\"),
-        color=(120, 220, 220),
+        color=ICE_CYAN_DIM,
         count=18,
         speed=45.0,
         life_ms=500,
@@ -257,11 +259,11 @@ def spawn_jackin_glitch(effects: CombatEffects) -> None:
         spread=math.tau,
     )
     effects.shake.trigger(intensity=80, duration_ms=180)
-    effects.hit_flash.trigger(color=(120, 220, 220), duration_ms=120)
+    effects.hit_flash.trigger(color=ICE_CYAN_DIM, duration_ms=120)
     effects.cinematic = CinematicSequence(
         name="jackin",
         phases=(
-            (">> JACKING IN...", (120, 220, 220), 180),
+            (">> JACKING IN...", ICE_CYAN_DIM, 180),
             (">> SCANNING HOST...", ICE_TYPE_WATCHDOG_COLOR, 180),
             (">> CYBERSPACE LOADED", (180, 220, 120), 220),
         ),
@@ -317,7 +319,7 @@ def spawn_data_acquired(effects: CombatEffects, x: float = 0.0, y: float = 0.0) 
         name="data_acquired",
         phases=(
             (">> DATA FRAGMENT RECOVERED", TIER_GOLD, 280),
-            ("+ CREDITS + REPUTATION", (220, 220, 180), 200),
+            ("+ CREDITS + REPUTATION", ICE_YELLOW_WARM, 200),
         ),
     )
 

@@ -26,6 +26,7 @@ from .palette import (
     GLITCH_COLOR,
     GOLIATH_PARTICLE_COLOR,
     HIT_FLASH_COLOR,
+    ICE_GRAY_BLUE,
     ICE_TYPE_NEUROMANCER_COLOR,
     ICE_TYPE_PATROL_COLOR,
 )
@@ -106,7 +107,7 @@ GOLIATH_PRIME = BossSpec(
             name="정상",
             hp_threshold_pct=100,
             intro_line="",
-            color=(150, 150, 170),
+            color=ICE_GRAY_BLUE,
         ),
         BossPhase(
             index=1,

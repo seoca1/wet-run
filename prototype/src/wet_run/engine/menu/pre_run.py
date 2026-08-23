@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import tcod.console
 
-from ...i18n import Translator
 from ...combat.palette import (
     COMBO_BAR_YELLOW,
     DEFAULT_COLOR,
@@ -21,6 +20,7 @@ from ...combat.palette import (
     ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
     OLIVE,
 )
+from ...i18n import Translator
 from ..state import AppState, ScreenKind
 
 CHARACTER_OPTIONS = [

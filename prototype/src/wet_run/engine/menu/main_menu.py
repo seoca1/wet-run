@@ -13,8 +13,8 @@ import tcod.console
 import tcod.event
 from tcod.event import KeyDown, KeySym
 
-from ...i18n import Translator
 from ...combat.palette import DEFAULT_COLOR, GRAY_MID, ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR
+from ...i18n import Translator
 from ..layout import (
     RegionId,
     clear_region,

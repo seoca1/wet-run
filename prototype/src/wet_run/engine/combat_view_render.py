@@ -31,6 +31,7 @@ from ..combat.palette import (
     GREEN_PURE,
     HIT_FLASH_COLOR,
     ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    ICE_WARN_GOLD,
     PROBE_COLOR,
     SHIELD_COLOR,
     STUN_COLOR,
@@ -322,7 +323,7 @@ def _draw_combatants(
         if not progress.is_last_phase:
             y += 1
             next_str = f"NEXT: {int(progress.hp_threshold * 100)}% HP"
-            console.print(x=x, y=y, string=next_str, fg=(200, 200, 0))
+            console.print(x=x, y=y, string=next_str, fg=ICE_WARN_GOLD)
 
     y += 1
     console.print(x=x, y=y, string=f"ATK: {enemy.auto_attack_damage}", fg=(180, 180, 180))

@@ -31,6 +31,10 @@ from .palette import (
     GRAY_LIGHT,
     GRAY_MID,
     GRAY_MID_DARK,
+    ICE_FADE_BROWN,
+    ICE_GRAY_BLUE,
+    ICE_GRAY_LIGHT,
+    ICE_RED_PINK,
     ICE_TYPE_PATROL_COLOR,
     ICE_TYPE_WATCHDOG_COLOR,
     MAGENTA_DEEP,
@@ -74,7 +78,7 @@ def ice_intro_sequence(ice_type: IceType, name: str) -> CinematicSequence:
             name="goliath_intro",
             phases=(
                 ("...", (100, 100, 120), 300),
-                (f"[ {name} ]", (150, 150, 170), 200),
+                (f"[ {name} ]", ICE_GRAY_BLUE, 200),
                 (f"[ {name} ]", TA_CONSTRUCT_P2_COLOR, 100),
                 (f"··[{name}]··", COMBO_BAR_RED, 100),
                 (f"··[{name}]··", DAMAGE_FLASH_COLOR, 1000),
@@ -190,7 +194,7 @@ def boss_phase_transition_sequence(
         name=f"{ice_type.value}_phase_{phase}_transition",
         phases=(
             (f"PHASE {phase}/{total_phases}", DEFAULT_COLOR, 600),
-            (f"PHASE {phase}/{total_phases}", (240, 240, 240), 600),
+            (f"PHASE {phase}/{total_phases}", ICE_GRAY_LIGHT, 600),
         ),
     )
 
@@ -214,8 +218,8 @@ def ice_death_sequence(ice_type: IceType) -> CinematicSequence:
             phases=(
                 ("woof...?", ICE_TYPE_WATCHDOG_COLOR, 200),
                 ("[X_O]", (200, 150, 100), 150),
-                ("[X_X]", (180, 100, 100), 150),
-                ("[X_X]", (150, 80, 80), 200),
+                ("[X_X]", ICE_RED_PINK, 150),
+                ("[X_X]", ICE_FADE_BROWN, 200),
                 ("· · ·", DEFAULT_COLOR, 300),
             ),
         )

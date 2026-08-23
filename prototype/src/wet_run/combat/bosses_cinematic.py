@@ -21,6 +21,8 @@ from .palette import (
     GRAY_MID_DARK,
     GRAY_VERY_DARK,
     HIT_FLASH_COLOR,
+    ICE_FADE_BROWN,
+    ICE_RED_PINK,
     ICE_TYPE_NEUROMANCER_COLOR,
     ICE_TYPE_WATCHDOG_COLOR,
     MAGENTA_DEEP,
@@ -216,7 +218,7 @@ def _watchdog_death_sequence() -> list[CinematicSequence]:
         phases=(
             ("[X_O]", ICE_TYPE_WATCHDOG_COLOR, 150),
             ("[X_X]", TA_CONSTRUCT_P2_COLOR, 200),
-            ("[X_X]", (150, 80, 80), 250),
+            ("[X_X]", ICE_FADE_BROWN, 250),
         ),
     )
     seq2 = CinematicSequence(
@@ -224,13 +226,13 @@ def _watchdog_death_sequence() -> list[CinematicSequence]:
         phases=(
             ("...", (200, 150, 100), 200),
             ("...woof?", TA_CONSTRUCT_P2_COLOR, 400),
-            ("[system: target lost]", (180, 100, 100), 400),
+            ("[system: target lost]", ICE_RED_PINK, 400),
         ),
     )
     seq3 = CinematicSequence(
         name="watchdog_core_exposure",
         phases=(
-            ("[X_X]", (150, 80, 80), 200),
+            ("[X_X]", ICE_FADE_BROWN, 200),
             ("[X·X]", (100, 60, 60), 250),
             ("[·_·]", (80, 40, 40), 300),
         ),

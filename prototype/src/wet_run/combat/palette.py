@@ -96,6 +96,22 @@ WINTERMUTE_FADE: Final[tuple[int, int, int]] = (220, 0, 220)  # wintermute final
 GRAY_96: Final[tuple[int, int, int]] = (96, 96, 96)  # mid gray (dim)
 GRAY_64: Final[tuple[int, int, int]] = (64, 64, 64)  # dark gray
 ICE_RED_DARK: Final[tuple[int, int, int]] = (220, 60, 60)  # ICE dark red (alert)
+ICE_CYAN_DIM: Final[tuple[int, int, int]] = (120, 220, 220)  # dim cyan (ICE calm)
+ICE_BLUE_BRIGHT: Final[tuple[int, int, int]] = (160, 200, 255)  # bright blue (ICE active)
+ICE_FADE_BROWN: Final[tuple[int, int, int]] = (150, 80, 80)  # fade brown (death)
+ICE_FADE_DARK: Final[tuple[int, int, int]] = (140, 100, 100)  # fade dark
+ICE_FADE_PURPLE: Final[tuple[int, int, int]] = (180, 100, 200)  # fade purple (death)
+ICE_WARN_GOLD: Final[tuple[int, int, int]] = (200, 200, 0)  # warning gold
+ICE_GREEN_GLOW: Final[tuple[int, int, int]] = (100, 200, 100)  # ICE green glow
+ICE_GREEN_BRIGHT: Final[tuple[int, int, int]] = (120, 200, 150)  # ICE green-bright
+ICE_GREEN_PALE: Final[tuple[int, int, int]] = (150, 255, 180)  # ICE green-pale
+ICE_GRAY_BLUE: Final[tuple[int, int, int]] = (150, 150, 170)  # ICE gray-blue
+ICE_RED_BLOOD: Final[tuple[int, int, int]] = (180, 50, 50)  # ICE blood red
+ICE_RED_FADED: Final[tuple[int, int, int]] = (180, 80, 80)  # ICE red faded
+ICE_RED_PINK: Final[tuple[int, int, int]] = (180, 100, 100)  # ICE pink-red
+ICE_BLUE_PALE: Final[tuple[int, int, int]] = (180, 200, 255)  # ICE pale blue
+ICE_YELLOW_WARM: Final[tuple[int, int, int]] = (220, 220, 180)  # ICE warm yellow
+ICE_GRAY_LIGHT: Final[tuple[int, int, int]] = (240, 240, 240)  # ICE gray light
 
 # ----------------------------------------------------------------------------
 # Wintermute boss phase colors (3-tier escalation)
@@ -369,10 +385,27 @@ __all__ = [
     "HP_LOW_COLOR",
     "HP_MID_COLOR",
     "ICE_BLACK_PALETTE",
+    "ICE_BLUE_BRIGHT",
+    "ICE_BLUE_PALE",
     "ICE_BREAK_COLOR",
     "ICE_CONSTRUCT_PALETTE",
+    "ICE_CYAN_DIM",
+    "ICE_FADE_BROWN",
+    "ICE_FADE_DARK",
+    "ICE_FADE_PURPLE",
     "ICE_GLOW",
     "ICE_GOLIATH_PALETTE",
+    "ICE_GRAY_BLUE",
+    "ICE_GRAY_LIGHT",
+    "ICE_GREEN_BRIGHT",
+    "ICE_GREEN_GLOW",
+    "ICE_GREEN_PALE",
+    "ICE_RED_BLOOD",
+    "ICE_RED_DARK",
+    "ICE_RED_FADED",
+    "ICE_RED_PINK",
+    "ICE_WARN_GOLD",
+    "ICE_YELLOW_WARM",
     "ICE_PALETTES",
     "ICE_RED_DARK",
     "ICE_STANDARD_PALETTE",

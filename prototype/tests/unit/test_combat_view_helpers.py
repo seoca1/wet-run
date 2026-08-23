@@ -525,6 +525,158 @@ class TestDrawCombatants:
         _draw_combatants(console, region, cs)
 
 
+class TestDrawBossPhaseIndicator:
+    """Lock the render path of `phase_str` for BossPhaseTracker users.
+
+    Per .omo/plans/wet-run-ui-visibility-upgrade.md T2.1: only 3 F.4 bosses
+    use BossPhaseTracker (neuromancer / loa_baron / black_baron); wintermute
+    and ta_construct_prime use phase logic directly in combat/boss.py and
+    must cleanly skip the phase block (no orphan PHASE string).
+    """
+
+    def _make_console(self) -> tcod.console.Console:
+        return tcod.console.Console(width=80, height=50)
+
+    def _make_player(self) -> Combatant:
+        return Combatant(
+            id="player",
+            name="Hero",
+            portrait="@",
+            color=(255, 255, 255),
+            hp=80,
+            max_hp=100,
+            ap=5,
+            max_ap=10,
+            auto_attack_damage=10,
+            skills=(),
+            team="player",
+            ice_kind="standard",
+        )
+
+    def _make_enemy(self, name: str = "Boss", ice_kind: str = "boss") -> Combatant:
+        return Combatant(
+            id=ice_kind,
+            name=name,
+            portrait="*",
+            color=(255, 0, 100),
+            hp=400,
+            max_hp=400,
+            ap=0,
+            max_ap=0,
+            auto_attack_damage=20,
+            skills=(),
+            team="enemy",
+            ice_kind=ice_kind,
+            current_phase=1,
+        )
+
+    def _decode_row(self, console: tcod.console.Console, y: int, x_start: int, x_end: int) -> str:
+        cells = console.ch[y][x_start:x_end].tolist()
+        return "".join(chr(c) if c != 0 else " " for c in cells)
+
+    def test_tracker_neuromancer_renders_phase_1_of_6(self) -> None:
+        """Happy: neuromancer tracker at phase 1 → 'PHASE 1/6' on phase row."""
+        from wet_run.combat.boss_expansion import NEUROMANCER_PROFILE
+        from wet_run.combat.boss_phase_tracker import BossPhaseTracker
+
+        console = self._make_console()
+        region = Region(id=RegionId.MAIN, x=0, y=0, w=80, h=30)
+        cs = CombatState(
+            player=self._make_player(), enemy=self._make_enemy("Neuromancer", "neuromancer")
+        )
+        cs.boss_phase_tracker = BossPhaseTracker(NEUROMANCER_PROFILE)
+        cs.phase_change_ms = 0  # disable flash; deterministic color
+        _draw_combatants(console, region, cs)
+
+        # Enemy portrait at (55, 2); phase_str renders at row 6.
+        row = self._decode_row(console, y=6, x_start=55, x_end=70)
+        assert "PHASE 1/6" in row, f"Expected 'PHASE 1/6' at row 6 x=55, got {row!r}"
+
+    def test_tracker_loa_baron_renders_phase_1_of_4(self) -> None:
+        from wet_run.combat.boss_expansion import LOA_BARON_PROFILE
+        from wet_run.combat.boss_phase_tracker import BossPhaseTracker
+
+        console = self._make_console()
+        region = Region(id=RegionId.MAIN, x=0, y=0, w=80, h=30)
+        cs = CombatState(
+            player=self._make_player(), enemy=self._make_enemy("Loa Baron", "loa_baron")
+        )
+        cs.boss_phase_tracker = BossPhaseTracker(LOA_BARON_PROFILE)
+        cs.phase_change_ms = 0
+        _draw_combatants(console, region, cs)
+
+        row = self._decode_row(console, y=6, x_start=55, x_end=70)
+        assert "PHASE 1/4" in row, f"Expected 'PHASE 1/4' at row 6 x=55, got {row!r}"
+
+    def test_tracker_black_baron_renders_phase_1_of_4(self) -> None:
+        from wet_run.combat.boss_expansion import BLACK_BARON_PROFILE
+        from wet_run.combat.boss_phase_tracker import BossPhaseTracker
+
+        console = self._make_console()
+        region = Region(id=RegionId.MAIN, x=0, y=0, w=80, h=30)
+        cs = CombatState(
+            player=self._make_player(), enemy=self._make_enemy("Black Baron", "black_baron")
+        )
+        cs.boss_phase_tracker = BossPhaseTracker(BLACK_BARON_PROFILE)
+        cs.phase_change_ms = 0
+        _draw_combatants(console, region, cs)
+
+        row = self._decode_row(console, y=6, x_start=55, x_end=70)
+        assert "PHASE 1/4" in row, f"Expected 'PHASE 1/4' at row 6 x=55, got {row!r}"
+
+    def test_tracker_phase_transition_updates_string(self) -> None:
+        """Transition 1→2 → re-render shows 'PHASE 2/4'."""
+        from wet_run.combat.boss_expansion import LOA_BARON_PROFILE
+        from wet_run.combat.boss_phase_tracker import BossPhaseTracker
+
+        console = self._make_console()
+        region = Region(id=RegionId.MAIN, x=0, y=0, w=80, h=30)
+        enemy = self._make_enemy("Loa Baron", "loa_baron")
+        cs = CombatState(player=self._make_player(), enemy=enemy)
+        tracker = BossPhaseTracker(LOA_BARON_PROFILE)
+        cs.boss_phase_tracker = tracker
+        cs.phase_change_ms = 0
+        _draw_combatants(console, region, cs)
+
+        row1 = self._decode_row(console, y=6, x_start=55, x_end=70)
+        assert "PHASE 1/4" in row1, f"Pre-transition: expected 'PHASE 1/4', got {row1!r}"
+
+        tracker.transition()
+        enemy.current_phase = 2
+        cs2 = CombatState(player=self._make_player(), enemy=enemy)
+        cs2.boss_phase_tracker = tracker
+        cs2.phase_change_ms = 0
+        console2 = self._make_console()
+        _draw_combatants(console2, region, cs2)
+
+        row2 = self._decode_row(console2, y=6, x_start=55, x_end=70)
+        assert "PHASE 2/4" in row2, f"Post-transition: expected 'PHASE 2/4', got {row2!r}"
+
+    def test_no_tracker_cleanly_skips_phase_block(self) -> None:
+        """Failure: tracker is None (wintermute / ta_construct_prime) →
+        no orphan 'PHASE' string at row 6. Render must not crash."""
+        console = self._make_console()
+        region = Region(id=RegionId.MAIN, x=0, y=0, w=80, h=30)
+        cs = CombatState(
+            player=self._make_player(),
+            enemy=self._make_enemy("Wintermute", "wintermute"),
+        )
+        assert cs.boss_phase_tracker is None, "Pre-condition: tracker must default to None"
+        _draw_combatants(console, region, cs)
+
+        # Row 6 must NOT contain "PHASE" — block was cleanly skipped.
+        full_row = self._decode_row(console, y=6, x_start=0, x_end=80)
+        assert "PHASE" not in full_row, (
+            f"Orphan 'PHASE' string at row 6 when tracker is None: {full_row!r}"
+        )
+
+        # ATK line at row 6 (no tracker → no phase block advance) renders.
+        # The render code unconditionally prints ATK one row below hp_bar;
+        # when tracker is None the ATK line lands on row 6.
+        atk_row = self._decode_row(console, y=6, x_start=55, x_end=80)
+        assert "ATK:" in atk_row, f"ATK line missing after no-tracker render: {atk_row!r}"
+
+
 class TestDrawCombatEffects:
     """`_draw_combat_effects(console, main, combat_state)` — smoke tests.
 

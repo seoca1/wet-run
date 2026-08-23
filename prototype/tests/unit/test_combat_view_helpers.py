@@ -936,23 +936,80 @@ class TestDrawSkillsMenu:
 
 
 class TestDrawFirstCombatTutorial:
-    """`_draw_first_combat_tutorial(console, region)` — smoke tests.
+    """`_draw_first_combat_tutorial(console, region)` — smoke + polish verification.
 
-    Renders 4 lines of keyboard hints centered in the main region.
-    First line (header) highlighted yellow, others gray.
+    T3.1 polish (2026-08-23): box-drawing border (`+---+`), skill-hotkey hint
+    line (`Press 1-9 for skills`), and persistent visibility (every frame the
+    `state.show_first_combat_tutorial` flag is True; input layer clears it on
+    Space/Enter). Structural assertions verify the polish actually renders.
     """
+
+    def _make_console(self, width: int = 80, height: int = 50) -> tcod.console.Console:
+        return tcod.console.Console(width=width, height=height)
+
+    def _gather_text(self, console: tcod.console.Console) -> str:
+        """Read console cells into row strings (preserves spaces, strips trailing)."""
+        rows: list[str] = []
+        for y in range(console.height):
+            row_chars: list[str] = []
+            for x in range(console.width):
+                cp = int(console.ch[y, x])
+                if cp:  # skip NUL only — keep spaces
+                    row_chars.append(chr(cp))
+            rows.append("".join(row_chars).rstrip())
+        return "\n".join(rows)
 
     def test_smoke_basic_render(self) -> None:
         """Basic render: 4 hint lines centered in default region."""
-        console = tcod.console.Console(width=80, height=50)
+        console = self._make_console()
         region = Region(id=RegionId.MAIN, x=0, y=0, w=80, h=30)
         _draw_first_combat_tutorial(console, region)
 
     def test_smoke_with_small_region(self) -> None:
         """Small region (w=30, h=10) — exercises centering math with narrow space."""
-        console = tcod.console.Console(width=80, height=50)
+        console = self._make_console()
         region = Region(id=RegionId.MAIN, x=10, y=5, w=30, h=10)
         _draw_first_combat_tutorial(console, region)
+
+    def test_smoke_with_offset_region(self) -> None:
+        """Region offset from origin (20, 8) — exercises region arithmetic."""
+        console = self._make_console(width=80, height=50)
+        region = Region(id=RegionId.MAIN, x=20, y=8, w=40, h=15)
+        _draw_first_combat_tutorial(console, region)
+
+    def test_renders_box_border(self) -> None:
+        """ASCII '+---+' border must be emitted (top and bottom rows)."""
+        console = self._make_console()
+        region = Region(id=RegionId.MAIN, x=0, y=3, w=52, h=35)
+        _draw_first_combat_tutorial(console, region)
+        rendered = self._gather_text(console)
+        border_rows = [r for r in rendered.split("\n") if r.strip().startswith("+")]
+        assert len(border_rows) >= 2, f"Expected 2 border rows, got: {border_rows}"
+        for br in border_rows[:2]:
+            assert "+" in br
+            assert "-" in br
+
+    def test_renders_skill_hotkey_hint(self) -> None:
+        """Hint line 'Press 1-9 for skills' must appear inside the box."""
+        console = self._make_console()
+        region = Region(id=RegionId.MAIN, x=0, y=3, w=52, h=35)
+        _draw_first_combat_tutorial(console, region)
+        rendered = self._gather_text(console)
+        assert "Press 1-9 for skills" in rendered
+
+    def test_renders_four_keyboard_hint_lines(self) -> None:
+        """All 4 keyboard hint lines must appear: SPACE, 1-9, ESC, FIRST COMBAT header."""
+        console = self._make_console()
+        region = Region(id=RegionId.MAIN, x=0, y=3, w=52, h=35)
+        _draw_first_combat_tutorial(console, region)
+        rendered = self._gather_text(console)
+        for expected in (
+            "FIRST COMBAT",
+            "[SPACE] open skill menu",
+            "[1-9] quick-use skill",
+            "[ESC] disengage",
+        ):
+            assert expected in rendered, f"Missing tutorial line: {expected}"
 
 
 class TestCheckPostCombatEvent:

@@ -499,20 +499,50 @@ def _draw_skills_menu(
 def _draw_first_combat_tutorial(console: tcod.console.Console, region: Region) -> None:
     """Phase E-2: brief tutorial overlay for first combat encounter.
 
-    Shows 4 lines of keyboard hints centered in the main region.
-    Dismissed by pressing Space/Enter (handled in input layer).
+    Renders 4 lines of keyboard hints centered in the main region, surrounded
+    by an ASCII box border and a skill-hotkey hint line. Persistent throughout
+    first combat (every frame the ``show_first_combat_tutorial`` flag is True)
+    and dismissed by Space/Enter (handled in input layer).
     """
     lines = [
-        "── FIRST COMBAT ──",
+        "== FIRST COMBAT ==",
         "[SPACE] open skill menu",
         "[1-9] quick-use skill",
         "[ESC] disengage",
     ]
-    cx = region.x + (region.w - 22) // 2
-    cy = region.y + region.h // 2
+    hint = "> Press 1-9 for skills"
+    border_color = (160, 160, 160)
+    box_w = max(len(line) for line in lines) + 2  # pad 1 on each side
+    box_w = max(box_w, len(hint) + 2)
+    cx = region.x + (region.w - box_w) // 2
+    cy = region.y + region.h // 2 - 1  # -1 to keep the hint line inside the box
+    # Top border
+    console.print(
+        x=cx,
+        y=cy,
+        string=f"+{'-' * (box_w - 2)}+",
+        fg=border_color,
+    )
+    # Body: pipe-wrapped lines
     for i, line in enumerate(lines):
         fg = (255, 255, 100) if i == 0 else (200, 200, 200)
-        console.print(x=cx, y=cy + i, string=line, fg=fg)
+        body = f"|{line.center(box_w - 2)}|"
+        console.print(x=cx, y=cy + 1 + i, string=body, fg=fg)
+    # Hint row (last interior row)
+    hint_row = cy + 1 + len(lines)
+    console.print(
+        x=cx,
+        y=hint_row,
+        string=f"|{hint.center(box_w - 2)}|",
+        fg=(140, 200, 255),
+    )
+    # Bottom border
+    console.print(
+        x=cx,
+        y=hint_row + 1,
+        string=f"+{'-' * (box_w - 2)}+",
+        fg=border_color,
+    )
 
 
 # Skill helpers (used by _draw_skills_menu — kept here for cohesion).

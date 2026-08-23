@@ -10,6 +10,7 @@ ice_registry) -> bool (False = quit game).
 
 from __future__ import annotations
 
+import inspect
 from collections.abc import Callable
 from typing import TYPE_CHECKING
 
@@ -182,7 +183,7 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
             return story_cinematic.handle_cinematic_input(event, state, state.cinematic_state)
         return True
 
-    return {
+    raw_dispatch = {
         ScreenKind.MENU: menu_screen.handle_menu_input,
         ScreenKind.GRAPHIC_NOVEL_MENU: menu_screen.handle_graphic_novel_menu_input,
         ScreenKind.GRAPHIC_NOVEL: _gn_screen,
@@ -223,6 +224,23 @@ def _build_input_dispatch() -> dict[ScreenKind, InputFn]:
         ScreenKind.SALVATION_EPILOGUE: salvation_view.handle_salvation_epilogue_input,
         ScreenKind.SALVATION_ENDING: salvation_view.handle_salvation_ending_input,
     }
+
+    # Wrap 2-arg handlers (event, state) to accept 4 args (event, state, prog, ice)
+    # Pre-compute arity at build time to avoid per-event overhead.
+    dispatch: dict[ScreenKind, InputFn] = {}
+    for screen, fn in raw_dispatch.items():
+        try:
+            arity = len(inspect.signature(fn).parameters)  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            # Builtins, lambdas, or callables without signature — assume 4-arg compatible
+            arity = 4
+        if arity == 2:
+            # Wrap to accept 4 args, forward only event and state
+            dispatch[screen] = lambda e, s, p, i, _f=fn: _f(e, s)
+        else:
+            dispatch[screen] = fn  # type: ignore[assignment]
+
+    return dispatch
 
 
 def _advance_graphic_novel_scene(

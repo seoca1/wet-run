@@ -29,6 +29,7 @@ from .palette import (
     DAMAGE_COLOR,
     DEFAULT_COLOR,
     HEAL_COLOR,
+    HIT_FLASH_COLOR,
 )
 
 
@@ -365,10 +366,10 @@ class HitFlash:
 
     duration_ms: int = 0
     elapsed_ms: int = 0
-    color: tuple[int, int, int] = (255, 255, 255)
+    color: tuple[int, int, int] = HIT_FLASH_COLOR
 
     def trigger(
-        self, color: tuple[int, int, int] = (255, 255, 255), duration_ms: int = 120
+        self, color: tuple[int, int, int] = HIT_FLASH_COLOR, duration_ms: int = 120
     ) -> None:
         """Start a new tile-level flash; replaces any existing flash."""
         self.color = color
@@ -410,10 +411,10 @@ class ScreenFlash:
 
     duration_ms: int = 0
     elapsed_ms: int = 0
-    color: tuple[int, int, int] = (255, 255, 255)
+    color: tuple[int, int, int] = HIT_FLASH_COLOR
 
     def trigger(
-        self, color: tuple[int, int, int] = (255, 255, 255), duration_ms: int = 250
+        self, color: tuple[int, int, int] = HIT_FLASH_COLOR, duration_ms: int = 250
     ) -> None:
         """Start a new full-screen flash; replaces any existing flash."""
         self.color = color

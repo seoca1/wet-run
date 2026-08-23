@@ -22,7 +22,17 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from .palette import COMBO_STAGE_COLORS
+from .palette import (
+    COMBO_BAR_GREEN,
+    COMBO_BAR_RED,
+    COMBO_BAR_YELLOW,
+    COMBO_STAGE_COLORS,
+    DEFAULT_COLOR,
+    GRAY_MID,
+    HP_CRIT_COLOR,
+    HP_LOW_COLOR,
+    HP_MID_COLOR,
+)
 
 if TYPE_CHECKING:
     pass
@@ -288,12 +298,12 @@ class ComboVisual:
     """
 
     counter_text: str = ""
-    counter_color: tuple[int, int, int] = (200, 200, 200)
+    counter_color: tuple[int, int, int] = DEFAULT_COLOR
     counter_pulse_ms: int = 0  # Pulses when new hit registered
     counter_pulse_max_ms: int = 200
     # Stage-up cinematic
     stage_up_text: str = ""
-    stage_up_color: tuple[int, int, int] = (200, 200, 200)
+    stage_up_color: tuple[int, int, int] = DEFAULT_COLOR
     stage_up_ms: int = 0
     stage_up_max_ms: int = 800
     # End cinematic
@@ -491,10 +501,8 @@ class TimingBar:
 
     def get_color(self, combo: CombatCombo) -> tuple[int, int, int]:
         """Get the bar color based on time remaining."""
-        from .palette import COMBO_BAR_GREEN, COMBO_BAR_RED, COMBO_BAR_YELLOW
-
         if combo.count == 0:
-            return (100, 100, 100)
+            return GRAY_MID
         pct_remaining = 1.0 - combo.window_progress
         if pct_remaining > 0.5:
             return COMBO_BAR_GREEN
@@ -542,7 +550,7 @@ FINISHER_QUICK_SLASH = ComboFinisher(
     ap_cost=0,
     cooldown_ms=5000,
     description="FLURRY 단계에서 사용 가능. 3회 빠른 참격 (대상 1명).",
-    color=(255, 200, 80),
+    color=HP_MID_COLOR,
     icon="⚡",
     visual_animation="multi_hit",
 )
@@ -556,7 +564,7 @@ FINISHER_RAMPAGE_BURST = ComboFinisher(
     ap_cost=0,
     cooldown_ms=8000,
     description="RAMPAGE 단계에서 사용 가능. 광역 폭발 (모든 적).",
-    color=(255, 100, 80),
+    color=HP_LOW_COLOR,
     icon="☠",
     visual_animation="heavy_attack",
 )
@@ -570,7 +578,7 @@ FINISHER_FINAL_STRIKE = ComboFinisher(
     ap_cost=0,
     cooldown_ms=12000,
     description="ANNIHILATION 단계에서 사용 가능. 즉사급 데미지 + 화면 클리어.",
-    color=(255, 30, 30),
+    color=HP_CRIT_COLOR,
     icon="✦",
     visual_animation="critical_hit",
 )

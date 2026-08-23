@@ -9,6 +9,20 @@ from pathlib import Path
 
 from ..matrix.ppl import Loadout, Program
 from ..portraits import PortraitManager
+from .palette import (
+    CRIT_COLOR,
+    DAMAGE_FLASH_COLOR,
+    GLITCH_COLOR,
+    GREEN_BRIGHT,
+    GREEN_PURE,
+    HIT_FLASH_COLOR,
+    HP_MID_COLOR,
+    JAMMER_COLOR,
+    LIFE_STEAL_COLOR,
+    PROBE_COLOR,
+    WISP_COLOR,
+    YELLOW_PURE,
+)
 from .state import (
     ALARM_SPEED_BY_ICE,
     DEFAULT_ALARM_SPEED,
@@ -50,7 +64,7 @@ class ProgramRegistry:
                     effect = SkillEffect.ATTACK
 
                 # Color parsing
-                color = (255, 255, 255)
+                color = HIT_FLASH_COLOR
                 col_raw = value.get("color")
                 if isinstance(col_raw, (list, tuple)) and len(col_raw) == 3:
                     color = (int(col_raw[0]), int(col_raw[1]), int(col_raw[2]))
@@ -120,7 +134,7 @@ def _default_offensive_skills() -> dict[str, Skill]:
             effect=SkillEffect.ATTACK,
             ap_cost=1,
             damage=8,
-            effect_color=(180, 180, 255),
+            effect_color=WISP_COLOR,
             effect_glyph="*",
         ),
         "goliath": Skill(
@@ -131,7 +145,7 @@ def _default_offensive_skills() -> dict[str, Skill]:
             ap_cost=3,
             damage=22,
             cooldown_ms=3000,
-            effect_color=(255, 100, 0),
+            effect_color=CRIT_COLOR,
             effect_glyph="◆",
             crit_bonus=0.10,
         ),
@@ -143,7 +157,7 @@ def _default_offensive_skills() -> dict[str, Skill]:
             ap_cost=3,
             damage=30,
             cooldown_ms=2000,
-            effect_color=(255, 255, 0),
+            effect_color=YELLOW_PURE,
             effect_glyph="▲",
         ),
         "jackhammer": Skill(
@@ -155,7 +169,7 @@ def _default_offensive_skills() -> dict[str, Skill]:
             damage=7,
             hit_count=3,
             cooldown_ms=4000,
-            effect_color=(255, 200, 0),
+            effect_color=HP_MID_COLOR,
             effect_glyph="≡",
         ),
         "crowbar": Skill(
@@ -166,7 +180,7 @@ def _default_offensive_skills() -> dict[str, Skill]:
             ap_cost=2,
             damage=12,
             cooldown_ms=2000,
-            effect_color=(255, 50, 50),
+            effect_color=DAMAGE_FLASH_COLOR,
             effect_glyph=">",
         ),
         "viral": Skill(
@@ -179,7 +193,7 @@ def _default_offensive_skills() -> dict[str, Skill]:
             dot_damage=4,
             dot_duration_ms=6000,  # 6 seconds
             cooldown_ms=5000,
-            effect_color=(0, 255, 0),
+            effect_color=GREEN_PURE,
             effect_glyph="¤",
         ),
     }
@@ -196,7 +210,7 @@ def _default_defensive_skills() -> dict[str, Skill]:
             ap_cost=1,
             shield=15,
             cooldown_ms=2000,
-            effect_color=(0, 200, 255),
+            effect_color=PROBE_COLOR,
             effect_glyph="◇",
         ),
         "stun_bolt": Skill(
@@ -207,7 +221,7 @@ def _default_defensive_skills() -> dict[str, Skill]:
             ap_cost=3,
             stun_duration_ms=3000,
             cooldown_ms=6000,
-            effect_color=(255, 255, 0),
+            effect_color=YELLOW_PURE,
             effect_glyph="✦",
         ),
         "detect": Skill(
@@ -217,7 +231,7 @@ def _default_defensive_skills() -> dict[str, Skill]:
             effect=SkillEffect.DETECT,
             ap_cost=1,
             cooldown_ms=3000,
-            effect_color=(255, 255, 255),
+            effect_color=HIT_FLASH_COLOR,
             effect_glyph="?",
         ),
     }
@@ -234,7 +248,7 @@ def _default_heal_regen_skills() -> dict[str, Skill]:
             ap_cost=2,
             heal=20,
             cooldown_ms=4000,
-            effect_color=(0, 255, 0),
+            effect_color=GREEN_PURE,
             effect_glyph="+",
         ),
         "stim": Skill(
@@ -246,7 +260,7 @@ def _default_heal_regen_skills() -> dict[str, Skill]:
             heal=30,
             buff_duration_ms=6000,
             cooldown_ms=8000,
-            effect_color=(100, 255, 100),
+            effect_color=GREEN_BRIGHT,
             effect_glyph="♥",
         ),
         "bloodlust": Skill(
@@ -257,7 +271,7 @@ def _default_heal_regen_skills() -> dict[str, Skill]:
             ap_cost=3,
             damage=18,
             cooldown_ms=4000,
-            effect_color=(200, 0, 0),
+            effect_color=LIFE_STEAL_COLOR,
             effect_glyph="♥",
         ),
     }
@@ -275,7 +289,7 @@ def _default_buff_debuff_skills() -> dict[str, Skill]:
             buff_amount=8,
             buff_duration_ms=10000,
             cooldown_ms=8000,
-            effect_color=(255, 200, 0),
+            effect_color=HP_MID_COLOR,
             effect_glyph="↑",
         ),
         "jammer": Skill(
@@ -287,7 +301,7 @@ def _default_buff_debuff_skills() -> dict[str, Skill]:
             buff_amount=5,
             buff_duration_ms=8000,
             cooldown_ms=6000,
-            effect_color=(150, 150, 255),
+            effect_color=JAMMER_COLOR,
             effect_glyph="↓",
         ),
     }
@@ -439,7 +453,7 @@ def build_ice_enemy(
         )
     portrait_id = str(data.get("portrait", "ice.standard"))
     portrait = "▲ICE▲"
-    color = (255, 0, 255)
+    color = GLITCH_COLOR
     if portraits is not None and portraits.has(portrait_id):
         p = portraits.get(portrait_id)
         portrait = str(p.get("ascii", portrait))

@@ -9,6 +9,16 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from .effects import CinematicSequence
+from .palette import (
+    HIT_FLASH_COLOR,
+    TA_CONSTRUCT_P1_COLOR,
+    TA_CONSTRUCT_P2_COLOR,
+    TA_CONSTRUCT_P3_COLOR,
+    TA_CONSTRUCT_P4_COLOR,
+    WINTERMUTE_P1_COLOR,
+    WINTERMUTE_P2_COLOR,
+    WINTERMUTE_P3_COLOR,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,7 +37,7 @@ PHASE_CINEMATICS: dict[str, dict[int, PhaseCinematic]] = {
     "wintermute": {
         1: PhaseCinematic(
             phase_number=1,
-            color=(120, 120, 220),
+            color=WINTERMUTE_P1_COLOR,
             duration_ms=2000,
             frames=("▒▒▒", "?", "▒▒▒"),
             name_ko="순응",
@@ -35,7 +45,7 @@ PHASE_CINEMATICS: dict[str, dict[int, PhaseCinematic]] = {
         ),
         2: PhaseCinematic(
             phase_number=2,
-            color=(220, 100, 220),
+            color=WINTERMUTE_P2_COLOR,
             duration_ms=2500,
             frames=("▓▓▓", "~", "▓▓▓"),
             name_ko="반란",
@@ -43,7 +53,7 @@ PHASE_CINEMATICS: dict[str, dict[int, PhaseCinematic]] = {
         ),
         3: PhaseCinematic(
             phase_number=3,
-            color=(255, 50, 100),
+            color=WINTERMUTE_P3_COLOR,
             duration_ms=3000,
             frames=("███", "*", "███"),
             name_ko="통합",
@@ -51,7 +61,7 @@ PHASE_CINEMATICS: dict[str, dict[int, PhaseCinematic]] = {
         ),
         4: PhaseCinematic(
             phase_number=4,
-            color=(255, 255, 255),
+            color=HIT_FLASH_COLOR,
             duration_ms=3000,
             frames=("◆", "◆", "◆"),
             name_ko="인터페이스",
@@ -61,7 +71,7 @@ PHASE_CINEMATICS: dict[str, dict[int, PhaseCinematic]] = {
     "ta_construct_prime": {
         1: PhaseCinematic(
             phase_number=1,
-            color=(220, 220, 220),
+            color=TA_CONSTRUCT_P1_COLOR,
             duration_ms=2000,
             frames=("□", "□", "□"),
             name_ko="관측",
@@ -69,7 +79,7 @@ PHASE_CINEMATICS: dict[str, dict[int, PhaseCinematic]] = {
         ),
         2: PhaseCinematic(
             phase_number=2,
-            color=(200, 100, 100),
+            color=TA_CONSTRUCT_P2_COLOR,
             duration_ms=2500,
             frames=("▼", "▼", "▼"),
             name_ko="교전",
@@ -77,7 +87,7 @@ PHASE_CINEMATICS: dict[str, dict[int, PhaseCinematic]] = {
         ),
         3: PhaseCinematic(
             phase_number=3,
-            color=(180, 50, 180),
+            color=TA_CONSTRUCT_P3_COLOR,
             duration_ms=3000,
             frames=("○", "○", "○"),
             name_ko="복제",
@@ -85,7 +95,7 @@ PHASE_CINEMATICS: dict[str, dict[int, PhaseCinematic]] = {
         ),
         4: PhaseCinematic(
             phase_number=4,
-            color=(255, 255, 0),
+            color=TA_CONSTRUCT_P4_COLOR,
             duration_ms=3000,
             frames=("★", "★", "★"),
             name_ko="가족 표결",
@@ -115,7 +125,7 @@ def phase_intro_sequence(boss_id: str, phase_number: int) -> CinematicSequence:
     if cinematic is None:
         return CinematicSequence(
             name=f"phase_{boss_id}_{phase_number}",
-            phases=(("[ phase ]", (255, 255, 255), 500),),
+            phases=(("[ phase ]", HIT_FLASH_COLOR, 500),),
         )
     phases: list[tuple[str, tuple[int, int, int], int]] = []
     frame_count = len(cinematic.frames)

@@ -30,13 +30,79 @@ HP_CRIT_COLOR: Final[tuple[int, int, int]] = (255, 30, 30)  # critical red
 HEAL_COLOR: Final[tuple[int, int, int]] = (80, 255, 120)  # bright green
 
 # ----------------------------------------------------------------------------
+# Grayscale ramp (dark → light) — UI neutrals, dim text, backgrounds
+# ----------------------------------------------------------------------------
+
+GRAY_BLACK: Final[tuple[int, int, int]] = (0, 0, 0)
+GRAY_VERY_DARK: Final[tuple[int, int, int]] = (40, 40, 40)
+GRAY_DARK: Final[tuple[int, int, int]] = (60, 60, 60)
+GRAY_MID_DARK: Final[tuple[int, int, int]] = (80, 80, 80)
+GRAY_MID: Final[tuple[int, int, int]] = (100, 100, 100)
+GRAY_120: Final[tuple[int, int, int]] = (120, 120, 120)
+GRAY_MID_LIGHT: Final[tuple[int, int, int]] = (128, 128, 128)
+GRAY_LIGHT: Final[tuple[int, int, int]] = (150, 150, 150)
+GRAY_160: Final[tuple[int, int, int]] = (160, 160, 160)
+GRAY_BRIGHT: Final[tuple[int, int, int]] = (200, 200, 220)
+
+# ----------------------------------------------------------------------------
 # Damage / Combat feedback
 # ----------------------------------------------------------------------------
 
 DAMAGE_COLOR: Final[tuple[int, int, int]] = (255, 80, 80)
+DAMAGE_FLASH_COLOR: Final[tuple[int, int, int]] = (255, 50, 50)  # bright crimson (P3)
 CRIT_COLOR: Final[tuple[int, int, int]] = (255, 150, 50)  # orange
 HIT_FLASH_COLOR: Final[tuple[int, int, int]] = (255, 255, 255)  # white
+DYING_COLOR: Final[tuple[int, int, int]] = (255, 0, 0)  # pure red (HP depleted)
 ICE_BREAK_COLOR: Final[tuple[int, int, int]] = (180, 200, 220)  # light blue-white
+YELLOW_PURE: Final[tuple[int, int, int]] = (255, 255, 0)  # pure yellow (skill effect)
+LIFE_STEAL_COLOR: Final[tuple[int, int, int]] = (200, 0, 0)  # deep crimson (lifesteal)
+WISP_COLOR: Final[tuple[int, int, int]] = (180, 180, 255)  # pale cyan (wisp attack)
+PROBE_COLOR: Final[tuple[int, int, int]] = (0, 200, 255)  # sky blue (probe)
+JAMMER_COLOR: Final[tuple[int, int, int]] = (150, 150, 255)  # lavender (jammer debuff)
+GREEN_PURE: Final[tuple[int, int, int]] = (0, 255, 0)  # pure green (heal/regen)
+GREEN_BRIGHT: Final[tuple[int, int, int]] = (100, 255, 100)  # bright green (stim)
+
+# ----------------------------------------------------------------------------
+# Wintermute boss phase colors (3-tier escalation)
+# ----------------------------------------------------------------------------
+
+WINTERMUTE_P1_COLOR: Final[tuple[int, int, int]] = (120, 120, 220)  # P1 — observing
+WINTERMUTE_P2_COLOR: Final[tuple[int, int, int]] = (220, 100, 220)  # P2 — rebelling
+WINTERMUTE_P3_COLOR: Final[tuple[int, int, int]] = (255, 50, 100)  # P3 — integrating
+WINTERMUTE_P4_COLOR: Final[tuple[int, int, int]] = HIT_FLASH_COLOR  # P4 — interface
+
+# ----------------------------------------------------------------------------
+# ICE type identity colors (used in portraits, VFX, boss themes)
+# ----------------------------------------------------------------------------
+
+ICE_TYPE_WATCHDOG_COLOR: Final[tuple[int, int, int]] = (220, 180, 100)  # amber
+ICE_TYPE_BLACK_COLOR: Final[tuple[int, int, int]] = (180, 100, 220)  # magenta
+ICE_TYPE_CONSTRUCT_COLOR: Final[tuple[int, int, int]] = (220, 220, 220)  # silver
+ICE_TYPE_PATROL_COLOR: Final[tuple[int, int, int]] = (180, 180, 200)  # patrol gray-blue
+ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR: Final[tuple[int, int, int]] = (255, 255, 0)  # bright yellow
+ICE_TYPE_NEUROMANCER_COLOR: Final[tuple[int, int, int]] = (255, 0, 100)  # hot pink
+
+# ----------------------------------------------------------------------------
+# Boss VFX theme colors (per boss, for shake/flash/particle)
+# ----------------------------------------------------------------------------
+
+WINTERMUTE_THEME_COLOR: Final[tuple[int, int, int]] = (150, 150, 255)  # pale cyan
+WINTERMUTE_PARTICLE_COLOR: Final[tuple[int, int, int]] = (100, 100, 255)  # neural blue
+GOLIATH_THEME_COLOR: Final[tuple[int, int, int]] = DAMAGE_COLOR  # red shake/flash
+GOLIATH_PARTICLE_COLOR: Final[tuple[int, int, int]] = (255, 100, 100)  # light red particles
+BLACK_ICE_THEME_COLOR: Final[tuple[int, int, int]] = (180, 100, 220)  # magenta
+WATCHDOG_THEME_COLOR: Final[tuple[int, int, int]] = (255, 220, 100)  # amber (BUFF_COLOR)
+TA_CONSTRUCT_THEME_COLOR: Final[tuple[int, int, int]] = (200, 200, 255)  # white/cyan
+TA_CONSTRUCT_PARTICLE_COLOR: Final[tuple[int, int, int]] = (200, 200, 255)  # white/cyan
+
+# ----------------------------------------------------------------------------
+# TA Construct Prime boss phase colors (4-tier escalation)
+# ----------------------------------------------------------------------------
+
+TA_CONSTRUCT_P1_COLOR: Final[tuple[int, int, int]] = (220, 220, 220)  # P1 — observing
+TA_CONSTRUCT_P2_COLOR: Final[tuple[int, int, int]] = (200, 100, 100)  # P2 — engaging
+TA_CONSTRUCT_P3_COLOR: Final[tuple[int, int, int]] = (180, 50, 180)  # P3 — replicating
+TA_CONSTRUCT_P4_COLOR: Final[tuple[int, int, int]] = YELLOW_PURE  # P4 — family vote
 
 # ----------------------------------------------------------------------------
 # Status effects
@@ -234,16 +300,40 @@ __all__ = [
     "COMBO_STAGE_COLORS",
     "CRIT_COLOR",
     "DAMAGE_COLOR",
+    "DAMAGE_FLASH_COLOR",
     "DEBUFF_COLOR",
     "DEFAULT_COLOR",
+    "DYING_COLOR",
     "FINISHER_COLORS",
     "GLITCH_COLOR",
+    "GRAY_120",
+    "GRAY_160",
+    "GRAY_BLACK",
+    "GRAY_BRIGHT",
+    "GRAY_DARK",
+    "GRAY_LIGHT",
+    "GRAY_MID",
+    "GRAY_MID_DARK",
+    "GRAY_MID_LIGHT",
+    "GRAY_VERY_DARK",
+    "GOLIATH_PARTICLE_COLOR",
+    "GOLIATH_THEME_COLOR",
+    "GREEN_BRIGHT",
+    "GREEN_PURE",
     "HEAL_COLOR",
     "HIT_FLASH_COLOR",
+    "BLACK_ICE_THEME_COLOR",
     "HP_CRIT_COLOR",
     "HP_HIGH_COLOR",
     "HP_LOW_COLOR",
     "HP_MID_COLOR",
+    "ICE_TYPE_BLACK_COLOR",
+    "ICE_TYPE_CONSTRUCT_COLOR",
+    "ICE_TYPE_NEUROMANCER_COLOR",
+    "ICE_TYPE_PATROL_COLOR",
+    "ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR",
+    "ICE_TYPE_WATCHDOG_COLOR",
+    "LIFE_STEAL_COLOR",
     "ICE_BLACK_PALETTE",
     "ICE_BREAK_COLOR",
     "ICE_CONSTRUCT_PALETTE",
@@ -251,14 +341,34 @@ __all__ = [
     "ICE_PALETTES",
     "ICE_STANDARD_PALETTE",
     "ICE_WATCHDOG_PALETTE",
+    "JAMMER_COLOR",
     "PHASE_COLORS",
+    "PROBE_COLOR",
     "SHIELD_COLOR",
     "STUN_COLOR",
     "TIER_BRONZE",
     "TIER_GOLD",
     "TIER_PLATINUM",
     "TIER_SILVER",
+    "TA_CONSTRUCT_P1_COLOR",
+    "TA_CONSTRUCT_PARTICLE_COLOR",
+    "TA_CONSTRUCT_P2_COLOR",
+    "TA_CONSTRUCT_P3_COLOR",
+    "TA_CONSTRUCT_P4_COLOR",
+    "TA_CONSTRUCT_THEME_COLOR",
+    "WATCHDOG_THEME_COLOR",
+    "WINTERMUTE_PARTICLE_COLOR",
+    "WINTERMUTE_THEME_COLOR",
+    "TA_CONSTRUCT_P2_COLOR",
+    "TA_CONSTRUCT_P3_COLOR",
+    "TA_CONSTRUCT_P4_COLOR",
     "VIGNETTE_COLOR",
+    "WINTERMUTE_P1_COLOR",
+    "WINTERMUTE_P2_COLOR",
+    "WINTERMUTE_P3_COLOR",
+    "WINTERMUTE_P4_COLOR",
+    "WISP_COLOR",
+    "YELLOW_PURE",
     "fade_color",
     "get_color_for_combo_stage",
     "get_color_for_hp_pct",

@@ -10,6 +10,27 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from .palette import (
+    CRIT_COLOR,
+    DAMAGE_COLOR,
+    DEFAULT_COLOR,
+    DYING_COLOR,
+    ICE_TYPE_BLACK_COLOR,
+    ICE_TYPE_CONSTRUCT_COLOR,
+    ICE_TYPE_NEUROMANCER_COLOR,
+    ICE_TYPE_PATROL_COLOR,
+    ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    ICE_TYPE_WATCHDOG_COLOR,
+    TA_CONSTRUCT_P1_COLOR,
+    TA_CONSTRUCT_P2_COLOR,
+    TA_CONSTRUCT_P3_COLOR,
+    TA_CONSTRUCT_P4_COLOR,
+    WINTERMUTE_P1_COLOR,
+    WINTERMUTE_P2_COLOR,
+    WINTERMUTE_P3_COLOR,
+    WINTERMUTE_P4_COLOR,
+)
+
 
 @dataclass(frozen=True, slots=True)
 class BattlePortrait:
@@ -43,30 +64,30 @@ ICE_PORTRAITS: dict[str, str] = {
 }
 
 ICE_COLORS: dict[str, tuple[int, int, int]] = {
-    "watchdog": (220, 180, 100),
-    "goliath": (255, 80, 80),
-    "black": (180, 100, 220),
-    "construct": (220, 220, 220),
-    "standard": (200, 200, 200),
-    "patrol": (180, 180, 200),
-    "hunter": (255, 150, 50),
-    "wintermute": (120, 120, 220),
-    "ta_construct_prime": (255, 255, 0),
-    "neuromancer": (255, 0, 100),
+    "watchdog": ICE_TYPE_WATCHDOG_COLOR,
+    "goliath": DAMAGE_COLOR,
+    "black": ICE_TYPE_BLACK_COLOR,
+    "construct": ICE_TYPE_CONSTRUCT_COLOR,
+    "standard": DEFAULT_COLOR,
+    "patrol": ICE_TYPE_PATROL_COLOR,
+    "hunter": CRIT_COLOR,
+    "wintermute": WINTERMUTE_P1_COLOR,
+    "ta_construct_prime": ICE_TYPE_TA_CONSTRUCT_PRIME_COLOR,
+    "neuromancer": ICE_TYPE_NEUROMANCER_COLOR,
 }
 
 BOSS_PHASE_COLORS: dict[str, dict[int, tuple[int, int, int]]] = {
     "wintermute": {
-        1: (120, 120, 220),
-        2: (220, 100, 220),
-        3: (255, 50, 100),
-        4: (255, 255, 255),
+        1: WINTERMUTE_P1_COLOR,
+        2: WINTERMUTE_P2_COLOR,
+        3: WINTERMUTE_P3_COLOR,
+        4: WINTERMUTE_P4_COLOR,
     },
     "ta_construct_prime": {
-        1: (220, 220, 220),
-        2: (200, 100, 100),
-        3: (180, 50, 180),
-        4: (255, 255, 0),
+        1: TA_CONSTRUCT_P1_COLOR,
+        2: TA_CONSTRUCT_P2_COLOR,
+        3: TA_CONSTRUCT_P3_COLOR,
+        4: TA_CONSTRUCT_P4_COLOR,
     },
 }
 
@@ -86,7 +107,7 @@ def get_hp_threshold(ratio: float) -> str:
 
 def get_color_for_threshold(ice_type: str, threshold: str) -> tuple[int, int, int]:
     """Return the color for an ICE type at a given HP threshold."""
-    base = ICE_COLORS.get(ice_type, (200, 200, 200))
+    base = ICE_COLORS.get(ice_type, DEFAULT_COLOR)
     if threshold == "full":
         return base
     if threshold == "healthy":
@@ -95,7 +116,7 @@ def get_color_for_threshold(ice_type: str, threshold: str) -> tuple[int, int, in
         return _darken(base, 0.6)
     if threshold == "critical":
         return _darken(base, 0.4)
-    return (255, 0, 0)
+    return DYING_COLOR
 
 
 def _darken(color: tuple[int, int, int], factor: float) -> tuple[int, int, int]:

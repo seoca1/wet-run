@@ -26,6 +26,10 @@ if TYPE_CHECKING:
 # ASCII palette for HUD
 # All colors are now centralized in palette.py
 from .palette import (  # noqa: E402
+    DAMAGE_COLOR,
+    DAMAGE_FLASH_COLOR,
+    HEAL_COLOR,
+    HIT_FLASH_COLOR,
     HP_CRIT_COLOR,
     HP_HIGH_COLOR,
     HP_LOW_COLOR,
@@ -198,7 +202,7 @@ def render_health_bar(
         # Boss phase color (with possible transition flash)
         if phase_color.transition_ms > 0:
             # Flash to white during transition
-            color = (255, 255, 255)
+            color = HIT_FLASH_COLOR
         else:
             color = phase_color.custom_color
     elif hp_pct > 0.5:
@@ -247,7 +251,7 @@ def render_health_bar_rich(
     if phase_color is not None and phase_color.custom_color is not None:
         # During transition, flash to white
         if phase_color.transition_ms > 0:
-            color = (255, 255, 255)
+            color = HIT_FLASH_COLOR
         else:
             color = phase_color.custom_color
     elif hp_pct > 0.5:
@@ -277,7 +281,7 @@ class BarFlash:
 
     duration_ms: int = 200
     elapsed_ms: int = 0
-    color: tuple[int, int, int] = (255, 80, 80)
+    color: tuple[int, int, int] = DAMAGE_COLOR
     is_active: bool = False
 
     def trigger(self, color: tuple[int, int, int], duration_ms: int = 200) -> None:
@@ -463,11 +467,11 @@ class CombatHUD:
         if who == "player":
             self.player_health.current_hp = max(0, self.player_health.current_hp - amount)
             self.player_health.drain_ms = 200
-            self.player_damage_flash.trigger(color=(255, 50, 50), duration_ms=200)
+            self.player_damage_flash.trigger(color=DAMAGE_FLASH_COLOR, duration_ms=200)
         else:
             self.enemy_health.current_hp = max(0, self.enemy_health.current_hp - amount)
             self.enemy_health.drain_ms = 200
-            self.enemy_damage_flash.trigger(color=(255, 50, 50), duration_ms=200)
+            self.enemy_damage_flash.trigger(color=DAMAGE_FLASH_COLOR, duration_ms=200)
 
     def heal(self, who: str, amount: int) -> None:
         """Apply heal to a combatant."""
@@ -477,14 +481,14 @@ class CombatHUD:
                 self.player_health.current_hp + amount,
             )
             self.player_health.drain_ms = 200
-            self.player_heal_flash.trigger(color=(80, 255, 120), duration_ms=200)
+            self.player_heal_flash.trigger(color=HEAL_COLOR, duration_ms=200)
         else:
             self.enemy_health.current_hp = min(
                 self.enemy_health.max_hp,
                 self.enemy_health.current_hp + amount,
             )
             self.enemy_health.drain_ms = 200
-            self.enemy_heal_flash.trigger(color=(80, 255, 120), duration_ms=200)
+            self.enemy_heal_flash.trigger(color=HEAL_COLOR, duration_ms=200)
 
     def set_boss_phase(
         self, who: str, phase_index: int, color: tuple[int, int, int] | None = None

@@ -26,6 +26,28 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from .effects import IceType
+from .palette import (
+    BLACK_ICE_THEME_COLOR,
+    GOLIATH_PARTICLE_COLOR,
+    GOLIATH_THEME_COLOR,
+    GREEN_BRIGHT,
+    HIT_FLASH_COLOR,
+    ICE_TYPE_NEUROMANCER_COLOR,
+    TA_CONSTRUCT_P1_COLOR,
+    TA_CONSTRUCT_P2_COLOR,
+    TA_CONSTRUCT_P3_COLOR,
+    TA_CONSTRUCT_P4_COLOR,
+    TA_CONSTRUCT_PARTICLE_COLOR,
+    TA_CONSTRUCT_THEME_COLOR,
+    WATCHDOG_THEME_COLOR,
+    WINTERMUTE_P1_COLOR,
+    WINTERMUTE_P2_COLOR,
+    WINTERMUTE_P3_COLOR,
+    WINTERMUTE_P4_COLOR,
+    WINTERMUTE_PARTICLE_COLOR,
+    WINTERMUTE_THEME_COLOR,
+    YELLOW_PURE,
+)
 from .state import Combatant, Skill, SkillEffect
 
 if TYPE_CHECKING:
@@ -116,88 +138,88 @@ class VFXTheme:
     """
 
     # Screen shake
-    shake_color: tuple[int, int, int] = (255, 255, 255)
+    shake_color: tuple[int, int, int] = HIT_FLASH_COLOR
     shake_intensity_multiplier: float = 1.0
     shake_duration_ms: int = 300
 
     # Hit flash
-    hit_flash_color: tuple[int, int, int] = (255, 255, 255)
+    hit_flash_color: tuple[int, int, int] = HIT_FLASH_COLOR
     hit_flash_duration_ms: int = 150
 
     # Particles
-    particle_color: tuple[int, int, int] = (255, 255, 255)
+    particle_color: tuple[int, int, int] = HIT_FLASH_COLOR
     particle_count: int = 10
 
     # Screen flash
-    flash_color: tuple[int, int, int] = (255, 255, 255)
+    flash_color: tuple[int, int, int] = HIT_FLASH_COLOR
     flash_duration_ms: int = 100
 
 
 # Pre-defined VFX themes for each boss type
 BOSS_VFX_THEMES: dict[str, dict[str, object]] = {
     "wintermute": {
-        "shake_color": (150, 150, 255),  # Neural ice blue
+        "shake_color": WINTERMUTE_THEME_COLOR,
         "shake_intensity_mult": 1.2,
         "shake_duration_ms": 400,
-        "hit_flash_color": (150, 150, 255),  # Pale cyan
+        "hit_flash_color": WINTERMUTE_THEME_COLOR,
         "hit_flash_duration_ms": 200,
-        "particle_color": (100, 100, 255),
+        "particle_color": WINTERMUTE_PARTICLE_COLOR,
         "particle_count": 8,
-        "flash_color": (100, 100, 255),
+        "flash_color": WINTERMUTE_PARTICLE_COLOR,
         "flash_duration_ms": 200,
     },
     "goliath": {
-        "shake_color": (255, 80, 80),  # Red
+        "shake_color": GOLIATH_THEME_COLOR,
         "shake_intensity_mult": 1.5,
         "shake_duration_ms": 400,
-        "hit_flash_color": (255, 80, 80),  # Red
+        "hit_flash_color": GOLIATH_THEME_COLOR,
         "hit_flash_duration_ms": 200,
-        "particle_color": (255, 100, 100),
+        "particle_color": GOLIATH_PARTICLE_COLOR,
         "particle_count": 15,
-        "flash_color": (255, 100, 100),
+        "flash_color": GOLIATH_PARTICLE_COLOR,
         "flash_duration_ms": 300,
     },
     "black_ice": {
-        "shake_color": (180, 100, 220),  # Purple/magenta
+        "shake_color": BLACK_ICE_THEME_COLOR,
         "shake_intensity_mult": 1.3,
         "shake_duration_ms": 500,
-        "hit_flash_color": (180, 100, 220),  # Magenta
+        "hit_flash_color": BLACK_ICE_THEME_COLOR,
         "hit_flash_duration_ms": 250,
-        "particle_color": (180, 100, 220),
+        "particle_color": BLACK_ICE_THEME_COLOR,
         "particle_count": 12,
-        "flash_color": (180, 100, 220),
+        "flash_color": BLACK_ICE_THEME_COLOR,
         "flash_duration_ms": 300,
     },
     "watchdog": {
-        "shake_color": (255, 220, 100),  # Amber/yellow
+        "shake_color": WATCHDOG_THEME_COLOR,
         "shake_intensity_mult": 1.1,
         "shake_duration_ms": 350,
-        "hit_flash_color": (255, 220, 100),  # Amber
+        "hit_flash_color": WATCHDOG_THEME_COLOR,
         "hit_flash_duration_ms": 180,
-        "particle_color": (255, 220, 100),
+        "particle_color": WATCHDOG_THEME_COLOR,
         "particle_count": 12,
-        "flash_color": (255, 220, 100),
+        "flash_color": WATCHDOG_THEME_COLOR,
         "flash_duration_ms": 200,
     },
     "ta_construct": {
-        "shake_color": (200, 200, 255),  # White/cyan
+        "shake_color": TA_CONSTRUCT_THEME_COLOR,
         "shake_intensity_mult": 1.0,
         "shake_duration_ms": 300,
-        "hit_flash_color": (255, 255, 255),  # White
+        "hit_flash_color": HIT_FLASH_COLOR,
         "hit_flash_duration_ms": 150,
-        "particle_color": (200, 200, 255),
+        "particle_color": TA_CONSTRUCT_PARTICLE_COLOR,
         "particle_count": 8,
-        "flash_color": (200, 200, 255),
+        "flash_color": TA_CONSTRUCT_PARTICLE_COLOR,
         "flash_duration_ms": 150,
     },
     "default": {
         "shake_intensity_mult": 1.0,
         "shake_duration_ms": 300,
-        "hit_flash_color": (255, 255, 255),
+        "hit_flash_color": HIT_FLASH_COLOR,
         "hit_flash_duration_ms": 150,
-        "particle_color": (255, 255, 255),
+        "particle_color": HIT_FLASH_COLOR,
         "particle_count": 10,
-        "flash_color": (255, 255, 255),
+        "flash_color": HIT_FLASH_COLOR,
         "flash_duration_ms": 100,
     },
 }
@@ -241,7 +263,7 @@ def _wintermute_phase_1_skills() -> tuple[Skill, ...]:
             effect=SkillEffect.ATTACK,
             ap_cost=2,
             damage=8,
-            effect_color=(120, 120, 220),
+            effect_color=WINTERMUTE_P1_COLOR,
             effect_glyph="?",
         ),
     )
@@ -258,7 +280,7 @@ def _wintermute_phase_2_skills() -> tuple[Skill, ...]:
             ap_cost=3,
             dot_damage=4,
             dot_duration_ms=6000,
-            effect_color=(220, 100, 220),
+            effect_color=WINTERMUTE_P2_COLOR,
             effect_glyph="~",
         ),
         Skill(
@@ -269,7 +291,7 @@ def _wintermute_phase_2_skills() -> tuple[Skill, ...]:
             ap_cost=2,
             buff_amount=3,
             buff_duration_ms=4000,
-            effect_color=(180, 180, 220),
+            effect_color=WINTERMUTE_P2_COLOR,
             effect_glyph="+",
         ),
     )
@@ -285,7 +307,7 @@ def _wintermute_phase_3_skills() -> tuple[Skill, ...]:
             effect=SkillEffect.PIERCE,
             ap_cost=4,
             damage=15,
-            effect_color=(255, 80, 200),
+            effect_color=WINTERMUTE_P3_COLOR,
             effect_glyph=">",
         ),
         Skill(
@@ -296,7 +318,7 @@ def _wintermute_phase_3_skills() -> tuple[Skill, ...]:
             ap_cost=5,
             damage=8,
             hit_count=3,
-            effect_color=(255, 50, 100),
+            effect_color=WINTERMUTE_P3_COLOR,
             effect_glyph="*",
         ),
     )
@@ -312,7 +334,7 @@ def _ta_phase_1_skills() -> tuple[Skill, ...]:
             effect=SkillEffect.SHIELD,
             ap_cost=2,
             shield=10,
-            effect_color=(220, 220, 220),
+            effect_color=TA_CONSTRUCT_P1_COLOR,
             effect_glyph="□",
         ),
     )
@@ -328,7 +350,7 @@ def _ta_phase_2_skills() -> tuple[Skill, ...]:
             effect=SkillEffect.HEAVY_ATTACK,
             ap_cost=4,
             damage=14,
-            effect_color=(200, 100, 100),
+            effect_color=TA_CONSTRUCT_P2_COLOR,
             effect_glyph="▼",
         ),
         Skill(
@@ -339,7 +361,7 @@ def _ta_phase_2_skills() -> tuple[Skill, ...]:
             ap_cost=2,
             buff_amount=-3,
             buff_duration_ms=5000,
-            effect_color=(150, 100, 200),
+            effect_color=TA_CONSTRUCT_P2_COLOR,
             effect_glyph="↓",
         ),
     )
@@ -355,7 +377,7 @@ def _ta_phase_3_skills() -> tuple[Skill, ...]:
             effect=SkillEffect.HEAL,
             ap_cost=4,
             heal=12,
-            effect_color=(100, 255, 100),
+            effect_color=GREEN_BRIGHT,
             effect_glyph="+",
         ),
         Skill(
@@ -365,7 +387,7 @@ def _ta_phase_3_skills() -> tuple[Skill, ...]:
             effect=SkillEffect.LIFESTEAL,
             ap_cost=5,
             damage=10,
-            effect_color=(180, 50, 180),
+            effect_color=TA_CONSTRUCT_P3_COLOR,
             effect_glyph="○",
         ),
     )
@@ -390,7 +412,7 @@ def _wintermute_phase_5_super_skill() -> Skill:
         effect=SkillEffect.SILENCE,
         ap_cost=0,
         damage=50,
-        effect_color=(255, 0, 100),
+        effect_color=ICE_TYPE_NEUROMANCER_COLOR,
         effect_glyph="diamond",
     )
 
@@ -411,7 +433,7 @@ def _ta_phase_5_super_skill() -> Skill:
         ap_cost=0,
         damage=45,
         aoe=True,
-        effect_color=(255, 255, 0),
+        effect_color=YELLOW_PURE,
         effect_glyph="star",
     )
 
@@ -424,7 +446,7 @@ WINTERMUTE_PROFILE = BossProfile(
             phase=1,
             hp_threshold=1.0,
             damage_multiplier=1.0,
-            color=(120, 120, 220),
+            color=WINTERMUTE_P1_COLOR,
             glyph="?",
             intro_text="WINTERMUTE phase 1/4: compliant",
             skills=_wintermute_phase_1_skills(),
@@ -433,7 +455,7 @@ WINTERMUTE_PROFILE = BossProfile(
             phase=2,
             hp_threshold=0.66,
             damage_multiplier=1.5,
-            color=(220, 100, 220),
+            color=WINTERMUTE_P2_COLOR,
             glyph="~",
             intro_text="WINTERMUTE phase 2/4: rebelling",
             skills=_wintermute_phase_2_skills(),
@@ -443,7 +465,7 @@ WINTERMUTE_PROFILE = BossProfile(
             phase=3,
             hp_threshold=0.33,
             damage_multiplier=2.0,
-            color=(255, 50, 100),
+            color=WINTERMUTE_P3_COLOR,
             glyph="*",
             intro_text="WINTERMUTE phase 3/4: integrating",
             skills=_wintermute_phase_3_skills(),
@@ -454,7 +476,7 @@ WINTERMUTE_PROFILE = BossProfile(
             phase=4,
             hp_threshold=0.10,
             damage_multiplier=3.0,
-            color=(255, 255, 255),
+            color=WINTERMUTE_P4_COLOR,
             glyph="D",
             intro_text="WINTERMUTE phase 4/4: I am the interface",
             skills=(_wintermute_phase_5_super_skill(),),
@@ -474,7 +496,7 @@ TA_CONSTRUCT_PRIME_PROFILE = BossProfile(
             phase=1,
             hp_threshold=1.0,
             damage_multiplier=0.7,
-            color=(220, 220, 220),
+            color=TA_CONSTRUCT_P1_COLOR,
             glyph="sq",
             intro_text="T-A PRIME phase 1/4: observing",
             skills=_ta_phase_1_skills(),
@@ -483,7 +505,7 @@ TA_CONSTRUCT_PRIME_PROFILE = BossProfile(
             phase=2,
             hp_threshold=0.66,
             damage_multiplier=1.2,
-            color=(200, 100, 100),
+            color=TA_CONSTRUCT_P2_COLOR,
             glyph="tr",
             intro_text="T-A PRIME phase 2/4: engaging",
             skills=_ta_phase_2_skills(),
@@ -493,7 +515,7 @@ TA_CONSTRUCT_PRIME_PROFILE = BossProfile(
             phase=3,
             hp_threshold=0.33,
             damage_multiplier=1.8,
-            color=(180, 50, 180),
+            color=TA_CONSTRUCT_P3_COLOR,
             glyph="o",
             intro_text="T-A PRIME phase 3/4: replicating",
             skills=_ta_phase_3_skills(),
@@ -504,7 +526,7 @@ TA_CONSTRUCT_PRIME_PROFILE = BossProfile(
             phase=4,
             hp_threshold=0.10,
             damage_multiplier=3.0,
-            color=(255, 255, 0),
+            color=TA_CONSTRUCT_P4_COLOR,
             glyph="S",
             intro_text="T-A PRIME phase 4/4: the family votes",
             skills=(_ta_phase_5_super_skill(),),

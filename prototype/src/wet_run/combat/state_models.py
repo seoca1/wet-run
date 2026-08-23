@@ -19,6 +19,8 @@ from dataclasses import dataclass, field
 from enum import StrEnum
 from typing import TYPE_CHECKING, Literal
 
+from .palette import HIT_FLASH_COLOR, YELLOW_PURE
+
 if TYPE_CHECKING:
     from wet_run.combat.boss import BossProfile
 
@@ -83,7 +85,7 @@ class Skill:
     crit_bonus: float = 0.0
     role: str | None = None
     aoe: bool = False
-    effect_color: tuple[int, int, int] = (255, 255, 255)
+    effect_color: tuple[int, int, int] = HIT_FLASH_COLOR
     effect_glyph: str = "*"
 
 
@@ -256,7 +258,7 @@ class CombatState:
     last_skill_used: Skill | None = None
     skill_cooldowns: dict[str, int] = field(default_factory=dict)
     last_event: str = ""
-    last_event_color: tuple[int, int, int] = (255, 255, 255)
+    last_event_color: tuple[int, int, int] = HIT_FLASH_COLOR
     last_event_tick: int = 0
     player_combo: int = 0
     enemy_combo: int = 0
@@ -285,7 +287,7 @@ class CombatState:
     phase_change_ms: int = 0
     # Phase 17: color of the most recent phase transition (used by the
     # UI color-shift flash). Defaults to yellow when unset.
-    phase_change_color: tuple[int, int, int] = (255, 255, 0)
+    phase_change_color: tuple[int, int, int] = YELLOW_PURE
     # Mission Archetype (ADR-0164): DEFENSE archetype HP pool for the
     # friendly node the player is protecting. 100 default (legacy fallback).
     friendly_node_hp: int = 100

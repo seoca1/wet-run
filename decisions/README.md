@@ -121,6 +121,8 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0194 | ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구) | **Draft** | 2026-08-19 | P3 (The Build, 아키텍처 명료화) |
 | 0195 | Accepted ADR Implementation Status Workflow (섹션 의무화 + 인덱스 Impl 컬럼) | **Draft** | 2026-08-20 | P3 (The Build, 프로세스 명료화) |
 | 0196 | Accessibility Colorblind State Alignment (AppState bool → str) | **Accepted (Option A)** | 2026-08-22 | P1 (Plan T2.2 게이트, UI/visibility 업그레이드) |
+| 0048 | Phase 189 — Wet Run Character Reflection (molly, johnny, rydell wiki pages cross-referenced to Fiction/wiki) | **Accepted** | 2026-08-24 | P2 |
+| 0049 | Phase 190 — Dashboard Verification Framework Sub-Stats Panel (verification_framework sub-object in aggregate-stats.mjs) | **Accepted** | 2026-08-24 | P2 |
 
 ### 2026-07-01 통합 작업 (P1~P4 + B)
 

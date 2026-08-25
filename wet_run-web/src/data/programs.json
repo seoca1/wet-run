@@ -1,0 +1,287 @@
+{
+  "wisp": {
+    "name": "Wisp",
+    "tier": 1,
+    "type": "defense",
+    "ap_cost": 2,
+    "shield": 1,
+    "description": "Defense program. Adds shield.",
+    "role": "guard"
+  },
+  "strike": {
+    "name": "Strike",
+    "tier": 1,
+    "type": "attack",
+    "ap_cost": 1,
+    "damage": 6,
+    "description": "Basic attack. Cheap, weak, reliable.",
+    "role": "strike"
+  },
+  "shield": {
+    "name": "Shield",
+    "tier": 1,
+    "type": "defense",
+    "ap_cost": 1,
+    "shield": 1,
+    "description": "One-time shield block.",
+    "role": "guard"
+  },
+  "probe": {
+    "name": "Probe",
+    "tier": 1,
+    "type": "detect",
+    "ap_cost": 1,
+    "description": "Reveal enemy weakness.",
+    "role": "utility"
+  },
+  "hammer": {
+    "name": "Hammer",
+    "tier": 2,
+    "type": "attack",
+    "ap_cost": 2,
+    "damage": 12,
+    "description": "Medium attack. Faster than Goliath.",
+    "role": "burst"
+  },
+  "virus": {
+    "name": "Virus",
+    "tier": 2,
+    "type": "attack",
+    "ap_cost": 2,
+    "damage": 8,
+    "description": "Damage over time. Weaker per tick but stacks.",
+    "role": "strike"
+  },
+  "goliath": {
+    "name": "Goliath",
+    "tier": 3,
+    "type": "attack",
+    "ap_cost": 3,
+    "damage": 25,
+    "description": "Heavy attack. Slow but powerful.",
+    "role": "burst"
+  },
+  "wardrone": {
+    "name": "Wardrone",
+    "tier": 4,
+    "type": "defense",
+    "ap_cost": 2,
+    "shield": 2,
+    "description": "Auto-counter defense. +2 shield + retaliation.",
+    "role": "guard"
+  },
+  "kraken": {
+    "name": "Kraken",
+    "tier": 5,
+    "type": "attack",
+    "ap_cost": 4,
+    "damage": 50,
+    "description": "Strongest attack. The legend.",
+    "role": "burst"
+  },
+  "ward": {
+    "name": "Ward",
+    "tier": 2,
+    "type": "defense",
+    "ap_cost": 2,
+    "shield": 2,
+    "duration": 3,
+    "description": "Area shield. Protects adjacent allies.",
+    "role": "guard"
+  },
+  "decoy": {
+    "name": "Decoy",
+    "tier": 2,
+    "type": "defense",
+    "ap_cost": 2,
+    "duration": 2,
+    "shield": 1,
+    "taunt_chance": 0.7,
+    "description": "Spawns a decoy that draws enemy attention.",
+    "role": "guard"
+  },
+  "reflect": {
+    "name": "Reflect",
+    "tier": 3,
+    "type": "defense",
+    "ap_cost": 3,
+    "shield": 1,
+    "reflect_chance": 0.4,
+    "description": "Reflects a portion of damage back at attacker.",
+    "role": "guard"
+  },
+  "barrier": {
+    "name": "Barrier",
+    "tier": 3,
+    "type": "defense",
+    "ap_cost": 3,
+    "shield": 4,
+    "description": "Heavy barrier. One-time large shield.",
+    "role": "guard"
+  },
+  "scan": {
+    "name": "Scan",
+    "tier": 1,
+    "type": "detect",
+    "ap_cost": 1,
+    "reveal_duration": 3,
+    "description": "Reveal enemy stats and weaknesses for 3 turns.",
+    "role": "utility"
+  },
+  "decrypt": {
+    "name": "Decrypt",
+    "tier": 2,
+    "type": "detect",
+    "ap_cost": 2,
+    "speed_bonus": 0.3,
+    "description": "Quick-decrypt ICE protection. Increases break speed.",
+    "role": "utility"
+  },
+  "cloak": {
+    "name": "Cloak",
+    "tier": 2,
+    "type": "defense",
+    "ap_cost": 2,
+    "shield": 1,
+    "duration": 3,
+    "evasion_bonus": 0.3,
+    "description": "Cloak program. Increases evasion for 3 turns.",
+    "role": "guard"
+  },
+  "trace": {
+    "name": "Trace",
+    "tier": 2,
+    "type": "detect",
+    "ap_cost": 2,
+    "reveal_duration": 4,
+    "description": "Trace enemy location. Reveals boss positions.",
+    "role": "utility"
+  },
+  "echo": {
+    "name": "Echo",
+    "tier": 3,
+    "type": "detect",
+    "ap_cost": 2,
+    "duration": 3,
+    "effect": "noise_attraction",
+    "description": "Echo pulse. Attracts nearby ICE for ambush.",
+    "role": "utility"
+  },
+  "exploit": {
+    "name": "Exploit",
+    "tier": 3,
+    "type": "attack",
+    "ap_cost": 3,
+    "damage": 12,
+    "armor_pierce": 0.5,
+    "description": "Exploit attack. High damage, ignores 50% armor.",
+    "role": "strike"
+  },
+  "payload": {
+    "name": "Payload",
+    "tier": 3,
+    "type": "attack",
+    "ap_cost": 4,
+    "damage": 15,
+    "crit_chance": 0.3,
+    "description": "High damage payload. Low AP cost for lethal strike.",
+    "role": "strike"
+  },
+  "backdoor": {
+    "name": "Backdoor",
+    "tier": 2,
+    "type": "attack",
+    "ap_cost": 2,
+    "damage": 6,
+    "armor_pierce": 0.3,
+    "description": "Backdoor exploit. Weak damage but consistent armor pierce.",
+    "role": "strike"
+  },
+  "surge": {
+    "name": "Surge",
+    "tier": 3,
+    "type": "attack",
+    "ap_cost": 2,
+    "damage": 10,
+    "speed_bonus": 0.5,
+    "description": "Surge attack. Fast and reliable.",
+    "role": "strike"
+  },
+  "boost": {
+    "name": "Boost",
+    "tier": 2,
+    "type": "support",
+    "ap_cost": 2,
+    "duration": 3,
+    "damage_bonus": 0.3,
+    "description": "Boost program. Allies deal 30% more damage for 3 turns.",
+    "role": "support"
+  },
+  "repair": {
+    "name": "Repair",
+    "tier": 2,
+    "type": "support",
+    "ap_cost": 2,
+    "heal_amount": 5,
+    "description": "Repair program. Restores HP to construct.",
+    "role": "support"
+  },
+  "heal": {
+    "name": "Heal",
+    "tier": 1,
+    "type": "support",
+    "ap_cost": 2,
+    "heal_amount": 3,
+    "description": "Basic heal. Restores 3 HP.",
+    "role": "support"
+  },
+  "salvage": {
+    "name": "Salvage",
+    "tier": 2,
+    "type": "support",
+    "ap_cost": 1,
+    "credits_gain": 100,
+    "description": "Salvage program. Gain bonus credits from defeated ICE.",
+    "role": "support"
+  },
+  "inspire": {
+    "name": "Inspire",
+    "tier": 1,
+    "type": "support",
+    "ap_cost": 1,
+    "duration": 3,
+    "morale_bonus": 1,
+    "description": "Inspire program. +1 morale to all allies.",
+    "role": "support"
+  },
+  "rewind": {
+    "name": "Rewind",
+    "tier": 1,
+    "type": "support",
+    "ap_cost": 1,
+    "duration": 1,
+    "effect": "reset_ap",
+    "description": "Rewind program. Resets AP to base value for 1 turn.",
+    "role": "support"
+  },
+  "ice_break": {
+    "name": "Ice Break",
+    "tier": 1,
+    "type": "attack",
+    "ap_cost": 2,
+    "damage": 8,
+    "armor_pierce": 0.2,
+    "description": "Targeted ICE break. Weak armor pierce.",
+    "role": "strike"
+  },
+  "sweep": {
+    "name": "Sweep",
+    "tier": 1,
+    "type": "attack",
+    "ap_cost": 1,
+    "damage": 4,
+    "aoe": true,
+    "description": "AOE sweep attack. Hits all adjacent ICE.",
+    "role": "strike"
+  }
+}

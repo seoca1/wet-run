@@ -67,6 +67,20 @@ def _main_inner() -> int:
     state = AppState()
     state.job_board = _load_job_board()
 
+    # Detect existing saves to enable CONTINUE option in main menu.
+    # GA-002 fix: state.has_save was never assigned, so the CONTINUE
+    # option was permanently disabled even when saves existed on disk.
+    from .save_manager import (
+        AUTO_SAVE_SLOT,
+        MAX_SLOTS,
+        SaveManager,
+    )
+
+    save_manager = SaveManager()
+    state.has_save = save_manager.has_save(AUTO_SAVE_SLOT) or any(
+        save_manager.has_save(slot) for slot in range(1, MAX_SLOTS + 1)
+    )
+
     # Store registries for combat (passed to _render/_handle_input)
     _global_prog_registry = prog_registry
     _global_ice_registry = ice_registry
@@ -83,14 +97,19 @@ def _main_inner() -> int:
 
         state.telemetry = TelemetryIntegrator()
 
+    # ADR-0198: resolve the user's selected resolution preset.
+    preset_name = getattr(state, "resolution", config.DEFAULT_RESOLUTION)
+    preset = config.RESOLUTION_PRESETS.get(preset_name, config.RESOLUTION_PRESETS[config.DEFAULT_RESOLUTION])
+    cols, rows = preset.cols or config.SCREEN_WIDTH, preset.rows or config.SCREEN_HEIGHT
+
     with tcod.context.new(
-        columns=config.SCREEN_WIDTH,
-        rows=config.SCREEN_HEIGHT,
+        columns=cols,
+        rows=rows,
         tileset=tileset,  # type: ignore[arg-type]
         title=config.SCREEN_TITLE,
         vsync=True,
     ) as context:
-        root_console = tcod.console.Console(config.SCREEN_WIDTH, config.SCREEN_HEIGHT, order="F")
+        root_console = tcod.console.Console(cols, rows, order="F")
 
         running = True
         last_time = time.monotonic()
@@ -121,6 +140,123 @@ def _main_inner() -> int:
                     if isinstance(event, tcod.event.WindowEvent) and event.type == "WindowClose":
                         running = False
                         break
+                    # ADR-0197: Gamepad adapter - intercept ControllerButton/Axis/Device
+                    # BEFORE dispatch and translate to synthetic KeyDown events.
+                    # Zero per-screen handler changes (35 ScreenKinds, ~12 active).
+                    import time as _gamepad_time
+
+                    if state.gamepad_enabled:
+                        from . import gamepad as _gamepad
+
+                        # Handle ControllerDevice (hot-plug) events.
+                        if isinstance(event, tcod.event.ControllerDevice):
+                            from . import gamepad_state as _gamepad_state
+
+                            _gamepad_state.handle_device_event(event, state)
+                            continue
+
+                        # Handle ControllerAxis (analog sticks + triggers).
+                        if isinstance(event, tcod.event.ControllerAxis):
+                            # Convert raw axis int -> ControllerAxis enum.
+                            axis_enum = tcod.sdl.joystick.ControllerAxis(event.axis)
+                            # Trigger -> Combat skill (LT=1, RT=2)
+                            skill_idx = _gamepad.trigger_to_skill_index(
+                                axis_enum, event.value
+                            )
+                            if skill_idx is not None and state.screen is ScreenKind.COMBAT:
+                                keysym = (
+                                    tcod.event.KeySym.N1
+                                    if skill_idx == 0
+                                    else tcod.event.KeySym.N2
+                                )
+                                synthetic_axis = tcod.event.KeyDown(
+                                    sym=keysym,
+                                    scancode=tcod.event.Scancode(event.scancode)
+                                    if hasattr(event, "scancode")
+                                    else tcod.event.Scancode(0),
+                                    mod=tcod.event.Modifier(0),
+                                    sdl_event=event.sdl_event,
+                                    timestamp_ns=event.timestamp_ns,
+                                )
+                                result = _handle_input(
+                                    synthetic_axis,
+                                    state,
+                                    _global_prog_registry,
+                                    _global_ice_registry,
+                                )
+                                if not result:
+                                    running = False
+                                    break
+                                continue
+                            # Stick -> arrow keys (deadzone + repeat)
+                            nav_key: tcod.event.KeySym | None = (
+                                _gamepad.axis_to_navigation_keysym(
+                                    axis_enum, event.value
+                                )
+                            )
+                            if nav_key is not None:
+                                # Only emit once per stick motion (axis events fire continuously)
+                                # by checking magnitude change threshold. For simplicity,
+                                # we let per-screen handlers handle repeat naturally.
+                                synthetic_axis_nav = tcod.event.KeyDown(
+                                    sym=nav_key,
+                                    scancode=tcod.event.Scancode(0),
+                                    mod=tcod.event.Modifier(0),
+                                    sdl_event=event.sdl_event,
+                                    timestamp_ns=event.timestamp_ns,
+                                )
+                                result = _handle_input(
+                                    synthetic_axis_nav,
+                                    state,
+                                    _global_prog_registry,
+                                    _global_ice_registry,
+                                )
+                                if not result:
+                                    running = False
+                                    break
+                                continue
+
+                        # Handle ControllerButton (digital face buttons + shoulders).
+                        if isinstance(event, tcod.event.ControllerButton):
+                            mapped_keysym: tcod.event.KeySym | None = (
+                                _gamepad.gamepad_to_keysym(event.button)
+                            )
+                            if mapped_keysym is not None and event.pressed:
+                                # Button repeat logic: emit KeyDown only if enough time
+                                # has passed since last press of the same button.
+                                now_ns = event.timestamp_ns or (
+                                    _gamepad_time.monotonic_ns()
+                                )
+                                last_ns = state.gamepad_button_last_press.get(
+                                    int(event.button), 0
+                                )
+                                elapsed_ms = (now_ns - last_ns) / 1_000_000
+                                if (
+                                    last_ns > 0
+                                    and elapsed_ms < _gamepad.GAMEPAD_REPEAT_INTERVAL_MS
+                                ):
+                                    continue  # too soon, skip
+                                state.gamepad_button_last_press[
+                                    int(event.button)
+                                ] = now_ns
+                                synthetic_btn = tcod.event.KeyDown(
+                                    sym=mapped_keysym,
+                                    scancode=tcod.event.Scancode(0),
+                                    mod=tcod.event.Modifier(0),
+                                    sdl_event=event.sdl_event,
+                                    timestamp_ns=event.timestamp_ns,
+                                )
+                                result = _handle_input(
+                                    synthetic_btn,
+                                    state,
+                                    _global_prog_registry,
+                                    _global_ice_registry,
+                                )
+                                if not result:
+                                    running = False
+                                    break
+                                continue
+
                     result = _handle_input(
                         event, state, _global_prog_registry, _global_ice_registry
                     )

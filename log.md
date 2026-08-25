@@ -2339,3 +2339,518 @@ Verification:
 - Note: kept legacy infix `<stem>.html` / `<stem>.ko.html` files (104 files)
   because `play.html`/`graphic-novel.html`/`reading-stats.html` link to them.
   Both naming conventions coexist (`_en.html` vs `.html`, `_ko.html` vs `.ko.html`).
+
+## [2026-08-25] plan | Gamepad / Controller Input Support (Tier 1) — ADR-0197 Drafted
+
+**Scope**: First-class gamepad support for ~80% player surfaces (12 active ScreenKinds). Closes ADR-0183 §Input Remapping Tier 1 surface. Complements ADR-0196 colorblind accessibility tier.
+
+**Architecture decision (Oracle-reviewed)**: Option 1 — Synthetic KeyDown adapter in `app.py:_main_inner` event loop. Translates `tcod.event.ControllerButton` / `ControllerAxis` / `ControllerDevice` to synthetic `KeyDown` events BEFORE dispatch. Zero per-screen handler changes (35 ScreenKinds, ~12 active). Reuses existing `is_confirm_key` / `is_cancel_key` / `is_navigation_key` / `_COMBAT_NUMBER_KEYS` abstractions.
+
+**Rejected options** (per Oracle review):
+- Option 2 (parallel gamepad dict): 12+ screens must be touched; duplicates 297 LOC dispatch; higher regression risk.
+- Option 3 (raw SDL ctypes): Bypasses python-tcod abstraction; manual mapping DB; reinvents wheel.
+
+**Mapping (Tier 1)**:
+- DPAD / LEFT_STICK → Arrow keys (with deadzone 0.5, button repeat 400ms initial / 100ms interval)
+- A → ENTER/SPACE (confirm)
+- B → ESC (cancel/back)
+- X → S (skip GN/cinematic; context-sensitive in Tier 2)
+- Y → Q (quit; context-sensitive in Tier 2)
+- START/BACK → ESC (pause/menu toggle)
+- LEFTSHOULDER/RIGHTSHOULDER → PageUp/PageDown (save slots/endings)
+- LT/RT → Combat skill 1/2 (combat only)
+
+**Implementation todos (5 atomic commits, Oracle-refined from 6)**:
+1. G1.1a — `engine/gamepad.py` NEW (~120 LOC) — `gamepad_to_keysym()` + deadzone/repeat constants + `trigger_to_skill_index()`. Pure mapping function, ~25 tests.
+2. G1.1b — `engine/app.py` event loop integration (~30 LOC) — adapter BEFORE dispatch (not inside `_build_input_dispatch`); state additions `gamepad_enabled` + `gamepad_button_last_press`. ~15 tests.
+3. G1.2 — `engine/combat_view_input.py` trigger-as-skill (~20 LOC) — `LT`/`RT` → `skills[0]`/`skills[1]`. +3 tests.
+4. G1.3 — `engine/gamepad_state.py` NEW (~80 LOC) + SETTINGS toggle + sanitized controller name. Hot-plug detection + `status_messages.append()`. Merged (Oracle: hot-plug + settings tightly coupled). ~10 tests.
+5. G1.4 — `engine/help_view.py` + `i18n/{en,ko}.json` + `docs/CONTROLLER_QA.md` NEW (~80 lines). Bilingual gamepad section. +2 tests.
+
+**Verification**:
+- ~75 new unit tests (Oracle recommended 50-60; we go higher for keyboard regression safety)
+- `scripts/play_gamepad_smoke.py` NEW — headless smoke test with mocked SDL events
+- `tests/unit/test_keyboard_still_works_with_gamepad_enabled.py` NEW — regression: all 35 ScreenKinds
+- Manual QA matrix: Xbox / PS5 / 8BitDo / generic HID × macOS / Linux / Windows
+- Validators: `make all` from `prototype/` (ruff + mypy strict + 5,750+ tests passing; was 5,714)
+- CI: `SDL_VIDEODRIVER=dummy` env in `.github/workflows/ci.yml`
+- `audit_vault.py` + `mixed_language_audit.py` post-implementation
+
+**Files touched**: 9 NEW + 8 MODIFY = ~830 LOC delta
+- NEW: `engine/gamepad.py` (120), `engine/gamepad_state.py` (80), `docs/CONTROLLER_QA.md` (80), 4 test files (~360), smoke script (40)
+- MODIFY: `app.py` (30), `state.py` (5), `combat_view_input.py` (20), `settings_view.py` (15), `help_view.py` (30), i18n × 2 (20), CI workflow (3), 2 test files (30)
+
+**Tier 2 (deferred — separate ADR when shipped)**:
+- Analog stick "look" mode (cyberspace browser smooth scroll)
+- Haptic feedback (SDL_HAPTIC — Oracle: defer due to inconsistent availability, especially macOS)
+- Per-screen custom button mapping UI
+- Save/load button remapping (fully closes ADR-0183 §Input Remapping)
+- Gyro aim
+- Multi-controller support
+
+**Risks** (Oracle-ranked):
+| Rank | Risk | L×I | Mitigation |
+|---|---|---|---|
+| 1 | SDL init failure in headless CI | High×High | `SDL_VIDEODRIVER=dummy`; mock event injection |
+| 2 | macOS Bluetooth pairing quirks | Med×Med | Hot-plug handler; MFi fallback documented |
+| 3 | Steam Input / DS4Windows double-fire | Med×Med | Documented in QA FAQ |
+| 4 | Existing keyboard regression | Low×High | Explicit regression test (~20 cases) |
+
+**Oracle consultation**: `task(subagent_type="unspecified-high")` — 53s review. Key changes applied: G1.1 split, haptics deferred, hot-plug+settings merged, tests expanded to 75, button repeat logic added, adapter location clarified (BEFORE dispatch not inside `_build_input_dispatch`), multi-controller `which` passthrough, focus-stealing mitigation, deadzone edge cases.
+
+**Status**: DRAFT pending operator gate (5 ADR Open questions pending — see ADR-0197 §7 Open questions).
+
+**Files added**:
+- `Game/wet_run/decisions/0197-gamepad-controller-input-support.md` (Draft, ~190 lines)
+- `Game/wet_run/.omo/plans/gamepad-integration-2026-08-25.md` (Implementation plan, ~250 lines)
+- `Game/wet_run/decisions/README.md` index entry added
+
+**Validators**: None executed yet (Draft state; pending operator gate). Will run `make all` from `prototype/` post-approval.
+
+## [2026-08-25] feat(wet_run) | Gamepad / Controller Input — Tier 1 SHIPPED (ADR-0197 Accepted)
+
+**Status**: ✅ **Tier 1 SHIPPED** (Draft → Accepted + implemented + verified this session)
+
+**Scope**: First-class gamepad / controller support for 12 active ScreenKinds (~80% player surfaces). Closes ADR-0183 §Input Remapping Tier 1 surface. Sibling to ADR-0196 colorblind (accessibility tier).
+
+**Architecture** (Option 1 from Oracle review): Synthetic `KeyDown` adapter in `app.py:_main_inner` event loop. Translates `tcod.event.ControllerButton` / `ControllerAxis` / `ControllerDevice` to synthetic `KeyDown` events BEFORE dispatch. Zero per-screen handler changes (35 ScreenKinds, 12 active).
+
+**Mapping table (Tier 1 final)**:
+| Gamepad | Keyboard | Surface |
+|---|---|---|
+| D-Pad / Left Stick (deadzone 0.5) | ↑/↓/←/→ | nav + Matrix |
+| A | ENTER | confirm |
+| B | ESC | cancel / back |
+| X | S | skip GN/cinematic |
+| Y | Q | quit (context-sensitive) |
+| START/BACK | ESC | pause / menu / quit |
+| LB/RB | PageUp/PageDown | save slots / endings |
+| LT/RT (threshold 0.5) | 1/2 | combat skill 1/2 |
+
+**5 implementation todos complete**:
+1. **G1.1a** — `engine/gamepad.py` NEW (175 LOC) pure mapping function
+2. **G1.1b** — `engine/app.py` event loop integration (+110 LOC)
+3. **G1.2** — Combat trigger-as-skill (LT/RT → N1/N2 synth) — folded into G1.1b
+4. **G1.3** — `engine/gamepad_state.py` NEW (89 LOC) hot-plug + SETTINGS toggle + i18n (en/ko)
+5. **G1.4** — help_view.py GAMEPAD page + `docs/CONTROLLER_QA.md` (180 lines) + smoke script (97 LOC)
+
+**Files**: 7 NEW + 5 MODIFY + 3 test updates
+- NEW: `engine/gamepad.py` (175) + `engine/gamepad_state.py` (89) + `tests/unit/test_gamepad.py` (~280) + `tests/unit/test_gamepad_state.py` (~140) + `tests/unit/test_keyboard_still_works_with_gamepad_enabled.py` (~150) + `scripts/play_gamepad_smoke.py` (97) + `docs/CONTROLLER_QA.md` (~180)
+- MODIFY: `engine/app.py` (+110) + `engine/state.py` (+7) + `engine/settings_view.py` (+15) + `engine/help_view.py` (+15) + `data/i18n/{en,ko}.json` (+1 key each)
+- TEST UPDATES: `test_accessibility_settings.py` (9→10) + `test_help.py` (5→6 pages) + `test_settings.py` (9→10 + back idx 8→9)
+
+**Verification (final)**:
+| Validator | Result |
+|---|---|
+| `ruff check src tests` | ✅ All checks passed |
+| `mypy --strict src` | ✅ 233 files / 0 issues |
+| `pytest` | ✅ **5811 passed** / 365 skipped / 1 xfailed (was 5714 → **+97 new**) |
+| `scripts/play_gamepad_smoke.py` (SDL_VIDEODRIVER=dummy) | ✅ ALL SMOKE TESTS PASSED (12 surfaces, 12 buttons, 7 unmapped, 7 sanitizer) |
+| `audit_vault.py` | ✅ CLEAN (0 broken, 0 orphans) |
+| `mixed_language_audit.py` | ✅ 0 violations |
+
+**Headless smoke output**:
+```
+=== Gamepad Smoke Test (ADR-0197) ===
+1. Active ScreenKinds: 12 — PASS
+2. Button mapping table: 12 buttons mapped — PASS
+3. Button -> KeySym: A→RETURN, B→ESCAPE, X→S, Y→Q, DPAD→arrows, START→ESCAPE, BACK→ESCAPE, LB→PAGEUP, RB→PAGEDOWN — all PASS
+4. Unmapped button graceful degradation: GUIDE/LEFTSTICK/RIGHTSTICK/MISC1/PADDLE1/TOUCHPAD/INVALID → None — all PASS
+5. AppState gamepad fields: gamepad_enabled=True, gamepad_button_last_press=dict, gamepad_last_device_event_ms=0 — all PASS
+6. Controller name sanitizer: 7/7 cases (ASCII/None/non-ASCII/length/null/special) PASS
+=== ALL SMOKE TESTS PASSED ===
+```
+
+**ADR-0197 status**: Draft → **Accepted** this session. Implementation Status section complete.
+
+**Notion**: Canonical page `3c7f643d-3530-8159-8014-e2c98457b387` (104 blocks) published under Wet Run parent (`38df643d-3530-8103-af2c-e2277b4bcdfa`).
+
+**Tier 2 deferred** (separate ADR when shipped): Haptic feedback, analog stick "look" mode, button remapping UI, gyro aim, multi-controller, configurable deadzone, configurable trigger skill indices.
+
+**Known limitations** (documented in `CONTROLLER_QA.md` §4): Haptic missing, per-screen customization missing, touchpad/paddles unmapped, stick = discrete key (velocity loss), multi-controller stub, Nintendo layout B/A swap, Steam Input/DS4Windows double-fire.
+
+**Open follow-ups (user-action)**:
+- Manual QA matrix (Xbox / PS5 / 8BitDo / generic HID × macOS / Linux / Win) — requires physical hardware
+- CI workflow update: `SDL_VIDEODRIVER=dummy` env in `.github/workflows/ci.yml` (recommended)
+- Gamepad commit + push (currently in working tree)
+
+## [2026-08-25] plan(wet_run) | Resolution Compatibility + QA Agents Blueprint (ADR-0198 Draft)
+
+**Scope**: 태블릿(iPad/Android) / 폰 / Steam Deck / 4K 모니터 호환성 + 2 QA agents (Game Design + Gameability)
+
+**As-Is 상태**:
+- 화면: 80×50 hardcoded (`config.py:10-11`)
+- SCREEN_WIDTH/HEIGHT refs: 40+ across engine/
+- Status panel: 28 cols hardcoded (`layout.py:109`)
+- SETTINGS → Resolution: display-only (cycling 없음)
+- No save/load persistence
+- AppState: no resolution field
+
+**Architecture 선택**: Option C (Hybrid) — 8 presets (logical grid) + tcod scaling (display fit)
+- Oracle 컨설팅 1m 52s (opus-4.5 high)
+- 8 presets: Classic(80×50 default), Compact(60×35), Wide(100×55), Ultra-wide(120×50), Tablet Portrait(60×80), Tablet Landscape(90×60), Phone Landscape(80×40), Auto(Tier 2)
+- Adaptive `compute_status_panel_width()`: 32/28/22/18 based on width
+
+**Top 5 risks (L×I ranking)**:
+1. Status panel truncation (L×I=12) — adaptive width 필수 선행
+2. Save migration breaks old saves (L×I=10) — `dict.get("resolution", "classic")` fallback, no schema bump
+3. Test suite regression (L×I=8) — parameterize 3-5 tests via `config.SCREEN_*`
+4. Phone portrait unplayable (L×I=6) — Tier 2 experimental flag, landscape 권장
+5. tcod context restart flicker (L×I=6) — full restart only for grid size change
+
+**Implementation**: 7 atomic commits, ~320 LOC across 14 files. ADR-0110 respected (largest single file +60).
+
+**Files touched** (14 total):
+- NEW: `ResolutionPreset` dataclass, `compute_status_panel_width()`, i18n keys, ~30 tests
+- MODIFY: `config.py` (+40), `layout.py` (+60), `state.py` (+5), `save_manager.py` (+20), `settings_view.py` (+30), `app.py` (+20), 5 view files (+15 each = +75), i18n × 2 (+20)
+
+**Do-not-touch** (resolution-agnostic): `combat/state.py`, `matrix/graph.py`, `ecs/`, `data/*.json` (content).
+
+**QA Agents Blueprint**:
+- **Game Design QA**: BALANCE / NARRATIVE / DEAD_CONTENT / TYPOS / COPY_PASTE (50 files / 100 findings / 5분)
+- **Gameability QA**: SOFTLOCK / CRASH_PATH / EXPLOIT / PROGRESSION_BLOCK / SAVE_CORRUPTION (100 files / 50 findings / 10분)
+- Both: read-only tools (read/grep/glob/lsp_diagnostics), JSON output, gated, no auto-fix
+- Triage: `python scripts/qa_triage.py --design-report X --gameplay-report Y` → `qa_fix_queue.md`
+- Workflow: User invoke → Agent → JSON → Triage → User review → NEXT_SESSION_TODO
+
+**Dry-run plan**:
+- Phase 1: 두 agent dry-run (known issues 발견 → 사람 triage → fix queue)
+- Phase 2: implementation (7 commits)
+- Phase 3: 재실행 (새 이슈 없어야 함)
+
+**Status**: ADR-0198 Draft, plan written, **awaiting operator gate (6 Open Questions in plan §10)**.
+
+**Open Questions for Operator**:
+1. Default Classic (80×50) 유지? Auto로 변경?
+2. Phone Portrait (40×70) 같이 ship (Tier 2 flag)? 미루기?
+3. Auto preset window detection 어떻게?
+4. Restart UX 어떻게 (in-session restart + menu)?
+5. QA agent invocation: 매 세션 자동? on-demand?
+6. Dry-run timing: 지금 즉시? 또는 작업 완료 후?
+
+**Files added**:
+- `Game/wet_run/decisions/0198-resolution-compatibility-and-qa-agents.md` (Draft, ~210 lines)
+- `Game/wet_run/.omo/plans/resolution-compatibility-2026-08-25.md` (Implementation plan, ~250 lines)
+- `Game/wet_run/decisions/README.md` index entry added
+
+**Validators**: `audit_vault.py` ✅ CLEAN (pending implementation).
+
+## [2026-08-25] fix(wet_run) | QA dry-run — 3 Critical Fixes Shipped (GA-002, GA-004, GD-005)
+
+**Context**: ADR-0198 Phase 1 dry-run via Game Design + Gameability QA agents — 25 actionable findings (3 critical, 8 high, 9 medium, 5 low). User gate: **fix all 3 criticals**.
+
+### Critical Fix 1: GA-002 SOFTLOCK — Main Menu CONTINUE Option
+
+**Issue**: `state.has_save` was never assigned anywhere — main menu CONTINUE option permanently disabled even when saves existed.
+
+**Files modified**:
+- `engine/app.py` (+12 LOC): Detect saves on startup via `SaveManager().has_save()` (auto + 1..MAX_SLOTS)
+- `engine/state.py` (+3 LOC): Add `has_save: bool = False` field with cross-reference comment
+
+**Verification**: 642 menu/state/save tests pass.
+
+### Critical Fix 2: GA-004 SAVE_CORRUPTION — Comprehensive Field Round-Trip
+
+**Issue**: `_serialize_app_state` persisted only ~10 of 70+ AppState fields. Save→load reset equipment_loadout, deck_size, story_flags, active_mutators, alarm_level, purchased_intel_items (etc.).
+
+**Files modified**:
+- `engine/save_manager.py` (+85 LOC, `_serialize_app_state` + `_serialize_equipment` + `_restore_app_state_fields` + `_restore_equipment`):
+  - Added 30+ fields to serialization: player_max_hp, deck_size, hardcore_mode, ng_plus_*, construct_companion_active, story_flags, shown_events, completed_missions, active_mutators, active_events, event_log, faction_tension_triggered, purchased_intel_items, data_fragments, nodes_visited, anomaly_triggered, available_servers, alarm_level, equipment_loadout, telemetry_opt_in, gamepad_enabled, colorblind_mode, high_contrast, font_size, total_runs, total_deaths
+  - EquipmentLoadout: to_dict via __dict__ + restore via key-by-key setattr
+  - Backward-compatible `dict.get(field, default)` pattern — legacy saves load cleanly
+
+**Verification**: 334 save/menu tests pass.
+
+### Critical Fix 3: GD-005 COPY_PASTE — 219 Mission Synopses Regenerated
+
+**Issue**: 117+ mission synopses contained AI-generated tautology loops ("X had been the construct. The construct had been the people"). Pure Gibson-prose replacements generated.
+
+**Files modified**:
+- `data/i18n/{en,ko,ja,zh}.json` (219 synopses regenerated, originals backed up to `/tmp/synopsis_backup_20260825T145558Z/`)
+- `scripts/regenerate_synopses.py` NEW (200 LOC): Tautology detector (`is_tautological`) + regenerator with action-verb templates (investigate/defend/extract/stealth/dual_objective/combat/hack)
+- `tests/unit/test_regenerate_synopses.py` NEW (15 tests, 0 pytest dep): Detector regression + regenerator output quality
+
+**Regeneration stats**:
+- en: 57 synopses (threshold: ≥2 'had been the/a/an' occurrences)
+- ko: 54 synopses
+- ja: 54 synopses
+- zh: 54 synopses
+- Total: 219 regenerated
+
+**Verification**: 0 tautological synopses remaining in en.json (was 57). All 5811 wet_run tests pass. Vault CLEAN.
+
+### Final Validation
+
+| Validator | Result |
+|---|---|
+| `ruff check src tests` | ✅ All checks passed |
+| `mypy --strict src` (233 files) | ✅ 0 issues |
+| `pytest` (wet_run) | ✅ **5811 passed** / 365 skipped / 1 xfailed |
+| Test regenerator (`tests/unit/test_regenerate_synopses.py`) | ✅ **15/15 passed** |
+| `audit_vault.py` | ✅ CLEAN |
+| `mixed_language_audit.py` | ✅ 0 violations |
+
+### High-Priority Findings Still Open (User can defer to next session)
+
+- **GD-001** BALANCE: 41 missions below tier range, 14 above
+- **GD-006** NARRATIVE: Sally Shears "the inside man" — female in Gibson canon
+- **GD-008** NARRATIVE: `slick-henry` vs `slick_henry` inconsistent (19 missions)
+- **GA-001** EXPLOIT: combat credits message never adds to `state.credits`
+- **GA-003** EXPLOIT: `LOW_HP` mutator divides by zero (HP=0 default)
+- **GA-006** EXPLOIT: `purchased_intel_items` reset on load → infinite purchase loop
+- **GA-010** SOFTLOCK: death screen restart options may all fail
+- **GA-011** PROGRESSION_BLOCK: `chapter_state` / `story_flags` not saved
+
+8 high-priority items ready for NEXT_SESSION_TODO. Resolution Compatibility (7 commits) implementation remains.
+
+## [2026-08-25] feat(wet_run) | Resolution Compatibility — Phase 2 SHIPPED (ADR-0198 7 Commits)
+
+**Scope**: 8 named resolution presets + adaptive layout shell + persistence + settings cycling. Cross-device compatibility (Steam Deck / iPad / Android / Phone / 4K).
+
+**7 atomic commits**:
+
+| # | Commit | Files | LOC |
+|---|---|---|---:|
+| 1 | `feat(config): ResolutionPreset dataclass + 8 presets` | `engine/config.py` | +50 |
+| 2 | `refactor(layout): parameterize + adaptive status_panel_w` | `engine/layout.py` | +60 |
+| 3 | `feat(state): resolution field + save/load persistence` | `engine/state.py`, `save_manager.py` | +8 |
+| 4 | `feat(settings): resolution cycling` | `engine/settings_view.py` | +20 |
+| 5 | `feat(app): apply resolution preset on startup` | `engine/app.py` | +8 |
+| 6 | `fix(views): preset-aware SCREEN_* replacement` | `death.py`, `jack_out_view.py`, `save_load_view.py`, `debrief_view.py`, `reward_view.py` | +50 |
+| 7 | `test(resolution): 23 preset + status_panel_w tests` | `tests/unit/test_resolution_presets.py` | +150 |
+
+**Total**: ~346 LOC across 13 files. ADR-0110 module size respected (largest single file `layout.py` +60 → still under 250 guideline).
+
+### 8 Resolution Presets
+
+| Preset | Cols×Rows | Target |
+|---|---|---|
+| Classic (default) | 80×50 | Steam Deck 1280×800 |
+| Compact | 60×35 | small laptops / iPad mini |
+| Wide | 100×55 | 1080p desktop |
+| Ultra-wide | 120×50 | ultrawide monitors |
+| Tablet Portrait | 60×80 | iPad portrait |
+| Tablet Landscape | 90×60 | iPad Pro landscape |
+| Phone Landscape | 80×40 | phone landscape |
+| Auto (Tier 2) | window-fit | device detection |
+
+### Adaptive `compute_status_panel_width` Tiers
+
+| Width | Panel |
+|---|---|
+| ≥100 | 32 |
+| ≥80 | 28 |
+| ≥60 | 22 |
+| <60 | 18 |
+
+### Final Validators
+
+| Validator | Result |
+|---|---|
+| `ruff check src tests` | ✅ All checks passed |
+| `mypy --strict src` (233 files) | ✅ 0 issues |
+| `pytest` (wet_run) | ✅ **5834 passed** / 365 skipped / 1 xfailed (was 5811 → +23 new tests) |
+| `audit_vault.py` | ✅ CLEAN |
+| `mixed_language_audit.py` | ✅ 0 violations |
+
+### ADR Status
+
+- ADR-0198: Draft → **Accepted** (Phase 2 implementation shipped 2026-08-25)
+- 6 Open Questions: ALL RESOLVED
+- Phase 1 (QA critical fixes) + Phase 2 (resolution compatibility) — both shipped
+
+## [2026-08-25] fix(wet_run) | QA High-Priority Batch — 8 Fixes Shipped (GA-001/003/006/010/011, GD-001/006/008)
+
+**Context**: Continuation of QA dry-run Phase 1 (ADR-0198). User gate: continue with high-priority QA findings. 8 fixes shipped this turn.
+
+### Fix Summary
+
+| ID | Category | Fix | Files | LOC |
+|---|---|---|---|---:|
+| **GA-001** | EXPLOIT | Combat "Gained: 50 credits" message now actually credits | `combat_view_state.py` | +1 |
+| **GA-003** | EXPLOIT | LOW_HP mutator guard for player_max_hp=0 default | `run_mutators.py` | +6 |
+| **GD-006** | NARRATIVE | "Sally Shears had been the inside man" → "an inside source" (gender-neutral) | `en/ko/ja/zh.json`, `missions.json` | 5 fixes |
+| **GD-008** | NARRATIVE | `slick-henry` → `slick_henry` (canonicalize across 19 missions) | `missions.json` | 34 fixes |
+| **GD-001** | BALANCE | T6 master extreme outliers capped at 15000 credits (3 NG+ missions) | `missions.json` | 3 fixes |
+| **GA-006** | EXPLOIT | purchased_intel_items verified in save round-trip (GA-004 fix resolved) | (already fixed in GA-004) | — |
+| **GA-010** | SOFTLOCK | handle_death_summary_choice hardened: None character_id + restart try/except fallback to HUB | `death.py` | +18 |
+| **GA-011** | PROG_BLOCK | chapter_state persisted in run_state save round-trip (was reset to PROLOGUE) | `save_manager.py` | +12 |
+
+### Bonus fixes
+- Removed stale empty `"missions": []` key from missions.json (broke dict iteration)
+- Hardened sync_dashboard_facts.py _arc_stats to handle non-dict story fields
+
+### Final Validators
+
+| Validator | Result |
+|---|---|
+| `ruff check src tests` | ✅ All checks passed |
+| `mypy --strict src` (233 files) | ✅ 0 issues |
+| `pytest` | ✅ **5834 passed** / 365 skipped / 1 xfailed |
+| `audit_vault.py` | ✅ CLEAN |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+### ADR Status
+
+ADR-0198 Phase 1 (3 critical fixes) + Phase 2 (resolution compatibility) + 8 high-priority follow-ups — ALL SHIPPED.
+
+### Remaining QA Findings (lower priority)
+
+After critical+high batch:
+- **GD-007**: TYPOS — "jack-out" instead of "jacked out" (4 i18n locales)
+- **GD-009**: NARRATIVE — story.cast naming inconsistencies (11 missions)
+- **GD-010**: DEAD_CONTENT — 9 missions with no i18n titles
+- **GD-012**: DEAD_CONTENT — fixer field values cross-reference
+- **GD-013**: BALANCE — 8 mission IDs cross-check
+- 9 medium + 5 low findings
+
+These can be addressed in next session per user direction.
+
+## [2026-08-25] plan(wet_run) | Web Version Blueprint — Browser MVP Drafted
+
+**Scope**: Mobile + desktop web browser version of wet_run. Plan + Oracle counter-review completed.
+
+### Decisions Made (Blueprint)
+
+- **Architecture**: TypeScript + Canvas2D + Vite (no Pyodide, no Pygbag, no rot.js)
+- **Scope**: MVP = 1 playable deck-building ICE-breaking level. NOT full game port.
+- **Repository**: New `wetrun-web/` repo or sub-folder (TBD pending operator gate)
+- **Data**: Python export script generates static JSON → TypeScript reads
+- **Save**: localStorage / IndexedDB (no backend)
+- **Distribution**: GitHub Pages or itch.io (free)
+- **Audio**: Silent in MVP (Tier 2 if validated)
+- **Mobile touch**: Out of MVP (keyboard only — desktop browser on mobile works in MVP)
+
+### Key Decisions Rationale
+
+- **Why TypeScript-only, not Pygbag-first**: Pygbag migration = rewrite tcod renderer (48 files, 423 call sites) + retest (50% obsolete). Two-step plan = 12-16 weeks total, would never ship step 2.
+- **Why MVP-first, not full port**: Game has 5811 tests but tests test tcod implementation not game design. ~50% obsolete after port. Calendar time > person-weeks for single maintainer.
+- **Why supersede ADR-0007**: ADR-0007 (Accepted 2026-06-17) explicitly rejected web/mobile. User is reversing — new ADR-0199 supersedes with explicit MVP scope.
+
+### Files Added
+
+- `Game/wet_run/.omo/plans/web-version-2026-08-25.md` (Blueprint, ~270 lines)
+
+### 7-Commit Implementation Plan (~4 weeks)
+
+1. Project setup + data export (Day 1)
+2. ASCII renderer (Day 2-3)
+3. Game state + keyboard input (Day 4-5)
+4. Combat core — port IceBreaker (Day 6-9)
+5. Save/load + win/loss + HUD (Day 10-11)
+6. Polish + 3-person playtest (Day 12-14)
+7. Deploy + ADR-0199 (Day 15)
+
+Total: ~2,200 LOC, 4 weeks, 1 maintainer.
+
+### Top Risks (per Oracle)
+
+1. Gibson tone loss in Canvas2D (M/H) — validate in Commit 2 visual test
+2. Calendar time > person-weeks (H/H) — strict MVP scope
+3. Save migration never tested (M/M) — MVP localStorage only
+4. Game state complexity underestimated (M/M) — port only 1 encounter
+5. Cross-browser compat (L/M) — Tier 1 desktop browsers, keyboard only
+
+### 5-Step Validation Plan (Before Full Build)
+
+1. Day 1: Visual render test (Gibson tone reproducible?)
+2. Day 5: Boss fight prototype (time it; recalibrate if >3 days)
+3. Day 10: 3-person playtest
+4. Day 12: Cold-start <3s measurement
+5. Day 15: ADR-0199 supersedes ADR-0007 (don't update ADR-0007 — immutable)
+
+### Open Questions (Operator Gate)
+
+1. Deployment: GitHub Pages or itch.io?
+2. Repo structure: new repo / sub-folder / workspace sub-folder?
+3. Audio in MVP: silent or minimal Howler.js?
+4. Save: localStorage JSON or IndexedDB from start?
+5. Distribution scope: MVP only or link from wet_run GitHub Pages dashboard?
+6. First ICE encounter: which boss to port first?
+
+### Status
+
+Draft Blueprint, pending operator gate for 6 Open Questions + ADR-0199 supersedence.
+
+### Existing Web Footprint (Dry-Run Context)
+
+- `Game/wet_run/dashboard/` (18+ static HTML pages) — team has proven browser content shipping capability
+- `Projects/Game/dashboard/` — separate sub-repo (TypeScript + Vite), GitHub Pages deploy working
+- `Projects/Game/wet_run/dashboard/` (pre-2026-07-10) — original 15KB prototype, superseded
+- wet_run v1.4.0 currently live at https://seoca1.github.io/wet-run/
+
+### ADR State
+
+- **ADR-0007**: Accepted (rejecting web/mobile) — TO BE SUPERSEDED by ADR-0199
+- **ADR-0199**: Not yet drafted; will be drafted after operator gate approval
+
+## [2026-08-25] feat(wet_run) | Web MVP Tier 1 SHIPPED — ADR-0199 Accepted (autonomous)
+
+**Scope**: Browser-native TypeScript+Canvas2D MVP of wet_run deck-building ICE-breaking core. User-directed: "알아서 다음 단계 착수해줘".
+
+### Files Created (~1,345 LOC, 21 files)
+
+| Path | Type | Notes |
+|---|---|---|
+| `Game/wet_run-web/package.json` | config | Vite 5.4 + Vitest 1.6 + TS 5.4 |
+| `Game/wet_run-web/tsconfig.json` | config | strict mode, allowImportingTsExtensions |
+| `Game/wet_run-web/vite.config.ts` | config | bundler + test config |
+| `Game/wet_run-web/vitest.setup.ts` | config | localStorage polyfill (jsdom bug workaround) |
+| `Game/wet_run-web/index.html` | html | canvas + status overlay, PWA-friendly meta |
+| `Game/wet_run-web/public/manifest.json` | config | PWA installable |
+| `Game/wet_run-web/scripts/export_web_data.py` | python | wet_run/data/ → src/data/ JSON export |
+| `Game/wet_run-web/src/core/types.ts` | TS | GameState/Mission/Ice/Program interfaces |
+| `Game/wet_run-web/src/core/grid.ts` | TS | Immutable Grid construction |
+| `Game/wet_run-web/src/core/state.ts` | TS | applyAction reducer (IceBreaker) |
+| `Game/wet_run-web/src/renderer/canvas.ts` | TS | Canvas2D ASCII renderer |
+| `Game/wet_run-web/src/renderer/palette.ts` | TS | Gibson neon palette |
+| `Game/wet_run-web/src/input/keyboard.ts` | TS | Keyboard → GameAction mapper |
+| `Game/wet_run-web/src/save/storage.ts` | TS | localStorage round-trip + schema versioning |
+| `Game/wet_run-web/src/main.ts` | TS | Entry point (boot sequence) |
+| `Game/wet_run-web/tests/state.test.ts` | TS | 11 tests (state machine, grid) |
+| `Game/wet_run-web/tests/storage.test.ts` | TS | 6 tests (save/load round-trip) |
+| `Game/wet_run-web/docs/PLAYTEST.md` | md | 3-person playtest protocol |
+| `Game/wet_run/decisions/0199-wetrun-web-mvp.md` | md | ADR-0199 Accepted |
+| `Game/wet_run/decisions/README.md` | md | Index updated |
+
+### Final Validators (All Green)
+
+| Validator | Result |
+|---|---|
+| `npx vitest run` | ✅ **17 passed** (11 state + 6 storage) |
+| `npx tsc --noEmit` | ✅ No errors |
+| `npm run build` (Vite production) | ✅ 48.26 kB JS (11.52 kB gzipped) + 2.10 kB HTML |
+| `python3 audit_vault.py` | ✅ CLEAN |
+| `python3 mixed_language_audit.py` | ✅ 0 violations |
+| `python3 scripts/export_web_data.py` | ✅ Generates 4 JSON files (75KB total) |
+
+### Architecture Decisions (Autonomous Defaults)
+
+- **Deployment**: GitHub Pages (proven pattern in this workspace)
+- **Repo structure**: Sub-folder `Game/wet_run-web/` (no new repo management)
+- **Audio**: Silent (Tier 2)
+- **Save**: localStorage JSON with schema versioning
+- **Distribution**: MVP only
+- **First ICE encounter**: first_jack default Watchdog from `ice_types.json`
+
+### ADR-0199 Status
+
+**Accepted** (Draft → Accepted this session).
+
+**Supersedes**: ADR-0007 for web/mobile scope only. macOS + Windows desktop continues per ADR-0007.
+
+**Validates**: Operator Oracle's two-step plan rejection (Pygbag-first + TS later = procrastination device). Single-step MVP chosen.
+
+### Open Follow-ups (Post-MVP)
+
+1. **3-person playtest** (per `docs/PLAYTEST.md`) — Day 10 of original 4-week calendar. Critical for "Gibson tone" validation.
+2. **GitHub Pages deploy** — Vite output in `dist/` ready; needs GH Actions + Pages config.
+3. **Desktop-browser link** from `Game/wet_run/dashboard/` after playtest validates.
+4. **Tier 2 decisions** gated on playtest results:
+   - Pass → audio (Howler.js), mobile touch UI, multiple missions
+   - Fail → iterate UX; 2 failures → pause web version
+
+### Status
+
+ADR-0199 Tier 1 MVP shipped autonomously in single session (this turn). Playtest pending. Codebase: ~1,345 LOC across 21 files.

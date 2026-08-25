@@ -1,0 +1,43 @@
+{
+  "first_jack": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 1,
+    "grade_min": 1,
+    "id": "first_jack",
+    "is_canonical_cast": true,
+    "matrix_seed": 42,
+    "primary_objective": {
+      "data_id": "demo_file",
+      "type": "extract_data"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.standard",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "case",
+      "char_count_ko": 353,
+      "character_ref": "novice",
+      "pillar": "power",
+      "source": "case_jackout-30sec",
+      "synopsis_en": "Thirty seconds. That's how long it takes for the Ono-Sendai electrodes to lift from his scalp, for the matrix to release its grip on his nervous system, for the countdown in his head to reach zero. K sits in a cheap Chiba capsule hotel room, fingers still trembling on keys that aren't there. The rain outside is the same color as the data he just burned through — gray, neon-refracted, arbitrary. The Hosaka terminal hums. A screensaver shows the boundary he crossed: parallel lines, rainbow-shattered. He is twenty-three years old and his first real run is over. Finn's voice crackles through the deck: 'You got the file. Now jack out.' K walks to the bathroom. The mirror shows he is young. He is young. The cold metal handle is proof he is still alive. Then again, what does being alive even mean? The matrix was more real than this room. The matrix was more real than his hands. The matrix was — The Finn is waiting. There's another file. Another run. Another thirty seconds.",
+      "synopsis_ko": "30초. Ono-Sendai 전극이 두피에서 떨어지고, 매트릭스가 신경 계통을 놓아주는 데 걸리는 시간. K는 천장의 싸구려 캡슐 호텔 방에서, 없는 키보드 위에서 손가락이 떨리는 채로 앉아 있다. 밖의 비는 그가 방금 뚫고 나온 데이터와 같은 색이다 — 회색, 네온 굴절, 무작위. Hosaka 터미널이 윙윙거린다. 화면 보호기가 그가 건넌 경계를 보여준다: 평행한 선들, 무지개로 부서진. 그는 스물세 살이고, 첫 실제 런이 끝났다. Finn의 목소리가 데크를 타고 울린다: '파일을 받았어. 이제 잭아웃해.' K는 화장실로 간다. 거울 속 자신이 젊다. 젊다. 차가운 금속 손잡이가 그가 아직 살아있다는 증거. 그러면서도, 살아있다는 게 대체 무슨 의미일까. 매트릭스가 이 방보다 더 진짜였다. 매트릭스가 그의 손보다 더 진짜였다. 매트릭스는 — Finn이 기다린다. 다른 파일이 있다. 다른 런이 있다. 다른 30초가 있다.",
+      "word_count_en": 174
+    },
+    "title": "First Jack",
+    "zone": "surface"
+  }
+}

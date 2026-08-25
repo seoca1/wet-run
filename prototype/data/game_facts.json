@@ -22,7 +22,7 @@
     "neuromancer",
     "novice",
     "sally",
-    "slick-henry",
+    "slick_henry",
     "suit",
     "veteran",
     "wigan",
@@ -67,7 +67,7 @@
   "cyberspace_sectors_per_world": 4,
   "cyberspace_sectors_total": 8,
   "cyberspace_servers_total": 184,
-  "skill_effect_count": 18,
-  "test_count_collected": 5088,
-  "_generated_at": "2026-08-21T11:49:06+00:00"
+  "skill_effect_count": 19,
+  "test_count_collected": 5222,
+  "_generated_at": "2026-08-25T16:04:15+00:00"
 }

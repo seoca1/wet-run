@@ -92,29 +92,80 @@ class Region:
         return self.x <= x <= self.x2 and self.y <= y <= self.y2
 
 
+def compute_status_panel_width(total_width: int) -> int:
+    """Compute adaptive status panel width (ADR-0198).
+
+    Tiers (ADR-0198 §Adaptive status_panel_w):
+        - >=100 cols: 32 (Wide / Ultra-wide — more room)
+        - >=80 cols:  28 (Classic — current)
+        - >=60 cols:  22 (Compact / Tablet — narrower, abbreviate labels)
+        - <60 cols:    18 (Phone — icon-only mode)
+
+    Status panel content abbreviates per tier via separate rendering
+    logic in screen handlers (not in this layout module).
+    """
+    if total_width >= 100:
+        return 32
+    if total_width >= 80:
+        return 28
+    if total_width >= 60:
+        return 22
+    return 18
+
+
 def make_shell(width: int = SCREEN_WIDTH, height: int = SCREEN_HEIGHT) -> dict[RegionId, Region]:
-    """Build the default shell layout for the given screen size.
+    """Build the default shell layout for the given screen size (ADR-0198).
 
     Returns a dict of RegionId -> Region.
 
-    Layout (80 cols × 50 rows):
-      - TITLE:     top, full width
-      - MAIN:      left side (width - 30 cols)
-      - STATUS_PANEL: right side, 28 cols (persistent)
-      - SIDE:      bottom strip, full width
-      - CONTROLS:  bottom, full width
-      - FOOTER:    bottom line, full width
+    Adaptive layout scales all region heights proportionally to the total
+    height while keeping the 2/35/5/3/1 row allocation for 50-row defaults.
+    Status panel width adapts to total width via compute_status_panel_width().
+
+    Default layout (80 cols × 50 rows):
+      - TITLE:     row 0-1 (h=2)
+      - MAIN:      row 3-37 (h=35)
+      - STATUS_PANEL: row 3-37, right side (h=35, w=compute_status_panel_width)
+      - SIDE:      row 39-43 (h=5)
+      - CONTROLS:  row 45-47 (h=3)
+      - FOOTER:    row 49 (h=1)
     """
-    # Reserve 28 cols on the right for the persistent status panel
-    status_panel_w = 28
+    status_panel_w = compute_status_panel_width(width)
     main_w = width - status_panel_w
 
+    # Proportional height allocation for non-50-row presets.
+    # Baseline (50 rows): title=2, main=35, side=5, controls=3, footer=1, dividers=4
+    # Adjust main region height to fit smaller heights.
+    if height >= 50:
+        main_h = 35
+        side_h = 5
+        controls_h = 3
+    elif height >= 40:
+        main_h = 28
+        side_h = 4
+        controls_h = 2
+    elif height >= 35:
+        main_h = 24
+        side_h = 3
+        controls_h = 2
+    else:
+        main_h = max(20, height - 12)  # Reserve at least 12 rows for chrome
+        side_h = 3
+        controls_h = 2
+
     title = Region(RegionId.TITLE, x=0, y=0, w=width, h=2)
-    main = Region(RegionId.MAIN, x=0, y=3, w=main_w, h=35)
-    status_panel = Region(RegionId.STATUS_PANEL, x=main_w, y=3, w=status_panel_w, h=35)
-    side = Region(RegionId.SIDE, x=0, y=39, w=width, h=5)
-    controls = Region(RegionId.CONTROLS, x=0, y=45, w=width, h=3)
-    footer = Region(RegionId.FOOTER, x=0, y=49, w=width, h=1)
+    main_y = 3
+    main = Region(RegionId.MAIN, x=0, y=main_y, w=main_w, h=main_h)
+    status_panel = Region(
+        RegionId.STATUS_PANEL, x=main_w, y=main_y, w=status_panel_w, h=main_h
+    )
+    side_y = main_y + main_h + 1
+    side = Region(RegionId.SIDE, x=0, y=side_y, w=width, h=side_h)
+    controls_y = side_y + side_h + 1
+    controls = Region(RegionId.CONTROLS, x=0, y=controls_y, w=width, h=controls_h)
+    footer_y = min(controls_y + controls_h + 1, height - 1)
+    footer_h = max(1, height - footer_y)
+    footer = Region(RegionId.FOOTER, x=0, y=footer_y, w=width, h=footer_h)
     return {
         RegionId.TITLE: title,
         RegionId.MAIN: main,
@@ -159,16 +210,39 @@ def draw_dividers(
     """Draw horizontal dividers at the standard row positions.
 
     Also draws a vertical divider between MAIN and STATUS_PANEL if shell is provided.
+
+    Adapter for ADR-0198: derives divider Y positions from the shell regions
+    when provided, falling back to the classic 50-row defaults otherwise.
     """
     fg = GRAY_96
-    for y in (2, 38, 44, 48):
-        console.print(x=0, y=y, string="─" * SCREEN_WIDTH, fg=fg)
+    if shell is not None:
+        title = shell.get(RegionId.TITLE)
+        side = shell.get(RegionId.SIDE)
+        controls = shell.get(RegionId.CONTROLS)
+        footer = shell.get(RegionId.FOOTER)
+        divider_ys = set()
+        if title is not None:
+            divider_ys.add(title.y2 + 1)  # below title
+        if side is not None:
+            divider_ys.add(side.y - 1)  # above side
+        if controls is not None:
+            divider_ys.add(controls.y - 1)  # above controls
+        if footer is not None:
+            divider_ys.add(footer.y - 1)  # above footer
+        width = title.w if title is not None else console.width
+    else:
+        divider_ys = {2, 38, 44, 48}
+        width = SCREEN_WIDTH
+
+    for y in divider_ys:
+        if 0 <= y < console.height:
+            console.print(x=0, y=y, string="─" * width, fg=fg)
 
     # Vertical divider between MAIN and STATUS_PANEL
     if shell is not None and RegionId.STATUS_PANEL in shell:
         panel = shell[RegionId.STATUS_PANEL]
         divider_x = panel.x
-        for y in range(panel.y, panel.y2 + 1):
+        for y in range(panel.y, min(panel.y2 + 1, console.height)):
             console.print(x=divider_x, y=y, string="│", fg=fg)
 
 

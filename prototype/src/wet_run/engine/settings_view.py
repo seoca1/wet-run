@@ -37,6 +37,7 @@ SETTINGS_OPTIONS = [
     ("high_contrast", "High Contrast"),
     ("keymap", "Keymap"),
     ("reset_keymap", "Reset Keymap to Defaults"),
+    ("gamepad", "Gamepad (Controller)"),
     ("resolution", "Resolution"),
     ("back", "Back to Menu"),
 ]
@@ -115,10 +116,18 @@ def render_settings(
         elif opt_id == "reset_keymap":
             customized = getattr(state, "keymap_customized", False)
             value_str = t("settings.keymap_apply") if customized else t("settings.keymap_default")
+        elif opt_id == "gamepad":
+            gp_enabled = getattr(state, "gamepad_enabled", True)
+            value_str = t("settings.on") if gp_enabled else t("settings.off")
         elif opt_id == "resolution":
             from . import config as cfg
 
-            value_str = f"{cfg.SCREEN_WIDTH}x{cfg.SCREEN_HEIGHT}"
+            preset_name = getattr(state, "resolution", cfg.DEFAULT_RESOLUTION)
+            preset = cfg.RESOLUTION_PRESETS.get(preset_name)
+            if preset is not None and preset.cols > 0:
+                value_str = f"{preset.name} ({preset.cols}x{preset.rows})"
+            else:
+                value_str = "auto"
         else:
             value_str = ""
 
@@ -203,7 +212,25 @@ def handle_settings_input(
         elif opt_id == "reset_keymap":
             state.keymap_customized = False
             return state
+        elif opt_id == "gamepad":
+            state.gamepad_enabled = not getattr(state, "gamepad_enabled", True)
+            label = "ON" if state.gamepad_enabled else "OFF"
+            state.status_messages.append(f">>> Gamepad input: {label}")
+            return state
         elif opt_id == "resolution":
+            from . import config as cfg
+
+            preset_names = list(cfg.RESOLUTION_PRESETS.keys())
+            current = getattr(state, "resolution", cfg.DEFAULT_RESOLUTION)
+            try:
+                idx = preset_names.index(current)
+            except ValueError:
+                idx = 0
+            state.resolution = preset_names[(idx + 1) % len(preset_names)]
+            preset = cfg.RESOLUTION_PRESETS[state.resolution]
+            state.status_messages.append(
+                f">>> Resolution: {preset.name} ({preset.cols}x{preset.rows}) — restart required"
+            )
             return state
 
     if event.sym in (KeySym.LEFT, KeySym.MINUS, KeySym.KP_MINUS):
@@ -230,6 +257,10 @@ def handle_settings_input(
                 state.screen = ScreenKind.MENU
                 if hasattr(state, "settings_selected"):
                     delattr(state, "settings_selected")
+            elif opt_id == "gamepad":
+                state.gamepad_enabled = not getattr(state, "gamepad_enabled", True)
+                label = "ON" if state.gamepad_enabled else "OFF"
+                state.status_messages.append(f">>> Gamepad input: {label}")
         return state
 
     return state

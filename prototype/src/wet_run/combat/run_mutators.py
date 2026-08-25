@@ -63,6 +63,10 @@ def apply_mutators(app_state: AppState, mutators: list[RunMutator]) -> None:
     clear_mutators(app_state)
     for mutator in mutators:
         if mutator == RunMutator.LOW_HP:
+            # GA-003 fix: guard against player_max_hp = 0 default.
+            # If 0, initialize to 100 baseline before halving.
+            if app_state.player_max_hp <= 0:
+                app_state.player_max_hp = 100
             app_state.player_max_hp = app_state.player_max_hp // 2
             app_state.player_hp = min(app_state.player_hp, app_state.player_max_hp)
         elif mutator == RunMutator.DOUBLE_ALARM:
@@ -80,7 +84,9 @@ def clear_mutators(app_state: AppState) -> None:
     """Clear all mutator effects from AppState."""
     for mutator in app_state.active_mutators:
         if mutator == RunMutator.LOW_HP:
-            app_state.player_max_hp = app_state.player_max_hp * 2
+            # GA-003 fix: only restore if currently halved (not zero).
+            if app_state.player_max_hp > 0:
+                app_state.player_max_hp = app_state.player_max_hp * 2
         elif mutator == RunMutator.DOUBLE_ALARM:
             app_state.alarm_speed_multiplier = 1.0
         elif mutator == RunMutator.ICE_X2:

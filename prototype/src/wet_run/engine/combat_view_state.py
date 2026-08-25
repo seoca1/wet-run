@@ -257,6 +257,8 @@ def _end_combat(state: AppState, combat_state: CombatState) -> None:
             state.inventory = {}
         state.inventory["ice_shard"] = state.inventory.get("ice_shard", 0) + 1
         state.status_messages.append(">>> VICTORY! Gained: 1x ICE Shard")
+        # GA-001 fix: actually award the 50 credits (was previously a cosmetic lie).
+        state.credits = state.credits + 50
         state.status_messages.append(">>> Gained: 50 credits")
         taunt = get_taunt(ice_type.value, combat_state.rng)
         if taunt is not None:

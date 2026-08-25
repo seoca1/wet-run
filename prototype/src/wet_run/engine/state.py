@@ -382,6 +382,17 @@ class AppState:
     high_contrast: bool = False  # high-contrast palette toggle
     # Keymap customization flag (Pillar 4 ephemeral)
     keymap_customized: bool = False  # True if user has modified key bindings
+    # Gamepad / Controller input (ADR-0197)
+    gamepad_enabled: bool = True  # Enable gamepad adapter in event loop (Tier 1)
+    gamepad_button_last_press: dict[int, int] = field(default_factory=dict)
+    # Tracks last press timestamp (ns) per ControllerButton ordinal for repeat logic.
+    gamepad_last_device_event_ms: int = 0
+    # Save file existence (GA-002 fix: previously never assigned, leaving CONTINUE disabled)
+    has_save: bool = False
+    # Whether any save slot (auto + manual) has data on disk; refreshed on app startup.
+    # Resolution preset name (ADR-0198). Keys into config.RESOLUTION_PRESETS.
+    resolution: str = "classic"
+    # Default = "classic" (80x50, Steam Deck native). Persisted across sessions.
     # Hardcore mode (Cycle 4: Pillar 3 reinforcement)
     hardcore_mode: bool = False  # 1-life permadeath (Pillar 4 compliant: ephemeral)
     # New Game+ (Cycle 4: Pillar 4 unlock-only meta-progression)

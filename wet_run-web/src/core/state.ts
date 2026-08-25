@@ -1,0 +1,155 @@
+/** Game state factory + reducer.
+ *
+ * Ports the wet_run GameState to a pure-data TypeScript model. The
+ * MVP supports ONE mission (first_jack) with a simple ICE encounter.
+ *
+ * State machine (per wet_run combat_view_input.py):
+ *   menu → approach → combat → victory | defeat → exit
+ */
+
+import type {
+  GameState,
+  GameAction,
+  Ice,
+  Mission,
+  PlayerStats,
+  Program,
+} from "./types.ts";
+import { makeGrid } from "./grid.ts";
+
+const MVP_GRID_W = 80;
+const MVP_GRID_H = 50;
+const MVP_BASE_HP = 100;
+const MVP_BASE_ALARM = 0;
+const MVP_BASE_CREDITS = 0;
+const MVP_BASE_HAND = 5;
+
+/** Construct a fresh GameState for the MVP mission. */
+export function makeInitialState(mission: Mission, ice: Ice, deck: ReadonlyArray<Program>): GameState {
+  const player: PlayerStats = {
+    hp: MVP_BASE_HP,
+    maxHp: MVP_BASE_HP,
+    alarm: MVP_BASE_ALARM,
+    credits: MVP_BASE_CREDITS,
+    handSize: MVP_BASE_HAND,
+  };
+  return {
+    phase: "menu",
+    mission,
+    player,
+    ice: { ...ice, hp: ice.hp, armor: ice.armor, tier: ice.tier, id: ice.id, name: ice.name },
+    deck: deck.slice(0, MVP_BASE_HAND),
+    drawPile: deck.slice(MVP_BASE_HAND),
+    discardPile: [],
+    grid: makeGrid(MVP_GRID_W, MVP_GRID_H),
+    message: `Mission: ${mission.title}`,
+    turnCount: 0,
+  };
+}
+
+/** Pure reducer — apply an action to a state, returning a new state. */
+export function applyAction(state: GameState, action: GameAction): GameState {
+  switch (state.phase) {
+    case "menu":
+      return applyMenuAction(state, action);
+    case "approach":
+      return applyApproachAction(state, action);
+    case "combat":
+      return applyCombatAction(state, action);
+    case "victory":
+    case "defeat":
+      return applyEndAction(state, action);
+    case "exit":
+      return state; // terminal — ignore further actions
+  }
+}
+
+function applyMenuAction(state: GameState, action: GameAction): GameState {
+  if (action.type === "confirm") {
+    return { ...state, phase: "approach", message: "Jacking in..." };
+  }
+  if (action.type === "jack_out") {
+    return { ...state, phase: "exit" };
+  }
+  return state;
+}
+
+function applyApproachAction(state: GameState, action: GameAction): GameState {
+  if (action.type === "confirm" || action.type === "use_program") {
+    // ENTER or any program use transitions into combat (MVP simplification).
+    return {
+      ...state,
+      phase: "combat",
+      message: `Combat vs ${state.ice.name}`,
+      turnCount: state.turnCount + 1,
+    };
+  }
+  if (action.type === "jack_out") {
+    return { ...state, phase: "exit" };
+  }
+  return state;
+}
+
+function applyCombatAction(state: GameState, action: GameAction): GameState {
+  if (action.type === "use_program") {
+    return useProgram(state, action.programId);
+  }
+  if (action.type === "jack_out") {
+    return { ...state, phase: "defeat", message: "Jacked out — mission failed" };
+  }
+  return state;
+}
+
+function useProgram(state: GameState, programId: string): GameState {
+  const program = state.deck.find((p) => p.id === programId);
+  if (!program) {
+    return { ...state, message: `Program ${programId} not in hand` };
+  }
+  const newAlarm = state.player.alarm + program.cost;
+  if (newAlarm > 100) {
+    return { ...state, message: "Alarm too high — program failed" };
+  }
+  const newDeck = state.deck.filter((p) => p.id !== programId);
+  const discard = [...state.discardPile, program];
+  const damage = program.tier * 5;
+  const newIceHp = Math.max(0, state.ice.hp - damage);
+  if (newIceHp === 0) {
+    return {
+      ...state,
+      ice: { ...state.ice, hp: 0 },
+      deck: newDeck,
+      discardPile: discard,
+      phase: "victory",
+      message: `${state.ice.name} defeated! +${state.mission.rewards.credits} credits`,
+    };
+  }
+  return {
+    ...state,
+    ice: { ...state.ice, hp: newIceHp },
+    deck: newDeck,
+    discardPile: discard,
+    player: { ...state.player, alarm: newAlarm },
+    message: `${program.name} → ${damage} dmg (ICE HP: ${newIceHp})`,
+  };
+}
+
+function applyEndAction(state: GameState, action: GameAction): GameState {
+  if (action.type === "confirm") {
+    return { ...state, phase: "exit" };
+  }
+  return state;
+}
+
+/** Generate HUD lines from current state — feeds the right-side panel. */
+export function buildHudLines(state: GameState): string[] {
+  return [
+    `HP ${state.player.hp}/${state.player.maxHp}`,
+    `Alarm ${state.player.alarm}/100`,
+    `Credits ${state.player.credits}`,
+    "",
+    `Phase: ${state.phase}`,
+    `ICE HP: ${state.ice.hp}`,
+    "",
+    state.message,
+  ];
+}

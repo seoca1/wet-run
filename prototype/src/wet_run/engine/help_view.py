@@ -85,6 +85,22 @@ HELP_PAGES = [
             "  If you die: Hall of Dead → choose new jockey",
         ],
     },
+    {
+        "title": "GAMEPAD / CONTROLLER",
+        "lines": [
+            "  D-Pad / Left Stick  —  Navigate menus / Matrix movement",
+            "  A button            —  Confirm (ENTER)",
+            "  B button            —  Cancel (ESC)",
+            "  X button            —  Skip (graphic novel / cinematic)",
+            "  Y button            —  Quit (context-sensitive)",
+            "  START / BACK        —  Pause / Menu toggle",
+            "  L/R Shoulder        —  Page navigation (save slots, endings)",
+            "  L/R Trigger         —  Combat skill 1 / 2 (combat only)",
+            "",
+            "  Note: HACK screen requires keyboard (text input).",
+            "  Disable gamepad: SETTINGS → Gamepad: Off",
+        ],
+    },
 ]
 
 

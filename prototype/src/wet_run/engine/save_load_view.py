@@ -117,6 +117,15 @@ def render_save_load(console: tcod.console.Console, state: AppState, t: Translat
     """Render the Save/Load browser."""
     SCREEN_WIDTH = _engine_config.SCREEN_WIDTH  # noqa: N806
     SCREEN_HEIGHT = _engine_config.SCREEN_HEIGHT  # noqa: N806
+    # ADR-0198: override with selected resolution preset.
+    preset_name = getattr(state, "resolution", _engine_config.DEFAULT_RESOLUTION)
+    preset = _engine_config.RESOLUTION_PRESETS.get(
+        preset_name, _engine_config.RESOLUTION_PRESETS[_engine_config.DEFAULT_RESOLUTION]
+    )
+    if preset.cols:
+        SCREEN_WIDTH = preset.cols  # noqa: N806
+    if preset.rows:
+        SCREEN_HEIGHT = preset.rows  # noqa: N806
 
     console.clear(bg=GRAY_BLACK)
     _draw_save_load_header(console, SCREEN_WIDTH)

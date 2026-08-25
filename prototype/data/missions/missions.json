@@ -168,7 +168,7 @@
   },
   "bama_statework": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "bama_statework",
@@ -380,7 +380,7 @@
   },
   "boone_tokyo_electronics_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "boone_tokyo_electronics_arc",
@@ -695,7 +695,7 @@
   },
   "cayce_footage_audit_run": {
     "arc": 1,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 4,
     "id": "cayce_footage_audit_run",
@@ -1863,7 +1863,7 @@
   },
   "fido_statework": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "fido_statework",
@@ -1951,7 +1951,7 @@
   },
   "finn_factory_labour_run": {
     "arc": 2,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 4,
     "id": "finn_factory_labour_run",
@@ -2946,7 +2946,7 @@
   },
   "fukuoka_ridership_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "fukuoka_ridership_arc",
@@ -3375,7 +3375,7 @@
   },
   "hounds_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "hounds_arc",
@@ -3906,7 +3906,7 @@
   },
   "mid_dual_objective_shibuya_run": {
     "arc": 2,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 4,
     "grade_min": 3,
     "id": "mid_dual_objective_shibuya_run",
@@ -3937,9 +3937,9 @@
     "secondary_objectives": [],
     "story": {
       "arc": 2,
-      "cast": "slick-henry",
+      "cast": "slick_henry",
       "char_count_ko": 57,
-      "character_ref": "slick-henry",
+      "character_ref": "slick_henry",
       "pillar": "code",
       "source": "mid_dual_objective_shibuya_run",
       "synopsis_en": "The run had been a shibuya for forty years. The shibuya had been a run. A Sprawl cowboy trades favors for a fragment of aleph.",
@@ -4132,7 +4132,7 @@
   },
   "mid_investigate_black_market": {
     "arc": 2,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 3,
     "grade_min": 2,
     "id": "mid_investigate_black_market",
@@ -4164,9 +4164,9 @@
     ],
     "story": {
       "arc": 2,
-      "cast": "slick-henry",
+      "cast": "slick_henry",
       "char_count_ko": 58,
-      "character_ref": "slick-henry",
+      "character_ref": "slick_henry",
       "pillar": "code",
       "source": "mid_investigate_black_market",
       "synopsis_en": "The market had been black for forty years. The black had been a market. The matrix hums with ghost-data from a previous run.",
@@ -4180,7 +4180,7 @@
     "arc": 2,
     "chain_id": "mid_security_breach",
     "chain_order": 1,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 3,
     "grade_min": 2,
     "id": "mid_investigate_yakuza_consortium",
@@ -4212,9 +4212,9 @@
     ],
     "story": {
       "arc": 2,
-      "cast": "slick-henry",
+      "cast": "slick_henry",
       "char_count_ko": 145,
-      "character_ref": "slick-henry",
+      "character_ref": "slick_henry",
       "pillar": "code",
       "source": "mid_investigate_yakuza_consortium",
       "synopsis_en": "The consortium had fifty-three members. The consortium had been a consortium for eleven minutes. The consortium would be a consortium for another three. Slick-Henry had counted. Slick-Henry had counted the minutes, not the members, because the members would change. The minutes would change first. The consortium was three minutes. The consortium was already three minutes old. The consortium was dying.",
@@ -4275,7 +4275,7 @@
   },
   "mid_stealth_yakuza_meeting": {
     "arc": 2,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 4,
     "grade_min": 3,
     "id": "mid_stealth_yakuza_meeting",
@@ -4309,9 +4309,9 @@
     ],
     "story": {
       "arc": 2,
-      "cast": "slick-henry",
+      "cast": "slick_henry",
       "char_count_ko": 63,
-      "character_ref": "slick-henry",
+      "character_ref": "slick_henry",
       "pillar": "code",
       "source": "mid_stealth_yakuza_meeting",
       "synopsis_en": "The meeting had been a yakuza for forty years. The yakuza had been a meeting. In Freeside, the corp's ICE never sleeps.",
@@ -4382,7 +4382,7 @@
     "arc": 2,
     "chain_id": "molly_razor",
     "chain_order": 2,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 3,
     "grade_min": 2,
     "id": "molly_razor_defend_london_nest",
@@ -4431,7 +4431,7 @@
     "arc": 2,
     "chain_id": "molly_razor",
     "chain_order": 3,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 4,
     "grade_min": 3,
     "id": "molly_razor_dual_objective_hotel_target",
@@ -4478,7 +4478,7 @@
     "arc": 2,
     "chain_id": "molly_razor",
     "chain_order": 4,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 4,
     "grade_min": 3,
     "id": "molly_razor_extract_final_chip",
@@ -4526,7 +4526,7 @@
     "arc": 2,
     "chain_id": "molly_razor",
     "chain_order": 1,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 3,
     "grade_min": 2,
     "id": "molly_razor_investigate_sin_fans",
@@ -4574,7 +4574,7 @@
     "arc": 2,
     "chain_id": "molly_razor",
     "chain_order": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 4,
     "id": "molly_razor_stealth_final_contract",
@@ -4747,7 +4747,7 @@
   },
   "mona_bridge_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "mona_bridge_arc",
@@ -5074,7 +5074,7 @@
     "reward_credits": 10000,
     "reward_tier": 6,
     "rewards": {
-      "credits": 50000,
+      "credits": 15000,
       "materials": {
         "ngplus_construct_full": 1,
         "t5_program": 3
@@ -5121,7 +5121,7 @@
     "reward_credits": 15000,
     "reward_tier": 6,
     "rewards": {
-      "credits": 75000,
+      "credits": 15000,
       "materials": {
         "ngplus_peripheral": 1,
         "t5_program": 3
@@ -5168,7 +5168,7 @@
     "reward_credits": 20000,
     "reward_tier": 6,
     "rewards": {
-      "credits": 100000,
+      "credits": 15000,
       "materials": {
         "ngplus_full_complete": 1,
         "t5_program": 5
@@ -5524,7 +5524,7 @@
   },
   "pacific_empire_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "pacific_empire_arc",
@@ -5569,7 +5569,7 @@
   },
   "pan_mannerist_audit": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "pan_mannerist_audit",
@@ -5868,7 +5868,7 @@
   },
   "sense_net_archive_intrusion": {
     "arc": 4,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 4,
     "id": "sense_net_archive_intrusion",
@@ -5988,7 +5988,7 @@
       "character_ref": "veteran",
       "pillar": "code",
       "source": "hosaka_extraction",
-      "synopsis_en": "Sense/Net's broadcast center was the largest node of information in the Sprawl — every story, every simstim recording, every corporate leak that mattered came through Sense/Net first. The broadcast center had been compromised twice in the last year. The first time was a routine raid by Sense/Net's own security. The second time was by the Yakuza. The third time would be by the cowboy, if the cowboy was willing to take the job. Sally Shears had the disk. Sally Shears had the disk because Sally Shears had been the inside man at Sense/Net for six years, and Sally Shears had decided that six years was long enough. The disk contained a simstim recording of a T-A board meeting. The board meeting contained the words that started wars. The cowboy would deliver the disk to the family. The family would pay in silence. The family always paid in silence.",
+      "synopsis_en": "Sense/Net's broadcast center was the largest node of information in the Sprawl — every story, every simstim recording, every corporate leak that mattered came through Sense/Net first. The broadcast center had been compromised twice in the last year. The first time was a routine raid by Sense/Net's own security. The second time was by the Yakuza. The third time would be by the cowboy, if the cowboy was willing to take the job. Sally Shears had the disk. Sally Shears had the disk because Sally Shears had been an inside source at Sense/Net for six years, and Sally Shears had decided that six years was long enough. The disk contained a simstim recording of a T-A board meeting. The board meeting contained the words that started wars. The cowboy would deliver the disk to the family. The family would pay in silence. The family always paid in silence.",
       "synopsis_ko": "센스/넷 방송 센터는 스프롤에서 가장 큰 정보 노드였다 — 모든 이야기, 모든 심스팀 녹음, 모든 중요한 기업 유출이 먼저 센스/넷을 통과했다. 방송 센터는 작년에 두 번 침해되었다. 첫 번째는 센스/넷 자체 보안의 정기적 습격이었다. 두 번째는 야쿠자에 의한 것이었다. 세 번째는, 카우보이가 그 의뢰를 받으려 한다면, 카우보이에 의한 것이 될 것이다. Sally Shears에게 디스크가 있었다. Sally Shears가 디스크를 가지고 있는 이유는 6년간 센스/넷 내부 사람이었기 때문이었고, Sally Shears는 6년이 충분히 길다고 판단했다. 디스크에는 T-A 이사회 회의의 심스팀 녹화가 들어 있었다. 이사회 회의에는 전쟁을 시작하는 단어들이 포함되어 있었다. 카우보이는 디스크를 가족에게 전달할 것이다. 가족은 침묵으로 지불할 것이다. 가족은 늘 침묵으로 지불했다.",
       "word_count_en": 148
     },
@@ -7636,7 +7636,7 @@
   },
   "tessier_sleeper_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "tessier_sleeper_arc",
@@ -8190,7 +8190,7 @@
   },
   "trauma_squads_audit": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "trauma_squads_audit",
@@ -8540,7 +8540,7 @@
   },
   "w_anchor_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "w_anchor_arc",
@@ -8961,7 +8961,7 @@
   },
   "working_class_ridership_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "working_class_ridership_arc",
@@ -9130,7 +9130,7 @@
   },
   "yanaka_family_power_arc": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "yanaka_family_power_arc",
@@ -9175,7 +9175,7 @@
   },
   "zaibatsu_statework": {
     "arc": 5,
-    "fixer": "slick-henry",
+    "fixer": "slick_henry",
     "grade_max": 5,
     "grade_min": 5,
     "id": "zaibatsu_statework",

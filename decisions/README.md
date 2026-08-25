@@ -121,6 +121,9 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0194 | ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구) | **Draft** | 2026-08-19 | P3 (The Build, 아키텍처 명료화) |
 | 0195 | Accepted ADR Implementation Status Workflow (섹션 의무화 + 인덱스 Impl 컬럼) | **Draft** | 2026-08-20 | P3 (The Build, 프로세스 명료화) |
 | 0196 | Accessibility Colorblind State Alignment (AppState bool → str) | **Accepted (Option A)** | 2026-08-22 | P1 (Plan T2.2 게이트, UI/visibility 업그레이드) |
+| 0197 | Gamepad / Controller Input Support (Tier 1 — synthetic KeyDown adapter, 12 active ScreenKinds, 97 new tests) | **Accepted** | 2026-08-25 | P2 (ADR-0183 §Input Remapping Tier 1 surface; complements ADR-0196) |
+| 0198 | Resolution Compatibility (Tablet / Phone / Steam Deck / 4K) + QA Agents (Design + Gameability) | **Accepted** | 2026-08-25 | P1 (Cross-device compatibility; +QA agents for ongoing QA; 6 Open Questions resolved; Phase 1 critical fixes shipped — GA-002/GA-004/GD-005) |
+| 0199 | Wet Run Web MVP (Tier 1 — TypeScript + Canvas2D + 1 playable mission, supersedes ADR-0007 web/mobile scope) | **Accepted** | 2026-08-25 | P1 (Browser reach; 4-week MVP build autonomous) |
 | 0048 | Phase 189 — Wet Run Character Reflection (molly, johnny, rydell wiki pages cross-referenced to Fiction/wiki) | **Accepted** | 2026-08-24 | P2 |
 | 0049 | Phase 190 — Dashboard Verification Framework Sub-Stats Panel (verification_framework sub-object in aggregate-stats.mjs) | **Accepted** | 2026-08-24 | P2 |
 

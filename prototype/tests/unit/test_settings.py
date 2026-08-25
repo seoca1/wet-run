@@ -16,8 +16,9 @@ from wet_run.engine.state import AppState, ScreenKind
 
 
 class TestSettingsOptions:
-    def test_eight_options_defined(self) -> None:
-        assert len(SETTINGS_OPTIONS) == 9
+    def test_nine_options_defined(self) -> None:
+        # 10 options as of ADR-0197 (added 'gamepad').
+        assert len(SETTINGS_OPTIONS) == 10
 
     def test_options_have_ids_and_labels(self) -> None:
         for opt_id, label in SETTINGS_OPTIONS:
@@ -172,7 +173,7 @@ class TestHandleSettingsInput:
         assert result.colorblind_mode == "deuteranopia"
 
     def test_enter_on_back_returns_to_menu(self, settings_state: AppState) -> None:
-        settings_state.settings_selected = 8  # back
+        settings_state.settings_selected = 9  # back (index 9 after ADR-0197 added 'gamepad')
         result = handle_settings_input(self._key(KeySym.RETURN), settings_state)
         assert result is not None
         assert result.screen == ScreenKind.MENU

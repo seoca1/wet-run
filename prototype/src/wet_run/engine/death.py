@@ -362,8 +362,14 @@ def render_death_screen(
     from ..avatar.renderer import render_avatar_lines
     from . import config as _engine_config
 
-    SCREEN_WIDTH = _engine_config.SCREEN_WIDTH  # noqa: N806
-    SCREEN_HEIGHT = _engine_config.SCREEN_HEIGHT  # noqa: N806
+    # ADR-0198: resolve effective screen dimensions from preset (handles
+    # user-selected resolution change before app restart).
+    preset_name = getattr(state, "resolution", _engine_config.DEFAULT_RESOLUTION)
+    preset = _engine_config.RESOLUTION_PRESETS.get(
+        preset_name, _engine_config.RESOLUTION_PRESETS[_engine_config.DEFAULT_RESOLUTION]
+    )
+    SCREEN_WIDTH = preset.cols if preset.cols else _engine_config.SCREEN_WIDTH  # noqa: N806
+    SCREEN_HEIGHT = preset.rows if preset.rows else _engine_config.SCREEN_HEIGHT  # noqa: N806
 
     console.clear(bg=GRAY_BLACK)
 
@@ -701,14 +707,31 @@ def handle_death_summary_choice(
         return
 
     if choice == "new_jockey":
-        # Pick a different character (any of the 3, not the current one)
-        available = [c for c in ("novice", "veteran", "heretic") if c != state.character_id]
+        # GA-010 fix: guard against character_id being None / unknown / unmatchable.
+        # Previously: if state.character_id was None or a non-standard value,
+        # `available` could end up empty or pick a locked character.
+        valid_characters = ("novice", "veteran", "heretic")
+        # Detect available (non-current) candidates.
+        available = [
+            c for c in valid_characters
+            if c != state.character_id
+        ]
+        # If character_id was unknown/None, all 3 are "available" — safe to pick.
+        if state.character_id is None or state.character_id not in valid_characters:
+            available = list(valid_characters)
         if available:
-            # Default to first non-current
             new_char = available[0]
-            restart_with_new_jockey(state, new_char)
+            try:
+                restart_with_new_jockey(state, new_char)
+            except (ValueError, RuntimeError) as exc:
+                # GA-010: if restart fails (e.g. hardcore mode already blocked),
+                # fall back to HUB instead of softlocking the player.
+                state.status_messages.append(
+                    f">>> Restart blocked ({exc.__class__.__name__}); falling back to HUB"
+                )
+                jack_out_to_hub(state)
         else:
-            # All 3 same (shouldn't happen) — fall back to HUB
+            # No valid candidates remain — fall back to HUB.
             jack_out_to_hub(state)
     elif choice == "same_jockey":
         jack_out_to_hub(state)

@@ -7,8 +7,9 @@ from wet_run.engine.state import AppState, ScreenKind
 
 
 class TestHelpPages:
-    def test_five_pages_defined(self) -> None:
-        assert len(HELP_PAGES) == 5
+    def test_six_pages_defined(self) -> None:
+        # 6 pages as of ADR-0197 (added GAMEPAD / CONTROLLER).
+        assert len(HELP_PAGES) == 6
 
     def test_all_pages_have_title(self) -> None:
         for page in HELP_PAGES:
@@ -36,7 +37,7 @@ class TestAppStateHelpPage:
     def test_help_page_wraps_forward(self) -> None:
         state = AppState()
         state.screen = ScreenKind.HELP
-        state.help_page = 4  # Last page (0-indexed)
+        state.help_page = 5  # Last page (0-indexed)
         state.help_page = (state.help_page + 1) % len(HELP_PAGES)
         assert state.help_page == 0
 
@@ -45,7 +46,7 @@ class TestAppStateHelpPage:
         state.screen = ScreenKind.HELP
         state.help_page = 0
         state.help_page = (state.help_page - 1) % len(HELP_PAGES)
-        assert state.help_page == 4
+        assert state.help_page == 5
 
 
 class TestHelpMenuIntegration:

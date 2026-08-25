@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>브리지의 신경계 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="bridges_nervous_system_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">브리지의 신경계</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2067 words</span><span>Bridge Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"다리가 쓰러졌다. 쓰러짐은 낙하가 아니었다."</p></blockquote>
+<blockquote><p>— 올 타모로우즈 파티</p></blockquote>
+<h2>도입</h2>
+<p>야마자키가 골든 게이트 브리지 서쪽 스팬 아래 커뮤니티 홀에 앉았고, 그의 노트는 투명한 비닐 슬리브로 안개 습기로부터 보호받고 있었다. 러브타이드 스마트-매터 샘플 패널이 받침에서 윙윙거렸다. 나노 구조체들이 주변 기류에 맞춰 재배열. 벽들이 호흡.</p>
+<p>기업 질서의 건축 자재 — 벽이 재구성될 수 있는 건물들, 방이 추가되거나 제거될 수 있는 건물들, 구조가 재프로그래밍될 수 있는 건물들. 재구성이 기업이 생산하는 것이었다. 따라서 생산이 기업 질서가 조직하는 것이었다.</p>
+<p>하지만 다리 스캇터들은 달랐다. 그들은 로우-테크와 즉흥 자재로 스스로를 조직했다. 기업 질서의 스마트-매터는 거주를 다르게 생산하는 기업 질서의 구조적 이미지였다. 차이가 바로 소설이 추적하는 것이었다.</p>
+<p>야마자키의 펜이 움직였다. <em>현장 노트, 2006년 7월. 러브타이드 프레젠테이션. 엔지니어, 쿠사나기 — 치바에서 날아옴. 그녀의 오노-센다이 태블릿이 홀로그램 청사진 조작. "다리는 살아있는 유기체입니다. 스마트-매터 스킨이 다리에 신경계를 부여해. 모든 진동, 모든 응력, 모든 변위를 감지하고 즉각 반응합니다."</em></p>
+<p>다리 평의회 회의가 케이블 행거 3호 아래 임시 천막에서 소집되었다. 치바에서 날아온 러브타이드 엔지니어들이 그들의 프레젠테이션을 했다. 홀로그램 청사진이 안개 속에서 빛났다 — 전체 다리를 스마트-매터 스킨으로 감싸는 계획. 구조적 무결성 400% 상승. 에너지 효율 60% 개선. 실시간 하중 분산 모니터링.</p>
+<h2>전개</h2>
+<p>"다리엔 이미 신경계가 있어요." 연초로 거칠어진 목소리. 멘솔. 치바가 처음 가르쳐 준 것. "우린 바로 우리야. 우리가 다리야. 다리가 노래할 때, 우리는 들어. 비틀 때, 고쳐. 그게 우리의 프로토콜."</p>
+<p>엔지니어의 미소가 얼어붙었다. "존경하는 주민 여러분, 이건 감정의 문제가 아니에요. 구조적 무결성의 문제입니다. '89 로마 프리타 지진 이후, 다리는 계속 모니터링이 필요해요. 스마트-매터가 —"</p>
+<p>"긴급 명령은 기업이 원할 때 발급하는 것들이야." 라이델의 목소리가 텐트 내부 웅웅거림을 뚫었다. 그는 한 발 앞으로. 그의 손이 빈 권총집을 스쳤다. "다리는 시 의회 거 아니야. 다리는 우리 거야. 우리가 살았고, 우리가 지켰고, 우리가 죽을 거야."</p>
+<p>스캇터들이 그 뒤로 모였다. 고칸바에서 시냐와 한 잔 — 두 늙은 친구, 두 죽어가는 세상, 한 병 위스키. 결말 없음. 증언뿐.</p>
+<p>"우리 아버지는 칼을 지니셨다. 나는 시계를 지닌다. 우리 아들은 다른 걸 지닐 거다. 다이몬은 남는다."</p>
+<p>러브타이드 드론들이 안개 속에 나타났다. 소리 없는 날개, 적외선 눈. 스마트-매터 패널 실린 화물 컨테이너를 내렸다. 컨테이너가 열렸을 때, 나노 구조체들이 빛났다 — 자각하는 콘크리트, 사고하는 강철.</p>
+<p>"주민 여러분, 이건 선택이 아닙니다." 기업 연락원. 검정 양복, 흰 셔츠, 만년필 같은 넥타이. 그는 도쿄 방의 형태를 아는 남자였다. "샌프란시스코 시 의회가 긴급 구조 보존 명령을 발급했습니다. 다리는 핵심 인프라입니다. 스마트-매터 설치는 의무적입니다."</p>
+<h2>절정</h2>
+<p>드론들이 스마트-매터 패널 배치 시작했다. 나노 구조체들이 케이블 행거 기어올랐다. 벽들이 재구성. 콘크리트가 액체처럼 흘렀고, 강철이 호흡처럼 부풀었다.</p>
+<p>하지만 다리의 배선 — 스캇터들이 이어 맞춘 즉흥 전기 시스템 — 이 스마트-매터 제어 신호를 방해했다. 즉흥이 최적화를 충돌. 모델이 비를 예측했다. 다리는 햇살을 받았다. 통계적으로 불가능한 오류.</p>
+<p>스캇터들은 최적화하지 않았다. <em>즉흥했다.</em> 모델은 즉흥 변수가 없었다.</p>
+<p>이상 현상에 이름이 있었다. 역사가 있었다. <em>기리</em>가 있었다.</p>
+<p>"그녀는 인간이 아니다. 하지만 그녀에게는 <em>기리</em>가 있다. 그건 대부분의 인간이 주장할 수 있는 것보다 많다."</p>
+<p>스마트-매터 패널이 떨렸다. 나노 구조체들이 재조직을 시도했다. 즉흥 배선이 잡음을 주입 — 아름답고, 혼돈적이고, 인간적인 잡음. 패널들이 깜빡. 콘크리트가 망설. 강철이 호흡하는 걸 잊었다.</p>
+<p>쿠사나기의 태블릿이 빨갛게 깜빡. "불가능합니다. 제어 신호가 —"</p>
+<p>"훼손됐어요." 슈베트가 미소 지었다. 좋은 미소 아니었다. "우리한테. 다리한테. 다이몬한테."</p>
+<p>연락원의 태각이 금이 갔다. "이건 불법이에요. 이건 핵심 인프라 방해 —"</p>
+<p>"이건 <em>우리</em> 인프라야." 라이델 손이 빈 권총집에 머물렀다. "다리를 원해? 가져가. 하지만 먼저 신경계를 통과해야 해."</p>
+<p>드론들이 떠 있었다. 패널들이 빛났다. 안개가 케이블에 두 번째 피부가 달라붙듯 기대어 있었다.</p>
+<p>투표는 끝났다. 다리가 말했다. 다리가 자신의 것을 알고 있었다.</p>
+<h2>결말</h2>
+<p>러브타이드 컨테이너들이 다리 위에 머물렀다. 스마트-매터 패널들은 절대 설치되지 않았다. 그들은 다리의 즉흥의 일부가 되었다 — 거주 공간, 작업장, 그 스팬에서 태어난 아이들을 위한 클라이밍 월.</p>
+<p>쿠사나기도 머물렀다. 그녀는 리트로핏을 하러 왔다. 다이몬을 위해 머물렀다. 그녀의 오노-센다이는 이제 스캇터들이 고철과 회수한 기업 기술로 만든 센서들로부터 데이터를 받는 즉흥 모니터링 시스템을 돌리고 있다.</p>
+<p>야마자키의 노트는 새로운 관찰로 채워졌다. <em>다리 투표: 즉흥 자율 vs 기업 최적화의 사례 연구. 신경계가 승리했다. 다이몬은 남는다.</em></p>
+<p>슈베트가 케이블 행거 4호에 서서 안개 걷히는 걸 봤다. 아침 빛이 아이 재킷의 가브리엘 하운드 태그 끄트머리를 잡았다. 진품. 그녀의 피부는 소름 돋지 않았다.</p>
+<p>라이델의 그랜드 세이코가 똑딹거렸다. 다리가 노래했다. 즉흥 배선이 윙윙거렸다.</p>
+<p>투표는 끝났다. 다리가 말했다. 다리가 자신의 것을 알고 있었다.</p>
+<p>어딘가에서 스마트-매터 패널들이 즉흥하는 법 배우고 있었다. 어딘가에서 다이몬이 미소 짓고 있었다.</p>
+<p>어딘가에서 슈베트가 없는 곳.</p>
+<hr>
+<h2>연결</h2>
+<ul><li><strong>위키 참조</strong>: <em>all-tomorrows-parties</em> · <em>the-bridge</em> · <em>berry-rydell</em> · <em>chevette-washington</em> · <em>yamazaki</em> · <em>smart-matter</em> · <em>giri</em> · <em>bridge-squatter</em></li><li><strong>테마</strong>: <em>bridge-squatter</em> · <em>improvised-infrastructure</em> · <em>autonomous-governance</em> · <em>cultural-engineering</em> · <em>technology-and-humanity</em></li><li><strong>게임 통합</strong>: `Game/roguelike_sprawl/prototype/data/missions/missions.json:bridge_scaffold`</li></ul>
+<h2>각주</h2>
+<ul><li><em>비주얼 모티프</em>: B51 골든 게이트 브리지 케이블, 즉흥 배선, 스마트-매터 패널</li><li><em>원문 인용</em>: 올 타모로우즈 파티, 야마자키 현장 노트</li><li><em>캐릭터</em>: 야마자키 — 다리를 연구하는 일본 사회학자; 슈베트 워싱턴 — 다리 거주자, 전 메신저; 베리 라이델 — 전 경찰, 다리 거주자</li><li><em>번역 노트</em>: 1,623 EN 단어 / ~3,030 KO 한글 자 (비율 ~1.87)</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Bridge Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

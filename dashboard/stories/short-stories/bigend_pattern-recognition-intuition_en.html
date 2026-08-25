@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bigend: Pattern Recognition Intuition — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="bigend_pattern-recognition-intuition_ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">Bigend: Pattern Recognition Intuition</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>869 words</span><span>Blue Ant Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<h2>Hook</h2>
+<blockquote><p>"Bigend did not believe in intuition. Bigend believed in pattern-recognition. The distinction was not as fine as people thought."</p></blockquote>
+<p>Hubertus Bigend had a problem. The problem was not the footage, exactly. The problem was that he had stopped recognizing patterns.</p>
+<p>This had never happened before. Bigend had spent thirty years recognizing patterns: market-patterns, fashion-patterns, technological-patterns, geopolitical-patterns, fashion-patterns-pretending-to-be-geopolitical-patterns. He had been good at it. He had been the best. He had built Blue Ant on the back of his pattern-recognition, and Blue Ant had become the world's leading coolhunting-firm because of it.</p>
+<p>Now, in the late-summer of 2002, sitting in his office in Notting Hill, looking at the wall-that-wasn't-a-wall, Bigend could not recognize any patterns at all. The footage of the girl walking across the plaza was a pattern. The F:F:F forum was a pattern. The post-9/11 surveillance-substrate was a pattern. Bigend could see all of these. Bigend could describe all of these. Bigend could write a memo about all of these.</p>
+<h2>Rising Action</h2>
+<p>But he could not feel them. He could not feel the substrate-emergence the way he used to. He could not feel the moment-before-cool. He could see the patterns as a diagram. He could not feel them as a pulse.</p>
+<p>He had not told anyone. He had not told Cayce. He had not told the board of Blue Ant. He had not told his wife.</p>
+<p>The reason he had not told anyone was that Bigend's methodology required him to be the one who knew. Bigend's reputation required him to be the one who saw. Bigend's paycheck required him to be the one who could walk into a room and tell everyone what was about to happen.</p>
+<p>If he could not walk into a room and tell everyone what was about to happen, then Bigend was no longer Bigend.</p>
+<p>He sat at his desk and looked at the footage. The girl walked across the plaza. The crowd parted. The light changed. Bigend tried to feel it. He tried to feel the substrate-emergence. He tried to feel the moment-before-cool.</p>
+<h2>Midpoint Reversal</h2>
+<p>He could not feel it.</p>
+<p>This was, Bigend realized, what his methodology had always feared. The methodology required pattern-recognition. Pattern-recognition required attention. Attention required a kind of openness, a kind of vulnerability, a kind of willingness to be affected by what was happening.</p>
+<p>But Bigend was not the man he had been ten years ago. The pattern-recognition that had made him the world's most-famous-coolhunter had become a memory of pattern-recognition, an echo of a pattern-recognition, a pattern of a pattern. The walls he had built around himself had not only kept the brand-substrate out; they had kept the pattern-substrate in, where it had curdled into something he could no longer feel. But Cayce could feel it. Cayce was the walls he had needed but never built.</p>
+<p>Bigend had spent thirty years learning not to be affected. Bigend had spent thirty years building walls around himself, walls that the brand-substrate could not penetrate, walls that the surveillance-substrate could not penetrate, walls that the geopolitical-substrate could not penetrate.</p>
+<p>The walls had worked. The walls had made Bigend rich. The walls had made Bigend powerful. The walls had made Bigend the most-pattern-recognizing person in the coolhunting-industry.</p>
+<p>But the walls had also made Bigend unable to recognize patterns. Because patterns required vulnerability, and Bigend had no vulnerability left.</p>
+<h2>Climax</h2>
+<p>He sat at his desk and looked at the footage and waited.</p>
+<p>He was waiting for someone to come into his office and see what he could not see. He was waiting for someone to walk into his office and feel what he could not feel. He was waiting for someone to do the thing that Bigend himself had done for thirty years, but that Bigend could no longer do, because Bigend had forgotten how.</p>
+<p>The door opened. Cayce Pollard came in. She was wearing her allergic-wardrobe. She was holding a piece of paper. She looked at Bigend.</p>
+<p>"I think I know what the footage is," she said.</p>
+<p>Bigend nodded. He had been waiting for this. He had been waiting for Cayce to walk into his office and tell him what the footage was. He had been waiting for Cayce to do the thing that Bigend could no longer do.</p>
+<h2>Resolution</h2>
+<p>"Tell me," he said.</p>
+<p>Cayce told him. Bigend listened. He did not interrupt. He had been told, early in his career, that the best way to learn was to let the person talking believe that you were the teacher.</p>
+<p>Cayce taught him.</p>
+<blockquote><p>"Bigend's methodology required him to be the one who knew. Now he was the one who listened. The shift was not a defeat. The shift was a substrate-emergence. Bigend had spent thirty years building the substrate. Now the substrate was using him."</p></blockquote>
+<p>The footage kept playing on the wall-that-wasn't-a-wall. The girl walked across the plaza. The crowd parted. The light changed.</p>
+<p>Cayce talked. Bigend listened. The methodology continued.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Blue Ant Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

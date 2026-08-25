@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conway's Communion — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="conways_communion_ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">Conway's Communion</h1>
+            <p class="story-subtitle">A Belonging-Kind Moment in a Sprawl Bar</p>
+            <div class="story-meta"><span>1341 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<p>I cannot say why I went back to the Backdoor Lounge.</p>
+<p>The Backdoor Lounge is on Mission Street. The Backdoor Lounge is a bar for the gaijin. The Backdoor Lounge is a bar for the working-class gaijin. The Backdoor Lounge is the kind of bar that does not advertise. The Backdoor Lounge is the kind of bar that the bartender knows the names of his customers.</p>
+<p>I went back to the Backdoor Lounge because I had met a woman there. The woman was Antoinette. Antoinette was not her real name. I did not know her real name. I did not know anything about her that I had not observed.</p>
+<p>I observed Antoinette doing things that were exactly right.</p>
+<p>I observed Antoinette's dress being the green of young corn. I observed Antoinette's smile being the smile of someone who had smiled before. I observed Antoinette's movements being the movements of someone who had moved before.</p>
+<p>I could not observe Antoinette's real name. I could not observe Antoinette's species.</p>
+<p>I went back to the Backdoor Lounge.</p>
+<p>The Backdoor Lounge was a bar. The bar was a bar for the working-class. The working-class was the working-class of the diaspora. The diaspora was the diaspora of the post-industrial Pacific Rim. The Pacific Rim was the Pacific Rim of the gaijin.</p>
+<p>I sat at the bar.</p>
+<p>The bartender gave me a drink.</p>
+<p>I drank the drink.</p>
+<p>I watched the bar.</p>
+<p>The bar was full of customers. The customers were the customers of the Backdoor Lounge. The customers were the customers of the working-class diaspora. The customers were the customers of the Pacific Rim.</p>
+<p>I watched the customers.</p>
+<p>Two customers sat together.</p>
+<p>The two customers sat at a table. The table was a table of the Backdoor Lounge. The table was a small table. The table was a small table for two.</p>
+<p>The two customers were a man and a woman. The man was Conway. The woman was Loretta.</p>
+<p>Conway and Loretta did not speak.</p>
+<p>I watched Conway and Loretta not speak.</p>
+<p>Conway and Loretta not-speak was not a silence. The silence was not the silence of customers who did not know each other. The silence was not the silence of customers who did not want to speak. The silence was the silence of customers who were communing.</p>
+<p>I did not know what communing was. I was a linguist. I had studied communing in graduate school. I had not understood communing in graduate school.</p>
+<p>I watched Conway and Loretta commune.</p>
+<p>Conway and Loretta communed at the table. The table was a small table. The table was a small table for two. The two sat at the table. The two communed at the table.</p>
+<p>I watched.</p>
+<p>Conway's face was bland. Conway's face was the bland face of a young man with the usual set of regular features. Conway wore a yellow golf shirt. Conway wore pressed jeans. Conway's face was bland.</p>
+<p>Loretta's face was bland. Loretta's face was the bland face of a young woman with the usual set of regular features. Loretta's face was the bland face of a woman who had been a young woman with the usual set of regular features for a long time.</p>
+<p>Conway and Loretta leaned toward one another. The leaning was not the leaning of two people who were about to embrace. The leaning was not the leaning of two people who were about to speak. The leaning was the leaning of two people who were communing.</p>
+<p>I did not understand the communing.</p>
+<p>I was a linguist. I had studied linguists. I had studied linguistics. I had not studied communing.</p>
+<p>The phone rang.</p>
+<p>The phone rang in my pocket.</p>
+<p>I took the phone from my pocket.</p>
+<p>The phone was a phone of the Backdoor Lounge. The phone was a phone for me.</p>
+<p>The phone said: Coretti.</p>
+<p>The phone said: Coretti.</p>
+<p>The phone said: the Backdoor Lounge.</p>
+<p>The phone said: the bar-noise.</p>
+<p>The phone said: the Backdoor Lounge.</p>
+<p>I said: yes.</p>
+<p>The phone said: the song.</p>
+<p>The phone said: the bar-noise.</p>
+<p>The phone said: You're the Reason Our Kids Are Ugly.</p>
+<p>The phone said: the song.</p>
+<p>I knew the song. I had heard the song before. I had heard the song at the Backdoor Lounge. I had heard the song the first time I had met Antoinette. The song had been playing at the Backdoor Lounge when Antoinette had done things that were exactly right.</p>
+<p>The phone said: the song.</p>
+<p>The phone said: the song is the message.</p>
+<p>The phone said: the message is the song.</p>
+<p>I put the phone in my pocket.</p>
+<p>I looked at Conway and Loretta.</p>
+<p>Conway and Loretta did not look at me. Conway and Loretta did not look at the phone. Conway and Loretta did not look at anything. Conway and Loretta communed.</p>
+<p>I stood up from the bar.</p>
+<p>I walked toward Conway and Loretta.</p>
+<p>I sat down at the table.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: the song.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: the song is the message.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: the message is the song.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: You are the Reason Our Kids Are Ugly.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: You are the Reason Our Kids Are Ugly is the message.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: the message is the song.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: the message is the song.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: I am Coretti.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: I am a linguist.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: I study sequencing and options in conversational openings.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: my ex-wife told me I dress like a Martian.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: Antoinette was here.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: Antoinette was here the first night I heard the song.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: Antoinette did things that were exactly right.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: Antoinette was green. Antoinette was young corn.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: Antoinette was not real.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: Antoinette was not human.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: Antoinette was the species.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: you are the species.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: Conway and Loretta are the species.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: the species is the species.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: the species is the message. The message is the song. The song is You're the Reason Our Kids Are Ugly.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: I am the species.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: I am the linguist.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: I am the species. The species is the linguist. The linguist is the species.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: the linguist is the message.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>I said: I am Coretti.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>Conway and Loretta communed.</p>
+<p>The song played.</p>
+<p>The phone did not ring.</p>
+<p>The bar-noise was the bar-noise of the Backdoor Lounge.</p>
+<p>I sat at the table with Conway and Loretta.</p>
+<p>I was the species.</p>
+<p>Conway and Loretta did not look at me.</p>
+<p>Conway and Loretta were the species.</p>
+<p>The song played.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

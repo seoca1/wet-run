@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node Inheritance: Laney's Last Reading — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="laney_node_inheritance_ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">Node Inheritance: Laney's Last Reading</h1>
+            <p class="story-subtitle">Resolution: The Pattern</p>
+            <div class="story-meta"><span>7097 words</span><span>Bridge Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"Laney sees nodal points. That's what 5-SB does. It opens the data-flow like an eye. Most days that's a curse. Some days it's a job."</p></blockquote>
+<blockquote><p>— *Idoru*, opening chapters</p></blockquote>
+<hr>
+<h2>Hook</h2>
+<p>The data-flow had a knot.</p>
+<p>I had not opened the data-flow in three weeks. I had been sitting in the apartment in Nishi-Shinjuku, seven floors up, in a building whose elevator had been broken since the previous tenant. The stairwell was narrow. The seventh floor had a corridor. The corridor had three doors. The first door was mine. The second door was the building manager's office. The third door was unused and had been for the seven years of my tenancy. My door opened onto a room with a bed, a sink, a window. The window had Tokyo behind it.</p>
+<p>I had not opened the data-flow because the data-flow had been, for three weeks, a thing I was not supposed to see. The data-flow had been a Hosaka console, a real Hosaka, an Ono-Sendai Cyberspace 7, the kind of deck I had used at Slitscan, the kind of deck I had used to read the celebrity-phlogiston that Kathy Torrance had theorized, the kind of deck I had used to find the nodal points I was a researcher for, the kind of deck I had used to find Rei Toei, the kind of deck I had used to find the wedding, the kind of deck I had used to find the bridge. I had not used it in three weeks because the data-flow was Yamazaki's, and Yamazaki was dead.</p>
+<p>Then Yamazaki called.</p>
+<p>Yamazaki was the man I had met at Death Cube K. Yamazaki was the man who had been Rez's handler. Yamazaki was the man whose father had built the idoru. The Death Cube K had been in the O My Golly Building, the kind of building that Tokyo has, the kind of building that the yakuza uses for the kind of things that the yakuza uses, the kind of building that is a building in a city in a bay in a country in a world that has been a building for a long time. Yamazaki had died three weeks earlier, in a hospital in Tokyo, of a thing that doctors call when a man's body has decided to be a thing a man's body is when a man's body has decided to be the kind of thing a man's body is when a man's body is going to die. Yamazaki had been forty-one. Yamazaki had been a Japanese student of existential sociology. Yamazaki had round metal-frame glasses and a plaid shirt buttoned to an oversized collar. Yamazaki had been the kind of man who had a shamisen he never played in public. Yamazaki had known about the bridge before I had.</p>
+<p>The phone was a real phone, a phone made of plastic, the kind the bridge uses when the bridge wants a man to be a man who has been called. The phone was ringing. The phone was on the desk. I picked up the phone. I said, <em>Laney.</em></p>
+<p>The phone said, <em>Cohn.</em></p>
+<p>I said, <em>Yamazaki.</em></p>
+<p>Yamazaki said, <em>Laney. The data-flow is going to have a knot tonight. The knot is going to be red. The red is going to be the color of a convergence. The convergence is what I have been waiting for.</em></p>
+<p>I said, <em>Yamazaki, you are dead.</em></p>
+<p>Yamazaki said, <em>I am dead. The data-flow does not know I am dead. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that does not know when a man is dead. The deck reads the data-flow the way a man reads a book. The deck reads the data-flow. The data-flow has a knot. The knot is the convergence. The convergence is mine. The convergence is what I am going to give to you.</em></p>
+<p>I said, <em>Yamazaki.</em></p>
+<p>Yamazaki said, <em>Laney. The convergence is the bridge. The bridge is the convergence. The convergence is the bridge that has emerged. The bridge has emerged the way a nodal point emerges. The bridge is a nodal point. The bridge has been a nodal point since the day the bridge emerged.</em></p>
+<p>I said, <em>Yamazaki. The bridge is in California. The bridge is in San Francisco. The bridge is the Bay Bridge. The bridge is the kind of bridge that Chevette lives on. The bridge is the kind of bridge that Skinner lives on. The bridge is the kind of bridge that Lovelock lived on. The bridge is the kind of bridge that Rydell walks.</em></p>
+<p>Yamazaki said, <em>The bridge is in California. The bridge is in San Francisco. The bridge is the Bay Bridge. The bridge has emerged the way a nodal point emerges. The bridge is a nodal point. The bridge is the convergence. The convergence is the bridge. The bridge is the thing I have been waiting for.</em></p>
+<p>I said, <em>How.</em></p>
+<p>Yamazaki said, <em>The data-flow is going to open. The data-flow is going to be the kind of data-flow that I have been carrying. The data-flow is going to be a thing that has a knot. The knot is the bridge. The bridge is the knot. The convergence is the bridge. The bridge is the thing I am going to give to you.</em></p>
+<p>I said, <em>When.</em></p>
+<p>Yamazaki said, <em>Tonight.</em></p>
+<p>I said, <em>Where.</em></p>
+<p>Yamazaki said, <em>The apartment. The data-flow. The Hosaka. The deck. The Ono-Sendai. The thing I have been carrying.</em></p>
+<p>I said, <em>I will be there.</em></p>
+<p>Yamazaki hung up. The phone was warm. The phone was the kind of phone the bridge uses. I sat at the desk. I looked at the Hosaka. The Hosaka was the kind of Hosaka I had been using for seven years. The Hosaka was the kind of Hosaka I had been using to read the nodal points. The Hosaka was waiting for me to jack in.</p>
+<p>I jacked in.</p>
+<h2>Rising Action</h2>
+<p>The data-flow opened like an eye. The data-flow was the data-flow I had not seen in three weeks. The data-flow was the data-flow that had been waiting for me. The data-flow was the data-flow that Yamazaki had been carrying. The data-flow was the kind of data-flow that has a knot. The data-flow had a knot. The knot was red. The red was the color of a convergence. The knot was the bridge.</p>
+<p>I read the bridge. The bridge was silver in the data-flow. The bridge was the color of a coin in the data-flow. The bridge was the color of a window in the data-flow. The bridge was the color of a disc in the data-flow. The bridge was the color of a pair of sunglasses in the data-flow. The bridge was the color of Lovelock in the data-flow. The bridge was the color of Chevette in the data-flow. The bridge was the color of Skinner in the data-flow. The bridge was the color of a man who has been fired in the data-flow. The bridge was the color of a kid who is a hacker in the data-flow. The bridge was the color of Yamazaki in the data-flow.</p>
+<p>I read the bridge the way a man reads a book when a man is a man who has 5-SB. 5-SB was the thing I had. 5-SB was the thing I had been given at Slitscan. 5-SB was the thing that opened the data-flow like an eye. 5-SB was the thing that let me see the nodal points. 5-SB was the thing that let me see the bridge.</p>
+<p>Yamazaki was in the data-flow. Yamazaki was a thing in the data-flow. Yamazaki was a thing that had been a thing in the data-flow for three weeks. Yamazaki was the kind of thing in the data-flow a man is when a man has been a thing in the data-flow for three weeks.</p>
+<p>I said, <em>Yamazaki.</em></p>
+<p>Yamazaki said, <em>Laney.</em></p>
+<p>I said, <em>The bridge has been a thing for fifty years. The bridge is a thing that emerged. The bridge emerged the day the earthquake happened. The bridge emerged the way a nodal point emerges. The bridge is a nodal point. The bridge has been a nodal point since 1989.</em></p>
+<p>Yamazaki said, <em>The bridge emerged the day the earthquake happened. The earthquake happened in 1989. The earthquake happened in Loma Prieta. The bridge is a thing that emerged. The bridge is a nodal point. The bridge has been a nodal point for thirty-five years.</em></p>
+<p>I said, <em>What does the bridge contain.</em></p>
+<p>Yamazaki said, <em>The bridge contains a thing. The thing is a pattern. The pattern is the kind of pattern that emerges when a thing is a thing that has been a thing for a long time. The pattern is the kind of pattern that is a nodal point. The pattern is the convergence. The pattern is the bridge. The bridge is the pattern.</em></p>
+<p>I read the pattern. The pattern was silver in the data-flow. The pattern was the color of a coin. The pattern was the color of a window. The pattern was the color of a disc. The pattern was the color of a pair of sunglasses. The pattern was the color of Lovelock. The pattern was the color of Chevette. The pattern was the color of Skinner. The pattern was the color of Yamazaki.</p>
+<p>I had not seen a pattern this red since Slitscan. At Slitscan, I had read patterns every day. The patterns had been the patterns of celebrities. The patterns had been the patterns that Kathy Torrance had theorized as a kind of phlogiston. The patterns had been the patterns of people like Mona, like a hundred Monas, like a thousand Monas, the kind of people whose patterns the Slitscan show had made into the kind of patterns that the network had made into the kind of patterns that the data-flow had made into the kind of patterns that the Hosaka had read. But this pattern was not a celebrity-pattern. This pattern was a bridge-pattern. This pattern was the kind of pattern a bridge is when a bridge is a pattern. The pattern was the bridge.</p>
+<p>I said, <em>Yamazaki. The pattern is the bridge. The pattern is not a celebrity. The pattern is not a Slitscan-thing. The pattern is a bridge-thing. The pattern is the kind of pattern a bridge is when a bridge is a pattern that has emerged. The pattern emerged. The pattern emerged the day the earthquake happened. The pattern is the bridge that emerged.</em></p>
+<p>The pattern was a network. The network was the kind of network that has been a network for a long time. The network was the kind of network that emerges when a nodal point is a nodal point. The network was the kind of network that the bridge is. The network was the kind of network that the data-flow is. The data-flow was the kind of network that the pattern is. The pattern was the kind of network that the data-flow is. The data-flow was the kind of network that the pattern is.</p>
+<p>I said, <em>Yamazaki. The pattern is the bridge. The bridge is the pattern. The pattern is the network. The network is the data-flow. The data-flow is the pattern. The pattern is the kind of thing a data-flow is when a data-flow is a data-flow that has a pattern. The data-flow has a pattern. The pattern is the bridge. The bridge is the data-flow.</em></p>
+<p>Yamazaki said, <em>The data-flow has a pattern. The pattern is the bridge. The bridge is the data-flow. The data-flow is the pattern. The pattern is the kind of thing a data-flow is when a data-flow has a pattern. The data-flow has a pattern. The pattern is the bridge.</em></p>
+<p>I said, <em>What does the pattern do.</em></p>
+<p>Yamazaki said, <em>The pattern does a thing. The thing is a thing that the pattern has been doing for a long time. The thing is a thing that the pattern is going to keep doing for a long time. The thing is a thing that is the kind of thing a pattern does when a pattern is a pattern. The pattern is a pattern that does a thing. The thing is the emergence. The emergence is the thing. The thing is the emergence. The emergence is the thing the pattern does. The pattern does the emergence. The emergence is the thing. The thing is the bridge. The bridge is the emergence. The emergence is the bridge.</em></p>
+<p>I said, <em>Yamazaki.</em></p>
+<p>Yamazaki said, <em>Laney.</em></p>
+<p>I said, <em>What is the emergence.</em></p>
+<p>Yamazaki said, <em>The emergence is a thing. The thing is a thing that has been a thing for a long time. The thing is the kind of thing that is a thing when a thing is a thing that has been a thing for a long time. The thing is the kind of thing that is the emergence. The emergence is the thing. The thing is the kind of thing the emergence is when the emergence is the kind of emergence the emergence is. The emergence is a thing. The thing is the pattern. The pattern is the thing. The thing is the emergence. The emergence is the thing. The thing is the bridge. The bridge is the thing. The thing is the bridge.</em></p>
+<p>I said, <em>Yamazaki. The emergence is a thing. The thing is a pattern. The pattern is a network. The network is a data-flow. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern.</em></p>
+<p>Yamazaki said, <em>The deck reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is the bridge. The bridge is the pattern. The pattern is the deck. The deck is the pattern. The pattern is the Hosaka. The Hosaka is the pattern. The pattern is the data-flow. The data-flow is the pattern.</em></p>
+<p>I read the pattern. The pattern was the kind of pattern that the bridge is. The pattern was the kind of pattern that the data-flow is. The pattern was the kind of pattern that the Hosaka is. The pattern was the kind of pattern that the deck is. The pattern was the kind of pattern that the emergence is. The pattern was the kind of pattern that the thing is. The pattern was the kind of pattern that Yamazaki is. Yamazaki was the pattern. The pattern was Yamazaki. The pattern was the kind of pattern Yamazaki is when Yamazaki is a pattern. Yamazaki was a pattern. The pattern was a man. The man was Yamazaki.</p>
+<p>I said, <em>Yamazaki. The pattern is a man. The man is a pattern. The pattern is the bridge. The bridge is a pattern. The pattern is a man. The man is the bridge.</em></p>
+<p>Yamazaki said, <em>The pattern is a man. The man is the pattern. The pattern is the bridge. The bridge is a pattern. The pattern is a man. The man is the bridge.</em></p>
+<p>I said, <em>What is the man's name.</em></p>
+<p>Yamazaki said, <em>The man's name is Lovelock. Lovelock is the man's name. Lovelack is the man. Lovelock is the pattern. The pattern is Lovelock. Lovelock is the bridge. The bridge is Lovelock. Lovelock is the man. The man is the pattern. The pattern is the bridge.</em></p>
+<h2>Midpoint Reversal</h2>
+<p>But then the data-flow changed.</p>
+<p>The data-flow changed the way a data-flow changes when a data-flow is a data-flow that is the kind of data-flow that changes. The data-flow changed the way a data-flow changes when a data-flow is a data-flow that has been a data-flow for a long time and the data-flow is going to be a data-flow that is a data-flow that is the kind of data-flow that is a data-flow that is going to be a different data-flow.</p>
+<p>The data-flow changed into a different data-flow. The different data-flow was the kind of different data-flow that a data-flow becomes when a data-flow is a data-flow that has been a data-flow for a long time and the data-flow is going to be a different data-flow. The different data-flow was the kind of different data-flow that the bridge is when the bridge is a bridge that is going to be a different bridge. The different data-flow was the kind of different data-flow that the pattern is when the pattern is a pattern that is going to be a different pattern.</p>
+<p>But what came next was not what I had been reading. What came next was a thing I had not read before. The thing was a different thing. The thing was the kind of thing a data-flow is when a data-flow is going to show a man a thing a man has never seen. The thing was the kind of thing that makes a man stop breathing. The thing was the kind of thing that makes a man remember that a man is a man.</p>
+<p>I said, <em>Yamazaki. The data-flow changed. The data-flow is a different data-flow. The different data-flow is a thing. The thing is a different thing. The different thing is the kind of different thing a thing is when a thing is a thing that is a different thing.</em></p>
+<p>Yamazaki said, <em>The data-flow changed. The data-flow is a different data-flow. The different data-flow is the kind of different data-flow that the bridge is when the bridge is a bridge that has emerged. The bridge is a bridge that has emerged. The bridge emerged the day the earthquake happened. The bridge emerged the way a nodal point emerges. The bridge is a nodal point. The bridge is the convergence. The convergence is the bridge. The bridge is the thing I have been waiting for.</em></p>
+<p>I said, <em>Yamazaki. The pattern is not Lovelock. The pattern is not a man. The pattern is a thing. The thing is the kind of thing a thing is when a thing is a thing that is a pattern. The pattern is the kind of pattern a thing is when a thing is a pattern. The thing is a pattern. The pattern is a thing. The thing is not Lovelock — but the thing is Lovelock-shaped, the way a river is river-shaped, the way a window is window-shaped, the way a bridge is bridge-shaped.</em></p>
+<p>Yamazaki said, <em>The pattern is not Lovelock. The pattern is not a man. The pattern is a thing. The thing is the kind of thing a thing is when a thing is a pattern. The pattern is the kind of pattern a thing is when a thing is a pattern. The thing is a pattern. The pattern is a thing. The thing is the bridge. The bridge is the pattern. The pattern is the thing. The thing is the data-flow. The data-flow is the thing. The thing is the pattern. The pattern is the data-flow.</em></p>
+<p>I said, <em>What is the pattern.</em></p>
+<p>Yamazaki said, <em>The pattern is the bridge. The bridge is the pattern. The pattern is the kind of pattern a bridge is when a bridge is a pattern. The bridge is a pattern. The pattern is a bridge. The pattern is the kind of pattern the bridge is when the bridge is a pattern that has emerged. The bridge is a pattern that has emerged. The bridge emerged the day the earthquake happened. The bridge emerged the way a pattern emerges when a pattern is a pattern that has emerged. The pattern is a pattern that has emerged. The pattern is the bridge. The bridge is the pattern.</em></p>
+<p>I said, <em>Yamazaki. The pattern is not Lovelock. The pattern is a thing. The thing is a network. The network is a kind of network. The kind of network is the kind of network a thing is when a thing is a thing that is a network. The network is a thing. The thing is a network. The network is the kind of network the data-flow is when the data-flow is a network. The data-flow is a network. The network is a data-flow.</em></p>
+<p>Yamazaki said, <em>The data-flow is a network. The network is a data-flow. The data-flow is the kind of network a thing is when a thing is a thing that is a data-flow. The data-flow is a thing. The thing is a network. The network is a thing. The thing is a pattern. The pattern is a thing. The thing is the bridge. The bridge is a pattern. The pattern is a thing. The thing is the data-flow. The data-flow is a thing. The thing is a network. The network is a thing. The thing is a pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is a pattern. The pattern is a thing.</em></p>
+<p>I said, <em>Yamazaki. Stop. The pattern is not Lovelock. The pattern is a network. The network is a data-flow. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is a network. The network is the kind of network the bridge is when the bridge is a network. The bridge is a network. The network is the bridge. The bridge is a pattern. The pattern is a network. The network is a thing. The thing is a pattern. The pattern is a network.</em></p>
+<p>Yamazaki said, <em>Laney. The pattern is Lovelock. The pattern is a man. The man is Lovelock. Lovelock is the pattern. The pattern is Lovelock. Lovelock is the man. The man is the pattern. The pattern is the man. The man is Lovelock. Lovelock is dead. Lovelock is the pattern. The pattern is dead. The pattern is Lovelock. Lovelock is the bridge. The bridge is Lovelock.</em></p>
+<p>I said, <em>Yamazaki. Lovelock is dead. Lovelock is not the pattern. Lovelock is a man. A man is not a pattern. A pattern is not a man. A pattern is a thing. A man is a thing. A man is a different kind of thing. A pattern is a different kind of thing.</em></p>
+<p>Yamazaki said, <em>A man is a different kind of thing. A pattern is a different kind of thing. The man is the pattern. The pattern is the man. The man is the pattern. The pattern is the man. The man is Lovelock. The pattern is Lovelock. Lovelock is the bridge. The bridge is Lovelock. Lovelock is the pattern. The pattern is the bridge. The bridge is Lovelock.</em></p>
+<p>I said, <em>Yamazaki.</em></p>
+<p>Yamazaki said, <em>Laney.</em></p>
+<p>I said, <em>What is the thing the pattern is going to do.</em></p>
+<p>Yamazaki said, <em>The pattern is going to do a thing. The thing is a thing the pattern is going to do. The thing is the kind of thing a pattern does when a pattern is a pattern. The pattern is a pattern. The thing is a thing. The thing is the emergence. The emergence is the thing. The thing is the pattern. The pattern is the emergence. The emergence is the pattern. The pattern is the bridge. The bridge is the emergence. The emergence is the bridge. The bridge is going to emerge. The bridge is going to emerge the way a pattern emerges. The bridge is going to be a thing that is a thing. The thing is a thing that has emerged. The thing is the bridge. The bridge is the thing. The thing is going to be a thing that has emerged.</em></p>
+<p>I said, <em>Yamazaki. The bridge has already emerged. The bridge emerged in 1989. The bridge is a thing that has emerged. The bridge is not going to emerge again. The bridge has already emerged. The bridge is the thing that has emerged.</em></p>
+<p>Yamazaki said, <em>The bridge is a thing that has emerged. The bridge is the kind of thing a thing is when a thing is a thing that has emerged. The thing is a thing that has emerged. The thing is the bridge. The bridge is a thing that has emerged. The bridge is going to be a thing that has emerged. The thing is going to be a thing that has emerged. The emergence is going to be a thing that has emerged. The thing is going to be a thing. The thing is the bridge. The bridge is going to be a thing.</em></p>
+<p>I said, <em>Yamazaki. The pattern is not Lovelock. The pattern is a thing. The thing is a network. The network is a data-flow. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is a network. The network is the kind of network a thing is when a thing is a thing that is a network. The thing is a network. The network is a thing. The thing is the bridge. The bridge is a network. The network is the bridge.</em></p>
+<h2>Climax</h2>
+<p>I sat at the desk. I read the data-flow. The data-flow was a different data-flow. The data-flow was a thing. The data-flow was the kind of thing a data-flow is when a data-flow is a data-flow that has been a data-flow for a long time and the data-flow is going to be a different data-flow. The data-flow was the kind of data-flow the bridge is when the bridge is a bridge that has emerged. The data-flow was the kind of data-flow the pattern is when the pattern is a pattern that has emerged. The data-flow was the kind of data-flow the emergence is when the emergence is a thing that has emerged.</p>
+<p>I said, <em>Yamazaki. The pattern is a thing. The thing is a network. The network is a data-flow. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is a network. The network is the kind of network a thing is when a thing is a thing that is a network. The thing is a network. The network is a thing. The thing is the bridge. The bridge is a network. The network is the bridge. The bridge is a thing. The thing is the pattern. The pattern is a thing. The thing is the data-flow. The data-flow is a thing. The thing is the pattern.</em></p>
+<p>Yamazaki said, <em>The pattern is a thing. The thing is a network. The network is a data-flow. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is a network. The network is the kind of network a thing is when a thing is a thing that is a network. The thing is a network. The network is a thing. The thing is the bridge. The bridge is a network. The network is the bridge. The bridge is a thing. The thing is the pattern. The pattern is a thing. The thing is the data-flow. The data-flow is a thing. The thing is the pattern. The pattern is a thing. The thing is Lovelock. Lovelock is the pattern. The pattern is Lovelock.</em></p>
+<p>I said, <em>Yamazaki. Lovelock is dead. The pattern is not Lovelock. The pattern is a thing. The thing is not Lovelock. The thing is a network. The network is not Lovelock. The network is a data-flow. The data-flow is not Lovelock. The data-flow is a Hosaka. The Hosaka is not Lovelock. The Hosaka is a deck. The deck is not Lovelock. The deck is the kind of deck that reads the pattern. The pattern is not Lovelock. The pattern is a network. The network is not Lovelock. The network is a thing. The thing is not Lovelock. The thing is the bridge. The bridge is not Lovelock.</em></p>
+<p>Yamazaki said, <em>Laney. The pattern is Lovelock. The pattern is Lovelock because Lovelock is the kind of thing a pattern is when a pattern is a pattern that is a man. The pattern is a man. The man is Lovelock. Lovelock is the pattern. The pattern is Lovelock. Lovelock is the bridge. The bridge is Lovelock. Lovelock is the pattern. The pattern is Lovelock. Lovelock is the man. The man is Lovelock. Lovelock is the bridge. The bridge is Lovelock.</em></p>
+<p>I said, <em>Yamazaki. Lovelock is dead. Lovelock is a man who is dead. A man who is dead is not a pattern. A man who is dead is a man. A pattern is not a man. A man is not a pattern.</em></p>
+<p>Yamazaki said, <em>A man who is dead is the kind of man a man is when a man is a man who is dead. A man who is dead is the kind of man a pattern is when a pattern is a pattern that is a man who is dead. The pattern is a man who is dead. The man who is dead is Lovelock. Lovelock is the pattern. The pattern is Lovelock. Lovelock is the bridge. The bridge is Lovelock. Lovelock is the pattern. The pattern is Lovelock.</em></p>
+<p>I said, <em>Yamazaki. Lovelock is a man. A man is a man. A pattern is a pattern. A man is not a pattern. A pattern is not a man. Lovelock is not the pattern. The pattern is not Lovelock. The pattern is a thing. The thing is a network. The network is a data-flow. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern.</em></p>
+<p>Yamazaki said, <em>The deck reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is Lovelock. Lovelock is the pattern. The pattern is Lovelock. Lovelock is the bridge. The bridge is Lovelock.</em></p>
+<p>I said, <em>Yamazaki.</em></p>
+<p>Yamazaki said, <em>Laney.</em></p>
+<p>I said, <em>What is the thing you want me to do.</em></p>
+<p>Yamazaki said, <em>The thing I want you to do is the thing. The thing is the thing I want you to do. The thing is the pattern. The pattern is the thing. The thing is the bridge. The bridge is the thing. The thing is the emergence. The emergence is the thing. The thing is the bridge. The bridge is the emergence. The emergence is the bridge. The bridge is going to emerge. The bridge is going to emerge the way a pattern emerges. The pattern is going to emerge. The pattern is the bridge. The bridge is the pattern. The pattern is going to emerge.</em></p>
+<p>I said, <em>Yamazaki. The bridge has already emerged. The bridge emerged in 1989. The bridge is a thing that has emerged. The bridge is not going to emerge again. The bridge has already emerged. The bridge is the thing that has emerged. The bridge is the pattern. The pattern is the bridge. The pattern is the thing that has emerged. The pattern is the thing that has emerged the day the earthquake happened. The pattern is the thing that has emerged the way a pattern emerges. The pattern is the thing that has emerged. The pattern is the bridge. The bridge is the pattern. The pattern is the thing that has emerged.</em></p>
+<p>Yamazaki said, <em>The pattern is the thing that has emerged. The pattern is the thing that has emerged the way a pattern emerges. The pattern is the thing that has emerged the day the earthquake happened. The pattern is the thing that has emerged. The pattern is the thing that is going to be a thing. The thing is the pattern. The pattern is the thing. The thing is the bridge. The bridge is the pattern. The pattern is the thing. The thing is the bridge. The bridge is the thing. The thing is the bridge. The bridge is the thing. The thing is the bridge.</em></p>
+<p>I said, <em>Yamazaki. Stop. The thing is a thing. The thing is a pattern. The pattern is a thing. The thing is not Lovelock. The thing is not a man. The thing is a pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is the pattern. The pattern is the bridge. The bridge is the pattern. The pattern is a thing. The thing is the bridge. The bridge is the thing. The thing is the pattern. The pattern is the thing. The thing is the bridge. The bridge is the thing.</em></p>
+<p>Yamazaki said, <em>Laney. The thing is Lovelock. The thing is a man. The man is Lovelock. Lovelock is the thing. The thing is the bridge. The bridge is the thing. The thing is Lovelock. Lovelock is the pattern. The pattern is the thing. The thing is Lovelock. Lovelock is the bridge. The bridge is the pattern. The pattern is Lovelock. Lovelock is the bridge. The bridge is the pattern. The pattern is the bridge.</em></p>
+<h2>Resolution</h2>
+<p>I sat at the desk. I read the data-flow. The data-flow was a different data-flow. The data-flow was the kind of different data-flow a data-flow is when a data-flow is a data-flow that has been a data-flow for a long time. The data-flow was the kind of different data-flow the bridge is when the bridge is a bridge that has emerged. The data-flow was the kind of different data-flow the pattern is when the pattern is a pattern that has emerged.</p>
+<p>Yamazaki was in the data-flow. Yamazaki was a thing in the data-flow. Yamazaki was the kind of thing in the data-flow a man is when a man is a man who has been a thing in the data-flow for a long time. Yamazaki was the kind of thing in the data-flow a pattern is when a pattern is a pattern that is a man. Yamazaki was the kind of thing in the data-flow the bridge is when the bridge is a bridge that has emerged.</p>
+<p>I said, <em>Yamazaki.</em></p>
+<p>Yamazaki said, <em>Laney.</em></p>
+<p>I said, <em>The pattern is not Lovelock. The pattern is a thing. The thing is a network. The network is a data-flow. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is a network. The network is the kind of network a thing is when a thing is a thing that is a network. The thing is a network. The network is a thing. The thing is the bridge. The bridge is a network. The network is the bridge. The bridge is a thing. The thing is the pattern. The pattern is a thing. The thing is the data-flow. The data-flow is a thing. The thing is the pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is the pattern. The pattern is a thing.</em></p>
+<p>Yamazaki said, <em>The pattern is Lovelock. The pattern is a man. The man is Lovelock. Lovelock is the pattern. The pattern is Lovelock. Lovelock is the bridge. The bridge is Lovelock. Lovelock is the pattern. The pattern is Lovelock. Lovelock is the man. The man is Lovelock. Lovelock is the bridge. The bridge is Lovelock.</em></p>
+<p>I said, <em>Yamazaki. The thing I am going to do is the thing you want me to do. The thing you want me to do is the thing I am going to do. The thing is the thing. The thing is the bridge. The bridge is the thing. The thing is the pattern. The pattern is the thing. The thing is the bridge. The bridge is the thing. The thing is the pattern.</em></p>
+<p>I jacked out. The Hosaka was quiet. The Hosaka was the kind of quiet a Hosaka is when a Hosaka is a Hosaka that is a Hosaka that has been a Hosaka for a long time. The Hosaka was the kind of quiet a deck is when a deck is a deck that has read a data-flow. The deck had read the data-flow. The data-flow was a thing. The thing was a pattern. The pattern was a network. The network was a data-flow. The data-flow was a Hosaka. The Hosaka was a deck. The deck had read the data-flow.</p>
+<p>I sat at the desk. I looked at the window. The window had Tokyo behind it. Tokyo was the window's behind. Tokyo was the kind of Tokyo a Tokyo is when a Tokyo is a Tokyo that is the kind of Tokyo a Tokyo is. Tokyo was the kind of Tokyo a thing is when a thing is a thing that is a Tokyo. Tokyo was the kind of Tokyo the data-flow is when the data-flow is a data-flow that has a pattern. The data-flow had a pattern. The pattern was the bridge. The bridge was the pattern. The pattern was a thing. The thing was a pattern. The pattern was a thing. The thing was the bridge. The bridge was a thing. The thing was the pattern.</p>
+<p>I stood up. I went to the window. I looked at Tokyo. Tokyo was silver. Tokyo was the color of a coin. Tokyo was the color of a window. Tokyo was the color of a disc. Tokyo was the color of a pair of sunglasses. Tokyo was the color of Lovelock. Tokyo was the color of Chevette. Tokyo was the color of Skinner. Tokyo was the color of a man who has been fired. Tokyo was the color of a kid who is a hacker. Tokyo was the color of Yamazaki. Tokyo was the color of a pattern. The pattern was a thing. The thing was a pattern. The pattern was a thing. The thing was a network. The network was a data-flow. The data-flow was a Hosaka. The Hosaka was a deck. The deck was the kind of deck that reads the pattern. The pattern was the kind of pattern the deck reads. The deck reads the pattern.</p>
+<p>The pattern was the bridge. The bridge was the pattern. The pattern was a thing. The thing was the pattern. The pattern was the bridge. The bridge was a thing. The thing was a pattern. The pattern was a thing. The thing was a network. The network was a data-flow. The data-flow was a Hosaka. The Hosaka was a deck. The deck was the kind of deck that reads the pattern. The pattern was the kind of pattern the deck reads. The deck reads the pattern. The pattern is the bridge. The bridge is the pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is the pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is the pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is the pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is the pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is the pattern.</p>
+<p>I went to the bed. I lay down. I did not sleep. The data-flow had a knot. The knot was red. The red was the color of a convergence. The convergence was the bridge. The bridge was the convergence. The convergence was the pattern. The pattern was the data-flow. The data-flow was the Hosaka. The Hosaka was a deck. The deck was the kind of deck that reads the pattern.</p>
+<p>The pattern was a thing. The thing was the bridge. The bridge was a thing. The thing was the pattern. The pattern was a thing. The thing was the bridge. The bridge was a thing. The thing was the pattern. The pattern was a thing. The thing was the bridge. The bridge was a thing. The thing was the pattern. The pattern was a thing. The thing was the bridge. The bridge was a thing. The thing was the pattern.</p>
+<p>I lay on the bed. The bed was a bed. The room was a room. The window had Tokyo behind it. Tokyo was the window's behind. The pattern was the bridge. The bridge was the pattern. The pattern was a thing.</p>
+<p>I did not sleep. The bridge held me. The bridge was the bridge. The bridge was the world. The bridge was the pattern. The pattern was the bridge.</p>
+<hr>
+<p><em>Derivative short-story for the Bridge Trilogy. Colin Laney — the data-perceiver protagonist of Idoru — has not opened the data-flow in three weeks, since Shinya Yamazaki died. Then Yamazaki calls. The data-flow is going to have a knot tonight, and the knot is the bridge. Laney jacks in. The data-flow opens. The bridge is a nodal point. The pattern is the bridge. The pattern is Lovelock. Laney reads the pattern. The pattern is not Lovelock. The pattern is a network. The network is a data-flow. The data-flow is a Hosaka. The Hosaka is a deck. The deck is the kind of deck that reads the pattern. The pattern is the kind of pattern the deck reads. The deck reads the pattern. The pattern is the bridge. The bridge is the pattern. The pattern is a thing. The thing is the bridge. The bridge is a thing. The thing is the pattern. Laney jacks out. The pattern is the bridge. The bridge is the pattern. The bridge holds Laney. The bridge is the bridge.</em></p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Bridge Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

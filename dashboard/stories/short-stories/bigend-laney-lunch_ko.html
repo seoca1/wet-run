@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바이겐드, 레니를 만나다 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="bigend-laney-lunch_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">바이겐드, 레니를 만나다</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2157 words</span><span>Bridge Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입 — 오프닝 훅</h2>
+<p>내가 도쿄에 온 지 구십 일이 지나서야 바이겐드가 나를 찾았다. 자판기의 윙윙거림 속에서 잠들고 자판기의 윙윙거림 속에서 깨어나는 구십 일 — 같은 윙윙거림, 같은 자판기, 같은 자동판매. 도쿄에서 자동판매는 일종의 시다. 베이 에어리어에서는 그냥 자동판매다. 내가 도쿄에 있는 이유는 도쿄가 패턴이 종결되는 곳이기 때문이다.</p>
+<p>나는 롭퐁이의 어떤 가게에서 이름을 발음할 수 없는 라멘을 먹고 있었다. 국물은 일종의 데이터였다 — 알칼리성, 해양, 내가 전생에 먹었던 무언가의 유령. 밖에서, 거리의 간판들이 내가 읽을 수 있는 패턴으로 깜빡였다 — 어떤 남자들이 여자를 읽듯, 표면적으로, 의도로. 간판 아래, 인도 위의 보행자 패턴에서, 나는 내가 항상 읽어온 것을 읽었다: 다음 놀라움의 모양.</p>
+<p>다음 놀라움이 들어왔다.</p>
+<p>그는 6피트 6인치였다. 북유럽식 모음이었다. 그는 아무것도 주문하지 않았다.</p>
+<p>"콜린 레니, " 그가 말했다. "위베르투스 바이겐드. 블루 앤트. 계약에 관해 이야기하고 싶습니다."</p>
+<p>나는 그가 누군지 알고 있었다. 케이스 폴라드가—3천 마일 떨어진 소호의 사무실에서—블루 앤트가 문화의 표류를 포착하는 회사라고 설명해준 이래로 알고 있었다. 케이스는 그것을 아이러니 없이 말했다. 케이스는 브랜딩에 알레르기가 있다. 케이스는 그 의미에서 브랜딩의 도구다 — 다른 사람들이 보지 못하는 것을 측정하는 장치.</p>
+<p>나는 어떤 것에도 알레르기가 없다. 나는 패턴에 민감하다. 이것은 다른 장애다.</p>
+<h2>전개 — 상승 액션</h2>
+<p>"아이도루, " 바이겐드가 말했다. "레이 토에이. 당신은 그녀를 알고 있습니다."</p>
+<p>나는 그녀를 알고 있었다. 레이 토에이 — 세계 최초의 가상 팝 아이돌. 로아 오러클들의 잔여 아키텍처가 생성하고 레즈의 산업적 연결을 통해 몸을 받은 구성체. 그녀는 내가 참석하기 거절한 도쿄 결혼식에서 록 기타리스트와 결혼했다. 내가 거절한 이유는 내 패턴이 결혼이 상징적이지 않다고 말해줬기 때문이다 — 결혼은 운영적이었다. 결혼은 데이터 흐름이었다.</p>
+<p>"레이 토에이는 선례입니다, " 바이겐드가 말했다. "선례란 단일 사건이 아닙니다. 뒤따라 일어날 사건들의 패턴입니다. 레이 토에이는 한 카테고리의 첫 번째입니다. 그 카테고리는 그녀 같은 많은 것을 만들어낼 것입니다. 블루 앤트가 묻는 질문은 레이 토에이가 누구인가가 아니라, 그녀가 무엇을 예언하는가입니다."</p>
+<p>나는 그 질문이 마음에 들지 않았다. 그 질문은 내가 레즈-로 컨소시엄에서 일하던 시절—그 컨소시엄이 나에게 삭제로, 위협으로, 시애틀의 한 주차 구조물에서의 한 번의 죽음 직전 상황으로 보상하던 시절—의 고용주들이 물었던 종류의 질문이었다. 패턴이 그만하라고 해서 그만뒀다. 모두 그만뒀다.</p>
+<p>바이겐드가 내가 그 질문을 좋아하지 않는 것을 보았다.</p>
+<p>"블루 앤트는 삭제로 지불하지 않습니다, " 그가 말했다. "블루 앤트는 엔화로 지불합니다. 블루 앤트는 데이터로 지불합니다. 블루 앤트는 지속으로 지불합니다."</p>
+<p>"지속?"</p>
+<p>"당신은 콜린 레니로 계속 살아갈 것입니다. 당신은 패턴에 민감한 상태로 계속 살아갈 것입니다. 당신은 그 민감함에 대한 보상을 계속 받을 것입니다. 당신은 도쿄에서, 롭퐁이에서, 이름을 발음할 수 없는 라멘 가게에서 계속 살아갈 것입니다."</p>
+<p>나는 이것을 고려했다. 수 년 만에 죽음을 요구하지 않는 첫 번째 제안이었다.</p>
+<h2>절정 — 클라이맥스</h2>
+<p>"프로파일링하길 원하는 것은 무엇입니까?" 내가 물었다.</p>
+<p>"레이 토에이를 만들어낸 데이터 흐름, " 바이겐드가 말했다. "선례의 아키텍처. 선례가 어디로 이끄는가. 누가 따라올 것인가. 그들이 무엇을 가져올 것인가."</p>
+<p>이것은, 내가 깨달았듯이, 로아 오러클들이 레이 토에이를 만들어냈을 때 답한 바로 그 질문이었다. 로아는 예언적으로 답했다 — 그들은 자신이 카테고리를 보았기 때문에 선례를 만들어냈다. 바이겐드는 질문이 분석적으로 답해지길 원했다 — 그는 인간 분석가가 로아가 이미 알고 있는 것을 확인해주길 원했다.</p>
+<p>"로아가 이미 만들어낸 것을 프로파일링할 수 없습니다, " 내가 말했다.</p>
+<p>"로아가 다음에 만들어낼 것을 프로파일링할 수 있습니다, " 바이겐드가 말했다. "레이 토에이가 첫 번째입니다. 다음은 케이스 폴라드 — 브랜딩에 너무 민감해서 몸이 로고를 거부하는 쿨헌터. 그다음은 우리가 아직 이름 붙이지 않은 무언가일 것입니다. 브랜드 라인 아래 너무 멀리 있는 패턴, 어떤 도구도 읽을 수 없는 패턴."</p>
+<p>"케이스는 구성체가 아닙니다, " 내가 말했다.</p>
+<p>"아닙니다, " 바이겐드가 말했다. "케이스는 분석가의 다음 카테고리입니다. 쿨헌터. 브랜드 센서. 브랜딩과 면역의 합병으로 만들어진 새로운 인간 역할. 블루 앤트는 그녀를 더 일찍 찾길 원합니다. 블루 앤트는 그녀가 자신을 찾기 전에 그녀를 찾길 원합니다."</p>
+<p>나는 이해했다. 계약은 레이 토에이를 프로파일링하는 것이 아니었다. 계약은 다음 레이 토에이를 찾는 것이었다. 계약은 패턴을 만들어내는 패턴을 찾는 것이었다.</p>
+<p>나는 계약을 수락했다.</p>
+<h2>결말 — 해소</h2>
+<p>바이겐드는 나에게 엔화로 지불했다. 엔화는 깨끗했다. 계약은 서면으로 작성되었다. 데이터 흐름은 시작되었다.</p>
+<p>나는 구십 칠 일 동안 블루 앤트를 위해 일해왔다. 내가 읽는 패턴은 더 이상 도쿄만의 것이 아니다. 런던, 모스크바, 뉴욕, 스프롤의 잔재, 브리지의 새 인프라, 포스트 2001 시대의 브랜드 면역. 블루 앤트는 내가 이전에 내가 읽고 있는지 모르던 패턴을 읽도록 가르쳤다.</p>
+<p>나는 여전히 어떤 것에도 알레르기가 없다.</p>
+<h2>에필로그</h2>
+<p>바이겐드가 지난주에 또 다른 라멘 가게에서 나를 다시 찾았다. 그는 내 앞에서 처음으로 음식을 먹었다. 그는 나와 같은 라멘을 주문했다. 우리는 침묵 속에서 먹었다.</p>
+<p>삼십 분 후, 그가 말했다: "지금 어떤 패턴을 읽고 있습니까?"</p>
+<p>"이 식사의 패턴입니다, " 내가 말했다.</p>
+<p>"좋습니다, " 그가 말했다. "계속하십시오."</p>
+<hr>
+<h2>연결 — Connections</h2>
+<ul><li><strong>위키 참조</strong>: [idoru](../../../../wiki/concepts/idoru.md) · <em>pattern-recognition</em> · <em>colin-laney</em></li><li><strong>주제</strong>: <em>art-and-creation</em> · <em>media-and-celebrity</em> · <em>artificial-intelligence</em></li><li><strong>Cross-project</strong>: `Game/roguelike_sprawl/prototype/data/missions/missions.json:bigend-laney-lunch` (pending)</li><li><strong>Bridge × Blue Ant</strong>: 이 이야기는 <em>colin-laney</em> (Bridge Trilogy) 와 <em>hubertus-bigend</em> (Blue Ant Trilogy) 를 연결한다; 만남은 2003년 <em>tokyo-idoru</em> 에서, Bridge Trilogy 종결 (1999) 과 Blue Ant Trilogy 시작 (2003) 사이에 일어난다.</li></ul>
+<h2>주해 — Notes</h2>
+<ul><li><em>시각적 모티프</em>: 아이두수 시바리 (idol-binding) — 가상 아이돌을 만들어내는 데이터 흐름</li><li><em>원문 인용</em>: <em>Idoru</em>, 레니의 도쿄 도착; <em>Pattern Recognition</em>, 케이스의 알레르기 독백</li><li><em>번역 주해</em>: 본문은 KO body의 충실한 산문 번역; 기존 plot contract (레니의 패턴 읽기, 바이겐드의 채용, 지속 보상, 브랜드 경제 변화) 를 보존한다.</li><li><em>게임 통합</em>: `mission_id: bigend-laney-lunch` 는 Game workspace 에 정의되어야 할 새 미션 슬롯을 참조한다; cross-project 의존성 (Fiction → Game).</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Bridge Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

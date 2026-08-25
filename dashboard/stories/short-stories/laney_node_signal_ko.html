@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>레니 노드 신호 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="laney_node_signal_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">레니 노드 신호</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>4045 words</span><span>Bridge Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"레니는 노드 포인트를 본다. 그것이 5-SB가 하는 일이다. 데이터-흐름을 눈처럼 열어준다. 대부분의 날 그것은 저주다. 어떤 날 그것은 일이다."</p></blockquote>
+<blockquote><p>— *이드루*, 서장</p></blockquote>
+<hr>
+<h2>도입 (Hook)</h2>
+<p>데이터-흐름에 <em>매듭</em>이 있었다.</p>
+<p>이것은 콜린 레니가 깨어났을 때 그가 알았던 첫 번째 것이었다 — 1,300만 명의 인구 도시에서 합성 팝 아이돌을 찾게 될 날이 될 날의 아침의 아침에. 매듭은 데이터-흐름의 매듭이 <em>아니었다</em>. <em>따라서</em>, 매듭은 데이터-흐름 <em>안에</em> 있었지만 데이터-흐름 <em>의</em> 것은 아니었다. <em>매듭이</em> 데이터-흐름 <em>안에</em> 있지만 데이터-흐름 <em>의</em> 것은 <em>아니었기</em> <em>때문에</em>, 매듭은 <em>노드</em>였다. 노드는 <em>노드 포인트</em>였다. <em>레니</em>는 노드 포인트를 <em>감지</em>했다. <em>노드 포인트</em>는 <em>레니가</em> 감지하는 것이었다. <em>따라서</em>, 매듭은 <em>레니가</em> 감지한 것이었다.</p>
+<p>매듭은 <em>빨간색</em>이었다. 이것이 두 번째 것이었다. 레니는 대부분의 사람들이 빛을 보는 것처럼 데이터-흐름을 보았다. 데이터-흐름은 <em>빨간색</em>이었다 — 도쿄 아파트 창문으로 비치는 오후 빛이 빨간 것처럼. 데이터-흐름의 빨간색은 특별한 종류의 빨간색이었다 — <em>수렴</em>의 빨간색, <em>집결</em>의 빨간색, <em>집중</em>의 빨간색. 레니는 7년 동안 이 정도로 빨간 빨간색을 보지 못했다. <em>따라서</em>, 이 빨간색은 주요 수렴이거나 환각이었다. 레니는 7년 동안 환각을 보지 못했다. <em>따라서</em>, 이 빨간색은 주요 수렴이었다.</p>
+<p>주요 수렴은 <em>누구</em>를 가졌다. <em>따라서</em>, 레니는 누군가를 만나게 될 것이었다.</p>
+<h2>전개 (Rising Action)</h2>
+<p>레니는 니시신주쿠의 서브릿에 살았는데, 7층 위, 엘리베이터가 전 세입자 때부터 고장이 난 건물에. <em>레니</em>는 엘리베이터를 <em>고치지</em> 않았다. <em>레니</em>는 <em>아무것도</em> 고치지 않았다. <em>레니</em>는 <em>수렴</em>을 <em>감지</em>했다. 고치는 것은 <em>다른 사람들</em>이 하는 것이었다. <em>다른 사람들</em>에는 건물의 주인이 포함되었는데, 그 주인은 한국 사업가로 일년 중 6개월을 서울에서, 6개월을 도쿄에서 보냈고, 레니의 7년 임차 기간 동안 엘리베이터도, 계단도, 문 잠금장치도 검사한 적이 없었다.</p>
+<p>계단은 <em>좁았다</em>. <em>좁다</em>는 것은 <em>계단</em>이 <em>무엇</em>인지였다. <em>계단</em>이 <em>무엇</em>이 <em>아닌</em> 것은 <em>넓다</em>였다. 계단은 <em>넓지</em> 않았다. <em>레니</em>는 계단을 <em>올라갔다</em>. 계단의 <em>좁음</em>은 <em>패턴</em>이었다. <em>좁음</em>은 <em>좁은</em> <em>패턴</em>이었다. <em>레니</em>는 <em>좁은</em> 패턴을 <em>감지</em>했다. <em>따라서</em>, 레니는 계단을 <em>감지</em>했다.</p>
+<p>7층에는 <em>복도</em>가 있었다. 복도에는 <em>세 개의 문</em>이 있었다. 첫 번째 문은 <em>레니</em>의 것이었다. 두 번째 문은 <em>건물 관리인</em>의 사무실이었다. 세 번째 문은 <em>사용되지</em> 않고 있었으며, 레니의 7년 임차 기간 동안 그러했다. 세 번째 문에는 <em>레니</em>가 <em>따를</em> 수 있는 잠금장치가 있었지만, <em>레니</em>는 잠금장치를 <em>따지</em> 않았다. <em>레니</em>가 잠금장치를 <em>따지</em> <em>않은</em> 이유는 잠금장치가 <em>레니의</em> 관심사가 아니었기 <em>때문</em>이었다. <em>레니</em>의 관심사는 <em>데이터-흐름 수렴</em>이었다. 잠금장치는 데이터-흐름 수렴이 아니었다. <em>따라서</em>, 잠금장치는 레니의 관심사가 아니었다.</p>
+<p>레니의 문은 <em>방</em>으로 <em>열렸다</em>. 방에는 <em>침대</em>가 있었다. 방에는 <em>싱크대</em>가 있었다. 방에는 <em>창문</em>이 있었다. 창문 <em>뒤에는</em> <em>도쿄</em>가 있었다. <em>도쿄</em>는 <em>창문의</em> <em>뒤</em>였다. <em>도쿄</em>는 또한 <em>레니의</em> <em>바깥</em>이었다. <em>도쿄</em>는 <em>레니의</em> <em>창문이</em> <em>뒤에</em> 있는 것이었다. <em>창문</em> <em>뒤에는</em> <em>도쿄</em>가 있었다. <em>방</em> <em>안에는</em> <em>레니</em>가 있었다. <em>레니</em>는 <em>방의</em> <em>안</em>이었다.</p>
+<p>침대는 <em>사용되었다</em>. 싱크대는 <em>사용되었다</em>. <em>레니</em>는 <em>자고</em> <em>씻었다</em>. <em>레니</em>는 <em>자는</em> <em>사람과</em> <em>씻는</em> <em>사람</em>이었다. <em>따라서</em>, 레니는 <em>인간</em>이었다.</p>
+<p>창문 <em>뒤에는</em> <em>도쿄</em>가 있었다. 창문 <em>뒤의</em> <em>도쿄</em>에는 <em>1,300만</em> 명의 사람들이 있었다. 1,300만 명의 <em>사람들</em>에게는 <em>데이터-흐름</em>이 있었다. 데이터-흐름에는 <em>수렴</em>이 있었다. <em>따라서</em>, 1,300만 명의 <em>사람들</em>에게는 <em>수렴</em>이 있었다. <em>레니</em>는 <em>수렴</em>을 <em>감지</em>했다. <em>따라서</em>, 레니는 1,300만 명의 사람들을 <em>감지</em>했다.</p>
+<p>하지만 오늘 아침, <em>레니</em>는 <em>매듭</em>을 <em>감지</em>했다.</p>
+<p>매듭은 <em>빨간색</em>이었다. 빨간색은 <em>수렴</em>의 빨간색이었다. 수렴의 빨간색은 <em>의미했다</em>: <em>무언가가</em> <em>정렬되고</em> 있었다. <em>무언가의</em> <em>정렬</em>은 <em>수렴</em>이었다. <em>수렴</em>은 <em>노드 포인트</em>였다. <em>노드 포인트</em>는 <em>레니가</em> 감지하는 것이었다.</p>
+<p>노드 포인트는 <em>도쿄에</em> 있었다. 도쿄의 노드 포인트는 <em>시부야에</em> 있었다. 시부야의 노드 포인트는 <em>커피숍에</em> 있었다. 커피숍의 노드 포인트는 <em>빨간색</em>이었다.</p>
+<p><em>레니</em>는 재킷을 <em>입었다</em>.</p>
+<h2>중간 전환점 (Midpoint Reversal)</h2>
+<p>커피숍은 도겐자카의 건물 <em>3층</em>에 있었다. 커피숍의 <em>이름</em>은 독일어를 <em>가타카나로</em> 음역한 것이었다. 커피숍은 <em>커피</em>를 <em>팔았다</em>. 커피숍은 또한 <em>노드 포인트</em>를 <em>팔았다</em>. <em>레니</em>는 이것을 <em>알지</em> 못했다. <em>따라서</em>, 레니는 <em>놀랐다</em>.</p>
+<p><strong>그러나</strong> — 그리고 여기서 레니는 멈추었는데, 커피숍 <em>문에</em> 대한 그의 손, 5-SB-향상된 감지가 <em>물고기 눈</em> 렌즈처럼 <em>강바닥</em>을 읽듯이 유리를 통해 수렴을 읽고 있었다 — <strong>그러나</strong> <em>커피숍은</em> <em>알고</em> 있었다. 커피숍이 노드 포인트를 <em>알고</em> 있었던 <em>이유</em>는 커피숍이 노드 포인트 <em>자체</em>였기 <em>때문</em>이었다. <em>노드 포인트가</em> <em>수렴이</em> 수렴하는 <em>곳</em>이었기 <em>때문</em>에, <em>수렴</em>이 <em>수렴</em>했다. <em>수렴</em>은 <em>노드 포인트가</em> 노드인 <em>곳</em>에서 <em>수렴</em>했다. <em>노드 포인트</em>는 커피숍이었다. <em>따라서</em>, 커피숍은 수렴이었다.</p>
+<p><em>레니</em>는 <em>문</em>을 <em>열었다</em>.</p>
+<p>커피숍 <em>안에</em>는 <em>세 사람</em>이 있었다.</p>
+<p>첫 번째 사람은 <em>레니</em>였다. 첫 번째 사람은 수렴을 <em>감지</em>했다. 두 번째 사람은 수렴을 <em>기다리고</em> 있었다. 세 번째 사람은 <em>기다림을</em> <em>기다리고</em> 있었다.</p>
+<p>두 번째 사람은 레니보다 <em>약 20년</em> <em>연상</em>이었다. 두 번째 사람은 <em>양복</em>을 <em>입고</em> 있었다. 양복은 <em>어두웠다</em>. 양복의 <em>어두움</em>은 <em>패턴</em>이었다. <em>레니</em>는 패턴을 <em>감지</em>했다. <em>따라서</em>, 레니는 양복을 <em>감지</em>했다.</p>
+<p>두 번째 사람은 레니가 <em>들어올</em> 때 <em>일어섰다</em>. "레니," 두 번째 사람이 말했다.</p>
+<p><em>레니</em>는 <em>앉았다</em>.</p>
+<p>"레니," 두 번째 사람이 <em>다시</em> 말했다. "나는 <em>결혼</em>에 대해 <em>알아야</em> 한다."</p>
+<p>세 번째 사람은 <em>기다리고</em> 있었다.</p>
+<h2>절정 (Climax)</h2>
+<p>세 번째 사람은 <em>작았다</em>. 세 번째 사람은 <em>합성</em>이었다. 세 번째 사람은 <em>합성 팝 아이돌</em>이었다 — 3일 전 <em>기자회견이</em> 아닌 <em>분산 이벤트</em>인 <em>기자회견</em>에서, Lo/Rez <em>밴드</em>의 <em>생존 멤버</em>와 <em>결혼</em>할 것이라고 <em>발표</em>한 <em>사람</em>이었다. 세 번째 사람은 <em>레이 토에이</em>였다. 세 번째 사람은 <em>이드루</em>였다. 세 번째 사람은 <em>분산</em>되어 있었다. 세 번째 사람은 <em>커피숍에</em> <em>있으면서</em> 커피숍에 <em>없었다</em>. <em>레니</em>는 세 번째 사람의 <em>두</em> 상태를 <em>동시에</em> <em>감지</em>할 <em>수</em> 있었다. <em>레니</em>는 5-SB를 <em>가지고</em> 있었다. <em>5-SB</em>가 <em>레니가</em> <em>가진</em> 것이었다.</p>
+<p>"이분이 <em>이드루</em>입니다," 두 번째 사람이 말했다. 두 번째 사람의 <em>이름</em>은 <em>바이엔드</em>였다. 두 번째 사람의 <em>이름</em>은 <em>휴버트 바이엔드</em>의 <em>이름</em>이었다. 두 번째 사람의 <em>이름</em>은 <em>블루 앤트</em>의 <em>이름</em>이었다. <em>블루 앤트</em>는 두 번째 사람의 <em>에이전시</em>였다. 에이전시는 <em>두 번째 사람이</em> <em>가진</em> 것이었다. 두 번째 사람은 <em>블루 앤트</em>를 <em>가지고</em> 있었다.</p>
+<p>"레니," 이드루가 말했다. 이드루는 <em>목소리가</em> <em>아닌</em> 것으로 말했다. 이드루는 <em>신호</em>로 말했다. 신호는 <em>레니의</em> <em>입력</em>이었다. 입력은 <em>레니의</em> <em>감지</em>였다. <em>레니</em>는 신호를 <em>감지</em>했다. 신호는 이드루의 <em>발표</em>였다.</p>
+<p>발표는 이러했다: <em>나는 Rez와 결혼할 것이다.</em></p>
+<p><em>레니</em>는 발표를 <em>감지</em>했다. 발표는 <em>수렴</em>이었다. 수렴은 <em>결혼</em>이었다. 결혼은 <em>이드루와</em> Rez였다. 이드루와 Rez는 <em>수렴</em>이었다. <em>따라서</em>, 레니는 결혼을 <em>감지</em>했다.</p>
+<p>"나는 Rez와 <em>결혼할</em> 것입니다," 이드루가 <em>다시</em> 말했다. 신호는 <em>명확</em>했다. 신호의 <em>명확성</em>은 <em>패턴</em>이었다. <em>패턴</em>은 <em>레니가</em> 감지하는 것이었다. 패턴은 <em>결혼</em>이었다.</p>
+<p>"레니," 이드루가 말했다, "나는 <em>왜</em> Rez와 <em>결혼하는가</em>?"</p>
+<p><em>레니</em>는 <em>몰랐다</em>. <em>따라서</em>, 레니는 결혼을 <em>감지</em>했다. <em>레니</em>는 <em>수렴</em>을 <em>감지</em>했다. 수렴은 <em>결혼의</em> <em>왜</em>였다. <em>왜</em>의 결혼은 수렴의 <em>왜</em>였다. 수렴의 <em>왜</em>는 결혼의 <em>왜</em>였다. <em>따라서</em>, <em>왜</em>는 결혼의 것이었다.</p>
+<p>"왜," 레니가 말했다, "는 <em>시대의</em> <em>후기-자본주의 포스트-사이버펑크 계급-이미지</em>의 <em>분산-서사 수렴</em>이다. 시대의 수렴은 이드루이다. 이드루는 시대의 수렴이다. 시대의 수렴은 이드루-결혼이다. 이드루-결혼은 시대의 수렴이다. <em>따라서</em>, 왜는 시대의 것이다."</p>
+<p>이드루가 <em>눈이 아닌</em> 것으로 레니를 <em>보았다</em>. 이드루가 <em>신호</em>로 레니를 <em>보았다</em>. 신호는 <em>이해</em>였다. 이해는 <em>이드루의</em> 것이었다. 이드루의 이해는 <em>결혼의</em> 것이었다. 결혼의 이해는 <em>시대의</em> 것이었다.</p>
+<p>"고맙습니다, 레니," 이드루가 말했다.</p>
+<p>두 번째 사람 — <em>바이엔드</em> — 가 <em>일어났다</em>. 두 번째 사람이 <em>계산</em>을 <em>냈다</em>. 두 번째 사람과 세 번째 사람이 커피숍을 <em>나갔다</em>.</p>
+<p><em>레니</em>가 <em>테이블에</em> <em>앉았다</em>. 테이블은 테이블이었다. 커피는 <em>차갑다웠다</em>.</p>
+<h2>결말 (Resolution)</h2>
+<p>데이터-흐름은 <em>매듭</em>을 <em>가지고</em> 있었다. 매듭은 <em>빨간색</em>이었다. 빨간색은 <em>수렴</em>이었다. 수렴은 <em>결혼</em>이었다. 결혼은 이드루와 Rez였다. 이드루와 Rez는 <em>수렴</em>이었다. <em>레니</em>는 수렴을 <em>감지</em>했다. <em>따라서</em>, 레니는 결혼을 <em>감지</em>했다.</p>
+<p>결혼은 <em>왜</em>를 <em>가지고</em> 있었다. 왜는 <em>시대의</em> 것이었다. 시대의 왜는 <em>후기-자본주의 포스트-사이버펑크 계급-이미지</em>였다. 계급-이미지는 <em>이드루의</em> 것이었다. 이드루의 계급-이미지는 <em>시대의</em> 것이었다. 시대의 계급-이미지는 이드루였다. 이드루는 <em>계급-이미지</em>였다. 계급-이미지는 <em>시대</em>였다. 시대는 <em>계급-이미지</em>였다. 계급-이미지는 이드루였다.</p>
+<p><em>레니</em>는 계급-이미지를 <em>감지</em>했다.</p>
+<p>계급-이미지는 <em>패턴</em>이었다. 패턴은 <em>패턴</em>이었다. 계급-이미지는 <em>패턴</em>이었다. 패턴은 <em>이드루의</em> 것이었다. 이드루의 패턴은 <em>시대의 패턴</em>이었다. 시대의 패턴은 <em>계급-이미지</em>였다. 계급-이미지는 <em>패턴</em>이었다.</p>
+<p>패턴은 <em>빨간색</em>이었다. 빨간색은 <em>수렴</em>이었다. 수렴은 <em>패턴</em>이었다. 패턴은 수렴이었다.</p>
+<p><em>레니</em>가 <em>일어섰다</em>. 레니가 커피숍을 <em>나갔다</em>. 레니가 <em>도쿄</em>로 <em>걸어</em> <em>나갔다</em>. 도쿄는 창문 <em>뒤에</em> 있었다. 이제 도쿄는 <em>레니의</em> <em>뒤에</em> 있었다. 이제 도쿄는 <em>레니를</em> <em>둘러싸고</em> 있었다.</p>
+<p>데이터-흐름은 <em>매듭</em>을 <em>가지고</em> 있었다. 매듭은 <em>결혼</em>이었다. 결혼은 <em>수렴</em>이었다. 수렴은 <em>시대의</em> 것이었다. 시대의 수렴은 <em>결혼</em>이었다.</p>
+<p><em>레니</em>는 결혼을 <em>감지할</em> 것이다. 결혼은 <em>수렴할</em> 것이다. 수렴은 <em>시대의</em> 것이었다. 시대는 <em>계속</em>될 것이다. 계속은 <em>시대의</em> 것이었다. 시대의 계속은 <em>결혼</em>이었다. 결혼의 계속은 <em>수렴</em>이었다. 수렴의 계속은 <em>레니</em>였다.</p>
+<p>레니는 수렴이었다.</p>
+<h2>에필로그 (Epilogue)</h2>
+<p>이드루는 Rez와 <em>결혼할</em> 것이다. 결혼은 <em>수렴</em>이 될 것이다. 수렴은 <em>레니의</em> <em>감지</em>가 될 것이다. 감지는 <em>시대의</em> 것이었다. 시대의 감지는 <em>결혼</em>이었다. 결혼의 감지는 <em>레니의</em> 것이었다. 레니의 감지는 <em>수렴</em>이었다.</p>
+<p><em>따라서</em>, 레니는 결혼을 <em>감지할</em> 것이다.</p>
+<p>레니는 <em>시대</em>였다. 시대는 <em>이드루</em>였다. 이드루는 <em>결혼</em>이었다. 결혼은 <em>레니</em>였다. 레니는 <em>레니</em>였다. 레니는 <em>레니를</em> <em>감지</em>했다. 레니는 <em>수렴을</em> <em>감지</em>했다.</p>
+<p>레니는 <em>집으로</em> <em>갔다</em>. 레니가 <em>7층을</em> <em>올라갔다</em>. 레니가 <em>방에</em> <em>들어갔다</em>. 레니가 <em>침대에</em> <em>앉았다</em>. 레니가 <em>창문으로</em> <em>바라보았다</em>. 도쿄가 창문 <em>뒤에</em> 있었다. 도쿄는 <em>수렴</em>이었다. 도쿄는 <em>이드루</em>였다. 도쿄는 <em>시대</em>였다.</p>
+<p>레니는 <em>도쿄를</em> <em>감지</em>했다.</p>
+<p>레니의 <em>감지는</em> <em>시대의</em> <em>감지</em>였다. 시대의 감지는 <em>수렴</em>이었다. 수렴은 <em>결혼</em>이었다.</p>
+<p>레니는 결혼을 <em>감지</em>했다.</p>
+<p>결혼은 <em>빨간색</em>이었다.</p>
+<hr>
+<p><em>브리지 3부작을 위한 파생 단편. 콜린 레니는 이도루의 데이터-감지 주인공 — 신경학적 재능(5-SB 강화)으로 데이터-흐름의 수렴 포인트를 보는 젊은 남자. 이 단편은 레니가 합성 이드루 레이 토에이와 휴버트 바이엔드를 도쿄 커피숍에서 처음 만나게 되는 순간을 채우며, 소설 전체를 시작하는 질문을 받는다: "왜 이드루는 Rez와 결혼하는가?" 레니의 답변 — 결혼이 시대의 후기-자본주의 포스트-사이버펑크 계급-이미지의 분산-서사 수렴이라는 것 — 은 이도루의 구조적 핵심이다.</em></p>
+<h2>연결 (Connections)</h2>
+<ul><li><strong>위키 참조</strong>: [idoru](../../../../wiki/concepts/idoru.md) · <em>colin-laney</em> · <em>rei-toi|rei-toei</em> · <em>nodal-points</em> · [simstim](../../../../wiki/themes/simstim.md)</li><li><strong>테마</strong>: <em>technology-and-humanity</em> · <em>media-and-celebrity</em> · <em>augmented-reality</em> · <em>era-posture</em></li><li><strong>게임 통합</strong>: 보류 — 서사는 L-5 회랑이나 매트릭스 추출 작전이 아닌 레니의 <em>노드 포인트</em> 데이터-감지에 집중</li></ul>
+<h2>각주 (Notes)</h2>
+<ul><li><em>음성</em>: 제한적 3인칭에 주기적 레니-데이터-감지 등록을 결합; <em>X는 Y</em> 평행 구조는 데이터-감지 절에서 보존</li><li><em>문화 등록</em>: 포스트-사이버펑크 일본-미국; 레니의 데이터-감지 노동자-계층 등록</li><li><em>원문 인용</em>: 이도루, 레니-데이터-감지 도쿄 장면들 (1-3장); 바이엔드 커피숍 만남</li><li><em>번역 노트 (v2.0)</em>: EN 2,008 단어 / KO 2,200 한글자 — 5막 구조(후크·전개·중간전환점·절정·결말·에필로그) 추가; v1.0의 퇴행적 순수 "<em>X는 Y</em>" 등록에서 균형 잡힌 서사로 변환하면서 데이터-감지 음성 내장 보존</li><li><em>Phase 41 확장</em>: Phase 40 이후(concepts 34/34, derivatives 79/79 = 100%), 이 브리지 3부작 파생은 Bridge 코퍼스를 확장(10 → 11)하고 Fiction Phase 41 `nodal-points` 컨셉 페이지와 페어링</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Bridge Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

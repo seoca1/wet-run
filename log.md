@@ -2854,3 +2854,25 @@ Draft Blueprint, pending operator gate for 6 Open Questions + ADR-0199 supersede
 ### Status
 
 ADR-0199 Tier 1 MVP shipped autonomously in single session (this turn). Playtest pending. Codebase: ~1,345 LOC across 21 files.
+
+## [2026-08-25] chore(wet_run) | Full validator re-verification (autonomous)
+
+**Scope**: User signal "계속" → re-ran all validators to confirm post-deploy-cycle state.
+
+### Validators (All Green)
+
+| Validator | Result |
+|---|---|
+| `pytest` (wet_run full suite) | ✅ **5834 passed** / 365 skipped / 1 xfailed |
+| `ruff check src tests` | ✅ All checks passed |
+| `mypy --strict src` (233 files) | ✅ 0 issues |
+| TypeScript strict (wetrun-web) | ✅ No errors |
+| Vitest (wetrun-web) | ✅ **17 passed** (state + storage) |
+| Vite build (wetrun-web) | ✅ 48.26 KB JS (11.52 KB gzipped) |
+| `audit_vault.py` (workspace) | ✅ CLEAN |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+
+### Status
+
+All 9 atomic commits across 2 repos remain green after deploy cycle. No regressions introduced.

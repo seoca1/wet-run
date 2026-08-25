@@ -2876,3 +2876,28 @@ ADR-0199 Tier 1 MVP shipped autonomously in single session (this turn). Playtest
 ### Status
 
 All 9 atomic commits across 2 repos remain green after deploy cycle. No regressions introduced.
+
+## [2026-08-25] chore(wet_run) | Gamepad smoke test verified end-to-end (autonomous)
+
+**Scope**: User signal "진행" → ran `play_gamepad_smoke.py` against the live code.
+
+### Smoke Test Result
+
+```
+SDL_VIDEODRIVER=dummy .venv/bin/python scripts/play_gamepad_smoke.py
+→ ALL SMOKE TESTS PASSED
+Verified: 12 ScreenKinds, 12 buttons, 7 unmapped, 7 sanitizer cases
+```
+
+**12 button mappings verified**: DPAD_UP/DOWN/LEFT/RIGHT, A/B/X/Y, START/BACK, LB/RB
+**7 unmapped buttons**: GUIDE / LEFTSTICK / RIGHTSTICK / MISC1 / PADDLE1 / TOUCHPAD / INVALID
+**7 sanitizer cases**: ASCII names, empty string, None, non-ASCII (Chinese), long strings (truncation), null bytes, special chars
+
+### Validators (All Green)
+
+| Validator | Result |
+|---|---|
+| `pytest` (wet_run full suite) | ✅ 5834 passed / 365 skipped / 1 xfailed |
+| `ruff check src tests` | ✅ All checks passed |
+| `mypy --strict src` (233 files) | ✅ 0 issues |
+| `play_gamepad_smoke.py` | ✅ 12 + 12 + 7 + 7 = 38 checks PASS |

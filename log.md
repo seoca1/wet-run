@@ -2306,3 +2306,36 @@ Plan: .omo/plans/wet-run-ui-visibility-upgrade.md T2.1.
 [2026-08-23] docs | T3.1 tutorial overlay polish (box border + skill hints)
 
 [2026-08-23] refactor | T3.2 palette consistency audit (~570 RGB tuples refactored to palette imports across 70 files, 6 atomic commits: 38f4835/174a146/a472464/9fd75c8/6d5a4a8/fd3cdf1; palette.py expanded 36→109 unique colors with semantic names; 5714 tests pass; ruff 0; mypy strict 0)
+
+## [2026-08-25] fix | dashboard stories-browse — 645 broken URLs → 0 (3-trilogy HTML pipeline)
+
+Root cause: `data/search_index.json` URLs pointed to flat `stories/<stem>_en.html`
+but the dashboard layout is subdir-organized (`stories/{short-stories,novelettes}/`).
+Also, `markdown_to_story_html.py` and `build_static_data.py` URL construction
+were hardcoded to Sprawl-only.
+
+Fixed:
+- `scripts/markdown_to_story_html.py`: added `--trilogy {sprawl,bridge,blue-ant,all}`
+  + `--content-type {short-stories,novelettes,all}` flags; auto-discovers source
+  dirs from `Fiction/derivative/<trilogy>/<type>/{en,ko}/`. Trilogy-aware
+  metadata (header label + footer credit per story). Fixed alias dedup so
+  date-prefixed `salvation_wigan_zavijava` no longer collides with bare
+  `wigan_zavijava`.
+- `tools/build_static_data.py`: track stem→(trilogy, content_type); URL
+  becomes `stories/{content_type}/{stem}_{lang}.html`. Added `_story_key()`
+  to strip `YYYY-MM-DD_` prefix so search_index stems match dashboard HTML
+  stems (previously URL had date prefix but HTML didn't).
+- Generated 784 HTML files (391 unique stems × 2 langs + 2 alias variants)
+  across all 3 trilogies × short-stories + novelettes.
+- Deleted 127 legacy flat `dashboard/stories/<date>_*.html` files (last regen
+  2026-07-15, nothing linked to them).
+- Regenerated `search_index.json` (784 entries).
+
+Verification:
+- Story URL resolution: 645 broken → 0 broken (100%)
+- search_index by trilogy: sprawl 504 / bridge 170 / blue-ant 110
+- search_index by content_type: short-stories 762 / novelettes 22
+- dashboard_pipeline_audit.py: 0 errors
+- Note: kept legacy infix `<stem>.html` / `<stem>.ko.html` files (104 files)
+  because `play.html`/`graphic-novel.html`/`reading-stats.html` link to them.
+  Both naming conventions coexist (`_en.html` vs `.html`, `_ko.html` vs `.ko.html`).

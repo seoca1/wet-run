@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "generated": "2026-08-21T11:57:49.048144+00:00",
+  "generated": "2026-08-25T03:27:17.431097+00:00",
   "wiki_base": "../../../Fiction/wiki/",
-  "term_count": 372,
+  "term_count": 391,
   "terms": [
     "Gibson Virtual Light-era Interview (Dublin, October 1, 1993)",
     "working class ridership and late capitalist substrate",
@@ -50,6 +50,7 @@
     "lady 3jane tessier ashpool",
     "extraction and kidnapping",
     "improvised infrastructure",
+    "Johnny (Johnny Mnemonic)",
     "Tick (London Data-Thief)",
     "addiction and dependency",
     "aesthetic infrastructure",
@@ -86,6 +87,7 @@
     "reality vs simulation",
     "structural monitoring",
     "Neuromancer (the AI)",
+    "burning chrome story",
     "class and inequality",
     "comms infrastructure",
     "consciousness upload",
@@ -96,6 +98,7 @@
     "found art assemblage",
     "identity and doubles",
     "loa matrix construct",
+    "magnetic dog sisters",
     "water infrastructure",
     "cherry chesterfield",
     "chevette washington",
@@ -116,6 +119,7 @@
     "The Winter Market",
     "augmented reality",
     "body and identity",
+    "body modification",
     "brandless objects",
     "chia pet mckenzie",
     "corporate warfare",
@@ -158,7 +162,6 @@
     "sprawl_universe",
     "tessier ashpool",
     "Andrew Pollard",
-    "Burning Chrome",
     "New Rose Hotel",
     "Wendell Wright",
     "Wilf Netherton",
@@ -166,6 +169,7 @@
     "angie mitchell",
     "bridge courier",
     "bridge trilogy",
+    "burning chrome",
     "damien vorcees",
     "dead mans chip",
     "dixie flatline",
@@ -174,6 +178,7 @@
     "molly millions",
     "nanotechnology",
     "rom constructs",
+    "sprawl trilogy",
     "the peripheral",
     "Russian Mafia",
     "blue ant soho",
@@ -231,6 +236,7 @@
     "josef virek",
     "loa oracles",
     "lost decade",
+    "lovemachine",
     "neuromancer",
     "roger swain",
     "slick henry",
@@ -238,12 +244,15 @@
     "the moderns",
     "tokyo idoru",
     "Piper Hill",
+    "The Dromes",
+    "The Yakuza",
     "Two-A-Days",
     "chiba city",
     "connection",
     "constructs",
     "coolhunter",
     "count zero",
+    "cybernetic",
     "cyberspace",
     "jacking in",
     "kid afrika",
@@ -263,6 +272,7 @@
     "Petty San",
     "character",
     "construct",
+    "nighttown",
     "post 9 11",
     "razorgirl",
     "sense net",
@@ -291,12 +301,14 @@
     "santeria",
     "specials",
     "the finn",
+    "violence",
     "w anchor",
     "yamazaki",
     "yokohama",
     "zaibatsu",
     "zavijava",
     "Agrippa",
+    "Killing",
     "Maelcum",
     "ashpool",
     "biosoft",
@@ -319,6 +331,7 @@
     "Jackie",
     "Lo (로)",
     "Rydell",
+    "Squids",
     "Turner",
     "agency",
     "bisoft",
@@ -328,6 +341,7 @@
     "hounds",
     "idi ru",
     "idu ru",
+    "johnny",
     "lo rez",
     "shinya",
     "skinny",
@@ -339,10 +353,12 @@
     "Colin",
     "Darko",
     "Laney",
+    "Lewis",
     "Lucas",
     "Marly",
     "Petal",
     "Prior",
+    "Ralfi",
     "Reina",
     "alain",
     "aleph",
@@ -350,6 +366,7 @@
     "cheba",
     "hideo",
     "idoru",
+    "jones",
     "motif",
     "t ray",
     "theme",
@@ -369,7 +386,9 @@
     "node",
     "paco",
     "soho",
+    "teks",
     "zion",
+    "bax",
     "ice",
     "kas",
     "l 5",
@@ -678,6 +697,11 @@
       "tooltip": "cyberspace",
       "text": "cyberspace"
     },
+    "cybernetic": {
+      "page": "concepts/cybernetic.md",
+      "tooltip": "cybernetic",
+      "text": "cybernetic"
+    },
     "hub protocol": {
       "page": "concepts/hub-protocol.md",
       "tooltip": "hub protocol",
@@ -727,6 +751,11 @@
       "page": "concepts/santeria.md",
       "tooltip": "santeria",
       "text": "santeria"
+    },
+    "violence": {
+      "page": "concepts/violence.md",
+      "tooltip": "violence",
+      "text": "violence"
     },
     "sense net": {
       "page": "concepts/sense-net.md",
@@ -813,6 +842,11 @@
       "tooltip": "trauma squads",
       "text": "trauma squads"
     },
+    "body modification": {
+      "page": "concepts/body-modification.md",
+      "tooltip": "body modification",
+      "text": "body modification"
+    },
     "brand_allergy": {
       "page": "concepts/brand_allergy.md",
       "tooltip": "brand_allergy",
@@ -868,6 +902,11 @@
       "tooltip": "smart matter",
       "text": "smart matter"
     },
+    "lovemachine": {
+      "page": "concepts/lovemachine.md",
+      "tooltip": "lovemachine",
+      "text": "lovemachine"
+    },
     "sleeve technology": {
       "page": "concepts/sleeve-technology.md",
       "tooltip": "sleeve technology",
@@ -912,6 +951,11 @@
       "page": "concepts/reflex-boosters.md",
       "tooltip": "reflex boosters",
       "text": "reflex boosters"
+    },
+    "teks": {
+      "page": "concepts/teks.md",
+      "tooltip": "teks",
+      "text": "teks"
     },
     "bing": {
       "page": "concepts/bing.md",
@@ -1538,6 +1582,16 @@
       "tooltip": "shinya",
       "text": "shinya"
     },
+    "killing": {
+      "page": "characters/killing.md",
+      "tooltip": "Killing",
+      "text": "Killing"
+    },
+    "sprawl trilogy": {
+      "page": "characters/killing.md",
+      "tooltip": "sprawl trilogy",
+      "text": "sprawl trilogy"
+    },
     "a. insley": {
       "page": "characters/a-insley.md",
       "tooltip": "A. Insley",
@@ -1637,6 +1691,21 @@
       "page": "characters/brown.md",
       "tooltip": "Brown (Holland Windgate Brown)",
       "text": "Brown (Holland Windgate Brown)"
+    },
+    "lewis": {
+      "page": "characters/lewis.md",
+      "tooltip": "Lewis",
+      "text": "Lewis"
+    },
+    "bax": {
+      "page": "characters/lewis.md",
+      "tooltip": "bax",
+      "text": "bax"
+    },
+    "jones": {
+      "page": "characters/lewis.md",
+      "tooltip": "jones",
+      "text": "jones"
     },
     "bobby quine (the post-merger cowboy)": {
       "page": "characters/bobby-quine.md",
@@ -1988,15 +2057,55 @@
       "tooltip": "Ashpool (Tessier-Ashpool founder)",
       "text": "Ashpool (Tessier-Ashpool founder)"
     },
+    "squids": {
+      "page": "characters/squids.md",
+      "tooltip": "Squids",
+      "text": "Squids"
+    },
     "paco": {
       "page": "characters/marly-krushkhova.md",
       "tooltip": "paco",
       "text": "paco"
     },
+    "ralfi": {
+      "page": "characters/ralfi.md",
+      "tooltip": "Ralfi",
+      "text": "Ralfi"
+    },
+    "burning chrome story": {
+      "page": "characters/ralfi.md",
+      "tooltip": "burning chrome story",
+      "text": "burning chrome story"
+    },
+    "johnny": {
+      "page": "characters/ralfi.md",
+      "tooltip": "johnny",
+      "text": "johnny"
+    },
+    "magnetic dog sisters": {
+      "page": "characters/ralfi.md",
+      "tooltip": "magnetic dog sisters",
+      "text": "magnetic dog sisters"
+    },
+    "burning chrome": {
+      "page": "characters/ralfi.md",
+      "tooltip": "burning chrome",
+      "text": "burning chrome"
+    },
     "prior": {
       "page": "characters/prior.md",
       "tooltip": "Prior",
       "text": "Prior"
+    },
+    "the yakuza": {
+      "page": "characters/yakuza.md",
+      "tooltip": "The Yakuza",
+      "text": "The Yakuza"
+    },
+    "nighttown": {
+      "page": "characters/yakuza.md",
+      "tooltip": "nighttown",
+      "text": "nighttown"
     },
     "lo (로)": {
       "page": "characters/lo.md",
@@ -2028,6 +2137,11 @@
       "tooltip": "Colin Laney (Bridge version)",
       "text": "Colin Laney (Bridge version)"
     },
+    "johnny (johnny mnemonic)": {
+      "page": "characters/johnny.md",
+      "tooltip": "Johnny (Johnny Mnemonic)",
+      "text": "Johnny (Johnny Mnemonic)"
+    },
     "ainsley lowbeer": {
       "page": "characters/lowbeer.md",
       "tooltip": "Ainsley Lowbeer",
@@ -2047,6 +2161,11 @@
       "page": "characters/dorotea-benedetti.md",
       "tooltip": "Dorotea Benedetti (Pattern Recognition Antagonist)",
       "text": "Dorotea Benedetti (Pattern Recognition Antagonist)"
+    },
+    "the dromes": {
+      "page": "characters/drome.md",
+      "tooltip": "The Dromes",
+      "text": "The Dromes"
     },
     "mona": {
       "page": "characters/mona.md",
@@ -2112,11 +2231,6 @@
       "page": "works/fragments-of-a-hologram-rose.md",
       "tooltip": "Fragments of a Hologram Rose",
       "text": "Fragments of a Hologram Rose"
-    },
-    "burning chrome": {
-      "page": "works/burning-chrome.md",
-      "tooltip": "Burning Chrome",
-      "text": "Burning Chrome"
     },
     "burning chrome (story)": {
       "page": "works/burning-chrome-story.md",

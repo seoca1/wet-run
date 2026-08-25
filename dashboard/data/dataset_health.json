@@ -1,18 +1,40 @@
 {
   "version": "1.0",
-  "generated": "2026-08-21T11:57:49.048144+00:00",
-  "en_stories": 384,
-  "ko_stories": 386,
+  "generated": "2026-08-25T03:27:17.431097+00:00",
+  "en_stories": 392,
+  "ko_stories": 392,
   "missions": 209,
-  "glossary_terms": 372,
+  "glossary_terms": 391,
   "issues": [
     {
-      "type": "en_ko_mismatch",
-      "only_en": [],
-      "only_ko": [
-        "2026-06-29_matrix_revelation",
-        "2026-06-29_neuromancer_whisper"
-      ]
+      "type": "missing_source",
+      "mission": "ghost_signal_origin",
+      "source": "ghost_signal"
+    },
+    {
+      "type": "missing_source",
+      "mission": "hosaka_after_hours",
+      "source": "hosaka_after_hours"
+    },
+    {
+      "type": "missing_source",
+      "mission": "t_a_construction_site",
+      "source": "t_a_construction_site"
+    },
+    {
+      "type": "missing_source",
+      "mission": "tessier_ashpool_aftermath",
+      "source": "tessier_ashpool_aftermath"
+    },
+    {
+      "type": "missing_source",
+      "mission": "wintermute_residue",
+      "source": "wintermute_residue"
+    },
+    {
+      "type": "missing_source",
+      "mission": "zion_lab_breach",
+      "source": "zion_lab_breach"
     }
   ],
   "ok": false

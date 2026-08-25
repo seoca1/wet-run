@@ -64,11 +64,28 @@ def _character_stats() -> tuple[int, list[str]]:
 
 def _arc_stats() -> tuple[list[int], dict[str, int]]:
     data = json.loads(MISSIONS_JSON.read_text(encoding="utf-8"))
-    arcs = sorted({m["story"]["arc"] for m in data.values() if "story" in m})
+    arcs_set: set[int] = set()
+    for m in data.values():
+        if "story" not in m:
+            continue
+        story = m["story"]
+        if isinstance(story, dict):
+            arc = story["arc"]
+            if isinstance(arc, int):
+                arcs_set.add(arc)
+            elif isinstance(arc, str) and arc.isdigit():
+                arcs_set.add(int(arc))
+    arcs = sorted(arcs_set)
     dist: dict[str, int] = {}
     for m in data.values():
-        a = str(m["story"]["arc"])
-        dist[a] = dist.get(a, 0) + 1
+        if "story" not in m:
+            continue
+        story = m["story"]
+        if not isinstance(story, dict):
+            continue
+        a = str(story.get("arc", ""))
+        if a:
+            dist[a] = dist.get(a, 0) + 1
     return arcs, dist
 
 

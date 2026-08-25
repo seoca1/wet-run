@@ -448,6 +448,11 @@ class SaveManager:
 
     def _serialize_run_state(self, run_state: Any) -> dict[str, Any]:
         """Flatten the run-state into a JSON-safe dict (Stage enums → strings)."""
+        # GA-011 fix: persist chapter_state (was silently reset to PROLOGUE).
+        chapter_state_obj = getattr(run_state, "chapter_state", None)
+        chapter_state_value = (
+            chapter_state_obj.value if chapter_state_obj is not None else "prologue"
+        )
         return {
             "current_stage": run_state.current_stage.value,
             "completed_stages": [s.value for s in run_state.completed_stages],
@@ -456,6 +461,7 @@ class SaveManager:
             "last_visited_node": run_state.last_visited_node,
             "mission_id": run_state.mission_id,
             "started_at_ms": run_state.started_at_ms,
+            "chapter_state": chapter_state_value,
         }
 
     def _serialize_mission(self, mission: Any) -> dict[str, Any] | None:
@@ -493,6 +499,10 @@ class SaveManager:
                 _log_save_warning(f"matrix serialization failed: {exc}")
                 matrix_dict = None
 
+        # GA-004 fix: equipment_loadout serializes to a dict (no to_dict method).
+        # Round-trip via __dict__ + dict() conversion for nested dataclass.
+        equipment_dict = self._serialize_equipment(state.equipment_loadout)
+
         return {
             "inventory": dict(state.inventory),
             "credits": state.credits,
@@ -506,7 +516,88 @@ class SaveManager:
             "matrix": matrix_dict,
             # Phase 6+: faction reputation persists across runs.
             "reputation": state.reputation.to_dict(),
+            # GA-004 fix: comprehensive field round-trip to prevent
+            # save corruption across the 30+ AppState fields not
+            # previously serialised.
+            "player_loadout_id": getattr(state.player_loadout, "id", "starter"),
+            "player_max_hp": state.player_max_hp,
+            "deck_size": state.deck_size,
+            "hardcore_mode": state.hardcore_mode,
+            "ng_plus_unlocked": state.ng_plus_unlocked,
+            "ng_plus_active": state.ng_plus_active,
+            "construct_companion_active": state.construct_companion_active,
+            "story_flags": list(state.story_flags),
+            "shown_events": list(state.shown_events),
+            "completed_missions": list(state.completed_missions),
+            "active_mutators": list(state.active_mutators),
+            "active_events": list(state.active_events),
+            "event_log": list(state.event_log),
+            "faction_tension_triggered": list(state.faction_tension_triggered),
+            "purchased_intel_items": list(state.purchased_intel_items),
+            "data_fragments": list(state.data_fragments),
+            "nodes_visited": list(state.nodes_visited),
+            "anomaly_triggered": list(state.anomaly_triggered),
+            "available_servers": list(state.available_servers),
+            "alarm_level": state.alarm_level,
+            "equipment_loadout": equipment_dict,
+            "telemetry_opt_in": state.telemetry_opt_in,
+            "gamepad_enabled": state.gamepad_enabled,
+            "colorblind_mode": state.colorblind_mode,
+            "high_contrast": state.high_contrast,
+            "font_size": state.font_size,
+            "total_runs": state.total_runs,
+            "total_deaths": state.total_deaths,
+            "resolution": getattr(state, "resolution", "classic"),
         }
+
+    def _serialize_equipment(self, equipment: Any) -> dict[str, Any]:
+        """Convert EquipmentLoadout to a JSON-safe dict.
+
+        EquipmentLoadout does not have to_dict(); reconstruct via __dict__.
+        Nested items are dicts (already JSON-safe).
+        """
+        result: dict[str, Any] = {}
+        for attr in (
+            "deck",
+            "programs",
+            "wetware",
+            "set_bonuses_active",
+        ):
+            value = getattr(equipment, attr, None)
+            if value is None:
+                result[attr] = None
+            elif isinstance(value, dict):
+                result[attr] = {k: list(v) if isinstance(v, (list, tuple)) else v for k, v in value.items()}
+            elif isinstance(value, (list, tuple, set)):
+                result[attr] = list(value)
+            else:
+                result[attr] = value
+        return result
+
+    def _restore_equipment(self, equipment: Any, data: dict[str, Any]) -> None:
+        """Populate EquipmentLoadout fields from a serialised dict.
+
+        Mirrors ``_serialize_equipment``; missing keys keep defaults so
+        legacy / partial saves still load.
+        """
+        for attr in ("deck", "programs", "wetware", "set_bonuses_active"):
+            if attr not in data:
+                continue
+            value = data[attr]
+            if value is None:
+                continue
+            current = getattr(equipment, attr, None)
+            if isinstance(current, dict):
+                # Keys -> str, values -> tuple/list (matches EquipmentLoadout convention)
+                setattr(
+                    equipment,
+                    attr,
+                    {k: tuple(v) if isinstance(v, list) else v for k, v in value.items()},
+                )
+            elif isinstance(current, (list, tuple, set)):
+                setattr(equipment, attr, list(value))
+            else:
+                setattr(equipment, attr, value)
 
     def _serialize_metadata(self, state: AppState) -> dict[str, Any]:
         """Lightweight display metadata for the save-slot list."""
@@ -615,6 +706,13 @@ class SaveManager:
         completed_stages: tuple[Stage, ...] = tuple(
             Stage(s) for s in rs_data.get("completed_stages", [])
         )
+        # GA-011 fix: restore chapter_state (was silently reset to PROLOGUE on load).
+        from ..run.state import ChapterState
+
+        try:
+            chapter_state = ChapterState(rs_data.get("chapter_state", "prologue"))
+        except ValueError:
+            chapter_state = ChapterState.PROLOGUE
         state.run_state = RunState(
             current_stage=current_stage,
             completed_stages=completed_stages,
@@ -623,11 +721,17 @@ class SaveManager:
             last_visited_node=rs_data.get("last_visited_node"),
             mission_id=rs_data.get("mission_id", "first_jack"),
             started_at_ms=rs_data.get("started_at_ms", 0),
+            chapter_state=chapter_state,
         )
         return current_stage
 
     def _restore_app_state_fields(self, state: AppState, app_data: dict[str, Any]) -> None:
-        """Populate the small AppState scalar / set fields."""
+        """Populate the small AppState scalar / set fields.
+
+        GA-004 fix: round-trip the comprehensive field set serialised in
+        _serialize_app_state. Each new field uses ``dict.get()`` with the
+        field's existing default so legacy saves (pre-fix) load cleanly.
+        """
         state.inventory = dict(app_data.get("inventory", {}))
         state.credits = int(app_data.get("credits", 0))
         state.current_node_id = app_data.get("current_node_id")
@@ -636,6 +740,43 @@ class SaveManager:
         state.mission_progress = dict(app_data.get("mission_progress", {}))
         state.in_server_browser = app_data.get("in_server_browser", True)
         state.selected_server_index = int(app_data.get("selected_server_index", 0))
+        # GA-004 fix: restore the comprehensive field set with safe defaults.
+        state.player_max_hp = int(app_data.get("player_max_hp", 0))
+        state.deck_size = app_data.get("deck_size", "standard")
+        state.hardcore_mode = bool(app_data.get("hardcore_mode", False))
+        state.ng_plus_unlocked = bool(app_data.get("ng_plus_unlocked", False))
+        state.ng_plus_active = bool(app_data.get("ng_plus_active", False))
+        state.construct_companion_active = bool(
+            app_data.get("construct_companion_active", False)
+        )
+        state.story_flags = set(app_data.get("story_flags", []))
+        state.shown_events = set(app_data.get("shown_events", []))
+        state.completed_missions = set(app_data.get("completed_missions", []))
+        state.active_mutators = tuple(app_data.get("active_mutators", []))
+        state.active_events = tuple(app_data.get("active_events", []))
+        state.event_log = list(app_data.get("event_log", []))
+        state.faction_tension_triggered = set(
+            app_data.get("faction_tension_triggered", [])
+        )
+        state.purchased_intel_items = list(
+            app_data.get("purchased_intel_items", [])
+        )
+        state.data_fragments = set(app_data.get("data_fragments", []))
+        state.nodes_visited = set(app_data.get("nodes_visited", []))
+        state.anomaly_triggered = set(app_data.get("anomaly_triggered", []))
+        state.available_servers = list(app_data.get("available_servers", []))
+        state.alarm_level = int(app_data.get("alarm_level", 0))
+        state.telemetry_opt_in = bool(app_data.get("telemetry_opt_in", False))
+        state.gamepad_enabled = bool(app_data.get("gamepad_enabled", True))
+        state.colorblind_mode = app_data.get("colorblind_mode", "none")
+        state.high_contrast = bool(app_data.get("high_contrast", False))
+        state.font_size = app_data.get("font_size", "normal")
+        state.total_runs = int(app_data.get("total_runs", 0))
+        state.total_deaths = int(app_data.get("total_deaths", 0))
+        state.resolution = app_data.get("resolution", "classic")
+        equipment_data = app_data.get("equipment_loadout")
+        if isinstance(equipment_data, dict):
+            self._restore_equipment(state.equipment_loadout, equipment_data)
 
     def _restore_reputation(self, state: AppState, app_data: dict[str, Any]) -> None:
         """Phase 6+: restore faction reputation.  Missing/legacy saves

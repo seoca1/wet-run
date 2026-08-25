@@ -65,46 +65,50 @@ def load_missions() -> dict[str, object]:
     return json.loads(MISSIONS.read_text(encoding="utf-8"))
 
 
-def load_all_stories() -> tuple[dict, dict]:
-    """Load EN and KO stories from Sprawl, Bridge, and Blue Ant trilogies.
+def _story_key(stem: str) -> str:
+    """Strip leading YYYY-MM-DD_ prefix from a markdown stem.
 
-    Returns (en_stories, ko_stories) dicts keyed by stem.
+    Keeps the stem comparable to dashboard HTML file names which also
+    strip the date prefix (see markdown_to_story_html.get_story_id).
     """
-    en_out = {}
-    ko_out = {}
+    if len(stem) >= 11 and stem[4] == "-" and stem[7] == "-" and stem[10] == "_":
+        return stem[11:]
+    return stem
 
-    # Sprawl Trilogy (short-stories + novelettes)
+
+def load_all_stories() -> tuple[dict, dict]:
+    en_out: dict[str, dict] = {}
+    ko_out: dict[str, dict] = {}
+
     for src_dir in (SPRAWL_EN_DIR, SPRAWL_NV_EN_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.md")):
                 if not f.name.endswith(".ko.md") and not f.name.endswith(".tone-prompt.md"):
-                    en_out[f.stem] = parse_story(f.read_text(encoding="utf-8"), "en")
+                    en_out.setdefault(_story_key(f.stem), parse_story(f.read_text(encoding="utf-8"), "en"))
     for src_dir in (SPRAWL_KO_DIR, SPRAWL_NV_KO_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.ko.md")):
-                ko_out[f.stem.replace(".ko", "")] = parse_story(f.read_text(encoding="utf-8"), "ko")
+                ko_out.setdefault(_story_key(f.stem.replace(".ko", "")), parse_story(f.read_text(encoding="utf-8"), "ko"))
 
-    # Bridge Trilogy (short-stories + novelettes)
     for src_dir in (BRIDGE_EN_DIR, BRIDGE_NV_EN_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.md")):
                 if not f.name.endswith(".ko.md") and not f.name.endswith(".tone-prompt.md"):
-                    en_out[f.stem] = parse_story(f.read_text(encoding="utf-8"), "en")
+                    en_out.setdefault(_story_key(f.stem), parse_story(f.read_text(encoding="utf-8"), "en"))
     for src_dir in (BRIDGE_KO_DIR, BRIDGE_NV_KO_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.ko.md")):
-                ko_out[f.stem.replace(".ko", "")] = parse_story(f.read_text(encoding="utf-8"), "ko")
+                ko_out.setdefault(_story_key(f.stem.replace(".ko", "")), parse_story(f.read_text(encoding="utf-8"), "ko"))
 
-    # Blue Ant Trilogy (short-stories + novelettes)
     for src_dir in (BLUE_ANT_EN_DIR, BLUE_ANT_NV_EN_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.md")):
                 if not f.name.endswith(".ko.md") and not f.name.endswith(".tone-prompt.md"):
-                    en_out[f.stem] = parse_story(f.read_text(encoding="utf-8"), "en")
+                    en_out.setdefault(_story_key(f.stem), parse_story(f.read_text(encoding="utf-8"), "en"))
     for src_dir in (BLUE_ANT_KO_DIR, BLUE_ANT_NV_KO_DIR):
         if src_dir.exists():
             for f in sorted(src_dir.glob("*.ko.md")):
-                ko_out[f.stem.replace(".ko", "")] = parse_story(f.read_text(encoding="utf-8"), "ko")
+                ko_out.setdefault(_story_key(f.stem.replace(".ko", "")), parse_story(f.read_text(encoding="utf-8"), "ko"))
 
     return en_out, ko_out
 
@@ -189,53 +193,40 @@ def gen_mission_links(missions: dict) -> dict:
 def gen_search_index(en_stories: dict, ko_stories: dict,
                      mission_links: dict) -> dict:
     out = []
-    # Track which stems are in which trilogy based on existing files
-    bridge_stems = set()
-    blueant_stems = set()
-    sprawl_stems = set()
-    for d in (BRIDGE_EN_DIR, BRIDGE_NV_EN_DIR, BRIDGE_KO_DIR, BRIDGE_NV_KO_DIR):
-        if d.exists():
-            for f in d.glob("*.md"):
-                stem = f.stem.replace(".ko", "")
-                if "bridge" in str(d).lower() or any("bridge" in p.name for p in [d]):
-                    if f.suffix == ".md" and not f.name.endswith(".tone-prompt.md"):
-                        bridge_stems.add(stem)
-    for d in (BLUE_ANT_EN_DIR, BLUE_ANT_NV_EN_DIR):
-        if d.exists():
-            for f in d.glob("*.md"):
-                if f.suffix == ".md" and not f.name.endswith(".tone-prompt.md"):
-                    blueant_stems.add(f.stem)
-    for d in (SPRAWL_EN_DIR, SPRAWL_NV_EN_DIR):
-        if d.exists():
-            for f in d.glob("*.md"):
-                if f.suffix == ".md" and not f.name.endswith(".tone-prompt.md"):
-                    sprawl_stems.add(f.stem)
+    stem_trilogy: dict[str, str] = {}
+    stem_content: dict[str, str] = {}
+    trilogy_dirs_map = {
+        "bridge":   (BRIDGE_EN_DIR,   BRIDGE_NV_EN_DIR,   BRIDGE_KO_DIR,   BRIDGE_NV_KO_DIR),
+        "blue-ant": (BLUE_ANT_EN_DIR, BLUE_ANT_NV_EN_DIR, BLUE_ANT_KO_DIR, BLUE_ANT_NV_KO_DIR),
+        "sprawl":   (SPRAWL_EN_DIR,   SPRAWL_NV_EN_DIR,   SPRAWL_KO_DIR,   SPRAWL_NV_KO_DIR),
+    }
+    # Novelettes win over short-stories when a stem exists in both.
+    for trilogy, (ss_dir, nv_dir, ko_ss, ko_nv) in trilogy_dirs_map.items():
+        for content_type, ss in (("short-stories", ss_dir), ("novelettes", nv_dir)):
+            if not ss.exists():
+                continue
+            for f in ss.glob("*.md"):
+                if not (f.suffix == ".md" and not f.name.endswith(".tone-prompt.md")):
+                    continue
+                stem = _story_key(f.stem)
+                if stem not in stem_trilogy or content_type == "novelettes":
+                    stem_trilogy[stem] = trilogy
+                    stem_content[stem] = content_type
 
     for stem, info in en_stories.items():
-        if stem in bridge_stems:
-            trilogy = "bridge"
-        elif stem in blueant_stems:
-            trilogy = "blue-ant"
-        elif stem in sprawl_stems:
-            trilogy = "sprawl"
-        else:
-            trilogy = "sprawl"  # default
-        out.append(_story_entry(stem, info, "en", mission_links, trilogy))
+        trilogy = stem_trilogy.get(stem, "sprawl")
+        content = stem_content.get(stem, "short-stories")
+        out.append(_story_entry(stem, info, "en", mission_links, trilogy, content))
     for stem, info in ko_stories.items():
-        if stem in bridge_stems:
-            trilogy = "bridge"
-        elif stem in blueant_stems:
-            trilogy = "blue-ant"
-        elif stem in sprawl_stems:
-            trilogy = "sprawl"
-        else:
-            trilogy = "sprawl"  # default
-        out.append(_story_entry(stem, info, "ko", mission_links, trilogy))
+        trilogy = stem_trilogy.get(stem, "sprawl")
+        content = stem_content.get(stem, "short-stories")
+        out.append(_story_entry(stem, info, "ko", mission_links, trilogy, content))
     out.sort(key=lambda s: (s["lang"], s["id"]))
     return {"version": "1.0", "generated": NOW, "count": len(out), "stories": out}
 
 
-def _story_entry(stem: str, info: dict, lang: str, mission_links: dict, trilogy: str = "sprawl") -> dict:
+def _story_entry(stem: str, info: dict, lang: str, mission_links: dict,
+                 trilogy: str = "sprawl", content_type: str = "short-stories") -> dict:
     body_preview = ""
     sm = info.get(f"summary_{lang}") or info.get("summary_en") or info.get("summary_ko")
     if sm:
@@ -259,7 +250,7 @@ def _story_entry(stem: str, info: dict, lang: str, mission_links: dict, trilogy:
         "body_preview": body_preview,
         "missions": missions_for_stem,
         "trilogy": trilogy,
-        "url": f"stories/{stem}_{lang}.html",
+        "url": f"stories/{content_type}/{stem}_{lang}.html",
     }
 
 

@@ -19,6 +19,7 @@ STORY_ID_MAP: dict[str, str] = {
     'case_jackout-30sec': 'case_jackout-30sec',
     'dixies_last_run': 'dixies_last_run',
     'wigan_zavijava': 'wigan_zavijava',
+    'salvation_wigan_zavijava': 'salvation_wigan_zavijava',
     'loa_voodoo_contact': 'loa_voodoo_contact',
     'the_choice': 'the_choice',
     'flatline_again': 'flatline_again',
@@ -125,14 +126,14 @@ STORY_HTML_TEMPLATE = """<!DOCTYPE html>
             <div class="character-badge">{character_badge}</div>
             <h1 class="story-title">{title}</h1>
             <p class="story-subtitle">{subtitle}</p>
-            <div class="story-meta"><span>{word_count} words</span><span>Sprawl Trilogy</span></div>
+            <div class="story-meta"><span>{word_count} words</span><span>{trilogy_label}</span></div>
         </header>
         <article class="story-body">
 {body}
         </article>
         <footer class="story-footer">
             <p>Wet Run — Derivative Fiction</p>
-            <p>Based on William Gibson's Sprawl Trilogy</p>
+            <p>Based on William Gibson's {trilogy_footer}</p>
         </footer>
     </div>
 </body>
@@ -268,12 +269,15 @@ def get_story_id(md_path: Path) -> str:
         return STORY_ID_MAP[stem]
 
     # Legacy date-prefixed filenames ("2026-06-23_case_jackout-30sec"):
-    # the story-id is whatever comes after "YYYY-MM-DD_".
+    if len(stem) >= 11 and stem[4] == "-" and stem[7] == "-" and stem[10] == "_":
+        bare = stem[11:]
+        if bare in STORY_ID_MAP:
+            return STORY_ID_MAP[bare]
+
     for md_id, html_id in STORY_ID_MAP.items():
         if stem.endswith(md_id):
             return html_id
 
-    # Unknown stem → strip the date prefix if present.
     if stem.startswith("20") and "-" in stem[:10]:
         return stem[11:]
 
@@ -305,7 +309,6 @@ def _pick_localised(value: object, lang: str, fallback: str = "") -> str:
 
 
 def convert_markdown_to_html(md_path: Path, output_dir: Path, lang: str) -> Path:
-    """Convert a single markdown file to HTML."""
     content = md_path.read_text(encoding='utf-8')
     frontmatter, body = parse_frontmatter(content)
 
@@ -340,6 +343,8 @@ def convert_markdown_to_html(md_path: Path, output_dir: Path, lang: str) -> Path
 
     body_html = markdown_to_html(body, lang)
 
+    trilogy_label, trilogy_footer = _trilogy_labels(md_path)
+
     html = STORY_HTML_TEMPLATE.format(
         lang=lang,
         title=title,
@@ -347,7 +352,9 @@ def convert_markdown_to_html(md_path: Path, output_dir: Path, lang: str) -> Path
         character_badge=char_badge,
         word_count=word_count,
         lang_indicator=lang_indicator,
-        body=body_html
+        body=body_html,
+        trilogy_label=trilogy_label,
+        trilogy_footer=trilogy_footer,
     )
 
     output_path = output_dir / f"{story_id}_{lang}.html"
@@ -356,35 +363,76 @@ def convert_markdown_to_html(md_path: Path, output_dir: Path, lang: str) -> Path
     return output_path
 
 
+def _trilogy_labels(md_path: Path) -> tuple[str, str]:
+    p = str(md_path).lower()
+    if 'blue-ant' in p:
+        return 'Blue Ant Trilogy', 'Blue Ant Trilogy'
+    if 'bridge-trilogy' in p:
+        return 'Bridge Trilogy', 'Bridge Trilogy'
+    return 'Sprawl Trilogy', 'Sprawl Trilogy'
+
+
 def main():
     import argparse
     parser = argparse.ArgumentParser(description='Convert short story markdown to HTML')
-    parser.add_argument('--source-dir', default='/Users/emilio/projects/Projects/Fiction/derivative/sprawl-trilogy/short-stories', help='Source markdown directory')
-    parser.add_argument('--output-dir', default='/Users/emilio/projects/Projects/Game/wet_run/dashboard/stories/short-stories', help='Output HTML directory')
+    parser.add_argument('--source-dir', default=None, help='Source markdown directory (overrides --trilogy auto-discovery)')
+    parser.add_argument('--output-dir', default=None, help='Output HTML directory (overrides --trilogy auto-discovery)')
     parser.add_argument('--lang', choices=['en', 'ko', 'both'], default='both', help='Language to convert')
+    parser.add_argument('--trilogy', choices=['sprawl', 'bridge', 'blue-ant', 'all'], default='all',
+                        help='Trilogy to process (default: all). Auto-discovers short-stories + novelettes.')
+    parser.add_argument('--content-type', choices=['short-stories', 'novelettes', 'all'], default='all',
+                        help='Content type to process (default: all)')
     args = parser.parse_args()
 
-    source_dir = Path(args.source_dir)
-    output_dir = Path(args.output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
+    REPO_ROOT = Path('/Users/emilio/projects/Projects')
+    FICTION = REPO_ROOT / 'Fiction/derivative'
+    DASH_STORIES = REPO_ROOT / 'Game/wet_run/dashboard/stories'
+
+    trilogy_dirs = {
+        'sprawl':   'sprawl-trilogy',
+        'bridge':   'bridge-trilogy',
+        'blue-ant': 'blue-ant',
+    }
+
+    trilogies = ['sprawl', 'bridge', 'blue-ant'] if args.trilogy == 'all' else [args.trilogy]
+    contents = ['short-stories', 'novelettes'] if args.content_type == 'all' else [args.content_type]
+
+    jobs: list = []
+    if args.source_dir and args.output_dir:
+        jobs.append((Path(args.source_dir), Path(args.output_dir)))
+    else:
+        for t in trilogies:
+            tk = trilogy_dirs[t]
+            for c in contents:
+                src_en = FICTION / tk / c / 'en'
+                src_ko = FICTION / tk / c / 'ko'
+                out = DASH_STORIES / c
+                if not (src_en.exists() or src_ko.exists()):
+                    continue
+                jobs.append(((src_en, src_ko), out))
 
     languages = ['en', 'ko'] if args.lang == 'both' else [args.lang]
 
-    # Match any date-prefixed story file (2026-06-*, 2026-07-01, ...).
-    # Earlier this glob was hardcoded to 2026-06-*, which silently
-    # dropped every story added after the original cut-off (Phase B
-    # CONTENT_EXPANSION added 5 stories in 2026-07-01).  See the
-    # dashboard validation follow-up for details.
+    for source_dir, output_dir in jobs:
+        if isinstance(source_dir, tuple):
+            _run_pair(source_dir[0], source_dir[1], output_dir, languages)
+        else:
+            _run_pair(source_dir, None, output_dir, languages)
+
+
+def _run_pair(en_dir: Path, ko_dir: Path | None, output_dir: Path, languages: list[str]) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
     en_files = sorted(
-        f for f in source_dir.glob('20*-*-*_*.md') if '.ko.' not in f.name and '.tone-prompt' not in f.name
+        f for f in en_dir.glob('20*-*-*_*.md') if '.ko.' not in f.name and '.tone-prompt' not in f.name
     )
-    ko_files = sorted(source_dir.glob('20*-*-*_*.ko.md'))
+    ko_files: list[Path] = []
+    if ko_dir is not None:
+        ko_files = sorted(ko_dir.glob('20*-*-*_*.ko.md'))
+    else:
+        ko_files = sorted(en_dir.glob('20*-*-*_*.ko.md'))
 
     # De-dup: only the *latest* markdown wins per dashboard stem.
-    # Two date-prefixed files with the same story-id (alias map)
-    # would otherwise overwrite each other and the printed log would
-    # be misleading.  Sorting newest-first by mtime keeps behaviour
-    # predictable.
+    # Sorting newest-first by mtime keeps behaviour predictable.
     en_seen: set[str] = set()
     en_unique: list[Path] = []
     for md_path in sorted(en_files, key=lambda p: p.stat().st_mtime, reverse=True):

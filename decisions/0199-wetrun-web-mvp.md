@@ -6,7 +6,7 @@
 **우선순위**: P1 (Browser reach — broadens addressable player base; mobile/web deferred per ADR-0007 now superseded)
 **관련**:
 - [ADR-0007 — Platform Target (Accepted 2026-06-17)](./0007-platform-target.md) **SUPERSEDED** for web/mobile scope
-- [web-version-2026-08-25 implementation plan](../.omo/plans/web-version-2026-08-25.md) (full context)
+- web-version-2026-08-25 implementation plan (`.omo/plans/`, gitignored, local-only)
 - [Gamepad controller input (ADR-0197)](./0197-gamepad-controller-input-support.md) — keyboard mapping parity
 
 ## 컨텍스트 (Context)

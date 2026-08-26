@@ -5,7 +5,7 @@
 **결정자**: Sisyphus (위임, Phase 190 dashboard extension)
 **우선순위**: P2 (cross-project reflection, additive)
 **선행**: [ADR-0048 (Phase 189 — Wet Run Character Reflection)](0048-wet-run-character-reflection-amendment.md) — 35차 amendment chain
-**관련**: [ADR-0023 (Novel Quality Rubric)](0023-novel-quality-rubric.md), [ADR-0044 (Phase 181 Final Report)](0044-final-report-amendment.md), Game/dashboard/
+**관련**: ADR-0023 (Novel Quality Rubric, Fiction ADR), ADR-0044 (Phase 181 Final Report, Fiction ADR), Game/dashboard/
 
 ## 컨텍스트
 

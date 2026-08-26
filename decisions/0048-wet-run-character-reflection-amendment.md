@@ -4,8 +4,8 @@
 **날짜**: 2026-08-24
 **결정자**: Sisyphus (위임, Phase 189 Wet Run reflection)
 **우선순위**: P2 (cross-project reflection, additive)
-**선행**: [ADR-0047 (Phase 188 — Network Temporal Evolution)](0047-network-evolution-amendment.md) — 34차 amendment chain
-**관련**: [ADR-0023 (Novel Quality Rubric)](0023-novel-quality-rubric.md), ADR-0041 (Phase 175), ADR-0047 (Phase 188), Game/wet_run/wiki/world/
+**선행**: ADR-0047 (Phase 188 — Network Temporal Evolution, Fiction ADR) — 34차 amendment chain
+**관련**: ADR-0023 (Novel Quality Rubric, Fiction ADR), ADR-0041 (Phase 175), ADR-0047 (Phase 188), Game/wet_run/wiki/world/
 
 ## 컨텍스트
 
@@ -77,7 +77,7 @@ Wet Run 의 character roster 가 Fiction verification framework 의 empirical fi
 
 ## 참고
 
-- 선행 ADR: [ADR-0047 (Phase 188 Network Temporal Evolution)](0047-network-evolution-amendment.md)
+- 선행 ADR: ADR-0047 (Phase 188 Network Temporal Evolution, Fiction ADR)
 - Wet Run AGENTS.md §4.1: Fiction wiki is canonical source
 - Wet Run pages: `Game/wet_run/wiki/world/characters/`
 - Fiction wiki pages: `../../../../Fiction/wiki/characters/`

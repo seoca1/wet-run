@@ -39,5 +39,171 @@
     },
     "title": "First Jack",
     "zone": "surface"
+  },
+  "watchdog_patrol": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 1,
+    "grade_min": 1,
+    "id": "watchdog_patrol",
+    "is_canonical_cast": true,
+    "matrix_seed": 1337,
+    "primary_objective": {
+      "count": 2,
+      "enemy": "ice.watchdog",
+      "type": "defeat"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 750,
+      "materials": {
+        "ice_shard": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 3,
+        "material": "ice_shard",
+        "type": "collect_material"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "case",
+      "char_count_ko": 404,
+      "character_ref": "novice",
+      "pillar": "power",
+      "source": "watchdog_patrol",
+      "synopsis_en": "The watchdogs came at 0300, like they always did. K had been running Sense/Net ICE for three weeks by then — Wisp-class, nothing fancy, the kind of corporate perimeter protection that looked intimidating to civilians but was really just a polite fence. The watchdogs were different. They didn't patrol the surface; they patrolled the memory. K felt them before he saw them: a cold pressure behind his eyes, the matrix geometry shifting from clean vectors to something with teeth. Two of them. Black-coated, corporate-logic, the kind of ICE that didn't negotiate. Finn's voice: 'They found the hole you left in sector seven.' K ran the numbers. Sector seven wasn't him — it was M, who jack-out three days ago and never came back. The watchdogs remembered her signature anyway. They were hunting it now. K started to back his own trace, erasing M's ghost-marks one by one. The watchdogs turned. Toward him. The rain in Chiba was the same color as a dead channel. K was twenty-three years old and something was very wrong.",
+      "synopsis_ko": "워치독이 0300에 왔다, 늘 그랬듯이. 그때까지 K는 삼 주 동안 Sense/Net ICE를 실행하고 있었다 — Wisp급, 호화 nothing, 민간인을 겁주는 것처럼 보이지만 실은 정중한 울타리에 불과한 기업 주변 보호. 워치독은 달랐다. 그들은 표면을 순찰하지 않았다; 그들은 기억을 순찰했다. K는 그들을 보기 전에 느꼈다: 눈 뒤의 차가운 압력, 깨끗한 벡터에서 뭔가 이빨이 있는 것으로 전환되는 매트릭스 기하학. 둘. 검은 코트, 기업 논리, 협상하지 않는 ICE. Finn의 목소리: '그들이 네가 일번 섹터에 남긴 구멍을 찾았어.' K는 숫자를 계산했다. 일번 섹터는 그의 것이 아니었다 — M의 것이었다, 사흘 전에 잭아웃하고 돌아오지 못한. 워치독은 그녀의 서명을 어쨌든 기억하고 있었다. 그들이 지금 그것을 사냥하고 있었다. K는 자신의 트레이스를 백업하기 시작했고, M의 고스트 마크를 하나씩 지웠다. 워치독이 방향을 틀었다. 그를 향해. 시바의 비는 죽은 채널과 같은 색이었다. K는 스물세 살이고, 뭔가 매우 잘못되었다.",
+      "word_count_en": 174
+    },
+    "title": "Watchdog Patrol",
+    "zone": "surface"
+  },
+  "ono_sendai_repair": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "ono_sendai_repair",
+    "is_canonical_cast": false,
+    "matrix_seed": 318,
+    "primary_objective": {
+      "data_id": "deck_repair_quote",
+      "type": "extract_data"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 350,
+      "materials": {
+        "data_fragment": 1,
+        "deck_part": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "target": "ono_sendai_rep",
+        "type": "negotiate"
+      },
+      {
+        "count": 1,
+        "target": "street_doc_repair",
+        "type": "acquire"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "k",
+      "char_count_ko": 805,
+      "character_ref": "novice",
+      "pillar": "purpose",
+      "source": "ono_sendai_repair",
+      "synopsis_en": "The Cyberspace 7 has been through three Chiba caps and one too many jack-outs. K can feel it in the back of his skull, a low-level buzz where the Ono-Sendai meet the cortex, the deck's bio-electrical interface degrading like an old Hosaka terminal on its second life. He needs it repaired. He doesn't have credit for the Ono-Sendai service clinic on the eighth floor — the real Ono-Sendai shop, the brand office, where the Cyberspace 7's calibration is performed with proprietary Ono-Sendai diagnostic rigs. He has enough for the street-corner jack-doc on the fourteenth — Pavel-equipment, no warranty, the technician who can fix a cracked interface but can't tell a deck from a deck-chair. K goes up the eighth. The brand office won't take him. The rep looks at the deck, looks at K, looks at the deck again. The rep is maybe thirty. The deck is older than the rep. K is younger than the rep. The rep says the kinds of things reps say, things about corporate client-rights and minimum-purchase thresholds and the Cyberspace 7's discontinued status. K has a brief life-flash moment. The brief life-flash moment is what working-class matrix-labor feel when Ono-Sendai stops recognizing them. The deck is the working-class substrate; the brand office's non-recognition is the substrate's working-class cut-off. K leaves the eighth floor. The street-corner jack-doc on the fourteenth fixes the cracked interface. The fix is partial. The deck runs at eighty percent of its designed capability. K is okay with eighty percent. Eighty percent is the working-class matrix-operative's standard operating capability. Eighty percent is what the Chiba port districts' grifting economy can afford. K walks out into the rain. The rain is still the same color as the data. The deck on his head is still the same brand — Ono-Sendai. Just less of it. The brand office's non-recognition is what the working-class matrix-operatives experience as the era's substrate-pricing.",
+      "synopsis_ko": "Cyberspace 7은 세 번의 치바 캡슐과 잭아웃 한 번을 더 거쳤다. K는 그것을 후두골 안쪽에서, Ono-Sendai가 대뇌 피질에 만나는 곳의 저-레벨 윙윙거림으로 느낄 수 있다 — 디크의 생물-전기 인터페이스가 두 번째 인생의 오래된 Hosaka 터미널처럼 열화되는 것. 그는 그것을 수리해야 한다. 그는 8층의 Ono-Sendai 서비스 클리닉 — 진짜 Ono-Sendai 매장, 브랜드 사무실, 전용 Ono-Sendai 진단 장비로 Cyberspace 7의 보정이 수행되는 곳 — 에 지불할 크레딧이 없다. 그는 14층의 거리-구석 잭-닥터에게는 충분히 가지고 있다 — 파벨급 장비, 보증 없음, 크랙된 인터페이스는 고칠 수 있지만 디크와 디크-의자를 구별 못 하는 기술자. K는 8층으로 간다. 브랜드 사무실은 그를 받아주지 않는다. 영업 사원은 디크를 보고, K를 보고, 디크를 다시 본다. 영업 사원은 서른쯤. 디크는 영업 사원보다 오래되었다. K는 영업 사원보다 어리다. 영업 사원은 영업 사원이 하는 종류의 말들을 한다 — 기업 고객-권리에 대한 것들, 최소-구매-임계값에 대한 것들, Cyberspace 7의 단종-상태에 대한 것들. K는 짧은 인생-플래시 순간을 가진다. 짧은 인생-플래시 순간은 Ono-Sendai가 그를 인식하지 않을 때 작업-클래스 매트릭스-노동이 느끼는 것이다. 디크는 작업-클래스 기질; 브랜드 사무실의 비-인식은 기질의 작업-클래스 차단. K는 8층을 떠난다. 14층의 거리-구석 잭-닥터가 크랙된 인터페이스를 고친다. 수리는 부분적이다. 디크는 설계-능력의 80 퍼센트로 작동한다. K는 80 퍼센트에 만족한다. 80 퍼센트는 작업-클래스 매트릭스-운영자의 표준 작동 능력이다. 80 퍼센트는 치바 항구 지구의 그리핑 경제가 감당할 수 있는 것이다. K는 비 속으로 걸어 나온다. 비는 여전히 데이터와 같은 색이다. 머리의 디크는 여전히 같은 브랜드 — Ono-Sendai. 단지 조금 더 작다. 브랜드 사무실의 비-인식이 작업-클래스 매트릭스-운영자가 시대의 기질-가격 책정으로 경험하는 것이다.",
+      "word_count_en": 316
+    },
+    "title": "Ono-Sendai Repair",
+    "zone": "surface"
+  },
+  "construct_market": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "construct_market",
+    "is_canonical_cast": false,
+    "matrix_seed": 480,
+    "primary_objective": {
+      "data_id": "construct_market_inventory",
+      "type": "extract"
+    },
+    "reward_credits": 450,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 450,
+      "materials": {}
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "market_watchdog",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "case",
+      "char_count_ko": 117,
+      "character_ref": "novice",
+      "pillar": "people",
+      "source": "construct_market",
+      "synopsis_en": "The market sells constructs. The ICE protects inventory. The owner is a small operator who does not ask questions and does not remember faces. You go in as a buyer. You leave as a buyer. Nobody notices you were there except the ICE, and the ICE was not looking at you.",
+      "synopsis_ko": "시장은 구성체를 판다. ICE는 재고를 보호한다. 주인은 질문을 하지 않고 얼굴을 기억하지 않는 작은 운영자이다. 당신은 구매자로 들어간다. 당신은 구매자로 나간다. 당신이 거기 있었다는 것을 알아차리는 사람은 없다, ICE만 빼고, 그리고 ICE는 당신을 보지 않았다.",
+      "word_count_en": 51
+    },
+    "title": "Construct Market",
+    "zone": "surface"
+  },
+  "ghost_signal_origin": {
+    "arc": 6,
+    "fixer": "sally",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "ghost_signal_origin",
+    "is_canonical_cast": false,
+    "matrix_seed": 723,
+    "primary_objective": {
+      "target": "ghost_signal_origin",
+      "type": "investigate"
+    },
+    "reward_credits": 600,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 600,
+      "materials": {}
+    },
+    "secondary_objectives": [
+      {
+        "data_id": "ghost_signal_data",
+        "type": "extract"
+      }
+    ],
+    "story": {
+      "arc": 6,
+      "cast": "sally",
+      "char_count_ko": 117,
+      "character_ref": "novice",
+      "pillar": "people",
+      "source": "ghost_signal",
+      "synopsis_en": "A signal that should not exist pulses in the matrix fragments — a ghost of the Neuromancer merger, broadcasting from a node you cannot identify. You trace it back through dead servers and corrupted ICE, looking for the origin. Whatever sent it is still alive. Whatever sent it knows you are coming.",
+      "synopsis_ko": "존재해서는 안 되는 신호가 매트릭스 파편에서 펄스친다 — 뉴로맨서 합병의 유령, 당신이 식별할 수 없는 노드에서 방송한다. 당신은 죽은 서버와 손상된 ICE를 거쳐 원점으로 거슬러 올라간다. 그것을 보낸 무엇은 여전히 살아 있다. 그것을 보낸 무엇은 당신이 오는 것을 알고 있다.",
+      "word_count_en": 52
+    },
+    "title": "Ghost Signal: Origin",
+    "zone": "aftermath"
   }
 }

@@ -23,27 +23,27 @@ npm run build
 # Output: dist/ (static files)
 ```
 
-## Scope (MVP Tier 1)
+## Scope (Tier 2a — current build)
 
-- 1 playable mission (first_jack)
+- **5 playable missions** (first_jack + watchdog_patrol + ono_sendai_repair + construct_market + ghost_signal_origin)
 - ASCII Canvas2D renderer (Gibson palette)
 - ICE-breaking combat state machine
-- Save/load via localStorage
+- **Multi-slot save/load** (4 slots: 1 autosave + 3 manual, with legacy single-slot migration)
 - Keyboard input (arrow keys + ENTER + SPACE + ESC)
-- Silent (no audio in Tier 1; Tier 2 adds Howler.js)
-- Desktop browser primary (mobile browser works; touch UI is Tier 2)
+- **Mobile touch input** (auto-mounts virtual gamepad on `pointer: coarse` devices)
+- Silent (no audio — Tier 2b adds Howler.js)
+- Desktop browser primary, mobile browser fully playable
 
-## Out of MVP scope (Tier 2+)
+## Out of scope (Tier 3+)
 
-- Multiple missions, full campaign
+- Full 209-mission campaign
 - Status effect VFX
 - Multiple bosses
 - Multiple jockeys
 - Save migration from desktop
-- Mobile touch UI
 - Audio (Howler.js)
 - Multiplayer / cloud sync
-- Full i18n (English only in MVP)
+- Full i18n (English only)
 
 See [implementation plan](Game/wet_run/.omo/plans/web-version-2026-08-25.md) for full context.
 

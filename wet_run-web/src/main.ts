@@ -1,10 +1,12 @@
 /** Wet Run Web MVP — entry point.
  *
+ * Tier 2a (2026-08-25): supports mission select screen (5 missions).
  * Boots the ASCII renderer, mounts keyboard input, loads MVP game data,
  * and renders the initial frame.
  */
 import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
+import { mountVirtualGamepad, isTouchDevice } from "./input/touch.ts";
 import type { GameState, GameAction, Ice, Mission, Program } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
@@ -14,31 +16,137 @@ import missionsData from "./data/missions.json" with { type: "json" };
 import programsData from "./data/programs.json" with { type: "json" };
 import iceTypesData from "./data/ice_types.json" with { type: "json" };
 
-const MVP_MISSION_ID = "first_jack";
+type MissionsFile = Readonly<Record<string, Mission>>;
+type ProgramsFile = Readonly<Record<string, Program>>;
 
-function loadMission(): Mission {
-  const data = missionsData as unknown as Record<string, Mission>;
-  const mission = data[MVP_MISSION_ID];
-  if (!mission) throw new Error(`MVP mission '${MVP_MISSION_ID}' not found in missions.json`);
-  return mission;
+/** Mission catalog (Tier 2a: 5 curated). */
+const MISSIONS: ReadonlyArray<Mission> = Object.values(missionsData as MissionsFile);
+
+/** Pick the ICE type best matched to the mission's `ice_id` (fallback: first). */
+function loadIce(mission: Mission, iceTypes: Readonly<Record<string, Ice>>): Ice {
+  const keys = Object.keys(iceTypes);
+  const preferred = (mission as { ice_id?: string }).ice_id;
+  if (preferred && preferred in iceTypes) {
+    const ice = iceTypes[preferred];
+    if (ice) return ice;
+  }
+  const first = keys[0];
+  if (!first) throw new Error("No ICE types in ice_types.json");
+  const fallback = iceTypes[first];
+  if (!fallback) throw new Error("ICE entry empty");
+  return fallback;
 }
 
-function loadIce(): Ice {
-  // ice_types.json is keyed by ICE id; pick the first entry as MVP default.
-  const data = iceTypesData as unknown as Record<string, Ice>;
-  const firstKey = Object.keys(data)[0];
-  if (!firstKey) throw new Error("No ICE types in ice_types.json");
-  const ice = data[firstKey];
-  if (!ice) throw new Error("ICE entry empty");
-  return ice;
-}
-
-function loadDeck(): ReadonlyArray<Program> {
-  const data = programsData as unknown as Record<string, Program>;
-  const ids = Object.keys(data).slice(0, 5);
+/** Build the first 5 programs for the deck (deterministic order from program id). */
+function loadDeck(programs: Readonly<Record<string, Program>>, count = 5): ReadonlyArray<Program> {
+  const ids = Object.keys(programs)
+    .sort()
+    .slice(0, count);
   return ids
-    .map((id) => data[id])
+    .map((id) => programs[id])
     .filter((p): p is Program => p !== undefined);
+}
+
+/** Format a mission for the select screen (Tier 2a). */
+function formatMissionOption(mission: Mission, index: number): string {
+  const grade = `T${mission.grade_max}`;
+  const credits = mission.rewards.credits.toLocaleString();
+  return `${index + 1}. ${mission.title}  [${grade} | ${credits}cr]`;
+}
+
+/** Render the mission select screen. */
+function renderMissionSelect(missions: ReadonlyArray<Mission>, selected: number): ReturnType<typeof makeGrid> {
+  let grid = makeGrid(80, 50);
+  grid = setText(grid, 2, 1, "WET RUN — Select Mission", PALETTE.GREEN_NEON);
+  grid = setText(grid, 2, 3, "ENTER: launch | ESC: quit | Arrow keys: navigate", PALETTE.GRAY_LIGHT);
+  let y = 6;
+  for (let i = 0; i < missions.length; i++) {
+    const m = missions[i];
+    if (!m) continue;
+    const isSelected = i === selected;
+    const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
+    const marker = isSelected ? "▸" : " ";
+    grid = setText(grid, 4, y, `${marker} ${formatMissionOption(m, i)}`, fg);
+    y += 2;
+  }
+  return grid;
+}
+
+class Game {
+  private state: GameState | null = null;
+  private renderer: AsciiRenderer;
+  private input: KeyboardInput;
+  private selectedMission = 0;
+  private iceTypes: Readonly<Record<string, Ice>>;
+  private unmountTouch: () => void = () => {};
+
+  constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
+    this.iceTypes = iceTypes;
+    this.renderer = new AsciiRenderer(canvas, { cellWidth: 8, cellHeight: 16 });
+    this.renderer.resizeGrid(80, 50, 28);
+    this.input = new KeyboardInput();
+    const handler = (action: GameAction): void => {
+      if (this.state === null) {
+        this.handleMenuInput(action);
+      } else {
+        this.state = applyAction(this.state, action);
+        this.draw();
+      }
+    };
+    this.input.setHandler(handler);
+    this.input.start();
+    // Tier 2c: auto-mount virtual gamepad on touch devices.
+    if (isTouchDevice()) {
+      this.unmountTouch = mountVirtualGamepad(handler);
+    }
+  }
+
+  private handleMenuInput(action: GameAction): void {
+    if (action.type === "move_south") {
+      this.selectedMission = (this.selectedMission + 1) % MISSIONS.length;
+      this.draw();
+    } else if (action.type === "move_north") {
+      this.selectedMission = (this.selectedMission - 1 + MISSIONS.length) % MISSIONS.length;
+      this.draw();
+    } else if (action.type === "confirm") {
+      this.launchSelected();
+    } else if (action.type === "jack_out" || action.type === "cancel") {
+      this.draw();
+    }
+  }
+
+  private launchSelected(): void {
+    const mission = MISSIONS[this.selectedMission];
+    if (!mission) return;
+    const programs = programsData as unknown as ProgramsFile;
+    const deck = loadDeck(programs);
+    const ice = loadIce(mission, this.iceTypes);
+    const initial = makeInitialState(mission, ice, deck);
+    this.state = { ...initial, grid: makeGrid(80, 50) };
+    this.draw();
+  }
+
+  private draw(): void {
+    if (this.state === null) {
+      this.renderer.render(renderMissionSelect(MISSIONS, this.selectedMission), [
+        "MISSION SELECT",
+        "",
+        `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
+      ]);
+    } else {
+      this.state = { ...this.state, grid: renderGrid(this.state) };
+      this.renderer.render(this.state.grid, buildHudLines(this.state));
+    }
+  }
+
+  start(): void {
+    this.draw();
+  }
+
+  stop(): void {
+    this.input.stop();
+    this.unmountTouch();
+  }
 }
 
 function renderGrid(state: GameState) {
@@ -65,37 +173,6 @@ function renderGrid(state: GameState) {
   return grid;
 }
 
-class Game {
-  private state: GameState;
-  private renderer: AsciiRenderer;
-  private input: KeyboardInput;
-
-  constructor(canvas: HTMLCanvasElement, mission: Mission, ice: Ice, deck: ReadonlyArray<Program>) {
-    this.state = { ...makeInitialState(mission, ice, deck), grid: makeGrid(80, 50) };
-    this.renderer = new AsciiRenderer(canvas, { cellWidth: 8, cellHeight: 16 });
-    this.renderer.resizeGrid(80, 50, 28);
-    this.input = new KeyboardInput();
-    this.input.setHandler((action: GameAction) => {
-      this.state = applyAction(this.state, action);
-      this.draw();
-    });
-    this.input.start();
-  }
-
-  private draw(): void {
-    const nextGrid = renderGrid(this.state);
-    this.renderer.render(nextGrid, buildHudLines(this.state));
-  }
-
-  start(): void {
-    this.draw();
-  }
-
-  stop(): void {
-    this.input.stop();
-  }
-}
-
 function boot(): void {
   const loading = document.getElementById("loading");
   const canvas = document.getElementById("game-canvas");
@@ -106,7 +183,8 @@ function boot(): void {
 
   let game: Game;
   try {
-    game = new Game(canvas, loadMission(), loadIce(), loadDeck());
+    const iceTypes = iceTypesData as unknown as Record<string, Ice>;
+    game = new Game(canvas, iceTypes);
   } catch (err) {
     console.error("Failed to boot Wet Run:", err);
     if (loading) loading.textContent = `Error: ${(err as Error).message}`;

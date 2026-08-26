@@ -2901,3 +2901,53 @@ Verified: 12 ScreenKinds, 12 buttons, 7 unmapped, 7 sanitizer cases
 | `ruff check src tests` | ✅ All checks passed |
 | `mypy --strict src` (233 files) | ✅ 0 issues |
 | `play_gamepad_smoke.py` | ✅ 12 + 12 + 7 + 7 = 38 checks PASS |
+
+## [2026-08-25] feat(wet_run-web) | Tier 2 shipped (5 missions + multi-slot save + touch UI)
+
+**Scope**: User-directed Tier 2 expansion (per web-version-2026-08-25.md). 3 atomic increments.
+
+### Tier 2a: Multiple Missions (5 curated)
+
+- `scripts/export_web_data.py`: `MVP_MISSION_IDS` tuple of 5 missions (was 1)
+  - first_jack (T1 tutorial), watchdog_patrol (T1), ono_sendai_repair (T2),
+    construct_market (T2 surface), ghost_signal_origin (T2 arc6 aftermath)
+- `src/data/missions.json`: now 5 missions (14.3 KB vs 2.9 KB Tier 1)
+- `src/main.ts`: mission select screen with arrow-key navigation + ENTER
+- `tests/missions.test.ts`: 6 new tests (curated IDs, field validation, diversity)
+
+### Tier 2a: Multi-Slot Save/Load
+
+- `src/save/storage.ts`: rewrote as multi-slot (4 slots total)
+  - Slot 0 = Autosave, slots 1-3 = Manual (3 slots)
+  - Backward-compatible: migrates legacy single-slot save to slot 0
+  - `listSlots()` API for save-select UI (future)
+  - `MAX_SAVE_SLOT`, `MANUAL_SLOTS`, `SAVE_SLOT_LABELS` exports
+- `tests/storage.test.ts`: rewrote with 11 multi-slot tests + legacy migration
+
+### Tier 2c: Mobile Touch UI
+
+- `src/input/touch.ts`: virtual gamepad overlay module
+  - `mountVirtualGamepad(handler)`: mounts HTML/CSS D-pad + ABXY buttons
+  - `isTouchDevice()`: detects `pointer: coarse` for auto-mount
+  - Touch handlers fire `pointerdown` → `GameAction`
+- `src/main.ts`: Game class auto-mounts gamepad on touch devices
+- `tests/touch.test.ts`: 5 new tests (mount, buttons, cleanup, SSR-safe)
+
+### Validators (All Green)
+
+| Validator | Result |
+|---|---|
+| `tsc --noEmit` | ✅ No errors |
+| `vitest run` | ✅ **34 passed** (was 17; +17 Tier 2 tests) |
+| `vite build` | ✅ 58.91 KB JS (16.70 KB gzipped; +1.95 KB from Tier 1) |
+
+### Tier 2 Status (ADR-0199 Implementation Status)
+
+| Item | Status |
+|---|---|
+| Tier 1 MVP (1 mission, 1 slot, keyboard) | ✅ Shipped 2026-08-25 |
+| Tier 2a (5 missions, multi-slot) | ✅ Shipped 2026-08-25 |
+| Tier 2c (mobile touch UI) | ✅ Shipped 2026-08-25 |
+| Tier 2b (audio via Howler.js) | ⏸ Out of scope per operator gate (silent) |
+| 3-person playtest (`docs/PLAYTEST.md`) | ⏸ Required before Tier 3 expansion |
+| Tier 3 (more missions + status VFX) | ⏸ Gated on playtest + Tier 2 validation |

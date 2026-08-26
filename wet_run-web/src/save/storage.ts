@@ -1,48 +1,99 @@
-/** localStorage-backed save/load for wetrun-web MVP.
+/** Multi-slot save/load for wetrun-web (Tier 2a).
  *
- * Tier 1: localStorage JSON. Tier 2: IndexedDB for larger saves (cloud sync
- * explicitly out of scope per ADR-0199).
+ * Extends the single-slot MVP save to support 3 manual slots + 1 auto slot.
+ * Slot 0 = autosave (overwritten on phase transitions); slots 1-3 = manual.
  *
- * Save schema version is bumped on breaking changes; old saves are
- * silently dropped (the user re-starts the mission).
+ * Backward-compatible: if a legacy single-slot save exists (no slot suffix),
+ * it is read as slot 0 (autosave) on first load and migrated.
  */
 import type { SaveSlot } from "../core/types.ts";
 
-const SAVE_KEY = "wetrun_mvp_save_v1";
 const CURRENT_SCHEMA_VERSION = 1;
+const MANUAL_SLOT_COUNT = 3;
+const SLOT_COUNT = MANUAL_SLOT_COUNT + 1;
+const MAX_SLOT_INDEX = MANUAL_SLOT_COUNT;
 
-export function save(slot: SaveSlot): void {
+function key(slot: number): string {
+  if (slot < 0 || slot > MAX_SLOT_INDEX) throw new Error(`Invalid save slot ${slot}`);
+  return `wetrun_mvp_save_v1_slot_${slot}`;
+}
+
+const LEGACY_KEY = "wetrun_mvp_save_v1";
+
+export function save(slot: number, data: SaveSlot): void {
   try {
-    localStorage.setItem(SAVE_KEY, JSON.stringify(slot));
+    localStorage.setItem(key(slot), JSON.stringify(data));
   } catch (err) {
-    // QuotaExceededError or SecurityError — log and continue (game still playable).
-    console.warn("Failed to save game:", err);
+    // Re-throw validation errors (caller bug) but swallow I/O errors.
+    if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
+    console.warn(`Failed to save slot ${slot}:`, err);
   }
 }
 
-export function load(): SaveSlot | null {
+export function load(slot: number): SaveSlot | null {
   try {
-    const raw = localStorage.getItem(SAVE_KEY);
-    if (!raw) return null;
-    const parsed: unknown = JSON.parse(raw);
-    if (!isSaveSlot(parsed)) return null;
-    if (parsed.version !== CURRENT_SCHEMA_VERSION) return null; // Future-proof: drop old saves.
-    return parsed;
+    const raw = localStorage.getItem(key(slot));
+    if (raw) return parseSlot(raw);
+    if (slot === 0) {
+      const legacy = localStorage.getItem(LEGACY_KEY);
+      if (legacy) {
+        const parsed = parseSlot(legacy);
+        if (parsed) {
+          localStorage.setItem(key(0), legacy);
+          localStorage.removeItem(LEGACY_KEY);
+          return parsed;
+        }
+      }
+    }
+    return null;
   } catch (err) {
-    console.warn("Failed to load save:", err);
+    // Re-throw validation errors (caller bug) but swallow I/O errors.
+    if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
+    console.warn(`Failed to load slot ${slot}:`, err);
     return null;
   }
 }
 
-export function clear(): void {
+export function clear(slot: number): void {
   try {
-    localStorage.removeItem(SAVE_KEY);
+    localStorage.removeItem(key(slot));
   } catch (err) {
-    console.warn("Failed to clear save:", err);
+    console.warn(`Failed to clear slot ${slot}:`, err);
   }
 }
 
-/** Runtime type guard — defends against tampered localStorage. */
+export function listSlots(): ReadonlyArray<{
+  readonly slot: number;
+  readonly savedAt: string;
+  readonly missionId: string;
+  readonly turnCount: number;
+}> {
+  const out: { slot: number; savedAt: string; missionId: string; turnCount: number }[] = [];
+  for (let s = 0; s <= MAX_SLOT_INDEX; s++) {
+    const data = load(s);
+    if (data) {
+      out.push({
+        slot: s,
+        savedAt: data.savedAt,
+        missionId: data.missionId,
+        turnCount: data.turnCount,
+      });
+    }
+  }
+  return out;
+}
+
+function parseSlot(raw: string): SaveSlot | null {
+  try {
+    const parsed: unknown = JSON.parse(raw);
+    if (!isSaveSlot(parsed)) return null;
+    if (parsed.version !== CURRENT_SCHEMA_VERSION) return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
 function isSaveSlot(value: unknown): value is SaveSlot {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
@@ -60,3 +111,14 @@ function isSaveSlot(value: unknown): value is SaveSlot {
     typeof v.savedAt === "string"
   );
 }
+
+export const SAVE_SLOT_LABELS: Readonly<Record<number, string>> = Object.freeze({
+  0: "Autosave",
+  1: "Slot 1",
+  2: "Slot 2",
+  3: "Slot 3",
+});
+
+export const SLOT_COUNT_TOTAL: number = SLOT_COUNT;
+export const MAX_SAVE_SLOT: number = MAX_SLOT_INDEX;
+export const MANUAL_SLOTS: ReadonlyArray<number> = [1, 2, 3];

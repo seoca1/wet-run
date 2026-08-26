@@ -22,11 +22,19 @@ import json
 import sys
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
-WET_RUN_DATA = REPO_ROOT / "Game" / "wet_run" / "prototype" / "data"
+REPO_ROOT = Path(__file__).resolve().parents[2]
+WET_RUN_DATA = REPO_ROOT / "prototype" / "data"
 WEB_DATA = Path(__file__).resolve().parents[1] / "src" / "data"
 
-MVP_MISSION_ID = "first_jack"
+# Tier 2a (2026-08-25): 5 curated missions for the browser MVP.
+# Curated for: tier 1-2 difficulty, narrative flow, fixer variety.
+MVP_MISSION_IDS: tuple[str, ...] = (
+    "first_jack",          # Tier 1 — tutorial entry
+    "watchdog_patrol",     # Tier 1 — same fixer, escalation
+    "ono_sendai_repair",   # Tier 2 — different verb (repair vs extract)
+    "construct_market",    # Tier 2 — same zone (surface)
+    "ghost_signal_origin", # Tier 2 — different fixer (sally), arc6 aftermath
+)
 
 
 def _load_json(path: Path) -> dict | list:
@@ -42,19 +50,20 @@ def _write_json(path: Path, data: dict | list) -> None:
     print(f"  wrote {path} ({path.stat().st_size} bytes)")
 
 
-def export_mvp_mission() -> None:
-    """Export only the first_jack mission for the MVP."""
+def export_mvp_missions() -> None:
+    """Export curated Tier 2a missions (5 total) for the browser MVP."""
     missions = _load_json(WET_RUN_DATA / "missions" / "missions.json")
-    if MVP_MISSION_ID not in missions:
+    missing = [mid for mid in MVP_MISSION_IDS if mid not in missions]
+    if missing:
         available = sorted(missions.keys())[:5]
         print(
-            f"ERROR: '{MVP_MISSION_ID}' not found. "
-            f"First 5 available: {available}",
+            f"ERROR: missing missions {missing}. First 5 available: {available}",
             file=sys.stderr,
         )
         sys.exit(1)
-    mvp = {MVP_MISSION_ID: missions[MVP_MISSION_ID]}
+    mvp = {mid: missions[mid] for mid in MVP_MISSION_IDS}
     _write_json(WEB_DATA / "missions.json", mvp)
+    print(f"  mission count: {len(mvp)}")
 
 
 def export_programs() -> None:
@@ -85,8 +94,8 @@ def main() -> int:
     print("=== wetrun-web data export ===\n")
     print(f"Source: {WET_RUN_DATA}")
     print(f"Target: {WEB_DATA}\n")
-    print("Exporting MVP subset (1 mission + programs + ICE types + strings):")
-    export_mvp_mission()
+    print(f"Exporting Tier 2a subset ({len(MVP_MISSION_IDS)} missions + programs + ICE types + strings):")
+    export_mvp_missions()
     export_programs()
     export_ice_types()
     export_strings()

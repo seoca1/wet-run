@@ -191,6 +191,21 @@ for stage in data["stages"]:
 3. **decisions/README.md** 또는 **IMPROVEMENTS.md** 에 결과 반영
 4. **validate_stage_structure.py** 재실행 → 0 FAIL 확인
 
+## Implementation Status (2026-08-26)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- ✅ `run/state/models.py` — Stage enum with BLACK_MARKET + GHOST_ENCOUNTER transitions
+- ✅ `prototype/src/wet_run/black_market.py` — black_market stage module
+- ✅ `prototype/src/wet_run/ghost_encounter.py` — ghost_encounter stage module
+- ✅ `validate_stage_structure.py` 재실행 — 0 FAIL (전 stage reachable)
+- ✅ `design/systems/dungeon_events.md` — black_market + ghost_encounter 명시 추가
+
+**Notes**: Validator FAIL 해결 후속. AGENTS.md §8 Accepted immutable — 본 결정 사항 변경 불가, 후속 수정은 신규 ADR.
+
+---
+
 ## ADR Accepted 시 후속
 
 본 ADR 이 Accepted 되면 status 가 `Accepted` 로 변경되며, `decisions/README.md` 인덱스에 추가. AGENTS.md §8 "Accepted immutable" — 본 결정 사항은 변경 불가, 후속 수정은 신규 ADR.

@@ -174,6 +174,20 @@ ADR-0133 (graphic_novel_view.py split) 완료 후 module LOC 감사 결과:
 
 ---
 
+## Implementation Status (2026-08-26)
+
+**Status**: 🟡 Partial
+
+**Evidence**:
+- ✅ `matrix_view.py` 추출 완료 (ADR-0142 graphic_novel_view split v2에서 후속)
+- ✅ `combat/state.py` → `combat/state/state_models.py` 부분 추출 (ADR-0143 combat_view split 기반)
+- 🟡 4-way split 나머지 (state_machine.py, ai.py, skill_resolution.py) — v1.1.0+ 후속
+- 🟡 `combat/effects.py` (1246 LOC, ADR-0112) + `combat_view.py` (1096 LOC, ADR-0113) — ADR-0144/0145에서 일부 진행
+
+**Notes**: Option 1 partial — Top 2 채택. combat/effects + combat_view 4-way는 ADR-0143 ~ 0145 사이클로에서 분할.
+
+---
+
 ## 변경 이력
 
 - 2026-07-28: Draft 작성 (Post-ADR-0133 audit 후속)

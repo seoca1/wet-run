@@ -234,6 +234,24 @@ v1.0.0 release 후 사용자 consultation (2026-07-28) 에서 게임 중독성/�
 
 ---
 
+## Implementation Status (2026-08-26)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- `prototype/src/wet_run/lore/memory_fragment.py` (신규, Memory Fragments Pillar 3 death-avoidance)
+- `prototype/src/wet_run/matrix/faction_tension.py` (신규, Faction Tension Pillar 5)
+- `prototype/src/wet_run/matrix/near_miss.py` (신규, Near-Miss Extraction Pillar 1)
+- `prototype/src/wet_run/matrix/anomaly_reward.py` (신규, Variable Reward Nodes Pillar 1)
+- `prototype/src/wet_run/combat/intel_items.py` (Construct Whisper Pillar 4 unlock)
+- `prototype/src/wet_run/lore/__init__.py` (fragment_hook wiring)
+- `tests/unit/test_engagement.py` (Phase 1+2 회귀 테스트)
+- v1.1.0 final 통합: 8 ADR proposal 중 5개 shipped (Top 3 + Master Whisper), 3개 (Hardcore/NG+/Construct companion)는 별도 디자인
+
+**Notes**: Partial → Full 사이클. Phase 1+2는 Option 1 partial — Top 3 채택 시점, 2026-08-03 Cycle 4 polish 1~4 완료 후 본 phase 완결.
+
+---
+
 ## 변경 이력
 
 - 2026-07-28: Draft 작성 (사용자 consultation 후속)

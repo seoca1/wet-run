@@ -128,3 +128,38 @@ class T:
     def t1(self): from wet_run.missions.board import _p; m=_p(dict(id="t",title="T",fixer="finn",grade_min=1,grade_max=2,matrix_seed=0,zone="surface")); assert m is not None and m.random_weight==1.0
     def t2(self): import json; d=json.load(open("prototype/data/missions/missions.json")); assert d["ghost_signal_origin"].get("random_weight")==1.5
     def t3(self): import json; d=json.load(open("prototype/data/missions/missions.json")); assert d["hosaka_after_hours"].get("random_weight")==1.2
+
+
+
+class TestWeightedPick:
+    """Tests for board.py select_weighted + random_rules weighted pick with random_weight (ADR-0208)."""
+
+    def test_get_random_mission_with_weights(self) -> None:
+        from wet_run.missions.random_rules import get_random_mission
+        weights = {"a": 0.0, "b": 1.0, "c": 0.0}
+        for _ in range(20):
+            result = get_random_mission(state=type("S", (), {})(), available_missions=["a", "b", "c"], seed=None, mission_weights=weights)
+            assert result == "b", f"weighted pick failed with zero-weight a,c got {result}"
+
+    def test_get_random_mission_excludes_zero_weight(self) -> None:
+        from wet_run.missions.random_rules import get_random_mission
+        weights = {"a": 0.0, "b": 1.0, "c": 0.5}
+        seen = set()
+        for seed in range(50):
+            result = get_random_mission(state=type("S", (), {})(), available_missions=["a", "b", "c"], seed=seed, mission_weights=weights)
+            seen.add(result)
+        assert "a" not in seen, f"zero-weight mission a should be excluded, seen={seen}"
+
+    def test_select_weighted_uses_self_mission_weights(self) -> None:
+        from wet_run.missions.board import JobBoard, Mission
+        from wet_run.matrix.node import ZoneDepth
+        m1 = Mission(id="common", title="Common", fixer="finn", arc=1, grade_min=1, grade_max=2, matrix_seed=0, zone=ZoneDepth.SURFACE, random_weight=0.001)
+        m2 = Mission(id="rare", title="Rare", fixer="finn", arc=1, grade_min=1, grade_max=2, matrix_seed=0, zone=ZoneDepth.SURFACE, random_weight=1.0)
+        board = JobBoard((m1, m2))
+        state = type("S", (), {"grade": 1, "faction_rep": 0})()
+        seen = set()
+        for seed in range(30):
+            result = board.select_weighted(state=state, available=(m1, m2), seed=seed)
+            if result is not None:
+                seen.add(result.id)
+        assert "rare" in seen, f"rare mission should be selected at least once, seen={seen}"

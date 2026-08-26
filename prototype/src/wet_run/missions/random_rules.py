@@ -256,7 +256,7 @@ def get_random_mission(
     Returns:
         Selected mission ID or None if no missions available.
     """
-    result = get_random_mission_with_rule(state, available_missions, seed=seed)
+    result = get_random_mission_with_rule(state, available_missions, seed=seed, mission_weights=mission_weights)
     if result is None:
         return None
     return result[0]
@@ -286,6 +286,20 @@ def get_random_mission_with_rule(
         rng: random.Random = random.Random(seed)
     else:
         rng = random.Random()
+
+    # Phase 17 + ADR-0208: mission_weights multiplies per-mission weight.
+    if mission_weights is not None:
+        weights = [max(0.0, mission_weights.get(m, 1.0)) for m in available_missions]
+        total_weight = sum(weights)
+        if total_weight <= 0:
+            return None
+        pick = rng.uniform(0, total_weight)
+        cumulative = 0.0
+        for mid, weight in zip(available_missions, weights, strict=False):
+            cumulative += weight
+            if pick <= cumulative:
+                return mid, None
+        return available_missions[-1], None
 
     active_rules = get_all_active_rules(state)
     weights = [_compute_weight_modifier(r, state) for r in active_rules]

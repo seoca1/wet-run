@@ -74,11 +74,15 @@ class JobBoard:
     format (ADR-0017).
     """
 
-    __slots__ = ("_missions",)
+    __slots__ = ("_missions", "_mission_weights")
 
     def __init__(self, missions: tuple[Mission, ...] = ()) -> None:
         """Create a JobBoard pre-populated with ``missions`` (indexed by id)."""
         self._missions = {m.id: m for m in missions}
+        self._mission_weights: dict[str, float] = {
+            mid: mission.random_weight
+            for mid, mission in self._missions.items()
+        }
 
     @classmethod
     def load(cls, path: Path) -> JobBoard:
@@ -148,6 +152,7 @@ class JobBoard:
         state: object,
         available: tuple[Mission, ...] | None = None,
         seed: int | None = None,
+        mission_weights: dict[str, float] | None = None,
     ) -> Mission | None:
         """Select a mission using random_rules weighting (ADR-0188).
 
@@ -174,7 +179,11 @@ class JobBoard:
             return None
 
         mission_ids = [m.id for m in available]
-        result = get_random_mission_with_rule(state, mission_ids, seed=seed)
+        if mission_weights is None:
+            mission_weights = self._mission_weights
+        result = get_random_mission_with_rule(
+            state, mission_ids, seed=seed, mission_weights=mission_weights
+        )
         if result is None:
             return None
         selected_id, rule_id = result

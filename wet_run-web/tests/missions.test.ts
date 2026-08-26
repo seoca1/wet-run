@@ -1,7 +1,6 @@
-/** Tier 2a tests for mission catalog loading + selection logic.
- */
 import { describe, it, expect } from "vitest";
 import missionsData from "../src/data/missions.json" with { type: "json" };
+import iceTypesData from "../src/data/ice_types.json" with { type: "json" };
 
 type MissionsFile = Readonly<Record<string, import("../src/core/types.js").Mission>>;
 
@@ -9,6 +8,11 @@ describe("mission catalog", () => {
   it("loads at least 5 missions for Tier 2a MVP", () => {
     const data = missionsData as unknown as MissionsFile;
     expect(Object.keys(data).length).toBeGreaterThanOrEqual(5);
+  });
+
+  it("loads exactly 15 missions for Tier 2c", () => {
+    const data = missionsData as unknown as MissionsFile;
+    expect(Object.keys(data).length).toBe(15);
   });
 
   it("each mission has required fields", () => {
@@ -30,28 +34,72 @@ describe("mission catalog", () => {
     expect(uniqueIds.size).toBe(ids.length);
   });
 
-  it("mission IDs match tier 2a curation", () => {
+  it("mission IDs match tier 2c curation", () => {
     const data = missionsData as unknown as MissionsFile;
     const ids = Object.keys(data);
-    // Tier 2a selection: 5 curated missions (per export script MVP_MISSION_IDS).
-    const expected = ["first_jack", "watchdog_patrol", "ono_sendai_repair", "construct_market", "ghost_signal_origin"];
-    for (const id of expected) {
-      expect(ids, `expected ${id} in tier 2a catalog`).toContain(id);
-    }
+    const expected = [
+      "first_jack",
+      "watchdog_patrol",
+      "ono_sendai_repair",
+      "construct_market",
+      "ghost_signal_origin",
+      "razor_work",
+      "soho_blackout",
+      "delivery_to_finn",
+      "ice_run",
+      "armitage_infiltration",
+      "flatline_call",
+      "hosaka_corporate_infiltration",
+      "idoru_wedding",
+      "laney_node_signal_run",
+      "first_contact",
+    ];
+    expect(ids.sort()).toEqual([...expected].sort());
   });
 
-  it("missions span tier 1-2 difficulty curve", () => {
+  it("missions span tier 1-3 difficulty curve", () => {
     const data = missionsData as unknown as MissionsFile;
     const tiers = Object.values(data).map((m) => m.grade_max);
     const minTier = Math.min(...tiers);
     const maxTier = Math.max(...tiers);
-    expect(minTier).toBeLessThanOrEqual(2); // tutorial entry
-    expect(maxTier).toBeGreaterThanOrEqual(2); // some tier 2
+    expect(minTier).toBe(1);
+    expect(maxTier).toBe(3);
   });
 
-  it("fixers are diverse (variety for narrative)", () => {
+  it("fixers span at least 4 distinct names", () => {
     const data = missionsData as unknown as MissionsFile;
     const fixers = new Set(Object.values(data).map((m) => m.fixer));
-    expect(fixers.size).toBeGreaterThanOrEqual(2); // At least 2 fixers across the 5 missions
+    expect(fixers.size).toBeGreaterThanOrEqual(4);
+  });
+
+  it("zones span surface/mid/deep/core/aftermath", () => {
+    const data = missionsData as unknown as MissionsFile;
+    const zones = new Set(Object.values(data).map((m) => m.zone));
+    expect(zones.has("surface")).toBe(true);
+    expect(zones.has("mid") || zones.has("deep") || zones.has("core")).toBe(true);
+  });
+});
+
+describe("ice types (Tier 2c variety)", () => {
+  it("loads exactly 12 ICE types", () => {
+    const data = iceTypesData as unknown as Record<string, unknown>;
+    expect(Object.keys(data).length).toBe(12);
+  });
+
+  it("ICE types include tier 1-3 representatives", () => {
+    const data = iceTypesData as unknown as Record<string, { tier?: number }>;
+    const tiers = new Set(Object.values(data).map((i) => i.tier));
+    expect(tiers.has(1)).toBe(true);
+    expect(tiers.has(2)).toBe(true);
+    expect(tiers.has(3)).toBe(true);
+  });
+
+  it("ICE catalog includes Gibson-flavor types", () => {
+    const ids = Object.keys(iceTypesData as object);
+    expect(ids).toContain("watchdog");
+    expect(ids).toContain("spider");
+    expect(ids).toContain("loa_priest");
+    expect(ids).toContain("black");
+    expect(ids).toContain("goliath");
   });
 });

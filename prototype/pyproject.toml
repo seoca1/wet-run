@@ -55,6 +55,12 @@ exclude = [
 exclude = [
     "data/sounds_test/*.wav",
     "data/sounds_test/*",
+    ".venv/",
+    ".venv-*/",
+    "build/",
+    "dist/",
+    ".eggs/",
+    "*.egg-info/",
 ]
 
 [tool.ruff]

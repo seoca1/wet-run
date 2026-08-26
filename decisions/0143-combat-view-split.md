@@ -123,4 +123,23 @@ All tests pass — re-export 계약 유지.
 
 *ADR-0143 closes the ADR-0113 § 향후 split 계획 deferred work (v1.1.0+ → v1.1.0a1 cycle).*
 
+## Implementation Status (2026-08-26)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- ✅ `combat/state.py` — coordinator (state machine)
+- ✅ `combat/state_models.py` — dataclass / state definitions (ADR-0141 partial split 결과)
+- ✅ `combat/state_transitions.py` — transition rules
+- ✅ `combat/hud.py` — render HUD layer
+- ✅ `combat/state_effects.py` + `state_effects_v2.py` — status effect rendering
+- ✅ `combat/phase_cinematics.py` — phase intro cinematic
+- ✅ `combat/finisher_combos.py` — combo resolution
+- ✅ `combat/palette.py` — color palette integration
+- ADR-0143 결과: combat_view.py 972 → coordinator로 축소, 4-way 분할
+
+**Notes**: ADR-0113 정당화 + ADR-0141 partial split 통합. ADR-0142와 함께 "4-way coordinator split" 패턴 확립.
+
+---
+
 *ADR-0142 + ADR-0143 establish the "4-way coordinator split" pattern for monolithic view modules in wet_run engine.*

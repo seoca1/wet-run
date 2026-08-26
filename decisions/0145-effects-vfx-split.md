@@ -135,4 +135,19 @@ All tests pass — re-export 계약 유지.
 
 *ADR-0145 closes the ADR-0112 § 향후 split plan deferred work (effects_vfx.py 856 → 132 LOC facade).*
 
+## Implementation Status (2026-08-26)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- ✅ `combat/effects_vfx.py` (132 LOC, facade) — public API only
+- ✅ `combat/effects_vfx_animations.py` — animation primitives concern
+- ✅ `combat/effects_vfx_cinematics.py` — cinematic/boss intro concern
+- ✅ `combat/effects_vfx_compose.py` (350 LOC) — composition + spawn functions
+- ADR-0145 결과: effects_vfx.py 856 → 132 LOC facade (-85%), 3-way concern split 완료
+
+**Notes**: ADR-0112 deferred work 정리. 모듈 사이즈 정책 100% 준수 (effects_data.py 507 LOC는 PR threshold 약간 상회, acceptable). ADR-0142 ~ 0145 시리즈로 "coordinator + concern modules" 패턴 확립.
+
+---
+
 *ADR-0142 + ADR-0143 + ADR-0144 + ADR-0145 establish the "coordinator + concern modules" pattern for monolithic modules in wet_run engine.*

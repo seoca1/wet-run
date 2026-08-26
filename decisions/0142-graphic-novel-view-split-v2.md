@@ -137,4 +137,23 @@ All 229 graphic_novel-related tests pass — re-export 계약 유지.
 
 ---
 
+## Implementation Status (2026-08-26)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- ✅ `engine/gn_render/scene.py` (357 LOC, render scene) — 신규
+- ✅ `engine/gn_render/card.py` (230 LOC, render card) — 신규
+- ✅ `engine/gn_render/text.py` (159 LOC, render text) — 신규
+- ✅ `engine/gn_render/__init__.py` — public package, 하위 호환 re-exports
+- ✅ `screen_dispatch.py:render_graphic_novel_screen` — 새 모듈 사용
+- ✅ `menu.py:render_graphic_novel_menu, available_endings, load_*` — 새 모듈 사용
+- ✅ `state.py:SceneData` — 데이터 모델 유지
+- ✅ `salvation.py:SceneData, load_scene` — 데이터 모델 유지
+- ADR-0142 결과: graphic_novel_view 1266 → 231 LOC (-82%)
+
+**Notes**: ADR-0133 v1 split (data + loaders) 후속으로 v2 (render + menu) 분리 완료. ADR-0110 모듈 사이즈 정책 준수.
+
+---
+
 *ADR-0142 closes the ADR-0133 § 향후 split 계획 deferred work (v1.1.0+ → v1.1.0a1 cycle).*

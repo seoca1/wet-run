@@ -134,4 +134,19 @@ effects.py 와 effects_vfx.py 양쪽 import 한 곳 (예: `from . import effects
 
 *ADR-0144 closes the ADR-0112 § 향후 split 계획 deferred work (effects.py facade 축소) + eliminates the effects.py ↔ effects_vfx.py circular import.*
 
+## Implementation Status (2026-08-26)
+
+**Status**: ✅ Implemented
+
+**Evidence**:
+- ✅ `combat/effects.py` (70 LOC, facade) — public API only
+- ✅ `combat/effects_data.py` — data extraction (constants, enums, JSON loaders)
+- ✅ `combat/effects_vfx.py` (856 LOC) — VFX rendering logic
+- ADR-0144 결과: effects.py 1246 → 70 LOC facade (-94%), data extraction 완료
+- ADR-0112 partial split 통합 (effects.py 504 → 577 LOC growth → 70 LOC)
+
+**Notes**: ADR-0110 정합 (effects.py 70 LOC facade + effects_vfx.py 856 LOC within exception). Circular import 해소. ADR-0142/0143과 함께 "view/data extraction" 패턴 확립.
+
+---
+
 *ADR-0142 + ADR-0143 + ADR-0144 establish the "view/data extraction" pattern for monolithic modules in wet_run engine.*

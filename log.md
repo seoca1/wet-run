@@ -3078,3 +3078,128 @@ dd9a960 chore(dashboard): delete 127 legacy flat-path story HTML files
 | 7 | Fiction Track C (Phase C1-C4 blocked novels) | Awaiting raw source |
 
 ### SESSION END — 2026-08-26
+
+### SESSION 2026-08-26 (continued) — v1.4.0 Operational Release dry-run
+
+**Scope**: v1.4.0 Operational Release 후속 5개 항목 중 dry-run 검증 (push/upload 없음). 사용자 "전부 순서대로" + "ADR 2개 먼저" + "연습용 dry-run 우선" 지시 따름.
+
+**Working tree 진입 시점**:
+```
+M decisions/0199-wetrun-web-mvp.md   # Tier 2 Update section (2026-08-25 autonomous expansion, 미커밋)
+?? prototype/data/saves/crash.log     # runtime 생성, .gitignore 검토 필요
+```
+
+**완료 항목 (5개 중 5개 dry-run)**:
+
+1. **ADR-0194 Draft → Accepted (Option 3 Hybrid)** ✅
+   - `decisions/0194-ecs-role-clarification.md`: Status + Consequences + 변경 이력 업데이트
+   - ECS-lite = dungeon/room 도메인 한정 선택적 도구, 그 외 = OOP/dataclass
+   - 후속 작업 4건 명시: ARCHITECTURE.md §14 / AGENTS.md §6 / ecs/__init__.py docstring / README.md 인덱스
+
+2. **ADR-0195 Draft → Accepted (Option 1+3 Hybrid)** ✅
+   - `decisions/0195-adr-implementation-workflow.md`: Status + Consequences + 변경 이력 업데이트
+   - Implementation Status 섹션 의무화 (✅/🟡/❌/🟢 4종) + 인덱스 Impl 컬럼 추가
+   - 후속 작업 4건 (Phase 1~4): 40+ ADR sweep / AGENTS.md §3.2 / README.md 표 / template.md
+
+3. **PyPI 자격증명 + uv build dry-run** ⚠️
+   - `TWINE_USERNAME` / `TWINE_PASSWORD` / `PYPI_TOKEN` 환경변수 **없음**
+   - `~/.pypirc` **없음** → upload 불가 (사용자 credential 제공 필요)
+   - `uv build` dry-run: **실패** — hatchling sdist exclude에 `.venv/` 누락 → external symlink 거부
+     - Pre-existing build issue 발견 (수정 필요: `[tool.hatch.build.targets.sdist] exclude`에 `.venv/`, `.venv-*/` 추가)
+
+4. **GitHub v1.4.0 tag dry-run** ✅
+   - `git tag v1.4.0` 로컬 생성 완료 (push 안 함)
+   - tag message: "v1.4.0 Game Quality Upgrade (Tracks A + B + D)"
+   - tag hash: `f517e307d6c78ecb028dca1b51a7bdd74808b4cc`
+   - release notes draft: `/tmp/wet_run_v1.4.0_release_notes.md` (59 lines, CHANGELOG [1.4.0] 전문)
+
+5. **Git LFS D4 결정 자료** ✅ (사용자 결정 대기)
+   - 총 326MB audio:
+     - `prototype/data/sounds_test/` = **61MB** (46 placeholder WAV, game runtime)
+     - `dashboard/sounds/full/` = **~218MB** (24 mp3, 미니맥스 BGM, 5-8MB each)
+     - `data/sounds_test/` = **2.3MB** (legacy)
+   - wheel/sdist는 이미 `data/sounds_test/*.wav` exclude (wheel invalid 방지)
+   - GitHub LFS: 무료 1GB/월, Pro 2GB/월 → 326MB는 무료 tier 내
+   - **트레이드오프**: clone 부담 vs release artifact 명확성
+
+**인덱스 동기화** ✅:
+- `decisions/README.md` 121-122줄: 0194/0195 상태 Draft → **Accepted** + 부가 메모
+
+**검증 (no regressions)**:
+- `ruff check src/wet_run/`: 통과 (변경 없음)
+- `mypy --strict`: 통과 (ADR만 변경, 코드 무관)
+- `pytest`: 영향 없음 (ADR만 변경)
+
+**미커밋 변경 (this session)**:
+```
+M decisions/0194-ecs-role-clarification.md
+M decisions/0195-adr-implementation-workflow.md
+M decisions/0199-wetrun-web-mvp.md    # 이전 세션 잔여 (Tier 2 Update)
+M decisions/README.md                  # ADR 인덱스 상태 동기화
+```
+
+**사용자 결정 대기 항목**:
+1. **PyPI 자격증명** 제공 (TWINE_USERNAME/PASSWORD or PYPI_TOKEN) — upload 진행 시
+2. **PyPI upload 실행** — 자격증명 확인 후 `uv build && twine upload dist/*`
+3. **GitHub tag v1.4.0 push** — 로컬 tag를 `origin` 으로 push
+4. **GitHub release 작성** — release notes를 GitHub UI or `ghgh release create` 로 게시
+5. **Git LFS D4 결정** — 적용 / 보류 / 부분 적용 중 선택
+6. **pyproject.toml hatch exclude .venv** 수정 — pre-existing build issue 해결
+7. **ADR-0194/0195 변경 commit 작성** — 1 commit (decisions/) 또는 2 commit (ADR별)
+8. **ADR-0199 Tier 2 Update commit 작성** — 이전 세션 잔여
+
+**Open follow-ups** (carry-over from prior session, unchanged):
+- `git push origin main` (wet_run + workspace): GH_TOKEN
+- Tier 2b (Howler.js audio): silent per operator gate
+- Tier 3 (more missions + VFX): gated on playtest
+- Fiction Track C (Phase C1-C4 blocked novels): awaiting raw source
+
+### SESSION END — 2026-08-26 (continued, dry-run only, no push/upload)
+
+---
+
+## 🚀 v1.4.0 PyPI Release — POST-UPLOAD (2026-08-26 17:23 KST)
+
+**Status**: ✅ **PyPI upload SUCCESS** (https://pypi.org/project/wet-run/1.4.0/)
+
+### Pre-flight
+- **hatch sdist exclude 확장**: `.venv/`, `.venv-*/`, `build/`, `dist/`, `.eggs/`, `*.egg-info/` 추가
+- 파일: `prototype/pyproject.toml` line 54-65 (sdist target)
+
+### Build artifacts
+- `wet_run-1.4.0-py3-none-any.whl` (579 KB)
+- `wet_run-1.4.0.tar.gz` (2.86 MB)
+- `data/sounds_test/*.wav` excluded (wheel invalid 방지)
+
+### Upload
+- **Method**: `uv publish` (with `UV_PUBLISH_TOKEN`)
+- **Endpoint**: https://upload.pypi.org/legacy/
+- **Project**: https://pypi.org/project/wet-run/
+- **Version**: 1.4.0
+- **License**: MIT
+- **Upload time (UTC)**: 2026-08-26T08:23:48 (= 17:23 KST)
+
+### ⚠️ SECURITY: Token Rotation Required
+- **이 토큰은 Orca `~/.orca/agent-hooks/claude-hook.sh` UserPromptSubmit hook을 통해 Claude Code transcript `~/.claude/transcripts/ses_*.jsonl` 에 영구 기록됨**
+- **즉시 PyPI에서 regenerate 필요**: https://pypi.org/manage/account/token/
+- Transcript leak 확인: `grep -l "pypi-AgEIcHlwaS5vcmc" ~/.claude/transcripts/*.jsonl`
+
+### Working tree 상태 (post-upload)
+```
+M decisions/0194-ecs-role-clarification.md
+M decisions/0195-adr-implementation-workflow.md
+M decisions/0199-wetrun-web-mvp.md
+M decisions/README.md
+M log.md  (이 항목 포함)
+M prototype/pyproject.toml  (hatch sdist exclude 확장)
+?? prototype/data/saves/crash.log
+```
+
+### 다음 단계 (사용자 결정 대기)
+1. **hatch exclude 수정 commit** — pyproject.toml 변경 사항 commit
+2. **ADR-0194/0195 commit** — decisions/ 변경 사항 commit
+3. **ADR-0199 Tier 2 Update commit** — 이전 세션 잔여
+4. **PyPI token 회전** — 보안 필수
+5. **GitHub v1.4.0 tag push** — `git push origin v1.4.0`
+6. **GitHub release 작성** — CHANGELOG [1.4.0] release notes
+7. **Git LFS D4 결정** — 326MB audio LFS 적용 여부

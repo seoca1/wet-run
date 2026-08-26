@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [1.4.0] — 2026-08-20 — Game Quality Upgrade (Tracks A + B + D)
 
+> **Released**: 2026-08-26 ([PyPI](https://pypi.org/project/wet-run/1.4.0/) · Git tag `v1.4.0`)
+
 ### Track A — Foundation Health (7 items)
 
 - **A.1 ADR Implementation Status sweep**: 40 ADRs (0147-0193) reconciled with `## Implementation Status (2026-08-20)` sections (31 ✅ + 9 🟡 Partial)

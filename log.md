@@ -4195,3 +4195,52 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 
 - Commit pending: `fix(wet_run): test suite restoration — random_weights signature + AFTERMATH ZDR + stale contracts`
 - 5 files, +30 / -14 lines
+
+---
+
+## 🔍 Prologue Menu + Web Verification (3-track) — 2026-08-27
+
+**Scope**: 사용자 요청 — "프롤로그 메뉴 게임 진행 검증. 설계안과 버전별 구현안 비교하고 웹 버전 검증."
+
+### Track 1 — Python Prologue Menu ✅
+
+- **검증**: MENU → GRAPHIC_NOVEL_MENU → [1] PROLOGUE → load_prologue_chain() → GRAPHIC_NOVEL
+- **테스트**: 527 prologue/GN tests + 42 graphic_novel_view tests + integration smoke 전부 통과
+- **Drift 발견 + 수정**: design doc "3 chars × 4 scenes = 12" → actual "9 chars × 4 scenes = 36" (Phase 7 확장 후 stale)
+- **graphic-novel.md**: line 102 갱신 (12 → 36 scenes)
+
+### Track 2 — Design vs Implementation 비교표 ✅
+
+- **새 문서**: `docs/prologue-verification-2026-08-27.md` (185 lines, 8 sections)
+- 8개 비교표: 메인메뉴 / 플로우 / 콘텐츠 카운트 / 전투 / 저장 / 오디오 / 입력 / 검증 인프라
+- **Python ↔ wet_run-web 차이점 명확화**: web은 Tier 1-4 의도적 단순화 (단일 미션, 메뉴 1개, 다중 미션 run 없음)
+
+### Track 3 — wet_run-web E2E 검증 ✅
+
+- **신규 E2E 2종** (×2 projects = 4 tests):
+  - `idb_save.spec.ts`: save → reload page → game re-mount + canvas 렌더 검증
+  - `layout.spec.ts`: canvas aspect ↔ viewport aspect 일치 검증
+- **결과**: 10/10 E2E pass (desktop + mobile-portrait, smoke + progression + idb + layout)
+- **추가**: 106 vitest unit tests (unchanged)
+
+### 검증 종합
+
+| Check | Result |
+|---|---|
+| pytest tests/ (Python) | ✅ 5850 passed + 0 failed |
+| ruff check src/ | ✅ All checks passed |
+| mypy --strict (Python) | ✅ 0 issues / 233 files |
+| mkdocs build --strict | ✅ 0 errors |
+| npx tsc --noEmit (web) | ✅ 0 errors |
+| npm test (web) | ✅ 106 passed |
+| npx playwright test (web) | ✅ 10 passed (8.0s) |
+
+### Commit pushed
+
+- `a9d7ad9` test+docs: prologue verification + 2 new E2E + drift fix (4 files, +327/-1)
+
+### 후속 (carry-over, 다음 세션)
+
+1. 🟡 Phase 7 확장 시 다른 design doc 동시 갱신 (5 옵션 → 7 옵션 claim 검증)
+2. 🟢 Web MVP 추가 E2E: combat 히트플래시 VFX 검증, audio 컨텍스트 unlock 검증
+3. 🟢 Tier 5 web features (status state machine 통합, fade, save 압축)

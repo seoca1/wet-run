@@ -11,50 +11,50 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 
 ## 결정 목록
 
-| 번호 | 제목 | 상태 | 날짜 | 우선순위 |
-| --- | --- | --- | --- | --- |
-| 0001 | 엔진/프레임워크 | **Accepted** | 2026-06-17 | P0 |
-| 0002 | 비주얼 스타일 | **Accepted** | 2026-06-17 | P0 |
-| 0003 | 전투 시스템 (RT-MS) | **Accepted (Revised)** | 2026-06-17 | P1 |
-| 0004 | 코드 아키텍처 | **Accepted** | 2026-06-17 | P0 |
-| 0005 | 사이버스페이스 표현 | **Accepted** | 2026-06-17 | P1 |
-| 0006 | 런 구조 (로그라이크 vs 로그라이트) | **Accepted** | 2026-06-17 | P0 |
-| 0007 | 플랫폼 타겟 | **Accepted** | 2026-06-17 | P0 |
-| 0008 | 진행 / 레벨업 시스템 | **Accepted (Revised)** | 2026-06-17 | P1 |
-| 0009 | Story / News 전달 시스템 | **Accepted** | 2026-06-17 | P1 |
-| 0010 | i18n + Content Pipeline | **Accepted** | 2026-06-17 | P1 |
-| 0011 | ASCII Portraits (인물/객체 시각 식별) | **Accepted** | 2026-06-17 | P1 |
-| 0012 | Combat Difficulty & Threat Level (PPL & ZDR) | **Accepted** | 2026-06-17 | P0 |
-| 0013 | Story Events System (소설 스토리 이벤트) | **Accepted** | 2026-06-17 | P1 |
-| 0014 | Data Salvage (전투 승리 보상 — 데이터 회수) | **Accepted** | 2026-06-18 | P1 |
-| 0015 | Material & Crafting System (재료 & 조합) | **Accepted** | 2026-06-18 | P1 |
-| 0016 | Jockey Avatar (자키 아바타 — 스탯 시각화) | **Accepted** | 2026-06-18 | P1 |
-| 0017 | Mission-Material Integration (미션-재료 통합) | **Accepted** | 2026-06-18 | P1 |
-| 0018 | Combat Animation (전투 ASCII 애니메이션) | **Accepted** | 2026-06-18 | P1 |
-| 0019 | Combat Aftermath & Immersive Subtitles (전투 후일담 & 한글 자막) | **Accepted** | 2026-06-18 | P1 |
-| 0020 | Fog of War + Exploration (안개 / 탐험 메카닉) | **Accepted** | 2026-06-18 | P1 |
-| 0030 | GitHub Utilization Plan (GitHub 활용 계획) | **Accepted** | 2026-07-04 | P2 |
-| 0031 | Original Scenario Integration (단편 → 챕터 → 초반 플레이 통합) | **Accepted** | 2026-06-20 | P1 |
-| 0032 | Graphic Novel Auto-Play Mode + Main Menu 확장 (5 옵션) | **Accepted** | 2026-06-20 | P1 |
-| 0040 | Death & Restart Cycle (자키 사이클 + Hall of Dead) | **Accepted** | 2026-06-20 | P1 |
-| 0041 | Graphic Novel Content Expansion (씬 dialogue 4× 확장) | **Accepted** | 2026-06-20 | P1 |
-| 0042 | Chapter Title Cards / Scene Transitions (로마 숫자 + fade) | **Accepted** | 2026-06-20 | P2 |
-| 0043 | Sound Cue Integration (15개 cue → file 매핑) | **Accepted** | 2026-06-20 | P2 |
-| 0044 | Graphic Novel Save/Restore (이어서 읽기) | **Accepted** | 2026-06-20 | P2 |
-| 0046 | Graphic Novel Ending B (대안 결말) | **Accepted** | 2026-06-21 | P1 |
-| 0047 | Text Visibility (Typed Status Messages) | **Accepted** | 2026-06-21 | P2 |
-| 0048 | GN Ending Menu + Save Migration 1.1.0 | **Accepted** | 2026-06-21 | P2 |
-| 0049 | Graphic Novel Ending C (3rd ending) + Save 1.2.0 | **Accepted** | 2026-06-21 | P2 |
-| 0050 | Boss ICE System (Wintermute + T-A Prime 3-phase) | **Accepted** | 2026-06-21 | P1 |
-| 0051 | Mission Story Metadata (미션 ↔ 단편 직접 매핑) | **Accepted** | 2026-06-22 | P1 |
-| 0052 | Short Story Expansion Plan (단편 3편 보강) | **Accepted** | 2026-06-22 | P2 |
-| 0060 | Dungeon Exploration Redesign (NetHack + VFX) | **Accepted** | 2026-06-30 | P2 |
-| 0061 | Novel Integration Architecture (Hook 디스패치) | **Accepted** | 2026-06-30 | P2 |
-| 0090 | Salvation Phase Integration (9자 × epilogue + ChapterState 3개 + Stage 1개) | **Accepted** | 2026-07-07 | P2 |
+| 번호 | 제목 | 상태 | Impl | 날짜 | 우선순위 |
+| --- | --- | --- | --- | --- | --- |
+| 0001 | 엔진/프레임워크 | **Accepted** | — | 2026-06-17 | P0 |
+| 0002 | 비주얼 스타일 | **Accepted** | — | 2026-06-17 | P0 |
+| 0003 | 전투 시스템 (RT-MS) | **Accepted (Revised)** | — | 2026-06-17 | P1 |
+| 0004 | 코드 아키텍처 | **Accepted** | — | 2026-06-17 | P0 |
+| 0005 | 사이버스페이스 표현 | **Accepted** | — | 2026-06-17 | P1 |
+| 0006 | 런 구조 (로그라이크 vs 로그라이트) | **Accepted** | — | 2026-06-17 | P0 |
+| 0007 | 플랫폼 타겟 | **Accepted** | — | 2026-06-17 | P0 |
+| 0008 | 진행 / 레벨업 시스템 | **Accepted (Revised)** | — | 2026-06-17 | P1 |
+| 0009 | Story / News 전달 시스템 | **Accepted** | — | 2026-06-17 | P1 |
+| 0010 | i18n + Content Pipeline | **Accepted** | — | 2026-06-17 | P1 |
+| 0011 | ASCII Portraits (인물/객체 시각 식별) | **Accepted** | — | 2026-06-17 | P1 |
+| 0012 | Combat Difficulty & Threat Level (PPL & ZDR) | **Accepted** | — | 2026-06-17 | P0 |
+| 0013 | Story Events System (소설 스토리 이벤트) | **Accepted** | — | 2026-06-17 | P1 |
+| 0014 | Data Salvage (전투 승리 보상 — 데이터 회수) | **Accepted** | — | 2026-06-18 | P1 |
+| 0015 | Material & Crafting System (재료 & 조합) | **Accepted** | — | 2026-06-18 | P1 |
+| 0016 | Jockey Avatar (자키 아바타 — 스탯 시각화) | **Accepted** | — | 2026-06-18 | P1 |
+| 0017 | Mission-Material Integration (미션-재료 통합) | **Accepted** | — | 2026-06-18 | P1 |
+| 0018 | Combat Animation (전투 ASCII 애니메이션) | **Accepted** | — | 2026-06-18 | P1 |
+| 0019 | Combat Aftermath & Immersive Subtitles (전투 후일담 & 한글 자막) | **Accepted** | — | 2026-06-18 | P1 |
+| 0020 | Fog of War + Exploration (안개 / 탐험 메카닉) | **Accepted** | — | 2026-06-18 | P1 |
+| 0030 | GitHub Utilization Plan (GitHub 활용 계획) | **Accepted** | — | 2026-07-04 | P2 |
+| 0031 | Original Scenario Integration (단편 → 챕터 → 초반 플레이 통합) | **Accepted** | — | 2026-06-20 | P1 |
+| 0032 | Graphic Novel Auto-Play Mode + Main Menu 확장 (5 옵션) | **Accepted** | — | 2026-06-20 | P1 |
+| 0040 | Death & Restart Cycle (자키 사이클 + Hall of Dead) | **Accepted** | — | 2026-06-20 | P1 |
+| 0041 | Graphic Novel Content Expansion (씬 dialogue 4× 확장) | **Accepted** | — | 2026-06-20 | P1 |
+| 0042 | Chapter Title Cards / Scene Transitions (로마 숫자 + fade) | **Accepted** | — | 2026-06-20 | P2 |
+| 0043 | Sound Cue Integration (15개 cue → file 매핑) | **Accepted** | — | 2026-06-20 | P2 |
+| 0044 | Graphic Novel Save/Restore (이어서 읽기) | **Accepted** | — | 2026-06-20 | P2 |
+| 0046 | Graphic Novel Ending B (대안 결말) | **Accepted** | — | 2026-06-21 | P1 |
+| 0047 | Text Visibility (Typed Status Messages) | **Accepted** | — | 2026-06-21 | P2 |
+| 0048 | GN Ending Menu + Save Migration 1.1.0 | **Accepted** | — | 2026-06-21 | P2 |
+| 0049 | Graphic Novel Ending C (3rd ending) + Save 1.2.0 | **Accepted** | — | 2026-06-21 | P2 |
+| 0050 | Boss ICE System (Wintermute + T-A Prime 3-phase) | **Accepted** | — | 2026-06-21 | P1 |
+| 0051 | Mission Story Metadata (미션 ↔ 단편 직접 매핑) | **Accepted** | — | 2026-06-22 | P1 |
+| 0052 | Short Story Expansion Plan (단편 3편 보강) | **Accepted** | — | 2026-06-22 | P2 |
+| 0060 | Dungeon Exploration Redesign (NetHack + VFX) | **Accepted** | — | 2026-06-30 | P2 |
+| 0061 | Novel Integration Architecture (Hook 디스패치) | **Accepted** | — | 2026-06-30 | P2 |
+| 0090 | Salvation Phase Integration (9자 × epilogue + ChapterState 3개 + Stage 1개) | **Accepted** | — | 2026-07-07 | P2 |
 | 0104 | GN Save Slot 확장 (3 슬롯) | **Accepted (2026-07-25)** | 2026-06-21 | P2 |
 | 0101 | Fiction Metadata 보강 계획 (status report, not ADR) | (status doc) | — | P3 |
-| 0102 | v1.0.0 Release Decision | **Accepted** | 2026-07-08 | P2 |
-| 0103 | Dungeon-only Mode — `D` 토글 제거, `matrix_view` 폐기 | **Accepted** | 2026-07-10 | P2 (The Matrix) |
+| 0102 | v1.0.0 Release Decision | **Accepted** | — | 2026-07-08 | P2 |
+| 0103 | Dungeon-only Mode — `D` 토글 제거, `matrix_view` 폐기 | **Accepted** | — | 2026-07-10 | P2 (The Matrix) |
 | 0110 | 모듈 사이즈 정책 (현행 250 LOC) | **Accepted (Option 4)** | 2026-07-12 | P3 (The Build) |
 | 0111 | graphic_novel_view.py (1,510 LOC) — 정당화 or 분할 | **Accepted (Option 4)** | 2026-07-12 | P3 (The Build) |
 | 0112 | combat/effects.py (1,246 LOC) — 5-Layer VFX 시스템 | **Accepted (Option 4)** | 2026-07-12 | P3 (The Build) |
@@ -63,68 +63,68 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0125 | Boss Phase AoE + Minion Spawn (Phase B-3 Enhancement) | **Accepted (Option 4)** | 2026-07-26 | P3 (The Build) |
 | 0130 | Balance Audit + PPL/보상 동기화 (Phase 1 정리) | **Accepted (Option 1)** | 2026-07-27 | P1 (The Build) |
 | 0131 | Faction Reputation Cross-Run Persistence (Meta Progression) | **Accepted (Option 1)** | 2026-07-27 | P1 (The Build) |
-| 0133 | graphic_novel_view.py Split — Implementation (Supplements ADR-0111) | **Accepted** | 2026-07-27 | P2 (Build Health) |
+| 0133 | graphic_novel_view.py Split — Implementation (Supplements ADR-0111) | **Accepted** | — | 2026-07-27 | P2 (Build Health) |
 | 0140 | Engagement Layer for v1.1.0 (8 proposals) | **Accepted (Option 1 partial — Top 3)** | 2026-07-28 | P2 (v1.1.0 후보) |
 | 0141 | Additional Module Splits (matrix_view, combat/state) | **Accepted (Option 1 partial — Top 2)** | 2026-07-28 | P3 (v1.1.0+ backlog) |
-| 0142 | graphic_novel_view Split v2 — Implementation (3-way split) | **Accepted** | 2026-08-05 | P2 (Build Health) |
-| 0143 | combat_view Split — Implementation (4-way split) | **Accepted** | 2026-08-05 | P2 (Build Health) |
-| 0144 | combat/effects Split — Data Extraction | **Accepted** | 2026-08-05 | P2 (Build Health) |
-| 0145 | combat/effects_vfx Split — 3-Way Concern Split | **Accepted** | 2026-08-05 | P2 (Build Health) |
-| 0146 | Stage Flow — black_market & ghost_encounter 전이 추가 (Validator FAIL 해결) | **Accepted** | 2026-08-05 | P2 (The Matrix) |
-| 0147 | Data Salvage — Phase 6+ Completion (HEAL + FRAG + CRED + alarm trade-off) | **Accepted** | 2026-08-07 | P1 (Cycle 1 of A+B+C) |
-| 0148 | Combat Depth Expansion (counter window + defense stackable + companion skills + aggression tiers) | **Accepted** | 2026-08-07 | P1 (Cycle 2 of A+B+C) |
-| 0149 | Boss Phase 4 Finale (per-boss mechanics + death taunts + intro enhancement) | **Accepted** | 2026-08-07 | P1 (Cycle 3 of A+B+C) |
-| 0150 | Module Split — `depth.py` + `boss_phase4.py` (ADR-0110 follow-up) | **Accepted** | 2026-08-07 | P2 (Cycle 4 of A+B+C) |
-| 0151 | Info Market Intel Items — CRED Consumption (3 items, close salvage trade-off) | **Accepted** | 2026-08-07 | P1 (Cycle 6, v1.2.0+ bridge) |
-| 0152 | Multi-Enemy Encounters (1v2/1v3) + HEAL Rebalance 20%→15% | **Accepted** | 2026-08-07 | P1 (Cycle 8, v1.2.0+ core) |
-| 0153 | Matrix Encounter Spawn Integration (1v1/1v2/1v3) | **Accepted** | 2026-08-07 | P1 (Cycle 9, v1.2.0+ bridge) |
-| 0154 | Faction Expansion (faction_rumor 4 factions) + i18n (ja/zh) | **Accepted** | 2026-08-07 | P2 (Cycle 10, v1.2.0+ polish) |
-| 0155 | NG+ Grade 5→6 PPL Actual Rebalance (T6 master tier bonus +10) | **Accepted** | 2026-08-07 | P2 (Cycle 11, v1.2.0+ balance) |
-| 0156 | Combat State Module Split (state.py 890 → 3 files) | **Accepted** | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
-| 0157 | Combat Boss Module Split (boss.py 724 → 2 files) | **Accepted** | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
-| 0158 | Combat Combo Module Split (combo.py 685 → 2 files) | **Accepted** | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
-| 0159 | Combat Bosses Cinematic Module Split (bosses.py 627 → 2 files) | **Accepted** | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
-| 0160 | Status Effects System Expansion (DoT/Stun/Slow/Silence/Vulnerability) | **Accepted** | 2026-08-07 | P1 (The Build, Pillar 3 weight) |
-| 0161 | ICE Personality Archetypes (4 behaviors beyond aggression) | **Accepted** | 2026-08-07 | P2 (Pillar 5 variety, Pillar 3 weight via different pressure) |
-| 0162 | Boss Phase 4 Last Stand | **Accepted** | 2026-08-07 | P2 (Pillar 1 climax, Pillar 5 finale) |
-| 0163 | Run Mutators System (5+ modifiers) | **Accepted** | 2026-08-07 | P1 (Pillar 1 run variety, Pillar 4 meta progression) |
-| 0164 | Mission Archetypes (4 mission types) | **Accepted** | 2026-08-07 | P1 (Pillar 1 run variety) |
-| 0165 | Random Matrix Events (4-6 mid-run surprises) | **Accepted** | 2026-08-07 | P2 (Pillar 1 variety, Pillar 5 atmosphere) |
-| 0166 | Phase 6 Arc (Aftermath - Post-Ending NG+ Content) | **Accepted** | 2026-08-07 | P2 (Pillar 1 endgame, Pillar 4 meta progression) |
-| 0167 | Mission Expansion (15 → 25 missions) | **Accepted** | 2026-08-07 | P2 (Pillar 1 content variety, Pillar 5 progression) |
-| 0168 | Death Taunts Library (Per-Boss + Per-ICE) | **Accepted** | 2026-08-07 | P1 (Pillar 5 style, Pillar 3 death weight) |
-| 0169 | Combat Cinematics (Per Boss Phase Intro) | **Accepted** | 2026-08-07 | P2 (Pillar 5 style, Pillar 1 climax) |
-| 0170 | Gibson Fluff Library (200+ Status Messages) | **Accepted** | 2026-08-07 | P1 (Pillar 5 style) |
-| 0171 | ASCII Battle Portrait Evolution | **Accepted** | 2026-08-07 | P2 (Pillar 5 style, Pillar 3 visual feedback) |
-| 0172 | Cyberdeck Customization (8 Program Slots) | **Accepted** | 2026-08-08 | P1 (Pillar 4 Build depth) |
-| 0173 | Wetware Augments (6 Passive Slots) | **Accepted** | 2026-08-08 | P1 (Pillar 4 Build depth) |
-| 0174 | Meta-Progression (Persistent Unlocks) | **Accepted** | 2026-08-08 | P1 (Pillar 1 replay value) |
-| 0175 | Tutorial System (3-Act Onboarding) | **Accepted** | 2026-08-08 | P2 (Pillar 1 learning curve) |
-| 0176 | Achievement System (60+ Achievements) | **Accepted** | 2026-08-08 | P2 (Pillar 1 replay value) |
-| 0177 | Breach Protocol (Matrix Hacking Minigame) | **Accepted** | 2026-08-08 | P1 (Pillar 2 Matrix, Pillar 5 style) |
-| 0178 | Deck Building (6/8/10 Slot Limits) | **Accepted** | 2026-08-08 | P1 (Pillar 4 Build depth) |
-| 0179 | Status Effects v2 (Bleed, Fatigue, Confused, Terrified) | **Accepted** | 2026-08-08 | P2 (Pillar 3 depth) |
-| 0180 | Boss Expansion (+3 Boss Profiles) | **Accepted** | 2026-08-08 | P2 (Pillar 1 variety, Pillar 5 atmosphere) |
-| 0181 | Combo System v2 (Player-Triggered Finisher Combos) | **Accepted** | 2026-08-08 | P2 (Pillar 5 style, Pillar 4 build) |
-| 0182 | Run Replay System (Record + Playback) | **Accepted** | 2026-08-08 | P2 (Pillar 1 replay, Pillar 5 style) |
-| 0183 | Accessibility (Colorblind 3 Modes, Text Size, Input Remapping) | **Accepted** | 2026-08-08 | P2 (Pillar 1 inclusivity + Pillar 5 style) |
-| 0184 | Telemetry (Anonymous Player Behavior Tracking) | **Accepted** | 2026-08-08 | P3 (Pillar 4 balance + Pillar 1 tuning) |
-| 0185 | Save/Load Migration v2 (Versioned, Cloud-Ready) | **Accepted** | 2026-08-08 | P2 (Pillar 1 persistence + Pillar 4 carry) |
-| 0186 | Performance Optimization (Frame Rate, Memory) | **Accepted** | 2026-08-08 | P3 (Pillar 1 smoothness) |
-| 0187 | Boss Phase 5 Expansion (Last Stand) | **Accepted** | 2026-08-08 | P2 (Pillar 1 climax, Pillar 5 finale) |
-| 0188 | Mission Expansion (Phase 11 — Content Expansion, Axis 1) | **Accepted** | 2026-08-08 | P1 (Pillar 1 run variety) |
-| 0189 | ICE Type Expansion (Phase 12 — Content Expansion, Axis 2) | **Accepted** | 2026-08-08 | P2 (Pillar 3 combat variety + Pillar 5 atmosphere) |
-| 0190 | Boss Expansion + F.4 Integration (Phase 12 — Content Expansion, Axis 4) | **Accepted** | 2026-08-08 | P1 (Pillar 1 climax + Pillar 5 finale) |
-| 0191 | Story Events Expansion (Phase 13 — Content Expansion, Axis 3) | **Accepted** | 2026-08-08 | P2 (Pillar 5 atmosphere + Pillar 1 variety) |
-| 0192 | Ending Expansion (Phase 14 — Content Expansion, Axis 5) | **Accepted** | 2026-08-08 | P2 (Pillar 1 replay value + Pillar 5 closure) |
-| 0193 | Programs/Equipment Expansion (Phase 14 — Content Expansion, Axis 6) | **Accepted** | 2026-08-08 | P2 (Pillar 4 Build depth + Pillar 5 style) |
-| 0194 | ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구) | **Accepted** | 2026-08-19 | P3 (The Build, 아키텍처 명료화) | → **Accepted (Option 3 Hybrid)** 2026-08-26 [this session]
-| 0195 | Accepted ADR Implementation Status Workflow (섹션 의무화 + 인덱스 Impl 컬럼) | **Accepted** | 2026-08-20 | P3 (The Build, 프로세스 명료화) | → **Accepted (Option 1+3 Hybrid)** 2026-08-26 [this session]
-| 0196 | Accessibility Colorblind State Alignment (AppState bool → str) | **Accepted (Option A)** | 2026-08-22 | P1 (Plan T2.2 게이트, UI/visibility 업그레이드) |
-| 0197 | Gamepad / Controller Input Support (Tier 1 — synthetic KeyDown adapter, 12 active ScreenKinds, 97 new tests) | **Accepted** | 2026-08-25 | P2 (ADR-0183 §Input Remapping Tier 1 surface; complements ADR-0196) |
-| 0198 | Resolution Compatibility (Tablet / Phone / Steam Deck / 4K) + QA Agents (Design + Gameability) | **Accepted** | 2026-08-25 | P1 (Cross-device compatibility; +QA agents for ongoing QA; 6 Open Questions resolved; Phase 1 critical fixes shipped — GA-002/GA-004/GD-005) |
-| 0199 | Wet Run Web MVP (Tier 1 — TypeScript + Canvas2D + 1 playable mission, supersedes ADR-0007 web/mobile scope) | **Accepted** | 2026-08-25 | P1 (Browser reach; 4-week MVP build autonomous) |
-| 0048 | Phase 189 — Wet Run Character Reflection (molly, johnny, rydell wiki pages cross-referenced to Fiction/wiki) | **Accepted** | 2026-08-24 | P2 |
+| 0142 | graphic_novel_view Split v2 — Implementation (3-way split) | **Accepted** | — | 2026-08-05 | P2 (Build Health) |
+| 0143 | combat_view Split — Implementation (4-way split) | **Accepted** | — | 2026-08-05 | P2 (Build Health) |
+| 0144 | combat/effects Split — Data Extraction | **Accepted** | — | 2026-08-05 | P2 (Build Health) |
+| 0145 | combat/effects_vfx Split — 3-Way Concern Split | **Accepted** | — | 2026-08-05 | P2 (Build Health) |
+| 0146 | Stage Flow — black_market & ghost_encounter 전이 추가 (Validator FAIL 해결) | **Accepted** | — | 2026-08-05 | P2 (The Matrix) |
+| 0147 | Data Salvage — Phase 6+ Completion (HEAL + FRAG + CRED + alarm trade-off) | **Accepted** | — | 2026-08-07 | P1 (Cycle 1 of A+B+C) |
+| 0148 | Combat Depth Expansion (counter window + defense stackable + companion skills + aggression tiers) | **Accepted** | — | 2026-08-07 | P1 (Cycle 2 of A+B+C) |
+| 0149 | Boss Phase 4 Finale (per-boss mechanics + death taunts + intro enhancement) | **Accepted** | — | 2026-08-07 | P1 (Cycle 3 of A+B+C) |
+| 0150 | Module Split — `depth.py` + `boss_phase4.py` (ADR-0110 follow-up) | **Accepted** | — | 2026-08-07 | P2 (Cycle 4 of A+B+C) |
+| 0151 | Info Market Intel Items — CRED Consumption (3 items, close salvage trade-off) | **Accepted** | — | 2026-08-07 | P1 (Cycle 6, v1.2.0+ bridge) |
+| 0152 | Multi-Enemy Encounters (1v2/1v3) + HEAL Rebalance 20%→15% | **Accepted** | — | 2026-08-07 | P1 (Cycle 8, v1.2.0+ core) |
+| 0153 | Matrix Encounter Spawn Integration (1v1/1v2/1v3) | **Accepted** | — | 2026-08-07 | P1 (Cycle 9, v1.2.0+ bridge) |
+| 0154 | Faction Expansion (faction_rumor 4 factions) + i18n (ja/zh) | **Accepted** | — | 2026-08-07 | P2 (Cycle 10, v1.2.0+ polish) |
+| 0155 | NG+ Grade 5→6 PPL Actual Rebalance (T6 master tier bonus +10) | **Accepted** | — | 2026-08-07 | P2 (Cycle 11, v1.2.0+ balance) |
+| 0156 | Combat State Module Split (state.py 890 → 3 files) | **Accepted** | — | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
+| 0157 | Combat Boss Module Split (boss.py 724 → 2 files) | **Accepted** | — | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
+| 0158 | Combat Combo Module Split (combo.py 685 → 2 files) | **Accepted** | — | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
+| 0159 | Combat Bosses Cinematic Module Split (bosses.py 627 → 2 files) | **Accepted** | — | 2026-08-07 | P3 (The Build, ADR-0110 follow-up) |
+| 0160 | Status Effects System Expansion (DoT/Stun/Slow/Silence/Vulnerability) | **Accepted** | — | 2026-08-07 | P1 (The Build, Pillar 3 weight) |
+| 0161 | ICE Personality Archetypes (4 behaviors beyond aggression) | **Accepted** | — | 2026-08-07 | P2 (Pillar 5 variety, Pillar 3 weight via different pressure) |
+| 0162 | Boss Phase 4 Last Stand | **Accepted** | — | 2026-08-07 | P2 (Pillar 1 climax, Pillar 5 finale) |
+| 0163 | Run Mutators System (5+ modifiers) | **Accepted** | — | 2026-08-07 | P1 (Pillar 1 run variety, Pillar 4 meta progression) |
+| 0164 | Mission Archetypes (4 mission types) | **Accepted** | — | 2026-08-07 | P1 (Pillar 1 run variety) |
+| 0165 | Random Matrix Events (4-6 mid-run surprises) | **Accepted** | — | 2026-08-07 | P2 (Pillar 1 variety, Pillar 5 atmosphere) |
+| 0166 | Phase 6 Arc (Aftermath - Post-Ending NG+ Content) | **Accepted** | — | 2026-08-07 | P2 (Pillar 1 endgame, Pillar 4 meta progression) |
+| 0167 | Mission Expansion (15 → 25 missions) | **Accepted** | — | 2026-08-07 | P2 (Pillar 1 content variety, Pillar 5 progression) |
+| 0168 | Death Taunts Library (Per-Boss + Per-ICE) | **Accepted** | — | 2026-08-07 | P1 (Pillar 5 style, Pillar 3 death weight) |
+| 0169 | Combat Cinematics (Per Boss Phase Intro) | **Accepted** | — | 2026-08-07 | P2 (Pillar 5 style, Pillar 1 climax) |
+| 0170 | Gibson Fluff Library (200+ Status Messages) | **Accepted** | — | 2026-08-07 | P1 (Pillar 5 style) |
+| 0171 | ASCII Battle Portrait Evolution | **Accepted** | — | 2026-08-07 | P2 (Pillar 5 style, Pillar 3 visual feedback) |
+| 0172 | Cyberdeck Customization (8 Program Slots) | **Accepted** | — | 2026-08-08 | P1 (Pillar 4 Build depth) |
+| 0173 | Wetware Augments (6 Passive Slots) | **Accepted** | — | 2026-08-08 | P1 (Pillar 4 Build depth) |
+| 0174 | Meta-Progression (Persistent Unlocks) | **Accepted** | — | 2026-08-08 | P1 (Pillar 1 replay value) |
+| 0175 | Tutorial System (3-Act Onboarding) | **Accepted** | — | 2026-08-08 | P2 (Pillar 1 learning curve) |
+| 0176 | Achievement System (60+ Achievements) | **Accepted** | — | 2026-08-08 | P2 (Pillar 1 replay value) |
+| 0177 | Breach Protocol (Matrix Hacking Minigame) | **Accepted** | — | 2026-08-08 | P1 (Pillar 2 Matrix, Pillar 5 style) |
+| 0178 | Deck Building (6/8/10 Slot Limits) | **Accepted** | — | 2026-08-08 | P1 (Pillar 4 Build depth) |
+| 0179 | Status Effects v2 (Bleed, Fatigue, Confused, Terrified) | **Accepted** | — | 2026-08-08 | P2 (Pillar 3 depth) |
+| 0180 | Boss Expansion (+3 Boss Profiles) | **Accepted** | — | 2026-08-08 | P2 (Pillar 1 variety, Pillar 5 atmosphere) |
+| 0181 | Combo System v2 (Player-Triggered Finisher Combos) | **Accepted** | — | 2026-08-08 | P2 (Pillar 5 style, Pillar 4 build) |
+| 0182 | Run Replay System (Record + Playback) | **Accepted** | — | 2026-08-08 | P2 (Pillar 1 replay, Pillar 5 style) |
+| 0183 | Accessibility (Colorblind 3 Modes, Text Size, Input Remapping) | **Accepted** | — | 2026-08-08 | P2 (Pillar 1 inclusivity + Pillar 5 style) |
+| 0184 | Telemetry (Anonymous Player Behavior Tracking) | **Accepted** | — | 2026-08-08 | P3 (Pillar 4 balance + Pillar 1 tuning) |
+| 0185 | Save/Load Migration v2 (Versioned, Cloud-Ready) | **Accepted** | — | 2026-08-08 | P2 (Pillar 1 persistence + Pillar 4 carry) |
+| 0186 | Performance Optimization (Frame Rate, Memory) | **Accepted** | — | 2026-08-08 | P3 (Pillar 1 smoothness) |
+| 0187 | Boss Phase 5 Expansion (Last Stand) | **Accepted** | — | 2026-08-08 | P2 (Pillar 1 climax, Pillar 5 finale) |
+| 0188 | Mission Expansion (Phase 11 — Content Expansion, Axis 1) | **Accepted** | — | 2026-08-08 | P1 (Pillar 1 run variety) |
+| 0189 | ICE Type Expansion (Phase 12 — Content Expansion, Axis 2) | **Accepted** | — | 2026-08-08 | P2 (Pillar 3 combat variety + Pillar 5 atmosphere) |
+| 0190 | Boss Expansion + F.4 Integration (Phase 12 — Content Expansion, Axis 4) | **Accepted** | — | 2026-08-08 | P1 (Pillar 1 climax + Pillar 5 finale) |
+| 0191 | Story Events Expansion (Phase 13 — Content Expansion, Axis 3) | **Accepted** | — | 2026-08-08 | P2 (Pillar 5 atmosphere + Pillar 1 variety) |
+| 0192 | Ending Expansion (Phase 14 — Content Expansion, Axis 5) | **Accepted** | — | 2026-08-08 | P2 (Pillar 1 replay value + Pillar 5 closure) |
+| 0193 | Programs/Equipment Expansion (Phase 14 — Content Expansion, Axis 6) | **Accepted** | — | 2026-08-08 | P2 (Pillar 4 Build depth + Pillar 5 style) |
+| 0194 | ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구) | **Accepted** | — | 2026-08-19 | P3 (The Build, 아키텍처 명료화) | → **Accepted (Option 3 Hybrid)** 2026-08-26 [this session]
+| 0195 | Accepted ADR Implementation Status Workflow (섹션 의무화 + 인덱스 Impl 컬럼) | **Accepted** | — | 2026-08-20 | P3 (The Build, 프로세스 명료화) | → **Accepted (Option 1+3 Hybrid)** 2026-08-26 [this session]
+| 0196 | Accessibility Colorblind State Alignment (AppState bool → str) | **Accepted (Option A)** | — | 2026-08-22 | P1 (Plan T2.2 게이트, UI/visibility 업그레이드) |
+| 0197 | Gamepad / Controller Input Support (Tier 1 — synthetic KeyDown adapter, 12 active ScreenKinds, 97 new tests) | **Accepted** | — | 2026-08-25 | P2 (ADR-0183 §Input Remapping Tier 1 surface; complements ADR-0196) |
+| 0198 | Resolution Compatibility (Tablet / Phone / Steam Deck / 4K) + QA Agents (Design + Gameability) | **Accepted** | — | 2026-08-25 | P1 (Cross-device compatibility; +QA agents for ongoing QA; 6 Open Questions resolved; Phase 1 critical fixes shipped — GA-002/GA-004/GD-005) |
+| 0199 | Wet Run Web MVP (Tier 1 — TypeScript + Canvas2D + 1 playable mission, supersedes ADR-0007 web/mobile scope) | **Accepted** | — | 2026-08-25 | P1 (Browser reach; 4-week MVP build autonomous) |
+| 0048 | Phase 189 — Wet Run Character Reflection (molly, johnny, rydell wiki pages cross-referenced to Fiction/wiki) | **Accepted** | — | 2026-08-24 | P2 |
 | 0049 | Phase 190 — Dashboard Verification Framework Sub-Stats Panel (verification_framework sub-object in aggregate-stats.mjs) | **Accepted** | 2026-08-24 | P2 |
 
 ### 2026-07-01 통합 작업 (P1~P4 + B)

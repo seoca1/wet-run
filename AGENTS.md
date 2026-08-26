@@ -31,10 +31,27 @@
 
 ### 3.2 게임 디자인 변경
 1. `decisions/` 에 새 ADR 작성 또는 기존 ADR Status 변경
-2. 영향 받는 `design/systems/*.md` 갱신
-3. `testcases/` 에 회귀 테스트 추가/갱신
-4. `design/GDD.md` 의 본문 또는 Open Questions 갱신
-5. `log.md` 에 기록
+2. **Implementation status 결정** (ADR Accepted 시점 필수 — [ADR-0195](./decisions/0195-adr-implementation-workflow.md)):
+   - ✅ **Implemented**: 이미 shipped (코드 + 테스트 + 데이터 모두 확인)
+   - 🟡 **Partial**: 일부만 shipped, 나머지 backlog
+   - ❌ **Not started**: 미구현 (backlog 명시)
+   - 🟢 **Deferred**: 의도적으로 미래로 연기
+3. 영향 받는 `design/systems/*.md` 갱신
+4. `testcases/` 에 회귀 테스트 추가/갱신
+5. `design/GDD.md` 의 본문 또는 Open Questions 갱신
+6. `log.md` 에 기록
+
+**Implementation Status 형식** (0156/0188 모델):
+```markdown
+## Implementation Status (YYYY-MM-DD)
+
+**Status**: [✅ Implemented | 🟡 Partial | ❌ Not started | 🟢 Deferred]
+
+**Evidence**:
+- `path/to/file.py:LINE` — [description]
+
+**Notes**: [caveats]
+```
 
 ### 3.3 결정 요청
 - `decisions/template.md` 사용

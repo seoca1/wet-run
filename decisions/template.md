@@ -50,6 +50,19 @@
 
 (결정 후 작성)
 
+## Implementation Status (YYYY-MM-DD)
+
+> **ADR-0195** ([./0195-adr-implementation-workflow.md](./0195-adr-implementation-workflow.md)): Accepted 시점에 Implementation status 결정 필수.
+
+**Status**: [✅ Implemented | 🟡 Partial | ❌ Not started | 🟢 Deferred]
+
+**Evidence**:
+- `path/to/file.py:LINE` — [description]
+
+**Notes**: [caveats]
+
+(빈 Implementation Status 섹션이라도 추가 권장 — placeholder로 `❌ Not started` 명시 후 backlog 추적)
+
 ## 영향 받는 항목
 
 - `design/...`

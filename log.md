@@ -3203,3 +3203,63 @@ M prototype/pyproject.toml  (hatch sdist exclude 확장)
 5. **GitHub v1.4.0 tag push** — `git push origin v1.4.0`
 6. **GitHub release 작성** — CHANGELOG [1.4.0] release notes
 7. **Git LFS D4 결정** — 326MB audio LFS 적용 여부
+
+---
+
+## 🔄 v1.4.0 Operational Release 후속 — POST-PUSH (2026-08-26 18:30 KST)
+
+**Scope**: Option A (Ship v1.4.0) + Option B (ADR-0194/0195 후속) + Option C (ADR-0195 Phase 1 sweep).
+
+### Commits (8 atomic commits, all pushed to origin/main)
+
+| # | Hash | Subject |
+|---|---|---|
+| 1 | `91d7b47` | fix(pyproject): hatch sdist exclude .venv + build artifacts |
+| 2 | `244e890` | docs(decisions): ADR-0194 ECS-lite 격하 → Accepted (Option 3 Hybrid) |
+| 3 | `bc34044` | docs(decisions): ADR-0195 Implementation Workflow → Accepted (Option 1+3) |
+| 4 | `1866eee` | docs(decisions): README index sync + ADR-0199 Tier 2 Update |
+| 5 | `9898b37` | docs(wet_run): v1.4.0 PyPI release + session 2026-08-26 log |
+| 6 | `9a73b25` | docs(wet_run): apply ADR-0194 ECS-lite role clarification |
+| 7 | `f76a8ea` | docs(decisions): apply ADR-0195 workflow + index Impl + template status |
+| 8 | `485f3e7` | docs(decisions): Implementation Status for ADR-0142-0145 module splits |
+| 9 | `8bf6d93` | docs(decisions): Implementation Status for ADR-0140/0141/0146 |
+
+### Push State**:
+- `git push origin main`: ✅ 14 commits pushed (c3f1d9b..8bf6d93)
+- `git push origin v1.4.0`: ✅ tag pushed
+- `gh release create v1.4.0`: ✅ https://github.com/seoca1/wet-run/releases/tag/v1.4.0
+
+### ADR-0195 Phase 1 Sweep — COMPLETE
+
+대상 ADR 7개 (0140-0146, Implementation Status 미보유) 모두 ✅ 또는 🟡 status 결정 + evidence 인용:
+
+| ADR | Status | Module Split Series |
+| |---|---|
+| 0140 Engagement Layer | ✅ | v1.1.0 final 통합 완료 |
+| 0141 Additional Module Splits | 🟡 | Top 2 완료, 4-way 일부 진행 |
+| 0142 graphic_novel_view v2 | ✅ | engine/gn_render/{scene,card,text}.py |
+| 0143 combat_view | ✅ | combat/{state, state_models, ...}.py 4-way |
+| 0144 combat/effects data | ✅ | combat/{effects.py 70 LOC facade, effects_data.py} |
+| 0145 effects_vfx 3-way | ✅ | combat/{effects_vfx facade, animations, cinematics, compose} |
+| 0146 Stage Flow Transitions | ✅ | run/state/models.py Stage enum (BLACK_MARKET + GHOST_ENCOUNTER) |
+
+**Phase 1 COMPLETE**: 0140-0199 (60 ADR) 모두 Implementation Status 보유.
+
+### Working tree 상태 (final)
+```
+clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
+```
+
+### Open follow-ups (this session closed)
+- ~~hatch sdist exclude 수정~~ ✅ Commit 1
+- ~~ADR-0194 ECS-lite 격하~~ ✅ Commit 2 + Commit 6 (post-acceptance)
+- ~~ADR-0195 Implementation Workflow~~ ✅ Commit 3 + Commit 7 (post-acceptance)
+- ~~PyPI v1.4.0 release~~ ✅ (PyPI URL: https://pypi.org/project/wet-run/1.4.0/)
+- ~~GitHub tag push + release~~ ✅
+- ~~ADR-0195 Phase 1 sweep~~ ✅ (7 ADRs: 0140-0146)
+
+### Remaining items (carry-over)
+- Git LFS D4 결정 (326MB audio)
+- Tier 2b (Howler.js audio, wet_run-web) — silent per operator gate
+- Tier 3 (more missions + VFX) — playtest 게이트
+- Fiction Phase C1-C4 (blocked novels) — user raw source 대기

@@ -70,7 +70,7 @@ function renderMissionSelect(missions: ReadonlyArray<Mission>, selected: number)
     const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const marker = isSelected ? "▸" : " ";
     grid = setText(grid, 4, y, `${marker} ${formatMissionOption(m, i)}`, fg);
-    y += 2;
+    y += 1;
   }
   return grid;
 }

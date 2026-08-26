@@ -625,5 +625,667 @@
     },
     "title": "First Contact",
     "zone": "surface"
+  },
+  "cortex_hound_recovery": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 3,
+    "grade_min": 1,
+    "id": "cortex_hound_recovery",
+    "is_canonical_cast": false,
+    "matrix_seed": 174,
+    "primary_objective": {
+      "data_id": "cortex_hound_repair_intake",
+      "type": "extract_data"
+    },
+    "reward_credits": 150,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 850,
+      "materials": {
+        "clinic_chit": 1,
+        "data_fragment": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "target": "l5_clinic_technician",
+        "type": "negotiate"
+      },
+      {
+        "count": 1,
+        "target": "nervous_system_diagnostic",
+        "type": "preserve"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "k",
+      "char_count_ko": 921,
+      "character_ref": "novice",
+      "pillar": "power",
+      "source": "cortex_hound_recovery",
+      "synopsis_en": "K wakes up in a Cheap Hotel room in Chiba. The room is three meters by four. The walls are plywood. The bed is a futon. The window is two meters off the floor. The window's bars are broken. The bartender next door owes Finn money. Finn has been waiting. Finn has been waiting for a year. K has been waiting for longer. K was once a Cowboy. K was once a runner. K was once a runner for a Sense/Net archive extraction that worked three winters ago. K got too aggressive in his running. Sense/Net retaliated. Sense/Net administered a mycotoxin through K's nervous system — a cortex-hound, the corporate class's principal enforcement, a *payload* that damages the wet-ware-coupling without killing the cowboy. K's matrix-presence is broken. K's jacking-in capacity is broken. K's working-class operative role is *cortexed out*. K's body is alive. K's matrix is dead. K walks the Chiba port district waiting for the matrix to come back. The matrix does not come back. K drinks cheap Korean coffee. K eats shabu. K remembers the matrix. The matrix was more real than this room. The matrix was more real than his hands. The matrix was — Finn appears. Finn says there is a clinic in the L-5 corridor. The clinic can repair the cortex-hound. The repair is expensive. The repair is corporate-grade. The repair would restore K's jacking-in capacity. K's eye lights up. K has been waiting. K waits now for the L-5 corridor. The L-5 corridor is where the clinic is. The L-5 corridor is where Wintermute has been waiting too. K doesn't know Wintermute. K knows the clinic. The clinic is what K's pre-recursion run's purpose is. K runs for the clinic. The run becomes a Wintermute operation. The operation is what K's waiting has been for. The waiting has been the working-class-without-the-matrix posture. The posture has been the L-5 corridor's waiting. The waiting is what the cortex-hound has produced as the era's working-class enforcement. The working-class enforcement has been the era's working-class architecture. The architecture is what K is in. K runs. The cortex-hound has been the cortex-hound. The recovery is the recovery. The recovery is what Wintermute is operating through. The operation through is what K's pre-recursion working-class-without-the-matrix has become. K runs for the clinic. The clinic is what the working-class cowboy's cortex-hound was for.",
+      "synopsis_ko": "K는 치바의 싼 호텔 방에서 깨어난다. 방은 3 미터 4 미터다. 벽은 합판이다. 침대는 후톤이다. 창문은 바닥에서 2 미터. 창문의 창살은 부서져 있다. 옆집 바텐더는 핀에게 돈을 빚지고 있다. 핀은 1년을 기다려왔다. K는 더 오래 기다렸다. K는 한때 카우보이였다. K는 한때 러너였다. K는 한때 3년 전 Sense/Net 데이터 보관소 추출의 러너였다. K가 너무 공격적으로 달렸었다. Sense/Net이 보복했다. Sense/Net이 K의 신경계에 마이코톡신을 투여했다 — 코르텍스-하운드, 기업-급의 주요 시행 수단, 카우보이를 죽이지 않고 습식-기질 결합을 손상시키는 *페이로드*. K의 매트릭스-프레젠스는 부서졌다. K의 잭-인 능력은 부서졌다. K의 작업-급 운영자 역할은 *코르텍스-아웃*되었다. K의 몸은 살아 있다. K의 매트릭스는 죽었다. K는 매트릭스가 돌아오기를 기다리며 치바의 항구 지구를 걸어 다닌다. 매트릭스는 돌아오지 않는다. K는 싼 한국 커피를 마신다. K는 샤부를 먹는다. K는 매트릭스를 기억한다. 매트릭스는 이 방보다 더 진짜였다. 매트릭스는 그의 손보다 더 진짜였다. 매트릭스는 — 핀이 나타난다. 핀이 말한다 L-5 회랑에 클리닉이 있다고. 클리닉이 코르텍스-하운드를 수리할 수 있다. 수리는 비싸다. 수리는 기업-급이다. 수리는 K의 잭-인 능력을 복구할 것이다. K의 눈이 반짝인다. K는 기다렸다. K는 이제 L-5 회랑을 기다린다. L-5 회랑이 클리닉이 있는 곳이다. L-5 회랑이 Wintermute도 기다려온 곳이다. K는 Wintermute를 모른다. K는 클리닉을 안다. 클리닉이 K의 도입-이전 런의 목적이다. K는 클리닉을 위해 달린다. 런이 Wintermute 작전이 된다. 작전이 K의 기다림이 위한 것이 된다. 기다림이 매트릭스 없는 작업-급-일 자세였다. 자세가 L-5 회랑의 기다림이다. 기다림이 코르텍스-하운드가 시대의 작업-급 시행으로 생산한 것이었다. 작업-급 시행이 시대의 작업-급 아키텍처였다. 아키텍처가 K가 있는 곳이다. K가 달린다. 코르텍스-하운드가 코르텍스-하운드였다. 회복이 회복이다. 회복이 Wintermute가 작동하는 것이다. 작전을 통한 것이 K의 도입-이전 매트릭스 없는 작업-급-일이 된 것이다. K가 클리닉을 위해 달린다. 클리닉이 작업-급 카우보이의 코르텍스-하운드가 위한 것이었다.",
+      "word_count_en": 391
+    },
+    "title": "Cortex-Hound Recovery",
+    "zone": "surface"
+  },
+  "data_retrieval": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "data_retrieval",
+    "is_canonical_cast": true,
+    "matrix_seed": 705,
+    "primary_objective": {
+      "data_id": "data-retrieval",
+      "type": "extract_data"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.standard",
+        "type": "defeat"
+      }
+    ],
+    "stage_flow": [
+      "briefing",
+      "travel",
+      "meet_npc",
+      "extract_data",
+      "black_market",
+      "jack_out",
+      "reward",
+      "complete"
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "case",
+      "char_count_ko": 75,
+      "character_ref": "novice",
+      "pillar": "power",
+      "source": "data_retrieval",
+      "synopsis_en": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level Tessier-Ashpool subsidiary. The Finn knew all along. He always does.",
+      "synopsis_ko": "단순한 데이터 회수 작업이 목표가 기업 급여 명세서임직 밝혀지며 틀어진다—중간 수준 T-A 자회사를 물거품으로 만들 수 있는 비밀. 핀은 처음부터 알고 있었다. 언제나 그렇듯.",
+      "word_count_en": 33
+    },
+    "title": "Data Retrieval",
+    "zone": "surface"
+  },
+  "hosaka_after_hours": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "hosaka_after_hours",
+    "is_canonical_cast": false,
+    "matrix_seed": 111,
+    "primary_objective": {
+      "data_id": "hosaka_after_hours_data",
+      "type": "extract"
+    },
+    "reward_credits": 500,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 500,
+      "materials": {}
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "hosaka_watchdog",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "case",
+      "char_count_ko": 130,
+      "character_ref": "novice",
+      "pillar": "people",
+      "source": "hosaka_after_hours",
+      "synopsis_en": "After hours. The suits are gone. The data is not. The night shift at Hosaka runs lean — skeleton crew, minimal ICE, and a soft intranet the night operators never patched. You go in clean, grab what Finn needs, get out before the morning shift notices the gap.",
+      "synopsis_ko": "퇴근 후. 임원들은 떠났다. 데이터는 남아 있다. Hosaka의 야간 근무는 소수 정원으로 운영된다 — 최소 인원, 최소한의 ICE, 그리고 야간 운영자가 補修하지 않은 soft 인트라넷. 당신은 깨끗하게 들어가서 Finn이 필요로 하는 것을 가져오고, 아침 근무가 빈자리를 알아채기 전에 빠져나온다.",
+      "word_count_en": 48
+    },
+    "title": "Hosaka After Hours",
+    "zone": "surface"
+  },
+  "hosaka_terminal_supply": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "hosaka_terminal_supply",
+    "is_canonical_cast": false,
+    "matrix_seed": 524,
+    "primary_objective": {
+      "data_id": "hosaka_terminal_purchase",
+      "type": "extract_data"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 600,
+      "materials": {
+        "data_fragment": 2,
+        "deck_part": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "target": "hosaka_technician",
+        "type": "negotiate"
+      },
+      {
+        "count": 1,
+        "target": "hosaka_off_headpiece",
+        "type": "acquire"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "k",
+      "char_count_ko": 972,
+      "character_ref": "novice",
+      "pillar": "purpose",
+      "source": "hosaka_terminal_supply",
+      "synopsis_en": "The Hosaka service center is on the eleventh floor of a building whose elevator only works Tuesdays. K is there on a Wednesday. He has the Ono-Sendai Cyberspace 7 in his bag — the brand office's partial-fix eighty percent of what the deck could do, bio-electric coupling restored but the off-headpiece terminal pair nowhere to be seen. K's deck works without a Hosaka terminal in the same way that K's body works without lungs: the pairing is what gives the working-class matrix-operator runnable substrates; the partial-pairing is what working-class matrix-labor calls a Monday. Eleven flights up the stairs are a Hosaka service technician who's seen a thousand of K's Monday — partial decks brought to be paired with the firm's off-headpiece Hosaka mainframes. The technician looks at the deck. Looks at K. Looks at the deck. The technician is maybe forty. The deck is older. K is younger. The technician quotes a price. The price is what a working-class matrix-operator should pay for a Hosaka terminal with three years of operating life left — slightly more than a week of honest Sprawl hustling. K has slightly more than a week of honest Sprawl hustling saved. The technician takes K's credit. The technician goes to the back, the Hosaka service center's off-headpiece mainframe storage, and pulls a Hosaka off the rack — a unit mid-generation, slightly-used, the bio-electric input side scuffed but functional. The technician pairs it with K's deck. The pairing takes fifteen minutes. K feels the deck and the terminal interlock. The pairing is what working-class matrix-operatives call a kit. Eight other stores on the fourteenth floor would have done this for less. K picked the eleventh-floor Hosaka service center because the eleventh-floor service center is the only one that knows what an Ono-Sendai Cyberspace 7 is. The working-class matrix-operator's commercial-substrate loyalty is what the era's vendor-pairing has produced. K walks out into the rain. The deck-against-the-terminal kit is whole. The whole is what working-class matrix-labor needs to run the next job. The next job is what Wintermute has waiting. K doesn't know Wintermute. K knows Ono-Sendai. K knows Hosaka. The kit has been paired. The era's late-Capitalist commercial substrate has done its vendor-pairing. The rest of the matrix-labor is what working-class matrix-operatives call a Tuesday.",
+      "synopsis_ko": "Hosaka 서비스 센터는 엘리베이터가 화요일에만 작동하는 건물의 11층에 있다. K는 수요일에 거기 있다. 그는 가방에 Ono-Sendai Cyberspace 7을 가지고 있다 — 브랜드 사무실의 부분-수리, 즉 디크가 할 수 있었던 것의 80 퍼센트, 생물-전기 결합은 복구되었지만 출력 단자 페어는 어디에도 없다. K의 디크는 Hosaka 터미널 없이도 작동한다 — K의 몸이 허파 없이도 작동하는 것과 같은 방식으로: 페어링은 작업-클래스 매트릭스-운영자에게 작동 가능한 기질을 제공한다; 부분 페어링은 작업-클래스 매트릭스-노동이 월요일이라 부르는 것이다. 11층 계단 위로 Hosaka 서비스 기술자가 있다 — 그는 K의 월요일, 즉 부분 디크를 수천 번 보았다 — Ono-Sendai 회사의 호-헤드피스 Hosaka 메인프레임과 페어링하기 위해 가져온. 기술자는 디크를 본다. K를 본다. 디크를 다시 본다. 기술자는 마흔쯤. 디크는 더 오래되었다. K는 더 어리다. 기술자는 가격을 부른다. 가격은 작업-클래스 매트릭스-운영자가 Hosaka 터미널에 지불해야 할 것이다 — 약간의 정직한 Sprawl 그리핑 일주일보다 약간 더. K에게는 약간의 정직한 Sprawl 그리핑 일주일이 조금 더 저장되어 있다. 기술자는 K의 크레딧을 받는다. 기술자는 뒤로 가서, Hosaka 서비스 센터의 호-헤드피스 메인프레임 저장소로 가서, 약간 사용된, 생물-전기 입력 쪽이 긁혔지만 작동하는 중간-세대 Hosaka 한 대를 선반에서 꺼낸다. 기술자는 그것을 K의 디크와 페어링한다. 페어링은 15분이 걸린다. K는 디크와 터미널이 맞물리는 것을 느낀다. 페어링은 작업-클래스 매트릭스-운영자가 키트라고 부르는 것이다. 14층에 여덟 개의 다른 가게가 더 싼 가격에 이것을 했을 것이다. K는 11층 Hosaka 서비스 센터를 선택했다 — 11층 서비스 센터는 Ono-Sendai Cyberspace 7이 무엇인지 아는 유일한 곳이기 때문에. 작업-클래스 매트릭스-운영자의 상업-기질 충성도가 시대의 공급자-페어링이 만든 것이다. K는 비 속으로 걸어 나온다. 디크-대비-터미널 키트가 완성되었다. 완성이 작업-클래스 매트릭스-노동이 다음 작업을 실행하는 데 필요한 것이다. 다음 작업은 Wintermute가 기다리고 있는 것이다. K는 Wintermute를 모른다. K는 Ono-Sendai를 안다. K는 Hosaka를 안다. 키트가 페어링되었다. 시대의 후기-자본주의 상업 기질이 공급자-페어링을 했다.",
+      "word_count_en": 377
+    },
+    "title": "Hosaka Terminal Supply",
+    "zone": "surface"
+  },
+  "chevette_nightshift_run": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "chevette_nightshift_run",
+    "is_canonical_cast": false,
+    "matrix_seed": 193,
+    "primary_objective": {
+      "data_id": "data_key_pickup",
+      "type": "extract_data"
+    },
+    "rewards": {
+      "credits": 400,
+      "materials": {
+        "data_fragment": 1,
+        "data_key": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "target": "data_key_storage",
+        "type": "preserve"
+      },
+      {
+        "count": 1,
+        "target": "fixie_bag",
+        "type": "deliver"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "k",
+      "char_count_ko": 796,
+      "character_ref": "novice",
+      "pillar": "people",
+      "source": "chevette_nightshift_run",
+      "synopsis_en": "Chevette pedals along the bridge. The bridge is what the squatter community lives under. The squatter community is the bridge's working-class. The working-class is the bridge's. Chevette is the working-class. The working-class is the bridge's courier. The courier is Chevette. Chevette is the nightshift. The nightshift is what Chevette is doing. The nightshift is the courier's working-class operational image. The operational image is the data-key pick-up. The data-key is what the corporate-class has been trying to keep. The corporate-class has the data-key. The corporate-class has had the data-key for a long time. The data-key is the corporate-class's keep. The keep is what the corporate-class is doing. The corporate-class is doing the keep. The keep is the data-key. The data-key is in the bag. The bag is on the fixie. The fixie is on the bridge. The bridge is what Chevette is on. Chevette is on the bridge. The bridge is what the data-key is on. The data-key is on the bridge. The bridge is what the data-key is. The data-key is the bridge. The bridge is the data-key. The data-key is the corporate-class. The corporate-class is the data-key. The data-key is the corporate-class. The corporate-class is the bridge. The bridge is the corporate-class. The corporate-class is the bridge. The bridge is the corporate-class. The nightshift is what Chevette is doing. Chevette is doing the nightshift. The nightshift is the data-key. The data-key is the nightshift. The nightshift is the courier. The courier is the nightshift. The nightshift is what the working-class is. The working-class is the nightshift. The nightshift is the working-class. The working-class is the nightshift. The nightshift is the data-key pick-up. The data-key pick-up is what the working-class is. The working-class is the data-key pick-up. The data-key pick-up is what the working-class is doing. The working-class is doing the data-key pick-up. The data-key pick-up is the working-class's operational image. The operational image is what the working-class is. The working-class is the operational image. The operational image is the nightshift. The nightshift is the working-class's operational image. The operational image is the nightshift. The nightshift is the bridge. The bridge is the nightshift. The nightshift is the bridge. The bridge is the nightshift.",
+      "synopsis_ko": "셰벳이 브리지를 따라 페달을 밟는다. 브리지는 불법 거주자 공동체가 사는 곳이다. 불법 거주자 공동체는 브리지의 작업-급이다. 작업-급은 브리지의 것이다. 셰벳은 작업-급이다. 작업-급은 브리지의 배달원이다. 배달원은 셰벳이다. 셰벳은 야간 교대이다. 야간 교대는 셰벳이 하는 것이다. 야간 교대는 배달원의 작업-급 운영 이미지이다. 운영 이미지는 데이터-키 픽업이다. 데이터-키는 기업-급이 지키고자 하는 것이다. 기업-급이 데이터-키를 가지고 있다. 기업-급이 한참 동안 데이터-키를 가지고 있다. 데이터-키는 기업-급의 지키는 것이다. 지키는 것이 기업-급이 하는 것이다. 기업-급이 지키는 것을 한다. 지키는 것은 데이터-키이다. 데이터-키는 가방에 있다. 가방은 픽시 위에 있다. 픽시는 브리지 위에 있다. 브리지가 셰벳이 있는 곳이다. 셰벳이 브리지에 있다. 브리지가 데이터-키가 있는 곳이다. 데이터-키가 브리지에 있다. 브리지가 데이터-키인 곳이다. 데이터-키는 브리지이다. 브리지는 데이터-키이다. 데이터-키는 기업-급이다. 기업-급이 데이터-키이다. 데이터-키는 기업-급이다. 기업-급이 브리지이다. 브리지가 기업-급이다. 기업-급이 브리지이다. 야간 교대가 셰벳이 하는 것이다. 셰벳이 야간 교대를 한다. 야간 교대는 데이터-키이다. 데이터-키가 야간 교대이다. 야간 교대가 배달원이다. 배달원이 야간 교대이다. 야간 교대가 작업-급인 곳이다. 작업-급이 야간 교대이다. 야간 교대가 데이터-키 픽업이다. 데이터-키 픽업이 작업-급인 곳이다. 작업-급이 데이터-키 픽업이다. 데이터-키 픽업이 작업-급이 하는 것이다. 작업-급이 데이터-키 픽업을 한다. 데이터-키 픽업이 작업-급의 운영 이미지이다. 운영 이미지가 작업-급인 곳이다. 작업-급이 운영 이미지이다. 운영 이미지가 야간 교대이다. 야간 교대가 작업-급의 운영 이미지이다. 운영 이미지가 야간 교대이다. 야간 교대가 브리지이다. 브리지가 야간 교대이다. 야간 교대가 브리지에 있다. 브리지가 야간 교대이다.",
+      "word_count_en": 364
+    },
+    "title": "Chevette Nightshift Run",
+    "zone": "surface"
+  },
+  "case_past_extract_linda_memory": {
+    "arc": 1,
+    "chain_id": "case_past",
+    "chain_order": 2,
+    "fixer": "wintermute",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "case_past_extract_linda_memory",
+    "is_canonical_cast": true,
+    "is_chain_mission": true,
+    "matrix_seed": 7002,
+    "primary_objective": {
+      "count": 1,
+      "data_id": "linda_memory",
+      "penalty_on_failure": "construct_loss",
+      "time_limit_seconds": 75,
+      "type": "extract_data"
+    },
+    "reward_credits": 440,
+    "reward_tier": 2,
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "t2_program": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "enemy": "ice.standard",
+        "min_evade": 2,
+        "type": "evade"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "case",
+      "char_count_ko": 128,
+      "character_ref": "case",
+      "pillar": "code",
+      "source": "case_past_extract_linda_memory",
+      "synopsis_en": "Linda had been a memory for forty years. The memory had been Linda. The memory had been the construct. The construct had been the memory. The memory had been the construct. The construct had been the people. The people had been the construct. The construct had been the people. The people had been Linda. Linda had been the people. The people had been the memory. The memory had been Linda. The memory had been the construct.",
+      "synopsis_ko": "린다는 40년 동안 기억이었다. 기억은 린다였다. 기억은 구성체였다. 구성체는 기억이었다. 기억은 구성체였다. 구성체는 사람들이었다. 사람들은 구성체였다. 구성체는 사람들이었다. 사람들은 린다였다. 린다는 사람들이었다. 사람들은 기억이었다. 기억은 린다였다. 기억은 구성체였다.",
+      "word_count_en": 76
+    },
+    "title": "Linda's Memory",
+    "zone": "deep"
+  },
+  "hideo_contract": {
+    "arc": 2,
+    "fixer": "hideo",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "hideo_contract",
+    "is_canonical_cast": true,
+    "matrix_seed": 222,
+    "primary_objective": {
+      "target": "yakuza_memory_drop",
+      "type": "deliver"
+    },
+    "reward_credits": 150,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 1300,
+      "materials": {
+        "raw_neural": 1,
+        "scrap_ice": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.spider",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 2,
+      "cast": "sil",
+      "char_count_ko": 385,
+      "character_ref": "veteran",
+      "pillar": "code",
+      "source": "hideo_contract",
+      "synopsis_en": "Hideo had been a Yakuza fixer in the old sense, the kind of fixer who knew that the Sprawl was the Sprawl because the people in the Sprawl had decided it was. The contract was for a single job. The contract was for a memory that the Yakuza had buried in a place the Yakuza did not want anyone to find, which in the Yakuza language was a place that the Yakuza had decided did not exist. The runner took the contract. The runner took the pod. The runner took the place that the Yakuza had decided did not exist, which was, in fact, a place. The memory was a memory. The Yakuza did not want anyone to find the memory because the memory was a memory of something the Yakuza had been doing that the Yakuza did not want anyone to know the Yakuza had been doing. The runner copied the memory. The runner jack out. The runner filed the report. The runner did not say what the memory was. The runner thought the Yakuza had been doing something the Yakuza did not want anyone to know the Yakuza had been doing, and the runner thought the Sprawl was not ready to know about it either.",
+      "synopsis_ko": "히데오는 옛날 의미의 야쿠자 픽서였다. 스프롤이 스프롤인 이유는 스프롤의 사람들이 그것이 스프롤이라고 결정했기 때문임을 아는 종류의 픽서. 그 계약은 한 가지 일을 위한 것이었다. 계약은 야쿠자가 야쿠자가 아무도 찾기를 원하지 않는 장소에 묻은 기억을 위한 것이었다. 야쿠자 말로 그것은 야쿠자가 존재하지 않는다고 결정한 장소였다. 러너는 계약을 수락했다. 러너는 포드를 가져갔다. 러너는 야쿠자가 존재하지 않는다고 결정한 장소를 가져갔는데, 그것은 사실 장소였다. 기억은 기억이었다. 야쿠자가 아무도 기억을 찾지 않기를 원한 이유는 기억이 야쿠자가 해왔던 일의 기억이었고, 야쿠자가 아무도 야쿠자가 해왔다는 것을 알기를 원하지 않았기 때문이었다. 러너는 기억을 복사했다. 러너는 잭아웃했다. 러너는 보고서를 제출했다. 러너는 기억이 무엇인지 말하지 않았다. 러너는 야쿠자가 아무도 야쿠자가 해왔다는 것을 알기를 원하지 않는 일을 해왔고, 스프롤도 그것을 알 준비가 되지 않았다고 생각했다.",
+      "word_count_en": 207
+    },
+    "title": "Hideo's Contract",
+    "zone": "deep"
+  },
+  "mid_extract_yakuza_chop_shop": {
+    "arc": 2,
+    "fixer": "yakuza",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "mid_extract_yakuza_chop_shop",
+    "is_canonical_cast": true,
+    "is_chain_mission": false,
+    "matrix_seed": 8000,
+    "primary_objective": {
+      "count": 1,
+      "data_id": "chop_shop_data",
+      "penalty_on_failure": "construct_loss",
+      "time_limit_seconds": 90,
+      "type": "extract_data"
+    },
+    "reward_credits": 400,
+    "reward_tier": 2,
+    "rewards": {
+      "credits": 2000,
+      "materials": {
+        "extract_yakuza_chop_shop_sample": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "enemy": "ice.standard",
+        "min_evade": 2,
+        "type": "evade"
+      }
+    ],
+    "story": {
+      "arc": 2,
+      "cast": "yakuza",
+      "char_count_ko": 67,
+      "character_ref": "yakuza",
+      "pillar": "code",
+      "source": "mid_extract_yakuza_chop_shop",
+      "synopsis_en": "The chop shop had been a network for forty years. The network had been a chop shop. ICE pierces the construct's last defense.",
+      "synopsis_ko": "The chop shop had been a network for forty years. The network had been a chop shop.",
+      "word_count_en": 23
+    },
+    "title": "Yakuza Chop Shop",
+    "zone": "mid"
+  },
+  "bridge_scaffold": {
+    "arc": 3,
+    "fixer": "masahiko",
+    "grade_max": 4,
+    "grade_min": 3,
+    "id": "bridge_scaffold",
+    "is_canonical_cast": false,
+    "matrix_seed": 999,
+    "pillar": "purpose",
+    "primary_objective": {
+      "duration_sec": 1800,
+      "target": "bridge.integrity",
+      "type": "defend"
+    },
+    "rewards": {
+      "credits": 4000,
+      "materials": {
+        "smart_matter_shard": 1,
+        "upgrade_t2": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 3,
+        "target": "smart-matter.signature",
+        "type": "scan"
+      }
+    ],
+    "story": {
+      "arc": 3,
+      "cast": "berry-rydell",
+      "char_count_ko": 125,
+      "character_ref": "veteran",
+      "pillar": "purpose",
+      "source": "bridge-construct",
+      "synopsis_en": "The Bridge held the city up. The city held the Bridge down. LOVETIDE wants to wrap smart-matter around the Golden Gate — structural integrity 400% improvement, they say. But the squatters have their own protocol. Rydell's hand touches the nano-panel and it vibrates to his body temperature. The corporation is learning the language of improvisation.",
+      "synopsis_ko": "다리는 도시를 떠받쳤다. 도시는 다리를 눌렀다. LOVETIDE는 스마트매터를 금문교에 감싸려 한다 — 구조적 무결성 400% 향상이라고. 하지만 스쾃터들은 자신만의 프로토콜이 있다. 라이델의 손이 나노 패널에 닿자 그것이 그의 체온에 진동했다. 기업이 즉흥의 언어를 배우기 시작했다.",
+      "word_count_en": 55
+    },
+    "title": "Bridge Construct",
+    "zone": "deep"
+  },
+  "hosaka_core": {
+    "arc": 3,
+    "fixer": "finn",
+    "grade_max": 4,
+    "grade_min": 3,
+    "id": "hosaka_core",
+    "is_canonical_cast": true,
+    "matrix_seed": 3141,
+    "primary_objective": {
+      "data_id": "hosaka_corporate_memory",
+      "type": "extract_data"
+    },
+    "reward_credits": 300,
+    "reward_tier": 2,
+    "rewards": {
+      "credits": 1800,
+      "materials": {
+        "upgrade_t3": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.goliath",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 3,
+      "cast": "case",
+      "char_count_ko": 450,
+      "character_ref": "novice",
+      "pillar": "code",
+      "source": "hosaka_core",
+      "synopsis_en": "The Hosaka core sat in the third node like a sleeping animal. K had run the first two nodes blind — Sense/Net perimeter, then a thin corporate handshake — and now he was three levels deep, where the data was older and the ICE was sharper. The Finn had warned him: the third node is where Sense/Net keeps the things it can't afford to lose. Payroll, attendance, board meeting transcripts. The small embarrassments that become large scandals. The Hosaka was the brain of that small embarrassment archive, and the brain was awake. K felt it watching him before he saw the geometry shift. He'd been a cowboy for two months now, and the matrix still surprised him. Not with its danger — danger was expected. With its attention. The matrix, in the deep places, paid attention. The Hosaka was paying attention now. K was going to have to move fast, or not move at all.",
+      "synopsis_ko": "호사카 코어는 잠자는 동물처럼 세 번째 노드에 자리 잡고 있었다. 케이는 첫 두 노드를 맹목적으로 지나왔었다 — 센스넷 주변 경계, 그리고 얇은 기업 핸드셰이크 — 그리고 이제 그는 세 단계 깊이, 데이터가 더 오래되고 ICE가 더 날카로운 곳에 있었다. 핀이 그에게 경고했다: 세 번째 노드는 센스넷이 잃을 수 없는 것들을 보관하는 곳이라고. 급여, 출석, 이사회 회의록. 큰 스캔들로 변하는 작은 민망함들. 호사카는 그 작은 민망함 아카이브의 두뇌였고, 두뇌는 깨어 있었다. 케이는 기하학이 변하는 것을 보기 전에 그것이 자신을 지켜보는 것을 느꼈다. 그것의 순찰 경로에 첫 번째 런의 흔적이 구워져 있었다. 호사카 코어 주변의 매트릭스는 정확히 건축물 같지 않았다. 그것은 더 가까이 날씨에 가까웠다. 코어 자체는 엷은 파란 빛의 구체로, 노드의 중심에서 천천히 회전했다. 그것은 적대적이지 않았다. 우호적이지도 않았다. 그것은 단순히 지켜보고 있었다, 뇌가 자신의 생각을 지켜보는 것처럼. 케이는 데이터에 손을 뻗었다. 데이터가 손을 뻗어왔다. 호사카 코어는 그를 멈추려 하지 않았다. 그것은 30년 동안 지켜보고 있었다. 그것은 세상의 모든 시간을 가지고 있었다.",
+      "word_count_en": 155
+    },
+    "title": "Hosaka Core",
+    "zone": "mid"
+  },
+  "maas_heist": {
+    "arc": 3,
+    "fixer": "finn",
+    "grade_max": 4,
+    "grade_min": 3,
+    "id": "maas_heist",
+    "is_canonical_cast": true,
+    "matrix_seed": 1618,
+    "primary_objective": {
+      "data_id": "maas_biochip_specs",
+      "type": "extract_data"
+    },
+    "reward_credits": 300,
+    "reward_tier": 2,
+    "rewards": {
+      "credits": 1500,
+      "materials": {
+        "bio_chip": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.watchdog",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 3,
+      "cast": "case",
+      "char_count_ko": 434,
+      "character_ref": "novice",
+      "pillar": "code",
+      "source": "maas_heist",
+      "synopsis_en": "Maas Biolabs had a warehouse in the Sprawl that no one talked about. The official address on the corporate registry was a post box in Zurich. The real address was three levels down from a noodle shop in the Narita corridor, behind a door that didn't look like a door. K had been hired to break in, copy the biochip specs, and get out before the security shift changed at 0400. The job paid fifteen thousand credits, which was twice what the Finn usually offered. Twice meant dangerous. Twice meant Maas wanted the specs back before their competitors could reverse-engineer them. Twice meant the ICE inside the warehouse was not corporate-standard. Twice meant the constructs Maas kept in the basement had names. The Finn didn't say what names. The Finn just said: be back by 0400. The constructs are not pets. The constructs are not people. The constructs are Maas Biolabs constructs, and you don't want to meet one in the dark.",
+      "synopsis_ko": "마스 바이오랩스에는 아무도 말하지 않는 스프롤의 창고가 있었다. 기업 등록부의 공식 주소는 취리히의 사서함이었다. 진짜 주소는 나리타 복도의 국수 가게에서 세 층 아래, 문처럼 보이지 않는 문 뒤에 있었다. 케이는 침투하고, 바이오칩 스펙을 복사하고, 보안 교대 시간인 0400 전에 빠져나오도록 고용되었다. 일은 1만 5천 크레딧을 지불했다 — 핀이 보통 제공하는 것의 두 배였다. 두 배는 위험하다는 뜻이었다. 두 배는 창고 안의 ICE가 기업 표준이 아니라는 뜻이었다. 두 배는 마스가 지하실에 보관한 콘스트럭트들이 이름을 가지고 있다는 뜻이었다. 핀은: 0400까지 돌아와라. 콘스트럭트들은 마스 바이오랩스 콘스트럭트들이고, 너는 어둠 속에서 하나를 만나고 싶지 않을 거다라고 말했다. 케이는 0300에 잭인했다. 창고는 더 차갑고, 더 조용하고, 살균제와 더 오래된 무언가의 희미한 냄새가 났다. 데이터는 0315에 그의 데크에 있었다. 콘스트럭트는 0318에 나타났다. 콘스트럭트도 그를 지켜보았다. 잭아웃은 0319에 완료되었다. 케이는 현금으로 지불받았다. 묻지 않는 것이 나은 것들이 있다.",
+      "word_count_en": 162
+    },
+    "title": "Maas Biolabs Heist",
+    "zone": "mid"
+  },
+  "angie_leopard_tracking": {
+    "arc": 3,
+    "fixer": "dixie",
+    "grade_max": 4,
+    "grade_min": 3,
+    "id": "angie_leopard_tracking",
+    "is_canonical_cast": true,
+    "matrix_seed": 335,
+    "primary_objective": {
+      "data_id": "leopard_construct_story",
+      "type": "extract_data"
+    },
+    "reward_credits": 300,
+    "reward_tier": 2,
+    "rewards": {
+      "credits": 1700,
+      "materials": {
+        "memory_shard": 1,
+        "scrap_ice": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.loa_entity",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 3,
+      "cast": "angie",
+      "char_count_ko": 410,
+      "character_ref": "novice",
+      "pillar": "code",
+      "source": "angie_leopard_tracking",
+      "synopsis_en": "Angie had been twelve years old when she had first talked to the Loa, which in the Sprawl was the kind of thing that happened to people who had been twelve years old in the Sprawl for a long time. The leopard was not a leopard. The leopard was a construct, and the construct had been in the matrix since before the matrix had been the matrix, and the construct had been waiting for a runner. The runner was sent because the runner had been the last person to be the kind of person the leopard construct had been waiting for, which was the kind of person the leopard construct had not been able to find in the matrix for a long time. The runner jack in. The runner found the leopard. The leopard was not a leopard. The leopard was a god. The god was the kind of god that the matrix had been waiting for since before the matrix had been the matrix. The runner talked to the god. The god talked to the runner. The god told the runner a story. The story was the kind of story the matrix had been waiting for since before the matrix had been the matrix. The runner jack out. The runner filed the report. The runner did not say what the story was. The runner thought the matrix had been waiting for the kind of story the Sprawl was not ready to know about.",
+      "synopsis_ko": "앤지가 처음 로아와 이야기했을 때 열두 살이었다. 스프롤에서 그것은 스프롤에서 한참 동안 열두 살이었던 사람들에게 일어나는 종류의 일이었다. 표범은 표범이 아니었다. 표범은 콘스트럭트였고, 콘스트럭트는 매트릭스가 매트릭스이기 전부터 매트릭스에 있었고, 콘스트럭트는 러너를 기다리고 있었다. 러너는 러너가 표범 콘스트럭트가 기다려 온 종류의 사람, 즉 표범 콘스트럭트가 매트릭스에서 한참 동안 찾을 수 없었던 종류의 사람으로 마지막 사람이었기 때문에 보내졌다. 러너는 잭인했다. 러너는 표범을 찾았다. 표범은 표범이 아니었다. 표범은 신이었다. 신은 매트릭스가 매트릭스이기 전부터 기다려 온 종류의 신이었다. 러너는 신과 이야기했다. 신은 러너와 이야기했다. 신은 러너에게 이야기를 말했다. 이야기는 매트릭스가 매트릭스이기 전부터 기다려 온 종류의 이야기였다. 러너는 잭아웃했다. 러너는 보고서를 제출했다. 러너는 이야기가 무엇인지 말하지 않았다. 러너는 매트릭스가 스프롤이 알 준비가 되지 않은 종류의 이야기를 기다려 왔다고 생각했다.",
+      "word_count_en": 244
+    },
+    "title": "Angie's Leopard Tracking",
+    "zone": "deep"
+  },
+  "core_extract_neuromancer_signature": {
+    "arc": 3,
+    "fixer": "wintermute",
+    "grade_max": 4,
+    "grade_min": 3,
+    "id": "core_extract_neuromancer_signature",
+    "is_canonical_cast": true,
+    "is_chain_mission": false,
+    "matrix_seed": 8200,
+    "primary_objective": {
+      "count": 1,
+      "data_id": "neuromancer_sig",
+      "penalty_on_failure": "construct_loss",
+      "time_limit_seconds": 80,
+      "type": "extract_data"
+    },
+    "reward_credits": 800,
+    "reward_tier": 3,
+    "rewards": {
+      "credits": 4000,
+      "materials": {
+        "core_extract_neuromancer_signature_sample": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "enemy": "ice.black",
+        "min_evade": 2,
+        "type": "evade"
+      }
+    ],
+    "story": {
+      "arc": 3,
+      "cast": "wintermute",
+      "char_count_ko": 90,
+      "character_ref": "wintermute",
+      "pillar": "code",
+      "source": "core_extract_neuromancer_signature",
+      "synopsis_en": "The signature had been a neuromancer for forty years. ICE slides through the sprawl, leaving a trail of data In the Sprawl, a console cowboy jacks the matrix at night, slipping past corp ICE to lift data from a construct's memory. The run pays in credits and favors, and the bartender knows.",
+      "synopsis_ko": "The signature had been a neuromancer for forty years. 매트릭스에서 콘솔 카우보이는 ICE를 뚫고 데이터를 추출한다. 스프롤의 밤은 길고, 직장은 위험하다.",
+      "word_count_en": 52
+    },
+    "title": "Neuromancer Signature",
+    "zone": "core"
+  },
+  "aleph_fragment": {
+    "arc": 4,
+    "fixer": "finn",
+    "grade_max": 5,
+    "grade_min": 5,
+    "id": "aleph_fragment",
+    "is_canonical_cast": true,
+    "matrix_seed": 555,
+    "primary_objective": {
+      "data_id": "aleph_data",
+      "type": "extract_data"
+    },
+    "reward_credits": 1100,
+    "reward_tier": 3,
+    "rewards": {
+      "credits": 4000,
+      "materials": {
+        "unique_construct": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 2,
+        "enemy": "ice.black",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 4,
+      "cast": "kas",
+      "char_count_ko": 346,
+      "character_ref": "heretic",
+      "pillar": "code",
+      "source": "aleph_fragment",
+      "synopsis_en": "The Aleph was a point in space that contained all other points — every piece of data ever stored, every consciousness ever uploaded, every ghost still haunting the matrix. Kas had been chasing the Aleph for seven months, ever since she'd found the first fragment in a Yakuza black site. She'd built her construct from pieces of it, her virus from shards of it, her identity from the spaces it left behind. Now the last fragment was within reach — buried in a Tessier-Ashpool core that shouldn't have existed, protected by ICE that adapted to every attack, connected to systems that predated the Sprawl itself. 'You could become it,' Finn said. 'You could become everything.' Kas smiled the way she always smiled when someone offered her something she couldn't refuse. She took the job. She always did. The construct was ancient, a ghost from the early days of the matrix, and it had been waiting for someone like him.",
+      "synopsis_ko": "Aleph는 공간의 한 점이었다 — 다른 모든 포인트를 포함하는, 이전에 저장된 모든 데이터, 이전에 업로드된 모든 의식, 아직 매트릭스를 배회하는 모든 유령. 카스는 7개월 동안 Aleph를 쫓고 있었는데, 야쿠자 검은 곳에서 첫 번째 프래그먼트를 발견한 이후로. 그녀는 그것의 조각으로 그녀의 구성체를 만들었고, 그것의 파편으로 그녀의 바이러스를 만들었고, 그것이 남긴 공간으로 그녀의 정체성을 만들었다. 이제 마지막 프래그먼트가 손에 닿을 만했다 — 존재해서는 안 될 T-A 코어에 묻혀 있고, 모든 공격에 적응하는 ICE로 보호되고, Sprawl 자체보다 앞선 시스템에 연결되어 있었다. '네가 그것이 될 수 있어.' Finn이 말했다. '네가 모든 것이 될 수 있어.' 카스는 누군가가 그녀가 거절할 수 없는 것을 제공할 때마다 그녀가 그렇게 웃듯이 웃었다. 그녀는 의뢰를 받았다. 그녀는 언제나 그랬다.",
+      "word_count_en": 159
+    },
+    "title": "Aleph Fragment",
+    "zone": "deep"
+  },
+  "bama_statework": {
+    "arc": 5,
+    "fixer": "slick_henry",
+    "grade_max": 5,
+    "grade_min": 5,
+    "id": "bama_statework",
+    "is_canonical_cast": false,
+    "matrix_seed": 2024,
+    "primary_objective": {
+      "data_id": "bama_substrate_daily",
+      "type": "patch_ice_vulnerability"
+    },
+    "reward_credits": 1100,
+    "reward_tier": 3,
+    "rewards": {
+      "credits": 4000,
+      "materials": {
+        "data_fragment": 8,
+        "urban_chit": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "target": "urban_megastructure_throughput",
+        "type": "audit"
+      },
+      {
+        "count": 1,
+        "target": "class_substrate_continuity_signal",
+        "type": "ratify"
+      }
+    ],
+    "story": {
+      "arc": 5,
+      "cast": "slick_henry",
+      "char_count_ko": 877,
+      "character_ref": "suit",
+      "pillar": "purpose",
+      "source": "bama_statework",
+      "synopsis_en": "The Suit audits the BAMA. The BAMA is the era's urban-megastructure. The BAMA is what runs from Boston through to Atlanta. The Boston-to-Atlanta metropolitan axis is the era's working-class-matrix-operator's principal operational-image. The operational-image is the urban-megastructure. The urban-megastructure is the era's late-Capitalist working-class-matrix-operator class-substance. The class-substance is the BAMA. The BAMA is the era's working-class-matrix-labor market's principal class-image. The class-image is the urban-megastructure. The urban-megastructure is the BAMA. The BAMA is the era's late-Capitalist working-class-matrix-labor market's class-image. The class-image is the BAMA. The BAMA is the working-class-matrix-operator's class-substrate. The class-substrate is the BAMA. The BAMA is the working-class-matrix-operator's class-substrate. The BAMA is the era's working-class-matrix-labor market's class-image. The class-image is the BAMA. The BAMA is the era's working-class-matrix-labor market's class-substrate. The Suit's office has been tracking the BAMA's working-class-matrix-labor market's daily-substrate-management for two years. The Suit tracks it because the substrate-management is the era's working-class-matrix-operator class-image. The image is the era's late-Capitalist working-class-matrix-labor market. The Suit reads the substrate-management. The Suit reads the BAMA's daily-substrate-management registry. The registry is the era's late-Capitalist working-class-matrix-labor market's class-image. The image is the urban-megastructure. The Suit's audit is the corporate-statework's confirmation. The confirmation is what the era's late-Capitalist working-class-matrix-labor market has had as its industrial-class operational continuation. The continuation is what the BAMA has produced. The Suit's daily report is what the corporate-statework reads as its quarterly-reassurance signal. The reassurance is what the era's late-Capitalist working-class-matrix-labor market has had as its urban-megastructure operational continuity. The continuity is what the BAMA has produced. The BAMA is the era's working-class-matrix-labor market's principal urban-megastructure.",
+      "synopsis_ko": "Suit가 BAMA를 감사한다. BAMA는 시대의 도시-대형구조이다. BAMA는 보스턴에서 애틀랜타까지 이어지는 것이다. 보스턴에서 애틀랜타까지의 도시 축선은 시대의 작업-급-매트릭스-운영자의 주요 운영적 이미지이다. 운영적 이미지는 도시-대형구조이다. 도시-대형구조는 시대의 후기-자본주의 작업-급-매트릭스-운영자 계급-실체이다. 계급-실체는 BAMA이다. BAMA는 시대의 작업-급-매트릭스-노동 시장의 주요 계급-이미지이다. 계급-이미지는 도시-대형구조이다. 도시-대형구조는 BAMA이다. BAMA는 시대의 후기-자본주의 작업-급-매트릭스-노동 시장의 계급-이미지이다. 계급-이미지는 BAMA이다. BAMA는 작업-급-매트릭스-운영자의 계급-기질이다. 계급-기질은 BAMA이다. BAMA는 작업-급-매트릭스-운영자의 계급-기질이다. BAMA는 시대의 작업-급-매트릭스-노동 시장의 계급-이미지이다. 계급-이미지는 BAMA이다. BAMA는 시대의 작업-급-매트릭스-노동 시장의 계급-기질이다. Suit의 사무실은 2년 동안 BAMA의 작업-급-매트릭스-노동 시장의 일일-기질-관리를 추적해 왔다. Suit가 이걸 추적하는 이유는 기질-관리가 시대의 작업-급-매트릭스-운영자 계급-이미지이기 때문이다. 이미지는 시대의 후기-자본주의 작업-급-매트릭스-노동 시장이다. Suit가 기질-관리를 읽는다. Suit가 BAMA의 일일-기질-관리 등록부를 읽는다. 등록부는 시대의 후기-자본주의 작업-급-매트릭스-노동 시장의 계급-이미지이다. 이미지는 도시-대형구조이다. Suit의 감사는 기업-국가-작업의 확인이다. 확인은 시대의 후기-자본주의 작업-급-매트릭스-노동 시장이 산업-급 운영 연속성으로 가지고 있던 것이다. 연속성이 BAMA가 만든 것이다. Suit의 일일 보고서는 기업-국가-작업이 분기-재확신 신호로 읽는 것이다. 재확신은 시대의 후기-자본주의 작업-급-매트릭스-노동 시장이 도시-대형구조 운영 연속성으로 가지고 있던 것이다. 연속성이 BAMA가 만든 것이다. BAMA는 시대의 작업-급-매트릭스-노동 시장의 주요 도시-대형구조이다.",
+      "word_count_en": 257
+    },
+    "title": "BAMA Statework",
+    "zone": "deep"
   }
 }

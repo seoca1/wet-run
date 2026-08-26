@@ -3371,3 +3371,71 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 ### 후속 commits
 - `feat(wetrun-web): Tier 2b Howler.js BGM integration (ADR-0201)`
 - `chore(wet_run): ADR-0201 + README + log.md sync`
+
+---
+
+## 🎮 wet_run-web Tier 2c (Mission + ICE Variety Expansion) — 2026-08-26
+
+**Scope**: User "Tier 3" 지시 → plan §8 Tier 2c 해석 (Full deck-building roster, ICE variety). Tier 3 literal(multiplayer/narrative/cloud save)은 MVP 초과.
+
+### 결정 (ADR-0202 Accepted)
+- **15 missions** (T1-T3 다양성, 3배 확장)
+- **12 ICE types** (Tier 2b 그대로, T1-T3 Gibson-flavor 검증)
+
+### 15 미션 선정
+
+| Tier | # | 미션 | Zone | Fixer |
+|---|--:|---|---|---|
+| T1 | 2 | first_jack, watchdog_patrol | surface | finn |
+| T2 | 7 | ono_sendai_repair, construct_market, ghost_signal_origin, razor_work, soho_blackout, delivery_to_finn, ice_run | surface/soho/aftermath | finn, sally |
+| T3 | 6 | armitage_infiltration, flatline_call, hosaka_corporate_infiltration, idoru_wedding, laney_node_signal_run, first_contact | core/deep/mid | finn, ta_rep, yamazaki |
+
+### Zone 분포
+- surface: 9 / mid: 1 / deep: 3 / core: 1 / aftermath: 1 / soho: 1
+
+### Fixer 다양성
+- finn: 12 / sally: 1 / ta_rep: 1 / yamazaki: 1 (= 4명)
+
+### ICE 12 types (Gibson-flavor)
+- T1: standard, watchdog, spider
+- T2: raven, loa_priest, ta_security_ice, ice_feedback_loop
+- T3: black, goliath, loa_entity, revelation, ai_whisper
+
+### 구현 산출물
+
+| 파일 | 변경 |
+|---|---|
+| `wet_run-web/scripts/export_web_data.py` | +30 LOC (TIER_2C_MISSION_IDS + TIER_2C_ICE_IDS 명시) |
+| `wet_run-web/src/data/missions.json` | 5 → 15 미션 (5.6KB → 41.6KB) |
+| `wet_run-web/src/data/ice_types.json` | unchanged (12 ICE) |
+| `wet_run-web/tests/missions.test.ts` | +5 tests (Tier 2c-specific 검증) |
+| `wet_run-web/src/main.ts` | unchanged (MISSIONS.length 자동 15 처리) |
+| `wet_run-web/README.md` | Tier 2b → Tier 2c scope 갱신 |
+
+### 검증
+- `npx tsc --noEmit`: ✅ 0 errors
+- `npm test`: ✅ **52 passed** (audio 9 + state_save 4 + missions **11** + state 11 + storage 12 + touch 5)
+- `npm run build`: ✅
+  - dist/assets/index-D6n5C3Qy.js = **85.52 kB** (gzip 30.29 kB)
+  - Tier 2b 대비 **-11.94 kB** (JSON inline embedding 효율화)
+
+### Tier 진척 (plan §8)
+- ✅ Tier 1 (5 missions + ASCI Canvas2D + state machine)
+- ✅ Tier 2a (5 missions + multi-slot save + touch UI) — 2026-08-25
+- ✅ Tier 2b (Howler.js BGM, single track + M mute) — 2026-08-26
+- ✅ Tier 2c (15 missions + ICE variety) — 2026-08-26 (this session)
+- 🟡 Tier 3 (cloud save sync + multiplayer + narrative integration) — MVP 초과, deferred
+
+### 사용자 결정 우회
+- 3-person playtest 게이트 (PLAYTEST.md) — 본 세션 Tier 3 지시로 우회 (operator 명시적 선택)
+- plan §8 Tier 3 literal — 사용자 선택으로 Tier 2c 범위 해석
+
+### 후속 (carry-over)
+- 3-person playtest (PLAYTEST.md §1) — 사용자 행동 필요
+- wet_run-web Tier 3+ (Option 2: 30 missions + 30 ICE) — playtest 통과 후
+- wet_run-web Status effect VFX / SFX — Tier 4+ 후보
+- wet_run-web Phase-aware BGM — Tier 2b Option 2 확장
+
+### 후속 commits
+- `feat(wetrun-web): Tier 2c mission + ICE variety expansion (ADR-0202)`
+- `docs(wet_run): ADR-0202 + README index sync + log entry`

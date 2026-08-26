@@ -229,11 +229,13 @@ Game/wet_run-web/                           # New sub-folder in workspace
 
 - **ADR-0007** (Accepted 2026-06-17) for web/mobile scope only. macOS + Windows desktop continues per ADR-0007.
 
-### Deferred (Tier 2+)
+### Deferred (Tier 3+)
 
-- Audio via Howler.js (post-playtest)
-- Multiple missions + full campaign
-- Mobile touch UI
+- 3-person playtest (validates Tier 1+2 shippable quality)
+- Audio via Howler.js (silent per operator gate)
+- Full 209-mission campaign
+- Status effect VFX
+- Multiple bosses / jockeys
 - Save migration from desktop
 - Full i18n (English-only in MVP)
 - Multiplayer / cloud sync

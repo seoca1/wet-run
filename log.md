@@ -2992,3 +2992,89 @@ Tier 2 multi-slot save was previously inert (never called). Now:
 - `git push origin main` (needs GH auth)
 - 3-person playtest (validates autosave + multi-slot + touch overlay + 5 missions)
 - Tier 2b (audio via Howler.js) — silent per operator gate
+
+## [2026-08-26] chore(wet_run) | SESSION CLOSEOUT — 2026-08-25 ~ 2026-08-26
+
+**Scope**: User signal "All" → session closeout. Comprehensive state capture for next session continuity.
+
+### Session Cumulative Deliverables (across all turns)
+
+| Category | Count |
+|---|---|
+| ADRs Accepted | 3 (0197 gamepad, 0198 resolution, 0199 web MVP) |
+| QA Critical Fixes | 3 (GA-002 SOFTLOCK, GA-004 SAVE_CORRUPTION, GD-005 COPY_PASTE) |
+| QA High-Priority Fixes | 8 (GA-001/003/006/010/011, GD-001/006/008) |
+| Notion Pages Published | 3 (OpenCode, Gamepad, Resolution Compatibility) |
+| Atomic Commits (wet_run repo) | 9 |
+| wet_run-web Tier 1 MVP | 21 files, ~1,345 LOC, 17 tests |
+| wet_run-web Tier 2 expansion | +5 missions, +multi-slot save, +touch UI, +autosave, 17 new tests (38 total) |
+
+### wet_run State (2026-08-26 session end)
+
+| Metric | Value |
+|---|---|
+| Python source files | 236 |
+| Python test files | 234 |
+| Source LOC | 53,870 |
+| Test LOC | 64,382 |
+| Tests passed | 5,834 |
+| Tests skipped | 365 |
+| Tests xfailed | 1 (pre-existing flaky perf test) |
+| ADRs | 186 |
+| Wiki pages | 20 |
+| i18n strings (en) | 940 lines |
+
+### wet_run-web State (2026-08-26 session end)
+
+| Metric | Value |
+|---|---|
+| TypeScript files | 25 |
+| Tests | 38 (state machine + grid + missions + storage + touch + state_save) |
+| Production bundle | 59.55 KB JS / 16.96 KB gzipped |
+| Mission catalog | 5 curated (Tier 1-2) |
+| Save slots | 4 (1 autosave + 3 manual) |
+| Touch overlay | Auto-mounted on `pointer: coarse` devices |
+
+### Validators (Final)
+
+| Validator | Result |
+|---|---|
+| `ruff check src tests` (wet_run) | ✅ All checks passed |
+| `mypy --strict src` (233 files) | ✅ 0 issues |
+| `pytest` (wet_run) | ✅ 5834 passed / 365 skipped / 1 xfailed |
+| `npx tsc --noEmit` (wetrun-web) | ✅ No errors |
+| `vitest run` (wetrun-web) | ✅ 38 passed |
+| `vite build` (wetrun-web) | ✅ 59.55 KB JS / 16.96 KB gzipped |
+| `audit_vault.py` (workspace) | ✅ CLEAN |
+| `mixed_language_audit.py` | ✅ 0 violations |
+| `dashboard_pipeline_audit.py` | ✅ 0 errors |
+| `play_gamepad_smoke.py` (SDL dummy) | ✅ 38 checks PASS |
+
+### wet_run Repo Git Log (this session)
+
+```
+85b567e fix(wet_run-web): wire autosave + stateToSaveSlot serializer (Tier 2a gap closure)
+de77f12 chore(wet_run): log.md — 2026-08-26 cleanup orphan Tier 2 curation file (autonomous)
+e043de5 feat(wet_run-web): Tier 2 expansion (5 missions + multi-slot save + touch UI)
+0db3f52 docs(wet_run): log.md — 2026-08-25 gamepad smoke test verified (autonomous)
+b053f68 docs(wet_run): log.md — 2026-08-25 full validator re-verification (autonomous)
+3e14a7b test(wet_run): gamepad tier 1 tests + keyboard regression coverage
+49b4d3d feat(wet_run): Tier 1 accessibility batch — ADR-0197/0198/0199 + 8 QA fixes
+ab63f0b feat(wet_run-web): Browser MVP Tier 1 — ADR-0199 Accepted
+c3f1d9b docs(wet_run): 2026-08-25 log entry — dashboard stories-browse 3-trilogy pipeline fix
+dd9a960 chore(dashboard): delete 127 legacy flat-path story HTML files
+```
+
+### Open Follow-ups (Tier 2+ requires User action)
+
+| # | Item | Why blocked |
+|---|---|---|
+| 1 | `git push origin main` (wet_run + workspace) | Needs GH auth |
+| 2 | GitHub Pages setup on wet_run-web repo | One-time config |
+| 3 | 3-person playtest per `Game/wet_run/wet_run-web/docs/PLAYTEST.md` | Needs 3 humans |
+| 4 | Tier 2b (audio via Howler.js) | Silent per operator gate |
+| 5 | Tier 3 (more missions + VFX) | Gated on playtest |
+| 6 | Review destructive cleanup items (Ollama 19.4GB / Homebrew / opencode.db 4.9GB) | User confirmation |
+| 7 | Fiction Track C (Phase C1-C4 blocked novels) | Awaiting raw source |
+
+### SESSION END — 2026-08-26

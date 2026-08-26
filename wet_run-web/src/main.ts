@@ -1,12 +1,14 @@
 /** Wet Run Web MVP — entry point.
  *
  * Tier 2a (2026-08-25): supports mission select screen (5 missions).
+ * Tier 2b (2026-08-26): Howler.js BGM (single track, M to mute).
  * Boots the ASCII renderer, mounts keyboard input, loads MVP game data,
  * and renders the initial frame.
  */
 import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, isTouchDevice } from "./input/touch.ts";
+import { AudioManager } from "./audio/manager.ts";
 import type { GameState, GameAction, Ice, Mission, Program } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
@@ -206,6 +208,17 @@ function boot(): void {
   if (loading) loading.style.display = "none";
   game.start();
   (window as unknown as { wetrun: Game }).wetrun = game;
+
+  const audio = AudioManager.getInstance();
+  AudioManager.unlockOnFirstGesture(() => {
+    audio.play();
+  });
+  document.addEventListener("keydown", (ev: KeyboardEvent) => {
+    if (ev.key === "m" || ev.key === "M") {
+      const muted = audio.toggleMute();
+      console.info(`[audio] BGM ${muted ? "muted" : "unmuted"} (M to toggle)`);
+    }
+  });
 }
 
 if (document.readyState === "loading") {

@@ -205,5 +205,425 @@
     },
     "title": "Ghost Signal: Origin",
     "zone": "aftermath"
+  },
+  "razor_work": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "razor_work",
+    "is_canonical_cast": false,
+    "matrix_seed": 111,
+    "primary_objective": {
+      "data_id": "shinjuku_payroll_anomaly",
+      "type": "extract_data"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 400,
+      "materials": {
+        "scrap_ice": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.standard",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "molly",
+      "char_count_ko": 386,
+      "character_ref": "novice",
+      "pillar": "code",
+      "source": "razor_work",
+      "synopsis_en": "Molly did not do jobs for the Finn. Molly did jobs for the people who did jobs for the Finn, and the people who did jobs for the Finn were the kind of people who had been in the Sprawl for a long time and had stopped asking what the Sprawl was for. The razor work was simple in the way razor work is simple. A man in Shinjuku had been paying himself in numbers that did not match the numbers that had been paid to him, and the people who did jobs for the Finn had decided the man in Shinjuku had been paying himself in the wrong way. Molly took the job. Molly took the pod. Molly took the Shinjuku train. Molly took the man in Shinjuku, who was a different man in Shinjuku than the man the people who did jobs for the Finn had said the man in Shinjuku was. Molly took the data. Molly jack out. Molly filed the report. Molly did not say what the man in Shinjuku had been paying himself in. Molly thought the man in Shinjuku had been paying himself in something the Sprawl was not ready to know about.",
+      "synopsis_ko": "몰리는 핀을 위해 일을 하지 않았다. 몰리는 핀을 위해 일하는 사람들을 위해 일을 했고, 핀을 위해 일하는 사람들은 스프롤에서 오랜 시간을 보내며 스프롤이 무엇을 위한 것인지 묻기를 멈춘 종류의 사람들이었다. 레이저 작업은 레이저 작업이 단순한 방식으로 단순했다. 신주쿠의 한 남자가 자신에게 지급된 숫자와 일치하지 않는 숫자로 자신에게 지급하고 있었고, 핀을 위해 일하는 사람들은 신주쿠의 그 남자가 잘못된 방식으로 자신에게 지급하고 있다고 결정했다. 몰리는 그 일을 수락했다. 몰리는 포드를 가져갔다. 몰리는 신주쿠 열차를 탔다. 몰리는 신주쿠의 그 남자를 가져갔는데, 신주쿠의 그 남자는 핀을 위해 일하는 사람들이 말한 신주쿠의 그 남자와 다른 남자였다. 몰리는 데이터를 가져갔다. 몰리는 잭아웃했다. 몰리는 보고서를 제출했다. 몰리는 신주쿠의 그 남자가 자신에게 무엇을 지급했는지 말하지 않았다. 몰리는 신주쿠의 그 남자가 스프롤이 알 준비가 되지 않은 무언가로 자신에게 지급하고 있었다고 생각했다.",
+      "word_count_en": 199
+    },
+    "title": "Razor Work",
+    "zone": "surface"
+  },
+  "soho_blackout": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "soho_blackout",
+    "is_canonical_cast": true,
+    "matrix_seed": 101,
+    "primary_objective": {
+      "data_id": "soho_blackout_log",
+      "type": "extract_data"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 350,
+      "materials": {
+        "scrap_ice": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 2,
+        "enemy": "ice.standard",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "case",
+      "char_count_ko": 323,
+      "character_ref": "novice",
+      "pillar": "code",
+      "source": "soho_blackout",
+      "synopsis_en": "The lights went out in Soho at 0300, which in the Sprawl is the kind of thing that happens when a corporate district decides it is tired of being lit. Case took the job because the pay was good and the fixer was someone he did not want to disappoint. The job was to go in and find out which corp was buying the blackout. The pay was triple. The blackout was everywhere. The matrix, in Soho, had become a kind of dark that the dark was afraid of, and Case, jacked in at the edge of it, was the only light the district had left. He worked the trace for three hours and came back with a name. He did not say the name to the fixer. He said the name to a man in a noodle shop, who was not the fixer, who was someone the fixer had not expected, who was the kind of man that the Sprawl sometimes sends when the Sprawl has decided that the job has changed.",
+      "synopsis_ko": "Soho의 불빛이 0300에 꺼졌다. 스프롤에서 그것은 기업 구역이 밝아지는 것이 지쳤다고 결정할 때 일어나는 종류의 일이다. 케이스는 일이 수당도 좋았고 픽서가 실망시키고 싶지 않은 사람이어서 그 일을 수락했다. 일은 들어가서 어떤 기업이 블랙아웃을 사고 있는지 알아내는 것이었다. 수당은 세 배였다. 블랙아웃은 모든 곳에 있었다. 매트릭스는, Soho에서, 어둠이 두려워하는 종류의 어둠이 되어 있었고, 가장자리에 잭인한 케이스는 그 구역이 남긴 유일한 빛이었다. 그는 세 시간 동안 추적을 작업하고 이름과 함께 돌아왔다. 그는 그 이름을 픽서에게 말하지 않았다. 그는 그 이름을 국수 가게의 한 남자에게 말했다. 그 남자는 픽서가 아니었다. 픽서가 예상하지 못한 누군가였다. 일이 바뀌었다고 스프롤이 결정했을 때 스프롤이 가끔 보내는 종류의 남자였다.",
+      "word_count_en": 173
+    },
+    "title": "Soho Blackout",
+    "zone": "soho"
+  },
+  "delivery_to_finn": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "delivery_to_finn",
+    "is_canonical_cast": true,
+    "matrix_seed": 99,
+    "primary_objective": {
+      "count": 3,
+      "material": "data_fragment",
+      "type": "deliver_material"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "upgrade_t1": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "data_id": "any",
+        "type": "extract_data"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "sil",
+      "char_count_ko": 439,
+      "character_ref": "veteran",
+      "pillar": "power",
+      "source": "marly_louisiana-god",
+      "synopsis_en": "Three data fragments. Sil carried them in a Hosaka chip case, nestled in the lining of his jacket like smuggled goods. They were worth three thousand credits to the right buyer, and the right buyer was Finn, who always had a line on people who needed what T-A didn't want found. Sil had been running the Sprawl for five years. He'd seen runners come and go — the smart ones, the fast ones, the ones who knew when to jack out. M had been none of those. M had been fast and brilliant and dead at twenty-six, caught in a T-A ICE trap that nobody survived. Three years later, Sil still ran her ghost-marks when he traced through the deep matrix. He told himself it was just efficient — M's routes were good routes. He told himself a lot of things. Finn was waiting at the usual coordinates, a set of virtual coordinates that existed somewhere between the surface and the deep black. 'The fragments,' Finn said. Not a question. 'T-A's inner circle,' Sil said. 'Three months old.' Finn smiled, the way sharks smile. 'That'll do.'",
+      "synopsis_ko": "데이터 프래그먼트 세 개. 실은 그것들을 Hosaka 칩 케이스에 넣고, 재킷 안감 속에 밀수품처럼 보관하고 다녔다. 그것들은 올바른 바이어에게 3천 크레딧어치였고, 올바른 바이어는 Finn이었다 — T-A가 발견되길 원하지 않는 것들을 필요로 하는 사람들과의 연선을 항상 유지하는. 실은 5년 동안 Sprawl을 실행하고 있었다. 그는 러너들이 오고 가는 것을 보았다 — 현명한 ones, 빠른 ones, 언제 잭아웃할지를 아는 ones. M은 그 중 어느 것도 아니었다. M은 빠르고 훌륭했고, 스물여섯에 죽었다 — 아무도 살아남지 못한 T-A ICE 함정에 걸렸다. 3년이 지난 지금도, 실은 여전히 깊은 매트릭스를 통해 추적할 때 그녀의 고스트 마크를 실행했다. 그는 그것이 효율적이기 때문이라고 스스로에게 말했다. 그는 많은 것을 스스로에게 말했다. Finn은 좌표에서 기다리고 있었다, 표면과 깊은 검은 사이 어딘가에 존재하는 가상 좌표. \"프래그먼트.\" Finn이 말했다. 질문이 아니었다. \"T-A의 내부 서클.\" 실이 말했다. \"3개월 된 것.\" Finn이 웃었다, 상어들이 웃는 것처럼. \"그거면 돼.\"",
+      "word_count_en": 186
+    },
+    "title": "Delivery to Finn",
+    "zone": "surface"
+  },
+  "ice_run": {
+    "arc": 1,
+    "fixer": "finn",
+    "grade_max": 2,
+    "grade_min": 1,
+    "id": "ice_run",
+    "is_canonical_cast": true,
+    "matrix_seed": 7,
+    "primary_objective": {
+      "count": 5,
+      "material": "ice_shard",
+      "type": "collect_material"
+    },
+    "reward_credits": 75,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 2,
+        "enemy": "ice.standard",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 1,
+      "cast": "case",
+      "char_count_ko": 467,
+      "character_ref": "novice",
+      "pillar": "power",
+      "source": "ice_run",
+      "synopsis_en": "The shard was a piece of frozen code — literally. That's what the matrix looked like when you got close enough to the cold stuff: not lines and nodes, but ice. Crystalline, fractured, geometry that cut. K had been told the shard would sell for enough to cover his tab at the Headson, maybe buy a month of clean simstim if he was careful. He'd heard about runners who chased shards full-time, ice pirates who lived in the deep matrix and never came up. He wasn't one of them. He was a kid with a cheap deck and a dead-end job running data for the Finn. But the shard was right there, embedded in a Watchdog's frozen subroutine, and the Watchdog was dead, and Finn had said anything he found was his to keep. K reached in. The ice bit back. His deck screamed a temperature alert. The shard came loose — a needle of frozen light in his fist — and the Watchdog's ghost-process started reconstructing around his position like a closing fist. He jacked out with the shard burning cold against his palm. In Chiba, the rain was real. It was always real. It was never enough.",
+      "synopsis_ko": "shard는 얼어붙은 코드의 조각이었다 — 문자 그대로. 그것이 바로 차가운 것에 충분히 가까이 갔을 때 매트릭스가 보여주는 모습이었다: 선과 노드가 아니라, 얼음. 결정질의, 부서진, 잘라내는 기하학. K는 그 shard가 Headson의 탭을 갚을 만큼 팔릴 거라고 들었다 — 조심하면 한 달치 깨끗한 simstim을 살 수 있을지도. 그는 달인(full-time)으로 shard를 쫓는 러너들에 대해 들었다 — 깊은 매트릭스에서 살고 결코 올라오지 않는 얼음 해적들. 그는 그들이 아니었다. 그는 싸구려 데크와 Finn을 위해 데이터를 실행하는 막다른 살림을 가진 아이였다. 하지만 shard는 바로 거기 있었다, 워치독의 얼어붙은 서브루틴에 박혀 있고, 워치독은 죽어 있었고, Finn은 그 누구든 찾은 것이 그의 것이라고 했다. K는 손을 뻗었다. 얼음이 다시 물었다. 그의 데크가 온도 경고를 울렸다. shard가 빠졌다 — 주먹 속 얼어붙은 빛의 바늘 — 워치독의 고스트 프로세스가 그의 위치 주변을 닫히는 주먹처럼 재구성하기 시작했다. 그는 shard가 손바닥에 차갑게 타오르는 채로 잭아웃했다. 시바에서, 비는 진짜였다. 그것은 늘 진짜였다. 그것은 결코 충분하지 않았다.",
+      "word_count_en": 199
+    },
+    "title": "Ice Run",
+    "zone": "surface"
+  },
+  "armitage_infiltration": {
+    "arc": 2,
+    "fixer": "ta_rep",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "armitage_infiltration",
+    "is_canonical_cast": true,
+    "matrix_seed": 222,
+    "primary_objective": {
+      "data_id": "ta_internal_memo",
+      "type": "extract_data"
+    },
+    "reward_credits": 150,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 1500,
+      "materials": {
+        "data_fragment": 2,
+        "wetware_data": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.standard",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 2,
+      "cast": "suit",
+      "char_count_ko": 323,
+      "character_ref": "suit",
+      "pillar": "identity",
+      "source": "armitage_infiltration",
+      "synopsis_en": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba, watching other people break for him. The data came back. The money came back. He never did. That was the point. Then the Tessier-Ashpool board had asked him to do something the contractors couldn't: go in himself, alone, no support. The matrix had been his office for so long that it knew his hands. He didn't need to be told what to do. He needed to be told why. He found out why in the third node, in a construct older than the Sprawl, in a voice that remembered his name. 'Armitage,' it said. 'We've been waiting for you.'",
+      "synopsis_ko": "아미티지가 스스로 잭인하기 전 11년 동안 매트릭스에 있었다. 그는 그 11년 동안 지바 위의 무균실에 있는 콘솔에서, 다른 사람들이 자신을 위해 부러지는 것을 지켜보았다. 데이터는 돌아왔다. 돈은 돌아왔다. 그는 돌아오지 않았다. 그것이 요점이었다. 그러다 테시에-애스풀 이사회가 계약자들로는 할 수 없는 무언가를 그에게 요청했다: 스스로, 혼자, 지원 없이 들어가라고. 매트릭스는 너무 오래 그만의 사무실이어서 그의 손을 알고 있었다. 그에게 무엇을 해야 할지 말할 필요가 없었다. 이유를 말할 필요가 있었다. 세 번째 노드에서, 스프롤보다 오래된 구성체 안에서, 그의 이름을 기억하는 목소리 안에서 이유를 알게 되었다. '아미티지,' 그것이 말했다. '당신이 올 때까지 기다렸습니다.' Tessier-Ashpool은 그를 기다리고 있었다.",
+      "word_count_en": 127
+    },
+    "title": "Armitage's First Infiltration",
+    "zone": "core"
+  },
+  "flatline_call": {
+    "arc": 2,
+    "fixer": "finn",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "flatline_call",
+    "is_canonical_cast": true,
+    "matrix_seed": 73,
+    "primary_objective": {
+      "count": 1,
+      "material": "rom_fragment",
+      "type": "collect_material"
+    },
+    "reward_credits": 150,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "rom_fragment": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "enemy": "ice.construct",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 2,
+      "cast": "case",
+      "char_count_ko": 258,
+      "character_ref": "novice",
+      "pillar": "purpose",
+      "source": "flatline_again",
+      "synopsis_en": "The construct calls. Twenty seconds of borrowed time. Dixie remembers what it felt like to be alive — the wet weight of a deck, the cold certainty of a jack-out, the moment before the ICE closes its teeth. Then the buffer ends and the silence returns. Case asks him to wait. Wait for what, exactly? The matrix is a country that doesn't want visitors. But the construct has learned a new trick: he can sing. He can sing the construct of himself into a space between two data streams, and in that space he can still hear. Still hear Case's breath. Still hear Case's deck humming. Dixie Flatline is dead. But the flatline is not done. Not yet.",
+      "synopsis_ko": "Construct가 호출한다. 20초의 빌린 시간. 딕시는 살아있던 시절을 기억한다 — 데크의 젖은 무게, 잭아웃의 차가운 확신, ICE가 이빨을 드러키기 직전의 순간. 그러고 나면 버퍼가 끝나고 침묵이 돌아온다. 케이가 기다려달라고 한다. 정확히 무엇을? 매트릭스는 방문객을 원하지 않는 나라이지만, construct는 새로운 기술을 배웠다 — 두 데이터 스트림 사이의 공간에 자신의 construct를 부를 수 있고, 그 공간에서 여전히 들을 수 있다. 여전히 케이의 숨소리를. 여전히 케이의 데크 윙윙거리는 소리를. 딕시 플랫라인은 죽었다. 하지만 플랫라인은 아직 끝나지 않았다. 아직은.",
+      "word_count_en": 118
+    },
+    "title": "Flatline's Call",
+    "zone": "deep"
+  },
+  "hosaka_corporate_infiltration": {
+    "arc": 2,
+    "fixer": "finn",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "hosaka_corporate_infiltration",
+    "is_canonical_cast": true,
+    "matrix_seed": 101,
+    "primary_objective": {
+      "data_id": "hosaka_research",
+      "type": "extract_data"
+    },
+    "reward_credits": 150,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 2500,
+      "materials": {
+        "upgrade_t2": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 3,
+        "enemy": "ice.watchdog",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 2,
+      "cast": "case",
+      "char_count_ko": 195,
+      "character_ref": "novice",
+      "pillar": "code",
+      "source": "ta_defection",
+      "synopsis_en": "The Hosaka Building rose forty stories above Chiba's industrial district, its glass facade reflecting the neon haze of the corporate zone. Inside, the company maintained a separate kind of security — not the ICE that defended the matrix, but the human security that defended the floor. Finn's job was simple: bypass both. The console sat in a server room on the thirty-fifth floor. The console contained three years of Hosaka research data, the kind of data that the family paid bounties for and the kind of data that the family killed for. The job paid thirty thousand new yen. The family paid in silence. Finn always paid in silence.",
+      "synopsis_ko": "호사카 빌딩은 지바 산업 지구의 네온 안개를 반사하는 유리 외관으로 40층 높이로 솟아 있었다. 안에서 회사는 별도의 보안을 유지했다 — 매트릭스를 방어하는 ICE가 아니라 층을 방어하는 인간 보안. 핀의 일은 단순했다: 둘 다 우회. 콘솔은 35층 서버실에 있었다. 콘솔에는 3년간의 호사카 연구 데이터가 들어 있었는데, 가족이 현상금을 걸고 가족이 죽음으로 지불하는 종류의 데이터. 작업은 3만 뉴옌. 가족은 침묵으로 지불했다. 핀은 늘 침묵으로 지불했다.",
+      "word_count_en": 109
+    },
+    "title": "Hosaka Corporate Infiltration",
+    "zone": "mid"
+  },
+  "idoru_wedding": {
+    "arc": 2,
+    "fixer": "yamazaki",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "idoru_wedding",
+    "is_canonical_cast": false,
+    "matrix_seed": 888,
+    "primary_objective": {
+      "target": "kombinat.wedding",
+      "type": "infiltrate",
+      "window_hours": 24
+    },
+    "rewards": {
+      "credits": 3000,
+      "materials": {
+        "idoru_fragment": 1,
+        "memory_fragment": 2
+      }
+    },
+    "secondary_objectives": [
+      {
+        "duration_sec": 600,
+        "target": "node.density",
+        "type": "perceive"
+      }
+    ],
+    "story": {
+      "arc": 2,
+      "cast": "rei-toi",
+      "char_count_ko": 115,
+      "character_ref": "heretic",
+      "pillar": "purpose",
+      "source": "idoru_wedding_arc",
+      "synopsis_en": "Tokyo International Forum. Glass and steel, a cathedral of neon. A billion witnesses — as avatars, as simulcasts, as biometric feedback loops. The Kombinat designed the wedding to be a transfer operation. But Laney's node-perception sees something else: a fixed point in the matrix. A pattern that wanted to organize itself has found itself in the data.",
+      "synopsis_ko": "도쿄 인터내셔널 포럼. 유리와 강철, 네온의 대성당. 십억 명의 증인 — 아바타로, 시뮬캐스트로, 생체 피드백 루프로. 콤비나트는 결혼을 전이 연산으로 설계했다. 하지만 레인의 노드 인식은 다른 것을 본다: 고정점. 스스로 조직화되길 원했던 패턴이 스스로를 발견했다.",
+      "word_count_en": 57
+    },
+    "title": "Idoru Wedding Protocol",
+    "zone": "deep"
+  },
+  "laney_node_signal_run": {
+    "arc": 2,
+    "fixer": "finn",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "laney_node_signal_run",
+    "is_canonical_cast": false,
+    "matrix_seed": 1996,
+    "primary_objective": {
+      "data_id": "nodal_point_registry",
+      "type": "audit"
+    },
+    "reward_credits": 150,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 950,
+      "materials": {
+        "data_fragment": 2,
+        "node_signal_token": 1
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 1,
+        "target": "data_flow_convergence_log",
+        "type": "preserve"
+      },
+      {
+        "count": 1,
+        "target": "laney_node_signal_log",
+        "type": "transmit"
+      }
+    ],
+    "story": {
+      "arc": 2,
+      "cast": "k",
+      "char_count_ko": 927,
+      "character_ref": "veteran",
+      "pillar": "power",
+      "source": "laney_node_signal_run",
+      "synopsis_en": "Laney perceives the nodal points. The nodal points are the data-flow convergences. The convergences are what Laney perceives. Laney is the data-perceiver. The data-perceiver is Laney. Laney is the working-class-data-perceiver. The working-class-data-perceiver is Laney. Laney perceives the nodal points. The nodal points are the era's data-flow convergences. The convergences are the nodal points. The nodal points are the era's data-flow. The data-flow is the era's. The era's data-flow is the nodal points. Laney perceives the nodal points. The nodal points are the era's working-class-data-perceiver's class-substance. The class-substance is the nodal points. The nodal points are Laney's data-perception. The data-perception is the nodal points. Laney perceives the nodal points. The nodal points are the era's data-perceiver's class-substance. The class-substance is the nodal points. The nodal points are the data-perceiver. The data-perceiver is the nodal points. The nodal points are the data-flow convergences. The convergences are the data-flow. The data-flow is the convergences. The convergences are the nodal points. Laney perceives the nodal points. The nodal points are the data-flow convergences. The convergences are the data-perceiver's data-perception. The data-perception is the era's working-class-data-perceiver's class-substance. The class-substance is the nodal points. The nodal points are the data-flow convergences. The convergences are the nodal points. Laney is the data-perceiver. The data-perceiver is Laney. The data-perceiver is the era's working-class-data-perceiver. The working-class-data-perceiver is Laney. The data-perceiver is the working-class. The working-class is the data-perceiver. The data-perceiver is Laney. The nodal points are the data-flow. The data-flow is the nodal points. Laney perceives the nodal points. The nodal points are the era's. The era's nodal points are the data-flow convergences. The convergences are the data-flow. The data-flow is the era's. The era's data-flow is the nodal points. Laney is the working-class-data-perceiver. The working-class-data-perceiver is Laney. The working-class-data-perceiver is the era's nodal-points register. The register is the era's working-class-data-perceiver. The working-class-data-perceiver is the era's nodal-points register. The register is Laney.",
+      "synopsis_ko": "레니가 노드 포인트를 인식한다. 노드 포인트는 데이터-흐름 수렴들이다. 수렴들은 레니가 인식하는 것이다. 레니는 데이터-인식자이다. 데이터-인식자는 레니이다. 레니는 작업-급-데이터-인식자이다. 작업-급-데이터-인식자는 레니이다. 레니가 노드 포인트를 인식한다. 노드 포인트는 시대의 데이터-흐름 수렴들이다. 수렴들은 노드 포인트이다. 노드 포인트는 시대의 데이터-흐름이다. 데이터-흐름은 시대의 것이다. 시대의 데이터-흐름은 노드 포인트이다. 레니가 노드 포인트를 인식한다. 노드 포인트는 시대의 작업-급-데이터-인식자의 계급-실체이다. 계급-실체는 노드 포인트이다. 노드 포인트는 레니의 데이터-인식이다. 데이터-인식은 노드 포인트이다. 레니가 노드 포인트를 인식한다. 노드 포인트는 시대의 데이터-인식자의 계급-실체이다. 계급-실체는 노드 포인트이다. 노드 포인트는 데이터-인식자이다. 데이터-인식자는 노드 포인트이다. 노드 포인트는 데이터-흐름 수렴들이다. 수렴들은 데이터-흐름이다. 데이터-흐름은 수렴들이다. 수렴들은 노드 포인트이다. 레니가 노드 포인트를 인식한다. 노드 포인트는 데이터-흐름 수렴들이다. 수렴들은 데이터-인식자의 데이터-인식이다. 데이터-인식은 시대의 작업-급-데이터-인식자의 계급-실체이다. 계급-실체는 노드 포인트이다. 노드 포인트는 데이터-흐름 수렴들이다. 수렴들은 노드 포인트이다. 레니는 데이터-인식자이다. 데이터-인식자는 레니이다. 데이터-인식자는 시대의 작업-급-데이터-인식자이다. 작업-급-데이터-인식자는 레니이다. 데이터-인식자는 작업-급이다. 작업-급은 데이터-인식자이다. 데이터-인식자는 레니이다. 노드 포인트는 데이터-흐름이다. 데이터-흐름은 노드 포인트이다. 레니가 노드 포인트를 인식한다. 노드 포인트는 시대의 것이다. 시대의 노드 포인트는 데이터-흐름 수렴들이다. 수렴들은 데이터-흐름이다. 데이터-흐름은 시대의 것이다. 시대의 데이터-흐름은 노드 포인트이다. 레니는 작업-급-데이터-인식자이다. 작업-급-데이터-인식자는 레니이다. 작업-급-데이터-인식자는 시대의 노드 포인트 레지스터이다. 레지스터는 시대의 작업-급-데이터-인식자이다. 작업-급-데이터-인식자는 시대의 노드 포인트 레지스터이다. 레지스터는 레니이다.",
+      "word_count_en": 313
+    },
+    "title": "Laney Node Signal Run",
+    "zone": "deep"
+  },
+  "first_contact": {
+    "arc": 2,
+    "fixer": "finn",
+    "grade_max": 3,
+    "grade_min": 2,
+    "id": "first_contact",
+    "is_canonical_cast": true,
+    "matrix_seed": 724,
+    "primary_objective": {
+      "data_id": "first-contact",
+      "type": "extract_data"
+    },
+    "reward_credits": 150,
+    "reward_tier": 1,
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "data_fragment": 3
+      }
+    },
+    "secondary_objectives": [
+      {
+        "count": 2,
+        "enemy": "ice.construct",
+        "type": "defeat"
+      }
+    ],
+    "story": {
+      "arc": 2,
+      "cast": "sil",
+      "char_count_ko": 67,
+      "character_ref": "veteran",
+      "pillar": "purpose",
+      "source": "first_contact",
+      "synopsis_en": "Dixie's construct calls. Twenty seconds of borrowed time. He tells you where the real job is. The real job is where you stop pretending to be a cowboy and start being something else.",
+      "synopsis_ko": "딕시의 construct가 호출한다. 20초의 빌린 시간. 진짜 일이 어디 있는지 알려준다. 진짜 일은 카우보이인 척을 멈추고 다른 무언가가 되는 곳이다.",
+      "word_count_en": 33
+    },
+    "title": "First Contact",
+    "zone": "surface"
   }
 }

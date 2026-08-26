@@ -5,7 +5,7 @@
  * the state-tracking API which is the deterministic surface.
  */
 import { describe, it, expect, beforeEach } from "vitest";
-import { AudioManager, SOUND_IDS } from "../src/audio/manager.js";
+import { AudioManager, BGM_IDS, SFX_IDS } from "../src/audio/manager.js";
 
 describe("AudioManager", () => {
   beforeEach(() => {
@@ -48,7 +48,7 @@ describe("AudioManager", () => {
 
   it("play() accepts a SoundId and is a no-op in node", () => {
     const audio = AudioManager.getInstance();
-    audio.play(SOUND_IDS.SENSE_NET);
+    audio.play(BGM_IDS.SENSE_NET);
     expect(audio.isPlaying()).toBe(false);
   });
 
@@ -62,15 +62,15 @@ describe("AudioManager", () => {
     expect(() => AudioManager.unlockOnFirstGesture()).not.toThrow();
   });
 
-  it("SOUND_IDS exposes SENSE_NET path", () => {
-    expect(SOUND_IDS.SENSE_NET).toBe("sounds/theme_sense_net.mp3");
+  it("BGM_IDS exposes SENSE_NET path", () => {
+    expect(BGM_IDS.SENSE_NET).toBe("sounds/theme_sense_net.mp3");
   });
 
-  it("SOUND_IDS exposes 5 tracks for Tier 3 phase-aware BGM", () => {
-    expect(SOUND_IDS.CHIBA).toBe("sounds/theme_chiba.mp3");
-    expect(SOUND_IDS.MATRIX_RAIN).toBe("sounds/theme_matrix_rain.mp3");
-    expect(SOUND_IDS.BROADCAST).toBe("sounds/theme_broadcast.mp3");
-    expect(SOUND_IDS.INDUSTRIAL).toBe("sounds/theme_industrial.mp3");
+  it("BGM_IDS exposes 5 tracks for Tier 3 phase-aware BGM", () => {
+    expect(BGM_IDS.CHIBA).toBe("sounds/theme_chiba.mp3");
+    expect(BGM_IDS.MATRIX_RAIN).toBe("sounds/theme_matrix_rain.mp3");
+    expect(BGM_IDS.BROADCAST).toBe("sounds/theme_broadcast.mp3");
+    expect(BGM_IDS.INDUSTRIAL).toBe("sounds/theme_industrial.mp3");
   });
 
   it("playPhase('menu') tracks chiba but isPlaying false in node", () => {
@@ -91,5 +91,32 @@ describe("AudioManager", () => {
     audio.playPhase("unknown_phase");
     expect(audio.isPlaying()).toBe(false);
     expect(audio.getCurrentTrack()).toBe(null);
+  });
+
+  it("SFX_IDS exposes 3 effects for Tier 4", () => {
+    expect(SFX_IDS.COMBAT_HIT).toBe("sounds/sfx_combat_hit.wav");
+    expect(SFX_IDS.VICTORY).toBe("sounds/sfx_victory.wav");
+    expect(SFX_IDS.DEFEAT).toBe("sounds/sfx_defeat.wav");
+  });
+
+  it("playSfx is a no-op in node (Howler fails to decode)", () => {
+    const audio = AudioManager.getInstance();
+    audio.playSfx();
+    expect(audio.isMuted()).toBe(false);
+  });
+
+  it("playSfx respects mute state", () => {
+    const audio = AudioManager.getInstance();
+    audio.mute();
+    expect(audio.isMuted()).toBe(true);
+    audio.playSfx();
+    audio.unmute();
+    expect(audio.isMuted()).toBe(false);
+  });
+
+  it("stopAllSfx does not throw when no SFX active", () => {
+    const audio = AudioManager.getInstance();
+    audio.stopAllSfx();
+    expect(audio.isMuted()).toBe(false);
   });
 });

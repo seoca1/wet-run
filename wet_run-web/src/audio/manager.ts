@@ -25,7 +25,7 @@
 
 import { Howl } from "howler";
 
-export const SOUND_IDS = {
+export const BGM_IDS = {
   CHIBA: "sounds/theme_chiba.mp3",
   SENSE_NET: "sounds/theme_sense_net.mp3",
   MATRIX_RAIN: "sounds/theme_matrix_rain.mp3",
@@ -33,14 +33,21 @@ export const SOUND_IDS = {
   INDUSTRIAL: "sounds/theme_industrial.mp3",
 } as const;
 
-export type SoundId = (typeof SOUND_IDS)[keyof typeof SOUND_IDS];
+export const SFX_IDS = {
+  COMBAT_HIT: "sounds/sfx_combat_hit.wav",
+  VICTORY: "sounds/sfx_victory.wav",
+  DEFEAT: "sounds/sfx_defeat.wav",
+} as const;
+
+export type SoundId = (typeof BGM_IDS)[keyof typeof BGM_IDS];
+export type SoundEffectId = (typeof SFX_IDS)[keyof typeof SFX_IDS];
 
 const PHASE_TO_SOUND: Readonly<Record<string, SoundId | null>> = {
-  menu: SOUND_IDS.CHIBA,
-  approach: SOUND_IDS.SENSE_NET,
-  combat: SOUND_IDS.MATRIX_RAIN,
-  victory: SOUND_IDS.BROADCAST,
-  defeat: SOUND_IDS.INDUSTRIAL,
+  menu: BGM_IDS.CHIBA,
+  approach: BGM_IDS.SENSE_NET,
+  combat: BGM_IDS.MATRIX_RAIN,
+  victory: BGM_IDS.BROADCAST,
+  defeat: BGM_IDS.INDUSTRIAL,
   exit: null,
 };
 
@@ -52,15 +59,18 @@ export class AudioManager {
   private _muted = false;
   private _started = false;
   private readonly volume: number;
+  private readonly sfxHowls: Map<SoundEffectId, Howl> = new Map();
+  private readonly sfxVolume: number;
 
-  private constructor(volume: number) {
+  private constructor(volume: number, sfxVolume: number) {
     this.volume = volume;
+    this.sfxVolume = sfxVolume;
   }
 
   /** Get or create the singleton. Safe to call repeatedly. */
   static getInstance(): AudioManager {
     if (instance === null) {
-      instance = new AudioManager(0.4);
+      instance = new AudioManager(0.4, 0.6);
     }
     return instance;
   }
@@ -82,7 +92,7 @@ export class AudioManager {
    * the current one, the previous Howl is unloaded and a new one is
    * created. Lazy-creates Howl on first call. No-op in jsdom/node.
    */
-  play(track: SoundId = SOUND_IDS.SENSE_NET): void {
+  play(track: SoundId = BGM_IDS.SENSE_NET): void {
     if (this.currentTrack === track && this.howl !== null) {
       if (!this._started) {
         try {
@@ -168,6 +178,13 @@ export class AudioManager {
         // ignore
       }
     }
+    for (const sfx of this.sfxHowls.values()) {
+      try {
+        sfx.mute(true);
+      } catch {
+        // ignore
+      }
+    }
   }
 
   /** Unmute and restore prior volume. */
@@ -176,6 +193,13 @@ export class AudioManager {
     if (this.howl !== null) {
       try {
         this.howl.mute(false);
+      } catch {
+        // ignore
+      }
+    }
+    for (const sfx of this.sfxHowls.values()) {
+      try {
+        sfx.mute(false);
       } catch {
         // ignore
       }
@@ -202,6 +226,47 @@ export class AudioManager {
       return this.howl.playing();
     } catch {
       return false;
+    }
+  }
+
+  /**
+   * Play a one-shot sound effect. Howler instances are cached per
+   * SoundEffectId so repeated calls reuse the same buffer. Multiple
+   * plays of the same id overlap (Howler internal mix). Respects mute.
+   */
+  playSfx(id: SoundEffectId = SFX_IDS.COMBAT_HIT): void {
+    let howl = this.sfxHowls.get(id);
+    if (howl === undefined) {
+      try {
+        howl = new Howl({
+          src: [id],
+          loop: false,
+          volume: this.sfxVolume,
+          html5: false,
+        });
+        this.sfxHowls.set(id, howl);
+      } catch {
+        return;
+      }
+    }
+    try {
+      howl.play();
+      if (this._muted) {
+        howl.mute(true);
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  /** Stop every active SFX. */
+  stopAllSfx(): void {
+    for (const sfx of this.sfxHowls.values()) {
+      try {
+        sfx.stop();
+      } catch {
+        // ignore
+      }
     }
   }
 

@@ -8,7 +8,7 @@
 import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, isTouchDevice } from "./input/touch.ts";
-import { AudioManager } from "./audio/manager.ts";
+import { AudioManager, SFX_IDS } from "./audio/manager.ts";
 import { healthBar, healthColor, formatStatusLabel } from "./renderer/vfx.ts";
 import type { GameState, GameAction, GamePhase, Ice, Mission, Program } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState, stateToSaveSlot } from "./core/state.ts";
@@ -159,8 +159,17 @@ class Game {
 
   private syncPhase(current: GamePhase): void {
     if (this._lastPhase === current) return;
+    const previous = this._lastPhase;
     this._lastPhase = current;
-    AudioManager.getInstance().playPhase(current);
+    const audio = AudioManager.getInstance();
+    audio.playPhase(current);
+    if (current === "victory" && previous !== "victory") {
+      audio.playSfx(SFX_IDS.VICTORY);
+    } else if (current === "defeat" && previous !== "defeat") {
+      audio.playSfx(SFX_IDS.DEFEAT);
+    } else if (current === "exit") {
+      audio.stopAllSfx();
+    }
   }
 
   start(): void {

@@ -3555,3 +3555,56 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 - `feat(wetrun-web): Phase-aware BGM (5 tracks, ADR-0204)`
 - `test+docs(wetrun-web): Phase-aware BGM tests + README`
 - `docs(wet_run): ADR-0204 + README index sync + log entry`
+
+---
+
+## 🎨 wet_run-web Status Effect VFX + HUD Bars — 2026-08-26 [All-3]
+
+**Scope**: User "all" carry-over batch. Combat HUD 강화 (HP bars + turn counter + status labels).
+
+### 결정 (ADR-0205 Accepted, Option 1)
+- **Pure function VFX helpers** in `src/renderer/vfx.ts`
+- `healthBar()`, `healthColor()`, `formatStatusLabel()`
+
+### 구현 산출물
+
+| 파일 | LOC/Tests |
+|---|---|
+| `wet_run-web/src/renderer/vfx.ts` (new) | 31 LOC (3 helpers) |
+| `wet_run-web/src/main.ts` | renderGrid에 통합 (HP bars + turn + status) |
+| `wet_run-web/tests/vfx.test.ts` (new) | 14 tests |
+
+### HUD Layout (combat phase)
+
+```
+60,1: T3                            ← turn count
+2,5: P [████████████] 100/100      ← player HP bar (12 cells, color: green/yellow/red)
+36,22: [ Watchdog       ]           ← ICE name (tier color)
+36,24: [████████░░░░] 70/100       ← ICE HP bar (color: ratio-based)
+36,26: [ VICTORY ]                  ← status label (victory/defeat only)
+2,42: HAND: [abcd] [efgh] ...        ← existing deck hand
+```
+
+### Color Thresholds (healthColor)
+- > 60%: GREEN_NEON (healthy)
+- 30-60%: YELLOW_AMBER (warning)
+- < 30%: RED_BRIGHT (critical)
+
+### 검증
+- `npx tsc --noEmit`: ✅ 0 errors
+- `npm test`: ✅ **72 passed** (Phase-aware 58 → +14 VFX tests)
+- `npm run build`: ✅ 126.10 kB (Phase-aware 125.43 → +0.67 kB)
+- 20 modules (이전 19 → +1 vfx.ts)
+
+### 설계 결정
+- **Pure functions**: 격리 테스트 가능, 의존성 없음, jsdom 환경 무관
+- **Pure function**: `healthBar`/`healthColor`/`formatStatusLabel` 모두 side effect 없음
+- **테스트 가능성**: VFX 로직을 `vfx.ts`로 분리해 main.ts 변경 없이 격리 테스트
+
+### 후속 (carry-over)
+- All-4: Content authoring (Phase 6 Arc + Mission Expansion) — 다음
+
+### 후속 commits
+- `feat(wetrun-web): Status effect VFX + HUD bars (ADR-0205)`
+- `test(wetrun-web): VFX helper tests (14 new)`
+- `docs(wet_run): ADR-0205 + README index sync + log entry`

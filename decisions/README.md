@@ -129,6 +129,7 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0202 | wet_run-web Tier 2c — 미션 + ICE 다양성 확장 (5→15 missions T1-T3, 12 ICE Gibson-flavor, 85.52 KB bundle) | **Accepted (Option 1)** | 2026-08-26 | P2 (plan §8 Tier 2c: Full deck-building roster, ICE variety) |
 | 0203 | wet_run-web Tier 3 — 30 Missions + 30 ICE Expansion (T1-T5, 6 zones, 10 fixers, 124.66 KB bundle) | **Accepted (Option 1)** | 2026-08-26 | P2 (plan §8 Tier 3: Full deck-building roster, ICE variety expansion) |
 | 0204 | wet_run-web Phase-aware BGM (5 tracks, GamePhase 매핑, 125.43 KB bundle) | **Accepted (Option 2)** | 2026-08-26 | P2 (Tier 2b Option 2 확장: phase 기반 BGM 전환) |
+| 0205 | wet_run-web Status Effect VFX + HUD Bars (HP bars + turn counter + status labels, pure function helpers, 126.10 KB bundle) | **Accepted (Option 1)** | 2026-08-26 | P2 (combat HUD 강화, plan §3.2 out-of-MVP 보완) |
 | 0048 | Phase 189 — Wet Run Character Reflection (molly, johnny, rydell wiki pages cross-referenced to Fiction/wiki) | **Accepted** | — | 2026-08-24 | P2 |
 | 0049 | Phase 190 — Dashboard Verification Framework Sub-Stats Panel (verification_framework sub-object in aggregate-stats.mjs) | **Accepted** | 2026-08-24 | P2 |
 

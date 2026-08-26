@@ -3316,3 +3316,58 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 
 ### 후속 commits
 - `docs(decisions): ADR-0200 Git LFS D4 — Option 1 현상 유지`
+
+---
+
+## 🎵 wet_run-web Tier 2b (Howler.js BGM) — 2026-08-26
+
+**Scope**: plan §8 Tier 2b — Howler.js 오디오 통합 (operator gate 해제).
+
+### 결정 (Accepted)
+- **ADR-0201**: wet_run-web Tier 2b — Howler.js BGM 통합
+- **Option 1 채택**: 단순 통합 (단일 BGM + mute toggle)
+
+### 구현 산출물
+- `wet_run-web/package.json`: howler ^2.2.4 + @types/howler ^2.2.13 추가
+- `wet_run-web/src/audio/manager.ts` (140 LOC): AudioManager singleton
+  - Lazy-init Howl on first play()
+  - play/stop/mute/unmute/toggleMute/isMuted/isPlaying
+  - unlockOnFirstGesture (browser autoplay policy)
+  - resetForTesting (vitest 전용)
+- `wet_run-web/src/main.ts`: boot()에 AudioManager.getInstance() + unlockOnFirstGesture + M 키 keydown listener
+- `wet_run-web/public/sounds/theme_sense_net.mp3` (5.7 MB): 단일 BGM (dashboard/sounds/full/ 에서 copy)
+- `wet_run-web/tests/audio.test.ts` (9 tests): singleton lifecycle + mute toggle + jsdom 환경 가드
+- `wet_run-web/README.md`: Tier 2b scope 명시 + Controls 표 (M 키 추가)
+
+### 빌드 검증
+- `npx tsc --noEmit`: ✅ 0 errors
+- `npm test`: ✅ 47 passed (audio 9 + 기존 38)
+- `npm run build`: ✅
+  - dist/assets/index-*.js = **97.46 kB** (gzip 27.43 kB)
+  - dist/sounds/theme_sense_net.mp3 = **5.7 MB**
+- Tier 2a 대비 bundle: 59.55 KB → 97.46 KB (+37.91 KB, Howler.js + manager)
+
+### 사용자 인터랙션
+- 첫 click/keydown/touchstart 시 audio unlock (browser autoplay policy)
+- 이후 menu + combat 둘 다 theme_sense_net 반복
+- M 키 (case-insensitive) mute toggle
+
+### 거부된 옵션
+- Option 2 (Phase-aware: menu/combat/victory 5+ 트랙) — 3인 playtest 결과 대기
+- Option 3 (Shuffle 12 트랙) — bundle +70 MB 부담
+
+### 트리거 (Tier 3+ 확장)
+- 3인 playtest 통과 (PLAYTEST.md)
+- BGM 단조 피드백
+- SFX 필요성
+- Phase 전환 명확화
+
+### 후속 (Tier 3+)
+- phase 기반 BGM 전환 (menu vs combat)
+- SFX (combat_hit, victory, defeat)
+- 볼륨 슬라이더 UI
+- 12 트랙 전부 활성화 (Option 3)
+
+### 후속 commits
+- `feat(wetrun-web): Tier 2b Howler.js BGM integration (ADR-0201)`
+- `chore(wet_run): ADR-0201 + README + log.md sync`

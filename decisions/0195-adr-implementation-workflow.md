@@ -1,7 +1,7 @@
 # ADR-0195: Accepted ADR Implementation Status Workflow
 
-**상태**: Draft
-**날짜**: 2026-08-20
+**상태**: **Accepted (Option 1 + Option 3 하이브리드)** — Draft → Accepted 2026-08-26 (this session; user-approved via clarification Q1)
+**날짜**: 2026-08-20 (Draft), 2026-08-26 (Accepted)
 **결정자**: 사용자
 **우선순위**: P3 (The Build, 프로세스 명료화)
 **관련**: [ADR-0110 — 모듈 사이즈 정책](./0110-module-size-policy.md), [ADR-0141 — 추가 모듈 스플릿](./0141-additional-module-splits.md), `AGENTS.md §3.2`
@@ -152,7 +152,96 @@ Format (0156/0188 검증):
 - [ ] 기타: ___
 - [ ] Defer
 
-## 결과 (Consequences) — 결정 후 작성
+## 결과 (Consequences)
+
+### 2026-08-26 — Option 1 + Option 3 채택 (Draft → Accepted)
+
+**핵심 결정**: 두 보완적 옵션을 결합:
+- **Option 1**: 모든 신규/기존 Accepted ADR 에 `## Implementation Status (YYYY-MM-DD)` 섹션 추가 의무화
+- **Option 3**: `decisions/README.md` ADR 표에 `Impl` 컬럼 추가 — 한눈에 가시화
+
+### Status 4종 정의 (Accepted 시점 필수)
+
+| Status | 의미 | Evidence 요구 |
+|---|---|---|
+| ✅ **Implemented** | shipped: 코드 + 테스트 + 데이터 모두 확인 | `path/to/file.py:LINE` 다중 인용 |
+| 🟡 **Partial** | 일부만 shipped, 나머지 backlog | shipped 부분 + missing 부분 명시 |
+| ❌ **Not started** | 미구현 | backlog 명시 |
+| 🟢 **Deferred** | 의도적으로 미래로 연기 | ADR 본문에 defer 사유 명시 |
+
+**구현 = shipped 코드 + 테스트 + 데이터 모두 확인 후** ✅ 표시. ADR Accepted 시점이 곧 Implemented 아님.
+
+### Format (0156/0188 검증된 양식 재사용)
+
+```markdown
+## Implementation Status (YYYY-MM-DD)
+
+**Status**: [✅ Implemented | 🟡 Partial | ❌ Not started | 🟢 Deferred]
+
+**Evidence**:
+- `path/to/file.py:LINE` — [description]
+
+**Notes**: [caveats]
+
+**No further action on ADR-XXXX** — implementation closed.
+(또는 **Open items**: list)
+```
+
+### Phase 1: 기존 Accepted ADR sweep (Track A.1, 즉시 적용)
+
+대상: 40+ Accepted ADR (0147–0171, 0172–0187, 0190, 0192, 0193) 중 Implementation Status 섹션 미보유 항목
+- 각 ADR 파일에 `## Implementation Status (YYYY-MM-DD)` 섹션 추가
+- ✅ / 🟡 / ❌ / 🟢 status 결정 + evidence 인용
+- Phase 1 완료 후 인덱스 Impl 컬럼 동기화
+
+### Phase 2: AGENTS.md §3.2 workflow 갱신 (즉시)
+
+신규 ADR 작성 workflow에 status 결정 단계 추가:
+
+```markdown
+### 3.2 게임 디자인 변경 (갱신)
+1. `decisions/` 에 새 ADR 작성 또는 기존 ADR Status 변경
+2. **Implementation status 결정** (Accepted 시점 필수):
+   - ✅ Implemented: 이미 shipped (코드 + 테스트 + 데이터 모두 확인)
+   - 🟡 Partial: 일부만 shipped, 나머지 backlog
+   - ❌ Not started: 미구현 (backlog 명시)
+   - 🟢 Deferred: 의도적으로 미래로 연기
+3. 영향 받는 `design/systems/*.md` 갱신
+4. `testcases/` 에 회귀 테스트 추가/갱신
+5. `design/GDD.md` 의 본문 또는 Open Questions 갱신
+6. `log.md` 에 기록
+```
+
+### Phase 3: 인덱스 Impl 컬럼 추가
+
+`decisions/README.md` ADR 표에 `Impl` 컬럼 추가:
+
+| 번호 | 제목 | 상태 | **Impl** | 날짜 | 우선순위 |
+| --- | --- | --- | --- | --- | --- |
+| 0147 | Data Salvage Phase 6+ | Accepted | ✅ | 2026-08-07 | P1 |
+| 0160 | Status Effects v2 | Accepted | 🟡 | 2026-08-07 | P2 |
+| 0175 | Tutorial System | Accepted | ❌ | 2026-08-08 | P2 |
+
+### Phase 4: template.md 갱신 (신규 ADR 작성 시 적용)
+
+`decisions/template.md` 의 "게임 디자인 변경" 섹션에 Implementation Status 결정 단계 명시
+
+### 우선순위 (Track A 완료 후 작업)
+
+본 ADR Accepted 후 즉시 Phase 1~4 모두 적용 권장. 단 Track A.1 (40+ ADR sweep) 은 별도 세션 분담 가능 (작업량 큼).
+
+### 거부된 옵션
+
+- **Option 2** (Status에 Implemented 단계 추가): 기존 95개 Accepted ADR status 변경 부담 + "Accepted = 곧 구현" 의미 변질 위험
+- **Option 4** (현상 유지): silent scope creep 지속, 30+ ADR 정합성 미해결
+
+### 후속 작업 (별도 commit 필요)
+
+1. **Phase 1 sweep**: 40+ ADR 파일에 `## Implementation Status` 섹션 추가 (별도 세션, ~2-3h)
+2. **Phase 2**: `AGENTS.md §3.2` 갱신 (1 commit)
+3. **Phase 3**: `decisions/README.md` ADR 표 `Impl` 컬럼 추가 (1 commit)
+4. **Phase 4**: `decisions/template.md` 갱신 (1 commit)
+5. **인덱스 상태 갱신**: 0195 줄 `Draft → Accepted (Option 1+3)`
 
 ## 영향 받는 항목
 
@@ -177,3 +266,4 @@ Format (0156/0188 검증):
 ## 변경 이력
 
 - 2026-08-20: Draft 작성 (game quality audit 의 Q1 해결)
+- 2026-08-26: Draft → **Accepted (Option 1+3 하이브리드)** — 본 세션, v1.4.0 Operational Release 후속 작업. Implementation Status 섹션 의무화 + 인덱스 Impl 컬럼 추가. Consequences 섹션 + Phase 1~4 후속 작업 5건 명시.

@@ -261,6 +261,22 @@ uv run python scripts/play.py --lang ko
 - PR마다 lint + format + typecheck + test 자동 실행
 - python-tcod 21+ 검증
 
+### ECS-lite 사용 규칙 (ADR-0194, Accepted 2026-08-26)
+
+**기본 (신규 시스템 추가 시)**: OOP / `@dataclass` 사용.
+
+**ECS-lite 선택 허용 도메인**:
+- `matrix/` (노드 그래프 — 방 → Entity 매핑)
+- `engine/dungeon_view.py` (dungeon/room 시각화)
+
+**ECS-lite 비권장 도메인**:
+- `engine/state.py` (AppState), `combat/*`, `missions/*`, `equipment/*`,
+  `programs/*`, `portraits/*`, `i18n/*`, `story/` — 모두 OOP / `@dataclass`
+
+**World naming collision**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입.
+
+**참조**: [`decisions/0194-ecs-role-clarification.md`](./decisions/0194-ecs-role-clarification.md), [`docs/ARCHITECTURE.md` §14.6](./docs/ARCHITECTURE.md#146-adr-0194-결과-적용-2026-08-26)
+
 ## 7. CJK 혼용 방지 가이드
 
 **목적**: 한국어/영어 문장 속에 한자(漢字)나 일본어가 깨진 듯 끼어드는 혼용(mixed-script contamination)을 방지한다.

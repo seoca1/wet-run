@@ -630,6 +630,8 @@ flowchart LR
 
 **하지만 실제 코드베이스에서는 ECS가 거의 사용되지 않습니다.**
 
+> **2026-08-26 업데이트**: [`ADR-0194 (Accepted, Option 3)`](../../decisions/0194-ecs-role-clarification.md) — ECS-lite = 선택적 도구 (dungeon/room 도메인 한정), 프로덕션 = OOP/dataclass 유지. 상세: §14.6.
+
 ### 14.2 ECS 모듈 규모
 
 | 파일 | LOC | 역할 |
@@ -853,7 +855,21 @@ Wet Run의 코드 아키텍처는 **ADR-0004 (ECS-lite + 데이터 주도) Accep
 
 ### 14.11 ADR 링크
 
-§14 분석 결과를 정식 ADR 로 형식화: [`ADR-0194 (Draft)`](../../decisions/0194-ecs-role-clarification.md) — ECS-lite 역할 명시화 (프로덕션 = OOP/dataclass, ECS = 실험/테스트 도구). 사용자 결정 대기.
+§14 분석 결과를 정식 ADR 로 형식화: [`ADR-0194 (Accepted 2026-08-26, Option 3 Hybrid)`](../../decisions/0194-ecs-role-clarification.md) — ECS-lite 역할 명시화. **결정**: ECS-lite = dungeon/room 도메인 한정 선택적 도구, 프로덕션 = OOP/dataclass 유지.
+
+### 14.6 ADR-0194 결과 적용 (2026-08-26)
+
+| 도메인 | 권장 패턴 | 비고 |
+| --- | --- | --- |
+| `engine/state.py` (AppState) | OOP / `@dataclass` | 프로덕션 상태 컨테이너 |
+| `combat/*` (전투 시스템) | OOP / `@dataclass` | 13,604 LOC, 모두 Python class |
+| `missions/`, `equipment/`, `programs/`, `portraits/`, `i18n/`, `story/` | OOP / `@dataclass` | 데이터 주도 디자인 |
+| `matrix/` (노드 그래프) | **ECS-lite 선택적 허용** | 방 → Entity 매핑 자연스러움 |
+| `engine/dungeon_view.py` | **ECS-lite 선택적 허용** | dungeon/room 시각화 |
+
+**World naming collision 해결**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입.
+
+**테스트 보존**: `tests/unit/test_ecs.py` (103 LOC), `test_dungeon_ecs.py` (402 LOC), `scripts/play_ecs_dungeon.py`, `scripts/play_arc_bsp.py` — 향후 확장을 위한 실험 자산 유지.
 
 ---
 

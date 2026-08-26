@@ -3846,3 +3846,50 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 | Tier 3 | ✅ |
 | Tier 4 | ✅ |
 | Content authoring | ✅ this session |
+
+
+---
+
+## 🔀 Content authoring (continued) — random_weight wiring (ADR-0208 completion) — 2026-08-26
+
+**Scope**: Carry-over from commit 5af817b. board.py select_weighted + random pick with random_weight multiplier.
+
+### 결정 (todo[2/3] of Content authoring)
+
+random_weight field is wired end-to-end:
+
+```
+Mission dataclass (random_weight: float = 1.0)
+  -> _parse_mission (board.py _opt_float)
+  -> JobBoard._mission_weights (auto-built from mission.random_weight)
+  -> select_weighted (board.py mission_weights param)
+  -> get_random_mission_with_rule (random_rules.py weighted pick)
+```
+
+### 구현 산출물 (commit 91402f7, 3 files, +61/-3)
+
+| File | Change |
+|---|---|
+| random_rules.py | get_random_mission_with_rule(mission_weights): per-mission weight multiplies weighted pick when provided. get_random_mission pass-through. Branch logic: if mission_weights set, weighted pick; else 19-rules pick (ADR-0188). Zero/negative weights filter. |
+| board.py | JobBoard.__init__: build self._mission_weights dict from mission.random_weight. __slots__ extended ('_missions', '_mission_weights'). select_weighted(mission_weights): new optional param; if None, falls back to self._mission_weights. |
+| test_mission_wiring.py | TestWeightedPick: 3 new tests. Zero weight exclusion. Seed sweep. Rare mission selection. |
+
+### 검증
+
+- pytest test_mission_wiring.py: 13 + 4 + 3 = 20 tests passing
+- Weighted pick 동작: 1.5 weight missions 1.5x probability, 1.2 weight 1.2x probability, default 1.0 baseline
+- backward compatible: mission_weights=None → 기존 19-rules pick (ADR-0188)
+
+### Tier 진척 (continued)
+
+| Tier | Status |
+|---|---|
+| Content authoring todo[1/3] | ✅ commit 5af817b (Mission random_weight + ADR-0208) |
+| Content authoring todo[2/3] | ✅ commit 91402f7 (random_weight wiring) |
+| Content authoring todo[3/3] | ✅ ADR-0208 + log.md (initial + this entry) |
+
+### 후속 (carry-over)
+
+- 3-person playtest (PLAYTEST.md) — 사용자 행동 필요
+- Tier 3 literal (plan §8 cloud save + multiplayer + narrative) — MVP 초과
+- Tier 5 (state machine, volume slider, SFX expansion) — wet-run-web 자체 확장

@@ -65,6 +65,22 @@ export function applyAction(state: GameState, action: GameAction): GameState {
   }
 }
 
+/** Resolve a select_program (hand index, 1-based) to the matching use_program.
+ * Returns null if the index is out of range or no state.hand is provided.
+ * Used by main.ts to bridge input handlers with the reducer.
+ */
+export function resolveProgramSelection(
+  state: GameState,
+  action: GameAction,
+): { readonly type: "use_program"; readonly programId: string } | null {
+  if (action.type !== "select_program") return null;
+  const idx = action.handIndex - 1;
+  if (idx < 0 || idx >= state.deck.length) return null;
+  const program = state.deck[idx];
+  if (!program) return null;
+  return { type: "use_program", programId: program.id };
+}
+
 function applyMenuAction(state: GameState, action: GameAction): GameState {
   if (action.type === "confirm") {
     return { ...state, phase: "approach", message: "Jacking in..." };

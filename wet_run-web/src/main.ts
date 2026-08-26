@@ -7,7 +7,7 @@
  */
 import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
-import { mountVirtualGamepad, isTouchDevice } from "./input/touch.ts";
+import { mountVirtualGamepad, updateProgramRow, isTouchDevice } from "./input/touch.ts";
 import { AudioManager, SFX_IDS } from "./audio/manager.ts";
 import {
   healthBar,
@@ -20,7 +20,7 @@ import {
   centerArt,
 } from "./renderer/vfx.ts";
 import type { GameState, GameAction, GamePhase, Ice, Mission, Program } from "./core/types.ts";
-import { applyAction, buildHudLines, makeInitialState, stateToSaveSlot } from "./core/state.ts";
+import { applyAction, buildHudLines, makeInitialState, resolveProgramSelection, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
 import { save as saveToSlot } from "./save/storage.ts";
@@ -114,9 +114,15 @@ class Game {
       if (this.state === null) {
         this.handleMenuInput(action);
       } else {
+        // Resolve select_program (hand index) → use_program (programId) at the boundary.
+        const resolved: GameAction = (() => {
+          if (this.state === null) return action;
+          const r = resolveProgramSelection(this.state, action);
+          return r ?? action;
+        })();
         const previous = this.state;
-        this.state = applyAction(this.state, action);
-        if (action.type === "use_program" && previous.phase === "combat" && this.state.phase === "combat") {
+        this.state = applyAction(this.state, resolved);
+        if (resolved.type === "use_program" && previous.phase === "combat" && this.state.phase === "combat") {
           const iceDelta = this.state.ice.hp - previous.ice.hp;
           if (iceDelta < 0) {
             AudioManager.getInstance().playSfx(SFX_IDS.COMBAT_HIT);
@@ -182,6 +188,7 @@ class Game {
           `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
         ],
       );
+      updateProgramRow([]); // hide row outside combat
       this.syncPhase("menu");
     } else {
       const previous = this.state;
@@ -200,7 +207,7 @@ class Game {
         ),
       };
       this.renderer.render(this.state.grid, buildHudLines(this.state));
-      // Autosave on every state change (cheap; localStorage write).
+      updateProgramRow(this.state.phase === "combat" ? this.state.deck : []);
       this.autosave();
       this.syncPhase(this.state.phase);
     }
@@ -222,6 +229,32 @@ class Game {
   }
 
   start(): void {
+    this.draw();
+  }
+
+  /** Read-only phase accessor for e2e/integration tests. */
+  getPhase(): GamePhase | null {
+    return this.state?.phase ?? null;
+  }
+
+  /** External entry point for touch gamepad program buttons.
+   * Resolves hand index → programId via resolveProgramSelection, then applies.
+   */
+  handleProgramButton(handIndex: number): void {
+    if (this.state === null) return;
+    const action: GameAction = { type: "select_program", handIndex };
+    const resolved = resolveProgramSelection(this.state, action);
+    if (resolved === null) return;
+    const previous = this.state;
+    this.state = applyAction(this.state, resolved);
+    if (previous.phase === "combat" && this.state.phase === "combat") {
+      const iceDelta = this.state.ice.hp - previous.ice.hp;
+      if (iceDelta < 0) {
+        AudioManager.getInstance().playSfx(SFX_IDS.COMBAT_HIT);
+      }
+      this._lastIceHp = this.state.ice.hp;
+      this._lastPlayerHp = this.state.player.hp;
+    }
     this.draw();
   }
 

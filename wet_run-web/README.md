@@ -45,6 +45,7 @@ npm run build
 | --- | --- |
 | Arrow keys / WASD | Navigate mission select |
 | Enter / Space | Confirm / launch mission |
+| 1-9 | Select program by hand index (1-based) |
 | Escape | Cancel / back |
 | Q | Jack out |
 | **M** | **Mute / unmute BGM + SFX** (Tier 2b / Tier 4) |
@@ -93,9 +94,19 @@ src/
 
 - `npm run dev` — local dev server (Vite HMR)
 - `npm run build` — production bundle → `dist/`
-- `npm run test` — Vitest unit tests
+- `npm run test` — Vitest unit tests (8 files, ~106 tests)
+- `npm run e2e` — Playwright headless E2E tests (desktop-chromium + mobile-portrait-chromium)
+- `npm run smoke` — quick deployment smoke test against live URL
 - `npm run lint` — ESLint TypeScript check
 - `npm run export-data` — regenerate static JSON from wet_run Python
+
+### E2E + smoke
+
+Two-tier verification:
+1. **Unit tests** (`npm test`) — vitest jsdom, pure functions (state reducer, layout, vfx, storage).
+2. **E2E tests** (`npm run e2e`) — Playwright headless against live Pages URL (override with `PLAYWRIGHT_BASE_URL` for local dev).
+
+Includes regression for "stuck in combat" bug (2026-08-27): ensures menu → approach → combat → victory via digit-key program selection works end-to-end on desktop AND mobile portrait.
 
 Deployment target: GitHub Pages (free, proven pattern in this workspace).
 

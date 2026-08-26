@@ -4054,3 +4054,61 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 - CI Pages redeploy 후 폰에서 세로/가로 회전 검증
 - iOS Safari safe-area-inset 추가 (노치/Dynamic Island 회피) — 후속 세션
 - Galaxy/iPad breakpoint 미세 조정 — 실기기 테스트 후
+
+---
+
+## 🐛 wet_run-web Combat Progression Bug + Playwright E2E 검증 인프라 (2026-08-27)
+
+**Scope**: 사용자 보고 — "매뉴 표시 및 진입과 음악 재생은 되는데, 진입하고 진행은 막힘" + "버전별로 게임 진행 검증 도구나 절차가 필요해 보임".
+
+### 🐛 Bug 발견 (Root Cause)
+
+- `core/state.ts`의 `useProgram(programId)` 순수 reducer는 정상 작동
+- 하지만 `KEYBOARD_MAPPING` + 가상 게임패드 어느 것도 **`use_program` 액션을 emit 안 함** (move/confirm/cancel/jack_out만)
+- 결과: combat phase 진입 후 진행 불가 (state.phase="combat"에서 정체)
+
+### 🛠️ Fix — input → reducer bridge
+
+| File | Change |
+|---|---|
+| `core/types.ts` | `GameAction`에 `select_program(handIndex)` 추가 + KEYBOARD_MAPPING에 '1'..'9' 매핑 |
+| `core/state.ts` | `resolveProgramSelection(state, action)` helper — hand index → programId 변환 (OOR 시 null) |
+| `input/touch.ts` | 전투 중 화면 하단에 program row (각 핸드 카드 버튼, `window.wetrun.handleProgramButton(idx)` 호출) |
+| `main.ts` | 핸들러에서 `select_program` → `resolveProgramSelection` → `use_program` 자동 변환; `handleProgramButton(handIndex)` public 메서드; `getPhase()` e2e getter 노출; 매 draw()에서 combat phase면 `updateProgramRow(deck)` |
+| `tests/state.test.ts` | +5 regression tests (digit mapping, resolve, end-to-end Enter→Enter→"1"→victory) |
+
+### 🧪 Playwright E2E 인프라 (버전별 검증 도구)
+
+**원인**: 기존엔 vitest 단위 테스트만 (~106 tests) — pure functions 위주. end-to-end (메뉴 → 전투 → 승리) 검증 부재. 사용자 보고가 들어와서야 발견.
+
+**구축**:
+- `@playwright/test` 1.62.1 devDep 추가
+- `playwright.config.ts`: desktop-chromium + mobile-portrait-chromium (Pixel 5 에뮬레이션) 프로젝트
+- `e2e/progression.spec.ts`: regression 테스트 (메뉴→전투→승리 digit-key 검증 + jack_out 검증)
+- `e2e/smoke.spec.ts`: 배포 smoke test (canvas mount, asset 200 OK, no JS errors)
+- `package.json`: `npm run e2e`, `npm run e2e:ui`, `npm run smoke` scripts
+
+### 검증 결과
+
+- `tsc --noEmit -p tsconfig.json`: ✅ 0 errors
+- `npm test` (vitest): ✅ **106 passed** (was 101 → +5 regression)
+- `npm run build`: ✅ **133.87 kB** (was 131.65 → +2.22 KB select_program + touch program row)
+- `npm run e2e` (대 라이브 URL, 현재 deploy 기준): **2 failed (regression 노출됨 — fix deploy 후 통과 예상) + 1 passed (smoke)**
+  - progression test failure가 정확히 bug를 잡아냄 (user-facing 증상 재현)
+- Pages deploy 후 npm run e2e 재실행 → 모두 통과 예상
+
+### Per-version 검증 절차
+
+| 검증 단계 | 명령 | 목적 |
+|---|---|---|
+| 1. unit | `npm test` | reducer/layout/vfx/storage 회귀 |
+| 2. build | `npm run build` | 타입 체크 + 번들 생성 |
+| 3. e2e | `npm run e2e` | 라이브 배포 (또는 `PLAYWRIGHT_BASE_URL=...` 로컬) end-to-end |
+| 4. smoke | `npm run smoke` | Pages 도달성 + canvas mount + 콘솔 에러 없는지 |
+
+### 후속
+
+- Pages redeploy 후 e2e 회귀 검증 (자동)
+- 모바일 가로/세로 회전 e2e 추가 (Phase 6+)
+- IDB save backend e2e (load → reload 페이지 → 슬롯 복원) — Phase 7
+- Local ngrok + Playwright 모바일 디바이스 에뮬레이션 비교 — 실기 테스트 보완

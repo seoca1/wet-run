@@ -3,7 +3,12 @@
  * Run with: npm test
  */
 import { describe, it, expect } from "vitest";
-import { applyAction, buildHudLines, makeInitialState } from "../src/core/state.js";
+import {
+  applyAction,
+  buildHudLines,
+  makeInitialState,
+  resolveProgramSelection,
+} from "../src/core/state.js";
 import type { Ice, Mission, Program } from "../src/core/types.js";
 import { KEYBOARD_MAPPING } from "../src/core/types.js";
 import { makeGrid, setCell, setText } from "../src/core/grid.js";
@@ -113,6 +118,58 @@ describe("keyboard mapping", () => {
     expect(KEYBOARD_MAPPING[" "]).toBeDefined();
     expect(KEYBOARD_MAPPING.Escape).toBeDefined();
     expect(KEYBOARD_MAPPING.q).toBeDefined();
+  });
+
+  it("emits select_program for digits 1-9 (regression: progress bug)", () => {
+    for (let i = 1; i <= 9; i++) {
+      const action = KEYBOARD_MAPPING[String(i)];
+      expect(action, `key "${i}" should be mapped`).toBeDefined();
+      expect(action?.type).toBe("select_program");
+      if (action?.type === "select_program") {
+        expect(action.handIndex).toBe(i);
+      }
+    }
+  });
+});
+
+describe("resolveProgramSelection (input → reducer bridge)", () => {
+  it("resolves hand index 1 to first program", () => {
+    const state = makeInitialState(mockMission, mockIce, [mockProgram]);
+    const resolved = resolveProgramSelection(state, { type: "select_program", handIndex: 1 });
+    expect(resolved).toEqual({ type: "use_program", programId: "test_prog" });
+  });
+
+  it("returns null for out-of-range index", () => {
+    const state = makeInitialState(mockMission, mockIce, [mockProgram]);
+    const resolved = resolveProgramSelection(state, { type: "select_program", handIndex: 5 });
+    expect(resolved).toBeNull();
+  });
+
+  it("returns null for non-select actions", () => {
+    const state = makeInitialState(mockMission, mockIce, [mockProgram]);
+    expect(resolveProgramSelection(state, { type: "confirm" })).toBeNull();
+    expect(resolveProgramSelection(state, { type: "move_north" })).toBeNull();
+  });
+});
+
+describe("end-to-end combat progression (regression: 'stuck in combat')", () => {
+  it("menu → approach → combat → use_program → victory via digit key", () => {
+    const fastIce: Ice = { ...mockIce, hp: 5 };
+    const state = makeInitialState(mockMission, fastIce, [mockProgram]);
+    // Press Enter (menu → approach).
+    let next = applyAction(state, KEYBOARD_MAPPING.Enter!);
+    expect(next.phase).toBe("approach");
+    // Press Enter (approach → combat).
+    next = applyAction(next, KEYBOARD_MAPPING.Enter!);
+    expect(next.phase).toBe("combat");
+    // Press "1" (select_program[1]).
+    const selectAction = KEYBOARD_MAPPING["1"]!;
+    expect(selectAction.type).toBe("select_program");
+    const resolved = resolveProgramSelection(next, selectAction);
+    expect(resolved).not.toBeNull();
+    next = applyAction(next, resolved!);
+    expect(next.phase).toBe("victory");
+    expect(next.ice.hp).toBe(0);
   });
 });
 

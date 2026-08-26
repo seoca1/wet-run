@@ -115,6 +115,7 @@ export type GameAction =
   | { readonly type: "move_east" }
   | { readonly type: "move_west" }
   | { readonly type: "use_program"; readonly programId: string }
+  | { readonly type: "select_program"; readonly handIndex: number }
   | { readonly type: "confirm" }
   | { readonly type: "cancel" }
   | { readonly type: "jack_out" };
@@ -123,6 +124,9 @@ export type GameAction =
  *
  * Per ADR-0197 gamepad mapping parity (commitment: same semantics across
  * desktop keyboard, desktop gamepad, and (Tier 2) web browser).
+ *
+ * Number keys 1-9 emit a select_program action with the 1-based hand index.
+ * main.ts resolves programId from the current hand (where state is known).
  */
 export const KEYBOARD_MAPPING: Readonly<Record<string, GameAction>> = Object.freeze({
   ArrowUp: { type: "move_north" },
@@ -133,4 +137,13 @@ export const KEYBOARD_MAPPING: Readonly<Record<string, GameAction>> = Object.fre
   " ": { type: "confirm" },
   Escape: { type: "cancel" },
   q: { type: "jack_out" },
+  "1": { type: "select_program", handIndex: 1 },
+  "2": { type: "select_program", handIndex: 2 },
+  "3": { type: "select_program", handIndex: 3 },
+  "4": { type: "select_program", handIndex: 4 },
+  "5": { type: "select_program", handIndex: 5 },
+  "6": { type: "select_program", handIndex: 6 },
+  "7": { type: "select_program", handIndex: 7 },
+  "8": { type: "select_program", handIndex: 8 },
+  "9": { type: "select_program", handIndex: 9 },
 });

@@ -131,6 +131,7 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0204 | wet_run-web Phase-aware BGM (5 tracks, GamePhase 매핑, 125.43 KB bundle) | **Accepted (Option 2)** | 2026-08-26 | P2 (Tier 2b Option 2 확장: phase 기반 BGM 전환) |
 | 0205 | wet_run-web Status Effect VFX + HUD Bars (HP bars + turn counter + status labels, pure function helpers, 126.10 KB bundle) | **Accepted (Option 1)** | 2026-08-26 | P2 (combat HUD 강화, plan §3.2 out-of-MVP 보완) |
 | 0206 | Mission Registry Wiring — Arc6 + Expansion deferred 해결 (ZoneDepth.AFTERMATH + arc 1..6 + enrich_* + JobBoard 통합, 194→209 missions) | **Accepted (Option 1)** | 2026-08-26 | P1 (ADR-0166/0167 Consequences 후속 작업, 보드 wiring 활성화) |
+| 0207 | wet_run-web Tier 4 — SFX (combat_hit/victory/defeat) + Animation VFX (hit flash/defeat art) + Status Effect Glyphs (5 effects), 단순 통합 batch (128.65 KB bundle, +21 tests) | **Accepted (Option 1)** | 2026-08-26 | P2 (wet_run-web 자체 확장, plan §8 Tier 4 자체 정의) |
 | 0048 | Phase 189 — Wet Run Character Reflection (molly, johnny, rydell wiki pages cross-referenced to Fiction/wiki) | **Accepted** | — | 2026-08-24 | P2 |
 | 0049 | Phase 190 — Dashboard Verification Framework Sub-Stats Panel (verification_framework sub-object in aggregate-stats.mjs) | **Accepted** | 2026-08-24 | P2 |
 

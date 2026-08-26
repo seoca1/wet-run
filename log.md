@@ -3727,3 +3727,82 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 
 ### 후속 commits
 - `docs(wet_run): SESSION_REPORT_2026-08-26.md + log entry`
+
+---
+
+## 🎬 wet_run-web Tier 4 (SFX + Animation VFX + Status Glyphs) — 2026-08-26
+
+**Scope**: User "wet-run web 다음 Tier" 지시. plan §8 Tier 4 미정의 → wet-run-web 자체 확장 3 features 채택 (Option 1 단순 통합).
+
+### 결정 (ADR-0207 Accepted)
+
+3 atomic commits:
+
+| Commit | Feature |
+|---|---|
+| `feac61b` | SFX 통합 (combat_hit, victory, defeat) |
+| `81cffb5` | Animation VFX (hit flash + ICE/Player defeat art) |
+| `4afe25f` | Status effect glyphs (5 effects) |
+
+### 1. SFX 통합 (`feac61b`)
+
+- `AudioManager` 확장: `BGM_IDS` (5) + `SFX_IDS` (3)
+- `playSfx()` + `stopAllSfx()` API + mute/unmute 통합
+- 3 WAV copy (combat_hit_normal, combat_skill_buff, combat_defeat) = 48 KB
+- `syncPhase()` terminal phase SFX trigger (victory/defeat/exit)
+- `applyAction('use_program')` COMBAT_HIT SFX on ICE damage
+- +4 tests
+
+### 2. Animation VFX (`81cffb5`)
+
+- `vfx.ts` 확장: `hitFlashColor()` + `ICE_DEFEAT_ART` + `PLAYER_DEFEAT_ART` + `centerArt()`
+- `renderGrid` signature: `iceHpDelta` + `playerHpDelta` 파라미터
+- HP bar 색상: hitFlashColor(delta) 우선, fallback to ratio-based
+- `draw()`: `_lastIceHp`/`_lastPlayerHp` delta 추적
+- +11 tests
+
+### 3. Status Effect Glyphs (`4afe25f`)
+
+- `vfx.ts` 확장: `STATUS_GLYPHS` (burn=B, stun=S, slow=L, silence=M, vulnerable=V)
+- `formatStatusGlyph(effects)` → `[BS]` 형식
+- `renderGrid` signature: `statusEffects` 파라미터 추가
+- ICE name 옆 표시: effects 있으면 `[B]`, 없으면 `]`
+- `draw()`: `mockStatusEffectsForTurn(turnCount)` mock cycle
+- +6 tests
+
+### 검증 (Tier 4 누적)
+
+- TypeScript 컴파일: ✅ 0 errors
+- vitest: ✅ **93 passed** (Tier 3 72 → +21)
+- vite build: ✅ 128.65 kB (Tier 3 126.10 → +2.55 KB, +2.0%)
+
+### Bundle 추이
+
+| 시점 | Bundle | Tests | Δ |
+|---|--:|--:|--:|
+| Tier 3 | 126.10 kB | 72 | — |
+| + SFX | 126.83 kB | 76 | +0.73 kB |
+| + Animation VFX | 128.29 kB | 87 | +1.46 kB |
+| + Status Glyphs | **128.65 kB** | **93** | +0.36 kB |
+| **Tier 4 total** | **+2.55 kB** | **+21** | |
+
+### Tier 진척 (plan §8 + 자체 정의 Tier 4)
+
+- ✅ Tier 1 (5 missions + ASCII Canvas2D)
+- ✅ Tier 2a (5 missions + multi-slot save + touch UI)
+- ✅ Tier 2b (Howler.js BGM)
+- ✅ Tier 2c (15+12 mission + ICE)
+- ✅ Tier 3 (30+30 expansion)
+- ✅ **Tier 4 (SFX + Animation VFX + Status Glyphs)** — 단순 통합 batch
+- 🟡 Tier 3 literal (cloud save + multiplayer + narrative) — MVP 초과, deferred
+
+### Out-of-MVP 후속 (Tier 4+ candidates)
+
+- Status effects state machine 통합 (mock → real)
+- Animation timing (hit flash 지속 시간)
+- Volume slider UI
+- SFX 확장 (combat_block, combat_skill_* 등 9+ effects)
+- Per-track fade in/out
+
+### 후속 commits
+- `docs(wet_run): ADR-0207 + README index sync + log entry`

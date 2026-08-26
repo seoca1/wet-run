@@ -23,7 +23,7 @@ npm run build
 # Output: dist/ (static files)
 ```
 
-## Scope (Tier 3 — current build)
+## Scope (Tier 4 — current build)
 
 - **30 playable missions** (Tier 1-5, surface/mid/deep/core/aftermath/soho zones)
 - ASCII Canvas2D renderer (Gibson palette)
@@ -31,7 +31,10 @@ npm run build
 - **Multi-slot save/load** (4 slots: 1 autosave + 3 manual, with legacy single-slot migration)
 - Keyboard input (arrow keys + ENTER + SPACE + ESC)
 - **Mobile touch input** (auto-mounts virtual gamepad on `pointer: coarse` devices)
-- **BGM audio** (Howler.js, single track `theme_sense_net`, M to mute)
+- **BGM audio** (Howler.js, phase-aware 5 tracks: chiba/sense_net/matrix_rain/broadcast/industrial, M to mute)
+- **SFX** (Tier 4: combat_hit, victory, defeat — one-shot on phase transition + use_program)
+- **Animation VFX** (Tier 4: hit flash color on HP delta, ICE/Player defeat ASCII art)
+- **Status effect glyphs** (Tier 4: 5 effects [B/S/L/M/V] = burn/stun/slow/silence/vulnerable)
 - **ICE types** (30 curated, T1-T4 Gibson-flavor: watchdog, spider, loa_priest, black, goliath, etc.)
 - Desktop browser primary, mobile browser fully playable
 
@@ -43,19 +46,25 @@ npm run build
 | Enter / Space | Confirm / launch mission |
 | Escape | Cancel / back |
 | Q | Jack out |
-| **M** | **Mute / unmute BGM** (Tier 2b) |
+| **M** | **Mute / unmute BGM + SFX** (Tier 2b / Tier 4) |
 
-## Out of scope (Tier 3+)
+## Out of scope (Tier 5+)
 
 - Full 209-mission campaign
 - Status effect VFX
 - Multiple bosses
 - Multiple jockeys
 - Save migration from desktop
-- Phase-based BGM switching (Tier 3+ candidate)
-- SFX (combat_hit, victory, defeat)
 - Multiplayer / cloud sync
 - Full i18n (English only)
+
+## Out of scope (Tier 4+ / Tier 5 candidates)
+
+- Status effects state machine integration (currently mock data)
+- Animation timing (hit flash duration + interpolation)
+- Volume slider UI (M key toggle only, no slider)
+- SFX expansion (combat_block, combat_skill_*, movement_*)
+- Per-track fade in/out (Howler.fade())
 
 See [implementation plan](Game/wet_run/.omo/plans/web-version-2026-08-25.md) for full context.
 

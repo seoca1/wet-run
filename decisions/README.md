@@ -124,6 +124,7 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0197 | Gamepad / Controller Input Support (Tier 1 — synthetic KeyDown adapter, 12 active ScreenKinds, 97 new tests) | **Accepted** | — | 2026-08-25 | P2 (ADR-0183 §Input Remapping Tier 1 surface; complements ADR-0196) |
 | 0198 | Resolution Compatibility (Tablet / Phone / Steam Deck / 4K) + QA Agents (Design + Gameability) | **Accepted** | — | 2026-08-25 | P1 (Cross-device compatibility; +QA agents for ongoing QA; 6 Open Questions resolved; Phase 1 critical fixes shipped — GA-002/GA-004/GD-005) |
 | 0199 | Wet Run Web MVP (Tier 1 — TypeScript + Canvas2D + 1 playable mission, supersedes ADR-0007 web/mobile scope) | **Accepted** | — | 2026-08-25 | P1 (Browser reach; 4-week MVP build autonomous) |
+| 0200 | Git LFS D4 — 오디오 자산 관리 (현상 유지 + 명문화, 326MB audio in 258MB Git history) | **Accepted (Option 1)** | 2026-08-26 | P3 (Operational hygiene, 분기별 재평가) |
 | 0048 | Phase 189 — Wet Run Character Reflection (molly, johnny, rydell wiki pages cross-referenced to Fiction/wiki) | **Accepted** | — | 2026-08-24 | P2 |
 | 0049 | Phase 190 — Dashboard Verification Framework Sub-Stats Panel (verification_framework sub-object in aggregate-stats.mjs) | **Accepted** | 2026-08-24 | P2 |
 

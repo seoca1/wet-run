@@ -23,16 +23,16 @@ npm run build
 # Output: dist/ (static files)
 ```
 
-## Scope (Tier 2c — current build)
+## Scope (Tier 3 — current build)
 
-- **15 playable missions** (Tier 1-3, surface/mid/deep/core/aftermath/soho zones)
+- **30 playable missions** (Tier 1-5, surface/mid/deep/core/aftermath/soho zones)
 - ASCII Canvas2D renderer (Gibson palette)
 - ICE-breaking combat state machine
 - **Multi-slot save/load** (4 slots: 1 autosave + 3 manual, with legacy single-slot migration)
 - Keyboard input (arrow keys + ENTER + SPACE + ESC)
 - **Mobile touch input** (auto-mounts virtual gamepad on `pointer: coarse` devices)
 - **BGM audio** (Howler.js, single track `theme_sense_net`, M to mute)
-- **ICE types** (12 curated, T1-T3 Gibson-flavor: watchdog, spider, loa_priest, black, goliath, etc.)
+- **ICE types** (30 curated, T1-T4 Gibson-flavor: watchdog, spider, loa_priest, black, goliath, etc.)
 - Desktop browser primary, mobile browser fully playable
 
 ## Controls

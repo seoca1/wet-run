@@ -12,7 +12,12 @@ describe("mission catalog", () => {
 
   it("loads exactly 15 missions for Tier 2c", () => {
     const data = missionsData as unknown as MissionsFile;
-    expect(Object.keys(data).length).toBe(15);
+    expect(Object.keys(data).length).toBeGreaterThanOrEqual(15);
+  });
+
+  it("loads exactly 30 missions for Tier 3", () => {
+    const data = missionsData as unknown as MissionsFile;
+    expect(Object.keys(data).length).toBe(30);
   });
 
   it("each mission has required fields", () => {
@@ -34,7 +39,7 @@ describe("mission catalog", () => {
     expect(uniqueIds.size).toBe(ids.length);
   });
 
-  it("mission IDs match tier 2c curation", () => {
+  it("mission IDs match tier 3 curation", () => {
     const data = missionsData as unknown as MissionsFile;
     const ids = Object.keys(data);
     const expected = [
@@ -53,17 +58,32 @@ describe("mission catalog", () => {
       "idoru_wedding",
       "laney_node_signal_run",
       "first_contact",
+      "cortex_hound_recovery",
+      "data_retrieval",
+      "hosaka_after_hours",
+      "hosaka_terminal_supply",
+      "chevette_nightshift_run",
+      "case_past_extract_linda_memory",
+      "hideo_contract",
+      "mid_extract_yakuza_chop_shop",
+      "bridge_scaffold",
+      "hosaka_core",
+      "maas_heist",
+      "angie_leopard_tracking",
+      "core_extract_neuromancer_signature",
+      "aleph_fragment",
+      "bama_statework",
     ];
     expect(ids.sort()).toEqual([...expected].sort());
   });
 
-  it("missions span tier 1-3 difficulty curve", () => {
+  it("missions span tier 1-5 difficulty curve", () => {
     const data = missionsData as unknown as MissionsFile;
     const tiers = Object.values(data).map((m) => m.grade_max);
     const minTier = Math.min(...tiers);
     const maxTier = Math.max(...tiers);
     expect(minTier).toBe(1);
-    expect(maxTier).toBe(3);
+    expect(maxTier).toBe(5);
   });
 
   it("fixers span at least 4 distinct names", () => {
@@ -83,7 +103,12 @@ describe("mission catalog", () => {
 describe("ice types (Tier 2c variety)", () => {
   it("loads exactly 12 ICE types", () => {
     const data = iceTypesData as unknown as Record<string, unknown>;
-    expect(Object.keys(data).length).toBe(12);
+    expect(Object.keys(data).length).toBeGreaterThanOrEqual(12);
+  });
+
+  it("loads exactly 30 ICE types for Tier 3", () => {
+    const data = iceTypesData as unknown as Record<string, unknown>;
+    expect(Object.keys(data).length).toBe(30);
   });
 
   it("ICE types include tier 1-3 representatives", () => {

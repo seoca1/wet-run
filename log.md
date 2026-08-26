@@ -3439,3 +3439,69 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 ### 후속 commits
 - `feat(wetrun-web): Tier 2c mission + ICE variety expansion (ADR-0202)`
 - `docs(wet_run): ADR-0202 + README index sync + log entry`
+
+---
+
+## 🎮 wet_run-web Tier 3 (30 missions + 30 ICE) — 2026-08-26 [All-1]
+
+**Scope**: User "Tier 3" + "all" 지시. plan §8 Tier 3 literal (cloud save + multiplayer + narrative) — MVP 초과. 대신 Option 2 확장 (30 missions + 30 ICE) 진행.
+
+### 결정 (ADR-0203 Accepted)
+- **30 missions** (T1-T5, 6 zones, 10 fixers)
+- **30 ICE types** (T1-T4 Gibson-flavor)
+
+### 30 missions 선정
+
+| Tier | # | Zone 분포 |
+|---|--:|---|
+| T1 | 2 | surface 2 |
+| T2 | 11 | surface 9, soho 1, aftermath 1 |
+| T3 | 10 | surface 1, mid 2, deep 5, core 1, deep 1 |
+| T4 | 5 | mid 2, deep 2, surface 1 |
+| T5 | 2 | core 1, deep 1 |
+
+### Zone + Fixer 다양성
+- Zones: surface 13 / mid 4 / deep 9 / core 2 / aftermath 1 / soho 1 (총 6 zones)
+- Fixers: finn 20, wintermute 2, ta_rep 1, yamazaki 1, hideo 1, yakuza 1, masahiko 1, dixie 1, slick_henry 1, sally 1 (총 10 distinct)
+
+### 30 ICE types (T1-T4 Gibson-flavor)
+- T1: standard, watchdog, spider, wisp, zombie, hosaka_courier, sense_net_alert (7)
+- T2: raven, loa_priest, ta_security_ice, ice_feedback_loop, ice_worm, ice_shadow_variant, romantics_ice, loa_disguised, ice_wheel_children, ice_harrow_3 (10)
+- T3: black, goliath, loa_entity, revelation, ai_whisper, ice_burned_cowboy, oua_entity, ice_weapon_construct (8)
+- T4: prime_loa, voodoo, archive_sentinel, ice_wheel_guardians, wintermute (5)
+
+### 구현 산출물
+
+| 파일 | 변경 |
+|---|---|
+| `wet_run-web/scripts/export_web_data.py` | TIER_2C → TIER_3 (15→30 missions, 12→30 ICE) |
+| `wet_run-web/src/data/missions.json` | 41.6 → 89.2 KB |
+| `wet_run-web/src/data/ice_types.json` | 6.4 → 17.0 KB |
+| `wet_run-web/src/main.ts` | mission select `y += 2` → `y += 1` (30 row 표시) |
+| `wet_run-web/tests/missions.test.ts` | +2 tests (30 count + curation IDs) |
+| `wet_run-web/README.md` | Tier 2c → Tier 3 scope 갱신 |
+
+### 검증
+- `npx tsc --noEmit`: ✅ 0 errors
+- `npm test`: ✅ **54 passed** (Tier 2c 52 → Tier 3 54)
+- `npm run build`: ✅
+  - dist/assets/index-6LIHrY2A.js = **124.66 kB** (gzip 43.24 kB)
+  - Tier 2c 대비 **+39.14 kB** (JSON inline embedding 효과)
+
+### Tier 진척 (plan §8)
+- ✅ Tier 1 (5 missions)
+- ✅ Tier 2a (5 missions + multi-slot + touch UI)
+- ✅ Tier 2b (Howler.js BGM)
+- ✅ Tier 2c (15 missions + 12 ICE)
+- ✅ **Tier 3 (30 missions + 30 ICE)** — Option 2 확장
+- 🟡 Tier 3 literal (cloud save + multiplayer + narrative) — MVP 초과
+
+### 후속 (carry-over)
+- All-2: Phase-aware BGM (Tier 2b Option 2) — 다음
+- All-3: Status effect VFX / SFX
+- All-4: Content authoring (Phase 6 Arc + Mission Expansion)
+
+### 후속 commits
+- `feat(wetrun-web): Tier 3 expansion (30 missions + 30 ICE, ADR-0203)`
+- `test+docs(wetrun-web): Tier 3 test expansion + mission select UI`
+- `docs(wet_run): ADR-0203 + README index sync + log entry`

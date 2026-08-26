@@ -233,7 +233,7 @@ MENU
 ├── [1] NEW RUN
 │   └── CHARACTER_SELECT → CHAPTER → HUB → MATRIX → ...
 ├── [2] GRAPHIC NOVEL
-│   ├── [1] PROLOGUE (random)         ← 3 캐릭터 × 4 씬 = 12 scenes
+│   ├── [1] PROLOGUE (random)         ← 9 캐릭터 × 4 씬 = 36 scenes
 │   ├── [2] 케이 (Novice)             ← 4 scenes
 │   ├── [3] 실 (Veteran)              ← 4 scenes
 │   ├── [4] 카스 (Heretic)            ← 4 scenes

@@ -268,3 +268,4 @@ i18n + Content Pipeline:
 - **ADR-0162 title fix**: content는 Phase 4 mechanics를 설명하지만 title이 "Boss Phase 5 Last Stand"로 잘못 표기되어 있었음. Content와 일치하도록 "Boss Phase 4 Last Stand"로 수정.
 
 | 0208 | Mission Random Weight (ADR-0166/0167 weighted selection: 10 missions 1.5/1.2, random_weight field + apply_rule filter, 7/7 sub-steps) | **Accepted (Option 1)** | 2026-08-26 | P1 (ADR-0166/0167 wiring completion) |
+| 0209 | wet_run-web IndexedDB Save Backend (Tier 3 literal partial: IDB-first + localStorage fallback, lazy migration, async API, TS1128 fix, 129.63 KB bundle) | **Accepted (Option 1)** | 2026-08-26 | P2 (Tier 3 literal cloud sync on-ramp, MVP上限) |

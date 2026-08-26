@@ -1,20 +1,24 @@
 # Wet Run — Session Index
 
-> **Latest session**: 2026-08-20 (Track A: Foundation Health) — see [SESSION_SUMMARY_2026-08-20.md](./SESSION_SUMMARY_2026-08-20.md)
+> **Latest session**: 2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend) — see [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) §"Post-Report Addendum"
 >
-> Previous: [SESSION_SUMMARY_2026-08-19_notion.md](./SESSION_SUMMARY_2026-08-19_notion.md) (Notion 통합)
+> Previous: 2026-08-26 Part 1 (v1.4.0 Operational Release + ADR-0194/0195/0200/0201-0206) — [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md)
 >
-> Earlier: [SESSION_SUMMARY_2026-08-19.md](./SESSION_SUMMARY_2026-08-19.md) (CI hygiene + Pages deploy recovery)
+> Earlier: [SESSION_SUMMARY_2026-08-20.md](./SESSION_SUMMARY_2026-08-20.md) (Tracks A+B+C+D+E Full Quality Upgrade)
+>
+> [SESSION_SUMMARY_2026-08-19_notion.md](./SESSION_SUMMARY_2026-08-19_notion.md) (Notion 통합 Part 2)
 
 This is an **index** file pointing to the most recent dated session snapshot. Per project `AGENTS.md §9`, `SESSION_SUMMARY.md` should always point at the current/latest session.
 
-> **2026-08-19 Notion 통합 (Part 2).** Continued same-day work after CI/Pages recovery. Created `PROGRESS_REPORT_2026-08-19_NOTION_READY` (54 blocks) matching the established `_NOTION_READY` pattern. Renamed Notion parent page "Roguelike Sprawl - 프로젝트 가이드" → **"Wet Run - 프로젝트 가이드"** with 5 body updates (H1, code block, 2 URL bullets) for naming consistency across GitHub/Pages/Python/Notion. **Created 66 design document pages in Notion** under new `📚 Design Documents` parent (3-tier: 13 direct + 53 nested) — full `Game/wet_run/design/` (66 files, 18,573 lines) now searchable from Notion. Built 2 reusable Python helpers (`md2notion.py`, `notion_helper.py`) at `/tmp/notion-payload/`. ~150 API calls in ~3 minutes. Branch ahead of origin = 6, working tree clean (after commit).
+> **2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend).** Continued same-day work after v1.4.0 Operational Release report. Added 3 new ADR (0207 Tier 4, 0208 random_weight, 0209 IDB) + 8 atomic commits (`feac61b`, `81cffb5`, `4afe25f`, `33ba853`, `5af817b`, `91402f7`, `6c6e352`, `0a420e7`). Bundle 126.10 → **129.63 KB** (+3.53 KB for Tier 4 + IDB). Python + wet_run-web tests stable (4045 pass / 93 pass). Dry-run 단계에서 `storage.ts` TS1128 (orphan dead code) 발견 → 즉시 fix commit으로 해결. Tier 3 literal "cloud save sync"의 on-ramp 완성 (로컬 IDB ✅, 원격 sync ❌ out-of-MVP).
 
 ## Recent sessions
 
 | Date | File | Summary |
 |---|---|---|
-| **2026-08-20 (Tracks A+B+C+D+E: Full Quality Upgrade)** | [SESSION_SUMMARY_2026-08-20.md](./SESSION_SUMMARY_2026-08-20.md) | **LATEST.** All 5 tracks of the Quality Upgrade Plan executed in single session: A.4 module splits (5 parallel agents), B.9 ADR integrations wired, C content verified at target (200/97/30/29/81), D.5 meta & aftermath verified, E.4 release prep (CHANGELOG [1.4.0] + version bump 1.1.0→1.4.0). 0 commits (working tree dirty, ~37 files). Operational releases (PyPI/GitHub/LFS) deferred to user. |
+| **2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend)** | [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) (Post-Report Addendum) | **LATEST.** 3 new ADR (0207 Tier 4 SFX/Animation/Glyphs, 0208 random_weight, 0209 IDB save backend) + 8 commits. Bundle +3.53 KB. Dry-run TS1128 fix in same commit as IDB refactor. Tier 3 literal "cloud save sync" partial fulfillment (local IDB only). |
+| 2026-08-26 Part 1 (v1.4.0 Operational Release) | [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) | v1.4.0 PyPI + GitHub release + ADR-0194/0195/0200/0201-0206. 30 atomic commits. Previous session — full report in dedicated file. |
+| 2026-08-20 (Tracks A+B+C+D+E: Full Quality Upgrade) | [SESSION_SUMMARY_2026-08-20.md](./SESSION_SUMMARY_2026-08-20.md) | All 5 tracks: A.4 module splits (5 parallel agents), B.9 ADR integrations wired, C content verified at target (200/97/30/29/81), D.5 meta & aftermath verified, E.4 release prep. Operational releases (PyPI/GitHub/LFS) deferred to user. |
 | 2026-08-19 (Notion 통합 Part 2) | [SESSION_SUMMARY_2026-08-19_notion.md](./SESSION_SUMMARY_2026-08-19_notion.md) | Previous: 66 design doc pages in Notion (3-tier), 5 body updates, ~150 API calls. |
 | 2026-08-19 (CI hygiene + Pages deploy) | [SESSION_SUMMARY_2026-08-19.md](./SESSION_SUMMARY_2026-08-19.md) | Previous: 5 root causes fixed (Pages deploy 46d stale, interrogate, ruff lint/format, dashboard validation). 5700 passed baseline restored. |
 | **2026-08-18 (Axis closure sweep)** | [SESSION_SUMMARY_2026-08-18.md](./SESSION_SUMMARY_2026-08-18.md) | Previous: Axis 5 (Endings) + Axis 4 (Boss F.4) + Axis 6 (Programs/Equipment) closure. 8 commits. `combat/boss_dispatch.py` NEW + `combat/boss_registry.py` NEW + `build_ice_enemy` guard. +43 tests, 0 regressions. |

@@ -3893,3 +3893,72 @@ Mission dataclass (random_weight: float = 1.0)
 - 3-person playtest (PLAYTEST.md) — 사용자 행동 필요
 - Tier 3 literal (plan §8 cloud save + multiplayer + narrative) — MVP 초과
 - Tier 5 (state machine, volume slider, SFX expansion) — wet-run-web 자체 확장
+
+---
+
+## 🔧 wet_run-web IDB Save Backend (ADR-0209 Accepted, Option 1) — 2026-08-26 (post-Tier 4 carry-over)
+
+**Scope**: `storage.ts` async API 통일 + IDB 백엔드 신규 (Tier 3 literal "cloud save sync"의 on-ramp). Dry-run 단계에서 TS1128 (orphan dead code) 발견 → fix commit `0a420e7`로 한 번에 해결.
+
+### 결정 (ADR-0209 Accepted, Option 1)
+- IndexedDB primary 백엔드 (`storage_idb.ts`, 108 LOC)
+- localStorage fallback (IDB unavailable 환경 + jsdom test)
+- Lazy migration: 첫 load 시 legacy localStorage → IDB 복사 후 원본 삭제
+- Public API `save/load/clear/listSlots` → 모두 async (`Promise<T>`)
+
+### Dry-run 발견 → Fix
+
+| 문제 | Root cause | Fix |
+|---|---|---|
+| **TS1128** at storage.ts:53 | sync `save()` body의 `try` 블록이 async rewrite 후 모듈 최상위에 orphan으로 잔류 | orphan block 제거 |
+| **TS6196** at storage_idb.ts:12 | 미사용 `SlotKey` interface | 제거 |
+| **TS2339** at storage_idb.ts:95 | `IDBValidKey.name` (타입에 name 필드 없음) | `String(k)` |
+| **Promise 회귀** at storage.test.ts:6+ | async API인데 테스트는 sync 호출 (await 미사용) | 모든 호출 await |
+
+### 구현 산출물 (commit 0a420e7, 4 files, +209/-56)
+
+| File | Change |
+|---|---|
+| `src/save/storage.ts` | async API (`save/load/clear/listSlots`) + `saveLegacy/loadLegacy/migrateFromLegacy` helpers |
+| `src/save/storage_idb.ts` | 신규 — `idbGet/Put/Delete/Keys/IsAvailable` Promise API |
+| `src/main.ts` | `autosave()` `try/catch` → `Promise.catch()` (fire-and-forget; 매 draw() 호출이므로 await 불가) |
+| `tests/storage.test.ts` | 모든 `save/load/clear/listSlots` await 마이그레이션 |
+| `decisions/0209` | ADR-0209 Accepted (Option 1) — 본 entry 후 governance commit |
+
+### Public API 변경
+
+```typescript
+// Before (ADR-0203)
+function save(slot: number, data: SaveSlot): void;
+function load(slot: number): SaveSlot | null;
+function clear(slot: number): void;
+function listSlots(): ReadonlyArray<{...}>;
+
+// After (ADR-0209)
+async function save(slot: number, data: SaveSlot): Promise<void>;
+async function load(slot: number): Promise<SaveSlot | null>;
+async function clear(slot: number): Promise<void>;
+async function listSlots(): Promise<ReadonlyArray<{...}>>;
+```
+
+### 검증
+
+- `npx tsc --noEmit -p tsconfig.json`: ✅ 0 errors
+- `npm test`: ✅ **93 passed** (12 storage + 81 others)
+- `npm run build`: ✅ **129.63 KB** (gzip 44.96 KB) — Tier 4 128.65 → +0.98 KB IDB
+- jsdom 폴백: IDB unavailable → localStorage 경로 정상
+- Backward compat: 기존 save 데이터 lazy migration 무손실
+
+### Tier 3 literal 진척 (partial)
+
+| Tier 3 literal 항목 | Status |
+|---|---|
+| Cloud save sync (IndexedDB) | 🟡 partial — IDB 로컬 저장 ✅, 원격 sync (Firebase/Supabase) ❌ out-of-MVP |
+| Multiplayer | ❌ deferred (out-of-MVP) |
+| Narrative integration (graphic novel mode) | ❌ deferred (out-of-MVP) |
+
+### 후속 (carry-over)
+
+- Cloud sync 백엔드 (Firebase / Supabase / WebDAV) — 외부 API 의존성 + 사용자 인증 UX 필요
+- Save 압축 (lz-string) — payload 임계값 미정
+- IDB → cloud 양방향 sync (오프라인 변경 → 온라인 merge)

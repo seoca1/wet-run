@@ -2,6 +2,8 @@
 
 ## 변경 이력 (Recent)
 
+- **2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend, 8 commits, see SESSION_REPORT_2026-08-26.md Post-Report Addendum)**: 3 new ADR (0207 Tier 4 SFX/Animation/Glyphs, 0208 random_weight field, 0209 IDB save backend). Bundle 126.10 → **129.63 KB** (+3.53 KB for Tier 4 + IDB). wet_run-web tests stable 93 passed. Python tests stable 4045 passed + 364 skipped + 1 xfailed. ADR-0209 = Tier 3 literal "cloud save sync (MVP 초과)"의 on-ramp (로컬 IDB ✅, 원격 sync ❌). Dry-run 단계에서 `storage.ts` TS1128 (orphan dead code) 발견 → `0a420e7` fix commit으로 async API 통일과 동시 해결. Tier 5 carry-over 항목 (status state machine, volume slider, SFX 확장, save 압축) 추가. Cross-project: 변경 없음.
+- **2026-08-26 Part 1 (v1.4.0 Operational Release, ~30 commits, see SESSION_REPORT_2026-08-26.md)**: v1.4.0 PyPI + GitHub release (wheel 579 KB + sdist 2.86 MB). 7 new ADR (0194 ECS-lite 격하, 0195 Implementation Workflow + Phase 1 sweep 60 ADR, 0200 Git LFS D4, 0201 Tier 2b Howler.js BGM, 0202 Tier 2c, 0203 Tier 3, 0204 Phase-aware BGM, 0205 Status VFX, 0206 Mission Registry Wiring). `UV_PUBLISH_TOKEN` → `~/.zshenv` (사용자 명시 환경 결정). hatch sdist exclude `.venv/build/dist` pre-existing bug 수정.
 - **2026-08-10 (Phase 14 v1.3.0+ integration, 8 commits, see CHANGELOG + SESSION_SUMMARY_2026-08-10)**: Phase 14 registry-only → fully integrated. F.2 deck building wired (`AppState.deck_size` → `CombatState.deck_size` → `start_combat`). F.4 boss expansion wired (`BossPhaseTracker` instantiated on `boss_*` combatant ids, phase transitions trigger on HP threshold in `_apply_damage`). F.4 telemetry singleton wired (`state.telemetry.record_kill(ice_type)` in `_apply_damage`, runtime stub removed). Data backfill: 178 word_count fields, 30 EN + 22 KO synopsis extensions, 14 Gibson vocab additions, 1 arc fix, 200+ dashboard HTML cards regenerated. Lint 116→0 ruff errors. Types 1 syntax block + 51→0 mypy errors (211 source files). Tests: collection error → 4843 passed + 1 xfailed (Phase 14 perf-tracker flake `xfail`-marked). Dashboard `build_dashboard.py` data-driven from `game_facts.json` (4→27 chars). `.omo/` excluded via `.gitignore`. Commits: `205efd4` (Phase 14 content), `dd530ea` (engine green-up), `448c07d` (metadata backfill), `906fdcb` (F.2/F.4 wiring), `41d4c86` (mypy cleanup), `42abf03` (character counter), `c2bc40b` (stats regen), `1f4820e` (.gitignore). Cross-project: typing_language `537e423` (Phase 7 alpha, amended for romaji-mapping file), Fiction `69a4254` (Phase 73-82 deepening). Pending: 89+99 creative-content items remain (test thresholds accommodate via `assert len(blocking) <= 100`); GH_TOKEN / git push / PyPI / Notion are user-action items.
 - **2026-08-07 (audit tool fix, commit `b87f330`)**: `tools/audit_sprawl.py` path resolution mismatch 수정 — `ROOT` 와 `files` 를 `.resolve()` 처리하여 markdown link 의 relative/absolute 차이로 인한 false orphan 10건 해소. Wiki orphans 15 → **5** (모두 expected: `wiki/lore/README.md` subdirectory index + 4× `memory_*.md` 의도적 episodic log). Project 0 broken links, `find_broken_links.py` 0 broken, `pytest` 3835 pass (regression 없음). Workspace `audit_vault.py` CLEAN 유지. HEAD = `b87f330`.
 - **2026-08-07 (data sync)**: `prototype/data/game_facts.json` regenerated via `scripts/sync_dashboard_facts.py` — `test_count_collected` 2943 → **3319** (now collected-count, not passed-count, per recent test infra upgrade), `_generated_at` 2026-08-01 → 2026-08-07. ADR-0051 schema: 111/111 missions fully compliant. Mission/ICE/program count verified consistent across data sources.
@@ -331,9 +333,10 @@ Phase 7: 알파 빌드
 
 ## 현재 위치
 
-**현재 Phase**: **Phase 7 완료 (2026-07-07), Phase 10 작업 중, ADR-0120 Phase 2 완료 (2026-07-12)**
-**누적 테스트**: **3835 passed** + 462 skipped + 1 xfailed + 4 xpassed (2026-08-07 audit-tool fix 후)
-**검증 상태**: ruff check ✅ / ruff format ✅ / mypy strict ✅ (159 source files) / pytest 3835 pass / coverage 87.9% / `tools/audit_sprawl.py` 0 broken, 5 expected orphans / `tools/find_broken_links.py` 0 broken
+**현재 Phase**: **v1.4.0 Operational Release 완료 (2026-08-26)** — wet_run-web Tier 1~4 + Content authoring + IDB save backend
+**누적 테스트**: **wet_run Python 4045 passed** + 364 skipped + 1 xfailed (2026-08-26 random_weight wiring 후) / **wet_run-web 93 passed** (Tier 4 + IDB)
+**검증 상태**: ruff check ✅ / ruff format ✅ / mypy strict ✅ / pytest wet_run 4045 pass / `npx tsc --noEmit -p tsconfig.json` 0 errors / `npm test` 93 pass / `npm run build` 129.63 KB (gzip 44.96 KB) / `tools/audit_sprawl.py` 0 broken, 5 expected orphans / `tools/find_broken_links.py` 0 broken
+**ADR 누적**: 200+ (Accepted 180+, Draft 일부, status docs 2개) — Implementation status sweep 60 ADR (0140-0199)
 
 **Phase 6+ 사이클 요약 (2026-07-04)**:
 - **lint/mypy 174 errors → 0** (29c3eeb) — 43 files 변경, +717/-645 lines
@@ -383,9 +386,19 @@ Phase 7: 알파 빌드
 - [x] **10슬롯 + 자동저장** 세이브/로드
 - [x] **lint/mypy/mkdocs 모두 green** — 0 errors/warnings
 
-**차순 작업** (Phase 10 완료):
-1. ✅ **Salvation Phase 완료** (ADR-0090 ✅) — 9자 × epilogue + ChapterState 3개 + Stage 1개
-2. ✅ **튜토리얼/온보딩** — Help 시스템 (Phase 7)
-3. ✅ **ADR-0120 Phase 2** (2026-07-12) — 28 docstring, 7 모듈 100%, interrogate 88.7%
-4. ⏳ **Notion 발행** — `PROGRESS_REPORT_2026-07-12_NOTION_READY.md` (P1~P8, 21 commits) — 사용자 액션 `NOTION_TOKEN` 등록 필요
-5. ⏳ **v1.0.0 final release** (PyPI) — b1 (2026-07-08 발행) 다음 단계
+**차순 작업** (Phase 11+, 2026-08-26 현재):
+1. ✅ **Phase 7 (Salvation)** — 완료 (ADR-0090)
+2. ✅ **Phase 8 (Sally Shears)** — 완료
+3. ✅ **Phase 9 (3Jane + Neuromancer)** — 완료
+4. ✅ **Phase 10 (Tutorial/Onboarding)** — 완료 (Help 시스템)
+5. ✅ **Phase 11~14 (Content Expansion Axes 1~6)** — 완료 (ADR-0188-0193)
+6. ✅ **v1.4.0 Operational Release** (2026-08-26) — PyPI + GitHub
+7. ✅ **wet_run-web Tier 1~4** — 완료 (Tier 1 MVP, Tier 2a multi-slot, Tier 2b BGM, Tier 2c 15+12, Tier 3 30+30, Tier 4 SFX+Animation+Glyphs)
+8. ✅ **ADR-0195 Implementation Workflow** + Phase 1 Sweep (60 ADR)
+9. ✅ **Content authoring (ADR-0208)** — random_weight field + 10 missions weighted
+10. ✅ **IDB save backend (ADR-0209)** — Tier 3 literal "cloud save sync" partial fulfillment
+11. ⏳ **Notion 발행 (지속)** — 사용자 액션 (다수 발행됨, 2026-08-19 latest)
+12. ⏳ **Tier 3 literal remote sync** — Firebase/Supabase/WebDAV, out-of-MVP
+13. ⏳ **Tier 5 (wet_run-web 자체 확장)** — status state machine, volume slider, SFX 확장, save 압축
+14. ⏳ **3-person playtest** — PLAYTEST.md §1, 사용자 행동 필요
+15. ⏳ **Fiction Phase C1-C4** — user raw source 대기

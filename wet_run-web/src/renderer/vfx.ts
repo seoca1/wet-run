@@ -75,3 +75,20 @@ export function centerArt(art: readonly string[], width: number): string[] {
     return " ".repeat(padLeft) + line + " ".repeat(padRight);
   });
 }
+
+/** Status effect glyphs — single-letter indicators for HUD display. */
+export const STATUS_GLYPHS: Readonly<Record<string, string>> = {
+  burn: "B",
+  stun: "S",
+  slow: "L",
+  silence: "M",
+  vulnerable: "V",
+};
+
+export function formatStatusGlyph(effects: readonly string[]): string {
+  const glyphs = effects
+    .map((effect) => STATUS_GLYPHS[effect])
+    .filter((glyph): glyph is string => glyph !== undefined);
+  if (glyphs.length === 0) return "";
+  return "[" + glyphs.join("") + "]";
+}

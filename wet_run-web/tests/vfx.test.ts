@@ -5,6 +5,8 @@ import {
   formatStatusLabel,
   hitFlashColor,
   centerArt,
+  formatStatusGlyph,
+  STATUS_GLYPHS,
   ICE_DEFEAT_ART,
   PLAYER_DEFEAT_ART,
 } from "../src/renderer/vfx.js";
@@ -141,5 +143,37 @@ describe("centerArt", () => {
 
   it("returns empty array for empty input", () => {
     expect(centerArt([], 10)).toEqual([]);
+  });
+});
+
+describe("STATUS_GLYPHS", () => {
+  it("exposes 5 glyph mappings", () => {
+    expect(Object.keys(STATUS_GLYPHS).length).toBe(5);
+  });
+
+  it("maps each effect to a single letter", () => {
+    expect(STATUS_GLYPHS.burn).toBe("B");
+    expect(STATUS_GLYPHS.stun).toBe("S");
+    expect(STATUS_GLYPHS.slow).toBe("L");
+    expect(STATUS_GLYPHS.silence).toBe("M");
+    expect(STATUS_GLYPHS.vulnerable).toBe("V");
+  });
+});
+
+describe("formatStatusGlyph", () => {
+  it("returns empty string for no effects", () => {
+    expect(formatStatusGlyph([])).toBe("");
+  });
+
+  it("returns bracketed single glyph", () => {
+    expect(formatStatusGlyph(["burn"])).toBe("[B]");
+  });
+
+  it("concatenates multiple glyphs in order", () => {
+    expect(formatStatusGlyph(["burn", "stun"])).toBe("[BS]");
+  });
+
+  it("ignores unknown effects", () => {
+    expect(formatStatusGlyph(["burn", "unknown_effect"])).toBe("[B]");
   });
 });

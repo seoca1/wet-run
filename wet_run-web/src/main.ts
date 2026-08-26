@@ -14,6 +14,7 @@ import {
   healthColor,
   hitFlashColor,
   formatStatusLabel,
+  formatStatusGlyph,
   ICE_DEFEAT_ART,
   PLAYER_DEFEAT_ART,
   centerArt,
@@ -171,9 +172,10 @@ class Game {
       const previous = this.state;
       const iceDelta = this._lastIceHp !== null ? previous.ice.hp - this._lastIceHp : null;
       const playerDelta = this._lastPlayerHp !== null ? previous.player.hp - this._lastPlayerHp : null;
+      const mockStatusEffects = mockStatusEffectsForTurn(previous.turnCount);
       this.state = {
         ...this.state,
-        grid: renderGrid(this.state, iceDelta, playerDelta),
+        grid: renderGrid(this.state, iceDelta, playerDelta, mockStatusEffects),
       };
       this.renderer.render(this.state.grid, buildHudLines(this.state));
       // Autosave on every state change (cheap; localStorage write).
@@ -207,10 +209,18 @@ class Game {
   }
 }
 
+function mockStatusEffectsForTurn(turn: number): readonly string[] {
+  const pool = ["burn", "stun", "slow", "silence", "vulnerable"];
+  const start = turn % pool.length;
+  const count = (turn % 3) + 1;
+  return pool.slice(start, start + count);
+}
+
 function renderGrid(
   state: GameState,
   iceHpDelta: number | null = null,
   playerHpDelta: number | null = null,
+  statusEffects: readonly string[] = [],
 ) {
   let grid = makeGrid(80, 50);
   grid = setText(grid, 2, 1, `Mission: ${state.mission.title}`, PALETTE.GREEN_NEON);
@@ -230,7 +240,12 @@ function renderGrid(
     const iceHp = Math.max(0, state.ice.hp);
     grid = setText(grid, 36, 22, "[", PALETTE.GRAY_MID);
     grid = setText(grid, 37, 22, state.ice.name.slice(0, 12), iceColor(state.ice.tier));
-    grid = setText(grid, 50, 22, "]", PALETTE.GRAY_MID);
+    const statusSuffix = formatStatusGlyph(statusEffects);
+    if (statusSuffix !== "") {
+      grid = setText(grid, 50, 22, statusSuffix, PALETTE.YELLOW_AMBER);
+    } else {
+      grid = setText(grid, 50, 22, "]", PALETTE.GRAY_MID);
+    }
     grid = setText(
       grid,
       36,

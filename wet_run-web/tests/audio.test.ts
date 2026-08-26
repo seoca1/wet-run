@@ -65,4 +65,31 @@ describe("AudioManager", () => {
   it("SOUND_IDS exposes SENSE_NET path", () => {
     expect(SOUND_IDS.SENSE_NET).toBe("sounds/theme_sense_net.mp3");
   });
+
+  it("SOUND_IDS exposes 5 tracks for Tier 3 phase-aware BGM", () => {
+    expect(SOUND_IDS.CHIBA).toBe("sounds/theme_chiba.mp3");
+    expect(SOUND_IDS.MATRIX_RAIN).toBe("sounds/theme_matrix_rain.mp3");
+    expect(SOUND_IDS.BROADCAST).toBe("sounds/theme_broadcast.mp3");
+    expect(SOUND_IDS.INDUSTRIAL).toBe("sounds/theme_industrial.mp3");
+  });
+
+  it("playPhase('menu') tracks chiba but isPlaying false in node", () => {
+    const audio = AudioManager.getInstance();
+    audio.playPhase("menu");
+    expect(audio.getCurrentTrack()).toBe("sounds/theme_chiba.mp3");
+    expect(audio.isPlaying()).toBe(false);
+  });
+
+  it("playPhase('exit') stops playback", () => {
+    const audio = AudioManager.getInstance();
+    audio.playPhase("exit");
+    expect(audio.isPlaying()).toBe(false);
+  });
+
+  it("playPhase ignores unknown phases", () => {
+    const audio = AudioManager.getInstance();
+    audio.playPhase("unknown_phase");
+    expect(audio.isPlaying()).toBe(false);
+    expect(audio.getCurrentTrack()).toBe(null);
+  });
 });

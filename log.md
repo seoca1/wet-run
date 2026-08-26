@@ -3263,3 +3263,56 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 - Tier 2b (Howler.js audio, wet_run-web) — silent per operator gate
 - Tier 3 (more missions + VFX) — playtest 게이트
 - Fiction Phase C1-C4 (blocked novels) — user raw source 대기
+
+---
+
+## 🎚️ Git LFS D4 결정 — 2026-08-26
+
+**Scope**: v1.4.0 Operational Release Known Limitations §9.1 deferred item 결정.
+
+### 결정 (Accepted)
+- **ADR-0200**: Git LFS D4 — 오디오 자산 관리 (현상 유지 + 명문화)
+- **Option 1 채택**: Git LFS 미적용, 현상 유지하되 모니터링 트리거 정의
+
+### 정확한 오디오 분포 (2026-08-26 측정)
+
+| 위치 | 파일 | 크기 |
+|---|---|---|
+| `dashboard/sounds/full/` | 24 mp3 | 154 MB (BGM 미니맥스 생성) |
+| `dashboard/sounds/v2/` | 12+ WAV | 37 MB (BGM v2 iteration) |
+| `dashboard/sounds/*.wav` (root) | 24 | ~50 MB |
+| `dashboard/sounds/*.v1_backup.wav` | 24 | ~22 MB (중복) |
+| `prototype/data/sounds_test/` | 46 WAV | 61 MB (game runtime) |
+| `data/sounds_test/` | 46 WAV | 2.3 MB (legacy canonical) |
+| **총** | **153 files** | **325.6 MB** |
+
+### Git 저장소 상태
+- `.git/objects` = 258 MB
+- size-pack = 233.63 MiB
+- 698 commits
+- main = origin/main (ahead=0)
+- `git lfs` 미설치, `.gitattributes` 없음
+
+### GitHub LFS 정책
+- 무료 tier: 1 GB storage + 1 GB/month bandwidth
+- 현재 사용량 326MB < 1GB (3× headroom)
+
+### 거부된 옵션
+- **Option 2 (부분 LFS)**: 기존 history 154MB 그대로 (migrate 안 함), `git-lfs` brew install 필요
+- **Option 3 (전체 LFS + migrate)**: 698 commits force-push, 협업 위험
+- **Option 4 (v1_backup 정리 + 부분 LFS)**: 삭제도 history 재작성
+- **Option 5 (Submodule 분리)**: 구조 변경 비용 과다
+
+### 트리거 (재평가 조건)
+- 신규 contributor 합류 (clone 빈도 증가)
+- GitHub Actions CI checkout 30초+ 소요
+- 오디오 추가 합계 1GB 초과 예상
+- GitHub 일반 Git 압축 정책 변경 시
+
+### 후속 (분기별 모니터링)
+- `git count-objects -vH` 실행 → `.git` 사이즈 추적
+- 신규 오디오 추가는 CHANGELOG 기록
+- GitHub Actions CI checkout 시간 모니터링
+
+### 후속 commits
+- `docs(decisions): ADR-0200 Git LFS D4 — Option 1 현상 유지`

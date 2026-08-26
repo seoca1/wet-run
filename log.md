@@ -3962,3 +3962,47 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 - Cloud sync 백엔드 (Firebase / Supabase / WebDAV) — 외부 API 의존성 + 사용자 인증 UX 필요
 - Save 압축 (lz-string) — payload 임계값 미정
 - IDB → cloud 양방향 sync (오프라인 변경 → 온라인 merge)
+
+---
+
+## 🌐 wet_run-web GitHub Pages 배포 활성화 (2026-08-27)
+
+**Scope**: 사용자 요청 — "폰에서 wet-run web 버전을 지금 실행해 볼 수 있어?" → 현재 GitHub Pages에 wet_run-web이 배포되지 않은 상태 발견. workflow 수정으로 해결.
+
+### 발견 → 해결
+
+| 항목 | Before | After |
+|---|---|---|
+| `pages.yml` deploy 범위 | dashboard + wiki + design + Fiction/derivative | + wet_run-web (Tier 4 build) |
+| `npm run build` 자동화 | ❌ 수동만 | ✅ CI `npm ci && npm run build` |
+| 배포 경로 | (없음) | `/wetrun-web/` sub-path |
+| Live URL | 404 | `https://seoca1.github.io/wet-run/wetrun-web/` |
+| Dashboard 링크 | `https://seoca1.github.io/projects/wetrun-web/` (잘못된 repo) | `https://seoca1.github.io/wet-run/wetrun-web/` (정확) |
+
+### 구현 산출물 (commit pending)
+
+| File | Change |
+|---|---|
+| `.github/workflows/pages.yml` | `Build wet_run-web (Tier 4, Vite)` step 추가 (npm ci + build) + `cp -r wet_run-web/dist/ _pages/wetrun-web/` line 추가 + workflow name 갱신 |
+| `dashboard/index.html` | 잘못된 `projects/wetrun-web/` 링크 → 정확한 `wet-run/wetrun-web/` 경로 수정 |
+| `wet_run-web/README.md` | Live URL 섹션 추가 |
+
+### 검증
+
+- YAML valid: `python3 -c "import yaml; yaml.safe_load(...)"` ✅
+- npm test: 93 passed (build 사전 검증)
+- 기존 dashboard + wiki deploy 동작 유지 (workflow 변경 최소)
+
+### 사용자 접근
+
+| 디바이스 | URL |
+|---|---|
+| 폰 (어디서나) | `https://seoca1.github.io/wet-run/wetrun-web/` |
+| 데스크탑 | 동일 |
+| 터치 자동 감지 | `pointer: coarse` 디바이스에서 virtual gamepad 자동 마운트 (README §Controls) |
+
+### 후속
+
+- Pages 첫 빌드 검증 (workflow_dispatch 또는 main push)
+- 빌드 실패 시 npm ci 캐싱 또는 Node version 명시 (`setup-node@v4` + `.nvmrc`)
+- gh-pages 강제 재배포 (`force_orphan: true` 이미 설정됨)

@@ -98,6 +98,8 @@ src/
 
 Deployment target: GitHub Pages (free, proven pattern in this workspace).
 
+**Live URL**: <https://seoca1.github.io/wet-run/wetrun-web/> — auto-deployed via `.github/workflows/pages.yml` on every push to `main`. Touch input auto-mounts virtual gamepad on mobile (`pointer: coarse` detection).
+
 ## License
 
 Same as wet_run parent project: MIT.

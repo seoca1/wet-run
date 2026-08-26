@@ -3505,3 +3505,53 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 - `feat(wetrun-web): Tier 3 expansion (30 missions + 30 ICE, ADR-0203)`
 - `test+docs(wetrun-web): Tier 3 test expansion + mission select UI`
 - `docs(wet_run): ADR-0203 + README index sync + log entry`
+
+---
+
+## 🎵 wet_run-web Phase-aware BGM (5 tracks) — 2026-08-26 [All-2]
+
+**Scope**: User "all" carry-over batch. Tier 2b 단일 BGM → Phase-aware 5 tracks 확장.
+
+### 결정 (ADR-0204 Accepted, Option 2)
+- **5 BGM tracks** + GamePhase 자동 전환
+
+### Phase → BGM 매핑
+
+| GamePhase | Track | Size |
+|---|---|--:|
+| menu | theme_chiba | 6.9 MB |
+| approach | theme_sense_net | 5.4 MB |
+| combat | theme_matrix_rain | 8.0 MB |
+| victory | theme_broadcast | 6.5 MB |
+| defeat | theme_industrial | 7.8 MB |
+| exit | (none) | BGM 정지 |
+
+### 구현 산출물
+
+| 파일 | 변경 |
+|---|---|
+| `wet_run-web/src/audio/manager.ts` | +50 LOC (SOUND_IDS 5개, PHASE_TO_SOUND, playPhase(), currentTrack) |
+| `wet_run-web/src/main.ts` | +10 LOC (Game._lastPhase, syncPhase()) |
+| `wet_run-web/tests/audio.test.ts` | +4 tests |
+| `wet_run-web/public/sounds/theme_*.mp3` | +4 files (chiba, matrix_rain, broadcast, industrial) |
+
+### 검증
+- `npx tsc --noEmit`: ✅ 0 errors
+- `npm test`: ✅ **58 passed** (Tier 3 54 → +4)
+- `npm run build`: ✅ 125.43 kB (Tier 3 124.66 → +0.77 kB)
+- Audio total: ~36 MB (5 tracks)
+
+### 동작 흐름
+- 부팅 시 menu phase → chiba
+- 미션 선택 (launchSelected) → approach phase → sense_net
+- applyAction 결과 phase 변경 (combat/victory/defeat) → draw()에서 syncPhase() 호출 → 해당 track 자동 재생
+- M 키 mute toggle 유지
+
+### 후속 (carry-over)
+- All-3: Status effect VFX / SFX (다음)
+- All-4: Content authoring (Phase 6 Arc + Mission Expansion)
+
+### 후속 commits
+- `feat(wetrun-web): Phase-aware BGM (5 tracks, ADR-0204)`
+- `test+docs(wetrun-web): Phase-aware BGM tests + README`
+- `docs(wet_run): ADR-0204 + README index sync + log entry`

@@ -1,7 +1,7 @@
 # Game Design Document (GDD)
 
-> **Last updated**: 2026-08-13 (Phase 18 docs audit — Phase 15-17 feature notes added)
-> **Version**: v1.0.0
+> **Last updated**: 2026-08-27 (Phase 18 docs audit + v1.4.0 reflection + wet_run-web Tier 4 + ADR-0209)
+> **Version**: v1.4.0 (Python) + Tier 4 + ADR-0209 (wet_run-web)
 
 ## 1. Concept
 
@@ -138,13 +138,13 @@
 | **ICE Bypass** | 방어선 뚫기 | ✅ |
 | **Counter-Intelligence** | 흔적 지우기 | ✅ |
 
-실제 미션 예시: `missions.json` (111 missions, 5 zones 균형)
+실제 미션 예시: `missions.json` (209 missions, 5 zones 균형; ADR-0206 wiring + ADR-0208 random_weight)
 
 ### 적 유형 (구현됨)
 
 | 유형 | 설명 | 구현 |
 |------|------|------|
-| **ICE** | probe, watchdog, bulldog, asp, hellhound 등 58 types | ✅ |
+| **ICE** | probe, watchdog, bulldog, asp, hellhound 등 97 types | ✅ |
 | **Black ICE** | 치명적, trace 진행 | ✅ |
 | **Boss ICE** | Wintermute, T-A Prime 3-phase | ✅ (ADR-0050) |
 | **Hostile Deckers** | NPC 자키 (limited) | ✅ |
@@ -224,14 +224,16 @@
 - **초반 우선**: Arc 1 (1-3 jobs) — Phase 5에서 우선 구현
 - **반복 보강**: 무한 side content, faction 뉴스, world events
 
-**Content pillar totals (v1.0.0, 2026-08-03)**:
-- 111 missions (5 zones 균형)
-- 58 ICE types (incl. 14 skill effects + 15 skill animations)
-- 9 jockeys / 9 endings (3 × 3)
+**Content pillar totals (v1.4.0, 2026-08-26)**:
+- 209 missions (5 zones 균형; ADR-0206 Arc6 + Expansion wiring)
+- 97 ICE types (incl. 14 skill effects + 15 skill animations)
+- 9 jockeys / 29 endings (9 × A/B/C + salvation)
 - 81 GN scenes (12 prologue + 9 × 8 endings + epilogue)
+- 30 programs (ADR-0193 expansion)
 - 150+150 = 300 short stories (EN + KO)
 - 16 stages / 18 chapter states / 4 objectives
 - 5 NPCs / 14 dialogues / 51 lines
+- **wet_run-web**: 30 missions / 30 ICE / Tier 4 (ADR-0207) + IDB save (ADR-0209)
 - 8 node kinds / 8 zone depths
 
 ### 디자인 영향 (Accepted 결정으로 제약)
@@ -279,7 +281,7 @@
 Phase 15-17 동안 추가된 6개 engine 통합 (deck picker / telemetry opt-in / wetware stacking / F.4 boss phases / random rules / endings persistence) 와 3개 UI 노출 (F.4 phase UI / random rules UI / telemetry stats) 이 본 문서에 반영됨.
 
 **이전 known issues**:
-- Content totals 가 v1.0.0 (2026-08-03) 기준 — Phase 11 의 200 mission 으로 확장되었으나 본 섹션은 의도적으로 v1.0.0 베이스라인 유지.
+- ~~Content totals 가 v1.0.0 (2026-08-03) 기준~~ → 2026-08-27 갱신: v1.4.0 (209 미션, 97 ICE, 29 엔딩) 으로 통일.
 - 로드맵 항목 `Hardcore mode` (Phase 4 polish) 은 §3 Game Structure 에서 별도 다룸.
 
 **후속 예정** (Phase 19+):

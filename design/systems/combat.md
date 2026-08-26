@@ -17,7 +17,7 @@ ADR-0003의 핵심. 한 줄 요약: **실시간 자동 공격 + 메뉴로 강력
 
 | 자원 | 설명 | 회복 |
 | --- | --- | --- |
-| **HP** (Health) | 데크의 무결성. 0 = flatline. | 전투 승리 시 Data Salvage (HEAL 20%) |
+| **HP** (Health) | 데크의 무결성. 0 = flatline. | 전투 승리 시 Data Salvage (HEAL 15%, ADR-0152 rebalance) |
 | **AP** (Action Points) | 스킬 비용. 시간 경과로 자동 회복. | 자연 회복 |
 | **BW** (Bandwidth) | 동시 활성 program 수. | 자연 회복 |
 | **PW** (Processing Power) | program 복잡도 한계. | 고정 (장비 의존) |
@@ -164,7 +164,7 @@ ICE 격파. 잔여 데이터 회수 가능.
 
 ### Phase 6+ 확장 (ADR-0147, v1.1.0+ Cycle 1)
 
-- **HEAL**: 변경 없음 (20% max HP, tier-scaled, max-cap alert)
+- **HEAL**: **15% max HP** (ADR-0152 rebalance, was 20%), tier-scaled, max-cap alert
 - **FRAG**: +1 `state.salvage_fragments` (in-run unlock, death 시 loss — Pillar 4 정합)
 - **CRED**: +30 `state.credits` + `-1 state.alarm_level` (clamped ≥ 0, Pillar 1 weight)
 - **SKIP**: 보상 없음 (전략적 선택)
@@ -524,6 +524,25 @@ def apply_salvage(choice: SalvageChoice, player: Player) -> int:
 - 메뉴 키 (Space vs Tab)
 - 다중 적 (1-3 동시)
 - 시각 효과 디테일
+
+## Status Effect Glyphs (ADR-0207 / wet_run-web Tier 4)
+
+`wet_run-web` 전투 화면에 표시되는 5개 상태이상 글리프 (2026-08-26):
+
+| Glyph | 상태 | 효과 |
+|---|---|---|
+| `[B]` | Burn | 지속 DOT |
+| `[S]` | Stun | 행동 불가 (N턴) |
+| `[L]` | Slow | 공격 속도 감소 |
+| `[M]` | Silence | 스킬 사용 불가 |
+| `[V]` | Vulnerable | 받는 damage 증가 |
+
+**위치**: `wet_run-web/src/renderer/vfx.ts::STATUS_GLYPHS` + `formatStatusGlyph()`. ICE 이름 옆 표시. **현재 web mock 데이터** (`mockStatusEffectsForTurn`) 사용 — Python reducer 통합은 Tier 5+ 에서.
+
+**ASCII Art 효과 (wet_run-web)**:
+- `hitFlashColor(delta)` — HP 변동 시 색상 플래시
+- `ICE_DEFEAT_ART` / `PLAYER_DEFEAT_ART` — 격파 시 ASCII 아트
+- `centerArt(art, width)` — 중앙 정렬
 - HEAL 비율 (20% 적절? 15%? 25%?)
 - FRAG / CRED 시스템 상세 (Phase 6+)
 - 알람 / trace와 salvage의 상호작용

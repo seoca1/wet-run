@@ -1,8 +1,8 @@
 {
-  "short_stories_en": 233,
+  "short_stories_en": 229,
   "short_stories_ko": 229,
-  "novelettes_en": 26,
-  "novelettes_ko": 26,
+  "novelettes_en": 27,
+  "novelettes_ko": 27,
   "hook_kinds": 6,
   "hook_kind_names": [
     "narrative",
@@ -15,9 +15,9 @@
   "layers": 4,
   "tests_passing": 39,
   "code_lines_approx": 900,
-  "_generated_at": "2026-08-21T20:55:43",
+  "_generated_at": "2026-08-27T08:05:39",
   "stories_with_mission_link": 191,
-  "catalog_entries": 259,
+  "catalog_entries": 256,
   "catalog_entries_list": [
     {
       "stem": "3jane_straylight-monopoly",
@@ -221,6 +221,13 @@
       "title_en": "Case Past Investigate Armitage Mind",
       "title_ko": "Case Past Investigate Armitage Mind",
       "game_mission_id": "case_past_investigate_armitage_mind"
+    },
+    {
+      "stem": "case_second_run",
+      "type": "novelette",
+      "title_en": "Case Second Run",
+      "title_ko": "스프롤 오퍼레이터: 케이스의 두 번째 작전",
+      "game_mission_id": null
     },
     {
       "stem": "casey_leaves",
@@ -608,13 +615,6 @@
       "game_mission_id": "g_boys_arc"
     },
     {
-      "stem": "ghost_signal",
-      "type": "short_story",
-      "title_en": "유령 신호",
-      "title_ko": "",
-      "game_mission_id": null
-    },
-    {
       "stem": "heretic_loa_conscription",
       "type": "novelette",
       "title_en": "Heretic Loa Conscription",
@@ -647,13 +647,6 @@
       "type": "short_story",
       "title_en": "Hiltons Dispatch",
       "title_ko": "힐턴의 배달 (Hilton's Dispatch)",
-      "game_mission_id": null
-    },
-    {
-      "stem": "hosaka_after_hours",
-      "type": "short_story",
-      "title_en": "호사카 야간",
-      "title_ko": "",
       "game_mission_id": null
     },
     {
@@ -1490,13 +1483,6 @@
       "game_mission_id": "ta_payroll_archive"
     },
     {
-      "stem": "tessier_ashpool_aftermath",
-      "type": "short_story",
-      "title_en": "테시에-애시풀: 여파",
-      "title_ko": "",
-      "game_mission_id": null
-    },
-    {
       "stem": "tessier_sleeper_arc",
       "type": "novelette",
       "title_en": "Tessier Sleeper Arc",
@@ -1740,13 +1726,6 @@
       "title_en": "Wintermute Negotiation",
       "title_ko": "윈터뮤트 협상",
       "game_mission_id": "wintermute_negotiation"
-    },
-    {
-      "stem": "wintermute_residue",
-      "type": "short_story",
-      "title_en": "윈터뮤트 잔해",
-      "title_ko": "",
-      "game_mission_id": null
     },
     {
       "stem": "wintermute_witness",

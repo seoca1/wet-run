@@ -106,7 +106,7 @@
 - 최종 의뢰: T-A / Straylight / Zion 등
 - 플레이어의 누적 world state에 따라 결과 분기
 - "최종 의뢰"는 4개 variants 중 하나
-- 엔딩은 4+ variants
+- 엔딩은 **29개** (v1.4.0): 9 자키 × A/B/C ending + Salvation Phase 통합 (ADR-0090, ADR-0192)
 
 **주요 이벤트 (ADR-0013)**:
 - "3Jane's Shadow" (construct) — 3Jane 등장, special construct

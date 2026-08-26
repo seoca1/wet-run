@@ -323,6 +323,19 @@ class Mission:
 - Mission unlock 트리
 - Secondary objective의 *보상 기여*
 
+## Random Weight (ADR-0208)
+
+`Mission` 데이터 클래스에 `random_weight: float = 1.0` 필드 추가 (2026-08-26). JobBoard 미션 선택 가중치.
+
+| Weight | 적용 | 예시 |
+|---|---|---|
+| `1.0` | 기본 | 일반 미션 |
+| `1.2` | Expansion | 신규 콘텐츠 부각 |
+| `1.5` | Arc6 | 핵심 storyline 우선 노출 |
+| `< 0` | (필터링됨) | `apply_rule` 미션 제외 |
+
+**구현 위치**: `prototype/src/wet_run/missions/mission.py:138` (field), `missions/board.py:363` (parsing), `programs/random_rules.py:137,160-161` (filter + select_weighted multiplier).
+
 ## 관련 문서
 
 - `decisions/0017-mission-material-integration.md` — ADR
@@ -435,7 +448,7 @@ Chain reward: `ta_construct_full` + reputation +25 + 50000 credits + achievement
 | tokyo (Bridge) | 3 | 10+ | +7 |
 | soho (Blue Ant) | 2 | 10+ | +8 |
 
-**Current state (2026-08-08)**: 116 missions (was 111), TA zone: 13 (was 8). Phase 11 in progress.
+**Current state (2026-08-27, v1.4.0)**: 209 missions (was 116 at Phase 11, was 47 at v1.0.0), TA zone: 13 (was 8), 5 zones 균형. ADR-0206 Arc6 + Expansion wiring 완료. ADR-0208 random_weight 가중치 적용.
 
 ### 데이터 스키마 확장
 

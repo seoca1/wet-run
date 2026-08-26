@@ -329,7 +329,7 @@
     "world_count": 2,
     "sector_count": 4,
     "server_count": 6,
-    "zone_depths": 8,
+    "zone_depths": 9,
     "world_names": [
       "Chiba City",
       "Night City"
@@ -382,5 +382,5 @@
     "prototype/data/programs/programs.json",
     "prototype/data/cyberspace/worlds.json"
   ],
-  "_generated_at": "2026-08-21T20:55:44"
+  "_generated_at": "2026-08-27T08:05:40"
 }

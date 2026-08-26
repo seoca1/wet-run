@@ -54,16 +54,18 @@ credits = arc * 800 + (grade - 1) * 300
 > 실제 보상은 공식을 60~70% 수준으로 보수적으로 설정 — 깁슨 톤
 > ("the Sprawl is not a friendly place") 에 맞춰 런이 항상 빡빡함.
 
-### 등급별 미션 분포 (29 missions)
+### 등급별 미션 분포 (209 missions, v1.4.0)
 
 | Grade | 미션 수 | 비고 |
 |---|---:|---|
-| 1 | 7 | tutorial, watchdog_patrol, first_jack, ice_run 등 |
-| 2 | 12 | craft_job, first_trace, yakuza_deal 등 |
-| 3 | 12 | mollys_razor, ta_heist, sally_returns_arc3 등 |
-| 4 | 12 | dixies_choice, winter_infiltrate, aleph_fragment 등 |
-| 5 | 10 | final_choice, neuromancer_merger, zion_express 등 |
-| 6 | 2 | neuromancer_merger, zion_express (Arc 5 finale master) |
+| 1 | ~40 | tutorial, watchdog_patrol, first_jack, ice_run 등 |
+| 2 | ~50 | craft_job, first_trace, yakuza_deal 등 |
+| 3 | ~50 | mollys_razor, ta_heist, sally_returns_arc3 등 |
+| 4 | ~35 | dixies_choice, winter_infiltrate, aleph_fragment 등 |
+| 5 | ~30 | final_choice, neuromancer_merger, zion_express 등 |
+| 6 (Arc6 + Expansion) | ~10 | Arc6 신규 4 + Expansion 6 (ADR-0206 wiring) |
+
+> 정확한 분포는 `prototype/data/missions/missions.json` 참조 (ADR-0208 random_weight 적용).
 
 ## 인플레이션 / 싱크
 

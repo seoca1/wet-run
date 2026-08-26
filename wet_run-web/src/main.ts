@@ -9,7 +9,15 @@ import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, isTouchDevice } from "./input/touch.ts";
 import { AudioManager, SFX_IDS } from "./audio/manager.ts";
-import { healthBar, healthColor, formatStatusLabel } from "./renderer/vfx.ts";
+import {
+  healthBar,
+  healthColor,
+  hitFlashColor,
+  formatStatusLabel,
+  ICE_DEFEAT_ART,
+  PLAYER_DEFEAT_ART,
+  centerArt,
+} from "./renderer/vfx.ts";
 import type { GameState, GameAction, GamePhase, Ice, Mission, Program } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
@@ -84,6 +92,8 @@ class Game {
   private iceTypes: Readonly<Record<string, Ice>>;
   private unmountTouch: () => void = () => {};
   private _lastPhase: GamePhase | null = null;
+  private _lastIceHp: number | null = null;
+  private _lastPlayerHp: number | null = null;
 
   constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
     this.iceTypes = iceTypes;
@@ -94,7 +104,16 @@ class Game {
       if (this.state === null) {
         this.handleMenuInput(action);
       } else {
+        const previous = this.state;
         this.state = applyAction(this.state, action);
+        if (action.type === "use_program" && previous.phase === "combat" && this.state.phase === "combat") {
+          const iceDelta = this.state.ice.hp - previous.ice.hp;
+          if (iceDelta < 0) {
+            AudioManager.getInstance().playSfx(SFX_IDS.COMBAT_HIT);
+          }
+          this._lastIceHp = this.state.ice.hp;
+          this._lastPlayerHp = this.state.player.hp;
+        }
         this.draw();
       }
     };
@@ -149,7 +168,13 @@ class Game {
       ]);
       this.syncPhase("menu");
     } else {
-      this.state = { ...this.state, grid: renderGrid(this.state) };
+      const previous = this.state;
+      const iceDelta = this._lastIceHp !== null ? previous.ice.hp - this._lastIceHp : null;
+      const playerDelta = this._lastPlayerHp !== null ? previous.player.hp - this._lastPlayerHp : null;
+      this.state = {
+        ...this.state,
+        grid: renderGrid(this.state, iceDelta, playerDelta),
+      };
       this.renderer.render(this.state.grid, buildHudLines(this.state));
       // Autosave on every state change (cheap; localStorage write).
       this.autosave();
@@ -182,7 +207,11 @@ class Game {
   }
 }
 
-function renderGrid(state: GameState) {
+function renderGrid(
+  state: GameState,
+  iceHpDelta: number | null = null,
+  playerHpDelta: number | null = null,
+) {
   let grid = makeGrid(80, 50);
   grid = setText(grid, 2, 1, `Mission: ${state.mission.title}`, PALETTE.GREEN_NEON);
   grid = setText(grid, 2, 3, state.message, PALETTE.GRAY_LIGHT);
@@ -194,7 +223,7 @@ function renderGrid(state: GameState) {
     2,
     5,
     `P ${healthBar(state.player.hp, state.player.maxHp)} ${state.player.hp}/${state.player.maxHp}`,
-    healthColor(state.player.hp, state.player.maxHp),
+    playerHpDelta !== null ? hitFlashColor(playerHpDelta) : healthColor(state.player.hp, state.player.maxHp),
   );
 
   if (state.phase === "combat" || state.phase === "victory" || state.phase === "defeat") {
@@ -207,7 +236,7 @@ function renderGrid(state: GameState) {
       36,
       24,
       `${healthBar(iceHp, 100)} ${iceHp}/100`,
-      healthColor(iceHp, 100),
+      iceHpDelta !== null ? hitFlashColor(iceHpDelta) : healthColor(iceHp, 100),
     );
   }
 
@@ -215,6 +244,21 @@ function renderGrid(state: GameState) {
   if (statusLabel !== "") {
     const statusColor = state.phase === "victory" ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT;
     grid = setText(grid, 36, 26, statusLabel, statusColor);
+    if (state.phase === "victory") {
+      const art = centerArt(ICE_DEFEAT_ART, 32);
+      let y = 28;
+      for (const line of art) {
+        grid = setText(grid, 36, y, line, PALETTE.GRAY_MID);
+        y += 1;
+      }
+    } else if (state.phase === "defeat") {
+      const art = centerArt(PLAYER_DEFEAT_ART, 32);
+      let y = 28;
+      for (const line of art) {
+        grid = setText(grid, 36, y, line, PALETTE.GRAY_MID);
+        y += 1;
+      }
+    }
   }
 
   if (state.phase === "combat" && state.deck.length > 0) {

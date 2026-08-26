@@ -1,5 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { healthBar, healthColor, formatStatusLabel } from "../src/renderer/vfx.js";
+import {
+  healthBar,
+  healthColor,
+  formatStatusLabel,
+  hitFlashColor,
+  centerArt,
+  ICE_DEFEAT_ART,
+  PLAYER_DEFEAT_ART,
+} from "../src/renderer/vfx.js";
 import { PALETTE } from "../src/renderer/palette.js";
 
 describe("healthBar", () => {
@@ -72,5 +80,66 @@ describe("formatStatusLabel", () => {
     expect(formatStatusLabel("combat")).toBe("");
     expect(formatStatusLabel("approach")).toBe("");
     expect(formatStatusLabel("exit")).toBe("");
+  });
+});
+describe("hitFlashColor", () => {
+  it("returns RED_BRIGHT for damage taken", () => {
+    expect(hitFlashColor(-10)).toBe(PALETTE.RED_BRIGHT);
+    expect(hitFlashColor(-1)).toBe(PALETTE.RED_BRIGHT);
+  });
+
+  it("returns GREEN_NEON for heal", () => {
+    expect(hitFlashColor(10)).toBe(PALETTE.GREEN_NEON);
+    expect(hitFlashColor(1)).toBe(PALETTE.GREEN_NEON);
+  });
+
+  it("returns GRAY_LIGHT for no change", () => {
+    expect(hitFlashColor(0)).toBe(PALETTE.GRAY_LIGHT);
+  });
+});
+
+describe("ICE_DEFEAT_ART", () => {
+  it("contains ICE OFFLINE label", () => {
+    const joined = ICE_DEFEAT_ART.join("\n");
+    expect(joined).toContain("ICE OFFLINE");
+  });
+
+  it("has at least 5 lines", () => {
+    expect(ICE_DEFEAT_ART.length).toBeGreaterThanOrEqual(5);
+  });
+});
+
+describe("PLAYER_DEFEAT_ART", () => {
+  it("contains JACKED OUT label", () => {
+    const joined = PLAYER_DEFEAT_ART.join("\n");
+    expect(joined).toContain("JACKED OUT");
+  });
+
+  it("has at least 5 lines", () => {
+    expect(PLAYER_DEFEAT_ART.length).toBeGreaterThanOrEqual(5);
+  });
+});
+
+describe("centerArt", () => {
+  it("pads short lines to width", () => {
+    const art = ["hi"];
+    const result = centerArt(art, 5);
+    expect(result[0]).toBe(" hi  ");
+  });
+
+  it("truncates long lines to width", () => {
+    const art = ["abcdef"];
+    const result = centerArt(art, 3);
+    expect(result[0]).toBe("abc");
+  });
+
+  it("preserves exact-width lines", () => {
+    const art = ["abcd"];
+    const result = centerArt(art, 4);
+    expect(result[0]).toBe("abcd");
+  });
+
+  it("returns empty array for empty input", () => {
+    expect(centerArt([], 10)).toEqual([]);
   });
 });

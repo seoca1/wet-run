@@ -31,3 +31,47 @@ export function formatStatusLabel(phase: string): string {
       return "";
   }
 }
+
+export function hitFlashColor(delta: number): string {
+  if (delta < 0) return PALETTE.RED_BRIGHT;
+  if (delta > 0) return PALETTE.GREEN_NEON;
+  return PALETTE.GRAY_LIGHT;
+}
+
+export const ICE_DEFEAT_ART: readonly string[] = [
+  "                                ",
+  "      \\\\\\\\                  ",
+  "       \\\\\\                ",
+  "        \\\\\\              ",
+  "   ░░░░░░░░░░░░░░░░░░░░░░░░░    ",
+  "   ░░░ ICE OFFLINE ░░░    ",
+  "   ░░░░░░░░░░░░░░░░░░░░░░░░░    ",
+  "       /  /  /                ",
+  "      /  /  /                 ",
+  "                                ",
+];
+
+export const PLAYER_DEFEAT_ART: readonly string[] = [
+  "                                ",
+  "        ▒▒▒▒▒▒▒▒▒▒▒▒         ",
+  "      ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒       ",
+  "      ▒▒ JACKED OUT ▒▒       ",
+  "      ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒       ",
+  "        ▒▒▒▒▒▒▒▒▒▒▒▒         ",
+  "                                ",
+];
+
+/**
+ * Build a centered ASCII block from an art array, fit to the given width.
+ * Truncates or pads with spaces. Lines longer than ``width`` are
+ * truncated from the right; shorter lines are space-padded.
+ */
+export function centerArt(art: readonly string[], width: number): string[] {
+  return art.map((line) => {
+    if (line.length >= width) return line.slice(0, width);
+    const padTotal = width - line.length;
+    const padLeft = Math.floor(padTotal / 2);
+    const padRight = padTotal - padLeft;
+    return " ".repeat(padLeft) + line + " ".repeat(padRight);
+  });
+}

@@ -1,7 +1,7 @@
 # ADR-0194: ECS-lite 역할 명시화 — 프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구
 
-**상태**: Draft
-**날짜**: 2026-08-19
+**상태**: **Accepted (Option 3: ECS-lite 역할 명시화 — Hybrid)** — Draft → Accepted 2026-08-26 (this session; user-approved via clarification Q1)
+**날짜**: 2026-08-19 (Draft), 2026-08-26 (Accepted)
 **결정자**: 사용자
 **우선순위**: P3 (The Build, 아키텍처 명료화)
 **관련**: ADR-0004 (코드 아키텍처), `docs/ARCHITECTURE.md` §14 (ECS vs OOP 매트릭스)
@@ -162,7 +162,62 @@ def new_entity() -> Entity:
 - [ ] **기타**: ___
 - [ ] **Defer** (다음 단계로 미룸)
 
-## 결과 (Consequences) — 결정 후 작성
+## 결과 (Consequences)
+
+### 2026-08-26 — Option 3 채택 (Draft → Accepted)
+
+**핵심 결정**: ADR-0004의 "ECS-lite + 데이터 주도" 결정을 **두 부분으로 분리**:
+- **데이터 주도** (전체 적용, 유지): 모든 콘텐츠 = JSON, i18n 포함 (ADR-0010과 일치)
+- **ECS-lite** (선택적 격하): `ecs/` 모듈은 **실험/테스트 도구**로 역할 명시. 프로덕션 게임 로직은 OOP/dataclass 유지
+
+### 승인된 가이드 (신규 시스템 추가 시)
+
+```python
+# 기본 (P0/P1/P2/P3 모든 신규 시스템): OOP / dataclass
+@dataclass
+class NewSystem:
+    id: str
+    # ...
+
+# 선택 (dungeon/room 도메인 한정): ECS-lite
+from wet_run.ecs import Entity, World
+def new_entity() -> Entity:
+    return Entity(id="new", kind="new", ...)
+```
+
+**ECS-lite 적용 도메인 (허용)**:
+- `matrix/` (방 → Entity 매핑이 자연스러운 도메인)
+- `engine/dungeon_view.py` (dungeon/room 시각화)
+
+**ECS-lite 비적용 도메인 (금지)**:
+- `engine/state.py` (AppState는 dataclass 유지)
+- `combat/*` (전투 시스템은 OOP 유지)
+- `missions/*`, `equipment/*`, `programs/*`, `portraits/*`, `i18n/*` 등 모든 게임 시스템
+- 신규 시스템 추가 시 기본 = OOP/dataclass
+
+### World naming collision 해결
+- ECS의 `World` 클래스와 `cyberspace/world.py`의 `World` 계층 이름 충돌
+- ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입 (또는 `EcsWorld` 이름으로 직접 import)
+- 기존 코드 변경 불필요 (ECS가 프로덕션 미사용이므로 import alias만 권장)
+
+### ADR-0004와의 관계
+- ADR-0004는 **Superseded 하지 않음** — ADR-0004의 "데이터 주도" 부분은 그대로 유효
+- ADR-0194는 ADR-0004의 **ECS-lite 부분만 부분 Superseded** (격하된 역할로 재해석)
+- 결정 본문에서 명시: "ADR-0004의 의도(ECS 전면)를 축소 해석"
+
+### 후속 작업 (별도 commit/ADR 필요)
+
+1. **`docs/ARCHITECTURE.md` §14 갱신** (이 ADR cross-link):
+     - §14.4 매트릭스 섹션에 "ECS = 선택적 도구" 명시 추가
+     - §14.1 ADR-0004 링크 옆에 ADR-0194 cross-link 추가
+2. **`AGENTS.md` §6 갱신**:
+     - "Accepted 결정 반영" 섹션에 ECS-lite 사용 규칙 추가
+     - "신규 시스템 추가 시 OOP 우선, ECS는 dungeon/room 도메인에서만 선택적"
+3. **`prototype/src/wet_run/ecs/__init__.py` docstring 갱신**:
+     - 현재: `"""ECS-lite: Entity, World, Components (ADR-0004)."""`
+     - 변경: ECS-lite가 ADR-0194로 격하된 선택적 도구임을 명시
+4. **`decisions/README.md` 인덱스 상태 갱신**:
+     - 0194 줄: `Draft` → `Accepted (Option 3)`
 
 ## 영향 받는 항목
 
@@ -186,3 +241,4 @@ def new_entity() -> Entity:
 ## 변경 이력
 
 - 2026-08-19: Draft 작성 (ARCHITECTURE.md §14 분석 기반)
+- 2026-08-26: Draft → **Accepted (Option 3 Hybrid)** — 본 세션, v1.4.0 Operational Release 후속 작업. ECS-lite를 dungeon/room 도메인 한정 선택적 도구로 격하. Consequences 섹션 + 영향 받 항목 후속 작업 4건 명시.

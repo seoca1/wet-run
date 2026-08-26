@@ -9,6 +9,7 @@ import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, isTouchDevice } from "./input/touch.ts";
 import { AudioManager } from "./audio/manager.ts";
+import { healthBar, healthColor, formatStatusLabel } from "./renderer/vfx.ts";
 import type { GameState, GameAction, GamePhase, Ice, Mission, Program } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
@@ -177,11 +178,34 @@ function renderGrid(state: GameState) {
   grid = setText(grid, 2, 1, `Mission: ${state.mission.title}`, PALETTE.GREEN_NEON);
   grid = setText(grid, 2, 3, state.message, PALETTE.GRAY_LIGHT);
 
+  grid = setText(grid, 60, 1, `T${state.turnCount + 1}`, PALETTE.GRAY_LIGHT);
+
+  grid = setText(
+    grid,
+    2,
+    5,
+    `P ${healthBar(state.player.hp, state.player.maxHp)} ${state.player.hp}/${state.player.maxHp}`,
+    healthColor(state.player.hp, state.player.maxHp),
+  );
+
   if (state.phase === "combat" || state.phase === "victory" || state.phase === "defeat") {
+    const iceHp = Math.max(0, state.ice.hp);
     grid = setText(grid, 36, 22, "[", PALETTE.GRAY_MID);
     grid = setText(grid, 37, 22, state.ice.name.slice(0, 12), iceColor(state.ice.tier));
     grid = setText(grid, 50, 22, "]", PALETTE.GRAY_MID);
-    grid = setText(grid, 36, 24, `HP: ${state.ice.hp}`, PALETTE.RED_BRIGHT);
+    grid = setText(
+      grid,
+      36,
+      24,
+      `${healthBar(iceHp, 100)} ${iceHp}/100`,
+      healthColor(iceHp, 100),
+    );
+  }
+
+  const statusLabel = formatStatusLabel(state.phase);
+  if (statusLabel !== "") {
+    const statusColor = state.phase === "victory" ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT;
+    grid = setText(grid, 36, 26, statusLabel, statusColor);
   }
 
   if (state.phase === "combat" && state.deck.length > 0) {

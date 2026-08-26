@@ -2962,3 +2962,33 @@ Verified: 12 ScreenKinds, 12 buttons, 7 unmapped, 7 sanitizer cases
 |---|---|
 | `prototype/data/missions/missions.json.tier2_mvp` | ✅ Removed |
 | `prototype/data/saves/crash.log` | ⏸ Pre-existing runtime artifact (per ADR-0065 deferred cleanup) |
+
+## [2026-08-26] fix(wet_run-web) | Autosave wiring + stateToSaveSlot serializer (autonomous)
+
+**Scope**: User signal "계속" → fixed gap discovered during Tier 2 review: multi-slot save infrastructure shipped, but autosave was NEVER wired into main.ts.
+
+### Changes
+
+- **`src/core/state.ts`** — added `stateToSaveSlot(state: GameState): SaveSlot` serializer
+- **`src/main.ts`** — `Game.autosave()` method called on every `draw()` after phase transition
+- **`tests/state_save.test.ts`** (NEW) — 4 tests for round-trip: fields, deck array, combat changes, ISO timestamp
+
+### Validators
+
+| Validator | Result |
+|---|---|
+| `tsc --noEmit` | ✅ No errors |
+| `vitest run` | ✅ **38 passed** (was 34; +4 state_save tests) |
+| `vite build` | ✅ 59.55 KB JS / 16.96 KB gzipped (+0.26 KB) |
+
+### Impact
+
+Tier 2 multi-slot save was previously inert (never called). Now:
+- Every `draw()` call after a phase change writes `stateToSaveSlot(state)` to slot 0 (autosave).
+- Tier 2 user-facing win: load+continue from slot 0 on refresh now works.
+
+### Open follow-ups
+
+- `git push origin main` (needs GH auth)
+- 3-person playtest (validates autosave + multi-slot + touch overlay + 5 missions)
+- Tier 2b (audio via Howler.js) — silent per operator gate

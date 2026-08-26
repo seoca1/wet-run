@@ -8,9 +8,10 @@ import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, isTouchDevice } from "./input/touch.ts";
 import type { GameState, GameAction, Ice, Mission, Program } from "./core/types.ts";
-import { applyAction, buildHudLines, makeInitialState } from "./core/state.ts";
+import { applyAction, buildHudLines, makeInitialState, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
+import { save as saveToSlot } from "./save/storage.ts";
 
 import missionsData from "./data/missions.json" with { type: "json" };
 import programsData from "./data/programs.json" with { type: "json" };
@@ -126,6 +127,15 @@ class Game {
     this.draw();
   }
 
+  private autosave(): void {
+    if (this.state === null) return;
+    try {
+      saveToSlot(0, stateToSaveSlot(this.state));
+    } catch {
+      // Autosave is best-effort; user can manually save later.
+    }
+  }
+
   private draw(): void {
     if (this.state === null) {
       this.renderer.render(renderMissionSelect(MISSIONS, this.selectedMission), [
@@ -136,6 +146,8 @@ class Game {
     } else {
       this.state = { ...this.state, grid: renderGrid(this.state) };
       this.renderer.render(this.state.grid, buildHudLines(this.state));
+      // Autosave on every state change (cheap; localStorage write).
+      this.autosave();
     }
   }
 

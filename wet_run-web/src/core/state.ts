@@ -1,7 +1,7 @@
 /** Game state factory + reducer.
  *
- * Ports the wet_run GameState to a pure-data TypeScript model. The
- * MVP supports ONE mission (first_jack) with a simple ICE encounter.
+ * Ports the wet_run GameState to a pure-data TypeScript model. Tier 2
+ * supports multiple missions (see main.ts mission catalog).
  *
  * State machine (per wet_run combat_view_input.py):
  *   menu → approach → combat → victory | defeat → exit
@@ -14,6 +14,7 @@ import type {
   Mission,
   PlayerStats,
   Program,
+  SaveSlot,
 } from "./types.ts";
 import { makeGrid } from "./grid.ts";
 
@@ -152,4 +153,21 @@ export function buildHudLines(state: GameState): string[] {
     "",
     state.message,
   ];
+}
+
+/** Serialize a GameState to a SaveSlot (Tier 2 save round-trip). */
+export function stateToSaveSlot(state: GameState): SaveSlot {
+  return {
+    version: 1,
+    missionId: state.mission.id,
+    playerHp: state.player.hp,
+    playerMaxHp: state.player.maxHp,
+    playerAlarm: state.player.alarm,
+    playerCredits: state.player.credits,
+    turnCount: state.turnCount,
+    deckIds: state.deck.map((p: Program) => p.id),
+    discardIds: state.discardPile.map((p: Program) => p.id),
+    drawIds: state.drawPile.map((p: Program) => p.id),
+    savedAt: new Date().toISOString(),
+  };
 }

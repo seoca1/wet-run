@@ -9,7 +9,7 @@ import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, isTouchDevice } from "./input/touch.ts";
 import { AudioManager } from "./audio/manager.ts";
-import type { GameState, GameAction, Ice, Mission, Program } from "./core/types.ts";
+import type { GameState, GameAction, GamePhase, Ice, Mission, Program } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
@@ -82,6 +82,7 @@ class Game {
   private selectedMission = 0;
   private iceTypes: Readonly<Record<string, Ice>>;
   private unmountTouch: () => void = () => {};
+  private _lastPhase: GamePhase | null = null;
 
   constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
     this.iceTypes = iceTypes;
@@ -145,12 +146,20 @@ class Game {
         "",
         `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
       ]);
+      this.syncPhase("menu");
     } else {
       this.state = { ...this.state, grid: renderGrid(this.state) };
       this.renderer.render(this.state.grid, buildHudLines(this.state));
       // Autosave on every state change (cheap; localStorage write).
       this.autosave();
+      this.syncPhase(this.state.phase);
     }
+  }
+
+  private syncPhase(current: GamePhase): void {
+    if (this._lastPhase === current) return;
+    this._lastPhase = current;
+    AudioManager.getInstance().playPhase(current);
   }
 
   start(): void {

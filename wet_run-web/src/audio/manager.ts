@@ -25,19 +25,30 @@
 
 import { Howl } from "howler";
 
-/** Available BGM tracks. Tier 2b uses only SENSE_NET. */
 export const SOUND_IDS = {
+  CHIBA: "sounds/theme_chiba.mp3",
   SENSE_NET: "sounds/theme_sense_net.mp3",
+  MATRIX_RAIN: "sounds/theme_matrix_rain.mp3",
+  BROADCAST: "sounds/theme_broadcast.mp3",
+  INDUSTRIAL: "sounds/theme_industrial.mp3",
 } as const;
 
 export type SoundId = (typeof SOUND_IDS)[keyof typeof SOUND_IDS];
 
-/** Singleton state. Lazily initialized on first getInstance() call. */
+const PHASE_TO_SOUND: Readonly<Record<string, SoundId | null>> = {
+  menu: SOUND_IDS.CHIBA,
+  approach: SOUND_IDS.SENSE_NET,
+  combat: SOUND_IDS.MATRIX_RAIN,
+  victory: SOUND_IDS.BROADCAST,
+  defeat: SOUND_IDS.INDUSTRIAL,
+  exit: null,
+};
+
 let instance: AudioManager | null = null;
 
-/** AudioManager singleton. Audio playback for wet_run-web. */
 export class AudioManager {
   private howl: Howl | null = null;
+  private currentTrack: SoundId | null = null;
   private _muted = false;
   private _started = false;
   private readonly volume: number;
@@ -67,22 +78,42 @@ export class AudioManager {
   }
 
   /**
-   * Begin BGM playback. Lazy-creates the Howl instance on first call.
-   * No-op in non-browser environments (jsdom test).
+   * Begin BGM playback for the given track. If the track differs from
+   * the current one, the previous Howl is unloaded and a new one is
+   * created. Lazy-creates Howl on first call. No-op in jsdom/node.
    */
   play(track: SoundId = SOUND_IDS.SENSE_NET): void {
-    if (this.howl === null) {
-      try {
-        this.howl = new Howl({
-          src: [track],
-          loop: true,
-          volume: this.volume,
-          html5: false,
-        });
-      } catch {
-        // Howler construction failed (likely node test env). Mark unavailable.
-        return;
+    if (this.currentTrack === track && this.howl !== null) {
+      if (!this._started) {
+        try {
+          this.howl.play();
+          this._started = true;
+        } catch {
+          // ignore
+        }
       }
+      return;
+    }
+    if (this.howl !== null) {
+      try {
+        this.howl.unload();
+      } catch {
+        // ignore
+      }
+      this.howl = null;
+      this._started = false;
+    }
+    try {
+      this.howl = new Howl({
+        src: [track],
+        loop: true,
+        volume: this.volume,
+        html5: false,
+      });
+      this.currentTrack = track;
+    } catch {
+      // Howler construction failed (likely node test env). Mark unavailable.
+      return;
     }
     if (!this._started) {
       try {
@@ -93,6 +124,26 @@ export class AudioManager {
         // ignore — browser audio unlock may still be pending
       }
     }
+  }
+
+  /**
+   * Play BGM matching a GamePhase value. No-op when the same phase
+   * is already active. "exit" phase stops playback.
+   */
+  playPhase(phase: string): void {
+    const track = PHASE_TO_SOUND[phase];
+    if (track === undefined) {
+      return;
+    }
+    if (track === null) {
+      this.stop();
+      return;
+    }
+    this.play(track);
+  }
+
+  getCurrentTrack(): SoundId | null {
+    return this.currentTrack;
   }
 
   /** Pause playback but keep the Howl loaded. */

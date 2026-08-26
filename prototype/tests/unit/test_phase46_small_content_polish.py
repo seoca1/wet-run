@@ -387,8 +387,8 @@ class TestMissionPostInitErrorMessages:
     authors can locate the bad row quickly when ``missions.json`` fails
     to load.
 
-    Was: 'arc must be 1..5, got 6'.
-    Now: 'arc must be in 1..5, got 6 (mission_id="m_bad")'.
+    Was: 'arc must be 1..5, got 6' (pre-ADR-0206).
+    Now (ADR-0206, 2026-08-26): 'arc must be in 1..6, got 7 (mission_id="m_bad")'.
     """
 
     def test_mission_post_init_bad_arc_includes_value_and_id(self) -> None:
@@ -396,12 +396,12 @@ class TestMissionPostInitErrorMessages:
         from wet_run.matrix.node import ZoneDepth
         from wet_run.missions.mission import Mission
 
-        with pytest.raises(ValueError, match=r"arc must be in 1\.\.5, got 6") as exc_info:
+        with pytest.raises(ValueError, match=r"arc must be in 1\.\.6, got 7") as exc_info:
             Mission(
                 id="m_test_bad_arc",
                 title="t",
                 fixer="x",
-                arc=6,  # out of range
+                arc=7,  # out of range (was 6 pre-ADR-0206)
                 grade_min=1,
                 grade_max=6,
                 matrix_seed=0,
@@ -411,8 +411,8 @@ class TestMissionPostInitErrorMessages:
                 primary_objective=None,
             )
         msg = str(exc_info.value)
-        assert "1..5" in msg
-        assert "got 6" in msg
+        assert "1..6" in msg
+        assert "got 7" in msg
         assert "m_test_bad_arc" in msg
 
     def test_mission_post_init_bad_reward_tier_includes_value_and_id(self) -> None:
@@ -625,16 +625,16 @@ class TestPhase46Smoke:
         assert m.arc == 3
 
     def test_phase40_arc_validation_test_still_passes(self) -> None:
-        """Phase 40's test_mission_post_init_rejects_bad_arc regex still matches."""
+        """Phase 40's test_mission_post_init_rejects_bad_arc regex still matches (ADR-0206: 1..6)."""
         from wet_run.matrix.node import ZoneDepth
         from wet_run.missions.mission import Mission
 
-        with pytest.raises(ValueError, match=r"arc must be.*1..5"):
+        with pytest.raises(ValueError, match=r"arc must be.*1..6"):
             Mission(
                 id="m_smoke_bad",
                 title="t",
                 fixer="x",
-                arc=6,
+                arc=7,
                 grade_min=1,
                 grade_max=6,
                 matrix_seed=0,

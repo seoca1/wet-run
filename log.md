@@ -4159,3 +4159,39 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 - Reviewer 보고: bg_22e45ab2 (Sisyphus-Junior)
 - Plan: `Game/wet_run/.omo/plans/design-dashboard-review-2026-08-27.md`
 - Commit: `2a84434` (P0+P1 통합)
+
+---
+
+## 🐛 Test Suite Restoration (2026-08-27) — 37 failures → 0
+
+**Scope**: 사용자 요청 "1." → carry-over P0 (37 pytest failures from review session).
+
+### 발견된 4가지 버그
+
+1. **`get_random_mission()` 미정의 `mission_weights`** (`random_rules.py:259`) — `NameError`. commit `91402f7` 에서 production code는 kwarg 전달하지만 function 시그니처가 미업데이트.
+2. **`get_random_mission_with_rule()` 시그니처 누락** — `mission_weights` 파라미터 없음. board.py:184 호출이 `TypeError` 야기.
+3. **`_BASE_ZDR` dict 미갱신** (`zdr.py:14`) — `ZoneDepth.AFTERMATH` (ADR-0206, 2026-08-26 추가)이 dict에 없어 `KeyError`. **6 추가** (mid-difficulty, TOKYO와 동급).
+4. **Stale test contracts** — Arc range 1..5 → 1..6 (ADR-0206) 확장되었지만 test_phase40/46은 `arc=6` raise 검증. `arc=7` + regex `1..6` 으로 갱신.
+5. **`game_facts.json` 정체** — `scripts/sync_dashboard_facts.py` 실행 (test_count 5222 → 5238).
+
+### 수정
+
+| File | Change |
+|---|---|
+| `prototype/src/wet_run/missions/random_rules.py` | `get_random_mission()` + `get_random_mission_with_rule()` 시그니처에 `mission_weights: dict[str, float] \| None = None` 추가 |
+| `prototype/src/wet_run/matrix/zdr.py` | `_BASE_ZDR[ZoneDepth.AFTERMATH] = 6` 추가 |
+| `prototype/tests/unit/test_phase40_small_content_polish.py` | arc `6 → 7`, regex `1..5 → 1..6` |
+| `prototype/tests/unit/test_phase46_small_content_polish.py` | arc `6 → 7`, regex `1..5 → 1..6` (×2 occurrences) |
+| `prototype/data/game_facts.json` | `sync_dashboard_facts.py` 재생성 |
+
+### 검증
+
+- `pytest tests/`: **5850 passed + 0 failed** + 365 skipped + 1 xfailed (was 5813 + 37 failed)
+- `ruff check src/`: All checks passed
+- `mypy --strict src/wet_run/`: 0 issues in 233 source files
+- `mkdocs build --strict`: 0 errors (no doc changes this turn)
+
+### Commit
+
+- Commit pending: `fix(wet_run): test suite restoration — random_weights signature + AFTERMATH ZDR + stale contracts`
+- 5 files, +30 / -14 lines

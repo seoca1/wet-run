@@ -372,15 +372,15 @@ class TestPhase40Smoke:
             )
 
     def test_mission_post_init_rejects_bad_arc(self) -> None:
-        """Mission.__post_init__ rejects arc > 5 (validation preserved)."""
+        """Mission.__post_init__ rejects arc > 6 (validation preserved, ADR-0206 expanded to 1..6)."""
         from wet_run.missions.mission import Mission
 
-        with pytest.raises(ValueError, match="arc must be.*1..5"):
+        with pytest.raises(ValueError, match="arc must be.*1..6"):
             Mission(
                 id="m_bad",
                 title="t",
                 fixer="x",
-                arc=6,  # out of range
+                arc=7,  # out of range (was 6 pre-ADR-0206)
                 grade_min=1,
                 grade_max=6,
                 matrix_seed=0,

@@ -4,6 +4,24 @@ All notable changes to wet_run will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased] — 2026-08-27 — Test Suite Restoration
+
+### Fixed
+- **`get_random_mission()` missing `mission_weights` parameter** (random_rules.py:259) — `NameError: name 'mission_weights' is not defined`. Added kwarg to both `get_random_mission()` and `get_random_mission_with_rule()` so `board.py:184` production code (which already passes `mission_weights=...`) works correctly.
+- **Stale `_BASE_ZDR` dict** (zdr.py:14) — `ZoneDepth.AFTERMATH` (added 2026-08-26 in ADR-0206) was missing from base ZDR dict, causing `KeyError` on post-Neuromancer zone. Added `AFTERMATH: 6` (mid-difficulty tier, alongside TOKYO).
+- **Stale test contracts** for arc validation (test_phase40/46) — Arc range expanded 1..5 → 1..6 in ADR-0206 but tests still asserted `arc=6` should raise. Updated to `arc=7` (out of 1..6 range) with regex `1..6`.
+- **`game_facts.json` stale** — ran `scripts/sync_dashboard_facts.py` to refresh (`test_count_collected: 5222 → 5238`).
+
+### Result
+- pytest: **5813 passed + 37 failed → 5850 passed + 0 failed** (+37 passing)
+- ruff: All checks passed
+- mypy --strict: 0 issues in 233 source files
+
+### References
+- Review findings: `bg_22e45ab2` (Sisyphus-Junior, 2026-08-27 review) — out-of-scope bug reported
+- ADR-0206 (Mission registry wiring — root cause of arc range expansion + AFTERMATH zone)
+- ADR-0208 (Mission random_weight field — production code wiring incomplete in commit `91402f7`)
+
 ## [1.4.0] — 2026-08-20 — Game Quality Upgrade (Tracks A + B + D)
 
 > **Released**: 2026-08-26 ([PyPI](https://pypi.org/project/wet-run/1.4.0/) · Git tag `v1.4.0`)

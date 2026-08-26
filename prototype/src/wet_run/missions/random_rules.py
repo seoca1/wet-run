@@ -244,7 +244,10 @@ def calculate_weight_bonus(state: object, faction: str) -> float:
 
 
 def get_random_mission(
-    state: object, available_missions: list[str], seed: int | None = None
+    state: object,
+    available_missions: list[str],
+    seed: int | None = None,
+    mission_weights: dict[str, float] | None = None,
 ) -> str | None:
     """Get a random mission using all active rules' weights.
 
@@ -252,32 +255,47 @@ def get_random_mission(
         state: Player state.
         available_missions: List of available mission IDs.
         seed: Optional random seed.
+        mission_weights: Optional per-mission random_weight overrides
+            (ADR-0208). When provided, missions with weight < 0 are
+            filtered out and the pick uses these weights directly,
+            bypassing the rule-based weighting system.
 
     Returns:
         Selected mission ID or None if no missions available.
     """
-    result = get_random_mission_with_rule(state, available_missions, seed=seed, mission_weights=mission_weights)
+    result = get_random_mission_with_rule(
+        state, available_missions, seed=seed, mission_weights=mission_weights
+    )
     if result is None:
         return None
     return result[0]
 
 
 def get_random_mission_with_rule(
-    state: object, available_missions: list[str], seed: int | None = None
+    state: object,
+    available_missions: list[str],
+    seed: int | None = None,
+    mission_weights: dict[str, float] | None = None,
 ) -> tuple[str, str | None] | None:
     """Get a random mission AND the rule_id that selected it.
 
     Phase 17: exposes the rule_id so the UI can show why a mission was
     selected (e.g. "Selected by rule: faction_weighted").
+    Phase 17 + ADR-0208: mission_weights multiplies per-mission weight
+    when provided (overrides rule-based weighting).
 
     Args:
         state: Player state.
         available_missions: List of available mission IDs.
         seed: Optional random seed.
+        mission_weights: Optional per-mission random_weight overrides.
+            When provided, missions with weight < 0 are filtered out
+            and the pick uses these weights directly (rule_id is None).
 
     Returns:
         Tuple of (selected mission ID, rule_id) or None if no missions.
-        rule_id is None when no active rules fired (uniform random pick).
+        rule_id is None when mission_weights is provided or no active
+        rules fired (uniform random pick).
     """
     if not available_missions:
         return None

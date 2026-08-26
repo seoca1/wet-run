@@ -5,66 +5,85 @@
  *
  * Auto-shows on devices with `pointer: coarse` (touch); auto-hides on
  * devices with `pointer: fine` (mouse/trackpad).
+ *
+ * Layout: percentage-based positioning so it scales to any phone screen size.
+ * D-pad anchored bottom-left, A/B buttons anchored bottom-right.
  */
 
 import type { GameAction } from "../core/types.ts";
 
 interface ButtonConfig {
   readonly label: string;
-  readonly rect: { x: number; y: number; w: number; h: number };
+  /** Position in % units (0-100) for left/top, in vw for font-size. */
+  readonly left: string;
+  readonly top: string;
+  readonly size: string;
+  readonly fontSize: string;
   readonly action: GameAction;
 }
 
-interface DpadConfig {
-  readonly rect: { x: number; y: number; w: number; h: number };
-  readonly up: ButtonConfig;
-  readonly down: ButtonConfig;
-  readonly left: ButtonConfig;
-  readonly right: ButtonConfig;
-}
+// D-pad: 4 buttons in cross pattern, anchored bottom-left.
+const DPAD_CENTER_X = 18;
+const DPAD_CENTER_Y = 75;
+const DPAD_BUTTON_SIZE = 12;
+const DPAD_OFFSET = 6;
 
-interface GamepadLayout {
-  readonly dpad: DpadConfig;
-  readonly buttons: ReadonlyArray<ButtonConfig>;
-}
-
-const LAYOUT: GamepadLayout = {
-  dpad: {
-    rect: { x: 16, y: 240, w: 144, h: 144 },
-    up: {
-      label: "↑",
-      rect: { x: 64, y: 240, w: 48, h: 48 },
-      action: { type: "move_north" as const },
-    },
-    down: {
-      label: "↓",
-      rect: { x: 64, y: 336, w: 48, h: 48 },
-      action: { type: "move_south" as const },
-    },
-    left: {
-      label: "←",
-      rect: { x: 16, y: 288, w: 48, h: 48 },
-      action: { type: "move_west" as const },
-    },
-    right: {
-      label: "→",
-      rect: { x: 112, y: 288, w: 48, h: 48 },
-      action: { type: "move_east" as const },
-    },
+const DPAD_BUTTONS: ReadonlyArray<ButtonConfig> = [
+  {
+    label: "↑",
+    left: `${DPAD_CENTER_X - DPAD_BUTTON_SIZE / 2}vw`,
+    top: `${DPAD_CENTER_Y - DPAD_BUTTON_SIZE / 2 - DPAD_OFFSET}vh`,
+    size: `${DPAD_BUTTON_SIZE}vw`,
+    fontSize: `${Math.round(DPAD_BUTTON_SIZE * 0.5)}vw`,
+    action: { type: "move_north" as const },
   },
-  buttons: [
-    {
-      label: "A",
-      rect: { x: 440, y: 288, w: 64, h: 64 },
-      action: { type: "confirm" as const },
-    },
-    {
-      label: "B",
-      rect: { x: 360, y: 336, w: 48, h: 48 },
-      action: { type: "cancel" as const },
-    },
-  ],
-};
+  {
+    label: "↓",
+    left: `${DPAD_CENTER_X - DPAD_BUTTON_SIZE / 2}vw`,
+    top: `${DPAD_CENTER_Y - DPAD_BUTTON_SIZE / 2 + DPAD_OFFSET}vh`,
+    size: `${DPAD_BUTTON_SIZE}vw`,
+    fontSize: `${Math.round(DPAD_BUTTON_SIZE * 0.5)}vw`,
+    action: { type: "move_south" as const },
+  },
+  {
+    label: "←",
+    left: `${DPAD_CENTER_X - DPAD_BUTTON_SIZE / 2 - DPAD_OFFSET}vw`,
+    top: `${DPAD_CENTER_Y - DPAD_BUTTON_SIZE / 2}vh`,
+    size: `${DPAD_BUTTON_SIZE}vw`,
+    fontSize: `${Math.round(DPAD_BUTTON_SIZE * 0.5)}vw`,
+    action: { type: "move_west" as const },
+  },
+  {
+    label: "→",
+    left: `${DPAD_CENTER_X - DPAD_BUTTON_SIZE / 2 + DPAD_OFFSET}vw`,
+    top: `${DPAD_CENTER_Y - DPAD_BUTTON_SIZE / 2}vh`,
+    size: `${DPAD_BUTTON_SIZE}vw`,
+    fontSize: `${Math.round(DPAD_BUTTON_SIZE * 0.5)}vw`,
+    action: { type: "move_east" as const },
+  },
+];
+
+const BTN_CENTER_X = 82;
+const BTN_CENTER_Y = 75;
+
+const BUTTONS: ReadonlyArray<ButtonConfig> = [
+  {
+    label: "A",
+    left: `${BTN_CENTER_X - 7}vw`,
+    top: `${BTN_CENTER_Y - 7}vh`,
+    size: "14vw",
+    fontSize: "7vw",
+    action: { type: "confirm" as const },
+  },
+  {
+    label: "B",
+    left: `${BTN_CENTER_X - 22}vw`,
+    top: `${BTN_CENTER_Y - 5}vh`,
+    size: "10vw",
+    fontSize: "5vw",
+    action: { type: "cancel" as const },
+  },
+];
 
 /** Inject CSS + DOM elements for the on-screen gamepad. */
 export function mountVirtualGamepad(handler: (action: GameAction) => void): () => void {
@@ -95,39 +114,41 @@ function renderOverlay(root: HTMLElement, handler: (action: GameAction) => void)
       #wetrun-gamepad-root {
         position: fixed; inset: 0; pointer-events: none;
         font-family: monospace;
+        z-index: 5;
       }
       #wetrun-gamepad-root button {
         position: absolute; pointer-events: auto;
-        background: rgba(0, 0, 0, 0.55); border: 1px solid #00ff41;
-        color: #00ff41; font-size: 20px; font-weight: bold;
+        background: rgba(0, 0, 0, 0.55); border: 2px solid #00ff41;
+        color: #00ff41; font-weight: bold;
         padding: 0; margin: 0; line-height: 1;
+        border-radius: 8px;
         touch-action: none; user-select: none;
+        display: flex; align-items: center; justify-content: center;
       }
       #wetrun-gamepad-root button:active { background: rgba(0, 255, 65, 0.4); }
     </style>
-    ${LAYOUT.dpad.up.label ? "" : ""}
   `;
-  appendButton(root, LAYOUT.dpad.up);
-  appendButton(root, LAYOUT.dpad.down);
-  appendButton(root, LAYOUT.dpad.left);
-  appendButton(root, LAYOUT.dpad.right);
-  for (const btn of LAYOUT.buttons) {
-    appendButton(root, btn);
+  for (const btn of DPAD_BUTTONS) {
+    appendButton(root, btn, handler);
   }
+  for (const btn of BUTTONS) {
+    appendButton(root, btn, handler);
+  }
+}
 
-  function appendButton(parent: HTMLElement, cfg: ButtonConfig): void {
-    const btn = document.createElement("button");
-    btn.textContent = cfg.label;
-    btn.style.left = `${cfg.rect.x}px`;
-    btn.style.top = `${cfg.rect.y}px`;
-    btn.style.width = `${cfg.rect.w}px`;
-    btn.style.height = `${cfg.rect.h}px`;
-    btn.addEventListener("pointerdown", (e) => {
-      e.preventDefault();
-      handler(cfg.action);
-    });
-    parent.appendChild(btn);
-  }
+function appendButton(parent: HTMLElement, cfg: ButtonConfig, handler: (action: GameAction) => void): void {
+  const btn = document.createElement("button");
+  btn.textContent = cfg.label;
+  btn.style.left = cfg.left;
+  btn.style.top = cfg.top;
+  btn.style.width = cfg.size;
+  btn.style.height = cfg.size;
+  btn.style.fontSize = cfg.fontSize;
+  btn.addEventListener("pointerdown", (e) => {
+    e.preventDefault();
+    handler(cfg.action);
+  });
+  parent.appendChild(btn);
 }
 
 /** Returns true when the device has a coarse pointer (touch). */

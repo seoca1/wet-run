@@ -4006,3 +4006,51 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 - Pages 첫 빌드 검증 (workflow_dispatch 또는 main push)
 - 빌드 실패 시 npm ci 캐싱 또는 Node version 명시 (`setup-node@v4` + `.nvmrc`)
 - gh-pages 강제 재배포 (`force_orphan: true` 이미 설정됨)
+
+---
+
+## 📱 wet_run-web Responsive Layout (Portrait Support) — 2026-08-27
+
+**Scope**: 사용자 요청 — "폰에서는 세로화면 모바일 웹 버전으로 실행되어야 할 듯". 단일 코드베이스 + 반응형 (옵션 A) 채택.
+
+### 문제
+
+기존 wet_run-web은 80×50 고정 그리드 (데스크탑 모니터 기준). 폰 세로 화면(예: iPhone 14 = 390×844)에서 캔버스 640×400 px이 가로폭 초과 → 잘림/스크롤 발생. 가상 게임패드도 px 좌표 사용 → 작은 화면에서 어긋남.
+
+### 결정 (옵션 A: 단일 + 반응형)
+
+- Portrait phone: `50×80` 그리드 (cols×rows swap) + `vw/vh` 비례 게임패드
+- Compact phone (<480px): `40×60` + 더 작은 게임패드
+- Landscape/desktop: 기존 `80×50` 유지
+- 별도 모바일 빌드 ❌ (동기화 비용 ↑, ROI 낮음)
+
+### 구현 산출물 (5 files, +134/-13)
+
+| File | Change |
+|---|---|
+| `src/core/layout.ts` | 신규 — `getLayout()` + `watchLayout()` (matchMedia + viewport breakpoint) |
+| `src/renderer/canvas.ts` | DPR 스케일링 (devicePixelRatio) + CSS 크기 분리 + setTransform 리셋 |
+| `src/input/touch.ts` | 게임패드 vw/vh 비례 (D-pad 18%/75%, AB 82%/75%) + 버튼 12vw |
+| `src/main.ts` | layout import + `unwatchLayout` lifecycle + renderGrid/renderMissionSelect layout-aware (cols/rows 파라미터 + 상대 좌표) |
+| `index.html` | canvas CSS: `width: auto; height: auto; object-fit: contain` |
+| `tests/layout.test.ts` | 신규 8 tests — viewport × orientation × compact breakpoint matrix |
+
+### 검증
+
+- `tsc --noEmit -p tsconfig.json`: ✅ 0 errors
+- `npm test`: ✅ **101 passed** (was 93 → +8 layout tests)
+- `npm run build`: ✅ **131.65 kB** (was 129.63 → +2.02 KB for layout module)
+
+### 브레이크포인트 매트릭스
+
+| Viewport | Portrait | Landscape |
+|---|---|---|
+| < 480px | 40×60 + 16 HUD (compact) | (n/a) |
+| 480-768px | 50×80 + 20 HUD | 80×50 + 28 HUD |
+| ≥ 768px | (n/a, usually desktop) | 80×50 + 28 HUD |
+
+### 후속
+
+- CI Pages redeploy 후 폰에서 세로/가로 회전 검증
+- iOS Safari safe-area-inset 추가 (노치/Dynamic Island 회피) — 후속 세션
+- Galaxy/iPad breakpoint 미세 조정 — 실기기 테스트 후

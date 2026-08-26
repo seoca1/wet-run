@@ -21,6 +21,7 @@ export class AsciiRenderer {
   private cellHeight: number;
   private fontSize: number;
   private fontFamily: string;
+  private dpr: number;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -35,15 +36,30 @@ export class AsciiRenderer {
     this.cellHeight = options.cellHeight ?? 16;
     this.fontSize = this.cellHeight;
     this.fontFamily = options.fontFamily ?? '"JetBrains Mono", monospace';
+    // devicePixelRatio scales the backing store for sharp rendering on retina/HDR displays.
+    // Falls back to 1 in non-browser environments (vitest node default).
+    this.dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
     ctx.font = `${this.fontSize}px ${this.fontFamily}`;
     ctx.textBaseline = "top";
   }
 
-  /** Resize canvas to fit a (cols × rows) grid plus HUD width. */
+  /** Resize canvas to fit a (cols × rows) grid plus HUD width.
+   *
+   * Backing store is scaled by devicePixelRatio for crisp rendering. CSS
+   * size remains grid-sized so the canvas scales uniformly to the viewport.
+   */
   resizeGrid(cols: number, rows: number, hudCols = 28): void {
     const totalCols = cols + hudCols;
-    this.canvas.width = totalCols * this.cellWidth;
-    this.canvas.height = rows * this.cellHeight;
+    const cssWidth = totalCols * this.cellWidth;
+    const cssHeight = rows * this.cellHeight;
+    this.canvas.width = Math.round(cssWidth * this.dpr);
+    this.canvas.height = Math.round(cssHeight * this.dpr);
+    this.canvas.style.width = `${cssWidth}px`;
+    this.canvas.style.height = `${cssHeight}px`;
+    // Reset transform before applying DPR scale so previous resizeGrid calls don't compound.
+    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
+    this.ctx.textBaseline = "top";
   }
 
   /** Clear + render a complete frame. */

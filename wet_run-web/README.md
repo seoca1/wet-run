@@ -31,6 +31,7 @@ npm run build
 - **Multi-slot save/load** (4 slots: 1 autosave + 3 manual, with legacy single-slot migration)
 - Keyboard input (arrow keys + ENTER + SPACE + ESC)
 - **Mobile touch input** (auto-mounts virtual gamepad on `pointer: coarse` devices)
+- **Responsive layout** — portrait phones use 40×60 or 50×80 grid (compact breakpoint at 480px); landscape/desktop use 80×50. Auto-switches on `orientationchange`/`resize`.
 - **BGM audio** (Howler.js, phase-aware 5 tracks: chiba/sense_net/matrix_rain/broadcast/industrial, M to mute)
 - **SFX** (Tier 4: combat_hit, victory, defeat — one-shot on phase transition + use_program)
 - **Animation VFX** (Tier 4: hit flash color on HP delta, ICE/Player defeat ASCII art)

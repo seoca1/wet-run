@@ -24,6 +24,7 @@ import { applyAction, buildHudLines, makeInitialState, stateToSaveSlot } from ".
 import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
 import { save as saveToSlot } from "./save/storage.ts";
+import { getLayout, watchLayout, type Layout } from "./core/layout.ts";
 
 import missionsData from "./data/missions.json" with { type: "json" };
 import programsData from "./data/programs.json" with { type: "json" };
@@ -68,8 +69,13 @@ function formatMissionOption(mission: Mission, index: number): string {
 }
 
 /** Render the mission select screen. */
-function renderMissionSelect(missions: ReadonlyArray<Mission>, selected: number): ReturnType<typeof makeGrid> {
-  let grid = makeGrid(80, 50);
+function renderMissionSelect(
+  missions: ReadonlyArray<Mission>,
+  selected: number,
+  cols: number,
+  rows: number,
+): ReturnType<typeof makeGrid> {
+  let grid = makeGrid(cols, rows);
   grid = setText(grid, 2, 1, "WET RUN — Select Mission", PALETTE.GREEN_NEON);
   grid = setText(grid, 2, 3, "ENTER: launch | ESC: quit | Arrow keys: navigate", PALETTE.GRAY_LIGHT);
   let y = 6;
@@ -92,14 +98,17 @@ class Game {
   private selectedMission = 0;
   private iceTypes: Readonly<Record<string, Ice>>;
   private unmountTouch: () => void = () => {};
+  private unwatchLayout: () => void = () => {};
   private _lastPhase: GamePhase | null = null;
   private _lastIceHp: number | null = null;
   private _lastPlayerHp: number | null = null;
+  private layout: Layout;
 
   constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
     this.iceTypes = iceTypes;
+    this.layout = getLayout();
     this.renderer = new AsciiRenderer(canvas, { cellWidth: 8, cellHeight: 16 });
-    this.renderer.resizeGrid(80, 50, 28);
+    this.renderer.resizeGrid(this.layout.cols, this.layout.rows, this.layout.hudCols);
     this.input = new KeyboardInput();
     const handler = (action: GameAction): void => {
       if (this.state === null) {
@@ -120,10 +129,14 @@ class Game {
     };
     this.input.setHandler(handler);
     this.input.start();
-    // Tier 2c: auto-mount virtual gamepad on touch devices.
     if (isTouchDevice()) {
       this.unmountTouch = mountVirtualGamepad(handler);
     }
+    this.unwatchLayout = watchLayout((next) => {
+      this.layout = next;
+      this.renderer.resizeGrid(next.cols, next.rows, next.hudCols);
+      this.draw();
+    });
   }
 
   private handleMenuInput(action: GameAction): void {
@@ -147,7 +160,7 @@ class Game {
     const deck = loadDeck(programs);
     const ice = loadIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
-    this.state = { ...initial, grid: makeGrid(80, 50) };
+    this.state = { ...initial, grid: makeGrid(this.layout.cols, this.layout.rows) };
     this.draw();
   }
 
@@ -161,11 +174,14 @@ class Game {
 
   private draw(): void {
     if (this.state === null) {
-      this.renderer.render(renderMissionSelect(MISSIONS, this.selectedMission), [
-        "MISSION SELECT",
-        "",
-        `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
-      ]);
+      this.renderer.render(
+        renderMissionSelect(MISSIONS, this.selectedMission, this.layout.cols, this.layout.rows),
+        [
+          "MISSION SELECT",
+          "",
+          `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
+        ],
+      );
       this.syncPhase("menu");
     } else {
       const previous = this.state;
@@ -174,7 +190,14 @@ class Game {
       const mockStatusEffects = mockStatusEffectsForTurn(previous.turnCount);
       this.state = {
         ...this.state,
-        grid: renderGrid(this.state, iceDelta, playerDelta, mockStatusEffects),
+        grid: renderGrid(
+          this.state,
+          iceDelta,
+          playerDelta,
+          mockStatusEffects,
+          this.layout.cols,
+          this.layout.rows,
+        ),
       };
       this.renderer.render(this.state.grid, buildHudLines(this.state));
       // Autosave on every state change (cheap; localStorage write).
@@ -205,6 +228,7 @@ class Game {
   stop(): void {
     this.input.stop();
     this.unmountTouch();
+    this.unwatchLayout();
   }
 }
 
@@ -220,12 +244,23 @@ function renderGrid(
   iceHpDelta: number | null = null,
   playerHpDelta: number | null = null,
   statusEffects: readonly string[] = [],
+  cols = 80,
+  rows = 50,
 ) {
-  let grid = makeGrid(80, 50);
+  let grid = makeGrid(cols, rows);
+  // Layout-relative anchors: ICE block centered horizontally; HUD bars near top-left.
+  const iceCol = Math.max(20, Math.floor(cols * 0.45));
+  const iceNameCol = iceCol + 1;
+  const iceStatusCol = iceCol + Math.min(20, cols - iceCol - 6);
+  const turnCol = Math.max(iceNameCol, cols - Math.floor(cols * 0.25));
+  const statusArtCol = Math.max(20, Math.floor(cols * 0.45));
+  const handRow = Math.max(8, rows - Math.floor(rows * 0.16));
+  const artWidth = Math.min(32, cols - statusArtCol - 2);
+
   grid = setText(grid, 2, 1, `Mission: ${state.mission.title}`, PALETTE.GREEN_NEON);
   grid = setText(grid, 2, 3, state.message, PALETTE.GRAY_LIGHT);
 
-  grid = setText(grid, 60, 1, `T${state.turnCount + 1}`, PALETTE.GRAY_LIGHT);
+  grid = setText(grid, turnCol, 1, `T${state.turnCount + 1}`, PALETTE.GRAY_LIGHT);
 
   grid = setText(
     grid,
@@ -237,18 +272,19 @@ function renderGrid(
 
   if (state.phase === "combat" || state.phase === "victory" || state.phase === "defeat") {
     const iceHp = Math.max(0, state.ice.hp);
-    grid = setText(grid, 36, 22, "[", PALETTE.GRAY_MID);
-    grid = setText(grid, 37, 22, state.ice.name.slice(0, 12), iceColor(state.ice.tier));
+    const iceRow = Math.floor(rows * 0.44);
+    grid = setText(grid, iceCol, iceRow, "[", PALETTE.GRAY_MID);
+    grid = setText(grid, iceNameCol, iceRow, state.ice.name.slice(0, 12), iceColor(state.ice.tier));
     const statusSuffix = formatStatusGlyph(statusEffects);
     if (statusSuffix !== "") {
-      grid = setText(grid, 50, 22, statusSuffix, PALETTE.YELLOW_AMBER);
+      grid = setText(grid, iceStatusCol, iceRow, statusSuffix, PALETTE.YELLOW_AMBER);
     } else {
-      grid = setText(grid, 50, 22, "]", PALETTE.GRAY_MID);
+      grid = setText(grid, iceStatusCol, iceRow, "]", PALETTE.GRAY_MID);
     }
     grid = setText(
       grid,
-      36,
-      24,
+      iceCol,
+      iceRow + 2,
       `${healthBar(iceHp, 100)} ${iceHp}/100`,
       iceHpDelta !== null ? hitFlashColor(iceHpDelta) : healthColor(iceHp, 100),
     );
@@ -257,30 +293,34 @@ function renderGrid(
   const statusLabel = formatStatusLabel(state.phase);
   if (statusLabel !== "") {
     const statusColor = state.phase === "victory" ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT;
-    grid = setText(grid, 36, 26, statusLabel, statusColor);
+    const statusRow = Math.floor(rows * 0.52);
+    grid = setText(grid, statusArtCol, statusRow, statusLabel, statusColor);
     if (state.phase === "victory") {
-      const art = centerArt(ICE_DEFEAT_ART, 32);
-      let y = 28;
+      const art = centerArt(ICE_DEFEAT_ART, artWidth);
+      let y = statusRow + 2;
       for (const line of art) {
-        grid = setText(grid, 36, y, line, PALETTE.GRAY_MID);
+        if (y >= rows) break;
+        grid = setText(grid, statusArtCol, y, line, PALETTE.GRAY_MID);
         y += 1;
       }
     } else if (state.phase === "defeat") {
-      const art = centerArt(PLAYER_DEFEAT_ART, 32);
-      let y = 28;
+      const art = centerArt(PLAYER_DEFEAT_ART, artWidth);
+      let y = statusRow + 2;
       for (const line of art) {
-        grid = setText(grid, 36, y, line, PALETTE.GRAY_MID);
+        if (y >= rows) break;
+        grid = setText(grid, statusArtCol, y, line, PALETTE.GRAY_MID);
         y += 1;
       }
     }
   }
 
   if (state.phase === "combat" && state.deck.length > 0) {
-    grid = setText(grid, 2, 42, "HAND:", PALETTE.YELLOW_AMBER);
+    grid = setText(grid, 2, handRow, "HAND:", PALETTE.YELLOW_AMBER);
     let x = 9;
     for (const p of state.deck) {
+      if (x >= cols - 6) break;
       const label = `[${p.id.slice(0, 4)}]`;
-      grid = setText(grid, x, 42, label, PALETTE.CYAN_LIGHT);
+      grid = setText(grid, x, handRow, label, PALETTE.CYAN_LIGHT);
       x += label.length + 1;
     }
   }

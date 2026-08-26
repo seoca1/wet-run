@@ -4112,3 +4112,50 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 - 모바일 가로/세로 회전 e2e 추가 (Phase 6+)
 - IDB save backend e2e (load → reload 페이지 → 슬롯 복원) — Phase 7
 - Local ngrok + Playwright 모바일 디바이스 에뮬레이션 비교 — 실기 테스트 보완
+
+---
+
+## 📋 wet_run Design + Dashboard Comprehensive Review (2026-08-27) — P0+P1 applied
+
+**Scope**: 사용자 요청 — "wet_run project 설계문서와 대시보드를 전면 검토하고 통합 정리. 변경사항 반영. 별도 에이전트에서 반박 및 검증해서 제안."
+
+### Plan + Review
+
+- `.omo/plans/design-dashboard-review-2026-08-27.md` (9 섹션, 9KB) — Phase 1 inventory + Phase 2 adversarial review brief
+- **독립 검토**: bg_22e45ab2 (Sisyphus-Junior, 2분22초) — 20 findings (3 P0, 13 P1, 4 P2)
+- **Orchestrator 검증**: Reviewer의 line# 중 일부는 부정확 (combat.md "41 ICE" grep 매치 0건) 하지만 구조적 발견은 모두 실재 — 적용 검증 후 직접 수정
+
+### 적용 (P0 + P1 전체)
+
+| File | Change |
+|---|---|
+| `design/systems/web-architecture.md` | **신규** (196 lines) — IDB save backend (ADR-0209), Playwright E2E, Responsive layout (50×80/40×60 grids), Tier system, save architecture (async API + lazy migration), 가상 게임패드 vw/vh, 키보드 매핑 |
+| `design/GDD.md` | 헤더 (v1.0.0→v1.4.0, 2026-08-27), 미션 111→209, ICE 58→97, 엔딩 "4+ variants"→"29 (9 chars × A/B/C + salvation)", wet_run-web 카운트 행 추가 |
+| `design/systems/missions.md` | "116 missions"→"209", **신규 §Random Weight (ADR-0208)** — 가중치 표 (1.0 기본 / 1.2 Expansion / 1.5 Arc6) |
+| `design/systems/combat.md` | HEAL 20%→15% (ADR-0152 rebalance), **신규 §Status Effect Glyphs** (ADR-0207, 5 글리프 [B/S/L/M/V]) |
+| `design/systems/economy.md` | "29 missions distribution"→"209 missions v1.4.0" + 등급별 분포 (~40/50/50/35/30/10) |
+| `design/story_skeleton.md` | "엔딩 4+ variants"→"엔딩 29개 (9 자키 × A/B/C + Salvation Phase)" |
+| `dashboard/index.html` | 5+ 위치 hardcoded stats 수정 (47→209 missions, 41→97 ICE, 9→30 programs, "2983 tests"→"5700+ tests") |
+| `dashboard/play.html` | 동적 fallback (47→209, 2→29 엔딩) |
+| `dashboard/data/*.json` (12 파일) | `tools/build_dashboard.py` 재생성 — index_stats 6066→6216 tests |
+
+### 검증
+
+- ✅ `mkdocs build --strict`: 0 errors
+- ✅ `npx tsc --noEmit -p tsconfig.json` (web): 0 errors
+- ✅ `npm test` (web): 106 passed
+- ⚠️ `pytest tests/` (Python): **5813 passed + 37 failed + 365 skipped + 1 xfailed**
+  - 37 failures는 **pre-existing** (commit 91402f7 random_weight wiring에서 production code 미반영) — 본 세션 범위 외
+  - CHANGELOG v1.4.0 "5700 passed" / SESSION_REPORT "5834 passed" 와도 drift
+
+### Out-of-scope (다음 세션 후보)
+
+1. **P0 Bug**: 37 pytest failures — `get_random_mission_with_rule()` 가 `mission_weights` kwarg 거부 (`board.py:184`)
+2. **P2 (잔여)**: design/ frontmatter 표준화 (10 파일 중 7만 frontmatter 존재)
+3. **P2**: ADR-0182 (replay), ADR-0140 (engagement), ADR-0196-0198 (a11y) design 문서 추가
+
+### References
+
+- Reviewer 보고: bg_22e45ab2 (Sisyphus-Junior)
+- Plan: `Game/wet_run/.omo/plans/design-dashboard-review-2026-08-27.md`
+- Commit: `2a84434` (P0+P1 통합)

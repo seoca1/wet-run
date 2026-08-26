@@ -1,4 +1,4 @@
-/** Tests for save/load module (Tier 2a multi-slot). Requires jsdom environment.
+/** Tests for save/load module (Tier 2a multi-slot + Tier 3 IDB). Requires jsdom environment.
  */
 // @vitest-environment jsdom
 
@@ -29,21 +29,21 @@ const sampleSlot: SaveSlot = {
 };
 
 describe("storage (Tier 2a multi-slot)", () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     for (let s = 0; s <= MAX_SAVE_SLOT; s++) {
-      clear(s);
+      await clear(s);
     }
     localStorage.removeItem("wetrun_mvp_save_v1");
   });
 
-  it("exposes 4 slots (autosave + 3 manual)", () => {
+  it("exposes 4 slots (autosave + 3 manual)", async () => {
     expect(MAX_SAVE_SLOT).toBe(3);
     expect(MANUAL_SLOTS).toEqual([1, 2, 3]);
     // Verify all 4 slots (0..3) are reachable
     for (let s = 0; s <= 3; s++) {
-      save(s, sampleSlot);
-      expect(load(s)).not.toBeNull();
-      clear(s);
+      await save(s, sampleSlot);
+      expect(await load(s)).not.toBeNull();
+      await clear(s);
     }
   });
 
@@ -53,32 +53,32 @@ describe("storage (Tier 2a multi-slot)", () => {
     expect(SAVE_SLOT_LABELS[3]).toBe("Slot 3");
   });
 
-  it("round-trips a save on slot 0 (autosave)", () => {
-    save(0, sampleSlot);
-    expect(load(0)).toEqual(sampleSlot);
+  it("round-trips a save on slot 0 (autosave)", async () => {
+    await save(0, sampleSlot);
+    expect(await load(0)).toEqual(sampleSlot);
   });
 
-  it("saves and loads each slot independently", () => {
-    save(1, { ...sampleSlot, turnCount: 1 });
-    save(2, { ...sampleSlot, turnCount: 2 });
-    save(3, { ...sampleSlot, turnCount: 3 });
-    expect(load(1)?.turnCount).toBe(1);
-    expect(load(2)?.turnCount).toBe(2);
-    expect(load(3)?.turnCount).toBe(3);
+  it("saves and loads each slot independently", async () => {
+    await save(1, { ...sampleSlot, turnCount: 1 });
+    await save(2, { ...sampleSlot, turnCount: 2 });
+    await save(3, { ...sampleSlot, turnCount: 3 });
+    expect((await load(1))?.turnCount).toBe(1);
+    expect((await load(2))?.turnCount).toBe(2);
+    expect((await load(3))?.turnCount).toBe(3);
   });
 
-  it("clears only the specified slot", () => {
-    save(1, sampleSlot);
-    save(2, sampleSlot);
-    clear(1);
-    expect(load(1)).toBeNull();
-    expect(load(2)).not.toBeNull();
+  it("clears only the specified slot", async () => {
+    await save(1, sampleSlot);
+    await save(2, sampleSlot);
+    await clear(1);
+    expect(await load(1)).toBeNull();
+    expect(await load(2)).not.toBeNull();
   });
 
-  it("listSlots returns occupied slots with metadata", () => {
-    save(1, sampleSlot);
-    save(3, sampleSlot);
-    const listed = listSlots();
+  it("listSlots returns occupied slots with metadata", async () => {
+    await save(1, sampleSlot);
+    await save(3, sampleSlot);
+    const listed = await listSlots();
     expect(listed.length).toBe(2);
     const slots = listed.map((s) => s.slot);
     expect(slots).toContain(1);
@@ -86,38 +86,38 @@ describe("storage (Tier 2a multi-slot)", () => {
     expect(listed.every((s) => s.savedAt === sampleSlot.savedAt)).toBe(true);
   });
 
-  it("rejects invalid slot numbers", () => {
-    expect(() => save(-1, sampleSlot)).toThrow();
-    expect(() => save(99, sampleSlot)).toThrow();
-    expect(() => load(99)).toThrow();
+  it("rejects invalid slot numbers", async () => {
+    await expect(save(-1, sampleSlot)).rejects.toThrow();
+    await expect(save(99, sampleSlot)).rejects.toThrow();
+    await expect(load(99)).rejects.toThrow();
   });
 
-  it("returns null for empty slots", () => {
-    expect(load(1)).toBeNull();
-    expect(load(3)).toBeNull();
+  it("returns null for empty slots", async () => {
+    expect(await load(1)).toBeNull();
+    expect(await load(3)).toBeNull();
   });
 
-  it("rejects corrupted JSON", () => {
+  it("rejects corrupted JSON", async () => {
     localStorage.setItem("wetrun_mvp_save_v1_slot_1", "{not valid");
-    expect(load(1)).toBeNull();
+    expect(await load(1)).toBeNull();
   });
 
-  it("rejects schema version mismatch", () => {
-    save(1, { ...sampleSlot, version: 99 });
-    expect(load(1)).toBeNull();
+  it("rejects schema version mismatch", async () => {
+    await save(1, { ...sampleSlot, version: 99 });
+    expect(await load(1)).toBeNull();
   });
 
-  it("rejects type-mismatched fields", () => {
+  it("rejects type-mismatched fields", async () => {
     localStorage.setItem(
       "wetrun_mvp_save_v1_slot_1",
       JSON.stringify({ version: 1, playerHp: "not a number" }),
     );
-    expect(load(1)).toBeNull();
+    expect(await load(1)).toBeNull();
   });
 
-  it("migrates legacy single-slot save to slot 0", () => {
+  it("migrates legacy single-slot save to slot 0", async () => {
     localStorage.setItem("wetrun_mvp_save_v1", JSON.stringify(sampleSlot));
-    const loaded = load(0);
+    const loaded = await load(0);
     expect(loaded).not.toBeNull();
     expect(loaded?.turnCount).toBe(3);
     expect(localStorage.getItem("wetrun_mvp_save_v1")).toBeNull();

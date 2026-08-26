@@ -153,11 +153,10 @@ class Game {
 
   private autosave(): void {
     if (this.state === null) return;
-    try {
-      saveToSlot(0, stateToSaveSlot(this.state));
-    } catch {
+    // saveToSlot is async (Tier 3 IDB backend). Fire-and-forget: autosave is best-effort.
+    saveToSlot(0, stateToSaveSlot(this.state)).catch(() => {
       // Autosave is best-effort; user can manually save later.
-    }
+    });
   }
 
   private draw(): void {

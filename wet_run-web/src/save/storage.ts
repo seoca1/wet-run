@@ -7,6 +7,7 @@
  * it is read as slot 0 (autosave) on first load and migrated.
  */
 import type { SaveSlot } from "../core/types.ts";
+import { idbGet, idbPut, idbDelete, idbIsAvailable } from "./storage_idb.ts";
 
 const CURRENT_SCHEMA_VERSION = 1;
 const MANUAL_SLOT_COUNT = 3;
@@ -20,17 +21,45 @@ function key(slot: number): string {
 
 const LEGACY_KEY = "wetrun_mvp_save_v1";
 
-export function save(slot: number, data: SaveSlot): void {
+export async function save(slot: number, data: SaveSlot): Promise<void> {
+  if (!(await idbIsAvailable())) {
+    saveLegacy(slot, data);
+    return;
+  }
+  try {
+    await idbPut(slot, JSON.stringify(data));
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
+    console.warn(`IDB save failed slot ${slot}, falling back to localStorage:`, err);
+    saveLegacy(slot, data);
+  }
+}
+
+function saveLegacy(slot: number, data: SaveSlot): void {
   try {
     localStorage.setItem(key(slot), JSON.stringify(data));
   } catch (err) {
-    // Re-throw validation errors (caller bug) but swallow I/O errors.
     if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
     console.warn(`Failed to save slot ${slot}:`, err);
   }
 }
 
-export function load(slot: number): SaveSlot | null {
+export async function load(slot: number): Promise<SaveSlot | null> {
+  if (!(await idbIsAvailable())) {
+    return loadLegacy(slot);
+  }
+  try {
+    const raw = await idbGet(slot);
+    if (raw) return parseSlot(raw);
+    return await migrateFromLegacy(slot);
+  } catch (err) {
+    if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
+    console.warn(`IDB load failed slot ${slot}, falling back to localStorage:`, err);
+    return loadLegacy(slot);
+  }
+}
+
+function loadLegacy(slot: number): SaveSlot | null {
   try {
     const raw = localStorage.getItem(key(slot));
     if (raw) return parseSlot(raw);
@@ -47,30 +76,47 @@ export function load(slot: number): SaveSlot | null {
     }
     return null;
   } catch (err) {
-    // Re-throw validation errors (caller bug) but swallow I/O errors.
     if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
     console.warn(`Failed to load slot ${slot}:`, err);
     return null;
   }
 }
 
-export function clear(slot: number): void {
+async function migrateFromLegacy(slot: number): Promise<SaveSlot | null> {
+  const parsed = loadLegacy(slot);
+  if (parsed === null) return null;
   try {
+    await idbPut(slot, JSON.stringify(parsed));
+    if (slot === 0) localStorage.removeItem(LEGACY_KEY);
     localStorage.removeItem(key(slot));
+  } catch (err) {
+    console.warn(`IDB migration copy failed slot ${slot}:`, err);
+  }
+  return parsed;
+}
+
+
+export async function clear(slot: number): Promise<void> {
+  if (!(await idbIsAvailable())) {
+    localStorage.removeItem(key(slot));
+    return;
+  }
+  try {
+    await idbDelete(slot);
   } catch (err) {
     console.warn(`Failed to clear slot ${slot}:`, err);
   }
 }
 
-export function listSlots(): ReadonlyArray<{
+export async function listSlots(): Promise<ReadonlyArray<{
   readonly slot: number;
   readonly savedAt: string;
   readonly missionId: string;
   readonly turnCount: number;
-}> {
+}>> {
   const out: { slot: number; savedAt: string; missionId: string; turnCount: number }[] = [];
   for (let s = 0; s <= MAX_SLOT_INDEX; s++) {
-    const data = load(s);
+    const data = await load(s);
     if (data) {
       out.push({
         slot: s,

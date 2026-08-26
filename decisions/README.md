@@ -118,8 +118,8 @@ Architecture Decision Records. 모든 주요 결정은 여기 추적된다.
 | 0191 | Story Events Expansion (Phase 13 — Content Expansion, Axis 3) | **Accepted** | 2026-08-08 | P2 (Pillar 5 atmosphere + Pillar 1 variety) |
 | 0192 | Ending Expansion (Phase 14 — Content Expansion, Axis 5) | **Accepted** | 2026-08-08 | P2 (Pillar 1 replay value + Pillar 5 closure) |
 | 0193 | Programs/Equipment Expansion (Phase 14 — Content Expansion, Axis 6) | **Accepted** | 2026-08-08 | P2 (Pillar 4 Build depth + Pillar 5 style) |
-| 0194 | ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구) | **Draft** | 2026-08-19 | P3 (The Build, 아키텍처 명료화) |
-| 0195 | Accepted ADR Implementation Status Workflow (섹션 의무화 + 인덱스 Impl 컬럼) | **Draft** | 2026-08-20 | P3 (The Build, 프로세스 명료화) |
+| 0194 | ECS-lite 역할 명시화 (프로덕션은 OOP/dataclass, ECS는 실험/테스트 도구) | **Accepted** | 2026-08-19 | P3 (The Build, 아키텍처 명료화) | → **Accepted (Option 3 Hybrid)** 2026-08-26 [this session]
+| 0195 | Accepted ADR Implementation Status Workflow (섹션 의무화 + 인덱스 Impl 컬럼) | **Accepted** | 2026-08-20 | P3 (The Build, 프로세스 명료화) | → **Accepted (Option 1+3 Hybrid)** 2026-08-26 [this session]
 | 0196 | Accessibility Colorblind State Alignment (AppState bool → str) | **Accepted (Option A)** | 2026-08-22 | P1 (Plan T2.2 게이트, UI/visibility 업그레이드) |
 | 0197 | Gamepad / Controller Input Support (Tier 1 — synthetic KeyDown adapter, 12 active ScreenKinds, 97 new tests) | **Accepted** | 2026-08-25 | P2 (ADR-0183 §Input Remapping Tier 1 surface; complements ADR-0196) |
 | 0198 | Resolution Compatibility (Tablet / Phone / Steam Deck / 4K) + QA Agents (Design + Gameability) | **Accepted** | 2026-08-25 | P1 (Cross-device compatibility; +QA agents for ongoing QA; 6 Open Questions resolved; Phase 1 critical fixes shipped — GA-002/GA-004/GD-005) |

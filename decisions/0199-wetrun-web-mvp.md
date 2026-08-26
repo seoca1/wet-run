@@ -191,12 +191,21 @@ Game/wet_run-web/                           # New sub-folder in workspace
 | Commit 2: ASCII Canvas2D renderer | ✅ `renderer/canvas.ts` + `palette.ts` (Gibson neon palette) |
 | Commit 3: Game state + keyboard input | ✅ `core/types.ts` + `core/grid.ts` + `core/state.ts` + `input/keyboard.ts` |
 | Commit 4: Combat core | ✅ IceBreaker state machine (useProgram reduces ICE HP, alarm accumulates) |
-| Commit 5: Save/load | ✅ `save/storage.ts` (localStorage JSON + schema versioning) |
+| Commit 5: Save/load (Tier 1) | ✅ `save/storage.ts` (localStorage JSON + schema versioning) |
 | Commit 6: Polish + playtest hooks | ✅ `docs/PLAYTEST.md` (3-person protocol) |
 | Commit 7: ADR-0199 (this document) | ✅ |
 | 17 unit tests (state + storage) | ✅ All passing |
 | TypeScript strict dry-compile | ✅ No errors |
 | Vite production build | ✅ 48KB JS (11.5KB gzipped) + 2KB HTML |
+
+### Tier 2 Update (2026-08-25, autonomous expansion)
+
+| Tier 2a: 5 missions (curated T1-T2 pool) | ✅ `scripts/export_web_data.py` + `src/main.ts` mission select |
+| Tier 2a: Multi-slot save (autosave + 3 manual) | ✅ `save/storage.ts` rewritten + `stateToSaveSlot()` serializer + autosave wired in `main.ts` |
+| Tier 2c: Mobile touch UI (virtual gamepad) | ✅ `input/touch.ts` + auto-mount on `pointer: coarse` |
+| 38 unit tests (was 17; +21 Tier 2 + autosave) | ✅ All passing |
+| TypeScript strict dry-compile | ✅ No errors |
+| Vite production build | ✅ 59.55 KB JS / 16.96 KB gzipped |
 
 ### Final Files Touched
 

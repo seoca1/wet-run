@@ -266,3 +266,5 @@ i18n + Content Pipeline:
 - **신규 ADR 31개 인덱스 추가** (2026-08-07~08): 0156–0186 (v1.2.0+ 후속 + v1.3.0+ Tracks E/F/G). 인덱스 누락 상태였음 — 본 동기화로 README 인덱스 최신화 완료. ADR 총 88개 (Accepted/Revised/Superseded 모두 포함, status docs 제외).
 - **신규 ADR 7개 인덱스 추가** (2026-08-08~19): 0188–0194 (Phase 11~14 Content Expansion Axes 1~6 + ADR-0194 ECS-lite 역할 명시화). 7 ADR 파일은 2026-08-08~19 사이 생성되었으나 README 인덱스 누락 상태였음 — 본 동기화로 README 인덱스 최신화 완료. ADR 총 **106개** (Accepted/Revised/Draft 모두 포함, status docs 2개 제외).
 - **ADR-0162 title fix**: content는 Phase 4 mechanics를 설명하지만 title이 "Boss Phase 5 Last Stand"로 잘못 표기되어 있었음. Content와 일치하도록 "Boss Phase 4 Last Stand"로 수정.
+
+| 0208 | Mission Random Weight (ADR-0166/0167 weighted selection: 10 missions 1.5/1.2, random_weight field + apply_rule filter, 7/7 sub-steps) | **Accepted (Option 1)** | 2026-08-26 | P1 (ADR-0166/0167 wiring completion) |

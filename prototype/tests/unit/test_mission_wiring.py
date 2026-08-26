@@ -123,3 +123,8 @@ class TestJobBoardWiring:
             assert is_arc6_mission(mission.id)
         for mission in EXPANSION_MISSIONS:
             assert is_expansion_mission(mission.id)
+
+class T:
+    def t1(self): from wet_run.missions.board import _p; m=_p(dict(id="t",title="T",fixer="finn",grade_min=1,grade_max=2,matrix_seed=0,zone="surface")); assert m is not None and m.random_weight==1.0
+    def t2(self): import json; d=json.load(open("prototype/data/missions/missions.json")); assert d["ghost_signal_origin"].get("random_weight")==1.5
+    def t3(self): import json; d=json.load(open("prototype/data/missions/missions.json")); assert d["hosaka_after_hours"].get("random_weight")==1.2

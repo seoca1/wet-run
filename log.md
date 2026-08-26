@@ -3806,3 +3806,43 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 
 ### 후속 commits
 - `docs(wet_run): ADR-0207 + README index sync + log entry`
+
+
+---
+
+## 🔢 Content authoring — Mission Random Weight (ADR-0208) — 2026-08-26
+
+**Scope**: User-selected carry-over. 7/7 sub-steps completed.
+
+### 결정 (ADR-0208 Accepted, Option 1)
+- `random_weight: float = 1.0` field in Mission dataclass
+- 10 Arc6 + Expansion missions with elevated weights (1.5 / 1.2)
+- `apply_rule` mission_weights filter
+
+### 구현 산출물
+
+| File | Change |
+|---|---|
+| mission.py | random_weight field (line 138) + __post_init__ validation (line 173-175) |
+| board.py | _opt_float helper + _parse_mission random_weight parsing (line 363) |
+| missions.json | 10 missions weighted (Arc6 1.5, Expansion 1.2) |
+| random_rules.py | apply_rule(mission_weights) filter (line 137, 160-161) |
+| test_mission_wiring.py | +4 tests (default, Arc6, Expansion, filter) |
+| decisions/0208 | ADR-0208 Accepted (Option 1) |
+
+### 검증
+- pytest: 4 new tests passing
+- Mission.random_weight default 1.0 (backward compatible)
+- __post_init__ enforces random_weight >= 0
+
+### Tier 진척 (§8 + 자체 정의)
+
+| Tier | Status |
+|---|---|
+| Tier 1 | ✅ |
+| Tier 2a | ✅ |
+| Tier 2b | ✅ |
+| Tier 2c | ✅ |
+| Tier 3 | ✅ |
+| Tier 4 | ✅ |
+| Content authoring | ✅ this session |

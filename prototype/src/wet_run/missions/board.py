@@ -360,6 +360,7 @@ def _parse_mission(value: dict[str, object]) -> Mission | None:
             primary_objective=primary,
             secondary_objectives=tuple(secondary),
             rewards=rewards,
+            random_weight=_opt_float(value.get('random_weight'), 1.0) or 1.0,
         )
     except (KeyError, TypeError, ValueError):
         return None
@@ -379,6 +380,24 @@ def _opt_int(value: object, default: int) -> int | None:
     if isinstance(value, (str, bytes, bytearray)):
         try:
             return int(value)
+        except ValueError:
+            return None
+    return None
+
+
+def _opt_float(value: object, default: float) -> float | None:
+    """Coerce a JSON value to float or return None.
+
+    Bools are excluded (they are not numeric in our model). Strings are
+    parsed via float(); any TypeError / ValueError yields None.
+    """
+    if value is None or isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, (str, bytes, bytearray)):
+        try:
+            return float(value)
         except ValueError:
             return None
     return None

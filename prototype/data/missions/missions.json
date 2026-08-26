@@ -908,7 +908,8 @@
       "word_count_en": 51
     },
     "title": "Construct Market",
-    "zone": "surface"
+    "zone": "surface",
+    "random_weight": 1.2
   },
   "construct_memory_rescue": {
     "arc": 5,
@@ -3072,7 +3073,8 @@
       "word_count_en": 52
     },
     "title": "Ghost Signal: Origin",
-    "zone": "aftermath"
+    "zone": "aftermath",
+    "random_weight": 1.5
   },
   "heretic_loa_conscription": {
     "arc": 4,
@@ -3200,7 +3202,8 @@
       "word_count_en": 48
     },
     "title": "Hosaka After Hours",
-    "zone": "surface"
+    "zone": "surface",
+    "random_weight": 1.2
   },
   "hosaka_core": {
     "arc": 3,
@@ -4910,7 +4913,8 @@
       "word_count_en": 61
     },
     "title": "Neuromancer Merger: Residue",
-    "zone": "aftermath"
+    "zone": "aftermath",
+    "random_weight": 1.5
   },
   "neuromancer_whisper": {
     "arc": 3,
@@ -5952,7 +5956,8 @@
       "word_count_en": 141
     },
     "title": "Sense/Net Infiltration",
-    "zone": "mid"
+    "zone": "mid",
+    "random_weight": 1.2
   },
   "sense_net_media_extract": {
     "arc": 3,
@@ -6765,7 +6770,8 @@
       "word_count_en": 57
     },
     "title": "T-A Construction Site",
-    "zone": "core"
+    "zone": "core",
+    "random_weight": 1.2
   },
   "ta_3jane_betrayal": {
     "arc": 5,
@@ -7632,7 +7638,8 @@
       "word_count_en": 55
     },
     "title": "Tessier-Ashpool: Aftermath",
-    "zone": "aftermath"
+    "zone": "aftermath",
+    "random_weight": 1.5
   },
   "tessier_sleeper_arc": {
     "arc": 5,
@@ -8915,7 +8922,8 @@
       "word_count_en": 60
     },
     "title": "Wintermute Residue",
-    "zone": "aftermath"
+    "zone": "aftermath",
+    "random_weight": 1.5
   },
   "wintermute_witness": {
     "arc": 5,
@@ -9126,7 +9134,8 @@
       "word_count_en": 86
     },
     "title": "Yakuza Meeting",
-    "zone": "mid"
+    "zone": "mid",
+    "random_weight": 1.2
   },
   "yanaka_family_power_arc": {
     "arc": 5,
@@ -9298,7 +9307,8 @@
       "word_count_en": 58
     },
     "title": "Zion Lab Breach",
-    "zone": "core"
+    "zone": "core",
+    "random_weight": 1.2
   },
   "zion_vote_observation": {
     "arc": 5,

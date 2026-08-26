@@ -135,6 +135,7 @@ class Mission:
     primary_objective: Objective | None = None
     secondary_objectives: tuple[Objective, ...] = ()
     rewards: Rewards | None = None
+    random_weight: float = 1.0
 
     # Phase 11 fields (chain integration)
     is_chain_mission: bool = False
@@ -168,6 +169,10 @@ class Mission:
         if self.reward_credits < 0:
             raise ValueError(
                 f"reward_credits must be >= 0, got {self.reward_credits} (mission_id={self.id!r})"
+            )
+        if self.random_weight < 0:
+            raise ValueError(
+                f"random_weight must be >= 0, got {self.random_weight} (mission_id={self.id!r})"
             )
         if self.is_chain_mission and not self.chain_id:
             raise ValueError(

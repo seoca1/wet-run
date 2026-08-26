@@ -130,13 +130,20 @@ def _is_trigger_met(rule: dict[str, Any], state: object) -> bool:
     return False
 
 
-def apply_rule(rule_id: str, state: object, all_missions: list[str]) -> RuleResult:
+def apply_rule(
+    rule_id: str,
+    state: object,
+    all_missions: list[str],
+    mission_weights: dict[str, float] | None = None,
+) -> RuleResult:
     """Apply a specific rule and return the selected missions.
 
     Args:
         rule_id: The rule to apply.
         state: Player state.
         all_missions: List of all available mission IDs.
+        mission_weights: Optional per-mission random_weight overrides.
+            When provided, missions with weight < 0 are filtered out.
 
     Returns:
         RuleResult with selected missions and weight modifier.
@@ -150,6 +157,8 @@ def apply_rule(rule_id: str, state: object, all_missions: list[str]) -> RuleResu
 
     weight = _compute_weight_modifier(rule, state)
     selected = _select_missions(rule, state, all_missions, weight)
+    if mission_weights is not None:
+        selected = [m for m in selected if mission_weights.get(m, 1.0) >= 0]
     return RuleResult(rule_id, tuple(selected), weight)
 
 

@@ -3608,3 +3608,70 @@ clean (crash.log는 .gitignore 패턴 prototype/data/saves/*.log으로 제외)
 - `feat(wetrun-web): Status effect VFX + HUD bars (ADR-0205)`
 - `test(wetrun-web): VFX helper tests (14 new)`
 - `docs(wet_run): ADR-0205 + README index sync + log entry`
+
+---
+
+## 🔌 Mission Registry Wiring (ADR-0166/0167 Deferred) — 2026-08-26 [All-4]
+
+**Scope**: User "all" carry-over batch. ADR-0166/0167 Consequences의 "registry wiring deferred" 해결.
+
+### 결정 (ADR-0206 Accepted, Option 1)
+- **4-component fix**: ZoneDepth.AFTERMATH + arc 1..6 + enrich_* + JobBoard 통합
+
+### 근본 원인 발견 (조사)
+
+| 결함 | 영향 |
+|---|---|
+| `Mission.__post_init__` arc 검증 `1..5` | Arc6 mission `arc=6` 거부 |
+| `ZoneDepth` enum에 `AFTERMATH` 부재 | `zone="aftermath"` enum 변환 실패 |
+| Registry fields (`description`, `story_intro`, `primary_ice`) 무시 | 보강 정보 손실 |
+| **결과**: JobBoard 194/209 mission만 로드 (15개 손실) |
+
+### 4-Component Fix
+
+1. **`matrix/node.py`**: `ZoneDepth.AFTERMATH = "aftermath"` 추가
+2. **`missions/mission.py`**: `arc` 검증 `1..5` → `1..6` 확장
+3. **`combat/arc6.py` + `mission_expansion.py`**: `enrich_arc6_mission()` + `enrich_expansion_mission()` 추가
+4. **`combat/__init__.py` + `missions/board.py`**: 통합 `enrich_mission_registry()` + JobBoard.load()에 enrichment 통합
+
+### Registry Fields Merged (per mission)
+
+- `registry_description` — UI/board display
+- `registry_story_intro` — Story presentation
+- `registry_primary_ice` — ICE narrative
+- `registry_source` — "ADR-0166" / "ADR-0167" provenance
+
+### Non-destructive merge
+
+`enrich_*` 함수는 `setdefault()` 사용 → 기존 `missions.json` field 보존.
+
+### 검증
+
+- `pytest tests/unit/test_mission_wiring.py`: ✅ **13 passed**
+- `pytest tests/unit/test_mission_expansion.py`: ✅ 12 passed
+- 전체 테스트: 4045 passed (1 pre-existing failure: interrogate 모듈 부재, 무관)
+- JobBoard mission count: **194 → 209** (Arc6 4 + Expansion 6 = 15 mission 복구)
+
+### 구현 산출물
+
+| 파일 | 변경 |
+|---|---|
+| `prototype/src/wet_run/matrix/node.py` | +1 enum (AFTERMATH) |
+| `prototype/src/wet_run/missions/mission.py` | arc 검증 1..5 → 1..6 |
+| `prototype/src/wet_run/combat/arc6.py` | +enrich_arc6_mission() |
+| `prototype/src/wet_run/combat/mission_expansion.py` | +enrich_expansion_mission() (+ bugfix story_intory → story_intro) |
+| `prototype/src/wet_run/combat/__init__.py` | +enrich_mission_registry() |
+| `prototype/src/wet_run/missions/board.py` | JobBoard.load() enrichment 통합 |
+| `prototype/tests/unit/test_mission_wiring.py` (new) | 13 tests |
+
+### 후속 (carry-over) — all batch 완료
+
+- All-1: wet_run-web Tier 3 (30+30) ✅
+- All-2: Phase-aware BGM (5 tracks) ✅
+- All-3: Status effect VFX + HUD bars ✅
+- All-4: Mission registry wiring ✅
+
+### 후속 commits
+- `fix(wet_run): Arc6 + Expansion mission registry wiring (ADR-0206)`
+- `test(wet_run): mission registry wiring tests (13 new)`
+- `docs(wet_run): ADR-0206 + README index sync + log entry`

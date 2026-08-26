@@ -45,6 +45,7 @@ class ZoneDepth(StrEnum):
     FREESIDE = "freeside"  # 25-35 (orbital colonies, hardest)
     SOHO = "soho"  # 3-5 (London-style black market district, v0.5)
     TOKYO = "tokyo"  # 5-8 (Yakuza-adjacent underworld district, v0.5)
+    AFTERMATH = "aftermath"  # Phase 6 NG+ post-Neuromancer-merger zone (ADR-0166)
 
 
 class IceKind(StrEnum):

@@ -111,9 +111,35 @@ def expansion_mission_ids() -> tuple[str, ...]:
 __all__ = [
     "EXPANSION_MISSIONS",
     "ExpansionMission",
+    "enrich_expansion_mission",
     "expansion_mission_count",
     "expansion_mission_ids",
     "expansion_missions_by_difficulty",
     "get_expansion_mission",
     "is_expansion_mission",
 ]
+
+
+def enrich_expansion_mission(
+    mission_id: str,
+    base_data: dict[str, object],
+) -> dict[str, object] | None:
+    """Merge Mission Expansion registry fields into a base missions.json entry.
+
+    Returns None when ``mission_id`` is not an expansion mission. When
+    the base data already contains a key, the registry value does not
+    override (missions.json remains authoritative).
+    """
+    mission = get_expansion_mission(mission_id)
+    if mission is None:
+        return None
+    enriched = dict(base_data)
+    registry_fields: dict[str, object] = {
+        "registry_description": mission.description,
+        "registry_story_intro": mission.story_intro,
+        "registry_primary_ice": list(mission.primary_ice),
+        "registry_source": "ADR-0167",
+    }
+    for key, value in registry_fields.items():
+        enriched.setdefault(key, value)
+    return enriched

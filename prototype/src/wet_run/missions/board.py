@@ -86,7 +86,12 @@ class JobBoard:
 
         Missing or empty file yields an empty board (not an error).
         Malformed entries are skipped (caller can lint the data file).
+        ADR-0166 + ADR-0167 registry fields are merged into each mission
+        dict before parsing (registry_source, registry_description,
+        registry_story_intro, registry_primary_ice) — non-destructive.
         """
+        from ..combat import enrich_mission_registry
+
         if not path.exists():
             return cls()
         with path.open(encoding="utf-8") as f:
@@ -94,10 +99,13 @@ class JobBoard:
         if not isinstance(raw, dict):
             return cls()
         missions: list[Mission] = []
-        for value in raw.values():
+        for mission_id, value in raw.items():
             if not isinstance(value, dict):
                 continue
-            mission = _parse_mission(value)
+            enriched_value = enrich_mission_registry(
+                str(mission_id), dict(value)
+            )
+            mission = _parse_mission(enriched_value)
             if mission is not None:
                 missions.append(mission)
         return cls(tuple(missions))

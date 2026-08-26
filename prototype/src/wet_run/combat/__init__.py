@@ -185,3 +185,23 @@ __all__ = [
     "cycle_target",
     "encounter_count_for_grade",
 ]
+
+
+def enrich_mission_registry(
+    mission_id: str,
+    base_data: dict[str, object],
+) -> dict[str, object]:
+    """Wire ADR-0166/0167 registry fields into a missions.json entry.
+
+    Looks up ``mission_id`` in Arc6 + Expansion registries. If matched,
+    merges registry-only fields (registry_description, registry_story_intro,
+    registry_primary_ice, registry_source) into ``base_data`` without
+    overriding existing keys. If not matched, returns ``base_data`` unchanged.
+    """
+    from .arc6 import enrich_arc6_mission
+    from .mission_expansion import enrich_expansion_mission
+
+    enriched = enrich_arc6_mission(mission_id, base_data)
+    if enriched is None:
+        enriched = enrich_expansion_mission(mission_id, base_data)
+    return enriched if enriched is not None else dict(base_data)

@@ -142,8 +142,10 @@ class Mission:
     chain_order: int | None = None
 
     def __post_init__(self) -> None:
-        """Validate Mission invariants: non-empty id, arc in 1..5, grade range 1..6,
+        """Validate Mission invariants: non-empty id, arc in 1..6, grade range 1..6,
         reward_tier 1..6, reward_credits >= 0.
+
+        arc 6 = Phase 6 (ADR-0166, NG+ Aftermath).
 
         All error messages include the offending value (or pair of values
         for the grade-range check) so JSON-data authors can locate the
@@ -151,8 +153,8 @@ class Mission:
         """
         if not self.id:
             raise ValueError("Mission id must be non-empty (got empty string)")
-        if not 1 <= self.arc <= 5:
-            raise ValueError(f"arc must be in 1..5, got {self.arc} (mission_id={self.id!r})")
+        if not 1 <= self.arc <= 6:
+            raise ValueError(f"arc must be in 1..6, got {self.arc} (mission_id={self.id!r})")
         if not 1 <= self.grade_min <= self.grade_max <= 6:
             raise ValueError(
                 f"invalid grade range {self.grade_min}..{self.grade_max} "

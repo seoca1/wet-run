@@ -97,6 +97,32 @@ __all__ = [
     "arc6_mission_count",
     "arc6_mission_ids",
     "arc6_missions_by_difficulty",
+    "enrich_arc6_mission",
     "get_arc6_mission",
     "is_arc6_mission",
 ]
+
+
+def enrich_arc6_mission(
+    mission_id: str,
+    base_data: dict[str, object],
+) -> dict[str, object] | None:
+    """Merge Arc6 registry fields into a base missions.json entry.
+
+    Returns None when ``mission_id`` is not an Arc6 mission. When the
+    base data already contains a key, the registry value does not
+    override (missions.json remains authoritative).
+    """
+    mission = get_arc6_mission(mission_id)
+    if mission is None:
+        return None
+    enriched = dict(base_data)
+    registry_fields: dict[str, object] = {
+        "registry_description": mission.description,
+        "registry_story_intro": mission.story_intro,
+        "registry_primary_ice": list(mission.primary_ice),
+        "registry_source": "ADR-0166",
+    }
+    for key, value in registry_fields.items():
+        enriched.setdefault(key, value)
+    return enriched

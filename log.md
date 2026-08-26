@@ -2951,3 +2951,14 @@ Verified: 12 ScreenKinds, 12 buttons, 7 unmapped, 7 sanitizer cases
 | Tier 2b (audio via Howler.js) | ⏸ Out of scope per operator gate (silent) |
 | 3-person playtest (`docs/PLAYTEST.md`) | ⏸ Required before Tier 3 expansion |
 | Tier 3 (more missions + status VFX) | ⏸ Gated on playtest + Tier 2 validation |
+
+## [2026-08-26] chore(wet_run) | Cleanup orphan Tier 2 curation file (autonomous)
+
+**Scope**: User signal "계속" → removed `prototype/data/missions/missions.json.tier2_mvp` (14.5 KB orphan from intermediate Tier 2 mission curation step). The final 5-mission set is correctly in `missions.json` via `scripts/export_web_data.py`.
+
+### Final wet_run Status (post-cleanup)
+
+| Path | Status |
+|---|---|
+| `prototype/data/missions/missions.json.tier2_mvp` | ✅ Removed |
+| `prototype/data/saves/crash.log` | ⏸ Pre-existing runtime artifact (per ADR-0065 deferred cleanup) |

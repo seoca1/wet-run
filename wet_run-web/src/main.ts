@@ -58,7 +58,13 @@ function loadDeck(programs: Readonly<Record<string, Program>>, count = 5): Reado
     .sort()
     .slice(0, count);
   return ids
-    .map((id) => programs[id])
+    .map((id) => {
+      const p = programs[id];
+      if (!p) return undefined;
+      // programs.json entries are keyed by id but don't carry id in the
+      // value (legacy schema). Inject it so save/load round-trip works.
+      return { ...p, id } as Program;
+    })
     .filter((p): p is Program => p !== undefined);
 }
 

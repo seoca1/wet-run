@@ -228,8 +228,13 @@ function useProgram(state: GameState, programId: string): GameState {
   const vulnerableBonus = state.statusEffects
     .filter((e) => e.kind === "vulnerable" && e.target === "ice")
     .reduce((sum, e) => sum + e.magnitude, 0);
+  // Tier 5.5: slow on ICE reduces damage taken by latest slow magnitude%.
+  // Find the most-recent slow effect (highest index).
+  const slowIdx = state.statusEffects.findIndex((e) => e.kind === "slow" && e.target === "ice");
+  const slowReduction = slowIdx >= 0 ? (state.statusEffects[slowIdx]?.magnitude ?? 0) : 0;
   const baseDamage = program.tier * 5;
-  const damage = baseDamage + Math.floor((baseDamage * vulnerableBonus) / 100);
+  const damageWithVuln = baseDamage + Math.floor((baseDamage * vulnerableBonus) / 100);
+  const damage = Math.max(1, damageWithVuln - Math.floor((damageWithVuln * slowReduction) / 100));
   // Tier 5: damage applies to active ICE in roster, not single state.ice.
   const targetIdx = state.activeIceIndex;
   const damagedRoster = state.iceRoster.map((ice, i) => {
@@ -249,6 +254,17 @@ function useProgram(state: GameState, programId: string): GameState {
     if (vulnerableIdx >= 0) {
       const updated = [...stateWithDamage.statusEffects];
       updated.splice(vulnerableIdx, 1);
+      stateWithDamage = { ...stateWithDamage, statusEffects: updated };
+    }
+  }
+  // Clear consumed slow stack after damage applied (one-shot per attack).
+  if (slowReduction > 0) {
+    const slowAbsIdx = stateWithDamage.statusEffects.findIndex(
+      (e) => e.kind === "slow" && e.target === "ice",
+    );
+    if (slowAbsIdx >= 0) {
+      const updated = [...stateWithDamage.statusEffects];
+      updated.splice(slowAbsIdx, 1);
       stateWithDamage = { ...stateWithDamage, statusEffects: updated };
     }
   }

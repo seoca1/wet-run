@@ -59,7 +59,13 @@ describe("stateToSaveSlot round-trip", () => {
 
   it("serializes combat damage (turn count + alarm) changes", () => {
     let state = makeInitialState(mockMission, mockIce, mockPrograms);
-    const inCombat = applyAction(applyAction(state, { type: "confirm" }), {
+    // Tier 5: set up matrix so Enter transitions to combat.
+    const withMatrix = {
+      ...state,
+      matrix: { nodes: [{ id: 0, zone: "surface" as const, iceIds: ["watchdog"], iceHp: [100], reward: { credits: 50 }, isBoss: false, adjacent: [] }], startNode: 0, bossNode: 0 },
+      currentNodeIndex: 0,
+    };
+    const inCombat = applyAction(applyAction(withMatrix, { type: "confirm" }), {
       type: "confirm",
     });
     const afterUse = applyAction(inCombat, {

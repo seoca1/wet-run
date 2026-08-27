@@ -54,6 +54,7 @@ export function makeInitialState(mission: Mission, ice: Ice, deck: ReadonlyArray
     visitedNodes: [],
     bossPhase: 0,
     endingChoice: null,
+    vfxInstances: [],
   };
 }
 
@@ -231,6 +232,13 @@ function useProgram(state: GameState, programId: string): GameState {
   });
   // Check if all ICE in roster defeated (any 0-HP target ends the fight in MVP).
   const allDefeated = newRoster.every((ice) => ice.hp === 0);
+  // Tier 5.5: trigger VFX instances for visual feedback.
+  const vfxNew: ReadonlyArray<import("../renderer/combat_vfx.js").CombatVfxInstance> = [
+    ...state.vfxInstances,
+    import_vfx("card_use", program.name, 3),
+    import_vfx("card_hit", `${damage}`, 3),
+    import_vfx("ice_hit", `${damage}`, 2),
+  ];
   if (allDefeated && newRoster.length > 0) {
     // Victory → loot screen
     const totalReward = state.mission.rewards.credits +
@@ -244,6 +252,7 @@ function useProgram(state: GameState, programId: string): GameState {
       phase: "victory",
       message: `${state.ice.name} defeated! +${totalReward} credits`,
       player: { ...state.player, credits: state.player.credits + totalReward },
+      vfxInstances: [...vfxNew, import_vfx("victory", "", 5)],
     };
   }
   const activeIceNewHp = newRoster[targetIdx]?.hp ?? 0;
@@ -255,6 +264,22 @@ function useProgram(state: GameState, programId: string): GameState {
     discardPile: discard,
     player: { ...state.player, alarm: newAlarm },
     message: `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})`,
+    vfxInstances: vfxNew,
+  };
+}
+
+/** Tiny helper to avoid circular import: returns a VFX instance directly. */
+function import_vfx(
+  kind: import("../renderer/combat_vfx.js").CombatVfxKind,
+  payload: string,
+  duration: number,
+): import("../renderer/combat_vfx.js").CombatVfxInstance {
+  return {
+    id: Math.floor(Math.random() * 1e9) + 1,
+    kind,
+    tick: 0,
+    duration,
+    payload,
   };
 }
 
@@ -349,5 +374,6 @@ export function slotToGameState(
     visitedNodes: [],
     bossPhase: 0,
     endingChoice: null,
+    vfxInstances: [],
   };
 }

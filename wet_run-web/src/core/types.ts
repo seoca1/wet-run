@@ -120,6 +120,8 @@ export interface GameState {
   readonly visitedNodes: ReadonlyArray<number>;
   readonly bossPhase: BossPhase; // 0 = no boss active, 1..4 = boss phase
   readonly endingChoice: EndingChoice | null;
+  // Tier 5.5: active combat VFX (animation overlay).
+  readonly vfxInstances: ReadonlyArray<import("../renderer/combat_vfx.js").CombatVfxInstance>;
 }
 
 /** Top-level run cycle phase (Tier 5+). */
@@ -148,6 +150,9 @@ export interface MatrixNode {
   readonly reward: { credits: number };
   readonly isBoss: boolean;
   readonly adjacent: ReadonlyArray<number>;
+  // Tier 5.5: event kind (default "combat" for backward compat).
+  readonly eventKind?: "combat" | "discovery" | "trap" | "cache" | "rest" | "merchant";
+  readonly eventData?: { readonly damage?: number; readonly creditsBonus?: number; readonly programId?: string; readonly healPct?: number; readonly forSale?: ReadonlyArray<string> } | null;
 }
 
 /** Generated matrix for one run. */

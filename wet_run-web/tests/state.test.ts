@@ -163,23 +163,32 @@ describe("resolveProgramSelection (input → reducer bridge)", () => {
 });
 
 describe("end-to-end combat progression (regression: 'stuck in combat')", () => {
-  it("menu → approach → combat → use_program → victory via digit key", () => {
+  it("matrix → approach → combat → use_program → loot via digit key (Tier 5)", () => {
     const fastIce: Ice = { ...mockIce, hp: 5 };
     const state = makeInitialState(mockMission, fastIce, [mockProgram]);
-    // Press Enter (menu → approach).
-    let next = applyAction(state, KEYBOARD_MAPPING.Enter!);
+    // Tier 5: state defaults to runPhase="matrix" — set up a matrix with
+    // 1 ICE at node 0 so the test exercises the matrix→combat transition.
+    const withMatrix = {
+      ...state,
+      matrix: { nodes: [{ id: 0, zone: "surface" as const, iceIds: ["watchdog"], iceHp: [5], reward: { credits: 50 }, isBoss: false, adjacent: [] }], startNode: 0, bossNode: 0 },
+      currentNodeIndex: 0,
+    };
+    // Press Enter (matrix → approach).
+    let next = applyAction(withMatrix, KEYBOARD_MAPPING.Enter!);
     expect(next.phase).toBe("approach");
     // Press Enter (approach → combat).
     next = applyAction(next, KEYBOARD_MAPPING.Enter!);
     expect(next.phase).toBe("combat");
+    expect(next.runPhase).toBe("combat");
     // Press "1" (select_program[1]).
     const selectAction = KEYBOARD_MAPPING["1"]!;
     expect(selectAction.type).toBe("select_program");
     const resolved = resolveProgramSelection(next, selectAction);
     expect(resolved).not.toBeNull();
     next = applyAction(next, resolved!);
-    expect(next.phase).toBe("victory");
-    expect(next.ice.hp).toBe(0);
+    // Tier 5: ICE defeated → transition to loot (was 'victory' phase).
+    expect(next.runPhase).toBe("loot");
+    expect(next.iceRoster[0]?.hp).toBe(0);
   });
 });
 

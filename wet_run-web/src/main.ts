@@ -13,6 +13,7 @@ import { MENU_OPTIONS, renderMainMenu, renderStubScreen, type MenuOption } from 
 import { renderMatrix } from "./renderer/matrix.ts";
 import { buildMatrix } from "./core/matrix.ts";
 import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
+import { composeCombatVfx, tickCombatVfxList } from "./renderer/combat_vfx.ts";
 import {
   healthBar,
   healthColor,
@@ -300,9 +301,8 @@ class Game {
     const deck = loadDeck(programs);
     const ice = loadIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
-    // Tier 5: build matrix and start at node 0. populateIceRoster() will
-    // fill iceRoster when player enters combat at each node.
-    const matrix = buildMatrix(this.iceTypes);
+    // Tier 5.5: pass programs to enable event-matrix (combat/discovery/trap/etc.)
+    const matrix = buildMatrix(this.iceTypes, programs);
     this.state = {
       ...initial,
       grid: makeGrid(this.layout.cols, this.layout.rows),
@@ -423,6 +423,20 @@ class Game {
         ),
       };
       this.renderer.render(this.state.grid, buildHudLines(this.state));
+      // Tier 5.5: tick + composite VFX overlay.
+      this.state = {
+        ...this.state,
+        vfxInstances: tickCombatVfxList(this.state.vfxInstances),
+      };
+      if (this.state.vfxInstances.length > 0) {
+        const composed = composeCombatVfx(
+          this.state.grid,
+          this.state.vfxInstances,
+          this.layout.cols,
+          this.layout.rows,
+        );
+        this.renderer.render(composed, buildHudLines(this.state));
+      }
       updateProgramRow(this.state.phase === "combat" ? this.state.deck : []);
       this.autosave();
       this.syncPhase(this.state.phase);

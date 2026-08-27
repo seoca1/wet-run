@@ -23,19 +23,35 @@ export const ZONE_BY_NODE_INDEX: ReadonlyArray<ZoneDepth> = [
  *
  * Linear adjacency: node[i].adjacent = [i+1] (except last).
  * Boss at node 4. Each non-boss node has 1 ICE; boss node has 1 boss ICE.
- * ICE ids are placeholders resolved by main.ts against the iceTypes catalog.
+ * Tier 5.5: if programCatalog is provided, uses buildEventMatrix for varied
+ * event kinds. Otherwise combat-only (backward compat).
  */
+import { buildEventMatrix } from "./event_matrix.ts";
+
 export function buildMatrix(
   iceCatalog: Readonly<Record<string, Ice>>,
+  programCatalog?: Readonly<Record<string, import("./types.js").Program>>,
 ): Matrix {
+  if (programCatalog) {
+    const evented = buildEventMatrix(iceCatalog, programCatalog, 42);
+    const nodes: MatrixNode[] = evented.map((n) => ({
+      id: n.id,
+      zone: n.zone,
+      iceIds: n.iceIds,
+      iceHp: n.iceHp,
+      reward: n.reward,
+      isBoss: n.isBoss,
+      adjacent: n.adjacent,
+      eventKind: n.eventKind,
+      eventData: n.eventData,
+    }));
+    return { nodes, startNode: 0, bossNode: 4 };
+  }
   const nodes: MatrixNode[] = [];
   const startNode = 0;
   const bossNode = NUM_NODES - 1;
-
   for (let i = 0; i < NUM_NODES; i++) {
     const isLast = i === bossNode;
-    const isFirst = i === startNode;
-    // Pick a default ICE id per zone (main.ts can override per run).
     const defaultIceId = isLast ? "wintermute" : "watchdog";
     const defaultIce = iceCatalog[defaultIceId] ?? Object.values(iceCatalog)[0];
     const iceIds = defaultIce ? [defaultIce.id] : [];
@@ -50,10 +66,7 @@ export function buildMatrix(
       adjacent: isLast ? [] : [i + 1],
     };
     nodes.push(node);
-    // Suppress unused-var warning for isFirst (kept for future branching).
-    void isFirst;
   }
-
   return { nodes, startNode, bossNode };
 }
 

@@ -12,6 +12,8 @@ import { makeGrid, setText } from "../core/grid.ts";
 import { PALETTE } from "./palette.ts";
 
 /** Render the matrix navigation screen. */
+import { EVENT_GLYPHS, EVENT_LABELS, type MatrixEventKind } from "../core/event_matrix.ts";
+
 export function renderMatrix(
   matrix: Matrix,
   currentNodeIndex: number,
@@ -38,10 +40,13 @@ export function renderMatrix(
     const isCurrent = i === currentNodeIndex;
     const isVisited = visited.includes(i);
     const isBoss = node.isBoss;
+    const eventKind = (node.eventKind ?? "combat") as MatrixEventKind;
+    const glyph = EVENT_GLYPHS[eventKind];
     const marker = isCurrent ? "▸" : isVisited ? "✓" : " ";
-    const label = `[${i}] ${node.zone.toUpperCase()}${isBoss ? " (BOSS)" : ""}`;
+    const label = `${glyph} [${i}] ${node.zone.toUpperCase()}${isBoss ? " (BOSS)" : ""}`;
     const iceCount = node.iceIds.length;
-    const detail = `${iceCount} ICE · ${node.reward.credits}cr`;
+    const eventLabel = eventKind === "combat" ? "" : ` · ${EVENT_LABELS[eventKind]}`;
+    const detail = `${iceCount} ICE · ${node.reward.credits}cr${eventLabel}`;
     const fg = isCurrent ? PALETTE.GREEN_NEON : isVisited ? PALETTE.GRAY_MID : PALETTE.GRAY_LIGHT;
     grid = setText(grid, 4, row, `${marker} ${label}`, fg);
     grid = setText(grid, 8, row + 1, detail, PALETTE.GRAY_DARK);
@@ -50,7 +55,7 @@ export function renderMatrix(
   // Footer
   const footerRow = rows - 2;
   const status = isCurrentInAdjacent(matrix, currentNodeIndex)
-    ? "ENTER: enter combat | ESC: jack out"
+    ? "ENTER: enter | ESC: jack out"
     : "ESC: jack out";
   grid = setText(grid, 2, footerRow, status, PALETTE.YELLOW_AMBER);
 

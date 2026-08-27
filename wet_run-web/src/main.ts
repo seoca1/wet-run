@@ -341,6 +341,7 @@ class Game {
             this.state.visitedNodes,
             this.layout.cols,
             this.layout.rows,
+            this.state.iceRoster[this.state.activeIceIndex] ?? null,
           ),
           ["MATRIX", "", `Node ${this.state.currentNodeIndex + 1}/${matrix.nodes.length}`],
         );

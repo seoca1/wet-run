@@ -6,12 +6,13 @@
  * is copied into IndexedDB on first load.
  */
 const DB_NAME = "wetrun_save_v1";
-const DB_VERSION = 1;
+const DB_VERSION = 2; // bumped 2026-08-27: fix keyPath conflict (idbPut DataError)
 const STORE = "slots";
 
 interface SlotValue {
-  slot: number;
-  json: string;
+  readonly name: string;
+  readonly slot: number;
+  readonly json: string;
 }
 
 let dbPromise: Promise<IDBDatabase> | null = null;
@@ -28,6 +29,12 @@ function openDb(): Promise<IDBDatabase> {
     req.onupgradeneeded = () => {
       const db = req.result;
       if (!db.objectStoreNames.contains(STORE)) {
+        db.createObjectStore(STORE, { keyPath: "name" });
+      }
+      // Migration: bump DB_VERSION 1→2 clears stale store + recreates fresh
+      // (old records may have been written with keyPath conflict; safe reset).
+      else if ((req as unknown as { oldVersion: number }).oldVersion < 2) {
+        db.deleteObjectStore(STORE);
         db.createObjectStore(STORE, { keyPath: "name" });
       }
     };
@@ -60,8 +67,10 @@ export async function idbPut(slot: number, json: string): Promise<void> {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE, "readwrite");
     const store = tx.objectStore(STORE);
-    const value: SlotValue = { slot, json };
-    const req = store.put(value, slotKeyName(slot));
+    // keyPath: "name" — must embed the key in the value, not pass as 2nd arg.
+    // Passing both throws DataError ("in-line keys and the key parameter was provided").
+    const value: SlotValue = { name: slotKeyName(slot), slot, json };
+    const req = store.put(value);
     req.onsuccess = () => resolve();
     req.onerror = () => reject(req.error);
   });

@@ -187,3 +187,50 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     savedAt: new Date().toISOString(),
   };
 }
+
+/** Reconstruct a GameState from a SaveSlot (CONTINUE option reverse).
+ *
+ * Looks up the mission in the catalog, picks the first matching ICE,
+ * and rebuilds the deck from saved ids (skipping any that no longer exist
+ * in programsData — defensive against data drift).
+ *
+ * Returns null if the saved missionId is no longer in MISSIONS or no
+ * programs survive filtering (loadable state invariant).
+ */
+export function slotToGameState(
+  slot: SaveSlot,
+  missionCatalog: ReadonlyArray<Mission>,
+  programCatalog: Readonly<Record<string, Program>>,
+  iceFallback: Ice,
+): GameState | null {
+  const mission = missionCatalog.find((m) => m.id === slot.missionId);
+  if (!mission) return null;
+  // Reconstruct deck from saved program ids; skip any missing in catalog.
+  const findProgram = (id: string): Program | undefined => programCatalog[id];
+  const restoreHand = (ids: ReadonlyArray<string>): ReadonlyArray<Program> =>
+    ids.map(findProgram).filter((p): p is Program => p !== undefined);
+  const deck = restoreHand(slot.deckIds);
+  const discardPile = restoreHand(slot.discardIds);
+  const drawPile = restoreHand(slot.drawIds);
+  // If all programs in hand disappeared (data drift), refuse to load.
+  if (deck.length === 0 && slot.deckIds.length > 0) return null;
+  const player: PlayerStats = {
+    hp: slot.playerHp,
+    maxHp: slot.playerMaxHp,
+    alarm: slot.playerAlarm,
+    credits: slot.playerCredits,
+    handSize: MVP_BASE_HAND,
+  };
+  return {
+    phase: "approach", // resume from approach (post-combat-first-step)
+    mission,
+    player,
+    ice: iceFallback, // ICE state not in save; use mission's primary ICE
+    deck,
+    drawPile,
+    discardPile,
+    grid: makeGrid(MVP_GRID_W, MVP_GRID_H),
+    message: `Resumed from autosave (turn ${slot.turnCount + 1})`,
+    turnCount: slot.turnCount,
+  };
+}

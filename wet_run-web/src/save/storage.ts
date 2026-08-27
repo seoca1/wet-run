@@ -129,6 +129,34 @@ export async function listSlots(): Promise<ReadonlyArray<{
   return out;
 }
 
+/** Quick check: does the autosave (slot 0) have a valid save?
+ *
+ * Used by the main menu to gate the CONTINUE option — if no autosave
+ * exists, the option is greyed out and selecting it shows a stub.
+ */
+export async function hasSave(slot: number = 0): Promise<boolean> {
+  const data = await load(slot);
+  return data !== null;
+}
+
+/** Return autosave metadata (mission id + turn count + savedAt) or null.
+ *
+ * Used by the main menu to display "Continue: mission_name (turn N)" hint.
+ */
+export async function getSaveMeta(slot: number = 0): Promise<{
+  readonly missionId: string;
+  readonly turnCount: number;
+  readonly savedAt: string;
+} | null> {
+  const data = await load(slot);
+  if (!data) return null;
+  return {
+    missionId: data.missionId,
+    turnCount: data.turnCount,
+    savedAt: data.savedAt,
+  };
+}
+
 function parseSlot(raw: string): SaveSlot | null {
   try {
     const parsed: unknown = JSON.parse(raw);

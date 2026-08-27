@@ -21,10 +21,10 @@ import {
   centerArt,
 } from "./renderer/vfx.ts";
 import type { GameState, GameAction, GamePhase, Ice, Mission, Program, ScreenKind } from "./core/types.ts";
-import { applyAction, buildHudLines, makeInitialState, resolveProgramSelection, stateToSaveSlot } from "./core/state.ts";
+import { applyAction, buildHudLines, makeInitialState, resolveProgramSelection, slotToGameState, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
-import { save as saveToSlot } from "./save/storage.ts";
+import { save as saveToSlot, load as loadFromSlot, hasSave as slotHasSave, getSaveMeta } from "./save/storage.ts";
 import { getLayout, watchLayout, type Layout } from "./core/layout.ts";
 
 import missionsData from "./data/missions.json" with { type: "json" };
@@ -100,6 +100,10 @@ class Game {
   private renderer: AsciiRenderer;
   private input: KeyboardInput;
   private iceTypes: Readonly<Record<string, Ice>>;
+  private programs: Readonly<Record<string, Program>>;
+  private missions: ReadonlyArray<Mission>;
+  private hasSaveCache: boolean = false;
+  private saveMetaCache: { missionId: string; turnCount: number; savedAt: string } | null = null;
   private unmountTouch: () => void = () => {};
   private unwatchLayout: () => void = () => {};
   private _lastPhase: GamePhase | null = null;
@@ -109,10 +113,14 @@ class Game {
 
   constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
     this.iceTypes = iceTypes;
+    this.programs = programsData as unknown as ProgramsFile;
+    this.missions = MISSIONS;
     this.layout = getLayout();
     this.renderer = new AsciiRenderer(canvas, { cellWidth: 8, cellHeight: 16 });
     this.renderer.resizeGrid(this.layout.cols, this.layout.rows, this.layout.hudCols);
     this.input = new KeyboardInput();
+    // Refresh CONTINUE option availability on boot (async).
+    void this.refreshSaveCache();
     const handler = (action: GameAction): void => {
       // Pre-game screens (menu, mission_select, stub screens) route to handlePreGameInput.
       // In-game screens route through the reducer.
@@ -215,8 +223,10 @@ class Game {
         this.screen = "mission_select";
         this.draw();
         break;
-      case "graphic_novel":
       case "continue":
+        void this.handleContinue();
+        break;
+      case "graphic_novel":
       case "settings":
       case "credits":
       case "hall_of_dead":
@@ -227,6 +237,51 @@ class Game {
         this.draw();
         break;
     }
+  }
+
+  /** Reload hasSave + meta caches from storage. Call after save/load/clear. */
+  private async refreshSaveCache(): Promise<void> {
+    this.hasSaveCache = await slotHasSave(0);
+    this.saveMetaCache = await getSaveMeta(0);
+    // Re-draw menu to reflect availability change (if on menu screen).
+    if (this.screen === "menu") this.draw();
+  }
+
+  /** Load autosave (slot 0) and resume from saved state.
+   *
+   * Returns silently if no save exists (gated by hasSaveCache). On success,
+   * transitions to the in-game state and resets _lastIceHp/_lastPlayerHp
+   * so hit-flash VFX doesn't trigger immediately on resume.
+   */
+  private async handleContinue(): Promise<void> {
+    if (!this.hasSaveCache) {
+      // No save — show stub message (should be unreachable from menu but safe).
+      this.draw();
+      return;
+    }
+    const slot = await loadFromSlot(0);
+    if (!slot) {
+      // Stale cache: hasSave said true but load failed. Refresh + stub.
+      await this.refreshSaveCache();
+      this.draw();
+      return;
+    }
+    const fallbackIce = Object.values(this.iceTypes)[0];
+    if (!fallbackIce) {
+      this.draw();
+      return;
+    }
+    const restored = slotToGameState(slot, this.missions, this.programs, fallbackIce);
+    if (!restored) {
+      // Mission no longer in catalog or all programs disappeared.
+      this.draw();
+      return;
+    }
+    this.state = restored;
+    this.screen = "menu"; // game-internal state; main screen renderer picks up state != null
+    this._lastIceHp = restored.ice.hp;
+    this._lastPlayerHp = restored.player.hp;
+    this.draw();
   }
 
   private launchSelected(): void {
@@ -243,9 +298,14 @@ class Game {
   private autosave(): void {
     if (this.state === null) return;
     // saveToSlot is async (Tier 3 IDB backend). Fire-and-forget: autosave is best-effort.
-    saveToSlot(0, stateToSaveSlot(this.state)).catch(() => {
-      // Autosave is best-effort; user can manually save later.
-    });
+    saveToSlot(0, stateToSaveSlot(this.state))
+      .then(() => {
+        // Refresh save metadata so menu reflects current save state.
+        void this.refreshSaveCache();
+      })
+      .catch(() => {
+        // Autosave is best-effort; user can manually save later.
+      });
   }
 
   private draw(): void {
@@ -254,7 +314,13 @@ class Game {
       updateProgramRow([]); // hide row outside combat
       if (this.screen === "menu") {
         this.renderer.render(
-          renderMainMenu(this.selectedMenuIndex, this.layout.cols, this.layout.rows),
+          renderMainMenu(
+            this.selectedMenuIndex,
+            this.layout.cols,
+            this.layout.rows,
+            this.hasSaveCache,
+            this.saveMetaCache,
+          ),
           [
             "MAIN MENU",
             "",

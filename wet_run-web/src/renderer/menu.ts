@@ -36,11 +36,17 @@ export const MENU_OPTIONS: ReadonlyArray<{ key: MenuOption; label: string; avail
   { key: "stats", label: "STATS", available: true },
 ] as const;
 
-/** Render the main menu screen with the selected option highlighted. */
+/** Render the main menu screen with the selected option highlighted.
+ *
+ * CONTINUE option is grayed out (GRAY_DARK + " (no save)") when hasSave=false.
+ * Pass hasSave=true and saveMeta (optional) for full continue hint.
+ */
 export function renderMainMenu(
   selected: number,
   cols: number,
   rows: number,
+  hasSave: boolean = false,
+  saveMeta: { missionId: string; turnCount: number } | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -68,8 +74,23 @@ export function renderMainMenu(
     const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const row = startY + i;
     if (row >= rows - 1) break;
-    const label = `[${num}] ${opt.label}`;
+    let label = `[${num}] ${opt.label}`;
+    // CONTINUE option gating — gray out + suffix when no save.
+    if (opt.key === "continue" && !hasSave) {
+      label = `[${num}] CONTINUE    (no save)`;
+      grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
+      continue;
+    }
     grid = setText(grid, 4, row, `${marker} ${label}`, fg);
+  }
+
+  // Continue hint sub-line (when save exists).
+  if (hasSave && saveMeta) {
+    const hintRow = startY + 2;
+    if (hintRow < rows - 2) {
+      const hint = `→ ${saveMeta.missionId} (turn ${saveMeta.turnCount + 1})`;
+      grid = setText(grid, 6, hintRow, hint, PALETTE.YELLOW_AMBER);
+    }
   }
 
   // Footer

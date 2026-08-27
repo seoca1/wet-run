@@ -12,12 +12,13 @@ test("matrix shows event glyphs (combat/discovery/trap/etc.)", async ({ page }) 
   await page.keyboard.press("Enter"); // launch first mission
   await page.waitForTimeout(300);
 
-  // Now on matrix screen. Verify screen is matrix.
-  const screen = await page.evaluate(() => {
-    const w = window as unknown as { wetrun?: { getScreen(): string } };
-    return w.wetrun?.getScreen();
+  // After launch, state.runPhase="matrix" (the screen field stays
+  // "mission_select" but draw() routes by runPhase). Verify via state.
+  const runPhase = await page.evaluate(() => {
+    const w = window as unknown as { wetrun?: { state?: { runPhase?: string } | null } };
+    return w.wetrun?.state?.runPhase ?? null;
   });
-  expect(screen).toBe("matrix");
+  expect(runPhase).toBe("matrix");
 });
 
 test("combat triggers VFX (canvas changes after card use)", async ({ page }) => {

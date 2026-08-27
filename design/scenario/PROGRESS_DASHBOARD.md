@@ -1,8 +1,8 @@
 # Wet Run — Project Dashboard
 
-**Last Updated**: 2026-07-08 (Phase 7 완료 상태)
-**Project Phase**: Phase 7 완료 (2026-07-07)
-**참고**: Phase 4 당시 작성. Phase 7 기준으로 부분 업데이트됨. 최신 전체 진도는 `chapter-progress.md` 참조.
+**Last Updated**: 2026-08-27 (v1.4.0 반영 + Phase 18+ audit)
+**Project Phase**: v1.4.0 released (2026-08-26), Phase α-L + Phase 14 + Tracks A/B/D 완료
+**참고**: Phase 4~7 시절 작성. v1.4.0 기준으로 카운트 갱신. 최신 전체 진도는 `chapter-progress.md` 참조.
 
 ---
 
@@ -14,14 +14,14 @@
 | phases 데이터 | 45/45 챕터 | 45/45 챕터 | **100%** ✅ |
 | 컷씬 참조 | 41개 | 45개 | 91% |
 | Stories (단편소설) | **39 stories** (EN/KO pairs) | — | ✅ |
-| 미션 수 | **47 missions** | — | ✅ |
-| GN 씬 (9자키) | **72 scenes** (9×8) | 72 | **100%** ✅ |
+| 미션 수 | **209 missions** (ADR-0206 wiring: 194 → 209) | — | ✅ |
+| GN 씬 (9자키) | **81 scenes** (9×9) | 81 | **100%** ✅ |
 | 케이 전체 챕터 | ✅ 25 eps, 103 beats, 8 combats | — | — |
 | 실 전체 챕터 | ✅ 25 eps, 99 beats, 12 combats | — | — |
 | 카스 전체 챕터 | ✅ 25 eps, 100 beats, 11 combats | — | — |
 | Chapter Flow 대시보드 | ✅ 동적 로딩 | — | — |
 | Story HTML | ✅ 78 files (EN↔KO) | — | **NEW** |
-| ICE 스케일링 시스템 | ✅ 완비 (41 types) | — | **UPDATED** |
+| ICE 스케일링 시스템 | ✅ 완비 (97 types) | — | **UPDATED** (ADR-0206+Tracks) |
 | 9자키 완전 통합 | ✅ Phase 7~9 | — | **NEW** |
 | 검증 파이프라인 스크립트 | ✅ scripts/verify_story_pipeline.py | — | — |
 | Player Status HUD | ✅ HP bar + Grade + PPL | — | — |

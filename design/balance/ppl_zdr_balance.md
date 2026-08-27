@@ -118,7 +118,7 @@ credits = arc * 800 + (grade - 1) * 300
 
 > **2026-07-27 sync (ADR-0130)**: 권위 필드는 `rewards.credits` (nested) — `missions/board.py:246 _parse_rewards(value.get("rewards"))` 가 먼저 시도. `reward_credits` (top-level) 는 fallback (없거나 0일 때만).
 > 
-> **데이터 위생**: 111 missions 중 `reward_credits` (top) 와 `rewards.credits` 가 모두 존재하는 경우, JSON 정합성 위해 동일 값 권장. 향후 deprecation 검토 (P3).
+> **데이터 위생**: 209 missions 중 `reward_credits` (top) 와 `rewards.credits` 가 모두 존재하는 경우, JSON 정합성 위해 동일 값 권장. 향후 deprecation 검토 (P3).
 
 → **공식 대비 55~96%** 로 보수적 설정 (깁슨 톤: 런은 빡빡함).
    Arc 5 (finale) 만 공식 근접 — 엔딩 보상 풍성.

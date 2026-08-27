@@ -15,7 +15,7 @@ This document defines the complete mission type taxonomy used in wet_run. It cat
 
 ## Existing Mission Types (Refined)
 
-The current 111 missions use 24 distinct `primary_objective.type` values. These are consolidated into 6 logical categories:
+The current 209 missions (Phase 18 audit) use multiple distinct `primary_objective.type` values. These are consolidated into 6 logical categories:
 
 ### Category 1: Data Operations (51+ missions)
 
@@ -297,8 +297,7 @@ Gating: requires Salvation completion + NG+ active.
 
 ### Backward compatibility
 
-- Existing 111 missions: 0 modifications needed
-- New 153+ missions: use new + existing types
+- Existing missions (Phase 11 시점 116, 현재 209): 0 modifications needed
 - Schema validation: optional `type` field accepting any string
 
 ---
@@ -310,7 +309,7 @@ Gating: requires Salvation completion + NG+ active.
 - [ ] 19 random selection rules listed
 - [ ] 11 endgame missions scoped
 - [ ] All changes are additive (no regressions)
-- [ ] Existing 111 missions continue to work
+- [ ] Existing missions (현재 209) continue to work
 
 ## Status
 

@@ -79,7 +79,7 @@ def generate(seed: int, mission_id: str, character_ref: str) -> MatrixGraph:
 ## 시드 재현성
 
 같은 입력 (seed + mission_id + character_ref + grade) → 같은 출력.
-29 미션 × 3 캐릭터 × 5 등급 = **435 layouts** deterministic.
+209 미션 × 5 등급 = **1045 layouts** deterministic.
 
 ```python
 >>> g1 = generate(seed=42, mission_id="first_jack", character_ref="novice", grade=1)
@@ -124,7 +124,7 @@ HookAction 실행 (NARRATIVE/EXCERPT/EVENT/COMBAT/ITEM/CINEMATIC)
 AppState 에 결과 반영
 ```
 
-29 미션 × 6 hook kinds = 다채로운 런 변형.
+209 미션 × 6 hook kinds = 다채로운 런 변형.
 
 ## 재현성 vs 다양성 트레이드오프
 
@@ -155,7 +155,7 @@ AppState 에 결과 반영
 ## 테스트
 
 - `test_procedural_dungeon.py` (23 tests): BSP / Kruskal / dead-end
-- `test_mission_mapper.py` (59 tests): 29 미션 × 키워드 룰 매핑
+- `test_mission_mapper.py` (59 tests): 209 미션 × 키워드 룰 매핑
 - `test_matrix_generator.py` (회귀): 시드 재현성
 
 ## 미래 작업 (Phase 6+)

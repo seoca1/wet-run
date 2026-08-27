@@ -408,7 +408,7 @@ PYTHONPATH=src .venv/bin/python scripts/play_mission_mapping.py
 
 ## Phase 11 확장 (ADR-0188) — Mission Type Expansion
 
-Phase 11 introduces 5 new mission types + mission chains. All extensions are **additive** (existing 111 missions unchanged).
+Phase 11 introduces 5 new mission types + mission chains. All extensions are **additive** (existing 116 missions at the time; current 209 after Phase α-L + ADR-0206 Arc6+Expansion wiring).
 
 ### New Mission Types
 
@@ -471,7 +471,7 @@ Chain reward: `ta_construct_full` + reputation +25 + 50000 credits + achievement
 
 ### 상호 운용성 (Interoperability)
 
-- **기존 111 missions**: 0 변경, 그대로 작동
+- **기존 missions (Phase 11 시점 116, 현재 209)**: 0 변경, 그대로 작동
 - **신규 5 missions**: TA zone, chain 통합 (ta_succession)
 - **확장 5+ types**: `investigation_*, defeat_*, dual_*, extraction_v2, stealth_*`
 - **체인**: 1 chain (ta_succession) + 7 plans (faction 3 + character 3 + story 2)

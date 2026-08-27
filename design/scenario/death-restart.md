@@ -389,7 +389,7 @@ Avg missions/run: 2.3
 2. `jockey_history.py` 구현
 3. `death.py` 확장 (DEATH_SUMMARY, RESTART_OPTIONS, HALL_OF_DEAD)
 4. AppState 확장
-5. 메뉴 [6] 옵션 추가
+5. 메뉴 [6] 옵션 추가 (HALL_OF_DEAD, Phase 7에서 [7] HELP 추가, Phase 17에서 [8] STATS 옵트인)
 6. 테스트 30+ 추가
 7. `death_demo.py` 시연
 8. 메타 문서 동기화

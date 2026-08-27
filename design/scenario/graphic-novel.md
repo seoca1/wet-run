@@ -1,7 +1,7 @@
 # Graphic Novel Mode (그래픽 노블 자동플레이 모드)
 
 > **이 문서는 [`../../decisions/0032-graphic-novel-mode.md`](../../decisions/0032-graphic-novel-mode.md)의 디자인 명세.**
-> 메인메뉴 7 옵션 (Phase 7 + ADR-0040) + 그래픽 노블 자동플레이 + 세이브 진도 회고.
+> 메인메뉴 7 옵션 (Phase 7 + ADR-0040) + Phase 17 옵트인 [8] STATS + 그래픽 노블 자동플레이 + 세이브 진도 회고.
 >
 > **Phase 19 audit (2026-08-13)**: 7-option menu (was 5), ADR-0043 audio + ADR-0044 GN save, TELEMETRY_STATS menu cross-reference.
 
@@ -317,7 +317,7 @@ prototype/data/
 ## 10. 의존성
 
 - `engine/chapter_view.py` (ADR-0031) — 단일 씬 타이핑 기반
-- `engine/save_manager.py` (ADR-0021) — 세이브 로드 (진도 조회)
+- `engine/save_manager.py` (ADR-0044 GN Save) — 세이브 로드 (진도 조회)
 - `engine/state.py` — `ScreenKind.GRAPHIC_NOVEL_MENU`, `GRAPHIC_NOVEL`, `SAVED_PROGRESS` 추가
 - `engine/audio/sound_manager.py` — 씬별 사운드 큐
 - `data/portraits/portraits.json` — 기존 포트레잇 자산
@@ -379,7 +379,7 @@ prototype/data/
 └────┬───────┘
      │ depends on
      ├──> ADR-0031 (Original Scenario)  ← 캐릭터/챕터 정의
-     ├──> ADR-0021 (Save/Load)          ← 진도 조회
+     ├──> ADR-0044 (GN Save)          ← 진도 조회
      ├──> ADR-0009 (Story/News)         ← meatspace 미표시
      ├──> ADR-0011 (ASCII Portraits)    ← 포트레잇 시스템
      └──> ADR-0019 (Aftermath)          ← 4-importance
@@ -564,7 +564,7 @@ load_scene_chain(scenes_dir, character, *, shuffle=False, seed=None, ending="A")
 └────┬───────┘
      │ depends on
      ├──> ADR-0031 (Original Scenario)  ← 캐릭터/챕터 정의
-     ├──> ADR-0021 (Save/Load)          ← 진도 조회
+     ├──> ADR-0044 (GN Save)          ← 진도 조회
      ├──> ADR-0009 (Story/News)         ← meatspace 미표시
      ├──> ADR-0011 (ASCII Portraits)    ← 포트레잇 시스템
      ├──> ADR-0040 (Death Cycle)        ← Hall of Dead 메뉴 [6]

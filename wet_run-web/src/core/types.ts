@@ -79,6 +79,25 @@ export type GamePhase =
   | "defeat" // Player defeated
   | "exit"; // Jacked out
 
+/** Screen state — top-level UI surface (mirrors Python ScreenKind, wet_run-web subset).
+ *
+ * Tier 4 implements 6 of the 11 options: MENU + NEW_RUN (→ MISSION_SELECT) +
+ * GRAPHIC_NOVEL (stub) + CONTINUE (stub) + SETTINGS (stub) + CREDITS (stub).
+ * The remaining options (HALL_OF_DEAD, HELP, ENDINGS, STATS) are deferred
+ * until Tier 5+ per the README "Out of scope" list.
+ */
+export type ScreenKind =
+  | "menu" // Main menu (9 options, current screen on boot)
+  | "mission_select" // NEW RUN → mission select (Tier 3 curated 30 missions)
+  | "graphic_novel" // GRAPHIC NOVEL → auto-play (stub for Tier 4)
+  | "saved_progress" // CONTINUE → load saved (stub for Tier 4)
+  | "settings" // SETTINGS screen (stub)
+  | "credits" // CREDITS screen (stub)
+  | "help" // HELP screen (stub)
+  | "hall_of_dead" // HALL OF DEAD (stub, deferred)
+  | "endings" // ENDINGS browser (stub, deferred)
+  | "stats" // STATS / Telemetry (stub, deferred);
+
 /** Top-level game state — referenced by all subsystems. */
 export interface GameState {
   readonly phase: GamePhase;

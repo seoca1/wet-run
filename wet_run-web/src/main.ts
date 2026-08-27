@@ -9,6 +9,7 @@ import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, updateProgramRow, isTouchDevice } from "./input/touch.ts";
 import { AudioManager, SFX_IDS } from "./audio/manager.ts";
+import { MENU_OPTIONS, renderMainMenu, renderStubScreen, type MenuOption } from "./renderer/menu.ts";
 import {
   healthBar,
   healthColor,
@@ -19,7 +20,7 @@ import {
   PLAYER_DEFEAT_ART,
   centerArt,
 } from "./renderer/vfx.ts";
-import type { GameState, GameAction, GamePhase, Ice, Mission, Program } from "./core/types.ts";
+import type { GameState, GameAction, GamePhase, Ice, Mission, Program, ScreenKind } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState, resolveProgramSelection, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
@@ -93,9 +94,11 @@ function renderMissionSelect(
 
 class Game {
   private state: GameState | null = null;
+  private screen: ScreenKind = "menu";
+  private selectedMenuIndex = 0;
+  private selectedMission = 0;
   private renderer: AsciiRenderer;
   private input: KeyboardInput;
-  private selectedMission = 0;
   private iceTypes: Readonly<Record<string, Ice>>;
   private unmountTouch: () => void = () => {};
   private unwatchLayout: () => void = () => {};
@@ -111,8 +114,14 @@ class Game {
     this.renderer.resizeGrid(this.layout.cols, this.layout.rows, this.layout.hudCols);
     this.input = new KeyboardInput();
     const handler = (action: GameAction): void => {
+      // Pre-game screens (menu, mission_select, stub screens) route to handlePreGameInput.
+      // In-game screens route through the reducer.
+      if (this.screen !== "menu" && this.screen !== "mission_select" && this.state === null) {
+        this.handleStubInput(action);
+        return;
+      }
       if (this.state === null) {
-        this.handleMenuInput(action);
+        this.handlePreGameInput(action);
       } else {
         // Resolve select_program (hand index) → use_program (programId) at the boundary.
         const resolved: GameAction = (() => {
@@ -145,17 +154,78 @@ class Game {
     });
   }
 
-  private handleMenuInput(action: GameAction): void {
-    if (action.type === "move_south") {
-      this.selectedMission = (this.selectedMission + 1) % MISSIONS.length;
+  private handlePreGameInput(action: GameAction): void {
+    // Digit keys 1-9 → menu selection on menu screen (otherwise → combat program select).
+    if (action.type === "select_program" && this.screen === "menu") {
+      const idx = action.handIndex - 1;
+      if (idx >= 0 && idx < MENU_OPTIONS.length) {
+        this.selectedMenuIndex = idx;
+        this.selectMenuOption(MENU_OPTIONS[idx]?.key);
+      }
+      return;
+    }
+    if (this.screen === "menu") {
+      if (action.type === "move_south") {
+        this.selectedMenuIndex = (this.selectedMenuIndex + 1) % MENU_OPTIONS.length;
+        this.draw();
+      } else if (action.type === "move_north") {
+        this.selectedMenuIndex = (this.selectedMenuIndex - 1 + MENU_OPTIONS.length) % MENU_OPTIONS.length;
+        this.draw();
+      } else if (action.type === "confirm") {
+        this.selectMenuOption(MENU_OPTIONS[this.selectedMenuIndex]?.key);
+      } else if (action.type === "jack_out" || action.type === "cancel") {
+        // No-op: already at top-level menu
+        this.draw();
+      }
+      return;
+    }
+    if (this.screen === "mission_select") {
+      if (action.type === "move_south") {
+        this.selectedMission = (this.selectedMission + 1) % MISSIONS.length;
+        this.draw();
+      } else if (action.type === "move_north") {
+        this.selectedMission = (this.selectedMission - 1 + MISSIONS.length) % MISSIONS.length;
+        this.draw();
+      } else if (action.type === "confirm") {
+        this.launchSelected();
+      } else if (action.type === "jack_out" || action.type === "cancel") {
+        this.screen = "menu";
+        this.draw();
+      }
+      return;
+    }
+  }
+
+  private handleStubInput(action: GameAction): void {
+    // Stub screens: ENTER/ESC/Q/CANCEL all return to main menu.
+    if (
+      action.type === "confirm" ||
+      action.type === "cancel" ||
+      action.type === "jack_out"
+    ) {
+      this.screen = "menu";
       this.draw();
-    } else if (action.type === "move_north") {
-      this.selectedMission = (this.selectedMission - 1 + MISSIONS.length) % MISSIONS.length;
-      this.draw();
-    } else if (action.type === "confirm") {
-      this.launchSelected();
-    } else if (action.type === "jack_out" || action.type === "cancel") {
-      this.draw();
+    }
+  }
+
+  private selectMenuOption(option: MenuOption | undefined): void {
+    if (!option) return;
+    switch (option) {
+      case "new_run":
+        this.screen = "mission_select";
+        this.draw();
+        break;
+      case "graphic_novel":
+      case "continue":
+      case "settings":
+      case "credits":
+      case "hall_of_dead":
+      case "help":
+      case "endings":
+      case "stats":
+        // Stub for now (Tier 5+). Show "Coming soon" screen.
+        this.draw();
+        break;
     }
   }
 
@@ -180,15 +250,36 @@ class Game {
 
   private draw(): void {
     if (this.state === null) {
-      this.renderer.render(
-        renderMissionSelect(MISSIONS, this.selectedMission, this.layout.cols, this.layout.rows),
-        [
-          "MISSION SELECT",
-          "",
-          `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
-        ],
-      );
+      // Pre-game screen routing
       updateProgramRow([]); // hide row outside combat
+      if (this.screen === "menu") {
+        this.renderer.render(
+          renderMainMenu(this.selectedMenuIndex, this.layout.cols, this.layout.rows),
+          [
+            "MAIN MENU",
+            "",
+            `Selected: ${this.selectedMenuIndex + 1}/${MENU_OPTIONS.length}`,
+          ],
+        );
+      } else if (this.screen === "mission_select") {
+        this.renderer.render(
+          renderMissionSelect(MISSIONS, this.selectedMission, this.layout.cols, this.layout.rows),
+          [
+            "MISSION SELECT",
+            "",
+            `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
+          ],
+        );
+      } else {
+        // Stub screens (graphic_novel, continue, settings, credits, hall_of_dead,
+        // help, endings, stats)
+        const opt = MENU_OPTIONS[this.selectedMenuIndex];
+        const label = opt ? opt.label.toUpperCase() : "WET RUN";
+        this.renderer.render(
+          renderStubScreen(label, this.layout.cols, this.layout.rows),
+          ["STUB", "", "Coming soon — Tier 5+"],
+        );
+      }
       this.syncPhase("menu");
     } else {
       const previous = this.state;
@@ -235,6 +326,11 @@ class Game {
   /** Read-only phase accessor for e2e/integration tests. */
   getPhase(): GamePhase | null {
     return this.state?.phase ?? null;
+  }
+
+  /** Read-only screen accessor for e2e/integration tests. */
+  getScreen(): ScreenKind {
+    return this.screen;
   }
 
   /** External entry point for touch gamepad program buttons.

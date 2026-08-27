@@ -4244,3 +4244,54 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 1. 🟡 Phase 7 확장 시 다른 design doc 동시 갱신 (5 옵션 → 7 옵션 claim 검증)
 2. 🟢 Web MVP 추가 E2E: combat 히트플래시 VFX 검증, audio 컨텍스트 unlock 검증
 3. 🟢 Tier 5 web features (status state machine 통합, fade, save 압축)
+
+---
+
+## 📐 Design/ Comprehensive Drift Fix (2026-08-27) — P0+P1 selective applied
+
+**Scope**: User 'Continue' → carry-over P2 잔여 (design drift 일제 검증). Scanner bg_2af5659c (Sisyphus-Junior, 1m57s) 67 파일 (18,573 LOC) 8 카테고리 스캔.
+
+### 발견 (23 findings: 8 P0, 11 P1, 4 P2)
+
+#### P0 — Stale content counts (전부 적용)
+
+| File | Old | New |
+|---|---|---|
+| `scenario/PROGRESS_DASHBOARD.md` | 47 missions / 41 ICE / 72 GN scenes / Phase 7 | 209 missions / 97 ICE / 81 GN scenes / v1.4.0 |
+| `systems/procgen.md` (3 occurrences) | 29 미션 | 209 미션 |
+| `systems/missions.md` (2 occurrences) | 111 missions | 209 (with Phase 11 history) |
+| `systems/mission-types.md` (3 occurrences) | 111 missions | 209 (with history) |
+| `balance/ppl_zdr_balance.md` | 111 missions | 209 |
+
+#### P1 — 적용한 high-impact (8개)
+
+- `graphic-novel.md` line 4: 7 옵션 → 7~8 옵션 (STATS 옵트인)
+- `graphic-novel.md` ADR-0021 (Save/Load) → **ADR-0044 (GN Save)** (3 occurrences — ADR-0021 미존재)
+- `death-restart.md`: 메뉴 [6] 옵션 → [6] with Phase 7+17 history context
+- `chapter-4-suit.md`: 5 옵션 → 5 → 7 → 8 (history chain)
+- `chapter-5-wigan.md`: 6 옵션 → 6 → 7 → 8
+- `chapter-7-sally.md`: 9 옵션 (잘못된 방향) → 7~8 옵션
+- `chapter-progress.md` CJK contamination: '陈旧' → '오래됨', '原래' → '원래' (AGENTS.md §7 준수)
+
+### 적용하지 않은 P1 (low impact / not drift)
+
+- `engagement.md` line 590: "SETTINGS_OPTIONS 확장 (5 → 7)" — **not drift**. SETTINGS는 sub-menu (5 audio/colorblind/keymap/resolution/back + 2) vs MAIN menu. 다른 스코프.
+
+### 적용하지 않은 P2 (polish, ~0.5h 후속)
+
+- Frontmatter 표준화 (10 파일 중 1만 표준 형식) — 별도 세션
+
+### 검증
+
+- `mkdocs build --strict`: ✅ 0 errors
+- 11 files, +25/-26 lines
+
+### Commit pushed
+
+- `db5fd6d` docs(wet_run): design drift fixes — v1.4.0 content counts + menu claims + ADR refs
+
+### 후속
+
+1. 🟢 Frontmatter 표준화 (10 파일 통일)
+2. 🟢 ADR-0021 정식 파일 작성 (Save/Load 정책) 또는 영구 삭제 결정
+3. 🟢 Tier 5 web features, 3-person playtest, Phase C1-C4

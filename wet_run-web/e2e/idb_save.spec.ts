@@ -18,10 +18,12 @@ test("IDB save survives page reload", async ({ page }) => {
   await page.goto("./");
   await page.waitForLoadState("networkidle");
 
-  // Phase 1: enter menu, press Enter to launch first mission.
-  await page.keyboard.press("Enter");
+  // Phase 1: enter main menu → NEW_RUN → mission_select → Enter → combat.
+  await page.keyboard.press("Enter"); // NEW_RUN (highlighted)
   await page.waitForTimeout(200);
-  await page.keyboard.press("Enter"); // → combat
+  await page.keyboard.press("Enter"); // launch mission
+  await page.waitForTimeout(200);
+  await page.keyboard.press("Enter"); // approach → combat
   await page.waitForTimeout(200);
 
   // Inspect autosave state (IDB write should have happened on draw()).

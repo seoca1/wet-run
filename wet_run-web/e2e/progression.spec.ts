@@ -12,12 +12,16 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("combat progression (regression)", () => {
-  test("menu → approach → combat → victory via digit key", async ({ page }) => {
+  test("menu → mission_select → approach → combat → victory via digit key", async ({ page }) => {
     await page.goto("./");
     await page.waitForLoadState("networkidle");
 
-    // Mission select screen renders; press Enter to launch the first mission.
+    // Main menu renders; press Enter to select NEW_RUN (highlighted).
     await expect(page.locator("canvas#game-canvas")).toBeVisible();
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(200);
+
+    // Mission select screen renders; press Enter to launch the first mission.
     await page.keyboard.press("Enter");
     await page.waitForTimeout(200);
 

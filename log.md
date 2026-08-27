@@ -4340,3 +4340,68 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 ### Commit pushed
 
 - `03c8ff0` docs(wet_run): entry screen + progression flowchart + 9-option menu fix
+
+---
+
+## 🎮 wet_run-web Main Menu (9 Options) — Tier 4 (2026-08-27)
+
+**Scope**: User 'Continue' → Web 메인 메뉴 구현 (entry-flow gap, 16 missing screens).
+
+### 산출물
+
+| File | LOC | Purpose |
+|---|--:|---|
+| `src/renderer/menu.ts` | 148 | renderMainMenu() + renderStubScreen() + MENU_OPTIONS constant |
+| `src/core/types.ts` | +15 | ScreenKind enum (11 members) |
+| `src/main.ts` | +90 | Game class — screen state + handlePreGameInput() + selectMenuOption() + getScreen() |
+| `tests/menu.test.ts` | 79 | 7 unit tests (9 options, marker, grid dims, footer, stub) |
+| `e2e/menu.spec.ts` | 88 | 4 E2E tests (boot, NEW_RUN nav, ESC back, stub) |
+| `e2e/progression.spec.ts` | +3 | Updated for new menu flow |
+| `e2e/idb_save.spec.ts` | +2 | Updated for new menu flow |
+
+### 동작
+
+```
+[Boot]
+   ↓
+┌─────────────────────────────────┐
+│           WET RUN               │
+│  ▸ [1] NEW RUN                  │ ← Enter → mission_select
+│    [2] GRAPHIC NOVEL            │ ← stub (Tier 5+)
+│    [3] CONTINUE                 │ ← stub
+│    [4] SETTINGS                 │ ← stub
+│    [5] CREDITS                  │ ← stub
+│    [6] HALL OF DEAD             │ ← stub
+│    [7] HELP                     │ ← stub
+│    [8] ENDINGS                  │ ← stub
+│    [9] STATS                    │ ← stub
+│                                 │
+│  Arrow keys: nav | ENTER: sel   │
+└─────────────────────────────────┘
+```
+
+### 검증
+
+| Check | Result |
+|---|---|
+| `tsc --noEmit` | ✅ 0 errors |
+| `npm test` | ✅ **113 passed** (was 106 → +7 menu tests) |
+| `npm run build` | ✅ 136.75 KB (was 131.65 → +5.10 KB) |
+| `npx playwright test` | ✅ **18 passed** (was 10, +4 menu tests × 2 projects, +2 progress/idb updates × 2) |
+
+### Entry-flow gap 해소
+
+- **이전**: 19 화면 중 3 구현 (mission_select, combat, jack_out)
+- **이후**: **19 화면 중 4 구현** (main menu 추가 + stubs 7개 for Tier 5+ deferred)
+- **NEW RUN → mission select**: 신규 진입 경로 제공
+
+### Commit pushed
+
+- `40e96e2` test: update progression + idb_save for new menu flow
+- `05aa417` feat: main menu with 9 options (Tier 4)
+
+### 후속
+
+1. 🟢 Tier 5+ sub-screens 실제 구현 (graphic_novel, credits, settings, etc.)
+2. 🟢 Continue loading via IDB (CONTINUE 옵션 활성화)
+3. 🟢 Telemetry opt-in UI (STATS 옵션 활성화)

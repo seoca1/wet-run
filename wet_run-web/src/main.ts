@@ -149,13 +149,29 @@ class Game {
         })();
         const previous = this.state;
         this.state = applyAction(this.state, resolved);
+        // Sound + visual feedback for combat transitions.
+        const audio = AudioManager.getInstance();
         if (resolved.type === "use_program" && previous.phase === "combat" && this.state.phase === "combat") {
           const iceDelta = this.state.ice.hp - previous.ice.hp;
           if (iceDelta < 0) {
-            AudioManager.getInstance().playSfx(SFX_IDS.COMBAT_HIT);
+            audio.playSfx(SFX_IDS.COMBAT_HIT);
+            // Boss phase transition (only for isBoss node, phase advances from 1→2→3→4).
+            if (previous.bossPhase > 0 && this.state.bossPhase > previous.bossPhase) {
+              audio.playSfx(SFX_IDS.VICTORY); // reuse victory cue as boss enrage
+            }
           }
           this._lastIceHp = this.state.ice.hp;
           this._lastPlayerHp = this.state.player.hp;
+        }
+        // Card use cue handled by combat_hit above (no dedicated card_use asset yet).
+        // Matrix → combat entry SFX (entering a node triggers runPhase change).
+        if (previous.runPhase === "matrix" && this.state.runPhase === "combat") {
+          audio.playSfx(SFX_IDS.COMBAT_HIT); // reuse combat_hit as "engaging"
+        }
+        // Burn proc SFX (player takes burn damage from useProgram tick).
+        const burnTickDmg = this.state.player.hp - previous.player.hp;
+        if (burnTickDmg > 0 && previous.runPhase === "combat" && this.state.runPhase === "combat") {
+          audio.playSfx(SFX_IDS.DEFEAT); // reuse defeat cue as "ouch"
         }
         this.draw();
       }

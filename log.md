@@ -4536,3 +4536,47 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 - ⚪ Particle burst 추가 (현재 별표 5개만)
 - ⚪ 보스 4-phase VFX (현재 generic victory)
 - ⚪ Status overlay panel (현재 glyph + 텍스트만)
+
+---
+
+## 🔊 Sound Integration (SFX + BGM) — Tier 5.5+ (2026-08-27)
+
+**Scope**: User 'Continue' choice: 'Sound integration'.
+
+### Sound Triggers 추가
+
+| Trigger | SFX | 설명 |
+|---|---|---|
+| ICE HP 감소 (combat) | COMBAT_HIT (existing) | 카드 사용 시 데미지 시그널 |
+| runPhase: combat → loot | VICTORY (existing in syncPhase) | 격파 시 |
+| bossPhase 1→2→3→4 승급 | VICTORY cue 재사용 | boss 격노 (asset 재사용) |
+| Burn proc (player takes dmg) | DEFEAT cue 재사용 | "ouch" 시그널 |
+| runPhase: matrix → combat | COMBAT_HIT 재사용 | "engaging" 시그널 |
+
+**Asset 재사용 이유**: 별도 boss_phase.ogg가 없어 VICTORY를 enrage로, DEFEAT를 "ouch"로 사용. 향후 5개 SFX asset 확장 시 분리 가능.
+
+### Verification
+
+| Check | Result |
+|---|---|
+| tsc --noEmit | ✅ 0 errors |
+| npm test | ✅ **189 passed** (was 180 → +9 sound trigger tests) |
+| npm run build | ✅ 152.16 KB (was 151.89 → +0.27 KB) |
+| npx playwright test (live) | ✅ **34 passed** (was 32 → +2 × 2 projects) |
+
+### Tests
+
+- `tests/sound_triggers.test.ts` (NEW, 9 tests): pure predicate functions
+  (shouldFireCombatHit, shouldFireVictory, shouldFireBossPhase) tested with
+  multi-scenario coverage. Tier 5.5 iceRoster semantics documented inline.
+- `e2e/sound_triggers.spec.ts` (NEW, 1 test × 2 projects): full-run error
+  capture + AudioContext user-gesture filter (Howler.js requires user click
+  to start audio).
+
+### Commit pushed
+
+- `04de85b` feat(wetrun-web): sound integration — SFX on combat/burn/boss transitions
+
+### Live URL
+
+**`https://seoca1.github.io/wet-run/wetrun-web/`** — 사운드 활성화는 사용자 gesture 후 (브라우저 정책). 메뉴 클릭 후 카드 사용 → COMBAT_HIT + BGM phase 전환 + 격파 시 VICTORY.

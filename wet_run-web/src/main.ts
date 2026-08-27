@@ -10,6 +10,9 @@ import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, updateProgramRow, isTouchDevice } from "./input/touch.ts";
 import { AudioManager, SFX_IDS } from "./audio/manager.ts";
 import { MENU_OPTIONS, renderMainMenu, renderStubScreen, type MenuOption } from "./renderer/menu.ts";
+import { renderMatrix } from "./renderer/matrix.ts";
+import { buildMatrix } from "./core/matrix.ts";
+import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
 import {
   healthBar,
   healthColor,
@@ -297,7 +300,17 @@ class Game {
     const deck = loadDeck(programs);
     const ice = loadIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
-    this.state = { ...initial, grid: makeGrid(this.layout.cols, this.layout.rows) };
+    // Tier 5: build matrix and start at node 0. populateIceRoster() will
+    // fill iceRoster when player enters combat at each node.
+    const matrix = buildMatrix(this.iceTypes);
+    this.state = {
+      ...initial,
+      grid: makeGrid(this.layout.cols, this.layout.rows),
+      matrix,
+      currentNodeIndex: 0,
+      runPhase: "matrix",
+      phase: "approach",
+    };
     this.draw();
   }
 
@@ -315,6 +328,46 @@ class Game {
   }
 
   private draw(): void {
+    // Tier 5: matrix / loot / ending screens render with a real GameState
+    // but their UI is non-combat. Route by runPhase.
+    if (this.state !== null && this.state.runPhase === "matrix") {
+      updateProgramRow([]);
+      const matrix = this.state.matrix;
+      if (matrix) {
+        this.renderer.render(
+          renderMatrix(
+            matrix,
+            this.state.currentNodeIndex,
+            this.state.visitedNodes,
+            this.layout.cols,
+            this.layout.rows,
+          ),
+          ["MATRIX", "", `Node ${this.state.currentNodeIndex + 1}/${matrix.nodes.length}`],
+        );
+      }
+      return;
+    }
+    if (this.state !== null && this.state.runPhase === "ending") {
+      updateProgramRow([]);
+      this.renderer.render(
+        renderEndingScreen(this.state.endingChoice, this.layout.cols, this.layout.rows),
+        ["ENDING", "", `Choice: ${this.state.endingChoice ?? "?"}`],
+      );
+      return;
+    }
+    if (this.state !== null && this.state.runPhase === "loot") {
+      updateProgramRow([]);
+      this.renderer.render(
+        renderLootScreen(
+          this.state.player.hp,
+          this.state.player.maxHp,
+          this.layout.cols,
+          this.layout.rows,
+        ),
+        ["LOOT", "", "ENTER: continue | ESC: jack out"],
+      );
+      return;
+    }
     if (this.state === null) {
       // Pre-game screen routing
       updateProgramRow([]); // hide row outside combat

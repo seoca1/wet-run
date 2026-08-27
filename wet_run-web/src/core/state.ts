@@ -45,11 +45,36 @@ export function makeInitialState(mission: Mission, ice: Ice, deck: ReadonlyArray
     grid: makeGrid(MVP_GRID_W, MVP_GRID_H),
     message: `Mission: ${mission.title}`,
     turnCount: 0,
+    runPhase: "matrix",
+    statusEffects: [],
+    iceRoster: [ice],
+    activeIceIndex: 0,
+    currentNodeIndex: 0,
+    matrix: null,
+    visitedNodes: [],
+    bossPhase: 0,
+    endingChoice: null,
   };
 }
 
 /** Pure reducer — apply an action to a state, returning a new state. */
 export function applyAction(state: GameState, action: GameAction): GameState {
+  // Tier 5: matrix → combat → loot → ending cycle.
+  // The legacy `phase` field is still used within combat for
+  // approach/combat/victory/defeat sub-states.
+  if (state.runPhase === "matrix") {
+    return applyMatrixAction(state, action);
+  }
+  if (state.runPhase === "loot") {
+    return applyLootAction(state, action);
+  }
+  if (state.runPhase === "ending") {
+    return applyEndingAction(state, action);
+  }
+  if (state.runPhase === "dead") {
+    return state;
+  }
+  // combat: dispatch by legacy phase
   switch (state.phase) {
     case "menu":
       return applyMenuAction(state, action);
@@ -61,8 +86,77 @@ export function applyAction(state: GameState, action: GameAction): GameState {
     case "defeat":
       return applyEndAction(state, action);
     case "exit":
-      return state; // terminal — ignore further actions
+      return state;
   }
+}
+
+/** Tier 5: matrix view actions (navigate, enter combat, jack out). */
+function applyMatrixAction(state: GameState, action: GameAction): GameState {
+  if (action.type === "confirm" && state.matrix != null) {
+    const node = state.matrix.nodes[state.currentNodeIndex];
+    if (!node || node.iceIds.length === 0) return state;
+    // Populate iceRoster from matrix node + iceTypes catalog.
+    // main.ts's resolveMatrixRoster isn't accessible here (no ice catalog),
+    // so we resolve against the current activeIce (fallback). For MVP the
+    // matrix generator pre-resolves ids to a single default; tier 5+ will
+    // inject a richer resolver.
+    const activeIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
+    const iceRoster = node.iceIds.map((id, i) => {
+      const hp = node.iceHp[i] ?? activeIce.hp;
+      return { ...activeIce, id, hp };
+    });
+    return {
+      ...state,
+      runPhase: "combat",
+      phase: "approach",
+      message: `Entering ${node.zone}... (${iceRoster.length} ICE)`,
+      iceRoster,
+      activeIceIndex: 0,
+      bossPhase: node.isBoss ? 1 : 0,
+      turnCount: state.turnCount + 1,
+    };
+  }
+  if (action.type === "cancel" || action.type === "jack_out") {
+    return { ...state, phase: "menu", message: "Jacked out — run abandoned" };
+  }
+  return state;
+}
+
+/** Tier 5: loot screen between combats (Tier 4 simplification: HEAL + advance). */
+function applyLootAction(state: GameState, action: GameAction): GameState {
+  if (action.type !== "confirm") return state;
+  if (!state.matrix) {
+    return { ...state, runPhase: "ending", endingChoice: "A" };
+  }
+  const node = state.matrix.nodes[state.currentNodeIndex];
+  if (!node || node.adjacent.length === 0) {
+    // Boss defeated — run complete.
+    return {
+      ...state,
+      runPhase: "ending",
+      endingChoice: state.player.hp > 50 ? "A" : state.player.hp > 25 ? "B" : "C",
+    };
+  }
+  const nextIdx = node.adjacent[0] ?? state.currentNodeIndex;
+  const newVisited = state.visitedNodes.includes(nextIdx)
+    ? state.visitedNodes
+    : [...state.visitedNodes, nextIdx];
+  return {
+    ...state,
+    runPhase: "matrix",
+    currentNodeIndex: nextIdx,
+    visitedNodes: newVisited,
+    phase: "approach",
+    message: `Advancing to next node (${nextIdx})`,
+  };
+}
+
+/** Tier 5: ending screen — confirm returns to menu. */
+function applyEndingAction(state: GameState, action: GameAction): GameState {
+  if (action.type === "confirm" || action.type === "cancel") {
+    return { ...state, phase: "menu", message: `Ending ${state.endingChoice}: returning to title` };
+  }
+  return state;
 }
 
 /** Resolve a select_program (hand index, 1-based) to the matching use_program.
@@ -129,24 +223,38 @@ function useProgram(state: GameState, programId: string): GameState {
   const newDeck = state.deck.filter((p) => p.id !== programId);
   const discard = [...state.discardPile, program];
   const damage = program.tier * 5;
-  const newIceHp = Math.max(0, state.ice.hp - damage);
-  if (newIceHp === 0) {
+  // Tier 5: damage applies to active ICE in roster, not single state.ice.
+  const targetIdx = state.activeIceIndex;
+  const newRoster = state.iceRoster.map((ice, i) => {
+    if (i !== targetIdx) return ice;
+    return { ...ice, hp: Math.max(0, ice.hp - damage) };
+  });
+  // Check if all ICE in roster defeated (any 0-HP target ends the fight in MVP).
+  const allDefeated = newRoster.every((ice) => ice.hp === 0);
+  if (allDefeated && newRoster.length > 0) {
+    // Victory → loot screen
+    const totalReward = state.mission.rewards.credits +
+      (state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0);
     return {
       ...state,
-      ice: { ...state.ice, hp: 0 },
+      iceRoster: newRoster,
       deck: newDeck,
       discardPile: discard,
+      runPhase: "loot",
       phase: "victory",
-      message: `${state.ice.name} defeated! +${state.mission.rewards.credits} credits`,
+      message: `${state.ice.name} defeated! +${totalReward} credits`,
+      player: { ...state.player, credits: state.player.credits + totalReward },
     };
   }
+  const activeIceNewHp = newRoster[targetIdx]?.hp ?? 0;
   return {
     ...state,
-    ice: { ...state.ice, hp: newIceHp },
+    iceRoster: newRoster,
+    ice: { ...state.ice, hp: activeIceNewHp },
     deck: newDeck,
     discardPile: discard,
     player: { ...state.player, alarm: newAlarm },
-    message: `${program.name} → ${damage} dmg (ICE HP: ${newIceHp})`,
+    message: `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})`,
   };
 }
 
@@ -232,5 +340,14 @@ export function slotToGameState(
     grid: makeGrid(MVP_GRID_W, MVP_GRID_H),
     message: `Resumed from autosave (turn ${slot.turnCount + 1})`,
     turnCount: slot.turnCount,
+    runPhase: "matrix",
+    statusEffects: [],
+    iceRoster: [iceFallback],
+    activeIceIndex: 0,
+    currentNodeIndex: 0,
+    matrix: null,
+    visitedNodes: [],
+    bossPhase: 0,
+    endingChoice: null,
   };
 }

@@ -110,7 +110,58 @@ export interface GameState {
   readonly grid: Grid;
   readonly message: string; // Last status message (HUD)
   readonly turnCount: number;
+  // === Tier 5 multi-stage run extensions ===
+  readonly runPhase: RunPhase;
+  readonly statusEffects: ReadonlyArray<StatusEffectInstance>;
+  readonly iceRoster: ReadonlyArray<Ice>; // 1..N ICE in current combat (multi-enemy)
+  readonly activeIceIndex: number;
+  readonly currentNodeIndex: number;
+  readonly matrix: Matrix | null;
+  readonly visitedNodes: ReadonlyArray<number>;
+  readonly bossPhase: BossPhase; // 0 = no boss active, 1..4 = boss phase
+  readonly endingChoice: EndingChoice | null;
 }
+
+/** Top-level run cycle phase (Tier 5+). */
+export type RunPhase = "matrix" | "combat" | "loot" | "ending" | "dead";
+
+/** Status effect kinds (5 effects from ADR-0207). */
+export type StatusEffectKind = "burn" | "stun" | "slow" | "silence" | "vulnerable";
+
+/** Active status effect instance (Tier 5 state machine). */
+export interface StatusEffectInstance {
+  readonly kind: StatusEffectKind;
+  readonly remaining: number;
+  readonly magnitude: number;
+  readonly target: "player" | "ice";
+}
+
+/** Zone depth — mirrored from Python matrix/node.py ZoneDepth. */
+export type ZoneDepth = "surface" | "mid" | "deep" | "core" | "core-deep";
+
+/** Matrix node (one encounter in a run). */
+export interface MatrixNode {
+  readonly id: number;
+  readonly zone: ZoneDepth;
+  readonly iceIds: ReadonlyArray<string>;
+  readonly iceHp: ReadonlyArray<number>;
+  readonly reward: { credits: number };
+  readonly isBoss: boolean;
+  readonly adjacent: ReadonlyArray<number>;
+}
+
+/** Generated matrix for one run. */
+export interface Matrix {
+  readonly nodes: ReadonlyArray<MatrixNode>;
+  readonly startNode: number;
+  readonly bossNode: number;
+}
+
+/** Boss phase 0..4 (0 = no boss active). */
+export type BossPhase = 0 | 1 | 2 | 3 | 4;
+
+/** Ending variant chosen at run completion (29 total in Python, 3 here for MVP). */
+export type EndingChoice = "A" | "B" | "C";
 
 /** Save slot — JSON-serializable subset of GameState. */
 export interface SaveSlot {

@@ -24,7 +24,8 @@ test("CONTINUE option resumes saved state from IDB", async ({ page }) => {
   await page.keyboard.press("Enter"); // launch first mission
   await page.waitForTimeout(200);
   await page.keyboard.press("Enter"); // approach → combat
-  await page.waitForTimeout(500);
+  // Wait long enough for autosave IDB write to complete (async fire-and-forget).
+  await page.waitForTimeout(2000);
 
   // Verify we're in combat with saved state.
   const phaseBeforeReload = await page.evaluate(() => {
@@ -33,10 +34,33 @@ test("CONTINUE option resumes saved state from IDB", async ({ page }) => {
   });
   expect(["combat", "approach"]).toContain(phaseBeforeReload.phase);
 
+  // Verify save was actually written to IDB before reloading.
+  const hasSaveAfterAutoplay = await page.evaluate(async () => {
+    return new Promise<boolean>((resolve) => {
+      const req = indexedDB.open("wetrun_save_v1");
+      req.onsuccess = () => {
+        const db = req.result;
+        const tx = db.transaction("slots", "readonly");
+        const store = tx.objectStore("slots");
+        const getReq = store.get("slot_0");
+        getReq.onsuccess = () => {
+          resolve(getReq.result !== undefined);
+          db.close();
+        };
+        getReq.onerror = () => {
+          resolve(false);
+          db.close();
+        };
+      };
+      req.onerror = () => resolve(false);
+    });
+  });
+  expect(hasSaveAfterAutoplay).toBe(true);
+
   // Reload the page (simulates browser close + reopen).
   await page.reload();
   await page.waitForLoadState("networkidle");
-  await page.waitForTimeout(800);
+  await page.waitForTimeout(1000);
 
   // Verify we're back at main menu.
   const screenAfterReload = await page.evaluate(() => {

@@ -43,56 +43,66 @@ const mockProgram: Program = {
 };
 
 describe("state machine", () => {
-  it("starts in menu phase", () => {
+  it("starts in matrix phase (Tier 5 default)", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    expect(state.phase).toBe("menu");
+    expect(state.runPhase).toBe("matrix");
   });
 
-  it("transitions menu → approach on confirm", () => {
+  it("matrix → combat on confirm (when matrix has nodes)", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    const next = applyAction(state, { type: "confirm" });
-    expect(next.phase).toBe("approach");
+    const withMatrix = { ...state, matrix: { nodes: [], startNode: 0, bossNode: 0 } };
+    // Empty matrix returns state unchanged (no combat available).
+    expect(applyAction(withMatrix, { type: "confirm" })).toBe(withMatrix);
   });
 
-  it("transitions approach → combat on confirm", () => {
+  it("approach → combat on confirm", () => {
     let state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    state = applyAction(state, { type: "confirm" }); // menu → approach
+    state = { ...state, runPhase: "combat", phase: "approach" };
     state = applyAction(state, { type: "confirm" }); // approach → combat
     expect(state.phase).toBe("combat");
   });
 
-  it("jack_out exits from menu", () => {
+  it("jack_out exits to menu from matrix", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
     const next = applyAction(state, { type: "jack_out" });
-    expect(next.phase).toBe("exit");
+    expect(next.phase).toBe("menu");
   });
 });
 
 describe("combat", () => {
+  /** Build a state already in combat (Tier 5: runPhase="combat", phase="combat")
+   * with the active ICE in iceRoster. This is the state machine post-Tier 5.
+   */
+  function buildCombatState(ice: Ice = mockIce): ReturnType<typeof makeInitialState> {
+    const base = makeInitialState(mockMission, ice, [mockProgram]);
+    return {
+      ...base,
+      runPhase: "combat",
+      phase: "combat",
+      iceRoster: [{ ...ice }],
+      activeIceIndex: 0,
+    };
+  }
+
   it("use_program deals damage and increments alarm", () => {
-    const state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    const inCombat = applyAction(applyAction(state, { type: "confirm" }), {
-      type: "confirm",
-    });
+    const inCombat = buildCombatState();
     const afterUse = applyAction(inCombat, {
       type: "use_program",
       programId: "test_prog",
     });
-    expect(afterUse.ice.hp).toBe(95); // tier 1 * 5 = 5 dmg
+    expect(afterUse.iceRoster[0]?.hp).toBe(95); // tier 1 * 5 = 5 dmg
     expect(afterUse.player.alarm).toBe(10);
     expect(afterUse.deck.length).toBe(0); // card consumed
   });
 
-  it("defeats ICE when HP reaches 0", () => {
+  it("defeats ICE when HP reaches 0 (transitions to loot)", () => {
     const fastIce: Ice = { ...mockIce, hp: 5 };
-    const state = makeInitialState(mockMission, fastIce, [mockProgram]);
-    const inCombat = applyAction(applyAction(state, { type: "confirm" }), {
-      type: "confirm",
-    });
+    const inCombat = buildCombatState(fastIce);
     const afterUse = applyAction(inCombat, {
       type: "use_program",
       programId: "test_prog",
     });
+    expect(afterUse.runPhase).toBe("loot");
     expect(afterUse.phase).toBe("victory");
     expect(afterUse.message).toContain("defeated");
   });

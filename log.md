@@ -4464,3 +4464,75 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 ### Live URL
 
 **`https://seoca1.github.io/wet-run/wetrun-web/`** — 폰에서 확인 가능
+
+---
+
+## 🎮 Tier 5.5 — Stage Event Matrix + Combat VFX (2026-08-27)
+
+**Scope**: User 청사진 — "Stage 이동/이벤트 발생 + Combat VFX 강화". Plan: `.omo/plans/stage-combat-vfx-blueprint-2026-08-27.md`
+
+### Stage 1: Event Matrix
+
+**New module `core/event_matrix.ts`** (6 event kinds):
+- `combat` (전투, ICE 매트릭스)
+- `discovery` (발견, credits +25~50)
+- `trap` (함정, HP -10~20)
+- `cache` (은닉 저장, 랜덤 program 제공)
+- `rest` (휴식, HP +25%)
+- `merchant` (상인, 2 program 판매)
+
+**Distribution (Mulberry32 seed=42 RNG):**
+- Surface: combat 90% / discovery 10%
+- Mid: combat 70% / trap 20% / discovery 10%
+- Deep: combat 60% / trap 30% / cache 10%
+- Core: combat 60% / rest 20% / cache 20%
+- Boss: combat 100%
+
+**UI 렌더링**: `EVENT_GLYPHS` (⚔★✦◆♨⌘) + `EVENT_LABELS` per node.
+
+### Stage 2: Combat VFX
+
+**New module `renderer/combat_vfx.ts`** (7 VFX kinds):
+- `card_use`: 카드 발사체 라인 (점진적 이동)
+- `card_hit`: 폭발 파티클 (✶╲╳╱✶)
+- `ice_hit`: Full-row red flash
+- `player_hit`: Screen shake (█▒▒▒[HP CRIT])
+- `status_apply`: 상태이상 적용 알림 (YELLOW_AMBER)
+- `victory`: 격파 시 회전 별표 (✦✧✶✷★) + ASCII box
+- `defeat`: 패배 시 빨강 flash + ASCII box
+
+**Lifecycle**: `triggerCombatVfx()` → `tickCombatVfxList()` per draw() → null when expired.
+
+### Verification
+
+| Check | Result |
+|---|---|
+| tsc --noEmit | ✅ 0 errors |
+| npm test (vitest) | ✅ **149 passed** (was 120 → +29: event_matrix + combat_vfx) |
+| npm run build | ✅ 149.78 KB (was 140.14 → +9.64 KB for VFX + event types) |
+| gzipped | ✅ 51.17 KB |
+| npx playwright test (live deploy) | ✅ **26 passed** (was 22 → +4 tier55_vfx × 2 projects) |
+
+### Commit pushed
+
+- `8d59829` test: fix tier55_vfx E2E — check runPhase not screen field
+- `c8a858b` feat: Tier 5.5 — Stage event matrix + combat VFX overlay
+
+### User Flow (Live URL)
+
+**`https://seoca1.github.io/wet-run/wetrun-web/`**
+
+1. Boot → menu → NEW_RUN → mission_select → Enter (launch)
+2. **Matrix 화면**: 5 nodes with event glyphs (⚔ combat, ★ discovery, ✦ trap, ◆ cache, ♨ rest, ⌘ merchant)
+3. Enter → combat → press "1" (use program)
+4. **Combat VFX**: card_use 발사체 → card_hit 폭발 → ice_hit red flash (3-frame animation)
+5. ICE 격파 → victory VFX (회전 별표 + ASCII box)
+6. Continue → matrix → next node (event_kind random per seed)
+
+### Stage 3/4 Carry-over
+
+- ⚪ Sound integration (combat_hit SFX 자동 trigger)
+- ⚪ 화면 shake canvas offset (현재 텍스트 overlay만)
+- ⚪ Particle burst 추가 (현재 별표 5개만)
+- ⚪ 보스 4-phase VFX (현재 generic victory)
+- ⚪ Status overlay panel (현재 glyph + 텍스트만)

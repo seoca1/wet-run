@@ -263,12 +263,19 @@ function useProgram(state: GameState, programId: string): GameState {
   );
   // Check if all ICE in roster defeated (any 0-HP target ends the fight in MVP).
   const allDefeated = finalState.iceRoster.every((ice) => ice.hp === 0);
-  // Tier 5.5: trigger VFX instances for visual feedback.
+  // Boss phase transition VFX: if previous bossPhase differs from new,
+  // trigger phase-specific VFX (only when fighting a boss node).
+  const bossPhaseChanged =
+    state.bossPhase > 0 &&
+    finalState.bossPhase !== state.bossPhase;
   const vfxNew: ReadonlyArray<import("../renderer/combat_vfx.js").CombatVfxInstance> = [
     ...finalState.vfxInstances,
     import_vfx("card_use", program.name, 3),
     import_vfx("card_hit", `${damage}`, 3),
     import_vfx("ice_hit", `${damage}`, 2),
+    ...(bossPhaseChanged && finalState.bossPhase >= 1 && finalState.bossPhase <= 4
+      ? [import_vfx(`boss_phase_${finalState.bossPhase}` as "boss_phase_1" | "boss_phase_2" | "boss_phase_3" | "boss_phase_4", "", 5)]
+      : []),
   ];
   if (allDefeated && finalState.iceRoster.length > 0) {
     // Victory → loot screen
@@ -322,16 +329,17 @@ function applyEndAction(state: GameState, action: GameAction): GameState {
 
 /** Generate HUD lines from current state — feeds the right-side panel. */
 export function buildHudLines(state: GameState): string[] {
-  return [
+  const lines: string[] = [
     `HP ${state.player.hp}/${state.player.maxHp}`,
     `Alarm ${state.player.alarm}/100`,
     `Credits ${state.player.credits}`,
-    "",
-    `Phase: ${state.phase}`,
-    `ICE HP: ${state.ice.hp}`,
-    "",
-    state.message,
   ];
+  // Boss phase badge (only when fighting a boss and phase > 0).
+  if (state.bossPhase > 0 && state.bossPhase <= 4) {
+    lines.push(`★ BOSS PHASE ${state.bossPhase}/4`);
+  }
+  lines.push("", `Phase: ${state.phase}`, `ICE HP: ${state.ice.hp}`, "", state.message);
+  return lines;
 }
 
 /** Serialize a GameState to a SaveSlot (Tier 2 save round-trip). */

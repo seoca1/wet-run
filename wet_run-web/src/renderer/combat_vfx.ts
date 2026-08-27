@@ -24,7 +24,11 @@ export type CombatVfxKind =
   | "player_hit"
   | "status_apply"
   | "victory"
-  | "defeat";
+  | "defeat"
+  | "boss_phase_1"
+  | "boss_phase_2"
+  | "boss_phase_3"
+  | "boss_phase_4";
 
 export interface CombatVfxInstance {
   readonly id: number;
@@ -166,6 +170,48 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
       if (t < dur - 1) {
         for (let x = 0; x < cols; x++) {
           grid = setText(grid, x, rows - 2, "▓", PALETTE.RED_BRIGHT);
+        }
+      }
+      return grid;
+    }
+    case "boss_phase_1":
+    case "boss_phase_2":
+    case "boss_phase_3":
+    case "boss_phase_4": {
+      // Boss phase transition VFX (ADR-0149). Distinct color + icon + message per phase.
+      const phase = parseInt(instance.kind.slice(-1), 10) as 1 | 2 | 3 | 4;
+      // Per-phase config: color, icon, label, descriptive message.
+      // - Phase 1 (>75% HP): calm sentinel, gray-cyan
+      // - Phase 2 (50-75% HP): alert, yellow-amber
+      // - Phase 3 (25-50% HP): enraged, red-deep + magic effects
+      // - Phase 4 (<25% HP): desperate, magenta+cyan pulse
+      const phaseConfig: Record<number, { color: string; icon: string; label: string; message: string }> = {
+        1: { color: PALETTE.CYAN_LIGHT, icon: "⚡", label: "PHASE 1", message: "Sentinel scanning..." },
+        2: { color: PALETTE.YELLOW_AMBER, icon: "▲", label: "PHASE 2", message: "ICE alert — defenses rising!" },
+        3: { color: PALETTE.RED_BRIGHT, icon: "✶", label: "PHASE 3", message: "ICE enrages — full assault!" },
+        4: { color: PALETTE.MAGENTA_NEON, icon: "★", label: "PHASE 4", message: "Desperation — fatal protocols!" },
+      };
+      const cfg = phaseConfig[phase] ?? phaseConfig[1]!;
+      const cx = Math.floor(cols / 2);
+      const header = `${cfg.icon} BOSS ${cfg.label} ${cfg.icon}`;
+      grid = setText(grid, Math.max(2, cx - Math.floor(header.length / 2)), 1, header, cfg.color);
+      grid = setText(grid, Math.max(2, cx - 10), 3, "╔══════════════╗", cfg.color);
+      grid = setText(grid, Math.max(2, cx - 10), 4, `║ ${cfg.message.padEnd(14)} ║`, cfg.color);
+      grid = setText(grid, Math.max(2, cx - 10), 5, "╚══════════════╝", cfg.color);
+      // Phase-specific effects overlay
+      if (phase === 3) {
+        // Enrage: red flicker row
+        if (t === 0 || t === 2) {
+          for (let x = 4; x < cols - 4; x++) {
+            grid = setText(grid, x, 7, "✶", PALETTE.RED_BRIGHT);
+          }
+        }
+      } else if (phase === 4) {
+        // Desperate: cyan/magenta pulse
+        if (t % 2 === 0) {
+          for (let x = 4; x < cols - 4; x += 2) {
+            grid = setText(grid, x, 7, "★", PALETTE.MAGENTA_NEON);
+          }
         }
       }
       return grid;

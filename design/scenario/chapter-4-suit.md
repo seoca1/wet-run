@@ -73,7 +73,7 @@ MENU → GRAPHIC_NOVEL_MENU → SUIT (4 scenes) → SAVED_PROGRESS → MENU
 ## 4. ADR 통합
 
 - **ADR-0031** Original Scenario Integration — 단편 → 챕터 → 초반 플레이
-- **ADR-0032** Graphic Novel Mode — 메인메뉴 5 옵션 (Phase 7+ ADR-0040: 7 옵션, Phase 17+ 옵트인: 8 옵션)
+- **ADR-0032** Graphic Novel Mode — 메인메뉴 5 옵션 (Phase 7+ ADR-0040: 7 옵션, Phase 15: 8 옵션, Phase 17+ 옵트인: 9 옵션)
 - **ADR-0052** Short Story Expansion Plan — Phase B+ 신규 미션 5편 중 4편이 Suit 미션
 - **ADR-0051** Mission Story Metadata — `character_ref: "suit"` 추가
 

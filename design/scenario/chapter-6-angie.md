@@ -76,7 +76,7 @@ MENU → GRAPHIC_NOVEL_MENU → ANGIE (8 scenes) → SAVED_PROGRESS → MENU
 ## 5. ADR 통합
 
 - **ADR-0031** Original Scenario Integration
-- **ADR-0032** Graphic Novel Mode — 메인메뉴 8 옵션
+- **ADR-0032** Graphic Novel Mode — 메인메뉴 9 옵션 (Phase 15+ ENDINGS, Phase 17+ 옵트인 STATS)
 - **ADR-0051** Mission Story Metadata
 - **ADR-0052** Short Story Expansion Plan
 - **ADR-0061** Novel Integration Architecture

@@ -174,7 +174,7 @@ this.canvas.style.height = `${cssHeight}px`;
 - Cloud save (Firebase/Supabase/WebDAV) — ADR-0209는 local IDB만
 - Multiplayer
 - Graphic Novel mode (Python에는 있음)
-- Main menu 7-8 옵션 (Python에는 있음) — 현재 mission select만
+- Main menu 9 옵션 (Python에는 있음) — 현재 mission select만
 - 사망 / 리셋 사이클 (Python: DEATH_SUMMARY → HALL_OF_DEAD)
 - 인벤토리 / 제작 UI (Python: HUB panel)
 - 사이드 콘텐츠 (achievements, settings, news)

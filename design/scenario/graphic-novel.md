@@ -1,7 +1,7 @@
 # Graphic Novel Mode (그래픽 노블 자동플레이 모드)
 
 > **이 문서는 [`../../decisions/0032-graphic-novel-mode.md`](../../decisions/0032-graphic-novel-mode.md)의 디자인 명세.**
-> 메인메뉴 7 옵션 (Phase 7 + ADR-0040) + Phase 17 옵트인 [8] STATS + 그래픽 노블 자동플레이 + 세이브 진도 회고.
+> 메인메뉴 9 옵션 (Phase 7 + ADR-0040 + Phase 15 ENDINGS + Phase 17 옵트인 [9] STATS) + 그래픽 노블 자동플레이 + 세이브 진도 회고.
 >
 > **Phase 19 audit (2026-08-13)**: 7-option menu (was 5), ADR-0043 audio + ADR-0044 GN save, TELEMETRY_STATS menu cross-reference.
 
@@ -42,9 +42,11 @@
 ╚══════════════════════════════════════════════════════════════╝
 ```
 
-### 2.2 옵션 명세 (Phase 7 — 7 옵션)
+### 2.2 옵션 명세 (Phase 15 — 9 옵션)
 
 > **Phase 7 갱신 (ADR-0032 + ADR-0040 + HELP)**: 5 옵션 → 7 옵션 확장. Hall of Dead (ADR-0040) + HELP (온보딩) 추가.
+> **Phase 15 추가**: 7 → 8 옵션. ENDINGS 브라우저 추가.
+> **Phase 17 옵트인**: 8 → 9 옵션. STATS (telemetry_opt_in 시에만 표시).
 
 | # | 라벨 | 동작 | 조건 |
 | --- | --- | --- | --- |

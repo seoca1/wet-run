@@ -62,7 +62,7 @@ MENU → GRAPHIC_NOVEL_MENU → SALLY (8 scenes) → SAVED_PROGRESS → MENU
 ## 4. ADR 통합
 
 - **ADR-0031** Original Scenario Integration
-- **ADR-0032** Graphic Novel Mode — 메인메뉴 7~8 옵션 (Phase 7+ ADR-0040 HELP, Phase 17+ 옵트인 STATS)
+- **ADR-0032** Graphic Novel Mode — 메인메뉴 9 옵션 (Phase 7+ ADR-0040 HELP, Phase 15 ENDINGS, Phase 17+ 옵트인 STATS)
 - **ADR-0052** Short Story Expansion Plan
 
 ## 5. 캐릭터 비교 (7명)

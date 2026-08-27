@@ -4405,3 +4405,62 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 1. 🟢 Tier 5+ sub-screens 실제 구현 (graphic_novel, credits, settings, etc.)
 2. 🟢 Continue loading via IDB (CONTINUE 옵션 활성화)
 3. 🟢 Telemetry opt-in UI (STATS 옵션 활성화)
+
+---
+
+## 💾 wet_run-web CONTINUE Option + IDB Round-trip Fix (2026-08-27)
+
+**Scope**: User 'Continue' → CONTINUE 옵션 IDB save 로드 (가장 큰 잔여 gap).
+
+### 발견된 버그 2개 (CONTINUE E2E가 노출)
+
+1. **IDB keyPath conflict** (`storage_idb.ts:64`):
+   - `keyPath: "name"` 인라인 키 store에 `store.put(value, explicitKey)` 호출
+   - IDB가 `DataError: in-line keys and the key parameter was provided` 발생
+   - 결과: 모든 save()가 silent fail → IDB keys 항상 빈 배열
+   - **Fix**: `store.put(value)` 만 호출 (인라인 키가 자동 적용), value에 `name` 필드 포함
+
+2. **programs.json missing id field** (`main.ts:loadDeck`):
+   - programs.json은 id로 키잉 (`wisp`, `strike`, ...)하지만 inner object에 `id` 필드 없음
+   - `loadDeck()`가 그 객체 그대로 반환 → `state.deck[i].id === undefined`
+   - `stateToSaveSlot`이 `[null, null, null, null, null]` 직렬화
+   - `slotToGameState`의 `deck.length === 0 && slot.deckIds.length > 0` 가드로 null 반환
+   - `handleContinue` silent fail
+   - **Fix**: `loadDeck`에서 `{ ...p, id } as Program` 주입 (key를 id로)
+
+### Commit history (이 turn)
+
+- `1434e9a` fix(wetrun-web): programs.json missing id field — inject at loadDeck
+- `b59725a` fix(wetrun-web): IDB save DataError — keyPath conflict fix
+- `e376ca5` feat(wetrun-web): CONTINUE option — autosave resume from IDB
+
+### 산출물
+
+| File | LOC | Purpose |
+|---|--:|---|
+| `src/save/storage.ts` | +35 | hasSave + getSaveMeta 신규 API |
+| `src/core/state.ts` | +60 | slotToGameState (CONTINUE 재구성) |
+| `src/main.ts` | +90 | handleContinue + refreshSaveCache + hasSaveCache + programs id 주입 |
+| `src/renderer/menu.ts` | +30 | CONTINUE gating + hint sub-line |
+| `tests/slot_restore.test.ts` | 142 | 7 unit tests (round-trip, orphan, missing, defensive, draw/discard, phase, iceFallback) |
+| `e2e/continue.spec.ts` | 96 | 2 E2E (round-trip + no-save graceful) |
+
+### 검증
+
+| Check | Result |
+|---|---|
+| tsc --noEmit | ✅ 0 errors |
+| npm test | ✅ 120 passed (was 113 → +7) |
+| npm run build | ✅ 140.14 KB (was 136.75 → +3.39 KB) |
+| npx playwright test (live deploy) | ✅ **22 passed** (was 18 → +4 continue × 2 projects) |
+
+### User flow
+
+1. Boot → menu → CONTINUE는 '(no save)' (첫 실행)
+2. NEW_RUN → 전투 진행 → draw()마다 autosave → IDB 'slot_0'에 정상 저장
+3. Reload (브라우저 종료 + 재시작) → boot → menu → CONTINUE에 '→ first_jack (turn N)' 표시
+4. Enter → slotToGameState로 상태 복구 → approach/combat 재개
+
+### Live URL
+
+**`https://seoca1.github.io/wet-run/wetrun-web/`** — 폰에서 확인 가능

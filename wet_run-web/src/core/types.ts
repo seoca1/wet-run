@@ -85,6 +85,7 @@ export type GamePhase =
  * GRAPHIC_NOVEL (stub) + CONTINUE (stub) + SETTINGS (stub) + CREDITS (stub).
  * The remaining options (HALL_OF_DEAD, HELP, ENDINGS, STATS) are deferred
  * until Tier 5+ per the README "Out of scope" list.
+ * Tier 5.5: adds TUTORIAL for first-run onboarding.
  */
 export type ScreenKind =
   | "menu" // Main menu (9 options, current screen on boot)
@@ -96,7 +97,8 @@ export type ScreenKind =
   | "help" // HELP screen (stub)
   | "hall_of_dead" // HALL OF DEAD (stub, deferred)
   | "endings" // ENDINGS browser (stub, deferred)
-  | "stats" // STATS / Telemetry (stub, deferred);
+  | "stats" // STATS / Telemetry (stub, deferred)
+  | "tutorial"; // Tutorial overlay (Tier 5.5+ first-run onboarding)
 
 /** Top-level game state — referenced by all subsystems. */
 export interface GameState {

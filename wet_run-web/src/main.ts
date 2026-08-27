@@ -14,6 +14,7 @@ import { renderMatrix } from "./renderer/matrix.ts";
 import { buildMatrix } from "./core/matrix.ts";
 import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
 import { composeCombatVfx, tickCombatVfxList } from "./renderer/combat_vfx.ts";
+import { createTutorialOverlay } from "./renderer/tutorial.ts";
 import {
   healthBar,
   healthColor,
@@ -120,6 +121,8 @@ class Game {
   private _lastIceHp: number | null = null;
   private _lastPlayerHp: number | null = null;
   private layout: Layout;
+  private tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null = null;
+  private tutorialActive = false;
 
   constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
     this.iceTypes = iceTypes;
@@ -134,8 +137,22 @@ class Game {
     const handler = (action: GameAction): void => {
       // Pre-game screens (menu, mission_select, stub screens) route to handlePreGameInput.
       // In-game screens route through the reducer.
-      if (this.screen !== "menu" && this.screen !== "mission_select" && this.state === null) {
+      if (this.screen !== "menu" && this.screen !== "mission_select" && this.screen !== "tutorial" && this.state === null) {
         this.handleStubInput(action);
+        return;
+      }
+      // Handle tutorial input if active
+      if (this.tutorialActive && this.tutorialOverlay) {
+        const result = this.tutorialOverlay.handleInput(action.type === "jack_out" || action.type === "cancel" ? "Escape" : 
+          action.type === "confirm" ? "Enter" : action.type);
+        if (result.action === "next" || result.action === "skip") {
+          if (result.action === "skip" || this.tutorialOverlay.state.currentStep >= 6) {
+            this.tutorialActive = false;
+            this.tutorialOverlay = null;
+            this.screen = "menu";
+          }
+          this.draw();
+        }
         return;
       }
       if (this.state === null) {
@@ -186,6 +203,26 @@ class Game {
       this.renderer.resizeGrid(next.cols, next.rows, next.hudCols);
       this.draw();
     });
+    // Initialize tutorial overlay and check if first run
+    this.initTutorial();
+  }
+
+  private initTutorial(): void {
+    if (typeof window !== "undefined") {
+      try {
+        const done = localStorage.getItem("wetrun_tutorial_completed");
+        if (done !== "true") {
+          this.tutorialOverlay = createTutorialOverlay();
+          const tutorialState = this.tutorialOverlay.state;
+          if (tutorialState.visible) {
+            this.tutorialActive = true;
+            this.screen = "tutorial";
+          }
+        }
+      } catch {
+        // ignore localStorage errors
+      }
+    }
   }
 
   private handlePreGameInput(action: GameAction): void {
@@ -388,7 +425,12 @@ class Game {
     if (this.state === null) {
       // Pre-game screen routing
       updateProgramRow([]); // hide row outside combat
-      if (this.screen === "menu") {
+      if (this.tutorialActive && this.tutorialOverlay) {
+        // Tutorial overlay takes priority
+        const tutorialGrid = this.tutorialOverlay.render(this.layout.cols, this.layout.rows);
+        this.renderer.render(tutorialGrid, ["TUTORIAL", "", ""]);
+        this.syncPhase("menu");
+      } else if (this.screen === "menu") {
         this.renderer.render(
           renderMainMenu(
             this.selectedMenuIndex,

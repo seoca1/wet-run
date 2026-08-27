@@ -20,7 +20,7 @@ test("matrix shows zone-colored nodes with ICE preview panel", async ({ page }) 
 
   // Verify in matrix state.
   const runPhase = await page.evaluate(() => {
-    const w = window as unknown as { wetrun?: { state?: { runPhase?: string } | null };
+    const w = window as unknown as { wetrun?: { state?: { runPhase?: string } } | null };
     return w.wetrun?.state?.runPhase;
   });
   expect(runPhase).toBe("matrix");
@@ -51,7 +51,7 @@ test("matrix ICE preview shows current node info (runPhase=combat too)", async (
 
   // Verify iceRoster populated.
   const iceCount = await page.evaluate(() => {
-    const w = window as unknown as { wetrun?: { state?: { iceRoster?: ReadonlyArray<unknown> } | null };
+    const w = window as unknown as { wetrun?: { state?: { iceRoster?: ReadonlyArray<unknown> } } | null };
     return w.wetrun?.state?.iceRoster?.length ?? 0;
   });
   expect(iceCount).toBeGreaterThan(0);

@@ -2,7 +2,7 @@
  *
  * Run with: npm test
  */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
   applyAction,
   buildHudLines,
@@ -83,6 +83,15 @@ describe("combat", () => {
       activeIceIndex: 0,
     };
   }
+
+  // Mock Math.random to suppress the 20% burn proc — tests need deterministic
+  // damage values (95 = 100 - 5 base damage). >1.0 means proc never fires.
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.99);
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
 
   it("use_program deals damage and increments alarm", () => {
     const inCombat = buildCombatState();

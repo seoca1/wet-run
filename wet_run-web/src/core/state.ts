@@ -17,6 +17,7 @@ import type {
   SaveSlot,
 } from "./types.ts";
 import { makeGrid } from "./grid.ts";
+import { applyStatus, applyTickEffects, applyBurnDamage, tickStatus, rollStatusProc } from "./status.ts";
 
 const MVP_GRID_W = 80;
 const MVP_GRID_H = 50;
@@ -223,46 +224,75 @@ function useProgram(state: GameState, programId: string): GameState {
   }
   const newDeck = state.deck.filter((p) => p.id !== programId);
   const discard = [...state.discardPile, program];
-  const damage = program.tier * 5;
+  // Tier 5.5 status effect: check if ICE is vulnerable (next attack +X% dmg)
+  const vulnerableBonus = state.statusEffects
+    .filter((e) => e.kind === "vulnerable" && e.target === "ice")
+    .reduce((sum, e) => sum + e.magnitude, 0);
+  const baseDamage = program.tier * 5;
+  const damage = baseDamage + Math.floor((baseDamage * vulnerableBonus) / 100);
   // Tier 5: damage applies to active ICE in roster, not single state.ice.
   const targetIdx = state.activeIceIndex;
-  const newRoster = state.iceRoster.map((ice, i) => {
+  const damagedRoster = state.iceRoster.map((ice, i) => {
     if (i !== targetIdx) return ice;
     return { ...ice, hp: Math.max(0, ice.hp - damage) };
   });
+  // Apply burn to ICE on player attack (proc ~20%) — add to damagedRoster state.
+  let stateWithDamage: GameState = { ...state, iceRoster: damagedRoster };
+  if (rollStatusProc("burn") && damagedRoster[targetIdx] && damagedRoster[targetIdx].hp > 0) {
+    stateWithDamage = applyStatus(stateWithDamage, "ice", "burn", 2, 3);
+  }
+  // Clear one stack of vulnerable after being hit
+  if (vulnerableBonus > 0) {
+    const vulnerableIdx = stateWithDamage.statusEffects.findIndex(
+      (e) => e.kind === "vulnerable" && e.target === "ice",
+    );
+    if (vulnerableIdx >= 0) {
+      const updated = [...stateWithDamage.statusEffects];
+      updated.splice(vulnerableIdx, 1);
+      stateWithDamage = { ...stateWithDamage, statusEffects: updated };
+    }
+  }
+  // Tick status effects at turn start
+  stateWithDamage = tickStatus(stateWithDamage);
+  // Apply burn damage from tick
+  const tickResult = applyTickEffects(stateWithDamage);
+  const finalState = applyBurnDamage(
+    tickResult.state,
+    tickResult.burnDamagePlayer,
+    tickResult.burnDamageIce,
+  );
   // Check if all ICE in roster defeated (any 0-HP target ends the fight in MVP).
-  const allDefeated = newRoster.every((ice) => ice.hp === 0);
+  const allDefeated = finalState.iceRoster.every((ice) => ice.hp === 0);
   // Tier 5.5: trigger VFX instances for visual feedback.
   const vfxNew: ReadonlyArray<import("../renderer/combat_vfx.js").CombatVfxInstance> = [
-    ...state.vfxInstances,
+    ...finalState.vfxInstances,
     import_vfx("card_use", program.name, 3),
     import_vfx("card_hit", `${damage}`, 3),
     import_vfx("ice_hit", `${damage}`, 2),
   ];
-  if (allDefeated && newRoster.length > 0) {
+  if (allDefeated && finalState.iceRoster.length > 0) {
     // Victory → loot screen
     const totalReward = state.mission.rewards.credits +
       (state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0);
     return {
-      ...state,
-      iceRoster: newRoster,
+      ...finalState,
+      iceRoster: finalState.iceRoster,
       deck: newDeck,
       discardPile: discard,
       runPhase: "loot",
       phase: "victory",
-      message: `${state.ice.name} defeated! +${totalReward} credits`,
-      player: { ...state.player, credits: state.player.credits + totalReward },
+      message: `${finalState.ice.name} defeated! +${totalReward} credits`,
+      player: { ...finalState.player, credits: finalState.player.credits + totalReward },
       vfxInstances: [...vfxNew, import_vfx("victory", "", 5)],
     };
   }
-  const activeIceNewHp = newRoster[targetIdx]?.hp ?? 0;
+  const activeIceNewHp = finalState.iceRoster[targetIdx]?.hp ?? 0;
   return {
-    ...state,
-    iceRoster: newRoster,
-    ice: { ...state.ice, hp: activeIceNewHp },
+    ...finalState,
+    iceRoster: finalState.iceRoster,
     deck: newDeck,
     discardPile: discard,
-    player: { ...state.player, alarm: newAlarm },
+    player: { ...finalState.player, alarm: newAlarm },
     message: `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})`,
     vfxInstances: vfxNew,
   };

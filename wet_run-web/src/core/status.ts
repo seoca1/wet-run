@@ -38,7 +38,8 @@ export function tickStatus(state: GameState): GameState {
   const next = state.statusEffects
     .map((e) => ({ ...e, remaining: e.remaining - 1 }))
     .filter((e) => e.remaining > 0);
-  if (next.length === state.statusEffects.length) return state; // no change
+  // Always return the updated state (even if length unchanged, remaining
+  // values were decremented). The early-return optimization was buggy.
   return { ...state, statusEffects: next };
 }
 
@@ -103,8 +104,11 @@ export function applyBurnDamage(
   return next;
 }
 
-/** Roll whether a status effect procs after an attack. MVP: 20% chance per effect kind. */
-export function rollStatusProc(_kind: StatusEffectKind): boolean {
-  // Deterministic 20% chance using Math.random for MVP. Future: seedable RNG.
-  return Math.random() < 0.2;
+/** Roll whether a status effect procs after an attack. MVP: 20% chance per effect kind.
+ *
+ * Uses an injectable RNG function (defaults to Math.random) so tests can
+ * deterministically test the state machine without flaky random failures.
+ */
+export function rollStatusProc(_kind: StatusEffectKind, rng: () => number = Math.random): boolean {
+  return rng() < 0.2;
 }

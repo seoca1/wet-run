@@ -4295,3 +4295,48 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 1. 🟢 Frontmatter 표준화 (10 파일 통일)
 2. 🟢 ADR-0021 정식 파일 작성 (Save/Load 정책) 또는 영구 삭제 결정
 3. 🟢 Tier 5 web features, 3-person playtest, Phase C1-C4
+
+---
+
+## 🎨 Entry Screen + Flowchart + Per-Version Compare (2026-08-27)
+
+**Scope**: User "게임 진입 화면과 진행 플로우차트를 그리고, 버전별 구현 비교".
+
+### 산출물
+
+- **새 문서**: `docs/entry-flow-comparison-2026-08-27.md` (~280 lines, 8 sections)
+  - §1 ASCII art Python MENU (9 options)
+  - §2 ASCII art wet_run-web MISSION SELECT
+  - §3 Python progression flowchart (BOOT → MENU → 9 paths)
+  - §4 wet_run-web progression flowchart (BOOT → MISSION_SELECT → APPROACH → COMBAT)
+  - §5 화면별 비교표 (19 screens, Python 19/19 vs web 3/19)
+  - §6 Step-by-step breakdown (Python 12 stages vs web 4 phases)
+  - §7 User entry scenarios (Python 7 paths vs web 1 path)
+  - §8 References
+
+### 발견 + 수정한 추가 drift
+
+- **Python main_menu.py** has **9 OPTION_** constants (NEW_RUN, GRAPHIC_NOVEL, CONTINUE, SETTINGS, CREDITS, HALL_OF_DEAD, HELP, ENDINGS, STATS)
+- Prior session claimed 7~8 옵션 — **incorrect** (ENDINGS added Phase 15)
+- 7 design 파일에서 7~8 → 9 옵션 갱신
+
+### 핵심 발견
+
+| | Python (v1.4.0) | wet_run-web (Tier 4) |
+|---|--:|--:|
+| 진입 화면 옵션 | 9 | 1 (mission select) |
+| 전체 화면 수 | 19/19 | 3/19 |
+| 진입 시나리오 | 7 paths | 1 path |
+| 매트릭스 깊이 | procedural BSP | 단일 미션 |
+| 사망 사이클 | ✅ DEATH_SUMMARY | ❌ |
+| 그래픽 노블 | ✅ 36 scenes | ❌ (gn_prologue key만) |
+| 메인 메뉴 옵션 | 9 (NEW_RUN, GN, CONTINUE, SETTINGS, CREDITS, HALL_OF_DEAD, HELP, ENDINGS, STATS) | 0 |
+
+### 검증
+
+- mkdocs build --strict: 0 errors
+- 7 files, +340/-7 lines
+
+### Commit pushed
+
+- `03c8ff0` docs(wet_run): entry screen + progression flowchart + 9-option menu fix

@@ -462,6 +462,8 @@ class SaveManager:
             "mission_id": run_state.mission_id,
             "started_at_ms": run_state.started_at_ms,
             "chapter_state": chapter_state_value,
+            # GA-005 fix: persist current_phase_index (was reset to 0 on load).
+            "current_phase_index": getattr(run_state, "current_phase_index", 0),
         }
 
     def _serialize_mission(self, mission: Any) -> dict[str, Any] | None:
@@ -740,6 +742,8 @@ class SaveManager:
             mission_id=rs_data.get("mission_id", "first_jack"),
             started_at_ms=rs_data.get("started_at_ms", 0),
             chapter_state=chapter_state,
+            # GA-005 fix: restore current_phase_index (was silently reset to 0).
+            current_phase_index=int(rs_data.get("current_phase_index", 0)),
         )
         return current_stage
 

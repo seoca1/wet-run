@@ -425,6 +425,26 @@ class TestRestoreState:
         assert new_state.faction_tension_probability_boost == 0.75
         assert new_state.near_miss_triggered is True
 
+    def test_round_trips_run_state_chapter_progression(self, save_dir: Path) -> None:
+        """Regression (GA-005): chapter_state and current_phase_index
+        must round-trip through save/restore. Prior to the fix, both
+        were silently reset to defaults on load, forcing the player
+        to replay chapters from scratch after every save.
+        """
+        from wet_run.run.state import ChapterState
+
+        manager = SaveManager(save_dir=save_dir)
+        state = _make_state(credits=100)
+        state.run_state.chapter_state = ChapterState.IN_CHAPTER_3
+        state.run_state.current_phase_index = 5
+
+        manager.save(1, state)
+
+        new_state = AppState()
+        manager.restore_state(1, new_state)
+        assert new_state.run_state.chapter_state is ChapterState.IN_CHAPTER_3
+        assert new_state.run_state.current_phase_index == 5
+
 
 class TestSlotManagement:
     """list_slots, get_metadata, delete."""

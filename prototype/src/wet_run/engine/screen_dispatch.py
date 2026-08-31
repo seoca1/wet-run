@@ -17,6 +17,7 @@ import tcod.console
 
 from ..combat.palette import DYING_COLOR, GRAY_BLACK, GRAY_MID_LIGHT, OLIVE
 from ..combat.registry import IceRegistry, ProgramRegistry
+from .save_manager import SaveManager
 from .state import AppState, ScreenKind
 
 if TYPE_CHECKING:
@@ -109,7 +110,7 @@ def _build_dispatch() -> dict[ScreenKind, RenderFn]:
 
     def _graphic_novel_menu(console: tcod.console.Console, t: Translator, state: AppState) -> None:
         """Render the GRAPHIC_NOVEL_MENU screen — prologue/character pick list."""
-        has_save = getattr(state, "has_save", False)
+        has_save = SaveManager().has_save(1)
         graphic_novel_view.render_graphic_novel_menu(console, t, state.gn_menu_selected, has_save)
 
     def _graphic_novel_ending(

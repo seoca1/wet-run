@@ -29,6 +29,7 @@ from ...combat.palette import (
 )
 from ...i18n import Translator
 from ...story.ending_renderer import EndingRenderer
+from ..save_manager import SaveManager
 from ..state import AppState, ScreenKind
 
 GN_MENU_OPTION_COUNT = 11
@@ -93,7 +94,7 @@ def _apply_gn_menu_selection(state: AppState) -> None:
         GN_MENU_WIGAN,
     )
 
-    has_save = getattr(state, "has_save", False)
+    has_save = SaveManager().has_save(1)
     idx = state.gn_menu_selected
     if has_save:
         mapping = [

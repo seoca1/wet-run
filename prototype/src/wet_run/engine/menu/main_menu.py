@@ -24,6 +24,7 @@ from ..layout import (
     draw_title,
     make_shell,
 )
+from ..save_manager import SaveManager
 from ..state import AppState, ScreenKind
 
 # Main menu options (1-indexed) — ADR-0032, ADR-0040, Phase 7/15/17
@@ -57,7 +58,7 @@ def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -
     draw_title(console, title_r, title=t("app.title"), subtitle=t("app.subtitle"))
 
     # Main area: 9 menu options (ADR-0032 + ADR-0040 + Phase 7 + Phase 15 + Phase 17)
-    has_save = getattr(state, "has_save", False)
+    has_save = SaveManager().has_save(1)
     stats_enabled = getattr(state, "telemetry_opt_in", False)
     options = [
         (OPTION_NEW_RUN, t("menu.new_run")),
@@ -117,7 +118,7 @@ def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -
 
 def _select_menu_option(state: AppState, index: int) -> None:
     """Execute the menu action for the given 0-based option index."""
-    has_save = getattr(state, "has_save", False)
+    has_save = SaveManager().has_save(1)
     if index == 0:
         state.screen = ScreenKind.HUB
     elif index == 1:

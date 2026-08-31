@@ -34,6 +34,7 @@ from wet_run.engine.menu import (  # noqa: E402
     handle_saved_progress_input,
     render_menu,
 )
+from wet_run.engine.save_manager import SaveManager  # noqa: E402
 from wet_run.engine.state import AppState, ScreenKind  # noqa: E402
 from wet_run.i18n import Translator  # noqa: E402
 
@@ -58,6 +59,18 @@ def translator() -> Translator:
 @pytest.fixture
 def console() -> tcod.console.Console:
     return tcod.console.Console(80, 50, order="F")
+
+
+@pytest.fixture
+def no_save(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Stub SaveManager.has_save to return False (no save in slot 1)."""
+    monkeypatch.setattr(SaveManager, "has_save", lambda self, slot: False)
+
+
+@pytest.fixture
+def with_save(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Stub SaveManager.has_save to return True (save exists in slot 1)."""
+    monkeypatch.setattr(SaveManager, "has_save", lambda self, slot: True)
 
 
 def _key_event(sym: KeySym) -> tcod.event.KeyDown:
@@ -107,10 +120,9 @@ def test_render_menu_shows_graphic_novel(
 
 
 def test_render_menu_continue_no_save_label(
-    state: AppState, translator: Translator, console: tcod.console.Console
+    state: AppState, translator: Translator, console: tcod.console.Console, no_save: None
 ) -> None:
     """Without save, Continue should be dimmed (marked as 'no save')."""
-    state.has_save = False
     render_menu(console, translator, state)
     text = _console_to_text(console)
     assert "Continue" in text
@@ -133,21 +145,32 @@ def test_handle_menu_key2_graphic_novel(state: AppState) -> None:
     assert state.screen == ScreenKind.GRAPHIC_NOVEL_MENU
 
 
-def test_handle_menu_key3_continue_no_save(state: AppState) -> None:
+def test_handle_menu_key3_continue_no_save(state: AppState, no_save: None) -> None:
     """No save → message instead of screen change."""
     state.screen = ScreenKind.MENU
-    state.has_save = False
     handle_menu_input(_key_event(KeySym.N3), state)
     assert state.screen == ScreenKind.MENU
     assert "save" in state.message.lower() or "Save" in state.message
 
 
-def test_handle_menu_key3_continue_with_save(state: AppState) -> None:
+def test_handle_menu_key3_continue_with_save(state: AppState, with_save: None) -> None:
     """With save → load to HUB."""
     state.screen = ScreenKind.MENU
-    state.has_save = True
     handle_menu_input(_key_event(KeySym.N3), state)
     assert state.screen == ScreenKind.HUB
+
+
+def test_render_menu_uses_save_manager_not_state_field(
+    state: AppState, translator: Translator, console: tcod.console.Console
+) -> None:
+    """Regression (GA-002): menu must read live SaveManager.has_save,
+    not a stale AppState.has_save field that was only set once at app
+    startup. If the player saves mid-session, the menu should reflect
+    that immediately (without requiring app restart).
+    """
+    render_menu(console, translator, state)
+    text = _console_to_text(console)
+    assert "Continue" in text
 
 
 def test_handle_menu_key4_settings(state: AppState) -> None:

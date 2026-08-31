@@ -152,6 +152,8 @@
   <a href="./graphic-novel.html">🎬 GN</a>
   <span class="sep">|</span>
   <a href="./combat.html">⚔ Combat</a>
+  <span class="sep">|</span>
+  <button id="btn-volume-toggle" class="button ghost" style="font-size: 11px; padding: 4px 8px;">🔊 Volume</button>
 </nav>
 
 
@@ -174,6 +176,8 @@
   <span id="stats" style="float: right;"></span>
 </div>
 
+<div id="tier5-volume-panel"></div>
+
 <div id="progress-bar" class="progress" style="display:none;">
   <div class="seg" data-seg="1"></div>
   <div class="seg" data-seg="2"></div>
@@ -184,7 +188,8 @@
 
 <div id="stage" class="stage"></div>
 
-<script>
+<script src="tier5.js"></script>
+  <script>
 /* =====================================================================
    Static game data (snapshot of chapters + missions + endings).
    Loaded from data/play_game.json (or embedded fallback).
@@ -673,6 +678,12 @@ window.addEventListener('DOMContentLoaded', () => {
   set('chapters',   DATA.chapters.length);
   set('missions',   DATA.missions.length);
   set('endings',    DATA.endings.length);
+
+  // Tier 5: Volume panel toggle
+  const volBtn = document.getElementById('btn-volume-toggle');
+  if (volBtn && window._tier5) {
+    volBtn.addEventListener('click', () => window._tier5.toggleVolumePanel());
+  }
 });
 </script>
 

@@ -68,6 +68,29 @@ def test_apply_low_hp_halves_max_hp() -> None:
     assert is_mutator_active(state, RunMutator.LOW_HP)
 
 
+def test_default_player_hp_is_positive() -> None:
+    """Regression (GA-003): AppState() must default player_hp and
+    player_max_hp to positive values so the LOW_HP mutator halves a
+    real base. Previous default of 0 caused LOW_HP to silently no-op
+    (0 // 2 = 0) and player to enter game with 0/0 hp.
+    """
+    state = AppState()
+    assert state.player_hp > 0
+    assert state.player_max_hp > 0
+    assert state.player_hp == state.player_max_hp
+
+
+def test_apply_low_hp_with_defaults_halves_real_base() -> None:
+    """Regression (GA-003): LOW_HP mutator halves the positive default,
+    not 0/0. Uses bare AppState() (no fixture override).
+    """
+    state = AppState()
+    apply_mutators(state, [RunMutator.LOW_HP])
+    assert state.player_max_hp == state.player_hp  # equal: max clamped to hp after halve
+    assert state.player_max_hp > 0
+    assert state.player_hp > 0
+
+
 def test_apply_double_alarm_doubles_alarm_speed() -> None:
     state = make_app_state()
     apply_mutators(state, [RunMutator.DOUBLE_ALARM])

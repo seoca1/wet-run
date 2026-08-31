@@ -233,8 +233,12 @@ class AppState:
     telemetry: TelemetryIntegrator | None = None
     # Display fields (filled by the demo / shell)
     player_ppl: int = 0
-    player_hp: int = 0
-    player_max_hp: int = 0
+    # GA-003 fix: positive defaults so the LOW_HP mutator halves a real
+    # base (was previously 0 → 0/0 after halving + min()). Existing
+    # defensive `if state.player_hp > 0 else 100` fallbacks remain
+    # correct for legacy saves that predate this fix.
+    player_hp: int = 100
+    player_max_hp: int = 100
     demo_step: int = 0
     demo_elapsed_s: float = 0.0
     # Status messages (shown in footer or side panel).

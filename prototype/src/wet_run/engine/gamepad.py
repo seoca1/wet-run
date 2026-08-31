@@ -110,9 +110,7 @@ def dpad_button_to_keysym(button: ControllerButton) -> KeySym | None:
     return BUTTON_TO_KEYSYM.get(button)
 
 
-def axis_to_navigation_keysym(
-    axis: ControllerAxis, value: int
-) -> KeySym | None:
+def axis_to_navigation_keysym(axis: ControllerAxis, value: int) -> KeySym | None:
     """Map a stick/trigger axis value to a navigation KeySym.
 
     Args:
@@ -149,9 +147,7 @@ def axis_to_navigation_keysym(
     return None
 
 
-def trigger_to_skill_index(
-    axis: ControllerAxis, value: int
-) -> int | None:
+def trigger_to_skill_index(axis: ControllerAxis, value: int) -> int | None:
     """Map a trigger axis to a combat skill index (0-based).
 
     Args:

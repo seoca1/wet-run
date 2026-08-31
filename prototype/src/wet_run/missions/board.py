@@ -80,8 +80,7 @@ class JobBoard:
         """Create a JobBoard pre-populated with ``missions`` (indexed by id)."""
         self._missions = {m.id: m for m in missions}
         self._mission_weights: dict[str, float] = {
-            mid: mission.random_weight
-            for mid, mission in self._missions.items()
+            mid: mission.random_weight for mid, mission in self._missions.items()
         }
 
     @classmethod
@@ -106,9 +105,7 @@ class JobBoard:
         for mission_id, value in raw.items():
             if not isinstance(value, dict):
                 continue
-            enriched_value = enrich_mission_registry(
-                str(mission_id), dict(value)
-            )
+            enriched_value = enrich_mission_registry(str(mission_id), dict(value))
             mission = _parse_mission(enriched_value)
             if mission is not None:
                 missions.append(mission)
@@ -369,7 +366,7 @@ def _parse_mission(value: dict[str, object]) -> Mission | None:
             primary_objective=primary,
             secondary_objectives=tuple(secondary),
             rewards=rewards,
-            random_weight=_opt_float(value.get('random_weight'), 1.0) or 1.0,
+            random_weight=_opt_float(value.get("random_weight"), 1.0) or 1.0,
         )
     except (KeyError, TypeError, ValueError):
         return None

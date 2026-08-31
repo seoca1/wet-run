@@ -156,9 +156,7 @@ def make_shell(width: int = SCREEN_WIDTH, height: int = SCREEN_HEIGHT) -> dict[R
     title = Region(RegionId.TITLE, x=0, y=0, w=width, h=2)
     main_y = 3
     main = Region(RegionId.MAIN, x=0, y=main_y, w=main_w, h=main_h)
-    status_panel = Region(
-        RegionId.STATUS_PANEL, x=main_w, y=main_y, w=status_panel_w, h=main_h
-    )
+    status_panel = Region(RegionId.STATUS_PANEL, x=main_w, y=main_y, w=status_panel_w, h=main_h)
     side_y = main_y + main_h + 1
     side = Region(RegionId.SIDE, x=0, y=side_y, w=width, h=side_h)
     controls_y = side_y + side_h + 1

@@ -51,17 +51,13 @@ def handle_device_event(event: tcod.event.ControllerDevice, state: AppState) -> 
     if event.type == "CONTROLLERDEVICEADDED":
         state.status_messages.append(f">>> Gamepad connected: {safe_name}")
     elif event.type == "CONTROLLERDEVICEREMOVED":
-        state.status_messages.append(
-            ">>> Gamepad disconnected (falling back to keyboard)"
-        )
+        state.status_messages.append(">>> Gamepad disconnected (falling back to keyboard)")
     elif event.type == "CONTROLLERDEVICEREMAPPED":
         # Silent — just refresh; do not spam status panel.
         return
     else:
         # Unknown event type — log generically.
-        state.status_messages.append(
-            f">>> Gamepad event: {event.type} ({safe_name})"
-        )
+        state.status_messages.append(f">>> Gamepad event: {event.type} ({safe_name})")
 
 
 def _get_controller_name(event: tcod.event.ControllerDevice) -> str | None:

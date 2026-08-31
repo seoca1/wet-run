@@ -712,10 +712,7 @@ def handle_death_summary_choice(
         # `available` could end up empty or pick a locked character.
         valid_characters = ("novice", "veteran", "heretic")
         # Detect available (non-current) candidates.
-        available = [
-            c for c in valid_characters
-            if c != state.character_id
-        ]
+        available = [c for c in valid_characters if c != state.character_id]
         # If character_id was unknown/None, all 3 are "available" — safe to pick.
         if state.character_id is None or state.character_id not in valid_characters:
             available = list(valid_characters)

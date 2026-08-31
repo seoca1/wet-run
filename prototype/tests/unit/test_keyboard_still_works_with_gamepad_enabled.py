@@ -32,27 +32,21 @@ class TestKeyboardStillWorksWithGamepadEnabled:
         state = AppState()
         state.screen = ScreenKind.MENU
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.UP), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.UP), state, None, None)
         assert result is True
 
     def test_menu_down_arrow(self) -> None:
         state = AppState()
         state.screen = ScreenKind.MENU
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.DOWN), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.DOWN), state, None, None)
         assert result is True
 
     def test_menu_enter(self) -> None:
         state = AppState()
         state.screen = ScreenKind.MENU
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.RETURN), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.RETURN), state, None, None)
         assert result is True
 
     def test_menu_escape(self) -> None:
@@ -61,90 +55,70 @@ class TestKeyboardStillWorksWithGamepadEnabled:
         state.gamepad_enabled = True
         # ESC on MENU returns False (quit game) — correct behavior,
         # not a gamepad regression.
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.ESCAPE), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.ESCAPE), state, None, None)
         assert result is False
 
     def test_hub_enter(self) -> None:
         state = AppState()
         state.screen = ScreenKind.HUB
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.RETURN), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.RETURN), state, None, None)
         assert result is True
 
     def test_hub_escape(self) -> None:
         state = AppState()
         state.screen = ScreenKind.HUB
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.ESCAPE), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.ESCAPE), state, None, None)
         assert result is True
 
     def test_settings_up(self) -> None:
         state = AppState()
         state.screen = ScreenKind.SETTINGS
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.UP), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.UP), state, None, None)
         assert result is True
 
     def test_settings_down(self) -> None:
         state = AppState()
         state.screen = ScreenKind.SETTINGS
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.DOWN), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.DOWN), state, None, None)
         assert result is True
 
     def test_help_escape(self) -> None:
         state = AppState()
         state.screen = ScreenKind.HELP
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.ESCAPE), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.ESCAPE), state, None, None)
         assert result is True
 
     def test_help_left_arrow(self) -> None:
         state = AppState()
         state.screen = ScreenKind.HELP
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.LEFT), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.LEFT), state, None, None)
         assert result is True
 
     def test_help_right_arrow(self) -> None:
         state = AppState()
         state.screen = ScreenKind.HELP
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.RIGHT), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.RIGHT), state, None, None)
         assert result is True
 
     def test_arc_phase_advance(self) -> None:
         state = AppState()
         state.screen = ScreenKind.ARC_PHASE
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.SPACE), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.SPACE), state, None, None)
         assert result is True
 
     def test_arc_phase_escape(self) -> None:
         state = AppState()
         state.screen = ScreenKind.ARC_PHASE
         state.gamepad_enabled = True
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.ESCAPE), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.ESCAPE), state, None, None)
         assert result is True
 
 
@@ -156,9 +130,7 @@ class TestGamepadDisabledFallback:
         state.screen = ScreenKind.MENU
         state.gamepad_enabled = False
         # Keyboard input should still work.
-        result = handle_current_screen_input(
-            _make_keydown(KeySym.RETURN), state, None, None
-        )
+        result = handle_current_screen_input(_make_keydown(KeySym.RETURN), state, None, None)
         assert result is True
 
     def test_gamepad_enabled_default_true(self) -> None:

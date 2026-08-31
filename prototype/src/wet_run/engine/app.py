@@ -99,7 +99,9 @@ def _main_inner() -> int:
 
     # ADR-0198: resolve the user's selected resolution preset.
     preset_name = getattr(state, "resolution", config.DEFAULT_RESOLUTION)
-    preset = config.RESOLUTION_PRESETS.get(preset_name, config.RESOLUTION_PRESETS[config.DEFAULT_RESOLUTION])
+    preset = config.RESOLUTION_PRESETS.get(
+        preset_name, config.RESOLUTION_PRESETS[config.DEFAULT_RESOLUTION]
+    )
     cols, rows = preset.cols or config.SCREEN_WIDTH, preset.rows or config.SCREEN_HEIGHT
 
     with tcod.context.new(
@@ -160,14 +162,10 @@ def _main_inner() -> int:
                             # Convert raw axis int -> ControllerAxis enum.
                             axis_enum = tcod.sdl.joystick.ControllerAxis(event.axis)
                             # Trigger -> Combat skill (LT=1, RT=2)
-                            skill_idx = _gamepad.trigger_to_skill_index(
-                                axis_enum, event.value
-                            )
+                            skill_idx = _gamepad.trigger_to_skill_index(axis_enum, event.value)
                             if skill_idx is not None and state.screen is ScreenKind.COMBAT:
                                 keysym = (
-                                    tcod.event.KeySym.N1
-                                    if skill_idx == 0
-                                    else tcod.event.KeySym.N2
+                                    tcod.event.KeySym.N1 if skill_idx == 0 else tcod.event.KeySym.N2
                                 )
                                 synthetic_axis = tcod.event.KeyDown(
                                     sym=keysym,
@@ -189,10 +187,8 @@ def _main_inner() -> int:
                                     break
                                 continue
                             # Stick -> arrow keys (deadzone + repeat)
-                            nav_key: tcod.event.KeySym | None = (
-                                _gamepad.axis_to_navigation_keysym(
-                                    axis_enum, event.value
-                                )
+                            nav_key: tcod.event.KeySym | None = _gamepad.axis_to_navigation_keysym(
+                                axis_enum, event.value
                             )
                             if nav_key is not None:
                                 # Only emit once per stick motion (axis events fire continuously)
@@ -218,27 +214,18 @@ def _main_inner() -> int:
 
                         # Handle ControllerButton (digital face buttons + shoulders).
                         if isinstance(event, tcod.event.ControllerButton):
-                            mapped_keysym: tcod.event.KeySym | None = (
-                                _gamepad.gamepad_to_keysym(event.button)
+                            mapped_keysym: tcod.event.KeySym | None = _gamepad.gamepad_to_keysym(
+                                event.button
                             )
                             if mapped_keysym is not None and event.pressed:
                                 # Button repeat logic: emit KeyDown only if enough time
                                 # has passed since last press of the same button.
-                                now_ns = event.timestamp_ns or (
-                                    _gamepad_time.monotonic_ns()
-                                )
-                                last_ns = state.gamepad_button_last_press.get(
-                                    int(event.button), 0
-                                )
+                                now_ns = event.timestamp_ns or (_gamepad_time.monotonic_ns())
+                                last_ns = state.gamepad_button_last_press.get(int(event.button), 0)
                                 elapsed_ms = (now_ns - last_ns) / 1_000_000
-                                if (
-                                    last_ns > 0
-                                    and elapsed_ms < _gamepad.GAMEPAD_REPEAT_INTERVAL_MS
-                                ):
+                                if last_ns > 0 and elapsed_ms < _gamepad.GAMEPAD_REPEAT_INTERVAL_MS:
                                     continue  # too soon, skip
-                                state.gamepad_button_last_press[
-                                    int(event.button)
-                                ] = now_ns
+                                state.gamepad_button_last_press[int(event.button)] = now_ns
                                 synthetic_btn = tcod.event.KeyDown(
                                     sym=mapped_keysym,
                                     scancode=tcod.event.Scancode(0),

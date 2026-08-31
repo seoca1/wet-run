@@ -131,9 +131,7 @@ class TestDebouncing:
         count_after_first = len(state.status_messages)
 
         # Second event at t=1100ms (100ms later, within 1000ms debounce).
-        event2 = _make_device_event(
-            "CONTROLLERDEVICEADDED", name="PS5", timestamp_ns=1_100_000_000
-        )
+        event2 = _make_device_event("CONTROLLERDEVICEADDED", name="PS5", timestamp_ns=1_100_000_000)
         handle_device_event(event2, state)
 
         # Second event should be ignored.

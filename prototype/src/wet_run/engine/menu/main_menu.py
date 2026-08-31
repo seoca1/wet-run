@@ -79,7 +79,12 @@ def render_menu(console: tcod.console.Console, t: Translator, state: AppState) -
             key == OPTION_STATS and not stats_enabled
         )
         if dim:
-            label = f"{label} (opt-in)"
+            # GA-007 fix: differentiate the dim suffix by option so Continue
+            # no-save shows "(없음)" not "(opt-in)" — was misleading UX.
+            if key == OPTION_CONTINUE:
+                label = f"{label} (없음)"
+            else:  # OPTION_STATS
+                label = f"{label} (opt-in)"
         is_selected = i == selected
         marker = "▸ " if is_selected else "  "
         fg = (

@@ -326,12 +326,8 @@ def _draw_avatar_panel(
 
     # Phase 6+: show the discounted Info Market price for T1 so the
     # player sees the effect of their faction standing at a glance.
-    market_line = _render_market_summary(state)
-    if market_line:
-        console.print(x=x, y=y + 5, string=f"Market: {market_line}", fg=(180, 180, 180))
-
-    # Phase 6+: show the discounted Info Market price for T1 so the
-    # player sees the effect of their faction standing at a glance.
+    # GA-008 fix: removed duplicate render block that printed the same
+    # market_line at the same coordinates a second time.
     market_line = _render_market_summary(state)
     if market_line:
         console.print(x=x, y=y + 5, string=f"Market: {market_line}", fg=(180, 180, 180))

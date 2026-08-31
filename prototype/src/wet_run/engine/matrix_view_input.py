@@ -197,7 +197,11 @@ def _handle_movement(state: AppState, sym: KeySym) -> None:
 
     layouts = _last_layout.get(matrix)
     if layouts is None:
-        return
+        # GA-014 fix: stale cache after save/restore (new matrix object).
+        from ..matrix.graph import compute_layout
+
+        layouts = compute_layout(matrix)
+        _last_layout[matrix] = layouts
     current_pos = layouts.get(state.current_node_id)
     if current_pos is None:
         return

@@ -693,7 +693,11 @@ def _handle_backtrack(
     state.status_messages.append(f">>> Backtrack to {prev_node.label} ({prev_node.kind.value})")
     if hasattr(prev_node, "room_type") and prev_node.room_type is RoomType.DEAD_END:
         damage = 10
-        state.player_hp = max(0, state.player_hp - damage)
+        # GA-009 fix: floor at 1 so repeated backtrack cannot leave the
+        # player at 0 HP (which would block all subsequent actions until
+        # the player dies via the death cycle). max(1, ...) keeps the
+        # player alive with 1 HP so they can recover.
+        state.player_hp = max(1, state.player_hp - damage)
         state.status_messages.append(f">>> Dead End! You stumble and take {damage} damage!")
     _maybe_trigger_trap(state, prev_node)
     if ice_registry is not None and prog_registry is not None:

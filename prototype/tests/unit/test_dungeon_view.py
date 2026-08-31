@@ -195,6 +195,41 @@ class TestCardinalMovementDungeon:
         assert s.player_hp == 85
         assert any("TRAP" in m for m in s.status_messages)
 
+    def test_backtrack_from_dead_end_floors_hp_at_one(self) -> None:
+        """Regression (GA-009): repeated backtrack from a DEAD_END room
+        applies 10 damage each time, but the HP must floor at 1 so the
+        player always has a turn to recover (was previously max(0, ...)
+        which left the player at 0 HP — blocking all subsequent actions).
+        """
+        from wet_run.matrix.dungeon_generator import RoomType
+
+        nodes = (
+            Node(id="e", label="Entry", kind=NodeKind.ENTRY, zone=ZoneDepth.SURFACE),
+            Node(
+                id="d",
+                label="DeadEnd",
+                kind=NodeKind.ROUTER,
+                zone=ZoneDepth.MID,
+                room_type=RoomType.DEAD_END,
+            ),
+        )
+        edges = (Edge(src="e", dst="d"),)
+        g = MatrixGraph(nodes=nodes, edges=edges, entry_id="e")
+        s = AppState()
+        s.matrix = g
+        s.current_node_id = "d"
+        s.exploration = ExplorationState(current="d", path=["e", "d"])
+        s.player_hp = 5
+        s.player_max_hp = 100
+        s.screen = ScreenKind.MATRIX
+
+        dungeon_view._handle_backtrack(s, None, None)
+
+        # GA-009 fix: max(1, ...) floors HP at 1 so the player can recover
+        # on their next turn instead of being stuck at 0 HP.
+        assert s.player_hp >= 1
+        assert s.current_node_id == "e"
+
 
 # ============================================================================
 # Smoke render (does not assert content; just verifies it draws without error)

@@ -88,6 +88,14 @@ AUTO_SAVE_FILENAME = "autosave.json"  # distinct from manual slot_{N}.json
 #
 # Pre-0.1.0 saves lacked a version field entirely; the legacy chain
 # normalises them to 0.1.0 by injecting the version key.
+#
+# GA-016 fix: when SAVE_FORMAT_VERSION is bumped, add a forward-compat
+# migration entry that defaults all newly-serialized fields. Example:
+#   ("0.1.0", "0.2.0", _build_forward_compat_migration(
+#       "0.2.0", {"deck_size": "standard", "gamepad_enabled": True}
+#   )),
+# Without this, all existing 0.1.0 saves would raise
+# SaveVersionMismatchError on load.
 _SAVE_MIGRATIONS: list[tuple[str, str, Any]] = [
     (
         "<legacy>",
@@ -95,6 +103,43 @@ _SAVE_MIGRATIONS: list[tuple[str, str, Any]] = [
         lambda data: {**data, "version": SAVE_FORMAT_VERSION},
     ),
 ]
+
+
+def _build_forward_compat_migration(
+    target_version: str,
+    default_fields: dict[str, Any],
+) -> Any:
+    """Build a migration transform that injects defaults for new fields.
+
+    Use when bumping SAVE_FORMAT_VERSION: each newly-serialized field
+    must appear in ``default_fields`` with its AppState default value
+    so legacy saves upgrade cleanly without SaveVersionMismatchError.
+
+    Defaults are merged into ``data["app_state"]`` (the nested dict
+    that holds AppState fields), not the top-level save dict. Pre-
+    existing values in app_state are preserved (defaults only fill
+    missing keys).
+
+    Args:
+        target_version: The SAVE_FORMAT_VERSION string this migration
+            upgrades to (must match the constant at write time).
+        default_fields: Mapping of new AppState field name -> default
+            value (e.g. {"deck_size": "standard", "gamepad_enabled": True}).
+
+    Returns:
+        Transform function ``(data: dict) -> dict`` that bumps the
+        version and merges defaults into app_state (preserving any
+        existing values).
+    """
+
+    def _transform(data: dict[str, Any]) -> dict[str, Any]:
+        data["version"] = target_version
+        app_state = data.setdefault("app_state", {})
+        for key, value in default_fields.items():
+            app_state.setdefault(key, value)
+        return data
+
+    return _transform
 
 
 def _migrate_save_data(data: dict[str, Any]) -> dict[str, Any]:

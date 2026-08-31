@@ -617,3 +617,68 @@ class TestSaveMigration:
         data = {"version": SAVE_FORMAT_VERSION, "saved_at": "x"}
         out = _migrate_save_data(data)
         assert out is data or out == data
+
+    def test_forward_compat_migration_injects_defaults(self) -> None:
+        """Regression (GA-016): _build_forward_compat_migration helper
+        upgrades an older save by injecting default values for new
+        fields while preserving any pre-existing values. This is the
+        building block for future SAVE_FORMAT_VERSION bumps so legacy
+        saves don't raise SaveVersionMismatchError.
+        """
+        from wet_run.engine.save_manager import _build_forward_compat_migration
+
+        transform = _build_forward_compat_migration(
+            "0.2.0",
+            {"deck_size": "standard", "gamepad_enabled": True},
+        )
+        # Legacy save missing both fields gets defaults in app_state.
+        legacy = {"version": "0.1.0", "app_state": {"credits": 100}}
+        upgraded = transform(legacy)
+        assert upgraded["version"] == "0.2.0"
+        assert upgraded["app_state"]["deck_size"] == "standard"
+        assert upgraded["app_state"]["gamepad_enabled"] is True
+        assert upgraded["app_state"]["credits"] == 100
+        # Pre-existing values in app_state are not overwritten by defaults.
+        existing = {"version": "0.1.0", "app_state": {"deck_size": "heavy"}}
+        upgraded2 = transform(existing)
+        assert upgraded2["app_state"]["deck_size"] == "heavy"
+
+    def test_forward_compat_migration_full_chain(self, save_dir: Path) -> None:
+        """Regression (GA-016): end-to-end forward-compat migration
+        via the actual save_manager pipeline. Synthesise a 0.1.0 save,
+        register a forward-compat migration to 0.2.0, and confirm
+        load() succeeds with the new defaults injected.
+        """
+        from wet_run.engine import save_manager as sm
+
+        original_version = sm.SAVE_FORMAT_VERSION
+        try:
+            sm.SAVE_FORMAT_VERSION = "0.2.0"
+            # Forward-compat migration: 0.1.0 → 0.2.0
+            transform = sm._build_forward_compat_migration(
+                "0.2.0",
+                {"deck_size": "standard", "gamepad_enabled": True},
+            )
+            sm._SAVE_MIGRATIONS.append(("0.1.0", "0.2.0", transform))
+            manager = SaveManager(save_dir=save_dir)
+            legacy_data = {
+                "version": "0.1.0",
+                "saved_at": "2026-08-01T10:00:00Z",
+                "elapsed_seconds": 100,
+                "run_state": {"current_stage": "meet_npc", "mission_id": "first_jack"},
+                "app_state": {"inventory": {}, "credits": 50},
+                "metadata": {},
+            }
+            (save_dir / "slot_1.json").write_text(json.dumps(legacy_data), encoding="utf-8")
+            loaded = manager.load(1)
+            assert loaded.version == "0.2.0"
+            assert loaded.app_state["credits"] == 50
+            assert loaded.app_state["deck_size"] == "standard"
+            assert loaded.app_state["gamepad_enabled"] is True
+        finally:
+            # Restore original version + remove injected migration so
+            # other tests aren't affected.
+            sm.SAVE_FORMAT_VERSION = original_version
+            sm._SAVE_MIGRATIONS[:] = [
+                m for m in sm._SAVE_MIGRATIONS if m[0] != "0.1.0" or m[1] != "0.2.0"
+            ]

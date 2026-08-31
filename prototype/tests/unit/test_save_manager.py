@@ -386,6 +386,45 @@ class TestRestoreState:
         manager.restore_state(1, new_state)
         assert any("loaded from slot 1" in m for m in new_state.status_messages)
 
+    def test_round_trips_scalar_gameplay_fields(self, save_dir: Path) -> None:
+        """Regression (GA-004): scalar gameplay fields must round-trip
+        through save/restore. Prior to the fix, fields like is_dead,
+        death_reason, mutator multipliers, and salvage counters were
+        silently dropped on save (saved_at had wrong values), causing
+        progression loss on reload.
+        """
+        manager = SaveManager(save_dir=save_dir)
+        state = _make_state(credits=100)
+        state.is_dead = True
+        state.death_reason = "Test death"
+        state.death_cause = "Black ICE"
+        state.heal_disabled = True
+        state.alarm_speed_multiplier = 2.5
+        state.encounter_multiplier = 3
+        state.tempo_mode = "fast"
+        state.salvage_fragments = 42
+        state.pending_salvage = True
+        state.phase4_triggered = True
+        state.faction_tension_probability_boost = 0.75
+        state.near_miss_triggered = True
+
+        manager.save(1, state)
+
+        new_state = AppState()
+        manager.restore_state(1, new_state)
+        assert new_state.is_dead is True
+        assert new_state.death_reason == "Test death"
+        assert new_state.death_cause == "Black ICE"
+        assert new_state.heal_disabled is True
+        assert new_state.alarm_speed_multiplier == 2.5
+        assert new_state.encounter_multiplier == 3
+        assert new_state.tempo_mode == "fast"
+        assert new_state.salvage_fragments == 42
+        assert new_state.pending_salvage is True
+        assert new_state.phase4_triggered is True
+        assert new_state.faction_tension_probability_boost == 0.75
+        assert new_state.near_miss_triggered is True
+
 
 class TestSlotManagement:
     """list_slots, get_metadata, delete."""

@@ -548,6 +548,22 @@ class SaveManager:
             "total_runs": state.total_runs,
             "total_deaths": state.total_deaths,
             "resolution": getattr(state, "resolution", "classic"),
+            # GA-004 fix (continuation): scalar gameplay fields from QA's
+            # identified 50+ missing fields. Simple types only; complex
+            # objects (combat_state, gn_*, chapter_*) still require
+            # per-object to_dict / from_dict and are out of scope here.
+            "is_dead": state.is_dead,
+            "death_reason": state.death_reason,
+            "death_cause": state.death_cause,
+            "heal_disabled": state.heal_disabled,
+            "alarm_speed_multiplier": state.alarm_speed_multiplier,
+            "encounter_multiplier": state.encounter_multiplier,
+            "tempo_mode": state.tempo_mode,
+            "salvage_fragments": state.salvage_fragments,
+            "pending_salvage": state.pending_salvage,
+            "phase4_triggered": state.phase4_triggered,
+            "faction_tension_probability_boost": state.faction_tension_probability_boost,
+            "near_miss_triggered": state.near_miss_triggered,
         }
 
     def _serialize_equipment(self, equipment: Any) -> dict[str, Any]:
@@ -567,7 +583,9 @@ class SaveManager:
             if value is None:
                 result[attr] = None
             elif isinstance(value, dict):
-                result[attr] = {k: list(v) if isinstance(v, (list, tuple)) else v for k, v in value.items()}
+                result[attr] = {
+                    k: list(v) if isinstance(v, (list, tuple)) else v for k, v in value.items()
+                }
             elif isinstance(value, (list, tuple, set)):
                 result[attr] = list(value)
             else:
@@ -746,21 +764,15 @@ class SaveManager:
         state.hardcore_mode = bool(app_data.get("hardcore_mode", False))
         state.ng_plus_unlocked = bool(app_data.get("ng_plus_unlocked", False))
         state.ng_plus_active = bool(app_data.get("ng_plus_active", False))
-        state.construct_companion_active = bool(
-            app_data.get("construct_companion_active", False)
-        )
+        state.construct_companion_active = bool(app_data.get("construct_companion_active", False))
         state.story_flags = set(app_data.get("story_flags", []))
         state.shown_events = set(app_data.get("shown_events", []))
         state.completed_missions = set(app_data.get("completed_missions", []))
         state.active_mutators = tuple(app_data.get("active_mutators", []))
         state.active_events = tuple(app_data.get("active_events", []))
         state.event_log = list(app_data.get("event_log", []))
-        state.faction_tension_triggered = set(
-            app_data.get("faction_tension_triggered", [])
-        )
-        state.purchased_intel_items = list(
-            app_data.get("purchased_intel_items", [])
-        )
+        state.faction_tension_triggered = set(app_data.get("faction_tension_triggered", []))
+        state.purchased_intel_items = list(app_data.get("purchased_intel_items", []))
         state.data_fragments = set(app_data.get("data_fragments", []))
         state.nodes_visited = set(app_data.get("nodes_visited", []))
         state.anomaly_triggered = set(app_data.get("anomaly_triggered", []))
@@ -774,6 +786,23 @@ class SaveManager:
         state.total_runs = int(app_data.get("total_runs", 0))
         state.total_deaths = int(app_data.get("total_deaths", 0))
         state.resolution = app_data.get("resolution", "classic")
+        # GA-004 fix (continuation): round-trip scalar gameplay fields added in
+        # _serialize_app_state. Each new field uses dict.get() with the
+        # field's existing default so legacy saves (pre-fix) load cleanly.
+        state.is_dead = bool(app_data.get("is_dead", False))
+        state.death_reason = app_data.get("death_reason", "")
+        state.death_cause = app_data.get("death_cause", "Combat")
+        state.heal_disabled = bool(app_data.get("heal_disabled", False))
+        state.alarm_speed_multiplier = float(app_data.get("alarm_speed_multiplier", 1.0))
+        state.encounter_multiplier = int(app_data.get("encounter_multiplier", 1))
+        state.tempo_mode = app_data.get("tempo_mode", "normal")
+        state.salvage_fragments = int(app_data.get("salvage_fragments", 0))
+        state.pending_salvage = bool(app_data.get("pending_salvage", False))
+        state.phase4_triggered = bool(app_data.get("phase4_triggered", False))
+        state.faction_tension_probability_boost = float(
+            app_data.get("faction_tension_probability_boost", 0.0)
+        )
+        state.near_miss_triggered = bool(app_data.get("near_miss_triggered", False))
         equipment_data = app_data.get("equipment_loadout")
         if isinstance(equipment_data, dict):
             self._restore_equipment(state.equipment_loadout, equipment_data)

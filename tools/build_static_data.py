@@ -123,6 +123,118 @@ def load_ko_stories() -> dict[str, dict]:
     return ko_out
 
 
+def load_gibson_verification() -> dict[str, dict]:
+    """Load Gibson verification results and index by story key."""
+    gibson_path = Path("/tmp/gibson_verification.json")
+    if not gibson_path.exists():
+        return {}
+    
+    try:
+        data = json.loads(gibson_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    
+    index = {}
+    for item in data:
+        path = Path(item["path"])
+        stem = path.stem
+        
+        key = _story_key(stem)
+        
+        checks = {c["check"]: c["status"] for c in item.get("checks", [])}
+        
+        index[key] = {
+            "overall": item.get("overall", "partial"),
+            "passed": item.get("passed", 0),
+            "partial": item.get("partial", 0),
+            "failed": item.get("failed", 0),
+            "checks": checks,
+        }
+    
+    return index
+
+
+def load_stage5_results() -> dict[str, dict]:
+    """Load Stage 5 (derivative literary check) results and index by story key."""
+    stage5_path = Path("/tmp/stage5_results.json")
+    if not stage5_path.exists():
+        return {}
+    
+    try:
+        data = json.loads(stage5_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    
+    index = {}
+    for item in data:
+        path = Path(item["filepath"])
+        stem = path.stem
+        key = _story_key(stem)
+        
+        index[key] = {
+            "score": item.get("weighted_total", 0),
+            "grade": item.get("letter_grade", "unknown"),
+            "dimensions": item.get("dimensions", {}),
+        }
+    
+    return index
+
+
+def load_stage6_results() -> dict[str, dict]:
+    """Load Stage 6 (advanced literary check) results and index by story key."""
+    stage6_path = Path("/tmp/stage6_results.json")
+    if not stage6_path.exists():
+        return {}
+    
+    try:
+        data = json.loads(stage6_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    
+    index = {}
+    for item in data:
+        path = Path(item["filepath"])
+        stem = path.stem
+        key = _story_key(stem)
+        
+        index[key] = {
+            "score": item.get("weighted_total", 0),
+            "grade": item.get("letter_grade", "unknown"),
+            "era": item.get("era", ""),
+            "dimensions": item.get("dimensions", {}),
+        }
+    
+    return index
+
+
+def load_flesch_readability() -> dict[str, dict]:
+    """Load Flesch-Kincaid readability results and index by story key."""
+    flesch_path = Path("/tmp/flesch_readability.json")
+    if not flesch_path.exists():
+        return {}
+    
+    try:
+        data = json.loads(flesch_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    
+    index = {}
+    for item in data:
+        path = item.get("path", "")
+        stem = Path(path).stem if path else ""
+        key = _story_key(stem)
+        
+        index[key] = {
+            "fk_grade": item.get("flesch_kincaid_grade", 0),
+            "fre": item.get("flesch_reading_ease", 0),
+            "fog": item.get("gunning_fog", 0),
+            "smog": item.get("smog_index", 0),
+            "status": item.get("status", "unknown"),
+        }
+    
+    return index
+
+
 def parse_story(text: str, lang: str) -> dict:
     fm = re.search(r"^---\s*\n(.*?)\n---\s*\n", text, re.DOTALL)
     out = {"lang": lang, "title": "", "subtitle": "", "character": "",
@@ -200,7 +312,6 @@ def gen_search_index(en_stories: dict, ko_stories: dict,
         "blue-ant": (BLUE_ANT_EN_DIR, BLUE_ANT_NV_EN_DIR, BLUE_ANT_KO_DIR, BLUE_ANT_NV_KO_DIR),
         "sprawl":   (SPRAWL_EN_DIR,   SPRAWL_NV_EN_DIR,   SPRAWL_KO_DIR,   SPRAWL_NV_KO_DIR),
     }
-    # Novelettes win over short-stories when a stem exists in both.
     for trilogy, (ss_dir, nv_dir, ko_ss, ko_nv) in trilogy_dirs_map.items():
         for content_type, ss in (("short-stories", ss_dir), ("novelettes", nv_dir)):
             if not ss.exists():
@@ -213,16 +324,83 @@ def gen_search_index(en_stories: dict, ko_stories: dict,
                     stem_trilogy[stem] = trilogy
                     stem_content[stem] = content_type
 
+    gibson_index = load_gibson_verification()
+    stage5_index = load_stage5_results()
+    stage6_index = load_stage6_results()
+    flesch_index = load_flesch_readability()
+
     for stem, info in en_stories.items():
         trilogy = stem_trilogy.get(stem, "sprawl")
         content = stem_content.get(stem, "short-stories")
-        out.append(_story_entry(stem, info, "en", mission_links, trilogy, content))
+        entry = _story_entry(stem, info, "en", mission_links, trilogy, content)
+        if stem in gibson_index:
+            entry["gibson_style"] = gibson_index[stem]
+        if stem in stage5_index:
+            entry["literary"] = stage5_index[stem]
+        if stem in stage6_index:
+            entry["advanced_literary"] = stage6_index[stem]
+        if stem in flesch_index:
+            entry["readability"] = flesch_index[stem]
+        out.append(entry)
     for stem, info in ko_stories.items():
         trilogy = stem_trilogy.get(stem, "sprawl")
         content = stem_content.get(stem, "short-stories")
-        out.append(_story_entry(stem, info, "ko", mission_links, trilogy, content))
+        entry = _story_entry(stem, info, "ko", mission_links, trilogy, content)
+        if stem in gibson_index:
+            entry["gibson_style"] = gibson_index[stem]
+        if stem in stage5_index:
+            entry["literary"] = stage5_index[stem]
+        if stem in stage6_index:
+            entry["advanced_literary"] = stage6_index[stem]
+        if stem in flesch_index:
+            entry["readability"] = flesch_index[stem]
+        out.append(entry)
     out.sort(key=lambda s: (s["lang"], s["id"]))
-    return {"version": "1.0", "generated": NOW, "count": len(out), "stories": out}
+
+    gibson_stats = {
+        "total_verified": len(gibson_index),
+        "pass": sum(1 for v in gibson_index.values() if v["overall"] == "pass"),
+        "partial": sum(1 for v in gibson_index.values() if v["overall"] == "partial"),
+        "fail": sum(1 for v in gibson_index.values() if v["overall"] == "fail"),
+    }
+
+    stage5_stats = {
+        "total": len(stage5_index),
+        "S": sum(1 for v in stage5_index.values() if v["grade"] == "S"),
+        "A": sum(1 for v in stage5_index.values() if v["grade"] == "A"),
+        "B": sum(1 for v in stage5_index.values() if v["grade"] == "B"),
+        "C": sum(1 for v in stage5_index.values() if v["grade"] == "C"),
+        "D": sum(1 for v in stage5_index.values() if v["grade"] == "D"),
+    }
+
+    stage6_stats = {
+        "total": len(stage6_index),
+        "S": sum(1 for v in stage6_index.values() if v["grade"] == "S"),
+        "A": sum(1 for v in stage6_index.values() if v["grade"] == "A"),
+        "B": sum(1 for v in stage6_index.values() if v["grade"] == "B"),
+        "C": sum(1 for v in stage6_index.values() if v["grade"] == "C"),
+        "D": sum(1 for v in stage6_index.values() if v["grade"] == "D"),
+    }
+
+    flesch_stats = {
+        "total": len(flesch_index),
+        "pass": sum(1 for v in flesch_index.values() if v["status"] == "pass"),
+        "partial": sum(1 for v in flesch_index.values() if v["status"] == "partial"),
+        "avg_fk_grade": round(sum(v["fk_grade"] for v in flesch_index.values()) / max(1, len(flesch_index)), 1),
+        "avg_fre": round(sum(v["fre"] for v in flesch_index.values()) / max(1, len(flesch_index)), 1),
+        "avg_fog": round(sum(v["fog"] for v in flesch_index.values()) / max(1, len(flesch_index)), 1),
+    }
+
+    return {
+        "version": "1.0",
+        "generated": NOW,
+        "count": len(out),
+        "stories": out,
+        "gibson_style_stats": gibson_stats,
+        "literary_stats": stage5_stats,
+        "advanced_literary_stats": stage6_stats,
+        "readability_stats": flesch_stats,
+    }
 
 
 def _story_entry(stem: str, info: dict, lang: str, mission_links: dict,

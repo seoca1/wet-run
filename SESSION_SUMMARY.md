@@ -1,8 +1,8 @@
 # Wet Run — Session Index
 
-> **Latest session**: 2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend) — see [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) §"Post-Report Addendum"
+> **Latest session**: 2026-08-31 (Gibson verification pipeline expansion — 23 checks, 14 dimensions, 953 stories, dashboard rebuilt) — see `log.md` 2026-08-31 enhancement(dashboard) entry
 >
-> Previous: 2026-08-26 Part 1 (v1.4.0 Operational Release + ADR-0194/0195/0200/0201-0206) — [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md)
+> Previous: 2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend) — [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) §"Post-Report Addendum"
 >
 > Earlier: [SESSION_SUMMARY_2026-08-20.md](./SESSION_SUMMARY_2026-08-20.md) (Tracks A+B+C+D+E Full Quality Upgrade)
 >
@@ -16,7 +16,8 @@ This is an **index** file pointing to the most recent dated session snapshot. Pe
 
 | Date | File | Summary |
 |---|---|---|
-| **2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend)** | [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) (Post-Report Addendum) | **LATEST.** 3 new ADR (0207 Tier 4 SFX/Animation/Glyphs, 0208 random_weight, 0209 IDB save backend) + 8 commits. Bundle +3.53 KB. Dry-run TS1128 fix in same commit as IDB refactor. Tier 3 literal "cloud save sync" partial fulfillment (local IDB only). |
+| **2026-08-31 (Pipeline Expansion + Dashboard Rebuild)** | `log.md` (2026-08-31 entries) | **LATEST.** Dashboard rebuilt: 953 stories with 23-check `gibson_style` + 14-dimension `literary`. 5 tools patched for peripheral. S-grade threshold bug fixed. |
+| 2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend) | [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) (Post-Report Addendum) | 3 new ADR + 8 commits. Bundle +3.53 KB. Tier 3 literal "cloud save sync" partial fulfillment (local IDB only). |
 | 2026-08-26 Part 1 (v1.4.0 Operational Release) | [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) | v1.4.0 PyPI + GitHub release + ADR-0194/0195/0200/0201-0206. 30 atomic commits. Previous session — full report in dedicated file. |
 | 2026-08-20 (Tracks A+B+C+D+E: Full Quality Upgrade) | [SESSION_SUMMARY_2026-08-20.md](./SESSION_SUMMARY_2026-08-20.md) | All 5 tracks: A.4 module splits (5 parallel agents), B.9 ADR integrations wired, C content verified at target (200/97/30/29/81), D.5 meta & aftermath verified, E.4 release prep. Operational releases (PyPI/GitHub/LFS) deferred to user. |
 | 2026-08-19 (Notion 통합 Part 2) | [SESSION_SUMMARY_2026-08-19_notion.md](./SESSION_SUMMARY_2026-08-19_notion.md) | Previous: 66 design doc pages in Notion (3-tier), 5 body updates, ~150 API calls. |

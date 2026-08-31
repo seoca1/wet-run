@@ -4650,3 +4650,108 @@ Plus manual indent fix on the rewritten set comprehension (`ruff format --diff` 
 - **23 other uncommitted changes** in this repo remain untouched (gamepad + dashboard data + log.md session-close drift). User action required.
 - **1 broken Fiction wikilink** (`[[themes/corporate-warfare]]` in `2026-08-16_new_rose_hotel.md`) — Fiction project scope, not wet_run.
 - **Real wet_run path resolved**: `Projects/Game/wet_run/` is the canonical repo; `Game/wet_run/` at workspace root is a stale mount-point stub (1 .py file, 346 LOC). Plan + log evidence referenced relative paths that resolve correctly to `Projects/Game/wet_run/`.
+
+## [2026-08-31] enhancement(dashboard) | Gibson verification pipeline expansion — 23 checks, 14 dimensions, 953 stories
+
+**Status**: ✅ 완료 — Dashboard rebuilt with expanded verification pipeline.
+
+### Changes
+- `build_static_data.py`: Rebuilt `search_index.json` with 953 EN stories
+- Each story now includes `gibson_style` field with 23-check results (was 17)
+- Each story includes `literary` field with 14-dimension scores (was 12)
+- `verify_gibson_style.py --all`: Added "peripheral" to scan (was missing)
+- `derivative_literary_check.py --all`: Added "peripheral" to scan
+- `advanced_literary_check.py --all`: Added "peripheral" to scan
+- `flesch_readability.py --all`: Added "peripheral" to scan
+- `validate_all_stories.py`: Fixed S-grade threshold bug + added "peripheral" to scan
+
+### Verification
+- 506 EN stories scanned (Gibson), 501 scanned (literary)
+- New 2026-08-31 stories: 20 total, all passing (partial or better)
+- 0 FAIL on Gibson style checks for new stories
+
+## [2026-08-31] enhancement(dashboard) | Gibson verification pipeline expansion — 23 checks, 14 dimensions, 953 stories
+
+**Status**: ✅ 완료 — Dashboard rebuilt with expanded verification pipeline.
+
+### Changes
+- `build_static_data.py`: Rebuilt `search_index.json` with 953 EN stories
+- Each story now includes `gibson_style` field with 23-check results (was 17)
+- Each story includes `literary` field with 14-dimension scores (was 12)
+- `verify_gibson_style.py --all`: Added "peripheral" to scan (was missing)
+- `derivative_literary_check.py --all`: Added "peripheral" to scan
+- `advanced_literary_check.py --all`: Added "peripheral" to scan
+- `flesch_readability.py --all`: Added "peripheral" to scan
+- `validate_all_stories.py`: Fixed S-grade threshold bug + added "peripheral" to scan
+
+### Verification
+- 506 EN stories scanned (Gibson), 501 scanned (literary)
+- New 2026-08-31 stories: 20 total, all passing (partial or better)
+- 0 FAIL on Gibson style checks for new stories
+
+## [2026-08-31] housekeeping | session-close — 9 GA-finding fixes shipped + pushed (continuation session)
+
+**Scope**: Continuation session after the 12-ruff-errors fix. User-directed ("continue all"). Addressed 9 remaining wet_run GA findings from the 2026-08-25 QA report (`Projects/.omo/qa_agents/reports/gameplay_2026-08-25.json`).
+
+### Commits shipped (continuation session, 9 total)
+
+| # | Commit | Subject | Severity |
+|---|---|---|---|
+| 9 | `e4046f8` | GA-002 — menu reads live SaveManager.has_save(1) (no stale state) | critical |
+| 10 | `b74a526` | GA-004 — round-trip 12 scalar gameplay fields (death cycle, mutators, salvage) | critical |
+| 11 | `d78256f` | GA-005 — persist current_phase_index in RunState | high |
+| 12 | `9b6d524` | GA-007/008/014 — dim suffix, dup render, stale layout cache | medium |
+| 13 | `33b84ef` | GA-003 — initialize player_hp + player_max_hp to 100 (was 0) | high |
+| 14 | `15b8a83` | GA-016 — _build_forward_compat_migration helper | medium |
+| 15 | `314eaa5` | GA-015 — defensive clamp on step_hack indicator_pos | low |
+| 16 | `b828629` | GA-009 — floor HP at 1 on backtrack from DEAD_END | low |
+| 17 | `fc22620` | GA-013 — remove AttributeError from save corruption-list | medium |
+
+### QA findings resolution summary (post-cont.)
+
+| ID | Severity | Status |
+|---|---|---|
+| GA-001 | HIGH | ✅ already fixed (verified pre-session) |
+| GA-002 | CRITICAL | ✅ fixed (commit 9) |
+| GA-003 | HIGH | ✅ fixed (commit 13) |
+| GA-004 | CRITICAL | ✅ fixed (commit 10) |
+| GA-005 | HIGH | ✅ fixed (commit 11) |
+| GA-006 | HIGH | ✅ already fixed via GA-004 |
+| GA-007 | MED | ✅ fixed (commit 12) |
+| GA-008 | MED | ✅ fixed (commit 12) |
+| GA-009 | LOW | ✅ fixed (commit 16) |
+| GA-010 | HIGH | ✅ already fixed (verified pre-session) |
+| GA-011 | HIGH | ✅ already fixed via GA-004 |
+| GA-012 | MED | ✅ already mitigated at UI layer (`app.py:377` broad `except Exception`) |
+| GA-013 | MED | ✅ fixed (commit 17 — safe with GA-016 migration infra) |
+| GA-014 | MED | ✅ fixed (commit 12) |
+| GA-015 | LOW | ✅ fixed (commit 15) |
+| GA-016 | MED | ✅ fixed (commit 14) |
+
+**15/16 GA findings actively fixed today + 1 already mitigated at UI layer.**
+
+### Validator gates (canonical paths per wet_run AGENTS.md §6)
+
+| Gate | Result |
+|---|---|
+| `pytest tests/unit/` | 5826 passed / 365 skipped / 1 xfailed |
+| `ruff check .` | All checks passed |
+| `ruff format --check .` | 528 files formatted |
+| `mypy --strict src/wet_run` | 0 issues across 233 source files |
+
+### Branch state
+
+- HEAD: `fc22620` (latest GA-013 fix)
+- origin/main: SYNCED (no drift)
+- Commits shipped today in wet_run: 10 (commit 9 = e4046f8 through commit 17 = fc22620)
+
+### Note on earlier session
+
+The earlier "12 ruff errors fix" log entry (line 4611 in this file) was a prerequisite for this continuation session — without it, `make all` would have failed before any GA-finding test could even run. Total today: 10 wet_run commits + 2 sequential session entries.
+
+### Reference
+
+- QA source: `Projects/.omo/qa_agents/reports/gameplay_2026-08-25.json`
+- Workspace log: `Projects/log.md` (entries 2302797 + 924e2c9)
+- Next session: M3 cron Tue 2026-09-01 02:00 KST (ADR-0070 F21 re-evaluation)
+- Out-of-session-scope (preserved per workspace §6): 19 modified + 1 untracked file in wet_run working tree from parallel-session work

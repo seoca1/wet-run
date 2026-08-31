@@ -1,4 +1,29 @@
 
+## [2026-08-31] dashboard | Gibson style verification — stories-browse.html에 12-category Gibson style 검증 결과 반영 (업데이트)
+
+**Status**: ✅ **Gibson style verification dashboard 반영 완료 (업데이트)** — Fiction 프로젝트의 Gibson style 검증 결과를 wet-run 대시보드에 반영. 486 stories 검증 (138 PASS, 348 PARTIAL, 0 FAIL).
+
+### 변경 요약
+- **search_index.json**: `Fiction/tools/verify_gibson_style.py` 결과를 `gibson_style` 필드로 추가. 각 story에 overall/passed/partial/failed/checks 정보 포함.
+- **stories-browse.html**: Gibson style 필터 행 추가 (All/Pass/Partial/Fail 버튼).
+- **stories-browse.js**: story 카드에 Gibson style 뱃지 표시 + 필터 로직 추가. meta bar에 Gibson style 통계 표시.
+- **build_static_data.py**: Gibson verification 데이터 로드 함수 추가. `gen_search_index()`에서 verification 데이터 포함.
+- **README.md**: Gibson style verification 관련 문서 업데이트.
+
+### 검증
+- `build_static_data.py` 실행: search_index.json 정상 생성 (899,573 bytes)
+- Gibson style 통계: total_verified=486, pass=138, partial=348, fail=0
+- stories-browse.html 필터: Gibson style 상태별 필터링 동작 확인
+
+### 변경 파일
+- `tools/build_static_data.py` — load_gibson_verification() 함수 추가, gen_search_index() 수정
+- `dashboard/data/search_index.json` — gibson_style 필드 추가
+- `dashboard/stories-browse.html` — Gibson style 필터 행 추가
+- `dashboard/stories-browse.js` — Gibson style 뱃지 + 필터 로직 추가
+- `dashboard/README.md` — 문서 업데이트
+
+---
+
 ## [2026-08-23] fix | F3 boot crash — dispatcher arity handling (1-line fix surfaced by Final Verification)
 
 ## [2026-08-19] dashboard | Game/dashboard v2.0 — 통합 허브 + 라이브 stats (cross-project hub)
@@ -4580,3 +4605,48 @@ async function listSlots(): Promise<ReadonlyArray<{...}>>;
 ### Live URL
 
 **`https://seoca1.github.io/wet-run/wetrun-web/`** — 사운드 활성화는 사용자 gesture 후 (브라우저 정책). 메뉴 클릭 후 카드 사용 → COMBAT_HIT + BGM phase 전환 + 격파 시 VICTORY.
+
+---
+
+## [2026-08-31] housekeeping | fix 12 ruff errors (post-ADR-0197 gamepad regressions)
+
+**Scope**: User-directed — restore `ruff check` to 0 errors after gamepad Tier 1 (ADR-0197, 2026-08-25) introduced 12 lint errors in 2 files. Plan UI/visibility upgrade verified separately (PASS, all 9 todos shipped at canonical path `Projects/Game/wet_run/`).
+
+### Errors fixed (12 → 0)
+
+**`scripts/play_gamepad_smoke.py`** (1 error):
+- I001 (import sort) — auto-fixed by `ruff --fix`
+
+**`tests/unit/test_mission_wiring.py`** (11 errors):
+- I001 (import sort) — auto-fixed by `ruff --fix`
+- E402 × 6 (intentional sys.path bootstrap before pytest + wet_run imports) — added `# noqa: E402` per-line
+- C416 (set comprehension rewrite) — auto-fixed by `ruff --fix --unsafe-fixes`
+- C408 (dict() call rewrite) — auto-fixed by `ruff --fix --unsafe-fixes`
+- PT018 (compound assertion `m is not None and m.random_weight == 1.0`) — auto-fixed by `ruff --fix --unsafe-fixes` (split into 2 lines)
+
+Plus manual indent fix on the rewritten set comprehension (`ruff format --diff` reported 4-space → 8-space inconsistency after auto-fix).
+
+### Verification (canonical paths per AGENTS.md §6)
+
+| Check | Result |
+|---|---|
+| `ruff format --check .` | ✅ 527 files formatted |
+| `ruff check .` | ✅ All checks passed (0 errors) |
+| `mypy --strict src/wet_run` | ✅ Success: no issues found in 233 source files |
+| `pytest tests/unit/` | ✅ **5813 passed / 365 skipped / 1 xfailed** in 88.27s (baseline maintained) |
+| `pytest tests/unit/test_mission_wiring.py` | ✅ 16/16 passed (no regression) |
+
+### Files changed (2, ≤15 cap per workspace AGENTS.md §6)
+
+| File | Lines | Type |
+|---|---:|---|
+| `prototype/scripts/play_gamepad_smoke.py` | +12 / −7 | smoke script (was 1 I001 + minor whitespace) |
+| `prototype/tests/unit/test_mission_wiring.py` | +86 / −27 | test file (was 11 errors) |
+
+**Total**: 98 insertions, 34 deletions across 2 files.
+
+### Note (out of session scope)
+
+- **23 other uncommitted changes** in this repo remain untouched (gamepad + dashboard data + log.md session-close drift). User action required.
+- **1 broken Fiction wikilink** (`[[themes/corporate-warfare]]` in `2026-08-16_new_rose_hotel.md`) — Fiction project scope, not wet_run.
+- **Real wet_run path resolved**: `Projects/Game/wet_run/` is the canonical repo; `Game/wet_run/` at workspace root is a stale mount-point stub (1 .py file, 346 LOC). Plan + log evidence referenced relative paths that resolve correctly to `Projects/Game/wet_run/`.

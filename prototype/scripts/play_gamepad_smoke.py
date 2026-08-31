@@ -25,9 +25,10 @@ if str(SRC_DIR) not in sys.path:
 
 def main() -> int:
     """Run the smoke test."""
+    from tcod.sdl.joystick import ControllerButton
+
     from wet_run.engine.gamepad import BUTTON_TO_KEYSYM, gamepad_to_keysym
     from wet_run.engine.state import AppState, ScreenKind
-    from tcod.sdl.joystick import ControllerButton
 
     print("=== Gamepad Smoke Test (ADR-0197) ===\n")
 
@@ -54,9 +55,9 @@ def main() -> int:
     # 2. Verify mapping table completeness.
     print(f"2. Button mapping table: {len(BUTTON_TO_KEYSYM)} buttons mapped")
     expected_button_count = 12  # DPAD x4 + A/B/X/Y/START/BACK/LB/RB
-    assert (
-        len(BUTTON_TO_KEYSYM) >= expected_button_count
-    ), f"expected >= {expected_button_count} mapped buttons"
+    assert len(BUTTON_TO_KEYSYM) >= expected_button_count, (
+        f"expected >= {expected_button_count} mapped buttons"
+    )
     print(f"   PASS: {len(BUTTON_TO_KEYSYM)} >= {expected_button_count}\n")
 
     # 3. Verify each mapped button returns a valid KeySym.
@@ -116,7 +117,9 @@ def main() -> int:
     print(f"   PASS: gamepad_enabled default = {state.gamepad_enabled}")
     assert hasattr(state, "gamepad_button_last_press"), "missing button_last_press"
     assert isinstance(state.gamepad_button_last_press, dict), "button_last_press must be dict"
-    print(f"   PASS: gamepad_button_last_press type = {type(state.gamepad_button_last_press).__name__}")
+    print(
+        f"   PASS: gamepad_button_last_press type = {type(state.gamepad_button_last_press).__name__}"
+    )
     assert hasattr(state, "gamepad_last_device_event_ms"), "missing last_device_event_ms"
     print(f"   PASS: gamepad_last_device_event_ms initial = {state.gamepad_last_device_event_ms}")
     print()
@@ -143,8 +146,10 @@ def main() -> int:
     print()
 
     print("=== ALL SMOKE TESTS PASSED ===")
-    print(f"Verified: {len(active_screens)} ScreenKinds, {len(BUTTON_TO_KEYSYM)} buttons, "
-          f"{len(unmapped)} unmapped, {len(cases)} sanitizer cases")
+    print(
+        f"Verified: {len(active_screens)} ScreenKinds, {len(BUTTON_TO_KEYSYM)} buttons, "
+        f"{len(unmapped)} unmapped, {len(cases)} sanitizer cases"
+    )
     return 0
 
 

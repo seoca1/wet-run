@@ -1,12 +1,11 @@
 {
   "version": "1.0",
-  "generated": "2026-08-25T03:27:17.431097+00:00",
+  "generated": "2026-08-31T09:56:06.409928+00:00",
   "wiki_base": "../../../Fiction/wiki/",
-  "term_count": 391,
+  "term_count": 446,
   "terms": [
     "Gibson Virtual Light-era Interview (Dublin, October 1, 1993)",
     "working class ridership and late capitalist substrate",
-    "Dorotea Benedetti (Pattern Recognition Antagonist)",
     "Mona Lisa / \"Molly Millions\" (Mona Lisa Overdrive)",
     "William Gibson Reading Order & World Overview",
     "Colonel Willie Corto (The Original Armitage)",
@@ -17,12 +16,14 @@
     "3Jane Tessier-Ashpool (short story)",
     "Disney Land with the Death Penalty",
     "Thirteen Views of a Cardboard City",
+    "aubrey beardsley recruitment style",
     "short fiction as corpus foundation",
     "Ashpool (Tessier-Ashpool founder)",
     "Heretic (Jokey — The Declaration)",
     "Sally Shears (The Revealed Molly)",
     "Warbaby (Virtual Light Operative)",
     "Wigan Ludgate (The Uploaded Body)",
+    "mac cube damien investment device",
     "operative class across trilogies",
     "synthetic intelligence in gibson",
     "Armitage (Colonel Willie Corto)",
@@ -41,21 +42,33 @@
     "Colin Laney (Bridge version)",
     "Fragments of a Hologram Rose",
     "Sil (Jokey — Veteran Runner)",
+    "cynthia houston evp recovery",
     "late capitalist surveillance",
     "wintermute neuromancer merge",
+    "Cynthia (Rose of the World)",
+    "sprawl mission architecture",
     "technology and spirituality",
     "Lady 3Jane Tessier-Ashpool",
+    "aubrey beardsley aesthetic",
+    "electronic voice phenomena",
     "identity and consciousness",
     "independence vs connection",
     "lady 3jane tessier ashpool",
+    "september 11 disappearance",
+    "anonymous artist protocol",
+    "coolhunting as discipline",
     "extraction and kidnapping",
+    "homeland symbol exception",
     "improvised infrastructure",
+    "studio flat damien camden",
     "Johnny (Johnny Mnemonic)",
     "Tick (London Data-Thief)",
     "addiction and dependency",
     "aesthetic infrastructure",
+    "blue ant trilogy summary",
     "criminality and survival",
     "infrastructure as patron",
+    "retsina greek restaurant",
     "tessier ashpool sleepers",
     "Parkabrake (Bo Sellars)",
     "Peter 2 Tessier-Ashpool",
@@ -77,12 +90,14 @@
     "Win Cabreira (윈 카브레이라)",
     "cyberspace as frontier",
     "holland windgate brown",
+    "portobello road market",
     "3jane tessier ashpool",
     "The Difference Engine",
     "Zavijava (β Virginis)",
     "ai in gibsons fiction",
     "all tomorrows parties",
     "autonomous governance",
+    "cybernetic bracketing",
     "jackpot universe stub",
     "reality vs simulation",
     "structural monitoring",
@@ -95,18 +110,23 @@
     "construct_5_sequence",
     "cultural engineering",
     "culture and creation",
+    "fetish footage forum",
     "found art assemblage",
     "identity and doubles",
     "loa matrix construct",
     "magnetic dog sisters",
+    "ring twice threshold",
     "water infrastructure",
+    "Bernard Stonestreet",
     "cherry chesterfield",
     "chevette washington",
     "cyberspace as state",
     "fall and redemption",
+    "japanese collectors",
     "media and celebrity",
     "mona lisa overdrive",
     "pattern recognition",
+    "soviet nomenklatura",
     "synthetic celebrity",
     "Pagan (Parkabrake)",
     "The Belonging Kind",
@@ -114,15 +134,22 @@
     "ambient technology",
     "bigend methodology",
     "bridge to blue ant",
+    "camden high street",
+    "coolhunting brands",
     "kannon projections",
+    "ma 1 flying jacket",
     "neuromancer the AI",
+    "Dorotea Benedetti",
+    "Pamela Mainwaring",
     "The Winter Market",
     "augmented reality",
+    "black maria truck",
     "body and identity",
     "body modification",
     "brandless objects",
     "chia pet mckenzie",
     "corporate warfare",
+    "father ai meeting",
     "gibsons evolution",
     "jackie count zero",
     "japan traditional",
@@ -132,11 +159,16 @@
     "Blue Ant Trilogy",
     "The Rez (Lo/Rez)",
     "art and creation",
+    "bridge squatters",
+    "bridge substrate",
+    "curta calculator",
     "fukuoka okinawan",
     "gender and power",
+    "heinzi and pfaff",
     "improvised power",
     "marly krushkhova",
     "pirate broadcast",
+    "russian mini cab",
     "smoke and shadow",
     "sprawl to bridge",
     "villa straylight",
@@ -153,6 +185,7 @@
     "brown operation",
     "corporate power",
     "courier network",
+    "footage archive",
     "havana locative",
     "hubertus bigend",
     "idolu the idoru",
@@ -161,6 +194,7 @@
     "reflex boosters",
     "sprawl_universe",
     "tessier ashpool",
+    "voytek biroshak",
     "Andrew Pollard",
     "New Rose Hotel",
     "Wendell Wright",
@@ -178,14 +212,20 @@
     "molly millions",
     "nanotechnology",
     "rom constructs",
+    "sinclair zx 81",
     "sprawl trilogy",
+    "stella volkova",
     "the peripheral",
+    "volkov apparat",
+    "Hobbs Baranov",
     "Russian Mafia",
+    "andrei volkov",
     "blue ant soho",
     "bobby newmark",
     "brand_allergy",
     "brand_economy",
     "burton fisher",
+    "buzz ricksons",
     "cayce pollard",
     "cortical stem",
     "flynne fisher",
@@ -198,6 +238,7 @@
     "post cold war",
     "reasons cycle",
     "san francisco",
+    "sigil numbers",
     "spook country",
     "trauma squads",
     "virtual light",
@@ -219,6 +260,7 @@
     "maas biolabs",
     "mesh network",
     "nodal points",
+    "nora volkova",
     "robin lanier",
     "sally shears",
     "smart matter",
@@ -228,6 +270,7 @@
     "Hinterlands",
     "Little Bird",
     "Shinya (시냐)",
+    "Win Pollard",
     "bobby quine",
     "chickenhead",
     "colin ghost",
@@ -256,13 +299,16 @@
     "cyberspace",
     "jacking in",
     "kid afrika",
+    "neals yard",
     "night city",
     "ono sendai",
     "parkabrake",
+    "pilot film",
     "straylight",
     "the bridge",
     "the matrix",
     "the sprawl",
+    "timex 1000",
     "urban life",
     "voodoo loa",
     "wintermute",
@@ -270,8 +316,10 @@
     "Boone Chu",
     "Linda Lee",
     "Petty San",
+    "apophenia",
     "character",
     "construct",
+    "fff forum",
     "nighttown",
     "post 9 11",
     "razorgirl",
@@ -296,6 +344,8 @@
     "istanbul",
     "kombinat",
     "lovelite",
+    "mac cube",
+    "magadans",
     "masahiko",
     "mitchell",
     "santeria",
@@ -310,6 +360,7 @@
     "Agrippa",
     "Killing",
     "Maelcum",
+    "Sublett",
     "ashpool",
     "biosoft",
     "bioware",
@@ -327,6 +378,7 @@
     "simstim",
     "skinner",
     "the rez",
+    "warbaby",
     "wetware",
     "Jackie",
     "Lo (로)",
@@ -343,6 +395,7 @@
     "idu ru",
     "johnny",
     "lo rez",
+    "moscow",
     "shinya",
     "skinny",
     "sleeve",
@@ -368,11 +421,13 @@
     "idoru",
     "jones",
     "motif",
+    "ngemi",
     "t ray",
     "theme",
     "Eddy",
     "Finn",
     "Mona",
+    "Taki",
     "Tito",
     "Winn",
     "bama",
@@ -422,6 +477,11 @@
       "tooltip": "ambient technology",
       "text": "ambient technology"
     },
+    "footage archive": {
+      "page": "concepts/footage-archive.md",
+      "tooltip": "footage archive",
+      "text": "footage archive"
+    },
     "water infrastructure": {
       "page": "concepts/water-infrastructure.md",
       "tooltip": "water infrastructure",
@@ -431,6 +491,11 @@
       "page": "concepts/concept.md",
       "tooltip": "concept",
       "text": "concept"
+    },
+    "bridge squatters": {
+      "page": "concepts/bridge-squatters.md",
+      "tooltip": "bridge squatters",
+      "text": "bridge squatters"
     },
     "skinny": {
       "page": "concepts/skinny.md",
@@ -507,6 +572,11 @@
       "tooltip": "wintermute",
       "text": "wintermute"
     },
+    "electronic voice phenomena": {
+      "page": "concepts/electronic-voice-phenomena.md",
+      "tooltip": "electronic voice phenomena",
+      "text": "electronic voice phenomena"
+    },
     "character": {
       "page": "concepts/character.md",
       "tooltip": "character",
@@ -532,10 +602,25 @@
       "tooltip": "connection",
       "text": "connection"
     },
+    "volkov apparat": {
+      "page": "concepts/volkov-apparat.md",
+      "tooltip": "volkov apparat",
+      "text": "volkov apparat"
+    },
     "shibuya": {
       "page": "concepts/shibuya.md",
       "tooltip": "shibuya",
       "text": "shibuya"
+    },
+    "mac cube": {
+      "page": "concepts/mac-cube.md",
+      "tooltip": "mac cube",
+      "text": "mac cube"
+    },
+    "timex 1000": {
+      "page": "concepts/timex-1000.md",
+      "tooltip": "timex 1000",
+      "text": "timex 1000"
     },
     "wintermute neuromancer merge": {
       "page": "concepts/wintermute-neuromancer-merge.md",
@@ -577,6 +662,11 @@
       "tooltip": "autonomous governance",
       "text": "autonomous governance"
     },
+    "moscow": {
+      "page": "concepts/moscow.md",
+      "tooltip": "moscow",
+      "text": "moscow"
+    },
     "motif": {
       "page": "concepts/motif.md",
       "tooltip": "motif",
@@ -591,6 +681,21 @@
       "page": "concepts/coolhunting.md",
       "tooltip": "coolhunting",
       "text": "coolhunting"
+    },
+    "heinzi and pfaff": {
+      "page": "concepts/heinzi-and-pfaff.md",
+      "tooltip": "heinzi and pfaff",
+      "text": "heinzi and pfaff"
+    },
+    "cynthia houston evp recovery": {
+      "page": "concepts/cynthia-houston-evp-recovery.md",
+      "tooltip": "cynthia houston evp recovery",
+      "text": "cynthia houston evp recovery"
+    },
+    "russian mini cab": {
+      "page": "concepts/russian-mini-cab.md",
+      "tooltip": "russian mini cab",
+      "text": "russian mini cab"
     },
     "cortex hound": {
       "page": "concepts/cortex-hound.md",
@@ -607,6 +712,16 @@
       "tooltip": "blue ant method",
       "text": "blue ant method"
     },
+    "september 11 disappearance": {
+      "page": "concepts/september-11-disappearance.md",
+      "tooltip": "september 11 disappearance",
+      "text": "september 11 disappearance"
+    },
+    "magadans": {
+      "page": "concepts/magadans.md",
+      "tooltip": "magadans",
+      "text": "magadans"
+    },
     "gift economy": {
       "page": "concepts/gift-economy.md",
       "tooltip": "gift economy",
@@ -622,15 +737,50 @@
       "tooltip": "synthetic intelligence in gibson",
       "text": "synthetic intelligence in gibson"
     },
+    "portobello road market": {
+      "page": "concepts/portobello-road-market.md",
+      "tooltip": "portobello road market",
+      "text": "portobello road market"
+    },
     "dead mans chip": {
       "page": "concepts/dead-mans-chip.md",
       "tooltip": "dead mans chip",
       "text": "dead mans chip"
     },
+    "coolhunting as discipline": {
+      "page": "concepts/coolhunting-as-discipline.md",
+      "tooltip": "coolhunting as discipline",
+      "text": "coolhunting as discipline"
+    },
     "aleph": {
       "page": "concepts/aleph.md",
       "tooltip": "aleph",
       "text": "aleph"
+    },
+    "japanese collectors": {
+      "page": "concepts/japanese-collectors.md",
+      "tooltip": "japanese collectors",
+      "text": "japanese collectors"
+    },
+    "studio flat damien camden": {
+      "page": "concepts/studio-flat-damien-camden.md",
+      "tooltip": "studio flat damien camden",
+      "text": "studio flat damien camden"
+    },
+    "retsina greek restaurant": {
+      "page": "concepts/retsina-greek-restaurant.md",
+      "tooltip": "retsina greek restaurant",
+      "text": "retsina greek restaurant"
+    },
+    "aubrey beardsley aesthetic": {
+      "page": "concepts/aubrey-beardsley-aesthetic.md",
+      "tooltip": "aubrey beardsley aesthetic",
+      "text": "aubrey beardsley aesthetic"
+    },
+    "apophenia": {
+      "page": "concepts/apophenia.md",
+      "tooltip": "apophenia",
+      "text": "apophenia"
     },
     "dermal armor": {
       "page": "concepts/dermal-armor.md",
@@ -647,10 +797,25 @@
       "tooltip": "cultural engineering",
       "text": "cultural engineering"
     },
+    "camden high street": {
+      "page": "concepts/camden-high-street.md",
+      "tooltip": "camden high street",
+      "text": "camden high street"
+    },
+    "soviet nomenklatura": {
+      "page": "concepts/soviet-nomenklatura.md",
+      "tooltip": "soviet nomenklatura",
+      "text": "soviet nomenklatura"
+    },
     "idi ru": {
       "page": "concepts/idi-ru.md",
       "tooltip": "idi ru",
       "text": "idi ru"
+    },
+    "neals yard": {
+      "page": "concepts/neals-yard.md",
+      "tooltip": "neals yard",
+      "text": "neals yard"
     },
     "tessier ashpool sleepers": {
       "page": "concepts/tessier-ashpool-sleepers.md",
@@ -662,10 +827,20 @@
       "tooltip": "node",
       "text": "node"
     },
+    "homeland symbol exception": {
+      "page": "concepts/homeland-symbol-exception.md",
+      "tooltip": "homeland symbol exception",
+      "text": "homeland symbol exception"
+    },
     "the moderns": {
       "page": "concepts/the-moderns.md",
       "tooltip": "the moderns",
       "text": "the moderns"
+    },
+    "bridge substrate": {
+      "page": "concepts/bridge-substrate.md",
+      "tooltip": "bridge substrate",
+      "text": "bridge substrate"
     },
     "lost decade": {
       "page": "concepts/lost-decade.md",
@@ -697,10 +872,20 @@
       "tooltip": "cyberspace",
       "text": "cyberspace"
     },
+    "father ai meeting": {
+      "page": "concepts/father-ai-meeting.md",
+      "tooltip": "father ai meeting",
+      "text": "father ai meeting"
+    },
     "cybernetic": {
       "page": "concepts/cybernetic.md",
       "tooltip": "cybernetic",
       "text": "cybernetic"
+    },
+    "coolhunting brands": {
+      "page": "concepts/coolhunting-brands.md",
+      "tooltip": "coolhunting brands",
+      "text": "coolhunting brands"
     },
     "hub protocol": {
       "page": "concepts/hub-protocol.md",
@@ -711,6 +896,11 @@
       "page": "concepts/the-boxes.md",
       "tooltip": "the boxes",
       "text": "the boxes"
+    },
+    "ring twice threshold": {
+      "page": "concepts/ring-twice-threshold.md",
+      "tooltip": "ring twice threshold",
+      "text": "ring twice threshold"
     },
     "recurring themes across gibson": {
       "page": "concepts/recurring-themes-across-gibson.md",
@@ -726,6 +916,11 @@
       "page": "concepts/lovelite.md",
       "tooltip": "lovelite",
       "text": "lovelite"
+    },
+    "pilot film": {
+      "page": "concepts/pilot-film.md",
+      "tooltip": "pilot film",
+      "text": "pilot film"
     },
     "fontaine": {
       "page": "concepts/fontaine.md",
@@ -767,6 +962,11 @@
       "tooltip": "kami",
       "text": "kami"
     },
+    "sprawl mission architecture": {
+      "page": "concepts/sprawl-mission-architecture.md",
+      "tooltip": "sprawl mission architecture",
+      "text": "sprawl mission architecture"
+    },
     "bama": {
       "page": "concepts/bama.md",
       "tooltip": "bama",
@@ -807,10 +1007,20 @@
       "tooltip": "theme",
       "text": "theme"
     },
+    "fff forum": {
+      "page": "concepts/fff-forum.md",
+      "tooltip": "fff forum",
+      "text": "fff forum"
+    },
     "the footage": {
       "page": "concepts/the-footage.md",
       "tooltip": "the footage",
       "text": "the footage"
+    },
+    "aubrey beardsley recruitment style": {
+      "page": "concepts/aubrey-beardsley-recruitment-style.md",
+      "tooltip": "aubrey beardsley recruitment style",
+      "text": "aubrey beardsley recruitment style"
     },
     "chickenhead": {
       "page": "concepts/chickenhead.md",
@@ -832,6 +1042,11 @@
       "tooltip": "mirror lenses",
       "text": "mirror lenses"
     },
+    "buzz ricksons": {
+      "page": "concepts/buzz-ricksons.md",
+      "tooltip": "buzz ricksons",
+      "text": "buzz ricksons"
+    },
     "bridge courier": {
       "page": "concepts/bridge-courier.md",
       "tooltip": "bridge courier",
@@ -851,6 +1066,11 @@
       "page": "concepts/brand_allergy.md",
       "tooltip": "brand_allergy",
       "text": "brand_allergy"
+    },
+    "cybernetic bracketing": {
+      "page": "concepts/cybernetic-bracketing.md",
+      "tooltip": "cybernetic bracketing",
+      "text": "cybernetic bracketing"
     },
     "voodoo": {
       "page": "concepts/voodoo.md",
@@ -902,6 +1122,11 @@
       "tooltip": "smart matter",
       "text": "smart matter"
     },
+    "sinclair zx 81": {
+      "page": "concepts/sinclair-zx-81.md",
+      "tooltip": "sinclair zx 81",
+      "text": "sinclair zx 81"
+    },
     "lovemachine": {
       "page": "concepts/lovemachine.md",
       "tooltip": "lovemachine",
@@ -927,10 +1152,20 @@
       "tooltip": "loa matrix construct",
       "text": "loa matrix construct"
     },
+    "black maria truck": {
+      "page": "concepts/black-maria-truck.md",
+      "tooltip": "black maria truck",
+      "text": "black maria truck"
+    },
     "brandless objects": {
       "page": "concepts/brandless-objects.md",
       "tooltip": "brandless objects",
       "text": "brandless objects"
+    },
+    "mac cube damien investment device": {
+      "page": "concepts/mac-cube-damien-investment-device.md",
+      "tooltip": "mac cube damien investment device",
+      "text": "mac cube damien investment device"
     },
     "mesh network": {
       "page": "concepts/mesh-network.md",
@@ -946,6 +1181,11 @@
       "page": "concepts/smoke-and-shadow.md",
       "tooltip": "smoke and shadow",
       "text": "smoke and shadow"
+    },
+    "curta calculator": {
+      "page": "concepts/curta-calculator.md",
+      "tooltip": "curta calculator",
+      "text": "curta calculator"
     },
     "reflex boosters": {
       "page": "concepts/reflex-boosters.md",
@@ -987,6 +1227,11 @@
       "tooltip": "aesthetic infrastructure",
       "text": "aesthetic infrastructure"
     },
+    "ma 1 flying jacket": {
+      "page": "concepts/ma-1-flying-jacket.md",
+      "tooltip": "ma 1 flying jacket",
+      "text": "ma 1 flying jacket"
+    },
     "t ray": {
       "page": "concepts/t-ray.md",
       "tooltip": "t ray",
@@ -1001,6 +1246,16 @@
       "page": "concepts/fandom.md",
       "tooltip": "fandom",
       "text": "fandom"
+    },
+    "anonymous artist protocol": {
+      "page": "concepts/anonymous-artist-protocol.md",
+      "tooltip": "anonymous artist protocol",
+      "text": "anonymous artist protocol"
+    },
+    "the matrix": {
+      "page": "concepts/the-matrix.md",
+      "tooltip": "the matrix",
+      "text": "the matrix"
     },
     "operative class across trilogies": {
       "page": "concepts/operative-class-across-trilogies.md",
@@ -1027,10 +1282,30 @@
       "tooltip": "soho",
       "text": "soho"
     },
+    "tessier ashpool": {
+      "page": "concepts/tessier-ashpool.md",
+      "tooltip": "tessier ashpool",
+      "text": "tessier ashpool"
+    },
+    "blue ant trilogy summary": {
+      "page": "concepts/blue-ant-trilogy-summary.md",
+      "tooltip": "blue ant trilogy summary",
+      "text": "blue ant trilogy summary"
+    },
     "razorgirl modifications": {
       "page": "concepts/razorgirl-modifications.md",
       "tooltip": "razorgirl modifications",
       "text": "razorgirl modifications"
+    },
+    "sigil numbers": {
+      "page": "concepts/sigil-numbers.md",
+      "tooltip": "sigil numbers",
+      "text": "sigil numbers"
+    },
+    "andrei volkov": {
+      "page": "concepts/andrei-volkov.md",
+      "tooltip": "andrei volkov",
+      "text": "andrei volkov"
     },
     "andrew pollard": {
       "page": "characters/andrew-pollard.md",
@@ -1151,6 +1426,26 @@
       "page": "characters/heretic.md",
       "tooltip": "wigan ludgate",
       "text": "wigan ludgate"
+    },
+    "bernard stonestreet": {
+      "page": "characters/bernard-stonestreet.md",
+      "tooltip": "Bernard Stonestreet",
+      "text": "Bernard Stonestreet"
+    },
+    "brand and power": {
+      "page": "characters/bernard-stonestreet.md",
+      "tooltip": "brand and power",
+      "text": "brand and power"
+    },
+    "late capitalist surveillance": {
+      "page": "characters/bernard-stonestreet.md",
+      "tooltip": "late capitalist surveillance",
+      "text": "late capitalist surveillance"
+    },
+    "blue ant": {
+      "page": "characters/bernard-stonestreet.md",
+      "tooltip": "blue ant",
+      "text": "blue ant"
     },
     "linda lee": {
       "page": "characters/linda-lee.md",
@@ -1307,11 +1602,6 @@
       "tooltip": "havana locative",
       "text": "havana locative"
     },
-    "late capitalist surveillance": {
-      "page": "characters/tito.md",
-      "tooltip": "late capitalist surveillance",
-      "text": "late capitalist surveillance"
-    },
     "culture and creation": {
       "page": "characters/tito.md",
       "tooltip": "culture and creation",
@@ -1431,6 +1721,21 @@
       "page": "characters/wintermute.md",
       "tooltip": "artificial intelligence",
       "text": "artificial intelligence"
+    },
+    "hobbs baranov": {
+      "page": "characters/hobbs-baranov.md",
+      "tooltip": "Hobbs Baranov",
+      "text": "Hobbs Baranov"
+    },
+    "ngemi": {
+      "page": "characters/hobbs-baranov.md",
+      "tooltip": "ngemi",
+      "text": "ngemi"
+    },
+    "voytek biroshak": {
+      "page": "characters/hobbs-baranov.md",
+      "tooltip": "voytek biroshak",
+      "text": "voytek biroshak"
     },
     "dixie flatline (mccoy pauley)": {
       "page": "characters/dixie-flatline.md",
@@ -1557,11 +1862,6 @@
       "tooltip": "maas biolabs",
       "text": "maas biolabs"
     },
-    "tessier ashpool": {
-      "page": "characters/corto.md",
-      "tooltip": "tessier ashpool",
-      "text": "tessier ashpool"
-    },
     "fall and redemption": {
       "page": "characters/corto.md",
       "tooltip": "fall and redemption",
@@ -1642,11 +1942,6 @@
       "tooltip": "Pagan (Parkabrake)",
       "text": "Pagan (Parkabrake)"
     },
-    "brand and power": {
-      "page": "characters/pagan.md",
-      "tooltip": "brand and power",
-      "text": "brand and power"
-    },
     "brown": {
       "page": "characters/pagan.md",
       "tooltip": "brown",
@@ -1681,11 +1976,6 @@
       "page": "characters/wigan.md",
       "tooltip": "body and identity",
       "text": "body and identity"
-    },
-    "the matrix": {
-      "page": "characters/josef-virek.md",
-      "tooltip": "the matrix",
-      "text": "the matrix"
     },
     "brown (holland windgate brown)": {
       "page": "characters/brown.md",
@@ -1797,6 +2087,21 @@
       "tooltip": "kid afrika",
       "text": "kid afrika"
     },
+    "win pollard": {
+      "page": "characters/win-pollard.md",
+      "tooltip": "Win Pollard",
+      "text": "Win Pollard"
+    },
+    "nora volkova": {
+      "page": "characters/win-pollard.md",
+      "tooltip": "nora volkova",
+      "text": "nora volkova"
+    },
+    "stella volkova": {
+      "page": "characters/win-pollard.md",
+      "tooltip": "stella volkova",
+      "text": "stella volkova"
+    },
     "the projects": {
       "page": "characters/the-projects.md",
       "tooltip": "The Projects",
@@ -1887,15 +2192,15 @@
       "tooltip": "augmented reality",
       "text": "augmented reality"
     },
-    "blue ant": {
-      "page": "characters/milgrim.md",
-      "tooltip": "blue ant",
-      "text": "blue ant"
-    },
     "bridge squatter": {
       "page": "characters/maryalice-wake.md",
       "tooltip": "bridge squatter",
       "text": "bridge squatter"
+    },
+    "pamela mainwaring": {
+      "page": "characters/pamela-mainwaring.md",
+      "tooltip": "Pamela Mainwaring",
+      "text": "Pamela Mainwaring"
     },
     "reina": {
       "page": "characters/reina.md",
@@ -1941,6 +2246,16 @@
       "page": "characters/sil.md",
       "tooltip": "Sil (Jokey — Veteran Runner)",
       "text": "Sil (Jokey — Veteran Runner)"
+    },
+    "taki": {
+      "page": "characters/taki.md",
+      "tooltip": "Taki",
+      "text": "Taki"
+    },
+    "fetish footage forum": {
+      "page": "characters/taki.md",
+      "tooltip": "fetish footage forum",
+      "text": "fetish footage forum"
     },
     "eddy": {
       "page": "characters/eddy.md",
@@ -2122,10 +2437,25 @@
       "tooltip": "Yamazaki (야마자키)",
       "text": "Yamazaki (야마자키)"
     },
+    "sublett": {
+      "page": "characters/sublett.md",
+      "tooltip": "Sublett",
+      "text": "Sublett"
+    },
+    "warbaby": {
+      "page": "characters/sublett.md",
+      "tooltip": "warbaby",
+      "text": "warbaby"
+    },
     "darko": {
       "page": "characters/darko.md",
       "tooltip": "Darko",
       "text": "Darko"
+    },
+    "cynthia (rose of the world)": {
+      "page": "characters/cynthia.md",
+      "tooltip": "Cynthia (Rose of the World)",
+      "text": "Cynthia (Rose of the World)"
     },
     "rei toi (idoru)": {
       "page": "characters/rei-toi.md",
@@ -2157,10 +2487,10 @@
       "tooltip": "found art assemblage",
       "text": "found art assemblage"
     },
-    "dorotea benedetti (pattern recognition antagonist)": {
+    "dorotea benedetti": {
       "page": "characters/dorotea-benedetti.md",
-      "tooltip": "Dorotea Benedetti (Pattern Recognition Antagonist)",
-      "text": "Dorotea Benedetti (Pattern Recognition Antagonist)"
+      "tooltip": "Dorotea Benedetti",
+      "text": "Dorotea Benedetti"
     },
     "the dromes": {
       "page": "characters/drome.md",

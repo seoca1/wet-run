@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generated": "2026-08-25T03:27:17.431097+00:00",
+  "generated": "2026-08-31T09:56:06.409928+00:00",
   "by_source": {
     "aleph_fragment": [
       {
@@ -64,7 +64,7 @@
         "pillar": "purpose",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "beijing_memory_courier": [
@@ -129,7 +129,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "bridge-construct": [
@@ -220,7 +220,7 @@
         "pillar": "purpose",
         "grade_min": 4,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "chevette_nightshift_run": [
@@ -554,7 +554,7 @@
         "pillar": "purpose",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "the_choice": [
@@ -580,7 +580,7 @@
         "pillar": "purpose",
         "grade_min": 4,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "finn_final_reckoning": [
@@ -866,7 +866,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "g_boys_arc": [
@@ -1029,7 +1029,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "ice_run": [
@@ -1175,13 +1175,13 @@
       {
         "id": "mid_dual_objective_shibuya_run",
         "title": "Shibuya Run",
-        "character_ref": "slick-henry",
-        "cast": "slick-henry",
+        "character_ref": "slick_henry",
+        "cast": "slick_henry",
         "arc": 2,
         "pillar": "code",
         "grade_min": 3,
         "grade_max": 4,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "mid_dual_objective_trade_show": [
@@ -1240,26 +1240,26 @@
       {
         "id": "mid_investigate_black_market",
         "title": "Black Market Audit",
-        "character_ref": "slick-henry",
-        "cast": "slick-henry",
+        "character_ref": "slick_henry",
+        "cast": "slick_henry",
         "arc": 2,
         "pillar": "code",
         "grade_min": 2,
         "grade_max": 3,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "mid_investigate_yakuza_consortium": [
       {
         "id": "mid_investigate_yakuza_consortium",
         "title": "Yakuza Consortium",
-        "character_ref": "slick-henry",
-        "cast": "slick-henry",
+        "character_ref": "slick_henry",
+        "cast": "slick_henry",
         "arc": 2,
         "pillar": "code",
         "grade_min": 2,
         "grade_max": 3,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "mid_stealth_corpo_penthouse": [
@@ -1279,13 +1279,13 @@
       {
         "id": "mid_stealth_yakuza_meeting",
         "title": "Yakuza Meeting",
-        "character_ref": "slick-henry",
-        "cast": "slick-henry",
+        "character_ref": "slick_henry",
+        "cast": "slick_henry",
         "arc": 2,
         "pillar": "code",
         "grade_min": 3,
         "grade_max": 4,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "molly_decides": [
@@ -1311,7 +1311,7 @@
         "pillar": "code",
         "grade_min": 2,
         "grade_max": 3,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "molly_razor_dual_objective_hotel_target": [
@@ -1324,7 +1324,7 @@
         "pillar": "code",
         "grade_min": 3,
         "grade_max": 4,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "molly_razor_extract_final_chip": [
@@ -1337,7 +1337,7 @@
         "pillar": "code",
         "grade_min": 3,
         "grade_max": 4,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "molly_razor_investigate_sin_fans": [
@@ -1350,7 +1350,7 @@
         "pillar": "code",
         "grade_min": 2,
         "grade_max": 3,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "molly_razor_stealth_final_contract": [
@@ -1363,7 +1363,7 @@
         "pillar": "code",
         "grade_min": 4,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "mollys_final_razor": [
@@ -1415,7 +1415,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "neuromancer_first_ping": [
@@ -1634,7 +1634,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "pan_mannerist_audit": [
@@ -1647,7 +1647,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "panther_negotiate": [
@@ -1738,7 +1738,7 @@
         "pillar": "purpose",
         "grade_min": 4,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "sense_net_infiltration": [
@@ -2213,7 +2213,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "threjane_family_log": [
@@ -2369,7 +2369,7 @@
         "pillar": "purpose",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "trauma_squads_pair_arc": [
@@ -2473,7 +2473,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "watchdog_patrol": [
@@ -2590,7 +2590,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "yakuza_deal": [
@@ -2640,7 +2640,7 @@
         "pillar": "power",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "zaibatsu_statework": [
@@ -2653,7 +2653,7 @@
         "pillar": "purpose",
         "grade_min": 5,
         "grade_max": 5,
-        "fixer": "slick-henry"
+        "fixer": "slick_henry"
       }
     ],
     "zion_express": [
@@ -2902,7 +2902,7 @@
       "mid_extract_oni_data": "Oni Data",
       "mid_extract_yakuza_chop_shop": "Yakuza Chop Shop"
     },
-    "slick-henry": {
+    "slick_henry": {
       "mid_dual_objective_shibuya_run": "Shibuya Run",
       "mid_investigate_black_market": "Black Market Audit",
       "mid_investigate_yakuza_consortium": "Yakuza Consortium",

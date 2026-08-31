@@ -51,7 +51,7 @@ prototype/.venv/bin/python tools/build_dashboard.py
 | 페이지 | 동기화 소스 | 자동 / 수동 | 메모 |
 |---|---|---|---|
 | `story.html` | 캐릭터 3명 (Case/Sil/Kas) — `<div class="character-card">` 정적 디자인. 챕터 카드 21개는 JS 동적 렌더 (inline). | 혼합 | **character-card 부분 정적**. 예: 나이/데크/무기/동기/인용구 — 디자인 콘텐츠. |
-| `stories-browse.html` | `Fiction/derivative/sprawl-trilogy/short-stories/*.md` (29 stems) → 58 HTML | 자체 generator (`prototype/scripts/generate_story_html.py`) | **통계 동기화 완료**: 29/58/29/29/0 (commit b91b7cc). 2026-07-10 stories.html → stories-browse.html 합병. |
+| `stories-browse.html` | `Fiction/derivative/sprawl-trilogy/short-stories/*.md` (29 stems) → 58 HTML + Gibson style verification data | 자체 generator (`prototype/scripts/generate_story_html.py`) + `tools/build_static_data.py` | **Gibson style verification 추가됨** (2026-08-31). search_index.json에 gibson_style 필드 포함. 480 stories 검증 (34 PASS, 446 PARTIAL, 0 FAIL). 필터 버튼으로 Gibson style 상태별 필터링 가능. |
 | `stories/journey/{novice,veteran,heretic}.md\|html` | 시뮬레이션 시나리오 (정적). Missions 데이터와 직접 동기화 없음 (별도 합산). | 정적 | novice 20,050 / veteran 27,500 / heretic 20,100 cr (디자인 값). |
 | `stories/short-stories/{en,ko}.html` | 단편 본문 (58개) | `generate_story_html.py` | 자동 생성. 다시 실행 시 replace. |
 | `stories/episode-reader.html` | 챕터 카드 인덱스 — `chapters/{case,sil,kas,...}.json` (9 자키) | 정적 | 9 챕터 × 2 (EN+KO) = 18 카드. 2026-07-08 story_read.html → stories/episode-reader.html 이동. |
@@ -128,6 +128,12 @@ prototype/.venv/bin/python tools/build_dashboard.py
 - **2026-06-30** — Dashboard `data-status` audit + `dashboard/README.md` 작성.
 
 ---
+
+## Dashboard Update Log (2026-08-31)
+
+- **search_index.json**: Added Gibson style verification data from `Fiction/tools/verify_gibson_style.py`. Each story now includes a `gibson_style` field with verification status (overall, passed, partial, failed, checks). Updated `build_static_data.py` to load verification data from `/tmp/gibson_verification.json` and include it in search_index.json. Result: 480 stories verified (34 PASS, 446 PARTIAL, 0 FAIL).
+- **stories-browse.html**: Added Gibson style filter row with buttons for All/Pass/Partial/Fail.
+- **stories-browse.js**: Added Gibson style badge display on story cards and filter logic for Gibson style status. Updated meta bar to show Gibson style statistics.
 
 ## Dashboard Update Log (2026-07-25)
 

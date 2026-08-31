@@ -331,6 +331,13 @@ def step_hack(state: AppState, dt_s: float) -> None:
     elif pos <= 0:
         hack_state.indicator_pos = 0.0
         hack_state.indicator_dir = 1
+    # GA-015 fix: defensive clamp (race-condition guard). The conditional
+    # above handles the bounce, but a transient out-of-range value can
+    # still slip through between frames when _HACK_ZONES[indicator_pos]
+    # is read. clamp() ensures the indexer never sees an out-of-range
+    # float — even when the float-arithmetic rounding pushes pos just
+    # past _HACK_BAR_LEN - 1 or just below 0.
+    hack_state.indicator_pos = max(0.0, min(float(_HACK_BAR_LEN - 1), pos))
 
 
 def start_hack(state: AppState, node_label: str) -> None:

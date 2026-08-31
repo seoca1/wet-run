@@ -703,9 +703,16 @@ class SaveManager:
             return SavedRun.from_dict(data)
         except SaveVersionMismatchError:
             raise
-        except (KeyError, TypeError, ValueError, AttributeError) as e:
-            # Schema mismatch / dataclass evolution / type drift — all
-            # mean the save is structurally broken. Treat as corrupted.
+        except (KeyError, TypeError, ValueError) as e:
+            # GA-013 fix: removed AttributeError from the corruption-list.
+            # AttributeError from from_dict typically signals a missing
+            # NEW field on legacy saves (a migration concern, not a
+            # corruption). Since the GA-016 _build_forward_compat_migration
+            # helper provides explicit migration infrastructure, let
+            # AttributeError propagate as a normal load error so the
+            # developer sees the real exception (instead of it being
+            # masked as "save corrupted"). Corruption detection remains
+            # for genuinely malformed data (KeyError, TypeError, ValueError).
             raise SaveCorruptedError(f"Slot {slot} data is invalid: {e}") from e
 
     def restore_state(self, slot: int, state: AppState) -> None:

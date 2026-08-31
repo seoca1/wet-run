@@ -682,3 +682,53 @@ class TestSaveMigration:
             sm._SAVE_MIGRATIONS[:] = [
                 m for m in sm._SAVE_MIGRATIONS if m[0] != "0.1.0" or m[1] != "0.2.0"
             ]
+
+    def test_attribute_error_during_from_dict_propagates(self, save_dir: Path) -> None:
+        """Regression (GA-013): AttributeError from SavedRun.from_dict
+        must propagate as the original exception (not be masked as
+        SaveCorruptedError). AttributeError typically signals a missing
+        NEW field on legacy saves — a migration concern addressed by
+        GA-016 _build_forward_compat_migration. Masking it as
+        corruption hides the real exception from developers.
+        """
+        from wet_run.engine.save_manager import SavedRun
+
+        manager = SaveManager(save_dir=save_dir)
+        # Write a valid save file so load() proceeds past JSON parsing
+        # and reaches the from_dict call.
+        state = _make_state(credits=100)
+        manager.save(1, state)
+
+        # Patch SavedRun.from_dict to raise AttributeError (simulates
+        # from_dict failing on a new field that doesn't exist on the
+        # current dataclass — the GA-013 bug scenario).
+        with patch.object(
+            SavedRun,
+            "from_dict",
+            side_effect=AttributeError(
+                "module 'wet_run.engine.state' has no attribute 'nonexistent_field'"
+            ),
+        ):
+            with pytest.raises(AttributeError, match="nonexistent_field"):
+                manager.load(1)
+
+    def test_key_error_during_from_dict_still_marks_corrupt(self, save_dir: Path) -> None:
+        """Regression (GA-013): KeyError during from_dict must still be
+        classified as SaveCorruptedError (genuine corruption, not a
+        migration issue). Verifies that removing AttributeError from
+        the corruption list did NOT also remove the legitimate
+        corruption detectors.
+        """
+        from wet_run.engine.save_manager import SavedRun
+
+        manager = SaveManager(save_dir=save_dir)
+        state = _make_state(credits=100)
+        manager.save(1, state)
+
+        with patch.object(
+            SavedRun,
+            "from_dict",
+            side_effect=KeyError("missing_required_field"),
+        ):
+            with pytest.raises(SaveCorruptedError, match="missing_required_field"):
+                manager.load(1)

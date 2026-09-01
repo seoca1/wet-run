@@ -30,6 +30,36 @@
 | boss_ice_reference | 5개 보스 ICE 프로필 + Phase B-3 기능 | (Phase B-3) |
 | cross-project-integration | Fiction ↔ wet_run 양방향 통합 | (Phase α-J) |
 
+## 캐릭터 (world/characters/)
+
+게임 내 등장 캐릭터 (모두 Fiction wiki stub — Fiction 프로젝트 canonical entry로 redirect):
+
+- [[world/characters/angie-mitchell]] — Simstim star / Loa vessel (*Count Zero* / *Mona Lisa Overdrive*)
+- [[world/characters/bobby-newmark]] — Count Zero protagonist (boxer / business consultant)
+- [[world/characters/case]] — Neuromancer protagonist (console cowboy)
+- [[world/characters/johnny]] — Johnny Mnemonic (data courier)
+- [[world/characters/kumiko-yanaka]] — Hosaka zaibatsu heiress (*Mona Lisa Overdrive*)
+- [[world/characters/marly-krushkhova]] — Marly Krushkhova (*Mona Lisa Overdrive*)
+- [[world/characters/molly-millions]] — Sprawl razorgirl
+- [[world/characters/rydell]] — Berry Rydell (Bridge era)
+- [[world/characters/slick-henry]] — Slick Henry (*Mona Lisa Overdrive*)
+- [[world/characters/wigan-ludgate]] — Wigan Ludgate (*All Tomorrow's Parties*)
+- [[world/characters/yakuza]] — Yakuza faction archetype
+
+## 컨셉 (world/concepts/)
+
+- [[world/concepts/identity-and-consciousness]] — Construct personality, AI merging, selfhood
+- [[world/concepts/the-aleph]] — Infinite data construct / AI entity
+
+## 설정 (world/settings/)
+
+- [[world/settings/chiba-city]] — Sprawl entry point (*Neuromancer* opening)
+
+## 작품 (world/works/)
+
+- [[world/works/neuromancer]] — Sprawl Trilogy #1 (1984)
+- [[world/works/mona-lisa-overdrive]] — Sprawl Trilogy #3 (1988)
+
 > **경고**: Fiction wiki (`../../../../Fiction/wiki/`)는 이 프로젝트의 **읽기 전용** primary source입니다. 절대 수정하지 마세요.
 
 ## 메모리 조각 (lore/)

@@ -100,6 +100,8 @@ export type ScreenKind =
   | "stats" // STATS / Telemetry (stub, deferred)
   | "tutorial"; // Tutorial overlay (Tier 5.5+ first-run onboarding)
 
+import type { CombatPhaseState } from "./combat_phase.ts";
+
 /** Top-level game state — referenced by all subsystems. */
 export interface GameState {
   readonly phase: GamePhase;
@@ -124,6 +126,8 @@ export interface GameState {
   readonly endingChoice: EndingChoice | null;
   // Tier 5.5: active combat VFX (animation overlay).
   readonly vfxInstances: ReadonlyArray<import("../renderer/combat_vfx.js").CombatVfxInstance>;
+  // Tier 5: combat phase state machine (idle/turn/animating/resolving).
+  readonly combatPhase: CombatPhaseState;
 }
 
 /** Top-level run cycle phase (Tier 5+). */

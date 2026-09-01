@@ -37,6 +37,17 @@ export const SFX_IDS = {
   COMBAT_HIT: "sounds/sfx_combat_hit.wav",
   VICTORY: "sounds/sfx_victory.wav",
   DEFEAT: "sounds/sfx_defeat.wav",
+  COMBAT_BLOCK: "sounds/sfx_combat_block.wav",
+  SKILL_STRIKE: "sounds/sfx_skill_strike.wav",
+  SKILL_HAMMER: "sounds/sfx_skill_hammer.wav",
+  SKILL_VIRUS: "sounds/sfx_skill_virus.wav",
+  SKILL_WARDRONE: "sounds/sfx_skill_wardrone.wav",
+  MOVEMENT_NODE: "sounds/sfx_movement.wav",
+  UI_SELECT: "sounds/sfx_ui_select.wav",
+  UI_CONFIRM: "sounds/sfx_ui_confirm.wav",
+  UI_CANCEL: "sounds/sfx_ui_cancel.wav",
+  ALARM_TICK: "sounds/sfx_alarm.wav",
+  BURN_TICK: "sounds/sfx_burn.wav",
 } as const;
 
 export type SoundId = (typeof BGM_IDS)[keyof typeof BGM_IDS];
@@ -58,21 +69,88 @@ export class AudioManager {
   private currentTrack: SoundId | null = null;
   private _muted = false;
   private _started = false;
-  private readonly volume: number;
+  private _volume: number;
   private readonly sfxHowls: Map<SoundEffectId, Howl> = new Map();
-  private readonly sfxVolume: number;
+  private _sfxVolume: number;
 
   private constructor(volume: number, sfxVolume: number) {
-    this.volume = volume;
-    this.sfxVolume = sfxVolume;
+    this._volume = volume;
+    this._sfxVolume = sfxVolume;
   }
 
   /** Get or create the singleton. Safe to call repeatedly. */
   static getInstance(): AudioManager {
     if (instance === null) {
-      instance = new AudioManager(0.4, 0.6);
+      // Load persisted volumes or use defaults
+      let bgmVol = 0.4;
+      let sfxVol = 0.6;
+      if (typeof window !== "undefined") {
+        try {
+          const saved = localStorage.getItem("wetrun_audio_volumes");
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            bgmVol = parsed.bgmVolume ?? 0.4;
+            sfxVol = parsed.sfxVolume ?? 0.6;
+          }
+        } catch {
+          // ignore localStorage errors
+        }
+      }
+      instance = new AudioManager(bgmVol, sfxVol);
     }
     return instance;
+  }
+
+  /** Get current BGM volume (0.0 - 1.0). */
+  getBgmVolume(): number {
+    return this._volume;
+  }
+
+  /** Set BGM volume (0.0 - 1.0), applies to current Howl if playing. */
+  setBgmVolume(v: number): void {
+    const clamped = Math.max(0, Math.min(1, v));
+    this._volume = clamped;
+    if (this.howl !== null) {
+      try {
+        this.howl.volume(clamped);
+      } catch {
+        // ignore
+      }
+    }
+    this.persistVolumes();
+  }
+
+  /** Get current SFX volume (0.0 - 1.0). */
+  getSfxVolume(): number {
+    return this._sfxVolume;
+  }
+
+  /** Set SFX volume (0.0 - 1.0), applies to all cached SFX Howls. */
+  setSfxVolume(v: number): void {
+    const clamped = Math.max(0, Math.min(1, v));
+    this._sfxVolume = clamped;
+    for (const sfx of this.sfxHowls.values()) {
+      try {
+        sfx.volume(clamped);
+      } catch {
+        // ignore
+      }
+    }
+    this.persistVolumes();
+  }
+
+  /** Persist volumes to localStorage. */
+  private persistVolumes(): void {
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem("wetrun_audio_volumes", JSON.stringify({
+          bgmVolume: this._volume,
+          sfxVolume: this._sfxVolume,
+        }));
+      } catch {
+        // ignore localStorage errors
+      }
+    }
   }
 
   /** Test-only: reset singleton between tests. */
@@ -117,7 +195,7 @@ export class AudioManager {
       this.howl = new Howl({
         src: [track],
         loop: true,
-        volume: this.volume,
+        volume: this._volume,
         html5: false,
       });
       this.currentTrack = track;
@@ -241,7 +319,7 @@ export class AudioManager {
         howl = new Howl({
           src: [id],
           loop: false,
-          volume: this.sfxVolume,
+          volume: this._sfxVolume,
           html5: false,
         });
         this.sfxHowls.set(id, howl);

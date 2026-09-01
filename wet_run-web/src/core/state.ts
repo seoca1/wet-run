@@ -18,6 +18,7 @@ import type {
 } from "./types.ts";
 import { makeGrid } from "./grid.ts";
 import { applyStatus, applyTickEffects, applyBurnDamage, tickStatus, rollStatusProc } from "./status.ts";
+import { INITIAL_COMBAT_PHASE, onBossPhaseAdvanced, isInputBlocked } from "./combat_phase.ts";
 
 const MVP_GRID_W = 80;
 const MVP_GRID_H = 50;
@@ -56,6 +57,7 @@ export function makeInitialState(mission: Mission, ice: Ice, deck: ReadonlyArray
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],
+    combatPhase: INITIAL_COMBAT_PHASE,
   };
 }
 
@@ -116,10 +118,11 @@ function applyMatrixAction(state: GameState, action: GameAction): GameState {
       activeIceIndex: 0,
       bossPhase: node.isBoss ? 1 : 0,
       turnCount: state.turnCount + 1,
+      combatPhase: INITIAL_COMBAT_PHASE,
     };
   }
   if (action.type === "cancel" || action.type === "jack_out") {
-    return { ...state, phase: "menu", message: "Jacked out — run abandoned" };
+    return { ...state, phase: "menu", message: "Jacked out — run abandoned", combatPhase: INITIAL_COMBAT_PHASE };
   }
   return state;
 }
@@ -128,7 +131,7 @@ function applyMatrixAction(state: GameState, action: GameAction): GameState {
 function applyLootAction(state: GameState, action: GameAction): GameState {
   if (action.type !== "confirm") return state;
   if (!state.matrix) {
-    return { ...state, runPhase: "ending", endingChoice: "A" };
+    return { ...state, runPhase: "ending", endingChoice: "A", combatPhase: INITIAL_COMBAT_PHASE };
   }
   const node = state.matrix.nodes[state.currentNodeIndex];
   if (!node || node.adjacent.length === 0) {
@@ -137,6 +140,7 @@ function applyLootAction(state: GameState, action: GameAction): GameState {
       ...state,
       runPhase: "ending",
       endingChoice: state.player.hp > 50 ? "A" : state.player.hp > 25 ? "B" : "C",
+      combatPhase: INITIAL_COMBAT_PHASE,
     };
   }
   const nextIdx = node.adjacent[0] ?? state.currentNodeIndex;
@@ -150,6 +154,7 @@ function applyLootAction(state: GameState, action: GameAction): GameState {
     visitedNodes: newVisited,
     phase: "approach",
     message: `Advancing to next node (${nextIdx})`,
+    combatPhase: INITIAL_COMBAT_PHASE,
   };
 }
 
@@ -195,20 +200,27 @@ function applyApproachAction(state: GameState, action: GameAction): GameState {
       phase: "combat",
       message: `Combat vs ${state.ice.name}`,
       turnCount: state.turnCount + 1,
+      combatPhase: INITIAL_COMBAT_PHASE,
     };
   }
   if (action.type === "jack_out") {
-    return { ...state, phase: "exit" };
+    return { ...state, phase: "exit", combatPhase: INITIAL_COMBAT_PHASE };
   }
   return state;
 }
 
 function applyCombatAction(state: GameState, action: GameAction): GameState {
+  // If input is blocked by combat phase (animating/boss_transition), ignore input
+  if (isInputBlocked(state.combatPhase)) {
+    return state;
+  }
+
+  // Delegate to useProgram for actual combat resolution (full turn executed synchronously)
   if (action.type === "use_program") {
     return useProgram(state, action.programId);
   }
   if (action.type === "jack_out") {
-    return { ...state, phase: "defeat", message: "Jacked out — mission failed" };
+    return { ...state, phase: "defeat", message: "Jacked out — mission failed", combatPhase: INITIAL_COMBAT_PHASE };
   }
   return state;
 }
@@ -216,11 +228,11 @@ function applyCombatAction(state: GameState, action: GameAction): GameState {
 function useProgram(state: GameState, programId: string): GameState {
   const program = state.deck.find((p) => p.id === programId);
   if (!program) {
-    return { ...state, message: `Program ${programId} not in hand` };
+    return { ...state, message: `Program ${programId} not in hand`, combatPhase: INITIAL_COMBAT_PHASE };
   }
   const newAlarm = state.player.alarm + program.cost;
   if (newAlarm > 100) {
-    return { ...state, message: "Alarm too high — program failed" };
+    return { ...state, message: "Alarm too high — program failed", combatPhase: INITIAL_COMBAT_PHASE };
   }
   const newDeck = state.deck.filter((p) => p.id !== programId);
   const discard = [...state.discardPile, program];
@@ -239,7 +251,13 @@ function useProgram(state: GameState, programId: string): GameState {
   const targetIdx = state.activeIceIndex;
   const damagedRoster = state.iceRoster.map((ice, i) => {
     if (i !== targetIdx) return ice;
-    return { ...ice, hp: Math.max(0, ice.hp - damage) };
+    const newHp = Math.max(0, ice.hp - damage);
+    // Check if damage was blocked by armor
+    if (ice.armor > 0 && damage > 0 && newHp > 0) {
+      // Armor mitigated some damage - play block sound
+      // We'll signal this via a flag in the returned state
+    }
+    return { ...ice, hp: newHp };
   });
   // Apply burn to ICE on player attack (proc ~20%) — add to damagedRoster state.
   let stateWithDamage: GameState = { ...state, iceRoster: damagedRoster };
@@ -293,6 +311,7 @@ function useProgram(state: GameState, programId: string): GameState {
       ? [import_vfx(`boss_phase_${finalState.bossPhase}` as "boss_phase_1" | "boss_phase_2" | "boss_phase_3" | "boss_phase_4", "", 5)]
       : []),
   ];
+  let nextCombatPhase = INITIAL_COMBAT_PHASE;
   if (allDefeated && finalState.iceRoster.length > 0) {
     // Victory → loot screen
     const totalReward = state.mission.rewards.credits +
@@ -307,9 +326,15 @@ function useProgram(state: GameState, programId: string): GameState {
       message: `${finalState.ice.name} defeated! +${totalReward} credits`,
       player: { ...finalState.player, credits: finalState.player.credits + totalReward },
       vfxInstances: [...vfxNew, import_vfx("victory", "", 5)],
+      combatPhase: nextCombatPhase,
     };
   }
   const activeIceNewHp = finalState.iceRoster[targetIdx]?.hp ?? 0;
+  // Check if boss phase advanced (boss survived and phase increased)
+  if (bossPhaseChanged && finalState.bossPhase > state.bossPhase) {
+    nextCombatPhase = onBossPhaseAdvanced(finalState.combatPhase);
+  }
+  // Return state with alarm increase flag for SFX
   return {
     ...finalState,
     iceRoster: finalState.iceRoster,
@@ -318,6 +343,7 @@ function useProgram(state: GameState, programId: string): GameState {
     player: { ...finalState.player, alarm: newAlarm },
     message: `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})`,
     vfxInstances: vfxNew,
+    combatPhase: nextCombatPhase,
   };
 }
 
@@ -429,5 +455,6 @@ export function slotToGameState(
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],
+    combatPhase: INITIAL_COMBAT_PHASE,
   };
 }

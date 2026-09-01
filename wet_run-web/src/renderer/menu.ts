@@ -113,6 +113,89 @@ export function renderMainMenu(
   return grid;
 }
 
+/** Render the settings screen with volume sliders and sync status. */
+export function renderSettingsScreen(
+  bgmVolume: number,
+  sfxVolume: number,
+  cols: number,
+  rows: number,
+  syncStatus?: { status: string; lastSync: string | null; error: string | null; pushed: number; pulled: number },
+): Grid {
+  let grid = makeGrid(cols, rows);
+  grid = setText(
+    grid,
+    Math.max(2, Math.floor((cols - 8) / 2)),
+    2,
+    "SETTINGS",
+    PALETTE.GREEN_NEON,
+  );
+  grid = setText(grid, 2, 4, "─".repeat(Math.min(cols - 4, 60)), PALETTE.GRAY_MID);
+
+  // BGM Volume
+  const bgmBar = volumeBar(bgmVolume, 20);
+  grid = setText(grid, 4, 8, "BGM Volume", PALETTE.GRAY_LIGHT);
+  grid = setText(grid, 4, 9, bgmBar, PALETTE.YELLOW_AMBER);
+  grid = setText(grid, 4, 10, `← / → to adjust  (${Math.round(bgmVolume * 100)}%)`, PALETTE.GRAY_DARK);
+
+  // SFX Volume
+  const sfxBar = volumeBar(sfxVolume, 20);
+  grid = setText(grid, 4, 13, "SFX Volume", PALETTE.GRAY_LIGHT);
+  grid = setText(grid, 4, 14, sfxBar, PALETTE.YELLOW_AMBER);
+  grid = setText(grid, 4, 15, `← / → to adjust  (${Math.round(sfxVolume * 100)}%)`, PALETTE.GRAY_DARK);
+
+  // Sync Status Section
+  const syncStartRow = 18;
+  grid = setText(grid, 2, syncStartRow, "─".repeat(Math.min(cols - 4, 60)), PALETTE.GRAY_MID);
+  grid = setText(grid, 4, syncStartRow + 1, "CLOUD SYNC (Tier 3)", PALETTE.GREEN_NEON);
+  
+  if (syncStatus) {
+    const statusColors: Record<string, string> = {
+      idle: PALETTE.GRAY_LIGHT,
+      syncing: PALETTE.YELLOW_AMBER,
+      success: PALETTE.GREEN_NEON,
+      error: PALETTE.RED_BRIGHT,
+      offline: PALETTE.GRAY_DARK,
+    };
+    const statusColor = statusColors[syncStatus.status] ?? PALETTE.GRAY_LIGHT;
+    
+    grid = setText(grid, 4, syncStartRow + 3, `Status: ${syncStatus.status.toUpperCase()}`, statusColor);
+    
+    if (syncStatus.lastSync) {
+      const lastSync = new Date(syncStatus.lastSync).toLocaleTimeString();
+      grid = setText(grid, 4, syncStartRow + 4, `Last sync: ${lastSync}`, PALETTE.GRAY_DARK);
+    }
+    
+    if (syncStatus.error) {
+      grid = setText(grid, 4, syncStartRow + 5, `Error: ${syncStatus.error}`, PALETTE.RED_BRIGHT);
+    }
+    
+    if (syncStatus.pushed > 0 || syncStatus.pulled > 0) {
+      grid = setText(grid, 4, syncStartRow + 6, `Pushed: ${syncStatus.pushed}  Pulled: ${syncStatus.pulled}`, PALETTE.GRAY_LIGHT);
+    }
+  } else {
+    grid = setText(grid, 4, syncStartRow + 3, "Status: NOT CONFIGURED", PALETTE.GRAY_DARK);
+    grid = setText(grid, 4, syncStartRow + 4, "Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY", PALETTE.GRAY_DARK);
+  }
+
+  // Mute status
+  const audio = (window as unknown as { audioManager?: { isMuted: () => boolean } }).audioManager;
+  if (audio) {
+    grid = setText(grid, 4, syncStartRow + 8, `M key: ${audio.isMuted() ? "UNMUTE" : "MUTE"} all audio`, PALETTE.GRAY_DARK);
+  }
+
+  // Footer
+  grid = setText(grid, 2, rows - 2, "ENTER/ESC: back to main menu", PALETTE.GRAY_DARK);
+  grid = setText(grid, 2, rows - 1, "M: toggle mute | Arrows: adjust volumes | S: sync now", PALETTE.GRAY_DARK);
+
+  return grid;
+}
+
+/** Generate a volume bar string: [█████░░░░░░░░░░░░] */
+function volumeBar(volume: number, width: number): string {
+  const filled = Math.round(Math.max(0, Math.min(1, volume)) * width);
+  return "[" + "█".repeat(filled) + "░".repeat(width - filled) + "]";
+}
+
 /** Render a stub screen for options not yet implemented (Tier 5+).
  *
  * Shows the option name + "Coming soon" message so the user gets

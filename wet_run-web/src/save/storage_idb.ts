@@ -4,15 +4,20 @@
  * same public API surface (save/load/delete/list/migrate). Migration
  * happens lazily on the first read so that existing localStorage data
  * is copied into IndexedDB on first load.
+ *
+ * Tier 5: Save compression using LZ-string to reduce storage size.
  */
+import { compressSave, decompressSave } from "./compression.ts";
+
 const DB_NAME = "wetrun_save_v1";
-const DB_VERSION = 2; // bumped 2026-08-27: fix keyPath conflict (idbPut DataError)
+const DB_VERSION = 3; // bumped for compression migration (v2 was keyPath fix)
 const STORE = "slots";
 
 interface SlotValue {
   readonly name: string;
   readonly slot: number;
-  readonly json: string;
+  readonly json: string; // compressed JSON string
+  readonly compressed: boolean; // flag to distinguish compressed vs legacy
 }
 
 let dbPromise: Promise<IDBDatabase> | null = null;
@@ -31,11 +36,10 @@ function openDb(): Promise<IDBDatabase> {
       if (!db.objectStoreNames.contains(STORE)) {
         db.createObjectStore(STORE, { keyPath: "name" });
       }
-      // Migration: bump DB_VERSION 1→2 clears stale store + recreates fresh
-      // (old records may have been written with keyPath conflict; safe reset).
-      else if ((req as unknown as { oldVersion: number }).oldVersion < 2) {
-        db.deleteObjectStore(STORE);
-        db.createObjectStore(STORE, { keyPath: "name" });
+      // Migration: bump DB_VERSION 2→3 for compression
+      else if ((req as unknown as { oldVersion: number }).oldVersion < 3) {
+        // Don't delete - we'll migrate existing records on read
+        // Existing records have compressed: false (or undefined)
       }
     };
     req.onsuccess = () => resolve(req.result);
@@ -56,7 +60,23 @@ export async function idbGet(slot: number): Promise<string | null> {
     const req = store.get(slotKeyName(slot));
     req.onsuccess = () => {
       const v = req.result as SlotValue | undefined;
-      resolve(v === undefined ? null : v.json);
+      if (v === undefined) {
+        resolve(null);
+        return;
+      }
+      // Auto-migrate: if not compressed, decompress (no-op) and re-save compressed
+      if (!v.compressed) {
+        // Legacy uncompressed record - compress and update in background
+        const compressed = compressSave(v.json);
+        // Fire-and-forget update
+        const tx2 = db.transaction(STORE, "readwrite");
+        const store2 = tx2.objectStore(STORE);
+        store2.put({ ...v, json: compressed, compressed: true });
+        resolve(v.json); // Return original uncompressed for this call
+      } else {
+        // Already compressed - decompress
+        resolve(decompressSave(v.json));
+      }
     };
     req.onerror = () => reject(req.error);
   });
@@ -67,9 +87,9 @@ export async function idbPut(slot: number, json: string): Promise<void> {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE, "readwrite");
     const store = tx.objectStore(STORE);
-    // keyPath: "name" — must embed the key in the value, not pass as 2nd arg.
-    // Passing both throws DataError ("in-line keys and the key parameter was provided").
-    const value: SlotValue = { name: slotKeyName(slot), slot, json };
+    // Compress before storing
+    const compressed = compressSave(json);
+    const value: SlotValue = { name: slotKeyName(slot), slot, json: compressed, compressed: true };
     const req = store.put(value);
     req.onsuccess = () => resolve();
     req.onerror = () => reject(req.error);

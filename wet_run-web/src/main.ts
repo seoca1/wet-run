@@ -9,7 +9,8 @@ import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { mountVirtualGamepad, updateProgramRow, isTouchDevice } from "./input/touch.ts";
 import { AudioManager, SFX_IDS } from "./audio/manager.ts";
-import { MENU_OPTIONS, renderMainMenu, renderStubScreen, type MenuOption } from "./renderer/menu.ts";
+import { playUiSelect, playUiConfirm, playUiCancel, playMovement, playProgramSfx, playAlarmTick, playBurnTick } from "./audio/sfx_map.ts";
+import { MENU_OPTIONS, renderMainMenu, renderStubScreen, renderSettingsScreen, type MenuOption } from "./renderer/menu.ts";
 import { renderMatrix } from "./renderer/matrix.ts";
 import { buildMatrix } from "./core/matrix.ts";
 import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
@@ -25,6 +26,8 @@ import {
   PLAYER_DEFEAT_ART,
   centerArt,
 } from "./renderer/vfx.ts";
+import { isInputBlocked } from "./core/combat_phase.ts";
+import { getEngineState } from "./save/remote_sync.ts";
 import type { GameState, GameAction, GamePhase, Ice, Mission, Program, ScreenKind } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState, resolveProgramSelection, slotToGameState, stateToSaveSlot } from "./core/state.ts";
 import { makeGrid, setText } from "./core/grid.ts";
@@ -158,6 +161,10 @@ class Game {
       if (this.state === null) {
         this.handlePreGameInput(action);
       } else {
+        // Block input during combat animation phases (animating/boss_transition)
+        if (isInputBlocked(this.state.combatPhase)) {
+          return;
+        }
         // Resolve select_program (hand index) → use_program (programId) at the boundary.
         const resolved: GameAction = (() => {
           if (this.state === null) return action;
@@ -169,26 +176,36 @@ class Game {
         // Sound + visual feedback for combat transitions.
         const audio = AudioManager.getInstance();
         if (resolved.type === "use_program" && previous.phase === "combat" && this.state.phase === "combat") {
-          const iceDelta = this.state.ice.hp - previous.ice.hp;
+          const iceDelta = this.state.iceRoster[this.state.activeIceIndex]?.hp - previous.iceRoster[previous.activeIceIndex]?.hp;
           if (iceDelta < 0) {
-            audio.playSfx(SFX_IDS.COMBAT_HIT);
+            // Program-specific SFX based on program effect
+            const program = previous.deck.find(p => p.id === resolved.programId);
+            if (program) {
+              playProgramSfx(program.effect);
+            } else {
+              audio.playSfx(SFX_IDS.COMBAT_HIT);
+            }
             // Boss phase transition (only for isBoss node, phase advances from 1→2→3→4).
             if (previous.bossPhase > 0 && this.state.bossPhase > previous.bossPhase) {
               audio.playSfx(SFX_IDS.VICTORY); // reuse victory cue as boss enrage
             }
           }
-          this._lastIceHp = this.state.ice.hp;
+          this._lastIceHp = this.state.iceRoster[this.state.activeIceIndex]?.hp;
           this._lastPlayerHp = this.state.player.hp;
         }
-        // Card use cue handled by combat_hit above (no dedicated card_use asset yet).
         // Matrix → combat entry SFX (entering a node triggers runPhase change).
         if (previous.runPhase === "matrix" && this.state.runPhase === "combat") {
-          audio.playSfx(SFX_IDS.COMBAT_HIT); // reuse combat_hit as "engaging"
+          playMovement();
         }
         // Burn proc SFX (player takes burn damage from useProgram tick).
         const burnTickDmg = this.state.player.hp - previous.player.hp;
         if (burnTickDmg > 0 && previous.runPhase === "combat" && this.state.runPhase === "combat") {
-          audio.playSfx(SFX_IDS.DEFEAT); // reuse defeat cue as "ouch"
+          playBurnTick();
+        }
+        // Alarm increase SFX
+        const alarmDelta = this.state.player.alarm - previous.player.alarm;
+        if (alarmDelta > 0) {
+          playAlarmTick();
         }
         this.draw();
       }
@@ -239,14 +256,18 @@ class Game {
       if (action.type === "move_south") {
         this.selectedMenuIndex = (this.selectedMenuIndex + 1) % MENU_OPTIONS.length;
         this.draw();
+        playUiSelect();
       } else if (action.type === "move_north") {
         this.selectedMenuIndex = (this.selectedMenuIndex - 1 + MENU_OPTIONS.length) % MENU_OPTIONS.length;
         this.draw();
+        playUiSelect();
       } else if (action.type === "confirm") {
         this.selectMenuOption(MENU_OPTIONS[this.selectedMenuIndex]?.key);
+        playUiConfirm();
       } else if (action.type === "jack_out" || action.type === "cancel") {
         // No-op: already at top-level menu
         this.draw();
+        playUiCancel();
       }
       return;
     }
@@ -254,12 +275,39 @@ class Game {
       if (action.type === "move_south") {
         this.selectedMission = (this.selectedMission + 1) % MISSIONS.length;
         this.draw();
+        playUiSelect();
       } else if (action.type === "move_north") {
         this.selectedMission = (this.selectedMission - 1 + MISSIONS.length) % MISSIONS.length;
         this.draw();
+        playUiSelect();
       } else if (action.type === "confirm") {
         this.launchSelected();
+        playUiConfirm();
       } else if (action.type === "jack_out" || action.type === "cancel") {
+        this.screen = "menu";
+        this.draw();
+        playUiCancel();
+      }
+      return;
+    }
+    if (this.screen === "settings") {
+      const audio = AudioManager.getInstance();
+      if (action.type === "move_east") {
+        // Increase volume for selected slider (alternate between BGM/SFX)
+        // For simplicity, adjust both with left/right
+        const bgm = Math.min(1, audio.getBgmVolume() + 0.1);
+        const sfx = Math.min(1, audio.getSfxVolume() + 0.1);
+        audio.setBgmVolume(bgm);
+        audio.setSfxVolume(sfx);
+        this.draw();
+      } else if (action.type === "move_west") {
+        // Decrease volume
+        const bgm = Math.max(0, audio.getBgmVolume() - 0.1);
+        const sfx = Math.max(0, audio.getSfxVolume() - 0.1);
+        audio.setBgmVolume(bgm);
+        audio.setSfxVolume(sfx);
+        this.draw();
+      } else if (action.type === "confirm" || action.type === "cancel" || action.type === "jack_out") {
         this.screen = "menu";
         this.draw();
       }
@@ -289,8 +337,11 @@ class Game {
       case "continue":
         void this.handleContinue();
         break;
-      case "graphic_novel":
       case "settings":
+        this.screen = "settings";
+        this.draw();
+        break;
+      case "graphic_novel":
       case "credits":
       case "hall_of_dead":
       case "help":
@@ -453,6 +504,25 @@ class Game {
             "",
             `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
           ],
+        );
+      } else if (this.screen === "settings") {
+        const audio = AudioManager.getInstance();
+        const syncState = getEngineState();
+        this.renderer.render(
+          renderSettingsScreen(
+            audio.getBgmVolume(),
+            audio.getSfxVolume(),
+            this.layout.cols,
+            this.layout.rows,
+            syncState ? {
+              status: syncState.status,
+              lastSync: syncState.last_sync_at,
+              error: syncState.last_error,
+              pushed: 0, // TODO: track from sync result
+              pulled: 0,
+            } : undefined,
+          ),
+          ["SETTINGS", "", ""],
         );
       } else {
         // Stub screens (graphic_novel, continue, settings, credits, hall_of_dead,

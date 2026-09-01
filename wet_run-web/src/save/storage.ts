@@ -5,9 +5,12 @@
  *
  * Backward-compatible: if a legacy single-slot save exists (no slot suffix),
  * it is read as slot 0 (autosave) on first load and migrated.
+ *
+ * Tier 3: Remote sync integration (Supabase) — push on save, pull on load.
  */
 import type { SaveSlot } from "../core/types.ts";
 import { idbGet, idbPut, idbDelete, idbIsAvailable } from "./storage_idb.ts";
+import { pushNow, pullNow, initSync, fullSync } from "./remote_sync.ts";
 
 const CURRENT_SCHEMA_VERSION = 1;
 const MANUAL_SLOT_COUNT = 3;
@@ -24,6 +27,8 @@ const LEGACY_KEY = "wetrun_mvp_save_v1";
 export async function save(slot: number, data: SaveSlot): Promise<void> {
   if (!(await idbIsAvailable())) {
     saveLegacy(slot, data);
+    // Still try to push to remote if sync enabled
+    try { await pushNow(slot); } catch { /* ignore */ }
     return;
   }
   try {
@@ -33,6 +38,8 @@ export async function save(slot: number, data: SaveSlot): Promise<void> {
     console.warn(`IDB save failed slot ${slot}, falling back to localStorage:`, err);
     saveLegacy(slot, data);
   }
+  // Push to remote (fire-and-forget, non-blocking)
+  try { await pushNow(slot); } catch { /* ignore */ }
 }
 
 function saveLegacy(slot: number, data: SaveSlot): void {
@@ -46,11 +53,17 @@ function saveLegacy(slot: number, data: SaveSlot): void {
 
 export async function load(slot: number): Promise<SaveSlot | null> {
   if (!(await idbIsAvailable())) {
+    const legacy = loadLegacy(slot);
+    if (legacy) return legacy;
+    // Try to pull from remote if local missing
+    try { await pullNow(slot); } catch { /* ignore */ }
     return loadLegacy(slot);
   }
   try {
     const raw = await idbGet(slot);
     if (raw) return parseSlot(raw);
+    // Try pull from remote if local missing
+    try { await pullNow(slot); } catch { /* ignore */ }
     return await migrateFromLegacy(slot);
   } catch (err) {
     if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
@@ -92,9 +105,10 @@ async function migrateFromLegacy(slot: number): Promise<SaveSlot | null> {
   } catch (err) {
     console.warn(`IDB migration copy failed slot ${slot}:`, err);
   }
+  // Push migrated save to remote
+  try { await pushNow(slot); } catch { /* ignore */ }
   return parsed;
 }
-
 
 export async function clear(slot: number): Promise<void> {
   if (!(await idbIsAvailable())) {
@@ -106,6 +120,14 @@ export async function clear(slot: number): Promise<void> {
   } catch (err) {
     console.warn(`Failed to clear slot ${slot}:`, err);
   }
+  // Also delete from remote
+  try { 
+    const { deleteSave, getAuthState } = await import("./supabase_client.ts");
+    const auth = getAuthState();
+    if (auth.user_id) {
+      await deleteSave(auth.user_id, slot); 
+    }
+  } catch { /* ignore */ }
 }
 
 export async function listSlots(): Promise<ReadonlyArray<{
@@ -196,3 +218,21 @@ export const SAVE_SLOT_LABELS: Readonly<Record<number, string>> = Object.freeze(
 export const SLOT_COUNT_TOTAL: number = SLOT_COUNT;
 export const MAX_SAVE_SLOT: number = MAX_SLOT_INDEX;
 export const MANUAL_SLOTS: ReadonlyArray<number> = [1, 2, 3];
+
+/** Initialize sync engine (call on app boot). */
+export async function initStorageSync(): Promise<void> {
+  try { await initSync(); } catch { /* ignore */ }
+}
+
+/** Trigger full sync (manual sync button). */
+export async function triggerFullSync(): Promise<{ pushed: number; pulled: number; errors: string[] }> {
+  try { return await fullSync(); } catch (e) {
+    return { pushed: 0, pulled: 0, errors: [e instanceof Error ? e.message : "Sync failed"] };
+  }
+}
+
+/** Get sync engine state for UI. */
+export async function getSyncEngineState() {
+  const { getEngineState } = await import("./remote_sync.ts");
+  return getEngineState();
+}

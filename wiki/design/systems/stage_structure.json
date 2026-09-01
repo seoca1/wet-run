@@ -1,0 +1,1422 @@
+{
+  "version": "0.5.0",
+  "title": "Stage Structure & Progression",
+  "title_ko": "스테이지 구조 & 진행",
+  "description": "Single Run = BRIEFING → TRAVEL → Mission flow (per-mission) → COMPLETE/FAILED. v0.5: 16 stages (added BLACKMARKET vendor, GHOST_ENCOUNTER Loa event, DATA_FRAGMENT collectible lore system), 38 missions.",
+  "stages": [
+    {
+      "id": "briefing",
+      "name_en": "Mission Briefing",
+      "name_ko": "임무 브리핑",
+      "type": "narrative",
+      "is_terminal": false,
+      "objective_kind": "none",
+      "description_en": "Fixer's pre-mission briefing. Player sees the Finn's office ASCII and the fixer's dialogue.",
+      "description_ko": "픽서의 사전 미션 브리핑. 플레이어는 핀의 사무실 ASCII와 픽서 대사를 본다.",
+      "next_stage": "travel",
+      "trigger_en": "Player dismisses the briefing screen.",
+      "trigger_ko": "플레이어가 브리핑 화면을 종료.",
+      "ascii_art": [
+        "  ┌──────────────────────────┐",
+        "  │  ♠F♠ THE FINN'S OFFICE   │",
+        "  │  ────────────────────    │",
+        "  │  'Pay's in the credstick │",
+        "  │   when the data's in     │",
+        "  │   my hand. Don't die.'   │",
+        "  └──────────────────────────┘"
+      ],
+      "ui_elements": [
+        "briefing_screen",
+        "fixer_dialogue",
+        "ascii_finn_office"
+      ]
+    },
+    {
+      "id": "travel",
+      "name_en": "Travel to Jack-In Point",
+      "name_ko": "잭인 지점 이동",
+      "type": "animation",
+      "is_terminal": false,
+      "objective_kind": "none",
+      "description_en": "Pre-matrix travel animation. Chiba street → jack-in spot. Sets the mood before cyberspace.",
+      "description_ko": "매트릭스 진입 전 이동 애니메이션. 시바 거리 → 잭인 지점. 사이버스페이스 진입 전 분위기 조성.",
+      "next_stage": "meet_npc",
+      "trigger_en": "Player reaches the jack-in point.",
+      "trigger_ko": "플레이어가 잭인 지점에 도달.",
+      "ascii_art": [
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░  ◢◣  HEADING TO ▒░░░  ░",
+        "  ░  ──  JACK-IN POINT ──  ░",
+        "  ░  ░▒▓  CHIBA, 11LV  ▓▒░ ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░"
+      ],
+      "ui_elements": [
+        "travel_animation",
+        "ascii_chiba_street"
+      ]
+    },
+    {
+      "id": "bypass_security",
+      "name_en": "Bypass Security",
+      "name_ko": "보안 우회",
+      "type": "matrix",
+      "is_terminal": false,
+      "objective_kind": "none",
+      "description_en": "Optional: slip past a corporate security layer (e.g. Watchdog patrol). Used by watchdog_patrol flow.",
+      "description_ko": "선택적: 기업 보안 레이어 (예: Watchdog 순찰) 통과. watchdog_patrol 플로우에서 사용.",
+      "next_stage": "defeat_ice",
+      "trigger_en": "Bypass succeeds or fails (then continues to ICE).",
+      "trigger_ko": "우회 성공 또는 실패 (그 후 ICE로 진행).",
+      "ascii_art": [
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░  ◢◣  WATCHDOG AVOID  ░",
+        "  ░  ──  GHOST TRACE  ───  ░",
+        "  ░  ░▒▓  BLIND SPOT 3s  ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░"
+      ],
+      "ui_elements": [
+        "bypass_minigame",
+        "ascii_security_grid"
+      ]
+    },
+    {
+      "id": "pending",
+      "name_en": "Pending",
+      "name_ko": "대기",
+      "type": "hub",
+      "is_terminal": false,
+      "objective_kind": "none",
+      "description_en": "Run not started. Player is at the Hub.",
+      "description_ko": "Run 미시작. 플레이어는 Hub에 있음.",
+      "next_stage": "meet_npc",
+      "trigger_en": "Accept a mission at the Hub.",
+      "trigger_ko": "Hub에서 미션을 수락.",
+      "ascii_art": [
+        "  ┌──────────────────────┐",
+        "  │  HUB — The Sprawl Hole │",
+        "  │  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣  │",
+        "  │  ░▒▓█ Wim's bar  ▓▒░  │",
+        "  │  ░▒▓█ Job board  ▓▒░  │",
+        "  │  ░▒▓█ Couch      ▓▒░  │",
+        "  └──────────────────────┘"
+      ],
+      "ui_elements": [
+        "hub_view",
+        "mission_board",
+        "wim_dialogue"
+      ]
+    },
+    {
+      "id": "meet_npc",
+      "name_en": "Meet the NPC",
+      "name_ko": "NPC 만나기",
+      "type": "matrix",
+      "is_terminal": false,
+      "objective_kind": "npc",
+      "description_en": "Find and talk to a construct NPC (e.g. Dixie Flatline).",
+      "description_ko": "구성체 NPC (예: Dixie Flatline) 를 만나서 대화.",
+      "next_stage": "extract_data",
+      "trigger_en": "Talk to the construct NPC node in the matrix.",
+      "trigger_ko": "매트릭스의 구성체 NPC 노드와 대화.",
+      "ascii_art": [
+        "  ░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░  MATRIX — Surface ░",
+        "  ░  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣  ░",
+        "  ░                     ░",
+        "  ░  ★ Dixie (CONSTRUCT) ░",
+        "  ░  ░ data            ░",
+        "  ░  ▲ ice             ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░"
+      ],
+      "ui_elements": [
+        "matrix_view",
+        "npc_dialogue",
+        "status_panel"
+      ]
+    },
+    {
+      "id": "extract_data",
+      "name_en": "Extract the Data",
+      "name_ko": "데이터 추출",
+      "type": "matrix",
+      "is_terminal": false,
+      "objective_kind": "data",
+      "description_en": "Locate the data node and extract the payload.",
+      "description_ko": "데이터 노드를 찾아 페이로드를 추출.",
+      "next_stage": "defeat_ice",
+      "trigger_en": "Click the data node and confirm extraction.",
+      "trigger_ko": "데이터 노드를 클릭하고 추출 확정.",
+      "ascii_art": [
+        "  ░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░  MATRIX — Surface ░",
+        "  ░  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣  ░",
+        "  ░                     ░",
+        "  ░  ✓ Dixie talked    ░",
+        "  ░  ★ data (TARGET)   ░",
+        "  ░  ▲ ice             ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░"
+      ],
+      "ui_elements": [
+        "matrix_view",
+        "extract_action",
+        "status_panel"
+      ]
+    },
+    {
+      "id": "defeat_ice",
+      "name_en": "Defeat the ICE",
+      "name_ko": "ICE 격파",
+      "type": "combat",
+      "is_terminal": false,
+      "objective_kind": "ice",
+      "description_en": "Engage and defeat the ICE protecting the data.",
+      "description_ko": "데이터를 지키는 ICE와 교전하여 격파.",
+      "next_stage": "jack_out",
+      "trigger_en": "Win the combat (HP > 0, ICE HP = 0).",
+      "trigger_ko": "전투 승리 (HP > 0, ICE HP = 0).",
+      "ascii_art": [
+        "  ░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░  COMBAT — RT-MS    ░",
+        "  ░  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣  ░",
+        "  ░                     ░",
+        "  ░  ▶ Player  HP 18/20 ░",
+        "  ░  ▲ ICE     HP 12/12 ░",
+        "  ░  [E] skill [R] run  ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░"
+      ],
+      "ui_elements": [
+        "combat_view",
+        "skill_menu",
+        "status_panel"
+      ]
+    },
+    {
+      "id": "jack_out",
+      "name_en": "Jack Out",
+      "name_ko": "잭아웃",
+      "type": "animation",
+      "is_terminal": false,
+      "objective_kind": "none",
+      "description_en": "Disconnecting from the matrix. Animation + transition.",
+      "description_ko": "매트릭스에서 연결 해제. 애니메이션 + 전환.",
+      "next_stage": "reward",
+      "trigger_en": "Player presses any key to dismiss.",
+      "trigger_ko": "플레이어가 아무 키나 눌러 닫기.",
+      "ascii_art": [
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣  ░",
+        "  ░  ── JACKING OUT ──     ░",
+        "  ░  ░▒▓█             ▓▒░  ░",
+        "  ░  ░▒▓█             ▓▒░  ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░"
+      ],
+      "ui_elements": [
+        "jackout_animation",
+        "press_any_key"
+      ]
+    },
+    {
+      "id": "reward",
+      "name_en": "Mission Rewards",
+      "name_ko": "미션 보상",
+      "type": "hub",
+      "is_terminal": false,
+      "objective_kind": "none",
+      "description_en": "Show mission rewards: credits, materials, intel.",
+      "description_ko": "미션 보상 표시: 크레딧, 재료, 정보.",
+      "next_stage": "complete",
+      "trigger_en": "Player presses ENTER to return to hub.",
+      "trigger_ko": "플레이어가 ENTER를 눌러 Hub 복귀.",
+      "ascii_art": [
+        "  ┌──────────────────────┐",
+        "  │  ✓ MISSION COMPLETE  │",
+        "  │  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣  │",
+        "  │  ░▒▓ Credits  +500  ▓▒░  │",
+        "  │  ░▒▓ Materials +2   ▓▒░  │",
+        "  │  ░▒▓ Press ENTER    ▓▒░  │",
+        "  └──────────────────────┘"
+      ],
+      "ui_elements": [
+        "reward_screen",
+        "credits_display",
+        "materials_display"
+      ]
+    },
+    {
+      "id": "complete",
+      "name_en": "Run Complete",
+      "name_ko": "Run 완료",
+      "type": "hub",
+      "is_terminal": true,
+      "objective_kind": "none",
+      "description_en": "Mission complete. Return to hub for next job.",
+      "description_ko": "미션 완료. 다음 의뢰를 위해 Hub 복귀.",
+      "next_stage": null,
+      "trigger_en": "Auto-transition from REWARD.",
+      "trigger_ko": "REWARD에서 자동 전환.",
+      "ascii_art": [
+        "  ┌──────────────────────┐",
+        "  │  ✓ RUN COMPLETE     │",
+        "  │  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣  │",
+        "  │  ░▒▓ → Hub         ▓▒░  │",
+        "  └──────────────────────┘"
+      ],
+      "ui_elements": [
+        "mission_summary",
+        "return_to_hub"
+      ]
+    },
+    {
+      "id": "death_restart",
+      "name_en": "Death Restart",
+      "name_ko": "재시작",
+      "type": "death",
+      "is_terminal": true,
+      "objective_kind": "none",
+      "description_en": "After death screen. Player chooses to restart or quit.",
+      "description_ko": "사망 화면 후. 재시작 또는 종료 선택.",
+      "next_stage": "pending",
+      "trigger_en": "Player presses ENTER to restart, ESC to quit.",
+      "trigger_ko": "ENTER로 재시작, ESC로 종료.",
+      "ascii_art": [
+        "  ┌──────────────────────┐",
+        "  │  ⚠ FLATLINE         │",
+        "  │  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣  │",
+        "  │  ░▒▓ Equipment LOST ▓▒░  │",
+        "  │  ░▒▓ Grade kept     ▓▒░  │",
+        "  │  ░▒▓ [ENTER] restart ▓▒░  │",
+        "  │  ░▒▓ [ESC]   quit    ▓▒░  │",
+        "  └──────────────────────┘"
+      ],
+      "ui_elements": [
+        "death_screen",
+        "restart_prompt"
+      ]
+    },
+    {
+      "id": "failed",
+      "name_en": "Flatline",
+      "name_ko": "플랫라인",
+      "type": "death",
+      "is_terminal": true,
+      "objective_kind": "none",
+      "description_en": "Your run ended in cyberspace.",
+      "description_ko": "Run 종료.",
+      "next_stage": "death_restart",
+      "trigger_en": "Combat defeat (HP = 0) or matrix trap.",
+      "trigger_ko": "전투 패배 (HP = 0) 또는 매트릭스 함정.",
+      "ascii_art": [
+        "  ┌──────────────────────┐",
+        "  │  ✗ FLATLINE          │",
+        "  │  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣  │",
+        "  │  ░▒▓ Equipment LOST ▓▒░  │",
+        "  │  ░▒▓ Grade kept     ▓▒░  │",
+        "  └──────────────────────┘"
+      ],
+      "ui_elements": [
+        "death_screen",
+        "jack_out_to_hub"
+      ]
+    },
+    {
+      "id": "black_market",
+      "name_en": "Black Market",
+      "name_ko": "블랙 마켓",
+      "type": "hub",
+      "is_terminal": false,
+      "objective_kind": "none",
+      "description_en": "Hub-side vendor. Trade credits and materials for programs, deck upgrades, and intel. Reachable from the Hub between runs.",
+      "description_ko": "Hub 측 상인. 프로그램, 데크 업그레이드, 인텔을 위해 크레딧과 재료를 교환한다. Run 사이 Hub에서 접근 가능.",
+      "next_stage": "pending",
+      "trigger_en": "Player enters the black market from the Hub.",
+      "trigger_ko": "플레이어가 Hub에서 블랙 마켓에 진입.",
+      "ascii_art": [
+        "  ┌──────────────────────────┐",
+        "  │  ░▒▓█  BLACK MARKET  █▓▒░  │",
+        "  │  ────────────────────     │",
+        "  │  'Cash, credits, code'    │",
+        "  │   — the silent menu       │",
+        "  │   of the Sprawl.         │",
+        "  └──────────────────────────┘"
+      ],
+      "ui_elements": [
+        "market_browser",
+        "item_detail_panel",
+        "category_tabs"
+      ]
+    },
+    {
+      "id": "ghost_encounter",
+      "name_en": "Loa Encounter",
+      "name_ko": "로아 조우",
+      "type": "matrix",
+      "is_terminal": true,
+      "objective_kind": "npc",
+      "description_en": "Rare matrix event in deep architecture. Encounter a ghost-god (Loa) of the matrix. Choose: talk, fight, or leave. Talk yields a data fragment.",
+      "description_ko": "딥 아키텍처의 희귀 매트릭스 이벤트. 매트릭스의 유령신(로아)을 조우한다. 선택: 대화, 전투, 이탈. 대화는 데이터 프래그먼트를 보상한다.",
+      "next_stage": "defeat_ice",
+      "trigger_en": "Random encounter during matrix run in DEEP/CORE/TA zones.",
+      "trigger_ko": "DEEP/CORE/TA 존 매트릭스 런 중 무작위 조우.",
+      "ascii_art": [
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░   ◢◣  GHOST  IN  ▒░░  ░",
+        "  ░  ──  THE  MACHINE  ──  ░",
+        "  ░  ░▒▓  IT  WATCHES  ▓▒░ ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░"
+      ],
+      "ui_elements": [
+        "loa_dialogue",
+        "ghost_choice_menu",
+        "loa_ascii_portrait"
+      ]
+    }
+  ],
+  "gameplay_systems": {
+    "data_fragment": {
+      "name_en": "Data Fragment Collection",
+      "name_ko": "데이터 프래그먼트 수집",
+      "description_en": "v0.5 game play: collectible lore items found in missions. Each fragment unlocks a wiki page and provides narrative context for the Sprawl universe.",
+      "description_ko": "v0.5 게임 플레이: 미션에서 발견되는 수집형 로어 아이템. 각 프래그먼트는 위키 페이지를 해제하고 스프롤 세계관에 대한 서사적 맥락을 제공한다.",
+      "module": "wet_run.data_fragment",
+      "appstate_field": "data_fragments",
+      "catalog_size": 5,
+      "rarity_tiers": [
+        "common",
+        "uncommon",
+        "rare",
+        "legendary"
+      ]
+    }
+  },
+  "transitions": [
+    {
+      "from": "pending",
+      "to": "briefing",
+      "trigger_en": "Mission accepted at Hub",
+      "trigger_ko": "Hub에서 미션 수락",
+      "system": "start_run(mission_id) → briefing_screen"
+    },
+    {
+      "from": "briefing",
+      "to": "travel",
+      "trigger_en": "Player dismisses briefing",
+      "trigger_ko": "플레이어가 브리핑 종료",
+      "system": "mark_advance() → travel_screen"
+    },
+    {
+      "from": "travel",
+      "to": "meet_npc",
+      "trigger_en": "Player reaches jack-in point",
+      "trigger_ko": "플레이어가 잭인 지점 도달",
+      "system": "mark_advance() → matrix_enter"
+    },
+    {
+      "from": "extract_data",
+      "to": "bypass_security",
+      "trigger_en": "Optional: corporate security check",
+      "trigger_ko": "선택적: 기업 보안 점검",
+      "system": "bypass_security_screen"
+    },
+    {
+      "from": "bypass_security",
+      "to": "defeat_ice",
+      "trigger_en": "Bypass complete or failed",
+      "trigger_ko": "우회 완료 또는 실패",
+      "system": "mark_advance() → combat_state"
+    },
+    {
+      "from": "pending",
+      "to": "meet_npc",
+      "trigger_en": "Mission accepted at Hub",
+      "trigger_ko": "Hub에서 미션 수락",
+      "system": "start_run(mission_id)"
+    },
+    {
+      "from": "meet_npc",
+      "to": "extract_data",
+      "trigger_en": "Talked to construct NPC",
+      "trigger_ko": "구성체 NPC와 대화 완료",
+      "system": "RunState.mark_advance() after dialogue"
+    },
+    {
+      "from": "extract_data",
+      "to": "defeat_ice",
+      "trigger_en": "Data extracted",
+      "trigger_ko": "데이터 추출 완료",
+      "system": "RunState.mark_advance() after extract"
+    },
+    {
+      "from": "defeat_ice",
+      "to": "jack_out",
+      "trigger_en": "ICE defeated (HP > 0)",
+      "trigger_ko": "ICE 격파 (HP > 0)",
+      "system": "RunState.mark_advance() after combat victory"
+    },
+    {
+      "from": "jack_out",
+      "to": "reward",
+      "trigger_en": "Player dismisses jackout animation",
+      "trigger_ko": "잭아웃 애니메이션 닫기",
+      "system": "RunState.mark_advance() after input"
+    },
+    {
+      "from": "reward",
+      "to": "complete",
+      "trigger_en": "Player presses ENTER",
+      "trigger_ko": "ENTER 입력",
+      "system": "RunState.mark_advance() after input"
+    },
+    {
+      "from": "any",
+      "to": "failed",
+      "trigger_en": "Player HP = 0 (combat) or matrix trap",
+      "trigger_ko": "플레이어 HP = 0 (전투) 또는 매트릭스 함정",
+      "system": "RunState.mark_failed()"
+    },
+    {
+      "from": "failed",
+      "to": "death_restart",
+      "trigger_en": "Death screen dismissed",
+      "trigger_ko": "사망 화면 닫기",
+      "system": "RunState.mark_death_restart()"
+    },
+    {
+      "from": "black_market",
+      "to": "pending",
+      "condition": "after_vendor_exit",
+      "trigger_en": "Player exits the black market vendor screen",
+      "trigger_ko": "플레이어가 블랙 마켓 상인 화면 종료",
+      "system": "hub_loop → pending (between-runs)"
+    }
+  ],
+  "missions": [
+    {
+      "id": "aleph_fragment",
+      "title_en": "Aleph Fragment",
+      "title_ko": "알레프 프래그먼트",
+      "fixer": "finn",
+      "arc": 4,
+      "grade_min": 5,
+      "grade_max": 5,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: extract_data",
+      "primary_objective_ko": "유형: extract_data",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 4400,
+        "materials": {
+          "unique_construct": 1
+        }
+      },
+      "estimated_minutes": 16
+    },
+    {
+      "id": "mollys_market",
+      "title_en": "Molly's Market",
+      "title_ko": "몰리의 마켓",
+      "fixer": "molly",
+      "arc": 2,
+      "grade_min": 2,
+      "grade_max": 2,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: deliver_item",
+      "primary_objective_ko": "유형: 아이템 배달",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 3500,
+        "materials": {
+          "mollys_contact": 1
+        }
+      },
+      "estimated_minutes": 14
+    },
+    {
+      "id": "zion_express",
+      "title_en": "Zion Express",
+      "title_ko": "자이온 익스프레스",
+      "fixer": "finn",
+      "arc": 2,
+      "grade_min": 2,
+      "grade_max": 3,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: deliver_item",
+      "primary_objective_ko": "유형: 아이템 배달",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 4500,
+        "materials": {
+          "zion_contact": 1
+        }
+      },
+      "estimated_minutes": 18
+    },
+    {
+      "id": "vegas_stakeout",
+      "title_en": "Vegas Stakeout",
+      "title_ko": "베가스 스테이크아웃",
+      "fixer": "finn",
+      "arc": 2,
+      "grade_min": 2,
+      "grade_max": 3,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: gather_intelligence",
+      "primary_objective_ko": "유형: 정보 수집",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 2800,
+        "materials": {
+          "intel_fragment": 2
+        }
+      },
+      "estimated_minutes": 15
+    },
+    {
+      "id": "black_ice_dream",
+      "title_en": "Black Ice Dream",
+      "title_ko": "블랙 아이스 드림",
+      "fixer": "finn",
+      "arc": 3,
+      "grade_min": 3,
+      "grade_max": 4,
+      "stages": [
+        "meet_npc",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: defeat",
+      "primary_objective_ko": "유형: defeat",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 3000,
+        "materials": {
+          "upgrade_t3": 1
+        }
+      },
+      "estimated_minutes": 14
+    },
+    {
+      "id": "craft_job",
+      "title_en": "Craft Job",
+      "title_ko": "크래프트 잡",
+      "fixer": "finn",
+      "arc": 2,
+      "grade_min": 1,
+      "grade_max": 5,
+      "stages": [
+        "meet_npc",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: craft_item",
+      "primary_objective_ko": "유형: craft_item",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 1600,
+        "materials": {
+          "upgrade_t2": 1
+        }
+      },
+      "estimated_minutes": 12
+    },
+    {
+      "id": "delivery_to_finn",
+      "title_en": "Delivery to Finn",
+      "title_ko": "핀에게 배달",
+      "fixer": "finn",
+      "arc": 1,
+      "grade_min": 1,
+      "grade_max": 2,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: deliver_material",
+      "primary_objective_ko": "유형: deliver_material",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 800,
+        "materials": {
+          "upgrade_t1": 1
+        }
+      },
+      "estimated_minutes": 10
+    },
+    {
+      "id": "dixies_offer",
+      "title_en": "Dixie's Offer",
+      "title_ko": "딕시의 제안",
+      "fixer": "dixie",
+      "arc": 4,
+      "grade_min": 4,
+      "grade_max": 5,
+      "stages": [
+        "meet_npc",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: construct_unlock",
+      "primary_objective_ko": "유형: construct_unlock",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 4100,
+        "materials": {
+          "construct_fragment": 1
+        }
+      },
+      "estimated_minutes": 16
+    },
+    {
+      "id": "matrix_revelation",
+      "title_en": "Matrix Revelation",
+      "title_ko": "매트릭스 계시",
+      "fixer": "wintermute",
+      "arc": 4,
+      "grade_min": 4,
+      "grade_max": 5,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: uncover_truth",
+      "primary_objective_ko": "유형: 진실 발견",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 5000,
+        "materials": {
+          "truth_fragment": 1
+        }
+      },
+      "estimated_minutes": 20
+    },
+    {
+      "id": "dixies_choice",
+      "title_en": "Dixie's Choice",
+      "title_ko": "디지의 선택",
+      "fixer": "dixie",
+      "arc": 4,
+      "grade_min": 4,
+      "grade_max": 5,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: merge_ai",
+      "primary_objective_ko": "유형: AI 병합",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 5500,
+        "materials": {
+          "dixie_blessing": 1
+        }
+      },
+      "estimated_minutes": 22
+    },
+    {
+      "id": "final_choice",
+      "title_en": "The Final Choice",
+      "title_ko": "마지막 선택",
+      "fixer": "finn",
+      "arc": 5,
+      "grade_min": 5,
+      "grade_max": 5,
+      "stages": [
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: final_job",
+      "primary_objective_ko": "유형: final_job",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 10000,
+        "materials": {
+          "ending_token": 1
+        }
+      },
+      "estimated_minutes": 18
+    },
+    {
+      "id": "neuromancer_merger",
+      "title_en": "Neuromancer Merger",
+      "title_ko": "뉴로맨서 합병",
+      "fixer": "wintermute",
+      "arc": 5,
+      "grade_min": 5,
+      "grade_max": 5,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: merge_ai",
+      "primary_objective_ko": "유형: AI 병합",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 12000,
+        "materials": {
+          "merged_ai_blessing": 1
+        }
+      },
+      "estimated_minutes": 25
+    },
+    {
+      "id": "first_jack",
+      "title_en": "First Jack",
+      "title_ko": "첫 잭-인",
+      "fixer": "finn",
+      "arc": 1,
+      "grade_min": 1,
+      "grade_max": 1,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: extract_data",
+      "primary_objective_ko": "유형: extract_data",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 800,
+        "materials": {
+          "data_fragment": 2
+        }
+      },
+      "estimated_minutes": 10
+    },
+    {
+      "id": "first_trace",
+      "title_en": "First Trace",
+      "title_ko": "첫 추적",
+      "fixer": "finn",
+      "arc": 2,
+      "grade_min": 2,
+      "grade_max": 2,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: trace_target",
+      "primary_objective_ko": "유형: trace_target",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 1900,
+        "materials": {
+          "data_fragment": 3
+        }
+      },
+      "estimated_minutes": 12
+    },
+    {
+      "id": "ice_run",
+      "title_en": "Ice Run",
+      "title_ko": "아이스 런",
+      "fixer": "finn",
+      "arc": 1,
+      "grade_min": 1,
+      "grade_max": 2,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: collect_material",
+      "primary_objective_ko": "유형: collect_material",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 800,
+        "materials": {
+          "data_fragment": 2
+        }
+      },
+      "estimated_minutes": 10
+    },
+    {
+      "id": "mollys_razor",
+      "title_en": "Molly's Razor",
+      "title_ko": "몰리의 면도기",
+      "fixer": "maas",
+      "arc": 3,
+      "grade_min": 3,
+      "grade_max": 4,
+      "stages": [
+        "meet_npc",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: extract_data",
+      "primary_objective_ko": "유형: extract_data",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 3000,
+        "materials": {
+          "unique_program": 1
+        }
+      },
+      "estimated_minutes": 14
+    },
+    {
+      "id": "sense_net_tip",
+      "title_en": "Sense/Net Tip",
+      "title_ko": "센스/넷 정보",
+      "fixer": "finn",
+      "arc": 2,
+      "grade_min": 2,
+      "grade_max": 3,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: extract_data",
+      "primary_objective_ko": "유형: extract_data",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 1900,
+        "materials": {
+          "upgrade_t2": 1
+        }
+      },
+      "estimated_minutes": 12
+    },
+    {
+      "id": "ta_heist",
+      "title_en": "T-A Heist",
+      "title_ko": "T-A 강도",
+      "fixer": "ta_rep",
+      "arc": 3,
+      "grade_min": 4,
+      "grade_max": 4,
+      "stages": [
+        "meet_npc",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: extract_data",
+      "primary_objective_ko": "유형: extract_data",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 3300,
+        "materials": {
+          "upgrade_t4": 1
+        }
+      },
+      "estimated_minutes": 14
+    },
+    {
+      "id": "winter_infiltrate",
+      "title_en": "Winter Infiltrate",
+      "title_ko": "윈터 침투",
+      "fixer": "finn",
+      "arc": 3,
+      "grade_min": 3,
+      "grade_max": 4,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: infiltrate",
+      "primary_objective_ko": "유형: 침투",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 3800,
+        "materials": {
+          "wintermute_hint": 1
+        }
+      },
+      "estimated_minutes": 16
+    },
+    {
+      "id": "neuromancer_whisper",
+      "title_en": "Neuromancer Whisper",
+      "title_ko": "뉴로맨서 속삭임",
+      "fixer": "wintermute",
+      "arc": 3,
+      "grade_min": 3,
+      "grade_max": 4,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: meet_ai",
+      "primary_objective_ko": "유형: AI 조우",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 4200,
+        "materials": {
+          "ai_fragment": 1
+        }
+      },
+      "estimated_minutes": 18
+    },
+    {
+      "id": "voodoo_loa_encounter",
+      "title_en": "Voodoo Loa Encounter",
+      "title_ko": "부두 로아 encounter",
+      "fixer": "finn",
+      "arc": 4,
+      "grade_min": 4,
+      "grade_max": 5,
+      "stages": [
+        "meet_npc",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: defeat",
+      "primary_objective_ko": "유형: defeat",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 4100,
+        "materials": {
+          "loa_fragment": 1
+        }
+      },
+      "estimated_minutes": 16
+    },
+    {
+      "id": "watchdog_patrol",
+      "title_en": "Watchdog Patrol",
+      "title_ko": "워치독 순찰",
+      "fixer": "finn",
+      "arc": 1,
+      "grade_min": 1,
+      "grade_max": 1,
+      "stages": [
+        "meet_npc",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: defeat",
+      "primary_objective_ko": "유형: defeat",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 800,
+        "materials": {
+          "ice_shard": 2
+        }
+      },
+      "estimated_minutes": 10
+    },
+    {
+      "id": "yakuza_deal",
+      "title_en": "Yakuza Deal",
+      "title_ko": "야쿠자 거래",
+      "fixer": "yakuza",
+      "arc": 2,
+      "grade_min": 2,
+      "grade_max": 3,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: deliver_material",
+      "primary_objective_ko": "유형: deliver_material",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 1900,
+        "materials": {
+          "upgrade_t2": 1
+        }
+      },
+      "estimated_minutes": 12
+    },
+    {
+      "id": "tutorial_maze",
+      "title_en": "Tutorial: Maze",
+      "title_ko": "튜토리얼: 미로",
+      "fixer": "finn",
+      "arc": 1,
+      "grade_min": 1,
+      "grade_max": 1,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: tutorial",
+      "primary_objective_ko": "유형: 튜토리얼",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 500,
+        "materials": {
+          "data_fragment": 1
+        }
+      },
+      "estimated_minutes": 8
+    },
+    {
+      "id": "first_contact",
+      "title_en": "First Contact",
+      "title_ko": "퍼스트 컨택트",
+      "fixer": "dixie",
+      "arc": 1,
+      "grade_min": 1,
+      "grade_max": 1,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: meet_npc",
+      "primary_objective_ko": "유형: NPC 만나기",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 600,
+        "materials": {
+          "ice_shard": 1
+        }
+      },
+      "estimated_minutes": 10
+    },
+    {
+      "id": "data_retrieval",
+      "title_en": "Data Retrieval",
+      "title_ko": "데이터 회수",
+      "fixer": "finn",
+      "arc": 1,
+      "grade_min": 1,
+      "grade_max": 2,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: extract_data",
+      "primary_objective_ko": "유형: 데이터 추출",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 700,
+        "materials": {
+          "data_fragment": 2
+        }
+      },
+      "estimated_minutes": 12
+    },
+    {
+      "id": "flatline_call",
+      "title_en": "Flatline's Call",
+      "title_ko": "Flatline's Call",
+      "fixer": "finn",
+      "arc": 2,
+      "grade_min": 2,
+      "grade_max": 3,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: collect_material",
+      "primary_objective_ko": "유형: collect_material",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 1500,
+        "materials": {}
+      },
+      "estimated_minutes": 8
+    },
+    {
+      "id": "sally_returns_arc3",
+      "title_en": "Sally Returns",
+      "title_ko": "Sally Returns",
+      "fixer": "sally",
+      "arc": 3,
+      "grade_min": 3,
+      "grade_max": 4,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: extract_data",
+      "primary_objective_ko": "유형: extract_data",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 3000,
+        "materials": {}
+      },
+      "estimated_minutes": 8
+    },
+    {
+      "id": "sally_sandii_3am",
+      "title_en": "Rose Hotel, 3AM",
+      "title_ko": "Rose Hotel, 3AM",
+      "fixer": "finn",
+      "arc": 2,
+      "grade_min": 2,
+      "grade_max": 3,
+      "stages": [
+        "meet_npc",
+        "extract_data",
+        "defeat_ice",
+        "jack_out",
+        "reward",
+        "complete"
+      ],
+      "primary_objective_en": "Type: extract_data",
+      "primary_objective_ko": "유형: extract_data",
+      "secondary_objective_en": "",
+      "secondary_objective_ko": "",
+      "rewards": {
+        "credits": 1200,
+        "materials": {}
+      },
+      "estimated_minutes": 8
+    }
+  ],
+  "stage_event_bus": {
+    "name_en": "Stage Event Bus",
+    "name_ko": "스테이지 이벤트 버스",
+    "description_en": "Pub/sub for stage lifecycle events. Subscribe globally, by kind, or by stage.",
+    "description_ko": "스테이지 라이프사이클 이벤트 Pub/Sub. 전역, 종류별, 스테이지별로 구독.",
+    "event_kinds": [
+      {
+        "id": "enter",
+        "name_en": "Stage Enter",
+        "name_ko": "스테이지 진입",
+        "description_en": "Fired when entering a stage."
+      },
+      {
+        "id": "exit",
+        "name_en": "Stage Exit",
+        "name_ko": "스테이지 이탈",
+        "description_en": "Fired when leaving a stage."
+      },
+      {
+        "id": "complete",
+        "name_en": "Stage Complete",
+        "name_ko": "스테이지 완료",
+        "description_en": "Fired when a stage's objective is satisfied."
+      },
+      {
+        "id": "failed",
+        "name_en": "Run Failed",
+        "name_ko": "Run 실패",
+        "description_en": "Fired when the run transitions to FAILED."
+      },
+      {
+        "id": "advance",
+        "name_en": "Stage Advance",
+        "name_ko": "스테이지 전이",
+        "description_en": "Fired on any stage transition."
+      }
+    ],
+    "subscription_methods": [
+      "subscribe(handler) — all events",
+      "subscribe_kind(kind, handler) — specific kind",
+      "subscribe_stage(kind, stage, handler) — specific stage + kind"
+    ]
+  },
+  "death_flow": {
+    "name_en": "Death Flow (Pillar 3: The Flatline)",
+    "name_ko": "사망 흐름 (Pillar 3: 플랫라인)",
+    "description_en": "Triggered on combat defeat. Equipment lost, grade preserved.",
+    "description_ko": "전투 패배 시 발생. 장비 손실, 등급 유지.",
+    "ascii_art": [
+      "  COMBAT DEFEAT",
+      "         ↓",
+      "  trigger_death() called",
+      "         ↓",
+      "  state.is_dead = True",
+      "         ↓",
+      "  mark_failed() called",
+      "         ↓",
+      "  FAILED stage entered",
+      "         ↓",
+      "  DEATH SCREEN rendered",
+      "         ↓",
+      "  player presses ENTER",
+      "         ↓",
+      "  mark_death_restart() called",
+      "         ↓",
+      "  DEATH_RESTART stage",
+      "         ↓",
+      "  player chooses [ENTER] restart / [ESC] quit",
+      "         ↓",
+      "  (back to PENDING for new run)"
+    ],
+    "steps": [
+      {
+        "id": "defeat",
+        "name_en": "Combat Defeat",
+        "name_ko": "전투 패배",
+        "description_en": "Player HP reaches 0 in combat.",
+        "description_ko": "전투 중 플레이어 HP 0 도달."
+      },
+      {
+        "id": "trigger",
+        "name_en": "Death Triggered",
+        "name_ko": "사망 트리거",
+        "description_en": "death.trigger_death() called from combat_view._end_combat().",
+        "description_ko": "combat_view._end_combat() 에서 death.trigger_death() 호출."
+      },
+      {
+        "id": "screen",
+        "name_en": "Death Screen",
+        "name_ko": "사망 화면",
+        "description_en": "ASCII skull with avatar, 'FLATLINE' text, prompt to restart.",
+        "description_ko": "아바타와 함께 ASCII 해골, 'FLATLINE' 텍스트, 재시작 프롬프트."
+      },
+      {
+        "id": "restart",
+        "name_en": "Jack Out to Hub",
+        "name_ko": "잭아웃 → Hub",
+        "description_en": "ENTER pressed. Player returns to Hub. Inventory cleared, grade preserved.",
+        "description_ko": "ENTER 입력. 플레이어 Hub 복귀. 인벤토리 초기화, 등급 유지."
+      }
+    ]
+  },
+  "hub_loop": {
+    "name_en": "Hub Loop (Main Game Loop)",
+    "name_ko": "허브 루프 (메인 게임 루프)",
+    "description_en": "Between runs, player is at the Hub. Accept missions, talk to NPCs, manage equipment.",
+    "description_ko": "Run 사이, 플레이어는 Hub에 있음. 미션 수락, NPC 대화, 장비 관리.",
+    "ascii_art": [
+      "  ┌────────────────────────┐",
+      "  │  HUB — Between Runs    │",
+      "  │                        │",
+      "  │  [1] Mission board     │",
+      "  │  [2] Equipment         │",
+      "  │  [3] Talk to Wim       │",
+      "  │  [4] Talk to Finn      │",
+      "  │  [5] Sleep (heal)      │",
+      "  │                        │",
+      "  │  → Accept mission      │",
+      "  │     → Stage: meet_npc  │",
+      "  │     → Jack in          │",
+      "  │     → Matrix: ...      │",
+      "  │     → Jack out         │",
+      "  │     → Stage: reward    │",
+      "  │     → Return to Hub    │",
+      "  └────────────────────────┘"
+    ]
+  },
+  "mission_count_canonical": 38,
+  "mission_count_canonical_source": "prototype/data/missions/missions.json",
+  "mission_count_in_this_file": 29,
+  "note": "v0.4: 13 stages. 29 missions in legacy snapshot; canonical 38 in missions.json."
+}

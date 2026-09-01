@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="World → Sector → Server → Node 4-tier 사이버스페이스. 2 worlds, 8 sectors (4/world), 184 servers, 8 node types.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, neuromancer, python, tcod, ascii, cyberspace, matrix, node, graph">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/cyberspace.html">
+<meta property="og:title" content="Cyberspace — Wet Run">
+<meta property="og:description" content="World → Sector → Server → Node 4-tier 사이버스페이스. 2 worlds, 8 sectors (4/world), 184 servers, 8 node types.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/cyberspace.html">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cyberspace — Wet Run">
+<meta name="twitter:description" content="World → Sector → Server → Node 4-tier 사이버스페이스. 2 worlds, 8 sectors (4/world), 184 servers, 8 node types.">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta name="theme-color" content="#0a0e14">
+<title>Wet Run — Cyberspace Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.7;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { font-weight: 600; }
+  h1 { font-size: 28px; margin-bottom: 8px; color: #3498db; text-shadow: 0 0 12px #3498db44; }
+  h2 { font-size: 20px; margin: 32px 0 16px; color: #66ffcc; border-bottom: 1px solid #1a2530; padding-bottom: 8px; }
+  h3 { font-size: 16px; margin: 16px 0 8px; color: #ffaa55; }
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 24px; }
+
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 24px; margin: -24px -24px 16px -24px;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; font-size: 13px; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .current { color: #ffaa55; font-weight: 600; }
+  .top-nav .sep { color: #2a3540; }
+  .top-hub-link {
+    display: inline-block; background: #131a23; border: 1px solid #2a3540;
+    border-radius: 4px; padding: 6px 12px; color: #00d9ff; text-decoration: none;
+    font-size: 12px; margin-bottom: 16px;
+  }
+  .top-hub-link:hover { border-color: #00d9ff; }
+
+  /* Stats */
+  .stats-panel {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 8px;
+    padding: 20px; margin-bottom: 24px;
+  }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat-item {
+    background: #06090f; border: 1px solid #1a2530; border-radius: 4px; padding: 12px;
+  }
+  .stat-item .label { color: #6a7888; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-item .value { color: #3498db; font-size: 24px; font-weight: 700; margin-top: 4px; }
+  .stat-item .sub { color: #6a7888; font-size: 10px; margin-top: 2px; }
+
+  .section {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+    padding: 20px; margin-bottom: 24px;
+  }
+
+  /* Hierarchy tree */
+  .hierarchy {
+    background: #050a10; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 16px; margin-top: 12px; color: #3498db; font-size: 13px;
+    line-height: 1.8; font-family: monospace; white-space: pre;
+  }
+
+  /* World cards */
+  .world-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 16px; margin-bottom: 24px;
+  }
+  .world-card {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+    padding: 20px; position: relative; overflow: hidden;
+  }
+  .world-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .world-card.chiba::before { background: linear-gradient(90deg, #ffaa55, #e74c3c); }
+  .world-card.night_city::before { background: linear-gradient(90deg, #3498db, #9b59b6); }
+  .world-card h3 { margin-top: 0; }
+  .world-card .world-id { color: #6a7888; font-size: 12px; font-family: monospace; }
+  .world-card .world-desc { color: #8a9aa8; font-size: 12px; margin: 8px 0; }
+
+  .sector-list { margin: 12px 0; }
+  .sector-card {
+    background: #06090f; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 10px; margin-bottom: 8px;
+  }
+  .sector-card .name { color: #ffaa55; font-size: 13px; font-weight: 600; }
+  .sector-card .desc { color: #6a7888; font-size: 11px; margin: 4px 0; }
+  .sector-card .server-list { margin-top: 6px; padding-left: 12px; font-size: 11px; }
+  .sector-card .server {
+    color: #c5d4e3; margin: 2px 0; padding: 2px 0;
+  }
+  .sector-card .server .difficulty {
+    display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 10px;
+    margin-left: 6px;
+  }
+  .diff-1, .diff-2 { background: #66ffcc33; color: #66ffcc; }
+  .diff-3, .diff-4 { background: #f39c1233; color: #f39c12; }
+  .diff-5, .diff-6 { background: #e74c3c33; color: #e74c3c; }
+  .diff-7 { background: #9b59b633; color: #9b59b6; }
+
+  /* Node types */
+  .node-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px; margin-top: 12px;
+  }
+  .node-type {
+    background: #06090f; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 8px 12px; text-align: center;
+  }
+  .node-type .name { color: #ffaa55; font-size: 12px; font-weight: 600; }
+  .node-type .ascii { color: #66ffcc; font-size: 16px; margin: 4px 0; font-family: monospace; }
+  .node-type .desc { color: #8a9aa8; font-size: 11px; }
+
+  /* Navigation */
+  .nav-flow {
+    background: #050a10; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 16px; margin-top: 12px; color: #3498db; font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .footer {
+    text-align: center; color: #6a7888; font-size: 12px; margin-top: 48px;
+    padding: 24px; border-top: 1px solid #1a2530;
+  }
+  .footer code { background: #1a2530; padding: 2px 6px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="index.html">◀ Wet Run</a>
+  <span class="sep">|</span>
+  <a href="missions.html">📖 Story</a>
+  <span class="sep">|</span>
+  <a href="stages.html">⏱ Stages</a>
+  <span class="sep">|</span>
+  <a href="./jokey.html">🎭 Cast</a>
+  <a href="library.html">📚 Short Stories</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="graphic-novel.html">Graphic Novel</a>
+  <span class="sep">|</span>
+  <a href="sound.html">🔊 Sound</a>
+  <span class="sep">|</span>
+  <a href="combat.html">⚔ Combat</a>
+  <span class="sep">|</span>
+  <a href="./player.html#equipment">📦 Equipment</a>
+  <span class="sep">|</span>
+  <span class="current">🌐 Cyberspace</span>
+</nav>
+<a class="top-hub-link" id="projects-hub-link" href="../../" title="Projects Hub (local dev only)">🌐 Projects Hub</a>
+<script>
+  // Hide on non-local filesystems (e.g. GitHub Pages) where the
+  // workspace path ../../Game/ does not exist.
+  (function () {
+    var link = document.getElementById("projects-hub-link");
+    if (!link) return;
+    link.style.display = (window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+      ? "inline-block" : "none";
+  })();
+</script>
+
+<h1>🌐 Cyberspace Dashboard</h1>
+<div class="subtitle">
+  World → Sector → Server 계층 ·
+  <span data-stat="worlds">2</span> worlds ·
+  <span data-stat="sectors">4</span> sectors ·
+  <span data-stat="servers">6</span> servers ·
+  <span data-stat="nodes">8</span> node types
+  <br>
+  출처: <code>data/cyberspace/worlds.json</code> · <code>prototype/src/wet_run/matrix/</code>
+</div>
+
+<!-- Stats -->
+<div class="stats-panel">
+  <h2>📊 Overview</h2>
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="label">Worlds</div>
+      <div class="value" data-stat="worlds">2</div>
+      <div class="sub">chiba + night_city</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Sectors</div>
+      <div class="value" data-stat="sectors">4</div>
+      <div class="sub">2 per world</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Servers</div>
+      <div class="value" data-stat="servers">6</div>
+      <div class="sub">1-2 per sector</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Node Types</div>
+      <div class="value" data-stat="nodes">8</div>
+      <div class="sub">entry, data, ice, ...</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Zone Depths</div>
+      <div class="value" data-stat="zones">4</div>
+      <div class="sub">surface, mid, core, ta</div>
+    </div>
+  </div>
+</div>
+
+<!-- Hierarchy -->
+<h2>🗺️ Hierarchy (4-tier)</h2>
+<div class="section">
+  <h3>World → Sector → Server → Node</h3>
+  <div class="hierarchy">World 1 (Chiba City)
+├── Sector 1.1 (Sense/Net)
+│   ├── Server 1.1.1 (Demo Database, difficulty 2)  ← first_jack mission
+│   └── Server 1.1.2 (Mainframe Alpha, difficulty 5)
+└── Sector 1.2 (Public Grid)
+    ├── Server 1.2.1
+    └── Server 1.2.2
+
+World 2 (Night City)
+├── Sector 2.1 (Arasaka)
+│   └── Server 2.1.1
+└── Sector 2.2 (Militech)
+    └── Server 2.2.1</div>
+</div>
+
+<!-- World cards -->
+<h2>🌍 Worlds (2)</h2>
+<div class="world-grid">
+
+  <div class="world-card chiba">
+    <h3>Chiba City</h3>
+    <div class="world-id">id: chiba</div>
+    <div class="world-desc">A neon-lit sprawl of corporate arcologies. The Finn's territory. The air smells of ramen and ozone.</div>
+
+    <div class="sector-list">
+      <div class="sector-card">
+        <div class="name">Sense/Net</div>
+        <div class="desc">Major media corporation. Their database holds the demo file you need.</div>
+        <div class="server-list">
+          <div class="server">
+            <code>sensenet_demo</code> · Demo Database
+            <span class="difficulty diff-1">Diff 2</span>
+            <span style="color: #66ffcc; margin-left: 6px;">← first_jack</span>
+          </div>
+          <div class="server">
+            <code>sensenet_mainframe</code> · Mainframe Alpha
+            <span class="difficulty diff-3">Diff 5</span>
+          </div>
+        </div>
+      </div>
+      <div class="sector-card">
+        <div class="name">Public Grid</div>
+        <div class="desc">Free public cyberspace. Less secure, more chaos.</div>
+        <div class="server-list">
+          <div class="server">
+            <code>public_node_1</code> · Public Terminal
+            <span class="difficulty diff-1">Diff 1</span>
+          </div>
+          <div class="server">
+            <code>public_node_2</code> · Free Server
+            <span class="difficulty diff-1">Diff 2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="world-card night_city">
+    <h3>Night City</h3>
+    <div class="world-id">id: night_city</div>
+    <div class="world-desc">The corporate frontier. Arasaka and Militech vie for control. Higher security, higher reward.</div>
+
+    <div class="sector-list">
+      <div class="sector-card">
+        <div class="name">Arasaka</div>
+        <div class="desc">Megacorp. Heavily defended. Their ICE is legendary.</div>
+        <div class="server-list">
+          <div class="server">
+            <code>arasaka_tower</code> · Arasaka Tower
+            <span class="difficulty diff-5">Diff 7</span>
+          </div>
+        </div>
+      </div>
+      <div class="sector-card">
+        <div class="name">Militech</div>
+        <div class="desc">Militech weapons corp. Less secure, more aggressive ICE patterns.</div>
+        <div class="server-list">
+          <div class="server">
+            <code>militech_arsenal</code> · Arsenal Database
+            <span class="difficulty diff-4">Diff 6</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Node types -->
+<h2>🕸️ Node Types (8)</h2>
+<div class="section">
+  <p style="color: #8a9aa8; font-size: 13px;">매트릭스 그래프의 노드 종류. 각 노드는 고유한 행동과 시각 표현.</p>
+  <div class="node-grid">
+    <div class="node-type">
+      <div class="name">ENTRY</div>
+      <div class="ascii">▶</div>
+      <div class="desc">시작점</div>
+    </div>
+    <div class="node-type">
+      <div class="name">DATA</div>
+      <div class="ascii">▣</div>
+      <div class="desc">데이터 추출</div>
+    </div>
+    <div class="node-type">
+      <div class="name">ICE</div>
+      <div class="ascii">▲</div>
+      <div class="desc">전투 발생</div>
+    </div>
+    <div class="node-type">
+      <div class="name">CONSTRUCT</div>
+      <div class="ascii">★</div>
+      <div class="desc">NPC 대화</div>
+    </div>
+    <div class="node-type">
+      <div class="name">SYSTEM</div>
+      <div class="ascii">◈</div>
+      <div class="desc">시스템 노드</div>
+    </div>
+    <div class="node-type">
+      <div class="name">ROUTER</div>
+      <div class="ascii">◢</div>
+      <div class="desc">라우터</div>
+    </div>
+    <div class="node-type">
+      <div class="name">CORE</div>
+      <div class="ascii">◆</div>
+      <div class="desc">핵심 노드</div>
+    </div>
+    <div class="node-type">
+      <div class="name">EXIT</div>
+      <div class="ascii">✓</div>
+      <div class="desc">잭-아웃</div>
+    </div>
+  </div>
+</div>
+
+<!-- Zone depths -->
+<h2>🌊 Zone Depths (4)</h2>
+<div class="section">
+  <p style="color: #8a9aa8; font-size: 13px;">노드가 위치하는 깊이. 깊을수록 ZDR 증가.</p>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+    <thead>
+      <tr style="background: #1a2530;">
+        <th style="padding: 8px 12px; color: #3498db; text-align: left; font-size: 11px; text-transform: uppercase;">Zone</th>
+        <th style="padding: 8px 12px; color: #3498db; text-align: left; font-size: 11px; text-transform: uppercase;">Depth</th>
+        <th style="padding: 8px 12px; color: #3498db; text-align: left; font-size: 11px; text-transform: uppercase;">ZDR Base</th>
+        <th style="padding: 8px 12px; color: #3498db; text-align: left; font-size: 11px; text-transform: uppercase;">Description</th>
+      </tr>
+    </thead>
+    <tbody style="font-size: 13px;">
+      <tr><td style="padding: 8px 12px; border-top: 1px solid #1a2530;"><code>SURFACE</code></td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">1-3</td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">+0</td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">표면, 진입 가능</td></tr>
+      <tr><td style="padding: 8px 12px; border-top: 1px solid #1a2530;"><code>MID</code></td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">4-8</td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">+2</td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">중간, ICE 강화</td></tr>
+      <tr><td style="padding: 8px 12px; border-top: 1px solid #1a2530;"><code>CORE</code></td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">9-15</td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">+4</td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">핵심, Black ICE 가능</td></tr>
+      <tr><td style="padding: 8px 12px; border-top: 1px solid #1a2530;"><code>TA</code></td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">20-30</td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">+8</td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">Tessier-Ashpool 영역, 최강</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Browser Navigation -->
+<h2>🧭 Cyberspace Browser</h2>
+<div class="section">
+  <p style="color: #8a9aa8; font-size: 13px;">CyberspaceBrowser 화면. 3-level navigation:</p>
+  <div class="nav-flow">World 1 (Chiba) — Sense/Net — sensenet_demo
+                  ↑            ↑                ↑
+              PgUp/PgDn    LEFT/RIGHT      UP/DOWN
+              (worlds)    (sectors)      (servers)
+
+[ENTER] Accept mission (if mission_id set)
+[ESC] Return to Hub
+[F5/F9] Save/Load</div>
+</div>
+
+<!-- Sounds -->
+<h2>🔊 Movement Sounds (4)</h2>
+<div class="section">
+  <p style="color: #8a9aa8; font-size: 13px;">이동 사운드 (<code>V</code> 키로 토글).</p>
+  <table style="width: 100%; border-collapse: collapse; margin-top: 12px;">
+    <thead>
+      <tr style="background: #1a2530;">
+        <th style="padding: 8px 12px; color: #3498db; text-align: left; font-size: 11px; text-transform: uppercase;">Sound</th>
+        <th style="padding: 8px 12px; color: #3498db; text-align: left; font-size: 11px; text-transform: uppercase;">Trigger</th>
+      </tr>
+    </thead>
+    <tbody style="font-size: 13px;">
+      <tr><td style="padding: 8px 12px; border-top: 1px solid #1a2530;"><code>movement_jack_in</code></td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">잭-인 (matrix 진입)</td></tr>
+      <tr><td style="padding: 8px 12px; border-top: 1px solid #1a2530;"><code>movement_jack_out</code></td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">잭-아웃 (matrix 종료)</td></tr>
+      <tr><td style="padding: 8px 12px; border-top: 1px solid #1a2530;"><code>movement_nav_step</code></td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">노드 이동</td></tr>
+      <tr><td style="padding: 8px 12px; border-top: 1px solid #1a2530;"><code>movement_nav_block</code></td><td style="padding: 8px 12px; border-top: 1px solid #1a2530;">이동 차단</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  Wet Run — Cyberspace Dashboard<br>
+  <code>data/cyberspace/worlds.json</code> · <code>src/wet_run/matrix/</code> ·
+  <span data-stat="worlds-f">2</span> worlds ·
+  <span data-stat="sectors-f">4</span> sectors ·
+  <span data-stat="servers-f">6</span> servers
+</div>
+
+<script>
+/* Auto-sync stats from build_dashboard.py output (cyberspace_stats.json).
+   When the file is missing the static fallback values stay visible. */
+fetch('data/cyberspace_stats.json').then(r => r.ok ? r.json() : null)
+  .then(stats => {
+    if (!stats) return;
+    const set = (key, value) => {
+      const el = document.querySelector(`[data-stat="${key}"]`);
+      if (el && value !== undefined && value !== null) {
+        el.textContent = String(value);
+      }
+    };
+    set('worlds',    stats.worlds);
+    set('sectors',   stats.sectors);
+    set('servers',   stats.servers);
+    set('nodes',     stats.node_kinds);
+    set('zones',     stats.zone_depths);
+    set('worlds-f',  stats.worlds);
+    set('sectors-f', stats.sectors);
+    set('servers-f', stats.servers);
+  })
+  .catch(() => { /* keep static fallback */ });
+</script>
+
+</body>
+</html>

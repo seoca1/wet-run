@@ -1,0 +1,134 @@
+/* dashboard/print.css — clean print styles for story cards */
+
+@media print {
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-family: "Crimson Pro", "Source Serif 4", Georgia, serif !important;
+    font-size: 12pt;
+    line-height: 1.65;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container,
+  .story-body,
+  article,
+  .story-header {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #000 !important;
+    background: #fff !important;
+  }
+  
+  .story-header {
+    border-bottom: 1px solid #000 !important;
+    page-break-after: avoid;
+    margin-bottom: 1.5em !important;
+  }
+  
+  .character-badge-link,
+  .character-badge {
+    background: transparent !important;
+    color: #000 !important;
+    border: 1px solid #000 !important;
+    padding: 2px 8px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+  }
+  
+  .story-title {
+    color: #000 !important;
+    font-size: 24pt !important;
+    text-shadow: none !important;
+  }
+  
+  .story-subtitle,
+  .story-meta {
+    color: #444 !important;
+  }
+  
+  .story-body {
+    text-align: justify;
+  }
+  
+  .story-body p,
+  .story-body h2,
+  .story-body h3,
+  .story-body hr,
+  .story-body blockquote {
+    page-break-inside: avoid;
+  }
+  
+  .story-body h2,
+  .story-body h3 {
+    color: #000 !important;
+    font-weight: 700;
+    page-break-after: avoid;
+  }
+  
+  blockquote {
+    border-left: 4px solid #000 !important;
+    background: #fafafa !important;
+    margin: 1em 0 !important;
+    padding: 8pt 16pt !important;
+    font-style: italic;
+  }
+  
+  hr {
+    border-top: 1px dashed #888 !important;
+    page-break-after: avoid;
+  }
+  
+  .glossary-term,
+  .character-badge-link,
+  a {
+    color: #000 !important;
+    text-decoration: none !important;
+    border-bottom: none !important;
+  }
+  
+  .story-missions {
+    background: #fafafa !important;
+    border-left: 4px solid #000 !important;
+    page-break-inside: avoid;
+    margin-top: 1.5em !important;
+  }
+  
+  .mission-badge {
+    border: 1px solid #000 !important;
+    background: #fff !important;
+    color: #000 !important;
+    page-break-inside: avoid;
+  }
+  
+  .mission-badge .mission-id,
+  .mission-badge .mission-arc,
+  .mission-badge .mission-grade,
+  .mission-badge .mission-char {
+    color: #000 !important;
+    background: transparent !important;
+  }
+  
+  .resume-reading-btn,
+  .lang-switcher,
+  .glossary-tooltip {
+    display: none !important;
+  }
+  
+  /* Page footer */
+  .print-footer {
+    display: block !important;
+    margin-top: 32pt;
+    padding-top: 8pt;
+    border-top: 1px solid #888 !important;
+    font-size: 9pt;
+    font-family: "JetBrains Mono", monospace;
+    text-align: center;
+    color: #666 !important;
+  }
+}
+
+.print-footer { display: none; }

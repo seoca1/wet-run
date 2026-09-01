@@ -1,0 +1,11 @@
+{
+  "stage_enum_count": 0,
+  "stage_enum_names": [],
+  "stage_optional": [],
+  "chapter_state_enum_count": 0,
+  "chapter_state_enum_names": [],
+  "objective_kind_enum_count": 0,
+  "objective_kind_enum_names": [],
+  "source": "prototype/src/wet_run/run/state.py",
+  "_generated_at": "2026-08-27T08:05:40"
+}

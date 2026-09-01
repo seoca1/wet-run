@@ -1,0 +1,14 @@
+{
+  "npcs": 5,
+  "dialogues": 14,
+  "lines": 51,
+  "choices": 0,
+  "characters": [
+    "bartender",
+    "dixie",
+    "finn",
+    "maelcum",
+    "ta_rep"
+  ],
+  "_generated_at": "2026-08-27T08:05:39"
+}

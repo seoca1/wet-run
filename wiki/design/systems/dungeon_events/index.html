@@ -1,0 +1,2116 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>System: Dungeon Events (던전 이벤트) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#system-dungeon-events" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              System: Dungeon Events (던전 이벤트)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        이벤트 유형 스키마
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        이벤트별 상세
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRAP 이벤트 (미구현 → 구현 필요)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="TRAP 이벤트 (미구현 → 구현 필요)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        현재 상태
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구현안
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trap_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TRAP 발생 조건
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#random_combat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RANDOM_COMBAT 이벤트 (미구현 → 구현 필요)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="RANDOM_COMBAT 이벤트 (미구현 → 구현 필요)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        현재 상태
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구현안
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        호출 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#npc_encounter-stub" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NPC_ENCOUNTER 업그레이드 (STUB → 실제 대화)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="NPC_ENCOUNTER 업그레이드 (STUB → 실제 대화)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        현재 상태
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구현안
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        요구 사항
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        전투-던전 연동 수정 (핵심 버그)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="전투-던전 연동 수정 (핵심 버그)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        현재 문제
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        수정안
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        호출 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combatstate-enemyid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        노드 제거 검증: CombatState에 enemy.id 추가 필요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_phase-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _phase 2 구현 우선순위
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#special-encounter-v110-loa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Special Encounter (v1.1.0+) — Loa 유령신 조우
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Special Encounter (v1.1.0+) — Loa 유령신 조우">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        트리거 조건
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        선택지 (3가지)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-0146-option-3-hybrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        종료 처리 (ADR-0146 Option 3 Hybrid)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        디자인 의도
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hub-black-market-v110" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hub 사이클 — Black Market (v1.1.0+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hub 사이클 — Black Market (v1.1.0+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        트리거 조건
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adr-0146-option-3-hybrid_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        종료 처리 (ADR-0146 Option 3 Hybrid)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        디자인 의도
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="system-dungeon-events">System: Dungeon Events (던전 이벤트)<a class="headerlink" href="#system-dungeon-events" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>상위 결정</strong>: ADR-0060 (Dungeon Exploration Redesign)
+<strong>관련</strong>: ADR-0003 (RT-MS Combat), ADR-0005 (Matrix Graph), ADR-0020 (Exploration)</p>
+</blockquote>
+<h2 id="_1">개요<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>던전(매트릭스 graph) 탐험 중 발생 가능한 모든 이벤트를 구조화한다.</p>
+<h2 id="_2">이벤트 유형 스키마<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DungeonEventKind</span><span class="p">(</span><span class="n">StrEnum</span><span class="p">):</span>
+    <span class="n">DATA_EXTRACTION</span> <span class="o">=</span> <span class="s2">&quot;data_extraction&quot;</span>   <span class="c1"># 데이터 회수 (미션 목표)</span>
+    <span class="n">COMBAT_ENCOUNTER</span> <span class="o">=</span> <span class="s2">&quot;combat&quot;</span>          <span class="c1"># ICE 전투</span>
+    <span class="n">NPC_ENCOUNTER</span> <span class="o">=</span> <span class="s2">&quot;npc&quot;</span>                 <span class="c1"># NPC/Construct 대화</span>
+    <span class="n">TRAP</span> <span class="o">=</span> <span class="s2">&quot;trap&quot;</span>                        <span class="c1"># 알람 기반 함정</span>
+    <span class="n">RANDOM_COMBAT</span> <span class="o">=</span> <span class="s2">&quot;random_combat&quot;</span>       <span class="c1"># 랜덤 적遭遇</span>
+    <span class="n">ROUTER_TRANSIT</span> <span class="o">=</span> <span class="s2">&quot;router&quot;</span>            <span class="c1"># 단순 통과</span>
+    <span class="n">HACK_SYSTEM</span> <span class="o">=</span> <span class="s2">&quot;hack&quot;</span>                 <span class="c1"># 시스템 해킹</span>
+    <span class="n">CORE_ACCESS</span> <span class="o">=</span> <span class="s2">&quot;core&quot;</span>                  <span class="c1"># 코어 접근</span>
+    <span class="n">JACK_OUT</span> <span class="o">=</span> <span class="s2">&quot;jack_out&quot;</span>                 <span class="c1"># 매트릭스 탈출</span>
+    <span class="n">MISSION_COMPLETE</span> <span class="o">=</span> <span class="s2">&quot;mission_complete&quot;</span> <span class="c1"># 미션 완료</span>
+
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">DungeonEventResult</span><span class="p">:</span>
+    <span class="n">kind</span><span class="p">:</span> <span class="n">DungeonEventKind</span>
+    <span class="n">node_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
+    <span class="n">reward</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>  <span class="c1"># item_id → count</span>
+    <span class="n">damage</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>              <span class="c1"># 함정/전투 데미지</span>
+    <span class="n">status_messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+    <span class="n">next_screen</span><span class="p">:</span> <span class="n">ScreenKind</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># 전투 시 COMBAT 등</span>
+</code></pre></div>
+<h2 id="_3">이벤트별 상세<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>EventKind</th>
+<th>트리거</th>
+<th>전투?</th>
+<th>보상</th>
+<th>상태</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DATA_EXTRACTION</code></td>
+<td>DATA 노드 → EXTRACT</td>
+<td>❌</td>
+<td>data_fragment +1</td>
+<td>✅ 구현완료</td>
+</tr>
+<tr>
+<td><code>COMBAT_ENCOUNTER</code></td>
+<td>ICE 노드 → ENGAGE</td>
+<td>✅</td>
+<td>ICE 노드 제거 (완료 시)</td>
+<td>✅ 구현완료</td>
+</tr>
+<tr>
+<td><code>NPC_ENCOUNTER</code></td>
+<td>CONSTRUCT 노드 → COMMUNICATE</td>
+<td>❌</td>
+<td>story_beat</td>
+<td>⚠️ STUB (메시지만)</td>
+</tr>
+<tr>
+<td><code>TRAP</code></td>
+<td>ALARM_LEVEL &gt;= HIGH 진입</td>
+<td>❌</td>
+<td>HP 감소</td>
+<td>❌ 미구현</td>
+</tr>
+<tr>
+<td><code>RANDOM_COMBAT</code></td>
+<td>매 노드 이동 시 확률적</td>
+<td>✅</td>
+<td>—</td>
+<td>❌ 미구현</td>
+</tr>
+<tr>
+<td><code>ROUTER_TRANSIT</code></td>
+<td>ROUTER 노드 → MOVE</td>
+<td>❌</td>
+<td>—</td>
+<td>⚠️ STUB (no-op)</td>
+</tr>
+<tr>
+<td><code>HACK_SYSTEM</code></td>
+<td>SYSTEM 노드 → HACK</td>
+<td>❌</td>
+<td>data_fragment +1</td>
+<td>⚠️ STUB (메시지만)</td>
+</tr>
+<tr>
+<td><code>CORE_ACCESS</code></td>
+<td>CORE 노드 → ACCESS</td>
+<td>❌</td>
+<td>힌트 표시</td>
+<td>⚠️ STUB (메시지만)</td>
+</tr>
+<tr>
+<td><code>JACK_OUT</code></td>
+<td>EXIT 노드 → JACK OUT</td>
+<td>❌</td>
+<td>—</td>
+<td>✅ 구현완료</td>
+</tr>
+<tr>
+<td><code>MISSION_COMPLETE</code></td>
+<td>모든 DATA 추출 완료</td>
+<td>❌</td>
+<td>credits +xp</td>
+<td>✅ 구현완료</td>
+</tr>
+</tbody>
+</table>
+<h2 id="trap">TRAP 이벤트 (미구현 → 구현 필요)<a class="headerlink" href="#trap" title="Permanent link">&para;</a></h2>
+<h3 id="_4">현재 상태<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><code>alarm</code> 필드가 <code>Node</code>에 존재하지만,.ALARM &gt;= HIGH일 때 별도 이벤트 없음.</p>
+<h3 id="_5">구현안<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># action_menu.py 또는 새模块 dungeon_events.py</span>
+
+<span class="n">TRAP_DAMAGE_BY_ALARM</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">AlarmLevel</span><span class="o">.</span><span class="n">LOW</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">AlarmLevel</span><span class="o">.</span><span class="n">MEDIUM</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="n">AlarmLevel</span><span class="o">.</span><span class="n">HIGH</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="n">AlarmLevel</span><span class="o">.</span><span class="n">CRITICAL</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">trigger_trap</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">AppState</span><span class="p">,</span> <span class="n">node</span><span class="p">:</span> <span class="n">Node</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DungeonEventResult</span><span class="p">:</span>
+    <span class="n">damage</span> <span class="o">=</span> <span class="n">TRAP_DAMAGE_BY_ALARM</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">alarm</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">damage</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">player_hp</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">player_hp</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">player_hp</span> <span class="o">-</span> <span class="n">damage</span><span class="p">)</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">status_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt;&gt;&gt; TRAP: </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">alarm</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> alarm! -</span><span class="si">{</span><span class="n">damage</span><span class="si">}</span><span class="s2"> HP&quot;</span><span class="p">)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">DungeonEventResult</span><span class="p">(</span>
+            <span class="n">kind</span><span class="o">=</span><span class="n">DungeonEventKind</span><span class="o">.</span><span class="n">TRAP</span><span class="p">,</span>
+            <span class="n">node_id</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+            <span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">damage</span><span class="o">=</span><span class="n">damage</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">result</span>
+</code></pre></div>
+<h3 id="trap_1">TRAP 발생 조건<a class="headerlink" href="#trap_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>노드 진입 시 (cardinal movement로 해당 노드에 도착)</li>
+<li>알람 레벨이 MEDIUM 이상</li>
+<li>함정 우회 옵션 없음 (단, ICE 우회 가능)</li>
+</ul>
+<h2 id="random_combat">RANDOM_COMBAT 이벤트 (미구현 → 구현 필요)<a class="headerlink" href="#random_combat" title="Permanent link">&para;</a></h2>
+<h3 id="_6">현재 상태<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>랜덤 인카운터 없음. 전투는 오직 ICE 노드에서만 발생.</p>
+<h3 id="_7">구현안<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># zone별 랜덤 전투 확률 (노드 이동 시마다)</span>
+<span class="n">RANDOM_COMBAT_CHANCE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">ZoneDepth</span><span class="o">.</span><span class="n">SURFACE</span><span class="p">:</span> <span class="mf">0.02</span><span class="p">,</span>   <span class="c1"># 2%</span>
+    <span class="n">ZoneDepth</span><span class="o">.</span><span class="n">MID</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>       <span class="c1"># 5%</span>
+    <span class="n">ZoneDepth</span><span class="o">.</span><span class="n">DEEP</span><span class="p">:</span> <span class="mf">0.08</span><span class="p">,</span>      <span class="c1"># 8%</span>
+    <span class="n">ZoneDepth</span><span class="o">.</span><span class="n">CORE</span><span class="p">:</span> <span class="mf">0.12</span><span class="p">,</span>      <span class="c1"># 12%</span>
+    <span class="n">ZoneDepth</span><span class="o">.</span><span class="n">TA</span><span class="p">:</span> <span class="mf">0.20</span><span class="p">,</span>        <span class="c1"># 20%</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">maybe_trigger_random_combat</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">AppState</span><span class="p">,</span> <span class="n">prog_registry</span><span class="p">,</span> <span class="n">ice_registry</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns True if random combat was triggered.&quot;&quot;&quot;</span>
+    <span class="n">zone</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="s1">&#39;current_zone&#39;</span><span class="p">,</span> <span class="n">ZoneDepth</span><span class="o">.</span><span class="n">SURFACE</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">RANDOM_COMBAT_CHANCE</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">zone</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="c1"># Spawn generic enemy based on zone</span>
+    <span class="n">enemy_id</span> <span class="o">=</span> <span class="n">random_ice_for_zone</span><span class="p">(</span><span class="n">zone</span><span class="p">)</span>
+    <span class="n">combat_state</span> <span class="o">=</span> <span class="n">combat_view</span><span class="o">.</span><span class="n">start_combat</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">enemy_node</span><span class="p">,</span> <span class="n">prog_registry</span><span class="p">,</span> <span class="n">ice_registry</span><span class="p">)</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">combat_state</span> <span class="o">=</span> <span class="n">combat_state</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">screen</span> <span class="o">=</span> <span class="n">ScreenKind</span><span class="o">.</span><span class="n">COMBAT</span>
+    <span class="k">return</span> <span class="kc">True</span>
+</code></pre></div>
+<h3 id="_8">호출 위치<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p><code>dungeon_view._handle_cardinal_movement()</code> — 이동 성공 시 호출.</p>
+<h2 id="npc_encounter-stub">NPC_ENCOUNTER 업그레이드 (STUB → 실제 대화)<a class="headerlink" href="#npc_encounter-stub" title="Permanent link">&para;</a></h2>
+<h3 id="_9">현재 상태<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p><code>action_menu._execute_action("communicate")</code> → 메시지만 출력.</p>
+<h3 id="_10">구현안<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>기존 <code>NPCState</code> + <code>npc_event.py</code> 활용:</p>
+<div class="highlight"><pre><span></span><code><span class="k">elif</span> <span class="n">action_id</span> <span class="o">==</span> <span class="s2">&quot;communicate&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.npc_event</span> <span class="kn">import</span> <span class="n">NPCDialogue</span>
+    <span class="n">dialogue</span> <span class="o">=</span> <span class="n">NPCDialogue</span><span class="o">.</span><span class="n">for_node</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>  <span class="c1"># node.id → appropriate dialogue</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">npc_state</span> <span class="o">=</span> <span class="n">NPCState</span><span class="p">(</span><span class="n">event</span><span class="o">=</span><span class="n">dialogue</span><span class="p">)</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">screen</span> <span class="o">=</span> <span class="n">ScreenKind</span><span class="o">.</span><span class="n">NPC</span>
+</code></pre></div>
+<h3 id="_11">요구 사항<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ul>
+<li>각 CONSTRUCT 노드 id → NPCDialogue 매핑</li>
+<li>dialogue 내용 (현재 Dixie Flatline만 <code>_DIXIE_FLATLINE_EVENT</code>로 하드코딩)</li>
+<li>추후 6자(CONSTRUCT) 확장</li>
+</ul>
+<h2 id="-">전투-던전 연동 수정 (핵심 버그)<a class="headerlink" href="#-" title="Permanent link">&para;</a></h2>
+<h3 id="_12">현재 문제<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<ol>
+<li>ENGAGE → 전투 시작 → 승리 → <code>state.screen = MATRIX</code>로 복귀</li>
+<li><strong>해당 ICE 노드가 graph에서 제거되지 않음</strong> → 다시 올 때 같은 전투 재발생</li>
+<li><code>_remove_node_from_graph()</code>는 <code>action_menu._execute_action("extract")</code>에서만 호출</li>
+</ol>
+<h3 id="_13">수정안<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># combat_view.py 또는 새模块</span>
+
+<span class="k">def</span> <span class="nf">end_combat</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">AppState</span><span class="p">,</span> <span class="n">victory</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle transition out of COMBAT screen after combat resolves.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">victory</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">combat_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Remove defeated enemy node from graph</span>
+        <span class="n">enemy_id</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">combat_state</span><span class="o">.</span><span class="n">enemy</span><span class="o">.</span><span class="n">id</span>
+        <span class="n">ice_node</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">matrix</span><span class="o">.</span><span class="n">nodes</span> <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">enemy_id</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ice_node</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">.combat_view</span> <span class="kn">import</span> <span class="n">_remove_node_from_graph</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">matrix</span> <span class="o">=</span> <span class="n">_remove_node_from_graph</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">matrix</span><span class="p">,</span> <span class="n">enemy_id</span><span class="p">)</span>
+            <span class="n">state</span><span class="o">.</span><span class="n">status_messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&gt;&gt;&gt; </span><span class="si">{</span><span class="n">ice_node</span><span class="o">.</span><span class="n">label</span><span class="si">}</span><span class="s2"> defeated and removed&quot;</span><span class="p">)</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">combat_state</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">screen</span> <span class="o">=</span> <span class="n">ScreenKind</span><span class="o">.</span><span class="n">MATRIX</span>
+</code></pre></div>
+<h3 id="_14">호출 위치<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<p><code>app.py</code> 메인 루프 — COMBAT screen 처리 부분:
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">screen</span> <span class="ow">is</span> <span class="n">ScreenKind</span><span class="o">.</span><span class="n">COMBAT</span> <span class="ow">and</span> <span class="n">state</span><span class="o">.</span><span class="n">combat_state</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">step_combat</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">combat_state</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">state</span><span class="o">.</span><span class="n">combat_state</span><span class="o">.</span><span class="n">is_over</span><span class="p">:</span>  <span class="c1"># 새로 추가</span>
+        <span class="n">victory</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">combat_state</span><span class="o">.</span><span class="n">enemy</span><span class="o">.</span><span class="n">hp</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+        <span class="n">end_combat</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">victory</span><span class="p">)</span>
+</code></pre></div></p>
+<h2 id="combatstate-enemyid">노드 제거 검증: CombatState에 enemy.id 추가 필요<a class="headerlink" href="#combatstate-enemyid" title="Permanent link">&para;</a></h2>
+<p>현재 <code>CombatState</code>에 enemy.id 필드가 없음. 추가 필요.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># combat/state.py</span>
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">CombatState</span><span class="p">:</span>
+    <span class="n">player</span><span class="p">:</span> <span class="n">Combatant</span>
+    <span class="n">enemy</span><span class="p">:</span> <span class="n">Combatant</span>
+    <span class="n">enemy_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># 추가: graph에서 노드 제거용</span>
+    <span class="n">tick_ms</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="o">...</span>
+</code></pre></div>
+<h2 id="_phase-2">_phase 2 구현 우선순위<a class="headerlink" href="#_phase-2" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>P0 (지금)</strong>: 전투 승리 후 ICE 노드 제거</li>
+<li><strong>P1</strong>: TRAP 이벤트 (알람 데미지)</li>
+<li><strong>P1</strong>: RANDOM_COMBAT (zoneless 랜덤遭遇)</li>
+<li><strong>P2</strong>: NPC_ENCOUNTER → 실제 대화</li>
+<li><strong>P2</strong>: HACK_SYSTEM → 실제 해킹 미니게임 (스텁 해제)</li>
+<li><strong>P3</strong>: CORE_ACCESS → 실제 코어 브리칭</li>
+</ol>
+<h2 id="special-encounter-v110-loa">Special Encounter (v1.1.0+) — Loa 유령신 조우<a class="headerlink" href="#special-encounter-v110-loa" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>상위 결정</strong>: ADR-0146 (Stage Flow, Draft — user acceptance pending)</p>
+</blockquote>
+<p>DEEP/CORE/TA 존 매트릭스 런 중 무작위로 발생하는 특수 이벤트. 매트릭스 깊이 진입 시 깁슨 원작의 'vodoun Loa' 와 같은 유령 신을 조우.</p>
+<h3 id="_15">트리거 조건<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<ul>
+<li>매트릭스 노드 진입 시 확률적 (zone 깊이에 비례해 확률 증가)</li>
+<li>DEEP/CORE/TA 한정. SURFACE/MID/FREESIDE 는 미발생</li>
+</ul>
+<h3 id="3">선택지 (3가지)<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>선택</th>
+<th>결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Talk</strong></td>
+<td>Loa 의 메시지 + 데이터 프래그먼트 1개 (깁슨 톤 dialogue)</td>
+</tr>
+<tr>
+<td><strong>Fight</strong></td>
+<td>ICE 전투 (Loa = ICE proxy). victory 시 데이터 프래그먼트 2개</td>
+</tr>
+<tr>
+<td><strong>Leave</strong></td>
+<td>이벤트 종료. 보상 없음</td>
+</tr>
+</tbody>
+</table>
+<h3 id="adr-0146-option-3-hybrid">종료 처리 (ADR-0146 Option 3 Hybrid)<a class="headerlink" href="#adr-0146-option-3-hybrid" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>ghost_encounter.is_terminal: true</code></strong> — Talk / Fight / Leave 어느 선택이든 encounter 종료 의미</li>
+<li>다음 stage = <code>defeat_ice</code> 으로 main flow 복귀 (fight 선택 시 즉시, 다른 선택 시 다음 매트릭스 노드)</li>
+<li>Stage 종료 후 run 자체는 계속 (run_cycle 종료 아님)</li>
+</ul>
+<h3 id="_16">디자인 의도<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<ul>
+<li>깁슨 원작의 Loa / vodoun 시스템 반영 (<code>Mona Lisa Overdrive</code> 참조)</li>
+<li>매트릭스에 'mystical encounter' 측면 부여 — 순수 ICE 전투만 아닌 다양성</li>
+<li>데이터 fragment 보상으로 player에게 run 중 의미 있는 보상 제공</li>
+</ul>
+<hr />
+<h2 id="hub-black-market-v110">Hub 사이클 — Black Market (v1.1.0+)<a class="headerlink" href="#hub-black-market-v110" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>상위 결정</strong>: ADR-0146 (Stage Flow, Draft — user acceptance pending)</p>
+</blockquote>
+<p><code>black_market</code> 는 매트릭스가 아닌 <strong>Hub 사이클</strong> 의 일부. run 사이의 credits / materials 거래를 위한 vendor.</p>
+<h3 id="_17">트리거 조건<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Hub 화면에서 "BLACK MARKET" 메뉴 선택 시 진입</li>
+<li>Run 종료 후 (<code>complete</code>, <code>death_restart</code> 직후) 첫 pending 으로 복귀하기 직전 단계에서 접근 가능</li>
+</ul>
+<h3 id="adr-0146-option-3-hybrid_1">종료 처리 (ADR-0146 Option 3 Hybrid)<a class="headerlink" href="#adr-0146-option-3-hybrid_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>black_market → pending</code> transition</strong> ("after_vendor_exit") — vendor 화면 종료 시 정상 hub 사이클 복귀</li>
+<li>is_terminal: false 유지 (Hub loop 의 일부이므로 terminal 마크 부적절)</li>
+</ul>
+<h3 id="_18">디자인 의도<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<ul>
+<li>깁슨 Sprawl 의 'street-level commerce' 측면 (Armitage 의 fixer, Finn 의 정보상)</li>
+<li>Credits / materials 양쪽 모두 거래 (material 은 crafting 시스템 [ADR-0015] 활용)</li>
+<li>Program / deck upgrade 구매 가능 → 다음 run 의 진입 강도 상승</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

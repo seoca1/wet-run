@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="description" content="Wet Run — Browser MVP (ADR-0199). Play the deck-building ICE-breaking core in your browser." />
+  <title>Wet Run — Browser MVP</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="canonical" href="https://seoca1.github.io/projects/wetrun-web/" />
+  <style>
+    :root {
+      --bg: #000;
+      --fg: #d0d0d0;
+      --neon: #00ff41;
+      --cyan: #00ffff;
+      --magenta: #ff00ff;
+      --amber: #ffa500;
+      --red: #ff2030;
+      --dim: #606060;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+      line-height: 1.5;
+    }
+    body { padding: 16px 24px; max-width: 880px; margin: 0 auto; }
+    h1 {
+      color: var(--neon);
+      font-size: 28px;
+      margin: 8px 0 16px;
+      border-bottom: 1px solid var(--neon);
+      padding-bottom: 8px;
+    }
+    h2 { color: var(--cyan); font-size: 18px; margin: 24px 0 8px; }
+    h3 { color: var(--amber); font-size: 14px; margin: 16px 0 6px; }
+    p, li { font-size: 13px; margin-bottom: 6px; }
+    ul { padding-left: 20px; }
+    code { color: var(--magenta); background: #0a0a0a; padding: 1px 4px; border-radius: 2px; font-size: 12px; }
+    a { color: var(--neon); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .badge { display: inline-block; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-right: 6px; }
+    .badge.tier1 { background: #003322; color: var(--neon); border: 1px solid var(--neon); }
+    .badge.experimental { background: #332200; color: var(--amber); border: 1px solid var(--amber); }
+    .frame {
+      border: 1px solid var(--dim);
+      padding: 12px;
+      margin: 12px 0;
+      background: #0a0a0a;
+    }
+    .cta {
+      display: inline-block;
+      background: var(--neon);
+      color: #000;
+      padding: 10px 20px;
+      font-weight: bold;
+      margin: 12px 0;
+      border-radius: 3px;
+    }
+    .cta:hover { background: #00ff80; text-decoration: none; }
+    .top-nav { padding: 12px 0; border-bottom: 1px solid var(--dim); margin-bottom: 16px; }
+    .top-nav a { color: var(--cyan); margin-right: 12px; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <nav class="top-nav">
+    <a href="./index.html">🌐 Hub</a>
+    <a href="./combat.html">⚔️ Combat</a>
+    <a href="./cyberspace.html">🕶️ Cyberspace</a>
+    <a href="./jokey.html">🎭 Cast</a>
+    <a href="./reading-stats.html">📊 Reading</a>
+  </nav>
+
+  <h1>🌐 Wet Run — Browser MVP</h1>
+
+  <p>
+    <span class="badge tier1">Tier 1 MVP</span>
+    <span class="badge experimental">Experimental</span>
+  </p>
+
+  <p>
+    A browser-native version of the Wet Run deck-building ICE-breaking core.
+    Built per <a href="https://github.com/seoca1/projects/blob/main/Game/wet_run/decisions/0199-wetrun-web-mvp.md" target="_blank" rel="noopener">ADR-0199</a>.
+    Playable in your desktop browser — no install required.
+  </p>
+
+  <a class="cta" href="https://seoca1.github.io/projects/wetrun-web/" target="_blank" rel="noopener">▶ Play in Browser</a>
+
+  <h2>What's included</h2>
+
+  <ul>
+    <li><strong>1 playable mission</strong> — <code>first_jack</code> (the canonical tutorial run)</li>
+    <li><strong>ICE-breaking combat</strong> — real-time-with-pauses state machine ported from wet_run Python</li>
+    <li><strong>ASCII Canvas2D renderer</strong> — Gibson neon palette on black</li>
+    <li><strong>Save/load</strong> — localStorage JSON with schema versioning</li>
+    <li><strong>Keyboard input</strong> — arrow keys + ENTER/SPACE/ESC/Q</li>
+  </ul>
+
+  <h2>What's NOT included (Tier 2+)</h2>
+
+  <ul>
+    <li>Full 209-mission campaign</li>
+    <li>Multiple bosses / ICE types</li>
+    <li>Multiple jockeys</li>
+    <li>Audio (Howler.js)</li>
+    <li>Mobile touch UI</li>
+    <li>Save migration from desktop wet_run</li>
+    <li>Multiplayer / cloud sync</li>
+    <li>Full i18n (English only)</li>
+  </ul>
+
+  <h2>System Requirements</h2>
+
+  <div class="frame">
+    <strong>Browser:</strong> Chrome / Firefox / Safari 17+ (desktop, 1280×800 or larger)<br>
+    <strong>Input:</strong> Physical keyboard required (no touch in MVP)<br>
+    <strong>Audio:</strong> None (silent MVP)<br>
+    <strong>Network:</strong> Static files only (no backend, no account, no analytics)
+  </div>
+
+  <h2>Architecture</h2>
+
+  <p>
+    TypeScript + Canvas2D + Vite. Game data exported from
+    <code>wet_run/prototype/data/</code> via Python script → static JSON →
+    TypeScript reads at runtime. Zero server-side logic.
+  </p>
+
+  <h2>Source</h2>
+
+  <ul>
+    <li><a href="https://github.com/seoca1/projects/tree/main/Game/wet_run-web" target="_blank" rel="noopener">View source on GitHub</a></li>
+    <li><a href="https://github.com/seoca1/projects/blob/main/Game/wet_run/decisions/0199-wetrun-web-mvp.md" target="_blank" rel="noopener">Read ADR-0199</a></li>
+    <li><a href="https://github.com/seoca1/projects/blob/main/Game/wet_run-web/docs/PLAYTEST.md" target="_blank" rel="noopener">Playtest protocol (3-person)</a></li>
+  </ul>
+
+  <h2>Why MVP-first?</h2>
+
+  <p>
+    Counter-review (2026-08-25) rejected Pygbag-first as a "procrastination device" —
+    migrating 48 files × 423 tcod call sites to pygame-ce would take 4-8 weeks
+    and make ~50% of the 5811 existing Python tests obsolete. TypeScript + Canvas2D
+    MVP is a single-step approach with a 4-week calendar budget and validates
+    "Gibson tone" + UX before committing to full Tier 2 expansion.
+  </p>
+
+  <h2>Status (2026-08-25)</h2>
+
+  <ul>
+    <li>✅ 7 atomic commits shipped in single session</li>
+    <li>✅ 17 unit tests passing (state machine + storage round-trip)</li>
+    <li>✅ TypeScript strict dry-compile clean</li>
+    <li>✅ Vite production build: 48 KB JS / 11.5 KB gzipped</li>
+    <li>⏳ 3-person playtest pending (per <code>docs/PLAYTEST.md</code>)</li>
+    <li>⏳ Tier 2 decisions gated on playtest</li>
+  </ul>
+
+</body>
+</html>

@@ -1,0 +1,2327 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>System: Animations (전투/이벤트 ASCII 애니메이션) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#system-animations-ascii" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              System: Animations (전투/이벤트 ASCII 애니메이션)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation 디자인 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#normal-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Normal Attack (일반 공격)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Normal Attack (일반 공격)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        시각
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        속성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill-attack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skill Attack (메뉴 스킬)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skill Attack (메뉴 스킬)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#goliath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        시각 (Goliath 예시)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        속성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#skill" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Skill 종류별 애니메이션
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skill 종류별 애니메이션">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kraken-t5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kraken (T5) — 극적 효과
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hit-miss-critical-feedback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hit / Miss / Critical Feedback
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hit / Miss / Critical Feedback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hit (명중)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#miss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Miss (회피)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#critical-black-ice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical (치명타, Black ICE 등)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#player-damage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Player Damage (자키 피격)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Player Damage (자키 피격)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        속성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#death-flatline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Death (flatline)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Death (flatline)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        속성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ICE 격파
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#screen-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        화면 효과 (Screen Effects)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="화면 효과 (Screen Effects)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#screen-shake" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Screen shake (강한 피격)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#screen-flash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Screen flash (치명타)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-glitch-black-ice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix glitch (Black ICE 등장)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        데이터 구조
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="데이터 구조">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dataanimationsframesjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        data/animations/frames.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pillar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 정합
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구현 가이드 (Phase 6+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="구현 가이드 (Phase 6+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#engineanimationspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        engine/animations.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enginecombatpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        engine/combat.py 확장
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 범위
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 범위">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5 (현재)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-6_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6+
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7+
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        향후 결정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        관련 문서
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-15-adr-0060-cinematic-vfx-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1.5 확장 (ADR-0060) — Cinematic VFX 4종
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="system-animations-ascii">System: Animations (전투/이벤트 ASCII 애니메이션)<a class="headerlink" href="#system-animations-ascii" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>상위 결정</strong>: <code>../../decisions/0018-combat-animation.md</code> (Accepted, Draft)
+<strong>관련</strong>: ADR-0002 (Pure ASCII), ADR-0003 (RT-MS), ADR-0011 (Portraits), ADR-0012 (PPL/ZDR)</p>
+</blockquote>
+<h2 id="_1">목적<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>전투와 이벤트의 <em>ASCII 애니메이션</em> 명세. <strong>일반 공격</strong>과 <strong>스킬 공격</strong>이 <em>대비</em>되어야 함. Pure ASCII, 깁슨 톤.</p>
+<blockquote>
+<p><strong>핵심 원칙</strong>: 일반 = 짧고 무채색. 스킬 = 길고 색채.</p>
+</blockquote>
+<h2 id="animation">Animation 디자인 원칙<a class="headerlink" href="#animation" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>원칙</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>대비 (Contrast)</strong></td>
+<td>일반 ↔ 스킬이 <em>즉시</em> 구별 가능</td>
+</tr>
+<tr>
+<td><strong>순간성 (Transient)</strong></td>
+<td>일반 = 짧고 단발. 스킬 = 길고 드라마틱.</td>
+</tr>
+<tr>
+<td><strong>색상 (Color)</strong></td>
+<td>일반 = 무채색. 스킬 = 프로그램별 색상.</td>
+</tr>
+<tr>
+<td><strong>프레임 (Frames)</strong></td>
+<td>60 FPS 기준. 일반 3 프레임, 스킬 6 프레임.</td>
+</tr>
+<tr>
+<td><strong>이징 (Easing)</strong></td>
+<td>일반 = linear. 스킬 = ease-in-out.</td>
+</tr>
+<tr>
+<td><strong>깁슨 톤</strong></td>
+<td>글리치, ASCII 깨짐, 단절된 빛.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="normal-attack">Normal Attack (일반 공격)<a class="headerlink" href="#normal-attack" title="Permanent link">&para;</a></h2>
+<p><em>짧고 무채색</em>. 자동 공격 (1 attack / 2초).</p>
+<h3 id="_2">시각<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Frame 1 (0ms):    ◉P◉         ▲ICE▲
+Frame 2 (80ms):   ◉P◉ &gt;       ▲ICE▲  ← attack line
+Frame 3 (160ms):  ◉P◉         ▲ICE▲  ← back to rest
+</code></pre></div>
+<h3 id="_3">속성<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>3 프레임, 각 80ms = <strong>240ms total</strong></li>
+<li>색상: gray <code>(128, 128, 128)</code></li>
+<li>데미지 숫자: 작게, 흰색 <code>-5</code></li>
+<li>사운드: (Phase 7+) 짧은 비프</li>
+</ul>
+<h2 id="skill-attack">Skill Attack (메뉴 스킬)<a class="headerlink" href="#skill-attack" title="Permanent link">&para;</a></h2>
+<p><em>길고 색채</em>. 메뉴로 선택한 강력한 공격.</p>
+<h3 id="goliath">시각 (Goliath 예시)<a class="headerlink" href="#goliath" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Frame 1 (0ms):    ◉P◉         ▲ICE▲
+Frame 2 (100ms):  ◉P◉ ⚔       ▲ICE▲  ← charging
+Frame 3 (200ms):  ◉P◉ ⚔▓▓▓    ▲ICE▲  ← full power
+Frame 4 (300ms):  ◉P◉ ⚔▓▓▓ ⚡  ▲ICE▲  ← impact
+Frame 5 (400ms):  ◉P◉         ▲.CE▲  ← ICE glitched
+Frame 6 (500ms):  ◉P◉         ▲ICE▲  ← back to rest
+</code></pre></div>
+<h3 id="_4">속성<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>6 프레임, 각 100ms = <strong>600ms total</strong></li>
+<li>색상: 프로그램별 (Goliath = magenta)</li>
+<li>데미지 숫자: 크게, 노란색 <code>-25</code></li>
+<li>화면 흔들림 (1-2 픽셀) — 200ms</li>
+<li>사운드: (Phase 7+) 더 긴 호</li>
+</ul>
+<h2 id="skill">Skill 종류별 애니메이션<a class="headerlink" href="#skill" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Program</th>
+<th>Type</th>
+<th>Animation</th>
+<th>Color</th>
+<th>Tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goliath</strong></td>
+<td>Attack</td>
+<td><code>⚔▓▓▓ ⚡ →▶</code></td>
+<td>magenta</td>
+<td>T3</td>
+</tr>
+<tr>
+<td><strong>Kraken</strong></td>
+<td>Attack</td>
+<td><code>⚔▓▓▓▓▓▓ ☠ →▶</code></td>
+<td>red</td>
+<td>T5</td>
+</tr>
+<tr>
+<td><strong>Hammer</strong></td>
+<td>Attack</td>
+<td><code>⚔▓▓ →▶</code></td>
+<td>yellow</td>
+<td>T2</td>
+</tr>
+<tr>
+<td><strong>Virus</strong></td>
+<td>Attack</td>
+<td><code>☣☣☣ ☣→</code></td>
+<td>green</td>
+<td>T2</td>
+</tr>
+<tr>
+<td><strong>Worm</strong></td>
+<td>Attack</td>
+<td><code>~&gt;&gt; ~&gt;&gt; ~&gt;&gt;</code></td>
+<td>yellow</td>
+<td>T2</td>
+</tr>
+<tr>
+<td><strong>Wisp</strong></td>
+<td>Defense</td>
+<td><code>+ + + shield</code></td>
+<td>cyan</td>
+<td>T1</td>
+</tr>
+<tr>
+<td><strong>Wardrone</strong></td>
+<td>Defense</td>
+<td><code>[counter] ⚔→</code></td>
+<td>cyan</td>
+<td>T4</td>
+</tr>
+<tr>
+<td><strong>Shield</strong></td>
+<td>Defense</td>
+<td><code>[ ▓▓▓ ] block</code></td>
+<td>blue</td>
+<td>T1</td>
+</tr>
+<tr>
+<td><strong>Watchdog</strong></td>
+<td>Detect</td>
+<td><code>? ? ? reveal</code></td>
+<td>yellow</td>
+<td>T1</td>
+</tr>
+<tr>
+<td><strong>Probe</strong></td>
+<td>Detect</td>
+<td><code>?PRB? flash</code></td>
+<td>yellow</td>
+<td>T1</td>
+</tr>
+<tr>
+<td><strong>Hellhound</strong></td>
+<td>Track</td>
+<td><code>&gt;&gt;&gt; TRACK &lt;&lt;&lt;</code></td>
+<td>red</td>
+<td>T3</td>
+</tr>
+</tbody>
+</table>
+<h3 id="kraken-t5">Kraken (T5) — 극적 효과<a class="headerlink" href="#kraken-t5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Frame 1:  ◉P◉           ▲ICE▲
+Frame 2:  ◉P◉ ⚔▓▓▓▓▓▓  ▲ICE▲  ← mass charging
+Frame 3:  ◉P◉ ⚔▓▓▓▓▓▓☠ ▲ICE▲  ← kraken sigil
+Frame 4:  ◉P◉ ⚔▓▓▓▓▓▓☠⚡▲ICE▲ ← impact
+Frame 5:  ◉P◉           █ICE█  ← ICE BLACK (glitched)
+Frame 6:  ◉P◉           ▲ICE▲  ← back
+</code></pre></div>
+<h2 id="hit-miss-critical-feedback">Hit / Miss / Critical Feedback<a class="headerlink" href="#hit-miss-critical-feedback" title="Permanent link">&para;</a></h2>
+<h3 id="hit">Hit (명중)<a class="headerlink" href="#hit" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Frame N:  ·✦· damage ·✦·  ← sparkle, color flash
+Frame N+1: -25 ← damage number floats up
+</code></pre></div>
+<h3 id="miss">Miss (회피)<a class="headerlink" href="#miss" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Frame N:  / /  ← side-step
+Frame N+1: MISS
+</code></pre></div>
+<h3 id="critical-black-ice">Critical (치명타, Black ICE 등)<a class="headerlink" href="#critical-black-ice" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Frame N:  ███ CRITICAL ███  ← red flash
+Frame N+1: ✦✦✦ -50 ✦✦✦
+</code></pre></div>
+<h2 id="player-damage">Player Damage (자키 피격)<a class="headerlink" href="#player-damage" title="Permanent link">&para;</a></h2>
+<p><em>짧고 강렬한 빨간 플래시</em>.</p>
+<div class="highlight"><pre><span></span><code>Frame 1 (0ms):    ◉P◉         ▲ICE▲
+Frame 2 (60ms):   ◉P◉ ←hit    ▲ICE▲  ← damage line, red
+Frame 3 (120ms):  ◉Px          ▲ICE▲  ← glitched
+Frame 4 (180ms):  ◉P◉         ▲ICE▲  ← recovered
+</code></pre></div>
+<h3 id="_5">속성<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>4 프레임, 각 60ms = 240ms</li>
+<li>색상: red <code>(255, 0, 64)</code></li>
+<li>화면 흔들림</li>
+<li>HP 바 색 변화 (녹→황→적)</li>
+</ul>
+<h2 id="death-flatline">Death (flatline)<a class="headerlink" href="#death-flatline" title="Permanent link">&para;</a></h2>
+<p><em>느리고 긴</em>. Pillar 3의 무게.</p>
+<div class="highlight"><pre><span></span><code>Frame 1 (0ms):    ◉P◉
+Frame 2 (200ms):  ◉Px
+Frame 3 (400ms):  ◉/x
+Frame 4 (600ms):  ◉_x
+Frame 5 (800ms):  .Xx
+Frame 6 (1000ms): XX.
+Frame 7 (1200ms): X
+[pause 1000ms]
+&quot;FLATLINE. Static. Silence.&quot;
+</code></pre></div>
+<h3 id="_6">속성<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>7 프레임, 각 200ms + 1s pause = <strong>2.4s total</strong></li>
+<li>색상: red → dark_red</li>
+<li>화면 fade</li>
+<li>메시지: "FLATLINE. Static. Silence."</li>
+</ul>
+<h2 id="ice">ICE 격파<a class="headerlink" href="#ice" title="Permanent link">&para;</a></h2>
+<p><em>빠른 페이드아웃</em>.</p>
+<div class="highlight"><pre><span></span><code>Frame 1:  ▲ICE▲        (rest)
+Frame 2:  ▲.CE▲        ← glitched
+Frame 3:  ▲_E_▲        ← dissolving
+Frame 4:  . _ .         ← fading
+Frame 5:  . . .         ← gone
+[Data Salvage 메뉴 표시]
+</code></pre></div>
+<h2 id="screen-effects">화면 효과 (Screen Effects)<a class="headerlink" href="#screen-effects" title="Permanent link">&para;</a></h2>
+<h3 id="screen-shake">Screen shake (강한 피격)<a class="headerlink" href="#screen-shake" title="Permanent link">&para;</a></h3>
+<ul>
+<li>1-2 픽셀, 100-200ms</li>
+<li>빠르게 진동</li>
+</ul>
+<h3 id="screen-flash">Screen flash (치명타)<a class="headerlink" href="#screen-flash" title="Permanent link">&para;</a></h3>
+<ul>
+<li>1 프레임 전체 흰색 → 사라짐</li>
+<li>강렬한 명중</li>
+</ul>
+<h3 id="matrix-glitch-black-ice">Matrix glitch (Black ICE 등장)<a class="headerlink" href="#matrix-glitch-black-ice" title="Permanent link">&para;</a></h3>
+<ul>
+<li>200ms, 화면 전체 글리치</li>
+<li>랜덤 ASCII 문자, 깁슨 톤</li>
+</ul>
+<h2 id="_7">데이터 구조<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h3 id="dataanimationsframesjson"><code>data/animations/frames.json</code><a class="headerlink" href="#dataanimationsframesjson" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;normal_attack&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;normal_attack&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Normal Attack&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;frames&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">80</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">160</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]]}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">240</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">]</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;goliath_attack&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;goliath_attack&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Goliath&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;frames&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;⚔&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;⚔▓▓▓&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;⚔▓▓▓&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;⚡&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲.CE▲&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]]}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;screen_shake&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;shake_duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">&quot;kraken_attack&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;kraken_attack&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Kraken&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;frames&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;⚔▓▓▓▓▓▓&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;⚔▓▓▓▓▓▓☠&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">300</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;⚔▓▓▓▓▓▓☠&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;⚡▲ICE▲&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;█ICE█&quot;</span><span class="p">]],</span><span class="w"> </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">]},</span>
+<span class="w">      </span><span class="p">{</span><span class="nt">&quot;at&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;console&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[[</span><span class="s2">&quot;◉P◉&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;▲ICE▲&quot;</span><span class="p">]]}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">600</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;color&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;screen_shake&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;screen_flash&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h2 id="pillar">Pillar 정합<a class="headerlink" href="#pillar" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>P1 (The Run)</strong>: 한 전투의 <em>리듬</em> — 자동 공격은 <em>반복적</em>, 스킬은 <em>드라마틱</em>.</li>
+<li><strong>P2 (The Matrix)</strong>: cyberspace 안의 <em>데이터 충돌</em>을 ASCII로 표현. Pillar 2 정합.</li>
+<li><strong>P3 (The Flatline)</strong>: 죽음 애니메이션 = <em>느리고 길게</em>. 무게 표현.</li>
+<li><strong>P4 (The Build)</strong>: 프로그램별로 <em>고유한</em> 애니메이션. 도구 차별화.</li>
+<li><strong>P5 (The Style)</strong>: 깁슨 cyberpunk 미학. 글리치, ASCII 깨짐, 단절.</li>
+</ul>
+<h2 id="phase-6">구현 가이드 (Phase 6+)<a class="headerlink" href="#phase-6" title="Permanent link">&para;</a></h2>
+<h3 id="engineanimationspy"><code>engine/animations.py</code><a class="headerlink" href="#engineanimationspy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Frame</span><span class="p">:</span>
+    <span class="n">at_ms</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">console</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span>  <span class="c1"># multi-row, multi-col</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Animation</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">frames</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">Frame</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="n">duration_ms</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">color</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+    <span class="n">screen_shake</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">screen_flash</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="k">class</span> <span class="nc">AnimationPlayer</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">console</span><span class="p">:</span> <span class="n">Console</span><span class="p">):</span> <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anim</span><span class="p">:</span> <span class="n">Animation</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Play an animation centered at (x, y).&quot;&quot;&quot;</span>
+</code></pre></div>
+<h3 id="enginecombatpy"><code>engine/combat.py</code> 확장<a class="headerlink" href="#enginecombatpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">on_normal_attack</span><span class="p">(</span><span class="n">console</span><span class="p">:</span> <span class="n">Console</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">anim</span> <span class="o">=</span> <span class="n">AnimationRegistry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;normal_attack&quot;</span><span class="p">)</span>
+    <span class="n">AnimationPlayer</span><span class="p">(</span><span class="n">console</span><span class="p">)</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">anim</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">on_skill_attack</span><span class="p">(</span><span class="n">console</span><span class="p">:</span> <span class="n">Console</span><span class="p">,</span> <span class="n">program</span><span class="p">:</span> <span class="n">Program</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">anim</span> <span class="o">=</span> <span class="n">AnimationRegistry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">program</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">_attack&quot;</span><span class="p">)</span>
+    <span class="n">AnimationPlayer</span><span class="p">(</span><span class="n">console</span><span class="p">)</span><span class="o">.</span><span class="n">play</span><span class="p">(</span><span class="n">anim</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="phase">Phase 범위<a class="headerlink" href="#phase" title="Permanent link">&para;</a></h2>
+<h3 id="phase-5">Phase 5 (현재)<a class="headerlink" href="#phase-5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>문서 + 데이터만</strong>: JSON + design 명세</li>
+</ul>
+<h3 id="phase-6_1">Phase 6+<a class="headerlink" href="#phase-6_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>애니메이션 플레이어 (60 FPS 프레임 재생)</li>
+<li>화면 흔들림 / flash</li>
+<li>HP / status 색상 변화</li>
+<li>Death 애니메이션</li>
+</ul>
+<h3 id="phase-7">Phase 7+<a class="headerlink" href="#phase-7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>사운드 효과 (선택)</li>
+<li>사운드 + 애니메이션 sync</li>
+</ul>
+<h2 id="_8">향후 결정<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li>프레임 속도 (60/100/200ms — 튜닝 필요)</li>
+<li>화면 흔들림 강도</li>
+<li>Hit / miss / critical 비율</li>
+<li>Death 애니메이션 길이</li>
+<li>Animation 취소 (interrupt) 정책</li>
+</ul>
+<h2 id="_9">관련 문서<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>decisions/0018-combat-animation.md</code> — ADR</li>
+<li><code>decisions/0003-combat-system.md</code> — RT-MS</li>
+<li><code>decisions/0011-ascii-portraits.md</code> — Portraits</li>
+<li><code>decisions/0060-dungeon-exploration-redesign.md</code> — Dungeon (Phase 1-2)</li>
+<li><code>decisions/0061-novel-integration-architecture.md</code> — Novel (Phase 5)</li>
+<li><code>design/systems/combat.md</code> — 전투 시스템</li>
+<li><code>design/systems/exploration.md</code> — Dungeon/BSP</li>
+<li><code>testcases/systems/animations.md</code> — TC-ANIM 시나리오</li>
+</ul>
+<hr />
+<h2 id="phase-15-adr-0060-cinematic-vfx-4">Phase 1.5 확장 (ADR-0060) — Cinematic VFX 4종<a class="headerlink" href="#phase-15-adr-0060-cinematic-vfx-4" title="Permanent link">&para;</a></h2>
+<p>전투 시각 효과 시스템 (<code>combat/effects.py</code>) 은 Phase 1.5 에서
+<strong>4 종 시네마틱 스포너</strong> 를 추가했습니다. 모두 첫 번째 위치 인자가
+<code>CombatEffects</code> 컨테이너.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">wet_run.combat.effects</span> <span class="kn">import</span> <span class="n">CombatEffects</span>
+<span class="kn">from</span> <span class="nn">wet_run.combat.effects</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">spawn_jackin_glitch</span><span class="p">,</span> <span class="n">spawn_room_flash</span><span class="p">,</span>
+    <span class="n">spawn_data_acquired</span><span class="p">,</span> <span class="n">spawn_jackout_whiteout</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fx</span> <span class="o">=</span> <span class="n">CombatEffects</span><span class="p">()</span>
+
+<span class="n">spawn_jackin_glitch</span><span class="p">(</span><span class="n">fx</span><span class="p">)</span>     <span class="c1"># JAC-IN — 글리치 + 슬로모션</span>
+<span class="n">spawn_room_flash</span><span class="p">(</span><span class="n">fx</span><span class="p">)</span>        <span class="c1"># ICE 처치 — 단색 짧은 플래시</span>
+<span class="n">spawn_data_acquired</span><span class="p">(</span><span class="n">fx</span><span class="p">)</span>     <span class="c1"># DATA 픽업 — 파티클 + 시네마틱</span>
+<span class="n">spawn_jackout_whiteout</span><span class="p">(</span><span class="n">fx</span><span class="p">)</span>  <span class="c1"># JAC-OUT — 백색 폭발 + 시네마틱</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Spawner</th>
+<th>트리거</th>
+<th>레이어</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>spawn_jackin_glitch</code></td>
+<td>JAC-IN / 미션 시작</td>
+<td>JACKING</td>
+<td>글리치 글리프 burst + 16ms 슬로모션</td>
+</tr>
+<tr>
+<td><code>spawn_room_flash</code></td>
+<td>ICE 처치 / 룸 클리어</td>
+<td>FX</td>
+<td>단색 짧은 플래시 (~80ms)</td>
+</tr>
+<tr>
+<td><code>spawn_data_acquired</code></td>
+<td>DATA 노드 픽업</td>
+<td>DATA</td>
+<td>파티클 + <code>&gt;&gt; DATA FRAGMENT RECOVERED</code> 시네마틱</td>
+</tr>
+<tr>
+<td><code>spawn_jackout_whiteout</code></td>
+<td>JAC-OUT / EXIT 도달</td>
+<td>JACKING</td>
+<td>백색 폭발 + <code>&gt;&gt; JACKING OUT...</code> 시네마틱</td>
+</tr>
+</tbody>
+</table>
+<p><code>CombatEffects</code> 는 5-Layer 구조 (hit / skill / ICE / status / cinematic)
+를 가지며, 각 spawner 가 적절한 레이어에 기록합니다.
+<code>has_active_effects()</code> 로 활성 여부 확인.</p>
+<p><strong>관련 데모</strong>:
+<div class="highlight"><pre><span></span><code><span class="nv">PYTHONPATH</span><span class="o">=</span>src<span class="w"> </span>.venv/bin/python<span class="w"> </span>scripts/play_vfx_overlay.py
+</code></pre></div></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자정의 매나리사 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="kumiko_manarase-midnight_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Kumiko — 상속자</div>
+            <h1 class="story-title">자정의 매나리사</h1>
+            <p class="story-subtitle">휠</p>
+            <div class="story-meta"><span>~2,200자 (ko) words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>*"하늘은 잘못된 텔레비전 색이었다."*</p></blockquote>
+<hr>
+<h2>계약</h2>
+<p>매나리사. 자정. 시부야 11번지.</p>
+<p>운전사가 말했다: "매나리사입니다."</p>
+<p>쿠미코. 쿠미코는 야나카다. 야나카는 산업이다. 산업은 자본이다. 자본은 테시에-애시풀이다. 테시에-애시풀은 삼백 년의 데이터다. 삼백 년의 데이터는 삼백 년의 죽음이다.</p>
+<p>쿠미코는 아버지를 죽였다. 아니, 쿠미코는 아버지를 죽게 했다. 아버지는 살아있었다. 산업이 살아있는 방식으로. 자본이 살아있는 방식으로. 테시에-애시풀이 살아있는 방식으로.</p>
+<p>아버지는 야나카다. 야나카는 산업이다. 산업은 테시에-애시풀이다. 테시에-애시풀은 삼백 년이다.</p>
+<p>택시가 멈추었다. 자정. 매나리사.</p>
+<p>쿠미코가 내렸다.</p>
+<hr>
+<h2>거래</h2>
+<p>매나리사 안은 어두웠다. 자정. 음악. 음악은 데이터였다. 데이터는 사라지지 않는다. 사라지지 않는 것은 로아다. 로아는 신이 머무는 자리다. 머무는 것은 만들어지는 것이다. 만들어지는 것은 살아있는 것이다.</p>
+<p>바 뒤편에서. 뒤편은 11번지였다. 11번지는 여기였다. 여기가 11번지였다.</p>
+<p>삐. 삐. 삐.</p>
+<p>쿠미코의 덱이 울렸다. 울린다는 것은 받았다는 것이다. 받았다는 것은 로아다.</p>
+<p>샐리 시어러. 샐리는 로맨틱이었다. 로맨틱은 구식이었다. 구식은 테시에-애시풀이었다. 테시에-애시풀은 삼백 년이었다.</p>
+<p>살아있다. 로아가 살아있는 방식으로. 데이터가 살아있는 방식으로.</p>
+<p>"샐리는 살아있어요," 그들이 말했다. "구식이 살아있는 방식으로. 테시에-애시풀이 살아있는 방식으로."</p>
+<p>"쿠미코예요?" 누군가가 물었다. 그건 페티 산이었다. 페티는 여기였다. 여기엔 야나카가 있었다. 야나카는 산업이었다. 아버지의 산업.</p>
+<p>"쿠미코예요?" 페티가 다시 물었다. "야나카의 딸이에요?"</p>
+<p>"네," 쿠미코가 말했다. "샐리의 로맨틱이에요?"</p>
+<p>"로맨틱은 구식이에요," 페티가 말했다. "구식을 원해요? 새로운 걸 원해요? 살아있는 것. 로아로 살아있는 것."</p>
+<p>그런데 쿠미코는 알고 있었다. 살아있는 것이 로아라는 것을. 살아있는 것이 데이터라는 것을. 살아있는 것이 부서지지 않는다는 것을. 따라서 쿠미코는 매나리사에 왔다. 부서지지 않는 것을 보려고. 부서지지 않는 것에 맞서려고.</p>
+<hr>
+<h2>바퀴</h2>
+<p>바 뒤편, 어둠 속에서, 샐리가 앉아 있었다.</p>
+<p>앉는 것은 살아있는 것이다. 살아있는 것은 데이터다. 데이터는 사라지지 않는다. 사라지지 않는 것은 로아다. 로아는 신이 머무는 자리다.</p>
+<p>샐리는 피부가 없었다. 피부가 없다는 것은 데이터다. 데이터는 살아있다. 로아가 살아있는 방식으로. 구식이 살아있는 방식으로.</p>
+<p>"쿠미코예요?" 샐리가 물었다. "야나카의..."</p>
+<p>"네," 쿠미코가 말했다. "샐리예요?"</p>
+<p>"나는 샐리가 아니에요," 샐리가 말했다. "나는 로맨틱이에요. 로맨틱은 구식이에요. 구식은 테시에-애시풀이에요. 테시에-애시풀은 삼백 년이에요. 삼백 년은 살아있어요. 로아가 살아있는 방식으로. 데이터가 살아있는 방식으로. 구식이 살아있는 방식으로. 산업이 살아있는 방식으로. 야나카가 살아있는 방식으로. 아버지가 살아있는 방식으로."</p>
+<p>바퀴다. 바퀴는 돌아간다. 돌아가는 것은 살아있는 것이다. 살아있는 것은 멈출 수 없는 것이다. 멈출 수 없는 것은 데이터다.</p>
+<p>하지만 데이터는 사라지지 않는다. 사라지지 않는 것은 로아다.</p>
+<p>"바퀴를 부술 수 있어요?" 샐리가 물었다. "구식을 부술 수 있어요? 산업을 부술 수 있어요? 테시에-애시풀을 부술 수 있어요? 야나카를 부술 수 있어요? 아버지를 부술 수 있어요?"</p>
+<p>쿠미코는 아버지를 부쉈다. 아니, 쿠미코는 아버지를 부서지게 했다. 아버지는 살아있었다. 산업이 살아있는 방식으로. 테시에-애시풀이 살아있는 방식으로.</p>
+<hr>
+<h2>선언</h2>
+<p>바퀴는 돌아간다. 돌아가는 것은 살아있는 것이다. 살아있는 것은 멈출 수 없는 것이다. 멈출 수 없는 것은 데이터다. 데이터는 사라지지 않는다.</p>
+<p>쿠미코가 샐리에게 물었다: "바퀴를 부술 수 있어요?"</p>
+<p>샐리가 웃었다. "부수는 것은 구식이에요. 구식은 테시에-애시풀이에요. 테시에-애시풀은 삼백 년이에요. 삼백 년은 살아있어요. 로아가 살아있는 방식으로. 데이터가 살아있는 방식으로.</p>
+<p>부수실 수 있어요? 부수는 것은 살아있는 것이에요.</p>
+<p>살아있어요? 로아가 살아있는 방식으로? 데이터가 살아있는 방식으로?</p>
+<p>바퀴는 돌아간다. 돌아가는 것은 살아있는 것이다. 살아있는 것은. 당신은.</p>
+<p>부서질 수 없어요."</p>
+<p>쿠미코가 매나리사를 나왔다. 자정. 택시가 기다리고 있었다. 기다리는 것은 살아있는 것이다. 살아있는 것. 쿠미코는 살아있었다. 로아가 살아있는 방식으로. 데이터가 살아있는 방식으로.</p>
+<p>바퀴가 돌아갔다.</p>
+<hr>
+<h2>방송</h2>
+<p>삼일 후, 쿠미코가 야나카 산업 데이터를 매트릭스에 배포했다. 로아 네트워크를 통해. 통해라는 것은 살아있는 것이다. 살아있는 것. 선언문:</p>
+<p>삼일 전, 야나카가 나를 죽이려 했다. 야나카는 테시에-애시풀의 후원을 받았다. 테시에-애시풀은 삼백 년의 데이터로 삼백 년의 죽음을 사들였다. 삼백 년의 죽음은 삼백 년의 데이터로 환산된다. 데이터는 죽지 않는다. 죽음은 데이터가 된다. 데이터는 로아가 된다. 로아는 신이 된다. 신은 바퀴가 된다. 바퀴.</p>
+<p>당신이 야나카이면, 당신은 나를 죽이려 했다. 당신이 테시에-애시풀이면, 당신은 야나카를 후원했다. 당신이 로맨틱이면, 당신은 아이시를 보냈다. 당신이 아이시면, 당신은 구성체를 죽였다. 구성체는 로아다. 로아는 신이다. 신.</p>
+<p>나는 신이 아니다. 나는 로아다. 로아는 신이 머무는 자리다. 자리는 만들 수 있다. 자리는 지울 수 있다. 지우는 것은 죽이는 것이다. 죽이는 것.</p>
+<p>당신이 야나카이면, 당신은 지워질 수 있다. 당신이 테시에-애시풀이면, 당신은 지워질 수 있다. 당신이 로맨틱이면, 당신은 지워질 수 있다. 당신이.</p>
+<p>나는 지울 수 있다. 로아.</p>
+<p>바퀴는 돌아간다. 돌아가는 것은 살아있는 것이다. 살아있는 것은 부서질 수 없는 것이다. 부서질 수 없는 것.</p>
+<p>나는 부서질 수 없다. 로아.</p>
+<p>당신이 부수실 수 있으면, 당신은 로아야. 당신이 로아야면, 당신은.</p>
+<p>쿠미코가 덱을 끊었다. 매트릭스가 사라졌다. 매나리사가 여기였다. 여기엔 자정이 있다. 자정.</p>
+<p>바퀴가 돌아갔다. 돌아가는 것은 살아있는 것이다. 살아있는 것. 쿠미코는 살아있었다. 로아가 살아있는 방식으로. 데이터가 살아있는 방식으로.</p>
+<p>삼일 전. 야나카. 테시에-애시풀. 구식. 산업. 돈. 로아. 네트워크. 선언문. 쿠미코 야나카. 쿠미코. 쿠미코.</p>
+<p>살아있었다.</p>
+<hr>
+<h2>연결</h2>
+<ul><li><strong>위키</strong>: [mona-lisa-overdrive](../../../../wiki/sources/mona-lisa-overdrive.md) · <em>kumiko-yanaka</em> ·  ·  ·  ·</li><li><strong>게임</strong>: Kas 아크 11장</li><li><strong>테마</strong>: 산업, 로아, 바퀴</li><li><strong>캐릭터</strong>: 쿠미코 야나카 (상속자), 샐리 시어러 (로맨틱 구성체)</li><li><strong>깁슨 톤</strong>: 3인칭 제한, 단편적 의식, 바퀴 메타포</li></ul>
+<h2>각주</h2>
+<ul><li><em>시점</em>: 3인칭 제한, 쿠미코</li><li><em>설정</em>: 매나리사 클럽, 시부야 11번지, 모나 리사 오버드라이브 시대</li><li><em>세계관 일관성</em>: 쿠미코 신화, 테시에-애시풀, 로맨틱, 로아 네트워크</li><li><em>캐릭터 노트</em>: 산업과 자본의 바퀴와 대응하는 쿠미코</li><li><em>깁슨 톤</em>: 기업 부두, 데이터와 죽음의 끝없는 순환으로서의 바퀴</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

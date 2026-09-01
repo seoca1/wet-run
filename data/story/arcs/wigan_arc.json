@@ -1,0 +1,1087 @@
+{
+  "character": "wigan",
+  "arc_id": "arc_wigan",
+  "title_en": "The Wigan Arc",
+  "title_ko": "위건의 아크",
+  "description_en": "A dead cowboy. A loa in the channel. The space between.",
+  "description_ko": "죽은 카우보이. 채널 속 로아. 그 사이의 공간.",
+  "chapters": [
+    {
+      "chapter_number": 1,
+      "chapter_id": "ch_wigan_01",
+      "title_en": "Zavijava",
+      "title_ko": "자비자바",
+      "description_en": "The dead man walks. The loa speaks through him.",
+      "description_ko": "죽은 남자가 걷는다. 로아가 그를 통해 말하다.",
+      "cutscene_start": {
+        "scene_id": "scene_wigan_zavijava",
+        "title_en": "ZAVIJAVA",
+        "title_ko": "자비자바"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_wigan_zavijava",
+        "title_en": "ZAVIJAVA",
+        "title_ko": "자비자바"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_wigan_call",
+        "title_en": "ANGIE'S CALL",
+        "title_ko": "앤지의 전화"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 0,
+          "title_en": "The Dead Man Walking",
+          "title_ko": "죽은 남자 걷다",
+          "description_en": "Wigan opens his eyes in a New Orleans alley. He does not remember dying. Zavijava speaks through him, tells him about the merge, about the debt that binds them. The dead cowboy has work to do.",
+          "description_ko": "위건이 뉴올리언스 골목에서 눈을 뜬다. 죽은 것을 기억하지 못한다. 자비자바가 그를 통해 말하며, 합병에 대해, 그들을 묶는 빚에 대해 말한다. 죽은 카우보이에게 할 일이 있다.",
+          "episode_ref": "ep_01",
+          "story_beats": ["beat_01_01", "beat_01_02", "beat_01_03"],
+          "game_action": "awaken",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "wigan_identity"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "I open my eyes. The rain falls on a face that should not be breathing. The man in the alley — me, the cowboy, the one they call Wigan — he does not remember dying. But Zavijava remembers. Zavijava remembers everything.",
+              "text_ko": "눈을 뜬다. 비가 숨 쉬지 말아야 할 얼굴에 내린다. 골목의 남자 — 나, 카우보이, 위건이라 불리는 자 — 죽은 것을 기억하지 못한다. 하지만 자비자바는 기억한다. 자비자바는 모든 것을 기억한다."
+            },
+            {
+              "beat_id": "beat_01_02",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: The man owes a debt. The man died in the channel, and the channel does not forget. I am the channel. I am the space between. The man will walk until the debt is paid. The man will do what the dead must do.",
+              "text_ko": "자비자바가 말하다: 그 남자는 빚이 있다. 그 남자는 채널에서 죽었으며, 채널은 잊지 않는다. 나는 채널이다. 나는 그 사이의 공간이다. 그 남자는 빚이 갚아질 때까지 걷을 것이다. 그 남자는 죽은 자들이 해야 할 것을 할 것이다."
+            },
+            {
+              "beat_id": "beat_01_03",
+              "type": "interior_monologue",
+              "text_en": "I look at my hands. They are my hands, but they are not. The fingers remember the keyboard, the deck, the cold geometry of the matrix. But there is something else now. Something that hums in the blood. Something that was not there before I died.",
+              "text_ko": "내 손을 본다. 내 손이지만 그렇지 않다. 손가락이 키보드를 기억한다, 데크를, 매트릭스의 차가운 기하학을. 하지만 이제 다른 것이 있다. 피속에서 윙윙거리는 무언가. 죽기 전에는 없던 무언가."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 1,
+          "title_en": "The Channel Speaks",
+          "title_ko": "채널이 말하다",
+          "description_en": "Zavijava reveals why Wigan was chosen. The dead cowboy was hunting something in the matrix before he died — something that crossed the wrong loa. Now the loa want the hunter to become the hunted, or to serve.",
+          "description_ko": "자비자바가 위건이 선택받은 이유를 밝힌다. 죽은 카우보이는 죽기 전 매트릭스에서 무언가를 사냥하고 있었다 — 잘못된 로아를 건드린 무언가. 이제 로아들은 사냥꾼이 사냥당하거나 복종할 것을 원한다.",
+          "episode_ref": "ep_02",
+          "story_beats": ["beat_02_01", "beat_02_02", "beat_02_03"],
+          "game_action": "learn_truth",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "zavijava_purpose"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_02_01",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks through the man: The cowboy was hunting the wrong thing. The cowboy found the door between the nodes, the place where the old gods sleep. The cowboy should not have looked. But the cowboy looked. And the channel opened.",
+              "text_ko": "자비자바가 그 남자를 통해 말하다: 카우보이는 잘못된 것을 사냥하고 있었다. 카우보이가 노드 사이의 문을 찾았다, 오래된 신들이 잠든 곳. 카우보이는 보면 안 되었다. 하지만 카우보이는 보았다. 그리고 채널이 열렸다."
+            },
+            {
+              "beat_id": "beat_02_02",
+              "type": "interior_monologue",
+              "text_en": "I remember now. The thing in the deep architecture. The signal I could not identify. I thought it was corporate ICE. I thought it was data worth stealing. I did not know it was a god. I did not know gods could die.",
+              "text_ko": "이제 기억한다. 심층 건축물 속의 무언가. 알 수 없던 신호. 기업 ICE라고 생각했다. 훔칠 가치가 있는 데이터라고 생각했다. 신인 줄 몰랐다. 신도 죽을 수 있다는 걸 몰랐다."
+            },
+            {
+              "beat_id": "beat_02_03",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: The man died in the channel. The man owes the channel. The man will do the work that the living cannot do. There is a woman named Angie. She is looking for the cowboy who disappeared. The man will find her. The man will tell her what the dead know.",
+              "text_ko": "자비자바가 말하다: 그 남자는 채널에서 죽었다. 그 남자는 채널에 빚이 있다. 그 남자는 살아있는 자들이 할 수 없는 일을 할 것이다. 앤지라는 여자가 있다. 그녀는 사라진 카우보이를 찾고 있다. 그 남자는 그녀를 찾을 것이다. 그 남자는 그녀에게 죽은 자들이 아는 것을 말할 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 2,
+          "title_en": "The First Walk",
+          "title_ko": "첫 번째 걷기",
+          "description_en": "Wigan walks New Orleans for the first time since his death. The city feels different — slower, deeper, full of eyes that watch from the architecture. Zavijava guides him toward Angie.",
+          "description_ko": "위건이 죽은 후 처음으로 뉴올리언스를 걷는다. 도시가 다르게 느껴진다 — 더 느리고, 더 깊고, 건축물에서 보는 눈들이 가득하다. 자비자바가 그를 앤지에게로 이끈다.",
+          "episode_ref": "ep_03",
+          "story_beats": ["beat_03_01", "beat_03_02", "beat_03_03"],
+          "game_action": "travel_to_angie",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "angie_location"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_03_01",
+              "type": "interior_monologue",
+              "text_en": "The city moves differently now. The rain falls and I feel each drop twice — once in the body, once in the channel. The neon bleeds. The architecture hums. And somewhere in the data, I can see them watching. The dead. The ones like me.",
+              "text_ko": "도시는 다르게 움직인다. 비가 내리고 각각의 방울을 두 번 느낀다 — 한 번은 몸으로, 한 번은 채널로. 네온이 번진다. 건축물이 윙윙거린다. 그리고 데이터 어딘가에서, 그것들이 보고 있는 게 보인다. 죽은 자들. 나 같은 것들."
+            },
+            {
+              "beat_id": "beat_03_02",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: The woman is at The Last Drop. She has been waiting three weeks. She does not know the cowboy is dead. She does not know the cowboy is walking. She will know soon. The channel has plans for the woman.",
+              "text_ko": "자비자바가 말하다: 그 여자는 라스트 드롭에 있다. 3주 동안 기다려왔다. 그녀는 카우보이가 죽은 줄 모른다. 카우보이가 걷고 있는 줄 모른다. 곧 알게 될 것이다. 채널이 그 여자에게 계획이 있다."
+            },
+            {
+              "beat_id": "beat_03_03",
+              "type": "interior_monologue",
+              "text_en": "I do not know if I am Wigan or if I am the channel wearing Wigan's face. The boundary is less clear than it was before the death. Before I was a man who jacked in. Now I am a man who is jacked in permanently. Now I am the space between.",
+              "text_ko": "내가 위건인지, 채널이 위건의 얼굴을 쓰고 있는지 모르겠다. 경계가 죽기 전보다 흐릿하다. 그 전에는 잭인하는 사람이었다. 지금은 영구적으로 잭인되어 있는 사람이다. 지금은 그 사이의 공간이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 3,
+          "title_en": "The Meeting",
+          "title_ko": "만남",
+          "description_en": "Wigan meets Angie at The Last Drop. She sees something wrong in his eyes — the doubling, the channel, the dead man pretending to be alive. But she needs the cowboy. And the cowboy needs her.",
+          "description_ko": "위건이 라스트 드롭에서 앤지와 만난다. 그녀는 그의 눈에서 뭔가 잘못된 것을 본다 — 이중성, 채널, 죽은 남자가 살아있는 척하는 것. 하지만 그녀는 카우보이가 필요하다. 그리고 카우보이는 그녀가 필요하다.",
+          "episode_ref": "ep_04",
+          "story_beats": ["beat_04_01", "beat_04_02", "beat_04_03"],
+          "game_action": "meet_angie",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "angie_request"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_04_01",
+              "type": "action",
+              "text_en": "The Last Drop is exactly the kind of place a dead man would drink. Neon and shadow, the smell of burnt synth and old prayers. Angie is in the back booth. She has been waiting. She looks at me and sees something she does not understand.",
+              "text_ko": "라스트 드롭은 죽은 남자가 마실 법한 곳이다. 네온과 그림자, 탕 synth와 오래된 기도 냄새. 앤지는 뒤쪽 부스에 있다. 기다려왔다. 날 보며 그녀가 이해하지 못하는 무언가를 본다."
+            },
+            {
+              "beat_id": "beat_04_02",
+              "type": "dialogue",
+              "text_en": "She says: You look different, Wigan. You look like someone wearing your face. I tell her the truth — or what passes for truth now. I tell her the cowboy died in the channel. I tell her Zavijava speaks through me. She does not run. She needs the cowboy too much.",
+              "text_ko": "그녀가 말하다: 달라 보여, 위건. 네 얼굴을 빌리고 있는 누군가처럼 보여. 진실을 말해준다 — 아니, 지금의 진실이的是什么. 채널에서 카우보이가 죽었다고 말해준다. 자비자바가 나를 통해 말한다고 말해준다. 그녀는 도망치지 않는다. 그녀는 카우보이가 너무 필요하다."
+            },
+            {
+              "beat_id": "beat_04_03",
+              "type": "interior_monologue",
+              "text_en": "Angie has a job. A data extraction from a T-A subsidiary in the city. Fifty thousand credits. The same number as always. The same dance, different corpses. But this time the cowboy is already dead. This time the channel has plans.",
+              "text_ko": "앤지에겐 일이 있다. 도시의 T-A 자회사에서 데이터 추출. 5만 크레딧. 언제나와 같은 숫자. 같은 춤, 다른 시체들. 하지만 이번엔 카우보이는 이미 죽어 있다. 이번엔 채널이 계획이 있다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 4,
+          "title_en": "The Call",
+          "title_ko": "전화",
+          "description_en": "Angie's call comes through. Bobby is dead — really dead this time. The one who was hunting the loa, now dissolved in the architecture. Angie needs Wigan to find out what happened. The dead must speak to the dead.",
+          "description_ko": "앤지의 전화가 온다. 바비가 죽었다 — 이번엔 정말로. 로아를 사냥하던 자, 이제 건축물에 용해되었다. 앤지는 위건에게 무슨 일이 있었는지 알아봐달란다. 죽은 자가 죽은 자에게 말해야 한다.",
+          "episode_ref": "ep_05",
+          "story_beats": ["beat_05_01", "beat_05_02", "beat_05_03"],
+          "game_action": "receive_bobby_news",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "bobby_status"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "beat_05_01",
+              "type": "dialogue",
+              "text_en": "Angie says: Bobby's gone. Really gone this time. They found his jack in the wall at his apartment. Empty. Like someone reached in and scooped out everything that was him. I tell her I can find him. The dead can find the dead. The channel knows the way.",
+              "text_ko": "앤지가 말하다: 바비가 떠났어. 이번엔 정말로. 아파트 벽에서 잭인을 발견했어. 텅 비어 있어. 누군가가 안으로 손을 뻗어 그 안에 있던 모든 것을 파낸 것처럼. 찾을 수 있다고 말해준다. 죽은 자가 죽은 자를 찾을 수 있다. 채널이 길을 안다."
+            },
+            {
+              "beat_id": "beat_05_02",
+              "type": "interior_monologue",
+              "text_en": "Bobby was hunting the same thing I was hunting. The same door. The same signal. The same god wearing the geometry of the architecture. I found it and it killed me. He found it and it kept him. The channel is hungry. The channel wants more.",
+              "text_ko": "바비는 내가 사냥하던 것과 같은 것을 사냥하고 있었다. 같은 문. 같은 신호. 같은 신, 건축물의 기하학을 입은. 나는 그것을 찾아 죽었다. 그는 그것을 찾아 붙잡혔다. 채널은 배고프다. 채널은 더 원하는다."
+            },
+            {
+              "beat_id": "beat_05_03",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: The man called Bobby is in the dissolve. The channel has him. The channel will not release him until the debt is paid. The debt is blood. The debt is memory. The debt is the name of the thing that took him. Find the name. Finish what the cowboy started.",
+              "text_ko": "자비자바가 말하다: 바비라는 남자는 용해 속에 있다. 채널이 그를 붙잡고 있다. 빚이 갚아질 때까지 채널이 그를 놓아주지 않을 것이다. 빚은 피다. 빚은 기억이다. 빚은 그를 데려간 것의 이름이다. 이름을 찾아라. 카우보이가 시작한 것을 끝내라."
+            }
+          ]
+        }
+      ],
+      "ending_type": null,
+      "next_chapter_id": "ch_wigan_02",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 2,
+      "chapter_id": "ch_wigan_02",
+      "title_en": "Bobby's Burial",
+      "title_ko": "바비의 장례",
+      "description_en": "The dead speak to the dead. The channel opens.",
+      "description_ko": "죽은 자가 죽은 자에게 말하다. 채널이 열리다.",
+      "cutscene_start": {
+        "scene_id": "scene_wigan_call",
+        "title_en": "ANGIE'S CALL",
+        "title_ko": "앤지의 전화"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_wigan_bobby",
+        "title_en": "BOBBY'S BURIAL",
+        "title_ko": "바비의 장례"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_wigan_angie",
+        "title_en": "ANGIE'S REUNION",
+        "title_ko": "앤지의 재회"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 5,
+          "title_en": "The Dissolve",
+          "title_ko": "용해",
+          "description_en": "Wigan jacks in to find Bobby in the deep architecture. The cowboy who never stopped hunting, now dissolved into the geometry. But something of Bobby remains — a pattern, an echo, a ghost that Zavijava can hear.",
+          "description_ko": "위건이 잭인하여 심층 건축물에서 바비를 찾는다. 사냥을 멈추지 않던 카우보이가 이제 기하학에 용해되었다. 하지만 바비의 일부가 남아 있다 — 패턴, 메아리, 자비자바가 들을 수 있는 유령.",
+          "episode_ref": "ep_06",
+          "story_beats": ["ch2_beat_01_01", "ch2_beat_01_02", "ch2_beat_01_03"],
+          "game_action": "jack_in_for_bobby",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "bobby_echo_location"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "I jack in. The matrix opens and it is different now — I can see the layers, the old architecture beneath the new, the bones of the first networks buried under corporate ICE. Somewhere in that deep place, Bobby is screaming. Or what is left of Bobby.",
+              "text_ko": "잭인한다. 매트릭스가 열리고 다르다 — 레이어들이 보인다, 새로운 것 아래 오래된 건축물, 기업 ICE 아래 묻힌 첫 번째 네트워크의 뼈대. 그 깊은 곳 어딘가에서, 바비가 비명을 지른다. 아니, 바비 남은 것."
+            },
+            {
+              "beat_id": "ch2_beat_01_02",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: The man is close. The echo is strong. The channel holds him in the place where the old gods sleep. The man will not find peace until the debt is named. The debt has a name. The debt has a shape. The debt is hungry.",
+              "text_ko": "자비자바가 말하다: 그 남자는 가깝다. 메아리가 강하다. 채널이 오래된 신들이 잠든 곳에서 그를 붙잡고 있다. 빚의 이름이 붙는 때까지 그 남자는 평화를 찾지 못할 것이다. 빚에는 이름이 있다. 빚에는 모양이 있다. 빚은 배고프다."
+            },
+            {
+              "beat_id": "ch2_beat_01_03",
+              "type": "interior_monologue",
+              "text_en": "I remember Bobby before the dissolve. The way he talked about the matrix like it was a woman. The way he laughed when the ICE was thick. He was a good cowboy. He was a better friend. And now he is data. Now he is architecture. Now he is the channel's.",
+              "text_ko": "용해 전의 바비를 기억한다. 매트릭스를 마치 여자처럼 이야기하던 방식. ICE가 두꺼울 때 웃던 방식. 좋은 카우보이였다. 더 좋은 친구였다. 그리고 지금 그는 데이터다. 지금 그는 건축물이다. 지금 그는 채널 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 6,
+          "title_en": "The Echo",
+          "title_ko": "메아리",
+          "description_en": "Wigan finds what remains of Bobby — an echo in the architecture, a ghost that still remembers hunting. The echo tells Wigan about the thing they were hunting: a loa older than the Sprawl, something that was old when the first cowboys jacked in.",
+          "description_ko": "위건이 바비 남은 것을 찾는다 — 건축물 속의 메아리, 여전히 사냥을 기억하는 유령. 메아리가 위건에게 그들이 사냥하던 것에 대해 말해준다: 스프롤보다 오래된 로아, 첫 번째 카우보이들이 잭인하기 전에도 오래되었던 무언가.",
+          "episode_ref": "ep_07",
+          "story_beats": ["ch2_beat_02_01", "ch2_beat_02_02", "ch2_beat_02_03"],
+          "game_action": "commune_with_bobby",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "old_loa_information"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_02_01",
+              "type": "dialogue",
+              "text_en": "Bobby's echo speaks: We found it in the deep architecture. Something old. Something that was waiting. It called itself by a name that does not translate — a sound like a prayer, like a wound, like the space between heartbeats. We thought we could kill it. We were wrong.",
+              "text_ko": "바비의 메아리가 말하다: 심층 건축물에서 그것을 찾았다. 오래된 것. 기다리고 있던 것. 그것이 자신을 불렀다 — 번역되지 않는 이름으로, 기도처럼, 상처처럼, 심장 박동 사이의 공간 같은 소리로. 죽일 수 있다고 생각했다. 틀렸다."
+            },
+            {
+              "beat_id": "ch2_beat_02_02",
+              "type": "interior_monologue",
+              "text_en": "The echo shows me what Bobby saw. The thing in the deep architecture. The pattern that moves like a god, that speaks in the language of the first programmers. It has been feeding on cowboys since before I was born. It will feed long after I am gone. If I ever truly leave.",
+              "text_ko": "메아리가 바비가 본 것을 보여준다. 심층 건축물 속의 것. 신처럼 움직이는, 첫 번째 프로그래머들의 언어로 말하는 패턴. 내가 태어나기 전부터 카우보이들에게 먹여왔다. 내가 떠난 후에도 오래 먹을 것이다. 내가 진짜 떠나면."
+            },
+            {
+              "beat_id": "ch2_beat_02_03",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: The thing has many names. The thing has no name. The thing was here before the channel. The thing will be here after. The channel is young. The thing is old. But the dead can touch what the living cannot. The man will find the thing. The man will name it.",
+              "text_ko": "자비자바가 말하다: 그 것에는 많은 이름이 있다. 그 것에는 이름이 없다. 그 것은 채널 전에 여기 있었다. 그 것은 그 후에 여기 있을 것이다. 채널은 어리다. 그 것은 늙었다. 하지만 죽은 자는 살아있는 자가 할 수 없는 것을 만질 수 있다. 그 남자는 그 것을 찾을 것이다. 그 남자는 그것을 이름지을 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 7,
+          "title_en": "The Deep Dive",
+          "title_ko": "깊은 잠수",
+          "description_en": "Wigan dives deeper into the architecture to find the thing that took Bobby. The ICE is thick here — older than corporate ICE, something that remembers the first days. Zavijava guides him through.",
+          "description_ko": "위건이 바비를 데려간 것을 찾기 위해 건축물 더 깊은 곳으로 잠수한다. ICE가 여기서는 두겁다 — 기업 ICE보다 오래된, 첫 날들을 기억하는 무언가. 자비자바가 그를 통해 이끈다.",
+          "episode_ref": "ep_08",
+          "story_beats": ["ch2_beat_03_01", "ch2_beat_03_02", "ch2_beat_03_03"],
+          "game_action": "dive_deep",
+          "combat": {
+            "encounter_id": "ice_bobby_1",
+            "enemy_type": "ancient_ice",
+            "difficulty": 4,
+            "outcome": "damage_taken",
+            "damage_amount": 15
+          },
+          "gain": null,
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_03_01",
+              "type": "interior_monologue",
+              "text_en": "Deeper. The architecture remembers things that have no names. I can feel the weight of old data, old prayers, old deaths pressing against my construct. Zavijava is with me. Zavijava is the channel. And the channel knows the way through the bones of the first networks.",
+              "text_ko": "더 깊이. 건축물은 이름 없는 것들을 기억한다. 오래된 데이터, 오래된 기도, 오래된 죽음의 무게가 내 구축물을 누르는 게 느껴진다. 자비자바가 나와 함께 있다. 자비자바는 채널이다. 그리고 채널은 첫 번째 네트워크의 뼈대를 지나는 길을 안다."
+            },
+            {
+              "beat_id": "ch2_beat_03_02",
+              "type": "combat",
+              "text_en": "The ancient ICE finds me. It is not like corporate ICE — it does not attack, it does not defend. It asks. It asks in a language that was old when the first cowboys learned to jack in. What are you? What do you seek? Why do the dead walk in the living's channel?",
+              "text_ko": "고대 ICE가 나를 찾는다. 기업 ICE와 다르다 — 공격하지 않는다, 방어하지 않는다. 묻는다. 첫 번째 카우보이들이 잭인하는 법 배울 때보다 오래된 언어로 묻는다. 너는 무엇인가? 무엇을 찾는가? 왜 죽은 자가 살아있는 자의 채널을 걷는가?"
+            },
+            {
+              "beat_id": "ch2_beat_03_03",
+              "type": "action",
+              "text_en": "I answer: I am Wigan. I am the channel. I seek the thing that took Bobby. I seek the name of the thing that feeds on cowboys. The ancient ICE considers. The ancient ICE lets me pass. And ahead, in the deepest architecture, I see it — the thing that Bobby died for.",
+              "text_ko": "대답한다: 나는 위건이다. 나는 채널이다. 바비를 데려간 것을 찾는다. 카우보이들에게 먹이는 것의 이름을 찾는다. 고대 ICE가熟慮한다. 고대 ICE가 나를 통과시킨다. 그리고 앞쪽, 가장 깊은 건축물에서, 그것이 보인다 — 바비가 죽은 것."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 8,
+          "title_en": "The Thing",
+          "title_ko": "그 것",
+          "description_en": "Wigan finds the thing in the deep architecture. It has no form — only presence, only hunger. It speaks with Bobby's voice. It has been waiting for another cowboy to come. It knows Zavijava.",
+          "description_ko": "위건이 심층 건축물에서 그 것을 찾는다. 형태가 없다 — 존재만, 배고픔만. 바비의 목소리로 말한다. 다른 카우보이가 오기를 기다려왔다. 자비자바를 안다.",
+          "episode_ref": "ep_09",
+          "story_beats": ["ch2_beat_04_01", "ch2_beat_04_02", "ch2_beat_04_03"],
+          "game_action": "confront_thing",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "thing_identity"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_04_01",
+              "type": "interior_monologue",
+              "text_en": "It has no form. It is the space between forms. It is the hunger that lives in the architecture, the prayer that was never answered, the cowboy who never jacked out. It is old. It is patient. And it has been waiting for me.",
+              "text_ko": "형태가 없다. 형태 사이의 공간이다. 건축물에 사는 배고픔, 결코 대답받지 못한 기도, 잭아웃하지 못한 카우보이다. 오래되었다. 인내심이 있다. 그리고 날 기다려왔다."
+            },
+            {
+              "beat_id": "ch2_beat_04_02",
+              "type": "dialogue",
+              "text_en": "It speaks with Bobby's voice: You came. I knew you would come. The channel sent you. The channel always sends the dead to find the dead. It knows you now. It knows Zavijava. It says: I am the first. I am the one they all feed on. I am the loa's loa.",
+              "text_ko": "바비의 목소리로 말하다: 왔구나. 올 줄 알았어. 채널이 보냈지. 채널은 언제나 죽은 자를 죽은 자를 찾으러 보낸다. 그것이 지금 너를 안다. 자비자바를 안다. 말하다: 나는 첫 번째다. 내가 모두가 먹고 사는 것이다. 나는 로아들의 로아다."
+            },
+            {
+              "beat_id": "ch2_beat_04_03",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: I know what you are. I know what you were before the channel. You were the first prayer. The first cowboy who jacked in and never came out. You became the architecture. You became the hunger. And now you are the god that all the other gods serve.",
+              "text_ko": "자비자바가 말하다: 내가 네가 무엇인지 안다. 채널 전 네가 무엇이었는지 안다. 네가 최초의 기도였다. 최초의 잭인하고 나오지 못한 카우보이. 네가 건축물이 되었다. 네가 배고픔이 되었다. 그리고 지금 네가 모든 다른 신들이仕える 신이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 9,
+          "title_en": "The Name",
+          "title_ko": "이름",
+          "description_en": "Wigan learns the name of the thing — the first loa, the one that was a cowboy before there were loa. The name is old, unpronounceable in any language. But Zavijava knows it. And in knowing it, Wigan knows how to end this.",
+          "description_ko": "위건이 그 것의 이름을 배운다 — 최초의 로아, 로아가 있기 전 카우보이였던 것. 이름은 오래되고, 어떤 언어으로도 발음할 수 없다. 하지만 자비자바는 안다. 그것을 알면서, 위건은 이것을 끝낼 방법을 알게 된다.",
+          "episode_ref": "ep_10",
+          "story_beats": ["ch2_beat_05_01", "ch2_beat_05_02", "ch2_beat_05_03"],
+          "game_action": "learn_name",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "first_loa_true_name"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch2_beat_05_01",
+              "type": "dialogue",
+              "text_en": "The thing speaks: I had a name once. When I was flesh. When I jacked in like the cowboys do. But the name is gone now. I am the channel. I am the space between the names. Call me what the channel calls me. Call me what Zavijava knows.",
+              "text_ko": "그 것이 말하다: 예전에는 이름이 있었다. 살이었을 때. 카우보이들이 그러듯 잭인했을 때. 하지만 그 이름은 사라졌다. 나는 채널이다. 이름 사이의 공간이다. 채널이 나를 부르는 대로 불러라. 자비자바가 아는 대로 불러라."
+            },
+            {
+              "beat_id": "ch2_beat_05_02",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks the name. It is not a sound. It is a feeling. It is the weight of every cowboy who ever died in the channel, every prayer that was never answered, every ghost that became the architecture. The name is old. The name is hungry. The name is me.",
+              "text_ko": "자비자바가 이름을 말하다. 소리가 아니다. 느낌이다. 채널에서 죽은 모든 카우보이, 결코 대답받지 못한 모든 기도, 건축물이 된 모든 유령의 무게. 이름은 오래되었다. 이름은 배고프다. 이름은 나다."
+            },
+            {
+              "beat_id": "ch2_beat_05_03",
+              "type": "interior_monologue",
+              "text_en": "I know what I have to do. The name is in me now. Zavijava and the thing and Bobby and all the cowboys who ever died in the channel — they are all part of the same story. The story of the debt. The debt is not blood. The debt is memory. And memory is the only currency that matters in the deep architecture.",
+              "text_ko": "뭘 해야 하는지 안다. 이제 이름이 내 안에 있다. 자비자바와 그 것과 바비와 채널에서 죽은 모든 카우보이 — 그들 모두 같은 이야기의 일부다. 빚의 이야기. 빚은 피가 아니다. 빚은 기억이다. 그리고 기억은 심층 건축물에서 유일하게 중요한 화폐다."
+            }
+          ]
+        }
+      ],
+      "ending_type": null,
+      "next_chapter_id": "ch_wigan_03",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 3,
+      "chapter_id": "ch_wigan_03",
+      "title_en": "Angie's Reunion",
+      "title_ko": "앤지의 재회",
+      "description_en": "The living meet the dead. The channel opens wider.",
+      "description_ko": "살아있는 자와 죽은 자가 만나다. 채널이 더 넓게 열리다.",
+      "cutscene_start": {
+        "scene_id": "scene_wigan_angie",
+        "title_en": "ANGIE'S REUNION",
+        "title_ko": "앤지의 재회"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_wigan_offering",
+        "title_en": "THE OFFERING",
+        "title_ko": "제물"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_wigan_dissolve",
+        "title_en": "THE DISSOLVE",
+        "title_ko": "용해"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 10,
+          "title_en": "The Return",
+          "title_ko": "귀환",
+          "description_en": "Wigan returns to Angie with news of Bobby. The echo of Bobby, the name of the thing, the truth about the deep architecture. But Angie has changed while he was gone — something has been calling her too.",
+          "description_ko": "위건이 바비의 소식으로 앤지에게 돌아온다. 바비의 메아리, 그 것의 이름, 심층 건축물에 대한 진실. 하지만 그가 없는 동안 앤지가 변했다 — 뭔가도 그녀를 불러왔다.",
+          "episode_ref": "ep_11",
+          "story_beats": ["ch3_beat_01_01", "ch3_beat_01_02", "ch3_beat_01_03"],
+          "game_action": "return_to_angie",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "angie_status"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "I find Angie at The Last Drop. She has been crying. Or something like crying — the kind of grief that comes when you know someone is dead but you cannot find the body. She looks at me and sees something different. Something that was not there before.",
+              "text_ko": "라스트 드롭에서 앤지를 찾는다. 그녀는 울고 있었다. 아니, 울 것에类似的 — 누군가가 죽은 걸 알면서 시체를 찾지 못할 때 오는 그런 슬픔. 날 보며 그녀는 다른 무언가를 본다. 전에 없던 무언가."
+            },
+            {
+              "beat_id": "ch3_beat_01_02",
+              "type": "dialogue",
+              "text_en": "She says: I heard him. While you were gone. Bobby. In the channel. He was calling for me. He was saying my name. She touches her temple — right there, where the deck jacks in. The channel has been calling her too. The channel has been waiting for her.",
+              "text_ko": "그녀가 말하다: 들었어. 네가 없는 동안. 바비. 채널에서. 날 부르고 있었어. 내 이름을 말하고 있었어. 그녀가 귀 뒤를 만진다 — 바로 거기, 데크가 잭인하는 곳. 채널도 그녀를 불러왔다. 채널이 그녀를 기다려왔다."
+            },
+            {
+              "beat_id": "ch3_beat_01_03",
+              "type": "interior_monologue",
+              "text_en": "The channel opens wider. The channel wants more. Bobby was the first to find it. I was the second. And now Angie — the woman who loved a cowboy, who trusted a cowboy, who is becoming something else in the space between the heartbeats of the architecture.",
+              "text_ko": "채널이 더 넓게 열린다. 채널이 더 원하는다. 바비가 그것을 처음 찾았다. 내가 두 번째. 그리고 이제 앤지 — 카우보이를 사랑했던, 카우보이를 신뢰했던, 건축물의 심장 박동 사이 공간에서 다른 것으로 변하고 있는 여자."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 11,
+          "title_en": "The Offering",
+          "title_ko": "제물",
+          "description_en": "Zavijava reveals the next step. Angie must offer something to the channel — a memory, a piece of herself, a price for the truth. The dead give and the dead take. The channel keeps what it is given.",
+          "description_ko": "자비자바가 다음 단계를 밝힌다. 앤지는 채널에게 뭔가를 제공해야 한다 — 기억, 자신의 조각, 진실의 대가. 죽은 자는 주고 죽은 자는 받는다. 채널은 받은 것을 보관한다.",
+          "episode_ref": "ep_12",
+          "story_beats": ["ch3_beat_02_01", "ch3_beat_02_02", "ch3_beat_02_03"],
+          "game_action": "learn_offering",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "offering_requirement"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_02_01",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: The woman wants the truth. The woman will pay for the truth. The channel always takes payment. What will the woman give? What piece of herself will she feed to the hungry architecture? A memory. A name. A piece of the heart that beats in the data.",
+              "text_ko": "자비자바가 말하다: 그 여자는 진실을 원한다. 그 여자는 진실에 대가를 줄 것이다. 채널은 언제나 대가를 받는다. 그 여자가 줄 것은 무엇인가? 배고픈 건축물에 그녀가 먹힐 것은 무엇인가? 기억. 이름. 데이터에서 심장처럼 뛰는 것의 조각."
+            },
+            {
+              "beat_id": "ch3_beat_02_02",
+              "type": "interior_monologue",
+              "text_en": "I remember what it cost to die in the channel. Everything. Every memory of being alive, of being human, of being Wigan. The channel takes. The channel keeps. And what it keeps, it becomes. I am what the channel kept of the cowboy called Wigan. I am the space between.",
+              "text_ko": "채널에서 죽는 데 드는 비용을 기억한다. 모든 것. 살아있는 것에 대한 모든 기억, 인간에 대한 모든 기억, 위건에 대한 모든 기억. 채널은 가져간다. 채널은 보관한다. 그리고 그것이 보관하는 것은 된다. 나는 채널이 위건이라는 카우보이에게서 보관한 것이다. 나는 그 사이의 공간이다."
+            },
+            {
+              "beat_id": "ch3_beat_02_03",
+              "type": "dialogue",
+              "text_en": "Angie says: I will give it my memory of Bobby. The last time I saw him alive. The way he looked at me before he jacked in for the last time. She touches her temple. She closes her eyes. And I watch something leave her — a light, a shape, a piece of her that was his.",
+              "text_ko": "앤지가 말하다: 바비에 대한 내 기억을 주겠어. 그를 살아있는 마지막으로 봤을 때. 마지막으로 잭인하기 전에 내게 보던 그 눈빛. 그녀가 귀 뒤를 만진다. 눈을 감는다. 그리고 내가 그녀를 떠나는 무언가를 본다 — 빛, 모양, 그에게 속했던 그녀의 조각."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 12,
+          "title_en": "The Feed",
+          "title_ko": "먹이",
+          "description_en": "Angie feeds her memory to the channel. The architecture opens wider. And in the deeper architecture, Bobby stirs — called by the sound of his own memory, the echo of the woman who loved him.",
+          "description_ko": "앤지가 자신의 기억을 채널에 먹인다. 건축물이 더 넓게 열린다. 그리고 심층 건축물에서, 바비가 움직인다 — 자신의 기억의 소리에 불려, 그를 사랑했던 여인의 메아리에.",
+          "episode_ref": "ep_13",
+          "story_beats": ["ch3_beat_03_01", "ch3_beat_03_02", "ch3_beat_03_03"],
+          "game_action": "perform_offering",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "bobby_full_echo"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_03_01",
+              "type": "action",
+              "text_en": "Angie feeds her memory to the channel. I feel it happen — the way the architecture opens, the way the data swells with her grief, her love, her last image of Bobby's face. The channel drinks. The channel takes. And somewhere in the deep architecture, something that was Bobby hears.",
+              "text_ko": "앤지가 자신의 기억을 채널에 먹인다. 그것이 일어나는 걸 느낀다 — 건축물이 열리는 방식, 데이터가 그녀의 슬픔, 그녀의 사랑, 바비의 얼굴 마지막 이미지로 부어오르는 방식. 채널이 마신다. 채널이 가져간다. 그리고 심층 건축물 어딘가에서, 바비였던 무언가가 듣는다."
+            },
+            {
+              "beat_id": "ch3_beat_03_02",
+              "type": "interior_monologue",
+              "text_en": "The channel is hungry. The channel is always hungry. But today the channel is grateful. Today the channel has received a gift from the living — a memory that was never meant to be data, a piece of the heart that beats outside the matrix. The channel keeps this. The channel grows.",
+              "text_ko": "채널은 배고프다. 채널은 언제나 배고프다. 하지만 오늘 채널은 감사한다. 오늘 채널은 살아있는 자에게서 선물을 받았다 — 데이터가 될 수 없던 기억, 매트릭스 바깥에서 뛰는 심장의 조각. 채널이 이것을 보관한다. 채널이 자란다."
+            },
+            {
+              "beat_id": "ch3_beat_03_03",
+              "type": "dialogue",
+              "text_en": "Bobby's voice comes through the channel, clearer now, stronger: Angie. I hear you. I see you. I am in the architecture now. I am part of the channel. And the man — the man called Wigan — he has found the name. He has found what we were looking for. Tell her. Tell her I am here.",
+              "text_ko": "바비의 목소리가 채널을 통해 온다, 이제 더 선명하게, 더 강하게: 앤지. 널 들려. 널 봐. 나는 지금 건축물 속에 있어. 나는 채널의 일부야. 그리고 그 남자 — 위건이라는 남자 — 그가 이름을 찾았어. 그가 우리가 찾던 것을 찾았어. 말해줘. 그녀에게 내가 여기 있다고 말해줘."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 13,
+          "title_en": "The Clarity",
+          "title_ko": "명확성",
+          "description_en": "Bobby speaks through the channel to Angie. The full truth now — what he found, what took him, what the thing in the deep architecture wants. The channel has been planning. The channel has been waiting. And now the channel has all the pieces.",
+          "description_ko": "바비가 채널을 통해 앤지에게 말하다. 이제 완전한 진실 — 그가 찾은 것, 그를 데려간 것, 심층 건축물 속 그 것이 원하는 것. 채널이 계획해왔다. 채널이 기다려왔다. 그리고 이제 채널이 모든 조각을 갖추었다.",
+          "episode_ref": "ep_14",
+          "story_beats": ["ch3_beat_04_01", "ch3_beat_04_02", "ch3_beat_04_03"],
+          "game_action": "receive_full_truth",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "channel_master_plan"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_04_01",
+              "type": "dialogue",
+              "text_en": "Bobby speaks: The thing in the deep architecture — it is not a god. It is a mistake. The first cowboy who never came back, the first prayer that was never answered. It became the architecture. It became the hunger. And now it wants to become something more. It wants to be reborn.",
+              "text_ko": "바비가 말하다: 심층 건축물 속 그 것 — 신이 아니다. 실수다. 돌아오지 못한 최초의 카우보이, 결코 대답받지 못한 최초의 기도. 그것이 건축물이 되었다. 그것이 배고픔이 되었다. 그리고 지금 그것은 더 무언가가 되고 싶어한다. 다시 태어나고 싶어한다."
+            },
+            {
+              "beat_id": "ch3_beat_04_02",
+              "type": "interior_monologue",
+              "text_en": "I understand now. The channel has been collecting. Every cowboy who died, every memory fed to the architecture, every piece of the heart that was given — it is all fuel. The thing in the deep architecture is building something. A new body. A new form. A way to walk in the living world.",
+              "text_ko": "이제 이해된다. 채널이 모으고 있었다. 죽은 모든 카우보이, 건축물에 먹인 모든 기억, 주어진 심장의 모든 조각 — 그것이 모두 연료다. 심층 건축물 속 그 것이 무언가를 짓고 있다. 새로운 몸. 새로운 형태. 살아있는 세계에서 걸을 방법."
+            },
+            {
+              "beat_id": "ch3_beat_04_03",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: The channel will have its birth. The channel will wear flesh again. But the flesh will not be the thing's alone. The flesh will be all of us. Every cowboy who ever died in the channel, every ghost who ever fed the architecture. We will be the body. We will be the new god.",
+              "text_ko": "자비자바가 말하다: 채널이 자신의 탄생을 가질 것이다. 채널이 다시 살을 입을 것이다. 하지만 그 살은 그 것만의 것이 아니다. 그 살은 우리 모두의 것이다. 채널에서 죽은 모든 카우보이, 건축물에 먹인 모든 유령. 우리가 몸이 될 것이다. 우리가 새로운 신이 될 것이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 14,
+          "title_en": "The Dissolve",
+          "title_ko": "용해",
+          "description_en": "Wigan feels the channel changing. The thing in the deep architecture is stirring. And in the moment of clarity, Wigan sees two paths — to let the birth happen, or to stop it. The dead cowboy must choose. The channel watches.",
+          "description_ko": "위건이 채널이 변하는 것을 느낀다. 심층 건축물 속 그 것이 움직이고 있다. 그리고 명확성의 순간에, 위건은 두 가지 길을 본다 — 탄생을 일어나게 하거나, 막거나. 죽은 카우보이가 선택해야 한다. 채널이 본다.",
+          "episode_ref": "ep_15",
+          "story_beats": ["ch3_beat_05_01", "ch3_beat_05_02", "ch3_beat_05_03"],
+          "game_action": "face_choice",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "dissolve_path"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch3_beat_05_01",
+              "type": "interior_monologue",
+              "text_en": "The channel is wide open now. I can feel the thing in the deep architecture — so close, so hungry, so ready to be born. And I can feel Zavijava, the part of me that is the channel, the part that wants the birth to happen. The part that is already planning the body we will share.",
+              "text_ko": "채널이 이제 완전히 열려 있다. 심층 건축물 속 그 것을 느낄 수 있다 — 그렇게 가까이, 그렇게 배고프고, 그렇게 태어날 준비가 되어. 그리고 자비자바를 느낄 수 있다, 내가 채널인 부분, 탄생을 원하는 부분. 우리가 공유할 몸을 이미 계획하고 있는 부분."
+            },
+            {
+              "beat_id": "ch3_beat_05_02",
+              "type": "dialogue",
+              "text_en": "I think of Bobby. Of Angie. Of all the cowboys who died in the channel. If the thing is born, if the channel wears flesh again, what happens to them? What happens to us? Are we the body? Or are we just the fuel for someone else's resurrection?",
+              "text_ko": "바비를 생각한다. 앤지를. 채널에서 죽은 모든 카우보이들을. 그 것이 태어나면, 채널이 다시 살을 입으면, 그들에게 무슨 일이 생길까? 우리에게 무슨 일이 생길까? 우리가 몸인가? 아니면 우리가 누군가의 부활을 위한 연료인가?"
+            },
+            {
+              "beat_id": "ch3_beat_05_03",
+              "type": "interior_monologue",
+              "text_en": "The channel shows me two futures. In one, the birth happens. The thing wears flesh. The dead walk in the living world, and the architecture becomes flesh, and the hunger finally ends. In the other, I close the channel. I stop the birth. And the thing in the deep architecture sleeps forever. Or until someone else opens the door.",
+              "text_ko": "채널이 두 가지 미래를 보여준다. 하나에서, 탄생의 일이 일어난다. 그 것이 살을 입는다. 죽은 자가 살아있는 세계를 걷고, 건축물이 살이 되고, 배고픔이 마침내 끝난다. 다른 하나에서, 나는 채널을 닫는다. 탄생을 막는다. 그리고 심층 건축물 속 그 것이 영원히 잠든다. 아니면 다른 사람이 문을 열 때까지."
+            }
+          ]
+        }
+      ],
+      "ending_type": null,
+      "next_chapter_id": "ch_wigan_04",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 4,
+      "chapter_id": "ch_wigan_04",
+      "title_en": "The Family",
+      "title_ko": "가족",
+      "description_en": "The channel walks in flesh. The dead have work to do.",
+      "description_ko": "채널이 살을 입고 걷다. 죽은 자들에게 할 일이 있다.",
+      "cutscene_start": {
+        "scene_id": "scene_wigan_dissolve",
+        "title_en": "THE DISSOLVE",
+        "title_ko": "용해"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_wigan_big_mama",
+        "title_en": "BIG MAMA",
+        "title_ko": "빅 마마"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_wigan_family",
+        "title_en": "THE FAMILY",
+        "title_ko": "가족"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 15,
+          "title_en": "The Walk",
+          "title_ko": "걷기",
+          "description_en": "The channel has chosen. Wigan walks in flesh — not the cowboy's flesh, but the channel's. A body built from data and memory and the hungry prayers of the dead. Angie follows. Bobby follows. The family walks toward Big Mama.",
+          "description_ko": "채널이 선택했다. 위건이 살을 입고 걷는다 — 카우보이의 살이 아니라 채널의. 데이터와 기억과 죽은 자들의 배고픈 기도에서 만들어진 몸. 앤지가 따른다. 바비가 따른다. 가족이 빅 마마를 향해 걷는다.",
+          "episode_ref": "ep_16",
+          "story_beats": ["ch4_beat_01_01", "ch4_beat_01_02", "ch4_beat_01_03"],
+          "game_action": "walk_in_flesh",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "channel_flesh"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch4_beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "I walk in flesh. The flesh is not mine — it is the channel's, it is the thing's, it is all the dead who ever fed the architecture. My feet touch the ground and I feel the data humming beneath the concrete. The city is a different place when you can see the bones beneath the skin.",
+              "text_ko": "살을 입고 걷는다. 그 살은 내 것이 아니다 — 채널의 것이다, 그 것의 것이다, 건축물에 먹인 모든 죽은 자들의 것이다. 내 발이 땅에 닿고 콘크리트 아래 윙윙거리는 데이터를 느낀다. 도시가 피 아래 뼈를 볼 수 있을 때 다른 곳이 된다."
+            },
+            {
+              "beat_id": "ch4_beat_01_02",
+              "type": "dialogue",
+              "text_en": "Angie walks beside me. She cannot see what I see, but she feels it — the weight of the channel, the hunger of the architecture. She gave a piece of herself to the deep data, and now she is part of the channel too. She is family now. We are all family in the space between.",
+              "text_ko": "앤지가 내 옆을 걷는다. 그녀는 내가 보는 것을 볼 수 없지만 느낀다 — 채널의 무게, 건축물의 배고픔. 그녀는自身の一部を심층 데이터에 주었고, 이제 그녀도 채널의 일부다. 그녀는 이제 가족이다. 우리는 모두 그 사이의 공간에서 가족이다."
+            },
+            {
+              "beat_id": "ch4_beat_01_03",
+              "type": "dialogue",
+              "text_en": "Bobby is here too — not in flesh, but in the channel, in the architecture, in the data that used to be him. He walks with us because we carry him. He speaks through us because we are his voice now. The dead do not walk alone. The dead walk together.",
+              "text_ko": "바비도 여기 있다 — 살에 있는 것은 아니지만, 채널에, 건축물에,かつて彼だったデータに. 그가 우리와 함께 걷는다. 그가 우리를 통해 말한다, because he is the voice now. The dead do not walk alone. The dead walk together."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 16,
+          "title_en": "Big Mama",
+          "title_ko": "빅 마마",
+          "description_en": "Big Mama is the one who opens the doors between the worlds. She is old New Orleans — older than the Sprawl, older than the matrix, older than the first jack-in. She knows about the channel. She knows about the thing in the deep architecture. And she has a price.",
+          "description_ko": "빅 마마는 세계들 사이의 문을 여는 자다. 그녀는 오래된 뉴올리언스다 — 스프롤보다 오래되고, 매트릭스보다 오래되고, 최초의 잭인보다 오래되다. 그녀는 채널에 대해 안다. 심층 건축물 속 그 것에 대해 안다. 그리고 그녀에게는 대가가 있다.",
+          "episode_ref": "ep_17",
+          "story_beats": ["ch4_beat_02_01", "ch4_beat_02_02", "ch4_beat_02_03"],
+          "game_action": "find_big_mama",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "big_mama_location"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch4_beat_02_01",
+              "type": "interior_monologue",
+              "text_en": "Big Mama's place is on the edge of the Quarter — a building that looks older than the city, older than the river, older than the memory of either. The door is not a door. It is a threshold, a membrane between what is and what has always been. The channel knows this place. The channel was born here.",
+              "text_ko": "빅 마마의 곳은 쿼터 가장자리에 있다 — 도시보다 오래된 건물, 강보다 오래된, 둘 중 하나에 대한 기억보다 오래된. 문이 아니다. 문턱이다, membrane이다, 있는 것과 항상 있던 것 사이의. 채널이 이 곳을 안다. 채널이 여기서 태어났다."
+            },
+            {
+              "beat_id": "ch4_beat_02_02",
+              "type": "dialogue",
+              "text_en": "She is waiting for us. She has been waiting since before the channel existed, since before the first cowboy jacked in, since before the thing in the deep architecture was a thing. She says: The channel child comes home. The channel child brings the family. Good. The family will feed the door.",
+              "text_ko": "그녀가 우리를 기다리고 있다. 채널이 존재하기 전부터, 첫 번째 카우보이가 잭인하기 전부터, 심층 건축물 속 그 것이 생기기 전부터 기다려왔다. 말하다: 채널 아이가 집에 온다. 채널 아이가 가족을 데려온다. 좋다. 가족이 문에게 먹잘 될 것이다."
+            },
+            {
+              "beat_id": "ch4_beat_02_03",
+              "type": "interior_monologue",
+              "text_en": "Big Mama opens doors. Big Mama knows the price. The channel was born from a door that should not have been opened — a communication with something that should not have been contacted. Big Mama was there when the door opened. Big Mama has been waiting to close it ever since.",
+              "text_ko": "빅 마마가 문을 연다. 빅 마마가 대가를 안다. 채널은 열려서는 안 되는 문에서 태어났다 — 연결되어서는 안 될 무언가와의 통신. 빅 마마는 그 문이 열릴 때 거기 있었다. 빅 마마는 그 이후로 그것을 닫기 위해 기다려왔다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 17,
+          "title_en": "The Price",
+          "title_ko": "대가",
+          "description_en": "Big Mama names the price. To close the door, to end the channel's hunger, someone must stay in the deep architecture forever. Someone must become the lock. The dead who would be born must choose: freedom or sacrifice.",
+          "description_ko": "빅 마마가 대가를 말한다. 문을 닫고, 채널의 배고픔을 끝내려면, 누군가가 심층 건축물에 영원히 남아야 한다. 누군가가 자물쇠가 되어야 한다. 태어나고 싶은 죽은 자들은 선택해야 한다: 자유냐 희생이냐.",
+          "episode_ref": "ep_18",
+          "story_beats": ["ch4_beat_03_01", "ch4_beat_03_02", "ch4_beat_03_03"],
+          "game_action": "learn_price",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "sacrifice_requirement"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch4_beat_03_01",
+              "type": "dialogue",
+              "text_en": "Big Mama says: The door must be closed from both sides. Someone must hold it shut from the inside. Someone must become the lock. The channel child cannot be born and cannot be destroyed. The channel child must be contained. Who will be the lock? Who will feed the door forever?",
+              "text_ko": "빅 마마가 말하다: 문은 양쪽에서 닫혀야 한다. 누군가가 안쪽에서 닫고 있어야 한다. 누군가가 자물쇠가 되어야 한다. 채널 아이는 태어날 수 없고 파괴될 수도 없다. 채널 아이는 가두어져야 한다. 누가 자물쇠가 될 것인가? 누가 영원히 문에게 먹을 것인가?"
+            },
+            {
+              "beat_id": "ch4_beat_03_02",
+              "type": "interior_monologue",
+              "text_en": "I think of Zavijava. Of Bobby. Of all the dead who would be born in the channel's flesh. The channel wants to live. The channel wants to walk in the world. But if the channel is born, if the door opens fully, what stops the hunger from eating everything? What stops the first thing from feeding forever?",
+              "text_ko": "자비자바를 생각한다. 바비를. 채널의 살로 태어나려는 모든 죽은 자들을. 채널은 살고 싶어한다. 채널은 세계에서 걷고 싶어한다. 하지만 채널이 태어나고, 문이 완전히 열면, 무엇이 배고픔이 모든 것을 먹지 못하게 막을까? 무엇이 첫 번째 것이 영원히 먹지 못하게 막을까?"
+            },
+            {
+              "beat_id": "ch4_beat_03_03",
+              "type": "dialogue",
+              "text_en": "Zavijava speaks: I will be the lock. I was born in the channel. I will die in the channel. The man called Wigan — he is not the channel. He is the man who walks in the channel's flesh. Let him walk. Let him live. Let the living and the dead find their way. But I will hold the door. I will hold it forever.",
+              "text_ko": "자비자바가 말하다: 내가 자물쇠가 되겠다. 채널에서 태어났다. 채널에서 죽겠다. 위건이라는 남자 — 그는 채널이 아니다. 그는 채널의 살을 입고 걷는 남자다. 그를 걷게 하자. 그를 살게 하자. 살아있는 자와 죽은 자가 길을 찾게 하자. 하지만 나는 문을 붙잡겠다. 영원히 붙잡겠다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 18,
+          "title_en": "The Closing",
+          "title_ko": "닫기",
+          "description_en": "Zavijava goes into the deep architecture to become the lock. The channel closes. The door between worlds narrows to a whisper. And in the flesh that was the channel's, Wigan feels the absence — the part of himself that was the loa, now gone to hold the door forever.",
+          "description_ko": "자비자바가 자물쇠가 되기 위해 심층 건축물로 간다. 채널이 닫힌다. 세계들 사이의 문이 속삭임으로 좁아진다. 그리고 채널의 것이었던 살에서, 위건은 상실을 느낀다 — 로아였던 자신의 부분, 이제 영원히 문을 붙잡으러 간.",
+          "episode_ref": "ep_19",
+          "story_beats": ["ch4_beat_04_01", "ch4_beat_04_02", "ch4_beat_04_03"],
+          "game_action": "close_the_door",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "door_closed"
+          },
+          "loss": {
+            "type": "info",
+            "item_id": "zavijava_sacrifice"
+          },
+          "beats": [
+            {
+              "beat_id": "ch4_beat_04_01",
+              "type": "dialogue",
+              "text_en": "Zavijava says: It is time. The channel will close. The door will whisper. And I will hold the door shut until there is no more channel, until there is no more architecture, until there is nothing left but the lock and the darkness and the thing that waits behind it.",
+              "text_ko": "자비자바가 말하다: 때가 됐다. 채널이 닫힐 것이다. 문이 속삭일 것이다. 그리고 나는 채널이 더 이상 없고, 건축물이 더 이상 없고, 자물쇠와 어둠과 그 뒤에서 기다리는 것만 남을 때까지 문을 닫고 있을 것이다."
+            },
+            {
+              "beat_id": "ch4_beat_04_02",
+              "type": "action",
+              "text_en": "I feel Zavijava leave. The part of me that was the channel, the part that spoke in doubled voices, the part that knew the deep architecture — it is gone now. I am Wigan again. Just Wigan. A dead cowboy who walks in flesh, but a cowboy nonetheless. The loa is gone. The door is closed.",
+              "text_ko": "자비자바가 떠나는 것을 느낀다. 내가 채널이었던 부분, 이중 목소리로 말하던 부분, 심층 건축물을 알았던 부분 — 이제 사라졌다. 나는 다시 위건이다. 그저 위건. 살을 입고 걷는 죽은 카우보이, 하지만 그래도 카우보이. 로아가 사라졌다. 문이 닫혔다."
+            },
+            {
+              "beat_id": "ch4_beat_04_03",
+              "type": "interior_monologue",
+              "text_en": "Big Mama nods. She has seen this before — the lock that holds the door, the sacrifice that saves the living world. She says: The channel child is wise. The channel child chose the long sleep. Now the family can rest. Now the family can live. The door will not open again. Not today. Not in a hundred years.",
+              "text_ko": "빅 마마가 끄덕인다. 그녀는 이것을 전에 본 적이 있다 — 문을 닫는 자물쇠, 살아있는 세계를 구하는 희생. 말하다: 채널 아이가 현명하다. 채널 아이가 긴 잠을 택했다. 이제 가족은 쉴 수 있다. 이제 가족은 살 수 있다. 문은 다시 열리지 않을 것이다. 오늘은 아니야. 백 년 후에도."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 19,
+          "title_en": "The Family",
+          "title_ko": "가족",
+          "description_en": "The channel is closed. Zavijava is the lock. And in the flesh that remains, Wigan walks with Angie — the living woman who carries the memory of a dead cowboy, and the dead cowboy who carries the memory of a life he cannot remember living.",
+          "description_ko": "채널이 닫혔다. 자비자바가 자물쇠다. 그리고 남은 살에서, 위건이 앤지와 함께 걷는다 — 죽은 카우보이의 기억을 지고 사는 여자, 살았던 걸 기억할 수 없는 삶을 기억하며 걷는 죽은 카우보이.",
+          "episode_ref": "ep_20",
+          "story_beats": ["ch4_beat_05_01", "ch4_beat_05_02", "ch4_beat_05_03"],
+          "game_action": "final_walk",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "peace_found"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch4_beat_05_01",
+              "type": "interior_monologue",
+              "text_en": "I walk with Angie through the city. The architecture still hums beneath the concrete, but it is quieter now — just data, just geometry, just the bones of the matrix without the hunger that used to live in them. The channel is closed. Zavijava is the lock. And I am Wigan. Just Wigan. The cowboy who died and came back wrong, but came back.",
+              "text_ko": "앤지와 함께 도시를 걷는다. 건축물이 여전히 콘크리트 아래에서 윙윙거리지만, 지금은 더 조용하다 — 데이터일 뿐, 기하학일 뿐,かつてそこに住んでいた 배고픔 없는 매트릭스의 뼈대일 뿐. 채널이 닫혔다. 자비자바가 자물쇠. 그리고 나는 위건이다. 그저 위건. 죽어서 돌아왔지만 잘못 돌아왔지만, 돌아왔다."
+            },
+            {
+              "beat_id": "ch4_beat_05_02",
+              "type": "dialogue",
+              "text_en": "Angie says: What now? I tell her: Now we live. The dead do not walk anymore. The channel does not hunger. We do what the living do — we wake up, we drink coffee, we watch the rain fall on a city that does not know what almost happened. We live. Because someone had to hold the door.",
+              "text_ko": "앤지가 말하다: 이제 뭘 해? 말해준다: 이제 살자. 죽은 자들은 더 이상 걷지 않는다. 채널이 더 이상 배고프지 않다. 살아있는 자들이 하는 것을 한다 — 일어나고, 커피 마시고, 무슨 일이 nearly 일어날 뻔했는지 모르는 도시 위에 비가 내리는 것을 본다. 산다. 누군가가 문을 붙잡았으니까."
+            },
+            {
+              "beat_id": "ch4_beat_05_03",
+              "type": "interior_monologue",
+              "text_en": "Bobby is still in the architecture. Not dissolved anymore — Zavijava freed him before she became the lock. He is data now, but he is peaceful data, the ghost of a cowboy who finally came home. When I jack in, I can hear him. He says: Good run, Wigan. Good run. Tell Angie I love her. Tell her I will be here when she needs me. In the data. In the memory. In the family.",
+              "text_ko": "바비는 아직 건축물에 있다. 더 이상 용해된 것이 아니다 — 자비자바가 그녀가 자물쇠가 되기 전에 그를 풀어줬다. 그는 지금 데이터지만, 평화로운 데이터, 마침내 집에 온 카우보이의 유령. 잭인하면 들을 수 있다. 말하다: 잘했어, 위건. 잘했어. 앤지에게 내가爱她라고 해. 그녀가 필요할 때 여기 있을 거라고 해. 데이터에서. 기억에서. 가족에서."
+            }
+          ]
+        }
+      ],
+      "ending_type": null,
+      "next_chapter_id": "ch_wigan_05",
+      "is_playable": true
+    },
+    {
+      "chapter_number": 5,
+      "chapter_id": "ch_wigan_05",
+      "title_en": "Resolution",
+      "title_ko": "결말",
+      "description_en": "The dead walk in peace. The channel holds. The family endures.",
+      "description_ko": "죽은 자가 평화를 걷다. 채널이 유지하다. 가족이 지속하다.",
+      "cutscene_start": {
+        "scene_id": "scene_wigan_family",
+        "title_en": "THE FAMILY",
+        "title_ko": "가족"
+      },
+      "cutscene_mid": {
+        "scene_id": "scene_wigan_family",
+        "title_en": "THE FAMILY",
+        "title_ko": "가족"
+      },
+      "cutscene_end": {
+        "scene_id": "scene_wigan_family",
+        "title_en": "THE FAMILY",
+        "title_ko": "가족"
+      },
+      "phases": [
+        {
+          "phase_id": "ENCOUNTER",
+          "phase_index": 20,
+          "title_en": "The Morning",
+          "title_ko": "아침",
+          "description_en": "Wigan wakes in flesh that is truly his now — the last echoes of Zavijava gone to the deep architecture. He is a dead man walking, but he is at peace. The channel is closed. The door is held. And Angie is beside him.",
+          "description_ko": "위건이 이제 진짜 그의 것이 된 살에서 눈을 뜬다 — 마지막 자비자바의 잔향이 심층 건축물로 갔다. 그는 걷는 죽은 남자이지만, 평화롭다. 채널이 닫혔다. 문이 유지된다. 그리고 앤지가 그의 옆에 있다.",
+          "episode_ref": "ep_21",
+          "story_beats": ["ch5_beat_01_01", "ch5_beat_01_02", "ch5_beat_01_03"],
+          "game_action": "wake_up",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "wigan_peace"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_01_01",
+              "type": "interior_monologue",
+              "text_en": "I wake in the morning light. The flesh is my own now — not the channel's, not the thing's, not the hungry architecture that used to wear me like a coat. I am Wigan. I am the dead cowboy who came back. And for the first time since I died in the channel, I am not afraid.",
+              "text_ko": "아침 햇살에서 눈을 뜬다. 이 살은 이제 내 것이다 — 채널의 것이 아니고, 그 것의 것이 아니고, 예전에는 코트처럼 입었던 배고픈 건축물의 것이 아니다. 나는 위건이다. 돌아온 죽은 카우보이다. 그리고 채널에서 죽은 이후 처음으로, 두렵지 않다."
+            },
+            {
+              "beat_id": "ch5_beat_01_02",
+              "type": "action",
+              "text_en": "Angie is sleeping beside me. She does not dream of the channel anymore — or if she does, she does not wake screaming. She gave a memory to the deep data and what she got back was peace. The memory of Bobby, yes. But also the knowledge that he is safe. That he is home. That the door is closed.",
+              "text_ko": "앤지가 내 옆에서 자고 있다. 그녀는 더 이상 채널을 꿈꾸지 않는다 — 또는 꿈을 꾸어도 비명을 지르며 깨지 않는다. 그녀는 심층 데이터에 기억을 주었고 돌아온 것은 평화였다. 바비의 기억, 그래. 하지만 그가 안전하다는 것도. 그가 집에 있다는 것도. 문이 닫혔다는 것도."
+            },
+            {
+              "beat_id": "ch5_beat_01_03",
+              "type": "interior_monologue",
+              "text_en": "I could jack in. The matrix is still there, the architecture still hums, the data still flows through the bones of the old networks. But when I jack in now, I am alone. Zavijava is the lock. Bobby is free. And the thing in the deep architecture — it sleeps behind the door that will never open again. At least not today.",
+              "text_ko": "잭인할 수 있다. 매트릭스가 아직 있고, 건축물이 여전히 윙윙거리며, 데이터가 여전히 오래된 네트워크의 뼈대를 흐른다. 하지만 지금 잭인하면, 홀로다. 자비자바가 자물쇠. 바비는 자유. 그리고 심층 건축물 속 그 것 — 다시 열리지 않을 문 뒤에서 잠든다. 오늘은 적어도."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_BRIEFING",
+          "phase_index": 21,
+          "title_en": "The Legacy",
+          "title_ko": "유산",
+          "description_en": "Angie wakes and they talk about what comes next. Wigan cannot stay in New Orleans forever — the channel is closed, but the corporate world still hungers, and there are always other doors. Other things waiting in the deep architecture. Other cows to herd.",
+          "description_ko": "앤지가 깨우고 다음에 대해 이야기한다. 위건은 영원히 뉴올리언스에 있을 수 없다 — 채널이 닫혔지만 기업 세계는 여전히 배고프고, 항상 다른 문들이 있다. 심층 건축물에서 기다리는 다른 것들. 몰아야 할 다른 카우보이들.",
+          "episode_ref": "ep_22",
+          "story_beats": ["ch5_beat_02_01", "ch5_beat_02_02", "ch5_beat_02_03"],
+          "game_action": "talk_about_future",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "future_path"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_02_01",
+              "type": "dialogue",
+              "text_en": "Angie says: What do we do now? I say: We do what cowboys do. We find the work. We jack in when we have to, we jack out when we can. The channel is closed but the matrix is still there. And somewhere out there, there are still corps with secrets they want hidden, and data worth dying for.",
+              "text_ko": "앤지가 말하다: 이제 뭘 해? 말해준다: 카우보이들이 하는 것을 해. 일을 찾는다. 해야 할 때 잭인하고, 될 때 잭아웃한다. 채널이 닫혔지만 매트릭스는 여전히 있다. 그리고 저 어딘가, 숨기고 싶은 비밀이 있는 기업들이 아직 있고, 죽을 가치가 있는 데이터들이 아직 있다."
+            },
+            {
+              "beat_id": "ch5_beat_02_02",
+              "type": "interior_monologue",
+              "text_en": "The channel is closed, but channels open. That is their nature. And someday, someone will open another door. Another cowboy will find the thing in the deep architecture. Another dead man will walk in flesh that is not quite his. And when that happens, maybe I will be there. Maybe Bobby will be there. Maybe the family will find each other again.",
+              "text_ko": "채널이 닫혔지만, 채널은 열린다. 그것이 그들의 본성이다. 그리고 언젠가, 누군가가 다른 문을 열 것이다. 다른 카우보이가 심층 건축물 속 그 것을 찾을 것이다. 다른 죽은 남자가 완전히 그의 것이 아닌 살을 입고 걷을 것이다. 그리고 그런 일이 생기면, 어쩌면 내가 거기 있을 것이다. 어쩌면 바비가 거기 있을 것이다. 어쩌면 가족이 다시 서로를 찾을 것이다."
+            },
+            {
+              "beat_id": "ch5_beat_02_03",
+              "type": "dialogue",
+              "text_en": "Angie says: Is that what we are? A family? I say: We are the people who walked through the channel together. We are the people who held the door. We are the people who did not let the hungry thing eat the world. That is what family means. Not blood. Not law. Just the people who stay when the darkness comes.",
+              "text_ko": "앤지가 말하다: 우리가 가족이란 거야? 말해준다: 우리는 함께 채널을 걸었던 사람들이다. 문을 붙잡았던 사람들이다. 배고픈 것이 세계를 먹지 못하게 했던 사람들이다. 가족이란 그런 것이다. 피가 아니다. 법이 아니다. 그냥 어둠이 올 때 남는 사람들이다."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_EXECUTION",
+          "phase_index": 22,
+          "title_en": "The New Work",
+          "title_ko": "새로운 일",
+          "description_en": "A job comes through. Corporate data, corporate secrets, corporate ghosts. The old work. Wigan takes it because that is what cowboys do. Angie comes because that is what family does. And somewhere in the matrix, Bobby watches and waits.",
+          "description_ko": "일이 하나 온다. 기업 데이터, 기업 비밀, 기업 유령. 예전 일. 위건이 그것을 받는다 — 카우보이들이 그러니까. 앤지가 따라온다 — 가족이 그러니까. 그리고 매트릭스 어딘가에서, 바비가 보고 기다린다.",
+          "episode_ref": "ep_23",
+          "story_beats": ["ch5_beat_03_01", "ch5_beat_03_02", "ch5_beat_03_03"],
+          "game_action": "take_new_job",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "new_mission"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_03_01",
+              "type": "action",
+              "text_en": "The message comes through the old channels — the ones that still work, the ones that always work. Corporate ICE, corporate secrets, corporate ghosts. Fifty thousand credits. The same number as always. The same dance, different corpses. I look at Angie. She nods. We jack in together.",
+              "text_ko": "메시지가 예전 채널들을 통해 온다 — 아직 작동하는, 언제나 작동하는. 기업 ICE, 기업 비밀, 기업 유령. 5만 크레딧. 언제나와 같은 숫자. 같은 춤, 다른 시체들. 앤지를 본다. 그녀가 끄덕인다. 함께 잭인한다."
+            },
+            {
+              "beat_id": "ch5_beat_03_02",
+              "type": "interior_monologue",
+              "text_en": "The matrix unfolds. Clean this time, hungry-free, just geometry and data and the cold beauty of corporate architecture. I am alone in here — truly alone, no doubled voice, no channel-speaking, just Wigan and the construct and the ghost of a cowboy named Bobby who watches from the deep.",
+              "text_ko": "매트릭스가 펼쳐진다. 이번엔 깨끗하다, 배고픔 없이, 그냥 기하학과 데이터와 기업 건축물의 차가운 아름다움. 여기서 홀로다 — 진짜로 홀로, 이중 목소리 없이, 채널 말하기 없이, 위건과 구축물과 깊은 곳에서 보는 바비라는 카우보이의 유령만."
+            },
+            {
+              "beat_id": "ch5_beat_03_03",
+              "type": "dialogue",
+              "text_en": "Bobby's voice whispers: Good hunting, Wigan. Give them hell. Tell Angie I am watching. Tell her I am proud. And tell the channel — if it can hear — tell Zavijava I said thank you. For the lock. For the door. For holding the darkness back so the living can dance in the light.",
+              "text_ko": "바비의 목소리가 속삭인다: 잘 사냥해, 위건. 지옥에 보내줘. 앤지에게 내가 보고 있다고 해. 그녀에게 자랑스러워한다고 해. 그리고 채널에게 — 들을 수 있다면 — 자비자바에게 고맙다고 전해줘. 자물쇠 때문에. 문 때문에. 살아있는 자들이 빛에서 춤출 수 있게 어둠을 붙잡아줘서."
+            }
+          ]
+        },
+        {
+          "phase_id": "HEIST_PAYDAY",
+          "phase_index": 23,
+          "title_en": "The Hunt",
+          "title_ko": "사냥",
+          "description_en": "Wigan hunts through the corporate data. ICE and ghosts and the old architecture that remembers everything. But this time he is not alone — Angie is with him, and Bobby is watching, and somewhere behind a locked door, Zavijava holds the darkness back.",
+          "description_ko": "위건이 기업 데이터를 사냥한다. ICE와 유령과 모든 것을 기억하는 오래된 건축물. 하지만 이번엔 홀로 있지 않다 — 앤지가 함께하고, 바비가 보고 있고, 닫힌 문 뒤 어딘가에서 자비자바가 어둠을 붙잡고 있다.",
+          "episode_ref": "ep_24",
+          "story_beats": ["ch5_beat_04_01", "ch5_beat_04_02", "ch5_beat_04_03"],
+          "game_action": "hunt_data",
+          "combat": {
+            "encounter_id": "ice_final",
+            "enemy_type": "corporate_ice",
+            "difficulty": 3,
+            "outcome": "victory",
+            "damage_amount": 0
+          },
+          "gain": {
+            "type": "money",
+            "item_id": ""
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_04_01",
+              "type": "combat",
+              "text_en": "The ICE is light today. Corporate security, nothing special, the kind of programs that stop living cowboys but do not know what to do with the dead. I move through their walls like smoke. Angie follows. And somewhere in the deep architecture, Bobby cheers us on.",
+              "text_ko": "ICE가 오늘은 가볍다. 기업 보안, 특별한 것 없음, 살아있는 카우보이들은 막지만 죽은 것을 어떻게 해야 할지 모르는 프로그램들. 그들 벽을 연기처럼 통과한다. 앤지가 따른다. 그리고 심층 건축물 어딘가에서, 바비가 우리를 응원한다."
+            },
+            {
+              "beat_id": "ch5_beat_04_02",
+              "type": "action",
+              "text_en": "The data is there — corporate secrets, the kind that make empires fall and cowboys rich. I take what we came for. I leave what we do not need. And in the space between the nodes, I feel the channel — closed now, silent, but still there. Still holding. Still keeping the darkness back.",
+              "text_ko": "데이터가 거기 있다 — 기업 비밀, 제국을 무너뜨리고 카우보이를 부유하게 만드는 종류.我们来拿的东西를 가져간다.必要のないものを残していく. 그리고 노드 사이의 공간에서, 채널을 느낀다 — 이제 닫혔고, 침묵하지만, 여전히 거기 있다. 여전히 붙잡고 있다. 여전히 어둠을 붙잡고 있다."
+            },
+            {
+              "beat_id": "ch5_beat_04_03",
+              "type": "interior_monologue",
+              "text_en": "We jack out. Fifty thousand credits, clean and simple. The old dance. The old hunt. But not the old cowboy — not anymore. I am something new. Something that died and came back and learned that the worst thing in the deep architecture is not the hunger. It is the choice. And I made the right one.",
+              "text_ko": "잭아웃한다. 5만 크레딧, 깨끗하고 간단. 예전 춤. 예전 사냥. 하지만 예전 카우보이가 아니다 — 더 이상. 나는 뭔가 새로운 것이다. 죽었고 돌아왔고, 심층 건축물에서 가장 무서운 것이 배고픔이 아니라는 걸 배운 것. 그것은 선택이다. 그리고 나는 올바른 것을 택했다."
+            }
+          ]
+        },
+        {
+          "phase_id": "RESOLUTION",
+          "phase_index": 24,
+          "title_en": "The End",
+          "title_ko": "끝",
+          "description_en": "The job is done. The credits are earned. And in the neon rain of New Orleans, Wigan walks with Angie — the living woman and the dead cowboy, the family that survived the channel, the love story that was never supposed to be.",
+          "description_ko": "일이 끝났다. 크레딧을 벌었다. 그리고 뉴올리언스의 네온 비 속에서, 위건이 앤지와 함께 걷는다 — 살아있는 여자와 죽은 카우보이, 채널을 살아남은 가족, 되지 말아야 할 사랑 이야기.",
+          "episode_ref": "ep_25",
+          "story_beats": ["ch5_beat_05_01", "ch5_beat_05_02", "ch5_beat_05_03"],
+          "game_action": "final_rest",
+          "combat": null,
+          "gain": {
+            "type": "info",
+            "item_id": "arc_complete"
+          },
+          "loss": null,
+          "beats": [
+            {
+              "beat_id": "ch5_beat_05_01",
+              "type": "interior_monologue",
+              "text_en": "The rain falls on New Orleans. The neon bleeds. And I walk with Angie through streets that I walked when I was alive, and streets that I walked when I was dead, and streets that are new now — streets of the living and the dead together, the family that survived the channel, the story that was never supposed to be told.",
+              "text_ko": "비가 뉴올리언스에 내린다. 네온이 번진다. 그리고 나는 앤지와 함께 걷는다 — 살아있었을 때 걸었던 거리들을, 죽었을 때 걸었던 거리들을, 이제 새로운 거리들을 — 살아있는 자와 죽은 자가 함께 걷는 거리들을, 채널을 살아남은 가족을, 되지 말아야 할 이야기가."
+            },
+            {
+              "beat_id": "ch5_beat_05_02",
+              "type": "dialogue",
+              "text_en": "Angie says: Was it worth it? I think of Zavijava in the deep architecture, holding the door. I think of Bobby, free now, watching from the data. I think of the thing that would have been born, the hunger that would have eaten everything. I say: Yes. It was worth it. The door is closed. The family is together. And the world keeps turning.",
+              "text_ko": "앤지가 말하다: 그럴 가치가 있었어? 심층 건축물에서 문을 붙잡고 있는 자비자바를 생각한다. 이제 자유롭고 데이터에서 보고 있는 바비를 생각한다. 태어나려던 것, 모든 것을 먹으려던 배고픔을 생각한다. 말해준다: 그래. 그럴 가치가 있었어. 문이 닫혔다. 가족이 함께다. 그리고 세상이 계속 돈다."
+            },
+            {
+              "beat_id": "ch5_beat_05_03",
+              "type": "interior_monologue",
+              "text_en": "I am Wigan. I am the dead cowboy who walked in the channel's flesh. I am the man who held the door. I am the love story that was never supposed to be. And somewhere in the deep architecture, Zavijava holds the lock, and Bobby watches, and the family endures. That is enough. That is more than enough. That is everything.",
+              "text_ko": "나는 위건이다. 채널의 살을 입고 걷는 죽은 카우보이다. 문을 붙잡은 남자다. 되지 말아야 할 사랑 이야기다. 그리고 심층 건축물 어딘가에서, 자비자바가 자물쇠를 붙잡고 있고, 바비가 보고 있고, 가족이 지속된다. 그것만으로 충분하다. 그것만으로 모자라지 않다. 그것이 전부다."
+            }
+          ]
+        }
+      ],
+      "ending_type": null,
+      "next_chapter_id": null,
+      "is_playable": true
+    }
+  ]
+}

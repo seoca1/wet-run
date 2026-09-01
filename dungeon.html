@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ADR-0060 Dungeon Exploration: NetHack-style map + cyberspace VFX overlay + procedural BSP generator (Phase 1+1.5+2).">
+<title>Dungeon Exploration Dashboard — Wet Run</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/dungeon.html">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #0a0e14; color: #c5d4e3; line-height: 1.6;
+    padding: 24px; max-width: 1100px; margin: 0 auto; min-height: 100vh;
+  }
+  h1, h2, h3 { color: #66ffcc; font-weight: 600; }
+  h1 { font-size: 28px; margin-bottom: 8px; text-shadow: 0 0 12px #66ffcc44; }
+  h2 { font-size: 20px; margin: 24px 0 12px; border-bottom: 1px solid #2a3540; padding-bottom: 8px; }
+  h3 { font-size: 16px; margin: 16px 0 8px; color: #ffaa55; }
+  a { color: #66ffcc; }
+  a:hover { color: #00ccff; }
+
+  .nav { margin-bottom: 24px; font-size: 12px; }
+  .nav a { color: #6a7888; text-decoration: none; }
+  .nav a:hover { color: #66ffcc; }
+
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 24px; }
+
+  .panel {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 8px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .panel-row { display: flex; gap: 12px; align-items: center; padding: 6px 0; }
+  .badge {
+    display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .badge.done { background: #66ffcc22; color: #66ffcc; }
+  .badge.active { background: #ffaa5522; color: #ffaa55; }
+  .badge.pending { background: #2a354022; color: #6a7888; }
+  .badge.rejected {
+    background: #ff444422; color: #ff8888; text-decoration: line-through;
+  }
+
+  .phase-card {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 8px;
+    padding: 16px 20px; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .phase-num {
+    flex: 0 0 48px; height: 48px; border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 18px;
+  }
+  .phase-num.done { background: #66ffcc22; color: #66ffcc; }
+  .phase-num.rejected { background: #ff444422; color: #ff8888; }
+  .phase-info { flex: 1; }
+  .phase-info .name { color: #c5d4e3; font-size: 14px; font-weight: 600; }
+  .phase-info .desc { color: #6a7888; font-size: 12px; margin-top: 4px; }
+
+  .ascii {
+    background: #0a0e14; border: 1px solid #2a3540; border-radius: 4px;
+    padding: 12px; margin: 12px 0; font-size: 11px; line-height: 1.2;
+    overflow-x: auto; color: #c5d4e3; white-space: pre;
+  }
+  .ascii .wall { color: #ff6699; }
+  .ascii .corridor { color: #80a0c0; }
+  .ascii .room { color: #ffaa55; }
+  .ascii .entry { color: #66ffcc; }
+  .ascii .exit { color: #66ff66; }
+  .ascii .player { color: #00ccff; font-weight: 700; }
+  .ascii .data { color: #ffd700; }
+  .ascii .ice { color: #ff4444; }
+
+  .grid-2 {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 12px; }
+  th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #2a3540; }
+  th { color: #ffaa55; font-weight: 600; }
+  td { color: #c5d4e3; }
+  td.num { font-family: 'JetBrains Mono', monospace; color: #ffaa55; text-align: right; }
+
+  .callout {
+    border-left: 3px solid #ffaa55; padding: 12px 16px;
+    background: #ffaa5511; border-radius: 0 4px 4px 0;
+    margin: 12px 0; font-size: 13px; color: #c5d4e3;
+  }
+  .callout.rejected {
+    border-left-color: #ff4444; background: #ff444411;
+  }
+
+  .key {
+    display: inline-block; background: #1a232c; border: 1px solid #2a3540;
+    border-radius: 3px; padding: 2px 8px; font-size: 11px; color: #66ffcc;
+    box-shadow: 0 2px 0 #0a0e14;
+  }
+</style>
+<style>
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 16px; margin: -8px -8px 16px -8px;
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .sep { color: #2a3540; }
+</style>
+</head>
+
+<body>
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="./library.html">📚 Library</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Chars</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+  <span class="sep">|</span>
+  <a href="./missions.html">📖 Story</a>
+  <a href="./graphic-novel.html">🎬 GN</a>
+  <span class="sep">|</span>
+  <a href="./combat.html">⚔ Combat</a>
+</nav>
+
+
+
+<div class="nav"><a href="index.html">← Dashboard Home</a></div>
+
+<h1>🏰 Dungeon Exploration Dashboard</h1>
+<div class="subtitle">ADR-0060 · NetHack-style map + cyberspace VFX overlay + procedural BSP generator</div>
+
+<!-- Status overview -->
+<div class="panel">
+  <div class="panel-row">
+    <h3 style="flex:1; margin:0;">Status (2026-06-30)</h3>
+    <span class="badge done">Phase 1 DONE</span>
+    <span class="badge done">Phase 1.5 DONE</span>
+    <span class="badge done">Phase 2 DONE</span>
+    <span class="badge active">Phase 3 NEXT</span>
+  </div>
+  <div class="panel-row" style="font-size: 12px; color: #6a7888; margin-top: 8px;">
+    Tests: <strong style="color:#66ffcc;">43 PASS</strong> &nbsp;|&nbsp;
+    Code: <strong style="color:#66ffcc;">~700 lines</strong> (dungeon_generator.py) &nbsp;|&nbsp;
+    Docs: <strong style="color:#66ffcc;">3 files</strong>
+  </div>
+</div>
+
+<!-- Phase progress -->
+<h2>📋 Phase Progress</h2>
+
+<div class="phase-card">
+  <div class="phase-num done">1</div>
+  <div class="phase-info">
+    <div class="name">Phase 1 — dungeon_view 활성화</div>
+    <div class="desc">
+      키 <span class="key">D</span> 토글 (matrix ↔ dungeon). state.dungeon_mode 필드. dungeon_view는 기존
+      515 lines 활용 (이미 NetHack 스타일).
+    </div>
+  </div>
+  <span class="badge done">DONE</span>
+</div>
+
+<div class="phase-card">
+  <div class="phase-num done">½</div>
+  <div class="phase-info">
+    <div class="name">Phase 1.5 — VFX 오버레이</div>
+    <div class="desc">
+      사이버스페이스 분위기를 이펙트 레이어로 표현:
+      <span style="color:#66ffff;">spawn_jackin_glitch</span> · <span style="color:#ffd700;">spawn_data_acquired</span> ·
+      <span style="color:#ffffff;">spawn_jackout_whiteout</span> · <span style="color:#ffaa55;">spawn_room_flash</span>.
+      Glossy 3-phase cinematics.
+    </div>
+  </div>
+  <span class="badge done">DONE</span>
+</div>
+
+<div class="phase-card">
+  <div class="phase-num done">2</div>
+  <div class="phase-info">
+    <div class="name">Phase 2 — 절차적 BSP 미로</div>
+    <div class="desc">
+      ProceduralDungeonGenerator — 시드 기반 재현성 + Kruskal MST + 캐릭터 분기
+      (novice 0.10 / veteran 0.25 / heretic 0.40 dead-end).
+    </div>
+  </div>
+  <span class="badge done">DONE</span>
+</div>
+
+<div class="phase-card">
+  <div class="phase-num" style="background:#ffaa5522;color:#ffaa55;">3</div>
+  <div class="phase-info">
+    <div class="name">Phase 3 — 미션 → 룸 매핑 (NEXT)</div>
+    <div class="desc">
+      38개 미션을 키워드 기반으로 RoomType 배열로 변환 (missions_to_rooms).
+      노비/베테랑/헤레틱 분기 5-8 룸 분포.
+    </div>
+  </div>
+  <span class="badge active">NEXT</span>
+</div>
+
+<div class="phase-card" style="opacity:0.6">
+  <div class="phase-num" style="background:#2a354022;color:#6a7888;">4</div>
+  <div class="phase-info">
+    <div class="name">Phase 4 — ECS 통합 (선택)</div>
+    <div class="desc">
+      Room → Entity 변환, ECS 룸 시스템. 멀리 떨어져 있음.
+    </div>
+  </div>
+  <span class="badge pending">OPT</span>
+</div>
+
+<div class="phase-card" style="opacity:0.6">
+  <div class="phase-num" style="background:#2a354022;color:#6a7888;">5</div>
+  <div class="phase-info">
+    <div class="name">Phase 5 — 단편 연동 (선택)</div>
+    <div class="desc">
+      룸 진입 시 챕터 excerpt 인용. 보상 획득 시 단편 일부분 인용.
+    </div>
+  </div>
+  <span class="badge pending">OPT</span>
+</div>
+
+<!-- Rejected Option B+ callout -->
+<div class="callout rejected">
+  <strong>⚠ 폐기 결정 (2026-06-30)</strong>: <strong>옵션 B+</strong> (사용자 제안 — 4방향 미로 + <code>#</code> 루트
+  표시 + 백트래킹 표기 + NodeState 4단계)는 맵 글리프에 사이버스페이스 추상화를 도입했음.
+  사용자 결정: <em>맵은 게임플레이에 최적화</em> + <em>사이버스페이스는 이펙트로 분리</em>.
+  옵션 B-Nethack (NetHack + VFX) 로 자동 폐기.
+</div>
+
+<h2>🎨 NetHack-Style Map (실제 렌더링 추정)</h2>
+
+<div class="grid-2">
+  <div>
+    <h3>7×5 Grade 1 (manual layout)</h3>
+    <pre class="ascii"><span class="wall">---+   +---+</span>
+<span class="wall">|</span> <span class="entry">▶</span> <span class="wall">|</span>   <span class="wall">| ? |</span>
+<span class="wall">+</span>   <span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span>   <span class="wall">| </span><span class="corridor">?</span><span class="wall"> |</span>
+<span class="wall">|</span> <span class="room">D</span> <span class="wall">|</span><span class="corridor">───</span><span class="wall">|</span> <span class="ice">!</span> <span class="wall">|</span>
+<span class="wall">+</span>   <span class="wall">+</span>   <span class="wall">+</span>   <span class="wall">+</span>
+<span class="wall">|</span> <span class="room">·</span> <span class="wall">|</span>   <span class="wall">|</span> <span class="room">·</span> <span class="wall">|</span>
+<span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span>
+<span class="wall">|</span> <span class="exit">>></span> <span class="wall">|</span><span class="corridor">───</span><span class="wall">| </span><span class="room">·</span><span class="wall"> |</span>
+<span class="wall">+</span>   <span class="wall">+</span>   <span class="wall">+</span>
+        <span class="wall">+</span></pre>
+    <div style="font-size:11px;color:#6a7888;margin-top:4px;">
+      룸: <span class="entry">▶</span> Entry · <span class="room">D</span> Data · <span class="ice">!</span> ICE · <span class="room">·</span> Router · <span class="exit">>></span> Exit · <span class="room">?</span> NPC (Dixie)
+    </div>
+  </div>
+
+  <div>
+    <h3>11×7 Grade 3 (procedural BSP)</h3>
+    <pre class="ascii"><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span>
+<span class="wall">|</span> <span class="entry">▶</span> <span class="wall">| </span><span class="room">·</span><span class="wall"> |</span>   <span class="wall">| </span><span class="data">$</span><span class="wall"> |</span>
+<span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span>
+         <span class="wall">| </span><span class="ice">!</span><span class="wall"> |</span>
+   <span class="corridor">───────────</span>
+<span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span>         <span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span>
+<span class="wall">| </span><span class="room">·</span><span class="wall"> |</span><span class="corridor">───</span><span class="wall">| </span><span class="room">·</span><span class="wall"> |</span><span class="corridor">───</span><span class="wall">| </span><span class="exit">>></span><span class="wall"> |</span>
+<span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span><span class="corridor">───</span><span class="wall">+</span>
+   <span class="wall">|</span>   <span class="wall">|</span>
+   <span class="corridor">───</span><span class="wall">+</span>
+   <span class="corridor">───</span><span class="wall">|</span> <span class="data">$</span> <span class="wall">|</span>
+       <span class="wall">+</span></pre>
+    <div style="font-size:11px;color:#6a7888;margin-top:4px;">
+      시드 기반 절차 생성. 15 노드 / 15 엣지 (MST) + ~5 dead-end (heretic).
+    </div>
+  </div>
+</div>
+
+<h2>🎬 VFX Triggers</h2>
+
+<table>
+  <tr>
+    <th>Trigger</th>
+    <th>Function</th>
+    <th>Effect</th>
+    <th>Gibson Text</th>
+  </tr>
+  <tr>
+    <td>Matrix 진입</td>
+    <td><code>spawn_jackin_glitch</code></td>
+    <td>ASCII noise + shake 180ms</td>
+    <td><code>&gt;&gt; JACKING IN...</code><br><code>&gt;&gt; SCANNING HOST...</code><br><code>&gt;&gt; CYBERSPACE LOADED</code></td>
+  </tr>
+  <tr>
+    <td>룸 이동</td>
+    <td><code>spawn_room_flash</code></td>
+    <td>색상 플래시 80ms + spark</td>
+    <td>(없음 — 짧은 인지 큐)</td>
+  </tr>
+  <tr>
+    <td>DATA 획득</td>
+    <td><code>spawn_data_acquired</code></td>
+    <td>골드 파티클 + 2-phase</td>
+    <td><code>&gt;&gt; DATA FRAGMENT RECOVERED</code><br><code>+ CREDITS + REPUTATION</code></td>
+  </tr>
+  <tr>
+    <td>EXIT 도달</td>
+    <td><code>spawn_jackout_whiteout</code></td>
+    <td>white-out 260ms + 3-phase</td>
+    <td><code>&gt;&gt; JACKING OUT...</code><br><code>&gt;&gt; CONNECTION SEVERED</code><br><code>&gt;&gt; MATRIX CLOSED</code></td>
+  </tr>
+</table>
+
+<h2>📊 Procedural Generator Stats</h2>
+
+<h3>By Mission Grade (deterministic seed=42, novice)</h3>
+<table>
+  <tr>
+    <th>Grade</th>
+    <th>Grid</th>
+    <th class="num">Nodes</th>
+    <th class="num">Edges</th>
+  </tr>
+  <tr><td>1</td><td>7×5</td><td class="num">6</td><td class="num">5</td></tr>
+  <tr><td>2</td><td>9×6</td><td class="num">10</td><td class="num">10</td></tr>
+  <tr><td>3</td><td>11×7</td><td class="num">15</td><td class="num">15</td></tr>
+  <tr><td>4</td><td>13×8</td><td class="num">22</td><td class="num">23</td></tr>
+  <tr><td>5</td><td>15×10</td><td class="num">30</td><td class="num">32</td></tr>
+</table>
+
+<h3>By Character Reference (Grade 3, seed=99)</h3>
+<table>
+  <tr>
+    <th>Character</th>
+    <th class="num">Dead-end %</th>
+    <th>ICE type</th>
+    <th>Faction</th>
+    <th class="num">Edges</th>
+  </tr>
+  <tr><td><strong>novice</strong></td><td class="num">0.10</td><td>STANDARD</td><td>NONE</td><td class="num">15</td></tr>
+  <tr><td><strong>veteran</strong></td><td class="num">0.25</td><td>STANDARD</td><td>SENSE_NET</td><td class="num">18</td></tr>
+  <tr><td><strong>heretic</strong></td><td class="num">0.40</td><td>BLACK</td><td>TA</td><td class="num">20</td></tr>
+</table>
+
+<h2>✅ Test Coverage</h2>
+
+<div class="grid-2">
+  <div class="panel">
+    <h3 style="margin-top:0;">Phase 1+1.5 (20 tests)</h3>
+    <ul style="margin-left: 20px; line-height: 1.8; font-size: 12px;">
+      <li><code>test_default_is_false</code></li>
+      <li><code>test_d_toggles_dungeon_mode_true / false</code></li>
+      <li><code>test_shift_d_does_not_toggle</code></li>
+      <li><code>test_handle_dungeon_input_* (move)</code></li>
+      <li><code>test_render_dungeon_matrix_does_not_raise</code></li>
+      <li><code>spawn_jackin_glitch</code>: particles + cinematic + shake + flash</li>
+      <li><code>spawn_room_flash</code>: default color + custom color</li>
+      <li><code>spawn_data_acquired</code>: gold particles + cinematic</li>
+      <li><code>spawn_jackout_whiteout</code>: white flash + 3-phase</li>
+      <li><code>test_full_jackin_to_jackout_cycle</code></li>
+    </ul>
+  </div>
+  <div class="panel">
+    <h3 style="margin-top:0;">Phase 2 (23 tests)</h3>
+    <ul style="margin-left: 20px; line-height: 1.8; font-size: 12px;">
+      <li>Reproducibility: 4 tests (seed / char / mission_id)</li>
+      <li>Grade scaling: 3 tests (1, 5, monotonic)</li>
+      <li>Character variation: 2 tests</li>
+      <li>Structural: 7 tests (entry, exit, connected, no loops)</li>
+      <li>Edge cases: 3 tests (clamping, mission_id=None)</li>
+      <li>Backwards compat: 3 tests (DungeonGenerator)</li>
+      <li>Configuration: 1 test (min_leaf_size)</li>
+    </ul>
+  </div>
+</div>
+
+<h2>🔗 Related Documentation</h2>
+<ul style="margin-left:20px; line-height: 1.8;">
+  <li><a href="../docs/DUNGEON_OPTION_B_NETHACK.md">DUNGEON_OPTION_B_NETHACK.md</a> — design (option B-Nethack, 옵션 B+ 폐기 노트)</li>
+  <li><a href="../docs/DUNGEON_EXPLORATION_REVIEW.md">DUNGEON_EXPLORATION_REVIEW.md</a> — 옵션 A/B-Nethack/C/D 비교, 5 Phase 로드맵</li>
+  <li><a href="../docs/DUNGEON_VERIFICATION_CHECKLIST.md">DUNGEON_VERIFICATION_CHECKLIST.md</a> — 검증 체크리스트 (Phase 1+1.5 완료)</li>
+</ul>
+
+<div class="callout">
+  <strong>다음 단계 (Phase 3)</strong>: 미션 synopsis/story 키워드 → RoomType 매핑.
+  <code>missions_to_rooms(mission_data, character_ref) -&gt; list[RoomType]</code>.
+  38 미션 → 5-8 룸 분포 (캐릭터별 분기).
+</div>
+
+</body>
+</html>

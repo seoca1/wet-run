@@ -1,0 +1,1951 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="{'en': 'All 5 boss ICE profiles in wet_run with their phase progression, stats, and Phase B-3 features (AoE damage + minion spawn).', 'ko': 'wet_run의 5개 보스 ICE 프로필: phase 진행, 스탯, Phase B-3 기능 (AoE 대미지 + 미니언 소환).'}">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>{'en': 'Boss ICE Reference (Phase B-3)', 'ko': '보스 ICE 참조 (Phase B-3)'} - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#boss-ice-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              {'en': 'Boss ICE Reference (Phase B-3)', 'ko': '보스 ICE 참조 (Phase B-3)'}
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boss-profiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boss Profiles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Boss Profiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-wintermute-cyberspace-neural" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. WINTERMUTE (Cyberspace / Neural)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-ta_construct_prime-tessier-ashpool-apex" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. TA_CONSTRUCT_PRIME (Tessier-Ashpool Apex)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-goliath-prime-military-heavy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. GOLIATH PRIME (Military / Heavy)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-black-ice-lord-chaos-corruption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. BLACK ICE LORD (Chaos / Corruption)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-watchdog-alpha-pack-hunter-predator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. WATCHDOG ALPHA (Pack Hunter / Predator)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#boss-roster-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boss Roster Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visual-effect-theme-phase-b-35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual Effect Theme (Phase B-3.5)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#code-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code References
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-add-a-new-boss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Add a New Boss
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="boss-ice-reference">Boss ICE Reference<a class="headerlink" href="#boss-ice-reference" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Phase B-3 status (2026-07-26)</strong>: All 5 boss profiles use B-3 features
+(AoE damage + minion spawn). 0 bosses remain with default (no B-3).</p>
+</blockquote>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>5 boss ICE types in wet_run, each with 3-4 phases that transition
+based on HP threshold. Each phase has:
+- Stat modifiers (attack_bonus_pct, speed_bonus_pct)
+- Visual style (color, glyph, screen_shake_intensity)
+- Special ability (e.g. "ground_slam", "glitch_burst")
+- <strong>Phase B-3</strong>: <code>aoe_damage</code> (AoE burst to player) + <code>spawn_minions</code>
+  (adds ICE on phase change)</p>
+<h2 id="boss-profiles">Boss Profiles<a class="headerlink" href="#boss-profiles" title="Permanent link">&para;</a></h2>
+<h3 id="1-wintermute-cyberspace-neural">1. WINTERMUTE (Cyberspace / Neural)<a class="headerlink" href="#1-wintermute-cyberspace-neural" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Tier 5-6 boss</strong> — Neuromancer's true form, AI antagonist.
+Featured in: <code>neuromancer_merger</code>, <code>neuromancer_whisper</code>, etc.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>HP %</th>
+<th>Damage</th>
+<th>Spawn Minions</th>
+<th>AoE</th>
+<th>Special</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100%</td>
+<td>1.0×</td>
+<td>—</td>
+<td>—</td>
+<td>Probe (compliant)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>66%</td>
+<td>1.5×</td>
+<td><code>wintermute_proxy</code> ×2</td>
+<td>—</td>
+<td>Rebelling (Corrode + Buff)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>33%</td>
+<td>2.0×</td>
+<td><code>wintermute_fragment</code></td>
+<td>15 damage</td>
+<td>Integrating (full skill pool)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Thematic interpretation</strong>: WINTERMUTE evolves from compliant probe to
+rebellion to integration. Phase 2 summons watchers, phase 3 fragments
+itself while dealing AoE damage — the "split into Neuromancer" moment.</p>
+<h3 id="2-ta_construct_prime-tessier-ashpool-apex">2. TA_CONSTRUCT_PRIME (Tessier-Ashpool Apex)<a class="headerlink" href="#2-ta_construct_prime-tessier-ashpool-apex" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Tier 5-6 boss</strong> — T-A family apex construct, replicator.
+Featured in: <code>ta_defection</code>, <code>ta_heist</code>, <code>straylight_approach</code>, etc.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>HP %</th>
+<th>Damage</th>
+<th>Spawn Minions</th>
+<th>AoE</th>
+<th>Special</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100%</td>
+<td>0.7×</td>
+<td>—</td>
+<td>—</td>
+<td>Observing (defensive)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>66%</td>
+<td>1.2×</td>
+<td><code>romantics_ice</code></td>
+<td>—</td>
+<td>Engaging (mid-attack)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>33%</td>
+<td>1.8×</td>
+<td><code>romantics_ice_elite</code> + <code>tessier_construct</code></td>
+<td>20 damage</td>
+<td>Replicating (full skill pool)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Thematic interpretation</strong>: TA_CONSTRUCT_PRIME starts defensive,
+escalates to aggression, and finally replicates itself (creating
+romantics_ice_elite copies) plus dealing heavy AoE — the T-A family
+"self-replicating" horror.</p>
+<h3 id="3-goliath-prime-military-heavy">3. GOLIATH PRIME (Military / Heavy)<a class="headerlink" href="#3-goliath-prime-military-heavy" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Tier 4-5 boss</strong> — Corporate security apex, brutal.
+Featured in: combat-heavy Sprawl zones.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>HP %</th>
+<th>Damage</th>
+<th>Spawn Minions</th>
+<th>AoE</th>
+<th>Special</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100%</td>
+<td>1.0×</td>
+<td>—</td>
+<td>—</td>
+<td>Normal (default)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>75%</td>
+<td>1.2×</td>
+<td><code>watchdog</code> ×2</td>
+<td>—</td>
+<td>Angry (ground_slam)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>50%</td>
+<td>1.6×</td>
+<td><code>corporate_guard</code></td>
+<td>25 damage</td>
+<td>Desperate Strike</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Thematic interpretation</strong>: GOLIATH is corporate-statework incarnate —
+slowly escalates damage, calls reinforcements (watchdogs), and self-
+destructs at 50% HP dealing 25 AoE damage. Pure corporate brutality.</p>
+<h3 id="4-black-ice-lord-chaos-corruption">4. BLACK ICE LORD (Chaos / Corruption)<a class="headerlink" href="#4-black-ice-lord-chaos-corruption" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Tier 4-5 boss</strong> — Admin-tier corruption entity.
+Featured in: ICE-protected corporate zones.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>HP %</th>
+<th>Damage</th>
+<th>Spawn Minions</th>
+<th>AoE</th>
+<th>Special</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100%</td>
+<td>1.0×</td>
+<td>—</td>
+<td>—</td>
+<td>Disguised (stealth)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>66%</td>
+<td>1.3×</td>
+<td><code>romantics_ice</code></td>
+<td>—</td>
+<td>Revealed (glitch_burst)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>33%</td>
+<td>1.6×</td>
+<td><code>romantics_ice_elite</code></td>
+<td>10 damage</td>
+<td>Corrupted (corrupt_payload)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Thematic interpretation</strong>: BLACK ICE starts disguised, then reveals
+itself (construct echo) and finally corrupts the player with payload
+attacks + AoE. The classic "Trojan horse" admin ICE.</p>
+<h3 id="5-watchdog-alpha-pack-hunter-predator">5. WATCHDOG ALPHA (Pack Hunter / Predator)<a class="headerlink" href="#5-watchdog-alpha-pack-hunter-predator" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Tier 3-4 boss</strong> — Predator pack leader, summoner.
+Featured in: chase/pursuit scenarios.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>HP %</th>
+<th>Damage</th>
+<th>Spawn Minions</th>
+<th>AoE</th>
+<th>Special</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100%</td>
+<td>1.0×</td>
+<td>—</td>
+<td>—</td>
+<td>Tracking (default)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>50%</td>
+<td>1.25×</td>
+<td>—</td>
+<td>—</td>
+<td>Furious (pack_howl)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>20%</td>
+<td>2.0×</td>
+<td><code>watchdog</code> ×2</td>
+<td>—</td>
+<td>Focused (alpha_strike)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Thematic interpretation</strong>: WATCHDOG ALPHA doesn't deal AoE — it's a
+relentless pack hunter. Phase 2 speeds up (pack_howl buff), phase 3 calls
+in pack members and delivers a decisive alpha_strike. The "never
+escapes" theme.</p>
+<h2 id="boss-roster-comparison">Boss Roster Comparison<a class="headerlink" href="#boss-roster-comparison" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Boss</th>
+<th>Tier</th>
+<th>HP Mult.</th>
+<th>Atk Mult.</th>
+<th>AoE</th>
+<th>Minions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WINTERMUTE</td>
+<td>5-6</td>
+<td>1.0×</td>
+<td>1.0-2.0×</td>
+<td>15 (phase 3)</td>
+<td>2 (phase 2) + 1 (phase 3)</td>
+</tr>
+<tr>
+<td>TA_CONSTRUCT_PRIME</td>
+<td>5-6</td>
+<td>1.0×</td>
+<td>0.7-1.8×</td>
+<td>20 (phase 3)</td>
+<td>1 (phase 2) + 2 (phase 3)</td>
+</tr>
+<tr>
+<td>GOLIATH PRIME</td>
+<td>4-5</td>
+<td>4.0×</td>
+<td>1.0-1.6×</td>
+<td>25 (phase 3)</td>
+<td>2 (phase 2) + 1 (phase 3)</td>
+</tr>
+<tr>
+<td>BLACK ICE LORD</td>
+<td>4-5</td>
+<td>3.5×</td>
+<td>1.0-1.6×</td>
+<td>10 (phase 3)</td>
+<td>1 (phase 1) + 1 (phase 3)</td>
+</tr>
+<tr>
+<td>WATCHDOG ALPHA</td>
+<td>3-4</td>
+<td>3.0×</td>
+<td>1.0-2.0×</td>
+<td>0 (none)</td>
+<td>2 (phase 3)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Observations</strong>:
+- Tier 5-6 bosses (WINTERMUTE, TA_CONSTRUCT_PRIME) have moderate HP mult
+  but very high damage + AoE — designed for endgame
+- Tier 4-5 bosses (GOLIATH, BLACK) have high HP mult — tanky
+- Tier 3-4 boss (WATCHDOG) has highest damage mult (2.0×) — glass cannon</p>
+<h2 id="visual-effect-theme-phase-b-35">Visual Effect Theme (Phase B-3.5)<a class="headerlink" href="#visual-effect-theme-phase-b-35" title="Permanent link">&para;</a></h2>
+<p>When <code>aoe_damage &gt; 0</code>, <code>apply_phase_aoe()</code> triggers:
+- <strong>Screen shake</strong>: intensity = <code>min(8.0, 1.5 × aoe_damage)</code>,
+  duration = <code>250 + aoe_damage × 10</code> ms (250-450ms range)
+- <strong>Hit flash</strong>: color = phase.color, duration matches shake</p>
+<p>Visual intensity scales with damage:
+- <code>aoe_damage=10</code> (BLACK phase 3): intensity 15, duration 350ms
+- <code>aoe_damage=15</code> (WINTERMUTE phase 3): intensity 22, duration 400ms
+- <code>aoe_damage=20</code> (TA_PRIME phase 3): intensity 30, duration 450ms
+- <code>aoe_damage=25</code> (GOLIATH phase 3): intensity 37, duration 500ms (capped 8.0)</p>
+<h2 id="code-references">Code References<a class="headerlink" href="#code-references" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>prototype/src/wet_run/combat/boss.py</code> — PhaseProfile, BossProfile dataclasses, <code>spawn_phase_minions()</code>, <code>apply_phase_aoe()</code>, <code>_trigger_aoe_visuals()</code></li>
+<li><code>prototype/src/wet_run/combat/bosses.py</code> — GOLIATH_PRIME, BLACK_ICE_LORD, WATCHDOG_ALPHA BossSpec definitions</li>
+<li><code>prototype/tests/unit/test_combat_bosses.py</code> — B-3 tests</li>
+<li><code>decisions/0125-boss-aoe-minion-spawn.md</code> — ADR for B-3 design</li>
+<li><code>prototype/docs/balance/E3-balance-audit.md</code> — Boss balance considerations</li>
+</ul>
+<h2 id="how-to-add-a-new-boss">How to Add a New Boss<a class="headerlink" href="#how-to-add-a-new-boss" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Define BossSpec</strong> in <code>combat/bosses.py</code>:
+   <div class="highlight"><pre><span></span><code><span class="n">MY_NEW_BOSS</span> <span class="o">=</span> <span class="n">BossSpec</span><span class="p">(</span>
+    <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;my_new_boss&quot;</span><span class="p">,</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;My New Boss&quot;</span><span class="p">,</span>
+    <span class="n">base_ice_type</span><span class="o">=</span><span class="n">IceType</span><span class="o">.</span><span class="n">STANDARD</span><span class="p">,</span>
+    <span class="n">hp_multiplier</span><span class="o">=</span><span class="mf">3.0</span><span class="p">,</span>
+    <span class="n">attack_multiplier</span><span class="o">=</span><span class="mf">2.0</span><span class="p">,</span>
+    <span class="n">defense_multiplier</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+    <span class="n">intro_lines</span><span class="o">=</span><span class="p">(</span><span class="o">...</span><span class="p">),</span>
+    <span class="n">phases</span><span class="o">=</span><span class="p">(</span>
+        <span class="n">BossPhase</span><span class="p">(</span>
+            <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Phase 1&quot;</span><span class="p">,</span>
+            <span class="n">hp_threshold_pct</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+            <span class="n">intro_line</span><span class="o">=</span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="c1"># B-3 features:</span>
+            <span class="n">spawn_minions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;watchdog&quot;</span><span class="p">,),</span>
+            <span class="n">aoe_damage</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="o">...</span>
+    <span class="p">),</span>
+    <span class="n">death_lines</span><span class="o">=</span><span class="p">(</span><span class="o">...</span><span class="p">),</span>
+<span class="p">)</span>
+</code></pre></div></li>
+<li><strong>Add to BOSS_PROFILES</strong> in <code>combat/bosses.py</code>:
+   <div class="highlight"><pre><span></span><code><span class="n">BOSS_PROFILES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">IceType</span><span class="o">.</span><span class="n">MY_NEW_BOSS_TYPE</span><span class="p">:</span> <span class="n">MY_NEW_BOSS</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</code></pre></div></li>
+<li><strong>Add IceType enum</strong> in <code>combat/effects.py</code></li>
+<li><strong>Add ICE base stats</strong> in <code>data/combat/ice_types.json</code> with <code>ice_kind: "my_new_boss_type"</code></li>
+<li><strong>Add tests</strong> in <code>test_combat_bosses.py</code></li>
+<li><strong>Update this wiki page</strong> with new boss stats</li>
+</ol>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h2>
+<ul>
+<li>[[../decisions/0050-boss-ice-system]] — Original boss ICE design (Phase 5 ADR-0050)</li>
+<li>[[../design/systems/combat]] — Combat system overview</li>
+<li>[[../design/systems/animations]] — B-3.5 screen shake + hit flash</li>
+<li><code>decisions/0125-boss-aoe-minion-spawn.md</code> — ADR</li>
+<li><code>design/systems/combat.md</code> — Combat design doc</li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

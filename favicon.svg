@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>
+    .bg { fill: #0a0e14; }
+    .bracket { fill: none; stroke: #66ffcc; stroke-width: 2; }
+    .accent { fill: #00ccff; }
+    .glitch { fill: #66ffcc; }
+  </style>
+  <rect class="bg" width="32" height="32"/>
+  <path class="bracket" d="M 6 8 L 4 8 L 4 24 L 6 24"/>
+  <path class="bracket" d="M 26 8 L 28 8 L 28 24 L 26 24"/>
+  <text class="glitch" x="16" y="20" text-anchor="middle"
+        font-family="monospace" font-size="14" font-weight="bold">RS</text>
+  <rect class="accent" x="13" y="22" width="6" height="1"/>
+</svg>

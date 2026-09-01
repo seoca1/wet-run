@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cast & Archetypes — Wet Run</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  h1 { color: #66ffcc; font-size: 26px; margin-bottom: 6px; }
+  h2 { color: #ffaa55; font-size: 18px; margin: 32px 0 12px; padding-bottom: 6px; border-bottom: 1px solid #1a2530; }
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 16px; }
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 16px; margin: -24px -24px 16px -8px;
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .sep { color: #2a3540; }
+
+  .intro {
+    background: #0d1420;
+    border: 1px solid #1a2530;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .intro p { margin-bottom: 8px; }
+  .intro code {
+    background: #1a1a2e;
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: #66ffcc;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+
+  .cast-card {
+    background: #0d1420;
+    border: 1px solid #1a2530;
+    border-radius: 6px;
+    padding: 14px;
+    transition: border-color 0.15s ease;
+    position: relative;
+  }
+  .cast-card:hover { border-color: #66ffcc; }
+  .cast-card .archetype-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #66ffcc22;
+    color: #66ffcc;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 600;
+  }
+  .cast-card.narrator .archetype-badge {
+    background: #ffaa5522;
+    color: #ffaa55;
+  }
+  .cast-card .cast-name {
+    font-size: 14px;
+    color: #c5d4e3;
+    margin-bottom: 4px;
+  }
+  .cast-card .cast-role {
+    font-size: 11px;
+    color: #8a98a8;
+    margin-bottom: 6px;
+  }
+  .cast-card .cast-meta {
+    font-size: 10px;
+    color: #6a7888;
+    border-top: 1px solid #1a2530;
+    padding-top: 8px;
+  }
+  .cast-card .cast-meta span { margin-right: 8px; }
+  .cast-card a.wiki-link {
+    color: #66ffcc;
+    text-decoration: none;
+    font-size: 10px;
+  }
+  .cast-card a.wiki-link:hover { text-decoration: underline; }
+
+  .archetype-card {
+    background: #0d1420;
+    border: 1px solid #1a2530;
+    border-radius: 6px;
+    padding: 14px;
+  }
+  .archetype-card .arc {
+    font-size: 14px;
+    color: #88dd44;
+    margin-bottom: 4px;
+  }
+  .archetype-card .count {
+    font-size: 11px;
+    color: #ffaa55;
+    margin-bottom: 8px;
+  }
+  .archetype-card .desc {
+    font-size: 11px;
+    color: #8a98a8;
+  }
+  .archetype-card a {
+    color: #66ffcc;
+    text-decoration: none;
+  }
+  .archetype-card a:hover { text-decoration: underline; }
+
+  .mapping-table {
+    background: #0d1420;
+    border: 1px solid #1a2530;
+    border-radius: 6px;
+    padding: 12px;
+    margin-top: 16px;
+    overflow-x: auto;
+  }
+  .mapping-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  .mapping-table th {
+    text-align: left;
+    color: #6a7888;
+    padding: 4px 8px;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid #1a2530;
+  }
+  .mapping-table td {
+    padding: 4px 8px;
+    border-bottom: 1px solid #0d1420;
+    color: #c5d4e3;
+  }
+  .mapping-table .arc-tag {
+    background: #1a1a2e;
+    padding: 1px 5px;
+    border-radius: 2px;
+    color: #66ffcc;
+    font-size: 9px;
+  }
+</style>
+<meta name="description" content="9 cast / 4 archetypes — full character system. case, sil, kas, suit + 3jane, angie, sally, wigan, neuromancer. Wiki links to Gibson cast pages.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, cast, character, archetype">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/jokey.html">
+<meta property="og:title" content="Cast & Archetypes — Wet Run">
+<meta property="og:description" content="9 cast / 4 archetypes — full character system. case, sil, kas, suit + 3jane, angie, sally, wigan, neuromancer. Wiki links to Gibson cast pages.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/jokey.html">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cast & Archetypes — Wet Run">
+<meta name="twitter:description" content="9 cast / 4 archetypes — full character system. case, sil, kas, suit + 3jane, angie, sally, wigan, neuromancer. Wiki links to Gibson cast pages.">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta name="theme-color" content="#0a0e14">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="./library.html">📚 Library</a>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Chars</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+  <span class="sep">•</span>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <span class="current">🎭 Cast</span>
+</nav>
+
+<h1>🎭 Cast & Archetypes</h1>
+<p class="subtitle">9 cast characters (story) × 4 archetypes (gameplay) — the game's character systems</p>
+
+<div class="intro">
+  <p>The game has <strong style="color:#66ffcc">two separate character systems</strong>:</p>
+  <p>
+    <strong style="color:#ffaa55">Cast (9)</strong> — Story characters. Each has a chapter.
+    <code>case</code> / <code>sil</code> / <code>kas</code> / <code>suit</code> / <code>3jane</code> /
+    <code>angie</code> / <code>sally</code> / <code>wigan</code> / <code>neuromancer</code>
+  </p>
+  <p>
+    <strong style="color:#88dd44">Archetypes (4)</strong> — Gameplay POV. Mission archetype.
+    <code>novice</code> (15) / <code>veteran</code> (15) / <code>heretic</code> (12) / <code>suit</code> (5) — 47 total
+  </p>
+  <p>The 9 cast names appear in <code>chapters.json</code> and <code>arcs.json</code> <code>character</code> field.<br>
+     The 4 archetypes appear in <code>missions.json</code> <code>story.character_ref</code> field.</p>
+  <p>Each archetype maps 1:1 to a primary cast: <code>novice→case</code>, <code>veteran→sil</code>, <code>heretic→kas</code>, <code>suit→suit</code>.<br>
+     The remaining 5 cast (3jane, angie, sally, wigan, neuromancer) are <em>cutscene / chapter-only</em> — no direct mission POV.</p>
+</div>
+
+<h2>🎭 Cast (9) — Story Characters</h2>
+<div class="grid">
+
+  <div class="cast-card">
+    <span class="archetype-badge">novice</span>
+    <div class="cast-name">Case</div>
+    <div class="cast-role">Console cowboy, ex-Chiba hustler</div>
+    <div class="cast-meta">
+      <span>Arc 1-5</span> · <span>48 missions</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/case.md">📖 Wiki: case.md</a> <a class="wiki-link" href="../../../Fiction/wiki/characters/case.md" target="_blank">🎭 Gibson: case.md</a>
+  </div>
+
+  <div class="cast-card">
+    <span class="archetype-badge">veteran</span>
+    <div class="cast-name">Sil</div>
+    <div class="cast-role">Veteran runner, Marly-era survivor</div>
+    <div class="cast-meta">
+      <span>Arc 1-5</span> · <span>48 missions</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/sil.md">📖 Wiki: sil.md</a> <a class="wiki-link" href="../../../Fiction/wiki/characters/molly-millions.md" target="_blank">🎭 Gibson: molly-millions.md</a>
+  </div>
+
+  <div class="cast-card">
+    <span class="archetype-badge">heretic</span>
+    <div class="cast-name">Kas</div>
+    <div class="cast-role">Heretic console cowboy, voodoo-channel</div>
+    <div class="cast-meta">
+      <span>Arc 2-5</span> · <span>12 missions</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/kas.md">📖 Wiki: kas.md</a> <a class="wiki-link" href="../../../Fiction/wiki/characters/kumiko-yanaka.md" target="_blank">🎭 Gibson: kumiko-yanaka.md</a>
+  </div>
+
+  <div class="cast-card">
+    <span class="archetype-badge">suit</span>
+    <div class="cast-name">Suit</div>
+    <div class="cast-role">Corporate operations, T-A supply chain</div>
+    <div class="cast-meta">
+      <span>Arc 2-5</span> · <span>5 missions</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/suit.md">📖 Wiki: suit.md</a> <a class="wiki-link" href="../../../Fiction/wiki/characters/slick-henry.md" target="_blank">🎭 Gibson: slick-henry.md</a>
+  </div>
+
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">3Jane</div>
+    <div class="cast-role">Tessier-Ashpool heir, L-5 consort</div>
+    <div class="cast-meta">
+      <span>Arc 5</span> · <span>cutscene only</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/3jane.md">📖 Wiki: 3jane.md</a> <a class="wiki-link" href="../../../Fiction/wiki/characters/lady-3jane-tessier-ashpool.md" target="_blank">🎭 Gibson: lady-3jane-tessier-ashpool.md</a>
+  </div>
+
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">Angie</div>
+    <div class="cast-role">Loa-receiver child, dollhouse drawer</div>
+    <div class="cast-meta">
+      <span>Arc 4</span> · <span>cutscene only</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/angie.md">📖 Wiki: angie.md</a> <a class="wiki-link" href="../../../Fiction/wiki/characters/angie-mitchell.md" target="_blank">🎭 Gibson: angie-mitchell.md</a>
+  </div>
+
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">Sally</div>
+    <div class="cast-role">Market operator, borg runner</div>
+    <div class="cast-meta">
+      <span>Arc 2-3</span> · <span>cutscene only</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/sally.md">📖 Wiki: sally.md</a> <a class="wiki-link" href="../../../Fiction/wiki/characters/molly-millions.md" target="_blank">🎭 Gibson: molly-millions.md</a>
+  </div>
+
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">Wigan</div>
+    <div class="cast-role">Vodou-code vessel, Zavijava host</div>
+    <div class="cast-meta">
+      <span>Arc 2</span> · <span>cutscene only</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/wigan.md">📖 Wiki: wigan.md</a> <a class="wiki-link" href="../../../Fiction/wiki/characters/wigan-ludgate.md" target="_blank">🎭 Gibson: wigan-ludgate.md</a>
+  </div>
+
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">Neuromancer</div>
+    <div class="cast-role">Merged AI, post-Wintermute/Neuromancer</div>
+    <div class="cast-meta">
+      <span>Arc 5</span> · <span>cutscene only</span>
+    </div>
+    <a class="wiki-link" href="../../../Fiction/wiki/characters/neuromancer.md">📖 Wiki: neuromancer.md</a> <a class="wiki-link" href="../../../Fiction/wiki/concepts/wintermute.md" target="_blank">🎭 Gibson: ../concepts/wintermute.md</a>
+  </div>
+
+</div>
+
+<h2>🎯 Archetypes (4) — Gameplay POV</h2>
+<div class="grid">
+
+  <div class="archetype-card">
+    <div class="arc">Novice</div>
+    <div class="count">48 missions · Arc 1-5</div>
+    <div class="desc">
+      Beginner tutorial POV. The <code>case</code> cast.
+      <br>Examples: <code>first_jack</code>, <code>tutorial_maze</code>, <code>ice_run</code>.
+      <br><a href="./mission-flow.html?filter=novice">→ See all novice missions</a>
+    </div>
+  </div>
+
+  <div class="archetype-card">
+    <div class="arc">Veteran</div>
+    <div class="count">48 missions · Arc 1-5</div>
+    <div class="desc">
+      Mid-game runner. The <code>sil</code> cast.
+      <br>Examples: <code>delivery_to_finn</code>, <code>first_contact</code>, <code>zion_express</code>.
+      <br><a href="./mission-flow.html?filter=veteran">→ See all veteran missions</a>
+    </div>
+  </div>
+
+  <div class="archetype-card">
+    <div class="arc">Heretic</div>
+    <div class="count">12 missions · Arc 2-5</div>
+    <div class="desc">
+      End-game voodoo-channel. The <code>kas</code> cast.
+      <br>Examples: <code>craft_job</code>, <code>aleph_fragment</code>, <code>neuromancer_merger</code>.
+      <br><a href="./mission-flow.html?filter=heretic">→ See all heretic missions</a>
+    </div>
+  </div>
+
+  <div class="archetype-card">
+    <div class="arc">Suit</div>
+    <div class="count">5 missions · Arc 2-5</div>
+    <div class="desc">
+      Corporate operations. The <code>suit</code> cast.
+      <br>Examples: <code>armitage_infiltration</code>, <code>hosaka_extraction</code>, <code>wintermute_negotiation</code>.
+      <br><a href="./mission-flow.html?filter=suit">→ See all suit missions</a>
+    </div>
+  </div>
+
+</div>
+
+<h2>🔗 Cast ↔ Archetype Mapping</h2>
+<div class="mapping-table">
+<table>
+  <thead>
+    <tr>
+      <th>Archetype</th>
+      <th>Primary Cast</th>
+      <th>Gameplay Role</th>
+      <th>Arc Range</th>
+      <th>Mission Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>novice</code></td>
+      <td><a href="../../../Fiction/wiki/characters/case.md">case</a></td>
+      <td>Beginner tutorial — first jack</td>
+      <td>Arc 1-5</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td><code>veteran</code></td>
+      <td><a href="../../../Fiction/wiki/characters/sil.md">sil</a></td>
+      <td>Mid-game runner — old score</td>
+      <td>Arc 1-5</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <td><code>heretic</code></td>
+      <td><a href="../../../Fiction/wiki/characters/kas.md">kas</a></td>
+      <td>End-game heretic — declaration</td>
+      <td>Arc 2-5</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <td><code>suit</code></td>
+      <td><a href="../../../Fiction/wiki/characters/suit.md">suit</a></td>
+      <td>Corporate ops — T-A supply</td>
+      <td>Arc 2-5</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<h2>📖 Chapter-only Cast (5)</h2>
+<p style="color:#8a98a8;font-size:12px">
+  These 5 cast characters appear in chapter scenes / graphic novel / cutscenes but do not have a direct mission POV.
+  They drive plot through <code>arcs.json</code> + chapter dialogues.
+</p>
+<div class="grid">
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">3Jane</div>
+    <div class="cast-meta">Arc 5 · Tessier-Ashpool heir · <a href="../../../Fiction/wiki/characters/3jane.md">wiki</a></div>
+  </div>
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">Angie</div>
+    <div class="cast-meta">Arc 4 · Loa-receiver child · <a href="../../../Fiction/wiki/characters/angie.md">wiki</a></div>
+  </div>
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">Sally</div>
+    <div class="cast-meta">Arc 2-3 · Market operator · <a href="../../../Fiction/wiki/characters/sally.md">wiki</a></div>
+  </div>
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">Wigan</div>
+    <div class="cast-meta">Arc 2 · Vodou-code vessel · <a href="../../../Fiction/wiki/characters/wigan.md">wiki</a></div>
+  </div>
+  <div class="cast-card narrator">
+    <span class="archetype-badge">chapter</span>
+    <div class="cast-name">Neuromancer</div>
+    <div class="cast-meta">Arc 5 · Merged AI · <a href="../../../Fiction/wiki/characters/neuromancer.md">wiki</a></div>
+  </div>
+</div>
+
+<script src="continue-reading.js"></script>
+</body>
+</html>

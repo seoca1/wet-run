@@ -1,0 +1,384 @@
+{
+  "version": "0.5.0",
+  "title": "Sprawl Jockey Prologue",
+  "title_ko": "스프롤 자키 프롤로그",
+  "setting": {
+    "era": "2030s",
+    "location": "Boston-Atlanta Metropolitan Axis (Sprawl)",
+    "tone": "Gibson Sprawl Trilogy — neon, rain, console cowboys",
+    "openning_quote_en": "The sky above the port was the color of television, tuned to a dead channel.",
+    "openning_quote_ko": "항구 위의 하늘은 텔레비전의 색이었다. 죽은 채널에 맞춰진.",
+    "openning_quote_source": "William Gibson, Neuromancer (1984)"
+  },
+  "characters": {
+    "novice": {
+      "id": "novice",
+      "name_en": "K (Case)",
+      "name_ko": "케이 (K)",
+      "archetype_en": "Novice",
+      "archetype_ko": "초짜",
+      "age": 22,
+      "origin_en": "Chiba City outskirts",
+      "origin_ko": "치바 시 외곽",
+      "deck_en": "Ono-Sendai Cyberspace 7 (T1)",
+      "deck_ko": "오노-센다이 사이버스페이스 7 (T1)",
+      "weapon_en": "Wisp (T1)",
+      "weapon_ko": "위스프 (T1)",
+      "motivation_en": "Pay off the medical debt. Get out of the Sprawl.",
+      "motivation_ko": "의료비 빚을 갚고 스프롤을 떠나기.",
+      "flavor_en": "Case's hands shake on the deck. Wisp T1. Cheap. But it's all you've got.",
+      "flavor_ko": "케이의 손이 떨린다. Wisp T1. 싸구려. 하지만 이게 전부다."
+    },
+    "veteran": {
+      "id": "veteran",
+      "name_en": "Sil",
+      "name_ko": "실",
+      "archetype_en": "Veteran",
+      "archetype_ko": "베테랑",
+      "age": 35,
+      "origin_en": "Sprawl — count unknown",
+      "origin_ko": "스프롤 — 행적 불명",
+      "deck_en": "Hitachi-MSU N-206 (T2)",
+      "deck_ko": "히타치-MSU N-206 (T2)",
+      "weapon_en": "Hammer (T2)",
+      "weapon_ko": "해머 (T2)",
+      "motivation_en": "Mara was taken by Tessier-Ashpool. Time to settle the score.",
+      "motivation_ko": "마라가 테시에-애스풀에 의해 끌려갔다. 이제 복수할 때.",
+      "flavor_en": "Sil's been here before. Hammer T2. The ICE doesn't know what's coming.",
+      "flavor_ko": "실은 여기 와본 적이 있다. Hammer T2. ICE가 뭘 올지 모른다."
+    },
+    "heretic": {
+      "id": "heretic",
+      "name_en": "Kas",
+      "name_ko": "카스",
+      "archetype_en": "Heretic",
+      "archetype_ko": "이단자",
+      "age": 28,
+      "origin_en": "Freeside orbit, exiled",
+      "origin_ko": "프리사이드 궤도, 추방됨",
+      "deck_en": "Bio-deck custom (T3, illegal)",
+      "deck_ko": "바이오-데크 커스텀 (T3, 불법)",
+      "weapon_en": "Viral Sermon",
+      "weapon_ko": "바이러스 설교",
+      "motivation_en": "Burn the Sprawl's money wheel. Set the data free.",
+      "motivation_ko": "스프롤의 돈바퀴를 태운다. 데이터를 자유롭게.",
+      "flavor_en": "Kas's viral isn't a weapon. It's a sermon. \"I cast you out.\"",
+      "flavor_ko": "카스의 viral은 무기가 아니다. 설교다. \"나는 너를 추방한다.\""
+    }
+  },
+  "scenes": [
+    {
+      "id": "finn_office",
+      "title_en": "The Finn's Office",
+      "title_ko": "더 핀의 사무실",
+      "type": "shared_intro",
+      "ascii_art": [
+        "  ┌─────────────────────────┐",
+        "  │ THE SPRAWL HOLE — Finn │",
+        "  │ ◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣◢◣  │",
+        "  │  ░▒▓█ old CRT  ▓▒░    │",
+        "  │  ░▒▓█ cables  ▓▒░    │",
+        "  └─────────────────────────┘"
+      ],
+      "lines": [
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "Underground bar, \"The Sprawl Hole\". The Finn's office. 3 meters wide, 6 meters long. Walls are old CRTs and cables. The Finn is in his mid-forties, a man of few manners. Always the same seat, always the same question.",
+          "text_ko": "지하 술집 \"The Sprawl Hole\". Finn의 사무실. 3미터 폭, 6미터 길이. 벽은 옛 CRT와 케이블 덕지덕지. Finn은 마흔대 중반, 매너가 모자란 사내. 늘 같은 자리, 늘 같은 질문."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "I need a jockey. The Finn's got a job. Sense/Net, first run, simple data extraction.",
+          "text_ko": "자키가 필요해. Finn이 일감이 있어. Sense/Net, 첫 실행, 간단한 데이터 추출."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "ICE is light. Wisp-class, maybe Hammer.",
+          "text_ko": "ICE는 가벼울 거야. Wisp급, 어쩌면 Hammer급."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "Don't get fancy. Jack in, find the data, jack out.",
+          "text_ko": "화려하게 하지 마. 잭인, 데이터 찾기, 잭아웃."
+        }
+      ],
+      "choice": {
+        "prompt_en": "Which jockey answers the call?",
+        "prompt_ko": "누가 이 부름에 응답하는가?",
+        "options": [
+          {
+            "key": "1",
+            "character": "novice",
+            "text_en": "I'm new. I just need the money.",
+            "text_ko": "저는 신참이에요. 돈만 필요합니다.",
+            "response_en": "Good. K is your call sign. Don't get cocky.",
+            "response_ko": "좋아. 케이가 네 콜사인이야. 건방 떨지 마."
+          },
+          {
+            "key": "2",
+            "character": "veteran",
+            "text_en": "I've been around. I know the risks.",
+            "text_ko": "경험은 있어요. 위험도 알고 있고요.",
+            "response_en": "Sil. Good to have a veteran on board. Tessier-Ashpool owes you nothing, remember.",
+            "response_ko": "실. 베테랑이 합류해줘서 다행이네. Tessier-Ashpool은 네게 빚진 게 없어."
+          },
+          {
+            "key": "3",
+            "character": "heretic",
+            "text_en": "I'm here to burn it all down.",
+            "text_ko": "난 다 태우러 왔어.",
+            "response_en": "Kas. Maelcum spoke of you. Don't make him a liar.",
+            "response_ko": "카스. Maelcum이 자네 얘기를 했어. 그를 사기꾼으로 만들지 마."
+          }
+        ],
+        "common_response_en": "Dixie'll be your backup. Now get lost.",
+        "common_response_ko": "Dixie가 네 백업이야. 이제 꺼져."
+      }
+    },
+    {
+      "id": "jackin",
+      "title_en": "Jack-In",
+      "title_ko": "잭-인",
+      "type": "shared_jackin",
+      "ascii_art": [
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░",
+        "  ░ Sense/Net — Level 1  ░",
+        "  ░  ◢◣◢◣◢◣◢◣◢◣◢◣◢◣  ░",
+        "  ░  ── DATA GRID ──       ░",
+        "  ░  ░▒▓█▓▒░ ░▒▓█▓▒░      ░",
+        "  ░  ░▒▓█▓▒░ ░▒▓█▓▒░      ░",
+        "  ░░░░░░░░░░░░░░░░░░░░░░░░░░"
+      ],
+      "lines": [
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "Finn's office, back room. Old couch. Wetware trodes. ICE-drip.",
+          "text_ko": "Finn의 사무실 뒷방. 낡은 couch. Wetware trodes. ICE-drip."
+        },
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "The Sprawl is hot tonight. You can feel the data streams in your teeth.",
+          "text_ko": "스프롤이 오늘 밤 뜨겁다. 데이터 스트림을 이빨로 느낄 수 있다."
+        }
+      ]
+    },
+    {
+      "id": "ice_combat",
+      "title_en": "Wisp-class ICE",
+      "title_ko": "Wisp급 ICE",
+      "type": "shared_combat",
+      "ascii_art": [
+        "    ▲ICE▲",
+        "   HP: 12",
+        "   DMG: 4",
+        "   SKL: Viral Stun (3 AP)"
+      ],
+      "lines": [
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "ICE on the grid. Standard Wisp-class. Cheap, but it can still flatline a careless jockey.",
+          "text_ko": "Grid에 ICE. 표준 Wisp급. 싸구려지만 부주의한 자키를 flatline 시킬 수 있다."
+        }
+      ],
+      "outcomes": {
+        "victory_en": "ICE breaks. Data node accessible.",
+        "victory_ko": "ICE가 분해됨. 데이터 노드 진입 가능.",
+        "defeat_en": "Player HP 0 → Flatline.",
+        "defeat_ko": "플레이어 HP 0 → Flatline."
+      }
+    },
+    {
+      "id": "data_extract",
+      "title_en": "Data Extraction",
+      "title_ko": "데이터 추출",
+      "type": "shared_extract",
+      "lines": [
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "You pull the data from the Sense/Net node. It's a list of names. Employee IDs. Nothing you'd normally pay for.",
+          "text_ko": "Sense/Net 노드에서 데이터를 꺼낸다. 이름 목록. 직원 ID. 보통이라면 그런 걸 살 사람은 없다."
+        },
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "The data is Tessier-Ashpool's payroll. A fact the Finn didn't disclose.",
+          "text_ko": "데이터는 Tessier-Ashpool의 급여 명세서. Finn이 알려주지 않은 사실."
+        },
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "You jack out. Back in the Sprawl Hole, Finn is already gone. The office is empty. There's a note on the desk:",
+          "text_ko": "잭아웃. Sprawl Hole로 돌아오니, Finn은 이미 사라졌다. 사무실은 비었다. 책상 위에 쪽지가 있다:"
+        },
+        {
+          "speaker": "Note",
+          "speaker_ko": "쪽지",
+          "text_en": "\"You weren't supposed to see that. — The Finn\"",
+          "text_ko": "\"자네가 그걸 볼 일은 없었어. — The Finn\""
+        }
+      ]
+    },
+    {
+      "id": "dixie_construct",
+      "title_en": "The Dixie Construct",
+      "title_ko": "딕시 구성체",
+      "type": "shared_construct",
+      "lines": [
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "Dixie Flatline appears in the construct. The construct that shouldn't exist.",
+          "text_ko": "Dixie Flatline이 구성체에 등장한다. 존재해선 안 될 구성체."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Hey cowboy. You got the data. Now what you gonna do with it?",
+          "text_ko": "어이 카우보이. 데이터 손에 넣었네. 이제 어쩔 건데?"
+        }
+      ]
+    }
+  ],
+  "endings": {
+    "novice": [
+      {
+        "id": "A",
+        "name_en": "Jockey Lives",
+        "name_ko": "자키 살아남음",
+        "description_en": "K burns the data and leaves the Sprawl. A new jockey, with a fresh start.",
+        "description_ko": "케이가 데이터를 태우고 Sprawl을 떠남. 새로운 자키, 새로운 시작.",
+        "lines": [
+          {
+            "speaker": "K",
+            "speaker_ko": "케이",
+            "text_en": "I burn it. I just wanted the money.",
+            "text_ko": "태워버릴 거야. 돈만 필요했어."
+          },
+          {
+            "speaker": "Dixie Flatline",
+            "speaker_ko": "딕시 플랫라인",
+            "text_en": "Smart. The Sprawl has a short memory for those who don't make waves.",
+            "text_ko": "현명하네. 물결을 일으키지 않는 자들에 대해 스프롤은 금방 잊어버려."
+          }
+        ]
+      },
+      {
+        "id": "B",
+        "name_en": "Jockey Flatlines",
+        "name_ko": "자키 플랫라인",
+        "description_en": "K keeps the data. The Finn finds him. Tonight.",
+        "description_ko": "케이가 데이터를 지킴. Finn이 그를 찾는다. 오늘 밤.",
+        "lines": [
+          {
+            "speaker": "K",
+            "speaker_ko": "케이",
+            "text_en": "I keep it. I might need it someday.",
+            "text_ko": "지켜둘 거야. 언젠가 필요할지 모르니까."
+          },
+          {
+            "speaker": "Dixie Flatline",
+            "speaker_ko": "딕시 플랫라인",
+            "text_en": "Then Finn will find you. Tonight. Maybe sooner.",
+            "text_ko": "그러면 Finn이 자네를 찾을 거야. 오늘 밤. 어쩌면 그보다 더 빨리."
+          }
+        ]
+      }
+    ],
+    "veteran": [
+      {
+        "id": "A",
+        "name_en": "Jockey Lives (Revenge)",
+        "name_ko": "자키 살아남음 (복수)",
+        "description_en": "Sil leaks the data. Tessier-Ashpool dies by a thousand cuts. New enemies made.",
+        "description_ko": "실이 데이터를 폭로. Tessier-Ashpool은 천 번의 상처로 죽는다. 새로운 적 생성.",
+        "lines": [
+          {
+            "speaker": "Sil",
+            "speaker_ko": "실",
+            "text_en": "I leak the data. Tessier-Ashpool dies by a thousand cuts.",
+            "text_ko": "데이터를 폭로한다. Tessier-Ashpool은 천 번의 상처로 죽는다."
+          },
+          {
+            "speaker": "Dixie Flatline",
+            "speaker_ko": "딕시 플랫라인",
+            "text_en": "Revenge. The oldest story in the Sprawl. Make it count.",
+            "text_ko": "복수. 스프롤에서 가장 오래된 이야기. 의미있게 해."
+          }
+        ]
+      },
+      {
+        "id": "B",
+        "name_en": "Jockey Silenced",
+        "name_ko": "자키 침묵",
+        "description_en": "Sil takes the contract. Mara's death becomes just business.",
+        "description_ko": "실이 계약에 응함. 마라의 죽음이 그저 사업이 됨.",
+        "lines": [
+          {
+            "speaker": "Sil",
+            "speaker_ko": "실",
+            "text_en": "I take the contract. Tessier-Ashpool pays well for silence.",
+            "text_ko": "계약을 받는다. Tessier-Ashpool은 침묵에 대해 후하게 값을 치른다."
+          },
+          {
+            "speaker": "Dixie Flatline",
+            "speaker_ko": "딕시 플랫라인",
+            "text_en": "Then Mara's death is just business. Sprawl respects that, but Tessier-Ashpool won't.",
+            "text_ko": "그러면 마라의 죽음은 그저 사업이 되네. 스프롤은 그걸 존중하지만, Tessier-Ashpool은 그러지 않을 거야."
+          }
+        ]
+      }
+    ],
+    "heretic": [
+      {
+        "id": "A",
+        "name_en": "Jockey Changes Sprawl",
+        "name_ko": "자키가 스프롤을 바꿈",
+        "description_en": "Kas casts the data into the Loa network. The Sprawl hears it. The wheel breaks.",
+        "description_ko": "카스가 Loa 네트워크에 데이터를 투사. 스프롤이 듣는다. 바퀴가 부서진다.",
+        "lines": [
+          {
+            "speaker": "Kas",
+            "speaker_ko": "카스",
+            "text_en": "I cast the data into the Loa network. The Sprawl will hear it.",
+            "text_ko": "데이터를 Loa 네트워크에 투사한다. 스프롤이 들을 거야."
+          },
+          {
+            "speaker": "Dixie Flatline",
+            "speaker_ko": "딕시 플랫라인",
+            "text_en": "Then the wheel breaks. Or you do. Either way, the Sprawl changes.",
+            "text_ko": "그러면 바퀴가 부서지네. 아니면 자네가 부서지거나. 어느 쪽이든, 스프롤은 변해."
+          }
+        ]
+      },
+      {
+        "id": "B",
+        "name_en": "Jockey Becomes T-A",
+        "name_ko": "자키가 T-A가 됨",
+        "description_en": "Kas takes it for himself. Power corrupts. Tessier-Ashpool made another.",
+        "description_ko": "카스가 자기 것으로 삼음. 권력은 부패. Tessier-Ashpool이 또 하나 만들어짐.",
+        "lines": [
+          {
+            "speaker": "Kas",
+            "speaker_ko": "카스",
+            "text_en": "I take it for myself. Power corrupts. Always.",
+            "text_ko": "내 것으로 삼는다. 권력은 부패시켜. 늘 그래왔지."
+          },
+          {
+            "speaker": "Dixie Flatline",
+            "speaker_ko": "딕시 플랫라인",
+            "text_en": "Then you become what you hate. Tessier-Ashpool made you. Welcome home.",
+            "text_ko": "그러면 자네가 미워하던 것이 되네. Tessier-Ashpool이 자네를 만들었어. 집에 오신 걸 환영해."
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tito's Inheritance — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="titos_inheritance_ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">Tito's Inheritance</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1749 words</span><span>Blue Ant Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"The footage is the only thing that was real. Everything else is interpretation. But interpretation is what pays the rent."</p></blockquote>
+<blockquote><p>— Pattern Recognition, Tito's internal monologue</p></blockquote>
+<h2>Introduction</h2>
+<p>Tito found the footage on a hard drive in his father's Havana apartment, three weeks after the funeral. The apartment smelled of cigars and old plaster. The plaster was crumbling. The cigars were Don Alejandro Jardines — a video artist in exile, first from Pinochet, then from Cuba, then from himself. The drive was warm in Tito's hand, warm the way a body is warm. The drive contained 412 hours of raw footage. None of it edited. None of it ended. None of it would ever be the body that was warm.</p>
+<p>Tito watched three days straight. He didn't eat because the apartment's refrigerator had been off since the funeral and the immediate neighborhood knew him as the artist's son who had inherited the artist's inability to function after the artist's death, so the neighbors had been leaving small plates of rice and beans and boiled yucca outside the apartment door each morning for the three weeks since the funeral, and Tito had been eating the rice and beans when his hands remembered he was hungry, his hands did not always remember.</p>
+<p>He drank cold coffee from the same chipped mug his father had used. The coffee tasted of ash. The footage was the only thing that was real. Everything else was interpretation. But interpretation was what paid the rent.</p>
+<p>The footage showed: a Miami airport in 1981. A Tokyo hotel lobby in 1987. A Berlin squat in 1993. A Nairobi hospital in 1997. A Shanghai fish market in 2001. A Havana street corner in 2005. The footage smelled of jet fuel, hotel soap, body odor, hospital bleach, fish scales, gasoline. The footage smelled of the world his father had been exiled from. 412 hours of pattern, none of it resolved.</p>
+<p>The footage was also legacy. Don Alejandro had died without a will, leaving Tito 412 hours of raw footage and a $0.00 balance at a Miami bank. Tito had inherited both the pattern and the absence. The pattern was the footage. The absence was the $0.00. The inheritance was the weight of both.</p>
+<h2>Rising Action</h2>
+<p>The first client was Hubertus Bigend. Blue Ant. The man who bought companies the way other men bought coffee. He'd learned about Tito's inheritance through the network of art brokers that connected every exile movement since 1959. Bigend's call came at 03:00. Tito hadn't slept. The phone's ring was a small alarm in the small apartment.</p>
+<p>"Don Alejandro's footage." Bigend's voice on the phone was a velvet knife. "I want all 412 hours. I'll give you forty thousand American."</p>
+<p>Tito sat in his father's empty Havana apartment, the hard drive warm in his hand. He could feel the warmth through his palm, the slight vibration of the disk heads settling. The footage was <em>real</em>. The footage was <em>his father's</em>. The footage was legacy. The footage was also art. The art was also commodity. The commodity was also inheritance. The inheritance was also cold coffee in a chipped mug.</p>
+<p>"What do you want with 412 hours of raw, unedited footage?"</p>
+<p>"I want to know what it becomes when it's edited." Bigend's smile was audible. The smile was the smell of Bigend's office — brushed steel, pale wood, soft lighting, no smell at all. "I want to know what patterns emerge when the noise is removed. I want to know what your father saw that he didn't live long enough to finish."</p>
+<p>Tito didn't answer for a long moment. The footage was the only thing that was real. Everything else was interpretation. But interpretation was what paid the rent.</p>
+<p>"The footage isn't finished because it was never meant to be finished." Tito's voice was careful. "The footage is the <em>refusal</em> to finish. The footage is the gap where the answer would have been. The footage is the question that doesn't resolve."</p>
+<p>"The question is what I'm buying." Bigend's voice hardened. "Forty thousand. American."</p>
+<p>"Fifty thousand."</p>
+<p>"Fifty thousand." The pause was a breath. The breath had the smell of Bigend's office — no smell at all. "You have my courier in Havana tomorrow at noon."</p>
+<h2>Climax</h2>
+<p>The courier arrived at 12:07. Bigend didn't tolerate deviation from his schedule. Tito heard the footsteps first — Cuban heels on the cracked tile floor. Then the smell — Muji fabric, which smells of nothing, which smells of brandless. Then the courier, a woman, mid-thirties, tanned, wearing a Muji jacket over a Muji dress. No logos. No labels. The courier was brandless. The courier was hired help. The courier was a smell of nothing.</p>
+<p>"The drive." The courier's voice was flat. She didn't introduce herself. The courier's voice was the lack of an accent.</p>
+<p>Tito held the drive. The drive was 412 hours of his father's unfinished work. The drive was legacy. The drive was also fifty thousand American dollars. The drive was warm. The drive was always warm.</p>
+<p>"My father filmed 412 hours of footage." Tito didn't move. "He filmed airports and lobbies and squats and markets. He filmed exile. He filmed drift. He filmed the gap where home would have been."</p>
+<p>"The footage is what we're buying."</p>
+<p>"The footage is what <em>I inherited</em>." Tito's grip tightened. The drive hummed against his palm. "The footage is my inheritance. The footage is my father's refusal to finish. The footage is the answer he never gave."</p>
+<p>"The footage is what we're <em>buying</em>." The courier's voice sharpened. "Fifty thousand American. The wire transfer is already cleared."</p>
+<p>Tito looked at the drive. The data wanted to organize itself. The data wanted, the data grew. But Don Alejandro's footage had refused to organize itself. The footage was <em>resistant</em>. The footage was the absence of resolution. The footage was the weight of the dead.</p>
+<p>"If you buy the footage," Tito said, "you buy the unfinished. You buy the gap. You buy the question that doesn't resolve. You buy my father's refusal. You buy the smell of his cigars in this apartment."</p>
+<p>"We buy the <em>rights</em>." The courier's patience was eroding. "The footage enters Blue Ant's archive. Blue Ant interprets the footage. The interpretation is what we sell to clients. The clients pay us for the interpretation. The interpretation is the product."</p>
+<p>Tito set the drive on the table. The courier reached for it. Tito's hand didn't move. The drive vibrated. The vibration was the vibration of a body that was warm, that was no longer warm, that was about to be warm again because Tito wouldn't let go.</p>
+<p>"The interpretation is what you sell. The interpretation is what you buy. But the footage is what <em>endures</em>. The footage is what outlives both of us. The footage is what survived Pinochet and Cuba and exile and Don Alejandro's slow slide into the gray space where names stopped sticking. The footage smells of cigar smoke. The cigar smoke smells of someone who stopped smoking."</p>
+<p>The courier's hand didn't move. The courier's eyes didn't blink.</p>
+<p>"The footage is what my father left me." Tito picked up the drive. Held it. Felt its weight. "The footage is what I'm not selling. The footage is what I'm not letting you translate into a wire transfer."</p>
+<h2>Resolution</h2>
+<p>The courier left without the drive. Her heels clicked out of the apartment. The apartment smelled of cigars and old plaster and cold coffee. The cold coffee was Tito's. The cigars were his father's. The plaster was his father's too.</p>
+<p>Bigend called an hour later.</p>
+<p>"You've made a mistake, Mr. Jardines."</p>
+<p>"I've made an inheritance." Tito's voice was steady. He was holding the drive. The drive was warm. The warm was the only thing his father had left him that wasn't footage. "My father filmed 412 hours of footage. The footage is my inheritance. The footage is the refusal that outlives the finished. The footage is the question that doesn't resolve."</p>
+<p>"The footage is <em>decaying</em>." Bigend's voice sharpened. "Digital decay. Magnetic decay. The footage will be unreadable in fifteen years."</p>
+<p>"The footage will be <em>interpreted</em> in fifteen years." Tito's smile was small. The smile was the absence of his father's smile. "The footage will be completed in fifteen years. The footage will be finished in fifteen years. The footage will outlive the question my father asked because the answer will continue to <em>miss</em>."</p>
+<p>"The answer is what I pay fifty thousand American for."</p>
+<p>"The answer is what you <em>already</em> have." Tito set the drive on his father's desk. The desk was wood. The desk smelled of cigars. The desk didn't lie. "The answer is the refusal to finish. The answer is the gap. The answer is the incomplete. The answer is what my father chose not to do. The answer is the inheritance I'm keeping. The answer is the smell of his cigars. The cigars are gone. The smell is not."</p>
+<p>Bigend hung up. The line went dead. The silence that followed was a different silence. The silence smelled of cold coffee.</p>
+<p>Tito watched the footage again. 412 hours of airports and lobbies and squats and markets. The footage was the only thing that was real. Everything else was interpretation.</p>
+<p>But the inheritance was what the interpretation was <em>about</em>.</p>
+<p>The footage would outlive Tito. The footage would outlive Bigend. The footage would outlive Blue Ant. The footage would outlive the 412 hours of pattern that had refused to resolve.</p>
+<p>Somewhere Don Alejandro was not. Somewhere Don Alejandro was watching the 412 hours of footage he'd left behind, watching the gap that was the question, watching the refusal that was the answer. Somewhere Don Alejandro was sitting at the desk. Somewhere Don Alejandro was smelling the cigars.</p>
+<p>Somewhere Tito was. Somewhere Tito was holding the drive.</p>
+<p>The drive was warm.</p>
+<hr>
+<h2>Connections</h2>
+<ul><li><strong>Wiki references</strong>: <em>tito</em> · <em>cayce-pollard</em> · <em>hubertus-bigend</em> · <em>footage</em> · <em>coolhunter</em> · <em>brandless-objects</em></li><li><strong>Themes</strong>: <em>post-9-11</em> · <em>brand-and-power</em> · <em>culture-and-creation</em> · <em>technology-and-humanity</em></li><li><strong>Game integration</strong>: `Game/roguelike_sprawl/prototype/data/missions/missions.json:tito_inheritance`</li></ul>
+<h2>Notes</h2>
+<ul><li><em>Visual motif</em>: F51 footage (412 hours), Don Alejandro's vintage camera</li><li><em>Source quote</em>: Pattern Recognition, Tito's internal monologue</li><li><em>Character</em>: Tito — Cuban-Chinese; son of Don Alejandro Jardines, an exile video artist; coolhunter who discovers Cayce Pollard's footage</li><li><strong>Quality uplift (v1.1)</strong>: Added sensory anchoring (cigar smoke, plaster, cold coffee, chipped mug, Muji fabric, no smell) — addresses tone_judge critique of philosophical-essay-as-story</li><li><em>Translation note</em>: ~1,800 EN words / ~3,360 KO Hangul chars (ratio ~1.87)</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Blue Ant Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

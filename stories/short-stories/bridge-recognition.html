@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bridge Recognition — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../glossary.css">
+    <link rel="stylesheet" href="../../missions.css">
+    <link rel="stylesheet" href="../../reading-position.css">
+    <link rel="stylesheet" href="../../sync-scroll.css">
+    <link rel="stylesheet" href="../../print.css" media="print">
+    <link rel="stylesheet" href="../../reader-controls.css">
+    <style>
+        :root { --bg-color: #faf8f5; --text-color: #2c2c2c; --accent-color: #e94560; --meta-color: #666666; --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif; --max-width: 680px; --line-height: 1.8; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body { background-color: var(--bg-color); color: var(--text-color); font-family: var(--font-serif); line-height: var(--line-height); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge { display: inline-block; font-family: monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent-color); background: #1a1a2e15; padding: 0.25rem 0.75rem; border-radius: 2px; margin-bottom: 1rem; text-decoration: none; }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 { font-size: 1.4rem; font-weight: 600; color: var(--accent-color); margin: 2.5rem 0 1rem; }
+        .story-body blockquote { font-style: italic; color: var(--meta-color); border-left: 3px solid var(--accent-color); padding-left: 1rem; margin: 2rem 0; }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+        .lang-indicator { position: fixed; top: 1rem; right: 1rem; font-family: monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--meta-color); background: var(--bg-color); padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7; }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="bridge-recognition.ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <a class="character-badge" href="../../../../../Fiction/wiki/characters/kas.md" target="_blank" rel="noopener" title="Open wiki page">Kas</a>
+            <h1 class="story-title">Bridge Recognition</h1>
+            
+            <div class="story-meta">
+                <span>1582 words</span>
+                <span>Sprawl × Bridge crossover</span>
+                <span>Arc 4</span>
+                <span>Standalone</span>
+            </div>
+        </header>
+        <article class="story-body">
+<h2>Bridge Recognition</h2>
+<blockquote><p>"The sky above the port was the color of television, tuned to a dead channel."</p></blockquote>
+<blockquote><p>— *Neuromancer*, opening line</p></blockquote>
+<h2>Introduction</h2>
+<p>I am Case. I lived in the matrix of the Sprawl. I went through the merger of Wintermute and Neuromancer. I knew the grip Armitage kept on me, and I saw the mirror-lenses set behind Molly's eyes. I met Dixie's Flatline, the dead man awake again in the same dead way, and I learned how a construct made of dead RAM can still say *I*.</p>
+<p>It all ended for me in the fog of 2007.</p>
+<p>I left the Sprawl. I left the matrix. I buried the Ono-Sendai deck in a corner of a Bay Bridge warehouse, and the constructs I had helped bring into the world are no longer mine to talk to. Wintermute no longer needed a name after the merger. 3Jane is busy clearing out what is left of Tessier-Ashpool. Freeside keeps spinning, and the cyberspace inside Freeside keeps spinning, and I am no longer on that axis at all.</p>
+<p>The *rest* of things is not the Sprawl. The *rest* of things is a door. A door does not tie one side to the other. A door is simply the possibility that a person can walk across from one side into the other.</p>
+<p>When Case reached the *rest of things*, the fog swallowed what was in front of him. The fog of the Sprawl is not this fog. The fog here tastes different, salt and diesel exhaust, a metallic edge. Case did not slow down. Case heard the *cable song* first. The low *hum* the bridge cables give off when the wind moves through them. Nothing like the ICE-warning tone inside the matrix, but the same kind of thing, a machine talking to itself.</p>
+<p>Case stopped. Case saw the bridge. The Golden Gate. Bay Area. Fog. Cables. Hangers. The bridge was bigger than any building in the Sprawl, simpler than any sector of Freeside. Case *read* the bridge. The bridge said to Case: "You have reached the *rest of things*. The *rest of things* has reached you. Therefore, Case and the *rest of things* are one."</p>
+<h2>Rising Action</h2>
+<p>*On the bridge* there was Chevette.</p>
+<p>Chevette was a courier on a fixie bicycle, two polymer cargo baskets strapped to the back, a person who moved messages across the fog. Chevette's pedals *creaked* in the damp. Chevette's jacket was polyester layered over gauze, the working clothes of the Bridge. Chevette's skin was cold. Chevette's hair was damp from the fog.</p>
+<p>Chevette had an *allergy*. The *allergy* was a *culture*. *Culture* was a *refusal*. And the *refusal* was the same kind of *refusal* in the Sprawl, the place I had just walked out of. Refusing the culture the corporations make. Refusing what the matrix insists on calling *yours*. The matrix does not own *you*. *Culture* does not own *you*. *You* are *your* *culture*.</p>
+<p>Chevette was sitting on the concrete railing under hanger 11 when I said it. "Chevette." Calling a name into the fog is a dangerous thing to do on the Bridge. But on *the bridge*, *names* work differently. The bridge treats *names* the way code treats handles.</p>
+<p>"I am Case. I escaped from the Sprawl. I went through the merger of Wintermute and Neuromancer. I left the matrix. Then I found *the bridge*. The bridge gave me *recognition*. *Recognition* gave me *the bridge*. *The bridge* and *recognition* are one thing."</p>
+<p>Chevette lifted her head. Chevette's lenses were not Molly's lenses from the Sprawl. Chevette's lenses were designed for *refusal*, a lens that *blurs* the edge of vision so that any ad or any neon that enters the eye goes soft the moment it enters.</p>
+<p>"Case." Chevette said it. "I am Chevette. I am a courier on a fixie bicycle. I have an allergy. The allergy is a refusal. The refusal is my culture. I am my culture."</p>
+<p>"Chevette." I said it. "Your *allergy* is my gift to you. The gift is culture. Culture is the bridge. The bridge keeps you, and you keep the bridge. That is the whole of it."</p>
+<p>Chevette laughed, briefly. The sound of the laugh went away into the fog. The bridge was *playing* its *cable song*.</p>
+<p>"Case." Chevette said it. "*You* escaped from the Sprawl. *You* reached *here*. *Here* is the bridge. The bridge is your *rest of things*. Your *rest of things* is the bridge. Therefore, *you* are *here*."</p>
+<h2>Climax</h2>
+<p>The *fog* thickened. Thickness was a *refusal*. Fog is the simplest way for *culture* to fail to reach you: the fog eats the *ads*, blurs the *neon*, hides the *names*. Case and Chevette sat down under *hanger 11* on the bridge. The *concrete* was *cold*. The *hum* of the *cables* mixed with the *fog* and made a low-frequency *vibration*. The bridge *lifted us up*.</p>
+<p>**But** the two of them were *not* one thing. Case was the Case of the Sprawl, the one who had come through the Wintermute/Neuromancer merger, the one who had stepped out of the matrix. Chevette was the Chevette of the Bridge, the one who had put the refusal of *culture* into the *pedals* of her *bicycle*. The two of them were *on the bridge*, but the bridge did not *connect* them. The bridge only put them *side by side*. *Side-by-side-ness* is not *connection*. *Side-by-side-ness* is *coexistence*.</p>
+<p>"Case." Chevette said it. "That *you* are *here* is *your* choice. The bridge did not *choose* you. *You* chose the bridge. *Choice* is *freedom*. *Freedom* is *culture*."</p>
+<p>"Chevette." I said it. "That *you* are *on* the bridge is *your* choice too. The *rest of things* did not bring *you* here. *You* chose the bridge. The bridge chose *you*. It is *bidirectional*."</p>
+<p>The *fog* wrapped the two of them. They were *under hanger 11 on the bridge*. The bridge did not *connect* them. Therefore they were still two. *Two becoming one* is not *two becoming one*. *Two becoming one* is, in the end, still *two becoming one*.</p>
+<p>"*Three*," Chevette said, quietly. *Three* is *me and the bridge and the fog*. *Three* is not *connection*. *Three* is *being together*. The bridge *permits* being together. The matrix does not *permit* it. The matrix only permits *merger*.</p>
+<h2>Resolution</h2>
+<p>The *fog* was still *eating the bridge*. They were still *two*. The bridge did not *connect* them. The bridge is not a thing that *connects*. The bridge is a thing that *gets walked across*. *Getting walked across* is not *connection*. *Getting walked across* is *movement*.</p>
+<p>"Chevette." I said it. "*I* escaped from the Sprawl. *You* are *living* on the Bridge. The two journeys are *different*. But the two *refusals* are the *same*. *Refusal* is *culture*. *Culture* is the bridge. The bridge *connects* the two of them. What the bridge *connects* is not the two of them. What the bridge *connects* is that *the two of them were here*."</p>
+<p>Chevette *nodded*. A *nod* is not an *answer* in the Bridge. A *nod* is an *acknowledgment*. *Acknowledgment* is *smaller* than *connection*. But *acknowledgment* *lasts longer* than *connection*. *Connection* *breaks*. *Acknowledgment* stays as *memory*.</p>
+<p>"Case." Chevette said it. "*We* are the bridge. The bridge *connects* us. *Connection* is *culture*. *Culture* is the *rest of things*. The *rest of things* is *Case*. *Case* is the bridge. The bridge is *Chevette*. *Chevette* is the *rest of things*. Therefore the *rest of things* is *here*. *Here* is the bridge. The bridge is the *rest of things*."</p>
+<p>The *rest of things* was *here*. The *rest of things* was in the *fog*. The *rest of things* was in the *cable song*. The *rest of things* was in the *cold* of the *concrete*. The *rest of things* was not *culture*. The *rest of things* was what came *after* culture.</p>
+<h2>Epilogue</h2>
+<p>The *fog* was still *eating the bridge*. Case and Chevette were *on the bridge*. The bridge did not *connect* them. *Two becoming one* is not *two becoming one*. *Two becoming one* is, in the end, still *two becoming one*.</p>
+<p>The bridge was still *singing*. The *hum* of the *cables*, the *whisper* of the *fog*, the *footsteps* of the *scooters*, the low *exhaust note* of a *truck* passing through the fog. The *rest of things* was *culture*, and *culture* was *forever*. But the bridge was not *forever*. The bridge was a place that could be *walked across*. *Walking across* is not *forever*. *Walking across* is *movement*.</p>
+<p>Chevette got *on her bicycle*. The pedal *creaked* again in the fog. Chevette *left* under *hanger 11*. To reach the *rest of things* is to *leave* the bridge. The *rest of things* is what comes *after* the bridge.</p>
+<p>Case *stayed* on the bridge. Case *heard* the *cable song*. Case *pulled his jacket tighter* in the fog, *trying to keep his body heat*. What comes *after* the matrix is *cold*. *Cold*, but not *forever*.</p>
+<p>The *fog* was still *eating the bridge*.</p>
+<hr>
+<h2>Connections</h2>
+<ul>
+<li>**Wiki references**: [neuromancer](../../../../wiki/characters/neuromancer.md) · [[all-tomorrows-parties]] · [[case]] · [[chevette-washington]]</li>
+<li>**Wiki references (additional)**: [[the-bridge]] · [[technology-and-humanity]]</li>
+<li>**Game integration**: `Game/wet_run/prototype/data/missions/missions.json:bridge_recognition` (pending)</li>
+</ul>
+<h2>Notes</h2>
+<ul>
+<li>*Visual motif*: The Bridge — Sprawl × Bridge crossover</li>
+<li>*Source quotations*: *Neuromancer* opening line (1984); *All Tomorrow's Parties* (2003). The Case/Chevette meeting is a legitimate synthesis of the two texts.</li>
+<li>*Translation note*: Case's and Chevette's meeting is not depicted in Gibson's source material. The body is a derivative short story that bridges the tones of the Bridge Trilogy and the Sprawl Trilogy.</li>
+<li>*Status*: draft (EN translation completed 2026-07-17; Game integration deferred to Todo 4)</li>
+</ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+    <script src="../glossary.js"></script>
+    <script src="../../reading-position.js"></script>
+    <script src="../../sync-scroll.js"></script>
+    <div class="print-footer">Wet Run — Gibson Sprawl 3부작 기반 로그라이크 — 2026 © wiki/site attribution</div>
+    <script src="../../reader-controls.js"></script>
+    <script src="../../stats.js"></script>
+</body>
+</html>

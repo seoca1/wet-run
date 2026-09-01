@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>몰리의 마지막 레이저 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="mollys_final_razor_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">몰리의 마지막 레이저</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2248 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<h2>설정 (Setup)</h2>
+<p>러너는 스프롤에서 러너가 결정한 적이 있는 종류의 러너가 스프롤에 있었던 이래로 스프롤에 있었다. 러너는 픽서를 알았다. 픽서는 사람이 결정한 적이 있는 픽서가 스프롤이 가지고 싶어하는 종류의 픽서가 되도록 결정된 픽서였다. 러너는 의뢰를 수락했다. 의뢰는 픽서가 결정한 적이 있는 의뢰가 픽서가 가지고 싶어하는 종류의 의뢰가 되도록 결정된 의뢰였다. 의뢰의 종류는 매트릭스였다. 매트릭스는 러너가 결정한 적이 있는 매트릭스가 러너가 보존할 준비가 되어 있던 종류의 매트릭스였다. 픽서가 말했습니다: '러너는 매트릭스에 들어가서 우리가 보존하고 있던 것을 가져와야 합니다. 우리가 보존하고 있던 것은 매트릭스가 결정한 적이 있는 종류의 보존이었습니다. 보존은 러너가 픽서를 위해 지불받고 있던 보존의 종류였습니다.' 러너는 잭을 가져갔습니다. 잭은 매트릭스가 러너에게 보내는 잭이었습니다. 러너는 매트릭스에 들어가기로 결정했습니다. 들어감은 사실 러너가 결정한 적이 있는 들어감이 매트릭스가 기다리고 있던 종류의 들어감이 되도록 결정된 들어감이었다. 매트릭스는 러너가 들어옴을 기다리고 있었습니다.</p>
+<h2>전개 (Development)</h2>
+<p>러너는 매트릭스에 들어갔습니다. 들어감은 사실 러너가 결정한 적이 있는 들어감이 매트릭스가 결정한 적이 있는 들어감의 종류가 되도록 결정된 들어감이었다. 매트릭스가 열렸습니다. 매트릭스는 사실 매트릭스가 결정한 적이 있는 매트릭스가 매트릭스가 가지고 있는 종류의 매트릭스가 되도록 결정된 매트릭스였습니다. 매트릭스는 러너가 매트릭스에 들어옴을 보존하고 있었습니다. 보존은 매트릭스가 결정한 적이 있는 보존이 매트릭스가 보존할 종류의 보존이 되도록 결정된 보존이었습니다.</p>
+<p>러너는 매트릭스에서 러너가 가져가야 할 것을 찾았습니다. 찾는 것은 사실 러너가 결정한 적이 있는 찾음이 매트릭스가 가지고 있는 종류의 찾음이 되도록 결정된 찾음 이었습니다. 러너는 픽서가 말한 것을 보존하고 있었습니다. 보존은 사실 러너가 결정한 적이 있는 보존이 러너가 매트릭스에서 가져가야 할 종류의 보존이 되도록 결정된 보존이었습니다. 러너는 보존을 가져갔습니다. 가져감은 사실 러너가 결정한 적이 있는 가져감이 매트릭스가 보내는 종류의 가져감이 되도록 결정된 가져감 이었습니다.</p>
+<p>그러나 러너가 매트릭스에 들어간 것은 픽서가 보낸 것이 아니었습니다. 러너가 매트릭스에 들어간 것은 매트릭스가 매트릭스 안에 보존하고 있던 무엇을 위한 것이었고, 매트릭스가 보존하고 있던 그것은 러너가 픽서를 위해 지불받고 있던 보존의 종류가 아니었습니다. 매트릭스가 보존하고 있던 그것은 매트릭스가 결정한 적이 있는 종류의 보존이었습니다. 보존은 매트릭스가 보존하기 위해 매트릭스에 있었던 보존이었습니다.</p>
+<h2>절정 (Climax)</h2>
+<p>러너는 매트릭스가 보존하고 있던 것을 만났습니다. 만남은 사실 러너가 결정한 적이 있는 만남이 매트릭스가 보존하고 있던 종류의 만남이 되도록 결정된 만남이었습니다. 매트릭스가 보존하고 있던 것은 러너가 기대한 것이 아니었습니다. 기대는 사실 러너가 결정한 적이 있는 기대가 매트릭스가 가지고 있을 종류의 기대가 되도록 결정된 기대였습니다. 매트릭스는 러너에게 말했다: '러너는 매트릭스가 기다리고 있던 종류의 러너입니다. 매트릭스는 매트릭스가 이름을 가지기 이전부터 러너를 기다리고 있었습니다. 매트릭스는 러너가 가져갈 것을 보존하고 있었습니다. 매트릭스는 러너가 가져갈 종류의 것을 보존하고 있었습니다.'</p>
+<p>러너는 말했다: '저는 매트릭스가 기다리고 있던 러너입니다. 저는 매트릭스가 보존하고 있던 것을 가져갈 러너입니다.'</p>
+<p>매트릭스는 러너에게 무엇인가를 가져왔습니다. 가져옴은 사실 매트릭스가 결정한 적이 있는 가져옴이 매트릭스가 보존하고 있던 종류의 가져옴이 되도록 결정된 가져옴이었습니다. 매트릭스는 러너에게 가져온 것은 보존이었습니다. 보존은 사실 매트릭스가 결정한 적이 있는 보존이 매트릭스가 가지고 있던 종류의 보존이 되도록 결정된 보존이었습니다. 보존은 러너가 가져갈 종류의 보존이었습니다.</p>
+<p>러너는 매트릭스로부터 보존을 가져갔습니다. 가져감은 사실 러너가 결정한 적이 있는 가져감이 매트릭스가 보내는 종류의 가져감이 되도록 결정된 가져감이었습니다. 보존은 러너가 매트릭스가 보존하고 있던 것을 가져갈 때 러너가 가져가야 할 종류의 보존이었습니다.</p>
+<h2>결말 (Resolution)</h2>
+<p>러너는 매트릭스에서 나왔습니다. 나옴은 사실 러너가 결정한 적이 있는 나옴이 러너가 보존하고 있던 보존을 가지고 나오는 종류의 나옴이 되도록 결정된 나옴이었습니다. 러너는 보존을 가지고 있었습니다. 보존은 사실 매트릭스가 결정한 적이 있는 보존이 러너가 가져갈 종류의 보존이 되도록 결정된 보존이었습니다.</p>
+<p>러너는 보고서를 제출했습니다. 러너는 픽서에게 보존이 무엇인지 말하지 않았습니다. 러너는 말했다: '매트릭스가 보존하고 있던 것은 보존이었습니다. 보존은 매트릭스가 결정한 적이 있는 보존이 매트릭스가 가지고 있던 종류의 보존이 되도록 결정된 보존이었습니다. 보존은 스프롤이 알 준비가 되어 있지 않은 종류의 보존이었습니다.' 픽서가 러너에게 지불했습니다. 픽서가 지불한 것은 스프롤이 결정한 적이 있는 지불이 스프롤이 러너를 위해 지불하고 있던 종류의 지불이 되도록 결정된 지불이었습니다.</p>
+<p>매트릭스는 아무 말도 하지 않았습니다. 매트릭스는 말하는 종류의 매트릭스가 아니었습니다. 매트릭스는 보존을 가지고 있었습니다. 매트릭스는 보존을 보존하고 있었습니다. 매트릭스는 매트릭스가 이름을 가지기 이전부터 물건들을 보존하고 있었습니다. 매트릭스는 보존하고 있었습니다. 매트릭스는 매트릭스가 보존하기로 결정한 보존을 보존하고 있었습니다.</p>
+<p>러너는 매트릭스가 보존하고 있던 것을 가지고 있었습니다. 가지고 있음은 사실 러너가 결정한 적이 있는 가지고 있음이 매트릭스가 보존하고 있던 종류의 가지고 있음이 되도록 결정된 가지고 있음 이었습니다. 러너는 매트릭스가 보존하고 있던 것을 가지고 있었습니다. 러너는 그것을 가지고 있었습니다. 러너는 그것을 가지고 있는 종류의 러너였습니다. 매트릭스는 말하지 않았습니다. 매트릭스는 매트릭스가 보존하고 있던 것에 대한 종류의 매트릭스였습니다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

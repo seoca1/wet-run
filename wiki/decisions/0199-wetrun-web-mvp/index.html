@@ -1,0 +1,2223 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ADR-0199: Wet Run Web MVP (Tier 1) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#adr-0199-wet-run-web-mvp-tier-1" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ADR-0199: Wet Run Web MVP (Tier 1)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../design/systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../design/systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        컨텍스트 (Context)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#considered-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        고려한 옵션 (Considered Options)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="고려한 옵션 (Considered Options)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-typescript-canvas2d-mvp-recommended-adopted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 1: TypeScript + Canvas2D MVP (RECOMMENDED — adopted)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-pygbag-python-in-browser-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 2: Pygbag (Python-in-browser) — REJECTED
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3-hybrid-python-backend-js-frontend-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 3: Hybrid Python backend + JS frontend — REJECTED
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-4-full-port-all-209-missions-i18n-audio-mobile-touch-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option 4: Full port (all 209 missions + i18n + audio + mobile touch) — REJECTED
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        추천 (Recommendation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="추천 (Recommendation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scope-tier-1-mvp-explicit-boundaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scope (Tier 1 MVP — explicit boundaries)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tech-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tech Stack
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operational-decisions-operator-gate-answers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Operational Decisions (operator gate answers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-commit-implementation-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7-Commit Implementation Plan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-step-validation-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5-Step Validation Plan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#consequences" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        결과 (Consequences)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="결과 (Consequences)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#positive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#negative" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Negative
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-status-this-session-2026-08-25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Status (this session, 2026-08-25)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Status (this session, 2026-08-25)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tier-2-update-2026-08-25-autonomous-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 2 Update (2026-08-25, autonomous expansion)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#final-files-touched" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Final Files Touched
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supersedes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supersedes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deferred-tier-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deferred (Tier 3+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="adr-0199-wet-run-web-mvp-tier-1">ADR-0199: Wet Run Web MVP (Tier 1)<a class="headerlink" href="#adr-0199-wet-run-web-mvp-tier-1" title="Permanent link">&para;</a></h1>
+<p><strong>상태</strong>: Accepted (2026-08-25; user-directed autonomous build)
+<strong>날짜</strong>: 2026-08-25
+<strong>결정자</strong>: 사용자 (operator)
+<strong>우선순위</strong>: P1 (Browser reach — broadens addressable player base; mobile/web deferred per ADR-0007 now superseded)
+<strong>관련</strong>:
+- <a href="../0007-platform-target/">ADR-0007 — Platform Target (Accepted 2026-06-17)</a> <strong>SUPERSEDED</strong> for web/mobile scope
+- web-version-2026-08-25 implementation plan (<code>.omo/plans/</code>, gitignored, local-only)
+- <a href="../0197-gamepad-controller-input-support/">Gamepad controller input (ADR-0197)</a> — keyboard mapping parity</p>
+<h2 id="context">컨텍스트 (Context)<a class="headerlink" href="#context" title="Permanent link">&para;</a></h2>
+<p>ADR-0007 (Accepted 2026-06-17) explicitly rejected web + mobile:</p>
+<blockquote>
+<p>"모바일은 Pillar 3과 충돌 (F2P 위험)" / "웹은 매트릭스 톤의 ASCII와 거리"</p>
+</blockquote>
+<p>User reverses this decision (2026-08-25) to expand addressable player base to:
+- Steam Deck + Linux desktop browser
+- iPad / Android tablet browsers
+- Phone browsers (Tier 2 — MVP excludes)</p>
+<p>Two perspectives validated the approach:
+- <strong>Librarian research</strong> (opus-4.5, 1m43s): 6 web-port approaches; Pyodide not viable (SDL2 C extensions); Pygbag possible but costly rewrite
+- <strong>Oracle counter-review</strong> (1h adversarial): rejected Pygbag-first as "procrastination device"; pushed MVP-only with 4-week calendar budget</p>
+<h2 id="considered-options">고려한 옵션 (Considered Options)<a class="headerlink" href="#considered-options" title="Permanent link">&para;</a></h2>
+<h3 id="option-1-typescript-canvas2d-mvp-recommended-adopted">Option 1: TypeScript + Canvas2D MVP (RECOMMENDED — adopted)<a class="headerlink" href="#option-1-typescript-canvas2d-mvp-recommended-adopted" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>설명</strong>: Browser-native TypeScript; Canvas2D ASCII renderer; static files; ~4 weeks for MVP.</li>
+<li><strong>장점</strong>:</li>
+<li>Native browser performance (60fps free; sub-second cold-start)</li>
+<li>Single artifact (static files) for GitHub Pages + itch.io deployment</li>
+<li>Reuses existing wet_run/data/ via Python export script</li>
+<li>No backend, no multiplayer, no auth, no payment — minimal ops</li>
+<li><strong>단점</strong>:</li>
+<li>Game logic reimplementation in TypeScript (state machines, ICE-breaking)</li>
+<li>Gibson tone validation is non-trivial (subtle ANSI shifts, half-block glyphs)</li>
+<li>5811 Python tests become obsolete; ~50% don't port</li>
+<li><strong>Pillar 정합</strong>:</li>
+<li>P1 (The Run): tier 1 web MVP ships 1 playable mission</li>
+<li>P2 (The Matrix): Canvas2D renders ICE widget, basic state machine</li>
+<li>P3 (The Flatline): combat escalation via ICE HP damage</li>
+<li>P4 (The Build): static JSON export + Vite build pipeline</li>
+<li>P5 (The Style): Gibson neon palette preserved in palette.ts</li>
+</ul>
+<h3 id="option-2-pygbag-python-in-browser-rejected">Option 2: Pygbag (Python-in-browser) — REJECTED<a class="headerlink" href="#option-2-pygbag-python-in-browser-rejected" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>설명</strong>: Migrate tcod → pygame-ce; package via Pygbag to WebAssembly.</li>
+<li><strong>Why rejected</strong>: Migrating 48 files × 423 tcod call sites = rewriting the renderer. 4-8 weeks; tests become 50% obsolete. WASM-compiled Python in browser is a compromise; better to commit to native web from day 1.</li>
+</ul>
+<h3 id="option-3-hybrid-python-backend-js-frontend-rejected">Option 3: Hybrid Python backend + JS frontend — REJECTED<a class="headerlink" href="#option-3-hybrid-python-backend-js-frontend-rejected" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>설명</strong>: Python FastAPI + TypeScript rot.js frontend; multiplayer-ready.</li>
+<li><strong>Why rejected</strong>: Multiplayer isn't in the design. No design doc, no ADR, no roadmap entry says "we need multiplayer." Hybrid adds network round-trips + auth + reconnection logic + 2 type systems to solve a problem that doesn't exist.</li>
+</ul>
+<h3 id="option-4-full-port-all-209-missions-i18n-audio-mobile-touch-rejected">Option 4: Full port (all 209 missions + i18n + audio + mobile touch) — REJECTED<a class="headerlink" href="#option-4-full-port-all-209-missions-i18n-audio-mobile-touch-rejected" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>설명</strong>: Direct full-port without MVP scoping.</li>
+<li><strong>Why rejected</strong>: 6-12 months; calendar time &gt; person-weeks for single maintainer. Risk: shipping a half-broken web version kills the project.</li>
+</ul>
+<h2 id="recommendation">추천 (Recommendation)<a class="headerlink" href="#recommendation" title="Permanent link">&para;</a></h2>
+<p><strong>Adopt Option 1: TypeScript + Canvas2D MVP.</strong> Implement in 7 atomic commits over ~4 weeks calendar time.</p>
+<h3 id="scope-tier-1-mvp-explicit-boundaries">Scope (Tier 1 MVP — explicit boundaries)<a class="headerlink" href="#scope-tier-1-mvp-explicit-boundaries" title="Permanent link">&para;</a></h3>
+<p><strong>In MVP</strong>:
+- 1 playable mission (first_jack)
+- ASCII Canvas2D renderer (Gibson palette, monospace font)
+- ICE-breaking combat state machine (1 ICE encounter)
+- Save/load via localStorage (schema-versioned)
+- Keyboard input (arrow keys + ENTER + SPACE + ESC + Q)
+- Static files deployment (GitHub Pages)</p>
+<p><strong>Out of MVP</strong> (Tier 2+ deferral):
+- Multiple missions, full campaign (209 missions)
+- Multiple bosses, status effects, deck-building roster
+- Multiple jockeys, narrative / graphic novel mode
+- Audio (Howler.js)
+- Mobile touch UI
+- Multiplayer, cloud save sync
+- Full i18n (English only in MVP)
+- Save migration from desktop</p>
+<h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>Game/wet_run-web/                           # New sub-folder in workspace
+├── src/
+│   ├── core/                                # Game logic (port from wet_run)
+│   │   ├── types.ts                         # Shared interfaces (GameState, Mission, Ice, Program)
+│   │   ├── state.ts                         # Pure reducer (applyAction)
+│   │   └── grid.ts                          # Immutable Grid construction
+│   ├── renderer/
+│   │   ├── canvas.ts                        # AsciiRenderer (Canvas2D)
+│   │   └── palette.ts                       # Gibson neon palette
+│   ├── input/
+│   │   └── keyboard.ts                      # Keyboard → GameAction
+│   ├── save/
+│   │   └── storage.ts                       # localStorage round-trip
+│   ├── data/                                # Static JSON (exported from wet_run/data/)
+│   └── main.ts                              # Entry point
+├── tests/                                   # Vitest
+├── docs/PLAYTEST.md                          # 3-person playtest protocol
+├── scripts/export_web_data.py               # Python → JSON export
+├── index.html                               # Entry HTML (Canvas + status overlay)
+├── package.json                             # Vite + Vitest + TS
+├── tsconfig.json                            # TypeScript strict
+├── vite.config.ts                           # Vite bundler + test config
+└── vitest.setup.ts                          # localStorage polyfill
+</code></pre></div>
+<h3 id="tech-stack">Tech Stack<a class="headerlink" href="#tech-stack" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Choice</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Language</td>
+<td>TypeScript 5.x</td>
+<td>Type safety, modern web standards</td>
+</tr>
+<tr>
+<td>Bundler</td>
+<td>Vite</td>
+<td>Fast HMR, simple config</td>
+</tr>
+<tr>
+<td>Renderer</td>
+<td>Canvas2D</td>
+<td>Sufficient for ASCII; can upgrade to WebGL later</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>Vitest</td>
+<td>TS-native, fast</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>Static JSON (Python export)</td>
+<td>Reuses wet_run/data/</td>
+</tr>
+<tr>
+<td>Save</td>
+<td>localStorage JSON</td>
+<td>No backend needed</td>
+</tr>
+<tr>
+<td>Distribution</td>
+<td>GitHub Pages or itch.io</td>
+<td>Free, simple</td>
+</tr>
+</tbody>
+</table>
+<h3 id="operational-decisions-operator-gate-answers">Operational Decisions (operator gate answers)<a class="headerlink" href="#operational-decisions-operator-gate-answers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Q</th>
+<th>Decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deployment</td>
+<td>GitHub Pages (proven pattern in this workspace)</td>
+</tr>
+<tr>
+<td>Repo structure</td>
+<td>Sub-folder (<code>Game/wet_run-web/</code>) inside workspace</td>
+</tr>
+<tr>
+<td>Audio in MVP</td>
+<td>Silent (Tier 2 if validated)</td>
+</tr>
+<tr>
+<td>Save</td>
+<td>localStorage JSON (Tier 2: IndexedDB)</td>
+</tr>
+<tr>
+<td>Distribution scope</td>
+<td>MVP only (later: link from <code>Game/wet_run/dashboard/</code>)</td>
+</tr>
+<tr>
+<td>First ICE encounter</td>
+<td>first_jack (default Watchdog from <code>ice_types.json</code>)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="7-commit-implementation-plan">7-Commit Implementation Plan<a class="headerlink" href="#7-commit-implementation-plan" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Commit</th>
+<th>Day</th>
+<th style="text-align: right;">LOC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Project setup + data export</td>
+<td>1</td>
+<td style="text-align: right;">~200</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ASCII Canvas2D renderer</td>
+<td>2-3</td>
+<td style="text-align: right;">~300</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Game state types + keyboard input</td>
+<td>4-5</td>
+<td style="text-align: right;">~400</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Combat core — IceBreaker state machine port</td>
+<td>6-9</td>
+<td style="text-align: right;">~600</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Save/load + win/loss + HUD</td>
+<td>10-11</td>
+<td style="text-align: right;">~300</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Polish + 3-person playtest hooks</td>
+<td>12-14</td>
+<td style="text-align: right;">~400</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Deploy + ADR-0199</td>
+<td>15</td>
+<td style="text-align: right;">(docs)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total</strong>: ~2,200 LOC, 4 weeks calendar, 1 maintainer.</p>
+<h3 id="5-step-validation-plan">5-Step Validation Plan<a class="headerlink" href="#5-step-validation-plan" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Day 1 visual render test</strong> (Commit 2): Can Canvas2D render ASCII with Gibson neon feel? If not — stop, redesign.</li>
+<li><strong>Day 5 boss fight prototype</strong> (Commit 4): Port 1 boss. Time it. If &gt;3 days — estimate was wrong, recalibrate.</li>
+<li><strong>Day 10 playtest with 3 people</strong> (Commit 6): <code>docs/PLAYTEST.md</code> protocol. Watch where they get stuck.</li>
+<li><strong>Day 12 cold-start measurement</strong>: &lt;3s on cable broadband. (Static JS should be sub-second.)</li>
+<li><strong>Day 15 ADR-0199</strong> (this document): Supersede ADR-0007 for web/mobile scope.</li>
+</ol>
+<h2 id="consequences">결과 (Consequences)<a class="headerlink" href="#consequences" title="Permanent link">&para;</a></h2>
+<h3 id="positive">Positive<a class="headerlink" href="#positive" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Cross-device reach without backend infrastructure</li>
+<li>Sub-second cold-start (static files)</li>
+<li>Gibson neon palette reproducible in Canvas2D</li>
+<li>Reuses wet_run/data/ via Python export (no content duplication)</li>
+<li>4-week calendar budget realistic for single maintainer</li>
+</ul>
+<h3 id="negative">Negative<a class="headerlink" href="#negative" title="Permanent link">&para;</a></h3>
+<ul>
+<li>~2,200 LOC new TypeScript code</li>
+<li>5811 Python tests remain desktop-only</li>
+<li>Desktop ↔ web save migration not in MVP scope (ADR-0183 §Input Remapping closure incomplete)</li>
+<li>"Gibson tone" validation deferred to playtest — if fails, redesign</li>
+</ul>
+<h3 id="risks">Risks<a class="headerlink" href="#risks" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Risk</th>
+<th>L</th>
+<th>I</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Gibson tone loss</strong> in Canvas2D (subtle ANSI shifts, half-blocks, CRT flicker)</td>
+<td>M</td>
+<td>H</td>
+<td>Validate in Commit 2 visual render test; if fails, accept 80% fidelity</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Calendar time</strong> &gt; 4 weeks for single maintainer</td>
+<td>H</td>
+<td>H</td>
+<td>Strict MVP scope; no scope creep; hard deadline</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Save migration</strong> never covered by tests (desktop vs web save schema)</td>
+<td>M</td>
+<td>M</td>
+<td>MVP uses localStorage; cross-device sync explicitly out of scope</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Game state complexity</strong> underestimated</td>
+<td>M</td>
+<td>M</td>
+<td>Port only 1 encounter; reuse data; no multiplayer</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Cross-browser compat</strong> (Safari audio quirks, IndexedDB)</td>
+<td>L</td>
+<td>M</td>
+<td>Tier 1: desktop Chrome/Firefox/Safari 17+; keyboard only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="implementation-status-this-session-2026-08-25">Implementation Status (this session, 2026-08-25)<a class="headerlink" href="#implementation-status-this-session-2026-08-25" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADR-0199 drafted + Accepted</td>
+<td>✅ 2026-08-25 (autonomous, user-directed)</td>
+</tr>
+<tr>
+<td>Implementation plan written</td>
+<td>✅ <code>.omo/plans/web-version-2026-08-25.md</code></td>
+</tr>
+<tr>
+<td>Commit 1: Project setup + data export</td>
+<td>✅ Scaffolding, package.json, tsconfig.json, vite.config.ts, index.html, PWA manifest, export_web_data.py</td>
+</tr>
+<tr>
+<td>Commit 2: ASCII Canvas2D renderer</td>
+<td>✅ <code>renderer/canvas.ts</code> + <code>palette.ts</code> (Gibson neon palette)</td>
+</tr>
+<tr>
+<td>Commit 3: Game state + keyboard input</td>
+<td>✅ <code>core/types.ts</code> + <code>core/grid.ts</code> + <code>core/state.ts</code> + <code>input/keyboard.ts</code></td>
+</tr>
+<tr>
+<td>Commit 4: Combat core</td>
+<td>✅ IceBreaker state machine (useProgram reduces ICE HP, alarm accumulates)</td>
+</tr>
+<tr>
+<td>Commit 5: Save/load (Tier 1)</td>
+<td>✅ <code>save/storage.ts</code> (localStorage JSON + schema versioning)</td>
+</tr>
+<tr>
+<td>Commit 6: Polish + playtest hooks</td>
+<td>✅ <code>docs/PLAYTEST.md</code> (3-person protocol)</td>
+</tr>
+<tr>
+<td>Commit 7: ADR-0199 (this document)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>17 unit tests (state + storage)</td>
+<td>✅ All passing</td>
+</tr>
+<tr>
+<td>TypeScript strict dry-compile</td>
+<td>✅ No errors</td>
+</tr>
+<tr>
+<td>Vite production build</td>
+<td>✅ 48KB JS (11.5KB gzipped) + 2KB HTML</td>
+</tr>
+</tbody>
+</table>
+<h3 id="tier-2-update-2026-08-25-autonomous-expansion">Tier 2 Update (2026-08-25, autonomous expansion)<a class="headerlink" href="#tier-2-update-2026-08-25-autonomous-expansion" title="Permanent link">&para;</a></h3>
+<p>| Tier 2a: 5 missions (curated T1-T2 pool) | ✅ <code>scripts/export_web_data.py</code> + <code>src/main.ts</code> mission select |
+| Tier 2a: Multi-slot save (autosave + 3 manual) | ✅ <code>save/storage.ts</code> rewritten + <code>stateToSaveSlot()</code> serializer + autosave wired in <code>main.ts</code> |
+| Tier 2c: Mobile touch UI (virtual gamepad) | ✅ <code>input/touch.ts</code> + auto-mount on <code>pointer: coarse</code> |
+| 38 unit tests (was 17; +21 Tier 2 + autosave) | ✅ All passing |
+| TypeScript strict dry-compile | ✅ No errors |
+| Vite production build | ✅ 59.55 KB JS / 16.96 KB gzipped |</p>
+<h3 id="final-files-touched">Final Files Touched<a class="headerlink" href="#final-files-touched" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th style="text-align: right;">LOC</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Game/wet_run-web/package.json</code></td>
+<td style="text-align: right;">32</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/tsconfig.json</code></td>
+<td style="text-align: right;">21</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/vite.config.ts</code></td>
+<td style="text-align: right;">17</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/vitest.setup.ts</code></td>
+<td style="text-align: right;">35</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/index.html</code></td>
+<td style="text-align: right;">60</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/public/manifest.json</code></td>
+<td style="text-align: right;">18</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/README.md</code></td>
+<td style="text-align: right;">~70</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/scripts/export_web_data.py</code></td>
+<td style="text-align: right;">95</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/src/core/types.ts</code></td>
+<td style="text-align: right;">~140</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/src/core/grid.ts</code></td>
+<td style="text-align: right;">~70</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/src/core/state.ts</code></td>
+<td style="text-align: right;">~165</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/src/renderer/canvas.ts</code></td>
+<td style="text-align: right;">~85</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/src/renderer/palette.ts</code></td>
+<td style="text-align: right;">~45</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/src/input/keyboard.ts</code></td>
+<td style="text-align: right;">~50</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/src/save/storage.ts</code></td>
+<td style="text-align: right;">~65</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/src/main.ts</code></td>
+<td style="text-align: right;">~110</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/tests/state.test.ts</code></td>
+<td style="text-align: right;">~115</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/tests/storage.test.ts</code></td>
+<td style="text-align: right;">~70</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run-web/docs/PLAYTEST.md</code></td>
+<td style="text-align: right;">~85</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run/decisions/0199-wetrun-web-mvp.md</code></td>
+<td style="text-align: right;">(this)</td>
+<td>NEW</td>
+</tr>
+<tr>
+<td><code>Game/wet_run/decisions/README.md</code></td>
+<td style="text-align: right;">+1 line</td>
+<td>UPDATED (index entry)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>~1345</strong></td>
+<td>(TypeScript: ~1,015; Python: ~95; docs: ~235)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="supersedes">Supersedes<a class="headerlink" href="#supersedes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>ADR-0007</strong> (Accepted 2026-06-17) for web/mobile scope only. macOS + Windows desktop continues per ADR-0007.</li>
+</ul>
+<h3 id="deferred-tier-3">Deferred (Tier 3+)<a class="headerlink" href="#deferred-tier-3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>3-person playtest (validates Tier 1+2 shippable quality)</li>
+<li>Audio via Howler.js (silent per operator gate)</li>
+<li>Full 209-mission campaign</li>
+<li>Status effect VFX</li>
+<li>Multiple bosses / jockeys</li>
+<li>Save migration from desktop</li>
+<li>Full i18n (English-only in MVP)</li>
+<li>Multiplayer / cloud sync</li>
+<li>WebGL renderer upgrade (if Canvas2D insufficient)</li>
+</ul>
+<hr />
+<p><em>Accepted: 2026-08-25. Owner: Sisyphus. Tier 1 MVP built in single session (autonomous). Playtest pending (3-person protocol in docs/PLAYTEST.md).</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

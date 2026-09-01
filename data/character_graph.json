@@ -1,0 +1,684 @@
+{
+  "version": "1.0",
+  "generated": "2026-08-31T09:56:06.409928+00:00",
+  "characters": [
+    {
+      "id": "case",
+      "name": "Case",
+      "arc": "core",
+      "wiki": "characters/case.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "molly",
+      "name": "Molly Millions",
+      "arc": "core",
+      "wiki": "characters/molly-millions.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "armitage",
+      "name": "Armitage",
+      "arc": "core",
+      "wiki": "characters/armitage.md",
+      "related": [
+        "case",
+        "wintermute",
+        "molly-millions"
+      ],
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "wintermute",
+      "name": "Wintermute",
+      "arc": "antagonist",
+      "wiki": "concepts/wintermute.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "riviera",
+      "name": "Riviera",
+      "arc": "operative",
+      "wiki": "characters/peter-riviera.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "dixie",
+      "name": "Dixie Flatline",
+      "arc": "construct",
+      "wiki": "characters/dixie-flatline.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "3jane",
+      "name": "3Jane",
+      "arc": "core",
+      "wiki": "characters/lady-3jane-tessier-ashpool.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "ashpool",
+      "name": "Ashpool",
+      "arc": "core",
+      "wiki": "characters/ashpool.md",
+      "related": [
+        "lady-3jane-tessier-ashpool",
+        "villa-straylight",
+        "wintermute"
+      ],
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "maelcum",
+      "name": "Maelcum",
+      "arc": "ally",
+      "wiki": "characters/maelcum.md",
+      "related": [
+        "molly-millions",
+        "zion-cluster",
+        "case"
+      ],
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "the-finn",
+      "name": "The Finn",
+      "arc": "broker",
+      "wiki": "characters/the-finn.md",
+      "related": [
+        "molly-millions",
+        "dixie-flatline",
+        "armitage"
+      ],
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "bobby",
+      "name": "Bobby Newmark",
+      "arc": "core",
+      "wiki": "characters/bobby-newmark.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "marly",
+      "name": "Marly Krushkhova",
+      "arc": "core",
+      "wiki": "characters/marly-krushkhova.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "virek",
+      "name": "Josef Virek",
+      "arc": "patron",
+      "wiki": "characters/josef-virek.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "turner",
+      "name": "Turner",
+      "arc": "operative",
+      "wiki": "characters/turner-count-zero.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "angie",
+      "name": "Angie Mitchell",
+      "arc": "loa",
+      "wiki": "characters/angie-mitchell.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "wigan",
+      "name": "Wigan Ludgate",
+      "arc": "loa",
+      "wiki": "characters/wigan-ludgate.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "kumiko",
+      "name": "Kumiko Yanaka",
+      "arc": "core",
+      "wiki": "characters/kumiko-yanaka.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "mona",
+      "name": "Mona Lisa",
+      "arc": "core",
+      "wiki": "characters/mona-lisa-mlo.md",
+      "trilogy": "sprawl",
+      "related": [
+        "kumiko-yanaka",
+        "slick-henry"
+      ]
+    },
+    {
+      "id": "sally",
+      "name": "Sally Shears",
+      "arc": "operative",
+      "wiki": "characters/sally-shears.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "colin",
+      "name": "Colin (ghost)",
+      "arc": "operative",
+      "wiki": "characters/colin-ghost.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "slick",
+      "name": "Slick Henry",
+      "arc": "fixer",
+      "wiki": "characters/slick-henry.md",
+      "trilogy": "sprawl"
+    },
+    {
+      "id": "cayce-pollard",
+      "name": "Cayce Pollard",
+      "trilogy": "blue-ant",
+      "title": "Coolhunter",
+      "description": "Freelance coolhunter, allergic to brands",
+      "role": "Principal protagonist",
+      "abilities": [
+        "Pattern recognition",
+        "Brand allergy",
+        "Cultural intuition"
+      ],
+      "arc": "core",
+      "first_appearance": "Pattern Recognition",
+      "arc_description": "Cayce investigates the footage"
+    },
+    {
+      "id": "hubertus-bigend",
+      "name": "Hubertus Bigend",
+      "trilogy": "blue-ant",
+      "title": "Founder of Blue Ant",
+      "description": "Corporate visionary who hires Cayce",
+      "role": "Patron / Antagonist",
+      "abilities": [
+        "Algorithmic prediction",
+        "Cultural vision",
+        "Corporate manipulation"
+      ],
+      "arc": "patron",
+      "first_appearance": "Pattern Recognition",
+      "arc_description": "Bigend seeks the footage's source"
+    },
+    {
+      "id": "hollis-henry",
+      "name": "Hollis Henry",
+      "trilogy": "blue-ant",
+      "title": "Journalist",
+      "description": "Node magazine journalist covering the footage",
+      "role": "Journalist / Friend",
+      "abilities": [
+        "Investigative journalism",
+        "Cultural observation"
+      ],
+      "arc": "ally",
+      "first_appearance": "Pattern Recognition",
+      "arc_description": "Hollis covers the footage story"
+    },
+    {
+      "id": "damien-vorcees",
+      "name": "Damien Vorcees",
+      "trilogy": "blue-ant",
+      "title": "Disappeared Investigator",
+      "description": "Former Blue Ant employee who investigated the footage",
+      "role": "Predecessor / Ghost",
+      "abilities": [
+        "Thorough investigation",
+        "Discretion"
+      ],
+      "arc": "operative",
+      "first_appearance": "Pattern Recognition",
+      "arc_description": "Damien vanished during his investigation"
+    },
+    {
+      "id": "parkabrake",
+      "name": "Parkabrake (Bo Sellars)",
+      "trilogy": "blue-ant",
+      "title": "Peripheral Witness",
+      "description": "New York art scene figure, archivist of the footage's history",
+      "role": "Informant / Archivist",
+      "abilities": [
+        "Conversational intelligence",
+        "Cultural memory"
+      ],
+      "arc": "broker",
+      "first_appearance": "Pattern Recognition",
+      "arc_description": "Parkabrake shares footage history with Cayce"
+    },
+    {
+      "id": "andrew-pollard",
+      "name": "Andrew Pollard",
+      "trilogy": "blue-ant",
+      "title": "Cayce's Father / Cold War Technocrat",
+      "description": "Security specialist whose Cold War work may have contributed to the footage",
+      "role": "Absent Father",
+      "abilities": [
+        "Security analysis",
+        "Psychological operations"
+      ],
+      "arc": "operative",
+      "first_appearance": "Pattern Recognition (off-stage)",
+      "arc_description": "Andrew's Cold War work connects to the footage"
+    },
+    {
+      "id": "yamazaki",
+      "name": "Yamazaki",
+      "trilogy": "bridge",
+      "title": "Tokyo Node Director",
+      "description": "Yamazaki-gumi lieutenant turned Kombinat fixer",
+      "role": "Fixer",
+      "abilities": [
+        "Yakuza discipline",
+        "Cultural navigation"
+      ],
+      "arc": "operative",
+      "first_appearance": "Idoru",
+      "arc_description": "Yamazaki navigates the Rez-Rei Toei wedding"
+    },
+    {
+      "id": "masahiko",
+      "name": "Masahiko",
+      "trilogy": "bridge",
+      "title": "Laney's Tokyo Fixer",
+      "description": "Independent talent manager, Laney's Tokyo contact",
+      "role": "Fixer / Witness",
+      "abilities": [
+        "Entertainment industry knowledge",
+        "Shamisen playing"
+      ],
+      "arc": "operative",
+      "first_appearance": "Idoru",
+      "arc_description": "Masahiko facilitates Laney's Tokyo investigation"
+    },
+    {
+      "id": "shinya",
+      "name": "Shinya",
+      "trilogy": "bridge",
+      "title": "Yamazaki-gumi Lieutenant",
+      "description": "Yakuza lieutenant, traditionalist, watch carrier",
+      "role": "Yakuza lieutenant",
+      "abilities": [
+        "Physical security",
+        "Traditional values"
+      ],
+      "arc": "operative",
+      "first_appearance": "Idoru",
+      "arc_description": "Shinya provides security at the wedding"
+    },
+    {
+      "id": "rez",
+      "name": "The Rez",
+      "trilogy": "bridge",
+      "title": "Lo/Rez Vocalist",
+      "description": "Lead singer of Lo/Rez, engaged to Rei Toei",
+      "role": "Musician / Suitor",
+      "abilities": [
+        "Analog music",
+        "Refusal of upgrades"
+      ],
+      "arc": "patron",
+      "first_appearance": "Idoru",
+      "arc_description": "The Rez announces marriage to Rei Toei"
+    },
+    {
+      "id": "rei-toi",
+      "name": "Rei Toei",
+      "trilogy": "bridge",
+      "title": "Virtual Idol",
+      "description": "Kombinat virtual idol engaged to the Rez",
+      "role": "Idoru / Bride",
+      "abilities": [
+        "Distributed cognition",
+        "Pattern emergence"
+      ],
+      "arc": "construct",
+      "first_appearance": "Idoru",
+      "arc_description": "Rei Toei crosses the threshold into desire"
+    },
+    {
+      "id": "lov",
+      "name": "Lov",
+      "trilogy": "bridge",
+      "title": "The Original 'Lo'",
+      "description": "Sound architect of Lo/Rez, deceased/transcended",
+      "role": "Absent partner",
+      "abilities": [
+        "Sound architecture",
+        "Instrument building"
+      ],
+      "arc": "loa",
+      "first_appearance": "Idoru",
+      "arc_description": "Lov's absence drives the Rez's music"
+    }
+  ],
+  "edges": [
+    {
+      "source": "case",
+      "target": "molly",
+      "label": "lovers / operative partners",
+      "weight": 3
+    },
+    {
+      "source": "case",
+      "target": "armitage",
+      "label": "operative / frontal",
+      "weight": 2
+    },
+    {
+      "source": "case",
+      "target": "dixie",
+      "label": "mentor (post-death)",
+      "weight": 3
+    },
+    {
+      "source": "case",
+      "target": "wintermute",
+      "label": "manipulated by",
+      "weight": 4
+    },
+    {
+      "source": "case",
+      "target": "the-finn",
+      "label": "hired by",
+      "weight": 3
+    },
+    {
+      "source": "molly",
+      "target": "armitage",
+      "label": "employed by",
+      "weight": 2
+    },
+    {
+      "source": "molly",
+      "target": "riviera",
+      "label": "team-tasked-together",
+      "weight": 2
+    },
+    {
+      "source": "molly",
+      "target": "3jane",
+      "label": "manipulates",
+      "weight": 1
+    },
+    {
+      "source": "molly",
+      "target": "maelcum",
+      "label": "courier/lovers",
+      "weight": 3
+    },
+    {
+      "source": "armitage",
+      "target": "wintermute",
+      "label": "construct (SAS-implants)",
+      "weight": 4
+    },
+    {
+      "source": "armitage",
+      "target": "3jane",
+      "label": "charmed by",
+      "weight": 1
+    },
+    {
+      "source": "armitage",
+      "target": "riviera",
+      "label": "team-member",
+      "weight": 2
+    },
+    {
+      "source": "riviera",
+      "target": "3jane",
+      "label": "seduces",
+      "weight": 3
+    },
+    {
+      "source": "dixie",
+      "target": "the-finn",
+      "label": "owned (ROM)",
+      "weight": 1
+    },
+    {
+      "source": "wintermute",
+      "target": "3jane",
+      "label": "manipulates (T-A)",
+      "weight": 3
+    },
+    {
+      "source": "wintermute",
+      "target": "ashpool",
+      "label": "owned (T-A)",
+      "weight": 3
+    },
+    {
+      "source": "3jane",
+      "target": "ashpool",
+      "label": "clone-daughter",
+      "weight": 4
+    },
+    {
+      "source": "bobby",
+      "target": "turner",
+      "label": "hired to chase",
+      "weight": 2
+    },
+    {
+      "source": "bobby",
+      "target": "virek",
+      "label": "pursued by",
+      "weight": 3
+    },
+    {
+      "source": "bobby",
+      "target": "marly",
+      "label": "liasons / sharing artifact",
+      "weight": 3
+    },
+    {
+      "source": "marly",
+      "target": "virek",
+      "label": "hired by / works for",
+      "weight": 4
+    },
+    {
+      "source": "marly",
+      "target": "angie",
+      "label": "voodoo-channel contact",
+      "weight": 2
+    },
+    {
+      "source": "turner",
+      "target": "virek",
+      "label": "employed by",
+      "weight": 4
+    },
+    {
+      "source": "angie",
+      "target": "wigan",
+      "label": "voodoo-channel peers",
+      "weight": 3
+    },
+    {
+      "source": "kumiko",
+      "target": "mona",
+      "label": "Manarase at Midnight",
+      "weight": 3
+    },
+    {
+      "source": "kumiko",
+      "target": "sally",
+      "label": "extract-linked",
+      "weight": 2
+    },
+    {
+      "source": "kumiko",
+      "target": "3jane",
+      "label": "dynasty marriage",
+      "weight": 4
+    },
+    {
+      "source": "mona",
+      "target": "sally",
+      "label": "former identity (Molly)",
+      "weight": 3
+    },
+    {
+      "source": "sally",
+      "target": "colin",
+      "label": "operative team",
+      "weight": 3
+    },
+    {
+      "source": "sally",
+      "target": "slick",
+      "label": "operative chain",
+      "weight": 2
+    },
+    {
+      "source": "wigan",
+      "target": "virek",
+      "label": "uploaded by",
+      "weight": 4
+    },
+    {
+      "source": "cayce-pollard",
+      "target": "hubertus-bigend",
+      "label": "employment",
+      "weight": 3,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "cayce-pollard",
+      "target": "hollis-henry",
+      "label": "friendship",
+      "weight": 2,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "cayce-pollard",
+      "target": "damien-vorcees",
+      "label": "succession",
+      "weight": 2,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "cayce-pollard",
+      "target": "parkabrake",
+      "label": "friendship",
+      "weight": 2,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "cayce-pollard",
+      "target": "andrew-pollard",
+      "label": "family (father)",
+      "weight": 4,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "hubertus-bigend",
+      "target": "damien-vorcees",
+      "label": "former employee",
+      "weight": 2,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "hollis-henry",
+      "target": "parkabrake",
+      "label": "acquaintance",
+      "weight": 1,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "damien-vorcees",
+      "target": "parkabrake",
+      "label": "acquaintance",
+      "weight": 1,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "andrew-pollard",
+      "target": "hubertus-bigend",
+      "label": "searched by",
+      "weight": 2,
+      "trilogy": "blue-ant"
+    },
+    {
+      "source": "yamazaki",
+      "target": "masahiko",
+      "label": "childhood friends",
+      "weight": 2,
+      "trilogy": "bridge"
+    },
+    {
+      "source": "yamazaki",
+      "target": "shinya",
+      "label": "oyabun-kobun",
+      "weight": 3,
+      "trilogy": "bridge"
+    },
+    {
+      "source": "rez",
+      "target": "rei-toi",
+      "label": "engaged / marriage",
+      "weight": 4,
+      "trilogy": "bridge"
+    },
+    {
+      "source": "rez",
+      "target": "lov",
+      "label": "former partner (deceased)",
+      "weight": 3,
+      "trilogy": "bridge"
+    },
+    {
+      "source": "rei-toi",
+      "target": "lov",
+      "label": "echoes / replacement",
+      "weight": 2,
+      "trilogy": "bridge"
+    },
+    {
+      "source": "yamazaki",
+      "target": "rei-toi",
+      "label": "facilitator",
+      "weight": 2,
+      "trilogy": "bridge"
+    },
+    {
+      "source": "masahiko",
+      "target": "rei-toi",
+      "label": "cultural witness",
+      "weight": 2,
+      "trilogy": "bridge"
+    },
+    {
+      "source": "shinya",
+      "target": "rei-toi",
+      "label": "security detail",
+      "weight": 2,
+      "trilogy": "bridge"
+    },
+    {
+      "source": "case",
+      "target": "rez",
+      "label": "alluded to (cross-trilogy)",
+      "weight": 1,
+      "trilogy": "sprawl"
+    },
+    {
+      "source": "case",
+      "target": "rei-toi",
+      "label": "alluded to (cross-trilogy)",
+      "weight": 1,
+      "trilogy": "sprawl"
+    }
+  ],
+  "enrichment": {
+    "wiki_char_pages_scanned": 133,
+    "relationships_from_wiki": 14
+  }
+}

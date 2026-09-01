@@ -1,0 +1,2512 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+        <link rel="prev" href="../difficulty-rating/">
+      
+      
+        <link rel="next" href="../aftermath/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Exploration - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#system-exploration-fog-of-war" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Exploration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4단계 가시성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4단계 가시성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        가시성 결정 로직
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        특수 노드
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        노드 박스 렌더링
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="노드 박스 렌더링">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current (강조)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovered (방문한 적 있음)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adjacent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adjacent (인접, 미방문)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unknown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unknown (안개)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#top-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        미니맵 (Top-Right)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breadcrumb-bottom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breadcrumb (Bottom)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probe-program-adr-0003" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probe Program (ADR-0003 확장)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probe Program (ADR-0003 확장)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#without-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Without Probe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With Probe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explorationstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExplorationState 데이터
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExplorationState 데이터">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        메서드
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연결선 (Edge) 렌더링
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 범위
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 범위">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5 (현재)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6+
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7+
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pillar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 정합
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구현 가이드 (Phase 5+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="구현 가이드 (Phase 5+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matrixexplorationpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        matrix/exploration.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enginematrix_viewpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        engine/matrix_view.py 확장
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        관련 문서
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-2-adr-0060" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1-2 확장 (ADR-0060)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1-2 확장 (ADR-0060)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-dungeon-mode-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — Dungeon Mode (D 키)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-proceduraldungeongenerator-bsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — ProceduralDungeonGenerator (BSP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4단계 가시성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4단계 가시성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        가시성 결정 로직
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        특수 노드
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        노드 박스 렌더링
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="노드 박스 렌더링">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Current (강조)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discovered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Discovered (방문한 적 있음)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adjacent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adjacent (인접, 미방문)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unknown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unknown (안개)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#top-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        미니맵 (Top-Right)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#breadcrumb-bottom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Breadcrumb (Bottom)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probe-program-adr-0003" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probe Program (ADR-0003 확장)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probe Program (ADR-0003 확장)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#without-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Without Probe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-probe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With Probe
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#explorationstate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExplorationState 데이터
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExplorationState 데이터">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        메서드
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#edge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        연결선 (Edge) 렌더링
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 범위
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 범위">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5 (현재)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6+
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7+
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pillar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pillar 정합
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구현 가이드 (Phase 5+)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="구현 가이드 (Phase 5+)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#matrixexplorationpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        matrix/exploration.py
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#enginematrix_viewpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        engine/matrix_view.py 확장
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        관련 문서
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-1-2-adr-0060" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1-2 확장 (ADR-0060)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 1-2 확장 (ADR-0060)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-dungeon-mode-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1 — Dungeon Mode (D 키)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-proceduraldungeongenerator-bsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2 — ProceduralDungeonGenerator (BSP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="system-exploration-fog-of-war">System: Exploration (탐험 / Fog of War)<a class="headerlink" href="#system-exploration-fog-of-war" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>상위 결정</strong>: <code>../../decisions/0020-fog-of-war-exploration.md</code> (Accepted, Draft)
+<strong>관련</strong>: ADR-0005 (Cyberspace), ADR-0011 (Portraits), ADR-0012 (PPL/ZDR), ADR-0017 (Mission)</p>
+</blockquote>
+<h2 id="_1">목적<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>매트릭스 노드 그래프를 <strong>부분 가시</strong>로 표현. 자키는 매트릭스를 <em>한 번에</em> 보지 못하고, <em>한 노드씩</em> 발견. Pillar 5 (Style) — 깁슨의 "matrix is vast, you are small".</p>
+<blockquote>
+<p><strong>핵심</strong>: "다 보이는데 무슨 결정?" → "한 단계씩, 모르는 것과 마주하는" 결정.</p>
+</blockquote>
+<h2 id="4">4단계 가시성<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Visibility</th>
+<th>표시</th>
+<th>정보</th>
+<th>색상</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>current</code></td>
+<td>강조 박스 + <code>&gt;</code> 마커</td>
+<td>라벨, ZDR, PPL vs ZDR</td>
+<td>노란색 (highlight)</td>
+</tr>
+<tr>
+<td><code>adjacent</code></td>
+<td>외곽선 박스</td>
+<td>kind (Data, ICE, Router)</td>
+<td>회색</td>
+</tr>
+<tr>
+<td><code>discovered</code></td>
+<td>박스</td>
+<td>전체</td>
+<td>흰색 (방문한 적 있음)</td>
+</tr>
+<tr>
+<td><code>unknown</code></td>
+<td><code>?</code> placeholder</td>
+<td>없음</td>
+<td>어두운 회색</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">가시성 결정 로직<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">visibility</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">node_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Visibility</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">node_id</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">CURRENT</span>
+    <span class="k">if</span> <span class="n">node_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">discovered</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">DISCOVERED</span>
+    <span class="k">if</span> <span class="n">graph</span><span class="o">.</span><span class="n">is_connected</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">,</span> <span class="n">node_id</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ADJACENT</span>
+    <span class="k">return</span> <span class="n">UNKNOWN</span>
+</code></pre></div>
+<h3 id="_3">특수 노드<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Entry 노드</strong>: 시작 시 <code>discovered</code> (자기가 거기 있음)</li>
+<li><strong>Exit 노드</strong>: <em>항상 보임</em> (도착해야 하므로) — ZDR은 진입 전 비공개</li>
+<li><strong>Construct 노드</strong>: <code>?</code> (숨김) — <em>특정 조건</em> (Probe 사용, 사건 발동) 시에만 공개</li>
+</ul>
+<h2 id="_4">노드 박스 렌더링<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="current">Current (강조)<a class="headerlink" href="#current" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>┌──────────┐
+│  Entry   │   ← 노란색 (highlight)
+│ =ZDR:1   │
+└──────────┘
+</code></pre></div>
+<h3 id="discovered">Discovered (방문한 적 있음)<a class="headerlink" href="#discovered" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>┌──────────┐
+│  Data    │   ← 흰색
+│ =ZDR:5   │
+└──────────┘
+</code></pre></div>
+<h3 id="adjacent">Adjacent (인접, 미방문)<a class="headerlink" href="#adjacent" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>┌──────────┐
+│  ICE ?   │   ← 회색, kind만
+│  ?       │
+└──────────┘
+</code></pre></div>
+<h3 id="unknown">Unknown (안개)<a class="headerlink" href="#unknown" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>┌──────────┐
+│    ?     │   ← 어두운 회색
+│          │
+└──────────┘
+</code></pre></div>
+<h2 id="top-right">미니맵 (Top-Right)<a class="headerlink" href="#top-right" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>┌──────────────┐
+│     Map      │
+│  ┌─────────┐ │
+│  │ ● E  ?  │ │
+│  │  ?  ?  │ │
+│  │   ● X  │ │
+│  └─────────┘ │
+│  Path: E→R₀ │
+└──────────────┘
+</code></pre></div>
+<ul>
+<li><code>●</code> discovered (or current)</li>
+<li><code>?</code> unknown</li>
+<li><code>X</code> exit (always shown)</li>
+<li>현재 위치: <code>●</code> 강조</li>
+</ul>
+<h2 id="breadcrumb-bottom">Breadcrumb (Bottom)<a class="headerlink" href="#breadcrumb-bottom" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>Path: E → R₀ → I₀   (방문한 순서, 회색)
+</code></pre></div>
+<h2 id="probe-program-adr-0003">Probe Program (ADR-0003 확장)<a class="headerlink" href="#probe-program-adr-0003" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>T1 program</strong>, 1 AP</li>
+<li>인접 노드 1개의 <strong>ZDR</strong> 공개</li>
+<li>사용 후 <code>scanned</code> 표시</li>
+<li>인접 노드 ZDR / status (TOUGH, DEADLY, ...) 표시</li>
+</ul>
+<h3 id="without-probe">Without Probe<a class="headerlink" href="#without-probe" title="Permanent link">&para;</a></h3>
+<p>인접 노드: kind만 (Data, ICE, Router). ZDR/status 비공개.</p>
+<h3 id="with-probe">With Probe<a class="headerlink" href="#with-probe" title="Permanent link">&para;</a></h3>
+<p>인접 노드: kind + ZDR + status. 자키가 위험 수준 판단 가능.</p>
+<h2 id="explorationstate">ExplorationState 데이터<a class="headerlink" href="#explorationstate" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ExplorationState</span><span class="p">:</span>
+    <span class="n">current</span><span class="p">:</span> <span class="nb">str</span>                    <span class="c1"># 현재 노드 ID</span>
+    <span class="n">discovered</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>            <span class="c1"># 방문한 적 있는 노드들</span>
+    <span class="n">scanned</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>               <span class="c1"># Probe로 정찰한 노드들</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>                 <span class="c1"># 방문 경로 (breadcrumb)</span>
+</code></pre></div>
+<h3 id="_5">메서드<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>visit(node_id)</code>: 이동. <code>discovered</code> + <code>path</code> 갱신</li>
+<li><code>probe(node_id)</code>: <code>scanned</code>에 추가</li>
+<li><code>visibility(graph, node_id)</code>: Visibility 반환</li>
+<li><code>is_visible(graph, node_id)</code>: bool</li>
+<li><code>adjacent_to_current(graph)</code>: 현재 인접 노드 ID 목록</li>
+<li><code>discoverable_now(graph)</code>: 이동 가능한 노드 ID 목록</li>
+</ul>
+<h2 id="edge">연결선 (Edge) 렌더링<a class="headerlink" href="#edge" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>가시성</th>
+<th>표시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>둘 다 visible</td>
+<td><code>─</code> / <code>│</code> / <code>└</code> / <code>┘</code> (L-shape)</td>
+</tr>
+<tr>
+<td>한쪽만 visible</td>
+<td><strong>숨김</strong> (안개)</td>
+</tr>
+<tr>
+<td>둘 다 unknown</td>
+<td>숨김</td>
+</tr>
+</tbody>
+</table>
+<h2 id="phase">Phase 범위<a class="headerlink" href="#phase" title="Permanent link">&para;</a></h2>
+<h3 id="phase-5">Phase 5 (현재)<a class="headerlink" href="#phase-5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>ExplorationState</code> 모듈 구현 (순수 데이터)</li>
+<li><code>matrix_view.py</code> 확장 (fog 렌더링)</li>
+<li>미니맵 / breadcrumb 표시</li>
+<li>단위 테스트</li>
+</ul>
+<h3 id="phase-6">Phase 6+<a class="headerlink" href="#phase-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Probe program의 실제 효과 (UI에서 사용)</li>
+<li>미니맵 인터랙션 (확대, 클릭)</li>
+<li>"Scanned" 영구 표시</li>
+<li>안개 해제 이벤트 (특정 construct 발견 등)</li>
+</ul>
+<h3 id="phase-7">Phase 7+<a class="headerlink" href="#phase-7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>안개 <em>애니메이션</em> (reveal 효과, 페이드)</li>
+<li>사운드 (탐험 시 whisper)</li>
+</ul>
+<h2 id="pillar">Pillar 정합<a class="headerlink" href="#pillar" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>P1 (The Run)</strong>: 한 런 안의 <em>방랑</em> — 자키가 매트릭스를 <em>탐험</em>.</li>
+<li><strong>P2 (The Matrix)</strong>: 매트릭스 안의 <em>데이터</em>를 발견 — Pillar 2 정합.</li>
+<li><strong>P3 (The Flatline)</strong>: 안개로 인한 <em>불확실성</em> → 위험한 노드 회피의 <em>무게</em> 강화.</li>
+<li><strong>P4 (The Build)</strong>: Probe 같은 <em>탐색 도구</em> — Pillar 4 표현.</li>
+<li><strong>P5 (The Style)</strong>: 깁슨의 "matrix is vast, you are small" — <em>작고 헤매는</em> 자키.</li>
+</ul>
+<h2 id="phase-5_1">구현 가이드 (Phase 5+)<a class="headerlink" href="#phase-5_1" title="Permanent link">&para;</a></h2>
+<h3 id="matrixexplorationpy"><code>matrix/exploration.py</code><a class="headerlink" href="#matrixexplorationpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ExplorationState</span><span class="p">:</span>
+    <span class="n">current</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">discovered</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">set</span><span class="p">)</span>
+    <span class="n">scanned</span><span class="p">:</span> <span class="nb">set</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">set</span><span class="p">)</span>
+    <span class="n">path</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">visit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">probe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
+    <span class="k">def</span> <span class="nf">visibility</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">graph</span><span class="p">,</span> <span class="n">node_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Visibility</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
+<h3 id="enginematrix_viewpy"><code>engine/matrix_view.py</code> 확장<a class="headerlink" href="#enginematrix_viewpy" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">render_matrix</span><span class="p">(</span><span class="n">console</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">layouts</span><span class="p">,</span> <span class="n">exploration</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">exploration</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># legacy: full visibility</span>
+        <span class="o">...</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># fog of war rendering</span>
+        <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">matrix</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+            <span class="n">vis</span> <span class="o">=</span> <span class="n">exploration</span><span class="o">.</span><span class="n">visibility</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">node</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">vis</span> <span class="ow">is</span> <span class="n">Visibility</span><span class="o">.</span><span class="n">UNKNOWN</span><span class="p">:</span>
+                <span class="c1"># skip or render `?`</span>
+                <span class="k">continue</span>
+            <span class="c1"># render node with appropriate style</span>
+            <span class="o">...</span>
+</code></pre></div>
+<h2 id="_6">관련 문서<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>decisions/0020-fog-of-war-exploration.md</code> — ADR</li>
+<li><code>decisions/0005-cyberspace-representation.md</code> — 노드 그래프</li>
+<li><code>decisions/0003-combat-system.md</code> — Probe program</li>
+<li><code>decisions/0011-ascii-portraits.md</code> — 박스 렌더링</li>
+<li><code>decisions/0012-difficulty-rating.md</code> — ZDR/PPL</li>
+<li><code>decisions/0060-dungeon-exploration-redesign.md</code> — Dungeon Mode (Phase 1-2)</li>
+<li><code>decisions/0061-novel-integration-architecture.md</code> — Novel hooks (Phase 5)</li>
+<li><code>design/systems/hacking.md</code> — 매트릭스</li>
+<li><code>testcases/systems/exploration.md</code> — TC-EXP 시나리오</li>
+</ul>
+<hr />
+<h2 id="phase-1-2-adr-0060">Phase 1-2 확장 (ADR-0060)<a class="headerlink" href="#phase-1-2-adr-0060" title="Permanent link">&para;</a></h2>
+<p>Phase 1-2 (ADR-0060) 는 매트릭스 탐험에 두 가지 큰 변경을 도입했습니다.</p>
+<h3 id="phase-1-dungeon-mode-d">Phase 1 — Dungeon Mode (D 키)<a class="headerlink" href="#phase-1-dungeon-mode-d" title="Permanent link">&para;</a></h3>
+<p><code>engine/state.py: AppState.dungeon_mode: bool = False</code> 플래그 도입.
+<strong><code>D</code> 키</strong> 로 매트릭스 화면에서 2-D BSP 그리드 보기로 토글.
+<code>engine/app.py</code> 의 키 핸들러 + <code>engine/dungeon_view.py</code> 의
+<code>render_dungeon_matrix()</code> 가 상태를 읽어 그리드를 그립니다.</p>
+<p>토글 시 status panel 의 <code>WHERE</code> 행이 변경:</p>
+<div class="highlight"><pre><span></span><code>Screen: MATRIX              ← 기존 평면 그래프
+Screen: MATRIX (DUNGEON MODE)  ← 토글 후
+</code></pre></div>
+<h3 id="phase-2-proceduraldungeongenerator-bsp">Phase 2 — ProceduralDungeonGenerator (BSP)<a class="headerlink" href="#phase-2-proceduraldungeongenerator-bsp" title="Permanent link">&para;</a></h3>
+<p><code>matrix/dungeon_generator.py: ProceduralDungeonGenerator</code> 가
+<strong>BSP (Binary Space Partitioning)</strong> 트리로 매 런마다 다른 미로를
+생성합니다:</p>
+<table>
+<thead>
+<tr>
+<th>파라미터</th>
+<th>기본값</th>
+<th>효과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>min_leaf_size</code></td>
+<td><code>2</code></td>
+<td>재귀 깊이 (작을수록 방이 많음)</td>
+</tr>
+<tr>
+<td><code>room_padding</code></td>
+<td><code>1</code></td>
+<td>복도 통과용 보더</td>
+</tr>
+<tr>
+<td><code>seed</code></td>
+<td>(필수)</td>
+<td>RNG 시드</td>
+</tr>
+<tr>
+<td><code>mission_grade</code></td>
+<td><code>1</code></td>
+<td>1-5, 그리드 크기 결정</td>
+</tr>
+<tr>
+<td><code>character_ref</code></td>
+<td><code>"veteran"</code></td>
+<td>dead-end 분기 + ICE/NPC 밀도</td>
+</tr>
+</tbody>
+</table>
+<p>같은 <code>(seed, grade, ref)</code> = 동일 레이아웃 (재현 가능).</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">wet_run.matrix.dungeon_generator</span> <span class="kn">import</span> <span class="n">ProceduralDungeonGenerator</span>
+
+<span class="n">gen</span> <span class="o">=</span> <span class="n">ProceduralDungeonGenerator</span><span class="p">(</span><span class="n">min_leaf_size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">room_padding</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">graph</span> <span class="o">=</span> <span class="n">gen</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">mission_grade</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">character_ref</span><span class="o">=</span><span class="s2">&quot;veteran&quot;</span><span class="p">)</span>
+<span class="c1"># 6-12 노드 + Kruskal MST 연결</span>
+</code></pre></div>
+<p>생성된 그래프는 <code>state.matrix</code> 에 attach 되어 <code>dungeon_view.render_dungeon_matrix()</code>
+가 그리드 좌표 <code>_get_room_position()</code> 으로 위치를 결정합니다.</p>
+<p><strong>관련 데모</strong>:
+<div class="highlight"><pre><span></span><code><span class="nv">PYTHONPATH</span><span class="o">=</span>src<span class="w"> </span>.venv/bin/python<span class="w"> </span>scripts/play_dungeon_mode.py
+</code></pre></div></p>
+<p>자세한 검증 절차: <code>docs/DUNGEON_*.md</code> (3개) + <code>decisions/0060-dungeon-exploration-redesign.md</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

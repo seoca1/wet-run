@@ -1,0 +1,10 @@
+{
+  "tests_total": 6216,
+  "tests_passing": true,
+  "story_lines_total": 25,
+  "npcs_unique": 5,
+  "stages_per_run": 9,
+  "transitions": 8,
+  "missions": 209,
+  "_generated_at": "2026-08-27T08:05:40"
+}

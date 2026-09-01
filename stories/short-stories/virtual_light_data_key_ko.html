@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>버추얼 라이트 데이터 키 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="virtual_light_data_key_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">버추얼 라이트 데이터 키</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1836 words</span><span>Bridge Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"안경은 있는 걸 보여줬다. 데이터 키는 없는 걸 보여줬다."</p></blockquote>
+<blockquote><p>— 버추얼 라이트, 베리 라이델 내면 독백</p></blockquote>
+<h2>도입</h2>
+<p>선글라스가 순찰차 대시보드 위에 놓여 있었다. 싼 프레임. 진한 렌즈. 주유소에서 12달러에 사서 긁히면 버리는 종류.</p>
+<p>베리 라이델은 더 잘 알았다. 안경이 <em>뭐 하는지</em> 본 적 있으니까. 데이터 키가 관자놀이 슬롯에 들어가는 방식, 렌즈가 불투명해지는 방식, 세상이 스스로 다시 써지는 방식.</p>
+<p>버추얼 라이트. 거기 없는 도시. 지어지지 않은 건물들. 오리건 주 기업 서버팜의 기하학에만 존재하는 거리들.</p>
+<p>순찰차 엔진이 공회전했다. 샌프란시스코 밤이 앞유리에 밀려왔다 — 안개, 나트륨 증기, 소금과 배기가스 냄새. 라이델의 파트너, 12년 차 경찰로 매분을 증오하는 게라라는 여자가 조수석에서 자고 있었다. 입 벌리고. 검정 머리카락 한 가닥이 뺨 위.</p>
+<p>라이델은 잠을 잘 자지 못했다. 아카데미 이후로. 이후로 증거실 그 일 — 선글라스, 데이터 키, 버추얼 도시가 빛의 꽃처럼 그 주위에 피어오르던 방식 — 이후로.</p>
+<p>그가 안경을 집어 들었다. 프레임이 대시보드 열기로 따뜻했다. 데이터 키가 주머니에, 껌 크기의 날씬한 검은 직사각형. 오노-센다이. 프로토타입. 어떤 카탈로그에도 없는 종류.</p>
+<h2>전개</h2>
+<p>호출은 02:47에 왔다. 가정폭력. 엠바카데로의 한 건물 — 도어맨이 엘리베이터에서 내리기 전 당신의 순자산을 아는 신축 콘도 타워 중 하나.</p>
+<p>라이델이 게라를 깨웠다. 욕하고, 입 닦고, 권총 확인. 프로페셔널. 지친. 인간.</p>
+<p>콘도 타워 로비는 전부 유리와 광택 석재. 제복 입은 도어맨 — 라이델 월급보다 비싼 제복 — 이 경찰을 서비스업종으로 아는 사람 특유의 경멸로 쳐다봤다.</p>
+<p>"47C호." 도어맨 목소리가 매끄러웠다. "워싱턴 여자. 또."</p>
+<p>라이델 손가락이 주머니의 데이터 키를 움켜쥐었다. <em>워싱턴. 슈베트 워싱턴.</em></p>
+<p>파일을 읽었다. 메신저. 자전거 퀵. 버추얼 도시엔 없는 직업 — 버추얼 도시는 메신저가 <em>필요 없는</em> 게 아니라, 버추얼 도시가 <em>곧</em> 메시지니까. 하지만 진짜 도시엔 여전히 여기서 저기로 물건 나르는 사람들이 필요했다. 물리적 물건들. 전송될 수 없는 것들.</p>
+<p>엘리베이터는 조용했다. 게라가 거울 벽에 비친 제 모습 확인. 라이델이 층수 올라가는 거 지켜봤다. 12. 18. 24. 31. 47.</p>
+<p>문이 복도에 열렸다. 비싼 세제 냄새 밑에 깔린 냄새 — 먼지. 시간. 돈이 닦아낼 수 없는 것들.</p>
+<p>47C호. 문이 열려 있었다.</p>
+<h2>절정</h2>
+<p>안: 아수라장. 가구 엎어지고. 유리 깨지고. 램프가 벽에 박혀 산산조각, 갓이 빛의 찢긴 북.</p>
+<p>그리고 한가운데, 슈베트 워싱턴. 작고 단단. 메신저 백 바닥에, 내용물 쏟아진 채 — 빈티지 노키아, 접힌 지도, 단일 .38 구경 탄환.</p>
+<p>울고 있지 않았다. <em>보고</em> 있었다. 눈동자가 잔해 위를 코드 읽듯 움직였다.</p>
+<p>"키 노리러 왔어." 목소리가 평평했다. "못 찾았어. 못 찾을 거야."</p>
+<p>라이델 주머니의 데이터 키가 움찔했다. 오노-센다이 프로토타입. 존재 안 하는 것.</p>
+<p>"무슨 키?" 게라가 물었다. 프로페셔널. 지친. 인간. 하지만 손은 권총에.</p>
+<p>"버추얼 라이트 데이터 키." 메뉴 읽듯 말했다. "야마자키 사회학 연구가 추적한 키. 경찰 증거실에서 <em>분실</em>한 키. 없는 도시를 보여주는 키 — 그들이 우리가 자는 동안 <em>짓고 있는</em> 도시."</p>
+<p>라이델이 키를 꺼내 들었다. 검은 직사각형이 복도의 부드러운 빛을 받았다.</p>
+<p>"그들은 이 도시 위에 도시를 짓고 있어." 슈베트가 한 발 다가왔다. 메신저 백 끈이 유리 파편에 걸렸다. "버추얼 도시. 감당되는 사람들 위한. 우린 — 우린 비계나 받아."</p>
+<p>"슈베트." 라이델 목소리 낮게. "니가 경찰 증거물 훔쳤어."</p>
+<p>"난 미래를 <em>빌렸어</em>." 미소가 날카로웠다. "데이터 키는 버추얼 도시만 보여주는 게 아냐. <em>차이</em>를 보여줘. 있는 것과 그들이 계획하는 것 사이의 델타. 모든 철거 예정 건물. 모든 쫓겨난 동네. 비계 위에서 자고 있는 스캐터들에게 팔아넘길 다리마다."</p>
+<p>그녀가 손 내밀었다. "줘. 어디로 가는지 알아. 누가 봐야 하는지 알아."</p>
+<p>게라 손이 권총 잡았다. "워싱턴 양, 경찰 증거물 절도, 주거침입 — 체포합니다 —"</p>
+<p>"게라." 라이델이 파트너 안 봤다. "데이터 키는 버추얼 도시 보여줘. <em>진짜</em> 도시는 버추얼 도시가 충분치 않다고 사람들이 결심할 때 생기는 거야."</p>
+<p>그가 키를 슈베트 손바닥에 올렸다.</p>
+<h2>결말</h2>
+<p>순찰차 엠바카데로 멀어졌다. 게라가 운전. 라이델이 조수석, 선글라스 다시 대시보드 위.</p>
+<p>"넌 훔친 증거물 그냥 줬어." 게라 목소리 평평. "라이델, 니 커리어야. 연금이야. 그건 —"</p>
+<p>"게라." 라이델이 안개 너머 베이 브리지 나타나는 거 봤다. 진짜 다리. 스캐터들과 즉흥 배선과 다이몬 있는 다리. "버추얼 도시는 그들이 <em>파는</em> 거야. 진짜 도시는 우리가 <em>지키는</em> 거야."</p>
+<p>"언제부터 철학자야?"</p>
+<p>"데이터 키가 보여주는 거 보고부터." 라이델 손가락이 메신저 백 안의 .38 탄환 만졌다. 슈베트 만난 그날 밤부터 쭉 들고 다닌 거. "버추얼 도시엔 다리가 없어. 연결만 있지. 진짜 도시 — 진짜 도시 <em>자체가</em> 다리야."</p>
+<p>안개 걷혔다. 아침빛이 케이블 잡았다. 다리가 노래했다.</p>
+<p>라이델 눈 감았다. 눈꺼풀 뒤에서 버추얼 도시 피었다 — 그리고 진짜 도시가 <em>뚫고</em> 피어났다, 지저분하고 즉흥적이고 살아서.</p>
+<p>데이터 키는 갔다. 미래는 빌려졌고.</p>
+<p>어딘가에서 슈베트 워싱턴이 자전거 페달 밟으며 델타 건너고 있었다, 차이를 운반하며.</p>
+<hr>
+<h2>연결</h2>
+<ul><li><strong>위키 참조</strong>: <em>virtual-light</em> · <em>berry-rydell</em> · <em>chevette-washington</em> · <em>yamazaki</em> · <em>the-bridge</em></li><li><strong>테마</strong>: <em>bridge-squatter</em> · <em>improvised-infrastructure</em> · <em>corporate-warfare</em> · <em>technology-and-humanity</em> · <em>class-and-inequality</em></li><li><strong>게임 통합</strong>: `Game/roguelike_sprawl/prototype/data/missions/missions.json:virtual_light_data_key`</li></ul>
+<h2>각주</h2>
+<ul><li><em>비주얼 모티프</em>: V51 버추얼 라이트 안경, 오노-센다이 데이터 키, 베이 브리지 케이블</li><li><em>원문 인용</em>: 버추얼 라이트, 베리 라이델 내면 독백</li><li><em>캐릭터</em>: 베리 라이델 — 전 경찰, 브리지 거주자; 슈베트 워싱턴 — 메신저, 브리지 거주자</li><li><em>번역 노트</em>: 1,587 EN 단어 / ~2,970 KO 한글 자 (비율 ~1.87)</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Bridge Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

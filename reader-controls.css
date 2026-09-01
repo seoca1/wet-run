@@ -1,0 +1,122 @@
+/* dashboard/reader-controls.css — Tier 4 polish utilities */
+
+.prefs-toolbar {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  gap: 6px;
+  z-index: 990;
+}
+.prefs-toolbar button {
+  padding: 6px 12px;
+  background: #1a1a2e;
+  border: 1px solid #1a2530;
+  color: #66ffcc;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.prefs-toolbar button:hover {
+  background: #0d1420;
+}
+
+.notes-widget {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 990;
+}
+.notes-widget .notes-toggle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #1a1a2e;
+  border: 2px solid #66ffcc;
+  color: #66ffcc;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.notes-widget .notes-toggle:hover { transform: scale(1.05); }
+
+.notes-widget .notes-panel {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 320px;
+  height: 240px;
+  background: #0d1420ee;
+  border: 1px solid #66ffcc;
+  border-radius: 6px;
+  padding: 12px;
+  display: none;
+}
+.notes-widget.open .notes-panel { display: block; }
+
+.notes-widget textarea {
+  width: 100%;
+  height: 180px;
+  background: #06090f;
+  color: #c5d4e3;
+  border: 1px solid #1a2530;
+  border-radius: 4px;
+  padding: 8px;
+  font-family: "Crimson Pro", Georgia, serif;
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+}
+.notes-widget .notes-status {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: #66ffcc;
+  margin-top: 6px;
+  text-align: right;
+  height: 14px;
+}
+
+.help-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #0d1420;
+  border: 1px solid #66ffcc;
+  border-radius: 8px;
+  padding: 24px 32px;
+  max-width: 360px;
+  z-index: 1001;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  color: #c5d4e3;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+}
+.help-panel .close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #8a98a8;
+  font-size: 24px;
+  cursor: pointer;
+}
+.help-panel h3 {
+  color: #ffaa55;
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.help-panel kbd {
+  padding: 1px 6px;
+  background: #1a1a2e;
+  border-radius: 3px;
+  font-family: inherit;
+  color: #66ffcc;
+}
+
+@media print {
+  .prefs-toolbar, .notes-widget, .help-panel { display: none !important; }
+}

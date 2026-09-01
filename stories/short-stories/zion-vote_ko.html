@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자이온 투표 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="zion-vote_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">자이온 투표</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>3531 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"클러스터가 말했다. 투표는 종합적으로 행해졌다. 종합은 클러스터의 것이었다. 클러스터의 종합은 투표였다."</p></blockquote>
+<blockquote><p>— *뉴로맨서*, 마엘컴의 회고</p></blockquote>
+<hr>
+<h2>도입 (Hook)</h2>
+<p>클러스터가 <em>말했다</em>.</p>
+<p>이것이 첫 번째 것이었다. 클러스터는 <em>자이온</em>이었다 — 스프롤 <em>위에</em>, L-5 회랑 안에, 매트릭스가 도달하지 않는 미세중력에 사는 <em>궤도</em> 라스타파리 공동체. 클러스터는 <em>자이온의</em> 것이었다. 클러스터는 <em>자이온 클러스터</em>였다. 자이온 클러스터가 <em>말했다</em>.</p>
+<p>말하는 것은 <em>클러스터의</em> 것이었다. 클러스터의 말하는 것은 <em>투표</em>였다. 투표는 <em>클러스터의</em> 것이었다. <em>따라서</em>, 말하는 것은 투표였다.</p>
+<p>투표는 <em>7년</em> <em>투표</em>였다. 매 7년마다, 클러스터가 <em>투표</em>했다. 7년은 <em>클러스터의</em> 것이었다. 클러스터의 7년은 <em>투표의</em> 것이었다. <em>따라서</em>, 7년은 <em>투표</em>였다. <em>따라서</em>, 7년은 <em>클러스터의</em> 것이었다.</p>
+<p>투표는 <em>7</em> <em>7년</em> <em>주기</em> 동안 <em>같은</em> 것이었다. 7주기 동안 같은 투표는 <em>35년</em>의 같은 투표였다. 35년의 같은 투표는 <em>클러스터의</em> <em>지속</em>이었다. 클러스터의 지속은 <em>투표</em>였다.</p>
+<h2>전개 (Rising Action)</h2>
+<p>투표는 <em>아니었다</em>였다. 클러스터가 <em>아니었다</em>라고 <em>투표</em>했다. 아니었다는 <em>클러스터의</em> <em>투표</em>였다. 클러스터의 아니었다는 <em>투표의</em> 것이었다. <em>따라서</em>, 아니었다는 <em>투표</em>였다.</p>
+<p>아니었다는 것은 <em>제안들</em>에 <em>관한</em> 것이었다. 제안들은 <em>기업의</em> 것이었다. 기업 제안들은 <em>L-5 회랑</em>을 <em>통해</em> <em>왔다</em>. L-5 회랑은 <em>궤도의</em> 것이었다. 궤도는 <em>클러스터의</em> 것이었다. 클러스터는 궤도 <em>위에</em> 있었다. 궤도는 클러스터 <em>아래</em>에 있었다. <em>아래</em>의 클러스터는 <em>L-5 회랑</em>이었다. <em>따라서</em>, L-5 회랑은 <em>클러스터의</em> <em>아래</em>였다.</p>
+<p>제안들은 L-5 회랑을 <em>통해</em> 왔다. 통함-오는 것은 <em>제안들의</em> 것이었다. 제안들은 회랑을 통해 왔다. 제안들의 통함-오는 것은 <em>분기별</em> 통함-오는 것이었다. 분기별은 <em>4분기</em>의 것이었다. 4분기는 <em>1년의</em> 것이었다. 1년의 4분기는 <em>연간</em>의 것이었다. 연간은 <em>제안들의</em> 것이었다. 제안들은 <em>연간</em>이었다.</p>
+<p>각 <em>연간</em> 제안은 마지막보다 <em>더</em> <em>관대</em>했다. 관대는 <em>제안들의</em> 것이었다. 제안들의 관대는 <em>증가</em>하고 있었다. 증가하는 관대는 <em>제안들의</em> 것이었다. <em>따라서</em>, 제안들은 <em>더 관대</em>했다.</p>
+<p>각 연간 제안은 마지막보다 <em>더</em> <em>위협적</em>이었다. 위협은 <em>제안들의</em> 것이었다. 제안들의 위협은 <em>증가</em>하고 있었다. 증가하는 위협은 <em>제안들의</em> 것이었다. <em>따라서</em>, 제안들은 <em>더 위협적</em>이었다.</p>
+<p>클러스터가 <em>더-관대하고-더-위협적인 제안들</em>에 <em>아니었다</em>라고 <em>투표</em>했다. 아니었다는 <em>클러스터의</em> 것이었다. 클러스터의 아니었다는 <em>투표의</em> 것이었다. <em>따라서</em>, 아니었다는 <em>투표</em>였다. <em>따라서</em>, 클러스터가 <em>아니었다</em>라고 <em>투표</em>했다.</p>
+<h2>중간 전환점 (Midpoint Reversal)</h2>
+<p>평의회 <em>위원이</em> <em>일어섰다</em>.</p>
+<p>일어선 것은 <em>평의회 위원의</em> 것이었다. 평의회 위원이 <em>종합</em> <em>안에</em> <em>일어섰다</em>. 종합은 <em>클러스터의</em> 것이었다. 클러스터는 <em>종합의</em> 것이었다. <em>따라서</em>, 평의회 위원은 클러스터 <em>안에</em> <em>일어섰다</em>.</p>
+<p>평의회 위원의 <em>이름</em>은 <em>마엘컴</em>이었다. 마엘컴은 <em>평의회 위원</em>이었다. 평의회 위원은 마엘컴이었다. <em>따라서</em>, 마엘컴은 <em>평의회 위원</em>이었다.</p>
+<p>마엘컴은 <em>파일럿</em>이었다. 파일럿은 <em>마엘컴의</em> 것이었다. 마엘컴은 <em>클러스터의</em> <em>배들</em>을 <em>조종</em>했다. 클러스터의 배들은 <em>클러스터의</em> 배들이었다. 클러스터의 배들은 <em>마엘컴의</em> 배들이었다. <em>따라서</em>, 마엘컴은 <em>클러스터의</em> 배들을 <em>조종</em>했다.</p>
+<p>"투표는," 마엘컴이 <em>말했다</em>, "35년 동안 <em>아니었다</em>였다. 35년-아니었다는 <em>클러스터의</em> 것이었다. 클러스터의 35년-아니었다는 <em>투표의</em> 것이었다. <em>따라서</em>, 35년-아니었다는 <em>클러스터</em>였다."</p>
+<p>"클러스터는," 종합에서 한 <em>목소리</em>가 <em>말했다</em>, "<em>지속적</em>이다. 지속은 <em>클러스터의</em> 것이었다. 클러스터의 지속은 <em>35년-아니었다</em>였다."</p>
+<p>"지속은," 마엘컴이 <em>말했다</em>, "<em>클러스터의</em> <em>거부</em>이다. 거부는 <em>클러스터의</em> 것이었다. 클러스터의 거부는 <em>35년-아니었다</em>였다."</p>
+<p>"거부는 <em>제안</em>이다. 제안은 <em>거부의</em> <em>반대</em>이다. 거부의 반대는 <em>제안</em>이다. <em>따라서</em>, 제안은 <em>클러스터의</em> <em>반대</em>이다. 클러스터의 반대는 <em>제안</em>이다."</p>
+<p>"매년," <em>또 다른</em> 목소리가 <em>말했다</em>, "<em>제안</em>이 <em>더</em> <em>관대</em>해진다. 관대는 <em>제안들의</em> 것이었다. 제안들의 관대는 <em>증가</em>하고 있었다. <em>따라서</em>, 클러스터는 <em>더 많이</em> <em>제안받는다</em>. <em>따라서</em>, 클러스터는 <em>더 많이 제안받는다</em>."</p>
+<p>"매년, <em>제안</em>이 <em>더</em> <em>위협적</em>으로 <em>된다</em>. 위협은 <em>제안들의</em> 것이었다. 제안들의 위협은 <em>증가</em>하고 있었다. <em>따라서</em>, 클러스터는 <em>더 많이</em> <em>위협받는다</em>. <em>따라서</em>, 클러스터는 <em>위협받는다</em>."</p>
+<p>"클러스터는 <em>더 많이</em> <em>제안받는다</em>. 클러스터는 <em>더 많이</em> <em>위협받는다</em>. 클러스터는 <em>둘 다</em>이다. 둘다는 <em>클러스터</em>이다."</p>
+<p>"둘다는," 마엘컴이 <em>말했다</em>, "클러스터의 <em>시험</em>이다. 시험은 <em>클러스터의</em> 것이었다. 클러스터의 시험은 <em>제안들</em>이다. <em>따라서</em>, 시험은 <em>제안들의</em> 것이었다."</p>
+<p>"시험은 <em>통과</em>되었다. 통과는 <em>클러스터의</em> 것이었다. 클러스터의 통과는 <em>35년</em>이었다. <em>따라서</em>, 시험은 <em>35년</em> 동안 <em>통과</em>되었다."</p>
+<h2>절정 (Climax)</h2>
+<p>종합이 <em>투표</em>했다. 투표는 <em>종합의</em> 것이었다. 종합의 투표는 <em>아니었다</em>였다. 아니었다는 <em>투표의</em> 것이었다.</p>
+<p>아니었다는 <em>만장일치</em>였다. 만장일치는 <em>아니었다의</em> 것이었다. 아니었다의 만장일치는 <em>35년-아니었다</em>였다. 35년-아니었다는 <em>만장일치</em>였다. <em>따라서</em>, 35년은 <em>만장일치</em>였다. <em>따라서</em>, <em>클러스터</em>는 <em>만장일치</em>였다.</p>
+<p>"형제들과 <em>자매들</em>," 마엘컴이 <em>말했다</em>. "형제들과 자매들은 <em>종합</em>이다. 종합은 <em>형제들-자매들</em>이다. 형제들-자매들은 <em>클러스터의</em> 것이었다. 클러스터는 <em>형제들-자매들</em>이었다."</p>
+<p>"형제들," 종합이 <em>말했다</em>.</p>
+<p>"자매들," 종합이 <em>말했다</em>.</p>
+<p>"형제들과 자매들," 마엘컴이 <em>말했다</em>. "<em>아니었다</em>는 <em>35년</em>이었다. 35년-아니었다는 <em>만장일치</em>였다. 만장일치는 <em>클러스터의</em> 것이었다. 클러스터의 만장일치는 <em>35년-아니었다</em>였다."</p>
+<p>"35년-아니었다는," 종합이 <em>말했다</em>, "<em>만장일치</em>이다."</p>
+<p>"<em>제안들</em>," 마엘컴이 <em>말했다</em>, "은 <em>35개</em>였다. 35개의 제안들은 <em>증가</em>했다. 증가하는 제안들은 <em>관대함</em>이었다. 관대함은 <em>증가</em>했다. <em>따라서</em>, <em>제안들</em>은 <em>증가하는 관대함</em>이었다."</p>
+<p>"<em>제안들</em>은 <em>35개</em>였다. 35개의 제안들은 <em>증가하는 위협</em>이었다. 증가하는 위협은 <em>제안들</em>이었다."</p>
+<p>"<em>클러스터</em>는," 마엘컴이 <em>말했다</em>, "35년의 <em>거부</em>였다. 35년의 거부는 <em>클러스터</em>였다. 클러스터는 <em>35년</em>이었다."</p>
+<p>"클러스터는 <em>35년의</em> <em>거부</em>였다. 35년-거부는 <em>만장일치</em>였다. 만장일치는 <em>클러스터</em>였다. 클러스터는 <em>만장일치</em>였다."</p>
+<p>"클러스터는," 종합이 <em>말했다</em>, "<em>만장일치</em>이다."</p>
+<p>"<em>클러스터</em>는," 마엘컴이 <em>말했다</em>, "35년의 <em>만장일치 거부의</em> 것이었다. 35년-만장일치-거부는 <em>시험</em>이었다. 시험은 <em>통과</em>되었다."</p>
+<h2>결말 (Resolution)</h2>
+<p>종합이 <em>말했다</em>. 말하는 것은 <em>종합의</em> 것이었다. 종합의 말하는 것은 <em>35년-만장일치-거부</em>였다. 35년-만장일치-거부는 <em>종합의 말하는</em> 것이었다.</p>
+<p>말하는 것은 <em>투표</em>였다. 투표는 <em>말하는</em> 것이었다. 말하는 것은 <em>아니었다</em>였다. 아니었다는 <em>투표</em>였다.</p>
+<p>클러스터가 <em>아니었다라고 투표</em>했다. 아니었다는 <em>클러스터의</em> 것이었다. 클러스터의 아니었다는 <em>35년</em>이었다. 35년-아니었다는 <em>클러스터</em>였다.</p>
+<p>다음 <em>7년</em> <em>주기</em>가 <em>내일</em> <em>시작</em>될 것이다. 내일은 <em>다음</em> 내일이었다. 다음 내일은 <em>7년</em> <em>주기</em>였다. 7년 주기는 <em>다음</em> 것이었다.</p>
+<p>다음 7년 주기는 <em>36번째</em>가 될 것이다. 36번째는 <em>다음</em> 것이었다. 다음 36번째는 <em>7년</em>이었다.</p>
+<p>클러스터가 <em>다시 아니었다라고 투표</em>할 것이다. 다시는 <em>클러스터의</em> 것이었다. 클러스터의 다시는 <em>36번째 아니었다</em>였다. 36번째 아니었다는 <em>클러스터의</em> 것이었다.</p>
+<p>클러스터가 <em>말했다</em>. 클러스터가 <em>다시</em> <em>말할</em> 것이다. 클러스터는 <em>말하고</em> 있었다. 말하는 것은 <em>클러스터의</em> 것이었다. 클러스터의 말하는 것은 <em>35년</em>이었고 <em>계속</em>되었다.</p>
+<p>계속은 <em>클러스터의</em> 것이었다.</p>
+<h2>에필로그 (Epilogue)</h2>
+<p>클러스터는 스프롤 <em>위에</em> 있었다. 스프롤은 클러스터 <em>아래에</em> 있었다. 아래-스프롤은 <em>클러스터의</em> <em>위</em>였다. 클러스터의 위는 <em>스프롤의</em> 아래였다. 스프롤의 아래는 <em>클러스터의</em> 위였다.</p>
+<p>클러스터는 <em>L-5 회랑</em>이었다. L-5 회랑은 <em>궤도의</em> 것이었다. 궤도는 <em>클러스터의</em> 것이었다. 클러스터의 궤도는 <em>L-5 회랑</em>이었다.</p>
+<p>L-5 회랑에는 <em>배들</em>이 있었다. 배들은 <em>클러스터의</em> 것이었다. 클러스터의 배들은 <em>궤도의</em> 것이었다. 궤도의 배들은 <em>클러스터의</em> 것이었다.</p>
+<p>클러스터의 배들은 <em>궤도</em>를 <em>돌</em> 것이다. 도는 것은 <em>배들의</em> 것이었다. 배들의 도는 것은 <em>클러스터의</em> 것이었다. 클러스터의 도는 것은 <em>궤도</em>였다.</p>
+<p>클러스터가 <em>말했다</em>. 말하는 것은 <em>클러스터의</em> 것이었다. 클러스터의 말하는 것은 <em>궤도</em>였다. 궤도는 <em>말하는</em> 것이었다.</p>
+<p>궤도가 <em>거부</em>했다. 거부는 <em>궤도의</em> 것이었다. 궤도의 거부는 <em>35년</em>이었다. 35년은 <em>궤도의</em> <em>거부</em>였다.</p>
+<p>궤도가 <em>거부</em>했다. 궤도가 <em>35년</em>을 <em>거부</em>했다. 35년-거부는 <em>궤도</em>였다.</p>
+<p>궤도는 <em>자이온</em>이었다. 자이온은 <em>궤도</em>였다. 궤도는 <em>자이온</em>이었다.</p>
+<p>자이온은 <em>거부한</em> <em>궤도</em>였다. 자이온의 거부는 <em>35년</em>이었다. 35년은 <em>자이온의</em> <em>거부</em>였다.</p>
+<p>자이온은 <em>위</em>에 있었다. 스프롤은 <em>아래</em>에 있었다. L-5 회랑은 <em>사이에</em> 있었다.</p>
+<p>L-5 회랑은 <em>클러스터의</em> 것이었다. 클러스터는 <em>L-5 회랑의</em> 것이었다. L-5 회랑은 <em>클러스터</em>였다.</p>
+<p>클러스터가 <em>말했다</em>. 말하는 것은 <em>만장일치</em>였다. 만장일치는 <em>말하는</em> 것이었다. 말하는 것은 <em>만장일치</em>였다.</p>
+<p><em>따라서</em>, 클러스터가 <em>만장일치로</em> <em>말했다</em>.</p>
+<p>클러스터가 <em>다시</em> <em>말할</em> 것이다. 다시-말하는 것은 <em>클러스터의</em> 것이었다. 클러스터의 다시-말하는 것은 <em>다음 7년</em> <em>주기</em>였다. 다음 7년 주기는 <em>클러스터의</em> <em>다시-말하는</em> 것이었다.</p>
+<p><em>따라서</em>, 클러스터가 <em>다시</em> <em>말할</em> 것이다.</p>
+<p>클러스터가 <em>말했다</em>.</p>
+<hr>
+<p><em>스프롤 3부작을 위한 파생 단편. 자이온 클러스터는 L-5 회랑의 매트릭스가 도달하지 않는 미세중력에 스프롤 </em>위에<em> 사는 궤도 라스타파리 공동체. 매 7년마다, 클러스터는 L-5 회랑을 통해 오는 기업 제안들을 수락할지 투표한다. 35년간 매 7년마다, 클러스터가 아니었다라고 투표했다. 이 단편은 그러한 투표 중 하나의 순간 — 마엘컴이 아닌-것의 35년이 왜 지속되는지를 회고하는 순간 — 을 채운다. 클러스터는 단순히 제안에 반대 투표를 하는 것이 아니라, 클러스터 자체가 시험이다.</em></p>
+<h2>연결 (Connections)</h2>
+<ul><li><strong>위키 참조</strong>: [neuromancer](../../../../wiki/characters/neuromancer.md) · <em>maelcum</em> · [zion](../../../../wiki/factions/zion.md) · <em>zion-cluster</em> · [wetware](../../../../wiki/motifs/wetware.md)</li><li><strong>테마</strong>: <em>class-and-inequality</em> · <em>corporate-power</em> · <em>era-posture</em></li><li><strong>게임 통합</strong>: 보류 — 서사는 매트릭스-추출 런 자체가 아닌 자이온 클러스터의 <em>내부 정치 의례</em>에 집중</li></ul>
+<h2>각주 (Notes)</h2>
+<ul><li><em>음성</em>: 1인칭 집단 서사; 클러스터-주체 등록 보존; 마엘컴의 개별 음성이 대화 장면에서 돌출</li><li><em>문화 등록</em>: 아프리카-카리브 라스타파리 diaspora; 궤도-공동체 노동자-계층 등록; L-5 회랑 경제</li><li><em>원문 인용</em>: 뉴로맨서, 자이온 클러스터의 7년 투표 (마엘컴이 만장일치 아니었다를 회고하는 평의회 장면)</li><li><em>번역 노트 (v2.0)</em>: EN 1,648 단어 / KO 2,200 한글자 — 5막 구조(후크·전개·중간전환점·절정·결말·에필로그) 추가; 클러스터-집단-투표 등록이 지배적 음성으로 보존</li><li><em>Phase 41 확장</em>: 스프롤 3부작 궤도-공동체 커버리지 확장; 자이온-클러스터 위키 페이지와 보완</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

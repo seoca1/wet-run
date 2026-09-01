@@ -1,0 +1,152 @@
+{
+  "characters": [
+    {
+      "name_ko": "케이",
+      "name_en": "Case",
+      "arc": "novice",
+      "arc_label": "Novice",
+      "attributes": {
+        "이름": "케이 (K)",
+        "나이": "22",
+        "출신": "Chiba City 외곽, 저소득층",
+        "직업": "신참 콘솔 카우보이",
+        "데크": "Ono-Sendai Cyberspace 7 (T1)",
+        "주_무기": "Wisp (T1)",
+        "시점": "1인칭",
+        "동기": "빚 (생존)",
+        "톤": "떨리는 손, 자기성찰",
+        "아키타입": "Novice"
+      },
+      "id": "novice"
+    },
+    {
+      "name_ko": "실",
+      "name_en": "Sil",
+      "arc": "veteran",
+      "arc_label": "Veteran",
+      "attributes": {
+        "이름": "실 (Sil)",
+        "나이": "38",
+        "출신": "Freeside (L5 식민지)에서 시작, Sprawl로 이주",
+        "직업": "베테랑 자키, 15년 경력",
+        "데크": "Hosaka Security (T3)",
+        "주_무기": "Hammer (T2) + Probe (T2)",
+        "시점": "1인칭",
+        "동기": "복수 (과거)",
+        "톤": "직접적, 강렬함",
+        "아키타입": "Veteran"
+      },
+      "id": "veteran"
+    },
+    {
+      "name_ko": "카스",
+      "name_en": "Kas",
+      "arc": "heretic",
+      "arc_label": "Heretic",
+      "attributes": {
+        "이름": "카스 (Kas)",
+        "나이": "28",
+        "출신": "Sprawl의 Loa/Vodou 커뮤니티",
+        "직업": "반체제 해커, 테크노맨서",
+        "데크": "MaaS BioSystems (T2, bio-organic)",
+        "주_무기": "Viral (커스텀 T2, ICE 감염형)",
+        "시점": "1인칭",
+        "동기": "전복 (미래)",
+        "톤": "예술적, 가족 안에서",
+        "아키타입": "Herethic"
+      },
+      "id": "heretic"
+    },
+    {
+      "id": "suit",
+      "name_ko": "스위트 (Suit)",
+      "name_en": "Suit",
+      "arc": "suit",
+      "arc_label": "Corporate",
+      "attributes": {
+        "시점": "**3인칭**",
+        "동기": "거래 (영구)",
+        "톤": "차가움, 계산, 침묵",
+        "데크": "T2-T3",
+        "아키타입": "Corporate"
+      }
+    },
+    {
+      "id": "wigan",
+      "name_ko": "위건 (Wigan)",
+      "name_en": "Wigan",
+      "arc": "wigan",
+      "arc_label": "Vodou Construct",
+      "attributes": {
+        "시점": "1인칭 loa",
+        "동기": "회복 (자아)",
+        "톤": "Dreamlike, ritualistic",
+        "데크": "T2-T3",
+        "아키타입": "Vodou Construct"
+      }
+    },
+    {
+      "id": "angie",
+      "name_ko": "앤지 (Angie)",
+      "name_en": "Angie",
+      "arc": "angie",
+      "arc_label": "Loa Receiver",
+      "attributes": {
+        "시점": "**1인칭 12세**",
+        "동기": "엄마",
+        "톤": "Childlike, mystical",
+        "데크": "T2-T3 (Loa-Bound)",
+        "아키타입": "Loa Receiver"
+      }
+    },
+    {
+      "id": "sally",
+      "name_ko": "샐리 (Sally)",
+      "name_en": "Sally",
+      "arc": "sally",
+      "arc_label": "Market Operator",
+      "attributes": {
+        "시점": "**1인칭 cold**",
+        "동기": "**시장 지배**",
+        "톤": "**sharp, calculating**",
+        "데크": "T5-T6 (Master)",
+        "아키타입": "Market Operator"
+      }
+    },
+    {
+      "id": "3jane",
+      "name_ko": "3Jane (Tessier-Ashpool)",
+      "name_en": "3Jane",
+      "arc": "3jane",
+      "arc_label": "Family Heir",
+      "attributes": {
+        "시점": "1인칭 aristocratic",
+        "동기": "가족 통합",
+        "톤": "royal",
+        "데크": "T5-T6",
+        "아키타입": "Family Heir"
+      }
+    },
+    {
+      "id": "neuromancer",
+      "name_ko": "Neuromancer",
+      "name_en": "Neuromancer",
+      "arc": "neuromancer",
+      "arc_label": "Merged AI",
+      "attributes": {
+        "시점": "**1인칭 AI**",
+        "동기": "초월",
+        "톤": "vast, clinical",
+        "데크": "T6+ (AI-Ascended)",
+        "아키타입": "Merged AI"
+      }
+    }
+  ],
+  "source": "design/CHARACTER_PATHS.md + design/story/characters.md",
+  "sources": [
+    "design/CHARACTER_PATHS.md",
+    "design/story/characters.md"
+  ],
+  "_generated_at": "2026-08-27T08:05:40",
+  "total_characters": 9
+}

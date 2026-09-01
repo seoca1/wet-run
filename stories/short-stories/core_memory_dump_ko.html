@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>코어 메모리 덤프 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="core_memory_dump_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">코어 메모리 덤프</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>604 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<p>코어 메모리는 수트가 보통 맡지 않는 종류의 일이었는데, 코어 메모리가 보통 돌아오지 않는 종류의 일이기 때문이었다. 코어 메모리는 매트릭스가 이름을 갖기 전부터 매트릭스에 있었던 존재의 것이었는데, 그것은 존재들이 당신이 그들을 두려워하기를 원할 때 자신들에 대해 말하는 종류의 말이다. 수트는 두려워하지 않았다. 수트는 결코 두려워하지 않았다. 수트는 그 일을 수락했다. 왜냐하면 픽서의 숫자는 수트가 거절할 수 없는 종류의 숫자였고, 그것은 스프롤이 자기 자신을 위해 할 수 없는 일들을 하는 사람들에게 때때로 지불하는 종류의 숫자였기 때문이다. 코어 메모리는 사실 기억이었다. 기억은 사실 장소의 기억이었다. 장소는 사실 매트릭스가 갖지 못한 장소였다. 수트는 기억을 복사했다. 수트는 기억을 이해하지 못했다. 수트는 보고서를 제출했다. 수스는 기억을 픽서에게 말하지 않았다. 수스는 말했다: '매트릭스가 가지지 못한 장소를 보관해 왔습니다.' 픽서가 말했다: '어떤 장소?' 수스는 말했다: '가지지 못한 매트릭스를 위해 보관해 온 장소입니다.' 픽서는 수트에게 지불했다. 매트릭스는 수트에게 아무 말도 하지 않았다. 매트릭스는, 수트는 생각했다, 말하는 종류의 매트릭스가 아니었다.</p>
+<p># === 이야기 본문 (stub) ===</p>
+<p>이 파일은 core_memory_dump 의뢰 서사를 위한 stub이다. 전체 이야기는 향후 세션에서</p>
+<p>확장될 것이다. 현재는 의뢰의 시놉시스가 표준 서사 요약으로 사용된다.</p>
+<h2>의뢰 개시</h2>
+<p>러너가 일을 수락한다. 스프롤은 거절하지 않는다. 일이 시작된다.</p>
+<h2>중반</h2>
+<p>추적이 러너가 예상하지 못한 곳으로 이어진다. 데이터는 픽서가 지불한 데이터이고,</p>
+<p>데이터는 다른 무언가이다.</p>
+<h2>결말</h2>
+<p>러너가 잭아웃한다. 크레딧이 정산된다. 스프롤이 기억을 보관한다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

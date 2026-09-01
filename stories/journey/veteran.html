@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veteran Journey — Wet Run</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Crimson Pro', Georgia, serif;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.8;
+    padding: 24px;
+    max-width: 920px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 24px; margin: -24px -24px 24px -24px;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .top-nav a { color: #00ccff; text-decoration: none; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+  .top-nav a:hover { color: #ffaa55; }
+  .top-nav .sep { color: #2a3540; }
+  h1 { font-size: 32px; margin-bottom: 8px; color: #ffaa55; font-family: 'JetBrains Mono', monospace; }
+  h2 { font-size: 22px; margin: 32px 0 12px; color: #00ccff; border-bottom: 1px solid #1a2530; padding-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  h3 { font-size: 18px; margin: 20px 0 8px; color: #ffaa55; font-family: 'JetBrains Mono', monospace; }
+  p { margin: 8px 0; }
+  ul, li { margin: 4px 0 4px 24px; }
+  blockquote {
+    border-left: 3px solid #00ccff;
+    padding: 8px 16px;
+    margin: 16px 0;
+    color: #8a98a8;
+    font-style: italic;
+    background: #0d141d;
+  }
+  table { border-collapse: collapse; margin: 12px 0; width: 100%; font-family: 'JetBrains Mono', monospace; font-size: 13px; }
+  td { border: 1px solid #1a2530; padding: 6px 10px; }
+  td:first-child { color: #00ccff; font-weight: 600; }
+  strong { color: #ffaa55; }
+  em { color: #8a98a8; }
+  code { background: #1a2530; padding: 2px 6px; border-radius: 3px; font-size: 13px; color: #00ccff; }
+  hr { border: none; border-top: 1px solid #1a2530; margin: 24px 0; }
+  .footer { text-align: center; color: #6a7888; font-size: 12px; margin-top: 48px; padding: 24px; border-top: 1px solid #1a2530; font-family: 'JetBrains Mono', monospace; }
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="../../library.html">← Library</a>
+  <span class="sep">|</span>
+  <a href="README.md">📋 INDEX</a>
+  <span class="sep">|</span>
+  <a href="novice.html" >Novice</a>
+  <a href="veteran.html" style="color: #00ccff; font-weight: 600;">Veteran</a>
+  <a href="heretic.html" >Heretic</a>
+</nav>
+<h1>Journey: 실 (Sil) — Veteran</h1>
+<blockquote>**그녀의 복수는 마라의 죽음이다. 마라의 죽음은 3백 년이다. 3백 년은 끝나지 않는다.**</blockquote>
+<blockquote>— T-A 의뢰서 (실제 의뢰가 아닌 자의식)</blockquote>
+<p>---</p>
+<h2>프로필 (Chapter 0)</h2>
+<h3>프롤로그 (Phase 0)</h3>
+<p><code>`</code></p>
+<p>Louisiana, address 11. Marly Krushkhova stands in front of the voodoo shop's glass door.</p>
+<p><code>`</code></p>
+<p>실은 시부야가 아니라 루이지아나의 11번지에 선다. Maison de Loa의 마스크 5개가 그를 본다. 마스크는 항상 <em>누군가</em>를 보고 있다. 마스크는 그것이 누구인지 모른다. 마스크는 <em>loa</em>다. <em>loa</em>는 신이 아니라, 신이 머무는 <em>자리</em>다.</p>
+<p>핀이 의뢰를 보낸다: "T-A의 내부 통신. 3년 전. Mara가 —" 노파가 웃는다: "그건 <em>구식</em>이에요, 아이. <em>구식</em>은 <em>loa</em>가 <em>받지</em> 않아요."</p>
+<p>CHAPTER 화면 12초 타이핑: 실이 Marly의 시점에서 시작하지만 실의 자의식으로 통합.</p>
+<p>---</p>
+<h2>Chapter 1: The Old Score (Arc 1)</h2>
+<h3>미션 상세</h3>
+<p><strong>Delivery to Finn</strong> (Arc 1, veteran)</p>
+<blockquote>"Marly Krushkhova는 부두 가게의 유리문 앞에 서서, 마스크를 바라보았다."</blockquote>
+<li><strong>적</strong>: ICE.corporate (T-A 위엄)</li>
+<li><strong>목표</strong>: extract_data (T-A 사내 통신)</li>
+<li><strong>보상</strong>: 800cr + upgrade_t1 × 1</li>
+<li><strong>시점</strong>: 3인칭 제한, <strong>Marly</strong> (실의 의뢰 = 마라의 죽음 추적)</li>
+<h3>Chapter 1 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 2: The Voodoo God (Arc 2)</h2>
+<h3>미션 상세</h3>
+<p><strong>First Contact</strong> (Arc 2, veteran)</p>
+<blockquote>"딕시의 construct가 호출한다. 20초의 빌린 시간. 진짜 일이 어디 있는지 알려준다."</blockquote>
+<li><strong>적</strong>: ICE.construct × 1</li>
+<li><strong>목표</strong>: collect_material (rom_fragment)</li>
+<li><strong>보상</strong>: 800cr + data_fragment × 3</li>
+<li><strong>시점</strong>: 1인칭, <strong>Dixie</strong> (construct 콜)</li>
+<li><strong>연결 캐릭터</strong>: Dixie Flatline, Sil</li>
+<p><strong>Molly's Market</strong> (Arc 2, veteran) ★ Sally Shears 영감</p>
+<blockquote>"닌세이 복도에 새 바가 생겼다. 바에 새 바텐이 있다. 바텐은 수술 전 몰리의 얼굴 같은 새 얼굴을 가지고 있다."</blockquote>
+<li><strong>적</strong>: ICE.wisp × 2</li>
+<li><strong>목표</strong>: extract_data</li>
+<li><strong>보상</strong>: 1,200cr + data_fragment × 2</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sally Shears</strong> (가짜/진짜 정체성)</li>
+<li><strong>연결 캐릭터</strong>: Molly (Molly Millions), Sil</li>
+<p><strong>Sense Net Tip</strong> (Arc 2, veteran)</p>
+<blockquote>"Sense/Net ICE. Wisp급. 하지만 그 안에 무엇이 있는지 모른다."</blockquote>
+<li><strong>적</strong>: ICE.standard × 3</li>
+<li><strong>목표</strong>: extract_data (sense_net tip)</li>
+<li><strong>보상</strong>: 1,200cr + upgrade_t2 × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sil</strong></li>
+<h3>Chapter 2 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 3: The Insider (Arc 3)</h2>
+<h3>미션 상세</h3>
+<p><strong>Molly's Razor</strong> (Arc 3, veteran) ★ 신규 (06-30)</p>
+<blockquote>"소년이 어머니의 데크를 가지고 있다. 소년이 어머니의 거울 선글라스를 쓰고 있다. 소년이 어머니다. 소년이 끝나지 않는 버퍼다."</blockquote>
+<li><strong>적</strong>: ICE.rom_defense</li>
+<li><strong>목표</strong>: extract_data (Molly의 construct)</li>
+<li><strong>보상</strong>: 2,500cr + unique_program × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sil</strong> (Molly 자취 추적)</li>
+<li><strong>픽서</strong>: maas (Maas Biolabs 경로)</li>
+<p><strong>T-A Heist</strong> (Arc 3, veteran) ★ 신규 (06-30)</p>
+<blockquote>"가부장이 계약으로 자신을 보호하려 했다. 가부장이 틀렸다. 3백 년은 더 회전할 것이다."</blockquote>
+<li><strong>적</strong>: ICE.tessier_ashpool × 3 (Straylight 내)</li>
+<li><strong>목표</strong>: extract_data (T-A 가문 금고)</li>
+<li><strong>보상</strong>: 5,000cr + upgrade_t4 × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sil</strong></li>
+<li><strong>픽서</strong>: ta_rep (T-A 내부자)</li>
+<li><strong>연결 캐릭터</strong>: Ashpool, 3Jane, Hideo</li>
+<p><strong>Vegas Stakeout</strong> (Arc 3, veteran) ★ 신규 (06-29)</p>
+<blockquote>"베가스 복도의 T-A 자회사 감시. 자회사는 앞치다. 앞치다는 더 나쁜 무언가를 위한 것이다."</blockquote>
+<li><strong>적</strong>: ICE.surveillance × 4</li>
+<li><strong>목표</strong>: stealth_observe</li>
+<li><strong>보상</strong>: 1,800cr + data_fragment × 4</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sil</strong></li>
+<h3>Chapter 3 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 4: The Contract (Arc 4)</h2>
+<h3>미션 상세</h3>
+<p><strong>Dixie's Choice</strong> (Arc 4, veteran) ★ 신규 (06-29)</p>
+<blockquote>"딕시의 construct가 부탁한다. 부탁은 죽는 것이다. 죽는 것은 선택이다. 선택은 construct가 스스로 할 수 없는 유일한 것이다."</blockquote>
+<li><strong>적</strong>: ICE.construct × 2</li>
+<li><strong>목표</strong>: choice (Dixie construct 종료)</li>
+<li><strong>보상</strong>: 3,500cr + data_fragment × 5</li>
+<li><strong>시점</strong>: 1인칭, <strong>Dixie</strong> (1인칭 사망)</li>
+<li><strong>연결 캐릭터</strong>: Dixie Flatline</li>
+<p><strong>Dixie's Offer</strong> (Arc 4, veteran)</p>
+<blockquote>"딕시 플랫라인의 construct가 호출한다. '나를 끝내라.'"</blockquote>
+<li><strong>적</strong>: ICE.construct × 3</li>
+<li><strong>목표</strong>: defeat (construct)</li>
+<li><strong>보상</strong>: 3,000cr + construct_fragment × 1</li>
+<li><strong>시점</strong>: 1인칭, <strong>Dixie</strong> (construct 시점)</li>
+<p><strong>Winter Infiltration</strong> (Arc 4, veteran) ★ 신규 (06-29)</p>
+<blockquote>"윈터뮤트가 말한다. 윈터뮤트는 수년간 말했다. 윈터뮤트는 윈터뮤트를 신뢰할 것을 요구한다."</blockquote>
+<li><strong>적</strong>: ICE.wintermute × 1 (최종급)</li>
+<li><strong>목표</strong>: negotiate (Wintermute)</li>
+<li><strong>보상</strong>: 3,200cr + data_fragment × 4</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sil</strong></li>
+<li><strong>픽서</strong>: sally</li>
+<li><strong>연결 캐릭터</strong>: Wintermute, Neuromancer</li>
+<h3>Chapter 4 종료 시 상태</h3>
+<p>---</p>
+<h2>Chapter 5: The Blank (Arc 5) — 엔딩 결정</h2>
+<h3>미션 상세</h3>
+<p><strong>Zion Express</strong> (Arc 5, veteran)</p>
+<blockquote>"프리사이드에서 자이언으로 가는 셔틀. 셔틀은 화물을 싣고 있다. 화물은 데이터를 싣고 있다. 데이터는 당신이 태어나기 전에 죽은 자의 메시지를 싣고 있다. 당신이 메시지다."</blockquote>
+<li><strong>적</strong>: ICE.zion_defense × 3</li>
+<li><strong>목표</strong>: extract_data</li>
+<li><strong>보상</strong>: 4,500cr + data_fragment × 5</li>
+<li><strong>시점</strong>: 1인칭, <strong>Sil</strong></li>
+<li><strong>픽서</strong>: kumiko</li>
+<li><strong>연결 캐릭터</strong>: Kumiko (Zion 루트)</li>
+<h3>엔딩 선택</h3>
+<p>#### 엔딩 A: 📢 폭로 (Whistleblower)</p>
+<p><code>`</code></p>
+<p>실이 Tessier-Ashpool의 데이터를 폭로. 복수 성공. 새로운 적 생성.</p>
+<p><code>`</code></p>
+<li>T-A 사내 통신 + Mara 계약서를 공개</li>
+<li>Sprawl 전체가 T-A에 등을 돌림</li>
+<li><strong>결과</strong>: 3Jane이 죽고, 새로운 T-A의 적이 실을 쫓음</li>
+<li><strong>아이템 사용</strong>: data_fragment 다수</li>
+<li><strong>위키 영향</strong>: [[tessier-ashpool]] 약화, [[factions/yanaka-family]] 영향</li>
+<p>#### 엔딩 B: 💼 사업 (Business as Usual)</p>
+<p><code>`</code></p>
+<p>실이 Tessier-Ashpool의 계약에 응함. 마라의 죽음이 그저 사업이 됨.</p>
+<p><code>`</code></p>
+<li>T-A의 새로운 의뢰인이 됨</li>
+<li>복수는 잊고 돈만 취함</li>
+<li><strong>결과</strong>: Sprawl의 일원이 되지만 자의식 상실</li>
+<li><strong>아이템 사용</strong>: ending_token</li>
+<p>---</p>
+<h2>최종 누적 (엔딩 전)</h2>
+<h2>연결 단편 발췌</h2>
+<p><code>marly_louisiana-god</code>, <code>sense_net_trace</code>, <code>black_ice_dream</code>, <code>loa_voodoo_contact</code>, <code>dixies_last_run</code>, <code>the_choice</code>, <code>sally_returns</code>, <code>sally_sandii-3am</code>, <code>mollys_razor</code>, <code>ta_heist</code></p>
+<p>---</p>
+<p><em>Generated: 2026-06-30. Source: missions.json, chapters/sil.json, arcs/sil_arc.json, prologues/sil.json</em></p>
+<div class="footer">
+  Wet Run — Character Journey Demo<br>
+  Generated: 2026-06-30 · Source: missions.json + chapters + arcs
+</div>
+</body>
+</html>

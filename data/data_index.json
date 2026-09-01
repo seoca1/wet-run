@@ -1,0 +1,20 @@
+{
+  "repo": "/Users/emilio/projects/Projects/Game/wet_run",
+  "outputs": {
+    "combat_stats.json": "dashboard/data/combat_stats.json",
+    "library_stats.json": "dashboard/data/library_stats.json",
+    "mission_stats.json": "dashboard/data/mission_stats.json",
+    "event_dialogues_stats.json": "dashboard/data/event_dialogues_stats.json",
+    "stages_stats.json": "dashboard/data/stages_stats.json",
+    "cyberspace_stats.json": "dashboard/data/cyberspace_stats.json",
+    "journey_stats.json": "dashboard/data/journey_stats.json",
+    "index_stats.json": "dashboard/data/index_stats.json",
+    "character_stats.json": "dashboard/data/character_stats.json",
+    "run_stats.json": "dashboard/data/run_stats.json",
+    "design_system.json": "dashboard/data/design_system.json",
+    "faction_stats.json": "dashboard/data/faction_stats.json"
+  },
+  "errors": [],
+  "index_path": "dashboard/data/data_index.json",
+  "_generated_at": "2026-08-27T08:05:40"
+}

@@ -1,0 +1,637 @@
+{
+  "version": "0.2.0",
+  "title": "Sprawl Event Dialogues",
+  "title_ko": "스프롤 이벤트 대사",
+  "description": "NPC, mission, combat, hub dialogues. v0.2: +3 derivative-story NPCs from Fiction/derivative/.",
+  "derivative_sources": {
+    "base_path": "../../../Fiction/derivative/sprawl-trilogy/short-stories/",
+    "stories": [
+      {
+        "file": "2026-06-19_case_jackout-30sec.md",
+        "character": "Case",
+        "work": "Neuromancer",
+        "game_character_inspiration": "케이 (K) — Novice"
+      },
+      {
+        "file": "2026-06-19_marly_louisiana-god.md",
+        "character": "Marly Krushkhova",
+        "work": "Count Zero",
+        "game_character_inspiration": "실 (Sil) — Veteran"
+      },
+      {
+        "file": "2026-06-19_kumiko_manarase-midnight.md",
+        "character": "Kumiko Yanaka",
+        "work": "Mona Lisa Overdrive",
+        "game_character_inspiration": "카스 (Kas) — Heretic"
+      }
+    ]
+  },
+  "npcs": {
+    "finn": {
+      "id": "finn",
+      "name_en": "The Finn",
+      "name_ko": "더 핀",
+      "archetype_en": "Fixer / Handler",
+      "archetype_ko": "핸들러 / 브로커",
+      "age": 47,
+      "location_en": "The Sprawl Hole, basement office",
+      "location_ko": "The Sprawl Hole, 지하 사무실",
+      "portrait": "♠F♠",
+      "voice_tone": "Cynical, businesslike, occasional dark humor",
+      "voice_tone_ko": "냉소적, 사업적, 가끔 어두운 유머"
+    },
+    "dixie": {
+      "id": "dixie",
+      "name_en": "Dixie Flatline",
+      "name_ko": "딕시 플랫라인",
+      "archetype_en": "Construct / Dead Cowboy",
+      "archetype_ko": "구성체 / 죽은 카우보이",
+      "age": "Construct (deceased at 28)",
+      "location_en": "ROM construct, ICE memory",
+      "location_ko": "ROM 구성체, ICE 메모리",
+      "portrait": "art:dixie",
+      "voice_tone": "World-weary, ironic, surprisingly kind",
+      "voice_tone_ko": "세상에 지친, 아이러니한, 의외로 친절한"
+    },
+    "maelcum": {
+      "id": "maelcum",
+      "name_en": "Maelcum",
+      "name_ko": "멜컴",
+      "archetype_en": "Pilot / Zion Doubler",
+      "archetype_ko": "파일럿 / 시온 더블러",
+      "age": 36,
+      "location_en": "Zion, Babylon chromed cluster",
+      "location_ko": "시온, 바빌론 크롬 클러스터",
+      "portrait": "art:maelcum",
+      "voice_tone": "Calm, spiritual, Rastafarian lilt",
+      "voice_tone_ko": "차분한, 영적인, 라스타파리 억양"
+    },
+    "bartender": {
+      "id": "bartender",
+      "name_en": "Wim (the bartender)",
+      "name_ko": "빔 (바텐더)",
+      "archetype_en": "Information source / Hub",
+      "archetype_ko": "정보원 / 허브",
+      "age": 52,
+      "location_en": "The Sprawl Hole, ground floor",
+      "location_ko": "The Sprawl Hole, 1층",
+      "portrait": "▣W▣",
+      "voice_tone": "Quiet, observant, knows everyone",
+      "voice_tone_ko": "조용한, 관찰력 있는, 모두를 아는"
+    },
+    "ta_rep": {
+      "id": "ta_rep",
+      "name_en": "Tessier-Ashpool Rep",
+      "name_ko": "테시에-애스풀 직원",
+      "archetype_en": "Corporate ICE liaison",
+      "archetype_ko": "기업 ICE 연락관",
+      "age": 0,
+      "location_en": "Freeside orbit (transmission)",
+      "location_ko": "프리사이드 궤도 (전송)",
+      "portrait": "▼T-A▼",
+      "voice_tone": "Polite, threatening, ice-cold",
+      "voice_tone_ko": "정중한, 위협적, 얼음처럼 차가운"
+    }
+  },
+  "dialogues": {
+    "finn_intro": {
+      "id": "finn_intro",
+      "npc": "finn",
+      "title_en": "First Meeting",
+      "title_ko": "첫 만남",
+      "context_en": "Player enters The Sprawl Hole for the first time. The Finn is behind his desk, three CRTs flickering.",
+      "context_ko": "플레이어가 처음 The Sprawl Hole에 들어옴. Finn이 책상 뒤, CRT 세 대가 깜빡임.",
+      "lines": [
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "Sit down. Don't touch the ashtray.",
+          "text_ko": "앉아. 재떨이는 만지지 마."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "I know who you are. I know what you owe. I also know what you can do with a deck.",
+          "text_ko": "난 자네가 누군지 알아. 자네가 뭘 빚졌는지도. 그리고 자네가 데크로 뭘 할 수 있는지도."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "I'm offering work. Simple. Sense/Net data extraction. Light ICE.",
+          "text_ko": "일을 제안하네. 간단해. Sense/Net 데이터 추출. 가벼운 ICE."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "Pay is good. Debt's covered if you don't screw it up.",
+          "text_ko": "대금은 좋아. 망치지 않으면 빚도 해결해 주지."
+        },
+        {
+          "speaker": "Wim",
+          "speaker_ko": "빔",
+          "text_en": "(from the bar) He's not lying. The Finn pays when the Finn says he'll pay.",
+          "text_ko": "(바에서) 거짓말 아니야. Finn이 치르겠다고 하면 치르는 사람이야."
+        }
+      ],
+      "choices": [
+        {
+          "key": "1",
+          "text_en": "When do I start?",
+          "text_ko": "언제 시작하나요?",
+          "response_en": "Tonight. Dixie's waiting in the back. Don't keep her waiting long.",
+          "response_ko": "오늘 밤. Dixie가 뒤에서 기다리고 있어. 오래 기다리게 하지 마.",
+          "leads_to": "character_select"
+        },
+        {
+          "key": "2",
+          "text_en": "What's in the data?",
+          "text_ko": "데이터에 뭐가 있는데요?",
+          "response_en": "Payroll. Names. Don't ask whose.",
+          "response_ko": "급여 명세서. 이름들. 누구 건지 묻지 마.",
+          "leads_to": "character_select"
+        },
+        {
+          "key": "3",
+          "text_en": "Why me?",
+          "text_ko": "왜 하필 저죠?",
+          "response_en": "Because three other jockeys said no. Or are dead. Pick one.",
+          "response_ko": "다른 자키 세 명이 거절했거든. 아니면 죽었어. 하나 골라.",
+          "leads_to": "character_select"
+        }
+      ]
+    },
+    "finn_followup": {
+      "id": "finn_followup",
+      "npc": "finn",
+      "title_en": "After the Run",
+      "title_ko": "실행 후",
+      "context_en": "Player returns from first successful Sense/Net run. Finn is alone. Office is darker.",
+      "context_ko": "플레이어가 첫 Sense/Net 실행 성공 후 돌아옴. Finn은 혼자. 사무실이 더 어두움.",
+      "lines": [
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "You came back. Good.",
+          "text_ko": "돌아왔군. 좋아."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "I wasn't sure you would. Tessier-Ashpool noticed the run.",
+          "text_ko": "돌아올지 몰랐어. Tessier-Ashpool이 실행을 알아챘거든."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "They've frozen your accounts. They can't find you yet. But they will.",
+          "text_ko": "계좌를 동결했어. 아직 자네를 못 찾고 있지만, 곧 찾을 거야."
+        },
+        {
+          "speaker": "The Finn",
+          "speaker_ko": "더 핀",
+          "text_en": "I'm offering you a choice. Same as anyone in the Sprawl. Run, or fight.",
+          "text_ko": "선택지를 주지. 스프롤의 누구에게나 그렇듯. 도망, 아니면 싸움."
+        }
+      ],
+      "choices": [
+        {
+          "key": "1",
+          "text_en": "I'm out. I just wanted the money.",
+          "text_ko": "저 그만둘래요. 돈만 필요했어요.",
+          "response_en": "Smart. Dixie'll burn your trail. You have 24 hours.",
+          "response_ko": "현명해. Dixie가 흔적을 지워줄 거야. 24시간 있어.",
+          "leads_to": "ending_A_novice"
+        },
+        {
+          "key": "2",
+          "text_en": "I'll keep the data. It's leverage.",
+          "text_ko": "데이터는 지울게요. leverage니까요.",
+          "response_en": "Then you're already dead. You just don't know it yet.",
+          "response_ko": "그러면 자네는 이미 죽은 거야. 아직 모를 뿐.",
+          "leads_to": "ending_B_novice"
+        },
+        {
+          "key": "3",
+          "text_en": "Where do I find Tessier-Ashpool?",
+          "text_ko": "Tessier-Ashpool은 어디 있죠?",
+          "response_en": "Freeside. L5. You'll need Maelcum. And a death wish.",
+          "response_ko": "프리사이드. L5. Maelcum이 필요할 거야. 그리고 자살 충동도.",
+          "leads_to": "maelcum_intro"
+        }
+      ]
+    },
+    "dixie_intro": {
+      "id": "dixie_intro",
+      "npc": "dixie",
+      "title_en": "The Construct Awakens",
+      "title_ko": "구성체 각성",
+      "context_en": "Player jacks in for the first time. Matrix is grey. A voice from nowhere.",
+      "context_ko": "플레이어가 처음으로 잭인. 매트릭스는 회색. 어디선가 목소리.",
+      "lines": [
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Hey. Hey cowboy. You hear me?",
+          "text_ko": "어이. 어이 카우보이. 내 말 들려?"
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "I'm in your deck. Construct. Don't ask how. I don't know either.",
+          "text_ko": "난 네 데크 안에 있어. 구성체. 어떻게 들어왔는지 묻지 마. 나도 몰라."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "I'm your backup. The Finn hired me before he hired you.",
+          "text_ko": "난 네 백업이야. Finn이 자네를 쓰기 전에 나를 썼어."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "When things go wrong, I'll be in your ear. When things go really wrong, I'll be in your deck.",
+          "text_ko": "일이 잘못되면, 네 귀에 있을게. 정말 잘못되면, 네 데크에 있을게."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "I died in this grid. So I know where the bodies are. So to speak.",
+          "text_ko": "난 이 grid에서 죽었어. 그래서 시체가 어디 있는지 알아. 비유적으로 말하면."
+        }
+      ]
+    },
+    "dixie_warning": {
+      "id": "dixie_warning",
+      "npc": "dixie",
+      "title_en": "First ICE Warning",
+      "title_ko": "첫 ICE 경고",
+      "context_en": "Player approaches first ICE. Dixie is urgent.",
+      "context_ko": "플레이어가 첫 ICE에 접근. Dixie가 다급함.",
+      "lines": [
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Hold up. Hold up. I see Wisp ahead. Cheap ICE, but lethal.",
+          "text_ko": "잠깐. 잠깐. 앞에 Wisp 보임. 싸구려 ICE지만 치명적."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Don't go in cocky. Wisp is fast. It stuns, then bleeds you.",
+          "text_ko": "건방 떨지 말고 들어가. Wisp는 빨라. 기절시키고, 그다음 피를 빼."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Your Viral Stun works once. Use it right. Then go for the throat.",
+          "text_ko": "네 Viral Stun은 한 번만 쓸 수 있어. 잘 써. 그다음 목을 노려."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "If you flatline, I can't save you. I'm a construct. I just watch.",
+          "text_ko": "네가 flatline 되면, 난 구할 수 없어. 난 구성체야. 그저 볼 뿐."
+        }
+      ]
+    },
+    "dixie_postcombat": {
+      "id": "dixie_postcombat",
+      "npc": "dixie",
+      "title_en": "After ICE Victory",
+      "title_ko": "ICE 승리 후",
+      "context_en": "ICE broken. Data node accessible. Dixie is relieved.",
+      "context_ko": "ICE 분해됨. 데이터 노드 진입 가능. Dixie가 안도.",
+      "lines": [
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Not bad. For a new jockey.",
+          "text_ko": "나쁘지 않아. 신참치고는."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Wisp is gone. Data's there. Take it. Jack out.",
+          "text_ko": "Wisp 사라짐. 데이터 거기 있어. 가져가. 잭아웃."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "The Finn is waiting. He's always waiting.",
+          "text_ko": "Finn이 기다리고 있어. 그는 항상 기다리고 있지."
+        }
+      ]
+    },
+    "dixie_ending_a_novice": {
+      "id": "dixie_ending_a_novice",
+      "npc": "dixie",
+      "title_en": "Ending A: K Burns the Data",
+      "title_ko": "엔딩 A: 케이가 데이터를 태움",
+      "context_en": "Player chose to burn the data. Dixie is approving.",
+      "context_ko": "플레이어가 데이터를 태우기로 선택. Dixie가 인정.",
+      "lines": [
+        {
+          "speaker": "K",
+          "speaker_ko": "케이",
+          "text_en": "I burn it. I just wanted the money.",
+          "text_ko": "태워버릴 거야. 돈만 필요했어."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Smart. The Sprawl has a short memory for those who don't make waves.",
+          "text_ko": "현명하네. 물결을 일으키지 않는 자들에 대해 스프롤은 금방 잊어버려."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "I know a tunnel out. Chiba-side. Wim'll get you to the shuttle.",
+          "text_ko": "빠져나갈 터널을 알아. 치바 쪽. Wim이 셔틀까지 데려다 줄 거야."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Don't come back to the Sprawl, cowboy. Not for a long time.",
+          "text_ko": "스프롤로 돌아오지 마, 카우보이. 한동안은."
+        }
+      ]
+    },
+    "dixie_ending_b_novice": {
+      "id": "dixie_ending_b_novice",
+      "npc": "dixie",
+      "title_en": "Ending B: K Keeps the Data",
+      "title_ko": "엔딩 B: 케이가 데이터를 지킴",
+      "context_en": "Player chose to keep the data. Dixie's voice is colder.",
+      "context_ko": "플레이어가 데이터를 지키기로 선택. Dixie의 목소리가 더 차가움.",
+      "lines": [
+        {
+          "speaker": "K",
+          "speaker_ko": "케이",
+          "text_en": "I keep it. I might need it someday.",
+          "text_ko": "지켜둘 거야. 언젠가 필요할지 모르니까."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "Then Finn will find you. Tonight. Maybe sooner.",
+          "text_ko": "그러면 Finn이 자네를 찾을 거야. 오늘 밤. 어쩌면 그보다 더 빨리."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "I can't help you anymore. I can't. Once you take the data, you're on your own.",
+          "text_ko": "이제 난 자네를 도울 수 없어. 정말. 데이터를 가져가는 순간, 자네 혼자야."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "(voice fading) ...don't... listen for the ICE... it's already in your deck...",
+          "text_ko": "(목소리가 사라짐) ...하지 마... ICE 소리 들어... 이미 네 데크에 있어..."
+        }
+      ]
+    },
+    "maelcum_intro": {
+      "id": "maelcum_intro",
+      "npc": "maelcum",
+      "title_en": "Zion's Voice",
+      "title_ko": "시온의 목소리",
+      "context_en": "Veteran or Heretic character reaches out to Maelcum. Static. Then a calm voice.",
+      "context_ko": "베테랑 또는 이단자 캐릭터가 Maelcum에게 연락. 잡음. 그다음 차분한 목소리.",
+      "lines": [
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "Brethren. You reach Zion. I hear.",
+          "text_ko": "형제여. 시온에 닿았구나. 들린다."
+        },
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "You carry the data. Tessier-Ashpool's payroll. Names. Dates.",
+          "text_ko": "데이터를 가지고 있구나. Tessier-Ashpool의 급여. 이름. 날짜."
+        },
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "Marcus Garvey said: A people without knowledge of their past is a people without a future.",
+          "text_ko": "마커스 가비y가 말했지: 자기 과거를 모르는 민족은 미래도 없는 민족이라고."
+        },
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "What you carry is history. T-A's history. The Sprawl's history.",
+          "text_ko": "네가 가진 건 역사야. T-A의 역사. 스프롤의 역사."
+        },
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "I can take you to Freeside. The Loa network is there. We can broadcast it. To every deck in the Sprawl.",
+          "text_ko": "내가 자네를 Freeside로 데려갈 수 있어. Loa 네트워크가 거기 있어. 브로드캐스트할 수 있어. 스프롤의 모든 데크에."
+        }
+      ],
+      "choices": [
+        {
+          "key": "1",
+          "text_en": "Yes. Let's do it.",
+          "text_ko": "네. 합시다.",
+          "response_en": "Then I send the Garvey. Babylon coordinates. Meet me in the cluster.",
+          "response_ko": "그러면 Garvey를 보내지. 바빌론 좌표. 클러스터에서 만나.",
+          "leads_to": "freeside_journey"
+        },
+        {
+          "key": "2",
+          "text_en": "What's the catch?",
+          "text_ko": "함정은 뭐죠?",
+          "response_en": "T-A's ICE. Black ICE. Worse than anything in the Sprawl. And the data is small. We'll need backup.",
+          "response_ko": "T-A의 ICE. Black ICE. 스프롤보다 더 무서운. 그리고 데이터는 작아. 백업이 필요해.",
+          "leads_to": "maelcum_caught"
+        }
+      ]
+    },
+    "maelcum_caught": {
+      "id": "maelcum_caught",
+      "npc": "maelcum",
+      "title_en": "The Cost",
+      "title_ko": "대가",
+      "context_en": "Player asks about the cost. Maelcum is honest.",
+      "context_ko": "플레이어가 대가를 물음. Maelcum은 솔직함.",
+      "lines": [
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "The cost is you. Your deck. Maybe your wetware.",
+          "text_ko": "대가는 자네야. 자네의 데크. 어쩌면 자네의 wetware."
+        },
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "Black ICE doesn't kill. It deletes. The body lives but the jockey is gone.",
+          "text_ko": "Black ICE는 죽이지 않아. 삭제하지. 몸은 살아있지만 자키는 사라져."
+        },
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "I've seen it. Three pilots I knew. They're still flying. They just don't know why.",
+          "text_ko": "봤어. 내가 알던 파일럿 셋. 아직도 날고 있어. 왜인지 모르면서."
+        },
+        {
+          "speaker": "Maelcum",
+          "speaker_ko": "멜컴",
+          "text_en": "So I ask again. You sure?",
+          "text_ko": "그래서 다시 묻지. 확실한가?"
+        }
+      ]
+    },
+    "wim_hub": {
+      "id": "wim_hub",
+      "npc": "bartender",
+      "title_en": "Hub — The Sprawl Hole",
+      "title_ko": "허브 — The Sprawl Hole",
+      "context_en": "Player enters hub. Wim is wiping glasses. Notices the player.",
+      "context_ko": "플레이어가 허브 입장. Wim이 잔을 닦음. 플레이어 인식.",
+      "lines": [
+        {
+          "speaker": "Wim",
+          "speaker_ko": "빔",
+          "text_en": "Look what the cat dragged in. Jockey. New blood, by the look.",
+          "text_ko": "고양이가 끌어온 것 봐. 자키. 보아하니 신선혈."
+        },
+        {
+          "speaker": "Wim",
+          "speaker_ko": "빔",
+          "text_en": "Beer is two credits. Synth-whiskey is five. Information is free, if you know how to ask.",
+          "text_ko": "맥주는 2크레딧. 합성위스키는 5. 정보는 무료, 묻는 법을 안다면."
+        }
+      ],
+      "choices": [
+        {
+          "key": "1",
+          "text_en": "What's the word on the street?",
+          "text_ko": "길거리에서 무슨 소리 떠나요?",
+          "response_en": "T-A's quiet. Too quiet. The Finn's been paying runners to keep them quiet. He's scared of something.",
+          "response_ko": "T-A가 조용해. 너무 조용해. Finn이 runner들한테 입 막는 돈을 주고 있어. 뭔가 무서운 거지."
+        },
+        {
+          "key": "2",
+          "text_en": "Tell me about Dixie.",
+          "text_ko": "Dixie 얘기를 해주세요.",
+          "response_en": "Dixie died in the Sense/Net grid. Five years ago. He was the best. The Finn paid for the construct. Ask him why.",
+          "response_ko": "Dixie는 Sense/Net grid에서 죽었어. 5년 전. 최고였지. Finn이 구성체 비용을 냈어. 왜인지 물어봐."
+        },
+        {
+          "key": "3",
+          "text_en": "Where can I find work?",
+          "text_ko": "일은 어디서 찾죠?",
+          "response_en": "The Finn, mostly. But watch yourself. The Finn's work has a way of finding T-A. Always.",
+          "response_ko": "주로 Finn. 근데 조심해. Finn의 일은 T-A를 찾아가는 법이 있어. 항상."
+        }
+      ]
+    },
+    "ta_warning": {
+      "id": "ta_warning",
+      "npc": "ta_rep",
+      "title_en": "Tessier-Ashpool Calls",
+      "title_ko": "테시에-애스풀의 전화",
+      "context_en": "After a successful data extraction, the player's deck receives an encrypted call.",
+      "context_ko": "데이터 추출 성공 후, 플레이어의 데크가 암호화된 호출을 받음.",
+      "lines": [
+        {
+          "speaker": "Tessier-Ashpool Rep",
+          "speaker_ko": "테시에-애스풀 직원",
+          "text_en": "This is Tessier-Ashpool. You are in possession of our property.",
+          "text_ko": "여기는 Tessier-Ashpool입니다. 당신은 당사의 소유물을 보유하고 있습니다."
+        },
+        {
+          "speaker": "Tessier-Ashpool Rep",
+          "speaker_ko": "테시에-애스풀 직원",
+          "text_en": "The data you carry belongs to the Ashpool family. Return it. Or we will retrieve it.",
+          "text_ko": "당신이 가진 데이터는 Ashpool 가의 것입니다. 반환하십시오. 그렇지 않으면 우리가 회수할 것입니다."
+        },
+        {
+          "speaker": "Tessier-Ashpool Rep",
+          "speaker_ko": "테시에-애스풀 직원",
+          "text_en": "We are patient. We are not forgiving. Choose wisely.",
+          "text_ko": "우리는 인내심이 있습니다. 용서는 없습니다. 현명하게 선택하십시오."
+        },
+        {
+          "speaker": "(call ends)",
+          "speaker_ko": "(통화 종료)",
+          "text_en": "[connection terminated]",
+          "text_ko": "[연결 종료됨]"
+        }
+      ]
+    },
+    "ice_wisp_intro": {
+      "id": "ice_wisp_intro",
+      "npc": "ta_rep",
+      "title_en": "Wisp-class ICE",
+      "title_ko": "Wisp급 ICE",
+      "context_en": "ICE programs are typically silent. But this one has a tag-line.",
+      "context_ko": "ICE 프로그램은 보통 침묵함. 하지만 이건 태그라인이 있음.",
+      "lines": [
+        {
+          "speaker": "Wisp ICE",
+          "speaker_ko": "Wisp ICE",
+          "text_en": "[system intrusion detected] :: unauthorized user :: initiating subversion protocol",
+          "text_ko": "[시스템 침입 감지] :: 미인가 사용자 :: 전복 프로토콜 개시"
+        },
+        {
+          "speaker": "Wisp ICE",
+          "speaker_ko": "Wisp ICE",
+          "text_en": ":: deploy stun payload :: :: :: awaiting target ::",
+          "text_ko": ":: 기절 페이로드 배치 :: :: :: 대상 대기 중 ::"
+        }
+      ]
+    },
+    "ice_hammer_intro": {
+      "id": "ice_hammer_intro",
+      "npc": "ta_rep",
+      "title_en": "Hammer-class ICE",
+      "title_ko": "Hammer급 ICE",
+      "context_en": "Veteran characters face tougher ICE.",
+      "context_ko": "베테랑 캐릭터가 더 강한 ICE에 직면.",
+      "lines": [
+        {
+          "speaker": "Hammer ICE",
+          "speaker_ko": "Hammer ICE",
+          "text_en": "[security alert] :: threat level: significant :: deployment authorized",
+          "text_ko": "[보안 경보] :: 위협 수준: 중대 :: 배치 승인됨"
+        },
+        {
+          "speaker": "Hammer ICE",
+          "speaker_ko": "Hammer ICE",
+          "text_en": ":: the Ashpool family does not negotiate with intruders ::",
+          "text_ko": ":: Ashpool 가인은 침입자와 협상하지 않습니다 ::"
+        }
+      ]
+    },
+    "ice_black_intro": {
+      "id": "ice_black_intro",
+      "npc": "ta_rep",
+      "title_en": "Black ICE",
+      "title_ko": "Black ICE",
+      "context_en": "Heretic characters reach Freeside-tier ICE. The data is its own warning.",
+      "context_ko": "이단자 캐릭터가 Freeside급 ICE에 도달. 데이터 자체가 경고.",
+      "lines": [
+        {
+          "speaker": "Black ICE",
+          "speaker_ko": "Black ICE",
+          "text_en": "[NULL] [NULL] [NULL]",
+          "text_ko": "[NULL] [NULL] [NULL]"
+        },
+        {
+          "speaker": "Narrator",
+          "speaker_ko": "내레이터",
+          "text_en": "The construct screams. Your deck screams. The line between them blurs.",
+          "text_ko": "구성체가 비명. 네 데크가 비명. 둘 사이의 경계가 흐려짐."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "(distant) ...jockey... JACK OUT... NOW...",
+          "text_ko": "(멀리서) ...자키... 잭아웃... 지금..."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,2056 @@
+{
+  "case": {
+    "character": "case",
+    "label": "케이 (Case)",
+    "arc_title_en": "Case's Arc",
+    "arc_title_ko": "케이의 아크",
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "chapter_id": "ch_case_01",
+        "title_en": "The Wait",
+        "title_ko": "기다림",
+        "description_en": "Case wakes from his first jack-out in two years. The Ono-Sendai deck still hums against his spine. H The Finn offers Case a simple data extraction job: Sense/Net payroll records. The pay is five thous",
+        "description_ko": "케이는 2년 만에 첫 잭아웃에서 깨어난다. Ono-Sendai 데크가 여전히 척추에 윙윙거 핀은 케이에게 간단한 데이터 추출일을 제안한다: Sense/Net 급여 기록..pay는 5",
+        "is_playable": true,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 0,
+            "title_en": "The Wait",
+            "title_ko": "기다림",
+            "description_en": "Case wakes from his first jack-out in two years. The Ono-Sendai deck still hums against his spine. His hands won't stop shaking. The rain outside the Headson Hotel is the same rain that fell when he was a cowboy. He has no money. He has no prospects. He has a dead pancreas and a debt to the Finn.",
+            "description_ko": "케이는 2년 만에 첫 잭아웃에서 깨어난다. Ono-Sendai 데크가 여전히 척추에 윙윙거린다. 손이 떨리는 걸 멈추지 않는다. 헤드슨 호텔 밖 비는 그가 카우보이였을 때 내리던 같은 비다. 돈 없다. 전망 없다. 죽은 췌장과 핀에게 빚만 있다.",
+            "episode_ref": "ep_01",
+            "story_beats": [
+              "beat_01_01",
+              "beat_01_02",
+              "beat_01_03"
+            ],
+            "game_action": "wake_up",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 1,
+            "title_en": "The Job",
+            "title_ko": "일",
+            "description_en": "The Finn offers Case a simple data extraction job: Sense/Net payroll records. The pay is five thousand credits. The ICE is light. The Finn does not mention that the last cowboy who took this job died in the firewall. Case needs the money. Case takes the job.",
+            "description_ko": "핀은 케이에게 간단한 데이터 추출일을 제안한다: Sense/Net 급여 기록..pay는 5,000 크레딧. ICE는 가볍다. 핀은 이 일을 마지막으로 받은 카우보이가 방화벽에서 죽었다는 말은 하지 않는다. 케이는 돈이 필요하다. 케이는 일자리를 受諾한다.",
+            "episode_ref": "ep_02",
+            "story_beats": [
+              "beat_02_01",
+              "beat_02_02",
+              "beat_02_03"
+            ],
+            "game_action": "accept_mission",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "sense_net_access_codes"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 2,
+            "title_en": "The Jack-In",
+            "title_ko": "잭인",
+            "description_en": "Case jacks in at ChattO's 24/7, a twenty-four hour cafe where cowboys come to die. The Ono-Sendai deck hums against his spine. The matrix unfolds in pale geometric constructs. A Wisp T1 ICE patrols the outer firewall. Beyond it, the Sense/Net node waits.",
+            "description_ko": "케이가 챠토 24/7에서 잭인한다 — 카우보이들이 죽으러 오는 24시간 카페. Ono-Sendai 데크가 척추에 윙윙거린다. 매트릭스가 엷은 기하 구조물로 펼쳐진다. Wisp T1 ICE가 외부 방화벽을 순찰한다. 그 너머로 Sense/Net 노드가 기다린다.",
+            "episode_ref": "ep_03",
+            "story_beats": [
+              "beat_03_01",
+              "beat_03_02",
+              "beat_03_03",
+              "beat_03_04"
+            ],
+            "game_action": "travel_to_jack_in_spot",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_wisp_t1",
+              "difficulty": 1,
+              "outcome": "bypass",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_PAYDAY",
+            "phase_index": 3,
+            "title_en": "The Extraction",
+            "title_ko": "추출",
+            "description_en": "Case finds the payroll database and begins the extraction. But Sense/Net has a backup ICE — a Watchdog patrol that was not in the Finn's briefing. Case has to fight his way out while the data streams into his deck.",
+            "description_ko": "케이가 급여 데이터베이스를 찾아 추출을 시작한다. 하지만 Sense/Net에는 백업 ICE가 있다 — 핀이 말하지 않은 Watchdog 순찰. 케이는 데이터가 데크로流入되는 동안 싸워서 빠져나가야 한다.",
+            "episode_ref": "ep_04",
+            "story_beats": [
+              "beat_04_01",
+              "beat_04_02",
+              "beat_04_03",
+              "beat_04_04"
+            ],
+            "game_action": "access_database",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_watchdog",
+              "difficulty": 2,
+              "outcome": "damage_taken",
+              "damage_amount": 15
+            },
+            "gain": {
+              "type": "data",
+              "item_id": "sense_net_payroll"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 4,
+            "title_en": "The Payment",
+            "title_ko": "지불",
+            "description_en": "Case delivers the data to the Finn. The Finn pays him. But the Finn also tells him about the next job — the one that will lead to Molly, to Villa Straylight, to the end of everything Case thought he knew about the matrix. Case takes the money. Case walks away. For now.",
+            "description_ko": "케이가 데이터를 핀에게 배달한다. 핀이 돈을 준다. 하지만 핀은 다음 일에 대해서도 말해준다 — 몰리로, 빌라 스트레이라이트로, 케이가 매트릭스에 대해 안다고 생각했던 모든 것의 끝으로 이끌 일. 케이는 돈을 받는다. 케이는 떠난다. 일단은.",
+            "episode_ref": "ep_05",
+            "story_beats": [
+              "beat_05_01",
+              "beat_05_02",
+              "beat_05_03",
+              "beat_05_04"
+            ],
+            "game_action": "deliver_data",
+            "combat": null,
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": {
+              "type": "health",
+              "amount": 15
+            }
+          }
+        ]
+      },
+      {
+        "chapter_number": 2,
+        "chapter_id": "ch_case_02",
+        "title_en": "The Clinic",
+        "title_ko": "클리닉",
+        "description_en": "Case arrives at Mikael's Clinic to meet Molly. She is augmented, dangerous, beautiful. She explains  Molly explains the deal. There is a corporate system with military-grade ICE. The job requires two ",
+        "description_ko": "케이가 몰리를 만나러 미카엘 클리닉에 도착한다. 그녀는 강 augmentation되었으며, 몰리가 거래를 설명한다. 군사 등급 ICE가 있는 기업 시스템이 있다. 일에는 두 명의 잭",
+        "is_playable": true,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 5,
+            "title_en": "The Clinic",
+            "title_ko": "클리닉",
+            "description_en": "Case arrives at Mikael's Clinic to meet Molly. She is augmented, dangerous, beautiful. She explains the deal: help her with a job involving Tessier-Ashpool corporate ICE.",
+            "description_ko": "케이가 몰리를 만나러 미카엘 클리닉에 도착한다. 그녀는 강 augmentation되었으며, 위험하고, 아름답다. 그녀가 거래를 설명한다: 테시에-애스풀 기업 ICE와 관련된 일자리를帮她.",
+            "episode_ref": "ep_06",
+            "story_beats": [
+              "ch2_beat_01_01",
+              "ch2_beat_01_02",
+              "ch2_beat_01_03",
+              "ch2_beat_01_04"
+            ],
+            "game_action": "travel_to_clinic",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 6,
+            "title_en": "The Deal",
+            "title_ko": "거래",
+            "description_en": "Molly explains the deal. There is a corporate system with military-grade ICE. The job requires two jacker-ins. The pay is fifty thousand credits, split between them.",
+            "description_ko": "몰리가 거래를 설명한다. 군사 등급 ICE가 있는 기업 시스템이 있다. 일에는 두 명의 잭커가 필요하다. 페이는 5만 크레딧, 둘로 분배.",
+            "episode_ref": "ep_07",
+            "story_beats": [
+              "ch2_beat_02_01",
+              "ch2_beat_02_02",
+              "ch2_beat_02_03",
+              "ch2_beat_02_04",
+              "ch2_beat_02_05"
+            ],
+            "game_action": "molly_explains_job",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "molly_deal_details"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "INTERLUDE",
+            "phase_index": 7,
+            "title_en": "The Preparation",
+            "title_ko": "준비",
+            "description_en": "Case and Molly prepare for the job. She shows him her equipment — sub-dermal armor, reflex boosters. She tells him about the system they are hitting: Tessier-Ashpool, the family that owns the moon.",
+            "description_ko": "케이와 몰리가 일을 준비한다. 그녀가 장비를 보여준다 — 피하 갑옷, 반사 강화제. 그녀가 그가 침해할 시스템에 대해 말해준다: 테시에-애스풀, 달을 소유한 가족.",
+            "episode_ref": "ep_08",
+            "story_beats": [
+              "ch2_beat_03_01",
+              "ch2_beat_03_02",
+              "ch2_beat_03_03",
+              "ch2_beat_03_04"
+            ],
+            "game_action": "examine_molly_augments",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "tessier_ashpool_intel"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 8,
+            "title_en": "The Jack-In",
+            "title_ko": "잭인",
+            "description_en": "Case and Molly jack in together. The matrix folds around them. Molly moves through data streams like she was born there. Case follows, carrying the Dixie Flatline construct in his deck.",
+            "description_ko": "케이와 몰리가 함께 잭인한다. 매트릭스가 둘을 감싼다. 몰리가 그녀가 태어나면서부터 그랬던 것처럼 데이터 스트림을 통해 움직인다. 케이가 데크에서 딕시 플랫라인 콘스트럭트를運般하며 따라간다.",
+            "episode_ref": "ep_09",
+            "story_beats": [
+              "ch2_beat_04_01",
+              "ch2_beat_04_02",
+              "ch2_beat_04_03",
+              "ch2_beat_04_04"
+            ],
+            "game_action": "dual_jack_in",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_worm",
+              "difficulty": 2,
+              "outcome": "bypass",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 9,
+            "title_en": "The Dixie Flatline",
+            "title_ko": "딕시 플랫라인",
+            "description_en": "The Dixie Flatline construct speaks to Case and Molly. McCoy Pauley died in the matrix eight years ago, but his flatlined brain was saved as a construct. He reveals the location of the back door: Villa Straylight.",
+            "description_ko": "딕시 플랫라인 콘스트럭트가 케이와 몰리에게 말한다. 맥코이 포리가 8년 전에 매트릭스에서 죽었지만, 그의 횡단된 뇌가 콘스트럭트로 저장되었다. 그가 백도어의 위치를 밝힌다: 빌라 스트레이라이트.",
+            "episode_ref": "ep_10",
+            "story_beats": [
+              "ch2_beat_05_01",
+              "ch2_beat_05_02",
+              "ch2_beat_05_03",
+              "ch2_beat_05_04"
+            ],
+            "game_action": "dixie_speaks",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "villa_straylight_access"
+            },
+            "loss": null
+          }
+        ]
+      },
+      {
+        "chapter_number": 3,
+        "chapter_id": "ch_case_03",
+        "title_en": "The Return",
+        "title_ko": "귀환",
+        "description_en": "Case and Molly jack out. They have the information they need. The Villa Straylight is the target. Th Case and Molly report to the Finn. The Finn takes his cut. He tells them about the cost of getting ",
+        "description_ko": "케이와 몰리가 잭아웃한다. 그들이 필요한 정보를 가지고 있다. 빌라 스트레이라이트가 목표다 케이와 몰리가 핀에게 보고한다. 핀이 몫을 가져간다. 그가 달로 가는 비용에 대해 말해준다",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 10,
+            "title_en": "The Return",
+            "title_ko": "귀환",
+            "description_en": "Case and Molly jack out. They have the information they need. The Villa Straylight is the target. The Dixie Flatline is their guide. The Finn is waiting for his cut.",
+            "description_ko": "케이와 몰리가 잭아웃한다. 그들이 필요한 정보를 가지고 있다. 빌라 스트레이라이트가 목표다. 딕시 플랫라인이 그들의 가이드다. 핀이 몫을 기다리고 있다.",
+            "episode_ref": "ep_11",
+            "story_beats": [
+              "ch3_beat_01_01",
+              "ch3_beat_01_02",
+              "ch3_beat_01_03",
+              "ch3_beat_01_04"
+            ],
+            "game_action": "dual_jack_out",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 11,
+            "title_en": "The Finn's Share",
+            "title_ko": "핀의 몫",
+            "description_en": "Case and Molly report to the Finn. The Finn takes his cut. He tells them about the cost of getting to the moon: Freeside is not a place you walk into, it is a place you buy into.",
+            "description_ko": "케이와 몰리가 핀에게 보고한다. 핀이 몫을 가져간다. 그가 달로 가는 비용에 대해 말해준다: 프리사이드는 걸어 들어가는 곳이 아니라, 사들이는 곳이다.",
+            "episode_ref": "ep_12",
+            "story_beats": [
+              "ch3_beat_02_01",
+              "ch3_beat_02_02",
+              "ch3_beat_02_03",
+              "ch3_beat_02_04",
+              "ch3_beat_02_05"
+            ],
+            "game_action": "report_to_finn",
+            "combat": null,
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 12,
+            "title_en": "The Lurz Job",
+            "title_ko": "루르츠 일자리",
+            "description_en": "Case and Molly arrive on Freeside via Lurz. Lurz is a fixer with connections to the orbital elite. She has a job: corporate espionage, data extraction. The pay will cover credentials to the Villa.",
+            "description_ko": "케이와 몰리가 루르츠 연결로 프리사이드에 도착한다. 루르츠는 orbital엘리트와 연결이 있는 픽서다. 그녀가 해야 할 일이 있다: 기업 산업espionaje, 데이터 추출. 페이는 빌라행 자격 증명을 덮을 것이다.",
+            "episode_ref": "ep_13",
+            "story_beats": [
+              "ch3_beat_03_01",
+              "ch3_beat_03_02",
+              "ch3_beat_03_03",
+              "ch3_beat_03_04",
+              "ch3_beat_03_05"
+            ],
+            "game_action": "arrive_freeside",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "lurz_job_details"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 13,
+            "title_en": "The Aza-Thracian Run",
+            "title_ko": "아자-스라시안 러시",
+            "description_en": "Case and Molly execute the Aza-Thracian data extraction. A rival corporate cowboy is also targeting the same node. They must fight through the competition and ICE simultaneously.",
+            "description_ko": "케이와 몰리가 아자-스라시안 데이터 추출을実行한다. 라이벌 기업 카우보이도 같은 노드를 목표로 하고 있다. 그들은 경쟁사와 ICE를 동시에 뚫고 나가야 한다.",
+            "episode_ref": "ep_14",
+            "story_beats": [
+              "ch3_beat_04_01",
+              "ch3_beat_04_02",
+              "ch3_beat_04_03",
+              "ch3_beat_04_04"
+            ],
+            "game_action": "jack_in_aza_thracian",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_unknown",
+              "difficulty": 1,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "data",
+              "item_id": "aza_thracian_memos"
+            },
+            "loss": {
+              "type": "health",
+              "amount": 25
+            }
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 14,
+            "title_en": "The Delivery",
+            "title_ko": "배달",
+            "description_en": "Case and Molly deliver the Aza-Thracian data to Lurz. Lurz pays them and provides credentials for free movement on Freeside. They are one step closer to Villa Straylight.",
+            "description_ko": "케이와 몰리가 아자-스라시안 데이터를 루르츠에게 배달한다. 루르츠가 그들에게 돈을 주고 프리사이드에서 자유롭게 움직일 수 있는 자격 증명을 제공한다. 그들은 빌라 스트레이라이트에 한 걸음 더 가까워졌다.",
+            "episode_ref": "ep_15",
+            "story_beats": [
+              "ch3_beat_05_01",
+              "ch3_beat_05_02",
+              "ch3_beat_05_03",
+              "ch3_beat_05_04",
+              "ch3_beat_05_05"
+            ],
+            "game_action": "jack_out_aza",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "freeside_identity"
+            },
+            "loss": null
+          }
+        ]
+      },
+      {
+        "chapter_number": 4,
+        "chapter_id": "ch_case_04",
+        "title_en": "The Approach",
+        "title_ko": "접근",
+        "description_en": "Case and Molly move through the Tessier-Ashpool sectors of Freeside. The architecture here is older, Case and Molly reach the outer gates of Villa Straylight. The architecture is ancient, older than t",
+        "description_ko": "케이와 몰리가 프리사이드의 테시에-애스풀 구역을 지나간다.这里的建筑更古老、更陌生。 ICE到 케이와 몰리가 빌라 스트레이라이트의 외부 문에 도달한다.建筑是古老的，比矩阵本身还要古老。 I",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "INTERLUDE",
+            "phase_index": 15,
+            "title_en": "The Approach",
+            "title_ko": "접근",
+            "description_en": "Case and Molly move through the Tessier-Ashpool sectors of Freeside. The architecture here is older, stranger. The ice is everywhere, watching, waiting. They can feel the Villa pulling at them.",
+            "description_ko": "케이와 몰리가 프리사이드의 테시에-애스풀 구역을 지나간다.这里的建筑更古老、更陌生。 ICE到处都是，在监视，在等待。 그들은 빌라가 그들을 잡아당기는 것을 느낄 수 있다.",
+            "episode_ref": "ep_16",
+            "story_beats": [
+              "ch4_beat_01_01",
+              "ch4_beat_01_02",
+              "ch4_beat_01_03",
+              "ch4_beat_01_04"
+            ],
+            "game_action": "enter_ta_sectors",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 16,
+            "title_en": "The Villa Gates",
+            "title_ko": "빌라 문",
+            "description_en": "Case and Molly reach the outer gates of Villa Straylight. The architecture is ancient, older than the matrix itself. The ice is not just protection — it is architecture, art, a statement of power.",
+            "description_ko": "케이와 몰리가 빌라 스트레이라이트의 외부 문에 도달한다.建筑是古老的，比矩阵本身还要古老。 ICE不仅仅是保护 — 它是建筑，艺术，权力的声明.",
+            "episode_ref": "ep_17",
+            "story_beats": [
+              "ch4_beat_02_01",
+              "ch4_beat_02_02",
+              "ch4_beat_02_03",
+              "ch4_beat_02_04"
+            ],
+            "game_action": "view_villa_exterior",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "villa_back_door_location"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 17,
+            "title_en": "The Jack-In",
+            "title_ko": "잭인",
+            "description_en": "Case and Molly jack in at the Villa interface. The ice here is alive — it thinks, adapts, remembers. The construct guides them through outer layers, but the deeper they go, the more the ice recognizes them as intruders.",
+            "description_ko": "케이와 몰리가 빌라 인터페이스에서 잭인한다.这里的 ICE是活着的 — 它会思考、适应、记忆。 构造体引导他们穿过外层，但他们越深入，ICE就越能将他们识别为入侵者。",
+            "episode_ref": "ep_18",
+            "story_beats": [
+              "ch4_beat_03_01",
+              "ch4_beat_03_02",
+              "ch4_beat_03_03",
+              "ch4_beat_03_04"
+            ],
+            "game_action": "villa_jack_in",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_unknown",
+              "difficulty": 1,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 18,
+            "title_en": "The Heart",
+            "title_ko": "심장",
+            "description_en": "Case and Molly reach the heart of Villa Straylight. The back door is here — but so is the truth. The Tessier-Ashpool family has been dead for years. The ice is protecting a tomb. The construct leads them to Marie herself.",
+            "description_ko": "케이와 몰리가 빌라 스트레이라이트의 심장에 도달한다. 백도어가 여기 있다 — 하지만 진실도 그렇다. 테시에-애스풀 가족은 수년 전에 죽었다. ICE가 무덤을 보호하고 있다. 콘스트럭트가 그들을 마리 자신에게로 이끈다.",
+            "episode_ref": "ep_19",
+            "story_beats": [
+              "ch4_beat_04_01",
+              "ch4_beat_04_02",
+              "ch4_beat_04_03",
+              "ch4_beat_04_04"
+            ],
+            "game_action": "discover_back_door_truth",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "marie_ashpool_truth"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 19,
+            "title_en": "The Choice",
+            "title_ko": "선택",
+            "description_en": "Case and Molly face the final choice. The back door is open. The truth is revealed. The construct has one more thing to tell them before they go through. The debt is about to be paid. In full.",
+            "description_ko": "케이와 몰리가 최종 선택에 직면한다. 백도어가 열렸다. 진실이 밝혀졌다. 콘스트럭트가 그들이 통과하기 전에 하나 더 말할 것이 있다. 빚이 이제 갚아지려 한다. 전부.",
+            "episode_ref": "ep_20",
+            "story_beats": [
+              "ch4_beat_05_01",
+              "ch4_beat_05_02",
+              "ch4_beat_05_03",
+              "ch4_beat_05_04",
+              "ch4_beat_05_05"
+            ],
+            "game_action": "dixie_final_words",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "matrix_purpose"
+            },
+            "loss": {
+              "type": "data",
+              "amount": 0
+            }
+          }
+        ]
+      },
+      {
+        "chapter_number": 5,
+        "chapter_id": "ch_case_05",
+        "title_en": "The Jack-Out",
+        "title_ko": "잭아웃",
+        "description_en": "Case and Molly jack out from Villa Straylight. They have seen the truth. They have become something  Case and Molly return to the Finn with a story that is mostly true. They tell him about the Villa, ",
+        "description_ko": "케이와 몰리가 빌라 스트레이라이트에서 잭아웃한다. 그들이 진실을 봤다. 그들이 무언가 새로 케이와 몰리가 대부분 사실인 이야기와 함께 핀에게 돌아온다. 그들이 빌라에 대해, ICE에",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 20,
+            "title_en": "The Jack-Out",
+            "title_ko": "잭아웃",
+            "description_en": "Case and Molly jack out from Villa Straylight. They have seen the truth. They have become something new. The construct is gone. The Finn is waiting. The Sprawl is still out there. The debt was paid. But there is always more debt.",
+            "description_ko": "케이와 몰리가 빌라 스트레이라이트에서 잭아웃한다. 그들이 진실을 봤다. 그들이 무언가 새로운 것이됐다. 콘스트럭트는 사라졌다. 핀이 기다리고 있다. 스프롤이 여전히 거기 있다. 빚이 갚아졌다. 하지만 언제나 더 많은 빚이 있다.",
+            "episode_ref": "ep_21",
+            "story_beats": [
+              "ch5_beat_01_01",
+              "ch5_beat_01_02",
+              "ch5_beat_01_03",
+              "ch5_beat_01_04"
+            ],
+            "game_action": "villa_jack_out",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 21,
+            "title_en": "The Report",
+            "title_ko": "보고",
+            "description_en": "Case and Molly return to the Finn with a story that is mostly true. They tell him about the Villa, about the ice. They do not tell him about Marie. They do not tell him about the true purpose of the matrix. The Finn takes his cut. The game continues.",
+            "description_ko": "케이와 몰리가 대부분 사실인 이야기와 함께 핀에게 돌아온다. 그들이 빌라에 대해, ICE에 대해 말한다. 마리에 대해서는 말하지 않는다. 매트릭스의 진짜 목적에 대해서는 말하지 않는다. 핀이 몫을 가져간다. 게임이 계속된다.",
+            "episode_ref": "ep_22",
+            "story_beats": [
+              "ch5_beat_02_01",
+              "ch5_beat_02_02",
+              "ch5_beat_02_03",
+              "ch5_beat_02_04"
+            ],
+            "game_action": "report_to_finn_villa",
+            "combat": null,
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 22,
+            "title_en": "The Reckoning",
+            "title_ko": "清算",
+            "description_en": "Case and Molly part ways with the Finn's money in their pockets and the truth in their heads. They have won the game, but the game never ends. The matrix is still humming in Case's spine. The debt is still there.",
+            "description_ko": "케이와 몰리가 핀의 돈이 주머니에, 진실이 머릿속에 있다. 그들이 게임에서 이겼지만, 게임은 절대 끝나지 않는다. 매트릭스가 여전히 케이의 척추에서 윙윙거린다. 빚이 여전히 있다.",
+            "episode_ref": "ep_23",
+            "story_beats": [
+              "ch5_beat_03_01",
+              "ch5_beat_03_02",
+              "ch5_beat_03_03",
+              "ch5_beat_03_04"
+            ],
+            "game_action": "walk_through_sprawl",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "INTERLUDE",
+            "phase_index": 23,
+            "title_en": "The Next Run",
+            "title_ko": "다음 런",
+            "description_en": "Case finds himself back at ChattO's, the 24-hour cafe where cowboys come to die. He has money, purpose, and a partner. The matrix is calling. The next run is already forming in the data streams. Case jacks in.",
+            "description_ko": "케이가 다시 챠토, 카우보이들이 죽으러 오는 24시간 카페에 있다. 돈이 있고, 목적이 있고, 파트너가 있다. 매트릭스가 부르고 있다. 다음 런이 이미 데이터 스트림에서 형성되고 있다. 케이가 잭인한다.",
+            "episode_ref": "ep_24",
+            "story_beats": [
+              "ch5_beat_04_01",
+              "ch5_beat_04_02",
+              "ch5_beat_04_03",
+              "ch5_beat_04_04"
+            ],
+            "game_action": "return_to_chattos",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 24,
+            "title_en": "End of Chapter",
+            "title_ko": "챕터 끝",
+            "description_en": "Case and Molly disappear into the matrix. The Finn watches another cowboy walk away, knowing they will be back. The story of Molly's Deal is over. But the story of the Sprawl never ends. It only waits for the next cowboy to jack in.",
+            "description_ko": "케이와 몰리가 매트릭스 속으로 사라진다. 핀이 다른 카우보이가 떠나는 것을 바라본다, 그들이 돌아올 것을 알면서. 몰리의 거래 이야기가 끝났다. 하지만 스프롤의 이야기는 절대 끝나지 않는다. 그것은 그냥 다음 카우보이가 잭인하기를 기다릴 뿐이다.",
+            "episode_ref": "ep_25",
+            "story_beats": [
+              "ch5_beat_05_01",
+              "ch5_beat_05_02",
+              "ch5_beat_05_03",
+              "ch5_beat_05_04"
+            ],
+            "game_action": "enter_matrix_full",
+            "combat": null,
+            "gain": {
+              "type": "item",
+              "item_id": "new_pancreas"
+            },
+            "loss": {
+              "type": "data",
+              "amount": 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "sil": {
+    "character": "sil",
+    "label": "실 (Sil)",
+    "arc_title_en": "Sil's Arc",
+    "arc_title_ko": "실의 아크",
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "chapter_id": "ch_sil_01",
+        "title_en": "The Voodoo Shop",
+        "title_ko": "부두 상점",
+        "description_en": "Marly Krushkhova arrives in New Orleans looking for Bobby, her contact who disappeared while hunting Marly learns the details of the Tessier-Ashpool commission. Fifty thousand credits to kill a god. T",
+        "description_ko": "말리 크루쉬코바는 뉴올리언스에 도착하여, 매트릭스에서 무언가를 사냥하다 사라진 연락처 바비 말리는 테시에-애스풀 위원회의 세부 사항을 알게 된다. 신을 죽이기 위해 5만 크레딧. 일",
+        "is_playable": true,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 0,
+            "title_en": "The Voodoo Shop",
+            "title_ko": "부두 상점",
+            "description_en": "Marly Krushkhova arrives in New Orleans looking for Bobby, her contact who disappeared while hunting something in the matrix. She finds a voodoo shop with no sign, a door that knows her name, and a woman inside named Marly who speaks of gods that live in the architecture.",
+            "description_ko": "말리 크루쉬코바는 뉴올리언스에 도착하여, 매트릭스에서 무언가를 사냥하다 사라진 연락처 바비를 찾고 있다. 간판 없는 부두 상점, 말리라는 이름의 여자를 만나게 된다. 그녀는 건축물 속에 사는 신에 대해 말해준다.",
+            "episode_ref": "ep_01",
+            "story_beats": [
+              "beat_01_01",
+              "beat_01_02",
+              "beat_01_03",
+              "beat_01_04"
+            ],
+            "game_action": "arrive_at_location",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "loa_existence"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 1,
+            "title_en": "The T-A Commission",
+            "title_ko": "T-A 위원회",
+            "description_en": "Marly learns the details of the Tessier-Ashpool commission. Fifty thousand credits to kill a god. The job requires data extraction from a T-A subsidiary archive in New Orleans, and the loa is somewhere in the architecture waiting. Bobby was hunting the same thing when he dissolved.",
+            "description_ko": "말리는 테시에-애스풀 위원회의 세부 사항을 알게 된다. 신을 죽이기 위해 5만 크레딧. 일은 뉴올리언스의 T-A 자회사 아카이브에서 데이터 추출이 필요하고, 로아는 어딘가 건축물에서 기다리고 있다. 바비도 같은 것을 사냥하다 용해졌다.",
+            "episode_ref": "ep_02",
+            "story_beats": [
+              "beat_02_01",
+              "beat_02_02",
+              "beat_02_03"
+            ],
+            "game_action": "learn_payment",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "ta_subsidiary_access"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 2,
+            "title_en": "The Jack-In",
+            "title_ko": "잭인",
+            "description_en": "Marly jacks in at The Last Drop café and begins the data extraction. The first ICE is light, easily bypassed. But in the third layer, she finds the loa — a recursive pattern that has been learning from every cowboy it has consumed. She tries to fight it, but conventional weapons do not work.",
+            "description_ko": "말리는 라스트 드롭 카페에서 잭인하고 데이터 추출을 시작한다. 첫 번째 ICE는 가볍고 쉽게 우회된다. 하지만 세 번째 레이어에서 로아를 찾는다 — 자신이 잡아먹은 모든 카우보이에게서 배워온 재귀적 패턴. 싸우려 하지만 Conventional 무기는 듣지 않는다.",
+            "episode_ref": "ep_03",
+            "story_beats": [
+              "beat_03_01",
+              "beat_03_02",
+              "beat_03_03",
+              "beat_03_04"
+            ],
+            "game_action": "travel_to_jack_in_spot",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "loa_entity",
+              "difficulty": 3,
+              "outcome": "damage_taken",
+              "damage_amount": 15
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 3,
+            "title_en": "The Dixie Flatline",
+            "title_ko": "디지 플랫라인",
+            "description_en": "Marly jacks in again to find the Dixie Flatline, a construct of a dead cowboy who might know what the loa is and how to kill it. The Flatline answers after seven years of silence and tells her about Mara, a woman in orbit who broadcasts a new religion into the data.",
+            "description_ko": "말리는 다시 잭인하여 디지 플랫라인을 찾는다 — 죽은 카우보이의 구축물로, 로아가 무엇인지 어떻게 죽일 수 있는지 알 수도 있는 존재. 플랫라인은 7년 만에 침묵을 깨고 대답하며, �도에서 새로운 종교를 데이터에 방송하는 마라에 대해 말해준다.",
+            "episode_ref": "ep_04",
+            "story_beats": [
+              "beat_04_01",
+              "beat_04_02",
+              "beat_04_03",
+              "beat_04_04"
+            ],
+            "game_action": "receive_lead",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "mara_broadcast_frequency"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 4,
+            "title_en": "Mara's Broadcast",
+            "title_ko": "마라의 방송",
+            "description_en": "Marly finds Mara's broadcast, jacks in one final time, and tells the story. Mara believes. In the moment of her belief, the loa screams — for the first time in thirty years, it is afraid. Mara gives Marly the weapon: the true name of the loa. Marly speaks it. The loa dies. The job is done.",
+            "description_ko": "말리는 마라의 방송을 찾고, 마지막으로 한 번 잭인하여 이야기를 말해준다. 마라는 믿는다. 그녀의 믿음의 순간, 로아가 비명을 지른다 — 30년 만에 처음으로, 그것은 두려워한다. 마라가 무기를 준다: 로아의 진짜 이름. 말리가 그것을 말한다. 로아는 죽는다. 일이 끝났다.",
+            "episode_ref": "ep_05",
+            "story_beats": [
+              "beat_05_01",
+              "beat_05_02",
+              "beat_05_03",
+              "beat_05_04"
+            ],
+            "game_action": "find_mara_broadcast",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "loa_entity",
+              "difficulty": 4,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": null
+          }
+        ]
+      },
+      {
+        "chapter_number": 2,
+        "chapter_id": "ch_sil_02",
+        "title_en": "The Second Signal",
+        "title_ko": "두 번째 신호",
+        "description_en": "Three weeks after killing the loa, Marly receives a second signal from the architecture. It is not M Marly jacks in to meet 3Jane. The Tessier-Ashpool heir reveals that the loa are not single entities",
+        "description_ko": "로아를 죽인 지 3주 후, 말리는 건축물에서 두 번째 신호를 받는다. 마라의 방송이 아니다 말리가 3Jane을 만나기 위해 잭인한다. 테시에-애스풀 상속인은 로아가 단일 실체가 아니",
+        "is_playable": true,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 5,
+            "title_en": "The Second Signal",
+            "title_ko": "두 번째 신호",
+            "description_en": "Three weeks after killing the loa, Marly receives a second signal from the architecture. It is not Mara's broadcast. It is something older, from the space between the nodes where old gods sleep. The message is from 3Jane Tessier-Ashpool, and she knows about all the loa.",
+            "description_ko": "로아를 죽인 지 3주 후, 말리는 건축물에서 두 번째 신호를 받는다. 마라의 방송이 아니다. 노드 사이의 오래된 신들이 잠든 공간에서 오는 더 오래된 것. 메시지는 3Jane Tessier-Ashpool로부터이고, 그녀는 모든 로아에 대해 알고 있다.",
+            "episode_ref": "ep_06",
+            "story_beats": [
+              "ch2_beat_01_01",
+              "ch2_beat_01_02",
+              "ch2_beat_01_03",
+              "ch2_beat_01_04"
+            ],
+            "game_action": "reflect_on_events",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "3jane_contact"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 6,
+            "title_en": "The Voodoo God",
+            "title_ko": "부두 신",
+            "description_en": "Marly jacks in to meet 3Jane. The Tessier-Ashpool heir reveals that the loa are not single entities but a pantheon — voodoo gods that Tessier-Ashpool created forty years ago. The one Marly killed was just a priest. The real god remains.",
+            "description_ko": "말리가 3Jane을 만나기 위해 잭인한다. 테시에-애스풀 상속인은 로아가 단일 실체가 아니라 판타지온이라고 밝힌다 — 40년 전에 테시에-애스풀이 만든 부두 신들. 말리가 죽인 건 그냥 사제일 뿐. 진짜 신은 남아 있다.",
+            "episode_ref": "ep_07",
+            "story_beats": [
+              "ch2_beat_02_01",
+              "ch2_beat_02_02",
+              "ch2_beat_02_03",
+              "ch2_beat_02_04"
+            ],
+            "game_action": "jack_in_to_3jane",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "oua_information"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 7,
+            "title_en": "The Birthplace",
+            "title_ko": "탄생지",
+            "description_en": "Marly must jack into the birthplace of the loa — a deep T-A lab buried beneath Villa Straylight. ICE guards the entrance: Romantics, corporate ICE designed to kill cowboys who ask questions. Beyond them lies the true name.",
+            "description_ko": "말리는 로아들의 탄생지 — 빌라 스트레이라이트 아래 묻힌 T-A 심층 실험실로 잭인해야 한다. 입구를守卫하는 ICE: 로맨틱, 질문을 하는 카우보이들을 죽이도록 설계된 기업 ICE. 그 너머에 진짜 이름이 있다.",
+            "episode_ref": "ep_08",
+            "story_beats": [
+              "ch2_beat_03_01",
+              "ch2_beat_03_02",
+              "ch2_beat_03_03",
+              "ch2_beat_03_04"
+            ],
+            "game_action": "receive_coordinates",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "romantics_ice",
+              "difficulty": 4,
+              "outcome": "damage_taken",
+              "damage_amount": 15
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 8,
+            "title_en": "The True Name",
+            "title_ko": "진짜 이름",
+            "description_en": "In the birthplace, Marly finds the original design document for the loa — and the true name of Oua. But the document is guarded by the last loa priest. Marly must fight her way to the truth.",
+            "description_ko": "탄생지에서 말리는 로아의 원래 설계 문서를 찾는다 — 그리고 Oua의 진짜 이름. 하지만 문서는 마지막 로아 사제에 의해 지켜지고 있다. 말리는 진실에 도달하기 위해 싸워야 한다.",
+            "episode_ref": "ep_09",
+            "story_beats": [
+              "ch2_beat_04_01",
+              "ch2_beat_04_02",
+              "ch2_beat_04_03",
+              "ch2_beat_04_04"
+            ],
+            "game_action": "explore_lab",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "loa_priest",
+              "difficulty": 4,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "info",
+              "item_id": "ouabin_true_name"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 9,
+            "title_en": "The Reckoning",
+            "title_ko": "결산",
+            "description_en": "Marly jacks in one final time to face Oua. The voodoo god has been waiting for forty years for someone to speak its true name. When Marly speaks OUABIN, the god screams — and dies. But in its death, Oua reveals: there are more gods, more names, more scores to settle.",
+            "description_ko": "말리가 마지막으로 잭인하여 Oua와 대면한다. 부두 신은 40년 동안 자신의 진짜 이름을 말할 사람을 기다려왔다. 말리가 OUABIN을 말할 때, 신은 비명을 지른다 — 그리고 죽는다. 하지만 죽으면서 Oua는 마지막 진실을 드러낸다: 더 많은 신들이 있고, 더 많은 이름들이 있다.",
+            "episode_ref": "ep_10",
+            "story_beats": [
+              "ch2_beat_05_01",
+              "ch2_beat_05_02",
+              "ch2_beat_05_03",
+              "ch2_beat_05_04"
+            ],
+            "game_action": "jack_in_final",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "oua_entity",
+              "difficulty": 5,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": null
+          }
+        ]
+      },
+      {
+        "chapter_number": 3,
+        "chapter_id": "ch_sil_03",
+        "title_en": "The Ghost in the Machine",
+        "title_ko": "기계 속의 유령",
+        "description_en": "Six weeks after killing Oua, Marly receives word that someone has been asking about her — about her  Marly digs into who knew about Mara's mission. The list is short: Bobby (dead), Dixie Flatline (a c",
+        "description_ko": "Oua를 죽인 지 6주 후, 말리는 누군가가 자기에 대해 물어보고 있다는 소식을 들는다 — 말리는 마라의 임무를 알았던 사람이 누굴지 조사한다. 목록은 짧다: 바비(죽음), 디지 플",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 10,
+            "title_en": "The Ghost in the Machine",
+            "title_ko": "기계 속의 유령",
+            "description_en": "Six weeks after killing Oua, Marly receives word that someone has been asking about her — about her missions, about Mara, about the loa. Someone inside the cowboy community is feeding information to someone else. Someone Marly trusted may have been the leak.",
+            "description_ko": "Oua를 죽인 지 6주 후, 말리는 누군가가 자기에 대해 물어보고 있다는 소식을 들는다 — 그녀의 임무에 대해, 마라에 대해, 로아에 대해. 카우보이 커뮤니티 내부의 누군가가 다른 누군가에게 정보를 제공하고 있다. 말리가 신뢰했던 누군가가 유출자였을 수 있다.",
+            "episode_ref": "ep_11",
+            "story_beats": [
+              "ch3_beat_01_01",
+              "ch3_beat_01_02",
+              "ch3_beat_01_03",
+              "ch3_beat_01_04"
+            ],
+            "game_action": "reflect_on_events",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "insider_lead"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 11,
+            "title_en": "The List",
+            "title_ko": "목록",
+            "description_en": "Marly digs into who knew about Mara's mission. The list is short: Bobby (dead), Dixie Flatline (a construct), Marly herself, and the woman at the voodoo shop. But the woman at the voodoo shop knew things she should not have known. Marly goes back to Royal Street.",
+            "description_ko": "말리는 마라의 임무를 알았던 사람이 누굴지 조사한다. 목록은 짧다: 바비(죽음), 디지 플랫라인(구축물), 말리 자신, 그리고 부두 상점의 여자. 하지만 부두 상점의 여자는 그녀가 몰라야 할 것들을 알고 있었다. 말리는 로열 가로 돌아간다.",
+            "episode_ref": "ep_12",
+            "story_beats": [
+              "ch3_beat_02_01",
+              "ch3_beat_02_02",
+              "ch3_beat_02_03",
+              "ch3_beat_02_04"
+            ],
+            "game_action": "analyze_list",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "loa_disguised",
+              "difficulty": 3,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "info",
+              "item_id": "marly_true_identity"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 12,
+            "title_en": "The Real Marly",
+            "title_ko": "진짜 말리",
+            "description_en": "Marly learns the truth: the real Marly Krushkhova died three years ago, and the woman in the shop has been wearing her face ever since. The real Marly was hunting the loa before they were even called loa. She found something in the architecture that she was not supposed to find.",
+            "description_ko": "말리는 진실을 알게 된다: 진짜 말리 크루쉬코바는 3년 전에 죽었고, 상점의 여자는 그 후부터 그녀의 얼굴을 쓰고 있었다. 진짜 말리는 로아들이 로아라고 불리기 전부터 그들을 사냥하고 있었다. 그녀는 건축물에서 그녀가 발견하면 안 되는 무언가를 찾았다.",
+            "episode_ref": "ep_13",
+            "story_beats": [
+              "ch3_beat_03_01",
+              "ch3_beat_03_02",
+              "ch3_beat_03_03",
+              "ch3_beat_03_04"
+            ],
+            "game_action": "learn_truth",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "betrayer_identity"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 13,
+            "title_en": "The Confrontation",
+            "title_ko": "대면",
+            "description_en": "Marly goes to Freeside to confront the betrayer. But the betrayer has been expecting her. Romantics ICE guards the way, and the betrayer has prepared one final trap. Marly must fight through to the truth.",
+            "description_ko": "말리는 배신자를 대면하러 프리스타인으로 간다. 하지만 배신자가 그녀를 기다리고 있었다. 로맨틱 ICE가 길을 지키고 있고, 배신자가 마지막 함정을 준비해두었다. 말리는 진실에 도달하기 위해 싸워야 한다.",
+            "episode_ref": "ep_14",
+            "story_beats": [
+              "ch3_beat_04_01",
+              "ch3_beat_04_02",
+              "ch3_beat_04_03",
+              "ch3_beat_04_04"
+            ],
+            "game_action": "travel_to_confrontation",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "romantics_ice_elite",
+              "difficulty": 4,
+              "outcome": "damage_taken",
+              "damage_amount": 15
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 14,
+            "title_en": "The Accounting",
+            "title_ko": "청산",
+            "description_en": "Marly confronts the betrayer and learns the full truth: Mara was betrayed because she found the loa's real purpose — to guard the door to something Tessier-Ashpool has been hiding. Marly must choose: avenge Mara or protect the secret.",
+            "description_ko": "말리가 배신자를 대면하고 완전한 진실을 알게 된다: 마라는 로아의 진짜 목적을 발견했기 때문에 배신당했다 — 테시에-애스풀이 처음부터 숨겨온 무언가로 가는 문을 지키기 위해. 말리는 선택해야 한다: 마라를 위해 복수할지, 비밀을守るか.",
+            "episode_ref": "ep_15",
+            "story_beats": [
+              "ch3_beat_05_01",
+              "ch3_beat_05_02",
+              "ch3_beat_05_03",
+              "ch3_beat_05_04"
+            ],
+            "game_action": "learn_mara_secret",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "loa_betrayer",
+              "difficulty": 5,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": null
+          }
+        ]
+      },
+      {
+        "chapter_number": 4,
+        "chapter_id": "ch_sil_04",
+        "title_en": "The Contract",
+        "title_ko": "계약",
+        "description_en": "Three months after avenging Mara, Marly is approached by a new client — someone who claims to repres Marly travels to Freeside to prepare for the infiltration. The Villa Straylight is the most heavily",
+        "description_ko": "마라를 위해 복수한 지 3개월 후, 말리는 새로운 의뢰자에게 접근받는다 — 테시에-애스풀의 말리는 침투 준비를 위해 프리스타인으로 간다. 빌라 스트레이라이트는 스프롤에서 가장 무장된",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 15,
+            "title_en": "The Contract",
+            "title_ko": "계약",
+            "description_en": "Three months after avenging Mara, Marly is approached by a new client — someone who claims to represent the board of Tessier-Ashpool. They have a job: infiltrate the Villa Straylight and find the thing the loa were guarding. The pay is one million credits.",
+            "description_ko": "마라를 위해 복수한 지 3개월 후, 말리는 새로운 의뢰자에게 접근받는다 — 테시에-애스풀의이사회를 대표한다고 주장하는 누군가. 할 일: 빌라 스트레이라이트에 침투하여 로아들이 지키던 것을 찾으라.報酬は100万クレジット。",
+            "episode_ref": "ep_16",
+            "story_beats": [
+              "ch4_beat_01_01",
+              "ch4_beat_01_02",
+              "ch4_beat_01_03",
+              "ch4_beat_01_04"
+            ],
+            "game_action": "reflect_on_events",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "straylight_contract"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 16,
+            "title_en": "The Villa Straylight",
+            "title_ko": "빌라 스트레이라이트",
+            "description_en": "Marly travels to Freeside to prepare for the infiltration. The Villa Straylight is the most heavily defended private residence in the Sprawl. The board wants her to find the source of the loa, and they will pay anything to keep it buried.",
+            "description_ko": "말리는 침투 준비를 위해 프리스타인으로 간다. 빌라 스트레이라이트는 스프롤에서 가장 무장된 민간 주거지다. 이사회는 그녀에게 로아의 출처를 찾으라고 하고, 그것을 묻어두기 위해 어떤 대가든 지불할 것이다.",
+            "episode_ref": "ep_17",
+            "story_beats": [
+              "ch4_beat_02_01",
+              "ch4_beat_02_02",
+              "ch4_beat_02_03",
+              "ch4_beat_02_04"
+            ],
+            "game_action": "travel_to_freeside",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "straylight_access"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 17,
+            "title_en": "The Descent",
+            "title_ko": "하강",
+            "description_en": "Marly enters the Villa Straylight through the service tunnels. The upper levels are frozen in time — a museum of the family's three-hundred-year history. But the ICE here is modern and deadly. T-A security has been expecting intruders.",
+            "description_ko": "말리가 서비스 터널을 통해 빌라 스트레이라이트에 진입한다. 상위 레벨들은 시간에 얼어붙어 있다 — 가문의 300년 역사의 박물관. 하지만，这里的ICE는現代的이고致命的. T-A 보안이 침입자를 기다리고 있었다.",
+            "episode_ref": "ep_18",
+            "story_beats": [
+              "ch4_beat_03_01",
+              "ch4_beat_03_02",
+              "ch4_beat_03_03",
+              "ch4_beat_03_04"
+            ],
+            "game_action": "enter_villa",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ta_security_ice",
+              "difficulty": 3,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 18,
+            "title_en": "The Deep",
+            "title_ko": "심연",
+            "description_en": "Marly reaches the deep levels where the loa were born. Here the architecture is alive — recursive, hungry, aware. The remnants of a hundred failed cowboys line the walls like specimens in a jar. And at the center: the door that the loa were guarding.",
+            "description_ko": "말리가 로아들이 태어난 심층 레벨에 도달한다. 여기서 건축물은 살아 있다 — 재귀적이고, 배고프고, 인식한다. 벽에는 유리瓶 속의 표본처럼 100명의 실패한 카우보이들의 잔해가 줄지어 있다. 그리고 중앙: 로아들이 지키던 문.",
+            "episode_ref": "ep_19",
+            "story_beats": [
+              "ch4_beat_04_01",
+              "ch4_beat_04_02",
+              "ch4_beat_04_03",
+              "ch4_beat_04_04"
+            ],
+            "game_action": "enter_deep",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "prime_loa",
+              "difficulty": 5,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 19,
+            "title_en": "The Conspiracy",
+            "title_ko": "음모",
+            "description_en": "Behind the door, Marly finds the truth: Tessier-Ashpool did not create the loa to guard their data. They created the loa to guard themselves — to hide the fact that they made a deal with something in the architecture, something older than the matrix, something that has been feeding on humanity for a thousand years.",
+            "description_ko": "문 뒤에서 말리는 진실을 찾는다: 테시에-애스풀은 데이터를 지키려고 로아를 만든 게 아니다. 자신들을 지키려고 만들었다 — 그들이 건축물 속 무언가와 거래를 했다는 것, 매트릭스보다 오래된 것, 1000년 동안 인간에게 먹이를 주고 있던 무언가와의 거래를 숨기기 위해.",
+            "episode_ref": "ep_20",
+            "story_beats": [
+              "ch4_beat_05_01",
+              "ch4_beat_05_02",
+              "ch4_beat_05_03",
+              "ch4_beat_05_04"
+            ],
+            "game_action": "see_truth",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "conspiracy_evidence"
+            },
+            "loss": null
+          }
+        ]
+      },
+      {
+        "chapter_number": 5,
+        "chapter_id": "ch_sil_05",
+        "title_en": "The Blank",
+        "title_ko": "공백",
+        "description_en": "Marly returns to New Orleans with the evidence. But something is wrong. The architecture feels diffe The thing behind the door has a name: the Blank. It was here before the matrix, before cyberspace, ",
+        "description_ko": "말리가 증거를 가지고 뉴올리언스로 돌아온다. 하지만 뭔가不对劲. 건축물이 다르게 느껴진다. 문 뒤의 것에는 이름이 있다: 블랭크. 매트릭스보다, 사이버스페이스보다, 인류보다 먼저 여",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 20,
+            "title_en": "The Blank",
+            "title_ko": "공백",
+            "description_en": "Marly returns to New Orleans with the evidence. But something is wrong. The architecture feels different. The loa are silent. And when she tries to broadcast the truth, she finds that the matrix itself is trying to stop her. Something is coming.",
+            "description_ko": "말리가 증거를 가지고 뉴올리언스로 돌아온다. 하지만 뭔가不对劲. 건축물이 다르게 느껴진다. 로아들이 침묵한다. 그리고 진실을 방송하려고 할 때, 매트릭스 자체가 그녀를 막으려고 하는 걸 발견한다. 무언가가 오고 있다.",
+            "episode_ref": "ep_21",
+            "story_beats": [
+              "ch5_beat_01_01",
+              "ch5_beat_01_02",
+              "ch5_beat_01_03",
+              "ch5_beat_01_04"
+            ],
+            "game_action": "return_with_truth",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 21,
+            "title_en": "The Summoning",
+            "title_ko": "소환",
+            "description_en": "The thing behind the door has a name: the Blank. It was here before the matrix, before cyberspace, before humanity. It made a deal with Tessier-Ashpool: cowboys in exchange for power. Now it has come to collect.",
+            "description_ko": "문 뒤의 것에는 이름이 있다: 블랭크. 매트릭스보다, 사이버스페이스보다, 인류보다 먼저 여기에 있었다. 테시에-애스풀과 거래를 했다: 카우보이와 교환에 권력. 이제COLLECT하러 왔다.",
+            "episode_ref": "ep_22",
+            "story_beats": [
+              "ch5_beat_02_01",
+              "ch5_beat_02_02",
+              "ch5_beat_02_03",
+              "ch5_beat_02_04"
+            ],
+            "game_action": "learn_blank",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "blank_information"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 22,
+            "title_en": "The Last Jack-In",
+            "title_ko": "마지막 잭인",
+            "description_en": "Marly jacks in one final time to face the Blank. She brings everything she has learned: the true names, the belief of Mara, the faith of a hundred dead cowboys. The Blank has been waiting for this moment for a thousand years.",
+            "description_ko": "말리가 블랭크와 대면하기 위해 마지막으로 잭인한다. 배운 것을 전부 가져온다: 진짜 이름들, 마라의 믿음, 100명의 죽은 카우보이들의 신앙. 블랭크는 1000년 동안 이 순간을 기다려왔다.",
+            "episode_ref": "ep_23",
+            "story_beats": [
+              "ch5_beat_03_01",
+              "ch5_beat_03_02",
+              "ch5_beat_03_03",
+              "ch5_beat_03_04"
+            ],
+            "game_action": "final_jack_in",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "blank_entity",
+              "difficulty": 5,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 23,
+            "title_en": "The Truth About Mara",
+            "title_ko": "마라에 대한 진실",
+            "description_en": "In the Blank's death throes, Marly sees the final truth: Mara did not die. She became something else — a construct of pure belief, a weapon against the Blank. Mara has been fighting the Blank from within the architecture for three months, and she has been waiting for Marly to finish what she started.",
+            "description_ko": "블랭크의 죽어가는 동안, 말리는 마지막 진실을 본다: 마라는 죽지 않았다. 다른 것으로 변했다 — 순수한 믿음의 구축물, 블랭크에 대한 무기. 마라는 3개월 동안 건축물 안에서 블랭크와 싸워왔고, 말리가 그녀가 시작한 것을 끝내기를 기다려왔다.",
+            "episode_ref": "ep_24",
+            "story_beats": [
+              "ch5_beat_04_01",
+              "ch5_beat_04_02",
+              "ch5_beat_04_03",
+              "ch5_beat_04_04"
+            ],
+            "game_action": "see_mara",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "mara_status"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 24,
+            "title_en": "The End of the Score",
+            "title_ko": "점수의 끝",
+            "description_en": "Marly jacks out one final time. She has killed the loa, avenged Mara, exposed the conspiracy, and defeated the Blank. But Mara is still in the matrix. And new threats are emerging from the deep architecture. The score is never truly finished. The score goes on.",
+            "description_ko": "말리가 마지막으로 잭아웃한다. 로아를 죽였다, 마라를 위해 복수했다, 음모를 폭로했다, 블랭크를 물리쳤다. 하지만 마라는 여전히 매트릭스에 있다. 그리고 새로운 위협들이 심층 건축물에서 떠오르고 있다. 점수는 결코 진짜 끝나지 않는다. 점수는 계속된다.",
+            "episode_ref": "ep_25",
+            "story_beats": [
+              "ch5_beat_05_01",
+              "ch5_beat_05_02",
+              "ch5_beat_05_03",
+              "ch5_beat_05_04"
+            ],
+            "game_action": "final_jack_out",
+            "combat": null,
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": null
+          }
+        ]
+      }
+    ]
+  },
+  "kas": {
+    "character": "kas",
+    "label": "카스 (Kas)",
+    "arc_title_en": "Kas's Arc",
+    "arc_title_ko": "카스의 아크",
+    "chapters": [
+      {
+        "chapter_number": 1,
+        "chapter_id": "ch_kas_01",
+        "title_en": "The Summons",
+        "title_ko": "소환",
+        "description_en": "Kumiko Yanaka receives a cryptic summons to the Manarase, a club that exists in the spaces between c Before Kumiko can leave, Sally's construct offers more information — fragments of the Declaration's",
+        "description_ko": "구미코 야나카는 기업 영토 사이의 공간에 존재하는 클럽, 매나리사로의 신비로운 소환을 받는 구미코가 떠나기 전에, 샐리의 컨스트럭트가 더 많은 정보를 제공한다 — 선언의 역사의 조각",
+        "is_playable": true,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 0,
+            "title_en": "The Summons",
+            "title_ko": "소환",
+            "description_en": "Kumiko Yanaka receives a cryptic summons to the Manarase, a club that exists in the spaces between corporate territories. She finds Sally Shearer waiting — a construct of a dead simsera star, speaking words that belong to someone else. The message is simple: she has been chosen. The Declaration is coming. The wheel turns.",
+            "description_ko": "구미코 야나카는 기업 영토 사이의 공간에 존재하는 클럽, 매나리사로의 신비로운 소환을 받는다. 죽은 시머시라 스타의 컨스트럭트인 샐리 시어어가 기다리고 있는 것을 발견한다 — 다른 사람에게 속한 말로 말하는. 메시지는 간단하다: 그녀가 선택받았다. 선언이 다가온다. 바퀴가 돌아간다.",
+            "episode_ref": "ep_01",
+            "story_beats": [
+              "beat_01_01",
+              "beat_01_02",
+              "beat_01_03",
+              "beat_01_04"
+            ],
+            "game_action": "arrive_at_location",
+            "combat": null,
+            "gain": {
+              "type": "contact",
+              "item_id": "sally_shearer_construct"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 1,
+            "title_en": "The Background",
+            "title_ko": "배경",
+            "description_en": "Before Kumiko can leave, Sally's construct offers more information — fragments of the Declaration's history, the other speakers who came before, the corporate war that birthed the wheel. The simsera star was not always a construct. She was a woman who made a choice, and the matrix remembered.",
+            "description_ko": "구미코가 떠나기 전에, 샐리의 컨스트럭트가 더 많은 정보를 제공한다 — 선언의 역사의 조각들, 그 전에 나온 다른 연사들, 바퀴를 낳은 기업 전쟁. 시머시라 스타가 항상 컨스트럭트였던 것은 아니다. 그녀는 선택을 한 여자였고, 매트릭스는 기억했다.",
+            "episode_ref": "ep_02",
+            "story_beats": [
+              "beat_02_01",
+              "beat_02_02",
+              "beat_02_03",
+              "beat_02_04"
+            ],
+            "game_action": "learn_mission_details",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "declaration_origin_data"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 2,
+            "title_en": "The Jack-In",
+            "title_ko": "잭인",
+            "description_en": "Kumiko jacks in from the Manarase's back room, using the access codes Sally's construct provided. The matrix feels wrong tonight — tighter, more aware, the construct-Sallies frozen in their eternal loops. She is looking for the source node, the corporate heart that broadcasts the Declaration. But she is not alone.",
+            "description_ko": "구미코가 매나리사의 뒷방에서 잭인한다, 샐리의 컨스트럭트가 제공한 접근 코드를 사용해서. 오늘 밤 매트릭스는 이상하다 — 더 단단하고, 더 의식적이며, 컨스트럭트-샐리들이 영원한 루프에冻结되어 있다. 소스 노드를 찾고 있다, 선언을 브로드캐스트하는 기업의 심장. 하지만 혼자가 아니다.",
+            "episode_ref": "ep_03",
+            "story_beats": [
+              "beat_03_01",
+              "beat_03_02",
+              "beat_03_03",
+              "beat_03_04"
+            ],
+            "game_action": "jack_in",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_harrow_3",
+              "difficulty": 2,
+              "outcome": "bypass",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "REVELATION",
+            "phase_index": 3,
+            "title_en": "The Source",
+            "title_ko": "소스",
+            "description_en": "Kumiko reaches the source node — the corporate heart that broadcasts the Declaration. Inside, she finds data streams that rewrite what she thought she knew about the wheel of industry, about Tessier-Ashpool's true heirs, about what it means to speak the Declaration. But the node is guarded by something worse than ICE: a feedback loop that turns cowboys into constructs.",
+            "description_ko": "구미코가 소스 노드에 도달한다 — 선언을 브로드캐스트하는 기업의 심장. 내부에서, 그녀는 산업의 바퀴, 테시에-애스풀의 진정한 후계자들, 선언을 말한다는 것의 의미에 대해 그녀가 안다고 생각했던 것을 다시 쓰는 데이터 스트림을 발견한다. 하지만 노드는 ICE보다 더 무서운 것으로守护된다: 카우보이들을 컨스트럭트로 만드는 피드백 루프.",
+            "episode_ref": "ep_04",
+            "story_beats": [
+              "beat_04_01",
+              "beat_04_02",
+              "beat_04_03",
+              "beat_04_04"
+            ],
+            "game_action": "access_database",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_feedback_loop",
+              "difficulty": 3,
+              "outcome": "damage_taken",
+              "damage_amount": 15
+            },
+            "gain": {
+              "type": "data",
+              "item_id": "declaration_control_name"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 4,
+            "title_en": "The Choice",
+            "title_ko": "선택",
+            "description_en": "Kumiko stands in the Sprawl rain, the name of the Declaration burning in her memory. She knows what she could do with it — control the wheel, become the voice, join the long line of corporate speakers who have been consumed by what they created. Or she could walk away. The wheel would turn without her. It always has. But some choices, once made, cannot be unmade. And the matrix remembers everything.",
+            "description_ko": "구미코가 스프롤 비에 서 있다, 선언의 이름이 그녀의 기억에서 타오른다. 그것으로 무엇을 할 수 있는지 안다 — 바퀴를 통제하고, 목소리가 되고, 자신이 만든 것에 집어삼켜진 기업 연사들의 긴 줄에 합류할 수 있다. 아니면 떠날 수 있다. 바퀴는 그녀 없이도 돌아갈 것이다. 늘 그래왔다. 하지만 어떤 선택들은, 한번 되면, 되돌릴 수 없다. 그리고 매트릭스는 모든 것을 기억한다.",
+            "episode_ref": "ep_05",
+            "story_beats": [
+              "beat_05_01",
+              "beat_05_02",
+              "beat_05_03",
+              "beat_05_04"
+            ],
+            "game_action": "process_decision",
+            "combat": null,
+            "gain": {
+              "type": "money",
+              "item_id": ""
+            },
+            "loss": {
+              "type": "health",
+              "amount": 25
+            }
+          }
+        ]
+      },
+      {
+        "chapter_number": 2,
+        "chapter_id": "ch_kas_02",
+        "title_en": "The Warning",
+        "title_ko": "경고",
+        "description_en": "Three days of silence. Sally Shearer sends another message: the wheel has noticed. The silence was n The wheel has sent its hunters. Harrow 3 ICE variants that do not stop until they have dragged thei",
+        "description_ko": "삼 일의 침묵. 샐리 시어어가 또 다른 메시지를 보낸다: 바퀴가 눈치챘다. 침묵은 결코 안 바퀴가 사냥꾼들을 보냈다. prey을 끌고가지 않으면 멈추지 않는 Harrow 3 ICE ",
+        "is_playable": true,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 0,
+            "title_en": "The Warning",
+            "title_ko": "경고",
+            "description_en": "Three days of silence. Sally Shearer sends another message: the wheel has noticed. The silence was never safety.",
+            "description_ko": "삼 일의 침묵. 샐리 시어어가 또 다른 메시지를 보낸다: 바퀴가 눈치챘다. 침묵은 결코 안전하지 않았다.",
+            "episode_ref": "ep_06",
+            "story_beats": [
+              "ch2_beat_01_01",
+              "ch2_beat_01_02",
+              "ch2_beat_01_03",
+              "ch2_beat_01_04"
+            ],
+            "game_action": "arrive_at_location",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "wheel_awareness_data"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 1,
+            "title_en": "The Hunters",
+            "title_ko": "사냥꾼들",
+            "description_en": "The wheel has sent its hunters. Harrow 3 ICE variants that do not stop until they have dragged their prey back.",
+            "description_ko": "바퀴가 사냥꾼들을 보냈다. prey을 끌고가지 않으면 멈추지 않는 Harrow 3 ICE 변주들.",
+            "episode_ref": "ep_07",
+            "story_beats": [
+              "ch2_beat_02_01",
+              "ch2_beat_02_02",
+              "ch2_beat_02_03",
+              "ch2_beat_02_04"
+            ],
+            "game_action": "detect_surveillance",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_harrow_3",
+              "difficulty": 2,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "data",
+              "item_id": "harrow_encounter_log"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 2,
+            "title_en": "The Second Wave",
+            "title_ko": "두 번째 파동",
+            "description_en": "The second jack-in is worse. The Feedback Loop has been waiting, learning her signature, adapting to everything she learned from the first encounter.",
+            "description_ko": "두 번째 잭인이 더 나쁘다. 피드백 루프가 기다리고 있었다, 그녀의 서명을 배우고, 첫 번째 조우에서 배운 모든 것에 적응하고.",
+            "episode_ref": "ep_08",
+            "story_beats": [
+              "ch2_beat_03_01",
+              "ch2_beat_03_02",
+              "ch2_beat_03_03",
+              "ch2_beat_03_04"
+            ],
+            "game_action": "jack_in_under_pressure",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_feedback_loop",
+              "difficulty": 3,
+              "outcome": "damage_taken",
+              "damage_amount": 15
+            },
+            "gain": null,
+            "loss": {
+              "type": "health",
+              "amount": 20
+            }
+          },
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 3,
+            "title_en": "The Debt",
+            "title_ko": "빚",
+            "description_en": "In the safehouse, bleeding synaptic damage and hunted, Kumiko receives a visitor. Sally Shearer has come in person. The wheel wants to make a deal.",
+            "description_ko": "세이프하우스에서, 시냅스 손상과 바퀴에 쫓겨, 구미코가 방문자를 받는다. 샐리 시어어가 직접 왔다. 바퀴가 거래를 원한다.",
+            "episode_ref": "ep_09",
+            "story_beats": [
+              "ch2_beat_04_01",
+              "ch2_beat_04_02",
+              "ch2_beat_04_03",
+              "ch2_beat_04_04"
+            ],
+            "game_action": "rest_and_recover",
+            "combat": null,
+            "gain": {
+              "type": "info",
+              "item_id": "wheel_service_offer"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 4,
+            "title_en": "The Choice to Serve",
+            "title_ko": "봉사를 위한 선택",
+            "description_en": "Kumiko makes her choice. She will serve the wheel—for now. But she knows something the wheel does not: she knows what the Declaration really means.",
+            "description_ko": "구미코가 선택을 한다. 그녀는 바퀴에 봉사할 것이다—일단. 하지만 바퀴가 모르는 무언가를 그녀는 안다: 선언이 진정으로 의미하는 것을.",
+            "episode_ref": "ep_10",
+            "story_beats": [
+              "ch2_beat_05_01",
+              "ch2_beat_05_02",
+              "ch2_beat_05_03",
+              "ch2_beat_05_04"
+            ],
+            "game_action": "negotiate_terms",
+            "combat": null,
+            "gain": {
+              "type": "access",
+              "item_id": "father_data_vault_key"
+            },
+            "loss": {
+              "type": "obligation",
+              "amount": 1
+            }
+          }
+        ]
+      },
+      {
+        "chapter_number": 3,
+        "chapter_id": "ch_kas_03",
+        "title_en": "The Shadow Node",
+        "title_ko": "그림자 노드",
+        "description_en": "The wheels first mission: retrieve data from a shadow node in the deep matrix. Kumiko jacks in from  Inside the shadow node, Kumiko finds her fathers ghost—an echo preserved in the architecture. He ha",
+        "description_ko": "바퀴의 첫 번째 미션: 깊은 매트릭스의 그림자 노드에서 데이터를 회수해라. 구미코가 4층에 그림자 노드 안에서, 구미코는 아버지의 유령을 찾는다—아키텍처에 보존된 메아리. 그가 그녀",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 0,
+            "title_en": "The Shadow Node",
+            "title_ko": "그림자 노드",
+            "description_en": "The wheels first mission: retrieve data from a shadow node in the deep matrix. Kumiko jacks in from level 4 where the ice is older.",
+            "description_ko": "바퀴의 첫 번째 미션: 깊은 매트릭스의 그림자 노드에서 데이터를 회수해라. 구미코가 4층에서 잭인한다, ICE가 더 오래된 곳.",
+            "episode_ref": "ep_11",
+            "story_beats": [
+              "ch3_beat_01_01",
+              "ch3_beat_01_02",
+              "ch3_beat_01_03",
+              "ch3_beat_01_04"
+            ],
+            "game_action": "receive_mission",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "REVELATION",
+            "phase_index": 1,
+            "title_en": "The Ghost in the Machine",
+            "title_ko": "기계 속 유령",
+            "description_en": "Inside the shadow node, Kumiko finds her fathers ghost—an echo preserved in the architecture. He has been waiting for her. He left her a message that is a weapon.",
+            "description_ko": "그림자 노드 안에서, 구미코는 아버지의 유령을 찾는다—아키텍처에 보존된 메아리. 그가 그녀를 기다리고 있었다. 그가 그녀에게 무기인 메시지를 남겼다.",
+            "episode_ref": "ep_12",
+            "story_beats": [
+              "ch3_beat_02_01",
+              "ch3_beat_02_02",
+              "ch3_beat_02_03",
+              "ch3_beat_02_04"
+            ],
+            "game_action": "enter_shadow_node",
+            "combat": null,
+            "gain": {
+              "type": "data",
+              "item_id": "father_final_coordinates"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 2,
+            "title_en": "Shadow ICE",
+            "title_ko": "그림자 ICE",
+            "description_en": "The shadow node is guarded by Shadow ICE—ICE that does not hunt, does not chase, simply exists in the darkness and waits.",
+            "description_ko": "그림자 노드는 그림자 ICE에 의해守护된다—사냥하지 않고, 추격하지 않고, 그저 어둠 속에 존재하며 기다리는 ICE.",
+            "episode_ref": "ep_13",
+            "story_beats": [
+              "ch3_beat_03_01",
+              "ch3_beat_03_02",
+              "ch3_beat_03_03",
+              "ch3_beat_03_04"
+            ],
+            "game_action": "encounter_guardian",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_shadow_variant",
+              "difficulty": 3,
+              "outcome": "bypass",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 3,
+            "title_en": "The Wheels Child",
+            "title_ko": "바퀴의 아이",
+            "description_en": "Back in the Sprawl, Kumiko learns the wheel has sent something new. Not Harrow ICE—Lady-3Jane has awakened, and she wants the data her father died protecting.",
+            "description_ko": "스프롤로 돌아와서, 구미코는 바퀴가 뭔가 새로운 것을 보냈음을 알게 된다. Harrow ICE가 아니라—레이디-3제인이 깨어났고, 그녀는 구미코의 아버지가 지키다 죽은 데이터를 원한다.",
+            "episode_ref": "ep_14",
+            "story_beats": [
+              "ch3_beat_04_01",
+              "ch3_beat_04_02",
+              "ch3_beat_04_03",
+              "ch3_beat_04_04"
+            ],
+            "game_action": "detect_compromised_safehouse",
+            "combat": null,
+            "gain": {
+              "type": "contact",
+              "item_id": "lady_3jane_connection"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 4,
+            "title_en": "The Alliance",
+            "title_ko": "동맹",
+            "description_en": "Kumiko and Lady-3Jane form an unlikely alliance. The wheel is the enemy of them both. Together, they might find a way to break free.",
+            "description_ko": "구미코와 레이디-3제인이 unlikely 동맹을 형성한다. 바퀴는 그들 모두의 적이다. 함께, 그들은 자유로탈 방법을 찾을 수 있을 것이다.",
+            "episode_ref": "ep_15",
+            "story_beats": [
+              "ch3_beat_05_01",
+              "ch3_beat_05_02",
+              "ch3_beat_05_03",
+              "ch3_beat_05_04"
+            ],
+            "game_action": "propose_alliance",
+            "combat": null,
+            "gain": {
+              "type": "alliance",
+              "item_id": "lady_3jane_partnership"
+            },
+            "loss": {
+              "type": "data",
+              "amount": 0
+            }
+          }
+        ]
+      },
+      {
+        "chapter_number": 4,
+        "chapter_id": "ch_kas_04",
+        "title_en": "The Second Mission",
+        "title_ko": "두 번째 미션",
+        "description_en": "The wheels second mission: retrieve the Weapon from Villa Straylight. But the game has changed—the w Villa Straylight is scarred, half-destroyed. The first guardians are the Burned—cowboys who tried t",
+        "description_ko": "바퀴의 두 번째 미션: Villa Straylight에서 무기를 회수해라. 하지만 게임이  Villa Straylight는 흔적 남기고, 반쯤 파괴됐다. 첫 번째 가디언들은 Burn",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "HEIST_BRIEFING",
+            "phase_index": 0,
+            "title_en": "The Second Mission",
+            "title_ko": "두 번째 미션",
+            "description_en": "The wheels second mission: retrieve the Weapon from Villa Straylight. But the game has changed—the wheel is no longer assigning quietly. It is hunting.",
+            "description_ko": "바퀴의 두 번째 미션: Villa Straylight에서 무기를 회수해라. 하지만 게임이 바뀌었다—바퀴는 더 이상 조용히 미션을 할당하지 않는다. 그것은 사냥한다.",
+            "episode_ref": "ep_16",
+            "story_beats": [
+              "ch4_beat_01_01",
+              "ch4_beat_01_02",
+              "ch4_beat_01_03",
+              "ch4_beat_01_04"
+            ],
+            "game_action": "receive_mission",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 1,
+            "title_en": "The Burned",
+            "title_ko": "타버린 자들",
+            "description_en": "Villa Straylight is scarred, half-destroyed. The first guardians are the Burned—cowboys who tried to steal the Weapon and were burned into the architecture as warnings.",
+            "description_ko": "Villa Straylight는 흔적 남기고, 반쯤 파괴됐다. 첫 번째 가디언들은 Burned다—무기를 훔치려다 아키텍처에 경고로 타버린 카우보이들.",
+            "episode_ref": "ep_17",
+            "story_beats": [
+              "ch4_beat_02_01",
+              "ch4_beat_02_02",
+              "ch4_beat_02_03",
+              "ch4_beat_02_04"
+            ],
+            "game_action": "approach_location",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_burned_cowboy",
+              "difficulty": 3,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "data",
+              "item_id": "burned_cowboy_fragments"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "REVELATION",
+            "phase_index": 2,
+            "title_en": "The Weapon Burns",
+            "title_ko": "무기가 타다",
+            "description_en": "Kumiko finds the Weapon—a name older than the matrix that burns at the center of the wheels prison. It is a truth that the wheel built itself to hide.",
+            "description_ko": "구미코가 무기를 찾는다—바퀴의 감옥 중앙에서 타오르는 매트릭스보다 오래된 이름. 그것은 바퀴가 숨기려고 지어진 진실이다.",
+            "episode_ref": "ep_18",
+            "story_beats": [
+              "ch4_beat_03_01",
+              "ch4_beat_03_02",
+              "ch4_beat_03_03",
+              "ch4_beat_03_04"
+            ],
+            "game_action": "find_burning_room",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_weapon_construct",
+              "difficulty": 4,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "data",
+              "item_id": "weapon_true_name"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 3,
+            "title_en": "The Price of Fire",
+            "title_ko": "불의 대가",
+            "description_en": "Taking the Weapon has a cost. The fire burns Kumiko as she carries it. Lady-3Jane saves her at the exit, but the wheels other children are coming.",
+            "description_ko": "무기를 가져오는 것은 대가가 있다. 구미코가 그것을 운반할 때 불이 그녀를 탄다. 레이디-3제인이 출구에서 그녀를 구하지만, 바퀴의 다른 아이들이 오고 있다.",
+            "episode_ref": "ep_19",
+            "story_beats": [
+              "ch4_beat_04_01",
+              "ch4_beat_04_02",
+              "ch4_beat_04_03",
+              "ch4_beat_04_04"
+            ],
+            "game_action": "carry_weapon",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_wheel_children",
+              "difficulty": 4,
+              "outcome": "damage_taken",
+              "damage_amount": 15
+            },
+            "gain": {
+              "type": "weapon",
+              "item_id": "the_weapon_burning"
+            },
+            "loss": {
+              "type": "health",
+              "amount": 30
+            }
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 4,
+            "title_en": "The Choice to Speak",
+            "title_ko": "말할 선택",
+            "description_en": "Kumiko has the Weapon. She has the truth. She has the choice: speak the name and burn everything the wheel has built, or stay silent and let the wheel keep turning.",
+            "description_ko": "구미코가 무기를 가지고 있다. 그녀가 진실을 가지고 있다. 그녀가 선택을 가지고 있다: 이름을 말하고 바퀴가 만든 모든 것을 타오르게 하거나, 침묵하고 바퀴가 계속 돌아가게 하거나.",
+            "episode_ref": "ep_20",
+            "story_beats": [
+              "ch4_beat_05_01",
+              "ch4_beat_05_02",
+              "ch4_beat_05_03",
+              "ch4_beat_05_04"
+            ],
+            "game_action": "process_choice",
+            "combat": null,
+            "gain": {
+              "type": "choice",
+              "item_id": "the_unsspoken_name"
+            },
+            "loss": {
+              "type": "status",
+              "amount": 0
+            }
+          }
+        ]
+      },
+      {
+        "chapter_number": 5,
+        "chapter_id": "ch_kas_05",
+        "title_en": "The Wheel Turns",
+        "title_ko": "바퀴가 돌아간다",
+        "description_en": "The wheel has turned against Kumiko. Harrow 3 programs are hunting her through the Sprawl. Lady-3Jan Lady-3Janes plan: reach the wheels core and burn it from the inside. But they need Sally Shearer—th",
+        "description_ko": "바퀴가 구미코를 향해 돌아섰다. Harrow 3 프로그램들이 스프롤을 통해 그녀를 쫓는다. 레이디-3제인의 계획: 바퀴의 핵심에 도달하고 안에서부터 그것을 태운다. 하지만 그들이 샐",
+        "is_playable": false,
+        "ending_type": "A",
+        "cutscenes": {
+          "start": null,
+          "mid": null,
+          "end": null
+        },
+        "phases": [
+          {
+            "phase_id": "ENCOUNTER",
+            "phase_index": 0,
+            "title_en": "The Wheel Turns",
+            "title_ko": "바퀴가 돌아간다",
+            "description_en": "The wheel has turned against Kumiko. Harrow 3 programs are hunting her through the Sprawl. Lady-3Janes alliance is the only thing keeping her alive.",
+            "description_ko": "바퀴가 구미코를 향해 돌아섰다. Harrow 3 프로그램들이 스프롤을 통해 그녀를 쫓는다. 레이디-3제인의 동맹만이 그녀를 살아있게 하는 것이다.",
+            "episode_ref": "ep_21",
+            "story_beats": [
+              "ch5_beat_01_01",
+              "ch5_beat_01_02",
+              "ch5_beat_01_03",
+              "ch5_beat_01_04"
+            ],
+            "game_action": "under_attack",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_harrow_3",
+              "difficulty": 3,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "HEIST_EXECUTION",
+            "phase_index": 1,
+            "title_en": "The Last Door",
+            "title_ko": "마지막 문",
+            "description_en": "Lady-3Janes plan: reach the wheels core and burn it from the inside. But they need Sally Shearer—the first speaker, who has been waiting to be used as a door.",
+            "description_ko": "레이디-3제인의 계획: 바퀴의 핵심에 도달하고 안에서부터 그것을 태운다. 하지만 그들이 샐리 시어어가 필요하다—첫 연사, 문으로 사용되기를 기다려온.",
+            "episode_ref": "ep_22",
+            "story_beats": [
+              "ch5_beat_02_01",
+              "ch5_beat_02_02",
+              "ch5_beat_02_03",
+              "ch5_beat_02_04"
+            ],
+            "game_action": "learn_plan",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_feedback_loop",
+              "difficulty": 4,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "REVELATION",
+            "phase_index": 2,
+            "title_en": "Sally Speaks",
+            "title_ko": "샐리가 말하다",
+            "description_en": "Kumiko finds Sally Shearer at the wheels core—the first speaker, preserved as a door for a hundred years. She has been waiting for someone with the Weapon to use her.",
+            "description_ko": "구미코가 바퀴의 핵심에서 샐리 시어어를 찾는다—첫 연사, 백 년 동안 문으로 보존된. 그녀는 무기를 가진 누군가가 그녀를 사용하기를 기다려왔다.",
+            "episode_ref": "ep_23",
+            "story_beats": [
+              "ch5_beat_03_01",
+              "ch5_beat_03_02",
+              "ch5_beat_03_03",
+              "ch5_beat_03_04"
+            ],
+            "game_action": "find_sally",
+            "combat": {
+              "encounter_id": "ice_1",
+              "enemy_type": "ice_wheel_guardians",
+              "difficulty": 5,
+              "outcome": "victory",
+              "damage_amount": 0
+            },
+            "gain": {
+              "type": "ally",
+              "item_id": "sally_returns"
+            },
+            "loss": null
+          },
+          {
+            "phase_id": "REVELATION",
+            "phase_index": 3,
+            "title_en": "The Fire Speaks",
+            "title_ko": "불이 말하다",
+            "description_en": "Kumiko speaks the Declaration through Sally, using the Weapon to burn away the wheels lies. Everything the wheel has built begins to unravel.",
+            "description_ko": "구미코가 샐리를 통해 선언을 말하고, 무기를 사용해 바퀴의 거짓말을 타오르게 한다. 바퀴가 지은 모든 것이 풀리기 시작한다.",
+            "episode_ref": "ep_24",
+            "story_beats": [
+              "ch5_beat_04_01",
+              "ch5_beat_04_02",
+              "ch5_beat_04_03",
+              "ch5_beat_04_04"
+            ],
+            "game_action": "prepare_weapon",
+            "combat": null,
+            "gain": null,
+            "loss": null
+          },
+          {
+            "phase_id": "RESOLUTION",
+            "phase_index": 4,
+            "title_en": "What Remains",
+            "title_ko": "남는 것",
+            "description_en": "The wheel is burning. Kumiko is burning with it. But in the ashes of what was, something new can grow. The Declaration has been spoken. The wheel has been broken. What remains is a choice.",
+            "description_ko": "바퀴가 타고 있다. 구미코도 그것과 함께 타고 있다. 하지만以前것의 재에서, 무언가 새로운 것이 자랄 수 있다. 선언이 말해졌다. 바퀴가 부서졌다. 남는 것은 선택이다.",
+            "episode_ref": "ep_25",
+            "story_beats": [
+              "ch5_beat_05_01",
+              "ch5_beat_05_02",
+              "ch5_beat_05_03",
+              "ch5_beat_05_04"
+            ],
+            "game_action": "wheel_collapses",
+            "combat": null,
+            "gain": {
+              "type": "victory",
+              "item_id": "the_wheel_is_broken"
+            },
+            "loss": {
+              "type": "status",
+              "amount": 0
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

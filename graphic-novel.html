@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Wet Run 그래픽 노블 모드 — 81 씬 (9 cast / 4 archetypes × 9 씬), 캐릭터 포트레잇, 배경 아트, 단편 연결">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, graphic-novel, ascii, tcod, python, korean, fanfiction, derivative">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>그래픽 노블 — Wet Run</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0a0a0a;
+  color: #c0c0c0;
+  font-family: 'Courier New', 'Nanum Gothic Coding', monospace;
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+header {
+  border-bottom: 1px solid #00ff9c;
+  padding-bottom: 16px;
+  margin-bottom: 24px;
+}
+h1 {
+  color: #00ff9c;
+  font-size: 1.6em;
+  letter-spacing: 0.1em;
+}
+.subtitle {
+  color: #888;
+  font-size: 0.9em;
+  margin-top: 6px;
+}
+.adr-badge {
+  display: inline-block;
+  background: #2a2a2a;
+  color: #00ff9c;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  margin-top: 8px;
+}
+section {
+  margin: 32px 0;
+}
+h2 {
+  color: #00ff9c;
+  border-left: 4px solid #00ff9c;
+  padding-left: 12px;
+  margin-bottom: 16px;
+  font-size: 1.3em;
+}
+.scene-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+.scene-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 16px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.scene-card:hover {
+  transform: translateY(-2px);
+  border-color: #00ff9c;
+}
+.scene-card .num {
+  color: #00ff9c;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+.scene-card h3 {
+  color: #e0e0e0;
+  margin: 6px 0;
+  font-size: 1.05em;
+}
+.scene-card .char {
+  color: #ff9c00;
+  font-size: 0.85em;
+  margin-bottom: 8px;
+}
+.scene-card .preview {
+  background: #000;
+  color: #00ff9c;
+  font-size: 0.7em;
+  padding: 8px;
+  border-radius: 4px;
+  white-space: pre;
+  overflow-x: auto;
+  margin: 8px 0;
+  font-family: monospace;
+  line-height: 1.2;
+}
+.scene-card .meta {
+  color: #888;
+  font-size: 0.8em;
+}
+.scene-card .link {
+  color: #00ff9c;
+  text-decoration: none;
+  font-size: 0.85em;
+  display: inline-block;
+  margin-top: 8px;
+}
+.scene-card .link:hover { text-decoration: underline; }
+.flow {
+  background: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 16px;
+  white-space: pre;
+  font-size: 0.85em;
+  color: #00ff9c;
+  line-height: 1.4;
+  overflow-x: auto;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.stat-card {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+.stat-card .value {
+  color: #00ff9c;
+  font-size: 1.6em;
+  font-weight: bold;
+}
+.stat-card .label {
+  color: #888;
+  font-size: 0.8em;
+  margin-top: 4px;
+}
+footer {
+  border-top: 1px solid #2a2a2a;
+  padding-top: 16px;
+  margin-top: 32px;
+  color: #666;
+  font-size: 0.85em;
+}
+nav.dashboard-nav {
+  background: #0a0a0a;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 12px;
+  margin: 16px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+nav.dashboard-nav a {
+  color: #00ff9c;
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid transparent;
+}
+nav.dashboard-nav a:hover {
+  border-color: #00ff9c;
+}
+</style>
+<style>
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 16px; margin: -8px -8px 16px -8px;
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .sep { color: #2a3540; }
+</style>
+</head>
+
+<body>
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="./library.html">📚 Library</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Chars</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+  <span class="sep">|</span>
+  <a href="./missions.html">📖 Story</a>
+  <a href="./graphic-novel.html">🎬 GN</a>
+  <span class="sep">|</span>
+  <a href="./combat.html">⚔ Combat</a>
+</nav>
+
+
+
+<header>
+  <h1>▌ 그래픽 노블 모드 ▐</h1>
+  <div class="subtitle">A visual novel of Gibson's Sprawl trilogy — 81 scenes × 9 characters (Phase 7 완료)</div>
+  <span class="adr-badge">ADR-0032</span>
+</header>
+
+<nav class="dashboard-nav">
+  <a href="index.html">🏠 Home</a>
+  <a href="library.html">📚 Stories</a>
+  <a href="./player.html#achievements">🏆 Achievements</a>
+  <a href="combat.html">⚔ Combat</a>
+  <a href="sound.html">🔊 Sound</a>
+  <a href="./player.html#equipment">🛡 Equipment</a>
+  <a href="cyberspace.html">🌐 Cyberspace</a>
+  <a href="settings.html">⚙ Settings</a>
+  <a href="stages.html">🎬 Stages</a>
+  <a href="graphic-novel.html" style="border-color: #00ff9c;">📖 Graphic Novel</a>
+</nav>
+
+<section>
+  <h2>📊 Overview</h2>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="value">81</div>
+      <div class="label">Scenes</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">9</div>
+      <div class="label">Characters</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">18</div>
+      <div class="label">Portraits (10×14)</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">13</div>
+      <div class="label">Backgrounds</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">~5min</div>
+      <div class="label">Full Playthrough</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">5</div>
+      <div class="label">Main Menu Options</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>🌐 Screen Flow</h2>
+  <div class="flow">MENU
+├── [1] NEW RUN          → CHARACTER_SELECT → CHAPTER → HUB → MATRIX
+├── [2] GRAPHIC NOVEL    → GRAPHIC_NOVEL_MENU
+│   ├── [1] PROLOGUE (3 random characters)
+│   ├── [2] Case (K) — Novice
+│   ├── [3] Sil — Veteran
+│   ├── [4] Kas — Heretic
+│   └── [5] BACK
+├── [3] CONTINUE         (load save → HUB)
+├── [4] SETTINGS
+└── [5] CREDITS
+
+GRAPHIC_NOVEL → SAVED_PROGRESS
+├── [1] Other character stories
+├── [2] Continue gameplay
+└── [3] Main menu</div>
+</section>
+
+<section>
+  <h2>🎬 Scenes</h2>
+
+  <h3 style="color: #00ff9c; margin: 16px 0 8px 0;">Case (K) — Novice</h3>
+  <div class="scene-grid">
+    <div class="scene-card">
+      <div class="num">01</div>
+      <h3>CHATTO'S 24/7</h3>
+      <div class="char">챠토 24/7 · NOVICE</div>
+      <div class="preview">┌──────────┐
+│  11th level  │
+│  ┌─────┐    │
+│  │HOSAKA│    │
+│  └─────┘    │
+│  tangled    │
+│  cables     │
+│  CHATTO'S   │
+│  24/7       │
+└─────────────┘</div>
+      <div class="meta">3 dialogues · ~24초 · "잭아웃 후 30초" 도입</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/case/01_chattos.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">02</div>
+      <h3>JACK-IN</h3>
+      <div class="char">잭인 · NOVICE</div>
+      <div class="preview">  ░▒▓ MATRIX ▓▒░
+    ╲    ╱╲
+     ╲  ╱  ╲
+      ╲╱    ╲
+┌──────────┐
+│ Wisp T1  │
+│  patrol  │
+└──────────┘</div>
+      <div class="meta">3 dialogues · ~25초 · Ono-Sendai Cyberspace 7</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/case/02_jackin.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">03</div>
+      <h3>JACK-OUT</h3>
+      <div class="char">잭아웃 · NOVICE</div>
+      <div class="preview">   30 sec
+╔════════════╗
+║  countdown ║
+║            ║
+║  ░▒▓▒░    ║
+║  trembling ║
+║   hands    ║
+╚════════════╝</div>
+      <div class="meta">3 dialogues · ~26초 · 30초 후, 손 떨림</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/case/03_jackout.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">04</div>
+      <h3>THE FINN'S OFFICE</h3>
+      <div class="char">핀의 사무실 · NOVICE</div>
+      <div class="preview">╔════════════╗
+║ THE FINN  ║
+║  ♠F♠      ║
+║  ─────    ║
+║ 'I pay    ║
+║  for      ║
+║  results' ║
+╚════════════╝</div>
+      <div class="meta">3 dialogues · ~23초 · 핀이 자키를 받음</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/case/04_finn.json">📄 JSON</a>
+    </div>
+  </div>
+
+  <h3 style="color: #00ff9c; margin: 16px 0 8px 0;">Sil — Veteran</h3>
+  <div class="scene-grid">
+    <div class="scene-card">
+      <div class="num">01</div>
+      <h3>LOUISIANA 11</h3>
+      <div class="char">루이지아나 11번지 · VETERAN</div>
+      <div class="preview">╔════════════╗
+║  VOUDOU    ║
+║ AUTHENTIQUE║
+╚════════════╝
+┌────┐┌────┐┌────┐
+│ ♠  ││ ♥  ││ ♦  │
+│ ▒▓ ││ ▓▒ ││ ▓▒ │
+└────┘└────┘└────┘</div>
+      <div class="meta">4 dialogues · ~25초 · Maison de Loa, 부두 가게</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/sil/01_louisiana.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">02</div>
+      <h3>THE MASK</h3>
+      <div class="char">마스크 · VETERAN</div>
+      <div class="preview">   ★  ZAVI JAVA  ★
+     73 Eridani
+░▒▓▒░ 8M chairs ░▒▓▒░
+╔════════════╗
+║  loa       ║
+║  network   ║
+╚════════════╝</div>
+      <div class="meta">3 dialogues · ~28초 · Wigan의 loa 채널</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/sil/02_mask.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">03</div>
+      <h3>T-A PAYROLL</h3>
+      <div class="char">T-A 급여 · VETERAN</div>
+      <div class="preview">T E S S I E R - A S H P O O L
+┌─────────┐  ┌─────────┐
+│ Hammer  │──│  data   │
+│   T2    │  │  node   │
+└─────────┘  └─────────┘
+     T-A PAYROLL</div>
+      <div class="meta">3 dialogues · ~25초 · Tessier-Ashpool 본부</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/sil/03_payroll.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">04</div>
+      <h3>THE BROADCAST</h3>
+      <div class="char">폭로 · VETERAN</div>
+      <div class="preview">3 years ago
+╔════════════╗
+║ Mara       ║
+║  construct ║
+║  dead      ║
+║  Romantics ║
+║  T-A       ║
+╚════════════╝</div>
+      <div class="meta">3 dialogues · ~28초 · Mara의 죽음, 폭로</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/sil/04_broadcast.json">📄 JSON</a>
+    </div>
+  </div>
+
+  <h3 style="color: #00ff9c; margin: 16px 0 8px 0;">Kas — Heretic</h3>
+  <div class="scene-grid">
+    <div class="scene-card">
+      <div class="num">01</div>
+      <h3>MANARASE MIDNIGHT</h3>
+      <div class="char">매나리사 자정 · HERETIC</div>
+      <div class="preview">▒▓ SHIBUYA · MIDNIGHT · 11 ▓▒░
+╔════════════╗
+║  ◢◣◢◣  TAXI ║
+║  Kumiko   ║
+║   in the  ║
+║   back    ║
+╚════════════╝</div>
+      <div class="meta">4 dialogues · ~24초 · Shibuya 택시</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/kas/01_manarase.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">02</div>
+      <h3>SALLY</h3>
+      <div class="char">샐리 · HERETIC</div>
+      <div class="preview">M A N A R A S E  back room
+░ Sally — no skin ░
+░   only data     ░
+░▒▓▒░ 0101010 ░▒▓▒░
+'Romantics
+ are old way'</div>
+      <div class="meta">3 dialogues · ~28초 · Sally Shearer</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/kas/02_sally.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">03</div>
+      <h3>THE DECLARATION</h3>
+      <div class="char">선언 · HERETIC</div>
+      <div class="preview">SENSE/NET  C O R E
+       ╱╲    ╱╲
+      ╱ LOA╲ ╱    ╲
+     ╱ NET  ╲╱      ╲
+▓▓▓ loa channel OPEN ▓▓▓
+░▒▓ declaration ready ▓▒░</div>
+      <div class="meta">3 dialogues · ~28초 · Loa 네트워크 선언</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/kas/03_declaration.json">📄 JSON</a>
+    </div>
+
+    <div class="scene-card">
+      <div class="num">04</div>
+      <h3>THE WHEEL</h3>
+      <div class="char">바퀴 · HERETIC</div>
+      <div class="preview">╔════════════╗
+║  ╱─────╲   ║
+║ ╱  ◯◯◯  ╲  ║
+║│  INDUS  │ ║
+║│  -TRY   │ ║
+║ ╲       ╱  ║
+║  ╲─────╱   ║
+║      ▼     ║
+║  T E S S I E R ║
+╚════════════╝</div>
+      <div class="meta">3 dialogues · ~31초 · 산업 = 자본 = 바퀴</div>
+      <a class="link" href="../../../Game/wet_run/prototype/data/scenes/kas/04_wheel.json">📄 JSON</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>🎮 Try It</h2>
+  <p>Run the demo locally to see the graphic novel mode in action:</p>
+  <div class="flow"># Full prologue (81 scenes, 9 characters in random order)
+uv run python scripts/graphic_novel.py --mode prologue --seed 42
+
+# Single character story (9 scenes)
+uv run python scripts/graphic_novel.py --mode novice
+uv run python scripts/graphic_novel.py --mode veteran
+uv run python scripts/graphic_novel.py --mode heretic
+
+# Korean translation
+uv run python scripts/graphic_novel.py --mode prologue --lang ko
+
+# Custom speed
+uv run python scripts/graphic_novel.py --mode novice --speed 5</div>
+</section>
+
+<section>
+  <h2>📚 Related</h2>
+  <ul style="margin-left: 24px; line-height: 2;">
+    <li><a href="library.html" style="color: #00ff9c;">Stories</a> — 단편 5편 (Case/Marly/Kumiko/Wigan/Sally)</li>
+    <li><a href="stories/short-stories/case_jackout-30sec.html" style="color: #00ff9c;">잭아웃 후 30초</a> — Case 단편 v2.0</li>
+    <li><a href="stories/short-stories/marly_louisiana-god.html" style="color: #00ff9c;">루이지아나의 신</a> — Marly 단편 v2.0</li>
+    <li><a href="stories/short-stories/kumiko_manarase-midnight.html" style="color: #00ff9c;">매나리사의 자정</a> — Kumiko 단편 v2.0</li>
+  </ul>
+</section>
+
+<footer>
+  Wet Run — Graphic Novel Dashboard<br>
+  <code>Game/wet_run/design/scenario/graphic-novel.md</code> · <code>decisions/0032-graphic-novel-mode.md</code>
+</footer>
+
+</body>
+</html>

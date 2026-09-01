@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="theme-color" content="#000000" />
+    <title>Wet Run — Web MVP</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" type="image/png" href="./icons/icon-192.png" />
+    <style>
+      /* Reset + base — neon-on-black Gibson palette */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body {
+        background: #000;
+        color: #d0d0d0;
+        font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
+        overflow: hidden;
+        height: 100%;
+        -webkit-tap-highlight-color: transparent;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      }
+      #game-canvas {
+        display: block;
+        background: #000;
+        image-rendering: pixelated;
+        image-rendering: crisp-edges;
+        max-width: 100vw;
+        max-height: 100vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        touch-action: none;
+      }
+      #status-overlay {
+        position: fixed;
+        top: 8px;
+        right: 8px;
+        padding: 8px 12px;
+        background: rgba(0, 0, 0, 0.85);
+        border: 1px solid #00ff41;
+        color: #00ff41;
+        font-size: 12px;
+        line-height: 1.4;
+        z-index: 10;
+      }
+      #loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #00ff41;
+        font-size: 14px;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index-Bs-zUO6W.js"></script>
+  </head>
+  <body>
+    <canvas id="game-canvas" width="640" height="400"></canvas>
+    <div id="status-overlay" aria-live="polite"></div>
+    <div id="loading">Loading Wet Run...</div>
+  </body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stories — Wet Run</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.6;
+    padding: 24px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  h1 { color: #66ffcc; font-size: 26px; margin-bottom: 6px; }
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 16px; }
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 16px; margin: -24px -24px 16px -24px;
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .sep { color: #2a3540; }
+
+  .filters {
+    background: #0d1420;
+    border: 1px solid #1a2530;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .filter-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .filter-row:last-child { margin-bottom: 0; }
+  .filter-label {
+    font-size: 11px;
+    color: #6a7888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    width: 100%;
+    margin-bottom: 4px;
+  }
+  .filter-btn {
+    padding: 5px 10px;
+    background: #1a1a2e;
+    border: 1px solid #1a2530;
+    border-radius: 3px;
+    color: #c5d4e3;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .filter-btn.active {
+    background: #66ffcc22;
+    border-color: #66ffcc;
+    color: #66ffcc;
+  }
+  .filter-btn.read { color: #88dd44; border-color: #88dd4455; }
+  .filter-btn.read.active { background: #88dd4422; border-color: #88dd44; color: #88dd44; }
+
+  .search-bar {
+    width: 100%;
+    padding: 8px 12px;
+    background: #06090f;
+    border: 1px solid #1a2530;
+    border-radius: 4px;
+    color: #c5d4e3;
+    font-family: inherit;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  .search-bar:focus { outline: none; border-color: #66ffcc; }
+
+  .meta-bar {
+    font-size: 11px;
+    color: #6a7888;
+    margin-bottom: 12px;
+  }
+  .meta-bar span { margin-right: 16px; }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+  }
+  .story-card {
+    background: #0d1420;
+    border: 1px solid #1a2530;
+    border-radius: 6px;
+    padding: 14px;
+    transition: border-color 0.15s ease;
+    position: relative;
+  }
+  .story-card.read { border-color: #88dd4455; }
+  .story-card:hover { border-color: #66ffcc; }
+  .story-card .read-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #88dd44;
+    color: #06090f;
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 600;
+  }
+  .story-card .lang {
+    font-size: 10px;
+    color: #ffaa55;
+    margin-bottom: 4px;
+  }
+  .story-card .title {
+    font-size: 14px;
+    color: #c5d4e3;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .story-card .title a { color: inherit; text-decoration: none; }
+  .story-card .title a:hover { color: #66ffcc; }
+  .story-card .meta {
+    font-size: 10px;
+    color: #6a7888;
+    margin-bottom: 6px;
+  }
+  .story-card .missions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+  }
+  .story-card .mission-pill {
+    font-size: 9px;
+    padding: 1px 5px;
+    background: #1a1a2e;
+    color: #88dd44;
+    border-radius: 2px;
+  }
+  .story-card .progress {
+    margin-top: 8px;
+    height: 4px;
+    background: #1a2530;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .story-card .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #66ffcc, #88dd44);
+  }
+
+  @media (max-width: 700px) {
+    .top-nav { gap: 8px; }
+    body { padding: 16px; }
+  }
+</style>
+<meta name="description" content="127 derivative stories browsable by character, trilogy, language, read state. Data-driven from search_index.json. Sprawl (114) + Bridge (12) + Blue Ant (1).">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, stories, browse, cards">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/stories-browse.html">
+<meta property="og:title" content="Stories Browse — Wet Run">
+<meta property="og:description" content="78 derivative stories browsable by character, language, read state. Data-driven from search_index.json. 9 cast × 4 archetypes.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/stories-browse.html">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stories Browse — Wet Run">
+<meta name="twitter:description" content="78 derivative stories browsable by character, language, read state. Data-driven from search_index.json. 9 cast × 4 archetypes.">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta name="theme-color" content="#0a0e14">
+</head>
+<body>
+
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="./library.html">📚 Library</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <span class="sep">•</span>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Chars</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+</nav>
+
+<h1>Stories Browse</h1>
+<p class="subtitle">Data-driven 127-card index · filter by trilogy, character, language, read state · read state via localStorage</p>
+
+<div class="filters">
+
+  <div class="filter-row">
+    <div class="filter-label">Trilogy</div>
+    <button class="filter-btn active" data-trilogy="all">All</button>
+    <button class="filter-btn" data-trilogy="sprawl">Sprawl</button>
+    <button class="filter-btn" data-trilogy="bridge">Bridge</button>
+    <button class="filter-btn" data-trilogy="blue-ant">Blue Ant</button>
+  </div>
+
+  <div class="filter-row">
+    <div class="filter-label">Character</div>
+    <button class="filter-btn active" data-char="all">All</button>
+    <button class="filter-btn" data-char="Case">Case</button>
+    <button class="filter-btn" data-char="Sil">Sil</button>
+    <button class="filter-btn" data-char="Kas">Kas</button>
+    <button class="filter-btn" data-char="Bobby">Bobby</button>
+    <button class="filter-btn" data-char="Marly">Marly</button>
+  </div>
+
+  <div class="filter-row">
+    <div class="filter-label">Language</div>
+    <button class="filter-btn active" data-lang="all">All</button>
+    <button class="filter-btn" data-lang="en">EN</button>
+    <button class="filter-btn" data-lang="ko">KO</button>
+  </div>
+
+  <div class="filter-row">
+    <div class="filter-label">State</div>
+    <button class="filter-btn read active" data-state="all">All</button>
+    <button class="filter-btn read" data-state="read">✓ Read</button>
+    <button class="filter-btn read" data-state="unread">○ Unread</button>
+  </div>
+
+  <div class="filter-row">
+    <div class="filter-label">Gibson Style</div>
+    <button class="filter-btn active" data-gibson="all">All</button>
+    <button class="filter-btn" data-gibson="pass">✓ Pass</button>
+    <button class="filter-btn" data-gibson="partial">○ Partial</button>
+    <button class="filter-btn" data-gibson="fail">✗ Fail</button>
+  </div>
+
+  <div class="filter-row">
+    <div class="filter-label">Stage 5 · Literary</div>
+    <button class="filter-btn active" data-literary="all">All</button>
+    <button class="filter-btn" data-literary="S">S</button>
+    <button class="filter-btn" data-literary="A">A</button>
+    <button class="filter-btn" data-literary="B">B</button>
+    <button class="filter-btn" data-literary="C">C</button>
+    <button class="filter-btn" data-literary="D">D</button>
+  </div>
+
+  <div class="filter-row">
+    <div class="filter-label">Stage 6 · Advanced</div>
+    <button class="filter-btn active" data-advanced="all">All</button>
+    <button class="filter-btn" data-advanced="S">S</button>
+    <button class="filter-btn" data-advanced="A">A</button>
+    <button class="filter-btn" data-advanced="B">B</button>
+    <button class="filter-btn" data-advanced="C">C</button>
+    <button class="filter-btn" data-advanced="D">D</button>
+  </div>
+
+  <input type="text" id="search-input" class="search-bar"
+         placeholder="Quick filter (title, body preview)...">
+</div>
+
+<div id="meta" class="meta-bar"></div>
+<div id="grid" class="story-grid"></div>
+
+<script src="stories-browse.js"></script>
+</body>
+</html>

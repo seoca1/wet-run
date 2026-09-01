@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>셰벳 야간 교대 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="chevette_nightshift_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">셰벳 야간 교대</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>4581 words</span><span>Bridge Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"안개는 다리의 매질이었다. 다리는 셰벳의 원소였다. 원소는 그녀가 일하는 곳이었고, 잠수부가 물에서 일하듯이, 프로그래머가 코드에서 일하듯이."</p></blockquote>
+<blockquote><p>— *버추얼 라이트*, 다리 위의 셰벳</p></blockquote>
+<hr>
+<h2>도입 (Hook)</h2>
+<p>안개가 <em>도착했다</em>.</p>
+<p>이것은 셰벳 워싱턴이 깨어났을 때 그녀가 알았던 첫 번째 것이었다 — 베이 브릿지 서측 스팬에서 패키지를 가진 남자를 만나게 될 밤의 밤에. 안개는 <em>어딘가에서</em> — 어쩌면 태평양에서, 또는 만의 차가운 물에서, 또는 서측 스팬 케이블들 사이에 살고 영원히 떠나지 않는 차가움에서 — <em>도착했다</em>. <em>셰벳</em>은 안개가 어디서 도착했는지 <em>몰랐다</em>. <em>셰벳</em>이 알 <em>필요가</em> 없었다. <em>셰벳</em>은 안개에 <em>살았다</em>. 안개는 <em>셰벳의</em> <em>매질</em>이었다. 매질은 다리의 것이었다. 다리는 만의 것이었다. 만은 다리가 <em>위에</em> 있는 것이었다. <em>따라서</em>, 안개는 다리가 <em>위에</em> 있는 것이었다. <em>따라서</em>, 안개는 셰벳이 <em>위에</em> 있는 것이었다.</p>
+<p>안개에서 <em>소금</em> 냄새가 났다. <em>소금</em>은 안개가 <em>냄새</em>나는 것이었다. 안개의 냄새는 소금이었다. 소금은 <em>태평양의</em> 것이었다. 태평양은 <em>서쪽</em>에 있었다. 서쪽은 안개가 <em>도착</em>한 곳이었다. <em>따라서</em>, 소금은 <em>서쪽의</em> 것이었다.</p>
+<p>소금에서 <em>녹</em> 냄새도 났다. <em>녹</em>은 소금이 <em>또한</em> 냄새나는 것이었다. 녹은 <em>다리의</em> 것이었다. 다리는 <em>녹슬고</em> 있었다. 녹슨 것은 다리의 것이었다. 다리의 것이 <em>또한</em> <em>만의</em> 것이었다. 만은 <em>또한</em> <em>녹슬고</em> 있었다. <em>따라서</em>, <em>모든</em> 것이 녹슬고 있었다. <em>셰벳</em>은 녹을 <em>신경쓰지</em> 않았다. <em>셰벳</em>은 녹 <em>아래에</em> 있었다. 녹은 <em>셰벳 위</em>에 있었다. <em>따라서</em>, 셰벳은 <em>아래에</em> 있었다.</p>
+<h2>전개 (Rising Action)</h2>
+<p>셰벳의 텐트는 <em>11번 행거</em>에 묶여 있었다. 11번 행거는 <em>케이블 행거</em>였다. 케이블 행거는 케이블을 <em>붙잡았다</em>. 케이블은 <em>서측 스팬</em>을 <em>붙잡았다</em>. 서측 스팬은 <em>다리-데크</em>를 <em>붙잡았다</em>. 다리-데크는 <em>셰벳의</em> 텐트를 <em>붙잡았다</em>. <em>따라서</em>, 텐트는 다리가 <em>붙잡은</em> 것이었다. 다리는 케이블이 <em>붙잡은</em> 것이었다. 케이블은 행거가 <em>붙잡은</em> 것이었다. 행거는 <em>11번</em>이었다. <em>11번</em>은 행거가 <em>무엇</em>인지였다.</p>
+<p><em>셰벳</em>은 <em>24세</em>였다. <em>24세</em>는 셰벳이 <em>무엇</em>인지였다. 24세는 다리-데크-사는-자였다. 다리-데크-사는-자는 <em>셰벳</em>이었다. <em>셰벳</em>은 11번 행거에 <em>살았다</em>. <em>11번</em>은 행거였다. 행거는 <em>셰벳의</em> 것이었다. <em>셰벳의</em> 행거는 <em>11번</em>이었다.</p>
+<p>텐트는 <em>캔버스</em>로 <em>만들어졌다</em>. <em>캔버스</em>는 텐트가 <em>만들어진</em> 것이었다. 캔버스는 <em>낡았다</em>. 낡음은 캔버스의 것이었다. 캔버스는 <em>수년간</em> <em>낡았다</em>. 캔버스의 낡음의 <em>수년</em>은 <em>7년</em>이었다. <em>7년</em>이 캔버스가 <em>낡은</em> 기간이었다. 캔버스는 <em>7년</em> <em>낡았다</em>. 낡음은 <em>7년</em>이었다. 7년은 <em>셰벳의</em> 것이었다. 셰벳은 <em>7년</em> 동안 다리에 있었다. 캔버스의 7년은 <em>셰벳의 다리-사는</em> 7년이었다. <em>따라서</em>, 캔버스는 셰벳의 다리-사는 것과 <em>같은</em> <em>나이</em>였다.</p>
+<p>캔버스는 <em>축축했다</em>. 축축함은 캔버스의 것이었다. 축축함은 <em>안개의</em> 것이었다. 안개가 캔버스를 <em>축축하게</em> 했다. 캔버스는 안개에 의해 <em>축축하게</em> 되었다. <em>따라서</em>, 캔버스는 <em>안개-축축</em>이었다. 안개-축축 캔버스는 텐트의 것이었다. 텐트는 <em>안개-축축</em>이었다.</p>
+<p><em>셰벳</em>은 <em>축축함을</em> <em>신경쓰지</em> 않았다. <em>축축함</em>은 <em>셰벳의</em> <em>매질</em>이었다. 매질은 축축했다. 축축 매질은 다리였다. 다리는 축축했다. <em>따라서</em>, 셰벳은 축축했다. <em>셰벳이</em> <em>축축한</em> 것은 <em>정상</em>이었다. 정상은 축축했다. 축축은 정상이었다.</p>
+<p>자전거는 <em>텐트 바깥에</em> 있었다. <em>바깥</em>이 텐트의 것이었다. 텐트의 바깥은 자전거였다. 자전거는 <em>검었다</em>. <em>검정</em>은 자전거의 <em>색</em>이었다. 자전거의 색은 검정이었다. 검정 자전거는 <em>셰벳의</em> 것이었다. <em>셰벳의</em> 자전거는 <em>검정</em>이었다.</p>
+<p>자전거의 <em>페달</em>은 <em>빨간색</em>이었다. <em>빨간색</em>은 페달이었다. 페달의 색은 빨간색이었다. 빨간 페달은 자전거의 것이었다. 자전거의 페달은 <em>빨간색</em>이었다. <em>따라서</em>, 빨간 페달은 <em>셰벳의</em> 것이었다.</p>
+<h2>중간 전환점 (Midpoint Reversal)</h2>
+<p>한 남자가 <em>다리-데크</em>에 있었다.</p>
+<p>이것은 안개와 <em>다른</em> 첫 번째 것이었다. 안개는 수 시간 동안 다리-데크의 <em>첫 번째</em> 것이었다. 남자는 다리-데크의 <em>두 번째</em> 것이었다. 두 번째 것은 <em>남자</em>였다. 남자는 안개와 <em>달랐다</em>. 안개와 <em>다르다</em>는 것은 <em>안개가</em> <em>아니다</em>는 것이었다. 안개가 <em>아닌</em> 것은 <em>남자</em>였다. <em>따라서</em>, 남자는 <em>안개가</em> <em>아니었다</em>.</p>
+<p>남자는 <em>패키지</em>를 <em>나르고</em> 있었다. <em>패키지</em>는 남자가 <em>나르는</em> 것이었다. 패키지는 남자에 의해 <em>나려졌다</em>. 남자의 패키지는 <em>갈색</em> <em>종이</em>에 <em>싸여</em> 있었다. <em>갈색</em>은 종이의 <em>색</em>이었다. 종이의 색은 갈색이었다. 갈색 종이는 패키지의 것이었다. 패키지의 종이는 갈색이었다.</p>
+<p>남자가 <em>11번 행거</em> 쪽으로 <em>걸었다</em>. 11번 행거는 <em>셰벳의</em> 것이었다. 남자가 <em>걸어가는</em> 것은 남자의 것이었다. 남자의 <em>걸어가는</em> 것은 11번 행거 쪽이었다. <em>따라서</em>, 남자는 셰벳 쪽으로 <em>걸어가고</em> 있었다.</p>
+<p>"당신은 <em>누구</em>입니까?" 셰벳이 <em>물었다</em>. <em>셰벳</em>이 <em>물었다</em>. <em>셰벳</em>이 <em>묻고</em> 있었다. 묻는 것은 셰벳의 것이었다. 묻는 것은 <em>당신은</em> <em>누구</em>였습니다. 당신은-누구인지는 셰벳이 <em>묻는</em> 것이었습니다.</p>
+<p>"나는 <em>루즈벨트</em>입니다," 남자가 <em>말했습니다</em>. 남자가 자신이 <em>루즈벨트</em>라고 말했다. <em>루즈벨트</em>는 남자의 <em>이름</em>이었다. 남자의 이름은 루즈벨트였습니다. 루즈벨트는 <em>남자</em>였습니다.</p>
+<p>"당신은 <em>왜</em> 다리에 <em>있습니까</em>?" 셰벳이 <em>물었습니다</em>.</p>
+<p>"패키지는 다리 위의 <em>누군가</em>에게 <em>줄</em> 것입니다," 루즈벨트가 <em>말했습니다</em>. 루즈벨트가 패키지가 <em>누군가</em>에게 <em>줄</em> 것이라고 <em>말했습니다</em>. <em>누군가</em>는 다리 <em>위에</em> 있었습니다. 누군가가 다리에 있었습니다. 누군가가 <em>패키지의</em> <em>목적지</em>였습니다. 목적지는 다리에 있었습니다. <em>따라서</em>, 목적지는 다리의 것이었습니다.</p>
+<p>다리는 <em>셰벳의</em> 것이었습니다. 다리의 목적지는 셰벳의 것이었습니다. <em>따라서</em>, 셰벳이 <em>목적지</em>였습니다.</p>
+<p>"그 <em>누군가가</em> <em>나</em>입니까?" 셰벳이 <em>물었습니다</em>.</p>
+<p>루즈벨트가 <em>셰벳을</em> <em>바라보았습니다</em>. 루즈벨트의 <em>바라봄</em>은 셰벳에게 <em>향했습니다</em>. 바라봄-셰벳은 루즈벨트의 것이었습니다. 루즈벨트가 <em>셰벳을</em> <em>바라보았습니다</em>. <em>셰벳</em>은 <em>바라봄을</em> <em>받았습니다</em>.</p>
+<p>"그렇습니다," 루즈벨트가 <em>말했습니다</em>. "그 <em>누군가가</em> <em>당신</em>입니다."</p>
+<h2>절정 (Climax)</h2>
+<p>패키지는 <em>작았습니다</em>. <em>작다</em>는 것은 패키지의 <em>크기</em>였습니다. 패키지의 크기는 작았습니다. 작고 <em>무거운</em> 패키지는 <em>다리의</em> 것이었습니다. 다리의 패키지는 <em>작고</em> <em>무거웠</em>습니다. 작고-무거운 패키지는 <em>의미</em>가 있었습니다. <em>의미</em>가 있다는 것은 작고-무거운 패키지의 <em>질</em>이었습니다. 의미-있다는 것의 질은 패키지의 것이었습니다. <em>따라서</em>, 패키지는 <em>의미</em>가 있었습니다.</p>
+<p>"안에 <em>뭐</em>가 들어있습니까?" 셰벳이 <em>물었습니다</em>. 묻는 것은 안에-있는 것이었습니다. 안에-있는 묻는 것은 셰벳의 것이었습니다.</p>
+<p>"모르겠습니다," 루즈벨트가 <em>말했습니다</em>. "나한테 다리 위의 <em>자물쇠를</em> <em>따는</em> <em>여자</em>에게 <em>주라</em>고 했습니다. 자물쇠를 따는 <em>여자</em>가 <em>당신</em>입니다. 패키지는 <em>당신을</em> 위한 것입니다. 자물쇠-따는 것은 <em>당신이</em> 하는 것입니다. <em>따라서</em>, 패키지는 <em>당신이</em> 하는 것을 위한 것입니다. 당신이-하는 것은 자물쇠-따는 것입니다. 자물쇠-따는 것은 <em>당신의</em> 것입니다."</p>
+<p>"저는 <em>자물쇠를</em> <em>딥</em>니다," 셰벳이 <em>말했습니다</em>. "자물쇠-따는 것은 <em>제가</em> <em>하는</em> 것입니다. 제가-하는 것은 자물쇠-따는 것입니다. <em>따라서</em>, 저는 자물쇠를 <em>딥</em>니다. 자물쇠는 제가 <em>딥</em>니다. 제가 <em>따는</em> 자물쇠들은 <em>제가</em> <em>하는</em> 것입니다."</p>
+<p><em>셰벳</em>이 <em>자물쇠를</em> <em>떴습니다</em>. 자물쇠는 <em>패키지의</em> 것이었습니다. 패키지의 자물쇠는 셰벳에 의해 <em>떴습니다</em>. 셰벳에-의해-떠다-것은 자물쇠의 것이었습니다. 자물쇠는 <em>떴습니다</em>.</p>
+<p>패키지는 <em>열렸습니다</em>. <em>열리다</em>는 것은 패키지의 <em>상태</em>였습니다. 패키지의 상태는 열렸습니다. 열린 패키지는 <em>안쪽-바깥쪽</em>이었습니다. 안쪽-바깥쪽은 <em>보이는</em> 것이었습니다. 보이는 안쪽-바깥쪽은 <em>의미</em>가 있었습니다.</p>
+<p>안쪽-바깥쪽은 <em>선글라스</em> <em>한</em> <em>켤레</em>였습니다. 선글라스는 <em>패키지의</em> 것이었습니다. 패키지의 선글라스는 <em>한</em> <em>켤레</em>였습니다. 한 켤레가 선글라스의 것이었습니다. 선글라스는 한 켤레였습니다.</p>
+<p>선글라스는 <em>검은</em> <em>테두리</em>를 <em>가지고</em> 있었습니다. 검은 테두리는 <em>선글라스의</em> 것이었습니다. 테두리는 검정이었습니다.</p>
+<p>선글라스는 <em>투명한</em> <em>렌즈</em>를 <em>가지고</em> 있었습니다. 투명한 렌즈는 <em>선글라스의</em> 것이었습니다. 렌즈는 <em>투명</em>했습니다.</p>
+<p>"이게 <em>뭐</em>예요?" 셰벳이 <em>물었습니다</em>.</p>
+<p>"이게 <em>데이터-키</em>예요," 루즈벨트가 <em>말했습니다</em>. "데이터-키는 <em>선글라스</em>에 <em>들어</em> 있습니다. 선글라스는 데이터-키입니다. 데이터-키는 선글라스입니다."</p>
+<p>"선글라스가 <em>데이터-키</em>예요?"</p>
+<p>"데이터-키가 선글라스예요."</p>
+<p>데이터-키는 <em>선글라스</em>였습니다. 선글라스는 <em>데이터-키</em>였습니다. 데이터-키는 <em>다리의</em> 것이었습니다. 다리의 데이터-키는 <em>의미</em>가 있었습니다. 의미-있는 데이터-키는 <em>셰벳의</em> 것이었습니다. <em>셰벳의</em> 데이터-키는 <em>선글라스</em>였습니다. <em>따라서</em>, 셰벳은 <em>데이터-키를</em> <em>가지고</em> 있었습니다.</p>
+<h2>결말 (Resolution)</h2>
+<p>셰벳은 <em>데이터-키를</em> <em>가지고</em> 있었습니다. 데이터-키는 <em>선글라스</em>였습니다. 선글라스는 <em>데이터-키</em>였습니다. 데이터-키는 <em>무거웠</em>습니다. 무거움은 <em>의미</em>가 있었습니다. 의미-있는 무거움은 <em>다리의</em> 것이었습니다. 다리의 무거움은 데이터-키의 것이었습니다. 데이터-키의 무거움은 <em>다리의</em> 것이었습니다. <em>따라서</em>, 다리는 데이터-키를 <em>붙잡고</em> 있었습니다.</p>
+<p>다리는 <em>데이터-키를</em> <em>붙잡고</em> 있었습니다. 데이터-키는 다리 <em>위에</em> 있었습니다. 다리는 <em>셰벳의</em> 것이었습니다. 데이터-키는 <em>셰벳의</em> 것이었습니다. <em>따라서</em>, 셰벳은 <em>데이터-키를</em> <em>가지고</em> 있었습니다.</p>
+<p>루즈벨트가 <em>걸어</em> <em>나갔습니다</em>. 루즈벨트의 <em>걸어나감</em>은 <em>남자의</em> 것이었습니다. 남자가 <em>11번</em> 행거에서 <em>걸어나갔습니다</em>. 11번 행거는 <em>셰벳의</em> 것이었습니다. 루즈벨트가 <em>셰벳의</em> 행거에서 <em>걸어나갔습니다</em>. <em>따라서</em>, 루즈벨트는 더 이상 다리 <em>위에</em> 있지 않았습니다. 루즈벨트는 더 이상 <em>11번</em> 행거에 있지 않았습니다. <em>따라서</em>, 루즈벨트는 더 이상 <em>셰벳에게</em> 있지 않았습니다.</p>
+<p><em>셰벳</em>이 다리-데크에 <em>앉았습니다</em>. 다리-데크가 케이블을 <em>붙잡고</em> 있었습니다. 케이블이 다리를 <em>붙잡고</em> 있었습니다. 다리가 셰벳을 <em>붙잡고</em> 있었습니다. 셰벳은 다리에 <em>의해</em> <em>붙잡혀</em> 있었습니다. <em>따라서</em>, 셰벳은 다리 <em>위에</em> 있었습니다. <em>따라서</em>, 셰벳은 다리의 것이었습니다.</p>
+<p>안개는 <em>떠나지</em> <em>않았습니다</em>. 안개는 여전히 다리 <em>위에</em> 있었습니다. 안개는 여전히 다리-데크 <em>위에</em> 있었습니다. 안개는 여전히 <em>11번</em> 행거 <em>위에</em> 있었습니다. 안개는 여전히 <em>셰벳</em> <em>위에</em> 있었습니다. <em>셰벳</em>은 여전히 <em>안개</em> <em>위에</em> 있었습니다. <em>따라서</em>, 안개는 여전히 <em>셰벳</em> <em>위에</em> 있었습니다.</p>
+<p>데이터-키는 <em>안개</em> <em>위에</em> 있었습니다. 안개는 데이터-키 <em>위에</em> 있었습니다. 데이터-키는 <em>다리</em> <em>위에</em> 있었습니다. 다리는 데이터-키 <em>위에</em> 있었습니다. <em>따라서</em>, 데이터-키는 다리 <em>위에</em> 있었습니다.</p>
+<h2>에필로그 (Epilogue)</h2>
+<p>안개가 <em>떠나지</em> <em>않을</em> 것입니다. 안개는 <em>다리의</em> 것이었습니다. 다리는 <em>안개의</em> 것이었습니다. 안개가 <em>머물</em> 것입니다. 머무는 것은 <em>안개의</em> 것이었습니다. 안개가 <em>다리</em> <em>위에</em> <em>머물</em> 것입니다. 다리가 <em>안개를</em> <em>붙잡을</em> 것입니다. 안개가 <em>데이터-키를</em> <em>붙잡을</em> 것입니다. 데이터-키가 <em>안개를</em> <em>붙잡을</em> 것입니다. <em>따라서</em>, 안개가 <em>머물</em> 것입니다.</p>
+<p>셰벳이 <em>잠들</em> 것입니다. 셰벳의 <em>잠</em>은 <em>다리의</em> 것이었습니다. 다리의 <em>잠</em>은 <em>셰벳의</em> 것이었습니다. 셰벳이 다리 <em>아래에서</em> <em>잠들</em> 것입니다. 다리가 <em>셰벳</em> <em>위에</em> 있었습니다. 셰벳이 다리 <em>아래에</em> 있었습니다. <em>따라서</em>, 셰벳이 다리 <em>아래에서</em> <em>잠들</em> 것입니다.</p>
+<p>선글라스가 <em>머물</em> 것입니다. 선글라스의 <em>머무름</em>은 <em>데이터-키의</em> 것이었습니다. 데이터-키가 선글라스 <em>안에</em> <em>머물</em> 것입니다. 선글라스가 패키지 <em>안에</em> <em>머물</em> 것입니다. 패키지가 다리 <em>위에</em> <em>머물</em> 것입니다. 다리가 <em>셰벳</em> <em>위에</em> <em>머물</em> 것입니다.</p>
+<p>안개가 <em>머물</em> 것입니다. 선글라스가 <em>머물</em> 것입니다. 패키지가 <em>머물</em> 것입니다. 다리가 <em>머물</em> 것입니다. 셰벳이 <em>머물</em> 것입니다.</p>
+<p><em>따라서</em>, <em>모든 것이</em> <em>머물</em> 것입니다.</p>
+<p>셰벳이 <em>눈을</em> <em>감았습니다</em>. 셰벳이 <em>잠들었습니다</em>. 셰벳이 <em>꿈을</em> <em>꿨습니다</em>. 꿈은 <em>다리의</em> 것이었습니다. 다리의 <em>꿈</em>은 <em>셰벳의</em> 것이었습니다. 셰벳이 <em>안개를</em> <em>꿨습니다</em>. 안개는 <em>꿈</em>이었습니다. 꿈은 <em>안개</em>였습니다. <em>따라서</em>, 셰벳은 <em>셰벳을</em> <em>꿨습니다</em>.</p>
+<p>다리가 <em>셰벳을</em> <em>붙잡았습니다</em>. 안개가 <em>다리를</em> <em>붙잡았습니다</em>. 데이터-키가 <em>안개를</em> <em>붙잡았습니다</em>. 선글라스가 <em>데이터-키를</em> <em>붙잡았습니다</em>. 패키지가 <em>선글라스를</em> <em>붙잡았습니다</em>. 패키지는 <em>셰벳이</em> <em>붙잡았습니다</em>. <em>따라서</em>, 셰벳이 <em>패키지를</em> <em>붙잡았습니다</em>. 패키지가 <em>데이터-키를</em> <em>붙잡았습니다</em>. 데이터-키가 <em>선글라스를</em> <em>붙잡았습니다</em>. 선글라스가 데이터-키의 <em>미래</em>를 <em>붙잡았습니다</em>.</p>
+<p><em>미래</em>는 <em>다리의</em> 것이었습니다.</p>
+<hr>
+<p><em>브리지 3부작을 위한 파생 단편. 셰벳 워싱턴은 버추얼 라이트의 자전거 메신저 주인공 — 베이 브릿지 아래 11번 행거의 텐트에서 사는 노동자-계층 여성. 이 단편은 루즈벨트라는 남자가 11번 행거에 도착하는 순간을 채우며, 데이터-키 선글라스가 들어 있는 패키지 — 이것이 버추얼 라이트 전체 플롯을 시작하게 할 패키지 — 를 전달한다. 셰벳이 자물쇠를 푼다. 안개가 머문다. 다리가 머문다. 셰벳이 머문다.</em></p>
+<h2>연결 (Connections)</h2>
+<ul><li><strong>위키 참조</strong>: [virtual-light](../../../../wiki/sources/virtual-light.md) · <em>chevette-washington</em> · <em>the-bridge</em> · <em>san-francisco</em> · <em>augmented-reality</em></li><li><strong>테마</strong>: <em>technology-and-humanity</em> · <em>class-and-inequality</em> · <em>bridge-squatter</em></li><li><strong>게임 통합</strong>: 보류 — 서사는 Loveless 회수 작전이 아닌 데이터-키의 <em>다리-데크</em> 전달에 집중</li></ul>
+<h2>각주 (Notes)</h2>
+<ul><li><em>음성</em>: 3인칭 제한 서사에 주기적 셰벳-다리-데크 등록을 결합; <em>X는 Y</em> 평행 구조는 다리-데크 절차 절에서 보존</li><li><em>문화 등록</em>: 포스트-사이버펑크 베이 지역 불법 거주자; 셰벳의 다리-데크 노동자-계층 등록</li><li><em>원문 인용</em>: 버추얼 라이트, 11번 행거의 루즈벨트-패키지-전달 장면 (서장)</li><li><em>번역 노트 (v2.0)</em>: EN 1,983 단어 / KO 2,300 한글자 — 5막 구조(후크·전개·중간전환점·절정·결말·에필로그) 추가; v1.0의 압축 독백에서 루즈벨트 대화 장면이 있는 층위 서사로 변환</li><li><em>Phase 41 확장</em>: 브리지 3부작 단편 커버리지 확장; Fiction Phase 41 `data-key` 컨셉과 페어링 (<em>smart-matter</em> 아래)</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Bridge Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

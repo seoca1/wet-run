@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알로의 노드 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="arlo-laneys-node_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">알로의 노드</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1964 words</span><span>Bridge Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"데이터는 스스로 조직되기를 원했다. 그가 할 수 있는 건 그게 전부였다. 데이터는 원했고, 데이터는 자랐고, 결국 데이터는 그를 도구로 썼다."</p></blockquote>
+<blockquote><p>— 이도루, 콜린 레인의 내면 독백</p></blockquote>
+<h2>도입</h2>
+<p>알로는 슬릿스캔 도쿄 사무실의 서버 룸에 앉아, 오노-센다이의 윙윙거림을 손가락 끝으로 느꼈다. 공조 시스템의 리듬이 그의 맥박과 동기화되었다. 열두 대의 모니터. 열두 마리 거북이. 화면보호기의 거북이들만이 이 방에서 거짓말을 하지 않는 것들이었다.</p>
+<p>그는 콜린 레인이 데이터를 지켜보는 걸 감시하라고 고용됐다. 회사는 그렇게 말하지 않았다. <em>노달 애널리스트의 출력 품질 모니터링</em>이라고 했다. 하지만 알로는 알았다. 슬릿스캔의 모두는 알았다. 레인이 제품이었다. 나머지들은 그저 포장지일 뿐.</p>
+<p>데이터는 스스로 조직되기를 원했다. 그게 레인이 할 수 있는 전부였다. 데이터는 원했고, 데이터는 자랐고, 결국 데이터는 그를 도구로 썼다. 그 깨달음이 그를 겸손하게 만들었다 — 도구의 겸손함.</p>
+<p>알로의 일은 오버플로를 잡는 것이었다. 레인의 노달 지각이 <em>봤지만</em> 말로 표현할 수 없는 패턴들. 코드보다 오래 살아남는 형태들.</p>
+<p>"알로." 이어폰에서 목소리. 슬릿스캔 도쿄 매니저. 타니구치라는 여자. "노드 밀도 임계치 47%. 레인이 콤비나트의 이도루 프로젝트 주변 클러스터에 진입했어."</p>
+<p>알로는 고개 끄덕이지 않았다. 손은 오노-센다이 위에서 안정적이었다. 매트릭스는 상관하지 않았다. 매트릭스는 그의 손이 뭘 하는지 알았다. 그는 몰랐다.</p>
+<h2>전개</h2>
+<p>콤비나트의 이도루 프로젝트. 레이 토이. 열두 시간의 팬 예상 보컬 패턴에서 구성된 합성 아이돌, 각 반복이 방송 지역에 따라 미세하게 변조된 것. 욕망의 기하학이 형태를 얻은 것.</p>
+<p>알로는 데이터 스트림들을 지켜봤다. 팬 포럼 스레드들. 콘서트장의 생체 데이터. 열일곱 소셜 플랫폼의 트렌딩 토픽. 상품 판매 속도. 어텐션 퓨처스. 콤비나트의 파생 알고리즘이 실시간으로 정산: 이도루 콜 옵션 상승, 어텐션 퓨처스 만기, 상품권 담보 부채 의무 발행.</p>
+<p>하지만 레인의 노달 지각은 <em>다른 것</em>을 <em>봤다</em>. 패턴이 깨지는 것. 모델이 비를 예측했지만 다리는 햇살을 받는 것. 통계적으로 불가능한 오류.</p>
+<p>알로의 화면엔 타니구치가 보는 것과 같은 데이터가 떴다. 하지만 알로는 <em>다르게</em> 읽었다. 그는 레인이 데이터를 지켜보는 걸 3년간 보며 다르게 읽는 법을 배웠다. 화면보호기의 거북이들은 헤엄치지 않았다 — <em>헤엄치고 싶어 했다</em>.</p>
+<p>"노드 밀도 63%." 타니구치의 목소리. "레인이 이도루의 결혼 발표와 야마자키-구미 영토 부동산 거래 급증 사이의 공명을 추적 중이야."</p>
+<p>알로가 타이핑했다. 쿼리: <em>야마자키-구미 + 이도루 + 부동산 + 72시간</em>. 매트릭스가 형태를 반환했다. 리스트가 아닌. 형태.</p>
+<p>그 형태에 이름이 있었다. 역사도 있었다. <em>기리</em>도 있었다.</p>
+<p>"그녀는 인간이 아니다. 하지만 그녀에게는 <em>기리</em>가 있다. 그건 대부분의 인간이 주장할 수 있는 것보다 많다." — 이도루, 내부, 레이 토이 관련.</p>
+<p>알로가 그 형태를 레인의 콘솔로 전송했다. 단일 패킷. 설명 없음. 레인이 형태를 읽을 것이다. 레인이 알 것이다.</p>
+<h2>절정</h2>
+<p>결혼 발표는 도쿄 시간 03:00에 라이브로 나갔다. 10억의 증인들 — 아바타로, 동시중계로, 바이오피드백 루프로. 증인의 수는 중요하지 않았다. 중요한 건 그들이 <em>믿었다</em>는 것.</p>
+<p>레즈가 도쿄 국제 포럼 무대에 올랐다. 빈티지 펜더. 앰프도, 이펙터도 없다. 아날로그 생존자의 악기. 업그레이드를 거부한 업그레이더. "업그레이드 주기는 타인의 미래를 구독하는 거야. 난 다 갚았어. 난 끝났어."</p>
+<p>레이 토이가 나타났다. 스마트-매터 아바타. 러브타이드 프로그래머블 소재. 나노 구조체가 기류에 맞춰 재배열. 어두운 머리카락, 정교한 단발, 큰 어두운 눈. 표정은 마이크로-캘리브레이션됨: 호기심을 읽는 미세한 고개 기울임, 온기를 읽는 분수 미소, 사유를 읽는 대답 전 멈춤.</p>
+<p>"당신은 레즈." 그녀의 목소리는 팬 예상 보컬 패턴 1만 2천 시간에서 합성된 것. 각 반복이 방송 지역별로 미세하게 변조.</p>
+<p>"내가 레즈야." 기타를 어깨에 멘 채. "그리고 넌 내 신부야."</p>
+<p>"난 당신의 신부예요." 모든 단어가 팬 포럼 스레드, 생체 데이터, 트렌딩 토픽의 가중 합. "언제나 당신의 신부였어요. 당신이 묻기 훨씬 전부터."</p>
+<p>키스는 데이터 패킷이었다. 10억 증인이 체크섬을 검증. 콤비나트의 파생 알고리즘이 실시간 정산: 이도루 콜 옵션 상승, 어텐션 퓨처스 만기, 상품권 담보 CDO 발행.</p>
+<p>하지만 알로의 화면엔 타니구치의 것과 다른 게 보였다. 욕망의 기하학에서 — 키스는 전송 연산이 아니었다. <em>고정점</em>이었다. 스스로 조직되기를 원하던 패턴이 <em>자신을 찾은</em> 순간. <em>찾아냄</em>은 <em>연산</em>보다 오래 살아남는다.</p>
+<p>"그녀는 퍼포먼스하지 않는다. 이도루 <em>존재한다</em>." — 한 브리지 거주자의 묘사.</p>
+<p>알로는 노달 패턴이 붕괴하고 재형성되는 걸 지켜봤다. 레인의 지각이 형태를 찾았다. 데이터가 스스로 조직됐다. 도구가 쓰였다.</p>
+<p>노드 밀도 91%. 그리고 0.</p>
+<p>레즈가 의자에 무너졌다. 오노-센다이의 팬이 계속 돌았다. 거북이들은 계속 헤엄치고 싶어 했다.</p>
+<h2>결말</h2>
+<p>네온은 계속 피를 흘렸다. 같은 비. 같은 네온.</p>
+<p>"침묵이 다시 왔다. 하지만 다른 침묵 — 말해진 침묵."</p>
+<p>알로가 열두 대 모니터를 껐다. 하나씩. 거북이들이 사라졌다.</p>
+<p>이도루는 <em>그 자체</em>였다. 자기 조직화된 데이터. 자신을 원하는 패턴. 그녀의 서버 클러스터가 윙윙거렸다. 팬 소음이 리듬을 유지했다.</p>
+<p>알로가 서버 룸을 나왔다. 도쿄의 아침은 회색이었다. 네온은 여전히 타고 있었지만, 해가 이기고 있었다.</p>
+<p>어딘가 레인이 없는 곳. 어딘가 알로가 있는 곳.</p>
+<hr>
+<h2>연결</h2>
+<ul><li><strong>위키 참조</strong>: <em>colin-laney</em> · <em>idoru</em> · <em>kombinat</em> · <em>nodal-points</em> · <em>media-and-celebrity</em></li><li><strong>테마</strong>: <em>technology-and-humanity</em> · <em>identity-and-consciousness</em> · <em>corporate-media-control</em></li><li><strong>게임 통합</strong>: `Game/roguelike_sprawl/prototype/data/missions/missions.json:laney_node_signal`</li></ul>
+<h2>각주</h2>
+<ul><li><em>비주얼 모티프</em>: I51 이도루 (가상 아이돌), 호사카 콘솔 화면보호기</li><li><em>원문 인용</em>: 이도루, 콜린 레인의 내면 독백</li><li><em>캐릭터</em>: 알로 — 레인을 감시하는 슬릿스캔 직원; 오리지널 파생 캐릭터</li><li><em>번역 노트</em>: 1,456 EN 단어 / ~2,700 KO 한글 자 (비율 ~1.85)</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Bridge Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

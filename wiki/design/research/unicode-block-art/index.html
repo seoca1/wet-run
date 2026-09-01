@@ -1,0 +1,2475 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Unicode Block Art Research — 2× Vertical Resolution for Graphic Novel Mode - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#unicode-block-art-research-2-vertical-resolution-for-graphic-novel-mode" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Unicode Block Art Research — 2× Vertical Resolution for Graphic Novel Mode
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-unicode-block-characters-for-2-vertical-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Unicode Block Characters for 2× Vertical Resolution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Unicode Block Characters for 2× Vertical Resolution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-core-block-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Core Block Characters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-additional-useful-blocks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Additional Useful Blocks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-how-2-vertical-resolution-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 How 2× Vertical Resolution Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-python-tcod-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. python-tcod Compatibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. python-tcod Compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-console-rendering-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Console Rendering API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-current-portrait-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Current Portrait System Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Current Portrait System Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-portrait-manager-portraitsmanagerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Portrait Manager (portraits/manager.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-portrait-data-format-dataartportraitsportraitsjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Portrait Data Format (data/art/portraits/portraits.json)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-graphic-novel-view-enginegraphic_novel_viewpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Graphic Novel View (engine/graphic_novel_view.py)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-existing-unicode-block-usage-in-codebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Existing Unicode Block Usage in Codebase
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Existing Unicode Block Usage in Codebase">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-portraits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Portraits
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-backgrounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Backgrounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-proposed-block-art-rendering-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Proposed Block Art Rendering Approach
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Proposed Block Art Rendering Approach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-design-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Design Goals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-data-format-block-art-portrait" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Data Format — Block Art Portrait
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-rendering-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Rendering Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-backward-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Backward Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-implementation-roadmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Implementation Roadmap
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Implementation Roadmap">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-1-proof-of-concept-1-2-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: Proof of Concept (1-2 days)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2-tooling-2-3-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: Tooling (2-3 days)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3-content-creation-3-5-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: Content Creation (3-5 days)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4-integration-2-3-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: Integration (2-3 days)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-5-full-migration-5-7-days" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: Full Migration (5-7 days)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-technical-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Technical Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Technical Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-font-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Font Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-color-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Color Depth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74-art-creation-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Art Creation Workflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-alternative-approaches-considered-and-rejected" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Alternative Approaches (Considered and Rejected)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Alternative Approaches (Considered and Rejected)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-braille-patterns-u2800u28ff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Braille Patterns (U+2800–U+28FF)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-sextant-characters-u1fb00u1fb3b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Sextant Characters (U+1FB00–U+1FB3B)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-custom-bitmap-font" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Custom Bitmap Font
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Open Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. References
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. References">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-unicode-block-characters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Unicode Block Characters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-python-tcod-documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 python-tcod Documentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-existing-codebase" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Existing Codebase
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-related-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Related Decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="unicode-block-art-research-2-vertical-resolution-for-graphic-novel-mode">Unicode Block Art Research — 2× Vertical Resolution for Graphic Novel Mode<a class="headerlink" href="#unicode-block-art-research-2-vertical-resolution-for-graphic-novel-mode" title="Permanent link">&para;</a></h1>
+<p><strong>Date</strong>: 2026-07-10
+<strong>Context</strong>: Upgrade ASCII portraits from 10×14 cells to higher resolution using Unicode block characters
+<strong>Goal</strong>: Double vertical resolution for character portraits in graphic novel mode</p>
+<hr />
+<h2 id="1-unicode-block-characters-for-2-vertical-resolution">1. Unicode Block Characters for 2× Vertical Resolution<a class="headerlink" href="#1-unicode-block-characters-for-2-vertical-resolution" title="Permanent link">&para;</a></h2>
+<h3 id="11-core-block-characters">1.1 Core Block Characters<a class="headerlink" href="#11-core-block-characters" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Unicode</th>
+<th>Name</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>▀</code></td>
+<td>U+2580</td>
+<td>Upper Half Block</td>
+<td>Top half of a cell</td>
+</tr>
+<tr>
+<td><code>▄</code></td>
+<td>U+2584</td>
+<td>Lower Half Block</td>
+<td>Bottom half of a cell</td>
+</tr>
+<tr>
+<td><code>█</code></td>
+<td>U+2588</td>
+<td>Full Block</td>
+<td>Solid fill</td>
+</tr>
+<tr>
+<td><code>▌</code></td>
+<td>U+258C</td>
+<td>Left Half Block</td>
+<td>Left half of a cell</td>
+</tr>
+<tr>
+<td><code>▐</code></td>
+<td>U+2590</td>
+<td>Right Half Block</td>
+<td>Right half of a cell</td>
+</tr>
+<tr>
+<td><code>░</code></td>
+<td>U+2591</td>
+<td>Light Shade</td>
+<td>25% fill</td>
+</tr>
+<tr>
+<td><code>▒</code></td>
+<td>U+2592</td>
+<td>Medium Shade</td>
+<td>50% fill</td>
+</tr>
+<tr>
+<td><code>▓</code></td>
+<td>U+2593</td>
+<td>Dark Shade</td>
+<td>75% fill</td>
+</tr>
+</tbody>
+</table>
+<h3 id="12-additional-useful-blocks">1.2 Additional Useful Blocks<a class="headerlink" href="#12-additional-useful-blocks" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Unicode</th>
+<th>Name</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>▖</code></td>
+<td>U+2596</td>
+<td>Quadrant Lower Left</td>
+<td>Quarter-cell precision</td>
+</tr>
+<tr>
+<td><code>▗</code></td>
+<td>U+2597</td>
+<td>Quadrant Lower Right</td>
+<td>Quarter-cell precision</td>
+</tr>
+<tr>
+<td><code>▘</code></td>
+<td>U+2598</td>
+<td>Quadrant Upper Left</td>
+<td>Quarter-cell precision</td>
+</tr>
+<tr>
+<td><code>▝</code></td>
+<td>U+2599</td>
+<td>Quadrant Upper Right</td>
+<td>Quarter-cell precision</td>
+</tr>
+<tr>
+<td><code>▞</code></td>
+<td>U+259E</td>
+<td>Quadrant Upper Right + Lower Left</td>
+<td>Diagonal patterns</td>
+</tr>
+<tr>
+<td><code>▚</code></td>
+<td>U+259A</td>
+<td>Quadrant Upper Left + Lower Right</td>
+<td>Diagonal patterns</td>
+</tr>
+</tbody>
+</table>
+<h3 id="13-how-2-vertical-resolution-works">1.3 How 2× Vertical Resolution Works<a class="headerlink" href="#13-how-2-vertical-resolution-works" title="Permanent link">&para;</a></h3>
+<p><strong>Principle</strong>: Each console cell can display TWO vertical pixels by using <code>▀</code> (upper) and <code>▄</code> (lower) with different foreground/background colors.</p>
+<p><strong>Example — Single Cell Rendering</strong>:
+<div class="highlight"><pre><span></span><code>Cell (x, y):
+  - Character: ▀ (upper half block)
+  - Foreground color: (255, 0, 0)    # Red — upper pixel
+  - Background color: (0, 0, 255)    # Blue — lower pixel
+
+Result: Top half red, bottom half blue
+</code></pre></div></p>
+<p><strong>10×14 cell portrait → 10×28 pixel portrait</strong></p>
+<hr />
+<h2 id="2-python-tcod-compatibility">2. python-tcod Compatibility<a class="headerlink" href="#2-python-tcod-compatibility" title="Permanent link">&para;</a></h2>
+<h3 id="21-console-rendering-api">2.1 Console Rendering API<a class="headerlink" href="#21-console-rendering-api" title="Permanent link">&para;</a></h3>
+<p><strong>tcod.console.Console</strong> supports Unicode characters via:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Method 1: console.print() — string rendering</span>
+<span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">string</span><span class="o">=</span><span class="s2">&quot;▀▄█&quot;</span><span class="p">,</span> <span class="n">fg</span><span class="o">=</span><span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+
+<span class="c1"># Method 2: console.ch — direct character array access</span>
+<span class="n">console</span><span class="o">.</span><span class="n">ch</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;▀&#39;</span><span class="p">)</span>  <span class="c1"># Set character by Unicode codepoint</span>
+<span class="n">console</span><span class="o">.</span><span class="n">fg</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># Set foreground color</span>
+<span class="n">console</span><span class="o">.</span><span class="n">bg</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>  <span class="c1"># Set background color</span>
+</code></pre></div>
+<p><strong>Verification</strong>: Current codebase already uses Unicode block characters:
+- <code>▌</code> (U+258C) in portraits: <code>case_decision</code>, <code>marly_smile</code>, <code>kumiko_sally</code>
+- <code>▓</code> (U+2593) in portraits: <code>case_terminal</code>, <code>marly_data</code>, <code>armitage_suit</code>
+- <code>░</code> (U+2591) in portraits: <code>case_hands</code>, <code>sally_neutral</code>
+- <code>▒</code> (U+2592) in backgrounds: <code>bg_chat_room</code></p>
+<p><strong>Conclusion</strong>: ✅ python-tcod fully supports Unicode block characters.</p>
+<hr />
+<h2 id="3-current-portrait-system-architecture">3. Current Portrait System Architecture<a class="headerlink" href="#3-current-portrait-system-architecture" title="Permanent link">&para;</a></h2>
+<h3 id="31-portrait-manager-portraitsmanagerpy">3.1 Portrait Manager (<code>portraits/manager.py</code>)<a class="headerlink" href="#31-portrait-manager-portraitsmanagerpy" title="Permanent link">&para;</a></h3>
+<p><strong>Purpose</strong>: Load and cache ASCII portraits from JSON</p>
+<p><strong>Key Components</strong>:
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">PortraitManager</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_portraits</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">data_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_load</span><span class="p">(</span><span class="n">data_dir</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">:</span> <span class="n">Path</span><span class="p">):</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">data_dir</span> <span class="o">/</span> <span class="s2">&quot;portraits.json&quot;</span>
+        <span class="c1"># Load JSON, parse colors</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="c1"># Returns {&quot;ascii&quot;: &quot;...&quot;, &quot;color&quot;: (r, g, b), &quot;name&quot;: &quot;...&quot;}</span>
+</code></pre></div></p>
+<p><strong>Color Parsing</strong>:
+- Supports color names: <code>"red"</code>, <code>"green"</code>, <code>"cyan"</code>, etc.
+- Supports RGB tuples: <code>[255, 0, 0]</code>
+- Maps to <code>tuple[int, int, int]</code></p>
+<h3 id="32-portrait-data-format-dataartportraitsportraitsjson">3.2 Portrait Data Format (<code>data/art/portraits/portraits.json</code>)<a class="headerlink" href="#32-portrait-data-format-dataartportraitsportraitsjson" title="Permanent link">&para;</a></h3>
+<p><strong>Current Format</strong> (10×14 ASCII):
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;case_think&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;case_think&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;title_en&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Case (thinking)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;title_ko&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;케이 (사색)&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;character&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;case&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;art&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;  ╭─────╮  &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;  │ ◉   │  &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;  │  ‿  │  &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;  │ ─── │  &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;  ╰──┬──╯  &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;     │     &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;   ┌─┴─┐   &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;   │   │   &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;   │ ▎ │   &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;   │ ▎ │   &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;   │ ▎ │   &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;   │ ▎ │   &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;   ╰───╯   &quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="s2">&quot;  [chiba]  &quot;</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Key Observations</strong>:
+- <code>size</code>: <code>[width, height]</code> in cells
+- <code>art</code>: Array of strings, one per row
+- Already uses Unicode: <code>╭</code>, <code>╮</code>, <code>│</code>, <code>─</code>, <code>▎</code>, etc.
+- No per-pixel color data — single color per portrait</p>
+<h3 id="33-graphic-novel-view-enginegraphic_novel_viewpy">3.3 Graphic Novel View (<code>engine/graphic_novel_view.py</code>)<a class="headerlink" href="#33-graphic-novel-view-enginegraphic_novel_viewpy" title="Permanent link">&para;</a></h3>
+<p><strong>Portrait Rendering</strong> (current):
+<div class="highlight"><pre><span></span><code><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">slots</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Portrait</span><span class="p">:</span>
+    <span class="nb">id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">title_en</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">title_ko</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">character</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">width</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">art</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>  <span class="c1"># One string per row</span>
+</code></pre></div></p>
+<p><strong>Rendering Flow</strong>:
+1. Load scene JSON → get <code>portrait_left</code> / <code>portrait_right</code> IDs
+2. Load portrait art from <code>portraits.json</code>
+3. Render each line of <code>art</code> array to console at (x, y + row)</p>
+<p><strong>Current Limitation</strong>: Single foreground color per portrait, no per-pixel color control.</p>
+<hr />
+<h2 id="4-existing-unicode-block-usage-in-codebase">4. Existing Unicode Block Usage in Codebase<a class="headerlink" href="#4-existing-unicode-block-usage-in-codebase" title="Permanent link">&para;</a></h2>
+<h3 id="41-portraits">4.1 Portraits<a class="headerlink" href="#41-portraits" title="Permanent link">&para;</a></h3>
+<p><strong>Characters Used</strong>:
+- <code>▌</code> (U+258C) — Left half block: body/torso representation
+- <code>▓</code> (U+2593) — Dark shade: terminals, screens, solid objects
+- <code>░</code> (U+2591) — Light shade: transparency, mist, data streams
+- <code>▒</code> (U+2592) — Medium shade: screens, interfaces</p>
+<p><strong>Examples</strong>:
+<div class="highlight"><pre><span></span><code>case_decision:
+   │ ▌ │   # Body torso (left half block)
+   │ ▌ │
+
+case_terminal:
+  │▓▓▓▓ │  # Terminal screen (dark shade)
+  │▓▓▓▓ │
+
+case_hands:
+   ░ ░      # Trembling hands (light shade)
+   ░ ░
+</code></pre></div></p>
+<h3 id="42-backgrounds">4.2 Backgrounds<a class="headerlink" href="#42-backgrounds" title="Permanent link">&para;</a></h3>
+<p><strong>File</strong>: <code>data/art/backgrounds/backgrounds.json</code></p>
+<p><strong>Usage</strong>:
+<div class="highlight"><pre><span></span><code>│  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │  # Light shade for UI elements
+│  ░  11th level, Chiba  11:42 PM ░░ │
+│  │ ▓▓▓▓▓▓▓ │   ░▒▓ HEADSON ▓▒░ │TV ││  # Gradient: ░ → ▒ → ▓
+</code></pre></div></p>
+<p><strong>Observation</strong>: Backgrounds already use shade characters for depth/texture.</p>
+<hr />
+<h2 id="5-proposed-block-art-rendering-approach">5. Proposed Block Art Rendering Approach<a class="headerlink" href="#5-proposed-block-art-rendering-approach" title="Permanent link">&para;</a></h2>
+<h3 id="51-design-goals">5.1 Design Goals<a class="headerlink" href="#51-design-goals" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>2× Vertical Resolution</strong>: 10×14 cells → 10×28 pixels</li>
+<li><strong>Per-Pixel Color Control</strong>: Each half-cell can have different colors</li>
+<li><strong>Backward Compatible</strong>: Existing ASCII portraits still work</li>
+<li><strong>Efficient</strong>: Minimal memory overhead, fast rendering</li>
+</ol>
+<h3 id="52-data-format-block-art-portrait">5.2 Data Format — Block Art Portrait<a class="headerlink" href="#52-data-format-block-art-portrait" title="Permanent link">&para;</a></h3>
+<p><strong>Option A: Pixel Array (10×28)</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;case_think_hires&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;case_think_hires&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;block_art&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">],</span><span class="w">  </span><span class="c1">// Cell dimensions</span>
+<span class="w">    </span><span class="nt">&quot;pixels&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="c1">// 28 rows × 10 columns = 280 pixels</span>
+<span class="w">      </span><span class="c1">// Each pixel: [r, g, b] or color_index</span>
+<span class="w">      </span><span class="p">[[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">  </span><span class="c1">// Row 0 (top half of cell 0)</span>
+<span class="w">      </span><span class="p">[[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">  </span><span class="c1">// Row 1 (bottom half of cell 0)</span>
+<span class="w">      </span><span class="err">...</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Option B: Run-Length Encoded</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;case_think_hires&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;case_think_hires&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;block_art_rle&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;palette&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w">      </span><span class="c1">// 0: black</span>
+<span class="w">      </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="c1">// 1: white</span>
+<span class="w">      </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">255</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span><span class="w">    </span><span class="c1">// 2: green</span>
+<span class="w">      </span><span class="p">[</span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">,</span><span class="w"> </span><span class="mi">128</span><span class="p">]</span><span class="w"> </span><span class="c1">// 3: gray</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;rows&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;0:5,1:3,0:2&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Row 0: 5 black, 3 white, 2 black</span>
+<span class="w">      </span><span class="s2">&quot;0:10&quot;</span><span class="p">,</span><span class="w">         </span><span class="c1">// Row 1: 10 black</span>
+<span class="w">      </span><span class="err">...</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>Option C: Hybrid — ASCII + Color Map</strong></p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;case_think_hires&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;case_think_hires&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;format&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;block_art_hybrid&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;size&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">14</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;art&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="s2">&quot;▀▀▀▀▀▀▀▀▀▀&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Row 0: upper half blocks</span>
+<span class="w">      </span><span class="s2">&quot;▄▄▄▄▄▄▄▄▄▄&quot;</span><span class="p">,</span><span class="w">  </span><span class="c1">// Row 1: lower half blocks</span>
+<span class="w">      </span><span class="err">...</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;fg_colors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">[[</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">  </span><span class="c1">// Row 0 foreground</span>
+<span class="w">      </span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">              </span><span class="c1">// Row 1 foreground</span>
+<span class="w">      </span><span class="err">...</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;bg_colors&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">  </span><span class="c1">// Row 0 background</span>
+<span class="w">      </span><span class="p">[[</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="p">[</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">255</span><span class="p">],</span><span class="w"> </span><span class="err">...</span><span class="p">],</span><span class="w">  </span><span class="c1">// Row 1 background</span>
+<span class="w">      </span><span class="err">...</span>
+<span class="w">    </span><span class="p">]</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="53-rendering-algorithm">5.3 Rendering Algorithm<a class="headerlink" href="#53-rendering-algorithm" title="Permanent link">&para;</a></h3>
+<p><strong>Pseudo-code</strong> (Option A: Pixel Array):</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">render_block_art_portrait</span><span class="p">(</span><span class="n">console</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">portrait</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Render a 10×28 pixel portrait as 10×14 cells with block characters.&quot;&quot;&quot;</span>
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">portrait</span><span class="p">[</span><span class="s2">&quot;size&quot;</span><span class="p">]</span>  <span class="c1"># 10, 14</span>
+    <span class="n">pixels</span> <span class="o">=</span> <span class="n">portrait</span><span class="p">[</span><span class="s2">&quot;pixels&quot;</span><span class="p">]</span>  <span class="c1"># 28 rows × 10 cols</span>
+
+    <span class="k">for</span> <span class="n">cell_y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>  <span class="c1"># 0..13</span>
+        <span class="k">for</span> <span class="n">cell_x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>  <span class="c1"># 0..9</span>
+            <span class="c1"># Get two vertical pixels for this cell</span>
+            <span class="n">upper_pixel</span> <span class="o">=</span> <span class="n">pixels</span><span class="p">[</span><span class="n">cell_y</span> <span class="o">*</span> <span class="mi">2</span><span class="p">][</span><span class="n">cell_x</span><span class="p">]</span>      <span class="c1"># Even row</span>
+            <span class="n">lower_pixel</span> <span class="o">=</span> <span class="n">pixels</span><span class="p">[</span><span class="n">cell_y</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">][</span><span class="n">cell_x</span><span class="p">]</span>  <span class="c1"># Odd row</span>
+
+            <span class="c1"># Determine character and colors</span>
+            <span class="k">if</span> <span class="n">upper_pixel</span> <span class="o">==</span> <span class="n">lower_pixel</span><span class="p">:</span>
+                <span class="c1"># Same color → use full block or space</span>
+                <span class="n">char</span> <span class="o">=</span> <span class="s1">&#39;█&#39;</span> <span class="k">if</span> <span class="n">upper_pixel</span> <span class="o">!=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="k">else</span> <span class="s1">&#39; &#39;</span>
+                <span class="n">fg</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">upper_pixel</span><span class="p">)</span>
+                <span class="n">bg</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Different colors → use half block</span>
+                <span class="n">char</span> <span class="o">=</span> <span class="s1">&#39;▀&#39;</span>  <span class="c1"># Upper half block</span>
+                <span class="n">fg</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">upper_pixel</span><span class="p">)</span>   <span class="c1"># Foreground = upper pixel</span>
+                <span class="n">bg</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">lower_pixel</span><span class="p">)</span>   <span class="c1"># Background = lower pixel</span>
+
+            <span class="c1"># Render to console</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">ch</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="n">cell_y</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">cell_x</span><span class="p">]</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">fg</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="n">cell_y</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">cell_x</span><span class="p">]</span> <span class="o">=</span> <span class="n">fg</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">bg</span><span class="p">[</span><span class="n">y</span> <span class="o">+</span> <span class="n">cell_y</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">cell_x</span><span class="p">]</span> <span class="o">=</span> <span class="n">bg</span>
+</code></pre></div>
+<p><strong>Optimization</strong>: Pre-compute character/color arrays during load, cache in <code>PortraitManager</code>.</p>
+<h3 id="54-backward-compatibility">5.4 Backward Compatibility<a class="headerlink" href="#54-backward-compatibility" title="Permanent link">&para;</a></h3>
+<p><strong>Strategy</strong>: Detect format by JSON structure</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_portrait</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Portrait</span><span class="p">:</span>
+    <span class="k">if</span> <span class="s2">&quot;format&quot;</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;format&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;block_art&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load_block_art_portrait</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">load_ascii_portrait</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># Existing format</span>
+</code></pre></div>
+<p><strong>Migration Path</strong>:
+1. Keep existing ASCII portraits for now
+2. Add new block art portraits with <code>_hires</code> suffix
+3. Graphic novel view checks for <code>_hires</code> variant first, falls back to ASCII</p>
+<hr />
+<h2 id="6-implementation-roadmap">6. Implementation Roadmap<a class="headerlink" href="#6-implementation-roadmap" title="Permanent link">&para;</a></h2>
+<h3 id="phase-1-proof-of-concept-1-2-days">Phase 1: Proof of Concept (1-2 days)<a class="headerlink" href="#phase-1-proof-of-concept-1-2-days" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Create single test portrait (10×28 pixels) in JSON</li>
+<li>[ ] Implement <code>render_block_art_portrait()</code> function</li>
+<li>[ ] Verify rendering in test script</li>
+<li>[ ] Measure performance (render time, memory)</li>
+</ul>
+<h3 id="phase-2-tooling-2-3-days">Phase 2: Tooling (2-3 days)<a class="headerlink" href="#phase-2-tooling-2-3-days" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Create pixel art editor script (CLI or simple GUI)</li>
+<li>[ ] Implement palette system (16-color or 256-color)</li>
+<li>[ ] Add export to JSON format</li>
+<li>[ ] Document art creation workflow</li>
+</ul>
+<h3 id="phase-3-content-creation-3-5-days">Phase 3: Content Creation (3-5 days)<a class="headerlink" href="#phase-3-content-creation-3-5-days" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Convert 3 existing portraits to block art (Case, Marly, Kumiko)</li>
+<li>[ ] Create 3 new high-res portraits</li>
+<li>[ ] Test in graphic novel mode</li>
+<li>[ ] Gather feedback on visual quality</li>
+</ul>
+<h3 id="phase-4-integration-2-3-days">Phase 4: Integration (2-3 days)<a class="headerlink" href="#phase-4-integration-2-3-days" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Update <code>PortraitManager</code> to support both formats</li>
+<li>[ ] Add format detection and fallback logic</li>
+<li>[ ] Update graphic novel view rendering</li>
+<li>[ ] Add unit tests for block art rendering</li>
+<li>[ ] Update documentation</li>
+</ul>
+<h3 id="phase-5-full-migration-5-7-days">Phase 5: Full Migration (5-7 days)<a class="headerlink" href="#phase-5-full-migration-5-7-days" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] Convert all 15 existing portraits to block art</li>
+<li>[ ] Create additional portraits for new scenes</li>
+<li>[ ] Performance optimization (caching, pre-rendering)</li>
+<li>[ ] Visual QA pass</li>
+<li>[ ] Update design docs and ADRs</li>
+</ul>
+<p><strong>Total Estimate</strong>: 13-20 days</p>
+<hr />
+<h2 id="7-technical-considerations">7. Technical Considerations<a class="headerlink" href="#7-technical-considerations" title="Permanent link">&para;</a></h2>
+<h3 id="71-performance">7.1 Performance<a class="headerlink" href="#71-performance" title="Permanent link">&para;</a></h3>
+<p><strong>Rendering Cost</strong>:
+- Current: 14 <code>console.print()</code> calls per portrait (one per row)
+- Block art: 140 cell updates (10×14) via <code>console.ch/fg/bg</code> arrays
+- <strong>Impact</strong>: Negligible — tcod rendering is fast, 140 cells is trivial</p>
+<p><strong>Memory Cost</strong>:
+- Current: ~200 bytes per portrait (14 strings × ~15 chars)
+- Block art (Option A): ~8.4 KB per portrait (280 pixels × 3 bytes RGB)
+- Block art (Option B, RLE): ~2-4 KB per portrait (compressed)
+- <strong>Impact</strong>: Low — 15 portraits × 8 KB = 120 KB total</p>
+<h3 id="72-font-compatibility">7.2 Font Compatibility<a class="headerlink" href="#72-font-compatibility" title="Permanent link">&para;</a></h3>
+<p><strong>Requirement</strong>: Monospace font with full Unicode block character support</p>
+<p><strong>Current Font</strong>: <code>data/fonts/</code> (libtcod default)
+- ✅ Supports <code>▀</code>, <code>▄</code>, <code>█</code>, <code>▌</code>, <code>▐</code>, <code>░</code>, <code>▒</code>, <code>▓</code>
+- ✅ Already verified in existing portraits</p>
+<p><strong>Fallback</strong>: If font lacks block characters, render as ASCII (backward compatibility).</p>
+<h3 id="73-color-depth">7.3 Color Depth<a class="headerlink" href="#73-color-depth" title="Permanent link">&para;</a></h3>
+<p><strong>Options</strong>:
+1. <strong>16-color palette</strong>: Classic terminal colors (fast, retro aesthetic)
+2. <strong>256-color palette</strong>: Extended ANSI colors (good balance)
+3. <strong>True color (24-bit RGB)</strong>: Full color range (best quality)</p>
+<p><strong>Recommendation</strong>: Start with <strong>256-color palette</strong> for balance between quality and file size.</p>
+<p><strong>Palette Design</strong>:
+- 16 base colors (black, white, primary/secondary colors)
+- 16 skin tones (for character faces)
+- 16 metal/tech colors (for cyberware, terminals)
+- 16 neon colors (for cyberpunk aesthetic)
+- 192 gradient colors (for smooth shading)</p>
+<h3 id="74-art-creation-workflow">7.4 Art Creation Workflow<a class="headerlink" href="#74-art-creation-workflow" title="Permanent link">&para;</a></h3>
+<p><strong>Tools Needed</strong>:
+1. <strong>Pixel Editor</strong>: CLI tool to paint 10×28 pixel portraits
+   - Arrow keys to move cursor
+   - Number keys to select palette color
+   - Space to paint, Backspace to erase
+   - S to save, Q to quit
+2. <strong>Converter</strong>: Script to convert images to block art
+   - Input: PNG/JPG (20×56 pixels, scaled 2×)
+   - Output: JSON block art portrait
+   - Dithering for color reduction
+3. <strong>Previewer</strong>: Script to preview block art in terminal
+   - Render portrait at actual size
+   - Compare with ASCII version side-by-side</p>
+<hr />
+<h2 id="8-alternative-approaches-considered-and-rejected">8. Alternative Approaches (Considered and Rejected)<a class="headerlink" href="#8-alternative-approaches-considered-and-rejected" title="Permanent link">&para;</a></h2>
+<h3 id="81-braille-patterns-u2800u28ff">8.1 Braille Patterns (U+2800–U+28FF)<a class="headerlink" href="#81-braille-patterns-u2800u28ff" title="Permanent link">&para;</a></h3>
+<p><strong>Idea</strong>: Use Braille characters for 2×4 pixel resolution per cell (8 dots)</p>
+<p><strong>Example</strong>: <code>⠿</code> (U+283F) = all 8 dots filled</p>
+<p><strong>Pros</strong>:
+- Even higher resolution (10×14 cells → 20×56 pixels)
+- Single character per cell (simpler rendering)</p>
+<p><strong>Cons</strong>:
+- ❌ Only binary (on/off), no color per dot
+- ❌ Harder to read/edit by hand
+- ❌ Less aesthetic for portraits (too dense)</p>
+<p><strong>Decision</strong>: Rejected — block characters provide better color control and readability.</p>
+<h3 id="82-sextant-characters-u1fb00u1fb3b">8.2 Sextant Characters (U+1FB00–U+1FB3B)<a class="headerlink" href="#82-sextant-characters-u1fb00u1fb3b" title="Permanent link">&para;</a></h3>
+<p><strong>Idea</strong>: Use sextant characters for 2×3 pixel resolution per cell (6 dots)</p>
+<p><strong>Example</strong>: <code>🬀</code> (U+1FB00) = upper-left dot</p>
+<p><strong>Pros</strong>:
+- Higher resolution than half-blocks
+- More granular than Braille</p>
+<p><strong>Cons</strong>:
+- ❌ Limited font support (Unicode 13.0+, 2020)
+- ❌ May not render correctly in all terminals
+- ❌ Still binary (on/off), no per-dot color</p>
+<p><strong>Decision</strong>: Rejected — too new, limited compatibility.</p>
+<h3 id="83-custom-bitmap-font">8.3 Custom Bitmap Font<a class="headerlink" href="#83-custom-bitmap-font" title="Permanent link">&para;</a></h3>
+<p><strong>Idea</strong>: Create custom font with 2× vertical resolution glyphs</p>
+<p><strong>Pros</strong>:
+- Full control over rendering
+- Could support arbitrary resolutions</p>
+<p><strong>Cons</strong>:
+- ❌ Requires font file distribution
+- ❌ Breaks monospace alignment
+- ❌ Not compatible with standard terminals
+- ❌ High implementation cost</p>
+<p><strong>Decision</strong>: Rejected — violates Pure ASCII aesthetic (ADR-0002).</p>
+<hr />
+<h2 id="9-open-questions">9. Open Questions<a class="headerlink" href="#9-open-questions" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Color Palette Size</strong>: 16, 256, or true color?</li>
+<li><strong>Recommendation</strong>: Start with 256-color, measure file size impact</li>
+<li><strong>Art Creation Tool</strong>: CLI or GUI?</li>
+<li><strong>Recommendation</strong>: CLI first (faster to implement), GUI later if needed</li>
+<li><strong>Dithering</strong>: Use dithering for color reduction?</li>
+<li><strong>Recommendation</strong>: Yes, Floyd-Steinberg dithering for smooth gradients</li>
+<li><strong>Animation</strong>: Support animated portraits (frame sequences)?</li>
+<li><strong>Recommendation</strong>: Phase 6 (future work), not in initial implementation</li>
+<li><strong>Compression</strong>: Use RLE or other compression?</li>
+<li><strong>Recommendation</strong>: Yes, RLE for rows with repeated colors (Option B)</li>
+</ol>
+<hr />
+<h2 id="10-references">10. References<a class="headerlink" href="#10-references" title="Permanent link">&para;</a></h2>
+<h3 id="101-unicode-block-characters">10.1 Unicode Block Characters<a class="headerlink" href="#101-unicode-block-characters" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Block_Elements">Unicode Block Elements</a> (U+2580–U+259F)</li>
+<li><a href="https://en.wikipedia.org/wiki/Box-drawing_character">Unicode Box Drawing</a> (U+2500–U+257F)</li>
+<li><a href="https://en.wikipedia.org/wiki/Geometric_Shapes">Unicode Geometric Shapes</a> (U+25A0–U+25FF)</li>
+</ul>
+<h3 id="102-python-tcod-documentation">10.2 python-tcod Documentation<a class="headerlink" href="#102-python-tcod-documentation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="https://python-tcod.readthedocs.io/en/latest/tcod/console.html">tcod.console.Console</a></li>
+<li><a href="https://python-tcod.readthedocs.io/en/latest/tcod/console.html#console-arrays">Console Arrays</a></li>
+</ul>
+<h3 id="103-existing-codebase">10.3 Existing Codebase<a class="headerlink" href="#103-existing-codebase" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>prototype/src/wet_run/portraits/manager.py</code> — Portrait loading</li>
+<li><code>prototype/src/wet_run/engine/graphic_novel_view.py</code> — Rendering</li>
+<li><code>prototype/data/art/portraits/portraits.json</code> — Current ASCII portraits</li>
+<li><code>decisions/0011-ascii-portraits.md</code> — ADR for portrait system</li>
+</ul>
+<h3 id="104-related-decisions">10.4 Related Decisions<a class="headerlink" href="#104-related-decisions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>ADR-0002: Pure ASCII rendering style</li>
+<li>ADR-0011: ASCII portraits (cyberspace-only)</li>
+<li>ADR-0032: Graphic novel mode</li>
+</ul>
+<hr />
+<h2 id="11-conclusion">11. Conclusion<a class="headerlink" href="#11-conclusion" title="Permanent link">&para;</a></h2>
+<p><strong>Unicode block characters are fully suitable for 2× vertical resolution portraits in python-tcod.</strong></p>
+<p><strong>Key Findings</strong>:
+1. ✅ <code>▀</code> (upper half) and <code>▄</code> (lower half) provide 2× vertical resolution
+2. ✅ python-tcod supports Unicode block characters (verified in existing code)
+3. ✅ Current portrait system can be extended with minimal changes
+4. ✅ Backward compatibility is achievable via format detection</p>
+<p><strong>Recommended Approach</strong>:
+- <strong>Data Format</strong>: Option B (RLE with palette) for balance of quality and file size
+- <strong>Rendering</strong>: Direct <code>console.ch/fg/bg</code> array manipulation for performance
+- <strong>Tooling</strong>: CLI pixel editor + image converter
+- <strong>Migration</strong>: Gradual (keep ASCII, add block art variants)</p>
+<p><strong>Next Steps</strong>:
+1. Create proof-of-concept with single test portrait
+2. Implement rendering function and verify visual quality
+3. Build pixel editor tool for art creation
+4. Convert 3 existing portraits and gather feedback
+5. Proceed with full implementation if results are satisfactory</p>
+<hr />
+<p><strong>Document Status</strong>: Research Complete — Ready for Implementation Planning
+<strong>Author</strong>: AI Agent (Sisyphus-Junior)
+<strong>Review</strong>: Pending user approval</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

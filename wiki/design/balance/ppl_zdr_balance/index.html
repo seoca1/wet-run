@@ -1,0 +1,1986 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Balance: PPL / ZDR (난이도 곡선 검증) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#balance-ppl-zdr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Balance: PPL / ZDR (난이도 곡선 검증)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ppl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PPL 곡선 (검증됨)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PPL 곡선 (검증됨)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grade-6-master-arc-5-finale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grade 6 (Master) — Arc 5 Finale
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zdr-zonedepth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ZDR 베이스 (ZoneDepth)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status-pplzdr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Status 매트릭스 (PPL/ZDR 비율)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Status 매트릭스 (PPL/ZDR 비율)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grade-1-ppl8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grade 1 PPL=8 기준
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#grade-5-ppl75" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grade 5 PPL=75 기준
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        미션 보상 공식
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ice-stat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ICE stat 스케일
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        알려진 이슈 / 미래 작업
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        검증
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="balance-ppl-zdr">Balance: PPL / ZDR (난이도 곡선 검증)<a class="headerlink" href="#balance-ppl-zdr" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>관련</strong>: <a href="../../systems/difficulty-rating/">difficulty-rating.md</a>, <a href="../../systems/grade-progression/">grade-progression.md</a>
+<strong>구현</strong>: <code>../../prototype/src/wet_run/matrix/ppl.py</code>, <code>matrix/zdr.py</code>
+<strong>ADR</strong>: 0012 (PPL/ZDR)</p>
+</blockquote>
+<h2 id="_1">목적<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>등급 1~5 별 <strong>PPL 곡선</strong> 과 <strong>ZDR 범위</strong> 가 일관되게 매칭되어야
+플레이어가 <em>성장감</em> 을 체감하면서도 <em>불가능한 도전을 거부받지 않음</em>.</p>
+<h2 id="ppl">PPL 곡선 (검증됨)<a class="headerlink" href="#ppl" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>PPL = deck_tier * 3 + sum(prog_tier * 2) + wetware_tier + construct_tier
+     + (10 if deck_tier == MAX_TIER else 0)  // ADR-0155 master tier bonus
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Grade</th>
+<th>deck</th>
+<th>programs</th>
+<th>wetware</th>
+<th>construct</th>
+<th style="text-align: right;"><strong>PPL</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 (신참)</td>
+<td>T1</td>
+<td>Wisp T1, Strike T1 (×2)</td>
+<td>T1</td>
+<td>—</td>
+<td style="text-align: right;"><strong>8</strong></td>
+</tr>
+<tr>
+<td>2 (일반)</td>
+<td>T2</td>
+<td>Wisp T2, Hammer T2 (×2)</td>
+<td>T2</td>
+<td>—</td>
+<td style="text-align: right;"><strong>16</strong></td>
+</tr>
+<tr>
+<td>3 (숙련)</td>
+<td>T3</td>
+<td>Wisp T3, Goliath T3 (×2)</td>
+<td>T3</td>
+<td>—</td>
+<td style="text-align: right;"><strong>24</strong></td>
+</tr>
+<tr>
+<td>4 (베테랑)</td>
+<td>T4</td>
+<td>Wisp T4, Goliath T4, Wardrone T4 (×3)</td>
+<td>T4</td>
+<td>—</td>
+<td style="text-align: right;"><strong>40</strong></td>
+</tr>
+<tr>
+<td>5 (전설)</td>
+<td>T5</td>
+<td>Kraken T5, Goliath T5, Wisp T5, Wardrone T5 (×4)</td>
+<td>T5</td>
+<td>Dixie T5</td>
+<td style="text-align: right;"><strong>65</strong></td>
+</tr>
+<tr>
+<td>6 (마스터, Arc 5 finale)</td>
+<td>T6</td>
+<td>Master programs (T6) (×4)</td>
+<td>T6</td>
+<td>Dixie T6</td>
+<td style="text-align: right;"><strong>88</strong> ⭐</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>2026-07-27 sync (ADR-0130)</strong>: F1-1 rebalance (2026-07-22, construct 3×→1×) 적용 후 코드 기준 값.
+Grade 5 PPL: 75 → 65. Grade 6 PPL: 120+ → 78 (공식 결과).</p>
+<p><strong>2026-08-07 sync (ADR-0155)</strong>: Master tier bonus (+10 for T6 deck) 적용 후 코드 기준 값.
+Grade 6 PPL: 78 → <strong>88</strong> (1.20x → 1.35x growth, NG+ balance 해결).</p>
+</blockquote>
+<h3 id="grade-6-master-arc-5-finale">Grade 6 (Master) — Arc 5 Finale<a class="headerlink" href="#grade-6-master-arc-5-finale" title="Permanent link">&para;</a></h3>
+<p>T6 장비 3종이 <code>equipment/equipment.py</code> 에 추가됨:</p>
+<ul>
+<li><code>deck_master</code> (T6) — Wintermute/Neuromancer Merged, program_power=150</li>
+<li><code>bodysuit_master</code> (T6) — Full-Body Cyborg Conversion, hp_bonus=120 + 한 번 부활</li>
+<li><code>trodes_zion</code> (T6) — Zion Direct-Neural Link, ap_regen +100%</li>
+</ul>
+<p>Loadout tier 검증: <code>0..6</code> 까지 허용. <code>MAX_TIER = 6</code> 상수.</p>
+<p>PPL 공식 (F1-1 + ADR-0155 후): <code>deck*3 + sum(prog*2) + wetware + construct*1 + (10 if deck==MAX_TIER else 0)</code></p>
+<p>PPL 성장 곡선 (코드 기준, ADR-0155 적용):
+- 1 → 2: 8 → 16 (<strong>2.00x</strong>)
+- 2 → 3: 16 → 24 (<strong>1.50x</strong>)
+- 3 → 4: 24 → 40 (<strong>1.67x</strong>)
+- 4 → 5: 40 → 65 (<strong>1.62x</strong>)
+- 5 → 6: 65 → 88 (<strong>1.35x</strong>) ⭐ NG+ balance 해결 (ADR-0155)</p>
+<blockquote>
+<p><strong>해결 (ADR-0155, 2026-08-07)</strong>: Grade 5→6 성장이 1.20x → 1.35x 로 개선. Master tier <em>특별함</em> 확보.
+NG+ (Salvation Phase, ADR-0090) 의 <em>다음 런</em> 보완 완료. 잔존 이슈 해결됨.</p>
+</blockquote>
+<h2 id="zdr-zonedepth">ZDR 베이스 (ZoneDepth)<a class="headerlink" href="#zdr-zonedepth" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Zone</th>
+<th style="text-align: right;">Base ZDR</th>
+<th>의도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SURFACE</td>
+<td style="text-align: right;">1</td>
+<td>신참 데뷔</td>
+</tr>
+<tr>
+<td>MID</td>
+<td style="text-align: right;">5</td>
+<td>중간</td>
+</tr>
+<tr>
+<td>DEEP</td>
+<td style="text-align: right;">8</td>
+<td>Loa / construct</td>
+</tr>
+<tr>
+<td>CORE</td>
+<td style="text-align: right;">12</td>
+<td>기업 핵심</td>
+</tr>
+<tr>
+<td>TA</td>
+<td style="text-align: right;">25</td>
+<td>Tessier-Ashpool</td>
+</tr>
+<tr>
+<td>FREESIDE</td>
+<td style="text-align: right;">30</td>
+<td>궤도 식민지 (최하)</td>
+</tr>
+</tbody>
+</table>
+<p>ICE / Alarm / Faction modifier 가 더해져 최종 ZDR 결정.</p>
+<h2 id="status-pplzdr">Status 매트릭스 (PPL/ZDR 비율)<a class="headerlink" href="#status-pplzdr" title="Permanent link">&para;</a></h2>
+<p><code>calculate_status(ppl, zdr)</code>:
+- <code>ratio &gt; 1.5</code> → SAFE (green)
+- <code>1.0 &lt;= ratio &lt;= 1.5</code> → MATCH (cyan)
+- <code>0.75 &lt;= ratio &lt; 1.0</code> → TOUGH (yellow)
+- <code>0.5 &lt;= ratio &lt; 0.75</code> → DEADLY (red)
+- <code>ratio &lt; 0.5</code> → FUTILE (dark_red)</p>
+<h3 id="grade-1-ppl8">Grade 1 PPL=8 기준<a class="headerlink" href="#grade-1-ppl8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">ZDR</th>
+<th style="text-align: right;">ratio</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1 (Surface)</td>
+<td style="text-align: right;">8.0</td>
+<td>SAFE</td>
+</tr>
+<tr>
+<td style="text-align: right;">5 (Mid)</td>
+<td style="text-align: right;">1.6</td>
+<td>SAFE</td>
+</tr>
+<tr>
+<td style="text-align: right;">8 (Deep)</td>
+<td style="text-align: right;">1.0</td>
+<td>MATCH</td>
+</tr>
+<tr>
+<td style="text-align: right;">12 (Core)</td>
+<td style="text-align: right;">0.67</td>
+<td>DEADLY</td>
+</tr>
+<tr>
+<td style="text-align: right;">25 (TA)</td>
+<td style="text-align: right;">0.32</td>
+<td>FUTILE</td>
+</tr>
+<tr>
+<td style="text-align: right;">30 (Freeside)</td>
+<td style="text-align: right;">0.27</td>
+<td>FUTILE</td>
+</tr>
+</tbody>
+</table>
+<p>→ Grade 1 은 Surface/Mid 까지 SAFE, Deep 에서 MATCH. Core 부터 위험.
+   TA/Freeside 는 자키 사망 위험. 의도된 <em>성장 곡선</em>.</p>
+<h3 id="grade-5-ppl75">Grade 5 PPL=75 기준<a class="headerlink" href="#grade-5-ppl75" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">ZDR</th>
+<th style="text-align: right;">ratio</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1 (Surface)</td>
+<td style="text-align: right;">75.0</td>
+<td>SAFE</td>
+</tr>
+<tr>
+<td style="text-align: right;">5 (Mid)</td>
+<td style="text-align: right;">15.0</td>
+<td>SAFE</td>
+</tr>
+<tr>
+<td style="text-align: right;">8 (Deep)</td>
+<td style="text-align: right;">9.4</td>
+<td>SAFE</td>
+</tr>
+<tr>
+<td style="text-align: right;">12 (Core)</td>
+<td style="text-align: right;">6.25</td>
+<td>SAFE</td>
+</tr>
+<tr>
+<td style="text-align: right;">25 (TA)</td>
+<td style="text-align: right;">3.0</td>
+<td>SAFE</td>
+</tr>
+<tr>
+<td style="text-align: right;">30 (Freeside)</td>
+<td style="text-align: right;">2.5</td>
+<td>SAFE</td>
+</tr>
+</tbody>
+</table>
+<p>→ Grade 5 는 모든 zone 에서 SAFE — <em>전설의 자키</em>.</p>
+<h2 id="_2">미션 보상 공식<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>credits = arc * 800 + (grade - 1) * 300
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Arc</th>
+<th>Grade</th>
+<th style="text-align: right;">공식</th>
+<th style="text-align: right;">실제 평균 (<code>rewards.credits</code>)</th>
+<th style="text-align: right;">비율</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td style="text-align: right;">800</td>
+<td style="text-align: right;">500~800</td>
+<td style="text-align: right;">63~100%</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td style="text-align: right;">2,200</td>
+<td style="text-align: right;">~1,200</td>
+<td style="text-align: right;">~55%</td>
+</tr>
+<tr>
+<td>3</td>
+<td>3</td>
+<td style="text-align: right;">3,300</td>
+<td style="text-align: right;">~2,200</td>
+<td style="text-align: right;">~67%</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td style="text-align: right;">4,400</td>
+<td style="text-align: right;">~3,300</td>
+<td style="text-align: right;">~75%</td>
+</tr>
+<tr>
+<td>5</td>
+<td>5</td>
+<td style="text-align: right;">5,200</td>
+<td style="text-align: right;">~5,000</td>
+<td style="text-align: right;">~96%</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>2026-07-27 sync (ADR-0130)</strong>: 권위 필드는 <code>rewards.credits</code> (nested) — <code>missions/board.py:246 _parse_rewards(value.get("rewards"))</code> 가 먼저 시도. <code>reward_credits</code> (top-level) 는 fallback (없거나 0일 때만).</p>
+<p><strong>데이터 위생</strong>: 209 missions 중 <code>reward_credits</code> (top) 와 <code>rewards.credits</code> 가 모두 존재하는 경우, JSON 정합성 위해 동일 값 권장. 향후 deprecation 검토 (P3).</p>
+</blockquote>
+<p>→ <strong>공식 대비 55~96%</strong> 로 보수적 설정 (깁슨 톤: 런은 빡빡함).
+   Arc 5 (finale) 만 공식 근접 — 엔딩 보상 풍성.</p>
+<h2 id="ice-stat">ICE stat 스케일<a class="headerlink" href="#ice-stat" title="Permanent link">&para;</a></h2>
+<p>ICE 종류별 hp_base / hp_per_grade / dmg_base / dmg_per_grade:</p>
+<table>
+<thead>
+<tr>
+<th>ICE</th>
+<th>tier</th>
+<th style="text-align: right;">hp_base</th>
+<th style="text-align: right;">hp_per_grade</th>
+<th style="text-align: right;">dmg_base</th>
+<th style="text-align: right;">dmg_per_grade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>standard</td>
+<td>1</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>watchdog</td>
+<td>1</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>black</td>
+<td>3</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>goliath</td>
+<td>3</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>construct</td>
+<td>2</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td>boss</td>
+<td>4</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>wintermute</td>
+<td>4</td>
+<td style="text-align: right;">260</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>neuromancer</td>
+<td>5</td>
+<td style="text-align: right;">320</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td>revelation</td>
+<td>3</td>
+<td style="text-align: right;">160</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td>loa</td>
+<td>3</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<p>스케일 공식:
+<div class="highlight"><pre><span></span><code>hp = hp_base + hp_per_grade * max(0, player_grade - ice_tier)
+dmg = dmg_base + dmg_per_grade * max(0, player_grade - ice_tier)
+</code></pre></div></p>
+<p>플레이어가 ICE tier 이상이면 보너스. 미만이면 0.7~1.0 scale 로 약화.</p>
+<h2 id="_3">알려진 이슈 / 미래 작업<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Grade 6 (Arc 5 finale)</strong>: <code>grade_max=6</code> 미션 14개 (2026-08-07 verified: bigend_laney_lunch, case_meets_cayce, coolhunter_laney_tokyo, core_memory_dump, finn_final_reckoning, mollys_final_razor, neuromancer_merger, salvation_wigan_zavijava, ta_3jane_betrayal, ta_straylight_archive, ta_wintermute_direct, wintermute_negotiation, wintermute_witness, zion_express). 대부분 <code>grade_min=5</code> (master tier 진입). 1개만 <code>grade_min=6</code> (ta_wintermute_direct, true master-only).
+  Grade 6 PPL 공식 미정의 — 현재는 Grade 5 로 처리 (PPL=75 한계).
+  → Phase 6+: Grade 6 PPL 정의 (master tier)</li>
+<li><strong>low-PPL 디스크립션시 점프</strong>: Grade 1 PPL=8 → Core ZDR=12 즉시 DEADLY.
+  → 의도된 난이도이나 시각적 표시 강화 필요 (P2 #7)</li>
+<li><strong>Status threshold 비선형</strong>: ratio 0.499 vs 0.5 가 다른 카테고리
+  → 0.499 = FUTILE, 0.5 = DEADLY. 미세한 차이가 큰 결과.
+  → Phase 6+: threshold smoothing 검토</li>
+</ul>
+<h2 id="_4">검증<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>test_matrix_ppl.py</code> (PPL 계산)</li>
+<li><code>test_matrix_serialization.py</code> (ZDR roundtrip)</li>
+<li><code>test_grade_progression.py</code> (5 단계 비교)</li>
+<li><code>test_combat_to_death.py</code> (전투 → 사망 사이클)</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

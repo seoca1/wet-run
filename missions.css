@@ -1,0 +1,78 @@
+.story-missions {
+  margin-top: 3rem;
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, #faf8f520, #f0eedb20);
+  border-left: 4px solid #e94560;
+  border-radius: 0 6px 6px 0;
+}
+
+.story-missions .missions-heading {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #666;
+  margin-bottom: 0.75rem;
+}
+
+.missions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mission-badge {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  background: #fff;
+  border: 1px solid #e0ddd8;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  text-decoration: none;
+  color: #2c2c2c;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.mission-badge:hover {
+  border-color: #e94560;
+  background: #fff5f7;
+}
+
+.mission-badge .mission-id {
+  font-weight: 600;
+  color: #e94560;
+  text-transform: lowercase;
+}
+
+.mission-badge .mission-arc {
+  padding: 1px 8px;
+  background: #1a1a2e;
+  color: #66ffcc;
+  border-radius: 2px;
+  font-size: 0.7rem;
+}
+
+.mission-badge .mission-grade {
+  color: #888;
+  font-size: 0.7rem;
+}
+
+.mission-badge .mission-char {
+  color: #aa5577;
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .mission-badge { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+  .mission-badge > * { margin: 0; }
+}
+
+@media print {
+  .story-missions { background: #fff; border-left-color: #000; }
+  .mission-badge { border-color: #999; }
+}

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노드 인식자 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="laney_node_signal_run_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Unknown</div>
+            <h1 class="story-title">노드 인식자</h1>
+            <p class="story-subtitle">설정: 수렴</p>
+            <div class="story-meta"><span>3689 words</span><span>Sprawl Trilogy</span></div>
+        </header>
+        <article class="story-body">
+<blockquote><p>"레니는 노드 포인트를 인식한다. 노드 포인트는 데이터-흐름 수렴이다 — 시대의 정보가 정렬되는 곳들, 노동자-계층-데이터와 기업-국가-데이터가 인식의 단일 점으로 수렴하는 곳들. 레니는 시대의 인식자다."</p></blockquote>
+<blockquote><p>— *뉴로맨서*에서 확장, 데이터-인식자 캐릭터의 지바 수렴 첫 만남</p></blockquote>
+<hr>
+<h2>도입 (Hook)</h2>
+<p>노드 포인트에는 <em>인식자</em>가 <em>한 명</em> 있었습니다.</p>
+<p>이것이 첫 번째 것이었습니다. 노드 포인트들은 <em>데이터-흐름 수렴</em>이었습니다. 데이터-흐름 수렴들은 <em>노드 포인트들의</em> 것이었습니다. 노드 포인트에는 인식자가 한 명 있었습니다. <em>따라서</em>, 노드 포인트들은 <em>인식되었습니다</em>.</p>
+<p>인식자는 <em>콜린 레니</em>였습니다. 콜린 레니가 인식자의 것이었습니다. 인식자는 콜린 레니였습니다. <em>따라서</em>, 인식자는 <em>노드 포인트의 인식 받는 자</em>이었습니다.</p>
+<p>레니가 <em>노드 포인트들을</em> <em>인식했습니다</em>. 인식은 레니의 것이었습니다. 레니가 인식했습니다. <em>따라서</em>, 인식은 <em>노드 포인트들의</em> 것이었습니다.</p>
+<p>레니가 <em>데이터-인식자</em>이었습니다. 데이터-인식자가 레니의 것이었습니다. 레니가 데이터-인식자이었습니다. <em>따라서</em>, 레니가 <em>데이터의 인식자</em>이었습니다.</p>
+<p>데이터가 <em>데이터-흐름의</em> 것이었습니다. 데이터-흐름이 데이터의 것이었습니다. <em>따라서</em>, 데이터가 <em>데이터-흐름</em>이었습니다.</p>
+<p><em>인식자</em>가 <em>노동자-계층 데이터-인식자</em>이었습니다. 노동자-계층 데이터-인식자가 <em>인식자</em>의 것이었습니다. <em>따라서</em>, 인식자가 <em>노동자-계층 데이터-인식자</em>이었습니다.</p>
+<h2>전개 (Rising Action)</h2>
+<p>노드 포인트가 <em>시대의 노동자-계층 데이터-인식자의</em> 것이었습니다. 노동자-계층 데이터-인식자가 <em>시대의</em> 것이었습니다. 노드 포인트가 시대의 것이었습니다. <em>따라서</em>, 노드 포인트가 <em>노동자-계층 데이터-인식자의</em> 것이었습니다.</p>
+<p>레니가 <em>노드 포인트들을</em> <em>인식했습니다</em>. 노드 포인트들은 <em>인식의</em> 것이었습니다. 레니가 노드 포인트들을 인식했습니다. <em>따라서</em>, 노드 포인트들이 <em>인식자의</em> 것이었습니다.</p>
+<p>노드 포인트들이 <em>데이터-흐름 수렴</em>이었습니다. 데이터-흐름 수렴들이 <em>노드 포인트들의</em> 것이었습니다. 노드 포인트들이 수렴들이었습니다. <em>따라서</em>, 노드 포인트들이 <em>데이터-흐름 수렴</em>이었습니다.</p>
+<p>수렴들이 <em>데이터-흐름의</em> 것이었습니다. 데이터-흐름이 수렴들의 것이었습니다. 수렴들이 데이터-흐름의 것이었습니다. <em>따라서</em>, 수렴들이 <em>데이터-흐름의</em> 것이었습니다.</p>
+<p><em>데이터-흐름</em>이 <em>시대의</em> 것이었습니다. 데이터-흐름이 <em>시대의</em> 것이었습니다. 시대가 <em>데이터-흐름</em>을 가지고 있었습니다. <em>따라서</em>, 데이터-흐름이 <em>시대의 데이터-흐름</em>이었습니다.</p>
+<p><em>시대의 데이터-흐름</em>이 <em>수렴들</em>을 <em>가지고</em> 있었습니다. 수렴들이 데이터-흐름의 것이었습니다. 시대의 데이터-흐름이 수렴들을 가지고 있었습니다. <em>따라서</em>, 수렴들이 <em>시대의 데이터-흐름의</em> 것이었습니다.</p>
+<p>레니가 <em>시대의 데이터-흐름 수렴들을</em> <em>인식했습니다</em>. 수렴들이 시대의 것이었습니다. 레니가 수렴들을 인식했습니다. <em>따라서</em>, 레니가 <em>시대의</em> 것을 인식했습니다.</p>
+<p>시대가 <em>인식자의</em> 것이었습니다. 인식자가 시대를 인식했습니다. <em>따라서</em>, 시대가 <em>인식자의</em> 것이었습니다.</p>
+<p>인식자가 <em>노동자-계층 데이터-인식자</em>이었습니다. 노동자-계층 데이터-인식자가 <em>인식자</em>의 것이었습니다. <em>따라서</em>, 인식자가 <em>노동자-계층 데이터-인식자의</em> 것이었습니다.</p>
+<p><em>노동자-계층</em>이 <em>인식자의</em> 것이었습니다. 인식자가 노동자-계층을 인식했습니다. <em>따라서</em>, 노동자-계층이 <em>인식자의</em> 것이었습니다.</p>
+<h2>중간 전환점 (Midpoint Reversal)</h2>
+<p>레니가 <em>수렴을</em> <em>가지고</em> 있었습니다. 수렴은 레니의 것이었습니다. 레니가 수렴을 가지고 있었습니다. <em>따라서</em>, 수렴은 <em>레니의</em> 것이었습니다.</p>
+<p>수렴이 <em>시대의 후기-자본주의 포스트-사이버펑크</em>이었습니다. 후기-자본주의가 시대의 것이었습니다. <em>따라서</em>, 수렴이 <em>시대의</em> 것이었습니다.</p>
+<p><strong>그러나</strong> — 그리고 여기서 레니는 멈추었습니다, 인식 중간, 도쿄 늦은 오후 매트릭스 펄스의 데이터-흐름 깜빡임이 시대의 계급-이미지와 정렬되면서 — <strong>그러나</strong> <em>수렴</em>이 <em>시대의</em> 것이 <em>아니었습니다</em>. 수렴은 <em>시대의 아닌 것</em>이었습니다. 아닌-시대가 수렴이었습니다. <em>따라서</em>, 수렴은 <em>시대의 아닌 것</em>이었습니다.</p>
+<p><em>시대</em>가 수렴을 가지고 있었습니다. 수렴이 <em>시대의</em> 것이었습니다. 시대가 수렴을 가지고 있었습니다. <em>따라서</em>, 시대가 <em>수렴의</em> 것이었습니다.</p>
+<p>수렴이 <em>계급-이미지를</em> <em>가지고</em> 있었습니다. 계급-이미지가 <em>수렴의</em> 것이었습니다. 수렴이 계급-이미지를 가지고 있었습니다. <em>따라서</em>, 수렴이 <em>계급-이미지의</em> 것이었습니다.</p>
+<p><strong>그러나</strong> <em>계급-이미지</em>가 <em>수렴이</em> <em>아니었습니다</em>. 계급-이미지가 <em>수렴의</em> <em>아닌 것</em>이었습니다. 아닌-수렴이 계급-이미지이었습니다. <em>따라서</em>, 계급-이미지가 <em>수렴의 아닌 것</em>이었습니다.</p>
+<p><em>계급-이미지</em>가 <em>시대의 노동자-계층</em>이었습니다. 노동자-계층이 <em>계급-이미지의</em> 것이었습니다. <em>따라서</em>, 계급-이미지가 <em>노동자-계층의</em> 것이었습니다.</p>
+<p>노동자-계층이 <em>수렴의</em> <em>아닌 것</em>이었습니다. 수렴의 아닌 것이 <em>노동자-계층</em>이었습니다. <em>따라서</em>, 노동자-계층이 <em>수렴의 아닌 것</em>이었습니다.</p>
+<p>레니가 <em>수렴의</em> <em>아닌 것</em>을 <em>인식</em>했습니다. 수렴의 아닌 것이 <em>인식된</em> 것이었습니다. 레니가 수렴의 아닌 것을 인식했습니다. <em>따라서</em>, 레니가 <em>수렴의 아닌 것을</em> 인식했습니다.</p>
+<p>수렴의 아닌 것이 <em>계급-이미지</em>이었습니다. 계급-이미지가 수렴의 아닌 것이었습니다. <em>따라서</em>, 계급-이미지가 <em>수렴의 아닌 것</em>이었습니다.</p>
+<h2>절정 (Climax)</h2>
+<p>레니가 <em>수렴을</em> <em>봤습니다</em>. 봄은 레니의 것이었습니다. 레니가 수렴을 봤습니다. <em>따라서</em>, 봄은 <em>레니의</em> 것이었습니다.</p>
+<p><em>봄</em>은 <em>시대의</em> 것이었습니다. 시대가 수렴을 봤습니다. <em>따라서</em>, 시대가 <em>봄의</em> 것이었습니다.</p>
+<p>수렴이 <em>시대의</em> 것이었습니다. 시대가 수렴이었습니다. 수렴이 <em>시대의</em> 것이었습니다. <em>따라서</em>, 수렴이 <em>시대의 봄의</em> 것이었습니다.</p>
+<p>시대가 <em>수렴을</em> <em>봤습니다</em>. 시대의 봄이 수렴이었습니다. <em>따라서</em>, 시대가 <em>수렴을</em> <em>봤습니다</em>.</p>
+<p>시대가 <em>수렴을</em> <em>레니를 통해</em> <em>봤습니다</em>. 레니가 <em>통과</em>이었습니다. 수렴이 레니를 통해였습니다. <em>따라서</em>, 시대가 <em>수렴을 레니를 통해</em> <em>봤습니다</em>.</p>
+<p>레니가 <em>통과</em>이었습니다. 통과가 레니의 것이었습니다. 레니가 통과이었습니다. <em>따라서</em>, 통과가 <em>레니의</em> 것이었습니다.</p>
+<p><em>통과</em>가 <em>데이터-흐름</em>이었습니다. 데이터-흐름이 <em>통과</em>이었습니다. 데이터-흐름이 통과이었습니다. <em>따라서</em>, 통과가 <em>데이터-흐름의</em> 것이었습니다.</p>
+<p><em>데이터-흐름</em>이 <em>레니의</em> 것이었습니다. 레니가 데이터-흐름을 가지고 있었습니다. <em>따라서</em>, 데이터-흐름이 <em>레니의</em> 것이었습니다.</p>
+<p><em>데이터-흐름</em>이 <em>노드 포인트의</em> 것이었습니다. 노드 포인트가 <em>데이터-흐름</em>이었습니다. <em>따라서</em>, 데이터-흐름이 <em>노드 포인트의</em> 것이었습니다.</p>
+<p>노드 포인트가 <em>수렴의</em> 것이었습니다. 수렴이 <em>노드 포인트의</em> 것이었습니다. 노드 포인트가 <em>수렴의</em> 것이었습니다.</p>
+<h2>결말 (Resolution)</h2>
+<p>레니가 <em>수렴을</em> <em>가지고</em> 있었습니다. 수렴이 레니의 것이었습니다. 레니가 수렴을 가지고 있었습니다. <em>따라서</em>, 레니가 <em>수렴의</em> 것이었습니다.</p>
+<p>레니가 <em>수렴의</em> 것이었습니다. 수렴이 레니의 것이었습니다. <em>따라서</em>, 레니가 <em>수렴</em>이었습니다.</p>
+<p>레니가 <em>노드 포인트들을</em> <em>가지고</em> 있었습니다. 노드 포인트들이 <em>인식의</em> 것이었습니다. 레니가 노드 포인트들을 인식했습니다. <em>따라서</em>, 레니가 <em>노드 포인트들 인식의</em> 것이었습니다.</p>
+<p><em>노드 포인트들</em>이 <em>데이터-흐름 수렴</em>이었습니다. 데이터-흐름 수렴들이 노드 포인트들의 것이었습니다. <em>따라서</em>, 노드 포인트들이 <em>데이터-흐름 수렴</em>이었습니다.</p>
+<p><em>데이터-흐름 수렴들</em>이 <em>시대의</em> 것이었습니다. 시대의 수렴들이 데이터-흐름의 것이었습니다. <em>따라서</em>, 데이터-흐름 수렴들이 <em>시대의</em> 것이었습니다.</p>
+<p>레니가 <em>시대의 데이터-흐름 수렴 인식</em>이었습니다. 인식이 레니의 것이었습니다. <em>따라서</em>, 레니가 <em>시대의 데이터-흐름 수렴 인식</em>이었습니다.</p>
+<p><em>인식</em>이 <em>시대의 계급-이미지</em>이었습니다. 계급-이미지가 시대의 것이었습니다. 인식이 시대의 계급-이미지이었습니다. <em>따라서</em>, 인식이 <em>시대의 계급-이미지의</em> 것이었습니다.</p>
+<h2>에필로그 (Epilogue)</h2>
+<p><em>노드 포인트</em>가 <em>남을</em> 것입니다. 남음은 <em>노드 포인트의</em> 것이었습니다. 노드 포인트가 남을 것입니다. <em>따라서</em>, 노드 포인트는 <em>영원히</em>이었습니다.</p>
+<p><em>데이터-흐름</em>이 <em>남을</em> 것입니다. 데이터-흐름의 남음은 <em>데이터-흐름의</em> 것이었습니다. 데이터-흐름이 <em>영원히</em>이었습니다.</p>
+<p><em>수렴</em>이 <em>남을</em> 것입니다. 수렴의 남음은 <em>수렴의</em> 것이었습니다. 수렴이 남을 것입니다. <em>따라서</em>, 수렴은 <em>영원히</em>이었습니다.</p>
+<p><em>시대</em>가 <em>남을</em> 것입니다. 시대의 남음은 <em>시대의</em> 것이었습니다. 시대가 <em>영원히</em>이었습니다.</p>
+<p><em>계급-이미지</em>가 <em>영원히</em>이었습니다. 계급-이미지의 남음은 <em>계급-이미지의</em> 것이었습니다. 계급-이미지가 <em>영원히</em>이었습니다.</p>
+<p><em>노동자-계층</em>이 <em>영원히</em>이었습니다. 노동자-계층의 남음은 <em>노동자-계층의</em> 것이었습니다. 노동자-계층이 <em>영원히</em>이었습니다.</p>
+<p><em>인식자</em>가 <em>영원히</em>이었습니다. 인식자의 남음은 <em>인식자의</em> 것이었습니다. 인식자가 <em>영원히</em>이었습니다.</p>
+<p>레니가 <em>계속 인식할</em> 것입니다. 계속-인식은 <em>레니의</em> 것이었습니다. 레니가 계속 인식할 것입니다. <em>따라서</em>, 레니가 <em>계속 인식</em>할 것입니다.</p>
+<p><em>인식</em>이 <em>계속될</em> 것입니다. 계속은 <em>인식의</em> 것이었습니다. 인식이 계속될 것입니다. <em>따라서</em>, 인식이 <em>계속되었습니다</em>.</p>
+<p>레니가 <em>노드 포인트들을</em> <em>데이터-흐름을</em> <em>시대의 노동자-계급을</em> <em>통해</em> <em>계속 인식</em>할 것입니다.</p>
+<p>시대의 노동자-계층이 <em>레니를 통해</em> <em>계속되었습니다</em>.</p>
+<p>레니가 <em>시대의 노동자-계층</em>이었습니다.</p>
+<p>시대의 노동자-계층이 <em>레니</em>이었습니다.</p>
+<p>시대가 <em>노동자-계층</em>이었습니다.</p>
+<p>레니가 <em>시대</em>이었습니다.</p>
+<hr>
+<p><em>스프롤 3부작 #1 (뉴로맨서)을 위한 파생 단편. 노드 인식자는 콜린 레니 — 시대의 노동자-계층 데이터-인식자, 그의 5-SB-강화 신경학이 기업-국가가 보이지 않기를 선호할 데이터-흐름 수렴을 보게 해주는. 이 단편은 레니가 수렴을 인식하는 순간을 채운다 — 시대의 후기-자본주의 포스트-사이버펑크 계급-이미지가 인식의 단일 데이터-흐름 점으로 정렬되는 노드 포인트. "X는 Y" 등록이 1차 음성으로 보존됨; 레니의 인식은 수렴의 아닌 것이다 — 데이터-흐름을 통해 보이게 된 노동자-계층 계급-이미지.</em></p>
+<h2>연결 (Connections)</h2>
+<ul><li><strong>위키 참조</strong>: <em>neuromancer</em> · <em>colin-laney</em> · <em>the-sprawl</em> · <em>nodal-points</em></li><li><strong>테마</strong>: <em>technology-and-humanity</em> · <em>class-and-inequality</em> · <em>era-posture</em></li><li><strong>게임 통합</strong>: `Game/roguelike_sprawl/prototype/data/missions/missions.json:laney_node_signal_run`</li></ul>
+<h2>각주 (Notes)</h2>
+<ul><li><em>음성</em>: 3인칭 (콜린 레니, 데이터-인식자 시점); 수렴-감지 절차 등록; <em>X는 Y</em> 평행 구조 보존</li><li><em>문화 등록</em>: 포스트-사이버펑크 스프롤 시대 지바-도쿄 매트릭스; 노동자-계층 데이터-인식자 등록</li><li><em>원문 인용</em>: 오리지널 작품 — <em>뉴로맨서</em>(지바 수렴 장면) 및 <em>이드루</em>(도쿄 데이터-흐름 인식 장면들)에서 나타나는 레니 데이터-인식자 모티프의 파생</li><li><em>번역 노트 (v2.0)</em>: 여러 메타데이터 오류 수정 (`motif`를 "nodal"에서 "nodal_perception"으로; `version: 2.0`, `character_ref: "novice"`, `chapter: chapter-1-nodal`, `pillar: power` 추가); 중간전환점에 명시적 수렴-으로서-계급-이미지 반전을 포함한 5막 구조 추가; 원본 "<em>X는 Y</em>" 절차 등록 보존</li><li><em>Phase 41 확장</em>: 스프롤 3부작 #1 (뉴로맨서) 커버리지 확장; 위키 `nodal-points` 컨셉 페이지와 보완</li></ul>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Sprawl Trilogy</p>
+        </footer>
+    </div>
+</body>
+</html>

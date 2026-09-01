@@ -1,0 +1,52 @@
+{
+  "factions": [
+    {
+      "name": "NONE",
+      "id": "none"
+    },
+    {
+      "name": "HOSAKA",
+      "id": "hosaka"
+    },
+    {
+      "name": "MAAS",
+      "id": "maas"
+    },
+    {
+      "name": "SENSE_NET",
+      "id": "sense_net"
+    },
+    {
+      "name": "TA",
+      "id": "ta"
+    }
+  ],
+  "tier_thresholds": [
+    {
+      "threshold": 80,
+      "label": "ALLIED"
+    },
+    {
+      "threshold": 50,
+      "label": "FRIENDLY"
+    },
+    {
+      "threshold": 20,
+      "label": "TRUSTED"
+    },
+    {
+      "threshold": -20,
+      "label": "NEUTRAL"
+    },
+    {
+      "threshold": -50,
+      "label": "HOSTILE"
+    },
+    {
+      "threshold": -80,
+      "label": "ENEMY"
+    }
+  ],
+  "max_delta_per_event": 25,
+  "_generated_at": "2026-08-27T08:05:40"
+}

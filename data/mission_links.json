@@ -1,0 +1,2958 @@
+{
+  "version": "1.0",
+  "generated": "2026-08-31T09:56:06.409928+00:00",
+  "by_source": {
+    "aleph_fragment": [
+      {
+        "id": "aleph_fragment",
+        "title": "Aleph Fragment",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "angie_leopard_tracking": [
+      {
+        "id": "angie_leopard_tracking",
+        "title": "Angie's Leopard Tracking",
+        "character_ref": "novice",
+        "cast": "angie",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "dixie"
+      }
+    ],
+    "armitage_infiltration": [
+      {
+        "id": "armitage_infiltration",
+        "title": "Armitage's First Infiltration",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 2,
+        "pillar": "identity",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "ta_rep"
+      }
+    ],
+    "armitage_infiltration_2": [
+      {
+        "id": "armitage_infiltration_2",
+        "title": "Armitage Infiltration II",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "armitage"
+      }
+    ],
+    "bama_statework": [
+      {
+        "id": "bama_statework",
+        "title": "BAMA Statework",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "purpose",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "beijing_memory_courier": [
+      {
+        "id": "beijing_memory_courier",
+        "title": "Beijing Memory Courier",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 3,
+        "pillar": "memory",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "chrome_teeth"
+      }
+    ],
+    "bigend-laney-lunch": [
+      {
+        "id": "bigend_laney_lunch",
+        "title": "Bigend Meets Laney",
+        "character_ref": "veteran",
+        "cast": "laney, bigend",
+        "arc": 1,
+        "pillar": "memory",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "bigend"
+      }
+    ],
+    "bing_statework": [
+      {
+        "id": "bing_statework",
+        "title": "Bing Statework",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      }
+    ],
+    "black_ice_dream": [
+      {
+        "id": "black_ice_dream",
+        "title": "Black Ice Dream",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 3,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      }
+    ],
+    "boone_tokyo_electronics_arc": [
+      {
+        "id": "boone_tokyo_electronics_arc",
+        "title": "Boone Tokyo-Electronics Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "bridge-construct": [
+      {
+        "id": "bridge_scaffold",
+        "title": "Bridge Construct",
+        "character_ref": "veteran",
+        "cast": "berry-rydell",
+        "arc": 3,
+        "pillar": "purpose",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "masahiko"
+      }
+    ],
+    "case-meets-cayce": [
+      {
+        "id": "case_meets_cayce",
+        "title": "Case Meets Cayce",
+        "character_ref": "veteran",
+        "cast": "case, cayce",
+        "arc": 4,
+        "pillar": "identity",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "bigend"
+      }
+    ],
+    "case_past_defend_chiba_memory": [
+      {
+        "id": "case_past_defend_chiba_memory",
+        "title": "Chiba Memory Defense",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      }
+    ],
+    "case_past_dual_objective_dead_mans_chip": [
+      {
+        "id": "case_past_dual_objective_dead_mans_chip",
+        "title": "Dead Man's Chip",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "wintermute"
+      }
+    ],
+    "case_past_extract_linda_memory": [
+      {
+        "id": "case_past_extract_linda_memory",
+        "title": "Linda's Memory",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "wintermute"
+      }
+    ],
+    "case_past_investigate_armitage_mind": [
+      {
+        "id": "case_past_investigate_armitage_mind",
+        "title": "Armitage's Mind",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "wintermute"
+      }
+    ],
+    "cayce_footage_audit_run": [
+      {
+        "id": "cayce_footage_audit_run",
+        "title": "Cayce Footage Audit Run",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 1,
+        "pillar": "purpose",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "chevette_nightshift_run": [
+      {
+        "id": "chevette_nightshift_run",
+        "title": "Chevette Nightshift Run",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "people",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      },
+      {
+        "id": "chevette_run",
+        "title": "Chevette Run",
+        "character_ref": "novice",
+        "cast": "chevette",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "masahiko"
+      }
+    ],
+    "chickenhead_rickshaw_run": [
+      {
+        "id": "chickenhead_rickshaw_run",
+        "title": "Chickenhead Rickshaw Run",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "people",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "construct_market": [
+      {
+        "id": "construct_market",
+        "title": "Construct Market",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "people",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "dixies_last_run": [
+      {
+        "id": "construct_memory_rescue",
+        "title": "Construct Memory Rescue",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "dixie_flatline"
+      },
+      {
+        "id": "dixies_offer",
+        "title": "Dixie's Offer",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 4,
+        "pillar": "power",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "dixie"
+      }
+    ],
+    "coolhunter-laney-tokyo": [
+      {
+        "id": "coolhunter_laney_tokyo",
+        "title": "Coolhunter Meets Laney",
+        "character_ref": "novice",
+        "cast": "cayce, laney",
+        "arc": 2,
+        "pillar": "people",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "bigend"
+      }
+    ],
+    "core_defend_data_citadel": [
+      {
+        "id": "core_defend_data_citadel",
+        "title": "Data Citadel Defense",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "3jane"
+      }
+    ],
+    "core_defend_eye_archive": [
+      {
+        "id": "core_defend_eye_archive",
+        "title": "Eye Archive Defense",
+        "character_ref": "sally",
+        "cast": "sally",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "sally"
+      }
+    ],
+    "core_dual_objective_construct_heist": [
+      {
+        "id": "core_dual_objective_construct_heist",
+        "title": "Construct Heist",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "wintermute"
+      }
+    ],
+    "core_dual_objective_mirror_run": [
+      {
+        "id": "core_dual_objective_mirror_run",
+        "title": "Mirror Run",
+        "character_ref": "bigend",
+        "cast": "bigend",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "bigend"
+      }
+    ],
+    "core_extract_aeslin_key": [
+      {
+        "id": "core_extract_aeslin_key",
+        "title": "Aeslin Key Extraction",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "bigend"
+      }
+    ],
+    "core_extract_neuromancer_signature": [
+      {
+        "id": "core_extract_neuromancer_signature",
+        "title": "Neuromancer Signature",
+        "character_ref": "wintermute",
+        "cast": "wintermute",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "wintermute"
+      }
+    ],
+    "core_extract_payroll_archive": [
+      {
+        "id": "core_extract_payroll_archive",
+        "title": "Payroll Archive",
+        "character_ref": "wintermute",
+        "cast": "wintermute",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "core_investigate_construct_council": [
+      {
+        "id": "core_investigate_construct_council",
+        "title": "Construct Council",
+        "character_ref": "masahiko",
+        "cast": "masahiko",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "masahiko"
+      }
+    ],
+    "core_investigate_ice_lord": [
+      {
+        "id": "core_investigate_ice_lord",
+        "title": "The Ice Lord's Audit",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "masahiko"
+      }
+    ],
+    "core_memory_dump": [
+      {
+        "id": "core_memory_dump",
+        "title": "Core Memory Dump",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "finn"
+      }
+    ],
+    "core_stealth_construct_pool": [
+      {
+        "id": "core_stealth_construct_pool",
+        "title": "Construct Pool",
+        "character_ref": "sally",
+        "cast": "sally",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "sally"
+      }
+    ],
+    "core_stealth_eye_central": [
+      {
+        "id": "core_stealth_eye_central",
+        "title": "Eye Central Infiltration",
+        "character_ref": "sally",
+        "cast": "sally",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "sally"
+      }
+    ],
+    "cortex_hound_recovery": [
+      {
+        "id": "cortex_hound_recovery",
+        "title": "Cortex-Hound Recovery",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "kumiko_manarase-midnight": [
+      {
+        "id": "craft_job",
+        "title": "Craft Job",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "data_retrieval": [
+      {
+        "id": "data_retrieval",
+        "title": "Data Retrieval",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "marly_louisiana-god": [
+      {
+        "id": "delivery_to_finn",
+        "title": "Delivery to Finn",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "dixies_choice": [
+      {
+        "id": "dixies_choice",
+        "title": "Dixie's Choice",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 4,
+        "pillar": "people",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "eurydice_arc": [
+      {
+        "id": "eurydice_arc",
+        "title": "Eurydice Arc",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      }
+    ],
+    "fido_statework": [
+      {
+        "id": "fido_statework",
+        "title": "Fido Statework",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "purpose",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "the_choice": [
+      {
+        "id": "final_choice",
+        "title": "The Final Choice",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "finn_factory_labour_run": [
+      {
+        "id": "finn_factory_labour_run",
+        "title": "Finn's Factory Labour Run",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 2,
+        "pillar": "purpose",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "finn_final_reckoning": [
+      {
+        "id": "finn_final_reckoning",
+        "title": "Finn's Final Reckoning",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "finn"
+      }
+    ],
+    "first_contact": [
+      {
+        "id": "first_contact",
+        "title": "First Contact",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 2,
+        "pillar": "purpose",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "case_jackout-30sec": [
+      {
+        "id": "first_jack",
+        "title": "First Jack",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 1,
+        "fixer": "finn"
+      }
+    ],
+    "first_trace": [
+      {
+        "id": "first_trace",
+        "title": "First Trace",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 2,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "flatline_again": [
+      {
+        "id": "flatline_call",
+        "title": "Flatline's Call",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 2,
+        "pillar": "purpose",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "freeside_defend_orbit_habitat": [
+      {
+        "id": "freeside_defend_orbit_habitat",
+        "title": "Orbit Habitat Defense",
+        "character_ref": "3jane",
+        "cast": "3jane",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "3jane"
+      }
+    ],
+    "freeside_defend_orbital_habitat": [
+      {
+        "id": "freeside_defend_orbital_habitat",
+        "title": "Orbital Habitat Defense",
+        "character_ref": "wigan",
+        "cast": "wigan",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "3jane"
+      }
+    ],
+    "freeside_dual_objective_construct_pod_2": [
+      {
+        "id": "freeside_dual_objective_construct_pod_2",
+        "title": "Construct Pod 2",
+        "character_ref": "neuromancer",
+        "cast": "neuromancer",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "neuromancer"
+      }
+    ],
+    "freeside_dual_objective_jockey_pod": [
+      {
+        "id": "freeside_dual_objective_jockey_pod",
+        "title": "Jockey Pod",
+        "character_ref": "neuromancer",
+        "cast": "neuromancer",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "neuromancer"
+      }
+    ],
+    "freeside_dual_objective_space_jockey": [
+      {
+        "id": "freeside_dual_objective_space_jockey",
+        "title": "Space Jockey Extraction",
+        "character_ref": "neuromancer",
+        "cast": "neuromancer",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "freeside_extract_construct_archive": [
+      {
+        "id": "freeside_extract_construct_archive",
+        "title": "Construct Archive",
+        "character_ref": "neuromancer",
+        "cast": "neuromancer",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "neuromancer"
+      }
+    ],
+    "freeside_extract_construct_pod": [
+      {
+        "id": "freeside_extract_construct_pod",
+        "title": "Construct Pod Extraction",
+        "character_ref": "neuromancer",
+        "cast": "neuromancer",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "neuromancer"
+      }
+    ],
+    "freeside_extract_orbital_data": [
+      {
+        "id": "freeside_extract_orbital_data",
+        "title": "Orbital Data",
+        "character_ref": "masahiko",
+        "cast": "masahiko",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "masahiko"
+      }
+    ],
+    "freeside_extract_orbital_data_2": [
+      {
+        "id": "freeside_extract_orbital_data_2",
+        "title": "Orbital Data 2",
+        "character_ref": "masahiko",
+        "cast": "masahiko",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "masahiko"
+      }
+    ],
+    "freeside_investigate_construct_research": [
+      {
+        "id": "freeside_investigate_construct_research",
+        "title": "Construct Research",
+        "character_ref": "masahiko",
+        "cast": "masahiko",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "masahiko"
+      }
+    ],
+    "freeside_investigate_orbital_history": [
+      {
+        "id": "freeside_investigate_orbital_history",
+        "title": "Orbital History",
+        "character_ref": "wintermute",
+        "cast": "wintermute",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "freeside_investigate_orbital_sovereignty": [
+      {
+        "id": "freeside_investigate_orbital_sovereignty",
+        "title": "Orbital Sovereignty",
+        "character_ref": "angie",
+        "cast": "angie",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "masahiko"
+      }
+    ],
+    "freeside_payroll": [
+      {
+        "id": "freeside_payroll",
+        "title": "Freeside Payroll",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "freeside_stealth_construct_chamber": [
+      {
+        "id": "freeside_stealth_construct_chamber",
+        "title": "Construct Chamber",
+        "character_ref": "kumiko",
+        "cast": "kumiko",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "kumiko"
+      }
+    ],
+    "freeside_stealth_orbit_lab": [
+      {
+        "id": "freeside_stealth_orbit_lab",
+        "title": "Orbit Lab Infiltration",
+        "character_ref": "angie",
+        "cast": "angie",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "kumiko"
+      }
+    ],
+    "freeside_stealth_orbit_lab_2": [
+      {
+        "id": "freeside_stealth_orbit_lab_2",
+        "title": "Orbit Lab 2",
+        "character_ref": "kumiko",
+        "cast": "kumiko",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "kumiko"
+      }
+    ],
+    "fukuoka_ridership_arc": [
+      {
+        "id": "fukuoka_ridership_arc",
+        "title": "Fukuoka Ridership Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "g_boys_arc": [
+      {
+        "id": "g_boys_arc",
+        "title": "G-Boys Arc",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 3,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      }
+    ],
+    "ghost_signal": [
+      {
+        "id": "ghost_signal_origin",
+        "title": "Ghost Signal: Origin",
+        "character_ref": "novice",
+        "cast": "sally",
+        "arc": 6,
+        "pillar": "people",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "sally"
+      }
+    ],
+    "heretic_loa_conscription": [
+      {
+        "id": "heretic_loa_conscription",
+        "title": "Loa Conscription",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "hideo_contract": [
+      {
+        "id": "hideo_contract",
+        "title": "Hideo's Contract",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "hideo"
+      }
+    ],
+    "hosaka_after_hours": [
+      {
+        "id": "hosaka_after_hours",
+        "title": "Hosaka After Hours",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "people",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "hosaka_core": [
+      {
+        "id": "hosaka_core",
+        "title": "Hosaka Core",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      }
+    ],
+    "ta_defection": [
+      {
+        "id": "hosaka_corporate_infiltration",
+        "title": "Hosaka Corporate Infiltration",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      },
+      {
+        "id": "ta_3jane_betrayal",
+        "title": "3Jane's Betrayal",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "3jane"
+      },
+      {
+        "id": "ta_defection",
+        "title": "Tessier-Ashpool Defection",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "3jane"
+      }
+    ],
+    "hosaka_extraction": [
+      {
+        "id": "hosaka_extraction",
+        "title": "Hosaka Internal Extraction",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 3,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      },
+      {
+        "id": "sense_net_media_extract",
+        "title": "Sense/Net Media Extract",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "sally_shears"
+      }
+    ],
+    "hosaka_terminal_supply": [
+      {
+        "id": "hosaka_terminal_supply",
+        "title": "Hosaka Terminal Supply",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "purpose",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "hounds_arc": [
+      {
+        "id": "hounds_arc",
+        "title": "Hounds Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "ice_run": [
+      {
+        "id": "ice_run",
+        "title": "Ice Run",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "idoru_wedding_arc": [
+      {
+        "id": "idoru_wedding",
+        "title": "Idoru Wedding Protocol",
+        "character_ref": "heretic",
+        "cast": "rei-toi",
+        "arc": 2,
+        "pillar": "purpose",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "yamazaki"
+      },
+      {
+        "id": "idoru_wedding_arc",
+        "title": "Idoru Wedding Arc",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 3,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      }
+    ],
+    "kombinat-node-hack": [
+      {
+        "id": "kombinat_node_hack",
+        "title": "Kombinat Node Hack",
+        "character_ref": "suit",
+        "cast": "yamazaki",
+        "arc": 4,
+        "pillar": "power",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "yamazaki"
+      }
+    ],
+    "laney_node_signal_run": [
+      {
+        "id": "laney_node_signal_run",
+        "title": "Laney Node Signal Run",
+        "character_ref": "veteran",
+        "cast": "k",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "maas_heist": [
+      {
+        "id": "maas_heist",
+        "title": "Maas Biolabs Heist",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      },
+      {
+        "id": "maas_neural_extract",
+        "title": "Maas Neural Extract",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "matrix_revelation": [
+      {
+        "id": "matrix_revelation",
+        "title": "Matrix Revelation",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 4,
+        "pillar": "purpose",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "sally"
+      }
+    ],
+    "mid_defend_kumo_network": [
+      {
+        "id": "mid_defend_kumo_network",
+        "title": "Kumo Network Defense",
+        "character_ref": "yakuza",
+        "cast": "yakuza",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "yakuza"
+      }
+    ],
+    "mid_defend_sense_net_relay": [
+      {
+        "id": "mid_defend_sense_net_relay",
+        "title": "Sense/Net Relay Defense",
+        "character_ref": "masahiko",
+        "cast": "masahiko",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "masahiko"
+      }
+    ],
+    "mid_dual_objective_hosaka_data": [
+      {
+        "id": "mid_dual_objective_hosaka_data",
+        "title": "Hosaka Data Extraction",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "kumiko"
+      }
+    ],
+    "mid_dual_objective_shibuya_run": [
+      {
+        "id": "mid_dual_objective_shibuya_run",
+        "title": "Shibuya Run",
+        "character_ref": "slick_henry",
+        "cast": "slick_henry",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "slick_henry"
+      }
+    ],
+    "mid_dual_objective_trade_show": [
+      {
+        "id": "mid_dual_objective_trade_show",
+        "title": "Trade Show Heist",
+        "character_ref": "bigend",
+        "cast": "bigend",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "bigend"
+      }
+    ],
+    "mid_extract_biometal_chip": [
+      {
+        "id": "mid_extract_biometal_chip",
+        "title": "Biometal Chip Extraction",
+        "character_ref": "molly",
+        "cast": "molly",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "wigan"
+      }
+    ],
+    "mid_extract_oni_data": [
+      {
+        "id": "mid_extract_oni_data",
+        "title": "Oni Data",
+        "character_ref": "yakuza",
+        "cast": "yakuza",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "yakuza"
+      }
+    ],
+    "mid_extract_yakuza_chop_shop": [
+      {
+        "id": "mid_extract_yakuza_chop_shop",
+        "title": "Yakuza Chop Shop",
+        "character_ref": "yakuza",
+        "cast": "yakuza",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "yakuza"
+      }
+    ],
+    "mid_investigate_black_market": [
+      {
+        "id": "mid_investigate_black_market",
+        "title": "Black Market Audit",
+        "character_ref": "slick_henry",
+        "cast": "slick_henry",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "slick_henry"
+      }
+    ],
+    "mid_investigate_yakuza_consortium": [
+      {
+        "id": "mid_investigate_yakuza_consortium",
+        "title": "Yakuza Consortium",
+        "character_ref": "slick_henry",
+        "cast": "slick_henry",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "slick_henry"
+      }
+    ],
+    "mid_stealth_corpo_penthouse": [
+      {
+        "id": "mid_stealth_corpo_penthouse",
+        "title": "Corpo Penthouse Infiltration",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "armitage"
+      }
+    ],
+    "mid_stealth_yakuza_meeting": [
+      {
+        "id": "mid_stealth_yakuza_meeting",
+        "title": "Yakuza Meeting",
+        "character_ref": "slick_henry",
+        "cast": "slick_henry",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "slick_henry"
+      }
+    ],
+    "molly_decides": [
+      {
+        "id": "molly_decides",
+        "title": "Molly Decides",
+        "character_ref": "veteran",
+        "cast": "molly",
+        "arc": 2,
+        "pillar": "people",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "molly_razor_defend_london_nest": [
+      {
+        "id": "molly_razor_defend_london_nest",
+        "title": "London Nest Defense",
+        "character_ref": "molly",
+        "cast": "molly",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "slick_henry"
+      }
+    ],
+    "molly_razor_dual_objective_hotel_target": [
+      {
+        "id": "molly_razor_dual_objective_hotel_target",
+        "title": "Hotel Target",
+        "character_ref": "molly",
+        "cast": "molly",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "slick_henry"
+      }
+    ],
+    "molly_razor_extract_final_chip": [
+      {
+        "id": "molly_razor_extract_final_chip",
+        "title": "Final Chip",
+        "character_ref": "molly",
+        "cast": "molly",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "slick_henry"
+      }
+    ],
+    "molly_razor_investigate_sin_fans": [
+      {
+        "id": "molly_razor_investigate_sin_fans",
+        "title": "Sin Fans",
+        "character_ref": "molly",
+        "cast": "molly",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "slick_henry"
+      }
+    ],
+    "molly_razor_stealth_final_contract": [
+      {
+        "id": "molly_razor_stealth_final_contract",
+        "title": "Final Contract",
+        "character_ref": "molly",
+        "cast": "molly",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "mollys_final_razor": [
+      {
+        "id": "mollys_final_razor",
+        "title": "Molly's Final Razor",
+        "character_ref": "novice",
+        "cast": "molly",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "finn"
+      }
+    ],
+    "mollys_market": [
+      {
+        "id": "mollys_market",
+        "title": "Molly's Market",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 2,
+        "pillar": "people",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "mollys_razor": [
+      {
+        "id": "mollys_razor",
+        "title": "Molly's Razor",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 3,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "maas"
+      }
+    ],
+    "mona_bridge_arc": [
+      {
+        "id": "mona_bridge_arc",
+        "title": "Mona Bridge Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "neuromancer_first_ping": [
+      {
+        "id": "neuromancer_first_ping",
+        "title": "Neuromancer First Ping",
+        "character_ref": "suit",
+        "cast": "neuromancer",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "wintermute"
+      }
+    ],
+    "neuromancer_merger": [
+      {
+        "id": "neuromancer_merger",
+        "title": "Neuromancer Merger",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 5,
+        "pillar": "purpose",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "kumiko"
+      },
+      {
+        "id": "neuromancer_merger_residue",
+        "title": "Neuromancer Merger: Residue",
+        "character_ref": "heretic",
+        "cast": "armitage",
+        "arc": 6,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "armitage"
+      }
+    ],
+    "neuromancer_whisper": [
+      {
+        "id": "neuromancer_whisper",
+        "title": "Neuromancer Whisper",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 3,
+        "pillar": "purpose",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "sally"
+      }
+    ],
+    "ngplus_dual_objective_boss_rush_1": [
+      {
+        "id": "ngplus_dual_objective_boss_rush_1",
+        "title": "Boss Rush: Wintermute",
+        "character_ref": "wintermute",
+        "cast": "wintermute",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "ngplus_dual_objective_boss_rush_2": [
+      {
+        "id": "ngplus_dual_objective_boss_rush_2",
+        "title": "Boss Rush: Tessier-Ashpool",
+        "character_ref": "3jane",
+        "cast": "3jane",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "3jane"
+      }
+    ],
+    "ngplus_dual_objective_boss_rush_3": [
+      {
+        "id": "ngplus_dual_objective_boss_rush_3",
+        "title": "Boss Rush: Neuromancer",
+        "character_ref": "neuromancer",
+        "cast": "neuromancer",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "neuromancer"
+      }
+    ],
+    "ngplus_dual_objective_boss_rush_4": [
+      {
+        "id": "ngplus_dual_objective_boss_rush_4",
+        "title": "Boss Rush: Periphery",
+        "character_ref": "flynne",
+        "cast": "flynne",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "lowbeer"
+      }
+    ],
+    "ngplus_dual_objective_boss_rush_5": [
+      {
+        "id": "ngplus_dual_objective_boss_rush_5",
+        "title": "Boss Rush: Final",
+        "character_ref": "a_insley",
+        "cast": "a_insley",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "a_insley"
+      }
+    ],
+    "ngplus_investigate_archive_1": [
+      {
+        "id": "ngplus_investigate_archive_1",
+        "title": "Archive: Wintermute",
+        "character_ref": "wintermute",
+        "cast": "wintermute",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "ngplus_investigate_archive_2": [
+      {
+        "id": "ngplus_investigate_archive_2",
+        "title": "Archive: 3Jane",
+        "character_ref": "3jane",
+        "cast": "3jane",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "3jane"
+      }
+    ],
+    "ngplus_investigate_archive_3": [
+      {
+        "id": "ngplus_investigate_archive_3",
+        "title": "Archive: Bigend",
+        "character_ref": "bigend",
+        "cast": "bigend",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "bigend"
+      }
+    ],
+    "ngplus_investigate_archive_4": [
+      {
+        "id": "ngplus_investigate_archive_4",
+        "title": "Archive: Kumiko",
+        "character_ref": "kumiko",
+        "cast": "kumiko",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "kumiko"
+      }
+    ],
+    "ngplus_investigate_archive_5": [
+      {
+        "id": "ngplus_investigate_archive_5",
+        "title": "Archive: Masahiko",
+        "character_ref": "masahiko",
+        "cast": "masahiko",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "masahiko"
+      }
+    ],
+    "ngplus_investigate_archive_6": [
+      {
+        "id": "ngplus_investigate_archive_6",
+        "title": "Archive: Final",
+        "character_ref": "a_insley",
+        "cast": "a_insley",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "a_insley"
+      }
+    ],
+    "ono_sendai_repair": [
+      {
+        "id": "ono_sendai_repair",
+        "title": "Ono-Sendai Repair",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "purpose",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "pacific_empire_arc": [
+      {
+        "id": "pacific_empire_arc",
+        "title": "Pacific-Empire Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "pan_mannerist_audit": [
+      {
+        "id": "pan_mannerist_audit",
+        "title": "Pan-Mannerist Audit",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "panther_negotiate": [
+      {
+        "id": "panther_negotiate",
+        "title": "Panther Negotiate",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "razor_work": [
+      {
+        "id": "razor_work",
+        "title": "Razor Work",
+        "character_ref": "novice",
+        "cast": "molly",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "sally_construct_market": [
+      {
+        "id": "sally_construct_market",
+        "title": "Sally's Construct Market",
+        "character_ref": "heretic",
+        "cast": "sally",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "sally"
+      }
+    ],
+    "sally_returns": [
+      {
+        "id": "sally_returns_arc3",
+        "title": "Sally Returns",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 3,
+        "pillar": "people",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "sally"
+      }
+    ],
+    "sally_sandii-3am": [
+      {
+        "id": "sally_sandii_3am",
+        "title": "Rose Hotel, 3AM",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 2,
+        "pillar": "people",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "salvation_wigan_zavijava": [
+      {
+        "id": "salvation_wigan_zavijava",
+        "title": "Wigan's Salvation Call",
+        "character_ref": "heretic",
+        "cast": "wigan",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "dixie"
+      }
+    ],
+    "sense_net_archive_intrusion": [
+      {
+        "id": "sense_net_archive_intrusion",
+        "title": "Sense/Net Archive Intrusion",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 4,
+        "pillar": "purpose",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "sense_net_infiltration": [
+      {
+        "id": "sense_net_infiltration",
+        "title": "Sense/Net Infiltration",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "sense_net_trace": [
+      {
+        "id": "sense_net_tip",
+        "title": "Sense/Net Tip",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "soho_blackout": [
+      {
+        "id": "soho_blackout",
+        "title": "Soho Blackout",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "soho_defend_coolhunter_office": [
+      {
+        "id": "soho_defend_coolhunter_office",
+        "title": "Coolhunter Office Defense",
+        "character_ref": "hollis",
+        "cast": "hollis",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "hollis"
+      }
+    ],
+    "soho_dual_objective_footage_cult": [
+      {
+        "id": "soho_dual_objective_footage_cult",
+        "title": "Footage Cult Infiltration",
+        "character_ref": "hollis",
+        "cast": "hollis",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "hollis"
+      }
+    ],
+    "soho_dual_objective_viddy_share": [
+      {
+        "id": "soho_dual_objective_viddy_share",
+        "title": "Viddy Share Heist",
+        "character_ref": "cayce",
+        "cast": "cayce",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "cayce"
+      }
+    ],
+    "soho_extract_logo_meme": [
+      {
+        "id": "soho_extract_logo_meme",
+        "title": "Logo Meme Extraction",
+        "character_ref": "bigend",
+        "cast": "bigend",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "bigend"
+      }
+    ],
+    "soho_investigate_brand_territory": [
+      {
+        "id": "soho_investigate_brand_territory",
+        "title": "Brand Territory",
+        "character_ref": "bigend",
+        "cast": "bigend",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "bigend"
+      }
+    ],
+    "soho_investigate_nostalgia_loop": [
+      {
+        "id": "soho_investigate_nostalgia_loop",
+        "title": "Nostalgia Loop",
+        "character_ref": "hollis",
+        "cast": "hollis",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "hollis"
+      }
+    ],
+    "soho_stealth_brand_vault": [
+      {
+        "id": "soho_stealth_brand_vault",
+        "title": "Brand Vault Infiltration",
+        "character_ref": "cayce",
+        "cast": "cayce",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "cayce"
+      }
+    ],
+    "soho_stealth_node_dive": [
+      {
+        "id": "soho_stealth_node_dive",
+        "title": "Node Dive",
+        "character_ref": "cayce",
+        "cast": "cayce",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "cayce"
+      }
+    ],
+    "straylight_approach": [
+      {
+        "id": "straylight_approach",
+        "title": "Straylight Approach",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 3,
+        "pillar": "memory",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      },
+      {
+        "id": "ta_payroll_archive",
+        "title": "T-A Payroll Archive",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "armitage"
+      },
+      {
+        "id": "ta_straylight_archive",
+        "title": "Straylight Archive",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "3jane"
+      }
+    ],
+    "straylight_inquiry": [
+      {
+        "id": "straylight_inquiry",
+        "title": "Straylight Inquiry",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "surface_defend_recycling_baseline": [
+      {
+        "id": "surface_defend_recycling_baseline",
+        "title": "Recycling Baseline",
+        "character_ref": "finn",
+        "cast": "finn",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "surface_extract_seed_run": [
+      {
+        "id": "surface_extract_seed_run",
+        "title": "Seed Run Extraction",
+        "character_ref": "finn",
+        "cast": "finn",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "surface_investigate_bama_suburb": [
+      {
+        "id": "surface_investigate_bama_suburb",
+        "title": "Bama Suburb Investigation",
+        "character_ref": "finn",
+        "cast": "finn",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "surface_mail_run": [
+      {
+        "id": "surface_mail_run",
+        "title": "Surface Mail Run",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "people",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "t_a_construction_site": [
+      {
+        "id": "t_a_construction_site",
+        "title": "T-A Construction Site",
+        "character_ref": "heretic",
+        "cast": "sally",
+        "arc": 3,
+        "pillar": "power",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "sally"
+      }
+    ],
+    "ta_defend_straylight_corridor": [
+      {
+        "id": "ta_defend_straylight_corridor",
+        "title": "Straylight Corridor",
+        "character_ref": "3jane",
+        "cast": "3jane",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "3jane"
+      }
+    ],
+    "ta_defend_straylight_perimeter": [
+      {
+        "id": "ta_defend_straylight_perimeter",
+        "title": "Straylight Perimeter Defense",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "3jane"
+      }
+    ],
+    "ta_dual_objective_ashpool_vote": [
+      {
+        "id": "ta_dual_objective_ashpool_vote",
+        "title": "Ashpool Succession Vote",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "kumiko"
+      }
+    ],
+    "ta_dual_objective_payroll_heist": [
+      {
+        "id": "ta_dual_objective_payroll_heist",
+        "title": "Payroll Heist",
+        "character_ref": "armitage",
+        "cast": "armitage",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "armitage"
+      }
+    ],
+    "ta_dual_objective_warden_archive": [
+      {
+        "id": "ta_dual_objective_warden_archive",
+        "title": "Warden Archive",
+        "character_ref": "wintermute",
+        "cast": "wintermute",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "ta_extract_aleph_chip": [
+      {
+        "id": "ta_extract_aleph_chip",
+        "title": "Aleph Chip Extraction",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "ta_extract_aleph_fragment_2": [
+      {
+        "id": "ta_extract_aleph_fragment_2",
+        "title": "Aleph Fragment 2",
+        "character_ref": "wintermute",
+        "cast": "wintermute",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "ta_extract_sense_net_key": [
+      {
+        "id": "ta_extract_sense_net_key",
+        "title": "Sense/Net Key",
+        "character_ref": "3jane",
+        "cast": "3jane",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "3jane"
+      }
+    ],
+    "ta_heist": [
+      {
+        "id": "ta_heist",
+        "title": "T-A Heist",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 3,
+        "pillar": "power",
+        "grade_min": 4,
+        "grade_max": 4,
+        "fixer": "ta_rep"
+      }
+    ],
+    "ta_investigate_3jane_initiative": [
+      {
+        "id": "ta_investigate_3jane_initiative",
+        "title": "3Jane's Corporate Initiative",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "kumiko"
+      }
+    ],
+    "ta_investigate_construct_memory": [
+      {
+        "id": "ta_investigate_construct_memory",
+        "title": "Construct Memory",
+        "character_ref": "wintermute",
+        "cast": "wintermute",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "wintermute"
+      }
+    ],
+    "ta_stealth_construct_chamber": [
+      {
+        "id": "ta_stealth_construct_chamber",
+        "title": "Construct Chamber Infiltration",
+        "character_ref": "case",
+        "cast": "case",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      }
+    ],
+    "ta_stealth_penthouse_construct": [
+      {
+        "id": "ta_stealth_penthouse_construct",
+        "title": "Penthouse Construct",
+        "character_ref": "3jane",
+        "cast": "3jane",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "3jane"
+      }
+    ],
+    "wintermute_negotiation": [
+      {
+        "id": "ta_wintermute_direct",
+        "title": "Wintermute Direct",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 6,
+        "grade_max": 6,
+        "fixer": "wintermute"
+      },
+      {
+        "id": "wintermute_negotiation",
+        "title": "Wintermute Negotiation",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 5,
+        "pillar": "identity",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "3jane"
+      }
+    ],
+    "tessier_ashpool_aftermath": [
+      {
+        "id": "tessier_ashpool_aftermath",
+        "title": "Tessier-Ashpool: Aftermath",
+        "character_ref": "veteran",
+        "cast": "sally",
+        "arc": 6,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "sally"
+      }
+    ],
+    "tessier_sleeper_arc": [
+      {
+        "id": "tessier_sleeper_arc",
+        "title": "Tessier-Ashpool Sleeper Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "threjane_family_log": [
+      {
+        "id": "threjane_family_log",
+        "title": "3Jane's Family Log",
+        "character_ref": "suit",
+        "cast": "3jane",
+        "arc": 1,
+        "pillar": "code",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "3jane"
+      }
+    ],
+    "tokyo-courier-run": [
+      {
+        "id": "tokyo_courier_run",
+        "title": "Tokyo Courier Run",
+        "character_ref": "novice",
+        "cast": "courier",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "masahiko"
+      }
+    ],
+    "tokyo_defend_shibuya_archipelago": [
+      {
+        "id": "tokyo_defend_shibuya_archipelago",
+        "title": "Shibuya Archipelago Defense",
+        "character_ref": "bigend",
+        "cast": "bigend",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "bigend"
+      }
+    ],
+    "tokyo_dual_objective_coach_class": [
+      {
+        "id": "tokyo_dual_objective_coach_class",
+        "title": "Coach Class Extraction",
+        "character_ref": "angie",
+        "cast": "angie",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "angie"
+      }
+    ],
+    "tokyo_dual_objective_darko_trauma": [
+      {
+        "id": "tokyo_dual_objective_darko_trauma",
+        "title": "Darko's Trauma",
+        "character_ref": "darko",
+        "cast": "darko",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "yamazaki"
+      }
+    ],
+    "tokyo_extract_footage_archive": [
+      {
+        "id": "tokyo_extract_footage_archive",
+        "title": "Footage Archive Extraction",
+        "character_ref": "bigend",
+        "cast": "bigend",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "bigend"
+      }
+    ],
+    "tokyo_extract_laney_signal": [
+      {
+        "id": "tokyo_extract_laney_signal",
+        "title": "Laney's Signal",
+        "character_ref": "laney",
+        "cast": "laney",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "laney"
+      }
+    ],
+    "tokyo_investigate_marcus_garvey": [
+      {
+        "id": "tokyo_investigate_marcus_garvey",
+        "title": "Marcus Garvey Investigation",
+        "character_ref": "marcus_garvey",
+        "cast": "marcus_garvey",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "yamazaki"
+      }
+    ],
+    "tokyo_investigate_parkabrake_plaza": [
+      {
+        "id": "tokyo_investigate_parkabrake_plaza",
+        "title": "Parkabrake Plaza",
+        "character_ref": "yamazaki",
+        "cast": "yamazaki",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "yamazaki"
+      }
+    ],
+    "tokyo_pachinko_run": [
+      {
+        "id": "tokyo_pachinko_run",
+        "title": "Tokyo Pachinko Run",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "dixie"
+      }
+    ],
+    "tokyo_stealth_bridge_undercity": [
+      {
+        "id": "tokyo_stealth_bridge_undercity",
+        "title": "Bridge Undercity Infiltration",
+        "character_ref": "yamazaki",
+        "cast": "yamazaki",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "yamazaki"
+      }
+    ],
+    "trauma_squads_audit": [
+      {
+        "id": "trauma_squads_audit",
+        "title": "Trauma-Squads Audit",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "purpose",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "trauma_squads_pair_arc": [
+      {
+        "id": "trauma_squads_pair_arc",
+        "title": "Trauma-Squads Pair Arc",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 4,
+        "pillar": "power",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "tutorial_maze": [
+      {
+        "id": "tutorial_maze",
+        "title": "Tutorial Maze",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "vegas_stakeout": [
+      {
+        "id": "vegas_stakeout",
+        "title": "Vegas Stakeout",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 3,
+        "pillar": "purpose",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "finn"
+      }
+    ],
+    "viktor_orbit_arc": [
+      {
+        "id": "viktor_orbit_arc",
+        "title": "Viktor Orbit Arc",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "purpose",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "virtual_light_data_key_arc": [
+      {
+        "id": "virtual_light_data_key_arc",
+        "title": "Virtual Light Data-Key Arc",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "people",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "loa_voodoo_contact": [
+      {
+        "id": "voodoo_loa_encounter",
+        "title": "Voodoo Loa Encounter",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 4,
+        "pillar": "power",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ],
+    "voodoo_zoneload": [
+      {
+        "id": "voodoo_zoneload",
+        "title": "Voodoo Zone Load",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 3,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "dixie"
+      }
+    ],
+    "w_anchor_arc": [
+      {
+        "id": "w_anchor_arc",
+        "title": "W-Anchor Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "watchdog_patrol": [
+      {
+        "id": "watchdog_patrol",
+        "title": "Watchdog Patrol",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 1,
+        "fixer": "finn"
+      }
+    ],
+    "wendell_suburban_arc": [
+      {
+        "id": "wendell_suburban_arc",
+        "title": "Wendell Suburban Arc",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 1,
+        "pillar": "power",
+        "grade_min": 1,
+        "grade_max": 2,
+        "fixer": "finn"
+      }
+    ],
+    "wigan_call": [
+      {
+        "id": "wigan_call",
+        "title": "Wigan's Call",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "wigan"
+      }
+    ],
+    "wigan_construct_reach": [
+      {
+        "id": "wigan_construct_reach",
+        "title": "Wigan's Construct Reach",
+        "character_ref": "heretic",
+        "cast": "wigan",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "dixie"
+      }
+    ],
+    "winter_infiltrate": [
+      {
+        "id": "winter_infiltrate",
+        "title": "Winter Infiltration",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 4,
+        "pillar": "power",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "sally"
+      }
+    ],
+    "wintermute_merger_run": [
+      {
+        "id": "wintermute_merger_run",
+        "title": "Wintermute Merger Run",
+        "character_ref": "suit",
+        "cast": "neuromancer",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "wintermute"
+      }
+    ],
+    "wintermute_residue": [
+      {
+        "id": "wintermute_residue",
+        "title": "Wintermute Residue",
+        "character_ref": "veteran",
+        "cast": "dixie",
+        "arc": 6,
+        "pillar": "code",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "dixie"
+      }
+    ],
+    "wintermute_witness": [
+      {
+        "id": "wintermute_witness",
+        "title": "Wintermute Witness",
+        "character_ref": "suit",
+        "cast": "suit",
+        "arc": 5,
+        "pillar": "code",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "finn"
+      }
+    ],
+    "working_class_ridership_arc": [
+      {
+        "id": "working_class_ridership_arc",
+        "title": "Working-Class Ridership Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "yakuza_deal": [
+      {
+        "id": "yakuza_deal",
+        "title": "Yakuza Deal",
+        "character_ref": "heretic",
+        "cast": "kas",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "yakuza"
+      },
+      {
+        "id": "yakuza_loan_shark",
+        "title": "Yakuza Loan Shark",
+        "character_ref": "novice",
+        "cast": "case",
+        "arc": 2,
+        "pillar": "code",
+        "grade_min": 2,
+        "grade_max": 3,
+        "fixer": "finn"
+      }
+    ],
+    "yakuza_meeting": [
+      {
+        "id": "yakuza_meeting",
+        "title": "Yakuza Meeting",
+        "character_ref": "veteran",
+        "cast": "sally",
+        "arc": 2,
+        "pillar": "power",
+        "grade_min": 3,
+        "grade_max": 4,
+        "fixer": "sally"
+      }
+    ],
+    "yanaka_family_power_arc": [
+      {
+        "id": "yanaka_family_power_arc",
+        "title": "Yanaka Family-Power Arc",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "power",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "zaibatsu_statework": [
+      {
+        "id": "zaibatsu_statework",
+        "title": "Zaibatsu Statework",
+        "character_ref": "suit",
+        "cast": "slick_henry",
+        "arc": 5,
+        "pillar": "purpose",
+        "grade_min": 5,
+        "grade_max": 5,
+        "fixer": "slick_henry"
+      }
+    ],
+    "zion_express": [
+      {
+        "id": "zion_express",
+        "title": "Zion Express",
+        "character_ref": "veteran",
+        "cast": "sil",
+        "arc": 5,
+        "pillar": "purpose",
+        "grade_min": 5,
+        "grade_max": 6,
+        "fixer": "kumiko"
+      }
+    ],
+    "zion_lab_breach": [
+      {
+        "id": "zion_lab_breach",
+        "title": "Zion Lab Breach",
+        "character_ref": "heretic",
+        "cast": "dixie",
+        "arc": 4,
+        "pillar": "code",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "dixie"
+      }
+    ],
+    "zion_vote_observation": [
+      {
+        "id": "zion_vote_observation",
+        "title": "Zion Vote Observation",
+        "character_ref": "novice",
+        "cast": "k",
+        "arc": 5,
+        "pillar": "purpose",
+        "grade_min": 4,
+        "grade_max": 5,
+        "fixer": "finn"
+      }
+    ]
+  },
+  "by_character": {
+    "heretic": {
+      "aleph_fragment": "Aleph Fragment",
+      "beijing_memory_courier": "Beijing Memory Courier",
+      "bing_statework": "Bing Statework",
+      "cayce_footage_audit_run": "Cayce Footage Audit Run",
+      "dixies_last_run": "Construct Memory Rescue",
+      "kumiko_manarase-midnight": "Craft Job",
+      "eurydice_arc": "Eurydice Arc",
+      "g_boys_arc": "G-Boys Arc",
+      "heretic_loa_conscription": "Loa Conscription",
+      "idoru_wedding_arc": "Idoru Wedding Arc",
+      "maas_heist": "Maas Neural Extract",
+      "matrix_revelation": "Matrix Revelation",
+      "neuromancer_merger": "Neuromancer Merger: Residue",
+      "neuromancer_whisper": "Neuromancer Whisper",
+      "sally_construct_market": "Sally's Construct Market",
+      "sally_returns": "Sally Returns",
+      "sally_sandii-3am": "Rose Hotel, 3AM",
+      "salvation_wigan_zavijava": "Wigan's Salvation Call",
+      "straylight_inquiry": "Straylight Inquiry",
+      "t_a_construction_site": "T-A Construction Site",
+      "ta_defection": "3Jane's Betrayal",
+      "trauma_squads_pair_arc": "Trauma-Squads Pair Arc",
+      "voodoo_zoneload": "Voodoo Zone Load",
+      "wigan_call": "Wigan's Call",
+      "wigan_construct_reach": "Wigan's Construct Reach",
+      "yakuza_deal": "Yakuza Deal",
+      "zion_lab_breach": "Zion Lab Breach"
+    },
+    "novice": {
+      "angie_leopard_tracking": "Angie's Leopard Tracking",
+      "black_ice_dream": "Black Ice Dream",
+      "chevette_nightshift_run": "Chevette Run",
+      "chickenhead_rickshaw_run": "Chickenhead Rickshaw Run",
+      "construct_market": "Construct Market",
+      "coolhunter-laney-tokyo": "Coolhunter Meets Laney",
+      "cortex_hound_recovery": "Cortex-Hound Recovery",
+      "data_retrieval": "Data Retrieval",
+      "the_choice": "The Final Choice",
+      "case_jackout-30sec": "First Jack",
+      "first_trace": "First Trace",
+      "flatline_again": "Flatline's Call",
+      "ghost_signal": "Ghost Signal: Origin",
+      "hosaka_after_hours": "Hosaka After Hours",
+      "hosaka_core": "Hosaka Core",
+      "ta_defection": "Hosaka Corporate Infiltration",
+      "hosaka_terminal_supply": "Hosaka Terminal Supply",
+      "ice_run": "Ice Run",
+      "maas_heist": "Maas Biolabs Heist",
+      "mollys_final_razor": "Molly's Final Razor",
+      "ono_sendai_repair": "Ono-Sendai Repair",
+      "razor_work": "Razor Work",
+      "sense_net_infiltration": "Sense/Net Infiltration",
+      "soho_blackout": "Soho Blackout",
+      "surface_mail_run": "Surface Mail Run",
+      "tokyo-courier-run": "Tokyo Courier Run",
+      "tutorial_maze": "Tutorial Maze",
+      "viktor_orbit_arc": "Viktor Orbit Arc",
+      "virtual_light_data_key_arc": "Virtual Light Data-Key Arc",
+      "loa_voodoo_contact": "Voodoo Loa Encounter",
+      "watchdog_patrol": "Watchdog Patrol",
+      "wendell_suburban_arc": "Wendell Suburban Arc",
+      "yakuza_deal": "Yakuza Loan Shark",
+      "zion_vote_observation": "Zion Vote Observation"
+    },
+    "suit": {
+      "armitage_infiltration": "Armitage's First Infiltration",
+      "armitage_infiltration_2": "Armitage Infiltration II",
+      "bama_statework": "BAMA Statework",
+      "boone_tokyo_electronics_arc": "Boone Tokyo-Electronics Arc",
+      "core_defend_data_citadel": "Data Citadel Defense",
+      "core_memory_dump": "Core Memory Dump",
+      "fido_statework": "Fido Statework",
+      "finn_factory_labour_run": "Finn's Factory Labour Run",
+      "freeside_payroll": "Freeside Payroll",
+      "fukuoka_ridership_arc": "Fukuoka Ridership Arc",
+      "hosaka_extraction": "Hosaka Internal Extraction",
+      "hounds_arc": "Hounds Arc",
+      "kombinat-node-hack": "Kombinat Node Hack",
+      "mona_bridge_arc": "Mona Bridge Arc",
+      "neuromancer_first_ping": "Neuromancer First Ping",
+      "pacific_empire_arc": "Pacific-Empire Arc",
+      "pan_mannerist_audit": "Pan-Mannerist Audit",
+      "sense_net_archive_intrusion": "Sense/Net Archive Intrusion",
+      "ta_defection": "Tessier-Ashpool Defection",
+      "ta_defend_straylight_perimeter": "Straylight Perimeter Defense",
+      "wintermute_negotiation": "Wintermute Negotiation",
+      "tessier_sleeper_arc": "Tessier-Ashpool Sleeper Arc",
+      "threjane_family_log": "3Jane's Family Log",
+      "trauma_squads_audit": "Trauma-Squads Audit",
+      "w_anchor_arc": "W-Anchor Arc",
+      "wintermute_merger_run": "Wintermute Merger Run",
+      "wintermute_witness": "Wintermute Witness",
+      "working_class_ridership_arc": "Working-Class Ridership Arc",
+      "yanaka_family_power_arc": "Yanaka Family-Power Arc",
+      "zaibatsu_statework": "Zaibatsu Statework"
+    },
+    "veteran": {
+      "bigend-laney-lunch": "Bigend Meets Laney",
+      "bridge-construct": "Bridge Construct",
+      "case-meets-cayce": "Case Meets Cayce",
+      "marly_louisiana-god": "Delivery to Finn",
+      "dixies_choice": "Dixie's Choice",
+      "dixies_last_run": "Dixie's Offer",
+      "finn_final_reckoning": "Finn's Final Reckoning",
+      "first_contact": "First Contact",
+      "hideo_contract": "Hideo's Contract",
+      "laney_node_signal_run": "Laney Node Signal Run",
+      "molly_decides": "Molly Decides",
+      "mollys_market": "Molly's Market",
+      "mollys_razor": "Molly's Razor",
+      "panther_negotiate": "Panther Negotiate",
+      "hosaka_extraction": "Sense/Net Media Extract",
+      "sense_net_trace": "Sense/Net Tip",
+      "straylight_approach": "Straylight Archive",
+      "ta_heist": "T-A Heist",
+      "tessier_ashpool_aftermath": "Tessier-Ashpool: Aftermath",
+      "tokyo_pachinko_run": "Tokyo Pachinko Run",
+      "vegas_stakeout": "Vegas Stakeout",
+      "winter_infiltrate": "Winter Infiltration",
+      "wintermute_residue": "Wintermute Residue",
+      "yakuza_meeting": "Yakuza Meeting",
+      "zion_express": "Zion Express"
+    },
+    "case": {
+      "case_past_defend_chiba_memory": "Chiba Memory Defense",
+      "case_past_dual_objective_dead_mans_chip": "Dead Man's Chip",
+      "case_past_extract_linda_memory": "Linda's Memory",
+      "case_past_investigate_armitage_mind": "Armitage's Mind",
+      "core_dual_objective_construct_heist": "Construct Heist",
+      "core_extract_aeslin_key": "Aeslin Key Extraction",
+      "core_investigate_ice_lord": "The Ice Lord's Audit",
+      "mid_dual_objective_hosaka_data": "Hosaka Data Extraction",
+      "mid_stealth_corpo_penthouse": "Corpo Penthouse Infiltration",
+      "ta_dual_objective_ashpool_vote": "Ashpool Succession Vote",
+      "ta_extract_aleph_chip": "Aleph Chip Extraction",
+      "ta_investigate_3jane_initiative": "3Jane's Corporate Initiative",
+      "ta_stealth_construct_chamber": "Construct Chamber Infiltration"
+    },
+    "sally": {
+      "core_defend_eye_archive": "Eye Archive Defense",
+      "core_stealth_construct_pool": "Construct Pool",
+      "core_stealth_eye_central": "Eye Central Infiltration"
+    },
+    "bigend": {
+      "core_dual_objective_mirror_run": "Mirror Run",
+      "mid_dual_objective_trade_show": "Trade Show Heist",
+      "ngplus_investigate_archive_3": "Archive: Bigend",
+      "soho_extract_logo_meme": "Logo Meme Extraction",
+      "soho_investigate_brand_territory": "Brand Territory",
+      "tokyo_defend_shibuya_archipelago": "Shibuya Archipelago Defense",
+      "tokyo_extract_footage_archive": "Footage Archive Extraction"
+    },
+    "wintermute": {
+      "core_extract_neuromancer_signature": "Neuromancer Signature",
+      "core_extract_payroll_archive": "Payroll Archive",
+      "freeside_investigate_orbital_history": "Orbital History",
+      "ngplus_dual_objective_boss_rush_1": "Boss Rush: Wintermute",
+      "ngplus_investigate_archive_1": "Archive: Wintermute",
+      "ta_dual_objective_warden_archive": "Warden Archive",
+      "ta_extract_aleph_fragment_2": "Aleph Fragment 2",
+      "ta_investigate_construct_memory": "Construct Memory"
+    },
+    "masahiko": {
+      "core_investigate_construct_council": "Construct Council",
+      "freeside_extract_orbital_data": "Orbital Data",
+      "freeside_extract_orbital_data_2": "Orbital Data 2",
+      "freeside_investigate_construct_research": "Construct Research",
+      "mid_defend_sense_net_relay": "Sense/Net Relay Defense",
+      "ngplus_investigate_archive_5": "Archive: Masahiko"
+    },
+    "3jane": {
+      "freeside_defend_orbit_habitat": "Orbit Habitat Defense",
+      "ngplus_dual_objective_boss_rush_2": "Boss Rush: Tessier-Ashpool",
+      "ngplus_investigate_archive_2": "Archive: 3Jane",
+      "ta_defend_straylight_corridor": "Straylight Corridor",
+      "ta_extract_sense_net_key": "Sense/Net Key",
+      "ta_stealth_penthouse_construct": "Penthouse Construct"
+    },
+    "wigan": {
+      "freeside_defend_orbital_habitat": "Orbital Habitat Defense"
+    },
+    "neuromancer": {
+      "freeside_dual_objective_construct_pod_2": "Construct Pod 2",
+      "freeside_dual_objective_jockey_pod": "Jockey Pod",
+      "freeside_dual_objective_space_jockey": "Space Jockey Extraction",
+      "freeside_extract_construct_archive": "Construct Archive",
+      "freeside_extract_construct_pod": "Construct Pod Extraction",
+      "ngplus_dual_objective_boss_rush_3": "Boss Rush: Neuromancer"
+    },
+    "angie": {
+      "freeside_investigate_orbital_sovereignty": "Orbital Sovereignty",
+      "freeside_stealth_orbit_lab": "Orbit Lab Infiltration",
+      "tokyo_dual_objective_coach_class": "Coach Class Extraction"
+    },
+    "kumiko": {
+      "freeside_stealth_construct_chamber": "Construct Chamber",
+      "freeside_stealth_orbit_lab_2": "Orbit Lab 2",
+      "ngplus_investigate_archive_4": "Archive: Kumiko"
+    },
+    "yakuza": {
+      "mid_defend_kumo_network": "Kumo Network Defense",
+      "mid_extract_oni_data": "Oni Data",
+      "mid_extract_yakuza_chop_shop": "Yakuza Chop Shop"
+    },
+    "slick_henry": {
+      "mid_dual_objective_shibuya_run": "Shibuya Run",
+      "mid_investigate_black_market": "Black Market Audit",
+      "mid_investigate_yakuza_consortium": "Yakuza Consortium",
+      "mid_stealth_yakuza_meeting": "Yakuza Meeting"
+    },
+    "molly": {
+      "mid_extract_biometal_chip": "Biometal Chip Extraction",
+      "molly_razor_defend_london_nest": "London Nest Defense",
+      "molly_razor_dual_objective_hotel_target": "Hotel Target",
+      "molly_razor_extract_final_chip": "Final Chip",
+      "molly_razor_investigate_sin_fans": "Sin Fans",
+      "molly_razor_stealth_final_contract": "Final Contract"
+    },
+    "flynne": {
+      "ngplus_dual_objective_boss_rush_4": "Boss Rush: Periphery"
+    },
+    "a_insley": {
+      "ngplus_dual_objective_boss_rush_5": "Boss Rush: Final",
+      "ngplus_investigate_archive_6": "Archive: Final"
+    },
+    "hollis": {
+      "soho_defend_coolhunter_office": "Coolhunter Office Defense",
+      "soho_dual_objective_footage_cult": "Footage Cult Infiltration",
+      "soho_investigate_nostalgia_loop": "Nostalgia Loop"
+    },
+    "cayce": {
+      "soho_dual_objective_viddy_share": "Viddy Share Heist",
+      "soho_stealth_brand_vault": "Brand Vault Infiltration",
+      "soho_stealth_node_dive": "Node Dive"
+    },
+    "finn": {
+      "surface_defend_recycling_baseline": "Recycling Baseline",
+      "surface_extract_seed_run": "Seed Run Extraction",
+      "surface_investigate_bama_suburb": "Bama Suburb Investigation"
+    },
+    "armitage": {
+      "ta_dual_objective_payroll_heist": "Payroll Heist"
+    },
+    "darko": {
+      "tokyo_dual_objective_darko_trauma": "Darko's Trauma"
+    },
+    "laney": {
+      "tokyo_extract_laney_signal": "Laney's Signal"
+    },
+    "marcus_garvey": {
+      "tokyo_investigate_marcus_garvey": "Marcus Garvey Investigation"
+    },
+    "yamazaki": {
+      "tokyo_investigate_parkabrake_plaza": "Parkabrake Plaza",
+      "tokyo_stealth_bridge_undercity": "Bridge Undercity Infiltration"
+    }
+  }
+}

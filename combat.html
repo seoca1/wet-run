@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Real-Time with Menu Skills 전투 시스템. 15 스킬 효과, 5 ICE 카테고리 · 41 변형, PPL/ZDR 난이도 시스템.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, neuromancer, python, tcod, ascii, combat, rt-ms, ice, skill">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/combat.html">
+<meta property="og:title" content="Combat (RT-MS) — Wet Run">
+<meta property="og:description" content="Real-Time with Menu Skills 전투 시스템. 15 스킬 효과, 5 ICE 카테고리 · 41 변형, PPL/ZDR 난이도 시스템.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/combat.html">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Combat (RT-MS) — Wet Run">
+<meta name="twitter:description" content="Real-Time with Menu Skills 전투 시스템. 15 스킬 효과, 5 ICE 카테고리 · 41 변형, PPL/ZDR 난이도 시스템.">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta name="theme-color" content="#0a0e14">
+<title>Wet Run — Combat Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.7;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { font-weight: 600; }
+  h1 { font-size: 28px; margin-bottom: 8px; color: #e74c3c; text-shadow: 0 0 12px #e74c3c44; }
+  h2 { font-size: 20px; margin: 32px 0 16px; color: #66ffcc; border-bottom: 1px solid #1a2530; padding-bottom: 8px; }
+  h3 { font-size: 16px; margin: 16px 0 8px; color: #ffaa55; }
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 24px; }
+
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 24px; margin: -24px -24px 16px -24px;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; font-size: 13px; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .current { color: #ffaa55; font-weight: 600; }
+  .top-nav .sep { color: #2a3540; }
+  .top-hub-link {
+    display: inline-block; background: #131a23; border: 1px solid #2a3540;
+    border-radius: 4px; padding: 6px 12px; color: #00d9ff; text-decoration: none;
+    font-size: 12px; margin-bottom: 16px;
+  }
+  .top-hub-link:hover { border-color: #00d9ff; }
+
+  /* Stats */
+  .stats-panel {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 8px;
+    padding: 20px; margin-bottom: 24px;
+  }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat-item {
+    background: #06090f; border: 1px solid #1a2530; border-radius: 4px; padding: 12px;
+  }
+  .stat-item .label { color: #6a7888; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-item .value { color: #e74c3c; font-size: 24px; font-weight: 700; margin-top: 4px; }
+  .stat-item .sub { color: #6a7888; font-size: 10px; margin-top: 2px; }
+
+  /* Section panel */
+  .section {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+    padding: 20px; margin-bottom: 24px;
+  }
+
+  /* ICE table */
+  .ice-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  .ice-table th {
+    background: #1a2530; color: #e74c3c; padding: 10px 12px;
+    text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .ice-table td {
+    padding: 10px 12px; border-top: 1px solid #1a2530; color: #c5d4e3; font-size: 13px;
+  }
+  .ice-table tr:hover td { background: #1a2530; }
+  .ice-table .tier {
+    display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px;
+  }
+  .tier-1 { background: #66ffcc33; color: #66ffcc; }
+  .tier-2 { background: #3498db33; color: #3498db; }
+  .tier-3 { background: #f39c1233; color: #f39c12; }
+  .tier-4 { background: #e74c3c33; color: #e74c3c; }
+  .ice-table .hp-bar {
+    display: inline-block; background: #1a2530; border-radius: 4px; height: 6px;
+    width: 80px; position: relative; vertical-align: middle;
+  }
+  .ice-table .hp-fill {
+    display: block; height: 100%; border-radius: 4px;
+    background: linear-gradient(90deg, #66ffcc, #00ccff);
+  }
+  .ice-table .dmg-cell { color: #ff8888; font-weight: 700; }
+
+  /* Effect grid */
+  .effect-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin-top: 12px;
+  }
+  .effect-card {
+    background: #06090f; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 12px; border-left: 3px solid #e74c3c;
+  }
+  .effect-card .name { color: #ffaa55; font-size: 13px; font-weight: 600; }
+  .effect-card .id { color: #6a7888; font-size: 11px; font-family: monospace; }
+  .effect-card .desc { color: #8a9aa8; font-size: 12px; margin-top: 4px; }
+
+  /* Flow diagram */
+  .flow {
+    background: #050a10; border: 1px solid #1a2530; border-radius: 4px;
+    padding: 16px; margin-top: 12px; color: #66ffcc; font-size: 12px;
+    line-height: 1.8; white-space: pre-wrap;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center; color: #6a7888; font-size: 12px; margin-top: 48px;
+    padding: 24px; border-top: 1px solid #1a2530;
+  }
+  .footer code { background: #1a2530; padding: 2px 6px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="index.html">◀ Wet Run</a>
+  <span class="sep">|</span>
+  <a href="missions.html">📖 Story</a>
+  <span class="sep">|</span>
+  <a href="stages.html">⏱ Stages</a>
+  <span class="sep">|</span>
+  <a href="./jokey.html">🎭 Cast</a>
+  <a href="library.html">📚 Short Stories</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="graphic-novel.html">Graphic Novel</a>
+  <span class="sep">|</span>
+  <a href="sound.html">🔊 Sound</a>
+  <span class="sep">|</span>
+  <span class="current">⚔ Combat</span>
+  <span class="sep">|</span>
+  <a href="./player.html#equipment">📦 Equipment</a>
+  <span class="sep">|</span>
+  <a href="cyberspace.html">🌐 Cyberspace</a>
+</nav>
+<a class="top-hub-link" id="projects-hub-link" href="../../" title="Projects Hub (local dev only)">🌐 Projects Hub</a>
+<script>
+  // Hide on non-local filesystems (e.g. GitHub Pages) where the
+  // workspace path ../../Game/ does not exist.
+  (function () {
+    var link = document.getElementById("projects-hub-link");
+    if (!link) return;
+    link.style.display = (window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+      ? "inline-block" : "none";
+  })();
+</script>
+
+<h1>⚔ Combat Dashboard</h1>
+<div class="subtitle">
+  RT-MS (Real-Time with Menu Skills) · 5 ICE 등급 · 15 스킬 효과 · 5 종족
+  <br>
+  <code>src/wet_run/combat/</code> · <code>data/combat/ice_types.json</code>
+</div>
+
+<!-- Stats -->
+<div class="stats-panel">
+  <h2>📊 Overview</h2>
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="label">ICE Types</div>
+      <div class="value" data-stat="ice">5</div>
+      <div class="sub">standard → construct</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Skill Effects</div>
+      <div class="value" data-stat="effects">14</div>
+      <div class="sub">attack, heal, buff, ...</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Combat Mode</div>
+      <div class="value" data-stat="mode">RT-MS</div>
+      <div class="sub">Real-Time + Menu</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">PPL System</div>
+      <div class="value" data-stat="ppl">v1</div>
+      <div class="sub">Player Power Level</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">ZDR System</div>
+      <div class="value" data-stat="zdr">v1</div>
+      <div class="sub">Zone Difficulty Rating</div>
+    </div>
+  </div>
+</div>
+
+<!-- Combat Flow -->
+<h2>⚡ Combat Flow (RT-MS)</h2>
+<div class="section">
+  <h3>전투 사이클</h3>
+  <div class="flow">Player (real-time)              ICE (turn-based with timer)
+───────────────────              ───────────────────
+ 1. Move/Attack/Skill                  (timer counts down)
+ 2. Use AP for actions                 (auto-attack when timer=0)
+ 3. Block/Dodge in real-time            (skill use at thresholds)
+ 4. Watch cooldown timers              (HP bar, status effects)
+                  ↓                              ↓
+              damage applied              player takes damage
+                  ↓                              ↓
+              HP update                    AP/HP update
+                  ↓                              ↓
+              WIN: HP=0 enemy              LOSE: HP=0 player
+                  ↓                              ↓
+         → JACK_OUT screen              → DEATH screen (flatline)</div>
+</div>
+
+<!-- ICE Types -->
+<h2>👾 ICE Types (5 grade / <span data-stat="ice-total">29</span> total)</h2>
+<div class="section">
+  <p style="color: #8a9aa8; font-size: 13px;">ICE (Intrusion Countermeasures Electronics) — 사이버스페이스에서 자키를 막는 적.</p>
+  <table class="ice-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Tier</th>
+        <th>HP</th>
+        <th>Damage</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>standard</code></td>
+        <td>ICE — Standard</td>
+        <td><span class="tier tier-1">T1</span></td>
+        <td>
+          <div class="hp-bar"><div class="hp-fill" style="width: 27%"></div></div>
+          80
+        </td>
+        <td class="dmg-cell">3</td>
+        <td>기본 ICE. 신참 자키 대상.</td>
+      </tr>
+      <tr>
+        <td><code>watchdog</code></td>
+        <td>ICE — Watchdog</td>
+        <td><span class="tier tier-1">T1</span></td>
+        <td>
+          <div class="hp-bar"><div class="hp-fill" style="width: 17%"></div></div>
+          50
+        </td>
+        <td class="dmg-cell">2</td>
+        <td>순찰형 ICE. 다수 등장.</td>
+      </tr>
+      <tr>
+        <td><code>goliath</code></td>
+        <td>ICE — Goliath (heavy)</td>
+        <td><span class="tier tier-3">T3</span></td>
+        <td>
+          <div class="hp-bar"><div class="hp-fill" style="width: 50%"></div></div>
+          150
+        </td>
+        <td class="dmg-cell">5</td>
+        <td>중장형 ICE. 느리지만 강함.</td>
+      </tr>
+      <tr>
+        <td><code>black</code></td>
+        <td>ICE — Black</td>
+        <td><span class="tier tier-3">T3</span></td>
+        <td>
+          <div class="hp-bar"><div class="hp-fill" style="width: 67%"></div></div>
+          200
+        </td>
+        <td class="dmg-cell">8</td>
+        <td>블랙 ICE. 매우 위험. 사망 또는 손상.</td>
+      </tr>
+      <tr>
+        <td><code>construct</code></td>
+        <td>Construct — Dixie</td>
+        <td><span class="tier tier-4">T4</span></td>
+        <td>
+          <div class="hp-bar"><div class="hp-fill" style="width: 100%"></div></div>
+          300
+        </td>
+        <td class="dmg-cell">6</td>
+        <td>Dixie Flatline 구성체. 동맹 또는 적.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ICE Type Index (auto-built from combat_stats.json) -->
+<h2>📚 ICE Type Index (<span data-stat="ice-total">29</span> entries)</h2>
+<div class="section">
+  <p style="color: #8a9aa8; font-size: 13px;">
+    <code>prototype/data/combat/ice_types.json</code> 의 29 entries 목록
+    (5 grade + 24 specific). 자동 빌드:
+  </p>
+  <div id="ice-index" class="effect-grid" style="grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));"></div>
+</div>
+
+<!-- Skill Effects -->
+<h2>✨ Skill Effects (<span data-stat="effects-count">14</span>)</h2>
+<div class="section">
+  <p style="color: #8a9aa8; font-size: 13px;">스킬 효과는 RT-MS에서 사용 가능한 행동 유형.</p>
+  <div class="effect-grid">
+    <div class="effect-card"><div class="name">Attack</div><div class="id">attack</div><div class="desc">직접 데미지</div></div>
+    <div class="effect-card"><div class="name">Heavy Attack</div><div class="id">heavy_attack</div><div class="desc">큰 데미지, 느림</div></div>
+    <div class="effect-card"><div class="name">Pierce</div><div class="id">pierce</div><div class="desc">방어구 무시 데미지</div></div>
+    <div class="effect-card"><div class="name">Multi Hit</div><div class="id">multi_hit</div><div class="desc">2-3회 공격</div></div>
+    <div class="effect-card"><div class="name">DoT</div><div class="id">dot</div><div class="desc">지속 데미지 (화상, 바이러스)</div></div>
+    <div class="effect-card"><div class="name">Shield</div><div class="id">shield</div><div class="desc">데미지 흡수</div></div>
+    <div class="effect-card"><div class="name">Regen</div><div class="id">regen</div><div class="desc">지속 치유</div></div>
+    <div class="effect-card"><div class="name">Heal</div><div class="id">heal</div><div class="desc">즉시 치유</div></div>
+    <div class="effect-card"><div class="name">Buff</div><div class="id">buff</div><div class="desc">공격력 증가</div></div>
+    <div class="effect-card"><div class="name">Debuff</div><div class="id">debuff</div><div class="desc">적 공격력 감소</div></div>
+    <div class="effect-card"><div class="name">Detect</div><div class="id">detect</div><div class="desc">정보 공개</div></div>
+    <div class="effect-card"><div class="name">Stun</div><div class="id">stun</div><div class="desc">적 기절 (공격 스킵)</div></div>
+    <div class="effect-card"><div class="name">Counter</div><div class="id">counter</div><div class="desc">데미지 반사</div></div>
+    <div class="effect-card"><div class="name">Lifesteal</div><div class="id">lifesteal</div><div class="desc">가한 데미지만큼 치유</div></div>
+    <div class="effect-card"><div class="name">Poison</div><div class="id">poison</div><div class="desc">누적되는 DoT</div></div>
+  </div>
+</div>
+
+<!-- Difficulty System -->
+<h2>📊 PPL & ZDR System</h2>
+<div class="section">
+  <h3>Player Power Level (PPL)</h3>
+  <p style="color: #8a9aa8; font-size: 13px;">
+    자키의 전투력을 정량화. 장비/프로그램/웨웨어 티어 합산.
+  </p>
+  <div class="flow">PPL = (deck_tier × 3) + sum(programs) + (wetware_tier × 2) + (construct_tier)
+    예: Grade 1 (T1) loadout = 1×3 + 1 + 1×2 + 0 = 6 PPL</div>
+
+  <h3 style="margin-top: 16px;">Zone Difficulty Rating (ZDR)</h3>
+  <p style="color: #8a9aa8; font-size: 13px;">
+    구역의 난이도. faction + zone 깊이 + 데이터 가치로 결정.
+  </p>
+  <div class="flow">ZDR = base(zone) + modifier(faction) + risk(data_value)
+    SAFE (0-2) · MATCH (3-5) · TOUGH (6-9) · DEADLY (10-14) · FUTILE (15+)</div>
+
+  <h3 style="margin-top: 16px;">Status Calculation</h3>
+  <div class="flow">if ZDR == 0:  SAFE      (회피 가능)
+if PPL &gt; ZDR: MATCH    (균형)
+if PPL &gt;= ZDR×1.5: SAFE   (쉬움)
+if PPL &lt; ZDR:  TOUGH/DEADLY (어려움)</div>
+</div>
+
+<!-- Outcomes -->
+<h2>🎯 Combat Outcomes</h2>
+<div class="section">
+  <table class="ice-table">
+    <thead>
+      <tr><th>Outcome</th><th>Trigger</th><th>Result</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span style="color: #66ffcc; font-weight: 700;">Victory</span></td>
+        <td>ICE HP = 0</td>
+        <td>+ICE Shard, +Credits, +Mission Progress, → JACK_OUT screen</td>
+      </tr>
+      <tr>
+        <td><span style="color: #ff8888; font-weight: 700;">Defeat</span></td>
+        <td>Player HP = 0</td>
+        <td>Run failed → FAILED stage → DEATH screen → DEATH_RESTART</td>
+      </tr>
+      <tr>
+        <td><span style="color: #ffaa55; font-weight: 700;">Disengage</span></td>
+        <td>Player flees</td>
+        <td>No reward, return to matrix</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Sounds -->
+<h2>🔊 Combat Sounds (12)</h2>
+<div class="section">
+  <p style="color: #8a9aa8; font-size: 13px;">전투 사운드 카테고리 (<code>B</code> 키로 토글).</p>
+  <table class="ice-table">
+    <thead>
+      <tr><th>Sound</th><th>Trigger</th><th>File</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>combat_hit_normal</code></td><td>일반 명중</td><td><code>data/sounds_test/combat_hit_normal.wav</code></td></tr>
+      <tr><td><code>combat_hit_crit</code></td><td>크리티컬 명중</td><td><code>data/sounds_test/combat_hit_crit.wav</code></td></tr>
+      <tr><td><code>combat_hit_miss</code></td><td>빗나감</td><td><code>data/sounds_test/combat_hit_miss.wav</code></td></tr>
+      <tr><td><code>combat_block</code></td><td>방어/블록</td><td><code>data/sounds_test/combat_block.wav</code></td></tr>
+      <tr><td><code>combat_stun</code></td><td>스턴</td><td><code>data/sounds_test/combat_stun.wav</code></td></tr>
+      <tr><td><code>combat_skill_buff</code></td><td>스킬 버프</td><td><code>data/sounds_test/combat_skill_buff.wav</code></td></tr>
+      <tr><td><code>combat_skill_debuff</code></td><td>스킬 디버프</td><td><code>data/sounds_test/combat_skill_debuff.wav</code></td></tr>
+      <tr><td><code>combat_skill_heal</code></td><td>스킬 치유</td><td><code>data/sounds_test/combat_skill_heal.wav</code></td></tr>
+      <tr><td><code>combat_skill_magic</code></td><td>매직 스킬</td><td><code>data/sounds_test/combat_skill_magic.wav</code></td></tr>
+      <tr><td><code>combat_skill_physical</code></td><td>물리 스킬</td><td><code>data/sounds_test/combat_skill_physical.wav</code></td></tr>
+      <tr><td><code>combat_victory</code></td><td>승리</td><td><code>data/sounds_test/combat_victory.wav</code></td></tr>
+      <tr><td><code>combat_defeat</code></td><td>패배</td><td><code>data/sounds_test/combat_defeat.wav</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  Wet Run — Combat Dashboard<br>
+  <code>src/wet_run/combat/</code> · <code>data/combat/ice_types.json</code> · RT-MS
+</div>
+
+<div class="container">
+<h2>🎬 VFX (시각 효과) — 5-Layer System</h2>
+<p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
+  <code>src/wet_run/combat/effects.py</code> — 모든 스킬·ICE·크리티컬에 ASCII 애니메이션, 파티클, 스크린 셰이크, 시네마틱 인트로/데스 시퀀스.
+</p>
+
+<div class="vfx-grid">
+  <div class="vfx-card layer1">
+    <h3>Layer 1 — 즉각 히트 피드백</h3>
+    <ul>
+      <li><b>히트 플래시</b>: 타겟 타일 120ms 백색/노랑</li>
+      <li><b>플로팅 숫자</b>: 데미지/힐, 위로 떠오르며 페이드 (800ms)</li>
+      <li><b>히트 파티클</b>: 6개 ASCII 문자 외측 비산 (중력 80)</li>
+      <li><b>스크린 셰이크</b>: 무거운 히트에 1.0-3.5 강도</li>
+    </ul>
+  </div>
+  <div class="vfx-card layer2">
+    <h3>Layer 2 — 15 스킬 애니메이션</h3>
+    <ul>
+      <li><b>ATTACK</b>: <code>[=&gt;</code> → 타겟 플래시</li>
+      <li><b>HEAVY_ATTACK</b>: 차지 → 슬램 → 충격파</li>
+      <li><b>PIERCE</b>: 관통 화살표 + 이중 플래시</li>
+      <li><b>MULTI_HIT</b>: 3회 빠른 연타</li>
+      <li><b>DOT/POISON</b>: 보라색 독성 파티클</li>
+      <li><b>SHIELD</b>: <code>❖●❖</code> 육각 패턴</li>
+      <li><b>HEAL</b>: 상승하는 <code>+ ✚ ❀</code></li>
+      <li><b>STUN</b>: 회전하는 별 <code>✦·✦</code></li>
+      <li><b>LIFESTEAL</b>: 빨간 선 + 자가 힐</li>
+      <li><b>COUNTER</b>: 방패 후 반환</li>
+      <li><b>DETECT</b>: 스캔 레티클</li>
+      <li><b>...</b> BUFF/DEBUFF/REGEN 포함 15종</li>
+    </ul>
+  </div>
+  <div class="vfx-card layer3">
+    <h3>Layer 3 — ICE 타입별 고유 연출</h3>
+    <ul>
+      <li><b>standard</b>: <code>[X_X]</code> → <code>· · ·</code></li>
+      <li><b>watchdog</b>: <code>WOOF!</code> + 이빨 자국</li>
+      <li><b>goliath</b>: 균열 + 무거운 임팩트 (red)</li>
+      <li><b>black</b>: 글리치 <code>▓█▓▓█▓</code> + magenta</li>
+      <li><b>construct</b>: 회전 기어 <code>⚙⚙⚙</code></li>
+    </ul>
+  </div>
+  <div class="vfx-card layer4">
+    <h3>Layer 4 — 상태이상 아이콘</h3>
+    <ul>
+      <li><b>P</b> Poison · <b>B</b> Burn · <b>S</b> Stun</li>
+      <li><b>❖</b> Shield · <b>↑</b> Buff · <b>↓</b> Debuff</li>
+      <li><b>+</b> Regen · <b>•</b> DOT</li>
+      <li>전투원 옆 표시, 버프/디버프는 테두리 색 변화</li>
+    </ul>
+  </div>
+  <div class="vfx-card layer5">
+    <h3>Layer 5 — 시네마틱 (Cinematic)</h3>
+    <ul>
+      <li><b>전투 시작</b>: 1.5-2초 ICE 이름 글리치 등장</li>
+      <li><b>크리티컬</b>: 250ms 슬로모션 + 강 셰이크 (3.5)</li>
+      <li><b>데스 시퀀스</b>: 5-8프레임 다단계 파괴</li>
+      <li><b>콤보 카운터</b>: <code>2x HIT!</code> → <code>5x RAMPAGE!</code></li>
+    </ul>
+  </div>
+</div>
+
+<style>
+.vfx-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.vfx-card {
+  background: #131a23;
+  border: 1px solid #2a3540;
+  border-left: 3px solid #66ffcc;
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+.vfx-card h3 {
+  color: #66ffcc;
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.vfx-card ul {
+  color: #c5d4e3;
+  font-size: 12px;
+  line-height: 1.5;
+  list-style: none;
+  padding: 0;
+}
+.vfx-card li {
+  margin-bottom: 3px;
+}
+.vfx-card code {
+  color: #ffaa55;
+  font-size: 11px;
+  background: #0a0e14;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.vfx-card.layer2 { border-left-color: #00ccff; }
+.vfx-card.layer2 h3 { color: #00ccff; }
+.vfx-card.layer3 { border-left-color: #ffaa55; }
+.vfx-card.layer3 h3 { color: #ffaa55; }
+.vfx-card.layer4 { border-left-color: #ff7799; }
+.vfx-card.layer4 h3 { color: #ff7799; }
+.vfx-card.layer5 { border-left-color: #ff5599; }
+.vfx-card.layer5 h3 { color: #ff5599; }
+</style>
+
+<div class="container">
+<h2>👑 BOSS ICE (다단계 페이즈 보스)</h2>
+<p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
+  <code>src/wet_run/combat/bosses.py</code> — 3 BOSS × 다단계 페이즈 × 확장된 시네마틱.
+  각 BOSS는 3-4 단계로 전환되며, 단계마다 공격력·속도·특수능력이 강화됩니다.
+</p>
+
+<div class="boss-grid">
+  <div class="boss-card goliath">
+    <h3>👹 GOLIATH PRIME</h3>
+    <div class="boss-stats">
+      <span>HP ×4.0</span> · <span>ATK ×2.0</span> · <span>DEF ×1.8</span>
+    </div>
+    <div class="boss-phases">
+      <div class="phase">P0 정상 (100%)</div>
+      <div class="phase">P1 경계 (75%): +20% ATK, +10% SPD</div>
+      <div class="phase">P2 격노 (50%): +40% ATK, <code>ground_slam</code></div>
+      <div class="phase">P3 자폭 (25%): +80% ATK, <code>desperate_strike</code></div>
+    </div>
+    <div class="boss-text">
+      <b>인트로</b>: "[ 경고: GOLIATH PRIME ]" → "코어 노출" → "출현."<br>
+      <b>데스</b>: 4 시퀀스, 13 프레임, 3.5초
+    </div>
+  </div>
+  <div class="boss-card black">
+    <h3>👁 BLACK ICE LORD</h3>
+    <div class="boss-stats">
+      <span>HP ×3.5</span> · <span>ATK ×2.5</span> · <span>DEF ×1.4</span>
+    </div>
+    <div class="boss-phases">
+      <div class="phase">P0 위장 (100%)</div>
+      <div class="phase">P1 노출 (66%): +30% ATK, <code>glitch_burst</code></div>
+      <div class="phase">P2 붕괴 (33%): +60% ATK, <code>corrupt_payload</code></div>
+    </div>
+    <div class="boss-text">
+      <b>인트로</b>: "▓▓▓ 오류: ICE 권한 초과 ▓▓▓" → "[연결 종료]"<br>
+      <b>데스</b>: 4 시퀀스, 13 프레임, 글리치 효과
+    </div>
+  </div>
+  <div class="boss-card watchdog">
+    <h3>🐕 WATCHDOG ALPHA</h3>
+    <div class="boss-stats">
+      <span>HP ×3.0</span> · <span>ATK ×1.8</span> · <span>DEF ×1.2</span>
+    </div>
+    <div class="boss-phases">
+      <div class="phase">P0 추적 (100%)</div>
+      <div class="phase">P1 분노 (50%): +25% ATK, +50% SPD, <code>pack_howl</code></div>
+      <div class="phase">P2 집중 (20%): +100% ATK, <code>alpha_strike</code></div>
+    </div>
+    <div class="boss-text">
+      <b>인트로</b>: "WATCHDOG ALPHA 가 잠에서 깨어남" → "도망칠 수 없다"<br>
+      <b>데스</b>: 4 시퀀스, 11 프레임, "...woof?"
+    </div>
+  </div>
+</div>
+
+<style>
+.boss-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+.boss-card {
+  background: #131a23;
+  border: 1px solid #2a3540;
+  border-radius: 8px;
+  padding: 18px 20px;
+  border-top: 3px solid;
+}
+.boss-card.goliath { border-top-color: #ff5555; }
+.boss-card.black { border-top-color: #ff55ff; }
+.boss-card.watchdog { border-top-color: #ffaa55; }
+.boss-card h3 {
+  color: #66ffcc;
+  font-size: 18px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.boss-stats {
+  color: #ffaa55;
+  font-size: 12px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+.boss-phases {
+  background: #0a0e14;
+  border: 1px solid #2a3540;
+  border-radius: 4px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+.phase {
+  color: #c5d4e3;
+  font-size: 12px;
+  padding: 2px 0;
+  font-family: monospace;
+}
+.phase code {
+  color: #ff7799;
+  background: #131a23;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.boss-text {
+  color: #8a9aa8;
+  font-size: 11px;
+  line-height: 1.6;
+}
+.boss-text b {
+  color: #66ffcc;
+}
+</style>
+
+<div class="container">
+<h2>📊 HP 바 & 카메라 연출 (HUD)</h2>
+<p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
+  <code>src/wet_run/combat/hud.py</code> — 2단 HP 바, 임계치 경고, 보스 페이즈 색, 카메라 vignette. 600ms 펄스, 200ms 데미지/힐 플래시, 0.7 vignette 강도.
+</p>
+
+<div class="hud-grid">
+  <div class="hud-card hp-bar">
+    <h3>📊 2단 HP 바</h3>
+    <div class="bar-demo">
+      <code>[████████████████████] 100/100 HP</code>
+      <code class="hp-low">[██████░░░░░░░░░░░░░░] 30/100 HP</code>
+      <code class="hp-crit">[██░░░░░░░░░░░░░░░░░] 5/100 HP</code>
+      <code class="shield">[▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░] SH</code>
+    </div>
+    <ul>
+      <li><b>Block chars</b>: <code>█</code> (full) / <code>░</code> (empty)</li>
+      <li><b>Shield</b>: <code>▓</code> (full) / <code>░</code> (empty)</li>
+      <li><b>Smooth drain</b>: 200ms transition, no instant jumps</li>
+      <li><b>Color tiers</b>: green (>50%) → yellow (>30%) → orange (≤30%) → red (≤10%)</li>
+    </ul>
+  </div>
+  <div class="hud-card low-hp">
+    <h3>⚠️ 저HP 경고 (AlertLevel)</h3>
+    <table class="hud-table">
+      <tr><th>HP%</th><th>Level</th><th>Effect</th></tr>
+      <tr><td>&gt; 30%</td><td>HEALTHY</td><td>None</td></tr>
+      <tr><td>≤ 30%</td><td>LOW</td><td>펄스 600ms + Vignette 0.3</td></tr>
+      <tr><td>≤ 10%</td><td>CRITICAL</td><td>강한 펄스 + Vignette 0.7 + Desaturation 0.5</td></tr>
+    </table>
+  </div>
+  <div class="hud-card phase">
+    <h3>👑 보스 페이즈 색상</h3>
+    <ul>
+      <li><b>P0</b> 정상 <code>(180,180,200)</code> silver</li>
+      <li><b>P1</b> 경계 <code>(255,180,100)</code> warning</li>
+      <li><b>P2</b> 격노 <code>(255,100,100)</code> danger</li>
+      <li><b>P3</b> 자폭 <code>(255,50,50)</code> critical</li>
+      <li><b>전환 시</b>: 400ms 백색 플래시</li>
+      <li><b>Vignette</b>: 페이즈 전환 시 0.4 강도 300ms</li>
+    </ul>
+  </div>
+  <div class="hud-card flash">
+    <h3>💥 데미지/힐 플래시</h3>
+    <ul>
+      <li><b>데미지</b>: HP 바 적색 <code>(255,50,50)</code> 200ms</li>
+      <li><b>힐</b>: HP 바 녹색 <code>(80,255,120)</code> 200ms</li>
+      <li><b>Smooth drain</b>: HP가 200ms에 걸쳐 감소</li>
+      <li><b>Shield</b>: shield bar도 동일 애니메이션</li>
+    </ul>
+  </div>
+  <div class="hud-card camera">
+    <h3>📷 카메라 연출</h3>
+    <ul>
+      <li><b>Screen Shake</b>: Layer 1에서 1.0-4.5 강도</li>
+      <li><b>Vignette</b>: 저HP 시 화면 가장자리 어두움 (0.0~0.7)</li>
+      <li><b>Desaturation</b>: CRITICAL HP에서 색상 0.5 채도 감소</li>
+      <li><b>Phase Flash</b>: 보스 페이즈 전환 시 0.4 vignette 플래시</li>
+    </ul>
+  </div>
+  <div class="hud-card api">
+    <h3>🛠 CombatHUD API</h3>
+    <pre><code>hud = CombatHUD()
+hud.take_damage("player", 30)
+hud.heal("player", 50)
+hud.set_boss_phase("enemy", 2, color=(255,50,50))
+hud.step(dt_ms=50)  # 20 fps tick</code></pre>
+  </div>
+</div>
+
+<style>
+.hud-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+.hud-card {
+  background: #131a23;
+  border: 1px solid #2a3540;
+  border-radius: 8px;
+  padding: 16px 18px;
+}
+.hud-card h3 {
+  color: #66ffcc;
+  font-size: 15px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+.hud-card ul {
+  color: #c5d4e3;
+  font-size: 12px;
+  line-height: 1.6;
+  list-style: none;
+  padding: 0;
+}
+.hud-card li {
+  margin-bottom: 4px;
+}
+.hud-card code {
+  color: #ffaa55;
+  font-size: 11px;
+  background: #0a0e14;
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+.bar-demo {
+  background: #0a0e14;
+  border: 1px solid #2a3540;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-family: monospace;
+}
+.bar-demo code {
+  display: block;
+  color: #66ffcc;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+.bar-demo code.hp-low { color: #ffaa55; }
+.bar-demo code.hp-crit { color: #ff3344; }
+.bar-demo code.shield { color: #88ccff; }
+.hud-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+  color: #c5d4e3;
+  margin-top: 8px;
+}
+.hud-table th {
+  text-align: left;
+  color: #66ffcc;
+  padding: 4px 8px;
+  border-bottom: 1px solid #2a3540;
+}
+.hud-table td {
+  padding: 4px 8px;
+  font-family: monospace;
+}
+.hud-card.phase h3 { color: #ffaa55; }
+.hud-card.flash h3 { color: #ff7799; }
+.hud-card.camera h3 { color: #ff5599; }
+.hud-card.api h3 { color: #00ccff; }
+.hud-card pre {
+  background: #0a0e14;
+  border: 1px solid #2a3540;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 0;
+  overflow-x: auto;
+}
+.hud-card pre code {
+  color: #66ffcc;
+  font-size: 11px;
+  font-family: monospace;
+  background: transparent;
+  padding: 0;
+}
+</style>
+
+<div class="container">
+<h2>🔥 스킬 콤보 시스템</h2>
+<p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
+  <code>src/wet_run/combat/combo.py</code> — 3.5초 안에 스킬을 연속 사용 시 보너스. 5 단계 (WARMUP → CHAIN → FLURRY → RAMPAGE → ANNIHILATION).
+  데미지 +0% → +200%, AP 회복 0~3, 스크린 셰이크 0~4.0.
+</p>
+
+<div class="combo-grid">
+  <div class="combo-stage warmup">
+    <h3>0️⃣ WARMUP (웜업)</h3>
+    <div class="combo-meta">
+      <code>1-2 hits</code> · <code>+0% DMG</code> · <code>0 AP</code>
+    </div>
+    <div class="combo-label">콤보 시작</div>
+  </div>
+  <div class="combo-stage chain">
+    <h3>1️⃣ CHAIN (연쇄)</h3>
+    <div class="combo-meta">
+      <code>3 hits</code> · <code>+20% DMG</code> · <code>0 AP</code>
+    </div>
+    <div class="combo-label">3x CHAIN!</div>
+  </div>
+  <div class="combo-stage flurry">
+    <h3>2️⃣ FLURRY (폭주)</h3>
+    <div class="combo-meta">
+      <code>4 hits</code> · <code>+50% DMG</code> · <code>+1 AP</code> · <code>shake 1.5</code>
+    </div>
+    <div class="combo-label">4x FLURRY!</div>
+  </div>
+  <div class="combo-stage rampage">
+    <h3>3️⃣ RAMPAGE (섬멸)</h3>
+    <div class="combo-meta">
+      <code>5 hits</code> · <code>+100% DMG</code> · <code>+2 AP</code> · <code>shake 2.5</code>
+    </div>
+    <div class="combo-label">5x RAMPAGE!</div>
+  </div>
+  <div class="combo-stage annihilation">
+    <h3>4️⃣ ANNIHILATION (초월)</h3>
+    <div class="combo-meta">
+      <code>6+ hits</code> · <code>+200% DMG</code> · <code>+3 AP</code> · <code>shake 4.0</code>
+    </div>
+    <div class="combo-label">6x ANNIHILATION!</div>
+  </div>
+</div>
+
+<div class="combo-window-info">
+  <h3>⏱ 콤보 윈도우 (3.5초)</h3>
+  <div class="window-bar">
+    <code>[████████████████░░░░░░░░░░░░] 60% 남음</code>
+  </div>
+  <p>3.5초 안에 다음 스킬을 사용해야 콤보가 유지됨. 시간 초과 시 자동 종료.</p>
+  <p><b>콤보 종료</b> 시 화면 중앙에 <code>[ 콤보 종료 ]  최대 N 히트, X 데미지</code> 표시.</p>
+</div>
+
+<style>
+.combo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.combo-stage {
+  background: #131a23;
+  border: 1px solid #2a3540;
+  border-left: 3px solid;
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+.combo-stage.warmup { border-left-color: #c8c8c8; }
+.combo-stage.chain { border-left-color: #64e682; }
+.combo-stage.flurry { border-left-color: #ffc850; }
+.combo-stage.rampage { border-left-color: #ff6450; }
+.combo-stage.annihilation {
+  border-left-color: #ff1e1e;
+  background: linear-gradient(135deg, #131a23 0%, #1a0e0e 100%);
+}
+.combo-stage h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.combo-stage.warmup h3 { color: #c8c8c8; }
+.combo-stage.chain h3 { color: #64e682; }
+.combo-stage.flurry h3 { color: #ffc850; }
+.combo-stage.rampage h3 { color: #ff6450; }
+.combo-stage.annihilation h3 { color: #ff1e1e; text-shadow: 0 0 8px #ff1e1e44; }
+.combo-meta {
+  color: #8a9aa8;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+.combo-meta code {
+  color: #ffaa55;
+  background: #0a0e14;
+  padding: 1px 4px;
+  border-radius: 3px;
+  margin-right: 4px;
+}
+.combo-label {
+  font-family: monospace;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  padding: 8px 0;
+  border-top: 1px solid #2a3540;
+}
+.combo-stage.warmup .combo-label { color: #c8c8c8; }
+.combo-stage.chain .combo-label { color: #64e682; }
+.combo-stage.flurry .combo-label { color: #ffc850; }
+.combo-stage.rampage .combo-label { color: #ff6450; }
+.combo-stage.annihilation .combo-label { color: #ff1e1e; }
+.combo-window-info {
+  background: #131a23;
+  border: 1px solid #2a3540;
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 16px 0;
+}
+.combo-window-info h3 {
+  color: #ffaa55;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.combo-window-info p {
+  color: #c5d4e3;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 8px 0;
+}
+.combo-window-info code {
+  color: #ffaa55;
+  background: #0a0e14;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+.window-bar code {
+  display: block;
+  color: #66ffcc;
+  font-size: 12px;
+  font-family: monospace;
+  background: #0a0e14;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #2a3540;
+}
+</style>
+
+<div class="container">
+<h2>🎨 스테이지 UI 시스템</h2>
+<p style="color: #8a9aa8; font-size: 13px; margin-bottom: 16px;">
+  <code>combo.py</code>에 추가된 4개 컴포넌트: Stage Avatar (5종 ASCII 아이콘), Timing Bar (3.5초 카운트다운), Stage Counter UI, Combo Finisher (3종 필살기).
+</p>
+
+<h3>👤 스테이지 아바타 (5종)</h3>
+<div class="avatar-grid">
+  <div class="avatar-card warmup">
+    <div class="avatar-icon">◦</div>
+    <div class="avatar-name">WARMUP</div>
+    <div class="avatar-frames">
+      <code>◦</code> idle · <code>○</code> pulse · <code>◉</code> special
+    </div>
+    <div class="avatar-stage">1/5</div>
+  </div>
+  <div class="avatar-card chain">
+    <div class="avatar-icon">⫶</div>
+    <div class="avatar-name">CHAIN</div>
+    <div class="avatar-frames">
+      <code>⫶</code> idle · <code>⫷⫸</code> pulse · <code>⫴</code> special
+    </div>
+    <div class="avatar-stage">2/5</div>
+  </div>
+  <div class="avatar-card flurry">
+    <div class="avatar-icon">⚡</div>
+    <div class="avatar-name">FLURRY</div>
+    <div class="avatar-frames">
+      <code>⚡</code> idle · <code>⚡⚡</code> pulse · <code>✦⚡</code> special
+    </div>
+    <div class="avatar-stage">3/5</div>
+  </div>
+  <div class="avatar-card rampage">
+    <div class="avatar-icon">☠</div>
+    <div class="avatar-name">RAMPAGE</div>
+    <div class="avatar-frames">
+      <code>☠</code> idle · <code>☠☠</code> pulse · <code>☠✦</code> special
+    </div>
+    <div class="avatar-stage">4/5</div>
+  </div>
+  <div class="avatar-card annihilation">
+    <div class="avatar-icon">✦</div>
+    <div class="avatar-name">ANNIHILATION</div>
+    <div class="avatar-frames">
+      <code>✦</code> idle · <code>✦✦✦</code> pulse · <code>✦★✦</code> special
+    </div>
+    <div class="avatar-stage">5/5</div>
+  </div>
+</div>
+
+<h3>⏱ 타이밍 바 (3색 강도)</h3>
+<div class="timing-demo">
+  <div class="timing-row">
+    <span class="timing-label">100% (Safe)</span>
+    <code>[████████████████████] 100%</code>
+  </div>
+  <div class="timing-row warn">
+    <span class="timing-label">57% (Warning)</span>
+    <code>[▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░] 57%</code>
+  </div>
+  <div class="timing-row urgent">
+    <span class="timing-label">20% (Urgent)</span>
+    <code>[▓▓▓▓· · · · · · · · · · ·] 20%</code>
+  </div>
+</div>
+
+<h3>⚔ 콤보 필살기 (3종)</h3>
+<div class="finisher-grid">
+  <div class="finisher-card flurry">
+    <h4>⚡ QUICK SLASH <span class="finisher-kr">빠른 참격</span></h4>
+    <div class="finisher-stats">
+      <span>FLURRY 단계</span> · <span>×2.0 데미지</span> · <span>CD 5초</span>
+    </div>
+    <p>3회 빠른 참격 (대상 1명). FLURRY 진입 후 사용 가능.</p>
+  </div>
+  <div class="finisher-card rampage">
+    <h4>☠ RAMPAGE BURST <span class="finisher-kr">섬멸 폭발</span></h4>
+    <div class="finisher-stats">
+      <span>RAMPAGE 단계</span> · <span>×3.0 데미지</span> · <span>CD 8초</span>
+    </div>
+    <p>광역 폭발 (모든 적). RAMPAGE 진입 후 사용 가능.</p>
+  </div>
+  <div class="finisher-card annihilation">
+    <h4>✦ FINAL STRIKE <span class="finisher-kr">최후의 일격</span></h4>
+    <div class="finisher-stats">
+      <span>ANNIHILATION 단계</span> · <span>×5.0 데미지</span> · <span>CD 12초</span>
+    </div>
+    <p>즉사급 데미지 + 화면 클리어. ANNIHILATION 진입 후 사용 가능.</p>
+  </div>
+</div>
+
+<h3>🖼 풀 콤보 HUD (실제 출력)</h3>
+<div class="hud-preview">
+  <div class="hud-frame">
+    <pre><code>⚡  4x FLURRY!
+[████████████████████] 100%</code></pre>
+    <div class="hud-caption">CHAIN → FLURRY (4 hits)</div>
+  </div>
+  <div class="hud-frame">
+    <pre><code>☠☠  5x RAMPAGE!
+[▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░] 70%</code></pre>
+    <div class="hud-caption">RAMPAGE (5 hits, 70% time left)</div>
+  </div>
+  <div class="hud-frame">
+    <pre><code>✦✦✦  6x ANNIHILATION!
+[▓▓▓· · · · · · · · · · ·] 20%</code></pre>
+    <div class="hud-caption">ANNIHILATION (6 hits, 20% urgent)</div>
+  </div>
+</div>
+
+<style>
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.avatar-card {
+  background: #131a23;
+  border: 1px solid #2a3540;
+  border-radius: 8px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.avatar-icon {
+  font-size: 32px;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+.avatar-card.warmup .avatar-icon { color: #c8c8c8; }
+.avatar-card.chain .avatar-icon { color: #64e682; }
+.avatar-card.flurry .avatar-icon { color: #ffc850; }
+.avatar-card.rampage .avatar-icon { color: #ff6450; }
+.avatar-card.annihilation .avatar-icon {
+  color: #ff1e1e;
+  text-shadow: 0 0 8px #ff1e1e66;
+}
+.avatar-name {
+  color: #66ffcc;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.avatar-frames {
+  font-size: 10px;
+  color: #8a9aa8;
+  margin-bottom: 8px;
+}
+.avatar-frames code {
+  color: #ffaa55;
+  background: #0a0e14;
+  padding: 1px 3px;
+  border-radius: 2px;
+}
+.avatar-stage {
+  font-family: monospace;
+  color: #ffaa55;
+  font-size: 11px;
+  padding-top: 6px;
+  border-top: 1px solid #2a3540;
+}
+.timing-demo {
+  background: #131a23;
+  border: 1px solid #2a3540;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 12px 0;
+}
+.timing-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 6px 0;
+}
+.timing-label {
+  min-width: 140px;
+  color: #c5d4e3;
+  font-size: 12px;
+}
+.timing-row code {
+  color: #66ffcc;
+  font-family: monospace;
+  font-size: 12px;
+}
+.timing-row.warn code { color: #ffc850; }
+.timing-row.urgent code { color: #ff5050; }
+.finisher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.finisher-card {
+  background: #131a23;
+  border: 1px solid #2a3540;
+  border-left: 3px solid;
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+.finisher-card.flurry { border-left-color: #ffc850; }
+.finisher-card.rampage { border-left-color: #ff6450; }
+.finisher-card.annihilation { border-left-color: #ff1e1e; }
+.finisher-card h4 {
+  font-size: 14px;
+  color: #66ffcc;
+  margin-bottom: 6px;
+}
+.finisher-kr {
+  color: #ffaa55;
+  font-size: 12px;
+  font-weight: normal;
+  margin-left: 6px;
+}
+.finisher-stats {
+  color: #c5d4e3;
+  font-size: 11px;
+  margin-bottom: 8px;
+  font-family: monospace;
+}
+.finisher-stats span {
+  background: #0a0e14;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-right: 4px;
+  color: #ffaa55;
+}
+.finisher-card p {
+  color: #8a9aa8;
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 0;
+}
+.hud-preview {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+.hud-frame {
+  background: #0a0e14;
+  border: 1px solid #2a3540;
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}
+.hud-frame pre {
+  margin: 0;
+  text-align: left;
+  background: transparent;
+  padding: 0;
+}
+.hud-frame code {
+  color: #66ffcc;
+  font-size: 13px;
+  font-family: monospace;
+  background: transparent;
+  padding: 0;
+}
+.hud-caption {
+  color: #8a9aa8;
+  font-size: 11px;
+  margin-top: 8px;
+  font-style: italic;
+}
+</style>
+
+</div>
+
+</div>
+
+<script>
+/* Auto-sync stats from build_dashboard.py output (combat_stats.json).
+   When the file is missing the static fallback values stay visible. */
+fetch('data/combat_stats.json').then(r => r.ok ? r.json() : null)
+  .then(stats => {
+    if (!stats) return;
+    const set = (key, value) => {
+      const el = document.querySelector(`[data-stat="${key}"]`);
+      if (el && value !== undefined && value !== null) {
+        el.textContent = String(value);
+      }
+    };
+    // 5 design-grade categories + N specific ICE variants.
+    set('ice', `${stats.ice_types_total}`);
+    set('effects', `${stats.skill_effects_total}`);
+    set('mode', stats.combat_mode);
+    set('ppl', stats.ppl_version);
+    set('zdr', stats.zdr_version);
+    // Sub-heading cells (in case the page has multi-count sections).
+    set('ice-total', stats.ice_types_total);
+    set('effects-count', stats.skill_effects_total);
+    // Build ICE entries index (29 ICE entries from combat/ice_types.json).
+    const index = document.getElementById('ice-index');
+    if (index && Array.isArray(stats.ice_grades_list)) {
+      index.innerHTML = '';
+      stats.ice_grades_list.forEach(name => {
+        const card = document.createElement('div');
+        card.className = 'effect-card';
+        card.style.padding = '6px 10px';
+        card.innerHTML = `<div class="name" style="font-size:11px;">${name}</div>` +
+                         `<div class="id" style="font-size:10px;color:#66ffcc;">ice_type</div>`;
+        index.appendChild(card);
+      });
+    }
+  })
+  .catch(() => { /* keep static fallback */ });
+</script>
+
+</body>
+</html>

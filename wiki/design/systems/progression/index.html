@@ -1,0 +1,2001 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>System: Progression (종합 진행) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#system-progression" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              System: Progression (종합 진행)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3-tier 진행 구조
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3-tier 진행 구조">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tier-1-in-run-immutable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 1: 런 내 고정 (In-Run, Immutable)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-deck-size-selection-phase-15-adr-0178" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Deck Size Selection (Phase 15, ADR-0178)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-2-meta-progression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 2: 메타 진행 (Meta Progression, 자키 등급)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tier-3-item-tier-t1t5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tier 3: 아이템 티어 (Item Tier T1~T5)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ppl-adr-0012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PPL 공식 (ADR-0012)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#death-cycle-adr-0040" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        런 사이 전이 (Death Cycle, ADR-0040)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ng-post-salvation-meta-unlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NG+ 라이프사이클 (Post-Salvation Meta Unlock)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        진행 동기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        구현 위치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        미래 작업 (Phase 6+)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#phase-19-audit-trail-2026-08-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 19 Audit Trail (2026-08-13)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Phase 19 Audit Trail (2026-08-13)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        추가된 섹션
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        검증 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        변경 영향
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        의도적 비-변경
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="system-progression">System: Progression (종합 진행)<a class="headerlink" href="#system-progression" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>상위 결정</strong>: <code>../../decisions/0008-progression-system.md</code> (Accepted, Revised)
+<strong>관련</strong>: <a href="../grade-progression/">grade-progression.md</a> (등급 단계), <a href="../difficulty-rating/">difficulty-rating.md</a> (난이도), <a href="../crafting/">crafting.md</a> (제작), <a href="../economy/">economy.md</a> (재화)
+<strong>구현</strong>: <code>../../prototype/src/wet_run/matrix/ppl.py</code> (PPL 계산)</p>
+<p><strong>Phase 19 audit (2026-08-13)</strong>: Deck Size 선택 (Phase 15, ADR-0178) — LIGHT/STANDARD/HEAVY 3 템플릿. Tier 1 의 <em>런 시작 시 결정</em> 모델에 추가.</p>
+</blockquote>
+<h2 id="_1">목적<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>자키가 한 런 안에서 <strong>고정</strong>된 스탯을 가지고, 런 사이에는 <strong>등급 (meta progression)</strong> 으로 성장하는 시스템. Pillar 4 ("The Build") 의 직접적 표현.</p>
+<h2 id="3-tier">3-tier 진행 구조<a class="headerlink" href="#3-tier" title="Permanent link">&para;</a></h2>
+<h3 id="tier-1-in-run-immutable">Tier 1: 런 내 고정 (In-Run, Immutable)<a class="headerlink" href="#tier-1-in-run-immutable" title="Permanent link">&para;</a></h3>
+<p>한 번 런을 시작하면 캐릭터의 기본 스탯은 <strong>변하지 않음</strong>.</p>
+<table>
+<thead>
+<tr>
+<th>요소</th>
+<th>정의</th>
+<th>변경 가능?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Deck tier</td>
+<td>T1~T5</td>
+<td>❌ (런 시작시 결정)</td>
+</tr>
+<tr>
+<td><strong>Deck size</strong> (Phase 15, ADR-0178)</td>
+<td>LIGHT / STANDARD / HEAVY</td>
+<td>❌ (런 시작시 결정)</td>
+</tr>
+<tr>
+<td>Programs</td>
+<td>T1~T5 등급 매칭</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Wetware</td>
+<td>T1~T5</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Construct</td>
+<td>T0~T5 (0 = 없음)</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>HP / ATK</td>
+<td>tier 기반</td>
+<td>❌</td>
+</tr>
+</tbody>
+</table>
+<p>런 중 변경 가능한 것은 <strong>인벤토리</strong>와 <strong>장비</strong> (시간 한정 buff) 뿐.</p>
+<h3 id="11-deck-size-selection-phase-15-adr-0178">1.1 Deck Size Selection (Phase 15, ADR-0178)<a class="headerlink" href="#11-deck-size-selection-phase-15-adr-0178" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>새로 추가 (Phase 15)</strong>: 런 시작 시 <em>Deck tier</em> 외 <em>Deck size</em> 템플릿을 선택. 3가지 — LIGHT (얇은 슬롯, 빠른 빌드) / STANDARD (기본) / HEAVY (두꺼운 슬롯, 강력한 빌드).</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Size</th>
+<th>슬롯</th>
+<th>빌드 철학</th>
+<th>추천</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LIGHT</strong></td>
+<td>6 슬롯</td>
+<td>Wisp / Hammer / Strike 같은 <em>얇은</em> T1-T2 위주</td>
+<td>첫 런, 빠른 클리어, data salvage 우선</td>
+</tr>
+<tr>
+<td><strong>STANDARD</strong></td>
+<td>8 슬롯</td>
+<td>Goliath / Wisp / Hammer 균형</td>
+<td>메타 기본값 (default), 모든 zone 진입 가능</td>
+</tr>
+<tr>
+<td><strong>HEAVY</strong></td>
+<td>10 슬롯</td>
+<td>Kraken / Goliath / Wardrone + Dixie T5</td>
+<td>후반부, 깊은 zone (CORE / TA), meta unlock 후</td>
+</tr>
+</tbody>
+</table>
+<p><strong>구현</strong> (<code>combat/deck_building.py</code>):</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DeckSize</span><span class="p">:</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">slots</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span>
+
+<span class="n">DECK_SIZES</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">DeckSize</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;light&quot;</span><span class="p">:</span> <span class="n">DeckSize</span><span class="p">(</span><span class="s2">&quot;light&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="s2">&quot;Quick build, thin slots&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;standard&quot;</span><span class="p">:</span> <span class="n">DeckSize</span><span class="p">(</span><span class="s2">&quot;standard&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="s2">&quot;Balanced — default&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;heavy&quot;</span><span class="p">:</span> <span class="n">DeckSize</span><span class="p">(</span><span class="s2">&quot;heavy&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;Deep zone access, late game&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">get_deck_size</span><span class="p">(</span><span class="n">size</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DeckSize</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span> <span class="o">...</span>
+<span class="k">def</span> <span class="nf">get_deck_sizes</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="n">DeckSize</span><span class="p">,</span> <span class="o">...</span><span class="p">]:</span> <span class="o">...</span>
+</code></pre></div>
+<p><strong>AppState 필드</strong>: <code>state.deck_size: str = "standard"</code> (default). <code>engine/menu.py:</code>의 DECK_SELECT 화면 (Phase 15 신규)에서 LIGHT/STANDARD/HEAVY 3 옵션 — ENTER 로 확정.</p>
+<p><strong>PPL 영향</strong>: Deck size 는 <em>PPL 에 직접 영향 없음</em> — 슬롯 수만 변경. 실제 PPL 은 <em>선택된 program</em> 에 따라 좌우 (ADR-0012). 단, AVAILABLE 슬롯 수가 program 선택의 <em>상한</em> 이 되므로 <em>간접 효과</em> — HEAVY 는 강력한 Kraken T5 까지 동시 장착 가능.</p>
+<p><strong>Pillar 정합</strong>:
+- <strong>Pillar 1 (The Run)</strong>: 런 <em>시작</em> 시 결정 — in-run immutable.
+- <strong>Pillar 4 (The Build)</strong>: 빌드 깊이의 <em>첫 축</em> — slot count 가 core mechanic.
+- <strong>Pillar 5 (The Style)</strong>: 라벨 명확 (<code>LIGHT</code> / <code>STANDARD</code> / <code>HEAVY</code>), UI ASCII 셰이프 (·W· / :W: / |W| / ▓W▓ / ★W★ — 기존 등급 게이팅과 동일).</p>
+<p><strong>Cross-reference</strong>: <a href="../combat/"><code>design/systems/combat.md ## Deck Size Selection</code></a>, <a href="../../../decisions/0178-deck-building/">decisions/0178-deck-building.md</a>.</p>
+<h3 id="tier-2-meta-progression">Tier 2: 메타 진행 (Meta Progression, 자키 등급)<a class="headerlink" href="#tier-2-meta-progression" title="Permanent link">&para;</a></h3>
+<p>자키가 죽으면 (<code>Stage.FAILED</code> → <code>Stage.DEATH_RESTART</code>) <strong>새 자키</strong> 등장.
+새 자키는 이전 자키보다 한 단계 높은 등급으로 시작.</p>
+<table>
+<thead>
+<tr>
+<th>자키 순번</th>
+<th>등급</th>
+<th>시작 데크</th>
+<th>비고</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1번째</td>
+<td>1-up</td>
+<td>T1 Wisp/Strike</td>
+<td>신참</td>
+</tr>
+<tr>
+<td>2번째</td>
+<td>2-up</td>
+<td>T2 Wisp/Hammer</td>
+<td>일반</td>
+</tr>
+<tr>
+<td>3번째</td>
+<td>3-up</td>
+<td>T3 Wisp/Goliath</td>
+<td>숙련</td>
+</tr>
+<tr>
+<td>4번째</td>
+<td>4-up</td>
+<td>T4 Wisp/Goliath/Wardrone</td>
+<td>베테랑</td>
+</tr>
+<tr>
+<td>5번째</td>
+<td>5-up</td>
+<td>T5 Kraken/Goliath/Wisp/Wardrone + Dixie construct</td>
+<td>전설</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>메타 진행은 <strong>unlock 만</strong> (ADR-0006). 자키는 절대 잃지 않지만,
+새 자키는 더 강하게 시작할 뿐.</p>
+</blockquote>
+<h3 id="tier-3-item-tier-t1t5">Tier 3: 아이템 티어 (Item Tier T1~T5)<a class="headerlink" href="#tier-3-item-tier-t1t5" title="Permanent link">&para;</a></h3>
+<p>매 런 안에서 <strong>재료 → 컴포넌트 → 최종 아이템</strong>으로 제작 (ADR-0015).
+티어가 높을수록 stats 가 좋지만, <strong>사용 횟수</strong> 도 늘어남.</p>
+<div class="highlight"><pre><span></span><code>T1 (재료 5개) → T2 컴포넌트 (4개) → T3+ 프로그램/아이템/construct
+</code></pre></div>
+<h2 id="ppl-adr-0012">PPL 공식 (ADR-0012)<a class="headerlink" href="#ppl-adr-0012" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="n">PPL</span> <span class="o">=</span> <span class="n">deck_tier</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="nb">sum</span><span class="p">(</span><span class="n">programs</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">wetware_tier</span> <span class="o">+</span> <span class="n">construct_tier</span> <span class="o">*</span> <span class="mi">3</span>
+</code></pre></div>
+<p>예시 (Grade 1): <code>PPL = 1*3 + (1+1)*2 + 1 + 0 = 8</code>
+예시 (Grade 5): <code>PPL = 5*3 + (5+5+5+5)*2 + 5 + 5*3 = 75</code></p>
+<p>PPL 은 ICE 의 ZDR 과 비교되어 Status (SAFE/MATCH/TOUGH/DEADLY/FUTILE) 결정.</p>
+<h2 id="death-cycle-adr-0040">런 사이 전이 (Death Cycle, ADR-0040)<a class="headerlink" href="#death-cycle-adr-0040" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>MEET_NPC → EXTRACT_DATA → DEFEAT_ICE → JACK_OUT → REWARD → DEBRIEF → COMPLETE
+                                                       ↓ (사망)
+                                                    FAILED → DEATH_RESTART
+                                                              ↓ (새 자키 선택)
+                                                          PENDING (next grade)
+</code></pre></div>
+<h2 id="ng-post-salvation-meta-unlock">NG+ 라이프사이클 (Post-Salvation Meta Unlock)<a class="headerlink" href="#ng-post-salvation-meta-unlock" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>Cycle 4 polish (2026-08-03, ADR-0140 partial)</strong>: Pillar 4 (The Build)의 <em>unlock-only meta-progression</em>을 구현하는 메커니즘 — Salvation Phase 완료가 <em>구조적 replay</em>를 unlock한다.</p>
+</blockquote>
+<p><strong>Lifecycle</strong> (4단계):</p>
+<div class="highlight"><pre><span></span><code>[Salvation Phase 완료 (Epilogue 선택)]
+        ↓ unlock hook
+state.ng_plus_unlocked = True
+        ↓ 메인 메뉴 / CHARACTER_SELECT
+[N키 토글 가능]
+        ↓ 캐릭터 선택
+state.ng_plus_active = True (locked일 시 자동 False)
+        ↓ 새 런 시작
+[NG+ 런 — keep unlocks, fresh stats]
+        ↓ 사망 또는 완전 종료
+[메인 메뉴 — NG+ unlock 유지]
+</code></pre></div>
+<p><strong>구현 포인트</strong> (<code>engine/</code>):</p>
+<table>
+<thead>
+<tr>
+<th>위치</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>engine/salvation_view.py::handle_salvation_epilogue_input</code></td>
+<td>ENTER/SPACE로 epilogue 선택 확정 시 <code>state.ng_plus_unlocked = True</code> 세팅 (Salvation Epilogue 화면 진입 직후). <em>메타 unlock trigger</em>.</td>
+</tr>
+<tr>
+<td><code>engine/menu.py::handle_character_select_input</code></td>
+<td>unlocked 상태에서 N키 토글 — <code>state.ng_plus_active = not state.ng_plus_active</code>. 캐릭터 확정 시 locked일 경우 force False (lock gate).</td>
+</tr>
+<tr>
+<td><code>engine/menu.py::render_character_select</code></td>
+<td>unlocked 상태에서 <code>"NG+ MODE: ON/OFF"</code> 인디케이터 + 푸터에 <code>[N] NG+</code> 힌트 표시.</td>
+</tr>
+<tr>
+<td><code>state.ng_plus_unlocked</code> (AppState)</td>
+<td>False (default). Salvation Epilogue 확정 후 True. Pillar 4 준수 — AppState() 재생성 시 reset.</td>
+</tr>
+<tr>
+<td><code>state.ng_plus_active</code> (AppState)</td>
+<td>False (default). N키 토글 또는 locked일 시 False force. � 시작 시점에 snapshot, <em>unlock 자체는 보존</em>.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pillar 4 (The Build) 준수</strong>:
+- <em>Unlock-only meta-progression</em> — NG+는 unlock 대상이 아니라 <em>replay escalation</em>.
+- <em>No stat boost</em> — NG+ 런도 동일 stats (HP/AP/equipment). 테스트로 검증: <code>test_ng_plus_does_not_modify_player_stats</code>.
+- <em>Ephemeral preference</em> — <code>ng_plus_active</code>는 런 시작 시점에 결정, 사망 시 reset. <code>ng_plus_unlocked</code>만 보존.</p>
+<p><strong>Lock gate</strong> (enforcement):
+<div class="highlight"><pre><span></span><code><span class="c1"># engine/menu.py::handle_character_select_input (simplified)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">state</span><span class="o">.</span><span class="n">ng_plus_unlocked</span><span class="p">:</span>
+    <span class="n">state</span><span class="o">.</span><span class="n">ng_plus_active</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># locked runs cannot start NG+</span>
+</code></pre></div>
+locked 상태에서 <code>ng_plus_active = True</code>가 stale하게 남아있어도 캐릭터 확정 시 강제 False — <em>잠긴 모드로 NG+ 시작 불가</em>.</p>
+<p><strong>Salvation Phase와의 관계</strong> (cross-ref):
+- <em>Salvation은 narrative culmination</em> — 9자 × epilogue 씬으로 끝나는 메인 스토리.
+- <em>NG+는 mechanical aftermath</em> — Salvation 완료가 structural replay를 unlock.
+- <em>둘은 직교</em> — Salvation 완료 없이도 unlock 자체는 가능 (이론상), 단 v1.1.0에서는 Salvation 경로만 trigger.</p>
+<p><strong>Test coverage</strong> (<code>tests/unit/test_ng_plus.py</code>, 18 passed):</p>
+<table>
+<thead>
+<tr>
+<th>Test Class</th>
+<th>Coverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TestNGPlusFields</code> (5)</td>
+<td>unlock/active defaults + independence</td>
+</tr>
+<tr>
+<td><code>TestPillar4Compliance</code> (3)</td>
+<td>no meta_state write, doesn't persist across resets, no stat boost</td>
+</tr>
+<tr>
+<td><code>TestNGPlusBehavior</code> (2)</td>
+<td>locked cannot be active (stub), unlocked not yet active valid</td>
+</tr>
+<tr>
+<td><code>TestNGPlusUnlockHook</code> (4)</td>
+<td>default locked, unlock pattern after Salvation Epilogue, idempotent, active starts False</td>
+</tr>
+<tr>
+<td><code>TestNGPlusMenuUI</code> (4)</td>
+<td>locked forces active False on confirm, unlocked preserves toggle, N-key toggles when unlocked, N-key noop when locked</td>
+</tr>
+<tr>
+<td><code>TestNGPlusMenuRender</code> (3)</td>
+<td>render smoke tests (locked/unlocked-off/unlocked-on)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>의도적 제약</strong> (구현 단순화):
+- NG+는 <em>Salvation 완료 후에만 unlock</em> — 별도 메뉴 unlock 경로 없음
+- NG+ 런은 <em>stat 변경 없음</em> (unlocks만 유지)
+- NG+ difficulty modifier 없음 — Hardcore과 <em>독립</em></p>
+<p><strong>Future extensions</strong> (v1.2.0+ backlog):
+- NG+ difficulty scaling (적 HP ×1.5 등)
+- NG+ exclusive unlocks (post-Salvation 콘텐츠)
+- NG+ counter (몇 회차 NG+ 진행했는지)</p>
+<h2 id="_2">진행 동기<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>신규 자키 unlock</strong>: 처음 등급의 자키만 사용 가능 → 죽으면 다음 등급 해금</li>
+<li><strong>데크 업그레이드</strong>: 각 등급마다 새로운 프로그램 슬롯 unlock (Wardrone, Kraken)</li>
+<li><strong>Construct</strong>: T5 만 Dixie construct 동행 가능</li>
+</ul>
+<h2 id="_3">구현 위치<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>요소</th>
+<th>파일</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PPL 계산</td>
+<td><code>src/wet_run/matrix/ppl.py:42-57</code></td>
+</tr>
+<tr>
+<td>Status 결정</td>
+<td><code>src/wet_run/matrix/zdr.py:84-100</code></td>
+</tr>
+<tr>
+<td>메타 진행</td>
+<td><code>src/wet_run/engine/death.py:220-267</code> (restart_with_new_jockey)</td>
+</tr>
+<tr>
+<td>등급 곡선</td>
+<td><code>design/systems/grade-progression.md</code></td>
+</tr>
+<tr>
+<td>제작 티어</td>
+<td><code>src/wet_run/programs/</code> + <code>data/crafting/</code></td>
+</tr>
+<tr>
+<td><strong>Deck Size</strong> (Phase 15)</td>
+<td><code>src/wet_run/combat/deck_building.py:15-99</code> (DeckSize, DECK_SIZES)</td>
+</tr>
+<tr>
+<td><strong>Deck Size UI</strong></td>
+<td><code>src/wet_run/engine/menu.py:DECK_SELECT</code> (Phase 15)</td>
+</tr>
+<tr>
+<td><strong>State.field</strong></td>
+<td><code>src/wet_run/engine/state.py:222</code> (<code>deck_size: str = "standard"</code>)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="phase-6">미래 작업 (Phase 6+)<a class="headerlink" href="#phase-6" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Persistent unlocks</strong>: 자키 도감을 Hall of Dead 에서 영구 보존</li>
+<li><strong>Custom deck editor</strong>: 런 시작 전 데크 슬롯 자유 조합</li>
+<li><strong>Achievement 보상</strong>: 특정 조건 달성 시 추가 티어 unlock</li>
+</ul>
+<hr />
+<h2 id="phase-19-audit-trail-2026-08-13">Phase 19 Audit Trail (2026-08-13)<a class="headerlink" href="#phase-19-audit-trail-2026-08-13" title="Permanent link">&para;</a></h2>
+<p>Phase 19 audit 결과 — Deck Size Selection (Phase 15, ADR-0178) 가 Tier 1 표에 누락되어 본 섹션 1.1 로 추가.</p>
+<h3 id="_4">추가된 섹션<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Section 1.1</strong>: Deck Size Selection — 3 템플릿 (LIGHT 6 / STANDARD 8 / HEAVY 10).</li>
+</ul>
+<h3 id="_5">검증 위치<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>src/wet_run/combat/deck_building.py</code> — <code>DeckSize</code> / <code>DECK_SIZES</code> / <code>get_deck_size</code> / <code>get_deck_sizes</code> 4 API.</li>
+<li><code>src/wet_run/engine/state.py:222</code> — <code>deck_size: str = "standard"</code> AppState 필드.</li>
+<li><code>src/wet_run/engine/menu.py</code> — DECK_SELECT 화면 (Phase 15 통합 진입).</li>
+</ul>
+<h3 id="_6">변경 영향<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Tier 1 표</strong>: <code>Deck size</code> 행 <em>추가</em> (기존 Deck tier / Programs / Wetware / Construct / HP&amp;ATK 와 동일 결정 시점).</li>
+<li><strong>PPL 공식</strong>: <em>unchanged</em> — Deck size 는 <em>슬롯 수</em> 만 변경, PPL 계산과 직교.</li>
+<li><strong>Cross-reference</strong>: <a href="../../../decisions/0178-deck-building/">decisions/0178-deck-building.md</a>, <a href="../combat/">design/systems/combat.md ## Deck Size Selection</a>.</li>
+</ul>
+<h3 id="-">의도적 비-변경<a class="headerlink" href="#-" title="Permanent link">&para;</a></h3>
+<ul>
+<li>NG+ lifecycle (Section "NG+ 라이프사이클") — unchanged.</li>
+<li>Hardcore Mode (death-restart.md ## 6.5) — unchanged.</li>
+<li>등급 곡선 (grade-progression.md) — unchanged.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Stats — Wet Run</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', monospace;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.6;
+    padding: 32px 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  h1 { color: #66ffcc; font-size: 32px; margin-bottom: 8px; }
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 32px; }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: #0d1420;
+    border: 1px solid #1a2530;
+    border-radius: 6px;
+    padding: 18px 22px;
+  }
+  .stat-card .label {
+    font-size: 11px;
+    color: #6a7888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .stat-card .value {
+    font-size: 30px;
+    font-weight: 600;
+    color: #66ffcc;
+    margin-bottom: 4px;
+  }
+  .stat-card .sub {
+    font-size: 11px;
+    color: #6a7888;
+  }
+  
+  .progress-section {
+    margin-bottom: 32px;
+  }
+  .progress-section h2 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    color: #ffaa55;
+    border-bottom: 1px solid #1a2530;
+    padding-bottom: 6px;
+  }
+  .progress-bar {
+    margin-bottom: 12px;
+  }
+  .progress-bar .label-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+  .progress-bar .track {
+    height: 10px;
+    background: #1a2530;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-bar .fill {
+    height: 100%;
+    background: linear-gradient(90deg, #66ffcc, #00ccff);
+    transition: width 0.3s ease;
+  }
+  
+  .arc-row {
+    background: #0d1420;
+    border: 1px solid #1a2530;
+    border-radius: 6px;
+    padding: 14px;
+    margin-bottom: 8px;
+  }
+  .arc-row .arc-name {
+    color: #ffaa55;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .arc-row .arc-stats {
+    font-size: 12px;
+    color: #8a98a8;
+    margin-top: 4px;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 80px 24px;
+    color: #6a7888;
+    border: 1px dashed #1a2530;
+    border-radius: 6px;
+  }
+</style>
+<style>
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 16px; margin: -8px -8px 16px -8px;
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .sep { color: #2a3540; }
+</style>
+<meta name="description" content="Reading stats — localStorage-based tracking. Stories read / words / time / arc progress · 78 cards.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, reading, stats">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/reading-stats.html">
+<meta property="og:title" content="Reading Stats — Wet Run">
+<meta property="og:description" content="Reading stats — localStorage-based tracking. Stories read / words / time / arc progress · 78 cards.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/reading-stats.html">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Reading Stats — Wet Run">
+<meta name="twitter:description" content="Reading stats — localStorage-based tracking. Stories read / words / time / arc progress · 78 cards.">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta name="theme-color" content="#0a0e14">
+</head>
+
+<body>
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="./library.html">📚 Library</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Chars</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+  <span class="sep">|</span>
+  <a href="./missions.html">📖 Story</a>
+  <a href="./graphic-novel.html">🎬 GN</a>
+  <span class="sep">|</span>
+  <a href="./combat.html">⚔ Combat</a>
+</nav>
+
+
+
+<h1>Reading Stats</h1>
+<p class="subtitle">Track your journey through 78 derivative stories · localStorage only · no server sync</p>
+
+<div id="empty-state" class="empty-state" style="display:none">
+  You haven't read any stories yet. Start with <a href="stories/short-stories/case_jackout-30sec.html" style="color:#66ffcc">Jack-Out</a> or browse the <a href="library.html" style="color:#66ffcc">Library</a>.
+</div>
+
+<div id="content" style="display:none">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="label">Stories read</div>
+      <div class="value" id="stories-read">0</div>
+      <div class="sub"><span id="stories-total">0</span> total</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Words read</div>
+      <div class="value" id="words-read">0</div>
+      <div class="sub">≈ <span id="minutes-read">0</span> minutes</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Completion</div>
+      <div class="value" id="completion">0%</div>
+      <div class="sub">of catalog</div>
+    </div>
+    <div class="stat-card">
+      <div class="label">Current streak</div>
+      <div class="value" id="streak">0</div>
+      <div class="sub">days</div>
+    </div>
+  </div>
+  
+  <div class="progress-section">
+    <h2>By arc</h2>
+    <div id="arc-progress"></div>
+  </div>
+  
+  <div class="progress-section">
+    <h2>By language</h2>
+    <div id="lang-progress"></div>
+  </div>
+  
+  <div style="text-align: center; margin-top: 32px;">
+    <button id="reset-btn" style="padding:8px 16px;background:#1a1a2e;color:#ff5577;border:1px solid #ff5577;border-radius:4px;font-family:inherit;cursor:pointer">Reset reading history</button>
+  </div>
+</div>
+
+<script src="reading-stats.js"></script>
+
+<div id="telemetry-panel" style="margin-top:32px;padding:16px;background:#06090f;border:1px dashed #1a2530;border-radius:4px;font-size:11px;color:#6a7888;">
+  <details>
+    <summary style="cursor:pointer;color:#66ffcc;font-weight:600">Anonymous local telemetry (debug)</summary>
+    <div id="telemetry-content" style="margin-top:12px"></div>
+    <button id="telemetry-reset" style="margin-top:8px;padding:4px 10px;background:transparent;color:#ff5577;border:1px solid #ff5577;border-radius:3px;cursor:pointer;font-family:inherit;font-size:10px">Reset telemetry</button>
+  </details>
+</div>
+<script>
+(function () {
+  function render() {
+    var s = (window.SprawlStats && window.SprawlStats.snapshot) ? window.SprawlStats.snapshot() : {};
+    var c = document.getElementById("telemetry-content");
+    if (!c) return;
+    var html = "";
+    Object.keys(s).sort().forEach(function (bucket) {
+      var b = s[bucket];
+      html += "<div style='margin-bottom:8px'><strong style='color:#8a98a8'>" + bucket + "</strong> · total <strong style='color:#66ffcc'>" + (b.total || 0) + "</strong>";
+      if (b.by_event) {
+        html += "<pre style='margin:4px 0 0 16px;font-size:10px;color:#8a98a8'>";
+        Object.keys(b.by_event).forEach(function (ev) {
+          html += ev + " : " + b.by_event[ev] + "\n";
+        });
+        html += "</pre>";
+      }
+      html += "</div>";
+    });
+    if (!html) html = "<div style='color:#6a7888'>No telemetry yet — browse some stories first.</div>";
+    c.innerHTML = html;
+  }
+  var btn = document.getElementById("telemetry-reset");
+  if (btn) btn.addEventListener("click", function () {
+    if (window.SprawlStats && window.SprawlStats.reset) window.SprawlStats.reset();
+    render();
+  });
+  // re-render every 2s to pick up changes from other tabs / pages
+  setInterval(render, 2000);
+  setTimeout(render, 200);
+})();
+</script>
+
+</body>
+</html>

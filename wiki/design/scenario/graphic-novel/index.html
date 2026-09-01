@@ -1,0 +1,3012 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="깁슨 스프롤 3부작 세계관의 사이버펑크 로그라이크 — 디자인, 시스템, 세계관 위키">
+      
+      
+        <meta name="author" content="Wet Run Contributors">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Graphic Novel Mode (그래픽 노블 자동플레이 모드) - Wet Run — Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#graphic-novel-mode" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Wet Run — Wiki" class="md-header__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Wet Run — Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Graphic Novel Mode (그래픽 노블 자동플레이 모드)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="purple"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../world/sprawl_universe/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  세계관 (World)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../GDD/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  디자인 (Design)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../systems/combat/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  시스템 (Systems)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../decisions/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  결정 (Decisions)
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../ROADMAP/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  로드맵 (Roadmap)
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../log/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  활동 로그 (Log)
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Wet Run — Wiki" class="md-nav__button md-logo" aria-label="Wet Run — Wiki" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Wet Run — Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/seoca1/wet-run" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    seoca1/wet-run
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세계관 (World)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    세계관 (World)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/sprawl_universe/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/cyberspace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cyberspace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/factions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Factions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/style_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Style Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../world/derivative_stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Derivative Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    디자인 (Design)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    디자인 (Design)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../GDD/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pillars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기둥
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../core_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../story_skeleton/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Story Skeleton
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    시스템 (Systems)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    시스템 (Systems)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/combat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Combat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/hacking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hacking
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/missions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Missions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/difficulty-rating/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Difficulty Rating
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/exploration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Exploration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/aftermath/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aftermath
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/ascii-portraits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ASCII Portraits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/dialogue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dialogue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../systems/procgen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Procgen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../decisions/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    결정 (Decisions)
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    결정 (Decisions)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ROADMAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로드맵 (Roadmap)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../log/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    활동 로그 (Log)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 메인메뉴 (확장)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 메인메뉴 (확장)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 화면 구성
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-phase-15-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 옵션 명세 (Phase 15 — 9 옵션)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 그래픽 노블 메뉴
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 그래픽 노블 메뉴">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 화면 구성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 씬 구조 (12 씬)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 씬 구조 (12 씬)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 캐릭터별 씬 목록
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 씬 데이터 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 씬 1프레임 화면 레이아웃
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 사운드 큐
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 자동 진행 정책
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 자동 진행 정책">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 키 매핑
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 타이밍
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-saved-progress-card" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 종료 화면 (Saved Progress Card)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 종료 화면 (Saved Progress Card)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 세이브 있을 때
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 세이브 없을 때
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 상태 머신
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 데이터 디렉토리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ascii-new" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. ASCII 아트 자산 (NEW)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. ASCII 아트 자산 (NEW)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-12-80x40" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 배경 (12개, 80x40)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-12-10x16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 포트레잇 (12개, 10x16)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 의존성
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 완료 조건 (Acceptance Criteria)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 완료 조건 (Acceptance Criteria)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#phase-0-adr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 0: ADR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 1: 디자인
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 2: 씬 데이터
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 3: 엔진
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 4: 세이브 연동
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-5-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 5: 테스트 (30+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 6: 데모
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Phase 7: 메타 문서
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 의존성 그래프
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-adr-0041" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 콘텐츠 톤 가이드라인 (ADR-0041)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 콘텐츠 톤 가이드라인 (ADR-0041)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 목표 길이
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-tone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 톤 (Tone)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-voice-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 캐릭터 voice profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#104-narration-vs-dialogue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Narration vs Dialogue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#105" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 작성 규칙
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#106" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 안티패턴 (피할 것)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-a-b-adr-0046" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 엔딩 구조 (A / B) — ADR-0046
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 엔딩 구조 (A / B) — ADR-0046">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        엔딩 A (기본) — 모든 캐릭터 공통: 행동으로 답하다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        엔딩 B (대안) — 각 캐릭터의 다른 선택
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        씬 JSON 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        메뉴 옵션
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        로드 시그니처
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        그래픽 노블 저장
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-phase-15-17-2026-08-13-audit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Phase 15-17 교차 기능 (2026-08-13 audit)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Phase 15-17 교차 기능 (2026-08-13 audit)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-adr-0043-scene-sound-cue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 ADR-0043 — Scene Sound Cue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-adr-0044-gn-save-restore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 ADR-0044 — GN Save / Restore
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-ending-choice-adr-0192-phase-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 Ending Choice 영속성 (ADR-0192 + Phase 16)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-telemetry_stats-phase-17-adr-0184" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.4 TELEMETRY_STATS 메뉴 (Phase 17, ADR-0184)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#125-deck-size-phase-15-adr-0178" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.5 Deck Size 선택 (Phase 15, ADR-0178)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#126-wetware-stacking-phase-15-adr-0173" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.6 Wetware Stacking (Phase 15, ADR-0173)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#127-f4-boss-phase-transitions-phase-17-adr-0149" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.7 F.4 Boss Phase Transitions (Phase 17, ADR-0149)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#128-random-rules-ui-annotation-phase-17-adr-0188" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.8 Random Rules UI Annotation (Phase 17, ADR-0188)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#129-hardcore-mode-phase-14-adr-0140" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.9 Hardcore Mode (Phase 14, ADR-0140)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 의존성 그래프 (갱신)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="graphic-novel-mode">Graphic Novel Mode (그래픽 노블 자동플레이 모드)<a class="headerlink" href="#graphic-novel-mode" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>이 문서는 <a href="../../../decisions/0032-graphic-novel-mode/"><code>../../decisions/0032-graphic-novel-mode.md</code></a>의 디자인 명세.</strong>
+메인메뉴 9 옵션 (Phase 7 + ADR-0040 + Phase 15 ENDINGS + Phase 17 옵트인 [9] STATS) + 그래픽 노블 자동플레이 + 세이브 진도 회고.</p>
+<p><strong>Phase 19 audit (2026-08-13)</strong>: 7-option menu (was 5), ADR-0043 audio + ADR-0044 GN save, TELEMETRY_STATS menu cross-reference.</p>
+</blockquote>
+<h2 id="1">1. 개요<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>게임 시작 시 메인메뉴에서 진입 가능한 <strong>비주얼 노블 스타일 자동플레이 모드</strong>.
+- <strong>3 캐릭터의 씬을 랜덤 순서로 재생</strong> (프롤로그 옵션)
+- <strong>각 씬 = 배경 아트 + 캐릭터 포트레잇 + 대사 + 사운드 큐 + 자동 진행</strong>
+- <strong>종료 후 세이브 진도 카드 표시</strong> (자키/등급/미션)
+- <strong>다른 캐릭터 스토리 보기 옵션</strong> 제공</p>
+<h2 id="2">2. 메인메뉴 (확장)<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 화면 구성<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║            ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄                 ║
+║            ▌                                ▐                 ║
+║            ▌     R O G U E L I K E         ▐                 ║
+║            ▌         S P R A W L           ▐                 ║
+║            ▌                                ▐                 ║
+║            ▌  ───────────────────────────   ▐                 ║
+║            ▌  A cyberpunk roguelike based  ▐                 ║
+║            ▌    on Gibson&#39;s Sprawl trilogy ▐                 ║
+║            ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀                 ║
+║                                                              ║
+║   &gt; [1] N E W   R U N         ─ 자키 선택부터 시작          ║
+║     [2] G R A P H I C   N O V E L ─ 스토리 자동재생        ║
+║     [3] C O N T I N U E        ─ 마지막 세이브 (없음)       ║
+║     [4] S E T T I N G S                                    ║
+║     [5] C R E D I T S                                       ║
+║                                                              ║
+║   v0.5.0 · Phase 5 Vertical Slice                           ║
+║   [ENTER] Select  [Q] Quit                                  ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+</code></pre></div>
+<h3 id="22-phase-15-9">2.2 옵션 명세 (Phase 15 — 9 옵션)<a class="headerlink" href="#22-phase-15-9" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Phase 7 갱신 (ADR-0032 + ADR-0040 + HELP)</strong>: 5 옵션 → 7 옵션 확장. Hall of Dead (ADR-0040) + HELP (온보딩) 추가.
+<strong>Phase 15 추가</strong>: 7 → 8 옵션. ENDINGS 브라우저 추가.
+<strong>Phase 17 옵트인</strong>: 8 → 9 옵션. STATS (telemetry_opt_in 시에만 표시).</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>라벨</th>
+<th>동작</th>
+<th>조건</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>NEW RUN</td>
+<td>CHARACTER_SELECT 진입</td>
+<td>항상</td>
+</tr>
+<tr>
+<td>2</td>
+<td>GRAPHIC NOVEL</td>
+<td>GRAPHIC_NOVEL_MENU 진입</td>
+<td>항상</td>
+</tr>
+<tr>
+<td>3</td>
+<td>CONTINUE</td>
+<td>세이브 슬롯 1 로드 → HUB</td>
+<td>세이브 있을 때만 활성</td>
+</tr>
+<tr>
+<td>4</td>
+<td>SETTINGS</td>
+<td>SETTINGS 화면</td>
+<td>항상</td>
+</tr>
+<tr>
+<td>5</td>
+<td>CREDITS</td>
+<td>CREDITS 화면</td>
+<td>항상</td>
+</tr>
+<tr>
+<td>6</td>
+<td>HALL OF DEAD</td>
+<td>자키 아카이브 (사망한 자키 목록)</td>
+<td>ADR-0040, 항상</td>
+</tr>
+<tr>
+<td>7</td>
+<td>HELP</td>
+<td>조작법 / 컨셉 도움말</td>
+<td>Phase 7 온보딩, 항상</td>
+</tr>
+<tr>
+<td>8</td>
+<td>STATS</td>
+<td>TELEMETRY_STATS 집계 화면</td>
+<td><code>state.telemetry_opt_in == True</code> 일 때만 (Phase 17, ADR-0184)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="3">3. 그래픽 노블 메뉴<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 화면 구성<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>╔══════════════════════════════════════════════════════════════╗
+║            GRAPHIC NOVEL MODE                                ║
+║   &quot;깁슨의 스프롤 3부작을 비주얼 노블로&quot;                    ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║   &gt; [1] P R O L O G U E  ─ 3명의 진행 (랜덤 순서)           ║
+║       케이/실/카스의 4 씬씩, 무작위 셔플로 재생              ║
+║       매 플레이마다 다른 인트로를 경험                       ║
+║                                                              ║
+║     [2] 케이 (K) — Novice                                    ║
+║         &quot;잭아웃 후 30초&quot; 4 씬                                ║
+║                                                              ║
+║     [3] 실 (Sil) — Veteran                                   ║
+║         &quot;루이지아나의 신&quot; 4 씬                                ║
+║                                                              ║
+║     [4] 카스 (Kas) — Heretic                                 ║
+║         &quot;매나리사의 자정&quot; 4 씬                                ║
+║                                                              ║
+║     [5] BACK TO MAIN MENU                                    ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+</code></pre></div>
+<h2 id="4-12">4. 씬 구조 (12 씬)<a class="headerlink" href="#4-12" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 캐릭터별 씬 목록<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>캐릭터</th>
+<th>씬 1 (도입)</th>
+<th>씬 2 (전개)</th>
+<th>씬 3 (절정)</th>
+<th>씬 4 (결말)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>케이 (Novice)</strong></td>
+<td>CHATTO'S 24/7 (지바 호수텔)</td>
+<td>JACK-IN (Ono-Sendai 데크)</td>
+<td>JACK-OUT (30초 후)</td>
+<td>THE FINN'S OFFICE (핀의 의뢰)</td>
+</tr>
+<tr>
+<td><strong>실 (Veteran)</strong></td>
+<td>LOUISIANA 11 (Maison de Loa)</td>
+<td>THE MASK (Wigan의 loa)</td>
+<td>T-A PAYROLL (Tessier-Ashpool)</td>
+<td>THE BROADCAST (Mara의 죽음)</td>
+</tr>
+<tr>
+<td><strong>카스 (Heretic)</strong></td>
+<td>MANARASE MIDNIGHT (Shibuya 택시)</td>
+<td>SALLY (Sally Shearer)</td>
+<td>THE DECLARATION (Loa 네트워크)</td>
+<td>THE WHEEL (바퀴는 돌아간다)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42">4.2 씬 데이터 구조<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p><code>data/scenes/{character}/{scene_id}.json</code>:
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;scene_case_intro&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;character&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;novice&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;title_en&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;CHATTO&#39;S 24/7&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;title_ko&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;챠토 24/7&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;background&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;art:bg_chat_room&quot;</span><span class="p">,</span><span class="w">       </span><span class="c1">// 80x40 ASCII (optional inline)</span>
+<span class="w">  </span><span class="nt">&quot;portrait_left&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;art:case_think&quot;</span><span class="p">,</span><span class="w">      </span><span class="c1">// 10x16 ASCII</span>
+<span class="w">  </span><span class="nt">&quot;portrait_right&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">                 </span><span class="c1">// 한 명만 등장 시 null</span>
+<span class="w">  </span><span class="nt">&quot;dialogue&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">&quot;speaker&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;case&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;speaker_ko&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;케이&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;portrait&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;art:case_think&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;text_en&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;30 seconds. The Ono-Sendai electrodes lift from my scalp...&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;text_ko&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;30초. Ono-Sendai 전극이 두피에서 떨어진다. 내 손가락은 여전히 키를 두드리고 있었다.&quot;</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">&quot;duration_ms&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8000</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">],</span>
+<span class="w">  </span><span class="nt">&quot;next_scene&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;scene_case_jackin&quot;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="43-1">4.3 씬 1프레임 화면 레이아웃<a class="headerlink" href="#43-1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>┌──────────────────────────────────────────────────────────────┐
+│ 1/12   CHATTO&#39;S 24/7  ·  CASE            [SKIP] [PAUSE]      │ ← Top bar
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌────────┐                                                  │
+│  │        │                                                  │
+│  │  ◉P◉   │        30 seconds.                              │
+│  │        │        The Ono-Sendai electrodes                 │
+│  │   ▎    │        lift from my scalp and                    │
+│  │   ▎    │        my fingers keep typing.                   │
+│  │   ▎    │                                                  │
+│  │   ▎    │                                                  │
+│  │   ▎    │        &quot;Chiba. 11th level.                      │
+│  │        │         The room smells of                       │
+│  │        │         old circuits.&quot;                           │
+│  │        │                                                  │
+│  └────────┘                                                  │
+│                                                              │
+│  ╔════════════════════════════════════════════════════════╗ │
+│  ║ &quot;30초. Ono-Sendai 전극이 두피에서 떨어진다...&quot;         ║ │ ← Dialogue box
+│  ║                                                          ║ │   (5 lines)
+│  ║   [auto 8s]   [ENTER] next   [S] skip   [ESC] menu      ║ │ ← Controls
+│  ╚════════════════════════════════════════════════════════╝ │
+│  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ │ ← Progress
+└──────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h3 id="44">4.4 사운드 큐<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>씬</th>
+<th>사운드</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHATTO'S 24/7</td>
+<td><code>chiba_rain_loop</code> (배경)</td>
+</tr>
+<tr>
+<td>JACK-IN</td>
+<td><code>jack_in_zap</code> (전극 분리)</td>
+</tr>
+<tr>
+<td>JACK-OUT</td>
+<td><code>jack_out_buzz</code> (데이터 정적)</td>
+</tr>
+<tr>
+<td>LOUISIANA 11</td>
+<td><code>loa_drum</code> (부두 북소리)</td>
+</tr>
+<tr>
+<td>MANARASE MIDNIGHT</td>
+<td><code>shibuya_traffic</code> (도쿄 시내)</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<h2 id="5">5. 자동 진행 정책<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 키 매핑<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>키</th>
+<th>동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(자동)</td>
+<td>대사 duration_ms 후 다음 대사 → 다음 씬</td>
+</tr>
+<tr>
+<td><code>Enter</code> / <code>Space</code></td>
+<td>현재 대사 즉시 완료 → 다음</td>
+</tr>
+<tr>
+<td><code>→</code> (Right)</td>
+<td>현재 씬 즉시 스킵 → 다음 씬</td>
+</tr>
+<tr>
+<td><code>S</code></td>
+<td>Skip (현재 씬 종료)</td>
+</tr>
+<tr>
+<td><code>P</code></td>
+<td>Pause / Resume (배경 사운드 일시정지)</td>
+</tr>
+<tr>
+<td><code>Esc</code> / <code>Q</code></td>
+<td>그래픽 노블 종료 → 종료 화면</td>
+</tr>
+</tbody>
+</table>
+<h3 id="52">5.2 타이밍<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>기본값</th>
+<th>조정 가능</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>대사 표시 (50ms/char)</td>
+<td>자동</td>
+<td>Settings &gt; Animation Speed</td>
+</tr>
+<tr>
+<td>대사 duration_ms</td>
+<td>5000~10000</td>
+<td>데이터</td>
+</tr>
+<tr>
+<td>씬 전환 페이드</td>
+<td>200ms</td>
+<td>고정</td>
+</tr>
+<tr>
+<td>자동 진행 (대사 후)</td>
+<td>1초 후 다음</td>
+<td>고정</td>
+</tr>
+</tbody>
+</table>
+<h2 id="6-saved-progress-card">6. 종료 화면 (Saved Progress Card)<a class="headerlink" href="#6-saved-progress-card" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 세이브 있을 때<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>╔══════════════════════════════════════════════════════════════╗
+║              &gt; 당신의 자키 &lt;                                 ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║   ◉P◉                                                       ║
+║   ┌────┐   자키: 실 (Sil) — Veteran                          ║
+║   │ ◆P◆   등급: 3-up                                        ║
+║   │      미션 완료: 12 / 30 (40%)                            ║
+║   └────┘   데이터 회수: 234 / 500                            ║
+║            마지막 의뢰: &quot;watchdog_patrol&quot;                    ║
+║            마지막 위치: Tessier-Ashpool 본부                  ║
+║                                                              ║
+║   &gt; [1] 다른 캐릭터 스토리 보기                              ║
+║     [2] 게임플레이 계속 (HUB)                                ║
+║     [3] 메인메뉴                                            ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+</code></pre></div>
+<h3 id="62">6.2 세이브 없을 때<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>╔══════════════════════════════════════════════════════════════╗
+║              &gt; 아직 자키가 없습니다 &lt;                        ║
+╠══════════════════════════════════════════════════════════════╣
+║                                                              ║
+║        세이브 파일이 없습니다.                               ║
+║        NEW RUN으로 시작해 보세요.                            ║
+║                                                              ║
+║   &gt; [1] NEW RUN                                             ║
+║     [2] 다른 캐릭터 스토리 보기                              ║
+║     [3] 메인메뉴                                            ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+</code></pre></div>
+<h2 id="7">7. 상태 머신<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>MENU
+├── [1] NEW RUN
+│   └── CHARACTER_SELECT → CHAPTER → HUB → MATRIX → ...
+├── [2] GRAPHIC NOVEL
+│   ├── [1] PROLOGUE (random)         ← 9 캐릭터 × 4 씬 = 36 scenes
+│   ├── [2] 케이 (Novice)             ← 4 scenes
+│   ├── [3] 실 (Veteran)              ← 4 scenes
+│   ├── [4] 카스 (Heretic)            ← 4 scenes
+│   └── [5] BACK                      → MENU
+├── [3] CONTINUE                       (세이브 있을 때만)
+│   └── 세이브 로드 → HUB
+├── [4] SETTINGS
+└── [5] CREDITS
+
+GRAPHIC_NOVEL
+├── 자동 진행 / Enter / Skip / Esc
+├── 씬 1 → 씬 2 → ... → 마지막 씬
+└── 종료 → SAVED_PROGRESS
+
+SAVED_PROGRESS
+├── [1] 다른 캐릭터 보기  → GRAPHIC_NOVEL_MENU
+├── [2] 게임 계속        → HUB (세이브 있을 때만)
+└── [3] 메인메뉴         → MENU
+</code></pre></div>
+<h2 id="8">8. 데이터 디렉토리<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>prototype/data/
+├── scenes/                          ← NEW
+│   ├── case/
+│   │   ├── 01_chattos.json          ← CHATTO&#39;S 24/7
+│   │   ├── 02_jackin.json           ← JACK-IN
+│   │   ├── 03_jackout.json          ← JACK-OUT
+│   │   └── 04_finn.json             ← THE FINN&#39;S OFFICE
+│   ├── sil/
+│   │   ├── 01_louisiana.json        ← LOUISIANA 11
+│   │   ├── 02_mask.json             ← THE MASK
+│   │   ├── 03_payroll.json          ← T-A PAYROLL
+│   │   └── 04_broadcast.json        ← THE BROADCAST
+│   └── kas/
+│       ├── 01_manarase.json         ← MANARASE MIDNIGHT
+│       ├── 02_sally.json            ← SALLY
+│       ├── 03_declaration.json      ← THE DECLARATION
+│       └── 04_wheel.json            ← THE WHEEL
+├── portraits/                       ← existing
+└── ...
+</code></pre></div>
+<h2 id="9-ascii-new">9. ASCII 아트 자산 (NEW)<a class="headerlink" href="#9-ascii-new" title="Permanent link">&para;</a></h2>
+<h3 id="91-12-80x40">9.1 배경 (12개, 80x40)<a class="headerlink" href="#91-12-80x40" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>씬 ID</th>
+<th>ASCII (요약)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bg_chat_room</td>
+<td>호수텔 방, 콘솔 테이블, Hosaka, 화면</td>
+</tr>
+<tr>
+<td>bg_cyberspace_7</td>
+<td>Ono-Sendai 데크 이미지, 회로도</td>
+</tr>
+<tr>
+<td>bg_jackout_30s</td>
+<td>30초 카운트다운, 데이터 정적</td>
+</tr>
+<tr>
+<td>bg_finn_office</td>
+<td>핀의 지하 사무실, 책상, 핀의 얼굴</td>
+</tr>
+<tr>
+<td>bg_maison_loa</td>
+<td>부두 가게, 마스크 5개, 노파</td>
+</tr>
+<tr>
+<td>bg_loa_channel</td>
+<td>Wigan의 loa 마스크, 73 Eridani</td>
+</tr>
+<tr>
+<td>bg_ta_payroll</td>
+<td>T-A 본부, 데이터 노드, Hammer ICE</td>
+</tr>
+<tr>
+<td>bg_broadcast</td>
+<td>3년 전 Mara의 죽음, 폭로 화면</td>
+</tr>
+<tr>
+<td>bg_manarase</td>
+<td>Shibuya 택시, 매나리사 클럽 입구</td>
+</tr>
+<tr>
+<td>bg_sally</td>
+<td>Sally의 가죽, 데이터 전송</td>
+</tr>
+<tr>
+<td>bg_loa_network</td>
+<td>Loa 네트워크 트리, Sense/Net 코어</td>
+</tr>
+<tr>
+<td>bg_industrial</td>
+<td>산업 = 자본 = 바퀴, 야나카 패밀리</td>
+</tr>
+</tbody>
+</table>
+<h3 id="92-12-10x16">9.2 포트레잇 (12개, 10x16)<a class="headerlink" href="#92-12-10x16" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>캐릭터</th>
+<th>표정</th>
+<th>ASCII (요약)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>case_think</td>
+<td>케이</td>
+<td>사색</td>
+<td>정면, 눈 약간 감김</td>
+</tr>
+<tr>
+<td>case_hands</td>
+<td>케이</td>
+<td>손 떨림</td>
+<td>측면, 손 떨림</td>
+</tr>
+<tr>
+<td>case_terminal</td>
+<td>케이</td>
+<td>단자 응시</td>
+<td>측면, 화면 응시</td>
+</tr>
+<tr>
+<td>case_decision</td>
+<td>케이</td>
+<td>결심</td>
+<td>정면, 눈 크게</td>
+</tr>
+<tr>
+<td>marly_mask</td>
+<td>실</td>
+<td>마스크</td>
+<td>마스크 쓴 얼굴</td>
+</tr>
+<tr>
+<td>marly_smile</td>
+<td>실</td>
+<td>미소</td>
+<td>정면, 약한 미소</td>
+</tr>
+<tr>
+<td>marly_data</td>
+<td>실</td>
+<td>데이터</td>
+<td>데이터 흐름 응시</td>
+</tr>
+<tr>
+<td>marly_fire</td>
+<td>실</td>
+<td>결의</td>
+<td>정면, 결의</td>
+</tr>
+<tr>
+<td>kumiko_taxi</td>
+<td>카스</td>
+<td>택시 안</td>
+<td>정면, 차 안</td>
+</tr>
+<tr>
+<td>kumiko_sally</td>
+<td>카스</td>
+<td>Sally 응시</td>
+<td>측면, Sally 응시</td>
+</tr>
+<tr>
+<td>kumiko_decl</td>
+<td>카스</td>
+<td>선언</td>
+<td>정면, 큰 글리프</td>
+</tr>
+<tr>
+<td>kumiko_wheel</td>
+<td>카스</td>
+<td>바퀴</td>
+<td>측면, 회전 모티프</td>
+</tr>
+</tbody>
+</table>
+<h2 id="10">10. 의존성<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>engine/chapter_view.py</code> (ADR-0031) — 단일 씬 타이핑 기반</li>
+<li><code>engine/save_manager.py</code> (ADR-0044 GN Save) — 세이브 로드 (진도 조회)</li>
+<li><code>engine/state.py</code> — <code>ScreenKind.GRAPHIC_NOVEL_MENU</code>, <code>GRAPHIC_NOVEL</code>, <code>SAVED_PROGRESS</code> 추가</li>
+<li><code>engine/audio/sound_manager.py</code> — 씬별 사운드 큐</li>
+<li><code>data/portraits/portraits.json</code> — 기존 포트레잇 자산</li>
+</ul>
+<h2 id="11-acceptance-criteria">11. 완료 조건 (Acceptance Criteria)<a class="headerlink" href="#11-acceptance-criteria" title="Permanent link">&para;</a></h2>
+<h3 id="phase-0-adr">Phase 0: ADR<a class="headerlink" href="#phase-0-adr" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[x] <code>decisions/0032-graphic-novel-mode.md</code> (Draft)</li>
+</ul>
+<h3 id="phase-1">Phase 1: 디자인<a class="headerlink" href="#phase-1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[x] <code>design/scenario/graphic-novel.md</code> (이 문서)</li>
+</ul>
+<h3 id="phase-2">Phase 2: 씬 데이터<a class="headerlink" href="#phase-2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <code>data/scenes/case/*.json</code> 4개</li>
+<li>[ ] <code>data/scenes/sil/*.json</code> 4개</li>
+<li>[ ] <code>data/scenes/kas/*.json</code> 4개</li>
+<li>[ ] 배경 ASCII 12개 (또는 inline)</li>
+<li>[ ] 포트레잇 ASCII 12개</li>
+</ul>
+<h3 id="phase-3">Phase 3: 엔진<a class="headerlink" href="#phase-3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <code>engine/graphic_novel_view.py</code> (신규, ~350 lines)</li>
+<li><code>SceneData</code>, <code>load_scene()</code>, <code>load_scene_chain()</code></li>
+<li><code>render_scene()</code>, <code>tick_scene()</code></li>
+<li>자동 진행 로직 + 키 핸들러</li>
+<li>[ ] <code>engine/menu.py</code> 확장</li>
+<li>5 옵션 메뉴, GRAPHIC_NOVEL_MENU 진입</li>
+<li>[ ] <code>engine/state.py</code> ScreenKind 추가</li>
+<li><code>GRAPHIC_NOVEL_MENU</code>, <code>GRAPHIC_NOVEL</code>, <code>SAVED_PROGRESS</code></li>
+<li>[ ] <code>engine/save_progress.py</code> (신규, ~80 lines)</li>
+<li><code>get_saved_progress_summary()</code> — 자키/등급/미션 요약</li>
+</ul>
+<h3 id="phase-4">Phase 4: 세이브 연동<a class="headerlink" href="#phase-4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <code>engine/save_manager.py</code>에 <code>progress_summary()</code> 메서드 추가 (또는 <code>save_progress.py</code> 신규)</li>
+<li>[ ] <code>SAVED_PROGRESS</code> 화면이 세이브 데이터 기반으로 렌더</li>
+</ul>
+<h3 id="phase-5-30">Phase 5: 테스트 (30+)<a class="headerlink" href="#phase-5-30" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] 씬 로더 (<code>test_scene_loader.py</code>) — 10 tests</li>
+<li>[ ] 씬 체인 (<code>test_scene_chain.py</code>) — 8 tests</li>
+<li>[ ] 그래픽 노블 뷰 (<code>test_graphic_novel_view.py</code>) — 12 tests</li>
+<li>[ ] 메뉴 분기 (<code>test_menu.py</code> 확장) — 5 tests</li>
+<li>[ ] 세이브 진도 (<code>test_save_progress.py</code>) — 5 tests</li>
+</ul>
+<h3 id="phase-6">Phase 6: 데모<a class="headerlink" href="#phase-6" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <code>scripts/graphic_novel.py</code> — 풀 씬 시연 (옵션: --character, --shuffle, --duration)</li>
+<li>[ ] <code>make all</code> 그린 (lint + typecheck + test)</li>
+</ul>
+<h3 id="phase-7">Phase 7: 메타 문서<a class="headerlink" href="#phase-7" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <code>index.md</code> 갱신 (GRAPHIC_NOVEL_MENU 디자인 링크)</li>
+<li>[ ] <code>decisions/README.md</code> 갱신 (ADR-0032)</li>
+<li>[ ] <code>log.md</code> 갱신</li>
+<li>[ ] <code>ROADMAP.md</code> 갱신</li>
+<li>[ ] <code>dashboard/graphic-novel.html</code> (신규, 씬 미리보기)</li>
+</ul>
+<h2 id="12">12. 의존성 그래프<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>┌────────────┐
+│ ADR-0032   │  ← 이 문서
+└────┬───────┘
+     │ depends on
+     ├──&gt; ADR-0031 (Original Scenario)  ← 캐릭터/챕터 정의
+     ├──&gt; ADR-0044 (GN Save)          ← 진도 조회
+     ├──&gt; ADR-0009 (Story/News)         ← meatspace 미표시
+     ├──&gt; ADR-0011 (ASCII Portraits)    ← 포트레잇 시스템
+     └──&gt; ADR-0019 (Aftermath)          ← 4-importance
+</code></pre></div>
+<h2 id="13">13. 다음 단계<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<p>사용자 결정 후:
+1. 씬 데이터 12개 + 포트레잇 12개 + 배경 12개 (그리드 작업)
+2. <code>engine/graphic_novel_view.py</code> 구현
+3. <code>engine/menu.py</code> 5 옵션 확장
+4. <code>engine/save_progress.py</code> 신규
+5. 테스트 30+ 추가
+6. <code>scripts/graphic_novel.py</code> 데모
+7. <code>dashboard/graphic-novel.html</code> (대시보드)
+8. 메타 문서 동기화</p>
+<hr />
+<h2 id="10-adr-0041">10. 콘텐츠 톤 가이드라인 (ADR-0041)<a class="headerlink" href="#10-adr-0041" title="Permanent link">&para;</a></h2>
+<p>ADR-0041 (씬 콘텐츠 확장) — 깁슨 스프롤 톤을 보존하면서 페이지 호흡을 살리기 위한 가이드.</p>
+<h3 id="101">10.1 목표 길이<a class="headerlink" href="#101" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>이전</th>
+<th>목표</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dialogue 평균</td>
+<td>110자</td>
+<td><strong>300-500자</strong></td>
+</tr>
+<tr>
+<td>dialogue 범위</td>
+<td>50-160자</td>
+<td>250-600자</td>
+</tr>
+<tr>
+<td>씬당 dialogue</td>
+<td>3-4개</td>
+<td>3-4개 (그대로)</td>
+</tr>
+<tr>
+<td>씬당 총 길이</td>
+<td>350자</td>
+<td><strong>1200-1600자</strong></td>
+</tr>
+<tr>
+<td>페이지 분량</td>
+<td>1 page</td>
+<td><strong>2-3 pages</strong> (자동 페이지네이션 활용)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="102-tone">10.2 톤 (Tone)<a class="headerlink" href="#102-tone" title="Permanent link">&para;</a></h3>
+<p>깁슨 원작의 핵심 톤:
+- <strong>Cold / detached</strong>: 캐릭터는 감정보다 <em>상황</em>에 반응한다
+- <strong>Cinematic</strong>: 짧은 문장 + 긴 묘사의 교차
+- <strong>Industrial</strong>: 기업 이름 (Tessier-Ashpool, Maas, Sense/Net, Hosaka, Ono-Sendai)
+  이 배경음처럼 등장
+- <strong>Fragment 문장 OK</strong>: "He was a console cowboy. The sprawl was his church."
+- <strong>Sensory details</strong>: 시각 외 후각/촉각/청각 묘사 (smell of circuits, rain on glass)</p>
+<h3 id="103-voice-profile">10.3 캐릭터 voice profile<a class="headerlink" href="#103-voice-profile" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>캐릭터</th>
+<th>톤</th>
+<th>어휘</th>
+<th>예시</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Case (novice)</strong></td>
+<td>Jaded, ironic, self-deprecating</td>
+<td>deck, jack, flatline, ICE, wetware</td>
+<td>"Thirty seconds. The Ono-Sendai electrodes lift from my scalp and my fingers keep typing."</td>
+</tr>
+<tr>
+<td><strong>Marly (veteran)</strong></td>
+<td>Quiet, deliberate, gallery curator</td>
+<td>data, matrix, T-A, Mara</td>
+<td>"Behind the glass. Behind the mask. Behind the data."</td>
+</tr>
+<tr>
+<td><strong>Kumiko (heretic)</strong></td>
+<td>Ritualistic, formal, declarative</td>
+<td>wheel, Loa, casting, Tessier-Ashpool</td>
+<td>"I am Kas. Maelcum sent me. I cast you out."</td>
+</tr>
+<tr>
+<td><strong>narrator</strong></td>
+<td>Cold camera, omnipresent</td>
+<td>(any; view-only)</td>
+<td>"Chiba. Eleventh level. The room smells of old circuits."</td>
+</tr>
+</tbody>
+</table>
+<h3 id="104-narration-vs-dialogue">10.4 Narration vs Dialogue<a class="headerlink" href="#104-narration-vs-dialogue" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Narrator</strong>: 시점 묘사, 환경, 분위기, 분위기 전환. 1인칭 시점 (캐릭터 의식 흐름 아님)</li>
+<li><strong>Character dialogue</strong>: 캐릭터 목소리, 단언, 결정. fragment OK</li>
+<li><strong>혼합 금지</strong>: 한 dialogue 안에서 narrator가 캐릭터 의식을 읽지 않음 (냉정함 유지)</li>
+</ul>
+<h3 id="105">10.5 작성 규칙<a class="headerlink" href="#105" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>첫 문장은 hook</strong>: "30 seconds. The Ono-Sendai electrodes lift..." — 즉시 상황 / 시간 제시</li>
+<li><strong>마지막 문장은 비트로 끝</strong>: 완결하지 않고 다음 dialogue로 호흡 넘김</li>
+<li><strong>Sensory detail 1개 이상</strong>: smell, sound, touch, sight</li>
+<li><strong>산업 이름 1개 이상</strong> (해당 씬에서 자연스러우면): T-A, Sense/Net, Maas, Hosaka, Ono-Sendai, Neuromancer</li>
+<li><strong>번역 가이드</strong>: 영문 작성 → 한글 자막 동기화 (ADR-0010)</li>
+</ol>
+<h3 id="106">10.6 안티패턴 (피할 것)<a class="headerlink" href="#106" title="Permanent link">&para;</a></h3>
+<ul>
+<li>❌ 설명적 monologue ("I was feeling sad because...")</li>
+<li>❌ 직접 감정 표현 ("happy", "angry")</li>
+<li>❌ 멜로드라마 ("I will never forget...")</li>
+<li>❌ 현대 인터넷 meme, Cyberpunk 2077 용어, D&amp;D 클래스</li>
+<li>❌ 원문에 없는 사실 단언 ("Gibson에 따르면...")</li>
+<li>❌ 과도한 설명 (소설이 아니라 광고 카피)</li>
+</ul>
+<hr />
+<h2 id="11-a-b-adr-0046">11. 엔딩 구조 (A / B) — ADR-0046<a class="headerlink" href="#11-a-b-adr-0046" title="Permanent link">&para;</a></h2>
+<p>각 캐릭터는 <strong>2가지 결말</strong> 을 가짐:</p>
+<h3 id="a">엔딩 A (기본) — 모든 캐릭터 공통: 행동으로 답하다<a class="headerlink" href="#a" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>캐릭터</th>
+<th>엔딩 A</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Case</td>
+<td>Finn 의뢰 수락, Sense/Net 데이터 탈취, Chiba로 귀환</td>
+</tr>
+<tr>
+<td>Marly</td>
+<td>Tessier-Ashpool 데이터 브로드캐스트, 복수</td>
+</tr>
+<tr>
+<td>Kumiko</td>
+<td>Loa 네트워크에 wheel 캐스팅, 가족 선언</td>
+</tr>
+</tbody>
+</table>
+<h3 id="b">엔딩 B (대안) — 각 캐릭터의 다른 선택<a class="headerlink" href="#b" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>캐릭터</th>
+<th>엔딩 B</th>
+<th>원작 매핑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Case</strong></td>
+<td><strong>Refusal</strong> — 의뢰 거부, console cowboy 은퇴</td>
+<td>Neuromancer 후반</td>
+</tr>
+<tr>
+<td><strong>Marly</strong></td>
+<td><strong>Contract</strong> — Tessier-Ashpool 내부자, 데이터 검사자</td>
+<td>Count Zero</td>
+</tr>
+<tr>
+<td><strong>Kumiko</strong></td>
+<td><strong>Silence</strong> — Loa 거부, 가족 승리 묵인, 떠남</td>
+<td>Mona Lisa Overdrive</td>
+</tr>
+</tbody>
+</table>
+<h3 id="json">씬 JSON 구조<a class="headerlink" href="#json" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;scene_case_refusal&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;character&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;novice&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;order&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;ending&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;B&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">&quot;title_en&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;THE REFUSAL&quot;</span><span class="p">,</span>
+<span class="w">  </span><span class="err">...</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="_1">메뉴 옵션<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>[1] CONTINUE READING (saved)
+[2] PROLOGUE — 3 random
+[3] CASE (Novice)
+[4] MARLY (Veteran)
+[5] KUMIKO (Heretic)
+[6] CASE — ENDING B (Refusal)
+[7] MARLY — ENDING B (Contract)
+[8] KUMIKO — ENDING B (Silence)
+[9] BACK TO MAIN MENU
+</code></pre></div>
+<h3 id="_2">로드 시그니처<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">load_scene_chain</span><span class="p">(</span><span class="n">scenes_dir</span><span class="p">,</span> <span class="n">character</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ending</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_3">그래픽 노블 저장<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p><code>GNProgress</code> 에 <code>ending: str = "A"</code> 필드 추가.</p>
+<hr />
+<h2 id="12-phase-15-17-2026-08-13-audit">12. Phase 15-17 교차 기능 (2026-08-13 audit)<a class="headerlink" href="#12-phase-15-17-2026-08-13-audit" title="Permanent link">&para;</a></h2>
+<p>그래픽 노블 모드는 게임 메인 흐름과 직교로 동작하지만, Phase 15-17 사이클에서 추가된 일부 시스템과 <em>상태/저장</em> 레이어에서 연결된다.</p>
+<h3 id="121-adr-0043-scene-sound-cue">12.1 ADR-0043 — Scene Sound Cue<a class="headerlink" href="#121-adr-0043-scene-sound-cue" title="Permanent link">&para;</a></h3>
+<p><code>engine/graphic_novel_audio.py</code> (orphan module, ADR-0043). 씬 전환 시 사운드 큐 트리거 (<code>data/sounds/*.wav</code>, 46개 자동 생성 사운드). 본 자동플레이 모드는 별도 사운드 카드 (<code>bg_chat_room</code> rain, <code>jack_in_zap</code>, <code>jack_out_buzz</code> 등) 로 분리 — 일반 게임 사운드와 격리.</p>
+<h3 id="122-adr-0044-gn-save-restore">12.2 ADR-0044 — GN Save / Restore<a class="headerlink" href="#122-adr-0044-gn-save-restore" title="Permanent link">&para;</a></h3>
+<p><code>engine/graphic_novel_save.py</code> (ADR-0044). 3 슬롯 (<code>data/saves/gn_progress_slot_{1,2,3}.json</code>) + legacy <code>gn_progress.json</code> 마이그레이션. <em>이어서 보기</em> 옵션이 메인메뉴 [3] CONTINUE 와 직교 — GN 슬롯은 <em>auto-play 진행률</em>, 메인 슬롯은 <em>gameplay 진행률</em>.</p>
+<h3 id="123-ending-choice-adr-0192-phase-16">12.3 Ending Choice 영속성 (ADR-0192 + Phase 16)<a class="headerlink" href="#123-ending-choice-adr-0192-phase-16" title="Permanent link">&para;</a></h3>
+<p><code>AppState.ending_choice</code> (엔딩 A/B/C, 게임플레이 flow) 와 <code>GNProgress.ending</code> (그래픽 노블 데이터) 는 <em>별도 필드</em>:</p>
+<ul>
+<li><code>state.ending_choice</code> — gameplay flow 가 도달한 엔딩 (예: "A"). <code>engine/save_manager.py::SaveManager._serialize_metadata()</code> 가 save metadata 에 직렬화, <code>restore_state()</code> 가 복원 (Phase 16).</li>
+<li><code>GNProgress.ending</code> — 사용자가 GN 메뉴에서 <em>시청할</em> 엔딩 변종 (예: "A" / "B"). ADR-0048 + ADR-0049.</li>
+</ul>
+<p>그래픽 노블 메뉴에서 옵션 [6][7][8] (엔딩 B/C 변종) 진입 시 <code>GNProgress.ending</code> 사용. 메인 게임 엔딩 직후 <em>GN ending 자동 재생</em> 시에는 <code>state.ending_choice</code> 값을 fallback 으로 사용.</p>
+<h3 id="124-telemetry_stats-phase-17-adr-0184">12.4 TELEMETRY_STATS 메뉴 (Phase 17, ADR-0184)<a class="headerlink" href="#124-telemetry_stats-phase-17-adr-0184" title="Permanent link">&para;</a></h3>
+<p><code>ScreenKind.TELEMETRY_STATS</code> (메인메뉴 [8]). 메인메뉴에서 사용자가 <code>state.telemetry_opt_in == True</code> 일 때만 노출. 그래픽 노블 자체는 telemetry 이벤트 (<code>record_deck_chosen</code>, <code>record_run_completed</code>) 를 발생시키지만, <em>모드 자체</em> 는 STATS 화면 표시와 무관 — 별도 메뉴.</p>
+<h3 id="125-deck-size-phase-15-adr-0178">12.5 Deck Size 선택 (Phase 15, ADR-0178)<a class="headerlink" href="#125-deck-size-phase-15-adr-0178" title="Permanent link">&para;</a></h3>
+<p><code>state.deck_size: str = "standard"</code> (light / standard / heavy). 그래픽 노블 진입 <em>이전</em> — 즉 메인메뉴 [1] NEW RUN 진입 후 CHARACTER_SELECT 직전 — DECK_SELECT 화면에서 LIGHT/STANDARD/HEAVY 3 옵션 중 선택. GN 자동플레이는 <em>deck_size 와 무관</em> — 자동 재생 모드이므로 PPL / ZDR fight 가 없음.</p>
+<h3 id="126-wetware-stacking-phase-15-adr-0173">12.6 Wetware Stacking (Phase 15, ADR-0173)<a class="headerlink" href="#126-wetware-stacking-phase-15-adr-0173" title="Permanent link">&para;</a></h3>
+<p><code>equipment/wetware_stacking.py::stack_wetware()</code> — 6 슬롯 wetware 누적 효과. 그래픽 노블 자동재생 모드에서는 <em>장비 시스템 자체가 skip</em> — 자키는 prologue scene 의 기본 wetware 1 슬롯만 사용.</p>
+<h3 id="127-f4-boss-phase-transitions-phase-17-adr-0149">12.7 F.4 Boss Phase Transitions (Phase 17, ADR-0149)<a class="headerlink" href="#127-f4-boss-phase-transitions-phase-17-adr-0149" title="Permanent link">&para;</a></h3>
+<p><code>combat/boss_phase_tracker.py</code> + <code>combat/state_models.py::CombatState.phase_change_ms / phase_change_color</code>. 1.5초 phase transition blend — 보스 HP 70% / 40% / 15% threshold. 그래픽 노블은 <em>combat 자체가 없으므로</em> 영향 없음. 단, 화면 <em>연출</em> 측면에서 GN 종료 후 전투 진입 시 첫 phase transition 이 더 부드럽게 표시됨.</p>
+<h3 id="128-random-rules-ui-annotation-phase-17-adr-0188">12.8 Random Rules UI Annotation (Phase 17, ADR-0188)<a class="headerlink" href="#128-random-rules-ui-annotation-phase-17-adr-0188" title="Permanent link">&para;</a></h3>
+<p><code>engine/hub.py</code> 의 <em>Hub 사이드 패널</em> 에 <code>state.last_rule_id</code> 기반 추천 미션 annotation ("recommended by zone rep"). 그래픽 노블 진입 시점에는 <em>rule_id 가 reset</em> — 사용자가 <em>임의 미션</em> 그래픽 노블을 본 후 게임 복귀 시, 다시 rule 이 적용된 추천 mission 이 표시됨.</p>
+<h3 id="129-hardcore-mode-phase-14-adr-0140">12.9 Hardcore Mode (Phase 14, ADR-0140)<a class="headerlink" href="#129-hardcore-mode-phase-14-adr-0140" title="Permanent link">&para;</a></h3>
+<p><code>state.hardcore_mode</code> (1-life permadeath). 그래픽 노블 자동재생은 <em>무관</em> — GN 자체에는 메인 흐름의 revival / run 사이클이 없음. 단, Hardcore + Main Menu [6] HALL_OF_DEAD 동작 확인용으로 GN 진입 후 즉시 메인메뉴 복귀 시 정상 동작.</p>
+<hr />
+<h2 id="13_1">13. 의존성 그래프 (갱신)<a class="headerlink" href="#13_1" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code>┌────────────┐
+│ ADR-0032   │  ← 이 문서
+└────┬───────┘
+     │ depends on
+     ├──&gt; ADR-0031 (Original Scenario)  ← 캐릭터/챕터 정의
+     ├──&gt; ADR-0044 (GN Save)          ← 진도 조회
+     ├──&gt; ADR-0009 (Story/News)         ← meatspace 미표시
+     ├──&gt; ADR-0011 (ASCII Portraits)    ← 포트레잇 시스템
+     ├──&gt; ADR-0040 (Death Cycle)        ← Hall of Dead 메뉴 [6]
+     ├──&gt; ADR-0043 (Sound Cue)          ← 씬별 WAV
+     ├──&gt; ADR-0044 (GN Save)            ← 3 슬롯 + 이어서 읽기
+     ├──&gt; ADR-0046-0049 (Ending B/C)    ← 9 결말 조합
+     ├──&gt; ADR-0140 (Hardcore Mode)      ← 1-life permadeath (Phase 14)
+     ├──&gt; ADR-0149 (Boss Phase 4)       ← 보스 phase transition (Phase 17)
+     ├──&gt; ADR-0173 (Wetware)            ← 6 슬롯 (Phase 15 — GN 외)
+     ├──&gt; ADR-0178 (Deck Building)      ← LIGHT/STANDARD/HEAVY (Phase 15)
+     ├──&gt; ADR-0184 (Telemetry)          ← TELEMETRY_STATS (Phase 17)
+     ├──&gt; ADR-0188 (Mission Expansion)  ← Random Rules UI (Phase 17)
+     ├──&gt; ADR-0192 (Ending Expansion)   ← ending_choice 영속성 (Phase 16)
+     └──&gt; ADR-0019 (Aftermath)          ← 4-importance
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.indexes", "toc.follow", "content.code.copy", "search.suggest", "search.highlight"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

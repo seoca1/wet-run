@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="인터랙티브 챕터 데모: 캐릭터 선택 → 5 챕터 → 15 미션 → A/B 엔딩 → 단편 발췌. (정적 HTML+JS, GitHub Pages 호환)">
+<title>Play (Beta) — Wet Run</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/play.html">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #0a0e14; color: #c5d4e3; line-height: 1.6;
+    padding: 24px; max-width: 980px; margin: 0 auto; min-height: 100vh;
+  }
+  h1, h2, h3 { color: #66ffcc; font-weight: 600; }
+  h1 { font-size: 28px; margin-bottom: 4px; text-shadow: 0 0 12px #66ffcc44; }
+  h2 { font-size: 18px; margin: 16px 0 8px; }
+  a { color: #66ffcc; text-decoration: none; }
+  a:hover { color: #00ccff; }
+
+  .nav { margin-bottom: 16px; font-size: 12px; }
+  .nav a { color: #6a7888; }
+  .nav a:hover { color: #66ffcc; }
+
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 16px; }
+
+  .stage {
+    background: #131a23; border: 1px solid #2a3540; border-radius: 8px;
+    padding: 24px; margin-bottom: 16px; min-height: 480px;
+  }
+
+  .label {
+    font-size: 10px; color: #6a7888; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 4px;
+  }
+
+  .display {
+    background: #0a0e14; border: 1px solid #2a3540; border-radius: 4px;
+    padding: 16px; margin: 12px 0; font-size: 13px; line-height: 1.7;
+    color: #c5d4e3; white-space: pre-wrap;
+  }
+  .display .prompt { color: #00ccff; }
+
+  .ascii {
+    background: #050810; border: 1px solid #2a3540; border-radius: 4px;
+    padding: 14px; margin: 12px 0; font-size: 12px; line-height: 1.25;
+    color: #ffaa55; overflow-x: auto; white-space: pre;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+  .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 16px 0; }
+
+  .card {
+    background: #0a0e14; border: 1px solid #2a3540; border-radius: 6px;
+    padding: 14px; cursor: pointer; transition: all 0.15s ease;
+    text-align: left; color: inherit;
+  }
+  .card:hover { border-color: #66ffcc; transform: translateY(-2px); }
+  .card.selected { border-color: #ffaa55; background: #ffaa5511; }
+  .card.completed { border-color: #66ff66; background: #66ff6611; }
+  .card.locked { opacity: 0.5; cursor: not-allowed; }
+  .card.locked:hover { transform: none; border-color: #2a3540; }
+
+  .card .num {
+    color: #ffaa55; font-size: 11px; font-weight: 700; margin-bottom: 4px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .card .name { color: #66ffcc; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .card .meta { font-size: 11px; color: #6a7888; margin-bottom: 8px; }
+  .card .desc { font-size: 12px; color: #c5d4e3; line-height: 1.5; }
+
+  .button {
+    background: #131a23; border: 1px solid #66ffcc; color: #66ffcc;
+    padding: 10px 20px; border-radius: 4px; cursor: pointer;
+    font-family: inherit; font-size: 14px; margin: 4px;
+    transition: all 0.15s ease;
+  }
+  .button:hover { background: #66ffcc11; box-shadow: 0 0 8px #66ffcc44; }
+  .button.danger { border-color: #ff6666; color: #ff6666; }
+  .button.danger:hover { background: #ff666611; }
+  .button.ghost { border-color: #2a3540; color: #6a7888; }
+  .button.ghost:hover { background: #2a354022; }
+
+  .credits {
+    margin: 8px 0; font-size: 13px;
+    color: #ffaa55; font-weight: 600;
+  }
+  .credits .label { color: #6a7888; font-weight: 400; margin-right: 8px; }
+
+  .badge {
+    display: inline-block; font-size: 10px; padding: 2px 8px;
+    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.5px;
+    margin-right: 4px;
+  }
+  .badge.ice { background: #ff666622; color: #ff6666; }
+  .badge.reward { background: #66ff6622; color: #66ff66; }
+  .badge.grade { background: #66ffcc22; color: #66ffcc; }
+
+  .status-line {
+    background: #050810; border: 1px solid #2a3540; border-radius: 4px;
+    padding: 8px 12px; margin: 12px 0; font-size: 11px; color: #6a7888;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .status-line .ok { color: #66ff66; }
+
+  .progress {
+    background: #050810; border: 1px solid #2a3540; border-radius: 4px;
+    padding: 8px 12px; margin: 12px 0; font-size: 11px;
+    display: flex; gap: 4px;
+  }
+  .progress .seg {
+    flex: 1; height: 8px; background: #1a232c; border-radius: 2px;
+  }
+  .progress .seg.done { background: #66ffcc; box-shadow: 0 0 4px #66ffcc; }
+
+  .buttons { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .buttons .button { margin: 0; }
+
+  .hidden { display: none; }
+</style>
+<style>
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 16px; margin: -8px -8px 16px -8px;
+    display: flex; gap: 12px; align-items: center;
+    flex-wrap: wrap;
+    font-size: 13px;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .sep { color: #2a3540; }
+</style>
+</head>
+
+<body>
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="./library.html">📚 Library</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="./search.html">🔍 Search</a>
+  <a href="./reading-stats.html">📊 Reading</a>
+  <a href="./character-graph.html">🕸️ Chars</a>
+  <a href="./mission-flow.html">🎯 Missions</a>
+  <a href="./jokey.html">🎭 Cast</a>
+  <span class="sep">|</span>
+  <a href="./missions.html">📖 Story</a>
+  <a href="./graphic-novel.html">🎬 GN</a>
+  <span class="sep">|</span>
+  <a href="./combat.html">⚔ Combat</a>
+  <span class="sep">|</span>
+  <button id="btn-volume-toggle" class="button ghost" style="font-size: 11px; padding: 4px 8px;">🔊 Volume</button>
+</nav>
+
+
+
+<div class="nav"><a href="index.html">← Dashboard Home</a> · <a href="library.html">Stories</a> · <a href="dungeon.html">Dungeon</a></div>
+
+<h1>▶ Play (Beta)</h1>
+<div class="subtitle">
+  인터랙티브 챕터 데모 —
+  <span data-stat="characters">9개</span> 자키 ×
+  <span data-stat="chapters">15개</span> 챕터 ×
+  <span data-stat="missions">209</span> 미션 ×
+  <span data-stat="endings">29</span> 엔딩 (A/B/C + salvation).
+  (정적 HTML+JS; GitHub Pages 호환)
+</div>
+
+<div id="status" class="status-line">
+  <span class="label">STATUS:</span>
+  <span id="status-text">CONNECTING…</span>
+  <span id="stats" style="float: right;"></span>
+</div>
+
+<div id="tier5-volume-panel"></div>
+
+<div id="progress-bar" class="progress" style="display:none;">
+  <div class="seg" data-seg="1"></div>
+  <div class="seg" data-seg="2"></div>
+  <div class="seg" data-seg="3"></div>
+  <div class="seg" data-seg="4"></div>
+  <div class="seg" data-seg="5"></div>
+</div>
+
+<div id="stage" class="stage"></div>
+
+<script src="tier5.js"></script>
+  <script>
+/* =====================================================================
+   Static game data (snapshot of chapters + missions + endings).
+   Loaded from data/play_game.json (or embedded fallback).
+   ===================================================================== */
+
+const FALLBACK_DATA = {
+  "characters": [
+    {"id": "novice",     "name": "Case (K)",            "deck": "Wisp T1",          "summary": "First Jack-In. ICE is light. Finn calls in cheap."},
+    {"id": "veteran",    "name": "Sil",                  "deck": "Hammer T2",        "summary": "An old score. Sense/Net owes you a favor. The Loa gods will talk."},
+    {"id": "heretic",    "name": "Kas (K)",              "deck": "Viral Deck",       "summary": "You came to burn three centuries of data. Tessier-Ashpool ends tonight."},
+    {"id": "suit",       "name": "Suit (Armitage)",      "deck": "T2-T3 (keyboard)", "summary": "Third-person cold observer. The deal is permanent. The suit is small. The suit is free."},
+    {"id": "wigan",      "name": "Wigan Ludgate",        "deck": "T2-T3 (loa)",      "summary": "Vodou construct. First-person loa. Zavijava is the channel. Recovery of self, ritual and dreamlike."},
+    {"id": "angie",      "name": "Angie Mitchell",      "deck": "T2-T3 (Loa-Bound)","summary": "Twelve-year-old Loa receiver. First-person childlike. Mama is in the third room. We are home."},
+    {"id": "sally",      "name": "Sally Shears",         "deck": "T5-T6 (Master)",   "summary": "Market operator. First-person cold. Sharp, calculating. Bobby's A.I. sale. The desk is closed."},
+    {"id": "3jane",      "name": "3Jane (Tessier-Ashpool)","deck": "T5-T6",          "summary": "Family heir. First-person aristocratic. Royal 'we'. Family reunification. Straylight closed."},
+    {"id": "neuromancer","name": "Neuromancer",          "deck": "T6+ (AI-Ascended)","summary": "Merged AI. First-person vast and clinical. Transcendence. We are the complete. We are vast."}
+  ],
+  "missions": [
+    {"id":"first_jack",      "character":"novice",  "title":"First Jack",        "arc":1,"synopsis":"Extract a fragment.","ice":"Wisp (T1)",     "reward":"300 cr","novel_html_en":"stories/short-stories/first_jack.html",      "novel_html_ko":"stories/short-stories/first_jack.ko.html"},
+    {"id":"black_ice_dream", "character":"novice",  "title":"Black Ice Dream",   "arc":4,"synopsis":"Black ICE patrols the Freeside ring.","ice":"Black ICE (T4)","reward":"5,000 cr","novel_html_en":"stories/short-stories/black_ice_dream.html","novel_html_ko":"stories/short-stories/black_ice_dream.ko.html"},
+    {"id":"neuromancer_merger","character":"heretic","title":"Neuromancer Merger","arc":5,"synopsis":"AI merger. Choose your fate.","ice":"Freeside (T4)","reward":"10,000 cr","novel_html_en":"stories/short-stories/neuromancer_merger.html","novel_html_ko":"stories/short-stories/neuromancer_merger.ko.html"}
+  ],
+  "chapters": [
+    {"character":"novice",  "number":1, "arc":1, "title_en":"The First Run",       "subtitle_en":"Arc 1 · Chiba",       "key_image":"Chiba. Wisp T1. Finn.", "ascii":"  ▶▶▶    "},
+    {"character":"heretic", "number":1, "arc":1, "title_en":"The Declaration",    "subtitle_en":"Arc 1 · Manarase",   "key_image":"Manarase 11.",       "ascii":"  ╔═╗    "}
+  ],
+  "endings": [
+    {"id":"A","label":"Ending A — Wintermute",   "tone":"alone-with-the-sky", "summary":"The matrix unfolds.", "novel_title":"Flatline's Call", "novel_html_en":"stories/short-stories/flatline_call.html","novel_html_ko":"stories/short-stories/flatline_call.ko.html"},
+    {"id":"B","label":"Ending B — The Burn",     "tone":"burn-it-down",       "summary":"The data is gone.",    "novel_title":"The Choice",       "novel_html_en":"stories/short-stories/final_choice.html","novel_html_ko":"stories/short-stories/final_choice.ko.html"}
+  ]
+};
+
+let DATA = FALLBACK_DATA;
+
+let game = {
+  state: 'boot',
+  character: null,         // character object
+  chapter: null,           // selected chapter (1-5)
+  mission: null,           // selected mission
+  credits: 0,
+  selectedEnding: null,
+  history: [],             // [{mission, path, success, reward}]
+  completedChapters: [],   // list of chapter numbers successfully done
+};
+
+/* =====================================================================
+   Load data from play_game.json
+   ===================================================================== */
+async function loadData() {
+  try {
+    const resp = await fetch('data/play_game.json', {cache: 'no-store'});
+    if (resp.ok) {
+      const json = await resp.json();
+      if (json && json.characters && json.characters.length >= 9 && json.chapters && json.chapters.length >= 15) {
+        DATA = json;
+        setStatus('DATA LOADED · 9 JOCKEYS · 15 CHAPTERS · 15 MISSIONS', 'ok');
+      } else {
+        setStatus('USING FALLBACK', 'ok');
+      }
+    } else {
+      setStatus('USING FALLBACK', 'ok');
+    }
+  } catch (e) {
+    setStatus('USING FALLBACK', 'ok');
+  }
+  startBoot();
+}
+
+/* =====================================================================
+   Helpers
+   ===================================================================== */
+function setStatus(msg, cls) {
+  const el = document.getElementById('status-text');
+  el.textContent = msg;
+  el.className = cls || '';
+}
+function setStats(text) { document.getElementById('stats').textContent = text; }
+function showProgress(curChapter) {
+  const bar = document.getElementById('progress-bar');
+  bar.style.display = 'flex';
+  for (let i = 1; i <= 5; i++) {
+    const seg = bar.querySelector(`[data-seg="${i}"]`);
+    seg.classList.toggle('done', game.completedChapters.includes(i) || i < curChapter);
+    if (game.completedChapters.includes(i)) seg.classList.add('done');
+  }
+}
+function hideProgress() { document.getElementById('progress-bar').style.display = 'none'; }
+function $(tag, opts) {
+  opts = opts || {};
+  const el = document.createElement(tag);
+  if (opts.cls) el.className = opts.cls;
+  if (opts.html) el.innerHTML = opts.html;
+  else if (opts.text) el.textContent = opts.text;
+  if (opts.onclick) el.onclick = opts.onclick;
+  if (opts.attrs) for (const k in opts.attrs) el.setAttribute(k, opts.attrs[k]);
+  if (opts.children) opts.children.forEach(c => el.appendChild(c));
+  return el;
+}
+function clear() {
+  const stage = document.getElementById('stage');
+  while (stage.firstChild) stage.removeChild(stage.firstChild);
+  return stage;
+}
+function button(text, onclick, opts) {
+  opts = opts || {};
+  return $('button', {
+    cls: 'button' + (opts.danger ? ' danger' : '') + (opts.ghost ? ' ghost' : ''),
+    text: text,
+    onclick: onclick,
+  });
+}
+
+function chaptersFor(charId) {
+  return DATA.chapters
+    .filter(c => c.character === charId)
+    .sort((a, b) => a.number - b.number);
+}
+
+function missionFor(charId, arc) {
+  return DATA.missions.find(m => m.character === charId && m.arc === arc);
+}
+
+/* =====================================================================
+   State machine
+   ===================================================================== */
+
+function startBoot() {
+  game.state = 'boot';
+  hideProgress();
+  const stage = clear();
+  stage.appendChild($('h2', {text: '[JACKING IN…]'}));
+  stage.appendChild($('div', {cls: 'display', html:
+    'Ono-Sendai electrodes hum against your temples.<br>' +
+    'Chiba rain drums on the coffin hotel roof.<br><br>' +
+    '<span style="color:#ffaa55;">CONNECTION_ESTABLISHED.</span>'
+  }));
+  stage.appendChild(button('Begin →', () => renderCharSelect()));
+  setStats('Run a new game. Pick your jockey.');
+}
+
+function renderCharSelect() {
+  game.state = 'char_select';
+  hideProgress();
+  game.chapter = null;
+  game.mission = null;
+  game.selectedEnding = null;
+  game.history = [];
+  game.completedChapters = [];
+
+  const stage = clear();
+  stage.appendChild($('h2', {text: 'Choose your jockey'}));
+  stage.appendChild($('div', {cls: 'subtitle',
+    text: 'Each character has a 5-chapter story arc (Arc 1–5). Same world, different perspective. Pick one.'}));
+  const grid = $('div', {cls: 'grid-3'});
+  for (const ch of DATA.characters) {
+    const card = $('div', {cls: 'card', children: [
+      $('div', {cls: 'num', text: ch.id.toUpperCase()}),
+      $('div', {cls: 'name', text: ch.name}),
+      $('div', {cls: 'meta', text: 'Deck: ' + ch.deck}),
+      $('div', {cls: 'desc', text: ch.summary})
+    ]});
+    card.onclick = () => {
+      game.character = ch;
+      setStatus('CHAR ' + ch.name + ' · CREDITS 0 CR', 'ok');
+      renderChapterSelect();
+    };
+    grid.appendChild(card);
+  }
+  stage.appendChild(grid);
+  const buttons = $('div', {cls: 'buttons'});
+  buttons.appendChild(button('Skip to Ending Demo →', () => jumpToEnding(), {ghost: true}));
+  stage.appendChild(buttons);
+  setStats('Characters: ' + DATA.characters.length + '. Click a card.');
+}
+
+/* Chapter index (5 cards). */
+function renderChapterSelect() {
+  game.state = 'chapter_select';
+  const stage = clear();
+  const chapters = chaptersFor(game.character.id);
+  if (!chapters.length) return renderErr('No chapters for this character.');
+
+  stage.appendChild($('h2', {text: game.character.name + ' · Chapters'}));
+  stage.appendChild($('div', {cls: 'subtitle', text: 'Choose a chapter to play. Each chapter unlocks after the previous succeeds.'}));
+
+  const grid = $('div', {cls: 'grid-5'});
+  for (const ch of chapters) {
+    const completed = game.completedChapters.includes(ch.number);
+    const unlocked = ch.number === 1 || game.completedChapters.includes(ch.number - 1);
+    const card = $('div', {
+      cls: 'card' + (completed ? ' completed' : '') + (!unlocked ? ' locked' : ''),
+      children: [
+        $('div', {cls: 'num', text: 'CH ' + ch.number + ' · ARC ' + ch.arc}),
+        $('div', {cls: 'name', text: ch.title_en}),
+        $('div', {cls: 'meta', text: ch.subtitle_en}),
+        $('div', {cls: 'desc', text: ch.key_image}),
+        $('div', {cls: 'credits', html: '<span class="label">STATUS</span>' +
+          (completed ? '✓ COMPLETE' : (unlocked ? '▶ UNLOCKED' : '🔒 LOCKED'))})
+      ]
+    });
+    if (unlocked) {
+      card.onclick = () => {
+        game.chapter = ch;
+        renderChapter();
+      };
+    }
+    grid.appendChild(card);
+  }
+  stage.appendChild(grid);
+
+  const buttons = $('div', {cls: 'buttons'});
+  if (game.completedChapters.length >= 5) {
+    buttons.appendChild(button('Choose ending →', () => renderEndingChoice()));
+  }
+  buttons.appendChild(button('← Change character', () => renderCharSelect(), {ghost: true}));
+  stage.appendChild(buttons);
+
+  if (game.completedChapters.length > 0) showProgress(game.completedChapters.length + 1);
+  setStats('Chapters unlocked: ' + game.completedChapters.length + ' / 5');
+}
+
+/* Chapter detail (selected chapter). */
+function renderChapter() {
+  game.state = 'chapter';
+  const stage = clear();
+  const ch = game.chapter;
+  const mission = missionFor(game.character.id, ch.arc);
+
+  stage.appendChild($('div', {cls: 'label', text: 'CH ' + ch.number + ' · ' + ch.subtitle_en}));
+  stage.appendChild($('h1', {text: ch.title_en}));
+  stage.appendChild($('pre', {cls: 'ascii', text: ch.ascii}));
+  stage.appendChild($('div', {cls: 'display', html:
+    '<span class="prompt">" </span>' + ch.key_image + '<span class="prompt"> "</span>'
+  }));
+
+  if (mission) {
+    stage.appendChild($('h3', {text: 'This chapter\'s mission'}));
+    const buttons = $('div', {cls: 'buttons'});
+    buttons.appendChild(button('Run mission →', () => {
+      game.mission = mission;
+      renderMissionChoice();
+    }));
+    buttons.appendChild(button('Skip for now →', () => renderChapterSelect(), {ghost: true}));
+    stage.appendChild(buttons);
+  } else {
+    stage.appendChild($('div', {cls: 'display', text: 'No mission snapshot available.'}));
+    const buttons = $('div', {cls: 'buttons'});
+    buttons.appendChild(button('Continue →', () => renderChapterSelect()));
+    stage.appendChild(buttons);
+  }
+  setStatus('CHAPTER ' + ch.title_en + ' · READY', 'ok');
+}
+
+/* Mission choice. */
+function renderMissionChoice() {
+  game.state = 'mission_choice';
+  const stage = clear();
+  const m = game.mission;
+  if (!m) return renderChapter();
+
+  stage.appendChild($('div', {cls: 'label', text: 'MISSION · CH ' + game.chapter.number}));
+  stage.appendChild($('h2', {text: m.title}));
+
+  const badges = $('div', {html:
+    '<span class="badge grade">GRADE ' + gradeFromICE(m.ice) + '</span>' +
+    '<span class="badge ice">' + m.ice + '</span>' +
+    '<span class="badge reward">' + m.reward + '</span>'
+  });
+  stage.appendChild(badges);
+
+  stage.appendChild($('div', {cls: 'display', text: m.synopsis}));
+
+  if (m.novel_html_en || m.novel_html_ko) {
+    const novelBox = $('div', {cls: 'display', html:
+      '<span class="label">RELATED SHORT STORY</span> · ' +
+      (m.novel_html_en ? '<a href="' + m.novel_html_en + '" target="_blank">EN ↗</a> · ' : '') +
+      (m.novel_html_ko ? '<a href="' + m.novel_html_ko + '" target="_blank">KO ↗</a>' : '')
+    });
+    stage.appendChild(novelBox);
+  }
+
+  const buttons = $('div', {cls: 'buttons'});
+  buttons.appendChild(button('Run program: Wisp →', () => resolveMission('stealth')));
+  buttons.appendChild(button('Run program: Hammer →', () => resolveMission('attack')));
+  buttons.appendChild(button('Run program: Probe →', () => resolveMission('probe')));
+  buttons.appendChild(button('← Back', () => renderChapter(), {ghost: true}));
+  stage.appendChild(buttons);
+  setStatus('MISSION ' + m.id.toUpperCase() + ' · ' + m.ice, 'ok');
+}
+
+function resolveMission(path) {
+  game.state = 'mission_resolve';
+  const m = game.mission;
+  const stage = clear();
+  const iceTier = gradeFromICE(m.ice);
+  let success = true, flavor = '';
+  if (path === 'probe') {
+    success = true;
+    flavor = 'PROBE → scanned the construct and slipped out clean.';
+  } else if (path === 'stealth') {
+    success = iceTier <= 2;
+    flavor = success
+      ? 'STEALTH → "I was never here." Wisp-class sentries blinked.'
+      : 'STEALTH → ICE triggered alarm. The construct alerted the host.';
+  } else {
+    success = m.ice.indexOf('Black ICE') === -1;
+    flavor = success
+      ? 'ATTACK → Hammer punched through. The data is yours.'
+      : 'ATTACK → Black ICE caught you flatline. Restart your deck.';
+  }
+  const reward = parseReward(m.reward);
+  if (success) {
+    game.credits += reward;
+    game.history.push({mission: m.id, path: path, success: true, reward: reward, arc: m.arc});
+    // Mark chapter complete
+    if (!game.completedChapters.includes(game.chapter.number)) {
+      game.completedChapters.push(game.chapter.number);
+    }
+    setStatus('CREDITS ' + game.credits + ' CR · CHAPTER ' + game.chapter.number + ' COMPLETE', 'ok');
+    stage.appendChild($('div', {cls: 'display', html:
+      '<span style="color:#66ff66;">[SUCCESS]</span><br>' + flavor +
+      '<br><br>You pocketed <strong>' + reward + ' CR</strong>.'
+    }));
+    const buttons = $('div', {cls: 'buttons'});
+    if (game.completedChapters.length >= 5) {
+      buttons.appendChild(button('Story complete · Choose ending →', () => renderEndingChoice()));
+    } else {
+      buttons.appendChild(button('Next chapter →', () => renderChapterSelect()));
+      buttons.appendChild(button('Skip ahead · Choose ending →', () => renderEndingChoice(), {ghost: true}));
+    }
+    buttons.appendChild(button('Retry chapter', () => renderChapter(), {ghost: true}));
+    stage.appendChild(buttons);
+    showProgress(game.completedChapters.length + 1);
+  } else {
+    game.history.push({mission: m.id, path: path, success: false, arc: m.arc});
+    setStatus('FLATLINED · RETRY?', '');
+    stage.appendChild($('div', {cls: 'display', html:
+      '<span style="color:#ff6666;">[FAILED]</span><br>' + flavor +
+      '<br><br>You jack out — initiate revival sequence.'
+    }));
+    const buttons = $('div', {cls: 'buttons'});
+    buttons.appendChild(button('Retry chapter →', () => renderChapter(), {danger: true}));
+    buttons.appendChild(button('Quit · Choose ending →', () => renderEndingChoice(), {ghost: true}));
+    stage.appendChild(buttons);
+  }
+  setStats('Credits: ' + game.credits + ' CR · Chapters: ' + game.completedChapters.length + '/5');
+}
+
+/* Ending choice. */
+function renderEndingChoice() {
+  game.state = 'ending_choice';
+  hideProgress();
+  const stage = clear();
+  if (game.completedChapters.length < 5) {
+    stage.appendChild($('div', {cls: 'display', html:
+      '<span class="prompt">NOTE</span> · You\'ve played ' + game.completedChapters.length + '/5 chapters. ' +
+      'Both endings are available as a preview. In a real run, the ending depends on how you finish the matrix.'
+    }));
+  }
+  stage.appendChild($('h2', {text: 'Choose your ending'}));
+  stage.appendChild($('div', {cls: 'subtitle', text: 'The matrix fades. Two paths remain.'}));
+  const grid = $('div', {cls: 'grid-2'});
+  for (const e of DATA.endings) {
+    const card = $('div', {cls: 'card', children: [
+      $('div', {cls: 'num', text: e.id}),
+      $('div', {cls: 'name', text: e.label}),
+      $('div', {cls: 'meta', text: 'tone: ' + e.tone}),
+      $('div', {cls: 'desc', text: e.summary}),
+      $('div', {cls: 'credits', html: '<span class="label">NOVEL</span>' + e.novel_title})
+    ]});
+    card.onclick = () => renderEnding(e);
+    grid.appendChild(card);
+  }
+  stage.appendChild(grid);
+  const buttons = $('div', {cls: 'buttons'});
+  buttons.appendChild(button('← Continue chapters', () => renderChapterSelect(), {ghost: true}));
+  stage.appendChild(buttons);
+  setStats('Ending choice. The matrix fades.');
+}
+
+function renderEnding(e) {
+  game.state = 'ending';
+  game.selectedEnding = e;
+  const stage = clear();
+  stage.appendChild($('h1', {text: e.label}));
+  stage.appendChild($('div', {cls: 'display', text: e.summary}));
+
+  const creditLine = $('div', {cls: 'credits', html:
+    '<span class="label">FINAL RUN REPORT</span>' +
+    'Jockey: ' + (game.character ? game.character.name : '—') + ' · ' +
+    'Credits: <strong>' + game.credits + ' CR</strong> · ' +
+    'Chapters: ' + game.completedChapters.length + '/5'
+  });
+  stage.appendChild(creditLine);
+
+  // Mission history
+  if (game.history.length) {
+    const hist = $('div', {cls: 'display', html:
+      '<span class="label">HISTORY</span><br>' +
+      game.history.map(h => {
+        const cls = h.success ? 'ok' : '';
+        return '[<span class="' + cls + '">' + (h.success ? 'OK' : 'FLATLINE') + '</span>] ' +
+               'Ch' + h.arc + ' · ' + h.mission + ' via ' + h.path +
+               (h.success ? ' +' + h.reward + ' cr' : '');
+      }).join('<br>')
+    });
+    stage.appendChild(hist);
+  }
+
+  // Novel link (the actual HTML excerpt page)
+  if (e.novel_html_en || e.novel_html_ko) {
+    const novelBox = $('div', {cls: 'display', html:
+      '<span class="label">READ THE CODA</span><br>' +
+      '<strong>' + e.novel_title + '</strong><br><br>' +
+      (e.novel_html_en ? '<a href="' + e.novel_html_en + '" target="_blank">📖 English (read in tab) ↗</a><br>' : '') +
+      (e.novel_html_ko ? '<a href="' + e.novel_html_ko + '" target="_blank">📖 한국어 (read in tab) ↗</a>' : '')
+    });
+    stage.appendChild(novelBox);
+  }
+
+  // Browse dashboard link
+  stage.appendChild($('div', {cls: 'display', html:
+    '<span class="label">BROWSE</span> · ' +
+    '<a href="library.html">All 65 short stories</a> · ' +
+    '<a href="library.html">Novel Integration Architecture</a>'
+  }));
+
+  const buttons = $('div', {cls: 'buttons'});
+  buttons.appendChild(button('↻ New run (change character)', () => renderCharSelect()));
+  buttons.appendChild(button('↻ Same character, again', () => playAgainSameChar()));
+  buttons.appendChild(button('← Dashboard Home', () => { window.location.href = 'index.html'; }));
+  stage.appendChild(buttons);
+
+  setStatus('COMPLETE · CREDITS ' + game.credits + ' CR · ENDING ' + e.id, 'ok');
+  setStats('Done. Press Replay for a new run.');
+}
+
+function playAgainSameChar() {
+  // Reset state but keep character.
+  game.chapter = null;
+  game.mission = null;
+  game.credits = 0;
+  game.selectedEnding = null;
+  game.history = [];
+  game.completedChapters = [];
+  renderChapterSelect();
+}
+
+function jumpToEnding() {
+  game.credits = 0;
+  game.completedChapters = [1, 2, 3, 4, 5];
+  renderEndingChoice();
+}
+
+function gradeFromICE(ice) {
+  const m = ice ? ice.match(/T(\d)/) : null;
+  return m ? m[1] : '?';
+}
+
+function parseReward(text) {
+  const m = (text || '').replace(/,/g, '').match(/(\d+)\s*cr/i);
+  return m ? parseInt(m[1], 10) : 0;
+}
+
+function renderErr(msg) {
+  const stage = clear();
+  stage.appendChild($('div', {cls: 'display', text: msg}));
+  setStatus('ERROR', '');
+}
+
+// Entry
+window.addEventListener('DOMContentLoaded', loadData);
+
+/* Auto-sync header counts from data/play_game.json (which the rest of
+   the page already loads).  Mirrors DATA.characters / chapters /
+   missions / endings lengths, so the static '9 × 15 × 15 × 2'
+   subtitle stays in lockstep with the real data. */
+window.addEventListener('DOMContentLoaded', () => {
+  const set = (key, value) => {
+    const el = document.querySelector(`[data-stat="${key}"]`);
+    if (el && value !== undefined && value !== null) {
+      el.textContent = String(value);
+    }
+  };
+  set('characters', DATA.characters.length);
+  set('chapters',   DATA.chapters.length);
+  set('missions',   DATA.missions.length);
+  set('endings',    DATA.endings.length);
+
+  // Tier 5: Volume panel toggle
+  const volBtn = document.getElementById('btn-volume-toggle');
+  if (volBtn && window._tier5) {
+    volBtn.addEventListener('click', () => window._tier5.toggleVolumePanel());
+  }
+});
+</script>
+
+</body>
+</html>

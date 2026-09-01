@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="6 카테고리, 46 사운드, 5 테마의 프로시저럴 사운드 시스템. 외부 의존성 0. afplay/aplay/Wave.">
+<meta name="keywords" content="wet-run, cyberpunk, gibson, sprawl, neuromancer, python, tcod, ascii, sound, audio, theme, music">
+<meta name="author" content="emilio">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="canonical" href="https://seoca1.github.io/wet-run/sound.html">
+<meta property="og:title" content="Sound System — Wet Run">
+<meta property="og:description" content="6 카테고리, 46 사운드, 5 테마의 프로시저럴 사운드 시스템. 외부 의존성 0. afplay/aplay/Wave.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://seoca1.github.io/wet-run/sound.html">
+<meta property="og:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="Wet Run">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sound System — Wet Run">
+<meta name="twitter:description" content="6 카테고리, 46 사운드, 5 테마의 프로시저럴 사운드 시스템. 외부 의존성 0. afplay/aplay/Wave.">
+<meta name="twitter:image" content="https://seoca1.github.io/wet-run/favicon.svg">
+<meta name="theme-color" content="#0a0e14">
+<title>Wet Run — Sound Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'JetBrains Mono', 'Menlo', monospace;
+    background: #06090f;
+    color: #c5d4e3;
+    line-height: 1.7;
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  h1, h2, h3 { font-weight: 600; }
+  h1 { font-size: 28px; margin-bottom: 8px; color: #00d9ff; text-shadow: 0 0 12px #00d9ff44; }
+  h2 { font-size: 20px; margin: 32px 0 16px; color: #66ffcc; border-bottom: 1px solid #1a2530; padding-bottom: 8px; }
+  h3 { font-size: 16px; margin: 16px 0 8px; color: #ffaa55; }
+  .subtitle { color: #6a7888; font-size: 13px; margin-bottom: 24px; }
+
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #06090f; border-bottom: 1px solid #1a2530;
+    padding: 8px 24px; margin: -24px -24px 16px -24px;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap;
+  }
+  .top-nav a { color: #66ffcc; text-decoration: none; font-size: 13px; }
+  .top-nav a:hover { color: #00ccff; }
+  .top-nav .current { color: #ffaa55; font-weight: 600; }
+  .top-nav .sep { color: #2a3540; }
+  .top-hub-link {
+    display: inline-block; background: #131a23; border: 1px solid #2a3540;
+    border-radius: 4px; padding: 6px 12px; color: #00d9ff; text-decoration: none;
+    font-size: 12px; margin-bottom: 16px;
+  }
+  .top-hub-link:hover { border-color: #00d9ff; }
+
+  /* Stats panel */
+  .stats-panel {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 8px;
+    padding: 20px; margin-bottom: 24px;
+  }
+  .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+  .stat-item {
+    background: #06090f; border: 1px solid #1a2530; border-radius: 4px; padding: 12px;
+  }
+  .stat-item .label { color: #6a7888; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .stat-item .value { color: #ffaa55; font-size: 24px; font-weight: 700; margin-top: 4px; }
+  .stat-item .sub { color: #6a7888; font-size: 10px; margin-top: 2px; }
+
+  /* Category cards */
+  .category-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+  .category-card {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+    padding: 16px; position: relative; overflow: hidden;
+  }
+  .category-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .category-card.theme::before { background: #9b59b6; }
+  .category-card.events::before { background: #3498db; }
+  .category-card.keys::before { background: #95a5a6; }
+  .category-card.combat::before { background: #e74c3c; }
+  .category-card.movement::before { background: #2ecc71; }
+  .category-card.items::before { background: #f39c12; }
+  .category-card .name { color: #ffaa55; font-size: 14px; font-weight: 600; }
+  .category-card .name-en { color: #8a9aa8; font-size: 12px; }
+  .category-card .key {
+    display: inline-block; background: #1a2530; padding: 2px 8px;
+    border-radius: 3px; font-size: 11px; color: #66ffcc; margin: 6px 0;
+  }
+  .category-card .default-state {
+    font-size: 11px; color: #8a9aa8; margin: 4px 0;
+  }
+  .category-card .default-state.on { color: #66ffcc; }
+  .category-card .default-state.off { color: #ff8888; }
+  .category-card .sound-count {
+    font-size: 24px; color: #ffaa55; font-weight: 700; margin-top: 4px;
+  }
+
+  /* Sound list */
+  .sound-list {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+    padding: 16px; margin-bottom: 24px;
+  }
+  .sound-row {
+    display: grid; grid-template-columns: 220px 120px 1fr 80px;
+    gap: 12px; padding: 8px 0; border-bottom: 1px dashed #1a2530;
+    font-size: 12px;
+  }
+  .sound-row:last-child { border-bottom: none; }
+  .sound-row.header {
+    color: #6a7888; text-transform: uppercase; font-size: 10px; letter-spacing: 1px;
+    border-bottom: 1px solid #1a2530;
+  }
+  .sound-row .name { color: #ffaa55; }
+  .sound-row .category { color: #8a9aa8; font-size: 11px; }
+  .sound-row .category .pill { padding: 2px 6px; border-radius: 3px; }
+  .sound-row .pill.theme { background: #9b59b633; color: #9b59b6; }
+  .sound-row .pill.events { background: #3498db33; color: #3498db; }
+  .sound-row .pill.keys { background: #95a5a633; color: #95a5a6; }
+  .sound-row .pill.combat { background: #e74c3c33; color: #e74c3c; }
+  .sound-row .pill.movement { background: #2ecc7133; color: #2ecc71; }
+  .sound-row .pill.items { background: #f39c1233; color: #f39c12; }
+  .sound-row .file { color: #6a7888; font-family: monospace; font-size: 11px; }
+  .sound-row .size { color: #6a7888; text-align: right; }
+
+  /* Key bindings */
+  .bindings-panel {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+    padding: 20px; margin-bottom: 24px;
+  }
+  .bindings-table {
+    width: 100%; border-collapse: collapse; margin-top: 12px;
+  }
+  .bindings-table th {
+    background: #1a2530; color: #66ffcc; padding: 8px 12px;
+    text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;
+  }
+  .bindings-table td {
+    padding: 8px 12px; border-top: 1px solid #1a2530; color: #c5d4e3; font-size: 13px;
+  }
+  .bindings-table tr:hover td { background: #1a2530; }
+  .bindings-table code { color: #00ccff; background: #06090f; padding: 2px 6px; border-radius: 3px; }
+
+  /* Themes */
+  .theme-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; margin-bottom: 24px;
+  }
+  .theme-card {
+    background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+    padding: 16px;
+  }
+  .theme-card h3 { margin: 0 0 4px; color: #ffaa55; }
+  .theme-card .file { color: #6a7888; font-family: monospace; font-size: 11px; }
+  .theme-card .desc { color: #8a9aa8; font-size: 12px; margin-top: 4px; }
+
+  .footer {
+    text-align: center; color: #6a7888; font-size: 12px; margin-top: 48px;
+    padding: 24px; border-top: 1px solid #1a2530;
+  }
+  .footer code { background: #1a2530; padding: 2px 6px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <a href="./index.html">🌐 Hub</a>
+  <span class="sep">|</span>
+  <a href="index.html">◀ Wet Run</a>
+  <span class="sep">|</span>
+  <a href="missions.html">📖 Story</a>
+  <span class="sep">|</span>
+  <a href="stages.html">⏱ Stages</a>
+  <span class="sep">|</span>
+  <a href="./jokey.html">🎭 Cast</a>
+  <a href="library.html">📚 Short Stories</a>
+  <a href="./stories-browse.html">📖 Browse</a>
+  <a href="graphic-novel.html">Graphic Novel</a>
+  <span class="sep">|</span>
+  <span class="current">🔊 Sound</span>
+  <span class="sep">|</span>
+  <a href="combat.html">⚔ Combat</a>
+  <span class="sep">|</span>
+  <a href="./player.html#equipment">📦 Equipment</a>
+  <span class="sep">|</span>
+  <a href="cyberspace.html">🌐 Cyberspace</a>
+</nav>
+<a class="top-hub-link" id="projects-hub-link" href="../../" title="Projects Hub (local dev only)">🌐 Projects Hub</a>
+<script>
+  // Hide on non-local filesystems (e.g. GitHub Pages) where the
+  // workspace path ../../Game/ does not exist.
+  (function () {
+    var link = document.getElementById("projects-hub-link");
+    if (!link) return;
+    link.style.display = (window.location.protocol === "file:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+      ? "inline-block" : "none";
+  })();
+</script>
+
+<h1>🔊 Sound Dashboard</h1>
+<div class="subtitle">
+  6 카테고리 · 46 사운드 · 12 BGM 테마 · 키 바인딩 8개 · 기본 볼륨 0.2
+  <br>
+  <code>src/wet_run/audio/</code> · <code>sounds/</code> (deploy) · <code>data/sounds_test/</code> (source)
+</div>
+
+<!-- Stats -->
+<div class="stats-panel">
+  <h2>📊 Overview</h2>
+  <div class="stats-row">
+    <div class="stat-item">
+      <div class="label">Sounds</div>
+      <div class="value" data-stat="sounds">46</div>
+      <div class="sub">across 6 categories</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Categories</div>
+      <div class="value" data-stat="categories">6</div>
+      <div class="sub">all toggleable</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Themes</div>
+      <div class="value" data-stat="themes">12</div>
+      <div class="sub">background music</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Volume Default</div>
+      <div class="value" data-stat="volume">20%</div>
+      <div class="sub">master volume</div>
+    </div>
+    <div class="stat-item">
+      <div class="label">Keys Default</div>
+      <div class="value" data-stat="keys">OFF</div>
+      <div class="sub">user preference</div>
+    </div>
+  </div>
+</div>
+
+<!-- Categories -->
+<h2>📂 Categories (6)</h2>
+<div class="category-grid" data-sound-categories>
+  <div class="category-card theme">
+    <div class="name">THEME</div>
+    <div class="name-en">배경음악 (Background music / ambient)</div>
+    <div class="key">T</div>
+    <div class="default-state on">● ON by default</div>
+    <div class="sound-count">5</div>
+  </div>
+  <div class="category-card events">
+    <div class="name">EVENTS</div>
+    <div class="name-en">이벤트 (Story / event triggers)</div>
+    <div class="key">E</div>
+    <div class="default-state on">● ON by default</div>
+    <div class="sound-count">3</div>
+  </div>
+  <div class="category-card keys">
+    <div class="name">KEYS</div>
+    <div class="name-en">키보드 (UI key sounds)</div>
+    <div class="key">K</div>
+    <div class="default-state off">● OFF by default</div>
+    <div class="sound-count">5</div>
+  </div>
+  <div class="category-card combat">
+    <div class="name">COMBAT</div>
+    <div class="name-en">전투 (Combat effects)</div>
+    <div class="key">B</div>
+    <div class="default-state on">● ON by default</div>
+    <div class="sound-count">12</div>
+  </div>
+  <div class="category-card movement">
+    <div class="name">MOVEMENT</div>
+    <div class="name-en">이동 (Movement / navigation)</div>
+    <div class="key">V</div>
+    <div class="default-state on">● ON by default</div>
+    <div class="sound-count">4</div>
+  </div>
+  <div class="category-card items">
+    <div class="name">ITEMS</div>
+    <div class="name-en">아이템 (Inventory / equipment)</div>
+    <div class="key">I</div>
+    <div class="default-state on">● ON by default</div>
+    <div class="sound-count">3</div>
+  </div>
+</div>
+
+<!-- Themes -->
+<h2>🎵 Themes (5 + 7 ambient)</h2>
+<p style="color:#8a9aa8;font-size:13px;margin-bottom:16px;">아래에서 직접 들어보세요. WAV 파일은 <code>sounds/</code> 디렉토리에 있습니다.</p>
+
+<!-- BGM Player -->
+<div id="bgm-player" style="background:#0d1420;border:1px solid #2a3540;border-radius:8px;padding:20px;margin-bottom:24px;">
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+    <div id="now-playing" style="flex:1;color:#ffaa55;font-size:14px;font-weight:600;">🎧 BGM 미리듣기</div>
+    <button onclick="stopAll()" style="background:#1a2530;border:1px solid #2a3540;color:#c5d4e3;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:12px;">■ Stop</button>
+    <input type="range" id="bgm-volume" min="0" max="100" value="60" oninput="setVolume(this.value)" style="width:80px;">
+    <span id="vol-label" style="color:#6a7888;font-size:11px;width:30px;">60%</span>
+  </div>
+  <div class="theme-grid" id="theme-buttons" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
+  </div>
+</div>
+
+<script>
+const THEMES = [
+  { id: "matrix_rain",   file: "theme_matrix_rain.wav",   label: "Matrix Rain",   desc: "매트릭스 진입 · 비 · 데이터" },
+  { id: "cyberspace",    file: "theme_cyberspace.wav",       label: "Cyberspace",    desc: "깊은 매트릭스 · ICE 영역" },
+  { id: "chiba",         file: "theme_chiba.wav",           label: "Chiba",         desc: "Chiba City · 네온 거리" },
+  { id: "sense_net",     file: "theme_sense_net.wav",       label: "Sense/Net",     desc: "T-A 기업 영역" },
+  { id: "finn_office",   file: "theme_finn_office.wav",     label: "Finn's Office", desc: "브리핑 · 의뢰" },
+  { id: "industrial",    file: "theme_industrial.wav",      label: "Industrial",    desc: "전투 BGM" },
+  { id: "broadcast",     file: "theme_broadcast.wav",       label: "Broadcast",     desc: "스토리 · 이벤트" },
+  { id: "loa_drum",      file: "theme_loa_drum.wav",        label: "Loa Drum",      desc: "잭-아웃 드럼" },
+  { id: "loa_drum_fade", file: "theme_loa_drum_fade.wav",   label: "Loa Fade",      desc: "Death Summary" },
+  { id: "loa_channel",   file: "theme_loa_channel.wav",     label: "Loa Channel",   desc: "Hall of Dead" },
+  { id: "manarase_drone",file: "theme_manarase_drone.wav",  label: "Manarase Drone",desc: "엔딩 크레딧" },
+  { id: "hammer_alert",  file: "theme_hammer_alert.wav",    label: "Hammer Alert",  desc: "Death screen" },
+];
+let currentAudio = null;
+let currentThemeId = null;
+const SOUNDS_BASE = "sounds/";
+
+function buildButtons() {
+  const grid = document.getElementById("theme-buttons");
+  THEMES.forEach(t => {
+    const btn = document.createElement("button");
+    btn.id = "btn-" + t.id;
+    btn.className = "theme-play-btn";
+    btn.innerHTML = "<div class=\"t-label\"><span class=\"play-icon\">▶</span> " + t.label + "</div><div class=\"t-desc\">" + t.desc + "</div>";
+    btn.style.cssText = "background:#131a23;border:1px solid #2a3540;border-radius:6px;padding:12px;cursor:pointer;text-align:left;color:#c5d4e3;transition:border-color 0.15s,background 0.15s;";
+    btn.onmouseover = () => { btn.style.borderColor = "#66ffcc"; btn.style.background = "#1a2530"; };
+    btn.onmouseout = () => {
+      if (currentThemeId === t.id) { btn.style.borderColor = "#ffaa55"; btn.style.background = "#1a1200"; }
+      else { btn.style.borderColor = "#2a3540"; btn.style.background = "#131a23"; }
+    };
+    btn.onclick = () => playTheme(t);
+    grid.appendChild(btn);
+  });
+}
+
+// Persistent <audio> element appended to DOM — required for autoplay reliability on Safari/Chrome.
+// Detached `new Audio()` elements are unreliable for autoplay.
+let bgmAudioEl = null;
+function ensureBgmAudio() {
+  if (bgmAudioEl) return bgmAudioEl;
+  bgmAudioEl = document.createElement("audio");
+  bgmAudioEl.id = "bgm-audio";
+  bgmAudioEl.style.display = "none";  // hidden but in DOM
+  bgmAudioEl.preload = "auto";
+  document.body.appendChild(bgmAudioEl);
+  return bgmAudioEl;
+}
+
+function playTheme(t) {
+  if (currentThemeId === t.id && currentAudio && !currentAudio.paused) {
+    currentAudio.pause();
+    currentAudio = null;
+    currentThemeId = null;
+    document.getElementById("now-playing").textContent = "🎧 BGM 미리듣기";
+    updateButtons(null);
+    return;
+  }
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  // Reuse single persistent audio element so it's always in the DOM (autoplay-safe).
+  const a = ensureBgmAudio();
+  a._bgmCleared = false;
+  const audioSrc = SOUNDS_BASE + t.file;
+  a.src = audioSrc;
+  a.volume = (document.getElementById("bgm-volume").value / 100);
+  a.loop = true;
+  const playPromise = a.play();
+  if (playPromise && playPromise.catch) {
+    playPromise.catch(e => {
+      console.error("[bgm-player] play() rejected:", e, "src:", audioSrc);
+      let msg;
+      if (e && e.name === "NotAllowedError") {
+        msg = "⚠ 브라우저 자동재생 차단 — 한 번 더 클릭해 보세요";
+      } else if (e && e.name === "NotSupportedError") {
+        msg = "⚠ 파일 형식 미지원: " + t.file;
+      } else {
+        msg = "⚠ 재생 실패 (" + (e && e.name ? e.name : "Unknown") + "): " + t.file;
+      }
+      document.getElementById("now-playing").textContent = msg;
+    });
+  }
+  currentAudio = a;
+  currentThemeId = t.id;
+  document.getElementById("now-playing").textContent = "▶ " + t.label + " — " + t.desc;
+  updateButtons(t.id);
+  a.onerror = () => {
+    // Suppress false-positive from src clear in stopAll() or before src is set
+    if (a._bgmCleared || !a.src || a.src === window.location.href || a.src.endsWith("/")) {
+      console.log("[bgm-player] error suppressed (src cleared or empty):", a.error, "actual src:", a.src);
+      return;
+    }
+    console.error("[bgm-player] audio error:", a.error, "src:", a.src, "networkState:", a.networkState);
+    let msg;
+    if (a.error && a.error.code === 4 && a.networkState === 3 && a.src && a.src.length > 0) {
+      msg = "⚠ 파일 없음 (404): " + t.file;
+    } else if (a.error && a.error.code === 3) {
+      msg = "⚠ 디코드 실패: " + t.file;
+    } else {
+      msg = "⚠ 오디오 오류 (code " + (a.error ? a.error.code : "?") + "): " + t.file + " (networkState=" + a.networkState + ")";
+    }
+    document.getElementById("now-playing").textContent = msg;
+    currentAudio = null; currentThemeId = null;
+    updateButtons(null);
+  };
+}
+
+function stopAll() {
+  if (currentAudio) {
+    currentAudio._bgmCleared = true;
+    currentAudio.pause();
+    // Keep element in DOM, just remove src to reset state cleanly
+    currentAudio.removeAttribute("src");
+    currentAudio.load();
+    currentAudio = null;
+  }
+  currentThemeId = null;
+  document.getElementById("now-playing").textContent = "🎧 BGM 미리듣기";
+  updateButtons(null);
+}
+
+function setVolume(v) {
+  document.getElementById("vol-label").textContent = v + "%";
+  if (currentAudio) currentAudio.volume = v / 100;
+}
+
+function updateButtons(activeId) {
+  THEMES.forEach(t => {
+    const btn = document.getElementById("btn-" + t.id);
+    if (!btn) return;
+    if (t.id === activeId) {
+      btn.style.borderColor = "#ffaa55";
+      btn.style.background = "#1a1200";
+      btn.style.boxShadow = "0 0 8px #ffaa5533";
+    } else {
+      btn.style.borderColor = "#2a3540";
+      btn.style.background = "#131a23";
+      btn.style.boxShadow = "none";
+    }
+  });
+}
+
+buildButtons();
+</script>
+
+<style>
+.theme-play-btn { display: block; width: 100%; }
+.theme-play-btn .t-label { color: #ffaa55; font-size: 13px; font-weight: 600; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+.theme-play-btn .t-label .play-icon { color: #66ffcc; font-size: 11px; }
+.theme-play-btn .t-desc { color: #6a7888; font-size: 11px; }
+
+/* Reference cards: make obviously non-interactive */
+.theme-grid[data-themes] .theme-card {
+  opacity: 0.55;
+  cursor: default;
+  border-style: dashed;
+}
+.theme-grid[data-themes] .theme-card:hover { background: #0d1420; }
+.theme-grid[data-themes] .theme-card { position: relative; }
+
+/* Full Tracks Gallery */
+.full-tracks-gallery {
+  background: #0d1420; border: 1px solid #1a2530; border-radius: 6px;
+  padding: 12px 20px; margin-bottom: 24px;
+}
+.full-track-row {
+  display: grid; grid-template-columns: 220px 1fr auto; gap: 16px;
+  padding: 12px 0; border-bottom: 1px dashed #1a2530; align-items: center;
+}
+.full-track-row:last-child { border-bottom: none; }
+.full-track-label strong { color: #ffaa55; font-size: 13px; font-family: 'JetBrains Mono', monospace; }
+.full-track-label .desc { color: #8a9aa8; font-size: 11px; margin-top: 4px; line-height: 1.4; }
+.full-track-row audio {
+  width: 100%; min-width: 240px; max-width: 380px; height: 32px;
+}
+.full-track-meta {
+  font-size: 10px; color: #6a7888; font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
+.full-track-row.pending { opacity: 0.5; }
+.full-track-row.pending strong { color: #6a7888; }
+.pending-badge {
+  font-size: 10px; color: #8a9aa8; background: #1a2530;
+  padding: 4px 10px; border-radius: 3px; font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
+.full-track-source { display: none; }
+.full-track-group { padding: 0; }
+.full-track-row-master {
+  display: grid; grid-template-columns: 220px 1fr auto; gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px dashed #1a2530; align-items: center;
+}
+.full-track-row-master:last-child { border-bottom: none; }
+.full-track-count {
+  font-size: 10px; color: #8a9aa8; background: #1a2530;
+  padding: 4px 10px; border-radius: 3px; font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
+.full-track-variant {
+  display: grid; grid-template-columns: 200px 1fr auto; gap: 16px;
+  padding: 10px 0 10px 20px;
+  border-bottom: 1px dashed #1a2530; align-items: center;
+}
+.full-track-variant:last-of-type { border-bottom: none; padding-bottom: 12px; }
+.variant-label {
+  font-size: 11px; color: #66ffcc; font-family: 'JetBrains Mono', monospace;
+}
+.full-track-variant audio {
+  width: 100%; min-width: 240px; max-width: 380px; height: 32px;
+}
+.full-track-variant .full-track-meta {
+  font-size: 10px; color: #6a7888; font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
+}
+</style>
+
+<!-- Theme list (reference) -->
+<h3 style="color:#6a7888;font-size:12px;font-weight:400;text-transform:uppercase;letter-spacing:1px;margin:24px 0 12px 4px;">📋 Reference — read-only theme descriptions (use buttons above to play)</h3>
+<div class="theme-grid" data-themes style="margin-top:8px;">
+  <div class="theme-card">
+    <h3>matrix_rain</h3>
+    <div class="file">theme_matrix_rain.wav</div>
+    <div class="desc">Neuromancer의 매트릭스 진입 시. 비, 데이터, 의식의 시작.</div>
+  </div>
+  <div class="theme-card">
+    <h3>cyberspace</h3>
+    <div class="file">theme_cyberspace.wav</div>
+    <div class="desc">깊은 매트릭스 탐험. 데이터 노드, ICE 영역.</div>
+  </div>
+  <div class="theme-card">
+    <h3>chiba</h3>
+    <div class="file">theme_chiba.wav</div>
+    <div class="desc">Chiba City. 비, 네온, 콘솔 카우보이의 거리.</div>
+  </div>
+  <div class="theme-card">
+    <h3>sense_net</h3>
+    <div class="file">theme_sense_net.wav</div>
+    <div class="desc">Tessier-Ashpool / Sense/Net 영역. 기업, 의식체.</div>
+  </div>
+  <div class="theme-card">
+    <h3>finn_office</h3>
+    <div class="file">theme_finn_office.wav</div>
+    <div class="desc">더 핀의 사무실. 브리핑, 의뢰.</div>
+  </div>
+  <div class="theme-card">
+    <h3>industrial</h3>
+    <div class="file">theme_industrial.wav</div>
+    <div class="desc">전투 모드.</div>
+  </div>
+  <div class="theme-card">
+    <h3>broadcast</h3>
+    <div class="file">theme_broadcast.wav</div>
+    <div class="desc">스토리/이벤트 화면.</div>
+  </div>
+  <div class="theme-card">
+    <h3>loa_drum</h3>
+    <div class="file">theme_loa_drum.wav</div>
+    <div class="desc">잭-아웃 애니메이션.</div>
+  </div>
+  <div class="theme-card">
+    <h3>loa_drum_fade</h3>
+    <div class="file">theme_loa_drum_fade.wav</div>
+    <div class="desc">Death Summary.</div>
+  </div>
+  <div class="theme-card">
+    <h3>loa_channel</h3>
+    <div class="file">theme_loa_channel.wav</div>
+    <div class="desc">Hall of Dead.</div>
+  </div>
+  <div class="theme-card">
+    <h3>manarase_drone</h3>
+    <div class="file">theme_manarase_drone.wav</div>
+    <div class="desc">엔딩 크레딧.</div>
+  </div>
+  <div class="theme-card">
+    <h3>hammer_alert</h3>
+    <div class="file">theme_hammer_alert.wav</div>
+    <div class="desc">Death screen (flatline).</div>
+  </div>
+</div>
+
+<!-- Sound list -->
+<h2>🔉 Sound Files (46)</h2>
+<div class="sound-list" data-sound-list>
+  <div class="sound-row header">
+    <div>File</div>
+    <div>Category</div>
+    <div>Description</div>
+    <div style="text-align: right">Size</div>
+  </div>
+
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_block</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>방어/블록 시</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_defeat</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>전투 패배 (HP 0)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_hit_crit</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>크리티컬 명중</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_hit_miss</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>빗나감</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_hit_normal</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>일반 명중</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_skill_buff</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>스킬 버프</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_skill_debuff</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>스킬 디버프</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_skill_heal</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>스킬 치유</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_skill_magic</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>매직 스킬 (viral)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_skill_physical</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>물리 스킬</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_stun</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>스턴</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_victory</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>전투 승리 (REWARD 진입)</div>
+    <div class="size">~44KB</div>
+  </div>
+
+  <div class="sound-row" data-cat="items">
+    <div class="name">items_cant</div>
+    <div class="category"><span class="pill items">ITEMS</span></div>
+    <div>사용 불가</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="items">
+    <div class="name">items_equip</div>
+    <div class="category"><span class="pill items">ITEMS</span></div>
+    <div>장비 장착</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="items">
+    <div class="name">items_pickup</div>
+    <div class="category"><span class="pill items">ITEMS</span></div>
+    <div>아이템 획득</div>
+    <div class="size">~44KB</div>
+  </div>
+
+  <div class="sound-row" data-cat="movement">
+    <div class="name">movement_jack_in</div>
+    <div class="category"><span class="pill movement">MOVEMENT</span></div>
+    <div>잭-인 (matrix 진입)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="movement">
+    <div class="name">movement_jack_out</div>
+    <div class="category"><span class="pill movement">MOVEMENT</span></div>
+    <div>잭-아웃 (JACK_OUT 진입)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="movement">
+    <div class="name">movement_nav_block</div>
+    <div class="category"><span class="pill movement">MOVEMENT</span></div>
+    <div>이동 차단 (벽)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="movement">
+    <div class="name">movement_nav_step</div>
+    <div class="category"><span class="pill movement">MOVEMENT</span></div>
+    <div>한 칸 이동</div>
+    <div class="size">~44KB</div>
+  </div>
+
+  <div class="sound-row" data-cat="events">
+    <div class="name">story_dialogue_advance</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>대화 진행</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="events">
+    <div class="name">story_event_trigger</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>이벤트 트리거</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="events">
+    <div class="name">story_text_typing</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>텍스트 타이핑</div>
+    <div class="size">~44KB</div>
+  </div>
+
+  <div class="sound-row" data-cat="keys">
+    <div class="name">ui_error</div>
+    <div class="category"><span class="pill keys">KEYS</span></div>
+    <div>에러 (잘못된 입력)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="keys">
+    <div class="name">ui_menu_cancel</div>
+    <div class="category"><span class="pill keys">KEYS</span></div>
+    <div>메뉴 취소 (ESC)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="keys">
+    <div class="name">ui_menu_confirm</div>
+    <div class="category"><span class="pill keys">KEYS</span></div>
+    <div>메뉴 확인 (ENTER)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="keys">
+    <div class="name">ui_menu_select</div>
+    <div class="category"><span class="pill keys">KEYS</span></div>
+    <div>메뉴 선택 (탐색)</div>
+    <div class="size">~44KB</div>
+  </div>
+  <div class="sound-row" data-cat="keys">
+    <div class="name">ui_notification</div>
+    <div class="category"><span class="pill keys">KEYS</span></div>
+    <div>알림 (메시지)</div>
+    <div class="size">~44KB</div>
+  </div>
+</div>
+
+<!-- Key bindings -->
+<h2>⌨️ Key Bindings (전역)</h2>
+<div class="bindings-panel">
+  <p style="color: #8a9aa8; font-size: 13px;">모든 화면에서 동작. <code>app.py</code>의 글로벌 핸들러에 등록.</p>
+  <table class="bindings-table">
+    <thead>
+      <tr>
+        <th>Key</th>
+        <th>Action</th>
+        <th>Code</th>
+        <th>Scope</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>M</code></td>
+        <td>Master mute toggle</td>
+        <td><code>sound_manager.toggle_mute()</code></td>
+        <td>모든 화면</td>
+      </tr>
+      <tr>
+        <td><code>T</code></td>
+        <td>Theme on/off</td>
+        <td><code>toggle_category(SoundCategory.THEME)</code></td>
+        <td>모든 화면</td>
+      </tr>
+      <tr>
+        <td><code>E</code></td>
+        <td>Events on/off</td>
+        <td><code>toggle_category(SoundCategory.EVENTS)</code></td>
+        <td>모든 화면</td>
+      </tr>
+      <tr>
+        <td><code>K</code></td>
+        <td>Keys on/off (default OFF)</td>
+        <td><code>toggle_category(SoundCategory.KEYS)</code></td>
+        <td>모든 화면</td>
+      </tr>
+      <tr>
+        <td><code>B</code></td>
+        <td>Combat on/off</td>
+        <td><code>toggle_category(SoundCategory.COMBAT)</code></td>
+        <td>모든 화면</td>
+      </tr>
+      <tr>
+        <td><code>V</code></td>
+        <td>Movement on/off</td>
+        <td><code>toggle_category(SoundCategory.MOVEMENT)</code></td>
+        <td>모든 화면</td>
+      </tr>
+      <tr>
+        <td><code>I</code></td>
+        <td>Items on/off</td>
+        <td><code>toggle_category(SoundCategory.ITEMS)</code></td>
+        <td>모든 화면</td>
+      </tr>
+      <tr>
+        <td><code>+/-</code></td>
+        <td>Master volume ±0.1 (0.0-1.0)</td>
+        <td><code>adjust_volume(±0.1)</code></td>
+        <td>모든 화면</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Full Tracks Gallery (전체 트랙 감상) -->
+<h2>🎼 전체 트랙 감상 (Full Tracks)</h2>
+<p style="color:#8a9aa8;font-size:13px;margin-bottom:16px;">
+  게임 배포는 위 BGM 버튼의 30초 편집 버전만 사용. 아래는 외부 생성(미니맥스 Music 2.6 무료 베타) 의 풀 트랙 — 감상용.
+  제작 중 — 현재 1/12.
+</p>
+<div class="full-tracks-gallery">
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>matrix_rain</strong>
+        <div class="desc">Dark ambient cyberpunk, 90 BPM, A minor — 매트릭스 진입. Neuromancer 분위기 도입부. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본 (오리지널 미니맥스 생성)</div>
+      <audio controls preload="none" src="sounds/full/theme_matrix_rain.mp3"></audio>
+      <div class="full-track-meta">261.6초 · 45 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">F · (f) 버전 (미니맥스 2차 생성)</div>
+      <audio controls preload="none" src="sounds/full/theme_matrix_rain_full_f.mp3"></audio>
+      <div class="full-track-meta">192.2초 · 33 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 2. cyberspace -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>cyberspace</strong>
+        <div class="desc">Hypnotic dive, 광활한 디지털 공간. 깊은 매트릭스 탐험, ICE 영역. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_cyberspace.mp3"></audio>
+      <div class="full-track-meta">215.9초 · 6.7 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">F · (f) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_cyberspace_full_f.mp3"></audio>
+      <div class="full-track-meta">220.2초 · 37.9 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 3. chiba -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>chiba</strong>
+        <div class="desc">Neon-soaked cyberpunk jazz-funk, 110 BPM — Chiba City 네온 거리. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_chiba.mp3"></audio>
+      <div class="full-track-meta">226.2초 · 7.1 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">M · (m) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_chiba_full_m.mp3"></audio>
+      <div class="full-track-meta">183.8초 · 31.7 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 4. sense_net -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>sense_net</strong>
+        <div class="desc">Corporate minimal techno, 78 BPM — Tessier-Ashpool 기업 영역. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_sense_net.mp3"></audio>
+      <div class="full-track-meta">178.0초 · 5.6 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">F · (f) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_sense_net_full_f.mp3"></audio>
+      <div class="full-track-meta">160.8초 · 27.7 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 5. finn_office -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>finn_office</strong>
+        <div class="desc">Downtempo noir lounge, 92 BPM — 더 핀의 사무실, 브리핑. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_finn_office.mp3"></audio>
+      <div class="full-track-meta">238.3초 · 7.4 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">M · (m) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_finn_office_full_m.mp3"></audio>
+      <div class="full-track-meta">219.9초 · 37.9 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 6. hammer_alert -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>hammer_alert</strong>
+        <div class="desc">Industrial breakcore, 132 BPM — 긴급, Death screen. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_hammer_alert.mp3"></audio>
+      <div class="full-track-meta">184초 · 5.6 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">M · (m) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_hammer_alert_full_m.mp3"></audio>
+      <div class="full-track-meta">244초 · 7.4 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 7. industrial -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>industrial</strong>
+        <div class="desc">Industrial EBM, 124 BPM — 전투 모드 긴장. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_industrial.mp3"></audio>
+      <div class="full-track-meta">256초 · 7.8 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">M · (m) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_industrial_full_m.mp3"></audio>
+      <div class="full-track-meta">214초 · 6.6 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 8. broadcast -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>broadcast</strong>
+        <div class="desc">Ambient news soundtrack, 84 BPM — 스토리/이벤트 화면. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_broadcast.mp3"></audio>
+      <div class="full-track-meta">213초 · 6.5 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">F · (f) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_broadcast_full_f.mp3"></audio>
+      <div class="full-track-meta">169초 · 5.2 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 9. loa_drum -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>loa_drum</strong>
+        <div class="desc">Ritualistic voodoo drum circle, 92 BPM — 잭-아웃, 신비. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_loa_drum.mp3"></audio>
+      <div class="full-track-meta">190초 · 5.8 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">M · (m) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_loa_drum_full_m.mp3"></audio>
+      <div class="full-track-meta">189초 · 5.8 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 10. loa_drum_fade -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>loa_drum_fade</strong>
+        <div class="desc">Somber death farewell, 60 BPM — Death Summary, 체념. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_loa_drum_fade.mp3"></audio>
+      <div class="full-track-meta">274초 · 8.4 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">M · (m) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_loa_drum_fade_full_m.mp3"></audio>
+      <div class="full-track-meta">263초 · 8.0 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 11. loa_channel -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>loa_channel</strong>
+        <div class="desc">Ghosts in the wires, 84 BPM — Hall of Dead, 사이버 귀신. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_loa_channel.mp3"></audio>
+      <div class="full-track-meta">170초 · 5.2 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">M · (m) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_loa_channel_full_m.mp3"></audio>
+      <div class="full-track-meta">177초 · 5.4 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+
+  <!-- 12. manarase_drone -->
+  <div class="full-track-group">
+    <div class="full-track-row full-track-row-master active">
+      <div class="full-track-label">
+        <strong>manarase_drone</strong>
+        <div class="desc">Nylon guitar ambient, 76 BPM — 엔딩 크레딧, 차분한 여운. 두 가지 변형 모두 사용 가능.</div>
+      </div>
+      <span class="full-track-count">2 variants</span>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">A · 원본</div>
+      <audio controls preload="none" src="sounds/full/theme_manarase_drone.mp3"></audio>
+      <div class="full-track-meta">228초 · 7.0 MB<br>  MP3 · 256 kbps</div>
+    </div>
+    <div class="full-track-variant">
+      <div class="variant-label">F · (f) 버전</div>
+      <audio controls preload="none" src="sounds/full/theme_manarase_drone_full_f.mp3"></audio>
+      <div class="full-track-meta">173초 · 5.3 MB<br>  MP3 · 256 kbps</div>
+    </div>
+  </div>
+</div>
+
+<!-- Engine integration -->
+<h2>🔌 Engine Integration</h2>
+<div class="bindings-panel">
+  <p style="color: #8a9aa8; font-size: 13px;">사운드가 호출되는 엔진 모듈:</p>
+  <table class="bindings-table">
+    <thead>
+      <tr><th>Module</th><th>Triggers</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>story_cinematic.py</code></td><td>story_text_typing, story_dialogue_advance</td></tr>
+      <tr><td><code>npc_view.py</code></td><td>story_dialogue_advance</td></tr>
+      <tr><td><code>action_menu.py</code></td><td>ui_menu_select, ui_menu_confirm</td></tr>
+      <tr><td><code>combat_view.py</code></td><td>combat_hit_normal, combat_hit_crit, combat_victory, combat_defeat</td></tr>
+      <tr><td><code>matrix_view.py</code></td><td>movement_nav_step, movement_nav_block, movement_jack_in</td></tr>
+      <tr><td><code>cyberspace_browser.py</code></td><td>movement_jack_in, movement_jack_out</td></tr>
+      <tr><td><code>death.py</code></td><td>combat_defeat (death screen)</td></tr>
+      <tr><td><code>jack_out_view.py</code></td><td>movement_jack_out (JACK_OUT 진입)</td></tr>
+      <tr><td><code>reward_view.py</code></td><td>combat_victory (REWARD 진입)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  Wet Run — Sound Dashboard<br>
+  <code>src/wet_run/audio/</code> · <code>sounds/</code> · 46 sounds · 12 themes
+</div>
+
+</body>
+</html>

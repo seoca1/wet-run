@@ -4755,3 +4755,64 @@ The earlier "12 ruff errors fix" log entry (line 4611 in this file) was a prereq
 - Workspace log: `Projects/log.md` (entries 2302797 + 924e2c9)
 - Next session: M3 cron Tue 2026-09-01 02:00 KST (ADR-0070 F21 re-evaluation)
 - Out-of-session-scope (preserved per workspace §6): 19 modified + 1 untracked file in wet_run working tree from parallel-session work
+
+## [2026-09-01 10:18 KST] docs(wet_run) | world/ 11 stub wiki 페이지 cross-reference 경로 수정 + index 갱신
+
+**Status**: ✅ 완료
+
+### 요약
+
+11개의 untracked wiki stub 페이지 (`wiki/world/characters/`, `concepts/`, `settings/`, `works/` 하위) 가 Fiction wiki primary source를 가리키지만 **broken cross-reference** 사용. 모든 경로를 canonical 형식 (`../../../../Fiction/wiki/<sub>/<stem>`) 으로 수정하고 `wiki/index.md` 에 등록.
+
+### 문제
+
+- 모든 stub 의 cross-reference 가 `../../Fiction/wiki/<stem>` 또는 `../../Fiction/wiki/characters/<stem>` 형식 (2단계 또는 3단계 상승)
+- 파일 위치: `Game/wet_run/wiki/world/<sub>/<stem>.md` → 5단계 상승 필요 (기존 canonical 파일 `johnny.md`, `molly-millions.md` 등은 `../../../../Fiction/wiki/...` 5단계 사용)
+- `the-aleph.md` 의 Fiction canonical 은 `concepts/aleph.md` (stem = `aleph`, not `the-aleph`) → stub title 은 "The Aleph" 유지, link target 은 `aleph` 로 매핑
+
+### 수정 내역
+
+| 파일 | 변경 |
+|---|---|
+| `wiki/world/characters/angie-mitchell.md` | 2 refs fixed → `../../../../Fiction/wiki/characters/angie-mitchell` |
+| `wiki/world/characters/bobby-newmark.md` | 2 refs fixed → `../../../../Fiction/wiki/characters/bobby-newmark` |
+| `wiki/world/characters/case.md` | 2 refs fixed → `../../../../Fiction/wiki/characters/case` |
+| `wiki/world/characters/kumiko-yanaka.md` | 2 refs fixed → `../../../../Fiction/wiki/characters/kumiko-yanaka` |
+| `wiki/world/characters/marly-krushkhova.md` | 2 refs fixed → `../../../../Fiction/wiki/characters/marly-krushkhova` |
+| `wiki/world/characters/slick-henry.md` | 2 refs fixed → `../../../../Fiction/wiki/characters/slick-henry` |
+| `wiki/world/characters/wigan-ludgate.md` | 2 refs fixed → `../../../../Fiction/wiki/characters/wigan-ludgate` |
+| `wiki/world/characters/yakuza.md` | 2 refs fixed → `../../../../Fiction/wiki/characters/yakuza` |
+| `wiki/world/concepts/identity-and-consciousness.md` | 2 refs fixed → `../../../../Fiction/wiki/themes/identity-and-consciousness` |
+| `wiki/world/concepts/the-aleph.md` | 2 refs fixed → `../../../../Fiction/wiki/concepts/aleph` (stem 매핑) |
+| `wiki/world/settings/chiba-city.md` | 2 refs fixed → `../../../../Fiction/wiki/settings/chiba-city` |
+| `wiki/world/works/mona-lisa-overdrive.md` | 2 refs fixed → `../../../../Fiction/wiki/works/mona-lisa-overdrive` |
+| `wiki/world/works/neuromancer.md` | 2 refs fixed → `../../../../Fiction/wiki/works/neuromancer` |
+| `wiki/index.md` | 신규 section 추가: 캐릭터(11) + 컨셉(2) + 설정(1) + 작품(2) = 16 wikilink |
+
+**합계**: 13 files modified, 26 broken refs fixed, 16 wikilinks added to index.
+
+### Special case: the-aleph stem 매핑
+
+- Fiction canonical: `wiki/concepts/aleph.md` (stem = `aleph`)
+- Wet Run stub: `wiki/world/concepts/the-aleph.md` (stem = `the-aleph`, title = "The Aleph")
+- 결정: stub file name 유지 (AGENTS.md §2 `wiki/` 자유 편집 영역, downstream 참조 보존), link target 만 `aleph` 로 매핑. Fiction 의 개념명 보존 (aleph = Borges + Gibson allusions).
+
+### Verification
+
+| 검증 | 결과 |
+|---|---|
+| Python path resolution (`(base / rel / "Fiction/wiki/...").exists()`) | ✅ 13/13 targets exist |
+| Sprawl accuracy (§4) — Fiction canonical 에 1:1 매핑 | ✅ 모든 stub 가 정확한 primary source 가리킴 |
+| `wiki/index.md` wikilink 갱신 (§9) | ✅ 16 entries 추가 |
+
+### 인용
+
+- **갱신**: `wiki/world/characters/*.md` (8 files), `wiki/world/concepts/*.md` (2 files), `wiki/world/settings/*.md` (1 file), `wiki/world/works/*.md` (2 files), `wiki/index.md`
+- **패럴**: AGENTS.md §4.1 (Fiction wiki = canonical primary source), §9 (index 갱신 필수), §3.1 (wiki ingest 절차)
+- **Stem override 출처**: `Fiction/wiki/concepts/aleph.md` (Borges / Gibson allusions 통합 페이지)
+
+### 다음 단계 (사용자 direction 대기)
+
+- 이 13 stub 들을 richer content 로 채울지, 현재 redirect-only 상태로 둘지 (모두 16 lines stub)
+- 2026-08-19 Fiction Track A X1.1-X1.3a 의 verbatim deepening 작업물 (per Projects/NEXT_SESSION_TODO.md) 과 통합 여부
+- Sprawl-era 작업 의존성: case/molly-millions/johnny (X1.1 done), angie-mitchell/bobby-newmark/kumiko-yanaka (X1.2/X1.3a done) — 모두 stub 만 있음, Phase 191/192 확장 시 deeper content 권장

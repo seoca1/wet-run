@@ -126,6 +126,7 @@ class Game {
   private layout: Layout;
   private tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null = null;
   private tutorialActive = false;
+  private selectedSetting: "master" | "bgm" | "sfx" | "colorblind" | "telemetry" | "fontSize" | "highContrast" | "gamepad" = "master";
 
   constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
     this.iceTypes = iceTypes;
@@ -292,20 +293,79 @@ class Game {
     }
     if (this.screen === "settings") {
       const audio = AudioManager.getInstance();
-      if (action.type === "move_east") {
-        // Increase volume for selected slider (alternate between BGM/SFX)
-        // For simplicity, adjust both with left/right
-        const bgm = Math.min(1, audio.getBgmVolume() + 0.1);
-        const sfx = Math.min(1, audio.getSfxVolume() + 0.1);
-        audio.setBgmVolume(bgm);
-        audio.setSfxVolume(sfx);
+      const allSettings = [
+        "master", "bgm", "sfx", "colorblind", "telemetry", "fontSize", "highContrast", "gamepad"
+      ] as const;
+      const currentIndex = allSettings.indexOf(this.selectedSetting);
+      if (action.type === "move_north") {
+        this.selectedSetting = allSettings[(currentIndex - 1 + allSettings.length) % allSettings.length];
+        this.draw();
+        playUiSelect();
+      } else if (action.type === "move_south") {
+        this.selectedSetting = allSettings[(currentIndex + 1) % allSettings.length];
+        this.draw();
+        playUiSelect();
+      } else if (action.type === "move_east") {
+        // Increase/change selected setting
+        if (this.selectedSetting === "master") {
+          audio.setMasterVolume(Math.min(1, audio.getMasterVolume() + 0.1));
+        } else if (this.selectedSetting === "bgm") {
+          audio.setBgmVolume(Math.min(1, audio.getBgmVolume() + 0.1));
+        } else if (this.selectedSetting === "sfx") {
+          audio.setSfxVolume(Math.min(1, audio.getSfxVolume() + 0.1));
+        } else if (this.selectedSetting === "colorblind") {
+          const modes = ["none", "deuteranopia", "protanopia", "tritanopia"] as const;
+          const current = this.state?.colorblindMode ?? "none";
+          const idx = modes.indexOf(current);
+          const next = modes[(idx + 1) % modes.length];
+          this.state = applyAction(this.state!, { type: "set_colorblind", mode: next });
+        } else if (this.selectedSetting === "telemetry") {
+          const next = !(this.state?.telemetryOptIn ?? false);
+          this.state = applyAction(this.state!, { type: "set_telemetry", enabled: next });
+        } else if (this.selectedSetting === "fontSize") {
+          const sizes = ["small", "normal", "large"] as const;
+          const current = this.state?.fontSize ?? "normal";
+          const idx = sizes.indexOf(current);
+          const next = sizes[(idx + 1) % sizes.length];
+          this.state = applyAction(this.state!, { type: "set_font_size", size: next });
+        } else if (this.selectedSetting === "highContrast") {
+          const next = !(this.state?.highContrast ?? false);
+          this.state = applyAction(this.state!, { type: "set_high_contrast", enabled: next });
+        } else if (this.selectedSetting === "gamepad") {
+          const next = !(this.state?.gamepadEnabled ?? true);
+          this.state = applyAction(this.state!, { type: "set_gamepad", enabled: next });
+        }
         this.draw();
       } else if (action.type === "move_west") {
-        // Decrease volume
-        const bgm = Math.max(0, audio.getBgmVolume() - 0.1);
-        const sfx = Math.max(0, audio.getSfxVolume() - 0.1);
-        audio.setBgmVolume(bgm);
-        audio.setSfxVolume(sfx);
+        // Decrease/change selected setting (reverse direction for toggle options)
+        if (this.selectedSetting === "master") {
+          audio.setMasterVolume(Math.max(0, audio.getMasterVolume() - 0.1));
+        } else if (this.selectedSetting === "bgm") {
+          audio.setBgmVolume(Math.max(0, audio.getBgmVolume() - 0.1));
+        } else if (this.selectedSetting === "sfx") {
+          audio.setSfxVolume(Math.max(0, audio.getSfxVolume() - 0.1));
+        } else if (this.selectedSetting === "colorblind") {
+          const modes = ["none", "deuteranopia", "protanopia", "tritanopia"] as const;
+          const current = this.state?.colorblindMode ?? "none";
+          const idx = modes.indexOf(current);
+          const prev = modes[(idx - 1 + modes.length) % modes.length];
+          this.state = applyAction(this.state!, { type: "set_colorblind", mode: prev });
+        } else if (this.selectedSetting === "telemetry") {
+          const next = !(this.state?.telemetryOptIn ?? false);
+          this.state = applyAction(this.state!, { type: "set_telemetry", enabled: next });
+        } else if (this.selectedSetting === "fontSize") {
+          const sizes = ["small", "normal", "large"] as const;
+          const current = this.state?.fontSize ?? "normal";
+          const idx = sizes.indexOf(current);
+          const prev = sizes[(idx - 1 + sizes.length) % sizes.length];
+          this.state = applyAction(this.state!, { type: "set_font_size", size: prev });
+        } else if (this.selectedSetting === "highContrast") {
+          const next = !(this.state?.highContrast ?? false);
+          this.state = applyAction(this.state!, { type: "set_high_contrast", enabled: next });
+        } else if (this.selectedSetting === "gamepad") {
+          const next = !(this.state?.gamepadEnabled ?? true);
+          this.state = applyAction(this.state!, { type: "set_gamepad", enabled: next });
+        }
         this.draw();
       } else if (action.type === "confirm" || action.type === "cancel" || action.type === "jack_out") {
         this.screen = "menu";
@@ -508,17 +568,25 @@ class Game {
       } else if (this.screen === "settings") {
         const audio = AudioManager.getInstance();
         const syncState = getEngineState();
+        const state = this.state as GameState | null;
         this.renderer.render(
           renderSettingsScreen(
+            audio.getMasterVolume(),
             audio.getBgmVolume(),
             audio.getSfxVolume(),
             this.layout.cols,
             this.layout.rows,
+            this.selectedSetting,
+            state?.colorblindMode ?? "none",
+            state?.telemetryOptIn ?? false,
+            state?.fontSize ?? "normal",
+            state?.highContrast ?? false,
+            state?.gamepadEnabled ?? true,
             syncState ? {
               status: syncState.status,
               lastSync: syncState.last_sync_at,
               error: syncState.last_error,
-              pushed: 0, // TODO: track from sync result
+              pushed: 0,
               pulled: 0,
             } : undefined,
           ),

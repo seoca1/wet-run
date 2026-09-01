@@ -70,12 +70,14 @@ export class AudioManager {
   private _muted = false;
   private _started = false;
   private _volume: number;
+  private _masterVolume: number;
   private readonly sfxHowls: Map<SoundEffectId, Howl> = new Map();
   private _sfxVolume: number;
 
-  private constructor(volume: number, sfxVolume: number) {
+  private constructor(volume: number, sfxVolume: number, masterVolume: number) {
     this._volume = volume;
     this._sfxVolume = sfxVolume;
+    this._masterVolume = masterVolume;
   }
 
   /** Get or create the singleton. Safe to call repeatedly. */
@@ -84,6 +86,7 @@ export class AudioManager {
       // Load persisted volumes or use defaults
       let bgmVol = 0.4;
       let sfxVol = 0.6;
+      let masterVol = 1.0;
       if (typeof window !== "undefined") {
         try {
           const saved = localStorage.getItem("wetrun_audio_volumes");
@@ -91,12 +94,13 @@ export class AudioManager {
             const parsed = JSON.parse(saved);
             bgmVol = parsed.bgmVolume ?? 0.4;
             sfxVol = parsed.sfxVolume ?? 0.6;
+            masterVol = parsed.masterVolume ?? 1.0;
           }
         } catch {
           // ignore localStorage errors
         }
       }
-      instance = new AudioManager(bgmVol, sfxVol);
+      instance = new AudioManager(bgmVol, sfxVol, masterVol);
     }
     return instance;
   }
@@ -112,7 +116,7 @@ export class AudioManager {
     this._volume = clamped;
     if (this.howl !== null) {
       try {
-        this.howl.volume(clamped);
+        this.howl.volume(clamped * this._masterVolume);
       } catch {
         // ignore
       }
@@ -131,7 +135,33 @@ export class AudioManager {
     this._sfxVolume = clamped;
     for (const sfx of this.sfxHowls.values()) {
       try {
-        sfx.volume(clamped);
+        sfx.volume(clamped * this._masterVolume);
+      } catch {
+        // ignore
+      }
+    }
+    this.persistVolumes();
+  }
+
+  /** Get current master volume (0.0 - 1.0). */
+  getMasterVolume(): number {
+    return this._masterVolume;
+  }
+
+  /** Set master volume (0.0 - 1.0), applies to both BGM and SFX. */
+  setMasterVolume(v: number): void {
+    const clamped = Math.max(0, Math.min(1, v));
+    this._masterVolume = clamped;
+    if (this.howl !== null) {
+      try {
+        this.howl.volume(this._volume * clamped);
+      } catch {
+        // ignore
+      }
+    }
+    for (const sfx of this.sfxHowls.values()) {
+      try {
+        sfx.volume(this._sfxVolume * clamped);
       } catch {
         // ignore
       }
@@ -146,6 +176,7 @@ export class AudioManager {
         localStorage.setItem("wetrun_audio_volumes", JSON.stringify({
           bgmVolume: this._volume,
           sfxVolume: this._sfxVolume,
+          masterVolume: this._masterVolume,
         }));
       } catch {
         // ignore localStorage errors
@@ -195,7 +226,7 @@ export class AudioManager {
       this.howl = new Howl({
         src: [track],
         loop: true,
-        volume: this._volume,
+        volume: this._volume * this._masterVolume,
         html5: false,
       });
       this.currentTrack = track;
@@ -319,7 +350,7 @@ export class AudioManager {
         howl = new Howl({
           src: [id],
           loop: false,
-          volume: this._sfxVolume,
+          volume: this._sfxVolume * this._masterVolume,
           html5: false,
         });
         this.sfxHowls.set(id, howl);

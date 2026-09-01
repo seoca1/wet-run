@@ -128,6 +128,12 @@ export interface GameState {
   readonly vfxInstances: ReadonlyArray<import("../renderer/combat_vfx.js").CombatVfxInstance>;
   // Tier 5: combat phase state machine (idle/turn/animating/resolving).
   readonly combatPhase: CombatPhaseState;
+  // Tier 5: Accessibility & settings
+  readonly colorblindMode: "none" | "deuteranopia" | "protanopia" | "tritanopia";
+  readonly telemetryOptIn: boolean;
+  readonly fontSize: "small" | "normal" | "large";
+  readonly highContrast: boolean;
+  readonly gamepadEnabled: boolean;
 }
 
 /** Top-level run cycle phase (Tier 5+). */
@@ -199,7 +205,13 @@ export type GameAction =
   | { readonly type: "select_program"; readonly handIndex: number }
   | { readonly type: "confirm" }
   | { readonly type: "cancel" }
-  | { readonly type: "jack_out" };
+  | { readonly type: "jack_out" }
+  // Settings actions
+  | { readonly type: "set_colorblind"; readonly mode: "none" | "deuteranopia" | "protanopia" | "tritanopia" }
+  | { readonly type: "set_telemetry"; readonly enabled: boolean }
+  | { readonly type: "set_font_size"; readonly size: "small" | "normal" | "large" }
+  | { readonly type: "set_high_contrast"; readonly enabled: boolean }
+  | { readonly type: "set_gamepad"; readonly enabled: boolean };
 
 /** Input mapping — keyboard event → game action.
  *

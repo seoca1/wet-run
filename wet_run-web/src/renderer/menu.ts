@@ -113,12 +113,24 @@ export function renderMainMenu(
   return grid;
 }
 
+/** Settings option types. */
+export type SettingsOptionType = 
+  | "master" | "bgm" | "sfx" 
+  | "colorblind" | "telemetry" | "fontSize" | "highContrast" | "gamepad";
+
 /** Render the settings screen with volume sliders and sync status. */
 export function renderSettingsScreen(
+  masterVolume: number,
   bgmVolume: number,
   sfxVolume: number,
   cols: number,
   rows: number,
+  selectedSetting: SettingsOptionType = "master",
+  colorblindMode: "none" | "deuteranopia" | "protanopia" | "tritanopia" = "none",
+  telemetryOptIn: boolean = false,
+  fontSize: "small" | "normal" | "large" = "normal",
+  highContrast: boolean = false,
+  gamepadEnabled: boolean = true,
   syncStatus?: { status: string; lastSync: string | null; error: string | null; pushed: number; pulled: number },
 ): Grid {
   let grid = makeGrid(cols, rows);
@@ -131,20 +143,56 @@ export function renderSettingsScreen(
   );
   grid = setText(grid, 2, 4, "─".repeat(Math.min(cols - 4, 60)), PALETTE.GRAY_MID);
 
-  // BGM Volume
-  const bgmBar = volumeBar(bgmVolume, 20);
-  grid = setText(grid, 4, 8, "BGM Volume", PALETTE.GRAY_LIGHT);
-  grid = setText(grid, 4, 9, bgmBar, PALETTE.YELLOW_AMBER);
-  grid = setText(grid, 4, 10, `← / → to adjust  (${Math.round(bgmVolume * 100)}%)`, PALETTE.GRAY_DARK);
+  // Volume Sliders Section
+  const volumeSliders = [
+    { type: "master" as SettingsOptionType, label: "MASTER VOLUME", volume: masterVolume },
+    { type: "bgm" as SettingsOptionType, label: "BGM VOLUME", volume: bgmVolume },
+    { type: "sfx" as SettingsOptionType, label: "SFX VOLUME", volume: sfxVolume },
+  ] as const;
 
-  // SFX Volume
-  const sfxBar = volumeBar(sfxVolume, 20);
-  grid = setText(grid, 4, 13, "SFX Volume", PALETTE.GRAY_LIGHT);
-  grid = setText(grid, 4, 14, sfxBar, PALETTE.YELLOW_AMBER);
-  grid = setText(grid, 4, 15, `← / → to adjust  (${Math.round(sfxVolume * 100)}%)`, PALETTE.GRAY_DARK);
+  // Accessibility & Gameplay Section
+  const accessibilityOptions = [
+    { type: "colorblind" as SettingsOptionType, label: "COLORBLIND MODE", value: colorblindMode, values: ["none", "deuteranopia", "protanopia", "tritanopia"] as const },
+    { type: "telemetry" as SettingsOptionType, label: "TELEMETRY", value: telemetryOptIn ? "ON" : "OFF", values: ["OFF", "ON"] as const },
+    { type: "fontSize" as SettingsOptionType, label: "FONT SIZE", value: fontSize, values: ["small", "normal", "large"] as const },
+    { type: "highContrast" as SettingsOptionType, label: "HIGH CONTRAST", value: highContrast ? "ON" : "OFF", values: ["OFF", "ON"] as const },
+    { type: "gamepad" as SettingsOptionType, label: "GAMEPAD", value: gamepadEnabled ? "ON" : "OFF", values: ["OFF", "ON"] as const },
+  ] as const;
+
+  const allOptions = [...volumeSliders, ...accessibilityOptions] as const;
+  const startY = 6;
+
+  for (let i = 0; i < allOptions.length; i++) {
+    const config = allOptions[i];
+    const isSelected = config.type === selectedSetting;
+    const marker = isSelected ? "▸" : " ";
+    const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
+    const row = startY + i * 3;
+
+    // Option label with selection marker
+    grid = setText(grid, 4, row, `${marker} ${config.label}`, fg);
+
+    // Value display
+    let valueDisplay = "";
+    if ("volume" in config) {
+      const bar = volumeBar(config.volume, 20);
+      const barColor = isSelected ? PALETTE.YELLOW_AMBER : PALETTE.GRAY_LIGHT;
+      grid = setText(grid, 4, row + 1, bar, barColor);
+      valueDisplay = `${Math.round(config.volume * 100)}%`;
+    } else {
+      const value = config.value as string;
+      valueDisplay = value;
+    }
+
+    if (isSelected) {
+      grid = setText(grid, 4, row + 1, `←/→ to change  (${valueDisplay})`, PALETTE.GREEN_NEON);
+    } else {
+      grid = setText(grid, 4, row + 1, valueDisplay, PALETTE.GRAY_DARK);
+    }
+  }
 
   // Sync Status Section
-  const syncStartRow = 18;
+  const syncStartRow = startY + allOptions.length * 3 + 1;
   grid = setText(grid, 2, syncStartRow, "─".repeat(Math.min(cols - 4, 60)), PALETTE.GRAY_MID);
   grid = setText(grid, 4, syncStartRow + 1, "CLOUD SYNC (Tier 3)", PALETTE.GREEN_NEON);
   
@@ -185,7 +233,7 @@ export function renderSettingsScreen(
 
   // Footer
   grid = setText(grid, 2, rows - 2, "ENTER/ESC: back to main menu", PALETTE.GRAY_DARK);
-  grid = setText(grid, 2, rows - 1, "M: toggle mute | Arrows: adjust volumes | S: sync now", PALETTE.GRAY_DARK);
+  grid = setText(grid, 2, rows - 1, "M: toggle mute | ↑/↓ select  ←/→ change  S: sync now", PALETTE.GRAY_DARK);
 
   return grid;
 }

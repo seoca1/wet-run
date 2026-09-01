@@ -58,11 +58,30 @@ export function makeInitialState(mission: Mission, ice: Ice, deck: ReadonlyArray
     endingChoice: null,
     vfxInstances: [],
     combatPhase: INITIAL_COMBAT_PHASE,
+    colorblindMode: "none",
+    telemetryOptIn: false,
+    fontSize: "normal",
+    highContrast: false,
+    gamepadEnabled: true,
   };
 }
 
 /** Pure reducer — apply an action to a state, returning a new state. */
 export function applyAction(state: GameState, action: GameAction): GameState {
+  // Settings actions (global, available in any phase)
+  switch (action.type) {
+    case "set_colorblind":
+      return { ...state, colorblindMode: action.mode };
+    case "set_telemetry":
+      return { ...state, telemetryOptIn: action.enabled };
+    case "set_font_size":
+      return { ...state, fontSize: action.size };
+    case "set_high_contrast":
+      return { ...state, highContrast: action.enabled };
+    case "set_gamepad":
+      return { ...state, gamepadEnabled: action.enabled };
+  }
+
   // Tier 5: matrix → combat → loot → ending cycle.
   // The legacy `phase` field is still used within combat for
   // approach/combat/victory/defeat sub-states.
@@ -456,5 +475,10 @@ export function slotToGameState(
     endingChoice: null,
     vfxInstances: [],
     combatPhase: INITIAL_COMBAT_PHASE,
+    colorblindMode: "none",
+    telemetryOptIn: false,
+    fontSize: "normal",
+    highContrast: false,
+    gamepadEnabled: true,
   };
 }

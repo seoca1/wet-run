@@ -1,0 +1,134 @@
+/** Canvas2D ASCII grid renderer — Gibson-flavored.
+ *
+ * Renders Cell[][] to canvas. Uses monospace font (JetBrains Mono or
+ * system fallback). Cell size adapts to viewport:
+ *   - Portrait: 6x12 px (compact), 8x14 px (standard)
+ *   - Landscape: 8x16 px (standard), 10x18 px (large)
+ *
+ * ADR-0199 §4.3: this is the foundation for "Gibson tone" validation
+ * in Commit 2. Visual fidelity matters more than performance here.
+ */
+import type { Cell, Grid } from "../core/types.ts";
+import { PALETTE } from "./palette.ts";
+
+export interface AsciiRendererOptions {
+  readonly cellWidth?: number;
+  readonly cellHeight?: number;
+  readonly fontFamily?: string;
+}
+
+interface CellSize {
+  readonly width: number;
+  readonly height: number;
+}
+
+const CELL_SIZES: Record<string, CellSize> = {
+  compact_portrait: { width: 6, height: 12 },
+  standard_portrait: { width: 8, height: 14 },
+  standard_landscape: { width: 8, height: 16 },
+  large_landscape: { width: 10, height: 18 },
+};
+
+function getCellSize(orientation: "portrait" | "landscape", breakpoint: string): CellSize {
+  if (orientation === "portrait") {
+    return breakpoint === "compact" ? CELL_SIZES.compact_portrait : CELL_SIZES.standard_portrait;
+  }
+  return breakpoint === "xlarge" ? CELL_SIZES.large_landscape : CELL_SIZES.standard_landscape;
+}
+
+export class AsciiRenderer {
+  private ctx: CanvasRenderingContext2D;
+  private cellWidth: number;
+  private cellHeight: number;
+  private fontSize: number;
+  private fontFamily: string;
+  private dpr: number;
+
+  constructor(
+    private readonly canvas: HTMLCanvasElement,
+    options: AsciiRendererOptions = {},
+  ) {
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      throw new Error("Failed to acquire 2D rendering context");
+    }
+    this.ctx = ctx;
+    this.cellWidth = options.cellWidth ?? 8;
+    this.cellHeight = options.cellHeight ?? 16;
+    this.fontSize = this.cellHeight;
+    this.fontFamily = options.fontFamily ?? '"JetBrains Mono", monospace';
+    this.dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+    ctx.font = `${this.fontSize}px ${this.fontFamily}`;
+    ctx.textBaseline = "top";
+  }
+
+  /** Resize canvas to fit a (cols × rows) grid plus HUD width.
+   * Adapts cell size based on layout orientation and breakpoint.
+   */
+  resizeGrid(cols: number, rows: number, hudCols = 28, orientation: "portrait" | "landscape" = "landscape", breakpoint = "large"): void {
+    const cellSize = getCellSize(orientation, breakpoint);
+    this.cellWidth = cellSize.width;
+    this.cellHeight = cellSize.height;
+    this.fontSize = this.cellHeight;
+
+    const totalCols = cols + hudCols;
+    const cssWidth = totalCols * this.cellWidth;
+    const cssHeight = rows * this.cellHeight;
+    this.canvas.width = Math.round(cssWidth * this.dpr);
+    this.canvas.height = Math.round(cssHeight * this.dpr);
+    this.canvas.style.width = `${cssWidth}px`;
+    this.canvas.style.height = `${cssHeight}px`;
+    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
+    this.ctx.textBaseline = "top";
+  }
+
+  /** Clear + render a complete frame. */
+  render(grid: Grid, hudLines: ReadonlyArray<string>): void {
+    this.clear();
+    this.drawGrid(grid);
+    this.drawHud(grid, hudLines);
+  }
+
+  private clear(): void {
+    this.ctx.fillStyle = PALETTE.BACKGROUND;
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+  }
+
+  private drawGrid(grid: Grid): void {
+    for (let y = 0; y < grid.height; y++) {
+      const row = grid.cells[y];
+      if (!row) continue;
+      for (let x = 0; x < grid.width; x++) {
+        const cell = row[x];
+        if (!cell) continue;
+        this.drawCell(x, y, cell);
+      }
+    }
+  }
+
+  private drawCell(x: number, y: number, cell: Cell): void {
+    const px = x * this.cellWidth;
+    const py = y * this.cellHeight;
+    this.ctx.fillStyle = cell.bg;
+    this.ctx.fillRect(px, py, this.cellWidth, this.cellHeight);
+    this.ctx.fillStyle = cell.fg;
+    this.ctx.fillText(cell.char, px, py);
+  }
+
+  private drawHud(grid: Grid, lines: ReadonlyArray<string>): void {
+    const hudX = (grid.width + 1) * this.cellWidth;
+    let hudY = this.cellHeight;
+    for (const line of lines) {
+      this.ctx.fillStyle = PALETTE.GREEN_NEON;
+      this.ctx.fillText(line, hudX, hudY);
+      hudY += this.cellHeight;
+    }
+  }
+
+  /** Render a single character at (x, y) — for debug overlays. */
+  debugChar(x: number, y: number, char: string, color = PALETTE.GRAY_DARK): void {
+    this.ctx.fillStyle = color;
+    this.ctx.fillText(char, x * this.cellWidth, y * this.cellHeight);
+  }
+}

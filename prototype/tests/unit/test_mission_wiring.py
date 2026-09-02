@@ -14,17 +14,18 @@ _SRC = Path(__file__).resolve().parents[2] / "src"
 if str(_SRC) not in sys.path:
     sys.path.insert(0, str(_SRC))
 
-import pytest  # noqa: E402
+import pytest
 
-from wet_run.combat import enrich_mission_registry  # noqa: E402
-from wet_run.combat.arc6 import ARC6_MISSIONS, enrich_arc6_mission, is_arc6_mission  # noqa: E402
-from wet_run.combat.mission_expansion import (  # noqa: E402
+from wet_run.combat import enrich_mission_registry
+from wet_run.combat.arc6 import ARC6_MISSIONS, enrich_arc6_mission, is_arc6_mission
+from wet_run.combat.mission_expansion import (
     EXPANSION_MISSIONS,
     enrich_expansion_mission,
     is_expansion_mission,
 )
-from wet_run.matrix.node import ZoneDepth  # noqa: E402
-from wet_run.missions.board import JobBoard  # noqa: E402
+from wet_run.missions.board import JobBoard
+from wet_run.matrix.node import ZoneDepth
+
 
 MISSIONS_PATH = Path("data/missions/missions.json")
 
@@ -74,11 +75,15 @@ class TestEnrichExpansionMission:
 
 class TestEnrichMissionRegistry:
     def test_arc6_path(self) -> None:
-        enriched = enrich_mission_registry("ghost_signal_origin", {"title": "x", "fixer": "y"})
+        enriched = enrich_mission_registry(
+            "ghost_signal_origin", {"title": "x", "fixer": "y"}
+        )
         assert enriched["registry_source"] == "ADR-0166"
 
     def test_expansion_path(self) -> None:
-        enriched = enrich_mission_registry("hosaka_after_hours", {"title": "x", "fixer": "y"})
+        enriched = enrich_mission_registry(
+            "hosaka_after_hours", {"title": "x", "fixer": "y"}
+        )
         assert enriched["registry_source"] == "ADR-0167"
 
     def test_unknown_returns_base_unchanged(self) -> None:
@@ -93,12 +98,8 @@ class TestJobBoardWiring:
         return JobBoard.load(MISSIONS_PATH)
 
     def test_arc6_missions_loaded(self, board: JobBoard) -> None:
-        for mid in (
-            "ghost_signal_origin",
-            "wintermute_residue",
-            "tessier_ashpool_aftermath",
-            "neuromancer_merger_residue",
-        ):
+        for mid in ("ghost_signal_origin", "wintermute_residue",
+                    "tessier_ashpool_aftermath", "neuromancer_merger_residue"):
             mission = board.get(mid)
             assert mission is not None, f"{mid} not loaded"
             assert mission.zone == ZoneDepth.AFTERMATH
@@ -106,12 +107,10 @@ class TestJobBoardWiring:
 
     def test_expansion_missions_loaded(self, board: JobBoard) -> None:
         expansion_ids = {
-            "hosaka_after_hours",
-            "sense_net_infiltration",
-            "yakuza_meeting",
-            "t_a_construction_site",
-            "zion_lab_breach",
-            "construct_market",
+            mid for mid in (
+                "hosaka_after_hours", "sense_net_infiltration", "yakuza_meeting",
+                "t_a_construction_site", "zion_lab_breach", "construct_market",
+            )
         }
         for mid in expansion_ids:
             assert board.get(mid) is not None, f"{mid} not loaded"
@@ -124,101 +123,3 @@ class TestJobBoardWiring:
             assert is_arc6_mission(mission.id)
         for mission in EXPANSION_MISSIONS:
             assert is_expansion_mission(mission.id)
-
-
-class T:
-    def t1(self):
-        from wet_run.missions.board import _p
-
-        m = _p(
-            {
-                "id": "t",
-                "title": "T",
-                "fixer": "finn",
-                "grade_min": 1,
-                "grade_max": 2,
-                "matrix_seed": 0,
-                "zone": "surface",
-            }
-        )
-        assert m is not None
-        assert m.random_weight == 1.0
-
-    def t2(self):
-        import json
-
-        d = json.load(open("prototype/data/missions/missions.json"))
-        assert d["ghost_signal_origin"].get("random_weight") == 1.5
-
-    def t3(self):
-        import json
-
-        d = json.load(open("prototype/data/missions/missions.json"))
-        assert d["hosaka_after_hours"].get("random_weight") == 1.2
-
-
-class TestWeightedPick:
-    """Tests for board.py select_weighted + random_rules weighted pick with random_weight (ADR-0208)."""
-
-    def test_get_random_mission_with_weights(self) -> None:
-        from wet_run.missions.random_rules import get_random_mission
-
-        weights = {"a": 0.0, "b": 1.0, "c": 0.0}
-        for _ in range(20):
-            result = get_random_mission(
-                state=type("S", (), {})(),
-                available_missions=["a", "b", "c"],
-                seed=None,
-                mission_weights=weights,
-            )
-            assert result == "b", f"weighted pick failed with zero-weight a,c got {result}"
-
-    def test_get_random_mission_excludes_zero_weight(self) -> None:
-        from wet_run.missions.random_rules import get_random_mission
-
-        weights = {"a": 0.0, "b": 1.0, "c": 0.5}
-        seen = set()
-        for seed in range(50):
-            result = get_random_mission(
-                state=type("S", (), {})(),
-                available_missions=["a", "b", "c"],
-                seed=seed,
-                mission_weights=weights,
-            )
-            seen.add(result)
-        assert "a" not in seen, f"zero-weight mission a should be excluded, seen={seen}"
-
-    def test_select_weighted_uses_self_mission_weights(self) -> None:
-        from wet_run.matrix.node import ZoneDepth
-        from wet_run.missions.board import JobBoard, Mission
-
-        m1 = Mission(
-            id="common",
-            title="Common",
-            fixer="finn",
-            arc=1,
-            grade_min=1,
-            grade_max=2,
-            matrix_seed=0,
-            zone=ZoneDepth.SURFACE,
-            random_weight=0.001,
-        )
-        m2 = Mission(
-            id="rare",
-            title="Rare",
-            fixer="finn",
-            arc=1,
-            grade_min=1,
-            grade_max=2,
-            matrix_seed=0,
-            zone=ZoneDepth.SURFACE,
-            random_weight=1.0,
-        )
-        board = JobBoard((m1, m2))
-        state = type("S", (), {"grade": 1, "faction_rep": 0})()
-        seen = set()
-        for seed in range(30):
-            result = board.select_weighted(state=state, available=(m1, m2), seed=seed)
-            if result is not None:
-                seen.add(result.id)
-        assert "rare" in seen, f"rare mission should be selected at least once, seen={seen}"

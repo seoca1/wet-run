@@ -1,0 +1,256 @@
+{
+  "_schema_version": "1.1.0",
+  "_schema_doc": "Canonical combat VFX taxonomy. Single source of truth for effect_kind names + payload contracts. Both Python prototype and wet_run-web consume this. Python renders ASCII animation frames directly; web uses hardcoded grid overlays but reads kind/payload from this schema. Update via prototype/scripts/export_effects.py — do not hand-edit the web copy.",
+  "_spec": {
+    "duration_unit": "ms",
+    "web_tick_ms": 16,
+    "color_palette_source": "prototype/src/wet_run/combat/palette.py",
+    "ice_types": ["standard", "watchdog", "goliath", "black", "construct", "wintermute", "ta_construct_prime"],
+    "status_kinds": ["POISON", "BURN", "STUN", "SHIELD", "BUFF", "DEBUFF", "REGEN", "DOT"]
+  },
+  "effects": [
+    {
+      "kind": "attack",
+      "category": "combat.skill",
+      "description": "Basic attack effect (player program → ICE). Spawns projectile line + impact burst + damage number.",
+      "payload_shape": { "program_name": "string", "damage": "integer" },
+      "duration_ms": 240,
+      "color_hint": "DAMAGE_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "heal",
+      "category": "combat.skill",
+      "description": "Healing effect on player (HP restore animation).",
+      "payload_shape": { "amount": "integer" },
+      "duration_ms": 320,
+      "color_hint": "HEAL_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "shield",
+      "category": "combat.skill",
+      "description": "Shield activation (block one incoming attack).",
+      "payload_shape": { "target": "player|ice" },
+      "duration_ms": 280,
+      "color_hint": "SHIELD_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "buff",
+      "category": "combat.skill",
+      "description": "Buff application (positive status icon + rising arrow).",
+      "payload_shape": { "stat": "string", "amount": "integer" },
+      "duration_ms": 240,
+      "color_hint": "BUFF_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "debuff",
+      "category": "combat.skill",
+      "description": "Debuff application (negative status icon + falling arrow).",
+      "payload_shape": { "stat": "string", "amount": "integer" },
+      "duration_ms": 240,
+      "color_hint": "DEBUFF_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "stun",
+      "category": "combat.skill",
+      "description": "Stun effect on target (cannot act this turn).",
+      "payload_shape": { "target": "player|ice", "duration_turns": "integer" },
+      "duration_ms": 320,
+      "color_hint": "STUN_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "ice_hit",
+      "category": "combat.hit",
+      "description": "ICE takes damage from player attack (full-row red flash).",
+      "payload_shape": { "damage": "integer" },
+      "duration_ms": 160,
+      "color_hint": "DAMAGE_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "player_hit",
+      "category": "combat.hit",
+      "description": "Player takes damage from ICE attack (screen shake + red flash).",
+      "payload_shape": { "damage": "integer" },
+      "duration_ms": 200,
+      "color_hint": "DAMAGE_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "critical_hit",
+      "category": "combat.hit",
+      "description": "Critical strike (extra particles + larger damage number + CRIT tag).",
+      "payload_shape": { "damage": "integer", "is_player_attacker": "boolean" },
+      "duration_ms": 320,
+      "color_hint": "CRIT_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "status_apply",
+      "category": "status",
+      "description": "Status effect applied (glyph + label + duration).",
+      "payload_shape": { "status_kind": "status_kind_enum", "target": "player|ice" },
+      "duration_ms": 240,
+      "color_hint": "DEFAULT_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "ice_intro",
+      "category": "cinematic",
+      "description": "ICE encounter intro (per ICE type — distinct art).",
+      "payload_shape": { "ice_type": "ice_type_enum", "ice_name": "string" },
+      "duration_ms": 640,
+      "color_hint": "ICE_BREAK_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "ice_death",
+      "category": "cinematic",
+      "description": "ICE defeated cinematic (per ICE type — distinct art).",
+      "payload_shape": { "ice_type": "ice_type_enum", "ice_name": "string" },
+      "duration_ms": 640,
+      "color_hint": "ICE_BREAK_COLOR",
+      "tier": "v1"
+    },
+    {
+      "kind": "boss_phase_transition",
+      "category": "cinematic",
+      "description": "Boss enters new phase (1→2→3→4). Distinct color/icon per phase.",
+      "payload_shape": { "boss_phase": "integer[1..4]", "previous_phase": "integer[0..3]" },
+      "duration_ms": 800,
+      "color_hint": "PHASE_COLOR_BY_INDEX",
+      "tier": "v1"
+    },
+    {
+      "kind": "victory",
+      "category": "outcome",
+      "description": "Player wins encounter (ICE defeated).",
+      "payload_shape": {},
+      "duration_ms": 800,
+      "color_hint": "GREEN_NEON",
+      "tier": "v1"
+    },
+    {
+      "kind": "defeat",
+      "category": "outcome",
+      "description": "Player flatlined (HP 0 or alarm 100).",
+      "payload_shape": {},
+      "duration_ms": 800,
+      "color_hint": "RED_BRIGHT",
+      "tier": "v1"
+    },
+    {
+      "kind": "heavy_attack",
+      "category": "combat.skill",
+      "description": "Heavy attack: charge + slam + screen shake trigger. Higher damage, slower.",
+      "payload_shape": { "damage": "integer" },
+      "duration_ms": 900,
+      "color_hint": "ORANGE",
+      "tier": "v2"
+    },
+    {
+      "kind": "pierce",
+      "category": "combat.skill",
+      "description": "Pierce attack: arrow passes through target (ignores armor).",
+      "payload_shape": { "damage": "integer" },
+      "duration_ms": 310,
+      "color_hint": "WARM",
+      "tier": "v2"
+    },
+    {
+      "kind": "multi_hit",
+      "category": "combat.skill",
+      "description": "Multi-hit attack: 3 quick strikes with cumulative damage.",
+      "payload_shape": { "hit_count": "integer[1..5]", "total_damage": "integer" },
+      "duration_ms": 290,
+      "color_hint": "DAMAGE_COLOR",
+      "tier": "v2"
+    },
+    {
+      "kind": "dot",
+      "category": "combat.skill",
+      "description": "Damage-over-time / poison tick (toxic particles around target).",
+      "payload_shape": { "magnitude": "integer", "target": "player|ice" },
+      "duration_ms": 550,
+      "color_hint": "ICE_FADE_PURPLE",
+      "tier": "v2"
+    },
+    {
+      "kind": "counter",
+      "category": "combat.skill",
+      "description": "Counter-attack: shield bash returning damage to attacker.",
+      "payload_shape": { "damage": "integer" },
+      "duration_ms": 420,
+      "color_hint": "SHIELD_COLOR",
+      "tier": "v2"
+    },
+    {
+      "kind": "lifesteal",
+      "category": "combat.skill",
+      "description": "Lifesteal: red line from target to self, player heals for damage dealt.",
+      "payload_shape": { "damage": "integer", "heal_amount": "integer" },
+      "duration_ms": 490,
+      "color_hint": "DAMAGE_COLOR",
+      "tier": "v2"
+    },
+    {
+      "kind": "detect",
+      "category": "combat.skill",
+      "description": "Detect / scan: scanning reticle reveals enemy weakness.",
+      "payload_shape": { "target": "player|ice" },
+      "duration_ms": 550,
+      "color_hint": "SHIELD_COLOR",
+      "tier": "v2"
+    },
+    {
+      "kind": "regen",
+      "category": "combat.skill",
+      "description": "Regeneration tick: gentle pulse of plus signs (heal-over-time).",
+      "payload_shape": { "amount": "integer" },
+      "duration_ms": 450,
+      "color_hint": "ICE_GREEN_BRIGHT",
+      "tier": "v2"
+    },
+    {
+      "kind": "jackin_glitch",
+      "category": "matrix.dungeon",
+      "description": "Player jacks into the matrix (entrance glitch VFX).",
+      "payload_shape": {},
+      "duration_ms": 500,
+      "color_hint": "ICE_CYAN_DIM",
+      "tier": "v2"
+    },
+    {
+      "kind": "jackout_whiteout",
+      "category": "matrix.dungeon",
+      "description": "Player jacks out of the matrix (exit whiteout VFX).",
+      "payload_shape": {},
+      "duration_ms": 400,
+      "color_hint": "HIT_FLASH_COLOR",
+      "tier": "v2"
+    },
+    {
+      "kind": "room_flash",
+      "category": "matrix.dungeon",
+      "description": "Room transition flash (entering new dungeon room).",
+      "payload_shape": { "color_hint": "string" },
+      "duration_ms": 80,
+      "color_hint": "OLIVE",
+      "tier": "v2"
+    },
+    {
+      "kind": "data_acquired",
+      "category": "matrix.dungeon",
+      "description": "Data fragment recovered (DATA room pickup VFX).",
+      "payload_shape": {},
+      "duration_ms": 500,
+      "color_hint": "TIER_GOLD",
+      "tier": "v2"
+    }
+  ]
+}

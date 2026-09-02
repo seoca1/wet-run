@@ -1,0 +1,3181 @@
+{
+  "standard": {
+    "name": "ICE — Standard",
+    "portrait": "ice.standard",
+    "hp_base": 80,
+    "hp_per_grade": 15,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 1,
+    "defense": 2,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "watchdog": {
+    "name": "ICE — Watchdog",
+    "portrait": "ice.standard",
+    "hp_base": 50,
+    "hp_per_grade": 10,
+    "dmg_base": 2,
+    "dmg_per_grade": 1,
+    "tier": 1,
+    "defense": 1,
+    "speed": 6,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "defensive"
+  },
+  "spider": {
+    "name": "ICE — Spider",
+    "portrait": "ice.standard",
+    "hp_base": 40,
+    "hp_per_grade": 8,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 1,
+    "defense": 0,
+    "speed": 8,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "wisp": {
+    "name": "ICE — Wisp",
+    "portrait": "ice.standard",
+    "hp_base": 35,
+    "hp_per_grade": 5,
+    "dmg_base": 2,
+    "dmg_per_grade": 0,
+    "tier": 1,
+    "defense": 0,
+    "speed": 10,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "stealth"
+  },
+  "raven": {
+    "name": "ICE — Raven",
+    "portrait": "ice.standard",
+    "hp_base": 60,
+    "hp_per_grade": 12,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 2,
+    "defense": 2,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "black": {
+    "name": "ICE — Black",
+    "portrait": "ice.black",
+    "hp_base": 200,
+    "hp_per_grade": 40,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 5,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 2
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "black",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "goliath": {
+    "name": "ICE — Goliath",
+    "portrait": "ice.standard",
+    "hp_base": 150,
+    "hp_per_grade": 30,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 8,
+    "speed": 3,
+    "skills": [],
+    "resistance": 0.1,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 4
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "construct_shard",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "dixie": {
+    "name": "Construct — Dixie",
+    "portrait": "construct.dixie",
+    "hp_base": 300,
+    "hp_per_grade": 60,
+    "dmg_base": 6,
+    "dmg_per_grade": 3,
+    "tier": 4,
+    "defense": 10,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "construct_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "ice_construct",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "rom_echo",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ice_wisp_t1": {
+    "name": "ICE — Wisp (ice_wisp_t1)",
+    "portrait": "ice.standard",
+    "hp_base": 35,
+    "hp_per_grade": 5,
+    "dmg_base": 2,
+    "dmg_per_grade": 0,
+    "tier": 1,
+    "defense": 0,
+    "speed": 10,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "wisp",
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "stealth"
+  },
+  "ice_watchdog": {
+    "name": "ICE — Watchdog (ice_watchdog)",
+    "portrait": "ice.standard",
+    "hp_base": 50,
+    "hp_per_grade": 10,
+    "dmg_base": 2,
+    "dmg_per_grade": 1,
+    "tier": 1,
+    "defense": 1,
+    "speed": 6,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "watchdog",
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "defensive"
+  },
+  "ice_worm": {
+    "name": "ICE — Spider (ice_worm)",
+    "portrait": "ice.standard",
+    "hp_base": 40,
+    "hp_per_grade": 8,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 0,
+    "speed": 8,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "spider",
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "ice_unknown": {
+    "name": "ICE — Standard (ice_unknown)",
+    "portrait": "ice.standard",
+    "hp_base": 80,
+    "hp_per_grade": 15,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 1,
+    "defense": 2,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "standard",
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "loa_entity": {
+    "name": "ICE — Loa Entity",
+    "portrait": "ice.loa",
+    "hp_base": 100,
+    "hp_per_grade": 22,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 3,
+    "speed": 6,
+    "skills": [
+      "manifest_form",
+      "voodoo_curse"
+    ],
+    "resistance": 0.2,
+    "faction": "loa",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "loa_priest": {
+    "name": "ICE — Loa Priest",
+    "portrait": "ice.loa",
+    "hp_base": 85,
+    "hp_per_grade": 14,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 2,
+    "defense": 3,
+    "speed": 6,
+    "skills": [
+      "loa_summon",
+      "spirit_guard"
+    ],
+    "resistance": 0.15,
+    "faction": "loa",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "loa_betrayer": {
+    "name": "ICE — Black (loa_betrayer)",
+    "portrait": "ice.black",
+    "hp_base": 200,
+    "hp_per_grade": 40,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 5,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 2
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "black",
+    "ice_kind": "construct",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "loa_disguised": {
+    "name": "ICE — Standard (loa_disguised)",
+    "portrait": "ice.standard",
+    "hp_base": 80,
+    "hp_per_grade": 15,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 2,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "standard",
+    "ice_kind": "construct",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "romantics_ice": {
+    "name": "ICE — Raven (romantics_ice)",
+    "portrait": "ice.standard",
+    "hp_base": 60,
+    "hp_per_grade": 12,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 2,
+    "defense": 2,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "raven",
+    "ice_kind": "construct",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "romantics_ice_elite": {
+    "name": "ICE — Black (romantics_ice_elite)",
+    "portrait": "ice.black",
+    "hp_base": 200,
+    "hp_per_grade": 40,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 5,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 2
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "black",
+    "ice_kind": "construct",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "oua_entity": {
+    "name": "ICE — Goliath (oua_entity)",
+    "portrait": "ice.standard",
+    "hp_base": 150,
+    "hp_per_grade": 30,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 8,
+    "speed": 3,
+    "skills": [],
+    "resistance": 0.1,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 4
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "construct_shard",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "goliath",
+    "ice_kind": "goliath",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "prime_loa": {
+    "name": "Construct — Dixie (prime_loa)",
+    "portrait": "construct.dixie",
+    "hp_base": 300,
+    "hp_per_grade": 60,
+    "dmg_base": 6,
+    "dmg_per_grade": 3,
+    "tier": 4,
+    "defense": 10,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "construct_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "ice_construct",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "rom_echo",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "dixie",
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ta_security_ice": {
+    "name": "ICE — Watchdog (ta_security_ice)",
+    "portrait": "ice.standard",
+    "hp_base": 50,
+    "hp_per_grade": 10,
+    "dmg_base": 2,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 1,
+    "speed": 6,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "watchdog",
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "defensive"
+  },
+  "blank_entity": {
+    "name": "Construct — Dixie (blank_entity)",
+    "portrait": "construct.dixie",
+    "hp_base": 300,
+    "hp_per_grade": 60,
+    "dmg_base": 6,
+    "dmg_per_grade": 3,
+    "tier": 4,
+    "defense": 10,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "construct_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "ice_construct",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "rom_echo",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "dixie",
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ice_harrow_3": {
+    "name": "ICE — Raven (ice_harrow_3)",
+    "portrait": "ice.standard",
+    "hp_base": 60,
+    "hp_per_grade": 12,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 2,
+    "defense": 2,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "raven",
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "ice_feedback_loop": {
+    "name": "ICE — Spider (ice_feedback_loop)",
+    "portrait": "ice.standard",
+    "hp_base": 40,
+    "hp_per_grade": 8,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 0,
+    "speed": 8,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "spider",
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "ice_shadow_variant": {
+    "name": "ICE — Standard (ice_shadow_variant)",
+    "portrait": "ice.standard",
+    "hp_base": 80,
+    "hp_per_grade": 15,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 2,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "standard",
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "stealth"
+  },
+  "ice_burned_cowboy": {
+    "name": "ICE — Black (ice_burned_cowboy)",
+    "portrait": "ice.black",
+    "hp_base": 200,
+    "hp_per_grade": 40,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 5,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 2
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "black",
+    "ice_kind": "black",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "ice_weapon_construct": {
+    "name": "ICE — Goliath (ice_weapon_construct)",
+    "portrait": "ice.standard",
+    "hp_base": 150,
+    "hp_per_grade": 30,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 8,
+    "speed": 3,
+    "skills": [],
+    "resistance": 0.1,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 4
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "construct_shard",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "goliath",
+    "ice_kind": "construct",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "ice_wheel_children": {
+    "name": "ICE — Raven (ice_wheel_children)",
+    "portrait": "ice.standard",
+    "hp_base": 60,
+    "hp_per_grade": 12,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 2,
+    "defense": 2,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "combat_module",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "raven",
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "ice_wheel_guardians": {
+    "name": "Construct — Dixie (ice_wheel_guardians)",
+    "portrait": "construct.dixie",
+    "hp_base": 300,
+    "hp_per_grade": 60,
+    "dmg_base": 6,
+    "dmg_per_grade": 3,
+    "tier": 4,
+    "defense": 10,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "construct_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "ice_construct",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "rom_echo",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "is_alias": true,
+    "base_type": "dixie",
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "defensive"
+  },
+  "construct": {
+    "name": "Construct — Generic",
+    "portrait": "construct.dixie",
+    "hp_base": 90,
+    "hp_per_grade": 18,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0.1,
+    "loot_table": [
+      {
+        "item": "construct_shard",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "boss": {
+    "name": "ICE — Boss Tier",
+    "portrait": "ice.boss",
+    "hp_base": 280,
+    "hp_per_grade": 50,
+    "dmg_base": 12,
+    "dmg_per_grade": 3,
+    "tier": 4,
+    "defense": 8,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "combat_module",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "construct_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 1,
+        "quantity": 3
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "revelation": {
+    "name": "ICE — Revelation",
+    "portrait": "ice.black",
+    "hp_base": 160,
+    "hp_per_grade": 30,
+    "dmg_base": 7,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.8,
+        "quantity": 2
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "neuromancer": {
+    "name": "ICE — Neuromancer",
+    "portrait": "ice.boss",
+    "hp_base": 320,
+    "hp_per_grade": 60,
+    "dmg_base": 14,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 9,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0.35,
+    "loot_table": [
+      {
+        "item": "combat_module",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "construct_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 1,
+        "quantity": 5
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ai_whisper": {
+    "name": "ICE — AI Whisper",
+    "portrait": "ice.black",
+    "hp_base": 130,
+    "hp_per_grade": 25,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 6,
+    "skills": [],
+    "resistance": 0.25,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 2
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "surveillance": {
+    "name": "ICE — Surveillance",
+    "portrait": "ice.watchdog",
+    "hp_base": 70,
+    "hp_per_grade": 14,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0.1,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "wintermute": {
+    "name": "ICE — Wintermute",
+    "portrait": "ice.boss",
+    "hp_base": 260,
+    "hp_per_grade": 50,
+    "dmg_base": 11,
+    "dmg_per_grade": 3,
+    "tier": 4,
+    "defense": 8,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "combat_module",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "construct_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 1,
+        "quantity": 3
+      }
+    ],
+    "ice_kind": "wintermute",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "zion_defense": {
+    "name": "ICE — Zion Defense",
+    "portrait": "ice.black",
+    "hp_base": 180,
+    "hp_per_grade": 35,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 6,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0.25,
+    "loot_table": [
+      {
+        "item": "combat_module",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.9,
+        "quantity": 3
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "loa": {
+    "name": "ICE — Loa Entity",
+    "portrait": "ice.loa",
+    "hp_base": 100,
+    "hp_per_grade": 22,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 3,
+    "speed": 6,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "corporate_guard": {
+    "name": "ICE — Corporate Guard",
+    "portrait": "ice.standard",
+    "hp_base": 100,
+    "hp_per_grade": 18,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 5,
+    "skills": [
+      "scan",
+      "report"
+    ],
+    "resistance": 0.1,
+    "zone": "mid",
+    "loot_table": [
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "upgrade_t2",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "standard",
+    "personality": "defensive"
+  },
+  "archive_sentinel": {
+    "name": "ICE — Archive Sentinel",
+    "portrait": "ice.black",
+    "hp_base": 180,
+    "hp_per_grade": 25,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 5,
+    "speed": 4,
+    "skills": [
+      "archive_guard",
+      "deep_trace"
+    ],
+    "resistance": 0.25,
+    "zone": "core",
+    "loot_table": [
+      {
+        "item": "data_fragment",
+        "chance": 0.7,
+        "quantity": 2
+      },
+      {
+        "item": "upgrade_t4",
+        "chance": 0.3,
+        "quantity": 1
+      },
+      {
+        "item": "loa_chip",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "boss",
+    "personality": "defensive"
+  },
+  "wintermute_proxy": {
+    "name": "ICE — Wintermute Proxy",
+    "portrait": "ice.construct",
+    "hp_base": 400,
+    "hp_per_grade": 50,
+    "dmg_base": 18,
+    "dmg_per_grade": 4,
+    "tier": 6,
+    "defense": 8,
+    "speed": 6,
+    "skills": [
+      "ai_negotiate",
+      "matrix_merge",
+      "construct_proxy"
+    ],
+    "resistance": 0.5,
+    "zone": "ta",
+    "loot_table": [
+      {
+        "item": "t_a_data_fragment",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "unique_construct",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "wintermute_key",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "wintermute",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "voodoo": {
+    "name": "ICE — Voodoo Construct",
+    "portrait": "ice.loa",
+    "hp_base": 130,
+    "hp_per_grade": 28,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 4,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0.25,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.95,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "chinese_ice": {
+    "name": "ICE — Chinese (Mao security)",
+    "portrait": "ice.standard",
+    "hp_base": 70,
+    "hp_per_grade": 12,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 6,
+    "skills": [],
+    "resistance": 0.1,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.25,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "zombie": {
+    "name": "ICE — Zombie (viral)",
+    "portrait": "ice.standard",
+    "hp_base": 35,
+    "hp_per_grade": 6,
+    "dmg_base": 2,
+    "dmg_per_grade": 1,
+    "tier": 1,
+    "defense": 0,
+    "speed": 4,
+    "skills": [],
+    "resistance": 0,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "hellhound": {
+    "name": "ICE — Hellhound (Kuang military)",
+    "portrait": "ice.standard",
+    "hp_base": 110,
+    "hp_per_grade": 18,
+    "dmg_base": 7,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 9,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.85,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "morrison_echo": {
+    "name": "ICE — Morrison's Echo (Loa of deep architecture)",
+    "portrait": "ice.standard",
+    "hp_base": 160,
+    "hp_per_grade": 22,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 6,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.95,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.morrison_echo",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "maas_neuropozyne": {
+    "name": "ICE — Maas Biolabs Neuropozyne (Tier-2 biotech defense)",
+    "portrait": "ice.standard",
+    "hp_base": 90,
+    "hp_per_grade": 16,
+    "dmg_base": 4,
+    "dmg_per_grade": 2,
+    "tier": 2,
+    "defense": 3,
+    "speed": 6,
+    "skills": [
+      "biofeedback",
+      "addiction_loop"
+    ],
+    "resistance": 0.2,
+    "faction": "maas",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "maas_neuropozyne_dose",
+        "chance": 0.08,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "wintermute_prime": {
+    "name": "ICE — Wintermute Prime (boss-tier AI)",
+    "portrait": "ice.standard",
+    "hp_base": 320,
+    "hp_per_grade": 35,
+    "dmg_base": 14,
+    "dmg_per_grade": 3,
+    "tier": 6,
+    "defense": 10,
+    "speed": 12,
+    "skills": [],
+    "resistance": 0.5,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "unique_construct",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "wintermute",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ice_tessier_construct": {
+    "name": "ICE — Tessier Construct (T-A family construct)",
+    "portrait": "ice.standard",
+    "hp_base": 130,
+    "hp_per_grade": 20,
+    "dmg_base": 7,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 5,
+    "speed": 8,
+    "skills": [],
+    "resistance": 0.25,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.85,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.35,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "ice_neuromancer_warden": {
+    "name": "ICE — Neuromancer Warden (AI guardian)",
+    "portrait": "ice.standard",
+    "hp_base": 180,
+    "hp_per_grade": 25,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 7,
+    "speed": 9,
+    "skills": [],
+    "resistance": 0.35,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.tessier_archive",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "defensive"
+  },
+  "ice_cebu_pacific": {
+    "name": "ICE — Cebu Pacific (blueant data courier)",
+    "portrait": "ice.standard",
+    "hp_base": 60,
+    "hp_per_grade": 10,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 2,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0.1,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "ice_ghost_grid": {
+    "name": "ICE — Ghost Grid (Loa proximity alarm)",
+    "portrait": "ice.standard",
+    "hp_base": 75,
+    "hp_per_grade": 12,
+    "dmg_base": 5,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 6,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.75,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.25,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "standard",
+    "personality": "stealth"
+  },
+  "ice_dixie_echo": {
+    "name": "ICE — Dixie's Echo (dead construct ghost)",
+    "portrait": "ice.standard",
+    "hp_base": 95,
+    "hp_per_grade": 14,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 8,
+    "skills": [],
+    "resistance": 0.15,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.morrison_echo",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "aggressive",
+    "personality": "stealth"
+  },
+  "ice_3jane_maid": {
+    "name": "ICE — 3Jane's Maid (Straylight servant)",
+    "portrait": "ice.standard",
+    "hp_base": 85,
+    "hp_per_grade": 13,
+    "dmg_base": 5,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 6,
+    "skills": [],
+    "resistance": 0.15,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "ice_wintermute_sentinel": {
+    "name": "ICE — Wintermute Sentinel (AI guardian)",
+    "portrait": "ice.standard",
+    "hp_base": 150,
+    "hp_per_grade": 22,
+    "dmg_base": 7,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 6,
+    "speed": 9,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "wintermute",
+    "aggression": "boss",
+    "personality": "defensive"
+  },
+  "ice_loa_zombie": {
+    "name": "ICE — Loa Zombie (possessed dead runner)",
+    "portrait": "ice.standard",
+    "hp_base": 55,
+    "hp_per_grade": 9,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 1,
+    "speed": 5,
+    "skills": [],
+    "resistance": 0.1,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.35,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "ice_pazuzu_guard": {
+    "name": "ICE — Pazuzu Guard (Loa protector)",
+    "portrait": "ice.standard",
+    "hp_base": 120,
+    "hp_per_grade": 18,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 5,
+    "speed": 7,
+    "skills": [],
+    "resistance": 0.3,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.85,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.morrison_echo",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "defensive"
+  },
+  "ice_wintermute_fragment": {
+    "name": "ICE — Wintermute Fragment (AI sub-personality)",
+    "portrait": "ice.standard",
+    "hp_base": 200,
+    "hp_per_grade": 28,
+    "dmg_base": 9,
+    "dmg_per_grade": 2,
+    "tier": 5,
+    "defense": 8,
+    "speed": 10,
+    "skills": [],
+    "resistance": 0.4,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.tessier_archive",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "wintermute",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ice_screaming_fist": {
+    "name": "ICE — Screaming Fist (military boss-tier)",
+    "portrait": "ice.standard",
+    "hp_base": 100,
+    "hp_per_grade": 16,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 8,
+    "skills": [],
+    "resistance": 0.2,
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.35,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "black",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "hosaka_analyst": {
+    "name": "ICE — Hosaka Analyst",
+    "portrait": "ice.standard",
+    "hp_base": 90,
+    "hp_per_grade": 15,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 5,
+    "skills": [
+      "data_scan",
+      "report_alert"
+    ],
+    "resistance": 0.1,
+    "faction": "hosaka",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "hosaka_chip",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "hosaka_collector": {
+    "name": "ICE — Hosaka Collector",
+    "portrait": "ice.standard",
+    "hp_base": 110,
+    "hp_per_grade": 20,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 4,
+    "skills": [
+      "data_archive",
+      "maintain_order"
+    ],
+    "resistance": 0.15,
+    "faction": "hosaka",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "hosaka_archive",
+        "chance": 0.05,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "hosaka_courier": {
+    "name": "ICE — Hosaka Courier",
+    "portrait": "ice.standard",
+    "hp_base": 60,
+    "hp_per_grade": 10,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 1,
+    "defense": 2,
+    "speed": 8,
+    "skills": [
+      "packet_route",
+      "priority_delivery"
+    ],
+    "resistance": 0.05,
+    "faction": "hosaka",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "hosaka_terminal": {
+    "name": "ICE — Hosaka Terminal",
+    "portrait": "ice.standard",
+    "hp_base": 75,
+    "hp_per_grade": 12,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 6,
+    "skills": [
+      "buffer_check",
+      "memory_lock"
+    ],
+    "resistance": 0.1,
+    "faction": "hosaka",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.35,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "hosaka_defender": {
+    "name": "ICE — Hosaka Defender",
+    "portrait": "ice.standard",
+    "hp_base": 130,
+    "hp_per_grade": 22,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 6,
+    "speed": 5,
+    "skills": [
+      "alarm_propagate",
+      "defense_grid"
+    ],
+    "resistance": 0.2,
+    "faction": "hosaka",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "sense_net_alert": {
+    "name": "ICE — Sense/Net Alert",
+    "portrait": "ice.watchdog",
+    "hp_base": 55,
+    "hp_per_grade": 10,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 1,
+    "defense": 2,
+    "speed": 8,
+    "skills": [
+      "media_alert",
+      "broadcast_signal"
+    ],
+    "resistance": 0.05,
+    "faction": "sense_net",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "sense_net_archive": {
+    "name": "ICE — Sense/Net Archive",
+    "portrait": "ice.standard",
+    "hp_base": 100,
+    "hp_per_grade": 18,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 4,
+    "speed": 5,
+    "skills": [
+      "data_preserve",
+      "backup_dispatch"
+    ],
+    "resistance": 0.15,
+    "faction": "sense_net",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 2
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "sense_net_spin": {
+    "name": "ICE — Sense/Net Spin",
+    "portrait": "ice.standard",
+    "hp_base": 70,
+    "hp_per_grade": 12,
+    "dmg_base": 5,
+    "dmg_per_grade": 2,
+    "tier": 2,
+    "defense": 3,
+    "speed": 7,
+    "skills": [
+      "narrative_warp",
+      "alibi_construct"
+    ],
+    "resistance": 0.1,
+    "faction": "sense_net",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "sense_net_informer": {
+    "name": "ICE — Sense/Net Informer",
+    "portrait": "ice.standard",
+    "hp_base": 85,
+    "hp_per_grade": 14,
+    "dmg_base": 4,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 3,
+    "speed": 6,
+    "skills": [
+      "intel_broker",
+      "report_distribute"
+    ],
+    "resistance": 0.1,
+    "faction": "sense_net",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "sense_net_reporter": {
+    "name": "ICE — Sense/Net Reporter",
+    "portrait": "ice.standard",
+    "hp_base": 120,
+    "hp_per_grade": 20,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 8,
+    "skills": [
+      "info_warfare",
+      "narrative_attack"
+    ],
+    "resistance": 0.2,
+    "faction": "sense_net",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "yakuza_brute": {
+    "name": "ICE — Yakuza Brute",
+    "portrait": "ice.standard",
+    "hp_base": 140,
+    "hp_per_grade": 25,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 5,
+    "speed": 4,
+    "skills": [
+      "brutal_force",
+      "intimidation"
+    ],
+    "resistance": 0.15,
+    "faction": "yakuza",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.3,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "yakuza_enforcer": {
+    "name": "ICE — Yakuza Enforcer",
+    "portrait": "ice.standard",
+    "hp_base": 100,
+    "hp_per_grade": 18,
+    "dmg_base": 7,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 5,
+    "skills": [
+      "enforce_contract",
+      "debt_collect"
+    ],
+    "resistance": 0.15,
+    "faction": "yakuza",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "yakuza_assassin": {
+    "name": "ICE — Yakuza Assassin",
+    "portrait": "ice.standard",
+    "hp_base": 80,
+    "hp_per_grade": 14,
+    "dmg_base": 10,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 3,
+    "speed": 10,
+    "skills": [
+      "stealth_strike",
+      "critical_hit"
+    ],
+    "resistance": 0.2,
+    "faction": "yakuza",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "black",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "yakuza_collector": {
+    "name": "ICE — Yakuza Collector",
+    "portrait": "ice.standard",
+    "hp_base": 95,
+    "hp_per_grade": 16,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 4,
+    "speed": 6,
+    "skills": [
+      "debt_track",
+      "asset_seize"
+    ],
+    "resistance": 0.15,
+    "faction": "yakuza",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "yakuza_underboss": {
+    "name": "ICE — Yakuza Underboss",
+    "portrait": "ice.standard",
+    "hp_base": 220,
+    "hp_per_grade": 35,
+    "dmg_base": 12,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 8,
+    "speed": 5,
+    "skills": [
+      "command_brute",
+      "territorial_mark"
+    ],
+    "resistance": 0.35,
+    "faction": "yakuza",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "yakuza_construct",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ta_daemon": {
+    "name": "ICE — Tessier Daemon",
+    "portrait": "ice.standard",
+    "hp_base": 110,
+    "hp_per_grade": 18,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 5,
+    "speed": 6,
+    "skills": [
+      "family_protocol",
+      "inheritance_trace"
+    ],
+    "resistance": 0.2,
+    "faction": "tessier_ashpool",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "ta_sentinel": {
+    "name": "ICE — Tessier Sentinel",
+    "portrait": "ice.standard",
+    "hp_base": 160,
+    "hp_per_grade": 28,
+    "dmg_base": 7,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 7,
+    "speed": 5,
+    "skills": [
+      "vault_guard",
+      "straylight_protocol"
+    ],
+    "resistance": 0.3,
+    "faction": "tessier_ashpool",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "boss",
+    "personality": "defensive"
+  },
+  "ta_inheritor": {
+    "name": "ICE — Tessier Inheritor",
+    "portrait": "ice.standard",
+    "hp_base": 180,
+    "hp_per_grade": 30,
+    "dmg_base": 9,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 8,
+    "speed": 7,
+    "skills": [
+      "family_vote",
+      "construct_summon"
+    ],
+    "resistance": 0.35,
+    "faction": "tessier_ashpool",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "ta_construct",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ta_heir": {
+    "name": "ICE — Tessier Heir",
+    "portrait": "ice.standard",
+    "hp_base": 240,
+    "hp_per_grade": 40,
+    "dmg_base": 11,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 9,
+    "speed": 8,
+    "skills": [
+      "family_vote",
+      "orbital_command"
+    ],
+    "resistance": 0.4,
+    "faction": "tessier_ashpool",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "ta_construct",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "ta_orbital": {
+    "name": "ICE — Tessier Orbital",
+    "portrait": "ice.standard",
+    "hp_base": 300,
+    "hp_per_grade": 45,
+    "dmg_base": 13,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 10,
+    "speed": 6,
+    "skills": [
+      "orbital_targeting",
+      "construct_proxy"
+    ],
+    "resistance": 0.4,
+    "faction": "tessier_ashpool",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "ta_construct",
+        "chance": 0.25,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "loa_zombie": {
+    "name": "ICE — Loa Zombie",
+    "portrait": "ice.standard",
+    "hp_base": 55,
+    "hp_per_grade": 9,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 1,
+    "speed": 5,
+    "skills": [
+      "possession",
+      "undead_resilience"
+    ],
+    "resistance": 0.1,
+    "faction": "loa",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.35,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "standard",
+    "personality": "aggressive"
+  },
+  "loa_baron": {
+    "name": "ICE — Loa Baron",
+    "portrait": "ice.loa",
+    "hp_base": 300,
+    "hp_per_grade": 60,
+    "dmg_base": 14,
+    "dmg_per_grade": 3,
+    "tier": 4,
+    "defense": 7,
+    "speed": 5,
+    "skills": [
+      "voodoo_king",
+      "loa_command"
+    ],
+    "resistance": 0.3,
+    "faction": "loa",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "loa_chip",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "loa_pazuzu": {
+    "name": "ICE — Loa Pazuzu",
+    "portrait": "ice.loa",
+    "hp_base": 200,
+    "hp_per_grade": 30,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 5,
+    "speed": 7,
+    "skills": [
+      "wind_demolish",
+      "plague_spread"
+    ],
+    "resistance": 0.3,
+    "faction": "loa",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "standard_ascended": {
+    "name": "ICE — Standard Ascended",
+    "portrait": "ice.black",
+    "hp_base": 200,
+    "hp_per_grade": 30,
+    "dmg_base": 8,
+    "dmg_per_grade": 2,
+    "tier": 5,
+    "defense": 5,
+    "speed": 5,
+    "skills": [
+      "penetrating_strike",
+      "system_lock"
+    ],
+    "resistance": 0.3,
+    "variant": "ascended",
+    "base_type": "standard",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 2
+      },
+      {
+        "item": "t5_program",
+        "chance": 0.05,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "black",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "watchdog_ascended": {
+    "name": "ICE — Watchdog Ascended",
+    "portrait": "ice.black",
+    "hp_base": 140,
+    "hp_per_grade": 22,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 5,
+    "defense": 4,
+    "speed": 8,
+    "skills": [
+      "datamine_strike",
+      "watchdog_mark"
+    ],
+    "resistance": 0.25,
+    "variant": "ascended",
+    "base_type": "watchdog",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.7,
+        "quantity": 2
+      }
+    ],
+    "ice_kind": "watchdog",
+    "aggression": "boss",
+    "personality": "defensive"
+  },
+  "goliath_ascended": {
+    "name": "ICE — Goliath Ascended",
+    "portrait": "ice.boss",
+    "hp_base": 350,
+    "hp_per_grade": 50,
+    "dmg_base": 10,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 12,
+    "speed": 3,
+    "skills": [
+      "fortress_mode",
+      "siege_protocol"
+    ],
+    "resistance": 0.4,
+    "variant": "ascended",
+    "base_type": "goliath",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 4
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "t5_program",
+        "chance": 0.08,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "construct_ascended": {
+    "name": "ICE — Construct Ascended",
+    "portrait": "construct.dixie",
+    "hp_base": 450,
+    "hp_per_grade": 70,
+    "dmg_base": 12,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 14,
+    "speed": 5,
+    "skills": [
+      "construct_evolution",
+      "memory_overload"
+    ],
+    "resistance": 0.4,
+    "variant": "ascended",
+    "base_type": "construct",
+    "loot_table": [
+      {
+        "item": "construct_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "ice_construct",
+        "chance": 0.7,
+        "quantity": 1
+      },
+      {
+        "item": "t5_program",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "loa_ascended": {
+    "name": "ICE — Loa Ascended",
+    "portrait": "ice.loa",
+    "hp_base": 280,
+    "hp_per_grade": 40,
+    "dmg_base": 11,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 7,
+    "speed": 6,
+    "skills": [
+      "full_manifest",
+      "voodoo_dominion"
+    ],
+    "resistance": 0.35,
+    "variant": "ascended",
+    "base_type": "loa_entity",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "loa_chip",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "standard_corrupted": {
+    "name": "ICE — Standard Corrupted",
+    "portrait": "ice.standard",
+    "hp_base": 100,
+    "hp_per_grade": 18,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 3,
+    "speed": 6,
+    "skills": [
+      "glitch_phase",
+      "random_target",
+      "stack_overflow"
+    ],
+    "resistance": 0.1,
+    "variant": "corrupted",
+    "base_type": "standard",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.7,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "glitch_fragment",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "raven_corrupted": {
+    "name": "ICE — Raven Corrupted",
+    "portrait": "ice.standard",
+    "hp_base": 80,
+    "hp_per_grade": 14,
+    "dmg_base": 7,
+    "dmg_per_grade": 2,
+    "tier": 3,
+    "defense": 3,
+    "speed": 8,
+    "skills": [
+      "reality_warp",
+      "data_pollution"
+    ],
+    "resistance": 0.15,
+    "variant": "corrupted",
+    "base_type": "raven",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.8,
+        "quantity": 2
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "glitch_fragment",
+        "chance": 0.12,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "standard",
+    "aggression": "aggressive",
+    "personality": "aggressive"
+  },
+  "black_corrupted": {
+    "name": "ICE — Black Corrupted",
+    "portrait": "ice.black",
+    "hp_base": 250,
+    "hp_per_grade": 45,
+    "dmg_base": 10,
+    "dmg_per_grade": 3,
+    "tier": 4,
+    "defense": 6,
+    "speed": 5,
+    "skills": [
+      "stack_corruption",
+      "reality_distortion",
+      "data_melt"
+    ],
+    "resistance": 0.25,
+    "variant": "corrupted",
+    "base_type": "black",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.9,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.7,
+        "quantity": 2
+      },
+      {
+        "item": "glitch_fragment",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "black",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "watchdog_defensive": {
+    "name": "ICE — Watchdog Defensive",
+    "portrait": "ice.standard",
+    "hp_base": 90,
+    "hp_per_grade": 15,
+    "dmg_base": 3,
+    "dmg_per_grade": 1,
+    "tier": 2,
+    "defense": 7,
+    "speed": 5,
+    "skills": [
+      "shield_protocol",
+      "absorb_damage"
+    ],
+    "resistance": 0.25,
+    "variant": "defensive",
+    "base_type": "watchdog",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 0.85,
+        "quantity": 1
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "shield_program",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "watchdog",
+    "aggression": "standard",
+    "personality": "defensive"
+  },
+  "goliath_defensive": {
+    "name": "ICE — Goliath Defensive",
+    "portrait": "ice.standard",
+    "hp_base": 220,
+    "hp_per_grade": 35,
+    "dmg_base": 6,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 14,
+    "speed": 2,
+    "skills": [
+      "fortress_mode",
+      "shield_wall",
+      "damage_absorb"
+    ],
+    "resistance": 0.4,
+    "variant": "defensive",
+    "base_type": "goliath",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "shield_program",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "goliath",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "black_construct": {
+    "name": "ICE — Black Construct",
+    "portrait": "ice.black",
+    "hp_base": 220,
+    "hp_per_grade": 30,
+    "dmg_base": 12,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 6,
+    "speed": 4,
+    "skills": [
+      "construct_proxy",
+      "ice_pierce",
+      "data_corrupt"
+    ],
+    "resistance": 0.4,
+    "variant": "black",
+    "base_type": "construct",
+    "loot_table": [
+      {
+        "item": "ice_construct",
+        "chance": 0.6,
+        "quantity": 1
+      },
+      {
+        "item": "t5_program",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "black_construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "construct_proxy": {
+    "name": "ICE — Construct Proxy",
+    "portrait": "ice.construct",
+    "hp_base": 180,
+    "hp_per_grade": 25,
+    "dmg_base": 9,
+    "dmg_per_grade": 2,
+    "tier": 4,
+    "defense": 5,
+    "speed": 5,
+    "skills": [
+      "construct_proxy",
+      "ice_break"
+    ],
+    "resistance": 0.35,
+    "variant": "proxy",
+    "base_type": "construct",
+    "loot_table": [
+      {
+        "item": "ice_construct",
+        "chance": 0.5,
+        "quantity": 1
+      },
+      {
+        "item": "t4_program",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct_proxy",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "aleph": {
+    "name": "ICE — Aleph Fragment",
+    "portrait": "ice.aleph",
+    "hp_base": 320,
+    "hp_per_grade": 40,
+    "dmg_base": 15,
+    "dmg_per_grade": 4,
+    "tier": 6,
+    "defense": 7,
+    "speed": 5,
+    "skills": [
+      "aleph_fragment",
+      "matrix_merge",
+      "ice_pierce"
+    ],
+    "resistance": 0.5,
+    "variant": "aleph",
+    "base_type": "ta_construct",
+    "loot_table": [
+      {
+        "item": "aleph_shard",
+        "chance": 1,
+        "quantity": 1
+      },
+      {
+        "item": "t6_program",
+        "chance": 0.2,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "aleph",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "wintermute_corrupted": {
+    "name": "ICE — Wintermute Corrupted",
+    "portrait": "ice.black",
+    "hp_base": 240,
+    "hp_per_grade": 35,
+    "dmg_base": 11,
+    "dmg_per_grade": 3,
+    "tier": 5,
+    "defense": 6,
+    "speed": 7,
+    "skills": [
+      "stack_corruption",
+      "ai_subversion",
+      "reality_distortion"
+    ],
+    "resistance": 0.4,
+    "variant": "corrupted",
+    "base_type": "wintermute",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 3
+      },
+      {
+        "item": "data_fragment",
+        "chance": 0.7,
+        "quantity": 2
+      },
+      {
+        "item": "glitch_fragment",
+        "chance": 0.18,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.wintermute_echo",
+        "chance": 0.1,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "wintermute",
+    "aggression": "boss",
+    "personality": "aggressive"
+  },
+  "peripheral_ascended": {
+    "name": "ICE — Peripheral Ascended",
+    "portrait": "ice.boss",
+    "hp_base": 850,
+    "hp_per_grade": 120,
+    "dmg_base": 30,
+    "dmg_per_grade": 5,
+    "tier": 6,
+    "defense": 17,
+    "speed": 9,
+    "skills": [
+      "stub_time",
+      "lowbeer_vision",
+      "peripheral_strike",
+      "timeline_collapse"
+    ],
+    "resistance": 0.6,
+    "variant": "ascended",
+    "base_type": "the_peripheral",
+    "loot_table": [
+      {
+        "item": "ice_shard",
+        "chance": 1,
+        "quantity": 10
+      },
+      {
+        "item": "data_fragment",
+        "chance": 1,
+        "quantity": 6
+      },
+      {
+        "item": "t6_program",
+        "chance": 0.9,
+        "quantity": 2
+      },
+      {
+        "item": "peripheral_artifact",
+        "chance": 0.4,
+        "quantity": 1
+      },
+      {
+        "item": "fragment.timeline_echo",
+        "chance": 0.15,
+        "quantity": 1
+      }
+    ],
+    "ice_kind": "construct",
+    "aggression": "boss",
+    "personality": "aggressive"
+  }
+}

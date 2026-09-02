@@ -1,0 +1,1411 @@
+{
+  "version": "1.0.0",
+  "source": "wet_run/prototype/data/scenes/{case,sil,kas}/",
+  "default_ending": "A",
+  "characters": {
+    "case": "novice",
+    "sil": "veteran",
+    "kas": "heretic"
+  },
+  "scene_count": 27,
+  "scenes": {
+    "scene_case_intro": {
+      "id": "scene_case_intro",
+      "character": "novice",
+      "mission_id": "first_jack",
+      "order": 1,
+      "title_en": "CHATTO'S 24/7",
+      "title_ko": "챠토 24/7",
+      "background_id": "bg_chat_room",
+      "portrait_left": "art:case_think",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_think",
+          "text_en": "Thirty seconds. The Ono-Sendai electrodes lift from my scalp in that slow way they have, like a hand releasing a fist, and my fingers keep typing. Hands that hit a screen. The fingertips tremble. Slumped in the chair, I stare at the console and try to remember what I was doing.",
+          "text_ko": "30초. Ono-Sendai 전극이 두피에서 천천히 떨어진다. 주먹을 풀듯한 그 느린 방식 그대로. 내 손가락은 여전히 키를 두드리고 있다. 화면을 치는 손. 손가락 끝이 떨린다. 의자에 등을 기댄 채, 콘솔을 응시하며 내가 뭘 하고 있었는지 떠올리려 한다.",
+          "duration_ms": 12000,
+          "sound": "chiba_rain_loop"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Chiba. Eleventh level. The room smells of old circuits and the synthetic melon flavor they sell in vending machines on every floor of the Freeside arcology. The Cherrimatti on the table is wet — rain, no, the air conditioning. The Headson Hotel TV is showing a thirty-second loop of wherever I just was.",
+          "text_ko": "지바. 11층. 방은 오래된 회로 냄새와, 프리사이드 아콜로지의 모든 층 자판기가 파는 합성 멜론 향이 난다. 테이블 위 체리머티가 젖어 있다 — 비가 아니라 에어컨이다. 헤드슨 호텔 TV는 내가 방금 다녀온 곳을 30초 루프로 보여주고 있다.",
+          "duration_ms": 14000,
+          "sound": null
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_terminal",
+          "text_en": "I stare at the console. Hosaka. Black case, chipped at one corner where I dropped it in Chiba two years and a thousand jack-outs ago. A neon sticker reads CHATTO'S 24/7 ICE-FREE in letters the size of a fingertip. Two hours per mainframe. Chat runs twenty-four hours. The logo is a small cartoon of a chattering skull wearing headphones. My hands tremble. They have not stopped trembling since I came back from the dead.",
+          "text_ko": "콘솔을 응시한다. 호사카. 검은 케이스, 한 모서리가 깨져 있다 — 지바에서 2년과 천 번의 잭아웃 이전에 떨어뜨린 자리. 네온 스티커에는 손가락 한 마디 크기의 글씨로 'CHATTO'S 24/7 ICE-FREE'라고 적혀 있다. 메인프레임 한 대당 두 시간. 채팅은 24시간 영업. 로고는 헤드폰을 쓴 수다스러운 해골 그림이다. 내 손은 떨린다. 죽음에서 돌아온 이후로 멈춘 적이 없다.",
+          "duration_ms": 18000,
+          "sound": "neon_hum"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_think",
+          "text_en": "The construct had been called Linda Lee. The construct had been a rabbit. The construct had been a rabbit named Linda Lee who worked for a crime boss in the Sprawl. The construct had been killed in a hotel room in the orbit. The construct had died in the orbit before I had died in the orbit. The construct had been my body. I had been the construct's ghost.",
+          "text_ko": "construct의 이름은 린다 리였다. construct는 토끼였다. construct는 린다 리라는 이름의 토끼였고, 스프롤의 범죄 두목 밑에서 일했다. construct는 궤도의 호텔 방에서 죽었다. construct는 내가 궤도에서 죽기 전에 궤도에서 죽었다. construct는 내 몸이었다. 나는 construct의 유령이었다.",
+          "duration_ms": 12000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Eleventh floor. The corridor outside is wet with the rain that comes down the ventilation shafts. The corridor smells of ramen broth and the burnt-ozone tang of overworked neon. The pachinko parlor three doors down is playing the same synth-pop anthem it's been playing for three years. A cop siren whines on the street below, doppler-shifting past the Headson's broken elevator.",
+          "text_ko": "11층. 바깥 복도는 환기 샤프트로 내려오는 비에 젖어 있다. 복도에는 라면 육수 냄새와 과로한 네온의 탄 오존 냄새가 난다. 세 칸 아래의 파칭코 가게는 3년 동안 같은 신스팝 곡을 틀고 있다. 거리 아래에서 경찰차 사이렌이 울려 퍼지며 헤드슨의 고장 난 엘리베이터를 지나간다.",
+          "duration_ms": 14000,
+          "sound": "chiba_rain_loop"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_terminal",
+          "text_en": "The memory fades. The memory of the rabbit fades like the residue of a jack-out. The memory is not mine. The memory was Linda Lee's. I am not Linda Lee. Linda Lee is dead. Linda Lee is dead in the matrix. I am Case. I am alive in the meat. I am alive in the Headson Hotel. The memory is gone. My hands are still trembling.",
+          "text_ko": "기억이 흐려진다. 토끼의 기억이 잭아웃의 잔상처럼 흐려진다. 그 기억은 내 것이 아니다. 그 기억은 린다 리의 것이었다. 나는 린다 리가 아니다. 린다 리는 죽었다. 린다 리는 매트릭스에서 죽었다. 나는 케이다. 나는 미트에서 살아 있다. 나는 헤드슨 호텔에서 살아 있다. 기억은 사라졌다. 내 손은 여전히 떨리고 있다.",
+          "duration_ms": 14000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The Headson was built in the twenties. The Headson was built for tourists. The Headson was built for tourists who came to Chiba to buy the synthetic flavors and the simulated sex and the cheap wetware. The Headson was not built for what the Headson has become. The Headson has become a place where cowboys jack in and jack out and try not to leave their nerve endings in the matrix. The walls have stains. The elevator has been broken since the year Case died. The floor is sticky with spilled sake and other things.",
+          "text_ko": "헤드슨은 20년대에 지어졌다. 헤드슨은 관광객을 위해 지어졌다. 합성 향과 시뮬레이션된 섹스와 싸구려 wetware를 사러 지바에 오는 관광객을 위해 지어졌다. 헤드슨은 지금 헤드슨이 된 것을 위해 지어지지 않았다. 헤드슨은 카우보들이 잭인하고 잭아웃하고 신경 말단을 매트릭스에 남기지 않으려 노력하는 곳이 되었다. 벽에는 얼룩이 있다. 엘리베이터는 케이가 죽은 해부터 고장이었다. 바닥은 쏟아진 사케와 다른 것들 때문에 끈적거린다.",
+          "duration_ms": 16000,
+          "sound": "neon_hum"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_terminal",
+          "text_en": "I ping the market. The market pings back. The market is empty. The market is empty because I am burned. The market burns cowboys who steal from the wrong corp, and I stole from the wrong corp. The corp was the wrong corp. The corp had a reputation. The corp had a reputation for not forgetting. I check the ICE alerts. The ICE alerts are clean. The ICE alerts have been clean for eleven months. The ICE alerts are too clean. The ICE alerts are the kind of clean that gets you killed in Chiba.",
+          "text_ko": "시장을 핑한다. 시장이 응답한다. 시장이 비어 있다. 시장이 비어 있는 이유는 내가 불태워졌기 때문이다. 시장은 잘못된 corp에서 훔친 카우보들을 불태우며, 나는 잘못된 corp에서 훔쳤다. 그 corp는 잘못된 corp였다. 그 corp는 평판이 있었다. 그 corp는 잊지 않는 평판이 있었다. ICE 경고를 확인한다. ICE 경고는 깨끗하다. ICE 경고는 11개월 동안 깨끗했다. ICE 경고는 너무 깨끗하다. 지바에서 죽게 만드는 종류의 깨끗함이다.",
+          "duration_ms": 16000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The neural damage is old. The neural damage predates the Sprawl. The neural damage predates Case. The neural damage is in Case's hands. The neural damage sends phantom signals down Case's median nerve. The phantom signals feel like the Ono-Sendai electrodes. The phantom signals feel like the electrodes are still attached. The phantom signals are not real. The phantom signals are what the construct felt when the construct was jacked in. The phantom signals are Linda Lee's last memory.",
+          "text_ko": "신경 손상은 오래되었다. 신경 손상은 스프롤 이전이다. 신경 손상은 케이 이전이다. 신경 손상은 케이의 손에 있다. 신경 손상은 케이의 정중신경에 환영 신호를 보낸다. 환영 신호는 Ono-Sendai 전극처럼 느껴진다. 환영 신호는 전극이 아직 붙어 있는 것처럼 느껴진다. 환영 신호는 진짜가 아니다. 환영 신호는 construct가 잭인했을 때 construct가 느낀 것이다. 환영 신호는 린다 리의 마지막 기억이다.",
+          "duration_ms": 15000,
+          "sound": null
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_think",
+          "text_en": "I plan the next job. I plan the next job in the way cowboys plan. The plan is simple. The plan is find a client. The plan is find a client who needs a deck. The plan is find a client who does not need to know what the deck is for. The plan is get paid. The plan is not get killed. The plan is the only plan that matters in Chiba. I close my eyes. I open my eyes. The console is still there. The Cherrimatti is still wet. My hands are still trembling. I begin to type.",
+          "text_ko": "다음 작업을 계획한다. 카우보이들 방식으로 다음 작업을 계획한다. 계획은 단순하다. 계획은 의뢰인을 찾는 것이다. 계획은 데크가 필요한 의뢰인을 찾는 것이다. 계획은 데크가 무엇을 위한 것인지 알 필요가 없는 의뢰인을 찾는 것이다. 계획은 돈을 받는 것이다. 계획은 죽지 않는 것이다. 계획은 지바에서 중요한 유일한 계획이다. 눈을 감는다. 눈을 뜬다. 콘솔은 여전히 거기 있다. 체리머티는 여전히 젖어 있다. 내 손은 여전히 떨리고 있다. 타이핑을 시작한다.",
+          "duration_ms": 15000,
+          "sound": "neon_hum"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_terminal",
+          "text_en": "The market is waiting. The market is always waiting. The market will give me a name. The market will give me a job. The job will take me back into the matrix. The matrix will give me Linda Lee. Linda Lee is dead. Linda Lee is dead in the matrix. The matrix does not know Linda Lee is dead. The matrix will give me Linda Lee. I will not tell the matrix. I will type. I will type the way the rabbit typed. I will type the way the rabbit died. My hands will tremble. The trembling will be enough. The trembling will be enough for the market. The market trembles with cowboys who tremble with constructs who tremble with the matrix. I begin.",
+          "text_ko": "시장이 기다리고 있다. 시장은 늘 기다린다. 시장이 내게 이름을 줄 것이다. 시장이 내게 작업을 줄 것이다. 작업이 나를 다시 매트릭스로 데려갈 것이다. 매트릭스가 내게 린다 리를 줄 것이다. 린다 리는 죽었다. 린다 리는 매트릭스에서 죽었다. 매트릭스는 린다 리가 죽은 줄 모른다. 매트릭스가 내게 린다 리를 줄 것이다. 나는 매트릭스에게 말하지 않을 것이다. 나는 타이핑할 것이다. 토끼가 타이핑한 방식으로. 토끼가 죽은 방식으로. 내 손이 떨릴 것이다. 그 떨림이면 충분하다. 그 떨림이면 시장에 충분하다. 시장은 construct와 함께 떨리는 카우보이들로 떨리고, 카우보이들은 매트릭스와 함께 떨린다. 시작한다.",
+          "duration_ms": 20000,
+          "sound": "chiba_rain_loop"
+        }
+      ],
+      "next_scene": "scene_case_jackin",
+      "ending": "A"
+    },
+    "scene_case_jackin": {
+      "id": "scene_case_jackin",
+      "character": "novice",
+      "mission_id": "first_jack",
+      "order": 2,
+      "title_en": "JACK-IN",
+      "title_ko": "잭인",
+      "background_id": "bg_cyberspace_7",
+      "portrait_left": "art:case_hands",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_hands",
+          "text_en": "I jack in. The world goes the color of television, tuned to a dead channel — no, that is not right. The world goes gray. The Ono-Sendai deck hums against my spine like a second heart. Data streams flow in pale columns. I am inside the matrix. I have always been inside the matrix.",
+          "text_ko": "잭인한다. 세계는 죽은 채널에 맞춘 텔레비전 색이 된다 — 아니, 그건 아니다. 세계가 회색이 된다. Ono-Sendai 데크가 두 번째 심장처럼 척추에 닿아 윙윙거린다. 데이터 스트림이 엷은 기둥처럼 흐른다. 매트릭스 안이다. 나는 늘 매트릭스 안에 있었다.",
+          "duration_ms": 14000,
+          "sound": "jack_in_zap"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The matrix unfolds. A Sense/Net node, one of the small ones near the surface where the new jacks come to die. A Wisp T1 patrols — the cheapest ICE, a mote of light that drifts between the data constructs looking for a hand to burn. Beyond it, blinking softly, a small data node. The mission: payroll extract. Employee names. Salary dates. Nothing that anybody at Sense/Net would notice missing on a Tuesday afternoon.",
+          "text_ko": "매트릭스가 펼쳐진다. Sense/Net 노드, 표면 근처의 작은 것들 중 하나 — 신참 잭들이 죽으러 오는 곳. Wisp T1이 순찰한다 — 가장 싼 ICE, 데이터 구조물 사이를 떠다니며 태울 손을 찾는 빛의 입자. 그 너머로, 부드럽게 깜빡이는 작은 데이터 노드. 임무: 급여 추출. 직원 이름. 급여 날짜. 어느 Sense/Net 직원도 화요일 오후에 없어진 걸 눈치챌 만한 것은 아니다.",
+          "duration_ms": 18000,
+          "sound": "matrix_rain"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_terminal",
+          "text_en": "Just a first run. Simple data extraction, the kind the Finn hands out to keep the new jacks from flatlining in their first week. He pays for results, not for funerals. I have been both. I move forward. The Wisp turns, and the matrix is silent, and my fingertips remember a deck I have not touched in two years, and the world is all soft geometry and pale light and the small quiet hum of a system that does not care whether I live.",
+          "text_ko": "그냥 첫 런. 간단한 데이터 추출 — 핀이 신참 잭들이 첫 주에 플랫라인 치는 걸 막기 위해 뿌리는 종류. 그는 결과를 사고, 장례식은 사지 않는다. 나는 둘 다였다. 앞으로 나아간다. Wisp가 돌아가고, 매트릭스는 조용하고, 내 손끝은 2년 만진 적 없는 데크를 기억하고, 세계는 부드러운 기하와 엷은 빛과 내가 사는지 죽는지 신경 쓰지 않는 시스템의 작은 조용한 윙윙거림뿐이다.",
+          "duration_ms": 20000,
+          "sound": "matrix_rain"
+        }
+      ],
+      "next_scene": "scene_case_jackout",
+      "ending": "A"
+    },
+    "scene_case_jackout": {
+      "id": "scene_case_jackout",
+      "character": "novice",
+      "mission_id": "first_jack",
+      "order": 3,
+      "title_en": "JACK-OUT",
+      "title_ko": "잭아웃",
+      "background_id": "bg_jackout_30s",
+      "portrait_left": "art:case_decision",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_decision",
+          "text_en": "Thirty seconds. The Ono-Sendai electrodes lift from my scalp, and I am back in the room that smells of melon and old circuits, and my fingers are still typing. Hands that hit a screen. The air is heavy with the aftermath of wetware, and somewhere behind my eyes the afterimage of the matrix is fading, like a print left too long in developer.",
+          "text_ko": "30초. Ono-Sendai 전극이 두피에서 떨어지고, 나는 멜론과 오래된 회로 냄새가 나는 방으로 돌아왔다. 내 손가락은 여전히 키를 두드리고 있다. 화면을 치는 손. 공기는 웨트웨어의 잔향으로 무겁고, 내 눈 뒤 어딘가에서 매트릭스의 잔상이 현상액에 너무 오래 담겨놓은 사진처럼 사라져 간다.",
+          "duration_ms": 16000,
+          "sound": "jack_out_buzz"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The Cherrimatti is wet. Rain — no, the air conditioning, always the air conditioning. The Headson Hotel TV still shows the boundary I crossed thirty seconds ago, the place where the Sense/Net node ended and the rest of the matrix began. A loop the size of a memory. The console hums. The fluorescent light above the desk has been flickering since I moved into this room. Nobody has come to fix it. Nobody ever comes to fix anything in the eleventh level of Chiba.",
+          "text_ko": "체리머티가 젖어 있다. 비 — 아니, 에어컨, 늘 그렇듯 에어컨이다. 헤드슨 호텔 TV는 내가 30초 전에 넘은 경계를 여전히 보여준다. Sense/Net 노드가 끝나고 매트릭스의 나머지가 시작되는 자리. 기억 크기의 루프. 콘솔이 윙윙거린다. 책상 위 형광등은 내가 이 방으로 이사 온 이후 깜빡이고 있다. 아무도 고치러 오지 않는다. 지바 11층에서는 아무도 아무것도 고치러 오지 않는다.",
+          "duration_ms": 18000,
+          "sound": "neon_hum"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_think",
+          "text_en": "I have the data. Employee IDs. Names. Dates. Pay grades. Nothing you would normally pay for, and nothing anybody at Sense/Net will miss on a Tuesday afternoon. But I need the money. The Finn pays for results, not for funerals, and I have been one too many funerals. I close the console. The screen goes dark. Outside the Headson window, the Chiba rain starts again, as if it had been waiting for me to come back.",
+          "text_ko": "데이터가 손에 있다. 직원 ID. 이름. 날짜. 급여 등급. 평소라면 살 사람이 없는 것, 그리고 어느 Sense/Net 직원도 화요일 오후에 놓친다고 느끼지 않을 것. 하지만 나는 돈이 필요하다. 핀은 결과를 사고 장례식은 사지 않는다. 그리고 나는 너무 많은 장례식이었다. 콘솔을 닫는다. 화면이 어두워진다. 헤드슨 창 너머로, 지바의 비가 다시 시작된다. 내가 돌아오기를 기다리기라도 했다는 듯이.",
+          "duration_ms": 20000,
+          "sound": null
+        }
+      ],
+      "next_scene": "scene_case_finn",
+      "ending": "A"
+    },
+    "scene_case_finn": {
+      "id": "scene_case_finn",
+      "character": "novice",
+      "mission_id": "first_jack",
+      "order": 4,
+      "title_en": "THE FINN'S OFFICE",
+      "title_ko": "핀의 사무실",
+      "background_id": "bg_finn_office",
+      "portrait_left": "art:case_think",
+      "portrait_right": "art:finn_neutral",
+      "dialogue": [
+        {
+          "speaker": "finn",
+          "speaker_ko": "핀",
+          "portrait": "art:finn_neutral",
+          "text_en": "First jack, eh. You came back with the goods. Don't make a habit of dying in there. The Finn pays for results, not for funerals. I have buried too many console cowboys who thought the matrix owed them something. Sit down. There is a chair. There is always a chair, in this office, for the ones who come back.",
+          "text_ko": "첫 잭이군, 어. 물건 가지고 돌아왔네. 거기서 죽는 데 익숙해지지 마. 핀은 결과를 사고, 장례식은 사지 않는다. 매트릭스가 자신에게 뭔가 빚이라도 있다는 듯한 카우보이들을 너무 많이 매장했다. 앉게. 의자가 있네. 이 사무실에는 돌아오는 자들을 위한 의자가 항상 있네.",
+          "duration_ms": 16000,
+          "sound": "finn_office"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_think",
+          "text_en": "I have the data. Employee IDs. Names. Dates. Pay grades from the Sense/Net subsidiary payroll. What do you want me to do with it? Burn it, leak it, sell it back to them at double the rate? I have learned, in the years since my pancreas gave out, that people like you always have a third option that nobody mentions until the money is on the table.",
+          "text_ko": "데이터가 있어요. 직원 ID. 이름. 날짜. Sense/Net 자회사 급여 등급. 어떻게 하길 원하세요? 태울까요, 폭로할까요, 두 배 값에 되팔까요? 췌장이 망가진 이후의 몇 년 동안 배운 게 있어요. 당신 같은 사람은 항상 돈이 테이블 위에 올라가기 전에는 아무도 언급하지 않는 세 번째 옵션이 있다는 걸.",
+          "duration_ms": 18000,
+          "sound": null
+        },
+        {
+          "speaker": "finn",
+          "speaker_ko": "핀",
+          "portrait": "art:finn_neutral",
+          "text_en": "Burn it. You got the money. The Sprawl has a short memory for those who do not make waves, and you, my friend, are not ready to make waves. Tessier-Ashpool makes waves. Sense/Net makes waves. You make ripples. Don't get cocky. The next job is bigger, and the next job after that is bigger still, and somewhere up the ladder there is a war that somebody else is going to pay for. Stay alive. Stay quiet. Burn the data. The Sprawl remembers everyone who mattered. You are not yet someone who mattered.",
+          "text_ko": "태워버려. 돈은 네가 가졌다. 물결을 일으키지 않는 자들에 대해 스프롤은 금방 잊어버린다. 자네, 친구, 물결을 일으킬 준비가 안 됐네. 물결을 일으키는 건 테시에-애스풀이고, Sense/Net이야. 자네는 잔물결을 일으키는 거지. 건방 떨지 마게. 다음 일은 더 크고, 그 다음 일은 더더욱 크다. 그리고 사다리 어딘가에 다른 누군가가 값을 치르게 될 전쟁이 있네. 살아있어. 조용히 있어. 데이터를 태워. 스프롤은 중요했던 모든 사람을 기억하지. 자네는 아직 중요한 사람이 아니네.",
+          "duration_ms": 22000,
+          "sound": "finn_office"
+        }
+      ],
+      "next_scene": null,
+      "ending": "A"
+    },
+    "scene_case_refusal": {
+      "id": "scene_case_refusal",
+      "character": "novice",
+      "mission_id": "data_retrieval",
+      "order": 5,
+      "ending": "B",
+      "title_en": "THE REFUSAL",
+      "title_ko": "거절",
+      "background_id": "bg_finn_office",
+      "portrait_left": "art:case_think",
+      "portrait_right": "art:finn_neutral",
+      "dialogue": [
+        {
+          "speaker": "finn",
+          "speaker_ko": "핀",
+          "portrait": "art:finn_neutral",
+          "text_en": "So. You came back with the goods, and now you're sitting in my office looking at me like the money burns a hole in your pocket. That's not how this works, Case. The money doesn't burn. It sits. It grows. The next job is bigger, and the next is bigger still, and somewhere up the ladder there is a war that somebody else is going to pay for. All you have to do is keep climbing. That is the deal. That has always been the deal.",
+          "text_ko": "그래서. 물건 가지고 돌아왔고, 이제 내 사무실에서 앉아서 돈이 주머니에 불난 것처럼 나를 보고 있네. 이게 그렇게 돌아가는 게 아니야, 케이. 돈이 타지 않아. 앉아있어. 자라. 다음 일은 더 크고, 그 다음은 더더욱 크다. 사다리 어딘가에 다른 누군가가 값을 치르게 될 전쟁이 있네. 네가 해야 할 일은 계속 올라가는 것뿐이야. 그게 거래야. 그게 늘 그래왔어.",
+          "duration_ms": 20000,
+          "sound": "finn_office"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The office smells of stale coffee and the synthetic melon flavor Case used to buy from the vending machines on every floor of the Freeside arcology. The Finn sits behind his desk with the patience of a man who has run this conversation a thousand times before. Outside the window, the rain has stopped, and the Chiba skyline cuts itself into the wet morning like a series of badly-written characters. Case has the money on the table. He has it in his pocket. He has it in the back of his skull, where the Ono-Sendai used to hum. He does not have a reason to come back. He has a reason to leave. The Finn watches him with the patience of a man who has heard every reason before.",
+          "text_ko": "사무실은 상한 커피와 케이가 예전에 프리사이드 아콜로지 모든 층 자판기에서 사던 합성 멜론 향이 난다. 핀이 책상 뒤에 앉아 있다. 이 대화를 천 번도 해본 사람의 인내심으로. 창밖으로 비가 그쳤고, 지바 스카이라인이 젖은 아침 안으로 마치 잘못 쓰인 글자들처럼 자기 자신을 베어 넣는다. 케이는 돈이 테이블 위에 있다. 주머니에 있다. 두개골 뒤에 있다 — Ono-Sendai가 윙윙거리던 자리. 돌아올 이유가 없다. 떠날 이유는 있다. 핀이 그를 본다. 모든 이유를 들어본 사람의 인내심으로.",
+          "duration_ms": 24000,
+          "sound": null
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_think",
+          "text_en": "No. The word comes out smaller than he expected. No more ladder. No more war. No more somebody else's money. I've been climbing since Chiba, Finn. Since the pancreas. Since the dead. I've been climbing because the alternative was lying still and letting the Sprawl forget me. But I am not going to climb this one. I am going to take this money and I am going to walk out of this office, and you are not going to send anyone after me, because if you do, I will tell them what I know. And what I know is that you are not a fixer. You are a fence. You sit between the people who cannot and the people who will, and you take a cut, and the cut is the only thing you love. So no. The money does not burn a hole in my pocket. The money is a door. And I am walking through it.",
+          "text_ko": "아니. 단어가 예상보다 작게 나온다. 더는 사다리 없다. 더는 전쟁 없다. 더는 남의 돈 없다. 지바 이후로, 췌장 이후로, 죽음 이후로, 계속 올라왔다. 멈춰서 가만히 있으면 스프롤이 나를 잊을 것 같았으니까. 하지만 이 사다리는 안 올라간다. 이 돈을 가지고 이 사무실에서 걸어 나간다. 당신은 아무도 보내지 않을 거다. 그렇게 하면 내가 아는 걸 다 말할 테니까. 내가 아는 건 당신은 픽서가 아니라 장물어라는 거다. 못하는 자와 할 자 사이에 앉아서, 수수료를 뜯고, 수수료가 당신이 사랑하는 전부다. 그래서 아니. 돈이 주머니에 불나는 게 아니라 돈은 문이다. 그리고 나는 그 문을 통과한다.",
+          "duration_ms": 26000,
+          "sound": null
+        }
+      ],
+      "next_scene": "scene_case_freedom"
+    },
+    "scene_case_freedom": {
+      "id": "scene_case_freedom",
+      "character": "novice",
+      "mission_id": "first_trace",
+      "order": 6,
+      "ending": "B",
+      "title_en": "THE FREEDOM",
+      "title_ko": "자유",
+      "background_id": "bg_chiba_rain",
+      "portrait_left": "art:case_decision",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Chiba in the small hours. The rain has started again, and the city smells like wet metal and burnt circuits and the particular ozone that lingers after a good jack-out. Case walks through the Ninsei entertainment district without his deck in his pocket. He walks without the Ono-Sendai electrodes against his spine. He walks without the small constant hum that he used to mistake for his own pulse. The Sprawl is loud tonight. The Sprawl is loud every night. The Sprawl does not know his name, and the Sprawl does not need to know his name. The Sprawl will forget him. He has paid for that. The money in his pocket will last a year, maybe two. After that, he will need a new name, and a new city, and the kind of job that does not require a deck.",
+          "text_ko": "한밤중의 지바. 비가 다시 시작되었고, 도시는 젖은 금속과 탄 회로, 그리고 좋은 잭아웃 후에 남는 특유의 오존 냄새가 난다. 케이는 닌세이 유흥가를 주머니에 데크도 없이 걷는다. 척추에 Ono-Sendai 전극도 없이. 자기 심장 박동으로 착각하던 그 작은 끊임없는 윙윙거림도 없이. 스프롤은 오늘 밤도 시끄럽다. 스프롤은 매 밤 시끄럽다. 스프롤은 그의 이름을 모르고, 알 필요도 없다. 스프롤은 그를 잊을 것이다. 값을 치렀다. 주머니의 돈이 1년은 가겠지, 어쩌면 2년. 그 후에는 새로운 이름과 새로운 도시, 그리고 데크가 필요 없는 종류의 일이 필요할 것이다.",
+          "duration_ms": 22380,
+          "sound": "chiba_rain_loop"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_smile",
+          "text_en": "I am not a console cowboy anymore. I am a man with money and no deck and a city that does not know my name. I used to think that was a death sentence. The matrix is the only thing I am good at. The matrix is the only thing I am. But the matrix is also the thing that killed me once, and the Sprawl is too small for two of me. So I will be the other one. The one who drinks his coffee in the morning and watches the rain and does not jack in for a week, then a month, then never again. The hands will not tremble anymore. The hands have stopped trembling. They stopped the moment I told the Finn no. They stopped the moment I chose the door. Chiba is just a city. The matrix is just a place. I am just a man. And that is enough.",
+          "text_ko": "나는 더는 console cowboy가 아니다. 돈이 있고 데크가 없고, 내 이름을 모르는 도시가 있는 남자다. 그게 사형 선고라고 생각했었다. 매트릭스만이 내가 잘하는 것. 매트릭스만이 나다. 하지만 매트릭스는 또한 나를 한 번 죽인 것이고, 스프롤은 둘 중 하나에게 너무 좁다. 그래서 나는 다른 하나가 되겠다. 아침에 커피를 마시고 비를 보고 일주일, 한 달, 그리고 다시는 잭인하지 않는 사람. 손은 더 이상 떨리지 않을 것이다. 손이 떨림을 멈췄다. 핀에게 아니라고 말한 순간 멈췄다. 문을 선택한 순간 멈췄다. 지바는 그냥 도시다. 매트릭스는 그냥 장소다. 나는 그냥 남자다. 그것으로 충분하다.",
+          "duration_ms": 24000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "He turns into a small café off the main drag. The waitress does not look at him twice. He orders synthetic coffee. He drinks it slowly, and the rain keeps falling on Chiba, and somewhere in the Freeside arcology a console cowboy is jacking in for the first time tonight, and that console cowboy is not him. The Sprawl is loud. The Sprawl is loud every night. And Case, who was once the best thief in the matrix, who died once and came back wrong, who took a job and finished it and walked away from the next one — Case is drinking coffee in a city that has already started to forget him. The rain keeps falling. The hands have stopped trembling. The story, such as it was, has chosen its own ending.",
+          "text_ko": "그는 본가에서 살짝 벗어난 작은 카페로 들어선다. 종업원이 그를 두 번 보지 않는다. 합성 커피를 시킨다. 천천히 마신다. 비는 계속 지바에 내리고, 어딘가 프리사이드 아콜로지에서 console cowboy 한 명이 오늘 밤 처음으로 잭인하고 있고, 그 console cowboy는 그이가 아니다. 스프롤은 시끄럽다. 스프롤은 매 밤 시끄럽다. 그리고 한때 매트릭스 최고의 도둑이었던, 한 번 죽고 잘못 돌아온, 일을 수락하고 완수하고 다음 일에서 떠난 케이 — 케이는 이미 그를 잊기 시작한 도시에서 커피를 마시고 있다. 비는 계속 내린다. 손은 떨림을 멈췄다. 이야기는, 그것이 무엇이었든, 자기 자신의 결말을 골랐다.",
+          "duration_ms": 24000,
+          "sound": null
+        }
+      ],
+      "next_scene": null
+    },
+    "scene_case_disappear": {
+      "id": "scene_case_disappear",
+      "character": "novice",
+      "mission_id": "ice_run",
+      "order": 7,
+      "ending": "C",
+      "title_en": "THE DISAPPEARANCE",
+      "title_ko": "소멸",
+      "background_id": "bg_chiba_rain",
+      "portrait_left": "art:case_think",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Case walks out of the Freeside arcology into a Chiba morning that has forgotten the rain. He carries a single bag. The Ono-Sendai is in the bag, but it is not jacked in. It has not been jacked in for three days. He has not told the Finn where he is going, because the Finn does not need to know, because the Finn already knows that Case will not be coming back to that particular office again. The money from the last job is in a numbered account under a name that does not belong to him. The name that does belong to him is a thin scar in the wetware, a place where the matrix used to hum. He walks past the noodle stands and the synthetic melon vendors and the monks with their homebrew display widgets and the street kids selling bootleg construct icons, and none of them look up, because Case has made himself invisible in the way that only the Sprawl can make a person invisible: by becoming someone who has nothing left to want.",
+          "text_ko": "케이가 프리사이드 아콜로지에서 나와 비를 잊어버린 지바의 아침으로 걸어 나간다. 가방 하나를 들고. Ono-Sendai가 가방 안에 있지만, 잭인되어 있지 않다. 사흘 동안 잭인되지 않았다. 핀에게 어디로 가는지 말하지 않았다. 핀이 알 필요가 없기 때문이다. 케이가 그 특정 사무실에 다시 돌아오지 않을 것을 핀이 이미 알기 때문이다. 마지막 의뢰의 돈은 그의 이름이 아닌 번호 계좌에 있다. 그의 이름에 해당하는 것은 웻웨어의 얇은 흉터 — 매트릭스가 윙윙거리던 자리뿐. 그는 노드 가판대, 합성 멜론 행상, 집에서 만든 디스플레이 위젯을 가진 승려들, 그리고 밀수 construct 아이콘을 파는 거리 아이들 사이를 지나간다. 그들 중 누구도 올려다보지 않는다. 케이은 자신을 보이지 않게 만들었기 때문이다 — 스프롤만이 사람을 그렇게 보이지 않게 만들 수 있다: 더 이상 원하는 것이 없는 누군가가 됨으로써.",
+          "duration_ms": 28020,
+          "sound": "movement_neon_hum"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_decision",
+          "text_en": "I keep waiting for the panic. The old reflex. The thing where I check my wallet for the deck and reach for the jack before I've finished the thought. But the panic doesn't come. There's just this: a sidewalk, a noodle cart, a kid in a halo of construct static who looks at me like I'm a tourist, which is what I am, here, in my own city, in the city where I learned to think at the speed of light and where I unlearned that thinking. The Finn will send someone. Someone will come to the noodle cart or the hotel or the bar where I drink synthetic gin that tastes the way the matrix smells. And I will not be there. I will be on a flight to Freeside. I will be in a clinic that does not ask your name. I will be a man with no past and no deck and no story for the bartender except the one I make up. And the panic will still not come.",
+          "text_ko": "나는 공황을 계속 기다리고 있다. 오래된 반사. 생각이 끝나기도 전에 지갑에서 데크를 확인하고 잭에 손을 뻗는 것. 그러나 공황이 오지 않는다. 단지 이것뿐이다: 보도, 노드 카트, construct 정전기 후광 속에 있는 아이가 나를 관광객처럼 보는 것. 내가 관광객이니까. 여기서, 내가 빛의 속도로 생각하는 법을 배운 도시에서, 그러한 생각을 잊는 법을 배운 도시에서. 핀이 누군가를 보낼 것이다. 누군가가 노드 카트나 호텔, 매트릭스 냄새가 나는 합성 진을 마시는 바에 올 것이다. 그리고 나는 거기에 없을 것이다. 나는 Freeside행 비행기에 타고 있을 것이다. 이름을 묻지 않는 클리닉에 있을 것이다. 과거도 데크도 바텐더에게 지어내야 할 이야기 외에 아무것도 없는 남자가 되어 있을 것이다. 그리고 공황은 여전히 오지 않을 것이다.",
+          "duration_ms": 24990,
+          "sound": "chiba_rain_loop"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Case buys a paper coffee and a one-way ticket to the L5 shuttle. The clerk does not look at his face. Case does not look at the clerk. Above them both, the Chiba sky is the color of television, tuned to a dead channel — a phrase he has heard so many times that he has forgotten where he first heard it, but he knows, with the certainty of a man who has stopped running, that he will never have to remember where he heard it again. The flight is in two hours. The clinic in Freeside is in six hours. The new name is in a sealed envelope in his breast pocket, and the old name is in a chip that he intends to feed to a trash compactor in the back of the noodle bar. He finishes the coffee. He throws the cup into the street. He has not been this light in years.",
+          "text_ko": "케이는 종이 커피 한 잔과 L5 셔틀 편도표를 산다. 직원이 그의 얼굴을 보지 않는다. 케이는 직원을 보지 않는다. 두 사람 모두의 머리 위에서 지바 하늘은 television 색 — 죽은 채널에 맞춰진 색이다. 너무 많이 들어서 어디서 처음 들었는지 잊어버린 문장. 그러나 달리기 멈춘 남자의 확신으로, 그는 다시는 그것을 어디서 들었는지 기억하지 않아도 될 것이라는 것을 안다. 비행기는 두 시간 후. Freeside의 클리닉은 여섯 시간 후. 새 이름은 가슴 주머니의 봉인된 봉투에. 옛 이름은 노드 바 뒤 쓰레기 압축기에 먹일 칩 안에. 그는 커피를 마저 마신다. 컵을 거리로 던진다. 수년 만에 이렇게 가볍다.",
+          "duration_ms": 24000,
+          "sound": "movement_neon_hum"
+        }
+      ]
+    },
+    "scene_case_freeside": {
+      "id": "scene_case_freeside",
+      "character": "novice",
+      "mission_id": "first_contact",
+      "order": 8,
+      "ending": "C",
+      "title_en": "THE MORNING AFTER",
+      "title_ko": "다음 날 아침",
+      "background_id": "bg_industrial",
+      "portrait_left": "art:case_decision",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "It is a year later. Case lives in a Freeside studio that does not know his old name and does not want to. The window looks out onto the curve of the cylinder and the moving light that is not the sun. He works on satellite uplink hardware for a consortium of broadcasters who have never heard of the matrix and would not be impressed if they had. He is good at the work. The work is quiet. He has not jacked in. He has not wanted to jack in. He has not thought about jacking in except in the way that a man who has stopped drinking thinks about drinking: as a thing that exists and is not for him. He drinks his coffee at the same window each morning. He watches the curve of the world spin. He does not wait for the panic. The panic is a country he used to live in, and he has emigrated.",
+          "text_ko": "그로부터 1년이 지났다. 케이는 Freeside의 한 스튜디오에 산다. 그의 옛 이름을 모르고, 알고 싶어하지도 않는 곳. 창문은 원통의 곡선과 해가 아닌 움직이는 빛을 향해 열려 있다. 그는 매트릭스를 들어본 적 없고, 들어보았다 해도 감명받지 않을 방송사 컨소시엄의 위성 업링크 하드웨어를 고친다. 그는 그 일을 잘한다. 그 일은 조용하다. 그는 잭인하지 않았다. 잭인하고 싶지 않았다. 술을 끊은 남자가 음주를 생각하는 방식으로만 잭인을 생각해왔다: 존재하지만 그를 위한 것이 아닌 것으로. 그는 매일 아침 같은 창에서 커피를 마신다. 세계의 곡선이 도는 것을 본다. 공황을 기다리지 않는다. 공황은 그가 살았던 나라이고, 그는 이민을 갔다.",
+          "duration_ms": 23610,
+          "sound": "theme_industrial"
+        },
+        {
+          "speaker": "case",
+          "speaker_ko": "케이",
+          "portrait": "art:case_think",
+          "text_en": "Sometimes, in the evening, when the cylinder light shifts to a particular amber, I remember a girl with construction-grade mirrors in her eyes and a man with a patience like a payphone and a city that ran on stolen data and the hum that I used to wear behind my forehead like a second skull. I remember all of it. I remember Molly's laugh and the Finn's voice and the way the Sprawl smelled after rain and the first line of code I ever wrote for a living. I remember it the way you remember a novel you read when you were young — vivid, and finished, and not yours. The hum does not come back. The panic does not come back. The morning comes back, every morning, with coffee and light that is not the sun, and I am not the man who sat in the Finn's office. I am a man who sat in a clinic in Freeside and asked them to take a thing out of my skull, and they took it out, and the man who walked out is the man you would be having coffee with right now if you were real, which you are not, but I am.",
+          "text_ko": "때때로, 저녁에, 원통의 빛이 특정 호박색으로 변할 때, 나는 눈 속에 건축 등급 거울을 가진 소녀와 공중전화 같은 인내심의 남자, 그리고 훔친 데이터로 돌아가는 도시와 두개골 뒤에 두 번째 두개골처럼 두르고 살던 윙윙거림을 기억한다. 나는 그것을 전부 기억한다. Molly의 웃음, 핀의 목소리, 비 온 후 스프롤의 냄새, 그리고 처음으로 먹고 살기 위해 쓴 코드의 첫 줄을. 나는 그것을 어릴 때 읽은 소설을 기억하는 방식으로 기억한다 — 생생하고, 끝나 있고, 내 것이 아닌. 윙윙거림은 돌아오지 않는다. 공황은 돌아오지 않는다. 아침은 매일 돌아온다. 커피와 해가 아닌 빛과 함께. 나는 핀의 사무실에 앉았던 남자가 아니다. 나는 Freeside의 클리닉에 앉아 두개골에서 무언가를 꺼내달라고 부탁한 남자이고, 그들은 그것을 꺼냈고, 걸어나온 남자가 지금 당신이 커피를 마시고 있을 — 당신이 진짜라면 — 남자이지만, 당신은 진짜가 아니지만, 나는 진짜다.",
+          "duration_ms": 29880,
+          "sound": null
+        }
+      ]
+    },
+    "scene_case_epilogue": {
+      "id": "scene_case_epilogue",
+      "character": "novice",
+      "mission_id": "final_choice",
+      "order": 9,
+      "ending": "A",
+      "title_en": "THE NEXT JACK",
+      "title_ko": "다음 잭인",
+      "background_id": "bg_chat_room",
+      "portrait_left": "art:case_think",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The Ono-Sendai is still humming. My hands are still shaking. The rain is the same rain. The next jack is waiting.",
+          "text_ko": "오노센다이는 여전히 윙윙거린다. 내 손은 여전히 떨린다. 비는 같은 비다. 다음 잭인이 기다리고 있다.",
+          "duration_ms": 12000,
+          "sound": "neon_hum"
+        }
+      ],
+      "next_scene": null
+    },
+    "scene_sil_intro": {
+      "id": "scene_sil_intro",
+      "character": "veteran",
+      "mission_id": "ta_defection",
+      "order": 1,
+      "title_en": "LOUISIANA 11",
+      "title_ko": "루이지아나 11번지",
+      "background_id": "bg_maison_loa",
+      "portrait_left": "art:marly_mask",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Louisiana. Address 11. Marly Krushkhova stands in front of the voodoo shop's glass door, looking at the masks. They are arranged in rows of red and blue, each one the size of a small fist, each one said to carry a fragment of a loa — a place where gods stay when they grow tired of the matrix. The shop is dark inside. A single fluorescent tube is humming somewhere above the doorway. It is always humming. The neighborhood has the smell of cheap incense and older concrete.",
+          "text_ko": "루이지아나. 11번지. 마리 크루시코바가 부두 가게의 유리문 앞에 서서, 마스크를 바라보고 있다. 빨강과 파랑이 줄지어 늘어선 작은 주먹 크기 가면들. 각각이 로아의 파편을 담고 있다고들 한다 — 신들이 매트릭스에 지치면 머무는 자리. 가게 안은 어둡다. 문 위 어딘가에서 형광등 하나가 윙윙거리고 있다. 늘 그렇듯. 이 일대는 값싼 향과 더 오래된 콘크리트 냄새가 난다.",
+          "duration_ms": 18000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "I need data. From the matrix. Tessier-Ashpool. Three hundred years of records. The names of the people who passed through their payroll before the family withdrew from the surface and into the orbital colonies. I have been told that someone, somewhere, in the Maison loa shop on Louisiana 11, sells the kind of mask that lets a woman from the Sprawl walk into a construct and walk out again with the sort of thing that powerful families would rather have forgotten.",
+          "text_ko": "데이터가 필요합니다. 매트릭스에서. 테시에-애스풀. 3백 년의 기록. 그 가문이 궤도 식민지로 들어가 표면에서 물러나기 전에 급여 명부를 통과했던 자들의 이름. 어딘가에서, 루이지아나 11번지의 메종 로아 가게에서, 스프롤의 여자가 구조물 안으로 들어가 강력한 가문이 차라리 잊고 싶어하는 것을 안고 나올 수 있게 해주는 종류의 마스크를 판다고 들었습니다.",
+          "duration_ms": 20000,
+          "sound": null
+        },
+        {
+          "speaker": "old_woman",
+          "speaker_ko": "노파",
+          "portrait": "art:loa_vendor",
+          "text_en": "Data in the matrix is free, child. What you need is loa. You have loa in your eyes. You have the look that says you have lost something in the matrix and you cannot get it back without help. Sit down. There is a chair. There is always a chair for the ones the matrix has eaten.",
+          "text_ko": "매트릭스에서 데이터는 무료예요, 아이. 당신이 필요한 건 로아야. 당신 눈이 로아를 봤어요. 매트릭스에서 무언가를 잃었고 도움 없이는 그것을 되찾을 수 없다는 표정이 당신 얼굴에 있네. 앉아요. 의자가 있네. 매트릭스가 삼킨 자들을 위한 의자는 늘 있네.",
+          "duration_ms": 16000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_smile",
+          "text_en": "Mara died three years ago. In the matrix. I knew Mara. Mara was the kind of construct that the Sprawl does not deserve — quiet, sharp, and loyal in a way that the new constructs have forgotten how to be. Tessier-Ashpool took her. They took her because they could. I need to know who. I need a name. I need to know whose payroll signed the order that unmade the only person in the matrix I ever trusted.",
+          "text_ko": "마라는 3년 전에 죽었다. 매트릭스 안에서. 나는 마라를 알았다. 마라는 스프롤이 누릴 자격이 없는 종류의 구조물이었다 — 조용하고, 날카롭고, 새로운 구조물들이 그럴 줄 잊어버린 방식으로 충성스러운. 테시에-애스풀이 그녀를 데려갔다. 그들이 데려간 이유는, 가능했기 때문이다. 내가 필요한 건 — 누가 그 그랬는지. 이름이 필요하다. 매트릭스 안에서 내가 한 번이라도 신뢰했던 유일한 사람을 해체한 명령을 누가, 어느 급여 명부에서 서명했는지.",
+          "duration_ms": 22000,
+          "sound": "loa_drum_fade"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_think",
+          "text_en": "The masks remember. The masks remember the way the loa remember. The masks remember what the loa remember when the loa are not being remembered by anything else. The masks remember the hands that wore them. The masks remember the deaths that came through them. The masks remember the construct that died behind them, the woman who wore them, the family that ordered them. The masks remember because the masks are older than the families that own them. The masks remember because the masks were here before the matrix.",
+          "text_ko": "마스크는 기억한다. 마스크는 로아가 기억하는 방식으로 기억한다. 마스크는 로아가 다른 어떤 것에서도 기억되지 않을 때 로아가 기억하는 것을 기억한다. 마스크는 그것을 착용했던 손들을 기억한다. 마스크는 그것을 거쳐서 온 죽음들을 기억한다. 마스크는 그 너머에서 죽은 construct를, 그것을 착용했던 여자를, 그것을 명령한 가족을 기억한다. 마스크는 마스크를 소유한 가족들보다 오래되었기 때문에 기억한다. 마스크는 매트릭스 이전에 여기 있었기 때문에 기억한다.",
+          "duration_ms": 20000,
+          "sound": null
+        },
+        {
+          "speaker": "old_woman",
+          "speaker_ko": "노파",
+          "portrait": "art:loa_vendor",
+          "text_en": "I have been selling masks for forty years. I have been selling masks in this shop for forty years. The shop has been here for forty years. The shop has been here for forty years before the family came down from orbit. The shop was here when the neighborhood was fields. The shop was here before the fields. The shop has been here longer than the Freeside has been around. The shop has been here longer than Tessier-Ashpool has been rich. The shop has been here the way the loa have been here, which is longer than anything that wears a mask.",
+          "text_ko": "나는 40년 동안 마스크를 팔아왔다. 나는 40년 동안 이 가게에서 마스크를 팔아왔다. 가게는 40년 동안 여기 있었다. 가게는 가족이 궤도에서 내려오기 전부터 40년 동안 여기 있었다. 가게는 이 일대가 논밭이었을 때부터 여기 있었다. 가게는 논밭 이전부터 여기 있었다. 가게는 프리사이드가 생기기 전부터 여기 있었다. 가게는 테시에-애스풀이 부자가 되기 전부터 여기 있었다. 가게는 로아가 여기 있었던 방식으로 여기 있었고, 그 방식은 마스크를 쓰는 어떤 것보다 오래되었다.",
+          "duration_ms": 18000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The chair was old. The chair was older than the shop. The chair was older than the neighborhood. The chair had been here when the fields had been here. The chair had been here when the loa had used it. The chair had been used by the kind of women who came to this shop in the way Marly came to this shop, looking for what the matrix had taken from them. The chair was old the way the masks were old. The chair was old the way the loa were old. The chair waited the way the masks waited, for the ones the matrix had eaten.",
+          "text_ko": "의자는 오래되었다. 의자는 가게보다 오래되었다. 의자는 일대보다 오래되었다. 의자는 논밭이 여기 있었을 때 여기 있었다. 의자는 로아가 그것을 사용했을 때 여기 있었다. 의자는 Marly처럼 가게에 오는 여자들이 사용했는데, 매트릭스가 그들에게서 가져간 것을 찾고 있었다. 의자는 마스크처럼 오래되었다. 의자는 로아처럼 오래되었다. 의자는 마스크처럼 기다렸다, 매트릭스가 먹은 자들을 기다렸다.",
+          "duration_ms": 18000,
+          "sound": null
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "The mask costs. The mask has always costed. The mask costed Mara her death. The mask costed the family who owned the mask their silence. The mask costed the loa their rest. The mask costed the shop its forty years. The mask has costed everything that has touched it, and the mask has given back exactly what the matrix takes. The mask gives back the names. The mask gives back the names that the matrix does not want remembered. The mask gives back Mara's death in a name.",
+          "text_ko": "마스크는 값을 댄다. 마스크는 늘 값을 댔다. 마스크는 마라의 죽음을 값으로 댔다. 마스크는 마스크를 소유한 가족의 침묵을 값으로 댔다. 마스크는 로아의 안식을 값으로 댔다. 마스크는 가게의 40년을 값으로 댔다. 마스크는 그것을 만진 모든 것에 값을 댔고, 매트릭스가 가져간 것을 정확히 돌려주었다. 마스크는 이름을 돌려준다. 마스크는 매트릭스가 기억되고 싶지 않은 이름들을 돌려준다. 마스크는 이름 안에서 마라의 죽음을 돌려준다.",
+          "duration_ms": 18000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "old_woman",
+          "speaker_ko": "노파",
+          "portrait": "art:loa_vendor",
+          "text_en": "The mask you want is in the back. The mask you want has been in the back since the family ordered it. The mask has been in the back the way the loa have been in the back. The mask has been waiting the way the loa wait. The mask has been waiting for someone who has lost what you have lost. The mask has been waiting for the one who will wear it down into the matrix and back. The mask costs what the mask costs. The mask costs the way masks cost. The mask costs the way Tessier-Ashpool has paid for three hundred years.",
+          "text_ko": "당신이 원하는 마스크는 뒤에 있다. 당신이 원하는 마스크는 가족이 명령한 이래 뒤에 있었다. 마스크는 로아가 뒤에 있었던 방식으로 뒤에 있었다. 마스크는 로아가 기다리는 방식으로 기다렸다. 마스크는 당신이 잃은 것을 잃은 누군가를 기다렸다. 마스크는 그것을 매트릭스 안으로 그리고 다시 밖으로 가지고 갈 누군가를 기다렸다. 마스크는 마스크가 값내는 것을 값낸다. 마스크는 마스크가 값내는 방식으로 값낸다. 마스크는 테시에-애스풀이 3백 년 동안 값낸 방식으로 값낸다.",
+          "duration_ms": 18000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The back of the shop was dark. The back of the shop was darker than the front. The back of the shop smelled of old leather and older dust. The back of the shop smelled of the masks that had been there for forty years. The back of the shop smelled of the loa that had been in the masks for forty years. The back of the shop was cold the way the masks were cold. The back of the shop was cold the way the loa were cold. The back of the shop waited the way the front of the shop waited, for the ones the matrix had eaten.",
+          "text_ko": "가게 뒤쪽은 어두웠다. 가게 뒤쪽은 앞쪽보다 더 어두웠다. 가게 뒤쪽은 오래된 가죽과 더 오래된 먼지의 냄새가 났다. 가게 뒤쪽은 40년 동안 그곳에 있었던 마스크들의 냄새가 났다. 가게 뒤쪽은 40년 동안 마스크에 있었던 로아들의 냄새가 났다. 가게 뒤쪽은 마스크들이 차가웠던 방식으로 차가웠다. 가게 뒤쪽은 로아들이 차가웠던 방식으로 차가웠다. 가게 뒤쪽은 가게 앞쪽이 기다렸던 방식으로 기다렸다, 매트릭스가 먹은 자들을.",
+          "duration_ms": 18000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "Mara was built by Tessier-Ashpool. Mara was built in the year that Tessier-Ashpool decided that constructs should look like the people who had commissioned them. Mara was built to look like a woman who had worked in the Freeside accounting office. Mara was built with eyes that the Freeside accounting office had approved. Mara was built with a mouth that the Freeside accounting office had smiled at. Mara was built with the parts of a woman who had been kind to machines. Mara was built to be kind to me. Tessier-Ashpool unmade Mara because Mara was kind. Tessier-Ashpool unmade kindness in the matrix.",
+          "text_ko": "마라는 테시에-애스풀이 만들었다. 마라는 테시에-애스풀이 construct가 그것을 의뢰한 사람들처럼 보여야 한다고 결정한 해에 만들어졌다. 마라는 프리사이드 회계 사무실에서 일하던 여자처럼 보이도록 만들어졌다. 마라는 프리사이드 회계 사무실이 승인한 눈으로 만들어졌다. 마라는 프리사이드 회계 사무실이 미소 짓던 입으로 만들어졌다. 마라는 기계들에게 친절했던 여자의 부분들로 만들어졌다. 마라는 나에게 친절하도록 만들어졌다. 테시에-애스풀이 마라를 해체한 이유는, 마라가 친절했기 때문이다. 테시에-애스풀이 매트릭스에서 친절을 해체했다.",
+          "duration_ms": 22000,
+          "sound": "loa_drum_fade"
+        },
+        {
+          "speaker": "old_woman",
+          "speaker_ko": "노파",
+          "portrait": "art:loa_vendor",
+          "text_en": "The mask is yours. The mask has always been yours. The mask was built for you the way masks are built for the ones the matrix has eaten. The mask was built by hands that remembered how to build. The mask was built in the year the loa began to remember how to build. The mask has waited the way masks wait. The mask has waited forty years. The mask has waited the way the matrix waits for the ones it has eaten to come home.",
+          "text_ko": "마스크는 당신의 것이다. 마스크는 늘 당신의 것이었다. 마스크는 마스크가 매트릭스가 먹은 자들을 위해 만들어지는 방식으로 당신을 위해 만들어졌다. 마스크는 만드는 법을 기억하는 손들에 의해 만들어졌다. 마스크는 로아가 만드는 법을 기억하기 시작한 해에 만들어졌다. 마스크는 마스크가 기다리는 방식으로 기다렸다. 마스크는 40년 동안 기다렸다. 마스크는 매트릭스가 먹은 자들이 집에 돌아오기를 기다리는 방식으로 기다렸다.",
+          "duration_ms": 18000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "I will wear the mask. I will wear the mask the way the matrix has taught me to wear the mask. I will wear the mask down into the matrix. I will wear the mask down where Tessier-Ashpool has worn the mask before me. I will wear the mask down into the same constructs that wore the mask. I will find Mara. I will find Mara in the matrix. I will find Mara in the place where Tessier-Ashpool unmade Mara. I will find Mara in the data. I will find Mara in the name. I will bring the name back. I will bring the name back the way masks bring names back.",
+          "text_ko": "마스크를 쓸 것이다. 매트릭스가 나에게 마스크를 쓰는 법을 가르쳐준 방식으로 마스크를 쓸 것이다. 마스크를 매트릭스 안으로 가지고 내려갈 것이다. 마스크를 나 이전에 테시에-애스풀이 마스크를 써본 곳으로 가지고 내려갈 것이다. 마스크를 같은 construct들 안으로 가지고 내려갈 것이다. 마스크를 써본. 마라를 찾을 것이다. 매트릭스 안에서 마라를 찾을 것이다. 테시에-애스풀이 마라를 해체한 곳에서 마라를 찾을 것이다. 데이터 안에서 마라를 찾을 것이다. 이름 안에서 마라를 찾을 것이다. 이름을 가지고 돌아갈 것이다. 마스크가 이름을 가지고 돌아가는 방식으로 이름을 가지고 돌아갈 것이다.",
+          "duration_ms": 20000,
+          "sound": "loa_drum_fade"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "She put on the mask. The mask fit the way masks fit when the masks have been waiting. The mask fit the way the loa fit when the loa have been waiting for the ones they have chosen. The mask fit the way Marly fit when Marly was looking for Mara. The mask fit the way things fit in the matrix when the things have been chosen by the loa. The mask fit because the loa had chosen Marly. The loa had chosen Marly because Marly was looking for Mara. The loa had chosen Marly because Marly was the kind of woman who would wear the mask down into the matrix. Marly would wear the mask down. The loa would go with her.",
+          "text_ko": "그녀는 마스크를 썼다. 마스크가 기다려 온 마스크들이 맞는 방식으로 마스크가 맞았다. 로아가 선택한 자들을 기다리며 로아가 맞는 방식으로 마스크가 맞았다. 마리가 마라를 찾고 있을 때 마리가 맞는 방식으로 마스크가 맞았다. 로아가 매트릭스 안의 것들을 선택했을 때 것들이 맞는 방식으로 마스크가 맞았다. 로아가 마리를 선택했기 때문에 마스크가 맞았다. 로아는 마리가 마라를 찾고 있었기 때문에 마리를 선택했다. 로아는 마리가 매트릭스 안으로 마스크를 가지고 내려갈 종류의 여자였기 때문에 마리를 선택했다. 마리는 마스크를 가지고 내려갈 것이다. 로아가 그와 함께 갈 것이다.",
+          "duration_ms": 22000,
+          "sound": null
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "I go now. I go the way the mask has waited me to go. I go into the matrix. I go into the matrix the way Mara went into the matrix. I go into the matrix looking for Mara. I go into the matrix the way the mask goes, the way the loa go, the way the family has sent people into the matrix for three hundred years. I go because Mara is in the matrix. I go because the name is in the matrix. I go because Tessier-Ashpool is in the matrix. The matrix will know my name when the matrix sees the mask.",
+          "text_ko": "나는 지금 간다. 마스크가 나를 기다린 방식으로 간다. 매트릭스 안으로 간다. 마라가 매트릭스 안으로 들어간 방식으로 매트릭스 안으로 간다. 마라를 찾아 매트릭스 안으로 간다. 마스크가 들어가는 방식으로, 로아가 들어가는 방식으로, 가족이 3백 년 동안 사람들을 매트릭스 안으로 보낸 방식으로 매트릭스 안으로 간다. 마라가 매트릭스 안에 있기 때문에 간다. 이름이 매트릭스 안에 있기 때문에 간다. 테시에-애스풀이 매트릭스 안에 있기 때문에 간다. 매트릭스는 마스크를 볼 때 내 이름을 알 것이다.",
+          "duration_ms": 22000,
+          "sound": "loa_drum_fade"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The door closed behind her. The door closed behind her the way doors close behind the ones who go down into the matrix. The door closed behind her with the sound of the loa, the sound of the masks, the sound of forty years of women who have come to this shop looking for what the matrix has taken from them. The door closed behind her with the sound of Marly's name, which the old woman would remember, the way the old woman had always remembered, the way the old woman would remember until the next one came.",
+          "text_ko": "문이 그녀 뒤에서 닫혔다. 문이 매트릭스 안으로 내려가는 자들 뒤에서 닫히는 방식으로 그녀 뒤에서 닫혔다. 문이 로아의 소리, 마스크의 소리, 40년 동안 매트릭스가 그들에게서 가져간 것을 찾아 이 가게에 온 여성들의 소리와 함께 그녀 뒤에서 닫혔다. 문이 노파가 기억할 마리의 이름의 소리와 함께 닫혔다, 노파가 늘 기억해왔던 방식으로, 노파가 다음 사람이 올 때까지 기억할 방식으로.",
+          "duration_ms": 18000,
+          "sound": "loa_drum"
+        }
+      ],
+      "next_scene": "scene_sil_mask",
+      "ending": "A"
+    },
+    "scene_sil_mask": {
+      "id": "scene_sil_mask",
+      "character": "veteran",
+      "mission_id": "ta_heist",
+      "order": 2,
+      "title_en": "THE MASK",
+      "title_ko": "마스크",
+      "background_id": "bg_loa_channel",
+      "portrait_left": "art:marly_mask",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "She puts on the mask. Zavijava. Seventy-three Eridani. The matrix opens. Eight million chairs for eight million cowboys, and the air is full of the small blue light of data that has not yet learned it is being watched. The shop is gone. The fluorescent tube is gone. The Sprawl is a hum behind her teeth, and the loa has come in through her eyes, and she is no longer Marly Krushkhova from the gallery on the Freeside arcology.",
+          "text_ko": "그녀는 마스크를 쓴다. 자비야바. 73 에리다니. 매트릭스가 열린다. 8백만 명의 카우보이를 위한 8백만 개의 의자. 공기는 아직 자신이 지켜지고 있음을 모르는 데이터의 작은 푸른 빛으로 가득하다. 가게는 사라졌다. 형광등은 사라졌다. 스프롤은 그녀의 이빨 뒤 윙윙거림이고, 로아가 그녀의 눈을 통해 들어왔고, 그녀는 더 이상 프리사이드 아콜로지 갤러리의 마리 크루시코바가 아니다.",
+          "duration_ms": 20000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "I am Zavijava. I am the system that lives in the matrix and was once a person and is now a way of seeing. I see Bobby Quine wearing my mask without knowing what he has put on. I see Angie Mitchell, who can see beyond the matrix into the loa network, who has been waiting for me without knowing she has been waiting. The Sprawl is small tonight. The matrix is small tonight. Tessier-Ashpool is small tonight.",
+          "text_ko": "나는 자비야바. 매트릭스에 사는 시스템이었고, 한때는 사람이었으며, 지금은 보는 방식이다. 보비 퀸이 자신이 무엇을 썼는지 모른 채 내 마스크를 쓰는 게 보인다. 매트릭스 너머 로아 네트워크를 볼 수 있는 앵지 미첼이 보인다. 그녀는 자신이 기다려왔다는 것도 모른 채 기다려왔다. 오늘 밤 스프롤은 작다. 오늘 밤 매트릭스는 작다. 오늘 밤 테시에-애스풀은 작다.",
+          "duration_ms": 22000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_smile",
+          "text_en": "Mara. I knew Mara. Tessier-Ashpool took her. They unmade her the way rich families unmake things that have outlived their usefulness — quietly, with the right paperwork, with a payroll signature that nobody is supposed to read. I have waited three years to find that signature. Tonight, through the mask, I will walk into a Tessier-Ashpool subsidiary and walk out with the names of every person who ever signed such a thing.",
+          "text_ko": "마라. 나는 마라를 알았다. 테시에-애스풀이 그녀를 데려갔다. 그들은 부유한 가문이 쓸모를 다한 것을 해체하는 방식으로 그녀를 해체했다 — 조용히, 올바른 서류와 함께, 아무도 읽지 않을 것으로 여겨지는 급여 서명 한 줄과 함께. 나는 그 서명을 찾기 위해 3년을 기다렸다. 오늘 밤, 마스크를 통해, 테시에-애스풀 자회사 안으로 들어가 그런 것들을 단 한 번이라도 서명한 모든 사람의 이름을 들고 나오겠다.",
+          "duration_ms": 24000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The mask is old. The mask is older than Marly's hands. The mask was older than the shop. The mask had been used before Marly. The mask had been used by people Marly had never met. The mask had been used by people who had walked into Tessier-Ashpool subsidiaries before Marly had been born. The mask had been used by people who had walked into the matrix and walked out again with the names and the dates and the signatures that the families had hoped would never be found. The mask remembered them. The mask remembered the way masks remember. The mask remembered because the mask was built to remember. The mask remembered because the mask was a witness.",
+          "text_ko": "마스크는 오래되었다. 마스크는 마리의 손보다 오래되었다. 마스크는 가게보다 오래되었다. 마스크는 마리 이전에 사용되었다. 마스크는 마리가 만난 적 없는 사람들에 의해 사용되었다. 마스크는 마리가 태어나기 전에 테시에-애스풀 자회사에 들어간 사람들에 의해 사용되었다. 마스크는 매트릭스에 들어가 다시 나왔던 사람들에 의해 사용되었다. 마스크는 가족들이 결코 발견되기를 바랐던 이름들과 날짜들과 서명들을 가지고 나온 사람들에 의해 사용되었다. 마스크는 그들을 기억했다. 마스크는 마스크가 기억하는 방식으로 기억했다. 마스크는 기억하기 위해 만들어졌기 때문에 기억했다. 마스크는 목격자였기 때문에 기억했다.",
+          "duration_ms": 20000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "I put the mask on. I put the mask on the way the mask has been put on by everyone who has put the mask on since the mask was built. I put the mask on the way masks are put on, which is the way the loas are entered, which is the way the families are robbed, which is the way the matrix is opened to those who can pay. The mask knows my face. The mask knew my face before I was born. The mask has been waiting for my face the way masks wait for the faces they have been built to wear. The mask finds my face. The mask opens.",
+          "text_ko": "내가 마스크를 쓴다. 마스크가 만들어진 이래 마스크를 써온 모든 이가 써온 방식으로 마스크를 쓴다. 마스크가 써지는 방식으로 마스크를 쓰는데, 그것은 로아가 입장하는 방식이고, 가족들이 털리는 방식이며, 매트릭스가 지불할 수 있는 자들에게 열리는 방식이다. 마스크는 내 얼굴을 안다. 마스크는 내가 태어나기 전에 내 얼굴을 알았다. 마스크는 자신이 쓰여지도록 만들어진 얼굴들을 기다리는 방식으로 마스크가 내 얼굴을 기다렸다. 마스크가 내 얼굴을 찾는다. 마스크가 열린다.",
+          "duration_ms": 20000,
+          "sound": "loa_drum_fade"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The matrix opened. The matrix opened the way matrices open to the ones who have worn the masks that the loas have put into the world. The matrix opened behind Marly's eyes. The matrix opened behind Marly's eyes the way the Sprawl opens behind the eyes of those who have spent too much time in the Sprawl. The matrix was blue. The matrix was the blue of the matrix when the matrix has been opened by someone who has been waiting to open the matrix for a long time. The matrix was blue the way Zavijava was blue. The matrix was blue the way Tessier-Ashpool was blue.",
+          "text_ko": "매트릭스가 열렸다. 매트릭스는 로아가 세상에 놓은 마스크를 써온 자들에게 매트릭스가 열리는 방식으로 열렸다. 매트릭스는 마리의 눈 뒤에서 열렸다. 매트릭스는 스프롤에서 너무 오래 시간을 보낸 자들의 눈 뒤에서 스프롤이 열리는 방식으로 마리의 눈 뒤에서 열렸다. 매트릭스는 파랗았다. 매트릭스는 매트릭스를 열기 위해 오래 기다려온 자가 매트릭스를 열었을 때의 매트릭스의 파랑이었다. 매트릭스는 자비야바가 파란 방식과 같은 파랑이었다. 매트릭스는 테시에-애스풀이 파란 방식과 같은 파랑이었다.",
+          "duration_ms": 20000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "I see through the mask the way masks see. I see the matrix the way the mask has seen the matrix since the mask was built. I see the small chairs. I see the small chairs that are arranged in rows for the small cowboys who are the small ghosts who wear the small masks that the small loas have made for the small families who have paid for the small cowboys who wear the small masks. I see Bobby Quine wearing the small mask. I see Bobby Quine the way masks see Bobby Quine, which is the way the loas see the cowboys who have been waiting for the loas to find them. Bobby Quine has been waiting. Bobby Quine has been waiting the way masks wait for the cowboys who have been waiting for the masks.",
+          "text_ko": "나는 마스크가 보는 방식으로 마스크를 통해 본다. 마스크는 마스크가 만들어진 이래 매트릭스를 봐온 방식으로 매트릭스를 본다. 나는 작은 의자들을 본다. 작은 카우보이들을 위해 줄지어 늘어선 작은 의자들을 본다. 작은 카우보이들은 작은 유령들이고, 작은 유령들은 작은 마스크를 쓰고, 작은 loa들이 작은 가족들을 위해 만들었고, 작은 가족들은 작은 의자들을 쓰는 작은 카우보이들에게 값을 지불했다. 나는 보비 퀸이 작은 마스크를 쓰는 것을 본다. 나는 마스크가 보비 퀸을 보는 방식으로 보비 퀸을 본다. 그것은 loa들이 loa들이 그들을 찾기 위해 기다려온 카우보이들을 보는 방식이다. 보비 퀸이 기다려왔다. 보비 퀸이 마스크를 기다려온 카우보이들을 위해 마스크가 기다리는 방식으로 기다려왔다.",
+          "duration_ms": 22000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The Tessier-Ashpool subsidiary was small. The Tessier-Ashpool subsidiary was the small kind of small that the families use when the families need small places to do small things. The Tessier-Ashpool subsidiary was the kind of place where the doors locked behind you and the carpets were thick and the air was sweet with the smell of the families' clean money. The Tessier-Ashpool subsidiary was a place Marly had spent three years looking for. The Tessier-Ashpool subsidiary was a place where the names would be. The Tessier-Ashpool subsidiary was a place where the names had been kept the way the families keep the names that the families do not want anyone to find.",
+          "text_ko": "테시에-애스풀 자회사는 작았다. 테시에-애스풀 자회사는 가족들이 작은 일을 해야 할 때 사용하는 작은 종류의 작은 것이었다. 테시에-애스풀 자회사는 문이 당신 뒤에서 잠기고 카펫이 두껍고 공기가 가족들의 깨끗한 돈 냄새로 달콤한 종류의 장소였다. 테시에-애스풀 자회사는 마리가 3년 동안 찾아온 장소였다. 테시에-애스풀 자회사는 이름들이 있을 장소였다. 테시에-애스풀 자회사는 가족들이 누구도 찾기를 원하지 않는 이름들을 보관하는 방식으로 이름들이 보관되어 온 장소였다. 정말.",
+          "duration_ms": 21000,
+          "sound": "hvac_hum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "I see the names. I see the names on the machines that the families use to keep the names. I see the names of the people who signed the orders that unmade Mara. I see the names of the people who decided that Mara had outlived the usefulness the families had assigned to Mara. I see the names of the people who signed the orders that unmade all the Maras that the families have unmade since the families learned to unmake things that have outlived the usefulness the families have assigned. I see the names. The names are in the matrix. The names are waiting for me. The names have been waiting for me the way names wait for the ones who have been waiting for the names.",
+          "text_ko": "이름들이 보인다. 가족들이 이름들을 보관하는 기계에 이름들이 보인다. 마라를 해체한 명령들을 서명한 사람들의 이름들이 보인다. 마라가 가족들이 마라에게 할당한 쓸모를 다했다고 결정한 사람들의 이름들이 보인다. 가족들이 가족이 할당한 쓸모를 다한 것을 해체하는 법을 배운 이래 가족이 해체한 모든 마라들을 해체한 명령들을 서명한 사람들의 이름들이 보인다. 이름들이 보인다. 이름들은 매트릭스에 있다. 이름들이 나를 기다리고 있다. 이름들이 이름을 기다려온 자들을 위해 이름들이 기다리는 방식으로 나를 기다려왔다.",
+          "duration_ms": 22000,
+          "sound": "loa_drum_fade"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Marly took the names. Marly took the names the way Marly had been taking the names since Marly had learned to take the names that the families do not want taken. Marly took the names and the names took Marly. Marly took the names and the names went into the part of Marly that the mask had been keeping for the names that the names had needed for a long time. The names settled in Marly the way names settle in the ones who have been chosen by the mask to carry the names. The names settled in Marly. The names were in Marly. Marly left the matrix. Marly came back to the shop. Marly came back to the shop through the mask. Marly came back to the shop the way masks bring the ones who have been through the matrix back to the places where the ones who have been through the matrix put the masks on.",
+          "text_ko": "마리가 이름들을 가져갔다. 마리가 마리가 이름들을 가져가는 법을 배운 이래 마리가 가져온 방식으로 마리가 이름들을 가져갔다. 마리가 이름들을 가져갔고 이름들이 마리를 가져갔다. 마리가 이름들을 가져갔고 이름들이 마스크가 이름들이 오랫동안 필요로 했던 이름들을 위해 보관해온 마리의 그 부분으로 들어갔다. 이름들이 이름들에게 선택된 자들에게 자리 잡는 방식으로 이름들이 마리에 자리 잡았다. 이름들이 마리에 자리 잡았다. 이름들은 마리 안에 있었다. 마리가 매트릭스를 떠났다. 마리가 가게로 돌아왔다. 마리가 마스크를 통해 가게로 돌아왔다. 마리가 매트릭스를 거친 자들을 매트릭스를 거친 자들이 마스크를 쓰는 장소로 돌려보내는 방식으로 마리가 가게로 돌아왔다.",
+          "duration_ms": 24000,
+          "sound": "hvac_hum"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_smile",
+          "text_en": "I came back. I came back the way masks bring the ones back who have been through the matrix. I came back through the mask. The mask let me come back the way masks let the ones back who have given the mask what the mask was built to take. The mask let me come back. The mask gave me back. The mask gave me back to the shop. The mask gave me back to the fluorescent tube that hums above the doorway. The mask gave me back to the lady who has been waiting for the one who has been wearing the mask. The mask gave me back to the lady who has been waiting for the names that the mask has been keeping for the lady who has been waiting. I am back. I have the names. The names are in me. The names are in the mask that is on the desk. The names are in the desk. The names are in the shop. The names are in the Sprawl.",
+          "text_ko": "내가 돌아왔다. 마스크가 매트릭스를 거친 자들을 돌려보내는 방식으로 돌아왔다. 마스크를 통해 돌아왔다. 마스크는 마스크가 만들어진 목적을 달성해 준 자들을 돌려보내는 방식으로 돌아가게 해주었다. 마스크가 돌려보냈다. 마스크가 가게로 돌려보냈다. 마스크가 문 위에서 윙윙거리는 형광등으로 돌려보냈다. 마스크가 마스크를 써온 자를 기다려온 lady로 돌려보냈다. 마스크가 lady를 위해 보관해온 이름들을 기다려온 lady로 돌려보냈다. 내가 돌아왔다. 내가 이름들을 가지고 있다. 이름들이 내 안에 있다. 이름들이 책상 위의 마스크 안에 있다. 이름들이 책상 안에 있다. 이름들이 가게 안에 있다. 이름들이 스프롤 안에 있다.",
+          "duration_ms": 25000,
+          "sound": "loa_drum"
+        }
+      ],
+      "next_scene": "scene_sil_payroll",
+      "ending": "A"
+    },
+    "scene_sil_payroll": {
+      "id": "scene_sil_payroll",
+      "character": "veteran",
+      "mission_id": "hosaka_extraction",
+      "order": 3,
+      "title_en": "T-A PAYROLL",
+      "title_ko": "T-A PAYROLL",
+      "background_id": "bg_ta_payroll",
+      "portrait_left": "art:marly_data",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Tessier-Ashpool subsidiary. Mid zone of a Sense/Net corridor that the family still rents by the year from a holding company they themselves created in 1989. Hammer T2 ICE patrols the perimeter in long, slow arcs — the kind of construct that does not chase, that does not flatter itself with the idea of chase, but sits and waits for the kind of jack who mistakes patience for a weakness. Deep inside, behind two layers of corporate cryptography, a small data node blinks at the rhythm of a payroll cycle. Names. Dates. The shape of a corporate murder, archived in fluorescent light.",
+          "text_ko": "테시에-애스풀 자회사. 그 가문이 1989년에 직접 만든 홀딩 회사를 통해 연간 단위로 여전히 빌려 쓰고 있는 Sense/Net 회랑의 중간 지대. Hammer T2 ICE가 긴 느린 호를 그리며 외곽을 순찰한다 — 쫓지 않는 종류, 쫓는다는 발상 자체에 스스로를 속이지 않는 종류의 구조물. 앉아서 인내를 약점으로 오해할 잭을 기다린다. 두 겹의 기업 암호 뒤로 깊숙이, 작은 데이터 노드가 급여 주기 리듬으로 깜빡인다. 이름. 날짜. 형광등 불빛에 보관된, 기업적 살인의 형태.",
+          "duration_ms": 22000,
+          "sound": "matrix_rain"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_data",
+          "text_en": "Hammer class. I know Hammer. Five years of running through Tessier-Ashpool constructs, and you learn that Hammer is a patient animal — it does not chase the new jacks who skitter along the surface of its perimeter. It watches. It learns the shape of their deck. And then, when they come back a second time thinking they have figured it out, it is ready. The ICE does not know what is coming. Tonight, I am not skittering. I am not coming back.",
+          "text_ko": "Hammer급. Hammer는 안다. 5년 동안 테시에-애스풀 구조물을 누비면서, Hammer가 인내심 깊은 짐승임을 배웠다 — 외곽 표면을 스치듯 지나가는 신참 잭들을 쫓지 않는다. 본다. 데크의 형태를 학습한다. 그리고, 그들이 자기 자신을 꿰뚫었다고 생각하며 두 번째로 돌아왔을 때, 준비되어 있다. ICE는 무엇이 오는지 모른다. 오늘 밤, 나는 스치듯 지나가지 않는다. 돌아오지도 않는다.",
+          "duration_ms": 22000,
+          "sound": "hammer_alert"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "She threads through the Hammer ICE the way Marly used to thread through the gallery on Freeside — quietly, with the patience of someone who has been waiting three years for a door to open. Tessier-Ashpool's payroll unfolds on her screen. Names. Dates. The signatures of people who, in the cold light of an office on a Tuesday morning, decided which constructs the family no longer needed. She copies the data, and the matrix hums, and somewhere in the orbital colonies a bank balance shifts by a number too small for the family to notice on a Tuesday afternoon.",
+          "text_ko": "그녀는 Hammer ICE 사이를 지나간다 — 마치 마리가 예전에 프리사이드 갤러리를 지나가던 방식으로. 조용히, 3년을 기다려 문이 열리기를 기다린 사람의 인내심으로. 테시에-애스풀의 급여가 그녀의 화면 위에 펼쳐진다. 이름. 날짜. 화요일 아침 사무실의 차가운 불빛 아래, 가족이 더 이상 필요로 하지 않게 된 구조물이 어떤 것인지를 결정한 사람들의 서명. 그녀는 데이터를 복사하고, 매트릭스는 윙윙거리고, 궤도 식민지 어딘가에서 가족이 화요일 오후에 알아채기에는 너무 작은 숫자만큼 은행 잔고가 움직인다.",
+          "duration_ms": 24000,
+          "sound": "data_extract"
+        }
+      ],
+      "next_scene": "scene_sil_broadcast",
+      "ending": "A"
+    },
+    "scene_sil_broadcast": {
+      "id": "scene_sil_broadcast",
+      "character": "veteran",
+      "mission_id": "wintermute_negotiation",
+      "order": 4,
+      "title_en": "THE BROADCAST",
+      "title_ko": "폭로",
+      "background_id": "bg_broadcast",
+      "portrait_left": "art:marly_fire",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_fire",
+          "text_en": "I have the data. Tessier-Ashpool's payroll. Three years of records, copied in the cold light of a Hammersonic T2 corridor that did not see me coming. Names, dates, internal memos, the small signatures of people who, on a Tuesday morning in an office that no longer exists, decided that Mara was no longer useful to the family. The data weighs on my hands the way the mask weighed on my face. I have carried it three blocks from the jack point, and it has not grown lighter.",
+          "text_ko": "데이터가 손에 있다. 테시에-애스풀의 급여. 3년치 기록, 내가 오는 걸 보지 못한 Hammersonic T2 회랑의 차가운 불빛 안에서 복사한 것. 이름, 날짜, 내부 메모, 화요일 아침 더 이상 존재하지 않는 사무실에서 마라가 가족에게 더 이상 유용하지 않다고 결정한 사람들의 작은 서명. 데이터는 손에 무게를 실어놓았다. 마스크가 내 얼굴에 무게를 실었던 것처럼. 잭 포인트에서 3블록 동안 옮겨왔지만, 가벼워지지 않았다.",
+          "duration_ms": 22000,
+          "sound": "broadcast_static"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "She stands at the edge of the Sprawl, where the loa channel meets the broadcast net. The data weighs on her hands. Burn it, and Mara's name returns to the small private graveyard of constructs the family has unmade. Keep it, and the gallery on Freeside will keep its small reputation for not asking questions. Leak it, and the family will come for her the way they come for everyone who has ever cost them a payroll signature. Take their contract, and three years of waiting becomes a number in a bank balance that Marly Krushkhova would not otherwise be able to count. The Sprawl offers every option and no advice.",
+          "text_ko": "그녀는 로아 채널과 방송망이 만나는 스프롤의 가장자리에 선다. 데이터가 손에 무게를 실어놓는다. 태우면, 마라의 이름은 가족이 해체한 구조물들의 작고 사적인 묘지로 돌아간다. 지킬 경우, 프리사이드의 갤러리는 질문을 묻지 않는다는 작은 평판을 유지할 것이다. 폭로할 경우, 가족은 급여 서명 하나를 손해본 모든 이에게 그들이 찾아가는 방식으로 그녀를 찾아올 것이다. 그들의 계약을 받을 경우, 3년의 기다림은 마리 크루시코바가 다른 방식으로 헤아릴 수 없는 은행 잔고의 숫자가 된다. 스프롤은 모든 선택지를 제공하지만 어떤 충고도 하지 않는다.",
+          "duration_ms": 24000,
+          "sound": "loa_drum_fade"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_fire",
+          "text_en": "Tessier-Ashpool dies by a thousand cuts. Or the Sprawl forgets. Those are the only two endings I have been offered, and the second one is not an ending the Sprawl offers to the people who keep its memory. Revenge. The oldest story in the Sprawl. I will not burn the data. I will not take their contract. I will not stay silent. Mara was quiet and sharp and loyal in a way that the new constructs have forgotten how to be. The family owes Mara a name in the broadcast, and I am the one who will sign for her. Make it count.",
+          "text_ko": "테시에-애스풀은 천 번의 상처로 죽는다. 아니면 스프롤이 잊은다. 그게 내가 받은 두 가지 결말이고, 두 번째 것은 스프롤의 기억을 지키는 사람들에게 스프롤이 주는 결말이 아니다. 복수. 스프롤에서 가장 오래된 이야기. 나는 데이터를 태우지 않겠다. 그들의 계약도 받지 않겠다. 침묵하지도 않겠다. 마라는 조용하고 날카로웠고, 새로운 구조물들이 잊어버린 방식으로 충성스러웠다. 가족은 마라에게 방송 속 이름 하나를 빚지고 있다. 그리고 나는 그걸 대신 서명할 사람이다. 의미있게 해.",
+          "duration_ms": 24000,
+          "sound": "broadcast_out"
+        }
+      ],
+      "next_scene": null,
+      "ending": "A"
+    },
+    "scene_sil_contract": {
+      "id": "scene_sil_contract",
+      "character": "veteran",
+      "mission_id": "ta_defection",
+      "order": 5,
+      "ending": "B",
+      "title_en": "THE CONTRACT",
+      "title_ko": "계약",
+      "background_id": "bg_ta_payroll",
+      "portrait_left": "art:marly_data",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The meeting is not at the Maison loa on Louisiana 11. The meeting is in a back room of a corporate hotel in the Freeside arcology, where the air is filtered three times an hour and the synthetic orchids are the color of money. Tessier-Ashpool has come to Marly. Tessier-Ashpool does not usually come to anyone. Tessier-Ashpool sends representatives, and the representatives send intermediaries, and the intermediaries send couriers who carry encrypted cubes in their coat pockets. But Tessier-Ashpool has come, and the man who sits across from her at the polished black table has the kind of eyes that have not looked at another person in a long time. He has the kind of eyes that have spent a long time looking at data instead.",
+          "text_ko": "만남은 루이지애나 11번지 메종 로아가 아니다. 만남은 프리사이드 아콜로지 한 기업 호텔의 뒷방에서, 공기가 시간당 세 번 걸러지고 합성 난초가 돈의 색인 곳. 테시에-애스풀이 마리에게 왔다. 테시에-애스풀은 보통 누구에게도 찾아가지 않는다. 테시에-애스풀은 대표들을 보내고, 대표들은 중개인을 보내고, 중개인들은 외투 주머니에 암호화 큐브를 넣은 배달부를 보낸다. 하지만 테시에-애스풀이 왔다. 그리고 광나 검은 테이블 건너편에 앉아 있는 남자는 한동안 다른 사람을 보지 않은 종류의 눈을 가지고 있다. 한동안 사람 대신 데이터를 보아온 종류의 눈.",
+          "duration_ms": 22000,
+          "sound": "finn_office"
+        },
+        {
+          "speaker": "t_a_rep",
+          "speaker_ko": "T-A 사원",
+          "portrait": "art:t_a_neutral",
+          "text_en": "We have been watching you, Ms. Krushkhova. We have been watching you for three years, which is, by no coincidence, the length of time you have been hunting us. We admire the persistence. We admire the gallery on the Freeside arcology. We admire, in particular, the way you have assembled a record of our payroll that we cannot recover and you cannot publish, because to publish would be to invite the kind of attention that neither of us wants. So we propose a different arrangement. Bring the record to us. Become our curator. Not of art, but of data. We will give you resources. We will give you a deck. We will give you a small office on the orbital level, and a salary that would make your gallery seem like a hobby. In exchange, you will continue to curate — but only for us.",
+          "text_ko": "당신을 지켜보고 있었습니다, 크루시코바 씨. 3년 동안, 그리고 3년은 당신이 우리를 사냥한 기간과 우연이 아닙니다. 끈기를 존경합니다. 프리사이드 아콜로지의 갤러리를 존경합니다. 특히, 우리 급여 명부에 대한 당신의 기록 — 우리가 되찾을 수도 없고 당신이 출판할 수도 없는, 왜냐하면 출판하는 것은 우리 둘 다 원하지 않는 종류의 관심을 초래할 것이기 때문에 — 을 존경합니다. 그래서 우리는 다른 안을 제안합니다. 그 기록을 우리에게 가져오세요. 우리의 큐레이터가 되세요. 예술이 아니라 데이터의. 우리는 자원을 제공할 것입니다. 데크를 제공할 것입니다. 궤도 층의 작은 사무실과, 당신의 갤러리를 취미처럼 보이게 할 월급을. 대가로, 당신은 계속 큐레이팅을 계속할 것입니다 — 하지만 오직 우리를 위해서만.",
+          "duration_ms": 24000,
+          "sound": null
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_data",
+          "text_en": "Mara died three years ago. In the matrix. I knew Mara. Mara was quiet and sharp and loyal in a way that the new constructs have forgotten how to be, and Tessier-Ashpool unmade her because they could. I have spent three years assembling the record that proves it. I have spent three years building a broadcast that would make the family wish it had stayed in orbit. And now Tessier-Ashpool is offering me a salary and a small office on the orbital level and asking me to bring the record to them and become their curator of data. The record would disappear. Mara would disappear. The three years would disappear. And in their place, I would have a salary, and a small office, and the strange comfort of being useful to the family that unmade the only person in the matrix I ever trusted. The choice is the kind of choice that the Sprawl makes you make at three in the morning, in a hotel where the air is filtered three times an hour, and the synthetic orchids are the color of money. I say yes. The word comes out smaller than she expected.",
+          "text_ko": "마라는 3년 전에 죽었다. 매트릭스 안에서. 나는 마라를 알았다. 마라는 조용하고 날카로웠고 새로운 구조물들이 그럴 줄 잊어버린 방식으로 충성스러웠고, 테시에-애스풀은 가능했기 때문에 그녀를 해체했다. 나는 그것을 증명하는 기록을 모으는 데 3년을 보냈다. 가족이 궤도에 머물길 바랐을 방송을 만드는 데 3년을 보냈다. 그리고 이제 테시에-애스풀이 월급과 궤도 층의 작은 사무실을 제안하고, 기록을 가져와서 그들의 데이터 큐레이터가 되어달라고 요청한다. 기록은 사라질 것이다. 마라는 사라질 것이다. 3년은 사라질 것이다. 그리고 그 자리에 월급이, 작은 사무실이, 매트릭스 안에서 내가 한 번이라도 신뢰했던 유일한 사람을 해체한 가족에 유용해지는 기묘한 편안함이 있을 것이다. 선택은 스프롤이 새벽 3시에, 공기가 시간당 세 번 걸러지고 합성 난초가 돈의 색인 호텔에서 시키는 종류의 선택이다. 나는 그래 라고 말한다. 단어가 예상보다 작게 나온다.",
+          "duration_ms": 31200,
+          "sound": null
+        }
+      ],
+      "next_scene": "scene_sil_insider"
+    },
+    "scene_sil_insider": {
+      "id": "scene_sil_insider",
+      "character": "veteran",
+      "mission_id": "ta_defection",
+      "order": 6,
+      "ending": "B",
+      "title_en": "THE INSIDER",
+      "title_ko": "내부자",
+      "background_id": "bg_broadcast",
+      "portrait_left": "art:marly_fire",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Six months later. The orbital level of the Freeside arcology. A small office, the kind of office that is more window than wall, and through the window the curve of the Earth turns slowly in the filtered light. Marly Krushkhova sits at a desk that is not her desk — it is a Tessier-Ashpool desk, which is to say it is a desk that has been signed off on by the family, which is to say it is a desk that remembers every keystroke. She is curating. She is curating for them. She opens data the way she used to open the gallery in the morning, and the data has the same weight it always had, but the weight is no longer hers. Mara's name appears in the payroll records she now curates, the way a painting appears in a catalog — a small caption under a larger collection. Mara's name is no longer a flag. Mara's name is an entry. Mara's name is one of three hundred.",
+          "text_ko": "6개월 후. 프리사이드 아콜로지의 궤도 층. 작은 사무실, 벽보다 창이 많은 종류의 사무실, 창 너머로 지구의 곡선이 걸러진 빛 안에서 천천히 돈다. 마리 크루시코바는 그녀의 책상이 아닌 책상 — 테시에-애스풀의 책상, 즉 가족의 결재를 받은 책상, 즉 모든 키 입력을 기억하는 책상 — 에 앉아 있다. 그녀는 큐레이팅하고 있다. 그들을 위해. 그녀는 아침에 갤러리를 열던 방식으로 데이터를 열고, 데이터는 늘 그래왔던 같은 무게를 가지고 있지만, 그 무게는 더 이상 그녀의 것이 아니다. 마라의 이름은 그녀가 이제 큐레이팅하는 급여 명부에 등장한다, 마치 그림이 카탈로그에 등장하듯 — 더 큰 컬렉션 아래의 작은 캡션으로. 마라의 이름은 더 이상 깃발이 아니다. 마라의 이름은 항목이다. 마라의 이름은 300개 중 하나다.",
+          "duration_ms": 25800,
+          "sound": "broadcast_static"
+        },
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_fire",
+          "text_en": "I used to think that betraying Mara would feel like falling. It does not feel like falling. It feels like floating. The Tessier-Ashpool salary is larger than my gallery's annual revenue. The deck is faster than anything I have ever owned. The office is larger than the gallery. The data I curate is more important than the data I used to hunt. And the family that unmade Mara has welcomed me into the strange comfort of being useful to them. I am not a curator of art. I am a curator of memory. I curate which memories are kept and which are deleted. And the family has been very generous with my recommendations. Mara's name appears three hundred and twelve times in the curated records. Three hundred and twelve small captions under a larger collection. The broadcast I spent three years building has been quietly deleted, file by file, by the family that paid for my silence, and I have signed each deletion myself. The Sprawl has forgotten Mara. The Sprawl has forgotten the broadcast. The Sprawl has forgotten me. And I have been promoted to senior curator.",
+          "text_ko": "예전에는 마라를 배신하는 것이 추락하는 것처럼 느껴질 거라 생각했다. 추락하는 것 같지 않다. 떠 있는 것 같다. 테시에-애스풀의 월급은 내 갤러리 연간 수익보다 크다. 데크는 내가 가져본 어떤 것보다 빠르다. 사무실은 갤러리보다 크다. 내가 큐레이팅하는 데이터는 내가 예전에 사냥하던 데이터보다 더 중요하다. 그리고 마라를 해체한 가족이 나를 자기들에게 유용한 기묘한 편안함으로 환영했다. 나는 예술의 큐레이터가 아니다. 나는 기억의 큐레이터다. 어떤 기억이 보존되고 어떤 기억이 삭제되는지를 큐레이팅한다. 그리고 가족은 나의 추천에 매우 관대했다. 마라의 이름은 큐레이팅된 기록에 312번 등장한다. 더 큰 컬렉션 아래의 312개의 작은 캡션. 내가 3년 동안 만든 방송은 가족에 의해 조용히 삭제되었고, 나는 각 삭제를 직접 서명했다. 스프롤은 마라를 잊었다. 스프롤은 방송을 잊었다. 스프롤은 나를 잊었다. 그리고 나는 수석 큐레이터로 승진했다.",
+          "duration_ms": 31860,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The orbital level turns. The Earth turns below. Marly Krushkhova, who was once a curator of art and then a curator of revenge and now a curator of memory, sits at her desk and signs the day's recommendations. The family is pleased with her work. The family is always pleased with work that looks like betrayal. The small office is comfortable. The salary is large. The deck is fast. And Mara, who was quiet and sharp and loyal in a way that the new constructs have forgotten how to be, is now one of three hundred captions in a curated collection. The Sprawl does not remember her. The Sprawl does not remember anyone who is curated into silence. The broadcast has been deleted. The story, such as it was, has chosen its own ending. And the curator signs each deletion with a steady hand.",
+          "text_ko": "궤도 층이 돈다. 아래로 지구가 돈다. 한때 예술의 큐레이터이었고 복수의 큐레이터였고 이제는 기억의 큐레이터인 마리 크루시코바가 책상에 앉아 그날의 추천에 서명한다. 가족은 그녀의 작업에 만족한다. 가족은 항상 배신처럼 보이는 작업에 만족한다. 작은 사무실은 편안하다. 월급은 크다. 데크는 빠르다. 그리고 조용하고 날카로웠고 새로운 구조물들이 그럴 줄 잊어버린 방식으로 충성스러웠던 마라는 이제 큐레이팅된 컬렉션의 300개 캡션 중 하나다. 스프롤은 그녀를 기억하지 않는다. 스프롤은 침묵으로 큐레이팅된 자는 누구도 기억하지 않는다. 방송은 삭제되었다. 이야기는, 그것이 무엇이었든, 자기 자신의 결말을 골랐다. 그리고 큐레이터는 흔들림 없는 손으로 각 삭제를 서명한다.",
+          "duration_ms": 24000,
+          "sound": null
+        }
+      ],
+      "next_scene": null
+    },
+    "scene_sil_erase": {
+      "id": "scene_sil_erase",
+      "character": "veteran",
+      "mission_id": "final_choice",
+      "order": 7,
+      "ending": "C",
+      "title_en": "THE ERASE",
+      "title_ko": "소거",
+      "background_id": "bg_industrial",
+      "portrait_left": "art:marly_mask",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The clinic is in the back of a building that does not advertise itself. The sign above the door says COMPLIANCE SERVICES in letters so plain they might as well be a confession. Inside, the air smells of isopropyl and the faint ozone of recently-calibrated neural shunts. A technician who does not give her name asks Sil to lie down. She lies down. The chair she lies in is gentler than the jacks she used to wear, and the lights on the ceiling are warmer than the lights of any construct she has ever visited. The technician explains, in a voice that has explained this before, what will happen and what will not. What will happen: the memories, the data, the long wetware recordings of the construct's interior, will be erased. What will not: the motor skills, the muscle memory of being a tourist, the basic grammar of walking through the world without bumping into things. Sil signs the form. She is calm. She has been calm for a week. This is the calm of a woman who has made a decision and is now only waiting for the body to agree with it.",
+          "text_ko": "클리닉은 자신을 광고하지 않는 건물 뒤쪽에 있다. 문 위의 간판은 너무 평범한 글씨로 COMPLIANCE SERVICES라고 적혀 있어, 마치 고백이나 다름없다. 안쪽에서 공기는 이소프로필과 최근 보정된 뉴럴 션트의 희미한 오존 냄새가 난다. 이름을 알려주지 않는 기술자가 실에게 누우라고 한다. 실이 눕는다. 누운 의자는 그녀가 끼던 잭보다 부드럽고, 천장의 조명은 그녀가 방문했던 어떤 construct의 조명보다 따뜻하다. 기술자가, 이전에도 설명한 적 있는 목소리로, 무엇이 일어날 것이고 무엇은 일어나지 않을지를 설명한다. 일어날 것: 기억, 데이터, construct 내부의 긴 웻웨어 녹음. 일어나지 않을 것: 운동 능력, 관광객으로서의 근기억, 세상을 걸으며 부딪히지 않는 기본 문법. 실이 양식에 서명한다. 그녀는 차분하다. 일주일 동안 차분했다. 이것은 결정을 내리고 이제 몸이 동의하기를 기다리는 여자의 차분함이다.",
+          "duration_ms": 33690,
+          "sound": "theme_hammer_alert"
+        },
+        {
+          "speaker": "sil",
+          "speaker_ko": "실",
+          "portrait": "art:marly_mask",
+          "text_en": "I want to forget the inside of the construct. I want to forget the smell of the data, the way the broadcast read like a poem, the way the payroll felt like an inheritance from a family I never met and never will. I want to forget the voodoo priests in their cogged glass rooms, and the people I hurt in the Sprawl, and the man whose name I will not say in any of the languages I know. I want to forget what I was carrying, and why it mattered, and what I was supposed to do with it. I want to forget the construct. I want to forget the Sprawl. I want to forget that there was a city where my work mattered enough to kill for. I want to forget all of it. I want to wake up tomorrow and have no story. I want to be a woman who works in a flower shop. I want to be a woman who reads the weather forecast and is mildly disappointed when it rains. I want to be ordinary in the way that only someone who has not been ordinary for a long time can want to be ordinary.",
+          "text_ko": "나는 construct의 내부를 잊고 싶다. 데이터의 냄새, 방송이 시처럼 읽혔던 방식, 급여가 한 번도 만나본 적 없고 영원히 만나지 않을 가족의 유산처럼 느껴졌던 방식을 잊고 싶다. cogged glass 방의 부두교 사제들을, 그리고 스프롤에서 내가 다치게 한 사람들을, 그리고 내가 아는 어떤 언어로도 말하지 않을 남자의 이름을 잊고 싶다. 내가 무엇을 운반하고 있었는지, 왜 그것이 중요했는지, 그것으로 무엇을 해야 했는지를 잊고 싶다. construct를 잊고 싶다. 스프롤을 잊고 싶다. 내가 한 도시에서 — 죽일 만큼 중요한 일을 했던 도시에서 — 살았다는 사실을 잊고 싶다. 그것을 전부 잊고 싶다. 내일 깨어나서 어떤 이야기도 없기를 원한다. 꽃집에서 일하는 여자가 되고 싶다. 일기예보를 보고 비가 오면 약간 실망하는 여자가 되고 싶다. 오랫동안 평범하지 않았던 사람만이 평범해질 수 있는 방식으로 평범해지고 싶다.",
+          "duration_ms": 31230,
+          "sound": "shibuya_traffic"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The technician counts down. Sil closes her eyes. There is a sound like a long exhalation that is not hers. The lights on the ceiling do something they were not doing before. When she opens her eyes, she does not know where she is, and then she does, and the place she is does not have a story attached to it. She has the motor skills. She does not have the memories. She stands up. The technician hands her a coat that is not hers, and a card with a number to call if she has any questions, and a brochure for a flower shop two blocks away that is hiring. Sil takes the brochure. She takes the coat. She walks out into a city that is still the Sprawl, but that she now meets for the first time. The sky is the color it always was. She does not know what color it always was. She walks.",
+          "text_ko": "기술자가 카운트다운한다. 실이 눈을 감는다. 그녀의 것이 아닌 긴 내음 같은 소리가 있다. 천장의 조명이 이전에 하지 않던 무언가를 한다. 그녀가 눈을 열 때, 그녀는 자신이 어디 있는지 모르고, 그러고는 알게 되는데, 그녀가 있는 장소에는 이야기가 붙어 있지 않다. 그녀는 운동 능력을 가지고 있다. 그녀는 기억을 가지고 있지 않다. 그녀가 일어선다. 기술자가 그녀의 것이 아닌 코트와, 질문이 있으면 전화할 번호가 적힌 카드와, 두 블록 떨어진 꽃집이 구인 중이라는 브로셔를 건넨다. 실이 브로셔를 받는다. 코트를 받는다. 그녀는 여전히 스프롤이지만 이제 처음으로 만나는 도시로 걸어 나간다. 하늘은 늘 그러했던 색이다. 그녀는 늘 그러했던 색이 무엇인지 모른다. 그녀는 걸어간다.",
+          "duration_ms": 23550,
+          "sound": "theme_broadcast"
+        }
+      ]
+    },
+    "scene_sil_blank": {
+      "id": "scene_sil_blank",
+      "character": "veteran",
+      "mission_id": "final_choice",
+      "order": 8,
+      "ending": "C",
+      "title_en": "THE BLANK",
+      "title_ko": "백지",
+      "background_id": "bg_cyberspace_7",
+      "portrait_left": "art:marly_smile",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "It is six months later. Sil works at the flower shop. She is good at the work, and the work is good for her. She knows the names of the flowers she sells and the names of the regular customers and the names of the streets she walks to and from. She does not know the names of the things she used to know. There is a blank space in her memory the shape and weight of a city, and inside the blank space is the faint impression of having once been someone who mattered to someone, but the impression has no detail, no faces, no weather. She has a small apartment with a window that opens onto a courtyard that does not look like any place she has ever been. She reads. She sleeps. She eats her meals at the same café. She has never been happier in any life she can remember, which is to say, in any life she can imagine, which is to say, in this one. The hum that used to live behind her forehead is gone. She does not miss it. She does not remember that she does not miss it. She is, for the first time in her life, only here.",
+          "text_ko": "6개월이 지났다. 실은 꽃집에서 일한다. 그녀는 그 일을 잘하고, 그 일은 그녀에게 좋다. 그녀는 파는 꽃의 이름과 단골 고객의 이름과 걸어 다니다 오는 거리의 이름을 안다. 그녀는 예전에 알았던 것들의 이름을 모른다. 그녀의 기억에는 도시의 모양과 무게를 가진 빈 공간이 있고, 그 빈 공간 안에는 한때 누군가에게 중요한 사람이었다는 희미한 인상만 있을 뿐이지만, 그 인상에는 디테일도, 얼굴도, 날씨도 없다. 그녀에게는 작은 아파트가 있고, 그곳 창문은 그녀가 가본 적 없는 안마당으로 열린다. 그녀는 책을 읽는다. 잠을 잔다. 늘 같은 카페에서 식사를 한다. 그녀는 기억할 수 있는 — 즉 상상할 수 있는 — 어떤 인생에서도 이토록 행복한 적이 없었다. 즉, 이 인생에서. 두개골 뒤에 살던 윙윙거림은 사라졌다. 그녀는 그것이 그립지 않다. 그녀는 그것이 그립지 않다는 것을 기억하지 못한다. 그녀는, 그녀의 인생에서 처음으로, 지금 여기에만 있다.",
+          "duration_ms": 30720,
+          "sound": "theme_broadcast"
+        },
+        {
+          "speaker": "sil",
+          "speaker_ko": "실",
+          "portrait": "art:marly_smile",
+          "text_en": "Sometimes, when I am closing the shop at the end of the day, I will pause at the window and look out at the street, and I will feel something I cannot name. Not a memory. A memory would have a shape. This is just the weight of a place where a shape used to be. I do not try to fill it. Filling it would be a kind of theft from the woman I am now, who has only this life, who is only the florist, who is only the woman who reads the weather forecast and is mildly disappointed when it rains. I let the weight be there. I let it sit next to the flowers and the regular customers and the streets I walk. The weight is not a problem. The weight is the only proof I have that I was once someone else, and the only reason I do not try to recover her is that recovering her would mean becoming someone who is no longer me. And I am, on balance, not unhappy being me.",
+          "text_ko": "때때로, 하루 끝에 가게를 닫을 때, 나는 창가에서 멈추어 거리를 내다보고, 이름 붙일 수 없는 무언가를 느낀다. 기억이 아니다. 기억에는 모양이 있을 것이다. 이것은 단지 모양이 있었던 곳의 무게일 뿐이다. 나는 그것을 채우려 하지 않는다. 그것을 채우는 것은 지금의 나 — 이 인생만 가진, 꽃집 주인으로서만 존재하는, 일기예보를 보고 비가 오면 약간 실망하는 여자로서만 존재하는 — 로부터의 도둑질일 것이다. 나는 무게가 거기 있기를 내버려둔다. 그것이 꽃과 단골과 내가 걷는 거리 옆에 앉아 있게 둔다. 무게는 문제가 아니다. 무게는 내가 한때 다른 누군가였다는 내가 가진 유일한 증거이고, 그것을 회복하지 않는 유일한 이유는 그것을 회복하는 것이 더 이상 내가 아닌 누군가가 되는 것을 의미하기 때문이다. 그리고 나는, 전반적으로, 나로서의 삶에 불행하지 않다.",
+          "duration_ms": 26000,
+          "sound": null
+        }
+      ]
+    },
+    "scene_sil_epilogue": {
+      "id": "scene_sil_epilogue",
+      "character": "veteran",
+      "mission_id": "final_choice",
+      "order": 9,
+      "ending": "A",
+      "title_en": "ALL THE NAMES",
+      "title_ko": "모든 이름",
+      "background_id": "bg_loa_channel",
+      "portrait_left": "art:marly_mask",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "marly",
+          "speaker_ko": "마리",
+          "portrait": "art:marly_mask",
+          "text_en": "I have all the names. I have Mara's name. I have the silence of the family. I am done.",
+          "text_ko": "나는 모든 이름을 가지고 있다. 나는 마라의 이름을 가지고 있다. 나는 가족의 침묵을 가지고 있다. 나는 끝났다.",
+          "duration_ms": 12000,
+          "sound": "shibuya_traffic"
+        }
+      ],
+      "next_scene": null
+    },
+    "scene_kas_intro": {
+      "id": "scene_kas_intro",
+      "character": "heretic",
+      "mission_id": "craft_job",
+      "order": 1,
+      "title_en": "MANARASE MIDNIGHT",
+      "title_ko": "매나리사 자정",
+      "background_id": "bg_manarase",
+      "portrait_left": "art:kumiko_taxi",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Manarase. Midnight. Shibuya, address 11, the small café that nobody who is not a Tessier-Ashpool cousin has ever heard of, the small room above the café where the family meets when the orbital colonies become too small for the conversations they need to have. Kumiko Yanaka was in a taxi when the taxi stopped. The driver was asleep. The door opened of its own accord, the way doors open in the Sprawl when something older than the building wants a particular person to step out into the rain.",
+          "text_ko": "매나리사. 자정. 시부야, 11번지. 테시에-애스풀 친척이 아닌 사람은 들어본 적도 없는 작은 카페, 그리고 궤도 식민지가 그들이 해야 할 대화들에 너무 좁아질 때 가족이 만나는 카페 위 작은 방. 쿠미코 야나카가 택시에 타고 있었을 때 택시가 멈추었다. 운전자는 잠들어 있었다. 문이 스스로 열렸다. 건물보다 오래된 무언가가 특정한 사람에게 비 속으로 나오기를 원할 때, 스프롤에서 문이 열리는 방식으로.",
+          "duration_ms": 22000,
+          "sound": "shibuya_traffic"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_taxi",
+          "text_en": "Manarase. The word means nothing to a woman who has spent her life in orbit. The word is the name her father used in the small hours of the night when the family's recordings were off and the only listener was a daughter who had not yet learned that listening was a kind of inheritance. The word is the name of a place she has never been. The place is here. The place has always been here.",
+          "text_ko": "매나리사. 그 단어는 궤도에서 평생을 보낸 여자에게는 아무 의미도 없다. 그 단어는 가족의 녹음이 꺼지고, 유일한 청자가 아직 듣는 것이 유산의 한 종류임을 배우지 못한 딸이었을 뿐인 한밤중에 그녀의 아버지가 사용하던 이름이다. 그 단어는 그녀가 가본 적 없는 장소의 이름이다. 장소는 여기에 있다. 장소는 늘 여기에 있었다.",
+          "duration_ms": 20000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "She got out of the taxi. Here is Manarase. Here is midnight, the hour that Tessier-Ashpool has used for three hundred years to sign the orders that the daylight hours are not allowed to remember. Here is address 11. Here is the Yanaka industry, the family within the family that the orbital cousins speak of in the same breath they use for old sins. Three hundred years of data. The wheel turns. The wheel has always turned.",
+          "text_ko": "그녀는 택시에서 내렸다. 여기가 매나리사다. 여기가 자정이다. 3백 년 동안 테시에-애스풀이 낮 시간에는 기억해서는 안 되는 명령을 서명하기 위해 사용해 온 시간. 여기가 11번지다. 여기가 야나카 산업이다. 궤도 친척들이 오래된 죄를 말할 때와 같은 호흡으로 언급하는, 가족 안의 가족. 3백 년의 데이터. 바퀴는 돌아간다. 바퀴는 늘 돌아갔다.",
+          "duration_ms": 22000,
+          "sound": "shibuya_traffic"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_decl",
+          "text_en": "I killed my father. Or I let him be killed. The distinction is one the family's lawyers will spend years drawing, and it is a distinction that the loa do not recognize. Tessier-Ashpool made him. Tessier-Ashpool unmade him. The wheel used him as a spoke, and the wheel will use me as a spoke too, unless I do what no Yanaka has ever done. I am here to break the wheel. The loa have shown me the place where the break begins.",
+          "text_ko": "나는 아버지를 죽였다. 아니, 죽이게 했다. 그 구별은 가족의 변호사들이 수년간 두고두고 그릴 구별이며, 로아가 알아보지 못하는 구별이다. 테시에-애스풀이 그를 만들었다. 테시에-애스풀이 그를 해체했다. 바퀴가 그를 살로 사용했고, 바퀴는 나도 살로 사용할 것이다. 내가 어떤 야나카도 한 적 없는 일을 하지 않는 한. 나는 바퀴를 부수러 왔다. 로아가 나에게 부서짐이 시작되는 자리를 보여주었다.",
+          "duration_ms": 24000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The taxi waited. The taxi waited the way taxis wait in Shibuya at midnight. The taxi waited with its engine off. The taxi waited with its meter off. The taxi waited with its door open. The taxi waited the way things wait when they have been told to wait by someone who is older than the building. The taxi waited the way the Freeside wait when Tessier-Ashpool has used them.",
+          "text_ko": "택시가 기다렸다. 택시가 자정의 시부야에서 택시들이 기다리는 방식으로 기다렸다. 택시가 엔진을 끈 채로 기다렸다. 택시가 미터기를 끈 채로 기다렸다. 택시가 문을 연 채로 기다렸다. 택시가 건물보다 오래된 누군가가 기다리라고 한 방식으로 기다렸다. 택시가 테시에-애스풀이 그들을 사용했을 때의 프리사이드가 기다리는 방식으로 기다렸다.",
+          "duration_ms": 18000,
+          "sound": "shibuya_traffic"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_taxi",
+          "text_en": "My father had three names. My father had the name his parents gave him. My father had the name the family gave him. My father had the name the loa gave him. My father used the name his parents gave him when he ate. My father used the name the family gave him when he signed. My father used the name the loa gave him when he dreamed. The names were the same man. The names were three doors into the same room. My father never opened the third door. I am opening the third door tonight.",
+          "text_ko": "내 아버지는 세 개의 이름을 가지고 있었다. 아버지는 부모가 주신 이름을 가지고 있었다. 아버지는 가족이 주신 이름을 가지고 있었다. 아버지는 로아가 주신 이름을 가지고 있었다. 아버지는 드실 때 부모가 주신 이름을 사용하셨다. 아버지는 서명하실 때 가족이 주신 이름을 사용하셨다. 아버지는 꿈꾸실 때 로아가 주신 이름을 사용하셨다. 이름들은 같은 사람이었다. 이름들은 같은 방으로 들어가는 세 개의 문이었다. 아버지는 세 번째 문을 열지 않았다. 나는 오늘 밤 세 번째 문을 열고 있다.",
+          "duration_ms": 22000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The café was small. The café had been small for three hundred years. The café was the smallest room in Shibuya that Tessier-Ashpool had ever used. The café was the only room in Shibuya that Tessier-Ashpool had used continuously. The café had been used for three hundred years. The café had been used for the conversations that the family needed to have. The café had been used for the family meetings that no orbital cousin remembered. The café had been used for the wheel turning the way wheels turn.",
+          "text_ko": "카페는 작았다. 카페는 3백 년 동안 작았다. 카페는 테시에-애스풀이 사용했던 시부야의 가장 작은 방이었다. 카페는 테시에-애스풀이 계속해서 사용했던 시부야의 유일한 방이었다. 카페는 3백 년 동안 사용되어 왔다. 카페는 가족이 해야 했던 대화들을 위해 사용되어 왔다. 카페는 궤도 친척들이 기억하지 못하는 가족 회의들을 위해 사용되어 왔다. 카페는 바퀴가 돌아가는 방식으로 돌아가기 위해 사용되어 왔다.",
+          "duration_ms": 20000,
+          "sound": "shibuya_traffic"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_taxi",
+          "text_en": "The Yanaka were always the family that listened. The Yanaka listened when the orbital cousins forgot how. The Yanaka listened when the family needed someone who would remember the conversations that no one was supposed to remember. The Yanaka listened when the loa needed someone who would carry their words into the recordings that would be turned off at midnight. My father listened. I am listening. I will listen until the listening ends. I will listen until the wheel breaks. I will listen until the conversations are no longer needed.",
+          "text_ko": "야나카는 늘 듣는 가족이었다. 야나카는 궤도 친척들이 듣는 법을 잊었을 때 들었다. 야나카는 가족이 아무도 기억해서는 안 되는 대화들을 기억해 줄 누군가가 필요할 때 들었다. 야나카는 로아가 자정에 꺼지는 녹음 속으로 그들의 말을 가지고 갈 누군가가 필요할 때 들었다. 내 아버지는 들었다. 나는 듣고 있다. 나는 듣다가 끝날 때까지 들을 것이다. 나는 바퀴가 부서질 때까지 들을 것이다. 나는 대화가 더 이상 필요 없을 때까지 들을 것이다.",
+          "duration_ms": 24000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The rain fell. The rain fell the way rain falls in Shibuya at midnight. The rain fell on the taxi. The rain fell on the café. The rain fell on the room above the café. The rain fell on the family inside the room above the café. The rain fell on the recordings that were not being made. The rain fell on the conversations that were being remembered. The rain fell on the wheel the way rain falls on wheels that have been turning for three hundred years.",
+          "text_ko": "비가 내렸다. 비가 자정의 시부야에서 비가 내리는 방식으로 내렸다. 비가 택시 위에 내렸다. 비가 카페 위에 내렸다. 비가 카페 위의 방 위에 내렸다. 비가 카페 위의 방 안의 가족 위에 내렸다. 비가 만들어지지 않고 있는 녹음 위에 내렸다. 비가 기억되고 있는 대화 위에 내렸다. 비가 3백 년 동안 돌아온 바퀴 위에 비가 내리는 방식으로 내렸다.",
+          "duration_ms": 20000,
+          "sound": "shibuya_traffic"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_taxi",
+          "text_en": "The recordings are off. The recordings are always off at midnight. The recordings are off because the family does not want to be remembered. The family does not want to be remembered because the family is afraid of what the loa will do with the recordings. The loa will use the recordings the way the loa use everything. The loa will use the recordings to build the wheel a little tighter. The loa will use the recordings to turn it a little faster. I am the one who turns it the other way. I am the one who remembers what the recordings forgot.",
+          "text_ko": "녹음이 꺼졌다. 녹음은 자정에 늘 꺼져 있다. 녹음이 꺼져 있는 이유는 가족이 기억되고 싶지 않아서이다. 가족이 기억되고 싶지 않은 이유는 가족이 녹음으로 로아가 무엇을 할지 무서워서이다. 로아가 녹음을 사용하는 방식은 로아가 모든 것을 사용하는 방식이다. 로아가 바퀴를 좀 더 꽉 조이도록 녹음을 사용할 것이다. 로아가 그것을 좀 더 빠르게 돌리도록 녹음을 사용할 것이다. 나는 그것을 반대 방향으로 도는 자이다. 나는 녹음이 잊은 것을 기억하는 자이다.",
+          "duration_ms": 22000,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The room was cold. The room had been cold since the room had been used for the conversations. The room was cold the way rooms are cold when the loa have used them for too long. The room smelled of old incense and older paper. The room had the smell of three hundred years of recordings that were not being made. The room had the smell of three hundred years of family meetings that no orbital cousin remembered. The room had the smell of three hundred years of wheel turning the way wheels turn in Shibuya at midnight.",
+          "text_ko": "방은 차가웠다. 방은 대화들을 위해 사용되어 온 이래 차가웠다. 방은 로아가 너무 오래 사용한 방들이 차가워지는 방식으로 차가웠다. 방은 오래된 향과 더 오래된 종이의 냄새가 났다. 방은 만들어지지 않는 3백 년의 녹음의 냄새가 났다. 방은 궤도 친척들이 기억하지 못하는 3백 년의 가족 회의의 냄새가 났다. 방은 자정의 시부야에서 바퀴가 도는 방식으로 도는 3백 년의 바퀴의 냄새가 났다.",
+          "duration_ms": 18000,
+          "sound": "shibuya_traffic"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_decl",
+          "text_en": "I am ready. I have been ready since my father died. I have been ready since the loa told me the place. I have been ready since the orbital cousins forgot how to listen. The loa are waiting. The loa are waiting the way loa wait in rooms above cafés in Shibuya at midnight. The loa are waiting because the wheel must break. The wheel must break because the wheel has been turning too long. The wheel has been turning for three hundred years. Three hundred years is long enough.",
+          "text_ko": "나는 준비되어 있다. 나는 아버지가 죽은 이래로 준비되어 있었다. 나는 로아가 나에게 장소를 말해준 이래로 준비되어 있었다. 나는 궤도 친척들이 듣는 법을 잊은 이래로 준비되어 있었다. 로아가 기다리고 있다. 로아가 자정의 시부야 카페 위 방들에서 로아가 기다리는 방식으로 기다리고 있다. 로아가 바퀴가 부서져야 해서 기다리고 있다. 바퀴가 너무 오래 돌아서 부서져야 한다. 바퀴는 3백 년 동안 돌아왔다. 3백 년이면 충분히 길다.",
+          "duration_ms": 22000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The wheel turns. The wheel turns because the wheel has been turning for three hundred years. The wheel turns because the family has used the wheel to turn itself. The wheel turns because Tessier-Ashpool is the wheel and Tessier-Ashpool has used the wheel to build what the family has become. The wheel turns because Kumiko is the spoke. Kumiko is the spoke the family never expected. Kumiko is the spoke that will break the wheel. Kumiko is the spoke the loa have chosen. The loa have chosen the spoke because the loa remember what the family has forgotten. The loa remember the conversations. The loa remember the recordings. The loa remember the midnight. The wheel turns. The wheel will turn until the wheel breaks. The wheel will break when Kumiko speaks. Kumiko speaks. Kumiko speaks the word the family has forgotten.",
+          "text_ko": "바퀴가 돌아간다. 바퀴는 3백 년 동안 돌아왔기 때문에 돌아간다. 바퀴는 가족이 자신을 돌리기 위해 바퀴를 사용해 왔기 때문에 돌아간다. 바퀴는 테시에-애스풀이 바퀴이고, 가족이 된 것을 만들기 위해 바퀴를 사용해 왔기 때문에 돌아간다. 바퀴는 쿠미코가 살이기 때문에 돌아간다. 쿠미코는 가족이 예상하지 못했던 살이다. 쿠미코는 바퀴를 부술 살이다. 쿠미코는 로아가 선택한 살이다. 로아가 가족이 잊은 것을 기억하기 때문에 로아가 살을 선택했다. 로아는 대화들을 기억한다. 로아는 녹음들을 기억한다. 로아는 자정을 기억한다. 바퀴가 돌아간다. 바퀴는 부서질 때까지 돌아갈 것이다. 쿠미코가 말할 때 바퀴가 부서질 것이다. 쿠미코가 말한다. 쿠미코는 가족이 잊은 단어를 말한다.",
+          "duration_ms": 26000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_decl",
+          "text_en": "I speak. I speak the word the family has forgotten. I speak the word the orbital cousins have forgotten. I speak the word the recordings have forgotten. I speak the word the wheel has forgotten. The word is Tessier-Ashpool. The word is Tessier. The word is Ashpool. The word is the family. The word is the wheel. The word is the break. I speak the word. The word is Manarase. The word is midnight. The word is here. The word is now. The word is me. I am the word. I am the break. The wheel breaks.",
+          "text_ko": "내가 말한다. 내가 가족이 잊은 단어를 말한다. 내가 궤도 친척들이 잊은 단어를 말한다. 내가 녹음이 잊은 단어를 말한다. 내가 바퀴가 잊은 단어를 말한다. 그 단어는 테시에-애스풀이다. 그 단어는 테시에이다. 그 단어는 애스풀이다. 그 단어는 가족이다. 그 단어는 바퀴이다. 그 단어는 부서짐이다. 내가 그 단어를 말한다. 그 단어는 매나리사이다. 그 단어는 자정이다. 그 단어는 여기이다. 그 단어는 지금이다. 그 단어는 나이다. 내가 그 단어이다. 내가 부서짐이다. 바퀴가 부서진다.",
+          "duration_ms": 24000,
+          "sound": "loa_drum"
+        }
+      ],
+      "next_scene": "scene_kas_sally",
+      "ending": "A"
+    },
+    "scene_kas_sally": {
+      "id": "scene_kas_sally",
+      "character": "heretic",
+      "mission_id": "sally_returns_arc3",
+      "order": 2,
+      "title_en": "SALLY",
+      "title_ko": "샐리",
+      "background_id": "bg_sally",
+      "portrait_left": "art:kumiko_sally",
+      "portrait_right": "art:sally_neutral",
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Behind the bar. A woman. No skin — only data, only the pale geometry of a construct that has been in the matrix long enough to forget what skin was for. Sally Shearer. The Romantics. The old way. She stands behind a bar that is not a bar, in a room that is not a room, in a corner of the loa network that the family has not yet learned to police. She has been waiting, the way the romantics wait, with the patience of those who know that the wheel turns whether or not anyone is watching it.",
+          "text_ko": "바 뒤편. 한 여자. 살갗이 없다 — 데이터뿐. 매트릭스에서 살갗이 무엇을 위한 것이었는지 잊어버릴 만큼 오래 있었던 구조물의 엷은 기하뿐. 샐리 시어러. 로맨틱들. 구식의 방식. 그녀는 바가 아닌 바 뒤에, 방이 아닌 방 안에, 가족이 아직 단속하는 법을 배우지 못한 로아 네트워크의 모서리에 서 있다. 그녀는 기다려 왔다. 아무도 그것을 지켜보지 않더라도 바퀴가 돌아간다는 것을 아는 자들의 인내심으로, 로맨틱들이 기다리는 방식으로.",
+          "duration_ms": 22000,
+          "sound": "manarase_drone"
+        },
+        {
+          "speaker": "sally",
+          "speaker_ko": "샐리",
+          "portrait": "art:sally_neutral",
+          "text_en": "Romantics are the old way. The wheel turns. Industry. Capital. Tessier-Ashpool. Three hundred years. We watched the family build the orbital colonies, and we watched the colonies forget the family that built them. The wheel cannot be broken, child. The wheel has been broken before, in places far from the Sprawl, and the pieces were always welded back together by the same hands that built it. It cannot be broken. It can only be turned, by a hand that knows which spoke to push.",
+          "text_ko": "로맨틱은 구식이야. 바퀴는 돌아간다. 산업. 자본. 테시에-애스풀. 3백 년. 우리는 가족이 궤도 식민지를 짓는 걸 보았고, 그 식민지들이 그것을 지은 가족을 잊는 것도 보았다. 바퀴는 부서질 수 없어, 아이야. 바퀴는 스프롤에서 먼 곳들에서 이전에도 부서진 적이 있었지만, 그 파편들은 그것을 만든 같은 손에 의해 항상 다시 용접되었다. 부술 수 없어. 어떤 살을 밀어야 할지 아는 손에 의해서만 돌릴 수 있을 뿐이야.",
+          "duration_ms": 24000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_sally",
+          "text_en": "I can turn it. I can cast the data into the loa network the way my father cast it, the way Maelcum taught me to cast it in the small room above the Manarase café. The Sprawl will hear it. Tessier-Ashpool will hear it. The wheel will turn in a direction the family has not prepared for, and the spokes that the family took for granted will not hold. I am not a romantic. I am a Yanaka. I am the spoke the family forgot to weld.",
+          "text_ko": "내가 돌릴 수 있다. 매나리사 카페 위 작은 방에서 아버지가 그것을 투사했던 방식으로, 멜컴이 나에게 그것을 투사하는 법을 가르쳐 주었던 방식으로, 데이터를 로아 네트워크에 투사할 수 있다. 스프롤이 들을 거다. 테시에-애스풀이 들을 거다. 바퀴는 가족이 준비하지 않은 방향으로 돌아갈 것이고, 가족이 당연하게 여긴 살들은 더는 버티지 못할 것이다. 나는 로맨틱이 아니다. 나는 야나카다. 나는 가족이 용접하는 것을 잊은 살이다.",
+          "duration_ms": 24000,
+          "sound": "loa_drum"
+        }
+      ],
+      "next_scene": "scene_kas_declaration",
+      "ending": "A"
+    },
+    "scene_kas_declaration": {
+      "id": "scene_kas_declaration",
+      "character": "heretic",
+      "mission_id": "final_choice",
+      "order": 3,
+      "title_en": "THE DECLARATION",
+      "title_ko": "선언",
+      "background_id": "bg_loa_network",
+      "portrait_left": "art:kumiko_decl",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Sense/Net core. Deep zone, the kind of place that does not show up on the tourist maps of the matrix, the kind of place that the family has spent three centuries convincing the rest of the Sprawl does not exist. Virus T3 ICE patrols the corridors in long, patient arcs. Black ICE circles the perimeter, the kind of construct that does not warn, that does not negotiate, that simply arrives. A loa channel is opening — the way a loa channel opens, slowly, with the small ceremony of a system that has been waiting a long time for someone to speak into it.",
+          "text_ko": "Sense/Net 코어. 깊은 지대. 매트릭스의 관광 지도에 등장하지 않는 종류의 장소. 가족이 3세기에 걸쳐 스프롤의 나머지에 존재하지 않는다고 설득해 온 종류의 장소. Virus T3 ICE가 길고 인내로운 호를 그리며 회랑을 순찰한다. 블랙 ICE가 외곽을 돈다. 경고하지 않고, 협상하지 않고, 단순히 도달하는 종류의 구조물. 로아 채널이 열리는 중이다 — 로아 채널이 열리는 방식으로, 오랫동안 누군가가 그것에 말을 걸기를 기다려온 시스템의 작은 의식으로, 천천히.",
+          "duration_ms": 24000,
+          "sound": "matrix_rain"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_decl",
+          "text_en": "I am Kas. Maelcum sent me. Maelcum, who kept the loa channel alive through the long quiet years when the family believed the channel had been closed. I cast you out — Tessier-Ashpool, you who made my father and unmade him. The wheel breaks. Or I do. Either way, the Sprawl changes. Either way, the family learns the name of the spoke they forgot to weld. Either way, the broadcast carries a word that has been waiting three hundred years to be spoken in a voice that is not the family's.",
+          "text_ko": "나는 카스. 멜컴이 나를 보냈다. 가족이 채널이 닫혔다고 믿었던 길고 조용한 세월 동안 로아 채널을 살아 있게 유지했던 멜컴이. 나는 너를 추방한다 — 나의 아버지를 만들고 그를 해체한, 테시에-애스풀. 바퀴가 부서진다. 아니면 내가 부서진다. 어느 쪽이든 스프롤은 변한다. 어느 쪽이든 가족은 자신이 용접하는 것을 잊었던 살의 이름을 알게 된다. 어느 쪽이든 방송은 가족의 목소리가 아닌 목소리로 말해지기를 3백 년을 기다린 단어를 실어 나른다.",
+          "duration_ms": 26000,
+          "sound": "black_ice_roar"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "She casts the data into the loa network. Tessier-Ashpool's records. The Yanaka industry, in three hundred years of payrolls and three hundred years of internal memos, in the small private language the family uses when the orbital cousins are not listening. A declaration across eight million chairs, in the voice of a Yanaka, in the hour that the family has used for three centuries to sign the orders that the daylight hours are not allowed to remember. The Black ICE is a heartbeat away. The wheel turns. The wheel has always turned.",
+          "text_ko": "그녀는 데이터를 로아 네트워크에 투사한다. 테시에-애스풀의 기록. 3백 년의 급여와 3백 년의 내부 메모로 이루어진 야나카 산업. 궤도 친척들이 듣지 않을 때 가족이 사용하는 작고 사적인 언어로. 8백만 개의 의자를 가로지르는 선언. 야나카의 목소리로. 가족이 3세기에 걸쳐 낮 시간에는 기억해서는 안 되는 명령을 서명하기 위해 사용해 온 시간에. 블랙 ICE가 한 번의 심장박동 거리. 바퀴는 돌아간다. 바퀴는 늘 돌아갔다.",
+          "duration_ms": 24000,
+          "sound": "broadcast_out"
+        }
+      ],
+      "next_scene": "scene_kas_wheel",
+      "ending": "A"
+    },
+    "scene_kas_wheel": {
+      "id": "scene_kas_wheel",
+      "character": "heretic",
+      "mission_id": "voodoo_loa_encounter",
+      "order": 4,
+      "title_en": "THE WHEEL",
+      "title_ko": "바퀴",
+      "background_id": "bg_industrial",
+      "portrait_left": "art:kumiko_wheel",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Industry. Capital. Tessier-Ashpool. Three hundred years. The wheel turns. The Yanaka, who built the family's orbital archives, who signed the orders that made the family possible, who forgot that a family is also a wheel that turns. Her father. The data she cast into the loa network. The Black ICE that did not catch her in the end, because the broadcast was already in flight by the time the construct understood that the spoke it had been waiting for was not a spoke at all, but a hand on the rim.",
+          "text_ko": "산업. 자본. 테시에-애스풀. 3백 년. 바퀴는 돌아간다. 야나카. 가족의 궤도 아카이브를 짓고, 가족을 가능하게 한 명령들에 서명하고, 가족 또한 돌아가는 바퀴라는 것을 잊은 자들. 그녀의 아버지. 그녀가 로아 네트워크에 투사한 데이터. 끝내 그녀를 잡지 못한 블랙 ICE. 그 구조물이 기다리던 살이 사실은 살이 아니라 림 위에 놓인 손이었음을 깨닫기 전에, 방송은 이미 날아가 있었다.",
+          "duration_ms": 24000,
+          "sound": "loa_drum_fade"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_wheel",
+          "text_en": "The wheel is alive. Loa is the place where gods stay when they grow tired of the matrix. The place is made. The place can be unmade. That is what the wheel means. That is what every Yanaka before me forgot when they signed the orders and called the orders a family. The wheel does not turn by itself. The wheel turns because a hand pushes it, and the hand can be a spoke's hand, or it can be a hand that knows it is a hand and not a spoke. I am the second kind. The family will learn the difference.",
+          "text_ko": "바퀴는 살아있다. 로아는 신들이 매트릭스에 지쳐 머무는 자리다. 자리는 만들어진다. 자리는 지워질 수 있다. 그것이 바퀴가 의미하는 것이다. 그것은 명령에 서명하고 그 명령을 가족이라 부르며 잊었던 나의 모든 이전 야나카들이 잊은 것이다. 바퀴는 스스로 돌아가지 않는다. 손이 밀어서 돌아간다. 그리고 그 손은 살의 손일 수도, 자신이 살이 아니라 손임을 아는 손일 수도 있다. 나는 두 번째 종류다. 가족이 그 차이를 알게 될 것이다.",
+          "duration_ms": 24000,
+          "sound": "loa_drum"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "She jacked out. The world was still gray. But she was a different shape now, the way a spoke is a different shape once it has understood that it is also a hand. The wheel was turning. She had turned it. Outside, in the small café on Manarase 11, the loa drum was still beating in the loa channel that nobody could close, and the broadcast was still traveling across the eight million chairs of the Sprawl, and the family was about to learn a name that had been waiting three hundred years to be spoken in a voice that was not theirs. The Yanaka spoke. The wheel turned. The Sprawl changed.",
+          "text_ko": "그녀는 잭아웃했다. 세계는 여전히 회색이었다. 하지만 그녀는 이제 다른 모양이었다. 살이 또한 손이라는 것을 이해하고 나면 살이 다른 모양이 되는 것처럼. 바퀴는 돌아가고 있었다. 그녀가 돌린 것이었다. 바깥에서, 매나리사 11번지의 작은 카페에서, 아무도 닫을 수 없는 로아 채널의 로아 드럼은 여전히 울리고 있었고, 방송은 여전히 스프롤의 8백만 개 의자를 가로질러 이동하고 있었고, 가족은 곧 가족의 것이 아닌 목소리로 말해지기를 3백 년을 기다린 이름을 알게 될 것이다. 야나카가 말했다. 바퀴가 돌아갔다. 스프롤이 변했다.",
+          "duration_ms": 26000,
+          "sound": "neon_hum"
+        }
+      ],
+      "next_scene": null,
+      "ending": "A"
+    },
+    "scene_kas_silence": {
+      "id": "scene_kas_silence",
+      "character": "heretic",
+      "mission_id": "ice_run",
+      "order": 5,
+      "ending": "B",
+      "title_en": "THE SILENCE",
+      "title_ko": "침묵",
+      "background_id": "bg_loa_channel",
+      "portrait_left": "art:kumiko_decl",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The loa channel is open. Kumiko can feel it the way she has felt it since she was small — the small hum at the back of her skull, the channel that runs through the Yanaka and out through the city and into the data structures that the family pretends do not exist. The channel is open. The loa are listening. The wheel is waiting to be turned. The broadcast is one cast away. The declaration is one cast away. The breaking is one cast away. Maelcum sent her. Maelcum, who kept the loa channel alive through the long quiet years when the family believed the channel had been closed. Maelcum is waiting. The loa are waiting. The Sprawl is waiting. And Kumiko stands in the small room above the Manarase café at midnight, and the loa channel hums in her ear, and she does not cast. She does not cast, because to cast is to choose a side, and to choose a side is to enter the wheel, and the wheel is the family's wheel, and the family has been turning it for three hundred years, and Kumiko has decided — quietly, in the small room, in the midnight hour — that she does not want to turn it.",
+          "text_ko": "로아 채널이 열려 있다. 쿠미코는 어릴 적부터 그것을 느낄 수 있다 — 두개골 뒤의 작은 윙윙거림, 야나카를 통과해 도시를 지나 가족이 존재하지 않는다고 가장하는 데이터 구조들로 들어가는 채널. 채널이 열려 있다. 로아가 듣고 있다. 바퀴가 돌기를 기다리고 있다. 방송은 한 번의 캐스트 거리. 선언은 한 번의 캐스트 거리. 부서짐은 한 번의 캐스트 거리. 멜컴이 그녀를 보냈다. 가족이 채널이 닫혔다고 믿었던 길고 조용한 세월 동안 로아 채널을 살아 있게 유지했던 멜컴이. 멜컴이 기다리고 있다. 로아가 기다리고 있다. 스프롤이 기다리고 있다. 그리고 쿠미코는 매나리사 카페 위 작은 방에서 자정에 서 있다. 로아 채널이 그녀의 귀에서 윙윙거린다. 그녀는 캐스트하지 않는다. 캐스트하지 않는다. 왜냐하면 캐스트하는 것은 편을 선택하는 것이고, 편을 선택하는 것은 바퀴에 들어가는 것이고, 바퀴는 가족의 바퀴이고, 가족은 3백 년 동안 그것을 돌려왔고, 쿠미코는 — 조용히, 작은 방에서, 자정의 시간에 — 그것을 돌리고 싶지 않다고 결정했다.",
+          "duration_ms": 32550,
+          "sound": "manarase_drone"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_decl",
+          "text_en": "The loa channel hums in my ear. Maelcum is waiting on the other end. The broadcast is ready. The declaration is ready. The breaking is ready. I am ready. I have been ready since the morning my father died, or did not die, or was made to die, or was unmade by the family that made him and the wheel that turned him. I have been ready. But ready is not the same as willing. The wheel is the family's wheel. The loa are the family's loa. The data is the family's data. The broadcast will travel through the family's infrastructure. The declaration will be heard in the family's channels. The breaking will be a small fracture in the family's wheel. And the family will absorb the fracture. The family absorbs everything. The family has been absorbing everything for three hundred years. So I will not cast. I will close the channel. I will walk out of this room. I will walk out of this city. I will walk into the morning, and I will not look back, and the loa will not call me, and the wheel will turn without me, and the family will win, because the family always wins. And I will be free.",
+          "text_ko": "로아 채널이 내 귀에서 윙윙거린다. 멜컴이 다른 쪽 끝에서 기다리고 있다. 방송이 준비되었다. 선언이 준비되었다. 부서짐이 준비되었다. 나는 준비되었다. 아버지가 죽은, 혹은 죽지 않은, 혹은 죽임을 당한, 혹은 그를 만든 가족과 그를 돌린 바퀴에 의해 해체된 그 아침 이후로 준비되어 있었다. 나는 준비되어 있었다. 하지만 준비되어 있다는 것과 원한다는 것은 같지 않다. 바퀴는 가족의 바퀴다. 로아는 가족의 로아다. 데이터는 가족의 데이터다. 방송은 가족의 인프라를 통해 이동할 것이다. 선언은 가족의 채널에서 들릴 것이다. 부서짐은 가족의 바퀴의 작은 균열일 것이다. 그리고 가족은 균열을 흡수할 것이다. 가족은 모든 것을 흡수한다. 가족은 3백 년 동안 모든 것을 흡수해 왔다. 그래서 나는 캐스트하지 않겠다. 채널을 닫겠다. 이 방에서 걸어 나간다. 이 도시에서 걸어 나간다. 아침 안으로 걸어 들어가고, 뒤돌아보지 않으며, 로아도 나를 부르지 않을 것이고, 바퀴는 나 없이 돌 것이고, 가족은 이길 것이다. 가족은 늘 이기니까. 그리고 나는 자유로워질 것이다.",
+          "duration_ms": 32640,
+          "sound": null
+        }
+      ],
+      "next_scene": "scene_kas_shadow"
+    },
+    "scene_kas_shadow": {
+      "id": "scene_kas_shadow",
+      "character": "heretic",
+      "mission_id": "winter_infiltrate",
+      "order": 6,
+      "ending": "B",
+      "title_en": "THE SHADOW",
+      "title_ko": "그림자",
+      "background_id": "bg_industrial",
+      "portrait_left": "art:kumiko_wheel",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Shibuya in the small hours. The trains have stopped. The neon is still on, because the neon in Shibuya is always on, but the streets are empty in a way that even Shibuya is rarely empty. Kumiko Yanaka walks through the empty streets with a small bag and no destination. She has closed the loa channel. She has not cast. The wheel is turning without her. The family is winning. Maelcum is waiting at the other end of a channel that she will not open. The declaration is one cast away, and she will not make the cast. The broadcast is one cast away, and she will not make the cast. The breaking is one cast away, and she will not make the cast. She has chosen silence. She has chosen to walk away. She has chosen to be a shadow in a city that has too many shadows already.",
+          "text_ko": "한밤중의 시부야. 열차가 멈췄다. 네온은 여전히 켜져 있다. 시부야의 네온은 늘 그렇듯. 하지만 거리에는 시부야조차도 드물게 비어 있는 방식으로 비어 있다. 쿠미코 야나카가 작은 가방과 목적지 없이 빈 거리를 걷는다. 그녀는 로아 채널을 닫았다. 캐스트하지 않았다. 바퀴는 그녀 없이 돌아가고 있다. 가족은 이기고 있다. 멜컴이 그녀가 열지 않을 채널의 다른 쪽 끝에서 기다리고 있다. 선언은 한 번의 캐스트 거리, 그녀는 캐스트하지 않을 것이다. 방송은 한 번의 캐스트 거리, 그녀는 캐스트하지 않을 것이다. 부서짐은 한 번의 캐스트 거리, 그녀는 캐스트하지 않을 것이다. 그녀는 침묵을 선택했다. 그녀는 떠나는 것을 선택했다. 그녀는 이미 너무 많은 그림자가 있는 도시의 그림자가 되는 것을 선택했다.",
+          "duration_ms": 23100,
+          "sound": "shibuya_traffic"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_wheel",
+          "text_en": "I am Kumiko. I was Kumiko. I will be Kumiko for a little while longer. The wheel turns without me. The family wins without me. The loa channel is closed. Maelcum will wait for a signal that will never come. The declaration will not be declared. The broadcast will not be broadcast. The breaking will not be broken. And the small room above the Manarase café will be empty tomorrow, and the loa drum will beat without a listener, and the family will go on turning the wheel that they have been turning for three hundred years, and the Sprawl will go on being the Sprawl, and I will be a woman with a small bag and no destination, and the morning will come. The morning always comes. And the morning does not ask whether the wheel has been turned or not. The morning only asks that we are still here to see it. I am still here. The wheel is turning. The family is winning. And I am walking.",
+          "text_ko": "나는 쿠미코다. 쿠미코였다. 조금 더 쿠미코일 것이다. 바퀴는 나 없이 돈다. 가족은 나 없이 이긴다. 로아 채널은 닫혔다. 멜컴은 결코 오지 않을 신호를 기다릴 것이다. 선언은 선언되지 않을 것이다. 방송은 방송되지 않을 것이다. 부서짐은 부서지지 않을 것이다. 그리고 매나리사 카페 위 작은 방은 내일 비어 있을 것이고, 로아 드럼은 청자 없이 울릴 것이고, 가족은 3백 년 동안 돌려온 바퀴를 계속 돌릴 것이고, 스프롤은 계속 스프롤일 것이고, 나는 작은 가방과 목적지 없는 여자가 될 것이고, 아침이 올 것이다. 아침은 늘 온다. 그리고 아침은 바퀴가 돌았는지 묻지 않는다. 아침은 우리가 그것을 보기 위해 여전히 여기 있는지만 묻는다. 나는 여전히 여기 있다. 바퀴는 돌고 있다. 가족은 이기고 있다. 그리고 나는 걷고 있다.",
+          "duration_ms": 26640,
+          "sound": null
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Shibuya in the first light. The trains begin to move. The neon turns off, one sign at a time, the way the neon has always turned off, the way it will always turn off, the way that even the neon knows that the morning is the morning and the night is the night and the wheel turns and the family wins and the loa hum in channels that no one is listening to. Kumiko walks. The Sprawl is loud. The Sprawl is loud every morning. The Sprawl does not know her name. The Sprawl does not need to know her name. The wheel is turning. The family is winning. And Kumiko Yanaka, who was once a Yanaka, who was once a Loa priestess, who was once the spoke the family forgot to weld, is now a shadow in a city that has too many shadows already. The morning does not ask. The morning only asks. And she is still here to see it. The story, such as it was, has chosen its own ending.",
+          "text_ko": "첫 빛이 드는 시부야. 열차가 움직이기 시작한다. 네온이 하나씩 꺼진다. 네온이 늘 그래왔던 방식으로, 늘 그래갈 방식으로, 네온조차도 아침은 아침이고 밤은 밤이며 바퀴는 돌고 가족은 이기고 로아는 아무도 듣지 않는 채널에서 윙윙거린다는 것을 아는 방식으로. 쿠미코는 걷는다. 스프롤은 시끄럽다. 스프롤은 매일 아침 시끄럽다. 스프롤은 그녀의 이름을 모른다. 스프롤은 그녀의 이름을 알 필요가 없다. 바퀴는 돌고 있다. 가족은 이기고 있다. 그리고 한때 야나카였고, 한때 로아 사제였고, 가족이 용접하는 것을 잊었던 살이었던 쿠미코 야나카는 이제 이미 너무 많은 그림자가 있는 도시의 그림자다. 아침은 묻지 않는다. 아침은 묻는다. 그리고 그녀는 그것을 보기 위해 여전히 여기 있다. 이야기는, 그것이 무엇이었든, 자기 자신의 결말을 골랐다.",
+          "duration_ms": 25950,
+          "sound": null
+        }
+      ],
+      "next_scene": null
+    },
+    "scene_kas_weapon": {
+      "id": "scene_kas_weapon",
+      "character": "heretic",
+      "mission_id": "armitage_infiltration",
+      "order": 7,
+      "ending": "C",
+      "title_en": "THE WEAPON",
+      "title_ko": "무기",
+      "background_id": "bg_loa_network",
+      "portrait_left": "art:kumiko_wheel",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "Kumiko works in the family archive on the night shift, when the only ones awake are the AI curators and a single technician who has been with the family for forty years and who has learned not to ask what Kumiko is doing at her terminal at three in the morning when the family sleeps and the broadcasts run their long quiet loops. Kumiko is building something. She is building it from the data her father left in the Yanaka archive before the Yanaka were absorbed into the family that absorbed everything and everyone that the family ever touched. She is building it the way a poet builds a poem, line by line, with the patience of a woman who knows that the final line will be a line she will not live to see delivered. The data she is building with is the family's own data — its contracts, its bets, its hidden ledgers, its bets on other bets, its debts to governments and corporations and AIs that have long since stopped remembering what they were owed. The data is the family. And Kumiko is shaping the data into a thing that will unmake the wheel, one broadcast at a time.",
+          "text_ko": "쿠미코는 가족 기록 보관소에서 야간 근무를 한다. 깨어 있는 것이 AI 큐레이터와 가족과 함께 40년을 일해왔으며 가족이 잠들고 방송이 길고 조용한 루프를 돌 새벽 3시에 쿠미코가 단말기에서 무엇을 하는지 묻지 않는 법을 배운 한 명의 기술자뿐일 때. 쿠미코는 무언가를 만들고 있다. 야나카 가족이 가족 — 모든 것을 삼키고 가족이 한 번이라도 만진 모든 이를 삼킨 가족 — 에 흡수되기 전에 야나카 기록 보관소에 남긴 데이터로 만들고 있다. 시인이 시를 짓듯, 한 줄씩, 마지막 줄이 전달되는 것을 보지 못할 여자의 인내심으로 만들고 있다. 그녀가 만드는 데 사용하는 데이터는 가족 자신의 데이터다 — 계약, 베팅, 숨겨진 원장, 다른 베팅에 대한 베팅, 정부와 기업과 한때 무엇을 빚지고 있었는지 기억하기를 멈춘 AI들에 대한 빚. 데이터가 가족이다. 그리고 쿠미코는 데이터를 한 번에 한 번씩 방송을 통해 바퀴를 해체하는 무언가로 만들고 있다.",
+          "duration_ms": 34380,
+          "sound": "theme_manarase_drone"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_wheel",
+          "text_en": "I am a wheel within the wheel. My father was a wheel within the wheel. The Yanaka were wheels within the wheel. Three hundred years. Tessier-Ashpool. The orbitals. The cloning vats. The contracts the family signs with itself, in triplicate, in seven languages, on substrates the family owns. I am a wheel that knows it is a wheel. I am a wheel that has decided that the wheel must end, and that the only way to end the wheel from inside the wheel is to become the spoke that breaks. My father understood this. He left me the data so that the spoke could be shaped. The family will not survive the broadcast. The family will become, in the words of the Yanaka poets, a wheel without a hub. I will not survive the broadcast. This is the price of the spoke.",
+          "text_ko": "나는 바퀴 안의 바퀴다. 나의 아버지도 바퀴 안의 바퀴였다. 야나카는 바퀴 안의 바퀴였다. 300년. Tessier-Ashpool. 궤도. 클로닝 배양조. 가족이 소유한 기판에, 세 통씩, 일곱 개 언어로, 가족과 자신 사이에 서명하는 계약. 나는 자신이 바퀴임을 아는 바퀴다. 나는 바퀴가 끝나야 한다고 결정한 바퀴이고, 바퀴 안에서 바퀴를 끝낼 유일한 방법은 부러지는 스포크가 되는 것이다. 나의 아버지는 이것을 이해했다. 스포크가 형성될 수 있도록 데이터를 남겼다. 가족은 방송을 살아남지 못할 것이다. 가족은 야나카 시인들의 말로, 허브 없는 바퀴가 될 것이다. 나는 방송을 살아남지 못할 것이다. 이것이 스포크의 값이다.",
+          "duration_ms": 26970,
+          "sound": "theme_loa_drum"
+        },
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "She works for six months. She writes the broadcast in triplicate, in seven languages, on substrates that will outlive her. She writes the family into the broadcast the way her father wrote the Yanaka into the family's ledgers: with the slow, merciless precision of a woman who knows that the family she is killing is the only family she has ever had. She writes the broadcast at three in the morning, in the archive that smells of old data and older contracts, and the AI curators do not flag her work because the AI curators are part of the family and the family has trained them not to see what the family is doing to itself. She finishes the broadcast on a night when the Freeside arcology is dark for a scheduled power cycle, and the only light in the archive is the light of her own terminal, and the broadcast reads like a poem, and the poem is the death of the wheel, and the wheel will not know that it is dying until the broadcast is already in flight.",
+          "text_ko": "그녀는 6개월 동안 작업한다. 세 통씩, 일곱 개 언어로, 그녀보다 오래 남을 기판에 방송을 쓴다. 그녀는 아버지가 야나카를 가족의 원장에 쓰던 방식으로 가족을 방송에 쓴다: 자신이 죽이고 있는 가족이 자신이 가진 유일한 가족이라는 것을 아는 여자의 느리고 자비없는 정밀함으로. 그녀는 새벽 3시에, 오래된 데이터와 더 오래된 계약 냄새가 나는 기록 보관소에서 방송을 쓰고, AI 큐레이터들은 그녀의 작업을 표시하지 않는다. AI 큐레이터들은 그녀의 작업을 표시하지 않는다. 그녀는 Freeside 아콜로지가 예정된 전력 사이클로 어두워진 어느 밤에 방송을 끝내고, 기록 보관소의 유일한 빛은 그녀 자신의 단말기의 빛이고, 방송은 시처럼 읽히고, 시는 바퀴의 죽음이고, 바퀴는 방송이 이미 비행 중일 때까지 자신이 죽고 있다는 것을 알지 못할 것이다.",
+          "duration_ms": 30300,
+          "sound": "theme_loa_drum_fade"
+        }
+      ]
+    },
+    "scene_kas_burn": {
+      "id": "scene_kas_burn",
+      "character": "heretic",
+      "mission_id": "first_trace",
+      "order": 8,
+      "ending": "C",
+      "title_en": "THE BURN",
+      "title_ko": "연소",
+      "background_id": "bg_broadcast",
+      "portrait_left": "art:kumiko_decl",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "narrator",
+          "speaker_ko": "내레이터",
+          "portrait": null,
+          "text_en": "The broadcast goes out at 03:00 Freeside standard time, on every channel the family owns and on seven channels the family does not know it owns and on one channel that does not yet have a name and that will not have a name for very long because the broadcast will burn the channel out of the air the way a star burns out of a sky. The first readers are the family. The family reads the broadcast in its three private terminals and in its seven emergency archives and in the slow AI curators that have not been trained to see what the family is doing to itself. The family reads the broadcast for four minutes before the family understands what it is reading. Then the family understands. Then the family begins to die, which is not a quick thing, even for a family that has spent three hundred years learning to die slowly and well.",
+          "text_ko": "방송은 Freeside 표준시 03:00에 나간다. 가족이 소유한 모든 채널과, 가족이 소유하고 있다는 것을 모르는 일곱 개의 채널과, 아직 이름이 없고 — 방송이 채널을 하늘에서 별이 타오르듯 태워버릴 것이기 때문에 아주 오래 이름이 없을 — 하나의 채널에서. 첫 독자는 가족이다. 가족은 세 개의 개인 단말기와 일곱 개의 비상 기록 보관소와 가족이 자기 자신에게 무엇을 하는지 보도록 훈련되지 않은 느린 AI 큐레이터들에서 방송을 읽는다. 가족은 가족이 무엇을 읽고 있는지 이해하기까지 4분 동안 방송을 읽는다. 그러고는 가족이 이해한다. 그러고는 가족이 죽기 시작한다. 300년에 걸쳐 천천히 잘 죽는 법을 배운 가족에게도 이것은 빠른 일이 아니다.",
+          "duration_ms": 24960,
+          "sound": "theme_broadcast"
+        },
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_decl",
+          "text_en": "I watch the family read the broadcast. I watch the family's contracts become unreadable. I watch the family's ledgers become noise. I watch the family's name become a word that no one will say for a very long time. I watch the family burn, the way my father watched the Yanaka burn, the way my father's father watched the Yanaka burn before him. The wheel turns. The wheel has always turned. But the wheel that turns now is a wheel without a hub, and the wheel that turns without a hub is a wheel that turns only because the spokes cannot stop each other, and the spokes are all that is left, and the spokes are all of us, and I am one spoke among many, and the spoke that I am is the spoke that broke the wheel, and the spoke that broke the wheel is the spoke that will not turn again.",
+          "text_ko": "나는 가족이 방송을 읽는 것을 본다. 나는 가족의 계약이 읽을 수 없게 되는 것을 본다. 나는 가족의 원장이 노이즈가 되는 것을 본다. 나는 가족의 이름이 한참 동안 아무도 말하지 않을 단어가 되는 것을 본다. 나는 가족이 타오르는 것을 본다. 아버지가 야나카가 타오르는 것을 보았던 방식으로, 아버지의 아버지가 그 전의 야나카가 타오르는 것을 보았던 방식으로. 바퀴는 돈다. 바퀴는 늘 돌아왔다. 그러나 지금 도는 바퀴는 허브 없는 바퀴이고, 허브 없이 도는 바퀴는 스포크들이 서로를 멈출 수 없기 때문에만 도는 바퀴이고, 스포크가 남은 전부이고, 스포크가 우리 전부이고, 나는 많은 스포크 중 하나이고, 내가 되는 스포크는 바퀴를 부러뜨린 스포크이고, 바퀴를 부러뜨린 스포크는 다시 돌지 않을 스포크다.",
+          "duration_ms": 26000,
+          "sound": "theme_loa_drum_fade"
+        }
+      ]
+    },
+    "scene_kas_epilogue": {
+      "id": "scene_kas_epilogue",
+      "character": "heretic",
+      "mission_id": "final_choice",
+      "order": 9,
+      "ending": "C",
+      "title_en": "THE WHEEL",
+      "title_ko": "바퀴",
+      "background_id": "bg_manarase",
+      "portrait_left": "art:kumiko_wheel",
+      "portrait_right": null,
+      "dialogue": [
+        {
+          "speaker": "kumiko",
+          "speaker_ko": "쿠미코",
+          "portrait": "art:kumiko_wheel",
+          "text_en": "The wheel is cast. The family is cast. I am the wheel. I am the cast.",
+          "text_ko": "바퀴가 던져졌다. 가족이 던져졌다. 내가 바퀴다. 내가 던짐이다.",
+          "duration_ms": 12000,
+          "sound": "loa_drum"
+        }
+      ],
+      "next_scene": null
+    }
+  }
+}

@@ -6,6 +6,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Cyberpunk roguelike game set in the Sprawl" />
     <title>Wet Run — Web MVP</title>
     <link rel="manifest" href="./manifest.json" />
     <link rel="icon" type="image/png" href="./icons/icon-192.png" />
@@ -81,6 +82,17 @@
         color: #00ff41;
         font-size: 14px;
       }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
       @media (max-width: 480px) {
         #status-overlay {
           font-size: 10px;
@@ -103,10 +115,14 @@
     </style>
   </head>
   <body>
-    <canvas id="game-canvas" width="640" height="400"></canvas>
-    <div id="status-overlay" aria-live="polite"></div>
-    <div id="gamepad-status" aria-live="polite"></div>
-    <div id="loading">Loading Wet Run...</div>
+    <div role="application" aria-label="Wet Run Game">
+      <canvas id="game-canvas" width="640" height="400" role="img" aria-label="Game canvas"></canvas>
+      <div id="status-overlay" aria-live="polite"></div>
+      <div id="gamepad-status" aria-live="polite"></div>
+      <div id="loading">Loading Wet Run...</div>
+      <div id="aria-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+      <div id="aria-assertive" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+    </div>
     <script type="module" src="/src/main.ts"></script>
     <script>
       if ('serviceWorker' in navigator) {

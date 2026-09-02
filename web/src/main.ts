@@ -10,9 +10,7 @@ import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { GamepadInput, isGamepadConnected } from "./input/gamepad.ts";
 import { mountVirtualGamepad, updateProgramRow, isTouchDevice } from "./input/touch.ts";
-import { AudioManager, SFX_IDS } from "./audio/manager.ts";
 import { MENU_OPTIONS, renderMainMenu, renderStubScreen, type MenuOption } from "./renderer/menu.ts";
-import { renderSettingsScreen, getInitialSettingsState, type SettingsState, type SettingsField } from "./renderer/settings.ts";
 import { renderMatrix } from "./renderer/matrix.ts";
 import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
 import { composeCombatVfx, advanceVfxListBy, WEB_TICK_MS } from "./renderer/combat_vfx.ts";
@@ -33,11 +31,13 @@ import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
 import { save as saveToSlot, load as loadFromSlot, hasSave as slotHasSave, getSaveMeta } from "./save/storage.ts";
 import { getLayout, watchLayout, type Layout } from "./core/layout.ts";
-import { createPlayer, currentScene, currentDialogue, currentText, currentSpeaker, currentTitle, progress } from "./core/graphic_novel.ts";
-import { wrapTextForNovel, paginateLines, toRoman, computeTypedPageIndex } from "./core/graphic_novel_text.ts";
 import { craftItem, makeRecipesFromData, makeMaterialsFromData, type Recipe, type MaterialDef, makeInfoMarket } from "./core/crafting.ts";
 import { equipOn, DEFAULT_REGISTRY, EQUIP_SLOTS, makeLoadout } from "./core/equipment.ts";
 import type { InfoMarket } from "./core/info_market.ts";
+
+const loadStorySystem = () => import("./core/graphic_novel.ts");
+const loadAudioSystem = () => import("./audio/manager.ts");
+const loadSettingsRenderer = () => import("./renderer/settings.ts");
 
 import missionsData from "./data/missions.json" with { type: "json" };
 import programsData from "./data/programs.json" with { type: "json" };
@@ -140,7 +140,7 @@ class Game {
     private graphicNovelPlayer: import("./core/graphic_novel.ts").GraphicNovelPlayer | null = null;
     private graphicNovelState: GraphicNovelState | null = null;
     private gnLanguage: import("./core/graphic_novel_types.ts").Language = "en";
-    private settingsState: SettingsState;
+    private settingsState: import("./renderer/settings.ts").SettingsState | null = null;
     private _message: string = "";
 
     constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
@@ -157,7 +157,7 @@ class Game {
         this.recipes = makeRecipesFromData({});
         this.materials = makeMaterialsFromData({});
         this.infoMarket = makeInfoMarket({});
-        this.settingsState = getInitialSettingsState();
+        this.settingsState = null;
         void this.refreshSaveCache();
         const handler = (action: GameAction): void => {
             if (
@@ -205,25 +205,27 @@ class Game {
             })();
             const previous = this.state;
             this.state = applyAction(this.state, resolved);
-            const audio = AudioManager.getInstance();
-            if (resolved.type === "use_program" && previous.phase === "combat" && this.state.phase === "combat") {
-                const iceDelta = this.state.ice.hp - previous.ice.hp;
-                if (iceDelta < 0) {
-                    audio.playSfx(SFX_IDS.COMBAT_HIT);
-                    if (previous.bossPhase > 0 && this.state.bossPhase > previous.bossPhase) {
-                        audio.playSfx(SFX_IDS.VICTORY);
+            void loadAudioSystem().then((audio) => {
+                const manager = audio.AudioManager.getInstance();
+                if (resolved.type === "use_program" && previous.phase === "combat" && this.state?.phase === "combat") {
+                    const iceDelta = this.state.ice.hp - previous.ice.hp;
+                    if (iceDelta < 0) {
+                        manager.playSfx(audio.SFX_IDS.COMBAT_HIT);
+                        if (previous.bossPhase > 0 && this.state.bossPhase > previous.bossPhase) {
+                            manager.playSfx(audio.SFX_IDS.VICTORY);
+                        }
+                        this._lastIceHp = this.state.ice.hp;
+                        this._lastPlayerHp = this.state.player.hp;
                     }
-                    this._lastIceHp = this.state.ice.hp;
-                    this._lastPlayerHp = this.state.player.hp;
+                    if (previous.runPhase === "matrix" && this.state.runPhase === "combat") {
+                        manager.playSfx(audio.SFX_IDS.COMBAT_HIT);
+                    }
+                    const burnTickDmg = this.state.player.hp - previous.player.hp;
+                    if (burnTickDmg > 0 && previous.runPhase === "combat" && this.state.runPhase === "combat") {
+                        manager.playSfx(audio.SFX_IDS.DEFEAT);
+                    }
                 }
-                if (previous.runPhase === "matrix" && this.state.runPhase === "combat") {
-                    audio.playSfx(SFX_IDS.COMBAT_HIT);
-                }
-                const burnTickDmg = this.state.player.hp - previous.player.hp;
-                if (burnTickDmg > 0 && previous.runPhase === "combat" && this.state.runPhase === "combat") {
-                    audio.playSfx(SFX_IDS.DEFEAT);
-                }
-            }
+            });
             this.draw();
         };
         this.input.setHandler(handler);
@@ -450,70 +452,74 @@ class Game {
     }
 
     private initGraphicNovel(): void {
-        const player = createPlayer({ mode: "novice" });
-        this.graphicNovelPlayer = player;
-        this.graphicNovelState = {
-            player,
-            currentScene: currentScene(player),
-            currentText: currentText(player, this.gnLanguage),
-            isPaused: false,
-        };
+        void loadStorySystem().then((gn) => {
+            const player = gn.createPlayer({ mode: "novice" });
+            this.graphicNovelPlayer = player;
+            this.graphicNovelState = {
+                player,
+                currentScene: gn.currentScene(player),
+                currentText: gn.currentText(player, this.gnLanguage),
+                isPaused: false,
+            };
+            this.draw();
+        });
     }
 
     private renderGraphicNovel(): void {
         if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
-        const state = this.graphicNovelState;
-        const player = this.graphicNovelPlayer;
-        const scene = state.currentScene;
+        void loadStorySystem().then((gn) => {
+            void import("./core/graphic_novel_text.ts").then((gnText) => {
+                if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
+                const state = this.graphicNovelState;
+                const player = this.graphicNovelPlayer;
+                const scene = state.currentScene;
 
-        let grid = makeGrid(this.layout.cols, this.layout.rows);
+                let grid = makeGrid(this.layout.cols, this.layout.rows);
 
-        // Title
-        grid = setText(grid, 2, 1, "GRAPHIC NOVEL", PALETTE.GREEN_NEON);
+                grid = setText(grid, 2, 1, "GRAPHIC NOVEL", PALETTE.GREEN_NEON);
 
-        // Scene info
-        if (scene) {
-            const title = currentTitle(player, this.gnLanguage);
-            const speaker = currentSpeaker(player, this.gnLanguage);
-            grid = setText(grid, 2, 3, `Chapter: ${toRoman(scene.order)}`, PALETTE.GRAY_LIGHT);
-            grid = setText(grid, 2, 4, `Speaker: ${speaker}`, PALETTE.YELLOW_AMBER);
-            grid = setText(grid, 2, 5, `Title: ${title}`, PALETTE.GRAY_LIGHT);
-        }
+                if (scene) {
+                    const title = gn.currentTitle(player, this.gnLanguage);
+                    const speaker = gn.currentSpeaker(player, this.gnLanguage);
+                    grid = setText(grid, 2, 3, `Chapter: ${gnText.toRoman(scene.order)}`, PALETTE.GRAY_LIGHT);
+                    grid = setText(grid, 2, 4, `Speaker: ${speaker}`, PALETTE.YELLOW_AMBER);
+                    grid = setText(grid, 2, 5, `Title: ${title}`, PALETTE.GRAY_LIGHT);
+                }
 
-        // Dialogue text (wrapped)
-        const wrapped = wrapTextForNovel(state.currentText, { width: this.layout.cols - 4 });
-        const paginated = paginateLines(wrapped, 15);
-        const dialogueText = currentDialogue(player)?.text_en ?? null;
-        const typedChars = dialogueText !== null ? dialogueText.length : 0;
-        const pageIndex = computeTypedPageIndex(paginated, typedChars);
-        const page = paginated[pageIndex] ?? [];
+                const wrapped = gnText.wrapTextForNovel(state.currentText, { width: this.layout.cols - 4 });
+                const paginated = gnText.paginateLines(wrapped, 15);
+                const dialogueText = gn.currentDialogue(player)?.text_en ?? null;
+                const typedChars = dialogueText !== null ? dialogueText.length : 0;
+                const pageIndex = gnText.computeTypedPageIndex(paginated, typedChars);
+                const page = paginated[pageIndex] ?? [];
 
-        let y = 8;
-        for (const line of page) {
-            if (y >= this.layout.rows - 2) break;
-            grid = setText(grid, 2, y, line, PALETTE.FOREGROUND);
-            y += 1;
-        }
+                let y = 8;
+                for (const line of page) {
+                    if (y >= this.layout.rows - 2) break;
+                    grid = setText(grid, 2, y, line, PALETTE.FOREGROUND);
+                    y += 1;
+                }
 
-        // Status line
-        const progressValue = progress(player);
-        const statusText = state.isPaused ? "PAUSED" : "PLAYING";
-        grid = setText(
-            grid,
-            2,
-            this.layout.rows - 2,
-            `[${statusText}] Progress: ${Math.round(progressValue * 100)}%`,
-            PALETTE.GRAY_DARK,
-        );
-        grid = setText(
-            grid,
-            2,
-            this.layout.rows - 1,
-            "ENTER: skip dialogue | P: pause | ESC: exit",
-            PALETTE.GRAY_DARK,
-        );
+                const progressValue = gn.progress(player);
+                const statusText = state.isPaused ? "PAUSED" : "PLAYING";
+                grid = setText(
+                    grid,
+                    2,
+                    this.layout.rows - 2,
+                    `[${statusText}] Progress: ${Math.round(progressValue * 100)}%`,
+                    PALETTE.GRAY_DARK,
+                );
+                grid = setText(
+                    grid,
+                    2,
+                    this.layout.rows - 1,
+                    "ENTER: skip dialogue | P: pause | ESC: exit",
+                    PALETTE.GRAY_DARK,
+                );
 
-        this.renderer.render(grid, ["GRAPHIC NOVEL", "", ""]);
+                this.renderer.render(grid, ["GRAPHIC NOVEL", "", ""]);
+            });
+        });
     }
 
     private handlePreGameInput(action: GameAction): void {
@@ -559,51 +565,57 @@ class Game {
             return;
         }
         if (this.screen === "settings") {
-            const audio = AudioManager.getInstance();
-            const fields: ReadonlyArray<SettingsField> = ["bgm", "sfx", "mute"];
-            const idx = fields.indexOf(this.settingsState.selectedField);
-            if (action.type === "move_south") {
-                const nextIdx = (idx + 1) % fields.length;
-                const nextField = fields[nextIdx] ?? fields[0];
-                if (nextField) this.settingsState = { ...this.settingsState, selectedField: nextField };
-                this.draw();
-            } else if (action.type === "move_north") {
-                const prevIdx = (idx - 1 + fields.length) % fields.length;
-                const prevField = fields[prevIdx] ?? fields[0];
-                if (prevField) this.settingsState = { ...this.settingsState, selectedField: prevField };
-                this.draw();
-            } else if (action.type === "move_east") {
-                if (this.settingsState.selectedField === "bgm") {
-                    const v = (this.settingsState.bgmVolume + 0.1 > 1 ? 1 : Math.round((this.settingsState.bgmVolume + 0.1) * 10) / 10);
-                    this.settingsState = { ...this.settingsState, bgmVolume: v };
-                    audio.setBgmVolume(v);
-                } else if (this.settingsState.selectedField === "sfx") {
-                    const v = (this.settingsState.sfxVolume + 0.1 > 1 ? 1 : Math.round((this.settingsState.sfxVolume + 0.1) * 10) / 10);
-                    this.settingsState = { ...this.settingsState, sfxVolume: v };
-                    audio.setSfxVolume(v);
+            void loadAudioSystem().then(async (audio) => {
+                const manager = audio.AudioManager.getInstance();
+                const settingsModule = await loadSettingsRenderer();
+                if (this.settingsState === null) {
+                    this.settingsState = settingsModule.getInitialSettingsState();
                 }
-                this.draw();
-            } else if (action.type === "move_west") {
-                if (this.settingsState.selectedField === "bgm") {
-                    const v = (this.settingsState.bgmVolume - 0.1 < 0 ? 0 : Math.round((this.settingsState.bgmVolume - 0.1) * 10) / 10);
-                    this.settingsState = { ...this.settingsState, bgmVolume: v };
-                    audio.setBgmVolume(v);
-                } else if (this.settingsState.selectedField === "sfx") {
-                    const v = (this.settingsState.sfxVolume - 0.1 < 0 ? 0 : Math.round((this.settingsState.sfxVolume - 0.1) * 10) / 10);
-                    this.settingsState = { ...this.settingsState, sfxVolume: v };
-                    audio.setSfxVolume(v);
+                const fields: ReadonlyArray<"bgm" | "sfx" | "mute"> = ["bgm", "sfx", "mute"];
+                const idx = fields.indexOf(this.settingsState.selectedField);
+                if (action.type === "move_south") {
+                    const nextIdx = (idx + 1) % fields.length;
+                    const nextField = fields[nextIdx] ?? fields[0];
+                    if (nextField) this.settingsState = { ...this.settingsState, selectedField: nextField };
+                    this.draw();
+                } else if (action.type === "move_north") {
+                    const prevIdx = (idx - 1 + fields.length) % fields.length;
+                    const prevField = fields[prevIdx] ?? fields[0];
+                    if (prevField) this.settingsState = { ...this.settingsState, selectedField: prevField };
+                    this.draw();
+                } else if (action.type === "move_east") {
+                    if (this.settingsState.selectedField === "bgm") {
+                        const v = (this.settingsState.bgmVolume + 0.1 > 1 ? 1 : Math.round((this.settingsState.bgmVolume + 0.1) * 10) / 10);
+                        this.settingsState = { ...this.settingsState, bgmVolume: v };
+                        manager.setBgmVolume(v);
+                    } else if (this.settingsState.selectedField === "sfx") {
+                        const v = (this.settingsState.sfxVolume + 0.1 > 1 ? 1 : Math.round((this.settingsState.sfxVolume + 0.1) * 10) / 10);
+                        this.settingsState = { ...this.settingsState, sfxVolume: v };
+                        manager.setSfxVolume(v);
+                    }
+                    this.draw();
+                } else if (action.type === "move_west") {
+                    if (this.settingsState.selectedField === "bgm") {
+                        const v = (this.settingsState.bgmVolume - 0.1 < 0 ? 0 : Math.round((this.settingsState.bgmVolume - 0.1) * 10) / 10);
+                        this.settingsState = { ...this.settingsState, bgmVolume: v };
+                        manager.setBgmVolume(v);
+                    } else if (this.settingsState.selectedField === "sfx") {
+                        const v = (this.settingsState.sfxVolume - 0.1 < 0 ? 0 : Math.round((this.settingsState.sfxVolume - 0.1) * 10) / 10);
+                        this.settingsState = { ...this.settingsState, sfxVolume: v };
+                        manager.setSfxVolume(v);
+                    }
+                    this.draw();
+                } else if (action.type === "confirm") {
+                    if (this.settingsState.selectedField === "mute") {
+                        const muted = manager.toggleMute();
+                        this.settingsState = { ...this.settingsState, muted };
+                    }
+                    this.draw();
+                } else if (action.type === "jack_out") {
+                    this.screen = "menu";
+                    this.draw();
                 }
-                this.draw();
-            } else if (action.type === "confirm") {
-                if (this.settingsState.selectedField === "mute") {
-                    const muted = audio.toggleMute();
-                    this.settingsState = { ...this.settingsState, muted };
-                }
-                this.draw();
-            } else if (action.type === "jack_out") {
-                this.screen = "menu";
-                this.draw();
-            }
+            });
             return;
         }
     }
@@ -810,14 +822,19 @@ class Game {
                     ],
                 );
             } else if (this.screen === "settings") {
-                this.renderer.render(
-                    renderSettingsScreen(this.settingsState, this.layout.cols, this.layout.rows),
-                    [
-                        "SETTINGS",
-                        "",
-                        "Audio controls — volumes persist",
-                    ],
-                );
+                void loadSettingsRenderer().then((settingsModule) => {
+                    if (this.settingsState === null) {
+                        this.settingsState = settingsModule.getInitialSettingsState();
+                    }
+                    this.renderer.render(
+                        settingsModule.renderSettingsScreen(this.settingsState, this.layout.cols, this.layout.rows),
+                        [
+                            "SETTINGS",
+                            "",
+                            "Audio controls — volumes persist",
+                        ],
+                    );
+                });
             } else if (this.screen === "crafting") {
                 this.renderCraftingScreen();
             } else if (this.screen === "equipment") {
@@ -878,15 +895,17 @@ class Game {
         if (this._lastPhase === current) return;
         const previous = this._lastPhase;
         this._lastPhase = current;
-        const audio = AudioManager.getInstance();
-        audio.playPhase(current);
-        if (current === "victory" && previous !== "victory") {
-            audio.playSfx(SFX_IDS.VICTORY);
-        } else if (current === "defeat" && previous !== "defeat") {
-            audio.playSfx(SFX_IDS.DEFEAT);
-        } else if (current === "exit") {
-            audio.stopAllSfx();
-        }
+        void loadAudioSystem().then((audio) => {
+            const manager = audio.AudioManager.getInstance();
+            manager.playPhase(current);
+            if (current === "victory" && previous !== "victory") {
+                manager.playSfx(audio.SFX_IDS.VICTORY);
+            } else if (current === "defeat" && previous !== "defeat") {
+                manager.playSfx(audio.SFX_IDS.DEFEAT);
+            } else if (current === "exit") {
+                manager.stopAllSfx();
+            }
+        });
     }
 
     start(): void {
@@ -916,7 +935,9 @@ class Game {
         if (previous.phase === "combat" && this.state.phase === "combat") {
             const iceDelta = this.state.ice.hp - previous.ice.hp;
             if (iceDelta < 0) {
-                AudioManager.getInstance().playSfx(SFX_IDS.COMBAT_HIT);
+                void loadAudioSystem().then((audio) => {
+                    audio.AudioManager.getInstance().playSfx(audio.SFX_IDS.COMBAT_HIT);
+                });
             }
             this._lastIceHp = this.state.ice.hp;
             this._lastPlayerHp = this.state.player.hp;
@@ -1069,15 +1090,17 @@ function boot(): void {
     game.start();
     (window as unknown as { wetrun: Game }).wetrun = game;
 
-    const audio = AudioManager.getInstance();
-    AudioManager.unlockOnFirstGesture(() => {
-        audio.play();
-    });
-    document.addEventListener("keydown", (ev: KeyboardEvent) => {
-        if (ev.key === "m" || ev.key === "M") {
-            const muted = audio.toggleMute();
-            console.info(`[audio] BGM ${muted ? "muted" : "unmuted"} (M to toggle)`);
-        }
+    void loadAudioSystem().then((audio) => {
+        const manager = audio.AudioManager.getInstance();
+        audio.AudioManager.unlockOnFirstGesture(() => {
+            manager.play();
+        });
+        document.addEventListener("keydown", (ev: KeyboardEvent) => {
+            if (ev.key === "m" || ev.key === "M") {
+                const muted = manager.toggleMute();
+                console.info(`[audio] BGM ${muted ? "muted" : "unmuted"} (M to toggle)`);
+            }
+        });
     });
 
     // Gamepad connection monitoring

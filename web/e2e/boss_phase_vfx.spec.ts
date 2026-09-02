@@ -39,7 +39,7 @@ test("boss phase HUD badge appears when bossPhase > 0", async ({ page }) => {
 
   // State should be matrix now.
   const phase = await page.evaluate(() => {
-    const w = window as unknown as { wetrun?: { state?: { runPhase?: string } | null };
+    const w = window as unknown as { wetrun?: { state?: { runPhase?: string } | null } };
     return w.wetrun?.state?.runPhase;
   });
   expect(phase).toBe("matrix");
@@ -47,7 +47,7 @@ test("boss phase HUD badge appears when bossPhase > 0", async ({ page }) => {
   // Verify buildHudLines includes BOSS PHASE badge only when bossPhase > 0.
   // Since default watchdog isn't a boss, expect NO badge.
   const bossPhase = await page.evaluate(() => {
-    const w = window as unknown as { wetrun?: { state?: { bossPhase?: number } | null };
+    const w = window as unknown as { wetrun?: { state?: { bossPhase?: number } | null } };
     return w.wetrun?.state?.bossPhase;
   });
   expect(bossPhase).toBe(0);

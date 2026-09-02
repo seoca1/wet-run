@@ -298,6 +298,9 @@ export type {
   DialogueContext,
 } from "./dialogue.ts";
 
+/** Re-export i18n types (defined in i18n.ts). */
+export type { Language } from "./i18n.ts";
+
 /** Save slot — JSON-serializable subset of GameState. */
 export interface SaveSlot {
   readonly version: number; // schema version, bump on breaking changes

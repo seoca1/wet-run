@@ -171,7 +171,7 @@ describe("ESC/jack_out behavior consistency", () => {
       ...state,
       runPhase: "ending",
       phase: "victory",
-      endingChoice: "A",
+      endingChoice: "arc1_wage_slave",
     };
 
     const next = applyAction(state, KEYBOARD_MAPPING.Escape!);
@@ -242,7 +242,7 @@ describe("ESC/jack_out behavior consistency", () => {
       ...state,
       runPhase: "ending",
       phase: "victory",
-      endingChoice: "A",
+      endingChoice: "arc1_wage_slave",
     };
 
     const next = applyAction(state, KEYBOARD_MAPPING.Enter!);

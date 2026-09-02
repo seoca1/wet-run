@@ -148,3 +148,22 @@ function slugify(name: string): string {
     .replace(/[^a-z0-9]+/g, "_")
     .replace(/^_+|_+$/g, "");
 }
+
+export function hasMaterials(
+  recipes: ReadonlyArray<Recipe>,
+  recipeId: string,
+  inventory: Readonly<Record<string, number>>,
+): boolean {
+  const recipe = recipes.find((r) => r.itemId === recipeId);
+  if (recipe === undefined) return false;
+  
+  for (const [mat, need] of Object.entries(recipe.materials)) {
+    const have = inventory[mat] ?? 0;
+    if (have < need) return false;
+  }
+  return true;
+}
+
+export function getHubRecipes(recipes: ReadonlyArray<Recipe>): ReadonlyArray<string> {
+  return Object.freeze(recipes.filter((r) => r.ready).map((r) => r.itemId));
+}

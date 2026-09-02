@@ -105,6 +105,8 @@ export type ScreenKind =
   | "credits" // CREDITS screen (stub)
   | "help" // HELP screen (stub)
   | "hall_of_dead" // HALL OF DEAD (stub, deferred)
+  | "death_summary" // DEATH SUMMARY — jockey report after flatline
+  | "hall_of_dead_list" // HALL OF DEAD — deceased jockey archive (populated)
   | "endings" // ENDINGS browser (stub, deferred)
   | "stats" // STATS / Telemetry (stub, deferred)
   | "tutorial" // Tutorial overlay (Tier 5.5+ first-run onboarding)
@@ -166,6 +168,16 @@ export interface GameState {
   // Achievement tracking (string IDs of unlocked achievements)
   readonly unlockedAchievements: ReadonlyArray<string>;
   readonly achievementCredits: number;
+  // Death cycle (ADR-0040)
+  readonly deceasedJockeys: ReadonlyArray<import("./death_cycle.ts").DeceasedJockey>;
+  readonly lastDeathSummary: import("./death_cycle.ts").DeathSummary | null;
+  readonly totalRuns: number;
+  readonly totalDeaths: number;
+  readonly longestRunMinutes: number;
+  // Stage system (Phase 1-2)
+  readonly stageState: import("./stage_system.ts").StageState | null;
+  // Faction reputation (Phase 2-2)
+  readonly factionScores: import("./faction_reputation.ts").FactionScores;
 }
 
 /** Top-level run cycle phase (Tier 5+). */
@@ -252,8 +264,18 @@ export interface Matrix {
 /** Boss phase 0..4 (0 = no boss active). */
 export type BossPhase = 0 | 1 | 2 | 3 | 4;
 
-/** Ending variant chosen at run completion (29 total in Python, 3 here for MVP). */
-export type EndingChoice = "A" | "B" | "C";
+/** Ending variant (29 total across 5 arcs). */
+export type EndingChoice = 
+  | "arc1_wage_slave" | "arc1_first_blood" | "arc1_cowboy_up" | "arc1_cheap_death"
+  | "arc1_data_miner" | "arc1_ice_breaker" | "arc1_flatlined"
+  | "arc2_ghost_dancer" | "arc2_corporate_tool" | "arc2_silent_runner"
+  | "arc2_data_thief" | "arc2_construct_friend" | "arc2_flatlined_deep"
+  | "arc3_wintermute_agent" | "arc3_ta_insider" | "arc3_neutrality"
+  | "arc3_double_agent" | "arc3_zealot" | "arc3_sacrifice_play"
+  | "arc4_liberation_front" | "arc4_new_order" | "arc4_digital_exile"
+  | "arc4_corporate_victory" | "arc4_ai_merger"
+  | "arc5_neuromancer" | "arc5_sprawl_free" | "arc5_last_jockey"
+  | "arc5_sprawl_slave" | "arc5_unknown";
 
 /** Player inventory — credits, materials, and crafted/purchased programs. */
 export interface Inventory {
@@ -264,6 +286,17 @@ export interface Inventory {
 
 /** Re-export of the equipment loadout type alias (defined in equipment.ts). */
 export type { EquipmentLoadout } from "./equipment.ts";
+
+/** Re-export dialogue system types (defined in dialogue.ts). */
+export type {
+  DialogueNode,
+  DialogueChoice,
+  DialogueEffect,
+  DialogueCondition,
+  DialogueTree,
+  DialogueState,
+  DialogueContext,
+} from "./dialogue.ts";
 
 /** Save slot — JSON-serializable subset of GameState. */
 export interface SaveSlot {
@@ -296,7 +329,10 @@ export type GameAction =
   | { readonly type: "confirm" }
   | { readonly type: "cancel" }
   | { readonly type: "jack_out" }
-  | { readonly type: "cycle_target" };
+  | { readonly type: "cycle_target" }
+  | { readonly type: "trigger_death" }
+  | { readonly type: "select_restart"; readonly choice: import("./death_cycle.ts").RestartChoice }
+  | { readonly type: "view_hall_of_dead" };
 
 /** Input mapping — keyboard event → game action.
  *

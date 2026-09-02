@@ -1,76 +1,860 @@
 {
   "aleph_fragment": {
-    "arc": 4,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 5,
     "id": "aleph_fragment",
-    "matrix_seed": 555,
-    "primary_objective": {
-      "data_id": "aleph_data",
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
+    "title": "Aleph Fragment",
+    "fixer": "finn",
+    "arc": 4,
+    "zone": "deep",
+    "grade_min": 5,
+    "grade_max": 5,
     "rewards": {
       "credits": 4000,
       "materials": {
         "unique_construct": 1
       }
     },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.black",
-        "type": "defeat"
-      }
-    ],
-    "title": "Aleph Fragment",
-    "zone": "deep"
-  },
-  "angie_leopard_tracking": {
-    "arc": 3,
-    "fixer": "dixie",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "angie_leopard_tracking",
-    "matrix_seed": 335,
+    "matrix_seed": 555,
     "primary_objective": {
-      "data_id": "leopard_construct_story",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1700,
-      "materials": {
-        "memory_shard": 1,
-        "scrap_ice": 2
-      }
+      "type": "extract_data",
+      "data_id": "aleph_data"
     },
     "secondary_objectives": [
       {
-        "count": 1,
-        "enemy": "ice.loa_entity",
-        "type": "defeat"
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 2
       }
     ],
-    "title": "Angie's Leopard Tracking",
-    "zone": "deep"
+    "reward_credits": 1100,
+    "reward_tier": 4
+  },
+  "black_ice_dream": {
+    "id": "black_ice_dream",
+    "title": "Black Ice Dream",
+    "fixer": "finn",
+    "arc": 3,
+    "zone": "mid",
+    "grade_min": 3,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 2000,
+      "materials": {
+        "upgrade_t3": 1
+      }
+    },
+    "matrix_seed": 144,
+    "primary_objective": {
+      "type": "defeat",
+      "enemy": "ice.black",
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "blackice_core",
+        "count": 1
+      }
+    ],
+    "reward_credits": 300,
+    "reward_tier": 2
+  },
+  "craft_job": {
+    "id": "craft_job",
+    "title": "Craft Job",
+    "fixer": "finn",
+    "arc": 2,
+    "zone": "surface",
+    "grade_min": 1,
+    "grade_max": 5,
+    "rewards": {
+      "credits": 1000,
+      "materials": {
+        "upgrade_t2": 1
+      }
+    },
+    "matrix_seed": 256,
+    "primary_objective": {
+      "type": "craft_item",
+      "item_type": "program",
+      "tier_level": 1,
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "collect_material",
+        "material": "combat_module",
+        "count": 1
+      }
+    ],
+    "reward_credits": 300,
+    "reward_tier": 2
+  },
+  "data_retrieval": {
+    "id": "data_retrieval",
+    "title": "Data Retrieval",
+    "fixer": "finn",
+    "arc": 1,
+    "zone": "surface",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "matrix_seed": 705,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "data-retrieval"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 1
+      }
+    ],
+    "reward_credits": 75,
+    "reward_tier": 1
+  },
+  "delivery_to_finn": {
+    "id": "delivery_to_finn",
+    "title": "Delivery to Finn",
+    "fixer": "finn",
+    "arc": 1,
+    "zone": "surface",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "upgrade_t1": 1
+      }
+    },
+    "matrix_seed": 99,
+    "primary_objective": {
+      "type": "deliver_material",
+      "material": "data_fragment",
+      "count": 3
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "any",
+        "count": 1
+      }
+    ],
+    "reward_credits": 75,
+    "reward_tier": 1
+  },
+  "dixies_choice": {
+    "id": "dixies_choice",
+    "title": "Dixie's Choice",
+    "fixer": "finn",
+    "arc": 4,
+    "zone": "deep",
+    "grade_min": 4,
+    "grade_max": 5,
+    "rewards": {
+      "credits": 3500,
+      "materials": {
+        "data_fragment": 5
+      }
+    },
+    "matrix_seed": 935,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "dixies-choice"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 3
+      }
+    ],
+    "reward_credits": 600,
+    "reward_tier": 3
+  },
+  "dixies_offer": {
+    "id": "dixies_offer",
+    "title": "Dixie's Offer",
+    "fixer": "dixie",
+    "arc": 4,
+    "zone": "deep",
+    "grade_min": 4,
+    "grade_max": 5,
+    "rewards": {
+      "credits": 3000,
+      "materials": {
+        "construct_fragment": 1
+      }
+    },
+    "matrix_seed": 404,
+    "primary_objective": {
+      "type": "construct_unlock",
+      "construct_id": "dixie_flatline"
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "construct_memory",
+        "count": 1
+      }
+    ],
+    "reward_credits": 600,
+    "reward_tier": 3
+  },
+  "final_choice": {
+    "id": "final_choice",
+    "title": "The Final Choice",
+    "fixer": "finn",
+    "arc": 5,
+    "zone": "freeside",
+    "grade_min": 5,
+    "grade_max": 5,
+    "rewards": {
+      "credits": 5500,
+      "materials": {
+        "ending_token": 1
+      }
+    },
+    "matrix_seed": 666,
+    "primary_objective": {
+      "type": "final_job",
+      "variant": "A|B|C|D"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.boss",
+        "count": 1
+      }
+    ],
+    "reward_credits": 1100,
+    "reward_tier": 4
+  },
+  "first_contact": {
+    "id": "first_contact",
+    "title": "First Contact",
+    "fixer": "finn",
+    "arc": 2,
+    "zone": "surface",
+    "grade_min": 2,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "data_fragment": 3
+      }
+    },
+    "matrix_seed": 724,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "first-contact"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 2
+      }
+    ],
+    "reward_credits": 150,
+    "reward_tier": 1
+  },
+  "first_jack": {
+    "id": "first_jack",
+    "title": "First Jack",
+    "fixer": "finn",
+    "arc": 1,
+    "zone": "surface",
+    "grade_min": 1,
+    "grade_max": 1,
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "matrix_seed": 42,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "demo_file"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 1
+      }
+    ],
+    "reward_credits": 75,
+    "reward_tier": 1
+  },
+  "first_trace": {
+    "id": "first_trace",
+    "title": "First Trace",
+    "fixer": "finn",
+    "arc": 2,
+    "zone": "surface",
+    "grade_min": 2,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 800,
+      "materials": {
+        "data_fragment": 3
+      }
+    },
+    "matrix_seed": 55,
+    "primary_objective": {
+      "type": "trace_target",
+      "target_id": "finn_rival"
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "any",
+        "count": 1
+      }
+    ],
+    "reward_credits": 150,
+    "reward_tier": 1
+  },
+  "flatline_call": {
+    "id": "flatline_call",
+    "title": "Flatline's Call",
+    "fixer": "finn",
+    "arc": 2,
+    "zone": "deep",
+    "grade_min": 2,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "rom_fragment": 1
+      }
+    },
+    "matrix_seed": 73,
+    "primary_objective": {
+      "type": "collect_material",
+      "material": "rom_fragment",
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.construct",
+        "count": 1
+      }
+    ],
+    "reward_credits": 150,
+    "reward_tier": 1
+  },
+  "ice_run": {
+    "id": "ice_run",
+    "title": "Ice Run",
+    "fixer": "finn",
+    "arc": 1,
+    "zone": "surface",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 500,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "matrix_seed": 7,
+    "primary_objective": {
+      "type": "collect_material",
+      "material": "ice_shard",
+      "count": 5
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 2
+      }
+    ],
+    "reward_credits": 75,
+    "reward_tier": 1
+  },
+  "matrix_revelation": {
+    "id": "matrix_revelation",
+    "title": "Matrix Revelation",
+    "fixer": "sally",
+    "arc": 4,
+    "zone": "deep",
+    "grade_min": 4,
+    "grade_max": 5,
+    "rewards": {
+      "credits": 2800,
+      "materials": {
+        "data_fragment": 4
+      }
+    },
+    "matrix_seed": 228,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "matrix-revelation"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.revelation",
+        "count": 3
+      }
+    ],
+    "reward_credits": 600,
+    "reward_tier": 3
+  },
+  "mollys_market": {
+    "id": "mollys_market",
+    "title": "Molly's Market",
+    "fixer": "finn",
+    "arc": 2,
+    "zone": "surface",
+    "grade_min": 2,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "matrix_seed": 924,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "mollys-market"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.wisp",
+        "count": 2
+      }
+    ],
+    "reward_credits": 150,
+    "reward_tier": 1
+  },
+  "mollys_razor": {
+    "id": "mollys_razor",
+    "title": "Molly's Razor",
+    "fixer": "maas",
+    "arc": 3,
+    "zone": "core",
+    "grade_min": 3,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 2500,
+      "materials": {
+        "unique_program": 1
+      }
+    },
+    "matrix_seed": 201,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "molly_construct"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 1
+      }
+    ],
+    "reward_credits": 300,
+    "reward_tier": 2
+  },
+  "neuromancer_merger": {
+    "id": "neuromancer_merger",
+    "title": "Neuromancer Merger",
+    "fixer": "kumiko",
+    "arc": 5,
+    "zone": "freeside",
+    "grade_min": 5,
+    "grade_max": 6,
+    "rewards": {
+      "credits": 5000,
+      "materials": {
+        "data_fragment": 6
+      }
+    },
+    "matrix_seed": 939,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "neuromancer-merger"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.neuromancer",
+        "count": 3
+      }
+    ],
+    "reward_credits": 1100,
+    "reward_tier": 4
+  },
+  "neuromancer_whisper": {
+    "id": "neuromancer_whisper",
+    "title": "Neuromancer Whisper",
+    "fixer": "sally",
+    "arc": 3,
+    "zone": "deep",
+    "grade_min": 3,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "data_fragment": 3
+      }
+    },
+    "matrix_seed": 858,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "neuromancer-whisper"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.ai_whisper",
+        "count": 2
+      }
+    ],
+    "reward_credits": 300,
+    "reward_tier": 2
+  },
+  "sally_returns_arc3": {
+    "id": "sally_returns_arc3",
+    "title": "Sally Returns",
+    "fixer": "sally",
+    "arc": 3,
+    "zone": "freeside",
+    "grade_min": 3,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 2500,
+      "materials": {
+        "construct_fragment": 2
+      }
+    },
+    "matrix_seed": 7,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "construct_maas"
+    },
+    "secondary_objectives": [
+      {
+        "type": "negotiate",
+        "npc": "finn_construct"
+      }
+    ],
+    "reward_credits": 300,
+    "reward_tier": 2
+  },
+  "sally_sandii_3am": {
+    "id": "sally_sandii_3am",
+    "title": "Rose Hotel, 3AM",
+    "fixer": "finn",
+    "arc": 2,
+    "zone": "surface",
+    "grade_min": 2,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 1100,
+      "materials": {
+        "memory_chip": 1
+      }
+    },
+    "matrix_seed": 314,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "rose_construct"
+    },
+    "secondary_objectives": [
+      {
+        "type": "social",
+        "npc": "sally_younger"
+      }
+    ],
+    "reward_credits": 150,
+    "reward_tier": 1
+  },
+  "sense_net_tip": {
+    "id": "sense_net_tip",
+    "title": "Sense/Net Tip",
+    "fixer": "finn",
+    "arc": 2,
+    "zone": "surface",
+    "grade_min": 2,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 1200,
+      "materials": {
+        "upgrade_t2": 1
+      }
+    },
+    "matrix_seed": 77,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "sense_net_internal"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 2
+      }
+    ],
+    "reward_credits": 150,
+    "reward_tier": 1
+  },
+  "ta_heist": {
+    "id": "ta_heist",
+    "title": "T-A Heist",
+    "fixer": "ta_rep",
+    "arc": 3,
+    "zone": "core",
+    "grade_min": 4,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 3500,
+      "materials": {
+        "upgrade_t4": 1
+      }
+    },
+    "matrix_seed": 300,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "ta_300yr_data"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 2
+      }
+    ],
+    "reward_credits": 600,
+    "reward_tier": 3
+  },
+  "tutorial_maze": {
+    "id": "tutorial_maze",
+    "title": "Tutorial Maze",
+    "fixer": "finn",
+    "arc": 1,
+    "zone": "surface",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 300,
+      "materials": {
+        "data_fragment": 1
+      }
+    },
+    "matrix_seed": 382,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "tutorial-maze"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 1
+      }
+    ],
+    "reward_credits": 75,
+    "reward_tier": 1
+  },
+  "vegas_stakeout": {
+    "id": "vegas_stakeout",
+    "title": "Vegas Stakeout",
+    "fixer": "finn",
+    "arc": 3,
+    "zone": "deep",
+    "grade_min": 3,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 1800,
+      "materials": {
+        "data_fragment": 4
+      }
+    },
+    "matrix_seed": 952,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "vegas-stakeout"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.surveillance",
+        "count": 2
+      }
+    ],
+    "reward_credits": 300,
+    "reward_tier": 2
+  },
+  "voodoo_loa_encounter": {
+    "id": "voodoo_loa_encounter",
+    "title": "Voodoo Loa Encounter",
+    "fixer": "finn",
+    "arc": 4,
+    "zone": "deep",
+    "grade_min": 4,
+    "grade_max": 5,
+    "rewards": {
+      "credits": 3500,
+      "materials": {
+        "loa_fragment": 1
+      }
+    },
+    "matrix_seed": 444,
+    "primary_objective": {
+      "type": "defeat",
+      "enemy": "ice.loa",
+      "count": 1
+    },
+    "secondary_objectives": [
+      {
+        "type": "extract_data",
+        "data_id": "loa_fragment",
+        "count": 1
+      }
+    ],
+    "reward_credits": 600,
+    "reward_tier": 3
+  },
+  "watchdog_patrol": {
+    "id": "watchdog_patrol",
+    "title": "Watchdog Patrol",
+    "fixer": "finn",
+    "arc": 1,
+    "zone": "surface",
+    "grade_min": 1,
+    "grade_max": 1,
+    "rewards": {
+      "credits": 750,
+      "materials": {
+        "ice_shard": 2
+      }
+    },
+    "matrix_seed": 1337,
+    "primary_objective": {
+      "type": "defeat",
+      "enemy": "ice.watchdog",
+      "count": 2
+    },
+    "secondary_objectives": [
+      {
+        "type": "collect_material",
+        "material": "ice_shard",
+        "count": 3
+      }
+    ],
+    "reward_credits": 75,
+    "reward_tier": 1
+  },
+  "winter_infiltrate": {
+    "id": "winter_infiltrate",
+    "title": "Winter Infiltration",
+    "fixer": "sally",
+    "arc": 4,
+    "zone": "deep",
+    "grade_min": 4,
+    "grade_max": 5,
+    "rewards": {
+      "credits": 3200,
+      "materials": {
+        "data_fragment": 4
+      }
+    },
+    "matrix_seed": 859,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "winter-infiltrate"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.wintermute",
+        "count": 3
+      }
+    ],
+    "reward_credits": 600,
+    "reward_tier": 3
+  },
+  "yakuza_deal": {
+    "id": "yakuza_deal",
+    "title": "Yakuza Deal",
+    "fixer": "yakuza",
+    "arc": 2,
+    "zone": "mid",
+    "grade_min": 2,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 1500,
+      "materials": {
+        "upgrade_t2": 1
+      }
+    },
+    "matrix_seed": 88,
+    "primary_objective": {
+      "type": "deliver_material",
+      "material": "yakuza_token",
+      "count": 3
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.watchdog",
+        "count": 1
+      }
+    ],
+    "reward_credits": 150,
+    "reward_tier": 1
+  },
+  "zion_express": {
+    "id": "zion_express",
+    "title": "Zion Express",
+    "fixer": "kumiko",
+    "arc": 5,
+    "zone": "freeside",
+    "grade_min": 5,
+    "grade_max": 6,
+    "rewards": {
+      "credits": 4500,
+      "materials": {
+        "data_fragment": 5
+      }
+    },
+    "matrix_seed": 384,
+    "primary_objective": {
+      "type": "extract_data",
+      "data_id": "zion-express"
+    },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.zion_defense",
+        "count": 3
+      }
+    ],
+    "reward_credits": 1100,
+    "reward_tier": 4
   },
   "armitage_infiltration": {
-    "arc": 2,
-    "fixer": "ta_rep",
-    "grade_max": 3,
-    "grade_min": 2,
     "id": "armitage_infiltration",
-    "matrix_seed": 222,
-    "primary_objective": {
-      "data_id": "ta_internal_memo",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
+    "title": "Armitage's First Infiltration",
+    "fixer": "ta_rep",
+    "arc": 2,
+    "zone": "core",
+    "grade_min": 2,
+    "grade_max": 3,
     "rewards": {
       "credits": 1500,
       "materials": {
@@ -78,2285 +862,29 @@
         "wetware_data": 1
       }
     },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Armitage's First Infiltration",
-    "zone": "core"
-  },
-  "armitage_infiltration_2": {
-    "arc": 4,
-    "fixer": "armitage",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "armitage_infiltration_2",
-    "matrix_seed": 444,
-    "primary_objective": {
-      "data_id": "armitage_memory_v2",
-      "type": "extract_data"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2800,
-      "materials": {
-        "memory_shard": 1,
-        "refined_neural": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.corporate_guard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Armitage Infiltration II",
-    "zone": "mid"
-  },
-  "bama_statework": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "bama_statework",
-    "matrix_seed": 2024,
-    "primary_objective": {
-      "data_id": "bama_substrate_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4000,
-      "materials": {
-        "data_fragment": 8,
-        "urban_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "urban_megastructure_throughput",
-        "type": "audit"
-      },
-      {
-        "count": 1,
-        "target": "class_substrate_continuity_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "BAMA Statework",
-    "zone": "deep"
-  },
-  "beijing_memory_courier": {
-    "arc": 3,
-    "fixer": "chrome_teeth",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "beijing_memory_courier",
-    "matrix_seed": 480,
-    "primary_objective": {
-      "target": "straylight",
-      "type": "deliver_construct",
-      "window_hours": 24
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 4800,
-      "materials": {
-        "memory_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.watchdog",
-        "type": "evade"
-      }
-    ],
-    "title": "Beijing Memory Courier",
-    "zone": "core"
-  },
-  "bigend_laney_lunch": {
-    "arc": 1,
-    "fixer": "bigend",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "bigend_laney_lunch",
-    "matrix_seed": 0,
-    "pillar": "memory",
-    "primary_objective": {
-      "target": "blue_ant_contract",
-      "type": "data_analysis"
-    },
-    "rewards": {
-      "credits": 2500,
-      "materials": {
-        "yen": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Bigend Meets Laney",
-    "zone": "tokyo"
-  },
-  "bing_statework": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "bing_statework",
-    "matrix_seed": 2113,
-    "primary_objective": {
-      "data_id": "bing_supply_infrastructure",
-      "type": "audit"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1600,
-      "materials": {
-        "bing_chit": 1,
-        "data_fragment": 3
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "bing_supply_registry",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "class_substance_statework",
-        "type": "transmit"
-      }
-    ],
-    "title": "Bing Statework",
-    "zone": "surface"
-  },
-  "black_ice_dream": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "black_ice_dream",
-    "matrix_seed": 144,
-    "primary_objective": {
-      "count": 1,
-      "enemy": "ice.black",
-      "type": "defeat"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2000,
-      "materials": {
-        "upgrade_t3": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "data_id": "blackice_core",
-        "type": "extract_data"
-      }
-    ],
-    "title": "Black Ice Dream",
-    "zone": "mid"
-  },
-  "boone_tokyo_electronics_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "boone_tokyo_electronics_arc",
-    "matrix_seed": 2035,
-    "primary_objective": {
-      "data_id": "boone_tokyo_electronics_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "rewards": {
-      "credits": 3400,
-      "materials": {
-        "data_fragment": 6,
-        "tokyo_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "tokyo_electronics_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "aspirant_class_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Boone Tokyo-Electronics Arc",
-    "zone": "deep"
-  },
-  "bridge_scaffold": {
-    "arc": 3,
-    "fixer": "masahiko",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "bridge_scaffold",
-    "matrix_seed": 999,
-    "pillar": "purpose",
-    "primary_objective": {
-      "duration_sec": 1800,
-      "target": "bridge.integrity",
-      "type": "defend"
-    },
-    "rewards": {
-      "credits": 4000,
-      "materials": {
-        "smart_matter_shard": 1,
-        "upgrade_t2": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "target": "smart-matter.signature",
-        "type": "scan"
-      }
-    ],
-    "title": "Bridge Construct",
-    "zone": "deep"
-  },
-  "case_meets_cayce": {
-    "arc": 4,
-    "fixer": "bigend",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "case_meets_cayce",
-    "matrix_seed": 0,
-    "pillar": "identity",
-    "primary_objective": {
-      "target": "post_wintermute_substrate",
-      "type": "pattern_read"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "soho_pass": 1,
-        "yen": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Case Meets Cayce",
-    "zone": "soho"
-  },
-  "case_past_defend_chiba_memory": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "case_past_defend_chiba_memory",
-    "matrix_seed": 7003,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 4,
-      "wave_intensity": "tier_2"
-    },
-    "reward_credits": 560,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 2800,
-      "materials": {
-        "chiba_key": 1,
-        "shield_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 55,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Chiba Memory Defense",
-    "zone": "deep"
-  },
-  "case_past_dual_objective_dead_mans_chip": {
-    "arc": 1,
-    "fixer": "wintermute",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "case_past_dual_objective_dead_mans_chip",
-    "matrix_seed": 7004,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "dead_mans_chip"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 540,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1000,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5000,
-      "materials": {
-        "harvest_kit": 1,
-        "salvage_fragment": 2
-      }
-    },
-    "title": "Dead Man's Chip",
-    "zone": "deep"
-  },
-  "case_past_extract_linda_memory": {
-    "arc": 1,
-    "fixer": "wintermute",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "case_past_extract_linda_memory",
-    "matrix_seed": 7002,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "linda_memory",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 75,
-      "type": "extract_data"
-    },
-    "reward_credits": 440,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2200,
-      "materials": {
-        "t2_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.standard",
-        "min_evade": 2,
-        "type": "evade"
-      }
-    ],
-    "title": "Linda's Memory",
-    "zone": "deep"
-  },
-  "case_past_investigate_armitage_mind": {
-    "arc": 5,
-    "fixer": "wintermute",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "case_past_investigate_armitage_mind",
-    "matrix_seed": 7001,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "identity"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 360,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1800,
-      "materials": {
-        "case_memory": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Armitage's Mind",
-    "zone": "deep"
-  },
-  "cayce_footage_audit_run": {
-    "arc": 1,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "cayce_footage_audit_run",
-    "matrix_seed": 2003,
-    "primary_objective": {
-      "data_id": "footage_fragment_registry",
-      "type": "audit"
-    },
-    "rewards": {
-      "credits": 2100,
-      "materials": {
-        "data_fragment": 4,
-        "footage_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "footage_circulation_registry",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "coolhunter_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Cayce Footage Audit Run",
-    "zone": "deep"
-  },
-  "chevette_nightshift_run": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "chevette_nightshift_run",
-    "matrix_seed": 193,
-    "primary_objective": {
-      "data_id": "data_key_pickup",
-      "type": "extract_data"
-    },
-    "rewards": {
-      "credits": 400,
-      "materials": {
-        "data_fragment": 1,
-        "data_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "data_key_storage",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "fixie_bag",
-        "type": "deliver"
-      }
-    ],
-    "title": "Chevette Nightshift Run",
-    "zone": "surface"
-  },
-  "chevette_run": {
-    "arc": 1,
-    "fixer": "masahiko",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "chevette_run",
-    "matrix_seed": 555,
-    "primary_objective": {
-      "duration_sec": 600,
-      "target": "chevette.pedal",
-      "type": "protect"
-    },
-    "rewards": {
-      "credits": 2000,
-      "materials": {
-        "fixie_pedal": 1,
-        "memory_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "bridge.community",
-        "type": "deliver"
-      }
-    ],
-    "title": "Chevette Run",
-    "zone": "surface"
-  },
-  "chickenhead_rickshaw_run": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "chickenhead_rickshaw_run",
-    "matrix_seed": 1985,
-    "primary_objective": {
-      "data_id": "rickshaw_passenger_to_Chat",
-      "type": "deliver"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 500,
-      "materials": {
-        "data_fragment": 1,
-        "rickshaw_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "simstim_rickshaw_session",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "chickenhead_state_log",
-        "type": "transmit"
-      }
-    ],
-    "title": "Chickenhead Rickshaw Run",
-    "zone": "surface"
-  },
-  "construct_market": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "construct_market",
-    "matrix_seed": 480,
-    "primary_objective": {
-      "data_id": "construct_market_inventory",
-      "type": "extract"
-    },
-    "reward_credits": 450,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 450,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "market_watchdog",
-        "type": "defeat"
-      }
-    ],
-    "title": "Construct Market",
-    "zone": "surface"
-  },
-  "construct_memory_rescue": {
-    "arc": 5,
-    "fixer": "dixie_flatline",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "construct_memory_rescue",
-    "matrix_seed": 606,
-    "primary_objective": {
-      "construct_id": "dixie_archive",
-      "type": "rescue_construct"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 5500,
-      "materials": {
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.construct",
-        "type": "defeat"
-      }
-    ],
-    "title": "Construct Memory Rescue",
-    "zone": "core"
-  },
-  "coolhunter_laney_tokyo": {
-    "arc": 2,
-    "fixer": "bigend",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "coolhunter_laney_tokyo",
-    "matrix_seed": 0,
-    "pillar": "people",
-    "primary_objective": {
-      "target": "cayce_laney_exchange",
-      "type": "data_analysis"
-    },
-    "rewards": {
-      "credits": 2500,
-      "materials": {
-        "yen": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Coolhunter Meets Laney",
-    "zone": "tokyo"
-  },
-  "core_defend_data_citadel": {
-    "arc": 3,
-    "fixer": "3jane",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "core_defend_data_citadel",
-    "matrix_seed": 4902,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 5,
-      "wave_intensity": "tier_3"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5500,
-      "materials": {
-        "core_shard": 1,
-        "shield_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 55,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Data Citadel Defense",
-    "zone": "core"
-  },
-  "core_defend_eye_archive": {
-    "arc": 3,
-    "fixer": "sally",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "core_defend_eye_archive",
-    "matrix_seed": 8201,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 5,
-      "wave_intensity": "tier_3"
-    },
-    "reward_credits": 830,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4150,
-      "materials": {
-        "core_defend_eye_archive_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 55,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Eye Archive Defense",
-    "zone": "core"
-  },
-  "core_dual_objective_construct_heist": {
-    "arc": 3,
-    "fixer": "wintermute",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "core_dual_objective_construct_heist",
-    "matrix_seed": 4903,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "construct_kernel"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 540,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1700,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 8500,
-      "materials": {
-        "construct_key": 1,
-        "core_construct": 2
-      }
-    },
-    "title": "Construct Heist",
-    "zone": "core"
-  },
-  "core_dual_objective_mirror_run": {
-    "arc": 3,
-    "fixer": "bigend",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "core_dual_objective_mirror_run",
-    "matrix_seed": 8203,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "mirror_data"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 480,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 890,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4450,
-      "materials": {
-        "core_dual_objective_mirror_run_sample": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Mirror Run",
-    "zone": "core"
-  },
-  "core_extract_aeslin_key": {
-    "arc": 3,
-    "fixer": "bigend",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "core_extract_aeslin_key",
-    "matrix_seed": 4904,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "aeslin_key",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 110,
-      "type": "extract_data"
-    },
-    "reward_credits": 1500,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 7500,
-      "materials": {
-        "aeslin_key": 1,
-        "t5_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black_construct",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Aeslin Key Extraction",
-    "zone": "core"
-  },
-  "core_extract_neuromancer_signature": {
-    "arc": 3,
-    "fixer": "wintermute",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "core_extract_neuromancer_signature",
-    "matrix_seed": 8200,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "neuromancer_sig",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 80,
-      "type": "extract_data"
-    },
-    "reward_credits": 800,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4000,
-      "materials": {
-        "core_extract_neuromancer_signature_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 2,
-        "type": "evade"
-      }
-    ],
-    "title": "Neuromancer Signature",
-    "zone": "core"
-  },
-  "core_extract_payroll_archive": {
-    "arc": 3,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "core_extract_payroll_archive",
-    "matrix_seed": 8205,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "payroll_arch",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 105,
-      "type": "extract_data"
-    },
-    "reward_credits": 950,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4750,
-      "materials": {
-        "core_extract_payroll_archive_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 2,
-        "type": "evade"
-      }
-    ],
-    "title": "Payroll Archive",
-    "zone": "core"
-  },
-  "core_investigate_construct_council": {
-    "arc": 3,
-    "fixer": "masahiko",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "core_investigate_construct_council",
-    "matrix_seed": 8202,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 860,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4300,
-      "materials": {
-        "core_investigate_construct_council_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Construct Council",
-    "zone": "core"
-  },
-  "core_investigate_ice_lord": {
-    "arc": 3,
-    "fixer": "masahiko",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "core_investigate_ice_lord",
-    "matrix_seed": 4901,
-    "primary_objective": {
-      "evidence_required": 4,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment",
-        "identity"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 800,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4000,
-      "materials": {
-        "core_construct": 1,
-        "salvage_fragment": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 45,
-        "type": "avoid_combat"
-      },
-      {
-        "corruption_max": 0,
-        "type": "preserve_evidence"
-      }
-    ],
-    "title": "The Ice Lord's Audit",
-    "zone": "core"
-  },
-  "core_memory_dump": {
-    "arc": 5,
-    "fixer": "finn",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "core_memory_dump",
-    "matrix_seed": 505,
-    "primary_objective": {
-      "data_id": "core_memory_dump_payload",
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 7500,
-      "materials": {
-        "refined_neural": 2,
-        "unique_construct": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.construct",
-        "type": "defeat"
-      }
-    ],
-    "title": "Core Memory Dump",
-    "zone": "core"
-  },
-  "core_stealth_construct_pool": {
-    "arc": 3,
-    "fixer": "sally",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "core_stealth_construct_pool",
-    "matrix_seed": 8204,
-    "primary_objective": {
-      "data_id": "pool_data",
-      "detection_threshold": 35,
-      "no_combat_allowed": true,
-      "target_id": "core_stealth_construct_pool_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 920,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4600,
-      "materials": {
-        "core_stealth_construct_pool_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Construct Pool",
-    "zone": "core"
-  },
-  "core_stealth_eye_central": {
-    "arc": 3,
-    "fixer": "sally",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "core_stealth_eye_central",
-    "matrix_seed": 4905,
-    "primary_objective": {
-      "data_id": "eye_surveillance_archive",
-      "detection_threshold": 35,
-      "no_combat_allowed": true,
-      "target_id": "eye_central_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1400,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 7000,
-      "materials": {
-        "cloaking_program": 1,
-        "eye_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Eye Central Infiltration",
-    "zone": "core"
-  },
-  "cortex_hound_recovery": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 1,
-    "id": "cortex_hound_recovery",
-    "matrix_seed": 174,
-    "primary_objective": {
-      "data_id": "cortex_hound_repair_intake",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 850,
-      "materials": {
-        "clinic_chit": 1,
-        "data_fragment": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "l5_clinic_technician",
-        "type": "negotiate"
-      },
-      {
-        "count": 1,
-        "target": "nervous_system_diagnostic",
-        "type": "preserve"
-      }
-    ],
-    "title": "Cortex-Hound Recovery",
-    "zone": "surface"
-  },
-  "craft_job": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 1,
-    "id": "craft_job",
-    "matrix_seed": 256,
-    "primary_objective": {
-      "count": 1,
-      "item_type": "program",
-      "tier_level": 1,
-      "type": "craft_item"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1000,
-      "materials": {
-        "upgrade_t2": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "material": "combat_module",
-        "type": "collect_material"
-      }
-    ],
-    "title": "Craft Job",
-    "zone": "surface"
-  },
-  "data_retrieval": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "data_retrieval",
-    "matrix_seed": 705,
-    "primary_objective": {
-      "data_id": "data-retrieval",
-      "type": "extract_data"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 500,
-      "materials": {
-        "data_fragment": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "stage_flow": [
-      "briefing",
-      "travel",
-      "meet_npc",
-      "extract_data",
-      "black_market",
-      "jack_out",
-      "reward",
-      "complete"
-    ],
-    "title": "Data Retrieval",
-    "zone": "surface"
-  },
-  "delivery_to_finn": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "delivery_to_finn",
-    "matrix_seed": 99,
-    "primary_objective": {
-      "count": 3,
-      "material": "data_fragment",
-      "type": "deliver_material"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 800,
-      "materials": {
-        "upgrade_t1": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "data_id": "any",
-        "type": "extract_data"
-      }
-    ],
-    "title": "Delivery to Finn",
-    "zone": "surface"
-  },
-  "dixies_choice": {
-    "arc": 4,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "dixies_choice",
-    "matrix_seed": 935,
-    "primary_objective": {
-      "data_id": "dixies-choice",
-      "type": "extract_data"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "data_fragment": 5
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "enemy": "ice.construct",
-        "type": "defeat"
-      }
-    ],
-    "title": "Dixie's Choice",
-    "zone": "deep"
-  },
-  "dixies_offer": {
-    "arc": 4,
-    "fixer": "dixie",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "dixies_offer",
-    "matrix_seed": 404,
-    "primary_objective": {
-      "construct_id": "dixie_flatline",
-      "type": "construct_unlock"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3000,
-      "materials": {
-        "construct_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "data_id": "construct_memory",
-        "type": "extract_data"
-      }
-    ],
-    "title": "Dixie's Offer",
-    "zone": "deep"
-  },
-  "eurydice_arc": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "eurydice_arc",
-    "matrix_seed": 2032,
-    "primary_objective": {
-      "data_id": "eurydice_underground_daily",
-      "type": "audit"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1900,
-      "materials": {
-        "data_fragment": 4,
-        "underground_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "underground_operative_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "underground_class_image_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Eurydice Arc",
-    "zone": "surface"
-  },
-  "fido_statework": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "fido_statework",
-    "matrix_seed": 1984,
-    "primary_objective": {
-      "data_id": "fido_voice_output_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3800,
-      "materials": {
-        "data_fragment": 7,
-        "off_hours_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "fido_persona_programming",
-        "type": "audit"
-      },
-      {
-        "count": 1,
-        "target": "off_hours_ai_continuity_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Fido Statework",
-    "zone": "surface"
-  },
-  "final_choice": {
-    "arc": 5,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "final_choice",
-    "matrix_seed": 666,
-    "primary_objective": {
-      "type": "final_job",
-      "variant": "A|B|C|D"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 5500,
-      "materials": {
-        "ending_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.boss",
-        "type": "defeat"
-      }
-    ],
-    "title": "The Final Choice",
-    "zone": "freeside"
-  },
-  "finn_factory_labour_run": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "finn_factory_labour_run",
-    "matrix_seed": 1984,
-    "primary_objective": {
-      "data_id": "finn_labor_market_throughput",
-      "type": "audit"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2400,
-      "materials": {
-        "audit_chit": 1,
-        "data_fragment": 5
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "finn_match_registry",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "labor_market_continuity_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Finn's Factory Labour Run",
-    "zone": "surface"
-  },
-  "finn_final_reckoning": {
-    "arc": 5,
-    "fixer": "finn",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "finn_final_reckoning",
-    "matrix_seed": 556,
-    "primary_objective": {
-      "target": "finn_final_memory_drop",
-      "type": "deliver"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 9500,
-      "materials": {
-        "refined_neural": 3,
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice_ghost_grid",
-        "type": "defeat"
-      }
-    ],
-    "title": "Finn's Final Reckoning",
-    "zone": "freeside"
-  },
-  "first_contact": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "first_contact",
-    "matrix_seed": 724,
-    "primary_objective": {
-      "data_id": "first-contact",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 800,
-      "materials": {
-        "data_fragment": 3
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.construct",
-        "type": "defeat"
-      }
-    ],
-    "title": "First Contact",
-    "zone": "surface"
-  },
-  "first_jack": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 1,
-    "grade_min": 1,
-    "id": "first_jack",
-    "matrix_seed": 42,
-    "primary_objective": {
-      "data_id": "demo_file",
-      "type": "extract_data"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 500,
-      "materials": {
-        "data_fragment": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "First Jack",
-    "zone": "surface"
-  },
-  "first_trace": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 2,
-    "id": "first_trace",
-    "matrix_seed": 55,
-    "primary_objective": {
-      "target_id": "finn_rival",
-      "type": "trace_target"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 800,
-      "materials": {
-        "data_fragment": 3
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "data_id": "any",
-        "type": "extract_data"
-      }
-    ],
-    "title": "First Trace",
-    "zone": "surface"
-  },
-  "flatline_call": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "flatline_call",
-    "matrix_seed": 73,
-    "primary_objective": {
-      "count": 1,
-      "material": "rom_fragment",
-      "type": "collect_material"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1200,
-      "materials": {
-        "rom_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.construct",
-        "type": "defeat"
-      }
-    ],
-    "title": "Flatline's Call",
-    "zone": "deep"
-  },
-  "freeside_defend_orbit_habitat": {
-    "arc": 4,
-    "fixer": "3jane",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "freeside_defend_orbit_habitat",
-    "matrix_seed": 8301,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 5,
-      "wave_intensity": "tier_4"
-    },
-    "reward_credits": 1240,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6200,
-      "materials": {
-        "freeside_defend_orbit_habitat_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 55,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Orbit Habitat Defense",
-    "zone": "freeside"
-  },
-  "freeside_defend_orbital_habitat": {
-    "arc": 4,
-    "fixer": "3jane",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "freeside_defend_orbital_habitat",
-    "matrix_seed": 5002,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 5,
-      "wave_intensity": "tier_4"
-    },
-    "reward_credits": 1300,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6500,
-      "materials": {
-        "freeside_shard": 1,
-        "shield_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 50,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Orbital Habitat Defense",
-    "zone": "freeside"
-  },
-  "freeside_dual_objective_construct_pod_2": {
-    "arc": 4,
-    "fixer": "neuromancer",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_dual_objective_construct_pod_2",
-    "matrix_seed": 8306,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "pod_data_2"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 540,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1440,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 7200,
-      "materials": {
-        "freeside_dual_objective_construct_pod_2_sample": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Construct Pod 2",
-    "zone": "freeside"
-  },
-  "freeside_dual_objective_jockey_pod": {
-    "arc": 4,
-    "fixer": "neuromancer",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_dual_objective_jockey_pod",
-    "matrix_seed": 8303,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "pod_data"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 480,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1320,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6600,
-      "materials": {
-        "freeside_dual_objective_jockey_pod_sample": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Jockey Pod",
-    "zone": "freeside"
-  },
-  "freeside_dual_objective_space_jockey": {
-    "arc": 4,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_dual_objective_space_jockey",
-    "matrix_seed": 5003,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "space_jockey_memory"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 540,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1900,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 9500,
-      "materials": {
-        "construct_key": 1,
-        "freeside_construct": 2
-      }
-    },
-    "title": "Space Jockey Extraction",
-    "zone": "freeside"
-  },
-  "freeside_extract_construct_archive": {
-    "arc": 4,
-    "fixer": "neuromancer",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "freeside_extract_construct_archive",
-    "matrix_seed": 8309,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "archive_data",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 110,
-      "type": "extract_data"
-    },
-    "reward_credits": 1560,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 7800,
-      "materials": {
-        "freeside_extract_construct_archive_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black_construct",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Construct Archive",
-    "zone": "freeside"
-  },
-  "freeside_extract_construct_pod": {
-    "arc": 4,
-    "fixer": "neuromancer",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_extract_construct_pod",
-    "matrix_seed": 5004,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "construct_pod",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 100,
-      "type": "extract_data"
-    },
-    "reward_credits": 2400,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 12000,
-      "materials": {
-        "freeside_construct": 1,
-        "t5_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black_construct",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Construct Pod Extraction",
-    "zone": "freeside"
-  },
-  "freeside_extract_orbital_data": {
-    "arc": 4,
-    "fixer": "masahiko",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "freeside_extract_orbital_data",
-    "matrix_seed": 8300,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "orbital_data_1",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 95,
-      "type": "extract_data"
-    },
-    "reward_credits": 1200,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6000,
-      "materials": {
-        "freeside_extract_orbital_data_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black_construct",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Orbital Data",
-    "zone": "freeside"
-  },
-  "freeside_extract_orbital_data_2": {
-    "arc": 4,
-    "fixer": "masahiko",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_extract_orbital_data_2",
-    "matrix_seed": 8305,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "orbital_data_2",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 100,
-      "type": "extract_data"
-    },
-    "reward_credits": 1400,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 7000,
-      "materials": {
-        "freeside_extract_orbital_data_2_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black_construct",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Orbital Data 2",
-    "zone": "freeside"
-  },
-  "freeside_investigate_construct_research": {
-    "arc": 4,
-    "fixer": "masahiko",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "freeside_investigate_construct_research",
-    "matrix_seed": 8302,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 1280,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6400,
-      "materials": {
-        "freeside_investigate_construct_research_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Construct Research",
-    "zone": "freeside"
-  },
-  "freeside_investigate_orbital_history": {
-    "arc": 4,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_investigate_orbital_history",
-    "matrix_seed": 8307,
-    "primary_objective": {
-      "evidence_required": 4,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 1480,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 7400,
-      "materials": {
-        "freeside_investigate_orbital_history_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 45,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Orbital History",
-    "zone": "freeside"
-  },
-  "freeside_investigate_orbital_sovereignty": {
-    "arc": 4,
-    "fixer": "masahiko",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "freeside_investigate_orbital_sovereignty",
-    "matrix_seed": 5001,
-    "primary_objective": {
-      "evidence_required": 4,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment",
-        "identity"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 1160,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 5800,
-      "materials": {
-        "orbital_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Orbital Sovereignty",
-    "zone": "freeside"
-  },
-  "freeside_payroll": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "freeside_payroll",
-    "matrix_seed": 303,
-    "primary_objective": {
-      "data_id": "freeside_payroll_audit",
-      "type": "extract_data"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2000,
-      "materials": {
-        "memory_shard": 1,
-        "refined_neural": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.corporate_guard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Freeside Payroll",
-    "zone": "freeside"
-  },
-  "freeside_stealth_construct_chamber": {
-    "arc": 4,
-    "fixer": "kumiko",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_stealth_construct_chamber",
-    "matrix_seed": 8308,
-    "primary_objective": {
-      "data_id": "chamber_data",
-      "detection_threshold": 35,
-      "no_combat_allowed": true,
-      "target_id": "freeside_stealth_construct_chamber_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1520,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 7600,
-      "materials": {
-        "freeside_stealth_construct_chamber_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Construct Chamber",
-    "zone": "freeside"
-  },
-  "freeside_stealth_orbit_lab": {
-    "arc": 4,
-    "fixer": "kumiko",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_stealth_orbit_lab",
-    "matrix_seed": 5005,
-    "primary_objective": {
-      "data_id": "lab_experiment_data",
-      "detection_threshold": 30,
-      "no_combat_allowed": true,
-      "target_id": "orbit_lab_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1700,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 8500,
-      "materials": {
-        "cloaking_program": 1,
-        "lab_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Orbit Lab Infiltration",
-    "zone": "freeside"
-  },
-  "freeside_stealth_orbit_lab_2": {
-    "arc": 4,
-    "fixer": "kumiko",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "freeside_stealth_orbit_lab_2",
-    "matrix_seed": 8304,
-    "primary_objective": {
-      "data_id": "lab_data_2",
-      "detection_threshold": 35,
-      "no_combat_allowed": true,
-      "target_id": "freeside_stealth_orbit_lab_2_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1360,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6800,
-      "materials": {
-        "freeside_stealth_orbit_lab_2_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Orbit Lab 2",
-    "zone": "freeside"
-  },
-  "fukuoka_ridership_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "fukuoka_ridership_arc",
-    "matrix_seed": 2031,
-    "primary_objective": {
-      "data_id": "fukuoka_ridership_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "data_fragment": 7,
-        "ridership_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "okinawan_ridership_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "working_class_ridership_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Fukuoka Ridership Arc",
-    "zone": "deep"
-  },
-  "g_boys_arc": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "g_boys_arc",
-    "matrix_seed": 2036,
-    "primary_objective": {
-      "data_id": "g_boys_subculture_daily",
-      "type": "audit"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2200,
-      "materials": {
-        "data_fragment": 4,
-        "subculture_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "kung_fu_subculture_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "subculture_class_image_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "G-Boys Arc",
-    "zone": "surface"
-  },
-  "ghost_signal_origin": {
-    "arc": 6,
-    "fixer": "sally",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "ghost_signal_origin",
-    "matrix_seed": 723,
-    "primary_objective": {
-      "target": "ghost_signal_origin",
-      "type": "investigate"
-    },
-    "reward_credits": 600,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 600,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "data_id": "ghost_signal_data",
-        "type": "extract"
-      }
-    ],
-    "title": "Ghost Signal: Origin",
-    "zone": "aftermath"
-  },
-  "heretic_loa_conscription": {
-    "arc": 4,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "heretic_loa_conscription",
-    "matrix_seed": 1734,
-    "primary_objective": {
-      "data_id": "loa_construct_edit",
-      "type": "jack_in_conscription"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3200,
-      "materials": {
-        "data_fragment": 5,
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "enemy": "ice.voodoo",
-        "type": "defeat"
-      },
-      {
-        "count": 1,
-        "target": "construct_loa_channel",
-        "type": "preserve"
-      }
-    ],
-    "title": "Loa Conscription",
-    "zone": "deep"
-  },
-  "hideo_contract": {
-    "arc": 2,
-    "fixer": "hideo",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "hideo_contract",
     "matrix_seed": 222,
     "primary_objective": {
-      "target": "yakuza_memory_drop",
-      "type": "deliver"
+      "type": "extract_data",
+      "data_id": "ta_internal_memo"
     },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.standard",
+        "count": 1
+      }
+    ],
     "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1300,
-      "materials": {
-        "raw_neural": 1,
-        "scrap_ice": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.spider",
-        "type": "defeat"
-      }
-    ],
-    "title": "Hideo's Contract",
-    "zone": "deep"
-  },
-  "hosaka_after_hours": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "hosaka_after_hours",
-    "matrix_seed": 111,
-    "primary_objective": {
-      "data_id": "hosaka_after_hours_data",
-      "type": "extract"
-    },
-    "reward_credits": 500,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 500,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "hosaka_watchdog",
-        "type": "defeat"
-      }
-    ],
-    "title": "Hosaka After Hours",
-    "zone": "surface"
-  },
-  "hosaka_core": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "hosaka_core",
-    "matrix_seed": 3141,
-    "primary_objective": {
-      "data_id": "hosaka_corporate_memory",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1800,
-      "materials": {
-        "upgrade_t3": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.goliath",
-        "type": "defeat"
-      }
-    ],
-    "title": "Hosaka Core",
-    "zone": "mid"
-  },
-  "hosaka_corporate_infiltration": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "hosaka_corporate_infiltration",
-    "matrix_seed": 101,
-    "primary_objective": {
-      "data_id": "hosaka_research",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 2500,
-      "materials": {
-        "upgrade_t2": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "enemy": "ice.watchdog",
-        "type": "defeat"
-      }
-    ],
-    "title": "Hosaka Corporate Infiltration",
-    "zone": "mid"
+    "reward_tier": 1
   },
   "hosaka_extraction": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
     "id": "hosaka_extraction",
-    "matrix_seed": 333,
-    "primary_objective": {
-      "data_id": "hosaka_internal_data",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
+    "title": "Hosaka Internal Extraction",
+    "fixer": "finn",
+    "arc": 3,
+    "zone": "deep",
+    "grade_min": 3,
+    "grade_max": 4,
     "rewards": {
       "credits": 3000,
       "materials": {
@@ -2364,4320 +892,80 @@
         "rom_echo": 1
       }
     },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.black",
-        "type": "defeat"
-      }
-    ],
-    "title": "Hosaka Internal Extraction",
-    "zone": "deep"
-  },
-  "hosaka_terminal_supply": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "hosaka_terminal_supply",
-    "matrix_seed": 524,
-    "primary_objective": {
-      "data_id": "hosaka_terminal_purchase",
-      "type": "extract_data"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 600,
-      "materials": {
-        "data_fragment": 2,
-        "deck_part": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "hosaka_technician",
-        "type": "negotiate"
-      },
-      {
-        "count": 1,
-        "target": "hosaka_off_headpiece",
-        "type": "acquire"
-      }
-    ],
-    "title": "Hosaka Terminal Supply",
-    "zone": "surface"
-  },
-  "hounds_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "hounds_arc",
-    "matrix_seed": 2042,
-    "primary_objective": {
-      "data_id": "hounds_working_class_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "data_fragment": 7,
-        "mexico_city_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "mexico_city_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "canine_class_image_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Hounds Arc",
-    "zone": "deep"
-  },
-  "ice_run": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "ice_run",
-    "matrix_seed": 7,
-    "primary_objective": {
-      "count": 5,
-      "material": "ice_shard",
-      "type": "collect_material"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 500,
-      "materials": {
-        "data_fragment": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Ice Run",
-    "zone": "surface"
-  },
-  "idoru_wedding": {
-    "arc": 2,
-    "fixer": "yamazaki",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "idoru_wedding",
-    "matrix_seed": 888,
-    "primary_objective": {
-      "target": "kombinat.wedding",
-      "type": "infiltrate",
-      "window_hours": 24
-    },
-    "rewards": {
-      "credits": 3000,
-      "materials": {
-        "idoru_fragment": 1,
-        "memory_fragment": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "duration_sec": 600,
-        "target": "node.density",
-        "type": "perceive"
-      }
-    ],
-    "title": "Idoru Wedding Protocol",
-    "zone": "deep"
-  },
-  "idoru_wedding_arc": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "idoru_wedding_arc",
-    "matrix_seed": 1996,
-    "primary_objective": {
-      "data_id": "idoru_wedding_event",
-      "type": "witness"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2700,
-      "materials": {
-        "data_fragment": 5,
-        "wedding_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "post_cyberpunk_cultural_event_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "laney_5sb_nodal_signal_log",
-        "type": "transmit"
-      }
-    ],
-    "title": "Idoru Wedding Arc",
-    "zone": "deep"
-  },
-  "kombinat_node_hack": {
-    "arc": 4,
-    "fixer": "yamazaki",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "kombinat_node_hack",
-    "matrix_seed": 1111,
-    "primary_objective": {
-      "duration_sec": 900,
-      "target": "kombinat.node_map",
-      "type": "hack"
-    },
-    "rewards": {
-      "credits": 5000,
-      "materials": {
-        "kombinat_data": 1,
-        "upgrade_t3": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.black",
-        "type": "evade"
-      }
-    ],
-    "title": "Kombinat Node Hack",
-    "zone": "core"
-  },
-  "laney_node_signal_run": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "laney_node_signal_run",
-    "matrix_seed": 1996,
-    "primary_objective": {
-      "data_id": "nodal_point_registry",
-      "type": "audit"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 950,
-      "materials": {
-        "data_fragment": 2,
-        "node_signal_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "data_flow_convergence_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "laney_node_signal_log",
-        "type": "transmit"
-      }
-    ],
-    "title": "Laney Node Signal Run",
-    "zone": "deep"
-  },
-  "maas_heist": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "maas_heist",
-    "matrix_seed": 1618,
-    "primary_objective": {
-      "data_id": "maas_biochip_specs",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1500,
-      "materials": {
-        "bio_chip": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.watchdog",
-        "type": "defeat"
-      }
-    ],
-    "title": "Maas Biolabs Heist",
-    "zone": "mid"
-  },
-  "maas_neural_extract": {
-    "arc": 4,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "maas_neural_extract",
-    "matrix_seed": 505,
-    "primary_objective": {
-      "data_id": "maas_neural",
-      "type": "extract_data"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 5000,
-      "materials": {
-        "bio_chip": 1,
-        "upgrade_t4": 3
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.goliath",
-        "type": "defeat"
-      }
-    ],
-    "title": "Maas Neural Extract",
-    "zone": "core"
-  },
-  "matrix_revelation": {
-    "arc": 4,
-    "fixer": "sally",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "matrix_revelation",
-    "matrix_seed": 228,
-    "primary_objective": {
-      "data_id": "matrix-revelation",
-      "type": "extract_data"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2800,
-      "materials": {
-        "data_fragment": 4
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "enemy": "ice.revelation",
-        "type": "defeat"
-      }
-    ],
-    "title": "Matrix Revelation",
-    "zone": "deep"
-  },
-  "mid_defend_kumo_network": {
-    "arc": 2,
-    "fixer": "yakuza",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "mid_defend_kumo_network",
-    "matrix_seed": 8001,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 4,
-      "wave_intensity": "tier_2"
-    },
-    "reward_credits": 420,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2100,
-      "materials": {
-        "defend_kumo_network_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 60,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Kumo Network Defense",
-    "zone": "mid"
-  },
-  "mid_defend_sense_net_relay": {
-    "arc": 2,
-    "fixer": "masahiko",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "mid_defend_sense_net_relay",
-    "matrix_seed": 4802,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 4,
-      "wave_intensity": "tier_2"
-    },
-    "reward_credits": 560,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2800,
-      "materials": {
-        "sense_net_relay": 1,
-        "shield_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 60,
-        "type": "preserve_data"
-      }
-    ],
-    "title": "Sense/Net Relay Defense",
-    "zone": "mid"
-  },
-  "mid_dual_objective_hosaka_data": {
-    "arc": 2,
-    "fixer": "kumiko",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "mid_dual_objective_hosaka_data",
-    "matrix_seed": 4803,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "hosaka_silence_data"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 480,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 900,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4500,
-      "materials": {
-        "hosaka_construct": 1,
-        "salvage_fragment": 2
-      }
-    },
-    "title": "Hosaka Data Extraction",
-    "zone": "mid"
-  },
-  "mid_dual_objective_shibuya_run": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "mid_dual_objective_shibuya_run",
-    "matrix_seed": 8006,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "shibuya_data"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 480,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 520,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2600,
-      "materials": {
-        "dual_objective_shibuya_run_sample": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Shibuya Run",
-    "zone": "mid"
-  },
-  "mid_dual_objective_trade_show": {
-    "arc": 2,
-    "fixer": "bigend",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "mid_dual_objective_trade_show",
-    "matrix_seed": 8003,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "trade_data"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 420,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 460,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2300,
-      "materials": {
-        "dual_objective_trade_show_sample": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Trade Show Heist",
-    "zone": "mid"
-  },
-  "mid_extract_biometal_chip": {
-    "arc": 2,
-    "fixer": "wigan",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "mid_extract_biometal_chip",
-    "matrix_seed": 4804,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "biometal_chip",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 90,
-      "type": "extract_data"
-    },
-    "reward_credits": 760,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3800,
-      "materials": {
-        "biometal_sample": 1,
-        "t4_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 2,
-        "type": "evade"
-      }
-    ],
-    "title": "Biometal Chip Extraction",
-    "zone": "mid"
-  },
-  "mid_extract_oni_data": {
-    "arc": 2,
-    "fixer": "yakuza",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "mid_extract_oni_data",
-    "matrix_seed": 8005,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "oni_data",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 100,
-      "type": "extract_data"
-    },
-    "reward_credits": 500,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2500,
-      "materials": {
-        "extract_oni_data_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.standard",
-        "min_evade": 2,
-        "type": "evade"
-      }
-    ],
-    "title": "Oni Data",
-    "zone": "mid"
-  },
-  "mid_extract_yakuza_chop_shop": {
-    "arc": 2,
-    "fixer": "yakuza",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "mid_extract_yakuza_chop_shop",
-    "matrix_seed": 8000,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "chop_shop_data",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 90,
-      "type": "extract_data"
-    },
-    "reward_credits": 400,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2000,
-      "materials": {
-        "extract_yakuza_chop_shop_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.standard",
-        "min_evade": 2,
-        "type": "evade"
-      }
-    ],
-    "title": "Yakuza Chop Shop",
-    "zone": "mid"
-  },
-  "mid_investigate_black_market": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "mid_investigate_black_market",
-    "matrix_seed": 8002,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 440,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2200,
-      "materials": {
-        "investigate_black_market_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Black Market Audit",
-    "zone": "mid"
-  },
-  "mid_investigate_yakuza_consortium": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "mid_investigate_yakuza_consortium",
-    "matrix_seed": 4801,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 440,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2200,
-      "materials": {
-        "yakuza_contract": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Yakuza Consortium",
-    "zone": "mid"
-  },
-  "mid_stealth_corpo_penthouse": {
-    "arc": 2,
-    "fixer": "armitage",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "mid_stealth_corpo_penthouse",
-    "matrix_seed": 4805,
-    "primary_objective": {
-      "data_id": "armitage_memory",
-      "detection_threshold": 40,
-      "no_combat_allowed": true,
-      "target_id": "penthouse_archive",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 720,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3600,
-      "materials": {
-        "cloaking_program": 1,
-        "construct_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Corpo Penthouse Infiltration",
-    "zone": "mid"
-  },
-  "mid_stealth_yakuza_meeting": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "mid_stealth_yakuza_meeting",
-    "matrix_seed": 8004,
-    "primary_objective": {
-      "data_id": "meeting_data",
-      "detection_threshold": 40,
-      "no_combat_allowed": true,
-      "target_id": "mid_stealth_yakuza_meeting_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 480,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2400,
-      "materials": {
-        "stealth_yakuza_meeting_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Yakuza Meeting",
-    "zone": "mid"
-  },
-  "molly_decides": {
-    "arc": 2,
-    "character_ref": "veteran",
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "molly_decides",
-    "matrix_seed": 1147,
-    "pillars": [
-      "family"
-    ],
-    "primary_objective": {
-      "construct_id": "loa-construct-casey",
-      "data_id": "molly-decision",
-      "options": [
-        "take",
-        "leave",
-        "call"
-      ],
-      "type": "decision"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1500,
-      "materials": {
-        "data_fragment": 3,
-        "loa_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "construct.patterns",
-        "type": "scan"
-      },
-      {
-        "description": "Hold position outside noodle shop",
-        "duration_sec": 1200,
-        "type": "wait"
-      }
-    ],
-    "title": "Molly Decides",
-    "zone": "surface"
-  },
-  "molly_razor_defend_london_nest": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "molly_razor_defend_london_nest",
-    "matrix_seed": 7102,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 4,
-      "wave_intensity": "tier_2"
-    },
-    "reward_credits": 560,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 2800,
-      "materials": {
-        "razor_data": 1,
-        "shield_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 50,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "London Nest Defense",
-    "zone": "mid"
-  },
-  "molly_razor_dual_objective_hotel_target": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "molly_razor_dual_objective_hotel_target",
-    "matrix_seed": 7103,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "hotel_target_intel"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 480,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 900,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4500,
-      "materials": {
-        "razor_construct": 1,
-        "salvage_fragment": 2
-      }
-    },
-    "title": "Hotel Target",
-    "zone": "mid"
-  },
-  "molly_razor_extract_final_chip": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "molly_razor_extract_final_chip",
-    "matrix_seed": 7104,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "final_chip",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 90,
-      "type": "extract_data"
-    },
-    "reward_credits": 760,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3800,
-      "materials": {
-        "razor_chip": 1,
-        "t4_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 2,
-        "type": "evade"
-      }
-    ],
-    "title": "Final Chip",
-    "zone": "mid"
-  },
-  "molly_razor_investigate_sin_fans": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "molly_razor_investigate_sin_fans",
-    "matrix_seed": 7101,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 440,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2200,
-      "materials": {
-        "razor_data": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Sin Fans",
-    "zone": "mid"
-  },
-  "molly_razor_stealth_final_contract": {
-    "arc": 2,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "molly_razor_stealth_final_contract",
-    "matrix_seed": 7105,
-    "primary_objective": {
-      "data_id": "final_contract_data",
-      "detection_threshold": 35,
-      "no_combat_allowed": true,
-      "target_id": "final_contract_archive",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1300,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6500,
-      "materials": {
-        "cloaking_program": 1,
-        "final_contract_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Final Contract",
-    "zone": "mid"
-  },
-  "mollys_final_razor": {
-    "arc": 5,
-    "fixer": "finn",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "mollys_final_razor",
-    "matrix_seed": 558,
-    "primary_objective": {
-      "target": "molly_razor_memory_drop",
-      "type": "deliver"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 9000,
-      "materials": {
-        "refined_neural": 3,
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice_3jane_maid",
-        "type": "defeat"
-      }
-    ],
-    "title": "Molly's Final Razor",
-    "zone": "ta"
-  },
-  "mollys_market": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "mollys_market",
-    "matrix_seed": 924,
-    "primary_objective": {
-      "data_id": "mollys-market",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1200,
-      "materials": {
-        "data_fragment": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.wisp",
-        "type": "defeat"
-      }
-    ],
-    "title": "Molly's Market",
-    "zone": "surface"
-  },
-  "mollys_razor": {
-    "arc": 3,
-    "fixer": "maas",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "mollys_razor",
-    "matrix_seed": 201,
-    "primary_objective": {
-      "data_id": "molly_construct",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2500,
-      "materials": {
-        "unique_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.black",
-        "type": "defeat"
-      }
-    ],
-    "title": "Molly's Razor",
-    "zone": "core"
-  },
-  "mona_bridge_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "mona_bridge_arc",
-    "matrix_seed": 2041,
-    "primary_objective": {
-      "data_id": "mona_bridge_squatter_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "rewards": {
-      "credits": 3400,
-      "materials": {
-        "bay_area_token": 1,
-        "data_fragment": 7
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "bridge_squatter_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "bay_area_precariat_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Mona Bridge Arc",
-    "zone": "deep"
-  },
-  "neuromancer_first_ping": {
-    "arc": 2,
-    "fixer": "wintermute",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "neuromancer_first_ping",
-    "matrix_seed": 223,
-    "primary_objective": {
-      "data_id": "neuromancer_first_ping_log",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1500,
-      "materials": {
-        "raw_neural": 1,
-        "scrap_ice": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice_neuromancer_warden",
-        "type": "defeat"
-      }
-    ],
-    "title": "Neuromancer First Ping",
-    "zone": "core"
-  },
-  "neuromancer_merger": {
-    "arc": 5,
-    "fixer": "kumiko",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "neuromancer_merger",
-    "matrix_seed": 939,
-    "primary_objective": {
-      "data_id": "neuromancer-merger",
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 5000,
-      "materials": {
-        "data_fragment": 6
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "enemy": "ice.neuromancer",
-        "type": "defeat"
-      }
-    ],
-    "title": "Neuromancer Merger",
-    "zone": "freeside"
-  },
-  "neuromancer_merger_residue": {
-    "arc": 6,
-    "fixer": "armitage",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "neuromancer_merger_residue",
-    "matrix_seed": 394,
-    "primary_objective": {
-      "count": 1,
-      "enemy": "neuromancer_construct",
-      "type": "defeat"
-    },
-    "reward_credits": 2200,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 2200,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "data_id": "merger_residue_core",
-        "type": "extract"
-      }
-    ],
-    "title": "Neuromancer Merger: Residue",
-    "zone": "aftermath"
-  },
-  "neuromancer_whisper": {
-    "arc": 3,
-    "fixer": "sally",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "neuromancer_whisper",
-    "matrix_seed": 858,
-    "primary_objective": {
-      "data_id": "neuromancer-whisper",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2200,
-      "materials": {
-        "data_fragment": 3
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.ai_whisper",
-        "type": "defeat"
-      }
-    ],
-    "title": "Neuromancer Whisper",
-    "zone": "deep"
-  },
-  "ngplus_dual_objective_boss_rush_1": {
-    "arc": 6,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_dual_objective_boss_rush_1",
-    "matrix_seed": 6001,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.neuromancer"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "wintermute_construct"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 600,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 5000,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 25000,
-      "materials": {
-        "ngplus_construct": 1,
-        "t5_program": 2
-      }
-    },
-    "title": "Boss Rush: Wintermute",
-    "zone": "ta"
-  },
-  "ngplus_dual_objective_boss_rush_2": {
-    "arc": 6,
-    "fixer": "3jane",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_dual_objective_boss_rush_2",
-    "matrix_seed": 6002,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "ta_construct_full"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 600,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 6000,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 30000,
-      "materials": {
-        "ngplus_construct": 1,
-        "t5_program": 2
-      }
-    },
-    "title": "Boss Rush: Tessier-Ashpool",
-    "zone": "ta"
-  },
-  "ngplus_dual_objective_boss_rush_3": {
-    "arc": 6,
-    "fixer": "neuromancer",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_dual_objective_boss_rush_3",
-    "matrix_seed": 6003,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.neuromancer_ascended"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "neuromancer_construct"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 600,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 10000,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 15000,
-      "materials": {
-        "ngplus_construct_full": 1,
-        "t5_program": 3
-      }
-    },
-    "title": "Boss Rush: Neuromancer",
-    "zone": "ta"
-  },
-  "ngplus_dual_objective_boss_rush_4": {
-    "arc": 6,
-    "fixer": "lowbeer",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_dual_objective_boss_rush_4",
-    "matrix_seed": 6004,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.peripheral"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "peripheral_construct"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 600,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 15000,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 15000,
-      "materials": {
-        "ngplus_peripheral": 1,
-        "t5_program": 3
-      }
-    },
-    "title": "Boss Rush: Periphery",
-    "zone": "freeside"
-  },
-  "ngplus_dual_objective_boss_rush_5": {
-    "arc": 6,
-    "fixer": "a_insley",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_dual_objective_boss_rush_5",
-    "matrix_seed": 6005,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.final"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "final_construct"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 720,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 20000,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 15000,
-      "materials": {
-        "ngplus_full_complete": 1,
-        "t5_program": 5
-      }
-    },
-    "title": "Boss Rush: Final",
-    "zone": "ta"
-  },
-  "ngplus_investigate_archive_1": {
-    "arc": 6,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_investigate_archive_1",
-    "matrix_seed": 6006,
-    "primary_objective": {
-      "evidence_required": 4,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment",
-        "identity"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 3600,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 18000,
-      "materials": {
-        "ngplus_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 40,
-        "type": "avoid_combat"
-      },
-      {
-        "corruption_max": 0,
-        "type": "preserve_evidence"
-      }
-    ],
-    "title": "Archive: Wintermute",
-    "zone": "ta"
-  },
-  "ngplus_investigate_archive_2": {
-    "arc": 6,
-    "fixer": "3jane",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_investigate_archive_2",
-    "matrix_seed": 6007,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "audit"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 3200,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 16000,
-      "materials": {
-        "ngplus_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 45,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Archive: 3Jane",
-    "zone": "ta"
-  },
-  "ngplus_investigate_archive_3": {
-    "arc": 6,
-    "fixer": "bigend",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_investigate_archive_3",
-    "matrix_seed": 6008,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "data_fragment",
-        "audit",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 2800,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 14000,
-      "materials": {
-        "ngplus_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Archive: Bigend",
-    "zone": "soho"
-  },
-  "ngplus_investigate_archive_4": {
-    "arc": 6,
-    "fixer": "kumiko",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_investigate_archive_4",
-    "matrix_seed": 6009,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "witness",
-        "identity"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 3000,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 15000,
-      "materials": {
-        "ngplus_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Archive: Kumiko",
-    "zone": "ta"
-  },
-  "ngplus_investigate_archive_5": {
-    "arc": 6,
-    "fixer": "masahiko",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_investigate_archive_5",
-    "matrix_seed": 6010,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 2600,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 13000,
-      "materials": {
-        "ngplus_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Archive: Masahiko",
-    "zone": "freeside"
-  },
-  "ngplus_investigate_archive_6": {
-    "arc": 6,
-    "fixer": "a_insley",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ngplus_investigate_archive_6",
-    "matrix_seed": 6011,
-    "primary_objective": {
-      "evidence_required": 4,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment",
-        "identity",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 5000,
-    "reward_tier": 6,
-    "rewards": {
-      "credits": 25000,
-      "materials": {
-        "ngplus_construct_full": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 35,
-        "type": "avoid_combat"
-      },
-      {
-        "corruption_max": 0,
-        "type": "preserve_evidence"
-      }
-    ],
-    "title": "Archive: Final",
-    "zone": "ta"
-  },
-  "ono_sendai_repair": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "ono_sendai_repair",
-    "matrix_seed": 318,
-    "primary_objective": {
-      "data_id": "deck_repair_quote",
-      "type": "extract_data"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 350,
-      "materials": {
-        "data_fragment": 1,
-        "deck_part": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "ono_sendai_rep",
-        "type": "negotiate"
-      },
-      {
-        "count": 1,
-        "target": "street_doc_repair",
-        "type": "acquire"
-      }
-    ],
-    "title": "Ono-Sendai Repair",
-    "zone": "surface"
-  },
-  "pacific_empire_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "pacific_empire_arc",
-    "matrix_seed": 2037,
-    "primary_objective": {
-      "data_id": "pacific_empire_subculture_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "data_fragment": 7,
-        "pacific_empire_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "pacific_empire_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "east_asian_cultural_economic_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Pacific-Empire Arc",
-    "zone": "deep"
-  },
-  "pan_mannerist_audit": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "pan_mannerist_audit",
-    "matrix_seed": 2026,
-    "primary_objective": {
-      "data_id": "pan_mannerist_aesthetic_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3600,
-      "materials": {
-        "art_movement_token": 1,
-        "data_fragment": 7
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "retainer_class_aesthetic_cover",
-        "type": "audit"
-      },
-      {
-        "count": 1,
-        "target": "art_movement_continuity_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Pan-Mannerist Audit",
-    "zone": "deep"
-  },
-  "panther_negotiate": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "panther_negotiate",
-    "matrix_seed": 1083,
-    "primary_objective": {
-      "data_id": "sense_net_disguise",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1100,
-      "materials": {
-        "data_fragment": 4,
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.construct",
-        "type": "defeat"
-      },
-      {
-        "count": 1,
-        "target": "panther_handling",
-        "type": "deliver"
-      }
-    ],
-    "title": "Panther Negotiate",
-    "zone": "surface"
-  },
-  "razor_work": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "razor_work",
-    "matrix_seed": 111,
-    "primary_objective": {
-      "data_id": "shinjuku_payroll_anomaly",
-      "type": "extract_data"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 400,
-      "materials": {
-        "scrap_ice": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Razor Work",
-    "zone": "surface"
-  },
-  "sally_construct_market": {
-    "arc": 4,
-    "fixer": "sally",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "sally_construct_market",
-    "matrix_seed": 446,
-    "primary_objective": {
-      "target": "construct_market_sale",
-      "type": "deliver"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3000,
-      "materials": {
-        "memory_shard": 2,
-        "refined_neural": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Sally's Construct Market",
-    "zone": "core"
-  },
-  "sally_returns_arc3": {
-    "arc": 3,
-    "fixer": "sally",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "sally_returns_arc3",
-    "matrix_seed": 7,
-    "primary_objective": {
-      "data_id": "construct_maas",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2500,
-      "materials": {
-        "construct_fragment": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "npc": "finn_construct",
-        "type": "negotiate"
-      }
-    ],
-    "title": "Sally Returns",
-    "zone": "freeside"
-  },
-  "sally_sandii_3am": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "sally_sandii_3am",
-    "matrix_seed": 314,
-    "primary_objective": {
-      "data_id": "rose_construct",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1100,
-      "materials": {
-        "memory_chip": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "npc": "sally_younger",
-        "type": "social"
-      }
-    ],
-    "title": "Rose Hotel, 3AM",
-    "zone": "surface"
-  },
-  "salvation_wigan_zavijava": {
-    "arc": 5,
-    "fixer": "dixie",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "salvation_wigan_zavijava",
-    "matrix_seed": 567,
-    "primary_objective": {
-      "data_id": "loa_salvation_data",
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 10000,
-      "materials": {
-        "refined_neural": 2,
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice_loa_zombie",
-        "type": "defeat"
-      }
-    ],
-    "title": "Wigan's Salvation Call",
-    "zone": "deep"
-  },
-  "sense_net_archive_intrusion": {
-    "arc": 4,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "sense_net_archive_intrusion",
-    "matrix_seed": 1741,
-    "primary_objective": {
-      "data_id": "sense_net_perimeter",
-      "type": "patch_ice_vulnerability"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2800,
-      "materials": {
-        "corporate_chit": 1,
-        "data_fragment": 6
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "intrusion_signature",
-        "type": "identify"
-      },
-      {
-        "count": 1,
-        "target": "quarterly_review_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Sense/Net Archive Intrusion",
-    "zone": "deep"
-  },
-  "sense_net_infiltration": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "sense_net_infiltration",
-    "matrix_seed": 2718,
-    "primary_objective": {
-      "data_id": "sense_net_market_research",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1200,
-      "materials": {
-        "upgrade_t2": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.watchdog",
-        "type": "defeat"
-      }
-    ],
-    "title": "Sense/Net Infiltration",
-    "zone": "mid"
-  },
-  "sense_net_media_extract": {
-    "arc": 3,
-    "fixer": "sally_shears",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "sense_net_media_extract",
-    "matrix_seed": 202,
-    "primary_objective": {
-      "data_id": "sense_net_simstim",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3000,
-      "materials": {
-        "upgrade_t3": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 4,
-        "enemy": "ice.watchdog",
-        "type": "defeat"
-      }
-    ],
-    "title": "Sense/Net Media Extract",
-    "zone": "mid"
-  },
-  "sense_net_tip": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "sense_net_tip",
-    "matrix_seed": 77,
-    "primary_objective": {
-      "data_id": "sense_net_internal",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1200,
-      "materials": {
-        "upgrade_t2": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Sense/Net Tip",
-    "zone": "surface"
-  },
-  "soho_blackout": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "soho_blackout",
-    "matrix_seed": 101,
-    "primary_objective": {
-      "data_id": "soho_blackout_log",
-      "type": "extract_data"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 350,
-      "materials": {
-        "scrap_ice": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Soho Blackout",
-    "zone": "soho"
-  },
-  "soho_defend_coolhunter_office": {
-    "arc": 5,
-    "fixer": "hollis",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "soho_defend_coolhunter_office",
-    "matrix_seed": 5202,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 4,
-      "wave_intensity": "tier_3"
-    },
-    "reward_credits": 900,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4500,
-      "materials": {
-        "office_key": 1,
-        "shield_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 55,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Coolhunter Office Defense",
-    "zone": "soho"
-  },
-  "soho_dual_objective_footage_cult": {
-    "arc": 5,
-    "fixer": "hollis",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "soho_dual_objective_footage_cult",
-    "matrix_seed": 5203,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "footage_cult_archive"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 480,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1400,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 7000,
-      "materials": {
-        "cult_construct": 1,
-        "salvage_fragment": 2
-      }
-    },
-    "title": "Footage Cult Infiltration",
-    "zone": "soho"
-  },
-  "soho_dual_objective_viddy_share": {
-    "arc": 5,
-    "fixer": "cayce",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "soho_dual_objective_viddy_share",
-    "matrix_seed": 5207,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "viddy_share_index"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 540,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1760,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 8800,
-      "materials": {
-        "construct_key": 1,
-        "viddy_key": 1
-      }
-    },
-    "title": "Viddy Share Heist",
-    "zone": "soho"
-  },
-  "soho_extract_logo_meme": {
-    "arc": 5,
-    "fixer": "bigend",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "soho_extract_logo_meme",
-    "matrix_seed": 5204,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "logo_meme_seed",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 90,
-      "type": "extract_data"
-    },
-    "reward_credits": 1300,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6500,
-      "materials": {
-        "meme_seed": 1,
-        "t4_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Logo Meme Extraction",
-    "zone": "soho"
-  },
-  "soho_investigate_brand_territory": {
-    "arc": 5,
-    "fixer": "bigend",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "soho_investigate_brand_territory",
-    "matrix_seed": 5201,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 760,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3800,
-      "materials": {
-        "brand_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Brand Territory",
-    "zone": "soho"
-  },
-  "soho_investigate_nostalgia_loop": {
-    "arc": 5,
-    "fixer": "hollis",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "soho_investigate_nostalgia_loop",
-    "matrix_seed": 5206,
-    "primary_objective": {
-      "evidence_required": 4,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment",
-        "identity"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 1040,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5200,
-      "materials": {
-        "nostalgia_key": 1,
-        "salvage_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 45,
-        "type": "avoid_combat"
-      },
-      {
-        "corruption_max": 0,
-        "type": "preserve_evidence"
-      }
-    ],
-    "title": "Nostalgia Loop",
-    "zone": "soho"
-  },
-  "soho_stealth_brand_vault": {
-    "arc": 5,
-    "fixer": "cayce",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "soho_stealth_brand_vault",
-    "matrix_seed": 5205,
-    "primary_objective": {
-      "data_id": "vault_brand_archive",
-      "detection_threshold": 40,
-      "no_combat_allowed": true,
-      "target_id": "brand_vault_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1160,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5800,
-      "materials": {
-        "cloaking_program": 1,
-        "vault_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Brand Vault Infiltration",
-    "zone": "soho"
-  },
-  "soho_stealth_node_dive": {
-    "arc": 5,
-    "fixer": "cayce",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "soho_stealth_node_dive",
-    "matrix_seed": 5208,
-    "primary_objective": {
-      "data_id": "node_memory",
-      "detection_threshold": 35,
-      "no_combat_allowed": true,
-      "target_id": "node_dive_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5500,
-      "materials": {
-        "cloaking_program": 1,
-        "node_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Node Dive",
-    "zone": "soho"
-  },
-  "straylight_approach": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "straylight_approach",
-    "matrix_seed": 1729,
-    "primary_objective": {
-      "data_id": "ta_interfamily_correspondence",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 2200,
-      "materials": {
-        "t_a_data_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.black",
-        "type": "defeat"
-      }
-    ],
-    "title": "Straylight Approach",
-    "zone": "core"
-  },
-  "straylight_inquiry": {
-    "arc": 4,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "straylight_inquiry",
-    "matrix_seed": 404,
-    "primary_objective": {
-      "data_id": "straylight_family_vault",
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 5000,
-      "materials": {
-        "memory_shard": 2,
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.ta_security_ice",
-        "type": "defeat"
-      }
-    ],
-    "title": "Straylight Inquiry",
-    "zone": "ta"
-  },
-  "surface_defend_recycling_baseline": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "surface_defend_recycling_baseline",
-    "matrix_seed": 5302,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 3,
-      "wave_intensity": "tier_1"
-    },
-    "reward_credits": 240,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1200,
-      "materials": {
-        "shield_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 50,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Recycling Baseline",
-    "zone": "surface"
-  },
-  "surface_extract_seed_run": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "surface_extract_seed_run",
-    "matrix_seed": 5303,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "seed_run_data",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 60,
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1500,
-      "materials": {
-        "t1_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.standard",
-        "min_evade": 1,
-        "type": "evade"
-      }
-    ],
-    "title": "Seed Run Extraction",
-    "zone": "surface"
-  },
-  "surface_investigate_bama_suburb": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "surface_investigate_bama_suburb",
-    "matrix_seed": 5301,
-    "primary_objective": {
-      "evidence_required": 2,
-      "evidence_types": [
-        "testimony",
-        "data_fragment"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 160,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 800,
-      "materials": {
-        "salvage_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 60,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Bama Suburb Investigation",
-    "zone": "surface"
-  },
-  "surface_mail_run": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "surface_mail_run",
-    "matrix_seed": 1985,
-    "primary_objective": {
-      "data_id": "surface_mail_package",
-      "type": "deliver"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 450,
-      "materials": {
-        "data_fragment": 1,
-        "surface_mail_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "physical_postal_route",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "non_matrix_register_log",
-        "type": "transmit"
-      }
-    ],
-    "title": "Surface Mail Run",
-    "zone": "surface"
-  },
-  "t_a_construction_site": {
-    "arc": 3,
-    "fixer": "sally",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "t_a_construction_site",
-    "matrix_seed": 833,
-    "primary_objective": {
-      "target": "ta_straylight_adjacent",
-      "type": "infiltration"
-    },
-    "reward_credits": 1700,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 1700,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ta_construct_proxy",
-        "type": "defeat"
-      }
-    ],
-    "title": "T-A Construction Site",
-    "zone": "core"
-  },
-  "ta_3jane_betrayal": {
-    "arc": 5,
-    "fixer": "3jane",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "ta_3jane_betrayal",
-    "matrix_seed": 808,
-    "primary_objective": {
-      "package_id": "ta_secrets",
-      "type": "deliver_package"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 8000,
-      "materials": {
-        "t_a_data_fragment": 2,
-        "upgrade_t5": 3
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.construct",
-        "type": "defeat"
-      }
-    ],
-    "title": "3Jane's Betrayal",
-    "zone": "ta"
-  },
-  "ta_defection": {
-    "arc": 4,
-    "fixer": "3jane",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "ta_defection",
-    "matrix_seed": 444,
-    "primary_objective": {
-      "count": 1,
-      "enemy": "ice.boss",
-      "type": "defeat"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 4500,
-      "materials": {
-        "biosoft_agent": 1,
-        "ta_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "data_id": "ta_construct_key",
-        "type": "extract_data"
-      }
-    ],
-    "title": "Tessier-Ashpool Defection",
-    "zone": "ta"
-  },
-  "ta_defend_straylight_corridor": {
-    "arc": 4,
-    "fixer": "3jane",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "ta_defend_straylight_corridor",
-    "matrix_seed": 8101,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 5,
-      "wave_intensity": "tier_4"
-    },
-    "reward_credits": 1040,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5200,
-      "materials": {
-        "ta_defend_straylight_corridor_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 55,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Straylight Corridor",
-    "zone": "ta"
-  },
-  "ta_defend_straylight_perimeter": {
-    "arc": 4,
-    "fixer": "3jane",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "ta_defend_straylight_perimeter",
-    "matrix_seed": 4702,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 6,
-      "wave_intensity": "tier_4"
-    },
-    "reward_credits": 1400,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 7000,
-      "materials": {
-        "shield_program": 1,
-        "ta_construct": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "npc_id": "kumiko",
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 50,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Straylight Perimeter Defense",
-    "zone": "ta"
-  },
-  "ta_dual_objective_ashpool_vote": {
-    "arc": 4,
-    "fixer": "kumiko",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "ta_dual_objective_ashpool_vote",
-    "matrix_seed": 4703,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.construct_proxy"
-      },
-      "extraction_spec": {
-        "count": 1,
-        "data_id": "ta_vote_record"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 600,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1800,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 9000,
-      "materials": {
-        "construct_key": 1,
-        "ta_construct": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "npc_id": "kumiko",
-        "type": "preserve_npc"
-      }
-    ],
-    "title": "Ashpool Succession Vote",
-    "zone": "ta"
-  },
-  "ta_dual_objective_payroll_heist": {
-    "arc": 4,
-    "fixer": "armitage",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "ta_dual_objective_payroll_heist",
-    "matrix_seed": 8103,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "payroll_data"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 540,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1120,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5600,
-      "materials": {
-        "ta_dual_objective_payroll_heist_sample": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Payroll Heist",
-    "zone": "ta"
-  },
-  "ta_dual_objective_warden_archive": {
-    "arc": 4,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "ta_dual_objective_warden_archive",
-    "matrix_seed": 8105,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "warden_data"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 600,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1200,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6000,
-      "materials": {
-        "ta_dual_objective_warden_archive_sample": 1
-      }
-    },
-    "secondary_objectives": [],
-    "title": "Warden Archive",
-    "zone": "ta"
-  },
-  "ta_extract_aleph_chip": {
-    "arc": 4,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ta_extract_aleph_chip",
-    "matrix_seed": 4704,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "aleph_chip_fragment",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 120,
-      "type": "extract_data"
-    },
-    "reward_credits": 3000,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 15000,
-      "materials": {
-        "aleph_construct": 1,
-        "t5_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black_construct",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Aleph Chip Extraction",
-    "zone": "ta"
-  },
-  "ta_extract_aleph_fragment_2": {
-    "arc": 4,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ta_extract_aleph_fragment_2",
-    "matrix_seed": 8106,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "aleph_second",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 120,
-      "type": "extract_data"
-    },
-    "reward_credits": 1240,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6200,
-      "materials": {
-        "ta_extract_aleph_fragment_2_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Aleph Fragment 2",
-    "zone": "ta"
-  },
-  "ta_extract_sense_net_key": {
-    "arc": 4,
-    "fixer": "3jane",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "ta_extract_sense_net_key",
-    "matrix_seed": 8100,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "ta_key_1",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 95,
-      "type": "extract_data"
-    },
-    "reward_credits": 1000,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5000,
-      "materials": {
-        "ta_extract_sense_net_key_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Sense/Net Key",
-    "zone": "ta"
-  },
-  "ta_heist": {
-    "arc": 3,
-    "fixer": "ta_rep",
-    "grade_max": 4,
-    "grade_min": 4,
-    "id": "ta_heist",
-    "matrix_seed": 300,
-    "primary_objective": {
-      "data_id": "ta_300yr_data",
-      "type": "extract_data"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "upgrade_t4": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.black",
-        "type": "defeat"
-      }
-    ],
-    "title": "T-A Heist",
-    "zone": "core"
-  },
-  "ta_investigate_3jane_initiative": {
-    "arc": 4,
-    "fixer": "kumiko",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "ta_investigate_3jane_initiative",
-    "matrix_seed": 4701,
-    "primary_objective": {
-      "evidence_required": 4,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 5500,
-      "materials": {
-        "salvage_fragment": 2,
-        "ta_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      },
-      {
-        "corruption_max": 0,
-        "type": "preserve_evidence"
-      }
-    ],
-    "title": "3Jane's Corporate Initiative",
-    "zone": "ta"
-  },
-  "ta_investigate_construct_memory": {
-    "arc": 4,
-    "fixer": "wintermute",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "ta_investigate_construct_memory",
-    "matrix_seed": 8102,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 1080,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5400,
-      "materials": {
-        "ta_investigate_construct_memory_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Construct Memory",
-    "zone": "ta"
-  },
-  "ta_payroll_archive": {
-    "arc": 4,
-    "fixer": "armitage",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "ta_payroll_archive",
-    "matrix_seed": 404,
-    "primary_objective": {
-      "data_id": "ta_payroll",
-      "type": "extract_data"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 4500,
-      "materials": {
-        "loa_chip": 1,
-        "upgrade_t4": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "enemy": "ice.black",
-        "type": "defeat"
-      }
-    ],
-    "title": "T-A Payroll Archive",
-    "zone": "core"
-  },
-  "ta_stealth_construct_chamber": {
-    "arc": 5,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "ta_stealth_construct_chamber",
-    "matrix_seed": 4705,
-    "primary_objective": {
-      "data_id": "construct_chamber_key",
-      "detection_threshold": 50,
-      "no_combat_allowed": true,
-      "target_id": "construct_chamber_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1600,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 8000,
-      "materials": {
-        "cloaking_program": 1,
-        "construct_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Construct Chamber Infiltration",
-    "zone": "ta"
-  },
-  "ta_stealth_penthouse_construct": {
-    "arc": 4,
-    "fixer": "3jane",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "ta_stealth_penthouse_construct",
-    "matrix_seed": 8104,
-    "primary_objective": {
-      "data_id": "penthouse_data",
-      "detection_threshold": 35,
-      "no_combat_allowed": true,
-      "target_id": "ta_stealth_penthouse_construct_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1160,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5800,
-      "materials": {
-        "ta_stealth_penthouse_construct_sample": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Penthouse Construct",
-    "zone": "ta"
-  },
-  "ta_straylight_archive": {
-    "arc": 5,
-    "fixer": "3jane",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "ta_straylight_archive",
-    "matrix_seed": 707,
-    "primary_objective": {
-      "data_id": "ta_archive",
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 7000,
-      "materials": {
-        "t_a_data_fragment": 1,
-        "upgrade_t5": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 4,
-        "enemy": "ice.black",
-        "type": "defeat"
-      }
-    ],
-    "title": "Straylight Archive",
-    "zone": "ta"
-  },
-  "ta_wintermute_direct": {
-    "arc": 5,
-    "fixer": "wintermute",
-    "grade_max": 6,
-    "grade_min": 6,
-    "id": "ta_wintermute_direct",
-    "matrix_seed": 909,
-    "primary_objective": {
-      "ai_id": "wintermute",
-      "type": "negotiate_with_ai"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 10000,
-      "materials": {
-        "t_a_data_fragment": 3,
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "enemy": "ice.construct",
-        "type": "defeat"
-      }
-    ],
-    "title": "Wintermute Direct",
-    "zone": "ta"
-  },
-  "tessier_ashpool_aftermath": {
-    "arc": 6,
-    "fixer": "sally",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "tessier_ashpool_aftermath",
-    "matrix_seed": 472,
-    "primary_objective": {
-      "count": 2,
-      "enemy": "ice_tessier_construct",
-      "type": "defeat"
-    },
-    "reward_credits": 1400,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 1400,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "data_id": "ta_residue_data",
-        "type": "extract"
-      }
-    ],
-    "title": "Tessier-Ashpool: Aftermath",
-    "zone": "aftermath"
-  },
-  "tessier_sleeper_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "tessier_sleeper_arc",
-    "matrix_seed": 2040,
-    "primary_objective": {
-      "data_id": "tessier_sleeper_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3700,
-      "materials": {
-        "data_fragment": 7,
-        "sleeper_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "clan_genetic_continuity_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "family_tyranny_class_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Tessier-Ashpool Sleeper Arc",
-    "zone": "deep"
-  },
-  "threjane_family_log": {
-    "arc": 1,
-    "fixer": "3jane",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "threjane_family_log",
-    "matrix_seed": 113,
-    "primary_objective": {
-      "data_id": "straylight_family_log",
-      "type": "extract_data"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 500,
-      "materials": {
-        "scrap_ice": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice_tessier_construct",
-        "type": "defeat"
-      }
-    ],
-    "title": "3Jane's Family Log",
-    "zone": "ta"
-  },
-  "tokyo_courier_run": {
-    "arc": 1,
-    "fixer": "masahiko",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "tokyo_courier_run",
-    "matrix_seed": 777,
-    "primary_objective": {
-      "target": "tokyo-idoru",
-      "type": "deliver",
-      "window_hours": 12
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1500,
-      "materials": {
-        "memory_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "duration_sec": 300,
-        "target": "construct.patterns",
-        "type": "scan"
-      }
-    ],
-    "title": "Tokyo Courier Run",
-    "zone": "surface"
-  },
-  "tokyo_defend_shibuya_archipelago": {
-    "arc": 5,
-    "fixer": "bigend",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "tokyo_defend_shibuya_archipelago",
-    "matrix_seed": 5102,
-    "primary_objective": {
-      "type": "survive_n_waves",
-      "wave_count": 4,
-      "wave_intensity": "tier_3"
-    },
-    "reward_credits": 840,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4200,
-      "materials": {
-        "shibuya_node": 1,
-        "shield_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "must_survive": true,
-        "type": "protect_npc"
-      },
-      {
-        "node_hp_min": 60,
-        "type": "minimize_damage"
-      }
-    ],
-    "title": "Shibuya Archipelago Defense",
-    "zone": "tokyo"
-  },
-  "tokyo_dual_objective_coach_class": {
-    "arc": 5,
-    "fixer": "angie",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "tokyo_dual_objective_coach_class",
-    "matrix_seed": 5103,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "coach_passenger_data"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 450,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1300,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 6500,
-      "materials": {
-        "coach_construct": 1,
-        "salvage_fragment": 2
-      }
-    },
-    "title": "Coach Class Extraction",
-    "zone": "tokyo"
-  },
-  "tokyo_dual_objective_darko_trauma": {
-    "arc": 5,
-    "fixer": "yamazaki",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "tokyo_dual_objective_darko_trauma",
-    "matrix_seed": 5108,
-    "primary_objective": {
-      "defeat_spec": {
-        "count": 1,
-        "enemy": "ice.boss.construct_proxy"
-      },
-      "extract_spec": {
-        "count": 1,
-        "data_id": "darko_trauma_pattern"
-      },
-      "objective_lock": "both_required",
-      "time_limit_seconds": 540,
-      "type": "extraction_AND_defeat"
-    },
-    "reward_credits": 1800,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 9000,
-      "materials": {
-        "construct_key": 1,
-        "darko_key": 1
-      }
-    },
-    "title": "Darko's Trauma",
-    "zone": "tokyo"
-  },
-  "tokyo_extract_footage_archive": {
-    "arc": 5,
-    "fixer": "bigend",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "tokyo_extract_footage_archive",
-    "matrix_seed": 5104,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "footage_archive",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 100,
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5500,
-      "materials": {
-        "footage_key": 1,
-        "t4_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Footage Archive Extraction",
-    "zone": "tokyo"
-  },
-  "tokyo_extract_laney_signal": {
-    "arc": 5,
-    "fixer": "laney",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "tokyo_extract_laney_signal",
-    "matrix_seed": 5106,
-    "primary_objective": {
-      "count": 1,
-      "data_id": "laney_signal",
-      "penalty_on_failure": "construct_loss",
-      "time_limit_seconds": 110,
-      "type": "extract_data"
-    },
-    "reward_credits": 1500,
-    "reward_tier": 5,
-    "rewards": {
-      "credits": 7500,
-      "materials": {
-        "laney_signature": 1,
-        "t5_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "enemy": "ice.black",
-        "min_evade": 3,
-        "type": "evade"
-      }
-    ],
-    "title": "Laney's Signal",
-    "zone": "tokyo"
-  },
-  "tokyo_investigate_marcus_garvey": {
-    "arc": 5,
-    "fixer": "yamazaki",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "tokyo_investigate_marcus_garvey",
-    "matrix_seed": 5107,
-    "primary_objective": {
-      "evidence_required": 4,
-      "evidence_types": [
-        "testimony",
-        "audit",
-        "data_fragment",
-        "witness"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 960,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 4800,
-      "materials": {
-        "garvey_key": 1,
-        "salvage_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 45,
-        "type": "avoid_combat"
-      },
-      {
-        "corruption_max": 0,
-        "type": "preserve_evidence"
-      }
-    ],
-    "title": "Marcus Garvey Investigation",
-    "zone": "tokyo"
-  },
-  "tokyo_investigate_parkabrake_plaza": {
-    "arc": 5,
-    "fixer": "yamazaki",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "tokyo_investigate_parkabrake_plaza",
-    "matrix_seed": 5101,
-    "primary_objective": {
-      "evidence_required": 3,
-      "evidence_types": [
-        "testimony",
-        "data_fragment",
-        "identity"
-      ],
-      "type": "investigation_complete"
-    },
-    "reward_credits": 700,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "parkabrake_key": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "detection_threshold": 50,
-        "type": "avoid_combat"
-      }
-    ],
-    "title": "Parkabrake Plaza",
-    "zone": "tokyo"
-  },
-  "tokyo_pachinko_run": {
-    "arc": 2,
-    "fixer": "dixie",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "tokyo_pachinko_run",
-    "matrix_seed": 202,
-    "primary_objective": {
-      "target": "roppongi_drop",
-      "type": "deliver"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1100,
-      "materials": {
-        "raw_neural": 1,
-        "scrap_ice": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.spider",
-        "type": "defeat"
-      }
-    ],
-    "title": "Tokyo Pachinko Run",
-    "zone": "tokyo"
-  },
-  "tokyo_stealth_bridge_undercity": {
-    "arc": 5,
-    "fixer": "yamazaki",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "tokyo_stealth_bridge_undercity",
-    "matrix_seed": 5105,
-    "primary_objective": {
-      "data_id": "bridge_memory",
-      "detection_threshold": 35,
-      "no_combat_allowed": true,
-      "target_id": "undercity_construct_core",
-      "type": "reach_target_AND_extract_data"
-    },
-    "reward_credits": 1000,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 5000,
-      "materials": {
-        "bridge_key": 1,
-        "cloaking_program": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "alert_max": 0,
-        "type": "minimize_alerts"
-      },
-      {
-        "logging_max": 0,
-        "type": "preserve_trace"
-      }
-    ],
-    "title": "Bridge Undercity Infiltration",
-    "zone": "tokyo"
-  },
-  "trauma_squads_audit": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "trauma_squads_audit",
-    "matrix_seed": 2025,
-    "primary_objective": {
-      "data_id": "trauma_squads_daily_registry",
-      "type": "audit"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "data_fragment": 7,
-        "service_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "post_cortex_hound_service_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "specialized_service_continuity_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Trauma-Squads Audit",
-    "zone": "deep"
-  },
-  "trauma_squads_pair_arc": {
-    "arc": 4,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "trauma_squads_pair_arc",
-    "matrix_seed": 2030,
-    "primary_objective": {
-      "data_id": "trauma_squads_cortex_hound_pair_registry",
-      "type": "audit"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3300,
-      "materials": {
-        "data_fragment": 7,
-        "pair_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "brain_damage_management_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "class_enforcement_continuity_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Trauma-Squads Pair Arc",
-    "zone": "deep"
-  },
-  "tutorial_maze": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "tutorial_maze",
-    "matrix_seed": 382,
-    "primary_objective": {
-      "data_id": "tutorial-maze",
-      "type": "extract_data"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 300,
-      "materials": {
-        "data_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Tutorial Maze",
-    "zone": "surface"
-  },
-  "vegas_stakeout": {
-    "arc": 3,
-    "fixer": "finn",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "vegas_stakeout",
-    "matrix_seed": 952,
-    "primary_objective": {
-      "data_id": "vegas-stakeout",
-      "type": "extract_data"
-    },
-    "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1800,
-      "materials": {
-        "data_fragment": 4
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 2,
-        "enemy": "ice.surveillance",
-        "type": "defeat"
-      }
-    ],
-    "title": "Vegas Stakeout",
-    "zone": "deep"
-  },
-  "viktor_orbit_arc": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "viktor_orbit_arc",
-    "matrix_seed": 2039,
-    "primary_objective": {
-      "data_id": "orbit_rigging_daily",
-      "type": "deliver"
-    },
-    "rewards": {
-      "credits": 410,
-      "materials": {
-        "data_fragment": 1,
-        "rigger_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "orbit_daily_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "rigger_state_log",
-        "type": "transmit"
-      }
-    ],
-    "title": "Viktor Orbit Arc",
-    "zone": "surface"
-  },
-  "virtual_light_data_key_arc": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "virtual_light_data_key_arc",
-    "matrix_seed": 1993,
-    "primary_objective": {
-      "data_id": "data_key_luminous_map",
-      "type": "deliver"
-    },
-    "rewards": {
-      "credits": 480,
-      "materials": {
-        "data_fragment": 1,
-        "data_key_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "data_key_state_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "data_key_image_log",
-        "type": "transmit"
-      }
-    ],
-    "title": "Virtual Light Data-Key Arc",
-    "zone": "surface"
-  },
-  "voodoo_loa_encounter": {
-    "arc": 4,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "voodoo_loa_encounter",
-    "matrix_seed": 444,
-    "primary_objective": {
-      "count": 1,
-      "enemy": "ice.loa",
-      "type": "defeat"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "loa_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "data_id": "loa_fragment",
-        "type": "extract_data"
-      }
-    ],
-    "title": "Voodoo Loa Encounter",
-    "zone": "deep"
-  },
-  "voodoo_zoneload": {
-    "arc": 3,
-    "fixer": "dixie",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "voodoo_zoneload",
     "matrix_seed": 333,
     "primary_objective": {
-      "data_id": "loa_zoneload_payload",
-      "type": "extract_data"
+      "type": "extract_data",
+      "data_id": "hosaka_internal_data"
     },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.black",
+        "count": 1
+      }
+    ],
     "reward_credits": 300,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1800,
-      "materials": {
-        "memory_shard": 1,
-        "scrap_ice": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.loa_entity",
-        "type": "defeat"
-      }
-    ],
-    "title": "Voodoo Zone Load",
-    "zone": "deep"
+    "reward_tier": 2
   },
-  "w_anchor_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "w_anchor_arc",
-    "matrix_seed": 2038,
-    "primary_objective": {
-      "data_id": "w_anchor_equipment_anchor_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "anchor_chit": 1,
-        "data_fragment": 7
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "equipment_anchor_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "security_instrument_class_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "W-Anchor Arc",
-    "zone": "deep"
-  },
-  "watchdog_patrol": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 1,
-    "grade_min": 1,
-    "id": "watchdog_patrol",
-    "matrix_seed": 1337,
-    "primary_objective": {
-      "count": 2,
-      "enemy": "ice.watchdog",
-      "type": "defeat"
-    },
-    "reward_credits": 75,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 750,
-      "materials": {
-        "ice_shard": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "material": "ice_shard",
-        "type": "collect_material"
-      }
-    ],
-    "title": "Watchdog Patrol",
-    "zone": "surface"
-  },
-  "wendell_suburban_arc": {
-    "arc": 1,
-    "fixer": "finn",
-    "grade_max": 2,
-    "grade_min": 1,
-    "id": "wendell_suburban_arc",
-    "matrix_seed": 2034,
-    "primary_objective": {
-      "data_id": "wendell_suburban_class_substrate",
-      "type": "deliver"
-    },
-    "rewards": {
-      "credits": 420,
-      "materials": {
-        "aspirant_token": 1,
-        "data_fragment": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "suburban_class_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "aspirant_image_log",
-        "type": "transmit"
-      }
-    ],
-    "title": "Wendell Suburban Arc",
-    "zone": "surface"
-  },
-  "wigan_call": {
-    "arc": 2,
-    "fixer": "wigan",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "wigan_call",
-    "matrix_seed": 8843,
-    "primary_objective": {
-      "data_id": "loa_construct_fragment",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1500,
-      "materials": {
-        "loa_chip": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "material": "loa_token",
-        "type": "collect_material"
-      }
-    ],
-    "title": "Wigan's Call",
-    "zone": "mid"
-  },
-  "wigan_construct_reach": {
-    "arc": 2,
-    "fixer": "dixie",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "wigan_construct_reach",
-    "matrix_seed": 234,
-    "primary_objective": {
-      "data_id": "loa_construct_name",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1400,
-      "materials": {
-        "raw_neural": 1,
-        "scrap_ice": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice_ghost_grid",
-        "type": "defeat"
-      }
-    ],
-    "title": "Wigan's Construct Reach",
-    "zone": "deep"
-  },
-  "winter_infiltrate": {
+  "ta_defection": {
+    "id": "ta_defection",
+    "title": "Tessier-Ashpool Defection",
+    "fixer": "3jane",
     "arc": 4,
-    "fixer": "sally",
-    "grade_max": 5,
+    "zone": "ta",
     "grade_min": 4,
-    "id": "winter_infiltrate",
-    "matrix_seed": 859,
-    "primary_objective": {
-      "data_id": "winter-infiltrate",
-      "type": "extract_data"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
+    "grade_max": 5,
     "rewards": {
-      "credits": 3200,
+      "credits": 4500,
       "materials": {
-        "data_fragment": 4
+        "ta_construct": 1,
+        "biosoft_agent": 1
       }
+    },
+    "matrix_seed": 444,
+    "primary_objective": {
+      "type": "defeat",
+      "enemy": "ice.boss",
+      "count": 1
     },
     "secondary_objectives": [
       {
-        "count": 3,
-        "enemy": "ice.wintermute",
-        "type": "defeat"
+        "type": "extract_data",
+        "data_id": "ta_construct_key",
+        "count": 1
       }
     ],
-    "title": "Winter Infiltration",
-    "zone": "deep"
-  },
-  "wintermute_merger_run": {
-    "arc": 4,
-    "fixer": "wintermute",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "wintermute_merger_run",
-    "matrix_seed": 448,
-    "primary_objective": {
-      "data_id": "wintermute_merger_log",
-      "type": "extract_data"
-    },
     "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 3200,
-      "materials": {
-        "memory_shard": 2,
-        "refined_neural": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice_wintermute_sentinel",
-        "type": "defeat"
-      }
-    ],
-    "title": "Wintermute Merger Run",
-    "zone": "mid"
+    "reward_tier": 3
   },
   "wintermute_negotiation": {
-    "arc": 5,
-    "fixer": "3jane",
-    "grade_max": 6,
-    "grade_min": 5,
     "id": "wintermute_negotiation",
-    "matrix_seed": 555,
-    "primary_objective": {
-      "data_id": "wintermute_key",
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
+    "title": "Wintermute Negotiation",
+    "fixer": "3jane",
+    "arc": 5,
+    "zone": "freeside",
+    "grade_min": 5,
+    "grade_max": 6,
     "rewards": {
       "credits": 6000,
       "materials": {
-        "biosoft_agent": 2,
-        "ice_construct": 1
+        "ice_construct": 1,
+        "biosoft_agent": 2
       }
     },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.neuromancer",
-        "type": "defeat"
-      }
-    ],
-    "title": "Wintermute Negotiation",
-    "zone": "freeside"
-  },
-  "wintermute_residue": {
-    "arc": 6,
-    "fixer": "dixie",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "wintermute_residue",
-    "matrix_seed": 782,
-    "primary_objective": {
-      "count": 2,
-      "enemy": "wintermute_proxy",
-      "type": "defeat"
-    },
-    "reward_credits": 1200,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 1200,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "data_id": "wintermute_residue",
-        "type": "extract"
-      }
-    ],
-    "title": "Wintermute Residue",
-    "zone": "aftermath"
-  },
-  "wintermute_witness": {
-    "arc": 5,
-    "fixer": "finn",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "wintermute_witness",
     "matrix_seed": 555,
     "primary_objective": {
-      "data_id": "wintermute_witness_log",
-      "type": "extract_data"
+      "type": "extract_data",
+      "data_id": "wintermute_key"
     },
+    "secondary_objectives": [
+      {
+        "type": "defeat",
+        "enemy": "ice.neuromancer",
+        "count": 1
+      }
+    ],
     "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 8500,
-      "materials": {
-        "refined_neural": 2,
-        "unique_construct": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.ai_whisper",
-        "type": "defeat"
-      }
-    ],
-    "title": "Wintermute Witness",
-    "zone": "ta"
-  },
-  "working_class_ridership_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "working_class_ridership_arc",
-    "matrix_seed": 2033,
-    "primary_objective": {
-      "data_id": "working_class_ridership_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3700,
-      "materials": {
-        "data_fragment": 7,
-        "ridership_token": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "fukuoka_okinawan_ridership_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "late_capitalist_substrate_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Working-Class Ridership Arc",
-    "zone": "deep"
-  },
-  "yakuza_deal": {
-    "arc": 2,
-    "fixer": "yakuza",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "yakuza_deal",
-    "matrix_seed": 88,
-    "primary_objective": {
-      "count": 3,
-      "material": "yakuza_token",
-      "type": "deliver_material"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 1500,
-      "materials": {
-        "upgrade_t2": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "ice.watchdog",
-        "type": "defeat"
-      }
-    ],
-    "title": "Yakuza Deal",
-    "zone": "mid"
-  },
-  "yakuza_loan_shark": {
-    "arc": 2,
-    "fixer": "finn",
-    "grade_max": 3,
-    "grade_min": 2,
-    "id": "yakuza_loan_shark",
-    "matrix_seed": 303,
-    "primary_objective": {
-      "data_id": "yakuza_ledger",
-      "type": "extract_data"
-    },
-    "reward_credits": 150,
-    "reward_tier": 1,
-    "rewards": {
-      "credits": 2800,
-      "materials": {
-        "upgrade_t2": 2
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 4,
-        "enemy": "ice.standard",
-        "type": "defeat"
-      }
-    ],
-    "title": "Yakuza Loan Shark",
-    "zone": "mid"
-  },
-  "yakuza_meeting": {
-    "arc": 2,
-    "fixer": "sally",
-    "grade_max": 4,
-    "grade_min": 3,
-    "id": "yakuza_meeting",
-    "matrix_seed": 804,
-    "primary_objective": {
-      "target": "yakuza_consortium",
-      "type": "investigate"
-    },
-    "reward_credits": 1200,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 1200,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "yakuza_enforcer",
-        "type": "defeat"
-      }
-    ],
-    "title": "Yakuza Meeting",
-    "zone": "mid"
-  },
-  "yanaka_family_power_arc": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "yanaka_family_power_arc",
-    "matrix_seed": 2030,
-    "primary_objective": {
-      "data_id": "yanaka_family_power_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "rewards": {
-      "credits": 3700,
-      "materials": {
-        "data_fragment": 7,
-        "family_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "patriarch_decision_log",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "family_power_continuity_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Yanaka Family-Power Arc",
-    "zone": "deep"
-  },
-  "zaibatsu_statework": {
-    "arc": 5,
-    "fixer": "slick_henry",
-    "grade_max": 5,
-    "grade_min": 5,
-    "id": "zaibatsu_statework",
-    "matrix_seed": 2847,
-    "primary_objective": {
-      "data_id": "zaibatsu_supply_chain_daily",
-      "type": "patch_ice_vulnerability"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 3500,
-      "materials": {
-        "data_fragment": 7,
-        "industrial_chit": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "convenience_store_throughput",
-        "type": "audit"
-      },
-      {
-        "count": 1,
-        "target": "industrial_class_continuity_signal",
-        "type": "ratify"
-      }
-    ],
-    "title": "Zaibatsu Statework",
-    "zone": "deep"
-  },
-  "zion_express": {
-    "arc": 5,
-    "fixer": "kumiko",
-    "grade_max": 6,
-    "grade_min": 5,
-    "id": "zion_express",
-    "matrix_seed": 384,
-    "primary_objective": {
-      "data_id": "zion-express",
-      "type": "extract_data"
-    },
-    "reward_credits": 1100,
-    "reward_tier": 3,
-    "rewards": {
-      "credits": 4500,
-      "materials": {
-        "data_fragment": 5
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 3,
-        "enemy": "ice.zion_defense",
-        "type": "defeat"
-      }
-    ],
-    "title": "Zion Express",
-    "zone": "freeside"
-  },
-  "zion_lab_breach": {
-    "arc": 4,
-    "fixer": "dixie",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "zion_lab_breach",
-    "matrix_seed": 694,
-    "primary_objective": {
-      "data_id": "zion_lab_research",
-      "type": "extract"
-    },
-    "reward_credits": 1900,
-    "reward_tier": 4,
-    "rewards": {
-      "credits": 1900,
-      "materials": {}
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "enemy": "zion_experimental",
-        "type": "defeat"
-      }
-    ],
-    "title": "Zion Lab Breach",
-    "zone": "core"
-  },
-  "zion_vote_observation": {
-    "arc": 5,
-    "fixer": "finn",
-    "grade_max": 5,
-    "grade_min": 4,
-    "id": "zion_vote_observation",
-    "matrix_seed": 2611,
-    "primary_objective": {
-      "data_id": "zion_cluster_vote_2035",
-      "type": "record_procedural"
-    },
-    "reward_credits": 600,
-    "reward_tier": 2,
-    "rewards": {
-      "credits": 4500,
-      "materials": {
-        "data_fragment": 8,
-        "witness_record": 1
-      }
-    },
-    "secondary_objectives": [
-      {
-        "count": 1,
-        "target": "witness_record",
-        "type": "preserve"
-      },
-      {
-        "count": 1,
-        "target": "matrix_corporate_reviewer",
-        "type": "transmit"
-      }
-    ],
-    "title": "Zion Vote Observation",
-    "zone": "surface"
+    "reward_tier": 4
   }
 }

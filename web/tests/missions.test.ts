@@ -15,9 +15,9 @@ describe("mission catalog", () => {
     expect(Object.keys(data).length).toBeGreaterThanOrEqual(15);
   });
 
-  it("loads exactly 209 missions (full Python catalog)", () => {
+  it("loads exactly 33 missions (synced from Python)", () => {
     const data = missionsData as unknown as MissionsFile;
-    expect(Object.keys(data).length).toBe(209);
+    expect(Object.keys(data).length).toBe(33);
   });
 
   it("each mission has required fields", () => {
@@ -46,7 +46,6 @@ describe("mission catalog", () => {
     expect(ids).toContain("watchdog_patrol");
     expect(ids).toContain("ice_run");
     expect(ids).toContain("aleph_fragment");
-    expect(ids).toContain("bama_statework");
   });
 
   it("missions span tier 1-6 difficulty curve", () => {

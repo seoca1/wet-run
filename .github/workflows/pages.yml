@@ -46,7 +46,7 @@ jobs:
 
       - name: Build wet_run-web (Tier 4, Vite)
         run: |
-          cd wet_run-web
+          cd web
           node --version
           npm --version
           npm ci
@@ -72,7 +72,7 @@ jobs:
           cp -r Fiction/derivative/ _pages/Fiction/derivative/ 2>/dev/null || true
           # wet_run-web (TypeScript + Canvas2D ASCII game) → /wetrun-web/ sub-path
           # Includes static JSON (missions/ice/programs) + BGM/SFX (Howler.js)
-          cp -r wet_run-web/dist/ _pages/wetrun-web/
+          cp -r web/dist/ _pages/wetrun-web/
           # Disable Jekyll processing on GitHub Pages
           touch _pages/.nojekyll
           echo ""

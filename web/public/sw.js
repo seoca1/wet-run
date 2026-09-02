@@ -1,11 +1,13 @@
 /**
  * Service Worker for Wet Run — Offline Play Support
  *
- * Caches static assets for offline gameplay.
- * Uses cache-first strategy for assets, network-first for API calls.
+ * Enhanced caching strategies:
+ * - stale-while-revalidate for assets (fast + fresh)
+ * - network-first for HTML and API calls
+ * - cache-first fallback for offline scenarios
  */
 
-const CACHE_NAME = 'wetrun-v1';
+const CACHE_NAME = 'wetrun-v2';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -21,7 +23,7 @@ self.addEventListener('install', (event) => {
       return cache.addAll(STATIC_ASSETS);
     })
   );
-  self.skipWaiting();
+  // Wait for user activation before update
 });
 
 // Activate: clean old caches
@@ -38,7 +40,14 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
-// Fetch: cache-first for static assets, network-first for others
+// Handle skip waiting message from clients
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Fetch: enhanced caching strategies
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
@@ -48,7 +57,29 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache-first for static assets (JS, CSS, images, fonts)
+  // API requests: network-first (always try server, fallback to cache)
+  if (url.pathname.startsWith('/api/')) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return response;
+        })
+        .catch(() => {
+          return caches.match(request).then((cached) => {
+            return cached || new Response('Offline', { status: 503 });
+          });
+        })
+    );
+    return;
+  }
+
+  // Static assets: stale-while-revalidate (return cache immediately, update in background)
   if (
     request.destination === 'script' ||
     request.destination === 'style' ||
@@ -57,14 +88,14 @@ self.addEventListener('fetch', (event) => {
     url.pathname.endsWith('.js') ||
     url.pathname.endsWith('.css') ||
     url.pathname.endsWith('.png') ||
-    url.pathname.endsWith('.woff2')
+    url.pathname.endsWith('.jpg') ||
+    url.pathname.endsWith('.woff2') ||
+    url.pathname.endsWith('.woff') ||
+    url.pathname.endsWith('.json')
   ) {
     event.respondWith(
       caches.match(request).then((cached) => {
-        if (cached) {
-          return cached;
-        }
-        return fetch(request).then((response) => {
+        const fetchPromise = fetch(request).then((response) => {
           if (response.ok) {
             const responseClone = response.clone();
             caches.open(CACHE_NAME).then((cache) => {
@@ -73,12 +104,14 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         });
+        // Return cached version immediately, update in background
+        return cached || fetchPromise;
       })
     );
     return;
   }
 
-  // Network-first for HTML and other navigation requests
+  // HTML and navigation: network-first (always try server, fallback to cache)
   event.respondWith(
     fetch(request)
       .then((response) => {
@@ -91,7 +124,9 @@ self.addEventListener('fetch', (event) => {
         return response;
       })
       .catch(() => {
-        return caches.match(request);
+        return caches.match(request).then((cached) => {
+          return cached || new Response('Offline', { status: 503 });
+        });
       })
   );
 });

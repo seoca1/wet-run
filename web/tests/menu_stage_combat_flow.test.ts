@@ -315,7 +315,7 @@ describe("Combat → Victory → Loot flow", () => {
     // Loot → ending
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("ending");
-    expect(state.endingChoice).toMatch(/^[ABC]$/);
+    expect(state.endingChoice).toMatch(/^arc[1-5]_[a-z_]+$/);
   });
 });
 
@@ -397,7 +397,7 @@ describe("Full run completion", () => {
 
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("ending");
-    expect(state.endingChoice).toMatch(/^[ABC]$/);
+    expect(state.endingChoice).toMatch(/^arc[1-5]_[a-z_]+$/);
 
     state = applyAction(state, { type: "confirm" });
     expect(state.phase).toBe("menu");

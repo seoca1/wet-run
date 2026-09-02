@@ -6,44 +6,39 @@
 import type { EndingChoice, Grid } from "../core/types.ts";
 import { makeGrid, setText } from "../core/grid.ts";
 import { PALETTE } from "./palette.ts";
+import { ENDINGS } from "../core/ending_resolver.ts";
 
-const ENDING_TEXT: Readonly<Record<EndingChoice, { title: string; body: string }>> = {
-  A: {
-    title: "ENDING A — VICTORY",
-    body: "You jack out cleanly. The Sprawl swallows your trace.",
-  },
-  B: {
-    title: "ENDING B — BARGAIN",
-    body: "You strike a deal in the dark. Some data follows you out.",
-  },
-  C: {
-    title: "ENDING C — FLATLINE",
-    body: "Your trace fades to white noise. The construct remembers.",
-  },
-};
-
-/** Render the ending screen with the chosen ending letter + flavor text. */
 export function renderEndingScreen(
   choice: EndingChoice | null,
   cols: number,
   rows: number,
 ): Grid {
   let grid = makeGrid(cols, rows);
-  const c = choice ?? "A";
-  const text = ENDING_TEXT[c];
+  const c = choice ?? "arc1_wage_slave";
+  const ending = ENDINGS.find(e => e.id === c);
+  
+  if (!ending) {
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - 12) / 2)),
+      Math.floor(rows / 2),
+      "UNKNOWN ENDING",
+      PALETTE.RED_BRIGHT,
+    );
+    return grid;
+  }
 
-  // Title block (centered)
+  const title = ending.nameEn.toUpperCase();
   grid = setText(
     grid,
-    Math.max(2, Math.floor((cols - text.title.length) / 2)),
+    Math.max(2, Math.floor((cols - title.length) / 2)),
     Math.floor(rows / 2) - 4,
-    text.title,
+    title,
     PALETTE.GREEN_NEON,
   );
 
-  // Body (centered, wrapped at ~60 chars)
   const wrapWidth = Math.min(cols - 8, 60);
-  const bodyLines = wrapText(text.body, wrapWidth);
+  const bodyLines = wrapText(ending.descriptionEn, wrapWidth);
   let y = Math.floor(rows / 2) - 1;
   for (const line of bodyLines) {
     grid = setText(
@@ -56,7 +51,6 @@ export function renderEndingScreen(
     y += 1;
   }
 
-  // Footer
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - 28) / 2)),

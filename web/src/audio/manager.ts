@@ -24,6 +24,12 @@
  */
 
 import { Howl } from "howler";
+import {
+  TRACKS,
+  shouldTransition,
+  calculateVolume,
+  type BgmTrackId,
+} from "../core/sound_system.ts";
 
 export const BGM_IDS = {
   CHIBA: "sounds/theme_chiba.mp3",
@@ -128,8 +134,14 @@ export class AudioManager {
    * Begin BGM playback for the given track. If the track differs from
    * the current one, the previous Howl is unloaded and a new one is
    * created. Lazy-creates Howl on first call. No-op in jsdom/node.
+   *
+   * Uses expanded track info from sound_system when available.
    */
   play(track: SoundId = BGM_IDS.SENSE_NET): void {
+    const trackInfo = TRACKS[track as BgmTrackId];
+    const finalVolume = trackInfo
+      ? calculateVolume(track as BgmTrackId, this._bgmVolume)
+      : this._bgmVolume;
     if (this.currentTrack === track && this.howl !== null) {
       if (!this._started) {
         try {
@@ -153,8 +165,8 @@ export class AudioManager {
     try {
       this.howl = new Howl({
         src: [track],
-        loop: true,
-        volume: this._bgmVolume,
+        loop: trackInfo?.loop ?? true,
+        volume: finalVolume,
         html5: false,
       });
       this.currentTrack = track;
@@ -463,5 +475,19 @@ export class AudioManager {
       if (onUnlock) onUnlock();
     };
     events.forEach((e) => document.addEventListener(e, handler, { once: true }));
+  }
+
+  /**
+   * Play BGM based on game event, with auto-transition logic.
+   * Returns the new current track if transition occurred, otherwise current track.
+   */
+  playBgmForEvent(event: string): string | null {
+    const currentTrack = this.currentTrack as BgmTrackId | null;
+    const transition = shouldTransition(currentTrack, event);
+    if (transition) {
+      this.crossfadeTo(transition.track as SoundId);
+      return transition.track as string;
+    }
+    return this.currentTrack as string | null;
   }
 }

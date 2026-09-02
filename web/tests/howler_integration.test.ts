@@ -206,7 +206,7 @@ describe("Howler.js Integration", () => {
     it("playPhase plays track for game phase", () => {
       expect(() => playPhase("menu")).not.toThrow();
       const track = getCurrentTrack();
-      expect(track === null || track === BGM_IDS.CHIBA).toBe(true);
+      expect(track === null || track === BGM_IDS.MENU).toBe(true);
     });
 
     it("playPhase transitions smoothly between phases", () => {
@@ -261,7 +261,7 @@ describe("Howler.js Integration", () => {
   });
 
   describe("Track constants", () => {
-    it("BGM_IDS exports all 5 tracks", () => {
+    it("BGM_IDS exports legacy mp3 tracks", () => {
       expect(BGM_IDS.CHIBA).toBe("sounds/theme_chiba.mp3");
       expect(BGM_IDS.SENSE_NET).toBe("sounds/theme_sense_net.mp3");
       expect(BGM_IDS.MATRIX_RAIN).toBe("sounds/theme_matrix_rain.mp3");
@@ -269,10 +269,23 @@ describe("Howler.js Integration", () => {
       expect(BGM_IDS.INDUSTRIAL).toBe("sounds/theme_industrial.mp3");
     });
 
-    it("SFX_IDS exports all 3 effects", () => {
+    it("BGM_IDS exports new bgm directory tracks", () => {
+      expect(BGM_IDS.TITLE).toBe("sounds/bgm/title.wav");
+      expect(BGM_IDS.MENU).toBe("sounds/bgm/menu.wav");
+      expect(BGM_IDS.EXPLORATION).toBe("sounds/bgm/exploration.wav");
+      expect(BGM_IDS.COMBAT_NORMAL).toBe("sounds/bgm/combat_normal.wav");
+    });
+
+    it("SFX_IDS exports legacy sfx files", () => {
       expect(SFX_IDS.COMBAT_HIT).toBe("sounds/sfx_combat_hit.wav");
-      expect(SFX_IDS.VICTORY).toBe("sounds/sfx_victory.wav");
       expect(SFX_IDS.DEFEAT).toBe("sounds/sfx_defeat.wav");
+    });
+
+    it("SFX_IDS exports new sfx directory files", () => {
+      expect(SFX_IDS.CLICK).toBe("sounds/sfx/click.wav");
+      expect(SFX_IDS.CONFIRM).toBe("sounds/sfx/confirm.wav");
+      expect(SFX_IDS.VICTORY).toBe("sounds/sfx/victory.wav");
+      expect(SFX_IDS.DAMAGE).toBe("sounds/sfx/damage.wav");
     });
   });
 

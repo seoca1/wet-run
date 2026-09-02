@@ -73,10 +73,10 @@ describe("AudioManager", () => {
     expect(BGM_IDS.INDUSTRIAL).toBe("sounds/theme_industrial.mp3");
   });
 
-  it("playPhase('menu') tracks chiba but isPlaying false in node", () => {
+  it("playPhase('menu') uses new menu track, isPlaying false in node", () => {
     const audio = AudioManager.getInstance();
     audio.playPhase("menu");
-    expect(audio.getCurrentTrack()).toBe("sounds/theme_chiba.mp3");
+    expect(audio.getCurrentTrack()).toBe("sounds/bgm/menu.wav");
     expect(audio.isPlaying()).toBe(false);
   });
 
@@ -93,10 +93,15 @@ describe("AudioManager", () => {
     expect(audio.getCurrentTrack()).toBe(null);
   });
 
-  it("SFX_IDS exposes 3 effects for Tier 4", () => {
+  it("SFX_IDS exposes legacy effects", () => {
     expect(SFX_IDS.COMBAT_HIT).toBe("sounds/sfx_combat_hit.wav");
-    expect(SFX_IDS.VICTORY).toBe("sounds/sfx_victory.wav");
     expect(SFX_IDS.DEFEAT).toBe("sounds/sfx_defeat.wav");
+  });
+
+  it("SFX_IDS exposes new sfx directory effects", () => {
+    expect(SFX_IDS.VICTORY).toBe("sounds/sfx/victory.wav");
+    expect(SFX_IDS.CLICK).toBe("sounds/sfx/click.wav");
+    expect(SFX_IDS.DAMAGE).toBe("sounds/sfx/damage.wav");
   });
 
   it("playSfx is a no-op in node (Howler fails to decode)", () => {

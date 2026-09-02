@@ -32,6 +32,21 @@ import {
 } from "../core/sound_system.ts";
 
 export const BGM_IDS = {
+  TITLE: "sounds/bgm/title.wav",
+  MENU: "sounds/bgm/menu.wav",
+  EXPLORATION: "sounds/bgm/exploration.wav",
+  COMBAT_NORMAL: "sounds/bgm/combat_normal.wav",
+  COMBAT_BOSS: "sounds/bgm/combat_boss.wav",
+  COMBAT_MULTI: "sounds/bgm/combat_multi.wav",
+  SHOP: "sounds/bgm/shop.wav",
+  ENDING_GOOD: "sounds/bgm/ending_good.wav",
+  ENDING_BAD: "sounds/bgm/ending_bad.wav",
+  ENDING_NEUTRAL: "sounds/bgm/ending_neutral.wav",
+  DEATH: "sounds/bgm/death.wav",
+  VICTORY: "sounds/bgm/victory.wav",
+  EVENT_SPECIAL: "sounds/bgm/event_special.wav",
+  AMBIENT_LOW: "sounds/bgm/ambient_low.wav",
+  AMBIENT_HIGH: "sounds/bgm/ambient_high.wav",
   CHIBA: "sounds/theme_chiba.mp3",
   SENSE_NET: "sounds/theme_sense_net.mp3",
   MATRIX_RAIN: "sounds/theme_matrix_rain.mp3",
@@ -40,8 +55,22 @@ export const BGM_IDS = {
 } as const;
 
 export const SFX_IDS = {
+  CLICK: "sounds/sfx/click.wav",
+  CONFIRM: "sounds/sfx/confirm.wav",
+  BACK: "sounds/sfx/back.wav",
+  EQUIP: "sounds/sfx/equip.wav",
+  HEAL: "sounds/sfx/heal.wav",
+  DAMAGE: "sounds/sfx/damage.wav",
+  ATTACK: "sounds/sfx/attack.wav",
+  ICE_BREAK: "sounds/sfx/ice_break.wav",
+  LOOT_DROP: "sounds/sfx/loot_drop.wav",
+  CREDIT_GAIN: "sounds/sfx/credit_gain.wav",
+  CREDIT_SPEND: "sounds/sfx/credit_spend.wav",
+  DEATH: "sounds/sfx/death.wav",
+  VICTORY: "sounds/sfx/victory.wav",
+  BOSS_INTRO: "sounds/sfx/boss_intro.wav",
+  PHASE_CHANGE: "sounds/sfx/phase_change.wav",
   COMBAT_HIT: "sounds/sfx_combat_hit.wav",
-  VICTORY: "sounds/sfx_victory.wav",
   DEFEAT: "sounds/sfx_defeat.wav",
 } as const;
 
@@ -49,11 +78,11 @@ export type SoundId = (typeof BGM_IDS)[keyof typeof BGM_IDS];
 export type SoundEffectId = (typeof SFX_IDS)[keyof typeof SFX_IDS];
 
 const PHASE_TO_SOUND: Readonly<Record<string, SoundId | null>> = {
-  menu: BGM_IDS.CHIBA,
-  approach: BGM_IDS.SENSE_NET,
-  combat: BGM_IDS.MATRIX_RAIN,
-  victory: BGM_IDS.BROADCAST,
-  defeat: BGM_IDS.INDUSTRIAL,
+  menu: BGM_IDS.MENU,
+  approach: BGM_IDS.EXPLORATION,
+  combat: BGM_IDS.COMBAT_NORMAL,
+  victory: BGM_IDS.VICTORY,
+  defeat: BGM_IDS.DEATH,
   exit: null,
 };
 
@@ -137,7 +166,7 @@ export class AudioManager {
    *
    * Uses expanded track info from sound_system when available.
    */
-  play(track: SoundId = BGM_IDS.SENSE_NET): void {
+  play(track: SoundId = BGM_IDS.MENU): void {
     const trackInfo = TRACKS[track as BgmTrackId];
     const finalVolume = trackInfo
       ? calculateVolume(track as BgmTrackId, this._bgmVolume)
@@ -421,7 +450,7 @@ export class AudioManager {
    * SoundEffectId so repeated calls reuse the same buffer. Multiple
    * plays of the same id overlap (Howler internal mix). Respects mute.
    */
-  playSfx(id: SoundEffectId = SFX_IDS.COMBAT_HIT): void {
+  playSfx(id: SoundEffectId = SFX_IDS.CLICK): void {
     let howl = this.sfxHowls.get(id);
     if (howl === undefined) {
       try {

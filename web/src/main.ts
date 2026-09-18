@@ -14,7 +14,9 @@ import { MENU_OPTIONS, renderMainMenu, renderStubScreen, type MenuOption } from 
 import { renderMatrix } from "./renderer/matrix.ts";
 import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
 import { composeCombatVfx, advanceVfxListBy, WEB_TICK_MS } from "./renderer/combat_vfx.ts";
-import { createTutorialOverlay } from "./renderer/tutorial.ts";
+import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial.ts";
+import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon.ts";
+import { DungeonCrawler } from "./core/dungeon_crawler.ts";
 import {
     healthBar,
     healthColor,
@@ -141,6 +143,7 @@ class Game {
     private graphicNovelState: GraphicNovelState | null = null;
     private gnLanguage: import("./core/graphic_novel_types.ts").Language = "en";
     private settingsState: import("./renderer/settings.ts").SettingsState | null = null;
+    private dungeonCrawler: DungeonCrawler | null = null;
     private _message: string = "";
 
     constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
@@ -165,6 +168,8 @@ class Game {
                 this.screen !== "mission_select" &&
                 this.screen !== "tutorial" &&
                 this.screen !== "settings" &&
+                this.screen !== "dungeon" &&
+                this.screen !== "pause" &&
                 this.state === null
             ) {
                 this.handleStubInput(action);
@@ -195,6 +200,21 @@ class Game {
             if (this.screen === "crafting" || this.screen === "equipment") {
                 if (this.screen === "crafting") this.handleCraftingInput(action);
                 else this.handleEquipmentInput(action);
+                this.draw();
+                return;
+            }
+            if (this.screen === "settings") {
+                this.handleSettingsInput(action);
+                this.draw();
+                return;
+            }
+            if (this.screen === "pause") {
+                this.handlePauseInput(action);
+                this.draw();
+                return;
+            }
+if (this.screen === "dungeon") {
+                this.handleDungeonInput(action);
                 this.draw();
                 return;
             }
@@ -331,6 +351,59 @@ class Game {
             this._message = `Equipped ${candidate.name} to ${slot}`;
             this.draw();
             return;
+        }
+    }
+
+    private handleDungeonInput(action: GameAction): void {
+        if (!this.dungeonCrawler) return;
+
+        switch (action.type) {
+            case "move_north":
+            case "move_south":
+            case "move_east":
+            case "move_west": {
+                const dx = action.type === "move_east" ? 1 : action.type === "move_west" ? -1 : 0;
+                const dy = action.type === "move_south" ? 1 : action.type === "move_north" ? -1 : 0;
+                this.dungeonCrawler.tryMovePlayer(dx, dy);
+                break;
+            }
+            case "confirm":
+                this.dungeonCrawler.confirm();
+                break;
+            case "cancel":
+                this.dungeonCrawler.cancel();
+                break;
+            case "jack_out":
+                this.screen = "menu";
+                this.draw();
+                return;
+            default:
+                break;
+        }
+        this.draw();
+    }
+
+    private handleSettingsInput(action: GameAction): void {
+        if (action.type === "cancel" || action.type === "jack_out") {
+            this.screen = "menu";
+            this.draw();
+            return;
+        }
+        if (action.type === "confirm") {
+            // Toggle settings
+            this.draw();
+        }
+    }
+
+    private handlePauseInput(action: GameAction): void {
+        if (action.type === "cancel" || action.type === "jack_out") {
+            this.screen = "menu";
+            this.draw();
+            return;
+        }
+        if (action.type === "confirm") {
+            this.screen = "settings";
+            this.draw();
         }
     }
 
@@ -567,6 +640,13 @@ class Game {
         if (this.screen === "settings") {
             void loadAudioSystem().then(async (audio) => {
                 const manager = audio.AudioManager.getInstance();
+                // Ensure defaults are persisted
+                if (localStorage.getItem("wetrun_audio_bgm_volume") === null) {
+                    manager.setBgmVolume(manager.getBgmVolume());
+                }
+                if (localStorage.getItem("wetrun_audio_sfx_volume") === null) {
+                    manager.setSfxVolume(manager.getSfxVolume());
+                }
                 const settingsModule = await loadSettingsRenderer();
                 if (this.settingsState === null) {
                     this.settingsState = settingsModule.getInitialSettingsState();
@@ -653,8 +733,18 @@ class Game {
                 this.initGraphicNovel();
                 this.draw();
                 break;
+            case "settings":
+                this.screen = "settings";
+                this.draw();
+                break;
+            case "tutorial":
+                resetTutorial();
+                this.tutorialActive = true;
+                this.tutorialOverlay = createTutorialOverlay();
+                this.draw();
+                break;
             default:
-                // Other options (settings, credits, etc.) handled elsewhere.
+                // Other options (credits, etc.) handled elsewhere.
                 this.draw();
                 break;
         }
@@ -835,19 +925,37 @@ class Game {
                         ],
                     );
                 });
+            } else if (this.screen === "pause") {
+                this.renderer.render(
+                    makeGrid(this.layout.cols, this.layout.rows),
+                    ["PAUSED", "", "ESC: Resume | SETTINGS: Enter | ESC: Quit to Menu"],
+                );
             } else if (this.screen === "crafting") {
                 this.renderCraftingScreen();
             } else if (this.screen === "equipment") {
                 this.renderEquipmentScreen();
-            } else if (this.screen === "graphic_novel") {
-                this.renderGraphicNovel();
+} else if (this.screen === "dungeon") {
+            if (this.state && this.dungeonCrawler) {
+                const grid = renderDungeonMap(this.dungeonCrawler, this.layout.cols, this.layout.rows);
+                const hud = renderDungeonUi(this.dungeonCrawler, this.layout.cols, this.layout.rows);
+                this.renderer.render(grid, hud);
             } else {
-                const opt = MENU_OPTIONS[this.selectedMenuIndex];
-                const label = opt ? opt.label.toUpperCase() : "WET RUN";
                 this.renderer.render(
-                    renderStubScreen(label, this.layout.cols, this.layout.rows),
-                    ["STUB", "", "Coming soon — Tier 5+"],
+                    makeGrid(this.layout.cols, this.layout.rows),
+                    ["DUNGEON", "", "No dungeon active"],
                 );
+            }
+            return;
+        } else if (this.screen === "graphic_novel") {
+            this.renderGraphicNovel();
+            return;
+        } else {
+            const opt = MENU_OPTIONS[this.selectedMenuIndex];
+            const label = opt ? opt.label.toUpperCase() : "WET RUN";
+            this.renderer.render(
+                renderStubScreen(label, this.layout.cols, this.layout.rows),
+                ["STUB", "", "Coming soon — Tier 5+"],
+            );
             }
             this.syncPhase("menu");
             return;
@@ -922,6 +1030,12 @@ class Game {
         return this.screen;
     }
 
+    /** Read-only BGM volume accessor for e2e/integration tests. */
+    async getBgmVolume(): Promise<number> {
+        const audio = await loadAudioSystem();
+        return audio.AudioManager.getInstance().getBgmVolume();
+    }
+
     /** External entry point for touch gamepad program buttons.
      * Resolves hand index → programId via resolveProgramSelection, then applies.
      */
@@ -951,6 +1065,13 @@ class Game {
         this.unmountTouch();
         this.unwatchLayout();
     }
+
+    getSettingsState(): import("./renderer/settings.ts").SettingsState | null {
+        return this.settingsState;
+    }
+
+    /** Expose methods for e2e testing */
+    static readonly e2eMethods = ["getScreen", "getPhase", "getBgmVolume", "getSettingsState", "handleProgramButton", "start", "stop"];
 }
 
 function mockStatusEffectsForTurn(turn: number): readonly string[] {

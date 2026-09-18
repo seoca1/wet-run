@@ -22,8 +22,9 @@ import type {
   Program,
   SaveSlot,
 } from "./types.ts";
+export type { GameState } from "./types.ts";
 import { makeGrid } from "./grid.ts";
-import { EMPTY_LOADOUT } from "./equipment.ts";
+import { EMPTY_LOADOUT } from "./loadout.ts";
 import { generateProceduralMatrix } from "./matrix.ts";
 import { DEFAULT_FACTION_SCORES } from "./faction_reputation.ts";
 import missionsData from "../data/missions.json";

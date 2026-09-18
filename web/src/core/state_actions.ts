@@ -21,6 +21,7 @@ import type {
   EndingChoice,
 } from "./types.ts";
 import { applyStatus, applyTickEffects, applyBurnDamage, tickStatus, rollStatusProc } from "./status.ts";
+import { AudioManager, SFX_IDS } from "../audio/manager.ts";
 import { calculateDamage, countRoleSynergy, AUTO_ATTACK_INTERVAL_MS } from "./combat_engine.ts";
 import { DEFAULT_BOSS_PROFILE, checkPhaseTransition } from "./boss_phases.ts";
 import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai.ts";
@@ -39,6 +40,77 @@ const DIXIE_SYNERGY_BONUS = 3;
 
 /** Tier 5: matrix view actions (navigate, enter combat, jack out). */
 export function applyMatrixAction(state: GameState, action: GameAction): GameState {
+  if (action.type === "confirm" && state.matrix != null) {
+    const node = state.matrix.nodes[state.currentNodeIndex];
+    if (!node || node.iceIds.length === 0) return state;
+    const activeIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
+    const encounterMultiplier = isMutatorActive(state as unknown as MutableRunState, "ice_x2") ? 2 : 1;
+    const baseCount = Math.min(node.iceIds.length * encounterMultiplier, 4);
+    const iceRoster = node.iceIds.slice(0, baseCount).map((id, i) => {
+      const hp = node.iceHp[i] ?? activeIce.hp;
+      return { ...activeIce, id, hp };
+    });
+    const matrixEntryVfx: import("../renderer/combat_vfx.js").CombatVfxInstance[] = [
+      import_vfx("room_flash", "TIER_GOLD", 1),
+    ];
+    if (node.eventKind === "cache") {
+      matrixEntryVfx.push(import_vfx("data_acquired", "", durationForKind("data_acquired")));
+    }
+    return {
+      ...state,
+      runPhase: "combat",
+      phase: "approach",
+      message: `Entering ${node.zone}... (${iceRoster.length} ICE)`,
+      iceRoster,
+      activeIceIndex: 0,
+      bossPhase: node.isBoss ? 1 : 0,
+      turnCount: state.turnCount + 1,
+      vfxInstances: [...state.vfxInstances, ...matrixEntryVfx],
+    };
+  }
+  
+// Matrix navigation - move between adjacent nodes
+  if ((action.type === "move_north" || action.type === "move_south" || 
+       action.type === "move_east" || action.type === "move_west") && state.matrix != null) {
+    const node = state.matrix.nodes[state.currentNodeIndex];
+    if (!node || node.adjacent.length === 0) return state;
+    
+    // Determine direction: south/east = forward, north/west = backward
+    const isForward = action.type === "move_south" || action.type === "move_east";
+    const isBackward = action.type === "move_north" || action.type === "move_west";
+    
+    if (isForward) {
+      // Move forward to adjacent node
+      const nextIndex = node.adjacent[0];
+      if (nextIndex != null && nextIndex < state.matrix!.nodes.length) {
+        return {
+          ...state,
+          currentNodeIndex: nextIndex,
+          turnCount: state.turnCount + 1,
+          message: `Moved to ${state.matrix!.nodes[nextIndex].zone}`,
+        };
+      }
+    } else if (isBackward) {
+      // Move backward - find node that points to current
+      let prevIndex = -1;
+      for (let i = 0; i < state.matrix!.nodes.length; i++) {
+        if (state.matrix!.nodes[i].adjacent.includes(state.currentNodeIndex)) {
+          prevIndex = i;
+          break;
+        }
+      }
+      if (prevIndex >= 0 && prevIndex !== state.currentNodeIndex) {
+        return {
+          ...state,
+          currentNodeIndex: prevIndex,
+          turnCount: state.turnCount + 1,
+          message: `Moved back to ${state.matrix!.nodes[prevIndex].zone}`,
+        };
+      }
+    }
+    return state;
+  }
+  
   if (action.type === "confirm" && state.matrix != null) {
     const node = state.matrix.nodes[state.currentNodeIndex];
     if (!node || node.iceIds.length === 0) return state;
@@ -435,6 +507,8 @@ function processEnemyTurns(state: GameState): GameState {
     };
   }
 
+  const bossPhaseChangedInEnemyTurn = newBossPhase > state.bossPhase;
+
   return {
     ...state,
     skillCooldowns: newCooldowns,
@@ -445,6 +519,9 @@ function processEnemyTurns(state: GameState): GameState {
     lastEnemyAttackMs: anyEnemyAttacked ? currentMs : state.lastEnemyAttackMs,
     counterWindowOpenMs: anyEnemyAttacked ? currentMs : state.counterWindowOpenMs,
     message: logMessages.length > 0 ? logMessages[logMessages.length - 1] : state.message,
+    vfxInstances: bossPhaseChangedInEnemyTurn && newBossPhase >= 1 && newBossPhase <= 4
+      ? [...state.vfxInstances, import_vfx_ms("boss_phase_transition", "", durationMsForKind("boss_phase_transition"), undefined, undefined, newBossPhase)]
+      : state.vfxInstances,
   };
 }
 
@@ -475,6 +552,9 @@ function useProgram(state: GameState, programId: string): GameState {
 
   const newCombo = state.playerCombo + 1;
   const currentMs = Date.now();
+
+  // Play combat hit SFX automatically
+  void AudioManager.getInstance().playSfx(SFX_IDS.COMBAT_HIT);
 
   const damageCtx = {
     baseDamage: program.tier * 5,
@@ -584,8 +664,8 @@ function useProgram(state: GameState, programId: string): GameState {
       : []),
   ];
   
-  const newlyDefeated = damagedRoster.filter(
-    (ice, i) => ice.hp === 0 && state.iceRoster[i].hp > 0,
+  const newlyDefeated = finalState.iceRoster.filter(
+    (ice, i) => ice.hp === 0 && state.iceRoster[i]?.hp !== 0,
   );
   let lootDrops: LootDrop[] = [];
   let updatedFactionScores = state.factionScores;
@@ -658,17 +738,17 @@ function useProgram(state: GameState, programId: string): GameState {
   }
   const activeIceNewHp = finalState.iceRoster[targetIdx]?.hp ?? 0;
   return {
-    ...finalState,
-    iceRoster: finalState.iceRoster,
+    ...stateWithLoot,
+    iceRoster: stateWithLoot.iceRoster,
     deck: newDeck,
     discardPile: discard,
-    player: { ...finalState.player, alarm: newAlarm },
+    player: { ...stateWithLoot.player, alarm: newAlarm },
     message: isAoe
       ? `${program.name} → ${damage} dmg ALL (roster hit)`
       : `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})`,
     vfxInstances: vfxNew,
-    unlockedAchievements: finalState.unlockedAchievements,
-    achievementCredits: finalState.achievementCredits,
+    unlockedAchievements: stateWithLoot.unlockedAchievements,
+    achievementCredits: stateWithLoot.achievementCredits,
     factionScores: updatedFactionScores,
   };
 }

@@ -15,6 +15,7 @@ export const PALETTE = Object.freeze({
   GRAY_DARK: "#606060",
   GRAY_MID: "#909090",
   GRAY_LIGHT: "#c0c0c0",
+  GRAY: "#808080",
   CYAN_LIGHT: "#00ffff",
   CYAN_DIM: "#00a0a0",
   GREEN_NEON: "#00ff41",
@@ -22,7 +23,10 @@ export const PALETTE = Object.freeze({
   RED_DEEP: "#a00020",
   RED_BRIGHT: "#ff2030",
   YELLOW_AMBER: "#ffa500",
+  YELLOW: "#ffff00",
   MAGENTA_NEON: "#ff00ff",
+  MAGENTA_LIGHT: "#ff80ff",
+  BLUE_BRIGHT: "#4080ff",
   ICE_BLUE: "#4080ff",
   ALARM_RED: "#ff4040",
   PLAYER_CYAN: "#40ffff",
@@ -40,6 +44,7 @@ export const PALETTE = Object.freeze({
   WARM: "#e0a060",
   OLIVE: "#a0a040",
   TIER_GOLD: "#ffd040",
+  WHITE: "#ffffff",
 } as const);
 
 /** Resolve a Python palette key to the closest web palette token.

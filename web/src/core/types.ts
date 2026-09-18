@@ -25,6 +25,7 @@ export interface Grid {
   readonly height: number;
   readonly cells: ReadonlyArray<ReadonlyArray<Cell>>;
   get(x: number, y: number): Cell | null;
+  readonly [x: number]: ReadonlyArray<Cell> | undefined;
 }
 
 /** Mission metadata (subset of wet_run Mission schema). */
@@ -39,6 +40,7 @@ export interface Mission {
   readonly rewards: MissionRewards;
   readonly grade?: number; // Current mission grade (1-5) for procedural generation
   readonly seed?: number; // RNG seed for deterministic dungeon generation
+  runPhase?: "matrix" | "approach" | "combat" | "loot" | "ending" | "dead"; // Current phase for dungeon mode
 }
 
 export interface MissionRewards {
@@ -99,6 +101,9 @@ export type GamePhase =
 export type ScreenKind =
   | "menu" // Main menu (9 options, current screen on boot)
   | "mission_select" // NEW RUN → mission select (Tier 3 curated 30 missions)
+  | "briefing" // Mission briefing (Finn's office) — NEW
+  | "travel" // Travel to jack-in point animation — NEW
+  | "bypass_security" // Bypass corporate security — NEW
   | "graphic_novel" // GRAPHIC NOVEL → auto-play (stub for Tier 4)
   | "saved_progress" // CONTINUE → load saved (stub for Tier 4)
   | "settings" // SETTINGS screen (stub)
@@ -111,7 +116,17 @@ export type ScreenKind =
   | "stats" // STATS / Telemetry (stub, deferred)
   | "tutorial" // Tutorial overlay (Tier 5.5+ first-run onboarding)
   | "crafting" // CRAFT — recipe/material consumption screen
-  | "equipment"; // EQUIPMENT — equip/unequip gear screen
+  | "equipment" // EQUIPMENT — equip/unequip gear screen
+  | "pause" // PAUSED screen
+  | "bypass_security" // Bypass corporate security — NEW
+  | "black_market" // BLACK MARKET — hub vendor
+  | "ghost_encounter" // GHOST ENCOUNTER — Loa event
+  | "death_restart" // DEATH RESTART — flatline recovery
+  | "failed" // FAILED — flatline terminal state
+  | "meet_npc" // MEET NPC — construct dialogue
+  | "extract_data" // EXTRACT DATA — data extraction
+  | "dungeon" // NetHack-style dungeon crawler mode
+  | "dungeon_debug"; // DEBUG: dungeon graph visualization
 
 /** Graphic novel live state (Tier 5+).
  *

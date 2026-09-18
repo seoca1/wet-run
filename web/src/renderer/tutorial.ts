@@ -152,6 +152,18 @@ function completeTutorial(): void {
   }
 }
 
+/** Reset tutorial so it can be re-run from menu. */
+export function resetTutorial(): void {
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.removeItem("wetrun_tutorial_completed");
+      localStorage.removeItem("wetrun_tutorial_step");
+    } catch {
+      // ignore
+    }
+  }
+}
+
 export function createTutorialOverlay(): {
   readonly state: TutorialOverlayState;
   readonly render: (cols: number, rows: number) => Grid;

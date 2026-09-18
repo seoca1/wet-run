@@ -134,10 +134,17 @@ export class AudioManager {
   private _sfxVolume: number;
   private readonly sfxHowls: Map<SoundEffectId, Howl> = new Map();
 
-  private constructor(bgmVolume: number, sfxVolume: number) {
+private constructor(bgmVolume: number, sfxVolume: number) {
     this._bgmVolume = readPersistedVolume(STORAGE_KEY_BGM, bgmVolume);
     this._sfxVolume = readPersistedVolume(STORAGE_KEY_SFX, sfxVolume);
-  }
+    // Persist defaults if not already set
+    if (localStorage.getItem(STORAGE_KEY_BGM) === null) {
+      writePersistedVolume(STORAGE_KEY_BGM, this._bgmVolume);
+    }
+    if (localStorage.getItem(STORAGE_KEY_SFX) === null) {
+      writePersistedVolume(STORAGE_KEY_SFX, this._sfxVolume);
+    }
+}
 
   /** Get or create the singleton. Safe to call repeatedly. */
   static getInstance(): AudioManager {

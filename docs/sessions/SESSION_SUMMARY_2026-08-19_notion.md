@@ -34,7 +34,7 @@ gap that the dashboard had.
 ### 2.2 Notion 명칭 변경: Roguelike Sprawl → Wet Run
 - **Parent page rename**: `Roguelike Sprawl - 프로젝트 가이드` → **`Wet Run - 프로젝트 가이드`**
 - **5 body updates** on the same page (1 H1, 1 code block, 2 URL bullets):
-  - `cd ~/projects/Projects/Game/roguelike_sprawl/prototype` → `wet_run`
+  - `cd ~/projects/opencodework/Game/roguelike_sprawl/prototype` → `wet_run`
   - `github.com/seoca1/roguelike-sprawl` → `wet-run`
   - `seoca1.github.io/roguelike-sprawl/` → `wet-run/`
 - **ROGUELIKE residual hits**: 0

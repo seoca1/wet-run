@@ -9,6 +9,11 @@ import { test, expect } from "@playwright/test";
 test.describe("Wet Run Game", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto("./");
+    await page.evaluate(() => {
+      localStorage.setItem('wetrun_tutorial_completed', 'true');
+      localStorage.removeItem('wetrun_tutorial_step');
+    });
+    await page.goto("./");
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(500);
   });
@@ -167,6 +172,9 @@ test.describe("Wet Run Game", () => {
     await page.keyboard.press("Enter");
     await page.waitForTimeout(300);
 
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(300);
+
     const approachPhase = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getPhase(): string | null } };
       return w.wetrun?.getPhase() ?? null;
@@ -184,6 +192,8 @@ test.describe("Wet Run Game", () => {
   });
 
   test("can use program in combat via digit key", async ({ page }) => {
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(300);
     await page.keyboard.press("Enter");
     await page.waitForTimeout(300);
     await page.keyboard.press("Enter");

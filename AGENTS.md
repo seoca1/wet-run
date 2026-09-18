@@ -15,7 +15,7 @@
 | `design/` | 자유롭게 편집, 사용자 검토 영역 | 활성 스펙. 사용자가 직접 수정할 수 있음을 인지. |
 | `testcases/` | 자유롭게 편집, 템플릿 사용 | 디자인 변경 시 동기화 필요. |
 | `decisions/` | Draft 상태는 자유, Accepted는 immutable | 결정된 사항 임의 변경 금지, 새 결정은 신규 ADR로. |
-| `prototype/` | Python 3.11 + python-tcod ECS + uv | 확정 (v1.1.0a1, 2026-07-28). 모든 변경 후 `ruff check` + `mypy` + `pytest` 통과 필수. |
+| `prototype/` | (이전 명칭; **2026-09-15 통합 완료 → `web/` 로 이관**) | 하위 호환을 위해 디렉토리는 보존되지만 활성 코드베이스는 `web/` TypeScript. |
 | 루트 메타 파일 | 신중히 수정 | README, AGENTS.md, index, log, ROADMAP, SETUP_LOG |
 
 ## 3. 작업 워크플로우
@@ -120,175 +120,163 @@
 
 ## 6. 코딩 규칙 (Accepted 결정 반영)
 
-### 언어 및 의존성
-- **언어**: Python 3.11+ (3.12, 3.14 호환 확인)
-- **렌더링 / 게임 루프**: python-tcod (>= 16.0, 21+ 검증)
-- **테스트**: pytest
-- **린트 / 포맷**: ruff
-- **타입 체크**: mypy (strict)
-- **의존성 관리**: pyproject.toml + uv (또는 pip)
-- **빌드 백엔드**: hatchling
+> **2026-09 통합 노트**: `prototype/` 디렉토리의 Python 코드는 **2026-09-15 통합으로 `web/` TypeScript로 이관 완료** (커밋 `1b3cff4 chore: prototype/ 정리 및 web/ 검증 완료`). 활성 코드베이스는 `web/` (Node.js + TypeScript + Vite + Vitest). 모든 변경은 `web/` 에서.
+
+### 언어 및 의존성 (현재 — `web/`)
+
+- **언어**: TypeScript 5.5
+- **빌드**: Vite 5.3
+- **테스트**: Vitest (vitest.config.ts + tests/ 하위)
+- **린트 / 포맷**: ESLint + Prettier
+- **타입 체크**: tsc --noEmit (strict mode in tsconfig.json)
+- **의존성 관리**: package.json + npm (또는 pnpm/yarn)
+- **렌더링**: HTML5 Canvas 2D (Web tier); tcod 호환 포트는 데이터 export (`scripts/export_web_data.py`)로만 잔존
 
 ### 테스트 / 린트 / 타입체크 실행 경로 (canonical)
 
-**반드시 `prototype/` 디렉토리에서 실행** — 프로젝트 루트에 있는 `.venv/`는 pytest만 있고 ruff/mypy/interrogate/typing_extensions가 없음. 절대 경로 (예: `/.../prototype/.venv/bin/pytest`)는 다른 Python 인터프리터를 사용해 11+ false-positive 실패를 보임.
+**반드시 `web/` 디렉토리에서 실행** — 절대 경로 (`/.../web/node_modules/.bin/vitest`)는 다른 인터프리터를 사용해 9+ false-positive 실패를 보임. `cd web &&` 후 상대 npm 스크립트 사용.
 
 ```bash
-cd prototype
-make all          # format + lint + typecheck + test
-make test         # pytest only (5281 → 5307 passing, 463 → 365 skipped)
-make lint         # ruff
-make typecheck    # mypy --strict
+cd web
+npm install            # 1회 (또는 의존성 변경 시)
+npm test               # vitest run — 87 files, ~2646 tests at HEAD + 63 pre-existing failures
+npm run test:watch     # watch 모드
+npm run typecheck      # tsc --noEmit (strict)
+npm run lint           # eslint src
+npm run format         # prettier --write
+npm run build          # tsc + vite build → dist/
+npm run dev            # vite dev server (HMR)
+npm run e2e            # playwright e2e (separated tests, requires browsers)
+npm run smoke          # e2e/smoke.spec.ts only
+npm run export-data    # regenerate static JSON from wet_run Python (read-only)
 ```
 
-또는 직접 실행 시 `prototype/.venv/bin/...` 절대 경로 대신 `cd prototype &&` 후 상대 경로 사용.
+> **사전 알림 (2026-09-15 감사)**: `tsc --noEmit`을 pristine HEAD에서 실행 시 약 79개 strict-type 에러가 보고된다 — 대부분 **PR 시점에는 존재했지만 미해결로 머문 항목** (untracked `src/renderer/{dungeon,inventory,journal,loading,mission_select,pause,shop,status}.ts` 가 `State` 타입을 잘못 import하는 등의 신규 추가 코드에서 발생). 버그 헌트가 아닌 마이그레이션 잔재. **CI에서 강제하지 않음**. 가이드: 가능하면 같은 세션에서 함께 정리하거나, 별도 PR로 분리.
 
-### 디렉토리 구조 (Phase 4 확정)
-
-코드 프로젝트는 `prototype/` 하위. 디자인 문서와 분리.
+### 디렉토리 구조 (현재 — `web/` 기반)
 
 ```
-prototype/
-├── pyproject.toml          # uv / pip 프로젝트 설정
-├── README.md               # 코드 프로젝트 README
-├── Makefile                # 편의 명령
-├── .gitignore, .editorconfig, .python-version
-├── src/
-│   └── wet_run/   # Python 패키지
-│       ├── __init__.py
-│       ├── __main__.py     # python -m wet_run
-│       ├── engine/         # tcod 통합 (app, render, input, config)
-│       ├── ecs/            # ECS-lite (entity, world)
-│       ├── i18n/           # 번역 (translator)
-│       ├── portraits/      # ASCII Portraits (manager)
-│       ├── data/           # 데이터 로더
-│       ├── matrix/         # 사이버스페이스 (노드 그래프)
-│       ├── combat/         # RT-MS 전투
-│       ├── programs/       # 프로그램
-│       ├── jobs/           # 의뢰
-│       ├── save_progress.py  # 세이브 진도 조회 (ADR-0032)
-│       ├── graphic_novel_view.py  # 그래픽 노블 자동플레이 (ADR-0032, 0041-0044)
-│       ├── graphic_novel_audio.py  # 씬 사운드 큐 (ADR-0043)
-│       ├── graphic_novel_save.py   # GN 이어서 읽기 (ADR-0044)
-│       └── jockey_history.py       # Hall of Dead 자키 아카이브 (ADR-0040)
-├── tests/
-│   ├── conftest.py
-│   └── unit/               # 단위 테스트 (2257 tests)
-├── data/
-│   ├── i18n/               # en.json, ko.json
-│   ├── portraits/          # portraits.json
-│   ├── programs/           # programs.json
-│   ├── scenes/             # 그래픽 노블 씬 (3 캐릭터 × 4 씬, ADR-0032 + ADR-0041 4× 확장)
-│   ├── art/                # ASCII 아트 (portraits.json, backgrounds.json)
-│   ├── saves/              # GNProgress save 파일 (ADR-0044)
-│   ├── sounds_test/        # 46개 자동 생성 WAV (ADR-0043)
-│   └── fonts/              # libtcod terminal font
-├── scripts/
-│   ├── download_font.py    # 폰트 다운로드
-│   ├── play.py             # 풀 게임 데모 (--gn-mode로 그래픽 노블 진입)
-│   ├── demo.py             # 사이클 데모
-│   ├── demo_all.py         # 풀 게임 + 그래픽 노블 통합
-│   ├── graphic_novel.py    # 그래픽 노블 단독 (--continue, --no-cards, --card-ms)
-│   ├── combat_simulator.py # 단일 전투 검증
-│   ├── combat_grades.py    # 5등급 진행 비교
-│   ├── combat_effects_demo.py  # 5-Layer VFX 10-씬
-│   ├── death_demo.py       # Death cycle 단독
-│   ├── death_in_action_demo.py  # Combat → Death 5-Phase 풀사이클
-│   ├── full_demo.py        # Prologue → Briefing → Matrix → Combat
-│   └── scripts/README.md   # 모든 데모 실행 가이드
-└── .github/workflows/
-    └── ci.yml              # GitHub Actions CI
+Game/wet_run/
+├── web/                     # ← 활성 코드베이스 (TypeScript + Vite + Vitest)
+│   ├── package.json
+│   ├── tsconfig.json        # strict 모드
+│   ├── vite.config.ts
+│   ├── vitest.config.ts
+│   ├── index.html
+│   ├── public/              # 정적 자산
+│   ├── src/
+│   │   ├── main.ts          # 엔트리 포인트 (canvas + renderer + game loop)
+│   │   ├── audio/           # Howler.js BGM + SFX
+│   │   ├── core/            # 게임 로직 (combat, state, dungeon, save 등)
+│   │   │   ├── combat_engine.ts / combat_models.ts / boss*.ts / ice_ai.ts
+│   │   │   ├── state.ts / state_actions.ts / state_helpers.ts / types.ts
+│   │   │   ├── matrix.ts / dungeon*.ts / hub.ts / stage_system.ts
+│   │   │   ├── achievements*.ts / faction_reputation.ts / death_cycle.ts
+│   │   │   ├── graphic_novel*.ts / sound_system.ts / i18n.ts
+│   │   │   ├── save_progress.ts / accessibility.ts / pwa_manager.ts
+│   │   │   └── starter_deck.ts  # STARTER_DECK constant (Tier 1 MVP)
+│   │   ├── input/           # KeyboardInput / GamepadInput / Touch
+│   │   ├── renderer/        # Canvas2D ASCII renderer (palette.ts, canvas.ts)
+│   │   ├── data/            # 정적 JSON (export_web_data.py로 생성)
+│   │   └── e2e/             # Playwright e2e specs
+│   ├── tests/              # 87 vitest 파일 (~2646 tests + 63 pre-existing failures)
+│   └── scripts/            # export_web_data.py 등 보조 스크립트
+├── docs/                   # 디자인 / ADR / 세션 요약
+├── data/                   # 정적 데이터 (이전 prototype/ 잔재; export_web_data.py 입력)
+├── tools/
+├── log.md                  # 워크스페이스 활동 로그
+├── README.md               # 최상위 개요
+└── ROADMAP.md              # 단계별 계획
 ```
 
-### 스타일
-- PEP 8 + ruff 기본
-- 모든 public 함수 / 클래스에 타입 힌트 + docstring
-- `from __future__ import annotations` 사용
-- 한 줄 100자 (ruff)
-- 모듈 / 클래스 / 함수 모두 docstring
-- `__slots__` 사용 (메모리 효율)
+> **통합 ADR**: `1b3cff4 chore: prototype/ 정리 및 web/ 검증 완료` — Python 프로토타입 비활성화, `web/` Tier 1 MVP 활성. 후속 ADRs (ADR-0199 등)는 web/ 단계별로 갱신.
 
-### 모듈 사이즈 정책 (ADR-0110)
-- **250 LOC**: 신규 모듈 권장 한도 (PR 리뷰 체크리스트)
-- **500 LOC**: PR 거부 기준 (1회성 / 단발성 모듈은 700~800 LOC 까지 예외 허용)
-- **1000+ LOC**: 신규 ADR 필수 (정당화 + 분할 계획 OR 보유 사유 명시)
+### 스타일 (현재 — `web/` TypeScript)
 
-현행 14 파일은 ADR-0110 Consequences 표 참조. 1000+ LOC 4 모듈은 후속 ADR (제안: 0111/0112/0113) 로 정당화/분할 처리. matrix_view.py 는 ADR-0103 의 backward compat 보존 결정 우선.
+- TypeScript strict, ESLint + Prettier 기본
+- 모든 public 함수 / 컴포넌트에 타입 명시
+- 2-space indent
+- 한 줄 100자 (Prettier 기본)
+- 함수형 컴포넌트 우선, hooks 활용
+- `Object.freeze(...)` / `Readonly<...>` 광범위 사용 (불변 상태 모델)
+- 모듈 / 클래스 / 함수 모두 docstring 권장
 
-### 명령 (Makefile)
+### 모듈 사이즈 정책 (ADR-0110 이월)
+
+1000+ LOC 정책은 이전 Python 코드를 기준으로 작성됨. `web/` TypeScript는 **모듈당 평균 100-300 LOC**으로 더 작은 단위를 권장 (Vite tree-shaking 효율). 1000+ LOC 신규 모듈은 PR 리뷰에서 분할 계획 또는 정당화 필수.
+
+### 명령 (npm scripts via Makefile wrapper 또는 직접)
 
 ```bash
-make sync         # uv sync --all-extras
-make download-font  # 폰트 다운로드 (최초 1회)
-make run          # 게임 실행 (hello-world)
-make test         # pytest
-make lint         # ruff check
-make format       # ruff format
-make typecheck    # mypy
-make build        # uv build
-make clean        # 캐시 정리
-make all          # format + lint + typecheck + test
+cd web
+npm test               # vitest run
+npm run typecheck      # tsc --noEmit
+npm run lint           # eslint src --ext .ts,.tsx
+npm run format         # prettier --write
+npm run build          # tsc -b && vite build
+npm run dev            # vite (HMR)
 ```
 
-### 빠른 데모 (Phase 5)
+### 빠른 데모 (web/ 기준)
 
 ```bash
-# 30초 자동 플레이 (Menu → Hub → Matrix 사이클, Fog 표시)
-uv run python scripts/play.py
+cd web
+npm run dev            # http://localhost:5173
 
-# 짧은 데모
-uv run python scripts/play.py --duration 8 --step-delay 0.3
+# CLI 인터랙티브 (Tier 4 검증 도구)
+npm run cli:interactive
 
-# 화면 누적 (스크롤)
-uv run python scripts/play.py --no-clear
+# 빠른 자동 검증 (30 tests, ~1초)
+npm run cli:test
 
-# 한글
-uv run python scripts/play.py --lang ko
+# 빌드 미리보기
+npm run build && npm run preview
 ```
 
-추가 도구 (전체 가이드: `scripts/README.md`):
-- `scripts/combat_simulator.py` — 단일 전투 검증 (PPL/ZDR/enemy/strategy 옵션)
-- `scripts/combat_grades.py` — 5등급 전투 진행 비교 (테이블 출력)
-- `scripts/combat_effects_demo.py` — 5-Layer VFX 10-씬 검증
-- `scripts/death_demo.py` — Death 사이클 단독 (DEATH_SUMMARY/HALL_OF_DEAD)
-- `scripts/death_in_action_demo.py` — Combat → Death 5-Phase 풀사이클
-- `scripts/graphic_novel.py` — 그래픽 노블 자동재생 (`--continue` 이어서 읽기)
-- `scripts/demo.py` — 2분 전체 플레이 (HUB + Matrix 사이클)
-- `scripts/demo_all.py` — 풀 게임 + 그래픽 노블 통합
-- `scripts/visual_demo.py` — 8개 시스템 한 번에 시각 검증
+### 코드 변경 시 워크플로우 (web/)
 
-### 코드 변경 시 워크플로우
-1. 관련 `design/systems/*.md` 와 `testcases/*.md` 확인
-2. 자동 테스트 추가 (단위/통합)
-3. `make format && make lint && make typecheck && make test`
-4. `log.md` 에 기록
-5. 영향 받는 ADR / 결정이 있으면 ADR 갱신
+1. 관련 `docs/design/*.md` (이전 `design/systems/*.md` 위계) 와 `testcases/` 확인
+2. 자동 테스트 추가 (vitest 단위/통합)
+3. `npm run format && npm run lint && npm run typecheck && npm test`
+4. `log.md` 에 `[YYYY-MM-DD] 작업종류 | 제목` 형식으로 기록
+5. 영향 받는 ADR / 결정이 있으면 ADR 갱신 (단, `decisions/` 디렉토리는 이전 prototype 잔재; 신규 web ADR은 `docs/architecture/` 권장)
 
-### i18n (번역) 가이드라인 (ADR-0010)
+### i18n (번역) 가이드라인 (ADR-0010 이월)
 
 - **1차**: 영어 (en) — 깁슨 원문 톤 직접 보존
 - **보조**: 한글 (ko) — 번역/자막 추가
 - **고유명사**: 영어 원문 그대로 사용 가능 (Case, Tessier-Ashpool, Ono-Sendai, ICE, construct 등)
 - **일반 명사/서술/대사**: 한국어 의역
 - **표시 모드**: Off (영어만) / Subtitle (영어+한글) / Replace (한글만)
-- 자세한 내용: `decisions/0010-i18n-content-pipeline.md`, `design/glossary.md` 의 "고유명사 번역 원칙"
+
+### 알려진 한계 (web/ 활성 상태)
+
+- **`tsc --noEmit` 알려진 알림**: 위 "사전 알림" 박스 참조. 79개 에러는 별도 청소 PR 권장.
+- **e2e specs (`web/e2e/*.spec.ts`)**: Playwright 브라우저 의존성. 단위 검증이 부족한 통합 경로 검증용.
+- **PWA (`web/src/core/pwa_manager.ts`)**: half-implemented (consumer only). beforeinstallprompt / controllerchange / online-offline 리스너 미연결 — 후속 작업.
 
 ### CI / CD
 - GitHub Actions: macOS + Windows 매트릭스
-- PR마다 lint + format + typecheck + test 자동 실행
-- python-tcod 21+ 검증
+- PR마다 lint + format + build 자동 실행
+- Vitest 단위 테스트는 CI에서 강제 / e2e는 명시 트리거
 
-### ECS-lite 사용 규칙 (ADR-0194, Accepted 2026-08-26)
+### ECS-lite 사용 규칙 (ADR-0194, Accepted 2026-08-26) — 이전 prototype/ 잔재
+
+> **2026-09 노트**: ECS 결정은 prototype/ Python 코드에 적용됨. web/ TypeScript 마이그레이션에서는 상태가 `web/src/core/state.ts` 의 reducer 패턴 + `GameState` 인터페이스로 통합되어, 별도 ECS 레이어가 없음. 신규 web 컴포넌트는 **순수 OOP + `interface` 타입** 권장.
 
 **기본 (신규 시스템 추가 시)**: OOP / `@dataclass` 사용.
 
-**ECS-lite 선택 허용 도메인**:
+**ECS-lite 선택 허용 도메인** (Python 잔재 — `prototype/` 디렉토리에서만):
 - `matrix/` (노드 그래프 — 방 → Entity 매핑)
 - `engine/dungeon_view.py` (dungeon/room 시각화)
 
 **ECS-lite 비권장 도메인**:
 - `engine/state.py` (AppState), `combat/*`, `missions/*`, `equipment/*`,
   `programs/*`, `portraits/*`, `i18n/*`, `story/` — 모두 OOP / `@dataclass`
+
+**World naming collision**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입 (Python). web/ TypeScript에는 해당 없음.
+
+**참조**: [`decisions/0194-ecs-role-clarification.md`](./decisions/0194-ecs-role-clarification.md), [`docs/ARCHITECTURE.md` §14.6](./docs/ARCHITECTURE.md#146-adr-0194-결과-적용-2026-08-26)
 
 **World naming collision**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입.
 
@@ -406,6 +394,8 @@ Web UI에서 보드 생성:
 ## 10. 그래픽 노블 모드 (ADR-0032)
 
 게임 시작 시 메인메뉴(7 옵션)에서 진입 가능한 비주얼 노블 자동플레이.
+
+> **2026-09 통합 노트**: 본 섹션은 prototype/ Python 시절 ADR-0032/0040/0041-44 그래픽 노블 명세를 보존합니다. web/ TypeScript 포트는 다음에 위치: `web/src/core/graphic_novel*.ts` (5 modules), `web/src/main.ts` 메뉴 옵션 2 (`GRAPHIC NOVEL`), `web/src/ui/GraphicNovelMenu.tsx` 등. **web/ 테스트는 `web/tests/graphic_novel*.test.ts`** (Tier 4 기준 — ADR-0199 이월).
 
 ### 메인메뉴 옵션 (7) — ADR-0032 + ADR-0040 + Phase 7
 1. **NEW RUN** — 자키 선택부터 일반 게임플레이

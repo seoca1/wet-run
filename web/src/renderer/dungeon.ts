@@ -7,9 +7,9 @@
  * - Color coding for different tile types and entities
  */
 
-import { Cell, Grid } from "../core/types.ts";
+import { Grid } from "../core/types.ts";
 import { PALETTE } from "./palette.ts";
-import { DungeonTile, TileType, DungeonEntity, EntityType, ItemType, MonsterType } from "../core/dungeon_crawler.ts";
+import { TileType, EntityType, ItemType, MonsterType } from "../core/dungeon_crawler.ts";
 import { DungeonCrawler } from "../core/dungeon_crawler.ts";
 import { makeGrid, setCell } from "../core/grid.ts";
 
@@ -266,8 +266,8 @@ function dimColor(hexColor: string): string {
 /** Render dungeon UI elements (sidebar with stats, etc.) */
 export function renderDungeonUi(
   crawler: DungeonCrawler,
-  cols: number,
-  rows: number
+  _cols: number,
+  _rows: number
 ): ReadonlyArray<string> {
   const stats = crawler.getPlayerStats();
   

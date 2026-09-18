@@ -383,3 +383,6 @@ export const KEYBOARD_MAPPING: Readonly<Record<string, GameAction>> = Object.fre
   "8": { type: "select_program", handIndex: 8 },
   "9": { type: "select_program", handIndex: 9 },
 });
+
+/** Type alias for GameState — convenience for renderers. */
+export type State = GameState;

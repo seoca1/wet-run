@@ -77,7 +77,7 @@ export interface DungeonEntity {
   y: number;
   type: EntityType;
   subtype?: ItemType | MonsterType; // More specific type
-  hp?: number;
+  hp: number;
   maxHp?: number;
   hostile?: boolean;
 }
@@ -111,7 +111,7 @@ export interface DungeonState {
 
 /** Create a new dungeon crawler instance */
 export class DungeonCrawler {
-  private state: DungeonState;
+  private _state: DungeonState;
   private rng: Rng;
   private rngInt: RngInt;
   private generator: ProceduralDungeonGenerator;
@@ -122,8 +122,13 @@ export class DungeonCrawler {
     this.rng = this.createRng(seed, mission?.id ?? null);
     this.rngInt = this.withInt(this.rng);
     this.generator = new ProceduralDungeonGenerator(2, 1); // minLeafSize=2, roomPadding=1
-    this.state = this.initializeDungeonState();
+    this._state = this.initializeDungeonState();
     this.generateFirstLevel();
+  }
+
+  /** Public getter for dungeon state (read-only access for renderers) */
+  public get state(): Readonly<DungeonState> {
+    return this._state;
   }
 
   /** Create a seeded RNG (mirrors Python hash(id) % 7919) */
@@ -208,17 +213,17 @@ export class DungeonCrawler {
     // Generate dungeon graph using existing BSP system
     const graph: DungeonGraph = this.generator.generate(
       Date.now() + levelNum * 1000, // Different seed per level
-      this.state.missionGrade,
-      this.state.characterRef
+      this._state.missionGrade,
+      this._state.characterRef
     );
     
     // Resize the dungeon to fit the generated graph
-    this.state.width = graph.width;
-    this.state.height = graph.height;
+    this._state.width = graph.width;
+    this._state.height = graph.height;
     
     // Initialize tiles as walls
-    this.state.tiles = Array.from({ length: this.state.height }, () =>
-      Array.from({ length: this.state.width }, () => ({
+    this._state.tiles = Array.from({ length: this._state.height }, () =>
+      Array.from({ length: this._state.width }, () => ({
         type: TileType.WALL,
         explored: false,
         visible: false,
@@ -226,17 +231,17 @@ export class DungeonCrawler {
     );
     
     // Reset explored map for new level
-    this.state.exploredMap = Array.from({ length: this.state.height }, () =>
-      Array.from({ length: this.state.width }, () => false)
+    this._state.exploredMap = Array.from({ length: this._state.height }, () =>
+      Array.from({ length: this._state.width }, () => false)
     );
     
     // Clear entities (except player who gets repositioned)
-    this.state.entities = [];
+    this._state.entities = [];
     
     // Carry over player stats
-    const playerHp = this.state.playerHp;
-    const playerMaxHp = this.state.playerMaxHp;
-    const playerAlarm = this.state.playerAlarm;
+    const playerHp = this._state.playerHp;
+    const playerMaxHp = this._state.playerMaxHp;
+    const playerAlarm = this._state.playerAlarm;
     
 // Convert rooms and corridors to tiles
      this.digRoomsAndCorridors(graph);
@@ -248,12 +253,12 @@ export class DungeonCrawler {
      this.placePlayerAtEntry(graph);
     
     // Restore player stats
-    this.state.playerHp = playerHp;
-    this.state.playerMaxHp = playerMaxHp;
-    this.state.playerAlarm = playerAlarm;
+    this._state.playerHp = playerHp;
+    this._state.playerMaxHp = playerMaxHp;
+    this._state.playerAlarm = playerAlarm;
     
-    this.state.level = levelNum;
-    this.state.maxLevel = Math.max(this.state.maxLevel, levelNum);
+    this._state.level = levelNum;
+    this._state.maxLevel = Math.max(this._state.maxLevel, levelNum);
     
     // Place stairs
     this.placeStairs(graph);
@@ -262,9 +267,9 @@ export class DungeonCrawler {
   /** Convert dungeon rooms and corridors to walkable tiles */
   private digRoomsAndCorridors(graph: DungeonGraph): void {
     // Start with all walls
-    for (let y = 0; y < this.state.height; y++) {
-      for (let x = 0; x < this.state.width; x++) {
-        this.state.tiles[y][x].type = TileType.WALL;
+    for (let y = 0; y < this._state.height; y++) {
+      for (let x = 0; x < this._state.width; x++) {
+        this._state.tiles[y][x].type = TileType.WALL;
       }
     }
     
@@ -272,9 +277,9 @@ export class DungeonCrawler {
     for (const room of graph.rooms) {
       for (let y = room.y; y < room.y + room.h; y++) {
         for (let x = room.x; x < room.x + room.w; x++) {
-          if (y >= 0 && y < this.state.height && x >= 0 && x < this.state.width) {
+          if (y >= 0 && y < this._state.height && x >= 0 && x < this._state.width) {
             // Room interiors are floors
-            this.state.tiles[y][x].type = TileType.FLOOR;
+            this._state.tiles[y][x].type = TileType.FLOOR;
             
             // Room walls (edges) - but we'll handle corridors separately for now
             if (y === room.y || y === room.y + room.h - 1 || 
@@ -312,32 +317,32 @@ export class DungeonCrawler {
     if (goHorizontalFirst) {
       // Go horizontally, then vertically
       for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
-        if (x >= 0 && x < this.state.width && y1 >= 0 && y1 < this.state.height) {
-          if (this.state.tiles[y1][x].type === TileType.WALL) {
-            this.state.tiles[y1][x].type = TileType.FLOOR;
+        if (x >= 0 && x < this._state.width && y1 >= 0 && y1 < this._state.height) {
+          if (this._state.tiles[y1][x].type === TileType.WALL) {
+            this._state.tiles[y1][x].type = TileType.FLOOR;
           }
         }
       }
       for (let y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) {
-        if (x2 >= 0 && x2 < this.state.width && y >= 0 && y < this.state.height) {
-          if (this.state.tiles[y][x2].type === TileType.WALL) {
-            this.state.tiles[y][x2].type = TileType.FLOOR;
+        if (x2 >= 0 && x2 < this._state.width && y >= 0 && y < this._state.height) {
+          if (this._state.tiles[y][x2].type === TileType.WALL) {
+            this._state.tiles[y][x2].type = TileType.FLOOR;
           }
         }
       }
     } else {
       // Go vertically, then horizontally
       for (let y = Math.min(y1, y2); y <= Math.max(y1, y2); y++) {
-        if (x1 >= 0 && x1 < this.state.width && y >= 0 && y < this.state.height) {
-          if (this.state.tiles[y][x1].type === TileType.WALL) {
-            this.state.tiles[y][x1].type = TileType.FLOOR;
+        if (x1 >= 0 && x1 < this._state.width && y >= 0 && y < this._state.height) {
+          if (this._state.tiles[y][x1].type === TileType.WALL) {
+            this._state.tiles[y][x1].type = TileType.FLOOR;
           }
         }
       }
       for (let x = Math.min(x1, x2); x <= Math.max(x1, x2); x++) {
-        if (x >= 0 && x < this.state.width && y2 >= 0 && y2 < this.state.height) {
-          if (this.state.tiles[y2][x].type === TileType.WALL) {
-            this.state.tiles[y2][x].type = TileType.FLOOR;
+        if (x >= 0 && x < this._state.width && y2 >= 0 && y2 < this._state.height) {
+          if (this._state.tiles[y2][x].type === TileType.WALL) {
+            this._state.tiles[y2][x].type = TileType.FLOOR;
           }
         }
       }
@@ -348,9 +353,9 @@ export class DungeonCrawler {
     private placeEntities(): void {
         // Collect all floor tiles where we can place entities
         const floorPositions: {x: number; y: number}[] = [];
-        for (let y = 0; y < this.state.height; y++) {
-            for (let x = 0; x < this.state.width; x++) {
-                if (this.state.tiles[y][x].type === TileType.FLOOR) {
+        for (let y = 0; y < this._state.height; y++) {
+            for (let x = 0; x < this._state.width; x++) {
+                if (this._state.tiles[y][x].type === TileType.FLOOR) {
                     floorPositions.push({x, y});
                 }
             }
@@ -382,7 +387,7 @@ export class DungeonCrawler {
         }
         
         // Place traps (less common)
-        const trapCount = Math.floor(this.state.level * 0.5) + 1;
+        const trapCount = Math.floor(this._state.level * 0.5) + 1;
         for (let i = 0; i < Math.min(trapCount, floorPositions.length); i++) {
             const pos = this.getRandomFloorPosition(floorPositions);
             if (pos) {
@@ -402,17 +407,17 @@ export class DungeonCrawler {
 
   /** Get monster count based on level and character ref */
   private getMonsterCount(): number {
-    const baseCount = this.state.level + 2;
+    const baseCount = this._state.level + 2;
     const charMultiplier = 
-      this.state.characterRef === "novice" ? 0.5 :
-      this.state.characterRef === "veteran" ? 1.0 :
+      this._state.characterRef === "novice" ? 0.5 :
+      this._state.characterRef === "veteran" ? 1.0 :
       1.5; // heretic
     return Math.floor(baseCount * charMultiplier);
   }
 
   /** Get item count based on level */
   private getItemCount(): number {
-    return Math.floor(this.state.level * 0.3) + 2;
+    return Math.floor(this._state.level * 0.3) + 2;
   }
 
   /** Add a monster at the specified position */
@@ -421,11 +426,11 @@ export class DungeonCrawler {
     let monsterType: MonsterType;
     const roll = this.rng();
     
-    if (this.state.characterRef === "novice") {
+    if (this._state.characterRef === "novice") {
       if (roll < 0.7) monsterType = MonsterType.ICE_WATCHDOG;
       else if (roll < 0.9) monsterType = MonsterType.ICE_SPIDER;
       else monsterType = MonsterType.ICE_LOA_PRIEST;
-    } else if (this.state.characterRef === "veteran") {
+    } else if (this._state.characterRef === "veteran") {
       if (roll < 0.5) monsterType = MonsterType.ICE_WATCHDOG;
       else if (roll < 0.8) monsterType = MonsterType.ICE_SPIDER;
       else if (roll < 0.95) monsterType = MonsterType.ICE_LOA_PRIEST;
@@ -440,8 +445,8 @@ export class DungeonCrawler {
     
     const monsterHp = this.getMonsterHp(monsterType);
     
-    this.state.entities.push({
-      id: `monster_${this.state.entities.length}_${Date.now()}`,
+    this._state.entities.push({
+      id: `monster_${this._state.entities.length}_${Date.now()}`,
       x,
       y,
       type: EntityType.MONSTER,
@@ -455,11 +460,11 @@ export class DungeonCrawler {
   /** Get HP for a monster type */
   private getMonsterHp(type: MonsterType): number {
     switch (type) {
-      case MonsterType.ICE_WATCHDOG: return 15 + this.state.level * 2;
-      case MonsterType.ICE_SPIDER: return 12 + this.state.level * 2;
-      case MonsterType.ICE_LOA_PRIEST: return 20 + this.state.level * 3;
-      case MonsterType.ICE_GOLIATH: return 30 + this.state.level * 4;
-      case MonsterType.ICE_BLACK: return 50 + this.state.level * 5;
+      case MonsterType.ICE_WATCHDOG: return 15 + this._state.level * 2;
+      case MonsterType.ICE_SPIDER: return 12 + this._state.level * 2;
+      case MonsterType.ICE_LOA_PRIEST: return 20 + this._state.level * 3;
+      case MonsterType.ICE_GOLIATH: return 30 + this._state.level * 4;
+      case MonsterType.ICE_BLACK: return 50 + this._state.level * 5;
       default: return 10;
     }
   }
@@ -476,22 +481,24 @@ export class DungeonCrawler {
     else if (roll < 0.95) itemType = ItemType.WEAPON;
     else itemType = ItemType.ARMOR;
     
-    this.state.entities.push({
-      id: `item_${this.state.entities.length}_${Date.now()}`,
+    this._state.entities.push({
+      id: `item_${this._state.entities.length}_${Date.now()}`,
       x,
       y,
       type: EntityType.ITEM,
       subtype: itemType,
+      hp: 0,
     });
   }
 
   /** Add a trap at the specified position */
   private addTrap(x: number, y: number): void {
-    this.state.entities.push({
-      id: `trap_${this.state.entities.length}_${Date.now()}`,
+    this._state.entities.push({
+      id: `trap_${this._state.entities.length}_${Date.now()}`,
       x,
       y,
       type: EntityType.TRAP,
+      hp: 0,
     });
   }
 
@@ -501,18 +508,18 @@ export class DungeonCrawler {
     const entryRoom = graph.rooms.find(r => r.roomType === "entry");
     if (entryRoom) {
       // Place player in the center of the entry room
-      this.state.playerX = entryRoom.x + Math.floor(entryRoom.w / 2);
-      this.state.playerY = entryRoom.y + Math.floor(entryRoom.h / 2);
+      this._state.playerX = entryRoom.x + Math.floor(entryRoom.w / 2);
+      this._state.playerY = entryRoom.y + Math.floor(entryRoom.h / 2);
     } else {
       // Fallback: place at first room center
       if (graph.rooms.length > 0) {
         const firstRoom = graph.rooms[0];
-        this.state.playerX = firstRoom.x + Math.floor(firstRoom.w / 2);
-        this.state.playerY = firstRoom.y + Math.floor(firstRoom.h / 2);
+        this._state.playerX = firstRoom.x + Math.floor(firstRoom.w / 2);
+        this._state.playerY = firstRoom.y + Math.floor(firstRoom.h / 2);
       } else {
         // Ultimate fallback: center of map
-        this.state.playerX = Math.floor(this.state.width / 2);
-        this.state.playerY = Math.floor(this.state.height / 2);
+        this._state.playerX = Math.floor(this._state.width / 2);
+        this._state.playerY = Math.floor(this._state.height / 2);
       }
     }
   }
@@ -523,8 +530,8 @@ export class DungeonCrawler {
     const rooms = [...graph.rooms];
     
     // Sort rooms by distance from center to get good distribution
-    const centerX = Math.floor(this.state.width / 2);
-    const centerY = Math.floor(this.state.height / 2);
+    const centerX = Math.floor(this._state.width / 2);
+    const centerY = Math.floor(this._state.height / 2);
     rooms.sort((a, b) => {
       const distA = Math.abs(a.x + a.w/2 - centerX) + Math.abs(a.y + a.h/2 - centerY);
       const distB = Math.abs(b.x + b.w/2 - centerX) + Math.abs(b.y + b.h/2 - centerY);
@@ -532,19 +539,19 @@ export class DungeonCrawler {
     });
     
     // Place up stairs in a room near the edge (if we have a previous level)
-    if (this.state.level > 0 && rooms.length >= 2) {
+    if (this._state.level > 0 && rooms.length >= 2) {
       const upRoom = rooms[0]; // Closest to center
-      this.state.stairsUpX = upRoom.x + Math.floor(upRoom.w / 2);
-      this.state.stairsUpY = upRoom.y + Math.floor(upRoom.h / 2);
-      this.state.tiles[this.state.stairsUpY][this.state.stairsUpX].type = TileType.STAIRS_UP;
+      this._state.stairsUpX = upRoom.x + Math.floor(upRoom.w / 2);
+      this._state.stairsUpY = upRoom.y + Math.floor(upRoom.h / 2);
+      this._state.tiles[this._state.stairsUpY][this._state.stairsUpX].type = TileType.STAIRS_UP;
     }
     
     // Place down stairs in a room farther from center
     if (rooms.length >= 2) {
       const downRoom = rooms[rooms.length - 1]; // Farthest from center
-      this.state.stairsDownX = downRoom.x + Math.floor(downRoom.w / 2);
-      this.state.stairsDownY = downRoom.y + Math.floor(downRoom.h / 2);
-      this.state.tiles[this.state.stairsDownY][this.state.stairsDownX].type = TileType.STAIRS_DOWN;
+      this._state.stairsDownX = downRoom.x + Math.floor(downRoom.w / 2);
+      this._state.stairsDownY = downRoom.y + Math.floor(downRoom.h / 2);
+      this._state.tiles[this._state.stairsDownY][this._state.stairsDownX].type = TileType.STAIRS_DOWN;
     }
   }
 
@@ -552,23 +559,23 @@ export class DungeonCrawler {
   public updateFov(): void {
     // Simple FOV: illuminate tiles in a radius around player
     // In a full implementation, we'd use proper shadowcasting
-    const radius = 6 + Math.floor(this.state.level * 0.5); // Increase FOV with level
+    const radius = 6 + Math.floor(this._state.level * 0.5); // Increase FOV with level
     
     // Reset visibility
-    for (let y = 0; y < this.state.height; y++) {
-      for (let x = 0; x < this.state.width; x++) {
-        this.state.tiles[y][x].visible = false;
+    for (let y = 0; y < this._state.height; y++) {
+      for (let x = 0; x < this._state.width; x++) {
+        this._state.tiles[y][x].visible = false;
       }
     }
     
     // Calculate visible tiles (simple circular FOV for now)
     for (let y = -radius; y <= radius; y++) {
       for (let x = -radius; x <= radius; x++) {
-        const worldX = this.state.playerX + x;
-        const worldY = this.state.playerY + y;
+        const worldX = this._state.playerX + x;
+        const worldY = this._state.playerY + y;
         
         // Check bounds
-        if (worldX < 0 || worldX >= this.state.width || worldY < 0 || worldY >= this.state.height) {
+        if (worldX < 0 || worldX >= this._state.width || worldY < 0 || worldY >= this._state.height) {
           continue;
         }
         
@@ -578,8 +585,8 @@ export class DungeonCrawler {
         
         // Check line of sight
         if (this.isTileVisibleFromPlayer(worldX, worldY)) {
-          this.state.tiles[worldY][worldX].visible = true;
-          this.state.exploredMap[worldY][worldX] = true; // Mark as explored
+          this._state.tiles[worldY][worldX].visible = true;
+          this._state.exploredMap[worldY][worldX] = true; // Mark as explored
         }
       }
     }
@@ -588,8 +595,8 @@ export class DungeonCrawler {
   /** Check if a tile is visible from player position (line-of-sight check) */
   private isTileVisibleFromPlayer(targetX: number, targetY: number): boolean {
     // Bresenham's line algorithm for line of sight
-    let x0 = this.state.playerX;
-    let y0 = this.state.playerY;
+    let x0 = this._state.playerX;
+    let y0 = this._state.playerY;
     const x1 = targetX;
     const y1 = targetY;
     
@@ -601,7 +608,7 @@ export class DungeonCrawler {
     
     while (true) {
       // Check if current tile blocks vision
-      if (this.state.tiles[y0][x0].type === TileType.WALL) {
+      if (this._state.tiles[y0][x0].type === TileType.WALL) {
         // Don't allow seeing through walls
         return false;
       }
@@ -627,22 +634,22 @@ export class DungeonCrawler {
 
   /** Handle player movement */
   public tryMovePlayer(dx: number, dy: number): boolean {
-    const newX = this.state.playerX + dx;
-    const newY = this.state.playerY + dy;
+    const newX = this._state.playerX + dx;
+    const newY = this._state.playerY + dy;
     
     // Check bounds
-    if (newX < 0 || newX >= this.state.width || newY < 0 || newY >= this.state.height) {
+    if (newX < 0 || newX >= this._state.width || newY < 0 || newY >= this._state.height) {
       return false;
     }
     
     // Check if tile is walkable
-    const tile = this.state.tiles[newY][newX];
+    const tile = this._state.tiles[newY][newX];
     if (tile.type === TileType.WALL) {
       return false;
     }
     
     // Check for entities blocking movement
-    const blockingEntity = this.state.entities.find(
+    const blockingEntity = this._state.entities.find(
       e => e.x === newX && e.y === newY && 
            (e.type === EntityType.MONSTER || e.type === EntityType.DOOR_CLOSED)
     );
@@ -662,8 +669,8 @@ export class DungeonCrawler {
     }
     
     // Move the player
-    this.state.playerX = newX;
-    this.state.playerY = newY;
+    this._state.playerX = newX;
+    this._state.playerY = newY;
     
     // Check for stairs
     this.checkForStairs();
@@ -672,30 +679,30 @@ export class DungeonCrawler {
     this.checkForEntityInteractions();
     
     // Increment turn
-    this.state.turnCount++;
+    this._state.turnCount++;
     
     // Update FOV
     this.updateFov();
     
     // Apply alarm increase for movement
-    this.state.playerAlarm = Math.min(100, this.state.playerAlarm + 1);
+    this._state.playerAlarm = Math.min(100, this._state.playerAlarm + 1);
     
     return true;
   }
 
   /** Check if player is on stairs */
   private checkForStairs(): void {
-    const tile = this.state.tiles[this.state.playerY][this.state.playerX];
+    const tile = this._state.tiles[this._state.playerY][this._state.playerX];
     
-    if (tile.type === TileType.STAIRS_UP && this.state.stairsUpX !== null && this.state.stairsUpY !== null) {
-      if (this.state.playerX === this.state.stairsUpX && this.state.playerY === this.state.stairsUpY) {
+    if (tile.type === TileType.STAIRS_UP && this._state.stairsUpX !== null && this._state.stairsUpY !== null) {
+      if (this._state.playerX === this._state.stairsUpX && this._state.playerY === this._state.stairsUpY) {
         // Go up a level
         this.changeLevel(-1);
       }
     }
     
-    if (tile.type === TileType.STAIRS_DOWN && this.state.stairsDownX !== null && this.state.stairsDownY !== null) {
-      if (this.state.playerX === this.state.stairsDownX && this.state.playerY === this.state.stairsDownY) {
+    if (tile.type === TileType.STAIRS_DOWN && this._state.stairsDownX !== null && this._state.stairsDownY !== null) {
+      if (this._state.playerX === this._state.stairsDownX && this._state.playerY === this._state.stairsDownY) {
         // Go down a level
         this.changeLevel(1);
       }
@@ -704,7 +711,7 @@ export class DungeonCrawler {
 
   /** Change dungeon level */
   private changeLevel(delta: number): void {
-    const newLevel = this.state.level + delta;
+    const newLevel = this._state.level + delta;
     
     // Prevent going below level 0
     if (newLevel < 0) return;
@@ -715,44 +722,44 @@ export class DungeonCrawler {
     // Position player on stairs
     if (delta > 0) {
       // Going down - place player on up stairs of new level
-      if (this.state.stairsUpX !== null && this.state.stairsUpY !== null) {
-        this.state.playerX = this.state.stairsUpX;
-        this.state.playerY = this.state.stairsUpY;
+      if (this._state.stairsUpX !== null && this._state.stairsUpY !== null) {
+        this._state.playerX = this._state.stairsUpX;
+        this._state.playerY = this._state.stairsUpY;
       }
     } else {
       // Going up - place player on down stairs of new level
-      if (this.state.stairsDownX !== null && this.state.stairsDownY !== null) {
-        this.state.playerX = this.state.stairsDownX;
-        this.state.playerY = this.state.stairsDownY;
+      if (this._state.stairsDownX !== null && this._state.stairsDownY !== null) {
+        this._state.playerX = this._state.stairsDownX;
+        this._state.playerY = this._state.stairsDownY;
       }
     }
     
     // Reset alarm when changing levels (slightly)
-    this.state.playerAlarm = Math.max(0, this.state.playerAlarm - 10);
+    this._state.playerAlarm = Math.max(0, this._state.playerAlarm - 10);
   }
 
   /** Check for entity interactions (pick up items, trigger traps) */
   private checkForEntityInteractions(): void {
     // Check for items at player position
-    const itemIndex = this.state.entities.findIndex(
-      e => e.x === this.state.playerX && e.y === this.state.playerY && e.type === EntityType.ITEM
+    const itemIndex = this._state.entities.findIndex(
+      e => e.x === this._state.playerX && e.y === this._state.playerY && e.type === EntityType.ITEM
     );
     
     if (itemIndex !== -1) {
-      const item = this.state.entities[itemIndex];
+      const item = this._state.entities[itemIndex];
       this.pickUpItem(item);
-      this.state.entities.splice(itemIndex, 1);
+      this._state.entities.splice(itemIndex, 1);
     }
     
     // Check for traps at player position
-    const trapIndex = this.state.entities.findIndex(
-      e => e.x === this.state.playerX && e.y === this.state.playerY && e.type === EntityType.TRAP
+    const trapIndex = this._state.entities.findIndex(
+      e => e.x === this._state.playerX && e.y === this._state.playerY && e.type === EntityType.TRAP
     );
     
     if (trapIndex !== -1) {
-      const trap = this.state.entities[trapIndex];
+      const trap = this._state.entities[trapIndex];
       this.triggerTrap(trap);
-      this.state.entities.splice(trapIndex, 1);
+      this._state.entities.splice(trapIndex, 1);
     }
   }
 
@@ -760,14 +767,14 @@ export class DungeonCrawler {
   private pickUpItem(item: DungeonEntity): void {
     switch (item.subtype) {
       case ItemType.HEALTH_POTION:
-        this.state.playerHp = Math.min(this.state.playerMaxHp, this.state.playerHp + 25);
+        this._state.playerHp = Math.min(this._state.playerMaxHp, this._state.playerHp + 25);
         break;
       case ItemType.ENERGY_CELL:
-        this.state.playerAlarm = Math.max(0, this.state.playerAlarm - 15);
+        this._state.playerAlarm = Math.max(0, this._state.playerAlarm - 15);
         break;
       case ItemType.DATA_CHIP:
         // Data chips give credits or special abilities
-        this.state.playerHp = Math.min(this.state.playerMaxHp, this.state.playerHp + 10);
+        this._state.playerHp = Math.min(this._state.playerMaxHp, this._state.playerHp + 10);
         break;
       case ItemType.WEAPON:
         // Temporary attack boost
@@ -779,17 +786,17 @@ export class DungeonCrawler {
   }
 
   /** Trigger a trap */
-  private triggerTrap(trap: DungeonEntity): void {
+  private triggerTrap(_trap: DungeonEntity): void {
     // Different trap types based on level
     const trapRoll = this.rng();
     
     if (trapRoll < 0.3) {
       // Damage trap
-      const damage = 10 + this.state.level * 2;
-      this.state.playerHp = Math.max(0, this.state.playerHp - damage);
+      const damage = 10 + this._state.level * 2;
+      this._state.playerHp = Math.max(0, this._state.playerHp - damage);
     } else if (trapRoll < 0.6) {
       // Alarm trap
-      this.state.playerAlarm = Math.min(100, this.state.playerAlarm + 20);
+      this._state.playerAlarm = Math.min(100, this._state.playerAlarm + 20);
     } else if (trapRoll < 0.8) {
       // Teleport trap
       this.teleportPlayerRandomly();
@@ -802,11 +809,11 @@ export class DungeonCrawler {
   /** Teleport player to a random safe location */
   private teleportPlayerRandomly(): void {
     const floorPositions: {x: number; y: number}[] = [];
-    for (let y = 0; y < this.state.height; y++) {
-      for (let x = 0; x < this.state.width; x++) {
-        if (this.state.tiles[y][x].type === TileType.FLOOR) {
+    for (let y = 0; y < this._state.height; y++) {
+      for (let x = 0; x < this._state.width; x++) {
+        if (this._state.tiles[y][x].type === TileType.FLOOR) {
           // Check if not occupied by hostile entity
-          const occupied = this.state.entities.some(
+          const occupied = this._state.entities.some(
             e => e.x === x && e.y === y && e.hostile === true
           );
           if (!occupied) {
@@ -819,8 +826,8 @@ export class DungeonCrawler {
     if (floorPositions.length > 0) {
       const pos = this.getRandomFloorPosition(floorPositions);
       if (pos) {
-        this.state.playerX = pos.x;
-        this.state.playerY = pos.y;
+        this._state.playerX = pos.x;
+        this._state.playerY = pos.y;
       }
     }
   }
@@ -830,14 +837,14 @@ export class DungeonCrawler {
     // Try to find a spot near the player
     for (let dy = -2; dy <= 2; dy++) {
       for (let dx = -2; dx <= 2; dx++) {
-        const x = this.state.playerX + dx;
-        const y = this.state.playerY + dy;
+        const x = this._state.playerX + dx;
+        const y = this._state.playerY + dy;
         
-        if (x >= 0 && x < this.state.width && y >= 0 && y < this.state.height) {
-          const tile = this.state.tiles[y][x];
+        if (x >= 0 && x < this._state.width && y >= 0 && y < this._state.height) {
+          const tile = this._state.tiles[y][x];
           if (tile.type === TileType.FLOOR) {
             // Check if not occupied
-            const occupied = this.state.entities.some(e => e.x === x && e.y === y);
+            const occupied = this._state.entities.some(e => e.x === x && e.y === y);
             if (!occupied) {
               this.addMonster(x, y);
               return; // Only summon one monster
@@ -853,7 +860,7 @@ export class DungeonCrawler {
     if (!entity.hostile) return;
     
     // Player attack damage (based on level and equipment)
-    const damage = Math.max(1, 5 + Math.floor(this.state.level * 0.5));
+    const damage = Math.max(1, 5 + Math.floor(this._state.level * 0.5));
     
     entity.hp -= damage;
     
@@ -865,9 +872,9 @@ export class DungeonCrawler {
         this.addItem(entity.x, entity.y);
       }
       // Remove dead entity after a short delay (for now, remove immediately)
-      const index = this.state.entities.indexOf(entity);
+      const index = this._state.entities.indexOf(entity);
       if (index !== -1) {
-        this.state.entities.splice(index, 1);
+        this._state.entities.splice(index, 1);
       }
     }
     
@@ -881,21 +888,21 @@ export class DungeonCrawler {
   private getMonsterDamage(type: MonsterType | undefined): number {
     if (!type) return 5;
     switch (type) {
-      case MonsterType.ICE_WATCHDOG: return 3 + Math.floor(this.state.level * 0.3);
-      case MonsterType.ICE_SPIDER: return 4 + Math.floor(this.state.level * 0.4);
-      case MonsterType.ICE_LOA_PRIEST: return 2 + Math.floor(this.state.level * 0.2); // Low damage but special effects
-      case MonsterType.ICE_GOLIATH: return 6 + Math.floor(this.state.level * 0.5);
-      case MonsterType.ICE_BLACK: return 8 + Math.floor(this.state.level * 0.6);
+      case MonsterType.ICE_WATCHDOG: return 3 + Math.floor(this._state.level * 0.3);
+      case MonsterType.ICE_SPIDER: return 4 + Math.floor(this._state.level * 0.4);
+      case MonsterType.ICE_LOA_PRIEST: return 2 + Math.floor(this._state.level * 0.2); // Low damage but special effects
+      case MonsterType.ICE_GOLIATH: return 6 + Math.floor(this._state.level * 0.5);
+      case MonsterType.ICE_BLACK: return 8 + Math.floor(this._state.level * 0.6);
       default: return 5;
     }
   }
 
   /** Player takes damage */
   private playerTakeDamage(damage: number): void {
-    this.state.playerHp = Math.max(0, this.state.playerHp - damage);
+    this._state.playerHp = Math.max(0, this._state.playerHp - damage);
     
     // Check for player death
-    if (this.state.playerHp <= 0) {
+    if (this._state.playerHp <= 0) {
       this.handlePlayerDeath();
     }
   }
@@ -904,8 +911,8 @@ export class DungeonCrawler {
   private handlePlayerDeath(): void {
     // In a full implementation, this would trigger game over sequence
     // For now, just reset to entrance with penalty
-    this.state.playerHp = Math.floor(this.state.playerMaxHp * 0.5); // Come back with half HP
-    this.state.playerAlarm = Math.min(100, this.state.playerAlarm + 25); // Increase alarm
+    this._state.playerHp = Math.floor(this._state.playerMaxHp * 0.5); // Come back with half HP
+    this._state.playerAlarm = Math.min(100, this._state.playerAlarm + 25); // Increase alarm
     
     // Optionally: send back to previous level or apply other penalties
   }
@@ -920,7 +927,7 @@ export class DungeonCrawler {
   /** Close a door after some time (called periodically) */
   public updateDoors(): void {
     // Simple door closing logic - in reality would have timers
-    for (const entity of this.state.entities) {
+    for (const entity of this._state.entities) {
       if (entity.type === EntityType.DOOR_OPEN) {
         // 10% chance per turn to close
         if (this.rng() < 0.1) {
@@ -932,36 +939,36 @@ export class DungeonCrawler {
 
   /** Get the tile type for rendering */
   public getTileType(x: number, y: number): TileType {
-    if (x < 0 || x >= this.state.width || y < 0 || y >= this.state.height) {
+    if (x < 0 || x >= this._state.width || y < 0 || y >= this._state.height) {
       return TileType.WALL;
     }
-    return this.state.tiles[y][x].type;
+    return this._state.tiles[y][x].type;
   }
 
   /** Check if a tile is explored */
   public isTileExplored(x: number, y: number): boolean {
-    if (x < 0 || x >= this.state.width || y < 0 || y >= this.state.height) {
+    if (x < 0 || x >= this._state.width || y < 0 || y >= this._state.height) {
       return false;
     }
-    return this.state.exploredMap[y][x];
+    return this._state.exploredMap[y][x];
   }
 
   /** Check if a tile is currently visible */
   public isTileVisible(x: number, y: number): boolean {
-    if (x < 0 || x >= this.state.width || y < 0 || y >= this.state.height) {
+    if (x < 0 || x >= this._state.width || y < 0 || y >= this._state.height) {
       return false;
     }
-    return this.state.tiles[y][x].visible;
+    return this._state.tiles[y][x].visible;
   }
 
   /** Get entities at a position */
   public getEntitiesAt(x: number, y: number): DungeonEntity[] {
-    return this.state.entities.filter(e => e.x === x && e.y === y);
+    return this._state.entities.filter(e => e.x === x && e.y === y);
   }
 
   /** Get player position */
   public getPlayerPosition(): {x: number; y: number} {
-    return {x: this.state.playerX, y: this.state.playerY};
+    return {x: this._state.playerX, y: this._state.playerY};
   }
 
   /** Get player stats */
@@ -973,26 +980,26 @@ export class DungeonCrawler {
     turnCount: number;
   } {
     return {
-      hp: this.state.playerHp,
-      maxHp: this.state.playerMaxHp,
-      alarm: this.state.playerAlarm,
-      level: this.state.level,
-      turnCount: this.state.turnCount,
+      hp: this._state.playerHp,
+      maxHp: this._state.playerMaxHp,
+      alarm: this._state.playerAlarm,
+      level: this._state.level,
+      turnCount: this._state.turnCount,
     };
   }
 
   /** Check if game is over (player dead) */
   public isGameOver(): boolean {
-    return this.state.playerHp <= 0;
+    return this._state.playerHp <= 0;
   }
 
   /** Get stairs positions */
   public getStairsUp(): {x: number | null; y: number | null} {
-    return {x: this.state.stairsUpX, y: this.state.stairsUpY};
+    return {x: this._state.stairsUpX, y: this._state.stairsUpY};
   }
   
   public getStairsDown(): {x: number | null; y: number | null} {
-    return {x: this.state.stairsDownX, y: this.state.stairsDownY};
+    return {x: this._state.stairsDownX, y: this._state.stairsDownY};
   }
 
   /** Process one game turn (call periodically) */
@@ -1023,21 +1030,21 @@ export class DungeonCrawler {
 
   /** Simple monster AI */
   private processMonsterAi(): void {
-    for (const entity of this.state.entities) {
+    for (const entity of this._state.entities) {
       if (entity.type === EntityType.MONSTER && entity.hostile && entity.hp > 0) {
         // Simple AI: if player is adjacent, attack; otherwise move toward player
-        const dx = Math.abs(entity.x - this.state.playerX);
-        const dy = Math.abs(entity.y - this.state.playerY);
+        const dx = Math.abs(entity.x - this._state.playerX);
+        const dy = Math.abs(entity.y - this._state.playerY);
         
         if (dx <= 1 && dy <= 1) {
           // Adjacent - attack player
           this.playerTakeDamage(this.getMonsterDamage(entity.subtype as MonsterType));
         } else if (dx + dy > 1) {
           // Not adjacent - try to move toward player
-          const moveX = this.state.playerX > entity.x ? 1 : 
-                       this.state.playerX < entity.x ? -1 : 0;
-          const moveY = this.state.playerY > entity.y ? 1 : 
-                       this.state.playerY < entity.y ? -1 : 0;
+          const moveX = this._state.playerX > entity.x ? 1 : 
+                       this._state.playerX < entity.x ? -1 : 0;
+          const moveY = this._state.playerY > entity.y ? 1 : 
+                       this._state.playerY < entity.y ? -1 : 0;
           
           // Try to move diagonally first if both axes need movement
           if (moveX !== 0 && moveY !== 0 && this.rng() < 0.7) {
@@ -1067,18 +1074,18 @@ export class DungeonCrawler {
     const newY = entity.y + dy;
     
     // Check bounds
-    if (newX < 0 || newX >= this.state.width || newY < 0 || newY >= this.state.height) {
+    if (newX < 0 || newX >= this._state.width || newY < 0 || newY >= this._state.height) {
       return false;
     }
     
     // Check if tile is walkable
-    const tile = this.state.tiles[newY][newX];
+    const tile = this._state.tiles[newY][newX];
     if (tile.type === TileType.WALL) {
       return false;
     }
     
     // Check if tile is occupied by another entity
-    const occupied = this.state.entities.some(
+    const occupied = this._state.entities.some(
       e => e !== entity && e.x === newX && e.y === newY
     );
     

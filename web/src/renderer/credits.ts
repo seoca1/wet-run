@@ -1,6 +1,6 @@
+import type { Grid } from "../core/types.ts";
 import { makeGrid } from "../core/grid.ts";
-import { GameState as State } from "../core/state.ts";
 
-export function renderCreditsScreen(state: State | null): Grid {
+export function renderCreditsScreen(_state: import("../core/state.ts").GameState | null): Grid {
     return makeGrid(0, 0);
 }

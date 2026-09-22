@@ -61,12 +61,14 @@ export function renderEndingScreen(
   return grid;
 }
 
-/** Render loot screen between combats (HEAL + reward credits). */
+/** Render loot screen between combats (HEAL + reward credits + items). */
 export function renderLootScreen(
   hp: number,
   maxHp: number,
   cols: number,
   rows: number,
+  rewardCredits: number = 0,
+  lootMessage: string = "",
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -89,14 +91,37 @@ export function renderLootScreen(
     hp > maxHp / 2 ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT,
   );
 
-  // HEAL applied
+  // Credits awarded
+  if (rewardCredits > 0) {
+    const creditsLine = `+${rewardCredits.toLocaleString()} credits`;
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - creditsLine.length) / 2)),
+      Math.floor(rows / 2) + 1,
+      creditsLine,
+      PALETTE.CYAN_LIGHT,
+    );
+  }
+
+  // Items dropped (raw loot message, e.g. "Loot: ice_shardx1, data_fragmentx1")
+  if (lootMessage) {
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - lootMessage.length) / 2)),
+      Math.floor(rows / 2) + 3,
+      lootMessage,
+      lootMessage.startsWith("Loot: ") ? PALETTE.YELLOW_AMBER : PALETTE.GRAY_LIGHT,
+    );
+  }
+
+  // HEAL preview (preview only — actual heal applied on next node advance)
   const healed = Math.min(maxHp, hp + Math.floor(maxHp * 0.15));
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - 22) / 2)),
-    Math.floor(rows / 2) + 1,
+    Math.floor(rows / 2) + 5,
     `HEAL applied → ${healed}/${maxHp}`,
-    PALETTE.YELLOW_AMBER,
+    PALETTE.GRAY_DARK,
   );
 
   // Footer

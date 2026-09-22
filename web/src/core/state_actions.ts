@@ -42,7 +42,13 @@ const DIXIE_SYNERGY_BONUS = 3;
 export function applyMatrixAction(state: GameState, action: GameAction): GameState {
   if (action.type === "confirm" && state.matrix != null) {
     const node = state.matrix.nodes[state.currentNodeIndex];
-    if (!node || node.iceIds.length === 0) return state;
+    if (!node) return state;
+    if (node.iceIds.length === 0) {
+      return {
+        ...state,
+        message: "No ICE here — move to a node with an encounter.",
+      };
+    }
     const activeIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
     const encounterMultiplier = isMutatorActive(state as unknown as MutableRunState, "ice_x2") ? 2 : 1;
     const baseCount = Math.min(node.iceIds.length * encounterMultiplier, 4);
@@ -68,17 +74,17 @@ export function applyMatrixAction(state: GameState, action: GameAction): GameSta
       vfxInstances: [...state.vfxInstances, ...matrixEntryVfx],
     };
   }
-  
-// Matrix navigation - move between adjacent nodes
-  if ((action.type === "move_north" || action.type === "move_south" || 
+
+  // Matrix navigation - move between adjacent nodes
+  if ((action.type === "move_north" || action.type === "move_south" ||
        action.type === "move_east" || action.type === "move_west") && state.matrix != null) {
     const node = state.matrix.nodes[state.currentNodeIndex];
     if (!node || node.adjacent.length === 0) return state;
-    
+
     // Determine direction: south/east = forward, north/west = backward
     const isForward = action.type === "move_south" || action.type === "move_east";
     const isBackward = action.type === "move_north" || action.type === "move_west";
-    
+
     if (isForward) {
       // Move forward to adjacent node
       const nextIndex = node.adjacent[0];
@@ -110,35 +116,7 @@ export function applyMatrixAction(state: GameState, action: GameAction): GameSta
     }
     return state;
   }
-  
-  if (action.type === "confirm" && state.matrix != null) {
-    const node = state.matrix.nodes[state.currentNodeIndex];
-    if (!node || node.iceIds.length === 0) return state;
-    const activeIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
-    const encounterMultiplier = isMutatorActive(state as unknown as MutableRunState, "ice_x2") ? 2 : 1;
-    const baseCount = Math.min(node.iceIds.length * encounterMultiplier, 4);
-    const iceRoster = node.iceIds.slice(0, baseCount).map((id, i) => {
-      const hp = node.iceHp[i] ?? activeIce.hp;
-      return { ...activeIce, id, hp };
-    });
-    const matrixEntryVfx: import("../renderer/combat_vfx.js").CombatVfxInstance[] = [
-      import_vfx("room_flash", "TIER_GOLD", 1),
-    ];
-    if (node.eventKind === "cache") {
-      matrixEntryVfx.push(import_vfx("data_acquired", "", durationForKind("data_acquired")));
-    }
-    return {
-      ...state,
-      runPhase: "combat",
-      phase: "approach",
-      message: `Entering ${node.zone}... (${iceRoster.length} ICE)`,
-      iceRoster,
-      activeIceIndex: 0,
-      bossPhase: node.isBoss ? 1 : 0,
-      turnCount: state.turnCount + 1,
-      vfxInstances: [...state.vfxInstances, ...matrixEntryVfx],
-    };
-  }
+
   if (action.type === "jack_out") {
     return {
       ...state,
@@ -147,33 +125,25 @@ export function applyMatrixAction(state: GameState, action: GameAction): GameSta
       vfxInstances: [...state.vfxInstances, import_vfx("jackout_whiteout", "", durationForKind("jackout_whiteout"))],
     };
   }
+  if (action.type === "select_program") {
+    return {
+      ...state,
+      message: "Programs only usable in combat — press ENTER to engage ICE",
+    };
+  }
   return state;
 }
 
 export function applyLootAction(state: GameState, action: GameAction): GameState {
-  if (action.type !== "confirm") return state;
-  if (!state.matrix) {
-    const missionFaction = getMissionFaction(state.mission.id);
-    let updatedScores = state.factionScores;
-    if (missionFaction) {
-      updatedScores = onMissionComplete(updatedScores, missionFaction);
-    }
-    const arc: ArcId = (state.mission.arc as ArcId) || 1;
-    const ctx: EndingContext = {
-      arc,
-      hp: state.player.hp,
-      maxHp: state.player.maxHp,
-      credits: state.inventory.credits,
-      missionsCompleted: 0,
-      totalDeaths: state.totalDeaths,
-      factionScores: updatedScores,
-      choices: [],
-    };
-    const ending = resolveEnding(ctx);
-    return { ...state, runPhase: "ending", endingChoice: ending.id as EndingChoice, factionScores: updatedScores };
+  if (action.type === "select_program" || action.type === "use_program") {
+    return { ...state, message: "Hand empty — press ENTER to advance to next node" };
   }
-  const node = state.matrix.nodes[state.currentNodeIndex];
-  if (!node || node.adjacent.length === 0) {
+  if (action.type !== "confirm") return state;
+  const node = state.matrix?.nodes[state.currentNodeIndex];
+  // Mission complete: matrix cleared, OR dead-end node (no forward path), OR boss defeated.
+  const missionComplete =
+    !state.matrix || !node || node.adjacent.length === 0 || node.isBoss;
+  if (missionComplete) {
     const missionFaction = getMissionFaction(state.mission.id);
     let updatedScores = state.factionScores;
     if (missionFaction) {
@@ -198,17 +168,28 @@ export function applyLootAction(state: GameState, action: GameAction): GameState
       factionScores: updatedScores,
     };
   }
-  const nextIdx = node.adjacent[0] ?? state.currentNodeIndex;
+  // Linear progression: advance by index+1. Falls back to adjacency only when
+  // the player is already at the last node and the graph points to an earlier
+  // one (e.g. boss-room exit edge).
+  const nextIdx = state.currentNodeIndex + 1 < state.matrix.nodes.length
+    ? state.currentNodeIndex + 1
+    : (node.adjacent[0] ?? state.currentNodeIndex);
   const newVisited = state.visitedNodes.includes(nextIdx)
     ? state.visitedNodes
     : [...state.visitedNodes, nextIdx];
+  // Apply loot HEAL preview: 15% of max HP (matches renderLootScreen label).
+  const healedHp = Math.min(
+    state.player.maxHp,
+    state.player.hp + Math.floor(state.player.maxHp * 0.15),
+  );
   return {
     ...state,
     runPhase: "matrix",
     currentNodeIndex: nextIdx,
     visitedNodes: newVisited,
     phase: "approach",
-    message: `Advancing to next node (${nextIdx})`,
+    player: { ...state.player, hp: healedHp },
+    message: `Advancing to next node (${nextIdx}) — healed to ${healedHp}/${state.player.maxHp}`,
   };
 }
 
@@ -291,12 +272,18 @@ export function applyMenuAction(state: GameState, action: GameAction): GameState
 }
 
 export function applyApproachAction(state: GameState, action: GameAction): GameState {
-  if (action.type === "confirm" || action.type === "use_program") {
+  if (action.type === "confirm") {
     return {
       ...state,
       phase: "combat",
       message: `Combat vs ${state.ice.name}`,
       turnCount: state.turnCount + 1,
+    };
+  }
+  if (action.type === "select_program") {
+    return {
+      ...state,
+      message: "Press ENTER (or SPACE) to engage combat — programs activate during combat",
     };
   }
   if (action.type === "jack_out") {
@@ -308,6 +295,18 @@ export function applyApproachAction(state: GameState, action: GameAction): GameS
 export function applyCombatAction(state: GameState, action: GameAction): GameState {
   if (action.type === "cycle_target") {
     return cycleTarget(state);
+  }
+  if (action.type === "select_program") {
+    const idx = action.handIndex - 1;
+    if (idx < 0 || idx >= state.deck.length) {
+      return {
+        ...state,
+        message: state.deck.length === 0
+          ? "Hand empty — no programs to play"
+          : `Hand slot ${action.handIndex} is empty`,
+      };
+    }
+    return state;
   }
   if (action.type === "use_program") {
     const result = useProgram(state, action.programId);
@@ -331,7 +330,7 @@ export function applyCombatAction(state: GameState, action: GameAction): GameSta
     return afterEnemies;
   }
   if (action.type === "jack_out") {
-    return { ...state, phase: "defeat", message: "Jacked out — mission failed" };
+    return { ...state, runPhase: "dead", phase: "defeat", message: "Jacked out — mission failed" };
   }
   return state;
 }
@@ -429,7 +428,8 @@ function processEnemyTurns(state: GameState): GameState {
         const remaining = newCooldowns[cooldownKey] ?? 0;
         
         if (remaining <= 0 && selectedSkill.damage > 0) {
-          const skillDmg = Math.max(1, selectedSkill.damage + enemy.tier * 2);
+          const rawSkillDmg = selectedSkill.damage + enemy.tier * 2;
+          const skillDmg = Math.max(1, Number.isFinite(rawSkillDmg) ? rawSkillDmg : 1);
           playerHp = Math.max(0, playerHp - skillDmg);
           logMessages.push(`>>> ${enemy.name} uses ${selectedSkill.name}: ${skillDmg} dmg`);
           newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
@@ -439,12 +439,13 @@ function processEnemyTurns(state: GameState): GameState {
     }
 
     if (!usedSkill) {
-      let autoDmg = Math.max(1, enemy.tier * 3 + enemy.armor);
-      
+      const rawAutoDmg = enemy.tier * 3 + (enemy.armor ?? 0);
+      let autoDmg = Math.max(1, Number.isFinite(rawAutoDmg) ? rawAutoDmg : 1);
+
       if (enemy.tier >= 3 && state.bossPhase > 0) {
         autoDmg = Math.floor(autoDmg * bossDamageMultiplier);
       }
-      
+
       playerHp = Math.max(0, playerHp - autoDmg);
       
       if (enemy.tier >= 3 && state.bossPhase >= 3) {
@@ -599,6 +600,11 @@ function useProgram(state: GameState, programId: string): GameState {
   };
   if (rollStatusProc("burn") && damagedRoster[targetIdx] && damagedRoster[targetIdx].hp > 0) {
     stateWithDamage = applyStatus(stateWithDamage, "ice", "burn", 2, 3);
+  }
+
+  // Apply slow effect 20% chance to slow ice for 2 turns with 30% damage reduction
+  if (rollStatusProc("slow") && damagedRoster[targetIdx] && damagedRoster[targetIdx].hp > 0) {
+    stateWithDamage = applyStatus(stateWithDamage, "ice", "slow", 2, 30, { slowPct: 30 });
   }
 
   if (vulnerableBonus > 0) {

@@ -67,8 +67,15 @@ export function makeInitialState(
     materials: mission.rewards.materials,
     programs: [],
   };
-  const gridSize = mission.grade ? { w: 80 + (mission.grade - 1) * 20, h: 50 + (mission.grade - 1) * 10 } : { w: MVP_GRID_W, h: MVP_GRID_H };
-  const matrix = generateProceduralMatrix(mission.grade || 1, mission.seed || 42, mission.id);
+  // Mission schema field names: matrix_seed (not seed), grade_max/grade_min (not grade).
+  const missionSeed: number = (mission as { matrix_seed?: number }).matrix_seed ?? mission.seed ?? 42;
+  const missionGrade: number =
+    (mission as { grade_max?: number }).grade_max ??
+    (mission as { grade_min?: number }).grade_min ??
+    mission.grade ??
+    1;
+  const gridSize = missionGrade ? { w: 80 + (missionGrade - 1) * 20, h: 50 + (missionGrade - 1) * 10 } : { w: MVP_GRID_W, h: MVP_GRID_H };
+  const matrix = generateProceduralMatrix(missionGrade, missionSeed, mission.id);
   const finalDrawPile = drawPile.length > 0 ? drawPile : deck.slice(MVP_BASE_HAND);
   
   return {

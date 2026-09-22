@@ -124,6 +124,9 @@ export class DungeonCrawler {
     this.generator = new ProceduralDungeonGenerator(2, 1); // minLeafSize=2, roomPadding=1
     this._state = this.initializeDungeonState();
     this.generateFirstLevel();
+    // Reveal the player's starting tile + apply initial FOV so first render shows something.
+    this._state.exploredMap[this._state.playerY][this._state.playerX] = true;
+    this.updateFov();
   }
 
   /** Public getter for dungeon state (read-only access for renderers) */

@@ -208,23 +208,62 @@ export function dungeonToMatrix(graph: DungeonGraph): Matrix {
   const bossRoom = sorted.find((r) => r.roomType === "exit") ?? sorted[sorted.length - 1];
   const bossIndex = bossRoom !== undefined ? (idToIndex.get(bossRoom.id) ?? 0) : 0;
 
-  const nodes: MatrixNode[] = sorted.map((room, idx) => {
+  const needsIcePromotion = (nodes: MatrixNode[]): boolean => {
+    return !nodes.some((n) => n.iceIds.length > 0 && n.zone !== "surface");
+  };
+
+  const rawNodes: MatrixNode[] = sorted.map((room, idx) => {
     const adjacent = graph.edges
       .filter((e) => e.src === room.id || e.dst === room.id)
       .map((e) => (e.src === room.id ? e.dst : e.src))
       .map((nid) => idToIndex.get(nid) ?? -1)
       .filter((i) => i >= 0);
     const isBoss = room.roomType === "exit";
+    // Boss (exit) rooms must spawn an encounter, otherwise the boss is unreachable.
+    // ICE rooms use watchdog, boss rooms use wintermute (matches Python parity).
+    let iceIds: ReadonlyArray<string>;
+    let iceHp: ReadonlyArray<number>;
+    if (room.roomType === "ice") {
+      iceIds = ["watchdog"];
+      iceHp = [100];
+    } else if (isBoss) {
+      iceIds = ["wintermute"];
+      iceHp = [150];
+    } else {
+      iceIds = [];
+      iceHp = [];
+    }
     return {
       id: idx,
       zone: roomZone(room.roomType),
-      iceIds: room.roomType === "ice" ? ["watchdog"] : [],
-      iceHp: room.roomType === "ice" ? [100] : [],
+      iceIds,
+      iceHp,
       reward: { credits: 50 + idx * 25 },
       isBoss,
       adjacent,
     } satisfies MatrixNode;
   });
+
+  // Fallback: if generator produced no mid+ ICE (e.g. grade=1, small grid),
+  // promote one non-entry/non-boss data/router room to an ice encounter.
+  // Defensive against generator nondeterminism on small grids; keeps every run playable.
+  let nodes: MatrixNode[] = rawNodes;
+  if (needsIcePromotion(nodes)) {
+    const candidateIdx = nodes.findIndex((n, i) => {
+      const r = sorted[i];
+      return r && r.roomType !== "entry" && r.roomType !== "exit" && !n.isBoss;
+    });
+    if (candidateIdx >= 0) {
+      const upgraded = nodes[candidateIdx];
+      if (upgraded) {
+        nodes = nodes.map((n, i) =>
+          i === candidateIdx
+            ? { ...n, zone: "mid", iceIds: ["watchdog"], iceHp: [100] }
+            : n,
+        );
+      }
+    }
+  }
 
   return {
     nodes,

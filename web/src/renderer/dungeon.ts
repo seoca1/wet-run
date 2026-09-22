@@ -20,38 +20,38 @@ export function renderDungeonMap(
   rows: number
 ): Grid {
   // Create empty grid using makeGrid
-  const grid = makeGrid(cols, rows);
+  let grid = makeGrid(cols, rows);
 
   // Calculate offset to center the dungeon in the viewport
   const dungeonWidth = crawler.state.width;
   const dungeonHeight = crawler.state.height;
-  
+
   let offsetX = Math.max(0, Math.floor((cols - dungeonWidth) / 2));
   let offsetY = Math.max(0, Math.floor((rows - dungeonHeight) / 2));
-  
+
   // Ensure we don't go negative if dungeon is larger than viewport
   offsetX = Math.min(offsetX, cols - 1);
   offsetY = Math.min(offsetY, rows - 1);
-  
+
   // Render each tile
   for (let y = 0; y < dungeonHeight; y++) {
     for (let x = 0; x < dungeonWidth; x++) {
       const screenX = offsetX + x;
       const screenY = offsetY + y;
-      
+
       // Skip if outside viewport
       if (screenX < 0 || screenX >= cols || screenY < 0 || screenY >= rows) {
         continue;
       }
-      
+
       const tile = crawler.state.tiles[y][x];
       const explored = crawler.isTileExplored(x, y);
       const visible = crawler.isTileVisible(x, y);
-      
+
       let char: string;
       let fg: string;
-      let bg: string = PALETTE.BACKGROUND;
-      
+      const bg: string = PALETTE.BACKGROUND;
+
       if (!explored) {
         // Unexplored area - completely dark
         char = ' ';
@@ -65,14 +65,14 @@ export function renderDungeonMap(
         char = getTileChar(tile.type);
         fg = getTileFg(tile.type, false); // Bright
       }
-      
-      setCell(grid, { x: screenX, y: screenY }, { char, fg, bg });
+
+      grid = setCell(grid, { x: screenX, y: screenY }, { char, fg, bg });
     }
   }
-  
+
   // Render entities on top of tiles
-  renderEntities(grid, crawler, offsetX, offsetY, cols, rows);
-  
+  grid = renderEntities(grid, crawler, offsetX, offsetY, cols, rows);
+
   return grid;
 }
 
@@ -84,29 +84,29 @@ function renderEntities(
   offsetY: number,
   cols: number,
   rows: number
-): void {
+): Grid {
   const entities = crawler.state.entities;
-  
+
   for (const entity of entities) {
     // Only render if explored
     if (!crawler.isTileExplored(entity.x, entity.y)) {
       continue;
     }
-    
+
     const screenX = offsetX + entity.x;
     const screenY = offsetY + entity.y;
-    
+
     // Skip if outside viewport
     if (screenX < 0 || screenX >= cols || screenY < 0 || screenY >= rows) {
       continue;
     }
-    
+
     const visible = crawler.isTileVisible(entity.x, entity.y);
-    
+
     let char: string;
     let fg: string;
-    let bg: string = PALETTE.BACKGROUND;
-    
+    const bg: string = PALETTE.BACKGROUND;
+
     if (!visible) {
       // Entity in explored but not visible area - show as explored tile
       const tile = crawler.state.tiles[entity.y][entity.x];
@@ -120,8 +120,8 @@ function renderEntities(
           fg = getPlayerFg(crawler.getPlayerStats().hp, crawler.getPlayerStats().maxHp);
           break;
         case EntityType.MONSTER:
-          char = getMonsterChar(entity.subtype as MonsterType);
-          fg = getMonsterFg(entity.subtype as MonsterType, entity.hp! > 0);
+          char = entity.subtype ? getMonsterChar(entity.subtype as MonsterType) : 'M';
+          fg = getMonsterFg(entity.subtype as MonsterType, (entity.hp ?? 0) > 0);
           break;
         case EntityType.ITEM:
           char = getItemChar(entity.subtype as ItemType);
@@ -145,9 +145,11 @@ function renderEntities(
           break;
       }
     }
-    
-    setCell(grid, { x: screenX, y: screenY }, { char, fg, bg });
+
+    grid = setCell(grid, { x: screenX, y: screenY }, { char, fg, bg });
   }
+
+  return grid;
 }
 
 /** Get character representation for a tile type */

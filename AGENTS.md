@@ -151,7 +151,7 @@ npm run smoke          # e2e/smoke.spec.ts only
 npm run export-data    # regenerate static JSON from wet_run Python (read-only)
 ```
 
-> **사전 알림 (2026-09-15 감사)**: `tsc --noEmit`을 pristine HEAD에서 실행 시 약 79개 strict-type 에러가 보고된다 — 대부분 **PR 시점에는 존재했지만 미해결로 머문 항목** (untracked `src/renderer/{dungeon,inventory,journal,loading,mission_select,pause,shop,status}.ts` 가 `State` 타입을 잘못 import하는 등의 신규 추가 코드에서 발생). 버그 헌트가 아닌 마이그레이션 잔재. **CI에서 강제하지 않음**. 가이드: 가능하면 같은 세션에서 함께 정리하거나, 별도 PR로 분리.
+> **사전 알림 (2026-09-15 감사, 2026-09-19 해소)**: `tsc --noEmit`이 pristine HEAD에서 79개 strict-type 에러를 보고했음. 2026-09-19 세션에서 모두 해소 — 정확한 seed/grade 필드명 사용 (state.ts), 미커밋된 매트릭스 테스트 fallback 타입 좁히기 (matrix_ice_bug.test.ts), 그리고 데이터 경계의 런타임 검증 추가 (data_loaders.ts). 0개 에러.
 
 ### 디렉토리 구조 (현재 — `web/` 기반)
 
@@ -251,7 +251,7 @@ npm run build && npm run preview
 
 ### 알려진 한계 (web/ 활성 상태)
 
-- **`tsc --noEmit` 알려진 알림**: 위 "사전 알림" 박스 참조. 79개 에러는 별도 청소 PR 권장.
+- **`tsc --noEmit`**: 2026-09-19에 0개 에러로 청소 완료 (이전 79개). 신규 PR에서 strict-type 에러가 발생하지 않도록 주의.
 - **e2e specs (`web/e2e/*.spec.ts`)**: Playwright 브라우저 의존성. 단위 검증이 부족한 통합 경로 검증용.
 - **PWA (`web/src/core/pwa_manager.ts`)**: half-implemented (consumer only). beforeinstallprompt / controllerchange / online-offline 리스너 미연결 — 후속 작업.
 

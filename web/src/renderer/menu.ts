@@ -24,11 +24,13 @@ export type MenuOption =
   | "help"
   | "endings"
   | "stats"
-  | "tutorial";
+  | "tutorial"
+  | "dungeon_crawl";
 
-/** All 9 menu options in display order. Order matches Python OPTION_* constants. */
+/** All 13 menu options in display order. Order matches Python OPTION_* constants. */
 export const MENU_OPTIONS: ReadonlyArray<{ key: MenuOption; label: string; available: boolean }> = [
   { key: "new_run", label: "NEW RUN", available: true },
+  { key: "dungeon_crawl", label: "DUNGEON CRAWL", available: true },
   { key: "graphic_novel", label: "GRAPHIC NOVEL", available: true },
   { key: "continue", label: "CONTINUE", available: true },
   { key: "settings", label: "SETTINGS", available: true },
@@ -53,6 +55,7 @@ export function renderMainMenu(
   rows: number,
   hasSave: boolean = false,
   saveMeta: { missionId: string; turnCount: number } | null = null,
+  statusMessage: string = "",
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -90,12 +93,21 @@ export function renderMainMenu(
     grid = setText(grid, 4, row, `${marker} ${label}`, fg);
   }
 
-  // Continue hint sub-line (when save exists).
+  // Continue hint sub-line (when save exists). Place below all menu items
+  // (MENU_OPTIONS.length + 1 row after startY) to avoid overlap.
   if (hasSave && saveMeta) {
-    const hintRow = startY + 2;
+    const hintRow = startY + MENU_OPTIONS.length + 1;
     if (hintRow < rows - 2) {
       const hint = `→ ${saveMeta.missionId} (turn ${saveMeta.turnCount + 1})`;
       grid = setText(grid, 6, hintRow, hint, PALETTE.YELLOW_AMBER);
+    }
+  }
+
+  // Status message line (shown after save hint, before footer).
+  if (statusMessage) {
+    const msgRow = startY + MENU_OPTIONS.length + 2;
+    if (msgRow < rows - 2) {
+      grid = setText(grid, 2, msgRow, statusMessage, PALETTE.YELLOW_AMBER);
     }
   }
 

@@ -36,7 +36,19 @@ const VOLUME_STEP = 0.1;
  * Use `getInitialSettingsStateAsync` from main.ts to fetch real quota.
  */
 export function getInitialSettingsState(): SettingsState {
-  const audio = AudioManager.getInstance();
+  let audio: AudioManager;
+  try {
+    audio = AudioManager.getInstance();
+  } catch {
+    // AudioManager not initialized yet, use defaults
+    return {
+      selectedField: "bgm",
+      bgmVolume: 0.4,
+      sfxVolume: 0.6,
+      muted: false,
+      storageQuota: { state: "unavailable", reason: "not yet fetched" },
+    };
+  }
   return {
     selectedField: "bgm",
     bgmVolume: audio.getBgmVolume(),

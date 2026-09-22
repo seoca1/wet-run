@@ -1,11 +1,3 @@
-/** Wet Run Web MVP — entry point.
- *
- * Tier 2a (2026-08-25): supports mission select screen (5 missions).
- * Tier 2b (2026-08-26): Howler.js BGM (single track, M to mute).
- * Tier 3 (2026-09-01): Physical gamepad support + responsive layout.
- * Boots the ASCII renderer, mounts keyboard/gamepad input, loads MVP game data,
- * and renders the initial frame.
- */
 import { AsciiRenderer } from "./renderer/canvas.ts";
 import { KeyboardInput } from "./input/keyboard.ts";
 import { GamepadInput, isGamepadConnected } from "./input/gamepad.ts";
@@ -16,7 +8,8 @@ import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
 import { composeCombatVfx, advanceVfxListBy, WEB_TICK_MS } from "./renderer/combat_vfx.ts";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial.ts";
 import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon.ts";
-import { DungeonCrawler } from "./core/dungeon_crawler.ts";
+import { DungeonCrawler, createDungeonCrawlerFromMission } from "./core/dungeon_crawler.ts";
+import { renderSettingsScreen, getInitialSettingsState } from "./renderer/settings.ts";
 import {
     healthBar,
     healthColor,
@@ -39,31 +32,47 @@ import type { InfoMarket } from "./core/info_market.ts";
 
 const loadStorySystem = () => import("./core/graphic_novel.ts");
 const loadAudioSystem = () => import("./audio/manager.ts");
-const loadSettingsRenderer = () => import("./renderer/settings.ts");
 
 import missionsData from "./data/missions.json" with { type: "json" };
 import programsData from "./data/programs.json" with { type: "json" };
 import iceTypesData from "./data/ice_types.json" with { type: "json" };
+import {
+  loadMissionsCatalog,
+  loadProgramsCatalog,
+  loadIceCatalog,
+} from "./core/data_loaders.ts";
 
-type MissionsFile = Readonly<Record<string, Mission>>;
-type ProgramsFile = Readonly<Record<string, Program>>;
+/** Mission catalog (validated at module load — schema mismatches throw early). */
+const MISSIONS: ReadonlyArray<Mission> = loadMissionsCatalog(missionsData);
 
-/** Mission catalog (Tier 2a: 5 curated). */
-const MISSIONS: ReadonlyArray<Mission> = Object.values(missionsData as MissionsFile);
+/** Programs catalog (validated). Field aliases (ap_cost → cost) normalized. */
+const PROGRAMS: Readonly<Record<string, Program>> = loadProgramsCatalog(programsData);
+
+/** ICE types catalog (validated). Field aliases (defense → armor) normalized. */
+const ICE_TYPES: Readonly<Record<string, Ice>> = loadIceCatalog(iceTypesData);
 
 /** Pick the ICE type best matched to the mission's `ice_id` (fallback: first). */
 function loadIce(mission: Mission, iceTypes: Readonly<Record<string, Ice>>): Ice {
     const keys = Object.keys(iceTypes);
     const preferred = (mission as { ice_id?: string }).ice_id;
+    const normalize = (raw: Ice): Ice => {
+        // ice_types.json uses legacy Python schema field `defense` for what the
+        // TS Ice type calls `armor`. Inject it so combat math doesn't produce NaN.
+        const defense = (raw as { defense?: number }).defense;
+        if (defense !== undefined && raw.armor === undefined) {
+            return { ...raw, armor: defense };
+        }
+        return raw;
+    };
     if (preferred && preferred in iceTypes) {
         const ice = iceTypes[preferred];
-        if (ice) return ice;
+        if (ice) return normalize(ice);
     }
     const first = keys[0];
     if (!first) throw new Error("No ICE types in ice_types.json");
     const fallback = iceTypes[first];
     if (!fallback) throw new Error("ICE entry empty");
-    return fallback;
+    return normalize(fallback);
 }
 
 /** Build the first 5 programs for the deck (deterministic order from program id). */
@@ -77,7 +86,15 @@ function loadDeck(programs: Readonly<Record<string, Program>>, count = 5): Reado
             if (!p) return undefined;
             // programs.json entries are keyed by id but don't carry id in the
             // value (legacy schema). Inject it so save/load round-trip works.
-            return { ...p, id } as Program;
+            // Also normalize ap_cost (legacy Python schema field) to cost
+            // (the field the TS Program type + useProgram handler read).
+            const apCost = (p as { ap_cost?: number }).ap_cost;
+            const normalized: Program = {
+                ...p,
+                id,
+                ...(apCost !== undefined && p.cost === undefined ? { cost: apCost } : {}),
+            } as Program;
+            return normalized;
         })
         .filter((p): p is Program => p !== undefined);
 }
@@ -148,19 +165,41 @@ class Game {
 
     constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
         this.iceTypes = iceTypes;
-        this.programs = programsData as unknown as ProgramsFile;
+        this.programs = PROGRAMS;
         this.missions = MISSIONS;
         this.layout = getLayout();
         this.renderer = new AsciiRenderer(canvas, { cellWidth: 8, cellHeight: 16 });
         this.renderer.resizeGrid(this.layout.cols, this.layout.rows, this.layout.hudCols, this.layout.orientation, this.layout.breakpoint);
         this.input = new KeyboardInput();
         this.gamepad = new GamepadInput();
-        this.inventory = { credits: 0, materials: {}, programs: [] };
+this.inventory = { credits: 0, materials: {}, programs: [] };
         this.equipmentLoadout = makeLoadout();
         this.recipes = makeRecipesFromData({});
         this.materials = makeMaterialsFromData({});
         this.infoMarket = makeInfoMarket({});
-        this.settingsState = null;
+        // Initialize settings state synchronously at construction time with robust fallback
+        try {
+            this.settingsState = getInitialSettingsState();
+        } catch (e) {
+            console.error("[Game] Failed to initialize settingsState:", e);
+            this.settingsState = {
+                selectedField: "bgm",
+                bgmVolume: 0.4,
+                sfxVolume: 0.6,
+                muted: false,
+                storageQuota: { state: "unavailable", reason: "not yet fetched" },
+            };
+        }
+        // Ensure settingsState is never null/undefined
+        if (!this.settingsState) {
+            this.settingsState = {
+                selectedField: "bgm",
+                bgmVolume: 0.4,
+                sfxVolume: 0.6,
+                muted: false,
+                storageQuota: { state: "unavailable", reason: "not yet fetched" },
+            };
+        }
         void this.refreshSaveCache();
         const handler = (action: GameAction): void => {
             if (
@@ -193,6 +232,13 @@ class Game {
                 }
                 return;
             }
+            // Dungeon crawler has its own self-contained state (DungeonCrawler instance);
+            // it must be handled before the `state === null` pre-game shortcut.
+            if (this.screen === "dungeon") {
+                this.handleDungeonInput(action);
+                this.draw();
+                return;
+            }
             if (this.state === null) {
                 this.handlePreGameInput(action);
                 return;
@@ -210,11 +256,6 @@ class Game {
             }
             if (this.screen === "pause") {
                 this.handlePauseInput(action);
-                this.draw();
-                return;
-            }
-if (this.screen === "dungeon") {
-                this.handleDungeonInput(action);
                 this.draw();
                 return;
             }
@@ -365,6 +406,13 @@ if (this.screen === "dungeon") {
                 const dx = action.type === "move_east" ? 1 : action.type === "move_west" ? -1 : 0;
                 const dy = action.type === "move_south" ? 1 : action.type === "move_north" ? -1 : 0;
                 this.dungeonCrawler.tryMovePlayer(dx, dy);
+                // Drive monster AI + FOV update each player turn.
+                this.dungeonCrawler.processTurn();
+                if (this.dungeonCrawler.isGameOver()) {
+                    this._message = "FLATLINE — dungeon crawl failed";
+                    this.screen = "menu";
+                    this.dungeonCrawler = null;
+                }
                 break;
             }
             case "confirm":
@@ -375,6 +423,7 @@ if (this.screen === "dungeon") {
                 break;
             case "jack_out":
                 this.screen = "menu";
+                this.dungeonCrawler = null;
                 this.draw();
                 return;
             default:
@@ -647,21 +696,21 @@ if (this.screen === "dungeon") {
                 if (localStorage.getItem("wetrun_audio_sfx_volume") === null) {
                     manager.setSfxVolume(manager.getSfxVolume());
                 }
-                const settingsModule = await loadSettingsRenderer();
                 if (this.settingsState === null) {
-                    this.settingsState = settingsModule.getInitialSettingsState();
+                    this.settingsState = getInitialSettingsState();
                 }
                 const fields: ReadonlyArray<"bgm" | "sfx" | "mute"> = ["bgm", "sfx", "mute"];
                 const idx = fields.indexOf(this.settingsState.selectedField);
-                if (action.type === "move_south") {
-                    const nextIdx = (idx + 1) % fields.length;
+                if (
+                    action.type === "cycle_target" ||
+                    action.type === "move_south" ||
+                    action.type === "move_north"
+                ) {
+                    const direction =
+                        action.type === "move_north" ? -1 : 1;
+                    const nextIdx = (idx + direction + fields.length) % fields.length;
                     const nextField = fields[nextIdx] ?? fields[0];
                     if (nextField) this.settingsState = { ...this.settingsState, selectedField: nextField };
-                    this.draw();
-                } else if (action.type === "move_north") {
-                    const prevIdx = (idx - 1 + fields.length) % fields.length;
-                    const prevField = fields[prevIdx] ?? fields[0];
-                    if (prevField) this.settingsState = { ...this.settingsState, selectedField: prevField };
                     this.draw();
                 } else if (action.type === "move_east") {
                     if (this.settingsState.selectedField === "bgm") {
@@ -708,12 +757,16 @@ if (this.screen === "dungeon") {
         }
     }
 
-    private selectMenuOption(option: MenuOption | undefined): void {
-        if (!option) return;
+    private async selectMenuOption(option: MenuOption | undefined): Promise<void> {
+        if (!option) return Promise.resolve();
+        console.log("selectMenuOption called with:", option);
         switch (option) {
             case "new_run":
                 this.screen = "mission_select";
                 this.draw();
+                break;
+            case "dungeon_crawl":
+                this.startDungeonCrawl();
                 break;
             case "continue":
                 void this.handleContinue();
@@ -735,6 +788,20 @@ if (this.screen === "dungeon") {
                 break;
             case "settings":
                 this.screen = "settings";
+                try {
+                    if (this.settingsState === null) {
+                        this.settingsState = getInitialSettingsState();
+                    }
+                } catch (e) {
+                    console.error("[Game] Failed to initialize settingsState on menu select:", e);
+                    this.settingsState = {
+                        selectedField: "bgm",
+                        bgmVolume: 0.4,
+                        sfxVolume: 0.6,
+                        muted: false,
+                        storageQuota: { state: "unavailable", reason: "not yet fetched" },
+                    };
+                }
                 this.draw();
                 break;
             case "tutorial":
@@ -744,7 +811,7 @@ if (this.screen === "dungeon") {
                 this.draw();
                 break;
             default:
-                // Other options (credits, etc.) handled elsewhere.
+                this._message = `${(option ?? "this option").toString().replace(/_/g, " ")} — coming soon in a future tier`;
                 this.draw();
                 break;
         }
@@ -798,7 +865,7 @@ if (this.screen === "dungeon") {
     private launchSelected(): void {
         const mission = MISSIONS[this.selectedMission];
         if (!mission) return;
-        const programs = programsData as unknown as ProgramsFile;
+        const programs = PROGRAMS;
         const deck = loadDeck(programs);
         const ice = loadIce(mission, this.iceTypes);
         const initial = makeInitialState(mission, ice, deck);
@@ -814,6 +881,13 @@ if (this.screen === "dungeon") {
         this.recipes = makeRecipesFromData({});
         this.materials = makeMaterialsFromData({});
         this.infoMarket = makeInfoMarket({});
+        this.draw();
+    }
+
+    private startDungeonCrawl(): void {
+        const mission = MISSIONS[0] ?? null;
+        this.dungeonCrawler = createDungeonCrawlerFromMission(mission);
+        this.screen = "dungeon";
         this.draw();
     }
 
@@ -861,12 +935,20 @@ if (this.screen === "dungeon") {
         }
         if (this.state !== null && this.state.runPhase === "loot") {
             updateProgramRow([]);
+            // Parse the loot message to extract credits/items for the dedicated UI.
+            const msg = this.state.message;
+            const creditsMatch = msg.match(/\+(\d[\d,]*)\s+credits/);
+            const lootMatch = msg.match(/Loot:\s*(.+)$/);
+            const rewardCredits = creditsMatch ? parseInt(creditsMatch[1]!.replace(/,/g, ""), 10) : 0;
+            const lootText = lootMatch ? `Loot: ${lootMatch[1]}` : "";
             this.renderer.render(
                 renderLootScreen(
                     this.state.player.hp,
                     this.state.player.maxHp,
                     this.layout.cols,
                     this.layout.rows,
+                    rewardCredits,
+                    lootText,
                 ),
                 ["LOOT", "", "↑↓: navigate | ENTER: continue | ESC: back"],
             );
@@ -895,6 +977,7 @@ if (this.screen === "dungeon") {
                         this.layout.rows,
                         this.hasSaveCache,
                         this.saveMetaCache,
+                        this._message,
                     ),
                     [
                         "MAIN MENU",
@@ -912,19 +995,28 @@ if (this.screen === "dungeon") {
                     ],
                 );
             } else if (this.screen === "settings") {
-                void loadSettingsRenderer().then((settingsModule) => {
-                    if (this.settingsState === null) {
-                        this.settingsState = settingsModule.getInitialSettingsState();
+                if (this.settingsState === null || this.settingsState === undefined) {
+                    try {
+                        this.settingsState = getInitialSettingsState();
+                    } catch (e) {
+                        console.error("[Game] Failed to initialize settingsState in render:", e);
+                        this.settingsState = {
+                            selectedField: "bgm",
+                            bgmVolume: 0.4,
+                            sfxVolume: 0.6,
+                            muted: false,
+                            storageQuota: { state: "unavailable", reason: "not yet fetched" },
+                        };
                     }
-                    this.renderer.render(
-                        settingsModule.renderSettingsScreen(this.settingsState, this.layout.cols, this.layout.rows),
-                        [
-                            "SETTINGS",
-                            "",
-                            "Audio controls — volumes persist",
-                        ],
-                    );
-                });
+                }
+                this.renderer.render(
+                    renderSettingsScreen(this.settingsState, this.layout.cols, this.layout.rows),
+                    [
+                        "SETTINGS",
+                        "",
+                        "Audio controls — volumes persist",
+                    ],
+                );
             } else if (this.screen === "pause") {
                 this.renderer.render(
                     makeGrid(this.layout.cols, this.layout.rows),
@@ -935,10 +1027,18 @@ if (this.screen === "dungeon") {
             } else if (this.screen === "equipment") {
                 this.renderEquipmentScreen();
 } else if (this.screen === "dungeon") {
-            if (this.state && this.dungeonCrawler) {
+            if (this.dungeonCrawler) {
                 const grid = renderDungeonMap(this.dungeonCrawler, this.layout.cols, this.layout.rows);
                 const hud = renderDungeonUi(this.dungeonCrawler, this.layout.cols, this.layout.rows);
-                this.renderer.render(grid, hud);
+                const alarm = this.dungeonCrawler.state.playerAlarm;
+                // Tinted visual cue when alarm is high: amber at 75%+ and red at 100%.
+                const colorFor = (line: string): string | undefined => {
+                    if (!line.startsWith("ALM:")) return undefined;
+                    if (alarm >= 100) return PALETTE.RED_BRIGHT;
+                    if (alarm >= 75) return PALETTE.YELLOW_AMBER;
+                    return undefined;
+                };
+                this.renderer.render(grid, hud, colorFor);
             } else {
                 this.renderer.render(
                     makeGrid(this.layout.cols, this.layout.rows),
@@ -1066,7 +1166,21 @@ if (this.screen === "dungeon") {
         this.unwatchLayout();
     }
 
-    getSettingsState(): import("./renderer/settings.ts").SettingsState | null {
+    getSettingsState(): import("./renderer/settings.ts").SettingsState {
+        if (this.settingsState === null || this.settingsState === undefined) {
+            try {
+                this.settingsState = getInitialSettingsState();
+            } catch (e) {
+                console.error("[Game] Failed to initialize settingsState in getter:", e);
+                this.settingsState = {
+                    selectedField: "bgm",
+                    bgmVolume: 0.4,
+                    sfxVolume: 0.6,
+                    muted: false,
+                    storageQuota: { state: "unavailable", reason: "not yet fetched" },
+                };
+            }
+        }
         return this.settingsState;
     }
 
@@ -1199,7 +1313,7 @@ function boot(): void {
 
     let game: Game;
     try {
-        const iceTypes = iceTypesData as unknown as Record<string, Ice>;
+        const iceTypes = ICE_TYPES;
         game = new Game(canvas, iceTypes);
     } catch (err) {
         console.error("Failed to boot Wet Run:", err);
@@ -1210,6 +1324,7 @@ function boot(): void {
     if (loading) loading.style.display = "none";
     game.start();
     (window as unknown as { wetrun: Game }).wetrun = game;
+
 
     void loadAudioSystem().then((audio) => {
         const manager = audio.AudioManager.getInstance();

@@ -92,13 +92,13 @@ export function renderMatrix(
 
   // ICE preview panel (right side, current node)
   if (icePreview && cols >= 50) {
-    const previewX = cols - 28;
+    const previewX = cols - 30;
     const previewY = 6;
     grid = setText(grid, previewX, previewY, "── CURRENT NODE ──", PALETTE.GRAY_LIGHT);
-    const iceName = icePreview.name.slice(0, 12);
-    grid = setText(grid, previewX, previewY + 1, `ICE: ${iceName}`, PALETTE.ICE_BLUE);
+    const iceName = icePreview.name.slice(0, 22);
+    grid = setText(grid, previewX, previewY + 1, iceName, PALETTE.ICE_BLUE);
     const node = matrix.nodes[currentNodeIndex];
-    const hpStr = node?.iceHp[0]?.toString() ?? "?";
+    const hpStr = node?.iceHp[0]?.toString() ?? "—";
     grid = setText(grid, previewX, previewY + 2, `HP:  ${hpStr}`, PALETTE.GREEN_NEON);
     if (node) {
       const eventKind = (node.eventKind ?? "combat") as MatrixEventKind;

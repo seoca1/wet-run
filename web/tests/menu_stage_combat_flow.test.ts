@@ -141,7 +141,7 @@ describe("Menu → Stage flow", () => {
     expect(next).toBe(noNodeMatrix);
   });
 
-  it("matrix confirm with no ice returns unchanged", () => {
+  it("matrix confirm with no ice returns feedback message", () => {
     const state = buildMatrixState();
     const noIceMatrix = {
       ...state,
@@ -152,7 +152,8 @@ describe("Menu → Stage flow", () => {
     };
     const next = applyAction(noIceMatrix, { type: "confirm" });
 
-    expect(next).toBe(noIceMatrix);
+    expect(next).not.toBe(noIceMatrix);
+    expect(next.message).toMatch(/No ICE/i);
   });
 
   it("matrix jack_out returns to menu", () => {
@@ -190,18 +191,21 @@ describe("Stage → Combat flow", () => {
     expect(state.runPhase).toBe("combat");
   });
 
-  it("approach use_program transitions to combat", () => {
+  it("approach use_program does NOT transition to combat (Bug #4: silent deck consumption prevented)", () => {
     let state = buildMatrixState();
     // Matrix → approach
     state = applyAction(state, { type: "confirm" });
+    const deckBefore = state.deck.length;
+    const deckFirstBefore = state.deck[0]?.id;
 
-    // Approach → combat via use_program
+    // Approach use_program is ignored (deck not consumed)
     state = applyAction(state, {
       type: "use_program",
       programId: "test_prog",
     });
-    expect(state.phase).toBe("combat");
-    expect(state.runPhase).toBe("combat");
+    expect(state.phase).toBe("approach");
+    expect(state.deck.length).toBe(deckBefore);
+    expect(state.deck[0]?.id).toBe(deckFirstBefore);
   });
 
   it("approach jack_out exits to menu", () => {
@@ -525,12 +529,11 @@ describe("Edge cases", () => {
     expect(state.message).toContain("Alarm too high");
   });
 
-  it("invalid confirm actions in menu phase are no-ops", () => {
+  it("confirm in initial state (menu phase, matrix runPhase) returns no-ICE feedback", () => {
     const state = buildMenuState();
-    // applyMenuAction is dead code (menu is handled by main.ts), but test it anyway
     const next = applyAction(state, { type: "confirm" });
-    // Should return unchanged since applyMenuAction is not called
-    expect(next).toBe(state);
+    expect(next.runPhase).toBe("matrix");
+    expect(next.message).toMatch(/No ICE/i);
   });
 
   it("jack_out from any phase exits appropriately", () => {

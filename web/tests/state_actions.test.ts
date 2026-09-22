@@ -72,7 +72,7 @@ describe("applyMatrixAction", () => {
     expect(result.iceRoster.length).toBeGreaterThan(0);
   });
 
-  it("does nothing when confirming on a node with no ICE", () => {
+  it("returns feedback message when confirming on a node with no ICE", () => {
     const state = createMockGameState({
       matrix: {
         nodes: [
@@ -85,7 +85,9 @@ describe("applyMatrixAction", () => {
     });
     const action: GameAction = { type: "confirm" };
     const result = applyMatrixAction(state, action);
-    expect(result).toBe(state);
+    expect(result).not.toBe(state);
+    expect(result.message).toMatch(/No ICE/i);
+    expect(result.runPhase).toBe("matrix");
   });
 
   it("sets boss phase to 1 when entering boss node", () => {
@@ -356,11 +358,11 @@ describe("applyApproachAction", () => {
     expect(result.turnCount).toBe(state.turnCount + 1);
   });
 
-  it("transitions to combat phase on use_program", () => {
+  it("does NOT transition to combat phase on use_program (Bug #4: silent deck consumption prevented)", () => {
     const state = createMockGameState({ phase: "approach" });
     const action: GameAction = { type: "use_program", programId: "test" };
     const result = applyApproachAction(state, action);
-    expect(result.phase).toBe("combat");
+    expect(result.phase).toBe("approach");
   });
 
   it("exits to defeat on jack_out", () => {

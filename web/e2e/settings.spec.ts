@@ -31,6 +31,11 @@ async function navigateToSettings(page: import("@playwright/test").Page): Promis
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("Enter");
   await page.waitForTimeout(300);
+  // Wait for settings screen to be active
+  await page.waitForFunction(() => {
+    const w = window as unknown as { wetrun?: { getScreen(): string } };
+    return w.wetrun?.getScreen() === "settings";
+  }, { timeout: 10000 });
 }
 
 test("SETTINGS menu option navigates to settings screen", async ({ page }) => {
@@ -60,122 +65,27 @@ test("SETTINGS menu option navigates to settings screen", async ({ page }) => {
   expect(criticalErrors).toEqual([]);
 });
 
-test.skip("ArrowRight on settings increments BGM volume", async ({ page }) => {
-  const consoleMessages: string[] = [];
-  page.on("console", (msg) => {
-    consoleMessages.push(`[${msg.type()}] ${msg.text()}`);
-  });
-  page.on("pageerror", (err) => {
-    consoleMessages.push(`[pageerror] ${err.message}`);
-  });
-
+test("ArrowRight on settings increments BGM volume", async ({ page }) => {
   await setupTest(page);
   await navigateToSettings(page);
 
-  // Wait for settings state to be initialized by draw() path
-  await page.waitForTimeout(3000);
-
-  console.log("Console messages:", consoleMessages.slice(-20).join("\n"));
-
-  // Check if we're on settings screen
-  const screenInfo = await page.evaluate(() => {
-    const w = window as unknown as { wetrun?: { getScreen(): string } };
-    return w.wetrun?.getScreen();
-  });
-  console.log("Current screen:", screenInfo);
-
-  // Check initial state via AudioManager getter
-  const initialBgm = await page.evaluate(async () => {
-    const w = window as unknown as { wetrun?: { getBgmVolume(): Promise<number> } };
-    if (w.wetrun?.getBgmVolume) {
-      try {
-        const result = await w.wetrun.getBgmVolume();
-        console.log("getBgmVolume result:", result);
-        return result;
-      } catch (e) {
-        console.log("getBgmVolume error:", e);
-        return null;
-      }
-    }
-    return null;
-  });
-  console.log("Initial BGM volume via getter:", initialBgm);
-
-  // Check localStorage directly
-  const initialLs = await page.evaluate(() => {
-    return localStorage.getItem("wetrun_audio_bgm_volume");
-  });
-  console.log("Initial localStorage:", initialLs);
-
-  // Check settingsState before
-  const settingsStateBefore = await page.evaluate(() => {
+  // Verify settingsState is initialized via the getter
+  const before = await page.evaluate(() => {
     const w = window as unknown as { wetrun?: { getSettingsState(): unknown } };
-    if (w.wetrun?.getSettingsState) {
-      try {
-        const result = w.wetrun.getSettingsState();
-        console.log("getSettingsState before:", result);
-        return result;
-      } catch (e) {
-        console.log("getSettingsState error:", e);
-        return null;
-      }
-    }
-    return null;
+    return w.wetrun?.getSettingsState?.() ?? null;
   });
-  console.log("Settings state before:", JSON.stringify(settingsStateBefore));
+  expect(before).not.toBeNull();
+  expect((before as { bgmVolume: number }).bgmVolume).toBe(0.4);
 
   // Default BGM = 0.4. ArrowRight should bump it to 0.5.
-  console.log("Pressing ArrowRight...");
   await page.keyboard.press("ArrowRight");
-  
+
   // Wait for the async volume change to persist to localStorage
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(3000);
 
-  console.log("Console messages after ArrowRight:", consoleMessages.slice(-30).join("\n"));
-
-  // Check settingsState after
-  const settingsStateAfter = await page.evaluate(() => {
-    const w = window as unknown as { wetrun?: { getSettingsState(): unknown } };
-    if (w.wetrun?.getSettingsState) {
-      try {
-        const result = w.wetrun.getSettingsState();
-        console.log("getSettingsState after:", result);
-        return result;
-      } catch (e) {
-        console.log("getSettingsState error after:", e);
-        return null;
-      }
-    }
-    return null;
-  });
-  console.log("Settings state after:", JSON.stringify(settingsStateAfter));
-
-  // Check via getter
-  const afterBgm = await page.evaluate(async () => {
-    const w = window as unknown as { wetrun?: { getBgmVolume(): Promise<number> } };
-    if (w.wetrun?.getBgmVolume) {
-      try {
-        const result = await w.wetrun.getBgmVolume();
-        console.log("getBgmVolume result after:", result);
-        return result;
-      } catch (e) {
-        console.log("getBgmVolume error after:", e);
-        return null;
-      }
-    }
-    return null;
-  });
-  console.log("After BGM volume via getter:", afterBgm);
-
-  // Check localStorage directly
-  const afterLs = await page.evaluate(() => {
-    console.log("All localStorage keys after:", Object.keys(localStorage));
-    return localStorage.getItem("wetrun_audio_bgm_volume");
-  });
-  console.log("After localStorage:", afterLs);
-
-  const after = afterLs;
-  expect(after).toBe("0.5");
+  // Verify localStorage was updated (AudioManager persists volumes)
+  const afterLs = await page.evaluate(() => localStorage.getItem("wetrun_audio_bgm_volume"));
+  expect(afterLs).toBe("0.5");
 });
 
 test("ESC from settings returns to main menu", async ({ page }) => {
@@ -191,4 +101,3 @@ test("ESC from settings returns to main menu", async ({ page }) => {
   });
   expect(screen).toBe("menu");
 });
-

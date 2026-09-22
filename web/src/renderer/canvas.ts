@@ -83,11 +83,20 @@ export class AsciiRenderer {
     this.ctx.textBaseline = "top";
   }
 
-  /** Clear + render a complete frame. */
-  render(grid: Grid, hudLines: ReadonlyArray<string>): void {
+  /** Clear + render a complete frame.
+   *
+   * `hudColorFor` (optional) lets callers tint individual HUD lines (e.g.
+   * alarm = 100% shown in amber instead of green) without breaking the existing
+   * ReadonlyArray<string> contract.
+   */
+  render(
+    grid: Grid,
+    hudLines: ReadonlyArray<string>,
+    hudColorFor?: (line: string, index: number) => string | undefined,
+  ): void {
     this.clear();
     this.drawGrid(grid);
-    this.drawHud(grid, hudLines);
+    this.drawHud(grid, hudLines, hudColorFor);
   }
 
   private clear(): void {
@@ -116,11 +125,17 @@ export class AsciiRenderer {
     this.ctx.fillText(cell.char, px, py);
   }
 
-  private drawHud(grid: Grid, lines: ReadonlyArray<string>): void {
+  private drawHud(
+    grid: Grid,
+    lines: ReadonlyArray<string>,
+    colorFor?: (line: string, index: number) => string | undefined,
+  ): void {
     const hudX = (grid.width + 1) * this.cellWidth;
     let hudY = this.cellHeight;
-    for (const line of lines) {
-      this.ctx.fillStyle = PALETTE.GREEN_NEON;
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i] ?? "";
+      const override = colorFor?.(line, i);
+      this.ctx.fillStyle = override ?? PALETTE.GREEN_NEON;
       this.ctx.fillText(line, hudX, hudY);
       hudY += this.cellHeight;
     }

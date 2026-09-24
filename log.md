@@ -1161,3 +1161,39 @@ ADR-0211 Option 1 구현 중 진단 정정: 곡선 비단조의 실제 driver �
 
 ### 보류
 실제 게임 난이도를 바꾸는 변경이라 사용자 승인 후 구현 (매핑 표는 디자인 결정). 승인 시 단계: (1) `Matrix.grade` + `resolveMatrixRoster` HP 배선 → (2) grade→ICE 매핑 → (3) balance 곡선 검증 → (4) armor/deck 후속.
+
+---
+
+## [2026-09-24] feat | ADR-0212 Option A 구현 — grade 기반 ICE encounter (곡선 단조화)
+
+### 배경
+사용자 승인. ADR-0212 Option A 단계 (1)~(3) 구현 + 검증.
+
+### 구현
+- `web/src/core/ice_scaling.ts` (신규): `clampGrade` / `encounterIceIdForGrade` / `iceHpForGrade` / `missionGradeOf`.
+- `web/src/core/types.ts`: `Matrix.grade?`.
+- `web/src/core/dungeon.ts`: `dungeonToMatrix(graph, grade)` — `ice` 방은 grade→ICE, 보스는 wintermute 유지, 노드 `iceHp` 는 `[]` 로 두고 소비자가 산출. **부수 수정**: `needsIcePromotion` 이 보스 ICE 를 정상 encounter 로 오인해 보스만 있는 미션에 비보스 ICE 방이 생성되지 않던 버그 해소.
+- `web/src/core/matrix.ts`: grade 전달 + `resolveMatrixRoster` grade HP.
+- `web/src/core/state_actions.ts`: 노드 진입 ICE HP 를 grade 기반으로.
+- `web/src/main.ts`: `loadIce` grade 선택 + `normalizeIce` 스키마 정규화 (latent NaN 수정 — 기존엔 노드 `iceHp` 가 가려줌).
+- `web/scripts/balance_sim.ts`: roster grade HP 사용 + 보스 노드 제외.
+- 테스트: `tests/ice_scaling.test.ts` 신규 + balance 회귀 조정. 2657 → **2664**.
+
+### 실측 곡선 (`npm run balance -- --runs 500`)
+```
+grade  before  after
+  1    50.5%   100%
+  2    80.2%   100%
+  3    43.4%     0%
+  4    85.9%     0%
+  5     100%     0%
+  6     100%     0%
+```
+→ 비단조 해소, **단조 비증가** 달성.
+
+### 검증
+`npm run typecheck` 0 errors / `npm run lint` 0 errors + 4 warnings / `npm test` **2664 pass** / `npm run build` OK
+
+### 잔여 (step 4 — 밸런스 디자인)
+- grade 3 cliff: opening deck 5장 총 데미지 약 80-100 ≪ tier-3+ ICE HP 130-320+. ICE HP 데이터 또는 deck damage 재조정 필요.
+- `state_actions.ts` `defenderDefenseBonus: 0` — ICE `armor` 미반영 (곡선 영향 작음, 별건).

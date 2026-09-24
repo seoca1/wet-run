@@ -1,8 +1,8 @@
 # ADR-0212: grade 기반 ICE encounter 배선 (Option 2)
 
-**상태**: Draft
+**상태**: Accepted (Option A)
 **날짜**: 2026-09-24
-**결정자**: 사용자
+**결정자**: 사용자 (2026-09-24: Option A 선택)
 **우선순위**: P1 (밸런스 정확성 — ADR-0211 후속)
 **관련**:
 - [ADR-0211](./0211-ice-grade-scaling.md) — Option 1 (harness HP 스케일링) 구현 완료. 본 ADR 은 그 후속.
@@ -67,7 +67,7 @@ ADR-0211 Option 1 로 harness 는 `hp_base + hp_per_grade * (grade - 1)` 로 HP 
 
 ## 사용자 결정 (Decision)
 
-- [ ] Option A (권장)
+- [x] Option A — 2026-09-24 사용자 선택
 - [ ] Option A 단, 매핑 표 수정: ___
 - [ ] Option B
 - [ ] Option C (Defer)
@@ -75,20 +75,50 @@ ADR-0211 Option 1 로 harness 는 `hp_base + hp_per_grade * (grade - 1)` 로 HP 
 
 ## 결과 (Consequences)
 
-(결정 후 작성)
+**2026-09-24 — Option A 구현 완료. 곡선이 비단조 → 단조 비증가로 전환.**
+
+구현:
+- `web/src/core/ice_scaling.ts` (신규) — `clampGrade`, `encounterIceIdForGrade`, `iceHpForGrade`, `missionGradeOf`.
+- `web/src/core/types.ts` — `Matrix.grade?` 추가.
+- `web/src/core/dungeon.ts` — `dungeonToMatrix(graph, grade)`; `ice` 방은 grade→ICE, 보스는 `wintermute` 유지; 노드 `iceHp` 는 `[]` 로 두고 소비자가 산출. **부수 버그 수정**: `needsIcePromotion` 이 보스 ICE 를 정상 encounter 로 오인해, 보스만 있는 미션(예: `first_jack`)에 비보스 ICE 방이 생성되지 않던 문제.
+- `web/src/core/matrix.ts` — `generateProceduralMatrix` 가 grade 전달, `resolveMatrixRoster` 가 `hp_base + hp_per_grade * (grade - 1)` 산출.
+- `web/src/core/state_actions.ts` — 노드 진입 시 grade 기반 ICE HP.
+- `web/src/main.ts` — `loadIce` 가 grade→ICE 선택, `normalizeIce` 가 `hp_base`/`hp_per_grade` 정규화 + `hp` 보정 (**기존 latent NaN** — 노드 `iceHp` 가 가려주고 있었음).
+- `web/scripts/balance_sim.ts` — roster 의 grade HP 사용, 보스 노드 제외 (정상 encounter 측정).
+- 테스트: `tests/ice_scaling.test.ts` 신규 + balance 회귀 조정. 2657 → **2664**.
+
+실측 곡선 (`npm run balance -- --runs 500`):
+
+| grade | before | after |
+| --- | --- | --- |
+| 1 | 50.5% | 100% |
+| 2 | 80.2% | 100% |
+| 3 | 43.4% | 0% |
+| 4 | 85.9% | 0% |
+| 5 | 100% | 0% |
+| 6 | 100% | 0% |
+
+→ **단조 비증가** 달성 (비단조 해소). 단 grade 3 에서 cliff (100 → 0).
+
+**Cliff 원인 (step-4 후속)**: opening deck 5장 총 데미지 (~80-100) 보다 tier-3+ ICE HP (`hp_base` 130-320 + `hp_per_grade`) 가 훨씬 높다. grade→tier 배선만으로는 매끄러운 gradient 가 나오지 않고, ICE HP 데이터 / deck damage (PPL) 재조정이 필요하다.
+
+**미적용 (별건)**: `state_actions.ts` `defenderDefenseBonus: 0` (ICE `armor` 미반영). 본 곡선 영향은 작다 — g1/g2 armor ≈ 0, g3+ 는 이미 0%. 전투 데미지 전반을 바꾸므로 별도 밸런스 작업으로 분리.
 
 ## Implementation Status (2026-09-24)
 
-**Status**: ❌ Not started
+**Status**: ✅ Implemented (Option A) — 배선 + 매핑 완료, grade 3 cliff 는 step-4 밸런스 과제
 
 **Evidence**:
-- `web/src/core/dungeon.ts:223-231, 261` — `ice` 방 `watchdog` / 보스 방 `wintermute` 하드코딩
-- `web/src/core/matrix.ts:80-88` — `generateProceduralMatrix(missionGrade, …)` 가 `dungeonToMatrix(graph)` 에 grade 미전달
-- `web/src/core/types.ts:273-277` — `Matrix` 에 grade 없음
-- `web/src/core/matrix.ts:122` — `resolveMatrixRoster` 가 `node.iceHp[i] ?? entry.hp`
-- `web/src/core/state_actions.ts:572` — `defenderDefenseBonus: 0` (armor 미반영, 별건)
+- `web/src/core/ice_scaling.ts` — 신규 (clamp / id / hp / grade 헬퍼)
+- `web/src/core/dungeon.ts` — `dungeonToMatrix(graph, grade)` + `needsIcePromotion` 보스 오인 수정
+- `web/src/core/matrix.ts` — grade 전달 + `resolveMatrixRoster` grade HP
+- `web/src/core/types.ts` — `Matrix.grade?`
+- `web/src/core/state_actions.ts` — grade 기반 노드 ICE HP
+- `web/src/main.ts` — `loadIce` grade 선택 + `normalizeIce` 스키마 정규화
+- `web/scripts/balance_sim.ts` — roster HP + 보스 노드 제외
+- `web/tests/ice_scaling.test.ts` — 신규 회귀 (grade 매핑 / HP / 스케일 / 보스 제외)
 
-**Notes**: ADR-0211 Option 1 완료 후 실측으로 확인된 후속. 실제 게임 난이도 변경을 포함하므로 사용자 승인 필요.
+**Notes**: 단조 비증가 달성. grade 3 cliff (deck damage vs tier-3+ HP) 와 ICE `armor` 미반영은 후속 밸런스 결정.
 
 ## 영향 받는 항목
 
@@ -100,3 +130,4 @@ ADR-0211 Option 1 로 harness 는 `hp_base + hp_per_grade * (grade - 1)` 로 HP 
 ## 변경 이력
 
 - 2026-09-24: Draft 작성 (ADR-0211 Option 1 구현 중 확인된 진단 정정에 근거).
+- 2026-09-24: Accepted (Option A) + 구현. 곡선 비단조 → 단조 비증가. 부수로 `needsIcePromotion` 보스 오인 + `normalizeIce` latent NaN 수정.

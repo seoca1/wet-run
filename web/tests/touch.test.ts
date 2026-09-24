@@ -60,4 +60,17 @@ describe("virtual gamepad overlay", () => {
     const result = isTouchDevice();
     expect(typeof result).toBe("boolean");
   });
+
+  it("fires exactly one action per tap across duplicate event types", () => {
+    const actions: string[] = [];
+    const unmount = mountVirtualGamepad((a) => actions.push(a.type));
+    const root = document.getElementById("wetrun-gamepad-root");
+    const btn = root?.querySelector("button");
+    expect(btn).toBeTruthy();
+    for (const type of ["pointerdown", "touchstart", "mousedown", "click"]) {
+      btn?.dispatchEvent(new Event(type, { bubbles: true, cancelable: true }));
+    }
+    expect(actions.length).toBe(1);
+    unmount();
+  });
 });

@@ -45,7 +45,8 @@ describe("adjustVolume", () => {
 
 describe("renderSettingsScreen", () => {
   const baseState: SettingsState = {
-    selectedField: "bgm",
+    selectedField: "audio",
+    audioEnabled: true,
     bgmVolume: 0.5,
     sfxVolume: 0.7,
     muted: false,
@@ -109,7 +110,7 @@ function gridToText(grid: ReturnType<typeof renderSettingsScreen>): string[] {
 describe("getInitialSettingsState", () => {
   it("returns a state with valid field selection", () => {
     const s = getInitialSettingsState();
-    expect(["bgm", "sfx", "mute"]).toContain(s.selectedField);
+    expect(["audio", "bgm", "sfx", "mute"]).toContain(s.selectedField);
     expect(s.bgmVolume).toBeGreaterThanOrEqual(0);
     expect(s.bgmVolume).toBeLessThanOrEqual(1);
     expect(s.sfxVolume).toBeGreaterThanOrEqual(0);

@@ -202,9 +202,10 @@ function renderOverlay(root: HTMLElement, handler: (action: GameAction) => void)
   root.innerHTML = `
     <style>
       #wetrun-gamepad-root {
-        position: fixed; inset: 0; pointer-events: none;
+        position: fixed; inset: 0;
         font-family: monospace;
         z-index: 5;
+        pointer-events: auto;
       }
       #wetrun-gamepad-root button {
         position: absolute; pointer-events: auto;
@@ -212,7 +213,7 @@ function renderOverlay(root: HTMLElement, handler: (action: GameAction) => void)
         color: #00ff41; font-weight: bold;
         padding: 0; margin: 0; line-height: 1;
         border-radius: 8px;
-        touch-action: none; user-select: none;
+        touch-action: manipulation; user-select: none;
         display: flex; align-items: center; justify-content: center;
       }
       #wetrun-gamepad-root button:active { background: rgba(0, 255, 65, 0.4); }
@@ -234,15 +235,39 @@ function appendButton(parent: HTMLElement, cfg: ButtonConfig, handler: (action: 
   btn.style.width = cfg.size;
   btn.style.height = cfg.size;
   btn.style.fontSize = cfg.fontSize;
-  btn.addEventListener("pointerdown", (e) => {
+  // Single dispatch path: registering pointerdown + touchstart + mousedown + click
+  // together fires the action 2-3x per tap (touchstart → synthetic mousedown → click).
+  // Use Pointer Events where available; otherwise touch/mouse with a short debounce
+  // so synthetic duplicates are ignored.
+  let lastFire = 0;
+  const dispatch = (e: Event): void => {
     e.preventDefault();
+    const now = Date.now();
+    if (now - lastFire < 250) return;
+    lastFire = now;
     handler(cfg.action);
-  });
+  };
+  if (typeof window !== "undefined" && "PointerEvent" in window) {
+    btn.addEventListener("pointerdown", dispatch);
+  } else {
+    btn.addEventListener("touchstart", dispatch, { passive: false });
+    btn.addEventListener("mousedown", dispatch);
+  }
   parent.appendChild(btn);
 }
 
-/** Returns true when the device has a coarse pointer (touch). */
+/** Returns true when the device has touch capability.
+ * Checks multiple signals: pointer: coarse, any-pointer: coarse, touchstart support,
+ * or maxTouchPoints > 0. E-ink devices with stylus may report pointer: fine but
+ * still support touch input.
+ */
 export function isTouchDevice(): boolean {
   if (typeof window === "undefined") return false;
-  return window.matchMedia("(pointer: coarse)").matches;
+  // Primary check: coarse pointer (finger touch)
+  if (window.matchMedia("(pointer: coarse)").matches) return true;
+  // Secondary check: any pointer is coarse (multi-input device)
+  if (window.matchMedia("(any-pointer: coarse)").matches) return true;
+  // Tertiary check: touch event support + touch points
+  if ("ontouchstart" in window || navigator.maxTouchPoints > 0) return true;
+  return false;
 }

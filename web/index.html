@@ -43,7 +43,23 @@
         width: auto;
         height: auto;
         object-fit: contain;
-        touch-action: none;
+        touch-action: manipulation;
+        position: relative;
+        z-index: 1;
+      }
+      #wetrun-gamepad-root {
+        position: fixed; inset: 0; pointer-events: none;
+        font-family: monospace;
+        z-index: 5;
+      }
+      #wetrun-gamepad-root button {
+        position: absolute; pointer-events: auto;
+        background: rgba(0, 0, 0, 0.55); border: 2px solid #00ff41;
+        color: #00ff41; font-weight: bold;
+        padding: 0; margin: 0; line-height: 1;
+        border-radius: 8px;
+        touch-action: manipulation; user-select: none;
+        display: flex; align-items: center; justify-content: center;
       }
       #status-overlay {
         position: fixed;

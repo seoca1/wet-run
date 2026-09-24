@@ -31,7 +31,9 @@ import { equipOn, DEFAULT_REGISTRY, EQUIP_SLOTS, makeLoadout } from "./core/equi
 import type { InfoMarket } from "./core/info_market.ts";
 
 const loadStorySystem = () => import("./core/graphic_novel.ts");
-const loadAudioSystem = () => import("./audio/manager.ts");
+const loadAudioSystemRaw = () => import("./audio/manager.ts");
+function isAudioOff(): boolean { return localStorage.getItem("wetrun_audio_off") === "1"; }
+const loadAudioSystem = () => isAudioOff() ? Promise.resolve(null) : loadAudioSystemRaw();
 
 import missionsData from "./data/missions.json" with { type: "json" };
 import programsData from "./data/programs.json" with { type: "json" };
@@ -187,7 +189,8 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
         } catch (e) {
             console.error("[Game] Failed to initialize settingsState:", e);
             this.settingsState = {
-                selectedField: "bgm",
+                selectedField: "audio",
+                audioEnabled: !isAudioOff(),
                 bgmVolume: 0.4,
                 sfxVolume: 0.6,
                 muted: false,
@@ -197,7 +200,8 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
         // Ensure settingsState is never null/undefined
         if (!this.settingsState) {
             this.settingsState = {
-                selectedField: "bgm",
+                selectedField: "audio",
+                audioEnabled: !isAudioOff(),
                 bgmVolume: 0.4,
                 sfxVolume: 0.6,
                 muted: false,
@@ -271,6 +275,7 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
             const previous = this.state;
             this.state = applyAction(this.state, resolved);
             void loadAudioSystem().then((audio) => {
+                if (!audio) return;
                 const manager = audio.AudioManager.getInstance();
                 if (resolved.type === "use_program" && previous.phase === "combat" && this.state?.phase === "combat") {
                     const iceDelta = this.state.ice.hp - previous.ice.hp;
@@ -692,6 +697,7 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
         }
         if (this.screen === "settings") {
             void loadAudioSystem().then(async (audio) => {
+                if (!audio) return;
                 const manager = audio.AudioManager.getInstance();
                 // Ensure defaults are persisted
                 if (localStorage.getItem("wetrun_audio_bgm_volume") === null) {
@@ -703,7 +709,10 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
                 if (this.settingsState === null) {
                     this.settingsState = getInitialSettingsState();
                 }
-                const fields: ReadonlyArray<"bgm" | "sfx" | "mute"> = ["bgm", "sfx", "mute"];
+                if (this.settingsState.audioEnabled === undefined) {
+                    this.settingsState = { ...this.settingsState, audioEnabled: !isAudioOff() };
+                }
+                const fields: ReadonlyArray<"audio" | "bgm" | "sfx" | "mute"> = ["audio", "bgm", "sfx", "mute"];
                 const idx = fields.indexOf(this.settingsState.selectedField);
                 if (
                     action.type === "cycle_target" ||
@@ -739,7 +748,15 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
                     }
                     this.draw();
                 } else if (action.type === "confirm") {
-                    if (this.settingsState.selectedField === "mute") {
+                    if (this.settingsState.selectedField === "audio") {
+                        const newEnabled = !this.settingsState.audioEnabled;
+                        if (newEnabled) {
+                            localStorage.removeItem("wetrun_audio_off");
+                        } else {
+                            localStorage.setItem("wetrun_audio_off", "1");
+                        }
+                        this.settingsState = { ...this.settingsState, audioEnabled: newEnabled };
+                    } else if (this.settingsState.selectedField === "mute") {
                         const muted = manager.toggleMute();
                         this.settingsState = { ...this.settingsState, muted };
                     }
@@ -799,7 +816,8 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
                 } catch (e) {
                     console.error("[Game] Failed to initialize settingsState on menu select:", e);
                     this.settingsState = {
-                        selectedField: "bgm",
+                        selectedField: "audio",
+                        audioEnabled: !isAudioOff(),
                         bgmVolume: 0.4,
                         sfxVolume: 0.6,
                         muted: false,
@@ -1005,7 +1023,8 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
                     } catch (e) {
                         console.error("[Game] Failed to initialize settingsState in render:", e);
                         this.settingsState = {
-                            selectedField: "bgm",
+                            selectedField: "audio",
+                            audioEnabled: !isAudioOff(),
                             bgmVolume: 0.4,
                             sfxVolume: 0.6,
                             muted: false,
@@ -1108,6 +1127,7 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
         const previous = this._lastPhase;
         this._lastPhase = current;
         void loadAudioSystem().then((audio) => {
+            if (!audio) return;
             const manager = audio.AudioManager.getInstance();
             manager.playPhase(current);
             if (current === "victory" && previous !== "victory") {
@@ -1137,6 +1157,7 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
     /** Read-only BGM volume accessor for e2e/integration tests. */
     async getBgmVolume(): Promise<number> {
         const audio = await loadAudioSystem();
+        if (!audio) return 0;
         return audio.AudioManager.getInstance().getBgmVolume();
     }
 
@@ -1154,6 +1175,7 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
             const iceDelta = this.state.ice.hp - previous.ice.hp;
             if (iceDelta < 0) {
                 void loadAudioSystem().then((audio) => {
+                    if (!audio) return;
                     audio.AudioManager.getInstance().playSfx(audio.SFX_IDS.COMBAT_HIT);
                 });
             }
@@ -1175,9 +1197,10 @@ this.inventory = { credits: 0, materials: {}, programs: [] };
             try {
                 this.settingsState = getInitialSettingsState();
             } catch (e) {
-                console.error("[Game] Failed to initialize settingsState in getter:", e);
-                this.settingsState = {
-                    selectedField: "bgm",
+                    console.error("[Game] Failed to initialize settingsState in getter:", e);
+                    this.settingsState = {
+                        selectedField: "audio",
+                        audioEnabled: !isAudioOff(),
                     bgmVolume: 0.4,
                     sfxVolume: 0.6,
                     muted: false,
@@ -1331,6 +1354,7 @@ function boot(): void {
 
 
     void loadAudioSystem().then((audio) => {
+        if (!audio) return;
         const manager = audio.AudioManager.getInstance();
         audio.AudioManager.unlockOnFirstGesture(() => {
             manager.play();

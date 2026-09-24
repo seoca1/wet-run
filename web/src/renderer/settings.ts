@@ -19,10 +19,11 @@ import {
   type StorageQuota,
 } from "../save/storage_quota.ts";
 
-export type SettingsField = "bgm" | "sfx" | "mute";
+export type SettingsField = "audio" | "bgm" | "sfx" | "mute";
 
 export interface SettingsState {
   selectedField: SettingsField;
+  audioEnabled: boolean;
   bgmVolume: number;
   sfxVolume: number;
   muted: boolean;
@@ -40,9 +41,9 @@ export function getInitialSettingsState(): SettingsState {
   try {
     audio = AudioManager.getInstance();
   } catch {
-    // AudioManager not initialized yet, use defaults
     return {
-      selectedField: "bgm",
+      selectedField: "audio",
+      audioEnabled: localStorage.getItem("wetrun_audio_off") !== "1",
       bgmVolume: 0.4,
       sfxVolume: 0.6,
       muted: false,
@@ -50,7 +51,8 @@ export function getInitialSettingsState(): SettingsState {
     };
   }
   return {
-    selectedField: "bgm",
+    selectedField: "audio",
+    audioEnabled: !audio.isMuted(),
     bgmVolume: audio.getBgmVolume(),
     sfxVolume: audio.getSfxVolume(),
     muted: audio.isMuted(),
@@ -66,7 +68,8 @@ export async function getInitialSettingsStateAsync(): Promise<SettingsState> {
   const audio = AudioManager.getInstance();
   const storageQuota = await getStorageQuota();
   return {
-    selectedField: "bgm",
+    selectedField: "audio",
+    audioEnabled: !audio.isMuted(),
     bgmVolume: audio.getBgmVolume(),
     sfxVolume: audio.getSfxVolume(),
     muted: audio.isMuted(),
@@ -109,26 +112,40 @@ export function renderSettingsScreen(state: SettingsState, cols: number, rows: n
   grid = setText(grid, Math.max(2, Math.floor((cols - 14) / 2)), 1, "WET RUN — Settings", PALETTE.GREEN_NEON);
   grid = setText(grid, 2, 3, "─".repeat(Math.min(cols - 4, 50)), PALETTE.GRAY_MID);
 
+  const audioLabel = state.audioEnabled ? "[X] AUDIO ENABLED" : "[ ] AUDIO ENABLED";
+  const audioFg = state.selectedField === "audio"
+    ? PALETTE.YELLOW_AMBER
+    : (state.audioEnabled ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT);
   grid = setText(grid, 4, 5, "AUDIO", PALETTE.CYAN_LIGHT);
+  grid = setText(grid, 4, 7, audioLabel, audioFg);
 
-  grid = renderSlider(grid, "BGM Volume", state.bgmVolume, state.selectedField === "bgm", 7);
+  grid = renderSlider(grid, "BGM Volume", state.bgmVolume, state.selectedField === "bgm", 9);
 
-  grid = renderSlider(grid, "SFX Volume", state.sfxVolume, state.selectedField === "sfx", 11);
+  grid = renderSlider(grid, "SFX Volume", state.sfxVolume, state.selectedField === "sfx", 13);
 
   const muteLabel = state.muted ? "[X] MUTE ALL" : "[ ] MUTE ALL";
   const muteFg = state.selectedField === "mute"
     ? PALETTE.YELLOW_AMBER
     : (state.muted ? PALETTE.RED_BRIGHT : PALETTE.GRAY_LIGHT);
-  grid = setText(grid, 4, 16, muteLabel, muteFg);
+  grid = setText(grid, 4, 18, muteLabel, muteFg);
 
-  // Tier 7: storage quota section.
-  grid = renderStorageQuota(grid, state.storageQuota, cols, 18);
+  grid = setText(grid, 4, 20, "STORAGE", PALETTE.CYAN_LIGHT);
+  if (state.storageQuota.state === "unavailable") {
+    grid = setText(grid, 4, 21, `[ Storage API unavailable ]`, PALETTE.GRAY_DARK);
+  } else {
+    const level = quotaLevel(state.storageQuota.percent);
+    const barColor = level === "critical" ? PALETTE.RED_BRIGHT : level === "warning" ? PALETTE.YELLOW_AMBER : PALETTE.GREEN_NEON;
+    const bar = renderUsageBar(state.storageQuota.percent, 20);
+    grid = setText(grid, 4, 21, `[${bar}] ${state.storageQuota.percent}%`, barColor);
+  }
 
-  const hint = state.selectedField === "mute"
-    ? "ENTER: toggle mute | ESC: back"
-    : "←/→: adjust volume | TAB: switch | ESC: back";
-  grid = setText(grid, 2, rows - 3, hint, PALETTE.GRAY_DARK);
-  grid = setText(grid, 2, rows - 2, "Volumes persist via localStorage", PALETTE.GRAY_DARK);
+  const hint = state.selectedField === "audio"
+    ? "ENTER: toggle audio | TAB: switch | ESC: back"
+    : state.selectedField === "mute"
+      ? "ENTER: toggle mute | TAB: switch | ESC: back"
+      : "←/→: adjust volume | TAB: switch | ESC: back";
+  grid = setText(grid, 2, rows - 2, hint, PALETTE.GRAY_DARK);
+  grid = setText(grid, 2, rows - 1, "Volumes persist via localStorage", PALETTE.GRAY_DARK);
 
   return grid;
 }

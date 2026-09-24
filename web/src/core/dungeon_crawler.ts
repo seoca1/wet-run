@@ -1103,9 +1103,12 @@ export class DungeonCrawler {
   }
 }
 
-/** Factory function to create a dungeon crawler from a mission */
-export function createDungeonCrawlerFromMission(mission: Mission | null = null): DungeonCrawler {
-  // Generate a seed based on mission and current time
-  const seed = Date.now() + (mission ? stringHashCode(mission.id) : 0);
-  return new DungeonCrawler(seed, mission);
+/** Factory function to create a dungeon crawler from a mission.
+ *
+ * Pass `seed` for a deterministic layout (used by tests); otherwise the seed is
+ * derived from the mission id and the current time so each run differs.
+ */
+export function createDungeonCrawlerFromMission(mission: Mission | null = null, seed?: number): DungeonCrawler {
+  const resolvedSeed = seed ?? Date.now() + (mission ? stringHashCode(mission.id) : 0);
+  return new DungeonCrawler(resolvedSeed, mission);
 }

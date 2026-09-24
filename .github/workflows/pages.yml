@@ -1,4 +1,4 @@
-name: Deploy Dashboard + Wiki + wet_run-web to GitHub Pages
+name: Deploy wet_run-web to GitHub Pages
 
 on:
   push:
@@ -23,28 +23,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Verify dashboard files exist
-        run: |
-          echo "Dashboard:"
-          ls -la dashboard/
-          echo ""
-          echo "Design (for fetch()):"
-          ls -la design/
-
-      - name: Build Wiki (MkDocs Material)
-        run: |
-          python -m pip install --upgrade pip
-          pip install "mkdocs-material[recommended]" pymdown-extensions
-          mkdocs build --strict
-          echo ""
-          echo "Wiki built. Size:"
-          du -sh site/
-          echo ""
-          echo "Wiki pages:"
-          find site -name "*.html" | wc -l
-          echo "HTML pages"
-
-      - name: Build wet_run-web (Tier 4, Vite)
+      - name: Build wet_run-web (Vite)
         run: |
           cd web
           node --version
@@ -61,15 +40,6 @@ jobs:
       - name: Prepare gh-pages artifact
         run: |
           mkdir -p _pages
-          # Dashboard: copy entire directory recursively (all HTML/JS/CSS/JSON/assets).
-          # Replaces prior file-by-file list which drifted as new pages were added
-          # (character-graph, mission-flow, jokey, dungeon, player, play, glossary.json, etc.).
-          cp -r dashboard/. _pages/
-          # Wiki (MkDocs Material build output) → /wiki/ sub-path
-          cp -r site/ _pages/wiki/
-          # Sibling assets referenced by dashboard via fetch()
-          cp -r design/ _pages/design/
-          cp -r Fiction/derivative/ _pages/Fiction/derivative/ 2>/dev/null || true
           # wet_run-web (TypeScript + Canvas2D ASCII game) → /wetrun-web/ sub-path
           # Includes static JSON (missions/ice/programs) + BGM/SFX (Howler.js)
           cp -r web/dist/ _pages/wetrun-web/
@@ -90,7 +60,7 @@ jobs:
           force_orphan: true
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
-          commit_message: "deploy: dashboard + wiki ${{ github.sha }}"
+          commit_message: "deploy: wet_run-web ${{ github.sha }}"
 
       - name: Enable Pages (gh-pages branch)
         uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b

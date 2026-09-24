@@ -38,6 +38,7 @@ prototype/data/saves/*.json
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.vite/
 
 # Local BGM backups (v1 originals — restored on next regeneration)
 dashboard/sounds/*.v1_backup.wav

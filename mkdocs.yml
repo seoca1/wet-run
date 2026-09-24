@@ -5,7 +5,7 @@ repo_url: https://github.com/seoca1/wet-run
 repo_name: seoca1/wet-run
 edit_uri: ""
 
-docs_dir: wiki
+docs_dir: docs/wiki
 
 theme:
   name: material

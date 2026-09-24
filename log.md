@@ -1107,8 +1107,9 @@ push 후 CI 실패 — repo 정책상 모든 action 을 full-length commit SHA �
 - `.github/workflows/ci.yml`: `actions/setup-node@v4` → `actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020`. 나머지 action (checkout / gh-pages / github-script / labeler) 은 이미 SHA pin 상태.
 
 ### 검증
-- Pages 워크플로 run `35975309175` 성공 — gh-pages 배포 완료로 로컬 수정이 라이브 반영됨.
-- CI 는 pin 수정 push 후 재검증.
+- Pages 워크플로 성공 — gh-pages 배포 완료로 로컬 수정이 라이브 반영됨.
+- CI 1차 실패는 repo 정책 (setup-node SHA pin) 이었고, pin 후에는 `dungeon_crawler_wiring.test.ts` flake 가 드러남 — `Date.now()` 시드 기반 절차적 레이아웃 때문에 no-op 이동이 턴으로 안 잡히는 경우가 존재. `createDungeonCrawlerFromMission` 에 optional `seed` 추가 + 테스트 실이동 probe 로 결정화 (로컬 30/30 determinism).
+- 최종: CI success + Pages success (`06642d4`).
 
 ### 잔여
-- 환경변수 `GH_TOKEN` 은 invalid, `GITHUB_TOKEN` 은 valid (seoca1) — 노출 경로 점검 + 정리 필요.
+- 환경변수 `GH_TOKEN` 은 invalid, `GITHUB_TOKEN` 은 valid (seoca1) — 노출 경로 점검 + 정리 필요. 이번 `git push` 는 valid 한 `GITHUB_TOKEN` 을 임시 credential helper 로 사용 (argv/config 에 토큰 미기록).

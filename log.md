@@ -1112,4 +1112,4 @@ push 후 CI 실패 — repo 정책상 모든 action 을 full-length commit SHA �
 - 최종: CI success + Pages success (`06642d4`).
 
 ### 잔여
-- 환경변수 `GH_TOKEN` 은 invalid, `GITHUB_TOKEN` 은 valid (seoca1) — 노출 경로 점검 + 정리 필요. 이번 `git push` 는 valid 한 `GITHUB_TOKEN` 을 임시 credential helper 로 사용 (argv/config 에 토큰 미기록).
+- ~~환경변수 `GH_TOKEN` 은 invalid, `GITHUB_TOKEN` 은 valid (seoca1) — 노출 경로 점검 + 정리 필요.~~ **2026-09-24 해결**: `~/.zshenv` 의 invalid `GH_TOKEN` (2026-06-30 self-flagged "Revoke ASAP") 를 주석 처리 — 유효한 `GITHUB_TOKEN` 을 shadowing 하고 있었음. 백업 `~/.trash/2026-09-24-ghtoken-cleanup/zshenv.bak`. 검증: fresh shell 에서 `gh auth status` = seoca1 로그인 OK. 이번 `git push` 는 valid 한 `GITHUB_TOKEN` 을 임시 credential helper 로 사용 (argv/config 에 토큰 미기록).

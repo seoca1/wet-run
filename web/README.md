@@ -9,16 +9,13 @@ for GitHub Pages or itch.io deployment.
 ## Quick start
 
 ```bash
-# 1. Export game data from wet_run Python (read-only)
-python3 scripts/export_web_data.py
-
-# 2. Install deps (npm/pnpm/yarn)
+# 1. Install deps (npm/pnpm/yarn)
 npm install
 
-# 3. Dev server
+# 2. Dev server
 npm run dev
 
-# 4. Build for production
+# 3. Build for production
 npm run build
 # Output: dist/ (static files)
 ```
@@ -68,7 +65,7 @@ npm run build
 - SFX expansion (combat_block, combat_skill_*, movement_*)
 - Per-track fade in/out (Howler.fade())
 
-See [implementation plan](Game/wet_run/.omo/plans/web-version-2026-08-25.md) for full context.
+See implementation plan for full context.
 
 ADR-0199 (web MVP) is being drafted alongside this MVP implementation.
 
@@ -94,11 +91,25 @@ src/
 
 - `npm run dev` — local dev server (Vite HMR)
 - `npm run build` — production bundle → `dist/`
-- `npm run test` — Vitest unit tests (8 files, ~106 tests)
+- `npm run test` — Vitest unit tests
 - `npm run e2e` — Playwright headless E2E tests (desktop-chromium + mobile-portrait-chromium)
 - `npm run smoke` — quick deployment smoke test against live URL
-- `npm run lint` — ESLint TypeScript check
-- `npm run export-data` — regenerate static JSON from wet_run Python
+- `npm run lint` — ESLint TypeScript check (config: `.eslintrc.cjs`)
+- `npm run typecheck` — `tsc --noEmit` (strict)
+- `npm run balance` — seeded combat simulation; prints win-rate / turns / HP per grade
+
+### Balance harness
+
+`npm run balance -- --runs 500` drives the real combat reducer under a seeded
+PRNG and a controlled clock, then reports per-grade win-rate, stall rate,
+turns-to-kill and ending HP. Because it exercises shipped code rather than a
+reimplementation, a constant change in `combat_engine.ts` / `boss_phases.ts`
+shows up in the numbers immediately. Invariants (determinism, no NaN HP,
+bounded turns) are pinned in `tests/balance_sim.test.ts`.
+
+`src/data/*.json` is the canonical game data, hand-maintained since the Python
+prototype was retired on 2026-09-15 (the old `prototype/` → `src/data/` export
+pipeline no longer exists).
 
 ### E2E + smoke
 

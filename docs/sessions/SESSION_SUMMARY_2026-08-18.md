@@ -165,10 +165,10 @@ No commits made (per workspace AGENTS.md §6 — no auto-commit without explicit
 
 ### Section 5 corrections for future sessions
 
-This section's previous "still pending" ADRs (0188, 0189, 0191, 0156-0159) are now all **implementation closed** (verified by recon, not by new authoring). For true next-session backlog, see [`log.md`](./log.md) § "[2026-08-18] docs(sweep)" entry which lists real candidates (new ADR for further Track-A extraction, SESSION_SUMMARY §5 update propagation, GH_TOKEN rotation + push).
+This section's previous "still pending" ADRs (0188, 0189, 0191, 0156-0159) are now all **implementation closed** (verified by recon, not by new authoring). For true next-session backlog, see log.md § "[2026-08-18] docs(sweep)" entry which lists real candidates (new ADR for further Track-A extraction, SESSION_SUMMARY §5 update propagation, GH_TOKEN rotation + push).
 
 ---
 
 For project conventions and handoff context, see
-[`AGENTS.md`](./AGENTS.md), [`log.md`](./log.md), and
+AGENTS.md, log.md, and
 [`SESSION_SUMMARY.md`](./SESSION_SUMMARY.md).

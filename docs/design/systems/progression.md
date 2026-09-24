@@ -1,6 +1,6 @@
 # System: Progression (종합 진행)
 
-> **상위 결정**: `../../decisions/0008-progression-system.md` (Accepted, Revised)
+> **상위 결정**: `../../wiki/decisions/0008-progression-system.md` (Accepted, Revised)
 > **관련**: [grade-progression.md](./grade-progression.md) (등급 단계), [difficulty-rating.md](./difficulty-rating.md) (난이도), [crafting.md](./crafting.md) (제작), [economy.md](./economy.md) (재화)
 > **구현**: `../../prototype/src/wet_run/matrix/ppl.py` (PPL 계산)
 >
@@ -64,7 +64,7 @@ def get_deck_sizes() -> tuple[DeckSize, ...]: ...
 - **Pillar 4 (The Build)**: 빌드 깊이의 *첫 축* — slot count 가 core mechanic.
 - **Pillar 5 (The Style)**: 라벨 명확 (`LIGHT` / `STANDARD` / `HEAVY`), UI ASCII 셰이프 (·W· / :W: / |W| / ▓W▓ / ★W★ — 기존 등급 게이팅과 동일).
 
-**Cross-reference**: [`design/systems/combat.md ## Deck Size Selection`](combat.md), [decisions/0178-deck-building.md](../../decisions/0178-deck-building.md).
+**Cross-reference**: [`design/systems/combat.md ## Deck Size Selection`](combat.md), [decisions/0178-deck-building.md](../../wiki/decisions/0178-deck-building.md).
 
 ### Tier 2: 메타 진행 (Meta Progression, 자키 등급)
 
@@ -226,7 +226,7 @@ Phase 19 audit 결과 — Deck Size Selection (Phase 15, ADR-0178) 가 Tier 1 �
 
 - **Tier 1 표**: `Deck size` 행 *추가* (기존 Deck tier / Programs / Wetware / Construct / HP&ATK 와 동일 결정 시점).
 - **PPL 공식**: *unchanged* — Deck size 는 *슬롯 수* 만 변경, PPL 계산과 직교.
-- **Cross-reference**: [decisions/0178-deck-building.md](../../decisions/0178-deck-building.md), [design/systems/combat.md ## Deck Size Selection](combat.md).
+- **Cross-reference**: [decisions/0178-deck-building.md](../../wiki/decisions/0178-deck-building.md), [design/systems/combat.md ## Deck Size Selection](combat.md).
 
 ### 의도적 비-변경
 

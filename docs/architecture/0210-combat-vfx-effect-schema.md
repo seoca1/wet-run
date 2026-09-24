@@ -6,8 +6,8 @@
 **우선순위**: P2 (Cross-version parity, player-facing polish)
 **관련**:
 - [ADR-0199 — Wet Run Web MVP (Tier 1)](./0199-wetrun-web-mvp.md) — established Python → JSON → web export pattern
-- [ADR-0145 — effects_vfx 3-way split (Python)](./decisions/0145-effects-vfx-3-way-split.md) — Python's 16 skill animations + 7 cinematic sequences + 10 spawn functions
-- [ADR-0112 — combat/effects.py size reduction](./decisions/0112-combat-effects-size.md) — Python effects module history
+- ADR-0145 — effects_vfx 3-way split (Python) — Python's 16 skill animations + 7 cinematic sequences + 10 spawn functions
+- [ADR-0112 — combat/effects.py size reduction](../wiki/decisions/0112-combat-effects-size.md) — Python effects module history
 
 ## 컨텍스트 (Context)
 

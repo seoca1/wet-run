@@ -1,7 +1,7 @@
 # Web Architecture (wet_run-web)
 
 > **상태**: Living doc — updated 2026-08-27 (v1.4.0 + Tier 4 + ADR-0209)
-> **상위 결정**: [ADR-0199](../../decisions/0199-wetrun-web-mvp.md) (Tier 1), [ADR-0207](../../decisions/0207-wetrun-web-tier4-sfx-animation-glyphs.md) (Tier 4), [ADR-0209](../../decisions/0209-wetrun-web-idb-save-backend.md) (IDB)
+> **상위 결정**: [ADR-0199](../../wiki/decisions/0199-wetrun-web-mvp.md) (Tier 1), [ADR-0207](../../wiki/decisions/0207-wetrun-web-tier4-sfx-animation-glyphs.md) (Tier 4), [ADR-0209](../../wiki/decisions/0209-wetrun-web-idb-save-backend.md) (IDB)
 > **관련**: [version-status.md on GitHub](https://github.com/seoca1/wet-run/blob/main/docs/version-status.md), implementation plan (local-only, gitignored)
 
 이 문서는 `wet_run-web` (브라우저 MVP) 의 아키텍처를 정리한다. Python 데스크탑 게임과 별도의 트랙이지만, 동일한 게임 디자인을 공유한다. 명명 규칙/릴리스 사이클은 `docs/version-status.md` 참조.

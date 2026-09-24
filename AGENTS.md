@@ -31,7 +31,7 @@
 
 ### 3.2 게임 디자인 변경
 1. `decisions/` 에 새 ADR 작성 또는 기존 ADR Status 변경
-2. **Implementation status 결정** (ADR Accepted 시점 필수 — [ADR-0195](./decisions/0195-adr-implementation-workflow.md)):
+2. **Implementation status 결정** (ADR Accepted 시점 필수 — [ADR-0195](./docs/wiki/decisions/0195-adr-implementation-workflow.md)):
    - ✅ **Implemented**: 이미 shipped (코드 + 테스트 + 데이터 모두 확인)
    - 🟡 **Partial**: 일부만 shipped, 나머지 backlog
    - ❌ **Not started**: 미구현 (backlog 명시)
@@ -139,16 +139,16 @@
 ```bash
 cd web
 npm install            # 1회 (또는 의존성 변경 시)
-npm test               # vitest run — 87 files, ~2646 tests at HEAD + 63 pre-existing failures
+npm test               # vitest run — 107 files, 2654 tests, 0 failures
 npm run test:watch     # watch 모드
 npm run typecheck      # tsc --noEmit (strict)
-npm run lint           # eslint src
+npm run lint           # eslint src scripts
 npm run format         # prettier --write
 npm run build          # tsc + vite build → dist/
 npm run dev            # vite dev server (HMR)
 npm run e2e            # playwright e2e (separated tests, requires browsers)
 npm run smoke          # e2e/smoke.spec.ts only
-npm run export-data    # regenerate static JSON from wet_run Python (read-only)
+npm run balance        # 밸런스 하네스 — 시드 고정 전투 시뮬레이션 (grade별 승률/턴/HP)
 ```
 
 > **사전 알림 (2026-09-15 감사, 2026-09-19 해소)**: `tsc --noEmit`이 pristine HEAD에서 79개 strict-type 에러를 보고했음. 2026-09-19 세션에서 모두 해소 — 정확한 seed/grade 필드명 사용 (state.ts), 미커밋된 매트릭스 테스트 fallback 타입 좁히기 (matrix_ice_bug.test.ts), 그리고 데이터 경계의 런타임 검증 추가 (data_loaders.ts). 0개 에러.
@@ -170,7 +170,7 @@ Game/wet_run/
 │   │   ├── core/            # 게임 로직 (combat, state, dungeon, save 등)
 │   │   │   ├── combat_engine.ts / combat_models.ts / boss*.ts / ice_ai.ts
 │   │   │   ├── state.ts / state_actions.ts / state_helpers.ts / types.ts
-│   │   │   ├── matrix.ts / dungeon*.ts / hub.ts / stage_system.ts
+│   │   │   ├── matrix.ts / dungeon*.ts / hub.ts
 │   │   │   ├── achievements*.ts / faction_reputation.ts / death_cycle.ts
 │   │   │   ├── graphic_novel*.ts / sound_system.ts / i18n.ts
 │   │   │   ├── save_progress.ts / accessibility.ts / pwa_manager.ts
@@ -223,11 +223,8 @@ npm run dev            # vite (HMR)
 cd web
 npm run dev            # http://localhost:5173
 
-# CLI 인터랙티브 (Tier 4 검증 도구)
-npm run cli:interactive
-
-# 빠른 자동 검증 (30 tests, ~1초)
-npm run cli:test
+# 타입 체크
+npm run typecheck
 
 # 빌드 미리보기
 npm run build && npm run preview
@@ -276,11 +273,11 @@ npm run build && npm run preview
 
 **World naming collision**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입 (Python). web/ TypeScript에는 해당 없음.
 
-**참조**: [`decisions/0194-ecs-role-clarification.md`](./decisions/0194-ecs-role-clarification.md), [`docs/ARCHITECTURE.md` §14.6](./docs/ARCHITECTURE.md#146-adr-0194-결과-적용-2026-08-26)
+**참조**: [`decisions/0194-ecs-role-clarification.md`](./docs/wiki/decisions/0194-ecs-role-clarification.md), docs/ARCHITECTURE.md §14.6
 
 **World naming collision**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입.
 
-**참조**: [`decisions/0194-ecs-role-clarification.md`](./decisions/0194-ecs-role-clarification.md), [`docs/ARCHITECTURE.md` §14.6](./docs/ARCHITECTURE.md#146-adr-0194-결과-적용-2026-08-26)
+**참조**: [`decisions/0194-ecs-role-clarification.md`](./docs/wiki/decisions/0194-ecs-role-clarification.md), docs/ARCHITECTURE.md §14.6
 
 ## 7. CJK 혼용 방지 가이드
 
@@ -381,7 +378,7 @@ Web UI에서 보드 생성:
 2. Name: "Wet Run Development"
 3. Columns: Backlog / Ready / In Progress / Review / Done
 
-상세 가이드: [`docs/GITHUB_PROJECTS_SETUP.md`](./docs/GITHUB_PROJECTS_SETUP.md)
+상세 가이드: docs/GITHUB_PROJECTS_SETUP.md
 
 ## 9. 작업 종료 체크리스트
 

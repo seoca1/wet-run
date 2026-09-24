@@ -1,6 +1,6 @@
 # System: Exploration (탐험 / Fog of War)
 
-> **상위 결정**: `../../decisions/0020-fog-of-war-exploration.md` (Accepted, Draft)
+> **상위 결정**: `../../wiki/decisions/0020-fog-of-war-exploration.md` (Accepted, Draft)
 > **관련**: ADR-0005 (Cyberspace), ADR-0011 (Portraits), ADR-0012 (PPL/ZDR), ADR-0017 (Mission)
 
 ## 목적

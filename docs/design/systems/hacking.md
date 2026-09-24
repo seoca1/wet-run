@@ -1,6 +1,6 @@
 # System: Cyberspace / Hacking (사이버스페이스 / 해킹)
 
-> **상위 결정**: `../../decisions/0005-cyberspace-representation.md` (Accepted)
+> **상위 결정**: `../../wiki/decisions/0005-cyberspace-representation.md` (Accepted)
 > **관련**: ADR-0003 (RT-MS), ADR-0008 (Item Tier), ADR-0009 (Story), ADR-0011 (Portraits), ADR-0012 (PPL/ZDR), ADR-0013 (Events)
 
 ## 목적

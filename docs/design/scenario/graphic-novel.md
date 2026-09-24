@@ -1,6 +1,6 @@
 # Graphic Novel Mode (그래픽 노블 자동플레이 모드)
 
-> **이 문서는 [`../../decisions/0032-graphic-novel-mode.md`](../../decisions/0032-graphic-novel-mode.md)의 디자인 명세.**
+> **이 문서는 [`../../wiki/decisions/0032-graphic-novel-mode.md`](../../wiki/decisions/0032-graphic-novel-mode.md)의 디자인 명세.**
 > 메인메뉴 9 옵션 (Phase 7 + ADR-0040 + Phase 15 ENDINGS + Phase 17 옵트인 [9] STATS) + 그래픽 노블 자동플레이 + 세이브 진도 회고.
 >
 > **Phase 19 audit (2026-08-13)**: 7-option menu (was 5), ADR-0043 audio + ADR-0044 GN save, TELEMETRY_STATS menu cross-reference.

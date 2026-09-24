@@ -1,6 +1,6 @@
 # System: Crafting (제작 — 재료 & 조합)
 
-> **상위 결정**: `../../decisions/0015-crafting-system.md` (Accepted, Draft)
+> **상위 결정**: `../../wiki/decisions/0015-crafting-system.md` (Accepted, Draft)
 > **관련**: ADR-0008 (Progression), ADR-0010 (i18n), ADR-0013 (Events), ADR-0014 (Data Salvage)
 
 ## 목적

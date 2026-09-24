@@ -1,6 +1,6 @@
 # System: Grade Progression (등급 진행 — 1-up to 5-up)
 
-> **상위 결정**: `../../decisions/0008-progression-system.md` (Accepted, Revised)
+> **상위 결정**: `../../wiki/decisions/0008-progression-system.md` (Accepted, Revised)
 > **관련**: ADR-0003 (Combat), ADR-0012 (PPL/ZDR), ADR-0014 (Data Salvage), ADR-0015 (Crafting), ADR-0016 (Avatar), ADR-0019 (Aftermath)
 
 ## 목적

@@ -271,7 +271,7 @@ Both deferred to content-authoring session.
 ---
 
 For project conventions and handoff context, see
-[`AGENTS.md`](./AGENTS.md), [`log.md`](./log.md),
-[`QUALITY_UPGRADE_PLAN_2026-08-20.md`](./.omo/plans/QUALITY_UPGRADE_PLAN_2026-08-20.md),
-[`docs/audits/adr_coverage_matrix_2026-08-20.md`](./docs/audits/adr_coverage_matrix_2026-08-20.md),
+AGENTS.md, log.md,
+QUALITY_UPGRADE_PLAN_2026-08-20.md,
+docs/audits/adr_coverage_matrix_2026-08-20.md,
 and [`SESSION_SUMMARY.md`](./SESSION_SUMMARY.md).

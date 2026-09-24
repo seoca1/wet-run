@@ -1,6 +1,6 @@
 # System: Combat (전투 시스템)
 
-> **상위 결정**: `../../decisions/0003-combat-system.md` (Accepted, Revised), `../../decisions/0014-data-salvage.md` (Accepted)
+> **상위 결정**: `../../wiki/decisions/0003-combat-system.md` (Accepted, Revised), `../../wiki/decisions/0014-data-salvage.md` (Accepted)
 > **관련**: ADR-0008 (Item Tier), ADR-0011 (Portraits), ADR-0012 (PPL/ZDR), ADR-0013 (Events)
 
 ## 목적

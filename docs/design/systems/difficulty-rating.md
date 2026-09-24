@@ -1,6 +1,6 @@
 # System: Combat Difficulty & Threat Level (PPL & ZDR)
 
-> **상위 결정**: `../../decisions/0012-difficulty-rating.md` (Accepted)
+> **상위 결정**: `../../wiki/decisions/0012-difficulty-rating.md` (Accepted)
 > **관련**: ADR-0003 (RT-MS), ADR-0005 (Cyberspace), ADR-0008 (Item Tier), ADR-0011 (ASCII Portraits)
 
 ## 목적

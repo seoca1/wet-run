@@ -1,6 +1,6 @@
 # System: Missions (미션 시스템 — 재료 연계)
 
-> **상위 결정**: `../../decisions/0017-mission-material-integration.md` (Accepted, Draft), `../../decisions/0010-i18n-content-pipeline.md` (Accepted), `../../decisions/0013-story-events.md` (Accepted), `../../decisions/0015-crafting-system.md` (Accepted)
+> **상위 결정**: `../../wiki/decisions/0017-mission-material-integration.md` (Accepted, Draft), `../../wiki/decisions/0010-i18n-content-pipeline.md` (Accepted), `../../wiki/decisions/0013-story-events.md` (Accepted), `../../wiki/decisions/0015-crafting-system.md` (Accepted)
 > **관련**: ADR-0006 (Run), ADR-0009 (Story), ADR-0014 (Data Salvage), ADR-0016 (Avatar)
 
 ## 목적

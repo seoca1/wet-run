@@ -1,6 +1,6 @@
 # System: Combat Aftermath & Subtitles (전투 후일담 & 자막)
 
-> **상위 결정**: `../../decisions/0019-combat-aftermath-subtitles.md` (Accepted, Draft)
+> **상위 결정**: `../../wiki/decisions/0019-combat-aftermath-subtitles.md` (Accepted, Draft)
 > **관련**: ADR-0009 (Story), ADR-0010 (i18n), ADR-0013 (Events), ADR-0014 (Data Salvage), ADR-0017 (Mission), ADR-0018 (Animation)
 
 ## 목적

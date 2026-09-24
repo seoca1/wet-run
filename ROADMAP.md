@@ -63,7 +63,7 @@
     - **Faction Reputation** — 5 faction × 7 tier (AppState.reputation), 미션 완료 + ICE 처치 + Hub 시각 통합 hook, save/restore 영속화
     - **Grade 6 Master Tier** — `MAX_TIER=6`, T6 장비 3종 (master deck/body, Zion trodes), 18 items로 확장
   - **디자인 문서 7개 신규** (Phase 2 100% 완성): inventory, dialogue, procgen, i18n, story-archive, progression, balance/ppl_zdr
-  - 상세: [`IMPROVEMENTS.md`](./IMPROVEMENTS.md)
+  - 상세: IMPROVEMENTS.md
 - **2026-06-30**: ADR-0060 (Dungeon BSP + NetHack + VFX Overlay) + ADR-0061 (Novel Hook Dispatch) Accepted. ADR-0046~0052, 0060, 0061 추가. 미션 29개, 단편 65개 (en/ko), Novel Catalog 4-layer 자동 디스패치. **3254 tests pass**.
 - **2026-06-21**: ADR-0041~0044 모두 Accepted. 12 씬 dialogue 4× 확장 (4188→16862 chars), 30줄 페이지 + 챕터 카드 I-XII + fade transition, 15개 scene cue 연결, 그래픽 노블 이어서 읽기. **2257 tests pass**.
 - **2026-06-20**: ADR-0031 Original Scenario Integration (Accepted). 단편 3편 v2.0 소설 레벨 재작성. chapter_view.py 신규 + ScreenKind 확장. 1843 tests pass.

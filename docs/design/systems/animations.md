@@ -1,6 +1,6 @@
 # System: Animations (전투/이벤트 ASCII 애니메이션)
 
-> **상위 결정**: `../../decisions/0018-combat-animation.md` (Accepted, Draft)
+> **상위 결정**: `../../wiki/decisions/0018-combat-animation.md` (Accepted, Draft)
 > **관련**: ADR-0002 (Pure ASCII), ADR-0003 (RT-MS), ADR-0011 (Portraits), ADR-0012 (PPL/ZDR)
 
 ## 목적

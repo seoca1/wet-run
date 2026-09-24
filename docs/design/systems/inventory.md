@@ -1,6 +1,6 @@
 # System: Inventory & Equipment (인벤토리 · 장비)
 
-> **상위 결정**: `../../decisions/0008-progression-system.md` (Accepted, Revised)
+> **상위 결정**: `../../wiki/decisions/0008-progression-system.md` (Accepted, Revised)
 > **관련**: [crafting.md](./crafting.md) (제작), [progression.md](./progression.md) (메타 진행), [combat.md](./combat.md) (전투)
 > **구현**: `../../prototype/src/wet_run/equipment/equipment.py`
 

@@ -1,6 +1,6 @@
 # System: Jockey Avatar (자키 아바타 — 스탯 시각화)
 
-> **상위 결정**: `../../decisions/0016-jockey-avatar.md` (Accepted, Draft)
+> **상위 결정**: `../../wiki/decisions/0016-jockey-avatar.md` (Accepted, Draft)
 > **관련**: ADR-0002 (Pure ASCII), ADR-0008 (Progression), ADR-0011 (Portraits), ADR-0012 (PPL/ZDR), ADR-0014 (Data Salvage)
 
 ## 목적

@@ -1,6 +1,6 @@
 # System: Story Events (소설 스토리 부가 이벤트)
 
-> **상위 결정**: `../../decisions/0013-story-events.md` (Accepted)
+> **상위 결정**: `../../wiki/decisions/0013-story-events.md` (Accepted)
 > **관련**: ADR-0008 (Item Tier), ADR-0009 (Story/News), ADR-0010 (Content Pipeline), ADR-0011 (ASCII Portraits), ADR-0012 (PPL/ZDR)
 
 ## 목적

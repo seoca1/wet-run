@@ -1,7 +1,7 @@
 # System: ASCII Portraits (인물 / 객체 시각 식별)
 
-> **상위 결정**: `../../decisions/0011-ascii-portraits.md` (Accepted)
-> **관련**: `../../decisions/0002-rendering-style.md` (Pure ASCII 보강)
+> **상위 결정**: `../../wiki/decisions/0011-ascii-portraits.md` (Accepted)
+> **관련**: `../../wiki/decisions/0002-rendering-style.md` (Pure ASCII 보강)
 
 ## 목적
 

@@ -3,7 +3,7 @@
 **Document Type**: Data specification
 **Status**: Active (Phase 11 implementation)
 **Date**: 2026-08-08
-**Related**: [ADR-0188 — Mission Expansion](../../decisions/0188-mission-expansion.md), `mission-types.md`
+**Related**: [ADR-0188 — Mission Expansion](../../wiki/decisions/0188-mission-expansion.md), `mission-types.md`
 
 ## Overview
 

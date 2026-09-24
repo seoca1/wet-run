@@ -1,6 +1,6 @@
 # Death & Restart Cycle (자키 사이클)
 
-> **이 문서는 [`../../decisions/0040-death-restart-cycle.md`](../../decisions/0040-death-restart-cycle.md)의 디자인 명세.**
+> **이 문서는 [`../../wiki/decisions/0040-death-restart-cycle.md`](../../wiki/decisions/0040-death-restart-cycle.md)의 디자인 명세.**
 > 플레이어 자키가 HP 0이 되면 *인격이 보존된 채로* 사망 → 새 자키 또는 같은 자키로 재시작.
 >
 > **Phase 19 audit (2026-08-13)**: Telemetry wiring (Phase 16), ending_choice persistence (Phase 16, ADR-0192), TELEMETRY_STATS data-source (Phase 17, ADR-0184) cross-references added.
@@ -423,5 +423,5 @@ Phase 19 감사 (Phase 16 telemetry + Phase 16 ending_choice + Phase 17 TELEMETR
 - [`design/scenario/graphic-novel.md ## 12.3 Ending Choice 영속성`](graphic-novel.md) — GN 의 엔딩 변종과 main flow 엔딩의 분리.
 - [`design/systems/combat.md ## F.4 Boss Phase 4`](../systems/combat.md) — 보스 phase transition (death 흐름 진입 *전* 에 발생).
 - [`design/systems/inventory.md`](../systems/inventory.md) — wetware stacking (death 시 인벤토리 손실 처리과 무관, 별도).
-- [`decisions/0184-telemetry.md`](../../decisions/0184-telemetry.md) — ADR 본문.
-- [`decisions/0192-ending-expansion.md`](../../decisions/0192-ending-expansion.md) — ADR 본문.
+- [`decisions/0184-telemetry.md`](../../wiki/decisions/0184-telemetry.md) — ADR 본문.
+- [`decisions/0192-ending-expansion.md`](../../wiki/decisions/0192-ending-expansion.md) — ADR 본문.

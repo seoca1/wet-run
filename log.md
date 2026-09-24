@@ -1067,3 +1067,31 @@ c7cf815 docs(ADR-0210): Tier 6 implementation status update
 - `web/src/audio/manager.ts` lazy-load Howler 리팩터는 동시 편집 세션이 진행한 작업 — 검증 후 커밋에 포함.
 - **밸런스 조사 완료**: 비단조 승률의 근본 원인은 `dungeon.ts` ICE 하드코딩 + `parseIce` hp=100 + `ice_types.json` `hp_per_grade` 미사용 (dead data). 하네스가 grade 난이도가 아니라 BSP 토폴로지를 측정하고 있었음. **Draft ADR-0211** + `docs/diagnostics/balance-grade-curve-root-cause-2026-09-24.md` 로 기록.
 - 잔여: ADR-0211 결정 (Option 1/2), PAT 토큰 회전은 사용자 액션.
+
+---
+
+## [2026-09-24] fix | 터치 gamepad 마무리 + 오디오 토글 복원 + prettier 사고 복구
+
+### 배경
+전 세션의 모바일 터치 디버깅이 미커밋 상태로 남아 있었고, 디버그 오버레이/로그와 4중 이벤트 리스너가 섞여 있었음.
+
+### 수정 — web/
+- **터치 정리**: `web/src/input/touch.ts` — 화면 디버그 로그 오버레이 `#wetrun-debug-log` 와 `appendDebugLog` 제거. gamepad 버튼이 `pointerdown`+`touchstart`+`mousedown`+`click` 4개 리스너를 동시 등록해 탭 1회에 액션 2~3회 중복 발화하던 문제를 **단일 dispatch 경로**로 수정. PointerEvent 지원 시 `pointerdown`, 미지원 시 `touchstart`/`mousedown` + 250ms debounce.
+- **main.ts**: `#wetrun-debug` 오버레이와 디버그 `console.log` 제거. Settings AUDIO 토글 기능 복원 — `isAudioOff` / `wetrun_audio_off` / `loadAudioSystem` null 게이트 / `audioEnabled`.
+- **probe-touch.html** 제거 — untracked debug probe 였고 `public/` 에 있어 dist 로 배포되던 파일.
+- **회귀 테스트 추가**: `web/tests/touch.test.ts` — 탭 중복 이벤트 4종 dispatch 시 액션 1회만 발화 검증. 테스트 2654 → **2655**.
+
+### prettier 사고 및 복구
+- 이 repo 는 `.prettierrc` 가 없어 `npm run format` — prettier 3 기본 printWidth 80 — 이 손으로 정렬한 코드 71개 파일을 재포맷했음. 전량 `git checkout` 으로 revert 후 의도된 5개 파일만 **원 포맷 유지**로 재적용.
+- **교훈**: 이 repo 에서 `npm run format` 실행 금지 — 설정 부재. 필요하면 `.prettierrc` 도입을 별도 결정으로.
+
+### 문서
+- `AGENTS.md` §2/§4/§5 를 실제 트리에 맞게 정정 + §6 중복 문단 제거, `ROADMAP.md` Recent 갱신.
+
+### 검증
+- `npm run typecheck` 0 errors / `npm run lint` 0 errors + 4 warnings pre-existing / `npm test` 107 files **2655 pass** / `npm run build` OK
+- `dist/probe-touch.html` 미포함 확인
+
+### 잔여
+- `web/public/probe.html` — tracked, 미참조 진단 페이지. dist 로 배포 중이며 제거 여부는 사용자 결정.
+- ADR-0211 결정, PAT 토큰 회전은 사용자 액션.

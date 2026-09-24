@@ -10,13 +10,13 @@
 
 | 디렉토리 | 에이전트의 역할 | 절대 규칙 |
 | --- | --- | --- |
-| `raw/` | **읽기 전용** | 절대 수정 금지. 원본 자료의 무결성 유지. |
-| `wiki/` | 자유롭게 편집, 인덱스/로그 갱신 필수 | LLM Wiki 계층. 인용이 가능한 모든 페이지에 원문 인용 포함. |
-| `design/` | 자유롭게 편집, 사용자 검토 영역 | 활성 스펙. 사용자가 직접 수정할 수 있음을 인지. |
-| `testcases/` | 자유롭게 편집, 템플릿 사용 | 디자인 변경 시 동기화 필요. |
-| `decisions/` | Draft 상태는 자유, Accepted는 immutable | 결정된 사항 임의 변경 금지, 새 결정은 신규 ADR로. |
-| `prototype/` | (**2026-09-15 통합으로 삭제됨**) | 활성 코드베이스는 `web/` TypeScript. 디렉토리 자체가 삭제되어 존재하지 않음 (git history에서만 조회 가능). |
-| 루트 메타 파일 | 신중히 수정 | README, AGENTS.md, index, log, ROADMAP, SETUP_LOG |
+| `web/` | **활성 코드베이스** | TypeScript + Vite + Vitest. 모든 변경은 `web/` 에서. 명령은 `cd web && npm ...`. |
+| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. `docs/architecture/` 가 web/ ADR 권장 위치, `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
+| `data/` | 신중히 수정 | 정적 JSON 데이터 (이전 prototype/ 잔재; hand-maintained). `data/raw/`, `data/sounds_test/` 같은 하위 폴더는 비활성/테스트 잔재. |
+| `scripts/` | 자유롭게 편집 | 보조 도구 (`scripts/tools/` — audit_sprawl.py, find_broken_links.py, README.md). |
+| 루트 메타 파일 | 신중히 수정 | README, AGENTS, log, ROADMAP, CHANGELOG, MIGRATION, VALIDATION_SCENARIO, mkdocs.yml |
+
+> **2026-09-24 정합 노트**: 본 표는 현행 트리 기준이다. 이전 버전이 나열하던 `raw/`, `wiki/`, `design/`, `testcases/`, `decisions/`, `prototype/`, `dashboard/` 행은 모두 프로토타입 시절 경로로 현재 존재하지 않는다 — `raw/` 와 `prototype/` 은 2026-09-15 Python 프로토타입 통합으로 삭제되었고, `wiki/` / `design/` / `testcases/` / `decisions/` 는 `docs/` 하위로 이관되었으며, `dashboard/` 는 `docs/dashboard/` 로 이동했다. 깁슨 분석 wiki는 Fiction 프로젝트(`../../../Fiction/wiki/`)에서 별도 유지된다.
 
 ## 3. 작업 워크플로우
 
@@ -60,7 +60,7 @@
 
 ## 4. Sprawl 세계관 정확성 규칙
 
-> **2026-07-10 정책 변경**: 파생 소설을 Notion에 게시하지 **않는다**. 대신 `Game/wet_run/dashboard/stories/` HTML 카드를 단일 진실 공급원으로 사용. 자세한 계획: `docs/progress/DASHBOARD_ENHANCEMENT_PLAN.md`.
+> **2026-07-10 정책 변경 (2026-09-24 경로 정합)**: 파생 소설을 Notion에 게시하지 **않는다**. 대신 `Game/wet_run/docs/dashboard/stories/` HTML 카드를 단일 진실 공급원으로 사용 (예전 `Game/wet_run/dashboard/stories/` 경로는 2026-09 통합으로 `docs/dashboard/` 로 이동).
 
 깁슨 원작의 톤과 용어를 정확히 살리는 것은 디자인의 일부다.
 
@@ -86,7 +86,7 @@
 게임의 세계관은 **`../../../../Fiction/wiki/`** (깁슨 분석 wiki)를 *Primary source*로 참조한다.
 (이는 `Projects/Fiction/wiki/` — Fiction 프로젝트의 위키 디렉토리)
 
-- 게임 wiki (`Game/wet_run/wiki/world/`)는 게임용 요약/적응
+- 게임 wiki (`Game/wet_run/docs/wiki/world/`)는 게임용 요약/적응 (예전 `Game/wet_run/wiki/world/` 경로는 2026-09 통합으로 `docs/wiki/` 로 이동)
 - 깊은 분석/원문 인용/캐릭터 디테일은 Fiction wiki 참조
 - **절대 경로**: `../../../../Fiction/wiki/...` (위치: `wiki/` 하위 MD 파일 기준 4단계 상승)
 - AGENTS.md 기준 절대 경로: `../../../Fiction/wiki/...`
@@ -106,12 +106,14 @@
 3. 원문에 없는 요소를 만들지 말 것
 4. 새 요소가 필요하면 Fiction wiki의 *이전 작품* (Bridge, Blue Ant, Jackpot)에서 차용 가능 — 단 명시
 
-## 5. LLM Wiki Operations (raw / wiki / schema)
+## 5. LLM Wiki Operations (docs/wiki)
 
 이 프로젝트는 표준 LLM Wiki 패턴을 따른다.
 
-- **Ingest**: raw에 새 자료 → 관련 wiki 페이지 작성/갱신 → index 갱신 → log 기록
-- **Query**: 사용자가 질문 → index로 관련 페이지 찾기 → 인용과 함께 답변 → 가치가 있으면 결과를 새 wiki 페이지로 file-back
+> **2026-09-24 정합 노트**: 워크스페이스 표준의 3계층 (raw / wiki / schema) 가운데 `raw/` 는 Python 프로토타입 통합 (2026-09-15) 으로 retired — wet_run 트리에서 더 이상 존재하지 않는다. 게임 위키는 `docs/wiki/` (`decisions/`, `design/`, `lore/`, `world/` 하위) 로 통합되었고, 깁슨 분석용 primary source 는 Fiction 프로젝트의 `../../../Fiction/wiki/` 가 담당한다. 신규 ingest 시 깁슨 원문 인용은 Fiction wiki 를 우선 참조하고, 게임용 요약/적응은 `docs/wiki/` 에 둔다.
+
+- **Ingest**: 깁슨 원문 발췌가 생기면 Fiction wiki (`../../../Fiction/wiki/`) 에 먼저 인제스트 → 게임용 요약/적응을 `docs/wiki/world/` (또는 `docs/wiki/lore/`, `docs/wiki/design/`) 에 작성/갱신 → `docs/wiki/index.md` 갱신 → `log.md` 에 `[YYYY-MM-DD] ingest | 제목` 형식으로 기록
+- **Query**: 사용자가 질문 → `docs/wiki/index.md` 로 관련 페이지 찾기 → Fiction wiki 인용과 함께 답변 → 가치가 있으면 결과를 새 `docs/wiki/` 페이지로 file-back
 - **Lint**: 주기적으로 wiki 건강 점검
   - orphan 페이지 (인바운드 링크 없음)
   - 모순 (여러 페이지의 동일 주제 다름)
@@ -274,11 +276,7 @@ npm run build && npm run preview
 
 **World naming collision**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입 (Python). web/ TypeScript에는 해당 없음.
 
-**참조**: [`decisions/0194-ecs-role-clarification.md`](./docs/wiki/decisions/0194-ecs-role-clarification.md), docs/ARCHITECTURE.md §14.6
-
-**World naming collision**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입.
-
-**참조**: [`decisions/0194-ecs-role-clarification.md`](./docs/wiki/decisions/0194-ecs-role-clarification.md), docs/ARCHITECTURE.md §14.6
+**참조**: [`decisions/0194-ecs-role-clarification.md`](./docs/wiki/decisions/0194-ecs-role-clarification.md)
 
 ## 7. CJK 혼용 방지 가이드
 

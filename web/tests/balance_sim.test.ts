@@ -8,7 +8,7 @@
 import { describe, expect, it } from "vitest";
 
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
-import { runSuite, simulateCombat } from "../scripts/balance_sim";
+import { iceHpForGrade, runSuite, simulateCombat } from "../scripts/balance_sim";
 import type { Program } from "../src/core/types";
 
 import missionsJson from "../src/data/missions.json";
@@ -40,6 +40,24 @@ describe("balance sim — determinism", () => {
       ),
     );
     expect(seen.size).toBeGreaterThan(1);
+  });
+});
+
+describe("balance sim — grade scaling", () => {
+  it("derives ICE HP from hp_base + hp_per_grade * (grade - 1)", () => {
+    const standard = iceCatalog["standard"];
+    expect(standard).toBeDefined();
+    if (standard === undefined) return;
+    const hp1 = iceHpForGrade(standard, 1);
+    const hp4 = iceHpForGrade(standard, 4);
+    expect(hp4).toBeGreaterThan(hp1);
+    expect(hp1).toBe(standard.hpBase);
+    expect(hp4).toBe((standard.hpBase ?? 0) + (standard.hpPerGrade ?? 0) * 3);
+  });
+
+  it("falls back to ice.hp when grade data is missing", () => {
+    const noGrade = { id: "x", name: "X", hp: 77, armor: 0, tier: 1 };
+    expect(iceHpForGrade(noGrade, 5)).toBe(77);
   });
 });
 

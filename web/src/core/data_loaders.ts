@@ -143,6 +143,8 @@ export function parseIce(raw: unknown, idHint: string): Ice {
     throw new Error(`[data_loaders] ice '${name}' requires 'armor' or 'defense' as finite number`);
   }
   const tier = typeof r.tier === "number" ? r.tier : 1;
+  const hpBase = typeof r.hp_base === "number" ? r.hp_base : undefined;
+  const hpPerGrade = typeof r.hp_per_grade === "number" ? r.hp_per_grade : undefined;
   const hp = 100;
   return {
     id: idHint,
@@ -150,6 +152,8 @@ export function parseIce(raw: unknown, idHint: string): Ice {
     armor,
     tier,
     hp,
+    ...(hpBase !== undefined ? { hpBase } : {}),
+    ...(hpPerGrade !== undefined ? { hpPerGrade } : {}),
   };
 }
 

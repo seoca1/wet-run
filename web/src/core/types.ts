@@ -67,6 +67,8 @@ export interface Ice {
   readonly maxHp?: number;
   readonly armor: number;
   readonly tier: number;
+  readonly hpBase?: number;
+  readonly hpPerGrade?: number;
   readonly personality?: "aggressive" | "defensive" | "stealth" | "support";
   readonly aggression?: "passive" | "standard" | "aggressive" | "boss";
   readonly skills?: ReadonlyArray<{ id: string; name: string; effect: string; cooldownMs: number; damage: number }>;

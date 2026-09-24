@@ -1095,3 +1095,20 @@ c7cf815 docs(ADR-0210): Tier 6 implementation status update
 ### 잔여
 - `web/public/probe.html` — tracked, 미참조 진단 페이지. dist 로 배포 중이며 제거 여부는 사용자 결정.
 - ADR-0211 결정, PAT 토큰 회전은 사용자 액션.
+
+---
+
+## [2026-09-24] ci | setup-node 액션 SHA pin + Pages 배포 성공
+
+### 배경
+push 후 CI 실패 — repo 정책상 모든 action 을 full-length commit SHA 로 pin 해야 하는데, `actions/setup-node@v4` 만 tag 참조로 남아 거부됨. Sep 18/22 CI 실패도 동일 원인.
+
+### 수정
+- `.github/workflows/ci.yml`: `actions/setup-node@v4` → `actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020`. 나머지 action (checkout / gh-pages / github-script / labeler) 은 이미 SHA pin 상태.
+
+### 검증
+- Pages 워크플로 run `35975309175` 성공 — gh-pages 배포 완료로 로컬 수정이 라이브 반영됨.
+- CI 는 pin 수정 push 후 재검증.
+
+### 잔여
+- 환경변수 `GH_TOKEN` 은 invalid, `GITHUB_TOKEN` 은 valid (seoca1) — 노출 경로 점검 + 정리 필요.

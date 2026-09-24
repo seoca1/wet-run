@@ -1065,4 +1065,5 @@ c7cf815 docs(ADR-0210): Tier 6 implementation status update
 
 ### 메모
 - `web/src/audio/manager.ts` lazy-load Howler 리팩터는 동시 편집 세션이 진행한 작업 — 검증 후 커밋에 포함.
-- 잔여: balance 곡선 비단조 (G3 43% < G4 86%) 조사 필요; PAT 토큰 회전은 사용자 액션.
+- **밸런스 조사 완료**: 비단조 승률의 근본 원인은 `dungeon.ts` ICE 하드코딩 + `parseIce` hp=100 + `ice_types.json` `hp_per_grade` 미사용 (dead data). 하네스가 grade 난이도가 아니라 BSP 토폴로지를 측정하고 있었음. **Draft ADR-0211** + `docs/diagnostics/balance-grade-curve-root-cause-2026-09-24.md` 로 기록.
+- 잔여: ADR-0211 결정 (Option 1/2), PAT 토큰 회전은 사용자 액션.

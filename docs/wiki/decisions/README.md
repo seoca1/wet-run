@@ -271,3 +271,4 @@ i18n + Content Pipeline:
 | 0209 | wet_run-web IndexedDB Save Backend (Tier 3 literal partial: IDB-first + localStorage fallback, lazy migration, async API, TS1128 fix, 129.63 KB bundle) | **Accepted (Option 1)** | 2026-08-26 | P2 (Tier 3 literal cloud sync on-ramp, MVP上限) |
 | 0210 | Combat VFX Effect Schema (cross-version standardization: prototype/data/effects.json canonical + wet_run-web/scripts/export_effects.py consumer + 15 v1 effects, boss_phase_1..4 unification) | **Accepted (Option 1)** | 2026-08-31 | P2 (cross-version parity, player-facing polish) |
 | 0211 | ICE 난이도 스케일링 — grade 기반 HP/스탯 배선 (balance 하네스 비단조 승률의 근본 원인: dungeon.ts ICE 하드코딩 + parseIce hp=100 + hp_per_grade dead data) | **Accepted (Option 1)** | 2026-09-24 | P1 (밸런스 정확성) |
+| 0212 | grade 기반 ICE encounter 배선 (ADR-0211 후속 — dungeon.ts 가 grade 무시하고 watchdog/wintermute 하드코딩. 게임 난이도를 grade 로 구동) | **Draft** | — | 2026-09-24 | P1 (밸런스 정확성) |

@@ -1147,3 +1147,17 @@ Option 1 은 필요조건이지 충분조건이 아니다. grade 난이도 곡�
 
 ### 잔여
 - Option 2 ADR: encounter grade 파라미터화 + `state_actions.ts:572` ICE `armor` 반영 + opening deck damage vs ICE HP/armor 재검토.
+
+---
+
+## [2026-09-24] decision | ADR-0212 Draft 작성 (grade 기반 ICE encounter — Option 2)
+
+### 배경
+ADR-0211 Option 1 구현 중 진단 정정: 곡선 비단조의 실제 driver 는 HP 가 아니라 encounter 정체성 (`watchdog` armor 1 ↔ `wintermute` armor 8) 이며, `dungeon.ts` 가 grade 를 무시하고 ICE 를 하드코딩한다. 실제 게임도 grade 가 ICE 난이도를 구동하지 않는다.
+
+### 산출
+- `docs/wiki/decisions/0212-grade-driven-ice-encounters.md` (Draft) — Option A (grade→ICE tier 배선) / Option B (harness-only) / Option C (defer) + 권장 grade→ICE 매핑 초안 표 + 영향 파일/리스크.
+- `docs/wiki/decisions/README.md` 인덱스에 0212 추가.
+
+### 보류
+실제 게임 난이도를 바꾸는 변경이라 사용자 승인 후 구현 (매핑 표는 디자인 결정). 승인 시 단계: (1) `Matrix.grade` + `resolveMatrixRoster` HP 배선 → (2) grade→ICE 매핑 → (3) balance 곡선 검증 → (4) armor/deck 후속.

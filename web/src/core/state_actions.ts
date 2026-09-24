@@ -26,6 +26,7 @@ import { calculateDamage, countRoleSynergy, AUTO_ATTACK_INTERVAL_MS } from "./co
 import { DEFAULT_BOSS_PROFILE, checkPhaseTransition } from "./boss_phases.ts";
 import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai.ts";
 import { rollLoot, getLootTable, type LootDrop } from "./loot.ts";
+import { iceHpForGrade, missionGradeOf } from "./ice_scaling.ts";
 import iceTypesData from "../data/ice_types.json";
 import type { MutableRunState } from "./run_mutators.ts";
 import { isMutatorActive } from "./run_mutators.ts";
@@ -60,7 +61,7 @@ export function applyMatrixAction(state: GameState, action: GameAction): GameSta
     const encounterMultiplier = isMutatorActive(state as unknown as MutableRunState, "ice_x2") ? 2 : 1;
     const baseCount = Math.min(node.iceIds.length * encounterMultiplier, 4);
     const iceRoster = node.iceIds.slice(0, baseCount).map((id, i) => {
-      const hp = node.iceHp[i] ?? activeIce.hp;
+      const hp = node.iceHp[i] ?? iceHpForGrade(activeIce, missionGradeOf(state.mission));
       return { ...activeIce, id, hp };
     });
     const matrixEntryVfx: import("../renderer/combat_vfx.js").CombatVfxInstance[] = [

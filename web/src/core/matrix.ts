@@ -11,6 +11,7 @@
 import type { Matrix, MatrixNode, ZoneDepth, Ice } from "./types.ts";
 import { ProceduralDungeonGenerator } from "./dungeon_layout.ts";
 import { dungeonToMatrix } from "./dungeon.ts";
+import { iceHpForGrade } from "./ice_scaling.ts";
 
 export const NUM_NODES = 5;
 export const ZONE_BY_NODE_INDEX: ReadonlyArray<ZoneDepth> = [
@@ -84,7 +85,7 @@ export function generateProceduralMatrix(
 ): Matrix {
   const generator = new ProceduralDungeonGenerator();
   const graph = generator.generate(seed, missionGrade, "veteran", missionId);
-  return dungeonToMatrix(graph);
+  return dungeonToMatrix(graph, missionGrade);
 }
 
 /** Linear advance: move to current node's adjacent (boss → final). */
@@ -119,7 +120,7 @@ export function resolveMatrixRoster(
   for (let i = 0; i < node.iceIds.length; i++) {
     const id = node.iceIds[i];
     const entry = (id && iceCatalog[id]) || fallback;
-    const hpVal = node.iceHp[i] ?? entry.hp;
+    const hpVal = node.iceHp[i] ?? iceHpForGrade(entry, matrix.grade ?? 1);
     ice.push(entry);
     hp.push(hpVal);
   }

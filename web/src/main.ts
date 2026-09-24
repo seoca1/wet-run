@@ -22,6 +22,7 @@ import {
 } from "./renderer/vfx.ts";
 import type { GameState, GameAction, GamePhase, Ice, Mission, Program, ScreenKind, GraphicNovelState, Inventory, EquipmentLoadout } from "./core/types.ts";
 import { applyAction, buildHudLines, makeInitialState, resolveProgramSelection, slotToGameState, stateToSaveSlot } from "./core/state.ts";
+import { encounterIceIdForGrade, missionGradeOf } from "./core/ice_scaling.ts";
 import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
 import { save as saveToSlot, load as loadFromSlot, hasSave as slotHasSave, getSaveMeta } from "./save/storage.ts";
@@ -58,18 +59,28 @@ function loadIce(mission: Mission, iceTypes: Readonly<Record<string, Ice>>): Ice
     const keys = Object.keys(iceTypes);
     const preferred = (mission as { ice_id?: string }).ice_id;
     const normalize = (raw: Ice): Ice => {
-        // ice_types.json uses legacy Python schema field `defense` for what the
-        // TS Ice type calls `armor`. Inject it so combat math doesn't produce NaN.
-        const defense = (raw as { defense?: number }).defense;
-        if (defense !== undefined && raw.armor === undefined) {
-            return { ...raw, armor: defense };
-        }
-        return raw;
+        // ice_types.json uses legacy Python field names (`defense`, `hp_base`,
+        // `hp_per_grade`) and carries no precomputed `hp`. Normalize them so
+        // combat math and grade scaling never receive undefined.
+        const r = raw as Ice & { defense?: number; hp_base?: number; hp_per_grade?: number };
+        const armor = r.armor ?? r.defense ?? 0;
+        const hpBase = r.hpBase ?? r.hp_base;
+        const hpPerGrade = r.hpPerGrade ?? r.hp_per_grade;
+        const hp = Number.isFinite(r.hp) ? r.hp : (hpBase ?? 100);
+        return {
+            ...r,
+            armor,
+            hp,
+            ...(hpBase !== undefined ? { hpBase } : {}),
+            ...(hpPerGrade !== undefined ? { hpPerGrade } : {}),
+        };
     };
     if (preferred && preferred in iceTypes) {
         const ice = iceTypes[preferred];
         if (ice) return normalize(ice);
     }
+    const graded = iceTypes[encounterIceIdForGrade(missionGradeOf(mission))];
+    if (graded) return normalize(graded);
     const first = keys[0];
     if (!first) throw new Error("No ICE types in ice_types.json");
     const fallback = iceTypes[first];

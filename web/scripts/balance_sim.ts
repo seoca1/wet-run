@@ -47,22 +47,6 @@ export interface CombatOutcome {
 const DEFAULT_MAX_TURNS = 100;
 const CLOCK_ORIGIN_MS = 1_000_000;
 
-/** Grade-scaled ICE HP for the balance harness.
- *
- * The game path keeps using `Ice.hp` (parseIce pins it to 100); the harness
- * derives HP from the data-driven `hp_base + hp_per_grade * (grade - 1)` so the
- * reported curve actually reflects mission grade rather than which ICE template
- * the procedural layout happened to place first. Falls back to `ice.hp` when the
- * grade fields are absent from the data.
- */
-export function iceHpForGrade(ice: Ice, grade: number): number {
-  const base = ice.hpBase;
-  const perGrade = ice.hpPerGrade;
-  if (base === undefined || perGrade === undefined) return ice.hp;
-  const g = Number.isFinite(grade) && grade > 0 ? grade : 1;
-  return base + perGrade * (g - 1);
-}
-
 function isFighting(s: GameState): boolean {
   return s.runPhase === "combat" && s.phase === "combat";
 }
@@ -91,18 +75,19 @@ export function simulateCombat(
     if (fallback === undefined) throw new Error("balance_sim: empty ICE catalog");
 
     const probe = makeInitialState(mission, fallback, deck);
-    const nodeIndex = probe.matrix?.nodes.findIndex((n) => n.iceIds.length > 0) ?? -1;
-    const base =
+    // Measure the mission's normal encounter: skip boss rooms so a boss spike
+    // does not decide the reported win-rate. Falls back to any ICE node if no
+    // non-boss encounter exists.
+    const nodes = probe.matrix?.nodes ?? [];
+    const encounterIdx = nodes.findIndex((n) => n.iceIds.length > 0 && !n.isBoss);
+    const nodeIndex = encounterIdx >= 0 ? encounterIdx : nodes.findIndex((n) => n.iceIds.length > 0);
+    const roster =
       nodeIndex >= 0 && probe.matrix !== null
-        ? (resolveMatrixRoster(probe.matrix, nodeIndex, iceCatalog).ice[0] ?? fallback)
-        : fallback;
-    const grade =
-      (mission as { grade_max?: number }).grade_max ??
-      (mission as { grade_min?: number }).grade_min ??
-      mission.grade ??
-      1;
-    const templateHp = iceHpForGrade(base, grade);
-    const template = templateHp === base.hp ? base : { ...base, hp: templateHp, maxHp: templateHp };
+        ? resolveMatrixRoster(probe.matrix, nodeIndex, iceCatalog)
+        : null;
+    const base = roster?.ice[0] ?? fallback;
+    const hp = roster?.hp[0] ?? base.hp;
+    const template = hp === base.hp ? base : { ...base, hp, maxHp: hp };
 
     let s = makeInitialState(mission, template, deck);
     if (nodeIndex >= 0) s = { ...s, currentNodeIndex: nodeIndex };

@@ -8,7 +8,8 @@
 import { describe, expect, it } from "vitest";
 
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
-import { iceHpForGrade, runSuite, simulateCombat } from "../scripts/balance_sim";
+import { iceHpForGrade } from "../src/core/ice_scaling";
+import { runSuite, simulateCombat } from "../scripts/balance_sim";
 import type { Program } from "../src/core/types";
 
 import missionsJson from "../src/data/missions.json";
@@ -33,13 +34,18 @@ describe("balance sim — determinism", () => {
   });
 
   it("different seeds actually diverge (the RNG is not pinned)", () => {
-    const mission = missions[0]!;
-    const seen = new Set(
-      Array.from({ length: 24 }, (_, i) =>
-        JSON.stringify(simulateCombat(mission, iceCatalog, openingDeck, { seed: i })),
-      ),
-    );
-    expect(seen.size).toBeGreaterThan(1);
+    // Grade-scaled encounters make many missions decisive (always win or always
+    // lose), so assert divergence holds for at least one contested mission
+    // instead of assuming the first mission is a close fight.
+    const diverged = missions.some((mission) => {
+      const seen = new Set(
+        Array.from({ length: 16 }, (_, i) =>
+          JSON.stringify(simulateCombat(mission, iceCatalog, openingDeck, { seed: i })),
+        ),
+      );
+      return seen.size > 1;
+    });
+    expect(diverged, "at least one mission must vary with the seed").toBe(true);
   });
 });
 

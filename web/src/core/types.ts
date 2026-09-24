@@ -274,6 +274,7 @@ export interface Matrix {
   readonly nodes: ReadonlyArray<MatrixNode>;
   readonly startNode: number;
   readonly bossNode: number;
+  readonly grade?: number;
 }
 
 /** Boss phase 0..4 (0 = no boss active). */

@@ -7,6 +7,7 @@
  * stable public entry point for the dungeon system.
  */
 import type { Matrix, MatrixNode, ZoneDepth } from "./types.ts";
+import { encounterIceIdForGrade } from "./ice_scaling.ts";
 
 // ============================================================================
 //  Public type definitions
@@ -197,7 +198,7 @@ export type { DungeonFaction, DungeonIceKind, DungeonNode, DungeonNodeKind } fro
 // ============================================================================
 
 /** Convert a `DungeonGraph` to the web project's `Matrix` shape. */
-export function dungeonToMatrix(graph: DungeonGraph): Matrix {
+export function dungeonToMatrix(graph: DungeonGraph, grade = 1): Matrix {
   const sorted = [...graph.rooms].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   const idToIndex = new Map<string, number>();
   for (let i = 0; i < sorted.length; i += 1) {
@@ -209,7 +210,7 @@ export function dungeonToMatrix(graph: DungeonGraph): Matrix {
   const bossIndex = bossRoom !== undefined ? (idToIndex.get(bossRoom.id) ?? 0) : 0;
 
   const needsIcePromotion = (nodes: MatrixNode[]): boolean => {
-    return !nodes.some((n) => n.iceIds.length > 0 && n.zone !== "surface");
+    return !nodes.some((n) => n.iceIds.length > 0 && !n.isBoss);
   };
 
   const rawNodes: MatrixNode[] = sorted.map((room, idx) => {
@@ -220,15 +221,16 @@ export function dungeonToMatrix(graph: DungeonGraph): Matrix {
       .filter((i) => i >= 0);
     const isBoss = room.roomType === "exit";
     // Boss (exit) rooms must spawn an encounter, otherwise the boss is unreachable.
-    // ICE rooms use watchdog, boss rooms use wintermute (matches Python parity).
+    // ICE rooms take a grade-appropriate encounter; boss rooms stay wintermute.
+    // HP stays empty so the consumer derives it from hp_base + hp_per_grade.
     let iceIds: ReadonlyArray<string>;
     let iceHp: ReadonlyArray<number>;
     if (room.roomType === "ice") {
-      iceIds = ["watchdog"];
-      iceHp = [100];
+      iceIds = [encounterIceIdForGrade(grade)];
+      iceHp = [];
     } else if (isBoss) {
       iceIds = ["wintermute"];
-      iceHp = [150];
+      iceHp = [];
     } else {
       iceIds = [];
       iceHp = [];
@@ -258,7 +260,7 @@ export function dungeonToMatrix(graph: DungeonGraph): Matrix {
       if (upgraded) {
         nodes = nodes.map((n, i) =>
           i === candidateIdx
-            ? { ...n, zone: "mid", iceIds: ["watchdog"], iceHp: [100] }
+            ? { ...n, zone: "mid", iceIds: [encounterIceIdForGrade(grade)], iceHp: [] }
             : n,
         );
       }
@@ -269,6 +271,7 @@ export function dungeonToMatrix(graph: DungeonGraph): Matrix {
     nodes,
     startNode: idToIndex.get(graph.entryId) ?? 0,
     bossNode: bossIndex,
+    grade,
   };
 }
 

@@ -18,6 +18,6 @@
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": false
   },
-  "include": ["src/**/*", "tests/**/*"],
+  "include": ["src/**/*", "tests/**/*", "scripts/**/*", "vitest.setup.ts"],
   "exclude": ["node_modules", "dist"]
 }

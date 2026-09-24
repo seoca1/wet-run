@@ -1,8 +1,14 @@
-/** Ending Resolver — determines run결국 based on arc + player choices.
+/** Ending Resolver — determines the run's ending from arc + accumulated state.
  *
  * Ports Python's 29 endings across 5 arcs (ADR-0010 story skeleton).
- * Each arc has multiple ending variants based on player decisions,
- * faction reputation, and mission outcomes.
+ *
+ * Tier scope (ADR-0199 — single-mission-per-run MVP): of the six branches in
+ * `resolveEnding`, three are reachable — HP = 0 (sacrifice), HP > 75% with
+ * 5k+ credits (control), and the status_quo default. The `requiresChoice`
+ * branch needs a choice system and the `missionsCompleted >= 3` branch needs
+ * cross-run meta-progression; both are out of this tier. `requiresFaction` is
+ * reachable in principle (faction scores are live) but no ending declares it
+ * yet. `tests/design_conformance.test.ts` enforces this boundary.
  */
 
 export type ArcId = 1 | 2 | 3 | 4 | 5;

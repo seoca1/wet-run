@@ -75,16 +75,17 @@ function generateEventData(
       return { damage: 10 + Math.floor(rng() * 11) }; // 10..20
     case "discovery":
       return { creditsBonus: 25 + Math.floor(rng() * 26) }; // 25..50
-    case "cache":
+    case "cache": {
       // Pick a random program that exists in the catalog.
       const programIds = Object.keys(programCatalog);
       if (programIds.length === 0) return null;
       const idx = Math.floor(rng() * programIds.length);
       const programId = programIds[idx] ?? programIds[0];
       return { programId };
+    }
     case "rest":
       return { healPct: 0.25 }; // 25% heal
-    case "merchant":
+    case "merchant": {
       // Offer 2 random programs at 50% off (placeholder pricing).
       const allIds = Object.keys(programCatalog);
       if (allIds.length < 2) return null;
@@ -94,6 +95,7 @@ function generateEventData(
         offers.push(allIds[offerIdx] ?? allIds[0]);
       }
       return { forSale: offers };
+    }
     case "combat":
     default:
       return null;

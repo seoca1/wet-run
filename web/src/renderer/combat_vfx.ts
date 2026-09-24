@@ -4,9 +4,8 @@
  * kind, a tick counter, a duration, and a payload (text). Instances are
  * ticked per draw() and expired when duration reaches 0.
  *
- * Effect kinds are the canonical taxonomy shared with the Python prototype
- * (see prototype/data/effects.json + ADR-0210). The schema is exported via
- * scripts/export_effects.py and consumed via src/data/effects.d.ts.
+ * Effect kinds are the canonical taxonomy from ADR-0210, declared in
+ * src/data/effects.d.ts.
  *
  * Tier 6 (this commit) adds 12 v2 effects (8 skill + 4 matrix) backported
  * from Python's effects_vfx_animations.py + effects_vfx_compose.py.

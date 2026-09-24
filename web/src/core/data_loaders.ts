@@ -1,8 +1,8 @@
 /** Runtime data loaders — schema validation at the data boundary.
  *
- * The static JSON files in `web/src/data/` are exported from the Python
- * prototype via `scripts/export_web_data.py`. The export uses Python's
- * snake_case schema (`matrix_seed`, `grade_max`, `ap_cost`, `defense`)
+ * The static JSON files in `web/src/data/` are hand-maintained (the Python
+ * prototype export pipeline was retired 2026-09-15; see web/README.md).
+ * Some retain the legacy snake_case schema (`matrix_seed`, `grade_max`, `ap_cost`, `defense`)
  * while the TS code reads camelCase (`seed`, `grade`, `cost`, `armor`).
  *
  * These loaders enforce the schema at module load time:

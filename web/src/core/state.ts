@@ -118,7 +118,6 @@ export function makeInitialState(
     totalRuns: 1,
     totalDeaths: 0,
     longestRunMinutes: 0,
-    stageState: null,
     factionScores: DEFAULT_FACTION_SCORES,
   };
 }
@@ -316,7 +315,6 @@ export function slotToGameState(
     totalRuns: 1,
     totalDeaths: 0,
     longestRunMinutes: 0,
-    stageState: null,
     factionScores: DEFAULT_FACTION_SCORES,
   };
 }

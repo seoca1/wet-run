@@ -1,6 +1,6 @@
 {
   "_schema_version": "1.1.0",
-  "_schema_doc": "Canonical combat VFX taxonomy. Single source of truth for effect_kind names + payload contracts. Both Python prototype and wet_run-web consume this. Python renders ASCII animation frames directly; web uses hardcoded grid overlays but reads kind/payload from this schema. Update via prototype/scripts/export_effects.py — do not hand-edit the web copy.",
+  "_schema_doc": "Canonical combat VFX taxonomy. Single source of truth for effect_kind names + payload contracts. Both Python prototype and wet_run-web consume this. Python renders ASCII animation frames directly; web uses hardcoded grid overlays but reads kind/payload from this schema. Hand-maintained in web/src/data/ since 2026-09-15.",
   "_spec": {
     "duration_unit": "ms",
     "web_tick_ms": 16,

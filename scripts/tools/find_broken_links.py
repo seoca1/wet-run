@@ -13,7 +13,7 @@ import re
 import sys
 from pathlib import Path
 
-ROOT = Path(".")
+ROOT = Path(__file__).resolve().parents[2]
 EXCLUDE = {
     ".git",
     "node_modules",
@@ -28,7 +28,7 @@ EXCLUDE = {
 
 # AGENTS.md §4.1: cross-project Fiction wiki is the canonical reference for
 # Gibson-canon characters/settings/concepts. Path is relative to project root.
-FICTION_WIKI_ROOT = Path("..") / ".." / "Fiction" / "wiki"
+FICTION_WIKI_ROOT = ROOT.parent.parent / "Fiction" / "wiki"
 
 
 def md_files():

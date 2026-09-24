@@ -1,7 +1,6 @@
 /** Effects schema validation (Tier 5.6, ADR-0210).
  *
- * Reads the exported effects.json + effects.d.ts (canonical source:
- * prototype/data/effects.json via scripts/export_effects.py). Verifies:
+ * Reads the canonical effects.json + effects.d.ts from src/data/. Verifies:
  * 1. Schema file is loadable
  * 2. All EffectKind values from the .d.ts file match kinds in effects.json
  * 3. Each kind has the expected required fields (kind, category, duration_ms,

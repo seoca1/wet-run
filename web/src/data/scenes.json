@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "source": "wet_run/prototype/data/scenes/{case,sil,kas}/",
+  "source": "hand-maintained in web/src/data/scenes.json (prototype source retired 2026-09-15)",
   "default_ending": "A",
   "characters": {
     "case": "novice",

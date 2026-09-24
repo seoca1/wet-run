@@ -189,8 +189,6 @@ export interface GameState {
   readonly totalRuns: number;
   readonly totalDeaths: number;
   readonly longestRunMinutes: number;
-  // Stage system (Phase 1-2)
-  readonly stageState: import("./stage_system.ts").StageState | null;
   // Faction reputation (Phase 2-2)
   readonly factionScores: import("./faction_reputation.ts").FactionScores;
 }

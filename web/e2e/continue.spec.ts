@@ -100,13 +100,6 @@ test.describe("CONTINUE Option", () => {
 
   test("CONTINUE option is grayed out when no save exists", async ({ page }) => {
     // Clear any existing save first (via direct IDB access).
-    await page.evaluate(async () => {
-      const { clear } = await import("./assets/index-BQO76r9r.js").catch(() => ({ clear: null }));
-      return clear;
-    }).catch(() => {
-      // Module import will fail in production build; fall back to manual IDB clear.
-    });
-
     // Manually clear IDB.
     await page.evaluate(async () => {
       return new Promise<void>((resolve) => {

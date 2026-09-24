@@ -32,9 +32,23 @@ describe("dungeon crawler (D7+D8 wiring)", () => {
 
   it("processTurn advances turnCount after player moves", () => {
     const crawler = createDungeonCrawlerFromMission(null);
-    crawler.tryMovePlayer(0, 1);
+    // Which neighbour of the start tile is open depends on the procedural
+    // layout, so probe until a move is accepted instead of assuming south.
+    const directions: ReadonlyArray<readonly [number, number]> = [
+      [0, 1],
+      [0, -1],
+      [1, 0],
+      [-1, 0],
+    ];
+    let moved = false;
+    for (const [dx, dy] of directions) {
+      if (crawler.tryMovePlayer(dx, dy)) {
+        moved = true;
+        break;
+      }
+    }
+    expect(moved, "start tile must have at least one passable neighbour").toBe(true);
     crawler.processTurn();
-    // Same brittleness reason as above — just assert it incremented.
     expect(crawler.state.turnCount).toBeGreaterThanOrEqual(1);
   });
 });

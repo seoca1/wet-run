@@ -34,9 +34,16 @@ import { resolveEnding, type EndingContext, type ArcId } from "./ending_resolver
 import { onMissionComplete, onIceKill, type FactionId } from "./faction_reputation.ts";
 import { import_vfx, import_vfx_ms, pickProgramVfxKind, durationForKind, durationMsForKind } from "./state_helpers.ts";
 
-const DIXIE_ATTACK_INTERVAL_MS = 3000;
-const DIXIE_BASE_DAMAGE = 8;
-const DIXIE_SYNERGY_BONUS = 3;
+/** Dixie companion tuning.
+ *
+ * Design reference: `docs/design/systems/combat.md` L101-102 specifies
+ * "Dixie ally: 2000ms interval, 5 dmg per tick (fixed, no stat boost)".
+ * The shipped values below diverge (see `design_conformance.test.ts`).
+ * Exported so the design-conformance suite can assert them against the doc.
+ */
+export const DIXIE_ATTACK_INTERVAL_MS = 3000;
+export const DIXIE_BASE_DAMAGE = 8;
+export const DIXIE_SYNERGY_BONUS = 3;
 
 /** Tier 5: matrix view actions (navigate, enter combat, jack out). */
 export function applyMatrixAction(state: GameState, action: GameAction): GameState {
@@ -155,7 +162,7 @@ export function applyLootAction(state: GameState, action: GameAction): GameState
       hp: state.player.hp,
       maxHp: state.player.maxHp,
       credits: state.inventory.credits,
-      missionsCompleted: 0,
+      missionsCompleted: 1, // single-mission run: this mission just completed
       totalDeaths: state.totalDeaths,
       factionScores: updatedScores,
       choices: [],
@@ -673,7 +680,7 @@ function useProgram(state: GameState, programId: string): GameState {
   const newlyDefeated = finalState.iceRoster.filter(
     (ice, i) => ice.hp === 0 && state.iceRoster[i]?.hp !== 0,
   );
-  let lootDrops: LootDrop[] = [];
+  const lootDrops: LootDrop[] = [];
   let updatedFactionScores = state.factionScores;
   for (const dead of newlyDefeated) {
     const lootTable = getLootTable(dead.id, iceTypesData as Record<string, { loot_table?: { item: string; chance: number; quantity: number }[] }>);

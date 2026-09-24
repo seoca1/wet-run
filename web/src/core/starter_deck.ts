@@ -1,8 +1,8 @@
 /**
  * Starter Deck — minimal default programs used by main.ts on NEW RUN.
  *
- * The full catalog lives in `data/programs.json` (exported from the Python
- * prototype via `scripts/export_web_data.py`). That data file uses a slightly
+ * The full catalog lives in `data/programs.json` (hand-maintained since the
+ * Python prototype export pipeline was retired 2026-09-15). That data file uses a slightly
  * different schema (`ap_cost`, `shield`, `damage`, `role`) targeting the
  * round-based Python combat, so it isn't a drop-in for the web tier 1 MVP.
  *

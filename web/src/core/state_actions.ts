@@ -565,12 +565,13 @@ function useProgram(state: GameState, programId: string): GameState {
   // Play combat hit SFX automatically
   void AudioManager.getInstance().playSfx(SFX_IDS.COMBAT_HIT);
 
+  const defenderIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
   const damageCtx = {
     baseDamage: program.tier * 5,
     attackerTeam: "player" as const,
     attackerAttackBonus,
     attackerCritBonusPct: equipStats.critBonusPct,
-    defenderDefenseBonus: 0,
+    defenderDefenseBonus: defenderIce.armor ?? 0,
     defenderIceResistance: 0,
     defenderIceKind: null,
     lastSkillRole: (program as { role?: string }).role ?? null,

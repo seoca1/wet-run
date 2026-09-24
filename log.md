@@ -1196,4 +1196,4 @@ grade  before  after
 
 ### 잔여 (step 4 — 밸런스 디자인)
 - grade 3 cliff: opening deck 5장 총 데미지 약 80-100 ≪ tier-3+ ICE HP 130-320+. ICE HP 데이터 또는 deck damage 재조정 필요.
-- `state_actions.ts` `defenderDefenseBonus: 0` — ICE `armor` 미반영 (곡선 영향 작음, 별건).
+- ICE `armor` 반영: `state_actions.ts` `defenderDefenseBonus` 를 defender ICE `armor` 로 교체 (기존 0 하드코딩). 곡선 불변, 테스트 통과 — correctness gap 해소.

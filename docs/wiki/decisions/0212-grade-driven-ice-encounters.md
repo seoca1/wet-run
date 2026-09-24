@@ -102,7 +102,7 @@ ADR-0211 Option 1 로 harness 는 `hp_base + hp_per_grade * (grade - 1)` 로 HP 
 
 **Cliff 원인 (step-4 후속)**: opening deck 5장 총 데미지 (~80-100) 보다 tier-3+ ICE HP (`hp_base` 130-320 + `hp_per_grade`) 가 훨씬 높다. grade→tier 배선만으로는 매끄러운 gradient 가 나오지 않고, ICE HP 데이터 / deck damage (PPL) 재조정이 필요하다.
 
-**미적용 (별건)**: `state_actions.ts` `defenderDefenseBonus: 0` (ICE `armor` 미반영). 본 곡선 영향은 작다 — g1/g2 armor ≈ 0, g3+ 는 이미 0%. 전투 데미지 전반을 바꾸므로 별도 밸런스 작업으로 분리.
+**ICE `armor` 반영 완료**: `state_actions.ts` 의 player→ICE 데미지에서 `defenderDefenseBonus: 0` 하드코딩을 defender ICE 의 `armor` 로 교체. 이전에는 `armor` / `defense` 데이터가 파싱만 되고 전투에서 무시되던 correctness gap 이었다. 곡선은 불변 (g1/g2 `armor` ≈ 0, g3+ 는 이미 0%) 이며 전체 테스트 통과. 단 고 `armor` ICE 가 더 단단해지는 전투 체감 변화는 있으므로 playtest 권장.
 
 ## Implementation Status (2026-09-24)
 
@@ -113,7 +113,7 @@ ADR-0211 Option 1 로 harness 는 `hp_base + hp_per_grade * (grade - 1)` 로 HP 
 - `web/src/core/dungeon.ts` — `dungeonToMatrix(graph, grade)` + `needsIcePromotion` 보스 오인 수정
 - `web/src/core/matrix.ts` — grade 전달 + `resolveMatrixRoster` grade HP
 - `web/src/core/types.ts` — `Matrix.grade?`
-- `web/src/core/state_actions.ts` — grade 기반 노드 ICE HP
+- `web/src/core/state_actions.ts` — grade 기반 노드 ICE HP + `defenderDefenseBonus` ← defender ICE `armor` (기존 0 하드코딩)
 - `web/src/main.ts` — `loadIce` grade 선택 + `normalizeIce` 스키마 정규화
 - `web/scripts/balance_sim.ts` — roster HP + 보스 노드 제외
 - `web/tests/ice_scaling.test.ts` — 신규 회귀 (grade 매핑 / HP / 스케일 / 보스 제외)

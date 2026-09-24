@@ -1,8 +1,8 @@
 # ADR-0211: ICE 난이도 스케일링 — grade 기반 HP/스탯 배선
 
-**상태**: Draft
+**상태**: Accepted (Option 1)
 **날짜**: 2026-09-24
-**결정자**: 사용자
+**결정자**: 사용자 (2026-09-24: Option 1 선택)
 **우선순위**: P1 (밸런스 정확성)
 **관련**:
 - [ADR-0199 — Wet Run Web MVP (Tier 1)](./0199-wetrun-web-mvp.md) — web 코드베이스 기준
@@ -76,7 +76,7 @@ grade  missions  win-rate
 
 ## 사용자 결정 (Decision)
 
-- [ ] Option 1
+- [x] Option 1 — 2026-09-24 사용자 선택
 - [ ] Option 2
 - [ ] Option 3
 - [ ] 기타: ___
@@ -84,22 +84,43 @@ grade  missions  win-rate
 
 ## 결과 (Consequences)
 
-(결정 후 작성)
+**2026-09-24 — Option 1 구현 완료, 단 곡선은 여전히 비단조.**
+
+구현 내용:
+- `web/scripts/balance_sim.ts` — `iceHpForGrade(ice, grade)` 추가. `hp_base + hp_per_grade * (grade - 1)` 로 grade 기반 HP 산출, `simulateCombat` 이 이를 encounter template 에 덮어씀.
+- `web/src/core/data_loaders.ts` — `parseIce` 가 `hp_base` / `hp_per_grade` 를 `Ice` 로 노출 (기존에는 누락된 dead data 였음). 게임 경로의 `Ice.hp` (100 고정) 는 불변.
+- `web/src/core/types.ts` — `Ice.hpBase?` / `Ice.hpPerGrade?` 추가.
+- 테스트: `tests/balance_sim.test.ts` 에 grade 스케일링 + fallback 회귀 2건 추가.
+
+**중요 — ADR 의 원래 진단이 부정확했음이 구현 중 확인됨.** 하네스가 실제로 사용하던 것은 `node.iceHp[i]` 가 아니라 `parseIce` 의 `Ice.hp` (전 ICE 100 고정) 였다. HP 를 grade 로 스케일해도 곡선이 거의 변하지 않은 이유는, 승패가 HP 가 아니라 **encounter template 의 정체성**으로 갈리기 때문:
+
+| template | armor | grade1 HP | grade6 HP | opening deck 승률 |
+| --- | --- | --- | --- | --- |
+| `watchdog` (일반 ICE 방) | 1 | 50 | 100 | 100% |
+| `wintermute` (보스 방) | 8 | 260 | 410 | 0% |
+
+- 첫 ICE 보유 노드가 일반 ICE 방이면 `watchdog`, 보스 방이면 `wintermute` — 이는 순수 BSP 토폴로지가 결정하며 grade 와 무관하다.
+- opening deck (~100-160 dmg) 은 `watchdog` (HP 50-100) 을 항상 처치하고, `wintermute` (armor 8 + HP 260-410) 은 항상 실패한다 → grade bucket 안에서 100%/0% 이분(bimodal).
+
+따라서 **Option 1 은 필요조건이지만 충분조건이 아니다.** grade-난이도 곡선을 실제로 얻으려면 encounter 자체가 grade 로 결정되어야 한다 (Option 2). 또한 opening deck damage vs ICE HP/armor 스케일 자체의 재검토도 필요하다.
+
+**후속**: Option 2 를 별도 ADR 로 진행할 것을 권장. 본 ADR 의 Option 2 섹션 + 위 표가 그 입력이 된다.
 
 ## Implementation Status (2026-09-24)
 
-**Status**: ❌ Not started
+**Status**: ✅ Implemented (Option 1) — 단, 곡선 비단조는 미해결 (Option 2 필요)
 
 **Evidence**:
-- `web/src/core/dungeon.ts:223-231` — ICE 방/보스 방 ICE id + HP 하드코딩
-- `web/src/core/data_loaders.ts:146` — `parseIce` 가 HP 를 100 으로 강제
-- `web/scripts/balance_sim.ts:78` — 첫 점유 노드의 첫 ICE 만 사용
-- `web/src/data/ice_types.json` — `hp_per_grade` 97개 항목 (TS 에서 미사용)
-- `web/src/core/state_actions.ts:572` — `defenderDefenseBonus: 0` 하드코딩 → ICE `armor` (watchdog 1 / wintermute 8) 미반영
-- `web/src/core/starter_deck.ts:28` — `STARTER_DECK` 는 dead code (live 경로 `main.ts loadDeck` 와 하네스 모두 programs.json 알파벳 정렬 5장 사용)
+- `web/scripts/balance_sim.ts` — `iceHpForGrade` + `simulateCombat` template HP override
+- `web/src/core/types.ts` — `Ice.hpBase?` / `Ice.hpPerGrade?`
+- `web/src/core/data_loaders.ts` `parseIce` — `hp_base` / `hp_per_grade` 노출 (게임 `Ice.hp=100` 불변)
+- `web/tests/balance_sim.test.ts` — grade 스케일링 + fallback 회귀 2건
+- `web/src/core/dungeon.ts:223-231,261` — ICE 방/보스 방 ICE id + HP 하드코딩 (Option 2 대상, 미변경)
+- `web/src/core/state_actions.ts:572` — `defenderDefenseBonus: 0` 하드코딩 → ICE `armor` 미반영 (Option 2/별건)
+- `web/src/core/starter_deck.ts:28` — `STARTER_DECK` dead code (별건)
 - `docs/diagnostics/balance-grade-curve-root-cause-2026-09-24.md` — 전체 조사
 
-**Notes**: 하네스 승률 비단조는 버그이며, 실제 게임의 grade-난이도 배선 공백을 드러낸다.
+**Notes**: Option 1 로 `hp_per_grade` 는 활성화됐으나, 실측 곡선 (50/80/43/86/100/100%) 은 거의 불변. 원인은 HP 가 아니라 encounter template 정체성 (watchdog armor 1 ↔ wintermute armor 8) 이 BSP 토폴로지로 결정되기 때문. 상세는 Consequences 참조.
 
 ## 영향 받는 항목
 
@@ -117,3 +138,4 @@ grade  missions  win-rate
 
 - 2026-09-24: Draft 작성
 - 2026-09-24: Evidence 보강 (ICE armor 미반영, `STARTER_DECK` dead code)
+- 2026-09-24: Accepted (Option 1) + Option 1 구현. 진단 정정 — 실제 driver 는 `node.iceHp` 가 아니라 encounter template 정체성. 곡선 미해결 → Option 2 후속 권장.

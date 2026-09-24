@@ -1113,3 +1113,37 @@ push 후 CI 실패 — repo 정책상 모든 action 을 full-length commit SHA �
 
 ### 잔여
 - ~~환경변수 `GH_TOKEN` 은 invalid, `GITHUB_TOKEN` 은 valid (seoca1) — 노출 경로 점검 + 정리 필요.~~ **2026-09-24 해결**: `~/.zshenv` 의 invalid `GH_TOKEN` (2026-06-30 self-flagged "Revoke ASAP") 를 주석 처리 — 유효한 `GITHUB_TOKEN` 을 shadowing 하고 있었음. 백업 `~/.trash/2026-09-24-ghtoken-cleanup/zshenv.bak`. 검증: fresh shell 에서 `gh auth status` = seoca1 로그인 OK. 이번 `git push` 는 valid 한 `GITHUB_TOKEN` 을 임시 credential helper 로 사용 (argv/config 에 토큰 미기록).
+
+---
+
+## [2026-09-24] decision | ADR-0211 Option 1 구현 + 곡선 미해결 진단 정정
+
+### 결정
+사용자가 ADR-0211 Option 1 선택 (Draft → Accepted).
+
+### 구현
+- `web/scripts/balance_sim.ts`: `iceHpForGrade(ice, grade)` = `hp_base + hp_per_grade * (grade - 1)`. `simulateCombat` 이 encounter template HP 를 이 값으로 덮어씀.
+- `web/src/core/types.ts`: `Ice.hpBase?` / `Ice.hpPerGrade?` 추가.
+- `web/src/core/data_loaders.ts` `parseIce`: `hp_base` / `hp_per_grade` 노출 — 게임의 `Ice.hp=100` 은 불변.
+- `web/tests/balance_sim.test.ts`: grade 스케일링 + fallback 회귀 2건. 테스트 2655 → **2657**.
+- 문서: ADR-0211 Accepted + Consequences / Impl Status 갱신, `docs/wiki/decisions/README.md` 인덱스 갱신.
+
+### 핵심 발견 — 원 진단 정정
+하네스가 실제로 쓰던 값은 `node.iceHp` 가 아니라 `parseIce` 의 `Ice.hp` (전 ICE 100 고정) 였다. HP 를 grade 로 스케일해도 곡선은 불변 (50/80/43/86/100/100%). 실제 driver 는 encounter template 정체성:
+
+| template | armor | G1 HP | G6 HP | opening deck 승률 |
+| --- | --- | --- | --- | --- |
+| `watchdog` (일반 ICE 방) | 1 | 50 | 100 | 100% |
+| `wintermute` (보스 방) | 8 | 260 | 410 | 0% |
+
+첫 ICE 보유 노드가 일반 방이냐 보스 방이냐는 BSP 토폴로지가 결정하며 grade 와 무관. opening deck 약 100-160 dmg 는 watchdog 은 항상 처치, wintermute 는 항상 실패 → grade bucket 안에서 이분.
+
+### 결론
+Option 1 은 필요조건이지 충분조건이 아니다. grade 난이도 곡선은 Option 2 — encounter 를 grade 로 파라미터화 — 로만 얻어진다. 후속 ADR 권장.
+
+### 검증
+- `npm run typecheck` 0 errors / `npm run lint` 0 errors + 4 warnings / `npm test` **2657 pass** / `npm run build` OK
+- `npm run balance -- --runs 500` 실행 — 곡선은 Option 1 적용 전후로 사실상 동일 (진단 정정의 근거).
+
+### 잔여
+- Option 2 ADR: encounter grade 파라미터화 + `state_actions.ts:572` ICE `armor` 반영 + opening deck damage vs ICE HP/armor 재검토.

@@ -2,7 +2,7 @@
 
 위키/디자인/결정/테스트 페이지 카탈로그. LLM Wiki 표준 패턴.
 
-**현재 상태**: Phase 5+6 (Vertical Slice + Expansion) 완료. **3835 tests pass** (462 skipped, 1 xfailed, 4 xpassed; **4302 collected**). **111 missions** / **300 short stories** (150 EN + 150 KO) / **14 stages**. 5 arcs (1-5) × 12 grade ranges. Novel Hook Dispatch (ADR-0061) + Novel Integration (런타임 연동) + BRIEFING/TRAVEL/BYPASS_SECURITY/BLACK_MARKET/GHOST_ENCOUNTER stages. **2026-08-07 audit-tool fix**: `tools/audit_sprawl.py` path resolution 2-line 수정 → false orphan 10건 해소 (15 → 5, all expected). Working tree clean, 1 commit unpushed (`b87f330`).
+**현재 상태**: wet_run-web Tier 1~4 완료 (Python 프로토타입은 2026-09-15 통합으로 retired). **web test suite: 2654 tests pass, 0 failures (107 vitest 파일, 2026-09-24 확인)**. **111 missions** / **300 short stories** (150 EN + 150 KO) / **14 stages**. 5 arcs (1-5) × 12 grade ranges. Novel Hook Dispatch (ADR-0061) + Novel Integration (런타임 연동) + BRIEFING/TRAVEL/BYPASS_SECURITY/BLACK_MARKET/GHOST_ENCOUNTER stages. **2026-08-07 audit-tool fix**: `scripts/tools/audit_sprawl.py` path resolution 2-line 수정 → false orphan 10건 해소 (15 → 5, all expected).
 
 ## 메타
 - [README](../README.md) - 프로젝트 개요
@@ -11,10 +11,11 @@
 - SETUP_LOG - 환경 구축 기록
 - [log](../log.md) - 활동 로그
 - [CHANGELOG](../CHANGELOG.md) - 버전별 변경 이력
-- [prototype/](../prototype/) - **Phase 4: 코드 프로젝트**
+- ~~[prototype/](../prototype/)~~ - **DELETED 2026-09-15** (Python 프로토타입 retired; 활성 코드베이스는 `web/`)
 
 ## 세션 / 릴리스 노트
-- SESSION_SUMMARY_2026-08-19_notion — **LATEST.** Notion 통합 (66 design pages, 명칭 통일)
+- **2026-09-21** — **LATEST.** Boss phases test coverage 추가 + Dungeon alarm cue + Boss defeat ending + jack_out runPhase fix (`log.md` 2026-09-21 entries)
+- SESSION_SUMMARY_2026-08-19_notion — Notion 통합 (66 design pages, 명칭 통일)
 - SESSION_SUMMARY_2026-08-19 — CI hygiene + Pages deploy 복구 (46d stale → live)
 - SESSION_SUMMARY_2026-08-18 — Axis 5/4/6 closure
 - SESSION_SUMMARY_2026-08-13 — mypy strict upgrade
@@ -107,16 +108,18 @@
 - [dashboard/stories/journey/novice](dashboard/stories/journey/novice.md) — 케이 (Novice) 자키 여정 페이지
 - [dashboard/stories/journey/veteran](dashboard/stories/journey/veteran.md) — 실 (Veteran) 자키 여정 페이지
 
-### 프로토타입 가이드 (prototype — added 9)
-- prototype/CONTROLS — 조작 가이드
-- prototype/DEMO_GUIDE — 데모 실행 가이드
-- prototype/DUNGEON_NPC_GUIDE — 던전 NPC 가이드
-- prototype/INTERACTIVE_GUIDE — 대화형 실행 가이드
-- prototype/QUICK_START — 빠른 시작 가이드
-- prototype/SOUND_PLAN — 사운드 플랜
-- prototype/STATUS_PANEL_GUIDE — 상태 패널 가이드
-- prototype/VISUAL_GUIDE — 비주얼 가이드
-- prototype/docs/balance/E3-balance-audit — E-3 밸런스 감사
+### 프로토타입 가이드 (prototype — **2026-09-15 통합으로 삭제됨**)
+- ~prototype/CONTROLS~ — 조작 가이드 (삭제됨)
+- ~prototype/DEMO_GUIDE~ — 데모 실행 가이드 (삭제됨)
+- ~prototype/DUNGEON_NPC_GUIDE~ — 던전 NPC 가이드 (삭제됨)
+- ~prototype/INTERACTIVE_GUIDE~ — 대화형 실행 가이드 (삭제됨)
+- ~prototype/QUICK_START~ — 빠른 시작 가이드 (삭제됨)
+- ~prototype/SOUND_PLAN~ — 사운드 플랜 (삭제됨)
+- ~prototype/STATUS_PANEL_GUIDE~ — 상태 패널 가이드 (삭제됨)
+- ~prototype/VISUAL_GUIDE~ — 비주얼 가이드 (삭제됨)
+- ~prototype/docs/balance/E3-balance-audit~ — E-3 밸런스 감사 (삭제됨)
+
+> **2026-09-15 통합 노트**: 위 9개 가이드는 모두 Python 프로토타입과 함께 retired. 가이드는 git history 에서만 조회 가능. 활성 문서는 `web/README.md` / `docs/` (Tier 4+).
 
 ### 세션 요약 (root SESSION_SUMMARY — added 2)
 - SESSION_SUMMARY — 마지막 세션 요약

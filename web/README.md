@@ -74,16 +74,20 @@ ADR-0199 (web MVP) is being drafted alongside this MVP implementation.
 ```
 src/
 ├── core/          # Game logic (port from wet_run Python)
-│   ├── combat.ts  # ICE-breaking state machine
-│   ├── deck.ts    # Program draw logic
-│   └── types.ts   # Shared interfaces
+│   ├── combat_engine.ts / combat_models.ts  # ICE-breaking state machine
+│   ├── starter_deck.ts                      # STARTER_DECK + program draw logic
+│   └── state.ts / state_actions.ts / state_helpers.ts / types.ts  # Shared interfaces & reducer
 ├── renderer/      # Canvas2D ASCII renderer
 │   ├── canvas.ts
 │   ├── palette.ts
-│   └── fonts.ts
+│   └── (no fonts.ts — palette + canvas only; per-glyph bitmaps in canvas.ts)
 ├── input/         # Keyboard input → game actions
-├── data/          # Static JSON (exported from wet_run Python)
-├── save/          # localStorage persistence
+├── data/          # Static JSON (hand-maintained; export pipeline retired 2026-09-15)
+├── save/          # localStorage / IndexedDB persistence
+│   ├── compress.ts
+│   ├── storage.ts
+│   ├── storage_idb.ts
+│   └── storage_quota.ts
 └── main.ts        # Entry point
 ```
 

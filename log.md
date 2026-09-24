@@ -1043,3 +1043,26 @@ c7cf815 docs(ADR-0210): Tier 6 implementation status update
 
 ### 메모
 - 다음 세션: **GitHub Pages 배포** — 로컬 fix를 라이브에 반영해야 함 (commit + push).
+
+---
+
+## [2026-09-24] refactor | 구조 정합 — CI/배포 복구 + 데드코드 정리 + 문서 동기화
+
+### 배경
+`web/` 앱 자체는 battery green 이었지만, 그 주변부(CI / 릴리스 / Pages 배포 / mkdocs / 메타 문서)가 삭제된 `prototype/` 과 존재하지 않는 디렉토리를 가리켜 구조적으로 깨져 있었음.
+
+### 수정
+- **보안**: remote URL 에 노출된 GitHub PAT 제거. git object 에는 토큰이 없음을 확인 (packfile 매치는 compressed bytes false positive).
+- **CI**: `ci.yml` → web 전용 1 job + `npm run lint` 추가, defunct Python job 5개 제거; `release.yml` 삭제 (삭제된 Python 패키지 PyPI 배포); `pages.yml` → web-only 배포; `mkdocs.yml` `docs_dir: wiki` → `docs/wiki`.
+- **데드코드**: `run_validation.py`, `web/src/core/equip_slots.ts`, `.vite/vitest/results.json`, `web/src/.!2786!main.ts` 제거; `e2e/continue.spec.ts` 죽은 bundle-hash import 제거; `data_loaders.ts` / `starter_deck.ts` / `effects.json` / `effects.d.ts` provenance 주석 + `scenes.json` source 정정.
+- **문서**: 테스트 수를 **107 파일 / 2654 tests / 0 failures** 로 통일; `prototype/` 은 2026-09-15 삭제됨으로 정정; AGENTS/README 트리 다이어그램, `docs/index.md` broken link + status banner, ROADMAP, SESSION_SUMMARY 갱신.
+
+### 검증
+- `npm run typecheck` 0 errors / `npm run lint` 0 errors (4 warnings) / `npm test` 2654 pass / `npm run build` OK
+- `mkdocs build --strict` OK (226 pages)
+- `scripts/tools/find_broken_links.py` 0 broken / `scripts/tools/audit_sprawl.py` 0 broken (84 orphans pre-existing)
+- 4 commits: `c0192dc` ci / `49e3d45` web cleanup / `1ad0683` audio lazy-load / docs
+
+### 메모
+- `web/src/audio/manager.ts` lazy-load Howler 리팩터는 동시 편집 세션이 진행한 작업 — 검증 후 커밋에 포함.
+- 잔여: balance 곡선 비단조 (G3 43% < G4 86%) 조사 필요; PAT 토큰 회전은 사용자 액션.

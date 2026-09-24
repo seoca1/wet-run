@@ -15,7 +15,7 @@
 | `design/` | 자유롭게 편집, 사용자 검토 영역 | 활성 스펙. 사용자가 직접 수정할 수 있음을 인지. |
 | `testcases/` | 자유롭게 편집, 템플릿 사용 | 디자인 변경 시 동기화 필요. |
 | `decisions/` | Draft 상태는 자유, Accepted는 immutable | 결정된 사항 임의 변경 금지, 새 결정은 신규 ADR로. |
-| `prototype/` | (이전 명칭; **2026-09-15 통합 완료 → `web/` 로 이관**) | 하위 호환을 위해 디렉토리는 보존되지만 활성 코드베이스는 `web/` TypeScript. |
+| `prototype/` | (**2026-09-15 통합으로 삭제됨**) | 활성 코드베이스는 `web/` TypeScript. 디렉토리 자체가 삭제되어 존재하지 않음 (git history에서만 조회 가능). |
 | 루트 메타 파일 | 신중히 수정 | README, AGENTS.md, index, log, ROADMAP, SETUP_LOG |
 
 ## 3. 작업 워크플로우
@@ -125,12 +125,12 @@
 ### 언어 및 의존성 (현재 — `web/`)
 
 - **언어**: TypeScript 5.5
-- **빌드**: Vite 5.3
-- **테스트**: Vitest (vitest.config.ts + tests/ 하위)
+- **빌드**: Vite 5.4
+- **테스트**: Vitest (설정은 `web/vite.config.ts` 에 inline; tests/ 하위)
 - **린트 / 포맷**: ESLint + Prettier
 - **타입 체크**: tsc --noEmit (strict mode in tsconfig.json)
 - **의존성 관리**: package.json + npm (또는 pnpm/yarn)
-- **렌더링**: HTML5 Canvas 2D (Web tier); tcod 호환 포트는 데이터 export (`scripts/export_web_data.py`)로만 잔존
+- **렌더링**: HTML5 Canvas 2D (Web tier). Python tcod 포트의 데이터 export 파이프라인은 2026-09-15 통합으로 retired — `web/src/data/*.json` 은 hand-maintained.
 
 ### 테스트 / 린트 / 타입체크 실행 경로 (canonical)
 
@@ -160,8 +160,8 @@ Game/wet_run/
 ├── web/                     # ← 활성 코드베이스 (TypeScript + Vite + Vitest)
 │   ├── package.json
 │   ├── tsconfig.json        # strict 모드
-│   ├── vite.config.ts
-│   ├── vitest.config.ts
+│   ├── vite.config.ts       # Vitest 설정은 inline (별도 vitest.config.ts 없음)
+│   ├── vitest.setup.ts      # jsdom polyfill 등 setup
 │   ├── index.html
 │   ├── public/              # 정적 자산
 │   ├── src/
@@ -176,14 +176,15 @@ Game/wet_run/
 │   │   │   ├── save_progress.ts / accessibility.ts / pwa_manager.ts
 │   │   │   └── starter_deck.ts  # STARTER_DECK constant (Tier 1 MVP)
 │   │   ├── input/           # KeyboardInput / GamepadInput / Touch
-│   │   ├── renderer/        # Canvas2D ASCII renderer (palette.ts, canvas.ts)
-│   │   ├── data/            # 정적 JSON (export_web_data.py로 생성)
-│   │   └── e2e/             # Playwright e2e specs
-│   ├── tests/              # 87 vitest 파일 (~2646 tests + 63 pre-existing failures)
-│   └── scripts/            # export_web_data.py 등 보조 스크립트
+│   │   ├── renderer/        # Canvas2D ASCII renderer (palette.ts, canvas.ts 등)
+│   │   ├── data/            # 정적 JSON (hand-maintained; export 파이프라인 retired)
+│   │   └── save/            # compress.ts / storage.ts / storage_idb.ts / storage_quota.ts
+│   ├── tests/              # 107 vitest 파일 (2654 tests, 0 failures)
+│   ├── e2e/                # Playwright e2e specs (web/src/e2e/ 아님)
+│   └── scripts/            # balance_harness.ts / balance_sim.ts 등 보조 스크립트
 ├── docs/                   # 디자인 / ADR / 세션 요약
-├── data/                   # 정적 데이터 (이전 prototype/ 잔재; export_web_data.py 입력)
-├── tools/
+├── data/                   # 정적 데이터 (이전 prototype/ 잔재; hand-maintained JSON으로 통합됨)
+├── scripts/                # tools/ (audit_sprawl.py, find_broken_links.py, README.md)
 ├── log.md                  # 워크스페이스 활동 로그
 ├── README.md               # 최상위 개요
 └── ROADMAP.md              # 단계별 계획
@@ -205,7 +206,7 @@ Game/wet_run/
 
 1000+ LOC 정책은 이전 Python 코드를 기준으로 작성됨. `web/` TypeScript는 **모듈당 평균 100-300 LOC**으로 더 작은 단위를 권장 (Vite tree-shaking 효율). 1000+ LOC 신규 모듈은 PR 리뷰에서 분할 계획 또는 정당화 필수.
 
-### 명령 (npm scripts via Makefile wrapper 또는 직접)
+### 명령 (npm scripts 직접 — Makefile 없음)
 
 ```bash
 cd web
@@ -416,6 +417,9 @@ MENU → GRAPHIC_NOVEL_MENU → GRAPHIC_NOVEL → SAVED_PROGRESS → MENU
 ```
 
 ### 주요 명령
+
+> **HISTORICAL (2026-09-15 prototype retired)**: 아래 명령은 Python 프로토타입 시절의 예시이며 현재 실행되지 않음. 활성 빌드는 `web/` (TypeScript + Vite) 이고 그래픽 노블은 `web/src/core/graphic_novel*.ts` 로 포팅됨.
+
 ```bash
 # 데모
 uv run python scripts/graphic_novel.py --mode prologue --seed 42

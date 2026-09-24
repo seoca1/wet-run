@@ -333,9 +333,9 @@ Phase 7: 알파 빌드
 
 ## 현재 위치
 
-**현재 Phase**: **v1.4.0 Operational Release 완료 (2026-08-26)** — wet_run-web Tier 1~4 + Content authoring + IDB save backend
-**누적 테스트**: **wet_run Python 4045 passed** + 364 skipped + 1 xfailed (2026-08-26 random_weight wiring 후) / **wet_run-web 93 passed** (Tier 4 + IDB)
-**검증 상태**: ruff check ✅ / ruff format ✅ / mypy strict ✅ / pytest wet_run 4045 pass / `npx tsc --noEmit -p tsconfig.json` 0 errors / `npm test` 93 pass / `npm run build` 129.63 KB (gzip 44.96 KB) / `tools/audit_sprawl.py` 0 broken, 5 expected orphans / `tools/find_broken_links.py` 0 broken
+**현재 Phase**: **wet_run-web Tier 1~4 + Content authoring + IDB save backend** (Python 프로토타입은 2026-09-15 통합으로 retired — Phase 표기는 wet_run-web 기준)
+**누적 테스트**: **wet_run-web 2654 passed, 0 failures (2026-09-24 확인)** — 107 vitest 파일. (이전 Python pytest/ruff/mypy 수치는 prototype retired (2026-09-15) 으로 historical — **참고용**: 4045 passed / ruff ✅ / mypy strict ✅)
+**검증 상태**: `npm test` 2654 pass (107 files, 0 failures) / `npx tsc --noEmit -p tsconfig.json` 0 errors / `npm run build` OK / `scripts/tools/audit_sprawl.py` 0 broken, 5 expected orphans / `scripts/tools/find_broken_links.py` 0 broken
 **ADR 누적**: 200+ (Accepted 180+, Draft 일부, status docs 2개) — Implementation status sweep 60 ADR (0140-0199)
 
 **Phase 6+ 사이클 요약 (2026-07-04)**:

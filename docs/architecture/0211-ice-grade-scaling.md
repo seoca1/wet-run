@@ -95,6 +95,8 @@ grade  missions  win-rate
 - `web/src/core/data_loaders.ts:146` — `parseIce` 가 HP 를 100 으로 강제
 - `web/scripts/balance_sim.ts:78` — 첫 점유 노드의 첫 ICE 만 사용
 - `web/src/data/ice_types.json` — `hp_per_grade` 97개 항목 (TS 에서 미사용)
+- `web/src/core/state_actions.ts:572` — `defenderDefenseBonus: 0` 하드코딩 → ICE `armor` (watchdog 1 / wintermute 8) 미반영
+- `web/src/core/starter_deck.ts:28` — `STARTER_DECK` 는 dead code (live 경로 `main.ts loadDeck` 와 하네스 모두 programs.json 알파벳 정렬 5장 사용)
 - `docs/diagnostics/balance-grade-curve-root-cause-2026-09-24.md` — 전체 조사
 
 **Notes**: 하네스 승률 비단조는 버그이며, 실제 게임의 grade-난이도 배선 공백을 드러낸다.
@@ -114,3 +116,4 @@ grade  missions  win-rate
 ## 변경 이력
 
 - 2026-09-24: Draft 작성
+- 2026-09-24: Evidence 보강 (ICE armor 미반영, `STARTER_DECK` dead code)

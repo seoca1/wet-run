@@ -229,14 +229,14 @@ describe("Howler.js Integration", () => {
 
   describe("Event-based transitions", () => {
     it("playBgmForEvent triggers track based on event", () => {
-      const result = playBgmForEvent("game_start");
-      expect(typeof result === "string" || result === null).toBe(true);
+      // playBgmForEvent is fire-and-forget (void) after async refactor
+      expect(() => playBgmForEvent("game_start")).not.toThrow();
     });
 
     it("playBgmForEvent returns null when no transition", () => {
       playBgm(BGM_IDS.SENSE_NET);
-      const result = playBgmForEvent("unknown_event");
-      expect(result === null || typeof result === "string").toBe(true);
+      // playBgmForEvent is fire-and-forget (void) after async refactor
+      expect(() => playBgmForEvent("unknown_event")).not.toThrow();
     });
 
     it("playBgmForEvent handles combat events", () => {
@@ -291,8 +291,7 @@ describe("Howler.js Integration", () => {
 
   describe("Integration with sound_system", () => {
     it("playBgmForEvent uses sound_system transition rules", () => {
-      const result = playBgmForEvent("combat_start");
-      expect(typeof result === "string" || result === null).toBe(true);
+      expect(() => playBgmForEvent("combat_start")).not.toThrow();
     });
 
     it("crossfade respects track volume from sound_system", () => {

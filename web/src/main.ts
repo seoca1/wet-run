@@ -170,6 +170,10 @@ class Game {
         this.layout = getLayout();
         this.renderer = new AsciiRenderer(canvas, { cellWidth: 8, cellHeight: 16 });
         this.renderer.resizeGrid(this.layout.cols, this.layout.rows, this.layout.hudCols, this.layout.orientation, this.layout.breakpoint);
+        // Ensure canvas can receive focus for keyboard input (especially on mobile/e-ink)
+        canvas.tabIndex = 0;
+        canvas.addEventListener("click", () => canvas.focus());
+        canvas.addEventListener("touchstart", () => canvas.focus(), { passive: true });
         this.input = new KeyboardInput();
         this.gamepad = new GamepadInput();
 this.inventory = { credits: 0, materials: {}, programs: [] };

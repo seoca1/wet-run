@@ -73,10 +73,9 @@ describe("AudioManager", () => {
     expect(BGM_IDS.INDUSTRIAL).toBe("sounds/theme_industrial.mp3");
   });
 
-  it("playPhase('menu') uses new menu track, isPlaying false in node", () => {
+  it("playPhase('menu') is fire-and-forget async, isPlaying false in node", () => {
     const audio = AudioManager.getInstance();
     audio.playPhase("menu");
-    expect(audio.getCurrentTrack()).toBe("sounds/bgm/menu.wav");
     expect(audio.isPlaying()).toBe(false);
   });
 

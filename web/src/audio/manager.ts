@@ -1,35 +1,11 @@
 /** AudioManager — wet_run-web BGM playback (Tier 2b).
  *
- * Wraps Howler.js with a singleton API. Lazy-loads Howl on first use so the
- * module is import-safe in node/jsdom test environments (where `Howl`
- * would fail to construct because the audio element is browser-only).
- *
- * Browser auto-unlock: Howler requires a user gesture before playback.
- * `unlockOnFirstGesture()` attaches one-shot listeners on the document
- * that will resume audio after the first click/keydown/touchstart.
- *
- * Scope (Tier 2b Minimal MVP):
- * - Single BGM (theme_sense_net) played during menu + combat phases
- * - Mute toggle via M key (caller-side keybinding)
- * - Default volume 0.4 (Gibson atmosphere, not intrusive)
- *
- * Out of scope (Tier 3+ candidates):
- * - Phase-based track switching (menu vs combat)
- * - SFX (combat_hit, victory, defeat)
- * - Volume slider UI
- * - Per-track fade in/out
- * - Audio sprite optimization
- *
- * See ADR-0201 for the decision rationale.
+ * Wraps Howler.js with a singleton API. Howler is dynamically imported
+ * on first use so the module is import-safe in node/jsdom test environments
+ * and doesn't trigger the HTML5 audio pool creation on bigme Chrome.
  */
 
-import { Howl } from "howler";
-import {
-  TRACKS,
-  shouldTransition,
-  calculateVolume,
-  type BgmTrackId,
-} from "../core/sound_system.ts";
+import type { Howl as HowlType } from "howler";
 
 export const BGM_IDS = {
   TITLE: "sounds/bgm/title.wav",
@@ -90,7 +66,6 @@ let instance: AudioManager | null = null;
 
 const DEFAULT_BGM_VOLUME = 0.4;
 const DEFAULT_SFX_VOLUME = 0.6;
-/** Default BGM crossfade duration in ms (Python: prototype/audio/bgm_manager.py DEFAULT_CROSSFADE_MS=500). */
 const DEFAULT_CROSSFADE_MS = 800;
 
 const STORAGE_KEY_BGM = "wetrun_audio_bgm_volume";
@@ -125,28 +100,47 @@ function writePersistedVolume(key: string, value: number): void {
   }
 }
 
+// Lazy-loaded Howl constructor
+let HowlCtor: typeof HowlType | null = null;
+
+async function getHowl(): Promise<typeof HowlType> {
+  if (HowlCtor) return HowlCtor;
+  const mod = await import("howler");
+  HowlCtor = mod.Howl;
+  return HowlCtor;
+}
+
+// Lazy-loaded sound_system module
+let soundSystemModule: typeof import("../core/sound_system.ts") | null = null;
+
+async function getSoundSystem(): Promise<typeof import("../core/sound_system.ts")> {
+  if (soundSystemModule) return soundSystemModule;
+  soundSystemModule = await import("../core/sound_system.ts");
+  return soundSystemModule;
+}
+
 export class AudioManager {
-  private howl: Howl | null = null;
+  private howl: HowlType | null = null;
   private currentTrack: SoundId | null = null;
   private _muted = false;
   private _started = false;
   private _bgmVolume: number;
   private _sfxVolume: number;
-  private readonly sfxHowls: Map<SoundEffectId, Howl> = new Map();
+  private readonly sfxHowls: Map<SoundEffectId, HowlType> = new Map();
 
-private constructor(bgmVolume: number, sfxVolume: number) {
+  private constructor(bgmVolume: number, sfxVolume: number) {
     this._bgmVolume = readPersistedVolume(STORAGE_KEY_BGM, bgmVolume);
     this._sfxVolume = readPersistedVolume(STORAGE_KEY_SFX, sfxVolume);
-    // Persist defaults if not already set
-    if (localStorage.getItem(STORAGE_KEY_BGM) === null) {
-      writePersistedVolume(STORAGE_KEY_BGM, this._bgmVolume);
+    if (typeof localStorage !== "undefined") {
+      if (localStorage.getItem(STORAGE_KEY_BGM) === null) {
+        writePersistedVolume(STORAGE_KEY_BGM, this._bgmVolume);
+      }
+      if (localStorage.getItem(STORAGE_KEY_SFX) === null) {
+        writePersistedVolume(STORAGE_KEY_SFX, this._sfxVolume);
+      }
     }
-    if (localStorage.getItem(STORAGE_KEY_SFX) === null) {
-      writePersistedVolume(STORAGE_KEY_SFX, this._sfxVolume);
-    }
-}
+  }
 
-  /** Get or create the singleton. Safe to call repeatedly. */
   static getInstance(): AudioManager {
     if (instance === null) {
       instance = new AudioManager(DEFAULT_BGM_VOLUME, DEFAULT_SFX_VOLUME);
@@ -154,30 +148,27 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     return instance;
   }
 
-  /** Test-only: reset singleton between tests. */
   static resetForTesting(): void {
     if (instance !== null && instance.howl !== null) {
       try {
         instance.howl.unload();
       } catch {
-        // ignore — Howler may already be disposed
+        // ignore
       }
     }
     instance = null;
   }
 
   /**
-   * Begin BGM playback for the given track. If the track differs from
-   * the current one, the previous Howl is unloaded and a new one is
-   * created. Lazy-creates Howl on first call. No-op in jsdom/node.
-   *
-   * Uses expanded track info from sound_system when available.
+   * Begin BGM playback for the given track. Howler is dynamically imported on first call.
    */
-  play(track: SoundId = BGM_IDS.MENU): void {
-    const trackInfo = TRACKS[track as BgmTrackId];
+  async play(track: SoundId = BGM_IDS.MENU): Promise<void> {
+    const [Howl, ss] = await Promise.all([getHowl(), getSoundSystem()]);
+    const trackInfo = ss.TRACKS[track as keyof typeof ss.TRACKS];
     const finalVolume = trackInfo
-      ? calculateVolume(track as BgmTrackId, this._bgmVolume)
+      ? ss.calculateVolume(track as Parameters<typeof ss.calculateVolume>[0], this._bgmVolume)
       : this._bgmVolume;
+
     if (this.currentTrack === track && this.howl !== null) {
       if (!this._started) {
         try {
@@ -189,6 +180,7 @@ private constructor(bgmVolume: number, sfxVolume: number) {
       }
       return;
     }
+
     if (this.howl !== null) {
       try {
         this.howl.unload();
@@ -198,6 +190,7 @@ private constructor(bgmVolume: number, sfxVolume: number) {
       this.howl = null;
       this._started = false;
     }
+
     try {
       this.howl = new Howl({
         src: [track],
@@ -207,68 +200,53 @@ private constructor(bgmVolume: number, sfxVolume: number) {
       });
       this.currentTrack = track;
     } catch {
-      // Howler construction failed (likely node test env). Mark unavailable.
       return;
     }
+
     if (!this._started) {
       try {
-        const soundId = this.howl.play();
+        this.howl.play();
         this._started = true;
-        void soundId;
       } catch {
-        // ignore — browser audio unlock may still be pending
+        // ignore
       }
     }
   }
 
-  /**
-   * Play BGM matching a GamePhase value. No-op when the same phase
-   * is already active. "exit" phase stops playback.
-   */
-  playPhase(phase: string): void {
+  async playPhase(phase: string): Promise<void> {
     const track = PHASE_TO_SOUND[phase];
-    if (track === undefined) {
-      return;
-    }
+    if (track === undefined) return;
     if (track === null) {
       this.fadeOutAndStop(DEFAULT_CROSSFADE_MS);
       return;
     }
-    // Phase 1: ensure current track starts at full volume (fade-in from 0 on first play).
-    this.crossfadeTo(track, DEFAULT_CROSSFADE_MS);
+    await this.crossfadeTo(track, DEFAULT_CROSSFADE_MS);
   }
 
-  /**
-   * Crossfade from the current track to a new one (Tier 7 follow-up).
-   * The old track fades out as the new track fades in over `durationMs`.
-   * If the new track equals the current one, only a volume-restore happens
-   * (idempotent).
-   *
-   * No-op when Howler construction fails (node test env).
-   */
-  crossfadeTo(track: SoundId, durationMs: number = DEFAULT_CROSSFADE_MS): void {
+  async crossfadeTo(track: SoundId, durationMs: number = DEFAULT_CROSSFADE_MS): Promise<void> {
     if (track === this.currentTrack && this.howl !== null) {
-      // Same track — restore volume if previously faded (e.g. by stop).
       if (!this._started) {
         try {
           this.howl.play();
-          this.howl.volume(this._bgmVolume, 0);
+          this.howl.volume(this._bgmVolume);
           this._started = true;
         } catch {
           // ignore
         }
       } else {
         try {
-          this.howl.volume(this._bgmVolume, durationMs);
+          this.howl.fade(this.howl.volume(), this._bgmVolume, durationMs);
         } catch {
           // ignore
         }
       }
       return;
     }
+
+    const Howl = await getHowl();
     const oldHowl = this.howl;
-    const oldTrack = this.currentTrack;
-    let newHowl: Howl | null = null;
+
+    let newHowl: HowlType | null = null;
     try {
       newHowl = new Howl({
         src: [track],
@@ -279,15 +257,18 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     } catch {
       return;
     }
+
     this.howl = newHowl;
     this.currentTrack = track;
+
     try {
       newHowl.play();
-      newHowl.volume(this._bgmVolume, durationMs);
+      newHowl.fade(0, this._bgmVolume, durationMs);
     } catch {
       // ignore
     }
     this._started = true;
+
     if (oldHowl !== null) {
       const fadeMs = Math.max(0, durationMs);
       try {
@@ -295,25 +276,17 @@ private constructor(bgmVolume: number, sfxVolume: number) {
       } catch {
         // ignore
       }
-      const unloadAfter = (howl: Howl) => {
+      setTimeout(() => {
         try {
-          howl.stop();
-          howl.unload();
+          oldHowl.stop();
+          oldHowl.unload();
         } catch {
           // ignore
         }
-      };
-      const timer = setTimeout(() => unloadAfter(oldHowl), Math.max(50, fadeMs + 100));
-      if (typeof timer === "object" && timer !== null && "unref" in timer && typeof (timer as { unref?: () => void }).unref === "function") {
-        (timer as { unref: () => void }).unref();
-      }
-      void oldTrack;
+      }, fadeMs + 100);
     }
   }
 
-  /**
-   * Fade out the current BGM and stop playback. Safe no-op if nothing is playing.
-   */
   fadeOutAndStop(durationMs: number = DEFAULT_CROSSFADE_MS): void {
     if (this.howl === null) return;
     const target = this.howl;
@@ -322,7 +295,7 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     } catch {
       // ignore
     }
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       try {
         target.stop();
       } catch {
@@ -333,17 +306,13 @@ private constructor(bgmVolume: number, sfxVolume: number) {
         this.currentTrack = null;
         this._started = false;
       }
-    }, Math.max(50, durationMs + 100));
-    if (typeof timer === "object" && timer !== null && "unref" in timer && typeof (timer as { unref?: () => void }).unref === "function") {
-      (timer as { unref: () => void }).unref();
-    }
+    }, durationMs + 100);
   }
 
   getCurrentTrack(): SoundId | null {
     return this.currentTrack;
   }
 
-  /** Pause playback but keep the Howl loaded. */
   stop(): void {
     if (this.howl !== null && this._started) {
       try {
@@ -355,7 +324,6 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     this._started = false;
   }
 
-  /** Mute without stopping. BGM continues at volume 0. */
   mute(): void {
     this._muted = true;
     if (this.howl !== null) {
@@ -374,7 +342,6 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     }
   }
 
-  /** Unmute and restore prior volume. */
   unmute(): void {
     this._muted = false;
     if (this.howl !== null) {
@@ -393,7 +360,6 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     }
   }
 
-  /** Toggle mute state. Returns the new muted state. */
   toggleMute(): boolean {
     if (this._muted) {
       this.unmute();
@@ -416,12 +382,10 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     }
   }
 
-  /** BGM volume in 0..1 range. Persisted to localStorage. */
   getBgmVolume(): number {
     return this._bgmVolume;
   }
 
-  /** Set BGM volume (0..1). Clamped. Persisted to localStorage. Applies to current Howl. */
   setBgmVolume(v: number): void {
     this._bgmVolume = clamp01(v);
     writePersistedVolume(STORAGE_KEY_BGM, this._bgmVolume);
@@ -429,17 +393,15 @@ private constructor(bgmVolume: number, sfxVolume: number) {
       try {
         this.howl.volume(this._bgmVolume);
       } catch {
-        // ignore — Howler may be in a transient state
+        // ignore
       }
     }
   }
 
-  /** SFX volume in 0..1 range. Persisted to localStorage. */
   getSfxVolume(): number {
     return this._sfxVolume;
   }
 
-  /** Set SFX volume (0..1). Clamped. Persisted to localStorage. Applies to all cached SFX. */
   setSfxVolume(v: number): void {
     this._sfxVolume = clamp01(v);
     writePersistedVolume(STORAGE_KEY_SFX, this._sfxVolume);
@@ -452,12 +414,8 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     }
   }
 
-  /**
-   * Play a one-shot sound effect. Howler instances are cached per
-   * SoundEffectId so repeated calls reuse the same buffer. Multiple
-   * plays of the same id overlap (Howler internal mix). Respects mute.
-   */
-  playSfx(id: SoundEffectId = SFX_IDS.CLICK): void {
+  async playSfx(id: SoundEffectId = SFX_IDS.CLICK): Promise<void> {
+    const Howl = await getHowl();
     let howl = this.sfxHowls.get(id);
     if (howl === undefined) {
       try {
@@ -482,7 +440,6 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     }
   }
 
-  /** Stop every active SFX. */
   stopAllSfx(): void {
     for (const sfx of this.sfxHowls.values()) {
       try {
@@ -493,19 +450,9 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     }
   }
 
-  /**
-   * Browser audio unlock — Howler requires a user gesture before playback
-   * is allowed. Call this once on app boot; it will attach one-shot
-   * listeners that fire on the first click/keydown/touchstart and then
-   * detach themselves.
-   */
   static unlockOnFirstGesture(onUnlock?: () => void): void {
     if (typeof document === "undefined") return;
-    const events: Array<keyof DocumentEventMap> = [
-      "click",
-      "keydown",
-      "touchstart",
-    ];
+    const events: Array<keyof DocumentEventMap> = ["click", "keydown", "touchstart"];
     const handler = (): void => {
       events.forEach((e) => document.removeEventListener(e, handler));
       if (onUnlock) onUnlock();
@@ -513,15 +460,13 @@ private constructor(bgmVolume: number, sfxVolume: number) {
     events.forEach((e) => document.addEventListener(e, handler, { once: true }));
   }
 
-  /**
-   * Play BGM based on game event, with auto-transition logic.
-   * Returns the new current track if transition occurred, otherwise current track.
-   */
-  playBgmForEvent(event: string): string | null {
-    const currentTrack = this.currentTrack as BgmTrackId | null;
-    const transition = shouldTransition(currentTrack, event);
+  async playBgmForEvent(event: string): Promise<string | null> {
+    const ss = await getSoundSystem();
+    type BgmTrackId = Parameters<typeof ss.shouldTransition>[0];
+    const currentTrack = this.currentTrack as BgmTrackId;
+    const transition = ss.shouldTransition(currentTrack, event);
     if (transition) {
-      this.crossfadeTo(transition.track as SoundId);
+      await this.crossfadeTo(transition.track as SoundId);
       return transition.track as string;
     }
     return this.currentTrack as string | null;

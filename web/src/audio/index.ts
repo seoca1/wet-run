@@ -30,7 +30,7 @@ function getManager(): AudioManager {
 }
 
 export function playBgm(track?: SoundId): void {
-  getManager().play(track);
+  void getManager().play(track);
 }
 
 export function stopBgm(): void {
@@ -46,7 +46,7 @@ export function setBgmVolume(volume: number): void {
 }
 
 export function playSfx(id?: SoundEffectId): void {
-  getManager().playSfx(id);
+  void getManager().playSfx(id);
 }
 
 export function stopAllSfx(): void {
@@ -73,12 +73,12 @@ export function unlockAudio(onUnlock?: () => void): void {
   AudioManager.unlockOnFirstGesture(onUnlock);
 }
 
-export function playBgmForEvent(event: string): string | null {
-  return getManager().playBgmForEvent(event);
+export function playBgmForEvent(event: string): void {
+  void getManager().playBgmForEvent(event);
 }
 
 export function playPhase(phase: string): void {
-  getManager().playPhase(phase);
+  void getManager().playPhase(phase);
 }
 
 export function isPlaying(): boolean {
@@ -90,7 +90,7 @@ export function getCurrentTrack(): SoundId | null {
 }
 
 export function crossfadeTo(track: SoundId, durationMs?: number): void {
-  getManager().crossfadeTo(track, durationMs);
+  void getManager().crossfadeTo(track, durationMs);
 }
 
 export function fadeOutAndStop(durationMs?: number): void {

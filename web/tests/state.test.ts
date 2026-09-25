@@ -103,7 +103,8 @@ describe("combat", () => {
     });
     expect(afterUse.iceRoster[0]?.hp).toBe(95); // tier 1 * 5 = 5 dmg
     expect(afterUse.player.alarm).toBe(10);
-    expect(afterUse.deck.length).toBe(0); // card consumed
+    expect(afterUse.deck.map((p) => p.id)).toEqual(["test_prog"]); // hand recycled by draw
+    expect(afterUse.discardPile.length).toBe(0);
   });
 
   it("defeats ICE when HP reaches 0 (transitions to loot)", () => {

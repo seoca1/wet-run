@@ -319,7 +319,7 @@ export function applyCombatAction(state: GameState, action: GameAction): GameSta
   if (action.type === "use_program") {
     const result = useProgram(state, action.programId);
     if (result.deck.length === state.deck.length) return result;
-    const afterEnemies = processEnemyTurns(result);
+    const afterEnemies = drawHand(processEnemyTurns(result));
     
     const allDefeated = afterEnemies.iceRoster.every((ice) => ice.hp === 0);
     if (allDefeated && afterEnemies.iceRoster.length > 0 && afterEnemies.runPhase === "combat") {
@@ -360,6 +360,25 @@ function advanceDeadTarget(state: GameState): GameState {
   const aliveIdx = state.iceRoster.findIndex(ice => ice.hp > 0);
   if (aliveIdx === -1) return state;
   return { ...state, activeIceIndex: aliveIdx };
+}
+
+/** Card draw (ADR-0212 step-4): when the hand empties, recycle the discard into
+ * the draw pile and deal a fresh hand so combat can continue past the opening 5
+ * cards. Order is preserved (no shuffle) so the draw consumes no RNG and stays
+ * deterministic; the fight is bounded by the alarm cap. Runs after the enemy
+ * turn so the "was a program played" guard in applyCombatAction still works.
+ */
+function drawHand(state: GameState): GameState {
+  if (state.deck.length > 0) return state;
+  const pool = [...state.drawPile, ...state.discardPile];
+  if (pool.length === 0) return state;
+  const size = state.player.handSize;
+  return {
+    ...state,
+    deck: pool.slice(0, size),
+    drawPile: pool.slice(size),
+    discardPile: [],
+  };
 }
 
 function processEnemyTurns(state: GameState): GameState {

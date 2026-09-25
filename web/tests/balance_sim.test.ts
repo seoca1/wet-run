@@ -89,10 +89,10 @@ describe("balance sim — outcome sanity", () => {
     }
   });
 
-  it("resolves within the opening hand (the loop cannot run away)", () => {
+  it("resolves within the turn cap (the loop cannot run away)", () => {
     for (const mission of missions.slice(0, 12)) {
       const outcome = simulateCombat(mission, iceCatalog, openingDeck, { seed: 3 });
-      expect(outcome.turns, `${mission.id} turns`).toBeLessThanOrEqual(openingDeck.length + 1);
+      expect(outcome.turns, `${mission.id} turns`).toBeLessThanOrEqual(100);
     }
   });
 

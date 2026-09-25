@@ -449,7 +449,7 @@ describe("State consistency during transitions", () => {
     expect(state.mission.title).toBe(mockMission.title);
   });
 
-  it("deck is consumed during combat", () => {
+  it("hand is recycled during combat (draw, ADR-0212 step-4)", () => {
     let state = buildMatrixState();
     state = applyAction(state, { type: "confirm" });
     state = applyAction(state, { type: "confirm" });
@@ -461,8 +461,8 @@ describe("State consistency during transitions", () => {
       programId: "test_prog",
     });
 
-    expect(state.deck.length).toBe(0);
-    expect(state.discardPile.length).toBe(1);
+    expect(state.deck.length).toBe(1);
+    expect(state.discardPile.length).toBe(0);
   });
 
   it("turn count increments during transitions", () => {

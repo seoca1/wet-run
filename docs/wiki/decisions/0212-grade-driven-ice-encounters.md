@@ -120,6 +120,23 @@ ADR-0211 Option 1 로 harness 는 `hp_base + hp_per_grade * (grade - 1)` 로 HP 
 
 **Notes**: 단조 비증가 달성. grade 3 cliff (deck damage vs tier-3+ HP) 와 ICE `armor` 미반영은 후속 밸런스 결정.
 
+## Step-4 후속 (2026-09-25)
+
+operator 위임 하에 Jev Choice 로 진행:
+
+| 결정 | Jev Choice | conf | 구현 / 결과 |
+| --- | --- | --- | --- |
+| PPL (deck scaling) | `ppl` p=0.86 | 0.79 | `--deck ppl` harness 모드 + `deckForGrade` — 곡선 불변 (덱 구성 무관) |
+| card draw | `add_draw` p=0.89 | 0.84 | `drawHand` — hand 소진 시 discard 재활용. **stall 제거** (g3/g4 stall 100%→0%), 플레이어 ~6-8턴 생존 |
+
+**실측 곡선 (draw + PPL)**: `100 / 100 / 1.2 / 0.8 / 0 / 0`
+
+**핵심 발견**: draw 로 stall 은 사라졌지만 승률 곡선은 여전히 cliff. 원인은 **damage-vs-HP 비율** — 프로그램 데미지 `tier*5` (≤125/hand) ≪ tier-3+ ICE HP 130-620. 덱 구성(PPL)도 드로우도 이 비율을 바꾸지 못한다.
+
+**미적용 (정책상 surface)**: 3차 Jev Choice 는 `ice_hp_retune` (p=0.61) 을 골랐으나 **confidence 0.41 (< 0.5)** — 워크스페이스 WF5/6 정책상 저신뢰는 auto-apply 금지, human surface. 또한 구현 분석상 high-tier ICE 를 무의미하게 약화시키는 결과가 되어(예: neuromancer 620→136) 손으로 튜닝한 게임 전역 밸런스 hack 을 ship 하지 않았다.
+
+**권장 (사람 결정 필요)**: damage + HP 를 함께 조정하는 balance pass — 예: 프로그램 데미지 스케일 상향 (`tier*5` → `tier*N`) + tier별 `hp_base` 를 deck damage 범위로 압축. 또는 현 상태를 "설계 공백"으로 문서화하고 보류.
+
 ## 영향 받는 항목
 
 - `web/src/core/dungeon.ts`, `web/src/core/matrix.ts`, `web/src/core/types.ts` (배선)
@@ -131,3 +148,4 @@ ADR-0211 Option 1 로 harness 는 `hp_base + hp_per_grade * (grade - 1)` 로 HP 
 
 - 2026-09-24: Draft 작성 (ADR-0211 Option 1 구현 중 확인된 진단 정정에 근거).
 - 2026-09-24: Accepted (Option A) + 구현. 곡선 비단조 → 단조 비증가. 부수로 `needsIcePromotion` 보스 오인 + `normalizeIce` latent NaN 수정.
+- 2026-09-25: Step-4 — Jev Choice 로 PPL (`--deck ppl`) + card draw (`drawHand`) 구현. stall 제거, 곡선은 여전히 cliff (damage-vs-HP 비율). `ice_hp_retune` (Jev p=0.61 / conf 0.41) 은 저신뢰로 human surface.

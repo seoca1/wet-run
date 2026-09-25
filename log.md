@@ -1197,3 +1197,31 @@ grade  before  after
 ### 잔여 (step 4 — 밸런스 디자인)
 - grade 3 cliff: opening deck 5장 총 데미지 약 80-100 ≪ tier-3+ ICE HP 130-320+. ICE HP 데이터 또는 deck damage 재조정 필요.
 - ICE `armor` 반영: `state_actions.ts` `defenderDefenseBonus` 를 defender ICE `armor` 로 교체 (기존 0 하드코딩). 곡선 불변, 테스트 통과 — correctness gap 해소.
+
+---
+
+## [2026-09-25] feat | ADR-0212 step-4 — Jev 결정으로 PPL + card draw 구현
+
+### 배경
+operator 위임 ("Jev로 권장안 선택하고 진행"). 3회 Jev Choice.
+
+### 구현
+- **PPL deck** (Jev `ppl`, p=0.86, conf 0.79): `deckForGrade` + `--deck ppl` harness 모드. 곡선 불변.
+- **card draw** (Jev `add_draw`, p=0.89, conf 0.84): `drawHand` — hand 소진 시 discard 재활용 (order-preserving, RNG 미소비, enemy turn 이후 실행). **stall 제거** (g3/g4 100%→0%), 플레이어 ~6-8턴 생존. 테스트 3건은 recycle 의미로 갱신.
+- 회귀: `deckForGrade` 테스트 추가. 2665 pass.
+
+### 실측 곡선
+```
+grade  1    2    3     4     5   6
+before 100  100   0     0     0   0
+after  100  100  1.2   0.8    0    0   ← draw+PPL
+```
+
+### 핵심 발견
+draw 로 stall 은 사라졌으나 곡선은 여전히 cliff. 원인은 **damage-vs-HP 비율** — 프로그램 데미지 `tier*5` (≤125/hand) ≪ tier-3+ ICE HP 130-620. 덱 구성·드로우로는 못 바꾼다.
+
+### 미적용 (정책)
+3차 Jev Choice `ice_hp_retune` (p=0.61) 은 **conf 0.41 < 0.5** → WF5/6 정책상 human surface. 구현 분석상 high-tier ICE 를 무의미하게 약화(neuromancer 620→136)시키는 결과라 손튜닝 hack 을 ship 하지 않음.
+
+### 잔여
+- **balance pass (사람 결정)**: deck damage 스케일 상향 + tier별 `hp_base` 압축을 함께. 또는 "설계 공백"으로 문서화하고 보류.

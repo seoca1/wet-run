@@ -9,7 +9,7 @@ import { describe, expect, it } from "vitest";
 
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
 import { iceHpForGrade } from "../src/core/ice_scaling";
-import { runSuite, simulateCombat } from "../scripts/balance_sim";
+import { deckForGrade, runSuite, simulateCombat } from "../scripts/balance_sim";
 import type { Program } from "../src/core/types";
 
 import missionsJson from "../src/data/missions.json";
@@ -64,6 +64,18 @@ describe("balance sim — grade scaling", () => {
   it("falls back to ice.hp when grade data is missing", () => {
     const noGrade = { id: "x", name: "X", hp: 77, armor: 0, tier: 1 };
     expect(iceHpForGrade(noGrade, 5)).toBe(77);
+  });
+});
+
+describe("balance sim — PPL deck", () => {
+  it("scales the deck tier with grade and always fields 5 cards", () => {
+    const g1 = deckForGrade(programs, 1);
+    const g5 = deckForGrade(programs, 5);
+    expect(g1.length).toBe(5);
+    expect(g5.length).toBe(5);
+    expect(g1.every((p) => p.tier <= 1)).toBe(true);
+    const maxTier = (deck: ReadonlyArray<{ tier: number }>) => Math.max(...deck.map((p) => p.tier));
+    expect(maxTier(g5)).toBeGreaterThanOrEqual(maxTier(g1));
   });
 });
 

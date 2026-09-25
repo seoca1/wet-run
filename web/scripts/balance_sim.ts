@@ -47,6 +47,23 @@ export interface CombatOutcome {
 const DEFAULT_MAX_TURNS = 100;
 const CLOCK_ORIGIN_MS = 1_000_000;
 
+/** Grade-appropriate deck for the PPL curve (ADR-0212 step-4).
+ *
+ * Models player power growth: at grade g the runner has access to programs of
+ * tier <= g and fields the strongest 5 of them. Measuring this deck against the
+ * grade-scaled ICE answers "does a developed deck meet the grade?" — the
+ * counterpart to the fixed opening-hand measurement.
+ */
+export function deckForGrade(catalog: Readonly<Record<string, Program>>, grade: number): Program[] {
+  const tier = Math.max(1, Math.min(5, Math.round(Number.isFinite(grade) ? grade : 1)));
+  const all = Object.values(catalog).filter((p): p is Program => p !== undefined);
+  const eligible = all.filter((p) => p.tier <= tier);
+  const pool = eligible.length >= 5 ? eligible : all;
+  return [...pool]
+    .sort((a, b) => b.tier - a.tier || b.cost - a.cost || a.id.localeCompare(b.id))
+    .slice(0, 5);
+}
+
 function isFighting(s: GameState): boolean {
   return s.runPhase === "combat" && s.phase === "combat";
 }

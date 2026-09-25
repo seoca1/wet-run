@@ -9,8 +9,9 @@
  * change in combat_engine.ts / boss_phases.ts shows up here immediately.
  */
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
+import { missionGradeOf } from "../src/core/ice_scaling";
 import type { Mission, Program } from "../src/core/types";
-import { runSuite } from "./balance_sim";
+import { deckForGrade, runSuite } from "./balance_sim";
 import { installLocalStoragePolyfill } from "./node_polyfills";
 
 import missionsJson from "../src/data/missions.json" with { type: "json" };
@@ -22,6 +23,11 @@ function parseRuns(argv: ReadonlyArray<string>): number {
   const raw = idx >= 0 ? argv[idx + 1] : undefined;
   const parsed = raw === undefined ? Number.NaN : Number.parseInt(raw, 10);
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 100;
+}
+
+function parseDeck(argv: ReadonlyArray<string>): "opening" | "ppl" {
+  const idx = argv.indexOf("--deck");
+  return idx >= 0 && argv[idx + 1] === "ppl" ? "ppl" : "opening";
 }
 
 /** Same opening hand the game builds on NEW RUN (see main.ts loadDeck). */
@@ -43,10 +49,13 @@ function pad(value: string, width: number): string {
 
 function main(): void {
   installLocalStoragePolyfill();
-  const runs = parseRuns(process.argv.slice(2));
+  const argv = process.argv.slice(2);
+  const runs = parseRuns(argv);
+  const deckMode = parseDeck(argv);
   const missions = loadMissionsCatalog(missionsJson);
   const iceCatalog = loadIceCatalog(iceTypesJson);
-  const deck = openingDeck(loadProgramsCatalog(programsJson));
+  const programCatalog = loadProgramsCatalog(programsJson);
+  const deck = openingDeck(programCatalog);
 
   const byGrade = new Map<number, Mission[]>();
   for (const m of missions) {
@@ -56,7 +65,11 @@ function main(): void {
     else bucket.push(m);
   }
 
-  console.log(`Balance harness — opening deck [${deck.map((p) => p.id).join(", ")}]`);
+  console.log(
+    deckMode === "ppl"
+      ? "Balance harness — PPL deck (grade-appropriate: tier <= grade, top 5)"
+      : `Balance harness — opening deck [${deck.map((p) => p.id).join(", ")}]`,
+  );
   console.log(`Missions: ${missions.length}, ICE types: ${Object.keys(iceCatalog).length}, runs/mission: ${runs}\n`);
   console.log("grade  missions  win-rate  stalled  mean-turns  mean-HP-end  p5/p95");
 
@@ -70,7 +83,9 @@ function main(): void {
     let p95 = 0;
 
     for (const mission of bucket) {
-      const stats = runSuite(mission, iceCatalog, deck, runs, 1);
+      const deckForMission =
+        deckMode === "ppl" ? deckForGrade(programCatalog, missionGradeOf(mission)) : deck;
+      const stats = runSuite(mission, iceCatalog, deckForMission, runs, 1);
       wins += stats.wins;
       stalls += stats.stalls;
       turns += stats.meanTurns;

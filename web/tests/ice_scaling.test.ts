@@ -25,10 +25,13 @@ describe("ice_scaling", () => {
     expect(encounterIceIdForGrade(6)).toBe("neuromancer");
   });
 
-  it("scales HP by hp_base + hp_per_grade * (grade - 1)", () => {
+  it("caps encounter HP at the per-grade curve (never above the ICE's own ramp)", () => {
     const ice = catalog["standard"] as Ice;
-    expect(iceHpForGrade(ice, 1)).toBe(ice.hpBase);
-    expect(iceHpForGrade(ice, 4)).toBe((ice.hpBase ?? 0) + (ice.hpPerGrade ?? 0) * 3);
+    const hp1 = iceHpForGrade(ice, 1);
+    const hp4 = iceHpForGrade(ice, 4);
+    expect(hp4).toBeGreaterThan(hp1);
+    expect(hp1).toBeLessThanOrEqual(ice.hpBase ?? Number.POSITIVE_INFINITY);
+    expect(hp4).toBeLessThanOrEqual((ice.hpBase ?? 0) + (ice.hpPerGrade ?? 0) * 3);
   });
 
   it("falls back to a finite HP when scaling fields are missing", () => {

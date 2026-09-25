@@ -1225,3 +1225,21 @@ draw 로 stall 은 사라졌으나 곡선은 여전히 cliff. 원인은 **damage
 
 ### 잔여
 - **balance pass (사람 결정)**: deck damage 스케일 상향 + tier별 `hp_base` 압축을 함께. 또는 "설계 공백"으로 문서화하고 보류.
+
+---
+
+## [2026-09-25] feat | ADR-0212 step-4 — grade별 ICE HP cap (ice_hp_retune 구현)
+
+### 측정
+opening deck 승률 vs ICE HP: **50 → 100%, 116 → 100%, 118 → 18%, 240 → 0%** → **~117 HP 에서 step** (고정 덱 전투가 near-deterministic).
+
+### 구현
+- `iceHpForGrade` 가 데이터 ramp(`hp_base + hp_per_grade*(g-1)`)를 **grade별 cap** `[50, 85, 116, 118, 121, 124]` 로 상한. 저HP ICE 는 자기 값 유지, 고HP ICE 만 cap (데이터 보존).
+- 곡선: `100 / 100 / 100 / 18.4 / 0 / 0` (단조 비증가, mid point 18%).
+- 테스트 2건을 cap semantics 로 갱신. 2665 pass.
+
+### 한계
+HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient 를 원하면 encounter/덱에 분산 축 추가 필요 (grade별 armor/damage 변화, deck 스케일).
+
+### 잔여
+- 분산 축 도입 여부 (사람 결정) 또는 현 단조 곡선 수용.

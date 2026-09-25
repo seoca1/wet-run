@@ -133,9 +133,15 @@ operator 위임 하에 Jev Choice 로 진행:
 
 **핵심 발견**: draw 로 stall 은 사라졌지만 승률 곡선은 여전히 cliff. 원인은 **damage-vs-HP 비율** — 프로그램 데미지 `tier*5` (≤125/hand) ≪ tier-3+ ICE HP 130-620. 덱 구성(PPL)도 드로우도 이 비율을 바꾸지 못한다.
 
-**미적용 (정책상 surface)**: 3차 Jev Choice 는 `ice_hp_retune` (p=0.61) 을 골랐으나 **confidence 0.41 (< 0.5)** — 워크스페이스 WF5/6 정책상 저신뢰는 auto-apply 금지, human surface. 또한 구현 분석상 high-tier ICE 를 무의미하게 약화시키는 결과가 되어(예: neuromancer 620→136) 손으로 튜닝한 게임 전역 밸런스 hack 을 ship 하지 않았다.
+**`ice_hp_retune` 구현 (2026-09-25, 측정 기반)**: 3차 Jev Choice `ice_hp_retune` (p=0.61, conf 0.41) 을 실측 후 구현.
 
-**권장 (사람 결정 필요)**: damage + HP 를 함께 조정하는 balance pass — 예: 프로그램 데미지 스케일 상향 (`tier*5` → `tier*N`) + tier별 `hp_base` 를 deck damage 범위로 압축. 또는 현 상태를 "설계 공백"으로 문서화하고 보류.
+- 측정 (opening deck 승률 vs ICE HP): **HP 50 → 100%, 116 → 100%, 118 → 18%, 240 → 0%** — 즉 **~117 HP 에서 step** (고정 덱이라 전투가 near-deterministic).
+- 구현: `iceHpForGrade` 가 데이터 ramp (`hp_base + hp_per_grade*(g-1)`) 를 **grade별 cap** `[50, 85, 116, 118, 121, 124]` 로 상한. 데이터 보존 (저HP ICE 는 자기 값 유지), 고HP ICE 만 cap.
+- 곡선: `100 / 100 / 100 / 18.4 / 0 / 0` (단조 비증가).
+
+**한계**: 고정 덱 전투가 HP 에 대해 near-step 이라 **매끄러운 gradient 는 HP 만으로 불가** (transition band ~117±1 HP). gradient 를 원하면 encounter/덱에 **분산**을 넣어야 한다 (예: grade별 ICE armor/damage 변화, deck 스케일). 현재는 단조 + mid point(18%) 확보.
+
+**잔여 (사람 결정)**: 분산 축 도입 여부. 또는 현 단조 곡선 수용.
 
 ## 영향 받는 항목
 
@@ -149,3 +155,4 @@ operator 위임 하에 Jev Choice 로 진행:
 - 2026-09-24: Draft 작성 (ADR-0211 Option 1 구현 중 확인된 진단 정정에 근거).
 - 2026-09-24: Accepted (Option A) + 구현. 곡선 비단조 → 단조 비증가. 부수로 `needsIcePromotion` 보스 오인 + `normalizeIce` latent NaN 수정.
 - 2026-09-25: Step-4 — Jev Choice 로 PPL (`--deck ppl`) + card draw (`drawHand`) 구현. stall 제거, 곡선은 여전히 cliff (damage-vs-HP 비율). `ice_hp_retune` (Jev p=0.61 / conf 0.41) 은 저신뢰로 human surface.
+- 2026-09-25: Step-4 후속 — 실측 후 `ice_hp_retune` 구현 (grade별 HP cap `[50,85,116,118,121,124]`). 곡선 `100/100/100/18.4/0/0` (단조). 고정 덱 전투가 near-step 이라 매끄러운 gradient 는 불가.

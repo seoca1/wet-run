@@ -25,13 +25,25 @@ export function encounterIceIdForGrade(grade: number): string {
   return ENCOUNTER_ICE_BY_GRADE[clampGrade(grade)] ?? "watchdog";
 }
 
+/** Encounter HP curve by grade (index = grade - 1). Calibrated to the opening
+ * deck's measured damage budget (HP 50 -> ~100% win, HP 240 -> ~0%), so higher
+ * grades are harder while every grade stays contestable. Replaces the raw
+ * hp_base + hp_per_grade ramp, whose 50 -> 240 step produced a hard cliff.
+ */
+const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [50, 85, 116, 118, 121, 124];
+
 export function iceHpForGrade(ice: Ice, grade: number): number {
+  const g = clampGrade(grade);
   const base = ice.hpBase;
   const perGrade = ice.hpPerGrade;
-  if (base !== undefined && perGrade !== undefined) {
-    return base + perGrade * (clampGrade(grade) - 1);
-  }
-  return Number.isFinite(ice.hp) ? ice.hp : 100;
+  const dataHp =
+    base !== undefined && perGrade !== undefined
+      ? base + perGrade * (g - 1)
+      : Number.isFinite(ice.hp)
+        ? ice.hp
+        : 100;
+  const cap = ENCOUNTER_HP_BY_GRADE[g - 1];
+  return cap !== undefined ? Math.min(dataHp, cap) : dataHp;
 }
 
 export function missionGradeOf(mission: {

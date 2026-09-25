@@ -50,15 +50,15 @@ describe("balance sim — determinism", () => {
 });
 
 describe("balance sim — grade scaling", () => {
-  it("derives ICE HP from hp_base + hp_per_grade * (grade - 1)", () => {
+  it("caps ICE HP at the per-grade encounter curve", () => {
     const standard = iceCatalog["standard"];
     expect(standard).toBeDefined();
     if (standard === undefined) return;
     const hp1 = iceHpForGrade(standard, 1);
     const hp4 = iceHpForGrade(standard, 4);
     expect(hp4).toBeGreaterThan(hp1);
-    expect(hp1).toBe(standard.hpBase);
-    expect(hp4).toBe((standard.hpBase ?? 0) + (standard.hpPerGrade ?? 0) * 3);
+    expect(hp1).toBeLessThanOrEqual(standard.hpBase ?? Number.POSITIVE_INFINITY);
+    expect(hp4).toBeLessThanOrEqual((standard.hpBase ?? 0) + (standard.hpPerGrade ?? 0) * 3);
   });
 
   it("falls back to ice.hp when grade data is missing", () => {

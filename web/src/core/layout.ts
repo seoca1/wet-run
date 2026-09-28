@@ -42,21 +42,57 @@ export function getLayout(): Layout {
 
   if (portrait) {
     if (width < BREAKPOINTS.COMPACT) {
-      return { cols: 32, rows: 50, hudCols: 12, orientation: "portrait", breakpoint: "compact" };
+      return {
+        cols: 32,
+        rows: 50,
+        hudCols: 12,
+        orientation: "portrait",
+        breakpoint: "compact",
+      };
     }
     if (width < BREAKPOINTS.SMALL) {
-      return { cols: 40, rows: 60, hudCols: 16, orientation: "portrait", breakpoint: "small" };
+      return {
+        cols: 40,
+        rows: 60,
+        hudCols: 16,
+        orientation: "portrait",
+        breakpoint: "small",
+      };
     }
-    return { cols: 50, rows: 80, hudCols: 20, orientation: "portrait", breakpoint: "medium" };
+    return {
+      cols: 50,
+      rows: 80,
+      hudCols: 20,
+      orientation: "portrait",
+      breakpoint: "medium",
+    };
   }
 
   if (width < BREAKPOINTS.MEDIUM) {
-    return { cols: 60, rows: 40, hudCols: 20, orientation: "landscape", breakpoint: "medium" };
+    return {
+      cols: 60,
+      rows: 40,
+      hudCols: 20,
+      orientation: "landscape",
+      breakpoint: "medium",
+    };
   }
   if (width < BREAKPOINTS.LARGE) {
-    return { cols: 80, rows: 50, hudCols: 24, orientation: "landscape", breakpoint: "large" };
+    return {
+      cols: 80,
+      rows: 50,
+      hudCols: 24,
+      orientation: "landscape",
+      breakpoint: "large",
+    };
   }
-  return { cols: 100, rows: 60, hudCols: 28, orientation: "landscape", breakpoint: "xlarge" };
+  return {
+    cols: 100,
+    rows: 60,
+    hudCols: 28,
+    orientation: "landscape",
+    breakpoint: "xlarge",
+  };
 }
 
 /** Subscribe to layout changes (resize + orientationchange). Returns cleanup fn.
@@ -69,7 +105,10 @@ export function watchLayout(onChange: (layout: Layout) => void): () => void {
   let last: Layout = getLayout();
   const handler = (): void => {
     const next = getLayout();
-    if (next.orientation !== last.orientation || next.breakpoint !== last.breakpoint) {
+    if (
+      next.orientation !== last.orientation ||
+      next.breakpoint !== last.breakpoint
+    ) {
       last = next;
       onChange(next);
     }

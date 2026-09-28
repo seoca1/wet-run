@@ -30,7 +30,11 @@ export function getCell(
 }
 
 /** Build an empty grid filled with background cells. */
-export function makeGrid(width: number, height: number, bgColor = PALETTE.BACKGROUND): Grid {
+export function makeGrid(
+  width: number,
+  height: number,
+  bgColor = PALETTE.BACKGROUND,
+): Grid {
   const cells: Cell[][] = [];
   for (let y = 0; y < height; y++) {
     const row: Cell[] = [];
@@ -93,7 +97,14 @@ function makeGridFromCells(
   };
 }
 
-export function drawRect(grid: Grid, x: number, y: number, w: number, h: number, color: string): Grid {
+export function drawRect(
+  grid: Grid,
+  x: number,
+  y: number,
+  w: number,
+  h: number,
+  color: string,
+): Grid {
   let g = grid;
   for (let dy = 0; dy < h; dy++) {
     for (let dx = 0; dx < w; dx++) {
@@ -107,7 +118,14 @@ export function drawRect(grid: Grid, x: number, y: number, w: number, h: number,
   return g;
 }
 
-export function drawLine(grid: Grid, x0: number, y0: number, x1: number, y1: number, color: string): Grid {
+export function drawLine(
+  grid: Grid,
+  x0: number,
+  y0: number,
+  x1: number,
+  y1: number,
+  color: string,
+): Grid {
   let g = grid;
   const dx = Math.abs(x1 - x0);
   const dy = Math.abs(y1 - y0);
@@ -123,8 +141,14 @@ export function drawLine(grid: Grid, x0: number, y0: number, x1: number, y1: num
     }
     if (x === x1 && y === y1) break;
     const e2 = 2 * err;
-    if (e2 > -dy) { err -= dy; x += sx; }
-    if (e2 < dx) { err += dx; y += sy; }
+    if (e2 > -dy) {
+      err -= dy;
+      x += sx;
+    }
+    if (e2 < dx) {
+      err += dx;
+      y += sy;
+    }
   }
   return g;
 }

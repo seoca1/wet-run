@@ -96,7 +96,9 @@ export class DungeonGenerator {
   generate(seed: number, _missionGrade = 1): DungeonGraph {
     void seed;
 
-    const layout: ReadonlyArray<readonly [string, number, number, RoomType, string]> = [
+    const layout: ReadonlyArray<
+      readonly [string, number, number, RoomType, string]
+    > = [
       ["r00", 0, 0, "router", "Comms Relay"],
       ["r10", 1, 0, "router", "Router"],
       ["ice", 2, 0, "ice", "ICE Barrier"],
@@ -172,7 +174,12 @@ export class DungeonGenerator {
 // ============================================================================
 
 // BSP primitives
-export { BspNode, bspPartition, collectLeaves, placeRooms } from "./dungeon_bsp.ts";
+export {
+  BspNode,
+  bspPartition,
+  collectLeaves,
+  placeRooms,
+} from "./dungeon_bsp.ts";
 export type { BspRoom } from "./dungeon_bsp.ts";
 
 // Layout helpers + procedural generator
@@ -191,7 +198,12 @@ export {
   pickRoomType,
   roomsToNodes,
 } from "./dungeon_layout.ts";
-export type { DungeonFaction, DungeonIceKind, DungeonNode, DungeonNodeKind } from "./dungeon_layout.ts";
+export type {
+  DungeonFaction,
+  DungeonIceKind,
+  DungeonNode,
+  DungeonNodeKind,
+} from "./dungeon_layout.ts";
 
 // ============================================================================
 //  Adapter: DungeonGraph → web Matrix shape
@@ -199,15 +211,19 @@ export type { DungeonFaction, DungeonIceKind, DungeonNode, DungeonNodeKind } fro
 
 /** Convert a `DungeonGraph` to the web project's `Matrix` shape. */
 export function dungeonToMatrix(graph: DungeonGraph, grade = 1): Matrix {
-  const sorted = [...graph.rooms].sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const sorted = [...graph.rooms].sort((a, b) =>
+    a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
+  );
   const idToIndex = new Map<string, number>();
   for (let i = 0; i < sorted.length; i += 1) {
     const r = sorted[i] as Room;
     idToIndex.set(r.id, i);
   }
 
-  const bossRoom = sorted.find((r) => r.roomType === "exit") ?? sorted[sorted.length - 1];
-  const bossIndex = bossRoom !== undefined ? (idToIndex.get(bossRoom.id) ?? 0) : 0;
+  const bossRoom =
+    sorted.find((r) => r.roomType === "exit") ?? sorted[sorted.length - 1];
+  const bossIndex =
+    bossRoom !== undefined ? (idToIndex.get(bossRoom.id) ?? 0) : 0;
 
   const needsIcePromotion = (nodes: MatrixNode[]): boolean => {
     return !nodes.some((n) => n.iceIds.length > 0 && !n.isBoss);
@@ -260,7 +276,12 @@ export function dungeonToMatrix(graph: DungeonGraph, grade = 1): Matrix {
       if (upgraded) {
         nodes = nodes.map((n, i) =>
           i === candidateIdx
-            ? { ...n, zone: "mid", iceIds: [encounterIceIdForGrade(grade)], iceHp: [] }
+            ? {
+                ...n,
+                zone: "mid",
+                iceIds: [encounterIceIdForGrade(grade)],
+                iceHp: [],
+              }
             : n,
         );
       }

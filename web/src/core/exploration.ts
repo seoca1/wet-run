@@ -29,7 +29,9 @@ export interface MatrixGraphView {
 }
 
 /** Build a `MatrixGraphView` from a flat edge list (test helper). */
-export function graphViewFromEdges(edges: ReadonlyArray<readonly [string, string]>): MatrixGraphView {
+export function graphViewFromEdges(
+  edges: ReadonlyArray<readonly [string, string]>,
+): MatrixGraphView {
   const adj = new Map<string, Set<string>>();
   for (const [a, b] of edges) {
     if (!adj.has(a)) adj.set(a, new Set());
@@ -39,7 +41,7 @@ export function graphViewFromEdges(edges: ReadonlyArray<readonly [string, string
   }
   return {
     neighbors: (nodeId) => Array.from(adj.get(nodeId) ?? []),
-    isConnected: (src, dst) => (adj.get(src)?.has(dst) ?? false),
+    isConnected: (src, dst) => adj.get(src)?.has(dst) ?? false,
   };
 }
 
@@ -105,7 +107,11 @@ export class ExplorationState {
     if (this.current !== "") {
       this.discovered.add(this.current);
     }
-    if (this.current !== "" && (this.path.length === 0 || this.path[this.path.length - 1] !== this.current)) {
+    if (
+      this.current !== "" &&
+      (this.path.length === 0 ||
+        this.path[this.path.length - 1] !== this.current)
+    ) {
       this.path.push(this.current);
     }
   }
@@ -138,7 +144,10 @@ export class ExplorationState {
   visibility(graph: MatrixGraphView, nodeId: string): Visibility {
     if (this.current !== "" && nodeId === this.current) return "current";
     if (this.discovered.has(nodeId)) return "discovered";
-    if (graph.isConnected(this.current, nodeId) || graph.isConnected(nodeId, this.current)) {
+    if (
+      graph.isConnected(this.current, nodeId) ||
+      graph.isConnected(nodeId, this.current)
+    ) {
       return "adjacent";
     }
     return "unknown";

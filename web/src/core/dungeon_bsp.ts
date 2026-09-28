@@ -48,7 +48,10 @@ export class BspNode {
         this.room.y + Math.floor(this.room.h / 2),
       ] as const;
     }
-    return [this.x + Math.floor(this.w / 2), this.y + Math.floor(this.h / 2)] as const;
+    return [
+      this.x + Math.floor(this.w / 2),
+      this.y + Math.floor(this.h / 2),
+    ] as const;
   }
 }
 

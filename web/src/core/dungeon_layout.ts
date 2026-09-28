@@ -21,7 +21,12 @@ import {
   makeMulberry32,
   withInt,
 } from "./dungeon.ts";
-import { type BspNode, collectLeaves, placeRooms, bspPartition } from "./dungeon_bsp.ts";
+import {
+  type BspNode,
+  collectLeaves,
+  placeRooms,
+  bspPartition,
+} from "./dungeon_bsp.ts";
 
 // ============================================================================
 //  Spanning tree + dead-ends
@@ -361,7 +366,9 @@ export function buildBidirectionalEdges(
 // ============================================================================
 
 /** Grid size (cols x rows) per mission grade (1-5). */
-export const GRID_BY_GRADE: Readonly<Record<number, readonly [number, number]>> = {
+export const GRID_BY_GRADE: Readonly<
+  Record<number, readonly [number, number]>
+> = {
   1: [7, 5],
   2: [9, 6],
   3: [11, 7],
@@ -372,8 +379,24 @@ export const GRID_BY_GRADE: Readonly<Record<number, readonly [number, number]>> 
 /** Build a minimal entry/exit fallback for degenerate BSP trees. */
 function degenerateDungeonGraph(): DungeonGraph {
   const rooms: Room[] = [
-    { id: "entry", x: 0, y: 0, w: 3, h: 3, roomType: "entry", label: "Jack-in Point" },
-    { id: "exit", x: 4, y: 0, w: 3, h: 3, roomType: "exit", label: "Extraction Gate" },
+    {
+      id: "entry",
+      x: 0,
+      y: 0,
+      w: 3,
+      h: 3,
+      roomType: "entry",
+      label: "Jack-in Point",
+    },
+    {
+      id: "exit",
+      x: 4,
+      y: 0,
+      w: 3,
+      h: 3,
+      roomType: "exit",
+      label: "Extraction Gate",
+    },
   ];
   return {
     rooms,

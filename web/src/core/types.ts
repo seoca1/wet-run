@@ -71,7 +71,13 @@ export interface Ice {
   readonly hpPerGrade?: number;
   readonly personality?: "aggressive" | "defensive" | "stealth" | "support";
   readonly aggression?: "passive" | "standard" | "aggressive" | "boss";
-  readonly skills?: ReadonlyArray<{ id: string; name: string; effect: string; cooldownMs: number; damage: number }>;
+  readonly skills?: ReadonlyArray<{
+    id: string;
+    name: string;
+    effect: string;
+    cooldownMs: number;
+    damage: number;
+  }>;
 }
 
 /** Player stats — ports wet_run AppState.player_loadout + combat state. */
@@ -167,7 +173,9 @@ export interface GameState {
   readonly bossPhase: BossPhase; // 0 = no boss active, 1..4 = boss phase
   readonly endingChoice: EndingChoice | null;
   // Tier 5.5: active combat VFX (animation overlay).
-  readonly vfxInstances: ReadonlyArray<import("../renderer/combat_vfx.js").CombatVfxInstance>;
+  readonly vfxInstances: ReadonlyArray<
+    import("../renderer/combat_vfx.js").CombatVfxInstance
+  >;
   // Combat engine state (Python parity damage system)
   readonly playerCombo: number;
   readonly comboLastHitMs: number;
@@ -181,12 +189,16 @@ export interface GameState {
   readonly inventory: Inventory;
   readonly equipmentLoadout: EquipmentLoadout;
   // Tier 9: run mutators — optional modifiers applied at run start.
-  readonly activeMutators: ReadonlyArray<import("./run_mutators.ts").RunMutator>;
+  readonly activeMutators: ReadonlyArray<
+    import("./run_mutators.ts").RunMutator
+  >;
   // Achievement tracking (string IDs of unlocked achievements)
   readonly unlockedAchievements: ReadonlyArray<string>;
   readonly achievementCredits: number;
   // Death cycle (ADR-0040)
-  readonly deceasedJockeys: ReadonlyArray<import("./death_cycle.ts").DeceasedJockey>;
+  readonly deceasedJockeys: ReadonlyArray<
+    import("./death_cycle.ts").DeceasedJockey
+  >;
   readonly lastDeathSummary: import("./death_cycle.ts").DeathSummary | null;
   readonly totalRuns: number;
   readonly totalDeaths: number;
@@ -265,8 +277,15 @@ export interface MatrixNode {
   readonly isBoss: boolean;
   readonly adjacent: ReadonlyArray<number>;
   // Tier 5.5: event kind (default "combat" for backward compat).
-  readonly eventKind?: "combat" | "discovery" | "trap" | "cache" | "rest" | "merchant";
-  readonly eventData?: { readonly damage?: number; readonly creditsBonus?: number; readonly programId?: string; readonly healPct?: number; readonly forSale?: ReadonlyArray<string> } | null;
+  readonly eventKind?:
+    "combat" | "discovery" | "trap" | "cache" | "rest" | "merchant";
+  readonly eventData?: {
+    readonly damage?: number;
+    readonly creditsBonus?: number;
+    readonly programId?: string;
+    readonly healPct?: number;
+    readonly forSale?: ReadonlyArray<string>;
+  } | null;
 }
 
 /** Generated matrix for one run. */
@@ -281,17 +300,36 @@ export interface Matrix {
 export type BossPhase = 0 | 1 | 2 | 3 | 4;
 
 /** Ending variant (29 total across 5 arcs). */
-export type EndingChoice = 
-  | "arc1_wage_slave" | "arc1_first_blood" | "arc1_cowboy_up" | "arc1_cheap_death"
-  | "arc1_data_miner" | "arc1_ice_breaker" | "arc1_flatlined"
-  | "arc2_ghost_dancer" | "arc2_corporate_tool" | "arc2_silent_runner"
-  | "arc2_data_thief" | "arc2_construct_friend" | "arc2_flatlined_deep"
-  | "arc3_wintermute_agent" | "arc3_ta_insider" | "arc3_neutrality"
-  | "arc3_double_agent" | "arc3_zealot" | "arc3_sacrifice_play"
-  | "arc4_liberation_front" | "arc4_new_order" | "arc4_digital_exile"
-  | "arc4_corporate_victory" | "arc4_ai_merger"
-  | "arc5_neuromancer" | "arc5_sprawl_free" | "arc5_last_jockey"
-  | "arc5_sprawl_slave" | "arc5_unknown";
+export type EndingChoice =
+  | "arc1_wage_slave"
+  | "arc1_first_blood"
+  | "arc1_cowboy_up"
+  | "arc1_cheap_death"
+  | "arc1_data_miner"
+  | "arc1_ice_breaker"
+  | "arc1_flatlined"
+  | "arc2_ghost_dancer"
+  | "arc2_corporate_tool"
+  | "arc2_silent_runner"
+  | "arc2_data_thief"
+  | "arc2_construct_friend"
+  | "arc2_flatlined_deep"
+  | "arc3_wintermute_agent"
+  | "arc3_ta_insider"
+  | "arc3_neutrality"
+  | "arc3_double_agent"
+  | "arc3_zealot"
+  | "arc3_sacrifice_play"
+  | "arc4_liberation_front"
+  | "arc4_new_order"
+  | "arc4_digital_exile"
+  | "arc4_corporate_victory"
+  | "arc4_ai_merger"
+  | "arc5_neuromancer"
+  | "arc5_sprawl_free"
+  | "arc5_last_jockey"
+  | "arc5_sprawl_slave"
+  | "arc5_unknown";
 
 /** Player inventory — credits, materials, and crafted/purchased programs. */
 export interface Inventory {
@@ -350,7 +388,10 @@ export type GameAction =
   | { readonly type: "jack_out" }
   | { readonly type: "cycle_target" }
   | { readonly type: "trigger_death" }
-  | { readonly type: "select_restart"; readonly choice: import("./death_cycle.ts").RestartChoice }
+  | {
+      readonly type: "select_restart";
+      readonly choice: import("./death_cycle.ts").RestartChoice;
+    }
   | { readonly type: "view_hall_of_dead" };
 
 /** Input mapping — keyboard event → game action.
@@ -364,26 +405,27 @@ export type GameAction =
  *   - Arrow keys: navigate
  *   - 1-9: select menu item or use program in combat
  */
-export const KEYBOARD_MAPPING: Readonly<Record<string, GameAction>> = Object.freeze({
-  ArrowUp: { type: "move_north" },
-  ArrowDown: { type: "move_south" },
-  ArrowLeft: { type: "move_west" },
-  ArrowRight: { type: "move_east" },
-  Enter: { type: "confirm" },
-  " ": { type: "confirm" },
-  Escape: { type: "jack_out" },
-  q: { type: "jack_out" },
-  Tab: { type: "cycle_target" },
-  "1": { type: "select_program", handIndex: 1 },
-  "2": { type: "select_program", handIndex: 2 },
-  "3": { type: "select_program", handIndex: 3 },
-  "4": { type: "select_program", handIndex: 4 },
-  "5": { type: "select_program", handIndex: 5 },
-  "6": { type: "select_program", handIndex: 6 },
-  "7": { type: "select_program", handIndex: 7 },
-  "8": { type: "select_program", handIndex: 8 },
-  "9": { type: "select_program", handIndex: 9 },
-});
+export const KEYBOARD_MAPPING: Readonly<Record<string, GameAction>> =
+  Object.freeze({
+    ArrowUp: { type: "move_north" },
+    ArrowDown: { type: "move_south" },
+    ArrowLeft: { type: "move_west" },
+    ArrowRight: { type: "move_east" },
+    Enter: { type: "confirm" },
+    " ": { type: "confirm" },
+    Escape: { type: "jack_out" },
+    q: { type: "jack_out" },
+    Tab: { type: "cycle_target" },
+    "1": { type: "select_program", handIndex: 1 },
+    "2": { type: "select_program", handIndex: 2 },
+    "3": { type: "select_program", handIndex: 3 },
+    "4": { type: "select_program", handIndex: 4 },
+    "5": { type: "select_program", handIndex: 5 },
+    "6": { type: "select_program", handIndex: 6 },
+    "7": { type: "select_program", handIndex: 7 },
+    "8": { type: "select_program", handIndex: 8 },
+    "9": { type: "select_program", handIndex: 9 },
+  });
 
 /** Type alias for GameState — convenience for renderers. */
 export type State = GameState;

@@ -19,8 +19,18 @@ export const DEFAULT_PAGE_WIDTH = 80;
 export const DEFAULT_LINES_PER_PAGE = 20;
 
 const ROMAN: ReadonlyArray<string> = Object.freeze([
-  "I", "II", "III", "IV", "V", "VI",
-  "VII", "VIII", "IX", "X", "XI", "XII",
+  "I",
+  "II",
+  "III",
+  "IV",
+  "V",
+  "VI",
+  "VII",
+  "VIII",
+  "IX",
+  "X",
+  "XI",
+  "XII",
 ]);
 
 /** Convert 1..12 to roman numerals; falls back to Arabic for larger values. */
@@ -98,8 +108,9 @@ export function computeTypedPageIndex(
   for (let i = 0; i < pages.length; i++) {
     const page = pages[i];
     if (page === undefined) continue;
-    const pageChars = page.reduce((sum, line) => sum + line.length, 0)
-      + Math.max(0, page.length - 1);
+    const pageChars =
+      page.reduce((sum, line) => sum + line.length, 0) +
+      Math.max(0, page.length - 1);
     cumulative += pageChars;
     if (typedChars <= cumulative) return i;
   }

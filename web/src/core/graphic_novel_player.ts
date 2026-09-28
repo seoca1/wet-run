@@ -39,7 +39,9 @@ let sessionCounter = 0;
 
 function nextSessionId(): string {
   sessionCounter = (sessionCounter + 1) >>> 0;
-  const rand = Math.floor(Math.random() * 0x100000).toString(16).padStart(5, "0");
+  const rand = Math.floor(Math.random() * 0x100000)
+    .toString(16)
+    .padStart(5, "0");
   return `${Date.now().toString(36)}-${sessionCounter.toString(36)}-${rand}`;
 }
 
@@ -51,21 +53,23 @@ export function createPlayer(options: {
   readonly maxOrder?: number;
 }): GraphicNovelPlayer {
   const ending = options.ending ?? "A";
-  const chain = options.mode === "prologue"
-    ? loadPrologueChain({
-        seed: options.seed,
-        ending,
-        maxOrder: options.maxOrder ?? 8,
-      })
-    : loadSceneChain(options.mode, {
-        shuffle: true,
-        seed: options.seed,
-        ending,
-        maxOrder: options.maxOrder,
-      });
-  const characterId: CharacterId = options.mode === "prologue"
-    ? (chain[0]?.character as CharacterId | undefined) ?? "novice"
-    : options.mode;
+  const chain =
+    options.mode === "prologue"
+      ? loadPrologueChain({
+          seed: options.seed,
+          ending,
+          maxOrder: options.maxOrder ?? 8,
+        })
+      : loadSceneChain(options.mode, {
+          shuffle: true,
+          seed: options.seed,
+          ending,
+          maxOrder: options.maxOrder,
+        });
+  const characterId: CharacterId =
+    options.mode === "prologue"
+      ? ((chain[0]?.character as CharacterId | undefined) ?? "novice")
+      : options.mode;
   return {
     mode: options.mode,
     chain,
@@ -123,8 +127,10 @@ export function progress(p: GraphicNovelPlayer): number {
 export function isDialogueComplete(p: GraphicNovelPlayer): boolean {
   const d = currentDialogue(p);
   if (d === null) return true;
-  return dialogueTypedChars(d.duration_ms, p.elapsed_ms, d.text_en.length)
-    >= d.text_en.length;
+  return (
+    dialogueTypedChars(d.duration_ms, p.elapsed_ms, d.text_en.length) >=
+    d.text_en.length
+  );
 }
 
 /* -------------------------------------------------------------------------- *
@@ -132,7 +138,10 @@ export function isDialogueComplete(p: GraphicNovelPlayer): boolean {
  * -------------------------------------------------------------------------- */
 
 /** Advance playback by deltaMs of wall time. Returns events for the renderer. */
-export function tick(p: GraphicNovelPlayer, deltaMs: number): ReadonlyArray<TickEvent> {
+export function tick(
+  p: GraphicNovelPlayer,
+  deltaMs: number,
+): ReadonlyArray<TickEvent> {
   if (p.done || p.paused) return Object.freeze([]);
   const events: TickEvent[] = [];
   p.elapsed_ms += deltaMs;
@@ -212,7 +221,11 @@ export function skipCurrentScene(p: GraphicNovelPlayer): boolean {
     const d = dlgs[p.dialogue_index];
     if (d === undefined) break;
     p.elapsed_ms = d.duration_ms;
-    const typed = dialogueTypedChars(d.duration_ms, p.elapsed_ms, d.text_en.length);
+    const typed = dialogueTypedChars(
+      d.duration_ms,
+      p.elapsed_ms,
+      d.text_en.length,
+    );
     if (typed >= d.text_en.length) {
       p.dialogue_index += 1;
       if (p.dialogue_index >= dlgs.length) {
@@ -277,21 +290,23 @@ export function restoreProgress(
   progress: GraphicNovelProgress,
   options: { readonly seed?: number } = {},
 ): GraphicNovelPlayer {
-  const chain = progress.mode === "prologue"
-    ? loadPrologueChain({
-        seed: options.seed,
-        ending: progress.ending,
-        maxOrder: 8,
-      })
-    : loadSceneChain(progress.character_id, {
-        seed: options.seed,
-        ending: progress.ending,
-      });
+  const chain =
+    progress.mode === "prologue"
+      ? loadPrologueChain({
+          seed: options.seed,
+          ending: progress.ending,
+          maxOrder: 8,
+        })
+      : loadSceneChain(progress.character_id, {
+          seed: options.seed,
+          ending: progress.ending,
+        });
   const clampedScene = Math.min(progress.scene_index, chain.length);
   const scene = chain[clampedScene];
-  const clampedDialogue = scene === undefined
-    ? 0
-    : Math.min(progress.dialogue_index, scene.dialogue.length);
+  const clampedDialogue =
+    scene === undefined
+      ? 0
+      : Math.min(progress.dialogue_index, scene.dialogue.length);
   return {
     mode: progress.mode,
     chain,
@@ -337,9 +352,13 @@ export function coerceProgress(value: unknown): GraphicNovelProgress {
   };
   if (!isValidProgress(value)) return fallback;
   return {
-    mode: (value.mode === "novice" || value.mode === "veteran" || value.mode === "heretic" || value.mode === "prologue")
-      ? value.mode
-      : "prologue",
+    mode:
+      value.mode === "novice" ||
+      value.mode === "veteran" ||
+      value.mode === "heretic" ||
+      value.mode === "prologue"
+        ? value.mode
+        : "prologue",
     scene_index: Math.max(0, Math.floor(value.scene_index)),
     dialogue_index: Math.max(0, Math.floor(value.dialogue_index)),
     elapsed_in_dialogue_ms: Math.max(0, value.elapsed_in_dialogue_ms),

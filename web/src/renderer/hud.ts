@@ -13,22 +13,27 @@ import type { GameState } from "../core/state.ts";
  * Shows: HP, Alarm, Credits, Combo (if >1), Boss Phase (if active).
  * Designed for 1-line height at the bottom of the screen.
  */
-export function renderHUD(
-  state: GameState,
-  cols: number,
-): Grid {
+export function renderHUD(state: GameState, cols: number): Grid {
   const parts: Array<{ text: string; color: string }> = [];
 
   // HP (always shown)
   parts.push({
     text: `HP: ${state.player.hp}/${state.player.maxHp}`,
-    color: state.player.hp <= state.player.maxHp / 4 ? PALETTE.RED_BRIGHT : PALETTE.GREEN_NEON,
+    color:
+      state.player.hp <= state.player.maxHp / 4
+        ? PALETTE.RED_BRIGHT
+        : PALETTE.GREEN_NEON,
   });
 
   // Alarm (always shown)
   parts.push({
     text: `ALM: ${state.player.alarm}%`,
-    color: state.player.alarm >= 75 ? PALETTE.RED_BRIGHT : state.player.alarm >= 50 ? PALETTE.YELLOW_AMBER : PALETTE.GREEN_NEON,
+    color:
+      state.player.alarm >= 75
+        ? PALETTE.RED_BRIGHT
+        : state.player.alarm >= 50
+          ? PALETTE.YELLOW_AMBER
+          : PALETTE.GREEN_NEON,
   });
 
   // Credits (always shown)
@@ -50,7 +55,9 @@ export function renderHUD(
     const phaseLabels = ["", "STANDARD", "ALERT", "BERSERK", "TERMINAL"];
     parts.push({
       text: `★ BOSS PHASE ${state.bossPhase}/4 (${phaseLabels[state.bossPhase]})`,
-      color: ["", "#ffffff", "#ffff00", "#ff8800", "#ff0000"][state.bossPhase] ?? PALETTE.WHITE,
+      color:
+        ["", "#ffffff", "#ffff00", "#ff8800", "#ff0000"][state.bossPhase] ??
+        PALETTE.WHITE,
     });
   }
 
@@ -73,7 +80,11 @@ export function renderHUD(
     for (let j = 0; j < text.length; j++) {
       const idx = x + j;
       if (idx < cols - 1) {
-        (grid[0] as Cell[])[idx] = { char: text[j], fg: part.color, bg: "transparent" };
+        (grid[0] as Cell[])[idx] = {
+          char: text[j],
+          fg: part.color,
+          bg: "transparent",
+        };
       }
     }
     x += text.length + 3;
@@ -83,7 +94,10 @@ export function renderHUD(
 }
 
 /** Check if HUD should be rendered for the current screen state. */
-export function shouldRenderHUD(screenKind: string, state: GameState | null): boolean {
+export function shouldRenderHUD(
+  screenKind: string,
+  state: GameState | null,
+): boolean {
   if (!state) return false;
   // Show HUD during dungeon/matrix exploration and overlay states
   const hudScreens = [

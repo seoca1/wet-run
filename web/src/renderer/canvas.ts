@@ -29,11 +29,18 @@ const CELL_SIZES: Record<string, CellSize> = {
   large_landscape: { width: 10, height: 18 },
 };
 
-function getCellSize(orientation: "portrait" | "landscape", breakpoint: string): CellSize {
+function getCellSize(
+  orientation: "portrait" | "landscape",
+  breakpoint: string,
+): CellSize {
   if (orientation === "portrait") {
-    return breakpoint === "compact" ? CELL_SIZES.compact_portrait : CELL_SIZES.standard_portrait;
+    return breakpoint === "compact"
+      ? CELL_SIZES.compact_portrait
+      : CELL_SIZES.standard_portrait;
   }
-  return breakpoint === "xlarge" ? CELL_SIZES.large_landscape : CELL_SIZES.standard_landscape;
+  return breakpoint === "xlarge"
+    ? CELL_SIZES.large_landscape
+    : CELL_SIZES.standard_landscape;
 }
 
 export class AsciiRenderer {
@@ -65,7 +72,13 @@ export class AsciiRenderer {
   /** Resize canvas to fit a (cols × rows) grid plus HUD width.
    * Adapts cell size based on layout orientation and breakpoint.
    */
-  resizeGrid(cols: number, rows: number, hudCols = 28, orientation: "portrait" | "landscape" = "landscape", breakpoint = "large"): void {
+  resizeGrid(
+    cols: number,
+    rows: number,
+    hudCols = 28,
+    orientation: "portrait" | "landscape" = "landscape",
+    breakpoint = "large",
+  ): void {
     const cellSize = getCellSize(orientation, breakpoint);
     this.cellWidth = cellSize.width;
     this.cellHeight = cellSize.height;
@@ -142,7 +155,12 @@ export class AsciiRenderer {
   }
 
   /** Render a single character at (x, y) — for debug overlays. */
-  debugChar(x: number, y: number, char: string, color = PALETTE.GRAY_DARK): void {
+  debugChar(
+    x: number,
+    y: number,
+    char: string,
+    color = PALETTE.GRAY_DARK,
+  ): void {
     this.ctx.fillStyle = color;
     this.ctx.fillText(char, x * this.cellWidth, y * this.cellHeight);
   }

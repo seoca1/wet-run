@@ -159,7 +159,10 @@ export function triggerCombatVfxMs(
  * Tier 7: ms-precise expiry replaces the legacy tick-based advance.
  * Falls back to duration-based expiry when durationMs is 0 (legacy path).
  */
-export function advanceVfxBy(instance: CombatVfxInstance, deltaMs: number): CombatVfxInstance | null {
+export function advanceVfxBy(
+  instance: CombatVfxInstance,
+  deltaMs: number,
+): CombatVfxInstance | null {
   if (deltaMs < 0) return instance;
   const elapsedMs = instance.elapsedMs + deltaMs;
   // ms-precise expiry: drop when wall-clock exceeds durationMs.
@@ -180,7 +183,9 @@ export function advanceVfxBy(instance: CombatVfxInstance, deltaMs: number): Comb
  * for ms-precise timing. Kept for backward compatibility with existing
  * call sites that don't have a deltaMs (e.g., headless test loops).
  */
-export function tickCombatVfx(instance: CombatVfxInstance): CombatVfxInstance | null {
+export function tickCombatVfx(
+  instance: CombatVfxInstance,
+): CombatVfxInstance | null {
   return advanceVfxBy(instance, WEB_TICK_MS);
 }
 
@@ -206,7 +211,11 @@ export function tickCombatVfxList(
  * The function writes the effect's visual at its current tick. The caller
  * is responsible for compositing this over the base combat grid.
  */
-export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows: number): Grid {
+export function renderCombatVfx(
+  instance: CombatVfxInstance,
+  cols: number,
+  rows: number,
+): Grid {
   let grid = makeGrid(cols, rows);
   const t = instance.tick;
   const dur = instance.duration;
@@ -215,10 +224,14 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
   switch (instance.kind) {
     case "attack": {
       // Projectile line: moves from startRow → targetRow over ticks.
-      const row = instance.startRow != null && instance.targetRow != null
-        ? Math.round(instance.startRow + (instance.targetRow - instance.startRow) * progress)
-        : rows / 2;
-      const col = Math.floor(cols * 0.2 + (cols * 0.6) * progress);
+      const row =
+        instance.startRow != null && instance.targetRow != null
+          ? Math.round(
+              instance.startRow +
+                (instance.targetRow - instance.startRow) * progress,
+            )
+          : rows / 2;
+      const col = Math.floor(cols * 0.2 + cols * 0.6 * progress);
       grid = setText(grid, col, row, "→", PALETTE.YELLOW_AMBER);
       grid = setText(grid, col - 2, row, "-", PALETTE.YELLOW_AMBER);
       grid = setText(grid, col - 4, row, "-", PALETTE.GRAY_DARK);
@@ -229,12 +242,42 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
       const cx = Math.floor(cols / 2);
       const amount = instance.payloadNum ?? 0;
       grid = setText(grid, cx - 8, 1, `+${amount} HP`, PALETTE.GREEN_NEON);
-      grid = setText(grid, cx - 4, Math.floor(rows / 2), "+", PALETTE.GREEN_NEON);
-      grid = setText(grid, cx - 6, Math.floor(rows / 2) - 1, "·", PALETTE.GREEN_NEON);
-      grid = setText(grid, cx - 2, Math.floor(rows / 2) - 1, "·", PALETTE.GREEN_NEON);
-      grid = setText(grid, cx, Math.floor(rows / 2) - 1, "+", PALETTE.GREEN_NEON);
+      grid = setText(
+        grid,
+        cx - 4,
+        Math.floor(rows / 2),
+        "+",
+        PALETTE.GREEN_NEON,
+      );
+      grid = setText(
+        grid,
+        cx - 6,
+        Math.floor(rows / 2) - 1,
+        "·",
+        PALETTE.GREEN_NEON,
+      );
+      grid = setText(
+        grid,
+        cx - 2,
+        Math.floor(rows / 2) - 1,
+        "·",
+        PALETTE.GREEN_NEON,
+      );
+      grid = setText(
+        grid,
+        cx,
+        Math.floor(rows / 2) - 1,
+        "+",
+        PALETTE.GREEN_NEON,
+      );
       if (t === dur - 1) {
-        grid = setText(grid, cx - 5, Math.floor(rows / 2) - 2, "♥", PALETTE.GREEN_NEON);
+        grid = setText(
+          grid,
+          cx - 5,
+          Math.floor(rows / 2) - 2,
+          "♥",
+          PALETTE.GREEN_NEON,
+        );
       }
       return grid;
     }
@@ -248,7 +291,13 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
     case "buff": {
       const cx = Math.floor(cols / 2);
       const cy = Math.floor(rows / 2);
-      grid = setText(grid, cx - 4, cy, `↑ ${instance.payload} ↑`, PALETTE.GREEN_NEON);
+      grid = setText(
+        grid,
+        cx - 4,
+        cy,
+        `↑ ${instance.payload} ↑`,
+        PALETTE.GREEN_NEON,
+      );
       if (t === Math.floor(dur / 2)) {
         grid = setText(grid, cx - 1, cy - 1, "▲", PALETTE.GREEN_NEON);
       }
@@ -257,7 +306,13 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
     case "debuff": {
       const cx = Math.floor(cols / 2);
       const cy = Math.floor(rows / 2);
-      grid = setText(grid, cx - 4, cy, `↓ ${instance.payload} ↓`, PALETTE.RED_BRIGHT);
+      grid = setText(
+        grid,
+        cx - 4,
+        cy,
+        `↓ ${instance.payload} ↓`,
+        PALETTE.RED_BRIGHT,
+      );
       if (t === Math.floor(dur / 2)) {
         grid = setText(grid, cx - 1, cy - 1, "▼", PALETTE.RED_BRIGHT);
       }
@@ -268,8 +323,20 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
       const cy = Math.floor(rows / 2);
       grid = setText(grid, cx - 2, cy, "✦ STUN ✦", PALETTE.YELLOW_AMBER);
       const stars = ["✦", "✧", "✶", "✷"];
-      grid = setText(grid, cx - 6, cy - 1, stars[t % stars.length] ?? "✦", PALETTE.YELLOW_AMBER);
-      grid = setText(grid, cx + 5, cy - 1, stars[(t + 2) % stars.length] ?? "✦", PALETTE.YELLOW_AMBER);
+      grid = setText(
+        grid,
+        cx - 6,
+        cy - 1,
+        stars[t % stars.length] ?? "✦",
+        PALETTE.YELLOW_AMBER,
+      );
+      grid = setText(
+        grid,
+        cx + 5,
+        cy - 1,
+        stars[(t + 2) % stars.length] ?? "✦",
+        PALETTE.YELLOW_AMBER,
+      );
       return grid;
     }
     case "ice_hit": {
@@ -280,13 +347,25 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
         grid = setText(grid, x, flashRow, flashChar, flashColor);
         grid = setText(grid, x, flashRow + 1, flashChar, flashColor);
       }
-      grid = setText(grid, 2, 1, `HIT! -${instance.payload}`, PALETTE.RED_BRIGHT);
+      grid = setText(
+        grid,
+        2,
+        1,
+        `HIT! -${instance.payload}`,
+        PALETTE.RED_BRIGHT,
+      );
       return grid;
     }
     case "player_hit": {
       const shakeRow = Math.floor(rows * 0.6);
       const shakeCol = t % 2;
-      grid = setText(grid, 2 + shakeCol, shakeRow, "█▒▒▒[HP CRIT]▒▒▒█", PALETTE.RED_BRIGHT);
+      grid = setText(
+        grid,
+        2 + shakeCol,
+        shakeRow,
+        "█▒▒▒[HP CRIT]▒▒▒█",
+        PALETTE.RED_BRIGHT,
+      );
       grid = setText(grid, 2, 1, "!! DAMAGE !!", PALETTE.RED_BRIGHT);
       return grid;
     }
@@ -294,7 +373,13 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
       const cx = Math.floor(cols / 2);
       const cy = Math.floor(rows / 2);
       const damage = instance.payloadNum ?? 0;
-      grid = setText(grid, cx - 8, 1, `* CRIT! -${damage} *`, PALETTE.YELLOW_AMBER);
+      grid = setText(
+        grid,
+        cx - 8,
+        1,
+        `* CRIT! -${damage} *`,
+        PALETTE.YELLOW_AMBER,
+      );
       grid = setText(grid, cx, cy, "✦", PALETTE.YELLOW_AMBER);
       grid = setText(grid, cx - 1, cy, "✶", PALETTE.YELLOW_AMBER);
       grid = setText(grid, cx + 1, cy, "✶", PALETTE.YELLOW_AMBER);
@@ -311,45 +396,158 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
     case "status_apply": {
       const statusRow = Math.floor(rows * 0.3);
       const statusCol = Math.floor(cols / 2) - 8;
-      grid = setText(grid, statusCol, statusRow, `[${instance.payload} applied]`, PALETTE.YELLOW_AMBER);
-      grid = setText(grid, statusCol, statusRow + 1, "▒▒▒▒▒▒▒▒▒▒▒▒▒▒", PALETTE.YELLOW_AMBER);
+      grid = setText(
+        grid,
+        statusCol,
+        statusRow,
+        `[${instance.payload} applied]`,
+        PALETTE.YELLOW_AMBER,
+      );
+      grid = setText(
+        grid,
+        statusCol,
+        statusRow + 1,
+        "▒▒▒▒▒▒▒▒▒▒▒▒▒▒",
+        PALETTE.YELLOW_AMBER,
+      );
       return grid;
     }
     case "ice_intro": {
       const cx = Math.floor(cols / 2);
       const iceName = instance.payload || "ICE";
-      grid = setText(grid, Math.max(2, cx - 10), 1, "┌──────────────────┐", PALETTE.RED_BRIGHT);
-      grid = setText(grid, Math.max(2, cx - 10), 2, `│ INCOMING: ${iceName.padEnd(8)} │`, PALETTE.RED_BRIGHT);
-      grid = setText(grid, Math.max(2, cx - 10), 3, "└──────────────────┘", PALETTE.RED_BRIGHT);
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        1,
+        "┌──────────────────┐",
+        PALETTE.RED_BRIGHT,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        2,
+        `│ INCOMING: ${iceName.padEnd(8)} │`,
+        PALETTE.RED_BRIGHT,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        3,
+        "└──────────────────┘",
+        PALETTE.RED_BRIGHT,
+      );
       const scanLines = ["[ scanning... ]", "[ scanning... ]", "[ DETECTED ]"];
-      grid = setText(grid, Math.max(2, cx - 9), 5, scanLines[Math.min(t, 2)] ?? "", PALETTE.YELLOW_AMBER);
+      grid = setText(
+        grid,
+        Math.max(2, cx - 9),
+        5,
+        scanLines[Math.min(t, 2)] ?? "",
+        PALETTE.YELLOW_AMBER,
+      );
       return grid;
     }
     case "ice_death": {
       const cx = Math.floor(cols / 2);
       const iceName = instance.payload || "ICE";
-      grid = setText(grid, Math.max(2, cx - 10), 1, `▼ ${iceName} OFFLINE ▼`, PALETTE.GRAY_LIGHT);
-      grid = setText(grid, Math.max(2, cx - 10), 3, "╔══════════════════╗", PALETTE.GRAY_LIGHT);
-      grid = setText(grid, Math.max(2, cx - 10), 4, "║   CONNECTION     ║", PALETTE.GRAY_LIGHT);
-      grid = setText(grid, Math.max(2, cx - 10), 5, "║     SEVERED      ║", PALETTE.GRAY_LIGHT);
-      grid = setText(grid, Math.max(2, cx - 10), 6, "╚══════════════════╝", PALETTE.GRAY_LIGHT);
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        1,
+        `▼ ${iceName} OFFLINE ▼`,
+        PALETTE.GRAY_LIGHT,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        3,
+        "╔══════════════════╗",
+        PALETTE.GRAY_LIGHT,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        4,
+        "║   CONNECTION     ║",
+        PALETTE.GRAY_LIGHT,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        5,
+        "║     SEVERED      ║",
+        PALETTE.GRAY_LIGHT,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        6,
+        "╚══════════════════╝",
+        PALETTE.GRAY_LIGHT,
+      );
       return grid;
     }
     case "boss_phase_transition": {
       const phase = (instance.payloadNum ?? 1) as 1 | 2 | 3 | 4;
-      const phaseConfig: Record<number, { color: string; icon: string; label: string; message: string }> = {
-        1: { color: PALETTE.CYAN_LIGHT, icon: "⚡", label: "PHASE 1", message: "Sentinel scanning..." },
-        2: { color: PALETTE.YELLOW_AMBER, icon: "▲", label: "PHASE 2", message: "ICE alert — defenses rising!" },
-        3: { color: PALETTE.RED_BRIGHT, icon: "✶", label: "PHASE 3", message: "ICE enrages — full assault!" },
-        4: { color: PALETTE.MAGENTA_NEON, icon: "★", label: "PHASE 4", message: "Desperation — fatal protocols!" },
+      const phaseConfig: Record<
+        number,
+        { color: string; icon: string; label: string; message: string }
+      > = {
+        1: {
+          color: PALETTE.CYAN_LIGHT,
+          icon: "⚡",
+          label: "PHASE 1",
+          message: "Sentinel scanning...",
+        },
+        2: {
+          color: PALETTE.YELLOW_AMBER,
+          icon: "▲",
+          label: "PHASE 2",
+          message: "ICE alert — defenses rising!",
+        },
+        3: {
+          color: PALETTE.RED_BRIGHT,
+          icon: "✶",
+          label: "PHASE 3",
+          message: "ICE enrages — full assault!",
+        },
+        4: {
+          color: PALETTE.MAGENTA_NEON,
+          icon: "★",
+          label: "PHASE 4",
+          message: "Desperation — fatal protocols!",
+        },
       };
       const cfg = phaseConfig[phase] ?? phaseConfig[1]!;
       const cx = Math.floor(cols / 2);
       const header = `${cfg.icon} BOSS ${cfg.label} ${cfg.icon}`;
-      grid = setText(grid, Math.max(2, cx - Math.floor(header.length / 2)), 1, header, cfg.color);
-      grid = setText(grid, Math.max(2, cx - 10), 3, "╔══════════════╗", cfg.color);
-      grid = setText(grid, Math.max(2, cx - 10), 4, `║ ${cfg.message.padEnd(14)} ║`, cfg.color);
-      grid = setText(grid, Math.max(2, cx - 10), 5, "╚══════════════╝", cfg.color);
+      grid = setText(
+        grid,
+        Math.max(2, cx - Math.floor(header.length / 2)),
+        1,
+        header,
+        cfg.color,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        3,
+        "╔══════════════╗",
+        cfg.color,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        4,
+        `║ ${cfg.message.padEnd(14)} ║`,
+        cfg.color,
+      );
+      grid = setText(
+        grid,
+        Math.max(2, cx - 10),
+        5,
+        "╚══════════════╝",
+        cfg.color,
+      );
       if (phase === 3) {
         if (t === 0 || t === 2) {
           for (let x = 4; x < cols - 4; x++) {
@@ -369,7 +567,13 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
       const cx = Math.floor(cols / 2);
       const stars = ["✦", "✧", "✶", "✷", "★"];
       const star = stars[t % stars.length] ?? "✦";
-      grid = setText(grid, cx - 5, 1, `* ${star} VICTORY ${star} *`, PALETTE.GREEN_NEON);
+      grid = setText(
+        grid,
+        cx - 5,
+        1,
+        `* ${star} VICTORY ${star} *`,
+        PALETTE.GREEN_NEON,
+      );
       grid = setText(grid, 2, 3, "╔══════════════════╗", PALETTE.GREEN_NEON);
       grid = setText(grid, 2, 4, "║   ICE DEFEATED   ║", PALETTE.GREEN_NEON);
       grid = setText(grid, 2, 5, "╚══════════════════╝", PALETTE.GREEN_NEON);
@@ -403,17 +607,29 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
           grid = setText(grid, x, cy + 2, "·", PALETTE.MAGENTA_NEON);
         }
       }
-      grid = setText(grid, 2, 1, `HEAVY -${instance.payloadNum ?? 0}`, PALETTE.ORANGE);
+      grid = setText(
+        grid,
+        2,
+        1,
+        `HEAVY -${instance.payloadNum ?? 0}`,
+        PALETTE.ORANGE,
+      );
       return grid;
     }
     case "pierce": {
       // Arrow passes through target (left → right).
       const cy = Math.floor(rows / 2);
-      const col = Math.floor(cols * 0.1 + (cols * 0.8) * progress);
+      const col = Math.floor(cols * 0.1 + cols * 0.8 * progress);
       grid = setText(grid, col, cy, "====>", PALETTE.WARM);
       grid = setText(grid, col - 6, cy, "----", PALETTE.GRAY_DARK);
       if (t === Math.floor(dur / 2)) {
-        grid = setText(grid, 2, 1, `PIERCE -${instance.payloadNum ?? 0}`, PALETTE.YELLOW_AMBER);
+        grid = setText(
+          grid,
+          2,
+          1,
+          `PIERCE -${instance.payloadNum ?? 0}`,
+          PALETTE.YELLOW_AMBER,
+        );
       }
       return grid;
     }
@@ -424,10 +640,28 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
       const hit = Math.floor(t / (dur / 3));
       const strikes = ["[>", "[>>", "[>>>"];
       const colOffset = hit * 2;
-      grid = setText(grid, cx - 3 + colOffset, cy, strikes[Math.min(hit, 2)] ?? "[>", PALETTE.DAMAGE_COLOR);
-      grid = setText(grid, cx - 3 + colOffset, cy - 1, "✦", PALETTE.YELLOW_AMBER);
+      grid = setText(
+        grid,
+        cx - 3 + colOffset,
+        cy,
+        strikes[Math.min(hit, 2)] ?? "[>",
+        PALETTE.DAMAGE_COLOR,
+      );
+      grid = setText(
+        grid,
+        cx - 3 + colOffset,
+        cy - 1,
+        "✦",
+        PALETTE.YELLOW_AMBER,
+      );
       if (t === dur - 1) {
-        grid = setText(grid, cx - 6, cy + 2, `-${instance.payloadNum ?? 0} (${instance.payload || "x3"})`, PALETTE.YELLOW_AMBER);
+        grid = setText(
+          grid,
+          cx - 6,
+          cy + 2,
+          `-${instance.payloadNum ?? 0} (${instance.payload || "x3"})`,
+          PALETTE.YELLOW_AMBER,
+        );
       }
       return grid;
     }
@@ -447,7 +681,13 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
         }
       }
       grid = setText(grid, cx - 2, cy, "(•)", PALETTE.ICE_FADE_PURPLE);
-      grid = setText(grid, 2, 1, `DOT -${instance.payloadNum ?? 0}`, PALETTE.ICE_FADE_PURPLE);
+      grid = setText(
+        grid,
+        2,
+        1,
+        `DOT -${instance.payloadNum ?? 0}`,
+        PALETTE.ICE_FADE_PURPLE,
+      );
       return grid;
     }
     case "regen": {
@@ -472,7 +712,13 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
       } else {
         grid = setText(grid, cx - 3, cy, ">>❖", PALETTE.DAMAGE_COLOR);
       }
-      grid = setText(grid, 2, 1, `COUNTER -${instance.payloadNum ?? 0}`, PALETTE.SHIELD_COLOR);
+      grid = setText(
+        grid,
+        2,
+        1,
+        `COUNTER -${instance.payloadNum ?? 0}`,
+        PALETTE.SHIELD_COLOR,
+      );
       return grid;
     }
     case "lifesteal": {
@@ -481,13 +727,19 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
       const cy = Math.floor(rows / 2);
       if (t < dur / 2) {
         const phase = t / (dur / 2);
-        const arrowCol = Math.floor(cols * 0.7 - (cols * 0.5) * phase);
+        const arrowCol = Math.floor(cols * 0.7 - cols * 0.5 * phase);
         grid = setText(grid, arrowCol, cy, "==>", PALETTE.DAMAGE_COLOR);
       } else {
         grid = setText(grid, cx, cy, "+", PALETTE.HEAL_COLOR);
         grid = setText(grid, cx - 2, cy, "·+·", PALETTE.HEAL_COLOR);
       }
-      grid = setText(grid, 2, 1, `LIFESTEAL +${instance.payloadNum ?? 0}`, PALETTE.MAGENTA_NEON);
+      grid = setText(
+        grid,
+        2,
+        1,
+        `LIFESTEAL +${instance.payloadNum ?? 0}`,
+        PALETTE.MAGENTA_NEON,
+      );
       return grid;
     }
     case "detect": {
@@ -513,20 +765,44 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
         const y = (i * 11 + t * 17) % rows;
         grid = setText(grid, x, y, ch, PALETTE.ICE_CYAN_DIM);
       }
-      grid = setText(grid, Math.floor(cols / 2) - 4, Math.floor(rows / 2), "JACK IN", PALETTE.CYAN_LIGHT);
+      grid = setText(
+        grid,
+        Math.floor(cols / 2) - 4,
+        Math.floor(rows / 2),
+        "JACK IN",
+        PALETTE.CYAN_LIGHT,
+      );
       return grid;
     }
     case "jackout_whiteout": {
       // Whiteout flash + sparse particles.
       const fade = t === 0 ? PALETTE.HIT_FLASH_COLOR : PALETTE.GRAY_LIGHT;
-      grid = setText(grid, Math.floor(cols / 2) - 4, Math.floor(rows / 2), "JACK OUT", fade);
+      grid = setText(
+        grid,
+        Math.floor(cols / 2) - 4,
+        Math.floor(rows / 2),
+        "JACK OUT",
+        fade,
+      );
       if (t === 0) {
         for (let x = 0; x < cols; x += 4) {
-          grid = setText(grid, x, Math.floor(rows / 2) - 1, "·", PALETTE.HIT_FLASH_COLOR);
+          grid = setText(
+            grid,
+            x,
+            Math.floor(rows / 2) - 1,
+            "·",
+            PALETTE.HIT_FLASH_COLOR,
+          );
         }
       } else if (t === 1) {
         for (let x = 0; x < cols; x += 4) {
-          grid = setText(grid, x, Math.floor(rows / 2) + 1, "·", PALETTE.GRAY_LIGHT);
+          grid = setText(
+            grid,
+            x,
+            Math.floor(rows / 2) + 1,
+            "·",
+            PALETTE.GRAY_LIGHT,
+          );
         }
       }
       return grid;
@@ -561,7 +837,13 @@ export function renderCombatVfx(instance: CombatVfxInstance, cols: number, rows:
         }
       }
       if (t < 2) {
-        grid = setText(grid, cx - 6, cy - 3, "DATA FRAGMENT", PALETTE.TIER_GOLD);
+        grid = setText(
+          grid,
+          cx - 6,
+          cy - 3,
+          "DATA FRAGMENT",
+          PALETTE.TIER_GOLD,
+        );
       }
       return grid;
     }
@@ -586,14 +868,23 @@ export function composeCombatVfx(
 }
 
 /** Overlay `overlay` onto `base` (overlay takes precedence where set). */
-function compositeGrid(base: Grid, overlay: Grid, cols: number, rows: number): Grid {
+function compositeGrid(
+  base: Grid,
+  overlay: Grid,
+  cols: number,
+  rows: number,
+): Grid {
   let result = base;
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
       const overlayCell = overlay.get(x, y);
       if (!overlayCell || overlayCell.char === " ") continue;
       const baseCell = base.get(x, y);
-      if (baseCell && baseCell.char === overlayCell.char && baseCell.fg === overlayCell.fg) {
+      if (
+        baseCell &&
+        baseCell.char === overlayCell.char &&
+        baseCell.fg === overlayCell.fg
+      ) {
         continue;
       }
       result = setText(result, x, y, overlayCell.char, overlayCell.fg);

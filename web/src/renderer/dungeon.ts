@@ -1,5 +1,5 @@
 /** Dungeon tile renderer for NetHack-style crawler mode.
- * 
+ *
  * Renders the dungeon map with:
  * - Tile-based graphics (walls, floors, doors, stairs)
  * - Entity rendering (player, monsters, items)
@@ -9,7 +9,12 @@
 
 import { Grid } from "../core/types.ts";
 import { PALETTE } from "./palette.ts";
-import { TileType, EntityType, ItemType, MonsterType } from "../core/dungeon_crawler.ts";
+import {
+  TileType,
+  EntityType,
+  ItemType,
+  MonsterType,
+} from "../core/dungeon_crawler.ts";
 import { DungeonCrawler } from "../core/dungeon_crawler.ts";
 import { makeGrid, setCell } from "../core/grid.ts";
 
@@ -17,7 +22,7 @@ import { makeGrid, setCell } from "../core/grid.ts";
 export function renderDungeonMap(
   crawler: DungeonCrawler,
   cols: number,
-  rows: number
+  rows: number,
 ): Grid {
   // Create empty grid using makeGrid
   let grid = makeGrid(cols, rows);
@@ -54,7 +59,7 @@ export function renderDungeonMap(
 
       if (!explored) {
         // Unexplored area - completely dark
-        char = ' ';
+        char = " ";
         fg = PALETTE.FOREGROUND;
       } else if (!visible) {
         // Explored but not currently visible - dim colors
@@ -83,7 +88,7 @@ function renderEntities(
   offsetX: number,
   offsetY: number,
   cols: number,
-  rows: number
+  rows: number,
 ): Grid {
   const entities = crawler.state.entities;
 
@@ -116,31 +121,39 @@ function renderEntities(
       // Entity is visible
       switch (entity.type) {
         case EntityType.PLAYER:
-          char = '@';
-          fg = getPlayerFg(crawler.getPlayerStats().hp, crawler.getPlayerStats().maxHp);
+          char = "@";
+          fg = getPlayerFg(
+            crawler.getPlayerStats().hp,
+            crawler.getPlayerStats().maxHp,
+          );
           break;
         case EntityType.MONSTER:
-          char = entity.subtype ? getMonsterChar(entity.subtype as MonsterType) : 'M';
-          fg = getMonsterFg(entity.subtype as MonsterType, (entity.hp ?? 0) > 0);
+          char = entity.subtype
+            ? getMonsterChar(entity.subtype as MonsterType)
+            : "M";
+          fg = getMonsterFg(
+            entity.subtype as MonsterType,
+            (entity.hp ?? 0) > 0,
+          );
           break;
         case EntityType.ITEM:
           char = getItemChar(entity.subtype as ItemType);
           fg = getItemFg(entity.subtype as ItemType);
           break;
         case EntityType.TRAP:
-          char = '^';
+          char = "^";
           fg = PALETTE.RED_BRIGHT;
           break;
         case EntityType.DOOR_CLOSED:
-          char = '+';
+          char = "+";
           fg = PALETTE.YELLOW_AMBER;
           break;
         case EntityType.DOOR_OPEN:
-          char = '/';
+          char = "/";
           fg = PALETTE.YELLOW_AMBER;
           break;
         default:
-          char = '?';
+          char = "?";
           fg = PALETTE.FOREGROUND;
           break;
       }
@@ -155,12 +168,18 @@ function renderEntities(
 /** Get character representation for a tile type */
 function getTileChar(type: TileType): string {
   switch (type) {
-    case TileType.WALL: return '#';
-    case TileType.FLOOR: return '.';
-    case TileType.DOOR: return '+';
-    case TileType.STAIRS_UP: return '<';
-    case TileType.STAIRS_DOWN: return '>';
-    default: return ' ';
+    case TileType.WALL:
+      return "#";
+    case TileType.FLOOR:
+      return ".";
+    case TileType.DOOR:
+      return "+";
+    case TileType.STAIRS_UP:
+      return "<";
+    case TileType.STAIRS_DOWN:
+      return ">";
+    default:
+      return " ";
   }
 }
 
@@ -173,21 +192,21 @@ function getTileFg(type: TileType, dimmed: boolean): string {
     [TileType.STAIRS_UP]: PALETTE.GREEN_NEON,
     [TileType.STAIRS_DOWN]: PALETTE.GREEN_NEON,
   };
-  
+
   const color = baseColors[type] || PALETTE.FOREGROUND;
-  
+
   if (dimmed) {
     // Return a dimmed version of the color
     return dimColor(color);
   }
-  
+
   return color;
 }
 
 /** Get character for player based on HP */
 function getPlayerFg(currentHp: number, maxHp: number): string {
   const hpRatio = currentHp / maxHp;
-  
+
   if (hpRatio > 0.6) return PALETTE.GREEN_NEON;
   if (hpRatio > 0.3) return PALETTE.YELLOW_AMBER;
   return PALETTE.RED_BRIGHT;
@@ -196,23 +215,29 @@ function getPlayerFg(currentHp: number, maxHp: number): string {
 /** Get character representation for a monster type */
 function getMonsterChar(type: MonsterType): string {
   switch (type) {
-    case MonsterType.ICE_WATCHDOG: return 'w';
-    case MonsterType.ICE_SPIDER: return 's';
-    case MonsterType.ICE_LOA_PRIEST: return 'l';
-    case MonsterType.ICE_GOLIATH: return 'g';
-    case MonsterType.ICE_BLACK: return 'B';
-    default: return 'M';
+    case MonsterType.ICE_WATCHDOG:
+      return "w";
+    case MonsterType.ICE_SPIDER:
+      return "s";
+    case MonsterType.ICE_LOA_PRIEST:
+      return "l";
+    case MonsterType.ICE_GOLIATH:
+      return "g";
+    case MonsterType.ICE_BLACK:
+      return "B";
+    default:
+      return "M";
   }
 }
 
 /** Get foreground color for a monster type */
 function getMonsterFg(type: MonsterType | undefined, alive: boolean): string {
   if (!type) return PALETTE.FOREGROUND;
-  
+
   if (!alive) {
     return PALETTE.GRAY_MID; // Dead monster
   }
-  
+
   const colors: Record<MonsterType, string> = {
     [MonsterType.ICE_WATCHDOG]: PALETTE.CYAN_LIGHT,
     [MonsterType.ICE_SPIDER]: PALETTE.MAGENTA_LIGHT,
@@ -220,19 +245,25 @@ function getMonsterFg(type: MonsterType | undefined, alive: boolean): string {
     [MonsterType.ICE_GOLIATH]: PALETTE.RED_BRIGHT,
     [MonsterType.ICE_BLACK]: PALETTE.WHITE,
   };
-  
+
   return colors[type] || PALETTE.FOREGROUND;
 }
 
 /** Get character representation for an item type */
 function getItemChar(type: ItemType): string {
   switch (type) {
-    case ItemType.HEALTH_POTION: return '!';
-    case ItemType.ENERGY_CELL: return 'e';
-    case ItemType.DATA_CHIP: return 'd';
-    case ItemType.WEAPON: return 'w';
-    case ItemType.ARMOR: return 'a';
-    default: return '?';
+    case ItemType.HEALTH_POTION:
+      return "!";
+    case ItemType.ENERGY_CELL:
+      return "e";
+    case ItemType.DATA_CHIP:
+      return "d";
+    case ItemType.WEAPON:
+      return "w";
+    case ItemType.ARMOR:
+      return "a";
+    default:
+      return "?";
   }
 }
 
@@ -245,7 +276,7 @@ function getItemFg(type: ItemType): string {
     [ItemType.WEAPON]: PALETTE.YELLOW_AMBER,
     [ItemType.ARMOR]: PALETTE.GREEN_NEON,
   };
-  
+
   return colors[type] || PALETTE.FOREGROUND;
 }
 
@@ -255,13 +286,13 @@ function dimColor(hexColor: string): string {
   if (hexColor === PALETTE.GRAY_MID) return PALETTE.GRAY_DARK;
   if (hexColor === PALETTE.GRAY_LIGHT) return PALETTE.GRAY;
   if (hexColor === PALETTE.YELLOW_AMBER) return PALETTE.YELLOW;
-  if (hexColor === PALETTE.GREEN_NEON) return '#008000';
-  if (hexColor === PALETTE.RED_BRIGHT) return '#800000';
-  if (hexColor === PALETTE.BLUE_BRIGHT) return '#000080';
-  if (hexColor === PALETTE.MAGENTA_LIGHT) return '#800080';
-  if (hexColor === PALETTE.CYAN_LIGHT) return '#008080';
+  if (hexColor === PALETTE.GREEN_NEON) return "#008000";
+  if (hexColor === PALETTE.RED_BRIGHT) return "#800000";
+  if (hexColor === PALETTE.BLUE_BRIGHT) return "#000080";
+  if (hexColor === PALETTE.MAGENTA_LIGHT) return "#800080";
+  if (hexColor === PALETTE.CYAN_LIGHT) return "#008080";
   if (hexColor === PALETTE.WHITE) return PALETTE.GRAY_LIGHT;
-  
+
   return hexColor; // Fallback
 }
 
@@ -269,38 +300,38 @@ function dimColor(hexColor: string): string {
 export function renderDungeonUi(
   crawler: DungeonCrawler,
   _cols: number,
-  _rows: number
+  _rows: number,
 ): ReadonlyArray<string> {
   const stats = crawler.getPlayerStats();
-  
+
   const lines: string[] = [];
-  
+
   // WET header
   lines.push("WET");
-  
+
   // Level
-  lines.push(`LVE: ${String(stats.level).padStart(2, '0')}`);
-  
+  lines.push(`LVE: ${String(stats.level).padStart(2, "0")}`);
+
   // HP
   lines.push(`HP: ${stats.hp}/${stats.maxHp}`);
-  
+
   // Alarm
   lines.push(`ALM: ${stats.alarm}%`);
-  
+
   // Turn
-  lines.push(`TRN: ${String(stats.turnCount).padStart(4, '0')}`);
-  
+  lines.push(`TRN: ${String(stats.turnCount).padStart(4, "0")}`);
+
   // Stairs indicators
   const stairsUp = crawler.getStairsUp();
   const stairsDown = crawler.getStairsDown();
-  
+
   if (stairsUp.x !== null && stairsUp.y !== null) {
     lines.push("< UP");
   }
-  
+
   if (stairsDown.x !== null && stairsDown.y !== null) {
     lines.push("> DN");
   }
-  
+
   return lines;
 }

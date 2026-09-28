@@ -10,7 +10,11 @@
 import type { Grid, Matrix, ZoneDepth, Ice } from "../core/types.ts";
 import { makeGrid, setText } from "../core/grid.ts";
 import { PALETTE } from "./palette.ts";
-import { EVENT_GLYPHS, EVENT_LABELS, type MatrixEventKind } from "../core/event_matrix.ts";
+import {
+  EVENT_GLYPHS,
+  EVENT_LABELS,
+  type MatrixEventKind,
+} from "../core/event_matrix.ts";
 
 /** Zone-to-color mapping for visual differentiation.
  *
@@ -49,11 +53,23 @@ export function renderMatrix(
   let grid = makeGrid(cols, rows);
 
   // Title
-  grid = setText(grid, Math.max(2, Math.floor((cols - 22) / 2)), 2, "MATRIX — CYBERSPACE", PALETTE.GREEN_NEON);
+  grid = setText(
+    grid,
+    Math.max(2, Math.floor((cols - 22) / 2)),
+    2,
+    "MATRIX — CYBERSPACE",
+    PALETTE.GREEN_NEON,
+  );
 
   // Subtitle: progress
   const progress = `${visited.length}/${matrix.nodes.length} nodes`;
-  grid = setText(grid, Math.max(2, cols - progress.length - 2), 4, progress, PALETTE.GRAY_LIGHT);
+  grid = setText(
+    grid,
+    Math.max(2, cols - progress.length - 2),
+    4,
+    progress,
+    PALETTE.GRAY_LIGHT,
+  );
 
   // Node list (start at row 6, 2 rows per node)
   const startY = 6;
@@ -66,8 +82,11 @@ export function renderMatrix(
     const isVisited = visited.includes(i);
     // Adjacent = next step (i = current + 1) or previous step (i = current - 1).
     // Linear matrix: each node connects to i+1 forward.
-    const isAdjacent = !isCurrent && !isVisited &&
-      (i === currentNodeIndex + 1 || (i === currentNodeIndex - 1 && visited.includes(currentNodeIndex - 1)));
+    const isAdjacent =
+      !isCurrent &&
+      !isVisited &&
+      (i === currentNodeIndex + 1 ||
+        (i === currentNodeIndex - 1 && visited.includes(currentNodeIndex - 1)));
     const isBoss = node.isBoss;
     const eventKind = (node.eventKind ?? "combat") as MatrixEventKind;
     const glyph = EVENT_GLYPHS[eventKind];
@@ -75,7 +94,8 @@ export function renderMatrix(
     const marker = isCurrent ? "▸" : isVisited ? "✓" : isAdjacent ? "→" : " ";
     const label = `${glyph} [${i}] ${node.zone.toUpperCase()}${isBoss ? " (BOSS)" : ""}`;
     const iceCount = node.iceIds.length;
-    const eventLabel = eventKind === "combat" ? "" : ` · ${EVENT_LABELS[eventKind]}`;
+    const eventLabel =
+      eventKind === "combat" ? "" : ` · ${EVENT_LABELS[eventKind]}`;
     const detail = `${iceCount} ICE · ${node.reward.credits}cr${eventLabel}`;
     // Color: current=highlighted, visited=faded, adjacent=zone (available), rest=zone faded
     const baseColor = zoneColor(node.zone);
@@ -87,23 +107,53 @@ export function renderMatrix(
           ? baseColor
           : PALETTE.GRAY_DARK;
     grid = setText(grid, 4, row, `${marker} ${label}`, fg);
-    grid = setText(grid, 8, row + 1, detail, isVisited ? PALETTE.GRAY_DARK : baseColor);
+    grid = setText(
+      grid,
+      8,
+      row + 1,
+      detail,
+      isVisited ? PALETTE.GRAY_DARK : baseColor,
+    );
   }
 
   // ICE preview panel (right side, current node)
   if (icePreview && cols >= 50) {
     const previewX = cols - 30;
     const previewY = 6;
-    grid = setText(grid, previewX, previewY, "── CURRENT NODE ──", PALETTE.GRAY_LIGHT);
+    grid = setText(
+      grid,
+      previewX,
+      previewY,
+      "── CURRENT NODE ──",
+      PALETTE.GRAY_LIGHT,
+    );
     const iceName = icePreview.name.slice(0, 22);
     grid = setText(grid, previewX, previewY + 1, iceName, PALETTE.ICE_BLUE);
     const node = matrix.nodes[currentNodeIndex];
     const hpStr = node?.iceHp[0]?.toString() ?? "—";
-    grid = setText(grid, previewX, previewY + 2, `HP:  ${hpStr}`, PALETTE.GREEN_NEON);
+    grid = setText(
+      grid,
+      previewX,
+      previewY + 2,
+      `HP:  ${hpStr}`,
+      PALETTE.GREEN_NEON,
+    );
     if (node) {
       const eventKind = (node.eventKind ?? "combat") as MatrixEventKind;
-      grid = setText(grid, previewX, previewY + 3, `Evt: ${EVENT_LABELS[eventKind]}`, PALETTE.YELLOW_AMBER);
-      grid = setText(grid, previewX, previewY + 4, `Rew: ${node.reward.credits}cr`, PALETTE.CYAN_LIGHT);
+      grid = setText(
+        grid,
+        previewX,
+        previewY + 3,
+        `Evt: ${EVENT_LABELS[eventKind]}`,
+        PALETTE.YELLOW_AMBER,
+      );
+      grid = setText(
+        grid,
+        previewX,
+        previewY + 4,
+        `Rew: ${node.reward.credits}cr`,
+        PALETTE.CYAN_LIGHT,
+      );
     }
   }
 

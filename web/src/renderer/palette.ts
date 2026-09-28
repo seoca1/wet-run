@@ -54,7 +54,9 @@ export const PALETTE = Object.freeze({
  */
 export function resolveColorHint(hint: string): string {
   if (hint in PALETTE) {
-    return (PALETTE as Readonly<Record<string, string>>)[hint] ?? PALETTE.FOREGROUND;
+    return (
+      (PALETTE as Readonly<Record<string, string>>)[hint] ?? PALETTE.FOREGROUND
+    );
   }
   return PALETTE.FOREGROUND;
 }

@@ -13,10 +13,10 @@
 
 /** Character identifiers used in scene.character and dialogue.portrait refs. */
 export type CharacterId =
-  | "novice"     // Case (K)
-  | "veteran"    // Marly (Sil)
-  | "heretic"    // Kumiko (Kas)
-  | "suit"       // reserved (data not bundled)
+  | "novice" // Case (K)
+  | "veteran" // Marly (Sil)
+  | "heretic" // Kumiko (Kas)
+  | "suit" // reserved (data not bundled)
   | "wigan"
   | "angie"
   | "sally"

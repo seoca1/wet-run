@@ -306,7 +306,8 @@ export const ACH_GHOST_PROTOCOL: Achievement = {
   id: "ghost_protocol",
   name: "Ghost Protocol",
   nameKo: "고스트 프로토콜",
-  description: "한 번의 매트릭스 진입에서 단 한 번의 전투도 하지 않고 데이터 3개 추출.",
+  description:
+    "한 번의 매트릭스 진입에서 단 한 번의 전투도 하지 않고 데이터 3개 추출.",
   category: "hidden",
   tier: "platinum",
   icon: "\u25C7",
@@ -387,9 +388,8 @@ export const ALL_ACHIEVEMENTS: ReadonlyArray<Achievement> = [
   ACH_TRUE_HACKER,
 ];
 
-export const ACHIEVEMENT_BY_ID: Readonly<Record<string, Achievement>> = Object.freeze(
-  Object.fromEntries(ALL_ACHIEVEMENTS.map((a) => [a.id, a])),
-);
+export const ACHIEVEMENT_BY_ID: Readonly<Record<string, Achievement>> =
+  Object.freeze(Object.fromEntries(ALL_ACHIEVEMENTS.map((a) => [a.id, a])));
 
 export const ACHIEVEMENT_CATEGORIES: ReadonlyArray<AchievementCategory> = [
   "combat",

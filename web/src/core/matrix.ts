@@ -15,10 +15,10 @@ import { iceHpForGrade } from "./ice_scaling.ts";
 
 export const NUM_NODES = 5;
 export const ZONE_BY_NODE_INDEX: ReadonlyArray<ZoneDepth> = [
-  "surface",  // node 0: start
-  "mid",      // node 1
-  "deep",     // node 2
-  "core",     // node 3
+  "surface", // node 0: start
+  "mid", // node 1
+  "deep", // node 2
+  "core", // node 3
   "core-deep", // node 4: boss
 ];
 

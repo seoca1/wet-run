@@ -20,26 +20,30 @@ export interface DeceasedJockey {
 }
 
 /** Epitaph pools — Gibson-toned epitaphs per character archetype. */
-export const EPITAPHS: Readonly<Record<string, ReadonlyArray<string>>> = Object.freeze({
-  novice: Object.freeze([
-    "You died a wage slave.",
-    "Sprawl is short on memory.",
-    "Cash for the next, then.",
-  ]),
-  veteran: Object.freeze([
-    "Old scores die hard.",
-    "Mara's not waiting.",
-    "T-A doesn't forget.",
-  ]),
-  heretic: Object.freeze([
-    "The wheel keeps turning.",
-    "Loa hears you still.",
-    "One spoke, not the wheel.",
-  ]),
-});
+export const EPITAPHS: Readonly<Record<string, ReadonlyArray<string>>> =
+  Object.freeze({
+    novice: Object.freeze([
+      "You died a wage slave.",
+      "Sprawl is short on memory.",
+      "Cash for the next, then.",
+    ]),
+    veteran: Object.freeze([
+      "Old scores die hard.",
+      "Mara's not waiting.",
+      "T-A doesn't forget.",
+    ]),
+    heretic: Object.freeze([
+      "The wheel keeps turning.",
+      "Loa hears you still.",
+      "One spoke, not the wheel.",
+    ]),
+  });
 
 /** Select a random epitaph for a character archetype. */
-export function selectEpitaph(characterId: string, rng: () => number = Math.random): string {
+export function selectEpitaph(
+  characterId: string,
+  rng: () => number = Math.random,
+): string {
   const pool = EPITAPHS[characterId] ?? EPITAPHS["novice"];
   if (!pool) return "The Sprawl remembers.";
   return pool[Math.floor(rng() * pool.length)] ?? "The Sprawl remembers.";
@@ -91,4 +95,5 @@ export function generateDeathSummary(
 }
 
 /** Restart option chosen by the player after death summary. */
-export type RestartChoice = "new_jockey" | "same_jockey" | "hall_of_dead" | "main_menu";
+export type RestartChoice =
+  "new_jockey" | "same_jockey" | "hall_of_dead" | "main_menu";

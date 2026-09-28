@@ -30,12 +30,13 @@ import type {
 // ============================================================================
 
 /** Per-tick probability of ICE choosing to cast a skill (ADR-0148). */
-export const AGGRESSION_PROBABILITY: Readonly<Record<AggressionTier, number>> = {
-  passive: 0.05,
-  standard: 0.15,
-  aggressive: 0.35,
-  boss: 0.50,
-} as const;
+export const AGGRESSION_PROBABILITY: Readonly<Record<AggressionTier, number>> =
+  {
+    passive: 0.05,
+    standard: 0.15,
+    aggressive: 0.35,
+    boss: 0.5,
+  } as const;
 
 /** Valid aggression values for coercion guards. */
 const VALID_AGGRESSION: ReadonlySet<string> = new Set<string>([
@@ -82,7 +83,10 @@ export function coercePersonality(value: unknown): PersonalityArchetype {
  * Otherwise rolls against the aggression tier's probability.
  * Called every AUTO_ATTACK_INTERVAL_MS (2000ms) for each alive enemy.
  */
-export function enemyShouldUseSkill(combatant: Combatant, rng: () => number): boolean {
+export function enemyShouldUseSkill(
+  combatant: Combatant,
+  rng: () => number,
+): boolean {
   if (combatant.skills.length === 0 || combatant.hp <= 0) {
     return false;
   }
@@ -101,7 +105,10 @@ export function enemyShouldUseSkill(combatant: Combatant, rng: () => number): bo
  *
  * @returns A randomly selected skill, or null if no skills are equipped.
  */
-export function chooseSkill(combatant: Combatant, rng: () => number): Skill | null {
+export function chooseSkill(
+  combatant: Combatant,
+  rng: () => number,
+): Skill | null {
   if (combatant.skills.length === 0) {
     return null;
   }

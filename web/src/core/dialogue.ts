@@ -88,7 +88,8 @@ export const DIALOGUE_TREES: ReadonlyArray<DialogueTree> = Object.freeze([
       Object.freeze({
         id: "finn_business",
         speaker: "Finn",
-        textEn: "Good. I've got a job for you. Simple data retrieval. 2000 credits.",
+        textEn:
+          "Good. I've got a job for you. Simple data retrieval. 2000 credits.",
         textKo: "좋아. 일 하나 있다. 간단한 데이터 회수. 2000 크레딧.",
         choices: Object.freeze([
           Object.freeze({
@@ -144,7 +145,8 @@ export const DIALOGUE_TREES: ReadonlyArray<DialogueTree> = Object.freeze([
       Object.freeze({
         id: "molly_greeting",
         speaker: "Molly",
-        textEn: "You're the new jockey? Interesting. Let me see what you can do.",
+        textEn:
+          "You're the new jockey? Interesting. Let me see what you can do.",
         textKo: "새 자키? 흥미롭군. 네 실력을 보자.",
         choices: Object.freeze([
           Object.freeze({
@@ -240,7 +242,10 @@ export function getAvailableChoices(
   });
 }
 
-export function checkCondition(cond: DialogueCondition, ctx: DialogueContext): boolean {
+export function checkCondition(
+  cond: DialogueCondition,
+  ctx: DialogueContext,
+): boolean {
   switch (cond.type) {
     case "reputation": {
       const rep = ctx.reputation[cond.target] ?? 0;
@@ -272,7 +277,9 @@ export function checkCondition(cond: DialogueCondition, ctx: DialogueContext): b
       }
       return false;
     case "item":
-      return cond.operator === "has" ? ctx.items.has(cond.target as string) : false;
+      return cond.operator === "has"
+        ? ctx.items.has(cond.target as string)
+        : false;
     default:
       return false;
   }
@@ -281,7 +288,10 @@ export function checkCondition(cond: DialogueCondition, ctx: DialogueContext): b
 export function selectChoice(
   state: DialogueState,
   choiceId: string,
-): { readonly state: DialogueState; readonly effects: ReadonlyArray<DialogueEffect> } {
+): {
+  readonly state: DialogueState;
+  readonly effects: ReadonlyArray<DialogueEffect>;
+} {
   const node = getCurrentNode(state);
   if (!node)
     return {

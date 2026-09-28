@@ -48,18 +48,30 @@ interface LegacyIce {
   tier?: number;
 }
 
-function expectNumber(obj: Record<string, unknown>, key: string, ctx: string): number {
+function expectNumber(
+  obj: Record<string, unknown>,
+  key: string,
+  ctx: string,
+): number {
   const v = obj[key];
   if (typeof v !== "number" || !Number.isFinite(v)) {
-    throw new Error(`[data_loaders] ${ctx}: field '${key}' must be a finite number (got ${typeof v}: ${String(v)})`);
+    throw new Error(
+      `[data_loaders] ${ctx}: field '${key}' must be a finite number (got ${typeof v}: ${String(v)})`,
+    );
   }
   return v;
 }
 
-function expectString(obj: Record<string, unknown>, key: string, ctx: string): string {
+function expectString(
+  obj: Record<string, unknown>,
+  key: string,
+  ctx: string,
+): string {
   const v = obj[key];
   if (typeof v !== "string" || v.length === 0) {
-    throw new Error(`[data_loaders] ${ctx}: field '${key}' must be a non-empty string (got ${typeof v}: ${String(v)})`);
+    throw new Error(
+      `[data_loaders] ${ctx}: field '${key}' must be a non-empty string (got ${typeof v}: ${String(v)})`,
+    );
   }
   return v;
 }
@@ -79,9 +91,15 @@ export function parseMission(raw: unknown, idHint: string): Mission {
   const seed = (r.matrix_seed ?? r.seed ?? 0) as number;
   const grade = (r.grade_max ?? r.grade_min ?? r.grade ?? 1) as number;
   if (!r.rewards || typeof r.rewards !== "object") {
-    throw new Error(`[data_loaders] mission '${id}': field 'rewards' must be an object`);
+    throw new Error(
+      `[data_loaders] mission '${id}': field 'rewards' must be an object`,
+    );
   }
-  const credits = expectNumber(r.rewards as Record<string, unknown>, "credits", `mission '${id}'`);
+  const credits = expectNumber(
+    r.rewards as Record<string, unknown>,
+    "credits",
+    `mission '${id}'`,
+  );
   return {
     id,
     title,
@@ -92,7 +110,8 @@ export function parseMission(raw: unknown, idHint: string): Mission {
     grade_max,
     rewards: {
       credits,
-      materials: (r.rewards as { materials?: Record<string, number> }).materials ?? {},
+      materials:
+        (r.rewards as { materials?: Record<string, number> }).materials ?? {},
     },
     grade,
     seed,
@@ -108,11 +127,15 @@ export function parseProgram(raw: unknown, idHint: string): Program {
   const tier = expectNumber(r, "tier", `program '${name}'`);
   // ap_cost (legacy) → cost (current). Both must not be set simultaneously.
   if (typeof r.cost === "number" && typeof r.ap_cost === "number") {
-    throw new Error(`[data_loaders] program '${name}' has both 'cost' and 'ap_cost'; choose one`);
+    throw new Error(
+      `[data_loaders] program '${name}' has both 'cost' and 'ap_cost'; choose one`,
+    );
   }
   const cost = r.cost ?? r.ap_cost;
   if (typeof cost !== "number" || !Number.isFinite(cost)) {
-    throw new Error(`[data_loaders] program '${name}' requires 'cost' or 'ap_cost' as finite number`);
+    throw new Error(
+      `[data_loaders] program '${name}' requires 'cost' or 'ap_cost' as finite number`,
+    );
   }
   const description = typeof r.description === "string" ? r.description : "";
   const effect = typeof r.effect === "string" ? r.effect : "attack";
@@ -136,15 +159,20 @@ export function parseIce(raw: unknown, idHint: string): Ice {
   const name = expectString(r, "name", `ice '${idHint}'`);
   // defense (legacy) → armor (current). Throw if both set.
   if (typeof r.armor === "number" && typeof r.defense === "number") {
-    throw new Error(`[data_loaders] ice '${name}' has both 'armor' and 'defense'; choose one`);
+    throw new Error(
+      `[data_loaders] ice '${name}' has both 'armor' and 'defense'; choose one`,
+    );
   }
   const armor = (r.armor ?? r.defense ?? 0) as number;
   if (typeof armor !== "number" || !Number.isFinite(armor)) {
-    throw new Error(`[data_loaders] ice '${name}' requires 'armor' or 'defense' as finite number`);
+    throw new Error(
+      `[data_loaders] ice '${name}' requires 'armor' or 'defense' as finite number`,
+    );
   }
   const tier = typeof r.tier === "number" ? r.tier : 1;
   const hpBase = typeof r.hp_base === "number" ? r.hp_base : undefined;
-  const hpPerGrade = typeof r.hp_per_grade === "number" ? r.hp_per_grade : undefined;
+  const hpPerGrade =
+    typeof r.hp_per_grade === "number" ? r.hp_per_grade : undefined;
   const hp = 100;
   return {
     id: idHint,
@@ -160,15 +188,23 @@ export function parseIce(raw: unknown, idHint: string): Ice {
 /** Load a missions JSON file. Throws on first malformed entry. */
 export function loadMissionsCatalog(raw: unknown): ReadonlyArray<Mission> {
   if (typeof raw !== "object" || raw === null) {
-    throw new Error("[data_loaders] missions JSON must be an object keyed by id");
+    throw new Error(
+      "[data_loaders] missions JSON must be an object keyed by id",
+    );
   }
-  return Object.entries(raw as Record<string, unknown>).map(([id, m]) => parseMission(m, id));
+  return Object.entries(raw as Record<string, unknown>).map(([id, m]) =>
+    parseMission(m, id),
+  );
 }
 
 /** Load a programs JSON file into a Map. Throws on first malformed entry. */
-export function loadProgramsCatalog(raw: unknown): Readonly<Record<string, Program>> {
+export function loadProgramsCatalog(
+  raw: unknown,
+): Readonly<Record<string, Program>> {
   if (typeof raw !== "object" || raw === null) {
-    throw new Error("[data_loaders] programs JSON must be an object keyed by id");
+    throw new Error(
+      "[data_loaders] programs JSON must be an object keyed by id",
+    );
   }
   const out: Record<string, Program> = {};
   for (const [id, p] of Object.entries(raw as Record<string, unknown>)) {
@@ -180,7 +216,9 @@ export function loadProgramsCatalog(raw: unknown): Readonly<Record<string, Progr
 /** Load an ICE types JSON file into a Map. Throws on first malformed entry. */
 export function loadIceCatalog(raw: unknown): Readonly<Record<string, Ice>> {
   if (typeof raw !== "object" || raw === null) {
-    throw new Error("[data_loaders] ice types JSON must be an object keyed by id");
+    throw new Error(
+      "[data_loaders] ice types JSON must be an object keyed by id",
+    );
   }
   const out: Record<string, Ice> = {};
   for (const [id, ice] of Object.entries(raw as Record<string, unknown>)) {

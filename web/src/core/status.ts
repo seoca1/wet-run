@@ -14,7 +14,11 @@
  *   2. applyTickEffects(state)    — apply DoT/slow etc. at start of actor's turn
  *   3. resolveAttack → may rollStatus → may add new effect
  */
-import type { GameState, StatusEffectInstance, StatusEffectKind } from "./types.ts";
+import type {
+  GameState,
+  StatusEffectInstance,
+  StatusEffectKind,
+} from "./types.ts";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 
 /** Apply a new status effect to a target. Stacks (adds new instance) if same kind.
@@ -127,7 +131,10 @@ export function applyTickEffects(state: GameState): {
       case "regen":
         {
           let healAmount = e.healPerTick ?? 0;
-          if (healAmount > 0 && isMutatorActive(state as unknown as MutableRunState, "no_heal")) {
+          if (
+            healAmount > 0 &&
+            isMutatorActive(state as unknown as MutableRunState, "no_heal")
+          ) {
             healAmount = 0;
           }
           if (isPlayer) healPlayer += healAmount;
@@ -203,11 +210,18 @@ export function applyBurnDamage(
 
   const netPlayerChange = playerHeal - playerDmg;
   if (netPlayerChange !== 0) {
-    const newHp = Math.max(0, Math.min(next.player.maxHp, next.player.hp + netPlayerChange));
+    const newHp = Math.max(
+      0,
+      Math.min(next.player.maxHp, next.player.hp + netPlayerChange),
+    );
     next = { ...next, player: { ...next.player, hp: newHp } };
   }
 
-  if ((iceDmg > 0 || iceHeal > 0) && next.iceRoster.length > 0 && next.activeIceIndex < next.iceRoster.length) {
+  if (
+    (iceDmg > 0 || iceHeal > 0) &&
+    next.iceRoster.length > 0 &&
+    next.activeIceIndex < next.iceRoster.length
+  ) {
     const netIceChange = iceHeal - iceDmg;
     if (netIceChange !== 0) {
       const newRoster = next.iceRoster.map((ice, i) => {
@@ -227,6 +241,9 @@ export function applyBurnDamage(
  * Uses an injectable RNG function (defaults to Math.random) so tests can
  * deterministically test the state machine without flaky random failures.
  */
-export function rollStatusProc(_kind: StatusEffectKind, rng: () => number = Math.random): boolean {
+export function rollStatusProc(
+  _kind: StatusEffectKind,
+  rng: () => number = Math.random,
+): boolean {
   return rng() < 0.2;
 }

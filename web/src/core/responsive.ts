@@ -46,7 +46,10 @@ export function calculateScale(): number {
 
 /** Get viewport size from window. */
 export function getViewport(): ViewportSize {
-  return Object.freeze({ width: window.innerWidth, height: window.innerHeight });
+  return Object.freeze({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
 }
 
 /** Build responsive state from window. */
@@ -69,7 +72,10 @@ export function shouldShowVirtualControls(state: ResponsiveState): boolean {
 /** Get recommended canvas size for the viewport. */
 export function getCanvasSize(state: ResponsiveState): ViewportSize {
   if (state.device === "mobile") {
-    return Object.freeze({ width: state.viewport.width, height: Math.floor(state.viewport.width * 1.5) });
+    return Object.freeze({
+      width: state.viewport.width,
+      height: Math.floor(state.viewport.width * 1.5),
+    });
   }
   return Object.freeze({ width: 800, height: 600 });
 }

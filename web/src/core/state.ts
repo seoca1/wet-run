@@ -68,21 +68,36 @@ export function makeInitialState(
     programs: [],
   };
   // Mission schema field names: matrix_seed (not seed), grade_max/grade_min (not grade).
-  const missionSeed: number = (mission as { matrix_seed?: number }).matrix_seed ?? mission.seed ?? 42;
+  const missionSeed: number =
+    (mission as { matrix_seed?: number }).matrix_seed ?? mission.seed ?? 42;
   const missionGrade: number =
     (mission as { grade_max?: number }).grade_max ??
     (mission as { grade_min?: number }).grade_min ??
     mission.grade ??
     1;
-  const gridSize = missionGrade ? { w: 80 + (missionGrade - 1) * 20, h: 50 + (missionGrade - 1) * 10 } : { w: MVP_GRID_W, h: MVP_GRID_H };
-  const matrix = generateProceduralMatrix(missionGrade, missionSeed, mission.id);
-  const finalDrawPile = drawPile.length > 0 ? drawPile : deck.slice(MVP_BASE_HAND);
-  
+  const gridSize = missionGrade
+    ? { w: 80 + (missionGrade - 1) * 20, h: 50 + (missionGrade - 1) * 10 }
+    : { w: MVP_GRID_W, h: MVP_GRID_H };
+  const matrix = generateProceduralMatrix(
+    missionGrade,
+    missionSeed,
+    mission.id,
+  );
+  const finalDrawPile =
+    drawPile.length > 0 ? drawPile : deck.slice(MVP_BASE_HAND);
+
   return {
     phase: "menu",
     mission,
     player,
-    ice: { ...ice, hp: ice.hp, armor: ice.armor, tier: ice.tier, id: ice.id, name: ice.name },
+    ice: {
+      ...ice,
+      hp: ice.hp,
+      armor: ice.armor,
+      tier: ice.tier,
+      id: ice.id,
+      name: ice.name,
+    },
     deck: deck.slice(0, MVP_BASE_HAND),
     drawPile: finalDrawPile,
     discardPile: [],
@@ -166,33 +181,37 @@ export function resolveProgramSelection(
 
 /** Generate HUD lines from current state — feeds the right-side panel. */
 export function buildHudLines(state: GameState): string[] {
-   const lines: string[] = [
-     `HP ${state.player.hp}/${state.player.maxHp}`,
-     `Alarm ${state.player.alarm}/100`,
-     `Credits ${state.player.credits}`,
-   ];
-   const equippedCount = Object.values(state.equipmentLoadout).filter(e => e !== null).length;
-   lines.push(`Equipped: ${equippedCount}/8`);
-   if (state.playerCombo > 1) {
-     lines.push(`Combo x${state.playerCombo}`);
-   }
-   if (state.alarmLevel > 0) {
-     lines.push(`ALARM ${state.alarmLevel}/5`);
-   }
-   if (state.bossPhase > 0 && state.bossPhase <= 4) {
-     lines.push(`★ BOSS PHASE ${state.bossPhase}/4`);
-   }
-   lines.push("", `Phase: ${state.phase}`);
-   for (let i = 0; i < state.iceRoster.length; i++) {
-     const ice = state.iceRoster[i];
-     const marker = i === state.activeIceIndex ? ">" : " ";
-     const alive = ice.hp > 0;
-     const hpDisplay = alive ? `${ice.hp}` : "DEAD";
-     lines.push(`${marker} [${i + 1}] ${ice.name.slice(0, 10)} HP: ${hpDisplay}`);
-   }
-   lines.push("", state.message);
-   return lines;
- }
+  const lines: string[] = [
+    `HP ${state.player.hp}/${state.player.maxHp}`,
+    `Alarm ${state.player.alarm}/100`,
+    `Credits ${state.player.credits}`,
+  ];
+  const equippedCount = Object.values(state.equipmentLoadout).filter(
+    (e) => e !== null,
+  ).length;
+  lines.push(`Equipped: ${equippedCount}/8`);
+  if (state.playerCombo > 1) {
+    lines.push(`Combo x${state.playerCombo}`);
+  }
+  if (state.alarmLevel > 0) {
+    lines.push(`ALARM ${state.alarmLevel}/5`);
+  }
+  if (state.bossPhase > 0 && state.bossPhase <= 4) {
+    lines.push(`★ BOSS PHASE ${state.bossPhase}/4`);
+  }
+  lines.push("", `Phase: ${state.phase}`);
+  for (let i = 0; i < state.iceRoster.length; i++) {
+    const ice = state.iceRoster[i];
+    const marker = i === state.activeIceIndex ? ">" : " ";
+    const alive = ice.hp > 0;
+    const hpDisplay = alive ? `${ice.hp}` : "DEAD";
+    lines.push(
+      `${marker} [${i + 1}] ${ice.name.slice(0, 10)} HP: ${hpDisplay}`,
+    );
+  }
+  lines.push("", state.message);
+  return lines;
+}
 
 /** Serialize a GameState to a SaveSlot (Tier 2 save round-trip). */
 export function stateToSaveSlot(state: GameState): SaveSlot {
@@ -252,11 +271,13 @@ export function slotToGameState(
   let graphicNovel = null;
   if (slot.graphicNovelProgress) {
     const parts = slot.graphicNovelProgress.chainId.split("_");
-    const mode = (parts[0] || "prologue") as "prologue" | "novice" | "veteran" | "heretic";
-    const characterId = (parts[1] || "novice") as "novice" | "veteran" | "heretic";
+    const mode = (parts[0] || "prologue") as
+      "prologue" | "novice" | "veteran" | "heretic";
+    const characterId = (parts[1] || "novice") as
+      "novice" | "veteran" | "heretic";
     const sceneIndex = slot.graphicNovelProgress.sceneIndex;
     const dialogueIndex = slot.graphicNovelProgress.dialogueIndex;
-    
+
     graphicNovel = {
       player: {
         mode,

@@ -12,11 +12,7 @@
 
 // Type exports
 export type AchievementCategory =
-  | "combat"
-  | "exploration"
-  | "story"
-  | "mastery"
-  | "hidden";
+  "combat" | "exploration" | "story" | "mastery" | "hidden";
 
 export type AchievementTier = "bronze" | "silver" | "gold" | "platinum";
 
@@ -446,9 +442,7 @@ export function renderAchievement(ach: Achievement, unlocked: boolean): string {
   return lines.join("\n");
 }
 
-export function getAchievementsSummary(
-  state: AchievementState,
-): {
+export function getAchievementsSummary(state: AchievementState): {
   readonly totalUnlocked: number;
   readonly totalAvailable: number;
   readonly completionPct: number;

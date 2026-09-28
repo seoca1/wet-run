@@ -17,14 +17,14 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "menu.hall_of_dead": "HALL OF DEAD",
   "menu.help": "HELP",
   "menu.back": "BACK",
-  
+
   // Game
   "game.credits": "CREDITS",
   "game.hp": "HP",
   "game.ap": "AP",
   "game.level": "LEVEL",
   "game.mission": "MISSION",
-  
+
   // Combat
   "combat.attack": "ATTACK",
   "combat.defend": "DEFEND",
@@ -33,7 +33,7 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "combat.flee": "FLEE",
   "combat.victory": "VICTORY",
   "combat.defeat": "DEFEAT",
-  
+
   // Settings
   "settings.language": "LANGUAGE",
   "settings.volume": "VOLUME",
@@ -43,7 +43,7 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "settings.easy": "EASY",
   "settings.normal": "NORMAL",
   "settings.hard": "HARD",
-  
+
   // Hub
   "hub.bar": "BAR",
   "hub.shop": "SHOP",
@@ -51,7 +51,7 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "hub.medbay": "MEDBAY",
   "hub.command": "COMMAND",
   "hub.dormitory": "DORMITORY",
-  
+
   // Generic
   "common.yes": "YES",
   "common.no": "NO",
@@ -73,14 +73,14 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "menu.hall_of_dead": "죽은 자의 전당",
   "menu.help": "도움말",
   "menu.back": "뒤로",
-  
+
   // Game
   "game.credits": "크레딧",
   "game.hp": "체력",
   "game.ap": "행동력",
   "game.level": "레벨",
   "game.mission": "미션",
-  
+
   // Combat
   "combat.attack": "공격",
   "combat.defend": "방어",
@@ -89,7 +89,7 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "combat.flee": "도망",
   "combat.victory": "승리",
   "combat.defeat": "패배",
-  
+
   // Settings
   "settings.language": "언어",
   "settings.volume": "볼륨",
@@ -99,7 +99,7 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "settings.easy": "쉬움",
   "settings.normal": "보통",
   "settings.hard": "어려움",
-  
+
   // Hub
   "hub.bar": "술집",
   "hub.shop": "상점",
@@ -107,7 +107,7 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "hub.medbay": "의무실",
   "hub.command": "지휘실",
   "hub.dormitory": "기숙사",
-  
+
   // Generic
   "common.yes": "예",
   "common.no": "아니오",
@@ -119,7 +119,9 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "common.delete": "삭제",
 });
 
-const TRANSLATIONS: Readonly<Record<Language, Readonly<Record<string, string>>>> = Object.freeze({
+const TRANSLATIONS: Readonly<
+  Record<Language, Readonly<Record<string, string>>>
+> = Object.freeze({
   en: EN_TRANSLATIONS,
   ko: KO_TRANSLATIONS,
 });
@@ -131,11 +133,16 @@ export function t(key: string, language: Language = "en"): string {
 }
 
 /** Get all translations for a language. */
-export function getTranslations(language: Language): Readonly<Record<string, string>> {
+export function getTranslations(
+  language: Language,
+): Readonly<Record<string, string>> {
   return TRANSLATIONS[language];
 }
 
-const AVAILABLE_LANGUAGES: ReadonlyArray<Language> = Object.freeze(["en", "ko"]);
+const AVAILABLE_LANGUAGES: ReadonlyArray<Language> = Object.freeze([
+  "en",
+  "ko",
+]);
 
 /** Get available languages. */
 export function getAvailableLanguages(): ReadonlyArray<Language> {

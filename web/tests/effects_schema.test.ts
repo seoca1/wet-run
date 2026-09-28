@@ -31,7 +31,8 @@ const FILE_KIND_RE = /EFFECT_([A-Z_]+):\s*\{/g;
 
 function parseEffectKindLiteral(dts: string): string[] {
   // Extract union of EffectKind from effects.d.ts (e.g. `"attack" | "heal" | ...`).
-  const match = dts.match(/export type EffectKind = (.+?);/);
+  // Use \s*=\s* for flexible whitespace around =, and 's' flag for multi-line.
+  const match = dts.match(/export type EffectKind\s*=\s*(.+?);/s);
   if (!match) return [];
   return match[1]
     .split("|")

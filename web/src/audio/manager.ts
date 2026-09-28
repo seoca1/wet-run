@@ -113,7 +113,9 @@ async function getHowl(): Promise<typeof HowlType> {
 // Lazy-loaded sound_system module
 let soundSystemModule: typeof import("../core/sound_system.ts") | null = null;
 
-async function getSoundSystem(): Promise<typeof import("../core/sound_system.ts")> {
+async function getSoundSystem(): Promise<
+  typeof import("../core/sound_system.ts")
+> {
   if (soundSystemModule) return soundSystemModule;
   soundSystemModule = await import("../core/sound_system.ts");
   return soundSystemModule;
@@ -166,7 +168,10 @@ export class AudioManager {
     const [Howl, ss] = await Promise.all([getHowl(), getSoundSystem()]);
     const trackInfo = ss.TRACKS[track as keyof typeof ss.TRACKS];
     const finalVolume = trackInfo
-      ? ss.calculateVolume(track as Parameters<typeof ss.calculateVolume>[0], this._bgmVolume)
+      ? ss.calculateVolume(
+          track as Parameters<typeof ss.calculateVolume>[0],
+          this._bgmVolume,
+        )
       : this._bgmVolume;
 
     if (this.currentTrack === track && this.howl !== null) {
@@ -223,7 +228,10 @@ export class AudioManager {
     await this.crossfadeTo(track, DEFAULT_CROSSFADE_MS);
   }
 
-  async crossfadeTo(track: SoundId, durationMs: number = DEFAULT_CROSSFADE_MS): Promise<void> {
+  async crossfadeTo(
+    track: SoundId,
+    durationMs: number = DEFAULT_CROSSFADE_MS,
+  ): Promise<void> {
     if (track === this.currentTrack && this.howl !== null) {
       if (!this._started) {
         try {
@@ -452,12 +460,18 @@ export class AudioManager {
 
   static unlockOnFirstGesture(onUnlock?: () => void): void {
     if (typeof document === "undefined") return;
-    const events: Array<keyof DocumentEventMap> = ["click", "keydown", "touchstart"];
+    const events: Array<keyof DocumentEventMap> = [
+      "click",
+      "keydown",
+      "touchstart",
+    ];
     const handler = (): void => {
       events.forEach((e) => document.removeEventListener(e, handler));
       if (onUnlock) onUnlock();
     };
-    events.forEach((e) => document.addEventListener(e, handler, { once: true }));
+    events.forEach((e) =>
+      document.addEventListener(e, handler, { once: true }),
+    );
   }
 
   async playBgmForEvent(event: string): Promise<string | null> {

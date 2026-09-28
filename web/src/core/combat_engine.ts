@@ -24,21 +24,41 @@ export const DEFAULT_ALARM_SPEED = 1.0;
 
 // ========== LOOKUP TABLES ==========
 
-export const WEAKNESS_BY_ICE: Readonly<Record<string, Readonly<Record<string, number>>>> = {
+export const WEAKNESS_BY_ICE: Readonly<
+  Record<string, Readonly<Record<string, number>>>
+> = {
   standard: { strike: 1.5, burst: 1.2, guard: 1.0, utility: 1.0, sustain: 0.8 },
   watchdog: { burst: 1.5, strike: 1.2, guard: 1.0, utility: 0.8, sustain: 0.6 },
   goliath: { sustain: 1.5, utility: 1.0, strike: 1.0, guard: 0.9, burst: 0.7 },
   black: { burst: 1.5, strike: 1.0, utility: 0.8, guard: 0.7, sustain: 0.6 },
-  construct: { utility: 1.5, strike: 1.0, burst: 1.0, guard: 1.0, sustain: 0.8 },
-  wintermute: { strike: 1.5, guard: 1.0, utility: 1.0, sustain: 1.0, burst: 0.6 },
-  ta_construct_prime: { burst: 1.5, strike: 0.8, guard: 0.8, utility: 0.8, sustain: 0.8 },
+  construct: {
+    utility: 1.5,
+    strike: 1.0,
+    burst: 1.0,
+    guard: 1.0,
+    sustain: 0.8,
+  },
+  wintermute: {
+    strike: 1.5,
+    guard: 1.0,
+    utility: 1.0,
+    sustain: 1.0,
+    burst: 0.6,
+  },
+  ta_construct_prime: {
+    burst: 1.5,
+    strike: 0.8,
+    guard: 0.8,
+    utility: 0.8,
+    sustain: 0.8,
+  },
 };
 
 export const ROLE_SYNERGY_BONUSES: Readonly<Record<number, number>> = {
   1: 1.0,
   2: 1.15,
-  3: 1.30,
-  4: 1.50,
+  3: 1.3,
+  4: 1.5,
   5: 1.75,
 };
 
@@ -53,7 +73,7 @@ export const COMBO_BONUSES: Readonly<Record<number, number>> = {
 
 export const ROLE_CRIT_BONUSES: Readonly<Record<string, number>> = {
   strike: 0.05,
-  burst: 0.10,
+  burst: 0.1,
   guard: 0.0,
   utility: 0.05,
   sustain: 0.0,
@@ -102,7 +122,9 @@ export interface AlarmTickResult {
 // ========== DAMAGE CALCULATION ==========
 
 export function calculateDamage(ctx: DamageContext): DamageResult {
-  const variance = ctx.rng() * (DAMAGE_VARIANCE_MAX - DAMAGE_VARIANCE_MIN) + DAMAGE_VARIANCE_MIN;
+  const variance =
+    ctx.rng() * (DAMAGE_VARIANCE_MAX - DAMAGE_VARIANCE_MIN) +
+    DAMAGE_VARIANCE_MIN;
   let dmg = ctx.baseDamage * variance;
 
   if (ctx.defenderIceResistance > 0.0) {
@@ -115,7 +137,8 @@ export function calculateDamage(ctx: DamageContext): DamageResult {
     ctx.defenderIceKind !== null
   ) {
     const weaknessMap = WEAKNESS_BY_ICE[ctx.defenderIceKind];
-    const weakness = weaknessMap?.[ctx.lastSkillRole] ?? DEFAULT_WEAKNESS_MULTIPLIER;
+    const weakness =
+      weaknessMap?.[ctx.lastSkillRole] ?? DEFAULT_WEAKNESS_MULTIPLIER;
     dmg *= weakness;
   }
 
@@ -145,7 +168,8 @@ export function calculateDamage(ctx: DamageContext): DamageResult {
 
   if (ctx.rng() < critChance) {
     const critMult =
-      ctx.rng() * (CRIT_MULTIPLIER_MAX - CRIT_MULTIPLIER_MIN) + CRIT_MULTIPLIER_MIN;
+      ctx.rng() * (CRIT_MULTIPLIER_MAX - CRIT_MULTIPLIER_MIN) +
+      CRIT_MULTIPLIER_MIN;
     dmg = Math.floor(dmg * critMult);
     isCrit = true;
   }

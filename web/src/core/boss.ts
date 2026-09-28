@@ -20,11 +20,11 @@ export interface BossPhaseInfo {
 }
 
 export const BOSS_PHASE_TABLE: ReadonlyArray<BossPhaseInfo> = [
-  { phase: 0, label: "—",        minHpPct: 0,    maxHpPct: 0    }, // no boss active
-  { phase: 1, label: "Phase 1", minHpPct: 75,   maxHpPct: 100  },
-  { phase: 2, label: "Phase 2", minHpPct: 50,   maxHpPct: 75   },
-  { phase: 3, label: "Phase 3", minHpPct: 25,   maxHpPct: 50   },
-  { phase: 4, label: "Phase 4", minHpPct: 0,    maxHpPct: 25   },
+  { phase: 0, label: "—", minHpPct: 0, maxHpPct: 0 }, // no boss active
+  { phase: 1, label: "Phase 1", minHpPct: 75, maxHpPct: 100 },
+  { phase: 2, label: "Phase 2", minHpPct: 50, maxHpPct: 75 },
+  { phase: 3, label: "Phase 3", minHpPct: 25, maxHpPct: 50 },
+  { phase: 4, label: "Phase 4", minHpPct: 0, maxHpPct: 25 },
 ];
 
 /** Compute current boss phase from HP percentage. */
@@ -36,7 +36,10 @@ export function bossPhaseFromHp(hpPercent: number): BossPhase {
 }
 
 /** True if the boss just transitioned (new phase differs from current). */
-export function shouldTransition(currentPhase: BossPhase, hpPercent: number): boolean {
+export function shouldTransition(
+  currentPhase: BossPhase,
+  hpPercent: number,
+): boolean {
   const next = bossPhaseFromHp(hpPercent);
   return next !== currentPhase && next > currentPhase;
 }

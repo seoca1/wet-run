@@ -34,7 +34,8 @@ export type SkillEffectKind =
 export type CombatantTeam = "player" | "enemy";
 export type CombatOutcome = "ongoing" | "victory" | "defeat";
 export type AggressionTier = "passive" | "standard" | "aggressive" | "boss";
-export type PersonalityArchetype = "aggressive" | "defensive" | "stealth" | "support";
+export type PersonalityArchetype =
+  "aggressive" | "defensive" | "stealth" | "support";
 
 export interface Skill {
   readonly id: string;
@@ -164,7 +165,10 @@ export function createCombatStats(): CombatStats {
   };
 }
 
-export function createCombatant(overrides: Partial<Combatant> & Pick<Combatant, "id" | "name" | "hp" | "maxHp">): Combatant {
+export function createCombatant(
+  overrides: Partial<Combatant> &
+    Pick<Combatant, "id" | "name" | "hp" | "maxHp">,
+): Combatant {
   return {
     portrait: "",
     color: "#ffffff",
@@ -196,7 +200,10 @@ export function createCombatant(overrides: Partial<Combatant> & Pick<Combatant, 
   };
 }
 
-export function createCombatState(player: Combatant, enemies: Combatant[]): CombatState {
+export function createCombatState(
+  player: Combatant,
+  enemies: Combatant[],
+): CombatState {
   return {
     player,
     enemies,

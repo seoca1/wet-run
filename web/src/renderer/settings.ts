@@ -100,52 +100,120 @@ function renderSlider(
   const width = 20;
   const filledCells = Math.round(value * width);
   const bar = "█".repeat(filledCells) + "░".repeat(width - filledCells);
-  const percent = Math.round(value * 100).toString().padStart(3, " ");
+  const percent = Math.round(value * 100)
+    .toString()
+    .padStart(3, " ");
   let out = setText(grid, 4, row, label, labelFg);
-  out = setText(out, 4, row + 1, `[${bar}] ${percent}%`, selected ? PALETTE.GREEN_NEON : PALETTE.GRAY_MID);
+  out = setText(
+    out,
+    4,
+    row + 1,
+    `[${bar}] ${percent}%`,
+    selected ? PALETTE.GREEN_NEON : PALETTE.GRAY_MID,
+  );
   return out;
 }
 
-export function renderSettingsScreen(state: SettingsState, cols: number, rows: number): Grid {
+export function renderSettingsScreen(
+  state: SettingsState,
+  cols: number,
+  rows: number,
+): Grid {
   let grid = makeGrid(cols, rows);
 
-  grid = setText(grid, Math.max(2, Math.floor((cols - 14) / 2)), 1, "WET RUN — Settings", PALETTE.GREEN_NEON);
-  grid = setText(grid, 2, 3, "─".repeat(Math.min(cols - 4, 50)), PALETTE.GRAY_MID);
+  grid = setText(
+    grid,
+    Math.max(2, Math.floor((cols - 14) / 2)),
+    1,
+    "WET RUN — Settings",
+    PALETTE.GREEN_NEON,
+  );
+  grid = setText(
+    grid,
+    2,
+    3,
+    "─".repeat(Math.min(cols - 4, 50)),
+    PALETTE.GRAY_MID,
+  );
 
-  const audioLabel = state.audioEnabled ? "[X] AUDIO ENABLED" : "[ ] AUDIO ENABLED";
-  const audioFg = state.selectedField === "audio"
-    ? PALETTE.YELLOW_AMBER
-    : (state.audioEnabled ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT);
+  const audioLabel = state.audioEnabled
+    ? "[X] AUDIO ENABLED"
+    : "[ ] AUDIO ENABLED";
+  const audioFg =
+    state.selectedField === "audio"
+      ? PALETTE.YELLOW_AMBER
+      : state.audioEnabled
+        ? PALETTE.GREEN_NEON
+        : PALETTE.RED_BRIGHT;
   grid = setText(grid, 4, 5, "AUDIO", PALETTE.CYAN_LIGHT);
   grid = setText(grid, 4, 7, audioLabel, audioFg);
 
-  grid = renderSlider(grid, "BGM Volume", state.bgmVolume, state.selectedField === "bgm", 9);
+  grid = renderSlider(
+    grid,
+    "BGM Volume",
+    state.bgmVolume,
+    state.selectedField === "bgm",
+    9,
+  );
 
-  grid = renderSlider(grid, "SFX Volume", state.sfxVolume, state.selectedField === "sfx", 13);
+  grid = renderSlider(
+    grid,
+    "SFX Volume",
+    state.sfxVolume,
+    state.selectedField === "sfx",
+    13,
+  );
 
   const muteLabel = state.muted ? "[X] MUTE ALL" : "[ ] MUTE ALL";
-  const muteFg = state.selectedField === "mute"
-    ? PALETTE.YELLOW_AMBER
-    : (state.muted ? PALETTE.RED_BRIGHT : PALETTE.GRAY_LIGHT);
+  const muteFg =
+    state.selectedField === "mute"
+      ? PALETTE.YELLOW_AMBER
+      : state.muted
+        ? PALETTE.RED_BRIGHT
+        : PALETTE.GRAY_LIGHT;
   grid = setText(grid, 4, 18, muteLabel, muteFg);
 
   grid = setText(grid, 4, 20, "STORAGE", PALETTE.CYAN_LIGHT);
   if (state.storageQuota.state === "unavailable") {
-    grid = setText(grid, 4, 21, `[ Storage API unavailable ]`, PALETTE.GRAY_DARK);
+    grid = setText(
+      grid,
+      4,
+      21,
+      `[ Storage API unavailable ]`,
+      PALETTE.GRAY_DARK,
+    );
   } else {
     const level = quotaLevel(state.storageQuota.percent);
-    const barColor = level === "critical" ? PALETTE.RED_BRIGHT : level === "warning" ? PALETTE.YELLOW_AMBER : PALETTE.GREEN_NEON;
+    const barColor =
+      level === "critical"
+        ? PALETTE.RED_BRIGHT
+        : level === "warning"
+          ? PALETTE.YELLOW_AMBER
+          : PALETTE.GREEN_NEON;
     const bar = renderUsageBar(state.storageQuota.percent, 20);
-    grid = setText(grid, 4, 21, `[${bar}] ${state.storageQuota.percent}%`, barColor);
+    grid = setText(
+      grid,
+      4,
+      21,
+      `[${bar}] ${state.storageQuota.percent}%`,
+      barColor,
+    );
   }
 
-  const hint = state.selectedField === "audio"
-    ? "ENTER: toggle audio | TAB: switch | ESC: back"
-    : state.selectedField === "mute"
-      ? "ENTER: toggle mute | TAB: switch | ESC: back"
-      : "←/→: adjust volume | TAB: switch | ESC: back";
+  const hint =
+    state.selectedField === "audio"
+      ? "ENTER: toggle audio | TAB: switch | ESC: back"
+      : state.selectedField === "mute"
+        ? "ENTER: toggle mute | TAB: switch | ESC: back"
+        : "←/→: adjust volume | TAB: switch | ESC: back";
   grid = setText(grid, 2, rows - 2, hint, PALETTE.GRAY_DARK);
-  grid = setText(grid, 2, rows - 1, "Volumes persist via localStorage", PALETTE.GRAY_DARK);
+  grid = setText(
+    grid,
+    2,
+    rows - 1,
+    "Volumes persist via localStorage",
+    PALETTE.GRAY_DARK,
+  );
 
   return grid;
 }
@@ -162,24 +230,49 @@ export function renderStorageQuota(
 ): Grid {
   let out = setText(grid, 4, row, "STORAGE", PALETTE.CYAN_LIGHT);
   if (quota.state === "unavailable") {
-    out = setText(out, 4, row + 1, `[ Storage API unavailable ]`, PALETTE.GRAY_DARK);
-    out = setText(out, 4, row + 2, quota.reason.slice(0, Math.max(0, cols - 6)), PALETTE.GRAY_DARK);
+    out = setText(
+      out,
+      4,
+      row + 1,
+      `[ Storage API unavailable ]`,
+      PALETTE.GRAY_DARK,
+    );
+    out = setText(
+      out,
+      4,
+      row + 2,
+      quota.reason.slice(0, Math.max(0, cols - 6)),
+      PALETTE.GRAY_DARK,
+    );
     return out;
   }
   const level = quotaLevel(quota.percent);
-  const barColor = level === "critical"
-    ? PALETTE.RED_BRIGHT
-    : level === "warning"
-      ? PALETTE.YELLOW_AMBER
-      : PALETTE.GREEN_NEON;
+  const barColor =
+    level === "critical"
+      ? PALETTE.RED_BRIGHT
+      : level === "warning"
+        ? PALETTE.YELLOW_AMBER
+        : PALETTE.GREEN_NEON;
   const bar = renderUsageBar(quota.percent, 20);
   const summary = summarizeQuota(quota);
   out = setText(out, 4, row + 1, `[${bar}] ${quota.percent}%`, barColor);
   out = setText(out, 4, row + 2, summary, barColor);
   if (level === "warning") {
-    out = setText(out, 4, row + 3, "! Storage filling up — clear old saves", PALETTE.YELLOW_AMBER);
+    out = setText(
+      out,
+      4,
+      row + 3,
+      "! Storage filling up — clear old saves",
+      PALETTE.YELLOW_AMBER,
+    );
   } else if (level === "critical") {
-    out = setText(out, 4, row + 3, "!! Quota nearly full — save may fail", PALETTE.RED_BRIGHT);
+    out = setText(
+      out,
+      4,
+      row + 3,
+      "!! Quota nearly full — save may fail",
+      PALETTE.RED_BRIGHT,
+    );
   }
   return out;
 }

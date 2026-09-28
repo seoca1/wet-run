@@ -15,8 +15,8 @@ export function renderEndingScreen(
 ): Grid {
   let grid = makeGrid(cols, rows);
   const c = choice ?? "arc1_wage_slave";
-  const ending = ENDINGS.find(e => e.id === c);
-  
+  const ending = ENDINGS.find((e) => e.id === c);
+
   if (!ending) {
     grid = setText(
       grid,
@@ -110,7 +110,9 @@ export function renderLootScreen(
       Math.max(2, Math.floor((cols - lootMessage.length) / 2)),
       Math.floor(rows / 2) + 3,
       lootMessage,
-      lootMessage.startsWith("Loot: ") ? PALETTE.YELLOW_AMBER : PALETTE.GRAY_LIGHT,
+      lootMessage.startsWith("Loot: ")
+        ? PALETTE.YELLOW_AMBER
+        : PALETTE.GRAY_LIGHT,
     );
   }
 

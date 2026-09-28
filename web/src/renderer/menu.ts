@@ -28,7 +28,11 @@ export type MenuOption =
   | "dungeon_crawl";
 
 /** All 13 menu options in display order. Order matches Python OPTION_* constants. */
-export const MENU_OPTIONS: ReadonlyArray<{ key: MenuOption; label: string; available: boolean }> = [
+export const MENU_OPTIONS: ReadonlyArray<{
+  key: MenuOption;
+  label: string;
+  available: boolean;
+}> = [
   { key: "new_run", label: "NEW RUN", available: true },
   { key: "dungeon_crawl", label: "DUNGEON CRAWL", available: true },
   { key: "graphic_novel", label: "GRAPHIC NOVEL", available: true },
@@ -60,7 +64,13 @@ export function renderMainMenu(
   let grid = makeGrid(cols, rows);
 
   // Title block (top)
-  grid = setText(grid, Math.max(2, Math.floor((cols - 8) / 2)), 2, "WET RUN", PALETTE.GREEN_NEON);
+  grid = setText(
+    grid,
+    Math.max(2, Math.floor((cols - 8) / 2)),
+    2,
+    "WET RUN",
+    PALETTE.GREEN_NEON,
+  );
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - 40) / 2)),
@@ -70,7 +80,13 @@ export function renderMainMenu(
   );
 
   // Divider
-  grid = setText(grid, 2, 6, "─".repeat(Math.min(cols - 4, 60)), PALETTE.GRAY_MID);
+  grid = setText(
+    grid,
+    2,
+    6,
+    "─".repeat(Math.min(cols - 4, 60)),
+    PALETTE.GRAY_MID,
+  );
 
   // Options list (starting at row 8)
   const startY = 8;
@@ -202,7 +218,13 @@ export function renderBriefingScreen(
   ];
   const startY = 3;
   for (let i = 0; i < asciiOffice.length; i++) {
-    grid = setText(grid, Math.max(2, Math.floor((cols - 28) / 2)), startY + i, asciiOffice[i], PALETTE.GRAY_LIGHT);
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - 28) / 2)),
+      startY + i,
+      asciiOffice[i],
+      PALETTE.GRAY_LIGHT,
+    );
   }
 
   // Mission title
@@ -289,7 +311,13 @@ export function renderTravelScreen(
   const scene = scenes[Math.min(step, scenes.length - 1)];
   const startY = 4;
   for (let i = 0; i < scene.length; i++) {
-    grid = setText(grid, Math.max(2, Math.floor((cols - 30) / 2)), startY + i, scene[i], PALETTE.GRAY_LIGHT);
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - 30) / 2)),
+      startY + i,
+      scene[i],
+      PALETTE.GRAY_LIGHT,
+    );
   }
 
   // Progress indicator
@@ -342,7 +370,13 @@ export function renderNPCDialogueScreen(
   // NPC Portrait (ASCII)
   const portraitStartY = 3;
   for (let i = 0; i < npcPortrait.length; i++) {
-    grid = setText(grid, Math.max(2, Math.floor((cols - npcPortrait[i].length) / 2)), portraitStartY + i, npcPortrait[i], PALETTE.CYAN_LIGHT);
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - npcPortrait[i].length) / 2)),
+      portraitStartY + i,
+      npcPortrait[i],
+      PALETTE.CYAN_LIGHT,
+    );
   }
 
   // Dialogue box
@@ -351,21 +385,40 @@ export function renderNPCDialogueScreen(
   const boxLeft = Math.max(2, Math.floor((cols - boxWidth) / 2));
 
   // Top border
-  grid = setText(grid, boxLeft, dialogueStartY, "╔" + "═".repeat(boxWidth - 2) + "╗", PALETTE.CYAN_LIGHT);
+  grid = setText(
+    grid,
+    boxLeft,
+    dialogueStartY,
+    "╔" + "═".repeat(boxWidth - 2) + "╗",
+    PALETTE.CYAN_LIGHT,
+  );
 
   // Dialogue lines
   for (let i = 0; i < dialogueLines.length; i++) {
     const line = dialogueLines[i];
-    const truncated = line.length > boxWidth - 4 ? line.slice(0, boxWidth - 7) + "..." : line;
+    const truncated =
+      line.length > boxWidth - 4 ? line.slice(0, boxWidth - 7) + "..." : line;
     const padded = truncated.padEnd(boxWidth - 4);
     const isCurrent = i === currentLine;
     const color = isCurrent ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
-    grid = setText(grid, boxLeft, dialogueStartY + 1 + i, `║ ${padded} ║`, color);
+    grid = setText(
+      grid,
+      boxLeft,
+      dialogueStartY + 1 + i,
+      `║ ${padded} ║`,
+      color,
+    );
   }
 
   // Bottom border
   const bottomY = dialogueStartY + 1 + dialogueLines.length;
-  grid = setText(grid, boxLeft, bottomY, "╚" + "═".repeat(boxWidth - 2) + "╝", PALETTE.CYAN_LIGHT);
+  grid = setText(
+    grid,
+    boxLeft,
+    bottomY,
+    "╚" + "═".repeat(boxWidth - 2) + "╝",
+    PALETTE.CYAN_LIGHT,
+  );
 
   // Progress indicator
   grid = setText(
@@ -433,7 +486,9 @@ export function renderExtractDataScreen(
   // Progress bar
   const barWidth = Math.min(cols - 4, 50);
   const barLeft = Math.max(2, Math.floor((cols - barWidth) / 2));
-  const filled = Math.floor((extractionProgress / maxProgress) * (barWidth - 2));
+  const filled = Math.floor(
+    (extractionProgress / maxProgress) * (barWidth - 2),
+  );
   const empty = barWidth - 2 - filled;
   const bar = "█".repeat(filled) + "░".repeat(empty);
   grid = setText(grid, barLeft, 10, "[" + bar + "]", PALETTE.GREEN_NEON);
@@ -446,13 +501,16 @@ export function renderExtractDataScreen(
   );
 
   // Status
-  const status = extractionProgress >= maxProgress ? "EXTRACTION COMPLETE" : "EXTRACTING...";
+  const status =
+    extractionProgress >= maxProgress ? "EXTRACTION COMPLETE" : "EXTRACTING...";
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - status.length) / 2)),
     13,
     status,
-    extractionProgress >= maxProgress ? PALETTE.GREEN_NEON : PALETTE.YELLOW_AMBER,
+    extractionProgress >= maxProgress
+      ? PALETTE.GREEN_NEON
+      : PALETTE.YELLOW_AMBER,
   );
 
   // Footer
@@ -522,8 +580,12 @@ export function renderBypassSecurityScreen(
   }
 
   // Watchdog position (moves back and forth)
-  const watchdogPos = (patrolPhase % (patrolWidth * 2 - 2));
-  const watchdogX = patrolLeft + (watchdogPos < patrolWidth - 1 ? watchdogPos : patrolWidth * 2 - 2 - watchdogPos);
+  const watchdogPos = patrolPhase % (patrolWidth * 2 - 2);
+  const watchdogX =
+    patrolLeft +
+    (watchdogPos < patrolWidth - 1
+      ? watchdogPos
+      : patrolWidth * 2 - 2 - watchdogPos);
   grid = setText(grid, watchdogX, patrolY, "▲", PALETTE.RED_BRIGHT);
 
   // Player position (fixed at left, waiting to move)
@@ -537,7 +599,13 @@ export function renderBypassSecurityScreen(
   const filled = Math.floor((detectionRisk / 100) * (barWidth - 2));
   const empty = barWidth - 2 - filled;
   const bar = "█".repeat(filled) + "░".repeat(empty);
-  grid = setText(grid, barLeft, riskY, "[" + bar + "]", detectionRisk >= 80 ? PALETTE.RED_BRIGHT : PALETTE.YELLOW_AMBER);
+  grid = setText(
+    grid,
+    barLeft,
+    riskY,
+    "[" + bar + "]",
+    detectionRisk >= 80 ? PALETTE.RED_BRIGHT : PALETTE.YELLOW_AMBER,
+  );
   grid = setText(
     grid,
     barLeft,
@@ -553,7 +621,13 @@ export function renderBypassSecurityScreen(
   const progFilled = Math.floor((progress / 3) * (progBarWidth - 2));
   const progEmpty = progBarWidth - 2 - progFilled;
   const progBar = "█".repeat(progFilled) + "░".repeat(progEmpty);
-  grid = setText(grid, progBarLeft, progY, "[" + progBar + "]", PALETTE.GREEN_NEON);
+  grid = setText(
+    grid,
+    progBarLeft,
+    progY,
+    "[" + progBar + "]",
+    PALETTE.GREEN_NEON,
+  );
   grid = setText(
     grid,
     progBarLeft,
@@ -573,8 +647,18 @@ export function renderBypassSecurityScreen(
   );
 
   // Status
-  const status = detectionRisk >= 95 ? "DETECTED!" : progress >= 3 ? "BYPASS COMPLETE" : "WAITING FOR CLEAR PATH...";
-  const statusColor = detectionRisk >= 95 ? PALETTE.RED_BRIGHT : progress >= 3 ? PALETTE.GREEN_NEON : PALETTE.YELLOW_AMBER;
+  const status =
+    detectionRisk >= 95
+      ? "DETECTED!"
+      : progress >= 3
+        ? "BYPASS COMPLETE"
+        : "WAITING FOR CLEAR PATH...";
+  const statusColor =
+    detectionRisk >= 95
+      ? PALETTE.RED_BRIGHT
+      : progress >= 3
+        ? PALETTE.GREEN_NEON
+        : PALETTE.YELLOW_AMBER;
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - status.length) / 2)),
@@ -593,7 +677,15 @@ export function renderBypassSecurityScreen(
 export function renderBlackMarketScreen(
   cols: number,
   rows: number,
-  categories: ReadonlyArray<{ name: string; items: ReadonlyArray<{ name: string; price: number; currency: "credits" | "materials"; quantity?: number }> }>,
+  categories: ReadonlyArray<{
+    name: string;
+    items: ReadonlyArray<{
+      name: string;
+      price: number;
+      currency: "credits" | "materials";
+      quantity?: number;
+    }>;
+  }>,
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -618,7 +710,13 @@ export function renderBlackMarketScreen(
   ];
   const startY = 3;
   for (let i = 0; i < vendorArt.length; i++) {
-    grid = setText(grid, Math.max(2, Math.floor((cols - 28) / 2)), startY + i, vendorArt[i], PALETTE.GRAY_LIGHT);
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - 28) / 2)),
+      startY + i,
+      vendorArt[i],
+      PALETTE.GRAY_LIGHT,
+    );
   }
 
   // Categories
@@ -629,9 +727,16 @@ export function renderBlackMarketScreen(
     y++;
     for (const item of cat.items) {
       if (y >= rows - 4) break;
-      const priceStr = item.currency === "credits" ? `${item.price}cr` : `${item.price}mat`;
+      const priceStr =
+        item.currency === "credits" ? `${item.price}cr` : `${item.price}mat`;
       const qtyStr = item.quantity ? ` x${item.quantity}` : "";
-      grid = setText(grid, 4, y, `  ${item.name}${qtyStr} — ${priceStr}`, PALETTE.GRAY_LIGHT);
+      grid = setText(
+        grid,
+        4,
+        y,
+        `  ${item.name}${qtyStr} — ${priceStr}`,
+        PALETTE.GRAY_LIGHT,
+      );
       y++;
     }
     y++; // spacing between categories
@@ -678,7 +783,13 @@ export function renderGhostEncounterScreen(
   // Loa ASCII portrait
   const portraitStartY = 3;
   for (let i = 0; i < loaPortrait.length; i++) {
-    grid = setText(grid, Math.max(2, Math.floor((cols - loaPortrait[i].length) / 2)), portraitStartY + i, loaPortrait[i], PALETTE.MAGENTA_NEON);
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - loaPortrait[i].length) / 2)),
+      portraitStartY + i,
+      loaPortrait[i],
+      PALETTE.MAGENTA_NEON,
+    );
   }
 
   // Dialogue
@@ -687,7 +798,13 @@ export function renderGhostEncounterScreen(
   const boxLeft = Math.max(2, Math.floor((cols - boxWidth) / 2));
 
   // Top border
-  grid = setText(grid, boxLeft, dialogueStartY, "╔" + "═".repeat(boxWidth - 2) + "╗", PALETTE.MAGENTA_NEON);
+  grid = setText(
+    grid,
+    boxLeft,
+    dialogueStartY,
+    "╔" + "═".repeat(boxWidth - 2) + "╗",
+    PALETTE.MAGENTA_NEON,
+  );
 
   // Dialogue text (wrapped)
   const words = dialogue.split(" ");
@@ -695,7 +812,13 @@ export function renderGhostEncounterScreen(
   let lineY = dialogueStartY + 1;
   for (const word of words) {
     if ((line + word).length > boxWidth - 4) {
-      grid = setText(grid, boxLeft, lineY, `║ ${line.padEnd(boxWidth - 4)} ║`, PALETTE.GRAY_LIGHT);
+      grid = setText(
+        grid,
+        boxLeft,
+        lineY,
+        `║ ${line.padEnd(boxWidth - 4)} ║`,
+        PALETTE.GRAY_LIGHT,
+      );
       line = word + " ";
       lineY++;
     } else {
@@ -703,13 +826,25 @@ export function renderGhostEncounterScreen(
     }
   }
   if (line.length > 0) {
-    grid = setText(grid, boxLeft, lineY, `║ ${line.padEnd(boxWidth - 4)} ║`, PALETTE.GRAY_LIGHT);
+    grid = setText(
+      grid,
+      boxLeft,
+      lineY,
+      `║ ${line.padEnd(boxWidth - 4)} ║`,
+      PALETTE.GRAY_LIGHT,
+    );
     lineY++;
   }
 
   // Bottom border
   const bottomY = lineY;
-  grid = setText(grid, boxLeft, bottomY, "╚" + "═".repeat(boxWidth - 2) + "╝", PALETTE.MAGENTA_NEON);
+  grid = setText(
+    grid,
+    boxLeft,
+    bottomY,
+    "╚" + "═".repeat(boxWidth - 2) + "╝",
+    PALETTE.MAGENTA_NEON,
+  );
 
   // Options
   for (let i = 0; i < options.length; i++) {
@@ -717,7 +852,13 @@ export function renderGhostEncounterScreen(
     const isSelected = i === selectedOption;
     const marker = isSelected ? "▸" : " ";
     const color = isSelected ? PALETTE.MAGENTA_NEON : PALETTE.GRAY_LIGHT;
-    grid = setText(grid, boxLeft + 1, bottomY + 1 + i, `${marker} ${opt.label}`, color);
+    grid = setText(
+      grid,
+      boxLeft + 1,
+      bottomY + 1 + i,
+      `${marker} ${opt.label}`,
+      color,
+    );
   }
 
   // Footer
@@ -740,7 +881,14 @@ export function renderGhostEncounterScreen(
 export function renderDeathRestartScreen(
   cols: number,
   rows: number,
-  summary: { jockeyName: string; mission: string; grade: number; playtimeMinutes: number; totalRuns: number; totalDeaths: number },
+  summary: {
+    jockeyName: string;
+    mission: string;
+    grade: number;
+    playtimeMinutes: number;
+    totalRuns: number;
+    totalDeaths: number;
+  },
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -764,7 +912,13 @@ export function renderDeathRestartScreen(
   ];
   const startY = 3;
   for (let i = 0; i < asciiArt.length; i++) {
-    grid = setText(grid, Math.max(2, Math.floor((cols - 28) / 2)), startY + i, asciiArt[i], PALETTE.RED_BRIGHT);
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - 28) / 2)),
+      startY + i,
+      asciiArt[i],
+      PALETTE.RED_BRIGHT,
+    );
   }
 
   // Jockey summary
@@ -825,10 +979,7 @@ export function renderDeathRestartScreen(
  *
  * Stage: failed — Terminal flatline state. No recovery, only acknowledgment.
  */
-export function renderFailedScreen(
-  cols: number,
-  rows: number,
-): Grid {
+export function renderFailedScreen(cols: number, rows: number): Grid {
   let grid = makeGrid(cols, rows);
 
   // Title
@@ -851,7 +1002,13 @@ export function renderFailedScreen(
   ];
   const startY = 3;
   for (let i = 0; i < asciiArt.length; i++) {
-    grid = setText(grid, Math.max(2, Math.floor((cols - 28) / 2)), startY + i, asciiArt[i], PALETTE.RED_BRIGHT);
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - 28) / 2)),
+      startY + i,
+      asciiArt[i],
+      PALETTE.RED_BRIGHT,
+    );
   }
 
   // Footer

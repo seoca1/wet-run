@@ -57,13 +57,17 @@ export function makeEquipmentSetsFromData(
   const out: Record<string, EquipmentSetV2> = {};
   for (const [key, value] of Object.entries(raw)) {
     if (key.startsWith("_")) continue;
-    if (value === null || typeof value !== "object" || Array.isArray(value)) continue;
+    if (value === null || typeof value !== "object" || Array.isArray(value))
+      continue;
     const r = value as RawEquipmentSet;
     const setId = typeof r.set_id === "string" ? r.set_id : key;
     const bonuses: Partial<Record<2 | 3 | 4, SetBonusV2>> = {};
-    if (r.set_bonus_2_piece !== undefined) bonuses[2] = normalizeSetBonus(r.set_bonus_2_piece);
-    if (r.set_bonus_3_piece !== undefined) bonuses[3] = normalizeSetBonus(r.set_bonus_3_piece);
-    if (r.set_bonus_4_piece !== undefined) bonuses[4] = normalizeSetBonus(r.set_bonus_4_piece);
+    if (r.set_bonus_2_piece !== undefined)
+      bonuses[2] = normalizeSetBonus(r.set_bonus_2_piece);
+    if (r.set_bonus_3_piece !== undefined)
+      bonuses[3] = normalizeSetBonus(r.set_bonus_3_piece);
+    if (r.set_bonus_4_piece !== undefined)
+      bonuses[4] = normalizeSetBonus(r.set_bonus_4_piece);
     out[setId] = Object.freeze({
       setId,
       setName: typeof r.set_name === "string" ? r.set_name : setId,

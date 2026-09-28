@@ -116,7 +116,11 @@ export interface Equipment {
 
 /** Build an `Equipment` with default values for the cosmetic / metadata fields. */
 export function makeEquipment(
-  partial: Pick<Equipment, "id" | "name" | "slot" | "category" | "tier" | "stats" | "description"> & Partial<Equipment>,
+  partial: Pick<
+    Equipment,
+    "id" | "name" | "slot" | "category" | "tier" | "stats" | "description"
+  > &
+    Partial<Equipment>,
 ): Equipment {
   return Object.freeze({
     id: partial.id,
@@ -151,7 +155,9 @@ export function isT1OrBetter(equip: Equipment): boolean {
  * with ", " when both are non-empty.
  */
 export function addStats(a: EquipStats, b: EquipStats): EquipStats {
-  const effect = [a.extraEffect, b.extraEffect].filter((e) => e.length > 0).join(", ");
+  const effect = [a.extraEffect, b.extraEffect]
+    .filter((e) => e.length > 0)
+    .join(", ");
   return makeEquipStats({
     attackBonus: a.attackBonus + b.attackBonus,
     critBonusPct: a.critBonusPct + b.critBonusPct,
@@ -198,7 +204,6 @@ export {
   DEFAULT_EQUIPMENT,
 } from "./equipment_catalog.ts";
 
-
 // =============================================================================
 // Equipment Registry
 // =============================================================================
@@ -211,7 +216,9 @@ export interface EquipmentRegistry {
 }
 
 /** Build a registry from an explicit equipment array. */
-export function makeEquipmentRegistry(equipment: ReadonlyArray<Equipment>): EquipmentRegistry {
+export function makeEquipmentRegistry(
+  equipment: ReadonlyArray<Equipment>,
+): EquipmentRegistry {
   const map: Record<string, Equipment> = {};
   for (const e of equipment) {
     map[e.id] = e;
@@ -229,9 +236,8 @@ export function makeEquipmentRegistry(equipment: ReadonlyArray<Equipment>): Equi
 }
 
 /** The default Gibson-inspired equipment registry. */
-export const DEFAULT_REGISTRY: EquipmentRegistry = makeEquipmentRegistry(DEFAULT_EQUIPMENT);
-
-
+export const DEFAULT_REGISTRY: EquipmentRegistry =
+  makeEquipmentRegistry(DEFAULT_EQUIPMENT);
 
 // =============================================================================
 // Loadout re-export

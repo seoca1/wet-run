@@ -41,7 +41,10 @@ export interface EquipResult {
 }
 
 /** Pure equip function — returns a new loadout with the item placed. */
-export function equipOn(loadout: EquipmentLoadout, equipment: Equipment): EquipResult {
+export function equipOn(
+  loadout: EquipmentLoadout,
+  equipment: Equipment,
+): EquipResult {
   const previous = loadout.equipment[equipment.slot] ?? null;
   return {
     previous,
@@ -55,16 +58,24 @@ export interface UnequipResult {
   readonly removed: Equipment | null;
 }
 
-export function unequipFrom(loadout: EquipmentLoadout, slot: EquipSlot): UnequipResult {
+export function unequipFrom(
+  loadout: EquipmentLoadout,
+  slot: EquipSlot,
+): UnequipResult {
   const removed = loadout.equipment[slot] ?? null;
   if (removed === null) return { loadout, removed: null };
   const next: Record<string, Equipment> = { ...loadout.equipment };
   delete next[slot];
-  return { removed, loadout: makeLoadout(next as Record<EquipSlot, Equipment>) };
+  return {
+    removed,
+    loadout: makeLoadout(next as Record<EquipSlot, Equipment>),
+  };
 }
 
 /** Construct a loadout from a slot → equipment map. */
-export function makeLoadout(equipment: Readonly<Partial<Record<EquipSlot, Equipment>>> = {}): EquipmentLoadout {
+export function makeLoadout(
+  equipment: Readonly<Partial<Record<EquipSlot, Equipment>>> = {},
+): EquipmentLoadout {
   const map: Record<EquipSlot, Equipment> = {} as Record<EquipSlot, Equipment>;
   for (const slot of EQUIP_SLOTS) {
     const piece = equipment[slot];

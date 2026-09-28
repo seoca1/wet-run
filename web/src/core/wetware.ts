@@ -117,12 +117,15 @@ export interface WetwareRegistry {
 }
 
 /** Build a registry from raw JSON parsed from `wetware.json`. */
-export function makeWetwareRegistry(raw: Readonly<Record<string, unknown>>): WetwareRegistry {
+export function makeWetwareRegistry(
+  raw: Readonly<Record<string, unknown>>,
+): WetwareRegistry {
   const byId: Record<string, WetwareAugment> = {};
   const all: WetwareAugment[] = [];
   for (const [key, value] of Object.entries(raw)) {
     if (key.startsWith("_")) continue;
-    if (value === null || typeof value !== "object" || Array.isArray(value)) continue;
+    if (value === null || typeof value !== "object" || Array.isArray(value))
+      continue;
     const r = value as RawWetwareAugment;
     const id = typeof r.id === "string" ? r.id : key;
     if (id.length === 0) continue;
@@ -175,15 +178,24 @@ export function stackWetware(
   registry: WetwareRegistry,
   augmentIds: ReadonlyArray<string>,
 ): StackedWetware {
-  let stacked: StackedWetware = { ...EMPTY_STACKED_WETWARE, augmentCount: augmentIds.length };
+  let stacked: StackedWetware = {
+    ...EMPTY_STACKED_WETWARE,
+    augmentCount: augmentIds.length,
+  };
 
   for (const id of augmentIds) {
     const aug = registry.byId[id];
     if (aug === undefined) continue;
     stacked = {
       apRegen: cap(stacked.apRegen + aug.apRegenBonus, WETWARE_CAPS.apRegen),
-      critChance: cap(stacked.critChance + aug.critChanceBonus, WETWARE_CAPS.critChance),
-      critDamage: cap(stacked.critDamage + aug.critDamageBonus, WETWARE_CAPS.critDamage),
+      critChance: cap(
+        stacked.critChance + aug.critChanceBonus,
+        WETWARE_CAPS.critChance,
+      ),
+      critDamage: cap(
+        stacked.critDamage + aug.critDamageBonus,
+        WETWARE_CAPS.critDamage,
+      ),
       dodge: cap(stacked.dodge + aug.dodgeBonus, WETWARE_CAPS.dodge),
       hpBonus: stacked.hpBonus + Math.trunc(aug.hpBonus),
       healing: cap(stacked.healing + aug.healBonus, WETWARE_CAPS.healing),
@@ -199,7 +211,9 @@ export function stackWetware(
 }
 
 /** Augments that introduce new stats (mana, armor, focus). */
-export function getNewStatAugments(registry: WetwareRegistry): ReadonlyArray<WetwareAugment> {
+export function getNewStatAugments(
+  registry: WetwareRegistry,
+): ReadonlyArray<WetwareAugment> {
   return Object.freeze(registry.all.filter((a) => a.isNewStat));
 }
 

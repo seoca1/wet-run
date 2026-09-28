@@ -1,9 +1,44 @@
 /** Effect/status kind unions — hand-maintained in web/src/data/ since 2026-09-15. */
-export type EffectKind = "attack" | "heal" | "shield" | "buff" | "debuff" | "stun" | "ice_hit" | "player_hit" | "critical_hit" | "status_apply" | "ice_intro" | "ice_death" | "boss_phase_transition" | "victory" | "defeat" | "heavy_attack" | "pierce" | "multi_hit" | "dot" | "counter" | "lifesteal" | "detect" | "regen" | "jackin_glitch" | "jackout_whiteout" | "room_flash" | "data_acquired";
+export type EffectKind =
+  | "attack"
+  | "heal"
+  | "shield"
+  | "buff"
+  | "debuff"
+  | "stun"
+  | "ice_hit"
+  | "player_hit"
+  | "critical_hit"
+  | "status_apply"
+  | "ice_intro"
+  | "ice_death"
+  | "boss_phase_transition"
+  | "victory"
+  | "defeat"
+  | "heavy_attack"
+  | "pierce"
+  | "multi_hit"
+  | "dot"
+  | "counter"
+  | "lifesteal"
+  | "detect"
+  | "regen"
+  | "jackin_glitch"
+  | "jackout_whiteout"
+  | "room_flash"
+  | "data_acquired";
 
-export type StatusKind = "BUFF" | "BURN" | "DEBUFF" | "DOT" | "POISON" | "REGEN" | "SHIELD" | "STUN";
+export type StatusKind =
+  "BUFF" | "BURN" | "DEBUFF" | "DOT" | "POISON" | "REGEN" | "SHIELD" | "STUN";
 
-export type IceType = "black" | "construct" | "goliath" | "standard" | "ta_construct_prime" | "watchdog" | "wintermute";
+export type IceType =
+  | "black"
+  | "construct"
+  | "goliath"
+  | "standard"
+  | "ta_construct_prime"
+  | "watchdog"
+  | "wintermute";
 
 export const EFFECTS: ReadonlyArray<EffectSpec> = [
   EFFECT_ATTACK,
@@ -51,9 +86,9 @@ export const EFFECT_ATTACK: {
   readonly duration_ticks: 15;
   readonly color_hint: "DAMAGE_COLOR";
   readonly payload: {
-  readonly program_name: string;
-  readonly damage: number;
-};
+    readonly program_name: string;
+    readonly damage: number;
+  };
 };
 
 export const EFFECT_HEAL: {
@@ -63,8 +98,8 @@ export const EFFECT_HEAL: {
   readonly duration_ticks: 20;
   readonly color_hint: "HEAL_COLOR";
   readonly payload: {
-  readonly amount: number;
-};
+    readonly amount: number;
+  };
 };
 
 export const EFFECT_SHIELD: {
@@ -74,8 +109,8 @@ export const EFFECT_SHIELD: {
   readonly duration_ticks: 18;
   readonly color_hint: "SHIELD_COLOR";
   readonly payload: {
-  readonly target: "player" | "ice";
-};
+    readonly target: "player" | "ice";
+  };
 };
 
 export const EFFECT_BUFF: {
@@ -85,9 +120,9 @@ export const EFFECT_BUFF: {
   readonly duration_ticks: 15;
   readonly color_hint: "BUFF_COLOR";
   readonly payload: {
-  readonly stat: string;
-  readonly amount: number;
-};
+    readonly stat: string;
+    readonly amount: number;
+  };
 };
 
 export const EFFECT_DEBUFF: {
@@ -97,9 +132,9 @@ export const EFFECT_DEBUFF: {
   readonly duration_ticks: 15;
   readonly color_hint: "DEBUFF_COLOR";
   readonly payload: {
-  readonly stat: string;
-  readonly amount: number;
-};
+    readonly stat: string;
+    readonly amount: number;
+  };
 };
 
 export const EFFECT_STUN: {
@@ -109,9 +144,9 @@ export const EFFECT_STUN: {
   readonly duration_ticks: 20;
   readonly color_hint: "STUN_COLOR";
   readonly payload: {
-  readonly target: "player" | "ice";
-  readonly duration_turns: number;
-};
+    readonly target: "player" | "ice";
+    readonly duration_turns: number;
+  };
 };
 
 export const EFFECT_ICE_HIT: {
@@ -121,8 +156,8 @@ export const EFFECT_ICE_HIT: {
   readonly duration_ticks: 10;
   readonly color_hint: "DAMAGE_COLOR";
   readonly payload: {
-  readonly damage: number;
-};
+    readonly damage: number;
+  };
 };
 
 export const EFFECT_PLAYER_HIT: {
@@ -132,8 +167,8 @@ export const EFFECT_PLAYER_HIT: {
   readonly duration_ticks: 13;
   readonly color_hint: "DAMAGE_COLOR";
   readonly payload: {
-  readonly damage: number;
-};
+    readonly damage: number;
+  };
 };
 
 export const EFFECT_CRITICAL_HIT: {
@@ -143,9 +178,9 @@ export const EFFECT_CRITICAL_HIT: {
   readonly duration_ticks: 20;
   readonly color_hint: "CRIT_COLOR";
   readonly payload: {
-  readonly damage: number;
-  readonly is_player_attacker: boolean;
-};
+    readonly damage: number;
+    readonly is_player_attacker: boolean;
+  };
 };
 
 export const EFFECT_STATUS_APPLY: {
@@ -155,9 +190,9 @@ export const EFFECT_STATUS_APPLY: {
   readonly duration_ticks: 15;
   readonly color_hint: "DEFAULT_COLOR";
   readonly payload: {
-  readonly status_kind: StatusKind;
-  readonly target: "player" | "ice";
-};
+    readonly status_kind: StatusKind;
+    readonly target: "player" | "ice";
+  };
 };
 
 export const EFFECT_ICE_INTRO: {
@@ -167,9 +202,9 @@ export const EFFECT_ICE_INTRO: {
   readonly duration_ticks: 40;
   readonly color_hint: "ICE_BREAK_COLOR";
   readonly payload: {
-  readonly ice_type: IceType;
-  readonly ice_name: string;
-};
+    readonly ice_type: IceType;
+    readonly ice_name: string;
+  };
 };
 
 export const EFFECT_ICE_DEATH: {
@@ -179,9 +214,9 @@ export const EFFECT_ICE_DEATH: {
   readonly duration_ticks: 40;
   readonly color_hint: "ICE_BREAK_COLOR";
   readonly payload: {
-  readonly ice_type: IceType;
-  readonly ice_name: string;
-};
+    readonly ice_type: IceType;
+    readonly ice_name: string;
+  };
 };
 
 export const EFFECT_BOSS_PHASE_TRANSITION: {
@@ -191,9 +226,9 @@ export const EFFECT_BOSS_PHASE_TRANSITION: {
   readonly duration_ticks: 50;
   readonly color_hint: "PHASE_COLOR_BY_INDEX";
   readonly payload: {
-  readonly boss_phase: number;
-  readonly previous_phase: number;
-};
+    readonly boss_phase: number;
+    readonly previous_phase: number;
+  };
 };
 
 export const EFFECT_VICTORY: {
@@ -221,8 +256,8 @@ export const EFFECT_HEAVY_ATTACK: {
   readonly duration_ticks: 57;
   readonly color_hint: "ORANGE";
   readonly payload: {
-  readonly damage: number;
-};
+    readonly damage: number;
+  };
 };
 
 export const EFFECT_PIERCE: {
@@ -232,8 +267,8 @@ export const EFFECT_PIERCE: {
   readonly duration_ticks: 20;
   readonly color_hint: "WARM";
   readonly payload: {
-  readonly damage: number;
-};
+    readonly damage: number;
+  };
 };
 
 export const EFFECT_MULTI_HIT: {
@@ -243,9 +278,9 @@ export const EFFECT_MULTI_HIT: {
   readonly duration_ticks: 19;
   readonly color_hint: "DAMAGE_COLOR";
   readonly payload: {
-  readonly hit_count: number;
-  readonly total_damage: number;
-};
+    readonly hit_count: number;
+    readonly total_damage: number;
+  };
 };
 
 export const EFFECT_DOT: {
@@ -255,9 +290,9 @@ export const EFFECT_DOT: {
   readonly duration_ticks: 35;
   readonly color_hint: "ICE_FADE_PURPLE";
   readonly payload: {
-  readonly magnitude: number;
-  readonly target: "player" | "ice";
-};
+    readonly magnitude: number;
+    readonly target: "player" | "ice";
+  };
 };
 
 export const EFFECT_COUNTER: {
@@ -267,8 +302,8 @@ export const EFFECT_COUNTER: {
   readonly duration_ticks: 27;
   readonly color_hint: "SHIELD_COLOR";
   readonly payload: {
-  readonly damage: number;
-};
+    readonly damage: number;
+  };
 };
 
 export const EFFECT_LIFESTEAL: {
@@ -278,9 +313,9 @@ export const EFFECT_LIFESTEAL: {
   readonly duration_ticks: 31;
   readonly color_hint: "DAMAGE_COLOR";
   readonly payload: {
-  readonly damage: number;
-  readonly heal_amount: number;
-};
+    readonly damage: number;
+    readonly heal_amount: number;
+  };
 };
 
 export const EFFECT_DETECT: {
@@ -290,8 +325,8 @@ export const EFFECT_DETECT: {
   readonly duration_ticks: 35;
   readonly color_hint: "SHIELD_COLOR";
   readonly payload: {
-  readonly target: "player" | "ice";
-};
+    readonly target: "player" | "ice";
+  };
 };
 
 export const EFFECT_REGEN: {
@@ -301,8 +336,8 @@ export const EFFECT_REGEN: {
   readonly duration_ticks: 29;
   readonly color_hint: "ICE_GREEN_BRIGHT";
   readonly payload: {
-  readonly amount: number;
-};
+    readonly amount: number;
+  };
 };
 
 export const EFFECT_JACKIN_GLITCH: {
@@ -330,8 +365,8 @@ export const EFFECT_ROOM_FLASH: {
   readonly duration_ticks: 5;
   readonly color_hint: "OLIVE";
   readonly payload: {
-  readonly color_hint: string;
-};
+    readonly color_hint: string;
+  };
 };
 
 export const EFFECT_DATA_ACQUIRED: {

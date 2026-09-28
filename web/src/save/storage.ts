@@ -22,7 +22,8 @@ const SLOT_COUNT = MANUAL_SLOT_COUNT + 1;
 const MAX_SLOT_INDEX = MANUAL_SLOT_COUNT;
 
 function key(slot: number): string {
-  if (slot < 0 || slot > MAX_SLOT_INDEX) throw new Error(`Invalid save slot ${slot}`);
+  if (slot < 0 || slot > MAX_SLOT_INDEX)
+    throw new Error(`Invalid save slot ${slot}`);
   return `wetrun_mvp_save_v1_slot_${slot}`;
 }
 
@@ -36,8 +37,12 @@ export async function save(slot: number, data: SaveSlot): Promise<void> {
   try {
     await idbPut(slot, serializeForStorage(data));
   } catch (err) {
-    if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
-    console.warn(`IDB save failed slot ${slot}, falling back to localStorage:`, err);
+    if (err instanceof Error && err.message.startsWith("Invalid save slot"))
+      throw err;
+    console.warn(
+      `IDB save failed slot ${slot}, falling back to localStorage:`,
+      err,
+    );
     saveLegacy(slot, data);
   }
 }
@@ -46,7 +51,8 @@ function saveLegacy(slot: number, data: SaveSlot): void {
   try {
     localStorage.setItem(key(slot), serializeForStorage(data));
   } catch (err) {
-    if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
+    if (err instanceof Error && err.message.startsWith("Invalid save slot"))
+      throw err;
     console.warn(`Failed to save slot ${slot}:`, err);
   }
 }
@@ -71,8 +77,12 @@ export async function load(slot: number): Promise<SaveSlot | null> {
     if (raw) return parseSlot(raw);
     return await migrateFromLegacy(slot);
   } catch (err) {
-    if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
-    console.warn(`IDB load failed slot ${slot}, falling back to localStorage:`, err);
+    if (err instanceof Error && err.message.startsWith("Invalid save slot"))
+      throw err;
+    console.warn(
+      `IDB load failed slot ${slot}, falling back to localStorage:`,
+      err,
+    );
     return loadLegacy(slot);
   }
 }
@@ -94,7 +104,8 @@ function loadLegacy(slot: number): SaveSlot | null {
     }
     return null;
   } catch (err) {
-    if (err instanceof Error && err.message.startsWith("Invalid save slot")) throw err;
+    if (err instanceof Error && err.message.startsWith("Invalid save slot"))
+      throw err;
     console.warn(`Failed to load slot ${slot}:`, err);
     return null;
   }
@@ -113,7 +124,6 @@ async function migrateFromLegacy(slot: number): Promise<SaveSlot | null> {
   return parsed;
 }
 
-
 export async function clear(slot: number): Promise<void> {
   if (!(await idbIsAvailable())) {
     localStorage.removeItem(key(slot));
@@ -126,13 +136,20 @@ export async function clear(slot: number): Promise<void> {
   }
 }
 
-export async function listSlots(): Promise<ReadonlyArray<{
-  readonly slot: number;
-  readonly savedAt: string;
-  readonly missionId: string;
-  readonly turnCount: number;
-}>> {
-  const out: { slot: number; savedAt: string; missionId: string; turnCount: number }[] = [];
+export async function listSlots(): Promise<
+  ReadonlyArray<{
+    readonly slot: number;
+    readonly savedAt: string;
+    readonly missionId: string;
+    readonly turnCount: number;
+  }>
+> {
+  const out: {
+    slot: number;
+    savedAt: string;
+    missionId: string;
+    turnCount: number;
+  }[] = [];
   for (let s = 0; s <= MAX_SLOT_INDEX; s++) {
     const data = await load(s);
     if (data) {
@@ -208,12 +225,14 @@ function isSaveSlot(value: unknown): value is SaveSlot {
   );
 }
 
-export const SAVE_SLOT_LABELS: Readonly<Record<number, string>> = Object.freeze({
-  0: "Autosave",
-  1: "Slot 1",
-  2: "Slot 2",
-  3: "Slot 3",
-});
+export const SAVE_SLOT_LABELS: Readonly<Record<number, string>> = Object.freeze(
+  {
+    0: "Autosave",
+    1: "Slot 1",
+    2: "Slot 2",
+    3: "Slot 3",
+  },
+);
 
 export const SLOT_COUNT_TOTAL: number = SLOT_COUNT;
 export const MAX_SAVE_SLOT: number = MAX_SLOT_INDEX;

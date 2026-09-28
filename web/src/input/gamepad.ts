@@ -28,18 +28,18 @@ const GAMEPAD_DEADZONE = 0.5;
 
 /** Standard gamepad button indices (matches navigator.getGamepads mapping). */
 const BUTTON = {
-  A: 0,      // Cross (PS) / A (Xbox)
-  B: 1,      // Circle (PS) / B (Xbox)
-  X: 2,      // Square (PS) / X (Xbox)
-  Y: 3,      // Triangle (PS) / Y (Xbox)
-  LB: 4,     // L1 / Left Bumper
-  RB: 5,     // R1 / Right Bumper
-  LT: 6,     // L2 / Left Trigger
-  RT: 7,     // R2 / Right Trigger
-  BACK: 8,   // Select / Back / Share
-  START: 9,  // Start / Options
-  LS: 10,    // Left Stick Press
-  RS: 11,    // Right Stick Press
+  A: 0, // Cross (PS) / A (Xbox)
+  B: 1, // Circle (PS) / B (Xbox)
+  X: 2, // Square (PS) / X (Xbox)
+  Y: 3, // Triangle (PS) / Y (Xbox)
+  LB: 4, // L1 / Left Bumper
+  RB: 5, // R1 / Right Bumper
+  LT: 6, // L2 / Left Trigger
+  RT: 7, // R2 / Right Trigger
+  BACK: 8, // Select / Back / Share
+  START: 9, // Start / Options
+  LS: 10, // Left Stick Press
+  RS: 11, // Right Stick Press
   DPAD_UP: 12,
   DPAD_DOWN: 13,
   DPAD_LEFT: 14,
@@ -134,7 +134,10 @@ export class GamepadInput {
     this.checkDpadAxes(prev.axes, curr.axes);
   }
 
-  private checkDpadAxes(prevAxes: ReadonlyArray<number>, currAxes: ReadonlyArray<number>): void {
+  private checkDpadAxes(
+    prevAxes: ReadonlyArray<number>,
+    currAxes: ReadonlyArray<number>,
+  ): void {
     if (!this.handler) return;
 
     // Some controllers map D-pad to axes[6] (horizontal) and axes[7] (vertical)
@@ -145,16 +148,25 @@ export class GamepadInput {
       const prevVertical = prevAxes[7] ?? 0;
 
       // Horizontal: -1 = left, +1 = right
-      if (horizontal < -GAMEPAD_DEADZONE && prevHorizontal >= -GAMEPAD_DEADZONE) {
+      if (
+        horizontal < -GAMEPAD_DEADZONE &&
+        prevHorizontal >= -GAMEPAD_DEADZONE
+      ) {
         this.handler({ type: "move_west" });
-      } else if (horizontal > GAMEPAD_DEADZONE && prevHorizontal <= GAMEPAD_DEADZONE) {
+      } else if (
+        horizontal > GAMEPAD_DEADZONE &&
+        prevHorizontal <= GAMEPAD_DEADZONE
+      ) {
         this.handler({ type: "move_east" });
       }
 
       // Vertical: -1 = up, +1 = down
       if (vertical < -GAMEPAD_DEADZONE && prevVertical >= -GAMEPAD_DEADZONE) {
         this.handler({ type: "move_north" });
-      } else if (vertical > GAMEPAD_DEADZONE && prevVertical <= GAMEPAD_DEADZONE) {
+      } else if (
+        vertical > GAMEPAD_DEADZONE &&
+        prevVertical <= GAMEPAD_DEADZONE
+      ) {
         this.handler({ type: "move_south" });
       }
     }

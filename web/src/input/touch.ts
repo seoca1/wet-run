@@ -120,7 +120,9 @@ function buildActionButtons(config: LayoutConfig): ReadonlyArray<ButtonConfig> {
 }
 
 /** Inject CSS + DOM elements for the on-screen gamepad. */
-export function mountVirtualGamepad(handler: (action: GameAction) => void): () => void {
+export function mountVirtualGamepad(
+  handler: (action: GameAction) => void,
+): () => void {
   if (typeof document === "undefined") {
     return () => {};
   }
@@ -135,7 +137,9 @@ export function mountVirtualGamepad(handler: (action: GameAction) => void): () =
  * Each program gets a button labeled with its short-id (first 4 chars), positioned
  * in a horizontal row at the bottom-center of the viewport.
  */
-export function updateProgramRow(deck: ReadonlyArray<{ readonly id: string }>): void {
+export function updateProgramRow(
+  deck: ReadonlyArray<{ readonly id: string }>,
+): void {
   const row = document.getElementById("wetrun-program-row");
   if (!row) return;
   if (deck.length === 0) {
@@ -173,7 +177,9 @@ export function updateProgramRow(deck: ReadonlyArray<{ readonly id: string }>): 
     if (Number.isFinite(idx) && idx > 0) {
       btn.addEventListener("pointerdown", (e) => {
         e.preventDefault();
-        const w = window as unknown as { wetrun?: { handleProgramButton(handIndex: number): void } };
+        const w = window as unknown as {
+          wetrun?: { handleProgramButton(handIndex: number): void };
+        };
         w.wetrun?.handleProgramButton(idx);
       });
     }
@@ -194,7 +200,10 @@ function ensureOverlayRoot(): HTMLElement {
   return root;
 }
 
-function renderOverlay(root: HTMLElement, handler: (action: GameAction) => void): void {
+function renderOverlay(
+  root: HTMLElement,
+  handler: (action: GameAction) => void,
+): void {
   const config = getLayoutConfig();
   const dpadButtons = buildDpadButtons(config);
   const actionButtons = buildActionButtons(config);
@@ -227,7 +236,11 @@ function renderOverlay(root: HTMLElement, handler: (action: GameAction) => void)
   }
 }
 
-function appendButton(parent: HTMLElement, cfg: ButtonConfig, handler: (action: GameAction) => void): void {
+function appendButton(
+  parent: HTMLElement,
+  cfg: ButtonConfig,
+  handler: (action: GameAction) => void,
+): void {
   const btn = document.createElement("button");
   btn.textContent = cfg.label;
   btn.style.left = cfg.left;

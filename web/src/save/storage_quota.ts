@@ -13,7 +13,12 @@
  */
 
 export type StorageQuota =
-  | { readonly state: "ok"; readonly usageBytes: number; readonly quotaBytes: number; readonly percent: number }
+  | {
+      readonly state: "ok";
+      readonly usageBytes: number;
+      readonly quotaBytes: number;
+      readonly percent: number;
+    }
   | { readonly state: "unavailable"; readonly reason: string };
 
 export const STORAGE_QUOTA_WARNING_PERCENT = 80;
@@ -21,11 +26,16 @@ export const STORAGE_QUOTA_CRITICAL_PERCENT = 95;
 
 /** Read the current storage usage + quota. Safe to call in any env. */
 export async function getStorageQuota(): Promise<StorageQuota> {
-  const sm = (typeof navigator !== "undefined" ? navigator.storage : undefined) as
+  const sm = (
+    typeof navigator !== "undefined" ? navigator.storage : undefined
+  ) as
     | { estimate?: () => Promise<{ usage?: number; quota?: number }> }
     | undefined;
   if (!sm || typeof sm.estimate !== "function") {
-    return { state: "unavailable", reason: "StorageManager.estimate not supported" };
+    return {
+      state: "unavailable",
+      reason: "StorageManager.estimate not supported",
+    };
   }
   try {
     const estimate = await sm.estimate();

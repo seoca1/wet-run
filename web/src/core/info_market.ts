@@ -24,15 +24,16 @@ export type ReputationTier =
 export const DISCOUNT_DENOM = 200;
 export const MARKUP_DENOM = 200;
 
-export const TIER_TO_MULTIPLIER: Readonly<Record<ReputationTier, number>> = Object.freeze({
-  ALLIED: 0.5,
-  FRIENDLY: 0.65,
-  TRUSTED: 0.85,
-  NEUTRAL: 1.0,
-  HOSTILE: 1.15,
-  ENEMY: 1.35,
-  OUTCAST: 1.5,
-});
+export const TIER_TO_MULTIPLIER: Readonly<Record<ReputationTier, number>> =
+  Object.freeze({
+    ALLIED: 0.5,
+    FRIENDLY: 0.65,
+    TRUSTED: 0.85,
+    NEUTRAL: 1.0,
+    HOSTILE: 1.15,
+    ENEMY: 1.35,
+    OUTCAST: 1.5,
+  });
 
 export function reputationTier(score: number): ReputationTier {
   const s = Math.max(-100, Math.min(100, score));
@@ -83,13 +84,23 @@ export interface InfoMarket {
   get(itemId: string): MarketItem | null;
   allItems(): ReadonlyArray<MarketItem>;
   availableItems(): ReadonlyArray<MarketItem>;
-  priceFor(itemId: string, factionScores: Readonly<Record<string, number>>): number | null;
-  canPurchase(itemId: string, factionScores: Readonly<Record<string, number>>, credits: number): boolean;
+  priceFor(
+    itemId: string,
+    factionScores: Readonly<Record<string, number>>,
+  ): number | null;
+  canPurchase(
+    itemId: string,
+    factionScores: Readonly<Record<string, number>>,
+    credits: number,
+  ): boolean;
 }
 
 export type PurchaseResult =
   | { readonly ok: true; readonly newCredits: number; readonly itemId: string }
-  | { readonly ok: false; readonly reason: "not_found" | "not_for_sale" | "insufficient_credits" };
+  | {
+      readonly ok: false;
+      readonly reason: "not_found" | "not_for_sale" | "insufficient_credits";
+    };
 
 export function purchaseItem(
   market: InfoMarket,
@@ -105,11 +116,18 @@ export function purchaseItem(
   return { ok: true, newCredits: credits - price, itemId };
 }
 
-export function makeInfoMarketFromData(raw: Readonly<Record<string, unknown>>): InfoMarket {
+export function makeInfoMarketFromData(
+  raw: Readonly<Record<string, unknown>>,
+): InfoMarket {
   const items: Record<string, MarketItem> = {};
   for (const [key, payload] of Object.entries(raw)) {
     if (key.startsWith("_")) continue;
-    if (payload === null || typeof payload !== "object" || Array.isArray(payload)) continue;
+    if (
+      payload === null ||
+      typeof payload !== "object" ||
+      Array.isArray(payload)
+    )
+      continue;
     const entry = payload as RawMarketEntry;
     const faction = parseFaction(entry.faction);
     const basePrice =
@@ -122,7 +140,9 @@ export function makeInfoMarketFromData(raw: Readonly<Record<string, unknown>>): 
       itemId: String(entry.item_id ?? key),
       name: String(entry.name ?? key),
       basePrice,
-      tierLevel: Number.isFinite(entry.tier_level) ? Math.trunc(entry.tier_level as number) : 1,
+      tierLevel: Number.isFinite(entry.tier_level)
+        ? Math.trunc(entry.tier_level as number)
+        : 1,
       available: entry.available === true,
       faction,
       examples: Array.isArray(entry.examples) ? entry.examples.map(String) : [],
@@ -133,7 +153,9 @@ export function makeInfoMarketFromData(raw: Readonly<Record<string, unknown>>): 
   return makeInfoMarket(items);
 }
 
-export function makeInfoMarket(items: Readonly<Record<string, MarketItem>>): InfoMarket {
+export function makeInfoMarket(
+  items: Readonly<Record<string, MarketItem>>,
+): InfoMarket {
   const lookup = Object.freeze({ ...items });
   const allItemsSnapshot = Object.freeze(Object.values(lookup));
   return Object.freeze({
@@ -147,7 +169,10 @@ export function makeInfoMarket(items: Readonly<Record<string, MarketItem>>): Inf
     availableItems(): ReadonlyArray<MarketItem> {
       return Object.freeze(allItemsSnapshot.filter((it) => it.available));
     },
-    priceFor(itemId: string, factionScores: Readonly<Record<string, number>>): number | null {
+    priceFor(
+      itemId: string,
+      factionScores: Readonly<Record<string, number>>,
+    ): number | null {
       const item = lookup[itemId];
       if (item === undefined) return null;
       if (item.faction === null) {
@@ -157,7 +182,11 @@ export function makeInfoMarket(items: Readonly<Record<string, MarketItem>>): Inf
       const score = factionScores[item.faction] ?? 0;
       return discountedPrice(item, score);
     },
-    canPurchase(itemId: string, factionScores: Readonly<Record<string, number>>, credits: number): boolean {
+    canPurchase(
+      itemId: string,
+      factionScores: Readonly<Record<string, number>>,
+      credits: number,
+    ): boolean {
       const price = this.priceFor(itemId, factionScores);
       return price !== null && credits >= price;
     },

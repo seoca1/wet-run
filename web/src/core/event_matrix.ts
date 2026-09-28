@@ -13,12 +13,7 @@
 import type { Ice, MatrixNode, Program } from "./types.ts";
 
 export type MatrixEventKind =
-  | "combat"
-  | "discovery"
-  | "trap"
-  | "cache"
-  | "rest"
-  | "merchant";
+  "combat" | "discovery" | "trap" | "cache" | "rest" | "merchant";
 
 export interface MatrixEventData {
   // trap: damage dealt to player
@@ -39,7 +34,10 @@ export interface EventedMatrixNode extends MatrixNode {
 }
 
 /** Deterministic weighted pick based on a seed-derived rng. */
-export function pickEventKind(zone: MatrixNode["zone"], rng: () => number): MatrixEventKind {
+export function pickEventKind(
+  zone: MatrixNode["zone"],
+  rng: () => number,
+): MatrixEventKind {
   const r = rng();
   switch (zone) {
     case "surface":
@@ -122,15 +120,26 @@ export function buildEventMatrix(
 ): EventedMatrixNode[] {
   const rng = makeRng(seed);
   const zones: ReadonlyArray<MatrixNode["zone"]> = [
-    "surface", "mid", "deep", "core", "core-deep",
+    "surface",
+    "mid",
+    "deep",
+    "core",
+    "core-deep",
   ];
   const fallbackIce = Object.values(iceCatalog)[0];
   const nodes: EventedMatrixNode[] = [];
   for (let i = 0; i < zones.length; i++) {
     const zone = zones[i] ?? "surface";
     const isLast = i === 4;
-    const eventKind: MatrixEventKind = isLast ? "combat" : pickEventKind(zone, rng);
-    const eventData = generateEventData(eventKind, iceCatalog, programCatalog, rng);
+    const eventKind: MatrixEventKind = isLast
+      ? "combat"
+      : pickEventKind(zone, rng);
+    const eventData = generateEventData(
+      eventKind,
+      iceCatalog,
+      programCatalog,
+      rng,
+    );
     const defaultIce = isLast ? "wintermute" : "watchdog";
     const ice = iceCatalog[defaultIce] ?? fallbackIce;
     const node: EventedMatrixNode = {

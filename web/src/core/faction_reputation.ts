@@ -15,7 +15,10 @@ export type ReputationTier =
   | "ENEMY"
   | "OUTCAST";
 
-export const TIER_THRESHOLDS: ReadonlyArray<{ readonly tier: ReputationTier; readonly min: number }> = Object.freeze([
+export const TIER_THRESHOLDS: ReadonlyArray<{
+  readonly tier: ReputationTier;
+  readonly min: number;
+}> = Object.freeze([
   { tier: "ALLIED", min: 80 },
   { tier: "FRIENDLY", min: 50 },
   { tier: "TRUSTED", min: 20 },
@@ -25,15 +28,16 @@ export const TIER_THRESHOLDS: ReadonlyArray<{ readonly tier: ReputationTier; rea
   { tier: "OUTCAST", min: -100 },
 ]);
 
-export const TIER_MULTIPLIERS: Readonly<Record<ReputationTier, number>> = Object.freeze({
-  ALLIED: 0.5,
-  FRIENDLY: 0.65,
-  TRUSTED: 0.85,
-  NEUTRAL: 1.0,
-  HOSTILE: 1.15,
-  ENEMY: 1.35,
-  OUTCAST: 1.5,
-});
+export const TIER_MULTIPLIERS: Readonly<Record<ReputationTier, number>> =
+  Object.freeze({
+    ALLIED: 0.5,
+    FRIENDLY: 0.65,
+    TRUSTED: 0.85,
+    NEUTRAL: 1.0,
+    HOSTILE: 1.15,
+    ENEMY: 1.35,
+    OUTCAST: 1.5,
+  });
 
 export type FactionScores = Readonly<Record<FactionId, number>>;
 
@@ -69,19 +73,21 @@ export function applyScoreChange(
   return { ...scores, [faction]: newScore };
 }
 
-export const MISSION_REWARD_MAP: Readonly<Record<FactionId, number>> = Object.freeze({
-  hosaka: 10,
-  maas: 10,
-  sense_net: 10,
-  ta: 10,
-});
+export const MISSION_REWARD_MAP: Readonly<Record<FactionId, number>> =
+  Object.freeze({
+    hosaka: 10,
+    maas: 10,
+    sense_net: 10,
+    ta: 10,
+  });
 
-export const KILL_PENALTY_MAP: Readonly<Record<FactionId, number>> = Object.freeze({
-  hosaka: -5,
-  maas: -5,
-  sense_net: -5,
-  ta: -5,
-});
+export const KILL_PENALTY_MAP: Readonly<Record<FactionId, number>> =
+  Object.freeze({
+    hosaka: -5,
+    maas: -5,
+    sense_net: -5,
+    ta: -5,
+  });
 
 export function onMissionComplete(
   scores: FactionScores,
@@ -105,7 +111,7 @@ export function getFactionSummary(scores: FactionScores): ReadonlyArray<{
   readonly tier: ReputationTier;
   readonly multiplier: number;
 }> {
-  return (Object.keys(scores) as FactionId[]).map(faction => ({
+  return (Object.keys(scores) as FactionId[]).map((faction) => ({
     faction,
     score: scores[faction],
     tier: scoreToTier(scores[faction]),

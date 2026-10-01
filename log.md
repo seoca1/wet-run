@@ -1243,3 +1243,20 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 
 ### 잔여
 - 분산 축 도입 여부 (사람 결정) 또는 현 단조 곡선 수용.
+
+---
+
+## [2026-09-28] chore | Prettier 전역 reformat + alarm-cap/fuzz + delegation-verification CI
+
+### Prettier reformat (10 commits, 동작 변경 없음)
+- `dd75fb1` single-quote→double, line-wrap, indent를 시작으로 combat/audio → dungeon → hub/info_market/faction/event_matrix → equipment/crafting → state/actions/meta → menu/settings → graphic_novel/core/types → canvas/combat_vfx/debug/dungeon/hud/matrix/palette renderer → input/save/data/main (`e0f52d5`) 순으로 전역 포맷 통일.
+- 커밋 메시지 기준 style-only. 전역 reformat이므로 이후 `git blame` 시 이 구간은 포맷 노이즈로 간주.
+
+### 테스트 (ADR-0210 invariant)
+- `54943ce` test(web): alarm-cap edge-case + combat fuzz 추가.
+
+### CI
+- `7cfa12e` ci(wet_run): delegation-verification workflow 추가 (sharded tests + Discord).
+
+### 잔여
+- 본 entry는 2026-10-01 세션에서 git 이력 기준으로 후기록 (당일 log 공백 보강). 09-24~25 항목은 이미 기록되어 있었음을 정정.

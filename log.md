@@ -1260,3 +1260,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 
 ### 잔여
 - 본 entry는 2026-10-01 세션에서 git 이력 기준으로 후기록 (당일 log 공백 보강). 09-24~25 항목은 이미 기록되어 있었음을 정정.
+
+## [2026-10-07] adr | ADR-0213 Far Grid — 비-깁슨 사이버펑크 별도 영역 확장
+
+**Status**: ✅ Accepted (Option 1, 사용자 승인 2026-10-07). 문서만 — 코드/데이터 미착수 (❌ Not started).
+
+- `docs/architecture/0213-far-grid-separate-expansion.md` 신규 — Sprawl 캐논 격리, `source_universe` 스키마, §8 정합. Related: `Fiction/decisions/0054-sf-collection-expansion.md` (Draft).
+- `docs/wiki/world/cyberpunk-sources.md` 신규 — 비-깁슨 사이버펑크 원천 prep (SF_F 서브셋, wet-run 연결점). Raw 제공(user-side) 후 Fiction ingest.
+- `docs/architecture/README.md` + `docs/wiki/index.md` 인덱스 등록.

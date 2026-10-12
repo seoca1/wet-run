@@ -18,6 +18,29 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "menu.help": "HELP",
   "menu.back": "BACK",
 
+  // Main menu surface (ADR-0207/0209 renderers: menu_main.ts)
+  "menu.title": "WET RUN",
+  "menu.subtitle": "A cyberpunk roguelike based on Gibson's Sprawl trilogy",
+  "menu.far_grid_hub": "FAR GRID",
+  "menu.dungeon_crawl": "DUNGEON CRAWL",
+  "menu.craft": "CRAFT",
+  "menu.equipment": "EQUIPMENT",
+  "menu.endings": "ENDINGS",
+  "menu.stats": "STATS",
+  "menu.tutorial": "TUTORIAL",
+  "menu.no_save": "(no save)",
+  "menu.locked": "(locked)",
+  "menu.footer": "↑↓: navigate | ENTER: select | ESC: back",
+  "menu.version": "Tier 4 · v0.1.0 · ADR-0209 IDB",
+
+  // Far Grid hub surface (ADR-0213 renderer: far_grid_hub.ts)
+  "far_grid.header": "FAR GRID HUB",
+  "far_grid.intro": "Beyond the Sprawl — Far Grid-tagged missions",
+  "far_grid.empty": "(no Far Grid missions available)",
+  "far_grid.footer": "↑↓: navigate | ENTER: launch | ESC: back",
+  "far_grid.locked_message":
+    "Clear all Sprawl Arc 1 missions to unlock the Far Grid",
+
   // Game
   "game.credits": "CREDITS",
   "game.hp": "HP",
@@ -73,6 +96,29 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "menu.hall_of_dead": "죽은 자의 전당",
   "menu.help": "도움말",
   "menu.back": "뒤로",
+
+  // Main menu surface (ADR-0207/0209 renderers: menu_main.ts)
+  "menu.title": "WET RUN",
+  "menu.subtitle": "깁슨의 스프롤 3부작을 바탕으로 한 사이버펑크 로그라이크",
+  "menu.far_grid_hub": "FAR GRID",
+  "menu.dungeon_crawl": "던전 크롤",
+  "menu.craft": "제작",
+  "menu.equipment": "장비",
+  "menu.endings": "엔딩",
+  "menu.stats": "통계",
+  "menu.tutorial": "튜토리얼",
+  "menu.no_save": "(저장 없음)",
+  "menu.locked": "(잠김)",
+  "menu.footer": "↑↓: 이동 | ENTER: 선택 | ESC: 뒤로",
+  "menu.version": "Tier 4 · v0.1.0 · ADR-0209 IDB",
+
+  // Far Grid hub surface (ADR-0213 renderer: far_grid_hub.ts)
+  "far_grid.header": "FAR GRID 허브",
+  "far_grid.intro": "스프롤 너머 — FAR GRID 임무",
+  "far_grid.empty": "(표시할 FAR GRID 임무 없음)",
+  "far_grid.footer": "↑↓: 이동 | ENTER: 출격 | ESC: 뒤로",
+  "far_grid.locked_message":
+    "스프롤 1장 임무를 모두 완료하면 FAR GRID가 열립니다",
 
   // Game
   "game.credits": "크레딧",

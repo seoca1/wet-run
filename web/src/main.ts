@@ -90,6 +90,11 @@ import {
   makeLoadout,
 } from "./core/equipment.ts";
 import type { InfoMarket } from "./core/info_market.ts";
+import type { Language } from "./core/i18n.ts";
+
+// UI language for the menu + Far Grid hub renderers. Fixed to English until
+// the settings toggle + global language state land (activation deferred).
+const UI_LANGUAGE: Language = "en";
 
 const loadStorySystem = () => import("./core/graphic_novel.ts");
 const loadAudioSystemRaw = () => import("./audio/manager.ts");
@@ -1311,6 +1316,7 @@ class Game {
             this.saveMetaCache,
             this._message,
             this.farGridUnlockedCache,
+            UI_LANGUAGE,
           ),
           [
             "MAIN MENU",
@@ -1338,13 +1344,18 @@ class Game {
           this.screen = "menu";
           this._message = FAR_GRID_LOCKED_MESSAGE;
         } else {
-          const farGridMissions = filterMissionsByUniverse(MISSIONS, "far-grid");
+          const farGridMissions = filterMissionsByUniverse(
+            MISSIONS,
+            "far-grid",
+          );
           this.renderer.render(
             renderFarGridHub(
               farGridMissions,
               this.selectedMission,
               this.layout.cols,
               this.layout.rows,
+              "",
+              UI_LANGUAGE,
             ),
             [
               "FAR GRID HUB",

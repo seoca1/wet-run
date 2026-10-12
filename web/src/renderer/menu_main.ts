@@ -12,6 +12,7 @@
  */
 import type { Grid } from "../core/types.ts";
 import { makeGrid, setText } from "../core/grid.ts";
+import { t, type Language } from "../core/i18n.ts";
 import { PALETTE } from "./palette.ts";
 
 export type MenuOption =
@@ -70,6 +71,7 @@ export function renderMainMenu(
   saveMeta: { missionId: string; turnCount: number } | null = null,
   statusMessage: string = "",
   farGridUnlocked: boolean = true,
+  language: Language = "en",
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -78,14 +80,14 @@ export function renderMainMenu(
     grid,
     Math.max(2, Math.floor((cols - 8) / 2)),
     2,
-    "WET RUN",
+    t("menu.title", language),
     PALETTE.GREEN_NEON,
   );
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - 40) / 2)),
     4,
-    "A cyberpunk roguelike based on Gibson's Sprawl trilogy",
+    t("menu.subtitle", language),
     PALETTE.GRAY_LIGHT,
   );
 
@@ -109,16 +111,16 @@ export function renderMainMenu(
     const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const row = startY + i;
     if (row >= rows - 1) break;
-    let label = `[${num}] ${opt.label}`;
+    let label = `[${num}] ${t(`menu.${opt.key}`, language)}`;
     // CONTINUE option gating — gray out + suffix when no save.
     if (opt.key === "continue" && !hasSave) {
-      label = `[${num}] CONTINUE    (no save)`;
+      label = `[${num}] ${t("menu.continue", language)}    ${t("menu.no_save", language)}`;
       grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
       continue;
     }
     // FAR GRID option gating — gray out + suffix when locked (ADR-0213 Phase 2).
     if (opt.key === "far_grid_hub" && !farGridUnlocked) {
-      label = `[${num}] FAR GRID    (locked)`;
+      label = `[${num}] ${t("menu.far_grid_hub", language)}    ${t("menu.locked", language)}`;
       grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
       continue;
     }
@@ -149,14 +151,14 @@ export function renderMainMenu(
     grid,
     2,
     footerRow,
-    "↑↓: navigate | ENTER: select | ESC: back",
+    t("menu.footer", language),
     PALETTE.GRAY_DARK,
   );
   grid = setText(
     grid,
     2,
     footerRow + 1,
-    "Tier 4 · v0.1.0 · ADR-0209 IDB",
+    t("menu.version", language),
     PALETTE.GRAY_DARK,
   );
 

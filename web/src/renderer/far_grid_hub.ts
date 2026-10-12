@@ -12,6 +12,7 @@
  */
 import type { Grid, Mission } from "../core/types.ts";
 import { makeGrid, setText } from "../core/grid.ts";
+import { t, type Language } from "../core/i18n.ts";
 import { PALETTE } from "./palette.ts";
 
 /** Word-wrap a string to lines no longer than `width` columns.
@@ -74,20 +75,21 @@ export function renderFarGridHub(
   cols: number,
   rows: number,
   statusMessage: string = "",
+  language: Language = "en",
 ): Grid {
   let grid = makeGrid(cols, rows);
 
   // Header (mirrors mission_select's "WET RUN — Select Mission" line)
-  grid = setText(grid, 2, 1, "FAR GRID HUB", PALETTE.GREEN_NEON);
-
-  // Intro — frame the Far Grid as set apart from Sprawl's mission board
   grid = setText(
     grid,
     2,
-    3,
-    "Beyond the Sprawl — Far Grid-tagged missions",
-    PALETTE.GRAY_LIGHT,
+    1,
+    t("far_grid.header", language),
+    PALETTE.GREEN_NEON,
   );
+
+  // Intro — frame the Far Grid as set apart from Sprawl's mission board
+  grid = setText(grid, 2, 3, t("far_grid.intro", language), PALETTE.GRAY_LIGHT);
 
   // Mission list — start at row 5 to mirror mission_select's spacing
   const listStartY = 5;
@@ -96,7 +98,7 @@ export function renderFarGridHub(
       grid,
       2,
       listStartY,
-      "(no Far Grid missions available)",
+      t("far_grid.empty", language),
       PALETTE.GRAY_DARK,
     );
   } else {
@@ -129,7 +131,7 @@ export function renderFarGridHub(
     grid,
     2,
     footerY,
-    "↑↓: navigate | ENTER: launch | ESC: back",
+    t("far_grid.footer", language),
     PALETTE.GRAY_DARK,
   );
 
@@ -151,7 +153,13 @@ export function renderFarGridHub(
     const maxLines = Math.max(0, lastAllowedY - startY);
     const toRender = lines.slice(0, maxLines);
     for (let i = 0; i < toRender.length; i++) {
-      grid = setText(grid, 2, startY + i, toRender[i] ?? "", PALETTE.GRAY_LIGHT);
+      grid = setText(
+        grid,
+        2,
+        startY + i,
+        toRender[i] ?? "",
+        PALETTE.GRAY_LIGHT,
+      );
     }
   }
 

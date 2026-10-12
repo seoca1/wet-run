@@ -147,7 +147,18 @@ Fiction `SF_F` 컬렉션에 Gibson 바깥 사이버펑크 원천이 있다 (W.J.
 - `web/tests/dungeon_pool_separation.test.ts` (new, 4 tests) — same-seed/different-id divergence (incl. the 555/7/444 dupe pairs), far-grid vs sprawl divergence, determinism, null-id fallback.
 - Gates: typecheck 0 · lint 0 errors · vitest 116 files / 2724 passed · build OK
 
-**Notes**: Seed-dupe cleanup closed as non-issue (ids differentiate streams). Remaining: Wave 3 (26 unmapped B stories) + full-arc-clear gate tightening.
+**Notes**: Seed-dupe cleanup closed as non-issue (ids differentiate streams). Remaining: full-arc-clear gate tightening.
+
+## Implementation Status (2026-10-12 — Wave 3 full roster)
+
+**Status**: ✅ Implemented (content-complete: all 20 xauthors stories playable)
+
+**Evidence**:
+- `web/src/data/missions.json` — 53 total, 20 far-grid (Wave 3: moat_burned_blue, erythrinas_list, rogers_backyard, arkady_in_orange, dirtgirl_dispatch, firebuds_chair; all with briefings, grades 1–4, seeds 202624–202629)
+- Correction: prior notes said "Wave 3 (26 unmapped)" — counting error. Only 20 xauthors stories exist (10 TN + 10 HW); 14 were mapped, 6 remained, now 0 unmapped. Agent correctly refused to invent missions for nonexistent stories (§8).
+- Hub scroll-window unnecessary: 20-item list fits the smallest 50-row grid with briefing block intact.
+- Tests: count assertions 47→53; far-grid ID list 14→20
+- Gates: typecheck 0 · lint 0 errors · vitest 116 files / 2724 passed · build OK
 
 ## 결과 (Consequences) — 2026-10-07 Option 1 확정
 

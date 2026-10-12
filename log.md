@@ -1323,3 +1323,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - RNG = mulberry32(seed + id-hash)라 우주 간 풀 공유 구조적 불가. 테스트 4개로 고정.
 - Gates: typecheck 0 · lint 0 errors · 116 files / 2724 passed.
 - seed 중복은 non-issue로 종결 (id가 스트림 분리).
+
+## [2026-10-12] feat | Far Grid Wave 3 — full roster 20종 (ADR-0213)
+
+- `missions.json` 47→53 (잔여 6편 전부 매핑, 미매핑 0).
+- 정정: "26 미매핑"은 카운팅 오류였음 (xauthors 20편 중 14 매핑済). 에이전트가 허위 미션 창작 거부 (§8 준수).
+- Hub 스크롤 불필요 (20개, 50행 그리드 내 brief 포함 표시 가능).
+- Gates: typecheck 0 · lint 0 errors · 116 files / 2724 passed · build OK.

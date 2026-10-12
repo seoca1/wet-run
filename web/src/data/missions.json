@@ -1253,5 +1253,127 @@
       "title": "Tin Soldiers at the Shrine"
     },
     "briefing": "Two children in silver-chased sockets are learning a third language in front of comp terminals on a silver-threaded floor. The silhouette wants the deck to read the data at Roon's belt without entering the room."
+  },
+  "moat_burned_blue": {
+    "id": "moat_burned_blue",
+    "title": "The Moat Burned Blue",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 1,
+    "rewards": {
+      "credits": 500,
+      "materials": {}
+    },
+    "matrix_seed": 202624,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_moat_burned_blue",
+      "title": "The Moat Burned Blue"
+    },
+    "briefing": "Alan the gate elemental has been watching the drawbridge from his cobalt pool long enough to learn who calls him by name; the silhouette wants the deck to stand at the lip of the moat and listen for the first sentence from the path."
+  },
+  "erythrinas_list": {
+    "id": "erythrinas_list",
+    "title": "Erythrina's List",
+    "fixer": "operator_silhouette",
+    "arc": 2,
+    "zone": "precursor",
+    "grade_min": 2,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 900,
+      "materials": {}
+    },
+    "matrix_seed": 202625,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_erythrinas_list",
+      "title": "Erythrina's List"
+    },
+    "briefing": "Erythrina's small ledger of True Names is six items longer than it was a month ago, and one of the additions will not resolve to any name she has carried; the silhouette wants the deck to watch her read the list one more time."
+  },
+  "rogers_backyard": {
+    "id": "rogers_backyard",
+    "title": "Roger's Backyard",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 1,
+    "rewards": {
+      "credits": 500,
+      "materials": {}
+    },
+    "matrix_seed": 202626,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_rogers_backyard",
+      "title": "Roger's Backyard"
+    },
+    "briefing": "A cabbage corner and a patch of crushed mint are the only evidence left in Roger Pollack's garden that the morning ever happened; the silhouette wants the deck to walk the herb spiral in the drizzle and see which stones have been turned."
+  },
+  "arkady_in_orange": {
+    "id": "arkady_in_orange",
+    "title": "Arkady in Orange",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 2,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 900,
+      "materials": {}
+    },
+    "matrix_seed": 202627,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_arkady_in_orange",
+      "title": "Arkady in Orange"
+    },
+    "briefing": "Arkady has been standing at the open barn door since the bronze machine pulled out of Colorado, and the small cold in his chest has not yet settled; the silhouette wants the deck to be the second pair of eyes on the long curve of the road."
+  },
+  "dirtgirl_dispatch": {
+    "id": "dirtgirl_dispatch",
+    "title": "Dirtgirl Dispatch",
+    "fixer": "operator_silhouette",
+    "arc": 2,
+    "zone": "precursor",
+    "grade_min": 3,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 1400,
+      "materials": {}
+    },
+    "matrix_seed": 202628,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_dirtgirl_dispatch",
+      "title": "Dirtgirl Dispatch"
+    },
+    "briefing": "A Tampa dispatcher's small white console has been routing the first batch of Cowboy's cargo down the alleyway courier ring since the Orbital blockade lifted, and nine years of waiting are ending in the rain; the silhouette wants the deck at the corner of the alley for the first handoff."
+  },
+  "firebuds_chair": {
+    "id": "firebuds_chair",
+    "title": "The Chair at the Cut",
+    "fixer": "operator_silhouette",
+    "arc": 2,
+    "zone": "precursor",
+    "grade_min": 3,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 1700,
+      "materials": {
+        "data_fragment": 1
+      }
+    },
+    "matrix_seed": 202629,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_firebuds_chair",
+      "title": "The Chair at the Cut"
+    },
+    "briefing": "Firebud has been tilting a dirtgirl's chin in the low white chair since the sun turned the color of copper over Tampa Bay, and the knot on the wall has been where the dirtgirl puts her eyes when the knife comes out; the silhouette wants the deck behind the surgical tray long enough to read the long scars and the small knot."
   }
 }

@@ -15,9 +15,9 @@ describe("mission catalog", () => {
     expect(Object.keys(data).length).toBeGreaterThanOrEqual(15);
   });
 
-  it("loads exactly 47 missions (33 Sprawl + 14 Far Grid, ADR-0213 Wave 2)", () => {
+  it("loads exactly 53 missions (33 Sprawl + 20 Far Grid, ADR-0213 Wave 3)", () => {
     const data = missionsData as unknown as MissionsFile;
-    expect(Object.keys(data).length).toBe(47);
+    expect(Object.keys(data).length).toBe(53);
   });
 
   it("each mission has required fields", () => {

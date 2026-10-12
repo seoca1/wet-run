@@ -25,6 +25,8 @@ interface LegacyMission {
   zone?: string;
   fixer?: string;
   arc?: number;
+  source_universe?: "sprawl" | "far-grid";
+  story?: { source?: string; title?: string };
   rewards?: { credits?: number; materials?: Record<string, number> };
 }
 
@@ -100,6 +102,32 @@ export function parseMission(raw: unknown, idHint: string): Mission {
     "credits",
     `mission '${id}'`,
   );
+  // source_universe is optional in JSON; absent means "sprawl" (ADR-0213)
+  const source_universe = r.source_universe ?? "sprawl";
+  if (source_universe !== "sprawl" && source_universe !== "far-grid") {
+    throw new Error(
+      `[data_loaders] mission '${id}': field 'source_universe' must be "sprawl" or "far-grid" (got ${JSON.stringify(r.source_universe)})`,
+    );
+  }
+  // story is optional display-only metadata (ADR-0213); never resolved at runtime
+  let story: Mission["story"] = undefined;
+  if (r.story !== undefined) {
+    if (typeof r.story !== "object" || r.story === null) {
+      throw new Error(
+        `[data_loaders] mission '${id}': field 'story' must be an object when present`,
+      );
+    }
+    const sRaw = r.story as { source?: unknown; title?: unknown };
+    if (typeof sRaw.source !== "string" || sRaw.source.length === 0) {
+      throw new Error(
+        `[data_loaders] mission '${id}': field 'story.source' must be a non-empty string`,
+      );
+    }
+    story = {
+      source: sRaw.source,
+      ...(typeof sRaw.title === "string" ? { title: sRaw.title } : {}),
+    };
+  }
   return {
     id,
     title,
@@ -115,6 +143,8 @@ export function parseMission(raw: unknown, idHint: string): Mission {
     },
     grade,
     seed,
+    source_universe,
+    story,
   };
 }
 

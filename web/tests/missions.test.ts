@@ -15,9 +15,9 @@ describe("mission catalog", () => {
     expect(Object.keys(data).length).toBeGreaterThanOrEqual(15);
   });
 
-  it("loads exactly 33 missions (synced from Python)", () => {
+  it("loads exactly 36 missions (33 Sprawl + 3 Far Grid, ADR-0213)", () => {
     const data = missionsData as unknown as MissionsFile;
-    expect(Object.keys(data).length).toBe(33);
+    expect(Object.keys(data).length).toBe(36);
   });
 
   it("each mission has required fields", () => {

@@ -62,6 +62,121 @@ describe("data_loaders: parseMission", () => {
       ),
     ).toThrow(/field 'rewards' must be an object/);
   });
+
+  it("defaults source_universe to sprawl when missing", () => {
+    const m = parseMission(
+      {
+        id: "x",
+        title: "X",
+        fixer: "f",
+        arc: 1,
+        zone: "z",
+        grade_min: 1,
+        grade_max: 1,
+        rewards: { credits: 0, materials: {} },
+      },
+      "x",
+    );
+    expect(m.source_universe).toBe("sprawl");
+  });
+
+  it("accepts source_universe far-grid", () => {
+    const m = parseMission(
+      {
+        id: "x",
+        title: "X",
+        fixer: "f",
+        arc: 1,
+        zone: "z",
+        grade_min: 1,
+        grade_max: 1,
+        rewards: { credits: 0, materials: {} },
+        source_universe: "far-grid",
+      },
+      "x",
+    );
+    expect(m.source_universe).toBe("far-grid");
+  });
+
+  it("throws on unknown source_universe value", () => {
+    expect(() =>
+      parseMission(
+        {
+          id: "x",
+          title: "X",
+          fixer: "f",
+          arc: 1,
+          zone: "z",
+          grade_min: 1,
+          grade_max: 1,
+          rewards: { credits: 0, materials: {} },
+          source_universe: "hybridscape",
+        },
+        "x",
+      ),
+    ).toThrow(/source_universe.*sprawl.*far-grid/);
+  });
+
+  it("accepts story with source only", () => {
+    const m = parseMission(
+      {
+        id: "x",
+        title: "X",
+        fixer: "f",
+        arc: 1,
+        zone: "z",
+        grade_min: 1,
+        grade_max: 1,
+        rewards: { credits: 0, materials: {} },
+        story: { source: "xauthors/true-names/en/2026-10-11_moat_burned_blue" },
+      },
+      "x",
+    );
+    expect(m.story?.source).toBe(
+      "xauthors/true-names/en/2026-10-11_moat_burned_blue",
+    );
+    expect(m.story?.title).toBeUndefined();
+  });
+
+  it("accepts story with source and title", () => {
+    const m = parseMission(
+      {
+        id: "x",
+        title: "X",
+        fixer: "f",
+        arc: 1,
+        zone: "z",
+        grade_min: 1,
+        grade_max: 1,
+        rewards: { credits: 0, materials: {} },
+        story: { source: "s", title: "T" },
+      },
+      "x",
+    );
+    expect(m.story).toEqual({ source: "s", title: "T" });
+  });
+
+  it("throws on malformed story field", () => {
+    const base = {
+      id: "x",
+      title: "X",
+      fixer: "f",
+      arc: 1,
+      zone: "z",
+      grade_min: 1,
+      grade_max: 1,
+      rewards: { credits: 0, materials: {} },
+    };
+    expect(() => parseMission({ ...base, story: "s" }, "x")).toThrow(
+      /field 'story' must be an object/,
+    );
+    expect(() => parseMission({ ...base, story: {} }, "x")).toThrow(
+      /field 'story.source' must be a non-empty string/,
+    );
+    expect(() => parseMission({ ...base, story: { source: "" } }, "x")).toThrow(
+      /field 'story.source' must be a non-empty string/,
+    );
+  });
 });
 
 describe("data_loaders: parseProgram", () => {
@@ -162,6 +277,23 @@ describe("data_loaders: integration with real JSON files", () => {
   it("missions.json loads without errors (all rows pass validation)", async () => {
     const { default: data } = await import("../src/data/missions.json");
     expect(() => loadMissionsCatalog(data)).not.toThrow();
+  });
+
+  it("every mission in missions.json defaults to sprawl universe", async () => {
+    const { default: data } = await import("../src/data/missions.json");
+    const loaded = loadMissionsCatalog(data);
+    expect(loaded.length).toBe(Object.keys(data).length);
+    const farGrid = loaded.filter((m) => m.source_universe === "far-grid");
+    expect(farGrid.map((m) => m.id).sort()).toEqual([
+      "deathspiders_news",
+      "don_mac_audit",
+      "far_grid_prelude",
+    ]);
+    for (const m of loaded) {
+      if (m.source_universe !== "far-grid") {
+        expect(m.source_universe).toBe("sprawl");
+      }
+    }
   });
 
   it("programs.json loads without errors", async () => {

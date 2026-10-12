@@ -25,15 +25,17 @@ export type MenuOption =
   | "endings"
   | "stats"
   | "tutorial"
+  | "far_grid_hub"
   | "dungeon_crawl";
 
-/** All 13 menu options in display order. Order matches Python OPTION_* constants. */
+/** All 14 menu options in display order. Order matches Python OPTION_* constants. */
 export const MENU_OPTIONS: ReadonlyArray<{
   key: MenuOption;
   label: string;
   available: boolean;
 }> = [
   { key: "new_run", label: "NEW RUN", available: true },
+  { key: "far_grid_hub", label: "FAR GRID", available: true },
   { key: "dungeon_crawl", label: "DUNGEON CRAWL", available: true },
   { key: "graphic_novel", label: "GRAPHIC NOVEL", available: true },
   { key: "continue", label: "CONTINUE", available: true },

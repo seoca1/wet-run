@@ -14,6 +14,7 @@ import {
 } from "./renderer/menu.ts";
 import { renderMatrix } from "./renderer/matrix.ts";
 import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
+import { renderFarGridHub } from "./renderer/far_grid_hub.ts";
 import {
   composeCombatVfx,
   advanceVfxListBy,
@@ -895,6 +896,39 @@ class Game {
       }
       return;
     }
+    if (this.screen === "far_grid_hub") {
+      const farGridMissions = MISSIONS.filter(
+        (m) => (m.source_universe ?? "sprawl") === "far-grid",
+      );
+      if (farGridMissions.length === 0) {
+        if (action.type === "jack_out") {
+          this.screen = "menu";
+          this.draw();
+        }
+        return;
+      }
+      if (action.type === "move_south") {
+        this.selectedMission =
+          (this.selectedMission + 1) % farGridMissions.length;
+        this.draw();
+      } else if (action.type === "move_north") {
+        this.selectedMission =
+          (this.selectedMission - 1 + farGridMissions.length) %
+          farGridMissions.length;
+        this.draw();
+      } else if (action.type === "confirm") {
+        const picked = farGridMissions[this.selectedMission];
+        const fullIndex = picked ? MISSIONS.indexOf(picked) : -1;
+        if (fullIndex >= 0) {
+          this.selectedMission = fullIndex;
+          this.launchSelected();
+        }
+      } else if (action.type === "jack_out") {
+        this.screen = "menu";
+        this.draw();
+      }
+      return;
+    }
     if (this.screen === "settings") {
       void loadAudioSystem().then(async (audio) => {
         if (!audio) return;
@@ -1061,6 +1095,11 @@ class Game {
         resetTutorial();
         this.tutorialActive = true;
         this.tutorialOverlay = createTutorialOverlay();
+        this.draw();
+        break;
+      case "far_grid_hub":
+        this.screen = "far_grid_hub";
+        this.selectedMission = 0;
         this.draw();
         break;
       default:
@@ -1268,6 +1307,23 @@ class Game {
             "MISSION SELECT",
             "",
             `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
+          ],
+        );
+      } else if (this.screen === "far_grid_hub") {
+        const farGridMissions = MISSIONS.filter(
+          (m) => (m.source_universe ?? "sprawl") === "far-grid",
+        );
+        this.renderer.render(
+          renderFarGridHub(
+            farGridMissions,
+            this.selectedMission,
+            this.layout.cols,
+            this.layout.rows,
+          ),
+          [
+            "FAR GRID HUB",
+            "",
+            `Selected: ${this.selectedMission + 1}/${farGridMissions.length}`,
           ],
         );
       } else if (this.screen === "settings") {

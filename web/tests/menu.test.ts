@@ -3,10 +3,11 @@ import { describe, it, expect } from "vitest";
 import { renderMainMenu, renderStubScreen, MENU_OPTIONS } from "../src/renderer/menu.ts";
 
 describe("main menu renderer", () => {
-  it("has 13 options including craft, equipment, and dungeon_crawl", () => {
-    expect(MENU_OPTIONS.length).toBe(13);
+  it("has 14 options including far_grid_hub, craft, equipment, and dungeon_crawl", () => {
+    expect(MENU_OPTIONS.length).toBe(14);
     expect(MENU_OPTIONS.map((o) => o.key)).toEqual([
       "new_run",
+      "far_grid_hub",
       "dungeon_crawl",
       "graphic_novel",
       "continue",

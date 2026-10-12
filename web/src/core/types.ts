@@ -40,6 +40,11 @@ export interface Mission {
   readonly rewards: MissionRewards;
   readonly grade?: number; // Current mission grade (1-5) for procedural generation
   readonly seed?: number; // RNG seed for deterministic dungeon generation
+  readonly source_universe?: "sprawl" | "far-grid"; // Universe tag (ADR-0213); absent means "sprawl"
+  readonly story?: {
+    readonly source: string; // Fiction stem, display-only (ADR-0213)
+    readonly title?: string;
+  };
   runPhase?: "matrix" | "approach" | "combat" | "loot" | "ending" | "dead"; // Current phase for dungeon mode
 }
 
@@ -134,6 +139,7 @@ export type ScreenKind =
   | "meet_npc" // MEET NPC — construct dialogue
   | "extract_data" // EXTRACT DATA — data extraction
   | "dungeon" // NetHack-style dungeon crawler mode
+  | "far_grid_hub" // FAR GRID hub (ADR-0213)
   | "dungeon_debug"; // DEBUG: dungeon graph visualization
 
 /** Graphic novel live state (Tier 5+).

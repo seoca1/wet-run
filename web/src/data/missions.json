@@ -967,5 +967,62 @@
     ],
     "reward_credits": 1100,
     "reward_tier": 4
+  },
+  "far_grid_prelude": {
+    "id": "far_grid_prelude",
+    "title": "Far Grid Prelude",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 600,
+      "materials": {}
+    },
+    "matrix_seed": 202610,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_far_grid_prelude",
+      "title": "Far Grid Prologue"
+    }
+  },
+  "don_mac_audit": {
+    "id": "don_mac_audit",
+    "title": "DON.MAC's Audit",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 600,
+      "materials": {}
+    },
+    "matrix_seed": 202611,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_don_mac_audit",
+      "title": "DON.MAC's Audit"
+    }
+  },
+  "deathspiders_news": {
+    "id": "deathspiders_news",
+    "title": "The Deathspider's News",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 600,
+      "materials": {}
+    },
+    "matrix_seed": 202612,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_deathspiders_news",
+      "title": "The Deathspider's News"
+    }
   }
 }

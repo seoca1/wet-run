@@ -1343,3 +1343,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `state_actions.ts` as-any 3건 → SkillUser/UsableSkill 구조적 완화 (`ice_ai.ts`).
 - `main.ts:1060` console.log 제거. lint warnings 4→1.
 - Gates: typecheck 0 · 116 files / 2752 passed.
+
+## [2026-10-12] refactor | Deep-check 모듈 분할 4건 (ADR-0110)
+
+- dungeon_crawler 1252→5 files · state_actions 1048→3+barrel · menu 1039→4+barrel · combat_vfx 894→3+barrel.
+- re-export barrel, 동작 불변, RNG/렌더 출력 동일.
+- Gates: typecheck 0 · lint 0 errors · 116 files / 2752 passed · build OK.

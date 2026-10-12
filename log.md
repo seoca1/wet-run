@@ -1355,3 +1355,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `i18n.ts`에 메뉴·hub 키 EN+KO 추가, 렌더러 2종 `language` param (EN 바이트 동일).
 - `main.ts`는 `UI_LANGUAGE="en"` 고정 (전역 토글 deferred).
 - Gates: typecheck 0 · lint 0 errors · 117 files / 2767 passed · build OK.
+
+## [2026-10-12] fix | ADR-0211 Option 1 — 하네스 grade-HP 배선
+
+- `simulateCombat`이 토폴로지 HP 대신 `iceHpForGrade` 사용. 커브 단조화 (100/100/100/16/0/0).
+- ADR Accepted 기록 + 근거 2건 해소 확인 (armor 반영, 일반방 grade-aware).
+- Gates: typecheck 0 · 117 files / 2767 passed.

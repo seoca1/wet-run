@@ -76,7 +76,7 @@ grade  missions  win-rate
 
 ## 사용자 결정 (Decision)
 
-- [ ] Option 1
+- [x] Option 1 (2026-10-12 확정)
 - [ ] Option 2
 - [ ] Option 3
 - [ ] 기타: ___
@@ -84,7 +84,17 @@ grade  missions  win-rate
 
 ## 결과 (Consequences)
 
-(결정 후 작성)
+- 하네스가 grade 곡선을 측정하게 됨 (2026-10-12 runs=100: 100/100/100/16/0/0 단조).
+- 실제 게임 난이도 배선(Option 2)은 후속 ADR로 분리 (본 ADR 범위 밖).
+- 조사 당시 근거 2건이 이미 해소됨: `defenderDefenseBonus` armor 반영済, 던전 일반방 grade-aware 배치済.残 `parseIce` HP 100 고정은 Option 2 범위.
+
+## Implementation Status (2026-10-12)
+
+**Status**: ✅ Implemented (Option 1)
+
+**Evidence**:
+- `web/scripts/balance_sim.ts` — `simulateCombat`이 roster HP 대신 `iceHpForGrade(base, missionGradeOf(mission))` 사용 (grade는 `makeInitialState`와 동일 순서)
+- Gates: typecheck 0 · 117 files / 2767 passed · `npm run balance` 단조 곡선 확인
 
 ## Implementation Status (2026-09-24)
 

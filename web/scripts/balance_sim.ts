@@ -15,6 +15,7 @@
  * stalls. That is recorded as `stalled` rather than papered over.
  */
 import { AUTO_ATTACK_INTERVAL_MS } from "../src/core/combat_engine";
+import { iceHpForGrade, missionGradeOf } from "../src/core/ice_scaling";
 import { resolveMatrixRoster } from "../src/core/matrix";
 import { applyAction, makeInitialState } from "../src/core/state";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
@@ -103,7 +104,11 @@ export function simulateCombat(
         ? resolveMatrixRoster(probe.matrix, nodeIndex, iceCatalog)
         : null;
     const base = roster?.ice[0] ?? fallback;
-    const hp = roster?.hp[0] ?? base.hp;
+    // ADR-0211 Option 1: grade-driven HP (hp_base + hp_per_grade, capped by
+    // the encounter curve) instead of the topology-picked roster HP, so the
+    // harness measures the grade curve. Same grade the game uses (grade_max
+    // first — missionGradeOf mirrors makeInitialState).
+    const hp = iceHpForGrade(base, missionGradeOf(mission));
     const template = hp === base.hp ? base : { ...base, hp, maxHp: hp };
 
     let s = makeInitialState(mission, template, deck);

@@ -83,17 +83,21 @@ Fiction `SF_F` 컬렉션에 Gibson 바깥 사이버펑크 원천이 있다 (W.J.
 [ ] 기타: ___
 [ ] Defer (다음 단계로 미룸)
 
-## Implementation Status (2026-10-07)
+## Implementation Status (2026-10-11)
 
-**Status**: ❌ Not started
+**Status**: ✅ Implemented (Phase 1)
 
-**Backlog**:
-- Fiction ADR-0054 Accepted (원천 인제스트 거버넌스 선행)
-- `source_universe` 스키마 (missions JSON + loader 분기)
-- Far Grid 허브 + 게이팅 + 미션 세트 ≥3 (True Names + Hardwired 우선)
-- `cyberpunk-sources.md` 입주 stub (works/ 패턴)
+**Evidence**:
+- `web/src/core/types.ts` — `Mission.source_universe` + `story?` fields, `ScreenKind "far_grid_hub"`
+- `web/src/core/data_loaders.ts` — `parseMission` literal validation + sprawl default + story passthrough
+- `web/src/core/missions_filter.ts` — `filterMissionsByUniverse` (frozen, undefined→sprawl)
+- `web/src/renderer/menu.ts` — `FAR GRID` entry (14 options)
+- `web/src/renderer/far_grid_hub.ts` — hub screen + `[Source: stem]` line
+- `web/src/main.ts` — menu/input/draw wiring + filtered-index launch mapping
+- `web/src/data/missions.json` — 3 Far Grid missions (far_grid_prelude, don_mac_audit, deathspiders_news)
+- Gates: typecheck 0 · lint 0 errors · vitest 112 files / 2687 passed · build OK
 
-**Notes**: 설계만 확정, 코드·데이터 변경 없음.
+**Notes**: Phase 1 display-only (stem strings, no resolution). Hardwired missions + gate logic deferred.
 
 ## 결과 (Consequences) — 2026-10-07 Option 1 확정
 

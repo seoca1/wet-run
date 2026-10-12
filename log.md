@@ -1268,3 +1268,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `docs/architecture/0213-far-grid-separate-expansion.md` 신규 — Sprawl 캐논 격리, `source_universe` 스키마, §8 정합. Related: `Fiction/decisions/0054-sf-collection-expansion.md` (Draft).
 - `docs/wiki/world/cyberpunk-sources.md` 신규 — 비-깁슨 사이버펑크 원천 prep (SF_F 서브셋, wet-run 연결점). Raw 제공(user-side) 후 Fiction ingest.
 - `docs/architecture/README.md` + `docs/wiki/index.md` 인덱스 등록.
+
+## [2026-10-11] feat | Far Grid Phase 1 구현 (ADR-0213)
+
+**Status**: ✅ Implemented (Phase 1). Gates: typecheck 0 · lint 0 errors · vitest 112 files / 2687 passed · build OK.
+
+- `web/src/core/types.ts` — `Mission.source_universe?` + `story?`, `ScreenKind "far_grid_hub"` (optional 필드로 — required 시 기존 fixture typecheck 파손에 중간 red 발생하므로 규약 준수).
+- `web/src/core/data_loaders.ts` — literal 검증 + sprawl 기본값 + story passthrough (display-only, resolve 없음).
+- `web/src/core/missions_filter.ts` 신규 — frozen `ReadonlyArray` (undefined→sprawl).
+- `web/src/renderer/menu.ts` — FAR GRID 항목 (13→14). `menu.test.ts`/`menu_layout.test.ts` 카운트 동기화.
+- `web/src/renderer/far_grid_hub.ts` 신규 — 허브 화면 + `[Source: stem]` 동일행 표기 (행 레이아웃 유지).
+- `web/src/main.ts` — menu/input/draw 배선. 리뷰 중 발견한 launch index bug 수정 (filtered 인덱스→전체 인덱스 매핑, `launchSelected` 무수정).
+- `web/src/data/missions.json` — True Names 미션 3개 (far_grid_prelude, don_mac_audit, deathspiders_news). 기존 카운트 단언 33→36 (`missions.test.ts`, `mission_loader.test.ts`).
+- Deferred: Hardwired 미션 (raw 미확보), 게이트 로직, story resolve.

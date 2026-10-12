@@ -4,7 +4,7 @@ import { loadMissions, getMissionById } from "../src/core/state.ts";
 describe("mission loader functions", () => {
   it("loadMissions returns all missions", () => {
     const missions = loadMissions();
-    expect(missions.length).toBe(39);
+    expect(missions.length).toBe(47);
     expect(missions[0]).toHaveProperty("id");
     expect(missions[0]).toHaveProperty("title");
   });

@@ -27,6 +27,7 @@ interface LegacyMission {
   arc?: number;
   source_universe?: "sprawl" | "far-grid";
   story?: { source?: string; title?: string };
+  briefing?: string;
   rewards?: { credits?: number; materials?: Record<string, number> };
 }
 
@@ -128,6 +129,21 @@ export function parseMission(raw: unknown, idHint: string): Mission {
       ...(typeof sRaw.title === "string" ? { title: sRaw.title } : {}),
     };
   }
+  // briefing is an optional display-only string (ADR-0213 Wave 2). When present it
+  // MUST be a non-empty string; absent or empty string is treated as "no briefing"
+  // and the field is omitted from the returned Mission (matches the optional typing).
+  let briefing: Mission["briefing"];
+  if (r.briefing !== undefined) {
+    if (typeof r.briefing !== "string") {
+      throw new Error(
+        `[data_loaders] mission '${id}': field 'briefing' must be a string when present (got ${typeof r.briefing})`,
+      );
+    }
+    const trimmed = r.briefing.trim();
+    if (trimmed.length > 0) {
+      briefing = trimmed;
+    }
+  }
   return {
     id,
     title,
@@ -145,6 +161,7 @@ export function parseMission(raw: unknown, idHint: string): Mission {
     seed,
     source_universe,
     story,
+    ...(briefing !== undefined ? { briefing } : {}),
   };
 }
 

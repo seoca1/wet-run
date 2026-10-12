@@ -45,6 +45,7 @@ export interface Mission {
     readonly source: string; // Fiction stem, display-only (ADR-0213)
     readonly title?: string;
   };
+  readonly briefing?: string; // Far Grid mission briefing (ADR-0213 Wave 2); English, display-only
   runPhase?: "matrix" | "approach" | "combat" | "loot" | "ending" | "dead"; // Current phase for dungeon mode
 }
 

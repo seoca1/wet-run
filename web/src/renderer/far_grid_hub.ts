@@ -4,19 +4,69 @@
  * footer) so the player gets the same navigation muscle memory. Renders
  * Far Grid-tagged missions as a separate list, framing the Far Grid as
  * a destination set apart from the Sprawl's regular mission board.
+ *
+ * Wave 2 (ADR-0213): also shows the SELECTED mission's `briefing` (if any)
+ * in a detail block below the list. The block is omitted entirely when no
+ * mission is selected, the mission has no `briefing`, or the grid is too
+ * short to fit even one line of detail.
  */
 import type { Grid, Mission } from "../core/types.ts";
 import { makeGrid, setText } from "../core/grid.ts";
 import { PALETTE } from "./palette.ts";
 
+/** Word-wrap a string to lines no longer than `width` columns.
+ *
+ * Words longer than `width` are hard-broken (per-character) so output never
+ * exceeds the cap; any line that would still exceed the cap after wrapping
+ * (i.e. an over-long word) is sliced and suffixed with "..." to mirror the
+ * truncation style of `renderNPCDialogueScreen` (renderer/menu.ts).
+ */
+function wrapBriefing(text: string, width: number): ReadonlyArray<string> {
+  if (width <= 0) return [];
+  const cap = Math.max(1, width);
+  const out: string[] = [];
+  const words = text.split(/\s+/).filter((w) => w.length > 0);
+  let line = "";
+  for (const word of words) {
+    if (word.length > cap) {
+      // Flush any accumulated line first.
+      if (line.length > 0) {
+        out.push(line);
+        line = "";
+      }
+      // Slice the over-long word and ellipsize the final piece.
+      let i = 0;
+      while (i + cap < word.length) {
+        out.push(word.slice(i, i + cap));
+        i += cap;
+      }
+      const tail = word.slice(i);
+      out.push(tail.length === cap ? tail : tail + "…");
+      continue;
+    }
+    if (line.length === 0) {
+      line = word;
+    } else if (line.length + 1 + word.length <= cap) {
+      line = `${line} ${word}`;
+    } else {
+      out.push(line);
+      line = word;
+    }
+  }
+  if (line.length > 0) out.push(line);
+  return out;
+}
+
 /** Render the Far Grid hub screen.
  *
  * Layout (matches mission_select convention from main.ts):
- *   row 1   : header "FAR GRID HUB"
- *   row 3   : intro line framing Far Grid as set apart from Sprawl
- *   row 5.. : mission list (title per row, ▸ marker on selected)
- *   row N   : empty-list message when missions array is empty
- *   footer  : ESC/ENTER hints mirroring mission_select
+ *   row 1           : header "FAR GRID HUB"
+ *   row 3           : intro line framing Far Grid as set apart from Sprawl
+ *   row 5..         : mission list (title per row, ▸ marker on selected)
+ *   row N           : empty-list message when missions array is empty
+ *   below list      : briefing of selected mission (Wave 2, optional)
+ *   status line     : optional statusMessage at rows-3 (unchanged)
+ *   footer          : ESC/ENTER hints at rows-2 (unchanged)
  */
 export function renderFarGridHub(
   missions: ReadonlyArray<Mission>,
@@ -82,6 +132,28 @@ export function renderFarGridHub(
     "↑↓: navigate | ENTER: launch | ESC: back",
     PALETTE.GRAY_DARK,
   );
+
+  // Briefing block (Wave 2, ADR-0213) — selected mission's briefing,
+  // wrapped to (cols - 4) columns (matching the 2-col indent of the intro),
+  // rendered between the list and the status/footer band. Skipped silently
+  // when no selection, no briefing, or insufficient room.
+  const selectedMission = missions[selected];
+  if (selectedMission !== undefined && selectedMission.briefing !== undefined) {
+    const briefText = selectedMission.briefing;
+    const maxWidth = Math.max(1, cols - 4);
+    const lines = wrapBriefing(briefText, maxWidth);
+    // Reserve: footer at footerY; if statusMessage present the visible band
+    // shrinks to rows - 4. We always leave 1 blank line of headroom before
+    // the status line / footer.
+    const reserveRows = statusMessage ? 4 : 2;
+    const lastAllowedY = rows - reserveRows;
+    const startY = listStartY + missions.length + 1;
+    const maxLines = Math.max(0, lastAllowedY - startY);
+    const toRender = lines.slice(0, maxLines);
+    for (let i = 0; i < toRender.length; i++) {
+      grid = setText(grid, 2, startY + i, toRender[i] ?? "", PALETTE.GRAY_LIGHT);
+    }
+  }
 
   return grid;
 }

@@ -1310,3 +1310,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - Arc-1-clear 신호: `applyLootAction` mission-complete에서 `arc===1` 시 플래그 (신규 완료 개념 없음).
 - 정직한 기록: arc-final 개념이 코드베이스에 없어 ANY arc-1 승리에 해금. 메시지도 구현 의미 그대로 수정.
 - Gates: typecheck 0 · lint 0 errors · 115 files / 2712 passed · build OK.
+
+## [2026-10-12] feat | Far Grid Wave 2 — 미션 14종 + briefing + hub resolution (ADR-0213)
+
+- `missions.json` 39→47 (TN 4 + HW 4 신규) + 14편 grade spread(1~4) + 전편 briefing.
+- Hub에 선택 미션 briefing 블록 (wrap/truncate/footer-safe).
+- Gates: typecheck 0 · lint 0 errors · 115 files / 2720 passed · build OK.
+- 참고: seed 중복 {555,7,444}은 기존 Sprawl 쌍 (미수정).

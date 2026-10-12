@@ -124,6 +124,20 @@ Fiction `SF_F` 컬렉션에 Gibson 바깥 사이버펑크 원천이 있다 (W.J.
 
 **Notes**: Unlock fires on ANY Sprawl arc-1 mission win (no arc-final/completion-history concept exists in the codebase; inventing one was out of scope). Locked message states the implemented semantics verbatim. Tightening to full-arc clear needs completion tracking — Phase 3 candidate.
 
+## Implementation Status (2026-10-12 — Wave 2 content)
+
+**Status**: 🟡 Partial (14 missions + briefings + hub resolution; dungeon-pool separation still open)
+
+**Evidence**:
+- `web/src/data/missions.json` — 47 total, 14 far-grid (Wave 2 = TN 4: mailmans_last_letter, pollack_after_dark, limeys_long_game, wileys_gate + HW 4: hetmans_meeting, maurice_princes, dodgers_office, tin_soldiers_end)
+- Grade spread 1–4 across the 14 (rookie 9 / intermediate 2 / focused 1 / deep 1 / hard 1); all zones stay `precursor`; no mission above grade 4 (Sprawl owns endgame)
+- `Mission.briefing?: string` + `parseMission` passthrough (`types.ts`, `data_loaders.ts`) — 1–2 sentence EN briefings adapted from each story's `plot_summary.en`
+- `web/src/renderer/far_grid_hub.ts` — selected-mission briefing block (wrapped, truncated, footer-safe)
+- Tests: count assertions 39→47; `far_grid_hub.test.ts` +8 briefing cases
+- Gates: typecheck 0 · lint 0 errors · vitest 115 files / 2720 passed · build OK
+
+**Notes**: Seed dupes {555, 7, 444} are pre-existing Sprawl pairs (aleph_fragment/wintermute_negotiation, ice_run/sally_returns_arc3, voodoo_loa_encounter/ta_defection) — untouched, cleanup candidate.
+
 ## 결과 (Consequences) — 2026-10-07 Option 1 확정
 
 - `cyberpunk-sources.md` Status: Prep → Ready (입주처 확정)

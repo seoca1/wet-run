@@ -287,10 +287,18 @@ describe("data_loaders: integration with real JSON files", () => {
     expect(farGrid.map((m) => m.id).sort()).toEqual([
       "blue_silk_wall",
       "deathspiders_news",
+      "dodgers_office",
       "don_mac_audit",
       "far_grid_prelude",
+      "hetmans_meeting",
+      "limeys_long_game",
       "maidens_first_run",
+      "mailmans_last_letter",
+      "maurice_princes",
+      "pollack_after_dark",
+      "tin_soldiers_end",
       "warren_meadow",
+      "wileys_gate",
     ]);
     for (const m of loaded) {
       if (m.source_universe !== "far-grid") {

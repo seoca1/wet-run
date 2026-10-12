@@ -985,7 +985,8 @@
     "story": {
       "source": "xauthors/true-names/en/2026-10-11_far_grid_prelude",
       "title": "Far Grid Prologue"
-    }
+    },
+    "briefing": "The operator silhouette offers the deck jockey a first walk along the Coven's narrow row of stones, with no fight and no contract — just a measured first step."
   },
   "don_mac_audit": {
     "id": "don_mac_audit",
@@ -1004,7 +1005,8 @@
     "story": {
       "source": "xauthors/true-names/en/2026-10-11_don_mac_audit",
       "title": "DON.MAC's Audit"
-    }
+    },
+    "briefing": "A small piece of bookkeeping that has been sitting in the corner of a wooden table wants reviewing; the silhouette asks that the deck bring a steady hand and read the line at the bottom of the reconciliation."
   },
   "deathspiders_news": {
     "id": "deathspiders_news",
@@ -1023,7 +1025,8 @@
     "story": {
       "source": "xauthors/true-names/en/2026-10-11_deathspiders_news",
       "title": "The Deathspider's News"
-    }
+    },
+    "briefing": "The webbing in the swamp is catching news the silhouette would rather have on paper; the deck is hired to pull the single thread without disturbing the rest of the pattern."
   },
   "warren_meadow": {
     "id": "warren_meadow",
@@ -1042,7 +1045,8 @@
     "story": {
       "source": "xauthors/hardwired/en/2026-10-12_warren_meadow",
       "title": "Warren's Meadow"
-    }
+    },
+    "briefing": "A small grey meadow between the road and the bay wants a quiet walk; the silhouette offers it to the deck as a courtesy, with the chrome of the bay humming in the grass."
   },
   "blue_silk_wall": {
     "id": "blue_silk_wall",
@@ -1061,7 +1065,8 @@
     "story": {
       "source": "xauthors/hardwired/en/2026-10-12_blue_silk_wall",
       "title": "Blue Silk Wall"
-    }
+    },
+    "briefing": "The bar at the end of the alley has a wall of small blue cloth pinned behind the bottles that wants photographing in the long quiet of late closing."
   },
   "maidens_first_run": {
     "id": "maidens_first_run",
@@ -1080,6 +1085,173 @@
     "story": {
       "source": "xauthors/hardwired/en/2026-10-12_maidens_first_run",
       "title": "Maiden's First Run"
-    }
+    },
+    "briefing": "A girl who has never turned a key in a wetware console wants the deck at her shoulder for the length of one short ride; the silhouette offers the egg and the chrome."
+  },
+  "mailmans_last_letter": {
+    "id": "mailmans_last_letter",
+    "title": "Mailman's Last Letter",
+    "fixer": "operator_silhouette",
+    "arc": 2,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 700,
+      "materials": {}
+    },
+    "matrix_seed": 202616,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_mailmans_last_letter",
+      "title": "The Mailman's Last Letter"
+    },
+    "briefing": "The Mailman is sealing a room that has never had a window. The silhouette wants the deck to stand in the doorway long enough to confirm the paper folds clean and the seal is set."
+  },
+  "pollack_after_dark": {
+    "id": "pollack_after_dark",
+    "title": "Pollack After Dark",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 700,
+      "materials": {}
+    },
+    "matrix_seed": 202617,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_pollack_after_dark",
+      "title": "Pollack After Dark"
+    },
+    "briefing": "The Feds have left the kitchen and the Portal electrodes are cool in a drawer. The silhouette wants the deck to power it up at the gold hour and confirm the swamp is empty in the polite way."
+  },
+  "limeys_long_game": {
+    "id": "limeys_long_game",
+    "title": "The Limey's Long Game",
+    "fixer": "operator_silhouette",
+    "arc": 3,
+    "zone": "precursor",
+    "grade_min": 3,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 2200,
+      "materials": {
+        "rom_echo": 1
+      }
+    },
+    "matrix_seed": 202618,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_limeys_long_game",
+      "title": "The Limey's Long Game"
+    },
+    "briefing": "An eleven-month reconciliation against a Mafia cash-flow system has just been audited by a piece of the deck. The silhouette wants the long quiet line at the bottom of the screen read by a third pair of eyes."
+  },
+  "wileys_gate": {
+    "id": "wileys_gate",
+    "title": "Wiley's Gate",
+    "fixer": "operator_silhouette",
+    "arc": 2,
+    "zone": "precursor",
+    "grade_min": 2,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 1100,
+      "materials": {}
+    },
+    "matrix_seed": 202619,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/true-names/en/2026-10-11_wileys_gate",
+      "title": "Wiley's Gate"
+    },
+    "briefing": "A single page of a small red book in the second sub-basement has been read by someone whose dust has no subroutine. The silhouette wants the deck to walk the aisles and confirm the dust."
+  },
+  "hetmans_meeting": {
+    "id": "hetmans_meeting",
+    "title": "The Hetman's Meeting",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 2,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 1000,
+      "materials": {}
+    },
+    "matrix_seed": 202620,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_hetmans_meeting",
+      "title": "The Hetman's Call"
+    },
+    "briefing": "A brown voice on an Orbital console is asking Michael the Hetman for a recommendation, and the small chrome of his back office at the Bay Bar needs a witness when the line goes quiet."
+  },
+  "maurice_princes": {
+    "id": "maurice_princes",
+    "title": "Maurice and the Princes",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 2,
+    "grade_max": 3,
+    "rewards": {
+      "credits": 1200,
+      "materials": {}
+    },
+    "matrix_seed": 202621,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_maurice_princes",
+      "title": "Maurice and the Princes"
+    },
+    "briefing": "Maurice is wiping the glass of a small dark frame behind the Blue Silk bar when a girl comes in from the back door. The silhouette wants the deck at the corner of the bar when the small grey chrome comes out of the safe."
+  },
+  "dodgers_office": {
+    "id": "dodgers_office",
+    "title": "The Dodger's Office",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 3,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 1800,
+      "materials": {
+        "data_fragment": 2
+      }
+    },
+    "matrix_seed": 202622,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_the_dodgers_office",
+      "title": "The Dodger's Office"
+    },
+    "briefing": "A small square of leather holding a paper the Orbital paid for sits on a steel desk in Albuquerque. The silhouette wants the deck to stand watch when the cowboy walks in and decides whether the codes change hands."
+  },
+  "tin_soldiers_end": {
+    "id": "tin_soldiers_end",
+    "title": "Tin Soldiers at the Shrine",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 4,
+    "grade_max": 4,
+    "rewards": {
+      "credits": 2600,
+      "materials": {
+        "wetware_data": 1
+      }
+    },
+    "matrix_seed": 202623,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_tin_soldiers_end",
+      "title": "Tin Soldiers at the Shrine"
+    },
+    "briefing": "Two children in silver-chased sockets are learning a third language in front of comp terminals on a silver-threaded floor. The silhouette wants the deck to read the data at Roon's belt without entering the room."
   }
 }

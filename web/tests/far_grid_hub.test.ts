@@ -27,6 +27,14 @@ function makeMissionWithStory(
   return { ...makeMission(id, title), story: { source } };
 }
 
+function makeMissionWithBriefing(
+  id: string,
+  title: string,
+  briefing: string,
+): Mission {
+  return { ...makeMission(id, title), briefing };
+}
+
 function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> }): string {
   return grid.cells
     .map((row) => row.map((c) => c?.char ?? " ").join(""))
@@ -143,5 +151,120 @@ describe("renderFarGridHub", () => {
   it("shows no source annotation when mission has no story", () => {
     const grid = renderFarGridHub([makeMission("m1", "Echo Lattice")], 0, 80, 24);
     expect(gridText(grid)).not.toContain("[Source:");
+  });
+});
+
+describe("renderFarGridHub — Wave 2 briefing block (ADR-0213)", () => {
+  it("renders the selected mission's briefing on the row below the list", () => {
+    const missions: ReadonlyArray<Mission> = [
+      makeMissionWithBriefing("m1", "Echo Lattice", "First, second, third."),
+    ];
+    const grid = renderFarGridHub(missions, 0, 80, 24);
+    // List row 5 (title at x=6: marker x=4, space x=5); blank row 6;
+    // briefing row 7 (text at x=2, matching the intro).
+    expect(getRowText(grid, 5, 6, "Echo Lattice".length)).toBe("Echo Lattice");
+    expect(getRowText(grid, 6, 2, 1)).toBe(" ");
+    expect(getRowText(grid, 7, 2, "First, second, third.".length)).toBe(
+      "First, second, third.",
+    );
+  });
+
+  it("follows the selected mission when selection changes", () => {
+    const missions: ReadonlyArray<Mission> = [
+      makeMissionWithBriefing("m1", "Echo Lattice", "Alpha briefing."),
+      makeMissionWithBriefing("m2", "Ghost Frequencies", "Bravo briefing."),
+    ];
+    const gridA = renderFarGridHub(missions, 0, 80, 24);
+    const gridB = renderFarGridHub(missions, 1, 80, 24);
+    // List rows 5–6 (2 missions); gap row 7; briefing row 8.
+    expect(getRowText(gridA, 8, 2, "Alpha briefing.".length)).toBe(
+      "Alpha briefing.",
+    );
+    expect(getRowText(gridB, 8, 2, "Bravo briefing.".length)).toBe(
+      "Bravo briefing.",
+    );
+  });
+
+  it("wraps a long briefing to multiple lines within grid width", () => {
+    const longBriefing =
+      "One two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen.";
+    const missions: ReadonlyArray<Mission> = [
+      makeMissionWithBriefing("m1", "Echo Lattice", longBriefing),
+    ];
+    const cols = 40;
+    const rows = 24;
+    const grid = renderFarGridHub(missions, 0, cols, rows);
+    const text = gridText(grid);
+    // Briefing must appear (some line contains a portion of the text).
+    expect(text).toContain("One two");
+    // No rendered cell on any row may exceed the grid width.
+    for (const row of grid.cells) {
+      expect(row.length).toBe(cols);
+    }
+  });
+
+  it("does not break grid width when a single word exceeds the cap", () => {
+    // 80-char single word vs 20-col cap → must be sliced and never overflow.
+    const hugeWord = "x".repeat(80);
+    const missions: ReadonlyArray<Mission> = [
+      makeMissionWithBriefing("m1", "Echo Lattice", hugeWord),
+    ];
+    const cols = 20;
+    const rows = 24;
+    const grid = renderFarGridHub(missions, 0, cols, rows);
+    for (const row of grid.cells) {
+      expect(row.length).toBe(cols);
+    }
+  });
+
+  it("renders a mission without briefing without empty garbage lines", () => {
+    const missions: ReadonlyArray<Mission> = [
+      makeMission("m1", "Echo Lattice"),
+      makeMission("m2", "Ghost Frequencies"),
+    ];
+    const grid = renderFarGridHub(missions, 0, 80, 24);
+    // List rows 5 and 6; row 7 is the gap row (single space) and should NOT
+    // be followed by an empty rendered briefing. The text below the list
+    // should not contain "briefing" leaks or stray newlines.
+    const text = gridText(grid);
+    expect(text).not.toContain("undefined");
+    expect(text).not.toContain("null");
+    // Footer still present (sanity).
+    expect(getRowText(grid, 22, 2, "↑↓: navigate".length)).toBe("↑↓: navigate");
+  });
+
+  it("omits briefing when missions list is empty (no crash, no garbage)", () => {
+    const grid = renderFarGridHub([], 0, 80, 24);
+    const text = gridText(grid);
+    expect(text).toContain("(no Far Grid missions available)");
+    expect(text).not.toContain("undefined");
+    expect(text).not.toContain("null");
+  });
+
+  it("does not collide with the footer even on a very short grid", () => {
+    const longBriefing =
+      "One two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen.";
+    const missions: ReadonlyArray<Mission> = [
+      makeMissionWithBriefing("m1", "Echo Lattice", longBriefing),
+    ];
+    // 14 rows: list row 5, briefing rows 6+ — footer is row 12. Briefing
+    // must be clipped, never overwrite the footer.
+    const grid = renderFarGridHub(missions, 0, 80, 14);
+    const footerY = 12;
+    const footerText = "↑↓: navigate | ENTER: launch | ESC: back";
+    expect(getRowText(grid, footerY, 2, footerText.length)).toBe(footerText);
+  });
+
+  it("keeps the [Source: stem] line unchanged when briefing is present", () => {
+    const stem = "xauthors/true-names/en/2026-10-11_wileys_gate";
+    const mission: Mission = {
+      ...makeMission("m1", "Wiley's Gate"),
+      story: { source: stem },
+      briefing: "Single page of a red book has been read.",
+    };
+    const grid = renderFarGridHub([mission], 0, 80, 24);
+    const text = gridText(grid);
+    expect(text).toContain(`[Source: ${stem}]`);
+    expect(text).toContain("Single page of a red book has been read.");
   });
 });

@@ -1281,3 +1281,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `web/src/main.ts` — menu/input/draw 배선. 리뷰 중 발견한 launch index bug 수정 (filtered 인덱스→전체 인덱스 매핑, `launchSelected` 무수정).
 - `web/src/data/missions.json` — True Names 미션 3개 (far_grid_prelude, don_mac_audit, deathspiders_news). 기존 카운트 단언 33→36 (`missions.test.ts`, `mission_loader.test.ts`).
 - Deferred: Hardwired 미션 (raw 미확보), 게이트 로직, story resolve.
+
+## [2026-10-12] feat | Far Grid Hardwired 미션 3종 (ADR-0213)
+
+- `missions.json` 36→39 (warren_meadow, blue_silk_wall, maidens_first_run — `xauthors/hardwired` stems).
+- 카운트 단언 동기화 (`missions.test.ts`, `mission_loader.test.ts`, far-grid 목록 단언 6종).
+- Gates: typecheck 0 · lint 0 errors · 112 files / 2687 passed · build OK.

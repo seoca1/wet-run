@@ -1024,5 +1024,62 @@
       "source": "xauthors/true-names/en/2026-10-11_deathspiders_news",
       "title": "The Deathspider's News"
     }
+  },
+  "warren_meadow": {
+    "id": "warren_meadow",
+    "title": "Warren's Meadow",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 600,
+      "materials": {}
+    },
+    "matrix_seed": 202613,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_warren_meadow",
+      "title": "Warren's Meadow"
+    }
+  },
+  "blue_silk_wall": {
+    "id": "blue_silk_wall",
+    "title": "Blue Silk Wall",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 600,
+      "materials": {}
+    },
+    "matrix_seed": 202614,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_blue_silk_wall",
+      "title": "Blue Silk Wall"
+    }
+  },
+  "maidens_first_run": {
+    "id": "maidens_first_run",
+    "title": "Maiden's First Run",
+    "fixer": "operator_silhouette",
+    "arc": 1,
+    "zone": "precursor",
+    "grade_min": 1,
+    "grade_max": 2,
+    "rewards": {
+      "credits": 600,
+      "materials": {}
+    },
+    "matrix_seed": 202615,
+    "source_universe": "far-grid",
+    "story": {
+      "source": "xauthors/hardwired/en/2026-10-12_maidens_first_run",
+      "title": "Maiden's First Run"
+    }
   }
 }

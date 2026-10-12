@@ -285,9 +285,12 @@ describe("data_loaders: integration with real JSON files", () => {
     expect(loaded.length).toBe(Object.keys(data).length);
     const farGrid = loaded.filter((m) => m.source_universe === "far-grid");
     expect(farGrid.map((m) => m.id).sort()).toEqual([
+      "blue_silk_wall",
       "deathspiders_news",
       "don_mac_audit",
       "far_grid_prelude",
+      "maidens_first_run",
+      "warren_meadow",
     ]);
     for (const m of loaded) {
       if (m.source_universe !== "far-grid") {

@@ -1287,3 +1287,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `missions.json` 36→39 (warren_meadow, blue_silk_wall, maidens_first_run — `xauthors/hardwired` stems).
 - 카운트 단언 동기화 (`missions.test.ts`, `mission_loader.test.ts`, far-grid 목록 단언 6종).
 - Gates: typecheck 0 · lint 0 errors · 112 files / 2687 passed · build OK.
+
+## [2026-10-12] refactor | Far Grid tidy — helper 단일화 + ADR-0213 Phase 1b 기록
+
+- `main.ts` 인라인 universe filter 2곳 → `filterMissionsByUniverse` 단일화.
+- ADR-0213 Implementation Status Phase 1b 추가 (미션 6종) + 인덱스 행 ❌→🟡 Partial.
+- Gates: typecheck 0 · 112 files / 2687 passed.

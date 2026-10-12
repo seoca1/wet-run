@@ -99,6 +99,17 @@ Fiction `SF_F` 컬렉션에 Gibson 바깥 사이버펑크 원천이 있다 (W.J.
 
 **Notes**: Phase 1 display-only (stem strings, no resolution). Hardwired missions + gate logic deferred.
 
+## Implementation Status (2026-10-12 — Phase 1b)
+
+**Status**: ✅ Implemented (Phase 1b — content + hygiene)
+
+**Evidence**:
+- `web/src/data/missions.json` — 6 Far Grid missions (True Names 3 + Hardwired 3: warren_meadow, blue_silk_wall, maidens_first_run)
+- `web/src/main.ts` — inline universe filters replaced with `filterMissionsByUniverse` helper (single source of truth)
+- Gates: typecheck 0 · lint 0 errors · vitest 112 files / 2687 passed · build OK
+
+**Notes**: Gate logic (entry condition) still deferred — Phase 2 decision item. Story-stem resolution still display-only.
+
 ## 결과 (Consequences) — 2026-10-07 Option 1 확정
 
 - `cyberpunk-sources.md` Status: Prep → Ready (입주처 확정)

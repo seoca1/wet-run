@@ -15,6 +15,7 @@ import {
 import { renderMatrix } from "./renderer/matrix.ts";
 import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
 import { renderFarGridHub } from "./renderer/far_grid_hub.ts";
+import { filterMissionsByUniverse } from "./core/missions_filter.ts";
 import {
   composeCombatVfx,
   advanceVfxListBy,
@@ -897,9 +898,7 @@ class Game {
       return;
     }
     if (this.screen === "far_grid_hub") {
-      const farGridMissions = MISSIONS.filter(
-        (m) => (m.source_universe ?? "sprawl") === "far-grid",
-      );
+      const farGridMissions = filterMissionsByUniverse(MISSIONS, "far-grid");
       if (farGridMissions.length === 0) {
         if (action.type === "jack_out") {
           this.screen = "menu";
@@ -1310,9 +1309,7 @@ class Game {
           ],
         );
       } else if (this.screen === "far_grid_hub") {
-        const farGridMissions = MISSIONS.filter(
-          (m) => (m.source_universe ?? "sprawl") === "far-grid",
-        );
+        const farGridMissions = filterMissionsByUniverse(MISSIONS, "far-grid");
         this.renderer.render(
           renderFarGridHub(
             farGridMissions,

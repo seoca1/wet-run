@@ -77,6 +77,24 @@ export function coercePersonality(value: unknown): PersonalityArchetype {
 }
 
 /**
+ * Minimal surface for skill-use decisions. Implemented by both the full
+ * `Combatant` engine type and the lightweight `Ice` roster type, so the
+ * boss-phase tick loop can call these helpers without type suppression.
+ */
+export interface SkillUser {
+  readonly hp: number;
+  readonly aggression?: unknown;
+  readonly personality?: unknown;
+}
+
+/** Minimal skill surface for personality matching (id/effect/damage). */
+export interface UsableSkill {
+  readonly id: string;
+  readonly effect: string;
+  readonly damage: number;
+}
+
+/**
  * Gate: should this ICE attempt to use a skill this tick?
  *
  * Returns false if the combatant has no skills or is dead.
@@ -84,10 +102,10 @@ export function coercePersonality(value: unknown): PersonalityArchetype {
  * Called every AUTO_ATTACK_INTERVAL_MS (2000ms) for each alive enemy.
  */
 export function enemyShouldUseSkill(
-  combatant: Combatant,
+  combatant: SkillUser & { readonly skills?: ReadonlyArray<unknown> },
   rng: () => number,
 ): boolean {
-  if (combatant.skills.length === 0 || combatant.hp <= 0) {
+  if ((combatant.skills ?? []).length === 0 || combatant.hp <= 0) {
     return false;
   }
   const tier = coerceAggression(combatant.aggression);
@@ -145,10 +163,10 @@ export const PERSONALITY_SKILL_PREFERENCE: Readonly<
  * where `select_skill_by_personality` is exported/tested but the tick
  * loop uses `choose_skill` (uniform random).
  */
-export function selectSkillByPersonality(
-  combatant: Combatant,
-  availableSkills: ReadonlyArray<Skill>,
-): Skill | null {
+export function selectSkillByPersonality<S extends UsableSkill>(
+  combatant: SkillUser,
+  availableSkills: ReadonlyArray<S>,
+): S | null {
   if (availableSkills.length === 0) {
     return null;
   }

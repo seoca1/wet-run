@@ -17,7 +17,7 @@
 
 **meatspace 전달 방식**: 뉴스 / 이야기 (Story Archive). 의뢰 briefing, 의뢰 결과, 월드 뉴스, faction 움직임, construct 대화가 텍스트로 전달되며 메인 메뉴에서 다시 볼 수 있음.
 
-**언어 (i18n)**: 영어 1차 (Gibson 톤 직접 보존) + 한글 보조 번역/자막. 표시 모드: Off (영어만) / Subtitle (영어+한글) / Replace (한글만). 모든 in-game 텍스트는 `data/i18n/en.json` (1차) + `data/i18n/ko.json` (보조)에서 로드 (ADR-0010).
+**언어 (i18n)**: 영어 1차 (Gibson 톤 직접 보존) + 한글 보조 번역/자막. 표시 모드: Off (영어만) / Subtitle (영어+한글) / Replace (한글만). 모든 in-game 텍스트는 `web/src/core/i18n.ts` 인라인 테이블에서 로드 (2026-09 web 이관 — 구 `data/i18n/*.json` 파이프라인 retired, ADR-0010).
 
 **Reference**:
 - Neuromancer / Count Zero / Mona Lisa Overdrive (world, lore)

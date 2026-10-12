@@ -1336,3 +1336,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - 완료추적 (`wetrun_completed_missions`) + Sprawl arc-1 6종 전승 시 해금 (카탈로그 동적 도출, 하드코드 0).
 - 기존 해금 세이브 유지 (legacy 플래그 short-circuit). 메시지 full-clear 의미로 수정.
 - Gates: typecheck 0 · lint 0 errors · 116 files / 2752 passed · build OK.
+
+## [2026-10-12] chore | Deep-check cleanup — 데드 JSON 삭제 + as-any 제거 + console.log 제거
+
+- `web/src/data/ko.json`·`strings.json` 삭제 (코드 무참조; 설계문서 5곳 정합 노트).
+- `state_actions.ts` as-any 3건 → SkillUser/UsableSkill 구조적 완화 (`ice_ai.ts`).
+- `main.ts:1060` console.log 제거. lint warnings 4→1.
+- Gates: typecheck 0 · 116 files / 2752 passed.

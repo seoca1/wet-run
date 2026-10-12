@@ -1057,7 +1057,6 @@ class Game {
     option: MenuOption | undefined,
   ): Promise<void> {
     if (!option) return Promise.resolve();
-    console.log("selectMenuOption called with:", option);
     switch (option) {
       case "new_run":
         this.screen = "mission_select";

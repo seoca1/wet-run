@@ -573,11 +573,11 @@ function processEnemyTurns(state: GameState): GameState {
 
     if (
       enemySkills.length > 0 &&
-      enemyShouldUseSkill(enemy as any, Math.random)
+      enemyShouldUseSkill(enemy, Math.random)
     ) {
       const selectedSkill = selectSkillByPersonality(
-        enemy as any,
-        enemySkills as any,
+        enemy,
+        enemySkills,
       );
 
       if (selectedSkill) {

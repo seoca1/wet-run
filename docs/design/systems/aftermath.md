@@ -152,6 +152,9 @@ class AftermathTrigger:
 
 ### i18n 키 구조 (ADR-0010 확장)
 
+> 2026-09 web 이관: 현행 `web/src/core/i18n.ts` 인라인. 아래 예시는 키 구조
+> reference (prototype 시절 `data/i18n/` 경로 표기).
+
 `data/i18n/en.json`:
 ```json
 {

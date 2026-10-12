@@ -1330,3 +1330,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - 정정: "26 미매핑"은 카운팅 오류였음 (xauthors 20편 중 14 매핑済). 에이전트가 허위 미션 창작 거부 (§8 준수).
 - Hub 스크롤 불필요 (20개, 50행 그리드 내 brief 포함 표시 가능).
 - Gates: typecheck 0 · lint 0 errors · 116 files / 2724 passed · build OK.
+
+## [2026-10-12] feat | Far Grid gate tightening — full arc-1 clear (ADR-0213)
+
+- 완료추적 (`wetrun_completed_missions`) + Sprawl arc-1 6종 전승 시 해금 (카탈로그 동적 도출, 하드코드 0).
+- 기존 해금 세이브 유지 (legacy 플래그 short-circuit). 메시지 full-clear 의미로 수정.
+- Gates: typecheck 0 · lint 0 errors · 116 files / 2752 passed · build OK.

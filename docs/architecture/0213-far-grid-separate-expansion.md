@@ -149,6 +149,17 @@ Fiction `SF_F` 컬렉션에 Gibson 바깥 사이버펑크 원천이 있다 (W.J.
 
 **Notes**: Seed-dupe cleanup closed as non-issue (ids differentiate streams). Remaining: full-arc-clear gate tightening.
 
+## Implementation Status (2026-10-12 — Gate tightening: full clear)
+
+**Status**: 🟡 Partial (gate now true full-clear; Wave 3 + Pillar-2 verified)
+
+**Evidence**:
+- `web/src/core/far_grid_gate.ts` — completion log (`wetrun_completed_missions`, default-fill) + `isArcOneCleared()` over dynamically derived Sprawl arc-1 set + `evaluateFarGridUnlock()`; legacy flag short-circuits (never re-locks)
+- `web/src/core/state_actions.ts` — `applyLootAction` records every completion, routes arc-1 through the coverage check
+- Locked message: "Clear all Sprawl Arc 1 missions to unlock the Far Grid"
+- Tests: 2752 total (+28; full-clear 5/6-vs-6/6, persistence, dynamic derivation, idempotency)
+- Gates: typecheck 0 · lint 0 errors · vitest 116 files / 2752 passed · build OK
+
 ## Implementation Status (2026-10-12 — Wave 3 full roster)
 
 **Status**: ✅ Implemented (content-complete: all 20 xauthors stories playable)

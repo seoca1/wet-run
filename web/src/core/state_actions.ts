@@ -58,7 +58,10 @@ import {
   durationForKind,
   durationMsForKind,
 } from "./state_helpers.ts";
-import { setFarGridUnlocked } from "./far_grid_gate.ts";
+import {
+  recordMissionComplete,
+  evaluateFarGridUnlock,
+} from "./far_grid_gate.ts";
 
 /** Dixie companion tuning.
  *
@@ -210,10 +213,13 @@ export function applyLootAction(
       updatedScores = onMissionComplete(updatedScores, missionFaction);
     }
     const arc: ArcId = (state.mission.arc as ArcId) || 1;
-    // ADR-0213 Phase 2: Arc 1 clear unlocks the Far Grid (cross-run flag).
-    // Hook the existing mission-complete signal — no new completion concept.
+    // ADR-0213 Phase 2 + tightening: full Sprawl Arc-1 clear unlocks the Far
+    // Grid. Always record the mission id; on Arc-1, route the unlock decision
+    // through the helper (legacy flag short-circuits to keep already-unlocked
+    // saves unlocked; otherwise the helper evaluates the full-clear rule).
+    recordMissionComplete(state.mission.id);
     if (arc === 1) {
-      setFarGridUnlocked();
+      evaluateFarGridUnlock();
     }
     const ctx: EndingContext = {
       arc,

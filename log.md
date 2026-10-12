@@ -1317,3 +1317,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - Hub에 선택 미션 briefing 블록 (wrap/truncate/footer-safe).
 - Gates: typecheck 0 · lint 0 errors · 115 files / 2720 passed · build OK.
 - 참고: seed 중복 {555,7,444}은 기존 Sprawl 쌍 (미수정).
+
+## [2026-10-12] test | Far Grid Pillar-2 검증 — 던전 풀 분리 (ADR-0213)
+
+- RNG = mulberry32(seed + id-hash)라 우주 간 풀 공유 구조적 불가. 테스트 4개로 고정.
+- Gates: typecheck 0 · lint 0 errors · 116 files / 2724 passed.
+- seed 중복은 non-issue로 종결 (id가 스트림 분리).

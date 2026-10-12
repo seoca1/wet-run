@@ -138,6 +138,17 @@ Fiction `SF_F` 컬렉션에 Gibson 바깥 사이버펑크 원천이 있다 (W.J.
 
 **Notes**: Seed dupes {555, 7, 444} are pre-existing Sprawl pairs (aleph_fragment/wintermute_negotiation, ice_run/sally_returns_arc3, voodoo_loa_encounter/ta_defection) — untouched, cleanup candidate.
 
+## Implementation Status (2026-10-12 — Pillar-2 verification)
+
+**Status**: 🟡 Partial (pool separation verified by construction + test; Wave 3 mapping still open)
+
+**Evidence**:
+- Layout RNG = `mulberry32(matrix_seed + mission-id hash)` (`applyMissionIdSeed`, `dungeon_layout.ts:411+`) — every mission id owns an independent topology stream, so no shared pool can exist between universes.
+- `web/tests/dungeon_pool_separation.test.ts` (new, 4 tests) — same-seed/different-id divergence (incl. the 555/7/444 dupe pairs), far-grid vs sprawl divergence, determinism, null-id fallback.
+- Gates: typecheck 0 · lint 0 errors · vitest 116 files / 2724 passed · build OK
+
+**Notes**: Seed-dupe cleanup closed as non-issue (ids differentiate streams). Remaining: Wave 3 (26 unmapped B stories) + full-arc-clear gate tightening.
+
 ## 결과 (Consequences) — 2026-10-07 Option 1 확정
 
 - `cyberpunk-sources.md` Status: Prep → Ready (입주처 확정)

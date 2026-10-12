@@ -1293,3 +1293,20 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `main.ts` 인라인 universe filter 2곳 → `filterMissionsByUniverse` 단일화.
 - ADR-0213 Implementation Status Phase 1b 추가 (미션 6종) + 인덱스 행 ❌→🟡 Partial.
 - Gates: typecheck 0 · 112 files / 2687 passed.
+
+## [2026-10-12] feat | ADR-0213 Phase 2 — Far Grid entry gate
+
+- 신규 `src/core/far_grid_gate.ts` (pure helpers, no UI imports, default-fill localStorage pattern).
+- `MENU_OPTIONS` FAR GRID `available` 데이터 유지; `renderMainMenu` 가 flag 받아 locked 시 `(locked)` suffix + GRAY_DARK.
+- `main.ts:selectMenuOption` 가 locked 시 status line에 + 메시지 ("Clear Sprawl Arc 1 to unlock the Far Grid").
+- Defense in depth: `far_grid_hub` screen (input handler + render) 도 lock re-check.
+- Arc-1-clear signal = `state_actions.ts:applyLootAction` 의 `arc === 1` missionComplete 분기 — 신규 completion 시맨틱 없음.
+- 신규 Vitest 25 tests: `far_grid_gate.test.ts` (13), `menu_far_grid_gate.test.ts` (6), `far_grid_gate_signal.test.ts` (6).
+- Gates: typecheck 0 · lint 0 errors (4 pre-existing warnings) · 115 files / 2712 passed (+25) · build OK.
+
+## [2026-10-12] feat | Far Grid Phase 2 gate — arc-1 win unlock (ADR-0213)
+
+- `far_grid_gate.ts` 신규 (localStorage 플래그, default-fill) + 메뉴 잠금 표시/차단 + hub defense-in-depth.
+- Arc-1-clear 신호: `applyLootAction` mission-complete에서 `arc===1` 시 플래그 (신규 완료 개념 없음).
+- 정직한 기록: arc-final 개념이 코드베이스에 없어 ANY arc-1 승리에 해금. 메시지도 구현 의미 그대로 수정.
+- Gates: typecheck 0 · lint 0 errors · 115 files / 2712 passed · build OK.

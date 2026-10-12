@@ -54,6 +54,11 @@ export const MENU_OPTIONS: ReadonlyArray<{
  *
  * CONTINUE option is grayed out (GRAY_DARK + " (no save)") when hasSave=false.
  * Pass hasSave=true and saveMeta (optional) for full continue hint.
+ *
+ * FAR GRID option is grayed out (GRAY_DARK + " (locked)") when
+ * farGridUnlocked=false (ADR-0213 Phase 2 gate). Status messages from the
+ * locked-selection path will surface on the existing `statusMessage` line —
+ * main.ts owns the message text (no UI strings here).
  */
 export function renderMainMenu(
   selected: number,
@@ -62,6 +67,7 @@ export function renderMainMenu(
   hasSave: boolean = false,
   saveMeta: { missionId: string; turnCount: number } | null = null,
   statusMessage: string = "",
+  farGridUnlocked: boolean = true,
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -105,6 +111,12 @@ export function renderMainMenu(
     // CONTINUE option gating — gray out + suffix when no save.
     if (opt.key === "continue" && !hasSave) {
       label = `[${num}] CONTINUE    (no save)`;
+      grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
+      continue;
+    }
+    // FAR GRID option gating — gray out + suffix when locked (ADR-0213 Phase 2).
+    if (opt.key === "far_grid_hub" && !farGridUnlocked) {
+      label = `[${num}] FAR GRID    (locked)`;
       grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
       continue;
     }

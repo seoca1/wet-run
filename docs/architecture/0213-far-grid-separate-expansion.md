@@ -110,6 +110,20 @@ Fiction `SF_F` 컬렉션에 Gibson 바깥 사이버펑크 원천이 있다 (W.J.
 
 **Notes**: Gate logic (entry condition) still deferred — Phase 2 decision item. Story-stem resolution still display-only.
 
+## Implementation Status (2026-10-12 — Phase 2 gate)
+
+**Status**: 🟡 Partial (gate shipped; story resolution + progression still open)
+
+**Evidence**:
+- `web/src/core/far_grid_gate.ts` (new) — pure unlock helpers, localStorage `wetrun_far_grid_unlocked`, default-fill (no save migration)
+- `web/src/core/state_actions.ts` — `applyLootAction` mission-complete path sets flag when `arc === 1`
+- `web/src/renderer/menu.ts` — FAR GRID renders `(locked)` + gray when flag absent
+- `web/src/main.ts` — locked selection blocked with status message; defense-in-depth bounce in `far_grid_hub` input + render paths
+- `web/tests/far_grid_gate.test.ts`, `menu_far_grid_gate.test.ts`, `far_grid_gate_signal.test.ts` — 25 new tests
+- Gates: typecheck 0 · lint 0 errors · vitest 115 files / 2712 passed · build OK
+
+**Notes**: Unlock fires on ANY Sprawl arc-1 mission win (no arc-final/completion-history concept exists in the codebase; inventing one was out of scope). Locked message states the implemented semantics verbatim. Tightening to full-arc clear needs completion tracking — Phase 3 candidate.
+
 ## 결과 (Consequences) — 2026-10-07 Option 1 확정
 
 - `cyberpunk-sources.md` Status: Prep → Ready (입주처 확정)

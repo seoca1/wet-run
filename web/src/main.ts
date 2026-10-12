@@ -17,6 +17,10 @@ import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
 import { renderFarGridHub } from "./renderer/far_grid_hub.ts";
 import { filterMissionsByUniverse } from "./core/missions_filter.ts";
 import {
+  FAR_GRID_LOCKED_MESSAGE,
+  isFarGridUnlocked,
+} from "./core/far_grid_gate.ts";
+import {
   composeCombatVfx,
   advanceVfxListBy,
   WEB_TICK_MS,
@@ -258,6 +262,7 @@ class Game {
     null;
   private dungeonCrawler: DungeonCrawler | null = null;
   private _message: string = "";
+  private farGridUnlockedCache: boolean = false;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -313,6 +318,9 @@ class Game {
         storageQuota: { state: "unavailable", reason: "not yet fetched" },
       };
     }
+    // ADR-0213 Phase 2: load Far Grid unlock cache synchronously. localStorage
+    // read is cheap and synchronous — no need for async refresh.
+    this.farGridUnlockedCache = isFarGridUnlocked();
     void this.refreshSaveCache();
     const handler = (action: GameAction): void => {
       if (
@@ -898,6 +906,14 @@ class Game {
       return;
     }
     if (this.screen === "far_grid_hub") {
+      // ADR-0213 Phase 2: defense in depth — if the unlock flag is missing,
+      // bounce back to the main menu rather than running the hub.
+      if (!this.farGridUnlockedCache) {
+        this.screen = "menu";
+        this._message = FAR_GRID_LOCKED_MESSAGE;
+        this.draw();
+        return;
+      }
       const farGridMissions = filterMissionsByUniverse(MISSIONS, "far-grid");
       if (farGridMissions.length === 0) {
         if (action.type === "jack_out") {
@@ -1097,6 +1113,14 @@ class Game {
         this.draw();
         break;
       case "far_grid_hub":
+        // ADR-0213 Phase 2: FAR GRID is gated by Arc 1 clear. Defense in depth:
+        // even if the screen was reached programmatically, we re-check here.
+        if (!this.farGridUnlockedCache) {
+          this._message = FAR_GRID_LOCKED_MESSAGE;
+          this.screen = "menu";
+          this.draw();
+          break;
+        }
         this.screen = "far_grid_hub";
         this.selectedMission = 0;
         this.draw();
@@ -1287,6 +1311,7 @@ class Game {
             this.hasSaveCache,
             this.saveMetaCache,
             this._message,
+            this.farGridUnlockedCache,
           ),
           [
             "MAIN MENU",
@@ -1309,20 +1334,26 @@ class Game {
           ],
         );
       } else if (this.screen === "far_grid_hub") {
-        const farGridMissions = filterMissionsByUniverse(MISSIONS, "far-grid");
-        this.renderer.render(
-          renderFarGridHub(
-            farGridMissions,
-            this.selectedMission,
-            this.layout.cols,
-            this.layout.rows,
-          ),
-          [
-            "FAR GRID HUB",
-            "",
-            `Selected: ${this.selectedMission + 1}/${farGridMissions.length}`,
-          ],
-        );
+        // Defense in depth: re-check the unlock flag in the render path.
+        if (!this.farGridUnlockedCache) {
+          this.screen = "menu";
+          this._message = FAR_GRID_LOCKED_MESSAGE;
+        } else {
+          const farGridMissions = filterMissionsByUniverse(MISSIONS, "far-grid");
+          this.renderer.render(
+            renderFarGridHub(
+              farGridMissions,
+              this.selectedMission,
+              this.layout.cols,
+              this.layout.rows,
+            ),
+            [
+              "FAR GRID HUB",
+              "",
+              `Selected: ${this.selectedMission + 1}/${farGridMissions.length}`,
+            ],
+          );
+        }
       } else if (this.screen === "settings") {
         if (this.settingsState === null || this.settingsState === undefined) {
           try {

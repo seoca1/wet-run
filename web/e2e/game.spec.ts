@@ -5,7 +5,7 @@
  * player journey from boot to combat victory.
  */
 import { test, expect } from "@playwright/test";
-import { gotoMenuOption } from "./menu-nav";
+import { gotoMenuOption, enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase } from "./menu-nav";
 
 test.describe("Wet Run Game", () => {
   test.beforeEach(async ({ page }) => {
@@ -160,14 +160,9 @@ test.describe("Wet Run Game", () => {
   });
 
   test("can progress through approach to combat", async ({ page }) => {
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
-
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
-
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await enterForScreen(page, "mission_select");
+    await enterForRunPhase(page, "matrix");
+    await enterForPhase(page, "approach");
 
     const approachPhase = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getPhase(): string | null } };
@@ -175,8 +170,7 @@ test.describe("Wet Run Game", () => {
     });
     expect(approachPhase).toBe("approach");
 
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await gotoIceNode(page);
 
     const combatPhase = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getPhase(): string | null } };
@@ -186,14 +180,10 @@ test.describe("Wet Run Game", () => {
   });
 
   test("can use program in combat via digit key", async ({ page }) => {
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await enterForScreen(page, "mission_select");
+    await enterForRunPhase(page, "matrix");
+    await enterForPhase(page, "approach");
+    await gotoIceNode(page);
 
     const initialPhase = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getPhase(): string | null } };

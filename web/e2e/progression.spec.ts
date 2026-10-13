@@ -10,6 +10,7 @@
  * If this test fails in CI, the phone-experience regression has returned.
  */
 import { test, expect } from "@playwright/test";
+import { enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase } from "./menu-nav";
 
 test.describe("combat progression (regression)", () => {
   test.beforeEach(async ({ page }) => {
@@ -27,12 +28,10 @@ test.describe("combat progression (regression)", () => {
   test("menu → mission_select → approach → combat → victory via digit key", async ({ page }) => {
     // Main menu renders; press Enter to select NEW_RUN (highlighted).
     await expect(page.locator("canvas#game-canvas")).toBeVisible();
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await enterForScreen(page, "mission_select");
 
     // Mission select screen renders; press Enter to launch the first mission.
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await enterForRunPhase(page, "matrix");
 
     // Check phase after mission select
     let phase = await page.evaluate(() => {
@@ -42,8 +41,7 @@ test.describe("combat progression (regression)", () => {
     console.log("Phase after mission select:", phase);
 
     // Approach screen (phase="approach").
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await enterForPhase(page, "approach");
 
     phase = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getPhase(): string | null } };
@@ -51,9 +49,8 @@ test.describe("combat progression (regression)", () => {
     });
     console.log("Phase after first Enter in matrix:", phase);
 
-    // Combat screen (phase="combat").
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    // Combat screen (phase="combat") — walk to an ICE node first.
+    await gotoIceNode(page);
 
     phase = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getPhase(): string | null } };

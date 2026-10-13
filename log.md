@@ -1361,3 +1361,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `simulateCombat`이 토폴로지 HP 대신 `iceHpForGrade` 사용. 커브 단조화 (100/100/100/16/0/0).
 - ADR Accepted 기록 + 근거 2건 해소 확인 (armor 반영, 일반방 grade-aware).
 - Gates: typecheck 0 · 117 files / 2767 passed.
+
+## [2026-10-12] feat | KO UI 활성화 + 0211 Option 2 (follow-ups)
+
+- KO: settings 토글 + `wetrun_language` 영속 + 메뉴/hub KO 렌더.
+- Option 2: `parseIce` grade-HP 도출 (수치 이동 0, 회귀 3건).
+- Gates: typecheck 0 · lint 0 errors · 118 files / 2792 passed · build OK · mixed 0.

@@ -34,6 +34,8 @@ import {
 import {
   renderSettingsScreen,
   getInitialSettingsState,
+  persistLanguage,
+  cycleLanguage,
 } from "./renderer/settings.ts";
 import {
   healthBar,
@@ -90,11 +92,19 @@ import {
   makeLoadout,
 } from "./core/equipment.ts";
 import type { InfoMarket } from "./core/info_market.ts";
-import type { Language } from "./core/i18n.ts";
+import { loadPersistedLanguage } from "./renderer/settings.ts";
 
-// UI language for the menu + Far Grid hub renderers. Fixed to English until
-// the settings toggle + global language state land (activation deferred).
-const UI_LANGUAGE: Language = "en";
+function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
+  return {
+    selectedField: "audio",
+    audioEnabled: !isAudioOff(),
+    bgmVolume: 0.4,
+    sfxVolume: 0.6,
+    muted: false,
+    language: loadPersistedLanguage(),
+    storageQuota: { state: "unavailable", reason: "not yet fetched" },
+  };
+}
 
 const loadStorySystem = () => import("./core/graphic_novel.ts");
 const loadAudioSystemRaw = () => import("./audio/manager.ts");
@@ -303,25 +313,11 @@ class Game {
       this.settingsState = getInitialSettingsState();
     } catch (e) {
       console.error("[Game] Failed to initialize settingsState:", e);
-      this.settingsState = {
-        selectedField: "audio",
-        audioEnabled: !isAudioOff(),
-        bgmVolume: 0.4,
-        sfxVolume: 0.6,
-        muted: false,
-        storageQuota: { state: "unavailable", reason: "not yet fetched" },
-      };
+      this.settingsState = fallbackSettingsState();
     }
     // Ensure settingsState is never null/undefined
     if (!this.settingsState) {
-      this.settingsState = {
-        selectedField: "audio",
-        audioEnabled: !isAudioOff(),
-        bgmVolume: 0.4,
-        sfxVolume: 0.6,
-        muted: false,
-        storageQuota: { state: "unavailable", reason: "not yet fetched" },
-      };
+      this.settingsState = fallbackSettingsState();
     }
     // ADR-0213 Phase 2: load Far Grid unlock cache synchronously. localStorage
     // read is cheap and synchronous — no need for async refresh.
@@ -969,12 +965,9 @@ class Game {
             audioEnabled: !isAudioOff(),
           };
         }
-        const fields: ReadonlyArray<"audio" | "bgm" | "sfx" | "mute"> = [
-          "audio",
-          "bgm",
-          "sfx",
-          "mute",
-        ];
+        const fields: ReadonlyArray<
+          "audio" | "bgm" | "sfx" | "mute" | "language"
+        > = ["audio", "bgm", "sfx", "mute", "language"];
         const idx = fields.indexOf(this.settingsState.selectedField);
         if (
           action.type === "cycle_target" ||
@@ -1039,6 +1032,10 @@ class Game {
           } else if (this.settingsState.selectedField === "mute") {
             const muted = manager.toggleMute();
             this.settingsState = { ...this.settingsState, muted };
+          } else if (this.settingsState.selectedField === "language") {
+            const next = cycleLanguage(this.settingsState.language);
+            persistLanguage(next);
+            this.settingsState = { ...this.settingsState, language: next };
           }
           this.draw();
         } else if (action.type === "jack_out") {
@@ -1099,14 +1096,7 @@ class Game {
             "[Game] Failed to initialize settingsState on menu select:",
             e,
           );
-          this.settingsState = {
-            selectedField: "audio",
-            audioEnabled: !isAudioOff(),
-            bgmVolume: 0.4,
-            sfxVolume: 0.6,
-            muted: false,
-            storageQuota: { state: "unavailable", reason: "not yet fetched" },
-          };
+          this.settingsState = fallbackSettingsState();
         }
         this.draw();
         break;
@@ -1316,7 +1306,7 @@ class Game {
             this.saveMetaCache,
             this._message,
             this.farGridUnlockedCache,
-            UI_LANGUAGE,
+            (this.settingsState?.language ?? "en"),
           ),
           [
             "MAIN MENU",
@@ -1355,7 +1345,7 @@ class Game {
               this.layout.cols,
               this.layout.rows,
               "",
-              UI_LANGUAGE,
+              (this.settingsState?.language ?? "en"),
             ),
             [
               "FAR GRID HUB",
@@ -1373,14 +1363,7 @@ class Game {
               "[Game] Failed to initialize settingsState in render:",
               e,
             );
-            this.settingsState = {
-              selectedField: "audio",
-              audioEnabled: !isAudioOff(),
-              bgmVolume: 0.4,
-              sfxVolume: 0.6,
-              muted: false,
-              storageQuota: { state: "unavailable", reason: "not yet fetched" },
-            };
+            this.settingsState = fallbackSettingsState();
           }
         }
         this.renderer.render(
@@ -1568,14 +1551,7 @@ class Game {
           "[Game] Failed to initialize settingsState in getter:",
           e,
         );
-        this.settingsState = {
-          selectedField: "audio",
-          audioEnabled: !isAudioOff(),
-          bgmVolume: 0.4,
-          sfxVolume: 0.6,
-          muted: false,
-          storageQuota: { state: "unavailable", reason: "not yet fetched" },
-        };
+        this.settingsState = fallbackSettingsState();
       }
     }
     return this.settingsState;

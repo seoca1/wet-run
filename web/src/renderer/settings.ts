@@ -1,6 +1,8 @@
 /** Settings screen renderer (Tier 5, ADR-0207 follow-up + Tier 7 quota UI).
  *
  * Audio controls panel: BGM volume + SFX volume sliders + global mute toggle.
+ * Language toggle (EN/KO) — persisted via localStorage. Drives the language
+ * arg of the menu + Far Grid hub renderers (which already accept `language`).
  * Storage quota panel: IDB usage bar + percent + warning levels.
  * Volumes are persisted via AudioManager (localStorage). The renderer is
  * pure: it reads current values from the AudioManager instance and emits
@@ -18,8 +20,37 @@ import {
   summarizeQuota,
   type StorageQuota,
 } from "../save/storage_quota.ts";
+import { isLanguageSupported, t, type Language } from "../core/i18n.ts";
 
-export type SettingsField = "audio" | "bgm" | "sfx" | "mute";
+/** localStorage key for the persisted UI language (EN/KO).
+ *
+ * Mirrors the `wetrun_*` key convention used by audio settings
+ * (`wetrun_audio_off`, `wetrun_audio_bgm_volume`, …) and other persisted
+ * toggles. Stored value is the bare language code ("en" or "ko"). Unknown
+ * or malformed values are rejected at read time — see `loadPersistedLanguage`.
+ */
+export const LANGUAGE_STORAGE_KEY = "wetrun_language";
+
+/** Read the persisted UI language. Returns "en" when missing/invalid. */
+export function loadPersistedLanguage(): Language {
+  if (typeof localStorage === "undefined") return "en";
+  const raw = localStorage.getItem(LANGUAGE_STORAGE_KEY);
+  if (raw !== null && isLanguageSupported(raw)) return raw;
+  return "en";
+}
+
+/** Persist the UI language. No-op when localStorage is unavailable. */
+export function persistLanguage(language: Language): void {
+  if (typeof localStorage === "undefined") return;
+  localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+}
+
+/** Cycle the language to the next supported value (en → ko → en). */
+export function cycleLanguage(current: Language): Language {
+  return current === "en" ? "ko" : "en";
+}
+
+export type SettingsField = "audio" | "bgm" | "sfx" | "mute" | "language";
 
 export interface SettingsState {
   selectedField: SettingsField;
@@ -27,6 +58,7 @@ export interface SettingsState {
   bgmVolume: number;
   sfxVolume: number;
   muted: boolean;
+  language: Language;
   storageQuota: StorageQuota;
 }
 
@@ -37,6 +69,7 @@ const VOLUME_STEP = 0.1;
  * Use `getInitialSettingsStateAsync` from main.ts to fetch real quota.
  */
 export function getInitialSettingsState(): SettingsState {
+  const language = loadPersistedLanguage();
   let audio: AudioManager;
   try {
     audio = AudioManager.getInstance();
@@ -47,6 +80,7 @@ export function getInitialSettingsState(): SettingsState {
       bgmVolume: 0.4,
       sfxVolume: 0.6,
       muted: false,
+      language,
       storageQuota: { state: "unavailable", reason: "not yet fetched" },
     };
   }
@@ -56,6 +90,7 @@ export function getInitialSettingsState(): SettingsState {
     bgmVolume: audio.getBgmVolume(),
     sfxVolume: audio.getSfxVolume(),
     muted: audio.isMuted(),
+    language,
     storageQuota: { state: "unavailable", reason: "not yet fetched" },
   };
 }
@@ -73,6 +108,7 @@ export async function getInitialSettingsStateAsync(): Promise<SettingsState> {
     bgmVolume: audio.getBgmVolume(),
     sfxVolume: audio.getSfxVolume(),
     muted: audio.isMuted(),
+    language: loadPersistedLanguage(),
     storageQuota,
   };
 }
@@ -173,12 +209,22 @@ export function renderSettingsScreen(
         : PALETTE.GRAY_LIGHT;
   grid = setText(grid, 4, 18, muteLabel, muteFg);
 
-  grid = setText(grid, 4, 20, "STORAGE", PALETTE.CYAN_LIGHT);
+  grid = setText(grid, 4, 20, t("settings.language", state.language), PALETTE.CYAN_LIGHT);
+  const languageLabel = state.language === "ko" ? "[X] KO" : "[ ] EN";
+  const languageFg =
+    state.selectedField === "language"
+      ? PALETTE.YELLOW_AMBER
+      : state.language === "ko"
+        ? PALETTE.GREEN_NEON
+        : PALETTE.GRAY_LIGHT;
+  grid = setText(grid, 4, 22, languageLabel, languageFg);
+
+  grid = setText(grid, 4, 24, "STORAGE", PALETTE.CYAN_LIGHT);
   if (state.storageQuota.state === "unavailable") {
     grid = setText(
       grid,
       4,
-      21,
+      25,
       `[ Storage API unavailable ]`,
       PALETTE.GRAY_DARK,
     );
@@ -194,7 +240,7 @@ export function renderSettingsScreen(
     grid = setText(
       grid,
       4,
-      21,
+      25,
       `[${bar}] ${state.storageQuota.percent}%`,
       barColor,
     );
@@ -205,7 +251,9 @@ export function renderSettingsScreen(
       ? "ENTER: toggle audio | TAB: switch | ESC: back"
       : state.selectedField === "mute"
         ? "ENTER: toggle mute | TAB: switch | ESC: back"
-        : "←/→: adjust volume | TAB: switch | ESC: back";
+        : state.selectedField === "language"
+          ? "ENTER: toggle language | TAB: switch | ESC: back"
+          : "←/→: adjust volume | TAB: switch | ESC: back";
   grid = setText(grid, 2, rows - 2, hint, PALETTE.GRAY_DARK);
   grid = setText(
     grid,

@@ -198,6 +198,19 @@ export function parseProgram(raw: unknown, idHint: string): Program {
   };
 }
 
+/** Default grade used to derive the static `hp` field when `hp_base` +
+ * `hp_per_grade` are present in the JSON (ADR-0211 Option 2). The HP curve
+ * itself is computed at runtime via `iceHpForGrade()` from `ice_scaling.ts`
+ * using the mission's actual grade; this constant only seeds the loader's
+ * fallback so the static `hp` field is non-arbitrary (e.g. a watchdog at
+ * grade 1 has hp=50, not 100). */
+const PARSE_ICE_DEFAULT_GRADE = 1;
+
+/** Default fallback HP for legacy rows that omit both `hp_base` and
+ * `hp_per_grade`. Matches the legacy `parseIce` behavior pinned by
+ * `tests/data_loaders.test.ts:234` (`expect(ice.hp).toBeGreaterThan(0)`). */
+const PARSE_ICE_LEGACY_HP = 100;
+
 export function parseIce(raw: unknown, idHint: string): Ice {
   if (typeof raw !== "object" || raw === null) {
     throw new Error(`[data_loaders] ice '${idHint}' must be an object`);
@@ -220,7 +233,14 @@ export function parseIce(raw: unknown, idHint: string): Ice {
   const hpBase = typeof r.hp_base === "number" ? r.hp_base : undefined;
   const hpPerGrade =
     typeof r.hp_per_grade === "number" ? r.hp_per_grade : undefined;
-  const hp = 100;
+  // ADR-0211 Option 2: derive `hp` from `hp_base` + `hp_per_grade` when both are
+  // available so the field is non-arbitrary and aligned with the runtime
+  // `iceHpForGrade` curve. Fall back to the legacy 100 default when grade data
+  // is missing (preserves `tests/data_loaders.test.ts:234` pinning).
+  const hp =
+    hpBase !== undefined && hpPerGrade !== undefined
+      ? hpBase + hpPerGrade * Math.max(0, PARSE_ICE_DEFAULT_GRADE - 1)
+      : PARSE_ICE_LEGACY_HP;
   return {
     id: idHint,
     name,

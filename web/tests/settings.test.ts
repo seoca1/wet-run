@@ -50,6 +50,7 @@ describe("renderSettingsScreen", () => {
     bgmVolume: 0.5,
     sfxVolume: 0.7,
     muted: false,
+    language: "en",
     storageQuota: { state: "unavailable", reason: "test fixture" },
   };
 

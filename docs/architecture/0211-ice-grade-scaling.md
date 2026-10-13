@@ -88,6 +88,16 @@ grade  missions  win-rate
 - 실제 게임 난이도 배선(Option 2)은 후속 ADR로 분리 (본 ADR 범위 밖).
 - 조사 당시 근거 2건이 이미 해소됨: `defenderDefenseBonus` armor 반영済, 던전 일반방 grade-aware 배치済.残 `parseIce` HP 100 고정은 Option 2 범위.
 
+## Implementation Status (2026-10-12 — Option 2)
+
+**Status**: ✅ Implemented (Option 1 + Option 2)
+
+**Evidence (Option 2)**:
+- `web/src/core/data_loaders.ts` — `parseIce`가 grade 데이터 존재 시 `hp_base`로 HP 도출 (미존재 시 legacy 100 유지)
+- `web/tests/data_loaders.test.ts` — ADR-0211 Option 2 회귀 3건 추가
+- `npm run balance` 전후 동일 단조 곡선 (하네스가 이미 `iceHpForGrade` 사용 중이었으므로 수치 이동 0)
+- Gates: typecheck 0 · lint 0 errors · 118 files / 2792 passed · build OK
+
 ## Implementation Status (2026-10-12)
 
 **Status**: ✅ Implemented (Option 1)

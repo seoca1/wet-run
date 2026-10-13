@@ -239,6 +239,40 @@ describe("data_loaders: parseIce", () => {
       parseIce({ name: "X", armor: 5, defense: 3 }, "x"),
     ).toThrow(/both 'armor' and 'defense'/);
   });
+
+  it("derives hp from hp_base when hp_per_grade is missing (partial data)", () => {
+    // Legacy rows that carry only hp_base (no hp_per_grade) still need a
+    // usable hp. parseIce falls back to 100 in that case; hpBase is still
+    // exposed for `iceHpForGrade` to compose at combat time.
+    const ice = parseIce(
+      { name: "ICE — X", tier: 1, armor: 0, hp_base: 75 },
+      "x",
+    );
+    expect(ice.hpBase).toBe(75);
+    expect(ice.hpPerGrade).toBeUndefined();
+    // No per_grade data → legacy 100 fallback (pinned by existing assertion).
+    expect(ice.hp).toBe(100);
+  });
+
+  it("derives hp from hp_base + hp_per_grade at default grade 1 (ADR-0211)", () => {
+    // Watchdog (hp_base=50, hp_per_grade=10) → hp = 50 at grade 1, not 100.
+    const watchdog = parseIce(
+      { name: "ICE — Watchdog", tier: 1, armor: 1, hp_base: 50, hp_per_grade: 10 },
+      "watchdog",
+    );
+    expect(watchdog.hpBase).toBe(50);
+    expect(watchdog.hpPerGrade).toBe(10);
+    expect(watchdog.hp).toBe(50);
+  });
+
+  it("falls back to legacy hp=100 when both hp_base and hp_per_grade are missing", () => {
+    // Pure legacy rows (no grade data at all) keep the pre-ADR-0211 default
+    // so any consumer still reading `ice.hp` directly gets a sensible value.
+    const ice = parseIce({ name: "ICE — Legacy", tier: 1, armor: 0 }, "x");
+    expect(ice.hpBase).toBeUndefined();
+    expect(ice.hpPerGrade).toBeUndefined();
+    expect(ice.hp).toBe(100);
+  });
 });
 
 describe("data_loaders: load catalogs", () => {

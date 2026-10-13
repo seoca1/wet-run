@@ -3,6 +3,7 @@ import {
   ENCOUNTER_ICE_BY_GRADE,
   clampGrade,
   encounterIceIdForGrade,
+  iceDmgBonusPctForGrade,
   iceHpForGrade,
   missionGradeOf,
   missionSeedOf,
@@ -90,6 +91,14 @@ describe("ice_scaling", () => {
     expect(iceHpForGrade({ id: "x", name: "X", hp: Number.NaN, armor: 0, tier: 1 }, 3)).toBe(100);
   });
 
+  it("applies a negative ICE dmg modifier at the g6 climax", () => {
+    // The g6 band is tanky enough that the developed deck flatlined at the HP
+    // cap; the climax needs an ICE dmg penalty (a higher cap is forbidden by
+    // the HP monotonicity invariant) to stay attainable.
+    expect(iceDmgBonusPctForGrade(6)).toBeLessThan(0);
+    expect(iceDmgBonusPctForGrade(5)).toBe(0);
+  });
+
   it("reads grade with the grade_max -> grade_min -> grade fallback", () => {
     expect(missionGradeOf({ grade_max: 5 })).toBe(5);
     expect(missionGradeOf({ grade_min: 3 })).toBe(3);
@@ -114,10 +123,14 @@ describe("grade-driven encounters in the procedural matrix", () => {
     const ice = roster.ice[0] as Ice;
     const grade5Band = ENCOUNTER_ICE_BY_GRADE[5] ?? [];
     expect(grade5Band).toContain(ice.id);
-    // HP is bounded by the encounter cap (grade 5 cap = 121) regardless of which
-    // band id was chosen — this is the variety-vs-budget invariant.
+    // HP is bounded by the encounter cap regardless of which band id was chosen
+    // — this is the variety-vs-budget invariant. The grade-5 cap is 165 (same
+    // as g4) so `ENCOUNTER_HP_BY_GRADE` stays monotonically non-decreasing
+    // (tested by `keeps HP monotonic non-decreasing across grades for every
+    // band id` above); the g6 dmg penalty in `ice_scaling.ts` — not a higher
+    // cap — is what lets the PPL deck hit its 25-45% target at g6.
     expect(roster.hp[0]).toBe(iceHpForGrade(ice, 5));
-    expect(roster.hp[0]).toBeLessThanOrEqual(121);
+    expect(roster.hp[0]).toBeLessThanOrEqual(165);
     expect(roster.hp[0]).toBeGreaterThanOrEqual(50);
   });
 

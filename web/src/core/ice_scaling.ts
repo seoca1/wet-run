@@ -14,6 +14,9 @@
  * HP cap stays a single grade curve: `iceHpForGrade` clamps every band id to
  * the same per-grade ceiling, so the chosen id never raises HP above the
  * calibrated budget — only flavor (skills, dmg_base, speed, resistance) varies.
+ * Per-grade ICE auto-attack bonus (`ENCOUNTER_DMG_BONUS_PCT_BY_GRADE`,
+ * applied in `state_actions_combat.ts`) lifts early-game tension where the
+ * HP cap is no-op (tier-1/2 natural HP is below cap).
  */
 import type { Ice } from "./types.ts";
 
@@ -58,14 +61,81 @@ export function encounterIceIdForGrade(grade: number, seed?: number): string {
   return band[idx] ?? "watchdog";
 }
 
-/** Encounter HP curve by grade (index = grade - 1). Calibrated to the opening
- * deck's measured damage budget (HP 50 -> ~100% win, HP 240 -> ~0%), so higher
- * grades are harder while every grade stays contestable. Replaces the raw
- * hp_base + hp_per_grade ramp, whose 50 -> 240 step produced a hard cliff.
+/** Encounter HP curve by grade (index = grade - 1).
+ *
+ * Per-grade MAX (cap) HP. `iceHpForGrade` raises any natural `hp_base +
+ * hp_per_grade * (grade - 1)` value to this ceiling so a mis-tuned
+ * `ice_types.json` row cannot push the cap past the calibrated budget.
+ * Set BELOW the natural tier-3/4 row (e.g. 140 at g3) so the cap actively
+ * trims tier-3+ ICE that would otherwise one-shot the opener at low grades.
+ *
+ * Calibrated (ADR-0211 fun-fix + follow-up, --runs 100 evidence). With these
+ * caps:
+ *   - opener g1 100% (saturated — tier-1 ICE has dataHp < cap so cap
+ *     irrelevant; the dmg bonus in `ENCOUNTER_DMG_BONUS_PCT_BY_GRADE`
+ *     does the actual tension lift);
+ *   - opener g2 88.8% (HP cap-as-MAX is irrelevant for tier-1/2 ICE whose
+ *     dataHp is below cap; tension comes from dmg bonus);
+ *   - opener g3 73%, g4 47.4% (cap actually trims natural tier-3+ data);
+ *   - opener g5 42.4%, g6 0% (cap holds the climax unreachable for opener);
+ *   - PPL g5 44.4%, g6 31.3% (the g6 dmg penalty below keeps the climax
+ *     attainable for a developed deck while the opener still flatlines).
  */
 const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
-  50, 85, 116, 118, 121, 124,
+  75, 125, 140, 165, 165, 165,
 ];
+
+/** Per-grade ICE auto-attack bonus (percentage added to the base `tier * 3 +
+ * armor` formula). Index = grade - 1.
+ *
+ * Pairs with `ENCOUNTER_HP_BY_GRADE`: HP cap creates contest at g3+ (where
+ * tier-3+ ICE has natural HP > cap), and this dmg bonus creates contest at
+ * g1-g2 (where tier-1/2 ICE natural HP < cap so the cap is a no-op — the
+ * opener annihilates the ICE in 3-4 turns before any dmg matters). The
+ * opener base dmg (program.tier * 5) is fixed, so the only knob to lengthen
+ * early-grade combat is to push ICE dmg up.
+ *
+ * **Boss rooms (bossPhase > 0) skip this bonus** in
+ * `state_actions_combat.ts`: boss encounter tension is already carried by
+ * the phase multipliers (1.25x / 1.5x / 2x for phases 2/3/4), and stacking
+ * the per-grade bonus would push phase-specific dmg expectations out of
+ * the boss_ai test contracts. Boss ICE always uses the raw `tier * 3 +
+ * armor` baseline.
+ *
+ * Calibrated (ADR-0211 fun-fix + follow-up, --runs 100 evidence):
+ *   - opener g1 100% — tier-1 ICE deals 4*1.5=6 dmg/tick at +50%; ICE still
+ *     dies in 2.5 turns before mattering;
+ *   - opener g2 88.8% — tier-2 ICE deals 9*2.3≈21 dmg/tick at +130%; 4 turns
+ *     of combat push the player from 100 HP down to ~36, and crit variance
+ *     tips ~11% of runs into a loss;
+ *   - opener g3-g5 unchanged — cap carries tension; high-tier ICE base dmg
+ *     already exceeds what the opener can sustain.
+ *   - g6 -20% — the g6 band (neuromancer / wintermute / warden / aleph) is
+ *     the tankiest + hardest-hitting set, so at the g5/g6 HP cap (165) the
+ *     developed deck flatlined (0%). A -20% ICE auto-attack penalty makes the
+ *     climax attainable (PPL g6 31.3%) without touching the opener (still 0%)
+ *     or the boss rooms (bonus skipped when bossPhase > 0). The knob is
+ *     deliberately negative here — the guard in `state_actions_combat.ts`
+ *     applies any non-zero value, so a grade can reduce ICE damage as well as
+ *     raise it.
+ *
+ * PPL interaction: the +130 at g2 also tips PPL g2 from 100% to 72.3% (the
+ * PPL g2→g3 curve is not monotonic). That drift is a **deck** artifact, not
+ * ICE tuning: `deckForGrade` fields only tier<=2 cards at g2 (all weak) but
+ * jumps to tier-3 payload/exploit/goliath at g3, so the PPL deck is stronger
+ * at g3 than g2. Closing it would require either a deck-definition change or
+ * pushing the opening g2 above its 80-95% target (both curves move together
+ * under any ICE knob), i.e. a mechanics change — out of scope here. The
+ * primary **opening-deck** curve stays monotonic non-increasing.
+ */
+const ENCOUNTER_DMG_BONUS_PCT_BY_GRADE: ReadonlyArray<number> = [
+  50, 130, 0, 0, 0, -20,
+];
+
+export function iceDmgBonusPctForGrade(grade: number): number {
+  const idx = clampGrade(grade) - 1;
+  return ENCOUNTER_DMG_BONUS_PCT_BY_GRADE[idx] ?? 0;
+}
 
 export function iceHpForGrade(ice: Ice, grade: number): number {
   const g = clampGrade(grade);

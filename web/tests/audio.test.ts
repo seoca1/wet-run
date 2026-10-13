@@ -3,9 +3,18 @@
  * Tests singleton lifecycle + mute toggle. Howler construction is
  * expected to fail silently in jsdom (no AudioContext), so we test
  * the state-tracking API which is the deterministic surface.
+ *
+ * Tier 5 SFX + PWA icon asset tests live in the `Tier 5 assets`
+ * block at the bottom of this file — they validate on-disk bytes
+ * (WAV/PNG headers, dimensions, durations) rather than runtime
+ * playback so they remain valid under the node test environment.
  */
 import { describe, it, expect, beforeEach } from "vitest";
+import { readFileSync, statSync } from "fs";
+import { join } from "path";
 import { AudioManager, BGM_IDS, SFX_IDS } from "../src/audio/manager.js";
+
+const PUBLIC_DIR = join(import.meta.dirname, "../public");
 
 describe("AudioManager", () => {
   beforeEach(() => {
@@ -275,5 +284,229 @@ describe("AudioManager", () => {
     const audio = AudioManager.getInstance();
     expect(() => audio.playPhase("nonexistent_phase")).not.toThrow();
     expect(audio.getCurrentTrack()).toBe(null);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Tier 5 assets — SFX files + PWA icons (on-disk byte validation).
+//
+// These tests do not require a browser AudioContext. They parse the WAV
+// headers + data chunks and the PNG signatures + IHDR dimensions so a
+// broken export (e.g. a future regeneration script writes silence, the
+// wrong sample rate, or a malformed PNG) is caught by CI.
+// ---------------------------------------------------------------------------
+
+interface WavInfo {
+  path: string;
+  relPath: string;
+  durationSec: number;
+  sizeBytes: number;
+  sampleRate: number;
+  channels: number;
+  bitDepth: 16;
+}
+
+function parseWavHeader(absPath: string): WavInfo {
+  const buf = readFileSync(absPath);
+  // RIFF/WAVE
+  if (
+    buf.length < 44 ||
+    buf.toString("ascii", 0, 4) !== "RIFF" ||
+    buf.toString("ascii", 8, 12) !== "WAVE"
+  ) {
+    throw new Error(`not RIFF/WAVE: ${absPath}`);
+  }
+  // fmt chunk at offset 12
+  if (buf.toString("ascii", 12, 16) !== "fmt ") {
+    throw new Error(`missing fmt chunk: ${absPath}`);
+  }
+  const fmtSize = buf.readUInt32LE(16);
+  const audioFormat = buf.readUInt16LE(20);
+  const channels = buf.readUInt16LE(22);
+  const sampleRate = buf.readUInt32LE(24);
+  const byteRate = buf.readUInt32LE(28);
+  const blockAlign = buf.readUInt16LE(32);
+  const bitsPerSample = buf.readUInt16LE(34);
+  if (audioFormat !== 1) throw new Error(`not PCM (fmt=${audioFormat}) in ${absPath}`);
+  if (bitsPerSample !== 16) throw new Error(`not 16-bit (bps=${bitsPerSample}) in ${absPath}`);
+  if (channels !== 1) throw new Error(`not mono (ch=${channels}) in ${absPath}`);
+  if (sampleRate !== 44100) throw new Error(`not 44.1 kHz (sr=${sampleRate}) in ${absPath}`);
+  if (byteRate !== sampleRate * channels * (bitsPerSample / 8))
+    throw new Error(`byteRate inconsistent in ${absPath}`);
+  if (blockAlign !== channels * (bitsPerSample / 8))
+    throw new Error(`blockAlign inconsistent in ${absPath}`);
+  if (fmtSize !== 16)
+    throw new Error(`expected fmt_size=16, got ${fmtSize} in ${absPath}`);
+  // data chunk immediately after fmt
+  const dataPos = 20 + fmtSize;
+  if (buf.toString("ascii", dataPos, dataPos + 4) !== "data")
+    throw new Error(`missing data chunk in ${absPath}`);
+  const dataSize = buf.readUInt32LE(dataPos + 4);
+  const expectedTotalSize = dataPos + 8 + dataSize;
+  if (expectedTotalSize !== buf.length)
+    throw new Error(
+      `data chunk size mismatch in ${absPath}: header says ${expectedTotalSize}, file is ${buf.length}`,
+    );
+  const frames = dataSize / blockAlign;
+  return {
+    path: absPath,
+    relPath: absPath.split("/public/").pop()!,
+    durationSec: frames / sampleRate,
+    sizeBytes: buf.length,
+    sampleRate,
+    channels,
+    bitDepth: 16,
+  };
+}
+
+interface PngInfo {
+  path: string;
+  width: number;
+  height: number;
+  sizeBytes: number;
+  nonBlackPixels?: number;
+}
+
+function parsePngHeader(absPath: string): PngInfo {
+  const buf = readFileSync(absPath);
+  // PNG signature: 89 50 4E 47 0D 0A 1A 0A
+  const sig = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  if (buf.length < 24 || !buf.subarray(0, 8).equals(sig))
+    throw new Error(`not PNG: ${absPath}`);
+  if (buf.toString("ascii", 12, 16) !== "IHDR")
+    throw new Error(`missing IHDR: ${absPath}`);
+  const width = buf.readUInt32BE(16);
+  const height = buf.readUInt32BE(20);
+  const bitDepth = buf[24];
+  const colorType = buf[25];
+  if (bitDepth !== 8)
+    throw new Error(`expected 8-bit depth, got ${bitDepth} in ${absPath}`);
+  if (colorType !== 2 && colorType !== 6)
+    throw new Error(
+      `expected RGB (2) or RGBA (6) color_type, got ${colorType} in ${absPath}`,
+    );
+  return {
+    path: absPath,
+    width,
+    height,
+    sizeBytes: buf.length,
+  };
+}
+
+// The 7 SFX the dispatcher expects, with expected duration bands (seconds).
+// Bands come from the spec the synth-sfx.py was written against.
+const SFX_CASES: Array<{
+  id: keyof typeof SFX_IDS;
+  filename: string;
+  minDur: number;
+  maxDur: number;
+}> = [
+  { id: "COMBAT_BLOCK", filename: "combat_block.wav", minDur: 0.25, maxDur: 0.40 },
+  {
+    id: "COMBAT_SKILL_STRIKE",
+    filename: "combat_skill_strike.wav",
+    minDur: 0.15,
+    maxDur: 0.22,
+  },
+  {
+    id: "COMBAT_SKILL_BURST",
+    filename: "combat_skill_burst.wav",
+    minDur: 0.30,
+    maxDur: 0.45,
+  },
+  {
+    id: "COMBAT_SKILL_GUARD",
+    filename: "combat_skill_guard.wav",
+    minDur: 0.28,
+    maxDur: 0.40,
+  },
+  {
+    id: "COMBAT_SKILL_SUPPORT",
+    filename: "combat_skill_support.wav",
+    minDur: 0.22,
+    maxDur: 0.32,
+  },
+  {
+    id: "MOVEMENT_STEP",
+    filename: "movement_step.wav",
+    minDur: 0.12,
+    maxDur: 0.20,
+  },
+  {
+    id: "MOVEMENT_NODE",
+    filename: "movement_node.wav",
+    minDur: 0.40,
+    maxDur: 0.55,
+  },
+];
+
+describe("Tier 5 SFX assets (public/sounds/sfx/*.wav)", () => {
+  for (const c of SFX_CASES) {
+    it(`SFX_IDS.${c.id} resolves to public/sounds/sfx/${c.filename}`, () => {
+      const expected = `sounds/sfx/${c.filename}`;
+      expect(SFX_IDS[c.id]).toBe(expected);
+      const abs = join(PUBLIC_DIR, expected);
+      expect(statSync(abs).size).toBeGreaterThan(0);
+    });
+
+    it(`${c.filename} is 44.1 kHz 16-bit mono PCM with sane duration`, () => {
+      const abs = join(PUBLIC_DIR, "sounds", "sfx", c.filename);
+      const info = parseWavHeader(abs);
+      expect(info.sampleRate).toBe(44100);
+      expect(info.channels).toBe(1);
+      expect(info.bitDepth).toBe(16);
+      // Duration band from spec (synth-sfx.py + task description 0.15..0.5s).
+      expect(info.durationSec).toBeGreaterThanOrEqual(c.minDur);
+      expect(info.durationSec).toBeLessThanOrEqual(c.maxDur);
+      // Size sanity: header 44 bytes + n_frames * 2 bytes/sample * 1 channel.
+      const expectedSize = 44 + Math.round(info.durationSec * 44100) * 2;
+      expect(info.sizeBytes).toBe(expectedSize);
+    });
+  }
+
+  it("all 7 SFX together weigh < 1 MB (PWA cache budget)", () => {
+    let total = 0;
+    for (const c of SFX_CASES) {
+      total += statSync(join(PUBLIC_DIR, "sounds", "sfx", c.filename)).size;
+    }
+    expect(total).toBeLessThan(1024 * 1024);
+  });
+});
+
+describe("PWA icons (public/icons/icon-*.png)", () => {
+  it("icon-192.png exists at manifest-declared size and is non-blank", () => {
+    const abs = join(PUBLIC_DIR, "icons", "icon-192.png");
+    const info = parsePngHeader(abs);
+    expect(info.width).toBe(192);
+    expect(info.height).toBe(192);
+    expect(info.sizeBytes).toBeGreaterThan(1024);
+  });
+
+  it("icon-512.png exists at manifest-declared size and is non-blank", () => {
+    const abs = join(PUBLIC_DIR, "icons", "icon-512.png");
+    const info = parsePngHeader(abs);
+    expect(info.width).toBe(512);
+    expect(info.height).toBe(512);
+    expect(info.sizeBytes).toBeGreaterThan(1024);
+  });
+
+  it("every manifest icon entry has a matching PNG file at the declared size", () => {
+    const manifestPath = join(PUBLIC_DIR, "manifest.json");
+    const manifest = JSON.parse(readFileSync(manifestPath, "utf-8"));
+    expect(Array.isArray(manifest.icons)).toBe(true);
+    expect(manifest.icons.length).toBeGreaterThan(0);
+    for (const entry of manifest.icons) {
+      expect(entry.sizes).toBeDefined();
+      expect(entry.type).toBe("image/png");
+      const [w, h] = entry.sizes.split(" ").sort()[0].split("x").map(Number);
+      expect(w).toBe(h); // square icons only
+      const filename = `icon-${w}.png`;
+      const abs = join(PUBLIC_DIR, "icons", filename);
+      const stat = statSync(abs);
+      expect(stat.size).toBeGreaterThan(0);
+      const info = parsePngHeader(abs);
+      expect(info.width).toBe(w);
+      expect(info.height).toBe(h);
+    }
   });
 });

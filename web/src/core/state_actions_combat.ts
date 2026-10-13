@@ -14,6 +14,7 @@ import type { GameState, GameAction, Ice, BossPhase } from "./types.ts";
 import { AUTO_ATTACK_INTERVAL_MS } from "./combat_engine.ts";
 import { DEFAULT_BOSS_PROFILE, checkPhaseTransition } from "./boss_phases.ts";
 import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai.ts";
+import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling.ts";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle.ts";
 import {
@@ -245,6 +246,24 @@ function processEnemyTurns(state: GameState): GameState {
     if (!usedSkill) {
       const rawAutoDmg = enemy.tier * 3 + (enemy.armor ?? 0);
       let autoDmg = Math.max(1, Number.isFinite(rawAutoDmg) ? rawAutoDmg : 1);
+      // ADR-0211 fun-fix: per-grade ICE dmg modifier. Pairs with the HP cap in
+      // ice_scaling.ts — cap contests g3+ (where tier-3+ natural HP > cap),
+      // the bonus contests g1-g2 (where tier-1/2 natural HP < cap and the
+      // opener otherwise kills the ICE before taking any meaningful dmg).
+      // The value may be negative (g6 -20%): the g6 band is tanky enough that
+      // the developed deck flatlined at the HP cap, so the climax needs an ICE
+      // dmg *penalty* to stay attainable. Any non-zero value applies.
+      // Skipped for boss rooms (bossPhase > 0): boss encounter tension is
+      // already carried by phase multipliers (1.25x / 1.5x / 2x) so stacking
+      // the per-grade modifier would tip the boss AI tests out of phase intent.
+      if (state.bossPhase === 0) {
+        const dmgBonusPct = iceDmgBonusPctForGrade(
+          state.mission.grade ?? missionGradeOf(state.mission),
+        );
+        if (dmgBonusPct !== 0) {
+          autoDmg = Math.max(1, Math.floor(autoDmg * (1 + dmgBonusPct / 100)));
+        }
+      }
 
       if (enemy.tier >= 3 && state.bossPhase > 0) {
         autoDmg = Math.floor(autoDmg * bossDamageMultiplier);

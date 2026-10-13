@@ -1400,3 +1400,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - 커브: 100/100/100/16/0/0 절벽 → 100/100/78.7/66.6/44.4/0 gradient (단조 유지).
 - 테스트 격리 불변 + Set.intersection lib 수정.
 - Gates: typecheck 0 · lint 0 errors · 122 files / 2883 passed · build OK.
+
+## [2026-10-13] feat | Fun curve + SFX/아이콘 + E2E CI
+
+- Curve: dmg 보너스 조정 → PPL g6 31% (목표 25-45), opening 단조 유지.
+- 에셋: 합성 WAV 7 + PIL 아이콘 2 (186KB), 재생 검증.
+- E2E 50/50 그린 확인 (수동). CI e2e 잡은 다음 푸시에서 실동작 검증.
+- Gates: typecheck 0 · lint 0 errors · 122 files / 2902 passed · build OK · mixed 0.

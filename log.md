@@ -1407,3 +1407,8 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - 에셋: 합성 WAV 7 + PIL 아이콘 2 (186KB), 재생 검증.
 - E2E 50/50 그린 확인 (수동). CI e2e 잡은 다음 푸시에서 실동작 검증.
 - Gates: typecheck 0 · lint 0 errors · 122 files / 2902 passed · build OK · mixed 0.
+
+## [2026-10-13] fix | PWA Node20 가드 — CI navigator 부재 수정
+
+- `INITIAL_PWA_STATE` 모듈로드 시 `navigator` 참조 → typeof 가드 (CI 3 suites 실패 원인).
+- Gates: typecheck 0 · 122 files / 2902 passed.

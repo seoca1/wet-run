@@ -15,7 +15,8 @@ export interface PwaState {
 export const INITIAL_PWA_STATE: PwaState = Object.freeze({
   canInstall: false,
   isInstalled: false,
-  isOffline: !navigator.onLine,
+  // Node <22 (incl. CI) has no navigator global — default to offline-safe.
+  isOffline: typeof navigator === "undefined" ? true : !navigator.onLine,
   hasUpdate: false,
   deferredPrompt: null,
 });

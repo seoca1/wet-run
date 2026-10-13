@@ -69,7 +69,7 @@ import {
   slotToGameState,
   stateToSaveSlot,
 } from "./core/state.ts";
-import { encounterIceIdForGrade, missionGradeOf } from "./core/ice_scaling.ts";
+import { encounterIceIdForGrade, missionGradeOf, missionSeedOf } from "./core/ice_scaling.ts";
 import { makeGrid, setText } from "./core/grid.ts";
 import { PALETTE, iceColor } from "./renderer/palette.ts";
 import {
@@ -168,7 +168,7 @@ function loadIce(
     const ice = iceTypes[preferred];
     if (ice) return normalize(ice);
   }
-  const graded = iceTypes[encounterIceIdForGrade(missionGradeOf(mission))];
+  const graded = iceTypes[encounterIceIdForGrade(missionGradeOf(mission), missionSeedOf(mission))];
   if (graded) return normalize(graded);
   const first = keys[0];
   if (!first) throw new Error("No ICE types in ice_types.json");

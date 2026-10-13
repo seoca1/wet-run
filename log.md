@@ -1393,3 +1393,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - mission_select가 53종 전 노출 → sprawl 33종만 (hub 전용 far-grid 20종 차단).
 - 격리 불변 테스트 + 브라우저 캡처 검증 (Selected 1/33).
 - Gates: typecheck 0 · 122 files / 2875 passed.
+
+## [2026-10-13] feat | ICE 밴드 로테이션 — 5종→19종 (fun fix)
+
+- 밴드당 3-4종, 시드 결정적, 보스 제외, HP 캡 유지.
+- 커브: 100/100/100/16/0/0 절벽 → 100/100/78.7/66.6/44.4/0 gradient (단조 유지).
+- 테스트 격리 불변 + Set.intersection lib 수정.
+- Gates: typecheck 0 · lint 0 errors · 122 files / 2883 passed · build OK.

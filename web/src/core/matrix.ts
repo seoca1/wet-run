@@ -85,7 +85,7 @@ export function generateProceduralMatrix(
 ): Matrix {
   const generator = new ProceduralDungeonGenerator();
   const graph = generator.generate(seed, missionGrade, "veteran", missionId);
-  return dungeonToMatrix(graph, missionGrade);
+  return dungeonToMatrix(graph, missionGrade, seed);
 }
 
 /** Linear advance: move to current node's adjacent (boss → final). */

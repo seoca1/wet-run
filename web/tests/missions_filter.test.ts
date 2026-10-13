@@ -58,7 +58,9 @@ describe("missions_filter: ADR-0213 board isolation", () => {
     const sprawl = filterMissionsByUniverse(list, "sprawl");
     const farGrid = filterMissionsByUniverse(list, "far-grid");
     expect(sprawl.length + farGrid.length).toBe(list.length);
-    expect(new Set(sprawl.map((m) => m.id)).intersection(new Set(farGrid.map((m) => m.id))).size).toBe(0);
+    const sprawlIds = new Set(sprawl.map((m) => m.id));
+    const overlap = farGrid.map((m) => m.id).filter((id) => sprawlIds.has(id));
+    expect(overlap).toEqual([]);
     expect(farGrid.length).toBe(20);
   });
 });

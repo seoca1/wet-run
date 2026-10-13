@@ -209,8 +209,18 @@ export type {
 //  Adapter: DungeonGraph → web Matrix shape
 // ============================================================================
 
-/** Convert a `DungeonGraph` to the web project's `Matrix` shape. */
-export function dungeonToMatrix(graph: DungeonGraph, grade = 1): Matrix {
+/** Convert a `DungeonGraph` to the web project's `Matrix` shape.
+ *
+ * `seed` (optional) rotates the per-grade band of `encounterIceIdForGrade`,
+ * keeping dungeon determinism: the same (graph, grade, seed) triple always
+ * yields the same ICE ids. Omitting `seed` pins the band to index 0, which
+ * preserves the legacy fixed-id behavior for older callers.
+ */
+export function dungeonToMatrix(
+  graph: DungeonGraph,
+  grade = 1,
+  seed?: number,
+): Matrix {
   const sorted = [...graph.rooms].sort((a, b) =>
     a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
   );
@@ -242,7 +252,7 @@ export function dungeonToMatrix(graph: DungeonGraph, grade = 1): Matrix {
     let iceIds: ReadonlyArray<string>;
     let iceHp: ReadonlyArray<number>;
     if (room.roomType === "ice") {
-      iceIds = [encounterIceIdForGrade(grade)];
+      iceIds = [encounterIceIdForGrade(grade, seed)];
       iceHp = [];
     } else if (isBoss) {
       iceIds = ["wintermute"];
@@ -279,7 +289,7 @@ export function dungeonToMatrix(graph: DungeonGraph, grade = 1): Matrix {
             ? {
                 ...n,
                 zone: "mid",
-                iceIds: [encounterIceIdForGrade(grade)],
+                iceIds: [encounterIceIdForGrade(grade, seed)],
                 iceHp: [],
               }
             : n,

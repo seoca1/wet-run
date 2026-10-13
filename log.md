@@ -1412,3 +1412,8 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 
 - `INITIAL_PWA_STATE` 모듈로드 시 `navigator` 참조 → typeof 가드 (CI 3 suites 실패 원인).
 - Gates: typecheck 0 · 122 files / 2902 passed.
+
+## [2026-10-13] ci | E2E 서브리포 CI 편입 + 루트 중복 제거
+
+- 서브리포 `ci.yml`에 e2e 잡 추가 (preview + chromium, 14 specs).
+- 루트 `wetrun-web.yml` 삭제 (gitignored 경로라 영원히 미트리거).

@@ -913,15 +913,25 @@ class Game {
       return;
     }
     if (this.screen === "mission_select") {
+      // ADR-0213 isolation: the Sprawl board lists sprawl-universe missions
+      // only; far-grid missions live behind the gated hub.
+      const sprawlMissions = filterMissionsByUniverse(MISSIONS, "sprawl");
       if (action.type === "move_south") {
-        this.selectedMission = (this.selectedMission + 1) % MISSIONS.length;
+        this.selectedMission =
+          (this.selectedMission + 1) % sprawlMissions.length;
         this.draw();
       } else if (action.type === "move_north") {
         this.selectedMission =
-          (this.selectedMission - 1 + MISSIONS.length) % MISSIONS.length;
+          (this.selectedMission - 1 + sprawlMissions.length) %
+          sprawlMissions.length;
         this.draw();
       } else if (action.type === "confirm") {
-        this.launchSelected();
+        const picked = sprawlMissions[this.selectedMission];
+        const fullIndex = picked ? MISSIONS.indexOf(picked) : -1;
+        if (fullIndex >= 0) {
+          this.selectedMission = fullIndex;
+          this.launchSelected();
+        }
       } else if (action.type === "jack_out") {
         this.screen = "menu";
         this.draw();
@@ -1103,6 +1113,7 @@ class Game {
     switch (option) {
       case "new_run":
         this.screen = "mission_select";
+        this.selectedMission = 0;
         this.draw();
         break;
       case "dungeon_crawl":
@@ -1356,9 +1367,10 @@ class Game {
           ],
         );
       } else if (this.screen === "mission_select") {
+        const sprawlMissions = filterMissionsByUniverse(MISSIONS, "sprawl");
         this.renderer.render(
           renderMissionSelect(
-            MISSIONS,
+            sprawlMissions,
             this.selectedMission,
             this.layout.cols,
             this.layout.rows,
@@ -1367,7 +1379,7 @@ class Game {
           [
             "MISSION SELECT",
             "",
-            `Selected: ${this.selectedMission + 1}/${MISSIONS.length}`,
+            `Selected: ${this.selectedMission + 1}/${sprawlMissions.length}`,
           ],
         );
       } else if (this.screen === "far_grid_hub") {

@@ -1387,3 +1387,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `pwa_boot.ts` 신규 (beforeinstallprompt/controllerchange/online-offline + 구독).
 - settings PWA 섹션 (설치/업데이트/오프라인) + i18n EN/KO.
 - Gates: typecheck 0 · lint 0 errors · 122 files / 2874 passed · build OK · mixed 0.
+
+## [2026-10-13] fix | Sprawl 보드 격리 붕괴 수정 (ADR-0213)
+
+- mission_select가 53종 전 노출 → sprawl 33종만 (hub 전용 far-grid 20종 차단).
+- 격리 불변 테스트 + 브라우저 캡처 검증 (Selected 1/33).
+- Gates: typecheck 0 · 122 files / 2875 passed.

@@ -50,3 +50,15 @@ describe("missions_filter: filterMissionsByUniverse", () => {
     expect(Object.isFrozen(result)).toBe(true);
   });
 });
+
+describe("missions_filter: ADR-0213 board isolation", () => {
+  it("Sprawl board source excludes every far-grid mission", async () => {
+    const { default: data } = await import("../src/data/missions.json");
+    const list = Object.values(data) as Mission[];
+    const sprawl = filterMissionsByUniverse(list, "sprawl");
+    const farGrid = filterMissionsByUniverse(list, "far-grid");
+    expect(sprawl.length + farGrid.length).toBe(list.length);
+    expect(new Set(sprawl.map((m) => m.id)).intersection(new Set(farGrid.map((m) => m.id))).size).toBe(0);
+    expect(farGrid.length).toBe(20);
+  });
+});

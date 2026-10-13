@@ -110,7 +110,7 @@ jobs:
               "fields": [
                 { "name": "Workflow", "value": "${{ github.workflow }}", "inline": true },
                 { "name": "Branch", "value": "${{ github.ref_name }}", "inline": true },
-                { "name": "Commit", "value": "${{ github.sha::8 }}", "inline": true }
+                { "name": "Commit", "value": "${{ github.sha }}", "inline": true }
               ]
             }]
           }

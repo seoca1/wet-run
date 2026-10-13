@@ -1560,6 +1560,16 @@ class Game {
     return this.screen;
   }
 
+  /** E2E hook: current highlighted menu index (position-independent specs). */
+  getSelectedMenuIndex(): number {
+    return this.selectedMenuIndex;
+  }
+
+  /** E2E hook: menu option keys in order (pair with getSelectedMenuIndex). */
+  getMenuOptionKeys(): string[] {
+    return MENU_OPTIONS.map((o) => o.key);
+  }
+
   /** Read-only BGM volume accessor for e2e/integration tests. */
   async getBgmVolume(): Promise<number> {
     const audio = await loadAudioSystem();
@@ -1635,6 +1645,8 @@ class Game {
   /** Expose methods for e2e testing */
   static readonly e2eMethods = [
     "getScreen",
+    "getSelectedMenuIndex",
+    "getMenuOptionKeys",
     "getPhase",
     "getBgmVolume",
     "getSettingsState",

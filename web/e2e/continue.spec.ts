@@ -80,10 +80,20 @@ test.describe("CONTINUE Option", () => {
     });
     expect(screenAfterReload).toBe("menu");
 
-    // Navigate to CONTINUE (index 2 in MENU_OPTIONS).
-    // Arrow keys: 0 -> NEW_RUN (start), ArrowDown -> GRAPHIC NOVEL, ArrowDown -> CONTINUE.
-    await page.keyboard.press("ArrowDown");
-    await page.keyboard.press("ArrowDown");
+    // Navigate to CONTINUE by resolving its live menu index.
+    const nav = await page.evaluate(() => {
+      const w = window as unknown as {
+        wetrun?: { getMenuOptionKeys(): string[]; getSelectedMenuIndex(): number };
+      };
+      const keys = w.wetrun?.getMenuOptionKeys?.() ?? [];
+      const cur = w.wetrun?.getSelectedMenuIndex?.() ?? 0;
+      return { idx: keys.indexOf("continue"), cur, len: keys.length };
+    });
+    const downs = (nav.idx - nav.cur + nav.len) % nav.len;
+    for (let i = 0; i < downs; i += 1) {
+      await page.keyboard.press("ArrowDown");
+      await page.waitForTimeout(120);
+    }
     await page.keyboard.press("Enter");
     await page.waitForTimeout(500);
 
@@ -115,9 +125,20 @@ test.describe("CONTINUE Option", () => {
     await page.waitForLoadState("networkidle");
     await page.waitForTimeout(500);
 
-    // Navigate to CONTINUE (index 2).
-    await page.keyboard.press("ArrowDown");
-    await page.keyboard.press("ArrowDown");
+    // Navigate to CONTINUE via its live menu index (position-independent).
+    const nav2 = await page.evaluate(() => {
+      const w = window as unknown as {
+        wetrun?: { getMenuOptionKeys(): string[]; getSelectedMenuIndex(): number };
+      };
+      const keys = w.wetrun?.getMenuOptionKeys?.() ?? [];
+      const cur = w.wetrun?.getSelectedMenuIndex?.() ?? 0;
+      return { idx: keys.indexOf("continue"), cur, len: keys.length };
+    });
+    const downs2 = (nav2.idx - nav2.cur + nav2.len) % nav2.len;
+    for (let i = 0; i < downs2; i += 1) {
+      await page.keyboard.press("ArrowDown");
+      await page.waitForTimeout(120);
+    }
 
     // Verify the grid contains "(no save)" suffix on CONTINUE.
     // We can't read the canvas pixels easily, so check via the menu option.

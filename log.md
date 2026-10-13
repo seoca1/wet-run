@@ -1417,3 +1417,8 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 
 - 서브리포 `ci.yml`에 e2e 잡 추가 (preview + chromium, 14 specs).
 - 루트 `wetrun-web.yml` 삭제 (gitignored 경로라 영원히 미트리거).
+
+## [2026-10-13] fix | E2E 메뉴 인덱스 하드코딩 제거 — CI settings 전수 실패 수정
+
+- settings/continue 스펙이 구 인덱스 가정 → live `getMenuOptionKeys`+`getSelectedMenuIndex` 후크 신설.
+- 로컬 6 passed. CI에서 실동작 확인 예정.

@@ -25,13 +25,23 @@ async function setupTest(page: import("@playwright/test").Page): Promise<void> {
 }
 
 async function navigateToSettings(page: import("@playwright/test").Page): Promise<void> {
-  // SETTINGS is at menu index 3 (0=NEW_RUN, 1=GRAPHIC_NOVEL, 2=CONTINUE, 3=SETTINGS).
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("ArrowDown");
+  // Position-independent: resolve the settings index from the live menu.
+  const target = await page.evaluate(() => {
+    const w = window as unknown as {
+      wetrun?: { getMenuOptionKeys(): string[]; getSelectedMenuIndex(): number };
+    };
+    const keys = w.wetrun?.getMenuOptionKeys?.() ?? [];
+    const cur = w.wetrun?.getSelectedMenuIndex?.() ?? 0;
+    return { idx: keys.indexOf("settings"), cur, len: keys.length };
+  });
+  if (target.idx < 0 || target.len === 0) throw new Error("settings option not found");
+  const downs = (target.idx - target.cur + target.len) % target.len;
+  for (let i = 0; i < downs; i += 1) {
+    await page.keyboard.press("ArrowDown");
+    await page.waitForTimeout(120);
+  }
   await page.keyboard.press("Enter");
   await page.waitForTimeout(300);
-  // Wait for settings screen to be active
   await page.waitForFunction(() => {
     const w = window as unknown as { wetrun?: { getScreen(): string } };
     return w.wetrun?.getScreen() === "settings";

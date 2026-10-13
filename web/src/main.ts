@@ -36,7 +36,9 @@ import {
   getInitialSettingsState,
   persistLanguage,
   cycleLanguage,
+  type SettingsField,
 } from "./renderer/settings.ts";
+import { bootPwaController, type PwaController } from "./core/pwa_boot.ts";
 import {
   healthBar,
   healthColor,
@@ -103,6 +105,7 @@ function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState
     muted: false,
     language: loadPersistedLanguage(),
     storageQuota: { state: "unavailable", reason: "not yet fetched" },
+    pwa: { canInstall: false, isInstalled: false, isOffline: false, hasUpdate: false, deferredPrompt: null },
   };
 }
 
@@ -290,6 +293,7 @@ class Game {
   private gnLanguage: import("./core/graphic_novel_types.ts").Language = "en";
   private settingsState: import("./renderer/settings.ts").SettingsState | null =
     null;
+  private pwaController: PwaController | null = null;
   private dungeonCrawler: DungeonCrawler | null = null;
   private _message: string = "";
   private farGridUnlockedCache: boolean = false;
@@ -330,6 +334,9 @@ class Game {
       console.error("[Game] Failed to initialize settingsState:", e);
       this.settingsState = fallbackSettingsState();
     }
+    // PWA controller is booted in `boot()` after the Game exists so the
+    // subscriber can call `draw()`. Seed the PWA slot with the controller's
+    // initial state once it's available; until then leave the default shape.
     // Ensure settingsState is never null/undefined
     if (!this.settingsState) {
       this.settingsState = fallbackSettingsState();
@@ -980,9 +987,15 @@ class Game {
             audioEnabled: !isAudioOff(),
           };
         }
-        const fields: ReadonlyArray<
-          "audio" | "bgm" | "sfx" | "mute" | "language"
-        > = ["audio", "bgm", "sfx", "mute", "language"];
+        const fields: ReadonlyArray<SettingsField> = [
+          "audio",
+          "bgm",
+          "sfx",
+          "mute",
+          "language",
+          "pwa_install",
+          "pwa_update",
+        ];
         const idx = fields.indexOf(this.settingsState.selectedField);
         if (
           action.type === "cycle_target" ||
@@ -1051,6 +1064,19 @@ class Game {
             const next = cycleLanguage(this.settingsState.language);
             persistLanguage(next);
             this.settingsState = { ...this.settingsState, language: next };
+          } else if (this.settingsState.selectedField === "pwa_install") {
+            // ENTER fires the install prompt (user gesture). Only effective
+            // when canInstall is true; the controller also clears the
+            // deferredPrompt after a successful install.
+            if (this.pwaController) {
+              void this.pwaController.tryPromptInstall();
+            }
+          } else if (this.settingsState.selectedField === "pwa_update") {
+            // ENTER triggers SKIP_WAITING. Controller sets hasUpdate=false on
+            // success; the page should be reloaded to activate the new worker.
+            if (this.pwaController) {
+              void this.pwaController.tryApplyUpdate();
+            }
           }
           this.draw();
         } else if (action.type === "jack_out") {
@@ -1558,6 +1584,10 @@ class Game {
     this.gamepad.stop();
     this.unmountTouch();
     this.unwatchLayout();
+    if (this.pwaController) {
+      this.pwaController.dispose();
+      this.pwaController = null;
+    }
   }
 
   getSettingsState(): import("./renderer/settings.ts").SettingsState {
@@ -1575,12 +1605,30 @@ class Game {
     return this.settingsState;
   }
 
+  /** Replace the live settingsState. Used by the PWA controller subscriber. */
+  setSettingsState(next: import("./renderer/settings.ts").SettingsState): void {
+    this.settingsState = next;
+  }
+
+  /** Attach the PWA controller (booted in `boot()`). */
+  attachPwaController(controller: PwaController): void {
+    this.pwaController = controller;
+  }
+
+  /** Public redraw — invoked by external subscribers (e.g. PWA controller). */
+  redraw(): void {
+    this.draw();
+  }
+
   /** Expose methods for e2e testing */
   static readonly e2eMethods = [
     "getScreen",
     "getPhase",
     "getBgmVolume",
     "getSettingsState",
+    "setSettingsState",
+    "attachPwaController",
+    "redraw",
     "handleProgramButton",
     "start",
     "stop",
@@ -1747,6 +1795,24 @@ function boot(): void {
   if (loading) loading.style.display = "none";
   game.start();
   (window as unknown as { wetrun: Game }).wetrun = game;
+
+  // Boot PWA controller and pipe state changes into the live settingsState
+  // so the PWA rows reflect install/update/offline events as they happen.
+  // Subscribing to draw() guarantees the settings screen redraws when a
+  // `beforeinstallprompt` arrives while the user is on the settings screen.
+  const pwa = bootPwaController();
+  const initialSettings = game.getSettingsState();
+  game.setSettingsState({
+    ...initialSettings,
+    pwa: pwa.state,
+  });
+  pwa.subscribe((next) => {
+    const current = game.getSettingsState();
+    game.setSettingsState({ ...current, pwa: next });
+    if (game.getScreen() === "settings") game.redraw();
+  });
+  // Expose the controller for the settings input handler (ENTER → prompt/apply).
+  game.attachPwaController(pwa);
 
   void loadAudioSystem().then((audio) => {
     if (!audio) return;

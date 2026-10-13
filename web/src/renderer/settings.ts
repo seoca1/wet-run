@@ -21,6 +21,12 @@ import {
   type StorageQuota,
 } from "../save/storage_quota.ts";
 import { isLanguageSupported, t, type Language } from "../core/i18n.ts";
+import { INITIAL_PWA_STATE, type PwaState } from "../core/pwa_manager.ts";
+
+/** Default `pwa` slot for callers that don't have a live controller. */
+export function defaultPwaState(): PwaState {
+  return INITIAL_PWA_STATE;
+}
 
 /** localStorage key for the persisted UI language (EN/KO).
  *
@@ -50,7 +56,14 @@ export function cycleLanguage(current: Language): Language {
   return current === "en" ? "ko" : "en";
 }
 
-export type SettingsField = "audio" | "bgm" | "sfx" | "mute" | "language";
+export type SettingsField =
+  | "audio"
+  | "bgm"
+  | "sfx"
+  | "mute"
+  | "language"
+  | "pwa_install"
+  | "pwa_update";
 
 export interface SettingsState {
   selectedField: SettingsField;
@@ -60,6 +73,8 @@ export interface SettingsState {
   muted: boolean;
   language: Language;
   storageQuota: StorageQuota;
+  /** Live PWA state — populated by `bootPwaController` in main.ts. */
+  pwa: PwaState;
 }
 
 const VOLUME_STEP = 0.1;
@@ -67,8 +82,14 @@ const VOLUME_STEP = 0.1;
 /**
  * Synchronous version — uses an unavailable quota placeholder.
  * Use `getInitialSettingsStateAsync` from main.ts to fetch real quota.
+ *
+ * Pass an optional `pwa` snapshot from `bootPwaController().state` so the
+ * PWA section reflects live install/update/offline status instead of
+ * `INITIAL_PWA_STATE`.
  */
-export function getInitialSettingsState(): SettingsState {
+export function getInitialSettingsState(
+  pwa: PwaState = defaultPwaState(),
+): SettingsState {
   const language = loadPersistedLanguage();
   let audio: AudioManager;
   try {
@@ -82,6 +103,7 @@ export function getInitialSettingsState(): SettingsState {
       muted: false,
       language,
       storageQuota: { state: "unavailable", reason: "not yet fetched" },
+      pwa,
     };
   }
   return {
@@ -92,14 +114,19 @@ export function getInitialSettingsState(): SettingsState {
     muted: audio.isMuted(),
     language,
     storageQuota: { state: "unavailable", reason: "not yet fetched" },
+    pwa,
   };
 }
 
 /**
  * Async version that fetches the live storage quota via navigator.storage.estimate().
  * Returns a fully-populated SettingsState with real IDB usage stats.
+ *
+ * Pass the live `pwa` snapshot so the PWA section reflects install/update/offline.
  */
-export async function getInitialSettingsStateAsync(): Promise<SettingsState> {
+export async function getInitialSettingsStateAsync(
+  pwa: PwaState = defaultPwaState(),
+): Promise<SettingsState> {
   const audio = AudioManager.getInstance();
   const storageQuota = await getStorageQuota();
   return {
@@ -110,6 +137,7 @@ export async function getInitialSettingsStateAsync(): Promise<SettingsState> {
     muted: audio.isMuted(),
     language: loadPersistedLanguage(),
     storageQuota,
+    pwa,
   };
 }
 
@@ -246,6 +274,54 @@ export function renderSettingsScreen(
     );
   }
 
+  // PWA section: install row, update row, offline status line.
+  // Always rendered (uses live `state.pwa` from bootPwaController) — never
+  // hidden, so the player can always see the current status.
+  grid = setText(grid, 4, 27, t("settings.pwa", state.language), PALETTE.CYAN_LIGHT);
+
+  const pwa = state.pwa;
+  // Install row: [ ] when not installable, [X] INSTALLED when standalone,
+  // [ ] INSTALL APP otherwise (will be selectable only when canInstall).
+  let installLabel: string;
+  let installFg: string;
+  if (pwa.isInstalled) {
+    installLabel = `[X] ${t("settings.pwa_installed", state.language)}`;
+    installFg = PALETTE.GREEN_NEON;
+  } else if (pwa.canInstall) {
+    installLabel = `[ ] ${t("settings.pwa_install", state.language)}`;
+    installFg =
+      state.selectedField === "pwa_install"
+        ? PALETTE.YELLOW_AMBER
+        : PALETTE.GRAY_LIGHT;
+  } else {
+    installLabel = `[ ] ${t("settings.pwa_unavailable", state.language)}`;
+    installFg =
+      state.selectedField === "pwa_install"
+        ? PALETTE.YELLOW_AMBER
+        : PALETTE.GRAY_DARK;
+  }
+  grid = setText(grid, 4, 29, installLabel, installFg);
+
+  // Update row: lights up when the controller has detected a waiting worker
+  // or a `controllerchange` event fired.
+  const updateLabel = pwa.hasUpdate
+    ? `[X] ${t("settings.pwa_update_available", state.language)}`
+    : `[ ] ${t("settings.pwa_update", state.language)}`;
+  const updateFg =
+    state.selectedField === "pwa_update"
+      ? PALETTE.YELLOW_AMBER
+      : pwa.hasUpdate
+        ? PALETTE.GREEN_NEON
+        : PALETTE.GRAY_LIGHT;
+  grid = setText(grid, 4, 31, updateLabel, updateFg);
+
+  // Offline status line (informational only — not selectable).
+  const offlineLabel = pwa.isOffline
+    ? t("settings.pwa_offline", state.language)
+    : t("settings.pwa_online", state.language);
+  const offlineFg = pwa.isOffline ? PALETTE.YELLOW_AMBER : PALETTE.GRAY_DARK;
+  grid = setText(grid, 4, 33, offlineLabel, offlineFg);
+
   const hint =
     state.selectedField === "audio"
       ? "ENTER: toggle audio | TAB: switch | ESC: back"
@@ -253,7 +329,11 @@ export function renderSettingsScreen(
         ? "ENTER: toggle mute | TAB: switch | ESC: back"
         : state.selectedField === "language"
           ? "ENTER: toggle language | TAB: switch | ESC: back"
-          : "←/→: adjust volume | TAB: switch | ESC: back";
+          : state.selectedField === "pwa_install"
+            ? "ENTER: install app | ESC: back"
+            : state.selectedField === "pwa_update"
+              ? "ENTER: apply update | ESC: back"
+              : "←/→: adjust volume | TAB: switch | ESC: back";
   grid = setText(grid, 2, rows - 2, hint, PALETTE.GRAY_DARK);
   grid = setText(
     grid,

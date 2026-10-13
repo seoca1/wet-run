@@ -28,6 +28,7 @@ import {
 import { renderMainMenu } from "../src/renderer/menu_main";
 import { renderFarGridHub } from "../src/renderer/far_grid_hub";
 import type { Cell, Mission, MissionRewards } from "../src/core/types";
+import { INITIAL_PWA_STATE } from "../src/core/pwa_manager.ts";
 
 type GridLike = { cells: ReadonlyArray<ReadonlyArray<Cell>> };
 
@@ -89,6 +90,7 @@ const baseSettingsState: SettingsState = {
   muted: false,
   language: "en",
   storageQuota: { state: "unavailable", reason: "test fixture" },
+  pwa: INITIAL_PWA_STATE,
 };
 
 beforeEach(() => {

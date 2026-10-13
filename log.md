@@ -1381,3 +1381,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - Tier 5: 볼륨 슬라이더 확인 + SFX 7종 + 실상태 이펙트 + 압축 측정(53~66%).
 - 스크래치 5건 삭제 (swap/중복모듈/검증스크립트/debug spec).
 - Gates: typecheck 0 · lint 0 errors · 120 files / 2821 passed · build OK · 단조 유지.
+
+## [2026-10-13] feat | PWA 완성 — 리스너+상태+settings 표면
+
+- `pwa_boot.ts` 신규 (beforeinstallprompt/controllerchange/online-offline + 구독).
+- settings PWA 섹션 (설치/업데이트/오프라인) + i18n EN/KO.
+- Gates: typecheck 0 · lint 0 errors · 122 files / 2874 passed · build OK · mixed 0.

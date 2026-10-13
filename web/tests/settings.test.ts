@@ -12,6 +12,7 @@ import {
   getInitialSettingsState,
   type SettingsState,
 } from "../src/renderer/settings.js";
+import { INITIAL_PWA_STATE } from "../src/core/pwa_manager.ts";
 
 describe("clampVolume", () => {
   it("clamps negative values to 0", () => {
@@ -52,6 +53,7 @@ describe("renderSettingsScreen", () => {
     muted: false,
     language: "en",
     storageQuota: { state: "unavailable", reason: "test fixture" },
+    pwa: INITIAL_PWA_STATE,
   };
 
   it("returns a grid of the requested dimensions", () => {

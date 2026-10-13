@@ -66,6 +66,14 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "settings.easy": "EASY",
   "settings.normal": "NORMAL",
   "settings.hard": "HARD",
+  "settings.pwa": "PWA",
+  "settings.pwa_install": "INSTALL APP",
+  "settings.pwa_installed": "INSTALLED",
+  "settings.pwa_update": "APPLY UPDATE",
+  "settings.pwa_update_available": "UPDATE AVAILABLE",
+  "settings.pwa_offline": "OFFLINE",
+  "settings.pwa_online": "ONLINE",
+  "settings.pwa_unavailable": "UNAVAILABLE",
 
   // Hub
   "hub.bar": "BAR",
@@ -145,6 +153,14 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "settings.easy": "쉬움",
   "settings.normal": "보통",
   "settings.hard": "어려움",
+  "settings.pwa": "PWA",
+  "settings.pwa_install": "앱 설치",
+  "settings.pwa_installed": "설치됨",
+  "settings.pwa_update": "업데이트 적용",
+  "settings.pwa_update_available": "업데이트 가능",
+  "settings.pwa_offline": "오프라인",
+  "settings.pwa_online": "온라인",
+  "settings.pwa_unavailable": "사용 불가",
 
   // Hub
   "hub.bar": "술집",

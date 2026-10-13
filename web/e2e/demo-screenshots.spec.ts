@@ -2,7 +2,12 @@ import { test, expect } from "@playwright/test";
 import * as fs from "fs";
 import * as path from "path";
 
-const SCREENSHOT_DIR = "/Users/emilio/projects/opencodework/Game/wet_run/web/demo-screenshots";
+const SCREENSHOT_DIR = path.resolve(
+  __dirname,
+  "..",
+  "test-results",
+  "demo-shots",
+);
 
 test.describe("Game Demo - Menu to Combat", () => {
   test.beforeEach(async ({ page }) => {

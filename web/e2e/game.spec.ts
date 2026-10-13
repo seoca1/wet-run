@@ -5,6 +5,7 @@
  * player journey from boot to combat victory.
  */
 import { test, expect } from "@playwright/test";
+import { gotoMenuOption } from "./menu-nav";
 
 test.describe("Wet Run Game", () => {
   test.beforeEach(async ({ page }) => {
@@ -96,12 +97,7 @@ test.describe("Wet Run Game", () => {
   });
 
   test("settings menu accessible", async ({ page }) => {
-    await page.keyboard.press("ArrowDown");
-    await page.waitForTimeout(100);
-    await page.keyboard.press("ArrowDown");
-    await page.waitForTimeout(100);
-    await page.keyboard.press("ArrowDown");
-    await page.waitForTimeout(100);
+    await gotoMenuOption(page, "settings");
 
     await page.keyboard.press("Enter");
     await page.waitForTimeout(300);
@@ -117,9 +113,7 @@ test.describe("Wet Run Game", () => {
   });
 
   test("ESC key returns from settings to menu", async ({ page }) => {
-    await page.keyboard.press("ArrowDown");
-    await page.keyboard.press("ArrowDown");
-    await page.keyboard.press("ArrowDown");
+    await gotoMenuOption(page, "settings");
     await page.keyboard.press("Enter");
     await page.waitForTimeout(300);
 

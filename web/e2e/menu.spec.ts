@@ -5,6 +5,7 @@
  * render for Tier 5+ options.
  */
 import { test, expect } from "@playwright/test";
+import { gotoMenuOption } from "./menu-nav";
 
 test.describe("Main Menu", () => {
   test.beforeEach(async ({ page }) => {
@@ -61,10 +62,7 @@ test.describe("Main Menu", () => {
   });
 
   test("stub options render 'Coming soon' message", async ({ page }) => {
-    await page.keyboard.press("ArrowDown");
-    await page.keyboard.press("ArrowDown");
-    await page.keyboard.press("ArrowDown");
-    await page.keyboard.press("ArrowDown");
+    await gotoMenuOption(page, "endings");
     await page.keyboard.press("Enter");
     await page.waitForTimeout(300);
 

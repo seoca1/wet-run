@@ -1,5 +1,8 @@
 # Wet Run Game Flow Validation Scenario
 
+> 2026-10-12 note: counts refreshed (menu 14 options incl. FAR GRID,
+> 53 missions incl. 20 Far Grid). E2E stays manual (no browsers locally).
+
 ## Test Scenario: Complete Game Flow from Start to Ending
 
 ### Phase 0: Pre-Game Setup
@@ -9,14 +12,14 @@
 - [ ] Audio context unlock works on first interaction
 
 ### Phase 1: Main Menu
-- [ ] Main menu renders with 9 options
+- [ ] Main menu renders with 14 options
 - [ ] Navigation (↑↓) works
 - [ ] ENTER on NEW RUN → mission_select
 - [ ] ESC → stays on menu
 - [ ] HUD visible on menu (shows default state)
 
 ### Phase 2: Mission Select
-- [ ] 30 missions listed
+- [ ] 53 missions listed (33 Sprawl + 20 Far Grid)
 - [ ] Navigation (↑↓) works
 - [ ] ENTER on mission → briefing screen
 - [ ] ESC → back to menu

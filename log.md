@@ -1367,3 +1367,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - KO: settings 토글 + `wetrun_language` 영속 + 메뉴/hub KO 렌더.
 - Option 2: `parseIce` grade-HP 도출 (수치 이동 0, 회귀 3건).
 - Gates: typecheck 0 · lint 0 errors · 118 files / 2792 passed · build OK · mixed 0.
+
+## [2026-10-12] ci | Dead wetrun-web.yml 재작성 + 검증도구 정리
+
+- 워크플로: `Game/wet_run-web/**`+`prototype/` 경로라 영원히 미실행 → `Game/wet_run/web/**` 대상으로 재작성 (ci/typecheck/vitest/build + Pages).
+- audit 스크립트 2종 현역 확인 (로그 인용). generate-*.py 일회성 (산출물 커밋済, 유지).
+- e2e는 수동 유지 (브라우저 없음). VALIDATION_SCENARIO 개수 정합 (14 options, 53 missions).
+- Gates: YAML valid · 118 files / 2792 passed · build OK.

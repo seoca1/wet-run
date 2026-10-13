@@ -1374,3 +1374,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - audit 스크립트 2종 현역 확인 (로그 인용). generate-*.py 일회성 (산출물 커밋済, 유지).
 - e2e는 수동 유지 (브라우저 없음). VALIDATION_SCENARIO 개수 정합 (14 options, 53 missions).
 - Gates: YAML valid · 118 files / 2792 passed · build OK.
+
+## [2026-10-12] feat | KO 파이프라인 + Tier 5 carry-over (follow-ups)
+
+- KO: 53 titles + 20 briefings 번역, 렌더러 KO 분기, CJK 0.
+- Tier 5: 볼륨 슬라이더 확인 + SFX 7종 + 실상태 이펙트 + 압축 측정(53~66%).
+- 스크래치 5건 삭제 (swap/중복모듈/검증스크립트/debug spec).
+- Gates: typecheck 0 · lint 0 errors · 120 files / 2821 passed · build OK · 단조 유지.

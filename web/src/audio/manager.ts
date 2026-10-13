@@ -48,6 +48,13 @@ export const SFX_IDS = {
   PHASE_CHANGE: "sounds/sfx/phase_change.wav",
   COMBAT_HIT: "sounds/sfx_combat_hit.wav",
   DEFEAT: "sounds/sfx_defeat.wav",
+  COMBAT_BLOCK: "sounds/sfx/combat_block.wav",
+  COMBAT_SKILL_STRIKE: "sounds/sfx/combat_skill_strike.wav",
+  COMBAT_SKILL_BURST: "sounds/sfx/combat_skill_burst.wav",
+  COMBAT_SKILL_GUARD: "sounds/sfx/combat_skill_guard.wav",
+  COMBAT_SKILL_SUPPORT: "sounds/sfx/combat_skill_support.wav",
+  MOVEMENT_STEP: "sounds/sfx/movement_step.wav",
+  MOVEMENT_NODE: "sounds/sfx/movement_node.wav",
 } as const;
 
 export type SoundId = (typeof BGM_IDS)[keyof typeof BGM_IDS];

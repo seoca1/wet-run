@@ -259,9 +259,9 @@ describe("calculateVolume", () => {
 });
 
 describe("getAllSfxIds", () => {
-  it("returns 15 SFX IDs", () => {
+  it("returns 22 SFX IDs (Tier 5 expanded set)", () => {
     const ids = getAllSfxIds();
-    expect(ids).toHaveLength(15);
+    expect(ids).toHaveLength(22);
   });
 
   it("includes all expected SFX", () => {
@@ -281,6 +281,13 @@ describe("getAllSfxIds", () => {
     expect(ids).toContain("victory");
     expect(ids).toContain("boss_intro");
     expect(ids).toContain("phase_change");
+    expect(ids).toContain("combat_block");
+    expect(ids).toContain("combat_skill_strike");
+    expect(ids).toContain("combat_skill_burst");
+    expect(ids).toContain("combat_skill_guard");
+    expect(ids).toContain("combat_skill_support");
+    expect(ids).toContain("movement_step");
+    expect(ids).toContain("movement_node");
   });
 
   it("returns frozen array", () => {

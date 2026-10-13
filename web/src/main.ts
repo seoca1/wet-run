@@ -202,10 +202,18 @@ function loadDeck(
 }
 
 /** Format a mission for the select screen (Tier 2a). */
-function formatMissionOption(mission: Mission, index: number): string {
+function formatMissionOption(
+  mission: Mission,
+  index: number,
+  language: import("./core/i18n.ts").Language = "en",
+): string {
   const grade = `T${mission.grade_max}`;
   const credits = mission.rewards.credits.toLocaleString();
-  return `${index + 1}. ${mission.title}  [${grade} | ${credits}cr]`;
+  const titleText =
+    language === "ko" && mission.title_ko !== undefined && mission.title_ko.length > 0
+      ? mission.title_ko
+      : mission.title;
+  return `${index + 1}. ${titleText}  [${grade} | ${credits}cr]`;
 }
 
 /** Render the mission select screen. */
@@ -214,6 +222,7 @@ function renderMissionSelect(
   selected: number,
   cols: number,
   rows: number,
+  language: import("./core/i18n.ts").Language = "en",
 ): ReturnType<typeof makeGrid> {
   let grid = makeGrid(cols, rows);
   grid = setText(grid, 2, 1, "WET RUN — Select Mission", PALETTE.GREEN_NEON);
@@ -231,7 +240,13 @@ function renderMissionSelect(
     const isSelected = i === selected;
     const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const marker = isSelected ? "▸" : " ";
-    grid = setText(grid, 4, y, `${marker} ${formatMissionOption(m, i)}`, fg);
+    grid = setText(
+      grid,
+      4,
+      y,
+      `${marker} ${formatMissionOption(m, i, language)}`,
+      fg,
+    );
     y += 1;
   }
   return grid;
@@ -1321,6 +1336,7 @@ class Game {
             this.selectedMission,
             this.layout.cols,
             this.layout.rows,
+            (this.settingsState?.language ?? "en"),
           ),
           [
             "MISSION SELECT",
@@ -1435,14 +1451,16 @@ class Game {
       this._lastPlayerHp !== null
         ? previous.player.hp - this._lastPlayerHp
         : null;
-    const mockStatusEffects = mockStatusEffectsForTurn(previous.turnCount);
+    // Tier 5: pull live status effects from the state machine instead of
+    // the tier-4 mock data (was a fixed pool sliced by turnCount).
+    const activeStatusEffects = previous.statusEffects.map((e) => e.kind);
     this.state = {
       ...this.state,
       grid: renderGrid(
         this.state,
         iceDelta,
         playerDelta,
-        mockStatusEffects,
+        activeStatusEffects,
         this.layout.cols,
         this.layout.rows,
       ),
@@ -1567,13 +1585,6 @@ class Game {
     "start",
     "stop",
   ];
-}
-
-function mockStatusEffectsForTurn(turn: number): readonly string[] {
-  const pool = ["burn", "stun", "slow", "silence", "vulnerable"];
-  const start = turn % pool.length;
-  const count = (turn % 3) + 1;
-  return pool.slice(start, start + count);
 }
 
 function renderGrid(

@@ -69,6 +69,60 @@ export function pickProgramVfxKind(
   return "attack";
 }
 
+/** Tier 5 SFX mapping: pick the SFX id for a program outcome.
+ *
+ * Pure helper — returns one of the SFX_IDS strings (e.g. "sounds/sfx/...").
+ * Logic:
+ *  - damage === 0 with a non-support program → COMBAT_BLOCK
+ *    (ICE had armor/guard reducing it; alternate would be heal/buff for
+ *    pure defensive programs — but role-driven dispatch keeps it deterministic)
+ *  - role === "strike" → COMBAT_SKILL_STRIKE
+ *  - role === "burst"  → COMBAT_SKILL_BURST
+ *  - role === "guard"  → COMBAT_SKILL_GUARD
+ *  - role === "support" → COMBAT_SKILL_SUPPORT
+ *  - default → COMBAT_HIT (matches existing behavior for non-typed programs)
+ *
+ * Callers (main.ts / state_actions_programs.ts) dispatch AudioManager.playSfx()
+ * with the returned id; if the audio file is missing the call no-ops gracefully.
+ */
+export function pickProgramSfxId(
+  program: { role?: string; effect?: string },
+  damage: number,
+): import("../audio/manager.ts").SoundEffectId {
+  if (damage <= 0 && program.role !== "guard" && program.role !== "support") {
+    return "sounds/sfx/combat_block.wav" as const;
+  }
+  switch (program.role) {
+    case "strike":
+      return "sounds/sfx/combat_skill_strike.wav" as const;
+    case "burst":
+      return "sounds/sfx/combat_skill_burst.wav" as const;
+    case "guard":
+      return "sounds/sfx/combat_skill_guard.wav" as const;
+    case "support":
+      return "sounds/sfx/combat_skill_support.wav" as const;
+    default:
+      return "sounds/sfx_combat_hit.wav" as const;
+  }
+}
+
+/** Tier 5 SFX: pick the SFX id for a matrix movement (approach phase).
+ *
+ * Pure helper — returns one of the SFX_IDS strings. Callers dispatch
+ * AudioManager.playSfx() with the returned id; missing files no-op gracefully.
+ *
+ * Logic:
+ *  - forwardMove = true → MOVEMENT_STEP (room-to-room transition)
+ *  - forwardMove = false → MOVEMENT_NODE (backtrack between distinct nodes)
+ */
+export function pickMovementSfxId(
+  forwardMove: boolean,
+): import("../audio/manager.ts").SoundEffectId {
+  return forwardMove
+    ? ("sounds/sfx/movement_step.wav" as const)
+    : ("sounds/sfx/movement_node.wav" as const);
+}
+
 /** Canonical duration in ticks for a VFX kind. */
 export function durationForKind(
   kind: import("../renderer/combat_vfx.js").CombatVfxKind,

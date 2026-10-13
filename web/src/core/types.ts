@@ -46,6 +46,8 @@ export interface Mission {
     readonly title?: string;
   };
   readonly briefing?: string; // Far Grid mission briefing (ADR-0213 Wave 2); English, display-only
+  readonly title_ko?: string; // Korean translation of `title` (Tier 4 follow-up KO content); display-only
+  readonly briefing_ko?: string; // Korean translation of `briefing` (Tier 4 follow-up KO content); display-only
   runPhase?: "matrix" | "approach" | "combat" | "loot" | "ending" | "dead"; // Current phase for dungeon mode
 }
 

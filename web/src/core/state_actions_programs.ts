@@ -17,7 +17,7 @@ import {
   tickStatus,
   rollStatusProc,
 } from "./status.ts";
-import { AudioManager, SFX_IDS } from "../audio/manager.ts";
+import { AudioManager } from "../audio/manager.ts";
 import { calculateDamage, countRoleSynergy } from "./combat_engine.ts";
 import { rollLoot, getLootTable, type LootDrop } from "./loot.ts";
 import iceTypesData from "../data/ice_types.json";
@@ -27,6 +27,7 @@ import {
   import_vfx,
   import_vfx_ms,
   pickProgramVfxKind,
+  pickProgramSfxId,
   durationForKind,
   durationMsForKind,
 } from "./state_helpers.ts";
@@ -74,9 +75,6 @@ export function useProgram(state: GameState, programId: string): GameState {
   const newCombo = state.playerCombo + 1;
   const currentMs = Date.now();
 
-  // Play combat hit SFX automatically
-  void AudioManager.getInstance().playSfx(SFX_IDS.COMBAT_HIT);
-
   const defenderIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
   const damageCtx = {
     baseDamage: program.tier * 5,
@@ -100,6 +98,12 @@ export function useProgram(state: GameState, programId: string): GameState {
 
   const dmgResult = calculateDamage(damageCtx);
   let damage = dmgResult.damage;
+
+  // Tier 5 SFX dispatch: pick role-specific SFX (combat_block /
+  // combat_skill_*) based on the actual damage the program delivered.
+  // damage === 0 with a non-support/guard program → COMBAT_BLOCK; role-driven
+  // dispatch otherwise; falls back to legacy COMBAT_HIT default.
+  void AudioManager.getInstance().playSfx(pickProgramSfxId(program, damage));
 
   const slowIdx = state.statusEffects.findIndex(
     (e) => e.kind === "slow" && e.target === "ice",

@@ -37,7 +37,14 @@ export type SfxId =
   | "death"
   | "victory"
   | "boss_intro"
-  | "phase_change";
+  | "phase_change"
+  | "combat_block"
+  | "combat_skill_strike"
+  | "combat_skill_burst"
+  | "combat_skill_guard"
+  | "combat_skill_support"
+  | "movement_step"
+  | "movement_node";
 
 export interface TrackInfo {
   readonly id: BgmTrackId;
@@ -238,6 +245,13 @@ export function getAllSfxIds(): ReadonlyArray<SfxId> {
     "victory",
     "boss_intro",
     "phase_change",
+    "combat_block",
+    "combat_skill_strike",
+    "combat_skill_burst",
+    "combat_skill_guard",
+    "combat_skill_support",
+    "movement_step",
+    "movement_node",
   ]);
 }
 

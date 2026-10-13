@@ -112,7 +112,11 @@ export function renderFarGridHub(
       const source = m.story?.source
         ? ` [Source: ${m.story.source.slice(0, 60)}]`
         : "";
-      grid = setText(grid, 4, y, `${marker} ${m.title}${source}`, fg);
+      const titleText =
+        language === "ko" && m.title_ko !== undefined && m.title_ko.length > 0
+          ? m.title_ko
+          : m.title;
+      grid = setText(grid, 4, y, `${marker} ${titleText}${source}`, fg);
       y += 1;
     }
   }
@@ -141,7 +145,12 @@ export function renderFarGridHub(
   // when no selection, no briefing, or insufficient room.
   const selectedMission = missions[selected];
   if (selectedMission !== undefined && selectedMission.briefing !== undefined) {
-    const briefText = selectedMission.briefing;
+    const briefText =
+      language === "ko" &&
+      selectedMission.briefing_ko !== undefined &&
+      selectedMission.briefing_ko.length > 0
+        ? selectedMission.briefing_ko
+        : selectedMission.briefing;
     const maxWidth = Math.max(1, cols - 4);
     const lines = wrapBriefing(briefText, maxWidth);
     // Reserve: footer at footerY; if statusMessage present the visible band

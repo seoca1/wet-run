@@ -26,7 +26,8 @@
       }
     ],
     "reward_credits": 1100,
-    "reward_tier": 4
+    "reward_tier": 4,
+    "title_ko": "알레프 파편"
   },
   "black_ice_dream": {
     "id": "black_ice_dream",
@@ -56,7 +57,8 @@
       }
     ],
     "reward_credits": 300,
-    "reward_tier": 2
+    "reward_tier": 2,
+    "title_ko": "블랙 ICE의 꿈"
   },
   "craft_job": {
     "id": "craft_job",
@@ -87,7 +89,8 @@
       }
     ],
     "reward_credits": 300,
-    "reward_tier": 2
+    "reward_tier": 2,
+    "title_ko": "제작 의뢰"
   },
   "data_retrieval": {
     "id": "data_retrieval",
@@ -116,7 +119,8 @@
       }
     ],
     "reward_credits": 75,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "데이터 회수"
   },
   "delivery_to_finn": {
     "id": "delivery_to_finn",
@@ -146,7 +150,8 @@
       }
     ],
     "reward_credits": 75,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "핀에게 배달"
   },
   "dixies_choice": {
     "id": "dixies_choice",
@@ -175,7 +180,8 @@
       }
     ],
     "reward_credits": 600,
-    "reward_tier": 3
+    "reward_tier": 3,
+    "title_ko": "디시의 선택"
   },
   "dixies_offer": {
     "id": "dixies_offer",
@@ -204,7 +210,8 @@
       }
     ],
     "reward_credits": 600,
-    "reward_tier": 3
+    "reward_tier": 3,
+    "title_ko": "디시의 제안"
   },
   "final_choice": {
     "id": "final_choice",
@@ -233,7 +240,8 @@
       }
     ],
     "reward_credits": 1100,
-    "reward_tier": 4
+    "reward_tier": 4,
+    "title_ko": "최후의 선택"
   },
   "first_contact": {
     "id": "first_contact",
@@ -262,7 +270,8 @@
       }
     ],
     "reward_credits": 150,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "첫 접촉"
   },
   "first_jack": {
     "id": "first_jack",
@@ -291,7 +300,8 @@
       }
     ],
     "reward_credits": 75,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "첫 잭인"
   },
   "first_trace": {
     "id": "first_trace",
@@ -320,7 +330,8 @@
       }
     ],
     "reward_credits": 150,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "첫 흔적"
   },
   "flatline_call": {
     "id": "flatline_call",
@@ -350,7 +361,8 @@
       }
     ],
     "reward_credits": 150,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "플랫라인의 부름"
   },
   "ice_run": {
     "id": "ice_run",
@@ -380,7 +392,8 @@
       }
     ],
     "reward_credits": 75,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "ICE 런"
   },
   "matrix_revelation": {
     "id": "matrix_revelation",
@@ -409,7 +422,8 @@
       }
     ],
     "reward_credits": 600,
-    "reward_tier": 3
+    "reward_tier": 3,
+    "title_ko": "매트릭스 계시"
   },
   "mollys_market": {
     "id": "mollys_market",
@@ -438,7 +452,8 @@
       }
     ],
     "reward_credits": 150,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "몰리의 시장"
   },
   "mollys_razor": {
     "id": "mollys_razor",
@@ -467,7 +482,8 @@
       }
     ],
     "reward_credits": 300,
-    "reward_tier": 2
+    "reward_tier": 2,
+    "title_ko": "몰리의 레이저"
   },
   "neuromancer_merger": {
     "id": "neuromancer_merger",
@@ -496,7 +512,8 @@
       }
     ],
     "reward_credits": 1100,
-    "reward_tier": 4
+    "reward_tier": 4,
+    "title_ko": "Neuromancer 합병"
   },
   "neuromancer_whisper": {
     "id": "neuromancer_whisper",
@@ -525,7 +542,8 @@
       }
     ],
     "reward_credits": 300,
-    "reward_tier": 2
+    "reward_tier": 2,
+    "title_ko": "Neuromancer의 속삭임"
   },
   "sally_returns_arc3": {
     "id": "sally_returns_arc3",
@@ -553,7 +571,8 @@
       }
     ],
     "reward_credits": 300,
-    "reward_tier": 2
+    "reward_tier": 2,
+    "title_ko": "살리의 귀환"
   },
   "sally_sandii_3am": {
     "id": "sally_sandii_3am",
@@ -581,7 +600,8 @@
       }
     ],
     "reward_credits": 150,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "로즈 호텔, 새벽 3시"
   },
   "sense_net_tip": {
     "id": "sense_net_tip",
@@ -610,7 +630,8 @@
       }
     ],
     "reward_credits": 150,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "센스넷 제보"
   },
   "ta_heist": {
     "id": "ta_heist",
@@ -639,7 +660,8 @@
       }
     ],
     "reward_credits": 600,
-    "reward_tier": 3
+    "reward_tier": 3,
+    "title_ko": "T-A 강탈"
   },
   "tutorial_maze": {
     "id": "tutorial_maze",
@@ -668,7 +690,8 @@
       }
     ],
     "reward_credits": 75,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "튜토리얼 미로"
   },
   "vegas_stakeout": {
     "id": "vegas_stakeout",
@@ -697,7 +720,8 @@
       }
     ],
     "reward_credits": 300,
-    "reward_tier": 2
+    "reward_tier": 2,
+    "title_ko": "베이거스 잠복"
   },
   "voodoo_loa_encounter": {
     "id": "voodoo_loa_encounter",
@@ -727,7 +751,8 @@
       }
     ],
     "reward_credits": 600,
-    "reward_tier": 3
+    "reward_tier": 3,
+    "title_ko": "부두 로아 조우"
   },
   "watchdog_patrol": {
     "id": "watchdog_patrol",
@@ -757,7 +782,8 @@
       }
     ],
     "reward_credits": 75,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "워치독 순찰"
   },
   "winter_infiltrate": {
     "id": "winter_infiltrate",
@@ -786,7 +812,8 @@
       }
     ],
     "reward_credits": 600,
-    "reward_tier": 3
+    "reward_tier": 3,
+    "title_ko": "윈터 잠입"
   },
   "yakuza_deal": {
     "id": "yakuza_deal",
@@ -816,7 +843,8 @@
       }
     ],
     "reward_credits": 150,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "야쿠자 거래"
   },
   "zion_express": {
     "id": "zion_express",
@@ -845,7 +873,8 @@
       }
     ],
     "reward_credits": 1100,
-    "reward_tier": 4
+    "reward_tier": 4,
+    "title_ko": "Zion 특송"
   },
   "armitage_infiltration": {
     "id": "armitage_infiltration",
@@ -875,7 +904,8 @@
       }
     ],
     "reward_credits": 150,
-    "reward_tier": 1
+    "reward_tier": 1,
+    "title_ko": "아미티지의 첫 잠입"
   },
   "hosaka_extraction": {
     "id": "hosaka_extraction",
@@ -905,7 +935,8 @@
       }
     ],
     "reward_credits": 300,
-    "reward_tier": 2
+    "reward_tier": 2,
+    "title_ko": "호사카 내부 추출"
   },
   "ta_defection": {
     "id": "ta_defection",
@@ -936,7 +967,8 @@
       }
     ],
     "reward_credits": 600,
-    "reward_tier": 3
+    "reward_tier": 3,
+    "title_ko": "테시에르-애시풀 이탈"
   },
   "wintermute_negotiation": {
     "id": "wintermute_negotiation",
@@ -966,7 +998,8 @@
       }
     ],
     "reward_credits": 1100,
-    "reward_tier": 4
+    "reward_tier": 4,
+    "title_ko": "윈터M 협상"
   },
   "far_grid_prelude": {
     "id": "far_grid_prelude",
@@ -986,7 +1019,9 @@
       "source": "xauthors/true-names/en/2026-10-11_far_grid_prelude",
       "title": "Far Grid Prologue"
     },
-    "briefing": "The operator silhouette offers the deck jockey a first walk along the Coven's narrow row of stones, with no fight and no contract — just a measured first step."
+    "briefing": "The operator silhouette offers the deck jockey a first walk along the Coven's narrow row of stones, with no fight and no contract — just a measured first step.",
+    "title_ko": "FAR GRID 전주곡",
+    "briefing_ko": "조작자의 실루엣이 데커에게 코벤의 좁은 돌다리를 따라 첫 산책을 제안한다. 싸움도 계약도 없이 — 고요한 첫 걸음뿐이다."
   },
   "don_mac_audit": {
     "id": "don_mac_audit",
@@ -1006,7 +1041,9 @@
       "source": "xauthors/true-names/en/2026-10-11_don_mac_audit",
       "title": "DON.MAC's Audit"
     },
-    "briefing": "A small piece of bookkeeping that has been sitting in the corner of a wooden table wants reviewing; the silhouette asks that the deck bring a steady hand and read the line at the bottom of the reconciliation."
+    "briefing": "A small piece of bookkeeping that has been sitting in the corner of a wooden table wants reviewing; the silhouette asks that the deck bring a steady hand and read the line at the bottom of the reconciliation.",
+    "title_ko": "DON.MAC의 감사",
+    "briefing_ko": "나무 탁자 구석에 놓여 있던 작은 장부 한 조각이 검토를 기다리고 있다. 실루엣은 데커에게 침착한 손을 빌려 가장 아래 줄을 정독해 줄 것을 부탁한다."
   },
   "deathspiders_news": {
     "id": "deathspiders_news",
@@ -1026,7 +1063,9 @@
       "source": "xauthors/true-names/en/2026-10-11_deathspiders_news",
       "title": "The Deathspider's News"
     },
-    "briefing": "The webbing in the swamp is catching news the silhouette would rather have on paper; the deck is hired to pull the single thread without disturbing the rest of the pattern."
+    "briefing": "The webbing in the swamp is catching news the silhouette would rather have on paper; the deck is hired to pull the single thread without disturbing the rest of the pattern.",
+    "title_ko": "데스파이더의 소식",
+    "briefing_ko": "늪의 거미줄이 실루엣이 종이에 받기를 원하는 소식을 걸러내고 있다. 데커는 나머지 패턴을 흐트러뜨리지 않고 그 한 가닥 실만 뽑아내도록 임신한다."
   },
   "warren_meadow": {
     "id": "warren_meadow",
@@ -1046,7 +1085,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_warren_meadow",
       "title": "Warren's Meadow"
     },
-    "briefing": "A small grey meadow between the road and the bay wants a quiet walk; the silhouette offers it to the deck as a courtesy, with the chrome of the bay humming in the grass."
+    "briefing": "A small grey meadow between the road and the bay wants a quiet walk; the silhouette offers it to the deck as a courtesy, with the chrome of the bay humming in the grass.",
+    "title_ko": "워런의 초원",
+    "briefing_ko": "도로와 만 사이의 작고 회색인 초원이 조용한 산책을 원한다. 실루엣은 풀 사이로 만의 크롬이 윙윙거리는 소리를 들으며, 호의로 그 초원을 데커에게 내준다."
   },
   "blue_silk_wall": {
     "id": "blue_silk_wall",
@@ -1066,7 +1107,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_blue_silk_wall",
       "title": "Blue Silk Wall"
     },
-    "briefing": "The bar at the end of the alley has a wall of small blue cloth pinned behind the bottles that wants photographing in the long quiet of late closing."
+    "briefing": "The bar at the end of the alley has a wall of small blue cloth pinned behind the bottles that wants photographing in the long quiet of late closing.",
+    "title_ko": "푸른 비단 벽",
+    "briefing_ko": "골목 끝의 술집 카운터에는 병들 뒤로 작은 파란 천 조각들이 박힌 벽이 있다. 늦은 폐점 시간의 긴 고요 속에서 그 벽을 사진에 담고 싶어 한다."
   },
   "maidens_first_run": {
     "id": "maidens_first_run",
@@ -1086,7 +1129,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_maidens_first_run",
       "title": "Maiden's First Run"
     },
-    "briefing": "A girl who has never turned a key in a wetware console wants the deck at her shoulder for the length of one short ride; the silhouette offers the egg and the chrome."
+    "briefing": "A girl who has never turned a key in a wetware console wants the deck at her shoulder for the length of one short ride; the silhouette offers the egg and the chrome.",
+    "title_ko": "소녀의 첫 런",
+    "briefing_ko": "웨트웨어 콘솔에서 한 번도 키를 돌려보지 못한 소녀가 짧은 한 번의 주행을 곁에서 지켜줄 데커를 원한다. 실루엣은 달걀과 크롬을 내준다."
   },
   "mailmans_last_letter": {
     "id": "mailmans_last_letter",
@@ -1106,7 +1151,9 @@
       "source": "xauthors/true-names/en/2026-10-11_mailmans_last_letter",
       "title": "The Mailman's Last Letter"
     },
-    "briefing": "The Mailman is sealing a room that has never had a window. The silhouette wants the deck to stand in the doorway long enough to confirm the paper folds clean and the seal is set."
+    "briefing": "The Mailman is sealing a room that has never had a window. The silhouette wants the deck to stand in the doorway long enough to confirm the paper folds clean and the seal is set.",
+    "title_ko": "우편부의 마지막 편지",
+    "briefing_ko": "우편부가 한 번도 창문을 가지지 못한 방을 봉인하고 있다. 실루엣은 종이가 깨끗하게 접히고 봉인이 굳어 있는지 확인할 만큼만 문간에 서 있어 줄 것을 데커에게 부탁한다."
   },
   "pollack_after_dark": {
     "id": "pollack_after_dark",
@@ -1126,7 +1173,9 @@
       "source": "xauthors/true-names/en/2026-10-11_pollack_after_dark",
       "title": "Pollack After Dark"
     },
-    "briefing": "The Feds have left the kitchen and the Portal electrodes are cool in a drawer. The silhouette wants the deck to power it up at the gold hour and confirm the swamp is empty in the polite way."
+    "briefing": "The Feds have left the kitchen and the Portal electrodes are cool in a drawer. The silhouette wants the deck to power it up at the gold hour and confirm the swamp is empty in the polite way.",
+    "title_ko": "폴락, 밤이 깊어지면",
+    "briefing_ko": "연방들이 부엌을 떠났고 포탈 전극이 서랍 안에서 식어 있다. 실루엣은 황혼 무렵에 그 전극에 전원을 넣어, 정중하게 늪이 비었는지 확인해 줄 것을 데커에게 부탁한다."
   },
   "limeys_long_game": {
     "id": "limeys_long_game",
@@ -1148,7 +1197,9 @@
       "source": "xauthors/true-names/en/2026-10-11_limeys_long_game",
       "title": "The Limey's Long Game"
     },
-    "briefing": "An eleven-month reconciliation against a Mafia cash-flow system has just been audited by a piece of the deck. The silhouette wants the long quiet line at the bottom of the screen read by a third pair of eyes."
+    "briefing": "An eleven-month reconciliation against a Mafia cash-flow system has just been audited by a piece of the deck. The silhouette wants the long quiet line at the bottom of the screen read by a third pair of eyes.",
+    "title_ko": "라임이의 장기전",
+    "briefing_ko": "마피아 자금 흐름을 향한 열한 달짜리 정산이 방금 데커의 일부에 의해 감사되었다. 실루엣은 화면 맨 아래의 긴 고요한 줄을 세 번째 눈으로 읽어 줄 것을 원한다."
   },
   "wileys_gate": {
     "id": "wileys_gate",
@@ -1168,7 +1219,9 @@
       "source": "xauthors/true-names/en/2026-10-11_wileys_gate",
       "title": "Wiley's Gate"
     },
-    "briefing": "A single page of a small red book in the second sub-basement has been read by someone whose dust has no subroutine. The silhouette wants the deck to walk the aisles and confirm the dust."
+    "briefing": "A single page of a small red book in the second sub-basement has been read by someone whose dust has no subroutine. The silhouette wants the deck to walk the aisles and confirm the dust.",
+    "title_ko": "와일리의 문",
+    "briefing_ko": "두 번째 지하실의 작은 빨간 책 한 페이지가 서브루틴을 모르는 먼지 같은 존재에게 읽혔다. 실루엣은 데커가 복도 사이를 걸으며 그 먼지를 확인해 주길 원한다."
   },
   "hetmans_meeting": {
     "id": "hetmans_meeting",
@@ -1188,7 +1241,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_hetmans_meeting",
       "title": "The Hetman's Call"
     },
-    "briefing": "A brown voice on an Orbital console is asking Michael the Hetman for a recommendation, and the small chrome of his back office at the Bay Bar needs a witness when the line goes quiet."
+    "briefing": "A brown voice on an Orbital console is asking Michael the Hetman for a recommendation, and the small chrome of his back office at the Bay Bar needs a witness when the line goes quiet.",
+    "title_ko": "이트만의 만남",
+    "briefing_ko": "궤도 콘솔 너머의 갈색 목소리가 마이클 이트만에게 추천을 부탁하고 있다. 만 바의 작은 뒷방 크롬은 전화가 조용해질 때 목격자를 필요로 한다."
   },
   "maurice_princes": {
     "id": "maurice_princes",
@@ -1208,7 +1263,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_maurice_princes",
       "title": "Maurice and the Princes"
     },
-    "briefing": "Maurice is wiping the glass of a small dark frame behind the Blue Silk bar when a girl comes in from the back door. The silhouette wants the deck at the corner of the bar when the small grey chrome comes out of the safe."
+    "briefing": "Maurice is wiping the glass of a small dark frame behind the Blue Silk bar when a girl comes in from the back door. The silhouette wants the deck at the corner of the bar when the small grey chrome comes out of the safe.",
+    "title_ko": "모리스와 왕자들",
+    "briefing_ko": "모리스가 푸른 비단 술집 뒤편에서 작은 어두운 액자 유리를 닦고 있는데, 뒤문으로 소녀가 들어온다. 실루엣은 작은 회색 크롬이 금고에서 나올 때 술집 모서리에 데커를 세워두고 싶어 한다."
   },
   "dodgers_office": {
     "id": "dodgers_office",
@@ -1230,7 +1287,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_the_dodgers_office",
       "title": "The Dodger's Office"
     },
-    "briefing": "A small square of leather holding a paper the Orbital paid for sits on a steel desk in Albuquerque. The silhouette wants the deck to stand watch when the cowboy walks in and decides whether the codes change hands."
+    "briefing": "A small square of leather holding a paper the Orbital paid for sits on a steel desk in Albuquerque. The silhouette wants the deck to stand watch when the cowboy walks in and decides whether the codes change hands.",
+    "title_ko": "도저의 사무실",
+    "briefing_ko": "오비탈리가 값을 치른 종이를 받쳐둔 작은 사각 가죽이 앨버커키의 강철 책상 위에 놓여 있다. 실루엣은 카우보이가 들어와 암호의 향방을 결정할 때 그 자리를 지켜봐 줄 것을 원한다."
   },
   "tin_soldiers_end": {
     "id": "tin_soldiers_end",
@@ -1252,7 +1311,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_tin_soldiers_end",
       "title": "Tin Soldiers at the Shrine"
     },
-    "briefing": "Two children in silver-chased sockets are learning a third language in front of comp terminals on a silver-threaded floor. The silhouette wants the deck to read the data at Roon's belt without entering the room."
+    "briefing": "Two children in silver-chased sockets are learning a third language in front of comp terminals on a silver-threaded floor. The silhouette wants the deck to read the data at Roon's belt without entering the room.",
+    "title_ko": "양철 병사들, 신전에 서다",
+    "briefing_ko": "은으로 박힌 소켓에 자리한 두 아이가 은실 위에 깔린 컴프 단말 앞에서 새로운 언어를 배우고 있다. 실루엣은 룬의 허리춤 데이터를 방 안으로 들어가지 않고 읽어 줄 것을 데커에게 부탁한다."
   },
   "moat_burned_blue": {
     "id": "moat_burned_blue",
@@ -1272,7 +1333,9 @@
       "source": "xauthors/true-names/en/2026-10-11_moat_burned_blue",
       "title": "The Moat Burned Blue"
     },
-    "briefing": "Alan the gate elemental has been watching the drawbridge from his cobalt pool long enough to learn who calls him by name; the silhouette wants the deck to stand at the lip of the moat and listen for the first sentence from the path."
+    "briefing": "Alan the gate elemental has been watching the drawbridge from his cobalt pool long enough to learn who calls him by name; the silhouette wants the deck to stand at the lip of the moat and listen for the first sentence from the path.",
+    "title_ko": "불탄 푸른 해자",
+    "briefing_ko": "문지기 정령 앨런이 자신의 코발터 웅덩이에서 다리를 지켜보며, 누가 자기 본명으로 부르는지를 알아내기에 충분한 시간을 보냈다. 실루엣은 해자 가장자리에 서서 오솔길에서 들려오는 첫 문장을 들어줄 것을 데커에게 부탁한다."
   },
   "erythrinas_list": {
     "id": "erythrinas_list",
@@ -1292,7 +1355,9 @@
       "source": "xauthors/true-names/en/2026-10-11_erythrinas_list",
       "title": "Erythrina's List"
     },
-    "briefing": "Erythrina's small ledger of True Names is six items longer than it was a month ago, and one of the additions will not resolve to any name she has carried; the silhouette wants the deck to watch her read the list one more time."
+    "briefing": "Erythrina's small ledger of True Names is six items longer than it was a month ago, and one of the additions will not resolve to any name she has carried; the silhouette wants the deck to watch her read the list one more time.",
+    "title_ko": "에리스티나의 목록",
+    "briefing_ko": "에리스티나의 진실 이름 작은 장부가 한 달 전보다 여섯 항목이 길어졌고, 그 추가된 것들 가운데 하나는 그녀가 가져온 어느 이름으로도 해소되지 않는다. 실루엣은 데커에게 그녀가 그 목록을 한 번 더 읽는 것을 지켜봐 달라고 부탁한다."
   },
   "rogers_backyard": {
     "id": "rogers_backyard",
@@ -1312,7 +1377,9 @@
       "source": "xauthors/true-names/en/2026-10-11_rogers_backyard",
       "title": "Roger's Backyard"
     },
-    "briefing": "A cabbage corner and a patch of crushed mint are the only evidence left in Roger Pollack's garden that the morning ever happened; the silhouette wants the deck to walk the herb spiral in the drizzle and see which stones have been turned."
+    "briefing": "A cabbage corner and a patch of crushed mint are the only evidence left in Roger Pollack's garden that the morning ever happened; the silhouette wants the deck to walk the herb spiral in the drizzle and see which stones have been turned.",
+    "title_ko": "로저의 뒤뜰",
+    "briefing_ko": "양배추 모서리와 짓밟힌 민트 한 덩어리가 로저 폴락의 정원에 그 아침이 실제로 있었다는 유일한 증거다. 실루엣은 이슬비 속에서 허브 나선형을 거닐며 어느 돌이 뒤집혔는지 봐 줄 것을 데커에게 부탁한다."
   },
   "arkady_in_orange": {
     "id": "arkady_in_orange",
@@ -1332,7 +1399,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_arkady_in_orange",
       "title": "Arkady in Orange"
     },
-    "briefing": "Arkady has been standing at the open barn door since the bronze machine pulled out of Colorado, and the small cold in his chest has not yet settled; the silhouette wants the deck to be the second pair of eyes on the long curve of the road."
+    "briefing": "Arkady has been standing at the open barn door since the bronze machine pulled out of Colorado, and the small cold in his chest has not yet settled; the silhouette wants the deck to be the second pair of eyes on the long curve of the road.",
+    "title_ko": "주황빛의 아르카디",
+    "briefing_ko": "청동 기계가 콜로라도를 떠난 뒤로 아르카디는 헛간 열린 문 앞에 서 있었고, 가슴의 작은 냉기가 아직 가라앉지 않았다. 실루엣은 길의 굽은 굽이를 지켜볼 두 번째 눈이 되어 줄 것을 데커에게 부탁한다."
   },
   "dirtgirl_dispatch": {
     "id": "dirtgirl_dispatch",
@@ -1352,7 +1421,9 @@
       "source": "xauthors/hardwired/en/2026-10-12_dirtgirl_dispatch",
       "title": "Dirtgirl Dispatch"
     },
-    "briefing": "A Tampa dispatcher's small white console has been routing the first batch of Cowboy's cargo down the alleyway courier ring since the Orbital blockade lifted, and nine years of waiting are ending in the rain; the silhouette wants the deck at the corner of the alley for the first handoff."
+    "briefing": "A Tampa dispatcher's small white console has been routing the first batch of Cowboy's cargo down the alleyway courier ring since the Orbital blockade lifted, and nine years of waiting are ending in the rain; the silhouette wants the deck at the corner of the alley for the first handoff.",
+    "title_ko": "머드걸 배달",
+    "briefing_ko": "탐파의 한 배달 담당자가 가진 작은 흰색 콘솔은 오비탈리 봉쇄가 풀린 이래 카우보이의 첫 화물을 골목 택배 루트로 보내고 있다. 아홉 해의 기다림이 빗속에서 끝나려 한다. 실루엣은 첫 인도를 위해 골목 모서리에 데커를 세워두고 싶어 한다."
   },
   "firebuds_chair": {
     "id": "firebuds_chair",
@@ -1374,6 +1445,8 @@
       "source": "xauthors/hardwired/en/2026-10-12_firebuds_chair",
       "title": "The Chair at the Cut"
     },
-    "briefing": "Firebud has been tilting a dirtgirl's chin in the low white chair since the sun turned the color of copper over Tampa Bay, and the knot on the wall has been where the dirtgirl puts her eyes when the knife comes out; the silhouette wants the deck behind the surgical tray long enough to read the long scars and the small knot."
+    "briefing": "Firebud has been tilting a dirtgirl's chin in the low white chair since the sun turned the color of copper over Tampa Bay, and the knot on the wall has been where the dirtgirl puts her eyes when the knife comes out; the silhouette wants the deck behind the surgical tray long enough to read the long scars and the small knot.",
+    "title_ko": "컷의 의자",
+    "briefing_ko": "탐파 만에서 해가 구릿빛으로 물든 뒤로 파이어버드가 낮은 흰 의자에서 머드걸의 턱을 기울이고 있다. 벽의 매듭은 칼이 나올 때 머드걸이 눈을 두는 자리다. 실루엣은 긴 흉터와 작은 매듭을 읽을 만큼만 수술 트레이 뒤에 데커를 세워두고 싶어 한다."
   }
 }

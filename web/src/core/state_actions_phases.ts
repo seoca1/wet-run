@@ -15,7 +15,12 @@
  */
 
 import type { GameState, GameAction, EndingChoice } from "./types.ts";
-import { import_vfx, durationForKind } from "./state_helpers.ts";
+import {
+  import_vfx,
+  durationForKind,
+  pickMovementSfxId,
+} from "./state_helpers.ts";
+import { AudioManager } from "../audio/manager.ts";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 import { iceHpForGrade, missionGradeOf } from "./ice_scaling.ts";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle.ts";
@@ -99,6 +104,8 @@ export function applyMatrixAction(
       // Move forward to adjacent node
       const nextIndex = node.adjacent[0];
       if (nextIndex != null && nextIndex < state.matrix!.nodes.length) {
+        // Tier 5 SFX: forward node transition dispatches MOVEMENT_STEP.
+        void AudioManager.getInstance().playSfx(pickMovementSfxId(true));
         return {
           ...state,
           currentNodeIndex: nextIndex,
@@ -116,6 +123,8 @@ export function applyMatrixAction(
         }
       }
       if (prevIndex >= 0 && prevIndex !== state.currentNodeIndex) {
+        // Tier 5 SFX: backtrack dispatches MOVEMENT_NODE.
+        void AudioManager.getInstance().playSfx(pickMovementSfxId(false));
         return {
           ...state,
           currentNodeIndex: prevIndex,

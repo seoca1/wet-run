@@ -28,6 +28,8 @@ interface LegacyMission {
   source_universe?: "sprawl" | "far-grid";
   story?: { source?: string; title?: string };
   briefing?: string;
+  title_ko?: string;
+  briefing_ko?: string;
   rewards?: { credits?: number; materials?: Record<string, number> };
 }
 
@@ -144,6 +146,21 @@ export function parseMission(raw: unknown, idHint: string): Mission {
       briefing = trimmed;
     }
   }
+  // title_ko is an optional display-only Korean translation of `title` (KO
+  // content activation follow-up). Empty string is treated as "absent"; any
+  // non-empty value passes through verbatim (no script validation here —
+  // CJK contamination is enforced by tests/audit script, not at module load).
+  let title_ko: Mission["title_ko"];
+  if (typeof r.title_ko === "string" && r.title_ko.trim().length > 0) {
+    title_ko = r.title_ko.trim();
+  }
+  // briefing_ko is the Korean translation of `briefing` (same conventions as
+  // `briefing` itself — non-empty string passes through, empty/missing is
+  // omitted).
+  let briefing_ko: Mission["briefing_ko"];
+  if (typeof r.briefing_ko === "string" && r.briefing_ko.trim().length > 0) {
+    briefing_ko = r.briefing_ko.trim();
+  }
   return {
     id,
     title,
@@ -162,6 +179,8 @@ export function parseMission(raw: unknown, idHint: string): Mission {
     source_universe,
     story,
     ...(briefing !== undefined ? { briefing } : {}),
+    ...(title_ko !== undefined ? { title_ko } : {}),
+    ...(briefing_ko !== undefined ? { briefing_ko } : {}),
   };
 }
 

@@ -201,6 +201,34 @@ describe("AudioManager", () => {
     localStorage.removeItem("wetrun_audio_sfx_volume");
   });
 
+  // Tier 5: volume slider round-trip — BGM + SFX persist independently and
+  // both survive an AudioManager reset (proves the values reach localStorage).
+  it("volume sliders: BGM + SFX persist independently and round-trip after reset", () => {
+    if (typeof localStorage === "undefined") return;
+    localStorage.removeItem("wetrun_audio_bgm_volume");
+    localStorage.removeItem("wetrun_audio_sfx_volume");
+    AudioManager.resetForTesting();
+
+    const audio = AudioManager.getInstance();
+    audio.setBgmVolume(0.3);
+    audio.setSfxVolume(0.7);
+    expect(audio.getBgmVolume()).toBe(0.3);
+    expect(audio.getSfxVolume()).toBe(0.7);
+
+    // Simulate reload — new singleton must rehydrate from localStorage.
+    AudioManager.resetForTesting();
+    const reloaded = AudioManager.getInstance();
+    expect(reloaded.getBgmVolume()).toBe(0.3);
+    expect(reloaded.getSfxVolume()).toBe(0.7);
+    // Decoupled: setting BGM doesn't disturb SFX.
+    reloaded.setBgmVolume(0.9);
+    expect(reloaded.getSfxVolume()).toBe(0.7);
+
+    // Cleanup
+    localStorage.removeItem("wetrun_audio_bgm_volume");
+    localStorage.removeItem("wetrun_audio_sfx_volume");
+  });
+
   // Tier 7: per-track fade in/out (crossfade between BGM phases).
   it("crossfadeTo accepts a track + duration without throwing in node", () => {
     const audio = AudioManager.getInstance();

@@ -3,7 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 const SCREENSHOT_DIR = path.resolve(
-  __dirname,
+  import.meta.dirname,
   "..",
   "test-results",
   "demo-shots",

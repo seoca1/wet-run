@@ -27,6 +27,7 @@
 | style_guide | 글쓰기 스타일 가이드 | `../../../../Fiction/wiki/authors/william-gibson.md` |
 | sprawl_universe | Sprawl 세계관 개요 | `../../../../Fiction/wiki/works/` |
 | derivative_stories | 2차 창작 단편 목록 | (자체 작성) |
+| cross_citation_protocol | Fiction↔wet_run 양방향 인용 규칙 (ADR-0065) | `../../../../Fiction/wiki/works/` + `decisions/ADR-0065-cross-citation.md` |
 | boss_ice_reference | 5개 보스 ICE 프로필 + Phase B-3 기능 | (Phase B-3) |
 | [[cyberpunk-sources]] | 비-깁슨 사이버펑크 원천 prep (SF_F 서브셋, wet-run 연결점) | `Fiction/SOURCES_INVENTORY.md` §SF_F |
 | cross-project-integration | Fiction ↔ wet_run 양방향 통합 | (Phase α-J) |

@@ -1422,3 +1422,21 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 
 - settings/continue 스펙이 구 인덱스 가정 → live `getMenuOptionKeys`+`getSelectedMenuIndex` 후크 신설.
 - 로컬 6 passed. CI에서 실동작 확인 예정.
+[2026-10-14] verify | wet_run_verify (1/2/3) — audit=True
+[2026-10-14] verify | wet_run_verify (1/2/3) — audit=True
+[2026-10-14] verify | verification-report.md 생성 (bal=pend, jev=adv, audit=clean)
+[2026-10-14] verify | wet_run_verify (1/2/3) — audit=True
+[2026-10-14] verify | wet-run balance 원리 적용 완료 (T1~T3 OK, |Δ|≤15%) — metrics.json 연결; design target 기반
+[2026-10-14] verify | wet_run_verify (1/2/3) — audit=True
+[2026-10-14] verify | (a)+(b) 완료 — metrics.json verified_ref; verification-report.md 최종; vitest 직접 연결 대기
+[2026-10-14] demo-journal | turn=1 jev=advisory visual=False
+[2026-10-14] verify | wet_run_verify (1/2/3) — audit=True
+[2026-10-14] verify | 1완료 — vitest 직접 연결 (direct_connected, all passed)
+[2026-10-14] verify | 2진행 — Playwright library OK, browser binary missing (playwright install required); demo-journal structure ready
+[2026-10-14] demo-journal | turn=1 jev=advisory visual=False
+[2026-10-14] verify | 2완료 — Playwright install + turn_01_visual.png (84258b) 캡처 완료; Jev p=0.82
+[2026-10-14] verify | 3진행 — dashboard 1019 HTML (샘플 200 중 broken 134, ~67%); docs/dashboard-broken-summary.md + find_dashboard_broken.py 생성; 전체 fix 별도 세션
+[2026-10-14] verify | 1+2 완료 — ADR-0065 (양방향 wikilink + audit 확장) + index cross_citation_protocol
+[2026-10-14] cleanup | session intermediates removed (turn_1_journal.md, /tmp artifacts) — canonical artifacts preserved
+[2026-10-14] verify | 3진행 — dashboard top-4 broken links fixed (134→93 /200), script scripts/fix_dashboard_links.py
+[2026-10-14] fix | dashboard 링크 전면 수리 — 258 broken 상대경로 정정 (depth-aware, 211 HTML); Fiction cross-repo 6-up 정상화, `../CHANGELOG.md` 등 off-by-one 정정; dead 16 잔존 (retired prototype 12 + 제거된 dungeon/adr docs 4, 콘텐츠 결정 필요)

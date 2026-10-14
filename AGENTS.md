@@ -28,6 +28,7 @@
    - `index.md` 갱신
    - `log.md` 에 `[YYYY-MM-DD] ingest | 제목` 형식으로 기록
 3. 위키 페이지에 원문 인용 추가 (가능하면)
+4. 검증 (새) — 변경 완료 후 `python3 scripts/wet_run_verify.py --full --out docs/design/verification-report.md` 실행; audit 0 + Jev p ≥ 0.6 확인; `log.md` 기록.
 
 ### 3.2 게임 디자인 변경
 1. `decisions/` 에 새 ADR 작성 또는 기존 ADR Status 변경

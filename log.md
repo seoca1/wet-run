@@ -1440,3 +1440,5 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 [2026-10-14] cleanup | session intermediates removed (turn_1_journal.md, /tmp artifacts) — canonical artifacts preserved
 [2026-10-14] verify | 3진행 — dashboard top-4 broken links fixed (134→93 /200), script scripts/fix_dashboard_links.py
 [2026-10-14] fix | dashboard 링크 전면 수리 — 258 broken 상대경로 정정 (depth-aware, 211 HTML); Fiction cross-repo 6-up 정상화, `../CHANGELOG.md` 등 off-by-one 정정; dead 16 잔존 (retired prototype 12 + 제거된 dungeon/adr docs 4, 콘텐츠 결정 필요)
+[2026-10-14] demo-journal | turn=2 jev=advisory visual=False
+[2026-10-14] verify | 후속 모두 완료 — 1(direct), 2(turn2 PNG), 3(dashboard 0 broken / 200), audit CLEAN

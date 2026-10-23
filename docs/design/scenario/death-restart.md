@@ -333,14 +333,14 @@ Avg missions/run: 2.3
 - `engine/death.py` — 기존 trigger_death / jack_out_to_hub 확장
 - `engine/state.py` — jockey_history, ScreenKind 추가
 - `engine/jack_out_view.py` — JACK_OUT 후 DEATH_SUMMARY로 전환
-- `data/jockeys/deceased.json` — 누적 데이터 (영구 보존)
+- `data/jockeys/deceased.json` — 누적 데이터 (영구 보존) — **Python prototype 시절; retired (2026-10-20)**
 - `engine/jockey_history.py` (신규) — Archive 관리
 
 ## 10. 완료 조건 (Acceptance Criteria)
 
 ### Phase 1: 데이터
 - [ ] `engine/jockey_history.py` 신규 (DeceasedJockey + JockeyHistory)
-- [ ] `data/jockeys/deceased.json` 초기 (빈 배열)
+- [ ] `data/jockeys/deceased.json` 초기 (빈 배열) — ⚠️ retired: Python prototype 시절 항목 (2026-10-20 data/ 제거). web/ 마이그레이션 시 별도 구현 필요.
 - [ ] `AppState`에 jockey_history, total_runs, total_deaths 등 추가
 
 ### Phase 2: 화면

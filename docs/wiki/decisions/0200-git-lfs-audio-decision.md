@@ -1,10 +1,12 @@
 # ADR-0200: Git LFS D4 — 오디오 자산 관리 (현상 유지)
 
-**상태**: **Accepted (Option 1: 현상 유지 + 명문화)** — Draft → Accepted 2026-08-26 (this session; v1.4.0 Operational Release 후속)
+**상태**: **Accepted (Option 1: 현상 유지 + 명확화)** — Draft → Accepted 2026-08-26 (this session; v1.4.0 Operational Release 후속)
 **날짜**: 2026-08-26
 **결정자**: 사용자
 **우선순위**: P3 (Operational hygiene, 차후 재평가)
 **관련**: ADR-0194 (ECS-lite 격하), ADR-0195 (Implementation Workflow), `prototype/pyproject.toml` wheel/sdist exclude, `CHANGELOG.md [1.4.0]`
+
+> **⚠️ 현행 상태 (2026-10-20)**: 본 ADR의 `data/sounds_test/` (2.3 MB legacy WAV)는 **2026-10-20에 제거**됨 (git 미추적 + 코드 미참조 확인). prototype/data/sounds_test/ (61 MB)도 retired. 현행 web/ 오디오는 `web/public/sounds/` 사용. 본 ADR의 "오디오 자산 추적" 항목은 prototype 시점 기록이며, 현행 트리에는 해당 자산 존재 안 함.
 
 ## 컨텍스트 (Context)
 
@@ -18,8 +20,8 @@ v1.4.0 Operational Release (2026-08-26, ADR-0199 후속) 후, **Git LFS D4 결�
 | `dashboard/sounds/v2/` | 37 MB (12+ WAV iteration) |
 | `dashboard/sounds/*.wav` (root) | ~50 MB (24 root BGM) |
 | `dashboard/sounds/*.v1_backup.wav` | ~22 MB (24 backup 중복) |
-| `prototype/data/sounds_test/` | 61 MB (46 game runtime WAV) |
-| `data/sounds_test/` | 2.3 MB (46 legacy canonical WAV) |
+| `prototype/data/sounds_test/` | 61 MB (46 game runtime WAV) — retired (2026-09-15) |
+| `data/sounds_test/` | 2.3 MB (46 legacy canonical WAV) — **2026-10-20 제거** (git 미추적, 코드 미참조) |
 | Git 저장소 `.git/objects` | 258 MB (오디오 객체 압축 후) |
 | size-pack | 233.63 MiB |
 | `git lfs` 설치 | ❌ 미설치 (`which git-lfs` not found) |
@@ -97,7 +99,7 @@ v1.4.0 Operational Release (2026-08-26, ADR-0199 후속) 후, **Git LFS D4 결�
 ### 모니터링 (최소)
 
 - 분기별 `.git/objects` 크기 확인 (`git count-objects -vH`)
-- 신규 오디오 추가 시 누적 추적 (dashboard/sounds/, prototype/data/sounds_test/)
+- 신규 오디오 추가 시 누적 추적 (dashboard/sounds/, web/public/sounds/) — prototype/data/sounds_test/와 data/sounds_test/는 모두 retired (2026-10-20)
 - GitHub LFS bandwidth dashboard (해당 시)
 
 ## 사용자 결정 요청

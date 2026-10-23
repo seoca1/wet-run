@@ -5,6 +5,8 @@
 > **결정자**: 사용자
 > **관련**: ADR-0003 (Combat RT-MS), ADR-0006 (Run structure), ADR-0008 (Progression), ADR-0017 (Missions), ADR-0019 (Aftermath), ADR-0021 (Save/Load)
 
+> **⚠️ 현행 상태 (2026-10-20)**: 본 ADR의 `data/jockeys/deceased.json` archive 구현은 **Python prototype 시절 것** (2026-09-15 retired). `data/` 디렉토리 자체도 2026-10-20에 제거됨. web/ TypeScript 코드(`web/src/`)는 deceased jockey persistence를 구현하지 않음 — 현재는 `GameState.deceasedJockeys` 빈 배열로 시작. 본 섹션의 "구현 증거"는 prototype 시점의 증거일 뿐 현행 상태 아님.
+
 ## 1. 컨텍스트
 
 현재 게임에서 플레이어의 HP가 0이 되면 `trigger_death()` → `DEATH` 화면 → `jack_out_to_hub()`로 HUB로 복귀하는 흐름은 구현되어 있음. 하지만 다음이 부족:
@@ -45,7 +47,7 @@
 | **재시작 옵션** | (1) 새 자키 / (2) 같은 자키 / (3) 메인메뉴 |
 | **새 자키** | CHARACTER_SELECT 화면으로 → 이전 다른 캐릭터 풀에서 선택 |
 | **같은 자키** | HUB로 직접 (현재 흐름) |
-| **Archive** | `data/jockeys/deceased.json` — 누적 사망 자키 |
+| **Archive** | `data/jockeys/deceased.json` — 누적 사망 자키 (Python prototype 시절; retired) |
 | **Statistics** | AppState에 누적 카운터 |
 | **Menu 진입** | MENU [6] "Hall of Dead Jockeys" (선택) |
 
@@ -262,7 +264,7 @@ HUB (기존 jack_out_to_hub와 동일)
 1. `engine/jockey_history.py` 신규 (DeceasedJockey, Hall of Dead 로직)
 2. `engine/death.py` 확장 (DEATH_SUMMARY 렌더링, RESTART_OPTIONS)
 3. `engine/state.py` — jockey_history 필드, ScreenKind 추가
-4. `data/jockeys/deceased.json` 초기 (빈 배열 또는 예시)
+4. `data/jockeys/deceased.json` 초기 (빈 배열 또는 예시) — Python prototype 시절; retired (2026-10-20)
 5. 메뉴 [6] "Hall of Dead Jockeys" 진입
 6. 테스트 30+ (death/restart/archive)
 7. `scripts/death_demo.py` (시연)
@@ -286,6 +288,6 @@ HUB (기존 jack_out_to_hub와 동일)
 
 본 ADR은 사용자 결정 (질의 응답으로 confirm, 2026-08-05)에 의해 Accepted 로 auto-convert 완료. 증거 기반 검증 통과.
 
-**구현 증거 (2026-08-05)**: `engine/death.py` (20KB) + `engine/jockey_history.py` (19KB) + `data/jockeys/deceased.json` (12,223 자키 보존). Death → DEATH_SUMMARY → HALL_OF_DEAD → 새 자키 풀 사이클 구현.
+**구현 증거 (2026-08-05, Python prototype 시점 — retired)**: `engine/death.py` (20KB) + `engine/jockey_history.py` (19KB) + `data/jockeys/deceased.json` (12,223 자키 보존). Death → DEATH_SUMMARY → HALL_OF_DEAD → 새 자키 풀 사이클 구현. **현행 web/ TypeScript는 이 기록을 미구현 상태** (`web/src/core/state.ts`의 `deceasedJockeys: []` 빈 배열). ADR-0040의 archive 구현은 prototype 시점 증거이며, web/ 마이그레이션 시 별도로 재구현 필요.
 
 **변경 후 immutable**: 본 ADR 의 결정 사항은 변경 불가. 향후 수정 필요 시 신규 ADR 작성 (AGENTS.md §8).

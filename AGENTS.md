@@ -11,12 +11,12 @@
 | 디렉토리 | 에이전트의 역할 | 절대 규칙 |
 | --- | --- | --- |
 | `web/` | **활성 코드베이스** | TypeScript + Vite + Vitest. 모든 변경은 `web/` 에서. 명령은 `cd web && npm ...`. |
-| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. `docs/architecture/` 가 web/ ADR 권장 위치, `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
-| `data/` | 신중히 수정 | 정적 JSON 데이터 (이전 prototype/ 잔재; hand-maintained). `data/raw/`, `data/sounds_test/` 같은 하위 폴더는 비활성/테스트 잔재. |
+| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (130 ADRs, 0001–0213). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
+| `data/` | **삭제됨 (2026-10-20)** | 이전 prototype/ 잔재 (sounds_test WAVs, jockeys/deceased.json). 모든 게임 데이터는 `web/src/data/*.json` 과 `web/public/sounds/` 에 존재. |
 | `scripts/` | 자유롭게 편집 | 보조 도구 (`scripts/tools/` — audit_sprawl.py, find_broken_links.py, README.md). |
 | 루트 메타 파일 | 신중히 수정 | README, AGENTS, log, ROADMAP, CHANGELOG, MIGRATION, VALIDATION_SCENARIO, mkdocs.yml |
 
-> **2026-09-24 정합 노트**: 본 표는 현행 트리 기준이다. 이전 버전이 나열하던 `raw/`, `wiki/`, `design/`, `testcases/`, `decisions/`, `prototype/`, `dashboard/` 행은 모두 프로토타입 시절 경로로 현재 존재하지 않는다 — `raw/` 와 `prototype/` 은 2026-09-15 Python 프로토타입 통합으로 삭제되었고, `wiki/` / `design/` / `testcases/` / `decisions/` 는 `docs/` 하위로 이관되었으며, `dashboard/` 는 `docs/dashboard/` 로 이동했다. 깁슨 분석 wiki는 Fiction 프로젝트(`../../../Fiction/wiki/`)에서 별도 유지된다.
+> **2026-10-20 정합 노트**: 본 표는 현행 트리 기준이다. 이전 버전이 나열하던 `raw/`, `wiki/`, `design/`, `testcases/`, `decisions/`, `prototype/`, `dashboard/` 행은 모두 프로토타입 시절 경로로 현재 존재하지 않는다 — `raw/` 와 `prototype/` 은 2026-09-15 Python 프로토타입 통합으로 삭제되었고, `wiki/` / `design/` / `testcases/` / `decisions/` 는 `docs/` 하위로 이관되었으며, `dashboard/` 는 `docs/dashboard/` 로 이동했다. 깁슨 분석 wiki는 Fiction 프로젝트(`../../../Fiction/wiki/`)에서 별도 유지된다.
 
 ## 3. 작업 워크플로우
 
@@ -111,9 +111,9 @@
 
 이 프로젝트는 표준 LLM Wiki 패턴을 따른다.
 
-> **2026-09-24 정합 노트**: 워크스페이스 표준의 3계층 (raw / wiki / schema) 가운데 `raw/` 는 Python 프로토타입 통합 (2026-09-15) 으로 retired — wet_run 트리에서 더 이상 존재하지 않는다. 게임 위키는 `docs/wiki/` (`decisions/`, `design/`, `lore/`, `world/` 하위) 로 통합되었고, 깁슨 분석용 primary source 는 Fiction 프로젝트의 `../../../Fiction/wiki/` 가 담당한다. 신규 ingest 시 깁슨 원문 인용은 Fiction wiki 를 우선 참조하고, 게임용 요약/적응은 `docs/wiki/` 에 둔다.
+> **2026-10-20 정합 노트**: 워크스페이스 표준의 3계층 (raw / wiki / schema) 가운데 `raw/` 는 Python 프로토타입 통합 (2026-09-15) 으로 retired — wet_run 트리에서 더 이상 존재하지 않는다. 게임 위키는 `docs/wiki/` (`decisions/`, `lore/`, `world/` 하위) 로 통합되었고, 디자인 스펙은 `docs/design/` 에 단일 canonical 으로 존재한다 (2026-10-20: `docs/wiki/design/` 중복 디렉토리 삭제). 깁슨 분석용 primary source 는 Fiction 프로젝트의 `../../../Fiction/wiki/` 가 담당한다. 신규 ingest 시 깁슨 원문 인용은 Fiction wiki 를 우선 참조하고, 게임용 요약/적응은 `docs/wiki/` 에 둔다.
 
-- **Ingest**: 깁슨 원문 발췌가 생기면 Fiction wiki (`../../../Fiction/wiki/`) 에 먼저 인제스트 → 게임용 요약/적응을 `docs/wiki/world/` (또는 `docs/wiki/lore/`, `docs/wiki/design/`) 에 작성/갱신 → `docs/wiki/index.md` 갱신 → `log.md` 에 `[YYYY-MM-DD] ingest | 제목` 형식으로 기록
+- **Ingest**: 깁슨 원문 발췌가 생기면 Fiction wiki (`../../../Fiction/wiki/`) 에 먼저 인제스트 → 게임용 요약/적응을 `docs/wiki/world/` (또는 `docs/wiki/lore/`) 에 작성/갱신 → `docs/wiki/index.md` 갱신 → `log.md` 에 `[YYYY-MM-DD] ingest | 제목` 형식으로 기록
 - **Query**: 사용자가 질문 → `docs/wiki/index.md` 로 관련 페이지 찾기 → Fiction wiki 인용과 함께 답변 → 가치가 있으면 결과를 새 `docs/wiki/` 페이지로 file-back
 - **Lint**: 주기적으로 wiki 건강 점검
   - orphan 페이지 (인바운드 링크 없음)
@@ -240,7 +240,7 @@ npm run build && npm run preview
 2. 자동 테스트 추가 (vitest 단위/통합)
 3. `npm run format && npm run lint && npm run typecheck && npm test`
 4. `log.md` 에 `[YYYY-MM-DD] 작업종류 | 제목` 형식으로 기록
-5. 영향 받는 ADR / 결정이 있으면 ADR 갱신 (단, `decisions/` 디렉토리는 이전 prototype 잔재; 신규 web ADR은 `docs/architecture/` 권장)
+5. 영향 받는 ADR / 결정이 있으면 ADR 갱신 (단, `decisions/` 디렉토리는 이전 prototype 잔재; 신규 web ADR은 `docs/wiki/decisions/` 권장 — canonical 위치)
 
 ### i18n (번역) 가이드라인 (ADR-0010 이월)
 

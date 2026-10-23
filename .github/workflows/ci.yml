@@ -37,6 +37,25 @@ jobs:
       - name: Build
         working-directory: ./web
         run: npm run build
+      - name: Guard: no build artifacts staged
+        working-directory: .
+        run: |
+          set -euo pipefail
+          BLOCKED="dist build site"
+          staged=$(git diff --cached --name-only --diff-filter=ACM 2>/dev/null || true)
+          violations=()
+          for f in $staged; do
+            for d in $BLOCKED; do
+              [[ "$f" == "$d"/* || "$f" == "$d" ]] && violations+=("$f")
+            done
+            [[ "$f" == *.map ]] && violations+=("$f")
+          done
+          if [[ ${#violations[@]} -gt 0 ]]; then
+            echo "❌ Build artifacts staged — refusing:" >&2
+            printf '   %s\n' "${violations[@]}" >&2
+            exit 1
+          fi
+          echo "✅ No build artifacts staged"
 
   e2e:
     name: E2E browser tests

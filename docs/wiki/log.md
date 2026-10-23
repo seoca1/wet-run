@@ -1374,6 +1374,29 @@ ADR-0188 "Accepted (2026-08-08, user explicit "Begin Phase 11")" 상태. 본 ses
 
 **No commit** per workspace §6.
 
+## [2026-10-20] cleanup | Issue #2 — root `data/` 완전 제거 + docs 경로 갱신
+
+**Status**: ✅ **root `data/` 48 files 완전히 제거** (git 미추적 + 코드 미참조 확인 완료). docs 내 `data/` 경로 참조 13개 파일에 retired 명시 추가.
+
+### 1. root `data/` 제거
+- `data/sounds_test/` (2.3 MB, 46 WAV) — **2026-08-20에 git untrack 완료** 후 로컬 파일만 남겨둔 것.本次 최종 제거.
+- `data/jockeys/deceased.json` (48 KB) — Python prototype 시절 사망 자키 아카이브. web/ TypeScript는 미구현 (`deceasedJockeys: []` 빈 배열).
+- `data/raw/README.md` — Python prototype 시절 raw/ 디렉토리 계획 문서. wet_run 트리에는 raw 계층 없음 (Fiction wiki가 대리 담당).
+- **삭제 확인**: `web/` + `scripts/` 모두 `data/` 경로 zero reference. `data/story/`, `data/saves/` 등 다른 하위 경로는 Python prototype 디자인 명세일 뿐이며, 현행 코드와 무관.
+
+### 2. docs 경로 참조 갱신 (13개 파일)
+- **ADR-0040** (`docs/wiki/decisions/`, `docs/architecture/`): `data/jockeys/deceased.json` archive 구현은 Python prototype 시절 것임을 명시. "구현 증거" 섹션에 "현행 web/ TypeScript는 미구현 상태" 추가.
+- **ADR-0200** (`docs/wiki/decisions/`, `docs/architecture/`): `data/sounds_test/` 제거 사실 명시. 추적 대상에서 `web/public/sounds/`로 변경.
+- **verification-framework.md**: 적용 범위에서 `data/` 제외.
+- **design/scenario/death-restart.md**, **design/systems/story-archive.md** (+ wiki/ 복사본): retired 명시.
+- **dashboard/combat.html** (12개): `data/sounds_test/` → `web/public/sounds/` 경로 수정.
+- **dashboard/sound.html**: `data/sounds_test/` → `web/public/sounds/` + retired 명시.
+
+### 3. 미수정 항목 (의도적)
+- `data/story/`, `data/saves/`, `data/scenes/` 등 Python prototype 디자인 명세 경로 — Python prototype 시절 설계서에만 등장. 현행 web/ 코드와 무관하므로 prototype 시절 기록으로 보존.
+
+**Diff**: `data/` -48 files (2.3 MB), docs +~30 lines (retired 명시), dashboard/combat.html -12/+12 (경로 수정)
+
 ## [2026-08-20] cleanup | Issue #1 — orphan `data/sounds_test/` untrack + local delete
 
 **Status**: ✅ **2.2 MB tracked orphan 제거 완료** (wet_run git). `Game/wet_run/data/sounds_test/` (46개 WAV, 2.3MB)는 정본 `prototype/data/sounds_test/` (61MB)와 중복이며, source code 어디에서도 참조되지 않음 (전체 17개 참조 모두 `prototype/data/sounds_test/` 또는 `__file__.parent/sounds_test` 경로 사용).

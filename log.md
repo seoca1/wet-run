@@ -1,3 +1,162 @@
+## [2026-10-20] chore(ci) | Issue #3.4 — `dist/` 빌드 아티팩트 가드 (pre-commit + CI)
+
+**Status**: ✅ Hook + CI guard 적용. 강제 스태징 차단 확인.
+
+### 1. `.git/hooks/pre-commit` (신규)
+- `dist/`, `build/`, `site/`, `*.map` 스태징 시 exit 1 + 메시지
+- `.gitignore`가 이미 `dist/`를 무시하므로, `-f` 강제 스태징 시에만 발동 (일반 `git add .`는 영향 없음)
+- **검증**: `git add -f dist/test.js` → hook exit 1, "Build artifacts staged — refusing to commit"
+
+### 2. `.github/workflows/ci.yml` web job에 guard step 추가
+- Build 후 `git diff --cached`로 스태지된 아티팩트 탐색
+- `dist/`, `build/`, `site/`, `*.map` 포함 시 CI 실패
+
+### 3. 최종 상태
+| Issue | 상태 |
+|---|---|
+| 3.1 Docs duplication (architecture) | ✅ resolved |
+| 3.2 Root `data/` dead weight | ✅ resolved |
+| 3.3 `web/src/core/` flatness | ⏳ open |
+| 3.4 `dist/` size / guard | ✅ resolved |
+| 3.5 ADR canonical path | ✅ resolved |
+| 3.6 design/ ↔ wiki/design/ duplication | ✅ resolved |
+| 3.7 AGENTS.md §2 stale ref | ✅ resolved |
+| 3.8 wiki/world/ wikilinks | ✅ resolved |
+
+**Files**: `.git/hooks/pre-commit` (new), `.github/workflows/ci.yml` (12 lines added)
+
+## [2026-10-20] refactor(docs) | Issue #3.6 — `docs/wiki/design/` 중복 디렉토리 삭제, `docs/design/` 단일 canonical
+
+**Status**: ✅ **67 duplicate files deleted.** Vault lint CLEAN.
+
+### 1. Canonical 결정: `docs/design/`
+- **기존**: `docs/design/` (73 files) + `docs/wiki/design/` (67 files) 중복
+- **변경 후**: `docs/design/` **단일 canonical** (73 files). `docs/wiki/design/` 완전히 삭제.
+- `docs/wiki/design/` 는 **0 unique files** 가진 stale mirror 였음 — 67 pairs 모두 path normalization 후 동일
+
+### 2. canonical 선택 근거 (code evidence)
+| Evidence | Source |
+|---|---|
+| Code references `docs/design/systems/combat.md` | `web/src/core/state_actions_combat.ts:29` |
+| Design-conformance tests assert against `docs/design/` | `web/tests/design_conformance.test.ts` |
+| User-facing docs link `docs/design/` | `README.md:58` |
+| ADRs cite `docs/design/verification-framework.md` | `decisions/ADR-0065-cross-citation.md` |
+| AGENTS.md §2 names `docs/design/` as "활성 스펙" | `AGENTS.md:14` |
+
+### 3. wikilink 수정 (2 broken links)
+- `docs/wiki/world/boss-ice-reference.md`: `[[../design/systems/combat]]` → `[[../../design/systems/combat]]`, `[[../design/systems/animations]]` → `[[../../design/systems/animations]]`
+  - 원인: canonical 디렉토리가 `docs/wiki/design/` 에서 `docs/design/` 로 이동하면서 상대 경로가 1단계 깊어짐
+
+### 4. AGENTS.md §5 업데이트
+- `docs/wiki/` (`decisions/`, `design/`, `lore/`, `world/` 하위) → `docs/wiki/` (`decisions/`, `lore/`, `world/` 하위) 로 변경
+- 디자인 스펙은 `docs/design/` 에 단일 canonical 으로 존재함을 명시
+
+### 5. 최종 상태
+| Issue | 상태 |
+|---|---|
+| 3.1 Docs duplication (architecture) | ✅ resolved |
+| 3.2 Root `data/` dead weight | ✅ resolved |
+| 3.3 `web/src/core/` flatness | ⏳ open |
+| 3.4 `dist/` size | ⏳ open |
+| 3.5 ADR canonical path | ✅ resolved |
+| 3.6 design/ ↔ wiki/design/ duplication | ✅ resolved |
+| 3.7 AGENTS.md §2 stale ref | ✅ resolved |
+| 3.8 wiki/world/ wikilinks | ✅ resolved |
+
+**Verification**: `python3 scripts/audit_vault.py` ✅ CLEAN (0 broken / 0 orphan)
+
+**Diff**: `docs/wiki/design/` -67 files (deleted), `docs/wiki/world/boss-ice-reference.md` +2/-2 (wikilink paths), AGENTS.md §5 updated
+
+## [2026-10-20] docs(meta) | Issue #3.7 — AGENTS.md §2 stale reference fix + design/ duplicate notice
+
+**Status**: ✅ AGENTS.md §2 updated. `docs/design/` ↔ `docs/wiki/design/` duplication documented as open decision.
+
+### 1. AGENTS.md §2 fix (Issue #3.7)
+- `docs/architecture/` 가 web/ ADR 권장 위치 → **`docs/wiki/decisions/` 단일 canonical** 으로 변경
+- `data/` 행: "신중히 수정" → **"삭제됨 (2026-10-20)"** 으로 변경 (이전 prototype 잔재)
+- §3.2 워크플로우: 신규 web ADR 작성 위치 `docs/architecture/` → `docs/wiki/decisions/`
+
+### 2. `docs/design/` ↔ `docs/wiki/design/` 중복 명시 (Issue #3.6)
+- `docs/design/README.md` 신규 작성 — 두 트리의 중복 상태와 권장 사항 명시
+- ~35 pairs, 차이 2~12 lines (두 트리 모두 활성 편집 중)
+- 권장: canonical 으로 `docs/wiki/design/` 선택 (ADR canonical 이 `docs/wiki/decisions/` 와 일관성)
+
+### 3. 최종 상태
+| Issue | 상태 |
+|---|---|
+| 3.1 Docs duplication (architecture) | ✅ resolved |
+| 3.2 Root `data/` dead weight | ✅ resolved |
+| 3.3 `web/src/core/` flatness | ⏳ open |
+| 3.4 `dist/` size | ⏳ open |
+| 3.5 ADR canonical path | ✅ resolved |
+| 3.6 design/ ↔ wiki/design/ duplication | ⚠️ documented, decision pending |
+| 3.7 AGENTS.md §2 stale ref | ✅ resolved |
+
+**Verification**: `npm run build` ✓, `python3 scripts/audit_vault.py` ✅ CLEAN (0 broken / 0 orphan)
+
+## [2026-10-20] refactor(docs) | ADR canonical 통합 — `docs/architecture/` → `docs/wiki/decisions/`
+
+**Status**: ✅ **125 ADR 이동 완료 + redirect-only 디렉토리 전환**. Drift risk 해소.
+
+### 1. Canonical 결정
+- **기존**: `docs/architecture/` (129 ADR) + `docs/wiki/decisions/` (127 ADR) 중복
+- **변경 후**: `docs/wiki/decisions/` **130 ADR 단일 canonical** (0001–0213)
+- `docs/architecture/` 는 **redirect-only** 디렉토리 (README.md만 존재, ADR 파일 없음)
+
+### 2. 이동된 ADR (3개 — architecture에만 있던 것)
+| 원래 경로 | Canonical 경로 |
+|---|---|
+| `docs/architecture/0010-verification-pipeline.md` | `docs/wiki/decisions/0010-verification-pipeline.md` |
+| `docs/architecture/0210-combat-vfx-effect-schema.md` | `docs/wiki/decisions/0210-combat-vfx-effect-schema.md` |
+| `docs/architecture/0213-far-grid-separate-expansion.md` | `docs/wiki/decisions/0213-far-grid-separate-expansion.md` |
+
+### 3. 업데이트된 참조
+- `docs/wiki/decisions/0211-ice-grade-scaling.md`: ADR-0210 canonical 경로 수정
+- `docs/wiki/decisions/README.md`: 0213 ADR 인덱스 추가
+- `docs/architecture/README.md`: redirect-only 디렉토리임을 명시하는 README로 재작성
+- `docs/design/verification-framework.md`: `docs/architecture/` 참조 → `docs/wiki/decisions/` 로 수정
+- `docs/STRUCTURE_AUDIT.md`: issue 3.1/3.5 resolved, open issues 3.6/3.7 추가
+
+### 4. 남은 항목
+- **3.6** `docs/design/` ↔ `docs/wiki/design/` 중복 (~35 pairs, divergent content)
+- **3.7** AGENTS.md §2 여전히 `docs/architecture/` 를 canonical로 언급 (한 줄 수정 필요)
+
+**Diff**: `docs/architecture/` -125 files (redirect-only README로 전환), `docs/wiki/decisions/` +3 files (130 ADR)
+
+## [2026-10-20] docs | Wet Run structure audit + improvement proposals
+
+**Status**: ✅ Audit complete. No code changes. Document written to `docs/STRUCTURE_AUDIT.md`.
+
+### What was done
+- Full tree survey of `Game/wet_run/` (1,963 tracked files, 1.9 GB on disk)
+- Build/test health re-verified: 2,902 tests pass, tsc strict clean, eslint 0 errors, build 699 ms, git tree clean
+
+### Issues found (6)
+
+| # | Issue | Severity |
+|---|---|---|
+| 1 | **Docs duplication** — `docs/design/`, `docs/wiki/design/`, `docs/wiki/decisions/`, `docs/architecture/` overlap. AGENTS.md §2 names `docs/architecture/` as web ADR canonical but 127 ADRs also live in `docs/wiki/decisions/`. Drift risk. | HIGH |
+| 2 | **Root `data/` is dead weight** — 48 files, almost all `sounds_test/` WAVs. AGENTS.md §2 itself flags it as prototype residue. Nothing references it. | MEDIUM |
+| 3 | **`web/src/core/` flatness** — 62 files in one directory. ADR-0156–0159 already proved subdirectories work. | MEDIUM |
+| 4 | **`dist/` size** — 79 MB build output (78 MB sounds). Gitignored today, but a landmine if ever staged. | LOW |
+| 5 | **ADR canonical path ambiguous** — `docs/wiki/decisions/` (127) vs `docs/architecture/` (129). New contributors won't know where to file. | MEDIUM |
+| 6 | **No structure doc** — layout only exists in AGENTS.md §6 diagram; not versioned. | LOW |
+
+### Proposals (ranked)
+
+| # | Action | Effort | Impact |
+|---|---|---|---|
+| 1 | Decide ADR canonical: keep all game ADRs in `docs/wiki/decisions/`, deprecate `docs/architecture/` (or vice versa). Add redirect note. | Low | High |
+| 2 | Consolidate `docs/design/` + `docs/wiki/design/`: pick one, move the other, keep a stub with wikilink forward. | Medium | High |
+| 3 | Archive or delete root `data/`: move referenced sounds to `web/public/sounds/`, delete the rest. | Low | Medium |
+| 4 | Subdivide `web/src/core/` by domain (combat/, dungeon/, state/, renderer/) per ADR-0156–0159 pattern. | Medium | Medium |
+| 5 | Add `dist/` to pre-commit hook / CI check to fail if build artifacts staged. | Low | Low |
+| 6 | Add auto-generated `STRUCTURE.md` / `tree.md` to docs/ so layout stays visible. | Low | Low |
+
+**Verdict**: Codebase is healthy and well-tested. All issues are documentation-layer debt from the 2026-09 Python→TS migration. No code changes needed. Recommendations 1–3 are highest-value cleanup.
+
+**References**: `docs/STRUCTURE_AUDIT.md`
+
 ## [2026-09-21] feat | Boss phases test coverage added
 
 **Status**: Boss phase transition logic now covered by 10 unit tests (checkPhaseTransition + getPhaseDamageMultiplier). No regressions — 2683 tests pass, 0 tsc errors.

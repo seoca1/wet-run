@@ -5,7 +5,7 @@
 **결정자**: 사용자 (2026-10-07 승인 — Option 1)
 **우선순위**: P2 (세계관 확장 — 캐논 무결성 선행)
 **관련**:
-- [ADR-0054 (Fiction) — SF Collection Expansion Pilot](../../../../Fiction/decisions/0054-sf-collection-expansion.md) — 원천 인제스트 거버넌스
+- [ADR-0054 (Fiction) — SF Collection Expansion Pilot](../../../../../Fiction/decisions/0054-sf-collection-expansion.md) — 원천 인제스트 거버넌스
 - `docs/wiki/world/cyberpunk-sources.md` — 사이버펑크 서브셋 prep (Hardwired / Halo / True Names / Otherland + adjacent)
 - AGENTS.md §8 — 타 사이버펑크 톤/용어 차용 금지 (본 ADR 의 정합 대상)
 

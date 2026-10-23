@@ -188,7 +188,7 @@ Visual intensity scales with damage:
 ## See Also
 
 - [[../decisions/0050-boss-ice-system]] — Original boss ICE design (Phase 5 ADR-0050)
-- [[../design/systems/combat]] — Combat system overview
-- [[../design/systems/animations]] — B-3.5 screen shake + hit flash
+- [[../../design/systems/combat]] — Combat system overview
+- [[../../design/systems/animations]] — B-3.5 screen shake + hit flash
 - `decisions/0125-boss-aoe-minion-spawn.md` — ADR
 - `design/systems/combat.md` — Combat design doc

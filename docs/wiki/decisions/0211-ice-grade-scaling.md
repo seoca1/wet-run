@@ -6,7 +6,7 @@
 **우선순위**: P1 (밸런스 정확성)
 **관련**:
 - [ADR-0199 — Wet Run Web MVP (Tier 1)](./0199-wetrun-web-mvp.md) — web 코드베이스 기준
-- ADR-0210 — Combat VFX Effect Schema — 동일 세션 정합 작업 (canonical: `docs/architecture/0210-combat-vfx-effect-schema.md`)
+- ADR-0210 — Combat VFX Effect Schema — 동일 세션 정합 작업 (canonical: `docs/wiki/decisions/0210-combat-vfx-effect-schema.md`)
 - ADR-0012 — Combat Difficulty & Threat Level (PPL & ZDR)
 
 ## 컨텍스트 (Context)

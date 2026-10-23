@@ -94,7 +94,7 @@ class JockeyRecord:
     timestamp_iso: str
 ```
 
-→ 사망한 자키는 `data/jockeys/deceased.json` 에 atomic 저장.
+→ 사망한 자키는 `data/jockeys/deceased.json`에 atomic 저장. (⚠️ Python prototype 시절; retired 2026-10-20 — web/ 마이그레이션 시 별도 구현 필요)
 
 ## Cinematic System (chapter_cutscene.py)
 

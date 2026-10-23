@@ -1,3 +1,48 @@
+## [2026-10-20] feat(evaluation) | Game design evaluation framework + 3 issue re-check
+
+**Status**: ✅ Evaluation complete. 3 issues re-checked — all previously thought broken are actually already fixed.
+
+### 1. 평가 기준 정립 (12-axis rubric)
+- **R1-R7**: Roguelike 전용 (난이도 곡선, 재현성, 위험/보상, 메타 진행, 시드 variety, 컨트롤 반응성, 사망 무게감)
+- **G1-G5**: 게임 전반 (스토리 통합, 톤 일관성, 학습 곡선, 오디오/비주얼, 접근성)
+- Full rubric: `docs/GAME_DESIGN_EVALUATION.md`
+
+### 2. 평가 결과 (8 strong / 3 partial / 1 issue)
+
+| Axis | Result |
+|---|---|
+| R1 Difficulty curve | 🟢 STRONG — monotonic non-increasing (100→88.8→73→47.4→42.4→0%) |
+| R2 Replayability | 🟢 STRONG — 5 mutators, 28 achievements, 53 missions, 97 ICE |
+| R3 Risk/reward | 🟢 STRONG — deck-building + real program-tier pricing |
+| R4 Meta-progression | 🟢 STRONG — death_cycle, HALL_OF_DEAD, faction_reputation |
+| R5 Seed variety | 🟢 STRONG — BSP dungeon, far_grid_gate |
+| R6 Control | 🟢 STRONG — combat state machine, enemy AI |
+| R7 Death weight | 🟢 STRONG — LOW_HP mutator, deceased jockey archive |
+| G1 Story integration | 🟢 STRONG — 72 GN scenes, Fiction wiki primary source |
+| G2 Tone | 🟢 STRONG — AGENTS.md §4 Sprawl accuracy rules |
+| G3 Learning curve | 🟡 PARTIAL — tutorial Tier 5.5+, 4/6 menu stubs |
+| G4 Audio/visual | 🟡 PARTIAL — 12 BGM, 3 SFX, no volume slider |
+| G5 Accessibility | 🟡 PARTIAL — colorblind/gamepad ADRs exist, application unverified |
+
+### 3. Issue re-check (all previously thought broken = already fixed)
+
+**R1 Difficulty curve**: ✅ Already fixed (2026-09-24, ADR-0211 + ADR-0212). `ice_types.json` carries `hp_base` + `hp_per_grade`; `parseIce` derives `hp` at load; `iceHpForGrade()` applies runtime cap. Balance harness reports monotonic curve.
+
+**R3 Status effects**: ✅ Already wired. `status.ts` (249 lines, 13 effects) is fully integrated via `state_actions_programs.ts` — `rollStatusProc` → `applyStatus` → `tickStatus` → `applyTickEffects` → `applyBurnDamage`. 31 tests. README "Out of scope" line was stale — removed.
+
+**R3 Event pricing**: ✅ Already implemented. `event_matrix.ts` merchant events use real program tier pricing. No placeholder remains.
+
+### 4. Verification
+```
+npm test:    2902 passed (122 files)
+npm run typecheck: 0 errors
+npm run lint: 0 errors (1 pre-existing warning in keyboard.ts)
+npm run build: OK
+audit_vault: CLEAN
+```
+
+**Files**: `docs/GAME_DESIGN_EVALUATION.md` (new), `web/README.md` (stale line removed)
+
 ## [2026-10-20] chore(ci) | Issue #3.4 — `dist/` 빌드 아티팩트 가드 (pre-commit + CI)
 
 **Status**: ✅ Hook + CI guard 적용. 강제 스태징 차단 확인.

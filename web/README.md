@@ -59,7 +59,6 @@ npm run build
 
 ## Out of scope (Tier 4+ / Tier 5 candidates)
 
-- Status effects state machine integration (currently mock data)
 - Animation timing (hit flash duration + interpolation)
 - Volume slider UI (M key toggle only, no slider)
 - SFX expansion (combat_block, combat_skill_*, movement_*)

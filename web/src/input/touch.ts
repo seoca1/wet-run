@@ -38,16 +38,16 @@ const LAYOUTS: Record<string, LayoutConfig> = {
   portrait: {
     dpadCenterX: 18,
     dpadCenterY: 75,
-    dpadButtonSize: 12,
-    dpadOffset: 6,
+    dpadButtonSize: 14,
+    dpadOffset: 7,
     btnCenterX: 82,
     btnCenterY: 75,
   },
   landscape: {
     dpadCenterX: 12,
     dpadCenterY: 50,
-    dpadButtonSize: 10,
-    dpadOffset: 5,
+    dpadButtonSize: 12,
+    dpadOffset: 6,
     btnCenterX: 88,
     btnCenterY: 50,
   },
@@ -110,10 +110,10 @@ function buildActionButtons(config: LayoutConfig): ReadonlyArray<ButtonConfig> {
     },
     {
       label: "B",
-      left: `${btnCenterX - 22}vw`,
+      left: `${btnCenterX - 24}vw`,
       top: `${btnCenterY - 5}vh`,
-      size: "10vw",
-      fontSize: "5vw",
+      size: "12vw",
+      fontSize: "6vw",
       action: { type: "jack_out" as const },
     },
   ];
@@ -149,7 +149,7 @@ export function updateProgramRow(
   const buttons = deck.map((p, i) => {
     const shortId = p.id.slice(0, 4);
     const num = i + 1;
-    return `<button data-hand-index="${num}" style="font-size:3vw;padding:1vw 2vw;">${num}.${shortId}</button>`;
+    return `<button data-hand-index="${num}" style="font-size:3vw;padding:2vh 2.5vw;min-height:6vh;min-width:8vw;border-radius:8px;">${num}.${shortId}</button>`;
   });
   row.innerHTML = `
     <style>
@@ -165,8 +165,10 @@ export function updateProgramRow(
         pointer-events: auto;
         background: rgba(0, 0, 0, 0.7); border: 2px solid #00ff41;
         color: #00ff41; font-weight: bold;
-        border-radius: 6px;
+        border-radius: 8px;
         touch-action: none; user-select: none;
+        min-height: 6vh; min-width: 8vw;
+        padding: 2vh 2.5vw; font-size: 3vw;
       }
       #wetrun-program-row button:active { background: rgba(0, 255, 65, 0.4); }
     </style>

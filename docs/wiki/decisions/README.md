@@ -274,3 +274,4 @@ i18n + Content Pipeline:
 | 0212 | grade 기반 ICE encounter 배선 (ADR-0211 후속 — dungeon.ts 가 grade 무시하고 watchdog/wintermute 하드코딩. 게임 난이도를 grade 로 구동) | **Accepted (Option A)** | 2026-09-24 | P1 (밸런스 정확성) |
 
 | 0213 | Far Grid — 비-侧 사이버페크 별도 영역 확장 (Sprawl 캐논 격리, source_universe 스키마, §8 정합) | **Accepted (Option 1)** | 🟡 Partial (Phase 2: hub + 6 missions + entry gate; story resolution open) | 2026-10-07 | P2 (세계관 확장) |
+| 0214 | 모바일 터치 대상 WCAG 최소 크기 충족 (가상 게임패드 D-pad 12→14vw, B 10→12vw, 프로그램 행 min-height 6vh/min-width 8vw) | **Accepted (Option 3 Hybrid)** | ✅ Implemented | 2026-10-24 | P2 (The Style, ADR-0183 accessibility) |

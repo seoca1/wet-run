@@ -1720,3 +1720,23 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **부수**: 합성 매트릭스 픽스처 4곳 비정합(범위 밖 `adjacent`) 정합화 — assertion 약화 없음(픽스처만 수정).
 
 **미커밋**. ADR: `0215-graph-directed-matrix-navigation.md` · `0216-derived-ice-skill-metadata.md` (+ `decisions/README.md` 인덱스 2행).
+
+## [2026-10-27] fix | CONTINUE 가 플레이 불가 상태를 복원하던 결함 수정 (ADR-0217)
+
+**발견**: 후속 검증 중 `slotToGameState`가 `matrix: null` + `runPhase: "matrix"`를 반환 → `applyAction`이 `runPhase === "matrix"`로 먼저 분기해 `applyMatrixAction`이 처리하는데, 그 `confirm`·이동 분기가 **모두 `state.matrix != null` 가드**에 걸려 CONTINUE 후 **모든 입력이 no-op**. 실측: `confirm`·`move_south` 모두 **동일 객체 반환**(no-op).
+
+**기존 테스트가 놓친 이유 — 거짓 양성 2건**:
+- `tests/slot_restore.test.ts` — `phase === "approach"`·`message`만 검증, **플레이 가능성 미검증**.
+- `e2e/continue.spec.ts` — `phase ∈ {combat, approach}`만 검증. dead state의 `phase`가 `"approach"`라 **자명 통과** (주석은 "resume → combat 검증"이라 주장).
+
+**수정**:
+- `slotToGameState`가 `makeInitialState`와 **동일 입력**(`missionGradeOf`/`missionSeedOf`)으로 매트릭스 재생성 → 복원 run이 시작 시점과 같은 매트릭스.
+- `SaveSlot.currentNodeIndex?`(선택 필드) 추가 — `stateToSaveSlot` 기록 · `isSaveSlot` 검증 · `slotToGameState` 소비(없으면 `matrix.startNode` 폴백). **스키마 버전 미변경**(선택 필드 → 하위 호환, 구 세이브 로드 가능).
+- `makeInitialState`의 중복 인라인 추출을 `missionGradeOf`/`missionSeedOf`로 통일(동작 동일 — 신규/복원 run의 생성 입력 드리프트 방지).
+- `main.ts handleContinue`가 `launchSelected`처럼 `grid: makeGrid(layout.cols, layout.rows)` 사용(1줄). 동작 변화 0 — `state.grid`는 렌더 직전 항상 `renderGrid(layout...)`로 재생성됨을 실측 확인(latent 불일치만 제거).
+
+**회귀 테스트**: `tests/slot_restore.test.ts` +7 (플레이 가능성·왕복). **pre-fix 코드에서 6/7 실패 확인** — `expected null not to be null`(매트릭스) 및 `expected {phase:'approach',…} not to be {phase:'approach',…}`(동일 객체 반환 = no-op의 결정적 증거). e2e 어서션 강화(브라우저·live URL 부재로 **미실행**).
+
+**잔여 갭**: 복원은 근사 — `visitedNodes`·`iceRoster`·`statusEffects`·`playerCombo`·`skillCooldowns`·`activeMutators`는 저장되지 않아 리셋됨.
+
+**게이트**: `npm test` **125 files / 2935 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0217-continue-restores-playable-run.md`.

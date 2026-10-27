@@ -54,7 +54,16 @@ interface LegacyIce {
   tier?: number;
   dmg_base?: number;
   skills?: ReadonlyArray<string>;
+  personality?: string;
 }
+
+/** Valid ICE personality archetypes (`Ice["personality"]`). */
+const VALID_ICE_PERSONALITY: ReadonlySet<string> = new Set([
+  "aggressive",
+  "defensive",
+  "stealth",
+  "support",
+]);
 
 function expectNumber(
   obj: Record<string, unknown>,
@@ -265,6 +274,24 @@ export function parseIce(raw: unknown, idHint: string): Ice {
       : PARSE_ICE_LEGACY_HP;
   const dmgBase = typeof r.dmg_base === "number" ? r.dmg_base : 0;
   const skills = parseIceSkills(r.skills, `ice '${name}'`, dmgBase);
+  // `personality` drives the archetype system (`ice_ai.ts`): defensive ICE
+  // shield below half HP, stealth ICE halves the alarm tick rate, aggressive
+  // ICE gains crit chance, support ICE targets wounded allies. It is dropped
+  // silently when absent (the field is optional and `coercePersonality` falls
+  // back to "aggressive"), but a malformed value is a data bug — throw rather
+  // than coerce (ADR-0216 defect class).
+  let personality: Ice["personality"];
+  if (r.personality !== undefined) {
+    if (
+      typeof r.personality !== "string" ||
+      !VALID_ICE_PERSONALITY.has(r.personality)
+    ) {
+      throw new Error(
+        `[data_loaders] ice '${name}': field 'personality' must be one of ${[...VALID_ICE_PERSONALITY].join(", ")} (got ${JSON.stringify(r.personality)})`,
+      );
+    }
+    personality = r.personality as Ice["personality"];
+  }
   return {
     id: idHint,
     name,
@@ -274,6 +301,7 @@ export function parseIce(raw: unknown, idHint: string): Ice {
     ...(hpBase !== undefined ? { hpBase } : {}),
     ...(hpPerGrade !== undefined ? { hpPerGrade } : {}),
     ...(skills !== undefined ? { skills } : {}),
+    ...(personality !== undefined ? { personality } : {}),
   };
 }
 

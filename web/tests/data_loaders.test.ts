@@ -452,3 +452,67 @@ describe("data_loaders: ICE skills", () => {
     ).toThrow(/field 'skills' must be an array when present/);
   });
 });
+
+/**
+ * Regression: `parseIce` used to drop the ICE `personality` field entirely.
+ *
+ * `ice_types.json` authors a personality archetype for every ICE
+ * (aggressive 80 / defensive 12 / stealth 5 / support 0), and `ice_ai.ts`
+ * reads it through `coercePersonality`. Before the fix the loader never
+ * copied the field, so every catalog ICE resolved to the "aggressive"
+ * fallback and the whole archetype system (defensive shielding, stealth
+ * alarm halving, support ally-targeting) was inert at runtime — the same
+ * defect class as ADR-0216 (dropped `skills`).
+ */
+describe("data_loaders: ICE personality", () => {
+  it("exposes the authored personality for a known non-aggressive ICE", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const catalog = loadIceCatalog(data);
+    const watchdog = catalog["watchdog"];
+    expect(watchdog).toBeDefined();
+    if (watchdog === undefined) return;
+    expect(watchdog.personality).toBe("defensive");
+    const wisp = catalog["wisp"];
+    expect(wisp?.personality).toBe("stealth");
+  });
+
+  it("maps the catalog's personality distribution to match the JSON exactly", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const raw = data as Record<string, { personality?: string }>;
+    const catalog = loadIceCatalog(data);
+    const jsonIds = Object.keys(raw).filter((id) => raw[id]?.personality !== undefined);
+    const catalogIds = Object.keys(catalog).filter(
+      (id) => catalog[id]?.personality !== undefined,
+    );
+    expect(jsonIds.length).toBeGreaterThan(0);
+    expect(catalogIds.sort()).toEqual(jsonIds.sort());
+    // Every authored personality survives the mapping, verbatim.
+    for (const id of jsonIds) {
+      expect(catalog[id]?.personality).toBe(raw[id]?.personality);
+    }
+    // The archetype system is inert unless non-aggressive ICE survive: the
+    // distribution must carry at least one defensive and one stealth ICE.
+    const personalities = catalogIds.map((id) => catalog[id]?.personality);
+    expect(personalities.filter((p) => p === "defensive").length).toBeGreaterThan(0);
+    expect(personalities.filter((p) => p === "stealth").length).toBeGreaterThan(0);
+    expect(personalities.filter((p) => p === "aggressive").length).toBeGreaterThan(0);
+  });
+
+  it("omits the personality key entirely for an ICE that declares none", () => {
+    const ice = parseIce({ name: "ICE — Legacy", tier: 1, armor: 0 }, "x");
+    expect(ice.personality).toBeUndefined();
+    expect("personality" in ice).toBe(false);
+  });
+
+  it("throws on a malformed personality value", () => {
+    expect(() =>
+      parseIce({ name: "ICE — X", armor: 0, personality: "evil" }, "x"),
+    ).toThrow(/^\[data_loaders\]/);
+    expect(() =>
+      parseIce({ name: "ICE — X", armor: 0, personality: "evil" }, "x"),
+    ).toThrow(/field 'personality' must be one of/);
+    expect(() =>
+      parseIce({ name: "ICE — X", armor: 0, personality: 42 }, "x"),
+    ).toThrow(/field 'personality' must be one of/);
+  });
+});

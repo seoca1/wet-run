@@ -516,3 +516,72 @@ describe("data_loaders: ICE personality", () => {
     ).toThrow(/field 'personality' must be one of/);
   });
 });
+
+/**
+ * Regression: `parseIce` used to drop the ICE `aggression` field entirely.
+ *
+ * `ice_types.json` authors an aggression tier for every ICE (standard 36 /
+ * aggressive 25 / boss 36), and `ice_ai.ts` reads it through
+ * `coerceAggression` to pick the per-tick skill-use probability from
+ * `AGGRESSION_PROBABILITY` (passive 0.05 / standard 0.15 / aggressive 0.35 /
+ * boss 0.5). Before the fix the loader never copied the field, so every
+ * catalog ICE resolved to the "standard" fallback and the authored tier
+ * distribution was inert at runtime — the same defect class as ADR-0216
+ * (dropped `skills`) and ADR-0220 (dropped `personality`).
+ */
+describe("data_loaders: ICE aggression", () => {
+  it("exposes the authored aggression for a known non-standard ICE", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const catalog = loadIceCatalog(data);
+    const goliath = catalog["goliath"];
+    expect(goliath).toBeDefined();
+    if (goliath === undefined) return;
+    expect(goliath.aggression).toBe("aggressive");
+    const wintermute = catalog["wintermute"];
+    expect(wintermute).toBeDefined();
+    if (wintermute === undefined) return;
+    expect(wintermute.aggression).toBe("boss");
+  });
+
+  it("maps the catalog's aggression distribution to match the JSON exactly", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const raw = data as Record<string, { aggression?: string }>;
+    const catalog = loadIceCatalog(data);
+    const jsonIds = Object.keys(raw).filter((id) => raw[id]?.aggression !== undefined);
+    const catalogIds = Object.keys(catalog).filter(
+      (id) => catalog[id]?.aggression !== undefined,
+    );
+    expect(jsonIds.length).toBeGreaterThan(0);
+    expect(catalogIds.sort()).toEqual(jsonIds.sort());
+    // Every authored aggression survives the mapping, verbatim.
+    for (const id of jsonIds) {
+      expect(catalog[id]?.aggression).toBe(raw[id]?.aggression);
+    }
+    // The authored distribution is inert unless every tier survives the
+    // mapping: the catalog must carry the exact authored counts, and it
+    // must not be a degenerate all-"standard" fallback.
+    const aggressions = catalogIds.map((id) => catalog[id]?.aggression);
+    expect(aggressions.filter((a) => a === "standard").length).toBe(36);
+    expect(aggressions.filter((a) => a === "aggressive").length).toBe(25);
+    expect(aggressions.filter((a) => a === "boss").length).toBe(36);
+    expect(aggressions.length).toBe(97);
+  });
+
+  it("omits the aggression key entirely for an ICE that declares none", () => {
+    const ice = parseIce({ name: "ICE — Legacy", tier: 1, armor: 0 }, "x");
+    expect(ice.aggression).toBeUndefined();
+    expect("aggression" in ice).toBe(false);
+  });
+
+  it("throws on a malformed aggression value", () => {
+    expect(() =>
+      parseIce({ name: "ICE — X", armor: 0, aggression: "furious" }, "x"),
+    ).toThrow(/^\[data_loaders\]/);
+    expect(() =>
+      parseIce({ name: "ICE — X", armor: 0, aggression: "furious" }, "x"),
+    ).toThrow(/field 'aggression' must be one of/);
+    expect(() =>
+      parseIce({ name: "ICE — X", armor: 0, aggression: 42 }, "x"),
+    ).toThrow(/field 'aggression' must be one of/);
+  });
+});

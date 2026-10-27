@@ -55,6 +55,7 @@ interface LegacyIce {
   dmg_base?: number;
   skills?: ReadonlyArray<string>;
   personality?: string;
+  aggression?: string;
 }
 
 /** Valid ICE personality archetypes (`Ice["personality"]`). */
@@ -63,6 +64,14 @@ const VALID_ICE_PERSONALITY: ReadonlySet<string> = new Set([
   "defensive",
   "stealth",
   "support",
+]);
+
+/** Valid ICE aggression tiers (`Ice["aggression"]`). */
+const VALID_ICE_AGGRESSION: ReadonlySet<string> = new Set([
+  "passive",
+  "standard",
+  "aggressive",
+  "boss",
 ]);
 
 function expectNumber(
@@ -292,6 +301,25 @@ export function parseIce(raw: unknown, idHint: string): Ice {
     }
     personality = r.personality as Ice["personality"];
   }
+  // `aggression` drives the per-tick skill-use probability (`ice_ai.ts`):
+  // `enemyShouldUseSkill` reads it through `coerceAggression` and maps it
+  // onto `AGGRESSION_PROBABILITY` (passive 0.05 / standard 0.15 /
+  // aggressive 0.35 / boss 0.5). It is dropped silently when absent (the
+  // field is optional and `coerceAggression` falls back to "standard"), but a
+  // malformed value is a data bug — throw rather than coerce (ADR-0216 /
+  // ADR-0220 defect class).
+  let aggression: Ice["aggression"];
+  if (r.aggression !== undefined) {
+    if (
+      typeof r.aggression !== "string" ||
+      !VALID_ICE_AGGRESSION.has(r.aggression)
+    ) {
+      throw new Error(
+        `[data_loaders] ice '${name}': field 'aggression' must be one of ${[...VALID_ICE_AGGRESSION].join(", ")} (got ${JSON.stringify(r.aggression)})`,
+      );
+    }
+    aggression = r.aggression as Ice["aggression"];
+  }
   return {
     id: idHint,
     name,
@@ -302,6 +330,7 @@ export function parseIce(raw: unknown, idHint: string): Ice {
     ...(hpPerGrade !== undefined ? { hpPerGrade } : {}),
     ...(skills !== undefined ? { skills } : {}),
     ...(personality !== undefined ? { personality } : {}),
+    ...(aggression !== undefined ? { aggression } : {}),
   };
 }
 

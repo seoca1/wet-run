@@ -396,21 +396,36 @@ describe("data_loaders: ICE skills", () => {
     expect(guard?.damage).toBe(0);
   });
 
-  it("gives an offensive ICE skill a positive damage derived from its own row", async () => {
+  it("derives skill damage from the owning row: offensive skills positive, non-damaging skills zero", async () => {
     const { default: data } = await import("../src/data/ice_types.json");
     const catalog = loadIceCatalog(data);
     const guard = catalog["corporate_guard"];
     expect(guard).toBeDefined();
     if (guard === undefined) return;
-    // `corporate_guard` declares ["scan", "report"]; "report" is offensive.
+    // `corporate_guard` declares ["scan", "report"]. Both are non-damaging:
+    // `scan` is `detect`, and `report` is `detect` too — filing a report is
+    // inspection, not an attack (skill-classification review).
     const report = guard.skills?.find((s) => s.id === "report");
     expect(report).toBeDefined();
     if (report === undefined) return;
-    expect(report.effect).toBe("attack");
-    expect(report.damage).toBeGreaterThan(0);
-    // The raw row declares dmg_base=4 — the skill damage is that own stat.
-    const raw = (data as Record<string, { dmg_base?: number }>)["corporate_guard"];
-    expect(report.damage).toBe(raw?.dmg_base);
+    expect(report.effect).toBe("detect");
+    // A non-damaging effect carries 0 damage — the combat path's `damage > 0`
+    // gate can never fire it, so the ICE falls through to a plain auto-attack.
+    expect(report.damage).toBe(0);
+
+    // The offensive path is pinned on `loa_baron`'s `loa_command` (`attack`):
+    // its damage is the owning row's own `dmg_base` stat.
+    const baron = catalog["loa_baron"];
+    expect(baron).toBeDefined();
+    if (baron === undefined) return;
+    const command = baron.skills?.find((s) => s.id === "loa_command");
+    expect(command).toBeDefined();
+    if (command === undefined) return;
+    expect(command.effect).toBe("attack");
+    expect(command.damage).toBeGreaterThan(0);
+    // The raw row declares dmg_base=14 — the skill damage is that own stat.
+    const raw = (data as Record<string, { dmg_base?: number }>)["loa_baron"];
+    expect(command.damage).toBe(raw?.dmg_base);
   });
 
   it("maps the catalog's skill-bearing ICE types to match the JSON exactly", async () => {

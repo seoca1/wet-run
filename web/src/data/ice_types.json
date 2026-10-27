@@ -3186,7 +3186,7 @@
     },
     "addiction_loop": {
       "name": "Addiction Loop",
-      "effect": "attack",
+      "effect": "dot",
       "cooldown_ms": 4000
     },
     "ai_negotiate": {
@@ -3196,12 +3196,12 @@
     },
     "ai_subversion": {
       "name": "Ai Subversion",
-      "effect": "buff",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "alarm_propagate": {
       "name": "Alarm Propagate",
-      "effect": "attack",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "aleph_fragment": {
@@ -3221,12 +3221,12 @@
     },
     "asset_seize": {
       "name": "Asset Seize",
-      "effect": "attack",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "backup_dispatch": {
       "name": "Backup Dispatch",
-      "effect": "attack",
+      "effect": "buff",
       "cooldown_ms": 4000
     },
     "biofeedback": {
@@ -3236,7 +3236,7 @@
     },
     "broadcast_signal": {
       "name": "Broadcast Signal",
-      "effect": "attack",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "brutal_force": {
@@ -3246,7 +3246,7 @@
     },
     "buffer_check": {
       "name": "Buffer Check",
-      "effect": "attack",
+      "effect": "detect",
       "cooldown_ms": 4000
     },
     "command_brute": {
@@ -3281,7 +3281,7 @@
     },
     "data_archive": {
       "name": "Data Archive",
-      "effect": "attack",
+      "effect": "buff",
       "cooldown_ms": 4000
     },
     "data_corrupt": {
@@ -3376,7 +3376,7 @@
     },
     "info_warfare": {
       "name": "Info Warfare",
-      "effect": "attack",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "inheritance_trace": {
@@ -3411,7 +3411,7 @@
     },
     "maintain_order": {
       "name": "Maintain Order",
-      "effect": "attack",
+      "effect": "buff",
       "cooldown_ms": 4000
     },
     "manifest_form": {
@@ -3426,7 +3426,7 @@
     },
     "media_alert": {
       "name": "Media Alert",
-      "effect": "attack",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "memory_lock": {
@@ -3446,7 +3446,7 @@
     },
     "narrative_warp": {
       "name": "Narrative Warp",
-      "effect": "buff",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "orbital_command": {
@@ -3461,7 +3461,7 @@
     },
     "packet_route": {
       "name": "Packet Route",
-      "effect": "attack",
+      "effect": "buff",
       "cooldown_ms": 4000
     },
     "penetrating_strike": {
@@ -3486,7 +3486,7 @@
     },
     "priority_delivery": {
       "name": "Priority Delivery",
-      "effect": "attack",
+      "effect": "buff",
       "cooldown_ms": 4000
     },
     "random_target": {
@@ -3496,27 +3496,27 @@
     },
     "reality_distortion": {
       "name": "Reality Distortion",
-      "effect": "buff",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "reality_warp": {
       "name": "Reality Warp",
-      "effect": "buff",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "report": {
       "name": "Report",
-      "effect": "attack",
+      "effect": "detect",
       "cooldown_ms": 4000
     },
     "report_alert": {
       "name": "Report Alert",
-      "effect": "attack",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "report_distribute": {
       "name": "Report Distribute",
-      "effect": "attack",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "scan": {
@@ -3611,7 +3611,7 @@
     },
     "watchdog_mark": {
       "name": "Watchdog Mark",
-      "effect": "buff",
+      "effect": "debuff",
       "cooldown_ms": 4000
     },
     "wind_demolish": {

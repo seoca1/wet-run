@@ -1646,3 +1646,27 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 [2026-10-14] fix | dashboard 링크 전면 수리 — 258 broken 상대경로 정정 (depth-aware, 211 HTML); Fiction cross-repo 6-up 정상화, `../CHANGELOG.md` 등 off-by-one 정정; dead 16 잔존 (retired prototype 12 + 제거된 dungeon/adr docs 4, 콘텐츠 결정 필요)
 [2026-10-14] demo-journal | turn=2 jev=advisory visual=False
 [2026-10-14] verify | 후속 모두 완료 — 1(direct), 2(turn2 PNG), 3(dashboard 0 broken / 200), audit CLEAN
+
+## [2026-10-27] feat(dashboard) | 파생소설 카드/검색 인덱스 확장 — xauthors·peripheral 국소 추가
+
+**Status**: ✅ 완료 (uncommitted). Fiction KO CJK 정리분을 대시보드에 반영.
+
+- retire된 생성기 `scripts/markdown_to_story_html.py` 복원(bbcb579^) + 수정:
+  - `REPO_ROOT` `/Users/emilio/projects/Projects` → `/Users/emilio/projects/opencodework`
+  - `DASH_STORIES` `Game/wet_run/dashboard/stories` → `Game/wet_run/docs/dashboard/stories`
+  - `--trilogy peripheral|xauthors` 추가 · `_trilogy_labels` 확장(Halo/Hardwired/True Names/Peripheral) · `character_ref` 배지 fallback
+- **국소 추가**: `xauthors/{halo,hardwired,true-names}` + `peripheral/short-stories` 카드 **94개 신규**(EN 47 + KO 47) → `docs/dashboard/stories/short-stories/`. 기존 970 카드 **무변경**(이름 충돌 0).
+- `search_index.json`: 신규 엔트리 94개 텍스트 삽입(기존 953 엔트리 바이트 보존), `count` 953→1047.
+- `stories-browse.html`: trilogy 필터 버튼 4개 추가(Peripheral/Halo/Hardwired/True Names) + 카드 수 표기 127→1047.
+
+**전체 재생성 비권장 근거**: 복원 생성기 전체 실행 시 커밋 대시보드와 근본 불일치 — 생성 1307 vs 커밋 970, 공통 762개 전부 상이, 신규 이름 545, 고아 208. 커밋 카드는 여러 세대 산출물 혼재(`_en` 381 · `_ko` 381 · `.ko` 104 · bare 866)이고, 현재 sprawl/bridge/blue-ant EN 소스의 slop(`"Something changed in the air"`)이 주입됨.
+
+**품질 메트릭**: 4종 도구(`verify_gibson_style` · `derivative_literary_check` · `advanced_literary_check` · `flesch_readability`)를 신규 EN 47건에 실행 → 94 엔트리 **전부**에 `gibson_style`·`literary`·`advanced_literary`·`readability` 채움(EN/KO 동일값). 상단 집계 stats도 갱신(gibson 500→594 · literary 495→589 · advanced 480→574 · readability 480→574).
+
+**카드 필드 통일**: `title`/`subtitle`/`word_count`/`character` 4필드를 소스 frontmatter 실값으로 **전 엔트리(1047) 통일** — 기존 953개가 slug 제목이던 것을 실제 제목으로 교체(예: `3jane_straylight-monopoly` → `3Jane's Straylight Monopoly`, KO `3제인의 스트레이라이트 독점`). slug 잔존 **0**. + `search.html` stale `78 entries` → 1047.
+
+**검증(Orca 브라우저)**: 메인 허브 · `stories-browse`(1047카드, trilogy 필터 8종: peripheral 34/halo 20/hardwired 20/true-names 20/sprawl 523/bridge 180/blue-ant 250) · 언어 필터(halo+KO=10) · 검색(Aleph→신규 포함) · KO/EN 카드 렌더(CJK 0) · 네비 링크 200 · **콘솔 에러 0**. CLI: `dashboard_pipeline_audit.py` 0 errors · `find_dashboard_broken.py` 1113 HTML / broken 0 · `audit_vault.py` CLEAN · `mixed_language_audit.py` 0.
+
+**한계**: `build_static_data.py`(search_index 전체 생성기) 미복원 — 실행 시 slop 주입 위험. 신규 카드 본문은 현재 EN/KO 소스 그대로(일부 slop 포함 가능).
+
+**부수(기존 이슈)**: `play.html`(→`tier5.js`)이 참조하던 `sounds/v2/{click,select,error,success,flatline,jack_in,jack_out,scan,probe,hammer,wardrone}.wav` 11개가 부재해 404 → 게임 SFX(`web/public/sounds/sfx/`)에서 매핑 복사하여 해소(전부 HTTP 200, play.html 콘솔 0). `novel.html` 404는 정적 참조가 전혀 없는 팬텀(REORGANIZE_PLAN상 이미 삭제·library.html 통합) — 수정 대상 없음.

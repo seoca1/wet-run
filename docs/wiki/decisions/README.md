@@ -278,3 +278,4 @@ i18n + Content Pipeline:
 | 0215 | Graph-directed matrix navigation (reducer 의 `adjacent[0]` 결함 해소 — BFS shortest path 로 boss 방향 전진, 보스 도달 0/53 → 53/53) | **Accepted** | ✅ Implemented | 2026-10-27 | P0 (The Matrix, 보스 도달 불가 결함) |
 | 0216 | Derived ICE skill metadata (`parseIce` 의 `skills` drop 해소 — loader 가 typed skill object 파생, 88 skill ID 에 대한 catalog 부재 대응) | **Accepted** | ✅ Implemented | 2026-10-27 | P1 (The Flatline, dead combat path) |
 | 0217 | CONTINUE 가 플레이 가능한 run 을 복원한다 (SaveSlot 이 matrix position 을 보존) | **Accepted** | ✅ Implemented | 2026-10-27 | P0 (The Matrix, CONTINUE 복원 후 dead state) |
+| 0218 | ICE 스킬 선택의 fallback 은 사용 가능한 스킬을 고른다 (usable skill — combat path 의 `damage > 0` 조건과 fallback 정합, `loa_entity` auto-attack 결함 해소) | **Accepted** | ✅ Implemented | 2026-10-27 | P1 (The Flatline, dead combat path — ADR-0216 sibling) |

@@ -280,3 +280,4 @@ i18n + Content Pipeline:
 | 0217 | CONTINUE 가 플레이 가능한 run 을 복원한다 (SaveSlot 이 matrix position 을 보존) | **Accepted** | ✅ Implemented | 2026-10-27 | P0 (The Matrix, CONTINUE 복원 후 dead state) |
 | 0218 | ICE 스킬 선택의 fallback 은 사용 가능한 스킬을 고른다 (usable skill — combat path 의 `damage > 0` 조건과 fallback 정합, `loa_entity` auto-attack 결함 해소) | **Accepted** | ✅ Implemented | 2026-10-27 | P1 (The Flatline, dead combat path — ADR-0216 sibling) |
 | 0219 | Non-damaging ICE 스킬 효과의 운명 (shield / heal / regen / buff / detect — combat path 가 발사할 수 없는 효과의 처리 결정 요청, ADR-0218 Remaining Gap 대응) | **Accepted** | ✅ Implemented | 2026-10-27 | P1 (The Flatline, dead combat path — ADR-0216/0218 sibling) |
+| 0220 | `parseIce` 가 authored `personality` 을 복원한다 (`personality` drop 해소 — loader 가 archetype 를 `aggressive` 로 강제하고 있었음, malformed 값은 throw, ADR-0216 결함 계열) | **Accepted** | ✅ Implemented | 2026-10-27 | P1 (The Flatline, dead combat path — ADR-0216/0219 sibling) |

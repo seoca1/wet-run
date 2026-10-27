@@ -1770,3 +1770,19 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **문서**: 옵션 4종(A 전면 구현 / B 일관성만 / C 현행 유지 / D 데이터만 선저작) 비교표 + 추천(**B → D → A** 순) + 열린 질문 8건. `docs/testcases/combat/depth.md`의 Python 프로토타입 시대 shield 의미(스택 + duration, "shield 가 3 모두 흡수")를 의도된 설계로 인용하되 web 미이식임을 명시.
 
 **코드 변경 없음** — 결정 대기. **미커밋**. ADR: `0219-non-damaging-ice-skill-effects.md` (Draft).
+
+## [2026-10-27] fix | ICE 스킬 선택이 발사 불가 스킬을 반환하지 않도록 정합 (ADR-0219 Option B)
+
+**결정**: 사용자가 ADR-0219의 **Option B(일관성만)** 선택 → Draft → **Accepted** 승격.
+
+**수정**: `selectSkillByPersonality`가 후보 풀을 1회 계산(`usable = filter(damage > 0)`, 비면 전체)하고 **선호 루프와 fallback 모두 그 풀에서** 선택 → 발사 가능한 스킬이 하나라도 있으면 반드시 사용(선호 순서 유지), 없으면 기존 동작(자동공격) 불변. ADR-0218의 "first usable" fallback은 자연 도출(`pool[0]`).
+
+**`PERSONALITY_SKILL_PREFERENCE` 불변** (열린 질문에 대한 결정): `shield`/`heal`/`regen`/`buff`/`detect` 항목은 Option A 시점에 살아날 **전방 호환 설계 의도** → 테이블을 자르면 의도가 소실되고 `defensive`/`support`가 "약한 aggressive"로 붕괴. 선택 시점 필터링은 의도를 보존(테이블 docstring에 근거 기록).
+
+**어서션 변경 1건(근거 있음)**: `personality_skill.test.ts`의 `"defensive personality prefers shield/heal skills"`가 `toContain("attacks:")`로 **결함을 고정**하고 있었음(shield(0) 반환 → `damage>0` 게이트 거부 → 자동공격). 테스트명·어서션 반전 → 공격 스킬 **사용** + 자동공격 **미사용** 동시 검증(기존보다 강함).
+
+**회귀 테스트 4건 추가 — 정직하게: 판별력 있는 것은 1건뿐**(pre-fix 실패). 나머지 3건은 불변 동작 고정 가드.
+
+**신규 발견 (미수정, 중대)**: `parseIce`가 **`personality` 필드를 복사하지 않음** → 런타임에 모든 catalog ICE가 `coercePersonality(undefined) === "aggressive"`로 해석되어 `ice_types.json`의 personality 분포(aggressive 80 / defensive 12 / stealth 5)가 **전부 무효**. → **Option B는 현재 정합적이지만 실플레이에서 거의 무효**(personality가 aggressive가 아니어야 작동). 아키타입 시스템의 진짜 병목은 이 로더 갭이며 **ADR-0216(skills 폐기)과 동일 결함 클래스**. 수정 시 밸런스 변화(12 defensive + 5 stealth ICE가 aggressive에서 벗어남) → 별도 결정 필요.
+
+**밸런스**: `npm run balance` 전 6개 grade **전 컬럼 동일**. **게이트**: `npm test` **125 files / 2943 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0219-non-damaging-ice-skill-effects.md` (Accepted).

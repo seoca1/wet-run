@@ -357,3 +357,98 @@ describe("data_loaders: integration with real JSON files", () => {
     expect(() => loadIceCatalog(data)).not.toThrow();
   });
 });
+
+/**
+ * Regression: `parseIce` used to drop the ICE `skills` array entirely.
+ *
+ * `ice_types.json` declares skills as bare id strings; the loader must map
+ * them into the typed `Ice["skills"]` shape so the combat path's skill
+ * branch (`state_actions_combat.ts` → `enemyShouldUseSkill`) is reachable.
+ * Before the fix, `skillCooldowns` stayed `{}` for every ICE and the skill
+ * logic was dead code.
+ */
+describe("data_loaders: ICE skills", () => {
+  it("maps a known ICE's skills into the typed skill shape", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const catalog = loadIceCatalog(data);
+    const priest = catalog["loa_priest"];
+    expect(priest).toBeDefined();
+    if (priest === undefined) return;
+    expect(priest.skills).toBeDefined();
+    expect(priest.skills?.length).toBeGreaterThan(0);
+    // `loa_priest` declares ["loa_summon", "spirit_guard"] in the JSON.
+    expect(priest.skills?.map((s) => s.id)).toEqual([
+      "loa_summon",
+      "spirit_guard",
+    ]);
+    const summon = priest.skills?.[0];
+    expect(summon).toBeDefined();
+    if (summon === undefined) return;
+    expect(summon.name).toBe("Loa Summon");
+    expect(summon.effect).toBe("buff");
+    expect(summon.cooldownMs).toBeGreaterThan(0);
+    // A non-damaging effect must carry 0 damage: the combat path only fires a
+    // skill when `damage > 0`, so a positive value would make a buff skill
+    // deal hits it was never meant to.
+    expect(summon.damage).toBe(0);
+    const guard = priest.skills?.[1];
+    expect(guard?.effect).toBe("shield");
+    expect(guard?.damage).toBe(0);
+  });
+
+  it("gives an offensive ICE skill a positive damage derived from its own row", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const catalog = loadIceCatalog(data);
+    const guard = catalog["corporate_guard"];
+    expect(guard).toBeDefined();
+    if (guard === undefined) return;
+    // `corporate_guard` declares ["scan", "report"]; "report" is offensive.
+    const report = guard.skills?.find((s) => s.id === "report");
+    expect(report).toBeDefined();
+    if (report === undefined) return;
+    expect(report.effect).toBe("attack");
+    expect(report.damage).toBeGreaterThan(0);
+    // The raw row declares dmg_base=4 — the skill damage is that own stat.
+    const raw = (data as Record<string, { dmg_base?: number }>)["corporate_guard"];
+    expect(report.damage).toBe(raw?.dmg_base);
+  });
+
+  it("maps the catalog's skill-bearing ICE types to match the JSON exactly", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const raw = data as Record<string, { skills?: ReadonlyArray<string> }>;
+    const catalog = loadIceCatalog(data);
+    const jsonIdsWithSkills = Object.keys(raw).filter(
+      (id) => (raw[id]?.skills ?? []).length > 0,
+    );
+    const catalogIdsWithSkills = Object.keys(catalog).filter(
+      (id) => (catalog[id]?.skills ?? []).length > 0,
+    );
+    expect(jsonIdsWithSkills.length).toBeGreaterThan(0);
+    expect(catalogIdsWithSkills.sort()).toEqual(jsonIdsWithSkills.sort());
+    // Every declared skill id survives the mapping, in order.
+    for (const id of jsonIdsWithSkills) {
+      const declared = raw[id]?.skills ?? [];
+      const mapped = catalog[id]?.skills ?? [];
+      expect(mapped.map((s) => s.id)).toEqual([...declared]);
+    }
+  });
+
+  it("omits the skills key entirely for ICE types that declare none", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const catalog = loadIceCatalog(data);
+    const watchdog = catalog["watchdog"];
+    expect(watchdog).toBeDefined();
+    if (watchdog === undefined) return;
+    expect(watchdog.skills).toBeUndefined();
+    expect("skills" in watchdog).toBe(false);
+  });
+
+  it("throws on a malformed skills entry", () => {
+    expect(() =>
+      parseIce({ name: "X", armor: 0, skills: [42] }, "x"),
+    ).toThrow(/field 'skills' entries must be non-empty strings/);
+    expect(() =>
+      parseIce({ name: "X", armor: 0, skills: "loa_summon" }, "x"),
+    ).toThrow(/field 'skills' must be an array when present/);
+  });
+});

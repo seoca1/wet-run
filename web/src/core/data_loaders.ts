@@ -12,6 +12,7 @@
  *
  * No new dependencies — pure type-guard validation.
  */
+import { parseIceSkills } from "./ice_skills.ts";
 import type { Mission, Program, Ice } from "./types.ts";
 
 interface LegacyMission {
@@ -51,6 +52,8 @@ interface LegacyIce {
   armor?: number;
   defense?: number;
   tier?: number;
+  dmg_base?: number;
+  skills?: ReadonlyArray<string>;
 }
 
 function expectNumber(
@@ -260,6 +263,8 @@ export function parseIce(raw: unknown, idHint: string): Ice {
     hpBase !== undefined && hpPerGrade !== undefined
       ? hpBase + hpPerGrade * Math.max(0, PARSE_ICE_DEFAULT_GRADE - 1)
       : PARSE_ICE_LEGACY_HP;
+  const dmgBase = typeof r.dmg_base === "number" ? r.dmg_base : 0;
+  const skills = parseIceSkills(r.skills, `ice '${name}'`, dmgBase);
   return {
     id: idHint,
     name,
@@ -268,6 +273,7 @@ export function parseIce(raw: unknown, idHint: string): Ice {
     hp,
     ...(hpBase !== undefined ? { hpBase } : {}),
     ...(hpPerGrade !== undefined ? { hpPerGrade } : {}),
+    ...(skills !== undefined ? { skills } : {}),
   };
 }
 

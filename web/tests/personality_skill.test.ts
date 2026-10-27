@@ -44,7 +44,12 @@ describe("personality-based skill selection", () => {
     expect(result.message).toContain("Heavy Strike");
   });
 
-  it("defensive personality prefers shield/heal skills", () => {
+  it("defensive personality uses its attack skill, not the unfireable shield", () => {
+    // ADR-0219 Option B: the combat path only fires a skill when
+    // `damage > 0`, so the preference loop must not return the 0-damage
+    // `shield`. This ICE's `defensive` preference list starts with
+    // `shield`, which used to win the match and degrade the enemy to a
+    // plain auto-attack. Now the attack skill is fired.
     const enemy: Ice = {
       id: "defender", name: "Defender", tier: 2, hp: 50, maxHp: 50, armor: 0,
       personality: "defensive", aggression: "aggressive",
@@ -55,7 +60,8 @@ describe("personality-based skill selection", () => {
     };
     const state = makeCombatState({ iceRoster: [enemy] });
     const result = applyAction(state, { type: "use_program", programId: "p1" });
-    expect(result.message).toContain("attacks:");
+    expect(result.message).toContain("Attack");
+    expect(result.message).not.toContain("attacks:");
   });
 
   it("enemy without personality defaults to random selection", () => {

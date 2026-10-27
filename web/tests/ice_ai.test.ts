@@ -232,6 +232,35 @@ describe("ice_ai", () => {
       const enemy = makeEnemy({ personality: "aggressive" });
       expect(selectSkillByPersonality(enemy, [])).toBeNull();
     });
+
+    // ADR-0219 Option B — the combat path only fires a skill when
+    // `damage > 0`, so preference matching must be restricted to skills it
+    // can actually fire.
+    it("skips an unfireable preferred skill and uses the usable one", () => {
+      const shield = makeSkill({ id: "sh", name: "Shield", effect: "shield", damage: 0 });
+      const attack = makeSkill({ id: "a", name: "Attack", effect: "attack", damage: 10 });
+      const enemy = makeEnemy({ personality: "defensive" });
+      expect(selectSkillByPersonality(enemy, [shield, attack])).toBe(attack);
+    });
+
+    it("orders preference among usable skills only", () => {
+      const heal = makeSkill({ id: "h", name: "Heal", effect: "heal", damage: 0 });
+      const heavy = makeSkill({ id: "hv", name: "Heavy", effect: "heavy_attack", damage: 12 });
+      const attack = makeSkill({ id: "a", name: "Attack", effect: "attack", damage: 10 });
+      const enemy = makeEnemy({ personality: "aggressive" });
+      expect(selectSkillByPersonality(enemy, [heal, attack, heavy])).toBe(heavy);
+    });
+
+    it("returns a skill when every skill is non-damaging", () => {
+      const heal = makeSkill({ id: "h", name: "Heal", effect: "heal", damage: 0 });
+      const enemy = makeEnemy({ personality: "support" });
+      expect(selectSkillByPersonality(enemy, [heal])).toBe(heal);
+    });
+
+    it("returns null for an empty skill list (regression)", () => {
+      const enemy = makeEnemy({ personality: "defensive" });
+      expect(selectSkillByPersonality(enemy, [])).toBeNull();
+    });
   });
 
   describe("shouldDefensiveAct", () => {

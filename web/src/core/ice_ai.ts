@@ -143,6 +143,16 @@ export function chooseSkill(
  * Skill preference table per personality archetype.
  * Priority-ordered list of SkillEffectKind — the first matching effect
  * wins. Mirrors Python `PERSONALITY_SKILL_PREFERENCE`.
+ *
+ * The table is **deliberately not trimmed** of its non-damaging entries
+ * (`shield`/`heal`/`regen`/`buff`/`detect`). Those entries are
+ * forward-looking design intent: the combat path cannot fire a
+ * non-damaging skill today, but if non-damaging effects are ever
+ * implemented (ADR-0219 Option A) they become meaningful immediately.
+ * Filtering at selection time (see `selectSkillByPersonality`) keeps the
+ * table and the code honest without discarding that intent; trimming the
+ * table would throw the intent away and collapse `defensive`/`support`
+ * into "a weaker aggressive".
  */
 export const PERSONALITY_SKILL_PREFERENCE: Readonly<
   Record<PersonalityArchetype, ReadonlyArray<SkillEffectKind>>
@@ -159,11 +169,19 @@ export const PERSONALITY_SKILL_PREFERENCE: Readonly<
  * Matches the combatant's personality preference against available skills'
  * effects. Returns the first skill whose effect matches a preference.
  *
- * When no preference matches, falls back to the first **usable** skill
- * (one with `damage > 0`) — the combat path only fires a skill when
- * `damage > 0`, so returning a non-damaging skill would silently degrade
- * the enemy to a plain auto-attack. If no skill is usable, falls back to
- * the first available skill; an empty list yields `null`.
+ * **Contract (ADR-0219 Option B — consistency-only):** the preference match
+ * is restricted to skills the combat path can actually fire. The combat
+ * path only fires a skill when `damage > 0`
+ * (`state_actions_combat.ts`: `selectedSkill.damage > 0`); anything else
+ * falls through to a plain auto-attack. So the candidate pool is computed
+ * once, up front:
+ *
+ *   - if any skill is usable (`damage > 0`), the pool is the usable skills
+ *     and both the preference loop and the fallback draw from it — the
+ *     function therefore always returns a skill the combat path can fire;
+ *   - if no skill is usable, the pool is every available skill and behavior
+ *     is unchanged from before (the combat path auto-attacks anyway);
+ *   - an empty skill list yields `null`.
  *
  * @returns The selected skill, or null when `availableSkills` is empty.
  */
@@ -177,20 +195,26 @@ export function selectSkillByPersonality<S extends UsableSkill>(
   const personality = coercePersonality(combatant.personality);
   const prefs = PERSONALITY_SKILL_PREFERENCE[personality];
 
+  // Candidate pool, computed once: prefer skills the combat path can fire.
+  // When nothing is usable the pool is every available skill, so the
+  // no-usable-skill case behaves exactly as it did before.
+  const usable = availableSkills.filter((skill) => skill.damage > 0);
+  const pool = usable.length > 0 ? usable : availableSkills;
+
   // Build effect → first matching skill index for O(n*m) but small n
   for (const effect of prefs) {
-    for (let i = 0; i < availableSkills.length; i++) {
-      if (availableSkills[i].effect === effect) {
-        return availableSkills[i];
+    for (let i = 0; i < pool.length; i++) {
+      if (pool[i].effect === effect) {
+        return pool[i];
       }
     }
   }
 
-  // Fallback: first usable skill (damage > 0) — the combat path only fires
-  // a skill when it deals damage, so a non-damaging pick would silently
-  // degrade to an auto-attack. When nothing is usable, first available wins.
-  const usable = availableSkills.find((skill) => skill.damage > 0);
-  return usable ?? availableSkills[0] ?? null;
+  // Fallback: first entry of the pool. With a usable skill present this is
+  // the first *usable* skill (ADR-0218 behavior); with none usable it is the
+  // first available skill, which the combat path will turn into an
+  // auto-attack — unchanged from before.
+  return pool[0] ?? null;
 }
 
 // ============================================================================

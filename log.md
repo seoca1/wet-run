@@ -1802,3 +1802,17 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **신규 발견 (미수정, 결정 필요)**: **`aggression`도 동일하게 버려짐**(97행 전부 키 보유: standard 36 / aggressive 25 / boss 36 → **61개가 non-standard**, 밴드는 24항목 중 **15개**가 non-standard: standard 9 / aggressive 9 / boss 6). `enemyShouldUseSkill` 확률(0.15/0.35/0.5)을 좌우. **측정 전용** 프로브(임시 적용 후 완전 revert — 최종 diff에 `aggression` 0줄 확인) 결과 g5 `mean-HP-end` 5.6→5.7뿐(승률/스톨/턴 무변화)이지만, catalog 전체의 스킬 발화 **빈도**를 바꾸므로 별도 결정 필요.
 
 **게이트**: `npm test` **125 files / 2947 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0220-parse-ice-personality-restore.md`.
+
+## [2026-10-27] fix | parseIce 가 버리던 `aggression` 복원 — 로더 데이터 손실 0건 달성 (ADR-0221)
+
+**발견**: `personality`(ADR-0220)를 고치며 확인된 동일 누락 — `parseIce`가 `aggression`도 복사하지 않아 런타임에 모든 catalog ICE가 `coerceAggression(undefined) === "standard"` → `enemyShouldUseSkill` 확률이 전부 **0.15** (authored: passive 0.05 / standard 0.15 / aggressive 0.35 / boss 0.5). 영향 **61/97 ICE**, 밴드 **15/24 항목**(standard 9 / aggressive 9 / boss 6).
+
+**수정**: `personality`(커밋 `58ec0b9`)와 **동일 형태** — `VALID_ICE_AGGRESSION`(4개 유니온 값 전부 수용; `passive`는 데이터에 0행이나 선언된 타입 계약), 부재 시 키 생략(하위 호환), malformed 시 `[data_loaders]` 접두사로 throw. **이로써 `parseIce`가 버리는 authored 필드 = 0건** (ADR-0216 skills → 0220 personality → 0221 aggression).
+
+**회귀 테스트 4건**(`data_loaders.test.ts`, `ICE aggression` 블록), **pre-fix에서 3건 실패 확인**.
+
+**밸런스 (정확히 기록)**: `npm run balance` 전후 **단 한 셀만 이동 — g5 `mean-HP-end` 5.6 → 5.7**(+0.1). 승률/스톨/턴/p5·p95 **무변화**. 수정 후 2회 재실행 동일 → **결정적, 노이즈 아님**.
+
+**메커니즘(실측)**: `enemyShouldUseSkill`은 `skills`가 비면 `aggression`을 읽기 **전에** `false` 반환 → 스킬 없는 non-standard 밴드 13슬롯은 **구조적으로 면역**. non-standard **이면서** 스킬 보유인 밴드 ICE는 2종뿐 — `loa_entity`(g5, aggressive → 0.35 = 0.15에서 2.3×) · `aleph`(g6, boss → 0.5 = 3.3×). 하네스 실측: g5는 9개 미션 중 1개가 `loa_entity`(= 이동한 셀), g6 `aleph`는 이미 **0.0% 승률 floor**라 수치 무변화 → **가장 크게 작용하는 곳은 g6이며 하네스가 값을 매길 수 없음**.
+
+**게이트**: `npm test` **125 files / 2951 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0221-parse-ice-aggression-restore.md`.

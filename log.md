@@ -1786,3 +1786,19 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **신규 발견 (미수정, 중대)**: `parseIce`가 **`personality` 필드를 복사하지 않음** → 런타임에 모든 catalog ICE가 `coercePersonality(undefined) === "aggressive"`로 해석되어 `ice_types.json`의 personality 분포(aggressive 80 / defensive 12 / stealth 5)가 **전부 무효**. → **Option B는 현재 정합적이지만 실플레이에서 거의 무효**(personality가 aggressive가 아니어야 작동). 아키타입 시스템의 진짜 병목은 이 로더 갭이며 **ADR-0216(skills 폐기)과 동일 결함 클래스**. 수정 시 밸런스 변화(12 defensive + 5 stealth ICE가 aggressive에서 벗어남) → 별도 결정 필요.
 
 **밸런스**: `npm run balance` 전 6개 grade **전 컬럼 동일**. **게이트**: `npm test` **125 files / 2943 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0219-non-damaging-ice-skill-effects.md` (Accepted).
+
+## [2026-10-27] fix | parseIce 가 버리던 `personality` 복원 (ADR-0220)
+
+**발견**: `parseIce`가 `personality`를 복사하지 않아 런타임에 모든 catalog ICE가 `coercePersonality(undefined) === "aggressive"` → `ice_types.json` 분포(aggressive 80 / defensive 12 / stealth 5 / support 0)가 **전부 무효**. **ADR-0216(skills 폐기)과 동일 결함 클래스**.
+
+**수정**: `parseIce`가 `personality` 매핑 — 부재 시 키 생략(하위 호환), 유효하지 않은 값이면 `[data_loaders]` 접두사로 **throw**(조용한 강제 변환 금지). `VALID_ICE_PERSONALITY` 셋 추가. (`aggression`은 **미변경**.)
+
+**회귀 테스트 4건**(`data_loaders.test.ts`): 비-aggressive ICE 노출 · catalog 분포가 JSON과 정확히 일치 · malformed 시 throw · 부재 시 키 생략. **pre-fix에서 3건 실패 확인**(`expected undefined to be 'defensive'` 등).
+
+**밸런스**: `npm run balance` 전 6개 grade **전 컬럼 동일**. 이유(실측 확인): 하네스는 밴드를 정상 테스트하며(`aleph_fragment` g5 → 기반 ICE `hellhound`, 28노드 매트릭스), 밴드에서 personality가 non-aggressive인 ICE(`watchdog`·`ice_neuromancer_warden` defensive, `wisp` stealth)는 **`skills: []`** 라 `selectSkillByPersonality` 경로에 진입하지 않음. 스킬 보유 2종(`loa_entity`·`aleph`)은 `aggressive`(강제 변환 기본값)라 변화 없음.
+
+> **정정**: 검증 에이전트가 "하네스가 밴드를 테스트하지 않는다"고 보고했으나 **직접 확인 결과 사실이 아님** — `probe.matrix`는 non-null(28 노드)이고 기반 ICE는 `iceCatalog[0]`이 아니라 매트릭스 로스터 ICE(`hellhound`).
+
+**신규 발견 (미수정, 결정 필요)**: **`aggression`도 동일하게 버려짐**(97행 전부 키 보유: standard 36 / aggressive 25 / boss 36 → **61개가 non-standard**, 밴드는 24항목 중 **15개**가 non-standard: standard 9 / aggressive 9 / boss 6). `enemyShouldUseSkill` 확률(0.15/0.35/0.5)을 좌우. **측정 전용** 프로브(임시 적용 후 완전 revert — 최종 diff에 `aggression` 0줄 확인) 결과 g5 `mean-HP-end` 5.6→5.7뿐(승률/스톨/턴 무변화)이지만, catalog 전체의 스킬 발화 **빈도**를 바꾸므로 별도 결정 필요.
+
+**게이트**: `npm test` **125 files / 2947 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0220-parse-ice-personality-restore.md`.

@@ -1816,3 +1816,23 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **메커니즘(실측)**: `enemyShouldUseSkill`은 `skills`가 비면 `aggression`을 읽기 **전에** `false` 반환 → 스킬 없는 non-standard 밴드 13슬롯은 **구조적으로 면역**. non-standard **이면서** 스킬 보유인 밴드 ICE는 2종뿐 — `loa_entity`(g5, aggressive → 0.35 = 0.15에서 2.3×) · `aleph`(g6, boss → 0.5 = 3.3×). 하네스 실측: g5는 9개 미션 중 1개가 `loa_entity`(= 이동한 셀), g6 `aleph`는 이미 **0.0% 승률 floor**라 수치 무변화 → **가장 크게 작용하는 곳은 g6이며 하네스가 값을 매길 수 없음**.
 
 **게이트**: `npm test` **125 files / 2951 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0221-parse-ice-aggression-restore.md`.
+
+## [2026-10-27] refactor | ICE 스킬 메타데이터를 휴리스틱 → 저작 데이터로 이관 (ADR-0222, ADR-0219 Option D)
+
+**배경**: ADR-0219 추천 순서 **B → D → A** 중 B(선택 정합)에 이어 **D** 실행 — ADR-0216이 도입한 토큰 휴리스틱 파생을 저작 데이터로 대체(효과 구현 A는 보류).
+
+**변경**:
+- `ice_types.json`에 top-level **`skill_defs`** 추가 — **88개 스킬 ID** → `{name, effect, cooldown_ms}`, 현재 휴리스틱 출력을 **그대로 물질화**. 97개 ICE 행은 바이트 동일(`git diff --stat` = 442 insertions / **0 deletions**).
+- `ice_skills.ts`: `ICE_SKILL_EFFECT_RULES`·`iceSkillEffectFor`·`iceSkillNameFor` **삭제**(147→187 LOC) → `skill_defs` 조회. 미등록 skill id는 `[data_loaders]` 접두사로 **throw**(조용한 fallback 제거).
+- **`damage`는 테이블로 옮기지 않음** — per-ICE(소유자의 `dmg_base`)이므로 옮기면 동작이 바뀜(`ice_pierce`는 dmg_base 12·15 두 행이 소유).
+- `data_loaders.ts`: `skill_defs` 키를 추출하고 ICE 행 순회에서 스킵.
+
+**동작 보존 증명(2중)**: ① `npm run balance` 전후 **바이트 동일**(MD5 일치) ② 파생 스킬 테이블(88종 × name/effect/cooldownMs/per-ICE damage) 덤프 전후 **바이트 동일**(MD5 일치).
+
+**어서션 1건 조정(불가피, 근거 기록)**: `missions.test.ts`의 "97 ICE types" 핀이 raw key count(`=== 97`)를 세는데 `skill_defs` 추가로 98이 됨 → `skill_defs`를 필터한 뒤 ICE 행 수를 세도록 변경. **의도("정확히 97개 ICE 타입")는 그대로 97로 고정**되며 약화·삭제 아님. `skill_defs`를 JSON **끝**에 추가해 `Object.values(iceTypesData)[0]`이 여전히 `standard`가 되도록 2차 영향도 무assertion 변경으로 처리.
+
+**D가 드러낸 구조적 사실**: **88종 중 44종이 비공격**(buff 17 · shield 9 · detect 6 · debuff 4 · stun 3 · silence 2 · slow 1 · heal 1 · regen 1)이라 전투 경로에서 **구조적으로 발화 불가**. **9개 ICE는 완전 무력**(모든 스킬이 0-데미지: `archive_sentinel`·`goliath_defensive`·`loa_priest`·`loa_zombie`·`sense_net_spin`·`standard_corrupted`·`ta_daemon`·`ta_inheritor`·`watchdog_defensive`), **17개 ICE는 `skill[0]`이 발화 불가**면서 뒤에 발화 가능 스킬 보유. `support` 아키타입 0종.
+
+**게이트**: `npm test` **125 files / 2951 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0222-ice-skill-metadata-as-data.md`.
+
+**다음(미실행)**: ① **스킬 분류 검토 패스** — 휴리스틱 실수를 그대로 물질화했으므로 데이터에 오분류가 남음(예: `corporate_guard`의 `report`가 `attack` — ADR-0219의 worked example 그 자체). 재분류는 밸런스를 바꾸므로 별도 결정 필요. ② **Option A**(비공격 효과 구현 + magnitude 저작). ③ 인카운터 밴드 확대.

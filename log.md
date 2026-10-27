@@ -1756,3 +1756,17 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **잔여 한계(미수정)**: 선호 목록에 **매칭되는** 스킬이 `damage: 0`이면 여전히 자동공격 — 비공격 스킬 효과(shield/heal/regen/buff/detect)가 전투 경로에 **미구현**이라 `defensive`/`support` 아키타입의 선호 목록이 구조적으로 관측 불가.
 
 **게이트**: `npm test` **125 files / 2939 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0218-ice-skill-selection-fallback.md`.
+
+## [2026-10-27] docs | 비공격 ICE 스킬 효과 결정 요청 (ADR-0219, Draft)
+
+**배경**: ADR-0218의 Remaining Gap(선호 목록에 매칭되는 `damage: 0` 스킬은 여전히 자동공격)을 해소하려면 (a) 비공격 효과(shield/heal/regen/buff/detect)를 전투 경로에 **구현**하고 (b) 스킬 magnitude 데이터를 **저작**하고 (c) 인카운터 밴드를 **확대**해야 하는데, 셋 다 **ADR-0211에서 `--runs 100` 근거로 캘리브레이션한 밸런스 곡선**(`ENCOUNTER_HP_BY_GRADE`·`ENCOUNTER_DMG_BONUS_PCT_BY_GRADE`)을 건드림 → 임의 변경 대신 AGENTS.md §3.3 결정 요청으로 진행.
+
+**조사에서 추가 확인된 사실**:
+- web 전투 경로에서 `shield`는 **player 측**(`combat_models.ts` `Skill.shield`·`equipment.ts` `shieldBonus`·`wetware.ts`)에만 존재 — **ICE/enemy 측에는 부재**. `StatusEffectKind`에 `shield` 없음, enemy 경로는 `StatusEffectKind`를 아예 참조하지 않음.
+- catalog personality 분포: aggressive 80 / defensive 12 / stealth 5 / **support 0** → Option A로도 `support` 아키타입은 해방되지 않음(매칭할 ICE 부재).
+- 인카운터 밴드의 `defensive` ICE 2종(`watchdog`·`ice_neuromancer_warden`)은 **`skills: []`** → 실플레이에서 `defensive`는 선호 매칭 경로에 진입조차 못 함.
+- 88개 고유 skill ID / 97개 ICE 행, 스킬은 **문자열 ID만** 보유(메타데이터 테이블 부재).
+
+**문서**: 옵션 4종(A 전면 구현 / B 일관성만 / C 현행 유지 / D 데이터만 선저작) 비교표 + 추천(**B → D → A** 순) + 열린 질문 8건. `docs/testcases/combat/depth.md`의 Python 프로토타입 시대 shield 의미(스택 + duration, "shield 가 3 모두 흡수")를 의도된 설계로 인용하되 web 미이식임을 명시.
+
+**코드 변경 없음** — 결정 대기. **미커밋**. ADR: `0219-non-damaging-ice-skill-effects.md` (Draft).

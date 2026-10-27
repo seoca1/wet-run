@@ -34,6 +34,7 @@ import {
   recordMissionComplete,
   evaluateFarGridUnlock,
 } from "./far_grid_gate.ts";
+import { nextHopToward } from "./matrix_navigation.ts";
 
 /** Tier 5: matrix view actions (navigate, enter combat, jack out). */
 export function applyMatrixAction(
@@ -57,9 +58,13 @@ export function applyMatrixAction(
       ? 2
       : 1;
     const baseCount = Math.min(node.iceIds.length * encounterMultiplier, 4);
-    const iceRoster = node.iceIds.slice(0, baseCount).map((id, i) => {
+    // Cycle the node's ICE ids so the roster actually reaches `baseCount`.
+    // A plain `slice` could only ever SHORTEN the list, which made the
+    // ICE_X2 mutator inert (nodes carry exactly one ice id → roster 1).
+    const iceRoster = Array.from({ length: baseCount }, (_, i) => {
+      const id = node.iceIds[i % node.iceIds.length] as string;
       const hp =
-        node.iceHp[i] ??
+        node.iceHp[i % node.iceHp.length] ??
         iceHpForGrade(activeIce, missionGradeOf(state.mission));
       return { ...activeIce, id, hp };
     });
@@ -92,48 +97,50 @@ export function applyMatrixAction(
     state.matrix != null
   ) {
     const node = state.matrix.nodes[state.currentNodeIndex];
-    if (!node || node.adjacent.length === 0) return state;
+    if (!node) return state;
 
     // Determine direction: south/east = forward, north/west = backward
     const isForward =
       action.type === "move_south" || action.type === "move_east";
-    const isBackward =
-      action.type === "move_north" || action.type === "move_west";
 
     if (isForward) {
-      // Move forward to adjacent node
-      const nextIndex = node.adjacent[0];
-      if (nextIndex != null && nextIndex < state.matrix!.nodes.length) {
+      // Graph-directed move: step to the neighbour on a shortest path to
+      // the boss. Never fall back to `adjacent[0]` — that degenerates into a
+      // 2-cycle and makes the boss unreachable.
+      const nextIndex = nextHopToward(
+        state.matrix,
+        state.currentNodeIndex,
+        state.matrix.bossNode,
+      );
+      if (nextIndex >= 0 && nextIndex < state.matrix.nodes.length) {
         // Tier 5 SFX: forward node transition dispatches MOVEMENT_STEP.
         void AudioManager.getInstance().playSfx(pickMovementSfxId(true));
         return {
           ...state,
           currentNodeIndex: nextIndex,
           turnCount: state.turnCount + 1,
-          message: `Moved to ${state.matrix!.nodes[nextIndex].zone}`,
+          message: `Moved to ${state.matrix.nodes[nextIndex].zone}`,
         };
       }
-    } else if (isBackward) {
-      // Move backward - find node that points to current
-      let prevIndex = -1;
-      for (let i = 0; i < state.matrix!.nodes.length; i++) {
-        if (state.matrix!.nodes[i].adjacent.includes(state.currentNodeIndex)) {
-          prevIndex = i;
-          break;
-        }
-      }
-      if (prevIndex >= 0 && prevIndex !== state.currentNodeIndex) {
-        // Tier 5 SFX: backtrack dispatches MOVEMENT_NODE.
-        void AudioManager.getInstance().playSfx(pickMovementSfxId(false));
-        return {
-          ...state,
-          currentNodeIndex: prevIndex,
-          turnCount: state.turnCount + 1,
-          message: `Moved back to ${state.matrix!.nodes[prevIndex].zone}`,
-        };
-      }
+      return { ...state, message: "No route to the objective" };
     }
-    return state;
+    // Backward: retreat along the shortest path back to the entry node.
+    const prevIndex = nextHopToward(
+      state.matrix,
+      state.currentNodeIndex,
+      state.matrix.startNode,
+    );
+    if (prevIndex >= 0 && prevIndex !== state.currentNodeIndex) {
+      // Tier 5 SFX: backtrack dispatches MOVEMENT_NODE.
+      void AudioManager.getInstance().playSfx(pickMovementSfxId(false));
+      return {
+        ...state,
+        currentNodeIndex: prevIndex,
+        turnCount: state.turnCount + 1,
+        message: `Moved back to ${state.matrix.nodes[prevIndex].zone}`,
+      };
+    }
+    return { ...state, message: "No route back to the entry" };
   }
 
   if (action.type === "jack_out") {
@@ -204,13 +211,15 @@ export function applyLootAction(
       factionScores: updatedScores,
     };
   }
-  // Linear progression: advance by index+1. Falls back to adjacency only when
-  // the player is already at the last node and the graph points to an earlier
-  // one (e.g. boss-room exit edge).
-  const nextIdx =
-    state.currentNodeIndex + 1 < state.matrix.nodes.length
-      ? state.currentNodeIndex + 1
-      : (node.adjacent[0] ?? state.currentNodeIndex);
+  // Graph-directed progression: step to the neighbour on a shortest path to
+  // the boss. The old index-order advance (`currentNodeIndex + 1`) ignored
+  // adjacency entirely and could walk into a dead end.
+  const hop = nextHopToward(
+    state.matrix,
+    state.currentNodeIndex,
+    state.matrix.bossNode,
+  );
+  const nextIdx = hop >= 0 ? hop : state.currentNodeIndex;
   const newVisited = state.visitedNodes.includes(nextIdx)
     ? state.visitedNodes
     : [...state.visitedNodes, nextIdx];

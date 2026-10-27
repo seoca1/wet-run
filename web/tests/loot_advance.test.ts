@@ -21,8 +21,8 @@ function loadDeck(programs: Record<string, Program>, count = 5): Program[] {
     .filter((p): p is Program => p !== undefined);
 }
 
-describe("LOOT advancement (Bug #3 regression: linear progression)", () => {
-  it("regression: LOOT advance does NOT move player backwards", () => {
+describe("LOOT advancement (Bug #3 regression: graph-directed progression)", () => {
+  it("regression: LOOT advance moves to a graph-adjacent node", () => {
     const mission = Object.values(missionsData)[0]!;
     const iceTypes = iceTypesData as unknown as Record<string, Ice>;
     const programs = programsData as unknown as Record<string, Program>;
@@ -44,10 +44,21 @@ describe("LOOT advancement (Bug #3 regression: linear progression)", () => {
     expect(state.runPhase).toBe("loot");
 
     const beforeIdx = state.currentNodeIndex;
+    const beforeNode = state.matrix!.nodes[beforeIdx];
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("matrix");
-    expect(state.currentNodeIndex).not.toBe(0);
-    expect(state.currentNodeIndex).toBeGreaterThanOrEqual(beforeIdx);
+    // Graph-directed advance: the new node must be a graph neighbour of the
+    // old one. The *index* may legitimately decrease (the boss is reached by
+    // graph distance, not array order), so adjacency — not index order — is
+    // the invariant that matters.
+    expect(
+      state.currentNodeIndex,
+      "loot advance must move to a different node",
+    ).not.toBe(beforeIdx);
+    expect(
+      beforeNode?.adjacent,
+      "loot advance must land on a graph-adjacent node",
+    ).toContain(state.currentNodeIndex);
   });
 
   it("Bug #4 regression: use_program during approach does NOT silently consume deck", () => {

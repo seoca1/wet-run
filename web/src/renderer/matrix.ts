@@ -80,13 +80,12 @@ export function renderMatrix(
     if (row >= rows - 6) break;
     const isCurrent = i === currentNodeIndex;
     const isVisited = visited.includes(i);
-    // Adjacent = next step (i = current + 1) or previous step (i = current - 1).
-    // Linear matrix: each node connects to i+1 forward.
+    // Adjacent = graph neighbours of the current node (the matrix is a
+    // graph, not a linear chain).
     const isAdjacent =
       !isCurrent &&
       !isVisited &&
-      (i === currentNodeIndex + 1 ||
-        (i === currentNodeIndex - 1 && visited.includes(currentNodeIndex - 1)));
+      (matrix.nodes[currentNodeIndex]?.adjacent.includes(i) ?? false);
     const isBoss = node.isBoss;
     const eventKind = (node.eventKind ?? "combat") as MatrixEventKind;
     const glyph = EVENT_GLYPHS[eventKind];

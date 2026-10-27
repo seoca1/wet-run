@@ -109,7 +109,7 @@ export function makeInitialState(
     statusEffects: [],
     iceRoster: [ice],
     activeIceIndex: 0,
-    currentNodeIndex: 0,
+    currentNodeIndex: matrix.startNode,
     matrix,
     visitedNodes: [],
     bossPhase: 0,

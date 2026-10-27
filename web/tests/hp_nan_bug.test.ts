@@ -1,9 +1,21 @@
 import { describe, expect, it } from "vitest";
 import { applyAction, makeInitialState, buildHudLines } from "../src/core/state";
+import type { GameState } from "../src/core/types";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
 import type { Program } from "../src/core/types";
+
+/** Place the runner directly on `target`.
+ *
+ * The matrix is a graph, so the number of `move_south` presses needed to
+ * reach a node is not a fixed count any more — navigation is graph-directed
+ * toward the boss. These tests are about combat-state preservation, not
+ * about how the runner got there, so the node index is set explicitly
+ * instead of counting hops. */
+function steerToNode(state: GameState, target: number): GameState {
+  return { ...state, currentNodeIndex: target };
+}
 
 /** Mirror of main.ts loadDeck — programs.json is keyed-by-id but values lack `id`,
  * and use the legacy `ap_cost` field where the TS Program type expects `cost`. */
@@ -47,9 +59,7 @@ describe("HP NaN/100 regression (2026-09-19)", () => {
     let state = makeInitialState(mission as any, ice as any, deck);
     const iceNodeIdx = state.matrix!.nodes.findIndex((n) => n.iceIds.length > 0);
     expect(iceNodeIdx).toBeGreaterThanOrEqual(0);
-    for (let i = 0; i < iceNodeIdx; i++) {
-      state = applyAction(state, { type: "move_south" });
-    }
+    state = steerToNode(state, iceNodeIdx);
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("combat");
 
@@ -79,9 +89,7 @@ describe("HP NaN/100 regression (2026-09-19)", () => {
     let state = makeInitialState(mission as any, ice as any, deck);
     const iceNodeIdx = state.matrix!.nodes.findIndex((n) => n.iceIds.length > 0);
     expect(iceNodeIdx).toBeGreaterThanOrEqual(0);
-    for (let i = 0; i < iceNodeIdx; i++) {
-      state = applyAction(state, { type: "move_south" });
-    }
+    state = steerToNode(state, iceNodeIdx);
     state = applyAction(state, { type: "confirm" });
     state = applyAction(state, { type: "confirm" });
     expect(state.phase).toBe("combat");

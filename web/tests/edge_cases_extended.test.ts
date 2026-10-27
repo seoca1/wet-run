@@ -70,14 +70,15 @@ describe("Edge case (extended): matrix→combat state preservation", () => {
 
     const initial = makeInitialState(mission as any, ice as any, deck);
 
-    // Find the index of the first ICE-bearing node, walk there via move_south.
+    // Place the runner on the first ICE-bearing node. The matrix is a graph,
+    // so the number of `move_south` presses needed to reach a node is not a
+    // fixed count any more — navigation is graph-directed toward the boss.
+    // This test is about state preservation across matrix→combat, not about
+    // how the runner got there.
     const iceNodeIdx = initial.matrix!.nodes.findIndex((n) => n.iceIds.length > 0);
     expect(iceNodeIdx).toBeGreaterThanOrEqual(0);
 
-    let state = initial;
-    for (let i = 0; i < iceNodeIdx; i++) {
-      state = applyAction(state, { type: "move_south" });
-    }
+    let state = { ...initial, currentNodeIndex: iceNodeIdx };
     // enter ICE-bearing node: matrix.confirm transitions to approach/combat.
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("combat");

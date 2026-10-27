@@ -57,10 +57,11 @@ describe("applyMatrixAction", () => {
       runPhase: "matrix",
       matrix: {
         nodes: [
-          { id: 0, zone: "surface", iceIds: ["ice1"], iceHp: [50], reward: { credits: 100 }, isBoss: false, adjacent: [1] }
+          { id: 0, zone: "surface", iceIds: ["ice1"], iceHp: [50], reward: { credits: 100 }, isBoss: false, adjacent: [1] },
+          { id: 1, zone: "mid", iceIds: ["ice2"], iceHp: [75], reward: { credits: 150 }, isBoss: true, adjacent: [] }
         ],
         startNode: 0,
-        bossNode: 0
+        bossNode: 1
       },
       currentNodeIndex: 0,
       iceRoster: [createMockIce({ id: "ice1", hp: 50 })]

@@ -80,17 +80,28 @@ describe("ESC/jack_out behavior consistency", () => {
     const withMatrix = {
       ...state,
       matrix: {
-        nodes: [{
-          id: 0,
-          zone: "surface" as const,
-          iceIds: ["watchdog"],
-          iceHp: [100],
-          reward: { credits: 50 },
-          isBoss: false,
-          adjacent: [1],
-        }],
+        nodes: [
+          {
+            id: 0,
+            zone: "surface" as const,
+            iceIds: ["watchdog"],
+            iceHp: [100],
+            reward: { credits: 50 },
+            isBoss: false,
+            adjacent: [1],
+          },
+          {
+            id: 1,
+            zone: "mid" as const,
+            iceIds: ["watchdog"],
+            iceHp: [120],
+            reward: { credits: 75 },
+            isBoss: true,
+            adjacent: [],
+          },
+        ],
         startNode: 0,
-        bossNode: 0,
+        bossNode: 1,
       },
     };
 
@@ -104,17 +115,28 @@ describe("ESC/jack_out behavior consistency", () => {
     const withMatrix = {
       ...state,
       matrix: {
-        nodes: [{
-          id: 0,
-          zone: "surface" as const,
-          iceIds: ["watchdog"],
-          iceHp: [100],
-          reward: { credits: 50 },
-          isBoss: false,
-          adjacent: [1],
-        }],
+        nodes: [
+          {
+            id: 0,
+            zone: "surface" as const,
+            iceIds: ["watchdog"],
+            iceHp: [100],
+            reward: { credits: 50 },
+            isBoss: false,
+            adjacent: [1],
+          },
+          {
+            id: 1,
+            zone: "mid" as const,
+            iceIds: ["watchdog"],
+            iceHp: [120],
+            reward: { credits: 75 },
+            isBoss: true,
+            adjacent: [],
+          },
+        ],
         startNode: 0,
-        bossNode: 0,
+        bossNode: 1,
       },
     };
 
@@ -217,17 +239,28 @@ describe("ESC/jack_out behavior consistency", () => {
       runPhase: "loot",
       phase: "victory",
       matrix: {
-        nodes: [{
-          id: 0,
-          zone: "surface" as const,
-          iceIds: ["watchdog"],
-          iceHp: [100],
-          reward: { credits: 50 },
-          isBoss: false,
-          adjacent: [1],
-        }],
+        nodes: [
+          {
+            id: 0,
+            zone: "surface" as const,
+            iceIds: ["watchdog"],
+            iceHp: [100],
+            reward: { credits: 50 },
+            isBoss: false,
+            adjacent: [1],
+          },
+          {
+            id: 1,
+            zone: "mid" as const,
+            iceIds: ["watchdog"],
+            iceHp: [120],
+            reward: { credits: 75 },
+            isBoss: true,
+            adjacent: [],
+          },
+        ],
         startNode: 0,
-        bossNode: 0,
+        bossNode: 1,
       },
     };
 

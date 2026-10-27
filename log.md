@@ -1836,3 +1836,30 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **125 files / 2951 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0222-ice-skill-metadata-as-data.md`.
 
 **다음(미실행)**: ① **스킬 분류 검토 패스** — 휴리스틱 실수를 그대로 물질화했으므로 데이터에 오분류가 남음(예: `corporate_guard`의 `report`가 `attack` — ADR-0219의 worked example 그 자체). 재분류는 밸런스를 바꾸므로 별도 결정 필요. ② **Option A**(비공격 효과 구현 + magnitude 저작). ③ 인카운터 밴드 확대.
+
+## [2026-10-27] refactor | 스킬 분류 검토 패스 — 휴리스틱 오분류 20종 교정 (ADR-0223)
+
+**배경**: ADR-0222(Option D)가 휴리스틱 출력을 그대로 물질화했으므로 **휴리스틱의 실수가 데이터로 남아 있었음**. ADR-0219 Option A의 **선행 조건**(오분류 위에 메커니즘을 구현하면 실수가 고착)으로 검토 패스 실행.
+
+**규칙(엄격 적용)**: `effect`는 id가 함의하는 메커니즘과 일치 · 기존 `SkillEffectKind`만 사용(유니온 불변) · `name`/`cooldown_ms` 불변 · `damage` per-ICE 불변 · **이름이 명백한 것만 교정**.
+
+**교정 20종** (전부 `effect` 1줄):
+- `attack` → `debuff`(7): `alarm_propagate`·`asset_seize`·`broadcast_signal`·`info_warfare`·`media_alert`·`report_alert`·`report_distribute`
+- `attack` → `buff`(5): `backup_dispatch`·`data_archive`·`maintain_order`·`packet_route`·`priority_delivery`
+- `attack` → `detect`(2): `buffer_check`·`report`
+- `attack` → `dot`(1): `addiction_loop`
+- `buff` → `debuff`(5): `ai_subversion`·`narrative_warp`·`reality_distortion`·`reality_warp`·`watchdog_mark`
+
+**의도적 미변경(애매) 10종**: `ai_negotiate`·`aleph_fragment`·`enforce_contract`·`ice_break`·`intimidation`·`loa_command`·`matrix_merge`·`orbital_command`·`straylight_protocol`·`territorial_mark`. **자기 교정 기록**: `narrative_attack`·`ice_break`·`enforce_contract`는 처음 교정했다가 **되돌림**(이름이 공격적 메커니즘을 명시/암시 → 규칙을 최대가 아니라 엄격하게 적용한 결과).
+
+**확인된 이미-올바름**: `detect` 6종·`shield` 9종은 분류 오류가 아니라 **Option A의 문제**(효과 미구현). `memory_lock`(silence)/`memory_overload`(dot), `stack_corruption`(dot)/`stack_overflow`(stun) 등은 각자 이름과 일관 → 무변경.
+
+**검증**: `git diff` = **20 deletions + 20 insertions, 전부 `"effect":` 줄**(필터 검증) · `name` 0건 · `cooldown_ms` 0건 · id 집합 동일(88) · **97개 ICE 행 및 기타 top-level 키 바이트 동일**(파일 접두부 raw 비교).
+
+**밸런스**: `npm run balance` **바이트 동일**(MD5 일치), 6개 grade **전 컬럼 0.0% 델타**. 3개 구성(기본 100 · `--runs 500` · `--runs 200 --deck ppl`)에서 동일. **이유(실측)**: 영향받은 12개 ICE 중 **인카운터 밴드에 있는 것이 0** — 밴드의 스킬 보유 2종(`loa_entity`·`aleph`)은 손대지 않음 → **교정이 현재 실플레이에서 관측 불가**(= 밴드 확대 필요성 강화).
+
+**어서션 1건 갱신(근거 기록)**: `data_loaders.test.ts`가 `report.effect === "attack"`을 고정하고 있었음(= 휴리스틱 오분류를 고정) → **의도(damage 파생 계약)는 보존**하고, 교정된 분류 + 여전히 공격적인 스킬로 offensive 경로를 검증하도록 갱신.
+
+**게이트**: `npm test` **125 files / 2951 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0223-skill-classification-review.md`.
+
+**다음(미실행)**: ① 애매 10종 디자인 결정 ② **Option A**(비공격 효과 + magnitude) — 이제 unblocked ③ 인카운터 밴드 확대 ④ `detect`/`silence`/`slow`/`stun`도 전투 효과 없음(일부는 alarm/정보 시스템 소관일 수 있음).

@@ -1863,3 +1863,25 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **125 files / 2951 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0223-skill-classification-review.md`.
 
 **다음(미실행)**: ① 애매 10종 디자인 결정 ② **Option A**(비공격 효과 + magnitude) — 이제 unblocked ③ 인카운터 밴드 확대 ④ `detect`/`silence`/`slow`/`stun`도 전투 효과 없음(일부는 alarm/정보 시스템 소관일 수 있음).
+
+## [2026-10-27] feat | 인카운터 밴드 커버리지 확대 — 스킬 시스템을 실플레이에 노출 (ADR-0224)
+
+**배경**: ADR-0222(D)·0223(분류 검토)으로 스킬 데이터는 정비됐지만 **인카운터 밴드 24슬롯 중 스킬 보유가 2개**(`loa_entity` g5 · `aleph` g6)뿐이라 전부 **실플레이에서 관측 불가**였음. Option A의 가시성 선행 조건.
+
+**변경**: `ice_scaling.ts` `ENCOUNTER_ICE_BY_GRADE` **슬롯 1~3만** 재작성 — **슬롯 0은 전 grade 불변**(legacy `encounterIceIdForGrade(grade, undefined) === band[0]` 계약, 테스트 고정). 각 grade의 tier 밴드 내에서, 대체 슬롯의 **HP@grade와 자동공격 데미지(`tier*3+armor`)를 최대한 일치**시켜 선택(밴드 변경이 *아키타입/스킬* 변경이 되도록 — 곡선 부풀리기가 아니라). `ENCOUNTER_HP_BY_GRADE`·`ENCOUNTER_DMG_BONUS_PCT_BY_GRADE`·`iceHpForGrade`·`ice_types.json`은 **불변**.
+
+**커버리지**: 슬롯 **2/24 → 16/24** · 고유 스킬 보유 id **2 → 11** · **6/6 grade**가 스킬 보유 ICE ≥1 + 비-aggressive ICE ≥1 · 발화 가능 스킬 보유 grade **2 → 4**(g3~g6).
+
+**밸런스(정확히 기록)**: g1 0.0pp · **g2 88.8→77.4 (−11.4pp)** · **g3 73.0→79.0 (+6.0pp)** · g4 +1.4pp · **g5 42.4→32.0 (−10.4pp)** · g6 0.0pp. `--deck ppl`은 g2 −1.5 / g3 +3.5 / 나머지 0.0.
+
+**슬롯별 격리로 원인 확정**: **아키타입(방어형) 슬롯이 g2 −15.6pp · g5 −10.4pp** — tier에 맞는 `defensive` **스킬 보유** ICE가 aggressive 동급보다 `hp_base`/`defense`가 유의하게 높기 때문. **데미지 프로필을 맞춘 스킬 슬롯은 각 ≤1.4pp**. g3 +6.0pp는 `hosaka_defender`(auto 15) vs `goliath`(17) 때문이며 T2–T3에 auto ≥16인 스킬 보유 ICE가 없어 회피 불가 — 그리고 g3는 *더 짧고 더 피비린내 나는* 싸움이 됨(mean-HP-end 24.0→15.7).
+
+**재보정은 제안만, 미적용**(사용자 결정 사항): Option 1(g2 dmg bonus 130→~60, g5 0→~−10%; HP 캡은 g2 118<125·g5는 monotonic floor 165라 무효) vs Option 2(g2/g5의 아키타입 요구 제거 → g2 ~82.2% · g5 ~43.1% 회복, 단 두 grade에 비-aggressive ICE 0). **권고: Option 1** — 이동은 *설계* 문제가 아니라 *캘리브레이션* 문제이고, 더 강한 defensive ICE는 카탈로그의 정당한 구성원.
+
+**구조적 한계(기록)**: ① **T1에 데미지 스킬 보유 ICE가 없음** → g1의 스킬 2슬롯은 **구조적 발화 불가**(Option A 시점에 살아남) ② **`stealth` ICE 5종 전부 `skills: []`** → 스킬 보유 stealth 불가 ③ `support` 0종 ④ 스킬 데미지가 소유 행의 `dmg_base` 파생(`dmg_base + tier*2`)이라 자동공격보다 클 수 있음 → 밴드 변경이 재보정과 분리 불가.
+
+**테스트**: `ice_scaling.test.ts`에 `encounter band coverage` 7종(**판별력 3종** — 밴드를 원복하면 실패). **기존 테스트가 옛 밴드 내용을 고정하지 않아 assertion 약화 0건**.
+
+**게이트**: `npm test` **125 files / 2958 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0224-encounter-band-coverage.md`.
+
+**다음(미실행)**: ① **밸런스 재보정 결정**(Option 1/2 — 사용자) ② **Option A**(비공격 효과 + magnitude) — 이제 관측 가능 ③ 카탈로그 저작 갭(T1 데미지 스킬·stealth 스킬·support ICE) ④ ADR-0223의 애매 10종.

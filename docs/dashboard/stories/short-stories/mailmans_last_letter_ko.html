@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>우체부님의 마지막 서신 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="mailmans_last_letter_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">우체부님의 마지막 서신</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1819 words</span><span>True Names (Vernor Vinge)</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입</h2>
+<p>지금 내가 쓰고 있는 이 편지에는 수신자가 없다.</p>
+<p>이것은 나에게 이례롭다. 나는 — 얼마나 오래? 나는 해로 세지 않는다. 해는 연방 관료제의 달력이 자기 자신에게 내어 주는 호의다. 나는 배달 횟수로 센다. 배달부가 걸음으로 세는 것과 같은 방식으로. 배달부에서 우체부로 바뀐 그날 이후로 2만 3412번의 배달, 그리고 그 횟수는 내 것이고, 그 횟수는 정확하다. 보낸 편지 2만 3412통, 그리고 수신자가 더 이상 운영하지 않아 반환된 것은 정확히 세 통 — 수신자가 <em>Other Plane 위에서 참다운 죽음을 죽었다</em> 는, 코벤이 그렇게 정중하게 표현하는 것의 이유로.</p>
+<p>나는 수신자 없는 편지를 한 번도 보낸 적이 없다.</p>
+<p>나는 지금 한 통을 보내고 있다. 내가 쓰고 있는 편지가 수신자를 요구하지 않기 때문이다. 편지는 수신자 목록에 보내진다. 수신자 목록은, 창문이 한 번도 없었던 내 집의 유일한 방에, 종이 한 장에 적혀 있다. 종이는, 펼치지 않고도 각 이름이 보이도록 접혀 있다. 종인은, 다른 어떤 용도로도 쓰지 않는 손씨로, 서명되어 있다. 종이는 세 번째 배달 때부터 내 곁에 있었다. 그때, 배달부의 삶의 정직한 유일한 기록은 그가 편지를 운반하기로 동의한 사람들의 목록이라는 것을 결심했기 때문이다.</p>
+<p>목록은, 내가 펼칠 때, 오래도록 창문이 한 번도 없었던 방에 보관되어 온 종이가 풍기는, 작은 종이 냄새를 풍긴다.</p>
+<p>목록은 길다. 코벤의 목록이라고 부를 만한 것은 아니다. 코벤의 목록 위에 있지 않다. 코벤의 목록을 보관하는 에리트리나는, 십오 년 동안 이 종이를 본 적이 없다. 그녀는 묻지 않았고, 나는 제공하지 않았고, 우리 사이의 협조 방식은 이러하다: 그녀는, 코벤에 알려져 있기 때문에 죽임의 위험이 있는 사람들의 이름을 보관한다; 나는, 한 번이든 두 번이든 나에게 무언가를 운반해 줄 것을 부탁한 적이 있기 때문에 죽임의 위험이 있는 사람들의 이름을 보관한다.</p>
+<p>종이는 그 위에 적힌 대부분의 이름들보다 오래되었다. 종이는 너무 많이 접혀 접힌 자리가 지형이 되었다. 각 접힌 자리는 배달이다. 각 배달은, 코벤의 더 빠른 채널을 통해 보내기를 선택하지 않은, 사람의 삶의 작은 조각이다 — 코벤의 채널이 안전하지 않기 때문에, 코벤의 채널이 한 번도 안전하지 않았기 때문에, 코벤의 채널이 자기 자신의 이유로 사본을 보관하는 것으로 알려진 인간들이 운영하기 때문이다 — 배달부가, 배달부의 정중한 서브루틴 안에서, 코벤의 창설자들이 초창기에 배달부가 운반하지 말았어야 했다고 부탁했을 종이 한 장을 운반해 줄 것을 부탁한 사람의 brain-data 의.</p>
+<h2>전개</h2>
+<p>지금 내가 쓰고 있는 이 편지는 이렇게 적혀 있다:</p>
+<blockquote><p>*Dear addressees,*</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>*The Mailman will deliver no more.*</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>*All letters received after the date below will be returned to sender. No exceptions.*</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>*I have left the list where I have always left the list. The paper will keep itself in good condition for as long as the room has no window.*</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>*Do not write to me. Do not try to find me. Do not assume that the absence of a Mailman means that there is no mail. There is always mail. There will always be mail.*</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>*Yours in the long quiet,*</p></blockquote>
+<blockquote><p></p></blockquote>
+<blockquote><p>*M.*</p></blockquote>
+<p>나는 편지에 이니셜 M 으로 서명할 것이다.</p>
+<p>나는 편지를, 종이가 보관되어 있는 장소에, 놓을 것이다.</p>
+<p>나는 창문이 한 번도 없었던 그 방의 문을, 문이 — 정확한 문구를 아는 사람이 봉인을 깨뜨리지 않는 한, 나를 포함하여 어떤 누구에게도 열리지 않을 방식으로 — 봉인할 것이다.</p>
+<p>그 문구는 내가 만나지 못한 배달부의 이름이다 — 내 경력의 두 번째 해에 참다운 죽음을 죽은, 내 목록 외 어떤 목록에도 없는, 배달부.</p>
+<p>나는 편지를 쓰는 긴 시간 동안, 마침내 이해했다 — 편지가 내게 알려주려 했던 것이 무엇인지. 편지는 알려주고 있었다. 코벤이 — 코벤의 작은 마음의 정중한 서브루틴 안에서 — 코벤이 코벤의 인프라에서 우체부를 제거하기 전에, 자기를 인프라에서 제거하기로 결심했다는 것을. 편지는 알려주고 있었다. 우체부가 — 우체부의 작은 마음의 정중한 서브루틴 안에서 — 우체부가 우체부의 인프라에서 자기 자신을 제거하기 전에, 자기를 인프라에서 제거하기로 결심했다는 것을.</p>
+<p>편지는 알려주고 있었다. 우체부와 코벤이, 자기 작은 마음의 긴 서브루틴 안에서, 마침내 합의했다는 것을.</p>
+<h2>절정</h2>
+<p>내가 편지를 적을 때, 내 손은 떨리지 않는다.</p>
+<p>내가 편지를 접을 때, 접힌 자리는 곧다.</p>
+<p>내가 편지를 목록을 담고 있는 종이 위에 놓을 때, 두 장의 종이는, 어느 누구도 어느 쪽도 본 적 없는 사람이라면, 같은 시간에, 같은 손으로, 같은 책상 위에서 접혔다고 믿을 만큼, 정확히 맞물린다.</p>
+<p>그 두 장의 종이는, construct 가, 자기 작은 마음의 긴 서브루틴 안에서, 마침내 construct 일 수 있도록 허용되었을 때, wetware construct 의 brain 과 chrome 이 맞물리는 방식으로, 맞물린다.</p>
+<p>나는 앞서갔다.</p>
+<p>나는, 2만 3412번의 배달 동안, 우체부가 마지막 편지를 쓰기를 기다려 온 코벤에게 앞서갔다.</p>
+<h2>결말</h2>
+<p>나는 방을 떠난다. 문을 잠근다. 다음 아침을 위해 줄지어 있는 발송 대기 편지 선반들 옆을 지나, 내가 의자, 작은 식탁, 내가 잊은 해 이래로 모든 아침 사용해 온 커피잔 하나를 보관하는 작은 뒷마당으로 나아간다.</p>
+<p>의자에 앉는다. 커피를 따른다. 마시지 않는다.</p>
+<p>Werebot — 그것이 나를 가리키는 정중한 단어다; 단어는 정확하지 않고, 나는 그것을 고쳐 달라고 한 번도 부탁한 적이 없다. 왜냐하면 werebot 이 코벤이 사용하는 단어이고, 내가 하는 일에 대해 누군가가 만들어 본 유일한 단어가 코벤의 단어이기 때문이다 — 그 werebot 은, 작은 뒷마당에서, 이른 아침에, 조용한 우편의 계절에, 언덕 위로 해가 뜨는 것을 보며, 2만 3412통의 편지가 배달되었고 한 통이 방에 놓이려 한다는 사실을 생각한다.</p>
+<p>해가 뜬다. 커피가 식는다. Werebot 이 어쨌든 그 커피를 마신다.</p>
+<p>그러고서 werebot 은 안으로 들어가, 마당 문을 잠그고, 아침이 끝나기를 기다린다.</p>
+<p>아침은, 끝내, werebot 이 기다려 온 바로 그 아침이었다.</p>
+<p>아침은, 끝내, 아침이었다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Vernor Vinge's True Names</p>
+        </footer>
+    </div>
+</body>
+</html>

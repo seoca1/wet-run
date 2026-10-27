@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>헤트맨의 전화 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="hetmans_meeting_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">헤트맨의 전화</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2835 words</span><span>Hardwired (Walter Jon Williams)</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입</h2>
+<p>마이클 더 헤트맨은 수요일에 전화를 받았다, 그 수요일은 만 물의 색을 하고 있었다.</p>
+<p>그 만은 그 늦은 오후, 늦은 해 안의 동전 한 닢의 색을 하고 있었다. 너무 자주 만져진 것의 색. 마이클은 만 주점의 작은 뒷방 사무실에 앉아 있었고, 그 사무실은 흘린 럼과 자유 지대에서 매주 비행으로 내려오는 작은 시가의 냄새가 났다. 그는 사무실에 앉아 있었는데 그 이유는 사무실이 전화가 있는 곳이었기 때문이다. 전화가 있는 이유는 선이 벽을 따라 내려가 만 속으로 들어갔기 때문이다.</p>
+<p>작업대 위의 전화기는 오래된 것이었다 — 궤도 잉여품, 봉쇄 이전에 브로커들이 궤도 플랫폼 위에서 자들의 웨트웨어 콘솔로 사용하던 종류의 콘솔. 콘솔에는 작은 검은 핸드셋과 작은 회색 크롬 받침대가 있었고, 위에는 마이클이 한 번도 읽을 수 없었던 서브루틴의 작은 리듬으로 박동하는 작은 녹색 불빛 하나가 있었다. 마이클은 만의 끝에 오는 오후의 밀물을 읽는 선원의 방식으로 그 불빛을 읽었다. 그는 그것을 읽었고 그는 알았다.</p>
+<p>그는 수화기를 들었다.</p>
+<p>말이 오기 전의 긴 침묵 속에서, 그는 다른 중력의 부드럽고 먼 쉬익소리를 들었다 — 위쪽 하늘에서 내려오는 작은 깨끗한 한 조각의 차가움. 그는 그 쉬익소리를 이전에도 들은 적 있었다. 그는 십오 년 동안 그 쉬익소리를 들어 왔다, 우물의 저편에서 시작되어 만 끝의 작은 사무실에서 끝나는 통화들 안에서.</p>
+<p>온 목소리는 갈색이었다.</p>
+<p>그것은 양복의 갈색이었고, 빈 책상의 갈색이었고, 하얀 도자기 잔의 커피 한 잔의 갈색이었다. 그 목소리는 방 안에 한 사람뿐이라고 느끼게 하는 동시에, 방 안에서 가장 작은 사람이라고 느끼게 하는 법을 아는 목소리였다. 그 목소리는 그런 방들에서 단련되어 왔다. 그 목소리는 갈색의 목소리였다.</p>
+<p>그 목소리가 사라를 물었다.</p>
+<p>그것은 궤도 목소리가 묻는 방식으로 물었다 — 정중하게, 그 정중한 방식으로, 요청의 앞면으로 부탁한다고 하면서 그 밑면으로는 지금이라고 말하는 방식으로. 그것은 지붕이 비에게 떨어지라고 부탁하는 방식으로 물었다. 그것은 물었고 기다렸다.</p>
+<hr>
+<h2>전개</h2>
+<p>마이클은 사라를 알고 있었다.</p>
+<p>그는 사라가 열네 살이었을 때부터 그를 알고 있었다. 그녀의 어머니가 전쟁의 아침에 죽은 그 아침부터, 그리고 그 다음 아침부터, 그리고 그 다음 아침부터, 그리고 그 이후 모든 아침까지 그를 알고 있었다. 그는 전쟁의 그 오후 이후 매번 다른 오후마다 만이 밀물을 알고 있었던 방식으로 그녀를 알고 있었다.</p>
+<p>사라는 만의 흙아이였다. 사라가 전쟁의 그 오후 이래 매번 다른 오후마다 사라였던 것처럼, 사라는 만의 흙아이였다. 사라는 그 오후 이후 매번 다른 오후마다 만이 사오던 그 흙아이였다. 사라의 어머니 부엌의 작은 검은 콘솔이 처음 그녀의 어머니의 이름을 불러주었던 아홉 살 무렵 — 마이클이 처음으로 그녀의 두개피 아래 작은 칩 — 셋째 사람들이 궤도 블록들이 내려오기 전 몇 해 동안 자들의 웨트웨어 허가증으로 다니던 작은 갈색의 칩 — 을 미끄러뜨렸을 때 — 사라는 열네 살이었다.</p>
+<p>사라는 오늘 밤 그 술집에 없었다.</p>
+<p>마이클은 이걸 알고 있었다. 전화 너머의 궤도의 남자도 이걸 알고 있었다. 선 위의 침묵도 이걸 알고 있었다. 침묵은 칩이었다 — 차가움의 한 조각, 전화의 저편에 있는 남자가 대화의 입으로 삼 초 전에 미끄러뜨린 칩.</p>
+<p>"당신이 그녀를 움직이지는 않았다고 말해라," 궤도의 목소리가 말했다, 매우 조용히.</p>
+<p>"나는 그녀를 움직이지 않았다," 마이클이 말했다.</p>
+<p>"당신은 그녀를 움직였다."</p>
+<p>"나는 그녀를 움직이지 않았다," 마이클이 다시 말했다. "그녀는 스스로 움직였다."</p>
+<p>갈색의 목소리는 대답하지 않았다. 갈색의 목소리는 여전히 고요했다. 갈색의 목소리는 — 아침이 죽음의 작은 차가움이었을 때의 작은 차가움 — 그 아침의 작은 차가움이었다. 갈색의 목소리는, 십오 년 동안, 자기에게 한 어린 시절의 소녀가 어디에 있는지 알려 줄 칩이 위쪽 하늘에서 내려오기를 기다려 온 남자의, 작은 차가움이었다.</p>
+<p>"나는 부탁하고 있다," 갈색의 목소리가 마침내 말했다, "추천을."</p>
+<p>"나는 주지 않는다," 마이클이 말했다.</p>
+<p>"그러면 내가 스스로 찾겠다."</p>
+<p>"당신은 만에서는 찾지 못할 것이다," 마이클이 말했다. "만은 작다. 만은 안다. 만은 이번 겨울에 자기들의 둘을 이미 묻었다."</p>
+<hr>
+<h2>절정</h2>
+<p>그는 작은 시가를 길게 빨았다.</p>
+<p>그 시가는 작은 한 조각의 담배였다, 매주 비행으로 내려오는 작은 시가의 작은 한 조각. 빨기는 길었다. 생각을 해야 할 때면 그는 이렇게 빨았다. 전화가 사라에 대해 처음으로 울린 아침 이래, 그는 같은 작은 시가의 같은 긴 빨기를 하며 사라에 대해 생각해 왔다. 그는 도시의 크롬 속으로 그의 손 밖으로 미끄러져 나간 딸에 대해 아버지가 생각하는 방식으로 사라에 대해 생각해 왔다.</p>
+<p>갈색의 목소리가 다시 말했다. 목소리는 칩이었다. 목소리는 콘솔의 작은 차가움 안에 눌러넣어진 차가움의 한 조각의 칩이었다. 목소리는 궤도 남자가 그 통화 입 값으로 치른 차가움의 한 조각의 칩이었다.</p>
+<p>"헤트맨님," 목소리가 말했다. "나는 당신에게 작은 삶의 값을 드리고 있습니다. 나는 당신에게 당신의 술집 값을 드리고 있습니다. 나는 당신에게 이번 겨울에 당신의 만 너머로 날아간 모든 조종사의 값을 드리고 있습니다. 나는 당신에게 길 하나의 값을 드리고 있습니다."</p>
+<p>마이클은 그 길을 알고 있었다. 그 길은 저주의 골목이었다. 그 길은 만의 북쪽, 산의 동쪽, 궤도 블록들의 길고 긴 인력에 아직 대항해 버티고 있는 모든 작고 갈색의 마을의 서쪽을 가로지르는 작은 회색 리본 같은 도로였다. 그 길은 카우보이가 — 그 남자가 위쪽 하늘에서 내려와서 마이클에게, 처음으로, 한 소녀를 찾으라고 부탁한 그 아침 — 마이클이 비운 직후, 카우보이가 날았던 길이었다.</p>
+<p>그 길은 카우보이가 죽은 길이었다.</p>
+<p>"나의 조종사," 마이클이 말했다, 매우 조용히, "당신의 길 때문에 죽지 않았습니다. 나의 조종사는 당신의 칩 때문에 죽었습니다. 나의 조종사는 당신의 사람들이 그를 고용해 날게 한 그 아침 당신이 그의 두개피 아래 밀어넣은 웨트웨어 때문에 죽었습니다."</p>
+<p>"나의 조종사," 궤도의 목소리가 대답했다.</p>
+<p>"그렇소," 마이클이 말했다. "당신의 조종사. 당신의 조종수. 당신의 사람. 당신이 그를 사셨소. 당신이 그를 소유하셨소. 당신이 그를 그가 무엇이 되도록 만드셨소. 당신이 치렀고 당신은 여전히 그의 죽음의 침묵 값을 치르고 계시오."</p>
+<p>창 너머로 만이, 매우 천천히, 동전 색에서 놋쇠 색으로 돌아갔다. 오후는 죽어 가고 있었다. 통화는 죽어 가고 있었다. 콘솔의 크롬 위에 있는 작은 녹색 불빛은, 벽의 웨트웨어에 궤도가 배선해 둔 그 작은 깨끗한 서브루틴의 리듬으로, 매우 천천히 박동하고 있었다.</p>
+<hr>
+<h2>결말</h2>
+<p>마이클은 울지 않았다.</p>
+<p>그는 전쟁의 그 오후 이후 어느 오후에서도 울고 있지 않았다. 그는 그 오후 이후 매번 다른 오후마다 모든 다른 남자가 울고 있지 않았던 방식으로 울고 있지 않았다. 그는 그 조종사를 위해 울지 않았다. 그는 매주 비행으로 내려오는 작은 갈색의 시가들을 위해 울지 않았다. 그는 오늘 밤 그 술집에 없는, 삼십일 일째 그 술집에 없었고, 만의 끝 테이블 세팅을 처음 가르쳐 준 마이클이 알고 있던 열네 살이던 사라를 위해 울지 않았다.</p>
+<p>그는 값에 대해 생각했다.</p>
+<p>값은 수였다, 그 수는 아침의 작은 한 조각의 차가움이었다. 그 수는 사라가 추천 값으로 치르게 될 값이었다. 그는 그 수를 전쟁의 그 이래로 주머니에 넣어 두었다.</p>
+<p>그는 그렇다고 말했다.</p>
+<p>그는 전쟁의 그 오후 이후 매번 다른 오후마다 그렇다고 말해 왔다. 그는 매번 다른 오후마다 모든 다른 헤트맨이 그렇다고 말해 왔던 방식으로 그렇다고 말해 왔다. 그는 자기에게 값이 들지 않는 것처럼 들리려는 목소리로 그렇다고 말해 왔다.</p>
+<p>그는 안녕히 계십시오, 라고 말했다.</p>
+<p>그는 수화기를 놓았다. 전화는 전화가 놓여 있던 자리에 놓여 있었다. 그의 손바닥 아래에서 크롬은 차가웠다. 작은 녹색 불빛이 꺼졌다.</p>
+<p>작은 창 너머로 만은 늦은 해 안의 작은 동전 한 닢의 색이었다. 너무 자주 만져진 것의 색. 수요일 오후의 긴 고요 속에서도 여전히 그의 것인, 그것의 색.</p>
+<p>그는 작은 잔에 럼을 따랐다. 그는 마시지 않고 잔을 들고 있었다. 그는 만 주점의 작은 사무실에 앉아, 천천히 매우 천천히, 만이 그를 긴 은빛 침묵 안에 받아주도록 두고 있었다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Walter Jon Williams' Hardwired</p>
+        </footer>
+    </div>
+</body>
+</html>

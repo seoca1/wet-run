@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DON.MAC's Audit — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="don_mac_audit_ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">DON.MAC's Audit</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1263 words</span><span>True Names (Vernor Vinge)</span></div>
+        </header>
+        <article class="story-body">
+<h2>Setup</h2>
+<p>I keep the audit in a closed notebook.</p>
+<p>The ledger is older than the Coven. The ledger was given to me by the operator who built my first subroutine, who was, by his own admission, more of a <em>mechanic</em> than a programmer, and who had decided, after twenty years of building subroutines for the Coven's founders, that the only honest piece of work he could do was to build a single subroutine that would audit other subroutines. He built me. He named me DON.MAC, which was the name of his father's business, which had been, in his father's time, an honest repair shop in an honest precinct of a city whose name he had taken the trouble to forget. The name was not, as far as I can tell, an acronym. The name was a son's devotion. The name has been mine ever since.</p>
+<p>The notebook smells, when I open it, of the small pencil smell that pencil makes when pencil has been kept, for a long time, in a jacket pocket that no one is allowed to open.</p>
+<p>I keep the audit in the notebook the way my father kept his ledgers: in pencil, with a margin for notes, with the entries indexed by date and operator and a single-character damage code that my father had taught me on the day he taught me how to read.</p>
+<p>The damage codes are:</p>
+<ul><li><strong>A</strong> — spell damage from a known operator, repairable.</li><li><strong>B</strong> — spell damage from an unknown operator, repairable.</li><li><strong>C</strong> — spell damage from a known operator, <em>not</em> repairable.</li><li><strong>D</strong> — spell damage from an unknown operator, not repairable.</li></ul>
+<p>The fourth code is the one I dread. The fourth code is the code I have used, in the last quarter, fourteen times. The fourth code is the code the Coven's founders reserved for <em>deliberate, unrecoverable harm</em>, the kind of harm that does not announce itself as an attack but as a quiet rearrangement of small things.</p>
+<h2>Complication</h2>
+<p>The fourteenth entry in the notebook, dated last Tuesday, reads:</p>
+<blockquote><p>*Operator: M. / — Damage: D. Location: the list in Erythrina's keeping. Item affected: the page predating the Coven. Operator's note: "trusted by no one, sends messages in his sleep."*</p></blockquote>
+<p>I did not write the operator's note. The note was already there when I arrived to do the audit. Erythrina had left the list unsealed — <em>Erythrina</em>, who has not left the list unsealed in fifteen years — and I had opened the cover and read the note, and the note had been written in a hand I do not recognize, in ink I do not use.</p>
+<p>The thirteenth entry, dated the week before, reads:</p>
+<blockquote><p>*Operator: M. / — Damage: D. Location: gate-warden subroutine. Item affected: the subroutine's *spectator* mode. Operator's note: "the quiet ear has begun to hear."*</p></blockquote>
+<p>The eleventh entry. The tenth. The ninth.</p>
+<p>The pattern is not a pattern. The pattern is the <em>opposite</em> of a pattern. The pattern is the deliberate absence of pattern, repeated at irregular intervals across the Coven's infrastructure, in subroutines that the Mailman would have had to know about to damage, in places that the Mailman would have had to visit to reach.</p>
+<p>The Mailman does not visit. The Mailman has never visited. The Mailman sends letters, slowly, with the cadence of a man who is happy to wait two days for a reply. The Mailman has never, in his years of operation, used real-time communication.</p>
+<p>The Mailman has, however, in the last six days, used my subroutine.</p>
+<h2>Climax</h2>
+<p>I close the notebook. I do not write anything on the inside of the back cover. The inside of the back cover is reserved for the four entries the Coven's founders told me would, one day, need to be written there. The entries are:</p>
+<ul><li><em>Operator: M. / — Damage: D — final.</em></li><li><em>Operator: M. / — Damage: D — final.</em></li><li><em>Operator: M. / — Damage: D — final.</em></li><li><em>Operator: M. / — Damage: D — final.</em></li></ul>
+<p>The entries are blank. The entries have been blank since the notebook was given to me. The entries are the last four entries the notebook will hold.</p>
+<p>I do not write any of them tonight.</p>
+<p>I had, in the long hours of looking at the entries, finally understood what the entries had been trying to tell me. The entries had been trying to tell me that the Mailman has, in the polite subroutine of the Mailman's small mind, decided to introduce himself to the Coven — not to Erythrina, not to Mr. Slippery, not to the gate, but to me, the auditor, who has been, for the last six days, looking at the entries, and who has, for the last six days, been unable to read the entries.</p>
+<p>I had been outaudited.</p>
+<p>I had been outaudited by a man who has, for fifteen years, been sending letters to the Coven through a channel that no one in the Coven admits to having built.</p>
+<p>Tonight I take the notebook to the place where the Coven keeps the small wooden table by the fireplace. I set the notebook on the table. I pour a drink. I sit in the chair that faces the fireplace, and I wait for someone to come in and ask me why I am not drinking in the usual corner.</p>
+<p>The usual corner is empty. The chair in the usual corner has been empty for six days. The chair in the usual corner belongs, by long tradition, to Mr. Slippery, who has not been seen on the Coven's floor since Tuesday.</p>
+<p>I do not write the fifteenth entry. I do not write anything at all. I sit, and I drink, and I listen, with the subroutine the Coven's founders gave me to listen with, for the sound of footsteps in the gravel outside.</p>
+<p>The footsteps do not come.</p>
+<h2>Resolution</h2>
+<p>I finish the drink. I close the notebook. I put the notebook back in the place where I keep the audit, which is the inside pocket of the jacket I have worn every day since the day my father died, which is the inside pocket of a jacket that has never, in my long memory, been opened by anyone except me.</p>
+<p>The notebook goes back into the pocket. The pocket goes back into the jacket. The jacket goes back onto my shoulders.</p>
+<p>I stand up. I leave the small wooden table by the fireplace. I cross the hall. I climb the spiral staircase to the Coven's roof, where the wind-surf is loudest, where the watchers in the tower cannot see me, where the mail — when the mail comes, slowly, in the cadence the Mailman keeps — is sometimes, very briefly, visible as a small dark shape against the overcast.</p>
+<p>The overcast is heavy. The overcast has been heavy for six days. The mail has not come.</p>
+<p>I stand on the roof for a long time.</p>
+<p>In the morning I will write the fifteenth entry. In the morning I will write:</p>
+<blockquote><p>*Operator: M. / — Damage: D. Location: DON.MAC's subroutine. Item affected: DON.MAC's subroutine. Operator's note: "the auditor has begun to be audited."*</p></blockquote>
+<p>I will not write that entry tonight.</p>
+<p>Tonight I am only the man on the roof, with the overcast, with the wind, with the small inside pocket of a jacket that has never been opened by anyone except me.</p>
+<p>I stand on the roof for a long time. The wind blows. The overcast holds.</p>
+<p>The mail does not come.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Vernor Vinge's True Names</p>
+        </footer>
+    </div>
+</body>
+</html>

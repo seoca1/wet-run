@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiley's Gate — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="wileys_gate_ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">Wiley's Gate</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1849 words</span><span>True Names (Vernor Vinge)</span></div>
+        </header>
+        <article class="story-body">
+<h2>Setup</h2>
+<p>The library is the oldest piece of the Coven.</p>
+<p>The library is not, by any modern definition, a <em>building</em>. The library is a piece of architecture that I have been maintaining since before I joined the Coven, and that I have been maintaining since the day I joined, in the way that a librarian maintains a library: by walking the aisles, by reading the spines, by making sure that the books that have been touched recently are the books that were meant to be touched recently. The library smells, in the morning, of the small parchment smell that parchment makes when parchment has been kept, for a long time, in a room that no one is allowed to enter without the librarian's keys.</p>
+<p>The library holds every spell that the Coven has ever used.</p>
+<p>The library holds spells that the Coven has never used. The library holds spells that the Coven has used once, in private, in the early years, and that the Coven has, by long custom, sealed away behind the second locked door at the back of the second sub-basement. The library holds spells that are <em>predicates</em> rather than <em>spells</em> — small pieces of code, small subroutines, small algorithms that the Coven's founders wrote into the architecture of the Other Plane itself, in the days before there was an Other Plane to speak of, in the days when the Coven was a small cabal of programmers in a basement in Boston, in the days when the basement's only defense against the curious-eyes-in-the-nearby-university was the basement's locked front door.</p>
+<p>The library is my responsibility.</p>
+<p>The library has been my responsibility since the day I joined, which was the day the Coven's founders realized that I was the only one of them who had, in my previous life, been a librarian. I had been a librarian in a public library in a small town whose name I have also, like everyone else in the Coven, taken the trouble to forget. I had been a librarian for eleven years. I had been a librarian, in the way that a librarian is a librarian, because I had a quiet voice and a habit of reading the spines of books without removing them from the shelves.</p>
+<p>The library, on the Other Plane, has no spines. The library, on the Other Plane, has a different kind of interface: a small set of three keys, which the Coven calls <em>the librarian's keys</em>, and which I keep on a chain around my neck. The keys are not, by any modern definition, <em>keys</em>. The keys are small pieces of code that the Coven's founders wrote for me, in the early days, to do the three things that the Coven's founders wanted me to be able to do: to walk the aisles, to read the spines, and to lock the second sub-basement.</p>
+<p>The library is, on most days, a quiet place.</p>
+<p>The library was not a quiet place this morning.</p>
+<h2>Complication</h2>
+<p>The morning had been the kind of morning the Coven had been having for six days: the overcast, the barely perceptible drizzle, the overcast making the light flat enough that the colors of the library's shelves did not shout, the smell of the old parchment rising in the air the way the smell of the third-generation forest rose in Mr. Slippery's back garden. I had been in the library for almost the whole morning. I had been enjoying the drizzle, which, in the library, fell through a small piece of architecture in the third sub-basement's ceiling that I had never been able to identify, and that I had never been able to repair, and that I had never been able to convince anyone else in the Coven to repair.</p>
+<p>I had been walking the aisles.</p>
+<p>I had walked the aisles the way my father — a man who had spent his life in a small-town library, in a small-town library's back office, in a small-town library's back office's archive, where the books that no one was allowed to read were kept in a single locked drawer — had taught me to walk: with the hands folded, with the eyes half-lowered, with the breath very slow.</p>
+<p>"The books that no one is allowed to read," my father had said, "are the books that are most often read by people who do not know they are not allowed to read them. The librarian's first job is to know which books the librarian has been asked not to read."</p>
+<p>I had been asked, in my years with the Coven, not to read three books.</p>
+<p>The books are:</p>
+<p>1. <em>The Book of First Names</em>, which is the small green volume at the back of the second sub-basement, behind the second locked door, in the corner where the light from the small piece of architecture in the third sub-basement's ceiling does not reach.</p>
+<p>2. <em>The Book of Last Names</em>, which is the small red volume next to it, in the same corner.</p>
+<p>3. <em>The Book of the Names Between</em>, which is the small blue volume between them, in the same corner.</p>
+<p>The three books have been in the same corner, in the same order, since the day I joined the Coven.</p>
+<p>The three books were not in the same order this morning.</p>
+<h2>Climax</h2>
+<p>The red one had been moved.</p>
+<p>The red one had been moved, very slightly, to the left — three places to the left, in the way that a person moves a book when they have read a single page of it and then returned it to the shelf without, exactly, returning it to its original position.</p>
+<p>I stood in the corner for a long time.</p>
+<p>I did not open the book. I am not allowed to open the book. I have never, in my years with the Coven, opened the book.</p>
+<p>I looked at the book. I looked at the place on the shelf where the book had been. I looked at the dust on the shelf. The dust was disturbed. The dust was disturbed in the way that the dust in a library is disturbed when a book has been opened by someone who has read a single page of it and then closed it again.</p>
+<p>I looked at the dust for a long time.</p>
+<p>The dust, in the morning light, did not shift. The dust, in the morning light, was very precisely the dust of a book that had been opened by someone who had read a single page of it and who had closed the book again without being seen by anyone.</p>
+<p>I did not know who had opened the book. I did not know who had read the single page. I did not know who had closed the book.</p>
+<p>I knew, with the certainty of a librarian, that the book had been opened. I knew, with the certainty of a librarian, that the book had been closed. I knew, with the certainty of a librarian, that the book would not be opened again — by the person who had opened it, by the person who had read the single page, by anyone — for as long as the library held the book.</p>
+<p>The library would hold the book.</p>
+<p>The library would hold the book for as long as the Coven needed the library.</p>
+<p>The library would hold the book.</p>
+<p>I had, in the long minutes of looking at the dust, finally understood what the dust had been trying to tell me. The dust had been trying to tell me that the library had been read. The dust had been trying to tell me that the Coven, for the first time in its long memory, had been read by a person who did not know the Coven had been read. The dust had been trying to tell me that the small subroutine the Coven's founders had written for me, in the early days, to do the three things the Coven's founders wanted me to be able to do — to walk the aisles, to read the spines, and to lock the second sub-basement — had been, for a long time, looking at a library that the subroutine had not, until the morning the dust had been disturbed, been able to read.</p>
+<p>I had been outread.</p>
+<p>I had been outread by a piece of code that had been written for me, in the early days, to read.</p>
+<h2>Resolution</h2>
+<p>I stood in the corner for a long time.</p>
+<p>In the morning, I told myself, I would call Erythrina. In the morning, I would call Mr. Slippery. In the morning, I would call DON.MAC.</p>
+<p>In the morning, I would tell them that the library had been read.</p>
+<p>In the morning, I would tell them that the Coven, for the first time in its long memory, had been read.</p>
+<p>The drizzle, in the third sub-basement, continued. The parchment smell rose. The dust, in the corner, did not shift.</p>
+<p>I closed the door. I locked the second locked door. I walked up the spiral staircase to the first sub-basement, and then to the ground floor, and then to the small wooden table by the fireplace, where DON.MAC was sitting with his closed notebook.</p>
+<p>I poured a drink. I sat down. I did not tell DON.MAC what had happened.</p>
+<p>"What did you find," DON.MAC said, after a long pause.</p>
+<p>"A book," I said. "A single page of a book. The red one. Three places to the left."</p>
+<p>DON.MAC was quiet for a long time.</p>
+<p>"Who," DON.MAC said, finally.</p>
+<p>"I do not know," I said. "The dust on the shelf was the dust of a person who had read a single page of a book and had closed the book again without being seen by anyone. The dust did not have a name. The dust did not have a subroutine. The dust was only the dust of a person who had read a single page of a book."</p>
+<p>DON.MAC was quiet for a longer time.</p>
+<p>"In the morning," DON.MAC said, "you will call Erythrina. You will call Mr. Slippery. You will call me. In the morning, you will tell them that the library has been read. In the morning, you will tell them that the Coven, for the first time in its long memory, has been read by a person who did not know the Coven had been read. In the morning, you will sit, in this chair, in this room, in this last corner, and you will drink this drink, and the drink will be exactly the right temperature, because the drink is the only thing in the room that does not have a subroutine to be read by."</p>
+<p>"In the morning," I said.</p>
+<p>"In the morning," DON.MAC said.</p>
+<p>The drink, in my hand, was exactly the right temperature.</p>
+<p>The drink, in my hand, did not shake. The drink, in my hand, was, in the end, exactly the right temperature, because the drink, in the end, was the only thing in the room that did not have a subroutine to be read by.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Vernor Vinge's True Names</p>
+        </footer>
+    </div>
+</body>
+</html>

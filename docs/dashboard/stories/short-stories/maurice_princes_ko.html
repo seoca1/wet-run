@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모리스와 왕자들 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="maurice_princes_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">모리스와 왕자들</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>3252 words</span><span>Hardwired (Walter Jon Williams)</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입</h2>
+<p>액자 속의 소년들은 더 이상 자기들 안에 어떤 습기도 갖지 않았다.</p>
+<p>모리스는 그날 밤 마지막 조종사의 젖은 신발을 술집에서 밀어내고 있었을 때, 앙리의 액자에 도달했다. 앙리는 앙리 보샹이었다. 앙리는 파리 외곽의 작은 마을에서 왔고, 모리스가 전쟁의 아침에 반덴버그에서 그 마을을 본 적이 있었던 적은 — 동행하여 날았던 그 소년의 사진 속에 — 뿐이었다. 전쟁 직전 마지막 오후 그 술집에서, 그 술집의 그 술집 안에 있던 어느 누구도 그 이후로는 하지 않았던 언어로 노래하던 바로 그 모리스였던, 앙리는 앙리였던.</p>
+<p>블루 실크는 그 화요일, 모든 블루 실크의 화요일이 그러했던 방식으로 고요했다 — 조종사들이 반덴버그에서 가져온 궤도 서브루틴의 작은 녹색 리듬을 술집 벽의 작은 웨트웨어 콘솔이 웅웅거리던 바로 그 방식으로. 모리스는 그 콘솔을 — 전쟁의 다음 날 아침, 커터들이 위쪽 하늘에서 내려왔고 궤도 블록들이 커터들이 마시던 모든 술집의 작은 크롬 값을 치른 그 아침에 — 스스로 삼십일 년 전에 배선했다. 콘솔은 기억의 한 조각이었다. 콘솔은 모리스가 블루 실크가 묻었던 모든 커터의 작은 회색 데이터를 위해 보관해 온 한 조각의 칩이었다.</p>
+<p>콘솔은 켜져 있었다. 크롬은 차가웠다. 벽지 — 병들 뒤편의 — 는 술집이 그 이름을 얻은 작은 파란 실크였다. 모리스는 삼십일 년 동안 그 술집을 닦아 왔다. 모리스는 조종사들이 술집을 보는 방식으로 그 술집을 보지 않았다. 모리스는 한 남자가 죽은 친구들의 작은 푸른 관포 천을 보는 방식으로 그 술집을 보았다.</p>
+<p>그는 액자를 들어 내렸다.</p>
+<p>액자는 삼십일 년 동안 벽에 걸려 있었다. 액자는 같은 어두운 나무로, 같은 작은 황동 패치로 되어 있었고, 황동 패치에는 앙리의 이름과, 차가운 작은 한 조각의 안료 묘비 날짜 — 어느 새벽의 — 가 적혀 있었다. 액자는 새벽의 한 조각, 새벽이 차가움의 한 조각이던 새벽의 한 조각이었다.</p>
+<p>그는 액자 유리를 닦았다.</p>
+<p>그는 앙리의 얼굴을 바라보았다. 그 얼굴은 전쟁의 아침에 스물셋이었을 얼굴이었고, 삼십일 년 동안 액자 안에서 스물셋이었던 얼굴이었다. 그 얼굴은 모리스가 그 자신의 가슴의 작은 차가움 안에 같던 날에다 매고 있던 것과 같은 작은 파란 군정 엘리트 특수 부대 스카프를 매고 있던 얼굴이었고, 그 작은 차가움은 의자가 타고 있었던 날의 의자의 한 조각, 차가움의 한 조각이었다.</p>
+<p>앙리는 의자에서 죽었다.</p>
+<hr>
+<h2>전개</h2>
+<p>모리스는 울지 않았다.</p>
+<p>눈물관은 그 모리스의 얼굴에서 잘려 나왔다. 그 모리스의 얼굴 위에서 궤도가 웨트웨어 한 조각을 그의 두개피 아래로 배선한 바로 그 아침에, 그리고 그 한 조각의 작은 회색 자른 조각을 궤도 블록에 대한 그의 봉사에 대한 선물이라 부른 바로 그 아침에. 칩은 모리스의 크롬 안에서 모든 궤도 칩이 궤도가 반덴버그에 보관해 둔 모든 작고 푸른 판저를 날았던 모든 커터의 크롬 안에서 웅웅거리던 바로 그 방식으로 웅웅거렸다. 칩은 웨트웨어였다. 칩은 전쟁의 아침에 모리스를 위해 하늘을 읽었던 그 웨트웨어였다. 하늘이 더 이상 하늘이 아니게 되었을 때 읽기를 멈춘 웨트웨어였다.</p>
+<p>모리스는 그 웨트웨어가 그의 두개피 아래로 배선된 아침 이래 그 웨트웨어가 읽기를 멈춘 아침 이래 울려고 시도해 왔다. 모리스는 매번 다른 밤마다 모든 다른 커터가 울려고 시도해 왔던 방식으로 울려고 시도해 왔다. 모리스는 차가움의 새벽의 한 조각의 눈물을 울려고 시도해 왔다.</p>
+<p>눈물은 그의 얼굴에서 잘려 나왔다.</p>
+<p>모리스는 그의 것으로 울려고 시도해 왔다 — 그의 두개골 안에서 웅웅거리던 웨트웨어의 차가운 크롬으로, 웨트웨어가 삼십일 년 동안 보관해 온 모든 기억 큐브의 작은 회색 데이터로. 웨트웨어의 것은 차가웠다. 웨트웨어의 것은 작은 회색 콘솔이었던 바로 그 웨트웨어의 작은 회색 차가움이었다. 웨트웨어의 것은 한 남자의 그것이 아니었다.</p>
+<p>부엌 문에 노크가 왔다. 노크는 짧게 두 번, 길게 한 번 — 자르기 아이들이 술집 뒷문으로 들어와 신용에 모리스에게 팔고 싶은 클로라메페닐도르핀 한 조각의 작은 깨끗한 크롬을 들고 들어올 때 두드리는 노크. 모리스는 삼십일 년 동안 자르기 아이들로부터 클로라메페닐도르핀의 작은 깨끗한 크롬을 사 왔다. 모리스는 그것을 — 그들의 크롬이 여전히 두개골 아래 웅웅거리던 채로 반덴버그에서 내려온 커터들의 작은 깨끗한 크롬을 위해 — 사 왔다. 모리스는 클로라메페닐도르핀의 작은 깨끗한 크롬을 술집 뒤편의 작은 회색 금고 안에 보관해 왔다. 그 작은 회색 금고 안에는, 삼십일 년 동안 웨트웨어의 작은 회색 콘솔이 웅웅거리고 있었다.</p>
+<p>"들어와라, 녀석아," 모리스가 말했다.</p>
+<p>한 소녀가 들어왔다.</p>
+<p>소녀는 열여섯이 아니었다. 소녀는 모리스가 삼 년 동안 보지 못했던 한 소녀의 작은 어두운 윤곽이었다. 소녀는 작은 깨끗한 크롬의 재킷과 작은 어두운 눈에 작은 어두운 표정을 하고, 블루 실크의 뒷문으로 들어온 한 소녀의 작은 어두운 윤곽이었다.</p>
+<p>"모리스," 소녀가 말했다.</p>
+<p>"사라."</p>
+<p>"그가 오고 있어요," 사라가 말했다.</p>
+<hr>
+<h2>절정</h2>
+<p>모리스는 액자를 술집 바 위에 놓았다. 모리스는 작은 회색 크롬의 금고로 걸어 갔다. 모리스는 작은 회색 크롬의 금고를 열었다. 모리스는 꺼내지 않았다 — 클로라메페닐도르핀의 작은 크롬을 — 꺼낸 것은 웨트웨어의 작은 회색 콘솔이었다.</p>
+<p>콘솔은 모리스 손바닥 만 했다. 콘솔은 — 자기 것이었던, 앙리의 것이었던, 전쟁의 아침에 반덴버그에서 작은 푸른 판저를 날았던 모든 커터의 작은 회색 크롬이었던 — 웨트웨어의 작은 회색 칩 한 닢. 콘솔은 삼십일 년 동안 모리스의 가슴 안에서 웅웅거렸다. 콘솔은 모리스의 기억의 작은 회색 크롬이었다.</p>
+<p>콘솔은 모리스의 죽은 커터들의 작은 회색 칩이었다.</p>
+<p>모리스는 콘솔을 사라에게 내밀었다.</p>
+<p>사라가 콘솔을 받았다. 사라는 콘솔을 보았다 — 마치 한 소녀가 자신의 작은 검은 두개골의 한 채의 웨트웨어를, 술집의 파란 실크의 이름이 된 한 채의 작은 푸른 관포의 한 채의 작은 회색 크롬 금고 안에 보관해 온 웨트웨어를 바라보듯이.</p>
+<p>"멈추지 않을 거예요," 사라가 말했다.</p>
+<p>"멈추지 않을 거예요," 모리스가 말했다.</p>
+<p>"그는 자기 크롬의 작은 검은 콘솔을 가지고 있어요," 사라가 말했다. "그는 자기 작은 웨트웨어 두개골의 안쪽에 작은 웨트웨어의 한 판저 조종사를 가지고 있어요."</p>
+<p>모리스는 말하지 않았다.</p>
+<p>"궤도가 그에게 작은 푸른 판저를 저주의 골목 위로 날라고 그 값을 치렀어요," 사라가 말했다. "궤도가 그에게 — 작은 푸른 판저를 클로라메페닐도르핀의 작은 깨끗한 크롬 한 칩 값으로 골목 위로 날라고 그 값을 치렀어요."</p>
+<p>모리스는 말하지 않았다.</p>
+<p>"궤도가 그에게 앙리의 작은 깨끗한 크롬 값을 치렀어요," 사라가 말했다, 매우 조용히, "그 작은 푸른 판저를 앙리의 작은 푸른 실크 관포의 작은 푸른 실크 위로 날라고."</p>
+<p>모리스는 말하지 않았다. 모리스는 술집 뒤편의 작은 회색 의자에 앉았다. 모리스는 앙리의 액자를 그의 두 손에 들었다. 모리스는 액자의 작은 회색 크롬을 그의 자기의 작은 웨트웨어 두개골의 작은 회색 크롬 위에 대고 있었다.</p>
+<p>"당신은 나의 죽은 친구들의 웨트웨어의 작은 깨끗한 크롬을, 그것을 죽은 친구들이 죽었던 방식으로 죽을 한 소년에게 줄 것을 당신은 나에게 부탁하는 것이군," 모리스가 말했다.</p>
+<p>사라가 말하지 않았다.</p>
+<p>"만약 내가 거절한다면," 모리스가 말했다, 매우 조용히.</p>
+<p>"궤도가 — 작은 깨끗한 전쟁의 작은 깨끗한 차가움으로 — 당신에게서 크롬을 가져갈 거예요," 사라가 말했다. "궤도가 — 골목의 다른 모든 파란 실크 술집에서 자기 청소를 끝낸 바로 그 방식으로 — 당신에게서 크롬을 가져갈 거예요."</p>
+<hr>
+<h2>결말</h2>
+<p>모리스는 콘솔을 그녀에게 주지 않았다.</p>
+<p>모리스는 일어섰다. 모리스는 작은 회색 크롬의 금고로 걸어갔다. 모리스는 웨트웨어의 작은 회색 콘솔을 작은 회색 크롬의 금고 안에 다시 넣었다. 모리스는 작은 회색 크롬의 금고를 닫았다.</p>
+<p>모리스는 대신, 액자들을 닦는 데 쓰던 작은 회색 천을 꺼냈다. 모리스는 작은 회색 천을 사라에게 내밀었다. 작은 회색 천은 그의 손 안에서 차가웠다. 작은 회색 천은, 모리스가 삼십일 년 동안 매번 차가웠던 자신의 커터 얼굴의 작은 회색 크롬을 닦아 왔던, 모리스가 매번 묻었던 자신의 회색 크롬의 커터 얼굴의, 그 작은 회색 천이었다.</p>
+<p>"이것을 가져가라," 모리스가 말했다. "그에게 가져가라. 크롬은 그에게 너의 죽은 형제들의 작은 회색 크롬이라고 전해라."</p>
+<p>사라가 천을 받았다.</p>
+<p>"크롬은 술집의 작은 회색 크롬이에요," 사라가 말했다.</p>
+<p>"크롬은 한 남자의 작은 회색 크롬이다," 모리스가 말했다, "삼십일 년 동안 술집의 작은 회색 크롬이었던 한 남자의."</p>
+<p>사라는 말하지 않았다. 사라는 작은 회색 크롬의 천을 그녀의 작은 어두운 손에 들었다. 사라는 블루 실크의 뒷문으로 걸어 갔다. 사라는 작은 크롬의 뒷문을 열었다. 사라는 작은 차가운 아침 속으로 걸어갔다.</p>
+<p>모리스는 술집 위에 서 있었다. 금고의 작은 회색 크롬 안의 작은 회색 콘솔이 침묵하고 있었다. 작은 회색 천이 모리스의 손 안에 있지 않았다. 작은 회색 천은, 작은 깨끗한 크롬의 웨트웨어를 그녀의 작은 어두운 혀 위에 싣고 블루 실크의 뒷문으로 들어왔던 소녀의, 작은 어두운 손 안에 있었다.</p>
+<p>모리스는 벽에서 앙리의 액자를 들어 내렸다.</p>
+<p>모리스는, 작은 회색 크롬의, 자기 자신의 작은 회색 크롬의 커터가 닦아 내려고 남겨 두었던 마지막 것의, 그 작은 회색 천으로 — 액자의 유리를 매우 천천히 닦았다.</p>
+<p>콘솔이 금고 안에서, 매우 조용히, 웅웅거렸다.</p>
+<p>블루 실크가 침묵했다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Walter Jon Williams' Hardwired</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결정의 순간: 플린이 스텁에 남기로 한다 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="flynne_decision_point_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Flynne-fisher</div>
+            <h1 class="story-title">결정의 순간: 플린이 스텁에 남기로 한다</h1>
+            <p class="story-subtitle">기원: 페리페럴 타임라인에 남기로 결정하는 플린</p>
+            <div class="story-meta"><span>2423 words</span><span>Peripheral</span></div>
+        </header>
+        <article class="story-body">
+<p>트레일러 현관에는 의자가 세 개 있었습니다. 세 의자는 트레일러가 수년에 걸쳐 축적하는 이야기들이었습니다. 정원에서 파는 물건들을 파는 yard sale에서 산 것이고, 이웃에게서 받은 것이고, 더 이상 필요 없어진 친척에게서 물려받은 것들. 현관의 세 의자는 팔걸이가 금 간 플라스틱 의자, 자국 먼지 색으로 바랜 웹빙 좌석이 있는 금속 의자, 그리고 어머니 것이었고 9개월 동안 비어 있던 나무 의자였습니다.</p>
+<p>나는 플라스틱 의자에 앉아 있었습니다. 버튼은 금속 의자에 앉아 있었습니다. 나무 의자는 우리 사이에 있었습니다.</p>
+<p>나무 의자는 어머니의 모양을 가지고 있었습니다. 오래 앉아온 의자가 앉아온 사람의 모양을 가지고 있는 방식으로. 어머니의 모양은 나무 의자에, 카펫 아래 바닥의 흔들의자 모양이 거실의 카펫에서 거실로 이동한 흔들의자 모양이 거실의 흔들의자 자리가 거실의 캡슐 자리로 옮겨간 것처럼, 있었습니다.</p>
+<p>나무 의자는 비어 있었습니다.</p>
+<p>나무 의자는 9개월 동안 비어 있었습니다.</p>
+<p>나무 의자가 비어 있는 것은, 어머니가 클랜턴의 병원에 갚히고 녹스빌의 의료 시설에 옮겨지고 애시빌의 의료 시설에 옮겨진 날에 트레일러가 병원으로 사람을 데려가는 종류의 트레일러가 되어야 했던 날에 사람이 더 이상 나무 의자에 앉지 않았기 때문입니다.</p>
+<p>"플린."</p>
+<p>"버튼."</p>
+<p>"그들이 나가 방법을 제안하고 있습니다."</p>
+<p>"무엇에서 나가는 방법."</p>
+<p>"트레일러에서 나가는 방법. 클랜턴에서 나가는 방법. 이 타임라인에서 나가는 방법."</p>
+<p>내가 그를 봤습니다. 그가 그가 가진 손에 종이 한 장을 들고 있었습니다. 종이는 세로로 세 번 접혀 있었습니다. 종이가 봉투에 거의 맞지 않을 정도로 봉투에 넣기 위해 세 번 접히는 방식으로 접혀 있었습니다. 종이는 그 종이에 거의 맞지 않는 봉투에서 꺼낸 것이었습니다.</p>
+<p>"윌프," 그가 말했습니다.</p>
+<p>"윌프 로비어."</p>
+<p>"윌프 로비어. 윌프 네서튼. 알리바이 메이커."</p>
+<p>"알리바이 메이커."</p>
+<p>"그들이 나가 방법을 제안하고 있습니다."</p>
+<p>내가 나무 의자를 봤습니다. 나무 의자는 비어 있었습니다. 나무 의자는 어머니의 모양을 가지고 있었습니다. 어머니의 모양은 9개월 전에 나무 의자에 앉기를 멈춘 사람의 모양이었습니다. 어머니의 모양은, 그 사람이 클랜턴의 병원에 갚혀서 녹스빌의 의료 시설에 갔고 애시빌의 의료 시설에 갔기 때문에 9개월 전에 나무 의자에 앉기를 멈춘 사람의 모양이었습니다.</p>
+<p>어머니의 모양은 나무 의자에 남아 있을 것입니다. 우리가 떠날 트레일러의 나무 의자에. 우리가 떠날 타임라인의 트레일러의 나무 의자에.</p>
+<p>"버튼."</p>
+<p>"플린."</p>
+<p>"트레일러에서 나가는 방법. 클랜턴에서 나가는 방법. 이 타임라인에서 나가는 방법. 이 타임라인에서 나가는 것이 무엇을 의미하나요."</p>
+<p>"우리가 떠납니다. 우리는 떠납니다. 우리는 클랜턴을 떠납니다. 우리는 이 트레일러를 떠납니다. 우리는 이 타임라인을 떠납니다. 우리는 트레일러를 마지막으로 떠납니다. 우리는 트레일러를 떠난 뒤 돌아오지 않습니다. 우리는 트레일러를 떠난 뒤 다른 곳에 도착합니다."</p>
+<p>"어디로요."</p>
+<p>"클랜턴이 아닌 다른 곳으로. 이 트레일러가 아닌 다른 곳으로. 이 타임라인이 아닌 다른 곳으로."</p>
+<p>"어떤 미래인가요."</p>
+<p>"우리가 살 미래로. 미래 arrangement자들이 arrangement한 미래로. 윌프가 arrangement한 미래로. 알리바이 메이커가 우리가 런던에서 한 일의 알리바이가 우리가 살 미래가 될 것이라고 결정했기 때문에 arrangement한 미래로."</p>
+<p>"우리가 살 미래."</p>
+<p>"네."</p>
+<p>"이 트레일러가 아닌 미래."</p>
+<p>"이 트레일러가 아닌 미래."</p>
+<p>"어머니 모양이 나무 의자에 없는 미래."</p>
+<p>"어머니 모양이 나무 의자에 없는 미래."</p>
+<p>내가 나무 의자를 봤습니다. 나무 의자는 어머니의 모양을 가지고 있었습니다. 어머니의 모양은 9개월 전에 나무 의자에 앉기를 멈춘 사람의 모양이었습니다. 어머니의 모양은, 사람들이 클랜턴의 병원에서 시작해서 녹스빌의 의료 시설에 갔고 애시빌의 의료 시설에 갔기 때문에 9개월 전에 나무 의자에 앉기를 멈춘 사람의 모양이었습니다.</p>
+<p>어머니의 모양은 윌프가 제안하는 미래의 나무 의자에 있지 않을 것입니다. 어머니의 모양은 우리가 떠날 트레일러의 나무 의자에, 우리가 떠날 타임라인의 나무 의자에 있을 것입니다.</p>
+<p>"버튼."</p>
+<p>"플린."</p>
+<p>"나는 남고 싶어요."</p>
+<p>그가 우리 사이 디딤돌에 종이를 내려놓았습니다. 종이는 세로로 세 번 접혀 있었습니다. 종이는 그 종이에 거의 맞지 않는 봉투에서 꺼낸 것이었습니다.</p>
+<p>"플린."</p>
+<p>"버튼."</p>
+<p>"트레일러에 남고 싶어요."</p>
+<p>"이 타임라인에 남고 싶어요."</p>
+<p>"왜요."</p>
+<p>"이 타임라인에는 나무 의자가 있으니까. 이 타임라인에는 어머니의 모양이 나무 의자에 있으니까. 이 타임라인에는 트레일러와 현관과 현관의 세 의자와 팔걸이가 금 간 플라스틱 의자와 자국 먼지 색으로 바랜 웹빙 좌석이 있는 금속 의자와 어머니 모양의 나무 의자가 있으니까. 이 타임라인에는 그것들이 모두 있어요. 윌프가 제안하는 미래에는 그것들이 없어요. 윌프가 제안하는 미래에는 미래가 있어요. 윌프가 제안하는 미래에는 어머니 모양의 나무 의자가 없어요."</p>
+<p>"플린."</p>
+<p>"버튼."</p>
+<p>"윌프가 우리가 떠나는 알리바이를 고칠 수 있다고 했어요. 윌프가 우리가 남는 알리바이는 고칠 수 없다고 했어요."</p>
+<p>"윌프가 그렇게 말했어요."</p>
+<p>"윌프가 그렇게 말했어요."</p>
+<p>"그러면 알리바이 메이커가 다른 알리바이를 고쳐야 해요."</p>
+<p>"플린."</p>
+<p>"버튼."</p>
+<p>"남는 알리바이는 떠나는 알리바이보다 어려워요. 남는 알리바이는 우리를 여기, 트레일러에, 클랜턴에, 이 타임라인에 두는 것을 수반해요, 미래에서 일어나는 일이 일어나는 동안. 남는 알리바이는 저쪽 사람들이 하는 일을 하는 동안 여기에 있는 사람들로 우리를 두는 것을 수반해요."</p>
+<p>"버튼."</p>
+<p>"플린."</p>
+<p>"나는 여기에 있는 사람이 되고 싶어요. 나는 트레일러에, 클랜턴에, 이 타임라인에 있는 사람이 되고 싶어요. 나는 저쪽 사람들이 하는 일을 하는 동안 여기에 있는 사람이 되고 싶어요. 나는 여기 있는 것의 운영자가 되고 싶어요. 내가 가진 것이 여기 있는 것이고 어머니가 나무 의자에 가진 것이 여기 있는 것이고 우리가 잃지 않을 것이 여기 있는 것이기 때문에 여기 있는 것의 운영자가 되고 싶어요."</p>
+<p>그가 종이를 다시 집어 들었습니다. 종이를 세로로 세 번 다시 접었습니다. 종이를 봉투에 다시 넣었습니다, 거의 맞지 않는 봉투에.</p>
+<p>"윌프가 이유를 알고 싶어할 거예요."</p>
+<p>"윌프에게 운영자가 결정했다고 말해줘요. 윌프에게 운영자가 일이 여기 있는 것이라고 결정했다고 말해줘요. 윌프에게 운영자가 여기 있는 것이 운영자가 계속할 일이라고 결정했다고 말해줘요."</p>
+<p>"플린."</p>
+<p>"버튼."</p>
+<p>"윌프에게 운영자가 결정했다고 말하러 갈게요."</p>
+<p>"윌프에게 운영자가 결정했다고 말하러 가요."</p>
+<p>그가 금속 의자에서 일어섰습니다. 의자가 의족이 있는 사람이 앉아 있던 금속 의자의 소리를 냈습니다. 그 소리는 슬픈 소리가 아니었습니다.</p>
+<p>그가 트레일러 안으로 들어갔습니다.</p>
+<p>내가 플라스틱 의자에 앉아 있었습니다.</p>
+<p>플라스틱 의자에는 금 간 팔걸이가 있었습니다.</p>
+<p>플라스틱 의자는 내가 9살 때부터 이 현관에 있었습니다.</p>
+<p>내가 나무 의자를 봤습니다.</p>
+<p>나무 의자에는 어머니의 모양이 있었습니다.</p>
+<p>나는 남기로 했습니다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's The Peripheral</p>
+        </footer>
+    </div>
+</body>
+</html>

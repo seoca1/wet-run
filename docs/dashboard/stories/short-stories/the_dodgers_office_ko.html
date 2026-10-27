@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>더저의 사무실 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="the_dodgers_office_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Novice</div>
+            <h1 class="story-title">더저의 사무실</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2868 words</span><span>Hardwired (Walter Jon Williams)</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입</h2>
+<p>더저는 알버커키에 사무실을 두었다, 그 이유는 알버커키가 사무실을 그늘 속에 두었기 때문이다. 문 밖의 거리는 도시의 모든 다른 거리와 다른 각도로 북쪽으로 달리고 있었고, 그 각도는 길 건너편 침례교회의 차양을 — 자기 책상 위의 작은 높은 창 너머로 내다보이는 — 감추었다. 차양은 새 것이었다. 차양은 자신의 강철 고깔에 올려진 길고 통나무 합판 한 닢이었고, 차양은 믿음직한 손글씨로 다가오는 일요일 설교의 이름을 적고 있었다. 차양은 삼 년 동안 그곳에 있었다. 더저는 모든 설교를 보았고 그 어느 것도 기억하지 못했다.</p>
+<p>오늘 아침 설교는 너가 사랑하는 것들을 정당하게 받아라, 였다.</p>
+<p>더저는 그가 정당하게 받은 것들을 사랑하지 않았다.</p>
+<p>예컨대 그 포트폴리오. 포트폴리오는 가죽 한 닢이었고, 그 위에는 신용 채권 발행 종이 한 닢의 작은 초록빛 막대가 실려 있었고, 종이에는 그 신용을 정당하게 받은 사람의 이름이 더 작은 글씨로 적혀 있었다. 그 사람의 이름은 카우보이였다. 그 사람의 이름은 카우보이가 지난 아홉 해 동안 저주의 골목을 가로질러 날았던 모든 운항의 이름이었다. 더저는 종이를 두 손가락 사이에 끼우고 양손 안에서 뒤집었는데 — 마치 자기 입 안에 든 다진 연초 꾸러미를 굴리듯이. 종이는 따뜻했다.</p>
+<p>사무실 벽 위의 콘솔은 오래된 궤도 콘솔이었다. 반덴버그의 워커들이, 전쟁의 아침에 자들이 조종사들의 두개피 아래로 밀어넣은 모든 칩의 웨트웨어 데크로 한때 사용했던, 작은 크롬의 사발판 하나. 작은 녹색 불빛이 크롬 위에서, 더저가 아홉 해 동안 무엇을 하는 서브루틴인지 한 번도 묻지 않고 지켜보아 온, 작은 깨끗한 리듬으로 매우 천천히 박동하고 있었다. 더저는 그 서브루틴이 무엇인지 몰랐다. 더저는 콘솔을 사랑하지 않았다. 더저는 콘솔을 미워하지도 않았다. 더저가 콘솔을 지킨 것은 콘솔이, 처음 운항의 아침에, 카우보이가 주머니에 웨트웨어 모듈 하나와 혀끝에 코드들을 달고 사무실로 걸어 들어왔을 때 카우보이가 자기에게 준 것이었기 때문이다.</p>
+<p>카우보이는 역에 있었다.</p>
+<p>이것은 카우보이가 알버커키 북쪽으로 뻗은 산악 구간 — 산기 크리스토 산맥 동쪽으로 뻗은 도로 구간 — 의 그 한 해 카우보이가 날아 넘었던 산에다 붙인 이름이었다. 카우보이가 그 구간을 역이라 부른 것은 카우보이가 그 구간에 있었기 때문이었다. 카우보이는 그 구간을 날았다. 카우보이는 그 구간을 정당하게 받았다.</p>
+<p>카우보이는 종이를 정당하게 받지 않았다.</p>
+<hr>
+<h2>전개</h2>
+<p>더저는 종이를 뒤집어 그것을 바라보았다. 종이는 그날의 한 조각 안에 신용 채권 발행 종이 몇 닢의 작은 초록빛 막대였다, 카우보이가 전쟁의 아침에 얻고 전쟁의 오후에 얻은 그 단단한 신경으로 자른 종이의 몇 닢, 그리고 카우보이가 그 이후 모든 아침과 모든 오후에 계속 얻어 온 그 단단한 신경으로 자른 종이의 몇 닢.</p>
+<p>종이는 카우보이가 사랑하는 것이었다. 더저가 지키는 것도 종이였다.</p>
+<p>그는 종이를 책상 위에 놓았다. 책상은 깎인 강철의 작은 사각 한 닢이었고, 더저가 전쟁의 아침에 얻고 전쟁의 오후에 얻은 그 단단한 신경의 자리였고, 그리고 더저가 그 이후 모든 아침과 모든 오후에 계속 얻어 온 그 단단한 신경의 자리였다.</p>
+<p>책상 위에는 포트폴리오를 여는 코드가 놓여 있었다. 코드는 더저가 종이 한 닢 위에 적어 둔 숫자들의 한 조각이었다. 더저는 코드를 사랑하지 않았다. 더저는 코드를 미워하지도 않았다. 더저는 아홉 해 동안 코드를 잡고 있었다. 코드는 지금껏 골목을 따라 내려온 모든 화물의 스로틀과 운전대 위에서 카우보이의 손을 단단하게 붙잡은 유일한 것이었다.</p>
+<p>운항의 아침, 코드가 책상 위에 놓여 있었다. 코드는 카우보이가 왕좌에 앉았던 방식으로 책상 위에 놓여 있었다. 코드는 길 건너편 교회 제단 위에 빵이 놓여 있던 방식으로 책상 위에 놓여 있었다. 코드는 차양 위에 설교의 이름이 놓여 있던 방식으로 책상 위에 놓여 있었다.</p>
+<p>차양에는 오늘 아침 너가 사랑하는 것들을 정당하게 받아라, 라고 적혀 있었다.</p>
+<p>더저는 코드를 사랑하지 않았다. 더저가 사랑한 것은 사람이었다. 사람은 자기 형의 한 조각의 한 조각이었다. 사람은 카우보이 운항의 모든 한 조각의 한 조각이었다. 사람은 골목의 한 조각이었고, 산의 한 조각이었고, 사무실의 한 조각이었다.</p>
+<p>사무실 문에 노크가 왔다.</p>
+<p>노크는 카우보이가 두드리는 방식이었다 — 두 번 두드리고 한 번. 더저는 담배를 책상의 크롬 위에 놓았다. 더저는 서지 않았다. 더저는 움직이지 않았다.</p>
+<p>"들어와라, 카우보이," 더저가 말했다.</p>
+<p>문이 열렸다. 카우보이가 들어왔다.</p>
+<hr>
+<h2>절정</h2>
+<p>카우보이는 면도하지 않았다. 카우보이의 귀 뒤, 궤도 블록이 칩을 두개피 아래로 밀어넣은 비용을 치른 그 아침부터 크롬 두개골의 작은 검은 콘솔이 웅웅대던 그 자리에는 작은 웨트웨어 패치가 붙어 있었다. 카우보이는 늘 날 때 입는 담황 재킷을 입고 있었다. 카우보이는 골목 선수권 대회에서 금메달을 딴 해 자유 지대에서 산 작은 갈색 부츠를 신고 있었다.</p>
+<p>카우보이는 책상을 마주 보는 의자에 앉았다. 카우보이는 말하지 않았다.</p>
+<p>더저는 말하지 않았다.</p>
+<p>콘솔의 작은 녹색 불빛이 두 번 박동했다.</p>
+<p>"코드가 있군," 카우보이가 마침내 말했다.</p>
+<p>"코드가 있지," 더저가 말했다.</p>
+<p>"주지는 않을 거군."</p>
+<p>"주겠지," 더저가 말했다. "뒤에."</p>
+<p>더저는 일어섰다. 더저는 책상 둘레로 걸었다. 더저는 가죽의 그 작은 사각 한 닢을 책상에서 들어 두 손에 들었다. 더저는 코드를 들고 있지 않았다. 더저는 종이를 들고 있었다.</p>
+<p>"포트폴리오가 무엇을 위한 것인지 말해라," 더저가 말했다. "지난 주 화요일에 갈색 양복의 궤도 남자가 우정을 따라 내려와 오늘까지 이 종이를 가까이 붙잡고 있으라고 한 이유를 말해라."</p>
+<p>카우보이는 종이를 바라보았다. 카우보이는 잭인하기 전 콘솔의 크롬을 바라보았던 방식으로 종이를 바라보았다. 카우보이는 종이를 오랫동안 바라보았다.</p>
+<p>"궤도는 나를 사는 것이 아니야," 카우보이가 말했다. "궤도는 골목 아래의 도시를 사는 거야. 궤도는 골목이 깔린 흙바닥을 사는 거야. 궤도는 골목을 침수시키고 셋째 사람들에게 값을 정산하게 할 권리를 사는 거야."</p>
+<p>"코드들은," 더저가 말했다.</p>
+<p>"코드는 그 권리를 치르는 은행을 여는 유일한 것들이야," 카우보이가 말했다.</p>
+<p>더저는 말하지 않았다.</p>
+<p>"형을, 코드를 줘," 카우보이가 말했다.</p>
+<p>더저는 종이를 책상 위에 다시 놓았다.</p>
+<p>"운항 뒤, 여기서, 코드를 주겠다," 더저가 말했다, 매우 조용히, "그 갈색 양복의 궤도 남자에게 종이를 정당하게 받기 전에는."</p>
+<p>"나에게 운항을 거절하라고 요구하는 거군."</p>
+<p>"그 종이를 거절하라고 요구하는 거다," 더저가 말했다.</p>
+<p>카우보이는 말하지 않았다. 카우보이는 종이를 바라보았다. 카우보이는 코드를 바라보았다. 카우보이는 더저를 바라보았다.</p>
+<p>카우보이는 일어섰다.</p>
+<hr>
+<h2>결말</h2>
+<p>카우보이는 문으로 걸었다. 카우보이는 문을 열었다. 카우보이는 뒤돌아보지 않았다. 카우보이는 알버커키의 작은 마른 아침으로, 길 건너편 작은 백색 교회 차양의 작은 흰빛 속으로 걸어 나갔다. 카우보이는 작은 회색 보레고 차 — 작은 회색 크롬의 화물이 아침 내내 그 운항을 기다리고 있던 차 — 쪽으로 걸어갔다.</p>
+<p>더저는 높은 창에서 카우보이를 바라보았다.</p>
+<p>코드는 책상 위에 놓여 있었다. 종이는 책상 위에 놓여 있었다. 콘솔이 박동하고 있었다. 차양에는 — 길 건머편의, 설교자의 긴 작은 흰 손 글씨로 — 너가 사랑하는 것들을 정당하게 받아라, 라고 적혀 있었다.</p>
+<p>더저는 담배를 집어 불을 붙였다.</p>
+<p>그는 코드를 창으로 가져가지 않았다. 그는 코드를 빛에 대지 않았다. 그는 코드를 책상 위에 놓아 코드가 놓여 있던 자리에 그대로 두었다.</p>
+<p>그는 운항을 할 것이다.</p>
+<p>그는 카우보이가 운항을 만들던 방식으로 운항을 만들 것이다 — 전쟁의 아침에 카우보이가 얻고 전쟁의 오후에 카우보이가 얻은 그 단단한 신경으로 단단해진 카우보이의 손으로, 카우보이가 운항을 만들던 그 단단한 손으로 운항을 만들 것이다.</p>
+<p>그는 문 밖으로 나갔다. 거리는 그 각도로 북쪽으로 달렸다. 차양은 그 각도로 동쪽으로 달렸다. 사무실은 그 각도로 남쪽으로 달렸다. 더저는 자기 잘린 각도로 동쪽으로 달렸다.</p>
+<p>포트폴리오는 책상 위에 머물러 있었다. 코드는 책상 위에 머물러 있었다. 이름들은 책상 위에 머물러 있었다.</p>
+<p>그는 운항을 할 것이다.</p>
+<p>그는 그가 사랑하는 것들을 정당하게 받을 것이다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Walter Jon Williams' Hardwired</p>
+        </footer>
+    </div>
+</body>
+</html>

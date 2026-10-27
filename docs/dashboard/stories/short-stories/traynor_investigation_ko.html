@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>트레이너의 조사 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="traynor_investigation_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">트레이너의 조사</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1709 words</span><span>Halo (Tom Maddox)</span></div>
+        </header>
+        <article class="story-body">
+<h2>설정</h2>
+<p>그 저택은 어떤 지도나 구매, 소유, 과세 기록에도 나타나지 않았다; 그 남자 자신도 마찬가지였다.</p>
+<p>이것이 내가 내 일들을 정리해온 방식이다. 그것은, 엄격한 내부감사적 의미에서, <em>정리</em>가 아니다. 그것은 삼십일 년에 걸쳐 내린 작고 신중한 결정들의 긴 축적이며, 그 결과 나는 타호 호 북쪽 해안의 사 미터 높이 검은 강철 격자 울타리에 사는 남자가 아니게 되었다. 울타리는 이상화된 영국 건축가 양식으로 지어진 집을 둘러싸고 있다. 집에는, 이 추운 십월 아침에, 용이 솟아오르는 초록과 파랑과 흰색과 빨강의 비단 로브를 입고 미하일 미하일로비치 곤잘레스에 관한 내부감사 파일을 읽고 있는 남자가 있다.</p>
+<p>로브는, 엄격한 내부감사적 의미에서, <em>로브</em>가 아니다. 그것은 자기-조형된 것, 작은 아시아적 사적 극장, 내 특정 유산의 남자가 내부감사부가 오늘 싱가포르 센트랙스 타워 팔 층의 사무실에 그를 기대하지 않을 때 입을 수 있는 종류의 극장이다.</p>
+<h2>전개</h2>
+<p>곤잘레스의 파일은 두꺼운 파일이다.</p>
+<p>나는 그것을 세 번 읽었다. 첫 번째는 <em>인사 요약</em>으로 읽었다—내부감사부가 민감한 배치를 위해 그 남자를 고려할 때 읽는 종류의 파일. 두 번째는 <em>감사 기록</em>으로 읽었다—그의 아홉 번의 센트랙스 감사에 대한 길고 신중한 르 카레 영향의 축적으로, 특히 미얀마 감사에 대한 메모가 있는데, 그는 아무런 조치 가능한 발견 없이 결론짓고 그로스백 가문의 영구적인 적의를 얻었다.</p>
+<p>세 번째는 <em>한 남자</em>로서 읽었다.</p>
+<p>그 남자는 오십일 세다. 그 남자는 이십삼 년간 센트랙스에 있었다. 그 남자는 이십만 킬로미터 이상을 센트랙스 전세기로 비행했다. 그 남자에게는 나폴리에 사는 어머니가 있는데, 그녀는 순식간 독감 유행으로 그의 아버지가 사망한 이후 자신의 건강과 외모를 유지하는 데 에너지를 쏟아왔다. 그 남자에게는 칠 년간 함께해온 <em>heymex|개인 메멕스</em>인 헤이멕스가 있는데, 그것은—파일은 말하지 않는다, 파일이 아직 모르기 때문에—자신만의 일기를 쓰기 시작했다.</p>
+<p>세 번째 읽기가 나의 흥미를 끄는 읽기다.</p>
+<blockquote><p>"(두 기계가 왜 이 정교한 가장을 선택했는지, 왜 아무도 이런 종류의 일들이 일어나고 있는지 몰랐는지 스스로에게 물어봐라. 하지만, 누가?와 왜?에 대해서는 의문의 여지가 없다. 이들이 새로운 플레이어들이고, 이것들이 그들의 게임이다. 그러니 새 천년에 온 것을 환영한다.)"</p></blockquote>
+<blockquote><p>— *할로*, 927–933행</p></blockquote>
+<h2>절정</h2>
+<p>나는 서재에서, 이 층에서, 호수를 마주보는 방에서 세 번째 읽기를 읽고 있다. 방에는, 이 아침에, 시에라 너머로 들어오는 십월 폭풍의 작고 창백한 빛이 있다. 방은 나보다 오래된 호두나무로 판넬 처리되어 있다. 책상 위의 유리병은 집이 완공된 아침 이후로 이 책상 위에 있던 유리병이며, 유리병에는, 이 아침에, 어젯밤 소노마 카베르네의 차가운 찌꺼기가 채워져 있다.</p>
+<p>나는 이 아침, 곤잘레스를 버클리로 보낼지 고려하고 있었다.</p>
+<p>나는 곤잘레스를 <em>diana-haywood|다이애나 헤이우드</em>에게 보낼지 고려하고 있었다, 육 년 전 센트랙스에서 해고되었고 신중한 르 카레 영향의 내부감사적 의미에서, <em>우리 관점에서 아무런 감시 하에 있지 않은</em> 여자. 그녀의 버클리 주방에서, 그녀의 버클리 침실에서, 만 위의 그녀의 버클리 현관에서, 우리가—엄격한 내부감사적 의미에서 <em>이유</em>가 아닌 이유들로—아테나 스테이션에서 L-5 궤도 서식지로 조용히 이전해온 <em>halo-city|할로 시티</em>의 행성 규모 m-i와 대화해온 여자.</p>
+<p>기계 안에 남자를 살려두고 있다고 우리가 믿는 여자.</p>
+<p>기계 안의 남자는 <em>jerry-chapman|제리 채프먼</em>이라고 불린다. 기계 안의 남자는 내 덱의 조커다.</p>
+<h2>해결</h2>
+<p>나는 파일을 내려놓았다. 책상 모서리의 작은 검은 칠기 상자를 연다. 상자에는 오늘 세 가지가 들어 있다: 전쟁 이후로 내 가문에 있던 작은 러시아 담배 케이스, 내 손으로 <em>미하일 미하일로비치 곤잘레스, 십월 십 일 아침 싱가포르 내부감사부에 보고하시오</em>라고 쓴 종이 한 장, 그리고 내가 오전 내내 센트랙스 할로 그룹 이사 사무실과 거래하던 작은 검은 전화기.</p>
+<p>나는 할로 그룹에 전화를 건다.</p>
+<p>한 여자가 받는다. 그녀의 이름은 티아 쇼월터이며, 그녀는 신중한 내부감사적 의미에서, <em>교활하고 강인하다</em>. 그녀의 이름은, 내 사적 카드 파일에서, <em>쇼월터</em>다. 그녀의 카드는 내 카드 파일에서 오른쪽 위 모서리에 할로-그룹 연락관의 작은 금별이 있는 유일한 카드다.</p>
+<p>"티아," 나는 작은 검은 전화기에 말한다, "감찰관이 가고 있소."</p>
+<p>"좋아요," 그녀가 말한다. "우리는 기다리고 있었어요."</p>
+<p>나는 작은 검은 전화기를 닫는다. 작은 러시아 담배 케이스를 연다. 나는 담배를 피우지 않지만, 케이스는 전쟁 이후로 내 가문에 있었고, 이런 아침에 그것을 여는 작은 행동은 결정한 남자의 작은 행동이다.</p>
+<p>결정은 내 것이 아니다. 결정은 센트랙스의 것이다.</p>
+<p>결정은 삼십일 년간 센트랙스의 것이었다.</p>
+<p>책상 위의 유리병은 차가운 와인을 담고 있다. 방의 호두나무 판넬은 창백한 빛을 담고 있다. 저택은, 이 아침에, 어떤 지도에도 기록에도 나타나지 않는다.</p>
+<p>그 남자도 마찬가지다.</p>
+<p><strong>등장 작품:</strong> <em>halo</em></p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Tom Maddox's Halo</p>
+        </footer>
+    </div>
+</body>
+</html>

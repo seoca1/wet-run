@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신참의 첫 운행 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="maidens_first_run_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Novice</div>
+            <h1 class="story-title">신참의 첫 운행</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2529 words</span><span>Hardwired (Walter Jon Williams)</span></div>
+        </header>
+        <article class="story-body">
+<p>고속도로에서 내가 처음 배운 것은, 고속도로는 자기 자신을 알리지 않는다는 것이었다.</p>
+<p>내가 열아홉이던 밤, 나는 남자친구의 낡은 판저 위쪽 해치를 타고 올라갔다. 그도 아직 열아홉이었다. 그가 내 오른쪽 관자놀이에 잭을 꽂고 자기 말고에도 거기까지 깐, 그 짧은 순간만큼은. 그리고 나서 g-수트 랙에 나란히 누우며, 앨리에 관해 이야기해 주었다. 그는 두 번 운행을 했었고, 두 번 모두 두 번째 후 그만두었고, 탬파에 남아 셋째 사람들을 위해 콘솔 화면을 두드리고 있던 형과 함께 있었던, 형이 그렇게 해 둔, 앨리가 길에 관한 거짓말이라고 말한 적이 있다.</p>
+<p>"형 말로는 앨리는 신경계 고속도로래," 내 남자친구가 말했다. "칩 위에서 돌아간다."</p>
+<p>"누구 칩?"</p>
+<p>"우리 거지. 앨리는 네 웨트웨어를 읽어. 그래서 네가 도는 선은, 앨리가 네가 두려움을 그만둘 수 있다고 배운 선이야."</p>
+<p>그건 형이 지어낸 말 같다고 생각했다. 그렇게 말했다.</p>
+<p>내 남자친구가 웃었다. 소년이었다. 소년들이 웃는 방식으로 웃었다. 그 다음 그는 죽었다.</p>
+<hr>
+<p>앨리가 그를 죽였다. 그의 세 번째 운행에서.</p>
+<p>그 밤 나는 판저 안에 없었다. 나는 탬파의 단말 창고에 있었다. 뒤쪽 벽의 작은 데이터 화면을 보고 있었다. 데이터 화면 위에서, 그의 판저의 작은 깜빡이는 점이 셋째 사람들이 그에게 그어 준 선을 따라 북쪽으로 가는 것을 보고 있었다. 그는 힐즈버러에서 사략선 회랑을 통과했다. 레이크랜드에서 로의 바깥 스크린을 통과했다. 키시미를 통과했다.</p>
+<p>오를란도를 통과하지 못했다.</p>
+<p>로가 그를 4번지선의 어느 고차에서, 오래된 디즈니 월드 스프롤 남쪽, 궤도 봉쇄의 크롬이 가장 짙게 깔리는 곳, 판저의 웨트웨어가 가장 잘 실패하는 곳에서 말아 올렸다. 로는 앨리가 모든 사람에게 마지막으로 그것을 찾는 곳에서 그를 찾았다. 엔진이 불타고, 화면이 자신의 신경계가 항복할 숫자라고 앨리가 배운 작고 완전한 숫자를 보여주는 방식으로.</p>
+<p>그는 열아홉이었다. 그의 이름은 마렉이었다. 판저는 값 치불이 되지 않았다.</p>
+<p>그 이후로 내가 보낸 1년은, 다음 번에, 내 판저가 값 치불이 되도록 하는 데 쓰였다. 그렇게 하는 방법은 앨리를 직접 도는 것이다.</p>
+<hr>
+<p>내가 위쪽 해치를 탔던 아침, 앨리는 아직 자기 자신을 알리지 않았다.</p>
+<p>위쪽 해치를 탔다. 내가 아직 가지지 않은 판저의 위쪽 해치를 소녀가 타는 방식으로 — 천천히, 어깨 위에 무거운 g-수트를 짊어지고, 오른쪽 관자놀이에 아직 차가운 스터드를 대고, 캐빈 뒤쪽의 작은 데이터 화면이 내 호흡만을 보여주도록. 그날 밤 나는 다른 형을 두었다. 다른 남자친구를 두었다. 다른 판저를 두었다. 뒤쪽에 화물을 싣고 있었다. 두꺼운 폼 블록 두 개 — CODE RED 네트워크로 취급, 셋째 사람들이 조심하길 원하는 모든 것에 적는 문구.</p>
+<p>나는 화물을 가지고 있었다.</p>
+<p>나는 신경을 가지고 있었다.</p>
+<p>캐빈에 앉았다. 위쪽 해치를 닫았다. 작은 화면이 올라오게 두었다.</p>
+<p>화면에 데이터 한 줄이 흘렀다 —</p>
+<p>웨트웨어: 정상. 인터로크: 호환. 고속도로: 대기.</p>
+<p>— 그리고 나는, 처음으로, 마렉의 형이 무슨 뜻이었는지 이해했다.</p>
+<p>앨리는 길이 아니었다.</p>
+<p>앨리는 칩이었다.</p>
+<p>앨리는 칩이 읽은 것을 읽었다.</p>
+<p>화면에 내 이름을 말했다. 화면은 깜빡이지 않았다. 화면은 작고 기다림을 담은 목소리로 말했다.</p>
+<p>웨트웨어: 정상. 준비되면 출발.</p>
+<p>나는 준비되지 않았다. 마렉이 죽은 이래로 한 번도 준비되지 않았다. 나는 그 앨리를 절대 안 도는 소녀였다. 톱날에 손을 잃은 사람이 그 톱을 다시 안 도는 것처럼. 나는 셋째 사람들을 위해 창고의 작은 콘솔을 두드리는 소녀였을 거니, 데이터의 작은 깜빡이는 선을 따라 다른 소녀들의 판저가 북쪽으로 가는 것을 보고, 커피를 따르고, 휴대폰이 울리면 받고, 절대, 다만, 단 한 번도 위쪽 해치를 타지 않는 소녀.</p>
+<p>나는 오랫동안 열아홉이었다.</p>
+<p>오늘 아침도 열아홉이었다.</p>
+<p>앨리를 돌았다.</p>
+<hr>
+<p>앨리는 300마일 길이다. 앨리는 300마일 폭이 아니다. 앨리는 신경계가 웨트웨어에서 미끄러지지 않고 삼백을 지탱할 수 있는 좁고 완전한 선이다.</p>
+<p>나는 세 시간 동안 앨리를 몰았다. 앨리를 신경을 가지고 몰았다. 내가 마렉이 죽은 아침에 번 단단한 신경으로, 마렉이 죽은 오후에 번 단단한 신경으로, 작은 콘솔을 두드리며 작은 화면을 보며 작은 커피를 마시며, 내 자신의 판저의 위쪽 해치를 오를 아침을 기다리며 매 아침 번 단단한 신경으로 앨리를 몰았다.</p>
+<p>삼백에서 앨리를 몰았다. 판저의 크롬이 울렸다. g-수트 안의 칩이, 길이 남자친구를 잃은 소녀에게 품는 그 인내로 웅웅거렸다.</p>
+<p>길은 로를 알리지 않았다. 길은 힐즈버러의 사략선 회랑을 알리지 않았다. 길은 레이크랜드의 스크린을 알리지 않았다. 길은 키시미를 알리지 않았다. 길은 마렉의 죽음의 아침이나 마렉의 죽음의 오후나 그 이후 모든 운행의 아침을 알리지 않았다.</p>
+<p>길은 내가 알리기를 기다렸다.</p>
+<p>나는 알리지 않았다.</p>
+<p>고차에서 삼백으로 몰았다.</p>
+<p>고차는 마렉이 신경을 잃은 장소였다. 고차는 마렉의 판저가 그의 것이기를 멈춘 장소였다. 고차는 작은 데이터 화면이 작은 깜빡이는 점을 보여주기를 멈춘 장소였다.</p>
+<p>고차는 로가 그를 말아 올린 장소였다. 데이터가 작은 깜빁임을 잃기 시작할 때 로는 당신을 말아 올린다.</p>
+<p>내 데이터는 작은 깜빁임을 잃지 않았다.</p>
+<p>내 칩은 미끄러지지 않았다.</p>
+<p>내 웨트웨어는 실패하지 않았다.</p>
+<p>고차를, 마렉이 획득하지 못한 방식으로 몰았다. 삼백으로 고차를 몰았다. 화물을 싣고, 관자놀이에 스터드를 대고, 주머니에 고스의 고, 셋째 사람들이 자기들의 작은 인내를 보관하는 작은 공간에 접은 마렉의 죽음의 아침을 가지고, 소녀가 획득한 판저의 고차를 도는 방식으로 고차를 몰았다.</p>
+<p>고차를 몰았고, 크롬이 울렸고, 앨리는 말하지 않았다.</p>
+<hr>
+<p>자정에 창고에 도착했다.</p>
+<p>창고는 탬프리의 창고가 아니었다. 창고는 오를란도의 창고였다. 셋째 사람들의 화면이 화물이 있어야 한다고 말한 창고, 로가 화물을 기다리고 있던 창고, 셋째 사람들의 러너들이 어둠 속 양복을 입고 선 밖에서 데려와 화물이 새 주인을 찾을 수 있게 한 창고.</p>
+<p>로가 창고에 있었다.</p>
+<p>로가 창고에서 나를 기다리고 있었다. 마렉을 창고에서 기다리던 방식으로, 마렉 이후 앨리를 시도한 모든 소녀를 기다리던 방식으로.</p>
+<p>로는 궤도 봉쇄의 크롬이 아니었다. 로는 화면의 크롬이 아니었다.</p>
+<p>로는 손목과 발목에 작은 크롬 부위를 단 어두운 양복의 두 남자였다. 왜 전쟁이 끝나기 전 셋째 사람들이 쓰던 종류의, 당신 관자놀이의 칩의 웨트웨어를 읽어 화물이 화물인지 시체인지를 결정하는 종류의 부위.</p>
+<p>"신분," 한 명이 작은 휴대폰을 내밀며 말했다.</p>
+<p>"메이든," 내가 말했다.</p>
+<p>"마렉의 소녀?"</p>
+<p>"마렉의 소녀," 내가 말했다.</p>
+<p>로가 앨리를 바라보던 방식으로 나를 바라보았다. 로는 한참 동안 말하지 않았다. 로는 기다림을 품었다.</p>
+<p>그때 로가 한참 말없이 있다가, 아주 조용히 말했다.</p>
+<p>"너는 그 운행을 마친 첫 소녀다."</p>
+<p>나는 대답하지 않았다.</p>
+<p>캐빈에서 내려왔다. 내가 아직 가지지 않은 판저의 캐빈에서 소녀가 내려오는 방식으로 — 천천히, 어깨 위에 무거운 g-수트를 짊어지고, 오른쪽 관자놀이에 아직 차가운 스터드를 대고, 뒤쪽에 화물을 싣고, 캐빈 벽의 작은 데이터 화면이 내 호흡만을 보여주도록.</p>
+<p>화물이 나를 기다리고 있었다.</p>
+<p>로가 나를 기다리고 있었다.</p>
+<p>앨리, 템프리와 오를란도 사이 데이터의 작은 선 저 멀리 뒤쪽에서, 나를 기다리고 있었다.</p>
+<p>나는 그 운행을 마친 첫 소녀였다.</p>
+<p>나는 창고에 도착한 첫 소녀였다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Walter Jon Williams' Hardwired</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>와일리 J. 의 문지기 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="wileys_gate_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">와일리 J. 의 문지기</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2871 words</span><span>True Names (Vernor Vinge)</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입</h2>
+<p>도감은 코벤에서 가장 오래된 조각이다.</p>
+<p>도감은, 어떤 현대적 정의로도, <em>건물</em> 이 아니다. 도감은 내가 코벤에 가입하기 전부터 유지해 왔고, 가입한 그날부터 유지해 온, 한 조각의 아키텍처 다. 사서가 도감을 유지하는 방식으로 — 통로를 걷고, 책등을 읽고, 최근에 만진 책들이 최근에 만지도록 되어 있던 책들이 맞는지 확인하는 방식으로 — 유지해 온 아키텍처 다. 도감은 아침에, 오래도록 도서관지기 열쇠 없이 들어가지 못하도록 된 방에 보관되어 온 양피지가 오래도록 그 방에 머무른 뒤 풍기는, 작은 양피지 냄새를 풍긴다.</p>
+<p>도감은 코벤이 한 번이라도 써 온 모든 주문을 담고 있다.</p>
+<p>도감은 코벤이 한 번도 쓰지 않은 주문들을 담고 있다. 도감은 코벤이 초년 시절에 한 번, 사적으로, 사용했고, 그 뒤 오래된 관습으로 두 번째 지하실 끝의 두 번째 잠긴 문 뒤에 봉인해 둔 주문들을 담고 있다. 도감은 <em>주문</em> 이라기보다 <em>술어</em> 인 것들을 담고 있다 — 코벤의 창설자들이 Other Plane 자체라는 것이 있기 전부터, Other Plane 라고 부를 만한 것이 없던 시절에, 코벤이 보스턴의 작은 지하실 프로그래머 작은 집단이던 시절에, 그 지하실의 호기심 많은 인근 대학의 눈으로부터 유일하게 지켜주던 것이 지하실의 잠긴 앞문이라던 시절에, Other Plane 의 아키텍처 그 자체에 적어 넣은, 작은 코드 조각, 작은 서브루틴, 작은 알고리즘들을 담고 있다.</p>
+<p>도감은 내 책임이다.</p>
+<p>도감은 내가 코벤에 합류한 그날부터 내 책임이었다. 그날은 코벤의 창설자들이 내가 이전의 삶에서 사서였다는 것을 깨달은 날이었다. 내가, 작은 마을의 공공 도서관에서 사서였던 것도, 열한 해 동안 사서였던 것도, 목소리가 조용하고 책장에서 책을 꺼내지 않고 책등을 읽는 습관이 있어서 사서였다는 것도.</p>
+<p>도감은, Other Plane 에서, 책등이 없다. 도감은, Other Plane 에서, 다른 종류의 interface 를 가지고 있다: 코벤이 <em>사서의 열쇠</em> 라 부르는 작은 세 개짜리 열쇠. 나는 그것들을 목에 걸고 있는 체인에 달고 다닌다. 열쇠들은, 어떤 현대적 정의로도, <em>열쇠</em> 가 아니다. 열쇠들은 초창기에 코벤의 창설자들이 나를 위해 작성한, 창설자들이 내가 할 수 있기를 바란 세 가지 — 통로를 걷고, 책등을 읽고, 두 번째 지하실을 잠그는 — 를 할 수 있도록 해주는 작은 코드 조각이다.</p>
+<p>도감은, 대부분의 날, 조용한 곳이다.</p>
+<p>도감은 오늘 아침, 조용한 곳이 아니었다.</p>
+<h2>전개</h2>
+<p>아침은 코벤이 엿새 동안 가져온 종류의 아침이었다: 흐린 하늘, 간신히 알아챌 정도의 이슬비, 빛을 평평하게 만들어 도감 선반의 색들이 소리 지르지 않게 만드는 흐린 하늘, Mr. Slippery 의 뒷마당에서 세 번째 세대 숲 냄새가 올라오는 방식과 같은 방식으로 올라오는 오래된 양피지 냄새. 나는 거의 한 아침 내내 도감에 있었다. 나는 이슬비를 즐기고 있었다. 도감에서 이슬비는, 세 번째 지하실 천장에 있는 내가 한 번도 알아내지 못한, 한 번도 고치지 못한, 그리고 코벤 안의 누구도 고치게 만들지 못한 작은 아키텍처 의 조각을 통해, 떨어졌다.</p>
+<p>나는 통로를 걷고 있었다.</p>
+<p>나는 아버지가 — 평생 작은 마을 도서관의, 작은 마을 도서관 뒷 사무실의, 아무도 읽도록 허용되지 않은 책들이 하나의 잠긴 서랍에 보관되어 있던 작은 마을 도서관 뒷 사무실의 보관실에 몸담은 분이 — 가르쳐 주신 방식으로 통로를 걸었다: 손을 포개고, 눈을 반쯤 내리고, 숨을 매우 천천히.</p>
+<p>"아무도 읽도록 허용되지 않은 책들," 아버지가 말했다, "은 자기가 읽도록 허용되지 않았다는 것을 모르는 사람들에 의해 가장 자주 읽힌다. 사서의 첫 번째 임무는, 사서에게 읽지 말도록 부탁받은 책이 어떤 책인지 아는 것이다."</p>
+<p>나는, 코벤에서의 해들 동안, 세 권의 책을 읽지 말도록 부탁받았다.</p>
+<p>그 책들은 이러하다:</p>
+<p>1. <em>The Book of First Names</em> — 두 번째 지하실 끝, 두 번째 잠긴 문 뒤, 세 번째 지하실 천장의 작은 아키텍처 의 빛이 닿지 않는 모서리에 놓인, 작은 초록색 책.</p>
+<p>2. <em>The Book of Last Names</em> — 같은 모서리에 놓인, 작은 빨간 책.</p>
+<p>3. <em>The Book of the Names Between</em> — 그 사이, 같은 모서리에 놓인, 작은 파란 책.</p>
+<p>세 책은 내가 코벤에 합류한 그날부터 같은 모서리에, 같은 순서로, 놓여 있었다.</p>
+<p>세 책은 오늘 아침 같은 순서로 놓여 있지 않았다.</p>
+<h2>절정</h2>
+<p>빨간 책이 옮겨져 있었다.</p>
+<p>빨간 책이 — 아주 살짝 — 왼쪽으로 옮겨져 있었다. 왼쪽으로 세 칸. 누군가가 한 페이지만 읽고, 정확히는, 원래 위치에 붙여 두지 않은 채 선반에 돌려놓을 때 책을 옮기는 방식으로.</p>
+<p>나는 모서리에서 한동안 서 있었다.</p>
+<p>나는 책을 열지 않았다. 나는 책을 열 수 없다. 코벤에서의 해들 동안, 나는 책을 한 번도 열지 않았다.</p>
+<p>나는 책을 보았다. 책이 있던 자리의 선반을 보았다. 선반의 먼지를 보았다. 먼지는 흐트러져 있었다. 먼지는, 누군가가 한 페이지를 읽고 다시 책을 닫았을 때 도서관의 먼지가 흐트러지는 방식으로, 흐트러져 있었다.</p>
+<p>나는 한동안 먼지를 보았다.</p>
+<p>먼지는 아침 빛 속에서 움직이지 않았다. 먼지는 아침 빛 속에서, 한 페이지를 읽고 다시 책을 닫은 사람의, 아무에게도 들키지 않고 다시 책을 닫은 사람의, 매우 정확한 먼지였다.</p>
+<p>나는 누가 책을 열었는지 알지 못했다. 누가 한 페이지를 읽었는지 알지 못했다. 누가 책을 닫았는지 알지 못했다.</p>
+<p>나는, 사서의 확실성으로, 책이 열렸다는 것을 알았다. 책이 닫혔다는 것을 알았다. 책이, 그 책을 연 사람에 의해서든, 한 페이지를 읽은 사람에 의해서든, 그 누구에 의해서든, 도감이 책을 붙들고 있는 한, 다시 열리지 않을 것을 알았다.</p>
+<p>도감은 책을 붙들고 있을 것이다.</p>
+<p>도감은 코벤이 도감을 필요로 하는 한, 책을 붙들고 있을 것이다.</p>
+<p>도감은 책을 붙들고 있을 것이다.</p>
+<p>나는 먼지를 바라보는 긴 시간 동안, 마침내 이해했다 — 먼지가 나에게 알려주려 했던 것이 무엇인지. 먼지는 알려주고 있었다. 코벤이, 그 긴 기억력 안에서 처음으로, 자기가 읽혔다는 사실을 모르는 사람에 의해 읽혔다는 것을. 먼지는 알려주고 있었다. 코벤의 창설자들이, 초창기에, 내가 할 수 있기를 바랐던 세 가지 — 통로를 걷고, 책등을 읽고, 두 번째 지하실을 잠그는 — 를 할 수 있도록 그들이 나를 위해 작성한 작은 서브루틴 이, 먼지가 흐트러진 그 아침까지, 읽지 못했던 도감을, 아주 오랫동안, 바라보고 있었다는 것을.</p>
+<p>나는 읽기에 진 바 되었다.</p>
+<p>나는 초창기에 나를 위해 작성된, 나를 위해 읽도록 작성된, 한 조각의 코드에게 읽기에 진 바 되었다.</p>
+<h2>결말</h2>
+<p>나는 모서리에서 한동안 서 있었다.</p>
+<p>아침에, 나는 — 나 자신에게 — 에리트리나에게 전화하겠다고 말했다. 아침에, 나는 — 나 자신에게 — Mr. Slippery 에게 전화하겠다고 말했다. 아침에, 나는 — 나 자신에게 — DON.MAC 에게 전화하겠다고 말했다.</p>
+<p>아침에, 나는 — 그들에게 — 도감이 읽혔음을 말하겠다고 말했다.</p>
+<p>아침에, 나는 — 그들에게 — 코벤이, 그 긴 기억력 안에서 처음으로, 읽혔음을 말하겠다고 말했다.</p>
+<p>이슬비가 세 번째 지하실에서 계속되었다. 양피지 냄새가 올라왔다. 먼지가 모서리에서 움직이지 않았다.</p>
+<p>나는 문을 닫았다. 두 번째 잠긴 문을 잠갔다. 나선형 계단을 올라 첫 번째 지하실로, 그리고 1층으로, 그리고 벽난로 옆의 작은 나무 식탁이 있는 곳으로 갔다. 그 식탁에 DON.MAC 가 닫힌 노트와 함께 앉아 있었다.</p>
+<p>나는 술을 따랐다. 앉았다. DON.MAC 에게 무슨 일이 있었는지 말하지 않았다.</p>
+<p>"무엇을 발견했습니까," DON.MAC 가, 한참의 침묵 끝에, 말했다.</p>
+<p>"책입니다," 내가 말했다. "책의 한 페이지. 빨간 책. 왼쪽으로 세 칸."</p>
+<p>DON.MAC 가 한참 동안 조용했다.</p>
+<p>"누군가가요," DON.MAC 가, 마침내, 말했다.</p>
+<p>"모르겠습니다," 내가 말했다. "선반의 먼지는 — 한 페이지를 읽고 다시 책을 닫은 사람의, 아무에게도 들키지 않고 다시 책을 닫은 사람의 — 그런 먼지였습니다. 먼지는 이름을 가지고 있지 않았습니다. 먼지는 서브루틴 을 가지고 있지 않았습니다. 먼지는 한 페이지를 읽은 사람의 먼지에 불과했습니다."</p>
+<p>DON.MAC 가 더 한참 동안 조용했다.</p>
+<p>"아침에," DON.MAC 가 말했다, "당신은 에리트리나에게 전화할 것입니다. Mr. Slippery 에게 전화할 것입니다. 나에게 전화할 것입니다. 아침에, 당신은 그들에게 도감이 읽혔음을 말할 것입니다. 아침에, 당신은 그들에게, 코벤이, 그 긴 기억력 안에서 처음으로, 자기가 읽혔다는 사실을 모르는 사람에 의해 읽혔음을 말할 것입니다. 아침에, 당신은 이 의자에, 이 방에, 이 마지막 모서리에 앉아 이 술을 마실 것이고, 술은 정확히 맞는 온도일 것입니다 — 술이, 방 안에서 읽힐 서브루틴 을 가진 유일한 것이 아니기 때문입니다."</p>
+<p>"아침에," 내가 말했다.</p>
+<p>"아침에," DON.MAC 가 말했다.</p>
+<p>DON.MAC 는 묻지 않았다.</p>
+<p>손에 든 술은 정확히 맞는 온도였다.</p>
+<p>손에 든 술은 떨리지 않았다. 손에 든 술은, 끝내, 정확히 맞는 온도였다. 술이, 끝내, 방 안에서 읽힐 서브루틴 을 가진 유일한 것이 아니었기 때문이다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Vernor Vinge's True Names</p>
+        </footer>
+    </div>
+</body>
+</html>

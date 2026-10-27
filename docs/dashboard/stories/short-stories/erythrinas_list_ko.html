@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>에리트리나의 명부 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="erythrinas_list_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">에리트리나의 명부</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2279 words</span><span>True Names (Vernor Vinge)</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입</h2>
+<p>나는 그 이름들을 아무도 찾지 않는 한 곳에 보관한다.</p>
+<p>엄밀히 말하면 사실은 그렇지 않다. Mr. Slippery 가, 수년 전에, 내가 침해당했을 거라 믿어 코벤 명부의 무결성을 내 어깨 너머로 읽음으로써 검증하려 했을 때 한 번 방문한 적이 있다. 내가 그를 들여보냈다. 그는 한 시간을 머물렀다. 그는 정중했다. 그는 아무것도 고치지 않고 떠났다. 그가 떠난 뒤, 그가 한 항목을 왼쪽으로 세 칸 옮겨 두고 다음 항목의 첫 음절에 밑줄을 그어 둔 것을 발견했다. 그는 그 재배열이 무엇을 의미하는지 내게 말하지 않았다. 나는 묻지 않았다. 그의 몇몇 표기들은 내가 읽도록 된 것이 아니다.</p>
+<p>명부는 정확히는 warlock 의 명단이 아니다. 빚의 원장에 더 가깝다. 각 항목은 코벤을 통과해 운반되어 온 True Name 에 대응한다 — 입문자에 의해 사슬 위로 올려지고, 책임자에 의해 외워지고, 가끔 한 번의 작전 동안 손님에게 빌려 주고, 그리고 오래된 관습으로 나에게 돌려주어지는. 그 관습은 나보다 앞서 있었다. 코벤의 창설자들은, 방치된 True Name 은 결국 주인을 죽음에 이르게 할 것이라는 믿음이 깊어서, 이름을 <em>완전히</em> 운반하고 한 번의 작전에서 <em>운반을 해제하는</em> 실천을 둘러싼 작은 관료제를 만들었다. 관료적 양식은 여전히 거기, 내 명부 맨 아래에, 원래 주문 템플릿의 닳아빠진 ASCII 와 같은 닳아빠진 ASCII 로 — 내가 십오 년 동안 코벤 안에서 그것을 읽도록 허용된 유일한 사람인 ASCII 의 작은 서브루틴 으로 — 적혀 있다.</p>
+<p>명부는, 내가 펼칠 때, 오래도록 그 방의 허락 없이 들어가지 못하도록 된 방에 보관되어 온 종이가 풍기는, 작은 종이 냄새를 풍긴다.</p>
+<p>오늘 밤 명부는 지난달보다 여섯 항목이 더 길다.</p>
+<p>그중 두 개의 추가는 쉽게 설명된다. Robin Hood 의 새로운 배달부 — Other Plane 에서, 그리고 거기서만, <em>Evel</em> 이라 불리는 폴란드 소년 — 가 마침내 코벤의 전체 등록부에 읽혀 들었다. 소년의 진짜 이름은 네 겹의 인격 아래로 암호화되어 내 바닥 금고의 종이 전용 디스크에 살아 있다. 암호화는 Slimey 씨가 했는데, 그는 우리 가운데 optical 을 여전히 종이 백업으로 보관하는 유일한 사람이다. 그가 말하기를, <em>NSA 는 optical 을 읽고, NSA 는 ASCII 를 읽고, NSA 는 wetware construct 가, 오랫동안 NSA 가 무엇을 읽어 왔는지 기억하려는 사람의, brain-data 를 읽는 방식으로 optical ASCII 를 읽는다.</em></p>
+<p>나는 Limey 씨와 다투지 않는다. 스무 해 동안 Limey 씨와 다투지 않았다.</p>
+<h2>전개</h2>
+<p>세 개의 추가는 마지막 FBI 의 관심을 받고 자신의 핸들을 은퇴시킨 오래된 멤버들의 새 핸들이다. 표준 관행이다. 만일 핸들이 다시 회수되지 않으면, 여섯 달 뒤에 삭제로 플래그해 두었다.</p>
+<p>여섯 번째 추가가 내가 위치를 잡지 못하는 항목이다.</p>
+<p>이름이 아니다. <em>호출 부호</em> 다. 명부 항목은, 내 손글씨로 — 또는 내가 명부를 보관하는 곳에서 내 손글씨가 통과되는 것으로서, 그곳에서 손글씨가 길고 느린 휘파람에 가까운 것으로서 — 적혀 있다:</p>
+<p><strong>M. /</strong> + 아무것도. 성도 없다. True Name 도 없다. 출신 노드도 없다. M. 과 슬래시, 마치 줄의 나머지가 의도적으로 비워진 것처럼. 슬래시 아래에는 내가 알아보지 못하는 손글씨로 단 한 줄의 주석이 적혀 있다: <em>trusted by no one, sends messages in his sleep.</em></p>
+<p>우체부다 — The Mailman.</p>
+<p>나는 명부를 닫는다. 표지 페이지에 아무것도 새로 쓰지 않는다. 나는 십오 년 동안 그 페이지에 아무것도 더하지 않았다. 그 페이지에는, 낡은 활자체로, 이렇게 적혀 있다:</p>
+<blockquote><p>*To my sister, with love.*</p></blockquote>
+<p>그것은 내게 보내진 것이 아니다. 그 페이지는 코벤보다 앞선다. 누구의 누이였는지 나는 한 번도 묻지 않았다. 한 번도 그것에 호기심을 가져 본 적 없었다. 오늘 밤, 처음으로, 나는 그것을 천천히 읽고 있는 자신을 발견한다 — 마치 그 단어들이, 이름이 아닌 이니셜과 서명이 아닌 슬래시와 아무도 찾지 않는 곳에 있을 일이 없는 작은 손씨 한 줄을 어떻게 정리할지 내게 알려줄 수 있기라도 한 것처럼.</p>
+<p>코벤은 조용하다. 해자는 평소의 색으로 타고 있다. Alan 은 문에서 평소와 다른 흐름을 표시하지 않았다. 모든 것을 아는 명부가, <em>M.</em> 에 관해 쓸모 있는 것은 아무것도 모른다.</p>
+<h2>절정</h2>
+<p>나는 명부를 다시 봉투에 접어 넣는다. 나는 코벤에서 어떤 누구도 일부러 깨뜨린 적이 없는 인봉으로 봉투를 봉한다. 나는 봉투를 아무도 찾지 않는 곳에 다시 놓는다.</p>
+<p>그 다음, 나는 창가의 의자에 앉아, 우체부가 — 자기 운영의 해들 가운데 한 번도 실시간 통신을 사용한 적이 없는 그 우체부가 — 이제 일주일 만에 두 번, 나에게가 아니라 <em>명부에</em> , 코벤 안의 어떤 누구도 만들었다고 인정하지 않는 채널을 통해, 메시지를 보냈다는 사실을 생각한다.</p>
+<p>명부는 언제나 코벤의 이름들이 보관되는 곳이었다. 우체부는 방금, True Name 도 출신 노드도 남기지 않고, 명부가 어디 있는지 알고 있다는 것을 보여 주었다.</p>
+<p>나는 그것이 무엇을 뜻하는지 모른다. 다만 Mr. Slippery 를 다시 초대해야 한다는 것을 안다. 코벤이 불안해지면, 그는 정확히 불안이 시작되는 순간에 도착하는 습관이 있다. 내가 불안할 때, 나는 내가 아니라고 가장하는 습관이 있다. 오늘 밤은 내가 가장하지 않을 것이다. 오늘 밤, 나는 그를 위해 문을 열어 둘 것이고, 타자기가 뒤에 있는 작은 캐비닛에 보관해 둔 차를 따를 것이고, 우리는 긴 식탁의 양편에 앉아 한마디도 우체부에 대해 말하지 않다가 어느 한쪽이 더 이상 견딜 수 없게 될 때까지 기다릴 것이다.</p>
+<p>나는 어느 쪽이 될지 아직 결정하지 않았다.</p>
+<p>나는 봉투를 바라보는 긴 시간 동안, 마침내 이해했다 — 봉투가 내게 알려주려 했던 것이 무엇인지. 봉투는 알려주고 있었다. 우체부가 — 우체부의 작은 마음의 정중한 서브루틴 안에서 — 자기를 코벤에 소개하기로 결심했다는 것을: 나에게도, Mr. Slippery 에게도, 문에게도 아니라, 십오 년 동안 우체부가 무엇을 해왔는지 알도록 허용된 코벤의 유일한 조각인 명부에. 봉투는 알려주고 있었다. 우체부가 — 자신의 긴 기억의 작은 서브루틴 안에서 — 명부가 자기를 소개할 가치가 있는 코벤의 유일한 조각이라고 마침내 결심했다는 것을.</p>
+<p>나는 읽기에 진 바 되었다.</p>
+<p>나는, 십오 년 동안 코벤이 만들었다고 인정하지 않는 채널을 통해 편지를 보내 온, 한 사람에게 읽기에 진 바 되었다.</p>
+<h2>결말</h2>
+<p>나는 우체부가 내게 알려주려 했던 것이 무엇인지 모른다. 다만, 사람이 평생 알게 될 것을 아는 작은 방식으로, 우체부가, 자기 긴 경력에서 처음으로, 코벤이 알릴 가치가 있다고 결심했다는 것을 안다.</p>
+<p>그 결심이 좋은 것인지 아닌지는 아직 결정하지 않았다.</p>
+<p>아침에, 나는 — 나 자신에게 — 그를 초대하겠다고 말했다. 아침에, 나는 — 나 자신에게 — 문을 열어 둘 것이라고 말했다. 아침에, 나는 — 나 자신에게 — 차를 따르겠다고 말했다.</p>
+<p>아침에, 아침은 올 것이다.</p>
+<p>명부는 봉투로 돌아갔다. 봉투는 아무도 찾지 않는 곳으로 돌아갔다. 그곳은, 끝내, 그곳에 아무도 찾지 않는 채로 남았다. 이유: 그곳은, 끝내, 방에서 읽힐 서브루틴 을 가진 유일한 것이 아니었기 때문이다.</p>
+<p>나는 창가의 의자에 앉았다.</p>
+<p>차가 식었다.</p>
+<p>차는, 아침에, 따를 것이다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Vernor Vinge's True Names</p>
+        </footer>
+    </div>
+</body>
+</html>

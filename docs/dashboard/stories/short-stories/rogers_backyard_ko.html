@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로저의 뒷마당 — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">KO · <a href="rogers_backyard_en.html">EN</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Novice</div>
+            <h1 class="story-title">로저의 뒷마당</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>2857 words</span><span>True Names (Vernor Vinge)</span></div>
+        </header>
+        <article class="story-body">
+<h2>도입</h2>
+<p>정원은 내가 아직 다듬을 수 있는 부분이었다.</p>
+<p>나는 양배추와 허브 나선이 만나는 모서리에서 시작했다. 바질은 손대지 않은 채였다. 로즈마리도 손대지 않은 채였다. 민트는 짓밟혀 있었다 — 무릎에, 내가 보기에, 정원의 가장 부드러운 곳이라 민트를 밟은 사람의 무릎에. 하지만 민트는 무엇에서든 회복하고, 짓밟힌 줄기는 이미 마디 아래에서 새 순을 내밀고 있었다. 짓밟힌 민트는 빗속에서, 민트가 다쳤을 때 그리고 매우 조용히 다시 자라기로 결심했을 때 민트가 풍기는 작은 초록 냄새를 풍겼다.</p>
+<p>나는 비를 맞으며 김을 매고 있었다. 어머니가 — 외할머니가 가르쳐 주신 방식으로 — 김을 매는 법을 가르쳐 주신 그 방식으로 매고 있었다: 오른손이 잡초의 뿌리턱을 찾고 왼손이 주변 훍을 잡아주며, 허리를 굽히고, 숨을 천천히 쉬고, 손이 자기가 무엇을 하는지 알고 있을 때 마음이 가는 곳으로 마음이 가게 두는 것.</p>
+<p>내 마음은 그 아침으로 갔다.</p>
+<p>아침은 좋았다. 내가 칠년 전 이 bungalow 로 이사한 이래, 더 또는 덜, 가져왔던 종류의 아침이었다: 흐린 하늘, 간신히 알아챌 정도의 이슬비, 색들이 소리 지르지 않을 만큼 빛을 평평하게 만드는 흐린 하늘, 도로 아래 세 번째 세대의 숲에서 올라오는 커피가 너무 오래 버너 위에 있었을 때 풍기는 방식의 그 냄새. 나는 거의 한 아침 내내 정원에 있었다. 나는 이슬비를 즐기고 있었다. 나는 안으로 들어가 실제로 돈을 버는 일을 시작할 결심을 찾으려 하고 있었다.</p>
+<p>실제로 돈을 버는 일은 소설이다.</p>
+<p>소설은 게임이 아니다. 내가 내가 게임을 쓴다고 생각하는 사람들에게 보낸 편지에 이 말을 적었고, <em>참여 게임</em> 이라고 적힌 계약서의 여백에 이 말을 적었고, 가장 크게는, 내가 종이로 직접 작성해 스스로에게 건네는 연말 정리표에 이 말을 적었다. 내가 가장 적게 신뢰하는 데이터 인프라는 내가 볼 수 없는 데이터 인프라이기 때문이다. 소설은 소설이다. 소설이 내가 비교적 쉽게 잡히는 이유다. 소설에는 표지에 내 이름이 있고, 그 이름은 소름의 데이터셋에서 작업실로, 작업실에서 소설로, 소설에서 나로 이어지는, 연방 수사관들이 추적할 수 있는 이름이다.</p>
+<p>나는 양배추 사이의 김을 매고 있었다. 양배추는 아직 짓밟히지 않았다. 아침은 아직 깨지지 않았다. 나는 양배추와 허브 나선이 만나는 모서리에 서서, 오른손은 엉겅퀴의 뿌리턱을 찾고 왼손은 주변 훍을 잡아주며, 금요일까지 Robin Hood 에게 주어야 할 한 장을 생각하고 있었다.</p>
+<h2>전개</h2>
+<p>Robin Hood 에게 빚진 그 장은 길고 느린 단락이었다. 거기서 주인공 — Robin Hood 의 주인공이지, 내 주인공은 아니다; 소설에는 주인공이 없다; 소설에는 참여자가 있다 — 참여자, 라고 해야겠다 — 가 IRS 가 수년간, 슬쩍, 기업용 의사결정 소프트웨어 조각을 사용해 <em>자기 자신의 감사 편지를 작성해 왔다</em> 는 것을 발견한다. Other Plane 에서는 Robin Hood 로 알려진 그 참여자는, 이 일을 조사하기 위해 우리 작은 모임의 돈을 받았다. Robin Hood 는 그 장이 생생하길 바랐다. 그 장이 웃기길 바랐다. Robin Hood 는 그 장의 둘째 단락 어딘가에, 이 문장을 포함하길 바랐다: <em>IRS 는, 자기가 무엇을 하고 있는지 발견했을 때, 자기를 상대로 감사 편지를 접수하지 않았다. IRS 는, IRS 답게, 단순히 그 소프트웨어의 두 번째 사본을 사서 첫 번째 사본을 감사하도록 설정했다.</em></p>
+<p>나는 그 문장을 어떻게 쓸지 생각하고 있었다. 아직 적어두지는 않았다. 그 문장은, 머릿속에서, 너무 날카로웠다. 머릿속의 그 문장은 — 참여자가 두 번째 사본이 첫 번째를 감사했을 때 단 하나의 위반, 즉 첫 감사 편지의 빠진 세미콜론 하나만을 발견한다는 것을 관찰하는, 추가 절로 한 번 더 둥글려야 했다. Robin Hood 가 선호하는 초안에서, 참여자는 그 빠진 세미콜론이 <em>의도적</em> 이었다고 관찰한다 — 그 소프트웨어의 원래 프로그래머가 심어 둔 것인데, 그 사람은 — 참여자는 초안에서 그 사람의 이름을 밝히지 않았다; Robin Hood 가 이름을 드러낼지 말지 아직 결정하지 않았다 — 난초를 키우며 은퇴한, 전직 Federal Screw Standards Commission 직원이었다.</p>
+<p>나는 그 문장을 쓰지 않았다. 김을 매고 있었다. 아침은 아직 깨지지 않았다.</p>
+<p>그 다음 아침이 깨졌다.</p>
+<p>연방 수사관들이 차도를 걸어 올라왔다. 셋이었다. 두 명은 양복, 한 명은 클립보드를 든 재킷 차림. 재킷의 그 사람은 한때 프로그래머였다. 연방이 프로그래머가 소환보다 영입이 더 쉽다는 것을 배우기 전, 먼 옛날에. 그 사람은 그들이 나를 부엌으로 frog-march 할 때 서랍 안에 케이스째 놓인 전극을 보고, 매우 정중하게, 증거로 가져가지 않기로 결정한 바로 그 사람이었다.</p>
+<h2>절정</h2>
+<p>재킷의 사람이 먼저 말했다.</p>
+<p>"무엇을 하시는 분이세요, Pollack 씨?" 그가 말했다.</p>
+<p>"소설을 씁니다," 내가 말했다.</p>
+<p>"다른 인생에서는요?" 그가 말했다.</p>
+<p>"저는 다른 인생이 없습니다," 내가 말했다.</p>
+<p>재킷의 사람은 잠시 조용했다. 그는 서랍 안에 케이스째 놓인 전극을 보았다. 그는 케이스를 보았다. 그는 — 오래도록 한 조각의 코드를 보고 있다가 매우 정중하게 소리 내어 읽지 않기로 결정한 프로그래머의 눈으로 — 케이스를 보았다.</p>
+<p>"알겠습니다," 그가 말했다, 매우 정중하게, 전극을 증거로 가져가지 않기로 결정한 사람의 정중한 목소리로. "당신에게는 다른 인생이 없다는 것을 알겠습니다, Pollack 씨. 당신의 소설이 소설이라는 것을 알겠습니다. 내가 가장 적게 신뢰하는 데이터 인프라는 내가 볼 수 없는 데이터 인프라라는 것을 알겠습니다."</p>
+<p>"저도 압니다," 내가 말했다.</p>
+<p>연방은 세 시에 떠났다.</p>
+<p>그때쯤 이슬비는 안개비로 변해 있었다. 양배추는 망가져 있었다. 여섯 그루, 그중 늦은 품종 네 그루는 내가 둘째 머리를 틔워보려던 것들이, 지금은 나를 내 부엌으로 frog-march 한 사람들의 부츠에 모두 납작하게 짓밟혀 있었다. 나는 양배추에 신경 쓰지 않았다. 신경 쓰인 것은 전극이었다. 케이스 안으로 돌아간 것은, 서랍 안으로 돌아간 것은, 방문 전 있던 자리로 돌아간 것은 — 어떤 의미에서 방문의 가장 나쁜 부분이었다: 서랍 안의 어떤 것도 움직이지 않았다. 연방은 자기 사건에 너무 확신이 있어서 전극을 증거로 가져가야겠다는 생각조차 하지 않았다.</p>
+<p>포털의 다섯 개 sucker 전극은 부엌 창문 빛에 들어 올렸을 때 내 손가락에 차가웠다. 그 빛은 그것을 통과해서, 유리 등면을 들여다볼 때 유리가 분홍이 되는 그 방식으로, 희미하게 분홍이었다.</p>
+<p>나는, 오후의 — 더 작은 의미에서 오후의 — 긴 시간에, 마침내 연방이 이해한 것을 이해했다. 연방은 내가 다른 인생을 가지고 있다는 것을 이해했다. 연방은 그 소설이 다른 인생을 가진 사람의 소설이라는 것을 이해했다. 연방은 내가 볼 수 없는 데이터 인프라가, 데이터 인프라가 데이터 인프라인 작은 의미에서, 연방이 볼 수 있는 데이터 인프라를 오랫동안 응시해 온 데이터 인프라라는 것을 이해했다.</p>
+<p>나는 진 바 되었다.</p>
+<p>나는 내가 볼 수 없는 데이터 인프라에게 진 바 되었다.</p>
+<h2>결말</h2>
+<p>나는 정원으로 돌아갔다. 양배추의 김을 다시 매기 시작했다. 어머니가 — 외할머니가 — 가르쳐 주신 방식으로 매고 있었다: 오른손이 잡초의 뿌리턱을 찾고 왼손이 주변 훍을 잡아주며, 허리를 굽히고, 숨을 천천히 쉬고, 손이 자기가 무엇을 하는지 알고 있을 때 마음이 가는 곳으로 마음이 가게 두는 것.</p>
+<p>비도, 그때쯤, 안개비가 되어 있었다.</p>
+<p>아침에, 나는 — 나 자신에게 — Robin Hood 에게 전화해 다른 문장이 있다고 말하겠다고 말했다.</p>
+<p>아침에, 나는 — 나 자신에게 — LA Times 데이터 데스크에도 전화해 북부 캘리포니아 데이터 인프라에 대해 묻겠다고 말했다. LA Times 데이터 데스크는, 데이터베이스를 사용하는 대부분의 사람들보다 오래된 데이터베이스에, 연방이 차도를 올라오기 며칠 전에 LA Times 데이터 데스크에 Roger Pollack, TIN/SSAN 0959-34-2861 이라는 남자에 대해 물었는지를 — LA Times 데이터 데스크가 선호하는 정중한 ASCII 로 — 알려 줄 종류의 북부 캘리포니아 데이터 인프라 기록을 보관하고 있었다.</p>
+<p>아침에, 나는 — 나 자신에게 — 아침이 올 것이라고 말했다.</p>
+<p>이슬비는 계속되었다. 양배추는 계속 망가져 있었다. 로즈마리, 김을 매지 않아도 됐던 로즈마리는, 매우 철저하게, 김을 매지 않은 채로 남아 있었다.</p>
+<p>나는 안으로 들어갔다. 차를 만들었다. 차를 마셨다. 차의 남은 양을 허브 나선 위에 부었다. 왜냐하면, 연방의 무릎에 짓밟힌 민트는, 잠깐이라도 한 남자에 의해 데워진 물의 동반에서 회복될 자격이 있었기 때문이다 — 그 남자는 한 번, 한 아침 동안, 아침이 깨지기 전에, 정원에서 김을 매는 사람일 뿐인 자격을 받아낸 적이 있었다.</p>
+<p>전극은 서랍으로 돌아갔다.</p>
+<p>서랍은 책상으로 돌아갔다.</p>
+<p>책상은 책상으로 돌아갔다.</p>
+<p>나는 사람으로 돌아갔다.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Vernor Vinge's True Names</p>
+        </footer>
+    </div>
+</body>
+</html>

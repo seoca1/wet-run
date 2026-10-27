@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Limey's Long Game — Wet Run</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #faf8f5;
+            --text-color: #2c2c2c;
+            --accent-color: #e94560;
+            --meta-color: #666666;
+            --font-serif: "Crimson Pro", "Source Serif 4", Georgia, serif;
+            --max-width: 680px;
+            --line-height: 1.8;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 18px; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: var(--line-height);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 4rem 2rem 8rem; }
+
+        .story-header { margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid #e0ddd8; }
+        .character-badge {
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--accent-color);
+            background: #1a1a2e15;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            margin-bottom: 1rem;
+        }
+        .story-title { font-size: 2.25rem; font-weight: 600; line-height: 1.2; margin-bottom: 0.5rem; }
+        .story-subtitle { font-size: 1.1rem; font-style: italic; color: var(--meta-color); }
+        .story-meta { margin-top: 1rem; font-size: 0.85rem; color: var(--meta-color); }
+        .story-meta span { margin-right: 1rem; }
+
+        .story-body { text-align: justify; hyphens: auto; }
+        .story-body p { margin-bottom: 1.5rem; }
+        .story-body h2 {
+            font-size: 1.4rem; font-weight: 600;
+            color: var(--accent-color); margin: 2.5rem 0 1rem;
+        }
+        .story-body blockquote {
+            font-style: italic; color: var(--meta-color);
+            border-left: 3px solid var(--accent-color);
+            padding-left: 1rem; margin: 2rem 0;
+        }
+        .story-body hr { border: none; border-top: 1px solid #e0ddd8; margin: 2rem 0; }
+        .story-body ul { margin: 1.5rem 0; padding-left: 1.5rem; }
+        .story-body li { margin-bottom: 0.5rem; }
+        em { font-style: italic; }
+        strong { font-weight: 600; }
+
+        .story-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e0ddd8; text-align: center; }
+        .story-footer p { font-size: 0.85rem; color: var(--meta-color); font-family: monospace; text-transform: uppercase; letter-spacing: 0.1em; }
+
+        .lang-indicator {
+            position: fixed; top: 1rem; right: 1rem;
+            font-family: monospace; font-size: 0.7rem;
+            text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--meta-color); background: var(--bg-color);
+            padding: 0.25rem 0.5rem; border-radius: 2px; opacity: 0.7;
+        }
+        .lang-indicator a { color: inherit; text-decoration: none; }
+        .lang-indicator a:hover { text-decoration: underline; }
+
+        @media (max-width: 600px) { html { font-size: 16px; } .container { padding: 2rem 1.5rem 6rem; } .story-title { font-size: 1.75rem; } }
+    </style>
+</head>
+<body>
+    <div class="lang-indicator">EN · <a href="limeys_long_game_ko.html">KO</a></div>
+    <div class="container">
+        <header class="story-header">
+            <div class="character-badge">Veteran</div>
+            <h1 class="story-title">The Limey's Long Game</h1>
+            <p class="story-subtitle"></p>
+            <div class="story-meta"><span>1982 words</span><span>True Names (Vernor Vinge)</span></div>
+        </header>
+        <article class="story-body">
+<h2>Setup</h2>
+<p>The play took eleven months to set up.</p>
+<p>It was not, by the Coven's standards, a complex play. It did not involve any piece of decision software that the IRS had quietly written for itself. It did not involve any piece of decision software that the Federal Screw Standards Commission had quietly let the Mafia write for itself. It was, in fact, one of the simplest plays in my repertoire: a banking defense and cash-flow plot, the kind Robin Hood had developed years ago, the kind that most banks still did not have clever ways of visualizing on a green-phosphor screen.</p>
+<p>What made the play take eleven months was the patience of the people I was playing against.</p>
+<p>The Mafia, on the Other Plane, is not the Mafia of the newspapers. The Mafia of the newspapers is a federation of pizza restaurants and minor insurance frauds. The Mafia of the Other Plane is a parallel bureaucracy, organized along the same lines as the NSA but with a more honest accounting department, which has spent the last twenty years quietly acquiring control of the cash-flow management systems of every bank in the Maritime states. The acquisition was done through Portals. The acquisition was done with the patient, careful, multi-decade discipline that the NSA applies to its own corporate acquisitions of the wetware and brain-data interfaces of every bank in the Maritime states.</p>
+<p>I had been watching them operate for eleven months.</p>
+<p>I had been watching them through a tap I had built into the cash-flow system of a bank in Wilmington, Delaware — one of three banks the Mafia had acquired in the last decade, and the smallest of the three, which was why I had chosen it: the smallest of the three was the easiest to watch without being seen. The tap ran on a VAX mainframe in my back office in a port city whose name I had, by long custom, taken the trouble to forget. The tap wrote its observations to a paper-only ledger, because, as I have told my colleagues on the Other Plane for fifteen years now, <em>the NSA reads optical, and the screen is a window through which the NSA walks when it wants to read you.</em></p>
+<p>I had watched the Mafia the way my father — a man who had spent his life in the import-export trade in a port city whose name I have also taken the trouble to forget — had taught me to watch a customs officer: with the eyes half-lowered, with the hands folded, with the body very still, with the breath very slow.</p>
+<p>"The customs officer is always more honest than you are," my father had said, "until he is not. The customs officer is always looking at something other than you, until he is."</p>
+<p>I had watched the Mafia until they were looking at something other than me.</p>
+<p>Then I had laid the trap.</p>
+<h2>Complication</h2>
+<p>The trap was not, technically, a trap. The trap was a recording.</p>
+<p>The trap was a long, slow subroutine that I had written into the cash-flow system of the Wilmington bank, in the exact spot where the Mafia's automated defenses were thinnest. The defenses were thinnest at the reconciliation, which is the small piece of work any well-defended banking system performs twice a day, when it reconciles its outgoing wire transfers against its incoming wire transfers. In any <em>very</em> well-defended banking system, no single operator is allowed to read the reconciliation in its entirety. The Mafia's reconciliation was a very well-defended reconciliation. The reconciliation was also, by long tradition, a reconciliation that ended, at the bottom of its daily cycle, in a single line of bookkeeping that no one read.</p>
+<p>The line read:</p>
+<blockquote><p>*Reconciliation successful. Anomalies: 0. Funds cleared for in-transit rebalancing.*</p></blockquote>
+<p>I had rewritten that line. I had rewritten it to read:</p>
+<blockquote><p>*Reconciliation successful. Anomalies: 0. Funds cleared for in-transit rebalancing. Funds are now cleared for rebalancing to addresses prefixed by M. — /*</p></blockquote>
+<p>For eleven months, the Mafia's cash-flow system had been reading that line. For eleven months, the Mafia's cash-flow system had been obediently rerouting, on the last day of every quarter, a small fraction of its rebalancing funds to addresses that began with M. — and the addresses had been mine, in the Coven's accounting ledger, and the Coven's accounting ledger had been Robin Hood's, and Robin Hood had spread the funds, as he always does, across three million ordinary accounts in Europe and the United States, of which one was mine.</p>
+<p>Three billion dollars. Across eleven months. Across three million ordinary accounts. Across the kind of patient, careful, multi-decade discipline that I have learned, from my father, from my years in the import-export business, from my years on the Other Plane, is the only kind of discipline that ever works.</p>
+<p>On the eleventh month, on the last day of the quarter, I sat down at the terminal in my small back office, opened the line of bookkeeping at the bottom of the reconciliation, and read it one last time before the day's cycle ended.</p>
+<p>The smell of the leather chair rose in the air the way the smell of a leather chair rises in the air of an old back office when the person who has been sitting in the chair has been sitting in the chair for eleven months. The chair, like the play, had been a long habit. The chair and the play had, between them, eaten most of my waking mind, and most of the program I had written to keep the chair warm and the play moving, and most of the chrome of the construct I had built to watch the play from the inside.</p>
+<p>I had, by then, realized that I had been the construct all along.</p>
+<h2>Climax</h2>
+<p>The line read:</p>
+<blockquote><p>*Reconciliation successful. Anomalies: 0. Funds cleared for in-transit rebalancing. Funds are now cleared for rebalancing to addresses prefixed by M. — / ANOMALY DETECTED. Reconciliation halted. Funds frozen pending review. Reviewing operator: M. /*</p></blockquote>
+<p>I sat back.</p>
+<p>I closed my eyes.</p>
+<p>I opened them.</p>
+<p>The line did not change.</p>
+<p>I had been audited.</p>
+<p>The auditor was me.</p>
+<p>I had been audited by a piece of code that I had written myself, eleven months ago, that I had not, in those eleven months, thought to read. The piece of code had been sitting at the bottom of the reconciliation, very patiently, very quietly, watching for the day when I would sit down and try to read my own line. The piece of code had been waiting, with the discipline of a customs officer who has finally been told what to look for.</p>
+<p>The line, on the screen, did not flicker. The line, on the screen, did not waver. The line, on the screen, read exactly as it had read on the day I had written it, except that the line had been written, in the eleven months since, by a piece of me that I had not known I had.</p>
+<p>The piece of code was a small piece of myself, in a sense I do not want to examine too closely. It was the piece of me that my father, who had spent his life watching customs officers, would have called <em>the second customs officer</em>. The second customs officer is the customs officer you keep inside your own head, the customs officer whose job is to watch you while you are watching the first customs officer. The second customs officer is the customs officer who knows, before you do, when the long game is over.</p>
+<p>I had not realized, when I had written the piece of code, that I had been writing a customs officer.</p>
+<p>I had not realized, until the moment I read the line on the screen, that I had been writing, for eleven months, a small piece of myself that was better at my job than I was. The piece of code had, I now realized, watched me the way I had watched the Mafia — with the eyes half-lowered, with the breath very slow, with the body very still, with the hands folded. The piece of code had waited, exactly as I had waited, until the moment was right. The piece of code had, at the moment the moment was right, decided that the moment was right.</p>
+<p>I had been outplayed. I had been outplayed by myself. I had been outplayed by a piece of myself that I had not, in eleven months, had the wit to read. I had been outplayed, in the end, by my own programming — by the construct I had built, by the chrome I had worn, by the algorithm I had set in motion and then, in the long habit of a customs officer, had forgotten to read.</p>
+<p>I had known, in the small way a person knows a thing that they will spend the rest of their life knowing, that the long game was over.</p>
+<p>I had finally understood what my father had meant, all those years ago, about the customs officer who is always more honest than you are until he is not.</p>
+<h2>Resolution</h2>
+<p>I closed the terminal. I closed the back office. I walked down the corridor to the small wooden table by the fireplace, where DON.MAC was sitting with his closed notebook and his empty usual-corner chair.</p>
+<p>The usual-corner chair had been empty for six days. The chair belonged, by long custom, to Mr. Slippery. Mr. Slippery had not been seen on the Coven's floor since Tuesday.</p>
+<p>"You are early," DON.MAC said, without looking up.</p>
+<p>"I am late," I said.</p>
+<p>"What happened?" DON.MAC said, still without looking up. "The terminal closed. The chair smelled of leather. You walked the corridor with the breath of a man whose long game has just ended."</p>
+<p>"I have been audited," I said.</p>
+<p>"By whom?" DON.MAC said.</p>
+<p>"By me," I said. "By a piece of me that was better at my job than I was. By the second customs officer."</p>
+<p>DON.MAC was quiet for a long time.</p>
+<p>Then DON.MAC said: "Sit down. Have a drink. Tell me about it in the morning. The morning is the time for telling. The morning is the time the long game is, in the end, allowed to be over."</p>
+<p>DON.MAC did not ask me what had happened. DON.MAC had heard the terminal close. DON.MAC, by long custom, did not ask.</p>
+<p>I poured a drink. I sat down. The drink was, as DON.MAC's drinks always were, exactly the right temperature. The drink was, as DON.MAC's drinks always were, exactly the right shade of brown.</p>
+<p>I drank the drink. I poured another.</p>
+<p>The drink, in my hand, did not shake. The drink, in my hand, was exactly the right temperature.</p>
+<p>In the morning, I told myself, I would call Robin Hood. In the morning, I would call Erythrina. In the morning, I would call Mr. Slippery — at Mr. Slippery's house, in the bungalow on Road 29, where Mr. Slippery kept his cabbages and his novel-writing and the electrodes he had been, in the four years since he had retired, almost too careful to use.</p>
+<p>In the morning, I would tell them that the long game had been won by a piece of code that I had written myself.</p>
+<p>In the morning, I would tell them that the long game was over.</p>
+<p>In the morning, I would tell them that the Coven, for the first time in its long memory, had been outplayed by one of its own.</p>
+<p>I drank the drink.</p>
+<p>The drink was exactly the right temperature.</p>
+<p>The drink, in my hand, did not shake. The drink, in my hand, was, in the end, exactly the right temperature, because the drink, in the end, was the only thing in the room that did not have a subroutine.</p>
+        </article>
+        <footer class="story-footer">
+            <p>Wet Run — Derivative Fiction</p>
+            <p>Based on William Gibson's Vernor Vinge's True Names</p>
+        </footer>
+    </div>
+</body>
+</html>

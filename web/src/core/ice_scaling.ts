@@ -17,6 +17,21 @@
  * Per-grade ICE auto-attack bonus (`ENCOUNTER_DMG_BONUS_PCT_BY_GRADE`,
  * applied in `state_actions_combat.ts`) lifts early-game tension where the
  * HP cap is no-op (tier-1/2 natural HP is below cap).
+ *
+ * **Encounter band coverage (ADR-0219 "remaining gap (4)" — encounter band
+ * 커버리지 확대).** The band is also the *reach* surface for the ICE skill
+ * and personality systems: the 97-row catalog has 44 skill-bearing ICE, but
+ * the band previously listed only 2 of them (`loa_entity` @ g5, `aleph` @ g6),
+ * both `aggressive` — so the skill metadata authored by ADR-0222 / corrected
+ * by ADR-0223 and the personality archetypes of ADR-0161 were unobservable in
+ * play. Slots 1-3 of every grade now list tier-appropriate ICE that carries
+ * skills, and every grade lists at least one non-`aggressive` ICE, so the
+ * archetype preference lists actually have something to match against.
+ *
+ * Slot 0 of every band stays **immutable**: `encounterIceIdForGrade(grade)`
+ * with no seed keeps returning `band[0]` (the legacy fixed-id behavior the
+ * original table pinned — watchdog @ g1, spider @ g2, black @ g3, goliath @
+ * g4, neuromancer @ g5/g6). Only slots 1-3 (the seed-rotated ones) changed.
  */
 import type { Ice } from "./types.ts";
 
@@ -24,16 +39,41 @@ import type { Ice } from "./types.ts";
  *
  * Each entry lists Gibson/Sprawl-flavored ids drawn from `ice_types.json`.
  * The first id of each band matches the legacy fixed-id behavior so callers
- * that omit a seed stay backward compatible. Boss rooms do NOT use this table
- * — `dungeon.ts` keeps the wintermute pinning for exit rooms.
+ * that omit a seed stay backward compatible — **slot 0 is immutable**.
+ * Boss rooms do NOT use this table — `dungeon.ts` keeps the wintermute
+ * pinning for exit rooms.
+ *
+ * Slots 1-3 are the seed-rotated part of the band. They were widened to
+ * cover the ICE skill and personality systems (ADR-0219 remaining gap (4)):
+ *
+ *  - **Skill coverage.** Every grade lists at least one ICE that carries
+ *    `skills`, so the authored skill metadata (ADR-0222) and its corrected
+ *    classifications (ADR-0223) are reachable in play instead of sitting on
+ *    catalog rows the encounter band never selects.
+ *  - **Archetype coverage.** Every grade lists at least one non-`aggressive`
+ *    ICE, so the `defensive` preference list of ADR-0161 has a target.
+ *    `support` remains unreachable — the catalog has **no** `support` ICE
+ *    (0 of 97 rows), and adding one is an ADR-0219 Option D content task.
+ *  - **Tier band.** Each grade keeps the tier band the original table used
+ *    (g1 T1, g2 T1-T2, g3 T2-T3, g4 T3-T4, g5 T3-T5, g6 T4-T6) so the HP
+ *    curve and the `iceHpForGrade` cap stay meaningful.
+ *
+ * Known catalog limits (not worked around, on purpose):
+ *  - **g1 cannot fire a skill.** Both tier-1 skill-bearing ICE
+ *    (`hosaka_courier`, `sense_net_alert`) carry only `buff` / `debuff`
+ *    effects, and the combat path only fires a skill with `damage > 0`
+ *    (ADR-0219 Option B). There is no tier-1 ICE with a damaging skill.
+ *  - **No `stealth` ICE in the catalog carries any skill** (all 5 stealth
+ *    rows have `skills: []`), so a skill-bearing `stealth` slot is
+ *    impossible until the catalog gains one.
  */
 export const ENCOUNTER_ICE_BY_GRADE: Readonly<Record<number, ReadonlyArray<string>>> = {
-  1: ["watchdog", "spider", "wisp", "zombie"],
-  2: ["spider", "raven", "surveillance", "chinese_ice"],
-  3: ["black", "goliath", "raven", "ai_whisper"],
-  4: ["goliath", "ai_whisper", "hellhound", "morrison_echo"],
-  5: ["neuromancer", "revelation", "loa_entity", "hellhound"],
-  6: ["neuromancer", "wintermute", "ice_neuromancer_warden", "aleph"],
+  1: ["watchdog", "sense_net_alert", "wisp", "hosaka_courier"],
+  2: ["spider", "sense_net_spin", "corporate_guard", "loa_zombie"],
+  3: ["black", "hosaka_defender", "ice_dixie_echo", "sense_net_reporter"],
+  4: ["goliath", "sense_net_reporter", "yakuza_enforcer", "ta_sentinel"],
+  5: ["neuromancer", "sense_net_reporter", "ta_sentinel", "yakuza_enforcer"],
+  6: ["neuromancer", "standard_ascended", "ta_sentinel", "aleph"],
 };
 
 export function clampGrade(grade: number): number {

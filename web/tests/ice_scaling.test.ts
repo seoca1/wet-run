@@ -114,6 +114,118 @@ describe("ice_scaling", () => {
   });
 });
 
+/**
+ * Encounter band coverage (ADR-0219 remaining gap (4)).
+ *
+ * Pins the intent the band now has: every grade lists a skill-bearing ICE and
+ * a non-`aggressive` ICE, every band id stays inside its grade's tier band,
+ * and slot 0 of every grade is still the legacy fixed id.
+ */
+describe("encounter band coverage", () => {
+  /** Tier band each grade may draw from (the band the original table used). */
+  const TIER_BAND: Readonly<Record<number, readonly [number, number]>> = {
+    1: [1, 1],
+    2: [1, 2],
+    3: [2, 3],
+    4: [3, 4],
+    5: [3, 5],
+    6: [4, 6],
+  };
+
+  const GRADES = [1, 2, 3, 4, 5, 6] as const;
+
+  it("keeps slot 0 of every grade on the legacy fixed id", () => {
+    // Slot 0 is immutable: a seedless pick must keep returning the id the
+    // original table pinned.
+    expect(encounterIceIdForGrade(1)).toBe("watchdog");
+    expect(encounterIceIdForGrade(2)).toBe("spider");
+    expect(encounterIceIdForGrade(3)).toBe("black");
+    expect(encounterIceIdForGrade(4)).toBe("goliath");
+    expect(encounterIceIdForGrade(5)).toBe("neuromancer");
+    expect(encounterIceIdForGrade(6)).toBe("neuromancer");
+  });
+
+  it("lists exactly four ids per grade, all present in the catalog", () => {
+    for (const g of GRADES) {
+      const band = ENCOUNTER_ICE_BY_GRADE[g] ?? [];
+      expect(band.length, `grade ${g} band length`).toBe(4);
+      for (const id of band) {
+        expect(catalog[id], `grade ${g} id ${id} missing from catalog`).toBeDefined();
+      }
+    }
+  });
+
+  it("gives every grade at least one skill-bearing ICE", () => {
+    for (const g of GRADES) {
+      const band = ENCOUNTER_ICE_BY_GRADE[g] ?? [];
+      const withSkills = band.filter((id) => (catalog[id]?.skills ?? []).length > 0);
+      expect(
+        withSkills.length,
+        `grade ${g} band must carry at least one skill-bearing ICE (band: ${band.join(", ")})`,
+      ).toBeGreaterThan(0);
+    }
+  });
+
+  it("gives every grade at least one non-aggressive ICE (archetype diversity)", () => {
+    for (const g of GRADES) {
+      const band = ENCOUNTER_ICE_BY_GRADE[g] ?? [];
+      const archetypes = new Set(
+        band.map((id) => catalog[id]?.personality ?? "aggressive"),
+      );
+      const nonAggressive = [...archetypes].filter((p) => p !== "aggressive");
+      expect(
+        nonAggressive.length,
+        `grade ${g} band must include a non-aggressive ICE (archetypes: ${[...archetypes].join(", ")})`,
+      ).toBeGreaterThan(0);
+    }
+  });
+
+  it("keeps every band id inside its grade's tier band", () => {
+    for (const g of GRADES) {
+      const [lo, hi] = TIER_BAND[g] ?? [1, 6];
+      for (const id of ENCOUNTER_ICE_BY_GRADE[g] ?? []) {
+        const tier = catalog[id]?.tier ?? 0;
+        expect(
+          tier,
+          `grade ${g} id ${id} has tier ${tier}, outside T${lo}-T${hi}`,
+        ).toBeGreaterThanOrEqual(lo);
+        expect(tier, `grade ${g} id ${id} has tier ${tier}, outside T${lo}-T${hi}`).toBeLessThanOrEqual(hi);
+      }
+    }
+  });
+
+  it("covers the skill-bearing catalog in play (most skill-bearing ICE are reachable)", () => {
+    // The widened band must reach the skill-bearing catalog, not just a couple
+    // of rows: 16 of the 24 slots and 11 of the 18 unique band ids carry
+    // skills (the band used to carry 2 slots / 2 unique ids).
+    const bandIds = new Set<string>();
+    let slotsWithSkills = 0;
+    for (const g of GRADES) {
+      for (const id of ENCOUNTER_ICE_BY_GRADE[g] ?? []) {
+        bandIds.add(id);
+        if ((catalog[id]?.skills ?? []).length > 0) slotsWithSkills += 1;
+      }
+    }
+    expect(slotsWithSkills).toBeGreaterThanOrEqual(14);
+
+    const skillBearing = Object.values(catalog).filter(
+      (ice) => (ice.skills ?? []).length > 0,
+    );
+    const reachable = skillBearing.filter((ice) => bandIds.has(ice.id));
+    expect(reachable.length).toBeGreaterThanOrEqual(10);
+  });
+
+  it("never selects a band id that is missing from the catalog", () => {
+    for (const g of GRADES) {
+      const band = ENCOUNTER_ICE_BY_GRADE[g] ?? [];
+      for (let s = 0; s < band.length * 4; s += 1) {
+        const id = encounterIceIdForGrade(g, s);
+        expect(catalog[id], `grade ${g} seed ${s} resolved ${id}`).toBeDefined();
+      }
+    }
+  });
+});
+
 describe("grade-driven encounters in the procedural matrix", () => {
   it("places a band ICE from the grade-5 set and returns grade-scaled HP", () => {
     const matrix = generateProceduralMatrix(5, 42);

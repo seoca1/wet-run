@@ -79,7 +79,11 @@ describe("ice types (Tier 2c variety)", () => {
 
   it("loads exactly 97 ICE types (full Python catalog)", () => {
     const data = iceTypesData as unknown as Record<string, unknown>;
-    expect(Object.keys(data).length).toBe(97);
+    // The file's top level holds the 97 ICE rows plus one non-ICE key,
+    // `skill_defs` (the authored per-skill metadata table, ADR-0219 Option D).
+    // Count ICE rows, not raw keys — the pin is on the catalog's ICE types.
+    const iceIds = Object.keys(data).filter((id) => id !== "skill_defs");
+    expect(iceIds.length).toBe(97);
   });
 
   it("ICE types include tier 1-3 representatives", () => {

@@ -3177,5 +3177,447 @@
     "ice_kind": "construct",
     "aggression": "boss",
     "personality": "aggressive"
+  },
+  "skill_defs": {
+    "absorb_damage": {
+      "name": "Absorb Damage",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "addiction_loop": {
+      "name": "Addiction Loop",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "ai_negotiate": {
+      "name": "Ai Negotiate",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "ai_subversion": {
+      "name": "Ai Subversion",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "alarm_propagate": {
+      "name": "Alarm Propagate",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "aleph_fragment": {
+      "name": "Aleph Fragment",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "alibi_construct": {
+      "name": "Alibi Construct",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "archive_guard": {
+      "name": "Archive Guard",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "asset_seize": {
+      "name": "Asset Seize",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "backup_dispatch": {
+      "name": "Backup Dispatch",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "biofeedback": {
+      "name": "Biofeedback",
+      "effect": "dot",
+      "cooldown_ms": 4000
+    },
+    "broadcast_signal": {
+      "name": "Broadcast Signal",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "brutal_force": {
+      "name": "Brutal Force",
+      "effect": "multi_hit",
+      "cooldown_ms": 4000
+    },
+    "buffer_check": {
+      "name": "Buffer Check",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "command_brute": {
+      "name": "Command Brute",
+      "effect": "multi_hit",
+      "cooldown_ms": 4000
+    },
+    "construct_evolution": {
+      "name": "Construct Evolution",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "construct_proxy": {
+      "name": "Construct Proxy",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "construct_summon": {
+      "name": "Construct Summon",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "critical_hit": {
+      "name": "Critical Hit",
+      "effect": "heavy_attack",
+      "cooldown_ms": 4000
+    },
+    "damage_absorb": {
+      "name": "Damage Absorb",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "data_archive": {
+      "name": "Data Archive",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "data_corrupt": {
+      "name": "Data Corrupt",
+      "effect": "dot",
+      "cooldown_ms": 4000
+    },
+    "data_melt": {
+      "name": "Data Melt",
+      "effect": "dot",
+      "cooldown_ms": 4000
+    },
+    "data_pollution": {
+      "name": "Data Pollution",
+      "effect": "dot",
+      "cooldown_ms": 4000
+    },
+    "data_preserve": {
+      "name": "Data Preserve",
+      "effect": "heal",
+      "cooldown_ms": 4000
+    },
+    "data_scan": {
+      "name": "Data Scan",
+      "effect": "detect",
+      "cooldown_ms": 4000
+    },
+    "datamine_strike": {
+      "name": "Datamine Strike",
+      "effect": "multi_hit",
+      "cooldown_ms": 4000
+    },
+    "debt_collect": {
+      "name": "Debt Collect",
+      "effect": "debuff",
+      "cooldown_ms": 4000
+    },
+    "debt_track": {
+      "name": "Debt Track",
+      "effect": "debuff",
+      "cooldown_ms": 4000
+    },
+    "deep_trace": {
+      "name": "Deep Trace",
+      "effect": "detect",
+      "cooldown_ms": 4000
+    },
+    "defense_grid": {
+      "name": "Defense Grid",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "enforce_contract": {
+      "name": "Enforce Contract",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "family_protocol": {
+      "name": "Family Protocol",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "family_vote": {
+      "name": "Family Vote",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "fortress_mode": {
+      "name": "Fortress Mode",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "full_manifest": {
+      "name": "Full Manifest",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "glitch_phase": {
+      "name": "Glitch Phase",
+      "effect": "stun",
+      "cooldown_ms": 4000
+    },
+    "ice_break": {
+      "name": "Ice Break",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "ice_pierce": {
+      "name": "Ice Pierce",
+      "effect": "pierce",
+      "cooldown_ms": 4000
+    },
+    "info_warfare": {
+      "name": "Info Warfare",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "inheritance_trace": {
+      "name": "Inheritance Trace",
+      "effect": "detect",
+      "cooldown_ms": 4000
+    },
+    "intel_broker": {
+      "name": "Intel Broker",
+      "effect": "detect",
+      "cooldown_ms": 4000
+    },
+    "intimidation": {
+      "name": "Intimidation",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "loa_command": {
+      "name": "Loa Command",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "loa_summon": {
+      "name": "Loa Summon",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "lowbeer_vision": {
+      "name": "Lowbeer Vision",
+      "effect": "detect",
+      "cooldown_ms": 4000
+    },
+    "maintain_order": {
+      "name": "Maintain Order",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "manifest_form": {
+      "name": "Manifest Form",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "matrix_merge": {
+      "name": "Matrix Merge",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "media_alert": {
+      "name": "Media Alert",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "memory_lock": {
+      "name": "Memory Lock",
+      "effect": "silence",
+      "cooldown_ms": 4000
+    },
+    "memory_overload": {
+      "name": "Memory Overload",
+      "effect": "dot",
+      "cooldown_ms": 4000
+    },
+    "narrative_attack": {
+      "name": "Narrative Attack",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "narrative_warp": {
+      "name": "Narrative Warp",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "orbital_command": {
+      "name": "Orbital Command",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "orbital_targeting": {
+      "name": "Orbital Targeting",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "packet_route": {
+      "name": "Packet Route",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "penetrating_strike": {
+      "name": "Penetrating Strike",
+      "effect": "pierce",
+      "cooldown_ms": 4000
+    },
+    "peripheral_strike": {
+      "name": "Peripheral Strike",
+      "effect": "multi_hit",
+      "cooldown_ms": 4000
+    },
+    "plague_spread": {
+      "name": "Plague Spread",
+      "effect": "dot",
+      "cooldown_ms": 4000
+    },
+    "possession": {
+      "name": "Possession",
+      "effect": "debuff",
+      "cooldown_ms": 4000
+    },
+    "priority_delivery": {
+      "name": "Priority Delivery",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "random_target": {
+      "name": "Random Target",
+      "effect": "debuff",
+      "cooldown_ms": 4000
+    },
+    "reality_distortion": {
+      "name": "Reality Distortion",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "reality_warp": {
+      "name": "Reality Warp",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "report": {
+      "name": "Report",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "report_alert": {
+      "name": "Report Alert",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "report_distribute": {
+      "name": "Report Distribute",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "scan": {
+      "name": "Scan",
+      "effect": "detect",
+      "cooldown_ms": 4000
+    },
+    "shield_protocol": {
+      "name": "Shield Protocol",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "shield_wall": {
+      "name": "Shield Wall",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "siege_protocol": {
+      "name": "Siege Protocol",
+      "effect": "heavy_attack",
+      "cooldown_ms": 4000
+    },
+    "spirit_guard": {
+      "name": "Spirit Guard",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "stack_corruption": {
+      "name": "Stack Corruption",
+      "effect": "dot",
+      "cooldown_ms": 4000
+    },
+    "stack_overflow": {
+      "name": "Stack Overflow",
+      "effect": "stun",
+      "cooldown_ms": 4000
+    },
+    "stealth_strike": {
+      "name": "Stealth Strike",
+      "effect": "multi_hit",
+      "cooldown_ms": 4000
+    },
+    "straylight_protocol": {
+      "name": "Straylight Protocol",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    },
+    "stub_time": {
+      "name": "Stub Time",
+      "effect": "slow",
+      "cooldown_ms": 4000
+    },
+    "system_lock": {
+      "name": "System Lock",
+      "effect": "silence",
+      "cooldown_ms": 4000
+    },
+    "territorial_mark": {
+      "name": "Territorial Mark",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "timeline_collapse": {
+      "name": "Timeline Collapse",
+      "effect": "stun",
+      "cooldown_ms": 4000
+    },
+    "undead_resilience": {
+      "name": "Undead Resilience",
+      "effect": "regen",
+      "cooldown_ms": 4000
+    },
+    "vault_guard": {
+      "name": "Vault Guard",
+      "effect": "shield",
+      "cooldown_ms": 4000
+    },
+    "voodoo_curse": {
+      "name": "Voodoo Curse",
+      "effect": "poison",
+      "cooldown_ms": 4000
+    },
+    "voodoo_dominion": {
+      "name": "Voodoo Dominion",
+      "effect": "poison",
+      "cooldown_ms": 4000
+    },
+    "voodoo_king": {
+      "name": "Voodoo King",
+      "effect": "poison",
+      "cooldown_ms": 4000
+    },
+    "watchdog_mark": {
+      "name": "Watchdog Mark",
+      "effect": "buff",
+      "cooldown_ms": 4000
+    },
+    "wind_demolish": {
+      "name": "Wind Demolish",
+      "effect": "attack",
+      "cooldown_ms": 4000
+    }
   }
 }

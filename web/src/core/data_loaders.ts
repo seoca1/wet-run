@@ -12,7 +12,11 @@
  *
  * No new dependencies — pure type-guard validation.
  */
-import { parseIceSkills } from "./ice_skills.ts";
+import {
+  parseIceSkills,
+  parseIceSkillDefs,
+  type IceSkillDefs,
+} from "./ice_skills.ts";
 import type { Mission, Program, Ice } from "./types.ts";
 
 interface LegacyMission {
@@ -251,7 +255,11 @@ const PARSE_ICE_DEFAULT_GRADE = 1;
  * `tests/data_loaders.test.ts:234` (`expect(ice.hp).toBeGreaterThan(0)`). */
 const PARSE_ICE_LEGACY_HP = 100;
 
-export function parseIce(raw: unknown, idHint: string): Ice {
+export function parseIce(
+  raw: unknown,
+  idHint: string,
+  skillDefs: IceSkillDefs = {},
+): Ice {
   if (typeof raw !== "object" || raw === null) {
     throw new Error(`[data_loaders] ice '${idHint}' must be an object`);
   }
@@ -282,7 +290,7 @@ export function parseIce(raw: unknown, idHint: string): Ice {
       ? hpBase + hpPerGrade * Math.max(0, PARSE_ICE_DEFAULT_GRADE - 1)
       : PARSE_ICE_LEGACY_HP;
   const dmgBase = typeof r.dmg_base === "number" ? r.dmg_base : 0;
-  const skills = parseIceSkills(r.skills, `ice '${name}'`, dmgBase);
+  const skills = parseIceSkills(r.skills, `ice '${name}'`, dmgBase, skillDefs);
   // `personality` drives the archetype system (`ice_ai.ts`): defensive ICE
   // shield below half HP, stealth ICE halves the alarm tick rate, aggressive
   // ICE gains crit chance, support ICE targets wounded allies. It is dropped
@@ -362,16 +370,31 @@ export function loadProgramsCatalog(
   return out;
 }
 
-/** Load an ICE types JSON file into a Map. Throws on first malformed entry. */
+/** Top-level key of `ice_types.json` that holds the authored skill table
+ * rather than an ICE row. `loadIceCatalog` skips it. */
+const ICE_SKILL_DEFS_KEY = "skill_defs";
+
+/** Load an ICE types JSON file into a Map. Throws on first malformed entry.
+ *
+ * The JSON's top-level map holds the ICE rows plus one non-ICE key,
+ * `skill_defs` — the authored per-skill metadata table (ADR-0219 Option D).
+ * That key is consumed here and skipped when the ICE rows are parsed.
+ */
 export function loadIceCatalog(raw: unknown): Readonly<Record<string, Ice>> {
   if (typeof raw !== "object" || raw === null) {
     throw new Error(
       "[data_loaders] ice types JSON must be an object keyed by id",
     );
   }
+  const entries = Object.entries(raw as Record<string, unknown>);
+  const skillDefs = parseIceSkillDefs(
+    entries.find(([id]) => id === ICE_SKILL_DEFS_KEY)?.[1] ?? {},
+    "ice_types.json",
+  );
   const out: Record<string, Ice> = {};
-  for (const [id, ice] of Object.entries(raw as Record<string, unknown>)) {
-    out[id] = parseIce(ice, id);
+  for (const [id, ice] of entries) {
+    if (id === ICE_SKILL_DEFS_KEY) continue;
+    out[id] = parseIce(ice, id, skillDefs);
   }
   return out;
 }

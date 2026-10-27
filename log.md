@@ -1670,3 +1670,53 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **한계**: `build_static_data.py`(search_index 전체 생성기) 미복원 — 실행 시 slop 주입 위험. 신규 카드 본문은 현재 EN/KO 소스 그대로(일부 slop 포함 가능).
 
 **부수(기존 이슈)**: `play.html`(→`tier5.js`)이 참조하던 `sounds/v2/{click,select,error,success,flatline,jack_in,jack_out,scan,probe,hammer,wardrone}.wav` 11개가 부재해 404 → 게임 SFX(`web/public/sounds/sfx/`)에서 매핑 복사하여 해소(전부 HTTP 200, play.html 콘솔 0). `novel.html` 404는 정적 참조가 전혀 없는 팬텀(REORGANIZE_PLAN상 이미 삭제·library.html 통합) — 수정 대상 없음.
+
+## [2026-10-27] test | Property-based fuzzing 도입 — 최초 적용 + 결함 5건 발견
+
+**배경**: 기존 검증 스택(vitest 122 files · Playwright e2e 16 specs · seeded balance 하네스 · 정적 audit 4종 · Orca 수동)에 **property-based/fuzz 테스트가 부재** → `fast-check` 도입, 최초 적용.
+
+**도입물**:
+- `web/package.json`: devDep `fast-check@^4.10.2` + 스크립트 `fuzz` = `vitest run property`.
+- `web/tests/property_reducer_fuzz.test.ts` (343 LOC) — `applyAction`에 13종 액션 랜덤 시퀀스 주입, 매 스텝 8개 불변식 검증(throw 없음 · NaN/Infinity 없음 · HP 범위 · alarm 0..100 · turnCount≥0 · phase/runPhase/bossPhase 유니온 · activeIceIndex 범위 · determinism). 기존 `mulberry32` + `Math.random`/`Date.now()` 제어 하네스 재사용.
+- `web/tests/property_save_fuzz.test.ts` (312 LOC) — `SaveSlot` 왕복 무손실(plain/compressed 양 브랜치) · 손상/절단/legacy/할당량초과 내성.
+
+**게이트**: `npm test` **124 files / 2911 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. 딥 런 `FUZZ_RUNS=20000`에서도 리듀서 불변식 위반 **0** (리듀서 자체는 건전).
+
+**발견 5건** (미수정 — 검증 전용 세션이므로 보고만):
+1. **[HIGH·crash]** `isSaveSlot`(`src/save/storage.ts:210`)이 배열 원소 타입·`graphicNovelProgress`를 검증하지 않음 → `slotToGameState`(`src/core/state.ts:243`)의 `chainId.split("_")`가 **TypeError 크래시**. 최소 반례 `graphicNovelProgress:"not-an-object"`. `it.fails`로 고정.
+2. **[MED]** 같은 함수가 `deckIds:[1]`(숫자 원소)을 유효 `SaveSlot`으로 수용 — 선언 타입 `ReadonlyArray<string>` 위반. `it.fails`로 고정.
+3. **[HIGH·gameplay]** **보스 방에 도보 도달 불가 — 53/53 미션**. `applyMatrixAction`(`src/core/state_actions_phases.ts:87-136`) 이동이 비대칭(전진은 `adjacent[0]`만, 후진은 첫 매칭 노드) → 생성 그래프 대부분 노드(보스 포함) 진입 불가.
+4. **[MED]** `ice_x2` 뮤테이터 무효 — `Math.min(node.iceIds.length * mult, 4)` 후 `slice(0, baseCount)`는 늘릴 수 없음(`state_actions_phases.ts:59-65`). 노드는 항상 ICE 1개 → 멀티-ICE 전투는 데드 코드.
+5. **[MED]** `parseIce`(`src/core/data_loaders.ts:233-272`)가 ICE `skills`를 버림 — 97종 중 **44종** 손실 → `skillCooldowns` 항상 `{}`, `enemyShouldUseSkill` 미발화.
+
+**미커밋**. `it.fails` 2건(결함 1·2)은 회귀 추적용으로 유지.
+
+## [2026-10-27] fix | Fuzzing 발견 결함 5건 전부 수정 (ADR-0215·0216)
+
+**계기**: property-based fuzzing(fast-check) 도입 직후 발견된 결함 5건을 전부 수정. 게이트: `npm test` **125 files / 2928 tests PASS** · `tsc --noEmit` 0 · `eslint` 0 errors · 딥 퍼징 `FUZZ_RUNS=3000` 9 PASS · `audit_vault.py` CLEAN · `mixed_language_audit.py` 0.
+
+**#1·#2 [HIGH·crash] 세이브 검증 강화** — `web/src/save/storage.ts`
+- `isSaveSlot`이 배열 **원소 타입**을 검사하지 않아 `deckIds:[1]`(숫자)을 유효 `SaveSlot`으로 수용 → 선언 타입 위반.
+- `graphicNovelProgress` 미검증 → `slotToGameState`의 `chainId.split("_")` **TypeError 크래시**.
+- 수정: `isStringArray` + `isGraphicNovelProgress` 가드 추가(+26/−4, 259 LOC). `property_save_fuzz.test.ts`의 `it.fails` 2건 → 정상 통과 테스트로 전환(반례는 회귀 주석 유지).
+
+**#3 [HIGH·gameplay] 보스 도달 불가 → 그래프 지향 내비게이션 (ADR-0215)**
+- 원인: `applyMatrixAction` 전진이 `node.adjacent[0]`만 따라감 → 53/53 미션에서 그 체인이 **2-사이클 0↔1**이라 최대 28노드 중 2개만 방문. (그래프 자체는 완전 연결 — BFS 도달 53/53.)
+- 신규 `web/src/core/matrix_navigation.ts`(148 LOC): `nextHopToward(matrix, from, target)` = `adjacent` 위 BFS 최단경로의 첫 hop, 도달 불가 시 `-1`. **`adjacent[0]` fallback 금지**(그 fallback이 결함 원인).
+- 전진=`bossNode` 방향, 후진=`startNode` 방향, `-1` → 상태 불변 + 명시 메시지. `applyLootAction`도 동일 헬퍼(인덱스+1 제거). `makeInitialState`는 `matrix.startNode` 사용. 렌더러 `isAdjacent`는 `adjacent.includes`.
+- 실측: 보스 도달 **0/53 → 53/53**, 평균 도보 **17.57 → 3.58 hop**, 최대 34 → 6.
+- 회귀 테스트 `web/tests/matrix_navigation.test.ts`(12) — 리듀서를 `adjacent[0]`로 되돌리면 `expected 1 to be 20`으로 실패 확인.
+
+**#4 [MED] `ice_x2` 뮤테이터 무효** — `state_actions_phases.ts`
+- `Math.min(node.iceIds.length*2, 4)` 후 `slice(0, baseCount)`는 늘릴 수 없음(노드당 ICE 1개) → 멀티-ICE 전투 데드 코드.
+- 수정: `Array.from({length: baseCount}, (_, i) => node.iceIds[i % node.iceIds.length])` 순환 → 별개 객체. 되돌리면 `expected 1 to be 2`로 실패 확인.
+
+**#5 [MED] `parseIce`가 ICE `skills` 폐기** — `data_loaders.ts` → `ice_skills.ts` (ADR-0216)
+- 97종 중 **44종** 스킬 상실 → `skillCooldowns` 항상 `{}`, `enemyShouldUseSkill` 미발화.
+- JSON은 스킬을 **문자열 ID**로만 보유(88종, 메타데이터 catalog 부재) → loader가 파생: `id` 원문 · `name` humanize · `effect` snake_case **토큰** 매칭(substring 금지 — `enforce_contract`의 "force" 오분류 방지) · `damage`=`dmg_base`(비공격 효과는 0, `damage>0` 게이트) · `cooldownMs`=4000.
+- 모듈 분리로 `data_loaders.ts` 461 → **320 LOC**(정책 100–300 준수), 신규 `ice_skills.ts` 147 LOC.
+- 밸런스 `npm run balance` **바이트 동일**(인카운터 밴드 24종 중 스킬 보유 2종).
+
+**부수**: 합성 매트릭스 픽스처 4곳 비정합(범위 밖 `adjacent`) 정합화 — assertion 약화 없음(픽스처만 수정).
+
+**미커밋**. ADR: `0215-graph-directed-matrix-navigation.md` · `0216-derived-ice-skill-metadata.md` (+ `decisions/README.md` 인덱스 2행).

@@ -207,6 +207,25 @@ function parseSlot(raw: string): SaveSlot | null {
   }
 }
 
+/** Every element of a card-id array must be a string (`ReadonlyArray<string>`). */
+function isStringArray(value: unknown): value is ReadonlyArray<string> {
+  return Array.isArray(value) && value.every((e) => typeof e === "string");
+}
+
+/** `graphicNovelProgress` is optional and nullable; when present it must be a
+ *  well-formed object (string `chainId`, numeric indices) — a malformed value
+ *  would crash `slotToGameState` on `chainId.split("_")`. */
+function isGraphicNovelProgress(value: unknown): boolean {
+  if (value === undefined || value === null) return true;
+  if (typeof value !== "object" || Array.isArray(value)) return false;
+  const g = value as Record<string, unknown>;
+  return (
+    typeof g.chainId === "string" &&
+    typeof g.sceneIndex === "number" &&
+    typeof g.dialogueIndex === "number"
+  );
+}
+
 function isSaveSlot(value: unknown): value is SaveSlot {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
@@ -218,10 +237,11 @@ function isSaveSlot(value: unknown): value is SaveSlot {
     typeof v.playerAlarm === "number" &&
     typeof v.playerCredits === "number" &&
     typeof v.turnCount === "number" &&
-    Array.isArray(v.deckIds) &&
-    Array.isArray(v.discardIds) &&
-    Array.isArray(v.drawIds) &&
-    typeof v.savedAt === "string"
+    isStringArray(v.deckIds) &&
+    isStringArray(v.discardIds) &&
+    isStringArray(v.drawIds) &&
+    typeof v.savedAt === "string" &&
+    isGraphicNovelProgress(v.graphicNovelProgress)
   );
 }
 

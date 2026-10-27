@@ -382,6 +382,13 @@ export interface SaveSlot {
     readonly sceneIndex: number;
     readonly dialogueIndex: number;
   } | null;
+  /** Index of the matrix node the player stood on when the run was saved.
+   *
+   * Optional for backward compatibility: saves written before this field
+   * existed omit it, and the restore path falls back to the matrix entry
+   * node (`matrix.startNode`). When present it MUST be a finite number.
+   */
+  readonly currentNodeIndex?: number;
 }
 
 /** Game action — keyboard input → state mutation. */

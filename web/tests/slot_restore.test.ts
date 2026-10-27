@@ -1,6 +1,11 @@
 /** Tests for save/load round-trip via slotToGameState (CONTINUE option). */
 import { describe, it, expect } from "vitest";
-import { slotToGameState, stateToSaveSlot, makeInitialState } from "../src/core/state.ts";
+import {
+  slotToGameState,
+  stateToSaveSlot,
+  makeInitialState,
+  applyAction,
+} from "../src/core/state.ts";
 import type { GameState, Ice, Mission, Program, SaveSlot } from "../src/core/types.ts";
 
 const mockMission: Mission = {
@@ -147,5 +152,120 @@ describe("slotToGameState (CONTINUE option)", () => {
     const customIce: Ice = { ...mockIce, id: "custom_ice", name: "Custom" };
     const restored = slotToGameState(slot, catalog, mockPrograms, customIce);
     expect(restored?.ice.id).toBe("custom_ice");
+  });
+});
+
+/**
+ * REGRESSION (severe): the CONTINUE option used to restore an UNPLAYABLE
+ * state.
+ *
+ * `slotToGameState` returned `matrix: null` while still declaring
+ * `runPhase: "matrix"`. `applyAction` routes on `runPhase === "matrix"`
+ * FIRST, so `applyMatrixAction` owned the state — and BOTH its `confirm`
+ * branch and its movement branch are gated on `state.matrix != null`.
+ * With a null matrix every input fell through and the reducer returned the
+ * state unchanged: the player could neither confirm nor move after
+ * resuming a save.
+ *
+ * These tests assert PLAYABILITY (the reducer actually reacts to input),
+ * not phase labels — the old `phase === "approach"` assertion passed
+ * vacuously because the dead state also reported `"approach"`.
+ */
+describe("slotToGameState (CONTINUE option) — restored run must be playable", () => {
+  it("restores a non-null matrix so the resumed run is actionable", () => {
+    const state = buildState();
+    const slot = stateToSaveSlot(state);
+    const restored = slotToGameState(slot, catalog, mockPrograms, mockIce);
+    expect(restored).not.toBeNull();
+    if (!restored) return;
+    expect(restored.matrix).not.toBeNull();
+    expect(restored.matrix?.nodes.length ?? 0).toBeGreaterThan(0);
+  });
+
+  it("restores the same matrix the run started with (deterministic inputs)", () => {
+    const state = buildState();
+    const slot = stateToSaveSlot(state);
+    const restored = slotToGameState(slot, catalog, mockPrograms, mockIce);
+    expect(restored).not.toBeNull();
+    if (!restored) return;
+    expect(restored.matrix).not.toBeNull();
+    expect(JSON.stringify(restored.matrix)).toBe(JSON.stringify(state.matrix));
+  });
+
+  it("confirm is NOT a no-op on a restored state (enters combat at an ICE node)", () => {
+    const state = buildState();
+    const matrix = state.matrix;
+    expect(matrix).not.toBeNull();
+    if (!matrix) return;
+    const iceNodeIndex = matrix.nodes.findIndex((n) => n.iceIds.length > 0);
+    expect(iceNodeIndex).toBeGreaterThanOrEqual(0);
+
+    const atIceNode: GameState = { ...state, currentNodeIndex: iceNodeIndex };
+    const slot = stateToSaveSlot(atIceNode);
+    const restored = slotToGameState(slot, catalog, mockPrograms, mockIce);
+    expect(restored).not.toBeNull();
+    if (!restored) return;
+
+    const afterConfirm = applyAction(restored, { type: "confirm" });
+    expect(afterConfirm).not.toBe(restored);
+    expect(afterConfirm.runPhase).toBe("combat");
+    expect(afterConfirm.iceRoster.length).toBeGreaterThan(0);
+  });
+
+  it("move_south changes currentNodeIndex on a restored state", () => {
+    const state = buildState();
+    const slot = stateToSaveSlot(state);
+    const restored = slotToGameState(slot, catalog, mockPrograms, mockIce);
+    expect(restored).not.toBeNull();
+    if (!restored) return;
+    expect(restored.matrix).not.toBeNull();
+
+    const afterMove = applyAction(restored, { type: "move_south" });
+    expect(afterMove).not.toBe(restored);
+    expect(afterMove.currentNodeIndex).not.toBe(restored.currentNodeIndex);
+    expect(afterMove.currentNodeIndex).toBeGreaterThanOrEqual(0);
+  });
+
+  it("round-trips currentNodeIndex through stateToSaveSlot + slotToGameState", () => {
+    const state = buildState();
+    const matrix = state.matrix;
+    expect(matrix).not.toBeNull();
+    if (!matrix) return;
+    const iceNodeIndex = matrix.nodes.findIndex((n) => n.iceIds.length > 0);
+    expect(iceNodeIndex).toBeGreaterThanOrEqual(0);
+
+    const moved: GameState = { ...state, currentNodeIndex: iceNodeIndex };
+    const slot = stateToSaveSlot(moved);
+    expect(slot.currentNodeIndex).toBe(iceNodeIndex);
+
+    const restored = slotToGameState(slot, catalog, mockPrograms, mockIce);
+    expect(restored).not.toBeNull();
+    if (!restored) return;
+    expect(restored.currentNodeIndex).toBe(iceNodeIndex);
+  });
+
+  it("falls back to the matrix entry node when the save predates currentNodeIndex", () => {
+    const state = buildState();
+    const slot = stateToSaveSlot(state);
+    const legacySlot: SaveSlot = { ...slot };
+    delete (legacySlot as { currentNodeIndex?: number }).currentNodeIndex;
+
+    const restored = slotToGameState(legacySlot, catalog, mockPrograms, mockIce);
+    expect(restored).not.toBeNull();
+    if (!restored) return;
+    expect(restored.matrix).not.toBeNull();
+    expect(restored.currentNodeIndex).toBe(restored.matrix?.startNode);
+  });
+
+  it("ignores an out-of-range currentNodeIndex and falls back to the entry node", () => {
+    const state = buildState();
+    const slot = stateToSaveSlot(state);
+    const bogus: SaveSlot = { ...slot, currentNodeIndex: 9999 };
+
+    const restored = slotToGameState(bogus, catalog, mockPrograms, mockIce);
+    expect(restored).not.toBeNull();
+    if (!restored) return;
+    expect(restored.matrix).not.toBeNull();
+    expect(restored.currentNodeIndex).toBe(restored.matrix?.startNode);
   });
 });

@@ -1221,7 +1221,10 @@ class Game {
       this.draw();
       return;
     }
-    this.state = restored;
+    this.state = {
+      ...restored,
+      grid: makeGrid(this.layout.cols, this.layout.rows),
+    };
     this.screen = "menu"; // game-internal state; main screen renderer picks up state != null
     this._lastIceHp = restored.ice.hp;
     this._lastPlayerHp = restored.player.hp;

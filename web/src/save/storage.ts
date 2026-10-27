@@ -226,6 +226,14 @@ function isGraphicNovelProgress(value: unknown): boolean {
   );
 }
 
+/** `currentNodeIndex` is optional; when present it must be a finite number.
+ *
+ *  A non-finite value would poison the restored matrix position, so such a
+ *  slot is rejected outright (same policy as the other numeric fields). */
+function isCurrentNodeIndex(value: unknown): boolean {
+  return value === undefined || (typeof value === "number" && Number.isFinite(value));
+}
+
 function isSaveSlot(value: unknown): value is SaveSlot {
   if (typeof value !== "object" || value === null) return false;
   const v = value as Record<string, unknown>;
@@ -241,7 +249,8 @@ function isSaveSlot(value: unknown): value is SaveSlot {
     isStringArray(v.discardIds) &&
     isStringArray(v.drawIds) &&
     typeof v.savedAt === "string" &&
-    isGraphicNovelProgress(v.graphicNovelProgress)
+    isGraphicNovelProgress(v.graphicNovelProgress) &&
+    isCurrentNodeIndex(v.currentNodeIndex)
   );
 }
 

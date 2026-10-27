@@ -106,6 +106,102 @@ test.describe("CONTINUE Option", () => {
     expect(phaseAfterContinue.turnCount).toBe(phaseBeforeReload.turnCount);
   });
 
+  /**
+   * REGRESSION (severe): the post-CONTINUE assertion above used to accept
+   * `["combat","approach"]`, which the DEAD restored state also reported
+   * (its `phase` was literally "approach"). A restored run whose `matrix`
+   * is null routes every input through `applyMatrixAction`, whose confirm
+   * and movement branches are both gated on `state.matrix != null` — so
+   * the player could neither confirm nor move.
+   *
+   * This test asserts PLAYABILITY: the restored state carries a real
+   * matrix, sits on a valid node, and actually REACTS to a keypress.
+   */
+  test("CONTINUE restores a playable state (matrix present, input is actionable)", async ({ page }) => {
+    // Boot + launch mission -> walk to ICE -> combat (autosave fires on draw()).
+    await enterForScreen(page, "mission_select");
+    await enterForRunPhase(page, "matrix");
+    await enterForPhase(page, "approach");
+    await gotoIceNode(page);
+    await page.waitForTimeout(2000);
+
+    const beforeReload = await page.evaluate(() => {
+      const w = window as unknown as {
+        wetrun?: {
+          state?: {
+            matrix?: { nodes?: Array<{ iceIds?: unknown[] }> } | null;
+            currentNodeIndex?: number;
+            turnCount?: number;
+          } | null;
+        };
+      };
+      const s = w.wetrun?.state;
+      return {
+        nodeCount: s?.matrix?.nodes?.length ?? 0,
+        currentNodeIndex: s?.currentNodeIndex ?? -1,
+        turnCount: s?.turnCount ?? null,
+      };
+    });
+    expect(beforeReload.nodeCount).toBeGreaterThan(0);
+
+    await page.reload();
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(1000);
+
+    // Navigate to CONTINUE by resolving its live menu index.
+    const nav = await page.evaluate(() => {
+      const w = window as unknown as {
+        wetrun?: { getMenuOptionKeys(): string[]; getSelectedMenuIndex(): number };
+      };
+      const keys = w.wetrun?.getMenuOptionKeys?.() ?? [];
+      const cur = w.wetrun?.getSelectedMenuIndex?.() ?? 0;
+      return { idx: keys.indexOf("continue"), cur, len: keys.length };
+    });
+    const downs = (nav.idx - nav.cur + nav.len) % nav.len;
+    for (let i = 0; i < downs; i += 1) {
+      await page.keyboard.press("ArrowDown");
+      await page.waitForTimeout(120);
+    }
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(500);
+
+    // The restored state MUST carry a real matrix and a valid node index.
+    const afterContinue = await page.evaluate(() => {
+      const w = window as unknown as {
+        wetrun?: {
+          state?: {
+            matrix?: { nodes?: Array<{ iceIds?: unknown[] }> } | null;
+            currentNodeIndex?: number;
+            runPhase?: string;
+          } | null;
+        };
+      };
+      const s = w.wetrun?.state;
+      return {
+        hasMatrix: (s?.matrix?.nodes?.length ?? 0) > 0,
+        nodeCount: s?.matrix?.nodes?.length ?? 0,
+        currentNodeIndex: s?.currentNodeIndex ?? -1,
+        runPhase: s?.runPhase ?? null,
+      };
+    });
+    expect(afterContinue.hasMatrix).toBe(true);
+    expect(afterContinue.nodeCount).toBeGreaterThan(0);
+    expect(afterContinue.currentNodeIndex).toBeGreaterThanOrEqual(0);
+    expect(afterContinue.currentNodeIndex).toBeLessThan(afterContinue.nodeCount);
+
+    // The restored state must REACT to input. A dead state (null matrix)
+    // swallows every keypress, so the node index would not move.
+    await page.keyboard.press("ArrowDown");
+    await page.waitForTimeout(300);
+    const afterMove = await page.evaluate(() => {
+      const w = window as unknown as {
+        wetrun?: { state?: { currentNodeIndex?: number } | null };
+      };
+      return { currentNodeIndex: w.wetrun?.state?.currentNodeIndex ?? -1 };
+    });
+    expect(afterMove.currentNodeIndex).not.toBe(afterContinue.currentNodeIndex);
+  });
+
   test("CONTINUE option is grayed out when no save exists", async ({ page }) => {
     // Clear any existing save first (via direct IDB access).
     // Manually clear IDB.

@@ -26,6 +26,7 @@ export type { GameState } from "./types.ts";
 import { makeGrid } from "./grid.ts";
 import { EMPTY_LOADOUT } from "./loadout.ts";
 import { generateProceduralMatrix } from "./matrix.ts";
+import { missionGradeOf, missionSeedOf } from "./ice_scaling.ts";
 import { DEFAULT_FACTION_SCORES } from "./faction_reputation.ts";
 import missionsData from "../data/missions.json";
 import type { RunMutator } from "./run_mutators.ts";
@@ -68,13 +69,8 @@ export function makeInitialState(
     programs: [],
   };
   // Mission schema field names: matrix_seed (not seed), grade_max/grade_min (not grade).
-  const missionSeed: number =
-    (mission as { matrix_seed?: number }).matrix_seed ?? mission.seed ?? 42;
-  const missionGrade: number =
-    (mission as { grade_max?: number }).grade_max ??
-    (mission as { grade_min?: number }).grade_min ??
-    mission.grade ??
-    1;
+  const missionSeed: number = missionSeedOf(mission);
+  const missionGrade: number = missionGradeOf(mission);
   const gridSize = missionGrade
     ? { w: 80 + (missionGrade - 1) * 20, h: 50 + (missionGrade - 1) * 10 }
     : { w: MVP_GRID_W, h: MVP_GRID_H };
@@ -236,6 +232,7 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     drawIds: state.drawPile.map((p: Program) => p.id),
     savedAt: new Date().toISOString(),
     graphicNovelProgress: gnProgress,
+    currentNodeIndex: state.currentNodeIndex,
   };
 }
 
@@ -296,6 +293,28 @@ export function slotToGameState(
     };
   }
 
+  // Regenerate the run's matrix from the same deterministic inputs
+  // `makeInitialState` uses (mission grade + seed), so the resumed run is
+  // byte-identical to the one that was saved. Without a matrix the restored
+  // state is unplayable: `applyMatrixAction` gates both its confirm and
+  // movement branches on `state.matrix != null`, so every input is a no-op.
+  const matrix = generateProceduralMatrix(
+    missionGradeOf(mission),
+    missionSeedOf(mission),
+    mission.id,
+  );
+  // Old saves (written before `currentNodeIndex` was persisted) fall back to
+  // the matrix entry node. An out-of-range index would also be unusable, so
+  // clamp it to the matrix bounds.
+  const savedIndex = slot.currentNodeIndex;
+  const currentNodeIndex =
+    savedIndex !== undefined &&
+    Number.isInteger(savedIndex) &&
+    savedIndex >= 0 &&
+    savedIndex < matrix.nodes.length
+      ? savedIndex
+      : matrix.startNode;
+
   return {
     phase: "approach",
     mission,
@@ -312,8 +331,8 @@ export function slotToGameState(
     statusEffects: [],
     iceRoster: [iceFallback],
     activeIceIndex: 0,
-    currentNodeIndex: 0,
-    matrix: null,
+    currentNodeIndex,
+    matrix,
     visitedNodes: [],
     bossPhase: 0,
     endingChoice: null,

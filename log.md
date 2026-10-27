@@ -1740,3 +1740,19 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **잔여 갭**: 복원은 근사 — `visitedNodes`·`iceRoster`·`statusEffects`·`playerCombo`·`skillCooldowns`·`activeMutators`는 저장되지 않아 리셋됨.
 
 **게이트**: `npm test` **125 files / 2935 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0217-continue-restores-playable-run.md`.
+
+## [2026-10-27] fix | ICE 스킬 선택 fallback 이 사용 불가 스킬을 고르던 결함 수정 (ADR-0218)
+
+**발견**: `selectSkillByPersonality`(`ice_ai.ts`)가 선호 매칭 실패 시 `availableSkills[0]`로 폴백하는데, 전투 경로(`state_actions_combat.ts:230`)는 `damage > 0`인 스킬만 발화 → 첫 스킬이 비공격이면 **공격 스킬을 영원히 미사용**(조용히 자동공격).
+
+**실측 (로더 파생값 직접 실행)**: `loa_entity`(g5 밴드) = `manifest_form`(buff/0) + `voodoo_curse`(poison/5), personality→`aggressive`(선호 `heavy_attack/pierce/multi_hit/attack/lifesteal` — 둘 다 불일치) → 폴백이 `manifest_form`(0) 선택 → 자동공격. `aleph`(g6)는 선호 매칭 `matrix_merge`(15)가 먼저라 **영향 없음**.
+
+**수정**: 폴백을 **첫 `damage > 0` 스킬**(없으면 첫 스킬, 빈 배열이면 `null`)로. **선호 루프·`PERSONALITY_SKILL_PREFERENCE` 불변.** `ice_ai.ts`의 **stale docstring 2곳** 정정 — 파일 헤더가 "hot path는 `chooseSkill` 사용"이라 주장했으나 실제로는 `state_actions_combat.ts:221`이 `selectSkillByPersonality`를 호출.
+
+**회귀 테스트**: `tests/ice_ai.test.ts` +3(단위), `tests/personality_skill.test.ts` +1(통합). **pre-fix 실패 확인** — 통합 실패 메시지 `expected '>>> Loa attacks: 9 dmg' to contain 'Voodoo Curse'`가 증상 재현. 기존 `defensive` 선호 테스트는 무변경 통과(선호 루프 미변경).
+
+**밸런스**: `npm run balance` 전 6개 grade **바이트 동일**, g5 `mean-HP-end`만 5.5 → 5.6(반올림 수준). 승률/스톨/턴 밴드 무변화.
+
+**잔여 한계(미수정)**: 선호 목록에 **매칭되는** 스킬이 `damage: 0`이면 여전히 자동공격 — 비공격 스킬 효과(shield/heal/regen/buff/detect)가 전투 경로에 **미구현**이라 `defensive`/`support` 아키타입의 선호 목록이 구조적으로 관측 불가.
+
+**게이트**: `npm test` **125 files / 2939 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0218-ice-skill-selection-fallback.md`.

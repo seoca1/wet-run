@@ -275,3 +275,5 @@ i18n + Content Pipeline:
 
 | 0213 | Far Grid — 비-侧 사이버페크 별도 영역 확장 (Sprawl 캐논 격리, source_universe 스키마, §8 정합) | **Accepted (Option 1)** | 🟡 Partial (Phase 2: hub + 6 missions + entry gate; story resolution open) | 2026-10-07 | P2 (세계관 확장) |
 | 0214 | 모바일 터치 대상 WCAG 최소 크기 충족 (가상 게임패드 D-pad 12→14vw, B 10→12vw, 프로그램 행 min-height 6vh/min-width 8vw) | **Accepted (Option 3 Hybrid)** | ✅ Implemented | 2026-10-24 | P2 (The Style, ADR-0183 accessibility) |
+| 0215 | Graph-directed matrix navigation (reducer 의 `adjacent[0]` 결함 해소 — BFS shortest path 로 boss 방향 전진, 보스 도달 0/53 → 53/53) | **Accepted** | ✅ Implemented | 2026-10-27 | P0 (The Matrix, 보스 도달 불가 결함) |
+| 0216 | Derived ICE skill metadata (`parseIce` 의 `skills` drop 해소 — loader 가 typed skill object 파생, 88 skill ID 에 대한 catalog 부재 대응) | **Accepted** | ✅ Implemented | 2026-10-27 | P1 (The Flatline, dead combat path) |

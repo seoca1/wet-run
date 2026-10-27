@@ -213,6 +213,25 @@ describe("ice_ai", () => {
       const enemy = makeEnemy({ personality: "aggressive" });
       expect(selectSkillByPersonality(enemy, [detect])).toBe(detect);
     });
+
+    it("falls back to the first usable skill when no preference matches", () => {
+      const buff = makeSkill({ id: "b", name: "Buff", effect: "buff", damage: 0 });
+      const poison = makeSkill({ id: "p", name: "Poison", effect: "poison", damage: 5 });
+      const enemy = makeEnemy({ personality: "aggressive" });
+      expect(selectSkillByPersonality(enemy, [buff, poison])).toBe(poison);
+    });
+
+    it("falls back to the first available skill when no skill is usable", () => {
+      const buff = makeSkill({ id: "b", name: "Buff", effect: "buff", damage: 0 });
+      const shield = makeSkill({ id: "s", name: "Shield", effect: "shield", damage: 0 });
+      const enemy = makeEnemy({ personality: "aggressive" });
+      expect(selectSkillByPersonality(enemy, [buff, shield])).toBe(buff);
+    });
+
+    it("returns null for an empty skill list", () => {
+      const enemy = makeEnemy({ personality: "aggressive" });
+      expect(selectSkillByPersonality(enemy, [])).toBeNull();
+    });
   });
 
   describe("shouldDefensiveAct", () => {

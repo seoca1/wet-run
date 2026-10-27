@@ -12,9 +12,10 @@
  *      crit bonus, alarm speed, defensive threshold, ally targeting
  *      (aggressive/defensive/stealth/support).
  *
- * The personality `selectSkillByPersonality` is a forward-facing hook.
- * The production hot path uses `chooseSkill` (uniform random) gated by
- * `enemyShouldUseSkill` — matching the Python prototype's current behavior.
+ * The personality `selectSkillByPersonality` IS the production hot path:
+ * `state_actions_combat.ts` calls it to pick the enemy's skill each tick,
+ * gated by `enemyShouldUseSkill`. `chooseSkill` (uniform random) remains
+ * exported as the Python-prototype port of `Combatant.choose_skill()`.
  */
 
 import type {
@@ -153,15 +154,18 @@ export const PERSONALITY_SKILL_PREFERENCE: Readonly<
 } as const;
 
 /**
- * Personality-based skill selection (forward-facing hook).
+ * Personality-based skill selection (production hot path).
  *
  * Matches the combatant's personality preference against available skills'
- * effects. Returns the first skill whose effect matches a preference, or
- * falls back to the first available skill.
+ * effects. Returns the first skill whose effect matches a preference.
  *
- * NOT yet wired into the production hot path — matches Python prototype
- * where `select_skill_by_personality` is exported/tested but the tick
- * loop uses `choose_skill` (uniform random).
+ * When no preference matches, falls back to the first **usable** skill
+ * (one with `damage > 0`) — the combat path only fires a skill when
+ * `damage > 0`, so returning a non-damaging skill would silently degrade
+ * the enemy to a plain auto-attack. If no skill is usable, falls back to
+ * the first available skill; an empty list yields `null`.
+ *
+ * @returns The selected skill, or null when `availableSkills` is empty.
  */
 export function selectSkillByPersonality<S extends UsableSkill>(
   combatant: SkillUser,
@@ -182,8 +186,11 @@ export function selectSkillByPersonality<S extends UsableSkill>(
     }
   }
 
-  // Fallback: first available skill
-  return availableSkills[0] ?? null;
+  // Fallback: first usable skill (damage > 0) — the combat path only fires
+  // a skill when it deals damage, so a non-damaging pick would silently
+  // degrade to an auto-attack. When nothing is usable, first available wins.
+  const usable = availableSkills.find((skill) => skill.damage > 0);
+  return usable ?? availableSkills[0] ?? null;
 }
 
 // ============================================================================

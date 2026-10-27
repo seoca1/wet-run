@@ -67,4 +67,19 @@ describe("personality-based skill selection", () => {
     const result = applyAction(state, { type: "use_program", programId: "p1" });
     expect(result.message).toContain("Fire");
   });
+
+  it("aggressive ICE falls back to the first damaging skill, not the auto-attack", () => {
+    const enemy: Ice = {
+      id: "loa", name: "Loa", tier: 2, hp: 50, maxHp: 50, armor: 0,
+      personality: "aggressive", aggression: "aggressive",
+      skills: [
+        { id: "loa_summon", name: "Loa Summon", effect: "buff", cooldownMs: 2000, damage: 0 },
+        { id: "voodoo_curse", name: "Voodoo Curse", effect: "poison", cooldownMs: 2000, damage: 5 },
+      ],
+    };
+    const state = makeCombatState({ iceRoster: [enemy] });
+    const result = applyAction(state, { type: "use_program", programId: "p1" });
+    expect(result.message).toContain("Voodoo Curse");
+    expect(result.message).not.toContain("attacks:");
+  });
 });

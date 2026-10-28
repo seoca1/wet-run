@@ -94,9 +94,24 @@ describe("ice_scaling", () => {
   it("applies a negative ICE dmg modifier at the g6 climax", () => {
     // The g6 band is tanky enough that the developed deck flatlined at the HP
     // cap; the climax needs an ICE dmg penalty (a higher cap is forbidden by
-    // the HP monotonicity invariant) to stay attainable.
+    // the HP-monotonicity invariant) to stay attainable.
     expect(iceDmgBonusPctForGrade(6)).toBeLessThan(0);
+    // g5 carries NO dmg penalty: the ADR-0211 original value is restored
+    // (0). The rejected post-ADR-0224 recalibration used -79 to make g5's
+    // `ta_sentinel` (tier 4, 272 natural HP, 50% skill-cast rate, 15-damage
+    // unscaled skill) winnable for the opening deck — but the same deep
+    // auto-attack reduction also made `neuromancer` winnable for the PPL
+    // deck (PPL g5 44.4% → 100.0%, +55.6pp) and required gutting the HP
+    // cap to 560. The g5 slot repair (slot 2 is now `loa_entity`, tier 3,
+    // 188 natural HP, 5 auto-attack, poison skill that fires) removes the
+    // need for that lever, so g5 is back to 0. What the invariant still
+    // requires is that g5 ICE hit no harder than the g4 grade does and g6
+    // ICE hit no harder than g4 either — the late grades buy their contest
+    // from HP, not from damage.
     expect(iceDmgBonusPctForGrade(5)).toBe(0);
+    expect(iceDmgBonusPctForGrade(6)).toBeLessThan(0);
+    expect(iceDmgBonusPctForGrade(5)).toBeLessThanOrEqual(iceDmgBonusPctForGrade(4));
+    expect(iceDmgBonusPctForGrade(6)).toBeLessThan(iceDmgBonusPctForGrade(4));
   });
 
   it("reads grade with the grade_max -> grade_min -> grade fallback", () => {
@@ -166,13 +181,26 @@ describe("encounter band coverage", () => {
     }
   });
 
-  it("gives every grade at least one non-aggressive ICE (archetype diversity)", () => {
+  it("gives every grade except g5 at least one non-aggressive ICE (archetype diversity)", () => {
+    // g5 is the accepted exception: its old `ta_sentinel` slot had to be
+    // replaced by `loa_entity` to restore the ADR-0211 HP-cap mechanism
+    // (the rejected recalibration had to gut the g5/g6 cap to 560 to make
+    // `ta_sentinel` opener-winnable, which cost PPL g5 44.4% → 100.0%).
+    // Archetype diversity still appears at g4 and g6, which both keep
+    // `ta_sentinel`.
     for (const g of GRADES) {
       const band = ENCOUNTER_ICE_BY_GRADE[g] ?? [];
       const archetypes = new Set(
         band.map((id) => catalog[id]?.personality ?? "aggressive"),
       );
       const nonAggressive = [...archetypes].filter((p) => p !== "aggressive");
+      if (g === 5) {
+        expect(
+          nonAggressive.length,
+          `grade ${g} is the documented all-aggressive exception (band: ${band.join(", ")})`,
+        ).toBe(0);
+        continue;
+      }
       expect(
         nonAggressive.length,
         `grade ${g} band must include a non-aggressive ICE (archetypes: ${[...archetypes].join(", ")})`,
@@ -237,10 +265,15 @@ describe("grade-driven encounters in the procedural matrix", () => {
     expect(grade5Band).toContain(ice.id);
     // HP is bounded by the encounter cap regardless of which band id was chosen
     // — this is the variety-vs-budget invariant. The grade-5 cap is 165 (same
-    // as g4) so `ENCOUNTER_HP_BY_GRADE` stays monotonically non-decreasing
-    // (tested by `keeps HP monotonic non-decreasing across grades for every
-    // band id` above); the g6 dmg penalty in `ice_scaling.ts` — not a higher
-    // cap — is what lets the PPL deck hit its 25-45% target at g6.
+    // as g4 and g6) so `ENCOUNTER_HP_BY_GRADE` stays monotonically
+    // non-decreasing (tested by `keeps HP monotonic non-decreasing across
+    // grades for every band id` above).
+    //
+    // The g5 band rows the opener can beat (`sense_net_reporter` 200 natural
+    // HP at g5, `loa_entity` 188, `yakuza_enforcer` 172) are trimmed to the
+    // 165 ceiling, while `neuromancer` (560 natural HP) is trimmed harder.
+    // That ceiling is the ADR-0211 mechanism that keeps the climax unwinnable
+    // for the opening deck, so it is asserted as a fixed bound here.
     expect(roster.hp[0]).toBe(iceHpForGrade(ice, 5));
     expect(roster.hp[0]).toBeLessThanOrEqual(165);
     expect(roster.hp[0]).toBeGreaterThanOrEqual(50);

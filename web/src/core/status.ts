@@ -51,10 +51,17 @@ export function applyStatus(
   return { ...state, statusEffects: [...state.statusEffects, newEffect] };
 }
 
-/** Tick all effects: decrement remaining, remove expired. Returns updated state. */
+/** Tick all effects: decrement remaining, remove expired. Returns updated state.
+ *
+ * Effects whose `tickSource` is `"enemy"` (ADR-0219 Option A — the ICE-cast
+ * shield / regen / buff) are skipped: their lifetime is measured in enemy
+ * turns and is advanced by `tickIceEffects` in the enemy turn instead.
+ */
 export function tickStatus(state: GameState): GameState {
   const next = state.statusEffects
-    .map((e) => ({ ...e, remaining: e.remaining - 1 }))
+    .map((e) =>
+      e.tickSource === "enemy" ? e : { ...e, remaining: e.remaining - 1 },
+    )
     .filter((e) => e.remaining > 0);
   // Always return the updated state (even if length unchanged, remaining
   // values were decremented). The early-return optimization was buggy.

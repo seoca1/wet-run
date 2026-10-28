@@ -14,6 +14,8 @@ import type { GameState, GameAction, Ice, BossPhase } from "./types.ts";
 import { AUTO_ATTACK_INTERVAL_MS } from "./combat_engine.ts";
 import { DEFAULT_BOSS_PROFILE, checkPhaseTransition } from "./boss_phases.ts";
 import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai.ts";
+import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects.ts";
+import { applyIceNonDamageEffect } from "./ice_combat_effect_apply.ts";
 import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling.ts";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle.ts";
@@ -200,8 +202,15 @@ function processEnemyTurns(state: GameState): GameState {
     logMessages.push(`★ PHASE 4: Drone deployed!`);
   }
 
-  for (const enemy of state.iceRoster) {
-    if (enemy.hp <= 0) continue;
+  // Working copy so the ICE-side effects (shield / regen / buff) can mutate
+  // `statusEffects` and the roster's HP inside the loop. ADR-0219 Option A.
+  // It starts from the roster that existed *before* the phase-4 minion was
+  // appended: a freshly deployed minion acts from the next enemy turn on.
+  let working: GameState = { ...state, iceRoster: state.iceRoster };
+
+  for (let iceIndex = 0; iceIndex < working.iceRoster.length; iceIndex++) {
+    const enemy = working.iceRoster[iceIndex];
+    if (!enemy || enemy.hp <= 0) continue;
 
     let enemySkills = enemy.skills ?? [];
 
@@ -228,7 +237,10 @@ function processEnemyTurns(state: GameState): GameState {
         const remaining = newCooldowns[cooldownKey] ?? 0;
 
         if (remaining <= 0 && selectedSkill.damage > 0) {
-          const rawSkillDmg = selectedSkill.damage + enemy.tier * 2;
+          const rawSkillDmg =
+            selectedSkill.damage +
+            enemy.tier * 2 +
+            iceAttackBonus(working, iceIndex);
           const skillDmg = Math.max(
             1,
             Number.isFinite(rawSkillDmg) ? rawSkillDmg : 1,
@@ -239,6 +251,22 @@ function processEnemyTurns(state: GameState): GameState {
           );
           newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
           usedSkill = true;
+        } else if (remaining <= 0) {
+          // ADR-0219 Option A: a non-damaging skill now fires as an effect
+          // instead of being blocked by the `damage > 0` gate. The skill
+          // still consumes the ICE's action.
+          const outcome = applyIceNonDamageEffect(
+            working,
+            iceIndex,
+            enemy,
+            selectedSkill,
+          );
+          working = outcome.state;
+          if (outcome.message !== null) {
+            logMessages.push(outcome.message);
+            newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
+            usedSkill = true;
+          }
         }
       }
     }
@@ -269,6 +297,12 @@ function processEnemyTurns(state: GameState): GameState {
         autoDmg = Math.floor(autoDmg * bossDamageMultiplier);
       }
 
+      // ADR-0219 Option A: the `buff` bonus is added after the grade and
+      // boss multipliers, so a temporary in-combat buff is worth the same
+      // flat amount at every grade instead of being amplified by the
+      // difficulty curve.
+      autoDmg += iceAttackBonus(working, iceIndex);
+
       playerHp = Math.max(0, playerHp - autoDmg);
 
       if (enemy.tier >= 3 && state.bossPhase >= 3) {
@@ -278,6 +312,18 @@ function processEnemyTurns(state: GameState): GameState {
       }
     }
   }
+
+  // ADR-0219 Option A: advance the enemy-timed ICE effects (shield pool
+  // lifetime, regen ticks, buff lifetime). One tick = one enemy turn.
+  working = tickIceEffects(working);
+  // The acted roster shares the prefix of `rosterForReturn`; the phase-4
+  // minion is appended after it, so merge positionally (roster ids are not
+  // unique — the encounter band repeats ids when a node has fewer ids than
+  // the roster needs).
+  rosterForReturn = [
+    ...working.iceRoster,
+    ...rosterForReturn.slice(working.iceRoster.length),
+  ];
 
   const anyEnemyAttacked = logMessages.length > 0;
 
@@ -292,6 +338,7 @@ function processEnemyTurns(state: GameState): GameState {
         return { ...ice, hp: Math.max(0, ice.hp - dixieDmg) };
       });
       rosterForReturn = newRoster;
+      working = { ...working, iceRoster: newRoster };
       logMessages.push(`>>> Dixie attacks: ${dixieDmg} dmg`);
       dixieAttacked = true;
     }
@@ -325,6 +372,7 @@ function processEnemyTurns(state: GameState): GameState {
       deceasedJockeys: [...state.deceasedJockeys, jockey],
       skillCooldowns: newCooldowns,
       iceRoster: rosterForReturn,
+      statusEffects: working.statusEffects,
       bossPhase: newBossPhase,
       dixieLastAttackMs: dixieAttacked ? currentMs : state.dixieLastAttackMs,
       lastEnemyAttackMs: anyEnemyAttacked ? currentMs : state.lastEnemyAttackMs,
@@ -340,6 +388,7 @@ function processEnemyTurns(state: GameState): GameState {
     ...state,
     skillCooldowns: newCooldowns,
     iceRoster: rosterForReturn,
+    statusEffects: working.statusEffects,
     bossPhase: newBossPhase,
     dixieLastAttackMs: dixieAttacked ? currentMs : state.dixieLastAttackMs,
     player: { ...state.player, hp: playerHp },

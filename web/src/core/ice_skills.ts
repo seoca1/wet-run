@@ -50,6 +50,17 @@ export interface IceSkillDef {
   readonly effect: string;
   /** Cooldown in milliseconds. */
   readonly cooldownMs: number;
+  /** Effect magnitude (ADR-0219 Option A).
+   *
+   * Meaning depends on the effect:
+   * - `shield` — HP the absorbing pool can still absorb
+   * - `heal` — HP restored immediately
+   * - `regen` — HP restored per enemy tick
+   * - `buff` — flat outgoing damage bonus
+   *
+   * Absent for damaging effects, whose damage already comes from the
+   * owning ICE row's `dmg_base`. */
+  readonly magnitude?: number;
 }
 
 /** The authored `skill_defs` map: skill id → definition. */
@@ -119,7 +130,13 @@ export function parseIceSkillDefs(
         `[data_loaders] ${ctx}: skill_defs entry '${id}': field 'cooldown_ms' must be a finite number (got ${typeof cooldownMs}: ${String(cooldownMs)})`,
       );
     }
-    out[id] = { name, effect, cooldownMs };
+    const magnitude = r["magnitude"];
+    if (magnitude !== undefined && (typeof magnitude !== "number" || !Number.isFinite(magnitude))) {
+      throw new Error(
+        `[data_loaders] ${ctx}: skill_defs entry '${id}': field 'magnitude' must be a finite number when present (got ${typeof magnitude}: ${String(magnitude)})`,
+      );
+    }
+    out[id] = { name, effect, cooldownMs, ...(magnitude !== undefined ? { magnitude } : {}) };
   }
   return out;
 }
@@ -181,6 +198,9 @@ export function parseIceSkills(
       // 0 for non-damaging ones. Deliberately not authored per-skill — see the
       // module docstring.
       damage: ICE_SKILL_NON_DAMAGE_EFFECTS.has(def.effect) ? 0 : damageBase,
+      // Effect magnitude (ADR-0219 Option A) is authored per skill and is
+      // therefore the same for every owner of that skill id.
+      ...(def.magnitude !== undefined ? { magnitude: def.magnitude } : {}),
     });
   }
   return skills.length > 0 ? skills : undefined;

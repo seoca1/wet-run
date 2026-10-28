@@ -86,6 +86,7 @@ export interface SkillUser {
   readonly hp: number;
   readonly aggression?: unknown;
   readonly personality?: unknown;
+  readonly maxHp?: number;
 }
 
 /** Minimal skill surface for personality matching (id/effect/damage). */
@@ -153,6 +154,12 @@ export function chooseSkill(
  * table and the code honest without discarding that intent; trimming the
  * table would throw the intent away and collapse `defensive`/`support`
  * into "a weaker aggressive".
+ *
+ * ADR-0219 Option A makes the `shield`/`heal`/`regen`/`buff` entries live:
+ * a skill carrying one of them is *usable* (see `selectSkillByPersonality`),
+ * so only the `defensive` and `support` archetypes — the two whose lists
+ * name them — ever select one. `aggressive` and `stealth` name none of the
+ * implemented families, so their behavior is unchanged.
  */
 export const PERSONALITY_SKILL_PREFERENCE: Readonly<
   Record<PersonalityArchetype, ReadonlyArray<SkillEffectKind>>
@@ -163,25 +170,94 @@ export const PERSONALITY_SKILL_PREFERENCE: Readonly<
   support: ["heal", "regen", "shield", "debuff", "detect"],
 } as const;
 
+/** Non-damaging effect families the combat path can actually resolve
+ * (ADR-0219 Option A). A skill carrying one of them is fireable even
+ * though its `damage` is 0.
+ *
+ * Every other non-damaging effect (`debuff` / `detect` / `stun` / `slow` /
+ * `silence`) stays inert — it has no combat semantics in the web combat
+ * path, so its skill remains unfireable exactly as before. */
+export const IMPLEMENTED_NON_DAMAGE_EFFECTS: ReadonlySet<string> = new Set([
+  "shield",
+  "heal",
+  "regen",
+  "buff",
+]);
+
+/** Preference order a `defensive` ICE uses while it is still healthy.
+ *
+ * ADR-0161 documents the defensive archetype as "shield below half HP":
+ * a defensive ICE only defends once it is actually threatened. While it is
+ * at or above the threshold it prefers to fight, so the archetype never
+ * degenerates into an ICE that shields forever and never attacks. */
+const DEFENSIVE_HEALTHY_PREFERENCE: ReadonlyArray<SkillEffectKind> = [
+  "heavy_attack",
+  "pierce",
+  "multi_hit",
+  "attack",
+  "lifesteal",
+  "shield",
+  "heal",
+  "regen",
+  "buff",
+];
+
+/** True when the ICE is at or above its defensive HP threshold.
+ *
+ * An ICE with no known max HP is treated as healthy, so it keeps fighting
+ * rather than hiding behind a shield it never needed. */
+function isAtOrAboveDefensiveThreshold(combatant: SkillUser): boolean {
+  const maxHp = combatant.maxHp;
+  if (typeof maxHp !== "number" || !Number.isFinite(maxHp) || maxHp <= 0) {
+    return true;
+  }
+  return combatant.hp / maxHp >= DEFENSIVE_HP_THRESHOLD;
+}
+
+/** The preference order to apply for this combatant right now. */
+function effectivePreference(
+  combatant: SkillUser,
+  personality: PersonalityArchetype,
+): ReadonlyArray<SkillEffectKind> {
+  const prefs = PERSONALITY_SKILL_PREFERENCE[personality];
+  if (personality !== "defensive") return prefs;
+  return isAtOrAboveDefensiveThreshold(combatant)
+    ? DEFENSIVE_HEALTHY_PREFERENCE
+    : prefs;
+}
+
 /**
  * Personality-based skill selection (production hot path).
  *
  * Matches the combatant's personality preference against available skills'
  * effects. Returns the first skill whose effect matches a preference.
  *
- * **Contract (ADR-0219 Option B — consistency-only):** the preference match
- * is restricted to skills the combat path can actually fire. The combat
- * path only fires a skill when `damage > 0`
- * (`state_actions_combat.ts`: `selectedSkill.damage > 0`); anything else
- * falls through to a plain auto-attack. So the candidate pool is computed
- * once, up front:
+ * **Contract (ADR-0219 Option B, extended by Option A):** the preference
+ * match is restricted to skills the combat path can actually fire. A skill
+ * is fireable when either
  *
- *   - if any skill is usable (`damage > 0`), the pool is the usable skills
- *     and both the preference loop and the fallback draw from it — the
- *     function therefore always returns a skill the combat path can fire;
- *   - if no skill is usable, the pool is every available skill and behavior
- *     is unchanged from before (the combat path auto-attacks anyway);
+ *   - it is damaging (`damage > 0`) — the combat path's original gate, or
+ *   - its effect is one of the implemented non-damaging families
+ *     (`shield` / `heal` / `regen` / `buff`, see
+ *     `IMPLEMENTED_NON_DAMAGE_EFFECTS`) **and** the combatant's archetype
+ *     names that effect in its preference list.
+ *
+ * The archetype clause matters: a `shield` skill on an `aggressive` ICE is
+ * flavor, not behavior, so the aggressive archetype must keep ignoring it
+ * (its list names none of the implemented families). The candidate pool is
+ * computed once, up front:
+ *
+ *   - if any skill is fireable, the pool is the fireable skills and both
+ *     the preference loop and the fallback draw from it — the function
+ *     therefore always returns a skill the combat path can fire;
+ *   - if no skill is fireable, the pool is every available skill and
+ *     behavior is unchanged from before (the combat path auto-attacks
+ *     anyway);
  *   - an empty skill list yields `null`.
+ *
+ * The fallback prefers a *damaging* skill over a non-damaging one, so an
+ * ICE that owns both (e.g. `loa_entity`: `manifest_form` buff +
+ * `voodoo_curse` poison) still attacks with it.
  *
  * @returns The selected skill, or null when `availableSkills` is empty.
  */
@@ -193,12 +269,18 @@ export function selectSkillByPersonality<S extends UsableSkill>(
     return null;
   }
   const personality = coercePersonality(combatant.personality);
-  const prefs = PERSONALITY_SKILL_PREFERENCE[personality];
+  const prefs = effectivePreference(combatant, personality);
+  const archetypeNames = PERSONALITY_SKILL_PREFERENCE[personality];
+
+  const fireable = (skill: S): boolean =>
+    skill.damage > 0 ||
+    (IMPLEMENTED_NON_DAMAGE_EFFECTS.has(skill.effect) &&
+      archetypeNames.includes(skill.effect as SkillEffectKind));
 
   // Candidate pool, computed once: prefer skills the combat path can fire.
-  // When nothing is usable the pool is every available skill, so the
-  // no-usable-skill case behaves exactly as it did before.
-  const usable = availableSkills.filter((skill) => skill.damage > 0);
+  // When nothing is fireable the pool is every available skill, so the
+  // no-fireable-skill case behaves exactly as it did before.
+  const usable = availableSkills.filter(fireable);
   const pool = usable.length > 0 ? usable : availableSkills;
 
   // Build effect → first matching skill index for O(n*m) but small n
@@ -210,10 +292,13 @@ export function selectSkillByPersonality<S extends UsableSkill>(
     }
   }
 
-  // Fallback: first entry of the pool. With a usable skill present this is
-  // the first *usable* skill (ADR-0218 behavior); with none usable it is the
-  // first available skill, which the combat path will turn into an
-  // auto-attack — unchanged from before.
+  // Fallback: a damaging skill if the pool has one (ADR-0218 behavior),
+  // otherwise the first entry of the pool — which is then a non-damaging
+  // skill the combat path resolves as an effect instead of an attack.
+  const damaging = pool.find((skill) => skill.damage > 0);
+  if (damaging) {
+    return damaging;
+  }
   return pool[0] ?? null;
 }
 

@@ -187,11 +187,25 @@ describe("ice_ai", () => {
       expect(selectSkillByPersonality(enemy, [attack, heavy])).toBe(heavy);
     });
 
-    it("prefers shield for defensive personality", () => {
+    // ADR-0219 Option A: a `defensive` ICE only defends once it is
+    // actually threatened. ADR-0161 defines the DEFENSIVE archetype as
+    // "Self-preservation, prefer shields when HP < 50%" / "Triggers shield
+    // when HP < 50%". The web port used to apply the preference order
+    // unconditionally; now that the shield skill is fireable, doing so
+    // would leave a healthy defensive ICE shielding forever and never
+    // attacking. The HP threshold restores ADR-0161's documented behavior.
+    it("prefers shield for a wounded defensive personality", () => {
       const shield = makeSkill({ id: "sh", name: "Shield", effect: "shield" });
       const attack = makeSkill({ id: "a", name: "Attack", effect: "attack" });
-      const enemy = makeEnemy({ personality: "defensive" });
+      const enemy = makeEnemy({ personality: "defensive", hp: 20, maxHp: 50 });
       expect(selectSkillByPersonality(enemy, [attack, shield])).toBe(shield);
+    });
+
+    it("prefers the attack for a healthy defensive personality", () => {
+      const shield = makeSkill({ id: "sh", name: "Shield", effect: "shield" });
+      const attack = makeSkill({ id: "a", name: "Attack", effect: "attack" });
+      const enemy = makeEnemy({ personality: "defensive", hp: 50, maxHp: 50 });
+      expect(selectSkillByPersonality(enemy, [attack, shield])).toBe(attack);
     });
 
     it("prefers dot for stealth personality", () => {

@@ -20,6 +20,7 @@ import {
 import { AudioManager } from "../audio/manager.ts";
 import { calculateDamage, countRoleSynergy } from "./combat_engine.ts";
 import { rollLoot, getLootTable, type LootDrop } from "./loot.ts";
+import { absorbIceDamage } from "./ice_combat_effects.ts";
 import iceTypesData from "../data/ice_types.json";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 import { onIceKill, type FactionId } from "./faction_reputation.ts";
@@ -117,14 +118,23 @@ export function useProgram(state: GameState, programId: string): GameState {
 
   const targetIdx = state.activeIceIndex;
   const isAoe = (program as { aoe?: boolean }).aoe === true;
-  const damagedRoster = state.iceRoster.map((ice, i) => {
+  // ADR-0219 Option A: an ICE's shield pool absorbs incoming player damage
+  // before it reaches the ICE's HP. Each roster ICE has its own pool, so the
+  // absorption runs per entry and the spent pools are written back.
+  let shieldState = state;
+  let shieldAbsorbed = 0;
+  const shieldedRoster = shieldState.iceRoster.map((ice, i) => {
     if (ice.hp <= 0) return ice;
     if (!isAoe && i !== targetIdx) return ice;
-    return { ...ice, hp: Math.max(0, ice.hp - damage) };
+    const absorbed = absorbIceDamage(shieldState, i, damage);
+    shieldState = absorbed.state;
+    shieldAbsorbed += absorbed.absorbed;
+    return { ...ice, hp: Math.max(0, ice.hp - absorbed.damage) };
   });
+  const damagedRoster = shieldedRoster;
 
   let stateWithDamage: GameState = {
-    ...state,
+    ...shieldState,
     iceRoster: damagedRoster,
     playerCombo: newCombo,
     comboLastHitMs: currentMs,
@@ -341,6 +351,7 @@ export function useProgram(state: GameState, programId: string): GameState {
     };
   }
   const activeIceNewHp = finalState.iceRoster[targetIdx]?.hp ?? 0;
+  const shieldNote = shieldAbsorbed > 0 ? ` (${shieldAbsorbed} absorbed)` : "";
   return {
     ...stateWithLoot,
     iceRoster: stateWithLoot.iceRoster,
@@ -348,8 +359,8 @@ export function useProgram(state: GameState, programId: string): GameState {
     discardPile: discard,
     player: { ...stateWithLoot.player, alarm: newAlarm },
     message: isAoe
-      ? `${program.name} → ${damage} dmg ALL (roster hit)`
-      : `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})`,
+      ? `${program.name} → ${damage} dmg ALL (roster hit)${shieldNote}`
+      : `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})${shieldNote}`,
     vfxInstances: vfxNew,
     unlockedAchievements: stateWithLoot.unlockedAchievements,
     achievementCredits: stateWithLoot.achievementCredits,

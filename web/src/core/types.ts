@@ -85,6 +85,8 @@ export interface Ice {
     effect: string;
     cooldownMs: number;
     damage: number;
+    /** Effect magnitude (ADR-0219 Option A) — see `IceSkillDef.magnitude`. */
+    magnitude?: number;
   }>;
 }
 
@@ -232,6 +234,11 @@ export type RunPhase = "matrix" | "combat" | "loot" | "ending" | "dead";
  * - fatigue: Reduces AP regen speed
  * - confused: 50% chance to attack self/allies
  * - terrified: Reduces attack damage
+ *
+ * ADR-0219 Option A adds one member:
+ * - shield: an absorbing damage pool on an ICE. `magnitude` holds the
+ *   remaining HP the pool can still absorb; `remaining` holds its lifetime
+ *   in enemy ticks. Applied only by ICE skills (never by the player side).
  */
 export type StatusEffectKind =
   | "burn"
@@ -246,7 +253,8 @@ export type StatusEffectKind =
   | "bleed"
   | "fatigue"
   | "confused"
-  | "terrified";
+  | "terrified"
+  | "shield";
 
 /** Active status effect instance (Tier 5 state machine).
  *
@@ -258,6 +266,19 @@ export type StatusEffectKind =
  * - slowPct: percentage slow for slow effect
  * - vulnerabilityPct: extra damage % for vulnerable
  * - apRegenReduction: AP regen penalty for fatigue
+ *
+ * ADR-0219 Option A adds two optional fields so the ICE-side effect state
+ * can live on the existing `statusEffects` array instead of a parallel
+ * collection on `GameState`:
+ * - iceIndex: which roster slot the effect is attached to. Required for
+ *   ICE-cast effects because a roster can hold several ICE — including two
+ *   with the same catalog id — and `target: "ice"` alone means "the active
+ *   ICE" for the player-side effects (burn / slow) that already use it.
+ * - tickSource: which side's turn advances this effect's timer. Defaults to
+ *   `"player"` (the historical behavior — every effect ticked with the
+ *   player program). ICE-cast effects set `"enemy"` so their lifetime is
+ *   measured in enemy turns (one enemy turn = one `AUTO_ATTACK_INTERVAL_MS`
+ *   window) and is not shortened by the player-side tick.
  */
 export interface StatusEffectInstance {
   readonly kind: StatusEffectKind;
@@ -271,6 +292,10 @@ export interface StatusEffectInstance {
   readonly slowPct?: number;
   readonly vulnerabilityPct?: number;
   readonly apRegenReduction?: number;
+  /** Owning roster slot index (ADR-0219 Option A). */
+  readonly iceIndex?: number;
+  /** Which side's turn advances `remaining` (ADR-0219 Option A). */
+  readonly tickSource?: "player" | "enemy";
 }
 
 /** Zone depth — mirrored from Python matrix/node.py ZoneDepth. */

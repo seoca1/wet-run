@@ -23,6 +23,7 @@ import {
 import { AudioManager } from "../audio/manager.ts";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 import { iceHpForGrade, missionGradeOf } from "./ice_scaling.ts";
+import { clearIceEffects } from "./ice_combat_effects.ts";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle.ts";
 import {
   resolveEnding,
@@ -66,7 +67,10 @@ export function applyMatrixAction(
       const hp =
         node.iceHp[i % node.iceHp.length] ??
         iceHpForGrade(activeIce, missionGradeOf(state.mission));
-      return { ...activeIce, id, hp };
+      // ADR-0219 Option A: the roster ICE carries its own `maxHp` so an ICE
+      // heal can be capped at it (catalog rows carry no `maxHp` — the loader
+      // derives HP from `hp_base` / `hp_per_grade`).
+      return { ...activeIce, id, hp, maxHp: hp };
     });
     const matrixEntryVfx: import("../renderer/combat_vfx.js").CombatVfxInstance[] =
       [import_vfx("room_flash", "TIER_GOLD", 1)];
@@ -76,7 +80,7 @@ export function applyMatrixAction(
       );
     }
     return {
-      ...state,
+      ...clearIceEffects(state),
       runPhase: "combat",
       phase: "approach",
       message: `Entering ${node.zone}... (${iceRoster.length} ICE)`,

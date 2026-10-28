@@ -3182,7 +3182,8 @@
     "absorb_damage": {
       "name": "Absorb Damage",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 6
     },
     "addiction_loop": {
       "name": "Addiction Loop",
@@ -3192,7 +3193,8 @@
     "ai_negotiate": {
       "name": "Ai Negotiate",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 18
     },
     "ai_subversion": {
       "name": "Ai Subversion",
@@ -3207,17 +3209,20 @@
     "aleph_fragment": {
       "name": "Aleph Fragment",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 15
     },
     "alibi_construct": {
       "name": "Alibi Construct",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 5
     },
     "archive_guard": {
       "name": "Archive Guard",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 16
     },
     "asset_seize": {
       "name": "Asset Seize",
@@ -3227,7 +3232,8 @@
     "backup_dispatch": {
       "name": "Backup Dispatch",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 4
     },
     "biofeedback": {
       "name": "Biofeedback",
@@ -3257,17 +3263,20 @@
     "construct_evolution": {
       "name": "Construct Evolution",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 12
     },
     "construct_proxy": {
       "name": "Construct Proxy",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 18
     },
     "construct_summon": {
       "name": "Construct Summon",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 9
     },
     "critical_hit": {
       "name": "Critical Hit",
@@ -3277,12 +3286,14 @@
     "damage_absorb": {
       "name": "Damage Absorb",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 12
     },
     "data_archive": {
       "name": "Data Archive",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 5
     },
     "data_corrupt": {
       "name": "Data Corrupt",
@@ -3302,7 +3313,8 @@
     "data_preserve": {
       "name": "Data Preserve",
       "effect": "heal",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 8
     },
     "data_scan": {
       "name": "Data Scan",
@@ -3332,7 +3344,8 @@
     "defense_grid": {
       "name": "Defense Grid",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 12
     },
     "enforce_contract": {
       "name": "Enforce Contract",
@@ -3342,22 +3355,26 @@
     "family_protocol": {
       "name": "Family Protocol",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 6
     },
     "family_vote": {
       "name": "Family Vote",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 11
     },
     "fortress_mode": {
       "name": "Fortress Mode",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 20
     },
     "full_manifest": {
       "name": "Full Manifest",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 11
     },
     "glitch_phase": {
       "name": "Glitch Phase",
@@ -3402,7 +3419,8 @@
     "loa_summon": {
       "name": "Loa Summon",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 5
     },
     "lowbeer_vision": {
       "name": "Lowbeer Vision",
@@ -3412,12 +3430,14 @@
     "maintain_order": {
       "name": "Maintain Order",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 5
     },
     "manifest_form": {
       "name": "Manifest Form",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 5
     },
     "matrix_merge": {
       "name": "Matrix Merge",
@@ -3462,7 +3482,8 @@
     "packet_route": {
       "name": "Packet Route",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 3
     },
     "penetrating_strike": {
       "name": "Penetrating Strike",
@@ -3487,7 +3508,8 @@
     "priority_delivery": {
       "name": "Priority Delivery",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 3
     },
     "random_target": {
       "name": "Random Target",
@@ -3527,12 +3549,14 @@
     "shield_protocol": {
       "name": "Shield Protocol",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 6
     },
     "shield_wall": {
       "name": "Shield Wall",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 12
     },
     "siege_protocol": {
       "name": "Siege Protocol",
@@ -3542,7 +3566,8 @@
     "spirit_guard": {
       "name": "Spirit Guard",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 10
     },
     "stack_corruption": {
       "name": "Stack Corruption",
@@ -3577,7 +3602,8 @@
     "territorial_mark": {
       "name": "Territorial Mark",
       "effect": "buff",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 12
     },
     "timeline_collapse": {
       "name": "Timeline Collapse",
@@ -3587,12 +3613,14 @@
     "undead_resilience": {
       "name": "Undead Resilience",
       "effect": "regen",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 3
     },
     "vault_guard": {
       "name": "Vault Guard",
       "effect": "shield",
-      "cooldown_ms": 4000
+      "cooldown_ms": 4000,
+      "magnitude": 14
     },
     "voodoo_curse": {
       "name": "Voodoo Curse",

@@ -1911,3 +1911,33 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **125 files / 2958 tests PASS** · `tsc --noEmit` 0 · `eslint` 0 · 두 밸런스 표 재실행 결정적. **미커밋**. ADR: `0225-encounter-band-recalibration.md`.
 
 **다음(미실행)**: ① g5 아키타입 갭은 세 번째 레버 필요(밴드에 맞는 tier·HP·데미지 프로필의 defensive 스킬 보유 ICE 저작, 또는 per-ICE 캘리브레이션 노브) ② **Option A**(비공격 효과 + magnitude) ③ ADR-0223 애매 10종 ④ 카탈로그 갭(T1 데미지 스킬·stealth 스킬·support ICE).
+
+## [2026-10-27] feat | 비공격 ICE 스킬 효과 구현 — defensive/support 아키타입 실체화 (ADR-0226, ADR-0219 Option A)
+
+**배경**: ADR-0219 사슬의 마지막 조각 — **B(0219) → D(0222) → 분류검토(0223) → 밴드(0224) → 재보정(0225) → A(이번)**. `defensive`/`support` 아키타입이 장식이 아니게 됨.
+
+**구현한 효과(정확한 규칙)**:
+- **`shield`** — ICE당 **흡수 풀** 1개(`statusEffects`의 `kind:"shield"`, `magnitude`=잔여 흡수 HP, `remaining`=적 턴 단위 수명). **player 데미지를 HP보다 먼저 흡수**, 초과분은 HP로. 소진 시 제거. **재시전은 풀을 더하되 수명은 리프레시**(duration 누적 아님) — `docs/testcases/combat/depth.md` TC-DEPTH-004/005의 문서화된 시맨틱. **지속 3틱 = 6000ms**(1틱 = `AUTO_ATTACK_INTERVAL_MS`). burn/DoT는 **우회**.
+- **`heal`** — 즉시 회복, **`maxHp` 상한**.
+- **`regen`** — 매 적 턴 `healPerTick` 회복, **`maxHp` 상한**, 지속 4틱.
+- **`buff`** — 스킬·자동공격 **출력 데미지 플랫 증가**, 지속 3틱, **grade/boss 배수 적용 후**에 더해 등급 무관 동일 가치.
+
+**magnitude는 저작**: `skill_defs`에 `magnitude = dmg_base(owner) × {shield 2, heal 2, regen 1, buff 1}`, 다중 소유 시 **최고 `dmg_base` 소유자** 기준. **28개**(shield 9 · buff 17 · heal 1 · regen 1) 저작. malformed는 loader가 **throw**.
+**트레이드오프(명시)**: `skill_defs`는 per-skill인데 ICE 전투력은 per-row → 고정 per-skill magnitude는 소유자 개별 강도를 무시(예: `construct_proxy`가 tier 4/5/6 공유로 18 고정 → tier-4 소유자 과대 버프). **저작 vs load-time 파생** 중 저작 선택(ADR-0222의 "heuristic이 아닌 저작 데이터" 방향 준수).
+
+**선택 정책**: 발사 가능 = 데미지 스킬(`damage > 0` — **기존 게이트 보존**) **또는** 구현된 계열 **이면서** 아키타입 선호 목록이 그 효과를 명시. `defensive`/`support`만 명시 → `aggressive`/`stealth` 동작 **불변**. fallback은 **데미지 스킬 우선** → `loa_entity`는 여전히 poison 발화. **`defensive`는 2체제**(ADR-0161: HP < 50%에서 방어) — 없으면 healthy defensive가 영원히 방어만 하고 공격을 안 하는 퇴화 발생.
+
+**상태**: 기존 `statusEffects` 배열 **확장**(병렬 컬렉션 신설 아님) — `StatusEffectKind`에 `"shield"` 추가, `StatusEffectInstance`에 `iceIndex`(카탈로그 id가 아니라 **로스터 슬롯** — 동일 id ICE 2개 공존이 `tick_kill_loot.test.ts`로 입증됨) + `tickSource` 추가. `tickStatus`는 enemy-sourced를 건너뛰고 `tickIceEffects`가 적 턴에 전진. 로스터 ICE가 이제 `maxHp` 보유(heal 상한 기준). 리듀서 순수·결정적 유지.
+
+**신규 모듈**: `ice_combat_effects.ts`(215 LOC) · `ice_combat_effect_apply.ts`(184 LOC) — 100–300 정책 준수, ADR-0110 선례대로 분리. `state_actions_combat.ts` 369→421.
+
+**밸런스 — g4만 +0.2pp 이동(양 곡선)**: opening 48.8→49.0, PPL 88.8→89.0. 나머지 전 등급·전 컬럼 **동일**(PPL g4 p95 26→29만 예외). **이유(실측)**: 도달 범위가 작음 — 밴드 24슬롯 중 아키타입이 구현 계열을 명시한 ICE는 **`ta_sentinel`(g4 슬롯3) 하나뿐**. `hosaka_defender`(g3)·`hosaka_courier`/`sense_net_spin`/`loa_zombie`(g1/g2)는 `aggressive`라 shield/buff/regen이 **설계상 불발**. **재보정 불필요**(g4 49.0%는 목표 47.4% 대비 +1.6pp, ±3pp 내).
+
+**테스트**: 신규 `ice_combat_effects.test.ts` **17종 중 16종 판별력**(모듈을 no-op 스텁하면 실패: `expected +0 to be 20` 등). 초기 vacuous했던 5종은 양성 사전단언으로 강화.
+**어서션 변경 1건**: `ice_ai.test.ts`의 `"prefers shield for defensive personality"`(healthy 50/50이 shield 기대)를 **2종으로 분리**(wounded 20/50 → shield · healthy 50/50 → attack) — 근거: ADR-0161이 DEFENSIVE를 "HP < 50%에서 방어"로 정의하고 `DEFENSIVE_HP_THRESHOLD`/`shouldDefensiveAct`가 이미 존재. 기존 어서션은 *무조건적* 선호를 고정한 것이고 Option A에서는 healthy defensive가 영구 방어가 됨. **강화이며 의도 삭제 아님**. 개발 중 깨진 기존 테스트 2건도 **정당하게 수정**: `boss_ai.test.ts` phase-4 미니언 스폰 턴 행동, `tick_kill_loot.test.ts` 로스터 id 충돌(→ 슬롯 인덱스).
+
+**게이트**: `npm test` **126 files / 2976 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0226-non-damaging-ice-skill-effects-implemented.md`.
+
+**잔여 미구현(기록)**: `detect`·`silence`·`slow`·`stun`·`debuff`·`stagger`·`counter`·`vulnerable`·`bleed`·`fatigue`·`confused`·`terrified`. `detect`/`silence`/`slow`는 **alarm/정보 시스템 소관**(ADR-0219 열린 질문 3)으로 보고만.
+
+**다음(미실행)**: ① 도달 범위 확대(밴드 또는 aggressive/stealth ICE에 아키타입이 실제 쓸 스킬 부여) ② per-owner magnitude ③ 잔여 효과 ④ ADR-0223 애매 10종 ⑤ 카탈로그 갭(T1 데미지 스킬·stealth 스킬·support ICE).

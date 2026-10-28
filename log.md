@@ -1885,3 +1885,29 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **125 files / 2958 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0224-encounter-band-coverage.md`.
 
 **다음(미실행)**: ① **밸런스 재보정 결정**(Option 1/2 — 사용자) ② **Option A**(비공격 효과 + magnitude) — 이제 관측 가능 ③ 카탈로그 저작 갭(T1 데미지 스킬·stealth 스킬·support ICE) ④ ADR-0223의 애매 10종.
+
+## [2026-10-27] balance | 인카운터 밴드 재보정 — 두 곡선 동시 복원, HP 캡 유지 (ADR-0225)
+
+**배경**: ADR-0224의 밴드 확대로 ADR-0211 캘리브레이션 곡선이 이동(g2 −11.4pp · g3 +6.0pp · g5 −10.4pp). 사용자가 **재보정(Option 1)** 선택.
+
+**1차 시도는 기각**: opening을 ±3pp 내로 복원했으나 **g5/g6 HP 캡을 165 → 560**으로 올려(= `neuromancer` 자연 HP) **캡을 무력화** — ADR-0211의 핵심 메커니즘("climax는 opener 불가 · developed 가능")이 꺼지고 **PPL g5 44.4% → 100.0%(+55.6pp)**. 에이전트 자체 frontier가 **두 레버만으로는 두 곡선 동시 만족 불가**를 입증.
+
+**근본 원인**: 문제는 **슬롯 하나** — g5의 `ta_sentinel`(T4, defensive). opener가 이기게 하려면 캡을 무력화해야 하고 그러면 developed도 이김.
+
+**최종 결정 — 캡이 아니라 슬롯을 고침**:
+- `ENCOUNTER_HP_BY_GRADE` → `[75, 86, 155, 165, 165, 165]` (g2 125→86 · g3 140→155 유지, **g4/g5/g6는 165로 복원** — 168/560/560 철회)
+- `ENCOUNTER_DMG_BONUS_PCT_BY_GRADE` → `[50, 130, 0, 0, 0, -20]` (**ADR-0211 원값 복원**, −79/−78 철회)
+- 밴드 **g5 슬롯2만**: `ta_sentinel` → `loa_entity` (aggressive · 스킬 보유 · poison 발화)
+- 캘리브레이션 docstring을 현행 설정·실측 근거로 재작성(560/−79/168 언급은 "이전 시도가 X였고 비용은 Y" 이력 서술로만 잔존)
+
+**실측 결과 — 두 곡선 모두 충족**:
+- **opening**: 100.0 / 88.6 / 73.1 / 48.8 / 43.1 / 0.0 → 목표 대비 **6/6이 ±1.4pp 내**(허용 ±3pp), 단조 비증가 유지
+- **PPL**: 100.0 / 77.9 / 97.8 / 88.8 / 44.4 / 31.3 → **g5·g6 바이트 동일**(+55.6pp 퇴행이 **캡을 살린 채** 완전 복원). 부수 이동은 캡 변경에 기인하며 둘 다 양성(PPL g2 +7.1pp는 *쉬워짐* — 기존 비단조 dip 개선, g3 −2.2pp는 약간 어려워짐)
+
+**어서션 3건**(근거 기록): ① `iceDmgBonusPctForGrade(5)`가 `< 0`(기각된 −79 고정) → `toBe(0)` ② "모든 grade에 비-aggressive ICE" → **"g5 예외"를 명시적으로 단언**(skip 아님) ③ g5 HP 캡 테스트는 assertion 무변경, **원래의 더 엄격한 `toBeLessThanOrEqual(165)`로 복원**(기각 시도가 자연 HP bound로 완화했던 것). **약화·삭제 0건**.
+
+**수용한 트레이드오프**: **g5가 비-aggressive ICE를 더는 갖지 않음** — 아키타입 다양성은 g1~g4·g6에서 충족(g4·g6는 `ta_sentinel` 유지). 캡을 지키기 위한 명시적 교환.
+
+**게이트**: `npm test` **125 files / 2958 tests PASS** · `tsc --noEmit` 0 · `eslint` 0 · 두 밸런스 표 재실행 결정적. **미커밋**. ADR: `0225-encounter-band-recalibration.md`.
+
+**다음(미실행)**: ① g5 아키타입 갭은 세 번째 레버 필요(밴드에 맞는 tier·HP·데미지 프로필의 defensive 스킬 보유 ICE 저작, 또는 per-ICE 캘리브레이션 노브) ② **Option A**(비공격 효과 + magnitude) ③ ADR-0223 애매 10종 ④ 카탈로그 갭(T1 데미지 스킬·stealth 스킬·support ICE).

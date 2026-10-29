@@ -47,19 +47,13 @@ import {
   getInitialSettingsState,
   persistLanguage,
   cycleLanguage,
+  adjustVolume,
   type SettingsField,
 } from "./renderer/settings.ts";
 import { bootPwaController, type PwaController } from "./core/pwa_boot.ts";
 import {
-  healthBar,
-  healthColor,
-  hitFlashColor,
-  formatStatusLabel,
-  formatStatusGlyph,
-  ICE_DEFEAT_ART,
-  PLAYER_DEFEAT_ART,
-  centerArt,
-} from "./renderer/vfx.ts";
+  groupStatusByTarget,
+} from "./renderer/status_hud.ts";
 import type {
   GameState,
   GameAction,
@@ -82,7 +76,8 @@ import {
 } from "./core/state.ts";
 import { encounterIceIdForGrade, missionGradeOf, missionSeedOf } from "./core/ice_scaling.ts";
 import { makeGrid, setText } from "./core/grid.ts";
-import { PALETTE, iceColor } from "./renderer/palette.ts";
+import { PALETTE } from "./renderer/palette.ts";
+import { renderGrid } from "./renderer/combat_grid.ts";
 import {
   save as saveToSlot,
   load as loadFromSlot,
@@ -111,6 +106,7 @@ function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState
   return {
     selectedField: "audio",
     audioEnabled: !isAudioOff(),
+    masterVolume: 1,
     bgmVolume: 0.4,
     sfxVolume: 0.6,
     muted: false,
@@ -1038,6 +1034,7 @@ class Game {
         }
         const fields: ReadonlyArray<SettingsField> = [
           "audio",
+          "master",
           "bgm",
           "sfx",
           "mute",
@@ -1061,7 +1058,11 @@ class Game {
             };
           this.draw();
         } else if (action.type === "move_east") {
-          if (this.settingsState.selectedField === "bgm") {
+          if (this.settingsState.selectedField === "master") {
+            const v = adjustVolume(this.settingsState.masterVolume ?? 1, "inc");
+            this.settingsState = { ...this.settingsState, masterVolume: v };
+            manager.setMasterVolume(v);
+          } else if (this.settingsState.selectedField === "bgm") {
             const v =
               this.settingsState.bgmVolume + 0.1 > 1
                 ? 1
@@ -1078,7 +1079,11 @@ class Game {
           }
           this.draw();
         } else if (action.type === "move_west") {
-          if (this.settingsState.selectedField === "bgm") {
+          if (this.settingsState.selectedField === "master") {
+            const v = adjustVolume(this.settingsState.masterVolume ?? 1, "dec");
+            this.settingsState = { ...this.settingsState, masterVolume: v };
+            manager.setMasterVolume(v);
+          } else if (this.settingsState.selectedField === "bgm") {
             const v =
               this.settingsState.bgmVolume - 0.1 < 0
                 ? 0
@@ -1534,15 +1539,20 @@ class Game {
         ? previous.player.hp - this._lastPlayerHp
         : null;
     // Tier 5: pull live status effects from the state machine instead of
-    // the tier-4 mock data (was a fixed pool sliced by turnCount).
-    const activeStatusEffects = previous.statusEffects.map((e) => e.kind);
+    // the tier-4 mock data (was a fixed pool sliced by turnCount). P14 groups
+    // them per target so the player's own effects are not merged with the
+    // ICE's.
+    const statusGroups = groupStatusByTarget(
+      previous.statusEffects,
+      previous.activeIceIndex,
+    );
     this.state = {
       ...this.state,
       grid: renderGrid(
         this.state,
         iceDelta,
         playerDelta,
-        activeStatusEffects,
+        statusGroups,
         this.layout.cols,
         this.layout.rows,
       ),
@@ -1768,144 +1778,6 @@ class Game {
     "start",
     "stop",
   ];
-}
-
-function renderGrid(
-  state: GameState,
-  iceHpDelta: number | null = null,
-  playerHpDelta: number | null = null,
-  statusEffects: readonly string[] = [],
-  cols = 80,
-  rows = 50,
-) {
-  let grid = makeGrid(cols, rows);
-  // Layout-relative anchors: ICE block centered horizontally; HUD bars near top-left.
-  const iceCol = Math.max(20, Math.floor(cols * 0.45));
-  const iceNameCol = iceCol + 1;
-  const iceStatusCol = iceCol + Math.min(20, cols - iceCol - 6);
-  const turnCol = Math.max(iceNameCol, cols - Math.floor(cols * 0.25));
-  const statusArtCol = Math.max(20, Math.floor(cols * 0.45));
-  const handRow = Math.max(8, rows - Math.floor(rows * 0.16));
-  const artWidth = Math.min(32, cols - statusArtCol - 2);
-
-  grid = setText(
-    grid,
-    2,
-    1,
-    `Mission: ${state.mission.title}`,
-    PALETTE.GREEN_NEON,
-  );
-  grid = setText(grid, 2, 3, state.message, PALETTE.GRAY_LIGHT);
-
-  grid = setText(
-    grid,
-    turnCol,
-    1,
-    `T${state.turnCount + 1}`,
-    PALETTE.GRAY_LIGHT,
-  );
-
-  grid = setText(
-    grid,
-    2,
-    5,
-    `P ${healthBar(state.player.hp, state.player.maxHp)} ${state.player.hp}/${state.player.maxHp}`,
-    playerHpDelta !== null
-      ? hitFlashColor(playerHpDelta)
-      : healthColor(state.player.hp, state.player.maxHp),
-  );
-
-  if (
-    state.phase === "combat" ||
-    state.phase === "victory" ||
-    state.phase === "defeat"
-  ) {
-    const rosterStartRow = Math.floor(rows * 0.44);
-    for (let i = 0; i < state.iceRoster.length; i++) {
-      const ice = state.iceRoster[i];
-      const row = rosterStartRow + i * 3;
-      if (row + 2 >= rows) break;
-      const isTarget = i === state.activeIceIndex;
-      const marker = isTarget ? ">" : " ";
-      const alive = ice.hp > 0;
-      const iceHp = Math.max(0, ice.hp);
-
-      // Name line: "> [1] ICE_NAME" or "  [1] ICE_NAME"
-      const nameText = `${marker} [${i + 1}] ${ice.name.slice(0, 10)}`;
-      grid = setText(
-        grid,
-        iceCol - 2,
-        row,
-        nameText,
-        alive ? iceColor(ice.tier) : PALETTE.GRAY_MID,
-      );
-
-      // Status effects only for target
-      if (isTarget) {
-        const statusSuffix = formatStatusGlyph(statusEffects);
-        if (statusSuffix !== "") {
-          grid = setText(
-            grid,
-            iceStatusCol,
-            row,
-            statusSuffix,
-            PALETTE.YELLOW_AMBER,
-          );
-        }
-      }
-
-      // HP bar line
-      if (alive) {
-        const delta = isTarget && iceHpDelta !== null ? iceHpDelta : null;
-        grid = setText(
-          grid,
-          iceCol,
-          row + 2,
-          `${healthBar(iceHp, 100)} ${iceHp}/100`,
-          delta !== null ? hitFlashColor(delta) : healthColor(iceHp, 100),
-        );
-      } else {
-        grid = setText(grid, iceCol, row + 2, "[DEAD]", PALETTE.GRAY_MID);
-      }
-    }
-  }
-
-  const statusLabel = formatStatusLabel(state.phase);
-  if (statusLabel !== "") {
-    const statusColor =
-      state.phase === "victory" ? PALETTE.GREEN_NEON : PALETTE.RED_BRIGHT;
-    const statusRow = Math.floor(rows * 0.52);
-    grid = setText(grid, statusArtCol, statusRow, statusLabel, statusColor);
-    if (state.phase === "victory") {
-      const art = centerArt(ICE_DEFEAT_ART, artWidth);
-      let y = statusRow + 2;
-      for (const line of art) {
-        if (y >= rows) break;
-        grid = setText(grid, statusArtCol, y, line, PALETTE.GRAY_MID);
-        y += 1;
-      }
-    } else if (state.phase === "defeat") {
-      const art = centerArt(PLAYER_DEFEAT_ART, artWidth);
-      let y = statusRow + 2;
-      for (const line of art) {
-        if (y >= rows) break;
-        grid = setText(grid, statusArtCol, y, line, PALETTE.GRAY_MID);
-        y += 1;
-      }
-    }
-  }
-
-  if (state.phase === "combat" && state.deck.length > 0) {
-    grid = setText(grid, 2, handRow, "HAND:", PALETTE.YELLOW_AMBER);
-    let x = 9;
-    for (const p of state.deck) {
-      if (x >= cols - 6) break;
-      const label = `[${p.id.slice(0, 4)}]`;
-      grid = setText(grid, x, handRow, label, PALETTE.CYAN_LIGHT);
-      x += label.length + 1;
-    }
-  }
-  return grid;
 }
 
 function boot(): void {

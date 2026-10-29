@@ -147,8 +147,11 @@ describe("centerArt", () => {
 });
 
 describe("STATUS_GLYPHS", () => {
-  it("exposes 5 glyph mappings", () => {
-    expect(Object.keys(STATUS_GLYPHS).length).toBe(5);
+  it("exposes 8 glyph mappings", () => {
+    // 5 Tier-4 glyphs + the 3 persistent ADR-0226 ICE effect kinds
+    // (shield / regen / powered). `heal` is instant and never persists as a
+    // status effect, so it has no glyph.
+    expect(Object.keys(STATUS_GLYPHS).length).toBe(8);
   });
 
   it("maps each effect to a single letter", () => {
@@ -157,6 +160,17 @@ describe("STATUS_GLYPHS", () => {
     expect(STATUS_GLYPHS.slow).toBe("L");
     expect(STATUS_GLYPHS.silence).toBe("M");
     expect(STATUS_GLYPHS.vulnerable).toBe("V");
+  });
+
+  it("maps the ADR-0226 ICE effect kinds (P6)", () => {
+    expect(STATUS_GLYPHS.shield).toBe("D");
+    expect(STATUS_GLYPHS.regen).toBe("R");
+    expect(STATUS_GLYPHS.powered).toBe("P");
+  });
+
+  it("never maps two kinds to the same letter", () => {
+    const glyphs = Object.values(STATUS_GLYPHS);
+    expect(new Set(glyphs).size).toBe(glyphs.length);
   });
 });
 

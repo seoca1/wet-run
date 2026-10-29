@@ -76,13 +76,21 @@ export function centerArt(art: readonly string[], width: number): string[] {
   });
 }
 
-/** Status effect glyphs — single-letter indicators for HUD display. */
+/** Status effect glyphs — single-letter indicators for HUD display.
+ *
+ * `shield` / `regen` / `powered` are the three persistent ADR-0226 ICE-side
+ * effect kinds (`buff` is stored as `powered`). `heal` is instant and never
+ * persists as a status effect, so it has no glyph.
+ */
 export const STATUS_GLYPHS: Readonly<Record<string, string>> = {
   burn: "B",
   stun: "S",
   slow: "L",
   silence: "M",
   vulnerable: "V",
+  shield: "D",
+  regen: "R",
+  powered: "P",
 };
 
 export function formatStatusGlyph(effects: readonly string[]): string {

@@ -10,6 +10,11 @@ import {
   ICE_SHIELD_DURATION_TICKS,
 } from "../src/core/ice_combat_effects.ts";
 import { applyIceNonDamageEffect } from "../src/core/ice_combat_effect_apply.ts";
+import {
+  groupStatusByTarget,
+  statusGlyphFor,
+  statusGroupForTarget,
+} from "../src/renderer/status_hud.ts";
 import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
 
 const MOCK_MISSION: Mission = {
@@ -428,5 +433,94 @@ describe("ICE effect VFX spawns (ADR-0219 Option A, P2)", () => {
 
     const result = applyAction(state, { type: "use_program", programId: "p1" });
     expect(result.vfxInstances.map((v) => v.kind)).toContain("shield");
+  });
+
+  it("the combat path merges a `heal` VFX into state.vfxInstances", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.01);
+    const ice = makeEffectIce("heal", 12, { hp: 30, maxHp: 50 });
+    const state = makeCombatState({
+      iceRoster: [ice],
+      lastEnemyAttackMs: 0,
+    });
+
+    const result = applyAction(state, { type: "use_program", programId: "p1" });
+    expect(result.vfxInstances.map((v) => v.kind)).toContain("heal");
+  });
+
+  it("the combat path merges a `regen` VFX into state.vfxInstances", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.01);
+    const ice = makeEffectIce("regen", 4, { hp: 30, maxHp: 50 });
+    const state = makeCombatState({
+      iceRoster: [ice],
+      lastEnemyAttackMs: 0,
+    });
+
+    const result = applyAction(state, { type: "use_program", programId: "p1" });
+    expect(result.vfxInstances.map((v) => v.kind)).toContain("regen");
+  });
+
+  it("the combat path merges a `buff` VFX into state.vfxInstances", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.01);
+    const ice = makeEffectIce("buff", 6);
+    const state = makeCombatState({
+      iceRoster: [ice],
+      lastEnemyAttackMs: 0,
+    });
+
+    const result = applyAction(state, { type: "use_program", programId: "p1" });
+    expect(result.vfxInstances.map((v) => v.kind)).toContain("buff");
+  });
+});
+
+describe("ADR-0226 effects are HUD-visible (P6)", () => {
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.01);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("every persistent ADR-0226 effect kind has a status glyph", () => {
+    expect(statusGlyphFor("shield")).toBe("D");
+    expect(statusGlyphFor("regen")).toBe("R");
+    expect(statusGlyphFor("powered")).toBe("P");
+  });
+
+  it("the shield effect lands in the ICE's own target group", () => {
+    const ice = makeEffectIce("shield", 20);
+    const state = makeCombatState({ iceRoster: [ice] });
+
+    const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
+    const groups = groupStatusByTarget(outcome.state.statusEffects, 0);
+
+    expect(statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind)).toEqual([
+      "shield",
+    ]);
+    expect(statusGroupForTarget(groups, "player")).toBeUndefined();
+  });
+
+  it("the regen effect lands in the ICE's own target group", () => {
+    const ice = makeEffectIce("regen", 4);
+    const state = makeCombatState({ iceRoster: [ice] });
+
+    const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
+    const groups = groupStatusByTarget(outcome.state.statusEffects, 0);
+
+    expect(statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind)).toEqual([
+      "regen",
+    ]);
+  });
+
+  it("the buff effect lands in the ICE's own target group", () => {
+    const ice = makeEffectIce("buff", 6);
+    const state = makeCombatState({ iceRoster: [ice] });
+
+    const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
+    const groups = groupStatusByTarget(outcome.state.statusEffects, 0);
+
+    expect(statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind)).toEqual([
+      "powered",
+    ]);
   });
 });

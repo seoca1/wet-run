@@ -2060,3 +2060,18 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **130 files / 3088 tests PASS** · `tsc --noEmit` 0 · `eslint src` 0 errors(기존 `keyboard.ts:14` warning 1건) · `npm run build` ✓ · 볼트 lint CLEAN.
 **검증 한계(정직 기록)**: vitest는 `main.ts` rAF 루프를 실행하지 않음(회귀 테스트는 루프 블록을 **시뮬레이션**) · 실 canvas 렌더 미검증 · Playwright e2e 미실행 · **흔들림/데미지 숫자의 "느낌"은 taste 판단(미검증)**.
 **미실행**: P6·**P7·P8**(§A1 필요)·P10~P15. ADR: `0232-combat-feel-tier2-shake-damage-sfx.md`.
+
+## [2026-10-27] feat | 전투 반응 tier 3 — 오디오 ducking/마스터 볼륨 · 효과 가시화 · 상태 HUD 개편 (ADR-0233 / ADR-0234)
+
+제안서의 **P13 · P6 · P14**를 구현 — 셋 다 **표시/오디오 계층**(밸런스 영향 0). 신규 4 모듈 + 신규 3 테스트 + 7 파일 수정.
+
+**P13 — 오디오 (ADR-0233)**: `playSfx(id, {rate?, duck?})` 옵션 추가(기존 call site 무변경) · 순수 helper `composeBgmVolume`/`composeSfxVolume`/`duckFactorFor`/`clampRate`/`isCombatSfxId` · BGM duck은 **곱셈 오프셋**(attack 60ms / hold 120ms / release 240ms / ×0.8, **영속 안 됨** — 제안서가 지적한 위험 회피) · 마스터 볼륨(기본 1.0, 영속).
+**P6 — 효과 가시화 (ADR-0234)**: **glyph 전용으로 판명** — `shield`/`heal`/`regen`/`buff` VFX 경로는 ADR-0231에서 이미 live(`state_actions_combat.ts:289` → `:473-476`). `STATUS_GLYPHS` 5→8종(`shield:"D"` / `regen:"R"` / `powered:"P"`; `heal`은 비영속이라 glyph 없음 — 제안서 "9종"은 실제로 8).
+**P14 — 상태 HUD 개편 (ADR-0234)**: 타겟별 분리(플레이어 vs 각 ICE 슬롯) + `[GLYPH<잔여턴>]` 표기. `renderGrid`를 신규 `renderer/combat_grid.ts`로 추출(테스트 가능화, `main.ts` 1991→1852 LOC) + 신규 `renderer/status_hud.ts`.
+
+**오케스트레이터 후속**: P13이 `main.ts` 미소유라 남긴 **마스터 볼륨 입력 배선 누락**(설정 필드 사이클에 `"master"` 없음 → 슬라이더는 렌더되나 도달 불가)을 두 에이전트 종료 후 배선 — `fields` 배열 + `move_east`/`move_west` 핸들러 + `fallbackSettingsState`.
+**테스트**: **3088 → 3173**(+3 files / +85 tests). 신규 단언 pre-change 실패 확인.
+**밸런스**: **12등급 0.0pp**(양 곡선, ADR-0229 기준선과 byte-identical — 오케스트레이터 독립 재실행). **§A1 미발동**.
+**게이트**: `npm test` **133 files / 3173 tests PASS** · `tsc --noEmit` 0 · `eslint src` 0 errors(기존 `keyboard.ts:14` warning 1건) · `npm run build` ✓ · 볼트 lint CLEAN.
+**검증 한계**: vitest는 `main.ts` 미실행(자체 boot) → `renderGrid`를 추출해 직접 검증, 설정 필드 배선은 코드 리드 검증 · 실 canvas/오디오 미검증 · e2e 미실행 · glyph 가독성(`D` vs `S`)은 taste 판단.
+**미실행**: P7·P8(§A1 필요)·P10·P11·P12·P15. ADR: `0233-audio-ducking-master-volume.md` · `0234-effect-visibility-status-hud.md`.

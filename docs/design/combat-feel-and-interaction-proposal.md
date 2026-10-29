@@ -347,9 +347,17 @@
 
 **구현 중 발견·수정된 결함 3건** (ADR-0232 기록): ① ADR-0231 의 `import_vfx_deterministic` **모노토닉 카운터가 reducer 순수성을 깨뜨림** (fuzz test 가 HEAD 에서 ~50% flaky) → FNV-1a content hash 로 교체 ② `COMBAT_HIT` **dead path** (`state.ice.hp` 는 init 후 불변 → 한 번도 발화 안 함) → `iceRoster` 기반 `pickCombatSfxLayers` 로 실제 배선 ③ **히트스톱 데드락** (hold 를 동결 대상인 `elapsedMs` 에서 파생 → >25fps 에서 VFX 영구 동결) → wall-clock deadline + identity 기반 arming.
 
+### ✅ 반영 완료 — P6 · P13 · P14 (ADR-0233 / ADR-0234)
+
+| 제안 | 반영 내용 | 밸런스 |
+|---|---|---|
+| **P13** | 오디오 ducking + SFX rate 변조 + **마스터 볼륨** (`playSfx(id, {rate?, duck?})` 옵션, 전투 임팩트 SFX 만 BGM duck — 곱셈 오프셋이라 영속 안 됨) | 0.0pp |
+| **P6** | ADR-0226 효과 가시화 — **glyph 전용** (VFX 경로는 ADR-0231 에서 이미 live), `STATUS_GLYPHS` 5→8종 (`shield`/`regen`/`powered`; `heal` 은 비영속이라 glyph 없음) | 0.0pp |
+| **P14** | 상태 effect HUD **타겟별 분리** (플레이어 vs 각 ICE 슬롯) + `[GLYPH<잔여턴>]` — `renderGrid` 를 `renderer/combat_grid.ts` 로 추출해 테스트 가능화 | 0.0pp |
+
 ### ⏸ 미착수
 
-P6 · P7 · P8 · P10 · P11 · P12 · P13 · P14 · P15. **P7 · P8 은 밸런스 접촉** → ADR-0229 §A1 전후 측정 필요.
+P7 · P8 · P10 · P11 · P12 · P15. **P7 · P8 은 밸런스 접촉** → ADR-0229 §A1 전후 측정 필요.
 
 ### ⚠️ 환경 관찰 (2026-10-27)
 

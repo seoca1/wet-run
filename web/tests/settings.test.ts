@@ -48,6 +48,7 @@ describe("renderSettingsScreen", () => {
   const baseState: SettingsState = {
     selectedField: "audio",
     audioEnabled: true,
+    masterVolume: 0.8,
     bgmVolume: 0.5,
     sfxVolume: 0.7,
     muted: false,
@@ -94,6 +95,47 @@ describe("renderSettingsScreen", () => {
     expect(sliderLine).toBeDefined();
     expect(sliderLine).toContain("█".repeat(10));
     expect(sliderLine).toContain("░".repeat(10));
+  });
+
+  // P13 — master volume slider, alongside BGM / SFX.
+  it("renders a Master Volume label", () => {
+    const grid = renderSettingsScreen(baseState, 80, 40);
+    const lines = gridToText(grid);
+    expect(lines.some((l) => l.includes("Master Volume"))).toBe(true);
+  });
+
+  it("renders the master volume percentage", () => {
+    const grid = renderSettingsScreen(
+      { ...baseState, masterVolume: 0.8 },
+      80,
+      40,
+    );
+    const lines = gridToText(grid);
+    expect(lines.some((l) => l.includes("80%"))).toBe(true);
+  });
+
+  it("renders the master slider bar proportional to the master volume", () => {
+    const grid = renderSettingsScreen(
+      { ...baseState, masterVolume: 0.8 },
+      80,
+      40,
+    );
+    const lines = gridToText(grid);
+    const sliderLine = lines.find((l) => l.includes("[█") && l.includes("80%"));
+    expect(sliderLine).toBeDefined();
+    expect(sliderLine).toContain("█".repeat(16));
+    expect(sliderLine).toContain("░".repeat(4));
+  });
+
+  it("shows the master slider as selected when selectedField is 'master'", () => {
+    const grid = renderSettingsScreen(
+      { ...baseState, selectedField: "master" },
+      80,
+      40,
+    );
+    const lines = gridToText(grid);
+    const labelRow = lines.find((l) => l.includes("Master Volume"));
+    expect(labelRow).toBeDefined();
   });
 });
 

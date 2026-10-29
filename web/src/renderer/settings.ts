@@ -58,6 +58,7 @@ export function cycleLanguage(current: Language): Language {
 
 export type SettingsField =
   | "audio"
+  | "master"
   | "bgm"
   | "sfx"
   | "mute"
@@ -68,6 +69,10 @@ export type SettingsField =
 export interface SettingsState {
   selectedField: SettingsField;
   audioEnabled: boolean;
+  /** Master volume (0..1) — multiplies BGM and SFX. Optional because
+   * `main.ts` still constructs this shape without it; the renderer treats
+   * `undefined` as 1. */
+  masterVolume?: number;
   bgmVolume: number;
   sfxVolume: number;
   muted: boolean;
@@ -98,6 +103,7 @@ export function getInitialSettingsState(
     return {
       selectedField: "audio",
       audioEnabled: localStorage.getItem("wetrun_audio_off") !== "1",
+      masterVolume: 1,
       bgmVolume: 0.4,
       sfxVolume: 0.6,
       muted: false,
@@ -109,6 +115,7 @@ export function getInitialSettingsState(
   return {
     selectedField: "audio",
     audioEnabled: !audio.isMuted(),
+    masterVolume: audio.getMasterVolume(),
     bgmVolume: audio.getBgmVolume(),
     sfxVolume: audio.getSfxVolume(),
     muted: audio.isMuted(),
@@ -132,6 +139,7 @@ export async function getInitialSettingsStateAsync(
   return {
     selectedField: "audio",
     audioEnabled: !audio.isMuted(),
+    masterVolume: audio.getMasterVolume(),
     bgmVolume: audio.getBgmVolume(),
     sfxVolume: audio.getSfxVolume(),
     muted: audio.isMuted(),
@@ -214,10 +222,18 @@ export function renderSettingsScreen(
 
   grid = renderSlider(
     grid,
+    "Master Volume",
+    state.masterVolume ?? 1,
+    state.selectedField === "master",
+    9,
+  );
+
+  grid = renderSlider(
+    grid,
     "BGM Volume",
     state.bgmVolume,
     state.selectedField === "bgm",
-    9,
+    12,
   );
 
   grid = renderSlider(
@@ -225,7 +241,7 @@ export function renderSettingsScreen(
     "SFX Volume",
     state.sfxVolume,
     state.selectedField === "sfx",
-    13,
+    15,
   );
 
   const muteLabel = state.muted ? "[X] MUTE ALL" : "[ ] MUTE ALL";
@@ -237,7 +253,13 @@ export function renderSettingsScreen(
         : PALETTE.GRAY_LIGHT;
   grid = setText(grid, 4, 18, muteLabel, muteFg);
 
-  grid = setText(grid, 4, 20, t("settings.language", state.language), PALETTE.CYAN_LIGHT);
+  grid = setText(
+    grid,
+    4,
+    20,
+    t("settings.language", state.language),
+    PALETTE.CYAN_LIGHT,
+  );
   const languageLabel = state.language === "ko" ? "[X] KO" : "[ ] EN";
   const languageFg =
     state.selectedField === "language"
@@ -277,7 +299,13 @@ export function renderSettingsScreen(
   // PWA section: install row, update row, offline status line.
   // Always rendered (uses live `state.pwa` from bootPwaController) — never
   // hidden, so the player can always see the current status.
-  grid = setText(grid, 4, 27, t("settings.pwa", state.language), PALETTE.CYAN_LIGHT);
+  grid = setText(
+    grid,
+    4,
+    27,
+    t("settings.pwa", state.language),
+    PALETTE.CYAN_LIGHT,
+  );
 
   const pwa = state.pwa;
   // Install row: [ ] when not installable, [X] INSTALLED when standalone,

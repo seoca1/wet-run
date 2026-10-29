@@ -69,20 +69,123 @@ const PHASE_TO_SOUND: Readonly<Record<string, SoundId | null>> = {
   exit: null,
 };
 
+/** SFX ids that should duck the BGM while they sound.
+ *
+ * Only combat-impact sounds count — UI clicks and movement steps ducking
+ * the music would feel like a stutter, not like emphasis.
+ */
+export const COMBAT_SFX_IDS: ReadonlySet<SoundEffectId> =
+  new Set<SoundEffectId>([
+    SFX_IDS.COMBAT_HIT,
+    SFX_IDS.ATTACK,
+    SFX_IDS.DAMAGE,
+    SFX_IDS.ICE_BREAK,
+    SFX_IDS.COMBAT_BLOCK,
+    SFX_IDS.COMBAT_SKILL_STRIKE,
+    SFX_IDS.COMBAT_SKILL_BURST,
+    SFX_IDS.COMBAT_SKILL_GUARD,
+    SFX_IDS.COMBAT_SKILL_SUPPORT,
+  ]);
+
 let instance: AudioManager | null = null;
 
 const DEFAULT_BGM_VOLUME = 0.4;
 const DEFAULT_SFX_VOLUME = 0.6;
+export const DEFAULT_MASTER_VOLUME = 1.0;
 const DEFAULT_CROSSFADE_MS = 800;
+
+/** BGM volume multiplier while a combat SFX is sounding. */
+export const BGM_DUCK_FACTOR = 0.8;
+/** Time the BGM takes to reach the full duck factor. */
+export const BGM_DUCK_ATTACK_MS = 60;
+/** Time the BGM stays at the full duck factor. */
+export const BGM_DUCK_HOLD_MS = 120;
+/** Time the BGM takes to return to its normal (un-ducked) volume. */
+export const BGM_DUCK_RELEASE_MS = 240;
+
+/** Howler playback-rate bounds. */
+const MIN_SFX_RATE = 0.5;
+const MAX_SFX_RATE = 4.0;
 
 const STORAGE_KEY_BGM = "wetrun_audio_bgm_volume";
 const STORAGE_KEY_SFX = "wetrun_audio_sfx_volume";
+const STORAGE_KEY_MASTER = "wetrun_audio_master_volume";
 
 function clamp01(v: number): number {
   if (Number.isNaN(v)) return 0;
   if (v < 0) return 0;
   if (v > 1) return 1;
   return v;
+}
+
+/**
+ * Compose the effective BGM volume.
+ *
+ * `duck` is a multiplicative offset (1 = no ducking) — it is never written
+ * to storage, so a duck can not pollute the persisted BGM setting.
+ */
+export function composeBgmVolume(
+  master: number,
+  bgm: number,
+  trackVolume: number,
+  duck: number = 1,
+): number {
+  if (Number.isNaN(master) || Number.isNaN(bgm)) return 0;
+  if (Number.isNaN(trackVolume) || Number.isNaN(duck)) return 0;
+  return clamp01(master * bgm * trackVolume * duck);
+}
+
+/** Compose the effective SFX volume (master × sfx). */
+export function composeSfxVolume(master: number, sfx: number): number {
+  if (Number.isNaN(master) || Number.isNaN(sfx)) return 0;
+  return clamp01(master * sfx);
+}
+
+/**
+ * The BGM ducking envelope.
+ *
+ * `elapsedMs` is the time since the duck was armed; a negative value (or
+ * a duration of 0) means nothing is playing and no ducking happens.
+ * The envelope ramps down over the attack window, holds, then ramps back up.
+ */
+export function duckFactorFor(
+  elapsedMs: number,
+  durationMs: number = BGM_DUCK_ATTACK_MS +
+    BGM_DUCK_HOLD_MS +
+    BGM_DUCK_RELEASE_MS,
+): number {
+  if (durationMs <= 0) return 1;
+  if (Number.isNaN(elapsedMs) || elapsedMs < 0) return 1;
+  if (elapsedMs >= durationMs) return 1;
+  if (elapsedMs < BGM_DUCK_ATTACK_MS) {
+    const t = elapsedMs / BGM_DUCK_ATTACK_MS;
+    return 1 + (BGM_DUCK_FACTOR - 1) * t;
+  }
+  const holdEnd = BGM_DUCK_ATTACK_MS + BGM_DUCK_HOLD_MS;
+  if (elapsedMs < holdEnd) return BGM_DUCK_FACTOR;
+  const releaseT = (elapsedMs - holdEnd) / BGM_DUCK_RELEASE_MS;
+  return BGM_DUCK_FACTOR + (1 - BGM_DUCK_FACTOR) * releaseT;
+}
+
+/** Clamp a playback rate into the range Howler accepts. */
+export function clampRate(rate: number): number {
+  if (Number.isNaN(rate)) return 1;
+  if (rate < MIN_SFX_RATE) return MIN_SFX_RATE;
+  if (rate > MAX_SFX_RATE) return MAX_SFX_RATE;
+  return rate;
+}
+
+/** Whether the given SFX id should duck the BGM. */
+export function isCombatSfxId(id: SoundEffectId): boolean {
+  return COMBAT_SFX_IDS.has(id);
+}
+
+/** Options accepted by {@link AudioManager.playSfx}. */
+export interface PlaySfxOptions {
+  /** Playback rate / pitch multiplier (Howler `rate()`). 1 = unchanged. */
+  readonly rate?: number;
+  /** Set to false to skip the BGM duck for this sound. Defaults to true. */
+  readonly duck?: boolean;
 }
 
 function readPersistedVolume(key: string, fallback: number): number {
@@ -135,11 +238,22 @@ export class AudioManager {
   private _started = false;
   private _bgmVolume: number;
   private _sfxVolume: number;
+  private _masterVolume: number;
   private readonly sfxHowls: Map<SoundEffectId, HowlType> = new Map();
+  private _duckArmed = false;
+  private _duckElapsedMs = 0;
+  private _duckStartedAtMs = 0;
+  private _duckDurationMs =
+    BGM_DUCK_ATTACK_MS + BGM_DUCK_HOLD_MS + BGM_DUCK_RELEASE_MS;
 
-  private constructor(bgmVolume: number, sfxVolume: number) {
+  private constructor(
+    bgmVolume: number,
+    sfxVolume: number,
+    masterVolume: number,
+  ) {
     this._bgmVolume = readPersistedVolume(STORAGE_KEY_BGM, bgmVolume);
     this._sfxVolume = readPersistedVolume(STORAGE_KEY_SFX, sfxVolume);
+    this._masterVolume = readPersistedVolume(STORAGE_KEY_MASTER, masterVolume);
     if (typeof localStorage !== "undefined") {
       if (localStorage.getItem(STORAGE_KEY_BGM) === null) {
         writePersistedVolume(STORAGE_KEY_BGM, this._bgmVolume);
@@ -147,12 +261,19 @@ export class AudioManager {
       if (localStorage.getItem(STORAGE_KEY_SFX) === null) {
         writePersistedVolume(STORAGE_KEY_SFX, this._sfxVolume);
       }
+      if (localStorage.getItem(STORAGE_KEY_MASTER) === null) {
+        writePersistedVolume(STORAGE_KEY_MASTER, this._masterVolume);
+      }
     }
   }
 
   static getInstance(): AudioManager {
     if (instance === null) {
-      instance = new AudioManager(DEFAULT_BGM_VOLUME, DEFAULT_SFX_VOLUME);
+      instance = new AudioManager(
+        DEFAULT_BGM_VOLUME,
+        DEFAULT_SFX_VOLUME,
+        DEFAULT_MASTER_VOLUME,
+      );
     }
     return instance;
   }
@@ -175,11 +296,18 @@ export class AudioManager {
     const [Howl, ss] = await Promise.all([getHowl(), getSoundSystem()]);
     const trackInfo = ss.TRACKS[track as keyof typeof ss.TRACKS];
     const finalVolume = trackInfo
-      ? ss.calculateVolume(
-          track as Parameters<typeof ss.calculateVolume>[0],
+      ? composeBgmVolume(
+          this._masterVolume,
           this._bgmVolume,
+          trackInfo.volume,
+          this.getDuckFactor(),
         )
-      : this._bgmVolume;
+      : composeBgmVolume(
+          this._masterVolume,
+          this._bgmVolume,
+          1,
+          this.getDuckFactor(),
+        );
 
     if (this.currentTrack === track && this.howl !== null) {
       if (!this._started) {
@@ -240,17 +368,18 @@ export class AudioManager {
     durationMs: number = DEFAULT_CROSSFADE_MS,
   ): Promise<void> {
     if (track === this.currentTrack && this.howl !== null) {
+      const currentVolume = this.getEffectiveBgmVolume();
       if (!this._started) {
         try {
           this.howl.play();
-          this.howl.volume(this._bgmVolume);
+          this.howl.volume(currentVolume);
           this._started = true;
         } catch {
           // ignore
         }
       } else {
         try {
-          this.howl.fade(this.howl.volume(), this._bgmVolume, durationMs);
+          this.howl.fade(this.howl.volume(), currentVolume, durationMs);
         } catch {
           // ignore
         }
@@ -278,7 +407,7 @@ export class AudioManager {
 
     try {
       newHowl.play();
-      newHowl.fade(0, this._bgmVolume, durationMs);
+      newHowl.fade(0, this.getEffectiveBgmVolume(), durationMs);
     } catch {
       // ignore
     }
@@ -404,13 +533,7 @@ export class AudioManager {
   setBgmVolume(v: number): void {
     this._bgmVolume = clamp01(v);
     writePersistedVolume(STORAGE_KEY_BGM, this._bgmVolume);
-    if (this.howl !== null) {
-      try {
-        this.howl.volume(this._bgmVolume);
-      } catch {
-        // ignore
-      }
-    }
+    this.applyBgmVolume();
   }
 
   getSfxVolume(): number {
@@ -420,24 +543,137 @@ export class AudioManager {
   setSfxVolume(v: number): void {
     this._sfxVolume = clamp01(v);
     writePersistedVolume(STORAGE_KEY_SFX, this._sfxVolume);
+    this.applySfxVolumes();
+  }
+
+  getMasterVolume(): number {
+    return this._masterVolume;
+  }
+
+  setMasterVolume(v: number): void {
+    this._masterVolume = clamp01(v);
+    writePersistedVolume(STORAGE_KEY_MASTER, this._masterVolume);
+    this.applyBgmVolume();
+    this.applySfxVolumes();
+  }
+
+  /** The BGM volume actually applied to Howler (master × bgm × track × duck). */
+  getEffectiveBgmVolume(): number {
+    const trackVolume = this.getCurrentTrackVolume();
+    return composeBgmVolume(
+      this._masterVolume,
+      this._bgmVolume,
+      trackVolume,
+      this.getDuckFactor(),
+    );
+  }
+
+  /** The SFX volume actually applied to Howler (master × sfx). */
+  getEffectiveSfxVolume(): number {
+    return composeSfxVolume(this._masterVolume, this._sfxVolume);
+  }
+
+  /** The current ducking multiplier (1 = BGM at its normal level). */
+  getDuckFactor(): number {
+    if (!this._duckArmed) return 1;
+    const elapsed = this.duckElapsedMs();
+    if (elapsed >= this._duckDurationMs) return 1;
+    return duckFactorFor(elapsed);
+  }
+
+  /** Whether the BGM is currently ducked by a combat SFX. */
+  isDucking(): boolean {
+    return this.getDuckFactor() < 1;
+  }
+
+  /**
+   * Advance the ducking clock by `deltaMs` and re-apply the BGM volume.
+   * The game loop calls this each frame so the duck envelope releases
+   * without needing a timer.
+   */
+  advanceDuckingClock(deltaMs: number): void {
+    if (!this._duckArmed) return;
+    this._duckElapsedMs += Math.max(0, deltaMs);
+    if (this._duckElapsedMs >= this._duckDurationMs) {
+      this.clearDuck();
+      return;
+    }
+    this.applyBgmVolume();
+  }
+
+  private duckElapsedMs(): number {
+    const wall = this.now() - this._duckStartedAtMs;
+    return Math.max(this._duckElapsedMs, wall);
+  }
+
+  private now(): number {
+    if (
+      typeof performance !== "undefined" &&
+      typeof performance.now === "function"
+    ) {
+      return performance.now();
+    }
+    return Date.now();
+  }
+
+  private getCurrentTrackVolume(): number {
+    const track = this.currentTrack;
+    if (track === null) return 1;
+    const ss = soundSystemModule;
+    if (ss === null) return 1;
+    const info = ss.TRACKS[track as keyof typeof ss.TRACKS];
+    return info?.volume ?? 1;
+  }
+
+  private applyBgmVolume(): void {
+    if (this.howl === null) return;
+    const volume = this.getEffectiveBgmVolume();
+    try {
+      this.howl.volume(volume);
+    } catch {
+      // ignore
+    }
+  }
+
+  private applySfxVolumes(): void {
+    const volume = this.getEffectiveSfxVolume();
     for (const sfx of this.sfxHowls.values()) {
       try {
-        sfx.volume(this._sfxVolume);
+        sfx.volume(volume);
       } catch {
         // ignore
       }
     }
   }
 
-  async playSfx(id: SoundEffectId = SFX_IDS.CLICK): Promise<void> {
+  private armDuck(): void {
+    this._duckArmed = true;
+    this._duckStartedAtMs = this.now();
+    this._duckElapsedMs = 0;
+    this.applyBgmVolume();
+  }
+
+  private clearDuck(): void {
+    if (!this._duckArmed) return;
+    this._duckArmed = false;
+    this._duckElapsedMs = 0;
+    this._duckStartedAtMs = 0;
+    this.applyBgmVolume();
+  }
+
+  async playSfx(
+    id: SoundEffectId = SFX_IDS.CLICK,
+    options?: PlaySfxOptions,
+  ): Promise<void> {
     const Howl = await getHowl();
+    const rate = clampRate(options?.rate ?? 1);
     let howl = this.sfxHowls.get(id);
     if (howl === undefined) {
       try {
         howl = new Howl({
           src: [id],
           loop: false,
-          volume: this._sfxVolume,
+          volume: this.getEffectiveSfxVolume(),
           html5: false,
         });
         this.sfxHowls.set(id, howl);
@@ -446,12 +682,18 @@ export class AudioManager {
       }
     }
     try {
+      howl.rate(rate);
+      howl.volume(this.getEffectiveSfxVolume());
       howl.play();
       if (this._muted) {
         howl.mute(true);
       }
     } catch {
       // ignore
+    }
+    const shouldDuck = options?.duck ?? true;
+    if (shouldDuck && isCombatSfxId(id)) {
+      this.armDuck();
     }
   }
 
@@ -463,6 +705,7 @@ export class AudioManager {
         // ignore
       }
     }
+    this.clearDuck();
   }
 
   static unlockOnFirstGesture(onUnlock?: () => void): void {

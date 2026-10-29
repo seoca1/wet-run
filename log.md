@@ -1941,3 +1941,27 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **잔여 미구현(기록)**: `detect`·`silence`·`slow`·`stun`·`debuff`·`stagger`·`counter`·`vulnerable`·`bleed`·`fatigue`·`confused`·`terrified`. `detect`/`silence`/`slow`는 **alarm/정보 시스템 소관**(ADR-0219 열린 질문 3)으로 보고만.
 
 **다음(미실행)**: ① 도달 범위 확대(밴드 또는 aggressive/stealth ICE에 아키타입이 실제 쓸 스킬 부여) ② per-owner magnitude ③ 잔여 효과 ④ ADR-0223 애매 10종 ⑤ 카탈로그 갭(T1 데미지 스킬·stealth 스킬·support ICE).
+
+## [2026-10-27] refactor | ICE 아키타입 일관성 검토 + g3 재보정 (ADR-0227)
+
+**배경**: ADR-0226의 새 메커니즘(shield/heal/regen/buff)이 **밴드 24슬롯 중 2개**(고유 ICE 1개 `ta_sentinel`)에서만 작동 — 이유는 shield/buff/regen을 소유한 밴드 ICE가 `aggressive`로 저작되어 **아키타입이 그 효과를 명시하지 않기 때문**. catalog 분포가 aggressive 80/97이라 그 자체가 신호. **ADR-0223(스킬 분류 검토)의 한 단계 위 버전**.
+
+**Part 1 — 아키타입 규칙 + 12종 교정**: `personality`는 **자기 이름·보유 스킬과 일치**해야 함(명백한 불일치만, 4개 아키타입 유지).
+- → `defensive`(3): `hosaka_defender`(`*_defender` + shield) · `loa_zombie`(regen 보유) · `goliath_defensive`(이름 그대로 + shield 3종)
+- → `support`(9): `hosaka_courier` · `sense_net_archive` · `sense_net_informer` · `hosaka_analyst` · `sense_net_spin` · `sense_net_alert` · `hosaka_collector` · `loa_priest` · `ice_cebu_pacific`
+- **미변경(애매)**: `ta_daemon`·`ta_inheritor`·`hosaka_terminal`·`yakuza_collector`·`morrison_echo`·`zombie`·`ice_loa_zombie` 등 / `sense_net_reporter`·`yakuza_assassin/enforcer/brute`는 공격 스킬 보유로 `aggressive` 유지가 정답
+- **주의(기록)**: `support`의 실제 선호 목록은 `heal/regen/shield/debuff/detect`로 **`buff`를 명시하지 않음** → buff-only support ICE는 **fallback 경로**로 발화(검증됨).
+
+**Part 1 검증**: diff = **정확히 personality 12줄**(다른 필드 0). **커버리지 2/24 → 4/24 슬롯**(고유 ICE 1 → 3). `hosaka_defender`의 shield · `loa_zombie`의 regen이 **실제 밴드 전투에서 관측**(end-to-end 프로브; pre-fix에서는 부재 — player측 burn/slow만).
+
+**Part 2 — g3 재보정(교정이 강제한 것)**: `hosaka_defender`가 공격 대신 **12포인트 shield**를 올려 **g3 opening 73.1% → 89.7%(+16.6pp)** → **단조성 파괴**(g3 89.7 > g2 88.6). 단조성·±3pp는 **ADR-0211/0225가 이미 결정한 제약**이므로 그 복원은 기존 결정의 실행.
+- `ENCOUNTER_HP_BY_GRADE[2]`: **155 → 141** · `ENCOUNTER_DMG_BONUS_PCT_BY_GRADE[2]`: **0 → +8**
+- 결과: **g3 = 72.8%**(목표 대비 **−0.2pp**, 곡선에서 가장 타이트) · **단조성 회복**(100.0/88.6/72.8/49.0/43.1/0.0) · **다른 등급 바이트 동일** · **PPL 전 등급 불변**
+
+**왜 두 레버 모두?**: HP 캡은 `c3 ≤ c4 = 165` 상한이고(위반 시 g3 ICE가 g4보다 HP가 많아짐 — 기존 테스트가 거부) 최대 165에서도 **76.3%**(+3.3pp, 허용 밖). 데미지 보너스는 auto-attack 기반(14/15/13/13)의 **계단 함수**로 +7%는 **증명된 no-op**(승수 동일), +8%는 **절벽**(76.3%→51.5%). 캡을 낮추면 창이 열림(+8%에서 142→71.5 · **141→72.8** · 140→75.0). 전수 스캔(cap 124~165 × pct 0~20) 13개 허용 구성 중 **`c3 ≥ 155`는 0개**.
+
+**정직한 caveat**: 이는 **순수 난이도 상향이 아니라 트레이드** — g3 ICE가 **HP 14 감소 + 자동공격 1 더 세게**. 순 난이도는 보존되고 shield는 여전히 의미 있음(12 흡수 · 3틱). 캡 ≥155 유지를 원하면 (a) g3 76.3%(+3.3pp) 수용 또는 (b) `hosaka_defender`의 shield **magnitude**(`skill_defs`, 콘텐츠 결정) 재검토.
+
+**게이트**: `npm test` **126 files / 2976 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0227-ice-archetype-consistency-review.md`.
+
+**다음(미실행)**: ① g3 설계 텐션(shield magnitude 또는 per-ICE 노브) ② `support` 선호 목록에 `buff` 포함 여부 ③ 애매 ICE 잔여 ④ 아키타입의 **미배선 동작**(`getCritBonus`·`shouldTargetAlly`·`getAlarmMultiplier`·`shouldDefensiveAct`) ⑤ ADR-0223 애매 10종 · 잔여 효과 · 카탈로그 갭.

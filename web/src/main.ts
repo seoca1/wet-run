@@ -64,6 +64,25 @@ import {
   adjustVolume,
   type SettingsField,
 } from "./renderer/settings.ts";
+import {
+  loadColorblindMode,
+  loadHighContrastOverride,
+  loadReducedMotionOverride,
+  loadTextScale,
+  nextColorblindMode,
+  nextTextScale,
+  previousTextScale,
+  persistColorblindMode,
+  persistHighContrastOverride,
+  persistReducedMotionOverride,
+  persistTextScale,
+  resolveHighContrast,
+  resolveReducedMotion,
+  textScaleFactor,
+  type ColorblindMode,
+  type TextScaleStep,
+} from "./renderer/accessibility_modes.ts";
+import { applyPaletteMode } from "./renderer/palette.ts";
 import { bootPwaController, type PwaController } from "./core/pwa_boot.ts";
 import {
   groupStatusByTarget,
@@ -127,6 +146,10 @@ function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState
     language: loadPersistedLanguage(),
     storageQuota: { state: "unavailable", reason: "not yet fetched" },
     pwa: { canInstall: false, isInstalled: false, isOffline: false, hasUpdate: false, deferredPrompt: null },
+    reducedMotion: resolveReducedMotion(loadReducedMotionOverride()),
+    highContrast: resolveHighContrast(loadHighContrastOverride()),
+    colorblindMode: loadColorblindMode(),
+    textScale: loadTextScale(),
   };
 }
 
@@ -318,6 +341,15 @@ class Game {
   /** P11 — the combat-entry hint is shown once per run, on the first combat
    * screen the player reaches. */
   private combatEntryHintShown = false;
+  /** P10 — effective reduced-motion state. True suppresses the P1 canvas
+   * shake and the hit-stop hold. */
+  private reducedMotion = false;
+  /** P10 — effective high-contrast state. */
+  private highContrast = false;
+  /** P10 — the active colorblind palette mode (ADR-0196). */
+  private colorblindMode: ColorblindMode = "none";
+  /** P10 — the active text-scale step. */
+  private textScale: TextScaleStep = "medium";
   /** P12 — the in-game acknowledgement of a touch program-button press. */
   private pressFeedback: PressFeedbackState = IDLE_PRESS_FEEDBACK;
   private graphicNovelPlayer:
@@ -383,6 +415,9 @@ class Game {
     if (!this.settingsState) {
       this.settingsState = fallbackSettingsState();
     }
+    // P10 — apply the persisted accessibility settings. This must happen
+    // before the first frame so the boot screen already honours them.
+    this.applyAccessibilitySettings();
     // ADR-0213 Phase 2: load Far Grid unlock cache synchronously. localStorage
     // read is cheap and synchronous — no need for async refresh.
     this.farGridUnlockedCache = isFarGridUnlocked();
@@ -1060,6 +1095,10 @@ class Game {
           "language",
           "pwa_install",
           "pwa_update",
+          "reduced_motion",
+          "high_contrast",
+          "colorblind",
+          "text_scale",
         ];
         const idx = fields.indexOf(this.settingsState.selectedField);
         if (
@@ -1095,6 +1134,13 @@ class Game {
                 : Math.round((this.settingsState.sfxVolume + 0.1) * 10) / 10;
             this.settingsState = { ...this.settingsState, sfxVolume: v };
             manager.setSfxVolume(v);
+          } else if (this.settingsState.selectedField === "text_scale") {
+            const next = nextTextScale(this.textScale);
+            persistTextScale(next);
+            this.textScale = next;
+            this.renderer.setTextScale(textScaleFactor(next));
+            this.resizeRenderer();
+            this.settingsState = { ...this.settingsState, textScale: next };
           }
           this.draw();
         } else if (action.type === "move_west") {
@@ -1116,6 +1162,13 @@ class Game {
                 : Math.round((this.settingsState.sfxVolume - 0.1) * 10) / 10;
             this.settingsState = { ...this.settingsState, sfxVolume: v };
             manager.setSfxVolume(v);
+          } else if (this.settingsState.selectedField === "text_scale") {
+            const next = previousTextScale(this.textScale);
+            persistTextScale(next);
+            this.textScale = next;
+            this.renderer.setTextScale(textScaleFactor(next));
+            this.resizeRenderer();
+            this.settingsState = { ...this.settingsState, textScale: next };
           }
           this.draw();
         } else if (action.type === "confirm") {
@@ -1150,6 +1203,47 @@ class Game {
             if (this.pwaController) {
               void this.pwaController.tryApplyUpdate();
             }
+          } else if (this.settingsState.selectedField === "reduced_motion") {
+            // P10 — toggle reduced motion. The override wins over the OS
+            // media query in both directions.
+            const next = !this.reducedMotion;
+            persistReducedMotionOverride(next);
+            this.reducedMotion = next;
+            this.settingsState = {
+              ...this.settingsState,
+              reducedMotion: next,
+            };
+          } else if (this.settingsState.selectedField === "high_contrast") {
+            // P10 — toggle the high-contrast palette overrides.
+            const next = !this.highContrast;
+            persistHighContrastOverride(next);
+            this.highContrast = next;
+            applyPaletteMode(this.colorblindMode, next);
+            this.settingsState = {
+              ...this.settingsState,
+              highContrast: next,
+            };
+          } else if (this.settingsState.selectedField === "colorblind") {
+            // P10 — cycle the ADR-0196 4-mode colorblind palette.
+            const next = nextColorblindMode(this.colorblindMode);
+            persistColorblindMode(next);
+            this.colorblindMode = next;
+            applyPaletteMode(next, this.highContrast);
+            this.settingsState = {
+              ...this.settingsState,
+              colorblindMode: next,
+            };
+          } else if (this.settingsState.selectedField === "text_scale") {
+            // P10 — cycle the text scale and re-derive the cell geometry.
+            const next = nextTextScale(this.textScale);
+            persistTextScale(next);
+            this.textScale = next;
+            this.renderer.setTextScale(textScaleFactor(next));
+            this.resizeRenderer();
+            this.settingsState = {
+              ...this.settingsState,
+              textScale: next,
+            };
           }
           this.draw();
         } else if (action.type === "jack_out") {
@@ -1629,7 +1723,7 @@ class Game {
         this.layout.cols,
         this.layout.rows,
       );
-      const shake = overlayShake(this.state.vfxInstances);
+      const shake = overlayShake(this.state.vfxInstances, this.reducedMotion);
       this.renderer.render(withDamage, hudLines, undefined, shake);
     }
     updateProgramRow(
@@ -1640,6 +1734,43 @@ class Game {
     );
     if (persist) this.autosave();
     this.syncPhase(this.state.phase);
+  }
+
+  /** Re-derive the canvas surface from the current layout + text scale. */
+  private resizeRenderer(): void {
+    this.renderer.resizeGrid(
+      this.layout.cols,
+      this.layout.rows,
+      this.layout.hudCols,
+      this.layout.orientation,
+      this.layout.breakpoint,
+    );
+  }
+
+  /** P10 — read the persisted accessibility settings and apply them to the
+   * renderer and the palette. Called at boot and after every settings
+   * change, so a change is visible on the very next frame.
+   *
+   * Purely presentational: no reducer, clock or RNG is touched, so the
+   * balance harness is unaffected (ADR-0229 §A1 does not trigger).
+   */
+  private applyAccessibilitySettings(): void {
+    this.reducedMotion = resolveReducedMotion(loadReducedMotionOverride());
+    this.highContrast = resolveHighContrast(loadHighContrastOverride());
+    this.colorblindMode = loadColorblindMode();
+    this.textScale = loadTextScale();
+    applyPaletteMode(this.colorblindMode, this.highContrast);
+    this.renderer.setTextScale(textScaleFactor(this.textScale));
+    this.resizeRenderer();
+    if (this.settingsState) {
+      this.settingsState = {
+        ...this.settingsState,
+        reducedMotion: this.reducedMotion,
+        highContrast: this.highContrast,
+        colorblindMode: this.colorblindMode,
+        textScale: this.textScale,
+      };
+    }
   }
 
   private syncPhase(current: GamePhase): void {
@@ -1717,6 +1848,7 @@ class Game {
       now,
       before,
       this.previousVfxInstances,
+      this.reducedMotion,
     );
     const holding = hitStopActiveAt(this.hitStopDeadlineMs, now);
     const advanceMs = holding ? 0 : deltaMs;

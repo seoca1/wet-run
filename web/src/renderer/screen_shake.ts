@@ -78,7 +78,9 @@ export function shakeOffsetFor(
   durationMs: number = SHAKE_DURATION_MS,
   magnitudePx: number = SHAKE_MAGNITUDE_PX,
   phase: number = 0,
+  reducedMotion: boolean = false,
 ): ScreenOffset {
+  if (reducedMotion) return { x: 0, y: 0 };
   if (durationMs <= 0 || elapsedMs < 0 || magnitudePx <= 0) {
     return { x: 0, y: 0 };
   }
@@ -120,7 +122,10 @@ export function shakeStateFor(
     readonly elapsedMs: number;
     readonly durationMs: number;
   }>,
+  reducedMotion: boolean = false,
 ): ShakeState {
+  if (reducedMotion) return NO_SHAKE;
+
   let newest: {
     readonly elapsedMs: number;
     readonly durationMs: number;
@@ -141,6 +146,7 @@ export function shakeStateFor(
     newest.durationMs,
     SHAKE_MAGNITUDE_PX,
     phase,
+    reducedMotion,
   );
   return { x: offset.x, y: offset.y, magnitudePx: SHAKE_MAGNITUDE_PX };
 }
@@ -166,7 +172,9 @@ export interface HitStopInstance {
  */
 export function hitStopMsFor(
   instances: ReadonlyArray<HitStopInstance>,
+  reducedMotion: boolean = false,
 ): number {
+  if (reducedMotion) return 0;
   for (const inst of instances) {
     if (inst.kind !== SHAKE_VFX_KIND) continue;
     if (inst.durationMs <= 0 || inst.elapsedMs >= inst.durationMs) continue;
@@ -211,7 +219,10 @@ export function hitStopDeadlineFor(
   nowMs: number,
   instances: ReadonlyArray<HitStopInstance>,
   previousInstances: ReadonlyArray<HitStopInstance> = [],
+  reducedMotion: boolean = false,
 ): number {
+  if (reducedMotion) return 0;
+
   // An in-flight hold keeps its original deadline — re-arming here would
   // let a long-lived instance push the deadline forward forever.
   if (previousDeadlineMs > 0 && nowMs < previousDeadlineMs) {

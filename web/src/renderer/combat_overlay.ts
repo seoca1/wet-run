@@ -47,11 +47,17 @@ export function iceDamageAnchor(cols: number, rows: number): DamageAnchor {
   return { col: iceCol - 2, row: rosterStartRow };
 }
 
-/** The canvas shake for the current frame. */
+/** The canvas shake for the current frame.
+ *
+ * `reducedMotion` (P10) suppresses the shake entirely — the offset becomes
+ * exactly zero, so a player who asked for reduced motion never sees the
+ * viewport move.
+ */
 export function overlayShake(
   instances: ReadonlyArray<CombatVfxInstance>,
+  reducedMotion: boolean = false,
 ): ShakeState {
-  return shakeStateFor(instances);
+  return shakeStateFor(instances, reducedMotion);
 }
 
 /**

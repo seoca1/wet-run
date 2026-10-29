@@ -15,6 +15,8 @@ export interface AsciiRendererOptions {
   readonly cellWidth?: number;
   readonly cellHeight?: number;
   readonly fontFamily?: string;
+  /** Cell/font multiplier (P10 text scale). Default 1.0 — no visual change. */
+  readonly textScale?: number;
 }
 
 interface CellSize {
@@ -43,6 +45,13 @@ function getCellSize(
     : CELL_SIZES.standard_landscape;
 }
 
+/** A non-positive or non-finite scale would collapse the grid — fall back
+ * to 1.0 (the unchanged default). */
+function sanitizeTextScale(scale: number): number {
+  if (!Number.isFinite(scale) || scale <= 0) return 1;
+  return scale;
+}
+
 export class AsciiRenderer {
   private ctx: CanvasRenderingContext2D;
   private cellWidth: number;
@@ -50,6 +59,10 @@ export class AsciiRenderer {
   private fontSize: number;
   private fontFamily: string;
   private dpr: number;
+  /** P10 text scale — a pure multiplier over the breakpoint cell size. */
+  private textScale: number;
+  /** The breakpoint cell size, before the text scale is applied. */
+  private baseCellSize: CellSize;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -65,8 +78,32 @@ export class AsciiRenderer {
     this.fontSize = this.cellHeight;
     this.fontFamily = options.fontFamily ?? '"JetBrains Mono", monospace';
     this.dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
+    this.textScale = sanitizeTextScale(options.textScale ?? 1);
+    this.baseCellSize = { width: this.cellWidth, height: this.cellHeight };
     ctx.font = `${this.fontSize}px ${this.fontFamily}`;
     ctx.textBaseline = "top";
+  }
+
+  /** Set the text scale and re-derive the cell geometry.
+   *
+   * The scale is a pure multiplier over the breakpoint cell size — a scale
+   * of 1.0 is byte-identical to the pre-P10 rendering.
+   */
+  setTextScale(scale: number): void {
+    this.textScale = sanitizeTextScale(scale);
+    this.cellWidth = Math.max(1, Math.round(this.baseCellSize.width * this.textScale));
+    this.cellHeight = Math.max(
+      1,
+      Math.round(this.baseCellSize.height * this.textScale),
+    );
+    this.fontSize = this.cellHeight;
+    this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
+    this.ctx.textBaseline = "top";
+  }
+
+  /** The current text scale multiplier. */
+  getTextScale(): number {
+    return this.textScale;
   }
 
   /** Resize canvas to fit a (cols × rows) grid plus HUD width.
@@ -80,8 +117,12 @@ export class AsciiRenderer {
     breakpoint = "large",
   ): void {
     const cellSize = getCellSize(orientation, breakpoint);
-    this.cellWidth = cellSize.width;
-    this.cellHeight = cellSize.height;
+    this.baseCellSize = cellSize;
+    this.cellWidth = Math.max(1, Math.round(cellSize.width * this.textScale));
+    this.cellHeight = Math.max(
+      1,
+      Math.round(cellSize.height * this.textScale),
+    );
     this.fontSize = this.cellHeight;
 
     const totalCols = cols + hudCols;

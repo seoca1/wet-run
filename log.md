@@ -2093,3 +2093,22 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **136 files / 3234 tests PASS** · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · 볼트 lint CLEAN.
 **검증 한계**: `main.ts`는 자체 boot으로 vitest 미실행 → 배선은 **소스 텍스트 단언**(런타임 실행 아님) · 실 브라우저/터치 하드웨어 미검증 · e2e 미실행.
 **미실행**: **P10**(accessibility, L 비용) · **P7·P8**(§A1 필요). ADR: `0235-onboarding-touch-intro-vfx.md`.
+
+## [2026-10-27] feat | 접근성 모드 배선 — reduced-motion / 고대비 / 색각 palette / 텍스트 스케일 (ADR-0236)
+
+제안서의 **P10**을 구현 — **접근성 계층**(기본값 무변경 → 밸런스·시각 영향 0). 신규 1 모듈 + 신규 5 테스트 + 7 파일 수정.
+
+**핵심**: `core/accessibility.ts`의 `reducedMotion` / `highContrast` / `prefersReducedMotion()`은 **소비자 0건**이었다(제안서 §1.2). 이를 실소비자와 연결:
+- **reduced-motion** — `shakeOffsetFor` / `shakeStateFor` / `hitStopMsFor` / `hitStopDeadlineFor` / `overlayShake` 가 `reducedMotion` 플래그를 받음(기본 `false` → 기존 39개 단언 무변경). ON이면 shake offset이 **정확히 `{x:0,y:0}`** 이고 hit-stop deadline은 arm되지 않음.
+- **색각 이상 palette** — `palette.ts` 에 ADR-0196 4-mode 어휘(`none`/`deuteranopia`/`protanopia`/`tritanopia`) + `PALETTE_VARIANTS` + `paletteFor(mode, highContrast)` + `applyPaletteMode`. `PALETTE` 를 mutable 로 전환(`Object.freeze` / `as const` 제거만 — **색상 값 무변경**) 해 20개 renderer call site 무변경. `resolveColorHint` 가 활성 palette를 자동 추종.
+- **고대비** — `core/accessibility.ts` 의 `getHighContrastColors()` 를 데이터 소스로 사용.
+- **텍스트 스케일** — `canvas.ts` 에 `textScale`(셀 + 폰트 동시 스케일, `medium` = 정확히 1.0).
+- 4개 설정 필드(`reduced_motion`/`high_contrast`/`colorblind`/`text_scale`)를 **완전 배선**(렌더 + 입력 사이클 + ENTER/←→ + 영속 + 부팅 시 첫 프레임 전 적용) — 이전 웨이브의 "렌더되나 도달 불가" 갭을 반복하지 않음. `tests/settings_accessibility.test.ts` 가 사이클 배열 자체를 pin.
+
+**기본값 불변 입증(오케스트레이터 확인)**: `palette.ts` diff 에서 제거된 줄은 `Object.freeze(` + `} as const)` **구조 2줄뿐** — 색상 값 변경 **0**.
+
+**테스트**: **3234 → 3333**(+5 files / +99 tests). 신규 단언 pre-change 실패 확인(4 파일 / 13 단언).
+**밸런스**: **12등급 0.0pp**(양 곡선 byte-identical — 오케스트레이터 독립 재실행).
+**게이트**: `npm test` **141 files / 3333 tests PASS** · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · 볼트 lint CLEAN.
+**검증 한계**: `main.ts` 자체 boot으로 vitest 미실행(배선은 코드 리드) · Playwright 3-mode 스크린샷 미실행 · 색 가독성은 taste 판단. 후속: `renderer/settings.ts` 456 pure LOC(ADR-0110 밴드 초과 — 분할 후속), `suppressMotion` 의 `flash`/`floating_damage` kind는 소비자 미배선(후속).
+**미실행**: **P7·P8**(밸런스 접촉 → ADR-0229 §A1 필요, 사용자 결정). ADR: `0236-accessibility-modes.md`.

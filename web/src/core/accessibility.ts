@@ -16,14 +16,41 @@ export const DEFAULT_ACCESSIBILITY_STATE: AccessibilityState = Object.freeze({
   reducedMotion: false,
 });
 
-/** Check if user prefers reduced motion. */
+/** Check if user prefers reduced motion.
+ *
+ * P10 / ADR-0236: this is the canonical source of the OS-level
+ * reduced-motion preference. `renderer/accessibility_modes.ts` resolves it
+ * against the in-game override and the result gates the P1 canvas shake.
+ *
+ * Guarded: `window.matchMedia` is absent in a non-DOM environment, so the
+ * check degrades to "no preference" instead of throwing during boot.
+ */
 export function prefersReducedMotion(): boolean {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return false;
+  }
+  try {
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  } catch {
+    return false;
+  }
 }
 
-/** Check if user prefers high contrast. */
+/** Check if user prefers high contrast.
+ *
+ * P10 / ADR-0236: consumed by `renderer/accessibility_modes.ts`, which
+ * resolves it against the in-game override and feeds the high-contrast
+ * palette overrides.
+ */
 export function prefersHighContrast(): boolean {
-  return window.matchMedia("(prefers-contrast: high)").matches;
+  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+    return false;
+  }
+  try {
+    return window.matchMedia("(prefers-contrast: high)").matches;
+  } catch {
+    return false;
+  }
 }
 
 /** Get ARIA label for a menu item. */

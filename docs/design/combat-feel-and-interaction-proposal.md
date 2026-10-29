@@ -363,9 +363,15 @@
 | **P12** | 터치 프로그램 버튼 **인게임 눌림 피드백** (월-클럭 deadline, 400ms) + `window.wetrun` 글로벌 의존 제거 → 직접 콜백 (신규 `core/touch_feedback.ts`) | 0.0pp |
 | **P15** | 전투 진입 연출 — 미스폰 `ice_intro` 배너 1건 스폰 (**`import_vfx_deterministic`**, RNG 무소비) | 0.0pp |
 
-### ⏸ 미착수
+### ✅ 반영 완료 — P10 (ADR-0236)
 
-**P10** (accessibility — reduced-motion / 색각 palette / 텍스트 스케일, L 비용) · **P7 · P8** (밸런스 접촉 → ADR-0229 §A1 전후 측정 필요).
+| 제안 | 반영 내용 | 밸런스 |
+|---|---|---|
+| **P10** | 접근성 모드 4종 — **reduced-motion**(shake/hit-stop 억제) · **고대비** · **색각 이상 palette**(ADR-0196 4-mode) · **텍스트 스케일**(ADR-0183 3-step). 기본값은 전부 무변경 (palette byte-identical 입증 — 35 token/5 helper/렌더 셀 색/4 breakpoint geometry 전부 diff 0). 4개 설정 필드 **완전 배선** | 0.0pp |
+
+### ⏸ 미착수 — 밸런스 접촉 (사용자 결정 필요)
+
+**P7** (입력 유휴 시 시간 압력) · **P8** (`critical_hit` 임계값을 데미지 스케일에 연동) — 둘 다 **calibrated 곡선을 바꾸므로** ADR-0229 §A1 (전후 측정 + re-baseline ADR) 이 필요하다.
 
 ### ⚠️ 환경 관찰 (2026-10-27)
 

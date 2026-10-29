@@ -22,6 +22,16 @@ import {
 } from "../save/storage_quota.ts";
 import { isLanguageSupported, t, type Language } from "../core/i18n.ts";
 import { INITIAL_PWA_STATE, type PwaState } from "../core/pwa_manager.ts";
+import {
+  loadColorblindMode,
+  loadHighContrastOverride,
+  loadReducedMotionOverride,
+  loadTextScale,
+  resolveHighContrast,
+  resolveReducedMotion,
+  type ColorblindMode,
+  type TextScaleStep,
+} from "./accessibility_modes.ts";
 
 /** Default `pwa` slot for callers that don't have a live controller. */
 export function defaultPwaState(): PwaState {
@@ -64,7 +74,11 @@ export type SettingsField =
   | "mute"
   | "language"
   | "pwa_install"
-  | "pwa_update";
+  | "pwa_update"
+  | "reduced_motion"
+  | "high_contrast"
+  | "colorblind"
+  | "text_scale";
 
 export interface SettingsState {
   selectedField: SettingsField;
@@ -80,6 +94,16 @@ export interface SettingsState {
   storageQuota: StorageQuota;
   /** Live PWA state — populated by `bootPwaController` in main.ts. */
   pwa: PwaState;
+  /** P10 — effective reduced-motion state (override resolved against the
+   * OS media query). */
+  reducedMotion?: boolean;
+  /** P10 — effective high-contrast state (override resolved against the
+   * OS `prefers-contrast` media query). */
+  highContrast?: boolean;
+  /** P10 — the 4-mode colorblind palette selection (ADR-0196). */
+  colorblindMode?: ColorblindMode;
+  /** P10 — the text-scale step. */
+  textScale?: TextScaleStep;
 }
 
 const VOLUME_STEP = 0.1;
@@ -96,6 +120,7 @@ export function getInitialSettingsState(
   pwa: PwaState = defaultPwaState(),
 ): SettingsState {
   const language = loadPersistedLanguage();
+  const accessibility = accessibilitySettings();
   let audio: AudioManager;
   try {
     audio = AudioManager.getInstance();
@@ -110,6 +135,7 @@ export function getInitialSettingsState(
       language,
       storageQuota: { state: "unavailable", reason: "not yet fetched" },
       pwa,
+      ...accessibility,
     };
   }
   return {
@@ -122,6 +148,22 @@ export function getInitialSettingsState(
     language,
     storageQuota: { state: "unavailable", reason: "not yet fetched" },
     pwa,
+    ...accessibility,
+  };
+}
+
+/** The P10 accessibility slice of the settings state, read from storage. */
+function accessibilitySettings(): {
+  readonly reducedMotion: boolean;
+  readonly highContrast: boolean;
+  readonly colorblindMode: ColorblindMode;
+  readonly textScale: TextScaleStep;
+} {
+  return {
+    reducedMotion: resolveReducedMotion(loadReducedMotionOverride()),
+    highContrast: resolveHighContrast(loadHighContrastOverride()),
+    colorblindMode: loadColorblindMode(),
+    textScale: loadTextScale(),
   };
 }
 
@@ -146,6 +188,7 @@ export async function getInitialSettingsStateAsync(
     language: loadPersistedLanguage(),
     storageQuota,
     pwa,
+    ...accessibilitySettings(),
   };
 }
 
@@ -269,12 +312,78 @@ export function renderSettingsScreen(
         : PALETTE.GRAY_LIGHT;
   grid = setText(grid, 4, 22, languageLabel, languageFg);
 
-  grid = setText(grid, 4, 24, "STORAGE", PALETTE.CYAN_LIGHT);
+  // P10 — ACCESSIBILITY section (reduced motion / high contrast / colorblind
+  // palette / text scale). Rows 24-28; the STORAGE and PWA sections below
+  // were shifted down by 5 rows to make room. In a grid shorter than 29 rows
+  // these rows are clipped — nothing existing is overwritten.
+  grid = setText(grid, 4, 24, "ACCESSIBILITY", PALETTE.CYAN_LIGHT);
+
+  const reducedMotion = state.reducedMotion ?? false;
+  const reducedLabel = reducedMotion
+    ? "[X] REDUCED MOTION"
+    : "[ ] REDUCED MOTION";
+  grid = setText(
+    grid,
+    4,
+    25,
+    reducedLabel,
+    state.selectedField === "reduced_motion"
+      ? PALETTE.YELLOW_AMBER
+      : reducedMotion
+        ? PALETTE.GREEN_NEON
+        : PALETTE.GRAY_LIGHT,
+  );
+
+  const highContrast = state.highContrast ?? false;
+  const contrastLabel = highContrast
+    ? "[X] HIGH CONTRAST"
+    : "[ ] HIGH CONTRAST";
+  grid = setText(
+    grid,
+    4,
+    26,
+    contrastLabel,
+    state.selectedField === "high_contrast"
+      ? PALETTE.YELLOW_AMBER
+      : highContrast
+        ? PALETTE.GREEN_NEON
+        : PALETTE.GRAY_LIGHT,
+  );
+
+  const colorblindMode = state.colorblindMode ?? "none";
+  const colorblindLabel = `[ ] COLORBLIND: ${colorblindMode.toUpperCase()}`;
+  grid = setText(
+    grid,
+    4,
+    27,
+    colorblindLabel,
+    state.selectedField === "colorblind"
+      ? PALETTE.YELLOW_AMBER
+      : colorblindMode === "none"
+        ? PALETTE.GRAY_LIGHT
+        : PALETTE.GREEN_NEON,
+  );
+
+  const textScale = state.textScale ?? "medium";
+  const textScaleLabel = `[ ] TEXT SCALE: ${textScale.toUpperCase()}`;
+  grid = setText(
+    grid,
+    4,
+    28,
+    textScaleLabel,
+    state.selectedField === "text_scale"
+      ? PALETTE.YELLOW_AMBER
+      : textScale === "medium"
+        ? PALETTE.GRAY_LIGHT
+        : PALETTE.GREEN_NEON,
+  );
+
+  grid = setText(grid, 4, 30, "STORAGE", PALETTE.CYAN_LIGHT);
   if (state.storageQuota.state === "unavailable") {
     grid = setText(
       grid,
       4,
-      25,
+      31,
       `[ Storage API unavailable ]`,
       PALETTE.GRAY_DARK,
     );
@@ -290,7 +399,7 @@ export function renderSettingsScreen(
     grid = setText(
       grid,
       4,
-      25,
+      31,
       `[${bar}] ${state.storageQuota.percent}%`,
       barColor,
     );
@@ -302,7 +411,7 @@ export function renderSettingsScreen(
   grid = setText(
     grid,
     4,
-    27,
+    33,
     t("settings.pwa", state.language),
     PALETTE.CYAN_LIGHT,
   );
@@ -328,7 +437,7 @@ export function renderSettingsScreen(
         ? PALETTE.YELLOW_AMBER
         : PALETTE.GRAY_DARK;
   }
-  grid = setText(grid, 4, 29, installLabel, installFg);
+  grid = setText(grid, 4, 35, installLabel, installFg);
 
   // Update row: lights up when the controller has detected a waiting worker
   // or a `controllerchange` event fired.
@@ -341,14 +450,14 @@ export function renderSettingsScreen(
       : pwa.hasUpdate
         ? PALETTE.GREEN_NEON
         : PALETTE.GRAY_LIGHT;
-  grid = setText(grid, 4, 31, updateLabel, updateFg);
+  grid = setText(grid, 4, 36, updateLabel, updateFg);
 
   // Offline status line (informational only — not selectable).
   const offlineLabel = pwa.isOffline
     ? t("settings.pwa_offline", state.language)
     : t("settings.pwa_online", state.language);
   const offlineFg = pwa.isOffline ? PALETTE.YELLOW_AMBER : PALETTE.GRAY_DARK;
-  grid = setText(grid, 4, 33, offlineLabel, offlineFg);
+  grid = setText(grid, 4, 37, offlineLabel, offlineFg);
 
   const hint =
     state.selectedField === "audio"
@@ -361,7 +470,15 @@ export function renderSettingsScreen(
             ? "ENTER: install app | ESC: back"
             : state.selectedField === "pwa_update"
               ? "ENTER: apply update | ESC: back"
-              : "←/→: adjust volume | TAB: switch | ESC: back";
+              : state.selectedField === "reduced_motion"
+                ? "ENTER: toggle reduced motion | TAB: switch | ESC: back"
+                : state.selectedField === "high_contrast"
+                  ? "ENTER: toggle high contrast | TAB: switch | ESC: back"
+                  : state.selectedField === "colorblind"
+                    ? "ENTER: cycle colorblind mode | TAB: switch | ESC: back"
+                    : state.selectedField === "text_scale"
+                      ? "ENTER: cycle text scale | TAB: switch | ESC: back"
+                      : "←/→: adjust volume | TAB: switch | ESC: back";
   grid = setText(grid, 2, rows - 2, hint, PALETTE.GRAY_DARK);
   grid = setText(
     grid,

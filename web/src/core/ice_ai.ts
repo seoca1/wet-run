@@ -336,10 +336,22 @@ export function getAlarmMultiplier(combatant: Combatant): number {
 }
 
 /**
+ * Minimal surface for archetype lookups that read only the personality.
+ *
+ * Distinct from `SkillUser` (which also carries `hp` / `aggression` /
+ * `maxHp`) because a crit-bonus lookup needs nothing but the archetype. The
+ * production roster type (`Ice`) and the engine type (`Combatant`) both
+ * satisfy it.
+ */
+export interface PersonalityBearer {
+  readonly personality?: unknown;
+}
+
+/**
  * Returns the crit chance bonus for this ICE's personality.
  * AGGRESSIVE personality adds +5% crit chance; all others return 0.
  */
-export function getCritBonus(combatant: Combatant): number {
+export function getCritBonus(combatant: PersonalityBearer): number {
   const personality = coercePersonality(combatant.personality);
   return personality === "aggressive" ? AGGRESSIVE_CRIT_BONUS : 0;
 }

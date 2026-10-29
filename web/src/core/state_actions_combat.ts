@@ -14,6 +14,7 @@ import type { GameState, GameAction, Ice, BossPhase } from "./types.ts";
 import { AUTO_ATTACK_INTERVAL_MS } from "./combat_engine.ts";
 import { DEFAULT_BOSS_PROFILE, checkPhaseTransition } from "./boss_phases.ts";
 import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai.ts";
+import { rollIceCrit } from "./ice_crit.ts";
 import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects.ts";
 import { applyIceNonDamageEffect } from "./ice_combat_effect_apply.ts";
 import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling.ts";
@@ -241,13 +242,19 @@ function processEnemyTurns(state: GameState): GameState {
             selectedSkill.damage +
             enemy.tier * 2 +
             iceAttackBonus(working, iceIndex);
-          const skillDmg = Math.max(
+          const baseSkillDmg = Math.max(
             1,
             Number.isFinite(rawSkillDmg) ? rawSkillDmg : 1,
           );
+          // ADR-0161 `aggressive` archetype: +5% crit chance on the ICE's
+          // outgoing damage. The roll is a pure function of the injected RNG
+          // and consumes the same `Math.random` the balance harness controls,
+          // so the simulation stays deterministic.
+          const crit = rollIceCrit(enemy, baseSkillDmg, Math.random);
+          const skillDmg = crit.damage;
           playerHp = Math.max(0, playerHp - skillDmg);
           logMessages.push(
-            `>>> ${enemy.name} uses ${selectedSkill.name}: ${skillDmg} dmg`,
+            `>>> ${enemy.name} uses ${selectedSkill.name}: ${skillDmg} dmg${crit.isCrit ? " CRITICAL" : ""}`,
           );
           newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
           usedSkill = true;
@@ -303,12 +310,23 @@ function processEnemyTurns(state: GameState): GameState {
       // difficulty curve.
       autoDmg += iceAttackBonus(working, iceIndex);
 
+      // ADR-0161 `aggressive` archetype: +5% crit chance on the ICE's
+      // outgoing auto-attack. The roll is a pure function of the injected RNG
+      // and consumes the same `Math.random` the balance harness controls, so
+      // the simulation stays deterministic.
+      const crit = rollIceCrit(enemy, autoDmg, Math.random);
+      autoDmg = crit.damage;
+
       playerHp = Math.max(0, playerHp - autoDmg);
 
       if (enemy.tier >= 3 && state.bossPhase >= 3) {
-        logMessages.push(`>>> ${enemy.name} AoE: ${autoDmg} dmg (hits all!)`);
+        logMessages.push(
+          `>>> ${enemy.name} AoE: ${autoDmg} dmg (hits all!)${crit.isCrit ? " CRITICAL" : ""}`,
+        );
       } else {
-        logMessages.push(`>>> ${enemy.name} attacks: ${autoDmg} dmg`);
+        logMessages.push(
+          `>>> ${enemy.name} attacks: ${autoDmg} dmg${crit.isCrit ? " CRITICAL" : ""}`,
+        );
       }
     }
   }

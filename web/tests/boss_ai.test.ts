@@ -23,8 +23,19 @@ function makeCombatState(roster: Ice[], bossPhase: number = 0): GameState {
   };
 }
 
+/** A boss ICE for the phase-multiplier tests.
+ *
+ * `personality` is stated explicitly because every production ICE row carries
+ * one (97 of 97 in `ice_types.json`). A fixture that omits it silently
+ * inherits `coercePersonality(undefined) === "aggressive"`, which now grants
+ * the ADR-0161 crit bonus — and these tests assert an exact damage value, so
+ * the unstated archetype made them fail on the ~5% of runs where the crit
+ * roll landed. `defensive` never crits, so the expected damage below stays
+ * exactly the phase-multiplier value.
+ */
 const makeIce = (name: string, hp: number, tier: number = 1): Ice => ({
   id: name.toLowerCase().replace(/\s/g, "_"), name, tier, hp, maxHp: 100, armor: 0,
+  personality: "defensive",
 });
 
 describe("boss AI overrides", () => {

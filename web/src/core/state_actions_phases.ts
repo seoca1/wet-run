@@ -17,9 +17,11 @@
 import type { GameState, GameAction, EndingChoice } from "./types.ts";
 import {
   import_vfx,
+  import_vfx_deterministic,
   durationForKind,
   pickMovementSfxId,
 } from "./state_helpers.ts";
+import { iceIntroPayload } from "./combat_entry_vfx.ts";
 import { AudioManager } from "../audio/manager.ts";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 import { iceHpForGrade, missionGradeOf } from "./ice_scaling.ts";
@@ -342,11 +344,25 @@ export function applyApproachAction(
   action: GameAction,
 ): GameState {
   if (action.type === "confirm") {
+    // P15 — combat entry presentation. The `ice_intro` banner ("INCOMING:
+    // <ICE>" + scanning line) had a renderer but no spawn site, so combat
+    // started as an instant cut from the approach screen.
+    // `import_vfx_deterministic` draws no `Math.random` value — the balance
+    // harness seeds `Math.random`, so a new `import_vfx` call here would
+    // silently shift the ADR-0229 grade curve.
     return {
       ...state,
       phase: "combat",
       message: `Combat vs ${state.ice.name}`,
       turnCount: state.turnCount + 1,
+      vfxInstances: [
+        ...state.vfxInstances,
+        import_vfx_deterministic(
+          "ice_intro",
+          iceIntroPayload(state.ice.name),
+          durationForKind("ice_intro"),
+        ),
+      ],
     };
   }
   if (action.type === "select_program") {

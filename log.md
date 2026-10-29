@@ -2075,3 +2075,21 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **133 files / 3173 tests PASS** · `tsc --noEmit` 0 · `eslint src` 0 errors(기존 `keyboard.ts:14` warning 1건) · `npm run build` ✓ · 볼트 lint CLEAN.
 **검증 한계**: vitest는 `main.ts` 미실행(자체 boot) → `renderGrid`를 추출해 직접 검증, 설정 필드 배선은 코드 리드 검증 · 실 canvas/오디오 미검증 · e2e 미실행 · glyph 가독성(`D` vs `S`)은 taste 판단.
 **미실행**: P7·P8(§A1 필요)·P10·P11·P12·P15. ADR: `0233-audio-ducking-master-volume.md` · `0234-effect-visibility-status-hud.md`.
+
+## [2026-10-27] feat | 전투 반응 P11·P12·P15 — 온보딩 자동 표시 · 터치 인게임 피드백 · 전투 진입 연출 (ADR-0235)
+
+제안서의 **P11 · P12 · P15**를 구현 — 셋 다 **표시/입력 계층**(밸런스 영향 0). 신규 3 모듈 + 신규 3 테스트 + 4 파일 수정.
+
+**P11 — 온보딩**: 기존 `wetrun_tutorial_completed` 플래그를 재사용해 첫 부팅 시 튜토리얼 **자동 표시** — `renderer/tutorial.ts` **미수정**, 신규 순수 모듈 `core/onboarding.ts`(`shouldAutoShowTutorial`). 전투 진입 힌트 2줄(`1-9: USE PROGRAM`)을 `HAND:` 행 위에 배치, `ice_intro` 배너 밴드(rows 1-3, 5)와 겹치지 않게 배치.
+**P12 — 터치**: 인게임 눌림 피드백(월-클럭 deadline, 400ms) — 신규 `core/touch_feedback.ts`(**RNG 0**). `updateProgramRow`가 `window.wetrun` 글로벌 대신 **직접 `onProgramPress` 콜백**을 받도록 변경, debounce 250ms→120ms.
+**P15 — 전투 진입 연출**: `applyApproachAction`이 미스폰 `ice_intro`를 **`import_vfx_deterministic`**(RNG 무소비)으로 1건 스폰. 렌더러·duration은 이미 존재(배선만 누락).
+
+### 🔍 구현 중 발견한 실질 결함 2건
+1. **`window.wetrun`이 `game.start()` 이후 할당** → 그 사이 도착한 탭이 `?.` 옵셔널 콜로 **조용히 유실**. 직접 콜백으로 해결.
+2. **렌더 루프의 VFX early-return이 눌림 피드백 만료를 삼킴** → ack가 영구 고정될 수 있었음. 만료를 early-return 앞으로 이동.
+
+**테스트**: **3173 → 3234**(+3 files / +61 tests). 3건 모두 pre-change 실패 확인(P15 5건 · P12 5건 · P11 2건).
+**밸런스**: **12등급 0.0pp**(양 곡선 byte-identical — 오케스트레이터 독립 재실행). 신규 VFX spawn의 **Math.random draw 0**(53개 전투 진입 전이). **§A1 미발동**.
+**게이트**: `npm test` **136 files / 3234 tests PASS** · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · 볼트 lint CLEAN.
+**검증 한계**: `main.ts`는 자체 boot으로 vitest 미실행 → 배선은 **소스 텍스트 단언**(런타임 실행 아님) · 실 브라우저/터치 하드웨어 미검증 · e2e 미실행.
+**미실행**: **P10**(accessibility, L 비용) · **P7·P8**(§A1 필요). ADR: `0235-onboarding-touch-intro-vfx.md`.

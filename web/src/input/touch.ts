@@ -133,12 +133,26 @@ export function mountVirtualGamepad(
   };
 }
 
+/** Minimum interval between two accepted program-button presses (ms).
+ *
+ * P12 — the previous 250ms window dropped taps during deliberate rapid
+ * play. 120ms still rejects the synthetic `pointerdown` → `click` duplicate
+ * while letting a fast player register consecutive presses.
+ */
+export const PROGRAM_PRESS_DEBOUNCE_MS = 120;
+
 /** Update the program row (only visible during combat). Pass deck array from state.
  * Each program gets a button labeled with its short-id (first 4 chars), positioned
  * in a horizontal row at the bottom-center of the viewport.
+ *
+ * `onProgramPress` receives the 1-based hand index of the pressed button. When
+ * it is omitted the press falls back to the `window.wetrun` global — the direct
+ * callback is preferred because the global is only assigned after boot, so a
+ * tap landing in that window would otherwise be silently dropped.
  */
 export function updateProgramRow(
   deck: ReadonlyArray<{ readonly id: string }>,
+  onProgramPress?: (handIndex: number) => void,
 ): void {
   const row = document.getElementById("wetrun-program-row");
   if (!row) return;
@@ -171,14 +185,25 @@ export function updateProgramRow(
         padding: 2vh 2.5vw; font-size: 3vw;
       }
       #wetrun-program-row button:active { background: rgba(0, 255, 65, 0.4); }
+      #wetrun-program-row button:focus-visible {
+        outline: 2px solid #ffa500; outline-offset: 2px;
+      }
     </style>
     ${buttons.join("")}
   `;
   row.querySelectorAll("button").forEach((btn) => {
     const idx = Number((btn as HTMLElement).dataset.handIndex);
     if (Number.isFinite(idx) && idx > 0) {
+      let lastFire = 0;
       btn.addEventListener("pointerdown", (e) => {
         e.preventDefault();
+        const now = Date.now();
+        if (now - lastFire < PROGRAM_PRESS_DEBOUNCE_MS) return;
+        lastFire = now;
+        if (onProgramPress) {
+          onProgramPress(idx);
+          return;
+        }
         const w = window as unknown as {
           wetrun?: { handleProgramButton(handIndex: number): void };
         };

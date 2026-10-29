@@ -37,6 +37,20 @@ import {
 import { pickCombatSfxLayers } from "./core/combat_sfx.ts";
 import { FpsCounter, getMetrics } from "./core/performance.ts";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial.ts";
+import {
+  COMBAT_ENTRY_HINT_LINES,
+  combatEntryHintFits,
+  combatEntryHintRows,
+  shouldAutoShowTutorial,
+} from "./core/onboarding.ts";
+import {
+  IDLE_PRESS_FEEDBACK,
+  expirePressFeedback,
+  hasPressFeedback,
+  pressFeedbackLabel,
+  pressProgramButton,
+  type PressFeedbackState,
+} from "./core/touch_feedback.ts";
 import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon.ts";
 import {
   DungeonCrawler,
@@ -75,7 +89,7 @@ import {
   stateToSaveSlot,
 } from "./core/state.ts";
 import { encounterIceIdForGrade, missionGradeOf, missionSeedOf } from "./core/ice_scaling.ts";
-import { makeGrid, setText } from "./core/grid.ts";
+import { makeGrid, setText, type Grid } from "./core/grid.ts";
 import { PALETTE } from "./renderer/palette.ts";
 import { renderGrid } from "./renderer/combat_grid.ts";
 import {
@@ -301,6 +315,11 @@ class Game {
   private tutorialActive = false;
   private tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null =
     null;
+  /** P11 — the combat-entry hint is shown once per run, on the first combat
+   * screen the player reaches. */
+  private combatEntryHintShown = false;
+  /** P12 — the in-game acknowledgement of a touch program-button press. */
+  private pressFeedback: PressFeedbackState = IDLE_PRESS_FEEDBACK;
   private graphicNovelPlayer:
     import("./core/graphic_novel.ts").GraphicNovelPlayer | null = null;
   private graphicNovelState: GraphicNovelState | null = null;
@@ -1197,10 +1216,7 @@ class Game {
         this.draw();
         break;
       case "tutorial":
-        resetTutorial();
-        this.tutorialActive = true;
-        this.tutorialOverlay = createTutorialOverlay();
-        this.draw();
+        this.enterTutorial();
         break;
       case "far_grid_hub":
         // ADR-0213 Phase 2: FAR GRID is gated by Arc 1 clear. Defense in depth:
@@ -1315,6 +1331,43 @@ class Game {
       .catch(() => {
         // Autosave is best-effort; user can manually save later.
       });
+  }
+
+  /** P11/P12 — draw the combat-entry hint and the touch press acknowledgement
+   * onto the base combat grid.
+   *
+   * The hint fires once per run, on the first frame where the phase becomes
+   * `combat`. It is drawn *under* the VFX layer so the `ice_intro` banner
+   * (P15) stays legible, and it sits above the `HAND:` row so it never covers
+   * the programs the player must press. The press acknowledgement is drawn
+   * last so it is always visible.
+   */
+  private composeCombatOverlays(grid: Grid, previousPhase: GamePhase): Grid {
+    let out = grid;
+    if (
+      !this.combatEntryHintShown &&
+      previousPhase !== "combat" &&
+      this.state?.phase === "combat" &&
+      combatEntryHintFits(this.layout.rows)
+    ) {
+      const rows = combatEntryHintRows(this.layout.rows);
+      COMBAT_ENTRY_HINT_LINES.forEach((line, index) => {
+        const row = rows[index];
+        if (row === undefined) return;
+        out = setText(out, 2, row, line, PALETTE.YELLOW_AMBER);
+      });
+      this.combatEntryHintShown = true;
+    }
+    if (hasPressFeedback(this.pressFeedback)) {
+      const program = this.state?.deck[this.pressFeedback.handIndex ?? -1];
+      const label = pressFeedbackLabel(
+        this.pressFeedback,
+        program?.id.slice(0, 4),
+      );
+      const row = combatEntryHintRows(this.layout.rows)[0] ?? 0;
+      out = setText(out, 2, row, label, PALETTE.GREEN_NEON);
+    }
+    return out;
   }
 
   /** Render the current state. `persist` is false for render-loop frames:
@@ -1548,13 +1601,16 @@ class Game {
     );
     this.state = {
       ...this.state,
-      grid: renderGrid(
-        this.state,
-        iceDelta,
-        playerDelta,
-        statusGroups,
-        this.layout.cols,
-        this.layout.rows,
+      grid: this.composeCombatOverlays(
+        renderGrid(
+          this.state,
+          iceDelta,
+          playerDelta,
+          statusGroups,
+          this.layout.cols,
+          this.layout.rows,
+        ),
+        previous.phase,
       ),
     };
     const hudLines = buildHudLines(this.state);
@@ -1576,7 +1632,12 @@ class Game {
       const shake = overlayShake(this.state.vfxInstances);
       this.renderer.render(withDamage, hudLines, undefined, shake);
     }
-    updateProgramRow(this.state.phase === "combat" ? this.state.deck : []);
+    updateProgramRow(
+      this.state.phase === "combat" ? this.state.deck : [],
+      this.state.phase === "combat"
+        ? (handIndex) => this.handleProgramButton(handIndex)
+        : undefined,
+    );
     if (persist) this.autosave();
     this.syncPhase(this.state.phase);
   }
@@ -1620,6 +1681,18 @@ class Game {
     this.fpsCounter.tick();
     const deltaMs = this.lastLoopMs > 0 ? now - this.lastLoopMs : WEB_TICK_MS;
     this.lastLoopMs = now;
+
+    // P12 — expire the touch press acknowledgement on the wall clock. This
+    // runs before the VFX early-return so the acknowledgement clears even
+    // when no VFX instance is alive.
+    if (hasPressFeedback(this.pressFeedback)) {
+      const expired = expirePressFeedback(this.pressFeedback, now);
+      if (expired !== this.pressFeedback) {
+        this.pressFeedback = expired;
+        if (this.state !== null) this.draw(false);
+        return;
+      }
+    }
 
     const state = this.state;
     if (state === null || state.vfxInstances.length === 0) return;
@@ -1697,6 +1770,13 @@ class Game {
     const action: GameAction = { type: "select_program", handIndex };
     const resolved = resolveProgramSelection(this.state, action);
     if (resolved === null) return;
+    // P12 — acknowledge the tap inside the game, not only via the button's
+    // CSS `:active` state (which vanishes as soon as the finger lifts).
+    this.pressFeedback = pressProgramButton(
+      this.pressFeedback,
+      handIndex,
+      Date.now(),
+    );
     const previous = this.state;
     this.state = applyAction(this.state, resolved);
     if (previous.phase === "combat" && this.state.phase === "combat") {
@@ -1715,10 +1795,25 @@ class Game {
     this.draw();
   }
 
+  /** P11 — enter the onboarding tutorial overlay.
+   *
+   * Called by `boot()` on a first boot (the localStorage completion flag is
+   * absent) and by the menu's TUTORIAL option. The overlay writes the
+   * completion flag itself when the player finishes or skips it, so the
+   * tutorial is shown exactly once per profile.
+   */
+  enterTutorial(): void {
+    resetTutorial();
+    this.tutorialActive = true;
+    this.tutorialOverlay = createTutorialOverlay();
+    this.draw();
+  }
+
   stop(): void {
     this.loopRunning = false;
     this.hitStopDeadlineMs = 0;
     this.previousVfxInstances = [];
+    this.pressFeedback = IDLE_PRESS_FEEDBACK;
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;
@@ -1800,6 +1895,12 @@ function boot(): void {
   }
 
   if (loading) loading.style.display = "none";
+  // P11 — first boot shows the onboarding tutorial automatically. The gate is
+  // the same localStorage flag the tutorial overlay writes on completion, so
+  // the tutorial appears exactly once per profile.
+  if (shouldAutoShowTutorial(localStorage)) {
+    game.enterTutorial();
+  }
   game.start();
   (window as unknown as { wetrun: Game }).wetrun = game;
 

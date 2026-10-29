@@ -355,9 +355,17 @@
 | **P6** | ADR-0226 효과 가시화 — **glyph 전용** (VFX 경로는 ADR-0231 에서 이미 live), `STATUS_GLYPHS` 5→8종 (`shield`/`regen`/`powered`; `heal` 은 비영속이라 glyph 없음) | 0.0pp |
 | **P14** | 상태 effect HUD **타겟별 분리** (플레이어 vs 각 ICE 슬롯) + `[GLYPH<잔여턴>]` — `renderGrid` 를 `renderer/combat_grid.ts` 로 추출해 테스트 가능화 | 0.0pp |
 
+### ✅ 반영 완료 — P11 · P12 · P15 (ADR-0235)
+
+| 제안 | 반영 내용 | 밸런스 |
+|---|---|---|
+| **P11** | 첫 부팅 시 튜토리얼 **자동 표시** (기존 `wetrun_tutorial_completed` 플래그 재사용) + 전투 진입 힌트 `1-9: USE PROGRAM` (신규 `core/onboarding.ts`) | 0.0pp |
+| **P12** | 터치 프로그램 버튼 **인게임 눌림 피드백** (월-클럭 deadline, 400ms) + `window.wetrun` 글로벌 의존 제거 → 직접 콜백 (신규 `core/touch_feedback.ts`) | 0.0pp |
+| **P15** | 전투 진입 연출 — 미스폰 `ice_intro` 배너 1건 스폰 (**`import_vfx_deterministic`**, RNG 무소비) | 0.0pp |
+
 ### ⏸ 미착수
 
-P7 · P8 · P10 · P11 · P12 · P15. **P7 · P8 은 밸런스 접촉** → ADR-0229 §A1 전후 측정 필요.
+**P10** (accessibility — reduced-motion / 색각 palette / 텍스트 스케일, L 비용) · **P7 · P8** (밸런스 접촉 → ADR-0229 §A1 전후 측정 필요).
 
 ### ⚠️ 환경 관찰 (2026-10-27)
 

@@ -466,6 +466,53 @@ describe("data_loaders: ICE skills", () => {
       parseIce({ name: "X", armor: 0, skills: "loa_summon" }, "x"),
     ).toThrow(/field 'skills' must be an array when present/);
   });
+
+  /**
+   * Pins the ten skill classifications that ADR-0223 left open as ambiguous.
+   *
+   * ADR-0223 reviewed all 88 `skill_defs` entries and deliberately left ten
+   * ids unchanged because their names admitted two readings, recording the
+   * competing readings instead. A later review closed that debt by evidence
+   * and confirmed all ten at their existing values, so they are pinned here:
+   *
+   * - The three `buff` ids (`ai_negotiate`, `aleph_fragment`,
+   *   `territorial_mark`) are the ones the ADR-0216 token table classified
+   *   deliberately (`negotiate` / `aleph` / `mark` → buff), and each carries a
+   *   `magnitude` equal to its owner's `dmg_base` × the buff multiplier — the
+   *   ADR-0226 authoring rule. Every shield / heal / regen / buff skill in the
+   *   catalog has a magnitude; no damaging skill has one, so the absence of a
+   *   magnitude on the seven `attack` ids is the same signal in reverse.
+   * - `straylight_protocol` is documented as a 15-damage skill in
+   *   `ice_scaling.ts`, and `ta_sentinel`'s own stats reproduce that number
+   *   exactly (`dmg_base` 7 + `tier` 4 × 2 = 15).
+   * - `enforce_contract` and `intimidation` are named as attack skills by
+   *   ADR-0227, and `loa_command` is pinned as the catalog's offensive
+   *   damage-derivation probe.
+   */
+  it("keeps the ten previously-ambiguous skill classifications at their reviewed values", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const defs = (
+      data as unknown as {
+        skill_defs: Record<string, { effect: string }>;
+      }
+    ).skill_defs;
+    const reviewed: ReadonlyArray<readonly [string, string]> = [
+      ["ai_negotiate", "buff"],
+      ["aleph_fragment", "buff"],
+      ["territorial_mark", "buff"],
+      ["enforce_contract", "attack"],
+      ["ice_break", "attack"],
+      ["intimidation", "attack"],
+      ["loa_command", "attack"],
+      ["matrix_merge", "attack"],
+      ["orbital_command", "attack"],
+      ["straylight_protocol", "attack"],
+    ];
+    expect(reviewed.length).toBe(10);
+    for (const [id, effect] of reviewed) {
+      expect(defs[id]?.effect).toBe(effect);
+    }
+  });
 });
 
 /**
@@ -517,6 +564,33 @@ describe("data_loaders: ICE personality", () => {
     const ice = parseIce({ name: "ICE — Legacy", tier: 1, armor: 0 }, "x");
     expect(ice.personality).toBeUndefined();
     expect("personality" in ice).toBe(false);
+  });
+
+  /**
+   * Pins the ICE archetype consistency review's one correction.
+   *
+   * `yakuza_collector` is a *role* ICE, not an attacker: its whole kit is the
+   * yakuza financial-pressure cluster (`debt_track` / `asset_seize`, both
+   * `debuff`) and it owns no damaging skill, so ADR-0227's rule 4 ("an ICE
+   * with a clear offensive identity and/or a damaging skill stays
+   * `aggressive`") does not protect it. ADR-0227 had already assigned the
+   * identical `*_collector` role suffix to `support` for `hosaka_collector`
+   * (same suffix, buff kit, no attack skill) and the same debuff-only /
+   * no-attack kit shape to `support` for `sense_net_alert`.
+   *
+   * The `aggression` tier does not veto the archetype: ADR-0227 corrected
+   * `hosaka_collector`, which also authored `aggression: "aggressive"`, to
+   * `support` as well.
+   */
+  it("reads the yakuza collector as a support archetype, not an attacker", async () => {
+    const { default: data } = await import("../src/data/ice_types.json");
+    const catalog = loadIceCatalog(data);
+    const collector = catalog["yakuza_collector"];
+    expect(collector).toBeDefined();
+    if (collector === undefined) return;
+    expect(collector.personality).toBe("support");
+    const effects = (collector.skills ?? []).map((s) => s.effect);
+    expect(effects).toEqual(["debuff", "debuff"]);
   });
 
   it("throws on a malformed personality value", () => {

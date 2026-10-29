@@ -2021,3 +2021,23 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **근거 있는 3대 발견**: ① **VFX 27종 중 10종이 완전 구현됐으나 spawn 호출 0** — 특히 **`player_hit`(피격 시각 피드백)이 아예 발생하지 않음** ② **게임 루프 부재**(`main.ts`에 rAF/setInterval 0, `draw()`는 입력 핸들러에서만 — **VFX가 다음 키 입력까지 정지**) ③ `core/accessibility.ts` **소비자 0**
 - 제안 **15건(P1~P15)** + 즉시 실행 상위 3개: **P2 VFX 10종 배선 · P9 rAF 루프 · P4 전투 로그 확장** — 셋 다 **순수 추가형**(드리프트 체크 불요). 밸런스 접촉은 **P7(유휴 턴 압박)·P8(crit 임계 결합)** 2건뿐이며 **ADR-0229 §A1 전후 측정 필수**로 명시.
 - 설계 의도는 이미 `docs/design/systems/animations.md`에 존재(화면 흔들림 1~2px/100~200ms · 부유 데미지 숫자 · 2.4초 사망 시퀀스) — **갭은 구현이지 스펙이 아님**.
+
+## [2026-10-27] feat | 전투 반응 top-3 구현 — VFX 배선 · 전투 로그 · rAF 렌더 루프 (ADR-0231)
+
+제안서(`docs/design/combat-feel-and-interaction-proposal.md`)의 상위 3개를 구현 — **셋 다 순수 추가형**(밸런스 영향 0). 11개 파일(+353/−23).
+
+**P2 — 미배선 VFX 7종 배선**(렌더러 신설 0): `player_hit`(적 데미지 2개 사이트) · `defeat`(player HP 0) · `ice_death`(승리) · `shield`/`heal`/`regen`/`buff`(`ice_combat_effect_apply.ts` 4개 적용기 → `IceEffectOutcome.vfx` → `state.vfxInstances` 병합). 전부 기존 렌더러 보유 → 신규 kind·렌더러 추가 없음.
+
+**P4 — 전투 로그**: `GameState.combatLog: ReadonlyArray<string>`(**newest-first**, `COMBAT_LOG_CAP=8`). `useProgram`·`processEnemyTurns`가 **prepend**(reverse 복사본, 변이 없음) → `combatLog[0]`이 최신 → 제안서의 `slice(0,4)`가 성립. `buildHudLines`가 최근 4줄 + 빈 경우 `message` fallback. `message` 시맨틱 **불변**. **SaveSlot 미포함**(스키마 bump 회피). 모든 `GameState` 픽스처에 필드 추가(타입 약화 0).
+
+**P9 — rAF 렌더 루프**(`main.ts`만): `rafId`/`loopRunning`/`lastLoopMs`/`fpsCounter` · `MAX_FRAME_ADVANCE_MS=100` · `startLoop()`(멱등) · `loop(now)`. 매 프레임 `FpsCounter` tick → delta → `advanceVfxListBy` → **tick 롤 또는 인스턴스 만료 시에만** `draw(false)`. **VFX advance를 `draw()`에서 이관**(중복 진행 방지), 기존 입력 핸들러 `draw()` 59곳 **보존**. `stop()`이 cancel, `_lastFrameMs` 제거. **신규 타이밍 서브시스템 없음** — `performance.ts`의 `FpsCounter`+`getMetrics()` + rAF delta 재사용, >100ms 스톨 시 advance 건너뜀.
+
+### 🔍 구현 중 발견한 실질 결함 2건 (이 ADR의 핵심 내용)
+1. **VFX spawn이 RNG-중립이 아니었고 캘리브레이션 곡선을 조용히 이동시킴** — `import_vfx`가 인스턴스 id에 `Math.random()`을 써서 **spawn마다 시드 PRNG draw 1회 소비**. 순진하게 배선하면 스트림이 밀려(HEAD 35 draw → 27) **승률이 이동**(g2 88.6→87.3, g3 73.1→72.1, g4 39.3→40.3). **수정**: `import_vfx`/`import_vfx_ms`는 **HEAD 그대로 복원**(기존 사이트의 draw 수·위치 보존) + 신규 사이트 전용 **`import_vfx_deterministic`**(모노토닉 카운터, **RNG 무소비**) 신설 → **35 draw = HEAD → 12등급 0.0pp**. `id`는 순수 식별자(로직 미사용)라 카운터/랜덤 공존 안전.
+2. **렌더 루프가 초당 ~60회 IDB 쓰기를 유발할 뻔함** — `draw()`가 무조건 `autosave()` → `saveToSlot(0,…)`. 루프가 애니메이션 중 초당 60회 draw하면 **초당 ~60 IDB 트랜잭션**. **수정**: `draw(persist: boolean = true)` — 기본값으로 기존 59개 사이트 **동작 불변**(여전히 autosave), 루프 내부 2곳만 `false`.
+
+**테스트**: **2986 → 3002**(+16). 신규 14개 단언은 **pre-change에서 실패 확인**(HEAD를 손으로 복원 — `git checkout`/`stash` 미사용).
+**밸런스**: **12등급 0.0pp**(양 곡선, ADR-0229 기준선과 byte-identical), RNG draw 수 35=35 독립 확인. **드리프트 정책 준수**.
+**게이트**: `npm test` **127 files / 3002 tests PASS** · `tsc --noEmit` 0(tsconfig가 `tests/**/*` 포함이라 테스트까지 검사) · `eslint src` 0 · `npm run build` ✓ · 볼트 lint CLEAN.
+**검증 한계(정직 기록)**: vitest는 `main.ts`의 rAF 루프를 실행하지 않음(`main.ts`는 import 시 자체 boot, vitest는 동기) · Playwright e2e **미실행**(브라우저+live URL 필요) · LSP 데몬 unreachable → `tsc --noEmit`이 권위 · **화면 애니메이션 육안 확인 안 함**(스크린샷·프레임 타이밍 미측정).
+**미실행**: P1·P3·P5·P6·**P7·P8**(§A1 필요)·P10~P15. **미커밋**. ADR: `0231-combat-feel-top3-vfx-log-raf.md`.

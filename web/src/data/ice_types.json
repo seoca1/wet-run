@@ -415,7 +415,7 @@
     ],
     "ice_kind": "construct",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "loa_betrayer": {
     "name": "ICE — Black (loa_betrayer)",
@@ -1593,7 +1593,7 @@
     ],
     "ice_kind": "watchdog",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "ice_ghost_grid": {
     "name": "ICE — Ghost Grid (Loa proximity alarm)",
@@ -1869,7 +1869,7 @@
     ],
     "ice_kind": "standard",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "hosaka_collector": {
     "name": "ICE — Hosaka Collector",
@@ -1906,7 +1906,7 @@
     ],
     "ice_kind": "standard",
     "aggression": "aggressive",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "hosaka_courier": {
     "name": "ICE — Hosaka Courier",
@@ -1938,7 +1938,7 @@
     ],
     "ice_kind": "standard",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "hosaka_terminal": {
     "name": "ICE — Hosaka Terminal",
@@ -2002,7 +2002,7 @@
     ],
     "ice_kind": "goliath",
     "aggression": "aggressive",
-    "personality": "aggressive"
+    "personality": "defensive"
   },
   "sense_net_alert": {
     "name": "ICE — Sense/Net Alert",
@@ -2034,7 +2034,7 @@
     ],
     "ice_kind": "watchdog",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "sense_net_archive": {
     "name": "ICE — Sense/Net Archive",
@@ -2066,7 +2066,7 @@
     ],
     "ice_kind": "standard",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "sense_net_spin": {
     "name": "ICE — Sense/Net Spin",
@@ -2098,7 +2098,7 @@
     ],
     "ice_kind": "watchdog",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "sense_net_informer": {
     "name": "ICE — Sense/Net Informer",
@@ -2130,7 +2130,7 @@
     ],
     "ice_kind": "watchdog",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "support"
   },
   "sense_net_reporter": {
     "name": "ICE — Sense/Net Reporter",
@@ -2534,7 +2534,7 @@
     ],
     "ice_kind": "construct",
     "aggression": "standard",
-    "personality": "aggressive"
+    "personality": "defensive"
   },
   "loa_baron": {
     "name": "ICE — Loa Baron",
@@ -2981,7 +2981,7 @@
     ],
     "ice_kind": "goliath",
     "aggression": "boss",
-    "personality": "aggressive"
+    "personality": "defensive"
   },
   "black_construct": {
     "name": "ICE — Black Construct",

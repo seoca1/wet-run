@@ -6,6 +6,9 @@
 
 const WEB_TICK_MS = 16;
 
+/** Maximum number of combat log lines kept on `GameState.combatLog`. */
+export const COMBAT_LOG_CAP = 8;
+
 /** Create a VFX instance directly (tick-based duration). */
 export function import_vfx(
   kind: import("../renderer/combat_vfx.js").CombatVfxKind,
@@ -46,6 +49,45 @@ export function import_vfx_ms(
     tick: 0,
     duration: Math.ceil(clampedMs / WEB_TICK_MS),
     durationMs: clampedMs,
+    elapsedMs: 0,
+    payload,
+    payloadNum,
+    startRow,
+    targetRow,
+  };
+}
+
+/** Monotonic id source for `import_vfx_deterministic`. */
+let nextDeterministicVfxId = 1;
+
+/** Spawn a VFX instance without consuming a `Math.random` draw.
+ *
+ * The balance harness seeds `Math.random` with a PRNG, so every draw shifts
+ * the seeded crit / proc / skill rolls and moves the ADR-0229 grade curve.
+ * `import_vfx` draws its id from `Math.random`, which is fine for the spawn
+ * sites that already existed (their draw count is baked into the recorded
+ * baseline) but NOT for newly added ones — those would silently shift the
+ * whole curve. New spawn sites use this helper so they stay RNG-neutral.
+ *
+ * Ids are unique within this counter but may collide with an `import_vfx`
+ * id. Nothing reads `CombatVfxInstance.id` for logic — it is an identity
+ * key only.
+ */
+export function import_vfx_deterministic(
+  kind: import("../renderer/combat_vfx.js").CombatVfxKind,
+  payload: string,
+  duration: number,
+  startRow?: number,
+  targetRow?: number,
+  payloadNum?: number,
+): import("../renderer/combat_vfx.js").CombatVfxInstance {
+  const durationMs = Math.max(0, duration) * WEB_TICK_MS;
+  return {
+    id: nextDeterministicVfxId++,
+    kind,
+    tick: 0,
+    duration,
+    durationMs,
     elapsedMs: 0,
     payload,
     payloadNum,

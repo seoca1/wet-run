@@ -170,6 +170,11 @@ export interface GameState {
   readonly discardPile: ReadonlyArray<Program>;
   readonly grid: Grid;
   readonly message: string; // Last status message (HUD)
+  /** Recent combat log lines, NEWEST first (index 0 = newest), capped at
+   * `COMBAT_LOG_CAP`. `message` is the most recent line, i.e. `combatLog[0]`
+   * whenever the log is non-empty. Display-only — not persisted in
+   * `SaveSlot` (no schema bump). */
+  readonly combatLog: ReadonlyArray<string>;
   readonly turnCount: number;
   /** Active graphic novel session, or null when not on the GN screen. */
   readonly graphicNovel: GraphicNovelState | null;

@@ -99,6 +99,7 @@ export function makeInitialState(
     discardPile: [],
     grid: makeGrid(gridSize.w, gridSize.h),
     message: `Mission: ${mission.title}`,
+    combatLog: [],
     turnCount: 0,
     graphicNovel: null,
     runPhase: "matrix",
@@ -205,8 +206,19 @@ export function buildHudLines(state: GameState): string[] {
       `${marker} [${i + 1}] ${ice.name.slice(0, 10)} HP: ${hpDisplay}`,
     );
   }
-  lines.push("", state.message);
+  lines.push("", ...recentLogLines(state));
   return lines;
+}
+
+/** The combat log lines to show in the HUD.
+ *
+ * `combatLog` is newest-first, so the first four entries are the four most
+ * recent events. Falls back to `state.message` when the log is empty (a
+ * fresh run, or a state built without the log).
+ */
+function recentLogLines(state: GameState): string[] {
+  if (state.combatLog.length === 0) return [state.message];
+  return state.combatLog.slice(0, 4);
 }
 
 /** Serialize a GameState to a SaveSlot (Tier 2 save round-trip). */
@@ -325,6 +337,7 @@ export function slotToGameState(
     discardPile,
     grid: makeGrid(MVP_GRID_W, MVP_GRID_H),
     message: `Resumed from autosave (turn ${slot.turnCount + 1})`,
+    combatLog: [],
     turnCount: slot.turnCount,
     graphicNovel,
     runPhase: "matrix",

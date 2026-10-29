@@ -366,3 +366,67 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
     });
   });
 });
+
+describe("ICE effect VFX spawns (ADR-0219 Option A, P2)", () => {
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.01);
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("shield spawns a `shield` VFX", () => {
+    const ice = makeEffectIce("shield", 20);
+    const state = makeCombatState({ iceRoster: [ice] });
+
+    const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
+    expect(outcome.vfx.map((v) => v.kind)).toContain("shield");
+  });
+
+  it("heal spawns a `heal` VFX", () => {
+    const ice = makeEffectIce("heal", 12, { hp: 30, maxHp: 50 });
+    const state = makeCombatState({ iceRoster: [ice] });
+
+    const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
+    expect(outcome.vfx.map((v) => v.kind)).toContain("heal");
+  });
+
+  it("regen spawns a `regen` VFX", () => {
+    const ice = makeEffectIce("regen", 4, { hp: 30, maxHp: 50 });
+    const state = makeCombatState({ iceRoster: [ice] });
+
+    const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
+    expect(outcome.vfx.map((v) => v.kind)).toContain("regen");
+  });
+
+  it("buff spawns a `buff` VFX", () => {
+    const ice = makeEffectIce("buff", 6);
+    const state = makeCombatState({ iceRoster: [ice] });
+
+    const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
+    expect(outcome.vfx.map((v) => v.kind)).toContain("buff");
+  });
+
+  it("an inert effect spawns no VFX", () => {
+    const ice = makeEffectIce("stun", 10);
+    const state = makeCombatState({ iceRoster: [ice] });
+
+    const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
+    expect(outcome.vfx).toHaveLength(0);
+  });
+
+  it("the combat path merges the effect VFX into state.vfxInstances", () => {
+    // `lastEnemyAttackMs: 0` lets the enemy turn run; the defensive
+    // archetype makes the ICE prefer its `shield` skill.
+    vi.spyOn(Math, "random").mockReturnValue(0.01);
+    const ice = makeEffectIce("shield", 20);
+    const state = makeCombatState({
+      iceRoster: [ice],
+      lastEnemyAttackMs: 0,
+    });
+
+    const result = applyAction(state, { type: "use_program", programId: "p1" });
+    expect(result.vfxInstances.map((v) => v.kind)).toContain("shield");
+  });
+});

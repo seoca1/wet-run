@@ -11,6 +11,7 @@
  */
 
 import type { GameState, GameAction, Ice, BossPhase } from "./types.ts";
+import type { CombatVfxInstance } from "../renderer/combat_vfx.ts";
 import { AUTO_ATTACK_INTERVAL_MS } from "./combat_engine.ts";
 import { DEFAULT_BOSS_PROFILE, checkPhaseTransition } from "./boss_phases.ts";
 import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai.ts";
@@ -21,8 +22,11 @@ import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling.ts";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle.ts";
 import {
+  COMBAT_LOG_CAP,
   import_vfx,
+  import_vfx_deterministic,
   import_vfx_ms,
+  durationForKind,
   durationMsForKind,
 } from "./state_helpers.ts";
 import { useProgram, advanceDeadTarget } from "./state_actions_programs.ts";
@@ -143,6 +147,7 @@ function processEnemyTurns(state: GameState): GameState {
   let playerHp = state.player.hp;
   const logMessages: string[] = [];
   const newCooldowns: Record<string, number> = { ...state.skillCooldowns };
+  const enemyTurnVfx: CombatVfxInstance[] = [];
 
   for (const key of Object.keys(newCooldowns)) {
     newCooldowns[key] = Math.max(
@@ -253,6 +258,13 @@ function processEnemyTurns(state: GameState): GameState {
           const crit = rollIceCrit(enemy, baseSkillDmg, Math.random);
           const skillDmg = crit.damage;
           playerHp = Math.max(0, playerHp - skillDmg);
+          enemyTurnVfx.push(
+            import_vfx_deterministic(
+              "player_hit",
+              "",
+              durationForKind("player_hit"),
+            ),
+          );
           logMessages.push(
             `>>> ${enemy.name} uses ${selectedSkill.name}: ${skillDmg} dmg${crit.isCrit ? " CRITICAL" : ""}`,
           );
@@ -271,6 +283,7 @@ function processEnemyTurns(state: GameState): GameState {
           working = outcome.state;
           if (outcome.message !== null) {
             logMessages.push(outcome.message);
+            enemyTurnVfx.push(...outcome.vfx);
             newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
             usedSkill = true;
           }
@@ -318,6 +331,13 @@ function processEnemyTurns(state: GameState): GameState {
       autoDmg = crit.damage;
 
       playerHp = Math.max(0, playerHp - autoDmg);
+      enemyTurnVfx.push(
+        import_vfx_deterministic(
+          "player_hit",
+          "",
+          durationForKind("player_hit"),
+        ),
+      );
 
       if (enemy.tier >= 3 && state.bossPhase >= 3) {
         logMessages.push(
@@ -392,6 +412,11 @@ function processEnemyTurns(state: GameState): GameState {
       iceRoster: rosterForReturn,
       statusEffects: working.statusEffects,
       bossPhase: newBossPhase,
+      vfxInstances: [
+        ...state.vfxInstances,
+        ...enemyTurnVfx,
+        import_vfx_deterministic("defeat", "", durationForKind("defeat")),
+      ],
       dixieLastAttackMs: dixieAttacked ? currentMs : state.dixieLastAttackMs,
       lastEnemyAttackMs: anyEnemyAttacked ? currentMs : state.lastEnemyAttackMs,
       counterWindowOpenMs: anyEnemyAttacked
@@ -401,6 +426,20 @@ function processEnemyTurns(state: GameState): GameState {
   }
 
   const bossPhaseChangedInEnemyTurn = newBossPhase > state.bossPhase;
+
+  const bossPhaseVfx: CombatVfxInstance[] =
+    bossPhaseChangedInEnemyTurn && newBossPhase >= 1 && newBossPhase <= 4
+      ? [
+          import_vfx_ms(
+            "boss_phase_transition",
+            "",
+            durationMsForKind("boss_phase_transition"),
+            undefined,
+            undefined,
+            newBossPhase,
+          ),
+        ]
+      : [];
 
   return {
     ...state,
@@ -418,19 +457,16 @@ function processEnemyTurns(state: GameState): GameState {
       logMessages.length > 0
         ? logMessages[logMessages.length - 1]
         : state.message,
+    combatLog:
+      logMessages.length > 0
+        ? [...logMessages.slice().reverse(), ...state.combatLog].slice(
+            0,
+            COMBAT_LOG_CAP,
+          )
+        : state.combatLog,
     vfxInstances:
-      bossPhaseChangedInEnemyTurn && newBossPhase >= 1 && newBossPhase <= 4
-        ? [
-            ...state.vfxInstances,
-            import_vfx_ms(
-              "boss_phase_transition",
-              "",
-              durationMsForKind("boss_phase_transition"),
-              undefined,
-              undefined,
-              newBossPhase,
-            ),
-          ]
+      bossPhaseVfx.length > 0 || enemyTurnVfx.length > 0
+        ? [...state.vfxInstances, ...enemyTurnVfx, ...bossPhaseVfx]
         : state.vfxInstances,
   };
 }

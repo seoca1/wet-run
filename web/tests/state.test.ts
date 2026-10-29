@@ -118,6 +118,16 @@ describe("combat", () => {
     expect(afterUse.phase).toBe("victory");
     expect(afterUse.message).toContain("defeated");
   });
+
+  it("spawns `ice_death` VFX when the ICE is defeated", () => {
+    const fastIce: Ice = { ...mockIce, hp: 5 };
+    const inCombat = buildCombatState(fastIce);
+    const afterUse = applyAction(inCombat, {
+      type: "use_program",
+      programId: "test_prog",
+    });
+    expect(afterUse.vfxInstances.map((v) => v.kind)).toContain("ice_death");
+  });
 });
 
 describe("hud", () => {

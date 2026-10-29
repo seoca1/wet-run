@@ -1,5 +1,5 @@
 /** Unit tests for status effect state machine (Tier 5.5). */
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
   applyStatus,
   tickStatus,
@@ -7,6 +7,7 @@ import {
   applyBurnDamage,
   rollStatusProc,
 } from "../src/core/status.ts";
+import { applyAction } from "../src/core/state.ts";
 import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
 import { makeInitialState } from "../src/core/state.ts";
 
@@ -209,5 +210,71 @@ describe("status state machine (Tier 5.5)", () => {
       const next = applyBurnDamage(s, 0, 0, 10, 0);
       expect(next.player.hp).toBe(initial + 10);
     });
+  });
+});
+
+describe("player_hit VFX spawn (P2)", () => {
+  beforeEach(() => {
+    // 0.99 → no burn / slow proc, no crit, but the enemy still auto-attacks.
+    vi.spyOn(Math, "random").mockReturnValue(0.99);
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  function makeHittableState(overrides: Partial<GameState> = {}): GameState {
+    const state = makeInitialState(mockMission, mockIce, mockPrograms);
+    return {
+      ...state,
+      runPhase: "combat",
+      phase: "combat",
+      iceRoster: [{ ...mockIce }],
+      activeIceIndex: 0,
+      lastEnemyAttackMs: 0,
+      dixieLastAttackMs: Date.now(),
+      ...overrides,
+    };
+  }
+
+  it("spawns `player_hit` when an ICE auto-attack damages the player", () => {
+    const state = makeHittableState();
+    const next = applyAction(state, { type: "use_program", programId: "p1" });
+
+    expect(next.player.hp).toBeLessThan(state.player.hp);
+    expect(next.vfxInstances.map((v) => v.kind)).toContain("player_hit");
+  });
+
+  it("spawns `player_hit` when an ICE skill damages the player", () => {
+    const skillIce: Ice = {
+      ...mockIce,
+      name: "Lancer",
+      skills: [
+        {
+          id: "sk1",
+          name: "Lance",
+          effect: "pierce",
+          cooldownMs: 0,
+          damage: 7,
+        },
+      ],
+    };
+    const state = makeHittableState({
+      iceRoster: [skillIce],
+      player: { hp: 100, maxHp: 100, alarm: 0, credits: 0, handSize: 5 },
+    });
+    const next = applyAction(state, { type: "use_program", programId: "p1" });
+
+    expect(next.player.hp).toBeLessThan(100);
+    expect(next.vfxInstances.map((v) => v.kind)).toContain("player_hit");
+  });
+
+  it("spawns `defeat` when the player's HP reaches 0", () => {
+    const state = makeHittableState({
+      player: { hp: 1, maxHp: 100, alarm: 0, credits: 0, handSize: 5 },
+    });
+    const next = applyAction(state, { type: "use_program", programId: "p1" });
+
+    expect(next.player.hp).toBe(0);
+    expect(next.vfxInstances.map((v) => v.kind)).toContain("defeat");
   });
 });

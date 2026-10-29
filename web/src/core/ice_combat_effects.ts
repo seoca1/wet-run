@@ -85,6 +85,9 @@ export interface IceEffectOutcome {
   readonly state: GameState;
   /** Human-readable log line, or `null` when the skill had no effect. */
   readonly message: string | null;
+  /** VFX instances the effect spawned — display only, never read by the
+   * combat math. Empty when the effect was inert. */
+  readonly vfx: ReadonlyArray<import("../renderer/combat_vfx.js").CombatVfxInstance>;
 }
 
 export function replaceEffect(

@@ -25,6 +25,7 @@ import {
   advanceVfxListBy,
   WEB_TICK_MS,
 } from "./renderer/combat_vfx.ts";
+import { FpsCounter, getMetrics } from "./core/performance.ts";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial.ts";
 import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon.ts";
 import {
@@ -111,6 +112,14 @@ function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState
 
 const loadStorySystem = () => import("./core/graphic_novel.ts");
 const loadAudioSystemRaw = () => import("./audio/manager.ts");
+
+/** P9 render loop — maximum frame interval (ms) that still advances VFX.
+ *
+ * A longer frame (GC pause, background-tab wake-up) is a stall: the VFX
+ * advance is skipped so instances do not all expire at once on a huge delta.
+ */
+const MAX_FRAME_ADVANCE_MS = 100;
+
 function isAudioOff(): boolean {
   return localStorage.getItem("wetrun_audio_off") === "1";
 }
@@ -276,7 +285,6 @@ class Game {
   private unwatchLayout: () => void = () => {};
   private _lastPhase: GamePhase | null = null;
   private _lastIceHp: number | null = null;
-  private _lastFrameMs: number = 0;
   private _lastPlayerHp: number | null = null;
   private inventory: Inventory;
   private equipmentLoadout: EquipmentLoadout;
@@ -297,6 +305,10 @@ class Game {
   private dungeonCrawler: DungeonCrawler | null = null;
   private _message: string = "";
   private farGridUnlockedCache: boolean = false;
+  private rafId: number | null = null;
+  private loopRunning = false;
+  private lastLoopMs = 0;
+  private readonly fpsCounter = new FpsCounter();
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -1273,7 +1285,9 @@ class Game {
       });
   }
 
-  private draw(): void {
+  /** Render the current state. `persist` is false for render-loop frames:
+   * a redraw must not trigger the autosave side effect. */
+  private draw(persist: boolean = true): void {
     // Tier 5: matrix / loot / ending screens render with a real GameState
     // but their UI is non-combat. Route by runPhase.
     if (this.state !== null && this.state.runPhase === "matrix") {
@@ -1507,16 +1521,6 @@ class Game {
       ),
     };
     this.renderer.render(this.state.grid, buildHudLines(this.state));
-    // Tier 7: ms-precision advance — exact expiry matching schema duration_ms.
-    const now =
-      typeof performance !== "undefined" ? performance.now() : Date.now();
-    const deltaMs =
-      this._lastFrameMs > 0 ? now - this._lastFrameMs : WEB_TICK_MS;
-    this._lastFrameMs = now;
-    this.state = {
-      ...this.state,
-      vfxInstances: advanceVfxListBy(this.state.vfxInstances, deltaMs),
-    };
     if (this.state.vfxInstances.length > 0) {
       const composed = composeCombatVfx(
         this.state.grid,
@@ -1527,7 +1531,7 @@ class Game {
       this.renderer.render(composed, buildHudLines(this.state));
     }
     updateProgramRow(this.state.phase === "combat" ? this.state.deck : []);
-    this.autosave();
+    if (persist) this.autosave();
     this.syncPhase(this.state.phase);
   }
 
@@ -1549,8 +1553,47 @@ class Game {
     });
   }
 
+  /** Start the continuous render loop (P9). Idempotent — a second call while
+   * the loop is already running is a no-op, so the loop cannot double-start. */
+  private startLoop(): void {
+    if (this.loopRunning) return;
+    this.loopRunning = true;
+    this.lastLoopMs = 0;
+    this.fpsCounter.reset();
+    this.rafId = requestAnimationFrame(this.loop);
+  }
+
+  /** Render-loop frame. Advances VFX by the elapsed frame interval and
+   * redraws only when an instance advanced to a new animation tick or expired. */
+  private readonly loop = (now: number): void => {
+    if (!this.loopRunning) return;
+    this.rafId = requestAnimationFrame(this.loop);
+
+    this.fpsCounter.tick();
+    const deltaMs = this.lastLoopMs > 0 ? now - this.lastLoopMs : WEB_TICK_MS;
+    this.lastLoopMs = now;
+
+    const state = this.state;
+    if (state === null || state.vfxInstances.length === 0) return;
+
+    const frameMs = getMetrics(this.fpsCounter.getFps(), 0).frameTime;
+    if (deltaMs > MAX_FRAME_ADVANCE_MS || frameMs > MAX_FRAME_ADVANCE_MS) {
+      this.draw(false);
+      return;
+    }
+
+    const before = state.vfxInstances;
+    const after = advanceVfxListBy(before, deltaMs);
+    const changed =
+      after.length !== before.length ||
+      after.some((instance, index) => instance.tick !== before[index]?.tick);
+    this.state = { ...state, vfxInstances: after };
+    if (changed) this.draw(false);
+  };
+
   start(): void {
     this.draw();
+    this.startLoop();
   }
 
   /** Read-only phase accessor for e2e/integration tests. */
@@ -1605,6 +1648,11 @@ class Game {
   }
 
   stop(): void {
+    this.loopRunning = false;
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
+    }
     this.input.stop();
     this.gamepad.stop();
     this.unmountTouch();

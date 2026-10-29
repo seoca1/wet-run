@@ -25,7 +25,9 @@ import iceTypesData from "../data/ice_types.json";
 import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
 import { onIceKill, type FactionId } from "./faction_reputation.ts";
 import {
+  COMBAT_LOG_CAP,
   import_vfx,
+  import_vfx_deterministic,
   import_vfx_ms,
   pickProgramVfxKind,
   pickProgramSfxId,
@@ -332,6 +334,8 @@ export function useProgram(state: GameState, programId: string): GameState {
     ];
     totalReward += achCredits;
 
+    const victoryMessage = `${stateWithLoot.ice.name} defeated! +${totalReward} credits${lootMessage}`;
+
     return {
       ...stateWithLoot,
       iceRoster: stateWithLoot.iceRoster,
@@ -339,12 +343,24 @@ export function useProgram(state: GameState, programId: string): GameState {
       discardPile: discard,
       runPhase: "loot",
       phase: "victory",
-      message: `${stateWithLoot.ice.name} defeated! +${totalReward} credits${lootMessage}`,
+      message: victoryMessage,
+      combatLog: [victoryMessage, ...stateWithLoot.combatLog].slice(
+        0,
+        COMBAT_LOG_CAP,
+      ),
       player: {
         ...stateWithLoot.player,
         credits: stateWithLoot.player.credits + totalReward,
       },
-      vfxInstances: [...vfxNew, import_vfx("victory", "", 5)],
+      vfxInstances: [
+        ...vfxNew,
+        import_vfx_deterministic(
+          "ice_death",
+          stateWithLoot.ice.name,
+          durationForKind("ice_death"),
+        ),
+        import_vfx("victory", "", 5),
+      ],
       unlockedAchievements: allUnlocked,
       achievementCredits: stateWithLoot.achievementCredits + achCredits,
       factionScores: updatedFactionScores,
@@ -352,15 +368,20 @@ export function useProgram(state: GameState, programId: string): GameState {
   }
   const activeIceNewHp = finalState.iceRoster[targetIdx]?.hp ?? 0;
   const shieldNote = shieldAbsorbed > 0 ? ` (${shieldAbsorbed} absorbed)` : "";
+  const programMessage = isAoe
+    ? `${program.name} → ${damage} dmg ALL (roster hit)${shieldNote}`
+    : `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})${shieldNote}`;
   return {
     ...stateWithLoot,
     iceRoster: stateWithLoot.iceRoster,
     deck: newDeck,
     discardPile: discard,
     player: { ...stateWithLoot.player, alarm: newAlarm },
-    message: isAoe
-      ? `${program.name} → ${damage} dmg ALL (roster hit)${shieldNote}`
-      : `${program.name} → ${damage} dmg (ICE HP: ${activeIceNewHp})${shieldNote}`,
+    message: programMessage,
+    combatLog: [programMessage, ...stateWithLoot.combatLog].slice(
+      0,
+      COMBAT_LOG_CAP,
+    ),
     vfxInstances: vfxNew,
     unlockedAchievements: stateWithLoot.unlockedAchievements,
     achievementCredits: stateWithLoot.achievementCredits,

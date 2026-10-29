@@ -136,3 +136,66 @@ describe("sound trigger logic (Tier 5.5+)", () => {
     });
   });
 });
+
+/** P4: `state.message` keeps only the LAST line, so a multi-event enemy turn
+ * loses every earlier event. `state.combatLog` preserves them.
+ */
+describe("combat log preservation (P4)", () => {
+  function buildMultiEnemyCombatState(): GameState {
+    const base = makeInitialState(mockMission, mockIce, mockPrograms);
+    return {
+      ...base,
+      runPhase: "combat",
+      phase: "combat",
+      iceRoster: [
+        { ...mockIce, id: "iceA", name: "Alpha" },
+        { ...mockIce, id: "iceB", name: "Beta" },
+      ],
+      activeIceIndex: 0,
+      lastEnemyAttackMs: 0,
+      dixieLastAttackMs: Date.now(),
+    };
+  }
+
+  it("keeps 2+ entries when 2+ events happen in one enemy turn", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.99);
+    const prev = buildMultiEnemyCombatState();
+    const next = applyAction(prev, { type: "use_program", programId: "p1" });
+
+    // Two ICE auto-attack → two enemy-turn events. Before P4 only the last
+    // one survived in `message`; the log must keep both.
+    expect(next.combatLog.length).toBeGreaterThanOrEqual(2);
+    expect(next.combatLog.some((l) => l.includes("Alpha"))).toBe(true);
+    expect(next.combatLog.some((l) => l.includes("Beta"))).toBe(true);
+  });
+
+  it("keeps `message` as the last event of the turn", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.99);
+    const prev = buildMultiEnemyCombatState();
+    const next = applyAction(prev, { type: "use_program", programId: "p1" });
+
+    // `combatLog` is newest-first, so the chronologically last event is first.
+    expect(next.message).toBe(next.combatLog[0]);
+  });
+
+  it("prepends the program's own message to the log", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.99);
+    const prev = buildMultiEnemyCombatState();
+    const next = applyAction(prev, { type: "use_program", programId: "p1" });
+
+    // The log is newest-first: the enemy turn's lines (which happen after the
+    // program was played) lead, and the program's own line follows them.
+    expect(next.combatLog.some((l) => l.startsWith("P1 →"))).toBe(true);
+    expect(next.combatLog.indexOf("P1 → 5 dmg (ICE HP: 95)")).toBe(2);
+    expect(next.combatLog[0]).toBe(">>> Beta attacks: 4 dmg");
+  });
+
+  it("caps the log at 8 entries", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.99);
+    let state = buildMultiEnemyCombatState();
+    for (let i = 0; i < 10; i++) {
+      state = applyAction(state, { type: "use_program", programId: "p1" });
+    }
+    expect(state.combatLog.length).toBeLessThanOrEqual(8);
+  });
+});

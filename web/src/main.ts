@@ -24,7 +24,17 @@ import {
   composeCombatVfx,
   advanceVfxListBy,
   WEB_TICK_MS,
+  type CombatVfxInstance,
 } from "./renderer/combat_vfx.ts";
+import {
+  composeFloatingDamage,
+  overlayShake,
+} from "./renderer/combat_overlay.ts";
+import {
+  hitStopActiveAt,
+  hitStopDeadlineFor,
+} from "./renderer/screen_shake.ts";
+import { pickCombatSfxLayers } from "./core/combat_sfx.ts";
 import { FpsCounter, getMetrics } from "./core/performance.ts";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial.ts";
 import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon.ts";
@@ -308,6 +318,11 @@ class Game {
   private rafId: number | null = null;
   private loopRunning = false;
   private lastLoopMs = 0;
+  /** Wall-clock deadline of the active P1 hit-stop hold (0 = none). */
+  private hitStopDeadlineMs = 0;
+  /** The VFX instance list from the previous frame — the hit-stop uses it to
+   * detect a *newly appeared* `player_hit` without reading `elapsedMs`. */
+  private previousVfxInstances: ReadonlyArray<CombatVfxInstance> = [];
   private readonly fpsCounter = new FpsCounter();
 
   constructor(
@@ -428,14 +443,26 @@ class Game {
       void loadAudioSystem().then((audio) => {
         if (!audio) return;
         const manager = audio.AudioManager.getInstance();
+        // P5 — the player taking damage had no sound at all (proposal §1.2
+        // U13). `pickCombatSfxLayers` decides the transition's audio from the
+        // (previous → next) state pair.
+        const nextState = this.state;
+        if (nextState !== null) {
+          for (const id of pickCombatSfxLayers(previous, nextState)) {
+            manager.playSfx(id);
+          }
+        }
         if (
           resolved.type === "use_program" &&
           previous.phase === "combat" &&
           this.state?.phase === "combat"
         ) {
+          // The ICE-hit sound now comes from `pickCombatSfxLayers` above.
+          // The old `state.ice.hp` delta check was provably dead — the
+          // reducers only ever write `iceRoster`, so `state.ice.hp` never
+          // changed after init and `COMBAT_HIT` never fired from here.
           const iceDelta = this.state.ice.hp - previous.ice.hp;
           if (iceDelta < 0) {
-            manager.playSfx(audio.SFX_IDS.COMBAT_HIT);
             if (
               previous.bossPhase > 0 &&
               this.state.bossPhase > previous.bossPhase
@@ -1520,15 +1547,24 @@ class Game {
         this.layout.rows,
       ),
     };
-    this.renderer.render(this.state.grid, buildHudLines(this.state));
-    if (this.state.vfxInstances.length > 0) {
+    const hudLines = buildHudLines(this.state);
+    if (this.state.vfxInstances.length === 0) {
+      this.renderer.render(this.state.grid, hudLines);
+    } else {
       const composed = composeCombatVfx(
         this.state.grid,
         this.state.vfxInstances,
         this.layout.cols,
         this.layout.rows,
       );
-      this.renderer.render(composed, buildHudLines(this.state));
+      const withDamage = composeFloatingDamage(
+        composed,
+        this.state.vfxInstances,
+        this.layout.cols,
+        this.layout.rows,
+      );
+      const shake = overlayShake(this.state.vfxInstances);
+      this.renderer.render(withDamage, hudLines, undefined, shake);
     }
     updateProgramRow(this.state.phase === "combat" ? this.state.deck : []);
     if (persist) this.autosave();
@@ -1559,6 +1595,8 @@ class Game {
     if (this.loopRunning) return;
     this.loopRunning = true;
     this.lastLoopMs = 0;
+    this.hitStopDeadlineMs = 0;
+    this.previousVfxInstances = [];
     this.fpsCounter.reset();
     this.rafId = requestAnimationFrame(this.loop);
   }
@@ -1583,11 +1621,29 @@ class Game {
     }
 
     const before = state.vfxInstances;
-    const after = advanceVfxListBy(before, deltaMs);
+    // P1 hit-stop: hold the impact frame briefly so the shake reads as an
+    // impact. This only slows the VFX advance — the reducer, the clock and
+    // therefore the enemy turn are untouched (proposal §R3 forbids using
+    // hit-stop to delay an enemy turn, which would be a balance change).
+    //
+    // The hold is bounded by WALL CLOCK (`hitStopDeadlineMs`), never by the
+    // VFX instance's own `elapsedMs`: deriving the hold from `elapsedMs`
+    // deadlocked, because the hold is precisely what freezes `elapsedMs`.
+    this.hitStopDeadlineMs = hitStopDeadlineFor(
+      this.hitStopDeadlineMs,
+      now,
+      before,
+      this.previousVfxInstances,
+    );
+    const holding = hitStopActiveAt(this.hitStopDeadlineMs, now);
+    const advanceMs = holding ? 0 : deltaMs;
+    const after = advanceVfxListBy(before, advanceMs);
     const changed =
       after.length !== before.length ||
-      after.some((instance, index) => instance.tick !== before[index]?.tick);
+      after.some((instance, index) => instance.tick !== before[index]?.tick) ||
+      holding;
     this.state = { ...state, vfxInstances: after };
+    this.previousVfxInstances = after;
     if (changed) this.draw(false);
   };
 
@@ -1634,21 +1690,25 @@ class Game {
     const previous = this.state;
     this.state = applyAction(this.state, resolved);
     if (previous.phase === "combat" && this.state.phase === "combat") {
-      const iceDelta = this.state.ice.hp - previous.ice.hp;
-      if (iceDelta < 0) {
-        void loadAudioSystem().then((audio) => {
-          if (!audio) return;
-          audio.AudioManager.getInstance().playSfx(audio.SFX_IDS.COMBAT_HIT);
-        });
-      }
       this._lastIceHp = this.state.ice.hp;
       this._lastPlayerHp = this.state.player.hp;
+    }
+    const nextState = this.state;
+    const layers = pickCombatSfxLayers(previous, nextState);
+    if (layers.length > 0) {
+      void loadAudioSystem().then((audio) => {
+        if (!audio) return;
+        const manager = audio.AudioManager.getInstance();
+        for (const id of layers) manager.playSfx(id);
+      });
     }
     this.draw();
   }
 
   stop(): void {
     this.loopRunning = false;
+    this.hitStopDeadlineMs = 0;
+    this.previousVfxInstances = [];
     if (this.rafId !== null) {
       cancelAnimationFrame(this.rafId);
       this.rafId = null;

@@ -2041,3 +2041,22 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **127 files / 3002 tests PASS** · `tsc --noEmit` 0(tsconfig가 `tests/**/*` 포함이라 테스트까지 검사) · `eslint src` 0 · `npm run build` ✓ · 볼트 lint CLEAN.
 **검증 한계(정직 기록)**: vitest는 `main.ts`의 rAF 루프를 실행하지 않음(`main.ts`는 import 시 자체 boot, vitest는 동기) · Playwright e2e **미실행**(브라우저+live URL 필요) · LSP 데몬 unreachable → `tsc --noEmit`이 권위 · **화면 애니메이션 육안 확인 안 함**(스크린샷·프레임 타이밍 미측정).
 **미실행**: P1·P3·P5·P6·**P7·P8**(§A1 필요)·P10~P15. **미커밋**. ADR: `0231-combat-feel-top3-vfx-log-raf.md`.
+
+## [2026-10-27] feat | 전투 반응 tier 2 구현 — 캔버스 흔들림 · 부유 데미지 숫자 · SFX 레이어링 (ADR-0232)
+
+제안서의 **P1·P3·P5**를 구현 — **순수 추가형**(밸런스 영향 0). 신규 4 모듈 + 신규 3 테스트 + 5 파일 수정.
+
+**P1 — canvas 흔들림 + 히트스톱**: `screen_shake.ts`(순수 `shakeOffsetFor` — 2px·200ms·20/27Hz, sign-preserving 반올림으로 dead frame 0) · `canvas.ts` `render()`에 optional `offset`(grid+HUD 동시 translate). 히트스톱은 **연출 전용** — reducer·시계·enemy turn 불변(§R3).
+**P3 — 부유 데미지 숫자**: `floating_damage.ts`(순수 — `normal` 소형 백색 / `skill` 대형 황색 / `critical` 금색 `✦-N✦`, `animations.md` 근거) · `combat_overlay.ts`가 grid에 합성(§R6의 DOM/sprite 거부 준수).
+**P5 — SFX 레이어링**: `combat_sfx.ts`(순수 `pickCombatSfxLayers(previous,next)`) — 플레이어 피격 `DAMAGE`(이전엔 무음) · ICE 피격 `COMBAT_HIT`+`ATTACK` · ICE 파괴 `ICE_BREAK`.
+
+### 🔍 구현·리뷰 중 발견한 실질 결함 3건 (이 ADR의 핵심 내용)
+1. **ADR-0231 자체의 reducer 순수성 결함** — `import_vfx_deterministic`이 **모듈 전역 모노토닉 카운터**를 써서 동일 `applyAction` 2회가 **다른 VFX id**를 생성 → `property_reducer_fuzz.test.ts`가 HEAD에서 **~50% flaky**(HEAD `src/` 복원 후 8회 중 4회 실패로 입증). **수정**: id를 (kind/payload/payloadNum/duration) **FNV-1a 31-bit content hash**로 — RNG 0 유지, 호출순서 독립. "newest instance" 로직도 id 비교 → **배열 순서**로 전환.
+2. **dead SFX path** — 기존 `COMBAT_HIT`이 `state.ice.hp`를 읽었으나 reducer는 `iceRoster`만 갱신 → **한 번도 발화 안 함**(probe: `state.ice.hp` 165 고정 vs roster 165→0). `pickCombatSfxLayers`가 `iceRoster`를 읽어 **실제 배선**; 중복 재생 방지 위해 중복 호출 제거.
+3. **히트스톱 데드락 (오케스트레이터 리뷰에서 발견)** — 1차 구현이 **동결 대상인 `elapsedMs`에서 hold를 파생**(`advanceMs = max(0, deltaMs−40) = 0`, >25fps) → **VFX 영구 동결 + 매 프레임 redraw**. **수정**: **wall-clock deadline**(`hitStopDeadlineFor`/`hitStopActiveAt`) + **새로 등장한 `player_hit`**(identity 기반, `elapsedMs` 아님 — elapsed 기반은 매 프레임 재장전되어 deadline이 무한 전진하는 2차 데드락). 30/60/144/240fps 전부 해제 확인.
+
+**테스트**: **3002 → 3088**(+86). 신규 단언은 **pre-change에서 실패 확인**(HEAD를 손으로 복원 — `git checkout`/`stash` 미사용).
+**밸런스**: **12등급 0.0pp**(양 곡선, ADR-0229 기준선과 byte-identical — 오케스트레이터 독립 재실행). RNG draw 수 불변(`aleph_fragment` 62 · catalog 2382). **§A1 미발동**.
+**게이트**: `npm test` **130 files / 3088 tests PASS** · `tsc --noEmit` 0 · `eslint src` 0 errors(기존 `keyboard.ts:14` warning 1건) · `npm run build` ✓ · 볼트 lint CLEAN.
+**검증 한계(정직 기록)**: vitest는 `main.ts` rAF 루프를 실행하지 않음(회귀 테스트는 루프 블록을 **시뮬레이션**) · 실 canvas 렌더 미검증 · Playwright e2e 미실행 · **흔들림/데미지 숫자의 "느낌"은 taste 판단(미검증)**.
+**미실행**: P6·**P7·P8**(§A1 필요)·P10~P15. ADR: `0232-combat-feel-tier2-shake-damage-sfx.md`.

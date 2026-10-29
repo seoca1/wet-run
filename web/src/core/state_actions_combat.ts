@@ -263,6 +263,9 @@ function processEnemyTurns(state: GameState): GameState {
               "player_hit",
               "",
               durationForKind("player_hit"),
+              undefined,
+              undefined,
+              skillDmg,
             ),
           );
           logMessages.push(
@@ -336,6 +339,9 @@ function processEnemyTurns(state: GameState): GameState {
           "player_hit",
           "",
           durationForKind("player_hit"),
+          undefined,
+          undefined,
+          autoDmg,
         ),
       );
 

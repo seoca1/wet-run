@@ -320,3 +320,38 @@
 - `log.md` , `web/src/data/ice_types.json` , `web/src/core/ice_scaling.ts` **무수정**
 - `ice_scaling.ts` 의 calibration 배열 은 P7/P8 에서만 간접 영향 (P7/P8 는 본 proposal 에서 **제안만** 하고 구현하지 않음)
 - `docs/design/` 의 기존 문서 **무수정** (본 문서 신규 생성만)
+
+---
+
+## 부록 C — 진행 상태 (2026-10-27)
+
+> 본 제안서는 **research-only** 로 작성됐다. 아래는 이후 실제 반영 내역이다 (추적용).
+
+### ✅ 반영 완료 (ADR-0231)
+
+| 제안 | 반영 내용 | 밸런스 |
+|---|---|---|
+| **P2** | 미배선 VFX **7종 배선** (`player_hit`×2 · `defeat` · `ice_death` · `shield`/`heal`/`regen`/`buff`) — 기존 렌더러만 사용, 신규 kind·renderer 0 | 0.0pp |
+| **P4** | `GameState.combatLog` (newest-first · cap 8) + `buildHudLines` 최근 4줄, `message` 시맨틱 불변, `SaveSlot` 미포함 | 0.0pp |
+| **P9** | `main.ts` **rAF 렌더 루프** (`startLoop`/`loop`, `MAX_FRAME_ADVANCE_MS=100`, `draw(persist)`) | 0.0pp |
+
+**구현 중 발견된 결함 2건**(ADR-0231 기록): ① `import_vfx` 가 `Math.random` 을 소비 → VFX spawn 추가 시 **시드 RNG 스트림이 이동**해 밸런스가 움직임 → `import_vfx_deterministic`(RNG 무소비) 신설로 0.0pp 복원 ② 루프의 초당 60회 `draw()` → **초당 ~60회 IDB autosave** → `draw(persist)` 로 루프만 차단.
+
+### ✅ 반영 완료 — tier 2 (ADR-0232)
+
+| 제안 | 반영 내용 | 밸런스 |
+|---|---|---|
+| **P1** | canvas 레벨 화면 흔들림 (2px · 200ms · 20/27Hz, `player_hit` 만) + **wall-clock 기반 히트스톱** (40ms, 연출 전용) | 0.0pp |
+| **P3** | 부유 데미지 숫자 — `normal`(소형·백색) / `skill`(대형·황색) / `critical`(금색 `✦-N✦`), 그리드 내 렌더 | 0.0pp |
+| **P5** | SFX 레이어링 — 플레이어 피격 `DAMAGE`(신규) · ICE 피격 `COMBAT_HIT`+`ATTACK` · ICE 파괴 `ICE_BREAK` | 0.0pp |
+
+**구현 중 발견·수정된 결함 3건** (ADR-0232 기록): ① ADR-0231 의 `import_vfx_deterministic` **모노토닉 카운터가 reducer 순수성을 깨뜨림** (fuzz test 가 HEAD 에서 ~50% flaky) → FNV-1a content hash 로 교체 ② `COMBAT_HIT` **dead path** (`state.ice.hp` 는 init 후 불변 → 한 번도 발화 안 함) → `iceRoster` 기반 `pickCombatSfxLayers` 로 실제 배선 ③ **히트스톱 데드락** (hold 를 동결 대상인 `elapsedMs` 에서 파생 → >25fps 에서 VFX 영구 동결) → wall-clock deadline + identity 기반 arming.
+
+### ⏸ 미착수
+
+P6 · P7 · P8 · P10 · P11 · P12 · P13 · P14 · P15. **P7 · P8 은 밸런스 접촉** → ADR-0229 §A1 전후 측정 필요.
+
+### ⚠️ 환경 관찰 (2026-10-27)
+
+- **무료 모델 rate-limit**: 구현 작업 중 `openrouter/google/gemma-4-26b-a4b-it:free` 가 upstream rate-limit 으로 실패 → fallback 모델로 재시도. opencode Zen 도 **설정 화이트리스트가 무료 모델 4종뿐**이라 실제 호출이 `429 FreeUsageLimitError` → **유료 모델 활성화 또는 OpenCode Go 필요**.
+- **RNG-중립 규칙**: 신규 VFX spawn 은 반드시 `import_vfx_deterministic` 사용(위 결함 ① 참조).

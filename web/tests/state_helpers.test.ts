@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { 
   import_vfx, 
   import_vfx_ms, 
+  import_vfx_deterministic,
   pickProgramVfxKind, 
   durationForKind, 
   durationMsForKind 
@@ -188,5 +189,40 @@ describe("durationMsForKind", () => {
 
   it("returns correct milliseconds for boss_phase_transition", () => {
     expect(durationMsForKind("boss_phase_transition")).toBe(800);
+  });
+});
+
+describe("import_vfx_deterministic (RNG-neutral spawn)", () => {
+  it("produces the same id for identical spawns", () => {
+    const a = import_vfx_deterministic("player_hit", "", 3);
+    const b = import_vfx_deterministic("player_hit", "", 3);
+    expect(a.id).toBe(b.id);
+  });
+
+  it("produces a different id for different content", () => {
+    const a = import_vfx_deterministic("player_hit", "", 3, undefined, undefined, 5);
+    const b = import_vfx_deterministic("player_hit", "", 3, undefined, undefined, 9);
+    expect(a.id).not.toBe(b.id);
+  });
+
+  it("consumes no Math.random draw", () => {
+    const original = Math.random;
+    let calls = 0;
+    Math.random = () => {
+      calls += 1;
+      return original();
+    };
+    try {
+      import_vfx_deterministic("player_hit", "", 3);
+      import_vfx_deterministic("defeat", "", 3);
+    } finally {
+      Math.random = original;
+    }
+    expect(calls).toBe(0);
+  });
+
+  it("never returns a zero id", () => {
+    const vfx = import_vfx_deterministic("attack", "", 3);
+    expect(vfx.id).toBeGreaterThan(0);
   });
 });

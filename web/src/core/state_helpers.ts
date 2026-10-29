@@ -57,8 +57,37 @@ export function import_vfx_ms(
   };
 }
 
-/** Monotonic id source for `import_vfx_deterministic`. */
-let nextDeterministicVfxId = 1;
+/** Content hash for a deterministic VFX id.
+ *
+ * A 31-bit FNV-1a over the spawn's own fields. Deterministic, RNG-free and
+ * independent of how many VFX were spawned before — which is what keeps the
+ * reducer pure (ADR-0231's global counter made two identical `applyAction`
+ * calls produce different ids, breaking the reducer-determinism invariant in
+ * `tests/property_reducer_fuzz.test.ts`).
+ */
+function deterministicVfxId(
+  kind: string,
+  payload: string,
+  payloadNum: number | undefined,
+  duration: number,
+): number {
+  let hash = 0x811c9dc5;
+  const mix = (text: string): void => {
+    for (let i = 0; i < text.length; i++) {
+      hash ^= text.charCodeAt(i);
+      hash = Math.imul(hash, 0x01000193) >>> 0;
+    }
+  };
+  mix(kind);
+  mix("|");
+  mix(payload);
+  mix("|");
+  mix(String(payloadNum ?? ""));
+  mix("|");
+  mix(String(duration));
+  // 0 is reserved for "no id" — shift into 1..2^31-1.
+  return (hash % 2147483646) + 1;
+}
 
 /** Spawn a VFX instance without consuming a `Math.random` draw.
  *
@@ -69,9 +98,11 @@ let nextDeterministicVfxId = 1;
  * baseline) but NOT for newly added ones — those would silently shift the
  * whole curve. New spawn sites use this helper so they stay RNG-neutral.
  *
- * Ids are unique within this counter but may collide with an `import_vfx`
- * id. Nothing reads `CombatVfxInstance.id` for logic — it is an identity
- * key only.
+ * The id is derived from the spawn's own content, so it is stable across
+ * runs and independent of call order — two identical reducer calls produce
+ * identical instances. Two spawns with identical content therefore share an
+ * id; nothing reads `CombatVfxInstance.id` for logic (it is an identity key
+ * only) and rendering composites by array order, not by id.
  */
 export function import_vfx_deterministic(
   kind: import("../renderer/combat_vfx.js").CombatVfxKind,
@@ -83,7 +114,7 @@ export function import_vfx_deterministic(
 ): import("../renderer/combat_vfx.js").CombatVfxInstance {
   const durationMs = Math.max(0, duration) * WEB_TICK_MS;
   return {
-    id: nextDeterministicVfxId++,
+    id: deterministicVfxId(kind, payload, payloadNum, duration),
     kind,
     tick: 0,
     duration,

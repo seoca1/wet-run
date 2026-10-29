@@ -101,13 +101,27 @@ export class AsciiRenderer {
    * `hudColorFor` (optional) lets callers tint individual HUD lines (e.g.
    * alarm = 100% shown in amber instead of green) without breaking the existing
    * ReadonlyArray<string> contract.
+   *
+   * `offset` (optional) shifts the WHOLE canvas in CSS pixels. This is the
+   * P1 screen shake: the grid characters and the HUD move together, so the
+   * shake reads as the viewport moving rather than as the ASCII art jittering
+   * inside a static frame.
    */
   render(
     grid: Grid,
     hudLines: ReadonlyArray<string>,
     hudColorFor?: (line: string, index: number) => string | undefined,
+    offset?: { readonly x: number; readonly y: number },
   ): void {
     this.clear();
+    if (offset !== undefined && (offset.x !== 0 || offset.y !== 0)) {
+      this.ctx.save();
+      this.ctx.translate(offset.x, offset.y);
+      this.drawGrid(grid);
+      this.drawHud(grid, hudLines, hudColorFor);
+      this.ctx.restore();
+      return;
+    }
     this.drawGrid(grid);
     this.drawHud(grid, hudLines, hudColorFor);
   }

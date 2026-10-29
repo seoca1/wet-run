@@ -2006,3 +2006,18 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **검증**: 두 밸런스 곡선이 **정확히 동일**(동작 불변 증명) · `npm test` **127 files / 2986 tests PASS** · `tsc --noEmit` 0 · `eslint` 0 · `audit_vault.py` CLEAN. 테스트 무변경(약화·삭제 0). **미커밋**. ADR: `0229-grade-curve-rebaseline.md`.
 
 **다음(미실행)**: ① `shouldTargetAlly`·`getAlarmMultiplier` 서브시스템 ② 잔여 효과(`detect`/`silence`/`slow`/`stun`/`debuff`) ③ 애매 분류(스킬 10종 · ICE 일부) ④ 카탈로그 갭(T1 데미지 스킬 · stealth 스킬 · support 선호목록 `buff` 여부) ⑤ g3 설계 텐션.
+
+## [2026-10-27] refactor | 애매 분류 부채 마감 + 전투 반응 개선 제안서 (ADR-0230 · 신규 제안서)
+
+**Part 1 — 애매 분류 부채 마감(ADR-0230)**: ADR-0223(스킬 10종)·ADR-0227(ICE 7종)이 남긴 애매 항목 **17건**을 **기존 규칙 재사용 + 새 증거**로 마감.
+- **스킬 10종: 0건 변경** — 전부 증거 확인. 3종(`ai_negotiate`·`aleph_fragment`·`territorial_mark`)은 **ADR-0216 토큰표가 의도적으로 buff로 매핑**했고 ADR-0226이 buff magnitude를 저작한 상태(변경하면 오히려 새 오분류). `straylight_protocol`은 `ice_scaling.ts:296`이 **15 데미지로 문서화**(= `ta_sentinel` dmg_base 7 + tier 4×2, load-bearing). `loa_command`는 **테스트 고정**. → **2개 테스트로 고정**(재개방 방지), 테스트 2986 → **2988**.
+- **ICE 7종: 1건 변경** — `yakuza_collector`: `aggressive` → **`support`**(debuff 전용 + 공격 스킬 없음 + ADR-0227이 동일 구조 `sense_net_alert`(debuff 2종·공격 없음)를 support로 교정한 **직접 선례**). `ta_daemon`은 **chapter-8 설계문서의 Family Daemon = CHAPTER BOSS**로 aggressive 확정, `ta_inheritor`는 **`family_vote` 공유 형제 `ta_heir`가 aggressive**라 확정. 3건은 **진정한 50:50**(예: `hosaka_terminal`은 support(detect)/stealth(silence)가 1:1이고 이름이 중립 + **양쪽 모두 inert라 동작 동일**)으로 병기 유지.
+- **밸런스: 12개 등급 전부 0.0pp**(debuff가 inert라 동작 동일) — **ADR-0229 드리프트 정책 준수**, 재기준화 불필요, §B 불변식 전부 유지.
+- **diff**: ice_types.json **정확히 `personality` 1줄**(`skill_defs` 바이트 동일) + 테스트 2건 신규.
+- **범위 밖 발견(미변경)**: **`family_vote`가 `buff`로 분류됐으나 `docs/design/systems/combat.md`는 "AoE damage 20 + construct 동반 시 +10"으로 문서화**(ADR-0149/0162의 보스 메커닉 `apply_family_vote`). ADR-0223의 10종 목록 밖이라 **미변경** — `ta_inheritor` 부자연스러움의 **상류 원인**으로 보이며 **별도 ADR 가치**.
+- 게이트: `npm test` **127 files / 2988 tests PASS** · `tsc` 0 · `eslint` 0 · 볼트 lint CLEAN.
+
+**Part 2 — 전투 반응·인터랙션 개선 제안서(신규, 코드 미변경)**: `docs/design/combat-feel-and-interaction-proposal.md`(322줄).
+- **근거 있는 3대 발견**: ① **VFX 27종 중 10종이 완전 구현됐으나 spawn 호출 0** — 특히 **`player_hit`(피격 시각 피드백)이 아예 발생하지 않음** ② **게임 루프 부재**(`main.ts`에 rAF/setInterval 0, `draw()`는 입력 핸들러에서만 — **VFX가 다음 키 입력까지 정지**) ③ `core/accessibility.ts` **소비자 0**
+- 제안 **15건(P1~P15)** + 즉시 실행 상위 3개: **P2 VFX 10종 배선 · P9 rAF 루프 · P4 전투 로그 확장** — 셋 다 **순수 추가형**(드리프트 체크 불요). 밸런스 접촉은 **P7(유휴 턴 압박)·P8(crit 임계 결합)** 2건뿐이며 **ADR-0229 §A1 전후 측정 필수**로 명시.
+- 설계 의도는 이미 `docs/design/systems/animations.md`에 존재(화면 흔들림 1~2px/100~200ms · 부유 데미지 숫자 · 2.4초 사망 시퀀스) — **갭은 구현이지 스펙이 아님**.

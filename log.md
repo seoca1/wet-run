@@ -1990,3 +1990,19 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **127 files / 2986 tests PASS** · `tsc --noEmit` 0 · `eslint` 0 · `npm run build` ✓. **미커밋**. ADR: `0228-ice-archetype-behavior-wiring.md`.
 
 **다음(미실행)**: ① **g4/g5 재보정 결정**(또는 크리 밴드 축소) ② `shouldTargetAlly`(per-target 스킬 해석) ③ `getAlarmMultiplier`(trace alarm 루프 + stealth ICE에 스킬 부여) ④ **반복 재보정 churn 대책**(ADR-0211 타깃 재기준화 또는 per-ICE 노브) ⑤ 잔여 효과 · 애매 분류 · 카탈로그 갭.
+
+## [2026-10-27] docs | 등급 곡선 타깃 재기준화 — ADR-0211 supersede (ADR-0229)
+
+**배경**: 연속 4개 기능 단계가 매번 ADR-0211 캘리브레이션 곡선을 이동시켰고(0224 밴드 · 0226 스킬효과 · 0227 아키타입 · 0228 crit), 두 전역 레버로 항상 복원할 수 없었음(계단 함수·절벽, `c3 ≤ c4` 상한). 기능 추가마다 옛 타깃을 추격하는 것은 churn → **1회 재기준화** 결정.
+
+**변경 — 값 변경 없음(문서·정책만)**:
+- **신규 ADR-0229**: ADR-0211의 per-grade 승률 타깃을 **현재 달성 곡선**(opening `100.0/88.6/73.1/39.3/35.7/0.0` · PPL `100.0/77.9/99.6/84.8/44.4/28.3`)으로 supersede. ADR-0211의 **메커니즘**(HP 캡 · 데미지 보너스 곡선 · grade-driven 스케일링)은 **계속 유효**하며 supersede 범위는 **승률 수치에 한정**.
+- **DRIFT POLICY 신설**: §A 무단 드리프트 금지(어느 등급이든 **±3pp 초과** 이동 시 → 재보정 또는 **명시적 re-baseline ADR**, before/after 표 필수) · §B **하드 불변식**(opening 단조 비증가 · g6 0~5% · HP 캡 단조 비감소 · 최대 캡 ≤165) — re-baseline으로도 완화 불가 · §C **PPL은 참조값**(타깃 아님; ≥5pp 이동은 ADR에 표로 명시) · §D 정책 변경은 신규 ADR 필요
+- **README**: 0211 상태 셀 → `Superseded by ADR-0229` + 0229 행 추가 (0211 파일 자체는 immutable이라 **미편집**)
+- **`ice_scaling.ts`**: **docstring만** 갱신 — 은퇴한 ADR-0211 타깃 대비 잔차 서술 제거, 현행을 baseline으로 서술. **배열 리터럴 3종 바이트 동일**(프로그램 검증)
+
+**의도적 미조치**: **frozen-baseline 테스트를 추가하지 않음** — 고정값 테스트는 다음 churn 원인이 되고 §A1의 "재보정 복귀" 경로를 막음(ADR Notes에 기록).
+
+**검증**: 두 밸런스 곡선이 **정확히 동일**(동작 불변 증명) · `npm test` **127 files / 2986 tests PASS** · `tsc --noEmit` 0 · `eslint` 0 · `audit_vault.py` CLEAN. 테스트 무변경(약화·삭제 0). **미커밋**. ADR: `0229-grade-curve-rebaseline.md`.
+
+**다음(미실행)**: ① `shouldTargetAlly`·`getAlarmMultiplier` 서브시스템 ② 잔여 효과(`detect`/`silence`/`slow`/`stun`/`debuff`) ③ 애매 분류(스킬 10종 · ICE 일부) ④ 카탈로그 갭(T1 데미지 스킬 · stealth 스킬 · support 선호목록 `buff` 여부) ⑤ g3 설계 텐션.

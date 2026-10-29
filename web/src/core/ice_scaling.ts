@@ -23,9 +23,10 @@
  * g3 +6.0pp, g5 -10.4pp). `ENCOUNTER_HP_BY_GRADE` and
  * `ENCOUNTER_DMG_BONUS_PCT_BY_GRADE` were re-tuned by measurement against
  * `npm run balance` (opening deck, 100 runs/mission) and restore every
- * grade's ADR-0211 target to within ±1pp. The per-grade evidence and the one
- * irreducible trade-off (g5's opening-deck target vs the PPL g5 curve) are
- * recorded on the two constants below. The encounter band itself is
+ * grade's ADR-0211 target to within ±3pp (the tightest current residual is
+ * g3 at -0.2pp; the loosest is g4 at +1.6pp). The per-grade evidence and the
+ * one irreducible trade-off (g5's opening-deck target vs the PPL g5 curve)
+ * are recorded on the two constants below. The encounter band itself is
  * **unchanged** — ADR-0224 settled it.
  *
  * **g5 band repair (post-ADR-0224).** The recalibration above restored the
@@ -49,6 +50,23 @@
  * The accepted trade: **g5 no longer carries a non-`aggressive` ICE.** The
  * archetype-diversity coverage ADR-0224 added still holds at g4 and g6,
  * which both keep `ta_sentinel`.
+ *
+ * **g3 recalibration (post-archetype-consistency fix).** The ICE archetype
+ * consistency pass corrected 12 catalog `personality` values so that each
+ * ICE's archetype matches its own name and skill effects. One of those
+ * corrections landed on the g3 encounter band: **`hosaka_defender` (g3 slot
+ * 2) is now `defensive`**, so it raises a 12-point `defense_grid` shield
+ * instead of auto-attacking. The grade measured **73.1% → 89.7% (+16.6pp)**
+ * on the opening deck, which is outside the ±3pp tolerance ADR-0225 set and
+ * **broke the opening curve's monotonic non-increasing invariant** (g3 at
+ * 89.7% exceeded g2 at 88.6%).
+ *
+ * The g3 grade was restored by trading encounter HP for auto-attack pressure:
+ * the g3 HP cap dropped 155 → **141** and the g3 auto-attack bonus rose
+ * 0 → **+8%**. The two levers are a matched pair — see the per-grade
+ * reasoning on each constant for why no single lever can land the grade in
+ * tolerance. The band, the ICE rows, the skill effects and the other five
+ * grades' calibration are **unchanged**.
  *
  * **Encounter band coverage (ADR-0219 "remaining gap (4)" — encounter band
  * 커버리지 확대).** The band is also the *reach* surface for the ICE skill
@@ -156,14 +174,18 @@ export function encounterIceIdForGrade(grade: number, seed?: number): string {
  * `npm run balance` (opening deck, 100 runs/mission) they restore the
  * ADR-0211 targets to within ±3pp on every grade:
  *
- *   | grade | ADR-0211 target | post-ADR-0224 | recalibrated | residual |
+ *   | grade | ADR-0211 target | pre-recalibration | current | residual |
  *   | --- | --- | --- | --- | --- |
  *   | g1 | 100.0% | 100.0% | 100.0% | +0.0pp |
  *   | g2 | 88.8% | 77.4% | 88.6% | -0.2pp |
- *   | g3 | 73.0% | 79.0% | 73.1% | +0.1pp |
- *   | g4 | 47.4% | 48.8% | 48.8% | +1.4pp |
+ *   | g3 | 73.0% | 79.0% | 72.8% | -0.2pp |
+ *   | g4 | 47.4% | 48.8% | 49.0% | +1.6pp |
  *   | g5 | 42.4% | 32.0% | 43.1% | +0.7pp |
  *   | g6 | 0.0% | 0.0% | 0.0% | +0.0pp |
+ *
+ * ("pre-recalibration" is the post-ADR-0224 measurement. g3 and g4 were
+ * re-measured after the archetype consistency fix; the g3 entry is the
+ * recalibration described below and on the g3 bullet.)
  *
  * Per-grade reasoning (all measured, not derived):
  *
@@ -180,21 +202,61 @@ export function encounterIceIdForGrade(grade: number, seed?: number): string {
  *     +120% and 20 dmg at +123%, and every value in between leaves the g2
  *     win-rate at 99.8% or 77.4% with no landing in between. The HP cap is
  *     the only fine-grained lever at g2.
- *   - **g3 155** — the cap no longer trims `black` / `hosaka_defender` down
- *     to 140; it now sits above their natural g3 HP (280 / 174) only for
- *     `black`. `hosaka_defender` (ADR-0224's new g3 slot 1) is what made g3
- *     *easier* than the ADR-0211 calibration: same 140 HP as the row it
- *     replaced, same 9 auto-attack, but it also fires a 12-damage skill.
- *     Giving the band ~13% more HP puts the grade's turn budget back where
- *     ADR-0211 measured it.
+ *   - **g3 141** — recalibrated after the ICE archetype consistency fix.
+ *     That fix corrected `hosaka_defender`'s `personality` to `defensive`,
+ *     so g3 slot 2 now raises a **12-point `defense_grid` shield** instead
+ *     of auto-attacking (the shield is authored in `skill_defs` with
+ *     `magnitude: 12` and lasts 3 enemy ticks). The grade measured
+ *     **73.1% → 89.7% (+16.6pp)** on the opening deck — outside the ±3pp
+ *     tolerance, and it broke the curve's monotonic non-increasing invariant
+ *     (g3 89.7% exceeded g2 88.6%).
+ *
+ *     The cap is **141** (was 155) and it is paired with a **+8%** g3
+ *     auto-attack bonus (see `ENCOUNTER_DMG_BONUS_PCT_BY_GRADE`). The
+ *     pairing is forced, not stylistic — measured, with the opening deck at
+ *     100 runs/mission:
+ *
+ *     - **Raising the cap alone cannot reach tolerance.** The cap is
+ *       bounded above by the HP-monotonicity invariant: `c3 <= c4 = 165`
+ *       (above 165 the same ICE would have *more* HP at g3 than at g4, which
+ *       the `keeps HP monotonic non-decreasing across grades for every band
+ *       id` test rejects). At the maximum c3 = 165 the grade measures
+ *       **76.3%** — still **+3.3pp** off the 73.0% target, i.e. outside the
+ *       ±3pp tolerance. No cap value in 155..165 lands inside it.
+ *     - **The auto-attack bonus alone cannot reach tolerance either**, and
+ *       it is a step function: `floor((tier * 3 + armor) * (1 + pct / 100))`
+ *       over the g3 band's auto-attack bases (14 / 15 / 13 / 13) yields only
+ *       two reachable damage vectors below +14% — `(14, 15, 13, 13)` at 0%
+ *       and `(15, 16, 14, 14)` at +8%. The intermediate +7% step (which
+ *       raises only `hosaka_defender`, 15 → 16) is measurably a **no-op**:
+ *       839/1100 wins, identical to 0%. The next step (+8%) is a **cliff** —
+ *       at c3 = 165 it drops the grade straight from 76.3% to **51.5%**
+ *       (-24.8pp), with no reachable value in between. So at the maximum cap
+ *       the grade cannot be placed inside the tolerance window at all.
+ *     - **Lowering the cap is what re-opens the tolerance band.** With the
+ *       +8% bonus applied, the reachable grade values step down through the
+ *       70-76% window as the cap drops: c3 = 142 → 71.5%, **c3 = 141 →
+ *       72.8%**, c3 = 140 → 75.0%. The cap is set to **141**, the value
+ *       closest to the ADR-0211 target (**-0.2pp** off 73.0%).
+ *
+ *     The mechanism is a **trade, not a nerf**: the g3 encounter ICE now has
+ *     14 fewer HP and hits 1 point harder per auto-attack, so the grade
+ *     keeps its difficulty while the shielded `hosaka_defender` still gets
+ *     to raise its shield (the shield stays meaningful — it absorbs a fixed
+ *     12 — it just no longer makes the grade trivially winnable). The
+ *     effective-HP monotonicity invariant still holds (0 violations), and
+ *     `ice_dixie_echo` (natural 123 HP at g3) remains the one g3 band row
+ *     the cap does not trim.
  *   - **g4 165** — the ADR-0211 original cap. The g4 band is 40% `goliath`
  *     (natural 240 HP, 8 armor) which the opener never beats, so the grade is
  *     carried by the rows the opener *can* beat (`sense_net_reporter` at
  *     natural 180 HP, `yakuza_enforcer` at 154, `ta_sentinel` at 244). The
  *     earlier post-ADR-0224 attempt used 168 to claw back 1.2pp; with the
- *     flat 165 ceiling restored the grade measures 48.8%, i.e. **+1.4pp**
+ *     flat 165 ceiling restored the grade measures 49.0%, i.e. **+1.6pp**
  *     off the 47.4% ADR-0211 target — inside the ±3pp tolerance, and the
- *     opener curve stays monotonic non-increasing.
+ *     opener curve stays monotonic non-increasing. The g3 recalibration
+ *     does not touch g4: its cap and its auto-attack bonus are unchanged,
+ *     and the grade measures 49.0% before and after.
  *   - **g5 165** — the ADR-0211 original cap. The earlier attempt raised
  *     this to 560 to separate the tier-4 `ta_sentinel` (272 natural HP) from
  *     the tier-5 `neuromancer` (560 natural HP) so the opener could win the
@@ -214,7 +276,7 @@ export function encounterIceIdForGrade(grade: number, seed?: number): string {
  *     attainable for a developed deck.
  */
 const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
-  75, 86, 155, 165, 165, 165,
+  75, 86, 141, 165, 165, 165,
 ];
 
 /** Per-grade ICE auto-attack bonus (percentage added to the base `tier * 3 +
@@ -250,11 +312,42 @@ const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
  *     lengthen the fight). The g2 grade is restored to 88.6% by the **HP
  *     cap** (86) instead; the bonus stays at +130 because it is what makes
  *     the remaining g2 contests real.
- *   - **g3 0 / g4 0** — unchanged, and deliberately so: at g3/g4 the HP cap
- *     carries the tension (it is the only fine-grained lever there; the dmg
- *     formula `floor(base * (1 + pct / 100))` is a step function whose steps
- *     are 6-16pp wide on the grade's win-rate). The g3 grade is pulled back
- *     to 73.1% and g4 to 48.8% with the cap alone.
+ *   - **g3 +8** — recalibrated after the ICE archetype consistency fix.
+ *     `hosaka_defender` (g3 slot 2) became `defensive` and started raising a
+ *     12-point `defense_grid` shield instead of auto-attacking, which moved
+ *     the opening-deck g3 win-rate 73.1% → 89.7% (+16.6pp) and broke the
+ *     curve's monotonic non-increasing invariant. The g3 HP cap alone
+ *     cannot fix it — its ceiling is 165 (`c3 <= c4`, enforced by the
+ *     HP-monotonicity invariant), and at 165 the grade still measures 76.3%,
+ *     +3.3pp off the 73.0% target. The auto-attack bonus is therefore the
+ *     second half of a **matched pair** with the HP cap: the cap drops to
+ *     **141** while this bonus rises 0 → **+8%**, and the grade lands at
+ *     **72.8%** (-0.2pp off the ADR-0211 target, inside the ±3pp tolerance).
+ *
+ *     **+8% is the smallest reachable step.** The bonus is a step function
+ *     — `floor((tier * 3 + armor) * (1 + pct / 100))` — over the g3 band's
+ *     auto-attack bases (14 / 15 / 13 / 13). It has only two reachable
+ *     damage vectors below +14%:
+ *
+ *     | pct | g3 band auto-attack damage |
+ *     | --- | --- |
+ *     | 0 | `(14, 15, 13, 13)` |
+ *     | +7 | `(14, 16, 13, 13)` — raises `hosaka_defender` only |
+ *     | +8 | `(15, 16, 14, 14)` — raises all four band rows |
+ *
+ *     The intermediate **+7%** step is measurably a **no-op** (839/1100
+ *     wins, identical to 0%) — it moves the shielded ICE's auto-attack by 1
+ *     point and changes no outcome at the grade level. **+8%** is the first
+ *     step that moves all four band rows, and it is the smallest one that
+ *     combines with a cap inside the tolerance window. The g3 grade
+ *     therefore lands at **72.8%** and the opening curve stays monotonic
+ *     non-increasing (100.0 / 88.6 / 72.8 / 49.0 / 43.1 / 0.0). The PPL g3
+ *     grade is unaffected at 100.0%.
+ *
+ *     Note the asymmetry this knob inherits from ADR-0211: it scales
+ *     auto-attack damage only. `hosaka_defender`'s shield is a **shield**,
+ *     not damage, so this bonus does not weaken it — the shield still
+ *     absorbs a flat 12 and still lasts 3 enemy ticks.
  *   - **g5 0** — back to the ADR-0211 original. The earlier post-ADR-0224
  *     attempt used -79 to make g5's `ta_sentinel` (tier 4, 19 auto-attack,
  *     272 natural HP, 50% skill-cast rate) winnable for the opening deck:
@@ -285,7 +378,7 @@ const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
  * primary **opening-deck** curve stays monotonic non-increasing.
  */
 const ENCOUNTER_DMG_BONUS_PCT_BY_GRADE: ReadonlyArray<number> = [
-  50, 130, 0, 0, 0, -20,
+  50, 130, 8, 0, 0, -20,
 ];
 
 export function iceDmgBonusPctForGrade(grade: number): number {

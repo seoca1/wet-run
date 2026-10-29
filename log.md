@@ -1965,3 +1965,28 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **126 files / 2976 tests PASS** · `tsc --noEmit` 0 · `eslint` 0. **미커밋**. ADR: `0227-ice-archetype-consistency-review.md`.
 
 **다음(미실행)**: ① g3 설계 텐션(shield magnitude 또는 per-ICE 노브) ② `support` 선호 목록에 `buff` 포함 여부 ③ 애매 ICE 잔여 ④ 아키타입의 **미배선 동작**(`getCritBonus`·`shouldTargetAlly`·`getAlarmMultiplier`·`shouldDefensiveAct`) ⑤ ADR-0223 애매 10종 · 잔여 효과 · 카탈로그 갭.
+
+## [2026-10-27] feat | ICE 아키타입 동작 배선 — crit 1건 구현, 2건은 서브시스템 필요 보고 (ADR-0228)
+
+**배경**: ADR-0227이 `personality`를 데이터 정합하게 만들었지만 `ice_ai.ts`의 4개 아키타입 동작이 **web 빌드에서 소비되지 않아**(테스트에서만 참조) 아키타입이 절반만 실체. ADR-0227 후속 #4 종결.
+
+**조사 우선 → 실재하는 것만 배선**:
+
+| 동작 | 결정 | 근거 |
+|---|---|---|
+| `getCritBonus` (aggressive +5% crit) | **배선** | 크리 시스템 존재(`combat_engine.ts`), `DamageContext.attackerTeam`이 이미 player/enemy 구분 — 그러나 **적 경로는 인라인 계산으로 크리 롤이 아예 없었고** `calculateDamage`의 프로덕션 호출자는 플레이어뿐 → 서브시스템 신설이 아니라 국소 배선 |
+| `shouldTargetAlly` | **미배선 — 서브시스템 필요** | 멀티 ICE 로스터는 존재하나 **모두 적대적**, 적 경로에 **per-target 스킬 해석이 없음**(전원이 플레이어 공격). `shield`/`heal`/`regen`/`buff`는 **자기 대상 전용** |
+| `getAlarmMultiplier` | **미배선 — 서브시스템 필요** | alarm이 **2종인데 둘 다 trace accrual 루프가 아님**: `player.alarm`은 **프로그램 비용 누산기**, `state.alarmLevel`/`lastAlarmTickMs`는 **초기화만 되고 어떤 리듀서도 쓰지 않음**. 의도된 훅 `tickAlarm(…, iceAlarmSpeed)`은 **프로덕션 호출자 0**. **밴드에 stealth ICE는 실재**(`wisp` g1 · `ice_dixie_echo` g3)하나 **stealth 5종 전부 `skills: []`**라 스케일할 액션이 없음 |
+| `shouldDefensiveAct` | **이미 배선(ADR-0226)** | 동일 `DEFENSIVE_HP_THRESHOLD`가 선택 로직에 연결됨 → 중복 배선 금지 |
+
+**구현**: 신규 `ice_crit.ts`(**103 LOC**, 순수·주입 RNG·모듈 상태 0) — 비-aggressive는 데미지 불변 + **RNG 소비 0**, aggressive는 5% 롤 후 엔진의 크리 배수 밴드(~1.8–2.2×) 적용. `ice_ai.ts`의 `getCritBonus` 파라미터를 최소 `PersonalityBearer` 인터페이스로 확장(파일의 기존 `SkillUser` 패턴). `state_actions_combat.ts`의 **양쪽 적 데미지 사이트**(스킬·자동공격)에 롤 배선 + `CRITICAL` 로그 마커, `damage > 0` 게이트 보존.
+
+**설계 노트**: 적을 `calculateDamage`로 라우팅하지 **않음** — 그러면 0.8–1.2× 분산이 모든 적 타격에 붙고 **모든 아키타입에 base 15% 크리**가 적용되어 "aggressive에만" 요건이 깨짐. 대신 이미 계산된 적 데미지에 **국소 수정자**로 적용 → 적 baseline 바이트 동일, aggressive만 크리 획득.
+
+**어서션/픽스처 1건 변경(근거 기록)**: `boss_ai.test.ts`의 `makeIce`에 `personality: "defensive"` 추가. 종전엔 `personality` 미지정 → `coercePersonality(undefined) === "aggressive"` 상속 → 정확 데미지 동등 단언이 **7/40 flaky**(2회 측정 동일; 크리율 4.86~5.60% 실측 = `AGGRESSIVE_CRIT_BONUS` 5%)였음 → 수정 후 0/40, 전체 스위트 8회 연속 clean. **프로덕션 97/97 ICE 행이 명시적 `personality`를 보유**하므로 픽스처가 생산 대비 under-specified였고, `defensive`는 크리가 없어 기대값 불변 → **약화 아님, 결정화**.
+
+**밸런스(정확히 기록)**: opening g1~g3 불변(g3 +0.3), **g4 49.0→39.3(−9.7pp)** · **g5 43.1→35.7(−7.4pp)**, g6 불변. PPL g4 89.0→84.8(−4.2) · g6 31.3→28.3(−3.0). **단조성은 유지**(100.0 ≥ 88.6 ≥ 73.1 ≥ 39.3 ≥ 35.7 ≥ 0.0)되나 g4/g5가 ±3pp 밖. **원인**: 크리가 aggressive ICE에 +10% 기대 데미지. **재보정은 제안만, 미적용** — g4/g5 dmg bonus 하향(단 auto-attack 전용이라 스킬 데미지는 상쇄 못 함) 또는 **크리 배수 밴드 축소**(캘리브레이션 배열 불변).
+
+**게이트**: `npm test` **127 files / 2986 tests PASS** · `tsc --noEmit` 0 · `eslint` 0 · `npm run build` ✓. **미커밋**. ADR: `0228-ice-archetype-behavior-wiring.md`.
+
+**다음(미실행)**: ① **g4/g5 재보정 결정**(또는 크리 밴드 축소) ② `shouldTargetAlly`(per-target 스킬 해석) ③ `getAlarmMultiplier`(trace alarm 루프 + stealth ICE에 스킬 부여) ④ **반복 재보정 churn 대책**(ADR-0211 타깃 재기준화 또는 per-ICE 노브) ⑤ 잔여 효과 · 애매 분류 · 카탈로그 갭.

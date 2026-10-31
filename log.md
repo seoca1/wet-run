@@ -93,11 +93,16 @@
     권했는데 **전제가 틀렸다** — 스펙의 출력 디렉터리를 확인하지 않고 추정했다.
     스펙이 tracked 파일을 건드리지 않는 건 오히려 올바른 설계였다.
 
+### 12. RNG 결합 해소 — 결정 요청 ADR-0239 (Draft) (`c49fc2d`)
+- ③ RNG 결합 정리는 **밸런스 재기준화**를 강제하므로 `AGENTS.md` §3.2상 ADR 선행이 필수다 → Draft ADR 을 작성했다 (**구현 없음**).
+- 내용 ① 문제 실측: 표시 전용 1줄 변경이 **opening g3 −2.0pp · PPL g6 −3.0pp** 를 움직였다. ② 현행 규칙의 구멍: `state_helpers.ts` docstring 은 "**새** spawn 은 결정적 헬퍼" 규칙만 갖고 **"기존 spawn 수정"** 규칙이 없다. ③ **수정 표면은 13곳이 아니라 2개 함수** — 13개 비결정적 호출 지점이 전부 `import_vfx` / `import_vfx_ms` 를 지나므로 이 둘의 id 만 바꾸면 한 번에 중립화된다. ④ **RNG 소비 지도**(전수): 표시 = 2 함수 + `status.ts:253` fluff(전투 경로에서 소비) / **게임플레이 = crit roll · loot · 적 스킬 · death cycle — 불변**. ⑤ Option A(현상 유지) · **B(결정적 id + 1회 재기준화, 추천)** · C(draw 수를 밸런스 계약으로 선언) + 비교표. ⑥ 부수 권고(강): **RNG draw 수 불변식 테스트** — ADR-0231/0232 는 draw 수를 **수작업**으로 대조했고, 그 구멍으로 이번 결합이 살아남았다. ⑦ 순서 권고: ADR-0238 의 VFX 항목(P2 잔여 · P8 · X5 · X8)보다 **먼저** 처리.
+- 열린 질문 6건 · 사용자 결정 체크리스트 6개. ADR 본문 `docs/wiki/decisions/0239-vfx-spawn-rng-decoupling.md`.
+
 **테스트**: vitest **3345 → 3567**(+6 files / +222 tests; 155 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed**.
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시 — Manus 태스크는 `stopped` 처리, 페이지는 로컬 미러.)
-**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · ADR-0238 Open questions (a)–(g) + **(h) program VFX 48ms 체감성** 미결 · ADR-0237 Open questions (a)·(e) 미결 · `demo-screenshots` 18장 교체 여부(§11 — 생성기가 `test-results/` 에 쓰므로 **의도적 결정** 대기). (던전 플레이어 미표시 · HUD `LVE` 오타는 §10 에서 **수정 완료**.)
+**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · RNG 결합 해소(재기준화 필요) → **ADR-0239 (Draft) 로 결정 요청**(§12) · ADR-0238 Open questions (a)–(g) + **(h) program VFX 48ms 체감성** 미결 · ADR-0237 Open questions (a)·(e) 미결 · `demo-screenshots` 18장 교체 여부(§11 — 생성기가 `test-results/` 에 쓰므로 **의도적 결정** 대기). (던전 플레이어 미표시 · HUD `LVE` 오타는 §10 에서 **수정 완료**.)
 **ADR**: `docs/wiki/decisions/0237-ui-composition-and-visual-direction.md` (Accepted, 🟡 Partial) · 트리아지: `docs/design/ui-overhaul-triage-2026-10-31.md` · 산출물: `docs/design/{manus-concepts,before-after}-2026-10-31/`.
 
 ---

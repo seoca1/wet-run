@@ -8,28 +8,21 @@ import {
 } from "./input/touch";
 import {
   MENU_OPTIONS,
-  renderMainMenu,
-  renderStubScreen,
   type MenuOption,
 } from "./renderer/menu";
-import { renderMatrix } from "./renderer/matrix";
-import { renderEndingScreen, renderLootScreen } from "./renderer/ending";
-import { renderFarGridHub } from "./renderer/far_grid_hub";
+import { renderPreGameScreen } from "./renderer/pre_game_screen";
+import { renderRunScreen, renderCombatScreen, composeCombatScreen } from "./renderer/run_screen";
+import { renderCombatHints } from "./renderer/combat_hints";
 import { filterMissionsByUniverse } from "./core/missions_filter";
 import {
   FAR_GRID_LOCKED_MESSAGE,
   isFarGridUnlocked,
 } from "./core/dungeon/far_grid_gate";
 import {
-  composeCombatVfx,
   advanceVfxListBy,
   WEB_TICK_MS,
   type CombatVfxInstance,
 } from "./renderer/combat_vfx";
-import {
-  composeFloatingDamage,
-  overlayShake,
-} from "./renderer/combat_overlay";
 import {
   hitStopActiveAt,
   hitStopDeadlineFor,
@@ -38,9 +31,7 @@ import { pickCombatSfxLayers } from "./core/combat/combat_sfx";
 import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
-  COMBAT_ENTRY_HINT_LINES,
   combatEntryHintFits,
-  combatEntryHintRows,
   shouldAutoShowTutorial,
 } from "./core/state/onboarding";
 import {
@@ -51,14 +42,11 @@ import {
   pressProgramButton,
   type PressFeedbackState,
 } from "./core/state/touch_feedback";
-import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon";
-import { renderMissionList } from "./renderer/mission_select";
 import {
   DungeonCrawler,
   createDungeonCrawlerFromMission,
 } from "./core/dungeon/dungeon_crawler";
 import {
-  renderSettingsScreen,
   getInitialSettingsState,
   persistLanguage,
   cycleLanguage,
@@ -85,9 +73,6 @@ import {
 } from "./renderer/accessibility_modes";
 import { applyPaletteMode } from "./renderer/palette";
 import { bootPwaController, type PwaController } from "./core/pwa_boot";
-import {
-  groupStatusByTarget,
-} from "./renderer/status_hud";
 import type {
   GameState,
   GameAction,
@@ -101,16 +86,13 @@ import type {
 } from "./core/types";
 import {
   applyAction,
-  buildHudLines,
   makeInitialState,
   resolveProgramSelection,
   slotToGameState,
   stateToSaveSlot,
 } from "./core/state/state";
 import { encounterIceIdForGrade, missionGradeOf, missionSeedOf } from "./core/combat/ice_scaling";
-import { makeGrid, setText, type Grid } from "./core/grid";
-import { PALETTE } from "./renderer/palette";
-import { renderGrid } from "./renderer/combat_grid";
+import { makeGrid, type Grid } from "./core/grid";
 import {
   save as saveToSlot,
   load as loadFromSlot,
@@ -270,18 +252,6 @@ function formatMissionOption(
       ? mission.title_ko
       : mission.title;
   return `${formatNavIndex(index)} ${titleText}  [${grade} | ${credits}cr]`;
-}
-
-/** Render the mission select screen inside the Green Grid frame (ADR-0237 §2). */
-function renderMissionSelect(
-  missions: ReadonlyArray<Mission>,
-  selected: number,
-  cols: number,
-  rows: number,
-  language: import("./core/i18n.ts").Language = "en",
-): ReturnType<typeof makeGrid> {
-  const rowLabels = missions.map((m, i) => formatMissionOption(m, i, language));
-  return renderMissionList(rowLabels, selected, cols, rows);
 }
 
 class Game {
@@ -704,165 +674,6 @@ class Game {
     }
   }
 
-  private renderCraftingScreen(): void {
-    let grid = makeGrid(this.layout.cols, this.layout.rows);
-    let y = 1;
-    grid = setText(grid, 2, y, "CRAFTING", PALETTE.GREEN_NEON);
-    y += 2;
-
-    // Inventory
-    grid = setText(
-      grid,
-      2,
-      y,
-      `Credits: ${this.inventory.credits}`,
-      PALETTE.GRAY_LIGHT,
-    );
-    y += 1;
-    grid = setText(grid, 2, y, "Materials:", PALETTE.GRAY_LIGHT);
-    y += 1;
-    const materials = this.inventory.materials;
-    if (Object.keys(materials).length === 0) {
-      grid = setText(grid, 4, y, "(none)", PALETTE.GRAY_LIGHT);
-      y += 1;
-    } else {
-      for (const [mat, qty] of Object.entries(materials)) {
-        grid = setText(grid, 4, y, `- ${mat}: ${qty}`, PALETTE.GRAY_LIGHT);
-        y += 1;
-      }
-    }
-    y += 1;
-
-    // Programs in inventory
-    grid = setText(grid, 2, y, "Programs in inventory:", PALETTE.GRAY_LIGHT);
-    y += 1;
-    const programs = this.inventory.programs;
-    if (programs.length === 0) {
-      grid = setText(grid, 4, y, "(none)", PALETTE.GRAY_LIGHT);
-      y += 1;
-    } else {
-      for (const p of programs) {
-        grid = setText(
-          grid,
-          4,
-          y,
-          `- ${p.name} (T${p.tier})`,
-          PALETTE.CYAN_LIGHT,
-        );
-        y += 1;
-      }
-    }
-    y += 1;
-
-    // Craftable recipes
-    grid = setText(grid, 2, y, "Craftable recipes:", PALETTE.GRAY_LIGHT);
-    y += 1;
-    let recipeIndex = 1;
-    for (const recipe of this.recipes) {
-      let canCraft = true;
-      for (const [mat, qty] of Object.entries(recipe.materials)) {
-        if (this.inventory.materials[mat] ?? 0 < qty) {
-          canCraft = false;
-          break;
-        }
-      }
-      const color = canCraft ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
-      const prefix = canCraft ? `${recipeIndex}. ` : "   ";
-      grid = setText(
-        grid,
-        2,
-        y,
-        `${prefix}${recipe.name} (T${recipe.tierLevel})`,
-        color,
-      );
-      y += 1;
-      if (canCraft) {
-        const costStr = Object.entries(recipe.materials)
-          .map(([k, v]) => `${k} x${v}`)
-          .join(", ");
-        grid = setText(grid, 4, y, `  Cost: ${costStr}`, PALETTE.GRAY_LIGHT);
-        y += 1;
-        recipeIndex += 1;
-      }
-    }
-    if (recipeIndex === 1) {
-      grid = setText(grid, 4, y, "(none)", PALETTE.GRAY_LIGHT);
-      y += 1;
-    }
-    y += 1;
-
-    // Instructions
-    grid = setText(
-      grid,
-      2,
-      y,
-      "Press 1-9 to craft a recipe, ESC to go back",
-      PALETTE.GRAY_LIGHT,
-    );
-    y += 1;
-    if (this.materials.length > 0) {
-      const names = this.materials.map((m) => `${m.id} (${m.name})`).join(", ");
-      grid = setText(
-        grid,
-        2,
-        y,
-        `Materials: ${names}`.slice(0, this.layout.cols - 4),
-        PALETTE.GRAY_DARK,
-      );
-      y += 1;
-    }
-    if (this.infoMarket.allItems().length > 0) {
-      grid = setText(
-        grid,
-        2,
-        y,
-        `Market items: ${this.infoMarket.allItems().length}`,
-        PALETTE.GRAY_DARK,
-      );
-      y += 1;
-    }
-    if (this._message !== "") {
-      grid = setText(grid, 2, y, this._message, PALETTE.YELLOW_AMBER);
-    }
-
-    this.renderer.render(grid, ["CRAFTING", "", ""]);
-  }
-
-  private renderEquipmentScreen(): void {
-    let grid = makeGrid(this.layout.cols, this.layout.rows);
-    let y = 1;
-    grid = setText(grid, 2, y, "EQUIPMENT", PALETTE.GREEN_NEON);
-    y += 2;
-
-    // Equipped items
-    grid = setText(grid, 2, y, "Equipped:", PALETTE.GRAY_LIGHT);
-    y += 1;
-    for (const slot of EQUIP_SLOTS) {
-      const equip = this.equipmentLoadout.get(slot);
-      const name = equip ? equip.name : "(empty)";
-      grid = setText(grid, 4, y, `- ${slot}: ${name}`, PALETTE.GRAY_LIGHT);
-      y += 1;
-    }
-    y += 1;
-
-    // Instructions
-    grid = setText(
-      grid,
-      2,
-      y,
-      "Press 1-8 to select slot to auto-equip from registry",
-      PALETTE.GRAY_LIGHT,
-    );
-    y += 1;
-    grid = setText(grid, 2, y, "Press ESC to go back", PALETTE.GRAY_LIGHT);
-    if (this._message !== "") {
-      y += 2;
-      grid = setText(grid, 2, y, this._message, PALETTE.YELLOW_AMBER);
-    }
-
-    this.renderer.render(grid, ["EQUIPMENT", "", ""]);
-  }
-
   private initGraphicNovel(): void {
     void loadStorySystem().then((gn) => {
       const player = gn.createPlayer({ mode: "novice" });
@@ -880,69 +691,19 @@ class Game {
   private renderGraphicNovel(): void {
     if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
     void loadStorySystem().then((gn) => {
-      void import("./core/graphic_novel/graphic_novel_text.ts").then((gnText) => {
+      void import("./renderer/graphic_novel_screen.ts").then(({ renderGraphicNovelScreen }) => {
         if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
         const state = this.graphicNovelState;
         const player = this.graphicNovelPlayer;
         const scene = state.currentScene;
 
-        let grid = makeGrid(this.layout.cols, this.layout.rows);
-
-        grid = setText(grid, 2, 1, "GRAPHIC NOVEL", PALETTE.GREEN_NEON);
-
-        if (scene) {
-          const title = gn.currentTitle(player, this.gnLanguage);
-          const speaker = gn.currentSpeaker(player, this.gnLanguage);
-          grid = setText(
-            grid,
-            2,
-            3,
-            `Chapter: ${gnText.toRoman(scene.order)}`,
-            PALETTE.GRAY_LIGHT,
-          );
-          grid = setText(
-            grid,
-            2,
-            4,
-            `Speaker: ${speaker}`,
-            PALETTE.YELLOW_AMBER,
-          );
-          grid = setText(grid, 2, 5, `Title: ${title}`, PALETTE.GRAY_LIGHT);
-        }
-
-        const wrapped = gnText.wrapTextForNovel(state.currentText, {
-          width: this.layout.cols - 4,
-        });
-        const paginated = gnText.paginateLines(wrapped, 15);
-        const dialogueText = gn.currentDialogue(player)?.text_en ?? null;
-        const typedChars = dialogueText !== null ? dialogueText.length : 0;
-        const pageIndex = gnText.computeTypedPageIndex(paginated, typedChars);
-        const page = paginated[pageIndex] ?? [];
-
-        let y = 8;
-        for (const line of page) {
-          if (y >= this.layout.rows - 2) break;
-          grid = setText(grid, 2, y, line, PALETTE.FOREGROUND);
-          y += 1;
-        }
-
-        const progressValue = gn.progress(player);
-        const statusText = state.isPaused ? "PAUSED" : "PLAYING";
-        grid = setText(
-          grid,
-          2,
-          this.layout.rows - 2,
-          `[${statusText}] Progress: ${Math.round(progressValue * 100)}%`,
-          PALETTE.GRAY_DARK,
-        );
-        grid = setText(
-          grid,
-          2,
-          this.layout.rows - 1,
-          "ENTER: skip dialogue | P: pause | ESC: exit",
-          PALETTE.GRAY_DARK,
-        );
-
+        const grid = renderGraphicNovelScreen({
+          chapter: scene ? { order: scene.order, title: gn.currentTitle(player, this.gnLanguage), speaker: gn.currentSpeaker(player, this.gnLanguage) } : null,
+          text: state.currentText,
+          dialogueText: gn.currentDialogue(player)?.text_en ?? null,
+          progress: gn.progress(player),
+          isPaused: state.isPaused,
+        }, this.layout.cols, this.layout.rows);
         this.renderer.render(grid, ["GRAPHIC NOVEL", "", ""]);
       });
     });
@@ -1404,40 +1165,22 @@ class Game {
       });
   }
 
-  /** P11/P12 — draw the combat-entry hint and the touch press acknowledgement
-   * onto the base combat grid.
-   *
-   * The hint fires once per run, on the first frame where the phase becomes
-   * `combat`. It is drawn *under* the VFX layer so the `ice_intro` banner
-   * (P15) stays legible, and it sits above the `HAND:` row so it never covers
-   * the programs the player must press. The press acknowledgement is drawn
-   * last so it is always visible.
-   */
+  /** Track the once-per-run hint; delegate drawing beneath the VFX layer. */
   private composeCombatOverlays(grid: Grid, previousPhase: GamePhase): Grid {
-    let out = grid;
-    if (
-      !this.combatEntryHintShown &&
+    const showHint = !this.combatEntryHintShown &&
       previousPhase !== "combat" &&
       this.state?.phase === "combat" &&
-      combatEntryHintFits(this.layout.rows)
-    ) {
-      const rows = combatEntryHintRows(this.layout.rows);
-      COMBAT_ENTRY_HINT_LINES.forEach((line, index) => {
-        const row = rows[index];
-        if (row === undefined) return;
-        out = setText(out, 2, row, line, PALETTE.YELLOW_AMBER);
-      });
-      this.combatEntryHintShown = true;
-    }
+      combatEntryHintFits(this.layout.rows);
+    let pressLabel: string | null = null;
     if (hasPressFeedback(this.pressFeedback)) {
       const program = this.state?.deck[this.pressFeedback.handIndex ?? -1];
-      const label = pressFeedbackLabel(
+      pressLabel = pressFeedbackLabel(
         this.pressFeedback,
         program?.id.slice(0, 4),
       );
-      const row = combatEntryHintRows(this.layout.rows)[0] ?? 0;
-      out = setText(out, 2, row, label, PALETTE.GREEN_NEON);
     }
+    const out = renderCombatHints(grid, { showHint, pressLabel });
+    if (showHint) this.combatEntryHintShown = true;
     return out;
   }
 
@@ -1446,61 +1189,10 @@ class Game {
   private draw(persist: boolean = true): void {
     // Tier 5: matrix / loot / ending screens render with a real GameState
     // but their UI is non-combat. Route by runPhase.
-    if (this.state !== null && this.state.runPhase === "matrix") {
+    if (this.state !== null && ["matrix", "ending", "loot"].includes(this.state.runPhase)) {
       updateProgramRow([]);
-      const matrix = this.state.matrix;
-      if (matrix) {
-        this.renderer.render(
-          renderMatrix(
-            matrix,
-            this.state.currentNodeIndex,
-            this.state.visitedNodes,
-            this.layout.cols,
-            this.layout.rows,
-            this.state.iceRoster[this.state.activeIceIndex] ?? null,
-          ),
-          [
-            "MATRIX",
-            "",
-            `Node ${this.state.currentNodeIndex + 1}/${matrix.nodes.length}`,
-          ],
-        );
-      }
-      return;
-    }
-    if (this.state !== null && this.state.runPhase === "ending") {
-      updateProgramRow([]);
-      this.renderer.render(
-        renderEndingScreen(
-          this.state.endingChoice,
-          this.layout.cols,
-          this.layout.rows,
-        ),
-        ["ENDING", "", `Choice: ${this.state.endingChoice ?? "?"}`],
-      );
-      return;
-    }
-    if (this.state !== null && this.state.runPhase === "loot") {
-      updateProgramRow([]);
-      // Parse the loot message to extract credits/items for the dedicated UI.
-      const msg = this.state.message;
-      const creditsMatch = msg.match(/\+(\d[\d,]*)\s+credits/);
-      const lootMatch = msg.match(/Loot:\s*(.+)$/);
-      const rewardCredits = creditsMatch
-        ? parseInt(creditsMatch[1]!.replace(/,/g, ""), 10)
-        : 0;
-      const lootText = lootMatch ? `Loot: ${lootMatch[1]}` : "";
-      this.renderer.render(
-        renderLootScreen(
-          this.state.player.hp,
-          this.state.player.maxHp,
-          this.layout.cols,
-          this.layout.rows,
-          rewardCredits,
-          lootText,
-        ),
-        ["LOOT", "", "↑↓: navigate | ENTER: continue | ESC: back"],
-      );
+      const view = renderRunScreen(this.state, this.layout.cols, this.layout.rows);
+      if (view) this.renderer.render(view.grid, view.hud);
       return;
     }
     // In-game graphic novel screen (graphicNovel state populated).
@@ -1521,67 +1213,13 @@ class Game {
         this.syncPhase("menu");
         return;
       }
-      if (this.screen === "menu") {
-        this.renderer.render(
-          renderMainMenu(
-            this.selectedMenuIndex,
-            this.layout.cols,
-            this.layout.rows,
-            this.hasSaveCache,
-            this.saveMetaCache,
-            this._message,
-            this.farGridUnlockedCache,
-            (this.settingsState?.language ?? "en"),
-          ),
-          [
-            "MAIN MENU",
-            "",
-            `Selected: ${this.selectedMenuIndex + 1}/${MENU_OPTIONS.length}`,
-          ],
-        );
-      } else if (this.screen === "mission_select") {
-        const sprawlMissions = filterMissionsByUniverse(MISSIONS, "sprawl");
-        this.renderer.render(
-          renderMissionSelect(
-            sprawlMissions,
-            this.selectedMission,
-            this.layout.cols,
-            this.layout.rows,
-            (this.settingsState?.language ?? "en"),
-          ),
-          [
-            "MISSION SELECT",
-            "",
-            `Selected: ${this.selectedMission + 1}/${sprawlMissions.length}`,
-          ],
-        );
-      } else if (this.screen === "far_grid_hub") {
-        // Defense in depth: re-check the unlock flag in the render path.
-        if (!this.farGridUnlockedCache) {
-          this.screen = "menu";
-          this._message = FAR_GRID_LOCKED_MESSAGE;
-        } else {
-          const farGridMissions = filterMissionsByUniverse(
-            MISSIONS,
-            "far-grid",
-          );
-          this.renderer.render(
-            renderFarGridHub(
-              farGridMissions,
-              this.selectedMission,
-              this.layout.cols,
-              this.layout.rows,
-              "",
-              (this.settingsState?.language ?? "en"),
-            ),
-            [
-              "FAR GRID HUB",
-              "",
-              `Selected: ${this.selectedMission + 1}/${farGridMissions.length}`,
-            ],
-          );
-        }
-      } else if (this.screen === "settings") {
+      if (this.screen === "far_grid_hub" && !this.farGridUnlockedCache) {
+        this.screen = "menu";
+        this._message = FAR_GRID_LOCKED_MESSAGE;
+        this.syncPhase("menu");
+        return;
+      }
+      if (this.screen === "settings") {
         if (this.settingsState === null || this.settingsState === undefined) {
           try {
             this.settingsState = getInitialSettingsState();
@@ -1593,64 +1231,38 @@ class Game {
             this.settingsState = fallbackSettingsState();
           }
         }
-        this.renderer.render(
-          renderSettingsScreen(
-            this.settingsState,
-            this.layout.cols,
-            this.layout.rows,
-          ),
-          ["SETTINGS", "", "Audio controls — volumes persist"],
-        );
-      } else if (this.screen === "pause") {
-        this.renderer.render(makeGrid(this.layout.cols, this.layout.rows), [
-          "PAUSED",
-          "",
-          "ESC: Resume | SETTINGS: Enter | ESC: Quit to Menu",
-        ]);
-      } else if (this.screen === "crafting") {
-        this.renderCraftingScreen();
-      } else if (this.screen === "equipment") {
-        this.renderEquipmentScreen();
-      } else if (this.screen === "dungeon") {
-        if (this.dungeonCrawler) {
-          const grid = renderDungeonMap(
-            this.dungeonCrawler,
-            this.layout.cols,
-            this.layout.rows,
-          );
-          const hud = renderDungeonUi(
-            this.dungeonCrawler,
-            this.layout.cols,
-            this.layout.rows,
-          );
-          const alarm = this.dungeonCrawler.state.playerAlarm;
-          // Tinted visual cue when alarm is high: amber at 75%+ and red at 100%.
-          const colorFor = (line: string): string | undefined => {
-            if (!line.startsWith("ALM:")) return undefined;
-            if (alarm >= 100) return PALETTE.RED_BRIGHT;
-            if (alarm >= 75) return PALETTE.YELLOW_AMBER;
-            return undefined;
-          };
-          this.renderer.render(grid, hud, colorFor);
-        } else {
-          this.renderer.render(makeGrid(this.layout.cols, this.layout.rows), [
-            "DUNGEON",
-            "",
-            "No dungeon active",
-          ]);
-        }
-        return;
-      } else if (this.screen === "graphic_novel") {
+      }
+      if (this.screen === "graphic_novel") {
         this.renderGraphicNovel();
         return;
-      } else {
-        const opt = MENU_OPTIONS[this.selectedMenuIndex];
-        const label = opt ? opt.label.toUpperCase() : "WET RUN";
-        this.renderer.render(
-          renderStubScreen(label, this.layout.cols, this.layout.rows),
-          ["STUB", "", "Coming soon — Tier 5+"],
-        );
       }
+      const language = this.settingsState?.language ?? "en";
+      const view = renderPreGameScreen({
+        screen: this.screen,
+        menuIndex: this.selectedMenuIndex,
+        missionIndex: this.selectedMission,
+        missionRows: this.screen === "mission_select"
+          ? filterMissionsByUniverse(MISSIONS, "sprawl")
+            .map((m, i) => formatMissionOption(m, i, language)) : [],
+        farGridMissions: this.screen === "far_grid_hub"
+          ? filterMissionsByUniverse(MISSIONS, "far-grid") : [],
+        hasSave: this.hasSaveCache,
+        saveMeta: this.saveMetaCache,
+        message: this._message,
+        farGridUnlocked: this.farGridUnlockedCache,
+        language,
+        settings: this.settingsState ?? fallbackSettingsState(),
+        crafting: {
+          inventory: this.inventory, recipes: this.recipes, materials: this.materials,
+          marketItemCount: this.screen === "crafting" ? this.infoMarket.allItems().length : 0,
+          message: this._message,
+        },
+        loadout: this.equipmentLoadout,
+        equipmentSlots: EQUIP_SLOTS,
+        dungeon: this.dungeonCrawler,
+      }, this.layout.cols, this.layout.rows);
+      this.renderer.render(view.grid, view.hud, view.colorFor);
+      if (this.screen === "dungeon") return;
       this.syncPhase("menu");
       return;
     }
@@ -1662,47 +1274,19 @@ class Game {
       this._lastPlayerHp !== null
         ? previous.player.hp - this._lastPlayerHp
         : null;
-    // Tier 5: pull live status effects from the state machine instead of
-    // the tier-4 mock data (was a fixed pool sliced by turnCount). P14 groups
-    // them per target so the player's own effects are not merged with the
-    // ICE's.
-    const statusGroups = groupStatusByTarget(
-      previous.statusEffects,
-      previous.activeIceIndex,
-    );
     this.state = {
       ...this.state,
       grid: this.composeCombatOverlays(
-        renderGrid(
-          this.state,
-          iceDelta,
-          playerDelta,
-          statusGroups,
+        renderCombatScreen(
+          { state: this.state, iceDelta, playerDelta },
           this.layout.cols,
           this.layout.rows,
         ),
         previous.phase,
       ),
     };
-    const hudLines = buildHudLines(this.state);
-    if (this.state.vfxInstances.length === 0) {
-      this.renderer.render(this.state.grid, hudLines);
-    } else {
-      const composed = composeCombatVfx(
-        this.state.grid,
-        this.state.vfxInstances,
-        this.layout.cols,
-        this.layout.rows,
-      );
-      const withDamage = composeFloatingDamage(
-        composed,
-        this.state.vfxInstances,
-        this.layout.cols,
-        this.layout.rows,
-      );
-      const shake = overlayShake(this.state.vfxInstances, this.reducedMotion);
-      this.renderer.render(withDamage, hudLines, undefined, shake);
-    }
+    const combatView = composeCombatScreen(this.state, this.reducedMotion);
+    this.renderer.render(combatView.grid, combatView.hud, undefined, combatView.shake);
     updateProgramRow(
       this.state.phase === "combat" ? this.state.deck : [],
       this.state.phase === "combat"

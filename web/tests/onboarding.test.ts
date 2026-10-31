@@ -9,6 +9,8 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { makeGrid } from "../src/core/grid";
+import { renderCombatHints } from "../src/renderer/combat_hints";
 import {
   COMBAT_ENTRY_HINT_LINES,
   TUTORIAL_COMPLETED_KEY,
@@ -192,19 +194,25 @@ describe("P11 — main.ts wiring", () => {
   });
 
   it("draws the combat-entry hint lines onto the grid", () => {
-    expect(mainSource).toContain("COMBAT_ENTRY_HINT_LINES");
-    expect(mainSource).toContain("combatEntryHintRows");
-    // The hint must actually reach the grid, not just be imported.
-    expect(mainSource).toMatch(
-      /COMBAT_ENTRY_HINT_LINES\.forEach\([\s\S]{0,240}setText\(/,
+    expect(mainSource).toContain(
+      "renderCombatHints(grid, { showHint, pressLabel })",
     );
+    const grid = renderCombatHints(makeGrid(80, 50), {
+      showHint: true,
+      pressLabel: null,
+    });
+    combatEntryHintRows(50).forEach((row, index) => {
+      const text = grid.cells[row]?.map((cell) => cell.char).join("") ?? "";
+      expect(text.slice(2).trimEnd()).toBe(COMBAT_ENTRY_HINT_LINES[index]);
+    });
   });
 
   it("shows the combat-entry hint only once", () => {
-    expect(mainSource).toContain("combatEntryHintShown");
-    // The guard must set the flag once the hint has been drawn.
     expect(mainSource).toMatch(
-      /combatEntryHintShown[\s\S]{0,400}this\.combatEntryHintShown = true/,
+      /const showHint = !this\.combatEntryHintShown &&[\s\S]*?combatEntryHintFits\(this\.layout\.rows\)/,
+    );
+    expect(mainSource).toMatch(
+      /renderCombatHints\(grid, \{ showHint, pressLabel \}\);\s*if \(showHint\) this\.combatEntryHintShown = true/,
     );
   });
 });

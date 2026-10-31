@@ -470,6 +470,15 @@ repeat 발사) 유지 — 세 케이스. 브라우저 스모크로 숫자키 길
   프로그램 버튼 120ms — 트리아지 P12) 에도 맞출 것인가?
 - **(g) 이 문서의 최종 상태** — 분할 후 이 문서는 Accepted 로 남기는가,
   분할 ADR 들에 의해 대체됐다고 인덱스에 기록하는가?
+- **(h) program VFX 수명 48ms 는 체감 가능한가** — e2e 게이트 복원 중 드러났다.
+  program 사용 시 spawn 되는 VFX 는 `import_vfx(kind, name, 3)` = 3 tick ×
+  `WEB_TICK_MS` 16 = **48ms**, `ice_hit` 은 **32ms**
+  (`core/combat/state_actions_programs.ts:231-232`, `core/state/state_helpers.ts:7`).
+  옛 `tier55_vfx` 스펙은 "카드 사용 100ms 후 VFX 존재" 를 기대했는데 그건
+  **잘못된 기대**라 스펙 쪽을 고쳤다 (`d817b96`). 다만 **48ms 는 60fps 에서 약
+  3프레임**이라 사람이 지각하기 어려울 수 있다 — ADR-0232 의 feel 작업이 의도한
+  만큼 보이지 않는다면 수명 상향이 필요하다. 밸런스와 무관한 표시 값이지만
+  **체감(feel) 설계 결정**이므로 오너 판단 대상.
 
 ## 영향 받는 항목
 

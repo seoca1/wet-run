@@ -75,11 +75,29 @@
 - **HUD 라벨 오타**: 같은 스크린샷에서 `LVE: 01` 을 발견 → 소스 확인 결과 `dungeon.ts:365` 가 문자 그대로 `LVE:` 를 출력(`LVL` 오타). 테스트 fixture(`ascii_renderer_color_for.test.ts:59`)에도 복사돼 있어 동반 수정.
 - **메모(오케스트레이터 자기정정)**: 처음엔 이 결함을 "서브에이전트 오보"로 잘못 정정했다가, `EntityType.PLAYER` 전수 grep 으로 **서브에이전트가 옳았음**을 확인하고 재정정했다 — 기록을 증거 기반으로 강화한 경위.
 
-**테스트**: vitest **3345 → 3569**(+7 files / +224 tests; 156 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed**.
+### 11. 잔여 위생 2건 (`c19982b`, `2a713ee`)
+- **마지막 죽은 코드 제거** (`c19982b`): `renderer/hud.ts` 는 `shouldRenderHUD()`
+  하나만 담고 있었고 **호출자 0**. 게다가 **중복 구현**이었다 — 실제 HUD 는 스크린
+  종류로 게이트되지 않는다. 각 뷰가 자기 `hud` 라인을
+  `renderer.render(view.grid, view.hud, …)` 로 넘기고, `hudScreens` 목록은
+  저장소 유일본이었다. → 모듈째 삭제하고, 그 존재를 pin 하던
+  `tests/hud.test.ts` 도 삭제(트리아지 X3 가 삭제를 승인). 테스트 156 → **155 files**.
+- **`demo-screenshots` 출처 명시** (`2a713ee`): 커밋된 18장은 **2026-10-13
+  스냅샷**이고, `e2e/demo-screenshots.spec.ts` 는 이제
+  **`test-results/demo-shots/`(gitignored)** 에 쓴다 → 이 디렉터리는 **생성기와
+  연결이 끊겨** 제자리 재생성이 불가능하다. 스펙이 18개 중 8개 이름만 만들므로
+  부분 갱신은 **나이 섞인 집합**이 되어 더 신뢰하기 어렵다. `README.md` 로 출처와
+  현재 baseline 위치(`docs/design/before-after-2026-10-31/`)를 기록하고, 교체는
+  **의도적 결정**임을 명시했다.
+  - **교훈(오케스트레이터)**: 처음에 "스펙을 돌려 스크린샷을 재생성하자"고
+    권했는데 **전제가 틀렸다** — 스펙의 출력 디렉터리를 확인하지 않고 추정했다.
+    스펙이 tracked 파일을 건드리지 않는 건 오히려 올바른 설계였다.
+
+**테스트**: vitest **3345 → 3567**(+6 files / +222 tests; 155 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed**.
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시 — Manus 태스크는 `stopped` 처리, 페이지는 로컬 미러.)
-**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · ADR-0238 Open questions (a)–(g) + **(h) program VFX 48ms 체감성** 미결 · ADR-0237 Open questions (a)·(e) 미결. (던전 플레이어 미표시 · HUD `LVE` 오타는 §10 에서 **수정 완료**.)
+**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · ADR-0238 Open questions (a)–(g) + **(h) program VFX 48ms 체감성** 미결 · ADR-0237 Open questions (a)·(e) 미결 · `demo-screenshots` 18장 교체 여부(§11 — 생성기가 `test-results/` 에 쓰므로 **의도적 결정** 대기). (던전 플레이어 미표시 · HUD `LVE` 오타는 §10 에서 **수정 완료**.)
 **ADR**: `docs/wiki/decisions/0237-ui-composition-and-visual-direction.md` (Accepted, 🟡 Partial) · 트리아지: `docs/design/ui-overhaul-triage-2026-10-31.md` · 산출물: `docs/design/{manus-concepts,before-after}-2026-10-31/`.
 
 ---

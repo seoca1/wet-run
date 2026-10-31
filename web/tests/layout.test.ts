@@ -3,7 +3,12 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { getLayout, watchLayout, type Layout } from "../src/core/layout";
+import {
+  getLayout,
+  layoutForViewport,
+  watchLayout,
+  type Layout,
+} from "../src/core/layout";
 
 interface MatchMediaStub {
   matches: boolean;
@@ -17,8 +22,16 @@ interface MatchMediaStub {
 }
 
 function setViewport(width: number, height: number, portrait: boolean): void {
-  Object.defineProperty(window, "innerWidth", { value: width, writable: true, configurable: true });
-  Object.defineProperty(window, "innerHeight", { value: height, writable: true, configurable: true });
+  Object.defineProperty(window, "innerWidth", {
+    value: width,
+    writable: true,
+    configurable: true,
+  });
+  Object.defineProperty(window, "innerHeight", {
+    value: height,
+    writable: true,
+    configurable: true,
+  });
   const stub = (query: string): MatchMediaStub => ({
     matches: query.includes("portrait") ? portrait : false,
     media: query,
@@ -103,10 +116,10 @@ describe("layout (responsive grid sizing)", () => {
     expect(changes.length).toBe(1);
     expect(changes[0]?.orientation).toBe("landscape");
 
-    // No further changes when only width changes within same orientation.
+    // A pixel resize within the category also needs new viewport-derived cells.
     setViewport(1000, 600, false);
     window.dispatchEvent(new Event("resize"));
-    expect(changes.length).toBe(1);
+    expect(changes.length).toBe(2);
 
     unwatch();
   });
@@ -124,6 +137,27 @@ describe("layout (responsive grid sizing)", () => {
 
     unwatch();
   });
+
+  it.each([
+    [359, true, 32, 50, 12],
+    [360, true, 40, 60, 16],
+    [479, true, 40, 60, 16],
+    [480, true, 50, 80, 20],
+    [767, false, 60, 40, 20],
+    [768, false, 80, 50, 24],
+    [1023, false, 80, 50, 24],
+    [1024, false, 100, 60, 28],
+  ] as const)(
+    "selects the preset without DOM at width %i (portrait=%s)",
+    (width, portrait, cols, rows, hudCols) => {
+      const layout = layoutForViewport(width, portrait);
+      expect([layout.cols, layout.rows, layout.hudCols]).toEqual([
+        cols,
+        rows,
+        hudCols,
+      ]);
+    },
+  );
 
   it("unwatch removes event listeners", () => {
     setViewport(390, 844, true);

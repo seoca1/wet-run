@@ -38,11 +38,8 @@
         background: #000;
         image-rendering: pixelated;
         image-rendering: crisp-edges;
-        max-width: 100vw;
-        max-height: 100vh;
-        width: auto;
-        height: auto;
-        object-fit: contain;
+        /* Viewport geometry owns both CSS and backing sizes. Never reclamp text scale. */
+        flex: none;
         touch-action: manipulation;
         position: relative;
         z-index: 1;

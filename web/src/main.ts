@@ -382,7 +382,7 @@ class Game {
     this.missions = MISSIONS;
     this.layout = getLayout();
     this.renderer = new AsciiRenderer(canvas, { cellWidth: 8, cellHeight: 16 });
-    this.renderer.resizeGrid(
+    this.layout = this.renderer.resizeGrid(
       this.layout.cols,
       this.layout.rows,
       this.layout.hudCols,
@@ -549,8 +549,7 @@ class Game {
     this.gamepad.setHandler(handler);
     this.gamepad.start();
     this.unwatchLayout = watchLayout((next) => {
-      this.layout = next;
-      this.renderer.resizeGrid(
+      this.layout = this.renderer.resizeGrid(
         next.cols,
         next.rows,
         next.hudCols,
@@ -1739,12 +1738,13 @@ class Game {
 
   /** Re-derive the canvas surface from the current layout + text scale. */
   private resizeRenderer(): void {
-    this.renderer.resizeGrid(
-      this.layout.cols,
-      this.layout.rows,
-      this.layout.hudCols,
-      this.layout.orientation,
-      this.layout.breakpoint,
+    const base = getLayout();
+    this.layout = this.renderer.resizeGrid(
+      base.cols,
+      base.rows,
+      base.hudCols,
+      base.orientation,
+      base.breakpoint,
     );
   }
 

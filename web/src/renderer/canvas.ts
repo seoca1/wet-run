@@ -1,55 +1,22 @@
 /** Canvas2D ASCII grid renderer — Gibson-flavored.
  *
  * Renders Cell[][] to canvas. Uses monospace font (JetBrains Mono or
- * system fallback). Cell size adapts to viewport:
- *   - Portrait: 6x12 px (compact), 8x14 px (standard)
- *   - Landscape: 8x16 px (standard), 10x18 px (large)
+ * system fallback). Cells fill the available viewport without CSS downscaling.
  *
  * ADR-0199 §4.3: this is the foundation for "Gibson tone" validation
  * in Commit 2. Visual fidelity matters more than performance here.
  */
 import type { Cell, Grid } from "../core/types";
+import type { Layout } from "../core/layout";
+import { canvasGeometry, sanitizeTextScale } from "./canvas_geometry";
 import { PALETTE } from "./palette";
 
 export interface AsciiRendererOptions {
   readonly cellWidth?: number;
   readonly cellHeight?: number;
   readonly fontFamily?: string;
-  /** Cell/font multiplier (P10 text scale). Default 1.0 — no visual change. */
+  /** Cell/font multiplier; larger text reduces presentation rows and columns. */
   readonly textScale?: number;
-}
-
-interface CellSize {
-  readonly width: number;
-  readonly height: number;
-}
-
-const CELL_SIZES: Record<string, CellSize> = {
-  compact_portrait: { width: 6, height: 12 },
-  standard_portrait: { width: 8, height: 14 },
-  standard_landscape: { width: 8, height: 16 },
-  large_landscape: { width: 10, height: 18 },
-};
-
-function getCellSize(
-  orientation: "portrait" | "landscape",
-  breakpoint: string,
-): CellSize {
-  if (orientation === "portrait") {
-    return breakpoint === "compact"
-      ? CELL_SIZES.compact_portrait
-      : CELL_SIZES.standard_portrait;
-  }
-  return breakpoint === "xlarge"
-    ? CELL_SIZES.large_landscape
-    : CELL_SIZES.standard_landscape;
-}
-
-/** A non-positive or non-finite scale would collapse the grid — fall back
- * to 1.0 (the unchanged default). */
-function sanitizeTextScale(scale: number): number {
-  if (!Number.isFinite(scale) || scale <= 0) return 1;
-  return scale;
 }
 
 export class AsciiRenderer {
@@ -59,10 +26,8 @@ export class AsciiRenderer {
   private fontSize: number;
   private fontFamily: string;
   private dpr: number;
-  /** P10 text scale — a pure multiplier over the breakpoint cell size. */
   private textScale: number;
-  /** The breakpoint cell size, before the text scale is applied. */
-  private baseCellSize: CellSize;
+  private hudCols = 28;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -79,26 +44,13 @@ export class AsciiRenderer {
     this.fontFamily = options.fontFamily ?? '"JetBrains Mono", monospace';
     this.dpr = typeof window !== "undefined" ? window.devicePixelRatio || 1 : 1;
     this.textScale = sanitizeTextScale(options.textScale ?? 1);
-    this.baseCellSize = { width: this.cellWidth, height: this.cellHeight };
     ctx.font = `${this.fontSize}px ${this.fontFamily}`;
     ctx.textBaseline = "top";
   }
 
-  /** Set the text scale and re-derive the cell geometry.
-   *
-   * The scale is a pure multiplier over the breakpoint cell size — a scale
-   * of 1.0 is byte-identical to the pre-P10 rendering.
-   */
+  /** Apply scale on the next resize; callers use its returned presentation layout. */
   setTextScale(scale: number): void {
     this.textScale = sanitizeTextScale(scale);
-    this.cellWidth = Math.max(1, Math.round(this.baseCellSize.width * this.textScale));
-    this.cellHeight = Math.max(
-      1,
-      Math.round(this.baseCellSize.height * this.textScale),
-    );
-    this.fontSize = this.cellHeight;
-    this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
-    this.ctx.textBaseline = "top";
   }
 
   /** The current text scale multiplier. */
@@ -106,35 +58,53 @@ export class AsciiRenderer {
     return this.textScale;
   }
 
-  /** Resize canvas to fit a (cols × rows) grid plus HUD width.
-   * Adapts cell size based on layout orientation and breakpoint.
+  /** Fill the safe viewport and return the grid dimensions that actually fit.
+   * Always pass the unscaled breakpoint preset to avoid cumulative scaling.
    */
   resizeGrid(
     cols: number,
     rows: number,
     hudCols = 28,
-    orientation: "portrait" | "landscape" = "landscape",
-    breakpoint = "large",
-  ): void {
-    const cellSize = getCellSize(orientation, breakpoint);
-    this.baseCellSize = cellSize;
-    this.cellWidth = Math.max(1, Math.round(cellSize.width * this.textScale));
-    this.cellHeight = Math.max(
-      1,
-      Math.round(cellSize.height * this.textScale),
+    orientation: Layout["orientation"] = "landscape",
+    breakpoint: Layout["breakpoint"] = "large",
+  ): Layout {
+    const baseLayout = { cols, rows, hudCols, orientation, breakpoint };
+    const padding = getComputedStyle(document.body);
+    const horizontalInset =
+      (parseFloat(padding.paddingLeft) || 0) +
+      (parseFloat(padding.paddingRight) || 0);
+    const verticalInset =
+      (parseFloat(padding.paddingTop) || 0) +
+      (parseFloat(padding.paddingBottom) || 0);
+    this.dpr = window.devicePixelRatio || 1;
+    const geometry = canvasGeometry(
+      baseLayout,
+      {
+        width: window.innerWidth - horizontalInset,
+        height: window.innerHeight - verticalInset,
+        dpr: this.dpr,
+      },
+      this.textScale,
     );
+    this.cellWidth = geometry.cellWidth;
+    this.cellHeight = geometry.cellHeight;
+    this.hudCols = geometry.layout.hudCols;
     this.fontSize = this.cellHeight;
-
-    const totalCols = cols + hudCols;
-    const cssWidth = totalCols * this.cellWidth;
-    const cssHeight = rows * this.cellHeight;
-    this.canvas.width = Math.round(cssWidth * this.dpr);
-    this.canvas.height = Math.round(cssHeight * this.dpr);
-    this.canvas.style.width = `${cssWidth}px`;
-    this.canvas.style.height = `${cssHeight}px`;
-    this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    this.canvas.width = geometry.backingWidth;
+    this.canvas.height = geometry.backingHeight;
+    this.canvas.style.width = `${geometry.cssWidth}px`;
+    this.canvas.style.height = `${geometry.cssHeight}px`;
+    this.ctx.setTransform(
+      geometry.backingWidth / geometry.cssWidth,
+      0,
+      0,
+      geometry.backingHeight / geometry.cssHeight,
+      0,
+      0,
+    );
     this.ctx.font = `${this.fontSize}px ${this.fontFamily}`;
     this.ctx.textBaseline = "top";
+    return geometry.layout;
   }
 
   /** Clear + render a complete frame.
@@ -190,7 +160,7 @@ export class AsciiRenderer {
     this.ctx.fillStyle = cell.bg;
     this.ctx.fillRect(px, py, this.cellWidth, this.cellHeight);
     this.ctx.fillStyle = cell.fg;
-    this.ctx.fillText(cell.char, px, py);
+    this.ctx.fillText(cell.char, px, py, this.cellWidth);
   }
 
   private drawHud(
@@ -204,7 +174,12 @@ export class AsciiRenderer {
       const line = lines[i] ?? "";
       const override = colorFor?.(line, i);
       this.ctx.fillStyle = override ?? PALETTE.GREEN_NEON;
-      this.ctx.fillText(line, hudX, hudY);
+      this.ctx.fillText(
+        line,
+        hudX,
+        hudY,
+        Math.max(1, this.hudCols - 1) * this.cellWidth,
+      );
       hudY += this.cellHeight;
     }
   }

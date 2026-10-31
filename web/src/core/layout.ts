@@ -39,7 +39,11 @@ function isPortraitViewport(): boolean {
 export function getLayout(): Layout {
   const portrait = isPortraitViewport();
   const width = typeof window !== "undefined" ? window.innerWidth : 1280;
+  return layoutForViewport(width, portrait);
+}
 
+/** Pure breakpoint selection; thresholds and grid presets are unchanged. */
+export function layoutForViewport(width: number, portrait: boolean): Layout {
   if (portrait) {
     if (width < BREAKPOINTS.COMPACT) {
       return {
@@ -97,21 +101,12 @@ export function getLayout(): Layout {
 
 /** Subscribe to layout changes (resize + orientationchange). Returns cleanup fn.
  *
- * Invokes `onChange` whenever the layout category changes (orientation or
- * breakpoint). Callers should re-resize canvas and redraw.
+ * Every resize matters: cells depend on viewport pixels, not only its category.
  */
 export function watchLayout(onChange: (layout: Layout) => void): () => void {
   if (typeof window === "undefined") return () => {};
-  let last: Layout = getLayout();
   const handler = (): void => {
-    const next = getLayout();
-    if (
-      next.orientation !== last.orientation ||
-      next.breakpoint !== last.breakpoint
-    ) {
-      last = next;
-      onChange(next);
-    }
+    onChange(getLayout());
   };
   window.addEventListener("resize", handler);
   window.addEventListener("orientationchange", handler);

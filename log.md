@@ -136,6 +136,13 @@
 - ⚠️ **ADR 자체의 오분류를 구현이 발견**: `core/status.ts` 는 "표시 fluff" 가 아니라 **게임플레이**다 — `rollStatusProc` 이 `_kind` 를 **무시**하고 `rng() < 0.2` 로 **burn·slow 적용 여부**를 결정한다 (`state_actions_programs.ts:145`·`:154`; 기존 `slow_effect.test.ts` 도 `// suppress burn proc` 으로 게임플레이 취급). `status.ts` 안에서만 결정화하면 20% proc 이 **상수화**되므로 **범위에서 제외하고 (b) 재개**. 게임플레이 RNG 는 일절 손대지 않았다.
 - 게이트: `tsc --noEmit` 0 · `eslint` 0 errors · vitest **156 files / 3,571 tests** · build OK.
 
+### 16. ADR-0238 결정 — 추천 번들 채택 + 4개 ADR 분할
+- 오너가 **추천 번들을 그대로 채택**: **P7-3**(유휴 → 알람 상승, 적 직접 공격 아님) · **X1-2**(기존 `tickAlarm` 시간 기반 배선) · **P8-2**(`isCrit` 연동) · **X2-3**(`getAlarmMultiplier` 만 · `shouldTargetAlly` 🟢 Deferred) · **X4-2**(숫자키 `1`–`9` repeat 만 무시). **4개 ADR 로 분할**(P7+X1 먼저).
+- 추가 결정 — **(a)** `balance_sim.ts` 에 **유휴 단계 추가** → P7 을 §A1 로 측정 가능하게 (없으면 0.0pp 가 "영향 없음"의 증거가 못 됨) · **(b)** **알람 레벨 상승 = 적 피해·공격성 증가** (X1·P7-3 이 표시 장식에 그치지 않게 하는 정의) · **(g)** 0238 은 분할 ADR 로 **대체됨으로 기록**.
+- **`c488b6d` 사실 반영**: P8-2 의 단점이던 drift(−2.0/−3.0pp 실측)는 ADR-0239 로 **해소** — 모든 VFX spawn 이 RNG 무소비가 되어 spawn 조건을 바꿔도 스트림이 밀리지 않는다 (**0.0pp 기대**). P8-5(draw 수 보존)는 "보존할 draw" 가 없어 **기각**, 열린 질문 (d) 해소.
+- 분할: **0240 P7+X1** · **0241 P8** · **0242 X2**(0240 이후) · **0243 X4**.
+- **분할 ADR 4개 생성 완료** — 각 **Accepted · ❌ Not started**, 0238 → **Superseded by ADR-0240..0243**, README 인덱스 행 4개 + 0238 행 상태 갱신. 각 분할이 **ADR-0239 의 새 기준선**(opening `100.0/88.3/70.5/39.5/36.2/0.0` · PPL `100.0/79.1/98.9/83.0/44.4/24.7`)을 §A1 비교 기준으로 인용한다(낡은 ADR-0229 곡선 아님). 0241 의 "0.0pp 기대"는 **가설**로 표기, 0242 의 "이전" 수치는 **0240 구현 이후** 측정하도록 명시(두 변경 효과 혼합 방지). `web/` 무변경.
+
 **테스트**: vitest **3345 → 3571**(+7 files / +226 tests; 156 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed** (retries off · flake 1건 수정 후 `--repeat-each=10` 40/40 로 재증명 — §13).
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).

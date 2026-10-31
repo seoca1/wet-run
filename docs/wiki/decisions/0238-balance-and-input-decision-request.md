@@ -1,10 +1,25 @@
 # ADR-0238: 밸런스 · 입력 정책 결정 요청 — P7 · P8 · X1 · X2 · X4
 
-**상태**: Draft
+**상태**: Superseded by ADR-0240..0243 (2026-10-31 — Draft 에서 결정 후 분할)
 **날짜**: 2026-10-31
 **결정자**: 사용자 (프로젝트 오너) — **결정 대기**
 **우선순위**: P2 (The Flatline — 트리아지 §2.1 "신규 ADR 필요" 중 밸런스 4건 + 입력 정책 1건)
 **관련**: [ADR-0018 — Combat Animation](./0018-combat-animation.md), [ADR-0161 — ICE Personality Archetypes](./0161-ice-personality-archetypes.md), [ADR-0183 — Accessibility (Colorblind 3 Modes, Text Size, Input Remapping)](./0183-accessibility.md), [ADR-0195 — Accepted ADR Implementation Status Workflow](./0195-adr-implementation-workflow.md), [ADR-0197 — Gamepad / Controller Input Support](./0197-gamepad-controller-input-support.md), [ADR-0228 — ICE 아키타입 동작 배선](./0228-ice-archetype-behavior-wiring.md), [ADR-0229 — Grade 난이도 곡선 재기준화](./0229-grade-curve-rebaseline.md), [ADR-0231 — Combat-feel top-3](./0231-combat-feel-top3-vfx-log-raf.md), [ADR-0237 — UI 화면 구성 개편](./0237-ui-composition-and-visual-direction.md), [UI 개편 트리아지 (2026-10-31)](../../design/ui-overhaul-triage-2026-10-31.md), [Combat-feel 제안서 (2026-10-29)](../../design/combat-feel-and-interaction-proposal.md)
+
+> **⚠️ 대체됨 (2026-10-31) — 이 문서는 아래 네 ADR 로 분할되었다.** 오너가 추천
+> 번들 (P7-3 · X1-2 · P8-2 · X2-3 · X4-2) 과 4 개 분할을 채택했고, 열린 질문 (g) 에
+> 대해 "분할 ADR 로 대체됨으로 기록" 을 골랐다 (§사용자 결정). 구현과 이후 갱신은
+> 각 분할 ADR 에서 한다. 이 문서의 본문은 **결정 요청 기록으로 그대로 보존**한다.
+>
+> | 분할 ADR | 항목 | 순서 |
+> | --- | --- | --- |
+> | [ADR-0240 — 유휴 압력 + 알람 누적 루프](./0240-idle-pressure-and-alarm-loop.md) | P7 + X1 | **먼저** |
+> | [ADR-0241 — `critical_hit` VFX 의 `isCrit` 연동](./0241-crit-vfx-isCrit-link.md) | P8 | 독립 |
+> | [ADR-0242 — ICE 아키타입 알람 배율 배선](./0242-ice-archetype-alarm-multiplier.md) | X2 | ADR-0240 이후 |
+> | [ADR-0243 — 숫자키 OS auto-repeat 정책](./0243-digit-key-repeat-policy.md) | X4 | 독립 |
+>
+> 열린 질문 (h) (program VFX 수명 48ms) 는 네 분할 어디에도 속하지 않아 **이 문서에
+> 미결로 남는다.**
 
 > **이 문서는 결정 요청 (Draft) 이다.** `AGENTS.md` §3.3 에 따라 항목마다
 > 옵션 비교표 · 추천안 · 열린 질문을 담는다. **어떤 항목도 구현하지
@@ -205,9 +220,9 @@ crit 판정은 `calculateDamage` 안에 있다 (`CRIT_CHANCE = 0.15`,
 | 옵션 | 내용 | 장점 | 단점 / 위험 |
 | --- | --- | --- | --- |
 | **P8-1 현상 유지** | `damage >= 10` 유지 | 변경 0, 0.0pp | 표시가 실제 crit 과 무관 — 티어마다 "CRIT" 빈도가 갈린다 (FEEL) |
-| **P8-2 채택: `isCrit` 연동** | `dmgResult.isCrit` 일 때만 spawn (FEEL ①) | 표시와 판정이 일치. 계산 무변경 | spawn 빈도가 바뀌므로 RNG 흐름이 이동 → **drift 발생 (실측, 아래 표)** — RNG 무소비 경로로 바꿔도 제거되지 않는다 |
+| **P8-2 채택: `isCrit` 연동** | `dmgResult.isCrit` 일 때만 spawn (FEEL ①) | 표시와 판정이 일치. 계산 무변경 | ~~RNG 흐름 이동~~ → ✅ **해소 (ADR-0239, `c488b6d`)**: 이제 모든 spawn 의 id 가 content-hash 라 **draw 를 소비하지 않는다**. spawn 조건을 바꿔도 스트림이 밀리지 않으므로 **0.0pp 기대** (아래 실측 표는 `c488b6d` **이전** 값) |
 | **P8-3 변형: 상대 비율 임계** | `damage >= maxHp * 0.15` 로 교체 (FEEL ②) | 티어 간 빈도 편차 완화 | 여전히 진짜 crit 과 무관 — 문제의 절반만 해결. RNG 이동은 P8-2 와 동일 |
-| **P8-5 변형: draw 수 보존** | spawn 여부와 무관하게 매 program resolve 에서 id draw 를 1회 소비해 스트림을 고정하고, `isCrit` 일 때만 인스턴스를 노출 | 이론상 0.0pp 유지 | RNG 를 "정렬용으로 태우는" 취약한 기법 — 이후 어떤 변경에도 깨지기 쉽고 리뷰어가 이유를 파악하기 어렵다 |
+| ~~**P8-5 변형: draw 수 보존**~~ | ~~spawn 여부와 무관하게 매 program resolve 에서 id draw 를 1회 소비해 스트림을 고정~~ | — | ⚪ **무의미해짐 (ADR-0239 `c488b6d`)** — 이제 spawn 이 draw 를 소비하지 않으므로 "보존할 draw" 가 없다. 기각 |
 | **P8-4 별도 ADR 로 분리** | P8 단독 ADR | 트리아지 권고. 범위가 작아 측정 · 리뷰가 쉽다 | — |
 
 **트레이드오프**: P8-2 와 P8-3 모두 spawn 빈도를 바꾸므로 RNG 중립성 처리
@@ -363,54 +378,70 @@ repeat 발사) 유지 — 세 케이스. 브라우저 스모크로 숫자키 길
 
 ## 사용자 결정 (Decision)
 
-**결정 대기.** 항목마다 하나를 고르거나, 다른 안을 적거나, Defer 를 고른다.
+**2026-10-31, 프로젝트 오너 직접 결정** — 문서의 **추천 번들을 그대로 채택**했다.
 
 **P7 — 입력 유휴 시 적 행동**
-- [ ] P7-1 현상 유지
-- [ ] P7-2 채택 (유휴 → 적 공격)
-- [ ] P7-3 변형 (유휴 → 알람 상승)
-- [ ] P7-4 별도 ADR 로 분리 (P7+X1)
-- [ ] 기타: ___ / [ ] Defer
+- [x] **P7-3 변형 (유휴 → 알람 상승)** 채택
+- [x] **P7-4 별도 ADR 로 분리 (P7+X1)**
 
 **X1 — `tickAlarm` 배선**
-- [ ] X1-1 현상 유지
-- [ ] X1-2 채택 (시간 기반)
-- [ ] X1-3 변형 (행동 기반)
-- [ ] X1-4 폐기
-- [ ] X1-5 별도 ADR 로 분리 (P7+X1)
-- [ ] 기타: ___ / [ ] Defer
+- [x] **X1-2 채택 (시간 기반)**
+- [x] **X1-5 별도 ADR 로 분리 (P7+X1)**
 
 **P8 — `critical_hit` 연동**
-- [ ] P8-1 현상 유지
-- [ ] P8-2 채택 (`isCrit` 연동)
-- [ ] P8-3 변형 (상대 비율 임계)
-- [ ] P8-4 별도 ADR 로 분리
-- [ ] 기타: ___ / [ ] Defer
+- [x] **P8-2 채택 (`isCrit` 연동)**
+- [x] **P8-4 별도 ADR 로 분리**
 
 **X2 — archetype 2 종 배선**
-- [ ] X2-1 현상 유지
-- [ ] X2-2 채택 (둘 다)
-- [ ] X2-3 변형 (`getAlarmMultiplier` 만)
-- [ ] X2-4 폐기 (새 ADR 로 ADR-0161 범위 축소)
-- [ ] X2-5 별도 ADR 로 분리
-- [ ] 기타: ___ / [ ] Defer
+- [x] **X2-3 변형 (`getAlarmMultiplier` 만)** 채택 · `shouldTargetAlly` 는 🟢 Deferred
+- [x] **X2-5 별도 ADR 로 분리** (X1 이후)
 
 **X4 — 숫자키 repeat 정책**
-- [ ] X4-1 현상 유지
-- [ ] X4-2 채택 (숫자키 repeat 무시)
-- [ ] X4-3 변형 (이동키 외 전부 무시)
-- [ ] X4-4 변형 (시간 디바운스)
-- [ ] X4-5 별도 ADR 로 분리
-- [ ] 기타: ___ / [ ] Defer
+- [x] **X4-2 채택 (숫자키 repeat 무시)**
+- [x] **X4-5 별도 ADR 로 분리**
 
 **분할**
-- [ ] 추천대로 4 개 ADR 로 분할 (P7+X1 / P8 / X2 / X4)
-- [ ] 트리아지대로 3 개 (P7+X1 / P8 / X2) + X4 는 이 문서에서 결정
-- [ ] 분할하지 않음 (이 문서가 다섯 결정을 모두 기록)
+- [x] **추천대로 4 개 ADR 로 분할** (P7+X1 / P8 / X2 / X4)
+
+**추가 결정 (열린 질문)**
+- [x] **(a) 하네스 유휴 모델 — `balance_sim.ts` 에 유휴 단계를 추가**해 P7 을 §A1 로
+  측정 가능하게 한다.
+- [x] **(b) `alarmLevel` 상승의 결과 — 적 피해 · 공격성 증가.** (X1·P7-3 이 표시
+  장식에 그치지 않게 하는 정의)
+- [x] **(g) 이 문서의 최종 상태 — 분할 ADR 로 대체됨으로 기록.**
 
 ## 결과 (Consequences)
 
-(결정 후 작성 — `AGENTS.md` §3.3)
+**2026-10-31 결정 기준.** 구현은 각 분할 ADR 에서 진행한다.
+
+### 결정이 확정한 것
+
+- **P7+X1 을 한 서브시스템으로**: 유휴 시간이 **적 공격이 아니라 알람 상승**을
+  일으키고(X1-2 시간 기반 `tickAlarm`), **알람 레벨 상승은 적 피해·공격성 증가로
+  이어진다** (b). 그 결과 X2 의 `getAlarmMultiplier` 가 걸 대상이 생긴다.
+- **P8 은 이제 저렴하다** — `c488b6d` 로 모든 VFX spawn 이 RNG 무소비가 되어
+  `isCrit` 연동이 밸런스를 밀지 않는다 (0.0pp 기대).
+- **X2 는 `getAlarmMultiplier` 만** — `shouldTargetAlly` 는 🟢 Deferred (multi-ICE
+  대상 모델이 필요해 별도).
+- **X4 는 숫자키 repeat 만 무시** — Enter·화살표 repeat(메뉴 스크롤)는 불변이라 기존
+  테스트 `:106-109` 와 충돌하지 않는다.
+- **하네스에 유휴 단계를 추가**해 P7 을 측정 가능하게 한다 (a) — 이게 없으면 P7 의
+  영향을 §A1 로 증명할 수 없다.
+
+### 부정적 영향 / 수용한 비용
+
+- **알람 경제 변경** — 알람이 실제 결과(적 피해·공격성)를 갖게 되므로 밸런스가
+  움직인다. 각 분할 ADR 이 ADR-0229 §A1 전후 표를 제출해야 한다.
+- **하네스 변경** — `balance_sim.ts` 에 유휴 단계를 넣는 것 자체가 테스트 인프라
+  변경이다 (측정 도구를 측정 대상에 맞추는 작업).
+- **4 개 ADR 분할** — 리뷰 단위는 작아지지만 문서 수가 늘고 순서 의존(P7+X1 → X2)이
+  생긴다.
+
+### 후속 항목
+
+1. 분할 ADR 4 개 작성 — **0240 P7+X1**(먼저) · 0241 P8 · 0242 X2(X1 이후) ·
+   0243 X4. 이 문서는 그 4 개로 대체됨으로 기록한다 (g).
+2. 구현은 각 분할 ADR 에서, 밸런스 항목은 ADR-0229 §A1 전후 표와 함께.
 
 ## Implementation Status (2026-10-31)
 
@@ -459,9 +490,9 @@ repeat 발사) 유지 — 세 케이스. 브라우저 스모크로 숫자키 길
   표시 장식에 그친다. `player.alarm` (0–100) 과 하나로 합칠지도 함께.
 - **(c) P7 의 N 초** — P7-2 든 P7-3 이든 유휴 판정 시간. 접근성
   (ADR-0183) 관점에서 설정으로 끌 수 있어야 하는가?
-- **(d) RNG 무소비 spawn 의 인자** — `import_vfx_deterministic` 이
-  `critical_hit` 에 필요한 지속시간 · 크기 인자를 지원하는지, 지원하지 않으면
-  확장할지.
+- ~~**(d) RNG 무소비 spawn 의 인자**~~ — ✅ **해소 (ADR-0239, `c488b6d`)**:
+  `import_vfx` / `import_vfx_ms` 자체가 content-hash id 를 쓰므로 인자 지원 문제가
+  사라졌다. 이제 모든 VFX spawn 이 RNG 무소비다.
 - **(e) `stealth` ICE 스킬** — ADR-0228 은 `getAlarmMultiplier` 에 "알람 루프 +
   스킬을 carry 하는 `stealth` ICE" 둘 다 필요하다고 적었다. X1 루프가 생기면
   배율이 알람 간격 자체를 바꾸므로 스킬 없이도 관측 가능한가, 아니면
@@ -544,3 +575,14 @@ repeat 발사) 유지 — 세 케이스. 브라우저 스모크로 숫자키 길
   스트림이 실제로 밀렸다는 독립 증거. PPL 은 ADR-0229 §C2 의 5pp 임계
   미만이라 표 의무는 없지만 기록한다. 원복 확인 (`git diff HEAD` 비어 있음,
   백업 `/tmp/p8-backup2-state_actions_programs.ts`).
+- 2026-10-31 (4차): **ADR-0239 구현(`c488b6d`) 반영** — 모든 VFX spawn 이 RNG
+  무소비(content-hash id)가 되어 **P8 의 drift 우려가 사라졌다** (P8-2 는 이제
+  0.0pp 기대). P8-5(draw 수 보존)는 "보존할 draw" 가 없어 무의미해졌고, 열린 질문
+  (d) 는 해소됐다. 이 문서의 실측 표(opening/PPL)는 **`c488b6d` 이전** 값임을 명시.
+- 2026-10-31 (5차): **추천 번들 채택 (오너 결정).** P7-3 · X1-2 · P8-2 · X2-3 ·
+  X4-2 를 채택하고 **4 개 ADR 로 분할**. 추가 결정 — (a) 하네스에 유휴 단계 추가 ·
+  (b) 알람 레벨 상승 = **적 피해·공격성 증가** · (g) 이 문서는 분할 ADR 로 **대체됨**.
+  Consequences 작성. 다음: 0240 P7+X1 · 0241 P8 · 0242 X2 · 0243 X4.
+- 2026-10-31 (6차): **분할 ADR 4 개 작성 → 상태 Draft → Superseded by ADR-0240..0243**
+  ((g) 결정). 상단에 분할 안내 추가. 본문은 삭제·수정 없이 보존. 열린 질문 (h) 는 이
+  문서에 미결로 남김.

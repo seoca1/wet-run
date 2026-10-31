@@ -12,14 +12,15 @@ import {
 } from "../src/renderer/settings";
 import { INITIAL_PWA_STATE, type PwaState } from "../src/core/pwa_manager";
 
-/** Grid height for the PWA-section tests: the 80x50 landscape preset.
- *
- * Inside the inset frame (ADR-0237 §2) the PWA rows sit on rows 35-38 and
- * the footer on the last two inner rows, so a 40-row grid can no longer show
- * them — that trade-off is pinned in settings.test.ts. Every assertion here
- * is about PWA content, not grid height, so it runs on the real 50-row preset.
+/** Grid sizes for the PWA-section tests: 40-row grids (the 60x40 preset and
+ * 80x40), where the footer now follows the body in flow (ADR-0237 Open
+ * question (f)), and the 80x50 preset, where it stays pinned.
  */
-const PWA_ROWS = 50;
+const PWA_GRIDS: ReadonlyArray<readonly [number, number]> = [
+  [60, 40],
+  [80, 40],
+  [80, 50],
+];
 
 function gridLines(grid: ReturnType<typeof renderSettingsScreen>): string[] {
   const lines: string[] = [];
@@ -61,193 +62,219 @@ function makeBaseState(overrides: Partial<SettingsState> = {}): SettingsState {
   };
 }
 
-describe("Settings — PWA section: install row", () => {
-  it("renders PWA header in English", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "PWA")).toBeDefined();
-  });
-
-  it("translates PWA header to Korean", () => {
-    const grid = renderSettingsScreen(
-      makeBaseState({ language: "ko" }),
-      80,
-      PWA_ROWS,
-    );
-    expect(findLine(grid, "PWA")).toBeDefined();
-  });
-
-  it("shows [ ] UNAVAILABLE when not installable (default state)", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "UNAVAILABLE")).toBeDefined();
-    expect(findLine(grid, "INSTALL APP")).toBeUndefined();
-    expect(findLine(grid, "INSTALLED")).toBeUndefined();
-  });
-
-  it("shows [ ] INSTALL APP when canInstall=true", () => {
-    const pwa: PwaState = { ...INITIAL_PWA_STATE, canInstall: true };
-    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, PWA_ROWS);
-    expect(findLine(grid, "INSTALL APP")).toBeDefined();
-    expect(findLine(grid, "UNAVAILABLE")).toBeUndefined();
-  });
-
-  it("shows [X] INSTALLED when isInstalled=true", () => {
-    const pwa: PwaState = { ...INITIAL_PWA_STATE, isInstalled: true };
-    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, PWA_ROWS);
-    expect(findLine(grid, "INSTALLED")).toBeDefined();
-    expect(findLine(grid, "INSTALL APP")).toBeUndefined();
-  });
-
-  it("renders Korean install label when KO is selected", () => {
-    const pwa: PwaState = { ...INITIAL_PWA_STATE, canInstall: true };
-    const grid = renderSettingsScreen(
-      makeBaseState({ pwa, language: "ko" }),
-      80,
-      PWA_ROWS,
-    );
-    expect(findLine(grid, "앱 설치")).toBeDefined();
-  });
-
-  it("renders Korean installed label", () => {
-    const pwa: PwaState = { ...INITIAL_PWA_STATE, isInstalled: true };
-    const grid = renderSettingsScreen(
-      makeBaseState({ pwa, language: "ko" }),
-      80,
-      PWA_ROWS,
-    );
-    expect(findLine(grid, "설치됨")).toBeDefined();
-  });
-});
-
-describe("Settings — PWA section: update row", () => {
-  it("shows [ ] APPLY UPDATE when no update is available", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "APPLY UPDATE")).toBeDefined();
-    expect(findLine(grid, "UPDATE AVAILABLE")).toBeUndefined();
-  });
-
-  it("shows [X] UPDATE AVAILABLE when hasUpdate=true", () => {
-    const pwa: PwaState = { ...INITIAL_PWA_STATE, hasUpdate: true };
-    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, PWA_ROWS);
-    expect(findLine(grid, "UPDATE AVAILABLE")).toBeDefined();
-  });
-
-  it("renders Korean update-available label", () => {
-    const pwa: PwaState = { ...INITIAL_PWA_STATE, hasUpdate: true };
-    const grid = renderSettingsScreen(
-      makeBaseState({ pwa, language: "ko" }),
-      80,
-      PWA_ROWS,
-    );
-    expect(findLine(grid, "업데이트 가능")).toBeDefined();
-  });
-});
-
-describe("Settings — PWA section: offline status line", () => {
-  it("shows ONLINE when isOffline=false", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "ONLINE")).toBeDefined();
-    expect(findLine(grid, "OFFLINE")).toBeUndefined();
-  });
-
-  it("shows OFFLINE when isOffline=true", () => {
-    const pwa: PwaState = { ...INITIAL_PWA_STATE, isOffline: true };
-    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, PWA_ROWS);
-    expect(findLine(grid, "OFFLINE")).toBeDefined();
-    expect(findLine(grid, "ONLINE")).toBeUndefined();
-  });
-
-  it("translates offline status to Korean", () => {
-    const pwa: PwaState = { ...INITIAL_PWA_STATE, isOffline: true };
-    const grid = renderSettingsScreen(
-      makeBaseState({ pwa, language: "ko" }),
-      80,
-      PWA_ROWS,
-    );
-    expect(findLine(grid, "오프라인")).toBeDefined();
-    const onlineGrid = renderSettingsScreen(
-      makeBaseState({ language: "ko" }),
-      80,
-      PWA_ROWS,
-    );
-    expect(findLine(onlineGrid, "온라인")).toBeDefined();
-  });
-});
-
-describe("Settings — PWA section: field selection + hint", () => {
-  const fields: ReadonlyArray<SettingsField> = [
-    "audio",
-    "bgm",
-    "sfx",
-    "mute",
-    "language",
-    "pwa_install",
-    "pwa_update",
-  ];
-
-  for (const field of fields) {
-    it(`accepts '${field}' as a SettingsField without throwing`, () => {
-      const grid = renderSettingsScreen(
-        makeBaseState({ selectedField: field }),
-        80,
-        PWA_ROWS,
-      );
-      expect(grid).toBeDefined();
+describe.each(PWA_GRIDS)("%ix%i grid", (cols, rows) => {
+  describe("Settings — PWA section: install row", () => {
+    it("renders PWA header in English", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "PWA")).toBeDefined();
     });
-  }
 
-  it("renders ENTER: install hint when pwa_install is selected", () => {
-    const grid = renderSettingsScreen(
-      makeBaseState({ selectedField: "pwa_install" }),
-      80,
-      PWA_ROWS,
-    );
-    expect(findLine(grid, "ENTER: install app")).toBeDefined();
+    it("translates PWA header to Korean", () => {
+      const grid = renderSettingsScreen(
+        makeBaseState({ language: "ko" }),
+        cols,
+        rows,
+      );
+      expect(findLine(grid, "PWA")).toBeDefined();
+    });
+
+    it("shows [ ] UNAVAILABLE when not installable (default state)", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "UNAVAILABLE")).toBeDefined();
+      expect(findLine(grid, "INSTALL APP")).toBeUndefined();
+      expect(findLine(grid, "INSTALLED")).toBeUndefined();
+    });
+
+    it("shows [ ] INSTALL APP when canInstall=true", () => {
+      const pwa: PwaState = { ...INITIAL_PWA_STATE, canInstall: true };
+      const grid = renderSettingsScreen(makeBaseState({ pwa }), cols, rows);
+      expect(findLine(grid, "INSTALL APP")).toBeDefined();
+      expect(findLine(grid, "UNAVAILABLE")).toBeUndefined();
+    });
+
+    it("shows [X] INSTALLED when isInstalled=true", () => {
+      const pwa: PwaState = { ...INITIAL_PWA_STATE, isInstalled: true };
+      const grid = renderSettingsScreen(makeBaseState({ pwa }), cols, rows);
+      expect(findLine(grid, "INSTALLED")).toBeDefined();
+      expect(findLine(grid, "INSTALL APP")).toBeUndefined();
+    });
+
+    it("renders Korean install label when KO is selected", () => {
+      const pwa: PwaState = { ...INITIAL_PWA_STATE, canInstall: true };
+      const grid = renderSettingsScreen(
+        makeBaseState({ pwa, language: "ko" }),
+        cols,
+        rows,
+      );
+      expect(findLine(grid, "앱 설치")).toBeDefined();
+    });
+
+    it("renders Korean installed label", () => {
+      const pwa: PwaState = { ...INITIAL_PWA_STATE, isInstalled: true };
+      const grid = renderSettingsScreen(
+        makeBaseState({ pwa, language: "ko" }),
+        cols,
+        rows,
+      );
+      expect(findLine(grid, "설치됨")).toBeDefined();
+    });
   });
 
-  it("renders ENTER: apply update hint when pwa_update is selected", () => {
-    const grid = renderSettingsScreen(
-      makeBaseState({ selectedField: "pwa_update" }),
-      80,
-      PWA_ROWS,
-    );
-    expect(findLine(grid, "ENTER: apply update")).toBeDefined();
+  describe("Settings — PWA section: update row", () => {
+    it("shows [ ] APPLY UPDATE when no update is available", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "APPLY UPDATE")).toBeDefined();
+      expect(findLine(grid, "UPDATE AVAILABLE")).toBeUndefined();
+    });
+
+    it("shows [X] UPDATE AVAILABLE when hasUpdate=true", () => {
+      const pwa: PwaState = { ...INITIAL_PWA_STATE, hasUpdate: true };
+      const grid = renderSettingsScreen(makeBaseState({ pwa }), cols, rows);
+      expect(findLine(grid, "UPDATE AVAILABLE")).toBeDefined();
+    });
+
+    it("renders Korean update-available label", () => {
+      const pwa: PwaState = { ...INITIAL_PWA_STATE, hasUpdate: true };
+      const grid = renderSettingsScreen(
+        makeBaseState({ pwa, language: "ko" }),
+        cols,
+        rows,
+      );
+      expect(findLine(grid, "업데이트 가능")).toBeDefined();
+    });
   });
 
-  it("renders Korean install hint when KO + pwa_install selected", () => {
-    const grid = renderSettingsScreen(
-      makeBaseState({ selectedField: "pwa_install", language: "ko" }),
-      80,
-      PWA_ROWS,
-    );
-    // Hint text is still English (settings pane hint) per existing convention
-    // — only section labels are translated. Verify the install hint still appears.
-    expect(findLine(grid, "ENTER: install app")).toBeDefined();
-  });
-});
+  describe("Settings — PWA section: offline status line", () => {
+    it("shows ONLINE when isOffline=false", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "ONLINE")).toBeDefined();
+      expect(findLine(grid, "OFFLINE")).toBeUndefined();
+    });
 
-describe("Settings — PWA section: existing EN rows unchanged", () => {
-  it("still renders AUDIO section header (regression guard)", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "AUDIO")).toBeDefined();
-  });
+    it("shows OFFLINE when isOffline=true", () => {
+      const pwa: PwaState = { ...INITIAL_PWA_STATE, isOffline: true };
+      const grid = renderSettingsScreen(makeBaseState({ pwa }), cols, rows);
+      expect(findLine(grid, "OFFLINE")).toBeDefined();
+      expect(findLine(grid, "ONLINE")).toBeUndefined();
+    });
 
-  it("still renders BGM Volume label", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "BGM Volume")).toBeDefined();
-  });
-
-  it("still renders MUTE ALL label", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "MUTE ALL")).toBeDefined();
-  });
-
-  it("still renders LANGUAGE section header in EN", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "LANGUAGE")).toBeDefined();
+    it("translates offline status to Korean", () => {
+      const pwa: PwaState = { ...INITIAL_PWA_STATE, isOffline: true };
+      const grid = renderSettingsScreen(
+        makeBaseState({ pwa, language: "ko" }),
+        cols,
+        rows,
+      );
+      expect(findLine(grid, "오프라인")).toBeDefined();
+      const onlineGrid = renderSettingsScreen(
+        makeBaseState({ language: "ko" }),
+        cols,
+        rows,
+      );
+      expect(findLine(onlineGrid, "온라인")).toBeDefined();
+    });
   });
 
-  it("still renders STORAGE section header", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
-    expect(findLine(grid, "STORAGE")).toBeDefined();
+  describe("Settings — PWA section: field selection + hint", () => {
+    const fields: ReadonlyArray<SettingsField> = [
+      "audio",
+      "bgm",
+      "sfx",
+      "mute",
+      "language",
+      "pwa_install",
+      "pwa_update",
+    ];
+
+    for (const field of fields) {
+      it(`accepts '${field}' as a SettingsField without throwing`, () => {
+        const grid = renderSettingsScreen(
+          makeBaseState({ selectedField: field }),
+          cols,
+          rows,
+        );
+        expect(grid).toBeDefined();
+      });
+    }
+
+    it("renders ENTER: install hint when pwa_install is selected", () => {
+      const grid = renderSettingsScreen(
+        makeBaseState({ selectedField: "pwa_install" }),
+        cols,
+        rows,
+      );
+      expect(findLine(grid, "ENTER: install app")).toBeDefined();
+    });
+
+    it("renders ENTER: apply update hint when pwa_update is selected", () => {
+      const grid = renderSettingsScreen(
+        makeBaseState({ selectedField: "pwa_update" }),
+        cols,
+        rows,
+      );
+      expect(findLine(grid, "ENTER: apply update")).toBeDefined();
+    });
+
+    it("renders Korean install hint when KO + pwa_install selected", () => {
+      const grid = renderSettingsScreen(
+        makeBaseState({ selectedField: "pwa_install", language: "ko" }),
+        cols,
+        rows,
+      );
+      // Hint text is still English (settings pane hint) per existing convention
+      // — only section labels are translated. Verify the install hint still appears.
+      expect(findLine(grid, "ENTER: install app")).toBeDefined();
+    });
+  });
+
+  describe("Settings — PWA section: existing EN rows unchanged", () => {
+    it("still renders AUDIO section header (regression guard)", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "AUDIO")).toBeDefined();
+    });
+
+    it("still renders BGM Volume label", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "BGM Volume")).toBeDefined();
+    });
+
+    it("still renders MUTE ALL label", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "MUTE ALL")).toBeDefined();
+    });
+
+    it("still renders LANGUAGE section header in EN", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "LANGUAGE")).toBeDefined();
+    });
+
+    it("still renders STORAGE section header", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      expect(findLine(grid, "STORAGE")).toBeDefined();
+    });
+  });
+
+  describe("Settings — PWA section: rows fit inside the frame", () => {
+    it("draws PWA header, install, update and online rows above the footer", () => {
+      const grid = renderSettingsScreen(makeBaseState(), cols, rows);
+      const lines = gridLines(grid);
+      const rowOf = (needle: string): number =>
+        lines.findIndex((l) => l.includes(needle));
+      const order = [
+        "PWA",
+        "UNAVAILABLE",
+        "APPLY UPDATE",
+        "ONLINE",
+        "ENTER:",
+        "Volumes persist",
+      ];
+      const ys = order.map(rowOf);
+      for (const [i, y] of ys.entries()) {
+        expect(y, order[i]).toBeGreaterThanOrEqual(2);
+        expect(y, order[i]).toBeLessThanOrEqual(rows - 3);
+      }
+      expect([...ys].sort((a, b) => a - b)).toEqual(ys);
+      expect(new Set(ys).size).toBe(ys.length);
+    });
   });
 });

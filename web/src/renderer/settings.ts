@@ -217,20 +217,52 @@ export interface SettingsLayout {
   readonly inner: PanelRect;
   /** First of the two footer rows (controls hint, then persistence note). */
   readonly footerY: number;
+  /** Header spacer offsets (from `HEADER_SPACERS`) dropped to fit a short
+   * grid; empty on every preset of 43 rows or more. */
+  readonly collapsedSpacers: readonly number[];
 }
+
+/** Frame-relative offset of the last body row (the online/offline line). */
+const BODY_LAST_OFFSET = 37;
+
+/** Blank rows between a section header and its first item (AUDIO, LANGUAGE,
+ * PWA), in the order they are given up when the grid is short — bottom first.
+ * ACCESSIBILITY and STORAGE already have no such spacer, so dropping these
+ * only makes the sections uniform; no item is dropped or reordered.
+ */
+const HEADER_SPACERS: readonly number[] = [34, 21, 6];
 
 /** The original fixed rows and columns, translated into the inset frame.
  *
  * Every body offset keeps the distance from the frame's top-left corner that
- * it used to have from the grid's (a +1/+1 parallel move, no reflow). The
- * two-line footer used to sit on the grid's last two rows, which are now the
- * bottom rail and the gutter, so it is pinned to the last two INNER rows
- * instead — the main menu's footer rule — keeping its order and adjacency.
+ * it used to have from the grid's (a +1/+1 parallel move). Footer rule
+ * (ADR-0237 Open question (f)): the two-line footer is pinned to the last two
+ * INNER rows only when the body ends above them; otherwise it follows the
+ * body's last row in flow. To keep that flow inside the frame on the 60x40
+ * preset (36 inner rows for a 37-row body + 2-row footer), up to three header
+ * spacers collapse — exactly as many as the overflow needs, bottom first.
+ * Grids of 43+ rows collapse nothing and keep the pinned footer. Grids under
+ * 40 rows (no real preset) cannot hold everything even collapsed; they keep
+ * the pre-fix layout, where the pinned controls hint wins over the body.
  */
 export function settingsLayout(cols: number, rows: number): SettingsLayout {
   const frame = screenFrameRect({ width: cols, height: rows });
   const inner = panelInnerRect(makeGrid(cols, rows), frame);
-  return { frame, inner, footerY: inner.y + inner.height - 2 };
+  const pinnedY = inner.y + inner.height - 2;
+  const overflow = Math.max(0, frame.y + BODY_LAST_OFFSET + 1 - pinnedY);
+  if (overflow > HEADER_SPACERS.length) {
+    return { frame, inner, footerY: pinnedY, collapsedSpacers: [] };
+  }
+  const collapsedSpacers = HEADER_SPACERS.slice(0, overflow);
+  const bodyEnd = frame.y + BODY_LAST_OFFSET - collapsedSpacers.length;
+  const footerY = bodyEnd < pinnedY ? pinnedY : bodyEnd + 1;
+  return { frame, inner, footerY, collapsedSpacers };
+}
+
+/** Absolute grid row of a frame-relative body offset under `layout`. */
+function bodyRow(layout: SettingsLayout, offset: number): number {
+  const shift = layout.collapsedSpacers.filter((s) => s < offset).length;
+  return layout.frame.y + offset - shift;
 }
 
 /** Writes text at an original grid-origin offset, re-measured from the frame. */
@@ -281,7 +313,7 @@ export function renderSettingsScreen(
   const layout = settingsLayout(cols, rows);
   const { frame, inner } = layout;
   const at: FramedWriter = (g, x, y, text, fg) =>
-    setInnerText(g, inner, frame.x + x, frame.y + y, text, fg);
+    setInnerText(g, inner, frame.x + x, bodyRow(layout, y), text, fg);
 
   grid = at(
     grid,

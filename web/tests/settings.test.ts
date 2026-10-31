@@ -155,6 +155,46 @@ function gridToText(grid: ReturnType<typeof renderSettingsScreen>): string[] {
   return lines;
 }
 
+/** Every grid preset in `src/core/layout.ts` (cols x rows). */
+const PRESETS: ReadonlyArray<readonly [number, number]> = [
+  [32, 50],
+  [40, 60],
+  [50, 80],
+  [60, 40],
+  [80, 50],
+  [100, 60],
+];
+
+/** One prefix per drawn settings line (slider bars are counted separately).
+ * Prefixes are short enough to survive the 32-column preset's existing
+ * right-edge clipping, so only vertical placement is under test here.
+ */
+const EVERY_LINE: readonly string[] = [
+  "WET RUN — Settings",
+  "─",
+  "AUDIO",
+  "[X] AUDIO ENABLED",
+  "Master Volume",
+  "BGM Volume",
+  "SFX Volume",
+  "[ ] MUTE ALL",
+  "LANGUAGE",
+  "[ ] EN",
+  "ACCESSIBILITY",
+  "[ ] REDUCED MOTION",
+  "[ ] HIGH CONTRAST",
+  "[ ] COLORBLIND: NONE",
+  "[ ] TEXT SCALE: MEDIUM",
+  "STORAGE",
+  "[ Storage API",
+  "PWA",
+  "[ ] UNAVAILABLE",
+  "[ ] APPLY UPDATE",
+  "ONLINE",
+  "ENTER: toggle audio",
+  "Volumes persist",
+];
+
 describe("renderSettingsScreen — inset frame (ADR-0237 §2)", () => {
   const state: SettingsState = {
     selectedField: "audio",
@@ -177,6 +217,7 @@ describe("renderSettingsScreen — inset frame (ADR-0237 §2)", () => {
       frame: { x: 1, y: 1, width: 78, height: 48 },
       inner: { x: 2, y: 2, width: 76, height: 46 },
       footerY: 46,
+      collapsedSpacers: [],
     });
   });
 
@@ -249,17 +290,84 @@ describe("renderSettingsScreen — inset frame (ADR-0237 §2)", () => {
     expect(gridToText(grid)[48]?.[3]).toBe("═");
   });
 
-  it("keeps the footer over the PWA rows when a 40-row grid cannot hold both", () => {
-    // 60x40 preset: the framed body needs rows 2-38 and the footer two more,
-    // but the inner box ends at row 37. The controls hint wins, as it did
-    // over the body in short grids before the frame.
-    const grid = renderSettingsScreen(state, 60, 40);
-    const lines = gridToText(grid);
-    expect(at(grid, 36, 3, 19)).toBe("ENTER: toggle audio");
-    expect(at(grid, 37, 3, 32)).toBe("Volumes persist via localStorage");
-    expect(at(grid, 34, 5, 3)).toBe("PWA");
-    expect(lines.some((l) => l.includes("UNAVAILABLE"))).toBe(false);
-    expect(lines[38]?.slice(1, 59)).toBe(`╚${"═".repeat(56)}╝`);
+  it("shows the PWA rows AND the footer inside the frame on 40-row grids", () => {
+    // ADR-0237 Open question (f): 60x40 used to lose the PWA install/update
+    // rows under the footer and the online line under the rail.
+    for (const cols of [60, 80]) {
+      const grid = renderSettingsScreen(state, cols, 40);
+      const rows: ReadonlyArray<readonly [number, number, string, string]> = [
+        [30, 5, "[ Storage API unavailable ]", PALETTE.GRAY_DARK],
+        [32, 5, "PWA", PALETTE.CYAN_LIGHT],
+        [33, 5, "[ ] UNAVAILABLE", PALETTE.GRAY_DARK],
+        [34, 5, "[ ] APPLY UPDATE", PALETTE.GRAY_LIGHT],
+        [35, 5, "ONLINE", PALETTE.GRAY_DARK],
+        [
+          36,
+          3,
+          "ENTER: toggle audio | TAB: switch | ESC: back",
+          PALETTE.GRAY_DARK,
+        ],
+        [37, 3, "Volumes persist via localStorage", PALETTE.GRAY_DARK],
+      ];
+      expect(settingsLayout(cols, 40).footerY).toBe(36);
+      for (const [y, x, text, fg] of rows) {
+        expect(at(grid, y, x, text.length), `${text} @ ${cols}x40`).toBe(text);
+        expect(grid.cells[y]?.[x]?.fg).toBe(fg);
+      }
+      const lines = gridToText(grid);
+      expect(lines[38]?.slice(1, cols - 1)).toBe(`╚${"═".repeat(cols - 4)}╝`);
+      expect(lines[0]?.trim()).toBe("");
+      expect(lines[39]?.trim()).toBe("");
+    }
+  });
+
+  it("lets the footer follow the body in flow instead of pinning it", () => {
+    expect(settingsLayout(60, 40)).toEqual({
+      frame: { x: 1, y: 1, width: 58, height: 38 },
+      inner: { x: 2, y: 2, width: 56, height: 36 },
+      footerY: 36,
+      collapsedSpacers: [34, 21, 6],
+    });
+  });
+
+  it("keeps today's pinned placement on every preset of 43+ rows", () => {
+    for (const [cols, rows] of PRESETS) {
+      if (rows < 43) continue;
+      const layout = settingsLayout(cols, rows);
+      expect(layout.collapsedSpacers).toEqual([]);
+      expect(layout.footerY).toBe(rows - 4);
+    }
+  });
+
+  it("shows every settings line inside the frame at every real preset", () => {
+    for (const [cols, rows] of PRESETS) {
+      const grid = renderSettingsScreen(state, cols, rows);
+      const lines = gridToText(grid);
+      const innerText = lines
+        .slice(2, rows - 2)
+        .map((l) => l.slice(2, cols - 2));
+      const trimmed = innerText.map((l) => l.trim());
+      for (const prefix of EVERY_LINE) {
+        const hits = trimmed.filter((l) => l.startsWith(prefix));
+        expect(hits, `${prefix} @ ${cols}x${rows}`).toHaveLength(1);
+      }
+      const bars = trimmed.filter((l) => /^\[[█░]/.test(l));
+      expect(bars, `slider bars @ ${cols}x${rows}`).toHaveLength(3);
+      expect(lines[0]?.trim(), `top gutter @ ${cols}x${rows}`).toBe("");
+      expect(lines[rows - 1]?.trim(), `bottom gutter @ ${cols}x${rows}`).toBe(
+        "",
+      );
+      expect(colText(grid, 0).trim()).toBe("");
+      expect(colText(grid, cols - 1).trim()).toBe("");
+      for (let y = 2; y < rows - 2; y++) {
+        expect(grid.cells[y]?.[1]?.char).toBe("║");
+        expect(grid.cells[y]?.[cols - 2]?.char).toBe("║");
+      }
+      expect(lines[1]?.slice(1, cols - 1)).toBe(`╔${"═".repeat(cols - 4)}╗`);
+      expect(lines[rows - 2]?.slice(1, cols - 1)).toBe(
+        `╚${"═".repeat(cols - 4)}╝`,
+      );
+    }
   });
 
   it("clips overlong lines at the inner edge instead of the right rail", () => {

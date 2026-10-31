@@ -60,11 +60,19 @@
 - 손실을 pin 하던 테스트를 **가시성을 pin 하는 테스트로 교체**, `settings_pwa_rows` 를 60×40 · 80×40 · 80×50 3종으로 확장해 **40행 가드 복원**, 6개 프리셋 전수 "모든 줄이 프레임 안에 정확히 1회" 테스트 추가.
 - 60×40 그리드 덤프로 PWA 3행 + 푸터 동시 표시 확인.
 
-**테스트**: **3345 → 3563**(+6 files / +218 tests; `f3a14c6` 기준 155 files).
+### 9. e2e 게이트 복원 (`d817b96`)
+- 레포에 **e2e 스펙 14개(76 테스트)** 가 있었으나 **Playwright 브라우저 미설치**로 한 번도 돌지 않았다 → `npx playwright install chromium` (chromium + headless shell + ffmpeg) 로 복원.
+- 로컬 프로덕션 빌드를 `vite preview` 로 서빙(포트 5195, **`--host 127.0.0.1` 필요** — 없으면 IPv6 `[::1]` 만 바인딩되어 127.0.0.1 실패). 실행은 `env -u CI` (config 가 `CI` 시 `retries: 2` 를 켜 flakiness 를 숨김) + `PLAYWRIGHT_BASE_URL`.
+- **결과: 76 테스트 → 72 passed / 4 skipped(설계상 — touch 테스트가 desktop 에서 skip) / 0 failed** → 개편 20커밋(8화면 프레임 · 지오메트리 · 번호 통일 · `main.ts` 분해)이 **e2e 로도 무결**임을 확인.
+- 유일한 실패였던 `tier55_vfx.spec.ts` 는 **pre-existing 스펙 레이스**: program VFX 수명 48ms/32ms(`WEB_TICK_MS=16`)인데 스펙은 100ms 대기 후 단일 read → 항상 0. `expect.poll` 로 교체(`d817b96`), **52/52 안정**(retries off). 프로덕션 코드 무변경.
+- `demo-screenshots.spec.ts` 는 커밋된 PNG 16장을 덮어쓰는 **생성기**라 게이트에서 제외(실행 후 `web/demo-screenshots/` 무변경 검증).
+- 부수 관찰: program VFX 48ms 는 사람 눈에 거의 안 보일 수 있음 → **feel 설계 질문**(ADR-0238 과 같은 성격).
+
+**테스트**: vitest **3345 → 3563**(+6 files / +218 tests; 155 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed**.
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
-**검증 한계**: Playwright e2e 미실행(브라우저 미설치) · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정).
+**검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시 — Manus 태스크는 `stopped` 처리, 페이지는 로컬 미러.)
-**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · ADR-0237 Open questions (a)·(e) 미결 · `renderer/dungeon.ts` 가 플레이어 `@` 를 그리지 않음(HEAD 동일, 범위 밖).
+**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · ADR-0237 Open questions (a)·(e) 미결 · `renderer/dungeon.ts:150` 의 `@` 분기는 **dead code** — `EntityType.PLAYER` 를 만드는 코드가 저장소에 없고(`entities.push` 3곳은 MONSTER/ITEM/TRAP 뿐) 플레이어는 `playerX/Y` 로만 추적됨 → **던전에서 플레이어 미표시**(범위 밖, 후속 조사 대상).
 **ADR**: `docs/wiki/decisions/0237-ui-composition-and-visual-direction.md` (Accepted, 🟡 Partial) · 트리아지: `docs/design/ui-overhaul-triage-2026-10-31.md` · 산출물: `docs/design/{manus-concepts,before-after}-2026-10-31/`.
 
 ---

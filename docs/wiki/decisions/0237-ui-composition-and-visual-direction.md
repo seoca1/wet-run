@@ -326,6 +326,10 @@ px 하한을 덧붙인다.
 3. **뷰포트 역산 레이아웃** — `layout.ts` + `canvas.ts` 의 계산을 순수
    함수로 분리해 테스트 가능하게 만든다.
 4. **e2e 레이아웃 스크린샷** — 색각 3모드 + 고대비 × 대표 뷰포트.
+   **선행 조건 해소** (`d817b96`): Playwright 브라우저 설치 완료 → 이제 실행
+   가능. 같은 커밋에서 14 스펙 / 76 테스트가 **72 passed / 4 skipped / 0 failed**
+   로 green 이 됐고, 그 결과 **이 ADR 의 8화면 개편이 e2e 로도 무결**임이
+   확인됐다.
 5. ~~**`index.html` inline `<style>` 정리**~~ — ✅ 2026-10-31 커밋 `4c8f40f1` 로 `#status-overlay` 요소·CSS·미디어 쿼리 제거 완료.
 
 ## Implementation Status (2026-10-31)
@@ -394,8 +398,15 @@ px 하한을 덧붙인다.
   잘린다 — 이전에는 그리드 가장자리 프레임이 위에 덮어 가렸다). 같은 커밋에서
   **matrix · dungeon 화면에도 프레임 적용**. 남은 미적용: pause · crafting ·
   equipment.
-- **동반 발견 (이번 범위 밖, 기록)**: ① `renderer/dungeon.ts` 는 플레이어 `@`
-  심볼을 **그리지 않는다** (HEAD 에서도 동일 — 후속 조사 대상) ② 런타임 던전
+- **동반 발견 (이번 범위 밖, 기록)**: ① `renderer/dungeon.ts:150` 에
+  `case EntityType.PLAYER: char = "@"` 분기가 있으나, **`EntityType.PLAYER` 는
+  저장소 전체에서 이 한 곳에만 등장하고 PLAYER 엔티티를 만드는 코드가 없다**
+  — `state.entities.push` 3곳은 MONSTER / ITEM / TRAP 뿐이다
+  (`dungeon_crawler_entities.ts:140` / `:187` / `:199`). 플레이어는
+  `state.playerX` / `playerY` 로만 추적된다 (`:213-214`). 따라서 **`@` 분기는
+  dead code 이고 플레이어는 던전 화면에 그려지지 않는다** — 자신의 위치가 보이지
+  않는 실질 결함(범위 밖, 후속 조사 대상). 언제 dead 가 됐는지는 bisect 하지
+  않았다. ② 런타임 던전
   크기는 **15×10** (100×60 그리드 / 내부 98×58) → 인셋 프레임이 던전을 자르지
   않는다 (`dungeon_crawler_generation.ts` 의 `80×45` 는 `state` 로 옮겨지기 전
   그래프 값) ③ 전투 HAND 행이 19행 미만 그리드에서 하단 레일에 가려 **보이지

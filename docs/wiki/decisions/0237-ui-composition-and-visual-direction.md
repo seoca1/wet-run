@@ -330,7 +330,7 @@ px 하한을 덧붙인다.
 
 ## Implementation Status (2026-10-31)
 
-**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 = `e9eb6f1` · V2 헬퍼 = `133286a` · V2 3화면 = `f29c22f` · V2 1셀 인셋 + matrix·dungeon = `a97a4a7` / 남은 것: pause·crafting·equipment 프레임, `main.ts` 분해
+**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 = `e9eb6f1` · V2 헬퍼 = `133286a` · V2 3화면 = `f29c22f` · V2 1셀 인셋 + matrix·dungeon = `a97a4a7` · `main.ts` 분해 = `ffbfa41` / 남은 것: pause·crafting·equipment 화면 프레임
 
 **Evidence**:
 - `web/index.html:41-44` — canvas `max-width: 100vw; max-height: 100vh; width: auto; height: auto` — CSS 축소만 하는 지점 (V1, V3)
@@ -412,15 +412,26 @@ px 하한을 덧붙인다.
   amber 사용이 프레임과 경쟁하는지도 함께 판단해야 한다. 코드를 사양에
   맞추면 순수 구현, 사양을 코드에 맞추면 `AGENTS.md` §3.2 의 사양 갱신
   절차다.
-- **(b) `main.ts` 분해는 같은 릴리스에 싣는가, 뒤로 미루는가?**
-  `main.ts` 는 현재 2096줄이며 미션 선택 렌더 (`main.ts:273-307`) 를
-  포함한다. 프레임 적용과 함께 렌더러 모듈로 옮기면 테스트 가능해지지만
-  변경 범위가 커진다 (ADR-0110).
-- **(c) `#status-overlay` 의 최종 형태** — 격자 안 `SIGNAL` 셀로 옮길지,
-  DOM 요소를 유지하되 팔레트를 따르게 할지, 제거할지. 무엇을 표시할지
-  (현재 화면 목적 / 연결 상태 / 알람) 도 미정.
-- **(d) 최소 실효 셀 크기 하한값** — `small` 텍스트 스케일과 `compact`
-  breakpoint 에서 몇 px 를 하한으로 둘지. 실측 후 결정.
+- ~~**(b) `main.ts` 분해는 같은 릴리스에 싣는가, 뒤로 미루는가?**~~ — ✅
+  **2026-10-31 결정: 같은 릴리스에 포함** (`ffbfa41`). `main.ts` 는
+  **2,074 → 1,658줄(-416)** 로 줄었고, 뷰 빌더를 `crafting_screen` ·
+  `equipment_screen` · `graphic_novel_screen` · `pre_game_screen` ·
+  `run_screen` · `combat_hints` 모듈로 옮겨 각각 순수 `*Layout()` + 단위
+  테스트를 갖췄다. 컨트롤러(입력 · 상태 변경 · 로딩 · autosave · 렌더 루프 ·
+  dispatch)는 `main.ts` 에 남는다 (ADR-0110 정합).
+  **주의 기록**: 분해 중 장비 렌더러의 런타임 import 가 기존
+  `equipment.ts ↔ loadout.ts` 순환을 앞당겨 부팅이
+  `Cannot access 'EQUIP_SLOTS' before initialization` 로 실패했다 —
+  **단위 테스트 3,456개가 전부 통과한 상태에서** 브라우저 스모크만이
+  잡아냈다 (컨트롤러가 슬롯 목록을 넘기도록 고쳐 해소). `main.ts` 는 import
+  시 자체 부팅해 vitest 대상이 아니므로, 이후 이 파일 변경은
+  **브라우저 스모크를 회귀 게이트로 삼는다.**
+- ~~**(c) `#status-overlay` 의 최종 형태**~~ — ✅ **2026-10-31 결정: 제거**
+  (`4c8f40f1`). 소비자가 0건이라 빈 초록 박스로 항상 표시됐고, 표시할 내용도
+  없었다.
+- ~~**(d) 최소 실효 셀 크기 하한값**~~ — ✅ **2026-10-31 결정: 6×12 CSS px**
+  (`e9eb6f1`, `renderer/canvas_geometry.ts` 의 최소 셀 하한). `small` 텍스트
+  스케일과 `compact` breakpoint 에서도 이 하한이 적용된다.
 - **(e) ko 자막 예약 행 수** — 1행 고정인지, 대사 길이에 따라 2행까지
   허용하는지.
 

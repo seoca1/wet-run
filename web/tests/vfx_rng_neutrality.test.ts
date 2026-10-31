@@ -7,12 +7,14 @@
  *
  * Two layers are pinned:
  *  1. The spawn helpers themselves (`import_vfx`, `import_vfx_ms`) draw 0.
- *  2. A scripted `use_program` that spawns five VFX (program, ice_hit, the
- *     role VFX, dot, critical_hit) consumes exactly the gameplay draws and
+ *  2. A scripted crit `use_program` that spawns five VFX (program, ice_hit,
+ *     the role VFX, dot, critical_hit) consumes exactly the gameplay draws and
  *     nothing more. The pinned count is the gameplay budget only — damage
- *     variance + crit check (`calculateDamage`), the burn / slow status proc
- *     rolls (`rollStatusProc`) and the ICE auto-attack crit roll of the enemy
- *     turn (`rollIceCrit`). Any VFX draw raises it (pre-ADR-0239: 10).
+ *     variance + crit check + crit multiplier (`calculateDamage`), the burn /
+ *     slow status proc rolls (`rollStatusProc`) and the ICE auto-attack crit
+ *     roll of the enemy turn (`rollIceCrit`). Any VFX draw raises it.
+ *     Since ADR-0241 `critical_hit` spawns only on a real crit, so the scripted
+ *     stream forces the crit roll.
  */
 import { describe, it, expect } from "vitest";
 import { applyAction, makeInitialState } from "../src/core/state/state";
@@ -20,13 +22,18 @@ import { applyStatus } from "../src/core/status";
 import { import_vfx, import_vfx_ms } from "../src/core/state/state_helpers";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
-/** Run `fn` with `Math.random` replaced by a counting constant stub. */
-function countDraws(fn: () => void, value = 0.99): number {
+/** Run `fn` with `Math.random` replaced by a counting stub. A number is
+ *  returned on every draw; an array is consumed in order, then 0.99. */
+function countDraws(
+  fn: () => void,
+  values: number | ReadonlyArray<number> = 0.99,
+): number {
   const original = Math.random;
   let calls = 0;
   Math.random = () => {
     calls += 1;
-    return value;
+    if (typeof values === "number") return values;
+    return values[calls - 1] ?? 0.99;
   };
   try {
     fn();
@@ -47,12 +54,13 @@ const mission: Mission = {
   rewards: { credits: 0, materials: {} },
 };
 const ice: Ice = { id: "ice1", name: "ICE", hp: 500, armor: 0, tier: 1 };
-// Tier 3 burst → base damage 15: spawns the role VFX (multi_hit) and, because
-// damage >= 10, the `import_vfx_ms` critical_hit flash.
+// Tier 2 burst → base damage 10. With CRIT_STREAM it crits for 14, which
+// keeps the role VFX in the multi_hit band (10..19) and, because the hit is a
+// crit (ADR-0241), spawns the `import_vfx_ms` critical_hit flash.
 const burst = {
-  id: "burst3",
+  id: "burst2",
   name: "BURST",
-  tier: 3,
+  tier: 2,
   cost: 10,
   effect: "e",
   description: "",
@@ -74,9 +82,14 @@ function combatState(): GameState {
   return applyStatus(state, "ice", "burn", 3, 2);
 }
 
-/** Gameplay draws of one non-crit, non-lethal `use_program`: damage variance +
- *  crit check (2) + burn proc + slow proc (2) + ICE auto-attack crit roll (1). */
-const USE_PROGRAM_GAMEPLAY_DRAWS = 5;
+/** Draw stream for `calculateDamage`: minimum variance (0.8), crit check
+ *  passes, minimum crit multiplier (1.8). Later draws fall back to 0.99. */
+const CRIT_STREAM: ReadonlyArray<number> = [0, 0, 0];
+
+/** Gameplay draws of one crit, non-lethal `use_program`: damage variance +
+ *  crit check + crit multiplier (3) + burn proc + slow proc (2) + ICE
+ *  auto-attack crit roll (1). */
+const USE_PROGRAM_GAMEPLAY_DRAWS = 6;
 
 describe("ADR-0239 VFX spawn RNG neutrality", () => {
   it("import_vfx consumes no Math.random draw", () => {
@@ -100,8 +113,8 @@ describe("ADR-0239 VFX spawn RNG neutrality", () => {
     const state = combatState();
     let next: GameState = state;
     const calls = countDraws(() => {
-      next = applyAction(state, { type: "use_program", programId: "burst3" });
-    });
+      next = applyAction(state, { type: "use_program", programId: "burst2" });
+    }, CRIT_STREAM);
     // Guard the scenario: the five spawns this test relies on really happened.
     const kinds = next.vfxInstances.map((v) => v.kind);
     expect(kinds).toEqual(

@@ -232,7 +232,10 @@ export function useProgram(state: GameState, programId: string): GameState {
     import_vfx("ice_hit", `${damage}`, 2),
     ...programVfxInstances,
     ...dotOrRegenVfx,
-    ...(damage >= 10
+    // ADR-0241: the CRIT flash tracks the real crit roll, not a damage
+    // threshold. Spawning draws no Math.random (ADR-0239), so this condition
+    // cannot shift the seeded gameplay stream.
+    ...(dmgResult.isCrit
       ? [
           import_vfx_ms(
             "critical_hit",

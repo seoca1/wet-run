@@ -46,15 +46,20 @@ test.describe("Tier 5.5 VFX", () => {
     expect(phase).toBe("combat");
 
     // Use a program -> should trigger VFX (state.vfxInstances.length > 0).
+    // Program-use VFX are short-lived (import_vfx ticks x 16ms = 32-48ms) and
+    // pruned by wall-clock, so a fixed wait before a single read always sees
+    // 0. Poll immediately after the keypress to observe the transient.
     await page.keyboard.press("1"); // first program
-    await page.waitForTimeout(100);
 
-    const vfxCount = await page.evaluate(() => {
-      const w = window as unknown as {
-        wetrun?: { state?: { vfxInstances?: ReadonlyArray<unknown> } | null };
-      };
-      return w.wetrun?.state?.vfxInstances?.length ?? 0;
-    });
-    expect(vfxCount).toBeGreaterThan(0);
+    const vfxCount = () =>
+      page.evaluate(() => {
+        const w = window as unknown as {
+          wetrun?: { state?: { vfxInstances?: ReadonlyArray<unknown> } | null };
+        };
+        return w.wetrun?.state?.vfxInstances?.length ?? 0;
+      });
+    await expect
+      .poll(vfxCount, { timeout: 1000, intervals: [5, 10, 25] })
+      .toBeGreaterThan(0);
   });
 });

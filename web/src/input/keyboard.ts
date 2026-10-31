@@ -34,6 +34,16 @@ const CODE_MAPPING: Readonly<Record<string, GameAction>> = Object.freeze({
   Digit9: KEYBOARD_MAPPING["9"]!,
 });
 
+/**
+ * True when the event comes from a program-select digit key — `event.key` in
+ * `1`..`9` or `event.code` in `Digit1`..`Digit9` (ADR-0243). Matching on both
+ * forms keeps the repeat policy aligned with the `KEYBOARD_MAPPING` /
+ * `CODE_MAPPING` lookup, so AZERTY (`key: "&"`, `code: "Digit1"`) is covered.
+ */
+function isProgramSelectDigit(event: KeyboardEvent): boolean {
+  return /^[1-9]$/.test(event.key) || /^Digit[1-9]$/.test(event.code);
+}
+
 export class KeyboardInput {
   private handler: ActionHandler | null = null;
   private isActive = false;
@@ -70,6 +80,11 @@ export class KeyboardInput {
     }
     // Ignore OS auto-repeat on modifier-bearing keystrokes — Enter held, etc.
     if (event.repeat && (event.ctrlKey || event.metaKey)) {
+      return;
+    }
+    // ADR-0243: holding a program-select digit must play one program, not one
+    // per OS repeat. Enter / arrow repeats are left alone (menu scroll/confirm).
+    if (event.repeat && isProgramSelectDigit(event)) {
       return;
     }
     // Don't swallow Cmd+Tab / Cmd+R / similar OS shortcuts.

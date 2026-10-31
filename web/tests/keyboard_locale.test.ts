@@ -108,3 +108,60 @@ describe("KeyboardInput — modifiers and repeat", () => {
     expect(actions).toEqual([{ type: "confirm" }]);
   });
 });
+
+describe("KeyboardInput — ADR-0243 digit-key repeat policy", () => {
+  let input: KeyboardInput;
+  let actions: Array<{ type: string; payload?: unknown }>;
+
+  beforeEach(() => {
+    actions = [];
+    input = new KeyboardInput();
+    input.setHandler((action) => actions.push(action));
+    input.start();
+  });
+
+  afterEach(() => {
+    input.stop();
+  });
+
+  it("repeated Digit1 (event.key form) is ignored", () => {
+    dispatchKey({ key: "1", code: "Digit1", repeat: true });
+    expect(actions).toEqual([]);
+  });
+
+  it("repeated Digit1 (event.code form, AZERTY key) is ignored", () => {
+    dispatchKey({ key: "&", code: "Digit1", repeat: true });
+    expect(actions).toEqual([]);
+  });
+
+  it("non-repeat Digit1 still fires select_program", () => {
+    dispatchKey({ key: "1", code: "Digit1" });
+    expect(actions).toEqual([{ type: "select_program", handIndex: 1 }]);
+  });
+
+  it("holding a digit fires select_program exactly once", () => {
+    dispatchKey({ key: "3", code: "Digit3" });
+    dispatchKey({ key: "3", code: "Digit3", repeat: true });
+    dispatchKey({ key: "3", code: "Digit3", repeat: true });
+    expect(actions).toEqual([{ type: "select_program", handIndex: 3 }]);
+  });
+
+  it("every digit 1-9 ignores repeat in both key and code forms", () => {
+    for (let n = 1; n <= 9; n++) {
+      dispatchKey({ key: String(n), code: `Digit${n}`, repeat: true });
+      dispatchKey({ key: "§", code: `Digit${n}`, repeat: true });
+    }
+    expect(actions).toEqual([]);
+  });
+
+  it("Enter repeat still fires confirm (regression guard)", () => {
+    dispatchKey({ key: "Enter", code: "Enter", repeat: true });
+    expect(actions).toEqual([{ type: "confirm" }]);
+  });
+
+  it("arrow-key repeat still fires movement (menu scrolling)", () => {
+    dispatchKey({ key: "ArrowDown", code: "ArrowDown", repeat: true });
+    dispatchKey({ key: "ArrowDown", code: "ArrowDown", repeat: true });
+    expect(actions).toEqual([{ type: "move_south" }, { type: "move_south" }]);
+  });
+});

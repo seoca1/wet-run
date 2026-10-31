@@ -11,14 +11,14 @@ export default defineConfig({
       output: {
         manualChunks: {
           "game-core": [
-            "./src/core/state.ts",
+            "./src/core/state/state.ts",
             "./src/core/types.ts",
-            "./src/core/combat_engine.ts",
+            "./src/core/combat/combat_engine.ts",
           ],
           "story": [
-            "./src/core/graphic_novel.ts",
+            "./src/core/graphic_novel/graphic_novel.ts",
             "./src/core/dialogue.ts",
-            "./src/core/ending_resolver.ts",
+            "./src/core/combat/ending_resolver.ts",
           ],
           "audio": [
             "./src/audio/manager.ts",

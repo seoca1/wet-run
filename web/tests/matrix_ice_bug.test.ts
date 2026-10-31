@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { generateProceduralMatrix, buildMatrix } from "../src/core/matrix";
+import { generateProceduralMatrix, buildMatrix } from "../src/core/dungeon/matrix";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";

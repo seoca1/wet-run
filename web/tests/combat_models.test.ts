@@ -12,11 +12,11 @@ import {
   getAttackBonus,
   getDefenseBonus,
   getTotalAttack,
-} from "../src/core/combat_models.ts";
+} from "../src/core/combat/combat_models";
 import type {
   StatusEffect,
   Skill,
-} from "../src/core/combat_models.ts";
+} from "../src/core/combat/combat_models";
 
 describe("createCombatStats", () => {
   it("initializes all stats to zero", () => {

@@ -4,9 +4,9 @@
  * owns the story-beat screens that present narrative text: mission briefing,
  * travel transition, NPC construct dialogue, and the Loa ghost encounter.
  */
-import type { Grid } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
+import type { Grid } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { PALETTE } from "./palette";
 
 /** Render the mission briefing screen (Finn's office).
  *

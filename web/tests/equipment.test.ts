@@ -63,7 +63,7 @@ import {
   stackWetware,
   unequipFrom,
   validateStacking,
-} from "../src/core/equipment.ts";
+} from "../src/core/state/equipment";
 
 const makeStatsRaw = makeEquipStats;
 

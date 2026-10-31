@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { loadMissions, getMissionById } from "../src/core/state.ts";
+import { loadMissions, getMissionById } from "../src/core/state/state";
 
 describe("mission loader functions", () => {
   it("loadMissions returns all missions", () => {

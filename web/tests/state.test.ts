@@ -8,11 +8,11 @@ import {
   buildHudLines,
   makeInitialState,
   resolveProgramSelection,
-} from "../src/core/state.js";
-import type { Ice, Mission, Program } from "../src/core/types.js";
-import { KEYBOARD_MAPPING } from "../src/core/types.js";
-import { makeGrid, setCell, setText } from "../src/core/grid.js";
-import { PALETTE } from "../src/renderer/palette.js";
+} from "../src/core/state/state";
+import type { Ice, Mission, Program } from "../src/core/types";
+import { KEYBOARD_MAPPING } from "../src/core/types";
+import { makeGrid, setCell, setText } from "../src/core/grid";
+import { PALETTE } from "../src/renderer/palette";
 
 const mockMission: Mission = {
   id: "test",

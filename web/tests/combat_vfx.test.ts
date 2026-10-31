@@ -7,8 +7,8 @@ import {
   renderCombatVfx,
   composeCombatVfx,
   type CombatVfxKind,
-} from "../src/renderer/combat_vfx.ts";
-import { makeGrid } from "../src/core/grid.ts";
+} from "../src/renderer/combat_vfx";
+import { makeGrid } from "../src/core/grid";
 
 describe("combat VFX (Tier 5.5)", () => {
   describe("triggerCombatVfx", () => {

@@ -11,7 +11,7 @@ import {
   TIER_MULTIPLIERS,
   MISSION_REWARD_MAP,
   KILL_PENALTY_MAP,
-} from "../src/core/faction_reputation.ts";
+} from "../src/core/state/faction_reputation";
 
 describe("Faction Reputation System", () => {
   describe("DEFAULT_FACTION_SCORES", () => {

@@ -14,13 +14,13 @@
  * render layer can call them every frame without perturbing the seeded PRNG
  * the balance harness controls (ADR-0231).
  */
-import type { Grid } from "../core/types.ts";
-import type { CombatVfxInstance } from "./combat_vfx_core.ts";
+import type { Grid } from "../core/types";
+import type { CombatVfxInstance } from "./combat_vfx_core";
 import {
   floatingDamageKindFor,
   renderFloatingDamage,
-} from "./floating_damage.js";
-import { shakeStateFor, type ShakeState } from "./screen_shake.js";
+} from "./floating_damage";
+import { shakeStateFor, type ShakeState } from "./screen_shake";
 
 /** Where a floating damage number is anchored on the grid. */
 export interface DamageAnchor {

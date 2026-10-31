@@ -19,8 +19,8 @@
  *    their own — they are not part of the Sprawl Arc-1 required set
  */
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { applyLootAction } from "../src/core/state_actions";
-import { makeInitialState } from "../src/core/state";
+import { applyLootAction } from "../src/core/state/state_actions";
+import { makeInitialState } from "../src/core/state/state";
 import {
   arcOneMissionIds,
   farGridUnlocked,
@@ -28,7 +28,7 @@ import {
   isFarGridUnlocked,
   resetCompletedMissions,
   resetFarGridUnlocked,
-} from "../src/core/far_grid_gate";
+} from "../src/core/dungeon/far_grid_gate";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 const FLAG_STORAGE_KEY = "wetrun_far_grid_unlocked";

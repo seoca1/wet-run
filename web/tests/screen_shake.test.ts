@@ -24,11 +24,11 @@ import {
   hitStopMsFor,
   hitStopDeadlineFor,
   hitStopActiveAt,
-} from "../src/renderer/screen_shake.js";
+} from "../src/renderer/screen_shake";
 import {
   triggerCombatVfxMs,
   advanceVfxListBy,
-} from "../src/renderer/combat_vfx.js";
+} from "../src/renderer/combat_vfx";
 
 describe("P1 screen shake constants", () => {
   it("uses a 1-2px magnitude per the animation spec", () => {

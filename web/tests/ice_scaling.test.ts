@@ -7,8 +7,8 @@ import {
   iceHpForGrade,
   missionGradeOf,
   missionSeedOf,
-} from "../src/core/ice_scaling";
-import { generateProceduralMatrix, resolveMatrixRoster } from "../src/core/matrix";
+} from "../src/core/combat/ice_scaling";
+import { generateProceduralMatrix, resolveMatrixRoster } from "../src/core/dungeon/matrix";
 import { loadIceCatalog } from "../src/core/data_loaders";
 import type { Ice } from "../src/core/types";
 import iceTypesJson from "../src/data/ice_types.json";

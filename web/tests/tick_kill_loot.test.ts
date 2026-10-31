@@ -16,9 +16,9 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { applyCombatAction } from "../src/core/state_actions.ts";
-import type { GameState, GameAction, Ice, Mission, Program } from "../src/core/types.ts";
-import { makeInitialState } from "../src/core/state.ts";
+import { applyCombatAction } from "../src/core/state/state_actions";
+import type { GameState, GameAction, Ice, Mission, Program } from "../src/core/types";
+import { makeInitialState } from "../src/core/state/state";
 
 const mockMission: Mission = {
   id: "tick_kill_test",

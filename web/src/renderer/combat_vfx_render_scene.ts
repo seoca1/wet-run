@@ -5,10 +5,10 @@
  * kinds. Returns null for kinds owned by combat_vfx_render_combat.ts so the
  * dispatcher can fall through.
  */
-import type { Grid } from "../core/types.ts";
-import { setText } from "../core/grid.ts";
-import { PALETTE, resolveColorHint } from "./palette.ts";
-import type { VfxRenderCtx } from "./combat_vfx_core.ts";
+import type { Grid } from "../core/types";
+import { setText } from "../core/grid";
+import { PALETTE, resolveColorHint } from "./palette";
+import type { VfxRenderCtx } from "./combat_vfx_core";
 
 /** Render a scene / outcome / matrix VFX frame, or null if the kind is not
  * handled here (combat / damage / status kinds live in the combat renderer). */

@@ -18,8 +18,8 @@ import type {
   GameState,
   StatusEffectInstance,
   StatusEffectKind,
-} from "./types.ts";
-import { isMutatorActive, type MutableRunState } from "./run_mutators.ts";
+} from "./types";
+import { isMutatorActive, type MutableRunState } from "./state/run_mutators";
 
 /** Apply a new status effect to a target. Stacks (adds new instance) if same kind.
  *

@@ -9,9 +9,9 @@
  * Shown once on first boot (localStorage flag 'tutorial_completed').
  * Skippable via ESC.
  */
-import type { Grid } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
+import type { Grid } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { PALETTE } from "./palette";
 
 interface TutorialStep {
   readonly title: string;

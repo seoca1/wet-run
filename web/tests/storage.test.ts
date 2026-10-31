@@ -11,8 +11,8 @@ import {
   MAX_SAVE_SLOT,
   MANUAL_SLOTS,
   SAVE_SLOT_LABELS,
-} from "../src/save/storage.ts";
-import type { SaveSlot } from "../src/core/types.ts";
+} from "../src/save/storage";
+import type { SaveSlot } from "../src/core/types";
 
 const sampleSlot: SaveSlot = {
   version: 1,

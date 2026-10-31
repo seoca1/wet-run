@@ -14,7 +14,7 @@ import {
   getTreeByNpc,
   type DialogueContext,
   type DialogueCondition,
-} from "../src/core/dialogue.ts";
+} from "../src/core/dialogue";
 
 describe("Dialogue System", () => {
   describe("DEFAULT_DIALOGUE_STATE", () => {

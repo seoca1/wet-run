@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { KEYBOARD_MAPPING } from "../src/core/types.ts";
+import { KEYBOARD_MAPPING } from "../src/core/types";
 import type { 
   GamePhase, 
   RunPhase, 
@@ -8,7 +8,7 @@ import type {
   BossPhase, 
   EndingChoice,
   ScreenKind
-} from "../src/core/types.ts";
+} from "../src/core/types";
 
 describe("GamePhase constants", () => {
   it("defines menu phase", () => {

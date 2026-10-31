@@ -12,13 +12,13 @@
 import { describe, expect, it } from "vitest";
 
 import { loadMissionsCatalog } from "../src/core/data_loaders";
-import { generateProceduralMatrix } from "../src/core/matrix";
+import { generateProceduralMatrix } from "../src/core/dungeon/matrix";
 import {
   NO_HOP,
   nextHopToward,
   pathLengthBetween,
-} from "../src/core/matrix_navigation";
-import { applyAction, makeInitialState } from "../src/core/state";
+} from "../src/core/dungeon/matrix_navigation";
+import { applyAction, makeInitialState } from "../src/core/state/state";
 import type { Ice, Matrix, Mission, Program } from "../src/core/types";
 
 import missionsJson from "../src/data/missions.json";

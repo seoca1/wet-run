@@ -32,7 +32,7 @@ import {
   type ColorblindMode,
   type TextScaleStep,
   type MotionKind,
-} from "../src/renderer/accessibility_modes.ts";
+} from "../src/renderer/accessibility_modes";
 
 describe("COLORBLIND_MODES", () => {
   it("has the 4 ADR-0196 modes in ADR-0196 cycle order", () => {

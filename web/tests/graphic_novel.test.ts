@@ -65,7 +65,7 @@ import {
   restoreProgress,
   isValidProgress,
   coerceProgress,
-} from "../src/core/graphic_novel.ts";
+} from "../src/core/graphic_novel/graphic_novel";
 import scenesJson from "../src/data/scenes.json" with { type: "json" };
 
 /* -------------------------------------------------------------------------- *

@@ -27,7 +27,7 @@ import {
   promptInstall,
   applyUpdate,
   type PwaState,
-} from "./pwa_manager.ts";
+} from "./pwa_manager";
 
 export type PwaListener = (state: PwaState) => void;
 

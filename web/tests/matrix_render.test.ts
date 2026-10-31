@@ -1,7 +1,7 @@
 /** Unit tests for matrix renderer (Tier 5.5+ enhanced). */
 import { describe, it, expect } from "vitest";
-import { renderMatrix } from "../src/renderer/matrix.ts";
-import type { Matrix, Ice } from "../src/core/types.ts";
+import { renderMatrix } from "../src/renderer/matrix";
+import type { Matrix, Ice } from "../src/core/types";
 
 const sampleIce: Ice = {
   id: "watchdog",

@@ -12,9 +12,9 @@ import {
   activeHighContrast,
   applyPaletteMode,
   resolveColorHint,
-} from "../src/renderer/palette.ts";
-import { COLORBLIND_MODES } from "../src/renderer/accessibility_modes.ts";
-import { getHighContrastColors } from "../src/core/accessibility.ts";
+} from "../src/renderer/palette";
+import { COLORBLIND_MODES } from "../src/renderer/accessibility_modes";
+import { getHighContrastColors } from "../src/core/state/accessibility";
 
 /** The pre-P10 palette, spelled out so a regression is visible. */
 const LEGACY_PALETTE: Readonly<Record<string, string>> = Object.freeze({

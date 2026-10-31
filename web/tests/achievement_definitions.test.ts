@@ -43,8 +43,8 @@ import {
   ACHIEVEMENT_CATEGORIES,
   getAchievement,
   getAchievementsByCategory,
-} from "../src/core/achievement_definitions.ts";
-import type { Achievement, AchievementCategory } from "../src/core/achievements.ts";
+} from "../src/core/state/achievement_definitions";
+import type { Achievement, AchievementCategory } from "../src/core/state/achievements";
 
 describe("ACH_* constant exports — combat category", () => {
   it("ACH_FIRST_BLOOD has combat/bronze shape with reward 50", () => {

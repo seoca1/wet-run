@@ -13,7 +13,7 @@ import {
   leaveHub,
   getHubSummary,
   type HubLocation,
-} from "../src/core/hub.ts";
+} from "../src/core/hub";
 
 describe("Hub System", () => {
   describe("DEFAULT_HUB_STATE", () => {

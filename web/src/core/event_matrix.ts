@@ -10,7 +10,7 @@
  * - core    (node 3): combat 60%, rest 20%, cache 20%
  * - boss    (node 4): combat 100% (boss)
  */
-import type { Ice, MatrixNode, Program } from "./types.ts";
+import type { Ice, MatrixNode, Program } from "./types";
 
 export type MatrixEventKind =
   "combat" | "discovery" | "trap" | "cache" | "rest" | "merchant";

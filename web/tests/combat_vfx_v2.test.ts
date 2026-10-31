@@ -8,8 +8,8 @@ import {
   renderCombatVfx,
   triggerCombatVfx,
   type CombatVfxKind,
-} from "../src/renderer/combat_vfx.js";
-import { resolveColorHint, PALETTE } from "../src/renderer/palette.js";
+} from "../src/renderer/combat_vfx";
+import { resolveColorHint, PALETTE } from "../src/renderer/palette";
 
 function countNonSpace(grid: ReturnType<typeof renderCombatVfx>, cols: number, rows: number): number {
   let n = 0;

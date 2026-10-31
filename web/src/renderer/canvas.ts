@@ -8,8 +8,8 @@
  * ADR-0199 §4.3: this is the foundation for "Gibson tone" validation
  * in Commit 2. Visual fidelity matters more than performance here.
  */
-import type { Cell, Grid } from "../core/types.ts";
-import { PALETTE } from "./palette.ts";
+import type { Cell, Grid } from "../core/types";
+import { PALETTE } from "./palette";
 
 export interface AsciiRendererOptions {
   readonly cellWidth?: number;

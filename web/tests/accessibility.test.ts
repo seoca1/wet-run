@@ -14,7 +14,7 @@ import {
   formatScreenReaderText,
   type AccessibilityState,
   type ContrastMode,
-} from "../src/core/accessibility.ts";
+} from "../src/core/state/accessibility";
 
 describe("DEFAULT_ACCESSIBILITY_STATE", () => {
   it("is frozen", () => {

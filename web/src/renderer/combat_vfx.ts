@@ -45,13 +45,13 @@
  * This file is the public entry point: a thin re-export barrel plus the
  * render dispatcher and grid compositor.
  */
-import type { Grid } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import type { CombatVfxInstance } from "./combat_vfx_core.ts";
-import { renderCombatHitVfx } from "./combat_vfx_render_combat.ts";
-import { renderSceneVfx } from "./combat_vfx_render_scene.ts";
+import type { Grid } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import type { CombatVfxInstance } from "./combat_vfx_core";
+import { renderCombatHitVfx } from "./combat_vfx_render_combat";
+import { renderSceneVfx } from "./combat_vfx_render_scene";
 
-export * from "./combat_vfx_core.ts";
+export * from "./combat_vfx_core";
 
 /** Render a single VFX frame into a grid overlay.
  *

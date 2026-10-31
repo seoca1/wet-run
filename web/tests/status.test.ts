@@ -6,10 +6,10 @@ import {
   applyTickEffects,
   applyBurnDamage,
   rollStatusProc,
-} from "../src/core/status.ts";
-import { applyAction } from "../src/core/state.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
-import { makeInitialState } from "../src/core/state.ts";
+} from "../src/core/status";
+import { applyAction } from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
+import { makeInitialState } from "../src/core/state/state";
 
 const mockMission: Mission = {
   id: "test", title: "T", fixer: "x", arc: 1, zone: "test",

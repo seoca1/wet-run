@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { applyAction, makeInitialState } from "../src/core/state.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
+import { applyAction, makeInitialState } from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 function makeCombatState(overrides: Partial<GameState> = {}): GameState {
   const mockMission: Mission = {

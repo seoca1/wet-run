@@ -31,8 +31,8 @@ import {
   fadeOutAndStop,
   BGM_IDS,
   SFX_IDS,
-} from "../src/audio/index.ts";
-import { AudioManager } from "../src/audio/manager.ts";
+} from "../src/audio/index";
+import { AudioManager } from "../src/audio/manager";
 
 describe("Howler.js Integration", () => {
   beforeEach(() => {

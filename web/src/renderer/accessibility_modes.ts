@@ -22,7 +22,7 @@
  * coupling — so enabling an accessibility mode cannot perturb the balance
  * harness (ADR-0229 §A1).
  */
-import { prefersHighContrast, prefersReducedMotion } from "../core/accessibility.ts";
+import { prefersHighContrast, prefersReducedMotion } from "../core/state/accessibility";
 
 /** The 4 colorblind palette modes (ADR-0196 §"Option A"). */
 export type ColorblindMode =

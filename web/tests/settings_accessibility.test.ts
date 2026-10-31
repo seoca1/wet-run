@@ -16,8 +16,8 @@ import {
   renderSettingsScreen,
   type SettingsField,
   type SettingsState,
-} from "../src/renderer/settings.ts";
-import { INITIAL_PWA_STATE } from "../src/core/pwa_manager.ts";
+} from "../src/renderer/settings";
+import { INITIAL_PWA_STATE } from "../src/core/pwa_manager";
 
 const baseState: SettingsState = {
   selectedField: "audio",

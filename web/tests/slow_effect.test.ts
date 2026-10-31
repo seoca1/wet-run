@@ -1,9 +1,9 @@
 /** Unit tests for slow effect damage reduction (Tier 5.5+). */
 import { describe, it, expect, vi } from "vitest";
-import { applyAction } from "../src/core/state.js";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.js";
-import { makeInitialState } from "../src/core/state.js";
-import { applyStatus } from "../src/core/status.js";
+import { applyAction } from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
+import { makeInitialState } from "../src/core/state/state";
+import { applyStatus } from "../src/core/status";
 
 const mockMission: Mission = {
   id: "test", title: "T", fixer: "x", arc: 1, zone: "test",

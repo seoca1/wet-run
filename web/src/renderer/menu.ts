@@ -11,7 +11,7 @@
  *                        renderBlackMarketScreen
  *   - menu_endings.ts  — renderDeathRestartScreen, renderFailedScreen
  */
-export * from "./menu_main.ts";
-export * from "./menu_dialogue.ts";
-export * from "./menu_stages.ts";
-export * from "./menu_endings.ts";
+export * from "./menu_main";
+export * from "./menu_dialogue";
+export * from "./menu_stages";
+export * from "./menu_endings";

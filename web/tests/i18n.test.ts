@@ -8,7 +8,7 @@ import {
   DEFAULT_I18N_STATE,
   createI18nState,
   type Language,
-} from "../src/core/i18n.ts";
+} from "../src/core/i18n";
 
 describe("t() - translation lookup", () => {
   it("returns English translation for valid key", () => {

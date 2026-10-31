@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createDungeonCrawlerFromMission } from "../src/core/dungeon_crawler";
+import { createDungeonCrawlerFromMission } from "../src/core/dungeon/dungeon_crawler";
 
 describe("DungeonCrawler death (Bug #5 regression: isGameOver on HP=0)", () => {
   it("isGameOver returns false at full HP", () => {

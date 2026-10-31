@@ -10,10 +10,10 @@
  * Layout: title block + 9 numbered options + footer. Selected option
  * highlighted with ▸ marker (matches mission select convention).
  */
-import type { Grid } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { t, type Language } from "../core/i18n.ts";
-import { PALETTE } from "./palette.ts";
+import type { Grid } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { t, type Language } from "../core/i18n";
+import { PALETTE } from "./palette";
 
 export type MenuOption =
   | "new_run"

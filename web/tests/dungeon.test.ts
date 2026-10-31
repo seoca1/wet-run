@@ -27,9 +27,9 @@ import {
   placeRooms,
   roomsToNodes,
   withInt,
-} from "../src/core/dungeon.ts";
+} from "../src/core/dungeon/dungeon";
 
-import type { Room, RoomType } from "../src/core/dungeon.ts";
+import type { Room, RoomType } from "../src/core/dungeon/dungeon";
 
 // ---------------------------------------------------------------------------
 //  Seeded RNG

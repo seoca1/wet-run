@@ -8,9 +8,9 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import {
   applyAction,
   makeInitialState,
-} from "../src/core/state.js";
-import type { Ice, Mission, Program } from "../src/core/types.js";
-import { KEYBOARD_MAPPING } from "../src/core/types.js";
+} from "../src/core/state/state";
+import type { Ice, Mission, Program } from "../src/core/types";
+import { KEYBOARD_MAPPING } from "../src/core/types";
 
 const mockMission: Mission = {
   id: "test",

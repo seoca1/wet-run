@@ -24,11 +24,11 @@ import {
   persistLanguage,
   renderSettingsScreen,
   type SettingsState,
-} from "../src/renderer/settings.js";
+} from "../src/renderer/settings";
 import { renderMainMenu } from "../src/renderer/menu_main";
 import { renderFarGridHub } from "../src/renderer/far_grid_hub";
 import type { Cell, Mission, MissionRewards } from "../src/core/types";
-import { INITIAL_PWA_STATE } from "../src/core/pwa_manager.ts";
+import { INITIAL_PWA_STATE } from "../src/core/pwa_manager";
 
 type GridLike = { cells: ReadonlyArray<ReadonlyArray<Cell>> };
 

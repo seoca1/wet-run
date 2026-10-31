@@ -14,7 +14,7 @@ import {
   tickCombatVfx,
   tickCombatVfxList,
   WEB_TICK_MS,
-} from "../src/renderer/combat_vfx.js";
+} from "../src/renderer/combat_vfx";
 
 describe("triggerCombatVfxMs (canonical ms-precision spawn)", () => {
   it("creates instance with durationMs set and tick duration derived", () => {

@@ -10,7 +10,7 @@ import {
   DISCOUNT_DENOM,
   MARKUP_DENOM,
   type MarketItem,
-} from "../src/core/info_market.ts";
+} from "../src/core/info_market";
 
 const sampleMarketData = {
   ice_breaker_basic: {

@@ -3,10 +3,10 @@
  * - renderEndingScreen: shows ending letter + flavor text (29 in Python, 3 MVP)
  * - renderLootScreen: shows HEAL applied + reward credits between combats
  */
-import type { EndingChoice, Grid } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
-import { ENDINGS } from "../core/ending_resolver.ts";
+import type { EndingChoice, Grid } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { PALETTE } from "./palette";
+import { ENDINGS } from "../core/combat/ending_resolver";
 
 export function renderEndingScreen(
   choice: EndingChoice | null,

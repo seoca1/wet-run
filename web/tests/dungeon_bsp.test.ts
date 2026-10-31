@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { BspNode, bspPartition, placeRooms, collectLeaves } from "../src/core/dungeon_bsp.ts";
-import { makeMulberry32, withInt } from "../src/core/dungeon.ts";
+import { BspNode, bspPartition, placeRooms, collectLeaves } from "../src/core/dungeon/dungeon_bsp";
+import { makeMulberry32, withInt } from "../src/core/dungeon/dungeon";
 
 describe("BspNode", () => {
   it("constructs with position and dimensions", () => {

@@ -13,8 +13,8 @@ import {
   bossPhaseFromHp,
   shouldTransition,
   bossPhaseLabel,
-} from "../src/core/boss.ts";
-import type { BossPhase } from "../src/core/types.ts";
+} from "../src/core/combat/boss";
+import type { BossPhase } from "../src/core/types";
 
 describe("BOSS_PHASE_TABLE", () => {
   it("contains exactly 5 phase entries (0-4)", () => {

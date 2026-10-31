@@ -3,10 +3,10 @@
  * Displays only essential info: HP, Alarm, Credits, Combo, Boss Phase.
  * Designed to be rendered at the bottom of the screen (1 line height).
  */
-import type { Grid, Cell } from "../core/types.ts";
-import { makeGrid } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
-import type { GameState } from "../core/state.ts";
+import type { Grid, Cell } from "../core/types";
+import { makeGrid } from "../core/grid";
+import { PALETTE } from "./palette";
+import type { GameState } from "../core/state/state";
 
 /** Render the minimal HUD bar at the bottom of the screen.
  *

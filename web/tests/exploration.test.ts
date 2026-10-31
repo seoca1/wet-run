@@ -14,7 +14,7 @@ import {
   VISIBILITY_ORDER,
   type MatrixGraphView,
   type Visibility,
-} from "../src/core/exploration.ts";
+} from "../src/core/dungeon/exploration";
 
 // ---------------------------------------------------------------------------
 //  Fixtures

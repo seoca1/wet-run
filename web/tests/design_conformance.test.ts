@@ -24,15 +24,15 @@ import {
   DAMAGE_VARIANCE_MAX,
   DAMAGE_VARIANCE_MIN,
   STAGGER_DURATION_MS,
-} from "../src/core/combat_engine";
-import { DEFAULT_BOSS_PROFILE } from "../src/core/boss_phases";
-import { ENDINGS, getEndingCounts, resolveEnding } from "../src/core/ending_resolver";
-import { TIER_MULTIPLIERS, TIER_THRESHOLDS } from "../src/core/faction_reputation";
+} from "../src/core/combat/combat_engine";
+import { DEFAULT_BOSS_PROFILE } from "../src/core/combat/boss_phases";
+import { ENDINGS, getEndingCounts, resolveEnding } from "../src/core/combat/ending_resolver";
+import { TIER_MULTIPLIERS, TIER_THRESHOLDS } from "../src/core/state/faction_reputation";
 import {
   DIXIE_ATTACK_INTERVAL_MS,
   DIXIE_BASE_DAMAGE,
   DIXIE_SYNERGY_BONUS,
-} from "../src/core/state_actions";
+} from "../src/core/state/state_actions";
 
 describe("design conformance — combat constants (docs/design/systems/combat.md)", () => {
   it("damage variance band is 0.8x–1.2x", () => {

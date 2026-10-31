@@ -4,9 +4,9 @@
  * glyph placement of proposal P14, is unit-testable without booting the
  * canvas renderer.
  */
-import { makeGrid, setText, type Grid } from "../core/grid.ts";
-import type { GameState } from "../core/types.ts";
-import { PALETTE, iceColor } from "./palette.ts";
+import { makeGrid, setText, type Grid } from "../core/grid";
+import type { GameState } from "../core/types";
+import { PALETTE, iceColor } from "./palette";
 import {
   centerArt,
   formatStatusLabel,
@@ -15,12 +15,12 @@ import {
   hitFlashColor,
   ICE_DEFEAT_ART,
   PLAYER_DEFEAT_ART,
-} from "./vfx.ts";
+} from "./vfx";
 import {
   drawTargetStatus,
   statusGroupForTarget,
   type TargetStatusGroup,
-} from "./status_hud.ts";
+} from "./status_hud";
 
 export function renderGrid(
   state: GameState,

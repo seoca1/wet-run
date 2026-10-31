@@ -8,9 +8,9 @@ import {
   applyApproachAction, 
   applyCombatAction,
   applyEndAction
-} from "../src/core/state_actions.ts";
-import type { GameState, Ice, GameAction, Mission, Program } from "../src/core/types.ts";
-import { makeInitialState } from "../src/core/state.ts";
+} from "../src/core/state/state_actions";
+import type { GameState, Ice, GameAction, Mission, Program } from "../src/core/types";
+import { makeInitialState } from "../src/core/state/state";
 
 const mockMission: Mission = {
   id: "test",

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { applyAction, makeInitialState, buildHudLines } from "../src/core/state";
+import { applyAction, makeInitialState, buildHudLines } from "../src/core/state/state";
 import type { GameState } from "../src/core/types";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";

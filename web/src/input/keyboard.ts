@@ -5,8 +5,8 @@
  *
  * MVP scope: keyboard only. Mobile touch UI is Tier 2 (per ADR-0199).
  */
-import type { GameAction } from "../core/types.ts";
-import { KEYBOARD_MAPPING } from "../core/types.ts";
+import type { GameAction } from "../core/types";
+import { KEYBOARD_MAPPING } from "../core/types";
 
 export type ActionHandler = (action: GameAction) => void;
 export interface InputAction {

@@ -7,7 +7,7 @@
  * @vitest-environment jsdom
  */
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { KeyboardInput } from "../src/input/keyboard.ts";
+import { KeyboardInput } from "../src/input/keyboard";
 
 function dispatchKey(options: KeyboardEventInit & { code?: string }): void {
   const event = new KeyboardEvent("keydown", {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { DEFAULT_BOSS_PROFILE, checkPhaseTransition, getPhaseDamageMultiplier } from "../src/core/boss_phases";
+import { DEFAULT_BOSS_PROFILE, checkPhaseTransition, getPhaseDamageMultiplier } from "../src/core/combat/boss_phases";
 
 describe("boss_phases: checkPhaseTransition", () => {
   it("stays in phase 1 when boss is at full HP", () => {

@@ -10,9 +10,9 @@ import { describe, it, expect, vi } from "vitest";
  * For now, test the trigger *predicates* (when SHOULD a sound fire?) as
  * pure functions. The actual SFX dispatch is verified via E2E.
  */
-import { applyAction } from "../src/core/state.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
-import { makeInitialState } from "../src/core/state.ts";
+import { applyAction } from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
+import { makeInitialState } from "../src/core/state/state";
 
 const mockMission: Mission = {
   id: "test", title: "T", fixer: "x", arc: 1, zone: "test",

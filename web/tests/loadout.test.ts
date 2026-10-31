@@ -4,7 +4,7 @@ import {
   EMPTY_LOADOUT,
   equipOn,
   unequipFrom,
-} from "../src/core/loadout.ts";
+} from "../src/core/state/loadout";
 import {
   STARTER_DECK,
   STARTER_HEADWARE,
@@ -14,8 +14,8 @@ import {
   CORPORATE_DECK,
   SUBDERMAL,
   BOOTS_GHOST,
-} from "../src/core/equipment_catalog.ts";
-import type { EquipmentLoadout } from "../src/core/loadout.ts";
+} from "../src/core/state/equipment_catalog";
+import type { EquipmentLoadout } from "../src/core/state/loadout";
 
 describe("loadout", () => {
   describe("EMPTY_LOADOUT", () => {

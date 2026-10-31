@@ -4,9 +4,9 @@
  * owns the interactive mission-stage screens: data extraction, security
  * bypass minigame, and the hub-side black market vendor.
  */
-import type { Grid } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
+import type { Grid } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { PALETTE } from "./palette";
 
 /** Render the data extraction screen (extract_data stage).
  *

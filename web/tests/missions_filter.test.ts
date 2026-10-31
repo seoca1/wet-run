@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { Mission } from "../src/core/types.ts";
+import type { Mission } from "../src/core/types";
 import { filterMissionsByUniverse } from "../src/core/missions_filter";
 
 function makeMission(

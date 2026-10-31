@@ -9,19 +9,19 @@
  * a Grid; the main game loop handles input dispatch (Left/Right to
  * decrement/increment, M to toggle mute, ESC to back out).
  */
-import type { Grid } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
-import { AudioManager } from "../audio/manager.ts";
+import type { Grid } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { PALETTE } from "./palette";
+import { AudioManager } from "../audio/manager";
 import {
   getStorageQuota,
   renderUsageBar,
   quotaLevel,
   summarizeQuota,
   type StorageQuota,
-} from "../save/storage_quota.ts";
-import { isLanguageSupported, t, type Language } from "../core/i18n.ts";
-import { INITIAL_PWA_STATE, type PwaState } from "../core/pwa_manager.ts";
+} from "../save/storage_quota";
+import { isLanguageSupported, t, type Language } from "../core/i18n";
+import { INITIAL_PWA_STATE, type PwaState } from "../core/pwa_manager";
 import {
   loadColorblindMode,
   loadHighContrastOverride,
@@ -31,7 +31,7 @@ import {
   resolveReducedMotion,
   type ColorblindMode,
   type TextScaleStep,
-} from "./accessibility_modes.ts";
+} from "./accessibility_modes";
 
 /** Default `pwa` slot for callers that don't have a live controller. */
 export function defaultPwaState(): PwaState {

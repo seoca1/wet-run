@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { applyAction, makeInitialState } from "../src/core/state.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
-import type { RunMutator } from "../src/core/run_mutators.ts";
-import { applyStatus, applyTickEffects } from "../src/core/status.ts";
+import { applyAction, makeInitialState } from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
+import type { RunMutator } from "../src/core/state/run_mutators";
+import { applyStatus, applyTickEffects } from "../src/core/status";
 
 function makeCombatState(mutators: RunMutator[] = []): GameState {
   const mockMission: Mission = {

@@ -12,9 +12,9 @@ import {
   getAlarmMultiplier,
   getCritBonus,
   shouldTargetAlly,
-} from "../src/core/ice_ai.ts";
-import { createCombatant } from "../src/core/combat_models.ts";
-import type { Combatant, Skill, AggressionTier } from "../src/core/combat_models.ts";
+} from "../src/core/combat/ice_ai";
+import { createCombatant } from "../src/core/combat/combat_models";
+import type { Combatant, Skill, AggressionTier } from "../src/core/combat/combat_models";
 
 function makeSkill(overrides: Partial<Skill> & Pick<Skill, "id" | "name" | "effect">): Skill {
   return {

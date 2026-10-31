@@ -3,7 +3,7 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { getLayout, watchLayout, type Layout } from "../src/core/layout.ts";
+import { getLayout, watchLayout, type Layout } from "../src/core/layout";
 
 interface MatchMediaStub {
   matches: boolean;

@@ -9,10 +9,10 @@ import {
   getBestSetBonusFor,
   getAllSetBonuses,
   applySetBonusesToStats,
-} from "../src/core/set_bonus.ts";
-import { makeLoadout, EMPTY_LOADOUT } from "../src/core/loadout.ts";
-import { STARTER_DECK, STREET_DECK, MILITECH_EYES, CHROME_GLOVES, MILITECH_DECK, ARASAKA_DECK, KEREZNIKOV } from "../src/core/equipment_catalog.ts";
-import { makeEquipStats } from "../src/core/equipment.ts";
+} from "../src/core/state/set_bonus";
+import { makeLoadout, EMPTY_LOADOUT } from "../src/core/state/loadout";
+import { STARTER_DECK, STREET_DECK, MILITECH_EYES, CHROME_GLOVES, MILITECH_DECK, ARASAKA_DECK, KEREZNIKOV } from "../src/core/state/equipment_catalog";
+import { makeEquipStats } from "../src/core/state/equipment";
 
 describe("set_bonus", () => {
   describe("SET_BONUSES data", () => {

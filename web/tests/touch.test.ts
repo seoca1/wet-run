@@ -8,7 +8,7 @@ import {
   isTouchDevice,
   updateProgramRow,
   PROGRAM_PRESS_DEBOUNCE_MS,
-} from "../src/input/touch.ts";
+} from "../src/input/touch";
 
 // jsdom doesn't ship matchMedia — polyfill before tests run.
 beforeAll(() => {

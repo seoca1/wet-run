@@ -10,10 +10,10 @@
  * mission is selected, the mission has no `briefing`, or the grid is too
  * short to fit even one line of detail.
  */
-import type { Grid, Mission } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { t, type Language } from "../core/i18n.ts";
-import { PALETTE } from "./palette.ts";
+import type { Grid, Mission } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { t, type Language } from "../core/i18n";
+import { PALETTE } from "./palette";
 
 /** Word-wrap a string to lines no longer than `width` columns.
  *

@@ -7,7 +7,7 @@ import {
   getEndingCounts,
   type EndingContext,
   type ArcId,
-} from "../src/core/ending_resolver.ts";
+} from "../src/core/combat/ending_resolver";
 
 describe("ending_resolver", () => {
   describe("ENDINGS constant", () => {

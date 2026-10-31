@@ -4,7 +4,7 @@ import {
   makeRecipesFromData,
   makeMaterialsFromData,
   type Recipe,
-} from "../src/core/crafting_flow.ts";
+} from "../src/core/state/crafting_flow";
 
 describe("craftItem", () => {
   it("returns unknown_recipe when recipe not found", () => {

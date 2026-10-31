@@ -11,8 +11,8 @@ import {
   renderSettingsScreen,
   getInitialSettingsState,
   type SettingsState,
-} from "../src/renderer/settings.js";
-import { INITIAL_PWA_STATE } from "../src/core/pwa_manager.ts";
+} from "../src/renderer/settings";
+import { INITIAL_PWA_STATE } from "../src/core/pwa_manager";
 
 describe("clampVolume", () => {
   it("clamps negative values to 0", () => {

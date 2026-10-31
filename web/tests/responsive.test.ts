@@ -15,7 +15,7 @@ import {
   BREAKPOINTS,
   type ViewportSize,
   type ResponsiveState,
-} from "../src/core/responsive.ts";
+} from "../src/core/responsive";
 
 describe("detectDevice", () => {
   it("returns mobile for width < 640", () => {

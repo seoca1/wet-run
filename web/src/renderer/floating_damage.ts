@@ -18,9 +18,9 @@
  * The ASCII/Canvas2D aesthetic is preserved: the number is drawn *into the
  * grid*, not as a DOM overlay (proposal §R6 rejected sprite/DOM numbers).
  */
-import type { Grid } from "../core/types.ts";
-import { setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
+import type { Grid } from "../core/types";
+import { setText } from "../core/grid";
+import { PALETTE } from "./palette";
 
 /** The damage-number branches. */
 export type FloatingDamageKind = "normal" | "skill" | "critical";

@@ -7,8 +7,8 @@ import {
   resolveMatrixRoster,
   NUM_NODES,
   ZONE_BY_NODE_INDEX,
-} from "../src/core/matrix.ts";
-import type { Ice, Matrix } from "../src/core/types.ts";
+} from "../src/core/dungeon/matrix";
+import type { Ice, Matrix } from "../src/core/types";
 
 const sampleIceCatalog: Record<string, Ice> = {
   watchdog: {

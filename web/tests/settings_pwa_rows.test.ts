@@ -9,8 +9,8 @@ import {
   renderSettingsScreen,
   type SettingsField,
   type SettingsState,
-} from "../src/renderer/settings.js";
-import { INITIAL_PWA_STATE, type PwaState } from "../src/core/pwa_manager.ts";
+} from "../src/renderer/settings";
+import { INITIAL_PWA_STATE, type PwaState } from "../src/core/pwa_manager";
 
 function gridLines(grid: ReturnType<typeof renderSettingsScreen>): string[] {
   const lines: string[] = [];

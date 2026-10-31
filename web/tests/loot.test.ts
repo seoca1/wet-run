@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { rollLoot, getLootTable } from "../src/core/loot.ts";
-import type { LootEntry } from "../src/core/loot.ts";
+import { rollLoot, getLootTable } from "../src/core/state/loot";
+import type { LootEntry } from "../src/core/state/loot";
 
 describe("loot system", () => {
   describe("rollLoot", () => {

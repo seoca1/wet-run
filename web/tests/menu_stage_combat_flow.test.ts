@@ -9,9 +9,9 @@ import {
   applyAction,
   makeInitialState,
   resolveProgramSelection,
-} from "../src/core/state.js";
-import type { Ice, Mission, Program, GameState } from "../src/core/types.js";
-import { KEYBOARD_MAPPING } from "../src/core/types.js";
+} from "../src/core/state/state";
+import type { Ice, Mission, Program, GameState } from "../src/core/types";
+import { KEYBOARD_MAPPING } from "../src/core/types";
 
 // ============================================================================
 // Test fixtures

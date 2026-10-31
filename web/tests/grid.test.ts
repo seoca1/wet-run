@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
-import { makeGrid, setCell, setText } from "../src/core/grid.ts";
-import { PALETTE } from "../src/renderer/palette.ts";
-import type { Cell } from "../src/core/types.ts";
+import { makeGrid, setCell, setText } from "../src/core/grid";
+import { PALETTE } from "../src/renderer/palette";
+import type { Cell } from "../src/core/types";
 
 describe("grid", () => {
   describe("makeGrid", () => {

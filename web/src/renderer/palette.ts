@@ -15,8 +15,8 @@
  * reads `PALETTE.X` at call time (never destructured at module scope), so
  * switching modes needs no call-site changes.
  */
-import type { ColorblindMode } from "./accessibility_modes.ts";
-import { getHighContrastColors } from "../core/accessibility.ts";
+import type { ColorblindMode } from "./accessibility_modes";
+import { getHighContrastColors } from "../core/state/accessibility";
 
 /** The palette token set — one entry per colour the renderer can emit. */
 export type PaletteToken =

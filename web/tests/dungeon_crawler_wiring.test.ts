@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { createDungeonCrawlerFromMission } from "../src/core/dungeon_crawler";
+import { createDungeonCrawlerFromMission } from "../src/core/dungeon/dungeon_crawler";
 
 /** Fixed layout seed so wiring assertions never depend on Date.now(). */
 const SEED = 42;

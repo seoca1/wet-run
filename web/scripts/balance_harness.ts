@@ -9,7 +9,7 @@
  * change in combat_engine.ts / boss_phases.ts shows up here immediately.
  */
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
-import { missionGradeOf } from "../src/core/ice_scaling";
+import { missionGradeOf } from "../src/core/combat/ice_scaling";
 import type { Mission, Program } from "../src/core/types";
 import { deckForGrade, runSuite } from "./balance_sim";
 import { installLocalStoragePolyfill } from "./node_polyfills";

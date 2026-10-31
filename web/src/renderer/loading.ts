@@ -1,8 +1,8 @@
-import type { Grid } from "../core/types.ts";
-import { makeGrid } from "../core/grid.ts";
+import type { Grid } from "../core/types";
+import { makeGrid } from "../core/grid";
 
 export function renderLoadingScreen(
-  _state: import("../core/state.ts").GameState | null,
+  _state: import("../core/state/state.ts").GameState | null,
 ): Grid {
   return makeGrid(0, 0);
 }

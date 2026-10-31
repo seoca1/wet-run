@@ -24,13 +24,13 @@
  */
 import { describe, it, expect, vi, afterEach } from "vitest";
 import fc, { base64String } from "fast-check";
-import { save, load, clear } from "../src/save/storage.ts";
-import { encodeEnvelope, decodeEnvelope } from "../src/save/compress.ts";
-import { slotToGameState } from "../src/core/state.ts";
+import { save, load, clear } from "../src/save/storage";
+import { encodeEnvelope, decodeEnvelope } from "../src/save/compress";
+import { slotToGameState } from "../src/core/state/state";
 import missionsData from "../src/data/missions.json";
 import programsData from "../src/data/programs.json";
 import iceTypesData from "../src/data/ice_types.json";
-import type { Ice, Mission, Program, SaveSlot } from "../src/core/types.ts";
+import type { Ice, Mission, Program, SaveSlot } from "../src/core/types";
 
 const NUM_RUNS = Number.parseInt(process.env.FUZZ_RUNS ?? "200", 10) || 200;
 

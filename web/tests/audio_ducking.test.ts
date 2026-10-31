@@ -28,7 +28,7 @@ import {
   BGM_DUCK_HOLD_MS,
   BGM_DUCK_RELEASE_MS,
   DEFAULT_MASTER_VOLUME,
-} from "../src/audio/manager.js";
+} from "../src/audio/manager";
 
 describe("composeBgmVolume", () => {
   it("multiplies master × bgm × track volume", () => {

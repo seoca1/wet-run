@@ -7,7 +7,7 @@ import {
   countRoleSynergy,
   COMBO_WINDOW_MS,
   type DamageContext,
-} from "../src/core/combat_engine.ts";
+} from "../src/core/combat/combat_engine";
 
 describe("combat_engine", () => {
   describe("calculateDamage", () => {

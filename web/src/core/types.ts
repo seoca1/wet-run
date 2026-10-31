@@ -1,4 +1,4 @@
-import type { EquipmentLoadout } from "./equipment.ts";
+import type { EquipmentLoadout } from "./state/equipment";
 
 /** Shared type definitions for wetrun-web MVP.
  *
@@ -153,11 +153,12 @@ export type ScreenKind =
  * single source of truth. `null` whenever the player isn't in a GN screen.
  */
 export interface GraphicNovelState {
-  readonly player: import("./graphic_novel.ts").GraphicNovelPlayer;
-  readonly currentScene: import("./graphic_novel.ts").SceneData | null;
+  readonly player: import("./graphic_novel/graphic_novel.ts").GraphicNovelPlayer;
+  readonly currentScene: import("./graphic_novel/graphic_novel.ts").SceneData | null;
   readonly currentText: string;
   readonly isPaused: boolean;
 }
+
 
 /** Top-level game state — referenced by all subsystems. */
 export interface GameState {
@@ -190,7 +191,7 @@ export interface GameState {
   readonly endingChoice: EndingChoice | null;
   // Tier 5.5: active combat VFX (animation overlay).
   readonly vfxInstances: ReadonlyArray<
-    import("../renderer/combat_vfx.js").CombatVfxInstance
+    import("../renderer/combat_vfx.ts").CombatVfxInstance
   >;
   // Combat engine state (Python parity damage system)
   readonly playerCombo: number;
@@ -206,21 +207,21 @@ export interface GameState {
   readonly equipmentLoadout: EquipmentLoadout;
   // Tier 9: run mutators — optional modifiers applied at run start.
   readonly activeMutators: ReadonlyArray<
-    import("./run_mutators.ts").RunMutator
+    import("./state/run_mutators.ts").RunMutator
   >;
   // Achievement tracking (string IDs of unlocked achievements)
   readonly unlockedAchievements: ReadonlyArray<string>;
   readonly achievementCredits: number;
   // Death cycle (ADR-0040)
   readonly deceasedJockeys: ReadonlyArray<
-    import("./death_cycle.ts").DeceasedJockey
+    import("./state/death_cycle.ts").DeceasedJockey
   >;
-  readonly lastDeathSummary: import("./death_cycle.ts").DeathSummary | null;
+  readonly lastDeathSummary: import("./state/death_cycle.ts").DeathSummary | null;
   readonly totalRuns: number;
   readonly totalDeaths: number;
   readonly longestRunMinutes: number;
   // Faction reputation (Phase 2-2)
-  readonly factionScores: import("./faction_reputation.ts").FactionScores;
+  readonly factionScores: import("./state/faction_reputation.ts").FactionScores;
 }
 
 /** Top-level run cycle phase (Tier 5+). */
@@ -378,7 +379,7 @@ export interface Inventory {
 }
 
 /** Re-export of the equipment loadout type alias (defined in equipment.ts). */
-export type { EquipmentLoadout } from "./equipment.ts";
+export type { EquipmentLoadout } from "./state/equipment";
 
 /** Re-export dialogue system types (defined in dialogue.ts). */
 export type {
@@ -389,10 +390,10 @@ export type {
   DialogueTree,
   DialogueState,
   DialogueContext,
-} from "./dialogue.ts";
+} from "./dialogue";
 
 /** Re-export i18n types (defined in i18n.ts). */
-export type { Language } from "./i18n.ts";
+export type { Language } from "./i18n";
 
 /** Save slot — JSON-serializable subset of GameState. */
 export interface SaveSlot {
@@ -436,7 +437,8 @@ export type GameAction =
   | { readonly type: "trigger_death" }
   | {
       readonly type: "select_restart";
-      readonly choice: import("./death_cycle.ts").RestartChoice;
+       readonly choice: import("./state/death_cycle.ts").RestartChoice;
+
     }
   | { readonly type: "view_hall_of_dead" };
 

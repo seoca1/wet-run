@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { makeInitialState, stateToSaveSlot, slotToGameState } from "../src/core/state";
+import { makeInitialState, stateToSaveSlot, slotToGameState } from "../src/core/state/state";
 import { loadMissionsCatalog, loadProgramsCatalog, loadIceCatalog } from "../src/core/data_loaders";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";

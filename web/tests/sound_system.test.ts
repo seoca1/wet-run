@@ -11,7 +11,7 @@ import {
   getAllBgmTrackIds,
   getTrackInfo,
   type BgmTrackId,
-} from "../src/core/sound_system.ts";
+} from "../src/core/sound_system";
 
 describe("TRACKS", () => {
   it("defines all 15 BGM tracks", () => {

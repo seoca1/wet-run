@@ -5,10 +5,10 @@
  * status placement can be asserted on the real grid.
  */
 import { describe, it, expect } from "vitest";
-import { renderGrid } from "../src/renderer/combat_grid.ts";
-import { groupStatusByTarget } from "../src/renderer/status_hud.ts";
-import { makeInitialState } from "../src/core/state.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
+import { renderGrid } from "../src/renderer/combat_grid";
+import { groupStatusByTarget } from "../src/renderer/status_hud";
+import { makeInitialState } from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 const MOCK_MISSION: Mission = {
   id: "test",

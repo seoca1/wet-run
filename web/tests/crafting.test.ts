@@ -20,7 +20,7 @@ import {
   parseFaction,
   purchaseItem,
   reputationTier,
-} from "../src/core/crafting.ts";
+} from "../src/core/state/crafting";
 
 // =============================================================================
 // Test fixtures — synthetic data the Python prototype loads from JSON

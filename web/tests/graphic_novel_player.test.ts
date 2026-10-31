@@ -20,7 +20,7 @@ import {
   restoreProgress,
   isValidProgress,
   coerceProgress,
-} from "../src/core/graphic_novel_player.ts";
+} from "../src/core/graphic_novel/graphic_novel_player";
 
 describe("createPlayer", () => {
   it("creates player with prologue mode", () => {

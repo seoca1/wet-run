@@ -15,15 +15,15 @@
  * helper in isolation, so they fail if the wiring is reverted.
  */
 import { describe, it, expect, vi, afterEach } from "vitest";
-import { applyCombatAction } from "../src/core/state_actions.ts";
-import { makeInitialState } from "../src/core/state.ts";
-import { AGGRESSIVE_CRIT_BONUS } from "../src/core/ice_ai.ts";
-import { rollIceCrit } from "../src/core/ice_crit.ts";
+import { applyCombatAction } from "../src/core/state/state_actions";
+import { makeInitialState } from "../src/core/state/state";
+import { AGGRESSIVE_CRIT_BONUS } from "../src/core/combat/ice_ai";
+import { rollIceCrit } from "../src/core/combat/ice_crit";
 import {
   CRIT_MULTIPLIER_MAX,
   CRIT_MULTIPLIER_MIN,
-} from "../src/core/combat_engine.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
+} from "../src/core/combat/combat_engine";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 const mockMission: Mission = {
   id: "ice_crit_test",

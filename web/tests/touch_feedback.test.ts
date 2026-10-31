@@ -13,7 +13,7 @@ import {
   isPressFeedbackLive,
   pressFeedbackLabel,
   pressProgramButton,
-} from "../src/core/touch_feedback.ts";
+} from "../src/core/state/touch_feedback";
 
 describe("P12 — press feedback state machine", () => {
   it("starts idle", () => {

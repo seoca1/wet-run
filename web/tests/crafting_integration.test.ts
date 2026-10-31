@@ -5,8 +5,8 @@ import {
   getHubRecipes,
   makeRecipesFromData,
   type Recipe,
-} from "../src/core/crafting_flow.ts";
-import { HUB_NPCS, HUB_SERVICES, enterHub, moveToLocation } from "../src/core/hub.ts";
+} from "../src/core/state/crafting_flow";
+import { HUB_NPCS, HUB_SERVICES, enterHub, moveToLocation } from "../src/core/hub";
 
 describe("Hub Workshop Integration", () => {
   const TEST_RECIPES: ReadonlyArray<Recipe> = Object.freeze([

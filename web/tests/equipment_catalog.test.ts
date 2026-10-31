@@ -19,8 +19,8 @@ import {
   NANO_HIVE,
   TRODES_NINJA,
   BOOTS_GHOST,
-} from "../src/core/equipment_catalog.ts";
-import type { EquipSlot } from "../src/core/equipment.ts";
+} from "../src/core/state/equipment_catalog";
+import type { EquipSlot } from "../src/core/state/equipment";
 
 describe("equipment_catalog", () => {
   describe("DEFAULT_EQUIPMENT array", () => {

@@ -12,7 +12,7 @@ import {
   MS_PER_CHAR,
   DEFAULT_PAGE_WIDTH,
   DEFAULT_LINES_PER_PAGE,
-} from "../src/core/graphic_novel_text.ts";
+} from "../src/core/graphic_novel/graphic_novel_text";
 
 describe("toRoman", () => {
   it("converts 1 to I", () => {

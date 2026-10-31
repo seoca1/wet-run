@@ -9,8 +9,8 @@ import {
   STATUS_GLYPHS,
   ICE_DEFEAT_ART,
   PLAYER_DEFEAT_ART,
-} from "../src/renderer/vfx.js";
-import { PALETTE } from "../src/renderer/palette.js";
+} from "../src/renderer/vfx";
+import { PALETTE } from "../src/renderer/palette";
 
 describe("healthBar", () => {
   it("renders full bar at 100%", () => {

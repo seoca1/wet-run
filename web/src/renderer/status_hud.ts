@@ -8,9 +8,9 @@
  * This module groups the live status effects by who carries them, renders
  * each group as `[GLYPH<turns>]` and draws it onto the grid.
  */
-import type { StatusEffectInstance } from "../core/types.ts";
-import { setText, type Grid } from "../core/grid.ts";
-import { STATUS_GLYPHS } from "./vfx.ts";
+import type { StatusEffectInstance } from "../core/types";
+import { setText, type Grid } from "../core/grid";
+import { STATUS_GLYPHS } from "./vfx";
 
 /** One status effect reduced to what the HUD needs to draw it. */
 export interface StatusGlyphEntry {

@@ -25,8 +25,8 @@
  * continues to guard the underlying assumptions.
  */
 import { describe, it, expect } from "vitest";
-import { STARTER_DECK, STARTER_HAND_SIZE } from "../src/core/starter_deck.ts";
-import type { Ice } from "../src/core/types.ts";
+import { STARTER_DECK, STARTER_HAND_SIZE } from "../src/core/state/starter_deck";
+import type { Ice } from "../src/core/types";
 
 describe("Fix #1+#2 — boot crash regression", () => {
   it("STARTER_DECK is a frozen, non-empty Program[]", () => {

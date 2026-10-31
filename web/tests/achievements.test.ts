@@ -27,7 +27,7 @@ import {
   renderAchievement,
   type Achievement,
   type AchievementCategory,
-} from "../src/core/achievements.ts";
+} from "../src/core/state/achievements";
 
 describe("achievement catalog", () => {
   it("contains exactly 28 achievements (matches Python catalog)", () => {

@@ -7,14 +7,14 @@
  * - Current node shows ICE preview (name + HP) in right HUD panel
  * - Layout adapts to grid dimensions (portrait 50×80, landscape 80×50)
  */
-import type { Grid, Matrix, ZoneDepth, Ice } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
+import type { Grid, Matrix, ZoneDepth, Ice } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { PALETTE } from "./palette";
 import {
   EVENT_GLYPHS,
   EVENT_LABELS,
   type MatrixEventKind,
-} from "../core/event_matrix.ts";
+} from "../core/event_matrix";
 
 /** Zone-to-color mapping for visual differentiation.
  *

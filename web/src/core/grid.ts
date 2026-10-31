@@ -5,8 +5,8 @@
  * pure function of GameState. This enables easy save/restore and
  * eliminates render-order bugs.
  */
-import type { Cell, Position } from "./types.ts";
-import { PALETTE } from "../renderer/palette.ts";
+import type { Cell, Position } from "./types";
+import { PALETTE } from "../renderer/palette";
 
 /** A 2D grid of cells with immutable operations. */
 export interface Grid {

@@ -20,9 +20,9 @@ import {
   floatingDamageKindFor,
   floatingDamageRows,
   renderFloatingDamage,
-} from "../src/renderer/floating_damage.js";
-import { PALETTE } from "../src/renderer/palette.js";
-import { makeGrid } from "../src/core/grid.js";
+} from "../src/renderer/floating_damage";
+import { PALETTE } from "../src/renderer/palette";
+import { makeGrid } from "../src/core/grid";
 
 describe("P3 floating damage — kind table", () => {
   it("covers the normal / skill / critical branches", () => {

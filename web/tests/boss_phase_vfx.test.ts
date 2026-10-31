@@ -5,7 +5,7 @@
  * (single `boss_phase_transition_sequence(ice_type, phase)` factory).
  */
 import { describe, it, expect } from "vitest";
-import { renderCombatVfx, triggerCombatVfx } from "../src/renderer/combat_vfx.js";
+import { renderCombatVfx, triggerCombatVfx } from "../src/renderer/combat_vfx";
 
 function findLine(grid: ReturnType<typeof renderCombatVfx>, cols: number, y: number): string {
   let line = "";

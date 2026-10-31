@@ -4,7 +4,7 @@ Pure functions for HP bars, color thresholds, and status indicators.
 No state, no side effects; testable in isolation.
  */
 
-import { PALETTE } from "./palette.ts";
+import { PALETTE } from "./palette";
 
 export function healthBar(filled: number, total: number, cells = 12): string {
   if (total <= 0) return "[" + " ".repeat(cells) + "]";

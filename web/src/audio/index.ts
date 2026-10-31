@@ -19,10 +19,10 @@
  * - unlockAudio() — Browser audio unlock (call on first user gesture)
  */
 
-import { AudioManager } from "./manager.ts";
-import type { SoundId, SoundEffectId } from "./manager.ts";
+import { AudioManager } from "./manager";
+import type { SoundId, SoundEffectId } from "./manager";
 
-export { BGM_IDS, SFX_IDS } from "./manager.ts";
+export { BGM_IDS, SFX_IDS } from "./manager";
 export type { SoundId, SoundEffectId };
 
 function getManager(): AudioManager {

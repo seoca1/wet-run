@@ -14,7 +14,7 @@ import {
   hitStopMsFor,
   hitStopDeadlineFor,
   hitStopActiveAt,
-} from "../src/renderer/screen_shake.ts";
+} from "../src/renderer/screen_shake";
 
 const PLAYER_HIT = Object.freeze({
   kind: "player_hit",

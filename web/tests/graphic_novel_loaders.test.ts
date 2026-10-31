@@ -7,8 +7,8 @@ import {
   soundCategory,
   CHAR_TO_DIR,
   SCENE_SOUND_MAP,
-} from "../src/core/graphic_novel_loaders.ts";
-import type { SceneData, CharacterId } from "../src/core/graphic_novel_types.ts";
+} from "../src/core/graphic_novel/graphic_novel_loaders";
+import type { SceneData, CharacterId } from "../src/core/graphic_novel/graphic_novel_types";
 
 describe("CHAR_TO_DIR", () => {
   it("maps novice to case", () => {

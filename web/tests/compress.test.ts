@@ -10,7 +10,7 @@ import {
   parseEnvelope,
   shouldCompress,
   COMPRESSION_THRESHOLD_BYTES,
-} from "../src/save/compress.js";
+} from "../src/save/compress";
 
 describe("shouldCompress (threshold gate)", () => {
   it("returns false for payloads under threshold", () => {

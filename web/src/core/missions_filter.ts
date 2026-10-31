@@ -1,4 +1,4 @@
-import type { Mission } from "./types.ts";
+import type { Mission } from "./types";
 
 export function filterMissionsByUniverse(
   missions: ReadonlyArray<Mission>,

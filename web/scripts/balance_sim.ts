@@ -14,10 +14,10 @@
  * ever draws from `drawPile`, so a run that cannot kill within its opening hand
  * stalls. That is recorded as `stalled` rather than papered over.
  */
-import { AUTO_ATTACK_INTERVAL_MS } from "../src/core/combat_engine";
-import { iceHpForGrade, missionGradeOf } from "../src/core/ice_scaling";
-import { resolveMatrixRoster } from "../src/core/matrix";
-import { applyAction, makeInitialState } from "../src/core/state";
+import { AUTO_ATTACK_INTERVAL_MS } from "../src/core/combat/combat_engine";
+import { iceHpForGrade, missionGradeOf } from "../src/core/combat/ice_scaling";
+import { resolveMatrixRoster } from "../src/core/dungeon/matrix";
+import { applyAction, makeInitialState } from "../src/core/state/state";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 /** Deterministic PRNG (mulberry32) — same seed always yields the same stream. */

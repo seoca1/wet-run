@@ -10,7 +10,7 @@
 import { describe, expect, it } from "vitest";
 import { renderMainMenu } from "../src/renderer/menu";
 import type { Cell } from "../src/core/types";
-import { FAR_GRID_LOCKED_MESSAGE } from "../src/core/far_grid_gate";
+import { FAR_GRID_LOCKED_MESSAGE } from "../src/core/dungeon/far_grid_gate";
 
 function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> }): string {
   return grid.cells

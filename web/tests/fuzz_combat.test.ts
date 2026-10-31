@@ -3,7 +3,7 @@
  *  ADR-0210 Tier 6 invariant test
  */
 import { describe, it, expect } from "vitest";
-import { applyAction, makeInitialState } from "../src/core/state";
+import { applyAction, makeInitialState } from "../src/core/state/state";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";

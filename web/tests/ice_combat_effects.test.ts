@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { applyAction, makeInitialState } from "../src/core/state.ts";
+import { applyAction, makeInitialState } from "../src/core/state/state";
 import {
   absorbIceDamage,
   iceAttackBonus,
@@ -8,14 +8,14 @@ import {
   ICE_BUFF_DURATION_TICKS,
   ICE_REGEN_DURATION_TICKS,
   ICE_SHIELD_DURATION_TICKS,
-} from "../src/core/ice_combat_effects.ts";
-import { applyIceNonDamageEffect } from "../src/core/ice_combat_effect_apply.ts";
+} from "../src/core/combat/ice_combat_effects";
+import { applyIceNonDamageEffect } from "../src/core/combat/ice_combat_effect_apply";
 import {
   groupStatusByTarget,
   statusGlyphFor,
   statusGroupForTarget,
-} from "../src/renderer/status_hud.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
+} from "../src/renderer/status_hud";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 const MOCK_MISSION: Mission = {
   id: "test",

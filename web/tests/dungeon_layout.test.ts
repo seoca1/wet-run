@@ -13,10 +13,10 @@ import {
   DEADEND_BY_CHAR,
   ICE_FRACTION_BY_CHAR,
   NPC_BIAS_BY_CHAR,
-} from "../src/core/dungeon_layout.ts";
-import { BspNode, bspPartition, placeRooms, collectLeaves } from "../src/core/dungeon_bsp.ts";
-import { makeMulberry32, withInt } from "../src/core/dungeon.ts";
-import type { Room, RoomType } from "../src/core/dungeon.ts";
+} from "../src/core/dungeon/dungeon_layout";
+import { BspNode, bspPartition, placeRooms, collectLeaves } from "../src/core/dungeon/dungeon_bsp";
+import { makeMulberry32, withInt } from "../src/core/dungeon/dungeon";
+import type { Room, RoomType } from "../src/core/dungeon/dungeon";
 
 describe("GRID_BY_GRADE", () => {
   it("maps grade 1 to 7x5", () => {

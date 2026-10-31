@@ -6,8 +6,8 @@ import {
   makeRng,
   EVENT_GLYPHS,
   EVENT_LABELS,
-} from "../src/core/event_matrix.ts";
-import type { Ice, Program } from "../src/core/types.ts";
+} from "../src/core/event_matrix";
+import type { Ice, Program } from "../src/core/types";
 
 const iceCatalog: Readonly<Record<string, Ice>> = Object.freeze({
   watchdog: { id: "watchdog", name: "Watchdog", hp: 100, armor: 0, tier: 1 },

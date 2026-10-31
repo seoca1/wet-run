@@ -23,13 +23,13 @@ import {
   load,
   clear,
   MAX_SAVE_SLOT,
-} from "../src/save/storage.ts";
+} from "../src/save/storage";
 import {
   encodeEnvelope,
   decodeEnvelope,
   COMPRESSION_THRESHOLD_BYTES,
-} from "../src/save/compress.ts";
-import type { SaveSlot } from "../src/core/types.ts";
+} from "../src/save/compress";
+import type { SaveSlot } from "../src/core/types";
 
 /** Build a SaveSlot with the requested number of programs in deck/discard/draw. */
 function buildSlot(

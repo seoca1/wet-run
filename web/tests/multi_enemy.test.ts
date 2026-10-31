@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { applyAction, makeInitialState, buildHudLines } from "../src/core/state.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
+import { applyAction, makeInitialState, buildHudLines } from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 function makeCombatState(roster: Ice[], activeIndex: number = 0): GameState {
   const mockMission: Mission = {

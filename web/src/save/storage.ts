@@ -12,9 +12,9 @@
  * Backward-compatible: legacy single-slot saves (no slot suffix) are read
  * as slot 0 (autosave) on first load and migrated.
  */
-import type { SaveSlot } from "../core/types.ts";
-import { idbGet, idbPut, idbDelete, idbIsAvailable } from "./storage_idb.ts";
-import { encodeEnvelope, decodeEnvelope } from "./compress.ts";
+import type { SaveSlot } from "../core/types";
+import { idbGet, idbPut, idbDelete, idbIsAvailable } from "./storage_idb";
+import { encodeEnvelope, decodeEnvelope } from "./compress";
 
 const CURRENT_SCHEMA_VERSION = 1;
 const MANUAL_SLOT_COUNT = 3;

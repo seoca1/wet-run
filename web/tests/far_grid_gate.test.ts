@@ -26,7 +26,7 @@ import {
   resetCompletedMissions,
   resetFarGridUnlocked,
   setFarGridUnlocked,
-} from "../src/core/far_grid_gate";
+} from "../src/core/dungeon/far_grid_gate";
 
 const FLAG_STORAGE_KEY = "wetrun_far_grid_unlocked";
 const COMPLETED_STORAGE_KEY = "wetrun_completed_missions";

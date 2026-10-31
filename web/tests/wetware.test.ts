@@ -8,7 +8,7 @@ import {
   WETWARE_CAPS,
   EMPTY_STACKED_WETWARE,
   MAX_AP_REGEN,
-} from "../src/core/wetware.ts";
+} from "../src/core/state/wetware";
 
 const sampleWetwareData = {
   reflex_boost: {

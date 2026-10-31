@@ -6,14 +6,14 @@
  * balance curve (ADR-0229).
  */
 import { describe, it, expect } from "vitest";
-import { applyAction, makeInitialState } from "../src/core/state.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
+import { applyAction, makeInitialState } from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
 import {
   ICE_INTRO_BANNER_ROWS,
   ICE_INTRO_DURATION_TICKS,
   iceIntroPayload,
-} from "../src/core/combat_entry_vfx.ts";
-import { durationForKind } from "../src/core/state_helpers.ts";
+} from "../src/core/combat/combat_entry_vfx";
+import { durationForKind } from "../src/core/state/state_helpers";
 
 const mockMission: Mission = {
   id: "test",

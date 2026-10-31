@@ -14,7 +14,7 @@
  * calls on every state change during combat. Outside combat the row is hidden.
  */
 
-import type { GameAction } from "../core/types.ts";
+import type { GameAction } from "../core/types";
 
 interface ButtonConfig {
   readonly label: string;

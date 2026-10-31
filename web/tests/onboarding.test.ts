@@ -19,7 +19,7 @@ import {
   markTutorialCompleted,
   shouldAutoShowTutorial,
   type OnboardingStorage,
-} from "../src/core/onboarding.ts";
+} from "../src/core/state/onboarding";
 
 /**
  * `main.ts` self-boots at import time (it calls `boot()`), so it cannot be

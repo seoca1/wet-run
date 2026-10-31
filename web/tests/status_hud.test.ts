@@ -17,9 +17,9 @@ import {
   formatTargetStatus,
   drawTargetStatus,
   statusGlyphFor,
-} from "../src/renderer/status_hud.ts";
-import { makeGrid, setText } from "../src/core/grid.ts";
-import type { StatusEffectInstance } from "../src/core/types.ts";
+} from "../src/renderer/status_hud";
+import { makeGrid, setText } from "../src/core/grid";
+import type { StatusEffectInstance } from "../src/core/types";
 
 function effect(
   overrides: Partial<StatusEffectInstance> = {},

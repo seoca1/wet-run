@@ -10,10 +10,10 @@
  * of SFX ids that should sound.
  */
 import { describe, it, expect } from "vitest";
-import { pickCombatSfxLayers } from "../src/core/combat_sfx.ts";
-import { SFX_IDS } from "../src/audio/manager.ts";
-import type { GameState } from "../src/core/types.ts";
-import { makeInitialState } from "../src/core/state.ts";
+import { pickCombatSfxLayers } from "../src/core/combat/combat_sfx";
+import { SFX_IDS } from "../src/audio/manager";
+import type { GameState } from "../src/core/types";
+import { makeInitialState } from "../src/core/state/state";
 
 const mockMission = {
   id: "test",

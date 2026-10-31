@@ -28,14 +28,14 @@ import fc from "fast-check";
 import { describe, expect, it } from "vitest";
 
 import { mulberry32 } from "../scripts/balance_sim";
-import { AUTO_ATTACK_INTERVAL_MS } from "../src/core/combat_engine";
+import { AUTO_ATTACK_INTERVAL_MS } from "../src/core/combat/combat_engine";
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
-import type { RestartChoice } from "../src/core/death_cycle";
-import { makeLoadout } from "../src/core/loadout";
-import { pathLengthBetween } from "../src/core/matrix_navigation";
-import { applyAction, makeInitialState } from "../src/core/state";
+import type { RestartChoice } from "../src/core/state/death_cycle";
+import { makeLoadout } from "../src/core/state/loadout";
+import { pathLengthBetween } from "../src/core/dungeon/matrix_navigation";
+import { applyAction, makeInitialState } from "../src/core/state/state";
 import type { GameAction, GameState, Ice, Mission, Program } from "../src/core/types";
-import type { RunMutator } from "../src/core/run_mutators";
+import type { RunMutator } from "../src/core/state/run_mutators";
 
 import iceTypesJson from "../src/data/ice_types.json";
 import missionsJson from "../src/data/missions.json";

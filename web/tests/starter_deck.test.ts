@@ -2,8 +2,8 @@
  * Tests for the starter deck constant used by main.ts.createInitialState.
  */
 import { describe, it, expect } from "vitest";
-import { STARTER_DECK, STARTER_HAND_SIZE } from "../src/core/starter_deck.ts";
-import type { Program } from "../src/core/types.ts";
+import { STARTER_DECK, STARTER_HAND_SIZE } from "../src/core/state/starter_deck";
+import type { Program } from "../src/core/types";
 
 describe("starter_deck", () => {
   it("exports 8 frozen programs", () => {

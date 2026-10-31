@@ -4,8 +4,8 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { GamepadInput, isGamepadConnected, getGamepadName } from "../src/input/gamepad.ts";
-import type { GameAction } from "../src/core/types.ts";
+import { GamepadInput, isGamepadConnected, getGamepadName } from "../src/input/gamepad";
+import type { GameAction } from "../src/core/types";
 
 function mockGamepads(gamepads: Array<{ id: string; buttons: Array<{ pressed: boolean; value: number }>; axes: number[] } | null>): void {
   Object.defineProperty(navigator, "getGamepads", {

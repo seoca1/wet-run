@@ -13,7 +13,7 @@
  * Polls gamepad state via requestAnimationFrame and emits actions on
  * button press (not hold) to prevent repeated triggers.
  */
-import type { GameAction } from "../core/types.ts";
+import type { GameAction } from "../core/types";
 
 export type GamepadActionHandler = (action: GameAction) => void;
 

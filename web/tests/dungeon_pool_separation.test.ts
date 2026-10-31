@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ProceduralDungeonGenerator } from "../src/core/dungeon_layout.ts";
+import { ProceduralDungeonGenerator } from "../src/core/dungeon/dungeon_layout";
 
 /** ADR-0213 Pillar 2 (P2 The Matrix): dungeon-pool separation.
  *

@@ -20,7 +20,7 @@ import type {
   GraphicNovelProgress,
   GraphicNovelPlayer,
   TickEvent,
-} from "../src/core/graphic_novel_types.ts";
+} from "../src/core/graphic_novel/graphic_novel_types";
 
 describe("type literal coverage", () => {
   it("CharacterId accepts all 9 declared character literals", () => {

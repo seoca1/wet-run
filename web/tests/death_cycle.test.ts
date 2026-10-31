@@ -4,9 +4,9 @@ import {
   createDeceasedJockey,
   generateDeathSummary,
   EPITAPHS,
-} from "../src/core/death_cycle.ts";
-import type { GameState, Ice, Mission, Program } from "../src/core/types.ts";
-import { makeInitialState, applyAction } from "../src/core/state.ts";
+} from "../src/core/state/death_cycle";
+import type { GameState, Ice, Mission, Program } from "../src/core/types";
+import { makeInitialState, applyAction } from "../src/core/state/state";
 
 const mockMission: Mission = {
   id: "test_mission",

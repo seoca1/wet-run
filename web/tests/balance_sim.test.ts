@@ -8,7 +8,7 @@
 import { describe, expect, it } from "vitest";
 
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
-import { iceHpForGrade } from "../src/core/ice_scaling";
+import { iceHpForGrade } from "../src/core/combat/ice_scaling";
 import { deckForGrade, runSuite, simulateCombat } from "../scripts/balance_sim";
 import type { Program } from "../src/core/types";
 

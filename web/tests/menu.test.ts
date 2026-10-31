@@ -1,6 +1,6 @@
 /** Tests for main menu renderer (Tier 4). */
 import { describe, it, expect } from "vitest";
-import { renderMainMenu, renderStubScreen, MENU_OPTIONS } from "../src/renderer/menu.ts";
+import { renderMainMenu, renderStubScreen, MENU_OPTIONS } from "../src/renderer/menu";
 
 describe("main menu renderer", () => {
   it("has 14 options including far_grid_hub, craft, equipment, and dungeon_crawl", () => {

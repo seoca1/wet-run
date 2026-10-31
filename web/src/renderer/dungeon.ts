@@ -7,16 +7,16 @@
  * - Color coding for different tile types and entities
  */
 
-import { Grid } from "../core/types.ts";
-import { PALETTE } from "./palette.ts";
+import { Grid } from "../core/types";
+import { PALETTE } from "./palette";
 import {
   TileType,
   EntityType,
   ItemType,
   MonsterType,
-} from "../core/dungeon_crawler.ts";
-import { DungeonCrawler } from "../core/dungeon_crawler.ts";
-import { makeGrid, setCell } from "../core/grid.ts";
+} from "../core/dungeon/dungeon_crawler";
+import { DungeonCrawler } from "../core/dungeon/dungeon_crawler";
+import { makeGrid, setCell } from "../core/grid";
 
 /** Render the dungeon map to a grid */
 export function renderDungeonMap(

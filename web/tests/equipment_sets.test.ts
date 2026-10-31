@@ -9,7 +9,7 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { makeEquipmentSetsFromData } from "../src/core/equipment_sets.ts";
+import { makeEquipmentSetsFromData } from "../src/core/state/equipment_sets";
 
 describe("makeEquipmentSetsFromData — basic shape", () => {
   it("returns a frozen empty object for empty input", () => {

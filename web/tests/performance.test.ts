@@ -9,7 +9,7 @@ import {
   isWithinBudget,
   formatMetrics,
   type PerformanceMetrics,
-} from "../src/core/performance.js";
+} from "../src/core/state/performance";
 
 describe("FpsCounter", () => {
   beforeEach(() => {

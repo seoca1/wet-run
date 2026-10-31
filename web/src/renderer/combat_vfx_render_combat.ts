@@ -4,10 +4,10 @@
  * status-glyph effect kinds. Returns null for kinds owned by
  * combat_vfx_render_scene.ts so the dispatcher can fall through.
  */
-import type { Grid } from "../core/types.ts";
-import { setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
-import type { VfxRenderCtx } from "./combat_vfx_core.ts";
+import type { Grid } from "../core/types";
+import { setText } from "../core/grid";
+import { PALETTE } from "./palette";
+import type { VfxRenderCtx } from "./combat_vfx_core";
 
 /** Render a combat / damage / status VFX frame, or null if the kind is not
  * handled here (scene / outcome / matrix kinds live in the scene renderer). */

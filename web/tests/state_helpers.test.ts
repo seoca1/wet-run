@@ -6,7 +6,7 @@ import {
   pickProgramVfxKind, 
   durationForKind, 
   durationMsForKind 
-} from "../src/core/state_helpers.ts";
+} from "../src/core/state/state_helpers";
 
 describe("import_vfx", () => {
   it("creates VFX instance with tick-based duration", () => {

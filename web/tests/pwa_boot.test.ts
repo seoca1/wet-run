@@ -11,8 +11,8 @@
 // @vitest-environment jsdom
 
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { bootPwaController, type PwaController } from "../src/core/pwa_boot.ts";
-import { INITIAL_PWA_STATE } from "../src/core/pwa_manager.ts";
+import { bootPwaController, type PwaController } from "../src/core/pwa_boot";
+import { INITIAL_PWA_STATE } from "../src/core/pwa_manager";
 
 function dispatchWindowEvent(name: string): boolean {
   return window.dispatchEvent(new Event(name));

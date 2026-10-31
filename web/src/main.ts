@@ -1,48 +1,48 @@
-import { AsciiRenderer } from "./renderer/canvas.ts";
-import { KeyboardInput } from "./input/keyboard.ts";
-import { GamepadInput, isGamepadConnected } from "./input/gamepad.ts";
+import { AsciiRenderer } from "./renderer/canvas";
+import { KeyboardInput } from "./input/keyboard";
+import { GamepadInput, isGamepadConnected } from "./input/gamepad";
 import {
   mountVirtualGamepad,
   updateProgramRow,
   isTouchDevice,
-} from "./input/touch.ts";
+} from "./input/touch";
 import {
   MENU_OPTIONS,
   renderMainMenu,
   renderStubScreen,
   type MenuOption,
-} from "./renderer/menu.ts";
-import { renderMatrix } from "./renderer/matrix.ts";
-import { renderEndingScreen, renderLootScreen } from "./renderer/ending.ts";
-import { renderFarGridHub } from "./renderer/far_grid_hub.ts";
-import { filterMissionsByUniverse } from "./core/missions_filter.ts";
+} from "./renderer/menu";
+import { renderMatrix } from "./renderer/matrix";
+import { renderEndingScreen, renderLootScreen } from "./renderer/ending";
+import { renderFarGridHub } from "./renderer/far_grid_hub";
+import { filterMissionsByUniverse } from "./core/missions_filter";
 import {
   FAR_GRID_LOCKED_MESSAGE,
   isFarGridUnlocked,
-} from "./core/far_grid_gate.ts";
+} from "./core/dungeon/far_grid_gate";
 import {
   composeCombatVfx,
   advanceVfxListBy,
   WEB_TICK_MS,
   type CombatVfxInstance,
-} from "./renderer/combat_vfx.ts";
+} from "./renderer/combat_vfx";
 import {
   composeFloatingDamage,
   overlayShake,
-} from "./renderer/combat_overlay.ts";
+} from "./renderer/combat_overlay";
 import {
   hitStopActiveAt,
   hitStopDeadlineFor,
-} from "./renderer/screen_shake.ts";
-import { pickCombatSfxLayers } from "./core/combat_sfx.ts";
-import { FpsCounter, getMetrics } from "./core/performance.ts";
-import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial.ts";
+} from "./renderer/screen_shake";
+import { pickCombatSfxLayers } from "./core/combat/combat_sfx";
+import { FpsCounter, getMetrics } from "./core/state/performance";
+import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
   COMBAT_ENTRY_HINT_LINES,
   combatEntryHintFits,
   combatEntryHintRows,
   shouldAutoShowTutorial,
-} from "./core/onboarding.ts";
+} from "./core/state/onboarding";
 import {
   IDLE_PRESS_FEEDBACK,
   expirePressFeedback,
@@ -50,12 +50,12 @@ import {
   pressFeedbackLabel,
   pressProgramButton,
   type PressFeedbackState,
-} from "./core/touch_feedback.ts";
-import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon.ts";
+} from "./core/state/touch_feedback";
+import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon";
 import {
   DungeonCrawler,
   createDungeonCrawlerFromMission,
-} from "./core/dungeon_crawler.ts";
+} from "./core/dungeon/dungeon_crawler";
 import {
   renderSettingsScreen,
   getInitialSettingsState,
@@ -63,7 +63,7 @@ import {
   cycleLanguage,
   adjustVolume,
   type SettingsField,
-} from "./renderer/settings.ts";
+} from "./renderer/settings";
 import {
   loadColorblindMode,
   loadHighContrastOverride,
@@ -81,12 +81,12 @@ import {
   textScaleFactor,
   type ColorblindMode,
   type TextScaleStep,
-} from "./renderer/accessibility_modes.ts";
-import { applyPaletteMode } from "./renderer/palette.ts";
-import { bootPwaController, type PwaController } from "./core/pwa_boot.ts";
+} from "./renderer/accessibility_modes";
+import { applyPaletteMode } from "./renderer/palette";
+import { bootPwaController, type PwaController } from "./core/pwa_boot";
 import {
   groupStatusByTarget,
-} from "./renderer/status_hud.ts";
+} from "./renderer/status_hud";
 import type {
   GameState,
   GameAction,
@@ -95,10 +95,9 @@ import type {
   Mission,
   Program,
   ScreenKind,
-  GraphicNovelState,
   Inventory,
   EquipmentLoadout,
-} from "./core/types.ts";
+} from "./core/types";
 import {
   applyAction,
   buildHudLines,
@@ -106,18 +105,18 @@ import {
   resolveProgramSelection,
   slotToGameState,
   stateToSaveSlot,
-} from "./core/state.ts";
-import { encounterIceIdForGrade, missionGradeOf, missionSeedOf } from "./core/ice_scaling.ts";
-import { makeGrid, setText, type Grid } from "./core/grid.ts";
-import { PALETTE } from "./renderer/palette.ts";
-import { renderGrid } from "./renderer/combat_grid.ts";
+} from "./core/state/state";
+import { encounterIceIdForGrade, missionGradeOf, missionSeedOf } from "./core/combat/ice_scaling";
+import { makeGrid, setText, type Grid } from "./core/grid";
+import { PALETTE } from "./renderer/palette";
+import { renderGrid } from "./renderer/combat_grid";
 import {
   save as saveToSlot,
   load as loadFromSlot,
   hasSave as slotHasSave,
   getSaveMeta,
-} from "./save/storage.ts";
-import { getLayout, watchLayout, type Layout } from "./core/layout.ts";
+} from "./save/storage";
+import { getLayout, watchLayout, type Layout } from "./core/layout";
 import {
   craftItem,
   makeRecipesFromData,
@@ -125,15 +124,15 @@ import {
   type Recipe,
   type MaterialDef,
   makeInfoMarket,
-} from "./core/crafting.ts";
+} from "./core/state/crafting";
 import {
   equipOn,
   DEFAULT_REGISTRY,
   EQUIP_SLOTS,
   makeLoadout,
-} from "./core/equipment.ts";
-import type { InfoMarket } from "./core/info_market.ts";
-import { loadPersistedLanguage } from "./renderer/settings.ts";
+} from "./core/state/equipment";
+import type { InfoMarket } from "./core/info_market";
+import { loadPersistedLanguage } from "./renderer/settings";
 
 function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
   return {
@@ -153,7 +152,7 @@ function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState
   };
 }
 
-const loadStorySystem = () => import("./core/graphic_novel.ts");
+const loadStorySystem = () => import("./core/graphic_novel/graphic_novel.ts");
 const loadAudioSystemRaw = () => import("./audio/manager.ts");
 
 /** P9 render loop — maximum frame interval (ms) that still advances VFX.
@@ -176,7 +175,7 @@ import {
   loadMissionsCatalog,
   loadProgramsCatalog,
   loadIceCatalog,
-} from "./core/data_loaders.ts";
+} from "./core/data_loaders";
 
 /** Mission catalog (validated at module load — schema mismatches throw early). */
 const MISSIONS: ReadonlyArray<Mission> = loadMissionsCatalog(missionsData);
@@ -353,9 +352,10 @@ class Game {
   /** P12 — the in-game acknowledgement of a touch program-button press. */
   private pressFeedback: PressFeedbackState = IDLE_PRESS_FEEDBACK;
   private graphicNovelPlayer:
-    import("./core/graphic_novel.ts").GraphicNovelPlayer | null = null;
-  private graphicNovelState: GraphicNovelState | null = null;
-  private gnLanguage: import("./core/graphic_novel_types.ts").Language = "en";
+    import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null = null;
+  private gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language = "en";
+  private graphicNovelState: import("./core/types.ts").GraphicNovelState | null = null;
+
   private settingsState: import("./renderer/settings.ts").SettingsState | null =
     null;
   private pwaController: PwaController | null = null;
@@ -903,7 +903,7 @@ class Game {
   private renderGraphicNovel(): void {
     if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
     void loadStorySystem().then((gn) => {
-      void import("./core/graphic_novel_text.ts").then((gnText) => {
+      void import("./core/graphic_novel/graphic_novel_text.ts").then((gnText) => {
         if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
         const state = this.graphicNovelState;
         const player = this.graphicNovelPlayer;

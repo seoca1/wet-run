@@ -5,8 +5,8 @@ import {
   stateToSaveSlot,
   makeInitialState,
   applyAction,
-} from "../src/core/state.ts";
-import type { GameState, Ice, Mission, Program, SaveSlot } from "../src/core/types.ts";
+} from "../src/core/state/state";
+import type { GameState, Ice, Mission, Program, SaveSlot } from "../src/core/types";
 
 const mockMission: Mission = {
   id: "test_mission",

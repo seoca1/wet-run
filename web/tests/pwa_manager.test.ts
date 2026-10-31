@@ -11,7 +11,7 @@ import {
   applyUpdate,
   getOnlineStatus,
   type PwaState,
-} from "../src/core/pwa_manager.ts";
+} from "../src/core/pwa_manager";
 
 describe("PWA Manager", () => {
   beforeEach(() => {

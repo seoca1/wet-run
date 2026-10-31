@@ -16,8 +16,8 @@ import {
   parseIceSkills,
   parseIceSkillDefs,
   type IceSkillDefs,
-} from "./ice_skills.ts";
-import type { Mission, Program, Ice } from "./types.ts";
+} from "./combat/ice_skills";
+import type { Mission, Program, Ice } from "./types";
 
 interface LegacyMission {
   id?: string;

@@ -14,7 +14,7 @@ import {
   STORAGE_QUOTA_WARNING_PERCENT,
   STORAGE_QUOTA_CRITICAL_PERCENT,
   type StorageQuota,
-} from "../src/save/storage_quota.js";
+} from "../src/save/storage_quota";
 
 describe("formatBytes", () => {
   it("returns '0 B' for zero or negative", () => {

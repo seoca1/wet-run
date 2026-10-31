@@ -4,9 +4,9 @@
  * owns the terminal run-end screens: the death restart summary and the
  * unrecoverable flatline screen.
  */
-import type { Grid } from "../core/types.ts";
-import { makeGrid, setText } from "../core/grid.ts";
-import { PALETTE } from "./palette.ts";
+import type { Grid } from "../core/types";
+import { makeGrid, setText } from "../core/grid";
+import { PALETTE } from "./palette";
 
 /** Render the death restart screen (death_restart stage).
  *

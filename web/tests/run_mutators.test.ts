@@ -24,7 +24,7 @@ import {
   makeDefaultMutableRunState,
   type MutableRunState,
   type RunMutator,
-} from "../src/core/run_mutators.ts";
+} from "../src/core/state/run_mutators";
 
 describe("mutator catalog", () => {
   it("declares exactly 5 mutators", () => {

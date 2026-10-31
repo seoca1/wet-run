@@ -12,7 +12,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { readFileSync, statSync } from "fs";
 import { join } from "path";
-import { AudioManager, BGM_IDS, SFX_IDS } from "../src/audio/manager.js";
+import { AudioManager, BGM_IDS, SFX_IDS } from "../src/audio/manager";
 
 const PUBLIC_DIR = join(import.meta.dirname, "../public");
 

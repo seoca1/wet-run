@@ -1,6 +1,12 @@
 /** Tests for main menu renderer (Tier 4). */
 import { describe, it, expect } from "vitest";
-import { renderMainMenu, renderStubScreen, MENU_OPTIONS } from "../src/renderer/menu";
+import {
+  renderMainMenu,
+  renderStubScreen,
+  MENU_OPTIONS,
+} from "../src/renderer/menu";
+import { mainMenuLayout } from "../src/renderer/menu_main";
+import { makeGrid } from "../src/core/grid";
 
 describe("main menu renderer", () => {
   it("has 14 options including far_grid_hub, craft, equipment, and dungeon_crawl", () => {
@@ -67,8 +73,9 @@ describe("main menu renderer", () => {
       }
     }
     expect(rowWithMarker).toBeGreaterThan(0);
-    // Marker at row = startY (8) + selectedIndex (2) = 10
-    expect(rowWithMarker).toBe(8 + 2);
+    // Marker at row = optionsY (frame-composed) + selectedIndex (2)
+    const { optionsY } = mainMenuLayout(makeGrid(cols, rows));
+    expect(rowWithMarker).toBe(optionsY + 2);
   });
 
   it("grid dimensions match requested cols/rows", () => {

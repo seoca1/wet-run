@@ -52,6 +52,7 @@ import {
   type PressFeedbackState,
 } from "./core/state/touch_feedback";
 import { renderDungeonMap, renderDungeonUi } from "./renderer/dungeon";
+import { renderMissionList } from "./renderer/mission_select";
 import {
   DungeonCrawler,
   createDungeonCrawlerFromMission,
@@ -271,7 +272,7 @@ function formatMissionOption(
   return `${formatNavIndex(index)} ${titleText}  [${grade} | ${credits}cr]`;
 }
 
-/** Render the mission select screen. */
+/** Render the mission select screen inside the Green Grid frame (ADR-0237 §2). */
 function renderMissionSelect(
   missions: ReadonlyArray<Mission>,
   selected: number,
@@ -279,32 +280,8 @@ function renderMissionSelect(
   rows: number,
   language: import("./core/i18n.ts").Language = "en",
 ): ReturnType<typeof makeGrid> {
-  let grid = makeGrid(cols, rows);
-  grid = setText(grid, 2, 1, "WET RUN — Select Mission", PALETTE.GREEN_NEON);
-  grid = setText(
-    grid,
-    2,
-    3,
-    "↑↓: navigate | ENTER: launch | ESC: back",
-    PALETTE.GRAY_LIGHT,
-  );
-  let y = 6;
-  for (let i = 0; i < missions.length; i++) {
-    const m = missions[i];
-    if (!m) continue;
-    const isSelected = i === selected;
-    const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
-    const marker = isSelected ? "▸" : " ";
-    grid = setText(
-      grid,
-      4,
-      y,
-      `${marker} ${formatMissionOption(m, i, language)}`,
-      fg,
-    );
-    y += 1;
-  }
-  return grid;
+  const rowLabels = missions.map((m, i) => formatMissionOption(m, i, language));
+  return renderMissionList(rowLabels, selected, cols, rows);
 }
 
 class Game {

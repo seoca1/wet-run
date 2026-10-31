@@ -7,14 +7,16 @@
  * Web Tier 4 implements the 6 reachable + 3 deferred (rendered as
  * "Coming soon" stubs to keep the menu 1:1 with Python for design parity).
  *
- * Layout: title block + 9 numbered options + footer. Selected option
- * highlighted with ▸ marker (matches mission select convention).
+ * Layout: Green Grid frame (renderer/panel.ts) around a centred title block,
+ * the numbered options and a footer pinned to the bottom inner rows. Selected
+ * option highlighted with ▸ marker (matches mission select convention).
  */
 import type { Grid } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { t, type Language } from "../core/i18n";
 import { PALETTE } from "./palette";
 import { formatNavIndex } from "./nav_index";
+import { drawPanel, panelInnerRect, type PanelRect } from "./panel";
 
 export type MenuOption =
   | "new_run"
@@ -54,6 +56,69 @@ export const MENU_OPTIONS: ReadonlyArray<{
   { key: "tutorial", label: "TUTORIAL", available: true },
 ] as const;
 
+/** Rows from the title to the status line: title, subtitle, divider (two-row
+ * gaps), the option list, then a blank row, the save hint and the status line.
+ */
+const MENU_BLOCK_ROWS = 6 + MENU_OPTIONS.length + 3;
+
+/** Where the main menu places its content inside the Green Grid frame. */
+export interface MainMenuLayout {
+  readonly frame: PanelRect;
+  readonly inner: PanelRect;
+  readonly titleY: number;
+  readonly optionsX: number;
+  readonly optionsY: number;
+  /** First of the two footer rows (controls hint, then version). */
+  readonly footerY: number;
+}
+
+/** Widest option row in any gating state, so the column never jumps. */
+function widestOptionRow(language: Language): number {
+  let widest = 0;
+  for (let i = 0; i < MENU_OPTIONS.length; i++) {
+    const opt = MENU_OPTIONS[i];
+    if (!opt) continue;
+    let label = `${formatNavIndex(i)} ${t(`menu.${opt.key}`, language)}`;
+    if (opt.key === "continue") label += `    ${t("menu.no_save", language)}`;
+    if (opt.key === "far_grid_hub")
+      label += `    ${t("menu.locked", language)}`;
+    widest = Math.max(widest, label.length + 2);
+  }
+  return widest;
+}
+
+/** Compose the main menu inside a full-grid frame (ADR-0237 §2).
+ *
+ * The footer sits on the last two inner rows; the title-to-status block is
+ * centred vertically in the space above it and the option column is centred
+ * horizontally. Grids too small to centre fall back to the original offsets
+ * (title two rows down, options at column 4).
+ */
+export function mainMenuLayout(
+  grid: Grid,
+  language: Language = "en",
+): MainMenuLayout {
+  const frame: PanelRect = {
+    x: 0,
+    y: 0,
+    width: grid.width,
+    height: grid.height,
+  };
+  const inner = panelInnerRect(grid, frame);
+  const footerY = inner.y + inner.height - 2;
+  const available = footerY - 1 - inner.y;
+  const titleY =
+    inner.y + Math.max(1, Math.floor((available - MENU_BLOCK_ROWS) / 2));
+  const optionsX =
+    inner.x +
+    Math.max(3, Math.floor((inner.width - widestOptionRow(language)) / 2));
+  return { frame, inner, titleY, optionsX, optionsY: titleY + 6, footerY };
+}
+
+function centredX(inner: PanelRect, width: number): number {
+  return inner.x + Math.max(1, Math.floor((inner.width - width) / 2));
+}
+
 /** Render the main menu screen with the selected option highlighted.
  *
  * CONTINUE option is grayed out (GRAY_DARK + " (no save)") when hasSave=false.
@@ -63,6 +128,8 @@ export const MENU_OPTIONS: ReadonlyArray<{
  * farGridUnlocked=false (ADR-0213 Phase 2 gate). Status messages from the
  * locked-selection path will surface on the existing `statusMessage` line —
  * main.ts owns the message text (no UI strings here).
+ *
+ * Content is placed by `mainMenuLayout` inside a `drawPanel` frame.
  */
 export function renderMainMenu(
   selected: number,
@@ -75,34 +142,38 @@ export function renderMainMenu(
   language: Language = "en",
 ): Grid {
   let grid = makeGrid(cols, rows);
+  const layout = mainMenuLayout(grid, language);
+  const { inner, titleY, optionsX, optionsY: startY, footerY } = layout;
 
-  // Title block (top)
+  // Title block
+  const title = t("menu.title", language);
   grid = setText(
     grid,
-    Math.max(2, Math.floor((cols - 8) / 2)),
-    2,
-    t("menu.title", language),
+    centredX(inner, title.length),
+    titleY,
+    title,
     PALETTE.GREEN_NEON,
   );
+  const subtitle = t("menu.subtitle", language);
   grid = setText(
     grid,
-    Math.max(2, Math.floor((cols - 40) / 2)),
-    4,
-    t("menu.subtitle", language),
+    centredX(inner, subtitle.length),
+    titleY + 2,
+    subtitle,
     PALETTE.GRAY_LIGHT,
   );
 
   // Divider
+  const dividerWidth = Math.max(0, Math.min(inner.width - 2, 60));
   grid = setText(
     grid,
-    2,
-    6,
-    "─".repeat(Math.min(cols - 4, 60)),
+    centredX(inner, dividerWidth),
+    titleY + 4,
+    "─".repeat(dividerWidth),
     PALETTE.GRAY_MID,
   );
 
-  // Options list (starting at row 8)
-  const startY = 8;
+  // Options list
   for (let i = 0; i < MENU_OPTIONS.length; i++) {
     const opt = MENU_OPTIONS[i];
     if (!opt) continue;
@@ -111,59 +182,77 @@ export function renderMainMenu(
     const num = formatNavIndex(i);
     const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const row = startY + i;
-    if (row >= rows - 1) break;
+    if (row >= footerY) break;
     let label = `${num} ${t(`menu.${opt.key}`, language)}`;
     // CONTINUE option gating — gray out + suffix when no save.
     if (opt.key === "continue" && !hasSave) {
       label = `${num} ${t("menu.continue", language)}    ${t("menu.no_save", language)}`;
-      grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
+      grid = setText(
+        grid,
+        optionsX,
+        row,
+        `${marker} ${label}`,
+        PALETTE.GRAY_DARK,
+      );
       continue;
     }
     // FAR GRID option gating — gray out + suffix when locked (ADR-0213 Phase 2).
     if (opt.key === "far_grid_hub" && !farGridUnlocked) {
       label = `${num} ${t("menu.far_grid_hub", language)}    ${t("menu.locked", language)}`;
-      grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
+      grid = setText(
+        grid,
+        optionsX,
+        row,
+        `${marker} ${label}`,
+        PALETTE.GRAY_DARK,
+      );
       continue;
     }
-    grid = setText(grid, 4, row, `${marker} ${label}`, fg);
+    grid = setText(grid, optionsX, row, `${marker} ${label}`, fg);
   }
 
   // Continue hint sub-line (when save exists). Place below all menu items
   // (MENU_OPTIONS.length + 1 row after startY) to avoid overlap.
   if (hasSave && saveMeta) {
     const hintRow = startY + MENU_OPTIONS.length + 1;
-    if (hintRow < rows - 2) {
+    if (hintRow < footerY) {
       const hint = `→ ${saveMeta.missionId} (turn ${saveMeta.turnCount + 1})`;
-      grid = setText(grid, 6, hintRow, hint, PALETTE.YELLOW_AMBER);
+      grid = setText(grid, optionsX + 2, hintRow, hint, PALETTE.YELLOW_AMBER);
     }
   }
 
   // Status message line (shown after save hint, before footer).
   if (statusMessage) {
     const msgRow = startY + MENU_OPTIONS.length + 2;
-    if (msgRow < rows - 2) {
-      grid = setText(grid, 2, msgRow, statusMessage, PALETTE.YELLOW_AMBER);
+    if (msgRow < footerY) {
+      grid = setText(
+        grid,
+        Math.max(inner.x + 1, optionsX - 2),
+        msgRow,
+        statusMessage,
+        PALETTE.YELLOW_AMBER,
+      );
     }
   }
 
   // Footer
-  const footerRow = rows - 2;
   grid = setText(
     grid,
-    2,
-    footerRow,
+    inner.x + 1,
+    footerY,
     t("menu.footer", language),
     PALETTE.GRAY_DARK,
   );
   grid = setText(
     grid,
-    2,
-    footerRow + 1,
+    inner.x + 1,
+    footerY + 1,
     t("menu.version", language),
     PALETTE.GRAY_DARK,
   );
 
-  return grid;
+  // Frame last, so an overlong status line can never erase a rail.
+  return drawPanel(grid, layout.frame).grid;
 }
 
 /** Render a stub screen for options not yet implemented (Tier 5+).

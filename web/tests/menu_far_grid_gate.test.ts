@@ -9,6 +9,8 @@
  */
 import { describe, expect, it } from "vitest";
 import { renderMainMenu } from "../src/renderer/menu";
+import { mainMenuLayout } from "../src/renderer/menu_main";
+import { makeGrid } from "../src/core/grid";
 import type { Cell } from "../src/core/types";
 import { FAR_GRID_LOCKED_MESSAGE } from "../src/core/dungeon/far_grid_gate";
 
@@ -39,11 +41,15 @@ describe("main menu: FAR GRID gate (ADR-0213 Phase 2)", () => {
     const rows = 50;
     // farGridUnlocked=false → FAR GRID row shows "(locked)"
     const grid = renderMainMenu(1, cols, rows, false, null, "", false);
-    // FAR GRID is index 1 in MENU_OPTIONS, rendered at row = startY(8) + 1 = 9
-    // The label format is: `▸ [2] FAR GRID    (locked)` starting at col 4.
-    // Col breakdown: 4='▸' 5=' ' 6='[' 7='2' 8=']' 9=' ' 10..17='FAR GRID' 18..21='    ' 22..29='(locked)'
+    // FAR GRID is index 1 in MENU_OPTIONS, rendered at row = optionsY + 1.
+    // The label format is: `▸ [2] FAR GRID    (locked)` starting at optionsX.
+    // Offsets: +0='▸' +1=' ' +2..+4='[2]' +5=' ' +6..+13='FAR GRID' +14..+17='    '
+    // +18..+25='(locked)'
+    const { optionsX, optionsY } = mainMenuLayout(makeGrid(cols, rows));
     const lockedSuffix = "(locked)";
-    expect(getRowText(grid, 9, 22, lockedSuffix.length)).toBe(lockedSuffix);
+    expect(
+      getRowText(grid, optionsY + 1, optionsX + 18, lockedSuffix.length),
+    ).toBe(lockedSuffix);
   });
 
   it("does NOT render '(locked)' suffix when farGridUnlocked=true", () => {
@@ -62,10 +68,11 @@ describe("main menu: FAR GRID gate (ADR-0213 Phase 2)", () => {
     const cols = 80;
     const rows = 50;
     const grid = renderMainMenu(1, cols, rows, false, null, "", false);
-    // Inspect the cells at row 9 (FAR GRID line when locked)
+    // Inspect the cells on the FAR GRID line (optionsY + 1) when locked.
     // Cell color comparison is loose — we just verify the text exists at
     // the row. Color discipline is enforced via the renderer contract.
-    const rowText = getRowText(grid, 9, 4, 30);
+    const { optionsX, optionsY } = mainMenuLayout(makeGrid(cols, rows));
+    const rowText = getRowText(grid, optionsY + 1, optionsX, 30);
     expect(rowText).toContain("FAR GRID");
     expect(rowText).toContain("(locked)");
   });

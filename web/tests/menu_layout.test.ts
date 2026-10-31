@@ -1,5 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { renderMainMenu } from "../src/renderer/menu";
+import { mainMenuLayout } from "../src/renderer/menu_main";
+import { makeGrid } from "../src/core/grid";
 import type { Cell } from "../src/core/types";
 
 function getGridText(
@@ -12,7 +14,7 @@ function getGridText(
   for (let i = 0; i < length; i++) {
     const row = grid.cells[y];
     if (!row) return result;
-    result += (row[x + i]?.char ?? " ");
+    result += row[x + i]?.char ?? " ";
   }
   return result;
 }
@@ -23,22 +25,28 @@ describe("renderMainMenu (Bug A regression: CONTINUE hint placement)", () => {
     const rows = 50;
     const saveMeta = { missionId: "aleph_fragment", turnCount: 3 };
     const grid = renderMainMenu(0, cols, rows, true, saveMeta);
-    const hintRow = 8 + 14 + 1;
+    const { optionsX, optionsY } = mainMenuLayout(makeGrid(cols, rows));
+    const hintRow = optionsY + 14 + 1;
     const hintText = "→ aleph_fragment (turn 4)";
-    const found = getGridText(grid, hintRow, 6, hintText.length);
-    expect(found, `Hint '${hintText}' should appear on row ${hintRow}`).toBe(hintText);
+    const found = getGridText(grid, hintRow, optionsX + 2, hintText.length);
+    expect(found, `Hint '${hintText}' should appear on row ${hintRow}`).toBe(
+      hintText,
+    );
   });
 
   it("does not render the save hint when no save exists", () => {
     const grid = renderMainMenu(0, 80, 50, false, null);
-    for (let y = 8; y <= 22; y++) {
-      const rowText = getGridText(grid, y, 4, 30);
+    for (let y = 0; y < 50; y++) {
+      const rowText = getGridText(grid, y, 0, 80);
       expect(rowText).not.toContain("→");
     }
   });
 
   it("renders all 14 menu options without overlap when save exists", () => {
-    const grid = renderMainMenu(0, 80, 50, true, { missionId: "x", turnCount: 0 });
+    const grid = renderMainMenu(0, 80, 50, true, {
+      missionId: "x",
+      turnCount: 0,
+    });
     const expected = [
       "[1] NEW RUN",
       "[2] FAR GRID",
@@ -55,10 +63,11 @@ describe("renderMainMenu (Bug A regression: CONTINUE hint placement)", () => {
       "[13] STATS",
       "[14] TUTORIAL",
     ];
+    const { optionsX, optionsY } = mainMenuLayout(makeGrid(80, 50));
     for (let i = 0; i < expected.length; i++) {
-      const rowText = getGridText(grid, 8 + i, 0, 30);
-      expect(rowText, `row ${8 + i} should contain '${expected[i]}'`).toContain(expected[i]!);
+      const rowText = getGridText(grid, optionsY + i, optionsX, 30);
+      const label = `row ${optionsY + i} should contain '${expected[i]}'`;
+      expect(rowText, label).toContain(expected[i]!);
     }
   });
 });
-

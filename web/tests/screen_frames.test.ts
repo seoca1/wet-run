@@ -1,5 +1,6 @@
 /** Green Grid frames on the main menu, mission select and combat screens
- * (ADR-0237 §2, triage V2). All three use `renderer/panel.ts`.
+ * (ADR-0237 §2, triage V2). All three use `renderer/panel.ts` and inset the
+ * frame one cell from the grid edge (`screenFrameRect`).
  */
 import { describe, expect, it } from "vitest";
 import type { Grid } from "../src/core/types";
@@ -24,34 +25,58 @@ function rowText(grid: Grid, y: number): string {
   return (grid.cells[y] ?? []).map((c) => c.char).join("");
 }
 
-/** Assert the full-grid frame: corners, rails, and nothing but frame glyphs on the edge. */
-function expectFullFrame(grid: Grid): void {
-  const right = grid.width - 1;
-  const bottom = grid.height - 1;
-  expect(charAt(grid, 0, 0)).toBe("╔");
-  expect(charAt(grid, right, 0)).toBe("╗");
-  expect(charAt(grid, 0, bottom)).toBe("╚");
+/** Assert the inset frame: corners one cell in from each grid edge, unbroken
+ * rails between them, and a blank one-cell gutter outside them. */
+function expectInsetFrame(grid: Grid): void {
+  const left = 1;
+  const top = 1;
+  const right = grid.width - 2;
+  const bottom = grid.height - 2;
+  expect(charAt(grid, left, top)).toBe("╔");
+  expect(charAt(grid, right, top)).toBe("╗");
+  expect(charAt(grid, left, bottom)).toBe("╚");
   expect(charAt(grid, right, bottom)).toBe("╝");
-  for (let x = 0; x <= right; x++) {
-    expect(FRAME_GLYPHS.has(charAt(grid, x, 0)), `top x=${x}`).toBe(true);
+  for (let x = left; x <= right; x++) {
+    expect(FRAME_GLYPHS.has(charAt(grid, x, top)), `top x=${x}`).toBe(true);
     expect(FRAME_GLYPHS.has(charAt(grid, x, bottom)), `bottom x=${x}`).toBe(
       true,
     );
   }
-  for (let y = 0; y <= bottom; y++) {
-    expect(FRAME_GLYPHS.has(charAt(grid, 0, y)), `left y=${y}`).toBe(true);
+  for (let y = top; y <= bottom; y++) {
+    expect(FRAME_GLYPHS.has(charAt(grid, left, y)), `left y=${y}`).toBe(true);
     expect(FRAME_GLYPHS.has(charAt(grid, right, y)), `right y=${y}`).toBe(true);
     expect(grid.cells[y]?.[right]?.fg).toBe(PALETTE.GREEN_NEON);
+  }
+  expectBlankGutter(grid);
+}
+
+/** Assert the outermost row/column on every side holds only blank cells. */
+function expectBlankGutter(grid: Grid): void {
+  const lastX = grid.width - 1;
+  const lastY = grid.height - 1;
+  for (let x = 0; x <= lastX; x++) {
+    expect(charAt(grid, x, 0), `gutter top x=${x}`).toBe(" ");
+    expect(charAt(grid, x, lastY), `gutter bottom x=${x}`).toBe(" ");
+  }
+  for (let y = 0; y <= lastY; y++) {
+    expect(charAt(grid, 0, y), `gutter left y=${y}`).toBe(" ");
+    expect(charAt(grid, lastX, y), `gutter right y=${y}`).toBe(" ");
   }
 }
 
 describe("main menu frame", () => {
   it("draws a GREEN_NEON double-line frame around an 80x50 menu", () => {
     const grid = renderMainMenu(0, 80, 50);
-    expectFullFrame(grid);
-    expect(charAt(grid, 40, 0)).toBe("═");
-    expect(charAt(grid, 0, 25)).toBe("║");
-    expect(charAt(grid, 79, 25)).toBe("║");
+    expectInsetFrame(grid);
+    expect(charAt(grid, 40, 1)).toBe("═");
+    expect(charAt(grid, 1, 25)).toBe("║");
+    expect(charAt(grid, 78, 25)).toBe("║");
+    expect(mainMenuLayout(grid).frame).toEqual({
+      x: 1,
+      y: 1,
+      width: 78,
+      height: 48,
+    });
   });
 
   it("keeps the frame intact with a save hint and an overlong status line", () => {
@@ -63,17 +88,17 @@ describe("main menu frame", () => {
       { missionId: "aleph_fragment", turnCount: 3 },
       "x".repeat(200),
     );
-    expectFullFrame(grid);
+    expectInsetFrame(grid);
   });
 
   it("pins the footer to the last two inner rows", () => {
     const grid = renderMainMenu(0, 80, 50);
     const { footerY } = mainMenuLayout(grid);
-    expect(footerY).toBe(47);
-    expect(rowText(grid, 47)).toContain(
+    expect(footerY).toBe(46);
+    expect(rowText(grid, 46)).toContain(
       "↑↓: navigate | ENTER: select | ESC: back",
     );
-    expect(rowText(grid, 48)).toContain("Tier 4 · v0.1.0 · ADR-0209 IDB");
+    expect(rowText(grid, 47)).toContain("Tier 4 · v0.1.0 · ADR-0209 IDB");
   });
 
   it("centres the title-to-status block instead of clustering it at the top", () => {
@@ -89,17 +114,19 @@ describe("main menu frame", () => {
     const grid = renderMainMenu(0, 80, 50, false, null, "", false);
     const { optionsX, optionsY } = mainMenuLayout(grid);
     const widest = "▸ [5] CONTINUE    (no save)".length;
-    expect(optionsX).toBe(1 + Math.floor((78 - widest) / 2));
+    expect(optionsX).toBe(2 + Math.floor((76 - widest) / 2));
     expect(rowText(grid, optionsY).slice(optionsX)).toMatch(/^▸ \[1\] NEW RUN/);
   });
 
-  it("falls back to the original offsets on a short grid without losing the frame", () => {
+  it("falls back to the original inner offsets on a short grid without losing the frame", () => {
     const grid = renderMainMenu(0, 30, 24);
     const layout = mainMenuLayout(grid);
-    expect(layout.titleY).toBe(2);
-    expect(layout.optionsY).toBe(8);
-    expect(layout.optionsX).toBe(4);
-    expectFullFrame(grid);
+    expect(layout.titleY).toBe(layout.inner.y + 1);
+    expect(layout.titleY).toBe(3);
+    expect(layout.optionsY).toBe(9);
+    expect(layout.optionsX).toBe(layout.inner.x + 3);
+    expect(layout.optionsX).toBe(5);
+    expectInsetFrame(grid);
   });
 });
 
@@ -111,16 +138,18 @@ describe("mission select frame", () => {
 
   it("frames the screen and rules off the header with ╠═╣", () => {
     const grid = renderMissionList(labels, 0, 80, 50);
-    expectFullFrame(grid);
-    expect(charAt(grid, 0, 4)).toBe("╠");
-    expect(charAt(grid, 79, 4)).toBe("╣");
-    expect(charAt(grid, 40, 4)).toBe("═");
+    expectInsetFrame(grid);
+    expect(charAt(grid, 1, 5)).toBe("╠");
+    expect(charAt(grid, 78, 5)).toBe("╣");
+    expect(charAt(grid, 40, 5)).toBe("═");
+    expect(charAt(grid, 0, 5)).toBe(" ");
+    expect(charAt(grid, 79, 5)).toBe(" ");
   });
 
-  it("keeps the header text and cells unchanged", () => {
+  it("keeps the header at its offsets inside the inset frame", () => {
     const grid = renderMissionList(labels, 0, 80, 50);
-    expect(rowText(grid, 1).slice(2)).toMatch(/^WET RUN — Select Mission/);
-    expect(rowText(grid, 3).slice(2)).toMatch(
+    expect(rowText(grid, 2).slice(3)).toMatch(/^WET RUN — Select Mission/);
+    expect(rowText(grid, 4).slice(3)).toMatch(
       /^↑↓: navigate \| ENTER: launch \| ESC: back/,
     );
   });
@@ -128,20 +157,30 @@ describe("mission select frame", () => {
   it("centres a short list in the body below the rule", () => {
     const grid = renderMissionList(labels, 1, 80, 50);
     const layout = missionListLayout(grid, labels);
-    expect(layout.listY).toBe(6 + Math.floor((43 - 5) / 2));
+    expect(layout.listY).toBe(7 + Math.floor((41 - 5) / 2));
     expect(rowText(grid, layout.listY + 1).slice(layout.listX)).toMatch(
       /^▸ \[2\] Mission 2/,
     );
   });
 
-  it("starts a list that fills the body at the original row 6 and clips it at the rail", () => {
+  it("starts a list that fills the body two rows below the rule and clips it at the rail", () => {
     const many = Array.from({ length: 60 }, (_, i) => `[${i + 1}] M${i + 1}`);
     const grid = renderMissionList(many, 0, 80, 50);
     const layout = missionListLayout(grid, many);
-    expect(layout.listY).toBe(6);
-    expect(layout.listBottom).toBe(48);
-    expect(rowText(grid, 48)).toContain("[43] M43");
-    expectFullFrame(grid);
+    expect(layout.listY).toBe(7);
+    expect(layout.listBottom).toBe(47);
+    expect(rowText(grid, 47)).toContain("[41] M41");
+    expect(rowText(grid, 48)).not.toContain("M42");
+    expectInsetFrame(grid);
+  });
+
+  it("clips an overlong row at the right rail instead of the gutter", () => {
+    const grid = renderMissionList(["z".repeat(200)], 0, 80, 50);
+    const { listX, listY } = missionListLayout(grid, ["z".repeat(200)]);
+    expect(charAt(grid, 77, listY)).toBe("z");
+    expect(charAt(grid, 78, listY)).toBe("║");
+    expect(listX).toBe(5);
+    expectInsetFrame(grid);
   });
 });
 
@@ -189,26 +228,26 @@ describe("combat frame", () => {
 
   it("frames the combat grid; the right rail divides it from the HUD column", () => {
     const grid = renderGrid(combatState(), null, null, [], 80, 50);
-    expectFullFrame(grid);
-    for (let y = 1; y < 49; y++) {
-      expect(FRAME_GLYPHS.has(charAt(grid, 79, y))).toBe(true);
+    expectInsetFrame(grid);
+    for (let y = 2; y < 48; y++) {
+      expect(FRAME_GLYPHS.has(charAt(grid, 78, y))).toBe(true);
     }
   });
 
   it("rules off the header (mission, message, player HP) from the ICE field", () => {
     const grid = renderGrid(combatState(), null, null, [], 80, 50);
-    expect(combatHeaderRuleRow(50)).toBe(7);
-    expect(charAt(grid, 0, 7)).toBe("╠");
-    expect(charAt(grid, 79, 7)).toBe("╣");
-    expect(rowText(grid, 1).slice(2)).toMatch(/^Mission: Test/);
-    expect(rowText(grid, 5).slice(2)).toMatch(/^P /);
+    expect(combatHeaderRuleRow(50)).toBe(8);
+    expect(charAt(grid, 1, 8)).toBe("╠");
+    expect(charAt(grid, 78, 8)).toBe("╣");
+    expect(rowText(grid, 2).slice(3)).toMatch(/^Mission: Test/);
+    expect(rowText(grid, 6).slice(3)).toMatch(/^P /);
   });
 
   it("omits the header rule when the grid is too short for it", () => {
     expect(combatHeaderRuleRow(12)).toBeNull();
     const grid = renderGrid(combatState(), null, null, [], 40, 12);
-    expect(charAt(grid, 0, 7)).toBe("║");
-    expectFullFrame(grid);
+    expect(charAt(grid, 1, 8)).toBe("║");
+    expectInsetFrame(grid);
   });
 
   it("never lets an overlong message erase the right rail", () => {
@@ -220,8 +259,9 @@ describe("combat frame", () => {
       80,
       50,
     );
-    expect(charAt(grid, 79, 3)).toBe("║");
-    expectFullFrame(grid);
+    expect(charAt(grid, 78, 4)).toBe("║");
+    expect(rowText(grid, 4).slice(3, 78)).toBe("y".repeat(75));
+    expectInsetFrame(grid);
   });
 
   it("keeps victory art off the bottom rail", () => {
@@ -233,6 +273,6 @@ describe("combat frame", () => {
       80,
       30,
     );
-    expectFullFrame(grid);
+    expectInsetFrame(grid);
   });
 });

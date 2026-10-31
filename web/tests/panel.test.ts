@@ -2,9 +2,13 @@ import { describe, expect, it } from "vitest";
 import type { Grid } from "../src/core/types";
 import { makeGrid, setText } from "../src/core/grid";
 import {
+  SCREEN_FRAME_INSET,
+  clipToInner,
   drawPanel,
   drawPanelSeparator,
   panelInnerRect,
+  screenFrameRect,
+  setInnerText,
   type PanelRect,
 } from "../src/renderer/panel";
 import {
@@ -345,4 +349,108 @@ describe("Green Grid panels", () => {
       }
     },
   );
+
+  it("derives a one-cell inset screen frame from the grid size", () => {
+    // Given
+    const input = makeGrid(80, 50);
+    // When
+    const frame = screenFrameRect(input);
+    // Then
+    expect(SCREEN_FRAME_INSET).toBe(1);
+    expect(frame).toEqual({ x: 1, y: 1, width: 78, height: 48 });
+    expect(panelInnerRect(input, frame)).toEqual({
+      x: 2,
+      y: 2,
+      width: 76,
+      height: 46,
+    });
+  });
+
+  it("leaves a blank gutter when the inset screen frame is drawn", () => {
+    // Given
+    const input = makeGrid(8, 6);
+    // When
+    const { grid } = drawPanel(input, screenFrameRect(input));
+    // Then
+    expect(lines(grid)).toEqual([
+      "        ",
+      " ╔════╗ ",
+      " ║    ║ ",
+      " ║    ║ ",
+      " ╚════╝ ",
+      "        ",
+    ]);
+  });
+
+  it.each([
+    [
+      { width: 2, height: 2 },
+      { x: 1, y: 1, width: 0, height: 0 },
+    ],
+    [
+      { width: 0, height: 0 },
+      { x: 1, y: 1, width: 0, height: 0 },
+    ],
+    [
+      { width: 10, height: 6 },
+      { x: 2, y: 2, width: 6, height: 2 },
+    ],
+  ])("clamps the inset frame for %o", (size, expected) => {
+    // Given
+    const inset = size.width === 10 ? 2 : SCREEN_FRAME_INSET;
+    // When
+    const frame = screenFrameRect(size, inset);
+    // Then
+    expect(frame).toEqual(expected);
+  });
+
+  it("draws nothing when the grid is too small for an inset frame", () => {
+    // Given
+    const input = makeGrid(3, 3);
+    // When
+    const result = drawPanel(input, screenFrameRect(input));
+    // Then
+    expect(result.grid).toBe(input);
+  });
+
+  it.each([
+    [2, "abcdef", "abcd"],
+    [3, "ab", "ab"],
+    [6, "abc", ""],
+    [9, "abc", ""],
+  ])(
+    "clips text from column %s to the inner rectangle",
+    (x, text, expected) => {
+      // Given
+      const inner: PanelRect = { x: 2, y: 2, width: 4, height: 1 };
+      // When
+      const clipped = clipToInner(inner, x, text);
+      // Then
+      expect(clipped).toBe(expected);
+    },
+  );
+
+  it("writes text only inside the inner rectangle", () => {
+    // Given
+    const input = makeGrid(8, 4);
+    const inner: PanelRect = { x: 2, y: 1, width: 4, height: 2 };
+    // When
+    let grid = setInnerText(input, inner, 3, 1, "LONGTEXT", PALETTE.CYAN_LIGHT);
+    grid = setInnerText(grid, inner, 2, 0, "ABOVE");
+    grid = setInnerText(grid, inner, 2, 3, "BELOW");
+    // Then
+    expect(lines(grid)).toEqual([
+      "        ",
+      "   LON  ",
+      "        ",
+      "        ",
+    ]);
+    expect(grid.get(3, 1)?.fg).toBe(PALETTE.CYAN_LIGHT);
+    expect(lines(input)).toEqual([
+      "        ",
+      "        ",
+      "        ",
+      "        ",
+    ]);
+  });
 });

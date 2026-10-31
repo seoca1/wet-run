@@ -59,6 +59,50 @@ export function panelInnerRect(grid: Grid, frame: PanelRect): PanelRect {
   };
 }
 
+/** Cells of black gutter left between a full-screen frame and the grid edge. */
+export const SCREEN_FRAME_INSET = 1;
+
+/** Frame rectangle for a full-screen panel, inset from every grid edge.
+ * Derived from the grid size so each screen frames itself the same way: the
+ * corners land on (inset, inset) and (width-1-inset, height-1-inset). Sizes
+ * too small for the gutter yield nonnegative (possibly degenerate) dimensions,
+ * which `drawPanel` then declines to draw.
+ */
+export function screenFrameRect(
+  size: { readonly width: number; readonly height: number },
+  inset: number = SCREEN_FRAME_INSET,
+): PanelRect {
+  return {
+    x: inset,
+    y: inset,
+    width: Math.max(0, size.width - 2 * inset),
+    height: Math.max(0, size.height - 2 * inset),
+  };
+}
+
+/** Truncate `text` written from column `x` so it ends inside `inner`.
+ * Keeps overlong lines off the right rail and out of the gutter beyond it.
+ */
+export function clipToInner(inner: PanelRect, x: number, text: string): string {
+  return text.slice(0, Math.max(0, inner.x + inner.width - x));
+}
+
+/** `setText` confined to a panel's inner rectangle: text is truncated at the
+ * right edge and rows outside the rectangle are skipped, so content can never
+ * reach a rail or the gutter beyond it. Returns a new grid (or the input).
+ */
+export function setInnerText(
+  grid: Grid,
+  inner: PanelRect,
+  x: number,
+  y: number,
+  text: string,
+  fg?: string,
+): Grid {
+  if (y < inner.y || y >= inner.y + inner.height) return grid;
+  return setText(grid, x, y, clipToInner(inner, x, text), fg);
+}
+
 interface PanelRule {
   readonly y: number;
   readonly left: string;

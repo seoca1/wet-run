@@ -16,7 +16,13 @@ import { makeGrid, setText } from "../core/grid";
 import { t, type Language } from "../core/i18n";
 import { PALETTE } from "./palette";
 import { formatNavIndex } from "./nav_index";
-import { drawPanel, panelInnerRect, type PanelRect } from "./panel";
+import {
+  drawPanel,
+  panelInnerRect,
+  screenFrameRect,
+  setInnerText,
+  type PanelRect,
+} from "./panel";
 
 export type MenuOption =
   | "new_run"
@@ -87,23 +93,20 @@ function widestOptionRow(language: Language): number {
   return widest;
 }
 
-/** Compose the main menu inside a full-grid frame (ADR-0237 §2).
+/** Compose the main menu inside a screen frame inset one cell from the grid
+ * edge (ADR-0237 §2, `screenFrameRect`).
  *
  * The footer sits on the last two inner rows; the title-to-status block is
  * centred vertically in the space above it and the option column is centred
  * horizontally. Grids too small to centre fall back to the original offsets
- * (title two rows down, options at column 4).
+ * relative to the inner box (title one row below its top, options three
+ * columns in).
  */
 export function mainMenuLayout(
   grid: Grid,
   language: Language = "en",
 ): MainMenuLayout {
-  const frame: PanelRect = {
-    x: 0,
-    y: 0,
-    width: grid.width,
-    height: grid.height,
-  };
+  const frame = screenFrameRect(grid);
   const inner = panelInnerRect(grid, frame);
   const footerY = inner.y + inner.height - 2;
   const available = footerY - 1 - inner.y;
@@ -147,16 +150,18 @@ export function renderMainMenu(
 
   // Title block
   const title = t("menu.title", language);
-  grid = setText(
+  grid = setInnerText(
     grid,
+    inner,
     centredX(inner, title.length),
     titleY,
     title,
     PALETTE.GREEN_NEON,
   );
   const subtitle = t("menu.subtitle", language);
-  grid = setText(
+  grid = setInnerText(
     grid,
+    inner,
     centredX(inner, subtitle.length),
     titleY + 2,
     subtitle,
@@ -165,8 +170,9 @@ export function renderMainMenu(
 
   // Divider
   const dividerWidth = Math.max(0, Math.min(inner.width - 2, 60));
-  grid = setText(
+  grid = setInnerText(
     grid,
+    inner,
     centredX(inner, dividerWidth),
     titleY + 4,
     "─".repeat(dividerWidth),
@@ -187,8 +193,9 @@ export function renderMainMenu(
     // CONTINUE option gating — gray out + suffix when no save.
     if (opt.key === "continue" && !hasSave) {
       label = `${num} ${t("menu.continue", language)}    ${t("menu.no_save", language)}`;
-      grid = setText(
+      grid = setInnerText(
         grid,
+        inner,
         optionsX,
         row,
         `${marker} ${label}`,
@@ -199,8 +206,9 @@ export function renderMainMenu(
     // FAR GRID option gating — gray out + suffix when locked (ADR-0213 Phase 2).
     if (opt.key === "far_grid_hub" && !farGridUnlocked) {
       label = `${num} ${t("menu.far_grid_hub", language)}    ${t("menu.locked", language)}`;
-      grid = setText(
+      grid = setInnerText(
         grid,
+        inner,
         optionsX,
         row,
         `${marker} ${label}`,
@@ -208,7 +216,7 @@ export function renderMainMenu(
       );
       continue;
     }
-    grid = setText(grid, optionsX, row, `${marker} ${label}`, fg);
+    grid = setInnerText(grid, inner, optionsX, row, `${marker} ${label}`, fg);
   }
 
   // Continue hint sub-line (when save exists). Place below all menu items
@@ -217,7 +225,14 @@ export function renderMainMenu(
     const hintRow = startY + MENU_OPTIONS.length + 1;
     if (hintRow < footerY) {
       const hint = `→ ${saveMeta.missionId} (turn ${saveMeta.turnCount + 1})`;
-      grid = setText(grid, optionsX + 2, hintRow, hint, PALETTE.YELLOW_AMBER);
+      grid = setInnerText(
+        grid,
+        inner,
+        optionsX + 2,
+        hintRow,
+        hint,
+        PALETTE.YELLOW_AMBER,
+      );
     }
   }
 
@@ -225,9 +240,11 @@ export function renderMainMenu(
   if (statusMessage) {
     const msgRow = startY + MENU_OPTIONS.length + 2;
     if (msgRow < footerY) {
-      grid = setText(
+      const msgX = Math.max(inner.x + 1, optionsX - 2);
+      grid = setInnerText(
         grid,
-        Math.max(inner.x + 1, optionsX - 2),
+        inner,
+        msgX,
         msgRow,
         statusMessage,
         PALETTE.YELLOW_AMBER,
@@ -236,15 +253,17 @@ export function renderMainMenu(
   }
 
   // Footer
-  grid = setText(
+  grid = setInnerText(
     grid,
+    inner,
     inner.x + 1,
     footerY,
     t("menu.footer", language),
     PALETTE.GRAY_DARK,
   );
-  grid = setText(
+  grid = setInnerText(
     grid,
+    inner,
     inner.x + 1,
     footerY + 1,
     t("menu.version", language),

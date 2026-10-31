@@ -57,6 +57,9 @@ function makeState(overrides: Partial<GameState> = {}): GameState {
   };
 }
 
+/** Fifth inner row of the inset combat frame (frame top rail on row 1). */
+const PLAYER_HP_ROW = 6;
+
 function rowText(grid: ReturnType<typeof renderGrid>, row: number): string {
   let out = "";
   for (let x = 0; x < grid.width; x++) {
@@ -79,11 +82,14 @@ describe("combat grid status glyph placement (P14)", () => {
     });
 
     const grid = renderGrid(state, null, null, [], 80, 50);
-    const groups = groupStatusByTarget(state.statusEffects, state.activeIceIndex);
+    const groups = groupStatusByTarget(
+      state.statusEffects,
+      state.activeIceIndex,
+    );
     const withStatus = renderGrid(state, null, null, groups, 80, 50);
 
-    expect(rowText(grid, 5)).not.toContain("[B2]");
-    expect(rowText(withStatus, 5)).toContain("[B2]");
+    expect(rowText(grid, PLAYER_HP_ROW)).not.toContain("[B2]");
+    expect(rowText(withStatus, PLAYER_HP_ROW)).toContain("[B2]");
   });
 
   it("draws the active ICE's effect on the ICE name row", () => {
@@ -100,7 +106,10 @@ describe("combat grid status glyph placement (P14)", () => {
       ],
     });
 
-    const groups = groupStatusByTarget(state.statusEffects, state.activeIceIndex);
+    const groups = groupStatusByTarget(
+      state.statusEffects,
+      state.activeIceIndex,
+    );
     const grid = renderGrid(state, null, null, groups, 80, 50);
 
     const rosterRow = Math.floor(50 * 0.44);
@@ -127,12 +136,15 @@ describe("combat grid status glyph placement (P14)", () => {
       ],
     });
 
-    const groups = groupStatusByTarget(state.statusEffects, state.activeIceIndex);
+    const groups = groupStatusByTarget(
+      state.statusEffects,
+      state.activeIceIndex,
+    );
     const grid = renderGrid(state, null, null, groups, 80, 50);
 
     const rosterRow = Math.floor(50 * 0.44);
-    expect(rowText(grid, 5)).toContain("[B2]");
-    expect(rowText(grid, 5)).not.toContain("[D3]");
+    expect(rowText(grid, PLAYER_HP_ROW)).toContain("[B2]");
+    expect(rowText(grid, PLAYER_HP_ROW)).not.toContain("[D3]");
     expect(rowText(grid, rosterRow)).toContain("[D3]");
     expect(rowText(grid, rosterRow)).not.toContain("[B2]");
   });
@@ -155,7 +167,10 @@ describe("combat grid status glyph placement (P14)", () => {
       ],
     });
 
-    const groups = groupStatusByTarget(state.statusEffects, state.activeIceIndex);
+    const groups = groupStatusByTarget(
+      state.statusEffects,
+      state.activeIceIndex,
+    );
     const grid = renderGrid(state, null, null, groups, 80, 50);
 
     const firstRow = Math.floor(50 * 0.44);
@@ -192,11 +207,14 @@ describe("combat grid status glyph placement (P14)", () => {
       ],
     });
 
-    const groups = groupStatusByTarget(state.statusEffects, state.activeIceIndex);
+    const groups = groupStatusByTarget(
+      state.statusEffects,
+      state.activeIceIndex,
+    );
     const grid = renderGrid(state, null, null, groups, 40, 60);
 
     expect(grid.width).toBe(40);
-    for (const row of [5, Math.floor(60 * 0.44)]) {
+    for (const row of [PLAYER_HP_ROW, Math.floor(60 * 0.44)]) {
       expect(rowText(grid, row).length).toBeLessThanOrEqual(40);
     }
   });

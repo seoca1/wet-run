@@ -7,12 +7,14 @@
  */
 import type { Grid } from "../core/types";
 import type { State } from "../core/types";
-import { makeGrid, setText } from "../core/grid";
+import { makeGrid } from "../core/grid";
 import { PALETTE } from "./palette";
 import {
   drawPanel,
   drawPanelSeparator,
   panelInnerRect,
+  screenFrameRect,
+  setInnerText,
   type PanelRect,
 } from "./panel";
 
@@ -32,22 +34,19 @@ export interface MissionListLayout {
   readonly listBottom: number;
 }
 
-/** Compose the mission list within a full-grid frame.
+/** Compose the mission list within a screen frame inset one cell from the grid
+ * edge (`screenFrameRect`).
  *
- * The header keeps its original cells (title row 1, key hint row 3, column 2).
- * The list starts no higher than its original row 6, is centred vertically in
+ * The header sits at fixed offsets inside the frame (title on the first inner
+ * row, key hint two rows below, one column in). The list starts no higher than
+ * two rows under the ╠═╣ rule, is centred vertically in
  * the body when it fits, and its column is centred on the widest row.
  */
 export function missionListLayout(
   grid: Grid,
   rowLabels: readonly string[],
 ): MissionListLayout {
-  const frame: PanelRect = {
-    x: 0,
-    y: 0,
-    width: grid.width,
-    height: grid.height,
-  };
+  const frame = screenFrameRect(grid);
   const inner = panelInnerRect(grid, frame);
   const separatorY = inner.y + 3;
   const bodyTop = separatorY + 2;
@@ -77,15 +76,17 @@ export function renderMissionList(
   let grid = makeGrid(cols, rows);
   const layout = missionListLayout(grid, rowLabels);
   const { inner } = layout;
-  grid = setText(
+  grid = setInnerText(
     grid,
+    inner,
     inner.x + 1,
     inner.y,
     "WET RUN — Select Mission",
     PALETTE.GREEN_NEON,
   );
-  grid = setText(
+  grid = setInnerText(
     grid,
+    inner,
     inner.x + 1,
     inner.y + 2,
     "↑↓: navigate | ENTER: launch | ESC: back",
@@ -97,7 +98,8 @@ export function renderMissionList(
     const isSelected = i === selected;
     const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const marker = isSelected ? "▸" : " ";
-    grid = setText(grid, layout.listX, y, `${marker} ${rowLabels[i]}`, fg);
+    const row = `${marker} ${rowLabels[i]}`;
+    grid = setInnerText(grid, inner, layout.listX, y, row, fg);
   }
   grid = drawPanel(grid, layout.frame).grid;
   return drawPanelSeparator(grid, layout.frame, layout.separatorY);

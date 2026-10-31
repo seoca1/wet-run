@@ -5,6 +5,7 @@
  * - Entity rendering (player, monsters, items)
  * - Fog of war / exploration system
  * - Color coding for different tile types and entities
+ * - ADR-0237 §2: an inset Green Grid frame (panel.ts) around the map
  */
 
 import { Grid } from "../core/types";
@@ -17,8 +18,24 @@ import {
 } from "../core/dungeon/dungeon_crawler";
 import { DungeonCrawler } from "../core/dungeon/dungeon_crawler";
 import { makeGrid, setCell } from "../core/grid";
+import {
+  drawPanel,
+  panelInnerRect,
+  screenFrameRect,
+  type PanelRect,
+} from "./panel";
 
-/** Render the dungeon map to a grid */
+/** Inset Green Grid frame of the dungeon screen (ADR-0237 §2): a one-cell
+ * gutter to the canvas edge on every side, shared with the other screens. */
+export function dungeonFrame(cols: number, rows: number): PanelRect {
+  return screenFrameRect({ width: cols, height: rows });
+}
+
+/** Render the dungeon map to a grid.
+ *
+ * The map is centred inside the frame's inner rectangle and clipped to it;
+ * the frame is drawn last so no tile or entity can land on a rail.
+ */
 export function renderDungeonMap(
   crawler: DungeonCrawler,
   cols: number,
@@ -26,17 +43,18 @@ export function renderDungeonMap(
 ): Grid {
   // Create empty grid using makeGrid
   let grid = makeGrid(cols, rows);
+  const frame = dungeonFrame(cols, rows);
+  const inner = panelInnerRect(grid, frame);
 
-  // Calculate offset to center the dungeon in the viewport
+  // Calculate offset to center the dungeon in the framed viewport
   const dungeonWidth = crawler.state.width;
   const dungeonHeight = crawler.state.height;
 
-  let offsetX = Math.max(0, Math.floor((cols - dungeonWidth) / 2));
-  let offsetY = Math.max(0, Math.floor((rows - dungeonHeight) / 2));
-
-  // Ensure we don't go negative if dungeon is larger than viewport
-  offsetX = Math.min(offsetX, cols - 1);
-  offsetY = Math.min(offsetY, rows - 1);
+  // A dungeon larger than the inner area is anchored at its top-left corner.
+  const offsetX =
+    inner.x + Math.max(0, Math.floor((inner.width - dungeonWidth) / 2));
+  const offsetY =
+    inner.y + Math.max(0, Math.floor((inner.height - dungeonHeight) / 2));
 
   // Render each tile
   for (let y = 0; y < dungeonHeight; y++) {
@@ -44,8 +62,8 @@ export function renderDungeonMap(
       const screenX = offsetX + x;
       const screenY = offsetY + y;
 
-      // Skip if outside viewport
-      if (screenX < 0 || screenX >= cols || screenY < 0 || screenY >= rows) {
+      // Skip if outside the framed viewport
+      if (!insideRect(inner, screenX, screenY)) {
         continue;
       }
 
@@ -76,9 +94,19 @@ export function renderDungeonMap(
   }
 
   // Render entities on top of tiles
-  grid = renderEntities(grid, crawler, offsetX, offsetY, cols, rows);
+  grid = renderEntities(grid, crawler, offsetX, offsetY, inner);
 
-  return grid;
+  // Frame last, so the map can never overwrite a rail.
+  return drawPanel(grid, frame).grid;
+}
+
+function insideRect(rect: PanelRect, x: number, y: number): boolean {
+  return (
+    x >= rect.x &&
+    x < rect.x + rect.width &&
+    y >= rect.y &&
+    y < rect.y + rect.height
+  );
 }
 
 /** Render entities (player, monsters, items) on top of the map */
@@ -87,8 +115,7 @@ function renderEntities(
   crawler: DungeonCrawler,
   offsetX: number,
   offsetY: number,
-  cols: number,
-  rows: number,
+  viewport: PanelRect,
 ): Grid {
   const entities = crawler.state.entities;
 
@@ -101,8 +128,8 @@ function renderEntities(
     const screenX = offsetX + entity.x;
     const screenY = offsetY + entity.y;
 
-    // Skip if outside viewport
-    if (screenX < 0 || screenX >= cols || screenY < 0 || screenY >= rows) {
+    // Skip if outside the framed viewport
+    if (!insideRect(viewport, screenX, screenY)) {
       continue;
     }
 

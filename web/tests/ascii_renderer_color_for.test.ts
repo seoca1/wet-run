@@ -56,7 +56,7 @@ describe("AsciiRenderer hudColorFor (alarm 100% visual cue)", () => {
   it("renders all HUD lines with default GREEN_NEON when no colorFor is passed", () => {
     const { canvas, fills } = makeCanvas();
     const renderer = new AsciiRenderer(canvas);
-    const lines = ["WET", "LVE: 01", "HP: 50/100", "ALM: 25%"];
+    const lines = ["WET", "LVL: 01", "HP: 50/100", "ALM: 25%"];
     renderer.render(emptyGrid(), lines);
     const hud = hudColors(fills, lines.length);
     expect(hud.length).toBe(lines.length);

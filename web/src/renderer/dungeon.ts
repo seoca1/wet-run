@@ -362,7 +362,7 @@ export function renderDungeonUi(
   lines.push("WET");
 
   // Level
-  lines.push(`LVE: ${String(stats.level).padStart(2, "0")}`);
+  lines.push(`LVL: ${String(stats.level).padStart(2, "0")}`);
 
   // HP
   lines.push(`HP: ${stats.hp}/${stats.maxHp}`);

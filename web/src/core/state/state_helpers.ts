@@ -9,7 +9,14 @@ const WEB_TICK_MS = 16;
 /** Maximum number of combat log lines kept on `GameState.combatLog`. */
 export const COMBAT_LOG_CAP = 8;
 
-/** Create a VFX instance directly (tick-based duration). */
+/** Create a VFX instance directly (tick-based duration).
+ *
+ * RNG-neutral since ADR-0239: the id is a content hash
+ * (`deterministicVfxId`), so spawning consumes no `Math.random` draw and the
+ * seeded gameplay stream (crit / proc / skill / loot) is untouched by display
+ * work. Identical spawns share an id — `CombatVfxInstance.id` is an identity
+ * key only and the renderer composites by array order.
+ */
 export function import_vfx(
   kind: import("../../renderer/combat_vfx.ts").CombatVfxKind,
   payload: string,
@@ -20,7 +27,7 @@ export function import_vfx(
 ): import("../../renderer/combat_vfx.ts").CombatVfxInstance {
   const durationMs = Math.max(0, duration) * WEB_TICK_MS;
   return {
-    id: Math.floor(Math.random() * 1e9) + 1,
+    id: deterministicVfxId(kind, payload, payloadNum, duration),
     kind,
     tick: 0,
     duration,
@@ -33,7 +40,11 @@ export function import_vfx(
   };
 }
 
-/** MS-precision variant: pass canonical duration_ms from schema. */
+/** MS-precision variant: pass canonical duration_ms from schema.
+ *
+ * RNG-neutral since ADR-0239 — same content-hash id scheme as `import_vfx`
+ * (hashed over the clamped millisecond duration).
+ */
 export function import_vfx_ms(
   kind: import("../../renderer/combat_vfx.ts").CombatVfxKind,
   payload: string,
@@ -44,7 +55,7 @@ export function import_vfx_ms(
 ): import("../../renderer/combat_vfx.ts").CombatVfxInstance {
   const clampedMs = Math.max(0, durationMs);
   return {
-    id: Math.floor(Math.random() * 1e9) + 1,
+    id: deterministicVfxId(kind, payload, payloadNum, clampedMs),
     kind,
     tick: 0,
     duration: Math.ceil(clampedMs / WEB_TICK_MS),
@@ -93,10 +104,10 @@ function deterministicVfxId(
  *
  * The balance harness seeds `Math.random` with a PRNG, so every draw shifts
  * the seeded crit / proc / skill rolls and moves the ADR-0229 grade curve.
- * `import_vfx` draws its id from `Math.random`, which is fine for the spawn
- * sites that already existed (their draw count is baked into the recorded
- * baseline) but NOT for newly added ones — those would silently shift the
- * whole curve. New spawn sites use this helper so they stay RNG-neutral.
+ * Since ADR-0239 `import_vfx` / `import_vfx_ms` use the same content-hash id
+ * and are RNG-neutral too (one-time re-baseline); this helper is kept for its
+ * existing spawn sites and is equivalent to `import_vfx`. The zero-draw
+ * invariant is pinned by `tests/vfx_rng_neutrality.test.ts`.
  *
  * The id is derived from the spawn's own content, so it is stable across
  * runs and independent of call order — two identical reducer calls produce

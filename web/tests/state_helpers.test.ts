@@ -32,10 +32,15 @@ describe("import_vfx", () => {
     expect(vfx.durationMs).toBe(0);
   });
 
-  it("generates unique IDs for each instance", () => {
+  // ADR-0239: ids are content-derived (RNG-neutral). Distinct content gets
+  // distinct ids; identical content shares one (identity key only).
+  it("generates distinct IDs for distinct content", () => {
     const vfx1 = import_vfx("attack", "", 3);
-    const vfx2 = import_vfx("attack", "", 3);
+    const vfx2 = import_vfx("attack", "x", 3);
+    const vfx3 = import_vfx("pierce", "", 3);
     expect(vfx1.id).not.toBe(vfx2.id);
+    expect(vfx1.id).not.toBe(vfx3.id);
+    expect(vfx1.id).toBeGreaterThan(0);
   });
 });
 

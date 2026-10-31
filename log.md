@@ -1,3 +1,27 @@
+## [2026-10-30] refactor(core) | Core module split + Audio dedup + Tier 5 verification
+
+**Status**: ✅ Core directory refactored (56 files moved). Audio assets deduplicated. Tier 5 features verified.
+
+### 1. 코어 모듈 분할 (Issue #3.3)
+- **Combat**: 15개 파일 이동 (`src/core/combat/`)
+- **Dungeon**: 13개 파일 이동 (`src/core/dungeon/`)
+- **State/Run**: 23개 파일 이동 (`src/core/state/`)
+- **Graphic Novel**: 5개 파일 이동 (`src/core/graphic_novel/`)
+- **수정**: 220+개 파일의 import 경로 정상화 및 typecheck(0 errors), test(3333 pass) 완료.
+
+### 2. 오디오 자산 정리 (Dedup)
+- **중복 제거**: `web/public/sounds/` 내 5개 theme MP3를 `docs/dashboard/sounds/full/` 참조 symlink로 교체.
+- **미사용 제거**: 소스에서 참조되지 않는 `web/public/sounds/sfx_victory.wav` 삭제.
+
+### 3. Tier 5 기능 검증
+- **확인**: 볼륨 슬라이더, 상태 머신, 세이브 압축, SFX 확장 기능이 이미 코드베이스에 구현되어 있음을 확인.
+- **업데이트**: `web/README.md` 및 `ROADMAP.md` 상의 Tier 5 미구현 항목들은 이미 완료된 상태임.
+
+**Verification**:
+- `npm run typecheck`: 0 errors
+- `npm test`: 3333 passed (141 files)
+- `audit_vault`: CLEAN
+
 ## [2026-10-20] feat(evaluation) | Game design evaluation framework + 3 issue re-check
 
 **Status**: ✅ Evaluation complete. 3 issues re-checked — all previously thought broken are actually already fixed.

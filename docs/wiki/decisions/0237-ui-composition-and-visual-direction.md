@@ -330,7 +330,7 @@ px 하한을 덧붙인다.
 
 ## Implementation Status (2026-10-31)
 
-**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 캔버스 지오메트리 = `e9eb6f1` · V2 프레임 헬퍼 = `133286a` · V2 메뉴/미션선택/전투 적용 = `f29c22f` / 남은 것: dungeon·matrix·pause·crafting·equipment 프레임, `main.ts` 분해
+**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 = `e9eb6f1` · V2 헬퍼 = `133286a` · V2 3화면 = `f29c22f` · V2 1셀 인셋 + matrix·dungeon = `a97a4a7` / 남은 것: pause·crafting·equipment 프레임, `main.ts` 분해
 
 **Evidence**:
 - `web/index.html:41-44` — canvas `max-width: 100vw; max-height: 100vh; width: auto; height: auto` — CSS 축소만 하는 지점 (V1, V3)
@@ -383,11 +383,23 @@ px 하한을 덧붙인다.
   `index.html` 의 `max-*` 가 상쇄했다). 밸런스는 개방·PPL 양 덱 6등급 전부
   **0.0pp drift** — 표시 계층 전용 변경임이 확인됐다. V2 는 `133286a`(헬퍼) +
   `f29c22f`(메뉴·미션 선택·전투 3화면 적용, 전투는 우측 레일이 HUD 컬럼과의
-  구분선을 겸함). **미적용**: dungeon · matrix · pause · crafting · equipment.
+  구분선을 겸함). **그 시점 미적용**: dungeon · matrix · pause · crafting ·
+  equipment — 그중 **dungeon·matrix 는 `a97a4a7` 에서 적용**됐다.
   검증: `vitest` 147 files / 3428 tests · `vite build` OK.
-- **미해결로 남긴 관찰**: 위 3화면의 프레임이 그리드 **최외곽 행/열**에 그려져
-  캔버스 가장자리에 붙는다 (스크린샷 `docs/design/before-after-2026-10-31/`).
-  1셀 인셋 여부는 후속 판단.
+- ~~**미해결로 남긴 관찰**: 3화면의 프레임이 그리드 최외곽 행/열에 그려져
+  캔버스 가장자리에 붙는다~~ — ✅ **2026-10-31 해소** (`a97a4a7`):
+  `panel.ts` 의 `screenFrameRect()` 가 프레임을 그리드 크기에서 파생해
+  **(1,1)–(cols-2, rows-2)** 로 인셋 → 사방 1셀 검은 거터. 텍스트가 거터로
+  새지 않도록 `clipToInner()` / `setInnerText()` 로 클립 (긴 텍스트는 이제
+  잘린다 — 이전에는 그리드 가장자리 프레임이 위에 덮어 가렸다). 같은 커밋에서
+  **matrix · dungeon 화면에도 프레임 적용**. 남은 미적용: pause · crafting ·
+  equipment.
+- **동반 발견 (이번 범위 밖, 기록)**: ① `renderer/dungeon.ts` 는 플레이어 `@`
+  심볼을 **그리지 않는다** (HEAD 에서도 동일 — 후속 조사 대상) ② 런타임 던전
+  크기는 **15×10** (100×60 그리드 / 내부 98×58) → 인셋 프레임이 던전을 자르지
+  않는다 (`dungeon_crawler_generation.ts` 의 `80×45` 는 `state` 로 옮겨지기 전
+  그래프 값) ③ 전투 HAND 행이 19행 미만 그리드에서 하단 레일에 가려 **보이지
+  않던** 문제를 같은 커밋에서 클램프로 해소.
 
 ## Open questions
 

@@ -1,6 +1,6 @@
 ## [2026-10-31] feat(ui) | UI 화면 구성 개편 — ADR-0237 채택(방향 B) + 캔버스 지오메트리 + 프레임 언어
 
-**Status**: 🟡 Partial (4 커밋). 밸런스 0.0pp 유지 — 표시 계층 전용.
+**Status**: 🟡 Partial (9 커밋). 밸런스 0.0pp 유지 — 표시 계층 전용.
 
 ### 0. 계기
 - 사용자: "wet_run UI 를 대대적으로 개선하고 싶다, 마누스 도움을 받을 수 있나?"
@@ -33,11 +33,18 @@
 - `main.ts` 변경은 미션 선택 위임 한 곳뿐 · `panel.ts`/`hud.ts` 무변경 · 신규 `tests/screen_frames.test.ts` 15개.
 - **미적용**: dungeon · matrix · pause · crafting · equipment.
 
-**테스트**: **3345 → 3428**(+3 files / +83 tests; `f29c22f` 기준 147 files).
-**게이트**: `npm test` 147 files / 3428 PASS · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓.
+### 5. 프레임 언어 완성 (`a97a4a7`)
+- 3화면 프레임을 그리드에서 파생해 **1셀 인셋**(사방 검은 거터). `panel.ts` 에 `screenFrameRect()` / `clipToInner()` / `setInnerText()` 추가.
+- **matrix · dungeon 화면에도 프레임 적용** (남은 미적용: pause · crafting · equipment).
+- 부작용 정리: 긴 텍스트는 이제 **클립**된다 (이전에는 그리드 가장자리 프레임이 위에 덮어 가렸다). 전투 HAND 행이 19행 미만 그리드에서 하단 레일에 가려 **보이지 않던** 문제도 같은 커밋에서 해소.
+- 검증: 런타임 던전 **15×10** / 그리드 100×60(내부 98×58) → 인셋 프레임이 던전을 자르지 않음.
+- 동반 발견: `renderer/dungeon.ts` 가 플레이어 `@` 심볼을 **그리지 않음** (HEAD 에서도 동일, 범위 밖).
+
+**테스트**: **3345 → 3456**(+5 files / +111 tests; `a97a4a7` 기준 149 files).
+**게이트**: `npm test` **149 files / 3456 tests PASS** (`a97a4a7`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp.
 **검증 한계**: Playwright e2e 미실행(브라우저 미설치) · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시로 Manus 태스크는 `waiting` 방치.)
-**미해결**: 3화면 프레임이 그리드 최외곽 행/열에 붙어 캔버스 가장자리에 닿음(1셀 인셋 여부 후속) · `main.ts` 2,096 LOC 분해 · 트리아지 P7/P8·X1·X2·X4(각각 ADR 선행).
+**미해결**: pause·crafting·equipment 프레임 미적용 · `main.ts` 2,096 LOC 분해 · 트리아지 P7/P8·X1·X2·X4(각각 ADR 선행) · `renderer/dungeon.ts` 가 플레이어 `@` 를 그리지 않음(HEAD 동일, 범위 밖) · Manus 태스크 `waiting` 방치(비공개 유지 결정).
 **ADR**: `docs/wiki/decisions/0237-ui-composition-and-visual-direction.md` (Accepted, 🟡 Partial) · 트리아지: `docs/design/ui-overhaul-triage-2026-10-31.md` · 산출물: `docs/design/{manus-concepts,before-after}-2026-10-31/`.
 
 ---

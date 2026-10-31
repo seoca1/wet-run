@@ -12,6 +12,15 @@ import {
 } from "../src/renderer/settings";
 import { INITIAL_PWA_STATE, type PwaState } from "../src/core/pwa_manager";
 
+/** Grid height for the PWA-section tests: the 80x50 landscape preset.
+ *
+ * Inside the inset frame (ADR-0237 §2) the PWA rows sit on rows 35-38 and
+ * the footer on the last two inner rows, so a 40-row grid can no longer show
+ * them — that trade-off is pinned in settings.test.ts. Every assertion here
+ * is about PWA content, not grid height, so it runs on the real 50-row preset.
+ */
+const PWA_ROWS = 50;
+
 function gridLines(grid: ReturnType<typeof renderSettingsScreen>): string[] {
   const lines: string[] = [];
   for (let y = 0; y < grid.height; y++) {
@@ -32,9 +41,7 @@ function findLine(
   return gridLines(grid).find((l) => l.includes(needle));
 }
 
-function makeBaseState(
-  overrides: Partial<SettingsState> = {},
-): SettingsState {
+function makeBaseState(overrides: Partial<SettingsState> = {}): SettingsState {
   // DEFAULT_PWA = offline=false so ONLINE row is visible regardless of
   // navigator.onLine in the host env (jsdom defaults to false; node has none).
   const defaultPwa: PwaState = {
@@ -56,7 +63,7 @@ function makeBaseState(
 
 describe("Settings — PWA section: install row", () => {
   it("renders PWA header in English", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "PWA")).toBeDefined();
   });
 
@@ -64,13 +71,13 @@ describe("Settings — PWA section: install row", () => {
     const grid = renderSettingsScreen(
       makeBaseState({ language: "ko" }),
       80,
-      40,
+      PWA_ROWS,
     );
     expect(findLine(grid, "PWA")).toBeDefined();
   });
 
   it("shows [ ] UNAVAILABLE when not installable (default state)", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "UNAVAILABLE")).toBeDefined();
     expect(findLine(grid, "INSTALL APP")).toBeUndefined();
     expect(findLine(grid, "INSTALLED")).toBeUndefined();
@@ -78,14 +85,14 @@ describe("Settings — PWA section: install row", () => {
 
   it("shows [ ] INSTALL APP when canInstall=true", () => {
     const pwa: PwaState = { ...INITIAL_PWA_STATE, canInstall: true };
-    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, PWA_ROWS);
     expect(findLine(grid, "INSTALL APP")).toBeDefined();
     expect(findLine(grid, "UNAVAILABLE")).toBeUndefined();
   });
 
   it("shows [X] INSTALLED when isInstalled=true", () => {
     const pwa: PwaState = { ...INITIAL_PWA_STATE, isInstalled: true };
-    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, PWA_ROWS);
     expect(findLine(grid, "INSTALLED")).toBeDefined();
     expect(findLine(grid, "INSTALL APP")).toBeUndefined();
   });
@@ -95,7 +102,7 @@ describe("Settings — PWA section: install row", () => {
     const grid = renderSettingsScreen(
       makeBaseState({ pwa, language: "ko" }),
       80,
-      40,
+      PWA_ROWS,
     );
     expect(findLine(grid, "앱 설치")).toBeDefined();
   });
@@ -105,7 +112,7 @@ describe("Settings — PWA section: install row", () => {
     const grid = renderSettingsScreen(
       makeBaseState({ pwa, language: "ko" }),
       80,
-      40,
+      PWA_ROWS,
     );
     expect(findLine(grid, "설치됨")).toBeDefined();
   });
@@ -113,14 +120,14 @@ describe("Settings — PWA section: install row", () => {
 
 describe("Settings — PWA section: update row", () => {
   it("shows [ ] APPLY UPDATE when no update is available", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "APPLY UPDATE")).toBeDefined();
     expect(findLine(grid, "UPDATE AVAILABLE")).toBeUndefined();
   });
 
   it("shows [X] UPDATE AVAILABLE when hasUpdate=true", () => {
     const pwa: PwaState = { ...INITIAL_PWA_STATE, hasUpdate: true };
-    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, PWA_ROWS);
     expect(findLine(grid, "UPDATE AVAILABLE")).toBeDefined();
   });
 
@@ -129,7 +136,7 @@ describe("Settings — PWA section: update row", () => {
     const grid = renderSettingsScreen(
       makeBaseState({ pwa, language: "ko" }),
       80,
-      40,
+      PWA_ROWS,
     );
     expect(findLine(grid, "업데이트 가능")).toBeDefined();
   });
@@ -137,14 +144,14 @@ describe("Settings — PWA section: update row", () => {
 
 describe("Settings — PWA section: offline status line", () => {
   it("shows ONLINE when isOffline=false", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "ONLINE")).toBeDefined();
     expect(findLine(grid, "OFFLINE")).toBeUndefined();
   });
 
   it("shows OFFLINE when isOffline=true", () => {
     const pwa: PwaState = { ...INITIAL_PWA_STATE, isOffline: true };
-    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState({ pwa }), 80, PWA_ROWS);
     expect(findLine(grid, "OFFLINE")).toBeDefined();
     expect(findLine(grid, "ONLINE")).toBeUndefined();
   });
@@ -154,13 +161,13 @@ describe("Settings — PWA section: offline status line", () => {
     const grid = renderSettingsScreen(
       makeBaseState({ pwa, language: "ko" }),
       80,
-      40,
+      PWA_ROWS,
     );
     expect(findLine(grid, "오프라인")).toBeDefined();
     const onlineGrid = renderSettingsScreen(
       makeBaseState({ language: "ko" }),
       80,
-      40,
+      PWA_ROWS,
     );
     expect(findLine(onlineGrid, "온라인")).toBeDefined();
   });
@@ -179,7 +186,11 @@ describe("Settings — PWA section: field selection + hint", () => {
 
   for (const field of fields) {
     it(`accepts '${field}' as a SettingsField without throwing`, () => {
-      const grid = renderSettingsScreen(makeBaseState({ selectedField: field }), 80, 40);
+      const grid = renderSettingsScreen(
+        makeBaseState({ selectedField: field }),
+        80,
+        PWA_ROWS,
+      );
       expect(grid).toBeDefined();
     });
   }
@@ -188,7 +199,7 @@ describe("Settings — PWA section: field selection + hint", () => {
     const grid = renderSettingsScreen(
       makeBaseState({ selectedField: "pwa_install" }),
       80,
-      40,
+      PWA_ROWS,
     );
     expect(findLine(grid, "ENTER: install app")).toBeDefined();
   });
@@ -197,7 +208,7 @@ describe("Settings — PWA section: field selection + hint", () => {
     const grid = renderSettingsScreen(
       makeBaseState({ selectedField: "pwa_update" }),
       80,
-      40,
+      PWA_ROWS,
     );
     expect(findLine(grid, "ENTER: apply update")).toBeDefined();
   });
@@ -206,7 +217,7 @@ describe("Settings — PWA section: field selection + hint", () => {
     const grid = renderSettingsScreen(
       makeBaseState({ selectedField: "pwa_install", language: "ko" }),
       80,
-      40,
+      PWA_ROWS,
     );
     // Hint text is still English (settings pane hint) per existing convention
     // — only section labels are translated. Verify the install hint still appears.
@@ -216,27 +227,27 @@ describe("Settings — PWA section: field selection + hint", () => {
 
 describe("Settings — PWA section: existing EN rows unchanged", () => {
   it("still renders AUDIO section header (regression guard)", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "AUDIO")).toBeDefined();
   });
 
   it("still renders BGM Volume label", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "BGM Volume")).toBeDefined();
   });
 
   it("still renders MUTE ALL label", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "MUTE ALL")).toBeDefined();
   });
 
   it("still renders LANGUAGE section header in EN", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "LANGUAGE")).toBeDefined();
   });
 
   it("still renders STORAGE section header", () => {
-    const grid = renderSettingsScreen(makeBaseState(), 80, 40);
+    const grid = renderSettingsScreen(makeBaseState(), 80, PWA_ROWS);
     expect(findLine(grid, "STORAGE")).toBeDefined();
   });
 });

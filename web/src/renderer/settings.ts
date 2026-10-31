@@ -12,6 +12,13 @@
 import type { Grid } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { PALETTE } from "./palette";
+import {
+  drawPanel,
+  panelInnerRect,
+  screenFrameRect,
+  setInnerText,
+  type PanelRect,
+} from "./panel";
 import { AudioManager } from "../audio/manager";
 import {
   getStorageQuota,
@@ -204,8 +211,40 @@ export function adjustVolume(v: number, direction: "inc" | "dec"): number {
   return clampVolume(Math.round((v + delta) * 10) / 10);
 }
 
+/** Where the settings screen places its content inside the inset frame. */
+export interface SettingsLayout {
+  readonly frame: PanelRect;
+  readonly inner: PanelRect;
+  /** First of the two footer rows (controls hint, then persistence note). */
+  readonly footerY: number;
+}
+
+/** The original fixed rows and columns, translated into the inset frame.
+ *
+ * Every body offset keeps the distance from the frame's top-left corner that
+ * it used to have from the grid's (a +1/+1 parallel move, no reflow). The
+ * two-line footer used to sit on the grid's last two rows, which are now the
+ * bottom rail and the gutter, so it is pinned to the last two INNER rows
+ * instead — the main menu's footer rule — keeping its order and adjacency.
+ */
+export function settingsLayout(cols: number, rows: number): SettingsLayout {
+  const frame = screenFrameRect({ width: cols, height: rows });
+  const inner = panelInnerRect(makeGrid(cols, rows), frame);
+  return { frame, inner, footerY: inner.y + inner.height - 2 };
+}
+
+/** Writes text at an original grid-origin offset, re-measured from the frame. */
+type FramedWriter = (
+  grid: Grid,
+  x: number,
+  y: number,
+  text: string,
+  fg: string,
+) => Grid;
+
 function renderSlider(
   grid: Grid,
+  at: FramedWriter,
   label: string,
   value: number,
   selected: boolean,
@@ -218,8 +257,8 @@ function renderSlider(
   const percent = Math.round(value * 100)
     .toString()
     .padStart(3, " ");
-  let out = setText(grid, 4, row, label, labelFg);
-  out = setText(
+  let out = at(grid, 4, row, label, labelFg);
+  out = at(
     out,
     4,
     row + 1,
@@ -229,27 +268,29 @@ function renderSlider(
   return out;
 }
 
+/** Render the settings screen inside the inset Green Grid frame (ADR-0237 §2).
+ * Items, order, values and colours are unchanged; every line goes through
+ * `setInnerText` and the frame is drawn last so no line can erase a rail.
+ */
 export function renderSettingsScreen(
   state: SettingsState,
   cols: number,
   rows: number,
 ): Grid {
   let grid = makeGrid(cols, rows);
+  const layout = settingsLayout(cols, rows);
+  const { frame, inner } = layout;
+  const at: FramedWriter = (g, x, y, text, fg) =>
+    setInnerText(g, inner, frame.x + x, frame.y + y, text, fg);
 
-  grid = setText(
+  grid = at(
     grid,
     Math.max(2, Math.floor((cols - 14) / 2)),
     1,
     "WET RUN — Settings",
     PALETTE.GREEN_NEON,
   );
-  grid = setText(
-    grid,
-    2,
-    3,
-    "─".repeat(Math.min(cols - 4, 50)),
-    PALETTE.GRAY_MID,
-  );
+  grid = at(grid, 2, 3, "─".repeat(Math.min(cols - 4, 50)), PALETTE.GRAY_MID);
 
   const audioLabel = state.audioEnabled
     ? "[X] AUDIO ENABLED"
@@ -260,11 +301,12 @@ export function renderSettingsScreen(
       : state.audioEnabled
         ? PALETTE.GREEN_NEON
         : PALETTE.RED_BRIGHT;
-  grid = setText(grid, 4, 5, "AUDIO", PALETTE.CYAN_LIGHT);
-  grid = setText(grid, 4, 7, audioLabel, audioFg);
+  grid = at(grid, 4, 5, "AUDIO", PALETTE.CYAN_LIGHT);
+  grid = at(grid, 4, 7, audioLabel, audioFg);
 
   grid = renderSlider(
     grid,
+    at,
     "Master Volume",
     state.masterVolume ?? 1,
     state.selectedField === "master",
@@ -273,6 +315,7 @@ export function renderSettingsScreen(
 
   grid = renderSlider(
     grid,
+    at,
     "BGM Volume",
     state.bgmVolume,
     state.selectedField === "bgm",
@@ -281,6 +324,7 @@ export function renderSettingsScreen(
 
   grid = renderSlider(
     grid,
+    at,
     "SFX Volume",
     state.sfxVolume,
     state.selectedField === "sfx",
@@ -294,9 +338,9 @@ export function renderSettingsScreen(
       : state.muted
         ? PALETTE.RED_BRIGHT
         : PALETTE.GRAY_LIGHT;
-  grid = setText(grid, 4, 18, muteLabel, muteFg);
+  grid = at(grid, 4, 18, muteLabel, muteFg);
 
-  grid = setText(
+  grid = at(
     grid,
     4,
     20,
@@ -310,19 +354,19 @@ export function renderSettingsScreen(
       : state.language === "ko"
         ? PALETTE.GREEN_NEON
         : PALETTE.GRAY_LIGHT;
-  grid = setText(grid, 4, 22, languageLabel, languageFg);
+  grid = at(grid, 4, 22, languageLabel, languageFg);
 
   // P10 — ACCESSIBILITY section (reduced motion / high contrast / colorblind
   // palette / text scale). Rows 24-28; the STORAGE and PWA sections below
   // were shifted down by 5 rows to make room. In a grid shorter than 29 rows
   // these rows are clipped — nothing existing is overwritten.
-  grid = setText(grid, 4, 24, "ACCESSIBILITY", PALETTE.CYAN_LIGHT);
+  grid = at(grid, 4, 24, "ACCESSIBILITY", PALETTE.CYAN_LIGHT);
 
   const reducedMotion = state.reducedMotion ?? false;
   const reducedLabel = reducedMotion
     ? "[X] REDUCED MOTION"
     : "[ ] REDUCED MOTION";
-  grid = setText(
+  grid = at(
     grid,
     4,
     25,
@@ -338,7 +382,7 @@ export function renderSettingsScreen(
   const contrastLabel = highContrast
     ? "[X] HIGH CONTRAST"
     : "[ ] HIGH CONTRAST";
-  grid = setText(
+  grid = at(
     grid,
     4,
     26,
@@ -352,7 +396,7 @@ export function renderSettingsScreen(
 
   const colorblindMode = state.colorblindMode ?? "none";
   const colorblindLabel = `[ ] COLORBLIND: ${colorblindMode.toUpperCase()}`;
-  grid = setText(
+  grid = at(
     grid,
     4,
     27,
@@ -366,7 +410,7 @@ export function renderSettingsScreen(
 
   const textScale = state.textScale ?? "medium";
   const textScaleLabel = `[ ] TEXT SCALE: ${textScale.toUpperCase()}`;
-  grid = setText(
+  grid = at(
     grid,
     4,
     28,
@@ -378,15 +422,9 @@ export function renderSettingsScreen(
         : PALETTE.GREEN_NEON,
   );
 
-  grid = setText(grid, 4, 30, "STORAGE", PALETTE.CYAN_LIGHT);
+  grid = at(grid, 4, 30, "STORAGE", PALETTE.CYAN_LIGHT);
   if (state.storageQuota.state === "unavailable") {
-    grid = setText(
-      grid,
-      4,
-      31,
-      `[ Storage API unavailable ]`,
-      PALETTE.GRAY_DARK,
-    );
+    grid = at(grid, 4, 31, `[ Storage API unavailable ]`, PALETTE.GRAY_DARK);
   } else {
     const level = quotaLevel(state.storageQuota.percent);
     const barColor =
@@ -396,25 +434,13 @@ export function renderSettingsScreen(
           ? PALETTE.YELLOW_AMBER
           : PALETTE.GREEN_NEON;
     const bar = renderUsageBar(state.storageQuota.percent, 20);
-    grid = setText(
-      grid,
-      4,
-      31,
-      `[${bar}] ${state.storageQuota.percent}%`,
-      barColor,
-    );
+    grid = at(grid, 4, 31, `[${bar}] ${state.storageQuota.percent}%`, barColor);
   }
 
   // PWA section: install row, update row, offline status line.
   // Always rendered (uses live `state.pwa` from bootPwaController) — never
   // hidden, so the player can always see the current status.
-  grid = setText(
-    grid,
-    4,
-    33,
-    t("settings.pwa", state.language),
-    PALETTE.CYAN_LIGHT,
-  );
+  grid = at(grid, 4, 33, t("settings.pwa", state.language), PALETTE.CYAN_LIGHT);
 
   const pwa = state.pwa;
   // Install row: [ ] when not installable, [X] INSTALLED when standalone,
@@ -437,7 +463,7 @@ export function renderSettingsScreen(
         ? PALETTE.YELLOW_AMBER
         : PALETTE.GRAY_DARK;
   }
-  grid = setText(grid, 4, 35, installLabel, installFg);
+  grid = at(grid, 4, 35, installLabel, installFg);
 
   // Update row: lights up when the controller has detected a waiting worker
   // or a `controllerchange` event fired.
@@ -450,14 +476,14 @@ export function renderSettingsScreen(
       : pwa.hasUpdate
         ? PALETTE.GREEN_NEON
         : PALETTE.GRAY_LIGHT;
-  grid = setText(grid, 4, 36, updateLabel, updateFg);
+  grid = at(grid, 4, 36, updateLabel, updateFg);
 
   // Offline status line (informational only — not selectable).
   const offlineLabel = pwa.isOffline
     ? t("settings.pwa_offline", state.language)
     : t("settings.pwa_online", state.language);
   const offlineFg = pwa.isOffline ? PALETTE.YELLOW_AMBER : PALETTE.GRAY_DARK;
-  grid = setText(grid, 4, 37, offlineLabel, offlineFg);
+  grid = at(grid, 4, 37, offlineLabel, offlineFg);
 
   const hint =
     state.selectedField === "audio"
@@ -479,16 +505,26 @@ export function renderSettingsScreen(
                     : state.selectedField === "text_scale"
                       ? "ENTER: cycle text scale | TAB: switch | ESC: back"
                       : "←/→: adjust volume | TAB: switch | ESC: back";
-  grid = setText(grid, 2, rows - 2, hint, PALETTE.GRAY_DARK);
-  grid = setText(
+  const footerX = frame.x + 2;
+  grid = setInnerText(
     grid,
-    2,
-    rows - 1,
+    inner,
+    footerX,
+    layout.footerY,
+    hint,
+    PALETTE.GRAY_DARK,
+  );
+  grid = setInnerText(
+    grid,
+    inner,
+    footerX,
+    layout.footerY + 1,
     "Volumes persist via localStorage",
     PALETTE.GRAY_DARK,
   );
 
-  return grid;
+  // Frame last, so an overlong line can never erase a rail.
+  return drawPanel(grid, frame).grid;
 }
 
 /**

@@ -53,9 +53,11 @@ function getRowText(
   return result;
 }
 
-function gridLines(
-  grid: { cells: ReadonlyArray<ReadonlyArray<Cell>>; width: number; height: number },
-): string[] {
+function gridLines(grid: {
+  cells: ReadonlyArray<ReadonlyArray<Cell>>;
+  width: number;
+  height: number;
+}): string[] {
   const out: string[] = [];
   for (let y = 0; y < grid.height; y++) {
     let line = "";
@@ -65,6 +67,11 @@ function gridLines(
     out.push(line);
   }
   return out;
+}
+
+/** A settings row without the frame's side rails, trimmed. */
+function unframed(line: string): string {
+  return line.replace(/║/g, "").trim();
 }
 
 const EMPTY_REWARDS: MissionRewards = { credits: 0, materials: {} };
@@ -192,7 +199,7 @@ describe("renderSettingsScreen — language row", () => {
       30,
     );
     const lines = gridLines(grid);
-    expect(lines.some((l) => l.trim() === "LANGUAGE")).toBe(true);
+    expect(lines.some((l) => unframed(l) === "LANGUAGE")).toBe(true);
   });
 
   it("translates the LANGUAGE section header to Korean when KO is selected", () => {
@@ -202,8 +209,8 @@ describe("renderSettingsScreen — language row", () => {
       30,
     );
     const lines = gridLines(grid);
-    expect(lines.some((l) => l.trim() === "언어")).toBe(true);
-    expect(lines.some((l) => l.trim() === "LANGUAGE")).toBe(false);
+    expect(lines.some((l) => unframed(l) === "언어")).toBe(true);
+    expect(lines.some((l) => unframed(l) === "LANGUAGE")).toBe(false);
   });
 
   it("shows the language hint when the language row is selected", () => {
@@ -221,14 +228,15 @@ describe("renderSettingsScreen — language row", () => {
   });
 
   it("highlights the language row with the selection color", () => {
-    // Selected row at y=22 should be exact text without relying on color.
+    // Selected row at y=23 (original y=22, +1 row inside the inset frame)
+    // should be exact text without relying on color.
     // We can verify the row exists and is well-formed (no clipping).
     const grid = renderSettingsScreen(
       { ...baseSettingsState, selectedField: "language", language: "ko" },
       80,
       30,
     );
-    expect(getRowText(grid, 22, 4, "[X] KO".length)).toBe("[X] KO");
+    expect(getRowText(grid, 23, 5, "[X] KO".length)).toBe("[X] KO");
   });
 });
 
@@ -260,9 +268,7 @@ describe("renderMainMenu — language wiring is now active", () => {
 });
 
 describe("renderFarGridHub — language wiring is now active", () => {
-  const missions: ReadonlyArray<Mission> = [
-    makeMission("m1", "Echo Lattice"),
-  ];
+  const missions: ReadonlyArray<Mission> = [makeMission("m1", "Echo Lattice")];
 
   it("EN default is unchanged (default arg matches explicit 'en')", () => {
     const defaultCall = renderFarGridHub(missions, 0, 80, 24);

@@ -15,6 +15,8 @@
  * stalls. That is recorded as `stalled` rather than papered over.
  */
 import { AUTO_ATTACK_INTERVAL_MS } from "../src/core/combat/combat_engine";
+import { idleAlarmAction, IDLE_ALARM_TUNING } from "../src/core/combat/idle_alarm";
+import { ALARM_TICK_INTERVAL_MS } from "../src/core/combat/combat_engine";
 import { iceHpForGrade, missionGradeOf } from "../src/core/combat/ice_scaling";
 import { resolveMatrixRoster } from "../src/core/dungeon/matrix";
 import { applyAction, makeInitialState } from "../src/core/state/state";
@@ -35,6 +37,8 @@ export function mulberry32(seed: number): () => number {
 export interface SimConfig {
   readonly seed: number;
   readonly maxTurns?: number;
+  /** Scalar repeats each turn; a schedule ends with zero-delay turns. No RNG. */
+  readonly idleMsPerTurn?: number | ReadonlyArray<number>;
 }
 
 export interface CombatOutcome {
@@ -43,6 +47,7 @@ export interface CombatOutcome {
   readonly turns: number;
   readonly hpStart: number;
   readonly hpEnd: number;
+  readonly peakAlarmLevel: number;
 }
 
 const DEFAULT_MAX_TURNS = 100;
@@ -129,6 +134,24 @@ export function simulateCombat(
         stalled = true;
         break;
       }
+      const idleMs = typeof config.idleMsPerTurn === "number"
+        ? config.idleMsPerTurn
+        : config.idleMsPerTurn?.[turns] ?? 0;
+      if (idleMs > 0) {
+        const idleSinceMs = clock;
+        const resumeMs = clock + idleMs;
+        // Sample every due tick, just as rAF does, without frame-rate dependence
+        // or an extra RNG draw for a synthetic idle-length distribution.
+        for (
+          clock = idleSinceMs + IDLE_ALARM_TUNING.idleThresholdMs;
+          clock <= resumeMs;
+          clock += ALARM_TICK_INTERVAL_MS
+        ) {
+          const tick = idleAlarmAction(s, idleSinceMs, clock);
+          if (tick !== null) s = applyAction(s, tick);
+        }
+        clock = resumeMs;
+      }
       clock += AUTO_ATTACK_INTERVAL_MS;
       s = applyAction(s, { type: "use_program", programId: card.id });
       turns += 1;
@@ -140,6 +163,7 @@ export function simulateCombat(
       turns,
       hpStart,
       hpEnd: s.player.hp,
+      peakAlarmLevel: s.alarmLevel,
     };
   } finally {
     Math.random = originalRandom;
@@ -172,6 +196,7 @@ export function runSuite(
   runs: number,
   baseSeed = 1,
   maxTurns?: number,
+  idleMsPerTurn?: SimConfig["idleMsPerTurn"],
 ): SuiteStats {
   let wins = 0;
   let stalls = 0;
@@ -180,7 +205,7 @@ export function runSuite(
   const hpEnds: number[] = [];
 
   for (let i = 0; i < runs; i++) {
-    const outcome = simulateCombat(mission, iceCatalog, deck, { seed: baseSeed + i, maxTurns });
+    const outcome = simulateCombat(mission, iceCatalog, deck, { seed: baseSeed + i, maxTurns, idleMsPerTurn });
     if (outcome.won) wins += 1;
     if (outcome.stalled) stalls += 1;
     turnSum += outcome.turns;

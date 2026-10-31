@@ -27,6 +27,7 @@ import { makeGrid } from "../grid";
 import { EMPTY_LOADOUT } from "./loadout";
 import { generateProceduralMatrix } from "../dungeon/matrix";
 import { missionGradeOf, missionSeedOf } from "../combat/ice_scaling";
+import { applyIdleAlarmTick } from "../combat/idle_alarm";
 import { DEFAULT_FACTION_SCORES } from "./faction_reputation";
 import missionsData from "../../data/missions.json";
 import type { RunMutator } from "./run_mutators";
@@ -136,6 +137,9 @@ export function makeInitialState(
 
 /** Pure reducer — apply an action to a state, returning a new state. */
 export function applyAction(state: GameState, action: GameAction): GameState {
+  if (action.type === "idle_tick") {
+    return applyIdleAlarmTick(state, action.idleSinceMs, Date.now());
+  }
   if (state.runPhase === "matrix") {
     return applyMatrixAction(state, action);
   }

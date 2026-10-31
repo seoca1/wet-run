@@ -38,6 +38,13 @@
 
 ## 3. Game Structure
 
+**Web 전투 유휴 압력 (ADR-0240, 2026-11-01)**: 입력 없는 10초마다 알람 레벨
+상승(최대 5), 레벨당 적 피해 +5% / 스킬 선택 확률 +1pp. 활성 플레이는 tick 없음,
+유휴만으로 직접 공격하지 않음. 기본 하네스는 ADR-0239 양 덱 기준선과 정확히 동일.
+초기 10초 유휴 시나리오 최대 opening drift 0.6pp; 매 카드 10초 유휴는 기존 Dixie
+타이밍과 상호작용하므로 같은 보장을 하지 않는다.
+[구현·실측·열린 질문](../wiki/decisions/0240-implementation-evidence.md).
+
 ### 한 런의 구조
 - **Deck Select (Phase 15)**: 런 시작 시 데크 사이즈 선택 — LIGHT (6 slots, +50% AP regen, -10% cooldowns) / STANDARD (8 slots, balanced, default) / HEAVY (10 slots, -30% AP regen, +15% cooldowns). 자키의 런-스타일 결정.
 - **Job Board**: 3~7개 의뢰 중 선택 (Phase 16: `JobBoard.select_weighted` 가 reputation / NG+ / chain unlocks 반영해 추천 의뢰 편향)

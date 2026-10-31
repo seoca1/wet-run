@@ -52,6 +52,13 @@ function main(): void {
   const argv = process.argv.slice(2);
   const runs = parseRuns(argv);
   const deckMode = parseDeck(argv);
+  const idleIndex = argv.indexOf("--idle-ms");
+  const idleRaw = idleIndex >= 0 ? argv[idleIndex + 1] ?? "" : undefined;
+  const idleValues = idleRaw === undefined ? [] : idleRaw.split(",").map(Number);
+  if (idleRaw === "" || idleValues.some((ms) => !Number.isFinite(ms) || ms < 0)) {
+    throw new RangeError("--idle-ms must contain non-negative finite durations");
+  }
+  const idleMsPerTurn = idleRaw?.includes(",") ? idleValues : idleValues[0];
   const missions = loadMissionsCatalog(missionsJson);
   const iceCatalog = loadIceCatalog(iceTypesJson);
   const programCatalog = loadProgramsCatalog(programsJson);
@@ -71,6 +78,7 @@ function main(): void {
       : `Balance harness — opening deck [${deck.map((p) => p.id).join(", ")}]`,
   );
   console.log(`Missions: ${missions.length}, ICE types: ${Object.keys(iceCatalog).length}, runs/mission: ${runs}\n`);
+  console.log(`Idle: ${idleRaw ?? 0}ms (scalar = every turn; schedule = once, then 0)`);
   console.log("grade  missions  win-rate  stalled  mean-turns  mean-HP-end  p5/p95");
 
   for (const grade of [...byGrade.keys()].sort((a, b) => a - b)) {
@@ -85,7 +93,7 @@ function main(): void {
     for (const mission of bucket) {
       const deckForMission =
         deckMode === "ppl" ? deckForGrade(programCatalog, missionGradeOf(mission)) : deck;
-      const stats = runSuite(mission, iceCatalog, deckForMission, runs, 1);
+      const stats = runSuite(mission, iceCatalog, deckForMission, runs, 1, undefined, idleMsPerTurn);
       wins += stats.wins;
       stalls += stats.stalls;
       turns += stats.meanTurns;

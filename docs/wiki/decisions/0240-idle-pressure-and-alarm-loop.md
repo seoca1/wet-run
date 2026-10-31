@@ -170,25 +170,104 @@ ADR-0238 「공통 수락 증거」와 ADR-0229 §A 를 따른다.
 4. 그 뒤 [ADR-0242](./0242-ice-archetype-alarm-multiplier.md) (X2) 착수.
 5. `docs/design/systems/combat.md` · `docs/design/GDD.md` 갱신 (`AGENTS.md` §3.2 단계 3·5).
 
-## Implementation Status (2026-10-31)
+## Implementation Status (2026-11-01)
 
-**Status**: ❌ Not started
+**Status**: ✅ Implemented — 유휴 → 알람 → 적 피해 · 스킬 공격성. (미커밋 작업 트리 기준)
 
 **Evidence**:
-- `web/src/core/combat/combat_engine.ts:198` — `tickAlarm` 정의, `web/src/` 호출자 0건 (X1)
-- `web/src/core/combat/combat_engine.ts:202` — `tickAlarm` 의 `iceAlarmSpeed` 인자 (X1 · ADR-0242 의 배선 지점)
-- `web/src/core/combat/combat_engine.ts:204` — 간격 `ALARM_TICK_INTERVAL_MS / Math.max(0.01, iceAlarmSpeed)` (X1)
-- `web/src/core/combat/combat_engine.ts:20-21` — `ALARM_TICK_INTERVAL_MS = 10000`, `ALARM_MAX_LEVEL = 5` (X1)
-- `web/src/core/combat/ice_crit.ts:12-15` — "not wired" 주석 (X1)
-- `web/src/core/state/state.ts:193-194` — HUD `ALARM N/5` 행, 현재 표시되지 않음 (X1)
-- `web/src/core/combat/state_actions_combat.ts:68` — `processEnemyTurns` 의 유일한 호출 지점 (P7)
-- `web/src/core/combat/state_actions_combat.ts:139`, `:143` — `processEnemyTurns` 정의와 `AUTO_ATTACK_INTERVAL_MS` 게이트 (P7)
-- `web/src/core/combat/combat_engine.ts:10` — `AUTO_ATTACK_INTERVAL_MS = 2000` (P7 — 바꾸지 않는다)
-- `web/scripts/balance_sim.ts:86-89` — 하네스 고정 시계, 유휴 단계 없음 (a)
+- `web/src/core/combat/idle_alarm.ts:12` — 유일한 튜닝 블록 `IDLE_ALARM_TUNING`
+  (`idleThresholdMs: 10_000`, `damagePerLevel: 0.05`, `aggressionPerLevel: 0.01`)
+- `web/src/core/combat/idle_alarm.ts:21` — 브라우저 · 하네스 · reducer 가 **공유하는** dispatch 게이트
+  (combat phase · 상한 · 임계 · 간격), `:51` — `tickAlarm` 의 **프로덕션 호출자** (`iceAlarmSpeed = 1`)
+- `web/src/core/combat/idle_alarm.ts:41` — `alarmDamage()`: `alarmLevel === 0` 이면 원값 그대로 (정확 보존)
+- `web/src/core/types.ts:427` — `idle_tick` 액션, `web/src/core/state/state.ts:140` — `applyAction` 이 라우팅
+- `web/src/core/combat/state_actions_combat.ts:235` — 적 스킬 판정에 `state.alarmLevel` 전달;
+  `:260` · `:335` — 스킬 피해와 자동공격 피해 **양쪽**에 `alarmDamage` 적용
+- `web/src/core/combat/ice_ai.ts:117` — `enemyShouldUseSkill(..., alarmLevel)`: **기존 RNG roll 의 임계값만** 이동
+  (`Math.min(1, prob + level × 0.01)`) — **추가 draw 0**
+- `web/src/main.ts:375` · `:1385-1394` · `:1481` — 입력 시 유휴 리셋 + 전투 화면에서만 tick 발행 (**삽입만**, 리포맷 없음)
+- `web/scripts/balance_sim.ts:41` · `:137-157` · `:166` — opt-in 유휴 스케줄 (스칼라 = 매 턴, 배열 = 턴별) + 관측용 peak alarm
+- `web/tests/idle_tick.test.ts` (12 tests) · `web/tests/balance_sim.test.ts` (+14) · `web/e2e/idle_alarm.spec.ts` (실 rAF)
 
-**Notes**: `combat_engine.ts` 의 `:198` · `:202` · `:204` · `:20-21` 은 2026-10-31 작업
-트리에서 직접 확인했다. 나머지 위치는 ADR-0238 Evidence (HEAD `0217c0a` 기준) 를
-인용했다. 구현 없음 — 테스트 수 · 승률은 측정하지 않았다.
+**Notes**: `AUTO_ATTACK_INTERVAL_MS = 2000` · `ALARM_TICK_INTERVAL_MS = 10000` · `ALARM_MAX_LEVEL = 5` 는 **불변**.
+`getAlarmMultiplier` 는 `iceAlarmSpeed` 에 **미배선** (ADR-0242 소관). 유휴 tick 은 적 턴을 부르지 않는다.
+`raw/` · VFX 파일 · `core/status.ts` 는 미수정. 전체 grid · raw 출력은
+[구현 증거 컴패니언](./0240-implementation-evidence.md) 참조.
+
+### 확정 수치 (측정과 함께 결정 — ADR §결정 "수치는 이 ADR 이 정하지 않는다" 이행)
+
+| 파라미터 | 확정값 |
+| --- | --- |
+| (c) 연속 무입력 임계 N | **10초** (입력 시 유휴 원점 리셋; 능동 시간은 누적되지 않음) |
+| 지속 유휴 추가 tick | **10초마다**, 상한 **5** |
+| (j) 적 피해 | **레벨당 +5%**, `floor(damage × (1 + 0.05 × level))` (레벨 0 = 원값) |
+| (j) 적 공격성 | **레벨당 +1pp** 를 기존 aggression tier 의 스킬 확률에 가산 (상한 1.0) |
+| 레벨 5 결과 | 피해 **×1.25**, 스킬 확률 **+5pp** |
+
+### 측정 (100 runs/mission, 53 missions, seeds 1–100, 6 grade)
+
+**유휴 비활성 — 하네스 단계와 구현 후 단계 모두 ADR-0239 기준선과 정확히 일치** (§A1 "도구 변경 ≠ 게임 변경" 분리):
+
+| Deck | g1 | g2 | g3 | g4 | g5 | g6 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Opening (ADR-0239 = 하네스 단계 = 구현 후) | 100.0 | 88.3 | 70.5 | 39.5 | 36.2 | 0.0 |
+| PPL (ADR-0239 = 하네스 단계 = 구현 후) | 100.0 | 79.1 | 98.9 | 83.0 | 44.4 | 24.7 |
+
+**유휴 활성 grid** (`--idle-ms 10000,0` = 첫 턴 10초 숙고 후 기존 2초 cadence):
+
+| 후보 | 피해/레벨 | 공격성/레벨 | Deck | g1 | g2 | g3 | g4 | g5 | g6 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| A | +1% | +0.5pp | Opening | 100.0 | 88.3 | 70.5 | 39.5 | 36.2 | 0.0 |
+| A | +1% | +0.5pp | PPL | 100.0 | 79.1 | 98.9 | 83.2 | 44.4 | 24.7 |
+| **B 채택** | **+5%** | **+1pp** | Opening | **100.0** | **88.3** | **70.5** | **38.9** | **36.2** | **0.0** |
+| **B 채택** | **+5%** | **+1pp** | PPL | **100.0** | **79.1** | **98.9** | **82.9** | **44.4** | **24.7** |
+| C 기각 | +10% | +2pp | Opening | 100.0 | 88.3 | 56.4 | 38.6 | 34.2 | 0.0 |
+| C 기각 | +10% | +2pp | PPL | 100.0 | 79.1 | 98.3 | 81.6 | 44.1 | 0.0 |
+
+**판정 (§A1)**: C 는 opening g3 **−14.1pp** 로 기각 (되돌림). B 는 최대 drift **0.6pp** (opening g4 39.5 → 38.9)
+→ **§A2 보고만**, 기본 곡선 re-baseline **없음**. **§B1** opening B `100 ≥ 88.3 ≥ 70.5 ≥ 38.9 ≥ 36.2 ≥ 0` 성립,
+**§B2** g6 **0.0%** 성립. PPL 은 reference 이며 §C2 에 따라 표를 함께 제출.
+
+### ⚠️ 지속 유휴는 3pp 창 밖이며, 방향이 설계 의도와 반대다 (오너 판단 필요)
+
+`--idle-ms 10000` (매 카드 전 10초) 스트레스 측정 — B 튜닝:
+
+| Deck | g1 | g2 | g3 | g4 | g5 | g6 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Opening | 100.0 | 100.0 | 93.4 | 55.3 | 40.4 | 0.0 |
+| Δpp vs no-idle | 0.0 | **+11.7** | **+22.9** | **+15.8** | +4.2 | 0.0 |
+| PPL | 100.0 | 100.0 | 97.8 | 91.3 | 44.1 | 4.0 |
+| Δpp vs no-idle | 0.0 | **+20.9** | −1.1 | +8.3 | −0.3 | **−20.7** |
+
+**승률이 오른다** — 유휴 처벌이 의도인데 지속 유휴가 **유리**해진다. 원인은 알람이 아니라
+기존 시간 경로다: `Dixie` 계열은 3000ms 마다 발화하는데 12000ms cadence 에서는 매 턴 발화한다
+(기준선 2000ms 에서는 격턴). 유휴 tick 자체는 Dixie 를 발화시키지 않는다. 알람 +5% 는 이
+독립적 시간 이득을 상쇄하지 못한다. **동반 cadence 재조정은 ADR-0240 범위 밖이라 묶지 않았다.**
+이 표는 시나리오 reference 이며 §A2 준수를 주장하지 않는다. (이 항목은 오너 판단 대기 — §Open questions 참조.)
+
+### 열린 질문 처리
+
+- **(c) 임계 N — 해소** (10초). **접근성 opt-out 은 미해결로 남김** — 무관한 설정 정책을 발명하지 않았다.
+- **(i) tick 구동 경로 — 해소**: reducer 액션. 결정 (a) 가 `applyAction` · fake `Date.now` 경유 측정을 요구하므로
+  rAF 단독 배선은 측정 불가 → rAF 는 호출자일 뿐이다. 브라우저와 하네스가 같은 게이트를 쓴다.
+- **(j) 크기·형태 — 해소** (grid). 기존 aggression tier 는 유지하고 스킬 확률을 가산 (tier 변형 · 추가 적 공격 도입 안 함).
+- **(l) 하네스 유휴 분포 — 측정 재현성 목적, 플레이어 텔레메트리 아님**: 생략/0 = 기존 시뮬 정확 보존,
+  스칼라 = 매 턴, 배열 = 턴별 고정 (이후 0). `--idle-ms 10000,0` 이 튜닝 시나리오. **점질량이며 RNG 표본이 아니다** (추가 draw 0).
+- **(k) `player.alarm` 과의 병합 — 여전히 OPEN**. **(e) `stealth` ICE 스킬 — 여전히 OPEN**.
+- **(m) 지속 유휴 역전의 근본 시간 게이트 — OPEN (오너 판단 필요)**: 매 카드 10초 유휴 시 승률이
+  **오른다**. 분해 측정 결과 이 역전은 **알람이 아니라 시계 진행 자체**가 원인이며 (`--idle-ms 1000`,
+  알람 0 에서 이미 발생), **2000ms/턴과 3000ms/턴 사이의 임계값 계단**이다 (1000·3000·6000·8000
+  byte-identical). 알람은 오히려 되돌리는 방향으로 작동한다 (10000 vs 8000: g3 98.9 → 93.4).
+  턴당 RNG draw 수가 같고 **난수 값 시퀀스까지 byte-identical** 한데 같은 턴의 피해가 다르다
+  (t1 `barrier` 10 vs 24) → **RNG 는 원인이 아니다.** 원인은 **전투 해석 경로 안의 시계 의존
+  결정적 항**이다 (하네스 인공물이 아니라 엔진의 실제 성질). 특정 함수는 미지목 — 후보는
+  시간 게이트된 DoT/`regen` tick 과 `AUTO_ATTACK_INTERVAL_MS` 경계의 상호작용
+  (`COMBO_WINDOW_MS` 는 측정상 제외, `lastPlayerAttackMs` 는 죽은 필드).
+  전체 표·턴 추적·난수 시퀀스는 [구현 증거 §부록](./0240-implementation-evidence.md) 참조.
+
+**구현 중 발견한 회귀 (수정·유지)**: 초기 e2e 는 20초 후 alarm 0 으로 실패했다. 런타임 확인 결과
+새 런 전투가 `screen === "mission_select"` 를 유지한다 (CONTINUE 는 `menu`). dispatch 게이트가
+`menu` · `mission_select` · `far_grid_hub` 를 수용하도록 수정했고, 실패하던 테스트는 삭제하지 않고 유지했다.
 
 ## Open questions
 
@@ -250,3 +329,9 @@ ADR-0238 「공통 수락 증거」와 ADR-0229 §A 를 따른다.
 - 2026-10-31: 작성 — ADR-0238 분할 (P7 + X1). **Accepted** (오너 결정: P7-3 · X1-2 ·
   (a) 하네스 유휴 단계 · (b) 알람 상승 = 적 피해·공격성 증가). Implementation Status
   ❌ Not started. 열린 질문 (c)(e) 이월, (i)–(l) 신설. 구현 없음.
+- 2026-11-01: **구현 완료 → Implementation Status ✅ Implemented**. `idle_alarm.ts` (튜닝 블록 +
+  공유 게이트 + `tickAlarm` 프로덕션 호출자) · `idle_tick` reducer 액션 · 적 피해·공격성 배선 ·
+  `main.ts` 유휴 추적 · 하네스 opt-in 유휴 스테이지. (c)(i)(j)(l) 해소, (k)(e) OPEN 유지.
+  유휴 비활성 경로가 ADR-0239 기준선과 정확히 일치 (drift 0.0pp), 채택 B 의 초기 유휴 drift ≤ 0.6pp.
+  **지속 유휴는 3pp 창 밖이며 방향이 반대** (Dixie cadence 상호작용) — 오너 판단 대기로 기록.
+  미커밋. (문서: 본 ADR + [구현 증거](./0240-implementation-evidence.md), `README.md` Impl 컬럼, `log.md`)

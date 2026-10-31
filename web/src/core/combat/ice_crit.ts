@@ -9,9 +9,8 @@
  *   - `shouldDefensiveAct` — **already wired** by ADR-0226, as the
  *     two-regime rule inside `selectSkillByPersonality` (it reads the same
  *     `DEFENSIVE_HP_THRESHOLD`). Not re-wired here.
- *   - `getAlarmMultiplier` — **not wired**: the web build has no alarm
- *     accrual loop (see `combat_engine.ts` `tickAlarm`, which has no
- *     production caller), so there is no rate for a multiplier to scale.
+ *   - `getAlarmMultiplier` — **wired** by ADR-0242: `idle_alarm.ts` passes
+ *     the living roster's minimum multiplier to ADR-0240's `tickAlarm` loop.
  *   - `shouldTargetAlly` — **not wired**: the enemy path has no per-target
  *     skill resolution (every roster ICE acts on the player), so there is
  *     no ally for a support ICE to target.

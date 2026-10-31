@@ -16,6 +16,7 @@ import { AUTO_ATTACK_INTERVAL_MS } from "./combat_engine";
 import { DEFAULT_BOSS_PROFILE, checkPhaseTransition } from "./boss_phases";
 import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai";
 import { rollIceCrit } from "./ice_crit";
+import { alarmDamage } from "./idle_alarm";
 import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects";
 import { applyIceNonDamageEffect } from "./ice_combat_effect_apply";
 import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling";
@@ -231,7 +232,7 @@ function processEnemyTurns(state: GameState): GameState {
 
     if (
       enemySkills.length > 0 &&
-      enemyShouldUseSkill(enemy, Math.random)
+      enemyShouldUseSkill(enemy, Math.random, state.alarmLevel)
     ) {
       const selectedSkill = selectSkillByPersonality(
         enemy,
@@ -256,7 +257,7 @@ function processEnemyTurns(state: GameState): GameState {
           // and consumes the same `Math.random` the balance harness controls,
           // so the simulation stays deterministic.
           const crit = rollIceCrit(enemy, baseSkillDmg, Math.random);
-          const skillDmg = crit.damage;
+          const skillDmg = alarmDamage(crit.damage, state.alarmLevel);
           playerHp = Math.max(0, playerHp - skillDmg);
           enemyTurnVfx.push(
             import_vfx_deterministic(
@@ -331,7 +332,7 @@ function processEnemyTurns(state: GameState): GameState {
       // and consumes the same `Math.random` the balance harness controls, so
       // the simulation stays deterministic.
       const crit = rollIceCrit(enemy, autoDmg, Math.random);
-      autoDmg = crit.damage;
+      autoDmg = alarmDamage(crit.damage, state.alarmLevel);
 
       playerHp = Math.max(0, playerHp - autoDmg);
       enemyTurnVfx.push(

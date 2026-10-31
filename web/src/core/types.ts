@@ -424,6 +424,7 @@ export interface SaveSlot {
 
 /** Game action — keyboard input → state mutation. */
 export type GameAction =
+  | { readonly type: "idle_tick"; readonly idleSinceMs: number }
   | { readonly type: "move_north" }
   | { readonly type: "move_south" }
   | { readonly type: "move_east" }

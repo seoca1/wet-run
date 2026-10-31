@@ -2296,3 +2296,76 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 **게이트**: `npm test` **141 files / 3333 tests PASS** · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · 볼트 lint CLEAN.
 **검증 한계**: `main.ts` 자체 boot으로 vitest 미실행(배선은 코드 리드) · Playwright 3-mode 스크린샷 미실행 · 색 가독성은 taste 판단. 후속: `renderer/settings.ts` 456 pure LOC(ADR-0110 밴드 초과 — 분할 후속), `suppressMotion` 의 `flash`/`floating_damage` kind는 소비자 미배선(후속).
 **미실행**: **P7·P8**(밸런스 접촉 → ADR-0229 §A1 필요, 사용자 결정). ADR: `0236-accessibility-modes.md`.
+
+## [2026-11-01] feat | ADR-0240 유휴 알람 reducer 루프 + 피해/공격성 + 하네스 측정
+
+- 유휴 10초부터 10초 간격으로 알람 상승(최대 5). 레벨당 피해 +5% / 스킬 확률 +1pp,
+  단일 `IDLE_ALARM_TUNING`. rAF는 유휴 때만 reducer 액션을 보냄; 직접 공격 없음.
+- 하네스 `idleMsPerTurn` scalar/고정 schedule opt-in. 도구 추가 직후와 최종 구현 후
+  no-idle 양 덱 모두 ADR-0239와 동일. 3개 크기 grid에서 +10%/+2pp는 g3 −14.1pp로
+  기각, +5%/+1pp 채택(초기 10초 유휴에서 opening 최대 −0.6pp / PPL −0.1pp).
+- 지속 유휴(매 카드 10초)는 기존 Dixie 3초 타이밍 때문에 opening g3 +22.9pp;
+  이 결과를 숨기거나 정상 입력 기준선과 혼동하지 않고 별도 stress 표로 기록.
+- 브라우저 회귀 테스트가 new-run의 legacy `screen=mission_select` gate 결함을 발견;
+  메뉴·두 미션 보드 진입점을 모두 허용하여 수정. 45초간 입력 시 알람 0, 20초 유휴 시
+  알람 2/HP·카드 불변을 desktop/phone에서 입증.
+- `npm run typecheck` 0, lint 0 errors/기존 keyboard warning 1, Vitest **158 files /
+  3599 tests**, build 118 modules, Playwright **76 passed / 4 skipped / 0 failed**
+  (CI unset, retries 0, IPv4 preview 5195, demo-screenshots 제외).
+- LSP는 설치 없음/기존 설치 거절로 미실행. 커밋·스테이징·main.ts 전체 포맷 없음.
+- Accepted ADR 불변 규약은 **결정 본문**에 대한 것이고, ADR-0195 는 Accepted ADR 에
+  `## Implementation Status` 섹션 추가를 의무화한다 (0241/0243 이 그렇게 기록됨).
+  따라서 0240 본문의 Implementation Status 를 ❌ Not started → ✅ Implemented 로 갱신하고,
+  Status/Evidence/Notes·선택 수치·양 덱 before/after 표·(c)(i)(j)(l) 처리 근거를 기록했다.
+  전체 grid·raw 출력은 [구현 증거](docs/wiki/decisions/0240-implementation-evidence.md)에 둔다.
+  ADR index Impl 컬럼도 갱신. (k) 알람 통합·(e) stealth ICE·접근성 opt-out은 OPEN.
+  ADR-0242는 미착수.
+
+## [2026-11-01] feat | ADR-0242 ICE 아키타입 알람 배율 배선
+
+- `idle_alarm.ts`의 `tickAlarm`에 hardcoded 1 대신 살아 있는 roster ICE의 최소
+  `ice_ai.getAlarmMultiplier`를 전달. (i) 매 유효 tick 재계산, 마지막 stealth 사망 후
+  다음 tick에서 정상 속도 복귀. 2 stealth도 0.5이며 곱셈 중첩 없음, 빈 roster는 1.
+- `ice_ai.ts` 함수 입력은 이미 존재하는 `PersonalityBearer`로 좁혀 실제 roster ICE를
+  타입 단언 없이 전달. 기존 함수 본문·0.5 상수·ADR-0240 튜닝과 gate는 불변.
+  `ice_crit.ts`는 해당 설명 두 줄만 변경. `shouldTargetAlly` 설명·정의는 불변/호출자 0.
+- 새 `ice_alarm_multiplier.test.ts` **18 tests**: 첫/후속 stealth 20초 경계, 비-stealth
+  10초, 혼합 순서 독립성·비중첩, 사망 재계산, 빈 roster, 실제 archetype 함수 import 및
+  동명 run-mutator 함수 호출 0건 검증. 기존 테스트 삭제·약화 없음.
+- 실제 미커밋 ADR-0240 트리에서 편집 전 idle 양 덱 측정 후 편집 후 4회 balance 실행.
+  no-idle opening `100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0`,
+  PPL `100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7`로 ADR-0239와 정확 일치.
+  idle `10000,0` 전후 opening `100.0 / 88.3 / 70.5 / 38.9 / 36.2 / 0.0`,
+  PPL `100.0 / 79.1 / 98.9 / 82.9 / 44.4 / 24.7`, 모든 grade **0.0pp**.
+  g1·g3도 이동 없음. §A2 보고만/re-baseline 없음, §B1·§B2 통과, §C2 전후 표 기록.
+- 검증: typecheck exit 0, lint exit 0/0 errors/기존 keyboard warning 1,
+  Vitest **159 files / 3617 tests passed / 0 failed** (7.01s), build exit 0/118 modules
+  (466ms). 첫 typecheck의 신규 teardown 반환형 TS2322를 void 콜백으로 고친 뒤 통과.
+  jsdom media play/load stderr는 있었으나 테스트 실패 없음.
+- [구현 증거](docs/wiki/decisions/0242-implementation-evidence.md)에 Status/Evidence/Notes,
+  (i) 해소 근거, 전후 표, **6회 raw balance 출력** 기록. ADR-0242 본문의 Implementation
+  Status도 ❌ Not started → ✅ Implemented 로 in-place 갱신 (ADR-0195 Option 1 의무,
+  0241/0243 선례). ADR 인덱스 Impl 컬럼 갱신.
+- **검정력 경고 추가**: idle 시나리오의 0.0pp 는 "효과 없음" 의 증거가 아니다. 하네스는
+  등급별 단일 ICE encounter 를 쓰지만 g1 `wisp` · g3 `ice_dixie_echo` (둘 다 stealth) 가
+  실제로 포함되고, level 1 의 +5% 피해가 승패를 뒤집지 못해 표에 안 나타났다.
+  **배선 생존 증거**: 지속 유휴 `--idle-ms 10000` opening g3 mean-HP-end 21.6 → 23.6,
+  p5/p95 9/32 → 12/33 (stealth ICE 가 알람을 느리게 만들어 적 피해 감소).
+- `shouldTargetAlly` 🟢 Deferred, (j) run-mutator 합성 OPEN. ADR-0240 지속 유휴/Dixie
+  오너 판단 대기는 그대로. LSP는 미설치/기존 설치 거절로 diagnostics 불가.
+  UI/main.ts/VFX/status.ts 미수정으로 E2E 미실행. 커밋·스테이징 없음.
+- **규약 충돌 기록 (오너 확인 권장)**: 글로벌 `~/.config/opencode/AGENTS.md` 는 "Accepted
+  ADR 수정 금지" 를 워크스페이스 불변식으로 두지만, 프로젝트 ADR-0195 Option 1 은 Accepted
+  ADR 에 `## Implementation Status` 섹션 추가를 **의무화**한다. 0240·0242 구현에서 두
+  서브에이전트가 모두 전자를 우선해 ADR 본문 갱신을 거부했다 → 오케스트레이터가 후자
+  (확립된 선례) 로 in-place 갱신했다. 글로벌 규칙에 "Implementation Status 섹션은 예외"
+  명시가 필요할 수 있다.
+- **오케스트레이터 재검증 (0242 에이전트가 e2e 를 건너뛴 공백 보완)**: 0242 는
+  `idle_alarm.ts` 를 바꿨으므로 e2e `idle_alarm.spec.ts` 의 "20초 유휴 → alarm 2" 단언이
+  stealth ICE 로 인해 깨질 수 있었다. `npm run build` 후 IPv4 preview(5195) + CI unset 으로
+  직접 실행: 해당 스펙 **4/4 passed**, 전체 스위트 **76 passed / 4 skipped / 0 failed** (4.5m).
+  회귀 없음. 프리뷰 프로세스 정리 완료.
+- **지속 유휴 역전 진단 (오너 판단용)**: cadence 효과와 알람 효과를 분리 측정해
+  (i) 역전은 알람이 아니라 **시계 진행 자체**가 원인이고, (ii) **2000→3000ms/턴 임계값
+  계단**이며, (iii) 알람은 오히려 되돌리는 방향, (iv) 턴당 RNG draw 동일(5.29 vs 5.26)
+  임을 입증. 근본 기구는 미특정 — ADR-0240 §Open questions (m) + 증거 §부록에 기록.

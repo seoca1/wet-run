@@ -11,6 +11,19 @@
 
 ## RT-MS (Real-Time with Menu Skills)
 
+### Web 유휴 압력 (ADR-0240, 2026-11-01)
+
+활성 web 전투는 입력 없이 **10초** 지나면 reducer `idle_tick`으로 알람 레벨을
+1 올린다. 연속 유휴 중 10초 간격, 최대 5. 입력이 있으면 유휴 시계를 다시 시작하며
+활성 플레이·숨긴 탭·비전투 화면에서는 tick을 보내지 않는다. 유휴 자체는 적 턴이나
+직접 피해를 발생시키지 않는다.
+
+레벨당 적 피해 **+5%**(소수점 버림), 기존 aggression tier의 스킬 선택 확률
+**+1pp**(최대 100%). 알람 0에서는 기존 전투와 RNG draw가 동일하다.
+`player.alarm`과의 통합, 접근성 opt-out, stealth 배율은 미결/후속 범위다.
+수치·양 덱 실측·지속 유휴의 Dixie 타이밍 한계는
+[ADR-0240 구현 증거](../../wiki/decisions/0240-implementation-evidence.md) 참조.
+
 ADR-0003의 핵심. 한 줄 요약: **실시간 자동 공격 + 메뉴로 강력한 스킬**.
 
 ### 자원 (Resources)

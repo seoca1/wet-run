@@ -25,6 +25,7 @@ import type {
   Skill,
   SkillEffectKind,
 } from "./combat_models";
+import { IDLE_ALARM_TUNING } from "./idle_alarm";
 
 // ============================================================================
 //  Aggression tiers — per-tick skill-use probability
@@ -106,13 +107,14 @@ export interface UsableSkill {
 export function enemyShouldUseSkill(
   combatant: SkillUser & { readonly skills?: ReadonlyArray<unknown> },
   rng: () => number,
+  alarmLevel = 0,
 ): boolean {
   if ((combatant.skills ?? []).length === 0 || combatant.hp <= 0) {
     return false;
   }
   const tier = coerceAggression(combatant.aggression);
   const prob = AGGRESSION_PROBABILITY[tier] ?? AGGRESSION_PROBABILITY.standard;
-  return rng() < prob;
+  return rng() < Math.min(1, prob + alarmLevel * IDLE_ALARM_TUNING.aggressionPerLevel);
 }
 
 // ============================================================================
@@ -330,7 +332,7 @@ export function shouldDefensiveAct(combatant: Combatant): boolean {
  * Returns the alarm speed multiplier for this ICE's personality.
  * STEALTH personality halves alarm tick rate; all others return 1.0.
  */
-export function getAlarmMultiplier(combatant: Combatant): number {
+export function getAlarmMultiplier(combatant: PersonalityBearer): number {
   const personality = coercePersonality(combatant.personality);
   return personality === "stealth" ? STEALTH_ALARM_MULTIPLIER : 1.0;
 }

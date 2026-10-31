@@ -26,6 +26,41 @@ const openingDeck: ReadonlyArray<Program> = Object.keys(programs)
   .filter((p): p is Program => p !== undefined);
 
 describe("balance sim — determinism", () => {
+  it("replays the reducer idle path deterministically when opted in", () => {
+    // Given
+    const mission = missions[0];
+    const config = { seed: 42, idleMsPerTurn: [10_000, 0] };
+    // When
+    const first = simulateCombat(mission, iceCatalog, openingDeck, config);
+    const second = simulateCombat(mission, iceCatalog, openingDeck, config);
+    // Then
+    expect(second).toEqual(first);
+    expect(first.peakAlarmLevel).toBe(1);
+  });
+
+  it("keeps alarm zero when idle simulation is disabled or below the threshold", () => {
+    // Given
+    const mission = missions[0];
+    // When
+    const outcomes = [undefined, 0, [9999, 0]].map((idleMsPerTurn) =>
+      simulateCombat(mission, iceCatalog, openingDeck, { seed: 42, idleMsPerTurn }),
+    );
+    // Then
+    expect(outcomes.map((outcome) => outcome.peakAlarmLevel)).toEqual([0, 0, 0]);
+    expect(outcomes[1]).toEqual(outcomes[0]);
+  });
+
+  it("samples all due ticks during a long idle hold, not just one", () => {
+    // Given
+    const mission = missions[0];
+    // When
+    const outcome = simulateCombat(mission, iceCatalog, openingDeck, {
+      seed: 42, idleMsPerTurn: [60_000, 0],
+    });
+    // Then
+    expect(outcome.peakAlarmLevel).toBe(5);
+  });
+
   it("the same seed yields an identical outcome", () => {
     const mission = missions[0]!;
     const first = simulateCombat(mission, iceCatalog, openingDeck, { seed: 42 });
@@ -50,6 +85,29 @@ describe("balance sim — determinism", () => {
 });
 
 describe("balance sim — grade scaling", () => {
+  it.each([
+    { mode: "opening", expected: [100.0, 88.3, 70.5, 39.5, 36.2, 0.0] },
+    { mode: "ppl", expected: [100.0, 79.1, 98.9, 83.0, 44.4, 24.7] },
+  ])("reproduces ADR-0239 exactly with idle disabled ($mode)", ({ mode, expected }) => {
+    // Given
+    const grades = [1, 2, 3, 4, 5, 6];
+    // When
+    const rates = grades.map((grade) => {
+      const bucket = missions.filter((mission) => (mission.grade ?? 1) === grade);
+      const wins = bucket.reduce((sum, mission) => sum + runSuite(
+        mission, iceCatalog,
+        mode === "ppl" ? deckForGrade(programs, grade) : openingDeck, 100, 1,
+      ).wins, 0);
+      return Number((wins / bucket.length).toFixed(1));
+    });
+    // Then
+    expect(rates).toEqual(expected);
+    if (mode === "opening") {
+      expect(rates.every((rate, index) => index === 0 || rate <= rates[index - 1])).toBe(true);
+      expect(rates[5]).toBeLessThanOrEqual(5);
+    }
+  }, 60_000);
+
   it("caps ICE HP at the per-grade encounter curve", () => {
     const standard = iceCatalog["standard"];
     expect(standard).toBeDefined();

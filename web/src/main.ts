@@ -28,6 +28,7 @@ import {
   hitStopDeadlineFor,
 } from "./renderer/screen_shake";
 import { pickCombatSfxLayers } from "./core/combat/combat_sfx";
+import { idleAlarmAction } from "./core/combat/idle_alarm";
 import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
@@ -313,6 +314,7 @@ class Game {
   private rafId: number | null = null;
   private loopRunning = false;
   private lastLoopMs = 0;
+  private idleSinceMs = Date.now();
   /** Wall-clock deadline of the active P1 hit-stop hold (0 = none). */
   private hitStopDeadlineMs = 0;
   /** The VFX instance list from the previous frame — the hit-stop uses it to
@@ -370,7 +372,12 @@ class Game {
     // read is cheap and synchronous — no need for async refresh.
     this.farGridUnlockedCache = isFarGridUnlocked();
     void this.refreshSaveCache();
+    const resetIdle = (): void => { this.idleSinceMs = Date.now(); };
+    document.addEventListener("keydown", resetIdle);
+    document.addEventListener("pointerdown", resetIdle);
+    document.addEventListener("visibilitychange", resetIdle);
     const handler = (action: GameAction): void => {
+      resetIdle();
       if (
         this.screen !== "menu" &&
         this.screen !== "mission_select" &&
@@ -1375,6 +1382,17 @@ class Game {
     const deltaMs = this.lastLoopMs > 0 ? now - this.lastLoopMs : WEB_TICK_MS;
     this.lastLoopMs = now;
 
+    if (this.state !== null && ["menu", "mission_select", "far_grid_hub"].includes(this.screen) && !this.tutorialActive && !document.hidden) {
+      const tick = idleAlarmAction(this.state, this.idleSinceMs, Date.now());
+      if (tick !== null) {
+        this.state = applyAction(this.state, tick);
+        this.draw(false);
+      }
+      if (this.state.runPhase !== "combat" || this.state.phase !== "combat") this.idleSinceMs = Date.now();
+    } else {
+      this.idleSinceMs = Date.now();
+    }
+
     // P12 — expire the touch press acknowledgement on the wall clock. This
     // runs before the VFX early-return so the acknowledgement clears even
     // when no VFX instance is alive.
@@ -1460,6 +1478,7 @@ class Game {
    * Resolves hand index → programId via resolveProgramSelection, then applies.
    */
   handleProgramButton(handIndex: number): void {
+    this.idleSinceMs = Date.now();
     if (this.state === null) return;
     const action: GameAction = { type: "select_program", handIndex };
     const resolved = resolveProgramSelection(this.state, action);

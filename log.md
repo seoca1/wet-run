@@ -128,7 +128,15 @@
 - **정직 공개**: canonical `scripts/jev-call.sh:46` 은 감사 JSON 을 **`raw/`** 에 쓴다 — 워크스페이스 규칙 위반이므로 **워크스페이스 사본을 /tmp 로 만들어 `AUDIT_DIR` 만 우회**했다 (canonical 무변경, diff 확인). 감사 로그는 `/tmp/jev-calls/` (10개).
 - **교훈**: WF1 이 "한 세션에 너무 많은 변경"을 정확히 지적했다 — 세션 내내 언급해온 §8/§6 상한과 일치한다.
 
-**테스트**: vitest **3345 → 3567**(+6 files / +222 tests; 155 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed** (retries off · flake 1건 수정 후 `--repeat-each=10` 40/40 로 재증명 — §13).
+### 15. ADR-0239 구현 — VFX id RNG 중립화 + 1회 재기준화 (`c488b6d`)
+- **승인대로 실행** (오너 결정: Option B, 이 ADR 우선). `import_vfx`(:23) / `import_vfx_ms`(:47) 의 id 를 `deterministicVfxId` 기반으로 → **13개 호출 지점 무변경**. `use_program` 5-spawn 시나리오에서 draw **10 → 5** (남은 5는 전부 게임플레이: damage variance · crit check · burn proc · slow proc · enemy ICE crit roll).
+- **0-draw 불변식 테스트** 추가 (`tests/vfx_rng_neutrality.test.ts` 4개 — 변경 전 실패 → 후 통과). 기존 `state_helpers.test.ts` 의 "generates unique IDs for each instance" 는 승인된 id 의미와 **정반대**라 "distinct IDs for distinct content" 로 교체(리뷰 요청 표시).
+- **안전성 독립 검증**: vfx id 의 유일한 독자는 `screen_shake.ts:234` 의 `player_hit` 게이트(`SHAKE_VFX_KIND` = `player_hit`, `:49`)뿐이고, 그 spawn 은 `import_vfx_deterministic`(이미 content-hash)에서 나온다 → 13개 지점의 공유 id 는 무해. (오케스트레이터가 직접 grep 으로 확인)
+- **재기준화 실행** (승인된 1회 이동, 되돌리려 튜닝하지 않음): opening `100.0/88.6/73.1/39.3/35.7/0.0` → `100.0/88.3/70.5/39.5/36.2/0.0` (g3 **−2.6pp**) · PPL `100.0/77.9/99.6/84.8/44.4/28.3` → `100.0/79.1/98.9/83.0/44.4/24.7` (g6 **−3.6pp**). 새 기준선은 **ADR-0239 에 기록**(ADR-0229 는 immutable 유지 + supersede 관계 명시), 롤백용 "이전" 곡선도 같은 표에 보존.
+- ⚠️ **ADR 자체의 오분류를 구현이 발견**: `core/status.ts` 는 "표시 fluff" 가 아니라 **게임플레이**다 — `rollStatusProc` 이 `_kind` 를 **무시**하고 `rng() < 0.2` 로 **burn·slow 적용 여부**를 결정한다 (`state_actions_programs.ts:145`·`:154`; 기존 `slow_effect.test.ts` 도 `// suppress burn proc` 으로 게임플레이 취급). `status.ts` 안에서만 결정화하면 20% proc 이 **상수화**되므로 **범위에서 제외하고 (b) 재개**. 게임플레이 RNG 는 일절 손대지 않았다.
+- 게이트: `tsc --noEmit` 0 · `eslint` 0 errors · vitest **156 files / 3,571 tests** · build OK.
+
+**테스트**: vitest **3345 → 3571**(+7 files / +226 tests; 156 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed** (retries off · flake 1건 수정 후 `--repeat-each=10` 40/40 로 재증명 — §13).
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시 — Manus 태스크는 `stopped` 처리, 페이지는 로컬 미러.)

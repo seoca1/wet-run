@@ -76,7 +76,7 @@ HEAD `f0530d0` 실측 — 호출 지점은 3개 헬퍼로 나뉜다:
 | --- | --- | --- | --- |
 | `import_vfx` id | `core/state/state_helpers.ts:23` | 표시 | ✅ **범위** |
 | `import_vfx_ms` id | `core/state/state_helpers.ts:47` | 표시 | ✅ **범위** |
-| 상태 메시지 fluff 판정 (`rng() < 0.2`) | `core/status.ts:253`·`:255` | 표시 — **단 전투 reducer 경로에서 소비됨** (`state_actions_programs.ts` 가 `../status` 를 import) | ⚠️ **범위 후보** |
+| 상태 proc 판정 (`rng() < 0.2`) | `core/status.ts:251`·`:255` | **게임플레이** — 호출자가 그 결과로 `burn`(2뎀×3턴)·`slow`(−30%댐·2턴)을 **실제 적용**한다 (`state_actions_programs.ts:145`·`:154`). `_kind` 인자는 **무시**됨 | ❌ **범위 밖 (2026-10-31 정정)** |
 | 그래픽노블 씬 선택 | `core/graphic_novel/graphic_novel_loaders.ts:112` · `graphic_novel_player.ts:42` | 표시 (하네스 밖) | 범위 밖 |
 | 데미지 · crit roll | `core/combat/state_actions_programs.ts:99` | **게임플레이** | ❌ 불변 |
 | 적 스킬 선택 · ICE crit roll | `core/combat/state_actions_combat.ts:234`·`:258`·`:333`, `core/combat/ice_crit.ts` | **게임플레이** | ❌ 불변 |
@@ -253,30 +253,68 @@ primary 전용(`JEV_LOCAL_FALLBACK=0`), 감사 로그는 `raw/` 대신 `/tmp/jev
    ADR 에 기록.
 3. 그 뒤 ADR-0238 의 VFX 항목 착수 (이 ADR 이 먼저).
 
+## 재기준화 결과 (2026-10-31, `c488b6d`)
+
+Option B 의 **1회 재기준화를 승인대로 실행**했다. 이동은 예상된 결과이며, 어떤 수치도
+옛 곡선으로 되돌리려 튜닝하지 않았다. **아래 "이후" 표가 새 기준선이다.**
+
+| grade | 1 | 2 | 3 | 4 | 5 | 6 |
+| --- | --- | --- | --- | --- | --- | --- |
+| opening **이전** (구 기준선) | 100.0 | 88.6 | 73.1 | 39.3 | 35.7 | 0.0 |
+| opening **이후** (새 기준선) | 100.0 | 88.3 | **70.5** | 39.5 | 36.2 | 0.0 |
+| Δpp | 0.0 | −0.3 | **−2.6** | +0.2 | +0.5 | 0.0 |
+| PPL **이전** | 100.0 | 77.9 | 99.6 | 84.8 | 44.4 | 28.3 |
+| PPL **이후** (새 기준선) | 100.0 | 79.1 | 98.9 | 83.0 | 44.4 | **24.7** |
+| Δpp | 0.0 | +1.2 | −0.7 | −1.8 | 0.0 | **−3.6** |
+
+- **ADR-0229 관계**: 위 "이전" 값이 ADR-0229 가 기록한 곡선이며, 이 시점부터
+  **역사적 값**이다. ADR-0229 는 Accepted/immutable 이므로 본문을 고치지 않고, 새
+  기준선은 **이 ADR 이 보유**한다 (supersede 관계).
+- **롤백 자료**: Open questions (f) 를 위해 "이전" 곡선을 위에 함께 남긴다 — 코드를
+  원복하면 이 값으로 돌아가야 한다.
+- **미완**: (b) 가 해결되어 caller-side seed 를 도입하면 **2차 재기준화**가 필요하다.
+  그때 이 표를 다시 갱신한다.
+
 ## Implementation Status (2026-10-31)
 
-**Status**: ❌ Not started
+**Status**: 🟡 Partial — VFX 절반 구현 (`c488b6d`). `core/status.ts` 는 **게임플레이로
+재분류**되어 범위에서 제외되고 오너 재결정 대기 (Open questions (b)).
 
 **Evidence**:
-- `core/state/state_helpers.ts:23` — `import_vfx` 의 id draw (`Math.random`)
-- `core/state/state_helpers.ts:47` — `import_vfx_ms` 의 id draw
-- `core/state/state_helpers.ts:107` — `import_vfx_deterministic` (content hash id, draw 0)
-- `core/state/state_helpers.ts:92-105` — 현행 정책 docstring ("새 spawn" 규칙만 존재)
-- `core/status.ts:253`·`:255` — fluff 판정 RNG (`rng() < 0.2`, 전투 경로에서 소비)
-- `core/combat/state_actions_programs.ts:99`, `state_actions_combat.ts:234`·`:258`·`:333`,
-  `loot.ts:30`, `death_cycle.ts:45` — **게임플레이 RNG (불변)**
+- ✅ `core/state/state_helpers.ts:23`·`:47` — `import_vfx` / `import_vfx_ms` 의 id 가
+  이제 `deterministicVfxId` 기반 (draw 0). `c488b6d`
+- ✅ `web/tests/vfx_rng_neutrality.test.ts` — 0-draw 불변식 (변경 전 실패 → 후 통과).
+  `use_program` 5-spawn 시나리오에서 draw **10 → 5**, 남은 5개는 전부 게임플레이
+  (damage variance · crit check · burn proc · slow proc · enemy ICE crit roll)
+- ✅ 안전성 확인 — `CombatVfxInstance.id` 의 유일한 독자는 `screen_shake.ts:234` 의
+  `player_hit` 게이트뿐이고 그 spawn 은 `import_vfx_deterministic`(이미 content-hash)
+  에서 나온다 → 13개 지점의 공유 id 는 무해
+- ❌ `core/status.ts:251`·`:255` — **게임플레이 판정**으로 재분류 (아래 (b))
+- ❌ `core/combat/state_actions_programs.ts:99`, `state_actions_combat.ts:234`·`:258`·`:333`,
+  `loot.ts:30`, `death_cycle.ts:45` — **게임플레이 RNG (불변 유지)**
 
-**Notes**: 이 ADR 은 아무것도 구현하지 않았다. 아래 실측 2건은 **ADR-0238 작업 중
-일회성으로 수행하고 원복**한 것이며, 저장소에는 흔적이 없다 (`git diff HEAD` 비어
-있음 · 백업 `/tmp/p8-backup2-state_actions_programs.ts`).
+**Notes**: 최초 Draft 의 실측 2건은 ADR-0238 작업 중 일회성으로 수행하고 원복한
+것이며 저장소에 흔적이 없다 (백업 `/tmp/p8-backup2-state_actions_programs.ts`).
+구현 실측(위 재기준화 표)은 `c488b6d` 이다.
 
 ## Open questions
 
 - **(a) id 스킴** — content hash 로 충분한가? `deterministicVfxId` 를 그대로 두
   헬퍼에 적용할지, 호출 순서 기반 counter 를 섞을지 (동일 내용 2건이 같은 id 를
   갖는 의미가 13개 지점 모두에서 안전한지 확인 필요).
-- ~~**(b) fluff RNG**~~ — ✅ **결정: 포함한다** (§사용자 결정). `core/status.ts:253`
-  의 20% 판정을 결정적/주입식으로 바꾼다. 배분 방식은 구현에서 확인.
+- **(b) `core/status.ts` 재분류 — 오너 재결정 필요 (2026-10-31 reopen)** — 최초
+  결정에서 "포함"으로 정한 이 항목은 **게임플레이**로 판명됐다.
+  `rollStatusProc(_kind, rng)` 은 `_kind` 를 **무시**하고 `rng() < 0.2` 만 보며, 호출자
+  (`state_actions_programs.ts:145`·`:154`)가 그 결과로 **`burn`(2뎀×3턴) ·
+  `slow`(−30%댐·2턴)을 실제 적용**한다. 기존 테스트도 게임플레이로 취급한다
+  (`slow_effect.test.ts` 가 `Math.random` 을 0.99 로 stub 하며 "suppress burn proc"
+  주석). 따라서 `status.ts` 안에서만 결정적으로 만들면 20% proc 이 **상수화**되어
+  게임플레이가 바뀐다 — **이 ADR 의 RNG 지도가 이 항목을 "표시" 로 오분류**한 것이
+  원인이다.
+  - **선택지 1 (구현자 권고)**: 게임플레이로 재분류해 **그대로 둔다**. 범위에서
+    제외되고 draw 2개는 게임플레이 예산으로 남는다 (새 테스트가 그렇게 pin).
+  - **선택지 2**: `core/combat/**` 에서 상태 기반 시드를 주입하도록 승인 → 그 자체가
+    게임플레이 변경이므로 **2차 재기준화**가 필요하다.
 - **(c) 새 기준선의 지위** — **권고안: ADR-0229 본문은 immutable 이므로 고치지
   않고, 새 기준선을 이 ADR 에 기록하며 supersede 관계를 명시**한다 (별도 baseline
   문서를 새로 만들지 않는다). 오너가 이 권고를 그대로 승인하면 구현 시 그렇게 한다.
@@ -327,3 +365,8 @@ primary 전용(`JEV_LOCAL_FALLBACK=0`), 감사 로그는 `raw/` 대신 `/tmp/jev
   `core/status.ts` fluff 포함, 불변식 테스트를 같은 ADR 에 포함, 이 ADR 을 우선
   처리. Consequences 작성, 열린 질문 (b)(d)(e) 해소, (c)(f) 는 권고안 명시.
   **구현은 아직 미착수.**
+- 2026-10-31 (4차): **구현 착수 + 재기준화 실행** (`c488b6d`). `import_vfx` /
+  `import_vfx_ms` 의 id 를 `deterministicVfxId` 로 전환 (13개 호출 지점 무변경),
+  0-draw 불변식 테스트 추가 (변경 전 실패 → 후 통과), 양 덱 재기준화 표를 이 ADR 에
+  기록. **다만 `core/status.ts` 는 게임플레이로 판명되어 범위에서 제외** — RNG 지도
+  오분류를 정정하고 (b) 를 재개. Implementation Status → 🟡 Partial.

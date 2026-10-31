@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wet Run // UI Direction Lab</title>
+  <style>
+    :root {
+      --black:#000000;
+      --text:#d0d0d0;
+      --g1:#606060;
+      --g2:#808080;
+      --g3:#909090;
+      --g4:#c0c0c0;
+      --white:#ffffff;
+      --green:#00ff41;
+      --green-dim:#008020;
+      --cyan:#00ffff;
+      --cyan-dim:#00a0a0;
+      --player:#40ffff;
+      --magenta:#ff00ff;
+      --pink:#ff80ff;
+      --yellow:#ffff00;
+      --amber:#ffa500;
+      --red:#ff2030;
+      --deep:#a00020;
+      --alarm:#ff4040;
+      --ice:#4080ff;
+      --orange:#ff8040;
+      --gold:#ffd040;
+    }
+    * { box-sizing:border-box; }
+    html, body { margin:0; min-height:100%; background:var(--black); color:var(--text); }
+    body { font-family:"Courier New", Courier, monospace; font-size:14px; line-height:1.35; letter-spacing:.02em; }
+    button { font:inherit; color:inherit; background:var(--black); border:1px solid var(--g2); min-height:44px; cursor:pointer; }
+    button:hover, button:focus-visible { color:var(--yellow); border-color:var(--yellow); outline:1px solid var(--yellow); outline-offset:2px; }
+    .site { width:min(1920px,100%); margin:0 auto; padding:16px; position:relative; overflow:hidden; }
+    .crt-layer { position:absolute; inset:0; pointer-events:none; opacity:.13; border-top:1px solid var(--green-dim); }
+    .header, .problem-rack, .footer { position:relative; border:1px solid var(--g2); background:var(--black); }
+    .header { padding:14px 16px 12px; border-color:var(--green-dim); overflow:hidden; }
+    .header canvas { position:absolute; inset:0; width:100%; height:100%; opacity:.22; pointer-events:none; }
+    .header-content { position:relative; }
+    .kicker { color:var(--amber); font-size:12px; text-transform:uppercase; letter-spacing:.16em; }
+    h1 { margin:4px 0 5px; font-size:clamp(24px,4vw,48px); font-weight:400; color:var(--green); letter-spacing:.12em; }
+    .header p { margin:0; max-width:96ch; color:var(--g4); }
+    .header .tagline { color:var(--orange); margin-top:6px; }
+    .topline { display:flex; gap:12px; justify-content:space-between; align-items:center; border-top:1px solid var(--green-dim); margin-top:12px; padding-top:9px; color:var(--green); font-size:12px; }
+    .topline .status { color:var(--yellow); }
+    .problem-rack { margin-top:12px; padding:10px 12px; border-color:var(--g1); }
+    .problem-rack h2 { margin:0 0 7px; font-size:13px; font-weight:400; color:var(--gold); letter-spacing:.08em; }
+    .problem-grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; }
+    .problem { border-left:2px solid var(--deep); padding-left:8px; color:var(--g3); min-height:46px; }
+    .problem b { color:var(--alarm); font-weight:400; display:block; }
+    .viewbar { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; align-items:center; }
+    .viewbar .label { color:var(--g3); margin-right:4px; }
+    .viewbar button { min-width:120px; color:var(--g4); }
+    .viewbar button[aria-selected="true"] { color:var(--green); border-color:var(--green); }
+    .showcase { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; align-items:start; }
+    .direction { position:relative; border:1px solid var(--g2); min-width:0; background:var(--black); }
+    .direction[data-theme="a"] { border-color:var(--amber); }
+    .direction[data-theme="b"] { border-color:var(--green); }
+    .direction[data-theme="c"] { border-color:var(--magenta); }
+    .direction-head { padding:12px 12px 10px; border-bottom:1px solid var(--g1); }
+    .direction-head .dir-id { font-size:22px; color:var(--white); }
+    .direction[data-theme="a"] .dir-id { color:var(--amber); }
+    .direction[data-theme="b"] .dir-id { color:var(--green); }
+    .direction[data-theme="c"] .dir-id { color:var(--magenta); }
+    .direction-head h2 { display:inline; margin:0 0 0 8px; font-size:18px; font-weight:400; color:var(--g4); }
+    .rationale { margin:7px 0 0; min-height:42px; color:var(--text); }
+    .rationale span { color:var(--yellow); }
+    .fixline { margin:8px 0 0; color:var(--g3); font-size:12px; }
+    .fixline b { color:var(--orange); font-weight:400; }
+    .screen { margin:12px; border:1px solid var(--g2); min-width:0; }
+    .screen-title { padding:6px 8px; border-bottom:1px solid var(--g1); color:var(--g4); font-size:12px; letter-spacing:.08em; display:flex; justify-content:space-between; gap:8px; }
+    .screen-title span:last-child { color:var(--g3); }
+    pre { margin:0; padding:10px; overflow:auto; white-space:pre; font-family:"Courier New", Courier, monospace; font-size:12px; line-height:1.18; color:var(--text); background:var(--black); }
+    .menu-pre { color:var(--amber); }
+    .menu-pre .accent { color:var(--yellow); }
+    .menu-pre .muted { color:var(--g3); }
+    .combat-pre { color:var(--cyan); }
+    .combat-pre .enemy { color:var(--ice); }
+    .combat-pre .player { color:var(--player); }
+    .combat-pre .danger { color:var(--red); }
+    .combat-pre .program { color:var(--magenta); }
+    .map-pre { color:var(--green); }
+    .map-pre .current { color:var(--yellow); }
+    .map-pre .locked { color:var(--g2); }
+    .hud-pre { color:var(--g4); }
+    .hud-pre .signal { color:var(--green); }
+    .hud-pre .heat { color:var(--orange); }
+    .hud-pre .xp { color:var(--gold); }
+    .phone-wrap { margin:12px; border-top:1px solid var(--g1); padding-top:12px; }
+    .phone-label { color:var(--pink); font-size:12px; margin-bottom:6px; }
+    .phone-frame { border:1px solid var(--pink); width:min(100%, 320px); margin:0 auto; }
+    .phone-frame pre { min-height:360px; font-size:12px; line-height:1.18; color:var(--pink); padding:9px; }
+    .phone-frame .accent { color:var(--yellow); }
+    .phone-note { margin:8px 0 0; color:var(--g3); font-size:11px; }
+    .touch { display:flex; flex-wrap:wrap; gap:6px; padding:10px 12px 12px; border-top:1px solid var(--g1); }
+    .touch button { min-height:44px; padding:7px 10px; color:var(--g4); }
+    .touch button:first-child { color:var(--green); border-color:var(--green-dim); }
+    .footer { margin-top:12px; padding:10px 12px; border-color:var(--green-dim); color:var(--g3); }
+    .footer strong { color:var(--green); font-weight:400; }
+    .footer .right { float:right; color:var(--amber); }
+    @media (max-width:1200px) {
+      .showcase { grid-template-columns:1fr; }
+      .direction { display:none; }
+      .direction.is-active { display:block; }
+      .problem-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .viewbar { position:sticky; top:0; z-index:2; background:var(--black); padding:5px 0; border-bottom:1px solid var(--g1); }
+    }
+    @media (max-width:600px) {
+      body { font-size:13px; }
+      .site { padding:8px; }
+      .header { padding:11px; }
+      h1 { font-size:24px; }
+      .topline { display:block; }
+      .topline .status { display:block; margin-top:5px; }
+      .problem-grid { grid-template-columns:1fr; }
+      .viewbar button { flex:1 1 30%; min-width:0; }
+      .screen { margin:8px; }
+      .direction-head { padding:10px; }
+      pre { font-size:11px; }
+      .phone-frame pre { font-size:11px; }
+      .footer .right { float:none; display:block; margin-top:5px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="site">
+    <div class="crt-layer" aria-hidden="true"></div>
+    <header class="header">
+      <canvas id="rain" width="1200" height="180" aria-hidden="true"></canvas>
+      <div class="header-content">
+        <div class="kicker">WET RUN // interface salvage report 07</div>
+        <h1>ASCII UI DIRECTION LAB</h1>
+        <p>Three candidate frames for a cyberpunk roguelike built from a monospace character grid. Same screens. Different signal.</p>
+        <p class="tagline">1980s C64 grit / amber CRT burn / rain through bad insulation / no empty streets</p>
+        <div class="topline"><span>LANDSCAPE 80×50 &nbsp; // &nbsp; PORTRAIT 40×60 &nbsp; // &nbsp; CANVAS2D CELL BASELINE 8×16</span><span class="status">FRAME PURPOSE: READABLE / TOUCH-SAFE / WORN</span></div>
+      </div>
+    </header>
+
+    <section class="problem-rack" aria-label="Measured problems and fixes">
+      <h2>REDESIGN TARGETS // FIVE MEASURED FAILURES TO SCRUB</h2>
+      <div class="problem-grid">
+        <div class="problem"><b>01 / DEAD SPACE</b>Full-frame frames, edge-to-edge gutters, and a live rain layer use the black field.</div>
+        <div class="problem"><b>02 / NO FRAMING</b>One box-drawing frame language repeats across menu, combat, map, and HUD.</div>
+        <div class="problem"><b>03 / TYPE TOO SMALL</b>12px baseline at desktop, room for a larger accessibility scale without re-shrinking.</div>
+        <div class="problem"><b>04 / GREEN BOX</b>Top-right cell is now a labeled SIGNAL / PURPOSE readout, never an unexplained mark.</div>
+        <div class="problem"><b>05 / TOUCH</b>Every visible control below is a 44px minimum target; program rows remain tappable.</div>
+      </div>
+    </section>
+
+    <nav class="viewbar" aria-label="Direction selector">
+      <span class="label">COMPARE:</span>
+      <button type="button" data-tab="all" aria-selected="true">A / B / C SIDE BY SIDE</button>
+      <button type="button" data-tab="a" aria-selected="false">A // AMBER RUST</button>
+      <button type="button" data-tab="b" aria-selected="false">B // GREEN GRID</button>
+      <button type="button" data-tab="c" aria-selected="false">C // MAGENTA STATIC</button>
+    </nav>
+
+    <section class="showcase" aria-label="Three visual directions">
+      <article class="direction is-active" data-theme="a" data-direction="a">
+        <div class="direction-head">
+          <span class="dir-id">A</span><h2>AMBER RUST // CRT SURVIVOR</h2>
+          <p class="rationale"><span>Rationale:</span> Warm amber carries the old monitor burn while red corrosion marks danger without turning the frame glossy.</p>
+          <p class="fixline"><b>FRAME NOTE:</b> solid amber rails / full-width footer / SIGNAL box explains the old top-right cell / 44px actions below.</p>
+        </div>
+        <section class="screen">
+          <div class="screen-title"><span>01 / MAIN MENU</span><span>80×50 LANDSCAPE</span></div>
+          <pre class="menu-pre">┌──────────────────────────────────────────────────────────────┐
+│  W E T   R U N                         [SIGNAL: MENU / 04] │
+│  // CITY WEATHER: ACID RAIN //                             │
+│                                                              │
+│     ███╗   ██╗███████╗██╗    ██╗    ██████╗ ██╗   ██╗███╗  │
+│     ╚██╗ ██╔╝██╔════╝██║    ██║    ██╔══██╗██║   ██║████╗ │
+│      ╚████╔╝ █████╗  ██║ █╗ ██║    ██████╔╝██║   ██║██╔██╗│
+│       ╚██╔╝  ██╔══╝  ██║███╗██║    ██╔══██╗██║   ██║██║╚██│
+│        ██║   ███████╗╚███╔███╔╝    ██║  ██║╚██████╔╝██║ ╚█│
+│        ╚═╝   ╚══════╝ ╚══╝╚══╝     ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚│
+│                                                              │
+│          > NEW RUN                                          │
+│            GRAPHIC NOVEL                                    │
+│            CONTINUE                                         │
+│            SETTINGS                                         │
+│            CREDITS                                          │
+│            HALL OF DEAD                                     │
+│            HELP                                             │
+│                                                              │
+│  > 새 실행 / NEW RUN  ← Korean line reserves the same row   │
+│                                                              │
+│  v0.7.3 // ENTER SELECT // ARROWS MOVE // ESC BACK          │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>02 / COMBAT</span><span>80×30 GRID</span></div>
+          <pre class="combat-pre">┌──────────────────────────────────────────────────────────────┐
+│ ICE/NULL-7  [FROST//HOSTILE]              [SIGNAL: LOCKED] │
+│ ┌──────────────────────────────────────────────────────────┐ │
+│ │         .  .  .       ╱╲ ICE ╱╲       .  .              │ │
+│ │     .       [ICE]  ──╱  ◇  ╲──  .       RAIN            │ │
+│ │   ┌─────────────── TARGET STATUS ─────────────────────┐  │ │
+│ │   │ ICE   ◇◇◇  FROZEN:02  ARMOR:███░░  [!] SPIKE     │  │ │
+│ │   │ NULL  ···  TRACE:08   SIGHT:◉     [x] BLEED       │  │ │
+│ │   └───────────────────────────────────────────────────┘  │ │
+│ │  P:WET-13  HP ███████░░░ 072/100  ARMOR ██░░  HEAT 31%  │ │
+│ │  STATUS: [CLOAK] [RIGGED]          CRED 018 / TURN 04   │ │
+│ ├──────────────── PROGRAM HAND ──────────────────────────┤ │
+│ │ [01] SCRAPE    [02] ICEPICK    [03] JAMMER    [04] SINK │ │
+│ │ cost 02        cost 03         cost 01        cost 02   │ │
+│ ├──────────────── COMBAT LOG ────────────────────────────┤ │
+│ │ > ICE/NULL-7 loses 08 shield. target status: FROZEN:02. │ │
+│ │ > rain static crawls across the lane. choose a program. │ │
+│ └─────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>03 / DUNGEON / MATRIX MAP</span><span>NODE HIERARCHY</span></div>
+          <pre class="map-pre">┌──────────────────────────────────────────────────────────────┐
+│ MATRIX / EAST DRAIN // CURRENT NODE: 04                     │
+│                                                              │
+│  ROOT / DEAD CITY                                           │
+│   ├─ 01  INTAKE TUNNEL ........ CLEARED                     │
+│   ├─ 02  RAIN CATCHER ...... CLEARED                        │
+│   │   ├─ 02A  SERVICE LIFT . CLEARED                        │
+│   │   └─ 02B  DROWNED SHOP .. LOST                          │
+│   ├─ 03  POWER SUBSTATION .. CLEARED                        │
+│   │   └─ 03A  ICE GATE ...... LOCKED                        │
+│   └─ 04  <CURRENT> UNDERPASS  [SIGNAL: WEAK]               │
+│       ├─ 04A  SCRAP SHRINE .. UNKNOWN                       │
+│       └─ 04B  EXIT RAIL ...... UNKNOWN                      │
+│                                                              │
+│  CURRENT NODE DETAIL                                        │
+│  UNDERPASS / wet concrete / trace 08 / exits 2              │
+│                                                              │
+│  PROGRESS  04 / 09 nodes   ████████░░░░  44%                │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>04 / STATUS BAR / HUD STRIP</span><span>ALWAYS VISIBLE</span></div>
+          <pre class="hud-pre">┌──────────────────────────────────────────────────────────────┐
+│ WET-13  HP ███████░░░ 072/100  CRED 018  HEAT 31%  [SIGNAL]│
+│ NODE 04 UNDERPASS  //  PROGRAMS 04  //  TURN 04  //  v0.7.3│
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <div class="phone-wrap">
+          <div class="phone-label">PORTRAIT PHONE / 40 COLUMNS / 40×60 GRID</div>
+          <div class="phone-frame"><pre>┌──────────────────────────────┐
+│ WET RUN     [SIG: MENU]      │
+│ // ACID RAIN / EAST DRAIN    │
+├──────────────────────────────┤
+│                              │
+│      W E T   R U N           │
+│      ─────────────           │
+│                              │
+│  &gt; NEW RUN                   │
+│    GRAPHIC NOVEL             │
+│    CONTINUE                  │
+│    SETTINGS                  │
+│    CREDITS                   │
+│    HALL OF DEAD              │
+│    HELP                      │
+│                              │
+│  &gt; 새 실행 / NEW RUN          │
+│                              │
+│  v0.7.3                     │
+│  TAP 44px+ // SWIPE MAP      │
+│                              │
+│ [A] SELECT       [B] BACK     │
+└──────────────────────────────┘</pre></div>
+          <p class="phone-note">Korean line fits inside the same 40-column frame. No dead black band; controls remain touch-safe.</p>
+        </div>
+        <div class="touch" aria-label="Direction A touch target samples"><button type="button">[A] SELECT</button><button type="button">[B] BACK</button><button type="button">NEXT PROGRAM</button></div>
+      </article>
+
+      <article class="direction" data-theme="b" data-direction="b">
+        <div class="direction-head">
+          <span class="dir-id">B</span><h2>GREEN GRID // DRAINLINE OPERATOR</h2>
+          <p class="rationale"><span>Rationale:</span> Phosphor green makes the frame feel like a working terminal, with cyan player data and yellow alerts cutting through grime.</p>
+          <p class="fixline"><b>FRAME NOTE:</b> repeated grid corners / denser content fill / named SIGNAL cell / touch row never under 44px.</p>
+        </div>
+        <section class="screen">
+          <div class="screen-title"><span>01 / MAIN MENU</span><span>80×50 LANDSCAPE</span></div>
+          <pre class="menu-pre">┌──────────────────────────────────────────────────────────────┐
+│ WET RUN // DRAINLINE OS                 [SIGNAL: MENU / 04] │
+│ 0x07 / WEATHER: ACID / VISIBILITY: POOR                    │
+│                                                              │
+│   ╔════════════════════════════════════════════════════════╗ │
+│   ║        W E T   R U N  /  NO CLEAN EXIT                ║ │
+│   ║                                                        ║ │
+│   ║  &gt; NEW RUN                                             ║ │
+│   ║    GRAPHIC NOVEL                                       ║ │
+│   ║    CONTINUE                                            ║ │
+│   ║    SETTINGS                                            ║ │
+│   ║    CREDITS                                             ║ │
+│   ║    HALL OF DEAD                                        ║ │
+│   ║    HELP                                                ║ │
+│   ║                                                        ║ │
+│   ║  &gt; 새 실행 / NEW RUN  // language-safe spare row        ║ │
+│   ╚════════════════════════════════════════════════════════╝ │
+│                                                              │
+│ v0.7.3 // ENTER EXECUTE // ARROWS NAVIGATE // ESC RETURN    │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>02 / COMBAT</span><span>80×30 GRID</span></div>
+          <pre class="combat-pre">┌──────────────────────────────────────────────────────────────┐
+│ COMBAT / LANE 04                        [SIGNAL: LOCKED]  │
+│ ┌──────────────────────────────────────────────────────────┐ │
+│ │  .. rain ..     [ICE//NULL-7]      .. smog ..           │ │
+│ │                 &lt;◇◇◇&gt;  FROZEN:02                       │ │
+│ │  TARGETS       STATUS GLYPHS       READOUT              │ │
+│ │  ICE           ◇◇◇  ARMOR:███░░    [!] SPIKE             │ │
+│ │  NULL          ···  TRACE:08        [x] BLEED             │ │
+│ │                                                          │ │
+│ │  PLAYER / WET-13  HP ███████░░░ 072/100  ARMOR ██░░     │ │
+│ │  STATUS [CLOAK] [RIGGED]   HEAT ███░░░ 31%   TURN 04   │ │
+│ ├──────────────── PROGRAM HAND ──────────────────────────┤ │
+│ │ 01 SCRAPE  02 ICEPICK  03 JAMMER  04 SINK              │ │
+│ │ 02 cost    03 cost     01 cost    02 cost               │ │
+│ ├──────────────── COMBAT LOG ────────────────────────────┤ │
+│ │ &gt; ICE/NULL-7 shield -08 // FROZEN:02 persists.          │ │
+│ │ &gt; choose a program; rain is eating the signal.          │ │
+│ └─────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>03 / DUNGEON / MATRIX MAP</span><span>NODE HIERARCHY</span></div>
+          <pre class="map-pre">┌──────────────────────────────────────────────────────────────┐
+│ MATRIX / DRAINLINE // RUN 07              [SIGNAL: WEAK]   │
+│                                                              │
+│  ROOT / DEAD CITY                                           │
+│   ├─ 01 INTAKE TUNNEL ............ CLEARED                 │
+│   ├─ 02 RAIN CATCHER ............. CLEARED                  │
+│   │   ├─ 02A SERVICE LIFT ......... CLEARED                 │
+│   │   └─ 02B DROWNED SHOP ......... LOST                   │
+│   ├─ 03 POWER SUBSTATION .......... CLEARED                 │
+│   │   └─ 03A ICE GATE ............. LOCKED                 │
+│   └─ 04 &lt;CURRENT&gt; UNDERPASS                                │
+│       ├─ 04A SCRAP SHRINE ......... UNKNOWN                 │
+│       └─ 04B EXIT RAIL ............ UNKNOWN                 │
+│                                                              │
+│  CURRENT NODE DETAIL: UNDERPASS / wet concrete / exits 2    │
+│  PROGRESS 04 / 09   ████████░░░░░░░░░░░░  44%             │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>04 / STATUS BAR / HUD STRIP</span><span>ALWAYS VISIBLE</span></div>
+          <pre class="hud-pre">┌──────────────────────────────────────────────────────────────┐
+│ WET-13 HP ███████░░░ 072/100  ARM ██░░  HEAT 31%  [SIGNAL] │
+│ UNDERPASS / NODE 04  CRED 018  PROG 04  TURN 04  v0.7.3   │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <div class="phone-wrap">
+          <div class="phone-label">PORTRAIT PHONE / 40 COLUMNS / 40×60 GRID</div>
+          <div class="phone-frame"><pre>┌──────────────────────────────┐
+│ WET RUN // OS                │
+│ [SIGNAL: MENU / 04]         │
+├──────────────────────────────┤
+│                              │
+│   ╔══════════════════════╗   │
+│   ║  W E T   R U N       ║   │
+│   ║                      ║   │
+│   ║ &gt; NEW RUN            ║   │
+│   ║   GRAPHIC NOVEL      ║   │
+│   ║   CONTINUE           ║   │
+│   ║   SETTINGS           ║   │
+│   ║   CREDITS            ║   │
+│   ║   HALL OF DEAD       ║   │
+│   ║   HELP               ║   │
+│   ║                      ║   │
+│   ║ &gt; 새 실행 / NEW RUN   ║   │
+│   ╚══════════════════════╝   │
+│                              │
+│ v0.7.3  44px ACTIONS        │
+│ [A] SELECT    [B] BACK      │
+└──────────────────────────────┘</pre></div>
+          <p class="phone-note">The inset frame stays legible at 40 columns and the button rail remains large enough for a thumb.</p>
+        </div>
+        <div class="touch" aria-label="Direction B touch target samples"><button type="button">[A] SELECT</button><button type="button">[B] BACK</button><button type="button">NEXT PROGRAM</button></div>
+      </article>
+
+      <article class="direction" data-theme="c" data-direction="c">
+        <div class="direction-head">
+          <span class="dir-id">C</span><h2>MAGENTA STATIC // NOISE ON THE LINE</h2>
+          <p class="rationale"><span>Rationale:</span> Magenta holds the social rot and signal noise, while ice blue isolates the hostile ICE entity and cyan keeps the player readable.</p>
+          <p class="fixline"><b>FRAME NOTE:</b> offset double rails / deliberate corrosion marks / explicit top-right readout / 44px action rail.</p>
+        </div>
+        <section class="screen">
+          <div class="screen-title"><span>01 / MAIN MENU</span><span>80×50 LANDSCAPE</span></div>
+          <pre class="menu-pre">┌──────────────────────────────────────────────────────────────┐
+│ //WET.RUN// / / / / / / /                   [SIGNAL: MENU] │
+│                                                             │
+│  ╭────────────────────────────────────────────────────────╮  │
+│  │  WET RUN                                              │  │
+│  │  N0 CLEAN EXIT / N0 QUIET CITY                        │  │
+│  │                                                        │  │
+│  │  &gt; NEW RUN                                            │  │
+│  │    GRAPHIC NOVEL                                      │  │
+│  │    CONTINUE                                           │  │
+│  │    SETTINGS                                           │  │
+│  │    CREDITS                                            │  │
+│  │    HALL OF DEAD                                       │  │
+│  │    HELP                                               │  │
+│  │                                                        │  │
+│  │  &gt; 새 실행 / NEW RUN  // reserved line                 │  │
+│  ╰────────────────────────────────────────────────────────╯  │
+│                                                             │
+│ v0.7.3 // ENTER JACK IN // ARROWS SHIFT // ESC DROP        │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>02 / COMBAT</span><span>80×30 GRID</span></div>
+          <pre class="combat-pre">┌──────────────────────────────────────────────────────────────┐
+│ // NOISE EVENT 07 //                      [SIGNAL: LOCKED] │
+│ ┌──────────────────────────────────────────────────────────┐ │
+│ │  rain / rain / rain             ICE/NULL-7               │ │
+│ │                              ╭──◇◇◇──╮                  │ │
+│ │  per-target glyphs:         │FROZEN02│  [!] SPIKE        │ │
+│ │  ICE  ◇◇◇ ARM ███░░         ╰────────╯  [x] BLEED        │ │
+│ │  NULL ··· TRACE 08                                       │ │
+│ │                                                          │ │
+│ │  PLAYER WET-13   HP ███████░░░ 072/100  ARM ██░░        │ │
+│ │  [CLOAK] [RIGGED]  HEAT 31%  CRED 018  TURN 04          │ │
+│ ├──────────────── PROGRAM HAND ──────────────────────────┤ │
+│ │ [01] SCRAPE   [02] ICEPICK   [03] JAMMER   [04] SINK  │ │
+│ │ COST 02       COST 03        COST 01       COST 02      │ │
+│ ├──────────────── COMBAT LOG ────────────────────────────┤ │
+│ │ &gt; target ICE/NULL-7: shield -08 / FROZEN:02.             │ │
+│ │ &gt; line noise rising; select the next program.            │ │
+│ └─────────────────────────────────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>03 / DUNGEON / MATRIX MAP</span><span>NODE HIERARCHY</span></div>
+          <pre class="map-pre">┌──────────────────────────────────────────────────────────────┐
+│ // MATRIX MAP / EAST DRAIN //          [SIGNAL: WEAK]      │
+│                                                              │
+│  ROOT / DEAD CITY                                           │
+│    ├─ 01 INTAKE TUNNEL ............. CLEARED                │
+│    ├─ 02 RAIN CATCHER .............. CLEARED                 │
+│    │   ├─ 02A SERVICE LIFT .......... CLEARED                │
+│    │   └─ 02B DROWNED SHOP .......... LOST                  │
+│    ├─ 03 POWER SUBSTATION ........... CLEARED                │
+│    │   └─ 03A ICE GATE .............. LOCKED                │
+│    └─ 04 &lt;CURRENT&gt; UNDERPASS                                  │
+│        ├─ 04A SCRAP SHRINE .......... UNKNOWN                │
+│        └─ 04B EXIT RAIL ............. UNKNOWN                │
+│                                                              │
+│  CURRENT NODE DETAIL // UNDERPASS                           │
+│  wet concrete / trace 08 / exits 2 / static in the walls    │
+│  PROGRESS 04/09  ████████░░░░░░░░░░░░ 44%                  │
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <section class="screen">
+          <div class="screen-title"><span>04 / STATUS BAR / HUD STRIP</span><span>ALWAYS VISIBLE</span></div>
+          <pre class="hud-pre">┌──────────────────────────────────────────────────────────────┐
+│ WET-13 / HP ███████░░░ 072/100 / HEAT 31% / [SIGNAL]      │
+│ NODE 04 UNDERPASS / CRED 018 / PROGRAMS 04 / TURN 04 / v0.7│
+└──────────────────────────────────────────────────────────────┘</pre>
+        </section>
+        <div class="phone-wrap">
+          <div class="phone-label">PORTRAIT PHONE / 40 COLUMNS / 40×60 GRID</div>
+          <div class="phone-frame"><pre>┌──────────────────────────────┐
+│ // WET.RUN //               │
+│ [SIGNAL: MENU]              │
+├──────────────────────────────┤
+│                              │
+│  ╭────────────────────────╮  │
+│  │ WET RUN                │  │
+│  │ N0 CLEAN EXIT          │  │
+│  │                        │  │
+│  │ &gt; NEW RUN              │  │
+│  │   GRAPHIC NOVEL        │  │
+│  │   CONTINUE             │  │
+│  │   SETTINGS             │  │
+│  │   CREDITS              │  │
+│  │   HALL OF DEAD         │  │
+│  │   HELP                 │  │
+│  │                        │  │
+│  │ &gt; 새 실행 / NEW RUN     │  │
+│  ╰────────────────────────╯  │
+│                              │
+│ v0.7.3 // 44px+ ACTIONS     │
+│ [A] SELECT     [B] BACK      │
+└──────────────────────────────┘</pre></div>
+          <p class="phone-note">Noise marks stay inside the frame, preserving room for Korean and keeping every action target above the minimum.</p>
+        </div>
+        <div class="touch" aria-label="Direction C touch target samples"><button type="button">[A] SELECT</button><button type="button">[B] BACK</button><button type="button">NEXT PROGRAM</button></div>
+      </article>
+    </section>
+
+    <footer class="footer"><strong>WET RUN // UI DIRECTION LAB</strong> &nbsp; chosen frame language: ASCII rails, box-drawing, readable density, purposeful signal. <span class="right">file:// safe // v0.7.3 // no external payload</span></footer>
+  </main>
+  <script>
+    (function () {
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('[data-tab]'));
+      var directions = Array.prototype.slice.call(document.querySelectorAll('.direction'));
+      tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var target = tab.getAttribute('data-tab');
+          tabs.forEach(function (item) { item.setAttribute('aria-selected', item === tab ? 'true' : 'false'); });
+          directions.forEach(function (direction) {
+            direction.classList.toggle('is-active', target === 'all' || direction.getAttribute('data-direction') === target);
+          });
+        });
+      });
+      var canvas = document.getElementById('rain');
+      var ctx = canvas.getContext('2d');
+      var drops = [];
+      for (var i = 0; i < 92; i += 1) {
+        drops.push({ x: (i * 73) % canvas.width, y: (i * 41) % canvas.height, speed: 1 + (i % 4), length: 3 + (i % 9) });
+      }
+      function paint() {
+        ctx.fillStyle = '#000000';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = '#008020';
+        ctx.lineWidth = 1;
+        drops.forEach(function (drop, index) {
+          ctx.globalAlpha = index % 5 === 0 ? .55 : .25;
+          ctx.beginPath();
+          ctx.moveTo(drop.x, drop.y);
+          ctx.lineTo(drop.x - 2, drop.y + drop.length);
+          ctx.stroke();
+          drop.y += drop.speed;
+          if (drop.y > canvas.height + 12) { drop.y = -12; drop.x = (drop.x + 97) % canvas.width; }
+        });
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(paint);
+      }
+      paint();
+    }());
+  </script>
+</body>
+</html>

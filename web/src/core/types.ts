@@ -154,11 +154,11 @@ export type ScreenKind =
  */
 export interface GraphicNovelState {
   readonly player: import("./graphic_novel/graphic_novel.ts").GraphicNovelPlayer;
-  readonly currentScene: import("./graphic_novel/graphic_novel.ts").SceneData | null;
+  readonly currentScene:
+    import("./graphic_novel/graphic_novel.ts").SceneData | null;
   readonly currentText: string;
   readonly isPaused: boolean;
 }
-
 
 /** Top-level game state — referenced by all subsystems. */
 export interface GameState {
@@ -200,7 +200,10 @@ export interface GameState {
   readonly lastAlarmTickMs: number;
   readonly counterWindowOpenMs: number;
   readonly lastEnemyAttackMs: number;
+  /** Unused legacy timestamp (ADR-0244); retained for state compatibility. */
   readonly dixieLastAttackMs: number;
+  /** Successful player program plays since Dixie fired; starts ready at N-1. */
+  readonly dixiePlayerTurnsSinceAttack: number;
   readonly skillCooldowns: Readonly<Record<string, number>>;
   // Tier 8: crafting + equipment — driven by the inventory/loadout systems.
   readonly inventory: Inventory;
@@ -216,7 +219,8 @@ export interface GameState {
   readonly deceasedJockeys: ReadonlyArray<
     import("./state/death_cycle.ts").DeceasedJockey
   >;
-  readonly lastDeathSummary: import("./state/death_cycle.ts").DeathSummary | null;
+  readonly lastDeathSummary:
+    import("./state/death_cycle.ts").DeathSummary | null;
   readonly totalRuns: number;
   readonly totalDeaths: number;
   readonly longestRunMinutes: number;
@@ -438,8 +442,7 @@ export type GameAction =
   | { readonly type: "trigger_death" }
   | {
       readonly type: "select_restart";
-       readonly choice: import("./state/death_cycle.ts").RestartChoice;
-
+      readonly choice: import("./state/death_cycle.ts").RestartChoice;
     }
   | { readonly type: "view_hall_of_dead" };
 

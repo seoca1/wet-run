@@ -82,7 +82,7 @@ describe("combat", () => {
       phase: "combat",
       iceRoster: [{ ...ice }],
       activeIceIndex: 0,
-      dixieLastAttackMs: Date.now(),
+      dixiePlayerTurnsSinceAttack: 0,
     };
   }
 

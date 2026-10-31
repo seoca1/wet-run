@@ -3,7 +3,7 @@
  * - applyCombatAction: combat phase dispatch (cycle target, use program, jack out)
  * - cycleTarget / advanceDeadTarget: active-ICE targeting
  * - drawHand: recycle discard into a fresh hand when the deck empties
- * - processEnemyTurns: enemy auto-attack / skill tick + Dixie companion tick
+ * - processEnemyTurns: enemy auto-attack / skill tick
  *
  * Program resolution lives in `state_actions_programs.ts`; non-combat phase
  * handlers live in `state_actions_phases.ts`. All three are re-exported from
@@ -21,7 +21,10 @@ import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects";
 import { applyIceNonDamageEffect } from "./ice_combat_effect_apply";
 import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling";
 import { isMutatorActive, type MutableRunState } from "../state/run_mutators";
-import { createDeceasedJockey, generateDeathSummary } from "../state/death_cycle";
+import {
+  createDeceasedJockey,
+  generateDeathSummary,
+} from "../state/death_cycle";
 import {
   COMBAT_LOG_CAP,
   import_vfx,
@@ -32,14 +35,13 @@ import {
 } from "../state/state_helpers";
 import { useProgram, advanceDeadTarget } from "./state_actions_programs";
 
-/** Dixie companion tuning.
- *
- * Design reference: `docs/design/systems/combat.md` L101-102 specifies
- * "Dixie ally: 2000ms interval, 5 dmg per tick (fixed, no stat boost)".
- * The shipped values below diverge (see `design_conformance.test.ts`).
- * Exported so the design-conformance suite can assert them against the doc.
+/** Dixie companion tuning (ADR-0244 option 2).
+ * N=2 preserves the 2000ms harness baseline: first player turn, then alternate
+ * successful program plays. Initial counter N-1 preserves that opening phase.
+ * Changing N is a separate balance decision; damage remains 8 + combo * 3.
+ * Exported for the design-conformance suite; see docs/design/systems/combat.md.
  */
-export const DIXIE_ATTACK_INTERVAL_MS = 3000;
+export const DIXIE_ATTACK_EVERY_N_PLAYER_TURNS = 2;
 export const DIXIE_BASE_DAMAGE = 8;
 export const DIXIE_SYNERGY_BONUS = 3;
 
@@ -66,7 +68,7 @@ export function applyCombatAction(
   if (action.type === "use_program") {
     const result = useProgram(state, action.programId);
     if (result.deck.length === state.deck.length) return result;
-    const afterEnemies = drawHand(processEnemyTurns(result));
+    const afterEnemies = drawHand(processDixieTurn(processEnemyTurns(result)));
 
     const allDefeated = afterEnemies.iceRoster.every((ice) => ice.hp === 0);
     if (
@@ -134,6 +136,28 @@ function drawHand(state: GameState): GameState {
     deck: pool.slice(0, size),
     drawPile: pool.slice(size),
     discardPile: [],
+  };
+}
+
+function processDixieTurn(state: GameState): GameState {
+  const turns = state.dixiePlayerTurnsSinceAttack + 1;
+  const targetIdx = state.iceRoster.findIndex((ice) => ice.hp > 0);
+  if (turns < DIXIE_ATTACK_EVERY_N_PLAYER_TURNS || targetIdx < 0) {
+    return { ...state, dixiePlayerTurnsSinceAttack: turns };
+  }
+  const dixieDmg = DIXIE_BASE_DAMAGE + state.playerCombo * DIXIE_SYNERGY_BONUS;
+  const message = `>>> Dixie attacks: ${dixieDmg} dmg`;
+  return {
+    ...state,
+    dixiePlayerTurnsSinceAttack: 0,
+    iceRoster: state.iceRoster.map((ice, i) =>
+      i === targetIdx ? { ...ice, hp: Math.max(0, ice.hp - dixieDmg) } : ice,
+    ),
+    message: state.phase === "defeat" ? state.message : message,
+    combatLog:
+      state.phase === "defeat"
+        ? state.combatLog
+        : [message, ...state.combatLog].slice(0, COMBAT_LOG_CAP),
   };
 }
 
@@ -234,10 +258,7 @@ function processEnemyTurns(state: GameState): GameState {
       enemySkills.length > 0 &&
       enemyShouldUseSkill(enemy, Math.random, state.alarmLevel)
     ) {
-      const selectedSkill = selectSkillByPersonality(
-        enemy,
-        enemySkills,
-      );
+      const selectedSkill = selectSkillByPersonality(enemy, enemySkills);
 
       if (selectedSkill) {
         const cooldownKey = `${enemy.id}_${selectedSkill.id}`;
@@ -372,23 +393,6 @@ function processEnemyTurns(state: GameState): GameState {
 
   const anyEnemyAttacked = logMessages.length > 0;
 
-  let dixieAttacked = false;
-  if (currentMs - state.dixieLastAttackMs >= DIXIE_ATTACK_INTERVAL_MS) {
-    const targetIdx = rosterForReturn.findIndex((ice) => ice.hp > 0);
-    if (targetIdx >= 0) {
-      const dixieDmg =
-        DIXIE_BASE_DAMAGE + state.playerCombo * DIXIE_SYNERGY_BONUS;
-      const newRoster = rosterForReturn.map((ice, i) => {
-        if (i !== targetIdx) return ice;
-        return { ...ice, hp: Math.max(0, ice.hp - dixieDmg) };
-      });
-      rosterForReturn = newRoster;
-      working = { ...working, iceRoster: newRoster };
-      logMessages.push(`>>> Dixie attacks: ${dixieDmg} dmg`);
-      dixieAttacked = true;
-    }
-  }
-
   if (playerHp <= 0) {
     const jockey = createDeceasedJockey({
       name: state.mission.title,
@@ -424,7 +428,6 @@ function processEnemyTurns(state: GameState): GameState {
         ...enemyTurnVfx,
         import_vfx_deterministic("defeat", "", durationForKind("defeat")),
       ],
-      dixieLastAttackMs: dixieAttacked ? currentMs : state.dixieLastAttackMs,
       lastEnemyAttackMs: anyEnemyAttacked ? currentMs : state.lastEnemyAttackMs,
       counterWindowOpenMs: anyEnemyAttacked
         ? currentMs
@@ -454,7 +457,6 @@ function processEnemyTurns(state: GameState): GameState {
     iceRoster: rosterForReturn,
     statusEffects: working.statusEffects,
     bossPhase: newBossPhase,
-    dixieLastAttackMs: dixieAttacked ? currentMs : state.dixieLastAttackMs,
     player: { ...state.player, hp: playerHp },
     lastEnemyAttackMs: anyEnemyAttacked ? currentMs : state.lastEnemyAttackMs,
     counterWindowOpenMs: anyEnemyAttacked

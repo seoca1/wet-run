@@ -77,7 +77,7 @@ function makeIce(overrides: Partial<Ice> = {}): Ice {
  *
  * `aggression: "passive"` keeps the enemy from casting a skill (5% chance),
  * so the auto-attack path is exercised deterministically. Dixie is suppressed
- * by parking `dixieLastAttackMs` far in the future — she would otherwise
+ * by starting her player-turn counter at zero — she would otherwise
  * attack in the same turn and contaminate the damage measurement.
  */
 function makePreState(ice: Ice): GameState {
@@ -90,7 +90,7 @@ function makePreState(ice: Ice): GameState {
     iceRoster: [ice],
     activeIceIndex: 0,
     inventory: { credits: 0, materials: {}, programs: [] },
-    dixieLastAttackMs: Number.MAX_SAFE_INTEGER,
+    dixiePlayerTurnsSinceAttack: 0,
   };
 }
 

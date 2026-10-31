@@ -23,7 +23,7 @@ function makeCombatState(overrides: Partial<GameState> = {}): GameState {
     phase: "combat" as const,
     runPhase: "combat" as const,
     lastEnemyAttackMs: 0,
-    dixieLastAttackMs: Date.now(),
+    dixiePlayerTurnsSinceAttack: 0,
     skillCooldowns: {},
     ...overrides,
   };

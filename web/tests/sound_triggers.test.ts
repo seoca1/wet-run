@@ -153,7 +153,7 @@ describe("combat log preservation (P4)", () => {
       ],
       activeIceIndex: 0,
       lastEnemyAttackMs: 0,
-      dixieLastAttackMs: Date.now(),
+    dixiePlayerTurnsSinceAttack: 0,
     };
   }
 

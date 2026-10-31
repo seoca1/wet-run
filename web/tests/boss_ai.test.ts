@@ -19,7 +19,7 @@ function makeCombatState(roster: Ice[], bossPhase: number = 0): GameState {
     runPhase: "combat" as const,
     bossPhase: bossPhase as any,
     lastEnemyAttackMs: 0,
-    dixieLastAttackMs: Date.now(),
+    dixiePlayerTurnsSinceAttack: 0,
   };
 }
 

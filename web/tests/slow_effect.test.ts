@@ -22,7 +22,7 @@ function buildCombatState(): GameState {
     phase: "combat",
     iceRoster: [{ ...mockIce }],
     activeIceIndex: 0,
-    dixieLastAttackMs: Date.now(),
+    dixiePlayerTurnsSinceAttack: 0,
   };
 }
 

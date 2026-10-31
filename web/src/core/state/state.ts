@@ -28,6 +28,7 @@ import { EMPTY_LOADOUT } from "./loadout";
 import { generateProceduralMatrix } from "../dungeon/matrix";
 import { missionGradeOf, missionSeedOf } from "../combat/ice_scaling";
 import { applyIdleAlarmTick } from "../combat/idle_alarm";
+import { DIXIE_ATTACK_EVERY_N_PLAYER_TURNS } from "../combat/state_actions_combat";
 import { DEFAULT_FACTION_SCORES } from "./faction_reputation";
 import missionsData from "../../data/missions.json";
 import type { RunMutator } from "./run_mutators";
@@ -120,6 +121,7 @@ export function makeInitialState(
     counterWindowOpenMs: 0,
     lastEnemyAttackMs: 0,
     dixieLastAttackMs: 0,
+    dixiePlayerTurnsSinceAttack: DIXIE_ATTACK_EVERY_N_PLAYER_TURNS - 1,
     skillCooldowns: {},
     inventory,
     equipmentLoadout: EMPTY_LOADOUT,
@@ -361,6 +363,7 @@ export function slotToGameState(
     counterWindowOpenMs: 0,
     lastEnemyAttackMs: 0,
     dixieLastAttackMs: 0,
+    dixiePlayerTurnsSinceAttack: DIXIE_ATTACK_EVERY_N_PLAYER_TURNS - 1,
     skillCooldowns: {},
     inventory,
     equipmentLoadout: EMPTY_LOADOUT,

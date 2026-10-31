@@ -7,7 +7,11 @@
  */
 import { describe, expect, it } from "vitest";
 
-import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
+import {
+  loadIceCatalog,
+  loadMissionsCatalog,
+  loadProgramsCatalog,
+} from "../src/core/data_loaders";
 import { iceHpForGrade } from "../src/core/combat/ice_scaling";
 import { deckForGrade, runSuite, simulateCombat } from "../scripts/balance_sim";
 import type { Program } from "../src/core/types";
@@ -26,6 +30,30 @@ const openingDeck: ReadonlyArray<Program> = Object.keys(programs)
   .filter((p): p is Program => p !== undefined);
 
 describe("balance sim — determinism", () => {
+  it.each(["opening", "ppl"])(
+    "ignores sub-threshold idle cadence for every mission (%s)",
+    (mode) => {
+      // Given
+      for (const mission of missions) {
+        const deck =
+          mode === "ppl"
+            ? deckForGrade(programs, mission.grade ?? 1)
+            : openingDeck;
+        // When
+        const baseline = simulateCombat(mission, iceCatalog, deck, {
+          seed: 42,
+          idleMsPerTurn: 0,
+        });
+        const delayed = simulateCombat(mission, iceCatalog, deck, {
+          seed: 42,
+          idleMsPerTurn: 1000,
+        });
+        // Then
+        expect(delayed, mission.id).toEqual(baseline);
+      }
+    },
+  );
+
   it("replays the reducer idle path deterministically when opted in", () => {
     // Given
     const mission = missions[0];
@@ -43,10 +71,15 @@ describe("balance sim — determinism", () => {
     const mission = missions[0];
     // When
     const outcomes = [undefined, 0, [9999, 0]].map((idleMsPerTurn) =>
-      simulateCombat(mission, iceCatalog, openingDeck, { seed: 42, idleMsPerTurn }),
+      simulateCombat(mission, iceCatalog, openingDeck, {
+        seed: 42,
+        idleMsPerTurn,
+      }),
     );
     // Then
-    expect(outcomes.map((outcome) => outcome.peakAlarmLevel)).toEqual([0, 0, 0]);
+    expect(outcomes.map((outcome) => outcome.peakAlarmLevel)).toEqual([
+      0, 0, 0,
+    ]);
     expect(outcomes[1]).toEqual(outcomes[0]);
   });
 
@@ -55,7 +88,8 @@ describe("balance sim — determinism", () => {
     const mission = missions[0];
     // When
     const outcome = simulateCombat(mission, iceCatalog, openingDeck, {
-      seed: 42, idleMsPerTurn: [60_000, 0],
+      seed: 42,
+      idleMsPerTurn: [60_000, 0],
     });
     // Then
     expect(outcome.peakAlarmLevel).toBe(5);
@@ -63,8 +97,12 @@ describe("balance sim — determinism", () => {
 
   it("the same seed yields an identical outcome", () => {
     const mission = missions[0]!;
-    const first = simulateCombat(mission, iceCatalog, openingDeck, { seed: 42 });
-    const second = simulateCombat(mission, iceCatalog, openingDeck, { seed: 42 });
+    const first = simulateCombat(mission, iceCatalog, openingDeck, {
+      seed: 42,
+    });
+    const second = simulateCombat(mission, iceCatalog, openingDeck, {
+      seed: 42,
+    });
     expect(second).toEqual(first);
   });
 
@@ -75,7 +113,9 @@ describe("balance sim — determinism", () => {
     const diverged = missions.some((mission) => {
       const seen = new Set(
         Array.from({ length: 16 }, (_, i) =>
-          JSON.stringify(simulateCombat(mission, iceCatalog, openingDeck, { seed: i })),
+          JSON.stringify(
+            simulateCombat(mission, iceCatalog, openingDeck, { seed: i }),
+          ),
         ),
       );
       return seen.size > 1;
@@ -88,25 +128,41 @@ describe("balance sim — grade scaling", () => {
   it.each([
     { mode: "opening", expected: [100.0, 88.3, 70.5, 39.5, 36.2, 0.0] },
     { mode: "ppl", expected: [100.0, 79.1, 98.9, 83.0, 44.4, 24.7] },
-  ])("reproduces ADR-0239 exactly with idle disabled ($mode)", ({ mode, expected }) => {
-    // Given
-    const grades = [1, 2, 3, 4, 5, 6];
-    // When
-    const rates = grades.map((grade) => {
-      const bucket = missions.filter((mission) => (mission.grade ?? 1) === grade);
-      const wins = bucket.reduce((sum, mission) => sum + runSuite(
-        mission, iceCatalog,
-        mode === "ppl" ? deckForGrade(programs, grade) : openingDeck, 100, 1,
-      ).wins, 0);
-      return Number((wins / bucket.length).toFixed(1));
-    });
-    // Then
-    expect(rates).toEqual(expected);
-    if (mode === "opening") {
-      expect(rates.every((rate, index) => index === 0 || rate <= rates[index - 1])).toBe(true);
-      expect(rates[5]).toBeLessThanOrEqual(5);
-    }
-  }, 60_000);
+  ])(
+    "reproduces ADR-0239 exactly with idle disabled ($mode)",
+    ({ mode, expected }) => {
+      // Given
+      const grades = [1, 2, 3, 4, 5, 6];
+      // When
+      const rates = grades.map((grade) => {
+        const bucket = missions.filter(
+          (mission) => (mission.grade ?? 1) === grade,
+        );
+        const wins = bucket.reduce(
+          (sum, mission) =>
+            sum +
+            runSuite(
+              mission,
+              iceCatalog,
+              mode === "ppl" ? deckForGrade(programs, grade) : openingDeck,
+              100,
+              1,
+            ).wins,
+          0,
+        );
+        return Number((wins / bucket.length).toFixed(1));
+      });
+      // Then
+      expect(rates).toEqual(expected);
+      if (mode === "opening") {
+        expect(
+          rates.every((rate, index) => index === 0 || rate <= rates[index - 1]),
+        ).toBe(true);
+        expect(rates[5]).toBeLessThanOrEqual(5);
+      }
+    },
+    60_000,
+  );
 
   it("caps ICE HP at the per-grade encounter curve", () => {
     const standard = iceCatalog["standard"];
@@ -115,8 +171,12 @@ describe("balance sim — grade scaling", () => {
     const hp1 = iceHpForGrade(standard, 1);
     const hp4 = iceHpForGrade(standard, 4);
     expect(hp4).toBeGreaterThan(hp1);
-    expect(hp1).toBeLessThanOrEqual(standard.hpBase ?? Number.POSITIVE_INFINITY);
-    expect(hp4).toBeLessThanOrEqual((standard.hpBase ?? 0) + (standard.hpPerGrade ?? 0) * 3);
+    expect(hp1).toBeLessThanOrEqual(
+      standard.hpBase ?? Number.POSITIVE_INFINITY,
+    );
+    expect(hp4).toBeLessThanOrEqual(
+      (standard.hpBase ?? 0) + (standard.hpPerGrade ?? 0) * 3,
+    );
   });
 
   it("falls back to ice.hp when grade data is missing", () => {
@@ -132,7 +192,8 @@ describe("balance sim — PPL deck", () => {
     expect(g1.length).toBe(5);
     expect(g5.length).toBe(5);
     expect(g1.every((p) => p.tier <= 1)).toBe(true);
-    const maxTier = (deck: ReadonlyArray<{ tier: number }>) => Math.max(...deck.map((p) => p.tier));
+    const maxTier = (deck: ReadonlyArray<{ tier: number }>) =>
+      Math.max(...deck.map((p) => p.tier));
     expect(maxTier(g5)).toBeGreaterThanOrEqual(maxTier(g1));
   });
 });
@@ -140,8 +201,12 @@ describe("balance sim — PPL deck", () => {
 describe("balance sim — outcome sanity", () => {
   it("never reports NaN or negative HP", () => {
     for (const mission of missions.slice(0, 8)) {
-      const outcome = simulateCombat(mission, iceCatalog, openingDeck, { seed: 1 });
-      expect(Number.isFinite(outcome.hpStart), `${mission.id} hpStart`).toBe(true);
+      const outcome = simulateCombat(mission, iceCatalog, openingDeck, {
+        seed: 1,
+      });
+      expect(Number.isFinite(outcome.hpStart), `${mission.id} hpStart`).toBe(
+        true,
+      );
       expect(Number.isFinite(outcome.hpEnd), `${mission.id} hpEnd`).toBe(true);
       expect(outcome.hpEnd, `${mission.id} hpEnd`).toBeGreaterThanOrEqual(0);
     }
@@ -149,13 +214,17 @@ describe("balance sim — outcome sanity", () => {
 
   it("resolves within the turn cap (the loop cannot run away)", () => {
     for (const mission of missions.slice(0, 12)) {
-      const outcome = simulateCombat(mission, iceCatalog, openingDeck, { seed: 3 });
+      const outcome = simulateCombat(mission, iceCatalog, openingDeck, {
+        seed: 3,
+      });
       expect(outcome.turns, `${mission.id} turns`).toBeLessThanOrEqual(100);
     }
   });
 
   it("a win and a loss are both reachable across the mission set", () => {
-    const outcomes = missions.map((m) => simulateCombat(m, iceCatalog, openingDeck, { seed: 5 }));
+    const outcomes = missions.map((m) =>
+      simulateCombat(m, iceCatalog, openingDeck, { seed: 5 }),
+    );
     expect(outcomes.some((o) => o.won)).toBe(true);
     expect(outcomes.some((o) => !o.won)).toBe(true);
   });

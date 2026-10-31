@@ -26,10 +26,17 @@ import {
   STAGGER_DURATION_MS,
 } from "../src/core/combat/combat_engine";
 import { DEFAULT_BOSS_PROFILE } from "../src/core/combat/boss_phases";
-import { ENDINGS, getEndingCounts, resolveEnding } from "../src/core/combat/ending_resolver";
-import { TIER_MULTIPLIERS, TIER_THRESHOLDS } from "../src/core/state/faction_reputation";
 import {
-  DIXIE_ATTACK_INTERVAL_MS,
+  ENDINGS,
+  getEndingCounts,
+  resolveEnding,
+} from "../src/core/combat/ending_resolver";
+import {
+  TIER_MULTIPLIERS,
+  TIER_THRESHOLDS,
+} from "../src/core/state/faction_reputation";
+import {
+  DIXIE_ATTACK_EVERY_N_PLAYER_TURNS,
   DIXIE_BASE_DAMAGE,
   DIXIE_SYNERGY_BONUS,
 } from "../src/core/state/state_actions";
@@ -69,7 +76,9 @@ describe("design conformance — boss phases (docs/design/systems/combat.md)", (
   });
 
   it("phase HP thresholds descend 0.75 / 0.5 / 0.25", () => {
-    const byPhase = new Map(DEFAULT_BOSS_PROFILE.phases.map((p) => [p.phase, p.hpThreshold]));
+    const byPhase = new Map(
+      DEFAULT_BOSS_PROFILE.phases.map((p) => [p.phase, p.hpThreshold]),
+    );
     expect(byPhase.get(2)).toBe(0.75);
     expect(byPhase.get(3)).toBe(0.5);
     expect(byPhase.get(4)).toBe(0.25);
@@ -78,7 +87,8 @@ describe("design conformance — boss phases (docs/design/systems/combat.md)", (
 
 describe("design conformance — faction reputation tiers", () => {
   it("tier thresholds match the designed ±100/±80/±50/±20 ladder", () => {
-    const min = (tier: string) => TIER_THRESHOLDS.find((t) => t.tier === tier)?.min;
+    const min = (tier: string) =>
+      TIER_THRESHOLDS.find((t) => t.tier === tier)?.min;
     expect(min("ALLIED")).toBe(80);
     expect(min("FRIENDLY")).toBe(50);
     expect(min("TRUSTED")).toBe(20);
@@ -120,7 +130,10 @@ describe("design conformance — ending catalog (docs/design/story_skeleton.md)"
         choices: [],
       });
       expect(ending, `arc ${arc} resolved to undefined`).toBeDefined();
-      expect(ending.arc, `arc ${arc} resolved to an ending from another arc`).toBe(arc);
+      expect(
+        ending.arc,
+        `arc ${arc} resolved to an ending from another arc`,
+      ).toBe(arc);
     }
   });
 });
@@ -133,22 +146,29 @@ describe("design conformance — ending catalog (docs/design/story_skeleton.md)"
  * Only gaps that are *achievable in this tier* belong here. Deliberately
  * out-of-scope behaviour lives in the scope-boundary block below.
  */
+describe("Dixie design conformance (ADR-0244)", () => {
+  it("attacks every two player turns per combat.md", () => {
+    expect(DIXIE_ATTACK_EVERY_N_PLAYER_TURNS).toBe(2);
+  });
+
+  it("deals 8 base damage per combat.md", () => {
+    expect(DIXIE_BASE_DAMAGE).toBe(8);
+  });
+
+  it("adds 3 damage per combo per combat.md", () => {
+    expect(DIXIE_SYNERGY_BONUS).toBe(3);
+  });
+});
+
 describe("tracked divergences (expected failures)", () => {
-  it.fails("Dixie attacks every 2000ms per combat.md L101 (code: 3000ms)", () => {
-    expect(DIXIE_ATTACK_INTERVAL_MS).toBe(2000);
-  });
-
-  it.fails("Dixie deals fixed 5 damage per combat.md L102 (code: 8 base)", () => {
-    expect(DIXIE_BASE_DAMAGE).toBe(5);
-  });
-
-  it.fails("Dixie has no combo bonus per combat.md L111 'fixed' (code: +3/combo)", () => {
-    expect(DIXIE_SYNERGY_BONUS).toBe(0);
-  });
-
-  it.fails("at least one ending declares requiresFaction (faction scores are live in this tier)", () => {
-    expect(ENDINGS.filter((e) => e.requiresFaction !== undefined).length).toBeGreaterThan(0);
-  });
+  it.fails(
+    "at least one ending declares requiresFaction (faction scores are live in this tier)",
+    () => {
+      expect(
+        ENDINGS.filter((e) => e.requiresFaction !== undefined).length,
+      ).toBeGreaterThan(0);
+    },
+  );
 });
 
 /**
@@ -160,7 +180,9 @@ describe("tracked divergences (expected failures)", () => {
  */
 describe("scope boundary — deliberately out of this tier (ADR-0199)", () => {
   it("no ending declares requiresChoice — this tier has no choice system", () => {
-    expect(ENDINGS.filter((e) => e.requiresChoice !== undefined)).toHaveLength(0);
+    expect(ENDINGS.filter((e) => e.requiresChoice !== undefined)).toHaveLength(
+      0,
+    );
   });
 
   it("the resolver's liberation branch needs missionsCompleted >= 3, unreachable in a one-mission run", () => {
@@ -173,7 +195,11 @@ describe("scope boundary — deliberately out of this tier (ADR-0199)", () => {
       factionScores: {},
       choices: [],
     };
-    expect(resolveEnding({ ...base, missionsCompleted: 2 }).category).not.toBe("liberation");
-    expect(resolveEnding({ ...base, missionsCompleted: 3 }).category).toBe("liberation");
+    expect(resolveEnding({ ...base, missionsCompleted: 2 }).category).not.toBe(
+      "liberation",
+    );
+    expect(resolveEnding({ ...base, missionsCompleted: 3 }).category).toBe(
+      "liberation",
+    );
   });
 });

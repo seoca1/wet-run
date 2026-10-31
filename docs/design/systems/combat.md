@@ -103,6 +103,22 @@ ADR-0003의 핵심. 한 줄 요약: **실시간 자동 공격 + 메뉴로 강력
 
 ### Construct Companion (Dixie — Pillar 5 actual combat ally)
 
+**현재 Web 구현 (2026-11-01, [ADR-0244](../../wiki/decisions/0244-clock-dependent-combat-term.md))**:
+
+| 항목 | 값 | 비고 |
+| --- | --- | --- |
+| Attack gate | **매 2 플레이어 턴** (`DIXIE_ATTACK_EVERY_N_PLAYER_TURNS = 2`) | 첫 성공한 `use_program`에 발동, 이후 3·5·7번째; 입력 시각 무관 |
+| Damage | **8 + playerCombo × 3** | 기존 Web 피해 공식 그대로; 플레이어 프로그램 처리 후 combo 사용 |
+| Target | `iceRoster.findIndex(ice => ice.hp > 0)` | 첫 생존 ICE |
+| Turn counter | `dixiePlayerTurnsSinceAttack` | N−1로 초기화, 성공한 프로그램마다 +1, 공격하면 0; 적 시계 gate 밖에서 처리 |
+| Save compatibility | SaveSlot 변경 없음 | 기존처럼 matrix 복귀 시 전투 상태 초기화; `dixieLastAttackMs`는 미사용 legacy 필드로 보존 |
+
+선택·타겟 변경·실패한 프로그램·idle/frame tick은 카운트하지 않는다. N=2는 기존 2000ms/턴
+하네스의 첫 턴 + 격턴 발동을 보존하며 양 덱 no-idle drift는 **0.0pp**다. N=1/3 변경은
+별도 밸런스 결정이다. 회귀: `web/tests/companion.test.ts`, 설계 정합:
+`web/tests/design_conformance.test.ts`. 아래 Python 설명은 **retired prototype 역사 기록**이며
+현재 Web의 2000ms/5 damage 규칙이 아니다.
+
 > **Cycle 4 polish (2026-08-03, ADR-0140 partial)**: Dixie Flatline은 기본적으로 dialog-only NPC이지만, `state.construct_companion_active = True`일 때 **실제 전투 동료**로 작동한다. 깁슨 코퍼스의 "digital ghost" 톤을 그대로 반영 — Dixie가 console cowboy와 함께 싸우는 모습.
 
 **Activation**: `state.construct_companion_active` (default `False`). 토글은 옵션/설정 화면 또는 construct_whisper UI에서 노출 (v1.2.0+).

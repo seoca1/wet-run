@@ -59,7 +59,7 @@ function combatState(program: Program): GameState {
     iceRoster: [{ ...ice }],
     activeIceIndex: 0,
     vfxInstances: [],
-    dixieLastAttackMs: Date.now(),
+    dixiePlayerTurnsSinceAttack: 0,
   };
 }
 

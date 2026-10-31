@@ -2406,3 +2406,28 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - ADR-0244 를 확정 기구로 재작성: 옵션 1~4 비교, 권고 = **옵션 2 (턴 기반) + 옵션 3
   (cadence 정정) + 재기준화**. 수락 증거에 핵심 회귀 명시 — "시계를 바꿔도 결과 불변"
   테스트는 **지금 실패해야** 한다 (결함의 pin). 열린 질문 (a)~(e). **구현 없음.**
+
+## [2026-11-01] fix | ADR-0244 옵션 2 — Dixie 플레이어 턴 gate, N=2
+
+- 첫 성공한 프로그램 턴에 발동, 이후 3·5·7번째. counter=N−1 초기화로 기존 2000ms
+  기준선 위상 유지. 적 clock gate 밖에서 성공한 프로그램마다만 카운트, 피해 8+combo×3 불변.
+- `dixieLastAttackMs`는 미사용 legacy 필드로 보존. SaveSlot에는 원래 없었으며 새 counter도
+  ephemeral. 실제 storage round-trip과 기존 save tests 통과; matrix resume에서 N−1 초기화.
+- clock regression 수정 전 적 HP 45 vs 34로 실패 → 수정 후 통과. 1/3/5턴 피해 11/17/23,
+  선택·실패·idle 비카운트, 양 덱 전체 미션 sub-threshold 수렴 테스트 추가 (+6 tests).
+  기존 combat fixture 9곳은 timestamp 억제를 counter=0으로 이전; assertion 완화 없음.
+- N=1/2/3 × opening/PPL × idle 0/1000/10000: 18회, 100 runs/mission.
+  상세 표/정책/수렴: [ADR-0244](docs/wiki/decisions/0244-clock-dependent-combat-term.md),
+  [raw stdout](docs/wiki/decisions/0244-implementation-evidence.md).
+- 채택 N=2 양 덱 ADR-0239 baseline **전 grade 0.0pp**, idle 0/1000 **전 metric 동일**.
+  N=1은 opening 최대 +28.4pp, PPL 최대 +20.9pp라 별도 re-baseline 대상, 미채택.
+  N=3도 미채택. 최종 상수는 **2**. 하네스 cadence와 알람 tuning은 불변.
+- **잔여 한계**: N=2 sustained idle 10000은 opening g4=7.4 < g5=11.7로 §B1 실패.
+  no-idle 기준선 통과를 모든 입력 분포 통과로 포장하지 않으며 알람 retuning은 별도 결정.
+- ADR-0244 Accepted + ADR-0195 Implementation Status 추가, 인덱스 Impl 갱신,
+  combat.md 현행 Web/retired Python 구분. (a)/(c)/(d) 종결, (b) telemetry 미측정,
+  (e) 다른 시간 gate는 범위 밖 유지. 옵션 3 미적용.
+- 검증: typecheck 0 errors; lint 0 errors/기존 keyboard warning 1; **159 files/3623 tests**;
+  build **118 modules**; 지정 IPv4 preview E2E **76 passed/4 skipped/0 failed, 4.7m**,
+  CI unset/retry 비활성/demo-screenshots 제외/preview 종료. LSP는 기존 설치 거절로 불가.
+- raw/금지 ADR/status/VFX 구현 파일 무변경. 커밋·stage 없음; 편집 파일만 포맷.

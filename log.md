@@ -1,6 +1,6 @@
 ## [2026-10-31] feat(ui) | UI 화면 구성 개편 — ADR-0237 채택(방향 B) + 캔버스 지오메트리 + 프레임 언어
 
-**Status**: 🟡 Partial (13 커밋). 밸런스 0.0pp 유지 — 표시 계층 전용.
+**Status**: 🟡 Partial (17 커밋). 밸런스 0.0pp 유지 — 표시 계층 전용.
 
 ### 0. 계기
 - 사용자: "wet_run UI 를 대대적으로 개선하고 싶다, 마누스 도움을 받을 수 있나?"
@@ -53,11 +53,18 @@
 - **의도적 미적용 2건**: `pause`(빈 격자가 설계 — 주석 + 테스트가 전 셀 공백을 pin) · `settings`(푸터가 `rows-2`/`rows-1` 인데 `rows-1` 이 거터 행 → 적용하려면 `settings.ts` 리플로우 필요, **별건 후속**).
 - 스크린샷: `after-11-crafting-framed.png` · `after-12-equipment-framed.png`.
 
-**테스트**: **3345 → 3494**(+6 files / +149 tests; `3e8041d` 기준 155 files).
-**게이트**: `npm test` **155 files / 3494 tests PASS** (`3e8041d`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
+### 8. settings 프레임 + 60×40 콘텐츠 손실 수정 (`0793ff3`, `f3a14c6`)
+- `settings` 에 인셋 프레임 적용 → **프레임 8화면 완료** (menu · mission select · combat · matrix · dungeon · crafting · equipment · settings). 본문은 프레임 코너 기준 +1/+1 평행 이동, `renderSlider` 는 writer 함수를 받도록 변경.
+- **`0793ff3` 이 만든 회귀**: 푸터를 마지막 내부 2행에 무조건 pin → **60×40 에서 PWA 3행 가림**. 진짜 원인은 지시했던 "리플로우 금지" 제약이었다 — 본문 37행 vs 40행 그리드 내부 36행이라 **푸터가 없어도** online/offline 행이 하단 레일에 걸린다.
+- **`f3a14c6` 해소**: 43행 이상은 기존 pin 유지(다른 프리셋 전부 불변), 40–42행은 빈 스페이서 3개(AUDIO · LANGUAGE · PWA 아래)를 접고 푸터가 본문 뒤에 붙는다. 항목 · 순서 · 문자열 변경 없음.
+- 손실을 pin 하던 테스트를 **가시성을 pin 하는 테스트로 교체**, `settings_pwa_rows` 를 60×40 · 80×40 · 80×50 3종으로 확장해 **40행 가드 복원**, 6개 프리셋 전수 "모든 줄이 프레임 안에 정확히 1회" 테스트 추가.
+- 60×40 그리드 덤프로 PWA 3행 + 푸터 동시 표시 확인.
+
+**테스트**: **3345 → 3563**(+6 files / +218 tests; `f3a14c6` 기준 155 files).
+**게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: Playwright e2e 미실행(브라우저 미설치) · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정).
-**발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시로 Manus 태스크는 `waiting` 방치.)
-**미해결**: `settings` 프레임(별건 후속 — 푸터가 거터 행과 충돌) · `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4(각각 ADR 선행) · ADR-0237 Open questions (a)·(e) 미결 · `renderer/dungeon.ts` 가 플레이어 `@` 를 그리지 않음(HEAD 동일, 범위 밖) · Manus 태스크 `waiting` 방치(비공개 유지 결정).
+**발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시 — Manus 태스크는 `stopped` 처리, 페이지는 로컬 미러.)
+**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · ADR-0237 Open questions (a)·(e) 미결 · `renderer/dungeon.ts` 가 플레이어 `@` 를 그리지 않음(HEAD 동일, 범위 밖).
 **ADR**: `docs/wiki/decisions/0237-ui-composition-and-visual-direction.md` (Accepted, 🟡 Partial) · 트리아지: `docs/design/ui-overhaul-triage-2026-10-31.md` · 산출물: `docs/design/{manus-concepts,before-after}-2026-10-31/`.
 
 ---

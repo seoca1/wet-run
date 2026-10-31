@@ -1,3 +1,47 @@
+## [2026-10-31] feat(ui) | UI 화면 구성 개편 — ADR-0237 채택(방향 B) + 캔버스 지오메트리 + 프레임 언어
+
+**Status**: 🟡 Partial (4 커밋). 밸런스 0.0pp 유지 — 표시 계층 전용.
+
+### 0. 계기
+- 사용자: "wet_run UI 를 대대적으로 개선하고 싶다, 마누스 도움을 받을 수 있나?"
+- Manus(무료 티어 1,500 + 300/day)로 **A/B/C 3방향 컨셉 시트** 생성 → 로컬 호스팅(`127.0.0.1:5194`)으로 비교 → **방향 B "Green Grid" 채택**.
+  - 채택 근거: 색각 변형 테이블이 green/red 시맨틱 위에 설계돼 있어 green 프레임은 **자동 재색**(새 오버라이드 0). amber 는 deuteranopia 에서 "안전" 신호와, magenta 는 위험 신호 및 ADR-0002 ICE 색과 충돌.
+  - 컨셉 시트 독립 검증: 22색 = 브리핑 팔레트 정확히 일치, 금지 스타일(glassmorphism/blur/gradient/box-shadow/emoji/CP2077) 전부 0.
+
+### 1. 선행: 베이스라인 정리 (`8d23b72`, `cc55d16`)
+- 미커밋 core/ 모듈 분할(178 M / 57 D / 56 rename)을 전체 게이트 후 커밋.
+- **게이트가 실제 빌드 파손 2건을 발견** — 원 세션은 `typecheck`+`test` 만 돌리고 build 는 돌리지 않았다:
+  ① `web/public/sounds/theme_*.mp3` 심링크 깊이 오류(`../../docs` → `web/docs` 로 해석) → `vite build` ENOENT. `../../../docs` 로 수정.
+  ② `vite.config.ts` `manualChunks` 가 이동 전 경로(`./src/core/state.ts` 등 4개) → `Could not resolve entry module`. 새 경로로 수정.
+
+### 2. 즉시 정리 (`4c8f40f1`, 트리아지 §3 1단계)
+- `#status-overlay` 요소·CSS·미디어 쿼리 제거 — 소비자 0건이라 빈 초록 박스로 항상 표시되고 있었다.
+- 터치 타깃 **44px px 하한**(`MIN_TOUCH_TARGET_PX`; D-pad·A/B 는 `min-width/height`, 프로그램 행은 `max(44px, Nvw)`).
+- 번호 표기 1-based `[N]` 통일(`renderer/nav_index.ts` 신설). matrix 는 0-based 였고 기존 "Node n/N" 표기와도 불일치 → 표시 전용 수정.
+- 죽은 `renderHUD()` 제거.
+- 테스트 **3333 → 3345**.
+
+### 3. 캔버스 지오메트리 (`e9eb6f1`, V1·V3)
+- 원인: 캔버스를 고정 px 로 그리고 CSS 가 **축소만** → 큰 빈 공간 + 텍스트 스케일 옵션이 CSS 에 상쇄.
+- 순수 `canvasGeometry()` / `layoutForViewport()` 추출, 뷰포트 + DPR 기반 파생, 텍스트 확대 시 presentation 행/열 감소, 6×12px 최소 셀 하한.
+- **실측**: 1440×900 박스 1280×900 → **1440×900**, 사망 띠 186.67px → **0px** · 390×844 56.38px → **0px**. 폰트 medium→large 가 15 → **18.75px**(데스크톱) / 14.07 → **17.58px**(폰).
+- **밸런스 6등급 0.0pp**(개방·PPL 양 덱) → 표시 전용 변경임을 확인.
+
+### 4. 프레임 언어 (`133286a` 헬퍼, `f29c22f` 3화면 적용, V2)
+- `renderer/panel.ts`(151 LOC): `drawPanel` / `drawPanelSeparator` / `panelInnerRect` — 불변 Grid 반환, 팔레트 call-time 조회, 클립·truncate·2×2 미만 무시 규칙. 테스트 43개.
+- 메뉴 / 미션 선택 / 전투 3화면에 적용(전투는 우측 레일이 HUD 컬럼 구분선을 겸함). 프레임은 마지막에 그려 긴 메시지가 레일을 지우지 못하게 함.
+- `main.ts` 변경은 미션 선택 위임 한 곳뿐 · `panel.ts`/`hud.ts` 무변경 · 신규 `tests/screen_frames.test.ts` 15개.
+- **미적용**: dungeon · matrix · pause · crafting · equipment.
+
+**테스트**: **3345 → 3428**(+3 files / +83 tests; `f29c22f` 기준 147 files).
+**게이트**: `npm test` 147 files / 3428 PASS · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓.
+**검증 한계**: Playwright e2e 미실행(브라우저 미설치) · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정).
+**발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시로 Manus 태스크는 `waiting` 방치.)
+**미해결**: 3화면 프레임이 그리드 최외곽 행/열에 붙어 캔버스 가장자리에 닿음(1셀 인셋 여부 후속) · `main.ts` 2,096 LOC 분해 · 트리아지 P7/P8·X1·X2·X4(각각 ADR 선행).
+**ADR**: `docs/wiki/decisions/0237-ui-composition-and-visual-direction.md` (Accepted, 🟡 Partial) · 트리아지: `docs/design/ui-overhaul-triage-2026-10-31.md` · 산출물: `docs/design/{manus-concepts,before-after}-2026-10-31/`.
+
+---
+
 ## [2026-10-30] refactor(core) | Core module split + Audio dedup + Tier 5 verification
 
 **Status**: ✅ Core directory refactored (56 files moved). Audio assets deduplicated. Tier 5 features verified.

@@ -7,7 +7,10 @@
 **관련**: [ADR-0002 — 비주얼 스타일](./0002-rendering-style.md), [ADR-0018 — Combat Animation](./0018-combat-animation.md), [ADR-0110 — 모듈 사이즈 정책](./0110-module-size-policy.md), [ADR-0183 — Accessibility (Colorblind 3 Modes, Text Size, Input Remapping)](./0183-accessibility.md), [ADR-0195 — Accepted ADR Implementation Status Workflow](./0195-adr-implementation-workflow.md), [ADR-0196 — Accessibility Colorblind State Alignment](./0196-accessibility-colorblind-state-alignment.md), [ADR-0198 — Resolution Compatibility](./0198-resolution-compatibility-and-qa-agents.md), [ADR-0199 — Wet Run Web MVP](./0199-wetrun-web-mvp.md), [ADR-0214 — 모바일 터치 대상 WCAG 최소 크기 충족](./0214-adr-mobile-touch-target-size.md), [ADR-0236 — 접근성 모드 배선](./0236-accessibility-modes.md), [UI 개편 트리아지 (2026-10-31)](../../design/ui-overhaul-triage-2026-10-31.md)
 
 > **이 문서는 Accepted 결정 기록이다.** 2026-10-31 에 프로젝트 오너가
-> 방향을 결정했다. **구현은 아직 시작하지 않았다** (§Implementation Status).
+> 방향을 결정했다. **구현은 부분 진행 중이다** — 트리아지 §3 1단계
+> (V4·V5·U3·X3) 는 커밋 `4c8f40f1`, 캔버스 지오메트리(V1·V3) 는 `e9eb6f1`,
+> 패널 헬퍼 모듈은 `133286a`. 나머지(프레임 적용 · `main.ts` 분해)는
+> §Implementation Status 참조.
 >
 > **이 ADR 은 밸런스를 건드리지 않는다.** 바뀌는 것은 표시 계층
 > (`web/index.html` 의 inline `<style>`, `web/src/renderer/`, `web/src/input/touch.ts`)
@@ -327,7 +330,7 @@ px 하한을 덧붙인다.
 
 ## Implementation Status (2026-10-31)
 
-**Status**: 🟡 Partial (V4·V5·U3·X3 커밋 `4c8f40f1` 완료 / V1·V2·V3 프레임·구성·타입 스케일 및 `main.ts` 분해는 미착수)
+**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 캔버스 지오메트리 = `e9eb6f1` · V2 프레임 헬퍼 = `133286a` · V2 메뉴/미션선택/전투 적용 = `f29c22f` / 남은 것: dungeon·matrix·pause·crafting·equipment 프레임, `main.ts` 분해
 
 **Evidence**:
 - `web/index.html:41-44` — canvas `max-width: 100vw; max-height: 100vh; width: auto; height: auto` — CSS 축소만 하는 지점 (V1, V3)
@@ -365,13 +368,26 @@ px 하한을 덧붙인다.
   3345 tests PASS** (직전 141 / 3333) · `vite build` OK. **따라서 위 Evidence
   의 `index.html:64-77`, `:112-130`, `:136`, `touch.ts:115`, `:166`, `:184`
   줄 번호는 무효다** — V4 / V5 는 🟡 Partial 로 재판정한다.
-- 이 ADR 작성 시점에 `web/` 아래 어떤 파일도 수정·실행하지 않았다. 테스트
-  수·빌드 결과는 기록하지 않는다 (측정하지 않았다).
+- 이 ADR **최초 작성** 시점에는 `web/` 아래 어떤 파일도 수정·실행하지 않았다
+  (테스트 수·빌드 결과를 측정하지 않았다). 이후 구현·측정 결과는 아래
+  "구현 경과" 항목에 있다.
 - 구현 시 **밸런스 0.0pp drift** (ADR-0229 §A1) 를 확인한다 — 표시 계층
   전용 변경이므로 drift 가 나면 결함이다.
 - 구현은 `AGENTS.md` §8 ("한 세션에 너무 많은 파일 변경 금지") 에 따라
   V4·V5 (작은 정리) → 패널 헬퍼 → V1·V3 (레이아웃) → 화면별 프레임 적용
   순서로 나누는 것을 권한다 (트리아지 §3).
+- **구현 경과 (2026-10-31, 오케스트레이터 검증)** — V1·V3 (`e9eb6f1`) 실측:
+  1440×900 캔버스 박스 1280×900 → **1440×900** (사망 띠 186.67px → **0px**),
+  390×844 는 56.38px → **0px**. 텍스트 스케일 medium→large 가 컨텍스트 폰트를
+  15 → 18.75px (데스크톱) / 14.07 → 17.58px (폰) 로 **실제로** 키운다 (이전에는
+  `index.html` 의 `max-*` 가 상쇄했다). 밸런스는 개방·PPL 양 덱 6등급 전부
+  **0.0pp drift** — 표시 계층 전용 변경임이 확인됐다. V2 는 `133286a`(헬퍼) +
+  `f29c22f`(메뉴·미션 선택·전투 3화면 적용, 전투는 우측 레일이 HUD 컬럼과의
+  구분선을 겸함). **미적용**: dungeon · matrix · pause · crafting · equipment.
+  검증: `vitest` 147 files / 3428 tests · `vite build` OK.
+- **미해결로 남긴 관찰**: 위 3화면의 프레임이 그리드 **최외곽 행/열**에 그려져
+  캔버스 가장자리에 붙는다 (스크린샷 `docs/design/before-after-2026-10-31/`).
+  1셀 인셋 여부는 후속 판단.
 
 ## Open questions
 

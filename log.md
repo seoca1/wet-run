@@ -120,6 +120,14 @@
 - **교훈**: "0 failed" 는 반복 측정 없이 주장할 수 없다. retries 를 끄고 반복해야
   flake 가 드러난다 — 이번 세션에서 제가 스스로를 정정한 세 번째 사례다.
 
+### 14. Jev 적용 — WF1 가드(BLOCK) + WF8 곡선 채점(advisory) 
+- 사용자 요청("jev ai 로 추가 진행할 수 없어?")에 따라 Jev 의 두 워크플로를 **결정 보조**로만 적용했다 (오너 결정 대체 아님).
+- **WF1 (AGENTS.md §6 가드, Noul)**: 세션 footprint 를 state 로, §6 절대 금지 5항목을 instructions 로 호출 → **`p = 0.63` → 임계표상 `p ≥ 0.6` = BLOCK + escalate**. Jev 는 타입화된 결정만 반환하고 **근거 텍스트가 없으므로**, 기계적 사실로 트리거를 추정: raw/ 변경 0 · 깨진 wikilink 0 → **파일 변경 약 380 (50+ 기준 초과)이 유력**, Accepted ADR-0237 의 Implementation Status 갱신도 가능. → 정책대로 **추가 변경 중단 + 에스컬레이션**.
+- **footprint 정정**: 앞서 "wet_run 밖 변경은 4건"이라고 적은 것은 **틀렸다** — 실제 **루트 15 엔트리** (Status/** 12 + infra/llm/wiki/agent-tool-integration-status.md + log.md + scripts/aside-mini24-health.sh + docs/progress 산출물). 첫 작업의 **검증된 산출물이 아직 미커밋**이며, 이것이 가드가 0.6 을 넘은 실질 원인일 가능성이 크다.
+- **WF8 (난이도 곡선, Score 0..5)**: 현재 곡선 vs **분리 프록시** 곡선 4회 채점 → opening **1.88 → 1.76** · PPL **0.93 → 0.94** (PPL 은 양쪽 다 고신뢰 0.86 / 0.90). **분리가 곡선 형태 품질을 떨어뜨리지 않는다** → ADR-0239 Option B(재기준화)의 위험을 낮추는 증거. ADR-0239 에 표·한계와 함께 기록.
+- **정직 공개**: canonical `scripts/jev-call.sh:46` 은 감사 JSON 을 **`raw/`** 에 쓴다 — 워크스페이스 규칙 위반이므로 **워크스페이스 사본을 /tmp 로 만들어 `AUDIT_DIR` 만 우회**했다 (canonical 무변경, diff 확인). 감사 로그는 `/tmp/jev-calls/` (10개).
+- **교훈**: WF1 이 "한 세션에 너무 많은 변경"을 정확히 지적했다 — 세션 내내 언급해온 §8/§6 상한과 일치한다.
+
 **테스트**: vitest **3345 → 3567**(+6 files / +222 tests; 155 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed** (retries off · flake 1건 수정 후 `--repeat-each=10` 40/40 로 재증명 — §13).
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).

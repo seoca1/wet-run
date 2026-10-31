@@ -84,9 +84,14 @@ policy 를 따른다.
   단조 비증가 (§B1) 와 g6 ∈ [0.0%, 5.0%] (§B2) 는 불변식. PPL 의 어떤
   grade 든 5pp 이상 이동 → PPL 표 필수 (§C2).
 - **RNG 중립성**: ADR-0231 이 발견했듯 `Math.random` 을 소비하는 VFX spawn 은
-  표시 전용이어도 하네스의 PRNG 흐름을 밀어 drift 를 만든다. 순수 표시
-  변경은 `import_vfx_deterministic` (`core/state/state_helpers.ts:107`) 을
-  쓰고 RNG draw count 일치를 확인한다.
+  표시 전용이어도 하네스의 PRNG 흐름을 밀어 drift 를 만든다.
+  **주의 (2026-10-31 실측으로 가정 정정)**: `import_vfx_deterministic`
+  (`core/state/state_helpers.ts:107`) 로 바꾸는 것은 "중립화" 가 아니라
+  **draw 하나를 제거하는 변경**이다 — 현재 코드가 이미 draw 를 소비하기
+  때문이다. `critical_hit` spawn 1줄만 그렇게 바꾼 실측에서 g3 가 **−2.0pp**
+  움직였다 (P8 절의 표). 따라서 **"RNG 무소비로 바꾸면 0.0pp" 라는 가정은 이
+  저장소에서 성립하지 않는다.** VFX spawn 의 draw 수를 바꾸는 모든 변경은
+  "0.0pp 기대" 가 아니라 §A1 판정 대상으로 제출할 것.
 
 ## 고려한 옵션
 
@@ -200,26 +205,48 @@ crit 판정은 `calculateDamage` 안에 있다 (`CRIT_CHANCE = 0.15`,
 | 옵션 | 내용 | 장점 | 단점 / 위험 |
 | --- | --- | --- | --- |
 | **P8-1 현상 유지** | `damage >= 10` 유지 | 변경 0, 0.0pp | 표시가 실제 crit 과 무관 — 티어마다 "CRIT" 빈도가 갈린다 (FEEL) |
-| **P8-2 채택: `isCrit` 연동** | `dmgResult.isCrit` 일 때만 spawn (FEEL ①) | 표시와 판정이 일치. 계산 무변경 | spawn 빈도가 바뀌므로 **`import_vfx_ms` 를 그대로 쓰면 RNG 흐름이 이동** → drift 가능 (가설) |
+| **P8-2 채택: `isCrit` 연동** | `dmgResult.isCrit` 일 때만 spawn (FEEL ①) | 표시와 판정이 일치. 계산 무변경 | spawn 빈도가 바뀌므로 RNG 흐름이 이동 → **drift 발생 (실측, 아래 표)** — RNG 무소비 경로로 바꿔도 제거되지 않는다 |
 | **P8-3 변형: 상대 비율 임계** | `damage >= maxHp * 0.15` 로 교체 (FEEL ②) | 티어 간 빈도 편차 완화 | 여전히 진짜 crit 과 무관 — 문제의 절반만 해결. RNG 이동은 P8-2 와 동일 |
+| **P8-5 변형: draw 수 보존** | spawn 여부와 무관하게 매 program resolve 에서 id draw 를 1회 소비해 스트림을 고정하고, `isCrit` 일 때만 인스턴스를 노출 | 이론상 0.0pp 유지 | RNG 를 "정렬용으로 태우는" 취약한 기법 — 이후 어떤 변경에도 깨지기 쉽고 리뷰어가 이유를 파악하기 어렵다 |
 | **P8-4 별도 ADR 로 분리** | P8 단독 ADR | 트리아지 권고. 범위가 작아 측정 · 리뷰가 쉽다 | — |
 
 **트레이드오프**: P8-2 와 P8-3 모두 spawn 빈도를 바꾸므로 RNG 중립성 처리
-없이는 drift 가 날 수 있다. spawn 을 `import_vfx_deterministic` 로 옮기면 그
-경로가 사라질 것으로 **예상**하지만 실측 전에는 단정하지 않는다
-(`import_vfx_deterministic` 이 `import_vfx_ms` 와 같은 지속시간·크기 인자를
-지원하는지도 구현 시 확인할 것 — Open questions (d)).
+없이는 drift 가 날 수 있다. spawn 을 `import_vfx_deterministic` 으로 옮기면 그
+경로가 사라질 것으로 **예상**했다. 인자 문제는 없다 — `import_vfx_deterministic`
+(`core/state/state_helpers.ts:107`) 은 `import_vfx_ms` 와 같은 (kind, payload,
+durationMs, startRow, targetRow, payloadNum) 를 받는다 (Open questions (d) 해소).
 
-**추천**: **P8-4 (단독 ADR) + P8-2 (`isCrit` 연동), spawn 은 RNG 무소비
-경로로.** 이유: 이것은 "판정을 바꾸는" 변경이 아니라 "표시를 판정에
-맞추는" 변경이다. RNG 무소비로 spawn 하면 0.0pp 가 기대값이 되고, 그러면
-ADR-0229 §A2 의 보고만으로 닫힌다. 0.0pp 가 아니면 그 자체가 조사 대상이다
-(§A3).
+**실측 — 그 예상은 틀렸다 (2026-10-31, 오케스트레이터 실험)**: `:237` 의
+`critical_hit` spawn 만 `import_vfx_ms` → `import_vfx_deterministic` 로 바꾸고
+(`:251` 의 다른 spawn 은 그대로 두고) `npm run balance` 를 돌렸다:
 
-**수락 증거**: ADR-0229 §A1 전후 표 (기대값 0.0pp 6 grade 전부) + RNG draw
-count before/after 일치 (ADR-0231/0232 선례). `web/tests/combat_engine.test.ts`
-와 crit spawn 조건 테스트. FEEL 이 지목한 `web/tests/design_conformance.test.ts`
-의 crit 상수 assertion 유지.
+| grade | 1 | 2 | 3 | 4 | 5 | 6 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 기준선 | 100.0 | 88.6 | 73.1 | 39.3 | 35.7 | 0.0 |
+| RNG 무소비 spawn | 100.0 | 88.4 | 71.1 | 40.4 | 36.2 | 0.0 |
+| drift (pp) | 0.0 | **−0.2** | **−2.0** | **+1.1** | **+0.5** | 0.0 |
+
+당연한 결과였다 — **현재 코드도 이미 draw 를 소비한다**
+(`state_helpers.ts:47`). 그러므로 RNG 무소비로 바꾸는 것은 "그 경로를 없애는"
+것이 아니라 **draw 하나를 제거하는** 변경이고, 그 자체가 스트림을 밀어
+`damage >= 10` 조건을 바꾸는 것과 같은 크기의 drift 를 만든다. 즉
+`import_vfx_deterministic` 는 P8 의 면제권이 **아니다**. (방법: 1줄 교체 실측 →
+원복 → `git status` clean 확인. 커밋 없음. 원본 백업은
+`/tmp/p8-backup-state_actions_programs.ts`.)
+
+**추천**: **P8-4 (단독 ADR) + P8-2 (`isCrit` 연동).** 이유: 이것은 "판정을
+바꾸는" 변경이 아니라 "표시를 판정에 맞추는" 변경이다. 단, 위 실측대로
+**RNG 무소비 spawn 은 0.0pp 를 주지 않는다** (g3 −2.0pp). 그러므로 P8 은
+"0.0pp 면 §A2 보고로 닫힌다" 는 경로로 갈 수 없고 **§A1 판정을 받아야
+한다** — 최대 −2.0pp 는 ±3pp 이내라 되돌릴 의무는 없지만(§A1), 표시 의도
+대비 2pp 이동은 §A2 보고 + re-baseline 여부 결정 대상이다. 0.0pp 를 반드시
+지켜야 한다면 P8-5(draw 수 보존)뿐인데, 그 취약성 때문에 비권장한다.
+
+**수락 증거**: ADR-0229 §A1 전후 표 — 6 grade 전부, **"0.0pp" 가 아니라 실측
+기반 허용 판정**으로 제출한다 (위 실측 최대 −2.0pp). P8-5 를 택한 경우에만
+0.0pp 를 요구한다. + RNG draw count before/after (ADR-0231/0232 선례).
+`web/tests/combat_engine.test.ts` 와 crit spawn 조건 테스트. FEEL 이 지목한
+`web/tests/design_conformance.test.ts` 의 crit 상수 assertion 유지.
 
 #### X2 — ICE archetype `getAlarmMultiplier` / `shouldTargetAlly` 배선
 
@@ -487,5 +514,12 @@ repeat 발사) 유지 — 세 케이스. 브라우저 스모크로 숫자키 길
 ## 변경 이력
 
 - 2026-10-31: Draft 작성 — P7 · P8 · X1 · X2 · X4 결정 요청. 항목별 옵션
-  비교표 (4 / 5 / 4 / 5 / 5 개) · 추천 · 수락 증거 · 열린 질문. 수락 시
+  비교표 (4 / 5 / 5 / 5 / 5 개) · 추천 · 수락 증거 · 열린 질문. 수락 시
   4 개 ADR (P7+X1 / P8 / X2 / X4) 로 분할 추천. 구현 없음.
+- 2026-10-31 (2차): **P8 반증 실측 추가 + 공통 가정 정정.** `critical_hit`
+  spawn 1줄을 `import_vfx_ms` → `import_vfx_deterministic` 로 바꿔
+  `npm run balance` 실측 → g3 **−2.0pp** · g4 **+1.1pp** (기대값 0.0pp 와
+  불일치). "RNG 무소비로 바꾸면 0.0pp" 가정이 **틀렸음**을 기록하고
+  **P8-5 (draw 수 보존)** 옵션 신설, P8 추천 · 수락 증거 · 공통 RNG 중립성
+  항목을 실측 기준으로 정정. 코드는 원복 — 커밋 없음, 트리 clean
+  (백업 `/tmp/p8-backup-state_actions_programs.ts`).

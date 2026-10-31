@@ -96,6 +96,9 @@ export function renderDungeonMap(
   // Render entities on top of tiles
   grid = renderEntities(grid, crawler, offsetX, offsetY, inner);
 
+  // Player after entities, so no monster or item can cover the `@`.
+  grid = renderPlayer(grid, crawler, offsetX, offsetY, inner);
+
   // Frame last, so the map can never overwrite a rail.
   return drawPanel(grid, frame).grid;
 }
@@ -109,7 +112,34 @@ function insideRect(rect: PanelRect, x: number, y: number): boolean {
   );
 }
 
-/** Render entities (player, monsters, items) on top of the map */
+/** Draw the player `@` at its position, coloured by HP ratio.
+ *
+ * The crawler tracks the player as `playerX`/`playerY`, not as an entry in
+ * `state.entities`, so it gets its own pass. The player's own tile is always
+ * explored, so no visibility gate is applied; viewport clipping still is.
+ */
+function renderPlayer(
+  grid: Grid,
+  crawler: DungeonCrawler,
+  offsetX: number,
+  offsetY: number,
+  viewport: PanelRect,
+): Grid {
+  const { x, y } = crawler.getPlayerPosition();
+  const screenX = offsetX + x;
+  const screenY = offsetY + y;
+  if (!insideRect(viewport, screenX, screenY)) {
+    return grid;
+  }
+  const { hp, maxHp } = crawler.getPlayerStats();
+  return setCell(
+    grid,
+    { x: screenX, y: screenY },
+    { char: "@", fg: getPlayerFg(hp, maxHp), bg: PALETTE.BACKGROUND },
+  );
+}
+
+/** Render entities (monsters, items, traps) on top of the map */
 function renderEntities(
   grid: Grid,
   crawler: DungeonCrawler,
@@ -146,14 +176,9 @@ function renderEntities(
       fg = getTileFg(tile.type, true); // Dimmed
     } else {
       // Entity is visible
+      // The player is not an entity (core tracks it as playerX/playerY);
+      // renderPlayer() draws it after this pass.
       switch (entity.type) {
-        case EntityType.PLAYER:
-          char = "@";
-          fg = getPlayerFg(
-            crawler.getPlayerStats().hp,
-            crawler.getPlayerStats().maxHp,
-          );
-          break;
         case EntityType.MONSTER:
           char = entity.subtype
             ? getMonsterChar(entity.subtype as MonsterType)

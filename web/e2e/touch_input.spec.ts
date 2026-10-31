@@ -103,7 +103,13 @@ test.describe("mobile touch input", () => {
  * listeners actually use (see touch.ts appendButton).
  */
 async function tap(page: Page, locator: ReturnType<typeof page.locator>): Promise<void> {
-  const box = await locator.boundingBox();
+  // boundingBox() returns null while the row re-renders (button detached), even
+  // though toBeVisible() just passed — retry rather than assert once.
+  let box = await locator.boundingBox();
+  for (let attempt = 0; attempt < 40 && !box; attempt += 1) {
+    await page.waitForTimeout(25);
+    box = await locator.boundingBox();
+  }
   if (!box) throw new Error("button not found or not visible");
 
   const x = box.x + box.width / 2;

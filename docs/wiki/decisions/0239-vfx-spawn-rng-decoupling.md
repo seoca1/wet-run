@@ -275,10 +275,10 @@ Option B 의 **1회 재기준화를 승인대로 실행**했다. 이동은 예�
 - **미완**: (b) 가 해결되어 caller-side seed 를 도입하면 **2차 재기준화**가 필요하다.
   그때 이 표를 다시 갱신한다.
 
-## Implementation Status (2026-10-31)
+## Implementation Status (2026-11-01)
 
-**Status**: 🟡 Partial — VFX 절반 구현 (`c488b6d`). `core/status.ts` 는 **게임플레이로
-재분류**되어 범위에서 제외되고 오너 재결정 대기 (Open questions (b)).
+**Status**: ✅ Implemented — VFX 절반 구현 (`c488b6d`) + `core/status.ts` 게임플레이
+재분류 **확정** (Open questions (b), 오너 승인 2026-11-01 → 선택지 1).
 
 **Evidence**:
 - ✅ `core/state/state_helpers.ts:23`·`:47` — `import_vfx` / `import_vfx_ms` 의 id 가
@@ -289,32 +289,36 @@ Option B 의 **1회 재기준화를 승인대로 실행**했다. 이동은 예�
 - ✅ 안전성 확인 — `CombatVfxInstance.id` 의 유일한 독자는 `screen_shake.ts:234` 의
   `player_hit` 게이트뿐이고 그 spawn 은 `import_vfx_deterministic`(이미 content-hash)
   에서 나온다 → 13개 지점의 공유 id 는 무해
-- ❌ `core/status.ts:251`·`:255` — **게임플레이 판정**으로 재분류 (아래 (b))
-- ❌ `core/combat/state_actions_programs.ts:99`, `state_actions_combat.ts:234`·`:258`·`:333`,
+- ✅ `core/status.ts:251`·`:255` — **게임플레이로 재분류, 코드 무변경** (선택지 1,
+  2026-11-01 오너 승인). draw 2개는 게임플레이 예산으로 남고, 새 테스트가 그렇게 pin 한다.
+- ✅ `core/combat/state_actions_programs.ts:99`, `state_actions_combat.ts:234`·`:258`·`:333`,
   `loot.ts:30`, `death_cycle.ts:45` — **게임플레이 RNG (불변 유지)**
 
 **Notes**: 최초 Draft 의 실측 2건은 ADR-0238 작업 중 일회성으로 수행하고 원복한
 것이며 저장소에 흔적이 없다 (백업 `/tmp/p8-backup2-state_actions_programs.ts`).
-구현 실측(위 재기준화 표)은 `c488b6d` 이다.
+구현 실측(위 재기준화 표)은 `c488b6d` 이다. (b) 가 마지막 미결 항목이었으므로 이
+ADR 은 이제 **완결**이다 — 남은 열린 질문 (a)(c)(f) 는 구현 세부이며 이 ADR 의
+구현 완료를 막지 않는다.
 
 ## Open questions
 
 - **(a) id 스킴** — content hash 로 충분한가? `deterministicVfxId` 를 그대로 두
   헬퍼에 적용할지, 호출 순서 기반 counter 를 섞을지 (동일 내용 2건이 같은 id 를
   갖는 의미가 13개 지점 모두에서 안전한지 확인 필요).
-- **(b) `core/status.ts` 재분류 — 오너 재결정 필요 (2026-10-31 reopen)** — 최초
-  결정에서 "포함"으로 정한 이 항목은 **게임플레이**로 판명됐다.
-  `rollStatusProc(_kind, rng)` 은 `_kind` 를 **무시**하고 `rng() < 0.2` 만 보며, 호출자
-  (`state_actions_programs.ts:145`·`:154`)가 그 결과로 **`burn`(2뎀×3턴) ·
-  `slow`(−30%댐·2턴)을 실제 적용**한다. 기존 테스트도 게임플레이로 취급한다
-  (`slow_effect.test.ts` 가 `Math.random` 을 0.99 로 stub 하며 "suppress burn proc"
-  주석). 따라서 `status.ts` 안에서만 결정적으로 만들면 20% proc 이 **상수화**되어
+- ~~**(b) `core/status.ts` 재분류**~~ — ✅ **결정: 선택지 1 (게임플레이로 재분류, 코드
+  무변경)** — 2026-11-01 오너 승인. 최초 결정에서 "포함"으로 정한 이 항목은
+  **게임플레이**로 판명됐다. `rollStatusProc(_kind, rng)` 은 `_kind` 를 **무시**하고
+  `rng() < 0.2` 만 보며, 호출자 (`state_actions_programs.ts:145`·`:154`)가 그 결과로
+  **`burn`(2뎀×3턴) · `slow`(−30%댐·2턴)을 실제 적용**한다. 기존 테스트도 게임플레이로
+  취급한다 (`slow_effect.test.ts` 가 `Math.random` 을 0.99 로 stub 하며 "suppress burn
+  proc" 주석). 따라서 `status.ts` 안에서만 결정적으로 만들면 20% proc 이 **상수화**되어
   게임플레이가 바뀐다 — **이 ADR 의 RNG 지도가 이 항목을 "표시" 로 오분류**한 것이
   원인이다.
-  - **선택지 1 (구현자 권고)**: 게임플레이로 재분류해 **그대로 둔다**. 범위에서
-    제외되고 draw 2개는 게임플레이 예산으로 남는다 (새 테스트가 그렇게 pin).
-  - **선택지 2**: `core/combat/**` 에서 상태 기반 시드를 주입하도록 승인 → 그 자체가
-    게임플레이 변경이므로 **2차 재기준화**가 필요하다.
+  - **채택: 선택지 1** — 게임플레이로 재분류해 **그대로 둔다**. 범위에서 제외되고
+    draw 2개는 게임플레이 예산으로 남는다 (새 테스트가 그렇게 pin).
+  - **기각: 선택지 2** — `core/combat/**` 에서 상태 기반 시드를 주입. 그 자체가
+    게임플레이 변경이므로 **2차 재기준화**가 필요하고, ADR-0239 는 이미 `c488b6d` 로
+    한 번 재기준화했으므로 두 번째 곡선 이동을 정당화할 이득이 없다 (2026-11-01 판단).
 - **(c) 새 기준선의 지위** — **권고안: ADR-0229 본문은 immutable 이므로 고치지
   않고, 새 기준선을 이 ADR 에 기록하며 supersede 관계를 명시**한다 (별도 baseline
   문서를 새로 만들지 않는다). 오너가 이 권고를 그대로 승인하면 구현 시 그렇게 한다.

@@ -1,18 +1,18 @@
 # ADR-0239: VFX spawn 의 RNG 결합 해소 — 결정적 id 전환 + 1회 재기준화
 
-**상태**: Draft
+**상태**: Accepted
 **날짜**: 2026-10-31
-**결정자**: 사용자 (프로젝트 오너) — **결정 대기**
+**결정자**: 사용자 (프로젝트 오너) — 2026-10-31 결정
 **우선순위**: P2 (The Flatline — 밸런스 프로세스, ADR-0229 §A1 접점)
 **관련**: [ADR-0229 — Grade 난이도 곡선 재기준화](./0229-grade-curve-rebaseline.md) · [ADR-0231 — Combat-feel top-3](./0231-combat-feel-top3-vfx-log-raf.md) · [ADR-0232 — Combat-feel tier 2](./0232-combat-feel-tier2-shake-damage-sfx.md) · [ADR-0238 — 밸런스·입력 결정 요청](./0238-balance-and-input-decision-request.md) · [UI 개편 트리아지 (2026-10-31)](../../design/ui-overhaul-triage-2026-10-31.md)
 
-> **이것은 결정 요청(Draft) 이다.** 아무것도 구현하지 않았다. 전환 자체는 2개
-> 함수 수정이지만, **밸런스 기준선을 옮기는 1회 재기준화**가 따라오므로 그 결정은
-> 오너의 몫이다 (ADR-0229 §A1).
+> **2026-10-31 프로젝트 오너가 Option B 를 채택했다** (§사용자 결정 참조). 이
+> ADR 은 이제 **Accepted** 이고, 구현은 아직 시작하지 않았다 (§Implementation
+> Status).
 >
-> **이 ADR 은 게임플레이 RNG 를 건드리지 않는다.** 바꾸는 것은 **표시 계층의
-> VFX id** 뿐이다. crit roll · loot roll · 적 스킬 선택 · death cycle 은 밸런스
-> 그 자체이므로 불변이다.
+> **이 ADR 은 게임플레이 RNG 를 건드리지 않는다.** 바꾸는 것은 **표시 계층의 VFX
+> id** 와 상태 메시지 fluff 판정뿐이다. crit roll · loot roll · 적 스킬 선택 ·
+> death cycle 은 밸런스 그 자체이므로 불변이다.
 
 ## 컨텍스트 (Context)
 
@@ -199,18 +199,59 @@ primary 전용(`JEV_LOCAL_FALLBACK=0`), 감사 로그는 `raw/` 대신 `/tmp/jev
 
 ## 사용자 결정 (Decision)
 
-- [ ] **Option A** — 현상 유지 + 규칙 명문화 only
-- [ ] **Option B** — 결정적 id 전환 + 1회 재기준화 **(추천)**
-- [ ] **Option C** — draw 수를 밸런스 계약으로 선언
-- [ ] 범위에 `core/status.ts` 의 fluff RNG(`:253`)도 포함할지
-- [ ] 부수 권고(RNG draw 수 불변식 테스트)를 같은 ADR 에 포함할지, 분리할지
-- [ ] ADR-0238 의 VFX 항목보다 **먼저** 처리하는 순서에 동의하는지
+**2026-10-31, 프로젝트 오너 직접 결정** (Jev 는 결정 보조로만 사용 — WF8 곡선
+증거 제공, 결정 자체는 오너).
+
+- [x] **Option B 채택** — 결정적 id 전환 + 1회 재기준화
+- [ ] ~~Option A~~ — 현상 유지 (미채택)
+- [ ] ~~Option C~~ — draw 수를 밸런스 계약으로 선언 (미채택)
+- [x] 범위에 `core/status.ts` 의 fluff RNG(`:253`) **포함**
+- [x] RNG draw 수 불변식 테스트를 **같은 ADR 에 포함**
+- [x] ADR-0238 의 VFX 항목보다 **먼저** 처리
 
 ## 결과 (Consequences)
 
-**결정 후 작성.** (Option B 기준으로 예상되는 결과: 6등급 곡선이 1회 이동하고 새
-기준선이 ADR-0229 기록을 대체한다. 그 이후 표시 계층 변경은 0.0pp 를 기본값으로
-갖는다.)
+**Option B 기준.** 아직 구현 전이므로, 아래는 결정이 확정한 것과 예상이다.
+
+### 결정이 확정한 것
+
+- **재기준화 1회를 수용한다** — `import_vfx` / `import_vfx_ms` 의 id draw 제거로
+  스트림이 한 번 이동하므로 6등급 곡선을 재측정하고 새 기준선으로 기록한다.
+  ADR-0229 의 기존 opening 곡선(`100.0/88.6/73.1/39.3/35.7/0.0`)은 이 시점부터
+  **역사적 값**이 된다. Accepted ADR 은 immutable 이므로 **ADR-0229 본문은 고치지
+  않고**, 새 기준선은 **이 ADR 에 기록**하며 supersede 관계를 명시한다
+  (Open questions (c) 의 권고안).
+- **표시 계층 변경의 기본 비용이 0.0pp 가 된다** — 이후 VFX spawn 작업
+  (ADR-0238 의 P2 잔여 · P8 · X5 · X8)은 draw 를 소비하지 않아 §A1 판정 없이
+  진행할 수 있다.
+- **`core/status.ts` 의 fluff 판정도 범위에 포함** — 전투 경로에서 draw 를 소비하는
+  표시용 RNG 도 함께 정리한다.
+- **RNG draw 수 불변식 테스트가 이 ADR 의 산출물** — ADR-0231·0232 가 수작업으로
+  대조했던 것을 기계화한다.
+
+### 긍정적 영향
+
+- 표시 개선이 밸런스와 분리된다 — 이 세션에서 세 번 반복된 함정(표시 변경 →
+  2~3pp 이동 → §A1 재판정)이 사라진다.
+- 코드에만 있던 규칙을 테스트가 강제한다.
+
+### 부정적 영향 / 수용한 비용
+
+- **1회 재기준화** — 기준선이 바뀌므로 그 이전 곡선과의 비교는 "다른 기준선"임을
+  명시해야 한다. 되돌리기가 자명하지 않다 (Open questions (f)).
+- **id 충돌 의미 확대** — 동일 내용 spawn 2건이 같은 id 를 갖는다. 현행 근거(id 는
+  logic 에 안 읽히고 렌더는 배열 순서)를 13개 지점 전부에서 확인해야 한다
+  (Open questions (a)).
+- **fluff 판정의 결정화** — 20% 확률 분기가 결정적이 되면 fluff 다양성이 줄 수
+  있으므로 배분 방식을 확인해야 한다.
+
+### 후속 항목
+
+1. 구현: 두 헬퍼의 id 를 `deterministicVfxId` 기반으로, `status.ts` fluff 를
+   결정적/주입식으로, draw 수 불변식 테스트 추가 (Open questions (a), (d)).
+2. 재기준화 실행: `npm run balance` (opening) + `--deck ppl`, 6등급 전후 표를 이
+   ADR 에 기록.
+3. 그 뒤 ADR-0238 의 VFX 항목 착수 (이 ADR 이 먼저).
 
 ## Implementation Status (2026-10-31)
 
@@ -234,29 +275,33 @@ primary 전용(`JEV_LOCAL_FALLBACK=0`), 감사 로그는 `raw/` 대신 `/tmp/jev
 - **(a) id 스킴** — content hash 로 충분한가? `deterministicVfxId` 를 그대로 두
   헬퍼에 적용할지, 호출 순서 기반 counter 를 섞을지 (동일 내용 2건이 같은 id 를
   갖는 의미가 13개 지점 모두에서 안전한지 확인 필요).
-- **(b) fluff RNG** — `core/status.ts:253` 의 20% 판정도 결정적이어야 하는가,
-  주입된 시드 rng 를 쓰게 할 것인가? 표시이지만 전투 경로에서 소비된다.
-- **(c) 새 기준선의 지위** — 재기준화한 곡선을 ADR-0229 의 새 baseline 으로
-  기록하는가(그러면 ADR-0229 의 기존 곡선 표기가 superseded 됨)? 아니면 별도
-  baseline 문서를 두는가?
-- **(d) 불변식 테스트** — draw 수/해시를 어떻게 고정할지, CI 에서 강제할지.
-- **(e) 순서** — ADR-0238 의 VFX 항목(P2 잔여 · P8 · X5 · X8)을 이 ADR **뒤**로
-  미룰지.
-- **(f) 되돌리기 정책** — 전환 후 문제가 생기면 기준선이 이미 바뀌어 "원복"이
-  자명하지 않다. 롤백 기준을 정해 둘지.
+- ~~**(b) fluff RNG**~~ — ✅ **결정: 포함한다** (§사용자 결정). `core/status.ts:253`
+  의 20% 판정을 결정적/주입식으로 바꾼다. 배분 방식은 구현에서 확인.
+- **(c) 새 기준선의 지위** — **권고안: ADR-0229 본문은 immutable 이므로 고치지
+  않고, 새 기준선을 이 ADR 에 기록하며 supersede 관계를 명시**한다 (별도 baseline
+  문서를 새로 만들지 않는다). 오너가 이 권고를 그대로 승인하면 구현 시 그렇게 한다.
+- ~~**(d) 불변식 테스트**~~ — ✅ **결정: 같은 ADR 에 포함** (§사용자 결정). 무엇을
+  고정할지(draw 수 vs 첫 N draw 해시)와 CI 강제 여부는 구현 세부로 남긴다.
+- ~~**(e) 순서**~~ — ✅ **결정: 이 ADR 을 먼저** 처리하고 ADR-0238 의 VFX 항목은 그
+  뒤에 (§사용자 결정).
+- **(f) 되돌리기 정책** — **권고안: 재기준화 직전의 곡선을 이 ADR 에 함께 기록**해
+  두어 문제 발생 시 코드 원복과 기준선 원복이 함께 가능하게 한다. 롤백 판단
+  기준(어떤 신호에서 되돌리는가)은 미정.
 
 ## 영향 받는 항목
 
-### 이 결정 요청으로 변경된 항목
+### 이 결정으로 변경된 항목
 
 - `docs/wiki/decisions/0239-vfx-spawn-rng-decoupling.md` — **신규** (이 ADR)
+- `docs/wiki/decisions/README.md` — 인덱스 행 (Draft → **Accepted**)
 
-### 결정 · 구현 시 변경될 수 있는 항목 (예정 — 결정에 따라)
+### 구현 시 변경될 항목 (결정으로 확정 — 구현은 미착수)
 
-- `core/state/state_helpers.ts` — `import_vfx` / `import_vfx_ms` 의 id 를 결정적으로
-- (선택) `core/status.ts` — fluff RNG 를 결정적/주입식으로
-- `web/tests/**` — RNG draw 수 불변식 테스트 (부수 권고 채택 시)
-- ADR-0229 의 baseline 기록 (재기준화 시)
+- `core/state/state_helpers.ts` — `import_vfx` / `import_vfx_ms` 의 id 를
+  `deterministicVfxId` 기반으로 (13개 호출 지점은 무변경)
+- `core/status.ts` — fluff RNG 를 결정적/주입식으로 **(범위 포함 확정)**
+- `web/tests/**` — RNG draw 수 불변식 테스트 **(같은 ADR 범위로 확정)**
+- 이 ADR 본문 — 재기준화 후 6등급 전후 표 (ADR-0229 의 곡선은 supersede 관계로 명시)
 
 ### 변경되지 않는 항목
 
@@ -276,3 +321,9 @@ primary 전용(`JEV_LOCAL_FALLBACK=0`), 감사 로그는 `raw/` 대신 `/tmp/jev
 
 - 2026-10-31: Draft 작성 — 문제 실측(opening · PPL 양 덱), RNG 소비 지도, 옵션 4종
   (실질 3종), Option B 추천, 불변식 테스트 부수 권고, 열린 질문 6건. **구현 없음.**
+- 2026-10-31 (2차): WF8 난이도 곡선 채점 증거 추가 (현재 vs 분리 프록시 — opening
+  1.88 → 1.76 · PPL 0.93 → 0.94, PPL 고신뢰) → Option B 의 위험을 낮추는 근거.
+- 2026-10-31 (3차): **Draft → Accepted.** 프로젝트 오너가 **Option B** 채택,
+  `core/status.ts` fluff 포함, 불변식 테스트를 같은 ADR 에 포함, 이 ADR 을 우선
+  처리. Consequences 작성, 열린 질문 (b)(d)(e) 해소, (c)(f) 는 권고안 명시.
+  **구현은 아직 미착수.**

@@ -330,7 +330,7 @@ px 하한을 덧붙인다.
 
 ## Implementation Status (2026-10-31)
 
-**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 = `e9eb6f1` · V2 헬퍼 = `133286a` · V2 3화면 = `f29c22f` · V2 1셀 인셋 + matrix·dungeon = `a97a4a7` · `main.ts` 분해 = `ffbfa41` · crafting·equipment 프레임 = `3e8041d` / 남은 것: `settings` 프레임(별건 후속), Open questions (a)·(e)
+**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 = `e9eb6f1` · V2 헬퍼 = `133286a` · V2 3화면 = `f29c22f` · V2 1셀 인셋 + matrix·dungeon = `a97a4a7` · `main.ts` 분해 = `ffbfa41` · crafting·equipment = `3e8041d` · settings = `0793ff3` / 남은 것: Open questions (a)·(e)·(f), 밸런스·입력 5건 = [[0238-balance-and-input-decision-request]] (**Draft**)
 
 **Evidence**:
 - `web/index.html:41-44` — canvas `max-width: 100vw; max-height: 100vh; width: auto; height: auto` — CSS 축소만 하는 지점 (V1, V3)
@@ -408,7 +408,9 @@ px 하한을 덧붙인다.
   (`pre_game_screen.ts` 주석 "Pause intentionally has a blank grid" 및 테스트가
   전 셀을 공백으로 pin) ② `settings` — 푸터가 `rows-2`/`rows-1` 에 있고
   `rows-1` 이 프레임이 비워야 하는 거터 행이라 적용하려면 `settings.ts`
-  리플로우가 필요하다 → **별건 후속**.
+  리플로우가 필요하다 → **`0793ff3` 에서 적용**. 푸터를 마지막 내부 2행에 pin
+  하는 방식(`menu_main.ts` 선례)으로 해결했고, 그 대가로 **60×40 프리셋에서
+  PWA 상태 3행이 가려진다** → Open question (f) 로 기록.
 
 ## Open questions
 
@@ -443,6 +445,12 @@ px 하한을 덧붙인다.
   스케일과 `compact` breakpoint 에서도 이 하한이 적용된다.
 - **(e) ko 자막 예약 행 수** — 1행 고정인지, 대사 길이에 따라 2행까지
   허용하는지.
+- **(f) 60×40 프리셋의 settings 프레임 트레이드오프** (`0793ff3`) — 프레임
+  본문(2–38행) + 푸터 2행이 필요해 그리드 **43행 이상**에서만 둘 다 들어간다.
+  `60×40` 에서는 PWA install/update 행이 푸터에 가려지고 online/offline 행이
+  하단 레일 아래로 간다 (짧은 그리드에서 푸터가 본문을 이기던 기존 우선순위와
+  동일). **수락할지, `settings.ts` 를 리플로우할지 결정 필요** — 테스트가 이
+  동작을 pin 하고 있다.
 
 ## 영향 받는 항목
 

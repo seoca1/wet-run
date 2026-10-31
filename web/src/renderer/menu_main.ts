@@ -14,6 +14,7 @@ import type { Grid } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { t, type Language } from "../core/i18n";
 import { PALETTE } from "./palette";
+import { formatNavIndex } from "./nav_index";
 
 export type MenuOption =
   | "new_run"
@@ -107,20 +108,20 @@ export function renderMainMenu(
     if (!opt) continue;
     const isSelected = i === selected;
     const marker = isSelected ? "▸" : " ";
-    const num = (i + 1).toString();
+    const num = formatNavIndex(i);
     const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const row = startY + i;
     if (row >= rows - 1) break;
-    let label = `[${num}] ${t(`menu.${opt.key}`, language)}`;
+    let label = `${num} ${t(`menu.${opt.key}`, language)}`;
     // CONTINUE option gating — gray out + suffix when no save.
     if (opt.key === "continue" && !hasSave) {
-      label = `[${num}] ${t("menu.continue", language)}    ${t("menu.no_save", language)}`;
+      label = `${num} ${t("menu.continue", language)}    ${t("menu.no_save", language)}`;
       grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
       continue;
     }
     // FAR GRID option gating — gray out + suffix when locked (ADR-0213 Phase 2).
     if (opt.key === "far_grid_hub" && !farGridUnlocked) {
-      label = `[${num}] ${t("menu.far_grid_hub", language)}    ${t("menu.locked", language)}`;
+      label = `${num} ${t("menu.far_grid_hub", language)}    ${t("menu.locked", language)}`;
       grid = setText(grid, 4, row, `${marker} ${label}`, PALETTE.GRAY_DARK);
       continue;
     }

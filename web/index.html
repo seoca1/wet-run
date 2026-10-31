@@ -61,20 +61,6 @@
         touch-action: manipulation; user-select: none;
         display: flex; align-items: center; justify-content: center;
       }
-      #status-overlay {
-        position: fixed;
-        top: 8px;
-        right: 8px;
-        padding: 8px 12px;
-        background: rgba(0, 0, 0, 0.85);
-        border: 1px solid #00ff41;
-        color: #00ff41;
-        font-size: 12px;
-        line-height: 1.4;
-        z-index: 10;
-        max-width: 200px;
-        word-wrap: break-word;
-      }
       #gamepad-status {
         position: fixed;
         bottom: 8px;
@@ -110,22 +96,10 @@
         border: 0;
       }
       @media (max-width: 480px) {
-        #status-overlay {
-          font-size: 10px;
-          padding: 6px 10px;
-          top: 4px;
-          right: 4px;
-        }
         #gamepad-status {
           font-size: 8px;
           bottom: 4px;
           left: 4px;
-        }
-      }
-      @media (orientation: landscape) and (max-height: 500px) {
-        #status-overlay {
-          font-size: 10px;
-          padding: 4px 8px;
         }
       }
     </style>
@@ -133,7 +107,6 @@
   <body>
     <div role="application" aria-label="Wet Run Game">
       <canvas id="game-canvas" width="640" height="400" role="img" aria-label="Game canvas" tabindex="0"></canvas>
-      <div id="status-overlay" aria-live="polite"></div>
       <div id="gamepad-status" aria-live="polite"></div>
       <div id="loading">Loading Wet Run...</div>
       <div id="aria-live" class="sr-only" aria-live="polite" aria-atomic="true"></div>

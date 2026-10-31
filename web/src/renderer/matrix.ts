@@ -10,6 +10,7 @@
 import type { Grid, Matrix, ZoneDepth, Ice } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { PALETTE } from "./palette";
+import { formatNavIndex } from "./nav_index";
 import {
   EVENT_GLYPHS,
   EVENT_LABELS,
@@ -91,7 +92,7 @@ export function renderMatrix(
     const glyph = EVENT_GLYPHS[eventKind];
     // Marker: ▸ current, ✓ visited, → adjacent (caret), space otherwise
     const marker = isCurrent ? "▸" : isVisited ? "✓" : isAdjacent ? "→" : " ";
-    const label = `${glyph} [${i}] ${node.zone.toUpperCase()}${isBoss ? " (BOSS)" : ""}`;
+    const label = `${glyph} ${formatNavIndex(i)} ${node.zone.toUpperCase()}${isBoss ? " (BOSS)" : ""}`;
     const iceCount = node.iceIds.length;
     const eventLabel =
       eventKind === "combat" ? "" : ` · ${EVENT_LABELS[eventKind]}`;

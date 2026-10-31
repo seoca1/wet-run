@@ -16,6 +16,13 @@
 
 import type { GameAction } from "../core/types";
 
+/** Minimum touch-target edge in CSS px (Apple HIG 44pt, WCAG 2.5.5).
+ *
+ * Buttons are sized in vw/vh so they scale on wide screens; this floor only
+ * takes effect on narrow viewports where the vw size would fall below it.
+ */
+export const MIN_TOUCH_TARGET_PX = 44;
+
 interface ButtonConfig {
   readonly label: string;
   readonly left: string;
@@ -160,10 +167,13 @@ export function updateProgramRow(
     row.innerHTML = "";
     return;
   }
+  const programMinSize =
+    `min-height:max(${MIN_TOUCH_TARGET_PX}px, 6vh);` +
+    `min-width:max(${MIN_TOUCH_TARGET_PX}px, 8vw)`;
   const buttons = deck.map((p, i) => {
     const shortId = p.id.slice(0, 4);
     const num = i + 1;
-    return `<button data-hand-index="${num}" style="font-size:3vw;padding:2vh 2.5vw;min-height:6vh;min-width:8vw;border-radius:8px;">${num}.${shortId}</button>`;
+    return `<button data-hand-index="${num}" style="font-size:3vw;padding:2vh 2.5vw;${programMinSize};border-radius:8px;">${num}.${shortId}</button>`;
   });
   row.innerHTML = `
     <style>
@@ -181,7 +191,7 @@ export function updateProgramRow(
         color: #00ff41; font-weight: bold;
         border-radius: 8px;
         touch-action: none; user-select: none;
-        min-height: 6vh; min-width: 8vw;
+        ${programMinSize};
         padding: 2vh 2.5vw; font-size: 3vw;
       }
       #wetrun-program-row button:active { background: rgba(0, 255, 65, 0.4); }
@@ -274,6 +284,8 @@ function appendButton(
   btn.style.top = cfg.top;
   btn.style.width = cfg.size;
   btn.style.height = cfg.size;
+  btn.style.minWidth = `${MIN_TOUCH_TARGET_PX}px`;
+  btn.style.minHeight = `${MIN_TOUCH_TARGET_PX}px`;
   btn.style.fontSize = cfg.fontSize;
   // Single dispatch path: registering pointerdown + touchstart + mousedown + click
   // together fires the action 2-3x per tap (touchstart → synthetic mousedown → click).

@@ -8,6 +8,7 @@ import {
   isTouchDevice,
   updateProgramRow,
   PROGRAM_PRESS_DEBOUNCE_MS,
+  MIN_TOUCH_TARGET_PX,
 } from "../src/input/touch";
 
 // jsdom doesn't ship matchMedia — polyfill before tests run.
@@ -58,6 +59,24 @@ describe("virtual gamepad overlay", () => {
     // Just verify the returned function is callable.
     const unmount = mountVirtualGamepad(() => {});
     expect(typeof unmount).toBe("function");
+    unmount();
+  });
+
+  it("uses a 44px minimum touch target (Apple HIG / WCAG 2.5.5)", () => {
+    expect(MIN_TOUCH_TARGET_PX).toBeGreaterThanOrEqual(44);
+  });
+
+  it("floors every gamepad button at MIN_TOUCH_TARGET_PX without dropping vw sizing", () => {
+    const unmount = mountVirtualGamepad(() => {});
+    const root = document.getElementById("wetrun-gamepad-root");
+    const buttons = Array.from(root?.querySelectorAll("button") ?? []);
+    expect(buttons.length).toBe(6);
+    for (const btn of buttons) {
+      expect(btn.style.minWidth).toBe(`${MIN_TOUCH_TARGET_PX}px`);
+      expect(btn.style.minHeight).toBe(`${MIN_TOUCH_TARGET_PX}px`);
+      expect(btn.style.width).toMatch(/vw$/);
+      expect(btn.style.height).toMatch(/vw$/);
+    }
     unmount();
   });
 
@@ -161,6 +180,15 @@ describe("program row (P12)", () => {
 
   it("uses a 120ms debounce window", () => {
     expect(PROGRAM_PRESS_DEBOUNCE_MS).toBe(120);
+  });
+
+  it("floors program buttons at MIN_TOUCH_TARGET_PX while keeping vw/vh scaling", () => {
+    updateProgramRow(DECK);
+    for (const btn of getRowButtons()) {
+      const style = btn.getAttribute("style") ?? "";
+      expect(style).toContain(`min-width:max(${MIN_TOUCH_TARGET_PX}px, 8vw)`);
+      expect(style).toContain(`min-height:max(${MIN_TOUCH_TARGET_PX}px, 6vh)`);
+    }
   });
 
   it("falls back to the wetrun global when no callback is given", () => {

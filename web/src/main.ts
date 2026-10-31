@@ -133,6 +133,7 @@ import {
 } from "./core/state/equipment";
 import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
+import { formatNavIndex } from "./renderer/nav_index";
 
 function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState {
   return {
@@ -267,7 +268,7 @@ function formatMissionOption(
     language === "ko" && mission.title_ko !== undefined && mission.title_ko.length > 0
       ? mission.title_ko
       : mission.title;
-  return `${index + 1}. ${titleText}  [${grade} | ${credits}cr]`;
+  return `${formatNavIndex(index)} ${titleText}  [${grade} | ${credits}cr]`;
 }
 
 /** Render the mission select screen. */

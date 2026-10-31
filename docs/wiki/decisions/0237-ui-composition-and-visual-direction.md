@@ -403,10 +403,15 @@ px 하한을 덧붙인다.
   저장소 전체에서 이 한 곳에만 등장하고 PLAYER 엔티티를 만드는 코드가 없다**
   — `state.entities.push` 3곳은 MONSTER / ITEM / TRAP 뿐이다
   (`dungeon_crawler_entities.ts:140` / `:187` / `:199`). 플레이어는
-  `state.playerX` / `playerY` 로만 추적된다 (`:213-214`). 따라서 **`@` 분기는
-  dead code 이고 플레이어는 던전 화면에 그려지지 않는다** — 자신의 위치가 보이지
-  않는 실질 결함(범위 밖, 후속 조사 대상). 언제 dead 가 됐는지는 bisect 하지
-  않았다. ② 런타임 던전
+  `state.playerX` / `playerY` 로만 추적된다 (`:213-214`). 따라서 `@` 분기는
+  dead code 이고 **플레이어는 던전 화면에 그려지지 않았다** — 자신의 위치가
+  보이지 않는 실질 결함. **✅ 2026-10-31 수정** (`4686191`): 렌더러에
+  `renderPlayer()` 패스를 추가(`getPlayerPosition()` + 기존 `getPlayerFg`
+  재사용, 엔티티 뒤 · 프레임 앞)하고 dead 분기를 제거했다. **core 무변경**
+  (PLAYER 엔티티를 state 에 넣지 않음 — 가시성/AI 파급 회피), 밸런스 **0.0pp**,
+  신규 테스트 6개. 같은 화면 HUD 라벨 오타 `LVE:` → `LVL:` 도 발견해 수정
+  (`36d639c`, 테스트 fixture 동반). 언제 dead 가 됐는지는 bisect 하지 않았다.
+  ② 런타임 던전
   크기는 **15×10** (100×60 그리드 / 내부 98×58) → 인셋 프레임이 던전을 자르지
   않는다 (`dungeon_crawler_generation.ts` 의 `80×45` 는 `state` 로 옮겨지기 전
   그래프 값) ③ 전투 HAND 행이 19행 미만 그리드에서 하단 레일에 가려 **보이지

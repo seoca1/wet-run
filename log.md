@@ -68,11 +68,18 @@
 - `demo-screenshots.spec.ts` 는 커밋된 PNG 16장을 덮어쓰는 **생성기**라 게이트에서 제외(실행 후 `web/demo-screenshots/` 무변경 검증).
 - 부수 관찰: program VFX 48ms 는 사람 눈에 거의 안 보일 수 있음 → **feel 설계 질문**(ADR-0238 과 같은 성격).
 
-**테스트**: vitest **3345 → 3563**(+6 files / +218 tests; 155 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed**.
+### 10. 던전 결함 2건 수정 (`4686191`, `36d639c`)
+- **플레이어 미표시 (dead `@` 분기)**: e2e 게이트 복원 중 확정 — `EntityType.PLAYER` 는 저장소 전체에서 `renderer/dungeon.ts:150` **한 곳에만** 등장하고, PLAYER 엔티티를 만드는 코드가 없다 (`entities.push` 3곳은 MONSTER / ITEM / TRAP 뿐). 플레이어는 `state.playerX/playerY` 로만 추적되어 **던전에서 자기 위치가 보이지 않았다**.
+  - 수정: 렌더러에 `renderPlayer()` 추가 (`getPlayerPosition()` + 기존 `getPlayerFg` 재사용), 그리기 순서 **타일 → 엔티티 → 플레이어 → 프레임**, dead 분기 제거. **core 무변경** — state 에 PLAYER 엔티티를 넣으면 가시성·AI 타게팅에 파급되므로 회피. 신규 테스트 6개(readonly state 캐스팅 대신 `getPlayerStats` spy 로 저HP 색 검증).
+  - 밸런스 **0.0pp** · e2e **72 passed / 4 skipped / 0 failed** · 라이브 스크린샷 `after-14-dungeon-player.png` 에서 초록 `@` 확인.
+- **HUD 라벨 오타**: 같은 스크린샷에서 `LVE: 01` 을 발견 → 소스 확인 결과 `dungeon.ts:365` 가 문자 그대로 `LVE:` 를 출력(`LVL` 오타). 테스트 fixture(`ascii_renderer_color_for.test.ts:59`)에도 복사돼 있어 동반 수정.
+- **메모(오케스트레이터 자기정정)**: 처음엔 이 결함을 "서브에이전트 오보"로 잘못 정정했다가, `EntityType.PLAYER` 전수 grep 으로 **서브에이전트가 옳았음**을 확인하고 재정정했다 — 기록을 증거 기반으로 강화한 경위.
+
+**테스트**: vitest **3345 → 3569**(+7 files / +224 tests; 156 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed**.
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시 — Manus 태스크는 `stopped` 처리, 페이지는 로컬 미러.)
-**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · ADR-0237 Open questions (a)·(e) 미결 · `renderer/dungeon.ts:150` 의 `@` 분기는 **dead code** — `EntityType.PLAYER` 를 만드는 코드가 저장소에 없고(`entities.push` 3곳은 MONSTER/ITEM/TRAP 뿐) 플레이어는 `playerX/Y` 로만 추적됨 → **던전에서 플레이어 미표시**(범위 밖, 후속 조사 대상).
+**미해결**: `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4 → **ADR-0238 (Draft) 로 결정 요청** · ADR-0238 Open questions (a)–(g) + **(h) program VFX 48ms 체감성** 미결 · ADR-0237 Open questions (a)·(e) 미결. (던전 플레이어 미표시 · HUD `LVE` 오타는 §10 에서 **수정 완료**.)
 **ADR**: `docs/wiki/decisions/0237-ui-composition-and-visual-direction.md` (Accepted, 🟡 Partial) · 트리아지: `docs/design/ui-overhaul-triage-2026-10-31.md` · 산출물: `docs/design/{manus-concepts,before-after}-2026-10-31/`.
 
 ---

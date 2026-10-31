@@ -5,6 +5,7 @@ import {
   type CraftingView,
 } from "../src/renderer/crafting_screen";
 import type { Recipe } from "../src/core/state/crafting";
+import type { Grid } from "../src/core/types";
 import { PALETTE } from "../src/renderer/palette";
 import { preGameView, program, rowText } from "./view_fixtures";
 
@@ -17,29 +18,49 @@ const recipe = (name: string, materials: Recipe["materials"]): Recipe => ({
   ready: true,
 });
 
+const colText = (grid: Grid, x: number): string =>
+  grid.cells.map((row) => row[x]?.char ?? "").join("");
+
 describe("crafting screen", () => {
-  it("keeps empty inventory sections and hints at their original coordinates", () => {
+  it("keeps empty inventory sections and hints at their original frame-relative coordinates", () => {
     const view = preGameView().crafting;
     const grid = renderCraftingScreen(view, 80, 50);
-    expect(craftingLayout()).toEqual({
-      x: 2,
-      itemX: 4,
-      titleY: 1,
-      inventoryY: 3,
+    expect(craftingLayout(80, 50)).toEqual({
+      frame: { x: 1, y: 1, width: 78, height: 48 },
+      inner: { x: 2, y: 2, width: 76, height: 46 },
+      x: 3,
+      itemX: 5,
+      titleY: 2,
+      inventoryY: 4,
     });
     for (const [y, x, text] of [
-      [1, 2, "CRAFTING"],
-      [3, 2, "Credits: 0"],
-      [4, 2, "Materials:"],
-      [5, 4, "(none)"],
-      [7, 2, "Programs in inventory:"],
-      [8, 4, "(none)"],
-      [10, 2, "Craftable recipes:"],
-      [11, 4, "(none)"],
-      [13, 2, "Press 1-9 to craft a recipe, ESC to go back"],
+      [2, 3, "CRAFTING"],
+      [4, 3, "Credits: 0"],
+      [5, 3, "Materials:"],
+      [6, 5, "(none)"],
+      [8, 3, "Programs in inventory:"],
+      [9, 5, "(none)"],
+      [11, 3, "Craftable recipes:"],
+      [12, 5, "(none)"],
+      [14, 3, "Press 1-9 to craft a recipe, ESC to go back"],
     ] as const)
-      expect(rowText(grid, y).slice(x).trimEnd()).toBe(text);
-    expect(grid.cells[1]?.[2]?.fg).toBe(PALETTE.GREEN_NEON);
+      expect(rowText(grid, y).slice(x, 78).trimEnd()).toBe(text);
+    expect(grid.cells[2]?.[3]?.fg).toBe(PALETTE.GREEN_NEON);
+  });
+
+  it("draws the inset frame and leaves the outermost grid row/column blank", () => {
+    const grid = renderCraftingScreen(preGameView().crafting, 80, 50);
+    expect(grid.cells[1]?.[1]?.char).toBe("╔");
+    expect(grid.cells[1]?.[78]?.char).toBe("╗");
+    expect(grid.cells[48]?.[1]?.char).toBe("╚");
+    expect(grid.cells[48]?.[78]?.char).toBe("╝");
+    expect(grid.cells[1]?.[1]?.fg).toBe(PALETTE.GREEN_NEON);
+    expect(grid.cells[20]?.[1]?.char).toBe("║");
+    expect(grid.cells[20]?.[78]?.char).toBe("║");
+    expect(rowText(grid, 0).trim()).toBe("");
+    expect(rowText(grid, 49).trim()).toBe("");
+    expect(colText(grid, 0).trim()).toBe("");
+    expect(colText(grid, 79).trim()).toBe("");
   });
 
   it("preserves eligibility precedence, recipe order and craftable-only numbering", () => {
@@ -57,19 +78,21 @@ describe("crafting screen", () => {
       ],
     };
     const grid = renderCraftingScreen(view, 80, 50);
-    expect(rowText(grid, 6).slice(4).trimEnd()).toBe("- zero: 0");
-    expect(rowText(grid, 9).slice(4).trimEnd()).toBe("- Atk (T1)");
-    expect(grid.cells[9]?.[4]?.fg).toBe(PALETTE.CYAN_LIGHT);
-    expect(rowText(grid, 12).slice(2).trimEnd()).toBe("   Blocked (T2)");
-    expect(grid.cells[12]?.[5]?.fg).toBe(PALETTE.GRAY_LIGHT);
-    expect(rowText(grid, 13).slice(2).trimEnd()).toBe("1. Zero (T2)");
-    expect(rowText(grid, 14).slice(4).trimEnd()).toBe("  Cost: zero x3");
-    expect(rowText(grid, 15).slice(2).trimEnd()).toBe("2. Free (T2)");
-    expect(grid.cells[15]?.[2]?.fg).toBe(PALETTE.GREEN_NEON);
+    const at = (y: number, x: number): string =>
+      rowText(grid, y).slice(x, 78).trimEnd();
+    expect(at(7, 5)).toBe("- zero: 0");
+    expect(at(10, 5)).toBe("- Atk (T1)");
+    expect(grid.cells[10]?.[5]?.fg).toBe(PALETTE.CYAN_LIGHT);
+    expect(at(13, 3)).toBe("   Blocked (T2)");
+    expect(grid.cells[13]?.[6]?.fg).toBe(PALETTE.GRAY_LIGHT);
+    expect(at(14, 3)).toBe("1. Zero (T2)");
+    expect(at(15, 5)).toBe("  Cost: zero x3");
+    expect(at(16, 3)).toBe("2. Free (T2)");
+    expect(grid.cells[16]?.[3]?.fg).toBe(PALETTE.GREEN_NEON);
     expect(view.inventory.materials).toEqual({ shard: 2, zero: 0 });
   });
 
-  it("clips material definitions and places market feedback after optional metadata", () => {
+  it("clips material definitions at the inner edge and places market feedback after optional metadata", () => {
     const view: CraftingView = {
       ...preGameView().crafting,
       marketItemCount: 3,
@@ -77,10 +100,13 @@ describe("crafting screen", () => {
       materials: [{ id: "shard", name: "Very long material name", need: 1 }],
     };
     const grid = renderCraftingScreen(view, 30, 24);
-    expect(rowText(grid, 14).slice(2, 28)).toBe("Materials: shard (Very lon");
-    expect(rowText(grid, 15).slice(2).trimEnd()).toBe("Market items: 3");
-    expect(rowText(grid, 16).slice(2).trimEnd()).toBe("Crafted!");
-    expect(grid.cells[16]?.[2]?.fg).toBe(PALETTE.YELLOW_AMBER);
+    // Inner box is columns 2..27; the line stops before the right rail.
+    expect(rowText(grid, 15).slice(3, 28)).toBe("Materials: shard (Very lo");
+    expect(grid.cells[15]?.[28]?.char).toBe("║");
+    expect(grid.cells[15]?.[29]?.char).toBe(" ");
+    expect(rowText(grid, 16).slice(3, 28).trimEnd()).toBe("Market items: 3");
+    expect(rowText(grid, 17).slice(3, 28).trimEnd()).toBe("Crafted!");
+    expect(grid.cells[17]?.[3]?.fg).toBe(PALETTE.YELLOW_AMBER);
   });
 
   it("keeps the no-craftable placeholder after unavailable recipe rows", () => {
@@ -89,7 +115,7 @@ describe("crafting screen", () => {
       recipes: [recipe("Missing", { absent: 1 })],
     };
     const grid = renderCraftingScreen(view, 80, 50);
-    expect(rowText(grid, 11).slice(2).trimEnd()).toBe("   Missing (T2)");
-    expect(rowText(grid, 12).slice(4).trimEnd()).toBe("(none)");
+    expect(rowText(grid, 12).slice(3, 78).trimEnd()).toBe("   Missing (T2)");
+    expect(rowText(grid, 13).slice(5, 78).trimEnd()).toBe("(none)");
   });
 });

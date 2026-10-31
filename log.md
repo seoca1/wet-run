@@ -98,7 +98,29 @@
 - 내용 ① 문제 실측: 표시 전용 1줄 변경이 **opening g3 −2.0pp · PPL g6 −3.0pp** 를 움직였다. ② 현행 규칙의 구멍: `state_helpers.ts` docstring 은 "**새** spawn 은 결정적 헬퍼" 규칙만 갖고 **"기존 spawn 수정"** 규칙이 없다. ③ **수정 표면은 13곳이 아니라 2개 함수** — 13개 비결정적 호출 지점이 전부 `import_vfx` / `import_vfx_ms` 를 지나므로 이 둘의 id 만 바꾸면 한 번에 중립화된다. ④ **RNG 소비 지도**(전수): 표시 = 2 함수 + `status.ts:253` fluff(전투 경로에서 소비) / **게임플레이 = crit roll · loot · 적 스킬 · death cycle — 불변**. ⑤ Option A(현상 유지) · **B(결정적 id + 1회 재기준화, 추천)** · C(draw 수를 밸런스 계약으로 선언) + 비교표. ⑥ 부수 권고(강): **RNG draw 수 불변식 테스트** — ADR-0231/0232 는 draw 수를 **수작업**으로 대조했고, 그 구멍으로 이번 결합이 살아남았다. ⑦ 순서 권고: ADR-0238 의 VFX 항목(P2 잔여 · P8 · X5 · X8)보다 **먼저** 처리.
 - 열린 질문 6건 · 사용자 결정 체크리스트 6개. ADR 본문 `docs/wiki/decisions/0239-vfx-spawn-rng-decoupling.md`.
 
-**테스트**: vitest **3345 → 3567**(+6 files / +222 tests; 155 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed**.
+### 13. e2e 재검증 — 제 주장이 틀렸고, flake 1건을 찾아 수정 (`97d13f5`)
+- **재검증이 반박했다**: 이 로그에 "e2e 72 passed / 0 failed" 라고 적어 두었으나,
+  현재 HEAD 에서 전체 스위트를 다시 돌리니 **1 failed / 4 skipped / 71 passed**
+  였다 — `mobile-portrait-chromium › touch_input.spec.ts:72 › program row touch
+  uses a program in combat`. 제 수치는 **한 번의 관측**이었고, 반복하지 않고
+  단정한 잘못이다.
+- **flake 판정**: `--repeat-each=5` → 모바일 20 중 1 실패 · `--repeat-each=10` →
+  40 중 2 실패 (**약 5%**). 결정적 회귀가 아니라 **타이밍 flake** 다. CI 는
+  `playwright.config.ts` 의 `retries: 2` 로 흡수해 왔기에 지금까지 표면화되지
+  않았다 (그래서 `env -u CI` 로 retries 를 꺼야 보인다).
+- **원인**: `tap()` 헬퍼가 `boundingBox()` 를 **한 번만** 읽고 null 이면 throw.
+  게임패드·프로그램 행은 상태 변화로 재렌더되므로, `toBeVisible()` 통과 직후에도
+  이전 버튼이 detach 된 창에 걸린다 — tier55 와 **같은 부류**(수동 대기 vs 일시적
+  상태).
+- **수정(스펙 전용)**: box 읽기를 짧게 재시도(최대 약 1초). 좌표 기반
+  `page.touchscreen.tap()` 을 유지해 **검증 대상인 실제 터치 이벤트 경로는 불변**.
+  나머지 3개 tap 호출 지점도 같은 견고성을 얻는다. 프로덕션 코드 무변경.
+- **증명(둘 다 retries off)**: `touch_input --repeat-each=10` → **40/40 통과**
+  (이전 40 중 2 실패) · 전체 14 스펙 → **72 passed / 4 skipped / 0 failed**.
+- **교훈**: "0 failed" 는 반복 측정 없이 주장할 수 없다. retries 를 끄고 반복해야
+  flake 가 드러난다 — 이번 세션에서 제가 스스로를 정정한 세 번째 사례다.
+
+**테스트**: vitest **3345 → 3567**(+6 files / +222 tests; 155 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed** (retries off · flake 1건 수정 후 `--repeat-each=10` 40/40 로 재증명 — §13).
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시 — Manus 태스크는 `stopped` 처리, 페이지는 로컬 미러.)

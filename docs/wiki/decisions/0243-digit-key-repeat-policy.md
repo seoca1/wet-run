@@ -112,15 +112,23 @@ ADR-0238 X4 수락 증거를 그대로 따른다.
 
 ## Implementation Status (2026-10-31)
 
-**Status**: ❌ Not started
+**Status**: ✅ Implemented (`46b4cb1`)
 
 **Evidence**:
-- `web/src/input/keyboard.ts:71-72` — modifier 조합일 때만 repeat 무시 (확장 대상)
-- `web/src/input/keyboard.ts:26-34` — `Digit1`–`Digit9` 매핑
-- `web/src/core/types.ts:467-475` — `1`–`9` → `select_program`
-- `web/src/core/state/state.ts:167-176` — `select_program` → `use_program` 해석 (`resolveProgramSelection`)
-- `web/tests/keyboard_locale.test.ts:106-109` — bare Enter repeat 는 confirm 발사 (유지 대상)
-- `web/src/input/touch.ts:142` — 터치 프로그램 버튼 120ms 디바운스 (참고, 범위 밖)
+- ✅ `web/src/input/keyboard.ts` — `isProgramSelectDigit(event)` 신규 (`event.key` `1`–`9` **또는** `event.code` `Digit1`–`Digit9`) + 그 키의 `event.repeat` 만 무시하는 가드 (기존 modifier-repeat 검사 **직후**)
+- ✅ `web/tests/keyboard_locale.test.ts` — 신규 **7 테스트**: repeat Digit1(key/code 두 형태) 무시 · 비-repeat Digit1 은 발사 · 누르고 있으면 정확히 1회 · `1`–`9` 전수 두 형태 · **Enter repeat 유지(회귀 가드)** · **화살표 repeat 유지(메뉴 스크롤 가드)**
+- ✅ 기존 `:106-109` (bare Enter repeat 발사) **무변경 · 통과** — Enter · 화살표 · Escape · WASD 및 비-숫자 경로 불변
+- ✅ **밸런스 불변** — `npm run balance` 가 ADR-0239 의 opening 기준선과 정확히 일치 (하네스는 `KeyboardInput` 을 경유하지 않음)
+- ✅ AZERTY(`key: "&"`, `code: "Digit1"`) · Shift+digit 커버 — `KEYBOARD_MAPPING`/`CODE_MAPPING` 이 실제 해석하는 키와 정책이 일치
+- ❌ `web/src/input/touch.ts` · 게임패드 경로 — **(f) 결정 전까지 불변**
+- ❌ `web/src/core/types.ts` 의 `KEYBOARD_MAPPING` — 매핑 자체 **불변**
+
+**Notes (갱신)**: **(i) 확인 결과 — 리매핑은 아직 없다.** `KEYBOARD_MAPPING`
+(`types.ts:456-476`)은 frozen 상수이고, `web/**` 에서 remap/keymap 계열 검색은 AZERTY
+테스트 주석의 "remapped" 뿐이다. 따라서 현재 "물리 `Digit1`–`Digit9` / key `1`–`9`" 와
+"`select_program` 으로 해석되는 키" 는 **같은 집합**이고, (i) 의 선택은 ADR-0183 의
+리매핑이 구현될 때 의미를 갖는다. "해석 결과 기준" 으로 간다면 `action.type ===
+"select_program"` 을 보도록 바꾸면 된다.
 
 **Notes**: `keyboard.ts:72` 와 `keyboard_locale.test.ts:106-109` 는 2026-10-31 작업
 트리에서 직접 확인했다. `keyboard.ts:26-34` · `types.ts:467-475` · `state.ts:167-176` 은

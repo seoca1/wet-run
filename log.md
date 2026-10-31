@@ -143,7 +143,13 @@
 - 분할: **0240 P7+X1** · **0241 P8** · **0242 X2**(0240 이후) · **0243 X4**.
 - **분할 ADR 4개 생성 완료** — 각 **Accepted · ❌ Not started**, 0238 → **Superseded by ADR-0240..0243**, README 인덱스 행 4개 + 0238 행 상태 갱신. 각 분할이 **ADR-0239 의 새 기준선**(opening `100.0/88.3/70.5/39.5/36.2/0.0` · PPL `100.0/79.1/98.9/83.0/44.4/24.7`)을 §A1 비교 기준으로 인용한다(낡은 ADR-0229 곡선 아님). 0241 의 "0.0pp 기대"는 **가설**로 표기, 0242 의 "이전" 수치는 **0240 구현 이후** 측정하도록 명시(두 변경 효과 혼합 방지). `web/` 무변경.
 
-**테스트**: vitest **3345 → 3571**(+7 files / +226 tests; 156 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed** (retries off · flake 1건 수정 후 `--repeat-each=10` 40/40 로 재증명 — §13).
+### 17. 분할 ADR 구현 — ① P8 · ② X4 (`2db4dfe`, `46b4cb1`)
+- **0241 (P8, `2db4dfe`)**: `state_actions_programs.ts:235` 의 `damage >= 10` → **`dmgResult.isCrit`**. **§A1 실측 = 양 덱 0.0pp** (opening `100.0/88.3/70.5/39.5/36.2/0.0` · PPL `100.0/79.1/98.9/83.0/44.4/24.7`, mean turns · ending HP 동일) → **ADR-0239 의 draw-0 성질이 실제로 작동함을 실증**, 열린 질문 (j) 는 발생하지 않음. 신규 `crit_vfx_link.test.ts` 4 테스트(구 조건을 일시 복원해 **4중 3 실패** 확인 — 변이 검증). 기존 ADR-0239 불변식 테스트(`vfx_rng_neutrality`)는 "15뎀 **비-crit** 이 critical_hit 을 spawn" 에 의존했으므로 **tier-2 crit** 으로 시나리오를 조정(pin draw 5→6 — 치명타 배수 draw 는 데미지 롤 소속)했고 강도는 유지.
+- **0243 (X4, `46b4cb1`)**: `keyboard.ts` 에 `isProgramSelectDigit(event)` (key `1`–`9` **또는** code `Digit1`–`Digit9`) + 그 키의 repeat 가드. AZERTY(`key:"&"`)·Shift+digit 커버. **Enter · 화살표 repeat 불변** (기존 `:106-109` 통과), 신규 7 테스트. 밸런스 불변(하네스가 키보드를 안 씀).
+- **미변경 (열린 질문)**: 0241 (i) `state_helpers.ts:150` 의 동일 임계(`pickProgramVfxKind` — crit 과 무관한 burst 연출 선택) → burst crit 이 `heavy_attack` 과 `critical_hit` 을 **함께** 표시할 수 있음. 0243 (i) **리매핑은 아직 없음** → 현재 "물리 숫자키" 와 "`select_program` 으로 해석되는 키" 는 **같은 집합**, ADR-0183 리매핑 구현 시 의미를 가짐.
+- 게이트: `tsc --noEmit` 0 · `eslint` 0 errors · vitest **157 files / 3,582 tests** · build OK. `web/` 변경은 두 ADR 범위로 한정 — **게임플레이 RNG · `status.ts` 무변경**(grep 확인).
+
+**테스트**: vitest **3345 → 3582**(+8 files / +237 tests; 157 files) · **e2e 14 스펙 / 76 테스트 → 72 passed / 4 skipped / 0 failed** (retries off · flake 1건 수정 후 `--repeat-each=10` 40/40 로 재증명 — §13).
 **게이트**: `npm test` **155 files / 3563 tests PASS** (`f3a14c6`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: ~~Playwright e2e 미실행(브라우저 미설치)~~ → ✅ **해소 (§9)** · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정) · 색각 3모드 × 뷰포트 e2e 스크린샷은 미실행(브라우저 확보로 이제 실행 가능).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시 — Manus 태스크는 `stopped` 처리, 페이지는 로컬 미러.)

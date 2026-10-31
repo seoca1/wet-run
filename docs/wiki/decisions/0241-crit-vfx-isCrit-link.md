@@ -125,16 +125,16 @@ spawn 이 `Math.random` draw 를 소비하지 않는다** (ADR-0239 Implementati
 
 ## Implementation Status (2026-10-31)
 
-**Status**: ❌ Not started
+**Status**: ✅ Implemented (`2db4dfe`)
 
 **Evidence**:
-- `web/src/core/combat/state_actions_programs.ts:235` — 하드코딩 `damage >= 10` 조건 (교체 대상)
-- `web/src/core/combat/state_actions_programs.ts:237` — `import_vfx_ms("critical_hit", …)` spawn
-- `web/src/core/combat/state_actions_programs.ts:102` — `const dmgResult = calculateDamage(damageCtx)` (이미 `isCrit` 를 받음)
-- `web/src/core/combat/combat_engine.ts:111-113` — `DamageResult.isCrit`
-- `web/src/core/combat/combat_engine.ts:14-15` — `CRIT_CHANCE = 0.15`, `CRIT_MULTIPLIER = 2.0` (불변)
-- `web/src/core/state/state_helpers.ts:47` — `import_vfx_ms`, ADR-0239 `c488b6d` 이후 id 가 `deterministicVfxId` 기반 (draw 0)
-- `web/tests/vfx_rng_neutrality.test.ts` — ADR-0239 의 0-draw 불변식 테스트 (유지 대상)
+- ✅ `web/src/core/combat/state_actions_programs.ts:235` — `damage >= 10` → **`dmgResult.isCrit`** (교체 완료)
+- ✅ `web/tests/crit_vfx_link.test.ts` — 신규 4 테스트 (crit → spawn · 비-crit ≥10 → 미spawn · 구 임계 미만 crit → spawn · crit roll 20개 스윕으로 경계 pin). 구 조건을 **일시 복원해 4중 3개가 실패**함을 확인
+- ✅ `web/tests/vfx_rng_neutrality.test.ts` — 5-VFX 시나리오를 **tier-2 crit** 로 조정 (기존엔 "15뎀 **비-crit** 이 critical_hit 을 spawn 함"에 의존했다). pin 된 draw 예산 5 → 6 (치명타 배수 draw 는 데미지 롤 소속, VFX 아님)
+- ✅ **§A1 실측 = 0.0pp** — opening `100.0/88.3/70.5/39.5/36.2/0.0` · PPL `100.0/79.1/98.9/83.0/44.4/24.7`, mean turns · ending HP 동일 → **Open question (j) 는 발생하지 않음**
+- ✅ 조건 변경이 RNG 를 밀지 않음을 실증 — ADR-0239 의 draw-0 성질이 실제로 작동
+- ❌ `web/src/core/state/state_helpers.ts:150` (`pickProgramVfxKind`) — **(i) 로 남김, 미변경**. 결과: burst crit 이 `heavy_attack` 과 `critical_hit` 을 함께 표시할 수 있다
+- ❌ `web/src/core/combat/combat_engine.ts:14-15` · `:111-113` — 치명타 상수 · 판정 **불변**
 
 **Notes**: `:235` · `:102` 는 2026-10-31 작업 트리에서 직접 확인했다. `:237` ·
 `combat_engine.ts:14-15` · `:111-113` 은 ADR-0238 Evidence (HEAD `0217c0a`) 인용이고,

@@ -1,6 +1,6 @@
 ## [2026-10-31] feat(ui) | UI 화면 구성 개편 — ADR-0237 채택(방향 B) + 캔버스 지오메트리 + 프레임 언어
 
-**Status**: 🟡 Partial (11 커밋). 밸런스 0.0pp 유지 — 표시 계층 전용.
+**Status**: 🟡 Partial (13 커밋). 밸런스 0.0pp 유지 — 표시 계층 전용.
 
 ### 0. 계기
 - 사용자: "wet_run UI 를 대대적으로 개선하고 싶다, 마누스 도움을 받을 수 있나?"
@@ -46,11 +46,18 @@
 - ⚠️ **브라우저 스모크가 잡은 부팅 파손**: 장비 렌더러의 런타임 import 가 기존 `equipment.ts ↔ loadout.ts` 순환을 앞당겨 `Cannot access 'EQUIP_SLOTS' before initialization` — **단위 테스트 3,456개 전부 통과 상태**에서 스모크만이 발견. 컨트롤러가 슬롯 목록을 넘기도록 고쳐 해소.
 - 스모크 결과(ego lite): `menu → mission_select → matrix → ArrowDown×3 → ICE 노드 18 → Enter×2 → combat` PASS, `vite-error-overlay` 없음. 오케스트레이터 독립 재확인: 부팅 정상 + `crafting` / `equipment` 화면 진입 정상.
 
-**테스트**: **3345 → 3491**(+6 files / +146 tests; `ffbfa41` 기준 155 files).
-**게이트**: `npm test` **155 files / 3491 tests PASS** (`ffbfa41`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
+### 7. 프레임 언어 최종 적용 (`3e8041d`)
+- `crafting` · `equipment` 에도 동일한 인셋 프레임 적용 → **프레임 7화면 완료** (menu · mission select · combat · matrix · dungeon · crafting · equipment).
+- 콘텐츠는 **리플로우 없이** +1열/+1행 평행 이동. 오프셋은 그리드가 아니라 프레임 코너 기준으로 재측정. 문자열·순서·키·색 무변경. 두 화면 모두 고정 푸터가 없어 키 힌트는 흐름대로 유지(menu/matrix 처럼 마지막 내부 행으로 옮기면 리플로우가 된다).
+- crafting 재료 줄의 중복 `.slice(0, cols-4)` 제거(`setInnerText` 가 클립) → 30열 그리드에서 그 줄이 1자 짧아짐(프레임이 셀을 차지하므로).
+- **의도적 미적용 2건**: `pause`(빈 격자가 설계 — 주석 + 테스트가 전 셀 공백을 pin) · `settings`(푸터가 `rows-2`/`rows-1` 인데 `rows-1` 이 거터 행 → 적용하려면 `settings.ts` 리플로우 필요, **별건 후속**).
+- 스크린샷: `after-11-crafting-framed.png` · `after-12-equipment-framed.png`.
+
+**테스트**: **3345 → 3494**(+6 files / +149 tests; `3e8041d` 기준 155 files).
+**게이트**: `npm test` **155 files / 3494 tests PASS** (`3e8041d`) · `tsc --noEmit` 0 · `eslint src` 0 errors · `npm run build` ✓ · `npm run balance` 6등급 0.0pp · 볼트 lint CLEAN.
 **검증 한계**: Playwright e2e 미실행(브라우저 미설치) · 컨셉 시트 미게시(비공개 로컬 유지) · `index.html`/`main.ts` 는 HEAD 에서도 Prettier-dirty(포맷 churn 회피 위해 미수정).
 **발견(회귀 아님)**: 미션 선택에서 맹목 Enter 는 진행되지 않는다 — `e2e/menu-nav.ts` 주석대로 "Node 0 이 조우를 보장하지 않아 'No ICE here' 로 정지"하는 **설계된 동작**. B3 의 `mission_select` 리팩터를 revert 해도 동일 재현 → 회귀 아님. (컨셉 시트 미게시로 Manus 태스크는 `waiting` 방치.)
-**미해결**: pause·crafting·equipment 프레임 미적용 · 트리아지 P7/P8·X1·X2·X4(각각 ADR 선행) · ADR-0237 Open questions (a)·(e) 미결 · `renderer/dungeon.ts` 가 플레이어 `@` 를 그리지 않음(HEAD 동일, 범위 밖) · Manus 태스크 `waiting` 방치(비공개 유지 결정).
+**미해결**: `settings` 프레임(별건 후속 — 푸터가 거터 행과 충돌) · `pause` 는 설계상 영구 미적용 · 트리아지 P7/P8·X1·X2·X4(각각 ADR 선행) · ADR-0237 Open questions (a)·(e) 미결 · `renderer/dungeon.ts` 가 플레이어 `@` 를 그리지 않음(HEAD 동일, 범위 밖) · Manus 태스크 `waiting` 방치(비공개 유지 결정).
 **ADR**: `docs/wiki/decisions/0237-ui-composition-and-visual-direction.md` (Accepted, 🟡 Partial) · 트리아지: `docs/design/ui-overhaul-triage-2026-10-31.md` · 산출물: `docs/design/{manus-concepts,before-after}-2026-10-31/`.
 
 ---

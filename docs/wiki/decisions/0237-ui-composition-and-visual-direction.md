@@ -330,7 +330,7 @@ px 하한을 덧붙인다.
 
 ## Implementation Status (2026-10-31)
 
-**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 = `e9eb6f1` · V2 헬퍼 = `133286a` · V2 3화면 = `f29c22f` · V2 1셀 인셋 + matrix·dungeon = `a97a4a7` · `main.ts` 분해 = `ffbfa41` / 남은 것: pause·crafting·equipment 화면 프레임
+**Status**: 🟡 Partial — V4·V5·U3·X3 = `4c8f40f1` · V1·V3 = `e9eb6f1` · V2 헬퍼 = `133286a` · V2 3화면 = `f29c22f` · V2 1셀 인셋 + matrix·dungeon = `a97a4a7` · `main.ts` 분해 = `ffbfa41` · crafting·equipment 프레임 = `3e8041d` / 남은 것: `settings` 프레임(별건 후속), Open questions (a)·(e)
 
 **Evidence**:
 - `web/index.html:41-44` — canvas `max-width: 100vw; max-height: 100vh; width: auto; height: auto` — CSS 축소만 하는 지점 (V1, V3)
@@ -400,6 +400,15 @@ px 하한을 덧붙인다.
   않는다 (`dungeon_crawler_generation.ts` 의 `80×45` 는 `state` 로 옮겨지기 전
   그래프 값) ③ 전투 HAND 행이 19행 미만 그리드에서 하단 레일에 가려 **보이지
   않던** 문제를 같은 커밋에서 클램프로 해소.
+- **프레임 언어 최종 적용 (2026-10-31, `3e8041d`)**: `crafting` · `equipment`
+  에도 동일한 인셋 프레임을 적용해 **7화면 완료** — menu · mission select ·
+  combat · matrix · dungeon · crafting · equipment. 콘텐츠는 리플로우 없이
+  +1열/+1행 평행 이동이고, 오프셋은 그리드가 아니라 프레임 코너 기준으로
+  재측정됐다. **의도적 미적용 2건**: ① `pause` — 빈 격자가 설계다
+  (`pre_game_screen.ts` 주석 "Pause intentionally has a blank grid" 및 테스트가
+  전 셀을 공백으로 pin) ② `settings` — 푸터가 `rows-2`/`rows-1` 에 있고
+  `rows-1` 이 프레임이 비워야 하는 거터 행이라 적용하려면 `settings.ts`
+  리플로우가 필요하다 → **별건 후속**.
 
 ## Open questions
 

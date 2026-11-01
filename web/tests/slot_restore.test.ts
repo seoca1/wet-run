@@ -212,7 +212,7 @@ describe("slotToGameState (CONTINUE option) — restored run must be playable", 
     expect(afterConfirm.iceRoster.length).toBeGreaterThan(0);
   });
 
-  it("move_south changes currentNodeIndex on a restored state", () => {
+  it("route selection and confirm change currentNodeIndex on a restored state", () => {
     const state = buildState();
     const slot = stateToSaveSlot(state);
     const restored = slotToGameState(slot, catalog, mockPrograms, mockIce);
@@ -220,9 +220,12 @@ describe("slotToGameState (CONTINUE option) — restored run must be playable", 
     if (!restored) return;
     expect(restored.matrix).not.toBeNull();
 
-    const afterMove = applyAction(restored, { type: "move_south" });
-    expect(afterMove).not.toBe(restored);
+    const selected = applyAction(restored, { type: "move_south" });
+    expect(selected).not.toBe(restored);
+    expect(selected.currentNodeIndex).toBe(restored.currentNodeIndex);
+    const afterMove = applyAction(selected, { type: "confirm" });
     expect(afterMove.currentNodeIndex).not.toBe(restored.currentNodeIndex);
+    expect(afterMove.currentNodeIndex).toBe(selected.selectedMatrixNodeIndex);
     expect(afterMove.currentNodeIndex).toBeGreaterThanOrEqual(0);
   });
 

@@ -270,7 +270,7 @@ describe("Combat → Victory → Loot flow", () => {
     expect(state.iceRoster[0]?.hp).toBe(84);
   });
 
-  it("loot confirm advances to next node", () => {
+  it("loot confirm returns to the same node for route selection", () => {
     let state = buildMatrixState();
     state = applyAction(state, { type: "confirm" }); // matrix → approach
     state = applyAction(state, { type: "confirm" }); // approach → combat
@@ -284,10 +284,11 @@ describe("Combat → Victory → Loot flow", () => {
 
     expect(state.runPhase).toBe("loot");
 
-    // Loot → matrix (next node)
+    // Loot → matrix (same node)
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("matrix");
-    expect(state.currentNodeIndex).toBe(1); // advanced to node 1
+    expect(state.currentNodeIndex).toBe(0);
+    expect(state.selectedMatrixNodeIndex).toBeNull();
   });
 
   it("loot confirm on boss node (no adjacent) transitions to ending", () => {
@@ -384,6 +385,9 @@ describe("Full run completion", () => {
 
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("matrix");
+    expect(state.currentNodeIndex).toBe(0);
+    state = applyAction(state, { type: "move_south" });
+    state = applyAction(state, { type: "confirm" });
     expect(state.currentNodeIndex).toBe(1);
 
     state = applyAction(state, { type: "confirm" });

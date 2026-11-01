@@ -2583,3 +2583,43 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - A 강화안 E, 고정 동사 A 검증 후 E 확장 권고, C의 다섯 번째 조건인 전력 공급 비지배성과 보상 예산 연결을 추가.
   사망 시 HP 절반 복구·무효 장비 픽업·런 반영 부재는 방향과 무관하게 수정 또는 제거할 필수 조치로 기록.
 - 인덱스에 상위 ADR-0246 링크와 새 행 추가. ADR-0005/0060/0103/0246·코드·테스트 변경 없음. 스테이징·커밋 없음.
+
+## [2026-11-01] feat | ADR-0246 A 첫 슬라이스 — 정보가 보이는 인접 경로 선택
+
+- **범위**: 경로 결정만 구현. Probe/Bypass/Breach, TRACE 통합·비용 정책, E, C, 별도 던전 정리·전투·튜닝·RNG·VFX 구현은 변경하지 않음.
+- **입력**: ↓/→ 다음 인접 후보, ↑/← 이전 후보, Enter/Space 선택한 이웃으로 이동. 이동/보상 확인 후 미선택으로 돌아감.
+  기존 목록·화살표·확인 액션을 재사용해 새 키 매핑/공간 지도 없이 최소 구현. 미선택 확인의 현재 ICE 진입은 유지.
+  입구 방향 자동 후퇴도 제거하고 방문한 인접 이웃을 직접 선택하게 함. 보상 확인의 기존 회복은 유지하되 위치는 그대로.
+- **정보/배치**: 현재 노드·전체 인접 후보를 먼저 표시하고 나머지 노드를 뒤에 배치. 각 후보의 zone, ICE 개수(0 포함), 크레딧, eventKind 표시.
+  `>`로 선택을 구분하고 후퇴 가능한 방문 이웃도 강조. 좁은 화면에서는 보조 ICE 패널보다 후보 정보를 우선하여 겹침 방지.
+- **Layout**: 기존 Green Grid 프레임 안의 2행 노드 목록을 유지; 현재 노드 → 인접 후보 → 나머지 순서, 스크롤 없음.
+  주 행동은 선택 목적지로 이동, 정보 우선순위는 현재 위치 → 후보의 위험/보상 → 나머지 노드. 새 카드·지도·위험 자원은 추가하지 않음.
+- **도달성**: 절차 생성 행렬은 DAG가 아님. MST 기반 연결/추가 간선이 양방향 `adjacent`로 변환되어 곁가지와 재방문이 존재.
+  방문 이웃을 막지 않아 곁가지에서 돌아갈 수 있고, 그래프를 변경하지 않아 어느 선택에서도 보스가 도달 가능.
+  자발적 왕복은 가능하지만 자동 라우팅/자동 2-cycle은 없음. 53개 미션 전 노드의 보스 경로·인접 역방향 연결과 선택+확인 보스 도달을 테스트.
+- **회귀**: 새 `matrix_route_choice.test.ts` 8건(구현 전 핵심 6건 실패 관측) + 전체 미션 도달성 1건.
+  BFS 비선택 곁가지, 명시적 후퇴, 보상 후 위치·미선택·회복, 동일 seed 각 분기, 실제 런 화면의 선택 강조,
+  80×50/60×40/40×60에서 목록 뒤쪽/방문 후보의 정보 검증. 기존 자동 이동 단언은 새 선택+확인 계약으로 갱신하고 실제 이동/전투/엔딩 검증 유지.
+- **E2E 적응**: `gotoIceNode`는 도달 가능한 ICE까지 경로를 찾은 뒤 실제 키로 후보 선택+확인; CONTINUE는 강조 단계의 위치 불변과 확인 후 선택 목적지 도착을 함께 단언.
+- **검증**: `npm run typecheck` 0 errors, `npm run lint` 0 errors/기존 untouched keyboard 경고 1개,
+  `npm test` **161 files / 3649 passed**, `npm run build` 통과. LSP는 미설치/기존 설치 거절로 사용할 수 없어 CLI 타입체크로 검증.
+- **양 덱 밸런스**: `npm run balance` opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**;
+  `npm run balance -- --deck ppl` **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**. 출력의 턴·HP·percentile도 ADR-0239 기준선 유지.
+- **문서**: ADR-0246의 `## Implementation Status`만 🟡 Partial로 변경하고 경로/테스트 증거 기록. README의 0246 Impl 셀 갱신.
+  Accepted 결정 본문 및 ADR-0005/0060/0103/0247 불변. 커밋·스테이징 없음.
+- **브라우저 검증**: `npx vite preview --port 5195 --strictPort --host 127.0.0.1` +
+  `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots`
+  → **76 passed / 4 skipped / 0 failed (4.6m)**. 최초 실행은 새 CONTINUE 단언에 Vitest 전용 matcher를 쓴 실수로 2건 실패;
+  `typeof` 단언으로 수정 후 전체 재실행 통과(검증 제거·완화 없음, retry 없음). 데스크톱/모바일 선택 화면 캡처도 직접 확인.
+
+## [2026-11-01] fix | ADR-0246 검증 발견 — 같은 노드 재확인 무한 파밍 차단
+
+- **원인**: 경로 슬라이스가 보상 후 자동 전진을 제거했지만 조우 완료 상태가 없어 같은 노드에서 확인만으로 전투·보상을 반복할 수 있었음. `visitedNodes`는 전투 전 이동 시점에도 기록되므로 완료 판별에 사용할 수 없음.
+- **수정**: `web/src/core/types.ts:194,433`의 optional `clearedEncounterNodes`를 추가. `web/src/core/state/state.ts:164-176` 공통 reducer 경계에서 전투가 `loot`로 해결될 때 현재 노드를 기록하고, `state_actions_phases.ts:65-70`에서 완료 노드의 재확인은 안내만 반환. 직접 공격/동료 처치 모두 포함하며 전투·튜닝·RNG·VFX 구현은 불변.
+- **ADR-0185 저장 호환**: `stateToSaveSlot`/`slotToGameState`가 완료 목록을 저장/복원. SaveSlot version 1 유지, 필드가 없는 기존 상태/슬롯은 빈 완료 목록. 과거 방문을 완료로 추측하지 않으며 이후 해결한 조우부터 기록. 저장 경계에서 잘못된 목록을 거부.
+- **RED → GREEN**: `npm test -- tests/matrix_route_choice.test.ts`에서 새 `cannot farm a cleared encounter by confirming again after loot (ICE HP %s)`의 HP 1/12 두 경우 모두 수정 전 `expected 'combat' not to be 'combat'` 실패(2 failed / 8 passed). 수정 후 노드 진입→해결→loot→재확인/프로그램 시도에서 재전투·추가 크레딧·재료 없음 검증 통과. 별도 저장/구형 슬롯/잘못된 목록 회귀 7건 추가.
+- **검증**: 경로/저장 왕복 4 files / 39 passed; `npm run typecheck && npm run lint && npm test && npm run build` 통과, **161 files / 3658 passed / 0 failures**. 기존 `keyboard.ts:14` 린트 경고 1개, jsdom 미디어 미구현 stderr는 있었으나 테스트 실패 없음. LSP는 미설치/기존 설치 거절로 실행 불가, CLI 타입체크 통과.
+- **양 덱 출력**: 수정 전후 `npm run balance`와 `npm run balance -- --deck ppl` 전체 stdout을 각각 `cmp`하여 byte-identical(exit 0). opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**; 턴·HP·percentile도 동일.
+- **측정 한계**: `balance_sim.ts`는 그래프 이동 없이 조우를 직접 구성하므로 이 파밍 구멍을 보지 못함. 0.0pp는 전투 기준선 보존 증거이지 런 보상 경제 무결성 증거가 아님. 결함 차단 증거는 위 red/green 경로 회귀와 저장 왕복임.
+- **E2E**: `npx vite preview --port 5195 --strictPort --host 127.0.0.1` + `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **76 passed / 4 skipped / 0 failed (4.5m)**, retry 없음. `gotoIceNode`/CONTINUE 그대로 통과. preview 종료 후 5195 리스너 없음 확인.
+- **문서/범위**: ADR-0246은 `## Implementation Status`만 갱신, 인덱스 0246 Impl 셀 및 본 로그 추가. 기존 미커밋 슬라이스 유지, 스테이징·커밋 없음. 경로 강조+확인·보상 후 위치·15% 회복 불변; 던전 크롤러·status.ts·raw/·Accepted 결정 본문·Probe/Bypass/Breach/TRACE/E는 변경하지 않음.

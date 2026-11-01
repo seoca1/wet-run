@@ -109,6 +109,21 @@ describe("matrix navigation — mission graph topology", () => {
       ).toBeGreaterThan(0);
     }
   });
+
+  it("every neighbour choice preserves a route to the boss, including backtracking", () => {
+    // Given
+    for (const mission of missions) {
+      const matrix = matrixFor(mission);
+      // When / Then
+      for (const [index, node] of matrix.nodes.entries()) {
+        expect(pathLengthBetween(matrix, index, matrix.bossNode)).toBeGreaterThanOrEqual(0);
+        for (const neighbour of node.adjacent) {
+          expect(matrix.nodes[neighbour]?.adjacent).toContain(index);
+          expect(pathLengthBetween(matrix, neighbour, matrix.bossNode)).toBeGreaterThanOrEqual(0);
+        }
+      }
+    }
+  });
 });
 
 describe("matrix navigation — forward walk reaches the boss", () => {
@@ -141,7 +156,7 @@ describe("matrix navigation — forward walk reaches the boss", () => {
     }
   });
 
-  it("the reducer's forward walk reaches the boss from startNode on every mission", () => {
+  it("explicitly selected adjacent routes reach the boss on every mission", () => {
     for (const mission of missions) {
       let state = makeInitialState(mission, stubIce, stubDeck);
       const matrix = state.matrix;
@@ -154,7 +169,14 @@ describe("matrix navigation — forward walk reaches the boss", () => {
       let current = state.currentNodeIndex;
       let hops = 0;
       while (current !== matrix.bossNode && hops <= matrix.nodes.length) {
-        state = applyAction(state, { type: "move_south" });
+        const target = nextHopToward(matrix, current, matrix.bossNode);
+        const slot = matrix.nodes[current]?.adjacent.indexOf(target) ?? -1;
+        expect(slot).toBeGreaterThanOrEqual(0);
+        for (let selection = 0; selection <= slot; selection += 1) {
+          state = applyAction(state, { type: "move_south" });
+          expect(state.currentNodeIndex).toBe(current);
+        }
+        state = applyAction(state, { type: "confirm" });
         expect(
           state.currentNodeIndex,
           `mission '${mission.id}': forward move did not advance at node ${current}`,
@@ -283,7 +305,7 @@ describe("matrix navigation — unreachable target contract", () => {
     expect(moved.currentNodeIndex, "forward move must not change the node").toBe(
       isolated.currentNodeIndex,
     );
-    expect(moved.message).toBe("No route to the objective");
+    expect(moved.message).toBe("No adjacent routes");
     expect(moved.turnCount, "a blocked move must not consume a turn").toBe(
       isolated.turnCount,
     );
@@ -298,7 +320,7 @@ describe("matrix navigation — unreachable target contract", () => {
     expect(moved.currentNodeIndex, "backward move must not change the node").toBe(
       isolated.currentNodeIndex,
     );
-    expect(moved.message).toBe("No route back to the entry");
+    expect(moved.message).toBe("No adjacent routes");
     expect(moved.turnCount, "a blocked move must not consume a turn").toBe(
       isolated.turnCount,
     );

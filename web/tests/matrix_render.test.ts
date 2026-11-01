@@ -143,10 +143,10 @@ describe("matrix renderer (Tier 5.5+ enhanced)", () => {
       expect(text).toContain("ENTER: enter");
     });
 
-    it("shows only ESC when current node has no adjacent (boss/boss cleared)", () => {
+    it("keeps ICE engagement available at a boss with no adjacent routes", () => {
       const grid = renderMatrix(sampleMatrix, 4, [0, 1, 2, 3], 80, 50);
       const text = findAllText(grid, 80, 50);
-      expect(text).not.toContain("ENTER: enter");
+      expect(text).toContain("ENTER: enter ICE");
       expect(text).toContain("ESC");
     });
   });

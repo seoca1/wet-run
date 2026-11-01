@@ -185,8 +185,13 @@ export interface GameState {
   readonly iceRoster: ReadonlyArray<Ice>; // 1..N ICE in current combat (multi-enemy)
   readonly activeIceIndex: number;
   readonly currentNodeIndex: number;
+  /** Transient route highlight; omitted by old states/saves, never auto-selected. */
+  readonly selectedMatrixNodeIndex?: number | null;
   readonly matrix: Matrix | null;
   readonly visitedNodes: ReadonlyArray<number>;
+  /** Resolved encounters, not visits: travel visits a node before combat.
+   * Optional for legacy states/saves; missing means no recorded clears. */
+  readonly clearedEncounterNodes?: ReadonlyArray<number>;
   readonly bossPhase: BossPhase; // 0 = no boss active, 1..4 = boss phase
   readonly endingChoice: EndingChoice | null;
   // Tier 5.5: active combat VFX (animation overlay).
@@ -424,6 +429,8 @@ export interface SaveSlot {
    * node (`matrix.startNode`). When present it MUST be a finite number.
    */
   readonly currentNodeIndex?: number;
+  /** Persist encounter clears without invalidating older version-1 slots. */
+  readonly clearedEncounterNodes?: ReadonlyArray<number>;
 }
 
 /** Game action — keyboard input → state mutation. */

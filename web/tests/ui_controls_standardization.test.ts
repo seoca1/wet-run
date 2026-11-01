@@ -232,7 +232,7 @@ describe("ESC/jack_out behavior consistency", () => {
     expect(next.phase).toBe("combat");
   });
 
-  it("Enter confirms in loot (advances to next node)", () => {
+  it("Enter confirms loot and returns to explicit route selection", () => {
     let state = makeInitialState(mockMission, mockIce, [mockProgram]);
     state = {
       ...state,
@@ -266,7 +266,12 @@ describe("ESC/jack_out behavior consistency", () => {
 
     const next = applyAction(state, KEYBOARD_MAPPING.Enter!);
     expect(next.runPhase).toBe("matrix");
-    expect(next.currentNodeIndex).toBe(1);
+    expect(next.currentNodeIndex).toBe(0);
+    expect(next.selectedMatrixNodeIndex).toBeNull();
+    const selected = applyAction(next, KEYBOARD_MAPPING.ArrowDown!);
+    expect(selected.currentNodeIndex).toBe(0);
+    const arrived = applyAction(selected, KEYBOARD_MAPPING.Enter!);
+    expect(arrived.currentNodeIndex).toBe(1);
   });
 
   it("Enter confirms in ending (returns to menu)", () => {

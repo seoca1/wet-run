@@ -43,25 +43,39 @@ export async function enterForPhase(page: Page, want: string, tries = 6): Promis
   throw new Error(`enterForPhase: phase ${want} not reached`);
 }
 
-/** Walk the matrix to an ICE-bearing node, then Enter into combat.
- *  Node 0 is not guaranteed to hold an encounter — Blind Enters stall
- *  with "No ICE here". Follows adjacent[0] forward, capped. Note the
- *  two-track phase model: entering a node sets runPhase "combat" while
- *  getPhase() stays "approach" until a second confirm engages — so this
- *  helper Enters twice (entry, then engage). */
+/** Select and confirm adjacent routes to an ICE node, then engage both phases. */
 export async function gotoIceNode(page: Page): Promise<void> {
   for (let i = 0; i < 30; i += 1) {
-    const hasIce = await page.evaluate(() => {
+    const route = await page.evaluate(() => {
       const w = window as unknown as {
-        wetrun?: { state?: { matrix?: { nodes?: Array<{ iceIds?: unknown[] }> } | null; currentNodeIndex?: number } | null };
+        wetrun?: { state?: { matrix?: { nodes: Array<{ iceIds: string[]; adjacent: number[] }> } | null; currentNodeIndex: number } | null };
       };
       const s = w.wetrun?.state;
-      const n = s?.matrix?.nodes?.[s?.currentNodeIndex ?? -1];
-      return (n?.iceIds?.length ?? 0) > 0;
+      if (!s?.matrix) throw new Error("gotoIceNode: missing matrix");
+      const { nodes } = s.matrix;
+      const start = s.currentNodeIndex;
+      if (nodes[start]?.iceIds.length) return { hasIce: true, slot: -1 };
+      const queue = [{ index: start, first: -1 }];
+      const seen = new Set([start]);
+      for (const entry of queue) {
+        for (const next of nodes[entry.index]?.adjacent ?? []) {
+          if (seen.has(next)) continue;
+          seen.add(next);
+          const first = entry.first < 0 ? next : entry.first;
+          if (nodes[next]?.iceIds.length) {
+            return { hasIce: false, slot: nodes[start]?.adjacent.indexOf(first) ?? -1 };
+          }
+          queue.push({ index: next, first });
+        }
+      }
+      throw new Error("gotoIceNode: no reachable ICE");
     });
-    if (hasIce) break;
-    await page.keyboard.press("ArrowDown");
-    await page.waitForTimeout(150);
+    if (route.hasIce) break;
+    if (route.slot < 0) throw new Error("gotoIceNode: route is not adjacent");
+    for (let selection = 0; selection <= route.slot; selection += 1) {
+      await page.keyboard.press("ArrowDown");
+    }
+    await page.keyboard.press("Enter");
     if (i === 29) throw new Error("gotoIceNode: no ICE node reached in 30 moves");
   }
   await enterForRunPhase(page, "combat");

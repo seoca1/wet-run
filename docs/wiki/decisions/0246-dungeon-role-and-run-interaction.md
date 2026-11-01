@@ -217,17 +217,39 @@ C에 필요한 결정 어휘를 생산한다. C는 런의 약한 P4를 도구 �
 
 ## Implementation Status (2026-11-01)
 
-**Status**: ❌ Not started
+**Status**: 🟡 Partial
 
 **Evidence**:
-- `docs/wiki/decisions/0246-dungeon-role-and-run-interaction.md` — 오너의 A → C 결정과 수락 기준만 기록.
-- `docs/wiki/decisions/README.md`, `log.md` — 인덱스·활동 기록만 갱신.
-- `web/src/core/state/state_actions_phases.ts:97-149,172-245` — 기존 자동 라우팅·확인형 보상은 구현 공백의 근거이며 A 완료 증거가 아님.
-- `web/src/core/dungeon/dungeon_crawler_actions.ts:49-67,116-121,334-347` — 기존 복구·빈 보상 처리·자동 공격은 C 완료 증거가 아님.
+- `web/src/core/state/state_actions_phases.ts:49-64,118-148` — 화살표로 실제 인접 목적지를 강조하고 확인으로 이동. 보스/입구 BFS 자동 라우팅 제거; 후퇴도 같은 명시적 인접 선택.
+- `web/src/core/state/state_actions_phases.ts:218-233` — 비보스 보상 확인은 현재 노드에 남고 목적지 강조를 해제. 기존 15% 회복 유지.
+- `web/src/core/types.ts:188-189`, `web/src/renderer/run_screen.ts:36` — 일시적 선택 상태를 실제 런 렌더러에 전달. 저장하지 않으며 기존 상태/세이브의 필드 누락은 미선택으로 처리.
+- `web/src/renderer/matrix.ts:83-90,113-115,191-240,290-299` — 현재 노드와 인접 후보를 목록 앞에 배치. 후보별 zone·ICE 개수(0 포함)·크레딧·eventKind를 확인 전에 표시; 방문한 이웃도 선택 가능. 좁은 화면은 충돌하는 현재 노드 보조 패널을 생략하고 후보 정보 유지.
+- `web/tests/matrix_route_choice.test.ts` — 기존 코드에서 6개 회귀 실패 확인 후 구현. BFS가 고르지 않는 곁가지, 명시적 후퇴, 보상 후 위치·미선택, 동일 seed의 각 분기, 실제 화면의 선택 강조, 80×50/60×40/40×60 후보 정보 및 재확인 파밍 차단 검증(10 tests).
+- `web/src/core/types.ts:192-194,432-433` — `clearedEncounterNodes?: ReadonlyArray<number>`를 런/SaveSlot에 추가. 방문은 전투 전 이동에서도 기록되므로 `visitedNodes`와 분리.
+- `web/src/core/state/state.ts:164-176` — 두 전투 해결 경로의 공통 reducer 경계에서 `loot` 진입 시 현재 노드의 조우 완료를 기록. 전투 메커닉·보상 수식·RNG는 변경하지 않음.
+- `web/src/core/state/state_actions_phases.ts:65-70` — 완료한 노드에서 목적지 미선택 확인은 안내만 반환하며 조우를 재생성하지 않음. 목적지를 선택한 이동은 여전히 가능.
+- `web/src/core/state/state.ts:264,367`, `web/src/save/storage.ts:256-262`, `web/tests/save_load_roundtrip.test.ts:30-101` — 완료 목록 저장/복원 및 저장 경계 검증. 기존 version-1 세이브는 필드가 없어도 로드되며 빈 완료 목록으로 복원(ADR-0185); 저장/CONTINUE 후 재진입 차단·구형 슬롯·잘못된 목록 검증.
+- `web/tests/matrix_route_choice.test.ts:145-214` — 노드 진입 → 전투 해결 → 보상 확인 → 재확인/프로그램 사용 시도. ICE HP 1/12 두 경우 모두 수정 전 `expected 'combat' not to be 'combat'` 실패 관측, 수정 후 통과; 추가 크레딧·재료 없음 단언.
+- `web/tests/matrix_navigation.test.ts` — 53개 미션의 모든 노드/인접 선택에서 보스 경로·양방향 연결 유지, 명시적 선택+확인으로 보스 도달 검증.
+- `web/e2e/menu-nav.ts:46`, `web/e2e/continue.spec.ts:194` — ICE까지 인접 경로를 선택+확인하도록 헬퍼/CONTINUE 입력 검증 갱신. 실제 이동 및 선택한 목적지 일치 단언 유지.
+- `npm run typecheck`, `npm run lint`, `npm test`, `npm run build` — 타입 오류/린트 오류 0, 기존 keyboard 경고 1개, **161 files / 3658 tests** 통과(기존 3649 + 회귀 9), 빌드 통과. 별도 경로/저장 왕복 4 files / 39 tests 통과.
+- `npm run balance`, `npm run balance -- --deck ppl` — opening `100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0`, PPL `100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7`; 수정 전후 양 덱 **전체 stdout을 `cmp`로 byte-identical 확인**. 아래 측정 한계와 구분한다.
+- `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` — `npx vite preview --port 5195 --strictPort --host 127.0.0.1`로 실행, **76 passed / 4 skipped / 0 failed** (4.5m), 재시도 없이 통과. preview 종료 후 5195 리스너 없음 확인.
 
 **Notes**: ADR-0195의 Status / Evidence / Notes 형식이다. **Accepted는 결정 완료이지 구현 완료가 아니다.**
-TRACE 통합, A의 첫 분기·결정 어휘, C의 네 계약·보상 예산·실제 런 이월, 측정 공백 해소와
-수락 증거는 모두 미착수다. B는 보류, D는 계약 미달 시 대체 경로다. Manus 응답은 아직 없다.
+이번 범위는 오너가 지정한 **경로 결정만**이다. ↓/→는 다음 후보, ↑/←는 이전 후보, Enter/Space는
+강조한 목적지로 이동하며 이동 뒤에는 미선택으로 돌아간다. 미선택 상태의 확인은 **미완료** 현재 노드 ICE에만 진입한다.
+기존 목록·화살표·확인 입력을 재사용하여 새 단축키나 공간 지도를 추가하지 않았다.
+실제 절차 생성 그래프는 DAG가 아니라 양방향 연결 그래프다 (`dungeon.ts:243-247`, `dungeon_layout.ts:444-447`).
+막다른 곁가지에서도 방문한 이웃으로 돌아갈 수 있어 보스 도달성을 보존한다. 자발적 재방문은 허용하지만
+자동 2-cycle이나 자동 목적지 선택은 없다. 모든 선택에서 보스 경로가 남는 것을 전 미션 회귀로 검증했다.
+**검증이 발견한 파밍 구멍**: 보상 뒤 같은 노드에 남으면서 완료 상태가 없어서 확인만으로 전투·보상을 무한 반복할 수 있었다.
+완료 목록을 기록/강제하여 막았다. `balance_sim.ts`는 그래프를 걷지 않고 조우를 직접 구성하므로 이 구멍을 볼 수 없다.
+양 덱 0.0pp/byte-identical은 전투 기준선 보존 증거일 뿐 **런 보상 경제의 무결성 증거가 아니다**; 위 red/green 경로 회귀가 해당 결함의 검증이다.
+구형 세이브에는 완료 이력이 없으므로 추측하여 방문 노드를 완료 처리하지 않는다. 누락은 빈 목록이며 이후 해결한 조우부터 기록/저장한다.
+TRACE 통합·비용 정책, Probe/Bypass/Breach 고정 동사, E 확장, C 계약·보상 예산·측정 공백 해소 및
+별도 던전 정리는 여전히 미구현이다. 본문과 기존 ADR-0005/0060/0103/0247 결정은 변경하지 않았다.
+LSP 서버는 미설치이며 기존 설치 거절을 존중하여 실행하지 못했다; TypeScript CLI 검증은 통과했다.
 
 ## 변경 이력
 

@@ -186,7 +186,7 @@ describe("applyMatrixAction", () => {
 });
 
 describe("applyLootAction", () => {
-  it("advances to next node when confirming with adjacent nodes", () => {
+  it("returns to route selection on the same node when confirming loot", () => {
     const state = createMockGameState({
       runPhase: "loot",
       matrix: {
@@ -202,8 +202,9 @@ describe("applyLootAction", () => {
     });
     const action: GameAction = { type: "confirm" };
     const result = applyLootAction(state, action);
-    expect(result.currentNodeIndex).toBe(1);
-    expect(result.visitedNodes).toContain(1);
+    expect(result.currentNodeIndex).toBe(0);
+    expect(result.visitedNodes).toEqual([0]);
+    expect(result.selectedMatrixNodeIndex).toBeNull();
     expect(result.runPhase).toBe("matrix");
   });
 

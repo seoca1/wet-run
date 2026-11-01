@@ -22,7 +22,7 @@ function loadDeck(programs: Record<string, Program>, count = 5): Program[] {
 }
 
 describe("LOOT advancement (Bug #3 regression: graph-directed progression)", () => {
-  it("regression: LOOT advance moves to a graph-adjacent node", () => {
+  it("regression: LOOT returns to the same node until an adjacent route is confirmed", () => {
     const mission = Object.values(missionsData)[0]!;
     const iceTypes = iceTypesData as unknown as Record<string, Ice>;
     const programs = programsData as unknown as Record<string, Program>;
@@ -47,17 +47,17 @@ describe("LOOT advancement (Bug #3 regression: graph-directed progression)", () 
     const beforeNode = state.matrix!.nodes[beforeIdx];
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("matrix");
-    // Graph-directed advance: the new node must be a graph neighbour of the
-    // old one. The *index* may legitimately decrease (the boss is reached by
-    // graph distance, not array order), so adjacency — not index order — is
-    // the invariant that matters.
+    expect(state.currentNodeIndex).toBe(beforeIdx);
+    state = applyAction(state, { type: "move_south" });
+    expect(state.currentNodeIndex).toBe(beforeIdx);
+    state = applyAction(state, { type: "confirm" });
     expect(
       state.currentNodeIndex,
-      "loot advance must move to a different node",
+      "confirmed route must move to a different node",
     ).not.toBe(beforeIdx);
     expect(
       beforeNode?.adjacent,
-      "loot advance must land on a graph-adjacent node",
+      "confirmed route must land on a graph-adjacent node",
     ).toContain(state.currentNodeIndex);
   });
 
@@ -82,4 +82,3 @@ describe("LOOT advancement (Bug #3 regression: graph-directed progression)", () 
     expect(state.phase).toBe("approach");
   });
 });
-

@@ -33,6 +33,7 @@ export function renderRunScreen(
           layout.cols,
           layout.rows,
           state.iceRoster[state.activeIceIndex] ?? null,
+          state.selectedMatrixNodeIndex ?? null,
         ),
         hud: [
           "MATRIX",

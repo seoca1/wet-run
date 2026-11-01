@@ -116,7 +116,7 @@ export function renderLootScreen(
     );
   }
 
-  // HEAL preview (preview only — actual heal applied on next node advance)
+  // HEAL preview (applied on loot confirm, without travelling).
   const healed = Math.min(maxHp, hp + Math.floor(maxHp * 0.15));
   grid = setText(
     grid,
@@ -131,7 +131,7 @@ export function renderLootScreen(
     grid,
     Math.max(2, Math.floor((cols - 28) / 2)),
     rows - 2,
-    "ENTER: next node | ESC: back",
+    "ENTER: route selection | ESC: back",
     PALETTE.GRAY_DARK,
   );
   return grid;

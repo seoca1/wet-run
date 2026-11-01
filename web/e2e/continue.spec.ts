@@ -193,6 +193,15 @@ test.describe("CONTINUE Option", () => {
     // swallows every keypress, so the node index would not move.
     await page.keyboard.press("ArrowDown");
     await page.waitForTimeout(300);
+    const highlighted = await page.evaluate(() => {
+      const w = window as unknown as {
+        wetrun?: { state?: { selectedMatrixNodeIndex?: number | null; currentNodeIndex?: number } | null };
+      };
+      return w.wetrun?.state;
+    });
+    expect(highlighted?.currentNodeIndex).toBe(afterContinue.currentNodeIndex);
+    expect(typeof highlighted?.selectedMatrixNodeIndex).toBe("number");
+    await page.keyboard.press("Enter");
     const afterMove = await page.evaluate(() => {
       const w = window as unknown as {
         wetrun?: { state?: { currentNodeIndex?: number } | null };
@@ -200,6 +209,7 @@ test.describe("CONTINUE Option", () => {
       return { currentNodeIndex: w.wetrun?.state?.currentNodeIndex ?? -1 };
     });
     expect(afterMove.currentNodeIndex).not.toBe(afterContinue.currentNodeIndex);
+    expect(afterMove.currentNodeIndex).toBe(highlighted?.selectedMatrixNodeIndex);
   });
 
   test("CONTINUE option is grayed out when no save exists", async ({ page }) => {

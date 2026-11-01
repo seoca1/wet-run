@@ -109,7 +109,7 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
     // Given / When
     const text = lines(renderMatrix(MATRIX, 0, [], 80, 50));
     // Then
-    expect(text[47]?.slice(2)).toMatch(/^ ENTER: enter node \| ESC: back/);
+    expect(text[47]?.slice(2)).toMatch(/^ ENTER: enter ICE \| ↑↓: route \| ESC: back/);
   });
 
   it("does not let a long node list or long event label reach a rail", () => {
@@ -130,7 +130,7 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
     }
     // A blank row separates the last node detail from the footer.
     expect(text[20]?.slice(2, 58).trim()).toBe("");
-    expect(text[21]).toContain("ENTER: enter node");
+    expect(text[21]).toContain("ENTER: enter ICE");
   });
 
   it("clips overlong labels at the rail instead of spilling into the gutter", () => {

@@ -112,6 +112,7 @@ export function makeInitialState(
     currentNodeIndex: matrix.startNode,
     matrix,
     visitedNodes: [],
+    clearedEncounterNodes: [],
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],
@@ -160,8 +161,18 @@ export function applyAction(state: GameState, action: GameAction): GameState {
       return applyMenuAction(state, action);
     case "approach":
       return applyApproachAction(state, action);
-    case "combat":
-      return applyCombatAction(state, action);
+    case "combat": {
+      const result = applyCombatAction(state, action);
+      if (result.runPhase !== "loot") return result;
+      // Both program kills and companion kills resolve through this run boundary.
+      const cleared = state.clearedEncounterNodes ?? [];
+      return {
+        ...result,
+        clearedEncounterNodes: cleared.includes(state.currentNodeIndex)
+          ? cleared
+          : [...cleared, state.currentNodeIndex],
+      };
+    }
     case "victory":
     case "defeat":
       return applyEndAction(state, action);
@@ -250,6 +261,7 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     savedAt: new Date().toISOString(),
     graphicNovelProgress: gnProgress,
     currentNodeIndex: state.currentNodeIndex,
+    clearedEncounterNodes: state.clearedEncounterNodes ?? [],
   };
 }
 
@@ -352,6 +364,7 @@ export function slotToGameState(
     currentNodeIndex,
     matrix,
     visitedNodes: [],
+    clearedEncounterNodes: slot.clearedEncounterNodes ?? [],
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],

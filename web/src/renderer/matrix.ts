@@ -1,7 +1,7 @@
 /** Matrix node graph renderer (Tier 5.5+).
  *
  * Renders the run's matrix as a vertical ASCII layout:
- * - Each node on its own row (top to bottom = surface to boss)
+ * - Current node and its frontier first, followed by the remaining node list
  * - Highlight current node (▸ marker) + visited nodes (✓ marker)
  * - Zone color coding (surface=green, mid=yellow, deep=red, core=magenta, boss=purple)
  * - Current node shows ICE preview (name + HP) in right HUD panel
@@ -82,11 +82,10 @@ interface NodeRow {
 
 function nodeRows(matrix: Matrix): NodeRow[] {
   return matrix.nodes.map((node, i) => {
-    const eventKind = (node.eventKind ?? "combat") as MatrixEventKind;
+    const eventKind: MatrixEventKind = node.eventKind ?? "combat";
     const glyph = EVENT_GLYPHS[eventKind];
     const label = `${glyph} ${formatNavIndex(i)} ${node.zone.toUpperCase()}${node.isBoss ? " (BOSS)" : ""}`;
-    const eventLabel =
-      eventKind === "combat" ? "" : ` · ${EVENT_LABELS[eventKind]}`;
+    const eventLabel = ` · ${EVENT_LABELS[eventKind]}`;
     const detail = `${node.iceIds.length} ICE · ${node.reward.credits}cr${eventLabel}`;
     return { label, detail };
   });
@@ -111,7 +110,9 @@ export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
       Math.max(widest, row.label.length + 2, row.detail.length + 4),
     0,
   );
-  const hasPreview = grid.width >= 50;
+  const hasPreview =
+    grid.width >= 50 &&
+    inner.width >= listWidth + PREVIEW_GAP + PREVIEW_WIDTH + 2;
   const blockWidth = listWidth + (hasPreview ? PREVIEW_GAP + PREVIEW_WIDTH : 0);
   const listX =
     inner.x + Math.max(1, Math.floor((inner.width - blockWidth) / 2));
@@ -157,6 +158,7 @@ export function renderMatrix(
   cols: number,
   rows: number,
   icePreview: Ice | null = null,
+  selectedNodeIndex: number | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const layout = matrixLayout(grid, matrix);
@@ -186,11 +188,19 @@ export function renderMatrix(
 
   // Node list (2 rows per node), kept one blank row clear of the footer
   const labels = nodeRows(matrix);
-  for (let i = 0; i < matrix.nodes.length; i++) {
+  const adjacent = matrix.nodes[currentNodeIndex]?.adjacent ?? [];
+  const order = [
+    currentNodeIndex,
+    ...adjacent,
+    ...matrix.nodes
+      .map((_, i) => i)
+      .filter((i) => i !== currentNodeIndex && !adjacent.includes(i)),
+  ];
+  for (const [position, i] of order.entries()) {
     const node = matrix.nodes[i];
     const text = labels[i];
     if (!node || !text) continue;
-    const row = listY + i * 2;
+    const row = listY + position * 2;
     if (row + 1 >= footerY - 1) break;
     const isCurrent = i === currentNodeIndex;
     const isVisited = visited.includes(i);
@@ -198,19 +208,28 @@ export function renderMatrix(
     // graph, not a linear chain).
     const isAdjacent =
       !isCurrent &&
-      !isVisited &&
       (matrix.nodes[currentNodeIndex]?.adjacent.includes(i) ?? false);
-    // Marker: ▸ current, ✓ visited, → adjacent (caret), space otherwise
-    const marker = isCurrent ? "▸" : isVisited ? "✓" : isAdjacent ? "→" : " ";
+    // Frontier markers take precedence over visited so retreat stays visible.
+    const isSelected = isAdjacent && i === selectedNodeIndex;
+    const marker = isCurrent
+      ? "▸"
+      : isSelected
+        ? ">"
+        : isAdjacent
+          ? "→"
+          : isVisited
+            ? "✓"
+            : " ";
     // Color: current=highlighted, visited=faded, adjacent=zone (available), rest=zone faded
     const baseColor = zoneColor(node.zone);
-    const fg = isCurrent
-      ? PALETTE.GREEN_NEON
-      : isVisited
-        ? PALETTE.GRAY_MID
+    const fg =
+      isCurrent || isSelected
+        ? PALETTE.GREEN_NEON
         : isAdjacent
           ? baseColor
-          : PALETTE.GRAY_DARK;
+          : isVisited
+            ? PALETTE.GRAY_MID
+            : PALETTE.GRAY_DARK;
     grid = put(grid, inner, listX, row, `${marker} ${text.label}`, fg);
     grid = put(
       grid,
@@ -218,7 +237,7 @@ export function renderMatrix(
       listX + 4,
       row + 1,
       text.detail,
-      isVisited ? PALETTE.GRAY_DARK : baseColor,
+      isVisited && !isAdjacent ? PALETTE.GRAY_DARK : baseColor,
     );
   }
 
@@ -247,7 +266,7 @@ export function renderMatrix(
       PALETTE.GREEN_NEON,
     );
     if (node) {
-      const eventKind = (node.eventKind ?? "combat") as MatrixEventKind;
+      const eventKind: MatrixEventKind = node.eventKind ?? "combat";
       grid = put(
         grid,
         inner,
@@ -268,9 +287,14 @@ export function renderMatrix(
   }
 
   // Footer
-  const status = isCurrentInAdjacent(matrix, currentNodeIndex)
-    ? "ENTER: enter node | ESC: back"
-    : "ESC: back";
+  const status =
+    inner.width < 40
+      ? selectedNodeIndex !== null
+        ? "↑↓ route | ENTER travel | ESC back"
+        : "↑↓ route | ENTER ICE | ESC back"
+      : selectedNodeIndex !== null
+        ? "ENTER: travel | ↑↓: route | ESC: back"
+        : "ENTER: enter ICE | ↑↓: route | ESC: back";
   grid = put(grid, inner, inner.x + 1, footerY, status, PALETTE.YELLOW_AMBER);
 
   // Frame last, so an overlong label can never erase a rail.
@@ -288,9 +312,4 @@ function put(
   fg: string,
 ): Grid {
   return setText(grid, x, y, clipToInner(inner, x, text), fg);
-}
-
-function isCurrentInAdjacent(matrix: Matrix, idx: number): boolean {
-  const node = matrix.nodes[idx];
-  return node != null && node.adjacent.length > 0;
 }

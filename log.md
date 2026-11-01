@@ -2459,3 +2459,23 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   **160 files / 3624 tests passed / 0 failures (8.35s)**; build **118 modules / 568ms**.
   지정 IPv4 strictPort preview E2E **76 passed / 4 skipped / 0 failed (4.6m)**,
   CI unset·재시도 없음·demo-screenshots 제외, preview 종료. 임시 진단 스크립트·저널 제거.
+
+## [2026-11-01] docs | ego-lite 실제 플레이 점검 절차 + 그 절차가 잡은 렌더 결함 2건
+
+- **절차 문서화**: `docs/playtest/EGO_LITE_PLAY_CHECK.md` — Playwright e2e 를 **대체하지
+  않고 보완**하는 실제 플레이 점검. ego-lite 에 **가짜 시계 API 가 없어** (`waitForTimeout`
+  과 `timeout` 옵션만) `page.clock` 기반 시간 게이트 단언을 옮길 수 없다는 것이 교체 불가
+  근거. 역할 분담을 명시: Playwright = 시드 결정성·clock·expect·2 뷰포트·CI / ego-lite =
+  실제 렌더·실제 조작·느낌.
+- **검증된 스크립트 포함**: `build` + `vite preview --host 127.0.0.1`(필수) →
+  `ego-browser nodejs` 로 menu → mission_select → combat 도달. 실측 확인:
+  `phase=combat, runPhase=combat, hp=100, lead ICE 165, deck=5, alarm=0`.
+  `waitForFunction` 옵션은 3번째 인자라는 함정도 기록.
+- **자동화 표면**: `window.wetrun.getScreen/getPhase/getMenuOptionKeys/getSelectedMenuIndex`
+  + `state.runPhase/matrix.nodes/currentNodeIndex` (e2e 헬퍼와 동일 계약). 고정 키 횟수를
+  쓰지 않고 목표 화면/단계까지 Enter 를 눌러 올린다. 교전은 2단계(runPhase → getPhase).
+- **이 절차가 실제로 잡은 것**: 첫 실행에서 상태는 정상이었지만 렌더에서
+  **ICE 표기 `165/100`** (HP 가 maxHp 초과) 과 **우측 패널 `Equipped: 10/8`** 를 발견.
+  둘 다 단언이 아니라 화면을 봐서 나온 것으로, 절차의 목적을 그대로 보여준다.
+  **미검증 — 별도 확인 필요** (이번 작업 범위 밖으로 기록만).
+- `docs/index.md` 테스트 케이스 절에 링크 추가. 코드 변경 없음.

@@ -237,6 +237,7 @@
 
 ## 테스트 케이스
 - [Index](testcases/README.md) - 모든 테스트 시나리오
+- [ego-lite 실제 플레이 점검](playtest/EGO_LITE_PLAY_CHECK.md) — 실제 Chromium 렌더·조작 확인 (Playwright 회귀 게이트를 **보완**, 대체 아님)
 
 ## 최근 결정 (ADR-0041~0061, 2026-06-21 ~ 2026-07-01)
 - **0041 Content Expansion** — 12 씬 dialogue 4× 확장 (4188 → 16862 chars)

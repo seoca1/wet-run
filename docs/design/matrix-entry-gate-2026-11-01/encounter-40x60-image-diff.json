@@ -1,0 +1,263 @@
+{
+  "command": "image-diff",
+  "dimensionsMatch": true,
+  "reference": {
+    "width": 560,
+    "height": 1080
+  },
+  "actual": {
+    "width": 560,
+    "height": 1080
+  },
+  "totalPixels": 604800,
+  "diffPixels": 39085,
+  "diffRatio": 0.0646,
+  "similarityScore": 94,
+  "alphaChannelIntact": true,
+  "hotspots": [
+    {
+      "gridX": 1,
+      "gridY": 2,
+      "x": 70,
+      "y": 270,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.3523
+    },
+    {
+      "gridX": 1,
+      "gridY": 1,
+      "x": 70,
+      "y": 135,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.3422
+    },
+    {
+      "gridX": 3,
+      "gridY": 2,
+      "x": 210,
+      "y": 270,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.3107
+    },
+    {
+      "gridX": 2,
+      "gridY": 1,
+      "x": 140,
+      "y": 135,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.2737
+    },
+    {
+      "gridX": 2,
+      "gridY": 2,
+      "x": 140,
+      "y": 270,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.2623
+    },
+    {
+      "gridX": 3,
+      "gridY": 3,
+      "x": 210,
+      "y": 405,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.2083
+    },
+    {
+      "gridX": 3,
+      "gridY": 1,
+      "x": 210,
+      "y": 135,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1846
+    },
+    {
+      "gridX": 1,
+      "gridY": 3,
+      "x": 70,
+      "y": 405,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1813
+    },
+    {
+      "gridX": 4,
+      "gridY": 2,
+      "x": 280,
+      "y": 270,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1722
+    },
+    {
+      "gridX": 1,
+      "gridY": 0,
+      "x": 70,
+      "y": 0,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1634
+    },
+    {
+      "gridX": 2,
+      "gridY": 3,
+      "x": 140,
+      "y": 405,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1618
+    },
+    {
+      "gridX": 6,
+      "gridY": 1,
+      "x": 420,
+      "y": 135,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1598
+    },
+    {
+      "gridX": 4,
+      "gridY": 3,
+      "x": 280,
+      "y": 405,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1578
+    },
+    {
+      "gridX": 0,
+      "gridY": 1,
+      "x": 0,
+      "y": 135,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1311
+    },
+    {
+      "gridX": 6,
+      "gridY": 0,
+      "x": 420,
+      "y": 0,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1238
+    },
+    {
+      "gridX": 2,
+      "gridY": 0,
+      "x": 140,
+      "y": 0,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.123
+    },
+    {
+      "gridX": 7,
+      "gridY": 0,
+      "x": 490,
+      "y": 0,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1225
+    },
+    {
+      "gridX": 0,
+      "gridY": 0,
+      "x": 0,
+      "y": 0,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1055
+    },
+    {
+      "gridX": 4,
+      "gridY": 1,
+      "x": 280,
+      "y": 135,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.103
+    },
+    {
+      "gridX": 0,
+      "gridY": 2,
+      "x": 0,
+      "y": 270,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.1005
+    },
+    {
+      "gridX": 0,
+      "gridY": 3,
+      "x": 0,
+      "y": 405,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.0997
+    },
+    {
+      "gridX": 7,
+      "gridY": 1,
+      "x": 490,
+      "y": 135,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.0851
+    },
+    {
+      "gridX": 3,
+      "gridY": 0,
+      "x": 210,
+      "y": 0,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.0826
+    },
+    {
+      "gridX": 4,
+      "gridY": 0,
+      "x": 280,
+      "y": 0,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.0503
+    },
+    {
+      "gridX": 5,
+      "gridY": 2,
+      "x": 350,
+      "y": 270,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.0309
+    },
+    {
+      "gridX": 5,
+      "gridY": 0,
+      "x": 350,
+      "y": 0,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.0243
+    },
+    {
+      "gridX": 5,
+      "gridY": 1,
+      "x": 350,
+      "y": 135,
+      "width": 70,
+      "height": 135,
+      "diffRatio": 0.0235
+    }
+  ],
+  "summary": "94/100 similarity; 39085/604800 pixels differ; 27 hotspot region(s)."
+}

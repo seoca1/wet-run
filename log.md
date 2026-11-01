@@ -2841,3 +2841,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - LOC(total/pure): `matrix_travel.ts` 신규 185/146, `matrix.ts` 203/167 → 223/183, `matrix_board.ts` 196/172 → 202/176, `run_screen.ts` 131/123 → 135/126, `accessibility_modes.ts` 239/126 → 246/132, `main.ts` 1747/1528 → 1783/1555(기존 초과).
 - 검증: `matrix_travel.test.ts` 13 failed → 15 passed; `npm test` **169 files / 3789 passed**; typecheck 0; lint 0 errors(기존 keyboard.ts:14 warning); build PASS; balance 양 덱 byte-identical(ADR-0239); E2E **82 passed / 4 skipped / 0 failed (4.6m)**, 5195 프리뷰(pid 75395) 유지. 독립 시각 리뷰 1차 REVISE(전환 중 카드/보드 불일치) → 수정 후 통과 항목 확인. 대비 최소 10.93:1. 상속 결함(행별 포커스 링·접근성 트리) 미해결.
 - 증거: [matrix-travel-animation-2026-11-01](docs/design/matrix-travel-animation-2026-11-01/README.md) (2 이동 × 3 레이아웃 × 6 프레임, 스트립 PNG, 실제 빌드 프레임, width check, contrast). ADR-0249 `## Implementation Status`에만 후속 기록. 미커밋·미스테이징.
+
+## [2026-11-02] fix(gameplay) | ADR-0250 조우 게이트를 입구로 — 2-이웃 노드 무한 반복 해소
+
+- 오너 보고 "계속 이벤트가 반복되서 빠져나오지 못했어" 수정. 미해결 ICE 노드에 도착하는 확인 한 번이 이동과 조우 결정 열림을 같은 상태로 반환. BYPASS는 런 스코프 저장 필드 `bypassedEncounterNodes`에 기록(`bypassedEncounterNodeIndex` 제거), 해결 노드(cleared ∪ bypassed)에서 출발 자유. 도착 없이 미해결 노드에 선 경우(런 시작·CONTINUE)는 출발이 여전히 결정을 연다.
+- footer는 Enter가 실제로 하는 일만 표시, 도착 메시지 `Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.`(HUD 15자 감싸기), 조우 화면 `ICE blocks travel until resolved` 1줄. 결정을 여는 도착은 이동 애니메이션 생략.
+- 가격·보스 차단·종결 조건·SCAN·RNG·화살표 순서·던전·세이브 스키마 버전 불변.
+- LOC(total/pure): `encounter_verbs.ts` 196/182 → 228/208, `state_actions_phases.ts` 370/328 → 379/336, `matrix.ts` 223/183 → 253/208, `encounter.ts` 115/114 → 132/127, `storage.ts` 276/217 → 283/223, `types.ts` 514/352 → 517/353, `state.ts` 406/350 → 409/353, `run_screen.ts` 135/126 → 136/127, `matrix_travel.ts` 185/146 → 188/147; 신규 테스트 330/261.
+- 검증: 신규 `encounter_entry_gate.test.ts` 26 failed → 28 passed; `npm test` **170 files / 3817 passed**; typecheck 0; lint 0 errors(기존 warning 1); build PASS; balance 양 덱 byte-identical(ADR-0239); E2E **82 passed / 4 skipped / 0 failed**, 5195 preview 유지. 시각 QA 독립 리뷰 PASS, 대비 최소 10.15:1.
+- 증거: [matrix-entry-gate-2026-11-01](docs/design/matrix-entry-gate-2026-11-01/README.md). ADR-0250 Implementation Status 작성, ADR-0246은 Implementation Status에 포인터만. 미커밋·미스테이징.

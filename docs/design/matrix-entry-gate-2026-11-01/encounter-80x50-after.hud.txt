@@ -1,0 +1,10 @@
+ENCOUNTER
+COST 0/100
+TRACE 0/5
+
+Travel blocked.
+BREACH: fight.
+BYPASS: 60 COST
+(once per run).
+JACK OUT:
+abandon run.

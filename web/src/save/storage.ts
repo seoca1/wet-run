@@ -253,12 +253,19 @@ function isSaveSlot(value: unknown): value is SaveSlot {
     typeof v.savedAt === "string" &&
     isGraphicNovelProgress(v.graphicNovelProgress) &&
     isCurrentNodeIndex(v.currentNodeIndex) &&
-    (v.clearedEncounterNodes === undefined ||
-      (Array.isArray(v.clearedEncounterNodes) &&
-        v.clearedEncounterNodes.every(
-          (index: unknown) =>
-            typeof index === "number" && Number.isInteger(index) && index >= 0,
-        )))
+    isOptionalNodeList(v.clearedEncounterNodes) &&
+    isOptionalNodeList(v.bypassedEncounterNodes)
+  );
+}
+
+function isOptionalNodeList(value: unknown): boolean {
+  return (
+    value === undefined ||
+    (Array.isArray(value) &&
+      value.every(
+        (index: unknown) =>
+          typeof index === "number" && Number.isInteger(index) && index >= 0,
+      ))
   );
 }
 

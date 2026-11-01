@@ -192,7 +192,7 @@ test.describe("CONTINUE Option", () => {
     await page.keyboard.press("Enter");
     await page.waitForFunction(() => window.wetrun?.state?.encounterDecision != null);
     await chooseEncounterVerb(page, "BYPASS");
-    expect(await page.evaluate(() => window.wetrun?.state?.bypassedEncounterNodeIndex)).toBe(afterContinue.currentNodeIndex);
+    expect(await page.evaluate(() => window.wetrun?.state?.bypassedEncounterNodes)).toContain(afterContinue.currentNodeIndex);
 
     // The restored state must REACT to input. A dead state (null matrix)
     // swallows every keypress, so the node index would not move.

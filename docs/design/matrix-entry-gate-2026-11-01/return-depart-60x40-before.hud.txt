@@ -1,0 +1,5 @@
+ENCOUNTER
+COST 60/100
+TRACE 0/5
+
+Uncleared ICE — choose how to cross.

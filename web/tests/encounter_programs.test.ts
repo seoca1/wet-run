@@ -245,7 +245,7 @@ describe("program-funded encounter intel (ADR-0247 E first slice)", () => {
     // Then
     expect(result.encounterDecision?.probed).toBe(true);
     expect(result.player.alarm).toBe(100);
-    expect(result.bypassedEncounterNodeIndex).not.toBe(0);
+    expect(result.bypassedEncounterNodes ?? []).not.toContain(0);
     expect(result.clearedEncounterNodes ?? []).not.toContain(0);
   });
 

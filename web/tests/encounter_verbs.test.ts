@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { applyAction, makeInitialState } from "../src/core/state/state";
 import { renderRunScreen } from "../src/renderer/run_screen";
-import type { GameState } from "../src/core/types";
+import type { GameState, Matrix } from "../src/core/types";
 
 function onIce(): GameState {
   const initial = makeInitialState(
@@ -55,6 +55,32 @@ function onIce(): GameState {
         },
       ],
     },
+  };
+}
+
+/** Node 1 (the boss) also holds ICE, so a fight can follow a BYPASS. */
+function withIceOnBoss(state: GameState): Matrix {
+  const matrix = state.matrix!;
+  return {
+    ...matrix,
+    nodes: matrix.nodes.map((node) =>
+      node.id === 1 ? { ...node, iceIds: ["watchdog"], iceHp: [1] } : node,
+    ),
+  };
+}
+
+/** Adds an unresolved non-boss ICE node 2 next to node 1. */
+function withSecondIce(state: GameState): Matrix {
+  const matrix = state.matrix!;
+  const base = matrix.nodes[0]!;
+  return {
+    ...matrix,
+    nodes: [
+      ...matrix.nodes.map((node) =>
+        node.id === 1 ? { ...node, adjacent: [0, 2] } : node,
+      ),
+      { ...base, id: 2, zone: "deep", adjacent: [1] },
+    ],
   };
 }
 
@@ -124,9 +150,15 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
       ...initial,
       player: { ...initial.player, alarm: 40 },
       deck: [expensive],
+      matrix: withIceOnBoss(initial),
     };
     const bypassed = choose(applyAction(costly, { type: "confirm" }), 1);
-    const breach = choose(applyAction(bypassed, { type: "confirm" }), 2);
+    // ADR-0250: the bypassed node stays resolved, so BREACH the next ICE,
+    // whose decision opens on arrival.
+    const arrived = applyAction(applyAction(bypassed, { type: "move_south" }), {
+      type: "confirm",
+    });
+    const breach = choose(arrived, 2);
     const fighting = applyAction(breach, { type: "confirm" });
     // When
     const rejected = applyAction(fighting, {
@@ -227,7 +259,7 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
     expect(won.clearedEncounterNodes).toContain(0);
   });
 
-  it("can return to a bypassed uncleared node and Breach for its full reward", () => {
+  it("returns to a bypassed node without reopening, charging or rewarding it (ADR-0250)", () => {
     // Given: bypass, leave, then explicitly return.
     const initial = onIce();
     const bypassed = choose(applyAction(initial, { type: "confirm" }), 1);
@@ -240,50 +272,52 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
     expect(away.currentNodeIndex).toBe(1);
     expect(returned.currentNodeIndex).toBe(0);
     expect(returned.clearedEncounterNodes ?? []).not.toContain(0);
-    // When
-    const breach = choose(applyAction(returned, { type: "confirm" }), 2);
-    const won = applyAction(applyAction(breach, { type: "confirm" }), {
-      type: "use_program",
-      programId: "strike",
-    });
-    // Then
-    expect(won.runPhase).toBe("loot");
-    expect(won.player.credits - initial.player.credits).toBe(125);
-    expect(won.player.alarm).toBe(60);
+    expect(returned.bypassedEncounterNodes).toEqual([0]);
+    // When: ENTER at rest on the resolved node.
+    const asked = applyAction(returned, { type: "confirm" });
+    // Then: the one BYPASS already paid for this ICE; no second decision.
+    expect(returned.encounterDecision ?? null).toBeNull();
+    expect(asked.encounterDecision ?? null).toBeNull();
+    expect(asked.runPhase).toBe("matrix");
+    expect(asked.player.credits).toBe(initial.player.credits);
+    expect(asked.player.alarm).toBe(60);
   });
 
   it("refuses a second BYPASS in the same run without spending or granting passage", () => {
     // Given: spend from zero, travel away, then return without restarting the run.
-    const initial = onIce();
+    // ADR-0250: a bypassed node stays resolved, so the second attempt is on
+    // another unresolved ICE node (2), reached through node 1.
+    const initial = { ...onIce(), matrix: withSecondIce(onIce()) };
     expect(initial.player.alarm).toBe(0);
     const bypassed = choose(applyAction(initial, { type: "confirm" }), 1);
     expect(bypassed.player.alarm).toBe(60);
     expect(bypassed.encounterDecision).toBeNull();
-    expect(bypassed.bypassedEncounterNodeIndex).toBe(0);
+    expect(bypassed.bypassedEncounterNodes).toEqual([0]);
     const away = applyAction(applyAction(bypassed, { type: "move_south" }), {
       type: "confirm",
     });
-    const returned = applyAction(applyAction(away, { type: "move_south" }), {
-      type: "confirm",
-    });
+    let toSecond = away;
+    while (toSecond.selectedMatrixNodeIndex !== 2)
+      toSecond = applyAction(toSecond, { type: "move_south" });
+    const arrived = applyAction(toSecond, { type: "confirm" });
     expect(away.currentNodeIndex).toBe(1);
-    expect(returned.currentNodeIndex).toBe(0);
-    expect(returned.bypassedEncounterNodeIndex).toBeNull();
+    expect(arrived.currentNodeIndex).toBe(2);
+    expect(arrived.encounterDecision).not.toBeNull();
     // When
-    const rejected = choose(applyAction(returned, { type: "confirm" }), 1);
+    const rejected = choose(arrived, 1);
     // Then: the cap keeps the menu open and grants neither payment nor departure.
     expect(rejected.player.alarm).toBe(60);
     expect(rejected.player).toEqual(bypassed.player);
     expect(rejected.inventory).toEqual(bypassed.inventory);
     expect(rejected.encounterDecision?.selectedVerb).toBe("BYPASS");
-    expect(rejected.bypassedEncounterNodeIndex).toBeNull();
-    expect(rejected.clearedEncounterNodes ?? []).not.toContain(0);
+    expect(rejected.bypassedEncounterNodes).toEqual([0]);
+    expect(rejected.clearedEncounterNodes ?? []).not.toContain(2);
     expect(screenText(rejected)).toContain("BYPASS +60 COST BLOCKED");
     const departure = applyAction(
       applyAction({ ...rejected, encounterDecision: null }, { type: "move_south" }),
       { type: "confirm" },
     );
-    expect(departure.currentNodeIndex).toBe(0);
+    expect(departure.currentNodeIndex).toBe(2);
     expect(departure.encounterDecision).not.toBeNull();
   });
 

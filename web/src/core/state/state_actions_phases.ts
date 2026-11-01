@@ -23,7 +23,12 @@ import {
 } from "./state_helpers";
 import { iceIntroPayload } from "../combat/combat_entry_vfx";
 import { AudioManager } from "../../audio/manager";
-import { applyEncounterDecision } from "./encounter_verbs";
+import {
+  applyEncounterDecision,
+  encounterGateMessage,
+  encounterGates,
+  encounterResolved,
+} from "./encounter_verbs";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import {
   resolveEnding,
@@ -48,43 +53,43 @@ export function applyMatrixAction(
     const node = state.matrix.nodes[state.currentNodeIndex];
     if (!node) return state;
     const destination = state.selectedMatrixNodeIndex;
-    const uncleared =
-      node.iceIds.length > 0 &&
-      !state.clearedEncounterNodes?.includes(state.currentNodeIndex);
-    // Departure must not offer a free alternative to the paid BYPASS verb.
-    if (
-      uncleared &&
-      (destination == null ||
-        state.bypassedEncounterNodeIndex !== state.currentNodeIndex)
-    ) {
+    // ADR-0250: the gate is on the entry. A node reached without an arrival
+    // (run start, CONTINUE) still cannot be left for free while unresolved.
+    if (encounterGates(state, state.currentNodeIndex)) {
       return {
         ...state,
         selectedMatrixNodeIndex: null,
         encounterDecision: { selectedVerb: null, probed: false },
-        message: "Uncleared ICE — choose how to cross.",
+        message: encounterGateMessage(state),
       };
     }
     if (destination != null && node.adjacent.includes(destination)) {
       const target = state.matrix.nodes[destination];
       if (!target) return state;
       void AudioManager.getInstance().playSfx(pickMovementSfxId(true));
-      return {
+      const moved: GameState = {
         ...state,
         currentNodeIndex: destination,
         selectedMatrixNodeIndex: null,
         encounterDecision: null,
-        bypassedEncounterNodeIndex: null,
         visitedNodes: state.visitedNodes.includes(destination)
           ? state.visitedNodes
           : [...state.visitedNodes, destination],
         turnCount: state.turnCount + 1,
-        message: `Moved to ${target.zone} — ENTER: encounter; arrows: route`,
+        message: `Moved to ${target.zone} — ↑↓ picks the next route`,
       };
+      return encounterGates(moved, destination)
+        ? {
+            ...moved,
+            encounterDecision: { selectedVerb: null, probed: false },
+            message: encounterGateMessage(moved),
+          }
+        : moved;
     }
-    if (state.clearedEncounterNodes?.includes(state.currentNodeIndex)) {
+    if (encounterResolved(state, state.currentNodeIndex)) {
       return {
         ...state,
-        message: "Encounter already cleared — choose an adjacent route.",
+        message: "Encounter resolved — choose an adjacent route.",
       };
     }
     if (node.iceIds.length === 0) {
@@ -124,7 +129,11 @@ export function applyMatrixAction(
     return {
       ...state,
       selectedMatrixNodeIndex: neighbours[index],
-      message: "Route highlighted — ENTER to travel; ↑↓ to change destination",
+      message: encounterGates(state, state.currentNodeIndex)
+        ? "Route highlighted — ICE here blocks travel; ENTER: encounter"
+        : encounterGates(state, neighbours[index] ?? -1)
+          ? "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+          : "Route highlighted — ENTER to travel; ↑↓ to change destination",
     };
   }
 

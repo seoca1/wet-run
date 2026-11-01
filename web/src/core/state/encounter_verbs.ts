@@ -42,6 +42,36 @@ export function bypassBlockReason(state: GameState): string | null {
   return null;
 }
 
+/** ADR-0250: a node is resolved for travel once cleared or bypassed this run. */
+export function encounterResolved(state: GameState, index: number): boolean {
+  return (
+    (state.clearedEncounterNodes?.includes(index) ?? false) ||
+    (state.bypassedEncounterNodes?.includes(index) ?? false)
+  );
+}
+
+/** Unresolved ICE at `index`: arriving opens the decision, leaving is blocked. */
+export function encounterGates(state: GameState, index: number): boolean {
+  const node = state.matrix?.nodes[index];
+  return (
+    node !== undefined &&
+    node.iceIds.length > 0 &&
+    !encounterResolved(state, index)
+  );
+}
+
+/** Message shown when the gate opens the decision: every way forward. */
+export function encounterGateMessage(state: GameState): string {
+  const bypass =
+    bypassBlockReason(state) !== null
+      ? "BYPASS: blocked here"
+      : state.player.alarm + ENCOUNTER_VERB_COSTS.bypass >
+          ENCOUNTER_VERB_COSTS.limit
+        ? "BYPASS: COST too high"
+        : `BYPASS: ${ENCOUNTER_VERB_COSTS.bypass} COST (once per run)`;
+  return `Travel blocked. BREACH: fight. ${bypass}. JACK OUT: abandon run.`;
+}
+
 /** Shared by paid intel and Breach so mutator copies and HP fallbacks agree. */
 export function encounterRoster(state: GameState): readonly Ice[] {
   const node = state.matrix?.nodes[state.currentNodeIndex];
@@ -140,9 +170,11 @@ export function applyEncounterDecision(
             ...paid,
             encounterDecision: null,
             selectedMatrixNodeIndex: null,
-            bypassedEncounterNodeIndex: state.currentNodeIndex,
-            message:
-              "Bypassed — no reward. Choose a route; ENTER reopens this encounter.",
+            bypassedEncounterNodes: [
+              ...(state.bypassedEncounterNodes ?? []),
+              state.currentNodeIndex,
+            ],
+            message: "Bypassed — no reward. Routes are open: ↑↓ then ENTER.",
           };
     }
     case "BREACH": {

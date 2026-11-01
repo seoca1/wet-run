@@ -193,8 +193,10 @@ describe("Matrix affordance — the prompt is primary and is never a selection",
       // no target token on the board (the legend's sample row is excluded)
       expect(text.slice(0, layout.legendY).join("\n")).not.toMatch(/>.</);
       expect(text.some((l) => inner(l).startsWith("> "))).toBe(false); // no target line in the card
+      // ADR-0250: the start node has no ICE, so at rest ENTER does nothing;
+      // the footer offers the route pick instead of promising an ICE.
       expect(text.join("\n")).toContain(
-        cols < 44 ? "ENTER ICE" : "ENTER: enter ICE",
+        cols < 44 ? "↑↓ pick route" : "↑↓: pick route",
       );
     },
   );

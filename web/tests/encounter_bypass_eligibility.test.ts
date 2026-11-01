@@ -75,8 +75,8 @@ describe.each(["boss", "isolated"] as const)(
       const rejected = applyAction(initial, { type: "confirm" });
       // Then
       expect(rejected.encounterDecision).toEqual(initial.encounterDecision);
-      expect(rejected.bypassedEncounterNodeIndex).toBe(
-        initial.bypassedEncounterNodeIndex,
+      expect(rejected.bypassedEncounterNodes).toEqual(
+        initial.bypassedEncounterNodes,
       );
       expect(rejected.clearedEncounterNodes).toEqual(
         initial.clearedEncounterNodes,

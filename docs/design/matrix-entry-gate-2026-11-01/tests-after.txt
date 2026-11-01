@@ -1,0 +1,37 @@
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90m/Users/emilio/projects/opencodework/Game/wet_run/web[39m
+
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 1 — the gate is on the entry[2m > [22mopens the decision in the same action that commits the arrival
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 1 — the gate is on the entry[2m > [22mdoes not open anything when the arrival node has no ICE or is resolved
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 1 — the gate is on the entry[2m > [22mcannot walk past an unresolved ICE: arrows and Enter act on the verbs, never on routes
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 1 — the gate is on the entry[2m > [22mre-gates the departure from an unresolved node reached without an arrival (CONTINUE)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 1 — the gate is on the entry[2m > [22mnames the ways forward in the arrival message, inside the 40x60 HUD width
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 1 — the gate is on the entry[2m > [22mstates once on the encounter screen that the node gates travel
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decisions 2-4 — resolved nodes are remembered for the run[2m > [22mrecords BYPASS in the run-scoped list and departs freely from a 2-neighbour node
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decisions 2-4 — resolved nodes are remembered for the run[2m > [22mkeeps a BYPASS-resolved node resolved after moving away and coming back
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decisions 2-4 — resolved nodes are remembered for the run[2m > [22mkeeps a combat-resolved node free to leave and to re-enter
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decisions 2-4 — resolved nodes are remembered for the run[2m > [22mstill gates every unresolved node on arrival and still allows only one BYPASS
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mon an unresolved node with a route targeted (80x50)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mon an unresolved node with a route targeted (60x40)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mon an unresolved node with a route targeted (40x60)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mand says travel exactly when Enter travels (80x50)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mand says travel exactly when Enter travels (60x40)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mand says travel exactly when Enter travels (40x60)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mnever claims travel on any frame where Enter would open the encounter (80x50)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mnever claims travel on any frame where Enter would open the encounter (60x40)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter[2m > [22mnever claims travel on any frame where Enter would open the encounter (40x60)
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 6 — save compatibility[2m > [22mround-trips bypassedEncounterNodes through storage without a version bump
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 6 — save compatibility[2m > [22mloads an old save without the field as an empty list
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 6 — save compatibility[2m > [22mrejects a malformed bypassedEncounterNodes list: null
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 6 — save compatibility[2m > [22mrejects a malformed bypassedEncounterNodes list: "1"
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 6 — save compatibility[2m > [22mrejects a malformed bypassedEncounterNodes list: "1"
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 6 — save compatibility[2m > [22mrejects a malformed bypassedEncounterNodes list: -1
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 decision 6 — save compatibility[2m > [22mrejects a malformed bypassedEncounterNodes list: 1.5
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 — travel animation when the arrival opens a decision[2m > [22mdoes not start a traversal the encounter screen would hide
+ [32m✓[39m tests/encounter_entry_gate.test.ts[2m > [22mADR-0250 — travel animation when the arrival opens a decision[2m > [22mstill animates a free arrival
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m28 passed[39m[22m[90m (28)[39m
+[2m   Start at [22m 00:46:39
+[2m   Duration [22m 335ms[2m (transform 148ms, setup 8ms, collect 182ms, tests 25ms, environment 0ms, prepare 36ms)[22m
+

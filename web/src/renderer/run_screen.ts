@@ -46,6 +46,7 @@ export function renderRunScreen(
           state.clearedEncounterNodes ?? [],
           matrixEntryHint,
           matrixTravel,
+          state.bypassedEncounterNodes ?? [],
         ),
         hud: [
           "MATRIX",

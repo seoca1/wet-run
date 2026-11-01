@@ -113,6 +113,7 @@ export function makeInitialState(
     matrix,
     visitedNodes: [],
     clearedEncounterNodes: [],
+    bypassedEncounterNodes: [],
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],
@@ -262,6 +263,7 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     graphicNovelProgress: gnProgress,
     currentNodeIndex: state.currentNodeIndex,
     clearedEncounterNodes: state.clearedEncounterNodes ?? [],
+    bypassedEncounterNodes: state.bypassedEncounterNodes ?? [],
   };
 }
 
@@ -365,6 +367,7 @@ export function slotToGameState(
     matrix,
     visitedNodes: [],
     clearedEncounterNodes: slot.clearedEncounterNodes ?? [],
+    bypassedEncounterNodes: slot.bypassedEncounterNodes ?? [],
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],

@@ -60,6 +60,9 @@ export function beginMatrixTravel(
 ): MatrixTravel | null {
   if (suppressMotion("travel", reducedMotion)) return null;
   if (previous.runPhase !== "matrix" || next.runPhase !== "matrix") return null;
+  // ADR-0250: an arrival that opens the encounter shows it at once; frames
+  // of a board that input no longer drives would be hidden and misleading.
+  if (next.encounterDecision) return null;
   const matrix = next.matrix;
   if (matrix == null || matrix !== previous.matrix) return null;
   const from = previous.currentNodeIndex;

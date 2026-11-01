@@ -1,0 +1,113 @@
+{
+  "seed": 42,
+  "grade": 3,
+  "x": 5,
+  "a": 2,
+  "other": 13,
+  "adjacentOfX": [
+    2,
+    13
+  ],
+  "iceIdsOfX": [
+    "ice_dixie_echo"
+  ],
+  "shots": {
+    "arrive-commit": {
+      "current": 2,
+      "selected": 5,
+      "cleared": [
+        0,
+        2
+      ],
+      "bypassed": [],
+      "bypassedIndex": null,
+      "alarm": 0,
+      "encounterOpen": false,
+      "message": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+    },
+    "arrive-result": {
+      "current": 5,
+      "selected": null,
+      "cleared": [
+        0,
+        2
+      ],
+      "bypassed": [],
+      "bypassedIndex": null,
+      "alarm": 0,
+      "encounterOpen": true,
+      "message": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+    },
+    "encounter": {
+      "current": 5,
+      "selected": null,
+      "cleared": [
+        0,
+        2
+      ],
+      "bypassed": [],
+      "bypassedIndex": null,
+      "alarm": 0,
+      "encounterOpen": true,
+      "message": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+    },
+    "return-rest": {
+      "current": 5,
+      "selected": null,
+      "cleared": [
+        0,
+        2
+      ],
+      "bypassed": [
+        5
+      ],
+      "bypassedIndex": null,
+      "alarm": 60,
+      "encounterOpen": false,
+      "message": "Moved to mid — ↑↓ picks the next route"
+    },
+    "return-route": {
+      "current": 5,
+      "selected": 13,
+      "cleared": [
+        0,
+        2
+      ],
+      "bypassed": [
+        5
+      ],
+      "bypassedIndex": null,
+      "alarm": 60,
+      "encounterOpen": false,
+      "message": "Route highlighted — ENTER to travel; ↑↓ to change destination"
+    },
+    "return-depart": {
+      "current": 13,
+      "selected": null,
+      "cleared": [
+        0,
+        2
+      ],
+      "bypassed": [
+        5
+      ],
+      "bypassedIndex": null,
+      "alarm": 60,
+      "encounterOpen": false,
+      "message": "Moved to surface — ↑↓ picks the next route"
+    },
+    "gated-route": {
+      "current": 5,
+      "selected": 13,
+      "cleared": [
+        0,
+        2
+      ],
+      "bypassed": [],
+      "bypassedIndex": null,
+      "alarm": 0,
+      "encounterOpen": false,
+      "message": "Route highlighted — ICE here blocks travel; ENTER: encounter"
+    }
+  }
+}

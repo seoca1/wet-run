@@ -1,0 +1,40 @@
+                                                            
+ ╔═ENCOUNTER══════════════════════════════════════════════╗ 
+ ║                                                        ║ 
+ ║ Node 6 · MID                                           ║ 
+ ║ ICE blocks travel until resolved                       ║ 
+ ║ HP 100/100 · COST 0/100                                ║ 
+ ║ Reward: 175cr                                          ║ 
+ ║                                                        ║ 
+ ║   PROBE +8 COST                                        ║ 
+ ║   Reveal ICE identity and HP                           ║ 
+ ║                                                        ║ 
+ ║   BYPASS +60 COST                                      ║ 
+ ║   No fight / no loot / no heal                         ║ 
+ ║                                                        ║ 
+ ║   BREACH                                               ║ 
+ ║   Fight for the full reward                            ║ 
+ ║                                                        ║ 
+ ║   JACK OUT                                             ║ 
+ ║   Abandon the run (unchanged)                          ║ 
+ ║                                                        ║ 
+ ║   SCAN NO UTILITY IN HAND                              ║ 
+ ║   Requires utility program in hand                     ║ 
+ ║   Reveal ICE; lose combat card                         ║ 
+ ║                                                        ║ 
+ ║ Threat hidden — PROBE or SCAN                          ║ 
+ ║                                                        ║ 
+ ║ ↑↓/←→: choose · ENTER/SPACE: act                       ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ╚════════════════════════════════════════════════════════╝ 
+                                                            

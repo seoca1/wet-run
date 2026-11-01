@@ -133,7 +133,7 @@ describe("Matrix operation board — integrity rules (ADR-0249)", () => {
     }
   });
 
-  it("rule 4: arriving draws no target and opens no verb until the player asks, then none is preselected", () => {
+  it("rule 4: arriving draws no target; the arrival opens the verb overlay (ADR-0250) with none preselected", () => {
     // Given: a node without ICE next to a non-boss ICE node.
     const ice = (j: number): boolean => (matrix.nodes[j]?.iceIds.length ?? 0) > 0 && !matrix.nodes[j]?.isBoss;
     const from = matrix.nodes.findIndex((n, i) => n.iceIds.length === 0 && n.adjacent.some((j) => j !== i && ice(j)));
@@ -147,7 +147,7 @@ describe("Matrix operation board — integrity rules (ADR-0249)", () => {
     const layout = matrixLayout(makeGrid(80, 50), matrix);
     // Then
     expect(arrived.currentNodeIndex).toBe(to);
-    expect(arrived.encounterDecision ?? null).toBeNull();
+    expect(arrived.encounterDecision).toEqual({ selectedVerb: null, probed: false });
     for (const site of layout.board.sites) expect(token(text, site.cx, site.cy)).not.toMatch(/^>.<$/);
     const site = layout.board.sites[to];
     expect(token(text, site?.cx ?? 0, site?.cy ?? 0)).toBe("#@#");

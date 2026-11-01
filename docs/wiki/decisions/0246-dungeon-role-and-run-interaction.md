@@ -291,6 +291,8 @@ C에 필요한 결정 어휘를 생산한다. C는 런의 약한 P4를 도구 �
 - **양 덱 전체 stdout `cmp` exit 0**: 기존 ADR-0239 기준선 캡처 `option-e-{opening,ppl}-before.txt`와 새 `bypass60-{opening,ppl}.txt`를 `/Users/emilio/.openclaw/tmp/opencode/`에서 byte 비교했다. Opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**, 턴·HP·percentile까지 동일. 가격 밸런스 검증으로 해석하지 않는다.
 - **E2E**: `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **82 passed / 4 skipped / 0 failed (4.5m)**, desktop/mobile 모두 새 **68 COST** 합계 단언 통과. rebuild 뒤 요청된 `npx vite preview --port 5195 --strictPort --host 127.0.0.1`는 **Port 5195 is already in use**로 새 기동을 거절했다. 기존 서버는 kill하지 않고 유지했고, 그 서버가 새 dist를 제공함을 E2E로 확인했다. 사용자 play session은 조작하지 않았다.
 
+**Superseded in part — [ADR-0250](./0250-encounter-gate-on-entry.md) (2026-11-02)**: 위 slice 2의 "출발 확인이 결정 메뉴를 연다"(이번 방문 통과 허가)와 "이번 방문의 통과 상태는 선택적 일시 필드" 두 조항은 ADR-0250이 대체했다 — 도착 게이트 + 런 스코프 `bypassedEncounterNodes`(저장) + 해결 노드 자유 출발. 그 밖의 ADR-0246 결정·가격·보스 차단·종결 조건·`clearedEncounterNodes` 계약은 불변. 구현 증거는 ADR-0250 `## Implementation Status`.
+
 **Notes**: ADR-0195의 Status / Evidence / Notes 형식이다. **Accepted는 결정 완료이지 구현 완료가 아니다.**
 첫 슬라이스의 **경로 결정**과 두 번째 슬라이스의 **고정 동사 결정** 위에 E의 **카드 결제 SCAN**을 겹쳤다. 경로 목록에서 ↓/→는 다음 후보, ↑/←는 이전 후보, Enter/Space는
 강조한 목적지로 이동하며 이동 뒤에는 미선택으로 돌아간다. 미완료 ICE를 아직 통과하지 않았다면 출발 확인도 결정 메뉴를 연다.

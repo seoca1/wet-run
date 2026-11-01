@@ -1,0 +1,397 @@
+
+ RUN  v1.6.1 /Users/emilio/projects/opencodework/Game/wet_run/web
+
+ ❯ tests/encounter_entry_gate.test.ts  (28 tests | 26 failed) 21ms
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 1 — the gate is on the entry > opens the decision in the same action that commits the arrival
+     → expected null to deeply equal { selectedVerb: null, probed: false }
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 1 — the gate is on the entry > does not open anything when the arrival node has no ICE or is resolved
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 1 — the gate is on the entry > names the ways forward in the arrival message, inside the 40x60 HUD width
+     → expected 'Moved to mid — ENTER: encounter; arro…' to contain 'Travel blocked'
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 1 — the gate is on the entry > states once on the encounter screen that the node gates travel
+     → expected [] to have a length of 1 but got +0
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decisions 2-4 — resolved nodes are remembered for the run > records BYPASS in the run-scoped list and departs freely from a 2-neighbour node
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decisions 2-4 — resolved nodes are remembered for the run > keeps a BYPASS-resolved node resolved after moving away and coming back
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decisions 2-4 — resolved nodes are remembered for the run > keeps a combat-resolved node free to leave and to re-enter
+     → expected undefined to be 'BREACH' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decisions 2-4 — resolved nodes are remembered for the run > still gates every unresolved node on arrival and still allows only one BYPASS
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > on an unresolved node with a route targeted (80x50)
+     → expected ' ║ ENTER: travel | ↑↓: route | ESC: b…' not to match /ENTER:? travel/
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > on an unresolved node with a route targeted (60x40)
+     → expected ' ║ ENTER: travel | ↑↓: route | ESC: b…' not to match /ENTER:? travel/
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > on an unresolved node with a route targeted (40x60)
+     → expected ' ║ ↑↓ route | ENTER travel | ESC back…' not to match /ENTER:? travel/
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > and says travel exactly when Enter travels (80x50)
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > and says travel exactly when Enter travels (60x40)
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > and says travel exactly when Enter travels (40x60)
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > never claims travel on any frame where Enter would open the encounter (80x50)
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > never claims travel on any frame where Enter would open the encounter (60x40)
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > never claims travel on any frame where Enter would open the encounter (40x60)
+     → expected undefined to be 'BYPASS' // Object.is equality
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > round-trips bypassedEncounterNodes through storage without a version bump
+     → expected undefined to deeply equal [ 2, 5 ]
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > loads an old save without the field as an empty list
+     → expected undefined to deeply equal []
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: null
+     → expected { version: 1, …(14) } to be null
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: "1"
+     → expected { version: 1, …(14) } to be null
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: "1"
+     → expected { version: 1, …(14) } to be null
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: -1
+     → expected { version: 1, …(14) } to be null
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: 1.5
+     → expected { version: 1, …(14) } to be null
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 — travel animation when the arrival opens a decision > does not start a traversal the encounter screen would hide
+     → expected null not to be null
+   ❯ tests/encounter_entry_gate.test.ts > ADR-0250 — travel animation when the arrival opens a decision > still animates a free arrival
+     → expected undefined to be 'BYPASS' // Object.is equality
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 26 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 1 — the gate is on the entry > opens the decision in the same action that commits the arrival
+AssertionError: expected null to deeply equal { selectedVerb: null, probed: false }
+
+- Expected: 
+Object {
+  "probed": false,
+  "selectedVerb": null,
+}
+
++ Received: 
+null
+
+ ❯ tests/encounter_entry_gate.test.ts:106:39
+    104|     expect(arrived.turnCount).toBe(before.turnCount + 1);
+    105|     expect(arrived.selectedMatrixNodeIndex ?? null).toBeNull();
+    106|     expect(arrived.encounterDecision).toEqual({ selectedVerb: null, pr…
+       |                                       ^
+    107|     expect(arrived.runPhase).toBe("matrix");
+    108|     expect(arrived.player.alarm).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 1 — the gate is on the entry > does not open anything when the arrival node has no ICE or is resolved
+AssertionError: expected undefined to be 'BYPASS' // Object.is equality
+
+- Expected: 
+"BYPASS"
+
++ Received: 
+undefined
+
+ ❯ choose tests/encounter_entry_gate.test.ts:76:48
+     74|   let next = state;
+     75|   for (let i = 0; i < 5 && next.encounterDecision?.selectedVerb !== ve…
+     76|   expect(next.encounterDecision?.selectedVerb).toBe(verb);
+       |                                                ^
+     77|   return act(next, "confirm");
+     78| }
+ ❯ tests/encounter_entry_gate.test.ts:113:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 1 — the gate is on the entry > names the ways forward in the arrival message, inside the 40x60 HUD width
+AssertionError: expected 'Moved to mid — ENTER: encounter; arro…' to contain 'Travel blocked'
+
+- Expected
++ Received
+
+- Travel blocked
++ Moved to mid — ENTER: encounter; arrows: route
+
+ ❯ tests/encounter_entry_gate.test.ts:147:31
+    145|     // Then
+    146|     for (const word of ["Travel blocked", "BREACH", "BYPASS: 60 COST (…
+    147|       expect(arrived.message).toContain(word);
+       |                               ^
+    148|     // The 40x60 preset gives the HUD 16 columns; drawHud reserves one.
+    149|     const hud = rows(arrived, 40, 60).hud;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 1 — the gate is on the entry > states once on the encounter screen that the node gates travel
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/encounter_entry_gate.test.ts:160:54
+    158|     for (const [cols, height] of LAYOUTS) {
+    159|       const grid = rows(arrived, cols, height).grid.join("\n");
+    160|       expect(grid.match(/ICE blocks travel/g) ?? []).toHaveLength(1);
+       |                                                      ^
+    161|     }
+    162|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decisions 2-4 — resolved nodes are remembered for the run > records BYPASS in the run-scoped list and departs freely from a 2-neighbour node
+AssertionError: expected undefined to be 'BYPASS' // Object.is equality
+
+- Expected: 
+"BYPASS"
+
++ Received: 
+undefined
+
+ ❯ choose tests/encounter_entry_gate.test.ts:76:48
+     74|   let next = state;
+     75|   for (let i = 0; i < 5 && next.encounterDecision?.selectedVerb !== ve…
+     76|   expect(next.encounterDecision?.selectedVerb).toBe(verb);
+       |                                                ^
+     77|   return act(next, "confirm");
+     78| }
+ ❯ tests/encounter_entry_gate.test.ts:169:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decisions 2-4 — resolved nodes are remembered for the run > keeps a BYPASS-resolved node resolved after moving away and coming back
+AssertionError: expected undefined to be 'BYPASS' // Object.is equality
+
+- Expected: 
+"BYPASS"
+
++ Received: 
+undefined
+
+ ❯ choose tests/encounter_entry_gate.test.ts:76:48
+     74|   let next = state;
+     75|   for (let i = 0; i < 5 && next.encounterDecision?.selectedVerb !== ve…
+     76|   expect(next.encounterDecision?.selectedVerb).toBe(verb);
+       |                                                ^
+     77|   return act(next, "confirm");
+     78| }
+ ❯ tests/encounter_entry_gate.test.ts:184:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decisions 2-4 — resolved nodes are remembered for the run > keeps a combat-resolved node free to leave and to re-enter
+AssertionError: expected undefined to be 'BREACH' // Object.is equality
+
+- Expected: 
+"BREACH"
+
++ Received: 
+undefined
+
+ ❯ choose tests/encounter_entry_gate.test.ts:76:48
+     74|   let next = state;
+     75|   for (let i = 0; i < 5 && next.encounterDecision?.selectedVerb !== ve…
+     76|   expect(next.encounterDecision?.selectedVerb).toBe(verb);
+       |                                                ^
+     77|   return act(next, "confirm");
+     78| }
+ ❯ tests/encounter_entry_gate.test.ts:202:20
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decisions 2-4 — resolved nodes are remembered for the run > still gates every unresolved node on arrival and still allows only one BYPASS
+AssertionError: expected undefined to be 'BYPASS' // Object.is equality
+
+- Expected: 
+"BYPASS"
+
++ Received: 
+undefined
+
+ ❯ choose tests/encounter_entry_gate.test.ts:76:48
+     74|   let next = state;
+     75|   for (let i = 0; i < 5 && next.encounterDecision?.selectedVerb !== ve…
+     76|   expect(next.encounterDecision?.selectedVerb).toBe(verb);
+       |                                                ^
+     77|   return act(next, "confirm");
+     78| }
+ ❯ tests/encounter_entry_gate.test.ts:215:34
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > on an unresolved node with a route targeted (80x50)
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > on an unresolved node with a route targeted (60x40)
+AssertionError: expected ' ║ ENTER: travel | ↑↓: route | ESC: b…' not to match /ENTER:? travel/
+
+- Expected: 
+/ENTER:? travel/
+
++ Received: 
+" ║ ENTER: travel | ↑↓: route | ESC: back                                      ║ "
+
+ ❯ tests/encounter_entry_gate.test.ts:233:22
+    231|     expect(act(state, "confirm").encounterDecision).not.toBeNull();
+    232|     const line = footer(state, cols, height);
+    233|     expect(line).not.toMatch(CLAIMS_TRAVEL);
+       |                      ^
+    234|     expect(line).toMatch(/ENTER:? (enter )?ICE/);
+    235|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > on an unresolved node with a route targeted (40x60)
+AssertionError: expected ' ║ ↑↓ route | ENTER travel | ESC back…' not to match /ENTER:? travel/
+
+- Expected: 
+/ENTER:? travel/
+
++ Received: 
+" ║ ↑↓ route | ENTER travel | ESC back ║ "
+
+ ❯ tests/encounter_entry_gate.test.ts:233:22
+    231|     expect(act(state, "confirm").encounterDecision).not.toBeNull();
+    232|     const line = footer(state, cols, height);
+    233|     expect(line).not.toMatch(CLAIMS_TRAVEL);
+       |                      ^
+    234|     expect(line).toMatch(/ENTER:? (enter )?ICE/);
+    235|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > and says travel exactly when Enter travels (80x50)
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > and says travel exactly when Enter travels (60x40)
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > and says travel exactly when Enter travels (40x60)
+AssertionError: expected undefined to be 'BYPASS' // Object.is equality
+
+- Expected: 
+"BYPASS"
+
++ Received: 
+undefined
+
+ ❯ choose tests/encounter_entry_gate.test.ts:76:48
+     74|   let next = state;
+     75|   for (let i = 0; i < 5 && next.encounterDecision?.selectedVerb !== ve…
+     76|   expect(next.encounterDecision?.selectedVerb).toBe(verb);
+       |                                                ^
+     77|   return act(next, "confirm");
+     78| }
+ ❯ tests/encounter_entry_gate.test.ts:238:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > never claims travel on any frame where Enter would open the encounter (80x50)
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > never claims travel on any frame where Enter would open the encounter (60x40)
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter > never claims travel on any frame where Enter would open the encounter (40x60)
+AssertionError: expected undefined to be 'BYPASS' // Object.is equality
+
+- Expected: 
+"BYPASS"
+
++ Received: 
+undefined
+
+ ❯ choose tests/encounter_entry_gate.test.ts:76:48
+     74|   let next = state;
+     75|   for (let i = 0; i < 5 && next.encounterDecision?.selectedVerb !== ve…
+     76|   expect(next.encounterDecision?.selectedVerb).toBe(verb);
+       |                                                ^
+     77|   return act(next, "confirm");
+     78| }
+ ❯ tests/encounter_entry_gate.test.ts:250:25
+ ❯ tests/encounter_entry_gate.test.ts:256:15
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > round-trips bypassedEncounterNodes through storage without a version bump
+AssertionError: expected undefined to deeply equal [ 2, 5 ]
+
+- Expected: 
+Array [
+  2,
+  5,
+]
+
++ Received: 
+undefined
+
+ ❯ tests/encounter_entry_gate.test.ts:289:41
+    287|     // Then
+    288|     expect(slot.version).toBe(1);
+    289|     expect(slot.bypassedEncounterNodes).toEqual([2, 5]);
+       |                                         ^
+    290|     expect(loaded?.bypassedEncounterNodes).toEqual([2, 5]);
+    291|     expect(restored?.bypassedEncounterNodes).toEqual([2, 5]);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > loads an old save without the field as an empty list
+AssertionError: expected undefined to deeply equal []
+
+- Expected: 
+Array []
+
++ Received: 
+undefined
+
+ ❯ tests/encounter_entry_gate.test.ts:305:46
+    303|     expect(loaded).not.toHaveProperty("bypassedEncounterNodes");
+    304|     expect(loaded?.version).toBe(1);
+    305|     expect(restored?.bypassedEncounterNodes).toEqual([]);
+       |                                              ^
+    306|   });
+    307| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: null
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: "1"
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: "1"
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: -1
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 decision 6 — save compatibility > rejects a malformed bypassedEncounterNodes list: 1.5
+AssertionError: expected { version: 1, …(14) } to be null
+ ❯ tests/encounter_entry_gate.test.ts:313:27
+    311|       JSON.stringify({ ...stateToSaveSlot(realRun()), bypassedEncounte…
+    312|     );
+    313|     expect(await load(3)).toBeNull();
+       |                           ^
+    314|   });
+    315| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 — travel animation when the arrival opens a decision > does not start a traversal the encounter screen would hide
+AssertionError: expected null not to be null
+ ❯ tests/encounter_entry_gate.test.ts:321:43
+    319|     const before = target(onStart(), 1);
+    320|     const arrived = act(before, "confirm");
+    321|     expect(arrived.encounterDecision).not.toBeNull();
+       |                                           ^
+    322|     expect(beginMatrixTravel(before, arrived, 0, false)).toBeNull();
+    323|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/26]⎯
+
+ FAIL  tests/encounter_entry_gate.test.ts > ADR-0250 — travel animation when the arrival opens a decision > still animates a free arrival
+AssertionError: expected undefined to be 'BYPASS' // Object.is equality
+
+- Expected: 
+"BYPASS"
+
++ Received: 
+undefined
+
+ ❯ choose tests/encounter_entry_gate.test.ts:76:48
+     74|   let next = state;
+     75|   for (let i = 0; i < 5 && next.encounterDecision?.selectedVerb !== ve…
+     76|   expect(next.encounterDecision?.selectedVerb).toBe(verb);
+       |                                                ^
+     77|   return act(next, "confirm");
+     78| }
+ ❯ tests/encounter_entry_gate.test.ts:326:27
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/26]⎯
+
+ Test Files  1 failed (1)
+      Tests  26 failed | 2 passed (28)
+   Start at  00:34:19
+   Duration  337ms (transform 153ms, setup 8ms, collect 188ms, tests 21ms, environment 0ms, prepare 34ms)
+

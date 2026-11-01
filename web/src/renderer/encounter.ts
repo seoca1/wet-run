@@ -46,6 +46,7 @@ export function renderEncounterDecision(
     `Node ${state.currentNodeIndex + 1} · ${node?.zone.toUpperCase() ?? ""}`,
     PALETTE.GREEN_NEON,
   );
+  write("ICE blocks travel until resolved", PALETTE.YELLOW_AMBER);
   write(
     `HP ${state.player.hp}/${state.player.maxHp} · COST ${state.player.alarm}/${costs.limit}`,
   );
@@ -109,7 +110,23 @@ export function renderEncounterDecision(
       `COST ${state.player.alarm}/${costs.limit}`,
       `TRACE ${state.alarmLevel}/5`,
       "",
-      state.message,
+      ...wrapWords(state.message, HUD_TEXT_COLS),
     ],
   };
+}
+
+/** The narrowest HUD in use (the 40x60 preset's 16 columns, one reserved by
+ * drawHud). The canvas squeezes a longer line rather than wrapping it. */
+const HUD_TEXT_COLS = 15;
+
+function wrapWords(text: string, width: number): string[] {
+  const lines: string[] = [];
+  for (const word of text.split(" ")) {
+    const last = lines.length - 1;
+    const line = lines[last];
+    if (line !== undefined && line.length + 1 + word.length <= width)
+      lines[last] = `${line} ${word}`;
+    else lines.push(word);
+  }
+  return lines;
 }

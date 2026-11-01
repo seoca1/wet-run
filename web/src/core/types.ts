@@ -193,13 +193,14 @@ export interface GameState {
       import("./state/encounter_verbs").EncounterVerb | null;
     readonly probed: boolean;
   } | null;
-  /** Paid passage for this visit only; does not resolve or reward the node. */
-  readonly bypassedEncounterNodeIndex?: number | null;
   readonly matrix: Matrix | null;
   readonly visitedNodes: ReadonlyArray<number>;
   /** Resolved encounters, not visits: travel visits a node before combat.
    * Optional for legacy states/saves; missing means no recorded clears. */
   readonly clearedEncounterNodes?: ReadonlyArray<number>;
+  /** Nodes passed by paid BYPASS this run (ADR-0250): resolved for travel, but
+   * never cleared, rewarded or healed. Optional; missing means none. */
+  readonly bypassedEncounterNodes?: ReadonlyArray<number>;
   readonly bossPhase: BossPhase; // 0 = no boss active, 1..4 = boss phase
   readonly endingChoice: EndingChoice | null;
   // Tier 5.5: active combat VFX (animation overlay).
@@ -455,6 +456,8 @@ export interface SaveSlot {
   readonly currentNodeIndex?: number;
   /** Persist encounter clears without invalidating older version-1 slots. */
   readonly clearedEncounterNodes?: ReadonlyArray<number>;
+  /** ADR-0250 run memory of BYPASS; older version-1 slots omit it. */
+  readonly bypassedEncounterNodes?: ReadonlyArray<number>;
 }
 
 /** Game action — keyboard input → state mutation. */

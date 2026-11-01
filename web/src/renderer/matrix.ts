@@ -88,6 +88,34 @@ export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
   };
 }
 
+/** The controls footer names what ENTER does now (ADR-0250 decision 5):
+ * unresolved ICE here blocks travel; a target with unresolved ICE is entered
+ * as an encounter; only a free target is travel. `target` is null at rest. */
+export function matrixFooter(
+  innerWidth: number,
+  hereGates: boolean,
+  target: boolean | null,
+): string {
+  const [short, long] = hereGates
+    ? [
+        "ENTER ICE | no travel | ESC back",
+        "ENTER: enter ICE | ICE blocks travel | ESC: back",
+      ]
+    : target === null
+      ? ["↑↓ pick route | ESC back", "↑↓: pick route | ESC: back"]
+      : target
+        ? [
+            "↑↓ route | ENTER ICE | ESC back",
+            "ENTER: enter ICE | ↑↓: route | ESC: back",
+          ]
+        : [
+            "↑↓ route | ENTER travel | ESC back",
+            "ENTER: travel | ↑↓: route | ESC: back",
+          ];
+  // The footer starts one cell inside the frame.
+  return innerWidth < 40 || long.length > innerWidth - 1 ? short : long;
+}
+
 /** Render the Matrix operation board. Pure: same inputs, same grid.
  *
  * Content is clipped to the frame's inner rectangle and the frame is drawn
@@ -106,7 +134,12 @@ export function renderMatrix(
   cleared: readonly number[] = [],
   entryHint = false,
   travel: MatrixTravelFrame | null = null,
+  bypassed: readonly number[] = [],
 ): Grid {
+  const gates = (i: number): boolean =>
+    (matrix.nodes[i]?.iceIds.length ?? 0) > 0 &&
+    !cleared.includes(i) &&
+    !bypassed.includes(i);
   let grid = makeGrid(cols, rows);
   const layout = matrixLayout(grid, matrix);
   const { inner, footerY } = layout;
@@ -201,14 +234,11 @@ export function renderMatrix(
     }
   }
 
-  const status =
-    inner.width < 40
-      ? selectedNodeIndex !== null
-        ? "↑↓ route | ENTER travel | ESC back"
-        : "↑↓ route | ENTER ICE | ESC back"
-      : selectedNodeIndex !== null
-        ? "ENTER: travel | ↑↓: route | ESC: back"
-        : "ENTER: enter ICE | ↑↓: route | ESC: back";
+  const status = matrixFooter(
+    inner.width,
+    gates(currentNodeIndex),
+    selectedNodeIndex === null ? null : gates(selectedNodeIndex),
+  );
   grid = putInside(
     grid,
     inner,

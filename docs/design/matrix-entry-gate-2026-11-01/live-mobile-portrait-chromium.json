@@ -1,0 +1,118 @@
+{
+  "build": "dist served by 127.0.0.1:5195",
+  "plan": [
+    1
+  ],
+  "log": [
+    {
+      "step": "confirm -> N2",
+      "before": {
+        "cur": 0,
+        "sel": 1,
+        "open": false,
+        "verb": null,
+        "alarm": 0,
+        "bypassed": [],
+        "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+      },
+      "after": {
+        "cur": 1,
+        "sel": null,
+        "open": true,
+        "verb": null,
+        "alarm": 0,
+        "bypassed": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+      }
+    },
+    {
+      "step": "BYPASS",
+      "after": {
+        "cur": 1,
+        "sel": null,
+        "open": false,
+        "verb": null,
+        "alarm": 60,
+        "bypassed": [
+          1
+        ],
+        "msg": "Bypassed — no reward. Routes are open: ↑↓ then ENTER."
+      }
+    },
+    {
+      "step": "confirm -> N1",
+      "before": {
+        "cur": 1,
+        "sel": 0,
+        "open": false,
+        "verb": null,
+        "alarm": 60,
+        "bypassed": [
+          1
+        ],
+        "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination"
+      },
+      "after": {
+        "cur": 0,
+        "sel": null,
+        "open": false,
+        "verb": null,
+        "alarm": 60,
+        "bypassed": [
+          1
+        ],
+        "msg": "Moved to surface — ↑↓ picks the next route"
+      }
+    },
+    {
+      "step": "confirm -> N2",
+      "before": {
+        "cur": 0,
+        "sel": 1,
+        "open": false,
+        "verb": null,
+        "alarm": 60,
+        "bypassed": [
+          1
+        ],
+        "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination"
+      },
+      "after": {
+        "cur": 1,
+        "sel": null,
+        "open": false,
+        "verb": null,
+        "alarm": 60,
+        "bypassed": [
+          1
+        ],
+        "msg": "Moved to mid — ↑↓ picks the next route"
+      }
+    },
+    {
+      "step": "confirm -> N1",
+      "before": {
+        "cur": 1,
+        "sel": 0,
+        "open": false,
+        "verb": null,
+        "alarm": 60,
+        "bypassed": [
+          1
+        ],
+        "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination"
+      },
+      "after": {
+        "cur": 0,
+        "sel": null,
+        "open": false,
+        "verb": null,
+        "alarm": 60,
+        "bypassed": [
+          1
+        ],
+        "msg": "Moved to surface — ↑↓ picks the next route"
+      }
+    }
+  ]
+}

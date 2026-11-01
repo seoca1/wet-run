@@ -4,6 +4,7 @@ import {
   ENCOUNTER_VERBS,
   ENCOUNTER_VERB_COSTS,
   encounterRoster,
+  bypassBlockReason,
 } from "../core/state/encounter_verbs";
 import { drawPanel, screenFrameRect, setInnerText } from "./panel";
 import { PALETTE } from "./palette";
@@ -38,6 +39,7 @@ export function renderEncounterDecision(
   };
   const node = state.matrix?.nodes[state.currentNodeIndex];
   const costs = ENCOUNTER_VERB_COSTS;
+  const bypassReason = bypassBlockReason(state);
   write(
     `Node ${state.currentNodeIndex + 1} · ${node?.zone.toUpperCase() ?? ""}`,
     PALETTE.GREEN_NEON,
@@ -49,7 +51,7 @@ export function renderEncounterDecision(
   y += 1;
   const details = {
     PROBE: "Reveal ICE identity and HP",
-    BYPASS: "No fight / no loot / no heal",
+    BYPASS: bypassReason ?? "No fight / no loot / no heal",
     BREACH: "Fight for the full reward",
     "JACK OUT": "Abandon the run (unchanged)",
   } as const;
@@ -62,7 +64,9 @@ export function renderEncounterDecision(
         : verb === "BYPASS"
           ? costs.bypass
           : 0;
-    const blocked = state.player.alarm + price > costs.limit;
+    const blocked =
+      (verb === "BYPASS" && bypassReason !== null) ||
+      state.player.alarm + price > costs.limit;
     const suffix =
       verb === "PROBE" && state.encounterDecision?.probed
         ? "REVEALED"

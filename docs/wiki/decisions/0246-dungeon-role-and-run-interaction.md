@@ -250,6 +250,20 @@ C에 필요한 결정 어휘를 생산한다. C는 런의 약한 P4를 도구 �
 - 양 덱 수정 전후 **전체 stdout `cmp` exit 0 (byte-identical)**. Opening `100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0`, PPL `100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7`. 턴·HP·percentile도 동일. 이는 **전투 하네스 동작 보존** 증거이지 경로 경제 밸런스 증거가 아니다.
 - 전체 E2E: 필수 IPv4 preview + `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **80 passed / 4 skipped / 0 failed (4.4m)**. 최초 실행의 CONTINUE 무료 출발 가정과 신규 JACK OUT의 state-null 가정 수정 후 통과. 마지막 좁은 화면 힌트 줄바꿈만 짧게 바꾼 뒤 build + 새 동사 E2E **4 passed**로 캡처 갱신. 매 실행 finally에서 preview 프로세스 그룹 종료.
 
+**Evidence — terminal BYPASS guard (2026-11-01)**:
+- `web/src/core/state/state_actions_phases.ts:164-167`의 실제 완료 조건은 `node.isBoss || node.adjacent.length === 0`이다. 전투 뒤 loot 확인만 런을 완료하므로 이 조우는 BYPASS로 진행할 수 없다. `dungeon.ts:243-248`의 인접 목록은 양방향이며, 이웃 하나가 있는 비보스 곁가지는 후퇴가 가능하므로 차단하지 않는다.
+- `web/src/core/state/encounter_verbs.ts`의 `bypassBlockReason`을 reducer와 `web/src/renderer/encounter.ts`가 공유한다. reducer는 결제·통과 플래그 설정 전에 거절하며 메뉴는 기존 순서를 유지하고 `BYPASS +30 COST BLOCKED`와 `Must BREACH to complete the run.` / `Must BREACH: no adjacent route.`를 선택 전에 표시한다. 선택 후 확인도 같은 이유로 거절한다. PROBE/BREACH/JACK OUT은 유지하고 PROBE 후 안내도 가능한 동사만 권한다.
+- `web/tests/encounter_bypass_eligibility.test.ts` — 보스/인접 0개 직접 BYPASS 거절·무결제·미완료·통과 불가, 80×50/60×40/40×60 사전 안내, PROBE/JACK OUT, 실제 보스 이동 → BREACH → combat → loot → ending 및 비보스 terminal 완료를 검증한다. 수정 전 **8 failed / 24 passed**, 수정 후 기존 동사 회귀(정상 BYPASS·no-farming 포함)와 합쳐 **32 passed**.
+- 최종 검증: `npm run typecheck` **0 errors**, `npm run lint` **0 errors / 기존 keyboard.ts:14 warning 1**, `npm test` **163 files / 3696 passed / 0 failed**, `npm run build` **119 modules** 통과. 첫 typecheck가 새 fixture의 필수 `arc` 누락을 발견해 보완한 뒤 통과했다. 편집한 src만 Prettier write/check; LSP는 서버 미설치·기존 설치 거절로 실행 불가.
+- 양 덱 수정 전후 전체 stdout **`cmp` exit 0 (byte-identical)**: opening `100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0`, PPL `100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7` (ADR-0239 기준선 유지). 이는 전투 하네스만 검증한다.
+- `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **80 passed / 4 skipped / 0 failed (4.4m)**. 기존 5195 preview를 종료하지 않고 새 dist로 검증했다. 별도 브라우저 fixture에서 390/1440px 보스·인접 0개·일반 노드를 각각 캡처하고 실제 키로 BYPASS 확인: 앞 둘 COST 0 유지 + 이유 안내, 일반 COST 30 결제. 사용자 play session은 조작하지 않았다. WCAG 전체 적합성은 주장하지 않는다.
+
+**Deferred — 오너 지시: 가격은 나중에 Jev-assisted decision tooling으로 결정한다**:
+- **BYPASS 30 / PROBE 8 및 모든 재튜닝은 명시적으로 연기**한다. 이번에는 `ENCOUNTER_VERB_COSTS` 수치를 변경하지 않는다. Jev-assisted 판정은 후속 작업이며 이번 세션에서 실행하거나 가격을 승인한 것으로 기록하지 않는다.
+- 오너가 전달한 **실제 play pass**는 COST를 써 HP 피해를 피하되 보상·회복을 포기하는 BYPASS, 정보를 사는 PROBE, HP 위험을 받아 보상을 얻는 BREACH가 **구조적으로 비지배적**임을 확립했다. 서로 다른 자원(COST 대 HP 대 정보/보상)을 교환하므로 실패 모드는 가짜 선택이 아니라 **가격 책정**이다. 이것이 현재 가격의 정량적 균형을 입증하지는 않는다.
+- 이번 opening 하네스의 g3/g4/g5 평균 HP-end는 **13.8 / 5.3 / 4.9**다. 시작 HP 100 대비 한 조우의 평균 HP 손실은 **86.2 / 94.7 / 95.1 (약 86–95 HP, 패배 포함 집계)**인 반면 BYPASS는 **100 COST 중 30**이다. 실제 play pass와 함께 보면 이 구간에서 BYPASS가 저평가됐을 가능성이 높다. HP와 COST를 같은 단위로 간주하거나 이 수치만으로 새 가격을 정하지 않는다.
+- `web/scripts/balance_sim.ts:77-81,100-130,132-162`는 그래프를 걷지 않고 고정 덱으로 단일 전투를 수행하므로 경로·연속 회피·정보의 가치와 가격을 판정할 수 없다. **byte-identical balance는 전투 하네스 보존만 증명**하며 경로 경제/가격의 적정성은 후속 Jev-assisted 결정과 실제 런 검증의 몫이다. 위 slice 2의 “play pass 미실행”은 당시 기록이며 이번 실제 pass 보고로 갱신된 판정과 구분한다.
+
 **Notes**: ADR-0195의 Status / Evidence / Notes 형식이다. **Accepted는 결정 완료이지 구현 완료가 아니다.**
 첫 슬라이스의 **경로 결정**에 이번 두 번째 슬라이스의 **고정 동사 결정**을 추가했다. 경로 목록에서 ↓/→는 다음 후보, ↑/←는 이전 후보, Enter/Space는
 강조한 목적지로 이동하며 이동 뒤에는 미선택으로 돌아간다. 미완료 ICE를 아직 통과하지 않았다면 출발 확인도 결정 메뉴를 연다.

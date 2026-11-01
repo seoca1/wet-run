@@ -2713,3 +2713,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   재시작 격리, 없는 Space, 빈 HP fallback·mutator 복제·공개 전 정보 차단을 검증했다.
   Node syntax check 통과. LSP는 TypeScript 서버 미설치·기존 설치 거절로 실행 불가.
 - 게임 코드·튜닝·`web/src/`·Accepted ADR 결정 본문 무변경. 기존 preview 유지, **stage/commit 없음**.
+
+## [2026-11-01] fix | 진행에 도움 없는 terminal BYPASS 차단 + 가격 판정 연기
+
+- 실제 코드 대조: `web/src/core/state/state_actions_phases.ts:164-167`는 전투 뒤 loot에서 **보스 또는 인접 0개**를 런 완료로 취급한다. BYPASS는 loot로 가지 않으므로 이 조건에서 무익하다. 인접 목록은 양방향(`dungeon.ts:243-248`)이므로 이웃 하나가 있는 비보스 곁가지는 후퇴 가능하며 여전히 BYPASS 허용.
+- `encounter_verbs.ts`의 공유 `bypassBlockReason`을 reducer와 Green Grid 메뉴가 사용. 결제·통과 허가 전에 hard-block; 네 동사 순서는 그대로 두고 **BLOCKED + Must BREACH 이유**를 선택 전에 표시. PROBE 후에도 불가능한 BYPASS를 권하지 않는다. PROBE/BREACH/JACK OUT 유지.
+- 새 `web/tests/encounter_bypass_eligibility.test.ts` 14개: 보스/인접 0개 직접 BYPASS 거절, COST·완료·통과 불변, 세 화면 크기의 사전 안내, PROBE/JACK OUT 및 보스 도달 → 실제 BREACH/combat/loot/ending. 기존 정상 BYPASS/no-farming 회귀와 함께 **red 8 failed / 24 passed → green 32 passed**.
+- **오너 지시로 BYPASS 30 / PROBE 8 및 재튜닝은 나중에 Jev-assisted decision tooling으로 처리**한다. 오너의 실제 play pass는 COST 대 HP 대 정보/보상을 교환하는 동사의 **구조적 비지배성**을 확인했다. 가짜 선택이 아니라 가격 문제다. Opening g3–5 mean HP-end **13.8/5.3/4.9**는 시작 100 대비 **86.2/94.7/95.1 HP 손실(패배 포함 평균)**인 반면 BYPASS는 **30/100 COST**여서 저평가 가능성이 높다. 단위가 다르므로 이 비교만으로 가격을 결정하지 않는다.
+- `balance_sim.ts:77-81,100-162`는 그래프를 걷지 않고 단일 전투를 수행한다. 경로/연속 BYPASS/정보 경제는 측정하지 못하므로 byte-identical 결과는 전투 하네스 보존 증거만 된다. Jev 호출·가격 조정은 이번 범위 밖.
+- ADR-0246 **Implementation Status만** 주석 추가, 인덱스 **0246 Impl 셀만** 갱신. 결정 본문·0247/0248·전투·튜닝·RNG·크롤러·status·VFX 구현·raw 무변경. **스테이징/커밋 없음**.
+- 최종 검증: typecheck **0 errors** (첫 실행에서 새 fixture `arc` 누락 발견·보완), lint **0 errors / 기존 keyboard.ts:14 warning 1**, test **163 files / 3696 passed / 0 failed**, build **119 modules** 통과. 편집한 src만 Prettier write/check. TypeScript LSP 미설치·기존 설치 거절 존중, CLI 검증과 구분.
+- balance 양 덱 전체 stdout 전후 **`cmp` exit 0**: opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**. 캡처는 `/Users/emilio/.openclaw/tmp/opencode/wet-run-bypass-{opening,ppl}-{before,after}.txt`.
+- 필수 E2E 명령 `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **80 passed / 4 skipped / 0 failed (4.4m)**. 기존 preview는 kill/restart하지 않고 그대로 새 dist를 서빙하도록 유지했다.
+- 별도 Playwright 브라우저의 보스/인접 0개/일반 노드 fixture에서 390/1440px 전후 캡처 및 실제 키 BYPASS 시도: 보스·고립 COST **0**, 일반 **30**. 사전 BLOCKED/이유 안내가 주 패널에 표시됨. `/Users/emilio/.openclaw/tmp/opencode/bypass-{boss,isolated,ordinary}-{390,1440}-{before,after}.png`. 사용자 play session 무조작; WCAG 전체 감사는 미실행.

@@ -19,6 +19,15 @@ export const ENCOUNTER_VERBS = [
 ] as const;
 export type EncounterVerb = (typeof ENCOUNTER_VERBS)[number];
 
+export function bypassBlockReason(state: GameState): string | null {
+  const node = state.matrix?.nodes[state.currentNodeIndex];
+  if (!node) return "No encounter to bypass.";
+  // applyLootAction completes the run only after combat at these terminal nodes.
+  if (node.isBoss) return "Must BREACH to complete the run.";
+  if (node.adjacent.length === 0) return "Must BREACH: no adjacent route.";
+  return null;
+}
+
 /** Shared by paid intel and Breach so mutator copies and HP fallbacks agree. */
 export function encounterRoster(state: GameState): readonly Ice[] {
   const node = state.matrix?.nodes[state.currentNodeIndex];
@@ -68,6 +77,10 @@ export function applyEncounterDecision(
       return { ...state, message: "Choose a verb with arrows, then ENTER." };
     case "PROBE":
     case "BYPASS": {
+      const bypassReason = bypassBlockReason(state);
+      if (verb === "BYPASS" && bypassReason) {
+        return { ...state, message: `BYPASS blocked — ${bypassReason}` };
+      }
       if (verb === "PROBE" && decision.probed) return state;
       const cost =
         verb === "PROBE"
@@ -87,7 +100,9 @@ export function applyEncounterDecision(
         ? {
             ...paid,
             encounterDecision: { ...decision, probed: true },
-            message: "Threat revealed — choose BYPASS or BREACH.",
+            message: bypassReason
+              ? "Threat revealed — choose BREACH or JACK OUT."
+              : "Threat revealed — choose BYPASS or BREACH.",
           }
         : {
             ...paid,

@@ -1,0 +1,50 @@
+                                                                                
+ ╔════════════════════════════════════════════════════════════════════════════╗ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                            MATRIX — CYBERSPACE                             ║ 
+ ║                                                                            ║ 
+ ║                                                           15/15 nodes      ║ 
+ ║                                                                            ║ 
+ ║      ▸ YOU ARE HERE                                                        ║ 
+ ║      ▸ ⚔ N07 CORE-DEEP (BOSS) · SEEN                                       ║ 
+ ║        1 ICE · 200cr · COMBAT                                              ║ 
+ ║                                                                            ║ 
+ ║      ┌─ REACHABLE NOW (3) ──────────────┐                                  ║ 
+ ║      │→ ⚔ N05 SURFACE · SEEN            │                                  ║ 
+ ║      │ 0 ICE · 150cr · COMBAT           │                                  ║ 
+ ║      │→ ⚔ N12 SURFACE · SEEN            │                                  ║ 
+ ║      │ 0 ICE · 325cr · COMBAT           │                                  ║ 
+ ║      │→ ⚔ N02 SURFACE · SEEN            │                                  ║ 
+ ║      │ 0 ICE · 75cr · COMBAT            │                                  ║ 
+ ║      └──────────────────────────────────┘                                  ║ 
+ ║                                                                            ║ 
+ ║      ◆ OBJECTIVE: BOSS                                                     ║ 
+ ║      N07 CORE-DEEP · HERE                                                  ║ 
+ ║        SEEN                                                                ║ 
+ ║                                                                            ║ 
+ ║      DEPTH / ZONES (not routes)                                            ║ 
+ ║      Nxx = node ID, not travel order                                       ║ 
+ ║      ▸ here → route ✓ seen + clear · new                                   ║ 
+ ║      ✓ SURFACE (12)                                                        ║ 
+ ║        +N01 ✓N02 ✓N03 ✓N04 ✓N05 ✓N08                                       ║ 
+ ║        ✓N09 ✓N10 ✓N11 ✓N12 ✓N13 ✓N14                                       ║ 
+ ║        ✓ MID (2)                                                           ║ 
+ ║          ✓N06 ✓N15                                                         ║ 
+ ║          ✓ CORE-DEEP (1)                                                   ║ 
+ ║            ▸N07                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║ ENTER: enter ICE | ↑↓: route | ESC: back                                   ║ 
+ ╚════════════════════════════════════════════════════════════════════════════╝ 
+                                                                                

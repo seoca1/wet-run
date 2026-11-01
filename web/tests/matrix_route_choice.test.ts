@@ -213,7 +213,7 @@ describe("explicit matrix routes (ADR-0246 first slice)", () => {
   ])(
     "shows every frontier offer before travel on %s×%s, including late and visited nodes",
     (cols, rows) => {
-      // Given: the frontier is beyond the old list's visible range.
+      // Given: the frontier is beyond the old list's visible range (no geometry).
       const nodes = Array.from({ length: 30 }, (_, i) => node(i, []));
       nodes[0] = node(0, [28, 29]);
       nodes[28] = {
@@ -229,16 +229,20 @@ describe("explicit matrix routes (ADR-0246 first slice)", () => {
         reward: { credits: 654 },
         eventKind: "cache",
       };
-      // When
-      const grid = renderMatrix({ ...matrix, nodes }, 0, [29], cols, rows);
-      const text = grid.cells
-        .map((row) => row.map((cell) => cell.char).join(""))
-        .join("\n");
-      // Then: both candidates, their zones, ICE presence/count, credits and events.
-      expect(text).toContain("N29 DEEP");
-      expect(text).toContain("2 ICE · 321cr · TRAP");
-      expect(text).toContain("N30 MID");
-      expect(text).toContain("0 ICE · 654cr · CACHE");
+      // When: no target yet, then each offer targeted with the arrows' state.
+      const text = (selected: number | null): string =>
+        renderMatrix({ ...matrix, nodes }, 0, [29], cols, rows, null, selected)
+          .cells.map((row) => row.map((cell) => cell.char).join(""))
+          .join("\n");
+      // Then: ADR-0249 — the card names both offers up front and details the
+      // targeted one (zone, ICE presence/count, credits, event) before travel.
+      expect(text(null)).toContain("ROUTES (2): N29 N30");
+      expect(text(28)).toContain("> ✦ N29 DEEP");
+      expect(text(28)).toContain("2 ICE · 321cr · TRAP");
+      expect(text(28)).toContain("ROUTES (2): >N29 N30");
+      // ◆ is reserved for the boss on the Matrix screen; a cache reads ¤.
+      expect(text(29)).toContain("> ¤ N30 MID · SEEN");
+      expect(text(29)).toContain("0 ICE · 654cr · CACHE");
     },
   );
 });

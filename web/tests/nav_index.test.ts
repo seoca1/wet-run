@@ -1,7 +1,7 @@
 /** Navigation numbering convention (UI triage U3).
  *
- * Menus use 1-based `[N]` ordinals. Matrix relevance groups instead use stable
- * Nxx node IDs, explicitly distinguished from travel order.
+ * Menus use 1-based `[N]` ordinals. The Matrix board (ADR-0249) instead uses
+ * stable Nxx node IDs; rooms are placed spatially, never as an ordinal list.
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -70,7 +70,8 @@ describe("unified numbering across screens", () => {
     const text = gridText(renderMatrix(MATRIX, 0, [], 80, 40), 80, 40);
     expect(text).toContain("N01 SURFACE");
     expect(text).toContain("N02 CORE");
-    expect(text).toContain("Nxx = node ID, not travel order");
+    // ADR-0249 removed the list legend; ids now label the board's routes.
+    expect(text).toContain("ROUTES (1): N02");
     expect(text).not.toMatch(/\[\d+\]/);
     expect(text).not.toContain("N00");
   });

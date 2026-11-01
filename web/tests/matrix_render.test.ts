@@ -1,6 +1,7 @@
 /** Unit tests for matrix renderer (Tier 5.5+ enhanced). */
 import { describe, it, expect } from "vitest";
-import { renderMatrix } from "../src/renderer/matrix";
+import { matrixLayout, renderMatrix } from "../src/renderer/matrix";
+import { makeGrid } from "../src/core/grid";
 import type { Matrix, Ice } from "../src/core/types";
 
 const sampleIce: Ice = {
@@ -54,8 +55,14 @@ function findAllText(grid: ReturnType<typeof renderMatrix>, cols: number, rows: 
 describe("matrix renderer (Tier 5.5+ enhanced)", () => {
   describe("zone color coding", () => {
     it("renders zone names in uppercase", () => {
-      const grid = renderMatrix(sampleMatrix, 0, [], 80, 50);
-      const text = findAllText(grid, 80, 50);
+      // ADR-0249: the card names the current and the targeted node; walking
+      // the chain with each next node targeted shows every zone.
+      const seen: string[] = [];
+      for (let current = 0; current < 4; current++) {
+        const grid = renderMatrix(sampleMatrix, current, [], 80, 50, null, current + 1);
+        seen.push(findAllText(grid, 80, 50));
+      }
+      const text = seen.join("\n");
       expect(text).toContain("SURFACE");
       expect(text).toContain("MID");
       expect(text).toContain("DEEP");
@@ -107,32 +114,40 @@ describe("matrix renderer (Tier 5.5+ enhanced)", () => {
   });
 
   describe("node state markers (current / visited / adjacent)", () => {
-    it("current node shows ▸ marker", () => {
+    it("current node shows @ marker (card and board)", () => {
       const grid = renderMatrix(sampleMatrix, 2, [], 80, 50);
       const text = findAllText(grid, 80, 50);
-      // Find row containing "DEEP" — should have ▸ marker
+      // Find row containing "DEEP" — the card's current-node line carries @
       const lines = text.split("\n");
       const deepRow = lines.find((l) => l.includes("DEEP"));
-      expect(deepRow).toMatch(/▸/);
+      expect(deepRow).toMatch(/@/);
+      const site = matrixLayout(makeGrid(80, 50), sampleMatrix).board.sites[2];
+      expect(lines[site?.cy ?? 0]?.slice((site?.cx ?? 0) - 1, (site?.cx ?? 0) + 2)).toBe("#@#");
     });
 
     it("visited node shows ✓ marker", () => {
       const grid = renderMatrix(sampleMatrix, 3, [0, 1], 80, 50);
       const text = findAllText(grid, 80, 50);
       const lines = text.split("\n");
-      const surfaceRow = lines.find((l) => l.includes("SURFACE"));
-      const midRow = lines.find((l) => l.includes("MID"));
-      expect(surfaceRow).toMatch(/✓/);
-      expect(midRow).toMatch(/✓/);
+      // ADR-0249: SURFACE (N01) and MID (N02) rooms on the board carry ✓.
+      const sites = matrixLayout(makeGrid(80, 50), sampleMatrix).board.sites;
+      const room = (i: number) =>
+        lines[sites[i]?.cy ?? 0]?.slice((sites[i]?.cx ?? 0) - 1, (sites[i]?.cx ?? 0) + 2);
+      expect(room(0)).toMatch(/✓/);
+      expect(room(1)).toMatch(/✓/);
+      expect(room(2)).not.toMatch(/✓/);
     });
 
-    it("unvisited non-current node shows space or adjacent →", () => {
+    it("unvisited adjacent node is offered as a route", () => {
       const grid = renderMatrix(sampleMatrix, 0, [], 80, 50);
       const text = findAllText(grid, 80, 50);
-      const lines = text.split("\n");
-      // Node 1 (mid) is adjacent to current (0). Should have → marker.
-      const midRow = lines.find((l) => l.includes("MID"));
-      expect(midRow).toMatch(/→/);
+      // ADR-0249: node 1 (mid) is adjacent to current (0): a solid route
+      // corridor joins them and the card names it among the routes.
+      expect(text).toContain("ROUTES (1): N02");
+      const sites = matrixLayout(makeGrid(80, 50), sampleMatrix).board.sites;
+      const row = text.split("\n")[sites[0]?.cy ?? 0] ?? "";
+      expect(row.slice((sites[0]?.cx ?? 0) + 2, (sites[1]?.cx ?? 0) - 1)).toMatch(/^─+$/);
+      expect(row.slice((sites[1]?.cx ?? 0) - 1, (sites[1]?.cx ?? 0) + 2)).toBe("#·#");
     });
   });
 

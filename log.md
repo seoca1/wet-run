@@ -2813,3 +2813,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **밸런스**: opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**. 양 덱 전체 stdout을 evidence에 보존, prior ADR-0239 baseline `option-e-{opening,ppl}-before.txt`와 Buffer byte equality **양쪽 true**(716 / 724 bytes), SHA-256 receipt 보존. combat harness 보존 증거이며 경로 경제 재평가 주장은 아님.
 - **E2E**: 요청 명령(`env -u CI`, base URL 5195, ignore snapshots, demo 제외) **82 passed / 4 skipped / 0 failed (4.6m)**. 첫 실행은 240s shell timeout(70 green)으로 중단, 600s 제한으로 완주. rebuild 후 요청된 strict preview 시작은 **Port 5195 is already in use**; 기존 preview kill 없이 유지했고 새 bundle로 E2E 통과. 사용자 play session 조작 없음.
 - **Visual QA**: 고정 dark ASCII에 맞춘 항목별 판정은 evidence README. 9개 after PNG + 3개 비교를 독립 A/B 리뷰, B는 구조/가독성 PASS. A의 큰 frontier/지속 width 증거 공백을 stress/CLI JSON으로 보완했고 **fresh A 재리뷰도 PASS**(2 rounds; 최초 병렬 35/39s, 최종 28s), 새 product defect 없음. Matrix 사용 토큰은 4 palette × 고대비 on/off에서 최소 **5.7497:1**, 색만으로 상태 전달 없음. 기존 canvas focus ring/접근성 트리(I1/I3 inherited FAIL)/선택 가능한 text와 물리 폰트·zoom 등은 이 범위에서 해결·완전 인증하지 않는다. 전체 WCAG AA 또는 Lighthouse 점수는 주장하지 않음. 스테이징·커밋 없음.
+
+## [2026-11-01] feat(ui) | ADR-0249 Matrix 오퍼레이션 보드 — 한 화면 기하 보드, 목록은 상세 카드로
+
+- 오너 승인 방향을 [ADR-0249](docs/wiki/decisions/0249-matrix-operation-board.md)(Accepted)로 기록: 결정층 규칙 8개, 삭제/유지 목록, 짓지 않을 것(미니맵·카메라·스크롤·FOV 자원화·LOS AI·스트리밍·런 타일 걷기). ADR-0246 B 아님(보류 유지), 안 3 범위 밖.
+- `dungeonToMatrix`가 버리던 `Room`의 `x/y/w/h/label`을 선택 필드 `MatrixNode.site`로 보존. 행렬은 저장되지 않고 seed로 재생성되므로 기존 세이브도 기하를 얻는다. `site` 없는 행렬은 결정적 대체 배치(BFS 층 → 열).
+- 보드: 생성 좌표에 방 토큰, `@` 현재 위치, 상시 `◆` 보스, `>·<` 타깃, `#·#` 미해결 ICE, `·/✓/+` NEW/SEEN/CLEAR. 인접 1개당 직교 A* 복도 1개(타깃 `━`, 경로 `─`, 연결 `┄`). `DEPTH / ZONES` 스택·범례 삭제, 노드 상세는 상세 카드로.
+- `renderMatrix` 시그니처·순수성 불변. 리듀서·동사·가격·튜닝·RNG·status.ts·크롤러·VFX 무변경, 화살표 순환 순서 불변 → e2e 헬퍼 무변경.
+- LOC(total/pure): `matrix.ts` 228/176 → 188/155, `matrix_nodes.ts` 146/134 → 100/82; 신규 `matrix_board.ts` 196/172, `matrix_board_layout.ts` 182/153, `matrix_board_routes.ts` 262/232, `min_heap.ts` 43/38.
+- 검증: 신규 규칙 테스트 13개 HEAD에서 13 failed → 13 passed. `npm test` **167 files / 3754 passed**, typecheck 0, lint 0 errors(기존 warning 1), build 124 modules, 3132-case 스트레스, 양 덱 balance stdout byte-identical(opening 100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0, PPL 100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7), E2E **82 passed / 4 skipped / 0 failed**. 증거: [docs/design/matrix-operation-board-2026-11-01](docs/design/matrix-operation-board-2026-11-01/README.md).

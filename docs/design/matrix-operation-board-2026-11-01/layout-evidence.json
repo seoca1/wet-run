@@ -1,0 +1,150 @@
+{
+  "checked": 3132,
+  "grades": "1..6",
+  "seeds": "0..9",
+  "layouts": [
+    "80x50",
+    "60x40",
+    "40x60"
+  ],
+  "maxNodes": 33,
+  "maxFrontier": 5,
+  "corridors": 3705,
+  "unrouted": 0,
+  "sharedCorridorCells": 665,
+  "scalesUsed": {
+    "80x50": [
+      "5x3"
+    ],
+    "60x40": [
+      "5x3",
+      "4x2",
+      "3x2"
+    ],
+    "40x60": [
+      "5x3",
+      "4x3",
+      "3x3",
+      "2x3"
+    ]
+  },
+  "captures": [
+    {
+      "file": "start-80x50-after.txt",
+      "expectedColumns": 80,
+      "maxWidth": 80,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 800,
+      "pngHeight": 900,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "start-60x40-after.txt",
+      "expectedColumns": 60,
+      "maxWidth": 60,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 600,
+      "pngHeight": 720,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "start-40x60-after.txt",
+      "expectedColumns": 40,
+      "maxWidth": 40,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 400,
+      "pngHeight": 1080,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "branch-80x50-after.txt",
+      "expectedColumns": 80,
+      "maxWidth": 80,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 800,
+      "pngHeight": 900,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "branch-60x40-after.txt",
+      "expectedColumns": 60,
+      "maxWidth": 60,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 600,
+      "pngHeight": 720,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "branch-40x60-after.txt",
+      "expectedColumns": 40,
+      "maxWidth": 40,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 400,
+      "pngHeight": 1080,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "boss-80x50-after.txt",
+      "expectedColumns": 80,
+      "maxWidth": 80,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 800,
+      "pngHeight": 900,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "boss-60x40-after.txt",
+      "expectedColumns": 60,
+      "maxWidth": 60,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 600,
+      "pngHeight": 720,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "boss-40x60-after.txt",
+      "expectedColumns": 40,
+      "maxWidth": 40,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 400,
+      "pngHeight": 1080,
+      "freshAgainstChangedSource": true
+    }
+  ]
+}

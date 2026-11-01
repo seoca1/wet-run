@@ -324,6 +324,19 @@ export interface StatusEffectInstance {
 /** Zone depth — mirrored from Python matrix/node.py ZoneDepth. */
 export type ZoneDepth = "surface" | "mid" | "deep" | "core" | "core-deep";
 
+/** Presentation-only room geometry kept from the dungeon generator (ADR-0249).
+ *
+ * Units are generator cells, not screen cells. Gameplay never reads it: the
+ * Matrix board scales it to draw rooms where they were generated.
+ */
+export interface MatrixSite {
+  readonly x: number;
+  readonly y: number;
+  readonly w: number;
+  readonly h: number;
+  readonly label: string;
+}
+
 /** Matrix node (one encounter in a run). */
 export interface MatrixNode {
   readonly id: number;
@@ -333,6 +346,9 @@ export interface MatrixNode {
   readonly reward: { credits: number };
   readonly isBoss: boolean;
   readonly adjacent: ReadonlyArray<number>;
+  /** Generated room geometry; absent on hand-built matrices and older data,
+   * which the board lays out deterministically instead (ADR-0249). */
+  readonly site?: MatrixSite;
   // Tier 5.5: event kind (default "combat" for backward compat).
   readonly eventKind?:
     "combat" | "discovery" | "trap" | "cache" | "rest" | "merchant";

@@ -269,6 +269,8 @@ export function dungeonToMatrix(
       reward: { credits: 50 + idx * 25 },
       isBoss,
       adjacent,
+      // Presentation only (ADR-0249): the board draws rooms where they were generated.
+      site: { x: room.x, y: room.y, w: room.w, h: room.h, label: room.label },
     } satisfies MatrixNode;
   });
 

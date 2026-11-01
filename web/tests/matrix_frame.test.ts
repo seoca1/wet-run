@@ -82,29 +82,34 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
     }
   });
 
-  it("composes the node list and node details away from the top-left", () => {
+  it("composes the board, legend and node card away from the top-left", () => {
     // Given
     const layout = matrixLayout(makeGrid(80, 50), MATRIX);
     // When
     const text = lines(renderMatrix(MATRIX, 0, [], 80, 50, ICE));
-    // Then — the list is centred with the CURRENT NODE column, and the block
-    // is centred vertically, so neither hugs the frame's top-left corner.
-    expect(layout.listX).toBeGreaterThan(layout.inner.x);
-    expect(layout.listX - layout.inner.x).toBe(
-      Math.floor((layout.inner.width - (layout.blockRight - layout.listX)) / 2),
+    // Then — ADR-0249: the board is centred in the frame, the card and the
+    // CURRENT NODE column are centred together under it, and the block is
+    // centred vertically, so nothing hugs the frame's top-left corner.
+    const { rect } = layout.board;
+    expect(rect.x - layout.inner.x).toBe(
+      Math.floor((layout.inner.width - rect.width) / 2),
     );
+    expect(layout.cardX).toBeGreaterThan(layout.inner.x);
     expect(layout.titleY).toBeGreaterThan(10);
     expect(layout.previewX).not.toBeNull();
-    expect(text[layout.listY]?.indexOf("▸ YOU ARE HERE")).toBe(layout.listX);
-    expect(text[layout.listY + 1]?.indexOf("▸ ⚔ N01 SURFACE")).toBe(
-      layout.listX,
+    expect(layout.cardX - layout.inner.x).toBe(
+      Math.floor(
+        (layout.inner.width - ((layout.previewX ?? 0) + 22 - layout.cardX)) / 2,
+      ),
     );
-    expect(text[layout.listY]?.indexOf("── CURRENT NODE ──")).toBe(
+    expect(text[layout.cardY]?.indexOf("@ ⚔ N01 SURFACE")).toBe(layout.cardX);
+    expect(text[layout.cardY]?.indexOf("── CURRENT NODE ──")).toBe(
       layout.previewX,
     );
-    expect(text[layout.listY + 2]?.indexOf("1 ICE · 50cr")).toBe(
-      layout.listX + 2,
+    expect(text[layout.cardY + 2]?.indexOf("1 ICE · 50cr")).toBe(
+      layout.cardX + 2,
     );
+    expect(text[layout.legendY]?.indexOf("@ you")).toBe(layout.cardX);
     expect(text[layout.titleY]).toContain("MATRIX — CYBERSPACE");
     expect(
       text[layout.progressY]?.slice(2, 78).trimEnd().endsWith("0/3 nodes"),
@@ -120,7 +125,7 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
     );
   });
 
-  it("does not let a long node list or long event label reach a rail", () => {
+  it("does not let a long node chain or long event label reach a rail", () => {
     // Given — far more nodes than fit, on a short grid
     const many: Matrix = {
       nodes: Array.from({ length: 30 }, (_, i) => node(i, "core", [i + 1])),
@@ -136,7 +141,7 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
       expect(text[y]?.[1]).toBe("║");
       expect(text[y]?.[58]).toBe("║");
     }
-    // A blank row separates the last node detail from the footer.
+    // A blank row separates the last card row from the footer.
     expect(text[20]?.slice(2, 58).trim()).toBe("");
     expect(text[21]).toContain("ENTER: enter ICE");
   });

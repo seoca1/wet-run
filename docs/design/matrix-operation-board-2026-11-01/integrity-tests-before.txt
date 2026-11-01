@@ -1,0 +1,15 @@
+      Tests  13 failed (13)
+ × tests/matrix_board.test.ts > Matrix board — layout stress (grades 1–6 × seeds 0–9 × every node × 3 layouts) > keeps every adjacency, the objective and the selection visible with rails intact
+ × tests/matrix_board.test.ts > Matrix board — selected-node detail card (ADR-0249) > details each targeted neighbour before travel on 40x60
+ × tests/matrix_board.test.ts > Matrix board — selected-node detail card (ADR-0249) > details each targeted neighbour before travel on 60x40
+ × tests/matrix_board.test.ts > Matrix board — selected-node detail card (ADR-0249) > details each targeted neighbour before travel on 80x50
+ × tests/matrix_board.test.ts > Matrix board — selected-node detail card (ADR-0249) > lays out a matrix without room geometry deterministically (legacy / hand-built)
+ × tests/matrix_board.test.ts > Matrix operation board — integrity rules (ADR-0249) > rule 1: knowledge state never hides topology — every adjacency is drawn when all is NEW
+ × tests/matrix_board.test.ts > Matrix operation board — integrity rules (ADR-0249) > rule 2: the whole topology fits one screen and the boss is a persistent ◆
+ × tests/matrix_board.test.ts > Matrix operation board — integrity rules (ADR-0249) > rule 3: nothing is preselected; arrows highlight exactly the reducer's choice
+ × tests/matrix_board.test.ts > Matrix operation board — integrity rules (ADR-0249) > rule 4: arriving draws no target and opens no verb until the player asks, then none is preselected
+ × tests/matrix_board.test.ts > Matrix operation board — integrity rules (ADR-0249) > rule 5: the board is the only map — every room appears once and the depth stack is gone
+ × tests/matrix_board.test.ts > Matrix operation board — integrity rules (ADR-0249) > rule 6: MatrixNode.adjacent is authoritative — one contiguous corridor per adjacency, nothing else
+ × tests/matrix_board.test.ts > Matrix operation board — integrity rules (ADR-0249) > rule 7: colour never carries meaning alone — position, boss, target and route read from glyphs
+ × tests/matrix_board.test.ts > Matrix operation board — integrity rules (ADR-0249) > rule 8: one confirmed move is one route action, and the board stays put while @ moves
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯

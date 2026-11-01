@@ -1,0 +1,463 @@
+{
+  "tokens": [
+    "GREEN_NEON",
+    "CYAN_LIGHT",
+    "GRAY_LIGHT",
+    "GRAY_MID",
+    "MAGENTA_LIGHT",
+    "YELLOW_AMBER",
+    "ICE_BLUE"
+  ],
+  "minRatio": 5.7497,
+  "minAt": "none/false/ICE_BLUE",
+  "rows": [
+    {
+      "mode": "none",
+      "highContrast": "false",
+      "token": "GREEN_NEON",
+      "fg": "#00ff41",
+      "bg": "#000000",
+      "ratio": 15.38
+    },
+    {
+      "mode": "none",
+      "highContrast": "false",
+      "token": "CYAN_LIGHT",
+      "fg": "#00ffff",
+      "bg": "#000000",
+      "ratio": 16.748
+    },
+    {
+      "mode": "none",
+      "highContrast": "false",
+      "token": "GRAY_LIGHT",
+      "fg": "#c0c0c0",
+      "bg": "#000000",
+      "ratio": 11.542
+    },
+    {
+      "mode": "none",
+      "highContrast": "false",
+      "token": "GRAY_MID",
+      "fg": "#909090",
+      "bg": "#000000",
+      "ratio": 6.578
+    },
+    {
+      "mode": "none",
+      "highContrast": "false",
+      "token": "MAGENTA_LIGHT",
+      "fg": "#ff80ff",
+      "bg": "#000000",
+      "ratio": 9.784
+    },
+    {
+      "mode": "none",
+      "highContrast": "false",
+      "token": "YELLOW_AMBER",
+      "fg": "#ffa500",
+      "bg": "#000000",
+      "ratio": 10.634
+    },
+    {
+      "mode": "none",
+      "highContrast": "false",
+      "token": "ICE_BLUE",
+      "fg": "#4080ff",
+      "bg": "#000000",
+      "ratio": 5.75
+    },
+    {
+      "mode": "none",
+      "highContrast": "true",
+      "token": "GREEN_NEON",
+      "fg": "#00ff00",
+      "bg": "#000000",
+      "ratio": 15.304
+    },
+    {
+      "mode": "none",
+      "highContrast": "true",
+      "token": "CYAN_LIGHT",
+      "fg": "#00ffff",
+      "bg": "#000000",
+      "ratio": 16.748
+    },
+    {
+      "mode": "none",
+      "highContrast": "true",
+      "token": "GRAY_LIGHT",
+      "fg": "#e0e0e0",
+      "bg": "#000000",
+      "ratio": 15.908
+    },
+    {
+      "mode": "none",
+      "highContrast": "true",
+      "token": "GRAY_MID",
+      "fg": "#d0d0d0",
+      "bg": "#000000",
+      "ratio": 13.615
+    },
+    {
+      "mode": "none",
+      "highContrast": "true",
+      "token": "MAGENTA_LIGHT",
+      "fg": "#ff80ff",
+      "bg": "#000000",
+      "ratio": 9.784
+    },
+    {
+      "mode": "none",
+      "highContrast": "true",
+      "token": "YELLOW_AMBER",
+      "fg": "#ffff00",
+      "bg": "#000000",
+      "ratio": 19.556
+    },
+    {
+      "mode": "none",
+      "highContrast": "true",
+      "token": "ICE_BLUE",
+      "fg": "#4080ff",
+      "bg": "#000000",
+      "ratio": 5.75
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "false",
+      "token": "GREEN_NEON",
+      "fg": "#e8d44d",
+      "bg": "#000000",
+      "ratio": 13.956
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "false",
+      "token": "CYAN_LIGHT",
+      "fg": "#00ffff",
+      "bg": "#000000",
+      "ratio": 16.748
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "false",
+      "token": "GRAY_LIGHT",
+      "fg": "#c0c0c0",
+      "bg": "#000000",
+      "ratio": 11.542
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "false",
+      "token": "GRAY_MID",
+      "fg": "#909090",
+      "bg": "#000000",
+      "ratio": 6.578
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "false",
+      "token": "MAGENTA_LIGHT",
+      "fg": "#ff80ff",
+      "bg": "#000000",
+      "ratio": 9.784
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "false",
+      "token": "YELLOW_AMBER",
+      "fg": "#ffa500",
+      "bg": "#000000",
+      "ratio": 10.634
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "false",
+      "token": "ICE_BLUE",
+      "fg": "#4080ff",
+      "bg": "#000000",
+      "ratio": 5.75
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "true",
+      "token": "GREEN_NEON",
+      "fg": "#00ff00",
+      "bg": "#000000",
+      "ratio": 15.304
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "true",
+      "token": "CYAN_LIGHT",
+      "fg": "#00ffff",
+      "bg": "#000000",
+      "ratio": 16.748
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "true",
+      "token": "GRAY_LIGHT",
+      "fg": "#e0e0e0",
+      "bg": "#000000",
+      "ratio": 15.908
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "true",
+      "token": "GRAY_MID",
+      "fg": "#d0d0d0",
+      "bg": "#000000",
+      "ratio": 13.615
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "true",
+      "token": "MAGENTA_LIGHT",
+      "fg": "#ff80ff",
+      "bg": "#000000",
+      "ratio": 9.784
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "true",
+      "token": "YELLOW_AMBER",
+      "fg": "#ffff00",
+      "bg": "#000000",
+      "ratio": 19.556
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": "true",
+      "token": "ICE_BLUE",
+      "fg": "#4080ff",
+      "bg": "#000000",
+      "ratio": 5.75
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "false",
+      "token": "GREEN_NEON",
+      "fg": "#00ff41",
+      "bg": "#000000",
+      "ratio": 15.38
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "false",
+      "token": "CYAN_LIGHT",
+      "fg": "#00ffff",
+      "bg": "#000000",
+      "ratio": 16.748
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "false",
+      "token": "GRAY_LIGHT",
+      "fg": "#c0c0c0",
+      "bg": "#000000",
+      "ratio": 11.542
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "false",
+      "token": "GRAY_MID",
+      "fg": "#909090",
+      "bg": "#000000",
+      "ratio": 6.578
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "false",
+      "token": "MAGENTA_LIGHT",
+      "fg": "#ff80ff",
+      "bg": "#000000",
+      "ratio": 9.784
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "false",
+      "token": "YELLOW_AMBER",
+      "fg": "#ffa500",
+      "bg": "#000000",
+      "ratio": 10.634
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "false",
+      "token": "ICE_BLUE",
+      "fg": "#4080ff",
+      "bg": "#000000",
+      "ratio": 5.75
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "true",
+      "token": "GREEN_NEON",
+      "fg": "#00ff00",
+      "bg": "#000000",
+      "ratio": 15.304
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "true",
+      "token": "CYAN_LIGHT",
+      "fg": "#00ffff",
+      "bg": "#000000",
+      "ratio": 16.748
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "true",
+      "token": "GRAY_LIGHT",
+      "fg": "#e0e0e0",
+      "bg": "#000000",
+      "ratio": 15.908
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "true",
+      "token": "GRAY_MID",
+      "fg": "#d0d0d0",
+      "bg": "#000000",
+      "ratio": 13.615
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "true",
+      "token": "MAGENTA_LIGHT",
+      "fg": "#ff80ff",
+      "bg": "#000000",
+      "ratio": 9.784
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "true",
+      "token": "YELLOW_AMBER",
+      "fg": "#ffff00",
+      "bg": "#000000",
+      "ratio": 19.556
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": "true",
+      "token": "ICE_BLUE",
+      "fg": "#4080ff",
+      "bg": "#000000",
+      "ratio": 5.75
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "false",
+      "token": "GREEN_NEON",
+      "fg": "#00ff41",
+      "bg": "#000000",
+      "ratio": 15.38
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "false",
+      "token": "CYAN_LIGHT",
+      "fg": "#00d0d0",
+      "bg": "#000000",
+      "ratio": 10.933
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "false",
+      "token": "GRAY_LIGHT",
+      "fg": "#c0c0c0",
+      "bg": "#000000",
+      "ratio": 11.542
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "false",
+      "token": "GRAY_MID",
+      "fg": "#909090",
+      "bg": "#000000",
+      "ratio": 6.578
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "false",
+      "token": "MAGENTA_LIGHT",
+      "fg": "#ff80ff",
+      "bg": "#000000",
+      "ratio": 9.784
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "false",
+      "token": "YELLOW_AMBER",
+      "fg": "#ff90d0",
+      "bg": "#000000",
+      "ratio": 10.152
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "false",
+      "token": "ICE_BLUE",
+      "fg": "#00a0a0",
+      "bg": "#000000",
+      "ratio": 6.536
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "true",
+      "token": "GREEN_NEON",
+      "fg": "#00ff00",
+      "bg": "#000000",
+      "ratio": 15.304
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "true",
+      "token": "CYAN_LIGHT",
+      "fg": "#00ffff",
+      "bg": "#000000",
+      "ratio": 16.748
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "true",
+      "token": "GRAY_LIGHT",
+      "fg": "#e0e0e0",
+      "bg": "#000000",
+      "ratio": 15.908
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "true",
+      "token": "GRAY_MID",
+      "fg": "#d0d0d0",
+      "bg": "#000000",
+      "ratio": 13.615
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "true",
+      "token": "MAGENTA_LIGHT",
+      "fg": "#ff80ff",
+      "bg": "#000000",
+      "ratio": 9.784
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "true",
+      "token": "YELLOW_AMBER",
+      "fg": "#ffff00",
+      "bg": "#000000",
+      "ratio": 19.556
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": "true",
+      "token": "ICE_BLUE",
+      "fg": "#00a0a0",
+      "bg": "#000000",
+      "ratio": 6.536
+    }
+  ]
+}

@@ -1,11 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { renderMatrix } from "../src/renderer/matrix";
+import { matrixLayout, renderMatrix } from "../src/renderer/matrix";
+import { makeGrid } from "../src/core/grid";
 import { generateProceduralMatrix } from "../src/core/dungeon/matrix";
 import type { Grid } from "../src/core/types";
 import { matrixNodeId } from "../src/renderer/matrix_nodes";
 
 function lines(grid: Grid): string[] {
   return grid.cells.map((row) => row.map((cell) => cell.char).join(""));
+}
+
+function room(text: string[], cx: number, cy: number): string {
+  return [...(text[cy] ?? "")].slice(cx - 1, cx + 2).join("");
 }
 
 describe("Matrix legibility", () => {
@@ -18,6 +23,7 @@ describe("Matrix legibility", () => {
     const matrix = generateProceduralMatrix(3, 42);
     const current = 1;
     const adjacent = matrix.nodes[current]?.adjacent ?? [];
+    const layout = matrixLayout(makeGrid(cols, rows), matrix);
     // When
     const text = lines(
       renderMatrix(
@@ -31,24 +37,32 @@ describe("Matrix legibility", () => {
         [0],
       ),
     );
-    // Then
-    const top = text.findIndex((line) => line.includes("┌─ REACHABLE NOW"));
-    const bottom = text.findIndex((line, i) => i > top && line.includes("└─"));
-    const frontier = text.slice(top + 1, bottom).join("\n");
-    expect(top).toBeGreaterThan(
-      text.findIndex((line) => line.includes("YOU ARE HERE")),
+    // Then — ADR-0249: offers are the rooms joined to @ by route corridors,
+    // named in arrow order in the card; context rooms only by link corridors.
+    const routes = text.find((line) => line.includes("ROUTES ("));
+    expect(routes).toContain(
+      `ROUTES (${adjacent.length}): ${adjacent.map((i, k) => `${k === 0 ? ">" : ""}${matrixNodeId(i)}`).join(" ")}`,
     );
-    expect(bottom).toBeGreaterThan(top);
-    expect(frontier.match(/[>→] ⚔ N\d+/g)).toHaveLength(adjacent.length);
-    for (const i of adjacent) {
-      expect(frontier).toContain(
-        `${matrixNodeId(i)} ${matrix.nodes[i]?.zone.toUpperCase()}`,
-      );
+    const offered = layout.corridors.corridors.filter(
+      (c) => c.a === current || c.b === current,
+    );
+    expect(offered).toHaveLength(adjacent.length);
+    for (const c of offered) {
+      const other = c.a === current ? c.b : c.a;
+      const glyphs = c.cells.map((cell) => [...(text[cell.y] ?? "")][cell.x]);
+      expect(glyphs.join("")).toMatch(other === adjacent[0] ? /^[┃━┏┓┗┛╋]+$/ : /^[│─┌┐└┘┼]+$/);
     }
-    expect(frontier).not.toContain(`${matrixNodeId(current)} `);
+    for (const c of layout.corridors.corridors.filter((c) => !offered.includes(c))) {
+      const own = c.cells.filter(
+        (cell) => !offered.some((o) => o.cells.some((x) => x.x === cell.x && x.y === cell.y)),
+      );
+      for (const cell of own)
+        expect("┆┄╭╮╰╯┼").toContain([...(text[cell.y] ?? "")][cell.x] ?? "?");
+    }
     expect(text.join("\n")).not.toMatch(/\[\d+\]/);
-    expect(text.slice(bottom + 1).join("\n")).toContain("◆ OBJECTIVE: BOSS");
-    expect(text.slice(bottom + 1).join("\n")).toContain(
+    const below = text.slice(layout.legendY).join("\n");
+    expect(below).toContain("◆ OBJECTIVE: BOSS");
+    expect(below).toContain(
       `${matrixNodeId(matrix.bossNode)} CORE-DEEP · REACHABLE NOW`,
     );
     expect(text[rows - 3]).toContain("ENTER");
@@ -59,22 +73,20 @@ describe("Matrix legibility", () => {
     [60, 40],
     [40, 60],
   ])(
-    "keeps the objective and every depth group visible from every node on %sx%s",
+    "keeps the objective and every room visible from every node on %sx%s",
     (cols, rows) => {
       // Given
       const matrix = generateProceduralMatrix(3, 42);
+      const sites = matrixLayout(makeGrid(cols, rows), matrix).board.sites;
       for (let current = 0; current < matrix.nodes.length; current++) {
         // When
-        const text = lines(renderMatrix(matrix, current, [0], cols, rows)).join(
-          "\n",
-        );
-        // Then
-        expect(text).toContain("◆ OBJECTIVE: BOSS");
-        expect(text).toContain(`${matrixNodeId(matrix.bossNode)} CORE-DEEP ·`);
-        const map = text.slice(text.indexOf("DEPTH / ZONES"));
-        const zones = [...new Set(matrix.nodes.map((node) => node.zone))];
-        for (const zone of zones)
-          expect(map).toContain(`${zone.toUpperCase()} (`);
+        const text = lines(renderMatrix(matrix, current, [0], cols, rows));
+        // Then — ADR-0249 replaced the depth groups with the board itself.
+        expect(text.join("\n")).toContain("◆ OBJECTIVE: BOSS");
+        expect(text.join("\n")).toContain(`${matrixNodeId(matrix.bossNode)} CORE-DEEP ·`);
+        expect(sites).toHaveLength(matrix.nodes.length);
+        for (const site of sites)
+          expect(room(text, site.cx, site.cy)).toMatch(/^[[#>◆][@◆·✓+][\]#<◆]$/);
       }
     },
   );
@@ -83,13 +95,17 @@ describe("Matrix legibility", () => {
     // Given
     const matrix = generateProceduralMatrix(3, 42);
     // When
-    const text = lines(
+    const retreat = lines(
       renderMatrix(matrix, 1, [0, 1], 40, 60, null, 0, [0]),
     ).join("\n");
+    const boss = lines(
+      renderMatrix(matrix, 1, [0, 1], 40, 60, null, matrix.bossNode, [0]),
+    ).join("\n");
     // Then
-    expect(text).toContain("▸ ⚔ N02 SURFACE · SEEN");
-    expect(text).toContain("> ⚔ N01 SURFACE · CLEAR");
-    expect(text).toContain("→ ⚔ N07 CORE-DEEP (BOSS) · NEW");
+    expect(retreat).toContain("@ ⚔ N02 SURFACE · SEEN");
+    expect(retreat).toContain("> ⚔ N01 SURFACE · CLEAR");
+    expect(boss).toContain("> ⚔ N07 CORE-DEEP (BOSS) · NEW");
+    expect(retreat).toContain("◆ OBJECTIVE: BOSS · NEW");
   });
 
   it("shows a labelled empty frontier at a terminal node without losing the boss", () => {
@@ -104,9 +120,10 @@ describe("Matrix legibility", () => {
       renderMatrix(terminal, matrix.bossNode, [], 40, 60),
     ).join("\n");
     // Then
-    expect(text).toContain("REACHABLE NOW (0)");
-    expect(text).toContain("No routes — ENTER: ICE");
+    expect(text).toContain("ROUTES (0): none");
+    expect(text).toContain("> no routes — ENTER: ICE");
     expect(text).toContain(`${matrixNodeId(matrix.bossNode)} CORE-DEEP · HERE`);
+    expect(text).toContain("◆@◆");
   });
 
   it("does not mutate the graph or visit state while presenting it", () => {

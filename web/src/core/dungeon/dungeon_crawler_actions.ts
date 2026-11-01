@@ -46,24 +46,9 @@ export function getMonsterDamage(
   }
 }
 
-/** Handle player death */
-export function handlePlayerDeath(state: DungeonState): void {
-  // In a full implementation, this would trigger game over sequence
-  // For now, just reset to entrance with penalty
-  state.playerHp = Math.floor(state.playerMaxHp * 0.5); // Come back with half HP
-  state.playerAlarm = Math.min(100, state.playerAlarm + 25); // Increase alarm
-
-  // Optionally: send back to previous level or apply other penalties
-}
-
-/** Player takes damage */
+/** Zero HP ends this standalone attempt; the controller announces defeat and returns to menu. */
 export function playerTakeDamage(state: DungeonState, damage: number): void {
   state.playerHp = Math.max(0, state.playerHp - damage);
-
-  // Check for player death
-  if (state.playerHp <= 0) {
-    handlePlayerDeath(state);
-  }
 }
 
 /** Attack an entity (typically a monster) */
@@ -105,6 +90,7 @@ export function attackEntity(
 
 /** Pick up an item */
 export function pickUpItem(state: DungeonState, item: DungeonEntity): void {
+  if (state.playerHp <= 0) return;
   switch (item.subtype) {
     case ItemType.HEALTH_POTION:
       state.playerHp = Math.min(state.playerMaxHp, state.playerHp + 25);
@@ -113,14 +99,7 @@ export function pickUpItem(state: DungeonState, item: DungeonEntity): void {
       state.playerAlarm = Math.max(0, state.playerAlarm - 15);
       break;
     case ItemType.DATA_CHIP:
-      // Data chips give credits or special abilities
       state.playerHp = Math.min(state.playerMaxHp, state.playerHp + 10);
-      break;
-    case ItemType.WEAPON:
-      // Temporary attack boost
-      break;
-    case ItemType.ARMOR:
-      // Temporary defense boost
       break;
   }
 }
@@ -190,7 +169,7 @@ export function triggerTrap(
   if (trapRoll < 0.3) {
     // Damage trap
     const damage = 10 + state.level * 2;
-    state.playerHp = Math.max(0, state.playerHp - damage);
+    playerTakeDamage(state, damage);
   } else if (trapRoll < 0.6) {
     // Alarm trap
     state.playerAlarm = Math.min(100, state.playerAlarm + 20);

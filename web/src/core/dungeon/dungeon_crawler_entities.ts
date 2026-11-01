@@ -177,8 +177,8 @@ export function addItem(
   if (roll < 0.4) itemType = ItemType.HEALTH_POTION;
   else if (roll < 0.7) itemType = ItemType.ENERGY_CELL;
   else if (roll < 0.9) itemType = ItemType.DATA_CHIP;
-  else if (roll < 0.95) itemType = ItemType.WEAPON;
-  else itemType = ItemType.ARMOR;
+  // Former equipment rolls yield nothing: preserve the draw and consumable probabilities.
+  else return;
 
   state.entities.push({
     id: `item_${state.entities.length}_${Date.now()}`,

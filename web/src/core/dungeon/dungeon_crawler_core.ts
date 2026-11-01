@@ -13,7 +13,7 @@
  * - Fog of war / exploration system
  * - Entity system (monsters, items, traps, stairs)
  * - Turn-based combat and action system
- * - Integration with existing game flow and state
+ * - Standalone menu attempt: zero HP is terminal, with no run write-back
  */
 
 import type { Rng, RngInt } from "./dungeon";
@@ -85,6 +85,7 @@ export function tryMoveMonster(
 /** Simple monster AI */
 export function processMonsterAi(state: DungeonState, rng: Rng): void {
   for (const entity of state.entities) {
+    if (state.playerHp <= 0) return;
     if (entity.type === EntityType.MONSTER && entity.hostile && entity.hp > 0) {
       // Simple AI: if player is adjacent, attack; otherwise move toward player
       const dx = Math.abs(entity.x - state.playerX);
@@ -157,6 +158,7 @@ export class DungeonCrawler {
 
   /** Handle player movement */
   public tryMovePlayer(dx: number, dy: number): boolean {
+    if (this.isGameOver()) return false;
     return tryMovePlayer(
       this._state,
       this.rng,
@@ -239,6 +241,7 @@ export class DungeonCrawler {
 
   /** Process one game turn (call periodically) */
   public processTurn(): void {
+    if (this.isGameOver()) return;
     // Update doors
     updateDoors(this._state, this.rng);
 

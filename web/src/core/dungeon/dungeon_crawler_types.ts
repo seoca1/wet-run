@@ -32,8 +32,6 @@ export const enum ItemType {
   HEALTH_POTION = "!",
   ENERGY_CELL = "e",
   DATA_CHIP = "d",
-  WEAPON = "w",
-  ARMOR = "a",
 }
 
 /** Monster types */

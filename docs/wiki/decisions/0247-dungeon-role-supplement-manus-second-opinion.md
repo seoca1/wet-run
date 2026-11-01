@@ -136,16 +136,28 @@ C의 비치명/치명 정책 등 ADR-0246의 열린 질문은 유지한다. 단,
 
 ## Implementation Status (2026-11-01)
 
-**Status**: ❌ Not started
+**Status**: 🟡 Partial — 독립 정리 중 사망·무효 픽업 2건 완료. 런 통합·E·C는 미구현.
 
 **Evidence**:
-- 이 ADR과 `docs/wiki/decisions/README.md`, `log.md` — 보충 결정·인덱스·활동 기록만 작성.
-- `web/src/core/dungeon/dungeon_crawler_actions.ts:49-67,116-121` — HP 복구·무효 픽업은 여전히 남아 있으며 정리 완료 증거가 아님.
-- `web/src/main.ts:613-658,1155-1159` — 별도 던전의 런 반영 부재를 확인한 근거이며 통합 완료 증거가 아님.
+- `web/src/core/dungeon/dungeon_crawler_actions.ts:49-52,92-104` — 피해는 HP 0에서 멈추고 사망 시 절반 회복·알람 +25를 제거. 죽은 플레이어의 회복 픽업도 차단. 함정 피해도 같은 피해 함수를 사용한다.
+- `web/src/core/dungeon/dungeon_crawler_core.ts:86-89,159-169,242-252` — 죽음 이후 이동·턴 처리 차단, AI도 치명타 뒤 남은 적 행동을 중단. HP 0이 `isGameOver()`에 그대로 관측된다.
+- `web/src/main.ts:631-675,1185-1189` — **기존 연결을 그대로 사용**: 메뉴에서 별도 크롤러 생성, 이동/피해 후 게임 오버이면 `FLATLINE — dungeon crawl failed`를 표시하고 메뉴로 돌아가 크롤러 참조를 폐기. 이탈도 별도 크롤러를 폐기하며 런 write-back은 추가하지 않았다.
+- `web/src/core/dungeon/dungeon_crawler_entities.ts:166-191`, `web/src/core/dungeon/dungeon_crawler_types.ts:30-35`, `web/src/renderer/dungeon.ts:304-324` — weapon/armor 생성·타입·빈 효과 처리·렌더 분기 제거. 기존 90%의 소모품 확률은 유지하고 이전 장비 구간 `[0.9,1)`은 무획득 처리한다. 생성/몬스터 드롭 모두 같은 `addItem`을 사용하며 기존 RNG 1회 소비는 유지. 새 장비 효과·전투 수식·HUD 스탯을 만들지 않는 작은 정직한 선택이다.
+- `web/tests/dungeon_death.test.ts:30-119` — HP를 0으로 대입하지 않고 **100 HP에서 인접 watchdog의 실제 `processTurn()` 34회 × 피해 3**으로 HP 0/게임 오버 도달. 사망 후 이동/턴/회복 불가, 실제 반격 및 함정의 치명 피해도 검증. 기존 수동 HP predicate 테스트는 보존.
+- `web/tests/dungeon_pickups.test.ts:7-57` — 10 tests: 생성된 세 소모품을 실제 이동의 상호작용 경로로 수령해 HP/알람 변화·소비 확인. 이전 weapon/armor 확률 경계 4개는 생성 없음·RNG 1회 단언. **수정 전 7 failed / 9 passed → 수정 후 16 passed** (사망·픽업 두 파일 합계).
+- `npm run typecheck` **0 errors**, `npm run lint` **0 errors / 기존 keyboard.ts:14 warning 1**, `npm test` **164 files / 3710 passed / 0 failed** (baseline 163/3696 + 14), `npm run build` **119 modules** 통과. 변경한 src 파일만 Prettier write/check 통과. TypeScript LSP는 미설치·기존 설치 거절로 실행 불가; CLI 검증과 구분한다.
+- `npm run balance`, `npm run balance -- --deck ppl` — 양 덱 수정 전후 전체 stdout **`cmp` exit 0 (byte-identical)**. ADR-0239 opening `100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0`, PPL `100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7` 유지. **하네스는 던전을 걷지 않으므로 전투 보존만 검증**하며 크롤러 난이도·C 보상 안전성 증거가 아니다.
+- `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` — **80 passed / 4 skipped / 0 failed (4.4m)**. 기존 preview를 kill/restart하지 않고 새 dist를 서빙하도록 유지.
+- 별도 Playwright context에서 메뉴 → 던전 → 인접 watchdog fixture → 실제 키 34턴을 실행: 초기 HP 100, 최종 `screen=menu`, 크롤러 참조 null, FLATLINE 메시지와 run state 불변(null) 확인. `/Users/emilio/.openclaw/tmp/opencode/dungeon-cleanup-defeat.png`를 직접 열어 메뉴의 실패 안내가 보임을 확인. 사용자 play session은 조작하지 않았다.
 
-**Notes**: Accepted는 오너의 결정 승인이지 구현 완료가 아니다. 독립 정리 3건, 고정 동사의
-A 첫 슬라이스·결정 루프 검증, E 확장, C 다섯 계약·보상 예산·효율 검증은 모두 미착수다.
-Manus의 예상과 세 출처의 수렴은 구현 수락 증거를 대신하지 않는다. 스테이징·커밋 없음.
+**Notes — 현재 사망 계약**: 메뉴에서 시작한 **독립 던전 시도 자체가 영구 종료**된다.
+사망 시 현재 탐색·레벨·소모품 기회를 잃고, 같은 시도에서 HP 회복·재개·리스폰은 없다.
+다시 메뉴에서 시작하면 별도 새 시도다. 본 런이나 Hall of Dead로 사망을 전파하지 않으며
+실제 런 보상을 얻는다고 주장하지 않는다. 이는 현행 별도 모드의 계약이지 C의 미정인 실패 정책을
+정한 것이 아니다. Pillar 3의 무상 부활을 제거하되 런 write-back·용도 변경·C/E 구현은 하지 않았다.
+독립 정리의 세 번째 항목인 런 반영/격리 경로 재정의는 **미완료**이며 이번 두 결함 해소와 구분한다.
+A의 별도 진행은 ADR-0246의 Implementation Status 참조. E 확장, C 다섯 계약·보상 예산·효율 검증은
+미구현이다. Accepted는 구현 완료가 아니며 결정 본문은 보존했다. 스테이징·커밋 없음.
 
 ## 변경 이력
 

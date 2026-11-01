@@ -310,10 +310,6 @@ function getItemChar(type: ItemType): string {
       return "e";
     case ItemType.DATA_CHIP:
       return "d";
-    case ItemType.WEAPON:
-      return "w";
-    case ItemType.ARMOR:
-      return "a";
     default:
       return "?";
   }
@@ -325,8 +321,6 @@ function getItemFg(type: ItemType): string {
     [ItemType.HEALTH_POTION]: PALETTE.RED_BRIGHT,
     [ItemType.ENERGY_CELL]: PALETTE.BLUE_BRIGHT,
     [ItemType.DATA_CHIP]: PALETTE.CYAN_LIGHT,
-    [ItemType.WEAPON]: PALETTE.YELLOW_AMBER,
-    [ItemType.ARMOR]: PALETTE.GREEN_NEON,
   };
 
   return colors[type] || PALETTE.FOREGROUND;

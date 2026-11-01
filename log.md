@@ -2690,3 +2690,26 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **문서**: ADR-0246은 Implementation Status 주석만 갱신, **🟡 Partial** 유지; 인덱스 Impl 셀 동기화.
   E/C·TRACE 표시 통합 미구현. 전투 메커닉·튜닝·RNG·크롤러·`core/status.ts`·VFX 구현·raw 및 Accepted 결정 본문 무변경.
   **stage/commit 없음**.
+
+## [2026-11-01] tooling | encounter 동사 경제의 읽기 전용 ego 기록기
+
+- [기존 실제 플레이 절차](docs/playtest/EGO_LITE_PLAY_CHECK.md)에 **동사 경제 검증** 추가:
+  지불 전 판단·PROBE 낭비·BYPASS/BREACH 지배 위험·동사별 반증 관찰과 정확한 실행 명령.
+- `docs/playtest/ego-decision-recorder.mjs`는 이미 열린 허가된 Space를 polling하고
+  확인된 동사별 Markdown/JSON을 지정 절대 경로에 배타적으로 출력한다. 키·마우스·탐색·상태 쓰기·claim·finish 없음.
+  `.mjs` + ego Node 24+ native type stripping으로 별도 빌드/의존성 없이 순수 scaling 함수를 읽기 전용 재사용한다.
+  상태 추출은 `ego-decision-state.mjs`로 분리해 관찰 경계와 누적 기록을 구분했다.
+- 실측: 자신의 **Space 39 / wet_run verb verify 20261101 recorder / p1**에서 기존 5195 preview를
+  실제 키로 조작. 최종 보고서 `/Users/emilio/.openclaw/tmp/opencode/wet-run-verbs-live-02.md`와 `.md.json`에
+  **PROBE 1 / BYPASS 1 / BREACH 1**. PROBE COST 38→46, BYPASS 46→76, HP 100 유지,
+  credits 양 원장 변화 0, 다음 노드 이동 확인. 공개된 `yakuza_enforcer HP 165`는 화면의 `165/165`와 일치.
+  BREACH는 실제 combat 확인, ΔCOST +2 / ΔHP -13에서 관찰 종료되어 **pending**, clear/계속 여부 미확정.
+  비지배성/가격 균형을 입증한 pass가 아니라 기록기의 실동작 검증이다.
+- 초기 live 검증이 빈 `iceHp`를 발견해 scaling 원문 재사용으로 해결했다. 메뉴의 state-null은
+  stack trace 없이 명확한 안내로 종료하는 것도 실측했다. 자신의 Space는 마지막에
+  `task.finish({ keep: [] })`를 한 번 호출해 정상 종료. 사용자 소유 **wet_run real-play QA** 및 다른 Space 무조작.
+- 회귀: `node --test docs/playtest/ego-decision-recorder.test.mjs` **6 passed**.
+  강조/거부 입력 제외, PROBE/BYPASS 분리, clear 뒤 HEAL 제외, stale bypass 뒤 JACK OUT,
+  재시작 격리, 없는 Space, 빈 HP fallback·mutator 복제·공개 전 정보 차단을 검증했다.
+  Node syntax check 통과. LSP는 TypeScript 서버 미설치·기존 설치 거절로 실행 불가.
+- 게임 코드·튜닝·`web/src/`·Accepted ADR 결정 본문 무변경. 기존 preview 유지, **stage/commit 없음**.

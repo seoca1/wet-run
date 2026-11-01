@@ -128,6 +128,99 @@ EOF
 실제 조작은 `page.keyboard.press("1")` ~ `"5"` 로 카드를 쓰고, `ArrowUp/Down` 으로
 대상을 바꾼다.
 
+## 동사 경제 검증
+
+대상은 [ADR-0246](../wiki/decisions/0246-dungeon-role-and-run-interaction.md)의 고정 동사다.
+가격의 원문은 `web/src/core/state/encounter_verbs.ts`의 `ENCOUNTER_VERB_COSTS`:
+PROBE 8 COST, BYPASS 30 COST. `balance_sim.ts`는 그래프를 걷지 않으므로 가격의
+비지배성을 검증하지 못한다. 아래는 **실제 선택의 관찰**이며 자동 밸런스 판정이 아니다.
+
+### 플레이 중 답할 질문
+
+- [ ] HP가 넉넉한 상황과 죽기 직전, COST 여유가 큰 상황과 작은 상황을 모두 봤는가?
+  각 노드에서 지불 **전** COST/HP, 보상, eventKind, ICE 수와 선택 이유를 적는다.
+- [ ] BYPASS가 상황과 무관하게 명백한 정답이 되는가? 30을 내고 포기한 보상·회복보다
+  보존한 HP와 다음 경로가 실제로 더 중요했는가? 반대로 안 내는 편이 나았던 사례는?
+- [ ] BREACH가 상황과 무관하게 명백한 정답이 되는가? 전투 후 COST/HP와 보상을 보고도
+  위험한 노드에서 BYPASS를 고를 이유가 남는가? 생존과 다음 노드의 프로그램 여유도 비교한다.
+- [ ] PROBE가 낭비였던 적이 있는가? 이미 방문해 알고 있던 정보, 또는 무엇이 나와도
+  같은 동사를 골랐을 상황에 8을 냈는가? 공개 전 예상 동사와 공개 후 실제 동사를 적는다.
+- [ ] frontier의 ICE 수·보상·eventKind만 보고, 정확한 HP는 숨겨진 채로도 **지불 전**
+  의미 있는 선택을 할 수 있는가? PROBE 없이도 감수할 위험을 설명할 수 있는가?
+  공개 뒤의 지식을 공개 전 판단에 소급 적용하지 않는다.
+- [ ] PROBE의 8이 다음 프로그램/BYPASS를 막은 사례가 있는가? BYPASS의 30이 이후
+  생존을 막았는가, 아니면 전투 회피가 런을 이어 주었는가? 노드 통과 뒤 실제 이동까지 관찰한다.
+
+### 비지배성을 반증하는 관찰
+
+한 번의 쉬운 전투나 한 번의 실수만으로 보편적 지배를 증명할 수는 없다. 조건이 다른
+반복 사례를 남기고, 비교하지 않은 대안은 미확인으로 둔다. 다음은 가격 재검토가 필요한 실패 신호다.
+
+| 동사 | 실패로 기록할 구체적 관찰 |
+| --- | --- |
+| PROBE | 정보가 필요 없던 쉬운 노드·재방문에서도 항상 먼저 누르고, 8 때문에 포기하는 후속 행동이 전혀 없다면 너무 싼 필수 세금일 수 있다. 반대로 공개가 선택을 바꾸거나 손실을 피하게 한 사례 없이 매번 같은 선택에 8만 더 냈다면 PROBE가 지배당하는 신호다. |
+| BYPASS | 낮은 HP·많은 ICE에서도 BREACH 후 손실이 30보다 작고 보상·회복까지 받아, 지불 가능한 BYPASS를 합리적으로 고를 사례가 없다면 30은 너무 비싼 신호다. 반대로 보상·회복이 중요한 쉬운 노드에서도 항상 BYPASS 후 런 결과가 더 좋다면 BYPASS가 다른 선택을 지배하는 신호다. |
+| BREACH | HP·COST·보상·위험이 달라도 항상 BREACH가 생존과 다음 행동 여유에서 낫다면 BYPASS의 자리가 없다. 반대로 높은 보상·쉬운 전투에서도 싸움이 생존/자원/진행 어느 쪽에서도 이득을 주지 못하고 매번 BYPASS가 낫다면 BREACH가 지배당하는 신호다. |
+| JACK OUT | 어떤 감당 불가능한 전투에서도 30 지불이 불가능하거나 나쁜데도 런 포기가 합리적인 선택이 되지 않는다면 탈출 선택의 역할을 재검토한다. 정상적인 유리한 노드에서도 계속 포기가 최선이라면 전반적인 진행 경제 실패 신호다. |
+
+### 수동 플레이를 방해하지 않는 기록기
+
+소스: [ego-decision-recorder.mjs](./ego-decision-recorder.mjs).
+`.mjs`를 쓴 이유는 ego의 Node ESM 표면에서 빌드·TS 로더·추가 의존성 없이 import하기 위해서다.
+ego의 Node 24+ native type stripping으로 순수 `iceHpForGrade`/`missionGradeOf`를 읽기 전용
+import한다. [상태 추출 모듈](./ego-decision-state.mjs)은 빈 `iceHp`도 게임과 같은 계산으로 처리한다.
+`recordDecisions(options, { taskSpace, listTaskSpaces })`의 인자로 경로와 Space ID를 전달한다.
+이미 플레이 중인 **허가된 agent 소유 Space**의 숫자 ID와 Page 라벨을 사용한다.
+없는 Space를 만들거나 user 소유 Space를 claim하지 않는다. `wet_run real-play QA`는
+사용자 소유이므로 건드리지 않는다. 사람이 입력하더라도 Space의 제어권이 user로 바뀌면
+기록기는 중단하며, 자동 탈환하지 않는다. 먼저 자신의 고유 이름 Space에서 런을 시작하고,
+종료 전 `finish`하지 않은 상태에서 기록기를 붙인다.
+
+서버가 없을 때만 §1의 두 명령을 실행한다. 현재 `http://127.0.0.1:5195/`가 열려 있으면
+재실행·재빌드·종료하지 않는다. 별도 셸에서 다음 호출을 실행하고 그동안 사람이 플레이한다:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+ego-browser nodejs <<'EOF'
+const { recordDecisions } = await import("/Users/emilio/projects/opencodework/Game/wet_run/docs/playtest/ego-decision-recorder.mjs");
+await recordDecisions({
+  spaceId: 39, // 예시: 자신의 아직 종료하지 않은 Space 숫자 ID로 교체
+  pageLabel: "p1",
+  outputPath: "/Users/emilio/.openclaw/tmp/opencode/wet-run-verbs-pass-01.md",
+  durationMs: 60000,
+  intervalMs: 100,
+}, { taskSpace, listTaskSpaces });
+EOF
+```
+
+출력 폴더는 미리 존재해야 하고 경로는 절대 경로여야 한다. 위 예시는 Markdown과
+`wet-run-verbs-pass-01.md.json`을 같은 폴더에 쓰고 동사별 행 수를 출력한다.
+기존 파일은 덮어쓰지 않으므로 매 pass마다 새 이름을 쓴다. 기록기는 **상태 polling만** 하며
+키·마우스·탐색·상태 쓰기·`finish`를 하지 않는다. 플레이를 마친 소유자가 §4대로 정리한다.
+
+해석 규칙과 한계:
+- 노드 index는 상태와 같은 **0-based**다. 화면 노드 번호는 여기에 1을 더한다.
+- COST는 `player.alarm`이며 TRACE의 `alarmLevel`이 아니다. 두 credits 원장
+  `player.credits`/`inventory.credits`를 모두 남긴다.
+- `encounterDecision.selectedVerb`는 강조일 뿐이다. PROBE는 `probed: false → true`,
+  BYPASS는 메뉴 종료와 `bypassedEncounterNodeIndex`, BREACH는 메뉴 종료와 전투 진입,
+  JACK OUT은 메뉴 종료와 run의 menu/exit 전이로 확인한다. 거부된 confirm은 행이 아니다.
+- PROBE와 그 뒤 BYPASS/BREACH는 별도 행이다. BREACH의 차이는 첫 clear/종료 관찰까지이며
+  clear 뒤 loot confirm의 회복은 포함하지 않는다. 전투 진입과 실제 `phase: combat`을 구분한다.
+- ICE 정체/HP는 **PROBE 후에만** 기록한다. `iceHp`가 비었으면 실제 게임의 순수 scaling 함수를 재사용한다.
+  clear/bypass는 해당 방문의 결과, Continued는 이후 다른 노드로 실제 이동했는지다.
+- 인과 추적기가 아니라 두 표본 사이 차이다. 100ms polling이면 각 입력 사이 최소 300ms를
+  두고 메뉴 열기·PROBE·최종 선택·loot를 구분한다. 빠른 연속 입력은 중간 결정을 놓칠 수 있다.
+  관찰 시작 전 지불은 복원하지 않는다. clear 표본을 놓치면 회복이 섞일 수 있다.
+  `pending`/`incomplete`/`unknown`은 관찰 부족이며 실패·미계속으로 단정하지 않는다.
+  재시작은 null 상태·런 식별 값 변경·turnCount 감소로 구분하지만 표본 사이 같은 런 재시작은 놓칠 수 있다.
+
+파서 회귀 검증은 브라우저 없이 `node --test docs/playtest/ego-decision-recorder.test.mjs`로 실행한다.
+상태 계약 출처: `web/src/core/types.ts`의 `encounterDecision`/`bypassedEncounterNodeIndex`,
+`web/src/core/state/state_actions_phases.ts`의 메뉴 개방·이동,
+`web/src/core/state/encounter_verbs.ts`의 confirm 결과,
+`web/src/core/state/state.ts`의 clear 기록.
+
 ## 4. 정리
 
 ```js

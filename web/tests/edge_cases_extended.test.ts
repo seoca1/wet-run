@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { applyAction, makeInitialState } from "../src/core/state/state";
+import { breachEncounter } from "./encounter_test_helpers";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
@@ -34,7 +35,7 @@ describe("Edge case (extended): alarm cap boundary", () => {
 
     let state = makeInitialState(mission as any, ice as any, deck);
     state = { ...state, currentNodeIndex: 1 };
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
     expect(state.runPhase).toBe("combat");
 
@@ -79,8 +80,8 @@ describe("Edge case (extended): matrix→combat state preservation", () => {
     expect(iceNodeIdx).toBeGreaterThanOrEqual(0);
 
     let state = { ...initial, currentNodeIndex: iceNodeIdx };
-    // enter ICE-bearing node: matrix.confirm transitions to approach/combat.
-    state = applyAction(state, { type: "confirm" });
+    // Choose BREACH on the ICE-bearing node before approach/combat.
+    state = breachEncounter(state);
     expect(state.runPhase).toBe("combat");
     expect(state.phase).toBe("approach");
 

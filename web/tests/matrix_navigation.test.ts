@@ -22,6 +22,7 @@ import { applyAction, makeInitialState } from "../src/core/state/state";
 import type { Ice, Matrix, Mission, Program } from "../src/core/types";
 
 import missionsJson from "../src/data/missions.json";
+import { breachEncounter } from "./encounter_test_helpers";
 
 const missions: ReadonlyArray<Mission> = loadMissionsCatalog(missionsJson);
 
@@ -162,6 +163,8 @@ describe("matrix navigation — forward walk reaches the boss", () => {
       const matrix = state.matrix;
       expect(matrix, `mission '${mission.id}': run must have a matrix`).toBeTruthy();
       if (!matrix) continue;
+      // Given: isolate route reachability from the separately tested encounter economy.
+      state = { ...state, clearedEncounterNodes: matrix.nodes.map((_, index) => index) };
       expect(
         state.currentNodeIndex,
         `mission '${mission.id}': run must start at startNode`,
@@ -350,7 +353,7 @@ describe("ice_x2 mutator — the encounter roster must actually grow", () => {
     const base = makeInitialState(mission, stubIce, stubDeck);
     const onNode = { ...base, matrix: singleIceNode, currentNodeIndex: 0 };
 
-    const plain = applyAction(onNode, { type: "confirm" });
+    const plain = breachEncounter(onNode);
     expect(
       plain.iceRoster.length,
       "without ice_x2 the roster must equal the node's ICE count",
@@ -360,7 +363,7 @@ describe("ice_x2 mutator — the encounter roster must actually grow", () => {
       ...onNode,
       activeMutators: Object.freeze(["ice_x2"] as const),
     };
-    const doubled = applyAction(mutated, { type: "confirm" });
+    const doubled = breachEncounter(mutated);
     expect(
       doubled.iceRoster.length,
       "ice_x2 must double the encounter roster",

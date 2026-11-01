@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { applyAction, makeInitialState } from "../src/core/state/state";
+import { breachEncounter } from "./encounter_test_helpers";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
@@ -23,7 +24,7 @@ describe("Bug #9: rapid input", () => {
     const ice = Object.values(iceTypes)[0]!;
     let state = makeInitialState(mission as any, ice as any, loadDeck(programs));
     state = { ...state, currentNodeIndex: 1 };
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
     
     // 10 rapid alternating attacks
@@ -63,7 +64,7 @@ describe("Bug #10: edge of combat death during enemy turn", () => {
     let state = makeInitialState(mission as any, ice as any, loadDeck(programs));
     
     state = { ...state, currentNodeIndex: 1 };
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
     
     // Force player to 1 HP

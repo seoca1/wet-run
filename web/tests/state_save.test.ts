@@ -7,6 +7,7 @@ import {
   stateToSaveSlot,
 } from "../src/core/state/state";
 import type { Ice, Mission, Program } from "../src/core/types";
+import { breachEncounter } from "./encounter_test_helpers";
 
 const mockMission: Mission = {
   id: "test_mission",
@@ -65,7 +66,7 @@ describe("stateToSaveSlot round-trip", () => {
       matrix: { nodes: [{ id: 0, zone: "surface" as const, iceIds: ["watchdog"], iceHp: [100], reward: { credits: 50 }, isBoss: false, adjacent: [] }], startNode: 0, bossNode: 0 },
       currentNodeIndex: 0,
     };
-    const inCombat = applyAction(applyAction(withMatrix, { type: "confirm" }), {
+    const inCombat = applyAction(breachEncounter(withMatrix), {
       type: "confirm",
     });
     const afterUse = applyAction(inCombat, {

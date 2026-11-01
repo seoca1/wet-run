@@ -14,6 +14,7 @@ import {
   iceIntroPayload,
 } from "../src/core/combat/combat_entry_vfx";
 import { durationForKind } from "../src/core/state/state_helpers";
+import { breachEncounter } from "./encounter_test_helpers";
 
 const mockMission: Mission = {
   id: "test",
@@ -138,7 +139,7 @@ describe("P15 — combat entry spawns ice_intro", () => {
     };
     // Entering the node moves the run into `combat`/approach; the
     // approach -> combat confirm is what spawns the intro.
-    const entered = applyAction(state, { type: "confirm" });
+    const entered = breachEncounter(state);
     const engaged = applyAction(entered, { type: "confirm" });
     const intros = engaged.vfxInstances.filter((v) => v.kind === "ice_intro");
     expect(intros.length).toBe(1);

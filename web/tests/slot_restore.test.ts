@@ -7,6 +7,7 @@ import {
   applyAction,
 } from "../src/core/state/state";
 import type { GameState, Ice, Mission, Program, SaveSlot } from "../src/core/types";
+import { breachEncounter } from "./encounter_test_helpers";
 
 const mockMission: Mission = {
   id: "test_mission",
@@ -206,7 +207,10 @@ describe("slotToGameState (CONTINUE option) — restored run must be playable", 
     expect(restored).not.toBeNull();
     if (!restored) return;
 
-    const afterConfirm = applyAction(restored, { type: "confirm" });
+    const decision = applyAction(restored, { type: "confirm" });
+    expect(decision).not.toBe(restored);
+    expect(decision.encounterDecision?.selectedVerb).toBeNull();
+    const afterConfirm = breachEncounter(restored);
     expect(afterConfirm).not.toBe(restored);
     expect(afterConfirm.runPhase).toBe("combat");
     expect(afterConfirm.iceRoster.length).toBeGreaterThan(0);

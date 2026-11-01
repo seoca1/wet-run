@@ -219,7 +219,7 @@ C에 필요한 결정 어휘를 생산한다. C는 런의 약한 P4를 도구 �
 
 **Status**: 🟡 Partial
 
-**Evidence**:
+**Evidence — slice 1 (historical verification)**:
 - `web/src/core/state/state_actions_phases.ts:49-64,118-148` — 화살표로 실제 인접 목적지를 강조하고 확인으로 이동. 보스/입구 BFS 자동 라우팅 제거; 후퇴도 같은 명시적 인접 선택.
 - `web/src/core/state/state_actions_phases.ts:218-233` — 비보스 보상 확인은 현재 노드에 남고 목적지 강조를 해제. 기존 15% 회복 유지.
 - `web/src/core/types.ts:188-189`, `web/src/renderer/run_screen.ts:36` — 일시적 선택 상태를 실제 런 렌더러에 전달. 저장하지 않으며 기존 상태/세이브의 필드 누락은 미선택으로 처리.
@@ -236,9 +236,28 @@ C에 필요한 결정 어휘를 생산한다. C는 런의 약한 P4를 도구 �
 - `npm run balance`, `npm run balance -- --deck ppl` — opening `100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0`, PPL `100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7`; 수정 전후 양 덱 **전체 stdout을 `cmp`로 byte-identical 확인**. 아래 측정 한계와 구분한다.
 - `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` — `npx vite preview --port 5195 --strictPort --host 127.0.0.1`로 실행, **76 passed / 4 skipped / 0 failed** (4.5m), 재시도 없이 통과. preview 종료 후 5195 리스너 없음 확인.
 
+**Evidence — slice 2 (fixed verbs, 2026-11-01)**:
+- `web/src/core/state/encounter_verbs.ts:8-20,39-149` — 고정 PROBE / BYPASS / BREACH / JACK OUT 목록과 reducer. PROBE **8 COST**, BYPASS **30 COST**, 기존 누산 상한 **100**을 한 상수 블록 `ENCOUNTER_VERB_COSTS`에서 공유. 초과 결제는 거절하고 이미 공개한 PROBE는 재청구하지 않는다. HP·TRACE 비용 및 새 화폐 없음.
+- `web/src/core/state/encounter_verbs.ts:23-37,69-128` — PROBE의 정확한 ICE 식별자(catalog id)·HP는 BREACH와 같은 roster 계산을 사용한다(ICE_X2·최대 4개·기존 grade HP fallback 포함). BREACH는 기존 approach → combat·VFX 진입·보상 경로를 그대로 재사용. BYPASS는 전투·보상·회복 없이 현재 노드에서 이동 가능 상태로 돌아가며 완료 목록에 기록하지 않는다.
+- `web/src/core/state/state_actions_phases.ts:44-96` — 현재 노드의 미완료 ICE를 해결하거나 이번 방문에서 BYPASS를 결제하기 전에는 출발 확인도 결정 메뉴를 연다. 목적지를 먼저 골라 무료로 떠나는 우회 차단. 이동하면 결제 통과 플래그를 초기화하여 재방문의 재통과도 무료가 아니다.
+- `web/src/core/types.ts:190-197` — 메뉴 선택·공개 정보와 이번 방문의 통과 상태는 선택적 일시 필드. 저장 스키마를 늘리지 않으며 기존 세이브에서 누락 허용. 이동/로드 시 공개 정보·통과 허가는 유지하지 않는다. 기존 `clearedEncounterNodes` 저장 계약은 불변.
+- `web/src/renderer/encounter.ts:12-90`, `web/src/renderer/run_screen.ts:26-45` — 기존 Green Grid 프레임에 자원·보상 → 네 동사와 가격/차단 상태 → 유료 위협 정보를 표시. 미완료 노드의 기존 CURRENT NODE HP 미리보기도 숨겨 무료 PROBE 누출 차단. 40×60 / 60×40 / 80×50에서 네 동사·정확한 HP 공개 회귀.
+- `web/tests/encounter_verbs.test.ts:81-322` — **18 tests**: BYPASS 무전투·무보상·무회복·유료, PROBE 유료·정확한 ICE/HP·중복 청구 없음, BREACH 기존 전체 보상, 우회 후 이동·재방문·BREACH, 완료 노드 파밍 금지, 선택 없는 재확인 무효, 무료 출발 차단, COST 초과 거절/정확히 100 허용, 실제 프로그램 사용 여력 소진, ICE_X2 정보 일치. 구현 전 최초 13개 중 **12 failed / 1 passed**, 구현 후 전부 통과. 보상 fixture는 기존 기본 50 + 노드 75 = **125 credits**를 단언하며 수식은 변경하지 않았다.
+- `web/tests/encounter_test_helpers.ts:4-10` 및 기존 전투 진입 회귀 — Enter-only setup 대신 실제 화살표+확인으로 BREACH 선택. 기존 전투·HP·보상·VFX·저장 단언 보존. 경로 도달성 fixture는 완료한 그래프를 걸어 경제와 분리하고, 별도 유료 통과/재방문 회귀가 새 계약을 검증한다.
+- `web/e2e/menu-nav.ts:48-104`, `web/e2e/continue.spec.ts:192-217`, `web/e2e/encounter_verbs.spec.ts:19-114` — 결정 메뉴 진입·명시적 동사 선택 헬퍼. CONTINUE 후 미완료 노드 이동도 BYPASS를 결제한 뒤 기존 목적지 일치·실제 이동 단언을 유지. SFX / status / IDB / matrix / demo setup도 이 입력으로 이관. 새 브라우저 회귀는 무선택 재확인·PROBE→BYPASS·무보상·이동·네 방향 선택·기존 JACK OUT 결과를 검증.
+- `web/scripts/balance_sim.ts:122-130` — 하네스는 그래프를 걷지 않지만 첫 전투 진입에 reducer confirm을 쓰므로, setup에 BREACH 선택 입력만 추가했다. **추가 clock/RNG 진행 없음**. 전투 루프·튜닝·RNG·결과 집계는 변경하지 않았다. 파일 자체가 무변경이라고 주장하지 않는다.
+- 검증: `npm run typecheck` **0 errors**; `npm run lint` **0 errors / 기존 keyboard.ts:14 warning 1**; `npm test` **162 files / 3682 passed / 0 failed** (baseline 161 / 3664 + 새 파일 18 tests); `npm run build` 통과(119 modules). 편집한 src 파일만 Prettier write/check 통과, repo-wide format 없음. LSP는 TypeScript 서버 미설치·기존 설치 거절로 실행 불가이며 CLI 검증과 구분한다.
+- 양 덱 수정 전후 **전체 stdout `cmp` exit 0 (byte-identical)**. Opening `100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0`, PPL `100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7`. 턴·HP·percentile도 동일. 이는 **전투 하네스 동작 보존** 증거이지 경로 경제 밸런스 증거가 아니다.
+- 전체 E2E: 필수 IPv4 preview + `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **80 passed / 4 skipped / 0 failed (4.4m)**. 최초 실행의 CONTINUE 무료 출발 가정과 신규 JACK OUT의 state-null 가정 수정 후 통과. 마지막 좁은 화면 힌트 줄바꿈만 짧게 바꾼 뒤 build + 새 동사 E2E **4 passed**로 캡처 갱신. 매 실행 finally에서 preview 프로세스 그룹 종료.
+
 **Notes**: ADR-0195의 Status / Evidence / Notes 형식이다. **Accepted는 결정 완료이지 구현 완료가 아니다.**
-이번 범위는 오너가 지정한 **경로 결정만**이다. ↓/→는 다음 후보, ↑/←는 이전 후보, Enter/Space는
-강조한 목적지로 이동하며 이동 뒤에는 미선택으로 돌아간다. 미선택 상태의 확인은 **미완료** 현재 노드 ICE에만 진입한다.
+첫 슬라이스의 **경로 결정**에 이번 두 번째 슬라이스의 **고정 동사 결정**을 추가했다. 경로 목록에서 ↓/→는 다음 후보, ↑/←는 이전 후보, Enter/Space는
+강조한 목적지로 이동하며 이동 뒤에는 미선택으로 돌아간다. 미완료 ICE를 아직 통과하지 않았다면 출발 확인도 결정 메뉴를 연다.
+메뉴도 **초기 선택 없음**이며 ↓/→는 PROBE → BYPASS → BREACH → JACK OUT 순, ↑/←는 역순으로 순환한다.
+Enter/Space로 강조한 동사만 실행한다. PROBE 후에는 같은 메뉴에서 다른 동사를 고르며,
+BYPASS 뒤에는 현재 노드에서 인접 목적지를 다시 선택한다. 목적지 없는 확인으로 재개한 메뉴에서 BREACH도 가능하다.
+BREACH 확인은 기존 approach로 진입하고 다음 확인이 교전한다. ESC/Q 및 메뉴의 JACK OUT은 기존 matrix 이탈 결과(`phase: menu`)를 유지한다.
+**기존 한계 관측**: 이 결과는 컨트롤러의 state-null/제목 화면 복귀를 뜻하지 않는다. 현재 main.ts는 matrix를 계속 그리며, 이번 범위에서 JACK OUT 정책/컨트롤러를 재설계하지 않았다.
 기존 목록·화살표·확인 입력을 재사용하여 새 단축키나 공간 지도를 추가하지 않았다.
 실제 절차 생성 그래프는 DAG가 아니라 양방향 연결 그래프다 (`dungeon.ts:243-247`, `dungeon_layout.ts:444-447`).
 막다른 곁가지에서도 방문한 이웃으로 돌아갈 수 있어 보스 도달성을 보존한다. 자발적 재방문은 허용하지만
@@ -247,8 +266,14 @@ C에 필요한 결정 어휘를 생산한다. C는 런의 약한 P4를 도구 �
 완료 목록을 기록/강제하여 막았다. `balance_sim.ts`는 그래프를 걷지 않고 조우를 직접 구성하므로 이 구멍을 볼 수 없다.
 양 덱 0.0pp/byte-identical은 전투 기준선 보존 증거일 뿐 **런 보상 경제의 무결성 증거가 아니다**; 위 red/green 경로 회귀가 해당 결함의 검증이다.
 구형 세이브에는 완료 이력이 없으므로 추측하여 방문 노드를 완료 처리하지 않는다. 누락은 빈 목록이며 이후 해결한 조우부터 기록/저장한다.
-TRACE 통합·비용 정책, Probe/Bypass/Breach 고정 동사, E 확장, C 계약·보상 예산·측정 공백 해소 및
-별도 던전 정리는 여전히 미구현이다. 본문과 기존 ADR-0005/0060/0103/0247 결정은 변경하지 않았다.
+**가격의 의미/측정 한계**: PROBE 8은 작은 정보 투자, BYPASS 30은 세 번에 COST 90/100을 써서 비싼 프로그램을 포기하게 하는 출혈이다.
+BREACH는 이 추가 비용 없이 전투 피해 위험을 감수하고 기존 보상·salvage HEAL을 얻는다. 낮은 HP/위험한 ICE에서는 회피,
+여력이 있거나 보상이 필요하면 전투가 이득인 구조이며 무료 이동 우회도 막았다. 다만 **8/30은 보수적인 시작값이지 비지배 전략의 실측 입증이 아니다**.
+`balance_sim.ts`는 경로·연속 BYPASS·PROBE를 측정하지 않으므로 이 수치를 검증할 수 없다. [ego-lite 실제 플레이 절차](../../playtest/EGO_LITE_PLAY_CHECK.md)를
+새 입력(경로 선택+확인 → 메뉴 → 동사 선택+확인)에 맞춰 실제 런에서 수행해야 한다. 이번에는 그 play pass를 실행하지 않았다.
+메뉴 공개/통과 허가는 일시적이므로 이동·로드 뒤 다시 PROBE/BYPASS할 때 재결제되며, 완료 기록으로 오인하지 않는다.
+TRACE 표시 통합(a)은 ADR-0248에서 Deferred이고 a0는 이름만 분리했으므로 단일 계기 선행 조건은 여전히 미충족이다.
+E 확장, C 계약·보상 예산·측정 공백 해소 및 별도 던전 정리는 여전히 미구현이다. 본문과 기존 ADR-0005/0060/0103/0247/0248 결정은 변경하지 않았다.
 LSP 서버는 미설치이며 기존 설치 거절을 존중하여 실행하지 못했다; TypeScript CLI 검증은 통과했다.
 
 ## 변경 이력

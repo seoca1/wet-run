@@ -12,7 +12,7 @@
  * If CONTINUE works, the player sees their previous HP/turn state.
  */
 import { test, expect } from "@playwright/test";
-import { enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase } from "./menu-nav";
+import { chooseEncounterVerb, enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase } from "./menu-nav";
 
 test.describe("CONTINUE Option", () => {
   test.beforeEach(async ({ page }) => {
@@ -188,6 +188,11 @@ test.describe("CONTINUE Option", () => {
     expect(afterContinue.nodeCount).toBeGreaterThan(0);
     expect(afterContinue.currentNodeIndex).toBeGreaterThanOrEqual(0);
     expect(afterContinue.currentNodeIndex).toBeLessThan(afterContinue.nodeCount);
+
+    await page.keyboard.press("Enter");
+    await page.waitForFunction(() => window.wetrun?.state?.encounterDecision != null);
+    await chooseEncounterVerb(page, "BYPASS");
+    expect(await page.evaluate(() => window.wetrun?.state?.bypassedEncounterNodeIndex)).toBe(afterContinue.currentNodeIndex);
 
     // The restored state must REACT to input. A dead state (null matrix)
     // swallows every keypress, so the node index would not move.

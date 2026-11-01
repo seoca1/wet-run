@@ -2658,3 +2658,35 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **E2E**: `npx vite preview --port 5195 --strictPort --host 127.0.0.1` +
   `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots`
   → **76 passed / 4 skipped / 0 failed (4.4m)**. finally에서 preview 프로세스 그룹 종료. 추가 재검증 없음.
+
+## [2026-11-01] feat | ADR-0246 A slice 2 — COST로 결제하는 고정 encounter 동사
+
+- **UX**: 현재 미완료 ICE에서 확인하면 초기 선택 없는 PROBE / BYPASS / BREACH / JACK OUT 메뉴.
+  ↓/→ 다음, ↑/← 이전, Enter/Space 실행. PROBE 후 같은 메뉴 유지, BYPASS 후 현재 노드에서 경로 선택,
+  BREACH 후 기존 approach 확인으로 교전. 새 키·지도·프로그램 부여 동사(E)·아이템 미니게임(C) 없음.
+- **수치 단일 블록**: `web/src/core/state/encounter_verbs.ts:8`의 `ENCOUNTER_VERB_COSTS`에 PROBE 8, BYPASS 30, 기존 COST 상한 100.
+  작은 정보 투자와 프로그램 사용 여력의 실질 소진을 교환한다. BYPASS는 전투·credits·loot·HEAL 없이 통과하며 완료 처리하지 않는다.
+  출발 확인도 결제를 요구하여 화살표 이동으로 무료 회피하는 우회 차단. 재방문하면 BREACH와 기존 온전한 보상 가능.
+  PROBE 공개는 실제 BREACH roster(ICE_X2 포함)의 catalog id·HP이며 미완료 matrix preview의 무료 HP 누출도 차단.
+- **red/green**: 새 최초 13 tests 중 기존 코드에서 **12 failed / 1 passed** 확인.
+  최종 새 18 tests에 무전투/무보상·비용·정확한 공개·전체 보상·재방문·no-farming·무료 출발 금지·상한 경계·프로그램 headroom 소진 포함.
+  기존 전투 setup은 실제 BREACH 입력으로 이관, 기존 결과 단언 유지. 전체 **162 files / 3682 passed / 0 failed** (+18).
+- **검증**: typecheck 0 errors; lint 0 errors/기존 `keyboard.ts:14` warning 1; build 통과(119 modules);
+  편집한 src만 Prettier write/check. TypeScript LSP는 미설치·기존 설치 거절로 실행 불가(설치/우회 없음).
+- **하네스의 실제 구조**: 그래프를 걷지 않지만 첫 전투에는 reducer confirm을 사용하므로
+  `web/scripts/balance_sim.ts:122-130` setup에 BREACH 선택 입력만 추가. clock/RNG 추가 진행·전투 루프·튜닝·집계 무변경.
+  양 덱 수정 전후 **전체 stdout `cmp` exit 0 (byte-identical)**:
+  opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**.
+  이는 전투 하네스 동작 보존이며 **경로 경제가 균형 잡혔다는 증거가 아니다**.
+- **가격 한계**: 8/30은 보수적 시작값. BYPASS는 피해를 피하지만 보상·회복·프로그램 여력을 잃고 BREACH는 반대 교환이므로 무료 지배 선택을 막았다.
+  그래도 비지배성과 실제 선택의 재미는 미측정이다. `docs/playtest/EGO_LITE_PLAY_CHECK.md`에 따른 새 입력 기반 실제 런 play pass 필요, 이번에 미실행.
+- **E2E**: `menu-nav.ts` 명시적 동사 선택 + CONTINUE 이동 전 BYPASS + SFX/status/IDB/matrix/demo setup 이관.
+  필수 `--host 127.0.0.1` preview 및 `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots`
+  → **80 passed / 4 skipped / 0 failed (4.4m)**. 첫 실행의 CONTINUE 무료 출발 가정 및 신규 JACK OUT state-null 가정을 수정한 뒤 통과.
+  독립 기능 리뷰 PASS. 데스크톱/모바일 캡처 검토에서 숨김 힌트 단어 쪼개짐 1건 발견·짧게 수정 후 build + 동사 E2E **4 passed**로 새 캡처.
+  모든 preview는 finally에서 프로세스 그룹 종료. WCAG 전체 적합성은 측정/주장하지 않는다.
+- **유지한 한계**: 기존 JACK OUT은 reducer `phase: menu`이며 컨트롤러가 state-null/제목 화면으로 돌아가지는 않는 것을 브라우저에서 관측했다.
+  요청대로 기존 동작은 변경하지 않았다. 공개 정보/통과 허가는 일시 상태라 이동·로드 후 재결제; 완료 목록 저장 계약은 불변.
+- **문서**: ADR-0246은 Implementation Status 주석만 갱신, **🟡 Partial** 유지; 인덱스 Impl 셀 동기화.
+  E/C·TRACE 표시 통합 미구현. 전투 메커닉·튜닝·RNG·크롤러·`core/status.ts`·VFX 구현·raw 및 Accepted 결정 본문 무변경.
+  **stage/commit 없음**.

@@ -12,6 +12,7 @@ import {
 } from "../src/core/state/state";
 import type { Ice, Mission, Program, GameState } from "../src/core/types";
 import { KEYBOARD_MAPPING } from "../src/core/types";
+import { breachEncounter } from "./encounter_test_helpers";
 
 // ============================================================================
 // Test fixtures
@@ -126,7 +127,7 @@ describe("Menu → Stage flow", () => {
 
   it("matrix confirm transitions to combat phase", () => {
     const state = buildMatrixState();
-    const next = applyAction(state, { type: "confirm" });
+    const next = breachEncounter(state);
 
     expect(next.runPhase).toBe("combat");
     expect(next.phase).toBe("approach");
@@ -181,7 +182,7 @@ describe("Stage → Combat flow", () => {
   it("approach confirm transitions to combat", () => {
     let state = buildMatrixState();
     // Matrix → approach
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     expect(state.runPhase).toBe("combat");
     expect(state.phase).toBe("approach");
 
@@ -194,7 +195,7 @@ describe("Stage → Combat flow", () => {
   it("approach use_program does NOT transition to combat (Bug #4: silent deck consumption prevented)", () => {
     let state = buildMatrixState();
     // Matrix → approach
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     const deckBefore = state.deck.length;
     const deckFirstBefore = state.deck[0]?.id;
 
@@ -211,7 +212,7 @@ describe("Stage → Combat flow", () => {
   it("approach jack_out exits to menu", () => {
     let state = buildMatrixState();
     // Matrix → approach
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
 
     // Approach → exit
     state = applyAction(state, { type: "jack_out" });
@@ -236,7 +237,7 @@ describe("Combat → Victory → Loot flow", () => {
     const fastIce: Ice = { ...mockIce, hp: 5 };
     let state = buildMatrixState();
     // Matrix → approach
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = { ...state, iceRoster: [fastIce] };
 
     // Approach → combat
@@ -256,7 +257,7 @@ describe("Combat → Victory → Loot flow", () => {
 
   it("use_program that doesn't defeat ICE stays in combat", () => {
     let state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
 
     // Combat - ICE has 100 HP, damage is 5 from program + 11 from Dixie (8 base + 3 from combo 1)
@@ -272,7 +273,7 @@ describe("Combat → Victory → Loot flow", () => {
 
   it("loot confirm returns to the same node for route selection", () => {
     let state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" }); // matrix → approach
+    state = breachEncounter(state); // matrix → approach
     state = applyAction(state, { type: "confirm" }); // approach → combat
 
     const fastIce: Ice = { ...mockIce, hp: 5 };
@@ -307,7 +308,7 @@ describe("Combat → Victory → Loot flow", () => {
     };
     state = { ...state, matrix: bossMatrix, currentNodeIndex: 0 };
 
-    state = applyAction(state, { type: "confirm" }); // matrix → approach
+    state = breachEncounter(state); // matrix → approach
     state = applyAction(state, { type: "confirm" }); // approach → combat
 
     const fastIce: Ice = { ...mockIce, hp: 5 };
@@ -369,7 +370,7 @@ describe("Full run completion", () => {
     let state = buildMenuState();
     state = { ...state, matrix: fastMatrix, currentNodeIndex: 0, deck: [prog1, prog2] };
 
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     expect(state.runPhase).toBe("combat");
     expect(state.phase).toBe("approach");
 
@@ -390,7 +391,7 @@ describe("Full run completion", () => {
     state = applyAction(state, { type: "confirm" });
     expect(state.currentNodeIndex).toBe(1);
 
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     expect(state.runPhase).toBe("combat");
     expect(state.phase).toBe("approach");
 
@@ -427,7 +428,7 @@ describe("State consistency during transitions", () => {
 
   it("player stats persist across phase transitions", () => {
     let state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" }); // matrix → approach
+    state = breachEncounter(state); // matrix → approach
     state = applyAction(state, { type: "confirm" }); // approach → combat
 
     const initialAlarm = state.player.alarm;
@@ -446,7 +447,7 @@ describe("State consistency during transitions", () => {
 
   it("mission data persists across transitions", () => {
     let state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
 
     expect(state.mission.id).toBe(mockMission.id);
@@ -455,7 +456,7 @@ describe("State consistency during transitions", () => {
 
   it("hand is recycled during combat (draw, ADR-0212 step-4)", () => {
     let state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
 
     expect(state.deck.length).toBe(1);
@@ -473,7 +474,7 @@ describe("State consistency during transitions", () => {
     let state = buildMatrixState();
     const initialTurn = state.turnCount;
 
-    state = applyAction(state, { type: "confirm" }); // matrix → approach
+    state = breachEncounter(state); // matrix → approach
     expect(state.turnCount).toBe(initialTurn + 1);
 
     state = applyAction(state, { type: "confirm" }); // approach → combat
@@ -496,7 +497,7 @@ describe("Edge cases", () => {
 
   it("program not in hand returns unchanged state", () => {
     let state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
 
     const beforeHp = state.player.hp;
@@ -514,7 +515,7 @@ describe("Edge cases", () => {
 
   it("alarm too high blocks program use", () => {
     let state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
 
     // Set alarm to 95
@@ -549,7 +550,7 @@ describe("Edge cases", () => {
 
     // Jack out from approach
     state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" }); // → approach
+    state = breachEncounter(state); // → approach
     state = applyAction(state, { type: "jack_out" });
     expect(state.phase).toBe("exit");
 
@@ -573,10 +574,12 @@ describe("Keyboard mapping integration", () => {
     vi.restoreAllMocks();
   });
 
-  it("Enter key triggers matrix → approach transition", () => {
+  it("Enter key opens the encounter decision before approach", () => {
     const state = buildMatrixState();
     const next = applyAction(state, KEYBOARD_MAPPING.Enter!);
     expect(next.phase).toBe("approach");
+    expect(next.encounterDecision?.selectedVerb).toBeNull();
+    expect(next.runPhase).toBe("matrix");
   });
 
   it("Escape key triggers jack_out from matrix", () => {
@@ -587,7 +590,7 @@ describe("Keyboard mapping integration", () => {
 
   it("digit keys select programs in combat", () => {
     let state = buildMatrixState();
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
 
     const selectAction = KEYBOARD_MAPPING["1"]!;
@@ -630,7 +633,7 @@ describe("Multi-ICE combat", () => {
     let state = buildMenuState();
     state = { ...state, matrix: multiIceMatrix, currentNodeIndex: 0 };
 
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     expect(state.iceRoster).toHaveLength(2);
     expect(state.iceRoster[0]?.id).toBe("ice1");
     expect(state.iceRoster[1]?.id).toBe("ice2");

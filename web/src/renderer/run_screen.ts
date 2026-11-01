@@ -8,6 +8,7 @@ import { buildHudLines } from "../core/state/state";
 import { composeCombatVfx } from "./combat_vfx";
 import { composeFloatingDamage, overlayShake } from "./combat_overlay";
 import type { ShakeState } from "./screen_shake";
+import { renderEncounterDecision } from "./encounter";
 
 /** The same full-grid dimensions used by matrix, loot, ending and combat views. */
 export function runScreenLayout(cols: number, rows: number) {
@@ -23,6 +24,8 @@ export function renderRunScreen(
   const layout = runScreenLayout(cols, rows);
   switch (state.runPhase) {
     case "matrix": {
+      if (state.encounterDecision)
+        return renderEncounterDecision(state, cols, rows);
       const matrix = state.matrix;
       if (!matrix) return null;
       return {
@@ -32,7 +35,9 @@ export function renderRunScreen(
           state.visitedNodes,
           layout.cols,
           layout.rows,
-          state.iceRoster[state.activeIceIndex] ?? null,
+          state.clearedEncounterNodes?.includes(state.currentNodeIndex)
+            ? (state.iceRoster[state.activeIceIndex] ?? null)
+            : null,
           state.selectedMatrixNodeIndex ?? null,
         ),
         hud: [

@@ -5,6 +5,7 @@ import { generateProceduralMatrix } from "../src/core/dungeon/matrix";
 import { renderMatrix } from "../src/renderer/matrix";
 import { renderRunScreen } from "../src/renderer/run_screen";
 import type { GameState, Matrix, MatrixNode } from "../src/core/types";
+import { breachEncounter } from "./encounter_test_helpers";
 
 function node(id: number, adjacent: readonly number[]): MatrixNode {
   return {
@@ -179,7 +180,7 @@ describe("explicit matrix routes (ADR-0246 first slice)", () => {
         { type: "confirm" },
       );
       expect(arrived.visitedNodes).toContain(1);
-      const encounter = applyAction(arrived, { type: "confirm" });
+      const encounter = breachEncounter(arrived);
       expect(encounter.runPhase).toBe("combat");
       const fighting = applyAction(encounter, { type: "confirm" });
       const cleared = applyAction(fighting, {

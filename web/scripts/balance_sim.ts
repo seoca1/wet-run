@@ -121,6 +121,11 @@ export function simulateCombat(
 
     clock += AUTO_ATTACK_INTERVAL_MS;
     s = applyAction(s, { type: "confirm" });
+    // Fixed-verb menu setup only: BREACH, with no extra clock or RNG advance.
+    for (let index = 0; index < 3; index += 1) {
+      s = applyAction(s, { type: "move_south" });
+    }
+    s = applyAction(s, { type: "confirm" });
     clock += AUTO_ATTACK_INTERVAL_MS;
     s = applyAction(s, { type: "confirm" });
 

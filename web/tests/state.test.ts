@@ -19,6 +19,7 @@ import {
   makeEquipStats,
 } from "../src/core/state/equipment";
 import { makeLoadout } from "../src/core/state/loadout";
+import { breachEncounter } from "./encounter_test_helpers";
 
 const mockMission: Mission = {
   id: "test",
@@ -280,8 +281,8 @@ describe("end-to-end combat progression (regression: 'stuck in combat')", () => 
       },
       currentNodeIndex: 0,
     };
-    // Press Enter (matrix → approach).
-    let next = applyAction(withMatrix, KEYBOARD_MAPPING.Enter!);
+    // Select BREACH (matrix → approach).
+    let next = breachEncounter(withMatrix);
     expect(next.phase).toBe("approach");
     // Press Enter (approach → combat).
     next = applyAction(next, KEYBOARD_MAPPING.Enter!);

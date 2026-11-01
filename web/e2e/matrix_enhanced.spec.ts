@@ -6,6 +6,7 @@
  * - State markers (▸ current, ✓ visited, → adjacent)
  */
 import { test, expect } from "@playwright/test";
+import { gotoIceNode } from "./menu-nav";
 
 test.describe("Matrix Enhanced", () => {
   test.beforeEach(async ({ page }) => {
@@ -50,9 +51,7 @@ test.describe("Matrix Enhanced", () => {
     await page.waitForTimeout(300);
     await page.keyboard.press("Enter");
     await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // matrix -> approach
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // approach -> combat
+    await gotoIceNode(page);
 
     // Verify iceRoster populated.
     const iceCount = await page.evaluate(() => {

@@ -11,6 +11,7 @@ import {
 } from "../src/core/state/state";
 import type { Ice, Mission, Program } from "../src/core/types";
 import { KEYBOARD_MAPPING } from "../src/core/types";
+import { breachEncounter } from "./encounter_test_helpers";
 
 const mockMission: Mission = {
   id: "test",
@@ -200,7 +201,7 @@ describe("ESC/jack_out behavior consistency", () => {
     expect(next.phase).toBe("menu");
   });
 
-  it("Enter confirms in matrix (enters node)", () => {
+  it("Enter opens an encounter decision and BREACH enters the node", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
     const withMatrix = {
       ...state,
@@ -219,7 +220,10 @@ describe("ESC/jack_out behavior consistency", () => {
       },
     };
 
-    const next = applyAction(withMatrix, KEYBOARD_MAPPING.Enter!);
+    const decision = applyAction(withMatrix, KEYBOARD_MAPPING.Enter!);
+    expect(decision.runPhase).toBe("matrix");
+    expect(decision.encounterDecision?.selectedVerb).toBeNull();
+    const next = breachEncounter(withMatrix);
     expect(next.runPhase).toBe("combat");
     expect(next.phase).toBe("approach");
   });
@@ -238,6 +242,7 @@ describe("ESC/jack_out behavior consistency", () => {
       ...state,
       runPhase: "loot",
       phase: "victory",
+      clearedEncounterNodes: [0],
       matrix: {
         nodes: [
           {

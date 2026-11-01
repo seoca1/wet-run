@@ -11,6 +11,7 @@ import {
 } from "../src/core/state/state_actions";
 import type { GameState, Ice, GameAction, Mission, Program } from "../src/core/types";
 import { makeInitialState } from "../src/core/state/state";
+import { breachEncounter } from "./encounter_test_helpers";
 
 const mockMission: Mission = {
   id: "test",
@@ -66,8 +67,7 @@ describe("applyMatrixAction", () => {
       currentNodeIndex: 0,
       iceRoster: [createMockIce({ id: "ice1", hp: 50 })]
     });
-    const action: GameAction = { type: "confirm" };
-    const result = applyMatrixAction(state, action);
+    const result = breachEncounter(state);
     expect(result.runPhase).toBe("combat");
     expect(result.phase).toBe("approach");
     expect(result.iceRoster.length).toBeGreaterThan(0);
@@ -103,8 +103,7 @@ describe("applyMatrixAction", () => {
       currentNodeIndex: 0,
       bossPhase: 0
     });
-    const action: GameAction = { type: "confirm" };
-    const result = applyMatrixAction(state, action);
+    const result = breachEncounter(state);
     expect(result.bossPhase).toBe(1);
   });
 
@@ -128,8 +127,7 @@ describe("applyMatrixAction", () => {
       currentNodeIndex: 0,
       vfxInstances: []
     });
-    const action: GameAction = { type: "confirm" };
-    const result = applyMatrixAction(state, action);
+    const result = breachEncounter(state);
     expect(result.vfxInstances.length).toBeGreaterThan(0);
     expect(result.vfxInstances.some(v => v.kind === "room_flash")).toBe(true);
   });
@@ -145,8 +143,7 @@ describe("applyMatrixAction", () => {
       },
       currentNodeIndex: 0
     });
-    const action: GameAction = { type: "confirm" };
-    const result = applyMatrixAction(state, action);
+    const result = breachEncounter(state);
     expect(result.iceRoster.length).toBeLessThanOrEqual(4);
   });
 
@@ -162,8 +159,7 @@ describe("applyMatrixAction", () => {
       currentNodeIndex: 0,
       vfxInstances: []
     });
-    const action: GameAction = { type: "confirm" };
-    const result = applyMatrixAction(state, action);
+    const result = breachEncounter(state);
     expect(result.vfxInstances.some(v => v.kind === "data_acquired")).toBe(true);
   });
 
@@ -179,8 +175,7 @@ describe("applyMatrixAction", () => {
       currentNodeIndex: 0,
       turnCount: 5
     });
-    const action: GameAction = { type: "confirm" };
-    const result = applyMatrixAction(state, action);
+    const result = breachEncounter(state);
     expect(result.turnCount).toBe(6);
   });
 });

@@ -23,9 +23,7 @@ import {
 } from "./state_helpers";
 import { iceIntroPayload } from "../combat/combat_entry_vfx";
 import { AudioManager } from "../../audio/manager";
-import { isMutatorActive, type MutableRunState } from "./run_mutators";
-import { iceHpForGrade, missionGradeOf } from "../combat/ice_scaling";
-import { clearIceEffects } from "../combat/ice_combat_effects";
+import { applyEncounterDecision } from "./encounter_verbs";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import {
   resolveEnding,
@@ -43,10 +41,29 @@ export function applyMatrixAction(
   state: GameState,
   action: GameAction,
 ): GameState {
+  if (state.encounterDecision && action.type !== "jack_out") {
+    return applyEncounterDecision(state, action);
+  }
   if (action.type === "confirm" && state.matrix != null) {
     const node = state.matrix.nodes[state.currentNodeIndex];
     if (!node) return state;
     const destination = state.selectedMatrixNodeIndex;
+    const uncleared =
+      node.iceIds.length > 0 &&
+      !state.clearedEncounterNodes?.includes(state.currentNodeIndex);
+    // Departure must not offer a free alternative to the paid BYPASS verb.
+    if (
+      uncleared &&
+      (destination == null ||
+        state.bypassedEncounterNodeIndex !== state.currentNodeIndex)
+    ) {
+      return {
+        ...state,
+        selectedMatrixNodeIndex: null,
+        encounterDecision: { selectedVerb: null, probed: false },
+        message: "Uncleared ICE — choose how to cross.",
+      };
+    }
     if (destination != null && node.adjacent.includes(destination)) {
       const target = state.matrix.nodes[destination];
       if (!target) return state;
@@ -55,11 +72,13 @@ export function applyMatrixAction(
         ...state,
         currentNodeIndex: destination,
         selectedMatrixNodeIndex: null,
+        encounterDecision: null,
+        bypassedEncounterNodeIndex: null,
         visitedNodes: state.visitedNodes.includes(destination)
           ? state.visitedNodes
           : [...state.visitedNodes, destination],
         turnCount: state.turnCount + 1,
-        message: `Moved to ${target.zone} — choose a route or ENTER to engage ICE`,
+        message: `Moved to ${target.zone} — ENTER: encounter; arrows: route`,
       };
     }
     if (state.clearedEncounterNodes?.includes(state.currentNodeIndex)) {
@@ -74,45 +93,7 @@ export function applyMatrixAction(
         message: "No ICE here — move to a node with an encounter.",
       };
     }
-    const activeIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
-    const encounterMultiplier = isMutatorActive(
-      state as unknown as MutableRunState,
-      "ice_x2",
-    )
-      ? 2
-      : 1;
-    const baseCount = Math.min(node.iceIds.length * encounterMultiplier, 4);
-    // Cycle the node's ICE ids so the roster actually reaches `baseCount`.
-    // A plain `slice` could only ever SHORTEN the list, which made the
-    // ICE_X2 mutator inert (nodes carry exactly one ice id → roster 1).
-    const iceRoster = Array.from({ length: baseCount }, (_, i) => {
-      const id = node.iceIds[i % node.iceIds.length] as string;
-      const hp =
-        node.iceHp[i % node.iceHp.length] ??
-        iceHpForGrade(activeIce, missionGradeOf(state.mission));
-      // ADR-0219 Option A: the roster ICE carries its own `maxHp` so an ICE
-      // heal can be capped at it (catalog rows carry no `maxHp` — the loader
-      // derives HP from `hp_base` / `hp_per_grade`).
-      return { ...activeIce, id, hp, maxHp: hp };
-    });
-    const matrixEntryVfx: import("../../renderer/combat_vfx.ts").CombatVfxInstance[] =
-      [import_vfx("room_flash", "TIER_GOLD", 1)];
-    if (node.eventKind === "cache") {
-      matrixEntryVfx.push(
-        import_vfx("data_acquired", "", durationForKind("data_acquired")),
-      );
-    }
-    return {
-      ...clearIceEffects(state),
-      runPhase: "combat",
-      phase: "approach",
-      message: `Entering ${node.zone}... (${iceRoster.length} ICE)`,
-      iceRoster,
-      activeIceIndex: 0,
-      bossPhase: node.isBoss ? 1 : 0,
-      turnCount: state.turnCount + 1,
-      vfxInstances: [...state.vfxInstances, ...matrixEntryVfx],
-    };
+    return state;
   }
 
   // List navigation only: travel (including retreat) requires a separate confirm.
@@ -150,6 +131,7 @@ export function applyMatrixAction(
   if (action.type === "jack_out") {
     return {
       ...state,
+      encounterDecision: null,
       phase: "menu",
       message: "Jacked out — run abandoned",
       vfxInstances: [
@@ -161,7 +143,8 @@ export function applyMatrixAction(
   if (action.type === "select_program") {
     return {
       ...state,
-      message: "Programs only usable in combat — press ENTER to engage ICE",
+      message:
+        "Programs only usable in combat — ENTER to choose an encounter verb",
     };
   }
   return state;

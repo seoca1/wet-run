@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 import * as fs from "fs";
 import * as path from "path";
+import { chooseEncounterVerb, gotoEncounterDecision } from "./menu-nav";
 
 const SCREENSHOT_DIR = path.resolve(
   import.meta.dirname,
@@ -53,8 +54,9 @@ test.describe("Game Demo - Menu to Combat", () => {
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, "03-matrix.png"), fullPage: true });
     console.log("📸 03-matrix.png captured");
     
-    // 4. APPROACH PHASE - Press Enter
-    await page.keyboard.press("Enter");
+    // 4. Select BREACH before the existing approach phase.
+    await gotoEncounterDecision(page);
+    await chooseEncounterVerb(page, "BREACH");
     await page.waitForTimeout(1000);
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, "04-approach.png"), fullPage: true });
     console.log("📸 04-approach.png captured");

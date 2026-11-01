@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { applyAction, makeInitialState } from "../src/core/state/state";
+import { breachEncounter } from "./encounter_test_helpers";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
@@ -30,7 +31,7 @@ describe("Bug #7 regression: applyLootAction heals player on advance", () => {
     let state = makeInitialState(mission as any, ice as any, loadDeck(programs));
 
     state = { ...state, currentNodeIndex: 1 };
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
     state = {
       ...state,

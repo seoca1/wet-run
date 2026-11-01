@@ -11,6 +11,7 @@ import { describe, it, expect, vi } from "vitest";
  * pure functions. The actual SFX dispatch is verified via E2E.
  */
 import { applyAction } from "../src/core/state/state";
+import { breachEncounter } from "./encounter_test_helpers";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 import { makeInitialState } from "../src/core/state/state";
 
@@ -130,7 +131,7 @@ describe("sound trigger logic (Tier 5.5+)", () => {
           reward: { credits: 50 }, isBoss: false, adjacent: [],
         }], startNode: 0, bossNode: 0,
       } };
-      const next = applyAction(prev, { type: "confirm" });
+      const next = breachEncounter(prev);
       expect(next.runPhase).toBe("combat");
       expect(next.runPhase !== prev.runPhase).toBe(true);
     });

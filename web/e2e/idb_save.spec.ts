@@ -13,6 +13,7 @@
  * 5. Verifies save survives (via IDB read)
  */
 import { test, expect } from "@playwright/test";
+import { gotoIceNode } from "./menu-nav";
 
 test.describe("IDB Save", () => {
   test.beforeEach(async ({ page }) => {
@@ -33,10 +34,7 @@ test.describe("IDB Save", () => {
     await page.waitForTimeout(300);
     await page.keyboard.press("Enter"); // launch mission
     await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // matrix -> approach
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // approach -> combat
-    await page.waitForTimeout(300);
+    await gotoIceNode(page);
 
     // Inspect autosave state (IDB write should have happened on draw()).
     const phaseAfterLaunch = await page.evaluate(() => {

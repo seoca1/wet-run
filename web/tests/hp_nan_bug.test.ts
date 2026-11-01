@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { applyAction, makeInitialState, buildHudLines } from "../src/core/state/state";
 import type { GameState } from "../src/core/types";
+import { breachEncounter } from "./encounter_test_helpers";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
@@ -60,7 +61,7 @@ describe("HP NaN/100 regression (2026-09-19)", () => {
     const iceNodeIdx = state.matrix!.nodes.findIndex((n) => n.iceIds.length > 0);
     expect(iceNodeIdx).toBeGreaterThanOrEqual(0);
     state = steerToNode(state, iceNodeIdx);
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     expect(state.runPhase).toBe("combat");
 
     state = applyAction(state, { type: "confirm" });
@@ -90,7 +91,7 @@ describe("HP NaN/100 regression (2026-09-19)", () => {
     const iceNodeIdx = state.matrix!.nodes.findIndex((n) => n.iceIds.length > 0);
     expect(iceNodeIdx).toBeGreaterThanOrEqual(0);
     state = steerToNode(state, iceNodeIdx);
-    state = applyAction(state, { type: "confirm" });
+    state = breachEncounter(state);
     state = applyAction(state, { type: "confirm" });
     expect(state.phase).toBe("combat");
 

@@ -187,6 +187,14 @@ export interface GameState {
   readonly currentNodeIndex: number;
   /** Transient route highlight; omitted by old states/saves, never auto-selected. */
   readonly selectedMatrixNodeIndex?: number | null;
+  /** Transient encounter menu/intel; omitted from saves, reset on travel. */
+  readonly encounterDecision?: {
+    readonly selectedVerb:
+      import("./state/encounter_verbs").EncounterVerb | null;
+    readonly probed: boolean;
+  } | null;
+  /** Paid passage for this visit only; does not resolve or reward the node. */
+  readonly bypassedEncounterNodeIndex?: number | null;
   readonly matrix: Matrix | null;
   readonly visitedNodes: ReadonlyArray<number>;
   /** Resolved encounters, not visits: travel visits a node before combat.

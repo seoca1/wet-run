@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { applyAction, makeInitialState } from "../src/core/state/state";
+import { breachEncounter } from "./encounter_test_helpers";
 import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
@@ -40,7 +41,7 @@ describe("Boss defeat transitions to ending (Bug regression)", () => {
     if (!bossNode?.isBoss) throw new Error("node 20 should be boss");
 
     // Confirm to enter matrix/approach
-    let s = applyAction(withBoss, { type: "confirm" });
+    let s = breachEncounter(withBoss);
     s = applyAction(s, { type: "confirm" });
     expect(s.phase).toBe("combat");
 

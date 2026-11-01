@@ -1,4 +1,5 @@
-import type { Page } from "@playwright/test";
+import { expect, type Page } from "@playwright/test";
+import type { EncounterVerb } from "../src/core/state/encounter_verbs";
 
 /** Resolve a menu option's live index and walk to it. Position-independent:
  *  hardcoded ArrowDown counts broke when FAR GRID et al. were inserted. */
@@ -43,8 +44,8 @@ export async function enterForPhase(page: Page, want: string, tries = 6): Promis
   throw new Error(`enterForPhase: phase ${want} not reached`);
 }
 
-/** Select and confirm adjacent routes to an ICE node, then engage both phases. */
-export async function gotoIceNode(page: Page): Promise<void> {
+/** Reach an ICE node and open its fixed-verb decision, without committing. */
+export async function gotoEncounterDecision(page: Page): Promise<void> {
   for (let i = 0; i < 30; i += 1) {
     const route = await page.evaluate(() => {
       const w = window as unknown as {
@@ -78,7 +79,25 @@ export async function gotoIceNode(page: Page): Promise<void> {
     await page.keyboard.press("Enter");
     if (i === 29) throw new Error("gotoIceNode: no ICE node reached in 30 moves");
   }
-  await enterForRunPhase(page, "combat");
+  await page.keyboard.press("Enter");
+  await page.waitForFunction(() => window.wetrun?.state?.encounterDecision != null);
+  expect(await page.evaluate(() => window.wetrun?.state?.encounterDecision?.selectedVerb)).toBeNull();
+}
+
+export async function chooseEncounterVerb(page: Page, verb: EncounterVerb): Promise<void> {
+  for (let step = 0; step < 4; step += 1) {
+    const selected = await page.evaluate(() => window.wetrun?.state?.encounterDecision?.selectedVerb);
+    if (selected === verb) break;
+    await page.keyboard.press("ArrowDown");
+  }
+  expect(await page.evaluate(() => window.wetrun?.state?.encounterDecision?.selectedVerb)).toBe(verb);
+  await page.keyboard.press("Enter");
+}
+
+export async function gotoIceNode(page: Page): Promise<void> {
+  await gotoEncounterDecision(page);
+  await chooseEncounterVerb(page, "BREACH");
+  expect(await page.evaluate(() => window.wetrun?.state?.runPhase)).toBe("combat");
   await enterForPhase(page, "combat");
 }
 

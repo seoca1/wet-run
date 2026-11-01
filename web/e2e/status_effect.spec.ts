@@ -5,21 +5,18 @@
  * (stun/slow/silence/vulnerable) are tested at unit level.
  */
 import { test, expect } from "@playwright/test";
+import { enterForScreen, gotoIceNode } from "./menu-nav";
 
 test("use_program triggers burn status effect on ICE (probabilistic)", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("wetrun_tutorial_completed", "true"));
   await page.goto("./");
   await page.waitForLoadState("networkidle");
   await page.waitForTimeout(500);
 
   // Navigate to combat: NEW_RUN → launch → matrix → enter → combat.
+  await enterForScreen(page, "mission_select");
   await page.keyboard.press("Enter");
-  await page.waitForTimeout(200);
-  await page.keyboard.press("Enter");
-  await page.waitForTimeout(200);
-  await page.keyboard.press("Enter"); // matrix → approach
-  await page.waitForTimeout(200);
-  await page.keyboard.press("Enter"); // approach → combat
-  await page.waitForTimeout(300);
+  await gotoIceNode(page);
 
   // Run the program multiple times to give burn proc a chance to fire.
   // 20% per program → ~67% chance after 5 uses to have at least one burn.

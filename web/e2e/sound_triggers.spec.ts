@@ -6,6 +6,7 @@
  * continues to function after SFX dispatch calls.
  */
 import { test, expect } from "@playwright/test";
+import { gotoIceNode } from "./menu-nav";
 
 test.describe("Sound Triggers", () => {
   test.beforeEach(async ({ page }) => {
@@ -34,10 +35,7 @@ test.describe("Sound Triggers", () => {
     await page.waitForTimeout(300);
     await page.keyboard.press("Enter"); // launch
     await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // matrix -> approach
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // approach -> combat (matrix -> combat SFX)
-    await page.waitForTimeout(300);
+    await gotoIceNode(page);
 
     // Use a program (combat_hit SFX + possible burn proc + boss phase if applicable).
     await page.keyboard.press("1");

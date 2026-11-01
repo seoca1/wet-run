@@ -20,6 +20,7 @@ describe("run screen composition", () => {
       runPhase: "matrix",
       currentNodeIndex: 1,
       visitedNodes: [0, 1],
+      clearedEncounterNodes: [1],
     });
     if (!state.matrix) throw new Error("fixture requires a matrix");
     const view = renderRunScreen(state, 80, 50);

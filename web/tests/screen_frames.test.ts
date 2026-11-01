@@ -11,7 +11,7 @@ import {
   renderMissionList,
 } from "../src/renderer/mission_select";
 import { combatHeaderRuleRow, renderGrid } from "../src/renderer/combat_grid";
-import { makeInitialState } from "../src/core/state/state";
+import { buildHudLines, makeInitialState } from "../src/core/state/state";
 import { PALETTE } from "../src/renderer/palette";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
@@ -263,6 +263,34 @@ describe("combat frame", () => {
     expect(rowText(grid, 4).slice(3, 78)).toBe("y".repeat(75));
     expectInsetFrame(grid);
   });
+
+  it.each([
+    [40, 60, 16],
+    [60, 40, 20],
+    [80, 50, 24],
+  ])(
+    "keeps TRACE feedback and the combat frame intact at %ix%i",
+    (cols, rows, hudCols) => {
+      // Given the highest idle level and its new player-visible message.
+      const state = combatState({ alarmLevel: 5, message: "TRACE 5/5" });
+
+      // When rendered through the real combat layout.
+      const grid = renderGrid(state, null, null, [], cols, rows);
+
+      // Then feedback is complete, with no overwritten frame or gutter.
+      expect(rowText(grid, 4)).toContain("TRACE 5/5");
+      expectInsetFrame(grid);
+      const hud = buildHudLines({
+        ...state,
+        player: { ...state.player, alarm: 100 },
+      });
+      expect(hud).toContain("COST 100/100");
+      expect(hud).toContain("TRACE 5/5");
+      for (const line of hud.filter((line) => /^(COST|TRACE) /.test(line))) {
+        expect(line.length).toBeLessThanOrEqual(hudCols - 1);
+      }
+    },
+  );
 
   it("keeps victory art off the bottom rail", () => {
     const grid = renderGrid(

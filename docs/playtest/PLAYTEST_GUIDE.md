@@ -64,7 +64,7 @@ binds IPv6 only and `http://127.0.0.1:...` will not connect.
 | --- | --- | --- | --- |
 | **TW-01** | New Run → mission select → launch a mission | 5 min | Reaches the matrix and an ICE encounter without getting stuck |
 | **TW-02** | Fight one encounter to the end | 5 min | Win or loss resolves; hand, HP and log all update |
-| **TW-03** | Idle in combat for ~30 seconds, then resume | 3 min | The alarm level rises while you do nothing and stops rising once you act again |
+| **TW-03** | Idle in combat for ~30 seconds, then resume | 3 min | TRACE rises while you do nothing and stops rising once you act again |
 | **TW-04** | Play slowly, then play fast, in the same encounter | 5 min | Your input *speed* should not change how hard the fight is |
 | **TW-05** | Mobile portrait and landscape | 10 min | Touch works; nothing is clipped or overlapping |
 | **TW-06** | Settings → volume / colourblind mode / text size | 3 min | Changes apply immediately and survive a reload |
@@ -73,7 +73,7 @@ binds IPv6 only and `http://127.0.0.1:...` will not connect.
 | **TW-09** | Die → death summary → Hall of Dead → new jockey | 5 min | The archive keeps the dead jockey; a new run starts clean |
 | **TW-10** | Play at the smallest and largest window sizes you use | 5 min | The frame and HUD stay inside the viewport; text does not clip |
 
-TW-03 and TW-04 matter most right now: the alarm is driven by **idle time** and the
+TW-03 and TW-04 matter most right now: TRACE is driven by **idle time** and the
 Dixie companion is driven by **player turns**. Both changed recently, and the way to
 catch a regression is to feel whether the *timing* of a fight behaves the way the
 descriptions say.
@@ -136,9 +136,9 @@ looking at the rendered screen while every automated test passed.
 
 1. **The opening hand** is `backdoor`, `barrier`, `boost`, `cloak`, `decoy`. Work out
    what each one does before the first real fight.
-2. **Two different "alarm"s, do not confuse them.** The right panel's `Alarm N/100` is
+2. **COST is for acting; TRACE is for idling.** The right panel's `COST N/100` is
    the program-cost accumulator: an expensive program pushes it up, and a program that
-   would take it past 100 fails. The `ALARM N/5` row is the idle alarm: it rises while
+   would take it past 100 fails. The `TRACE N/5` row is idle pressure: it rises while
    you do nothing and makes ICE hit harder.
 3. **Idling is meant to cost you.** If sitting still feels free, that is worth
    reporting (TW-03).

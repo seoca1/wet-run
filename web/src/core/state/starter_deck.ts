@@ -95,7 +95,7 @@ export const STARTER_DECK: readonly Program[] = Object.freeze([
     tier: 1,
     cost: 5,
     effect: "stealth",
-    description: "Reduces alarm; passive ICE may lose aggro.",
+    description: "Reduces COST; passive ICE may lose aggro.",
     aoe: false,
   },
 ] as Program[]);

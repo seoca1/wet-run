@@ -59,7 +59,7 @@ export function useProgram(state: GameState, programId: string): GameState {
   const newAlarm =
     state.player.alarm + Math.floor(program.cost * alarmMultiplier);
   if (newAlarm > 100) {
-    return { ...state, message: "Alarm too high — program failed" };
+    return { ...state, message: "Cost too high — program failed" };
   }
   const newDeck = state.deck.filter((p) => p.id !== programId);
   const discard = [...state.discardPile, program];

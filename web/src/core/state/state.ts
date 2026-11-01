@@ -198,7 +198,7 @@ export function resolveProgramSelection(
 export function buildHudLines(state: GameState): string[] {
   const lines: string[] = [
     `HP ${state.player.hp}/${state.player.maxHp}`,
-    `Alarm ${state.player.alarm}/100`,
+    `COST ${state.player.alarm}/100`,
     `Credits ${state.player.credits}`,
   ];
   const equippedCount = state.equipmentLoadout.allSlotsFilled().length;
@@ -207,7 +207,7 @@ export function buildHudLines(state: GameState): string[] {
     lines.push(`Combo x${state.playerCombo}`);
   }
   if (state.alarmLevel > 0) {
-    lines.push(`ALARM ${state.alarmLevel}/5`);
+    lines.push(`TRACE ${state.alarmLevel}/5`);
   }
   if (state.bossPhase > 0 && state.bossPhase <= 4) {
     lines.push(`★ BOSS PHASE ${state.bossPhase}/4`);

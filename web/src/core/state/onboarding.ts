@@ -71,7 +71,7 @@ export function shouldAutoShowTutorial(
 /** The combat-entry hint lines shown on the first combat screen. */
 export const COMBAT_ENTRY_HINT_LINES: readonly string[] = [
   "1-9: USE PROGRAM   (tap the program buttons on touch devices)",
-  "ICE first. You first. Alarm 100 is a flatline.",
+  "ICE first. You first. COST over 100 blocks programs.",
 ] as const;
 
 /** A combat-entry hint rendered as a single line (used by the HUD). */

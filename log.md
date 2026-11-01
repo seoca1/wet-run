@@ -2634,3 +2634,27 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **밸런스**: 포맷 전후 `npm run balance`와 `npm run balance -- --deck ppl` 전체 stdout을 각각 `cmp`하여 **byte-identical(exit 0)**. opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**로 ADR-0239 기준선 일치(턴/HP/percentile도 전후 동일).
 - **E2E**: `npx vite preview --port 5195 --strictPort --host 127.0.0.1` + CI를 제거한 환경의 `PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **76 passed / 4 skipped / 0 failed (4.4m)**, retry 없음. finally에서 preview 프로세스 그룹 종료.
 - **경계**: ADR·raw/·index.html·e2e/·package.json 변경 없음. 소스는 지정 glob에만 기계적 포맷. 커밋·스테이징 없음.
+
+## [2026-11-01] fix | ADR-0248 a0 — 두 alarm 계기의 이름을 COST / TRACE로 분리
+
+- **결함/수정**: 행동 비용 `Alarm N/100`과 유휴 압력 `ALARM N/5`를 모두 alarm으로 부르던 혼동 제거.
+  `COST N/100` / `TRACE N/5`, tick `TRACE N/5`, 실패 `Cost too high — program failed`로 변경.
+  튜토리얼·진입 힌트·Cloak·HOT TRACE 설명도 정합. 튜토리얼의 기존 flatline 주장은 실제 초과 비용 실패 규칙으로 설명.
+- **경계**: 이름만 분리, 메커닉 병합 없음. 필드·저장 스키마·RNG·10초 임계/간격·+4%/+1pp·상한 5 불변.
+  크롤러 자체 alarm·status.ts·VFX 구현·raw/·ADR-0240/0246/0247 결정 본문 미수정. stage/commit 없음.
+- **결정**: 신규 Accepted [ADR-0248](docs/wiki/decisions/0248-alarm-meter-naming.md), 인덱스·가이드·GDD·combat 명칭 정합.
+  표시 통합 (a)은 Deferred. 병합 (b)은 숙고와 행동 능력을 결합하고 re-baseline을 요구하는 별도 설계 결정으로 기각.
+  ADR-0246의 단일 가시 위험 계기 조건은 여전히 미충족.
+- **테스트**: 기존 표시 단언은 새 문구의 전체 문자열 단언으로 강화. COST/TRACE 별도 값·0 숨김 및
+  40×60/60×40/80×50 실제 전투 프레임 회귀 추가. E2E의 상태/HP/덱 보존 단언 유지·실제 TRACE 메시지 단언 추가.
+- **검증**: 편집한 src 7개 파일만 Prettier write/check 통과. typecheck 0 errors;
+  lint 0 errors/기존 keyboard.ts:14 warning 1개; 전체 **161 files / 3664 tests / 0 failures** (+6);
+  build 통과(117 modules). 첫 단위 실행에서 기존 onboarding flatline 단언 1건 발견·새 COST 제한 문구 전체 단언으로 갱신 후 통과.
+  LSP는 서버 미설치/기존 설치 거절로 실행 불가, CLI 타입체크 통과(설치/우회 없음).
+- **밸런스**: 양 덱 수정 전후 전체 stdout `cmp` exit 0.
+  ADR-0239 opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**,
+  PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**, 턴·HP·percentile 동일.
+  stdout 표는 ADR-0248 검증 기록 참조.
+- **E2E**: `npx vite preview --port 5195 --strictPort --host 127.0.0.1` +
+  `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots`
+  → **76 passed / 4 skipped / 0 failed (4.4m)**. finally에서 preview 프로세스 그룹 종료. 추가 재검증 없음.

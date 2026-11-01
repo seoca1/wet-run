@@ -208,7 +208,7 @@ export function tickAlarm(
     return {
       alarmLevel: newLevel,
       lastAlarmTickMs: currentTickMs,
-      message: `TRACE WARNING: alarm level ${newLevel}/${ALARM_MAX_LEVEL}`,
+      message: `TRACE ${newLevel}/${ALARM_MAX_LEVEL}`,
     };
   }
 

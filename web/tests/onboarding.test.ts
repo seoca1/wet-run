@@ -148,8 +148,10 @@ describe("P11 — combat-entry hint", () => {
     expect(all).toContain("touch");
   });
 
-  it("mentions the alarm / flatline stakes", () => {
-    expect(COMBAT_ENTRY_HINT_LINES.join(" ")).toContain("flatline");
+  it("explains the COST limit on program use", () => {
+    expect(COMBAT_ENTRY_HINT_LINES).toContain(
+      "ICE first. You first. COST over 100 blocks programs.",
+    );
   });
 
   it("places the hint above the hand row so it never covers the programs", () => {

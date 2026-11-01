@@ -65,7 +65,7 @@ export const MUTATORS: Readonly<Record<RunMutator, MutatorInfo>> =
     double_alarm: Object.freeze({
       id: "double_alarm",
       name: "HOT TRACE",
-      description: "Alarm ticks 2x faster. ICE pursues.",
+      description: "COST gains doubled. ICE pursues.",
       icon: "double_alarm",
     }),
     ice_x2: Object.freeze({

@@ -431,7 +431,7 @@ describe("combat_engine", () => {
       const result = tickAlarm(2, 0, 10000, 1.0);
       expect(result.alarmLevel).toBe(3);
       expect(result.lastAlarmTickMs).toBe(10000);
-      expect(result.message).toContain("alarm level 3");
+      expect(result.message).toBe("TRACE 3/5");
     });
 
     it("max level stays at ALARM_MAX_LEVEL", () => {

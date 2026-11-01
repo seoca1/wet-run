@@ -530,7 +530,7 @@ describe("Edge cases", () => {
     // State should be unchanged (new object but same values)
     expect(state.player.hp).toBe(beforeHp);
     expect(state.player.alarm).toBe(95);
-    expect(state.message).toContain("Alarm too high");
+    expect(state.message).toBe("Cost too high — program failed");
   });
 
   it("confirm in initial state (menu phase, matrix runPhase) returns no-ICE feedback", () => {

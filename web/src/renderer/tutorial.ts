@@ -50,11 +50,11 @@ const TUTORIAL_STEPS: readonly TutorialStep[] = [
   {
     title: "Combat Basics",
     body: [
-      "1-9: Use program from hand (programs cost Alarm)",
+      "1-9: Use program from hand (raises COST)",
       "M: Mute/Unmute BGM + SFX",
       "ICE has HP — reduce to 0 to defeat",
       "Cards go to discard, draw from deck",
-      "Alarm 100 = Flatline (Game Over)",
+      "COST over 100 = program fails",
     ],
     action: "Enter",
   },

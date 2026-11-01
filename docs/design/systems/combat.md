@@ -13,14 +13,21 @@
 
 ### Web 유휴 압력 (ADR-0240, 2026-11-01)
 
-활성 web 전투는 입력 없이 **10초** 지나면 reducer `idle_tick`으로 알람 레벨을
+활성 web 전투는 입력 없이 **10초** 지나면 reducer `idle_tick`으로 TRACE 레벨을
 1 올린다. 연속 유휴 중 10초 간격, 최대 5. 입력이 있으면 유휴 시계를 다시 시작하며
 활성 플레이·숨긴 탭·비전투 화면에서는 tick을 보내지 않는다. 유휴 자체는 적 턴이나
 직접 피해를 발생시키지 않는다.
 
 레벨당 적 피해 **+4%**(소수점 버림, 레벨 5에서 ×1.20), 기존 aggression tier의 스킬 선택 확률
-**+1pp**(최대 100%). 알람 0에서는 기존 전투와 RNG draw가 동일하다.
-`player.alarm`과의 통합, 접근성 opt-out, stealth 배율은 미결/후속 범위다.
+**+1pp**(최대 100%). TRACE 0에서는 기존 전투와 RNG draw가 동일하다.
+접근성 opt-out, stealth 배율은 미결/후속 범위다.
+
+**표시 명칭 (ADR-0248)**: `player.alarm`은 프로그램을 쓸 때 쌓이는 **COST N/100**,
+`alarmLevel`은 아무것도 하지 않을 때 쌓이는 **TRACE N/5**다. 프로그램 비용이 COST를
+100 초과로 만들면 그 프로그램은 실패한다. 두 메커닉은 병합하지 않고 이름만 구분한다.
+표시 통합 (a)은 보류이며, 행동 비용과 숙고 비용을 결합하는 병합 (b)은 별도 설계 결정으로 기각했다.
+[ADR-0248](../../wiki/decisions/0248-alarm-meter-naming.md) 참조. 아래 prototype의
+`state.alarm_level`·salvage·intel 기록은 역사적 사양이며 활성 web의 표시 명칭이 아니다.
 수치·양 덱 실측·지속 유휴의 Dixie 타이밍 한계는
 [ADR-0240 구현 증거](../../wiki/decisions/0240-implementation-evidence.md) 참조.
 

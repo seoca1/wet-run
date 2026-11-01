@@ -40,6 +40,9 @@ test("idle rAF dispatch raises alarm without directly attacking", async ({
     cards: window.wetrun?.state?.deck.length,
   }));
   expect(after).toEqual({ ...before, alarm: 2 });
+  expect(await page.evaluate(() => window.wetrun?.state?.message)).toBe(
+    "TRACE 2/5",
+  );
 });
 
 test("real input prevents alarm growth despite elapsed combat time", async ({

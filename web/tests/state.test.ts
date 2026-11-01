@@ -174,13 +174,35 @@ describe("hud", () => {
     },
   );
 
-  it("includes hp, alarm, credits lines", () => {
+  it("includes hp, cost, credits lines", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
     const lines = buildHudLines(state);
     expect(lines.some((l) => l.startsWith("HP "))).toBe(true);
-    expect(lines.some((l) => l.startsWith("Alarm "))).toBe(true);
+    expect(lines).toContain("COST 0/100");
     expect(lines.some((l) => l.startsWith("Credits "))).toBe(true);
   });
+
+  it.each([0, 1, 5])(
+    "distinguishes COST from TRACE at idle level %i",
+    (alarmLevel) => {
+      // Given two independent accumulators with visibly different values.
+      const initial = makeInitialState(mockMission, mockIce, [mockProgram]);
+      const state = {
+        ...initial,
+        player: { ...initial.player, alarm: 95 },
+        alarmLevel,
+      };
+
+      // When the shared status panel is built.
+      const lines = buildHudLines(state);
+
+      // Then both labels carry their own scale; zero TRACE stays hidden as before.
+      expect(lines).toContain("COST 95/100");
+      expect(lines.filter((line) => line.startsWith("TRACE "))).toEqual(
+        alarmLevel > 0 ? [`TRACE ${alarmLevel}/5`] : [],
+      );
+    },
+  );
 });
 
 describe("keyboard mapping", () => {

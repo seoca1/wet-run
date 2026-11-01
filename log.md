@@ -2507,3 +2507,22 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   설치/우회 없음, tsc 통과. 이번 수정 세션에서 ego-lite 재플레이/별도 시각 캡처는 미실행.
 - **문서**: 새 ADR-0245 ✅ Implemented + ADR-0195 Status/Evidence/Notes + 변경 이력,
   ADR 인덱스 Impl 행, 실제 플레이 점검의 두 항목을 확정·수정 상태로 연결.
+
+## [2026-11-01] docs | PLAYTEST_GUIDE 현행화 + 옛 프로토콜 역사 표시
+
+- **`PLAYTEST_GUIDE.md` v1.0 → v2.0**: 초판(2026-09-01)이 **retired 된 Python CLI** 를
+  "Option A (Full Game)" 로, **존재하지 않는 Supabase 클라우드 동기화**를, 그리고
+  옛 배포 URL `play.html` 을 안내하고 있었다 — 테스터를 없는 빌드로 보내는 상태였다.
+  검증: `grep -i supabase src/ package.json` → **0건** (저장은 IndexedDB/localStorage,
+  ADR-0209), Python 통합은 `1b3cff4` (2026-09-15), 현행 URL 은
+  `https://seoca1.github.io/wet-run/wetrun-web/`.
+- v2.0 은 웹 단일 빌드 기준으로 다시 썼다: 실행 방법(웹/로컬, `vite preview` 는
+  `--host 127.0.0.1` **필수**), 저장(IndexedDB 우선, 클라우드 없음), 시나리오 TW-01~10
+  (유휴 알람 TW-03, 입력 속도 무관 TW-04 를 신규 핵심으로 명시), 조작, 피드백 양식,
+  팁(오프닝 핸드, **두 종류의 alarm 구분** — `Alarm N/100` 비용 누산기 vs `ALARM N/5`
+  유휴 알람), ego-lite 실제 플레이 절차 링크.
+- **`PLAYTEST.md`**: 같은 허위 내용을 담은 2026-09-01 프로토콜이므로 **다시 쓰지 않고
+  역사 표시 배너**를 달았다 (Python CLI retired · URL 변경 명시 + 현행 가이드 링크).
+- 사실 확인 후에만 숫자를 썼다: missions.json 53, programs.json 30, 오프닝 핸드
+  `backdoor/barrier/boost/cloak/decoy` (하네스 + 실제 렌더 HAND 행으로 교차 확인).
+  코드 변경 없음.

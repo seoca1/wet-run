@@ -4,6 +4,13 @@
 **Date**: 2026-09-01  
 **Status**: Draft — awaiting user review
 
+> **역사 문서 (2026-11-01 표시).** 이 문서는 2026-09-01 시점의 3인 플레이테스트
+> 프로토콜이며 그대로 보존한다. 본문이 테스트 대상으로 적은 **Python CLI v1.4.0**
+> 은 2026-09-15 통합(`1b3cff4`)으로 retired 되었고, 배포 URL 도
+> `play.html` → `wetrun-web/` 로 바뀌었다. **현행 테스터 안내는
+> [PLAYTEST_GUIDE.md](PLAYTEST_GUIDE.md) 를 따른다.** 모집 조건·일정 같은 서술은
+> 당시 계획의 기록으로만 읽는다.
+
 ---
 
 ## 1. 목적

@@ -1,0 +1,270 @@
+{
+  "seed": 42,
+  "grade": 3,
+  "cleared": [
+    0,
+    1
+  ],
+  "traversals": [
+    {
+      "label": "fwd",
+      "from": 1,
+      "to": 8,
+      "shots": [
+        {
+          "name": "commit",
+          "current": 1,
+          "visited": [
+            0,
+            1
+          ],
+          "selected": 8,
+          "travel": null
+        },
+        {
+          "name": "t000",
+          "current": 8,
+          "visited": [
+            0,
+            1,
+            8
+          ],
+          "selected": null,
+          "travel": {
+            "from": 1,
+            "to": 8,
+            "phase": "transit",
+            "progress": 0
+          },
+          "afterOnly": true
+        },
+        {
+          "name": "t060",
+          "current": 8,
+          "visited": [
+            0,
+            1,
+            8
+          ],
+          "selected": null,
+          "travel": {
+            "from": 1,
+            "to": 8,
+            "phase": "transit",
+            "progress": 0.375
+          },
+          "afterOnly": true
+        },
+        {
+          "name": "t120",
+          "current": 8,
+          "visited": [
+            0,
+            1,
+            8
+          ],
+          "selected": null,
+          "travel": {
+            "from": 1,
+            "to": 8,
+            "phase": "transit",
+            "progress": 0.75
+          },
+          "afterOnly": true
+        },
+        {
+          "name": "t180",
+          "current": 8,
+          "visited": [
+            0,
+            1,
+            8
+          ],
+          "selected": null,
+          "travel": {
+            "from": 1,
+            "to": 8,
+            "phase": "arrival",
+            "progress": 1
+          },
+          "afterOnly": true
+        },
+        {
+          "name": "settled",
+          "current": 8,
+          "visited": [
+            0,
+            1,
+            8
+          ],
+          "selected": null,
+          "travel": null
+        }
+      ]
+    },
+    {
+      "label": "long",
+      "from": 1,
+      "to": 6,
+      "shots": [
+        {
+          "name": "commit",
+          "current": 1,
+          "visited": [
+            0,
+            1
+          ],
+          "selected": 6,
+          "travel": null
+        },
+        {
+          "name": "t000",
+          "current": 6,
+          "visited": [
+            0,
+            1,
+            6
+          ],
+          "selected": null,
+          "travel": {
+            "from": 1,
+            "to": 6,
+            "phase": "transit",
+            "progress": 0
+          },
+          "afterOnly": true
+        },
+        {
+          "name": "t060",
+          "current": 6,
+          "visited": [
+            0,
+            1,
+            6
+          ],
+          "selected": null,
+          "travel": {
+            "from": 1,
+            "to": 6,
+            "phase": "transit",
+            "progress": 0.375
+          },
+          "afterOnly": true
+        },
+        {
+          "name": "t120",
+          "current": 6,
+          "visited": [
+            0,
+            1,
+            6
+          ],
+          "selected": null,
+          "travel": {
+            "from": 1,
+            "to": 6,
+            "phase": "transit",
+            "progress": 0.75
+          },
+          "afterOnly": true
+        },
+        {
+          "name": "t180",
+          "current": 6,
+          "visited": [
+            0,
+            1,
+            6
+          ],
+          "selected": null,
+          "travel": {
+            "from": 1,
+            "to": 6,
+            "phase": "arrival",
+            "progress": 1
+          },
+          "afterOnly": true
+        },
+        {
+          "name": "settled",
+          "current": 6,
+          "visited": [
+            0,
+            1,
+            6
+          ],
+          "selected": null,
+          "travel": null
+        }
+      ]
+    }
+  ],
+  "adjacency": [
+    [
+      1,
+      7
+    ],
+    [
+      0,
+      6,
+      8,
+      9
+    ],
+    [
+      4,
+      5,
+      14
+    ],
+    [
+      14
+    ],
+    [
+      2,
+      6
+    ],
+    [
+      2,
+      13
+    ],
+    [
+      4,
+      11,
+      1
+    ],
+    [
+      0,
+      11
+    ],
+    [
+      1,
+      9,
+      10,
+      12
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      8
+    ],
+    [
+      6,
+      7,
+      14
+    ],
+    [
+      8,
+      13
+    ],
+    [
+      5,
+      12
+    ],
+    [
+      2,
+      3,
+      11
+    ]
+  ]
+}

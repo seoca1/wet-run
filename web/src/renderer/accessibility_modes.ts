@@ -75,7 +75,13 @@ export const REDUCED_MOTION_STORAGE_KEY = "wetrun_reduced_motion";
 export const HIGH_CONTRAST_STORAGE_KEY = "wetrun_high_contrast";
 
 /** The kinds of motion the reduced-motion gate can suppress. */
-export type MotionKind = "shake" | "hit_stop" | "flash" | "floating_damage";
+export type MotionKind =
+  | "shake"
+  | "hit_stop"
+  | "flash"
+  | "floating_damage"
+  /** The Matrix board's corridor traversal after a confirmed move. */
+  | "travel";
 
 /** Narrow a string to a `ColorblindMode`. */
 export function isColorblindMode(value: string): value is ColorblindMode {
@@ -132,7 +138,8 @@ export function suppressMotion(
     kind === "shake" ||
     kind === "hit_stop" ||
     kind === "flash" ||
-    kind === "floating_damage"
+    kind === "floating_damage" ||
+    kind === "travel"
   );
 }
 

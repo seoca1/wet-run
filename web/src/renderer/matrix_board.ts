@@ -12,7 +12,8 @@ import type { BoardPlan } from "./matrix_board_layout";
 import { E, N, S, W, type CorridorSet } from "./matrix_board_routes";
 import type { MatrixPosition } from "./matrix_nodes";
 
-type Style = "link" | "route" | "target";
+export type CorridorStyle = "link" | "route" | "target";
+type Style = CorridorStyle;
 
 const GLYPHS: Readonly<Record<Style, Readonly<Record<number, string>>>> = {
   link: {
@@ -49,6 +50,11 @@ const COLOURS: Readonly<Record<Style, string>> = {
   target: PALETTE.GREEN_NEON,
 };
 const RANK: Readonly<Record<Style, number>> = { link: 0, route: 1, target: 2 };
+
+/** The glyph a corridor cell takes in `style` for its `links`. */
+export function corridorGlyph(style: Style, links: number): string {
+  return GLYPHS[style][links] ?? GLYPHS[style][15] ?? "+";
+}
 
 /** Board legend, two rows of at most 33 columns (fits the 40x60 frame). */
 export const BOARD_LEGEND: readonly string[] = [
@@ -98,7 +104,7 @@ export function roomToken(position: MatrixPosition, i: number): string {
   return `${l}${centre}${r}`;
 }
 
-function tokenColour(
+export function tokenColour(
   position: MatrixPosition,
   i: number,
   frontier: readonly number[],
@@ -176,7 +182,7 @@ export function drawBoard(
   }
   let out = grid;
   for (const c of cells.values()) {
-    const glyph = GLYPHS[c.style][c.links] ?? GLYPHS[c.style][15] ?? "+";
+    const glyph = corridorGlyph(c.style, c.links);
     out = putInside(out, clip, c.x, c.y, glyph, COLOURS[c.style]);
   }
   const frontier = frontierOf(position);

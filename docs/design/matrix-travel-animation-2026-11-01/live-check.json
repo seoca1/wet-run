@@ -1,0 +1,90 @@
+{
+  "motion": {
+    "armed": {
+      "cur": 0,
+      "sel": 1
+    },
+    "stateImmediatelyAfterEnter": {
+      "cur": 1,
+      "sel": null
+    },
+    "recordedFrames": 51,
+    "distinctCanvasImages": 10,
+    "distinct": [
+      {
+        "t": 12,
+        "cur": 0,
+        "sel": 1
+      },
+      {
+        "t": 167,
+        "cur": 1,
+        "sel": null
+      },
+      {
+        "t": 177,
+        "cur": 1,
+        "sel": null
+      },
+      {
+        "t": 194,
+        "cur": 1,
+        "sel": null
+      },
+      {
+        "t": 211,
+        "cur": 1,
+        "sel": null
+      },
+      {
+        "t": 222,
+        "cur": 1,
+        "sel": null
+      },
+      {
+        "t": 238,
+        "cur": 1,
+        "sel": null
+      },
+      {
+        "t": 263,
+        "cur": 1,
+        "sel": null
+      },
+      {
+        "t": 326,
+        "cur": 1,
+        "sel": null
+      },
+      {
+        "t": 391,
+        "cur": 1,
+        "sel": null
+      }
+    ]
+  },
+  "reduced": {
+    "armed": {
+      "cur": 0,
+      "sel": 1
+    },
+    "stateImmediatelyAfterEnter": {
+      "cur": 1,
+      "sel": null
+    },
+    "recordedFrames": 50,
+    "distinctCanvasImages": 2,
+    "distinct": [
+      {
+        "t": 25,
+        "cur": 0,
+        "sel": 1
+      },
+      {
+        "t": 165,
+        "cur": 1,
+        "sel": null
+      }
+    ]
+  }
+}

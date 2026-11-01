@@ -9,18 +9,21 @@ import { composeCombatVfx } from "./combat_vfx";
 import { composeFloatingDamage, overlayShake } from "./combat_overlay";
 import type { ShakeState } from "./screen_shake";
 import { renderEncounterDecision } from "./encounter";
+import type { MatrixTravelFrame } from "./matrix_travel";
 
 /** The same full-grid dimensions used by matrix, loot, ending and combat views. */
 export function runScreenLayout(cols: number, rows: number) {
   return { cols, rows } as const;
 }
 
-/** Compose non-combat run phases, retaining message-derived loot and HUD text. */
+/** Compose non-combat run phases, retaining message-derived loot and HUD text.
+ * `matrixTravel` is the controller's current traversal frame (visual only). */
 export function renderRunScreen(
   state: GameState,
   cols: number,
   rows: number,
   matrixEntryHint = false,
+  matrixTravel: MatrixTravelFrame | null = null,
 ): ScreenView | null {
   const layout = runScreenLayout(cols, rows);
   switch (state.runPhase) {
@@ -42,6 +45,7 @@ export function renderRunScreen(
           state.selectedMatrixNodeIndex ?? null,
           state.clearedEncounterNodes ?? [],
           matrixEntryHint,
+          matrixTravel,
         ),
         hud: [
           "MATRIX",

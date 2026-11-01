@@ -13,6 +13,11 @@ import {
   renderCombatScreen,
   composeCombatScreen,
 } from "./renderer/run_screen";
+import {
+  beginMatrixTravel,
+  matrixTravelFrame,
+  type MatrixTravel,
+} from "./renderer/matrix_travel";
 import { renderCombatHints } from "./renderer/combat_hints";
 import { filterMissionsByUniverse } from "./core/missions_filter";
 import {
@@ -306,6 +311,10 @@ class Game {
   /** The Matrix-entry hint, same once-per-session pattern: shown on the
    * first board with a route, dismissed by the first input made there. */
   private matrixEntryHintShown = false;
+  /** The Matrix board's traversal after a confirmed move: visual only and
+   * never on `GameState`, so it is neither saved nor seen by the reducer.
+   * Null under reduced motion, and replaced by the next input. */
+  private matrixTravel: MatrixTravel | null = null;
   /** P10 — effective reduced-motion state. True suppresses the P1 canvas
    * shake and the hit-stop hold. */
   private reducedMotion = false;
@@ -469,6 +478,14 @@ class Game {
       if (shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state))
         this.matrixEntryHintShown = true;
       this.state = applyAction(this.state, resolved);
+      // The reducer has already moved `@`; this only chooses the next frames.
+      // Every input re-derives it, so input never waits on (or redirects) it.
+      this.matrixTravel = beginMatrixTravel(
+        previous,
+        this.state,
+        performance.now(),
+        this.reducedMotion,
+      );
       void loadAudioSystem().then((audio) => {
         if (!audio) return;
         const manager = audio.AudioManager.getInstance();
@@ -1238,12 +1255,23 @@ class Game {
       ["matrix", "ending", "loot"].includes(this.state.runPhase)
     ) {
       updateProgramRow([]);
-      const view = renderRunScreen(
-        this.state,
-        this.layout.cols,
-        this.layout.rows,
-        shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
-      );
+      // A traversal frame (visual only) replaces the board for ~220 ms.
+      const travel = matrixTravelFrame(this.matrixTravel, performance.now());
+      const view =
+        travel === null
+          ? renderRunScreen(
+              this.state,
+              this.layout.cols,
+              this.layout.rows,
+              shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
+            )
+          : renderRunScreen(
+              this.state,
+              this.layout.cols,
+              this.layout.rows,
+              shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
+              travel,
+            );
       if (view) this.renderer.render(view.grid, view.hud);
       return;
     }
@@ -1461,6 +1489,14 @@ class Game {
         this.idleSinceMs = Date.now();
     } else {
       this.idleSinceMs = Date.now();
+    }
+
+    // Matrix traversal frames run on the wall clock; the last one restores
+    // the static board. Drawing only: the state already holds the arrival.
+    if (this.matrixTravel !== null) {
+      if (matrixTravelFrame(this.matrixTravel, now) === null)
+        this.matrixTravel = null;
+      if (this.state !== null) this.draw(false);
     }
 
     // P12 — expire the touch press acknowledgement on the wall clock. This

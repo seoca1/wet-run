@@ -1,0 +1,29 @@
+ ❯ tests/matrix_travel.test.ts  (14 tests | 13 failed) 41ms
+⎯⎯⎯⎯⎯⎯ Failed Tests 13 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  tests/matrix_travel.test.ts > the state change is immediate; the animation is purely visual > one confirm moves @ in the same action, and the travel describes that move
+ ❯ tests/matrix_travel.test.ts:145:22
+ FAIL  tests/matrix_travel.test.ts > the state change is immediate; the animation is purely visual > the traversal is bounded by the wall clock alone and ends by itself
+ ❯ tests/matrix_travel.test.ts:157:29
+ FAIL  tests/matrix_travel.test.ts > reduced motion (ADR-0236) makes the traversal instantaneous > the travel motion kind is gated by suppressMotion
+ ❯ tests/matrix_travel.test.ts:172:44
+ FAIL  tests/matrix_travel.test.ts > reduced motion (ADR-0236) makes the traversal instantaneous > no travel starts when motion is suppressed; one starts otherwise
+ ❯ tests/matrix_travel.test.ts:178:59
+ FAIL  tests/matrix_travel.test.ts > reduced motion (ADR-0236) makes the traversal instantaneous > main.ts starts every travel through the controller's reduced-motion flag
+ ❯ tests/matrix_travel.test.ts:203:17
+ FAIL  tests/matrix_travel.test.ts > no RNG draw (ADR-0239) > animating a move consumes zero Math.random draws beyond the reducer's own
+ ❯ tests/matrix_travel.test.ts:224:19
+ FAIL  tests/matrix_travel.test.ts > the animation state is transient and unsaved > is absent from GameState and from the serialized save
+ ❯ tests/matrix_travel.test.ts:241:59
+ FAIL  tests/matrix_travel.test.ts > rule 8: one confirmed move is one route action > leaves no default target, during or after the traversal
+ ❯ tests/matrix_travel.test.ts:255:21
+ FAIL  tests/matrix_travel.test.ts > rule 8: one confirmed move is one route action > only a confirmed one-edge move animates
+ ❯ tests/matrix_travel.test.ts:263:59
+ FAIL  tests/matrix_travel.test.ts > rule 8: one confirmed move is one route action > walks exactly the one corridor of that adjacency, never through a room
+ ❯ tests/matrix_travel.test.ts:285:31
+ FAIL  tests/matrix_travel.test.ts > rule 8: one confirmed move is one route action > every frame shows exactly one @ that advances toward the destination
+ ❯ tests/matrix_travel.test.ts:307:29
+ FAIL  tests/matrix_travel.test.ts > rule 8: one confirmed move is one route action > the destination visibly receives the marker on arrival
+ ❯ tests/matrix_travel.test.ts:337:24
+ FAIL  tests/matrix_travel.test.ts > rule 8: one confirmed move is one route action > input during a traversal ends it: main.ts re-derives the travel on every action
+ ❯ tests/matrix_travel.test.ts:353:19
+      Tests  13 failed | 1 passed (14)

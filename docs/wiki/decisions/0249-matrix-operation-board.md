@@ -115,6 +115,14 @@
 - `core/state/onboarding.ts` + `matrix.ts` + `run_screen.ts` + `main.ts` — ADR-0235 combat-entry 힌트와 같은 모듈·패턴의 1회 Matrix 진입 힌트(`shouldShowMatrixEntryHint`, 컨트롤러 플래그 `matrixEntryHintShown`). 경로가 있는 첫 보드에서 카드 아래 표시, 그 화면에서의 첫 입력으로 사라지고 다시 나오지 않는다.
 - 리듀서·선택 의미·화살표 순서·동사·가격·튜닝·RNG 무변경; 기본 타깃 없음 규칙 테스트로 재확인. 신규 `web/tests/matrix_affordance.test.ts` **20 failed → 20 passed**; `npm test` **168 files / 3774 passed**; typecheck 0; lint 0 errors(기존 warning 1); build PASS; 양 덱 balance byte-identical(ADR-0239 기준선); E2E **82 passed / 4 skipped / 0 failed**. 증거: [matrix-affordance README](../../design/matrix-affordance-2026-11-01/README.md).
 
+**Follow-up — 이동 애니메이션 (2026-11-01, 오너 플레이 "이제 노드들을 거쳐 따라다닐 수 있어")**: 열린 위험의 "짧은 이동 피드백"을 순수 표시로 추가. 규칙 8개 불변:
+- `renderer/matrix_travel.ts`(신규) — 확정 이동 뒤 220 ms: 160 ms 동안 확정 당시 보드·카드 위에서 `@`가 그 인접의 **이미 라우팅된 복도 하나**를 따라 이동(지나온 칸은 굵은 녹색 `━┃`, 앞쪽은 가는 `─│`, 목적지는 `>x<`), 60 ms 동안 목적지 토큰 반전(도착), 이후 정적 보드(HEAD와 byte-identical). 카메라·스크롤·보드 이동 없음, 보드 위 `@`는 매 프레임 하나.
+- 상태는 즉시 바뀐다: `applyMatrixAction` 무변경. 애니메이션 상태 `MatrixTravel`은 `GameState`가 아니라 `main.ts` 컨트롤러 필드라 세이브·리듀서·밸런스 하네스에 닿지 않는다. 벽시계만 읽고 `Math.random` 0회. 매 입력이 다시 계산하므로 입력을 막거나 목적지를 바꾸지 않는다. 대상 확정된 인접 1칸 이동만 애니메이션(타게팅·CONTINUE·페이즈 전환 제외).
+- 감소된 모션: `MotionKind`에 `"travel"` 추가, `suppressMotion("travel", this.reducedMotion)` → 애니메이션 없음(중간 프레임 0). 실제 빌드 확인: motion 10 이미지 / reduced 2 이미지.
+- `matrix.ts` `renderMatrix`에 선택 인자 `travel` 추가(기본 null = 기존과 동일), `matrix_board.ts`는 `corridorGlyph`·`tokenColour` export만, `run_screen.ts` 인자 전달.
+- 독립 시각 리뷰 1차 REVISE(전환 중 카드가 이미 목적지를 `@`로 표시 → 보드와 불일치) → 전환 160 ms 동안 카드도 확정 당시 상태로 그리도록 수정.
+- 신규 `web/tests/matrix_travel.test.ts` **13 failed → 15 passed**(null 스텁 대비 13 red + 리뷰 후 1 추가); `npm test` **169 files / 3789 passed**; typecheck 0; lint 0 errors(기존 warning 1); build PASS; 양 덱 balance byte-identical(ADR-0239 기준선); E2E **82 passed / 4 skipped / 0 failed**. 리듀서·선택 의미·화살표 순서·동사·가격·튜닝·RNG·세이브 무변경, `e2e/menu-nav.ts` 무수정. 증거: [matrix-travel-animation README](../../design/matrix-travel-animation-2026-11-01/README.md).
+
 **Notes**: LSP는 TypeScript 서버 미설치로 실행하지 않았다(CLI `tsc --noEmit`이 타입 게이트). 캔버스 화면이라 행별 포커스 링·의미론적 접근성 트리는 여전히 없다(상속된 결함, 이번에 해결하지 않음).
 
 ## 영향 받는 항목

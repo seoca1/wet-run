@@ -2832,3 +2832,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - LOC(total/pure): `matrix.ts` 188/155 → 203/167, `matrix_nodes.ts` 100/82 → 138/109, `run_screen.ts` 129/121 → 131/123, `onboarding.ts` 109/47 → 146/72, `main.ts` 1740/1523 → 1747/1528.
 - 검증: 신규 `matrix_affordance.test.ts` 20 failed → 20 passed; `npm test` **168 files / 3774 passed**; typecheck 0; lint 0 errors(기존 keyboard.ts:14 warning); build PASS; balance 양 덱 ADR-0239 기준선과 byte-identical; E2E **82 passed / 4 skipped / 0 failed (4.6m)**, 5195 프리뷰 유지. 시각 QA 독립 리뷰 PASS, 대비 측정 최소 6.58:1(프롬프트 amber ≥10.15:1). 상속 결함(행별 포커스 링·접근성 트리) 미해결.
 - 증거: [matrix-affordance-2026-11-01](docs/design/matrix-affordance-2026-11-01/README.md) (15 전후 캡처 × 3 레이아웃, 페어 PNG, width check, contrast). ADR-0249 `## Implementation Status`에만 후속 기록. 미커밋·미스테이징.
+
+## [2026-11-01] feat(ui) | Matrix 보드 이동 애니메이션 — 확정 이동을 복도 위 `@` 이동으로 표시 (순수 표시)
+
+- 오너 플레이("이제 노드들을 거쳐 따라다닐 수 있어") 다음 단계. 확정 이동(Enter) 뒤 220 ms: 160 ms 전환(확정 당시 보드·카드, `@`가 이미 라우팅된 복도 하나를 따라 이동, 지나온 칸 굵은 녹색) + 60 ms 도착(목적지 토큰 반전) → 정적 보드(HEAD와 byte-identical).
+- 순수 표시: `applyMatrixAction` 무변경, 상태는 같은 액션에서 즉시 이동. `MatrixTravel`은 `main.ts` 컨트롤러 필드(`GameState`·세이브 아님), 벽시계만, RNG 0회. 매 입력이 다시 계산(입력 차단·목적지 변경 없음). 감소된 모션은 `suppressMotion("travel")` → 중간 프레임 없음.
+- 신규 `renderer/matrix_travel.ts`; `matrix.ts`(선택 인자 `travel`), `matrix_board.ts`(export 2개), `run_screen.ts`, `accessibility_modes.ts`(`MotionKind` "travel"), `main.ts` 배선.
+- LOC(total/pure): `matrix_travel.ts` 신규 185/146, `matrix.ts` 203/167 → 223/183, `matrix_board.ts` 196/172 → 202/176, `run_screen.ts` 131/123 → 135/126, `accessibility_modes.ts` 239/126 → 246/132, `main.ts` 1747/1528 → 1783/1555(기존 초과).
+- 검증: `matrix_travel.test.ts` 13 failed → 15 passed; `npm test` **169 files / 3789 passed**; typecheck 0; lint 0 errors(기존 keyboard.ts:14 warning); build PASS; balance 양 덱 byte-identical(ADR-0239); E2E **82 passed / 4 skipped / 0 failed (4.6m)**, 5195 프리뷰(pid 75395) 유지. 독립 시각 리뷰 1차 REVISE(전환 중 카드/보드 불일치) → 수정 후 통과 항목 확인. 대비 최소 10.93:1. 상속 결함(행별 포커스 링·접근성 트리) 미해결.
+- 증거: [matrix-travel-animation-2026-11-01](docs/design/matrix-travel-animation-2026-11-01/README.md) (2 이동 × 3 레이아웃 × 6 프레임, 스트립 PNG, 실제 빌드 프레임, width check, contrast). ADR-0249 `## Implementation Status`에만 후속 기록. 미커밋·미스테이징.

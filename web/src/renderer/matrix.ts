@@ -25,6 +25,7 @@ import { planBoard, type BoardPlan } from "./matrix_board_layout";
 import { routeCorridors, type CorridorSet } from "./matrix_board_routes";
 import { BOARD_LEGEND, drawBoard, putInside } from "./matrix_board";
 import { MATRIX_ENTRY_HINT_LINES } from "../core/state/onboarding";
+import { drawTravelBoard, type MatrixTravelFrame } from "./matrix_travel";
 
 /** Width reserved for the right-hand CURRENT NODE column (ICE name cap). */
 const PREVIEW_WIDTH = 22;
@@ -90,7 +91,9 @@ export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
 /** Render the Matrix operation board. Pure: same inputs, same grid.
  *
  * Content is clipped to the frame's inner rectangle and the frame is drawn
- * last, so nothing can erase a rail.
+ * last, so nothing can erase a rail. `travel` is one frame of the visual
+ * traversal into `currentNodeIndex` (the state has already moved); a frame
+ * for any other destination is ignored, and null draws the static board.
  */
 export function renderMatrix(
   matrix: Matrix,
@@ -102,6 +105,7 @@ export function renderMatrix(
   selectedNodeIndex: number | null = null,
   cleared: readonly number[] = [],
   entryHint = false,
+  travel: MatrixTravelFrame | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const layout = matrixLayout(grid, matrix);
@@ -140,11 +144,27 @@ export function renderMatrix(
   );
 
   const clip: PanelRect = { ...inner, height: Math.max(0, footerY - inner.y) };
-  grid = drawBoard(grid, clip, layout.board, layout.corridors, position);
+  grid =
+    travel !== null && travel.to === currentNodeIndex
+      ? drawTravelBoard(
+          grid,
+          clip,
+          layout.board,
+          layout.corridors,
+          position,
+          travel,
+        )
+      : drawBoard(grid, clip, layout.board, layout.corridors, position);
   BOARD_LEGEND.forEach((line, k) =>
     put(layout.cardX, layout.legendY + k, line, PALETTE.GRAY_LIGHT),
   );
-  matrixCardLines(position, layout.cardWidth).forEach((line, k) =>
+  // While `@` is still in the corridor the card must agree with the board:
+  // it shows the move as confirmed (origin `@`, destination targeted).
+  const cardPosition: MatrixPosition =
+    travel?.phase === "transit" && travel.to === currentNodeIndex
+      ? { ...position, current: travel.from, selected: travel.to }
+      : position;
+  matrixCardLines(cardPosition, layout.cardWidth).forEach((line, k) =>
     put(layout.cardX, layout.cardY + k, line.text, line.fg),
   );
 

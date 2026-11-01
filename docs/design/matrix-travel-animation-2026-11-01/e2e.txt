@@ -1,0 +1,109 @@
+
+Running 86 tests using 1 worker
+
+[1/86] [desktop-chromium] › e2e/boss_phase_vfx.spec.ts:27:3 › Boss Phase VFX › boss phase HUD badge appears when bossPhase > 0
+[2/86] [desktop-chromium] › e2e/continue.spec.ts:30:3 › CONTINUE Option › CONTINUE option resumes saved state from IDB
+[3/86] [desktop-chromium] › e2e/continue.spec.ts:120:3 › CONTINUE Option › CONTINUE restores a playable state (matrix present, input is actionable)
+[4/86] [desktop-chromium] › e2e/continue.spec.ts:220:3 › CONTINUE Option › CONTINUE option is grayed out when no save exists
+[5/86] [desktop-chromium] › e2e/encounter_verbs.spec.ts:21:1 › paid PROBE reveals intel, then BYPASS forgoes loot and permits travel
+[6/86] [desktop-chromium] › e2e/encounter_verbs.spec.ts:85:1 › arrows expose all four fixed verbs and JACK OUT abandons the run
+[7/86] [desktop-chromium] › e2e/encounter_verbs.spec.ts:114:1 › utility SCAN spends a real combat card and preserves fixed choices
+[8/86] [desktop-chromium] › e2e/game.spec.ts:22:3 › Wet Run Game › loads the game page
+[9/86] [desktop-chromium] › e2e/game.spec.ts:28:3 › Wet Run Game › displays main menu on boot
+[10/86] [desktop-chromium] › e2e/game.spec.ts:45:3 › Wet Run Game › game canvas exists and is visible
+[11/86] [desktop-chromium] › e2e/game.spec.ts:56:3 › Wet Run Game › can start new run with keyboard
+[12/86] [desktop-chromium] › e2e/game.spec.ts:76:3 › Wet Run Game › can navigate menu with arrow keys
+[13/86] [desktop-chromium] › e2e/game.spec.ts:99:3 › Wet Run Game › settings menu accessible
+[14/86] [desktop-chromium] › e2e/game.spec.ts:115:3 › Wet Run Game › ESC key returns from settings to menu
+[15/86] [desktop-chromium] › e2e/game.spec.ts:139:3 › Wet Run Game › full flow: menu → mission select → approach → combat
+[16/86] [desktop-chromium] › e2e/game.spec.ts:162:3 › Wet Run Game › can progress through approach to combat
+[17/86] [desktop-chromium] › e2e/game.spec.ts:182:3 › Wet Run Game › can use program in combat via digit key
+[18/86] [desktop-chromium] › e2e/game.spec.ts:204:3 › Wet Run Game › navigation between mission select options
+[19/86] [desktop-chromium] › e2e/game.spec.ts:226:3 › Wet Run Game › ESC from mission select returns to menu
+[20/86] [desktop-chromium] › e2e/idb_save.spec.ts:31:3 › IDB Save › IDB save survives page reload
+[21/86] [desktop-chromium] › e2e/idle_alarm.spec.ts:24:1 › idle rAF dispatch raises alarm without directly attacking
+[22/86] [desktop-chromium] › e2e/idle_alarm.spec.ts:48:1 › real input prevents alarm growth despite elapsed combat time
+[23/86] [desktop-chromium] › e2e/layout.spec.ts:12:1 › canvas aspect matches viewport aspect
+[24/86] [desktop-chromium] › e2e/matrix_enhanced.spec.ts:24:3 › Matrix Enhanced › matrix shows zone-colored nodes with ICE preview panel
+[25/86] [desktop-chromium] › e2e/matrix_enhanced.spec.ts:48:3 › Matrix Enhanced › matrix ICE preview shows current node info (runPhase=combat too)
+[26/86] [desktop-chromium] › e2e/menu.spec.ts:22:3 › Main Menu › main menu renders with 9 options on boot
+[27/86] [desktop-chromium] › e2e/menu.spec.ts:39:3 › Main Menu › NEW_RUN option navigates to mission select
+[28/86] [desktop-chromium] › e2e/menu.spec.ts:50:3 › Main Menu › ESC from mission select returns to main menu
+[29/86] [desktop-chromium] › e2e/menu.spec.ts:64:3 › Main Menu › stub options render 'Coming soon' message
+[30/86] [desktop-chromium] › e2e/progression.spec.ts:28:3 › combat progression (regression) › menu → mission_select → approach → combat → victory via digit key
+[desktop-chromium] › e2e/progression.spec.ts:28:3 › combat progression (regression) › menu → mission_select → approach → combat → victory via digit key
+Phase after mission select: approach
+
+Phase after first Enter in matrix: approach
+
+Phase after second Enter in matrix: combat
+
+Final phase: combat
+
+[31/86] [desktop-chromium] › e2e/progression.spec.ts:80:3 › combat progression (regression) › jack_out from menu reaches exit phase
+[32/86] [desktop-chromium] › e2e/settings.spec.ts:51:1 › SETTINGS menu option navigates to settings screen
+[33/86] [desktop-chromium] › e2e/settings.spec.ts:78:1 › ArrowRight on settings increments BGM volume
+[34/86] [desktop-chromium] › e2e/settings.spec.ts:106:1 › ESC from settings returns to main menu
+[35/86] [desktop-chromium] › e2e/smoke.spec.ts:18:35 › deployment reachable + canvas boots + no console errors
+[36/86] [desktop-chromium] › e2e/sound_triggers.spec.ts:24:3 › Sound Triggers › combat SFX events fire without errors during full run
+[37/86] [desktop-chromium] › e2e/status_effect.spec.ts:10:1 › use_program triggers burn status effect on ICE (probabilistic)
+[38/86] [desktop-chromium] › e2e/tier55_vfx.spec.ts:18:3 › Tier 5.5 VFX › matrix shows event glyphs (combat/discovery/trap/etc.)
+[39/86] [desktop-chromium] › e2e/tier55_vfx.spec.ts:34:3 › Tier 5.5 VFX › combat triggers VFX (canvas changes after card use)
+[40/86] [desktop-chromium] › e2e/touch_input.spec.ts:37:3 › mobile touch input › virtual gamepad overlay is visible on touch device
+[41/86] [desktop-chromium] › e2e/touch_input.spec.ts:43:3 › mobile touch input › D-pad touch navigates menu options
+[42/86] [desktop-chromium] › e2e/touch_input.spec.ts:56:3 › mobile touch input › A button touch confirms NEW_RUN → mission_select
+[43/86] [desktop-chromium] › e2e/touch_input.spec.ts:72:3 › mobile touch input › program row touch uses a program in combat
+[44/86] [mobile-portrait-chromium] › e2e/boss_phase_vfx.spec.ts:27:3 › Boss Phase VFX › boss phase HUD badge appears when bossPhase > 0
+[45/86] [mobile-portrait-chromium] › e2e/continue.spec.ts:30:3 › CONTINUE Option › CONTINUE option resumes saved state from IDB
+[46/86] [mobile-portrait-chromium] › e2e/continue.spec.ts:120:3 › CONTINUE Option › CONTINUE restores a playable state (matrix present, input is actionable)
+[47/86] [mobile-portrait-chromium] › e2e/continue.spec.ts:220:3 › CONTINUE Option › CONTINUE option is grayed out when no save exists
+[48/86] [mobile-portrait-chromium] › e2e/encounter_verbs.spec.ts:21:1 › paid PROBE reveals intel, then BYPASS forgoes loot and permits travel
+[49/86] [mobile-portrait-chromium] › e2e/encounter_verbs.spec.ts:85:1 › arrows expose all four fixed verbs and JACK OUT abandons the run
+[50/86] [mobile-portrait-chromium] › e2e/encounter_verbs.spec.ts:114:1 › utility SCAN spends a real combat card and preserves fixed choices
+[51/86] [mobile-portrait-chromium] › e2e/game.spec.ts:22:3 › Wet Run Game › loads the game page
+[52/86] [mobile-portrait-chromium] › e2e/game.spec.ts:28:3 › Wet Run Game › displays main menu on boot
+[53/86] [mobile-portrait-chromium] › e2e/game.spec.ts:45:3 › Wet Run Game › game canvas exists and is visible
+[54/86] [mobile-portrait-chromium] › e2e/game.spec.ts:56:3 › Wet Run Game › can start new run with keyboard
+[55/86] [mobile-portrait-chromium] › e2e/game.spec.ts:76:3 › Wet Run Game › can navigate menu with arrow keys
+[56/86] [mobile-portrait-chromium] › e2e/game.spec.ts:99:3 › Wet Run Game › settings menu accessible
+[57/86] [mobile-portrait-chromium] › e2e/game.spec.ts:115:3 › Wet Run Game › ESC key returns from settings to menu
+[58/86] [mobile-portrait-chromium] › e2e/game.spec.ts:139:3 › Wet Run Game › full flow: menu → mission select → approach → combat
+[59/86] [mobile-portrait-chromium] › e2e/game.spec.ts:162:3 › Wet Run Game › can progress through approach to combat
+[60/86] [mobile-portrait-chromium] › e2e/game.spec.ts:182:3 › Wet Run Game › can use program in combat via digit key
+[61/86] [mobile-portrait-chromium] › e2e/game.spec.ts:204:3 › Wet Run Game › navigation between mission select options
+[62/86] [mobile-portrait-chromium] › e2e/game.spec.ts:226:3 › Wet Run Game › ESC from mission select returns to menu
+[63/86] [mobile-portrait-chromium] › e2e/idb_save.spec.ts:31:3 › IDB Save › IDB save survives page reload
+[64/86] [mobile-portrait-chromium] › e2e/idle_alarm.spec.ts:24:1 › idle rAF dispatch raises alarm without directly attacking
+[65/86] [mobile-portrait-chromium] › e2e/idle_alarm.spec.ts:48:1 › real input prevents alarm growth despite elapsed combat time
+[66/86] [mobile-portrait-chromium] › e2e/layout.spec.ts:12:1 › canvas aspect matches viewport aspect
+[67/86] [mobile-portrait-chromium] › e2e/matrix_enhanced.spec.ts:24:3 › Matrix Enhanced › matrix shows zone-colored nodes with ICE preview panel
+[68/86] [mobile-portrait-chromium] › e2e/matrix_enhanced.spec.ts:48:3 › Matrix Enhanced › matrix ICE preview shows current node info (runPhase=combat too)
+[69/86] [mobile-portrait-chromium] › e2e/menu.spec.ts:22:3 › Main Menu › main menu renders with 9 options on boot
+[70/86] [mobile-portrait-chromium] › e2e/menu.spec.ts:39:3 › Main Menu › NEW_RUN option navigates to mission select
+[71/86] [mobile-portrait-chromium] › e2e/menu.spec.ts:50:3 › Main Menu › ESC from mission select returns to main menu
+[72/86] [mobile-portrait-chromium] › e2e/menu.spec.ts:64:3 › Main Menu › stub options render 'Coming soon' message
+[73/86] [mobile-portrait-chromium] › e2e/progression.spec.ts:28:3 › combat progression (regression) › menu → mission_select → approach → combat → victory via digit key
+[mobile-portrait-chromium] › e2e/progression.spec.ts:28:3 › combat progression (regression) › menu → mission_select → approach → combat → victory via digit key
+Phase after mission select: approach
+
+Phase after first Enter in matrix: approach
+
+Phase after second Enter in matrix: combat
+
+Final phase: combat
+
+[74/86] [mobile-portrait-chromium] › e2e/progression.spec.ts:80:3 › combat progression (regression) › jack_out from menu reaches exit phase
+[75/86] [mobile-portrait-chromium] › e2e/settings.spec.ts:51:1 › SETTINGS menu option navigates to settings screen
+[76/86] [mobile-portrait-chromium] › e2e/settings.spec.ts:78:1 › ArrowRight on settings increments BGM volume
+[77/86] [mobile-portrait-chromium] › e2e/settings.spec.ts:106:1 › ESC from settings returns to main menu
+[78/86] [mobile-portrait-chromium] › e2e/smoke.spec.ts:18:35 › deployment reachable + canvas boots + no console errors
+[79/86] [mobile-portrait-chromium] › e2e/sound_triggers.spec.ts:24:3 › Sound Triggers › combat SFX events fire without errors during full run
+[80/86] [mobile-portrait-chromium] › e2e/status_effect.spec.ts:10:1 › use_program triggers burn status effect on ICE (probabilistic)
+[81/86] [mobile-portrait-chromium] › e2e/tier55_vfx.spec.ts:18:3 › Tier 5.5 VFX › matrix shows event glyphs (combat/discovery/trap/etc.)
+[82/86] [mobile-portrait-chromium] › e2e/tier55_vfx.spec.ts:34:3 › Tier 5.5 VFX › combat triggers VFX (canvas changes after card use)
+[83/86] [mobile-portrait-chromium] › e2e/touch_input.spec.ts:37:3 › mobile touch input › virtual gamepad overlay is visible on touch device
+[84/86] [mobile-portrait-chromium] › e2e/touch_input.spec.ts:43:3 › mobile touch input › D-pad touch navigates menu options
+[85/86] [mobile-portrait-chromium] › e2e/touch_input.spec.ts:56:3 › mobile touch input › A button touch confirms NEW_RUN → mission_select
+[86/86] [mobile-portrait-chromium] › e2e/touch_input.spec.ts:72:3 › mobile touch input › program row touch uses a program in combat
+  4 skipped
+  82 passed (4.6m)

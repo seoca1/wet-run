@@ -12,7 +12,7 @@ import { getAlarmMultiplier } from "./ice_ai";
 
 export const IDLE_ALARM_TUNING = {
   idleThresholdMs: 10_000,
-  damagePerLevel: 0.05,
+  damagePerLevel: 0.04,
   aggressionPerLevel: 0.01,
 } as const;
 

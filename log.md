@@ -2431,3 +2431,31 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   build **118 modules**; 지정 IPv4 preview E2E **76 passed/4 skipped/0 failed, 4.7m**,
   CI unset/retry 비활성/demo-screenshots 제외/preview 종료. LSP는 기존 설치 거절로 불가.
 - raw/금지 ADR/status/VFX 구현 파일 무변경. 커밋·stage 없음; 편집 파일만 포맷.
+
+## [2026-11-01] fix | ADR-0240 sustained-idle §B1 — 피해/레벨 5%→4%
+
+- 진단 먼저: 피해 단독 opening **100/88.3/47.5/7.4/11.7/0**, 공격성 단독
+  **100/88.3/71.1/39.5/36.2/0**, 양쪽 **100/88.3/48.4/7.4/11.7/0**.
+  양 성분 0이면 sustained도 양 덱 기본 metric과 동일: cadence 자체는 원인이 아니다.
+- band별 실측: g4 reporter 3개 **79→10승**, enforcer 2개 **78→22승**,
+  sentinel 2개 **1→0승**, 합계 **395→74/1000**. g5는 enforcer 3개 **76→9승**이나
+  loa **98→78승**이 남아 **326→105/900**. 동일 배율의 서로 다른 생존 cliff가 역전 원인.
+- 1/2/3/4% grid(공격성 +1pp 고정), 양 덱 전 grade 측정 후 가장 강한 통과 후보
+  **4%** 채택. production diff는 `idle_alarm.ts` 상수 **한 값**뿐, 레벨 5 ×1.20.
+- 최종 sustained opening **100/88.3/49.3/25.2/12.4/0**, PPL
+  **100/79.1/97.1/79.1/44.1/0**. opening §B1 PASS, §B2 g6 0.0%.
+  알람 압력은 유지: opening g3 −21.2pp/g4 −14.3pp/g5 −23.8pp, PPL g6 −24.7pp vs no-idle.
+- 양 덱 × idle 0/1000/10000을 전후 별도 CLI 실행, 100 runs/mission, seeds 1–100.
+  양 덱 no-idle은 ADR-0239 승률과 동일, 모든 출력 metric은 수정 전과 byte-identical.
+  idle 0=1000도 모든 metric 행의 exact string equality assert PASS. 기본 재기준화 없음.
+- 신규 `sustained_idle_balance.test.ts`: 전 grade 반올림 전 비율 검사,
+  수정 전 **0.11666666666666667 > 0.074**로 실패 → 한 값 수정 후 통과.
+  기존 테스트 삭제/완화 없음. PPL 단조성은 §C3대로 목표로 삼지 않았다.
+- ADR-0240 확정 수치·Implementation Status·변경 이력, ADR-0244 잔여 한계,
+  combat.md/GDD/인덱스 동기화. [모든 raw stdout·재현 명령](docs/wiki/decisions/0240-sustained-idle-evidence.md).
+- LSP: 두 편집 TS 파일 모두 요청했으나 TypeScript 서버 미설치·기존 설치 거절로 불가.
+  설치/우회 없음. 금지 파일·상수·cadence·Accepted 결정 본문 무변경, stage/commit 없음.
+- 최종 검증: typecheck **0 errors**, lint **0 errors / 기존 keyboard warning 1**;
+  **160 files / 3624 tests passed / 0 failures (8.35s)**; build **118 modules / 568ms**.
+  지정 IPv4 strictPort preview E2E **76 passed / 4 skipped / 0 failed (4.6m)**,
+  CI unset·재시도 없음·demo-screenshots 제외, preview 종료. 임시 진단 스크립트·저널 제거.

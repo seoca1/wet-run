@@ -254,7 +254,8 @@ seed 1–100, mission 수 4/16/11/10/9/3. N=2 → N=1 → N=3 측정 후 **2로 
 **양 덱 모두 win-rate뿐 아니라 stalled / mean-turns / mean-HP-end / p5/p95도
 모두 동일**하다 (raw stdout). N=1/3에서도 각각 idle 0/1000이 전 metric 동일하다.
 10000은 알람을 실제로 올리므로 같아야 하는 조건이 아니며, 이제 유휴 이득이 아니라
-압력이 관측된다. 다만 아래 §B1 stress 한계는 숨기지 않는다.
+압력이 관측된다. 아래 §B1 stress 한계는 당시 측정이며, 현재는 ADR-0240의
+피해/레벨 5%→4% 후속 튜닝으로 해소됐다 (Dixie N=2 불변).
 
 ### ADR-0229 정책 판정 (ADR-0239 대비)
 
@@ -281,7 +282,10 @@ seed 1–100, mission 수 4/16/11/10/9/3. N=2 → N=1 → N=3 측정 후 **2로 
   N=2 `g4 7.4 < g5 11.7`, N=3 `1.5 < 5.4`. N=1 stress는 단조다.
   이 표는 기본 곡선의 §B1 통과를 **모든 유휴 분포의 통과로 일반화하지 않는다**.
   stress 실패를 재기준화로 면책하지 않는다. 입력 조건을 달리한 alarm pressure의
-  grade별 비대칭이 남았으며, 이를 고치려면 별도 밸런스 결정이 필요하다.
+   grade별 비대칭이 남았다. **후속 해소 (2026-11-01)**: ADR-0240 §Implementation
+   Status의 성분 분리·grid로 피해/레벨만 5%→4% 변경, N=2 sustained opening
+   **100.0 / 88.3 / 49.3 / 25.2 / 12.4 / 0.0**, §B1 PASS.
+   양 덱 no-idle 기준선·idle 0=1000은 그대로다. 이 절의 기존 5% 표는 역사적 측정이다.
 - **§B2**: opening g6은 모든 측정에서 0.0–1.0%, 허용 0–5% 이내.
 - **§C2**: 양 덱 before/after와 대안 전체 공개. N=1 PPL g2 **+20.9pp**,
   g4 **+12.2pp**, g6 **+8.6pp**; N=3 g4 **−18.4pp**, g6 **−7.7pp**.
@@ -300,8 +304,9 @@ seed 1–100, mission 수 4/16/11/10/9/3. N=2 → N=1 → N=3 측정 후 **2로 
 - **(d) RESOLVED**: N=2 실측 0.0pp라 ADR-0239는 superseded 되지 않는다.
 - **(e) UNCHANGED / out of scope**: 확정 진단의 적 auto-attack gate=2000ms와
   dead `counterWindowOpenMs`는 그대로. status/VFX 및 다른 시간 경로는 감사·수정하지 않았다.
-- **별도 잔여 항목**: 10000ms sustained idle의 §B1 실패 (위 표). 알람/grade retuning은
-  이번 gate 수정에 몰래 섞지 않았다.
+- **별도 잔여 항목 해소**: 위 5% 튜닝의 10000ms §B1 실패는 ADR-0240 후속
+  4% 튜닝으로 해결됐다. 이 gate 수정 당시에는 알람/grade retuning을 섞지 않았으며,
+  후속 진단·raw 출력은 [ADR-0240 지속 유휴 증거](./0240-sustained-idle-evidence.md)에 분리했다.
 
 ### 검증 결과
 

@@ -221,7 +221,7 @@ describe("program-funded encounter intel (ADR-0247 E first slice)", () => {
 
   it.each([
     [0, 8],
-    [1, 30],
+    [1, 60],
   ])(
     "preserves fixed verb %s and its COST with no matching program",
     (index, cost) => {

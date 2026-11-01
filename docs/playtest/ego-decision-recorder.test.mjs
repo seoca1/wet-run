@@ -47,8 +47,8 @@ test("records paid PROBE and BYPASS separately, not highlights or rejected confi
       decision: { selectedVerb: "BYPASS", probed: true },
       intel: [{ id: "watchdog", hp: 50 }],
     }),
-    snapshot({ cost: 38, decision: null, bypassed: 2 }),
-    snapshot({ node: 3, turn: 2, cost: 38, decision: null }),
+    snapshot({ cost: 68, decision: null, bypassed: 2 }),
+    snapshot({ node: 3, turn: 2, cost: 68, decision: null }),
   ];
   // When
   states.forEach((state) => recorder.observe(state));
@@ -57,7 +57,7 @@ test("records paid PROBE and BYPASS separately, not highlights or rejected confi
     recorder.rows.map((r) => [r.verb, r.before.cost, r.delta.cost, r.delta.hp]),
     [
       ["PROBE", 0, 8, 0],
-      ["BYPASS", 8, 30, 0],
+      ["BYPASS", 8, 60, 0],
     ],
   );
   assert.equal(recorder.rows[1].continued, "yes (travel observed)");

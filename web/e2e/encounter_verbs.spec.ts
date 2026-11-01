@@ -65,7 +65,7 @@ test("paid PROBE reveals intel, then BYPASS forgoes loot and permits travel", as
   });
   expect(bypassed).toEqual({
     ...initial,
-    cost: (initial.cost ?? 0) + 38,
+    cost: (initial.cost ?? 0) + 68,
     runPhase: "matrix",
     cleared: [],
     decision: null,

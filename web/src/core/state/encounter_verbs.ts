@@ -4,11 +4,11 @@ import { iceHpForGrade, missionGradeOf } from "../combat/ice_scaling";
 import { clearIceEffects } from "../combat/ice_combat_effects";
 import { durationForKind, import_vfx } from "./state_helpers";
 
-// Conservative route-economy starting points: the combat-only balance harness
-// never walks the graph. Validate these prices with a real play pass.
+// Owner-set route prices: the combat-only balance harness never walks the graph
+// and cannot validate them. Validate the route economy with real play passes.
 export const ENCOUNTER_VERB_COSTS = {
   probe: 8, // Small but nonzero information investment before committing.
-  bypass: 30, // Three passages consume 90/100, displacing expensive programs.
+  bypass: 60, // At most one bypass per run: COST only rises and the cap is 100.
   limit: 100, // Existing player.alarm cap; no new resource or TRACE coupling.
 } as const;
 

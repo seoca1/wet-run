@@ -91,7 +91,7 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
 
   it.each([
     [0, 92],
-    [1, 70],
+    [1, 40],
   ])("accepts verb %s exactly at the existing COST ceiling", (verb, alarm) => {
     // Given
     const initial = onIce();
@@ -122,7 +122,7 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
     };
     const costly = {
       ...initial,
-      player: { ...initial.player, alarm: 70 },
+      player: { ...initial.player, alarm: 40 },
       deck: [expensive],
     };
     const bypassed = choose(applyAction(costly, { type: "confirm" }), 1);
@@ -166,7 +166,7 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
     const result = choose(applyAction(initial, { type: "confirm" }), 1);
     // Then
     expect(result.runPhase).toBe("matrix");
-    expect(result.player.alarm).toBe(initial.player.alarm + 30);
+    expect(result.player.alarm).toBe(initial.player.alarm + 60);
     expect(result.player.hp).toBe(initial.player.hp);
     expect(result.player.credits).toBe(initial.player.credits);
     expect(result.inventory).toEqual(initial.inventory);
@@ -249,7 +249,42 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
     // Then
     expect(won.runPhase).toBe("loot");
     expect(won.player.credits - initial.player.credits).toBe(125);
-    expect(won.player.alarm).toBe(30);
+    expect(won.player.alarm).toBe(60);
+  });
+
+  it("refuses a second BYPASS in the same run without spending or granting passage", () => {
+    // Given: spend from zero, travel away, then return without restarting the run.
+    const initial = onIce();
+    expect(initial.player.alarm).toBe(0);
+    const bypassed = choose(applyAction(initial, { type: "confirm" }), 1);
+    expect(bypassed.player.alarm).toBe(60);
+    expect(bypassed.encounterDecision).toBeNull();
+    expect(bypassed.bypassedEncounterNodeIndex).toBe(0);
+    const away = applyAction(applyAction(bypassed, { type: "move_south" }), {
+      type: "confirm",
+    });
+    const returned = applyAction(applyAction(away, { type: "move_south" }), {
+      type: "confirm",
+    });
+    expect(away.currentNodeIndex).toBe(1);
+    expect(returned.currentNodeIndex).toBe(0);
+    expect(returned.bypassedEncounterNodeIndex).toBeNull();
+    // When
+    const rejected = choose(applyAction(returned, { type: "confirm" }), 1);
+    // Then: the cap keeps the menu open and grants neither payment nor departure.
+    expect(rejected.player.alarm).toBe(60);
+    expect(rejected.player).toEqual(bypassed.player);
+    expect(rejected.inventory).toEqual(bypassed.inventory);
+    expect(rejected.encounterDecision?.selectedVerb).toBe("BYPASS");
+    expect(rejected.bypassedEncounterNodeIndex).toBeNull();
+    expect(rejected.clearedEncounterNodes ?? []).not.toContain(0);
+    expect(screenText(rejected)).toContain("BYPASS +60 COST BLOCKED");
+    const departure = applyAction(
+      applyAction({ ...rejected, encounterDecision: null }, { type: "move_south" }),
+      { type: "confirm" },
+    );
+    expect(departure.currentNodeIndex).toBe(0);
+    expect(departure.encounterDecision).not.toBeNull();
   });
 
   it("cannot avoid paying BYPASS by selecting an outgoing route first", () => {
@@ -267,7 +302,7 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
 
   it.each([
     [0, 93],
-    [1, 71],
+    [1, 41],
   ])(
     "rejects unaffordable verb %s instead of capping away its price",
     (verb, alarm) => {

@@ -201,9 +201,9 @@ opening **g3 mean-HP-end 21.6 → 23.6**, p5/p95 **9/32 → 12/33** — stealth 
 - **(e) `stealth` ICE 스킬** — ADR-0240 에 이월된 질문과 같다. 배율이 알람 간격을
   바꾸는 것만으로 `stealth` 동작이 플레이에서 관측 가능한가, 아니면 catalog 에 스킬을
   저술해야 하는가? 결론은 ADR-0240 에서 내고 이 ADR 이 따른다.
-- **(i) 다수 ICE 의 배율 합성** — multi-ICE 전투 (ADR-0152) 에서 roster 에 `stealth`
-  와 비-`stealth` ICE 가 섞이면 `iceAlarmSpeed` 는 무엇인가 (최소값 / 곱 / 평균 /
-  살아 있는 ICE 기준)? `stealth` ICE 가 쓰러지면 배율이 즉시 바뀌는가?
+- ~~**(i) 다수 ICE 의 배율 합성**~~ — ✅ **해소: 살아 있는 roster ICE 의 최소 배율**, 매 적격 tick
+  재계산 (Implementation Status). stealth 1개 이상 생존 → 0.5 (간격 20초), 없으면 1 (10초).
+  **2개여도 중첩 없음** (곱 규칙 기각), stealth 가 모두 죽으면 다음 tick 부터 정상 속도 복귀.
 - **(j) run mutator 배율과의 관계** — `run_mutators.ts:183` 의 run 단위 알람 배율과
   ICE 배율이 함께 적용될 때의 합성 규칙은? (두 함수는 대상이 다르지만 둘 다 "알람
   속도" 를 말한다.)

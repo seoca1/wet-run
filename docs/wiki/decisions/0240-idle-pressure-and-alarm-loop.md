@@ -329,26 +329,26 @@ IPv4 strictPort preview + CI unset + demo-screenshots 제외 E2E는 **76 passed 
 
 ## Open questions
 
-- **(c) 유휴 판정 N 초 + 접근성 opt-out** (ADR-0238 에서 이월) — 입력 없음을 몇 초로
-  판정하는가? 접근성 (ADR-0183) 관점에서 설정으로 끌 수 있어야 하는가? 끌 수 있다면
-  그 설정이 하네스 기준선에 어떻게 반영되는가?
+- **(c) 유휴 판정 임계 N 초 — ✅ 해소(10초)** · **접근성 opt-out — 여전히 OPEN** (ADR-0238 에서
+  이월) — 임계는 10초로 확정했다 (Implementation Status). 접근성 (ADR-0183) 관점의 opt-out
+  설정은 만들지 않았고, 무관한 설정 정책을 발명하지 않기 위해 미해결로 남긴다.
 - **(e) `stealth` ICE 스킬** (ADR-0238 에서 이월) — ADR-0228 은 `getAlarmMultiplier`
-  에 "알람 루프 + 스킬을 carry 하는 `stealth` ICE" 둘 다 필요하다고 적었다. 이 ADR 의
-  루프가 생기면 배율이 알람 간격 자체를 바꾸므로 스킬 없이도 관측 가능한가, 아니면
-  catalog 에 스킬을 저술해야 하는가? (ADR-0242 와 공유하는 질문)
+  에 "알람 루프 + 스킬을 carry 하는 `stealth` ICE" 둘 다 필요하다고 적었다. ADR-0242 로
+  배율은 배선되었으나 catalog 의 stealth 5종이 여전히 `skills: []` 다. 스킬 저술 여부는
+  up-stream (위키) 선행이 필요해 **OPEN**.
 > 문자 표기: (c)(e) 는 ADR-0238 의 문자를 그대로 이월했다. 새 질문은 ADR-0238 의
 > (a)–(h) 와 겹치지 않도록 (i) 부터 붙였다.
 
-- **(i) tick 구동 경로** — 무엇이 `tickAlarm` 을 부르는가 (reducer 액션? rAF 루프?).
-  하네스가 같은 경로를 밟지 않으면 측정이 비어 있다 (ADR-0238 X1-2 행).
-- **(j) 알람 결과의 크기와 형태** — "적 피해 · 공격성 증가" 의 레벨당 크기는? "공격성"
-  은 기존 ICE `aggression` 필드 (ADR-0221 이 복원한 값) 를 올리는 것인가, 별도
-  배율인가? `ALARM_MAX_LEVEL = 5` 에서 상한은 어떻게 되는가?
+- ~~**(i) tick 구동 경로**~~ — ✅ **해소: reducer 액션** (Implementation Status). 결정 (a) 가
+  `applyAction` · fake `Date.now` 경유 측정을 요구하므로 rAF 단독 배선은 측정 불가다 — rAF 는
+  호출자일 뿐이고 브라우저와 하네스가 같은 게이트를 쓴다. **ADR-0244 가 시계 의존성까지 제거**했다.
+- ~~**(j) 알람 결과의 크기와 형태**~~ — ✅ **해소** (Implementation Status): 기존 aggression tier 는
+  유지하고 스킬 확률을 가산한다 (tier 변형 · 추가 적 공격 없음). 피해는 레벨당 **+4%**
+  (2026-11-01 §B1 수정으로 5% → 4%), 상한 `ALARM_MAX_LEVEL = 5`.
 - **(k) 두 알람의 관계** — `player.alarm` (0–100, 프로그램 비용 누산기) 과
   `state.alarmLevel` (0–5) 을 하나로 합칠 것인가 (ADR-0238 Open questions (b) 후반부)?
-- **(l) 하네스 유휴 길이 분포** — `balance_sim.ts` 의 유휴 단계는 어떤 분포로 유휴
-  길이를 뽑는가 (ADR-0238 Open questions (a) 후반부)? 그 분포 자체가 기준선을
-  결정하므로 근거를 이 ADR 에 기록해야 한다.
+- ~~**(l) 하네스 유휴 길이 분포**~~ — ✅ **해소** (Implementation Status): 생략/0 = 기존 시뮬 정확
+  보존, 스칼라 = 매 턴, 배열 = 턴별 고정. **점질량이며 RNG 표본이 아니다** (추가 draw 0).
 
 ## 영향 받는 항목
 

@@ -2542,3 +2542,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   닫지 않았다 — 다만 Implementation Status 의 안전성 확인이 "현재 독자에게는 충분" 근거를
   이미 담고 있다). `decisions/README.md` Impl 셀 갱신, 변경 이력 추가.
 - 코드 변경 없음 (문서 전용).
+
+## [2026-11-01] docs | 해소된 Open questions 정리 (0240/0242) + Impl 셀 정정
+
+- **ADR-0240 `## Open questions`**: Implementation Status 는 (c)(i)(j)(l) 을 해소로
+  기록했는데 아래 목록은 그대로 열린 것처럼 남아 있었다. (i)(j)(l) 을 취소선 + 해소 근거로
+  정리하고, (c) 는 **임계 N=10초 해소 / 접근성 opt-out 은 OPEN** 으로 분리해 표기했다.
+  (e) 는 stealth ICE 스킬 저술이 up-stream 선행이라 OPEN 임을 명시. (k) 는 그대로 OPEN.
+- **ADR-0242 `## Open questions`**: (i) 다수 ICE 배율 합성을 취소선 + 해소 규칙(살아 있는
+  roster ICE 의 최소 배율, 매 적격 tick 재계산, 비중첩)으로 정리. (e)(j) 는 OPEN 유지.
+- **`decisions/README.md`**: 0240 Impl 셀의 "미커밋 지속 유휴 수정" 을 실제 커밋
+  `5164b8c` 로 정정 (해당 수정은 이미 커밋됨).
+- 코드 변경 없음 (문서 전용). 남은 OPEN 은 오너 결정 또는 별도 프로젝트 선행이 필요한
+  항목뿐이다.

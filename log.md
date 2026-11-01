@@ -2623,3 +2623,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **측정 한계**: `balance_sim.ts`는 그래프 이동 없이 조우를 직접 구성하므로 이 파밍 구멍을 보지 못함. 0.0pp는 전투 기준선 보존 증거이지 런 보상 경제 무결성 증거가 아님. 결함 차단 증거는 위 red/green 경로 회귀와 저장 왕복임.
 - **E2E**: `npx vite preview --port 5195 --strictPort --host 127.0.0.1` + `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **76 passed / 4 skipped / 0 failed (4.5m)**, retry 없음. `gotoIceNode`/CONTINUE 그대로 통과. preview 종료 후 5195 리스너 없음 확인.
 - **문서/범위**: ADR-0246은 `## Implementation Status`만 갱신, 인덱스 0246 Impl 셀 및 본 로그 추가. 기존 미커밋 슬라이스 유지, 스테이징·커밋 없음. 경로 강조+확인·보상 후 위치·15% 회복 불변; 던전 크롤러·status.ts·raw/·Accepted 결정 본문·Probe/Bypass/Breach/TRACE/E는 변경하지 않음.
+
+## [2026-11-01] fix(ci) | Prettier 검사 쓰기 제거 + 소스 가드 공백 독립화
+
+- **원인/수정**: `.github/workflows/delegation-verification.yml:61`의 `npm run format -- --check`는 `format` 스크립트의 `--write`를 그대로 실행해 검사 중 소스를 수정했음. 직접 `npx prettier --check "src/**/*.{ts,tsx}"`로 교체. 기존 glob·package.json·ignore 설정은 불변.
+- **기계적 포맷**: `web/`에서 `npx prettier --write "src/**/*.{ts,tsx}"` 실행. 변경된 소스 19개, **+257/-135**. 기존 보호 4개(`dungeon_crawler_actions.ts`, `dungeon_crawler_core.ts`, `floating_damage.ts`, `screen_shake.ts`)는 **+21/-23**이며 동작 수정 없음. `core/status.ts`는 이미 clean이라 byte 변경 없음.
+- **중립성 증명**: 각 소스 파일이 HEAD에 Prettier만 적용한 결과와 byte-identical인지 확인하고, TypeScript AST의 노드·식별자·리터럴·연산자·인자 순서·선언 종류를 비교해 동일함을 확인(위치/공백/불필요한 괄호 제외). `git diff -w`는 `far_grid_gate.ts`만 empty, 나머지 18개는 non-empty: 줄 분할/합침, 후행 쉼표, 동치 괄호, union 첫 `|` 정리만 존재. 따옴표/리터럴 값 변경 없음.
+- **소스 가드**: `onboarding.test.ts`는 main.ts 공백을 제거한 뒤 기존 튜토리얼 진입·렌더 인자·힌트 조건·표시 후 once 플래그 순서를 그대로 검사. `nav_index.test.ts`는 동일 template expression의 `formatNavIndex(index)` 긍정 및 `index + 1` 부정 검사를 공백 제거 후 유지. `effects_schema.test.ts`는 동일 선언/union/상수/종류별 duration literal을 공백 제거 후 검사. 가드 삭제·새 wildcard·인자/값 완화 없음; tests 디렉토리 전체 포맷은 하지 않음.
+- **검증**: 직접 Prettier check exit 0; `npm run typecheck` 0 errors; `npm run lint` 0 errors/기존 `keyboard.ts:14` 경고 1개; `npm test` **161 files / 3658 passed / 0 failures**; `npm run build` 통과. jsdom 미디어 미구현 stderr는 테스트 실패를 일으키지 않음. LSP는 TypeScript 서버 미설치/기존 설치 거절로 실행 불가, CLI 타입체크로 검증.
+- **밸런스**: 포맷 전후 `npm run balance`와 `npm run balance -- --deck ppl` 전체 stdout을 각각 `cmp`하여 **byte-identical(exit 0)**. opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**로 ADR-0239 기준선 일치(턴/HP/percentile도 전후 동일).
+- **E2E**: `npx vite preview --port 5195 --strictPort --host 127.0.0.1` + CI를 제거한 환경의 `PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **76 passed / 4 skipped / 0 failed (4.4m)**, retry 없음. finally에서 preview 프로세스 그룹 종료.
+- **경계**: ADR·raw/·index.html·e2e/·package.json 변경 없음. 소스는 지정 glob에만 기계적 포맷. 커밋·스테이징 없음.

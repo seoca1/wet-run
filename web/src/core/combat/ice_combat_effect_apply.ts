@@ -15,7 +15,10 @@ import {
   type IceEffectOutcome,
   type IceEffectSkill,
 } from "./ice_combat_effects";
-import { durationForKind, import_vfx_deterministic } from "../state/state_helpers";
+import {
+  durationForKind,
+  import_vfx_deterministic,
+} from "../state/state_helpers";
 
 /** Apply an ICE's non-damaging skill to the given roster slot.
  *
@@ -66,7 +69,9 @@ function applyShield(
     return {
       state: { ...state, statusEffects: [...state.statusEffects, effect] },
       message: `>>> ${ice.name} raises a ${magnitude} pt shield`,
-      vfx: [import_vfx_deterministic("shield", ice.name, durationForKind("shield"))],
+      vfx: [
+        import_vfx_deterministic("shield", ice.name, durationForKind("shield")),
+      ],
     };
   }
   // Re-cast: the pool grows, the lifetime refreshes (depth.md TC-DEPTH-004).
@@ -82,7 +87,9 @@ function applyShield(
   return {
     state: replaceEffect(state, existingIndex, next),
     message: `>>> ${ice.name} reinforces its shield to ${next.magnitude} pt`,
-    vfx: [import_vfx_deterministic("shield", ice.name, durationForKind("shield"))],
+    vfx: [
+      import_vfx_deterministic("shield", ice.name, durationForKind("shield")),
+    ],
   };
 }
 
@@ -102,7 +109,16 @@ function applyHeal(
       healed > 0
         ? `>>> ${ice.name} restores ${healed} HP`
         : `>>> ${ice.name} is already at full integrity`,
-    vfx: [import_vfx_deterministic("heal", ice.name, durationForKind("heal"), undefined, undefined, healed)],
+    vfx: [
+      import_vfx_deterministic(
+        "heal",
+        ice.name,
+        durationForKind("heal"),
+        undefined,
+        undefined,
+        healed,
+      ),
+    ],
   };
 }
 
@@ -128,7 +144,9 @@ function applyRegen(
     return {
       state: { ...state, statusEffects: [...state.statusEffects, effect] },
       message: `>>> ${ice.name} begins regenerating ${magnitude} HP per tick`,
-      vfx: [import_vfx_deterministic("regen", ice.name, durationForKind("regen"))],
+      vfx: [
+        import_vfx_deterministic("regen", ice.name, durationForKind("regen")),
+      ],
     };
   }
   const existing = state.statusEffects[existingIndex];
@@ -144,7 +162,9 @@ function applyRegen(
   return {
     state: replaceEffect(state, existingIndex, next),
     message: `>>> ${ice.name} renews its regeneration`,
-    vfx: [import_vfx_deterministic("regen", ice.name, durationForKind("regen"))],
+    vfx: [
+      import_vfx_deterministic("regen", ice.name, durationForKind("regen")),
+    ],
   };
 }
 
@@ -170,7 +190,9 @@ function applyBuff(
     return {
       state: { ...state, statusEffects: [...state.statusEffects, effect] },
       message: `>>> ${ice.name} empowers its attacks (+${magnitude})`,
-      vfx: [import_vfx_deterministic("buff", ice.name, durationForKind("buff"))],
+      vfx: [
+        import_vfx_deterministic("buff", ice.name, durationForKind("buff")),
+      ],
     };
   }
   const existing = state.statusEffects[existingIndex];
@@ -189,4 +211,3 @@ function applyBuff(
     vfx: [import_vfx_deterministic("buff", ice.name, durationForKind("buff"))],
   };
 }
-

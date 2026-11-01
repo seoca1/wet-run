@@ -91,7 +91,9 @@ export function shakeOffsetFor(
   // The sine terms are phase-shifted off zero so the very first frame of a
   // shake already carries a displacement — an impact does not begin at rest.
   const rawX = Math.sin(t * SHAKE_FREQ_X + phase + SHAKE_START_PHASE);
-  const rawY = Math.sin(t * SHAKE_FREQ_Y + phase * 1.7 + SHAKE_START_PHASE * 1.3);
+  const rawY = Math.sin(
+    t * SHAKE_FREQ_Y + phase * 1.7 + SHAKE_START_PHASE * 1.3,
+  );
   const scaledX = rawX * magnitudePx * envelope;
   const scaledY = rawY * magnitudePx * envelope * 0.5;
   return {
@@ -243,9 +245,6 @@ export function hitStopDeadlineFor(
 }
 
 /** Whether a hit-stop hold is still in force at `nowMs`. */
-export function hitStopActiveAt(
-  deadlineMs: number,
-  nowMs: number,
-): boolean {
+export function hitStopActiveAt(deadlineMs: number, nowMs: number): boolean {
   return deadlineMs > 0 && nowMs < deadlineMs;
 }

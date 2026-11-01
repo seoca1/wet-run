@@ -95,10 +95,7 @@ const ICE_SKILL_NON_DAMAGE_EFFECTS: ReadonlySet<string> = new Set([
  * @param raw - The raw `skill_defs` value from `ice_types.json`.
  * @param ctx - Context string for error messages (e.g. `"ice_types.json"`).
  */
-export function parseIceSkillDefs(
-  raw: unknown,
-  ctx: string,
-): IceSkillDefs {
+export function parseIceSkillDefs(raw: unknown, ctx: string): IceSkillDefs {
   if (typeof raw !== "object" || raw === null || Array.isArray(raw)) {
     throw new Error(
       `[data_loaders] ${ctx}: field 'skill_defs' must be an object when present`,
@@ -131,12 +128,20 @@ export function parseIceSkillDefs(
       );
     }
     const magnitude = r["magnitude"];
-    if (magnitude !== undefined && (typeof magnitude !== "number" || !Number.isFinite(magnitude))) {
+    if (
+      magnitude !== undefined &&
+      (typeof magnitude !== "number" || !Number.isFinite(magnitude))
+    ) {
       throw new Error(
         `[data_loaders] ${ctx}: skill_defs entry '${id}': field 'magnitude' must be a finite number when present (got ${typeof magnitude}: ${String(magnitude)})`,
       );
     }
-    out[id] = { name, effect, cooldownMs, ...(magnitude !== undefined ? { magnitude } : {}) };
+    out[id] = {
+      name,
+      effect,
+      cooldownMs,
+      ...(magnitude !== undefined ? { magnitude } : {}),
+    };
   }
   return out;
 }

@@ -14,7 +14,8 @@ import { dirname, resolve } from "node:path";
 import effectsJson from "../src/data/effects.json";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const effectsDts = readFileSync(resolve(here, "../src/data/effects.d.ts"), "utf-8");
+// Normalize layout before checking the same declarations and literal values.
+const effectsDts = readFileSync(resolve(here, "../src/data/effects.d.ts"), "utf-8").replace(/\s+/g, "");
 
 interface EffectEntry {
   kind: string;
@@ -27,12 +28,12 @@ interface EffectEntry {
 }
 
 const WEB_TICK_MS = 16;
-const FILE_KIND_RE = /EFFECT_([A-Z_]+):\s*\{/g;
+const FILE_KIND_RE = /EFFECT_([A-Z_]+):\{/g;
 
 function parseEffectKindLiteral(dts: string): string[] {
   // Extract union of EffectKind from effects.d.ts (e.g. `"attack" | "heal" | ...`).
-  // Use \s*=\s* for flexible whitespace around =, and 's' flag for multi-line.
-  const match = dts.match(/export type EffectKind\s*=\s*(.+?);/s);
+  // Whitespace has already been removed from the source declarations.
+  const match = dts.match(/exporttypeEffectKind=(.+?);/s);
   if (!match) return [];
   return match[1]
     .split("|")
@@ -102,7 +103,7 @@ describe("effects schema (Tier 5.6, ADR-0210)", () => {
   it("duration_ticks in d.ts matches ceil(ms / 16)", () => {
     for (const e of schema.effects) {
       const expectedTicks = Math.ceil(e.duration_ms / WEB_TICK_MS);
-      const re = new RegExp(`EFFECT_${e.kind.toUpperCase()}:[\\s\\S]*?duration_ticks: ${expectedTicks};`);
+      const re = new RegExp(`EFFECT_${e.kind.toUpperCase()}:[\\s\\S]*?duration_ticks:${expectedTicks};`);
       expect(effectsDts).toMatch(re);
     }
   });

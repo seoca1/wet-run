@@ -58,7 +58,7 @@ jobs:
       
       - name: Format check
         working-directory: ./web
-        run: npm run format -- --check
+        run: npx prettier --check "src/**/*.{ts,tsx}"
       
       - name: Run unit tests
         working-directory: ./web

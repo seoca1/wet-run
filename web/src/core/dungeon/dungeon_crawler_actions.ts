@@ -96,7 +96,10 @@ export function attackEntity(
   // Monster gets to attack back if still alive
   if (entity.hp > 0 && rng() < 0.5) {
     // 50% chance to retaliate
-    playerTakeDamage(state, getMonsterDamage(state, entity.subtype as MonsterType));
+    playerTakeDamage(
+      state,
+      getMonsterDamage(state, entity.subtype as MonsterType),
+    );
   }
 }
 

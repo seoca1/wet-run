@@ -22,11 +22,14 @@ import type { SoundEffectId } from "../../audio/manager";
 import type { GameState } from "../types";
 
 /** Minimal shape the helper needs from a `GameState`. */
-type CombatSnapshot = Pick<GameState, "phase" | "player" | "iceRoster" | "activeIceIndex">;
+type CombatSnapshot = Pick<
+  GameState,
+  "phase" | "player" | "iceRoster" | "activeIceIndex"
+>;
 
 function activeIceHp(state: CombatSnapshot): number {
   const active = state.iceRoster[state.activeIceIndex];
-  return active !== undefined ? active.hp : state.iceRoster[0]?.hp ?? 0;
+  return active !== undefined ? active.hp : (state.iceRoster[0]?.hp ?? 0);
 }
 
 /**

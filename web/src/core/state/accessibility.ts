@@ -26,7 +26,10 @@ export const DEFAULT_ACCESSIBILITY_STATE: AccessibilityState = Object.freeze({
  * check degrades to "no preference" instead of throwing during boot.
  */
 export function prefersReducedMotion(): boolean {
-  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+  if (
+    typeof window === "undefined" ||
+    typeof window.matchMedia !== "function"
+  ) {
     return false;
   }
   try {
@@ -43,7 +46,10 @@ export function prefersReducedMotion(): boolean {
  * palette overrides.
  */
 export function prefersHighContrast(): boolean {
-  if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
+  if (
+    typeof window === "undefined" ||
+    typeof window.matchMedia !== "function"
+  ) {
     return false;
   }
   try {

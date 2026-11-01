@@ -6,12 +6,13 @@ import {
   updateProgramRow,
   isTouchDevice,
 } from "./input/touch";
-import {
-  MENU_OPTIONS,
-  type MenuOption,
-} from "./renderer/menu";
+import { MENU_OPTIONS, type MenuOption } from "./renderer/menu";
 import { renderPreGameScreen } from "./renderer/pre_game_screen";
-import { renderRunScreen, renderCombatScreen, composeCombatScreen } from "./renderer/run_screen";
+import {
+  renderRunScreen,
+  renderCombatScreen,
+  composeCombatScreen,
+} from "./renderer/run_screen";
 import { renderCombatHints } from "./renderer/combat_hints";
 import { filterMissionsByUniverse } from "./core/missions_filter";
 import {
@@ -23,10 +24,7 @@ import {
   WEB_TICK_MS,
   type CombatVfxInstance,
 } from "./renderer/combat_vfx";
-import {
-  hitStopActiveAt,
-  hitStopDeadlineFor,
-} from "./renderer/screen_shake";
+import { hitStopActiveAt, hitStopDeadlineFor } from "./renderer/screen_shake";
 import { pickCombatSfxLayers } from "./core/combat/combat_sfx";
 import { idleAlarmAction } from "./core/combat/idle_alarm";
 import { FpsCounter, getMetrics } from "./core/state/performance";
@@ -92,7 +90,11 @@ import {
   slotToGameState,
   stateToSaveSlot,
 } from "./core/state/state";
-import { encounterIceIdForGrade, missionGradeOf, missionSeedOf } from "./core/combat/ice_scaling";
+import {
+  encounterIceIdForGrade,
+  missionGradeOf,
+  missionSeedOf,
+} from "./core/combat/ice_scaling";
 import { makeGrid, type Grid } from "./core/grid";
 import {
   save as saveToSlot,
@@ -129,7 +131,13 @@ function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState
     muted: false,
     language: loadPersistedLanguage(),
     storageQuota: { state: "unavailable", reason: "not yet fetched" },
-    pwa: { canInstall: false, isInstalled: false, isOffline: false, hasUpdate: false, deferredPrompt: null },
+    pwa: {
+      canInstall: false,
+      isInstalled: false,
+      isOffline: false,
+      hasUpdate: false,
+      deferredPrompt: null,
+    },
     reducedMotion: resolveReducedMotion(loadReducedMotionOverride()),
     highContrast: resolveHighContrast(loadHighContrastOverride()),
     colorblindMode: loadColorblindMode(),
@@ -204,7 +212,10 @@ function loadIce(
     const ice = iceTypes[preferred];
     if (ice) return normalize(ice);
   }
-  const graded = iceTypes[encounterIceIdForGrade(missionGradeOf(mission), missionSeedOf(mission))];
+  const graded =
+    iceTypes[
+      encounterIceIdForGrade(missionGradeOf(mission), missionSeedOf(mission))
+    ];
   if (graded) return normalize(graded);
   const first = keys[0];
   if (!first) throw new Error("No ICE types in ice_types.json");
@@ -249,7 +260,9 @@ function formatMissionOption(
   const grade = `T${mission.grade_max}`;
   const credits = mission.rewards.credits.toLocaleString();
   const titleText =
-    language === "ko" && mission.title_ko !== undefined && mission.title_ko.length > 0
+    language === "ko" &&
+    mission.title_ko !== undefined &&
+    mission.title_ko.length > 0
       ? mission.title_ko
       : mission.title;
   return `${formatNavIndex(index)} ${titleText}  [${grade} | ${credits}cr]`;
@@ -301,9 +314,12 @@ class Game {
   /** P12 — the in-game acknowledgement of a touch program-button press. */
   private pressFeedback: PressFeedbackState = IDLE_PRESS_FEEDBACK;
   private graphicNovelPlayer:
-    import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null = null;
-  private gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language = "en";
-  private graphicNovelState: import("./core/types.ts").GraphicNovelState | null = null;
+    import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null =
+    null;
+  private gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language =
+    "en";
+  private graphicNovelState:
+    import("./core/types.ts").GraphicNovelState | null = null;
 
   private settingsState: import("./renderer/settings.ts").SettingsState | null =
     null;
@@ -372,7 +388,9 @@ class Game {
     // read is cheap and synchronous — no need for async refresh.
     this.farGridUnlockedCache = isFarGridUnlocked();
     void this.refreshSaveCache();
-    const resetIdle = (): void => { this.idleSinceMs = Date.now(); };
+    const resetIdle = (): void => {
+      this.idleSinceMs = Date.now();
+    };
     document.addEventListener("keydown", resetIdle);
     document.addEventListener("pointerdown", resetIdle);
     document.addEventListener("visibilitychange", resetIdle);
@@ -698,21 +716,33 @@ class Game {
   private renderGraphicNovel(): void {
     if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
     void loadStorySystem().then((gn) => {
-      void import("./renderer/graphic_novel_screen.ts").then(({ renderGraphicNovelScreen }) => {
-        if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
-        const state = this.graphicNovelState;
-        const player = this.graphicNovelPlayer;
-        const scene = state.currentScene;
+      void import("./renderer/graphic_novel_screen.ts").then(
+        ({ renderGraphicNovelScreen }) => {
+          if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
+          const state = this.graphicNovelState;
+          const player = this.graphicNovelPlayer;
+          const scene = state.currentScene;
 
-        const grid = renderGraphicNovelScreen({
-          chapter: scene ? { order: scene.order, title: gn.currentTitle(player, this.gnLanguage), speaker: gn.currentSpeaker(player, this.gnLanguage) } : null,
-          text: state.currentText,
-          dialogueText: gn.currentDialogue(player)?.text_en ?? null,
-          progress: gn.progress(player),
-          isPaused: state.isPaused,
-        }, this.layout.cols, this.layout.rows);
-        this.renderer.render(grid, ["GRAPHIC NOVEL", "", ""]);
-      });
+          const grid = renderGraphicNovelScreen(
+            {
+              chapter: scene
+                ? {
+                    order: scene.order,
+                    title: gn.currentTitle(player, this.gnLanguage),
+                    speaker: gn.currentSpeaker(player, this.gnLanguage),
+                  }
+                : null,
+              text: state.currentText,
+              dialogueText: gn.currentDialogue(player)?.text_en ?? null,
+              progress: gn.progress(player),
+              isPaused: state.isPaused,
+            },
+            this.layout.cols,
+            this.layout.rows,
+          );
+          this.renderer.render(grid, ["GRAPHIC NOVEL", "", ""]);
+        },
+      );
     });
   }
 
@@ -1174,7 +1204,8 @@ class Game {
 
   /** Track the once-per-run hint; delegate drawing beneath the VFX layer. */
   private composeCombatOverlays(grid: Grid, previousPhase: GamePhase): Grid {
-    const showHint = !this.combatEntryHintShown &&
+    const showHint =
+      !this.combatEntryHintShown &&
       previousPhase !== "combat" &&
       this.state?.phase === "combat" &&
       combatEntryHintFits(this.layout.rows);
@@ -1196,9 +1227,16 @@ class Game {
   private draw(persist: boolean = true): void {
     // Tier 5: matrix / loot / ending screens render with a real GameState
     // but their UI is non-combat. Route by runPhase.
-    if (this.state !== null && ["matrix", "ending", "loot"].includes(this.state.runPhase)) {
+    if (
+      this.state !== null &&
+      ["matrix", "ending", "loot"].includes(this.state.runPhase)
+    ) {
       updateProgramRow([]);
-      const view = renderRunScreen(this.state, this.layout.cols, this.layout.rows);
+      const view = renderRunScreen(
+        this.state,
+        this.layout.cols,
+        this.layout.rows,
+      );
       if (view) this.renderer.render(view.grid, view.hud);
       return;
     }
@@ -1244,30 +1282,44 @@ class Game {
         return;
       }
       const language = this.settingsState?.language ?? "en";
-      const view = renderPreGameScreen({
-        screen: this.screen,
-        menuIndex: this.selectedMenuIndex,
-        missionIndex: this.selectedMission,
-        missionRows: this.screen === "mission_select"
-          ? filterMissionsByUniverse(MISSIONS, "sprawl")
-            .map((m, i) => formatMissionOption(m, i, language)) : [],
-        farGridMissions: this.screen === "far_grid_hub"
-          ? filterMissionsByUniverse(MISSIONS, "far-grid") : [],
-        hasSave: this.hasSaveCache,
-        saveMeta: this.saveMetaCache,
-        message: this._message,
-        farGridUnlocked: this.farGridUnlockedCache,
-        language,
-        settings: this.settingsState ?? fallbackSettingsState(),
-        crafting: {
-          inventory: this.inventory, recipes: this.recipes, materials: this.materials,
-          marketItemCount: this.screen === "crafting" ? this.infoMarket.allItems().length : 0,
+      const view = renderPreGameScreen(
+        {
+          screen: this.screen,
+          menuIndex: this.selectedMenuIndex,
+          missionIndex: this.selectedMission,
+          missionRows:
+            this.screen === "mission_select"
+              ? filterMissionsByUniverse(MISSIONS, "sprawl").map((m, i) =>
+                  formatMissionOption(m, i, language),
+                )
+              : [],
+          farGridMissions:
+            this.screen === "far_grid_hub"
+              ? filterMissionsByUniverse(MISSIONS, "far-grid")
+              : [],
+          hasSave: this.hasSaveCache,
+          saveMeta: this.saveMetaCache,
           message: this._message,
+          farGridUnlocked: this.farGridUnlockedCache,
+          language,
+          settings: this.settingsState ?? fallbackSettingsState(),
+          crafting: {
+            inventory: this.inventory,
+            recipes: this.recipes,
+            materials: this.materials,
+            marketItemCount:
+              this.screen === "crafting"
+                ? this.infoMarket.allItems().length
+                : 0,
+            message: this._message,
+          },
+          loadout: this.equipmentLoadout,
+          equipmentSlots: EQUIP_SLOTS,
+          dungeon: this.dungeonCrawler,
         },
-        loadout: this.equipmentLoadout,
-        equipmentSlots: EQUIP_SLOTS,
-        dungeon: this.dungeonCrawler,
-      }, this.layout.cols, this.layout.rows);
+        this.layout.cols,
+        this.layout.rows,
+      );
       this.renderer.render(view.grid, view.hud, view.colorFor);
       if (this.screen === "dungeon") return;
       this.syncPhase("menu");
@@ -1293,7 +1345,12 @@ class Game {
       ),
     };
     const combatView = composeCombatScreen(this.state, this.reducedMotion);
-    this.renderer.render(combatView.grid, combatView.hud, undefined, combatView.shake);
+    this.renderer.render(
+      combatView.grid,
+      combatView.hud,
+      undefined,
+      combatView.shake,
+    );
     updateProgramRow(
       this.state.phase === "combat" ? this.state.deck : [],
       this.state.phase === "combat"
@@ -1382,13 +1439,19 @@ class Game {
     const deltaMs = this.lastLoopMs > 0 ? now - this.lastLoopMs : WEB_TICK_MS;
     this.lastLoopMs = now;
 
-    if (this.state !== null && ["menu", "mission_select", "far_grid_hub"].includes(this.screen) && !this.tutorialActive && !document.hidden) {
+    if (
+      this.state !== null &&
+      ["menu", "mission_select", "far_grid_hub"].includes(this.screen) &&
+      !this.tutorialActive &&
+      !document.hidden
+    ) {
       const tick = idleAlarmAction(this.state, this.idleSinceMs, Date.now());
       if (tick !== null) {
         this.state = applyAction(this.state, tick);
         this.draw(false);
       }
-      if (this.state.runPhase !== "combat" || this.state.phase !== "combat") this.idleSinceMs = Date.now();
+      if (this.state.runPhase !== "combat" || this.state.phase !== "combat")
+        this.idleSinceMs = Date.now();
     } else {
       this.idleSinceMs = Date.now();
     }

@@ -87,7 +87,9 @@ export interface IceEffectOutcome {
   readonly message: string | null;
   /** VFX instances the effect spawned — display only, never read by the
    * combat math. Empty when the effect was inert. */
-  readonly vfx: ReadonlyArray<import("../../renderer/combat_vfx.ts").CombatVfxInstance>;
+  readonly vfx: ReadonlyArray<
+    import("../../renderer/combat_vfx.ts").CombatVfxInstance
+  >;
 }
 
 export function replaceEffect(
@@ -115,14 +117,21 @@ export function removeEffect(state: GameState, index: number): GameState {
  * healing above its current pool.
  */
 export function iceMaxHp(ice: Ice): number {
-  if (typeof ice.maxHp === "number" && Number.isFinite(ice.maxHp) && ice.maxHp > 0) {
+  if (
+    typeof ice.maxHp === "number" &&
+    Number.isFinite(ice.maxHp) &&
+    ice.maxHp > 0
+  ) {
     return ice.maxHp;
   }
   return Math.max(0, ice.hp);
 }
 
 /** Heal an ICE, never above its max HP. Returns the applied amount. */
-export function healIce(ice: Ice, amount: number): { ice: Ice; healed: number } {
+export function healIce(
+  ice: Ice,
+  amount: number,
+): { ice: Ice; healed: number } {
   const maxHp = iceMaxHp(ice);
   const next = Math.min(maxHp, ice.hp + Math.max(0, amount));
   const healed = next - ice.hp;

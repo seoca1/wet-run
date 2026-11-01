@@ -77,11 +77,12 @@ describe("unified numbering across screens", () => {
   it("mission select formats entries through formatNavIndex, not `N.`", () => {
     // main.ts self-boots on import, so the call site is checked in source text
     // (same approach as tests/onboarding.test.ts).
+    // Compare the same template expressions independently of source layout.
     const mainSource = readFileSync(
       fileURLToPath(new URL("../src/main.ts", import.meta.url)),
       "utf-8",
-    );
-    expect(mainSource).toContain("${formatNavIndex(index)} ${titleText}");
-    expect(mainSource).not.toContain("${index + 1}. ${titleText}");
+    ).replace(/\s+/g, "");
+    expect(mainSource).toContain("${formatNavIndex(index)}${titleText}");
+    expect(mainSource).not.toContain("${index+1}.${titleText}");
   });
 });

@@ -83,12 +83,15 @@ export function statusGroupForTarget(
   iceIndex = -1,
 ): TargetStatusGroup | undefined {
   return groups.find(
-    (g) => g.target === target && (target === "player" || g.iceIndex === iceIndex),
+    (g) =>
+      g.target === target && (target === "player" || g.iceIndex === iceIndex),
   );
 }
 
 /** Render the entries as one bracket, each glyph carrying its turn count. */
-export function formatStatusEntries(entries: readonly StatusGlyphEntry[]): string {
+export function formatStatusEntries(
+  entries: readonly StatusGlyphEntry[],
+): string {
   const glyphs = entries
     .filter((entry) => entry.glyph !== "")
     .map((entry) => `${entry.glyph}${entry.remaining}`);
@@ -97,7 +100,9 @@ export function formatStatusEntries(entries: readonly StatusGlyphEntry[]): strin
 }
 
 /** Render one target group. */
-export function formatTargetStatus(group: TargetStatusGroup | undefined): string {
+export function formatTargetStatus(
+  group: TargetStatusGroup | undefined,
+): string {
   if (group === undefined) return "";
   return formatStatusEntries(group.entries);
 }

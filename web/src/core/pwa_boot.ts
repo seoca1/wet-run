@@ -72,8 +72,12 @@ export interface PwaController {
 
 /** Build a fresh frozen `PwaState` with the runtime-probed values. */
 function buildInitialState(): PwaState {
-  const offline = hasNavigator() ? !getOnlineStatus() : INITIAL_PWA_STATE.isOffline;
-  const installed = hasWindow() ? isStandalone() : INITIAL_PWA_STATE.isInstalled;
+  const offline = hasNavigator()
+    ? !getOnlineStatus()
+    : INITIAL_PWA_STATE.isOffline;
+  const installed = hasWindow()
+    ? isStandalone()
+    : INITIAL_PWA_STATE.isInstalled;
   return Object.freeze({
     canInstall: INITIAL_PWA_STATE.canInstall,
     isInstalled: installed,

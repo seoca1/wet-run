@@ -114,7 +114,10 @@ export function enemyShouldUseSkill(
   }
   const tier = coerceAggression(combatant.aggression);
   const prob = AGGRESSION_PROBABILITY[tier] ?? AGGRESSION_PROBABILITY.standard;
-  return rng() < Math.min(1, prob + alarmLevel * IDLE_ALARM_TUNING.aggressionPerLevel);
+  return (
+    rng() <
+    Math.min(1, prob + alarmLevel * IDLE_ALARM_TUNING.aggressionPerLevel)
+  );
 }
 
 // ============================================================================

@@ -85,11 +85,7 @@ export function tryMoveMonster(
 /** Simple monster AI */
 export function processMonsterAi(state: DungeonState, rng: Rng): void {
   for (const entity of state.entities) {
-    if (
-      entity.type === EntityType.MONSTER &&
-      entity.hostile &&
-      entity.hp > 0
-    ) {
+    if (entity.type === EntityType.MONSTER && entity.hostile && entity.hp > 0) {
       // Simple AI: if player is adjacent, attack; otherwise move toward player
       const dx = Math.abs(entity.x - state.playerX);
       const dy = Math.abs(entity.y - state.playerY);
@@ -103,17 +99,9 @@ export function processMonsterAi(state: DungeonState, rng: Rng): void {
       } else if (dx + dy > 1) {
         // Not adjacent - try to move toward player
         const moveX =
-          state.playerX > entity.x
-            ? 1
-            : state.playerX < entity.x
-              ? -1
-              : 0;
+          state.playerX > entity.x ? 1 : state.playerX < entity.x ? -1 : 0;
         const moveY =
-          state.playerY > entity.y
-            ? 1
-            : state.playerY < entity.y
-              ? -1
-              : 0;
+          state.playerY > entity.y ? 1 : state.playerY < entity.y ? -1 : 0;
 
         // Try to move diagonally first if both axes need movement
         if (moveX !== 0 && moveY !== 0 && rng() < 0.7) {

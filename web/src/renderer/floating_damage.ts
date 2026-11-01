@@ -122,7 +122,13 @@ export function floatingDamageRows(
   const out: FloatingDamage[] = [];
   for (let i = 0; i < count; i++) {
     out.push(
-      floatingDamageFor(kind, damage, count === 1 ? 0 : i / (count - 1), col, row),
+      floatingDamageFor(
+        kind,
+        damage,
+        count === 1 ? 0 : i / (count - 1),
+        col,
+        row,
+      ),
     );
   }
   return out;
@@ -161,7 +167,9 @@ export function renderFloatingDamage(
  * number (the "normal attack" case). `player_hit` is the damage the PLAYER
  * took, which reads as a hit on the player rather than on the ICE.
  */
-export function floatingDamageKindFor(vfxKind: string): FloatingDamageKind | null {
+export function floatingDamageKindFor(
+  vfxKind: string,
+): FloatingDamageKind | null {
   switch (vfxKind) {
     case "critical_hit":
       return "critical";

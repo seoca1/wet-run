@@ -118,7 +118,9 @@ import type { Ice } from "../types";
  *  - **g5 has no non-`aggressive` slot** (see "Archetype coverage" above).
  *    The grade's archetype diversity is carried by g4 and g6 instead.
  */
-export const ENCOUNTER_ICE_BY_GRADE: Readonly<Record<number, ReadonlyArray<string>>> = {
+export const ENCOUNTER_ICE_BY_GRADE: Readonly<
+  Record<number, ReadonlyArray<string>>
+> = {
   1: ["watchdog", "sense_net_alert", "wisp", "hosaka_courier"],
   2: ["spider", "sense_net_spin", "corporate_guard", "loa_zombie"],
   3: ["black", "hosaka_defender", "ice_dixie_echo", "sense_net_reporter"],
@@ -420,5 +422,7 @@ export function missionSeedOf(mission: {
   readonly seed?: number;
   readonly matrix_seed?: number;
 }): number {
-  return (mission as { matrix_seed?: number }).matrix_seed ?? mission.seed ?? 42;
+  return (
+    (mission as { matrix_seed?: number }).matrix_seed ?? mission.seed ?? 42
+  );
 }

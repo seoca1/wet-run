@@ -30,10 +30,11 @@ import {
  * extraction avoided by moving the logic into pure modules, but the *call
  * sites* still need a regression guard.
  */
+// Ignore layout only; keep the exact call-site tokens and their order.
 const mainSource = readFileSync(
   fileURLToPath(new URL("../src/main.ts", import.meta.url)),
   "utf-8",
-);
+).replace(/\s+/g, "");
 
 /** In-memory storage stub — mirrors the `localStorage` surface we use. */
 function makeStorage(
@@ -189,13 +190,13 @@ describe("P11 — main.ts wiring", () => {
   });
 
   it("exposes a tutorial entry point that resets and creates the overlay", () => {
-    expect(mainSource).toMatch(/enterTutorial\(\): void \{/);
+    expect(mainSource).toMatch(/enterTutorial\(\):void\{/);
     expect(mainSource).toContain("createTutorialOverlay()");
   });
 
   it("draws the combat-entry hint lines onto the grid", () => {
     expect(mainSource).toContain(
-      "renderCombatHints(grid, { showHint, pressLabel })",
+      "renderCombatHints(grid,{showHint,pressLabel})",
     );
     const grid = renderCombatHints(makeGrid(80, 50), {
       showHint: true,
@@ -209,10 +210,10 @@ describe("P11 — main.ts wiring", () => {
 
   it("shows the combat-entry hint only once", () => {
     expect(mainSource).toMatch(
-      /const showHint = !this\.combatEntryHintShown &&[\s\S]*?combatEntryHintFits\(this\.layout\.rows\)/,
+      /constshowHint=!this\.combatEntryHintShown&&[\s\S]*?combatEntryHintFits\(this\.layout\.rows\)/,
     );
     expect(mainSource).toMatch(
-      /renderCombatHints\(grid, \{ showHint, pressLabel \}\);\s*if \(showHint\) this\.combatEntryHintShown = true/,
+      /renderCombatHints\(grid,\{showHint,pressLabel\}\);if\(showHint\)this\.combatEntryHintShown=true/,
     );
   });
 });

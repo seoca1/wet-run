@@ -52,10 +52,7 @@
  * `Math.random` for the duration of a run, so a roll that consumes
  * `Math.random` stays deterministic under the harness.
  */
-import {
-  CRIT_MULTIPLIER_MAX,
-  CRIT_MULTIPLIER_MIN,
-} from "./combat_engine";
+import { CRIT_MULTIPLIER_MAX, CRIT_MULTIPLIER_MIN } from "./combat_engine";
 import { getCritBonus, type PersonalityBearer } from "./ice_ai";
 
 /** Result of an ICE crit roll. */
@@ -93,8 +90,7 @@ export function rollIceCrit(
     return { damage, isCrit: false };
   }
   const critMult =
-    rng() * (CRIT_MULTIPLIER_MAX - CRIT_MULTIPLIER_MIN) +
-    CRIT_MULTIPLIER_MIN;
+    rng() * (CRIT_MULTIPLIER_MAX - CRIT_MULTIPLIER_MIN) + CRIT_MULTIPLIER_MIN;
   return {
     damage: Math.max(1, Math.floor(damage * critMult)),
     isCrit: true,

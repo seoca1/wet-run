@@ -36,9 +36,7 @@ export const IDLE_PRESS_FEEDBACK: PressFeedbackState = Object.freeze({
 });
 
 /** Whether an acknowledgement is currently showing. */
-export function hasPressFeedback(
-  state: PressFeedbackState,
-): boolean {
+export function hasPressFeedback(state: PressFeedbackState): boolean {
   return state.handIndex !== null;
 }
 

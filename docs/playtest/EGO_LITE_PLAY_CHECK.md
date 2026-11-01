@@ -157,6 +157,17 @@ await task.finish({ keep: [] });   // 공간을 닫는다
 
 ## 이 절차로 실제로 잡은 것 (예)
 
-2026-11-01 첫 실행에서 상태는 정상이었지만 렌더에서 두 가지가 눈에 띄었다:
-ICE 표기가 `165/100`(HP 가 최대치를 초과), 우측 패널의 `Equipped: 10/8`. 둘 다
-단언이 아니라 **화면을 봐서** 발견한 것이며, 이 절차의 목적을 그대로 보여준다.
+2026-11-01 첫 실행에서 발견한 두 건은 **확정된 표시 결함이며 수정 완료**다
+([ADR-0245 — 원인·수정·회귀 테스트·실측 증거](../wiki/decisions/0245-combat-hud-display-defects.md)):
+
+- **ICE `165/100`**: renderer가 최대 HP를 `100`으로 하드코딩했다. 실제 상태는
+  `hp=165, maxHp=165`로 정상이었다. 게이지·분모·색상을 `ice.maxHp`로 통일해
+  `165/165`로 표시하며, 절반 HP에서는 게이지도 절반만 찬다.
+- **`Equipped: 10/8`**: `Object.values(loadout)`이 슬롯 맵과 메서드 9개를 세었다.
+  실제 채운 슬롯은 `allSlotsFilled().length`, 분모는 `EQUIP_SLOTS.length`로 바꿔
+  `Equipped: N/8`로 표시한다.
+
+둘 다 기존 단언이 아니라 **실제 화면을 봐서** 발견했다. 신규 회귀 16건과
+typecheck/lint/test/build 및 Playwright E2E를 통과했고, 양 덱 no-idle 승률은
+ADR-0239 대비 전 grade **0.0pp**다. 게임플레이·AI·RNG는 변경하지 않았다.
+수정 후 ego-lite 재플레이는 이번 수정 세션에서 수행하지 않았다.

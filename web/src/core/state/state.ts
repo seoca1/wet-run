@@ -25,6 +25,7 @@ import type {
 export type { GameState } from "../types";
 import { makeGrid } from "../grid";
 import { EMPTY_LOADOUT } from "./loadout";
+import { EQUIP_SLOTS } from "./equipment";
 import { generateProceduralMatrix } from "../dungeon/matrix";
 import { missionGradeOf, missionSeedOf } from "../combat/ice_scaling";
 import { applyIdleAlarmTick } from "../combat/idle_alarm";
@@ -189,10 +190,8 @@ export function buildHudLines(state: GameState): string[] {
     `Alarm ${state.player.alarm}/100`,
     `Credits ${state.player.credits}`,
   ];
-  const equippedCount = Object.values(state.equipmentLoadout).filter(
-    (e) => e !== null,
-  ).length;
-  lines.push(`Equipped: ${equippedCount}/8`);
+  const equippedCount = state.equipmentLoadout.allSlotsFilled().length;
+  lines.push(`Equipped: ${equippedCount}/${EQUIP_SLOTS.length}`);
   if (state.playerCombo > 1) {
     lines.push(`Combo x${state.playerCombo}`);
   }

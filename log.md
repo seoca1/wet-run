@@ -2479,3 +2479,31 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   둘 다 단언이 아니라 화면을 봐서 나온 것으로, 절차의 목적을 그대로 보여준다.
   **미검증 — 별도 확인 필요** (이번 작업 범위 밖으로 기록만).
 - `docs/index.md` 테스트 케이스 절에 링크 추가. 코드 변경 없음.
+
+## [2026-11-01] fix(display) | ADR-0245 — ICE 최대 HP·장비 슬롯 HUD 표시 결함 2건 수정
+
+- **확정 원인**: `combat_grid.ts`의 최대 HP 리터럴 100 → grade-scaled ICE의
+  `165/100` 및 잘못된 게이지/색상. `buildHudLines`의 `Object.values(loadout)` →
+  슬롯 맵 1개 + 메서드 9개 = 10으로 장비 수와 무관하게 `Equipped: 10/8`.
+  위 과거 점검 로그의 "미검증" 2건은 이번에 확정·수정했다.
+- **최소 표시 전용 수정**: 유한한 양수 `ice.maxHp`를 게이지·분모·색상에 공통 사용,
+  누락/0/음수/NaN/Infinity는 legacy 100 fallback. dead 분기는 `[DEAD]`라 수정 불필요.
+  장비는 `allSlotsFilled().length / EQUIP_SLOTS.length`. gameplay·튜닝·RNG·AI·알람·
+  Dixie·하네스 cadence·VFX·금지 ADR·raw 전부 무변경. stage/commit 없음.
+- **회귀 +16건**: renderer scaled HP 165/165·절반 게이지/색상 2건 + fallback 5건,
+  state HUD 실제 0..8 슬롯 9건. 수정 전 11 failed/27 passed → 전체 수정 후 통과.
+  web/src·tests·e2e 전체 조사에서 버그 값을 pin한 기존 단언은 **없음**;
+  기존 기대값 변경/삭제/완화 없음. 편집한 TS 4개만 Prettier 적용.
+- **밸런스 실측**: `npm run balance` opening **100.0/88.3/70.5/39.5/36.2/0.0**,
+  `npm run balance -- --deck ppl` **100.0/79.1/98.9/83.0/44.4/24.7**.
+  ADR-0239 승률 기준선과 12개 값 정확히 일치, **0.0pp**. 전체 stdout은
+  [ADR-0245](docs/wiki/decisions/0245-combat-hud-display-defects.md)에 기록.
+- **검증**: typecheck exit 0; lint exit 0 (기존 untouched keyboard.ts warning 1);
+  **160 files / 3640 tests passed / 0 failed (8.21s)**; build 118 modules/469ms.
+  지정 IPv4 strictPort preview + CI unset + demo-screenshots 제외 E2E
+  **76 passed / 4 skipped / 0 failed (4.6m)**. 첫 120초 tool timeout 후 600초로 재실행,
+  preview EXIT trap 종료. jsdom audio play/load 미구현 stderr는 비실패 진단.
+- **제약**: LSP diagnostics는 TypeScript 서버 미설치·기존 설치 거절로 불가;
+  설치/우회 없음, tsc 통과. 이번 수정 세션에서 ego-lite 재플레이/별도 시각 캡처는 미실행.
+- **문서**: 새 ADR-0245 ✅ Implemented + ADR-0195 Status/Evidence/Notes + 변경 이력,
+  ADR 인덱스 Impl 행, 실제 플레이 점검의 두 항목을 확정·수정 상태로 연결.

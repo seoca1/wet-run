@@ -13,6 +13,12 @@ import type { Ice, Mission, Program } from "../src/core/types";
 import { KEYBOARD_MAPPING } from "../src/core/types";
 import { makeGrid, setCell, setText } from "../src/core/grid";
 import { PALETTE } from "../src/renderer/palette";
+import {
+  EQUIP_SLOTS,
+  makeEquipment,
+  makeEquipStats,
+} from "../src/core/state/equipment";
+import { makeLoadout } from "../src/core/state/loadout";
 
 const mockMission: Mission = {
   id: "test",
@@ -51,7 +57,10 @@ describe("state machine", () => {
 
   it("matrix → combat on confirm (when matrix has nodes)", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    const withMatrix = { ...state, matrix: { nodes: [], startNode: 0, bossNode: 0 } };
+    const withMatrix = {
+      ...state,
+      matrix: { nodes: [], startNode: 0, bossNode: 0 },
+    };
     // Empty matrix returns state unchanged (no combat available).
     expect(applyAction(withMatrix, { type: "confirm" })).toBe(withMatrix);
   });
@@ -74,7 +83,9 @@ describe("combat", () => {
   /** Build a state already in combat (Tier 5: runPhase="combat", phase="combat")
    * with the active ICE in iceRoster. This is the state machine post-Tier 5.
    */
-  function buildCombatState(ice: Ice = mockIce): ReturnType<typeof makeInitialState> {
+  function buildCombatState(
+    ice: Ice = mockIce,
+  ): ReturnType<typeof makeInitialState> {
     const base = makeInitialState(mockMission, ice, [mockProgram]);
     return {
       ...base,
@@ -131,6 +142,38 @@ describe("combat", () => {
 });
 
 describe("hud", () => {
+  it.each([0, 1, 2, 3, 4, 5, 6, 7, 8])(
+    "shows %i actually filled equipment slots",
+    (count) => {
+      // Given a fresh loadout, never the shared EMPTY_LOADOUT singleton.
+      const equipmentLoadout = makeLoadout();
+      for (const slot of EQUIP_SLOTS.slice(0, count)) {
+        equipmentLoadout.equip(
+          makeEquipment({
+            id: slot,
+            name: slot,
+            slot,
+            category: "hardware",
+            tier: "T0",
+            stats: makeEquipStats(),
+            description: "HUD fixture",
+          }),
+        );
+      }
+      const state = {
+        ...makeInitialState(mockMission, mockIce, [mockProgram]),
+        equipmentLoadout,
+      };
+
+      // When the right status panel's lines are built.
+      const lines = buildHudLines(state);
+
+      // Then only filled slots count, not the loadout's methods.
+      expect(lines).toContain(`Equipped: ${count}/8`);
+      expect(lines).not.toContain(`Equipped: ${count + 9}/8`);
+    },
+  );
+
   it("includes hp, alarm, credits lines", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
     const lines = buildHudLines(state);
@@ -167,13 +210,19 @@ describe("keyboard mapping", () => {
 describe("resolveProgramSelection (input → reducer bridge)", () => {
   it("resolves hand index 1 to first program", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    const resolved = resolveProgramSelection(state, { type: "select_program", handIndex: 1 });
+    const resolved = resolveProgramSelection(state, {
+      type: "select_program",
+      handIndex: 1,
+    });
     expect(resolved).toEqual({ type: "use_program", programId: "test_prog" });
   });
 
   it("returns null for out-of-range index", () => {
     const state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    const resolved = resolveProgramSelection(state, { type: "select_program", handIndex: 5 });
+    const resolved = resolveProgramSelection(state, {
+      type: "select_program",
+      handIndex: 5,
+    });
     expect(resolved).toBeNull();
   });
 
@@ -192,7 +241,21 @@ describe("end-to-end combat progression (regression: 'stuck in combat')", () => 
     // 1 ICE at node 0 so the test exercises the matrix→combat transition.
     const withMatrix = {
       ...state,
-      matrix: { nodes: [{ id: 0, zone: "surface" as const, iceIds: ["watchdog"], iceHp: [1], reward: { credits: 50 }, isBoss: false, adjacent: [] }], startNode: 0, bossNode: 0 },
+      matrix: {
+        nodes: [
+          {
+            id: 0,
+            zone: "surface" as const,
+            iceIds: ["watchdog"],
+            iceHp: [1],
+            reward: { credits: 50 },
+            isBoss: false,
+            adjacent: [],
+          },
+        ],
+        startNode: 0,
+        bossNode: 0,
+      },
       currentNodeIndex: 0,
     };
     // Press Enter (matrix → approach).
@@ -225,7 +288,11 @@ describe("grid", () => {
 
   it("setCell writes to correct position", () => {
     let g = makeGrid(10, 10);
-    g = setCell(g, { x: 3, y: 4 }, { char: "@", fg: PALETTE.GREEN_NEON, bg: PALETTE.BACKGROUND });
+    g = setCell(
+      g,
+      { x: 3, y: 4 },
+      { char: "@", fg: PALETTE.GREEN_NEON, bg: PALETTE.BACKGROUND },
+    );
     const cell = g.get(3, 4);
     expect(cell?.char).toBe("@");
     expect(cell?.fg).toBe(PALETTE.GREEN_NEON);

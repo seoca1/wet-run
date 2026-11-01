@@ -138,6 +138,10 @@ export function renderGrid(
       const marker = isTarget ? ">" : " ";
       const alive = ice.hp > 0;
       const iceHp = Math.max(0, ice.hp);
+      const iceMaxHp =
+        ice.maxHp !== undefined && Number.isFinite(ice.maxHp) && ice.maxHp > 0
+          ? ice.maxHp
+          : 100;
 
       // Name line: "> [1] ICE_NAME" or "  [1] ICE_NAME"
       const nameText = `${marker} [${i + 1}] ${ice.name.slice(0, 10)}`;
@@ -168,8 +172,8 @@ export function renderGrid(
           inner,
           iceCol,
           row + 2,
-          `${healthBar(iceHp, 100)} ${iceHp}/100`,
-          delta !== null ? hitFlashColor(delta) : healthColor(iceHp, 100),
+          `${healthBar(iceHp, iceMaxHp)} ${iceHp}/${iceMaxHp}`,
+          delta !== null ? hitFlashColor(delta) : healthColor(iceHp, iceMaxHp),
         );
       } else {
         grid = setInnerText(

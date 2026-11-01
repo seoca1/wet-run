@@ -7,6 +7,7 @@
 import { describe, it, expect } from "vitest";
 import { renderGrid } from "../src/renderer/combat_grid";
 import { groupStatusByTarget } from "../src/renderer/status_hud";
+import { PALETTE } from "../src/renderer/palette";
 import { makeInitialState } from "../src/core/state/state";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
@@ -67,6 +68,45 @@ function rowText(grid: ReturnType<typeof renderGrid>, row: number): string {
   }
   return out;
 }
+
+describe("combat grid ICE HP display", () => {
+  it.each([
+    [165, "[████████████] 165/165", PALETTE.GREEN_NEON],
+    [82.5, "[██████░░░░░░] 82.5/165", PALETTE.YELLOW_AMBER],
+  ])("uses the scaled maximum when ICE HP is %s", (hp, text, color) => {
+    // Given a grade-scaled ICE at full or half HP.
+    const ice = { ...makeIce("Scaled"), hp, maxHp: 165 };
+    const state = makeState({ iceRoster: [ice] });
+
+    // When the real combat grid is rendered.
+    const grid = renderGrid(state);
+
+    // Then text, bar fill and color all use the ICE's own maximum.
+    const hpRow = Math.floor(grid.height * 0.44) + 2;
+    expect(rowText(grid, hpRow)).toContain(text);
+    expect(rowText(grid, hpRow)).not.toContain(`${hp}/100`);
+    expect(grid.get(Math.floor(grid.width * 0.45), hpRow)?.fg).toBe(color);
+  });
+
+  it.each([undefined, 0, -1, NaN, Infinity])(
+    "falls back to a legacy maximum when maxHp is %s",
+    (maxHp) => {
+      // Given a legacy or invalid maximum.
+      const ice = { ...makeIce("Legacy"), hp: 50, maxHp };
+      const state = makeState({ iceRoster: [ice] });
+
+      // When the combat grid is rendered.
+      const grid = renderGrid(state);
+
+      // Then all HP display consumers use the same positive fallback.
+      const hpRow = Math.floor(grid.height * 0.44) + 2;
+      expect(rowText(grid, hpRow)).toContain("[██████░░░░░░] 50/100");
+      expect(grid.get(Math.floor(grid.width * 0.45), hpRow)?.fg).toBe(
+        PALETTE.YELLOW_AMBER,
+      );
+    },
+  );
+});
 
 describe("combat grid status glyph placement (P14)", () => {
   it("draws the player's own effect on the player HP row", () => {

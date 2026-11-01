@@ -2750,3 +2750,24 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - 필수 `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **82 passed / 4 skipped / 0 failed (4.6m)**. 새 SCAN→무료 중복 PROBE→BREACH 손패 손실 spec이 desktop/mobile 각 1건. 최초 spec 수집의 JSON import attribute 오류를 수정한 뒤 통과. **5195 preview는 종료/재시작하지 않고 유지**, rebuilt dist의 새 기능을 E2E에서 검증했다.
 - 별도 QA browser에서 390/844/1440px × unavailable/ready/revealed 9개 캡처와 실제 ↑/Enter로 거절·소비 확인: 손 `[strike]`, discard `[scan]`, COST 0, probed true. `/Users/emilio/.openclaw/tmp/opencode/option-e-*-after.png` 및 편집 전 390/1440 baseline. 실제 grid 40×60/80×32/100×60과 단위 테스트의 세 요구 preset을 구분한다. 기존 Canvas/작은 HUD 접근성 한계가 있으며 WCAG 전체 적합성을 주장하지 않는다. 독립 read-only reviewer 두 호출은 `No assistant or tool response found`로 결과가 없어 승인으로 계산하지 않았다. 사용자 play session 무조작.
 - ADR-0246의 **Implementation Status만** mapping·path:line·검증·한계로 갱신하고 **🟡 Partial** 유지. 인덱스 **0246 Impl 셀만** 동기화. ADR-0247/0248 및 다른 Accepted 결정 본문은 그대로, C·TRACE 통합·나머지 E는 미구현. **스테이징·커밋 없음**.
+
+## [2026-11-01] decision-support | 동사 가격 평가 — Jev choice (오너 이연 항목의 입력)
+
+- **질의**: 미클리어 조우에서 동사 선택(PROBE 8 / BYPASS 30 / BREACH / JACK OUT). COST 는 0-100
+  누산기(프로그램 비용; 100 초과 시 프로그램 실패)라 실질적으로 "프로그램 여유"다.
+  실측: 전투 1회가 g1~g5 에서 88.2 / 42.7 / 13.8 / 5.3 / 4.9 HP 를 남긴다 → **비용 약 12 / 57 /
+  86 / 95 / 95 HP**. 즉 **g3~g5 에서 BYPASS 30 은 86~95 HP 를 면제**한다. 동사는 구조적으로
+  비지배(서로 다른 통화)이므로 위험은 **가짜 선택이 아니라 가격**이다.
+- **Jev 결과 (`choice`, `typesafe/jev-1.13`, `JEV_LOCAL_FALLBACK=0`)**: `raise_bypass_to_45`
+  선택. 분포 `keep_30 0.03 · raise_45 0.43 · raise_60 0.41 · bypass_costs_hp 0.09 ·
+  forfeit_heal_only 0.04`. **confidence 0.29 (낮음)**.
+- **해석**: **"30 유지"는 사실상 배제(0.03)** — 제 플레이 기반 판단(우회가 g3+에서 저렴)과
+  **독립적으로 일치**한다. 반면 **45 vs 60 은 사실상 동률(0.43 vs 0.41)** 이고 confidence 가
+  0.29 로 낮아 **자동 적용 불가** — Jev 스킬의 규칙(`p < 0.6` 이면 사람 개입)에 따라 **오너 결정
+  대상으로 남긴다**. 통화 변경안(HP 비용·회복만 포기)은 가능성 낮음(0.09 / 0.04).
+- **정직한 한계**: 이 판단의 입력에는 **측정되지 않은 값**(보상 크레딧 → 장비 → 전투력)이 있고,
+  하네스는 경로 경제를 보지 못한다. 따라서 Jev 결과는 **방향(상향)의 독립 확인**이지 정확한
+  값의 검증이 아니다. 정확한 값은 **플레이 패스**(`docs/playtest/ego-decision-recorder.mjs` 준비됨)
+  또는 오너 판단으로 정한다.
+- `raw/` 무접촉: 감사 JSON 을 `JEV_AUDIT_DIR=/tmp/jev-audit` 로 우회했다 (스크립트의 기본값은
+  `infra/lan-hosts/raw/jev-calls`). 코드·가격 변경 없음.

@@ -1,4 +1,6 @@
 import { expect, test } from "@playwright/test";
+import { parseProgram } from "../src/core/data_loaders";
+import programs from "../src/data/programs.json" with { type: "json" };
 import {
   chooseEncounterVerb,
   enterForScreen,
@@ -107,4 +109,67 @@ test("arrows expose all four fixed verbs and JACK OUT abandons the run", async (
   expect(
     await page.evaluate(() => window.wetrun?.state?.encounterDecision),
   ).toBeNull();
+});
+
+test("utility SCAN spends a real combat card and preserves fixed choices", async ({
+  page,
+}, testInfo) => {
+  // Given
+  const card = parseProgram(programs.scan, "scan");
+  await page.evaluate((program) => {
+    const game = window.wetrun;
+    if (!game?.state) throw new Error("No run state");
+    game.state = { ...game.state, deck: [program, ...game.state.deck] };
+  }, card);
+  const initial = await page.evaluate(() => ({
+    cost: window.wetrun?.state?.player.alarm,
+    hand: window.wetrun?.state?.deck.map((p) => p.id),
+    discarded: window.wetrun?.state?.discardPile.map((p) => p.id),
+  }));
+  // When
+  await page.keyboard.press("ArrowUp");
+  expect(
+    await page.evaluate(
+      () => window.wetrun?.state?.encounterDecision?.selectedVerb,
+    ),
+  ).toBe("SCAN");
+  await page.screenshot({
+    path: testInfo.outputPath("program-scan-payment.png"),
+  });
+  await page.keyboard.press("Enter");
+  // Then
+  expect(
+    await page.evaluate(() => ({
+      cost: window.wetrun?.state?.player.alarm,
+      hand: window.wetrun?.state?.deck.map((p) => p.id),
+      discarded: window.wetrun?.state?.discardPile.map((p) => p.id),
+      revealed: window.wetrun?.state?.encounterDecision?.probed,
+    })),
+  ).toEqual({
+    ...initial,
+    hand: initial.hand?.slice(1),
+    discarded: [...(initial.discarded ?? []), "scan"],
+    revealed: true,
+  });
+  await page.screenshot({
+    path: testInfo.outputPath("program-scan-revealed.png"),
+  });
+  await page.keyboard.press("ArrowDown");
+  expect(
+    await page.evaluate(
+      () => window.wetrun?.state?.encounterDecision?.selectedVerb,
+    ),
+  ).toBe("PROBE");
+  await page.keyboard.press("Enter");
+  expect(await page.evaluate(() => window.wetrun?.state?.player.alarm)).toBe(
+    initial.cost,
+  );
+  await chooseEncounterVerb(page, "BREACH");
+  await page.keyboard.press("Enter");
+  expect(await page.evaluate(() => window.wetrun?.state?.phase)).toBe("combat");
+  expect(
+    await page.evaluate(() =>
+      window.wetrun?.state?.deck.some((p) => p.id === "scan"),
+    ),
+  ).toBe(false);
 });

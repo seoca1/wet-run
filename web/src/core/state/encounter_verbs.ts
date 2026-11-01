@@ -1,4 +1,5 @@
-import type { GameAction, GameState, Ice } from "../types";
+import type { GameAction, GameState, Ice, Program } from "../types";
+import programs from "../../data/programs.json";
 import { iceHpForGrade, missionGradeOf } from "../combat/ice_scaling";
 import { clearIceEffects } from "../combat/ice_combat_effects";
 import { durationForKind, import_vfx } from "./state_helpers";
@@ -16,8 +17,21 @@ export const ENCOUNTER_VERBS = [
   "BYPASS",
   "BREACH",
   "JACK OUT",
+  "SCAN",
 ] as const;
 export type EncounterVerb = (typeof ENCOUNTER_VERBS)[number];
+
+// parseProgram drops role; resolve catalog metadata here without changing combat.
+// Utility T1–T3 all grant the same intel, with no tier-scaled price or effect.
+const scanProgramIds = new Set(
+  Object.entries(programs)
+    .filter(([, program]) => program.role === "utility")
+    .map(([id]) => id),
+);
+
+export function encounterScanProgram(state: GameState): Program | undefined {
+  return state.deck.find((program) => scanProgramIds.has(program.id));
+}
 
 export function bypassBlockReason(state: GameState): string | null {
   const node = state.matrix?.nodes[state.currentNodeIndex];
@@ -75,6 +89,24 @@ export function applyEncounterDecision(
   switch (verb) {
     case null:
       return { ...state, message: "Choose a verb with arrows, then ENTER." };
+    case "SCAN": {
+      if (decision.probed) return state;
+      const program = encounterScanProgram(state);
+      if (!program) {
+        return {
+          ...state,
+          message: "SCAN unavailable — no utility program in hand.",
+        };
+      }
+      const spentIndex = state.deck.indexOf(program);
+      return {
+        ...state,
+        deck: state.deck.filter((_, index) => index !== spentIndex),
+        discardPile: [...state.discardPile, program],
+        encounterDecision: { ...decision, probed: true },
+        message: `${program.name} discarded — threat revealed; combat card spent.`,
+      };
+    }
     case "PROBE":
     case "BYPASS": {
       const bypassReason = bypassBlockReason(state);

@@ -144,7 +144,7 @@ export function applyMatrixAction(
     return {
       ...state,
       message:
-        "Programs only usable in combat — ENTER to choose an encounter verb",
+        "ENTER for encounter options; utility cards can SCAN before combat",
     };
   }
   return state;

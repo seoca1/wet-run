@@ -258,6 +258,28 @@ C에 필요한 결정 어휘를 생산한다. C는 런의 약한 P4를 도구 �
 - 양 덱 수정 전후 전체 stdout **`cmp` exit 0 (byte-identical)**: opening `100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0`, PPL `100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7` (ADR-0239 기준선 유지). 이는 전투 하네스만 검증한다.
 - `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **80 passed / 4 skipped / 0 failed (4.4m)**. 기존 5195 preview를 종료하지 않고 새 dist로 검증했다. 별도 브라우저 fixture에서 390/1440px 보스·인접 0개·일반 노드를 각각 캡처하고 실제 키로 BYPASS 확인: 앞 둘 COST 0 유지 + 이유 안내, 일반 COST 30 결제. 사용자 play session은 조작하지 않았다. WCAG 전체 적합성은 주장하지 않는다.
 
+**Evidence — E first slice: utility 카드로 결제하는 SCAN (2026-11-01)**:
+- 범위는 [보충 ADR-0247 옵션 E](./0247-dungeon-role-supplement-manus-second-opinion.md#옵션-e--소모성-프로그램으로-만드는-노드-결정-계층)의 **정보 공개**부터다. 현재 선택한 미완료 ICE 노드의 정확한 위협을 드러내는 SCAN을 고정 동사 뒤에 겹친다. 인접 그래프 전체 스캔·노드 잠금·가짜 신호·추적 지연을 구현했다고 주장하지 않는다. BREACH/JACK OUT은 카드 없이 유지하고 고정 PROBE **8 COST** / BYPASS **30 COST**, terminal 차단·보상·완료 기록은 불변이다.
+
+| 실제 catalog role / tier | 이번 encounter capability | catalog 근거 / 판단 |
+| --- | --- | --- |
+| `utility`: T1 `probe`, `scan`; T2 `decrypt`, `trace`; T3 `echo` | **SCAN** — 현재 조우의 정확한 ICE id/HP 공개, 손의 첫 matching 카드 소비 | `web/src/data/programs.json:29-35,122-138,151-168`: weakness/stats 공개, ICE protection 해독, 위치 추적, nearby ICE 탐지/유인이라는 정보·정찰 계열. Echo의 개별 유인 효과를 구현한 것이 아니라 공유 utility 역할을 정보 획득으로 해석했다. |
+| `guard` T1–T4 | 새 capability 없음 | `programs.json:2-9,20-27,64-71,82-120,140-149`: 방어/회피. 새 deny 효과나 지속시간을 임의로 만들지 않음. |
+| `strike` T1–T3 / `burst` T2·T3·T5 | 새 capability 없음 | `programs.json:11-18,37-62,73-80,170-208,267-285`: 공격 계열은 기존 combat 용도로 보존. |
+| `support` T1–T2 | 새 capability 없음 | `programs.json:210-265`: 보조/회복 계열이며 미확정 시간·회복 수치를 encounter에 추가하지 않음. |
+
+- **Tier 정책**: 실제 utility T1–T3 모두 같은 질적 정보 공개 도구다. tier 문턱·공개 개수·효과 배율·새 숫자 가격을 추가하지 않는다. 높은 tier는 combat에서 잃는 카드의 가치가 다를 뿐이다. 기존 다섯 role 외 새 role은 만들지 않았다.
+- `web/src/core/state/encounter_verbs.ts:15-34,92-108` — 고정 네 동사의 순서 뒤 SCAN 추가. renderer/reducer가 `encounterScanProgram`을 공유해 **현재 손 `state.deck`의 첫 utility**만 결제 대상으로 삼는다. draw/discard/inventory 소유만으로는 사용 불가. 확인 시 해당 index의 카드 **한 장만** 제거하고 같은 객체를 `discardPile`에 append하며 `probed: true`를 설정한다. COST·HP·TRACE·보상·combo·turn·RNG는 건드리지 않고 새 카드를 뽑지 않는다. PROBE와 공개 상태를 공유해 공개 후 SCAN/PROBE의 재결제를 막는다.
+- **공유 경계 보존**: `web/src/core/data_loaders.ts:212-242`의 `parseProgram`은 현재 `role`을 반환하지 않는다. combat은 `web/src/core/combat/state_actions_programs.ts:83-99`에서 optional role과 `countRoleSynergy` (`combat_engine.ts:224-231`)를 읽는다. loader에 role을 복원하면 damage/crit 분기까지 바뀔 수 있으므로, 이번에는 **encounter에서만 catalog id → authored role**을 조회한다. loader·Program 타입·combat 코드는 변경하지 않았다.
+- **실제 교환 / 비지배성의 구조**: PROBE는 COST를 쓰고 combat 손패를 보존한다. SCAN은 COST 여력을 보존하지만 실제 combat 카드와 그 play의 damage/combo/Dixie 기회를 포기한다. `state_actions_programs.ts:49-65`의 같은 손에서 카드를 못 찾고, `state_actions_combat.ts:68-71,123-139`의 **기존 성공한 combat play 이후 재순환** 전에는 돌아오지 않는다. 영구 삭제나 전투 전체 사용 금지는 아니다. 탐색에서 손을 전부 소비해도 encounter 진입 시 자동 보충하지 않으므로 빈 손으로 BREACH할 위험이 있다. 따라서 SCAN을 무료 정보나 탐색 전용 카드로 만들지 않았다. 이는 구조 설명이며 정량 밸런스 입증은 아니다.
+- `web/src/renderer/encounter.ts:42-103` — 기존 Green Grid 프레임·줄바꿈·색상 토큰·화살표/확인 유지. `SCAN PROGRAM` + `Discard <name> (T<tier>)` + combat 카드 상실 안내, 없으면 `SCAN NO UTILITY IN HAND`와 필요 역할 표시. 사용 불가 안내 행은 남기되 실행은 거절한다. 공개 뒤 `REVEALED` / no payment로 전환. `state_actions_phases.ts:143-148`의 기존 combat-only 안내도 SCAN과 일치시켰다.
+- `web/tests/encounter_programs.test.ts:86-269` — **21 tests**. 실제 catalog utility 다섯 장 전부·네 비utility 역할·draw/discard/inventory-only 소유·중복 id 단일 소비·COST cap에서도 카드 결제·즉시 combat 재사용 거절·PROBE/SCAN 중복 청구 없음·고정 8/30 COST·무보상/no-farming 검증. **수정 전 신규 16 failed / 5 passed, 기존 32 passed → 수정 후 합계 53 passed**. 40×60 / 60×40 / 80×50에서 결제 카드·없음 상태·정확한 HP·입력 힌트가 프레임 내에 보임을 검증한다.
+- `web/e2e/encounter_verbs.spec.ts:114-173` — real catalog 카드를 손에 넣는 fixture 후 실제 ↑/Enter로 SCAN 선택/결제, 손에서 제거·discard 이동·COST 불변, 무료 중복 PROBE, BREACH 후 손패 손실을 desktop/mobile 모두 검증한다. 최초 E2E 수집의 Node JSON import attribute 오류를 spec import에 `with { type: "json" }`로 보완했다. 기존 테스트 삭제/약화 없음.
+- 검증: 편집한 **src 세 파일만** Prettier write/check, `npm run typecheck` **0 errors**, `npm run lint` **0 errors / 기존 keyboard.ts:14 warning 1**, `npm test` **165 files / 3731 passed / 0 failed** (baseline 164/3710 +21), `npm run build` **119 modules** 통과. TypeScript LSP는 미설치·기존 설치 거절로 실행 불가였으며 CLI 결과와 구분한다.
+- `npm run balance` / `npm run balance -- --deck ppl`: 전후 전체 stdout **양 덱 `cmp` exit 0 (byte-identical)**이며 기존 slice-2 baseline 캡처와의 `cmp`도 모두 0. ADR-0239 opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7** 유지. `/Users/emilio/.openclaw/tmp/opencode/option-e-{opening,ppl}-{before,after}.txt`에 전체 stdout 보존. **`balance_sim.ts:77-81,100-130,136-161`은 그래프를 걷지 않고 고정 덱으로 BREACH하므로 E의 밸런스는 미검증이다. 이 결과는 combat harness 보존만 증명한다.**
+- 필수 E2E 명령 `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **82 passed / 4 skipped / 0 failed (4.6m)**. 새 spec의 desktop/mobile 2건 증가. **5195의 기존 preview를 kill/restart하지 않고 유지**했으며 rebuilt dist의 SCAN을 실제 브라우저와 E2E에서 확인했다.
+- 별도 QA 브라우저에서 390×844 / 844×390 / 1440×1000의 unavailable/ready/revealed **9개 캡처** 및 실제 키 확인: 없는 카드는 거절, SCAN 후 손 `[strike]` / discard `[scan]` / COST 0 / probed true. 캡처는 `/Users/emilio/.openclaw/tmp/opencode/option-e-{390,844,1440}-{unavailable,ready,revealed}-after.png`, 전 편집 baseline은 `option-e-{390,1440}-before.png`. 실제 layout은 각각 40×60 / 80×32 / 100×60이며 요구된 세 grid 프리셋의 단위 검증과 구분한다. 사용자 play session 무조작. 기존 Canvas/작은 HUD의 접근성 한계가 있으며 WCAG 전체 적합성을 주장하지 않는다. 독립 read-only reviewer 호출 두 건은 도구의 `No assistant or tool response found` 오류로 결과를 얻지 못했으므로 독립 승인으로 기록하지 않는다.
+
 **Deferred — 오너 지시: 가격은 나중에 Jev-assisted decision tooling으로 결정한다**:
 - **BYPASS 30 / PROBE 8 및 모든 재튜닝은 명시적으로 연기**한다. 이번에는 `ENCOUNTER_VERB_COSTS` 수치를 변경하지 않는다. Jev-assisted 판정은 후속 작업이며 이번 세션에서 실행하거나 가격을 승인한 것으로 기록하지 않는다.
 - 오너가 전달한 **실제 play pass**는 COST를 써 HP 피해를 피하되 보상·회복을 포기하는 BYPASS, 정보를 사는 PROBE, HP 위험을 받아 보상을 얻는 BREACH가 **구조적으로 비지배적**임을 확립했다. 서로 다른 자원(COST 대 HP 대 정보/보상)을 교환하므로 실패 모드는 가짜 선택이 아니라 **가격 책정**이다. 이것이 현재 가격의 정량적 균형을 입증하지는 않는다.
@@ -265,9 +287,9 @@ C에 필요한 결정 어휘를 생산한다. C는 런의 약한 P4를 도구 �
 - `web/scripts/balance_sim.ts:77-81,100-130,132-162`는 그래프를 걷지 않고 고정 덱으로 단일 전투를 수행하므로 경로·연속 회피·정보의 가치와 가격을 판정할 수 없다. **byte-identical balance는 전투 하네스 보존만 증명**하며 경로 경제/가격의 적정성은 후속 Jev-assisted 결정과 실제 런 검증의 몫이다. 위 slice 2의 “play pass 미실행”은 당시 기록이며 이번 실제 pass 보고로 갱신된 판정과 구분한다.
 
 **Notes**: ADR-0195의 Status / Evidence / Notes 형식이다. **Accepted는 결정 완료이지 구현 완료가 아니다.**
-첫 슬라이스의 **경로 결정**에 이번 두 번째 슬라이스의 **고정 동사 결정**을 추가했다. 경로 목록에서 ↓/→는 다음 후보, ↑/←는 이전 후보, Enter/Space는
+첫 슬라이스의 **경로 결정**과 두 번째 슬라이스의 **고정 동사 결정** 위에 E의 **카드 결제 SCAN**을 겹쳤다. 경로 목록에서 ↓/→는 다음 후보, ↑/←는 이전 후보, Enter/Space는
 강조한 목적지로 이동하며 이동 뒤에는 미선택으로 돌아간다. 미완료 ICE를 아직 통과하지 않았다면 출발 확인도 결정 메뉴를 연다.
-메뉴도 **초기 선택 없음**이며 ↓/→는 PROBE → BYPASS → BREACH → JACK OUT 순, ↑/←는 역순으로 순환한다.
+메뉴도 **초기 선택 없음**이며 ↓/→는 PROBE → BYPASS → BREACH → JACK OUT → SCAN 순, ↑/←는 역순으로 순환한다.
 Enter/Space로 강조한 동사만 실행한다. PROBE 후에는 같은 메뉴에서 다른 동사를 고르며,
 BYPASS 뒤에는 현재 노드에서 인접 목적지를 다시 선택한다. 목적지 없는 확인으로 재개한 메뉴에서 BREACH도 가능하다.
 BREACH 확인은 기존 approach로 진입하고 다음 확인이 교전한다. ESC/Q 및 메뉴의 JACK OUT은 기존 matrix 이탈 결과(`phase: menu`)를 유지한다.
@@ -287,8 +309,15 @@ BREACH는 이 추가 비용 없이 전투 피해 위험을 감수하고 기존 �
 새 입력(경로 선택+확인 → 메뉴 → 동사 선택+확인)에 맞춰 실제 런에서 수행해야 한다. 이번에는 그 play pass를 실행하지 않았다.
 메뉴 공개/통과 허가는 일시적이므로 이동·로드 뒤 다시 PROBE/BYPASS할 때 재결제되며, 완료 기록으로 오인하지 않는다.
 TRACE 표시 통합(a)은 ADR-0248에서 Deferred이고 a0는 이름만 분리했으므로 단일 계기 선행 조건은 여전히 미충족이다.
-E 확장, C 계약·보상 예산·측정 공백 해소 및 별도 던전 정리는 여전히 미구현이다. 본문과 기존 ADR-0005/0060/0103/0247/0248 결정은 변경하지 않았다.
+E의 utility SCAN 첫 슬라이스만 구현했다. 나머지 E 예시, C 계약·보상 예산·측정 공백 해소는 미구현이며 **🟡 Partial**을 유지한다. 별도 던전의 독립 정리 2건은 ADR-0247의 상태 주석에 기록되어 있고 런 반영/격리 재정의는 남아 있다. 이번에는 크롤러·본문·기존 ADR-0005/0060/0103/0247/0248 결정을 변경하지 않았다.
 LSP 서버는 미설치이며 기존 설치 거절을 존중하여 실행하지 못했다; TypeScript CLI 검증은 통과했다.
+**검증 중 발견 (설계 관찰)**: E의 매핑은 실제 카탈로그에 존재함을 확인했다 — `programs.json` 의 role 분포는
+`guard 8 · strike 8 · utility 5 · burst 3 · support 6` 이고 utility id 는 정확히 `probe · scan · decrypt ·
+trace · echo` 다 (에이전트가 역할을 발명하지 않았다). **다만 오프닝 덱 5장은 전부 non-utility**
+(`backdoor`=strike, `barrier`/`cloak`/`decoy`=guard, `boost`=support) 이므로 **새 런에서는 SCAN 이 한 번도
+보이지 않는다**. Pillar 4("내가 뭘 할 수 있는가가 빌드에 달린다")에는 부합하지만, **발견 가능성(discoverability)**
+문제다 — 유틸리티 프로그램을 얻기 전까지 플레이어는 E의 존재를 알 수 없다. 해소 방향(오프닝 덱에 유틸리티 1장
+포함 / 덱 구성 화면에서 안내 / 그대로 두고 덱빌딩 보상으로만 노출)은 **오너 결정 대상**으로 남긴다.
 
 ## 변경 이력
 

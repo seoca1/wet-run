@@ -5,6 +5,7 @@ import {
   ENCOUNTER_VERB_COSTS,
   encounterRoster,
   bypassBlockReason,
+  encounterScanProgram,
 } from "../core/state/encounter_verbs";
 import { drawPanel, screenFrameRect, setInnerText } from "./panel";
 import { PALETTE } from "./palette";
@@ -40,6 +41,7 @@ export function renderEncounterDecision(
   const node = state.matrix?.nodes[state.currentNodeIndex];
   const costs = ENCOUNTER_VERB_COSTS;
   const bypassReason = bypassBlockReason(state);
+  const scanProgram = encounterScanProgram(state);
   write(
     `Node ${state.currentNodeIndex + 1} · ${node?.zone.toUpperCase() ?? ""}`,
     PALETTE.GREEN_NEON,
@@ -54,6 +56,11 @@ export function renderEncounterDecision(
     BYPASS: bypassReason ?? "No fight / no loot / no heal",
     BREACH: "Fight for the full reward",
     "JACK OUT": "Abandon the run (unchanged)",
+    SCAN: state.encounterDecision?.probed
+      ? "Threat already revealed; no payment"
+      : scanProgram
+        ? `Discard ${scanProgram.name} (T${scanProgram.tier})`
+        : "Requires utility program in hand",
   } as const;
   for (const verb of ENCOUNTER_VERBS) {
     const price =
@@ -68,17 +75,22 @@ export function renderEncounterDecision(
       (verb === "BYPASS" && bypassReason !== null) ||
       state.player.alarm + price > costs.limit;
     const suffix =
-      verb === "PROBE" && state.encounterDecision?.probed
+      (verb === "PROBE" || verb === "SCAN") && state.encounterDecision?.probed
         ? "REVEALED"
-        : price > 0
-          ? `+${price} COST${blocked ? " BLOCKED" : ""}`
-          : "";
+        : verb === "SCAN"
+          ? scanProgram
+            ? "PROGRAM"
+            : "NO UTILITY IN HAND"
+          : price > 0
+            ? `+${price} COST${blocked ? " BLOCKED" : ""}`
+            : "";
     const selected = state.encounterDecision?.selectedVerb === verb;
     write(
       `${selected ? ">" : " "} ${verb} ${suffix}`,
       selected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT,
     );
     write(`  ${details[verb]}`);
+    if (verb === "SCAN") write("  Reveal ICE; lose combat card");
     y += 1;
   }
   if (state.encounterDecision?.probed) {
@@ -86,7 +98,7 @@ export function renderEncounterDecision(
     for (const ice of encounterRoster(state))
       write(`${ice.id} HP ${ice.hp}/${ice.maxHp}`);
   } else {
-    write("Threat hidden — PROBE to reveal");
+    write("Threat hidden — PROBE or SCAN");
   }
   y += 1;
   write("↑↓/←→: choose · ENTER/SPACE: act");

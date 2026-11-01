@@ -37,7 +37,7 @@ jobs:
       - name: Build
         working-directory: ./web
         run: npm run build
-      - name: Guard: no build artifacts staged
+      - name: "Guard: no build artifacts staged"
         working-directory: .
         run: |
           set -euo pipefail

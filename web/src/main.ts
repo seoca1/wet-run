@@ -97,6 +97,10 @@ import {
   stateToSaveSlot,
 } from "./core/state/state";
 import {
+  openArrivalEncounter,
+  runAbandoned,
+} from "./core/state/encounter_verbs";
+import {
   encounterIceIdForGrade,
   missionGradeOf,
   missionSeedOf,
@@ -478,6 +482,15 @@ class Game {
       if (shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state))
         this.matrixEntryHintShown = true;
       this.state = applyAction(this.state, resolved);
+      if (runAbandoned(previous, this.state)) {
+        // JACK OUT ends the run: leave the board for the main menu.
+        this.state = null;
+        this.matrixTravel = null;
+        this.screen = "menu";
+        void this.refreshSaveCache();
+        this.draw();
+        return;
+      }
       // The reducer has already moved `@`; this only chooses the next frames.
       // Every input re-derives it, so input never waits on (or redirects) it.
       this.matrixTravel = beginMatrixTravel(
@@ -1190,13 +1203,13 @@ class Game {
     const deck = loadDeck(programs);
     const ice = loadIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
-    this.state = {
+    this.state = openArrivalEncounter({
       ...initial,
       grid: makeGrid(this.layout.cols, this.layout.rows),
       currentNodeIndex: 0,
       runPhase: "matrix",
       phase: "approach",
-    };
+    });
     this.inventory = initial.inventory;
     this.equipmentLoadout = initial.equipmentLoadout;
     this.recipes = makeRecipesFromData({});

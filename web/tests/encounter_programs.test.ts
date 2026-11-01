@@ -57,6 +57,23 @@ function encounter(hand: readonly Program[] = [strike, scan]): GameState {
   );
 }
 
+/** Commit SCAN without arrows: with no utility in hand the arrows skip it. */
+function forceScan(state: GameState): GameState {
+  expect(
+    applyAction(state, { type: "move_north" }).encounterDecision?.selectedVerb,
+  ).not.toBe("SCAN");
+  return applyAction(
+    {
+      ...state,
+      encounterDecision: {
+        selectedVerb: "SCAN",
+        probed: state.encounterDecision?.probed ?? false,
+      },
+    },
+    { type: "confirm" },
+  );
+}
+
 function useScan(state: GameState): GameState {
   return applyAction(applyAction(state, { type: "move_north" }), {
     type: "confirm",
@@ -106,7 +123,7 @@ describe("program-funded encounter intel (ADR-0247 E first slice)", () => {
       // Given
       const decision = encounter([parseProgram(programs[id], id)]);
       // When
-      const result = useScan(decision);
+      const result = forceScan(decision);
       // Then
       expect(result.encounterDecision?.probed).toBe(false);
       expect(result.deck).toEqual(decision.deck);
@@ -127,7 +144,7 @@ describe("program-funded encounter intel (ADR-0247 E first slice)", () => {
       inventory: { ...base.inventory, programs: [scan] },
     };
     // When
-    const result = useScan(decision);
+    const result = forceScan(decision);
     // Then
     expect(result.encounterDecision?.probed).toBe(false);
     expect(text(result)).toContain("NO UTILITY IN HAND");
@@ -154,7 +171,7 @@ describe("program-funded encounter intel (ADR-0247 E first slice)", () => {
       expect(hidden).not.toContain("watchdog HP");
       expect(revealed).toContain("watchdog HP 1/1");
       expect(revealed).toContain("ENTER/SPACE: act");
-      expect(revealed).toContain("PROBE REVEALED");
+      expect(revealed).toMatch(/PROBE +INFO REVEALED/);
       expect(text(encounter([strike]), cols, rows)).toContain(
         "NO UTILITY IN HAND",
       );

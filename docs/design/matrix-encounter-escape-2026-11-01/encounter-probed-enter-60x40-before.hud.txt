@@ -1,0 +1,7 @@
+ENCOUNTER
+COST 8/100
+TRACE 0/5
+
+Threat revealed
+— choose BYPASS
+or BREACH.

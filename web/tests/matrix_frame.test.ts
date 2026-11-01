@@ -126,7 +126,7 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
     const text = lines(renderMatrix(MATRIX, 0, [], 80, 50));
     // Then
     expect(text[47]?.slice(2)).toMatch(
-      /^ ENTER: enter ICE \| ICE blocks travel \| ESC: back/,
+      /^ ENTER: enter ICE \| ↑↓: pick route \| ESC: jack out/,
     );
   });
 

@@ -1,0 +1,60 @@
+                                        
+ ╔═ENCOUNTER══════════════════════════╗ 
+ ║                                    ║ 
+ ║ Node 2 · MID                       ║ 
+ ║ ICE blocks travel until resolved   ║ 
+ ║ HP 100/100 · COST 8/100            ║ 
+ ║ Reward: 75cr                       ║ 
+ ║ EXITS: BYPASS · BREACH · JACK OUT  ║ 
+ ║                                    ║ 
+ ║ > PROBE    INFO REVEALED           ║ 
+ ║   Reveal ICE identity and HP       ║ 
+ ║                                    ║ 
+ ║   BYPASS   EXIT +60 COST           ║ 
+ ║   No fight / no loot / no heal     ║ 
+ ║                                    ║ 
+ ║   BREACH   EXIT                    ║ 
+ ║   Fight for the full reward        ║ 
+ ║                                    ║ 
+ ║   JACK OUT EXIT                    ║ 
+ ║   Abandon the run (unchanged)      ║ 
+ ║                                    ║ 
+ ║   SCAN     INFO REVEALED           ║ 
+ ║   Threat already revealed; no paym ║ 
+ ║ ent                                ║ 
+ ║   Reveal ICE; lose combat card     ║ 
+ ║                                    ║ 
+ ║ EXACT THREAT                       ║ 
+ ║ yakuza_enforcer HP 140/140         ║ 
+ ║                                    ║ 
+ ║ ↑↓/←→: choose · ENTER/SPACE: act   ║ 
+ ║ ESC: jack out (abandon run)        ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ╚════════════════════════════════════╝ 
+                                        

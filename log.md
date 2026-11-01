@@ -2850,3 +2850,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - LOC(total/pure): `encounter_verbs.ts` 196/182 → 228/208, `state_actions_phases.ts` 370/328 → 379/336, `matrix.ts` 223/183 → 253/208, `encounter.ts` 115/114 → 132/127, `storage.ts` 276/217 → 283/223, `types.ts` 514/352 → 517/353, `state.ts` 406/350 → 409/353, `run_screen.ts` 135/126 → 136/127, `matrix_travel.ts` 185/146 → 188/147; 신규 테스트 330/261.
 - 검증: 신규 `encounter_entry_gate.test.ts` 26 failed → 28 passed; `npm test` **170 files / 3817 passed**; typecheck 0; lint 0 errors(기존 warning 1); build PASS; balance 양 덱 byte-identical(ADR-0239); E2E **82 passed / 4 skipped / 0 failed**, 5195 preview 유지. 시각 QA 독립 리뷰 PASS, 대비 최소 10.15:1.
 - 증거: [matrix-entry-gate-2026-11-01](docs/design/matrix-entry-gate-2026-11-01/README.md). ADR-0250 Implementation Status 작성, ADR-0246은 Implementation Status에 포인터만. 미커밋·미스테이징.
+
+## [2026-11-02] fix(gameplay) | ADR-0250 후속 — Matrix 조우에서 빠져나오지 못하는 상태 제거
+
+- 오너 "아직 못빠져나와." / "보드 + 'enter ICE' + 이벤트 반복". 5195 실제 키 로그로 재현: (a) BYPASS 후 보드는 재현 안 됨, (b) CONTINUE 복원과 (c)(d) ESC·JACK OUT 동사는 재현됨 — JACK OUT이 `phase: "menu"`만 바꾸고 보드에 남겨, Enter가 같은 조우를 다시 열었다.
+- 수정: 출발 게이트 제거 + 로드·런 시작을 도착으로 처리(`openArrivalEncounter`, 세이브-리로드 회피 불가), JACK OUT/ESC는 런을 끝내고 메인 메뉴, 유틸리티 없는 SCAN은 화살표에서 제외, Enter 무선택·사용한 PROBE/SCAN은 출구를 명시, 조우 화면 `EXITS:` 줄 + `EXIT`/`INFO` 태그 + cyan 출구, footer `ESC: jack out`.
+- 가격·보스 차단·종결 조건·SCAN 결제·RNG·화살표 순서·던전·세이브 스키마 버전 불변.
+- LOC(total/pure): `encounter_verbs.ts` 228/208 → 278/248, `state_actions_phases.ts` 379/336 → 372/328, `state.ts` 409/353 → 411/354, `encounter.ts` 132/127 → 150/143, `matrix.ts` 253/208 → 255/209, `main.ts` 1783/1555 → 1796/1567; 신규 테스트 389/332.
+- 검증: `encounter_escape.test.ts` 32 failed → 40 passed; `npm test` **171 files / 3857 passed**; typecheck 0; lint 0 errors(기존 warning 1); build PASS; balance 양 덱 byte-identical(ADR-0239); E2E **82 passed / 4 skipped / 0 failed**, 5195 preview 유지. 독립 리뷰 REVISE 3건은 모두 아티팩트 대조로 결함 아님 확인(리뷰 자체는 가벼움, 독립 승인으로 기록하지 않음).
+- 증거: [matrix-encounter-escape-2026-11-01](docs/design/matrix-encounter-escape-2026-11-01/README.md). ADR-0250 Implementation Status에만 후속 기록. 미커밋·미스테이징.

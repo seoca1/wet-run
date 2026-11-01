@@ -1,0 +1,10 @@
+
+ RUN  v1.6.1 /Users/emilio/projects/opencodework/Game/wet_run/web
+
+ ✓ tests/encounter_escape.test.ts  (40 tests) 31ms
+
+ Test Files  1 passed (1)
+      Tests  40 passed (40)
+   Start at  01:11:49
+   Duration  303ms (transform 135ms, setup 7ms, collect 167ms, tests 31ms, environment 0ms, prepare 22ms)
+

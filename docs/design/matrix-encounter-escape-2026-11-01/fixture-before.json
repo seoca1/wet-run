@@ -1,0 +1,136 @@
+{
+  "mission": "aleph_fragment",
+  "title": "Aleph Fragment",
+  "node": 1,
+  "adjacent": [
+    0,
+    26
+  ],
+  "iceIds": [
+    "yakuza_enforcer"
+  ],
+  "deck": [
+    "backdoor",
+    "barrier",
+    "boost",
+    "cloak",
+    "decoy"
+  ],
+  "shots": {
+    "gated-route": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 0,
+      "selected": 1,
+      "cleared": [],
+      "bypassed": [],
+      "alarm": 0,
+      "decision": null,
+      "message": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+    },
+    "encounter": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 1,
+      "selected": null,
+      "cleared": [],
+      "bypassed": [],
+      "alarm": 0,
+      "decision": {
+        "selectedVerb": null,
+        "probed": false
+      },
+      "message": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+    },
+    "encounter-enter": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 1,
+      "selected": null,
+      "cleared": [],
+      "bypassed": [],
+      "alarm": 0,
+      "decision": {
+        "selectedVerb": null,
+        "probed": false
+      },
+      "message": "Choose a verb with arrows, then ENTER."
+    },
+    "encounter-probed-enter": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 1,
+      "selected": null,
+      "cleared": [],
+      "bypassed": [],
+      "alarm": 8,
+      "decision": {
+        "selectedVerb": "PROBE",
+        "probed": true
+      },
+      "message": "Threat revealed — choose BYPASS or BREACH."
+    },
+    "post-bypass": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 1,
+      "selected": null,
+      "cleared": [],
+      "bypassed": [
+        1
+      ],
+      "alarm": 60,
+      "decision": null,
+      "message": "Bypassed — no reward. Routes are open: ↑↓ then ENTER."
+    },
+    "post-bypass-route": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 1,
+      "selected": 26,
+      "cleared": [],
+      "bypassed": [
+        1
+      ],
+      "alarm": 60,
+      "decision": null,
+      "message": "Route highlighted — ENTER to travel; ↑↓ to change destination"
+    },
+    "stranded-route": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 1,
+      "selected": 0,
+      "cleared": [],
+      "bypassed": [],
+      "alarm": 0,
+      "decision": null,
+      "message": "Route highlighted — ICE here blocks travel; ENTER: encounter"
+    },
+    "stranded-depart": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 1,
+      "selected": null,
+      "cleared": [],
+      "bypassed": [],
+      "alarm": 0,
+      "decision": {
+        "selectedVerb": null,
+        "probed": false
+      },
+      "message": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+    },
+    "continue": {
+      "phase": "approach",
+      "runPhase": "matrix",
+      "current": 1,
+      "selected": null,
+      "cleared": [],
+      "bypassed": [],
+      "alarm": 0,
+      "decision": null,
+      "message": "Resumed from autosave (turn 4)"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+ENCOUNTER
+COST 0/100
+TRACE 0/5
+
+Choose a verb
+with arrows,
+then ENTER.

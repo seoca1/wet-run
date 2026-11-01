@@ -88,29 +88,31 @@ export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
   };
 }
 
-/** The controls footer names what ENTER does now (ADR-0250 decision 5):
- * unresolved ICE here blocks travel; a target with unresolved ICE is entered
- * as an encounter; only a free target is travel. `target` is null at rest. */
+/** The controls footer names what ENTER does now (ADR-0250 decision 5): a
+ * target with unresolved ICE is entered as an encounter, a free target is
+ * travel, and at rest Enter enters unresolved ICE here. ESC is JACK OUT on
+ * the board, which ends the run. `target` is null at rest. */
 export function matrixFooter(
   innerWidth: number,
   hereGates: boolean,
   target: boolean | null,
 ): string {
-  const [short, long] = hereGates
-    ? [
-        "ENTER ICE | no travel | ESC back",
-        "ENTER: enter ICE | ICE blocks travel | ESC: back",
-      ]
-    : target === null
-      ? ["↑↓ pick route | ESC back", "↑↓: pick route | ESC: back"]
+  const [short, long] =
+    target === null
+      ? hereGates
+        ? [
+            "ENTER ICE | ↑↓ route | ESC jack out",
+            "ENTER: enter ICE | ↑↓: pick route | ESC: jack out",
+          ]
+        : ["↑↓ pick route | ESC jack out", "↑↓: pick route | ESC: jack out"]
       : target
         ? [
-            "↑↓ route | ENTER ICE | ESC back",
-            "ENTER: enter ICE | ↑↓: route | ESC: back",
+            "ENTER ICE | ↑↓ route | ESC jack out",
+            "ENTER: enter ICE | ↑↓: route | ESC: jack out",
           ]
         : [
-            "↑↓ route | ENTER travel | ESC back",
-            "ENTER: travel | ↑↓: route | ESC: back",
+            "ENTER travel | ↑↓ | ESC jack out",
+            "ENTER: travel | ↑↓: route | ESC: jack out",
           ];
   // The footer starts one cell inside the frame.
   return innerWidth < 40 || long.length > innerWidth - 1 ? short : long;

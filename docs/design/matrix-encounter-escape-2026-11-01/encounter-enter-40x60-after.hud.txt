@@ -1,0 +1,11 @@
+ENCOUNTER
+COST 0/100
+TRACE 0/5
+
+Nothing
+selected. Press
+↓ to pick a
+verb, then
+ENTER. Exits:
+BYPASS, BREACH,
+JACK OUT.

@@ -151,6 +151,21 @@ ADR-0246의 `## Implementation Status`에 이 ADR을 가리키는 주석을 추�
 
 **Notes**: 우회한 노드는 보드에서 여전히 `#·#`로 그려진다(보드의 CLEAR = 전투 해결). 열린 질문 1(리듬)·3(PROBE/SCAN 후 재도착 반복)은 실제 플레이로만 판정한다. 결정 내용은 변경하지 않았다.
 
+### 후속 슬라이스 — 탈출 불가 상태 제거 (2026-11-02)
+
+**새 증거** (오너: "아직 못빠져나와." / 화면 "보드 + 'enter ICE' + 이벤트 반복"). 5195 빌드 실제 키 로그([before-trace](../../design/matrix-encounter-escape-2026-11-01/live/before-trace.txt)), 노드 1(이웃 2개):
+- 키만 누르는 경로: 도착 → Enter = 안내만 → ↓ Enter = PROBE 8 결제 → Enter = **변화 없음** → ← = SCAN(유틸리티 없음) → Enter = **변화 없음**. `cur 1` 고정.
+- (a) BYPASS 후 보드: **재현 안 됨** — footer `↑↓: pick route`, Enter 이동. 렌더러·리듀서 해결 판정 일치.
+- (b) CONTINUE로 미해결 노드 복원: **재현됨** — 보드 + `ENTER: enter ICE | ICE blocks travel | ESC: back`, 모든 출발 시도가 결정을 다시 염(결정 4 문장의 출발 게이트).
+- (c)(d) 세션 내 **ESC / JACK OUT 동사**: **재현됨** — 리듀서가 `phase: "menu"`만 바꾸고 `runPhase: "matrix"`를 남겨 같은 보드로 돌아오고, Enter가 같은 조우를 다시 염. footer가 ESC를 `back`이라 안내했다.
+
+**변경** (결정 1~6 불변; 결정 4의 "도착 없이 서 있는 경우는 출발이 결정을 연다"라는 Implementation 서술을 "로드·런 시작을 도착으로 본다"로 바꿔 같은 안티-익스플로잇을 유지):
+- `encounter_verbs.ts` — `openArrivalEncounter`(로드·런 시작·도착 공용), `runAbandoned`, 화살표 순환에서 유틸리티 없는 SCAN 제외(순서 불변), Enter 무선택/사용한 PROBE·SCAN에 출구를 명시하는 메시지.
+- `state_actions_phases.ts` — 출발 게이트 제거(경로 확정 시 항상 이동), 경로 없이 Enter는 서 있는 미해결 ICE에 진입. `state.ts` `slotToGameState` — 복원이 결정을 엶(세이브-리로드 회피 불가). `main.ts` — 런 시작에 `openArrivalEncounter`, `runAbandoned`면 런 상태를 버리고 메인 메뉴.
+- `encounter.ts` — `EXITS: BYPASS · BREACH · JACK OUT`, 행마다 `EXIT`/`INFO`, 출구 cyan, `Nothing selected — press ↓ to pick`, `ESC: jack out (abandon run)`. `matrix.ts` footer `ESC: jack out`.
+- 테스트: 신규 `encounter_escape.test.ts` **HEAD 32 failed / 8 passed → 40 passed**. 기존 5개 파일의 대체된 계약 단언만 조정(삭제 없음; 증거 README 표). `npm test` **171 files / 3857 passed**, typecheck 0, lint 0 errors(기존 warning 1), build PASS, Prettier PASS, 양 덱 balance byte-identical(ADR-0239), E2E **82 passed / 4 skipped / 0 failed**(5195 유지), 폭 검사 27/27, 대비 최소 10.15:1.
+- 결과: JACK OUT/ESC는 이제 실제로 런을 끝낸다(확인 단계 없음, 자동 저장 슬롯은 유지). 증거: [matrix-encounter-escape-2026-11-01](../../design/matrix-encounter-escape-2026-11-01/README.md).
+
 ## 변경 이력
 
 - **2026-11-02**: 신규. 오너의 "그래 C로 가자" 승인으로 Accepted. ADR-0246 조항 2건 대체, 나머지 불변.

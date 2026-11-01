@@ -60,16 +60,63 @@ export function encounterGates(state: GameState, index: number): boolean {
   );
 }
 
+function bypassPayable(state: GameState): boolean {
+  return (
+    bypassBlockReason(state) === null &&
+    state.player.alarm + ENCOUNTER_VERB_COSTS.bypass <=
+      ENCOUNTER_VERB_COSTS.limit
+  );
+}
+
 /** Message shown when the gate opens the decision: every way forward. */
 export function encounterGateMessage(state: GameState): string {
   const bypass =
     bypassBlockReason(state) !== null
       ? "BYPASS: blocked here"
-      : state.player.alarm + ENCOUNTER_VERB_COSTS.bypass >
-          ENCOUNTER_VERB_COSTS.limit
+      : !bypassPayable(state)
         ? "BYPASS: COST too high"
         : `BYPASS: ${ENCOUNTER_VERB_COSTS.bypass} COST (once per run)`;
   return `Travel blocked. BREACH: fight. ${bypass}. JACK OUT: abandon run.`;
+}
+
+function exitsHint(state: GameState): string {
+  return bypassPayable(state)
+    ? "Exits: BYPASS, BREACH, JACK OUT."
+    : "Exits: BREACH, JACK OUT (BYPASS blocked).";
+}
+
+/** Load and run start count as an arrival: standing on unresolved ICE with no
+ * decision open opens it, so a save-reload cannot skip the encounter. */
+export function openArrivalEncounter(state: GameState): GameState {
+  if (
+    state.runPhase !== "matrix" ||
+    state.encounterDecision ||
+    !encounterGates(state, state.currentNodeIndex)
+  )
+    return state;
+  return {
+    ...state,
+    selectedMatrixNodeIndex: null,
+    encounterDecision: { selectedVerb: null, probed: false },
+    message: encounterGateMessage(state),
+  };
+}
+
+/** JACK OUT (verb or ESC) on the Matrix ends the run: the controller must
+ * leave the board, or Enter would land back on the same ICE. */
+export function runAbandoned(previous: GameState, next: GameState): boolean {
+  return (
+    previous.runPhase === "matrix" &&
+    previous.phase !== "menu" &&
+    next.runPhase === "matrix" &&
+    next.phase === "menu"
+  );
+}
+
+/** Verbs the arrows can land on: SCAN needs a utility program in hand. */
+function selectableVerbs(state: GameState): readonly EncounterVerb[] {
+  const scannable = encounterScanProgram(state) !== undefined;
+  return ENCOUNTER_VERBS.filter((verb) => verb !== "SCAN" || scannable);
 }
 
 /** Shared by paid intel and Breach so mutator copies and HP fallbacks agree. */
@@ -99,28 +146,30 @@ export function applyEncounterDecision(
     ["move_north", "move_south", "move_east", "move_west"].includes(action.type)
   ) {
     const forward = action.type === "move_south" || action.type === "move_east";
-    const current = ENCOUNTER_VERBS.findIndex(
-      (verb) => verb === decision.selectedVerb,
-    );
+    const verbs = selectableVerbs(state);
+    const current = verbs.findIndex((verb) => verb === decision.selectedVerb);
     const index =
       current < 0
         ? forward
           ? 0
-          : ENCOUNTER_VERBS.length - 1
-        : (current + (forward ? 1 : -1) + ENCOUNTER_VERBS.length) %
-          ENCOUNTER_VERBS.length;
+          : verbs.length - 1
+        : (current + (forward ? 1 : -1) + verbs.length) % verbs.length;
     return {
       ...state,
-      encounterDecision: { ...decision, selectedVerb: ENCOUNTER_VERBS[index] },
+      encounterDecision: { ...decision, selectedVerb: verbs[index] ?? null },
     };
   }
   if (action.type !== "confirm") return state;
   const verb = decision.selectedVerb;
+  const revealed = `Threat already revealed. ${exitsHint(state)}`;
   switch (verb) {
     case null:
-      return { ...state, message: "Choose a verb with arrows, then ENTER." };
+      return {
+        ...state,
+        message: `Nothing selected. Press ↓ to pick a verb, then ENTER. ${exitsHint(state)}`,
+      };
     case "SCAN": {
-      if (decision.probed) return state;
+      if (decision.probed) return { ...state, message: revealed };
       const program = encounterScanProgram(state);
       if (!program) {
         return {
@@ -143,7 +192,8 @@ export function applyEncounterDecision(
       if (verb === "BYPASS" && bypassReason) {
         return { ...state, message: `BYPASS blocked — ${bypassReason}` };
       }
-      if (verb === "PROBE" && decision.probed) return state;
+      if (verb === "PROBE" && decision.probed)
+        return { ...state, message: revealed };
       const cost =
         verb === "PROBE"
           ? ENCOUNTER_VERB_COSTS.probe

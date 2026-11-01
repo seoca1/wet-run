@@ -102,13 +102,11 @@ test("arrows expose all four fixed verbs and JACK OUT abandons the run", async (
   ).toBe("BREACH");
   await page.keyboard.press("ArrowRight");
   await page.keyboard.press("Enter");
-  expect(await page.evaluate(() => window.wetrun?.state?.phase)).toBe("menu");
-  expect(await page.evaluate(() => window.wetrun?.state?.message)).toBe(
-    "Jacked out — run abandoned",
-  );
-  expect(
-    await page.evaluate(() => window.wetrun?.state?.encounterDecision),
-  ).toBeNull();
+  // Then: the run really ends — no board left for a key to reopen the ICE.
+  expect(await page.evaluate(() => window.wetrun?.getScreen())).toBe("menu");
+  expect(await page.evaluate(() => window.wetrun?.state ?? null)).toBeNull();
+  await page.keyboard.press("Escape");
+  expect(await page.evaluate(() => window.wetrun?.state ?? null)).toBeNull();
 });
 
 test("utility SCAN spends a real combat card and preserves fixed choices", async ({

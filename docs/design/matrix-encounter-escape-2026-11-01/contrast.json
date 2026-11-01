@@ -1,0 +1,98 @@
+[
+  {
+    "mode": "none",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "gate line, nothing-selected prompt, matrix footer (YELLOW_AMBER on BACKGROUND)": 10.63,
+      "HUD arrival message (GREEN_NEON on BACKGROUND)": 15.38,
+      "INFO verb rows + details + hints (GRAY_LIGHT on BACKGROUND)": 11.54,
+      "EXIT verb rows + EXITS line (CYAN_LIGHT on BACKGROUND)": 16.75,
+      "selected verb row (GREEN_NEON on BACKGROUND)": 15.38
+    }
+  },
+  {
+    "mode": "none",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "gate line, nothing-selected prompt, matrix footer (YELLOW_AMBER on BACKGROUND)": 19.56,
+      "HUD arrival message (GREEN_NEON on BACKGROUND)": 15.3,
+      "INFO verb rows + details + hints (GRAY_LIGHT on BACKGROUND)": 15.91,
+      "EXIT verb rows + EXITS line (CYAN_LIGHT on BACKGROUND)": 16.75,
+      "selected verb row (GREEN_NEON on BACKGROUND)": 15.3
+    }
+  },
+  {
+    "mode": "deuteranopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "gate line, nothing-selected prompt, matrix footer (YELLOW_AMBER on BACKGROUND)": 10.63,
+      "HUD arrival message (GREEN_NEON on BACKGROUND)": 13.96,
+      "INFO verb rows + details + hints (GRAY_LIGHT on BACKGROUND)": 11.54,
+      "EXIT verb rows + EXITS line (CYAN_LIGHT on BACKGROUND)": 16.75,
+      "selected verb row (GREEN_NEON on BACKGROUND)": 13.96
+    }
+  },
+  {
+    "mode": "deuteranopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "gate line, nothing-selected prompt, matrix footer (YELLOW_AMBER on BACKGROUND)": 19.56,
+      "HUD arrival message (GREEN_NEON on BACKGROUND)": 15.3,
+      "INFO verb rows + details + hints (GRAY_LIGHT on BACKGROUND)": 15.91,
+      "EXIT verb rows + EXITS line (CYAN_LIGHT on BACKGROUND)": 16.75,
+      "selected verb row (GREEN_NEON on BACKGROUND)": 15.3
+    }
+  },
+  {
+    "mode": "protanopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "gate line, nothing-selected prompt, matrix footer (YELLOW_AMBER on BACKGROUND)": 10.63,
+      "HUD arrival message (GREEN_NEON on BACKGROUND)": 15.38,
+      "INFO verb rows + details + hints (GRAY_LIGHT on BACKGROUND)": 11.54,
+      "EXIT verb rows + EXITS line (CYAN_LIGHT on BACKGROUND)": 16.75,
+      "selected verb row (GREEN_NEON on BACKGROUND)": 15.38
+    }
+  },
+  {
+    "mode": "protanopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "gate line, nothing-selected prompt, matrix footer (YELLOW_AMBER on BACKGROUND)": 19.56,
+      "HUD arrival message (GREEN_NEON on BACKGROUND)": 15.3,
+      "INFO verb rows + details + hints (GRAY_LIGHT on BACKGROUND)": 15.91,
+      "EXIT verb rows + EXITS line (CYAN_LIGHT on BACKGROUND)": 16.75,
+      "selected verb row (GREEN_NEON on BACKGROUND)": 15.3
+    }
+  },
+  {
+    "mode": "tritanopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "gate line, nothing-selected prompt, matrix footer (YELLOW_AMBER on BACKGROUND)": 10.15,
+      "HUD arrival message (GREEN_NEON on BACKGROUND)": 15.38,
+      "INFO verb rows + details + hints (GRAY_LIGHT on BACKGROUND)": 11.54,
+      "EXIT verb rows + EXITS line (CYAN_LIGHT on BACKGROUND)": 10.93,
+      "selected verb row (GREEN_NEON on BACKGROUND)": 15.38
+    }
+  },
+  {
+    "mode": "tritanopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "gate line, nothing-selected prompt, matrix footer (YELLOW_AMBER on BACKGROUND)": 19.56,
+      "HUD arrival message (GREEN_NEON on BACKGROUND)": 15.3,
+      "INFO verb rows + details + hints (GRAY_LIGHT on BACKGROUND)": 15.91,
+      "EXIT verb rows + EXITS line (CYAN_LIGHT on BACKGROUND)": 16.75,
+      "selected verb row (GREEN_NEON on BACKGROUND)": 15.3
+    }
+  }
+]

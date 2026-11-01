@@ -28,6 +28,7 @@ import {
   encounterGateMessage,
   encounterGates,
   encounterResolved,
+  openArrivalEncounter,
 } from "./encounter_verbs";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import {
@@ -53,21 +54,13 @@ export function applyMatrixAction(
     const node = state.matrix.nodes[state.currentNodeIndex];
     if (!node) return state;
     const destination = state.selectedMatrixNodeIndex;
-    // ADR-0250: the gate is on the entry. A node reached without an arrival
-    // (run start, CONTINUE) still cannot be left for free while unresolved.
-    if (encounterGates(state, state.currentNodeIndex)) {
-      return {
-        ...state,
-        selectedMatrixNodeIndex: null,
-        encounterDecision: { selectedVerb: null, probed: false },
-        message: encounterGateMessage(state),
-      };
-    }
+    // ADR-0250: the gate is on the entry only. Departing never reopens the
+    // decision; load and run start open it instead (openArrivalEncounter).
     if (destination != null && node.adjacent.includes(destination)) {
       const target = state.matrix.nodes[destination];
       if (!target) return state;
       void AudioManager.getInstance().playSfx(pickMovementSfxId(true));
-      const moved: GameState = {
+      return openArrivalEncounter({
         ...state,
         currentNodeIndex: destination,
         selectedMatrixNodeIndex: null,
@@ -77,14 +70,16 @@ export function applyMatrixAction(
           : [...state.visitedNodes, destination],
         turnCount: state.turnCount + 1,
         message: `Moved to ${target.zone} — ↑↓ picks the next route`,
+      });
+    }
+    // Enter with no route on the unresolved ICE you stand on enters it.
+    if (encounterGates(state, state.currentNodeIndex)) {
+      return {
+        ...state,
+        selectedMatrixNodeIndex: null,
+        encounterDecision: { selectedVerb: null, probed: false },
+        message: encounterGateMessage(state),
       };
-      return encounterGates(moved, destination)
-        ? {
-            ...moved,
-            encounterDecision: { selectedVerb: null, probed: false },
-            message: encounterGateMessage(moved),
-          }
-        : moved;
     }
     if (encounterResolved(state, state.currentNodeIndex)) {
       return {
@@ -129,11 +124,9 @@ export function applyMatrixAction(
     return {
       ...state,
       selectedMatrixNodeIndex: neighbours[index],
-      message: encounterGates(state, state.currentNodeIndex)
-        ? "Route highlighted — ICE here blocks travel; ENTER: encounter"
-        : encounterGates(state, neighbours[index] ?? -1)
-          ? "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
-          : "Route highlighted — ENTER to travel; ↑↓ to change destination",
+      message: encounterGates(state, neighbours[index] ?? -1)
+        ? "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+        : "Route highlighted — ENTER to travel; ↑↓ to change destination",
     };
   }
 

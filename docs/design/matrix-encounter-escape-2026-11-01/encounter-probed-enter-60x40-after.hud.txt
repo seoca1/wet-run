@@ -1,0 +1,9 @@
+ENCOUNTER
+COST 8/100
+TRACE 0/5
+
+Threat already
+revealed.
+Exits: BYPASS,
+BREACH, JACK
+OUT.

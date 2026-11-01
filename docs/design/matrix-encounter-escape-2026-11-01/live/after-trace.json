@@ -1,0 +1,1150 @@
+{
+ "phase": "after",
+ "base": "http://127.0.0.1:5195/",
+ "scenarios": {
+  "keys": [
+   {
+    "key": "Enter",
+    "note": "menu",
+    "screen": "mission_select",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "launch",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "-",
+    "note": "run started",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": 1,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+   },
+   {
+    "key": "Enter",
+    "note": "travel to node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "open",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "shot": "after-keys-arrival.png"
+   },
+   {
+    "key": "Enter",
+    "note": "confirm, nothing chosen",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "open",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Nothing selected. Press ↓ to pick a verb, then ENTER. Exits: BYPASS, BREACH, JACK OUT."
+   },
+   {
+    "key": "ArrowDown",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "PROBE",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Nothing selected. Press ↓ to pick a verb, then ENTER. Exits: BYPASS, BREACH, JACK OUT."
+   },
+   {
+    "key": "Enter",
+    "note": "confirm first verb reached by Down",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "PROBE",
+    "probed": true,
+    "cost": 8,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Threat revealed — choose BYPASS or BREACH."
+   },
+   {
+    "key": "Enter",
+    "note": "confirm again",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "PROBE",
+    "probed": true,
+    "cost": 8,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Threat already revealed. Exits: BYPASS, BREACH, JACK OUT."
+   },
+   {
+    "key": "ArrowLeft",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "JACK OUT",
+    "probed": true,
+    "cost": 8,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Threat already revealed. Exits: BYPASS, BREACH, JACK OUT."
+   },
+   {
+    "key": "Enter",
+    "note": "confirm verb reached by Left",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "ArrowDown",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "ArrowDown",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "screen": "dungeon",
+    "state": null
+   },
+   {
+    "shot": "after-keys-end.png"
+   }
+  ],
+  "a-bypass": [
+   {
+    "key": "Enter",
+    "note": "menu",
+    "screen": "mission_select",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "launch",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "-",
+    "note": "run started",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": 1,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+   },
+   {
+    "key": "Enter",
+    "note": "travel to node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "open",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek BYPASS",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "PROBE",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek BYPASS",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "BYPASS",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "Enter",
+    "note": "commit BYPASS",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 60,
+    "cleared": [],
+    "bypassed": [
+     1
+    ],
+    "msg": "Bypassed — no reward. Routes are open: ↑↓ then ENTER."
+   },
+   {
+    "shot": "after-a-bypass-post-bypass-board.png"
+   },
+   {
+    "key": "Enter",
+    "note": "Enter at rest after BYPASS",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 60,
+    "cleared": [],
+    "bypassed": [
+     1
+    ],
+    "msg": "Encounter resolved — choose an adjacent route."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target a route",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": 0,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 60,
+    "cleared": [],
+    "bypassed": [
+     1
+    ],
+    "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination"
+   },
+   {
+    "shot": "after-a-bypass-post-bypass-route.png"
+   },
+   {
+    "key": "Enter",
+    "note": "depart",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 60,
+    "cleared": [],
+    "bypassed": [
+     1
+    ],
+    "msg": "Moved to surface — ↑↓ picks the next route"
+   },
+   {
+    "shot": "after-a-bypass-departed.png"
+   }
+  ],
+  "b-continue": [
+   {
+    "key": "Enter",
+    "note": "menu",
+    "screen": "mission_select",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "launch",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "-",
+    "note": "run started",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": 1,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+   },
+   {
+    "key": "Enter",
+    "note": "travel to node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "open",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek BREACH",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "PROBE",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek BREACH",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "BYPASS",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek BREACH",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "BREACH",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "Enter",
+    "note": "commit BREACH",
+    "screen": "mission_select",
+    "runPhase": "combat",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Entering mid... (1 ICE)"
+   },
+   {
+    "key": "Enter",
+    "note": "engage",
+    "screen": "mission_select",
+    "runPhase": "combat",
+    "phase": "combat",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Combat vs ICE — Yakuza Enforcer"
+   },
+   {
+    "key": "-",
+    "note": "in combat, autosaved; reloading",
+    "screen": "mission_select",
+    "runPhase": "combat",
+    "phase": "combat",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Combat vs ICE — Yakuza Enforcer"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "menu → CONTINUE",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "ArrowDown",
+    "note": "menu → CONTINUE",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "ArrowDown",
+    "note": "menu → CONTINUE",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "ArrowDown",
+    "note": "menu → CONTINUE",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "CONTINUE",
+    "screen": "menu",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "open",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "-",
+    "note": "restored",
+    "screen": "menu",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "open",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "shot": "after-b-continue-restored.png"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target a route",
+    "screen": "menu",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "PROBE",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "shot": "after-b-continue-restored-route.png"
+   },
+   {
+    "key": "Enter",
+    "note": "depart attempt 1",
+    "screen": "menu",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "PROBE",
+    "probed": true,
+    "cost": 8,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Threat revealed — choose BYPASS or BREACH."
+   },
+   {
+    "shot": "after-b-continue-after-enter-1.png"
+   },
+   {
+    "key": "Escape",
+    "note": "ESC (footer says ESC: back)",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "shot": "after-b-continue-after-esc-1.png"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target a route",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "depart attempt 2",
+    "screen": "settings",
+    "state": null
+   },
+   {
+    "key": "Escape",
+    "note": "ESC",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target a route",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "depart attempt 3",
+    "screen": "crafting",
+    "state": null
+   },
+   {
+    "shot": "after-b-continue-after-enter-3.png"
+   }
+  ],
+  "c-escape": [
+   {
+    "key": "Enter",
+    "note": "menu",
+    "screen": "mission_select",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "launch",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "-",
+    "note": "run started",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": 1,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+   },
+   {
+    "key": "Enter",
+    "note": "travel to node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "open",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "shot": "after-c-escape-arrival.png"
+   },
+   {
+    "key": "Escape",
+    "note": "ESC on encounter",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "shot": "after-c-escape-after-esc.png"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "pick left/right route",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "shot": "after-c-escape-route.png"
+   },
+   {
+    "key": "Enter",
+    "note": "travel attempt",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "shot": "after-c-escape-after-enter.png"
+   },
+   {
+    "key": "Escape",
+    "note": "ESC",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "ArrowUp",
+    "note": "pick the other route",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "travel attempt",
+    "screen": "mission_select",
+    "state": null
+   }
+  ],
+  "d-jackout": [
+   {
+    "key": "Enter",
+    "note": "menu",
+    "screen": "mission_select",
+    "state": null
+   },
+   {
+    "key": "Enter",
+    "note": "launch",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "-",
+    "note": "run started",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": null,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Mission: Aleph Fragment"
+   },
+   {
+    "key": "ArrowDown",
+    "note": "target node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 0,
+    "sel": 1,
+    "ice": 0,
+    "adjacent": [
+     1,
+     12,
+     25
+    ],
+    "decision": null,
+    "probed": null,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination"
+   },
+   {
+    "key": "Enter",
+    "note": "travel to node 1",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "open",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek JACK OUT",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "PROBE",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek JACK OUT",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "BYPASS",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek JACK OUT",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "BREACH",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "ArrowDown",
+    "note": "seek JACK OUT",
+    "screen": "mission_select",
+    "runPhase": "matrix",
+    "phase": "approach",
+    "cur": 1,
+    "sel": null,
+    "ice": 1,
+    "adjacent": [
+     0,
+     26
+    ],
+    "decision": "JACK OUT",
+    "probed": false,
+    "cost": 0,
+    "cleared": [],
+    "bypassed": [],
+    "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+   },
+   {
+    "key": "Enter",
+    "note": "commit JACK OUT",
+    "screen": "menu",
+    "state": null
+   },
+   {
+    "shot": "after-d-jackout-after-jackout.png"
+   },
+   {
+    "key": "Enter",
+    "note": "Enter",
+    "screen": "mission_select",
+    "state": null
+   },
+   {
+    "shot": "after-d-jackout-after-enter.png"
+   }
+  ]
+ }
+}

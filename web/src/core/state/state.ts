@@ -31,6 +31,7 @@ import { missionGradeOf, missionSeedOf } from "../combat/ice_scaling";
 import { applyIdleAlarmTick } from "../combat/idle_alarm";
 import { DIXIE_ATTACK_EVERY_N_PLAYER_TURNS } from "../combat/state_actions_combat";
 import { DEFAULT_FACTION_SCORES } from "./faction_reputation";
+import { openArrivalEncounter } from "./encounter_verbs";
 import missionsData from "../../data/missions.json";
 import type { RunMutator } from "./run_mutators";
 import {
@@ -346,7 +347,8 @@ export function slotToGameState(
       ? savedIndex
       : matrix.startNode;
 
-  return {
+  // Restoring onto unresolved ICE is an arrival: the decision opens again.
+  return openArrivalEncounter({
     phase: "approach",
     mission,
     player,
@@ -391,7 +393,7 @@ export function slotToGameState(
     totalDeaths: 0,
     longestRunMinutes: 0,
     factionScores: DEFAULT_FACTION_SCORES,
-  };
+  });
 }
 
 /** Load all missions from JSON. */

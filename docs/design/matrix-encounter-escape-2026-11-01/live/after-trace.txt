@@ -1,0 +1,93 @@
+## keys
+Enter      launch                             screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+-          run started                        screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+ArrowDown  target node 1                      screen=mission_select runPhase=matrix phase=approach cur=0 sel=1 decision=None probed=None COST=0 bypassed=[] | Route highlighted — ENTER enters its ICE; ↑↓ to change destination
+Enter      travel to node 1                   screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=open probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+   [canvas after-keys-arrival.png]
+Enter      confirm, nothing chosen            screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=open probed=False COST=0 bypassed=[] | Nothing selected. Press ↓ to pick a verb, then ENTER. Exits: BYPASS, BREACH, JACK OUT.
+ArrowDown                                     screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=PROBE probed=False COST=0 bypassed=[] | Nothing selected. Press ↓ to pick a verb, then ENTER. Exits: BYPASS, BREACH, JACK OUT.
+Enter      confirm first verb reached by Down screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=PROBE probed=True COST=8 bypassed=[] | Threat revealed — choose BYPASS or BREACH.
+Enter      confirm again                      screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=PROBE probed=True COST=8 bypassed=[] | Threat already revealed. Exits: BYPASS, BREACH, JACK OUT.
+ArrowLeft                                     screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=JACK OUT probed=True COST=8 bypassed=[] | Threat already revealed. Exits: BYPASS, BREACH, JACK OUT.
+Enter      confirm verb reached by Left       screen=menu
+ArrowDown                                     screen=menu
+Enter                                         screen=menu
+ArrowDown                                     screen=menu
+Enter                                         screen=dungeon
+   [canvas after-keys-end.png]
+
+## a-bypass
+Enter      launch                             screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+-          run started                        screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+ArrowDown  target node 1                      screen=mission_select runPhase=matrix phase=approach cur=0 sel=1 decision=None probed=None COST=0 bypassed=[] | Route highlighted — ENTER enters its ICE; ↑↓ to change destination
+Enter      travel to node 1                   screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=open probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek BYPASS                        screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=PROBE probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek BYPASS                        screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=BYPASS probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+Enter      commit BYPASS                      screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=None probed=None COST=60 bypassed=[1] | Bypassed — no reward. Routes are open: ↑↓ then ENTER.
+   [canvas after-a-bypass-post-bypass-board.png]
+Enter      Enter at rest after BYPASS         screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=None probed=None COST=60 bypassed=[1] | Encounter resolved — choose an adjacent route.
+ArrowDown  target a route                     screen=mission_select runPhase=matrix phase=approach cur=1 sel=0 decision=None probed=None COST=60 bypassed=[1] | Route highlighted — ENTER to travel; ↑↓ to change destination
+   [canvas after-a-bypass-post-bypass-route.png]
+Enter      depart                             screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=60 bypassed=[1] | Moved to surface — ↑↓ picks the next route
+   [canvas after-a-bypass-departed.png]
+
+## b-continue
+Enter      launch                             screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+-          run started                        screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+ArrowDown  target node 1                      screen=mission_select runPhase=matrix phase=approach cur=0 sel=1 decision=None probed=None COST=0 bypassed=[] | Route highlighted — ENTER enters its ICE; ↑↓ to change destination
+Enter      travel to node 1                   screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=open probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek BREACH                        screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=PROBE probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek BREACH                        screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=BYPASS probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek BREACH                        screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=BREACH probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+Enter      commit BREACH                      screen=mission_select runPhase=combat phase=approach cur=1 sel=None decision=None probed=None COST=0 bypassed=[] | Entering mid... (1 ICE)
+Enter      engage                             screen=mission_select runPhase=combat phase=combat cur=1 sel=None decision=None probed=None COST=0 bypassed=[] | Combat vs ICE — Yakuza Enforcer
+-          in combat, autosaved; reloading    screen=mission_select runPhase=combat phase=combat cur=1 sel=None decision=None probed=None COST=0 bypassed=[] | Combat vs ICE — Yakuza Enforcer
+ArrowDown  menu → CONTINUE                    screen=menu
+ArrowDown  menu → CONTINUE                    screen=menu
+ArrowDown  menu → CONTINUE                    screen=menu
+ArrowDown  menu → CONTINUE                    screen=menu
+Enter      CONTINUE                           screen=menu runPhase=matrix phase=approach cur=1 sel=None decision=open probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+-          restored                           screen=menu runPhase=matrix phase=approach cur=1 sel=None decision=open probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+   [canvas after-b-continue-restored.png]
+ArrowDown  target a route                     screen=menu runPhase=matrix phase=approach cur=1 sel=None decision=PROBE probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+   [canvas after-b-continue-restored-route.png]
+Enter      depart attempt 1                   screen=menu runPhase=matrix phase=approach cur=1 sel=None decision=PROBE probed=True COST=8 bypassed=[] | Threat revealed — choose BYPASS or BREACH.
+   [canvas after-b-continue-after-enter-1.png]
+Escape     ESC (footer says ESC: back)        screen=menu
+   [canvas after-b-continue-after-esc-1.png]
+ArrowDown  target a route                     screen=menu
+Enter      depart attempt 2                   screen=settings
+Escape     ESC                                screen=menu
+ArrowDown  target a route                     screen=menu
+Enter      depart attempt 3                   screen=crafting
+   [canvas after-b-continue-after-enter-3.png]
+
+## c-escape
+Enter      launch                             screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+-          run started                        screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+ArrowDown  target node 1                      screen=mission_select runPhase=matrix phase=approach cur=0 sel=1 decision=None probed=None COST=0 bypassed=[] | Route highlighted — ENTER enters its ICE; ↑↓ to change destination
+Enter      travel to node 1                   screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=open probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+   [canvas after-c-escape-arrival.png]
+Escape     ESC on encounter                   screen=menu
+   [canvas after-c-escape-after-esc.png]
+ArrowDown  pick left/right route              screen=menu
+   [canvas after-c-escape-route.png]
+Enter      travel attempt                     screen=menu
+   [canvas after-c-escape-after-enter.png]
+Escape     ESC                                screen=menu
+ArrowUp    pick the other route               screen=menu
+Enter      travel attempt                     screen=mission_select
+
+## d-jackout
+Enter      launch                             screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+-          run started                        screen=mission_select runPhase=matrix phase=approach cur=0 sel=None decision=None probed=None COST=0 bypassed=[] | Mission: Aleph Fragment
+ArrowDown  target node 1                      screen=mission_select runPhase=matrix phase=approach cur=0 sel=1 decision=None probed=None COST=0 bypassed=[] | Route highlighted — ENTER enters its ICE; ↑↓ to change destination
+Enter      travel to node 1                   screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=open probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek JACK OUT                      screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=PROBE probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek JACK OUT                      screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=BYPASS probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek JACK OUT                      screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=BREACH probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+ArrowDown  seek JACK OUT                      screen=mission_select runPhase=matrix phase=approach cur=1 sel=None decision=JACK OUT probed=False COST=0 bypassed=[] | Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.
+Enter      commit JACK OUT                    screen=menu
+   [canvas after-d-jackout-after-jackout.png]
+Enter      Enter                              screen=mission_select
+   [canvas after-d-jackout-after-enter.png]

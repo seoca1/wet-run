@@ -129,14 +129,18 @@ describe("ADR-0250 decision 1 — the gate is on the entry", () => {
     expect(state.player.alarm).toBe(0);
   });
 
-  it("re-gates the departure from an unresolved node reached without an arrival (CONTINUE)", () => {
-    // Given: the decision is transient, so a restored state stands on node 1 with none open.
-    const restored = { ...travel(onStart(), 1), encounterDecision: null };
-    // When
-    const attempted = act(target(restored, 2), "confirm");
-    // Then: no free departure.
-    expect(attempted.currentNodeIndex).toBe(1);
-    expect(attempted.encounterDecision).toEqual({ selectedVerb: null, probed: false });
+  it("re-opens the decision for an unresolved node reached without an arrival (CONTINUE)", () => {
+    // Given: a save taken on node 1; restore counts as an arrival (ADR-0250 follow-up).
+    const saved = stateToSaveSlot({ ...travel(onStart(), 1), encounterDecision: null });
+    const restored = slotToGameState(
+      { ...saved, missionId: loadMissionsCatalog(missionsData)[0]!.id, currentNodeIndex: 1 },
+      loadMissionsCatalog(missionsData),
+      loadProgramsCatalog(programsData),
+      WATCHDOG,
+    );
+    // Then: no free departure — the decision is already open.
+    expect(restored?.currentNodeIndex).toBe(1);
+    expect(restored?.encounterDecision).toEqual({ selectedVerb: null, probed: false });
   });
 
   it("names the ways forward in the arrival message, inside the 40x60 HUD width", () => {
@@ -224,9 +228,9 @@ describe("ADR-0250 decisions 2-4 — resolved nodes are remembered for the run",
 });
 
 describe("ADR-0250 decision 5 — the footer never claims travel when Enter opens the encounter", () => {
-  it.each(LAYOUTS)("on an unresolved node with a route targeted (%sx%s)", (cols, height) => {
-    // Given: CONTINUE-style state on node 1, route to node 2 highlighted.
-    const state = target({ ...travel(onStart(), 1), encounterDecision: null }, 2);
+  it.each(LAYOUTS)("on an unresolved node at rest (%sx%s)", (cols, height) => {
+    // Given: state on node 1 with nothing open and no route highlighted.
+    const state = { ...travel(onStart(), 1), encounterDecision: null };
     // When / Then: Enter opens the encounter, so the footer must not say travel.
     expect(act(state, "confirm").encounterDecision).not.toBeNull();
     const line = footer(state, cols, height);

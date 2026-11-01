@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { applyAction, makeInitialState } from "../src/core/state/state";
 import { renderRunScreen } from "../src/renderer/run_screen";
+import { openArrivalEncounter } from "../src/core/state/encounter_verbs";
 import type { GameState, Matrix } from "../src/core/types";
 
 function onIce(): GameState {
@@ -312,18 +313,17 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
     expect(rejected.encounterDecision?.selectedVerb).toBe("BYPASS");
     expect(rejected.bypassedEncounterNodes).toEqual([0]);
     expect(rejected.clearedEncounterNodes ?? []).not.toContain(2);
-    expect(screenText(rejected)).toContain("BYPASS +60 COST BLOCKED");
-    const departure = applyAction(
-      applyAction({ ...rejected, encounterDecision: null }, { type: "move_south" }),
-      { type: "confirm" },
-    );
+    expect(screenText(rejected)).toMatch(/BYPASS +EXIT \+60 COST BLOCKED/);
+    // The decision stays open: arrows move the verb cursor, never a route.
+    const departure = applyAction(rejected, { type: "move_south" });
     expect(departure.currentNodeIndex).toBe(2);
+    expect(departure.selectedMatrixNodeIndex ?? null).toBeNull();
     expect(departure.encounterDecision).not.toBeNull();
   });
 
   it("cannot avoid paying BYPASS by selecting an outgoing route first", () => {
-    // Given
-    const initial = onIce();
+    // Given: a run starting on unresolved ICE opens the decision (an arrival).
+    const initial = openArrivalEncounter(onIce());
     // When
     const attempted = applyAction(
       applyAction(initial, { type: "move_south" }),
@@ -331,6 +331,7 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
     );
     // Then
     expect(attempted.currentNodeIndex).toBe(0);
+    expect(attempted.selectedMatrixNodeIndex ?? null).toBeNull();
     expect(screenText(attempted)).toContain("BYPASS");
   });
 

@@ -6,10 +6,14 @@ import {
   encounterRoster,
   bypassBlockReason,
   encounterScanProgram,
+  type EncounterVerb,
 } from "../core/state/encounter_verbs";
 import { drawPanel, screenFrameRect, setInnerText } from "./panel";
 import { PALETTE } from "./palette";
 import type { ScreenView } from "./screen_view";
+
+/** The verbs that resolve the node or end the run, in arrow order. */
+const EXIT_VERBS: readonly EncounterVerb[] = ["BYPASS", "BREACH", "JACK OUT"];
 
 export function renderEncounterDecision(
   state: GameState,
@@ -51,6 +55,12 @@ export function renderEncounterDecision(
     `HP ${state.player.hp}/${state.player.maxHp} · COST ${state.player.alarm}/${costs.limit}`,
   );
   write(`Reward: ${node?.reward.credits ?? 0}cr`);
+  const bypassBlocked =
+    bypassReason !== null || state.player.alarm + costs.bypass > costs.limit;
+  const exits = EXIT_VERBS.filter(
+    (verb) => verb !== "BYPASS" || !bypassBlocked,
+  );
+  write(`EXITS: ${exits.join(" · ")}`, PALETTE.CYAN_LIGHT);
   y += 1;
   const details = {
     PROBE: "Reveal ICE identity and HP",
@@ -86,9 +96,14 @@ export function renderEncounterDecision(
             ? `+${price} COST${blocked ? " BLOCKED" : ""}`
             : "";
     const selected = state.encounterDecision?.selectedVerb === verb;
+    const exit = EXIT_VERBS.includes(verb);
     write(
-      `${selected ? ">" : " "} ${verb} ${suffix}`,
-      selected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT,
+      `${selected ? ">" : " "} ${verb.padEnd(8)} ${exit ? "EXIT" : "INFO"} ${suffix}`.trimEnd(),
+      selected
+        ? PALETTE.GREEN_NEON
+        : exit
+          ? PALETTE.CYAN_LIGHT
+          : PALETTE.GRAY_LIGHT,
     );
     write(`  ${details[verb]}`);
     if (verb === "SCAN") write("  Reveal ICE; lose combat card");
@@ -102,7 +117,10 @@ export function renderEncounterDecision(
     write("Threat hidden — PROBE or SCAN");
   }
   y += 1;
+  if (state.encounterDecision?.selectedVerb == null)
+    write("Nothing selected — press ↓ to pick", PALETTE.YELLOW_AMBER);
   write("↑↓/←→: choose · ENTER/SPACE: act");
+  write("ESC: jack out (abandon run)");
   return {
     grid,
     hud: [

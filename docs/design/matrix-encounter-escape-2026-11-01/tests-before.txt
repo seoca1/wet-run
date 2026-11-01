@@ -1,0 +1,559 @@
+
+ RUN  v1.6.1 /Users/emilio/projects/opencodework/Game/wet_run/web
+
+ ❯ tests/encounter_escape.test.ts  (40 tests | 32 failed) 32ms
+   ❯ tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > leaves an unresolved node reached without an arrival, for either neighbour
+     → expected 1 to be +0 // Object.is equality
+   ❯ tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > never promises 'enter ICE' on a departure the reducer lets through (80x50)
+     → expected ' ║ ENTER: enter ICE | ICE blocks trav…' to match /ENTER:? travel/
+   ❯ tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > never promises 'enter ICE' on a departure the reducer lets through (60x40)
+     → expected ' ║ ENTER: enter ICE | ICE blocks trav…' to match /ENTER:? travel/
+   ❯ tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > never promises 'enter ICE' on a departure the reducer lets through (40x60)
+     → expected ' ║ ENTER ICE | no travel | ESC back  …' to match /ENTER:? travel/
+   ❯ tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > the board footer says ESC jacks out, not 'back' (80x50)
+     → expected ' ║ ↑↓: pick route | ESC: back        …' to match /ESC:? jack out/
+   ❯ tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > the board footer says ESC jacks out, not 'back' (60x40)
+     → expected ' ║ ↑↓: pick route | ESC: back        …' to match /ESC:? jack out/
+   ❯ tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > the board footer says ESC jacks out, not 'back' (40x60)
+     → expected ' ║ ↑↓ pick route | ESC back          …' to match /ESC:? jack out/
+   ❯ tests/encounter_escape.test.ts > fix 1 — JACK OUT and ESC really leave the run > flags the JACK OUT verb as an abandoned run
+     → runAbandoned is not a function
+   ❯ tests/encounter_escape.test.ts > fix 1 — JACK OUT and ESC really leave the run > flags ESC on the encounter and on the board as an abandoned run
+     → runAbandoned is not a function
+   ❯ tests/encounter_escape.test.ts > fix 1 — JACK OUT and ESC really leave the run > does not flag travel, verb changes, BYPASS or BREACH
+     → runAbandoned is not a function
+   ❯ tests/encounter_escape.test.ts > fix 1 — load and start count as an arrival (save-reload cannot dodge) > CONTINUE onto an unresolved node opens the decision instead of the board
+     → expected undefined to deeply equal { selectedVerb: null, probed: false }
+   ❯ tests/encounter_escape.test.ts > fix 1 — load and start count as an arrival (save-reload cannot dodge) > a save taken with the decision open restores it open: no input reaches a route
+     → expected +0 to be null
+   ❯ tests/encounter_escape.test.ts > fix 1 — load and start count as an arrival (save-reload cannot dodge) > an old save without the bypass list still restores onto its node and opens the ICE there
+     → expected undefined to deeply equal { selectedVerb: null, probed: false }
+   ❯ tests/encounter_escape.test.ts > fix 1 — load and start count as an arrival (save-reload cannot dodge) > a run that starts on an unresolved ICE node opens the decision at once
+     → openArrivalEncounter is not a function
+   ❯ tests/encounter_escape.test.ts > fix 2 — SCAN with no utility in hand never swallows input > is skipped in both arrow directions when no utility program is in hand
+     → expected [ 'PROBE', 'BYPASS', 'BREACH', …(7) ] to not include 'SCAN'
+   ❯ tests/encounter_escape.test.ts > fix 2 — SCAN with no utility in hand never swallows input > keeps the fixed order of the remaining verbs (ADR-0246)
+     → expected 'SCAN' to be 'JACK OUT' // Object.is equality
+   ❯ tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > with nothing selected, says plainly what to do and names the exits; nothing is paid or moved
+     → expected 'Choose a verb with arrows, then ENTER.' to match /nothing selected/i
+   ❯ tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > the encounter screen itself tells a player with nothing selected to press ↓ (80x50)
+     → expected '                                     …' to match /Nothing selected/
+   ❯ tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > the encounter screen itself tells a player with nothing selected to press ↓ (60x40)
+     → expected '                                     …' to match /Nothing selected/
+   ❯ tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > the encounter screen itself tells a player with nothing selected to press ↓ (40x60)
+     → expected '                                     …' to match /Nothing selected/
+   ❯ tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > Enter on an already-used PROBE says the threat is revealed and points at the exits
+     → expected 'Threat revealed — choose BYPASS or BR…' not to be 'Threat revealed — choose BYPASS or BR…' // Object.is equality
+   ❯ tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > Enter on an already-revealed SCAN says so instead of doing nothing
+     → expected 'Threat revealed — choose BYPASS or BR…' to match /already revealed/i
+   ❯ tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > every confirm on every selectable verb changes what the player sees
+     → PROBE at COST 0: expected false to be true // Object.is equality
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > tags BYPASS / BREACH / JACK OUT as EXIT and PROBE / SCAN as INFO (80x50)
+     → expected ' ║   BYPASS +60 COST                 …' to match /\bEXIT\b/
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > tags BYPASS / BREACH / JACK OUT as EXIT and PROBE / SCAN as INFO (60x40)
+     → expected ' ║   BYPASS +60 COST                 …' to match /\bEXIT\b/
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > tags BYPASS / BREACH / JACK OUT as EXIT and PROBE / SCAN as INFO (40x60)
+     → expected ' ║   BYPASS +60 COST                 …' to match /\bEXIT\b/
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > draws unselected exits in a colour the information verbs do not use (80x50)
+     → expected true to be false // Object.is equality
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > draws unselected exits in a colour the information verbs do not use (60x40)
+     → expected true to be false // Object.is equality
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > draws unselected exits in a colour the information verbs do not use (40x60)
+     → expected true to be false // Object.is equality
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > keeps costs, BLOCKED, the gate line and the controls, and names ESC (80x50)
+     → expected '                                     …' to match /ESC: jack out/
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > keeps costs, BLOCKED, the gate line and the controls, and names ESC (60x40)
+     → expected '                                     …' to match /ESC: jack out/
+   ❯ tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > keeps costs, BLOCKED, the gate line and the controls, and names ESC (40x60)
+     → expected '                                     …' to match /ESC: jack out/
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 32 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > leaves an unresolved node reached without an arrival, for either neighbour
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/encounter_escape.test.ts:99:37
+     97|       const left = act(armed, "confirm");
+     98|       // Then
+     99|       expect(left.currentNodeIndex).toBe(to);
+       |                                     ^
+    100|       expect(left.encounterDecision ?? null).toBeNull();
+    101|       expect(left.player.alarm).toBe(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > never promises 'enter ICE' on a departure the reducer lets through (80x50)
+ FAIL  tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > never promises 'enter ICE' on a departure the reducer lets through (60x40)
+AssertionError: expected ' ║ ENTER: enter ICE | ICE blocks trav…' to match /ENTER:? travel/
+
+- Expected: 
+/ENTER:? travel/
+
++ Received: 
+" ║ ENTER: enter ICE | ICE blocks travel | ESC: back                           ║ "
+
+ ❯ tests/encounter_escape.test.ts:119:39
+    117|   it.each(LAYOUTS)("never promises 'enter ICE' on a departure the redu…
+    118|     const armed = target(stranded(), 0);
+    119|     expect(footer(armed, cols, rows)).toMatch(/ENTER:? travel/);
+       |                                       ^
+    120|     expect(footer(armed, cols, rows)).not.toMatch(/ICE blocks travel|n…
+    121|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > never promises 'enter ICE' on a departure the reducer lets through (40x60)
+AssertionError: expected ' ║ ENTER ICE | no travel | ESC back  …' to match /ENTER:? travel/
+
+- Expected: 
+/ENTER:? travel/
+
++ Received: 
+" ║ ENTER ICE | no travel | ESC back   ║ "
+
+ ❯ tests/encounter_escape.test.ts:119:39
+    117|   it.each(LAYOUTS)("never promises 'enter ICE' on a departure the redu…
+    118|     const armed = target(stranded(), 0);
+    119|     expect(footer(armed, cols, rows)).toMatch(/ENTER:? travel/);
+       |                                       ^
+    120|     expect(footer(armed, cols, rows)).not.toMatch(/ICE blocks travel|n…
+    121|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > the board footer says ESC jacks out, not 'back' (80x50)
+ FAIL  tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > the board footer says ESC jacks out, not 'back' (60x40)
+AssertionError: expected ' ║ ↑↓: pick route | ESC: back        …' to match /ESC:? jack out/
+
+- Expected: 
+/ESC:? jack out/
+
++ Received: 
+" ║ ↑↓: pick route | ESC: back                                                 ║ "
+
+ ❯ tests/encounter_escape.test.ts:126:20
+    124|     for (const state of [onStart(), target(onStart(), 1), stranded()])…
+    125|       const line = footer(state, cols, rows);
+    126|       expect(line).toMatch(/ESC:? jack out/);
+       |                    ^
+    127|       expect(line).not.toMatch(/ESC:? back/);
+    128|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — departing a node never reopens the decision > the board footer says ESC jacks out, not 'back' (40x60)
+AssertionError: expected ' ║ ↑↓ pick route | ESC back          …' to match /ESC:? jack out/
+
+- Expected: 
+/ESC:? jack out/
+
++ Received: 
+" ║ ↑↓ pick route | ESC back           ║ "
+
+ ❯ tests/encounter_escape.test.ts:126:20
+    124|     for (const state of [onStart(), target(onStart(), 1), stranded()])…
+    125|       const line = footer(state, cols, rows);
+    126|       expect(line).toMatch(/ESC:? jack out/);
+       |                    ^
+    127|       expect(line).not.toMatch(/ESC:? back/);
+    128|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — JACK OUT and ESC really leave the run > flags the JACK OUT verb as an abandoned run
+TypeError: runAbandoned is not a function
+ ❯ tests/encounter_escape.test.ts:136:12
+    134|     const arrived = travel(onStart(), 1);
+    135|     const out = choose(arrived, "JACK OUT");
+    136|     expect(runAbandoned(arrived, out)).toBe(true);
+       |            ^
+    137|   });
+    138| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — JACK OUT and ESC really leave the run > flags ESC on the encounter and on the board as an abandoned run
+TypeError: runAbandoned is not a function
+ ❯ tests/encounter_escape.test.ts:141:12
+    139|   it("flags ESC on the encounter and on the board as an abandoned run"…
+    140|     const arrived = travel(onStart(), 1);
+    141|     expect(runAbandoned(arrived, act(arrived, "jack_out"))).toBe(true);
+       |            ^
+    142|     const board = onStart();
+    143|     expect(runAbandoned(board, act(board, "jack_out"))).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — JACK OUT and ESC really leave the run > does not flag travel, verb changes, BYPASS or BREACH
+TypeError: runAbandoned is not a function
+ ❯ tests/encounter_escape.test.ts:157:49
+    155|       [select(arrived, "BREACH"), choose(arrived, "BREACH")],
+    156|     ];
+    157|     for (const [before, after] of pairs) expect(runAbandoned(before, a…
+       |                                                 ^
+    158|   });
+    159| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — load and start count as an arrival (save-reload cannot dodge) > CONTINUE onto an unresolved node opens the decision instead of the board
+AssertionError: expected undefined to deeply equal { selectedVerb: null, probed: false }
+
+- Expected: 
+Object {
+  "probed": false,
+  "selectedVerb": null,
+}
+
++ Received: 
+undefined
+
+ ❯ tests/encounter_escape.test.ts:184:41
+    182|     expect(restored?.currentNodeIndex).toBe(x);
+    183|     expect(restored?.runPhase).toBe("matrix");
+    184|     expect(restored?.encounterDecision).toEqual({ selectedVerb: null, …
+       |                                         ^
+    185|     expect(restored?.message).toContain("BREACH");
+    186|     expect(renderRunScreen(restored!, 80, 50)?.hud[0]).toBe("ENCOUNTER…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — load and start count as an arrival (save-reload cannot dodge) > a save taken with the decision open restores it open: no input reaches a route
+AssertionError: expected +0 to be null
+ ❯ tests/encounter_escape.test.ts:197:53
+    195|       const moved = act(restored, type);
+    196|       expect(moved.encounterDecision?.selectedVerb).not.toBeNull();
+    197|       expect(moved.selectedMatrixNodeIndex ?? null).toBeNull();
+       |                                                     ^
+    198|     }
+    199|     // Enter with nothing selected neither moves nor closes it.
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — load and start count as an arrival (save-reload cannot dodge) > an old save without the bypass list still restores onto its node and opens the ICE there
+AssertionError: expected undefined to deeply equal { selectedVerb: null, probed: false }
+
+- Expected: 
+Object {
+  "probed": false,
+  "selectedVerb": null,
+}
+
++ Received: 
+undefined
+
+ ❯ tests/encounter_escape.test.ts:226:41
+    224|     const restored = slotToGameState(old, missions, programs, WATCHDOG…
+    225|     expect(restored?.bypassedEncounterNodes).toEqual([]);
+    226|     expect(restored?.encounterDecision).toEqual({ selectedVerb: null, …
+       |                                         ^
+    227|   });
+    228| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 1 — load and start count as an arrival (save-reload cannot dodge) > a run that starts on an unresolved ICE node opens the decision at once
+TypeError: openArrivalEncounter is not a function
+ ❯ tests/encounter_escape.test.ts:230:21
+    228| 
+    229|   it("a run that starts on an unresolved ICE node opens the decision a…
+    230|     const started = openArrivalEncounter({ ...onStart(), currentNodeIn…
+       |                     ^
+    231|     expect(started.encounterDecision).toEqual({ selectedVerb: null, pr…
+    232|     expect(started.message).toContain("JACK OUT");
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 2 — SCAN with no utility in hand never swallows input > is skipped in both arrow directions when no utility program is in hand
+AssertionError: expected [ 'PROBE', 'BYPASS', 'BREACH', …(7) ] to not include 'SCAN'
+ ❯ tests/encounter_escape.test.ts:249:24
+    247|         seen.push(state.encounterDecision?.selectedVerb ?? null);
+    248|       }
+    249|       expect(seen).not.toContain("SCAN");
+       |                        ^
+    250|       expect(new Set(seen)).toEqual(new Set(["PROBE", "BYPASS", "BREAC…
+    251|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 2 — SCAN with no utility in hand never swallows input > keeps the fixed order of the remaining verbs (ADR-0246)
+AssertionError: expected 'SCAN' to be 'JACK OUT' // Object.is equality
+
+- Expected
++ Received
+
+- JACK OUT
++ SCAN
+
+ ❯ tests/encounter_escape.test.ts:262:85
+    260|     }
+    261|     expect(order).toEqual(["PROBE", "BYPASS", "BREACH", "JACK OUT"]);
+    262|     expect(act(travel(onStart(), 1), "move_north").encounterDecision?.…
+       |                                                                                     ^
+    263|   });
+    264| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > with nothing selected, says plainly what to do and names the exits; nothing is paid or moved
+AssertionError: expected 'Choose a verb with arrows, then ENTER.' to match /nothing selected/i
+
+- Expected: 
+/nothing selected/i
+
++ Received: 
+"Choose a verb with arrows, then ENTER."
+
+ ❯ tests/encounter_escape.test.ts:291:29
+    289|     const pressed = act(arrived, "confirm");
+    290|     expect(pressed.message).not.toBe(arrived.message);
+    291|     expect(pressed.message).toMatch(/nothing selected/i);
+       |                             ^
+    292|     expect(pressed.message).toContain("↓");
+    293|     for (const exit of ["BYPASS", "BREACH", "JACK OUT"]) expect(presse…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > the encounter screen itself tells a player with nothing selected to press ↓ (80x50)
+ FAIL  tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > the encounter screen itself tells a player with nothing selected to press ↓ (60x40)
+ FAIL  tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > the encounter screen itself tells a player with nothing selected to press ↓ (40x60)
+AssertionError: expected '                                     …' to match /Nothing selected/
+
+- Expected: 
+/Nothing selected/
+
++ Received: 
+"                                                                                
+ ╔═ENCOUNTER══════════════════════════════════════════════════════════════════╗ 
+ ║                                                                            ║ 
+ ║ Node 2 · MID                                                               ║ 
+ ║ ICE blocks travel until resolved                                           ║ 
+ ║ HP 100/100 · COST 0/100                                                    ║ 
+ ║ Reward: 75cr                                                               ║ 
+ ║                                                                            ║ 
+ ║   PROBE +8 COST                                                            ║ 
+ ║   Reveal ICE identity and HP                                               ║ 
+ ║                                                                            ║ 
+ ║   BYPASS +60 COST                                                          ║ 
+ ║   No fight / no loot / no heal                                             ║ 
+ ║                                                                            ║ 
+ ║   BREACH                                                                   ║ 
+ ║   Fight for the full reward                                                ║ 
+ ║                                                                            ║ 
+ ║   JACK OUT                                                                 ║ 
+ ║   Abandon the run (unchanged)                                              ║ 
+ ║                                                                            ║ 
+ ║   SCAN NO UTILITY IN HAND                                                  ║ 
+ ║   Requires utility program in hand                                         ║ 
+ ║   Reveal ICE; lose combat card                                             ║ 
+ ║                                                                            ║ 
+ ║ Threat hidden — PROBE or SCAN                                              ║ 
+ ║                                                                            ║ 
+ ║ ↑↓/←→: choose · ENTER/SPACE: act                                           ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ╚════════════════════════════════════════════════════════════════════════════╝ 
+                                                                                "
+
+ ❯ tests/encounter_escape.test.ts:301:20
+    299|   it.each(LAYOUTS)("the encounter screen itself tells a player with no…
+    300|     const joined = text(travel(onStart(), 1), cols, rows).join("\n");
+    301|     expect(joined).toMatch(/Nothing selected/);
+       |                    ^
+    302|   });
+    303| 
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > Enter on an already-used PROBE says the threat is revealed and points at the exits
+AssertionError: expected 'Threat revealed — choose BYPASS or BR…' not to be 'Threat revealed — choose BYPASS or BR…' // Object.is equality
+ ❯ tests/encounter_escape.test.ts:308:31
+    306|     expect(probed.player.alarm).toBe(8);
+    307|     const again = act(probed, "confirm");
+    308|     expect(again.message).not.toBe(probed.message);
+       |                               ^
+    309|     expect(again.message).toMatch(/already revealed/i);
+    310|     for (const exit of ["BYPASS", "BREACH", "JACK OUT"]) expect(again.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > Enter on an already-revealed SCAN says so instead of doing nothing
+AssertionError: expected 'Threat revealed — choose BYPASS or BR…' to match /already revealed/i
+
+- Expected: 
+/already revealed/i
+
++ Received: 
+"Threat revealed — choose BYPASS or BREACH."
+
+ ❯ tests/encounter_escape.test.ts:319:27
+    317|     const onScan = { ...probed, encounterDecision: { selectedVerb: "SC…
+    318|     const again = act(onScan, "confirm");
+    319|     expect(again.message).toMatch(/already revealed/i);
+       |                           ^
+    320|     expect(again.deck).toEqual(onScan.deck);
+    321|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 3 — Enter on the encounter is never silent > every confirm on every selectable verb changes what the player sees
+AssertionError: PROBE at COST 0: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ tests/encounter_escape.test.ts:341:65
+    339|             next.runPhase !== state.runPhase ||
+    340|             next.phase !== state.phase;
+    341|           expect(visible, `${verb ?? "null"} at COST ${alarm}`).toBe(t…
+       |                                                                 ^
+    342|         }
+    343|       }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > tags BYPASS / BREACH / JACK OUT as EXIT and PROBE / SCAN as INFO (80x50)
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > tags BYPASS / BREACH / JACK OUT as EXIT and PROBE / SCAN as INFO (60x40)
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > tags BYPASS / BREACH / JACK OUT as EXIT and PROBE / SCAN as INFO (40x60)
+AssertionError: expected ' ║   BYPASS +60 COST                 …' to match /\bEXIT\b/
+
+- Expected: 
+/\bEXIT\b/
+
++ Received: 
+" ║   BYPASS +60 COST                                                          ║ "
+
+ ❯ tests/encounter_escape.test.ts:357:92
+    355|   it.each(LAYOUTS)("tags BYPASS / BREACH / JACK OUT as EXIT and PROBE …
+    356|     const lines = text(travel(onStart(), 1), cols, rows);
+    357|     for (const exit of ["BYPASS", "BREACH", "JACK OUT"]) expect(verbRo…
+       |                                                                                            ^
+    358|     for (const info of ["PROBE", "SCAN"]) {
+    359|       expect(verbRow(lines, info).line).toMatch(/\bINFO\b/);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > draws unselected exits in a colour the information verbs do not use (80x50)
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > draws unselected exits in a colour the information verbs do not use (60x40)
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > draws unselected exits in a colour the information verbs do not use (40x60)
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ tests/encounter_escape.test.ts:376:59
+    374|     const infos = new Set(["PROBE", "SCAN"].map(fgOf));
+    375|     expect(exits.size).toBe(1);
+    376|     for (const colour of infos) expect(exits.has(colour)).toBe(false);
+       |                                                           ^
+    377|     expect([...exits][0]).toBe(PALETTE.CYAN_LIGHT);
+    378|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[21/32]⎯
+
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > keeps costs, BLOCKED, the gate line and the controls, and names ESC (80x50)
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > keeps costs, BLOCKED, the gate line and the controls, and names ESC (60x40)
+ FAIL  tests/encounter_escape.test.ts > fix 4 — the three exits read as the ways off this node > keeps costs, BLOCKED, the gate line and the controls, and names ESC (40x60)
+AssertionError: expected '                                     …' to match /ESC: jack out/
+
+- Expected: 
+/ESC: jack out/
+
++ Received: 
+"                                                                                
+ ╔═ENCOUNTER══════════════════════════════════════════════════════════════════╗ 
+ ║                                                                            ║ 
+ ║ Node 2 · MID                                                               ║ 
+ ║ ICE blocks travel until resolved                                           ║ 
+ ║ HP 100/100 · COST 95/100                                                   ║ 
+ ║ Reward: 75cr                                                               ║ 
+ ║                                                                            ║ 
+ ║   PROBE +8 COST BLOCKED                                                    ║ 
+ ║   Reveal ICE identity and HP                                               ║ 
+ ║                                                                            ║ 
+ ║   BYPASS +60 COST BLOCKED                                                  ║ 
+ ║   No fight / no loot / no heal                                             ║ 
+ ║                                                                            ║ 
+ ║   BREACH                                                                   ║ 
+ ║   Fight for the full reward                                                ║ 
+ ║                                                                            ║ 
+ ║   JACK OUT                                                                 ║ 
+ ║   Abandon the run (unchanged)                                              ║ 
+ ║                                                                            ║ 
+ ║   SCAN NO UTILITY IN HAND                                                  ║ 
+ ║   Requires utility program in hand                                         ║ 
+ ║   Reveal ICE; lose combat card                                             ║ 
+ ║                                                                            ║ 
+ ║ Threat hidden — PROBE or SCAN                                              ║ 
+ ║                                                                            ║ 
+ ║ ↑↓/←→: choose · ENTER/SPACE: act                                           ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ║                                                                            ║ 
+ ╚════════════════════════════════════════════════════════════════════════════╝ 
+                                                                                "
+
+ ❯ tests/encounter_escape.test.ts:387:20
+    385|     expect(joined.match(/ICE blocks travel until resolved/g) ?? []).to…
+    386|     expect(joined).toContain("ENTER/SPACE: act");
+    387|     expect(joined).toMatch(/ESC: jack out/);
+       |                    ^
+    388|   });
+    389| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[22/32]⎯
+
+ Test Files  1 failed (1)
+      Tests  32 failed | 8 passed (40)
+   Start at  01:09:44
+   Duration  341ms (transform 161ms, setup 10ms, collect 186ms, tests 32ms, environment 0ms, prepare 38ms)
+

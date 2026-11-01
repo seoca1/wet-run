@@ -2783,3 +2783,21 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **실행 결과**: 편집한 src 한 파일만 Prettier write/check 통과. `npm run typecheck` **0 errors**; `npm run lint` **0 errors / 기존 keyboard.ts:14 warning 1**; `npm test` **165 files / 3732 passed / 0 failed** (baseline 3731 + 회귀 1); `npm run build` **119 modules** 통과. recorder `node --test docs/playtest/ego-decision-recorder.test.mjs` **6 passed**. catalog의 30개 프로그램 비용은 전부 유한·비음수 (최소 1). `git diff --check` 통과 및 staged diff 비어 있음 확인. LSP는 TypeScript 서버 미설치·기존 설치 거절로 실행 불가, CLI typecheck와 구분한다.
 - **하네스**: `npm run balance` opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**; `npm run balance -- --deck ppl` PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**. `/Users/emilio/.openclaw/tmp/opencode/bypass60-{opening,ppl}.txt`에 전체 stdout을 보존하고 기존 ADR-0239 기준선 `option-e-{opening,ppl}-before.txt`와 **양쪽 `cmp` exit 0 (byte-identical)** 확인. 전투 하네스 보존 증거만으로 기록한다.
 - **E2E / preview 유지**: 필수 `env -u CI PLAYWRIGHT_BASE_URL=http://127.0.0.1:5195 npx playwright test --ignore-snapshots --grep-invert demo-screenshots` → **82 passed / 4 skipped / 0 failed (4.5m)**. desktop/mobile 새 68 COST 단언 통과. rebuild 후 요청된 `npx vite preview --port 5195 --strictPort --host 127.0.0.1`는 **Port 5195 is already in use**로 실패해 기존 서버를 유지했다. 기존 preview kill 없음, 새 dist 제공을 E2E로 확인. 사용자 play session 무조작.
+
+## [2026-11-01] verify | BYPASS 60 실플레이 검증 — 런당 1회 자원 확인
+
+- 오너 결정(BYPASS 30 → 60, `a076bb3f`)을 **실제 브라우저에서 플레이해 검증**했다 (ego-lite 자체 Space
+  생성 후 폐쇄, 사용자 Space 미접촉). 시나리오: 우회 1회 → 이동 → 2회차 우회 시도 → 이후 전투.
+- **실측 로그**:
+  - 조우 A (node 1, `yakuza_enforcer`): COST 0 · HP 100
+  - **BYPASS #1**: COST 0 → **60** · `bypassed=1` — **성공**
+  - 이동 후: COST 60 · `bypassed=null` — **이동이 passage 를 해제**(재접근 가능)
+  - **BYPASS #2 시도**: COST **60 유지** · `bypassed=null` — **상한으로 거부** (미차감·미부여)
+- **리듀서 탐침으로 상한 경계까지 확인**: `0+60=60` 성공 · `60+60=120` 거부 · `41+60=101` 거부 ·
+  `40+60=100` 허용 (경계 정확). 거부 메시지 `"COST too high for BYPASS — choose another verb."`
+- **결론**: 60 은 BYPASS 를 **런당 1회뿐인 큰 결정**으로 만든다 (60/100 소모 → 남은 프로그램 여유 40).
+  COST 는 런 내 **단조 증가**이고 리셋은 사망 재시작뿐이므로 두 번째 우회는 구조적으로 불가하다.
+  이는 "항상 우회" 지배 위험을 구조적으로 줄인다 — "어느 전투를 건너뛸 것인가"가 진짜 결정이 된다.
+- **정직한 한계**: 하네스는 경로 경제를 보지 못하므로 이 값의 **균형은 검증되지 않았다**. 오너 결정 +
+  Jev 방향 확인까지이며, 정확한 값은 플레이 패스(`ego-decision-recorder.mjs`) 또는 오너 판단으로 확정한다.
+- 세션 이연 항목은 워크스페이스 `NEXT_SESSION_TODO.md` 로 carry 했다. 코드 변경 없음.

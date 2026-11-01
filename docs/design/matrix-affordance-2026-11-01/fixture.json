@@ -1,0 +1,408 @@
+{
+  "seed": 42,
+  "grade": 3,
+  "states": [
+    {
+      "name": "first",
+      "current": 0,
+      "visited": [],
+      "cleared": [],
+      "selected": null,
+      "hint": true
+    },
+    {
+      "name": "start",
+      "current": 0,
+      "visited": [],
+      "cleared": [],
+      "selected": null,
+      "hint": false
+    },
+    {
+      "name": "rest",
+      "current": 1,
+      "visited": [
+        0,
+        1
+      ],
+      "cleared": [
+        0
+      ],
+      "selected": null,
+      "hint": false
+    },
+    {
+      "name": "branch",
+      "current": 1,
+      "visited": [
+        0,
+        1
+      ],
+      "cleared": [
+        0
+      ],
+      "selected": 0,
+      "hint": false
+    },
+    {
+      "name": "boss",
+      "current": 6,
+      "visited": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "cleared": [
+        0
+      ],
+      "selected": null,
+      "hint": false
+    }
+  ],
+  "matrix": {
+    "nodes": [
+      {
+        "id": 0,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 50
+        },
+        "isBoss": false,
+        "adjacent": [
+          1,
+          7
+        ],
+        "site": {
+          "x": 1,
+          "y": 1,
+          "w": 1,
+          "h": 1,
+          "label": "Jack-in Point"
+        }
+      },
+      {
+        "id": 1,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 75
+        },
+        "isBoss": false,
+        "adjacent": [
+          0,
+          6,
+          8,
+          9
+        ],
+        "site": {
+          "x": 1,
+          "y": 3,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 1"
+        }
+      },
+      {
+        "id": 2,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 100
+        },
+        "isBoss": false,
+        "adjacent": [
+          4,
+          5,
+          14
+        ],
+        "site": {
+          "x": 9,
+          "y": 1,
+          "w": 1,
+          "h": 1,
+          "label": "Router 10"
+        }
+      },
+      {
+        "id": 3,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 125
+        },
+        "isBoss": false,
+        "adjacent": [
+          14
+        ],
+        "site": {
+          "x": 7,
+          "y": 3,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 11"
+        }
+      },
+      {
+        "id": 4,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 150
+        },
+        "isBoss": false,
+        "adjacent": [
+          2,
+          6
+        ],
+        "site": {
+          "x": 10,
+          "y": 3,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 12"
+        }
+      },
+      {
+        "id": 5,
+        "zone": "mid",
+        "iceIds": [
+          "ice_dixie_echo"
+        ],
+        "iceHp": [],
+        "reward": {
+          "credits": 175
+        },
+        "isBoss": false,
+        "adjacent": [
+          2,
+          13
+        ],
+        "site": {
+          "x": 7,
+          "y": 6,
+          "w": 1,
+          "h": 1,
+          "label": "ICE Barrier 13"
+        }
+      },
+      {
+        "id": 6,
+        "zone": "core-deep",
+        "iceIds": [
+          "wintermute"
+        ],
+        "iceHp": [],
+        "reward": {
+          "credits": 200
+        },
+        "isBoss": true,
+        "adjacent": [
+          4,
+          11,
+          1
+        ],
+        "site": {
+          "x": 10,
+          "y": 6,
+          "w": 1,
+          "h": 1,
+          "label": "Extraction Gate"
+        }
+      },
+      {
+        "id": 7,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 225
+        },
+        "isBoss": false,
+        "adjacent": [
+          0,
+          11
+        ],
+        "site": {
+          "x": 3,
+          "y": 1,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 2"
+        }
+      },
+      {
+        "id": 8,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 250
+        },
+        "isBoss": false,
+        "adjacent": [
+          1,
+          9,
+          10,
+          12
+        ],
+        "site": {
+          "x": 3,
+          "y": 3,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 3"
+        }
+      },
+      {
+        "id": 9,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 275
+        },
+        "isBoss": false,
+        "adjacent": [
+          1,
+          8
+        ],
+        "site": {
+          "x": 1,
+          "y": 5,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 4"
+        }
+      },
+      {
+        "id": 10,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 300
+        },
+        "isBoss": false,
+        "adjacent": [
+          8
+        ],
+        "site": {
+          "x": 3,
+          "y": 5,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 5"
+        }
+      },
+      {
+        "id": 11,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 325
+        },
+        "isBoss": false,
+        "adjacent": [
+          6,
+          7,
+          14
+        ],
+        "site": {
+          "x": 5,
+          "y": 1,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 6"
+        }
+      },
+      {
+        "id": 12,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 350
+        },
+        "isBoss": false,
+        "adjacent": [
+          8,
+          13
+        ],
+        "site": {
+          "x": 5,
+          "y": 4,
+          "w": 1,
+          "h": 1,
+          "label": "Router 7"
+        }
+      },
+      {
+        "id": 13,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 375
+        },
+        "isBoss": false,
+        "adjacent": [
+          5,
+          12
+        ],
+        "site": {
+          "x": 5,
+          "y": 6,
+          "w": 1,
+          "h": 1,
+          "label": "Data Vault 8"
+        }
+      },
+      {
+        "id": 14,
+        "zone": "mid",
+        "iceIds": [
+          "ice_dixie_echo"
+        ],
+        "iceHp": [],
+        "reward": {
+          "credits": 400
+        },
+        "isBoss": false,
+        "adjacent": [
+          2,
+          3,
+          11
+        ],
+        "site": {
+          "x": 7,
+          "y": 1,
+          "w": 1,
+          "h": 1,
+          "label": "ICE Barrier 9"
+        }
+      }
+    ],
+    "startNode": 0,
+    "bossNode": 6,
+    "grade": 3
+  }
+}

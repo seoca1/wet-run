@@ -71,7 +71,7 @@ describe("unified numbering across screens", () => {
     expect(text).toContain("N01 SURFACE");
     expect(text).toContain("N02 CORE");
     // ADR-0249 removed the list legend; ids now label the board's routes.
-    expect(text).toContain("ROUTES (1): N02");
+    expect(text).toContain("ROUTES (1): ↓1 N02");
     expect(text).not.toMatch(/\[\d+\]/);
     expect(text).not.toContain("N00");
   });

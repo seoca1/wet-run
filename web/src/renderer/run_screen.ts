@@ -20,6 +20,7 @@ export function renderRunScreen(
   state: GameState,
   cols: number,
   rows: number,
+  matrixEntryHint = false,
 ): ScreenView | null {
   const layout = runScreenLayout(cols, rows);
   switch (state.runPhase) {
@@ -40,6 +41,7 @@ export function renderRunScreen(
             : null,
           state.selectedMatrixNodeIndex ?? null,
           state.clearedEncounterNodes ?? [],
+          matrixEntryHint,
         ),
         hud: [
           "MATRIX",

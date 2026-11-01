@@ -107,3 +107,40 @@ export function combatEntryHintFits(rows: number): boolean {
   if (first === undefined || last === undefined) return false;
   return first >= 6 && last < rows;
 }
+
+/** The Matrix-entry hint (ADR-0249 affordance slice): the first board with a
+ * route teaches how to read it, once, the same way the combat hint does. */
+export const MATRIX_ENTRY_HINT_LINES: readonly string[] = [
+  "TIP: solid lines from @ are routes",
+  "↓↑ picks one · ENTER travels there",
+] as const;
+
+/** The slice of state the Matrix-entry hint decision reads. */
+export interface MatrixHintState {
+  readonly runPhase: string;
+  readonly encounterDecision?: unknown;
+  readonly matrix?: {
+    readonly nodes: ReadonlyArray<{ readonly adjacent: readonly number[] }>;
+  } | null;
+  readonly currentNodeIndex: number;
+}
+
+/**
+ * Whether the Matrix-entry hint belongs on this frame: not yet shown, on the
+ * board itself (no crossing menu open) and with at least one route to take.
+ * The controller sets its flag on the first input made while this is true,
+ * so the hint is dismissed by that input and never returns.
+ */
+export function shouldShowMatrixEntryHint(
+  alreadyShown: boolean,
+  state: MatrixHintState | null,
+): boolean {
+  if (alreadyShown || state === null || state.runPhase !== "matrix")
+    return false;
+  if (state.encounterDecision) return false;
+  const nodes = state.matrix?.nodes ?? [];
+  const here = nodes[state.currentNodeIndex];
+  return (here?.adjacent ?? []).some(
+    (i) => i !== state.currentNodeIndex && nodes[i] !== undefined,
+  );
+}

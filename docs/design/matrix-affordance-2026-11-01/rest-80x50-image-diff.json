@@ -1,0 +1,74 @@
+{
+  "command": "image-diff",
+  "dimensionsMatch": true,
+  "reference": {
+    "width": 800,
+    "height": 900
+  },
+  "actual": {
+    "width": 800,
+    "height": 900
+  },
+  "totalPixels": 720000,
+  "diffPixels": 5923,
+  "diffRatio": 0.0082,
+  "similarityScore": 99,
+  "alphaChannelIntact": true,
+  "hotspots": [
+    {
+      "gridX": 2,
+      "gridY": 5,
+      "x": 200,
+      "y": 562,
+      "width": 100,
+      "height": 113,
+      "diffRatio": 0.1963
+    },
+    {
+      "gridX": 3,
+      "gridY": 5,
+      "x": 300,
+      "y": 562,
+      "width": 100,
+      "height": 113,
+      "diffRatio": 0.1494
+    },
+    {
+      "gridX": 1,
+      "gridY": 5,
+      "x": 100,
+      "y": 562,
+      "width": 100,
+      "height": 113,
+      "diffRatio": 0.1321
+    },
+    {
+      "gridX": 4,
+      "gridY": 5,
+      "x": 400,
+      "y": 562,
+      "width": 100,
+      "height": 113,
+      "diffRatio": 0.0203
+    },
+    {
+      "gridX": 0,
+      "gridY": 5,
+      "x": 0,
+      "y": 562,
+      "width": 100,
+      "height": 113,
+      "diffRatio": 0.0157
+    },
+    {
+      "gridX": 2,
+      "gridY": 6,
+      "x": 200,
+      "y": 675,
+      "width": 100,
+      "height": 112,
+      "diffRatio": 0.015
+    }
+  ],
+  "summary": "99/100 similarity; 5923/720000 pixels differ; 6 hotspot region(s)."
+}

@@ -143,7 +143,7 @@ describe("matrix renderer (Tier 5.5+ enhanced)", () => {
       const text = findAllText(grid, 80, 50);
       // ADR-0249: node 1 (mid) is adjacent to current (0): a solid route
       // corridor joins them and the card names it among the routes.
-      expect(text).toContain("ROUTES (1): N02");
+      expect(text).toContain("ROUTES (1): ↓1 N02");
       const sites = matrixLayout(makeGrid(80, 50), sampleMatrix).board.sites;
       const row = text.split("\n")[sites[0]?.cy ?? 0] ?? "";
       expect(row.slice((sites[0]?.cx ?? 0) + 2, (sites[1]?.cx ?? 0) - 1)).toMatch(/^─+$/);

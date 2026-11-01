@@ -2822,3 +2822,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - `renderMatrix` 시그니처·순수성 불변. 리듀서·동사·가격·튜닝·RNG·status.ts·크롤러·VFX 무변경, 화살표 순환 순서 불변 → e2e 헬퍼 무변경.
 - LOC(total/pure): `matrix.ts` 228/176 → 188/155, `matrix_nodes.ts` 146/134 → 100/82; 신규 `matrix_board.ts` 196/172, `matrix_board_layout.ts` 182/153, `matrix_board_routes.ts` 262/232, `min_heap.ts` 43/38.
 - 검증: 신규 규칙 테스트 13개 HEAD에서 13 failed → 13 passed. `npm test` **167 files / 3754 passed**, typecheck 0, lint 0 errors(기존 warning 1), build 124 modules, 3132-case 스트레스, 양 덱 balance stdout byte-identical(opening 100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0, PPL 100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7), E2E **82 passed / 4 skipped / 0 failed**. 증거: [docs/design/matrix-operation-board-2026-11-01](docs/design/matrix-operation-board-2026-11-01/README.md).
+
+## [2026-11-01] fix(ui) | Matrix 보드 행동 가독성 — 키→목적지 명시 · 정지 프롬프트 최상단 · 1회 진입 힌트
+
+- 오너 피드백: "선이 연결되는 느낌은 좋아. 그런데 어떻게 해야 하는지 잘 알아보지는 못하겠어 … 목록보다는 훨씬 좋아." 보드는 유지, 행동 가독성(affordance) 격차만 수정. ADR-0249 규칙 8개 안의 renderer + onboarding 변경.
+- `ROUTES (4): ↓1 N01  ↓2 N07  ↓3 N09` / `↓4 N10`(40열에서 감싸기). 타깃이 있으면 `>N01  ↓1 N07 …`(리듀서 순환과 동일하게 타깃 기준 계수). 정지 시 카드 첫 줄 `▸ PRESS ↓ OR ↑ TO PICK A ROUTE`(방 이름 없음 = 선택 아님), 타깃 시 첫 줄이 타깃·상세, 그 아래 `@`. 카드 8행 유지.
+- 1회 진입 힌트: ADR-0235 `onboarding.ts`에 `MATRIX_ENTRY_HINT_LINES` + `shouldShowMatrixEntryHint`, `main.ts` 플래그 `matrixEntryHintShown`(combat 힌트와 같은 패턴). 경로가 있는 첫 보드에서만, 첫 입력으로 사라짐. 세션 단위(영속 아님).
+- 리듀서·선택 의미·화살표 순서·동사·가격·튜닝·RNG·status.ts·크롤러·VFX·raw 무변경. e2e 헬퍼 무수정.
+- LOC(total/pure): `matrix.ts` 188/155 → 203/167, `matrix_nodes.ts` 100/82 → 138/109, `run_screen.ts` 129/121 → 131/123, `onboarding.ts` 109/47 → 146/72, `main.ts` 1740/1523 → 1747/1528.
+- 검증: 신규 `matrix_affordance.test.ts` 20 failed → 20 passed; `npm test` **168 files / 3774 passed**; typecheck 0; lint 0 errors(기존 keyboard.ts:14 warning); build PASS; balance 양 덱 ADR-0239 기준선과 byte-identical; E2E **82 passed / 4 skipped / 0 failed (4.6m)**, 5195 프리뷰 유지. 시각 QA 독립 리뷰 PASS, 대비 측정 최소 6.58:1(프롬프트 amber ≥10.15:1). 상속 결함(행별 포커스 링·접근성 트리) 미해결.
+- 증거: [matrix-affordance-2026-11-01](docs/design/matrix-affordance-2026-11-01/README.md) (15 전후 캡처 × 3 레이아웃, 페어 PNG, width check, contrast). ADR-0249 `## Implementation Status`에만 후속 기록. 미커밋·미스테이징.

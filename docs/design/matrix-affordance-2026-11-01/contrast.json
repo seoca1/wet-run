@@ -1,0 +1,114 @@
+[
+  {
+    "mode": "none",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "YELLOW_AMBER": 10.63,
+      "GREEN_NEON": 15.38,
+      "CYAN_LIGHT": 16.75,
+      "GRAY_LIGHT": 11.54,
+      "MAGENTA_LIGHT": 9.78,
+      "GRAY_MID": 6.58
+    },
+    "minimum": 6.58
+  },
+  {
+    "mode": "none",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "YELLOW_AMBER": 19.56,
+      "GREEN_NEON": 15.3,
+      "CYAN_LIGHT": 16.75,
+      "GRAY_LIGHT": 15.91,
+      "MAGENTA_LIGHT": 9.78,
+      "GRAY_MID": 13.62
+    },
+    "minimum": 9.78
+  },
+  {
+    "mode": "deuteranopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "YELLOW_AMBER": 10.63,
+      "GREEN_NEON": 13.96,
+      "CYAN_LIGHT": 16.75,
+      "GRAY_LIGHT": 11.54,
+      "MAGENTA_LIGHT": 9.78,
+      "GRAY_MID": 6.58
+    },
+    "minimum": 6.58
+  },
+  {
+    "mode": "deuteranopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "YELLOW_AMBER": 19.56,
+      "GREEN_NEON": 15.3,
+      "CYAN_LIGHT": 16.75,
+      "GRAY_LIGHT": 15.91,
+      "MAGENTA_LIGHT": 9.78,
+      "GRAY_MID": 13.62
+    },
+    "minimum": 9.78
+  },
+  {
+    "mode": "protanopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "YELLOW_AMBER": 10.63,
+      "GREEN_NEON": 15.38,
+      "CYAN_LIGHT": 16.75,
+      "GRAY_LIGHT": 11.54,
+      "MAGENTA_LIGHT": 9.78,
+      "GRAY_MID": 6.58
+    },
+    "minimum": 6.58
+  },
+  {
+    "mode": "protanopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "YELLOW_AMBER": 19.56,
+      "GREEN_NEON": 15.3,
+      "CYAN_LIGHT": 16.75,
+      "GRAY_LIGHT": 15.91,
+      "MAGENTA_LIGHT": 9.78,
+      "GRAY_MID": 13.62
+    },
+    "minimum": 9.78
+  },
+  {
+    "mode": "tritanopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "YELLOW_AMBER": 10.15,
+      "GREEN_NEON": 15.38,
+      "CYAN_LIGHT": 10.93,
+      "GRAY_LIGHT": 11.54,
+      "MAGENTA_LIGHT": 9.78,
+      "GRAY_MID": 6.58
+    },
+    "minimum": 6.58
+  },
+  {
+    "mode": "tritanopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "YELLOW_AMBER": 19.56,
+      "GREEN_NEON": 15.3,
+      "CYAN_LIGHT": 16.75,
+      "GRAY_LIGHT": 15.91,
+      "MAGENTA_LIGHT": 9.78,
+      "GRAY_MID": 13.62
+    },
+    "minimum": 9.78
+  }
+]

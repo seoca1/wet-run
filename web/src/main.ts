@@ -32,6 +32,7 @@ import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
   combatEntryHintFits,
   shouldAutoShowTutorial,
+  shouldShowMatrixEntryHint,
 } from "./core/state/onboarding";
 import {
   IDLE_PRESS_FEEDBACK,
@@ -302,6 +303,9 @@ class Game {
   /** P11 — the combat-entry hint is shown once per run, on the first combat
    * screen the player reaches. */
   private combatEntryHintShown = false;
+  /** The Matrix-entry hint, same once-per-session pattern: shown on the
+   * first board with a route, dismissed by the first input made there. */
+  private matrixEntryHintShown = false;
   /** P10 — effective reduced-motion state. True suppresses the P1 canvas
    * shake and the hit-stop hold. */
   private reducedMotion = false;
@@ -462,6 +466,8 @@ class Game {
         return r ?? action;
       })();
       const previous = this.state;
+      if (shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state))
+        this.matrixEntryHintShown = true;
       this.state = applyAction(this.state, resolved);
       void loadAudioSystem().then((audio) => {
         if (!audio) return;
@@ -1236,6 +1242,7 @@ class Game {
         this.state,
         this.layout.cols,
         this.layout.rows,
+        shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
       );
       if (view) this.renderer.render(view.grid, view.hud);
       return;

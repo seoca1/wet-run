@@ -1,0 +1,289 @@
+{
+  "captures": [
+    {
+      "stem": "first-80x50",
+      "maxWidth": 80,
+      "expectedColumns": 80,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (2): ↓1 N02  ↓2 N08",
+      "hintShown": true,
+      "pngSignatureOK": true,
+      "pngSize": [
+        800,
+        900
+      ],
+      "fresh": true,
+      "diffRatio": 0.012
+    },
+    {
+      "stem": "first-60x40",
+      "maxWidth": 60,
+      "expectedColumns": 60,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (2): ↓1 N02  ↓2 N08",
+      "hintShown": true,
+      "pngSignatureOK": true,
+      "pngSize": [
+        600,
+        720
+      ],
+      "fresh": true,
+      "diffRatio": 0.0201
+    },
+    {
+      "stem": "first-40x60",
+      "maxWidth": 40,
+      "expectedColumns": 40,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (2): ↓1 N02  ↓2 N08",
+      "hintShown": true,
+      "pngSignatureOK": true,
+      "pngSize": [
+        400,
+        1080
+      ],
+      "fresh": true,
+      "diffRatio": 0.0201
+    },
+    {
+      "stem": "start-80x50",
+      "maxWidth": 80,
+      "expectedColumns": 80,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (2): ↓1 N02  ↓2 N08",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        800,
+        900
+      ],
+      "fresh": true,
+      "diffRatio": 0.0071
+    },
+    {
+      "stem": "start-60x40",
+      "maxWidth": 60,
+      "expectedColumns": 60,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (2): ↓1 N02  ↓2 N08",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        600,
+        720
+      ],
+      "fresh": true,
+      "diffRatio": 0.0118
+    },
+    {
+      "stem": "start-40x60",
+      "maxWidth": 40,
+      "expectedColumns": 40,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (2): ↓1 N02  ↓2 N08",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        400,
+        1080
+      ],
+      "fresh": true,
+      "diffRatio": 0.0118
+    },
+    {
+      "stem": "rest-80x50",
+      "maxWidth": 80,
+      "expectedColumns": 80,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (4): ↓1 N01  ↓2 N07  ↓3 N09",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        800,
+        900
+      ],
+      "fresh": true,
+      "diffRatio": 0.0082
+    },
+    {
+      "stem": "rest-60x40",
+      "maxWidth": 60,
+      "expectedColumns": 60,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (4): ↓1 N01  ↓2 N07  ↓3 N09",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        600,
+        720
+      ],
+      "fresh": true,
+      "diffRatio": 0.0137
+    },
+    {
+      "stem": "rest-40x60",
+      "maxWidth": 40,
+      "expectedColumns": 40,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (4): ↓1 N01  ↓2 N07  ↓3 N09",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        400,
+        1080
+      ],
+      "fresh": true,
+      "diffRatio": 0.0137
+    },
+    {
+      "stem": "branch-80x50",
+      "maxWidth": 80,
+      "expectedColumns": 80,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (4): >N01  ↓1 N07  ↓2 N09",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        800,
+        900
+      ],
+      "fresh": true,
+      "diffRatio": 0.0083
+    },
+    {
+      "stem": "branch-60x40",
+      "maxWidth": 60,
+      "expectedColumns": 60,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (4): >N01  ↓1 N07  ↓2 N09",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        600,
+        720
+      ],
+      "fresh": true,
+      "diffRatio": 0.0138
+    },
+    {
+      "stem": "branch-40x60",
+      "maxWidth": 40,
+      "expectedColumns": 40,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (4): >N01  ↓1 N07  ↓2 N09",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        400,
+        1080
+      ],
+      "fresh": true,
+      "diffRatio": 0.0138
+    },
+    {
+      "stem": "boss-80x50",
+      "maxWidth": 80,
+      "expectedColumns": 80,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (3): ↓1 N05  ↓2 N12  ↓3 N02",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        800,
+        900
+      ],
+      "fresh": true,
+      "diffRatio": 0.0083
+    },
+    {
+      "stem": "boss-60x40",
+      "maxWidth": 60,
+      "expectedColumns": 60,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (3): ↓1 N05  ↓2 N12  ↓3 N02",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        600,
+        720
+      ],
+      "fresh": true,
+      "diffRatio": 0.0139
+    },
+    {
+      "stem": "boss-40x60",
+      "maxWidth": 40,
+      "expectedColumns": 40,
+      "overflowLines": 0,
+      "borderMisaligned": false,
+      "hasAnsi": false,
+      "railsIntact": true,
+      "promptOrTargetFirst": true,
+      "routesLine": "ROUTES (3): ↓1 N05  ↓2 N12  ↓3 N02",
+      "hintShown": false,
+      "pngSignatureOK": true,
+      "pngSize": [
+        400,
+        1080
+      ],
+      "fresh": true,
+      "diffRatio": 0.0139
+    }
+  ]
+}

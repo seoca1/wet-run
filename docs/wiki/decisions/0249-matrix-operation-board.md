@@ -110,6 +110,11 @@
 - 검증: 규칙 테스트 13개 HEAD에서 **13 failed → 13 passed**; `npm test` **167 files / 3754 passed**; typecheck 0; lint 0 errors(기존 keyboard.ts:14 warning 1); build 124 modules; 3132-case 스트레스(33 노드·이웃 5, 미배선 0); 양 덱 balance stdout byte-identical (ADR-0239 기준선); E2E **82 passed / 4 skipped / 0 failed**.
 - 검증 수치·전후 캡처·시각 QA는 [증거 README](../../design/matrix-operation-board-2026-11-01/README.md)에 기록.
 
+**Follow-up — 행동 가독성 (2026-11-01, 같은 날 오너 플레이 피드백)**: 보드는 목록보다 낫다고 확인됐으나 "어떻게 해야 하는지 알아보지 못하겠다". 규칙 8개 내에서 렌더러·온보딩 힌트만 변경:
+- `matrix_nodes.ts` — `ROUTES (n): ↓1 N01  ↓2 N08 …`: 각 입력을 목적지로 명시(↓k = ArrowDown k회, 타깃이 있으면 타깃 기준 `>N01  ↓1 …`; 리듀서 순환과 동일). 40열에서는 둘째 줄로 감싼다(잘리지 않음). 정지 상태 카드 첫 줄 = `▸ PRESS ↓ OR ↑ TO PICK A ROUTE`(방 이름 없음 → 선택 아님), 타깃이 있으면 첫 줄 = 타깃, 그 아래 상세, 그다음 `@`. 카드 높이 8행 유지.
+- `core/state/onboarding.ts` + `matrix.ts` + `run_screen.ts` + `main.ts` — ADR-0235 combat-entry 힌트와 같은 모듈·패턴의 1회 Matrix 진입 힌트(`shouldShowMatrixEntryHint`, 컨트롤러 플래그 `matrixEntryHintShown`). 경로가 있는 첫 보드에서 카드 아래 표시, 그 화면에서의 첫 입력으로 사라지고 다시 나오지 않는다.
+- 리듀서·선택 의미·화살표 순서·동사·가격·튜닝·RNG 무변경; 기본 타깃 없음 규칙 테스트로 재확인. 신규 `web/tests/matrix_affordance.test.ts` **20 failed → 20 passed**; `npm test` **168 files / 3774 passed**; typecheck 0; lint 0 errors(기존 warning 1); build PASS; 양 덱 balance byte-identical(ADR-0239 기준선); E2E **82 passed / 4 skipped / 0 failed**. 증거: [matrix-affordance README](../../design/matrix-affordance-2026-11-01/README.md).
+
 **Notes**: LSP는 TypeScript 서버 미설치로 실행하지 않았다(CLI `tsc --noEmit`이 타입 게이트). 캔버스 화면이라 행별 포커스 링·의미론적 접근성 트리는 여전히 없다(상속된 결함, 이번에 해결하지 않음).
 
 ## 영향 받는 항목

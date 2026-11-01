@@ -1,0 +1,22 @@
+ × tests/matrix_affordance.test.ts > Matrix affordance — the routes line maps each key press to a destination > at rest, ↓k names exactly the room k ArrowDowns target (80x50)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the routes line maps each key press to a destination > at rest, ↓k names exactly the room k ArrowDowns target (60x40)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the routes line maps each key press to a destination > at rest, ↓k names exactly the room k ArrowDowns target (40x60)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the routes line maps each key press to a destination > with a target, ↓k counts presses from the target and the target reads >Nxx (80x50)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the routes line maps each key press to a destination > with a target, ↓k counts presses from the target and the target reads >Nxx (60x40)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the routes line maps each key press to a destination > with a target, ↓k counts presses from the target and the target reads >Nxx (40x60)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the routes line maps each key press to a destination > states the mapping for every node of every generated matrix at every layout, unclipped
+ × tests/matrix_affordance.test.ts > Matrix affordance — the prompt is primary and is never a selection > at rest the prompt is the card's first line, above @, with no target anywhere (80x50)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the prompt is primary and is never a selection > at rest the prompt is the card's first line, above @, with no target anywhere (60x40)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the prompt is primary and is never a selection > at rest the prompt is the card's first line, above @, with no target anywhere (40x60)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the prompt is primary and is never a selection > once a target exists the prompt is gone and the footer says travel (80x50)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the prompt is primary and is never a selection > once a target exists the prompt is gone and the footer says travel (60x40)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the prompt is primary and is never a selection > once a target exists the prompt is gone and the footer says travel (40x60)
+ × tests/matrix_affordance.test.ts > Matrix affordance — the prompt is primary and is never a selection > keeps the no-default-target rule: arrival, prompt and hint never select
+ × tests/matrix_affordance.test.ts > Matrix affordance — one-time entry hint (reuses the ADR-0235 onboarding pattern) > shows only on the matrix board with a route, before it has been shown
+ × tests/matrix_affordance.test.ts > Matrix affordance — one-time entry hint (reuses the ADR-0235 onboarding pattern) > draws the hint in full below the card without covering it, rails intact (80x50)
+ × tests/matrix_affordance.test.ts > Matrix affordance — one-time entry hint (reuses the ADR-0235 onboarding pattern) > draws the hint in full below the card without covering it, rails intact (60x40)
+ × tests/matrix_affordance.test.ts > Matrix affordance — one-time entry hint (reuses the ADR-0235 onboarding pattern) > draws the hint in full below the card without covering it, rails intact (40x60)
+ × tests/matrix_affordance.test.ts > Matrix affordance — one-time entry hint (reuses the ADR-0235 onboarding pattern) > is absent unless asked for
+ × tests/matrix_affordance.test.ts > Matrix affordance — one-time entry hint (reuses the ADR-0235 onboarding pattern) > main.ts shows it once: gated by its flag, dismissed by the first input on the bo
+⎯⎯⎯⎯⎯⎯ Failed Tests 20 ⎯⎯⎯⎯⎯⎯⎯
+      Tests  20 failed (20)

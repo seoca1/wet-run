@@ -38,10 +38,16 @@ describe("Matrix legibility", () => {
       ),
     );
     // Then — ADR-0249: offers are the rooms joined to @ by route corridors,
-    // named in arrow order in the card; context rooms only by link corridors.
-    const routes = text.find((line) => line.includes("ROUTES ("));
-    expect(routes).toContain(
-      `ROUTES (${adjacent.length}): ${adjacent.map((i, k) => `${k === 0 ? ">" : ""}${matrixNodeId(i)}`).join(" ")}`,
+    // named in arrow order in the card (each with the ArrowDown presses from
+    // the target, wrapped onto a second row when narrow); context rooms only
+    // by link corridors.
+    const at = text.findIndex((line) => line.includes("ROUTES ("));
+    const routes = [text[at], text[at + 1]]
+      .map((line) => (line ?? "").slice(2, -2).trim())
+      .filter(Boolean)
+      .join("  ");
+    expect(routes).toBe(
+      `ROUTES (${adjacent.length}): ${adjacent.map((i, k) => (k === 0 ? `>${matrixNodeId(i)}` : `↓${k} ${matrixNodeId(i)}`)).join("  ")}`,
     );
     const offered = layout.corridors.corridors.filter(
       (c) => c.a === current || c.b === current,
@@ -121,7 +127,7 @@ describe("Matrix legibility", () => {
     ).join("\n");
     // Then
     expect(text).toContain("ROUTES (0): none");
-    expect(text).toContain("> no routes — ENTER: ICE");
+    expect(text).toContain("▸ NO ROUTES — ENTER: ICE");
     expect(text).toContain(`${matrixNodeId(matrix.bossNode)} CORE-DEEP · HERE`);
     expect(text).toContain("◆@◆");
   });

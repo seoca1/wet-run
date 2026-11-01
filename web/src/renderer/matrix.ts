@@ -24,6 +24,7 @@ import { EVENT_LABELS, type MatrixEventKind } from "../core/event_matrix";
 import { planBoard, type BoardPlan } from "./matrix_board_layout";
 import { routeCorridors, type CorridorSet } from "./matrix_board_routes";
 import { BOARD_LEGEND, drawBoard, putInside } from "./matrix_board";
+import { MATRIX_ENTRY_HINT_LINES } from "../core/state/onboarding";
 
 /** Width reserved for the right-hand CURRENT NODE column (ICE name cap). */
 const PREVIEW_WIDTH = 22;
@@ -100,6 +101,7 @@ export function renderMatrix(
   icePreview: Ice | null = null,
   selectedNodeIndex: number | null = null,
   cleared: readonly number[] = [],
+  entryHint = false,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const layout = matrixLayout(grid, matrix);
@@ -145,6 +147,19 @@ export function renderMatrix(
   matrixCardLines(position, layout.cardWidth).forEach((line, k) =>
     put(layout.cardX, layout.cardY + k, line.text, line.fg),
   );
+
+  // One-time entry hint: one blank row under the card when there is room,
+  // else flush above the footer; never over the card.
+  if (entryHint) {
+    const first = Math.min(
+      layout.cardY + CARD_ROWS + 1,
+      footerY - MATRIX_ENTRY_HINT_LINES.length,
+    );
+    MATRIX_ENTRY_HINT_LINES.forEach((line, k) => {
+      if (first + k >= layout.cardY + CARD_ROWS)
+        put(layout.cardX, first + k, line, PALETTE.YELLOW_AMBER);
+    });
+  }
 
   // Optional ICE preview for a cleared current node (run_screen decides).
   if (icePreview && layout.previewX !== null) {

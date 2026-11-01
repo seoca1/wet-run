@@ -1,0 +1,245 @@
+{
+  "renderer": "Actual AsciiRenderer (web/src/renderer/canvas.ts) bundled with esbuild, 10x18 cells, DPR 1, system monospace fallback, raw renderMatrix grids, no HUD",
+  "captures": [
+    {
+      "file": "first-80x50-before.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:09:07.619Z"
+    },
+    {
+      "file": "first-60x40-before.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:09:07.670Z"
+    },
+    {
+      "file": "first-40x60-before.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:09:07.734Z"
+    },
+    {
+      "file": "start-80x50-before.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:09:07.804Z"
+    },
+    {
+      "file": "start-60x40-before.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:09:07.850Z"
+    },
+    {
+      "file": "start-40x60-before.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:09:07.898Z"
+    },
+    {
+      "file": "rest-80x50-before.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:09:07.963Z"
+    },
+    {
+      "file": "rest-60x40-before.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:09:08.015Z"
+    },
+    {
+      "file": "rest-40x60-before.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:09:08.065Z"
+    },
+    {
+      "file": "branch-80x50-before.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:09:08.167Z"
+    },
+    {
+      "file": "branch-60x40-before.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:09:08.214Z"
+    },
+    {
+      "file": "branch-40x60-before.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:09:08.286Z"
+    },
+    {
+      "file": "boss-80x50-before.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:09:08.350Z"
+    },
+    {
+      "file": "boss-60x40-before.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:09:08.400Z"
+    },
+    {
+      "file": "boss-40x60-before.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:09:08.442Z"
+    },
+    {
+      "file": "first-80x50-after.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:13:14.843Z"
+    },
+    {
+      "file": "first-60x40-after.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:13:15.061Z"
+    },
+    {
+      "file": "first-40x60-after.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:13:15.218Z"
+    },
+    {
+      "file": "start-80x50-after.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:13:15.402Z"
+    },
+    {
+      "file": "start-60x40-after.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:13:15.577Z"
+    },
+    {
+      "file": "start-40x60-after.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:13:15.715Z"
+    },
+    {
+      "file": "rest-80x50-after.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:13:15.888Z"
+    },
+    {
+      "file": "rest-60x40-after.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:13:16.076Z"
+    },
+    {
+      "file": "rest-40x60-after.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:13:16.235Z"
+    },
+    {
+      "file": "branch-80x50-after.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:13:16.406Z"
+    },
+    {
+      "file": "branch-60x40-after.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:13:16.580Z"
+    },
+    {
+      "file": "branch-40x60-after.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:13:16.724Z"
+    },
+    {
+      "file": "boss-80x50-after.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "captured": "2026-11-01T14:13:16.874Z"
+    },
+    {
+      "file": "boss-60x40-after.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "captured": "2026-11-01T14:13:17.048Z"
+    },
+    {
+      "file": "boss-40x60-after.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "captured": "2026-11-01T14:13:17.184Z"
+    }
+  ]
+}

@@ -34,6 +34,46 @@ export function matrixNodeId(index: number): string {
   return `N${String(index + 1).padStart(2, "0")}`;
 }
 
+/** At-rest action line. Names no room, so it can never read as a target. */
+export const MATRIX_ROUTE_PROMPT = "▸ PRESS ↓ OR ↑ TO PICK A ROUTE";
+
+/** ArrowDown presses that target `node`, mirroring the reducer's cycle over
+ * `adjacent`: from rest the k-th neighbour takes k presses; with a target,
+ * presses count on from it. */
+function pressesTo(position: MatrixPosition, node: number): number {
+  const adjacent = position.matrix.nodes[position.current]?.adjacent ?? [];
+  const from =
+    position.selected === null ? -1 : adjacent.indexOf(position.selected);
+  const to = adjacent.indexOf(node);
+  return from < 0 ? to + 1 : (to - from + adjacent.length) % adjacent.length;
+}
+
+/** `ROUTES (n): ↓1 N01  ↓2 N08` in two rows; entries wrap under the first
+ * entry instead of clipping (the generator's frontier is at most 5). */
+function routeRows(
+  position: MatrixPosition,
+  frontier: readonly number[],
+  width: number,
+): readonly [string, string] {
+  const head = `ROUTES (${frontier.length}): `;
+  const entries = frontier.map((i) =>
+    i === position.selected
+      ? `>${matrixNodeId(i)}`
+      : `↓${pressesTo(position, i)} ${matrixNodeId(i)}`,
+  );
+  if (entries.length === 0) return [`${head}none`, ""];
+  const rows = [head];
+  for (const entry of entries) {
+    const last = rows.length - 1;
+    const row = rows[last] ?? "";
+    const fresh = row.trim().length === 0 || row === head;
+    if (fresh || row.length + 2 + entry.length <= width)
+      rows[last] = fresh ? row + entry : `${row}  ${entry}`;
+    else rows.push(" ".repeat(head.length) + entry);
+  }
+  return [rows[0] ?? head, rows.slice(1).join("  ")];
+}
+
 /** Card rows, each clipped to `width` columns. */
 export function matrixCardLines(
   position: MatrixPosition,
@@ -50,11 +90,12 @@ export function matrixCardLines(
     lines.push({ text: text.slice(0, Math.max(0, width)), fg });
   };
 
+  // First line = what to do next: the prompt at rest, the target once one is
+  // chosen. The node it details sits directly under it (ADR-0249 affordance).
   const here = matrix.nodes[current];
-  add(
-    here ? `@ ${name(here, current)}` : "@ No node here — ESC: back",
-    PALETTE.GREEN_NEON,
-  );
+  const atHere = here
+    ? `@ ${name(here, current)}`
+    : "@ No node here — ESC: back";
   const target =
     selected !== null && selected !== current
       ? matrix.nodes[selected]
@@ -64,18 +105,15 @@ export function matrixCardLines(
     add(`> ${name(target, selected)}`, PALETTE.GREEN_NEON);
   else
     add(
-      frontier.length > 0
-        ? "> no target — ↑↓ choose a route"
-        : "> no routes — ENTER: ICE",
-      PALETTE.CYAN_LIGHT,
+      frontier.length > 0 ? MATRIX_ROUTE_PROMPT : "▸ NO ROUTES — ENTER: ICE",
+      PALETTE.YELLOW_AMBER,
     );
+  if (!target) add(atHere, PALETTE.GREEN_NEON);
   add(shown ? detail(shown) : "");
   add(shown?.site?.label ? `  ${shown.site.label}` : "");
-  const ids = frontier
-    .map((i) => `${i === selected ? ">" : ""}${matrixNodeId(i)}`)
-    .join(" ");
-  add(`ROUTES (${frontier.length}): ${ids || "none"}`, PALETTE.CYAN_LIGHT);
-  add("");
+  if (target) add(atHere, PALETTE.GREEN_NEON);
+  for (const row of routeRows(position, frontier, width))
+    add(row, PALETTE.CYAN_LIGHT);
   const boss = matrix.nodes[matrix.bossNode];
   if (boss) {
     const where =

@@ -102,7 +102,12 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
         (layout.inner.width - ((layout.previewX ?? 0) + 22 - layout.cardX)) / 2,
       ),
     );
-    expect(text[layout.cardY]?.indexOf("@ ⚔ N01 SURFACE")).toBe(layout.cardX);
+    expect(text[layout.cardY]?.indexOf("▸ PRESS ↓ OR ↑ TO PICK A ROUTE")).toBe(
+      layout.cardX,
+    );
+    expect(text[layout.cardY + 1]?.indexOf("@ ⚔ N01 SURFACE")).toBe(
+      layout.cardX,
+    );
     expect(text[layout.cardY]?.indexOf("── CURRENT NODE ──")).toBe(
       layout.previewX,
     );

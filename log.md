@@ -2801,3 +2801,15 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **정직한 한계**: 하네스는 경로 경제를 보지 못하므로 이 값의 **균형은 검증되지 않았다**. 오너 결정 +
   Jev 방향 확인까지이며, 정확한 값은 플레이 패스(`ego-decision-recorder.mjs`) 또는 오너 판단으로 확정한다.
 - 세션 이연 항목은 워크스페이스 `NEXT_SESSION_TODO.md` 로 carry 했다. 코드 변경 없음.
+
+## [2026-11-01] fix(ui) | Matrix 구조 가독성 — 위치·도달 가능 경로·보스·깊이 구획
+
+- 오너의 실플레이 불만에 대응한 **renderer-only** 수정. 기존 relevance 재정렬 `[2] [1] [7] [9] [10] …`을 재현했다. 진단 중 두 가지는 정정: 기존 `(BOSS)` 접미사는 실제로 있었고, zone도 첫 라벨에 있었으나 계층/구획 부재 때문에 읽히지 않았다.
+- `▸ YOU ARE HERE` → 박스 `REACHABLE NOW (count)` → `◆ OBJECTIVE: BOSS` → `DEPTH / ZONES (not routes)` 순서. 메뉴식 ordinal 대신 **Nxx node ID**를 쓰며 `not travel order` 명시. 현재/선택/도달/SEEN/CLEAR/NEW는 색 외에 문자·라벨로 표현한다. 기존 ADR-0237 인셋 프레임 및 Gibson palette 값 유지, 스크롤 추가 없음.
+- 방문과 클리어는 다르므로 `run_screen.ts`가 기존 `clearedEncounterNodes`를 순수 renderer의 optional 마지막 인자로 전달한다. reducer·GameState·게임플레이·동사·BYPASS/PROBE 가격·RNG·status.ts·크롤러·VFX·raw·ADR 결정 본문은 무변경.
+- 모듈 분리: `matrix.ts` **315 → 228 total / 176 pure LOC**, 새 `matrix_nodes.ts` **146 total / 134 pure LOC**, `run_screen.ts` **129 total / 121 pure LOC**. 표시 row 구성과 프레임/ICE preview 조합 분리. 기존 단언은 새 labels/기하에 맞춰 의미를 보존했고 삭제/약화하지 않았다. 신규 회귀 9개: frontier 구획/전 offer, objective/depth, 방문≠clear, terminal frontier, 순수성.
+- **증거**: [Matrix before/after + QA](docs/design/matrix-legibility-2026-11-01/README.md). 편집 전 실제 `renderMatrix` text/cells 저장, 동일 fixture(start/branch/boss × 80×50·40×60·60×40)로 after 캡처. 실제 `AsciiRenderer`로 PNG 18개 및 branch 비교 3개 생성(10×18 cell, HUD 제외). raw text와 fixture/검증 receipt 보존. 3개 필수 grid width CLI: overflow 0 / borderMisaligned false. 60개 생성 그래프의 매 current node × 3 layout **3132 cases**, 최대 33 nodes / frontier 5에서도 frontier/objective/zone heading 및 rails 유지.
+- **검증**: pre-edit targeted 46 passed; 최종 `npm run typecheck` 0 errors, `npm run lint` 0 errors + 기존 keyboard.ts:14 warning 1, `npm test` **166 files / 3741 passed / 0 failed**, `npm run build` **120 modules** PASS. 편집 파일만 Prettier write/check, frontend draft guard clean. LSP는 서버 미설치·기존 설치 거절로 unavailable이며 CLI typecheck와 구분한다.
+- **밸런스**: opening **100.0 / 88.3 / 70.5 / 39.5 / 36.2 / 0.0**, PPL **100.0 / 79.1 / 98.9 / 83.0 / 44.4 / 24.7**. 양 덱 전체 stdout을 evidence에 보존, prior ADR-0239 baseline `option-e-{opening,ppl}-before.txt`와 Buffer byte equality **양쪽 true**(716 / 724 bytes), SHA-256 receipt 보존. combat harness 보존 증거이며 경로 경제 재평가 주장은 아님.
+- **E2E**: 요청 명령(`env -u CI`, base URL 5195, ignore snapshots, demo 제외) **82 passed / 4 skipped / 0 failed (4.6m)**. 첫 실행은 240s shell timeout(70 green)으로 중단, 600s 제한으로 완주. rebuild 후 요청된 strict preview 시작은 **Port 5195 is already in use**; 기존 preview kill 없이 유지했고 새 bundle로 E2E 통과. 사용자 play session 조작 없음.
+- **Visual QA**: 고정 dark ASCII에 맞춘 항목별 판정은 evidence README. 9개 after PNG + 3개 비교를 독립 A/B 리뷰, B는 구조/가독성 PASS. A의 큰 frontier/지속 width 증거 공백을 stress/CLI JSON으로 보완했고 **fresh A 재리뷰도 PASS**(2 rounds; 최초 병렬 35/39s, 최종 28s), 새 product defect 없음. Matrix 사용 토큰은 4 palette × 고대비 on/off에서 최소 **5.7497:1**, 색만으로 상태 전달 없음. 기존 canvas focus ring/접근성 트리(I1/I3 inherited FAIL)/선택 가능한 text와 물리 폰트·zoom 등은 이 범위에서 해결·완전 인증하지 않는다. 전체 WCAG AA 또는 Lighthouse 점수는 주장하지 않음. 스테이징·커밋 없음.

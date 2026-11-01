@@ -86,7 +86,7 @@ describe("explicit matrix routes (ADR-0246 first slice)", () => {
       .map((row) => row.map((cell) => cell.char).join(""))
       .join("\n");
     // Then
-    expect(text).toContain("> ⚔ [2] SURFACE");
+    expect(text).toContain("> ⚔ N02 SURFACE");
     expect(text).toContain("ENTER: travel");
     expect(selected.currentNodeIndex).toBe(0);
   });
@@ -235,9 +235,9 @@ describe("explicit matrix routes (ADR-0246 first slice)", () => {
         .map((row) => row.map((cell) => cell.char).join(""))
         .join("\n");
       // Then: both candidates, their zones, ICE presence/count, credits and events.
-      expect(text).toContain("[29] DEEP");
+      expect(text).toContain("N29 DEEP");
       expect(text).toContain("2 ICE · 321cr · TRAP");
-      expect(text).toContain("[30] MID");
+      expect(text).toContain("N30 MID");
       expect(text).toContain("0 ICE · 654cr · CACHE");
     },
   );

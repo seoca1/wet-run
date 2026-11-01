@@ -1,17 +1,17 @@
 /** Matrix node graph renderer (Tier 5.5+).
  *
  * Renders the run's matrix as a vertical ASCII layout:
- * - Current node and its frontier first, followed by the remaining node list
+ * - Current position, boxed frontier, objective and depth groups
  * - Highlight current node (▸ marker) + visited nodes (✓ marker)
- * - Zone color coding (surface=green, mid=yellow, deep=red, core=magenta, boss=purple)
+ * - Zone depth groups; states are labelled independently of palette mode
  * - Current node shows ICE preview (name + HP) in right HUD panel
  * - Layout adapts to grid dimensions (portrait 50×80, landscape 80×50)
  * - ADR-0237 §2: content composed inside an inset Green Grid frame (panel.ts)
  */
-import type { Grid, Matrix, ZoneDepth, Ice } from "../core/types";
+import type { Grid, Matrix, Ice } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { PALETTE } from "./palette";
-import { formatNavIndex } from "./nav_index";
+import { matrixNodeLines } from "./matrix_nodes";
 import {
   clipToInner,
   drawPanel,
@@ -19,36 +19,7 @@ import {
   screenFrameRect,
   type PanelRect,
 } from "./panel";
-import {
-  EVENT_GLYPHS,
-  EVENT_LABELS,
-  type MatrixEventKind,
-} from "../core/event_matrix";
-
-/** Zone-to-color mapping for visual differentiation.
- *
- * - surface (low danger): green (safe)
- * - mid (moderate): yellow (caution)
- * - deep (danger): red (warning)
- * - core (high danger): magenta (intense)
- * - core-deep (boss): boss-pulse color (high intensity)
- */
-function zoneColor(zone: ZoneDepth): string {
-  switch (zone) {
-    case "surface":
-      return PALETTE.GREEN_NEON;
-    case "mid":
-      return PALETTE.YELLOW_AMBER;
-    case "deep":
-      return PALETTE.RED_BRIGHT;
-    case "core":
-      return PALETTE.MAGENTA_NEON;
-    case "core-deep":
-      return PALETTE.MAGENTA_NEON;
-    default:
-      return PALETTE.GRAY_LIGHT;
-  }
-}
+import { EVENT_LABELS, type MatrixEventKind } from "../core/event_matrix";
 
 /** Width reserved for the right-hand CURRENT NODE column (ICE name cap). */
 const PREVIEW_WIDTH = 22;
@@ -63,9 +34,9 @@ export interface MatrixLayout {
   readonly inner: PanelRect;
   readonly titleY: number;
   readonly progressY: number;
-  /** Column of the node marker; node detail lines sit four columns right. */
+  /** Column of the position block and frontier's left rail. */
   readonly listX: number;
-  /** Row of the first node; each node takes two rows (label, detail). */
+  /** First row of the position / frontier / objective / depth stack. */
   readonly listY: number;
   /** CURRENT NODE column, or null on grids narrower than 50 columns. */
   readonly previewX: number | null;
@@ -75,29 +46,13 @@ export interface MatrixLayout {
   readonly footerY: number;
 }
 
-interface NodeRow {
-  readonly label: string;
-  readonly detail: string;
-}
-
-function nodeRows(matrix: Matrix): NodeRow[] {
-  return matrix.nodes.map((node, i) => {
-    const eventKind: MatrixEventKind = node.eventKind ?? "combat";
-    const glyph = EVENT_GLYPHS[eventKind];
-    const label = `${glyph} ${formatNavIndex(i)} ${node.zone.toUpperCase()}${node.isBoss ? " (BOSS)" : ""}`;
-    const eventLabel = ` · ${EVENT_LABELS[eventKind]}`;
-    const detail = `${node.iceIds.length} ICE · ${node.reward.credits}cr${eventLabel}`;
-    return { label, detail };
-  });
-}
-
 /** Compose the matrix screen inside an inset frame (ADR-0237 §2).
  *
  * The frame leaves a one-cell gutter to the canvas edge. The node list and
  * the CURRENT NODE column are centred together horizontally; the column is
- * reserved on every grid of 50+ columns so the list does not shift between
- * nodes with and without ICE. The title-to-last-node block is centred
- * vertically above the footer, which sits on the last inner row.
+ * reserved whenever both columns fit so the list does not shift between
+ * nodes with and without ICE. Compact grids give the stack priority over
+ * whitespace; the controls footer stays on the last inner row.
  */
 export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
   const frame = screenFrameRect(grid);
@@ -105,11 +60,7 @@ export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
   const innerRight = inner.x + inner.width;
   const footerY = inner.y + inner.height - 1;
 
-  const listWidth = nodeRows(matrix).reduce(
-    (widest, row) =>
-      Math.max(widest, row.label.length + 2, row.detail.length + 4),
-    0,
-  );
+  const listWidth = Math.max(2, Math.min(36, inner.width - 2));
   const hasPreview =
     grid.width >= 50 &&
     inner.width >= listWidth + PREVIEW_GAP + PREVIEW_WIDTH + 2;
@@ -130,7 +81,7 @@ export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
     previewX !== null ? previewX + PREVIEW_WIDTH : listX + listWidth,
   );
 
-  const blockRows = HEADER_ROWS + matrix.nodes.length * 2;
+  const blockRows = HEADER_ROWS + Math.min(32, 12 + matrix.nodes.length * 2);
   const available = footerY - 1 - inner.y;
   const titleY = inner.y + Math.max(1, Math.floor((available - blockRows) / 2));
   return {
@@ -146,7 +97,7 @@ export function matrixLayout(grid: Grid, matrix: Matrix): MatrixLayout {
   };
 }
 
-/** Render the matrix navigation screen with zone color coding + ICE preview.
+/** Render the matrix navigation screen with labelled route groups + ICE preview.
  *
  * Content is placed by `matrixLayout` and the frame is drawn last, so an
  * overlong label is clipped by a rail instead of erasing it.
@@ -159,6 +110,7 @@ export function renderMatrix(
   rows: number,
   icePreview: Ice | null = null,
   selectedNodeIndex: number | null = null,
+  cleared: readonly number[] = [],
 ): Grid {
   let grid = makeGrid(cols, rows);
   const layout = matrixLayout(grid, matrix);
@@ -186,59 +138,20 @@ export function renderMatrix(
     PALETTE.GRAY_LIGHT,
   );
 
-  // Node list (2 rows per node), kept one blank row clear of the footer
-  const labels = nodeRows(matrix);
-  const adjacent = matrix.nodes[currentNodeIndex]?.adjacent ?? [];
-  const order = [
-    currentNodeIndex,
-    ...adjacent,
-    ...matrix.nodes
-      .map((_, i) => i)
-      .filter((i) => i !== currentNodeIndex && !adjacent.includes(i)),
-  ];
-  for (const [position, i] of order.entries()) {
-    const node = matrix.nodes[i];
-    const text = labels[i];
-    if (!node || !text) continue;
-    const row = listY + position * 2;
-    if (row + 1 >= footerY - 1) break;
-    const isCurrent = i === currentNodeIndex;
-    const isVisited = visited.includes(i);
-    // Adjacent = graph neighbours of the current node (the matrix is a
-    // graph, not a linear chain).
-    const isAdjacent =
-      !isCurrent &&
-      (matrix.nodes[currentNodeIndex]?.adjacent.includes(i) ?? false);
-    // Frontier markers take precedence over visited so retreat stays visible.
-    const isSelected = isAdjacent && i === selectedNodeIndex;
-    const marker = isCurrent
-      ? "▸"
-      : isSelected
-        ? ">"
-        : isAdjacent
-          ? "→"
-          : isVisited
-            ? "✓"
-            : " ";
-    // Color: current=highlighted, visited=faded, adjacent=zone (available), rest=zone faded
-    const baseColor = zoneColor(node.zone);
-    const fg =
-      isCurrent || isSelected
-        ? PALETTE.GREEN_NEON
-        : isAdjacent
-          ? baseColor
-          : isVisited
-            ? PALETTE.GRAY_MID
-            : PALETTE.GRAY_DARK;
-    grid = put(grid, inner, listX, row, `${marker} ${text.label}`, fg);
-    grid = put(
-      grid,
-      inner,
-      listX + 4,
-      row + 1,
-      text.detail,
-      isVisited && !isAdjacent ? PALETTE.GRAY_DARK : baseColor,
-    );
+  const lines = matrixNodeLines(
+    {
+      matrix,
+      current: currentNodeIndex,
+      visited,
+      cleared,
+      selected: selectedNodeIndex,
+    },
+    Math.max(2, Math.min(36, inner.width - 2)),
+    footerY - 1 - listY,
+  );
+  for (const [offset, line] of lines.entries()) {
+    if (listY + offset >= footerY - 1) break;
+    grid = put(grid, inner, listX, listY + offset, line.text, line.fg);
   }
 
   // ICE preview panel (right column, current node)

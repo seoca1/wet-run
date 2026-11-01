@@ -1,0 +1,35 @@
+{
+  "balances": [
+    {
+      "mode": "opening",
+      "baselinePath": "/Users/emilio/.openclaw/tmp/opencode/option-e-opening-before.txt",
+      "byteIdentical": true,
+      "bytes": 716,
+      "sha256": "2f9abda6d226be2f1123aa0cb34c343f60ecd72d6df13112f4c703b84ecf6afe"
+    },
+    {
+      "mode": "ppl",
+      "baselinePath": "/Users/emilio/.openclaw/tmp/opencode/option-e-ppl-before.txt",
+      "byteIdentical": true,
+      "bytes": 724,
+      "sha256": "2a188ba7c1302cc50479aca3badd97d5bf7e69c6d6cc12819f04452ddc0d3c92"
+    }
+  ],
+  "sizes": [
+    {
+      "file": "matrix.ts",
+      "totalLines": 228,
+      "pureLines": 176
+    },
+    {
+      "file": "matrix_nodes.ts",
+      "totalLines": 146,
+      "pureLines": 134
+    },
+    {
+      "file": "run_screen.ts",
+      "totalLines": 129,
+      "pureLines": 121
+    }
+  ]
+}

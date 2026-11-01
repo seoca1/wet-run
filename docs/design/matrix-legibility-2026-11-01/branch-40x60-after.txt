@@ -1,0 +1,60 @@
+                                        
+ ╔════════════════════════════════════╗ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║        MATRIX — CYBERSPACE         ║ 
+ ║                                    ║ 
+ ║                         2/15 nodes ║ 
+ ║                                    ║ 
+ ║ ▸ YOU ARE HERE                     ║ 
+ ║ ▸ ⚔ N02 SURFACE · SEEN             ║ 
+ ║   0 ICE · 75cr · COMBAT            ║ 
+ ║                                    ║ 
+ ║ ┌─ REACHABLE NOW (4) ────────────┐ ║ 
+ ║ │> ⚔ N01 SURFACE · CLEAR         │ ║ 
+ ║ │ 0 ICE · 50cr · COMBAT          │ ║ 
+ ║ │→ ⚔ N07 CORE-DEEP (BOSS) · NEW  │ ║ 
+ ║ │ 1 ICE · 200cr · COMBAT         │ ║ 
+ ║ │→ ⚔ N09 SURFACE · NEW           │ ║ 
+ ║ │ 0 ICE · 250cr · COMBAT         │ ║ 
+ ║ │→ ⚔ N10 SURFACE · NEW           │ ║ 
+ ║ │ 0 ICE · 275cr · COMBAT         │ ║ 
+ ║ └────────────────────────────────┘ ║ 
+ ║                                    ║ 
+ ║ ◆ OBJECTIVE: BOSS                  ║ 
+ ║ N07 CORE-DEEP · REACHABLE NOW      ║ 
+ ║   NEW                              ║ 
+ ║                                    ║ 
+ ║ DEPTH / ZONES (not routes)         ║ 
+ ║ Nxx = node ID, not travel order    ║ 
+ ║ ▸ here → route ✓ seen + clear · new║ 
+ ║ SURFACE (12)                       ║ 
+ ║   +N01 ▸N02 ·N03 ·N04 ·N05 ·N08    ║ 
+ ║   →N09 →N10 ·N11 ·N12 ·N13 ·N14    ║ 
+ ║   MID (2)                          ║ 
+ ║     ·N06 ·N15                      ║ 
+ ║     CORE-DEEP (1)                  ║ 
+ ║       →N07                         ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║ ↑↓ route | ENTER travel | ESC back ║ 
+ ╚════════════════════════════════════╝ 
+                                        

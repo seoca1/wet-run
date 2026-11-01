@@ -1,0 +1,277 @@
+{
+  "matrix": {
+    "nodes": [
+      {
+        "id": 0,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 50
+        },
+        "isBoss": false,
+        "adjacent": [
+          1,
+          7
+        ]
+      },
+      {
+        "id": 1,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 75
+        },
+        "isBoss": false,
+        "adjacent": [
+          0,
+          6,
+          8,
+          9
+        ]
+      },
+      {
+        "id": 2,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 100
+        },
+        "isBoss": false,
+        "adjacent": [
+          4,
+          5,
+          14
+        ]
+      },
+      {
+        "id": 3,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 125
+        },
+        "isBoss": false,
+        "adjacent": [
+          14
+        ]
+      },
+      {
+        "id": 4,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 150
+        },
+        "isBoss": false,
+        "adjacent": [
+          2,
+          6
+        ]
+      },
+      {
+        "id": 5,
+        "zone": "mid",
+        "iceIds": [
+          "ice_dixie_echo"
+        ],
+        "iceHp": [],
+        "reward": {
+          "credits": 175
+        },
+        "isBoss": false,
+        "adjacent": [
+          2,
+          13
+        ]
+      },
+      {
+        "id": 6,
+        "zone": "core-deep",
+        "iceIds": [
+          "wintermute"
+        ],
+        "iceHp": [],
+        "reward": {
+          "credits": 200
+        },
+        "isBoss": true,
+        "adjacent": [
+          4,
+          11,
+          1
+        ]
+      },
+      {
+        "id": 7,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 225
+        },
+        "isBoss": false,
+        "adjacent": [
+          0,
+          11
+        ]
+      },
+      {
+        "id": 8,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 250
+        },
+        "isBoss": false,
+        "adjacent": [
+          1,
+          9,
+          10,
+          12
+        ]
+      },
+      {
+        "id": 9,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 275
+        },
+        "isBoss": false,
+        "adjacent": [
+          1,
+          8
+        ]
+      },
+      {
+        "id": 10,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 300
+        },
+        "isBoss": false,
+        "adjacent": [
+          8
+        ]
+      },
+      {
+        "id": 11,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 325
+        },
+        "isBoss": false,
+        "adjacent": [
+          6,
+          7,
+          14
+        ]
+      },
+      {
+        "id": 12,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 350
+        },
+        "isBoss": false,
+        "adjacent": [
+          8,
+          13
+        ]
+      },
+      {
+        "id": 13,
+        "zone": "surface",
+        "iceIds": [],
+        "iceHp": [],
+        "reward": {
+          "credits": 375
+        },
+        "isBoss": false,
+        "adjacent": [
+          5,
+          12
+        ]
+      },
+      {
+        "id": 14,
+        "zone": "mid",
+        "iceIds": [
+          "ice_dixie_echo"
+        ],
+        "iceHp": [],
+        "reward": {
+          "credits": 400
+        },
+        "isBoss": false,
+        "adjacent": [
+          2,
+          3,
+          11
+        ]
+      }
+    ],
+    "startNode": 0,
+    "bossNode": 6,
+    "grade": 3
+  },
+  "states": [
+    {
+      "name": "branch",
+      "current": 1,
+      "visited": [
+        0,
+        1
+      ],
+      "cleared": [
+        0
+      ],
+      "selected": 0
+    },
+    {
+      "name": "start",
+      "current": 0,
+      "visited": [],
+      "cleared": [],
+      "selected": null
+    },
+    {
+      "name": "boss",
+      "current": 6,
+      "visited": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "cleared": [
+        0
+      ],
+      "selected": null
+    }
+  ]
+}

@@ -1,8 +1,7 @@
 /** Navigation numbering convention (UI triage U3).
  *
- * Main menu, mission select and matrix all label list entries with the same
- * 1-based `[N]` form produced by `formatNavIndex`. The matrix previously used
- * 0-based `[i]` and the mission select used `N.`.
+ * Menus use 1-based `[N]` ordinals. Matrix relevance groups instead use stable
+ * Nxx node IDs, explicitly distinguished from travel order.
  */
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
@@ -67,11 +66,13 @@ describe("unified numbering across screens", () => {
     expect(text).not.toContain("[0] ");
   });
 
-  it("matrix labels nodes 1-based (first node is [1], not [0])", () => {
+  it("matrix keeps 1-based node identities without implying ordinal list order", () => {
     const text = gridText(renderMatrix(MATRIX, 0, [], 80, 40), 80, 40);
-    expect(text).toContain("[1] SURFACE");
-    expect(text).toContain("[2] CORE");
-    expect(text).not.toContain("[0]");
+    expect(text).toContain("N01 SURFACE");
+    expect(text).toContain("N02 CORE");
+    expect(text).toContain("Nxx = node ID, not travel order");
+    expect(text).not.toMatch(/\[\d+\]/);
+    expect(text).not.toContain("N00");
   });
 
   it("mission select formats entries through formatNavIndex, not `N.`", () => {

@@ -26,8 +26,16 @@ describe("run screen composition", () => {
     const view = renderRunScreen(state, 80, 50);
     expect(runScreenLayout(80, 50)).toEqual({ cols: 80, rows: 50 });
     expect(view?.grid.cells).toEqual(
-      renderMatrix(state.matrix, 1, [0, 1], 80, 50, state.iceRoster[0] ?? null)
-        .cells,
+      renderMatrix(
+        state.matrix,
+        1,
+        [0, 1],
+        80,
+        50,
+        state.iceRoster[0] ?? null,
+        null,
+        [1],
+      ).cells,
     );
     expect(view?.hud).toEqual([
       "MATRIX",

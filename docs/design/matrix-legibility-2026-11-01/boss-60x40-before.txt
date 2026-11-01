@@ -1,0 +1,40 @@
+                                                            
+ ╔════════════════════════════════════════════════════════╗ 
+ ║                                                        ║ 
+ ║                  MATRIX — CYBERSPACE                   ║ 
+ ║                                                        ║ 
+ ║                                            15/15 nodes ║ 
+ ║                                                        ║ 
+ ║ ▸ ⚔ [7] CORE-DEEP (BOSS)                               ║ 
+ ║     1 ICE · 200cr · COMBAT                             ║ 
+ ║ → ⚔ [5] SURFACE                                        ║ 
+ ║     0 ICE · 150cr · COMBAT                             ║ 
+ ║ → ⚔ [12] SURFACE                                       ║ 
+ ║     0 ICE · 325cr · COMBAT                             ║ 
+ ║ → ⚔ [2] SURFACE                                        ║ 
+ ║     0 ICE · 75cr · COMBAT                              ║ 
+ ║ ✓ ⚔ [1] SURFACE                                        ║ 
+ ║     0 ICE · 50cr · COMBAT                              ║ 
+ ║ ✓ ⚔ [3] SURFACE                                        ║ 
+ ║     0 ICE · 100cr · COMBAT                             ║ 
+ ║ ✓ ⚔ [4] SURFACE                                        ║ 
+ ║     0 ICE · 125cr · COMBAT                             ║ 
+ ║ ✓ ⚔ [6] MID                                            ║ 
+ ║     1 ICE · 175cr · COMBAT                             ║ 
+ ║ ✓ ⚔ [8] SURFACE                                        ║ 
+ ║     0 ICE · 225cr · COMBAT                             ║ 
+ ║ ✓ ⚔ [9] SURFACE                                        ║ 
+ ║     0 ICE · 250cr · COMBAT                             ║ 
+ ║ ✓ ⚔ [10] SURFACE                                       ║ 
+ ║     0 ICE · 275cr · COMBAT                             ║ 
+ ║ ✓ ⚔ [11] SURFACE                                       ║ 
+ ║     0 ICE · 300cr · COMBAT                             ║ 
+ ║ ✓ ⚔ [13] SURFACE                                       ║ 
+ ║     0 ICE · 350cr · COMBAT                             ║ 
+ ║ ✓ ⚔ [14] SURFACE                                       ║ 
+ ║     0 ICE · 375cr · COMBAT                             ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║ ENTER: enter ICE | ↑↓: route | ESC: back               ║ 
+ ╚════════════════════════════════════════════════════════╝ 
+                                                            

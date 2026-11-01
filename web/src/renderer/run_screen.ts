@@ -39,6 +39,7 @@ export function renderRunScreen(
             ? (state.iceRoster[state.activeIceIndex] ?? null)
             : null,
           state.selectedMatrixNodeIndex ?? null,
+          state.clearedEncounterNodes ?? [],
         ),
         hud: [
           "MATRIX",

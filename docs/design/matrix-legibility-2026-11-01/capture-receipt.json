@@ -1,0 +1,132 @@
+{
+  "renderer": "Actual AsciiRenderer, 10x18 cells, raw renderMatrix grids; no HUD",
+  "captured": "2026-11-01T12:40:18.723Z",
+  "captures": [
+    {
+      "file": "branch-80x50-before.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80
+    },
+    {
+      "file": "branch-80x50-after.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80
+    },
+    {
+      "file": "branch-40x60-before.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40
+    },
+    {
+      "file": "branch-40x60-after.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40
+    },
+    {
+      "file": "branch-60x40-before.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60
+    },
+    {
+      "file": "branch-60x40-after.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60
+    },
+    {
+      "file": "start-80x50-before.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80
+    },
+    {
+      "file": "start-80x50-after.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80
+    },
+    {
+      "file": "start-40x60-before.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40
+    },
+    {
+      "file": "start-40x60-after.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40
+    },
+    {
+      "file": "start-60x40-before.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60
+    },
+    {
+      "file": "start-60x40-after.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60
+    },
+    {
+      "file": "boss-80x50-before.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80
+    },
+    {
+      "file": "boss-80x50-after.png",
+      "width": 800,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80
+    },
+    {
+      "file": "boss-40x60-before.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40
+    },
+    {
+      "file": "boss-40x60-after.png",
+      "width": 400,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40
+    },
+    {
+      "file": "boss-60x40-before.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60
+    },
+    {
+      "file": "boss-60x40-after.png",
+      "width": 600,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60
+    }
+  ]
+}

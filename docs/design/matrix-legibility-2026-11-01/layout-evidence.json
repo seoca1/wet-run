@@ -1,0 +1,237 @@
+{
+  "checked": 3132,
+  "grades": "1..6",
+  "seeds": "0..9",
+  "layouts": [
+    "80x50",
+    "60x40",
+    "40x60"
+  ],
+  "maxFrontier": 5,
+  "maxNodes": 33,
+  "captures": [
+    {
+      "file": "branch-80x50-after.txt",
+      "expectedColumns": 80,
+      "maxWidth": 80,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 800,
+      "pngHeight": 900,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "branch-60x40-after.txt",
+      "expectedColumns": 60,
+      "maxWidth": 60,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 600,
+      "pngHeight": 720,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "branch-40x60-after.txt",
+      "expectedColumns": 40,
+      "maxWidth": 40,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 400,
+      "pngHeight": 1080,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "start-80x50-after.txt",
+      "expectedColumns": 80,
+      "maxWidth": 80,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 800,
+      "pngHeight": 900,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "start-60x40-after.txt",
+      "expectedColumns": 60,
+      "maxWidth": 60,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 600,
+      "pngHeight": 720,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "start-40x60-after.txt",
+      "expectedColumns": 40,
+      "maxWidth": 40,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 400,
+      "pngHeight": 1080,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "boss-80x50-after.txt",
+      "expectedColumns": 80,
+      "maxWidth": 80,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 800,
+      "pngHeight": 900,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "boss-60x40-after.txt",
+      "expectedColumns": 60,
+      "maxWidth": 60,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 600,
+      "pngHeight": 720,
+      "freshAgainstChangedSource": true
+    },
+    {
+      "file": "boss-40x60-after.txt",
+      "expectedColumns": 40,
+      "maxWidth": 40,
+      "overflowLines": [],
+      "borderMisaligned": false,
+      "wideCharColumns": [],
+      "hasAnsi": false,
+      "pngSignatureOK": true,
+      "pngWidth": 400,
+      "pngHeight": 1080,
+      "freshAgainstChangedSource": true
+    }
+  ],
+  "contrast": [
+    {
+      "mode": "none",
+      "highContrast": false,
+      "ratios": {
+        "GRAY_LIGHT": 11.542302514116262,
+        "CYAN_LIGHT": 16.748,
+        "GREEN_NEON": 15.380330774301472,
+        "MAGENTA_LIGHT": 9.783668593629214,
+        "YELLOW_AMBER": 10.634053407261927,
+        "ICE_BLUE": 5.749666330635646
+      },
+      "minimum": 5.749666330635646
+    },
+    {
+      "mode": "none",
+      "highContrast": true,
+      "ratios": {
+        "GRAY_LIGHT": 15.908084190807749,
+        "CYAN_LIGHT": 16.748,
+        "GREEN_NEON": 15.303999999999998,
+        "MAGENTA_LIGHT": 9.783668593629214,
+        "YELLOW_AMBER": 19.555999999999997,
+        "ICE_BLUE": 5.749666330635646
+      },
+      "minimum": 5.749666330635646
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": false,
+      "ratios": {
+        "GRAY_LIGHT": 11.542302514116262,
+        "CYAN_LIGHT": 16.748,
+        "GREEN_NEON": 13.955718778715825,
+        "MAGENTA_LIGHT": 9.783668593629214,
+        "YELLOW_AMBER": 10.634053407261927,
+        "ICE_BLUE": 5.749666330635646
+      },
+      "minimum": 5.749666330635646
+    },
+    {
+      "mode": "deuteranopia",
+      "highContrast": true,
+      "ratios": {
+        "GRAY_LIGHT": 15.908084190807749,
+        "CYAN_LIGHT": 16.748,
+        "GREEN_NEON": 15.303999999999998,
+        "MAGENTA_LIGHT": 9.783668593629214,
+        "YELLOW_AMBER": 19.555999999999997,
+        "ICE_BLUE": 5.749666330635646
+      },
+      "minimum": 5.749666330635646
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": false,
+      "ratios": {
+        "GRAY_LIGHT": 11.542302514116262,
+        "CYAN_LIGHT": 16.748,
+        "GREEN_NEON": 15.380330774301472,
+        "MAGENTA_LIGHT": 9.783668593629214,
+        "YELLOW_AMBER": 10.634053407261927,
+        "ICE_BLUE": 5.749666330635646
+      },
+      "minimum": 5.749666330635646
+    },
+    {
+      "mode": "protanopia",
+      "highContrast": true,
+      "ratios": {
+        "GRAY_LIGHT": 15.908084190807749,
+        "CYAN_LIGHT": 16.748,
+        "GREEN_NEON": 15.303999999999998,
+        "MAGENTA_LIGHT": 9.783668593629214,
+        "YELLOW_AMBER": 19.555999999999997,
+        "ICE_BLUE": 5.749666330635646
+      },
+      "minimum": 5.749666330635646
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": false,
+      "ratios": {
+        "GRAY_LIGHT": 11.542302514116262,
+        "CYAN_LIGHT": 10.93316338317912,
+        "GREEN_NEON": 15.380330774301472,
+        "MAGENTA_LIGHT": 9.783668593629214,
+        "YELLOW_AMBER": 10.152116849656132,
+        "ICE_BLUE": 6.535935376932918
+      },
+      "minimum": 6.535935376932918
+    },
+    {
+      "mode": "tritanopia",
+      "highContrast": true,
+      "ratios": {
+        "GRAY_LIGHT": 15.908084190807749,
+        "CYAN_LIGHT": 16.748,
+        "GREEN_NEON": 15.303999999999998,
+        "MAGENTA_LIGHT": 9.783668593629214,
+        "YELLOW_AMBER": 19.555999999999997,
+        "ICE_BLUE": 6.535935376932918
+      },
+      "minimum": 6.535935376932918
+    }
+  ]
+}

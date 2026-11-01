@@ -89,15 +89,21 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
     const text = lines(renderMatrix(MATRIX, 0, [], 80, 50, ICE));
     // Then — the list is centred with the CURRENT NODE column, and the block
     // is centred vertically, so neither hugs the frame's top-left corner.
-    expect(layout.listX).toBeGreaterThan(10);
+    expect(layout.listX).toBeGreaterThan(layout.inner.x);
+    expect(layout.listX - layout.inner.x).toBe(
+      Math.floor((layout.inner.width - (layout.blockRight - layout.listX)) / 2),
+    );
     expect(layout.titleY).toBeGreaterThan(10);
     expect(layout.previewX).not.toBeNull();
-    expect(text[layout.listY]?.indexOf("▸ ⚔ [1] SURFACE")).toBe(layout.listX);
+    expect(text[layout.listY]?.indexOf("▸ YOU ARE HERE")).toBe(layout.listX);
+    expect(text[layout.listY + 1]?.indexOf("▸ ⚔ N01 SURFACE")).toBe(
+      layout.listX,
+    );
     expect(text[layout.listY]?.indexOf("── CURRENT NODE ──")).toBe(
       layout.previewX,
     );
-    expect(text[layout.listY + 1]?.indexOf("1 ICE · 50cr")).toBe(
-      layout.listX + 4,
+    expect(text[layout.listY + 2]?.indexOf("1 ICE · 50cr")).toBe(
+      layout.listX + 2,
     );
     expect(text[layout.titleY]).toContain("MATRIX — CYBERSPACE");
     expect(
@@ -109,7 +115,9 @@ describe("matrix screen frame (ADR-0237 §2)", () => {
     // Given / When
     const text = lines(renderMatrix(MATRIX, 0, [], 80, 50));
     // Then
-    expect(text[47]?.slice(2)).toMatch(/^ ENTER: enter ICE \| ↑↓: route \| ESC: back/);
+    expect(text[47]?.slice(2)).toMatch(
+      /^ ENTER: enter ICE \| ↑↓: route \| ESC: back/,
+    );
   });
 
   it("does not let a long node list or long event label reach a rail", () => {

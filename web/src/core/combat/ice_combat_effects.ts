@@ -190,12 +190,21 @@ export function absorbIceDamage(
  */
 export function tickIceEffects(state: GameState): GameState {
   let next = state;
-  for (let i = 0; i < state.statusEffects.length; i++) {
-    const effect = state.statusEffects[i];
+  // Walk a snapshot, not the live array. removeEffect splices
+  // next.statusEffects, so once an earlier effect expires the original index
+  // no longer points at the same effect — the tick then decremented (or
+  // duplicated) a later effect against the wrong row. `removed` converts a
+  // snapshot index into the live index.
+  const snapshot = [...state.statusEffects];
+  let removed = 0;
+  for (let j = 0; j < snapshot.length; j++) {
+    const effect = snapshot[j];
+    const index = j - removed;
     if (!effect || effect.tickSource !== "enemy") continue;
     const remaining = effect.remaining - 1;
     if (remaining <= 0) {
-      next = removeEffect(next, i);
+      next = removeEffect(next, index);
+      removed += 1;
       continue;
     }
     let updated: StatusEffectInstance = { ...effect, remaining };
@@ -213,7 +222,7 @@ export function tickIceEffects(state: GameState): GameState {
         };
       }
     }
-    next = replaceEffect(next, i, updated);
+    next = replaceEffect(next, index, updated);
   }
   return next;
 }

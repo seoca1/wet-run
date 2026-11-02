@@ -130,10 +130,14 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
       const state = makeCombatState({ iceRoster: [ice] });
 
       const shielded = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
-      expect(shielded.state.statusEffects.filter((e) => e.kind === "shield")).toHaveLength(1);
+      expect(
+        shielded.state.statusEffects.filter((e) => e.kind === "shield"),
+      ).toHaveLength(1);
 
       const absorbed = absorbIceDamage(shielded.state, 0, 20);
-      expect(absorbed.state.statusEffects.filter((e) => e.kind === "shield")).toHaveLength(0);
+      expect(
+        absorbed.state.statusEffects.filter((e) => e.kind === "shield"),
+      ).toHaveLength(0);
     });
 
     it("expires when its duration runs out", () => {
@@ -141,13 +145,17 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
       const state = makeCombatState({ iceRoster: [ice] });
 
       const shielded = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
-      expect(shielded.state.statusEffects.filter((e) => e.kind === "shield")).toHaveLength(1);
+      expect(
+        shielded.state.statusEffects.filter((e) => e.kind === "shield"),
+      ).toHaveLength(1);
 
       let ticked = shielded.state;
       for (let i = 0; i < ICE_SHIELD_DURATION_TICKS; i++) {
         ticked = tickIceEffects(ticked);
       }
-      expect(ticked.statusEffects.filter((e) => e.kind === "shield")).toHaveLength(0);
+      expect(
+        ticked.statusEffects.filter((e) => e.kind === "shield"),
+      ).toHaveLength(0);
     });
 
     it("stacks the pool but refreshes the duration instead of adding to it", () => {
@@ -159,7 +167,9 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
       const second = applyIceNonDamageEffect(ticked, 0, ice, ice.skills![0]!);
 
       expect(iceShieldPool(second.state, 0)).toBe(40);
-      const shield = second.state.statusEffects.find((e) => e.kind === "shield");
+      const shield = second.state.statusEffects.find(
+        (e) => e.kind === "shield",
+      );
       expect(shield?.remaining).toBe(ICE_SHIELD_DURATION_TICKS);
     });
 
@@ -192,7 +202,10 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
         ],
       });
 
-      const result = applyAction(state, { type: "use_program", programId: "p1" });
+      const result = applyAction(state, {
+        type: "use_program",
+        programId: "p1",
+      });
       // The program is tier 1 → 5 damage, fully absorbed by the 20 pt pool:
       // the ICE's HP is untouched and the pool is down by exactly 5.
       expect(result.iceRoster[0]?.hp).toBe(100);
@@ -225,7 +238,10 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
         ],
       });
 
-      const result = applyAction(state, { type: "use_program", programId: "p1" });
+      const result = applyAction(state, {
+        type: "use_program",
+        programId: "p1",
+      });
       // 5 damage, 3 absorbed by the pool, 2 reaches HP.
       expect(result.iceRoster[0]?.hp).toBe(98);
       expect(iceShieldPool(result, 0)).toBe(0);
@@ -254,7 +270,10 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
       const ice = makeEffectIce("heal", 40, { hp: 30, maxHp: 50 });
       const state = makeCombatState({ iceRoster: [ice] });
 
-      const result = applyAction(state, { type: "use_program", programId: "p1" });
+      const result = applyAction(state, {
+        type: "use_program",
+        programId: "p1",
+      });
       // The heal fired (the ICE is above its starting HP) but never past 50.
       expect(result.iceRoster[0]?.hp).toBeGreaterThan(30);
       expect(result.iceRoster[0]?.hp).toBeLessThanOrEqual(50);
@@ -285,13 +304,17 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
       const state = makeCombatState({ iceRoster: [ice] });
 
       const started = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
-      expect(started.state.statusEffects.filter((e) => e.kind === "regen")).toHaveLength(1);
+      expect(
+        started.state.statusEffects.filter((e) => e.kind === "regen"),
+      ).toHaveLength(1);
 
       let ticked = started.state;
       for (let i = 0; i < ICE_REGEN_DURATION_TICKS; i++) {
         ticked = tickIceEffects(ticked);
       }
-      expect(ticked.statusEffects.filter((e) => e.kind === "regen")).toHaveLength(0);
+      expect(
+        ticked.statusEffects.filter((e) => e.kind === "regen"),
+      ).toHaveLength(0);
     });
   });
 
@@ -309,7 +332,9 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
       const state = makeCombatState({ iceRoster: [ice] });
 
       const buffed = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
-      expect(buffed.state.statusEffects.filter((e) => e.kind === "powered")).toHaveLength(1);
+      expect(
+        buffed.state.statusEffects.filter((e) => e.kind === "powered"),
+      ).toHaveLength(1);
 
       let ticked = buffed.state;
       for (let i = 0; i < ICE_BUFF_DURATION_TICKS; i++) {
@@ -348,8 +373,14 @@ describe("ICE non-damaging skill effects (ADR-0219 Option A)", () => {
       });
       const plainState = makeCombatState({ iceRoster: [ice] });
 
-      const buffed = applyAction(buffedState, { type: "use_program", programId: "p1" });
-      const plain = applyAction(plainState, { type: "use_program", programId: "p1" });
+      const buffed = applyAction(buffedState, {
+        type: "use_program",
+        programId: "p1",
+      });
+      const plain = applyAction(plainState, {
+        type: "use_program",
+        programId: "p1",
+      });
 
       const buffedDamage = 100 - buffed.player.hp;
       const plainDamage = 100 - plain.player.hp;
@@ -494,9 +525,9 @@ describe("ADR-0226 effects are HUD-visible (P6)", () => {
     const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
     const groups = groupStatusByTarget(outcome.state.statusEffects, 0);
 
-    expect(statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind)).toEqual([
-      "shield",
-    ]);
+    expect(
+      statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind),
+    ).toEqual(["shield"]);
     expect(statusGroupForTarget(groups, "player")).toBeUndefined();
   });
 
@@ -507,9 +538,9 @@ describe("ADR-0226 effects are HUD-visible (P6)", () => {
     const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
     const groups = groupStatusByTarget(outcome.state.statusEffects, 0);
 
-    expect(statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind)).toEqual([
-      "regen",
-    ]);
+    expect(
+      statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind),
+    ).toEqual(["regen"]);
   });
 
   it("the buff effect lands in the ICE's own target group", () => {
@@ -519,8 +550,100 @@ describe("ADR-0226 effects are HUD-visible (P6)", () => {
     const outcome = applyIceNonDamageEffect(state, 0, ice, ice.skills![0]!);
     const groups = groupStatusByTarget(outcome.state.statusEffects, 0);
 
-    expect(statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind)).toEqual([
+    expect(
+      statusGroupForTarget(groups, "ice", 0)?.entries.map((e) => e.kind),
+    ).toEqual(["powered"]);
+  });
+});
+
+/** ADR-0251 open question (b) — `tickIceEffects` index defect.
+ *
+ * The tick walked the ORIGINAL effect array by index while `removeEffect`
+ * spliced the array it was mutating. Once an earlier effect expired, the
+ * original index no longer pointed at the same effect, so a later effect was
+ * decremented (or duplicated) against the wrong row.
+ *
+ * Reproduced as shield(1) · powered(3) · regen(3): the shield expires on the
+ * first tick, and the powered/regen rows must each keep their own identity
+ * and their own remaining count.
+ */
+describe("tickIceEffects — expiring effect must not corrupt its neighbours", () => {
+  it("keeps each surviving effect's kind and remaining count when an earlier one expires", () => {
+    const state = makeCombatState({
+      statusEffects: [
+        {
+          kind: "shield",
+          remaining: 1,
+          magnitude: 20,
+          target: "ice",
+          iceIndex: 0,
+          tickSource: "enemy",
+        },
+        {
+          kind: "powered",
+          remaining: 3,
+          magnitude: 30,
+          target: "ice",
+          iceIndex: 0,
+          attackBonus: 30,
+          tickSource: "enemy",
+        },
+        {
+          kind: "regen",
+          remaining: 3,
+          magnitude: 5,
+          target: "ice",
+          iceIndex: 0,
+          healPerTick: 5,
+          tickSource: "enemy",
+        },
+      ],
+    });
+
+    const ticked = tickIceEffects(state);
+
+    expect(ticked.statusEffects.map((e) => e.kind)).toEqual([
+      "powered",
+      "regen",
+    ]);
+    expect(ticked.statusEffects.map((e) => e.remaining)).toEqual([2, 2]);
+    expect(
+      ticked.statusEffects.find((e) => e.kind === "powered")?.attackBonus,
+    ).toBe(30);
+    expect(
+      ticked.statusEffects.find((e) => e.kind === "regen")?.healPerTick,
+    ).toBe(5);
+  });
+
+  it("ticks every effect when nothing expires", () => {
+    const state = makeCombatState({
+      statusEffects: [
+        {
+          kind: "shield",
+          remaining: 5,
+          magnitude: 20,
+          target: "ice",
+          iceIndex: 0,
+          tickSource: "enemy",
+        },
+        {
+          kind: "powered",
+          remaining: 3,
+          magnitude: 30,
+          target: "ice",
+          iceIndex: 0,
+          attackBonus: 30,
+          tickSource: "enemy",
+        },
+      ],
+    });
+
+    const ticked = tickIceEffects(state);
+
+    expect(ticked.statusEffects.map((e) => e.kind)).toEqual([
+      "shield",
       "powered",
     ]);
+    expect(ticked.statusEffects.map((e) => e.remaining)).toEqual([4, 2]);
   });
 });

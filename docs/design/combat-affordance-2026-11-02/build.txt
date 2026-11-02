@@ -1,0 +1,2 @@
+dist/assets/index-B_nl8RTM.js                 111.29 kB │ gzip: 36.76 kB │ map: 542.84 kB
+✓ built in 592ms

@@ -1,0 +1,149 @@
+{
+  "mission": "aleph_fragment",
+  "ice": "standard",
+  "opening": [
+    "backdoor",
+    "barrier",
+    "boost",
+    "cloak",
+    "decoy"
+  ],
+  "aoeHand": [
+    "backdoor",
+    "barrier",
+    "sweep",
+    "kraken",
+    "decoy"
+  ],
+  "shots": {
+    "hand": {
+      "alarm": 38,
+      "mutators": [],
+      "deck": [
+        "backdoor:2",
+        "barrier:3",
+        "boost:2",
+        "cloak:2",
+        "decoy:2"
+      ],
+      "statusEffects": [],
+      "message": "Mission: Aleph Fragment",
+      "combatLog": [],
+      "vfx": []
+    },
+    "double-alarm": {
+      "alarm": 40,
+      "mutators": [
+        "double_alarm"
+      ],
+      "deck": [
+        "backdoor:2",
+        "barrier:3",
+        "boost:2",
+        "cloak:2",
+        "decoy:2"
+      ],
+      "statusEffects": [],
+      "message": "Mission: Aleph Fragment",
+      "combatLog": [],
+      "vfx": []
+    },
+    "aoe-blocked": {
+      "alarm": 97,
+      "mutators": [],
+      "deck": [
+        "backdoor:2",
+        "barrier:3",
+        "sweep:1",
+        "kraken:4",
+        "decoy:2"
+      ],
+      "statusEffects": [],
+      "message": "Mission: Aleph Fragment",
+      "combatLog": [],
+      "vfx": []
+    },
+    "status-apply": {
+      "alarm": 40,
+      "mutators": [],
+      "deck": [
+        "barrier:3",
+        "boost:2",
+        "cloak:2",
+        "decoy:2"
+      ],
+      "statusEffects": [
+        {
+          "kind": "burn",
+          "remaining": 1,
+          "magnitude": 3,
+          "target": "ice"
+        },
+        {
+          "kind": "slow",
+          "remaining": 1,
+          "magnitude": 30,
+          "target": "ice",
+          "slowPct": 30
+        }
+      ],
+      "message": ">>> Dixie attacks: 11 dmg",
+      "combatLog": [
+        ">>> Dixie attacks: 11 dmg",
+        ">>> ICE — Standard attacks: 5 dmg",
+        "Backdoor → 11 dmg (ICE HP: 151)"
+      ],
+      "vfx": [
+        "attack:Backdoor",
+        "ice_hit:11",
+        "dot:",
+        "critical_hit:",
+        "player_hit:"
+      ]
+    },
+    "status-expiry-start": {
+      "alarm": 38,
+      "mutators": [],
+      "deck": [
+        "backdoor:2",
+        "barrier:3",
+        "boost:2",
+        "cloak:2",
+        "decoy:2"
+      ],
+      "statusEffects": [
+        {
+          "kind": "burn",
+          "remaining": 1,
+          "magnitude": 3,
+          "target": "ice"
+        }
+      ],
+      "message": "Mission: Aleph Fragment",
+      "combatLog": [],
+      "vfx": []
+    },
+    "status-expiry": {
+      "alarm": 40,
+      "mutators": [],
+      "deck": [
+        "barrier:3",
+        "boost:2",
+        "cloak:2",
+        "decoy:2"
+      ],
+      "statusEffects": [],
+      "message": ">>> Dixie attacks: 11 dmg",
+      "combatLog": [
+        ">>> Dixie attacks: 11 dmg",
+        ">>> ICE — Standard attacks: 5 dmg",
+        "Backdoor → 9 dmg (ICE HP: 156)"
+      ],
+      "vfx": [
+        "attack:Backdoor",
+        "ice_hit:9",
+        "player_hit:"
+      ]
+    }
+  }
+}

@@ -254,3 +254,75 @@ export function rollStatusProc(
 ): boolean {
   return rng() < 0.2;
 }
+
+/** Identity of an effect for before/after comparison: who carries it and
+ * what it is (instances carry no id, and ticks rebuild them). */
+function statusKey(e: StatusEffectInstance): string {
+  return `${e.target}|${e.iceIndex ?? ""}|${e.kind}`;
+}
+
+/** Effects present in `before` that are gone from `after` (ADR-0251 slice B).
+ *
+ * Compares counts per (target, ICE, kind), so it reports exactly what a tick
+ * or a consumption removed without depending on how it removed it. Callers
+ * pass a pair between which effects are only removed or decremented, never
+ * added. Pure; no RNG.
+ */
+export function endedStatuses(
+  before: ReadonlyArray<StatusEffectInstance>,
+  after: ReadonlyArray<StatusEffectInstance>,
+): StatusEffectInstance[] {
+  const left = new Map<string, number>();
+  for (const e of after)
+    left.set(statusKey(e), (left.get(statusKey(e)) ?? 0) + 1);
+  const ended: StatusEffectInstance[] = [];
+  for (const e of before) {
+    const key = statusKey(e);
+    const n = left.get(key) ?? 0;
+    if (n > 0) left.set(key, n - 1);
+    else ended.push(e);
+  }
+  return ended;
+}
+
+/** Who carries an effect, in words: `YOU`, `ICE`, or `ICE2` when the roster
+ * has more than one ICE and the effect names its ICE. */
+function statusHolder(
+  effect: StatusEffectInstance,
+  rosterSize: number,
+): string {
+  if (effect.target === "player") return "YOU";
+  return rosterSize > 1 && effect.iceIndex !== undefined
+    ? `ICE${effect.iceIndex + 1}`
+    : "ICE";
+}
+
+/** Combat-log line for a status starting (`on`) or ending (`off`), e.g.
+ * `ICE BURN on`, `ICE2 REGEN off`, `YOU BURN off`. */
+export function statusEventLine(
+  effect: StatusEffectInstance,
+  change: "on" | "off",
+  rosterSize: number,
+): string {
+  return `${statusHolder(effect, rosterSize)} ${effect.kind.toUpperCase()} ${change}`;
+}
+
+/** One line per holder, kinds joined: `ICE BURN+SLOW on`. Keeps a play's
+ * status news inside the four log lines the HUD prints. */
+export function statusEventLines(
+  effects: ReadonlyArray<StatusEffectInstance>,
+  change: "on" | "off",
+  rosterSize: number,
+): string[] {
+  const byHolder = new Map<string, string[]>();
+  for (const e of effects) {
+    const holder = statusHolder(e, rosterSize);
+    byHolder.set(holder, [
+      ...(byHolder.get(holder) ?? []),
+      e.kind.toUpperCase(),
+    ]);
+  }
+  return [...byHolder].map(
+    ([holder, kinds]) => `${holder} ${kinds.join("+")} ${change}`,
+  );
+}

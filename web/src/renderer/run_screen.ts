@@ -90,6 +90,10 @@ export function renderCombatScreen(
     readonly state: GameState;
     readonly iceDelta: number | null;
     readonly playerDelta: number | null;
+    /** ADR-0251: the touch overlay's program buttons carry the hand (same
+     * rows, same facts) and sit over the canvas hand band, so the canvas
+     * leaves that band empty instead of drawing text under the buttons. */
+    readonly handOnOverlay?: boolean;
   },
   cols: number,
   rows: number,
@@ -106,6 +110,7 @@ export function renderCombatScreen(
     statusGroups,
     layout.cols,
     layout.rows,
+    view.handOnOverlay === true,
   );
 }
 

@@ -1,0 +1,11 @@
+HP 95/100
+COST 40/100
+Credits 0
+Equipped: 0/8
+
+Phase: combat
+> [1] ICE — Stan HP: 140
+
+>>> Dixie attacks: 11 dmg
+>>> ICE — Standard attacks: 5 dmg
+Backdoor → 11 dmg (ICE HP: 151)

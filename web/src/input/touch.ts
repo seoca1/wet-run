@@ -10,11 +10,16 @@
  * - Portrait: D-pad bottom-left, AB buttons bottom-right, program row above
  * - Landscape: D-pad left-center, AB buttons right-center, program row bottom
  *
- * The program row is rendered via `updateProgramRow(deck)` which main.ts
+ * The program row is rendered via `updateProgramRow(rows)` which main.ts
  * calls on every state change during combat. Outside combat the row is hidden.
  */
 
 import type { GameAction } from "../core/types";
+import {
+  affordanceAriaLabel,
+  touchAffordanceLines,
+  type ProgramAffordance,
+} from "../core/combat/program_affordance";
 
 /** Minimum touch-target edge in CSS px (Apple HIG 44pt, WCAG 2.5.5).
  *
@@ -148,9 +153,14 @@ export function mountVirtualGamepad(
  */
 export const PROGRAM_PRESS_DEBOUNCE_MS = 120;
 
-/** Update the program row (only visible during combat). Pass deck array from state.
- * Each program gets a button labeled with its short-id (first 4 chars), positioned
- * in a horizontal row at the bottom-center of the viewport.
+/** Update the program row (only visible during combat).
+ *
+ * ADR-0251: `rows` are the same affordance rows the canvas hand draws
+ * (`programAffordances`), so each button states the same facts as its canvas
+ * row — slot number, name, COST, COST after (or BLOCKED), target — visibly
+ * and in its `aria-label`. The buttons sit in a horizontal row at the
+ * bottom-center of the viewport, over the canvas hand band, which the canvas
+ * leaves empty while the overlay is mounted (`handOnOverlay`).
  *
  * `onProgramPress` receives the 1-based hand index of the pressed button. When
  * it is omitted the press falls back to the `window.wetrun` global — the direct
@@ -158,41 +168,48 @@ export const PROGRAM_PRESS_DEBOUNCE_MS = 120;
  * tap landing in that window would otherwise be silently dropped.
  */
 export function updateProgramRow(
-  deck: ReadonlyArray<{ readonly id: string }>,
+  rows: ReadonlyArray<ProgramAffordance>,
   onProgramPress?: (handIndex: number) => void,
 ): void {
   const row = document.getElementById("wetrun-program-row");
   if (!row) return;
-  if (deck.length === 0) {
+  if (rows.length === 0) {
     row.innerHTML = "";
     return;
   }
   const programMinSize =
     `min-height:max(${MIN_TOUCH_TARGET_PX}px, 6vh);` +
     `min-width:max(${MIN_TOUCH_TARGET_PX}px, 8vw)`;
-  const buttons = deck.map((p, i) => {
-    const shortId = p.id.slice(0, 4);
-    const num = i + 1;
-    return `<button data-hand-index="${num}" style="font-size:3vw;padding:2vh 2.5vw;${programMinSize};border-radius:8px;">${num}.${shortId}</button>`;
+  const buttons = rows.map((a) => {
+    const lines = touchAffordanceLines(a)
+      .map((line) => `<span>${escapeHtml(line)}</span>`)
+      .join("");
+    const blocked = a.blocked ? ' data-blocked="true"' : "";
+    return `<button data-hand-index="${a.slot}"${blocked} aria-label="${escapeHtml(affordanceAriaLabel(a))}" style="${programMinSize};">${lines}</button>`;
   });
   row.innerHTML = `
     <style>
       #wetrun-program-row {
         position: fixed; left: 50%; transform: translateX(-50%);
         bottom: 2vh;
-        display: flex; gap: 1.5vw;
+        display: flex; gap: 1vw;
         pointer-events: none;
         font-family: monospace;
         z-index: 6;
       }
       #wetrun-program-row button {
         pointer-events: auto;
-        background: rgba(0, 0, 0, 0.7); border: 2px solid #00ff41;
-        color: #00ff41; font-weight: bold;
+        background: #000; border: 2px solid #00ff41;
+        color: #00ff41; font-weight: bold; font-family: monospace;
         border-radius: 8px;
         touch-action: none; user-select: none;
         ${programMinSize};
-        padding: 2vh 2.5vw; font-size: 3vw;
+        padding: 1vh 0.8vw; font-size: 3vw; line-height: 1.15;
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center; white-space: pre;
+      }
+      #wetrun-program-row button[data-blocked="true"] {
+        border-color: #909090; color: #909090;
       }
       #wetrun-program-row button:active { background: rgba(0, 255, 65, 0.4); }
       #wetrun-program-row button:focus-visible {
@@ -322,4 +339,13 @@ export function isTouchDevice(): boolean {
   // Tertiary check: touch event support + touch points
   if ("ontouchstart" in window || navigator.maxTouchPoints > 0) return true;
   return false;
+}
+
+/** Escape text placed into the program row's HTML. */
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }

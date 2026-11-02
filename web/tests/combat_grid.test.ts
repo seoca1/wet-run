@@ -259,3 +259,117 @@ describe("combat grid status glyph placement (P14)", () => {
     }
   });
 });
+
+/** ADR-0251 slice A — the vertical, numbered hand. */
+describe("combat grid program hand (ADR-0251)", () => {
+  function prog(id: string, name: string, cost: number, aoe = false): Program {
+    return { ...MOCK_PROGRAM, id, name, cost, aoe };
+  }
+  const HAND = [
+    prog("backdoor", "Backdoor", 2),
+    prog("barrier", "Barrier", 3),
+    prog("sweep", "Sweep", 1, true),
+    prog("kraken", "Kraken", 4),
+    prog("ice_break", "Ice Break", 2),
+  ];
+
+  function handState(alarm: number, mutators: string[] = []): GameState {
+    const base = makeState({ deck: HAND });
+    return {
+      ...base,
+      player: { ...base.player, alarm },
+      activeMutators: mutators as GameState["activeMutators"],
+    };
+  }
+
+  function allRows(grid: ReturnType<typeof renderGrid>): string[] {
+    return Array.from({ length: grid.height }, (_, y) => rowText(grid, y));
+  }
+
+  it.each([
+    [80, 50],
+    [60, 40],
+    [40, 60],
+  ])("%ix%i: every slot is listed, numbered in input order, inside the rails", (cols, rows) => {
+    const grid = renderGrid(handState(97), null, null, [], cols, rows);
+    const text = allRows(grid);
+    const slotRows = HAND.map((p, i) =>
+      text.findIndex((line) =>
+        line.includes(`${i + 1} ${p.name.toUpperCase()}`),
+      ),
+    );
+    expect(slotRows.every((y) => y > 0)).toBe(true);
+    // One row per slot, top to bottom in slot order.
+    slotRows.forEach((y, i) => {
+      if (i > 0) expect(y).toBe(slotRows[i - 1]! + 1);
+    });
+    // Rails intact and nothing past them on every hand row and the header.
+    for (const y of [slotRows[0]! - 1, ...slotRows]) {
+      const line = text[y]!;
+      expect(line).toHaveLength(cols);
+      expect(line[1]).toBe("║");
+      expect(line[cols - 2]).toBe("║");
+      expect(line[cols - 1]).toBe(" ");
+    }
+    expect(slotRows[slotRows.length - 1]!).toBeLessThan(rows - 2);
+    // The old four-letter id strip is gone.
+    expect(text.join("\n")).not.toContain("[back]");
+    expect(text.join("\n")).not.toContain("HAND:");
+  });
+
+  it.each([
+    [80, 50],
+    [60, 40],
+    [40, 60],
+  ])("%ix%i: COST, AFTER, BLOCKED and the ALL ICE target are on screen", (cols, rows) => {
+    const text = allRows(renderGrid(handState(97), null, null, [], cols, rows));
+    const line = (slot: number) =>
+      text.find((t) => t.includes(`${slot} ${HAND[slot - 1]!.name.toUpperCase()}`))!;
+    expect(line(1)).toContain("+2");
+    expect(line(1)).toContain("99/100");
+    expect(line(2)).toContain("+3");
+    expect(line(2)).toContain("100/100");
+    expect(line(3)).toContain("ALL ICE");
+    expect(line(4)).toContain("BLOCKED");
+    expect(line(4)).not.toContain("101");
+  });
+
+  it("double_alarm doubles the COST the row shows", () => {
+    const text = allRows(
+      renderGrid(handState(10, ["double_alarm"]), null, null, [], 80, 50),
+    );
+    expect(text.some((t) => t.includes("1 BACKDOOR  COST +4  → 14/100"))).toBe(true);
+    expect(text.some((t) => t.includes("4 KRAKEN    COST +8  → 18/100"))).toBe(true);
+  });
+
+  it("a BLOCKED row is drawn in a different ink as well as worded", () => {
+    const grid = renderGrid(handState(97), null, null, [], 80, 50);
+    const text = allRows(grid);
+    const ok = text.findIndex((t) => t.includes("1 BACKDOOR"));
+    const blocked = text.findIndex((t) => t.includes("4 KRAKEN"));
+    expect(grid.get(3, ok)?.fg).toBe(PALETTE.CYAN_LIGHT);
+    expect(grid.get(3, blocked)?.fg).toBe(PALETTE.GRAY_MID);
+  });
+
+  it("keeps the remaining rows in place when a card is played", () => {
+    const full = allRows(renderGrid(handState(0), null, null, [], 60, 40));
+    const less = allRows(
+      renderGrid(
+        { ...handState(0), deck: HAND.slice(1) },
+        null,
+        null,
+        [],
+        60,
+        40,
+      ),
+    );
+    const header = (t: string[]) => t.findIndex((l) => l.includes(" HAND "));
+    expect(header(less)).toBe(header(full));
+  });
+
+  it("leaves the hand band empty when the touch overlay carries the hand", () => {
+    const text = allRows(renderGrid(handState(10), null, null, [], 40, 60, true));
+    expect(text.join("\n")).not.toContain("BACKDOOR");
+    expect(text.join("\n")).not.toContain("HAND");
+  });
+});

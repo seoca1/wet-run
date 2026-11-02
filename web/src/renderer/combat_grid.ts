@@ -15,6 +15,14 @@ import { makeGrid, type Grid } from "../core/grid";
 import type { GameState } from "../core/types";
 import { PALETTE, iceColor } from "./palette";
 import {
+  COMPACT_HAND_HEADER,
+  FULL_ROW_WIDTH,
+  combatHandRow,
+  formatAffordanceRow,
+  formatCompactAffordanceRow,
+  programAffordances,
+} from "../core/combat/program_affordance";
+import {
   drawPanel,
   drawPanelSeparator,
   panelInnerRect,
@@ -46,7 +54,7 @@ const HEADER_RULE_OFFSET = 6;
 export function combatHeaderRuleRow(rows: number): number | null {
   const ruleY = SCREEN_FRAME_INSET + 1 + HEADER_RULE_OFFSET;
   const rosterStartRow = Math.floor(rows * 0.44);
-  const handRow = Math.max(8, rows - Math.floor(rows * 0.16));
+  const handRow = combatHandRow(rows);
   return ruleY < Math.min(rosterStartRow, handRow - 2) - 1 ? ruleY : null;
 }
 
@@ -58,6 +66,7 @@ export function renderGrid(
   statusGroups: readonly TargetStatusGroup[] = [],
   cols = 80,
   rows = 50,
+  handOnOverlay = false,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const frame = screenFrameRect(grid);
@@ -72,10 +81,13 @@ export function renderGrid(
   const iceStatusCol = iceCol + Math.min(20, innerRight - iceCol - 6);
   const turnCol = Math.max(iceNameCol, cols - Math.floor(cols * 0.25));
   const statusArtCol = Math.max(20, Math.floor(cols * 0.45));
+  const showHand = state.phase === "combat" && state.deck.length > 0;
   const handRow = Math.min(
     innerBottom - 1,
-    Math.max(8, rows - Math.floor(rows * 0.16)),
+    combatHandRow(rows, state.deck.length),
   );
+  // ICE rows stop above the hand so a long roster can never cover a slot.
+  const rosterBottom = showHand ? handRow : innerBottom;
   const artWidth = Math.min(32, innerRight - statusArtCol - 1);
 
   grid = setInnerText(
@@ -133,7 +145,7 @@ export function renderGrid(
     for (let i = 0; i < state.iceRoster.length; i++) {
       const ice = state.iceRoster[i];
       const row = rosterStartRow + i * 3;
-      if (row + 2 >= innerBottom) break;
+      if (row + 2 >= rosterBottom) break;
       const isTarget = i === state.activeIceIndex;
       const marker = isTarget ? ">" : " ";
       const alive = ice.hp > 0;
@@ -234,26 +246,47 @@ export function renderGrid(
     }
   }
 
-  if (state.phase === "combat" && state.deck.length > 0) {
-    grid = setInnerText(
-      grid,
-      inner,
-      textX,
-      handRow,
-      "HAND:",
-      PALETTE.YELLOW_AMBER,
-    );
-    let x = textX + 7;
-    for (const p of state.deck) {
-      if (x >= innerRight - 5) break;
-      const label = `[${p.id.slice(0, 4)}]`;
-      grid = setInnerText(grid, inner, x, handRow, label, PALETTE.CYAN_LIGHT);
-      x += label.length + 1;
-    }
-  }
+  if (showHand && !handOnOverlay) grid = drawHand(grid, inner, state, handRow);
 
   // Frame last, so an overlong message line can never erase a rail.
   grid = drawPanel(grid, frame).grid;
   const ruleY = combatHeaderRuleRow(rows);
   return ruleY === null ? grid : drawPanelSeparator(grid, frame, ruleY);
+}
+
+/** ADR-0251: one numbered row per slot, built only from runtime fields
+ * (`programAffordances`): the digit that plays it, its name, the COST it
+ * charges and the COST after it (or BLOCKED past the cap), and whether it
+ * hits the targeted ICE or all of them. Narrow grids use the short row under
+ * a column legend. */
+function drawHand(
+  grid: Grid,
+  inner: ReturnType<typeof panelInnerRect>,
+  state: GameState,
+  handRow: number,
+): Grid {
+  const textX = inner.x + 1;
+  const width = inner.x + inner.width - textX;
+  const wide = width >= FULL_ROW_WIDTH;
+  let out = setInnerText(
+    grid,
+    inner,
+    textX,
+    handRow,
+    wide ? "HAND" : COMPACT_HAND_HEADER,
+    PALETTE.YELLOW_AMBER,
+  );
+  for (const row of programAffordances(state)) {
+    const y = handRow + row.slot;
+    if (y >= inner.y + inner.height) break;
+    out = setInnerText(
+      out,
+      inner,
+      textX,
+      y,
+      wide ? formatAffordanceRow(row) : formatCompactAffordanceRow(row),
+      row.blocked ? PALETTE.GRAY_MID : PALETTE.CYAN_LIGHT,
+    );
+  }
+  return out;
 }

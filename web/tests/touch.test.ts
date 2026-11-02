@@ -10,6 +10,11 @@ import {
   PROGRAM_PRESS_DEBOUNCE_MS,
   MIN_TOUCH_TARGET_PX,
 } from "../src/input/touch";
+import {
+  affordanceAriaLabel,
+  touchAffordanceLines,
+  type ProgramAffordance,
+} from "../src/core/combat/program_affordance";
 
 // jsdom doesn't ship matchMedia — polyfill before tests run.
 beforeAll(() => {
@@ -100,10 +105,11 @@ describe("virtual gamepad overlay", () => {
 });
 
 describe("program row (P12)", () => {
-  const DECK = [
-    { id: "backdoor" },
-    { id: "barrier" },
-    { id: "boost" },
+  // ADR-0251: the row is fed the same affordance rows the canvas draws.
+  const DECK: ReadonlyArray<ProgramAffordance> = [
+    { slot: 1, programId: "backdoor", name: "BACKDOOR", cost: 2, after: 12, blocked: false, target: "ICE" },
+    { slot: 2, programId: "barrier", name: "BARRIER", cost: 3, after: 13, blocked: false, target: "ICE" },
+    { slot: 3, programId: "boost", name: "BOOST", cost: 2, after: 12, blocked: false, target: "ICE" },
   ];
 
   beforeAll(() => {
@@ -206,5 +212,34 @@ describe("program row (P12)", () => {
     } finally {
       delete (window as unknown as { wetrun?: unknown }).wetrun;
     }
+  });
+
+  it("labels each button with the canvas row's facts, visibly and for assistive tech (ADR-0251)", () => {
+    const rows: ReadonlyArray<ProgramAffordance> = [
+      ...DECK.slice(0, 2),
+      { slot: 3, programId: "sweep", name: "SWEEP", cost: 1, after: 11, blocked: false, target: "ALL ICE" },
+      { slot: 4, programId: "kraken", name: "KRAKEN", cost: 4, after: 104, blocked: true, target: "ICE" },
+    ];
+    const pressed: number[] = [];
+    updateProgramRow(rows, (idx) => pressed.push(idx));
+    const buttons = getRowButtons();
+    expect(buttons).toHaveLength(rows.length);
+    buttons.forEach((btn, i) => {
+      const row = rows[i]!;
+      expect(btn.dataset.handIndex).toBe(String(row.slot));
+      expect(btn.getAttribute("aria-label")).toBe(affordanceAriaLabel(row));
+      const lines = Array.from(btn.querySelectorAll("span")).map((el) => el.textContent);
+      expect(lines).toEqual([...touchAffordanceLines(row)]);
+    });
+    expect(buttons[3]?.textContent).toContain("BLOCKED");
+    expect(buttons[2]?.getAttribute("aria-label")).toContain("ALL ICE");
+    buttons[3]?.dispatchEvent(new Event("pointerdown", { bubbles: true, cancelable: true }));
+    expect(pressed).toEqual([4]);
+  });
+
+  it("does not show the four-letter id strip any more (ADR-0251)", () => {
+    updateProgramRow(DECK);
+    const text = getRowButtons().map((b) => b.textContent ?? "");
+    expect(text.some((t) => t.includes("1.back"))).toBe(false);
   });
 });

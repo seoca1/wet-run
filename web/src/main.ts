@@ -30,7 +30,8 @@ import {
   type CombatVfxInstance,
 } from "./renderer/combat_vfx";
 import { hitStopActiveAt, hitStopDeadlineFor } from "./renderer/screen_shake";
-import { pickCombatSfxLayers } from "./core/combat/combat_sfx";
+import { pickTransitionSfx } from "./core/combat/combat_sfx";
+import { programAffordances } from "./core/combat/program_affordance";
 import { idleAlarmAction } from "./core/combat/idle_alarm";
 import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
@@ -330,6 +331,10 @@ class Game {
   private textScale: TextScaleStep = "medium";
   /** P12 — the in-game acknowledgement of a touch program-button press. */
   private pressFeedback: PressFeedbackState = IDLE_PRESS_FEEDBACK;
+  /** ADR-0251 — name of the program the acknowledged tap played. */
+  private pressedProgramName: string | null = null;
+  /** ADR-0251 — true while the touch overlay (and its program row) is up. */
+  private touchOverlayMounted = false;
   private graphicNovelPlayer:
     import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null =
     null;
@@ -503,11 +508,12 @@ class Game {
         if (!audio) return;
         const manager = audio.AudioManager.getInstance();
         // P5 — the player taking damage had no sound at all (proposal §1.2
-        // U13). `pickCombatSfxLayers` decides the transition's audio from the
-        // (previous → next) state pair.
+        // U13). `pickTransitionSfx` decides the transition's audio from the
+        // (previous → next) state pair: the combat layers plus the ADR-0251
+        // event ids (boss intro / phase change, credits, loot, heal, death).
         const nextState = this.state;
         if (nextState !== null) {
-          for (const id of pickCombatSfxLayers(previous, nextState)) {
+          for (const id of pickTransitionSfx(previous, nextState)) {
             manager.playSfx(id);
           }
         }
@@ -516,18 +522,14 @@ class Game {
           previous.phase === "combat" &&
           this.state?.phase === "combat"
         ) {
-          // The ICE-hit sound now comes from `pickCombatSfxLayers` above.
+          // The ICE-hit sound now comes from `pickTransitionSfx` above.
           // The old `state.ice.hp` delta check was provably dead — the
           // reducers only ever write `iceRoster`, so `state.ice.hp` never
           // changed after init and `COMBAT_HIT` never fired from here.
           const iceDelta = this.state.ice.hp - previous.ice.hp;
+          // (The boss-phase sound used to sit in this dead branch as
+          // VICTORY; `pickTransitionSfx` now plays PHASE_CHANGE for it.)
           if (iceDelta < 0) {
-            if (
-              previous.bossPhase > 0 &&
-              this.state.bossPhase > previous.bossPhase
-            ) {
-              manager.playSfx(audio.SFX_IDS.VICTORY);
-            }
             this._lastIceHp = this.state.ice.hp;
             this._lastPlayerHp = this.state.player.hp;
           }
@@ -553,6 +555,7 @@ class Game {
     this.input.start();
     if (isTouchDevice()) {
       this.unmountTouch = mountVirtualGamepad(handler);
+      this.touchOverlayMounted = true;
     }
     this.gamepad.setHandler(handler);
     this.gamepad.start();
@@ -1247,10 +1250,9 @@ class Game {
       combatEntryHintFits(this.layout.rows);
     let pressLabel: string | null = null;
     if (hasPressFeedback(this.pressFeedback)) {
-      const program = this.state?.deck[this.pressFeedback.handIndex ?? -1];
       pressLabel = pressFeedbackLabel(
         this.pressFeedback,
-        program?.id.slice(0, 4),
+        this.pressedProgramName ?? undefined,
       );
     }
     const out = renderCombatHints(grid, { showHint, pressLabel });
@@ -1385,7 +1387,12 @@ class Game {
       ...this.state,
       grid: this.composeCombatOverlays(
         renderCombatScreen(
-          { state: this.state, iceDelta, playerDelta },
+          {
+            state: this.state,
+            iceDelta,
+            playerDelta,
+            handOnOverlay: this.touchOverlayMounted,
+          },
           this.layout.cols,
           this.layout.rows,
         ),
@@ -1400,7 +1407,7 @@ class Game {
       combatView.shake,
     );
     updateProgramRow(
-      this.state.phase === "combat" ? this.state.deck : [],
+      this.state.phase === "combat" ? programAffordances(this.state) : [],
       this.state.phase === "combat"
         ? (handIndex) => this.handleProgramButton(handIndex)
         : undefined,
@@ -1602,6 +1609,11 @@ class Game {
     const action: GameAction = { type: "select_program", handIndex };
     const resolved = resolveProgramSelection(this.state, action);
     if (resolved === null) return;
+    // ADR-0251: name the program this tap plays, read before the play
+    // removes it from the hand (reading the hand afterwards named the card
+    // that slid into the slot, not the one played).
+    this.pressedProgramName =
+      this.state.deck[handIndex - 1]?.name.toUpperCase() ?? null;
     // P12 — acknowledge the tap inside the game, not only via the button's
     // CSS `:active` state (which vanishes as soon as the finger lifts).
     this.pressFeedback = pressProgramButton(
@@ -1616,7 +1628,7 @@ class Game {
       this._lastPlayerHp = this.state.player.hp;
     }
     const nextState = this.state;
-    const layers = pickCombatSfxLayers(previous, nextState);
+    const layers = pickTransitionSfx(previous, nextState);
     if (layers.length > 0) {
       void loadAudioSystem().then((audio) => {
         if (!audio) return;
@@ -1653,6 +1665,7 @@ class Game {
     this.input.stop();
     this.gamepad.stop();
     this.unmountTouch();
+    this.touchOverlayMounted = false;
     this.unwatchLayout();
     if (this.pwaController) {
       this.pwaController.dispose();

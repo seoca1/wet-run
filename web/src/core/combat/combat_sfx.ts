@@ -66,3 +66,75 @@ export function pickCombatSfxLayers(
 
   return [...new Set(layers)];
 }
+
+/** Slice of state the event picker reads. */
+type EventSnapshot = Pick<
+  GameState,
+  "phase" | "runPhase" | "player" | "bossPhase" | "inventory"
+>;
+
+function materialCount(state: EventSnapshot): number {
+  return Object.values(state.inventory.materials).reduce(
+    (sum, n) => sum + n,
+    0,
+  );
+}
+
+/**
+ * ADR-0251 slice B — sound ids that existed in `SFX_IDS` but were never
+ * dispatched, each wired to the one real transition it names:
+ *
+ * - `BOSS_INTRO`   — a fight starts with a boss phase set (boss node breach);
+ * - `PHASE_CHANGE` — the boss phase advances mid-fight;
+ * - `CREDIT_GAIN`  — `player.credits` rises (victory reward, achievements);
+ * - `LOOT_DROP`    — material counts rise (loot rolled on a kill);
+ * - `HEAL`         — player HP rises while alive (loot-screen heal);
+ * - `DEATH`        — player HP reaches 0 (FLATLINE). Jacking out is not a
+ *   death and stays silent here (`DEFEAT` still plays on the phase change).
+ *
+ * `CREDIT_SPEND` is deliberately absent: no in-game action lowers
+ * `player.credits` (`purchaseItem` has no caller), so there is no event to
+ * name. Pure over (previous, next); no RNG, no clock.
+ */
+export function pickEventSfx(
+  previous: EventSnapshot,
+  next: EventSnapshot,
+): ReadonlyArray<SoundEffectId> {
+  const ids: SoundEffectId[] = [];
+  if (
+    previous.runPhase !== "combat" &&
+    next.runPhase === "combat" &&
+    next.bossPhase > 0
+  ) {
+    ids.push(SFX_IDS.BOSS_INTRO);
+  } else if (previous.bossPhase > 0 && next.bossPhase > previous.bossPhase) {
+    ids.push(SFX_IDS.PHASE_CHANGE);
+  }
+  if (next.player.credits > previous.player.credits) {
+    ids.push(SFX_IDS.CREDIT_GAIN);
+  }
+  if (materialCount(next) > materialCount(previous)) {
+    ids.push(SFX_IDS.LOOT_DROP);
+  }
+  if (previous.player.hp > 0 && next.player.hp > previous.player.hp) {
+    ids.push(SFX_IDS.HEAL);
+  }
+  if (previous.player.hp > 0 && next.player.hp <= 0) {
+    ids.push(SFX_IDS.DEATH);
+  }
+  return ids;
+}
+
+/** Everything a (previous → next) transition should sound: the combat
+ * layers first, then the event ids, de-duplicated. */
+export function pickTransitionSfx(
+  previous: CombatSnapshot & EventSnapshot,
+  next: CombatSnapshot & EventSnapshot,
+): ReadonlyArray<SoundEffectId> {
+  return [
+    ...new Set([
+      ...pickCombatSfxLayers(previous, next),
+      ...pickEventSfx(previous, next),
+    ]),
+  ];
+}

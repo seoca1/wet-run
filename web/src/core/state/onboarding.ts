@@ -21,6 +21,8 @@
  * `main.ts` cannot be imported at all — it self-boots).
  */
 
+import { combatHandRow } from "../combat/program_affordance";
+
 /** localStorage key the tutorial overlay writes on completion. */
 export const TUTORIAL_COMPLETED_KEY = "wetrun_tutorial_completed";
 
@@ -82,13 +84,12 @@ export function combatEntryHint(): string {
 /**
  * Rows the hint may occupy, relative to the bottom of the grid.
  *
- * The hint sits above the `HAND:` row (`combat_grid.ts` puts the hand at
- * `rows - floor(rows * 0.16)`) so it never covers the programs the player
- * must press, and it stays clear of the `ice_intro` banner band the renderer
- * paints on rows 1..5.
+ * The hint sits above the hand header (`combatHandRow`, ADR-0251) so it
+ * never covers the programs the player must press, and it stays clear of the
+ * `ice_intro` banner band the renderer paints on rows 1..5.
  */
 export function combatEntryHintRows(rows: number): readonly number[] {
-  const handRow = Math.max(8, rows - Math.floor(rows * 0.16));
+  const handRow = combatHandRow(rows);
   return [handRow - 2, handRow - 1];
 }
 

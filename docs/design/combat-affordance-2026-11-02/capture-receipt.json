@@ -1,0 +1,329 @@
+{
+  "renderer": "Actual AsciiRenderer (web/src/renderer/canvas.ts) bundled with esbuild, 10x18 cells, DPR 1, system monospace fallback; renderCombatScreen + composeCombatScreen (base combat grid + VFX layer, reduced motion) plus HUD column at the layout preset hudCols (24/20/16)",
+  "captures": [
+    {
+      "file": "aoe-blocked-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T08:42:23.792Z"
+    },
+    {
+      "file": "aoe-blocked-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T08:42:23.899Z"
+    },
+    {
+      "file": "aoe-blocked-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T08:42:24.014Z"
+    },
+    {
+      "file": "double-alarm-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T08:42:24.073Z"
+    },
+    {
+      "file": "double-alarm-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T08:42:24.147Z"
+    },
+    {
+      "file": "double-alarm-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T08:42:24.223Z"
+    },
+    {
+      "file": "hand-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T08:42:24.289Z"
+    },
+    {
+      "file": "hand-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T08:42:24.373Z"
+    },
+    {
+      "file": "hand-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T08:42:24.465Z"
+    },
+    {
+      "file": "status-apply-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T08:42:24.522Z"
+    },
+    {
+      "file": "status-apply-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T08:42:24.580Z"
+    },
+    {
+      "file": "status-apply-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T08:42:24.657Z"
+    },
+    {
+      "file": "status-expiry-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T08:42:24.723Z"
+    },
+    {
+      "file": "status-expiry-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T08:42:24.800Z"
+    },
+    {
+      "file": "status-expiry-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T08:42:24.882Z"
+    },
+    {
+      "file": "status-expiry-start-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T08:42:24.962Z"
+    },
+    {
+      "file": "status-expiry-start-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T08:42:25.013Z"
+    },
+    {
+      "file": "status-expiry-start-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T08:42:25.101Z"
+    },
+    {
+      "file": "aoe-blocked-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T09:01:30.418Z"
+    },
+    {
+      "file": "aoe-blocked-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T09:01:30.473Z"
+    },
+    {
+      "file": "aoe-blocked-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T09:01:30.539Z"
+    },
+    {
+      "file": "double-alarm-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T09:01:30.585Z"
+    },
+    {
+      "file": "double-alarm-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T09:01:30.650Z"
+    },
+    {
+      "file": "double-alarm-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T09:01:30.732Z"
+    },
+    {
+      "file": "hand-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T09:01:30.789Z"
+    },
+    {
+      "file": "hand-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T09:01:30.848Z"
+    },
+    {
+      "file": "hand-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T09:01:30.918Z"
+    },
+    {
+      "file": "status-apply-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T09:01:30.962Z"
+    },
+    {
+      "file": "status-apply-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T09:01:31.012Z"
+    },
+    {
+      "file": "status-apply-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T09:01:31.079Z"
+    },
+    {
+      "file": "status-expiry-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T09:01:31.144Z"
+    },
+    {
+      "file": "status-expiry-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T09:01:31.190Z"
+    },
+    {
+      "file": "status-expiry-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T09:01:31.252Z"
+    },
+    {
+      "file": "status-expiry-start-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T09:01:31.291Z"
+    },
+    {
+      "file": "status-expiry-start-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T09:01:31.339Z"
+    },
+    {
+      "file": "status-expiry-start-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T09:01:31.404Z"
+    }
+  ]
+}

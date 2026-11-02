@@ -19,6 +19,7 @@ import { rollIceCrit } from "./ice_crit";
 import { alarmDamage } from "./idle_alarm";
 import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects";
 import { applyIceNonDamageEffect } from "./ice_combat_effect_apply";
+import { endedStatuses, statusEventLines } from "../status";
 import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling";
 import { isMutatorActive, type MutableRunState } from "../state/run_mutators";
 import {
@@ -381,7 +382,15 @@ function processEnemyTurns(state: GameState): GameState {
 
   // ADR-0219 Option A: advance the enemy-timed ICE effects (shield pool
   // lifetime, regen ticks, buff lifetime). One tick = one enemy turn.
+  const iceEffectsBeforeTick = working.statusEffects;
   working = tickIceEffects(working);
+  // ADR-0251 slice B: the tick used to drop ended ICE-cast effects silently.
+  // Log lines only — `logMessages` (and so `anyEnemyAttacked`) is untouched.
+  const endedIceEffectLines = statusEventLines(
+    endedStatuses(iceEffectsBeforeTick, working.statusEffects),
+    "off",
+    working.iceRoster.length,
+  );
   // The acted roster shares the prefix of `rosterForReturn`; the phase-4
   // minion is appended after it, so merge positionally (roster ids are not
   // unique — the encounter band repeats ids when a node has fewer ids than
@@ -467,11 +476,12 @@ function processEnemyTurns(state: GameState): GameState {
         ? logMessages[logMessages.length - 1]
         : state.message,
     combatLog:
-      logMessages.length > 0
-        ? [...logMessages.slice().reverse(), ...state.combatLog].slice(
-            0,
-            COMBAT_LOG_CAP,
-          )
+      logMessages.length > 0 || endedIceEffectLines.length > 0
+        ? [
+            ...logMessages.slice().reverse(),
+            ...endedIceEffectLines,
+            ...state.combatLog,
+          ].slice(0, COMBAT_LOG_CAP)
         : state.combatLog,
     vfxInstances:
       bossPhaseVfx.length > 0 || enemyTurnVfx.length > 0

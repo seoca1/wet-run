@@ -1,0 +1,661 @@
+{
+  "phase": "before",
+  "base": "http://127.0.0.1:5195/",
+  "bundle": [
+    "http://127.0.0.1:5195/assets/index-CduYM6w1.js"
+  ],
+  "scenarios": {
+    "desktop-keys": [
+      {
+        "key": "Enter",
+        "note": "menu",
+        "screen": "mission_select",
+        "state": null
+      },
+      {
+        "key": "Enter",
+        "note": "launch",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Mission: Aleph Fragment",
+        "handRows": [],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "key": "ArrowDown",
+        "note": "target route",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination",
+        "handRows": [],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "key": "Enter",
+        "note": "travel",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+        "handRows": [],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "key": "ArrowDown",
+        "note": "seek BREACH",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+        "handRows": [],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "key": "ArrowDown",
+        "note": "seek BREACH",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+        "handRows": [],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "key": "ArrowDown",
+        "note": "seek BREACH",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+        "handRows": [],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "key": "Enter",
+        "note": "commit BREACH",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Entering mid... (1 ICE)",
+        "handRows": [],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "key": "Enter",
+        "note": "engage",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "combat",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Combat vs ICE — Yakuza Enforcer",
+        "handRows": [
+          {
+            "y": 51,
+            "t": "HAND:  [back] [barr] [boos] [cloa] [deco]"
+          }
+        ],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "key": "-",
+        "note": "in combat",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "combat",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Combat vs ICE — Yakuza Enforcer",
+        "handRows": [
+          {
+            "y": 51,
+            "t": "HAND:  [back] [barr] [boos] [cloa] [deco]"
+          }
+        ],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "shot": "before-desktop-keys-hand.png"
+      },
+      {
+        "key": "2",
+        "note": "play displayed row 2",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "combat",
+        "cost": 3,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [
+          "barrier"
+        ],
+        "msg": ">>> Dixie attacks: 11 dmg",
+        "handRows": [
+          {
+            "y": 51,
+            "t": "HAND:  [back] [boos] [cloa] [deco]"
+          }
+        ],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "shot": "before-desktop-keys-after-2.png"
+      },
+      {
+        "key": "1",
+        "note": "play displayed row 1",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "combat",
+        "cost": 5,
+        "mutators": [],
+        "deck": [
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [
+          "barrier",
+          "backdoor"
+        ],
+        "msg": "Backdoor → 5 dmg (ICE HP: 140)",
+        "handRows": [
+          {
+            "y": 51,
+            "t": "HAND:  [boos] [cloa] [deco]"
+          }
+        ],
+        "buttons": [],
+        "vw": 1440
+      },
+      {
+        "shot": "before-desktop-keys-after-1.png"
+      },
+      {
+        "key": "-",
+        "note": "end",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "combat",
+        "cost": 5,
+        "mutators": [],
+        "deck": [
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [
+          "barrier",
+          "backdoor"
+        ],
+        "msg": "Backdoor → 5 dmg (ICE HP: 140)",
+        "handRows": [
+          {
+            "y": 51,
+            "t": "HAND:  [boos] [cloa] [deco]"
+          }
+        ],
+        "buttons": [],
+        "vw": 1440
+      }
+    ],
+    "mobile-tap": [
+      {
+        "key": "Enter",
+        "note": "menu",
+        "screen": "mission_select",
+        "state": null
+      },
+      {
+        "key": "Enter",
+        "note": "launch",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Mission: Aleph Fragment",
+        "handRows": [],
+        "buttons": [],
+        "vw": 390
+      },
+      {
+        "key": "ArrowDown",
+        "note": "target route",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination",
+        "handRows": [],
+        "buttons": [],
+        "vw": 390
+      },
+      {
+        "key": "Enter",
+        "note": "travel",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+        "handRows": [],
+        "buttons": [],
+        "vw": 390
+      },
+      {
+        "key": "ArrowDown",
+        "note": "seek BREACH",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+        "handRows": [],
+        "buttons": [],
+        "vw": 390
+      },
+      {
+        "key": "ArrowDown",
+        "note": "seek BREACH",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+        "handRows": [],
+        "buttons": [],
+        "vw": 390
+      },
+      {
+        "key": "ArrowDown",
+        "note": "seek BREACH",
+        "screen": "mission_select",
+        "runPhase": "matrix",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+        "handRows": [],
+        "buttons": [],
+        "vw": 390
+      },
+      {
+        "key": "Enter",
+        "note": "commit BREACH",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "approach",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Entering mid... (1 ICE)",
+        "handRows": [],
+        "buttons": [],
+        "vw": 390
+      },
+      {
+        "key": "Enter",
+        "note": "engage",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "combat",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Combat vs ICE — Yakuza Enforcer",
+        "handRows": [
+          {
+            "y": 47,
+            "t": "HAND:  [back] [barr] [boos] [cloa]"
+          }
+        ],
+        "buttons": [
+          {
+            "text": "1.back",
+            "aria": null,
+            "w": 60,
+            "h": 44,
+            "left": 36,
+            "right": 96
+          },
+          {
+            "text": "2.barr",
+            "aria": null,
+            "w": 56,
+            "h": 44,
+            "left": 102,
+            "right": 158
+          },
+          {
+            "text": "3.boos",
+            "aria": null,
+            "w": 61,
+            "h": 44,
+            "left": 164,
+            "right": 225
+          },
+          {
+            "text": "4.cloa",
+            "aria": null,
+            "w": 57,
+            "h": 44,
+            "left": 231,
+            "right": 287
+          },
+          {
+            "text": "5.deco",
+            "aria": null,
+            "w": 61,
+            "h": 44,
+            "left": 293,
+            "right": 354
+          }
+        ],
+        "vw": 390
+      },
+      {
+        "key": "-",
+        "note": "in combat",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "combat",
+        "cost": 0,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "barrier:3",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [],
+        "msg": "Combat vs ICE — Yakuza Enforcer",
+        "handRows": [
+          {
+            "y": 47,
+            "t": "HAND:  [back] [barr] [boos] [cloa]"
+          }
+        ],
+        "buttons": [
+          {
+            "text": "1.back",
+            "aria": null,
+            "w": 60,
+            "h": 44,
+            "left": 36,
+            "right": 96
+          },
+          {
+            "text": "2.barr",
+            "aria": null,
+            "w": 56,
+            "h": 44,
+            "left": 102,
+            "right": 158
+          },
+          {
+            "text": "3.boos",
+            "aria": null,
+            "w": 61,
+            "h": 44,
+            "left": 164,
+            "right": 225
+          },
+          {
+            "text": "4.cloa",
+            "aria": null,
+            "w": 57,
+            "h": 44,
+            "left": 231,
+            "right": 287
+          },
+          {
+            "text": "5.deco",
+            "aria": null,
+            "w": 61,
+            "h": 44,
+            "left": 293,
+            "right": 354
+          }
+        ],
+        "vw": 390
+      },
+      {
+        "shot": "before-mobile-tap-hand.png"
+      },
+      {
+        "key": "tap #2",
+        "note": "tap displayed button 2",
+        "screen": "mission_select",
+        "runPhase": "combat",
+        "phase": "combat",
+        "cost": 3,
+        "mutators": [],
+        "deck": [
+          "backdoor:2",
+          "boost:2",
+          "cloak:2",
+          "decoy:2"
+        ],
+        "discard": [
+          "barrier"
+        ],
+        "msg": ">>> Dixie attacks: 11 dmg",
+        "handRows": [
+          {
+            "y": 47,
+            "t": "HAND:  [back] [boos] [cloa] [deco]"
+          }
+        ],
+        "buttons": [
+          {
+            "text": "1.back",
+            "aria": null,
+            "w": 60,
+            "h": 44,
+            "left": 67,
+            "right": 127
+          },
+          {
+            "text": "2.boos",
+            "aria": null,
+            "w": 61,
+            "h": 44,
+            "left": 133,
+            "right": 194
+          },
+          {
+            "text": "3.cloa",
+            "aria": null,
+            "w": 57,
+            "h": 44,
+            "left": 200,
+            "right": 257
+          },
+          {
+            "text": "4.deco",
+            "aria": null,
+            "w": 61,
+            "h": 44,
+            "left": 262,
+            "right": 323
+          }
+        ],
+        "vw": 390
+      },
+      {
+        "shot": "before-mobile-tap-after-tap-2.png"
+      }
+    ]
+  }
+}

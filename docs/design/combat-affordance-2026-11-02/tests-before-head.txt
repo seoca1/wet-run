@@ -1,0 +1,48 @@
+FAIL combat_event_sfx.test.ts › pickEventSfx boss phase transition → phase_change
+FAIL combat_event_sfx.test.ts › pickEventSfx entering a boss fight → boss_intro (not phase_change)
+FAIL combat_event_sfx.test.ts › pickEventSfx entering an ordinary fight is not a boss intro
+FAIL combat_event_sfx.test.ts › pickEventSfx credits rise → credit_gain
+FAIL combat_event_sfx.test.ts › pickEventSfx materials rise → loot_drop
+FAIL combat_event_sfx.test.ts › pickEventSfx player HP rises → heal
+FAIL combat_event_sfx.test.ts › pickEventSfx a restart from a flatline is not a heal
+FAIL combat_event_sfx.test.ts › pickEventSfx player HP reaches 0 → death; jacking out is not a death
+FAIL combat_event_sfx.test.ts › pickEventSfx nothing changed → silence; credit_spend is never picked
+FAIL combat_event_sfx.test.ts › pickEventSfx pickTransitionSfx = combat layers + event ids, without duplicates
+FAIL combat_event_sfx.test.ts › dispatch sites both the key handler and the touch program buttons use the full picker
+FAIL combat_event_sfx.test.ts › dispatch sites the dead boss-phase VICTORY branch is gone (phase_change replaces it)
+PASS combat_grid.test.ts › combat grid ICE HP display uses the scaled maximum when ICE HP is 165
+PASS combat_grid.test.ts › combat grid ICE HP display uses the scaled maximum when ICE HP is 82.5
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is undefined
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is 0
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is -1
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is NaN
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is Infinity
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) draws the player's own effect on the player HP row
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) draws the active ICE's effect on the ICE name row
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) keeps the player's glyph and the ICE's glyph on separate rows (P14)
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) shows a non-target ICE's effect on that ICE's own row
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) does not overflow a narrow 40-column layout
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 80x50: every slot is listed, numbered in input order, inside the rails
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 60x40: every slot is listed, numbered in input order, inside the rails
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 40x60: every slot is listed, numbered in input order, inside the rails
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 80x50: COST, AFTER, BLOCKED and the ALL ICE target are on screen
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 60x40: COST, AFTER, BLOCKED and the ALL ICE target are on screen
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 40x60: COST, AFTER, BLOCKED and the ALL ICE target are on screen
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) double_alarm doubles the COST the row shows
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) a BLOCKED row is drawn in a different ink as well as worded
+PASS combat_grid.test.ts › combat grid program hand (ADR-0251) keeps the remaining rows in place when a card is played
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) leaves the hand band empty when the touch overlay carries the hand
+FAIL combat_status_feedback.test.ts › status application a burn/slow proc spawns status_apply and logs who got what
+PASS combat_status_feedback.test.ts › status application no proc, no status feedback
+FAIL combat_status_feedback.test.ts › status application the spawned overlay names the status inside the frame at 40 columns
+FAIL combat_status_feedback.test.ts › status end an expiring burn is logged as off (was silently dropped by tickStatus)
+PASS combat_status_feedback.test.ts › status end a burn that still has turns left is not reported as ended
+FAIL combat_status_feedback.test.ts › status end a slow spent on the hit is logged as off
+FAIL combat_status_feedback.test.ts › status end an ICE-cast effect ending in the enemy turn is logged with its ICE
+FAIL combat_status_feedback.test.ts › status end the end is information, not animation: the HUD prints it
+PASS combat_status_feedback.test.ts › status end status feedback consumes no RNG
+FAIL combat_status_feedback.test.ts › status helpers endedStatuses lists exactly what a tick dropped
+FAIL combat_status_feedback.test.ts › status helpers labels the target in words
+SUITE FAIL program_affordance.test.ts: Failed to load url ../src/core/combat/program_affordance (resolved id: ../src/core/combat/program_affordance) in /Users/emilio/.openclaw/tmp/opencode/combat-hea
+SUITE FAIL touch.test.ts: Failed to resolve import "../src/core/combat/program_affordance" from "tests/touch.test.ts". Does the file exist?
+TOTAL failed 29 passed 16 failed-suites 2

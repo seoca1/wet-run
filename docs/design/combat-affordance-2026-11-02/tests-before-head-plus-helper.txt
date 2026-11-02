@@ -1,0 +1,87 @@
+FAIL combat_event_sfx.test.ts › pickEventSfx boss phase transition → phase_change
+FAIL combat_event_sfx.test.ts › pickEventSfx entering a boss fight → boss_intro (not phase_change)
+FAIL combat_event_sfx.test.ts › pickEventSfx entering an ordinary fight is not a boss intro
+FAIL combat_event_sfx.test.ts › pickEventSfx credits rise → credit_gain
+FAIL combat_event_sfx.test.ts › pickEventSfx materials rise → loot_drop
+FAIL combat_event_sfx.test.ts › pickEventSfx player HP rises → heal
+FAIL combat_event_sfx.test.ts › pickEventSfx a restart from a flatline is not a heal
+FAIL combat_event_sfx.test.ts › pickEventSfx player HP reaches 0 → death; jacking out is not a death
+FAIL combat_event_sfx.test.ts › pickEventSfx nothing changed → silence; credit_spend is never picked
+FAIL combat_event_sfx.test.ts › pickEventSfx pickTransitionSfx = combat layers + event ids, without duplicates
+FAIL combat_event_sfx.test.ts › dispatch sites both the key handler and the touch program buttons use the full picker
+FAIL combat_event_sfx.test.ts › dispatch sites the dead boss-phase VICTORY branch is gone (phase_change replaces it)
+PASS combat_grid.test.ts › combat grid ICE HP display uses the scaled maximum when ICE HP is 165
+PASS combat_grid.test.ts › combat grid ICE HP display uses the scaled maximum when ICE HP is 82.5
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is undefined
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is 0
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is -1
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is NaN
+PASS combat_grid.test.ts › combat grid ICE HP display falls back to a legacy maximum when maxHp is Infinity
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) draws the player's own effect on the player HP row
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) draws the active ICE's effect on the ICE name row
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) keeps the player's glyph and the ICE's glyph on separate rows (P14)
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) shows a non-target ICE's effect on that ICE's own row
+PASS combat_grid.test.ts › combat grid status glyph placement (P14) does not overflow a narrow 40-column layout
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 80x50: every slot is listed, numbered in input order, inside the rails
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 60x40: every slot is listed, numbered in input order, inside the rails
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 40x60: every slot is listed, numbered in input order, inside the rails
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 80x50: COST, AFTER, BLOCKED and the ALL ICE target are on screen
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 60x40: COST, AFTER, BLOCKED and the ALL ICE target are on screen
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) 40x60: COST, AFTER, BLOCKED and the ALL ICE target are on screen
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) double_alarm doubles the COST the row shows
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) a BLOCKED row is drawn in a different ink as well as worded
+PASS combat_grid.test.ts › combat grid program hand (ADR-0251) keeps the remaining rows in place when a card is played
+FAIL combat_grid.test.ts › combat grid program hand (ADR-0251) leaves the hand band empty when the touch overlay carries the hand
+FAIL combat_status_feedback.test.ts › status application a burn/slow proc spawns status_apply and logs who got what
+PASS combat_status_feedback.test.ts › status application no proc, no status feedback
+FAIL combat_status_feedback.test.ts › status application the spawned overlay names the status inside the frame at 40 columns
+FAIL combat_status_feedback.test.ts › status end an expiring burn is logged as off (was silently dropped by tickStatus)
+PASS combat_status_feedback.test.ts › status end a burn that still has turns left is not reported as ended
+FAIL combat_status_feedback.test.ts › status end a slow spent on the hit is logged as off
+FAIL combat_status_feedback.test.ts › status end an ICE-cast effect ending in the enemy turn is logged with its ICE
+FAIL combat_status_feedback.test.ts › status end the end is information, not animation: the HUD prints it
+PASS combat_status_feedback.test.ts › status end status feedback consumes no RNG
+FAIL combat_status_feedback.test.ts › status helpers endedStatuses lists exactly what a tick dropped
+FAIL combat_status_feedback.test.ts › status helpers labels the target in words
+PASS program_affordance.test.ts › COST label = the reducer's charge normal: every slot's COST and AFTER equal what use_program does
+PASS program_affordance.test.ts › COST label = the reducer's charge double_alarm: every slot's COST and AFTER equal what use_program does
+PASS program_affordance.test.ts › COST label = the reducer's charge double_alarm doubles and floors exactly like the reducer
+PASS program_affordance.test.ts › COST label = the reducer's charge normal []: COST 97, cost 3, BLOCKED=false matches the reducer's refusal
+PASS program_affordance.test.ts › COST label = the reducer's charge normal []: COST 98, cost 3, BLOCKED=true matches the reducer's refusal
+PASS program_affordance.test.ts › COST label = the reducer's charge double_alarm ["double_alarm"]: COST 94, cost 3, BLOCKED=false matches the reducer's refusal
+PASS program_affordance.test.ts › COST label = the reducer's charge double_alarm ["double_alarm"]: COST 95, cost 3, BLOCKED=true matches the reducer's refusal
+PASS program_affordance.test.ts › slot order = input order slot N names the program select_program N plays, and the play removes exactly that row
+PASS program_affordance.test.ts › target label says ALL ICE only for aoe programs
+PASS program_affordance.test.ts › row text renders the synthesis contract
+PASS program_affordance.test.ts › row text narrow rows line up under their legend and keep every fact
+PASS program_affordance.test.ts › row text full rows fit the 60-column frame
+PASS program_affordance.test.ts › row text names nothing the runtime cannot vouch for
+PASS program_affordance.test.ts › touch label = canvas semantics states slot, name, COST, outcome and target
+PASS program_affordance.test.ts › display path is inert consumes no RNG and never reads the clock
+PASS program_affordance.test.ts › hand block placement rows=50: header row 42, five slots end inside the frame
+PASS program_affordance.test.ts › hand block placement rows=40: header row 32, five slots end inside the frame
+PASS program_affordance.test.ts › hand block placement rows=60: header row 51, five slots end inside the frame
+FAIL program_affordance.test.ts › wiring feeds the touch row the same affordance rows the canvas draws
+FAIL program_affordance.test.ts › wiring hands the canvas hand band to the touch overlay only while it is mounted
+FAIL program_affordance.test.ts › wiring names the program that was actually played in the touch acknowledgement
+FAIL program_affordance.test.ts › wiring keeps the combat-entry hint above the hand at every grid
+PASS touch.test.ts › virtual gamepad overlay mounts root element on first call
+PASS touch.test.ts › virtual gamepad overlay creates 6 buttons (4 dpad + A + B)
+PASS touch.test.ts › virtual gamepad overlay cleans up DOM on unmount
+PASS touch.test.ts › virtual gamepad overlay returns a no-op function in non-browser environments
+PASS touch.test.ts › virtual gamepad overlay uses a 44px minimum touch target (Apple HIG / WCAG 2.5.5)
+PASS touch.test.ts › virtual gamepad overlay floors every gamepad button at MIN_TOUCH_TARGET_PX without dropping vw sizing
+PASS touch.test.ts › virtual gamepad overlay isTouchDevice returns boolean
+PASS touch.test.ts › virtual gamepad overlay fires exactly one action per tap across duplicate event types
+FAIL touch.test.ts › program row (P12) renders one button per deck entry
+FAIL touch.test.ts › program row (P12) clears the row when the deck is empty
+FAIL touch.test.ts › program row (P12) reports the pressed hand index to the callback
+FAIL touch.test.ts › program row (P12) fires the callback on pointerdown (no tap latency)
+FAIL touch.test.ts › program row (P12) rejects a duplicate press inside the debounce window
+FAIL touch.test.ts › program row (P12) accepts a press after the debounce window has elapsed
+PASS touch.test.ts › program row (P12) uses a 120ms debounce window
+FAIL touch.test.ts › program row (P12) floors program buttons at MIN_TOUCH_TARGET_PX while keeping vw/vh scaling
+FAIL touch.test.ts › program row (P12) falls back to the wetrun global when no callback is given
+FAIL touch.test.ts › program row (P12) labels each button with the canvas row's facts, visibly and for assistive tech (ADR-0251)
+FAIL touch.test.ts › program row (P12) does not show the four-letter id strip any more (ADR-0251)
+TOTAL failed 43 passed 43 failed-suites 0

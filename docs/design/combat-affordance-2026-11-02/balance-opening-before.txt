@@ -1,0 +1,15 @@
+
+> wetrun-web@0.1.0 balance
+> tsx scripts/balance_harness.ts
+
+Balance harness — opening deck [backdoor, barrier, boost, cloak, decoy]
+Missions: 53, ICE types: 97, runs/mission: 100
+
+Idle: 0ms (scalar = every turn; schedule = once, then 0)
+grade  missions  win-rate  stalled  mean-turns  mean-HP-end  p5/p95
+    1         4    100.0%     0.0%         2.7         88.2   86/92
+    2        16     88.3%     0.0%         4.2         42.7   29/57
+    3        11     70.5%     0.0%         6.8         13.8    4/30
+    4        10     39.5%     0.0%         6.5          5.3    0/14
+    5         9     36.2%     0.0%         5.8          4.9    1/12
+    6         3      0.0%     0.0%         5.2          0.0    0/0

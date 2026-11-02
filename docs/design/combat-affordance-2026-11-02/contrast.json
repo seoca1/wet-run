@@ -1,0 +1,107 @@
+[
+  {
+    "mode": "none",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "hand row (CYAN_LIGHT)": 16.75,
+      "BLOCKED hand row (GRAY_MID)": 6.58,
+      "hand header / legend (YELLOW_AMBER)": 10.63,
+      "status_apply overlay (YELLOW_AMBER)": 10.63,
+      "HUD status on/off lines (GREEN_NEON)": 15.38
+    }
+  },
+  {
+    "mode": "none",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "hand row (CYAN_LIGHT)": 16.75,
+      "BLOCKED hand row (GRAY_MID)": 13.62,
+      "hand header / legend (YELLOW_AMBER)": 19.56,
+      "status_apply overlay (YELLOW_AMBER)": 19.56,
+      "HUD status on/off lines (GREEN_NEON)": 15.3
+    }
+  },
+  {
+    "mode": "deuteranopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "hand row (CYAN_LIGHT)": 16.75,
+      "BLOCKED hand row (GRAY_MID)": 6.58,
+      "hand header / legend (YELLOW_AMBER)": 10.63,
+      "status_apply overlay (YELLOW_AMBER)": 10.63,
+      "HUD status on/off lines (GREEN_NEON)": 13.96
+    }
+  },
+  {
+    "mode": "deuteranopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "hand row (CYAN_LIGHT)": 16.75,
+      "BLOCKED hand row (GRAY_MID)": 13.62,
+      "hand header / legend (YELLOW_AMBER)": 19.56,
+      "status_apply overlay (YELLOW_AMBER)": 19.56,
+      "HUD status on/off lines (GREEN_NEON)": 15.3
+    }
+  },
+  {
+    "mode": "protanopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "hand row (CYAN_LIGHT)": 16.75,
+      "BLOCKED hand row (GRAY_MID)": 6.58,
+      "hand header / legend (YELLOW_AMBER)": 10.63,
+      "status_apply overlay (YELLOW_AMBER)": 10.63,
+      "HUD status on/off lines (GREEN_NEON)": 15.38
+    }
+  },
+  {
+    "mode": "protanopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "hand row (CYAN_LIGHT)": 16.75,
+      "BLOCKED hand row (GRAY_MID)": 13.62,
+      "hand header / legend (YELLOW_AMBER)": 19.56,
+      "status_apply overlay (YELLOW_AMBER)": 19.56,
+      "HUD status on/off lines (GREEN_NEON)": 15.3
+    }
+  },
+  {
+    "mode": "tritanopia",
+    "highContrast": false,
+    "background": "#000000",
+    "ratios": {
+      "hand row (CYAN_LIGHT)": 10.93,
+      "BLOCKED hand row (GRAY_MID)": 6.58,
+      "hand header / legend (YELLOW_AMBER)": 10.15,
+      "status_apply overlay (YELLOW_AMBER)": 10.15,
+      "HUD status on/off lines (GREEN_NEON)": 15.38
+    }
+  },
+  {
+    "mode": "tritanopia",
+    "highContrast": true,
+    "background": "#000000",
+    "ratios": {
+      "hand row (CYAN_LIGHT)": 16.75,
+      "BLOCKED hand row (GRAY_MID)": 13.62,
+      "hand header / legend (YELLOW_AMBER)": 19.56,
+      "status_apply overlay (YELLOW_AMBER)": 19.56,
+      "HUD status on/off lines (GREEN_NEON)": 15.3
+    }
+  },
+  {
+    "surface": "touch program buttons (fixed CSS, not palette-driven)",
+    "ratios": {
+      "label #00ff41 on #000": 15.38,
+      "BLOCKED label #909090 on #000": 6.58,
+      "border #00ff41 vs #000 (non-text 3:1)": 15.38,
+      "BLOCKED border #909090 vs #000": 6.58
+    }
+  }
+]

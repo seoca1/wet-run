@@ -16,13 +16,19 @@ import {
   applyBurnDamage,
   tickStatus,
   rollStatusProc,
+  endedStatuses,
+  statusEventLines,
 } from "../status";
 import { AudioManager } from "../../audio/manager";
 import { calculateDamage, countRoleSynergy } from "./combat_engine";
 import { rollLoot, getLootTable, type LootDrop } from "../state/loot";
 import { absorbIceDamage } from "./ice_combat_effects";
 import iceTypesData from "../../data/ice_types.json";
-import { isMutatorActive, type MutableRunState } from "../state/run_mutators";
+import {
+  COST_LIMIT,
+  programAlarmCost,
+  programHitsAllIce,
+} from "./program_affordance";
 import { onIceKill, type FactionId } from "../state/faction_reputation";
 import {
   COMBAT_LOG_CAP,
@@ -50,15 +56,11 @@ export function useProgram(state: GameState, programId: string): GameState {
   if (!program) {
     return { ...state, message: `Program ${programId} not in hand` };
   }
-  const alarmMultiplier = isMutatorActive(
-    state as unknown as MutableRunState,
-    "double_alarm",
-  )
-    ? 2.0
-    : 1.0;
+  // ADR-0251: the hand label reads the same helper, so the COST it shows is
+  // the COST charged here and BLOCKED is exactly this refusal.
   const newAlarm =
-    state.player.alarm + Math.floor(program.cost * alarmMultiplier);
-  if (newAlarm > 100) {
+    state.player.alarm + programAlarmCost(program, state.activeMutators);
+  if (newAlarm > COST_LIMIT) {
     return { ...state, message: "Cost too high — program failed" };
   }
   const newDeck = state.deck.filter((p) => p.id !== programId);
@@ -119,7 +121,7 @@ export function useProgram(state: GameState, programId: string): GameState {
   }
 
   const targetIdx = state.activeIceIndex;
-  const isAoe = (program as { aoe?: boolean }).aoe === true;
+  const isAoe = programHitsAllIce(program);
   // ADR-0219 Option A: an ICE's shield pool absorbs incoming player damage
   // before it reaches the ICE's HP. Each roster ICE has its own pool, so the
   // absorption runs per entry and the spent pools are written back.
@@ -141,6 +143,7 @@ export function useProgram(state: GameState, programId: string): GameState {
     playerCombo: newCombo,
     comboLastHitMs: currentMs,
   };
+  const statusCountBeforeProcs = stateWithDamage.statusEffects.length;
   if (
     rollStatusProc("burn") &&
     damagedRoster[targetIdx] &&
@@ -159,6 +162,11 @@ export function useProgram(state: GameState, programId: string): GameState {
       slowPct: 30,
     });
   }
+
+  // ADR-0251 slice B: procs append, so what this play applied is the tail.
+  const appliedStatuses = stateWithDamage.statusEffects.slice(
+    statusCountBeforeProcs,
+  );
 
   if (vulnerableBonus > 0) {
     const vulnerableIdx = stateWithDamage.statusEffects.findIndex(
@@ -191,6 +199,32 @@ export function useProgram(state: GameState, programId: string): GameState {
     tickResult.healPlayer,
     tickResult.healIce,
   );
+  // ADR-0251 slice B: name every status this play started or ended. Between
+  // the input and `finalState` effects are only added by the procs above, so
+  // the before/after difference is exactly what a shield break, a spent
+  // slow / vulnerable or the tick removed. Display only; no RNG.
+  const rosterSize = state.iceRoster.length;
+  const statusLines = [
+    ...statusEventLines(appliedStatuses, "on", rosterSize),
+    ...statusEventLines(
+      endedStatuses(
+        [...state.statusEffects, ...appliedStatuses],
+        finalState.statusEffects,
+      ),
+      "off",
+      rosterSize,
+    ),
+  ];
+  const statusApplyVfx =
+    appliedStatuses.length > 0
+      ? [
+          import_vfx(
+            "status_apply",
+            `ICE ${appliedStatuses.map((e) => e.kind.toUpperCase()).join("+")}`,
+            durationForKind("status_apply"),
+          ),
+        ]
+      : [];
   const dotOrRegenVfx: import("../../renderer/combat_vfx.ts").CombatVfxInstance[] =
     [];
   if (tickResult.burnDamagePlayer > 0 || tickResult.burnDamageIce > 0) {
@@ -231,6 +265,7 @@ export function useProgram(state: GameState, programId: string): GameState {
     import_vfx(programVfxKind, program.name, 3),
     import_vfx("ice_hit", `${damage}`, 2),
     ...programVfxInstances,
+    ...statusApplyVfx,
     ...dotOrRegenVfx,
     // ADR-0241: the CRIT flash tracks the real crit roll, not a damage
     // threshold. Spawning draws no Math.random (ADR-0239), so this condition
@@ -347,10 +382,11 @@ export function useProgram(state: GameState, programId: string): GameState {
       runPhase: "loot",
       phase: "victory",
       message: victoryMessage,
-      combatLog: [victoryMessage, ...stateWithLoot.combatLog].slice(
-        0,
-        COMBAT_LOG_CAP,
-      ),
+      combatLog: [
+        victoryMessage,
+        ...statusLines,
+        ...stateWithLoot.combatLog,
+      ].slice(0, COMBAT_LOG_CAP),
       player: {
         ...stateWithLoot.player,
         credits: stateWithLoot.player.credits + totalReward,
@@ -381,10 +417,11 @@ export function useProgram(state: GameState, programId: string): GameState {
     discardPile: discard,
     player: { ...stateWithLoot.player, alarm: newAlarm },
     message: programMessage,
-    combatLog: [programMessage, ...stateWithLoot.combatLog].slice(
-      0,
-      COMBAT_LOG_CAP,
-    ),
+    combatLog: [
+      programMessage,
+      ...statusLines,
+      ...stateWithLoot.combatLog,
+    ].slice(0, COMBAT_LOG_CAP),
     vfxInstances: vfxNew,
     unlockedAchievements: stateWithLoot.unlockedAchievements,
     achievementCredits: stateWithLoot.achievementCredits,

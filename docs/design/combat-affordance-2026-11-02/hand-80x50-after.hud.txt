@@ -1,0 +1,9 @@
+HP 100/100
+COST 38/100
+Credits 0
+Equipped: 0/8
+
+Phase: combat
+> [1] ICE — Stan HP: 165
+
+Mission: Aleph Fragment

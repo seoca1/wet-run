@@ -27,7 +27,7 @@ Thumbs.db
 # Secrets (CRITICAL — never commit)
 .env
 
-# Local-only data (not in repo — project data lives under prototype/data/)
+# Local-only data (not in repo — project data lives under web/src/data/ + web/public/)
 /data/
 
 # Local test artifacts (intentional runtime accumulation)
@@ -40,11 +40,10 @@ prototype/data/saves/*.json
 .mypy_cache/
 .vite/
 
-# Local BGM backups (v1 originals — restored on next regeneration)
-dashboard/sounds/*.v1_backup.wav
-dashboard/sounds/*_v1_orig.wav
-prototype/.venv-311/
-
-# Orphan sounds_test/ at repo root (untracked 2026-08-20 — Issue #1 cleanup)
-# Canonical path is prototype/data/sounds_test/ (used by sound_manager + graphic_novel + minimax_bgms)
-data/sounds_test/
+# Audio assets (2026-11-02 dedup — ADR-0253)
+# v1 originals are transcoding sources only: the dashboard plays docs/dashboard/sounds/full/*.mp3.
+# Kept local-only — anchored so sounds/v2/ and sounds/full/ are unaffected.
+/docs/dashboard/sounds/theme_*.wav
+# Regenerable import-script backups (docs/dashboard/scripts/import_minimax_track.sh)
+/docs/dashboard/sounds/*.v1_backup.wav
+/docs/dashboard/sounds/*_v1_orig.wav

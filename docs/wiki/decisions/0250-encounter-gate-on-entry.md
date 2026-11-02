@@ -4,7 +4,7 @@
 **날짜**: 2026-11-02
 **결정자**: 사용자 (프로젝트 오너) — "그래 C로 가자" 승인
 **우선순위**: P2 (The Matrix — 경로·위험 결정)
-**관련**: [상위 ADR-0246 — 던전의 역할과 런 인터랙션](./0246-dungeon-role-and-run-interaction.md) · [ADR-0247 — 던전 역할 보충](./0247-dungeon-role-supplement-manus-second-opinion.md) · [ADR-0236 — 접근성·모션](./0236-accessibility-and-motion.md) · [ADR-0195 — 구현 상태 기록](./0195-adr-implementation-workflow.md)
+**관련**: [상위 ADR-0246 — 던전의 역할과 런 인터랙션](./0246-dungeon-role-and-run-interaction.md) · [ADR-0247 — 던전 역할 보충](./0247-dungeon-role-supplement-manus-second-opinion.md) · [ADR-0236 — 접근성 모드](./0236-accessibility-modes.md) · [ADR-0195 — 구현 상태 기록](./0195-adr-implementation-workflow.md)
 
 > **이 ADR은 ADR-0246의 조항 2건만 대체한다.** (1) "출발 확인이 결정 메뉴를 연다"(§Implementation Status, 242행),
 > (2) "이번 방문의 통과 상태는 선택적 일시 필드"(같은 절, 243행).

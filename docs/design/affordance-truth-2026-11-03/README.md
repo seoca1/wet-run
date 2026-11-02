@@ -1,6 +1,6 @@
 # 어포던스 진실성 정합 — 증거 (2026-11-03)
 
-[ADR-0253](../../wiki/decisions/0253-affordance-truth-and-effect-honesty.md) 의 증거다.
+[ADR-0254](../../wiki/decisions/0254-affordance-truth-and-effect-honesty.md) 의 증거다.
 결정은 **자가 플레이 검증 + AI 위임**(Jev 결정 계층 · Manus 독립 리뷰)으로 내렸다.
 
 ## 어떻게 결정했나

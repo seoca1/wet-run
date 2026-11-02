@@ -4,7 +4,7 @@
 **날짜**: 2026-11-03
 **결정자**: 위임 결정 — Jev 결정 계층(`scripts/jev-call.sh`) 선택 + Manus(max) 독립 리뷰, 오너 승인은 "스스로 판단할 수 있는 것부터 후속 진행해줘" (2026-11-02)
 **우선순위**: P1 (The Flatline — 화면이 오르는 약속, The Build — 상태 결함)
-**관련**: [ADR-0251 — 진실한 프로그램 어포던스 + 전투 무결성 규칙](./0251-truthful-program-affordance-and-combat-integrity-rules.md) · [ADR-0252 — 런 종료·저장 시점](./0252-run-end-and-save-timing.md) · [ADR-0243 — 숫자키 1회 = 카드 1장 실행](./0243-digit-key-repeat-policy.md) · [ADR-0195 — 구현 상태 기록](./0195-adr-implementation-workflow.md) · [ADR-0239 — VFX RNG 결합 해소(밸런스 기준선)](./0239-vfx-rng-neutrality.md)
+**관련**: [ADR-0251 — 진실한 프로그램 어포던스 + 전투 무결성 규칙](./0251-truthful-program-affordance-and-combat-integrity-rules.md) · [ADR-0252 — 런 종료·저장 시점](./0252-run-end-and-save-timing.md) · [ADR-0243 — 숫자키 1회 = 카드 1장 실행](./0243-digit-key-repeat-policy.md) · [ADR-0195 — 구현 상태 기록](./0195-adr-implementation-workflow.md) · [ADR-0239 — VFX RNG 결합 해소(밸런스 기준선)](./0239-vfx-spawn-rng-decoupling.md)
 
 > **이 ADR은 결정 내용을 새로 정하지 않는다.** ADR-0251 규칙 5("화면이 약속하는 동작은 반드시 진실이어야 한다")를
 > 그 규칙이 생긴 화면에 **적용**한다. 밸런스 수치는 건드리지 않는다(ADR-0239 기준선 byte-identical).

@@ -23,6 +23,7 @@ import { AudioManager } from "../../audio/manager";
 import { calculateDamage, countRoleSynergy } from "./combat_engine";
 import { rollLoot, getLootTable, type LootDrop } from "../state/loot";
 import { absorbIceDamage } from "./ice_combat_effects";
+import { programEffect } from "./program_effects";
 import iceTypesData from "../../data/ice_types.json";
 import {
   COST_LIMIT,
@@ -81,12 +82,21 @@ export function useProgram(state: GameState, programId: string): GameState {
   const currentMs = Date.now();
 
   const defenderIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
+
+  // ADR-0255: Backdoor ignores N points of the ICE's armor. Armor is a flat
+  // subtraction, so a pierce has to remove points from it — a share of the
+  // armor would round away to nothing on the lightly armored ICEs.
+  const effect = programEffect(program);
+  const piercePoints = effect.kind === "pierce" ? effect.amount : 0;
+  const defenderArmor = defenderIce.armor ?? 0;
+  const effectiveArmor = Math.max(0, defenderArmor - piercePoints);
+
   const damageCtx = {
     baseDamage: program.tier * 5,
     attackerTeam: "player" as const,
     attackerAttackBonus,
     attackerCritBonusPct: equipStats.critBonusPct,
-    defenderDefenseBonus: defenderIce.armor ?? 0,
+    defenderDefenseBonus: effectiveArmor,
     defenderIceResistance: 0,
     defenderIceKind: null,
     lastSkillRole: (program as { role?: string }).role ?? null,
@@ -163,11 +173,6 @@ export function useProgram(state: GameState, programId: string): GameState {
     });
   }
 
-  // ADR-0251 slice B: procs append, so what this play applied is the tail.
-  const appliedStatuses = stateWithDamage.statusEffects.slice(
-    statusCountBeforeProcs,
-  );
-
   if (vulnerableBonus > 0) {
     const vulnerableIdx = stateWithDamage.statusEffects.findIndex(
       (e) => e.kind === "vulnerable" && e.target === "ice",
@@ -192,12 +197,56 @@ export function useProgram(state: GameState, programId: string): GameState {
 
   stateWithDamage = tickStatus(stateWithDamage);
   const tickResult = applyTickEffects(stateWithDamage);
-  const finalState = applyBurnDamage(
+  let finalState = applyBurnDamage(
     tickResult.state,
     tickResult.burnDamagePlayer + tickResult.bleedDamagePlayer,
     tickResult.burnDamageIce + tickResult.bleedDamageIce,
     tickResult.healPlayer,
     tickResult.healIce,
+  );
+
+  // ADR-0255: the program's own effect. Applied AFTER the status tick so it
+  // starts at its full duration — a 3-turn shield must not be born at 2, and
+  // a 1-turn decoy must not expire in the same turn it was played.
+  if (effect.kind === "shield") {
+    finalState = applyStatus(
+      finalState,
+      "player",
+      "shield",
+      effect.turns,
+      effect.amount,
+    );
+  } else if (effect.kind === "empower") {
+    finalState = applyStatus(
+      finalState,
+      "player",
+      "powered",
+      effect.turns,
+      effect.amount,
+      { attackBonus: effect.amount },
+    );
+  } else if (effect.kind === "evade") {
+    finalState = applyStatus(
+      finalState,
+      "player",
+      "evasive",
+      effect.turns,
+      effect.amount,
+    );
+  } else if (effect.kind === "decoy") {
+    // The decoy takes part of the next hit meant for the player.
+    finalState = applyStatus(
+      finalState,
+      "player",
+      "evasive",
+      effect.turns,
+      effect.amount,
+    );
+  }
+
+  // ADR-0251 slice B: procs append, so what this play applied is the tail.
+  const appliedStatuses = finalState.statusEffects.slice(
+    statusCountBeforeProcs,
   );
   // ADR-0251 slice B: name every status this play started or ended. Between
   // the input and `finalState` effects are only added by the procs above, so

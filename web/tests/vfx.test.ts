@@ -149,9 +149,10 @@ describe("centerArt", () => {
 describe("STATUS_GLYPHS", () => {
   it("exposes 8 glyph mappings", () => {
     // 5 Tier-4 glyphs + the 3 persistent ADR-0226 ICE effect kinds
-    // (shield / regen / powered). `heal` is instant and never persists as a
+    // (shield / regen / powered) + `evasive` (ADR-0255, the player's
+    // damage reduction). `heal` is instant and never persists as a
     // status effect, so it has no glyph.
-    expect(Object.keys(STATUS_GLYPHS).length).toBe(8);
+    expect(Object.keys(STATUS_GLYPHS).length).toBe(9);
   });
 
   it("maps each effect to a single letter", () => {

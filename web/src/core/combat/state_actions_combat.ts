@@ -18,6 +18,7 @@ import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai";
 import { rollIceCrit } from "./ice_crit";
 import { alarmDamage } from "./idle_alarm";
 import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects";
+import { applyPlayerMitigation } from "./player_mitigation";
 import { applyIceNonDamageEffect } from "./ice_combat_effect_apply";
 import { endedStatuses, statusEventLines } from "../status";
 import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling";
@@ -280,7 +281,16 @@ function processEnemyTurns(state: GameState): GameState {
           // so the simulation stays deterministic.
           const crit = rollIceCrit(enemy, baseSkillDmg, Math.random);
           const skillDmg = alarmDamage(crit.damage, state.alarmLevel);
-          playerHp = Math.max(0, playerHp - skillDmg);
+          // ADR-0255: the player's shield pool and evasion stand between the
+          // ICE's hit and the player's HP.
+          const mitigated = applyPlayerMitigation(working, skillDmg);
+          working = mitigated.state;
+          playerHp = Math.max(0, playerHp - mitigated.damage);
+          if (mitigated.absorbed > 0 || mitigated.dodged > 0) {
+            logMessages.push(
+              `>>> shield absorbed ${mitigated.absorbed}, evasion dodged ${mitigated.dodged}`,
+            );
+          }
           enemyTurnVfx.push(
             import_vfx_deterministic(
               "player_hit",
@@ -288,7 +298,7 @@ function processEnemyTurns(state: GameState): GameState {
               durationForKind("player_hit"),
               undefined,
               undefined,
-              skillDmg,
+              mitigated.damage,
             ),
           );
           logMessages.push(
@@ -356,7 +366,16 @@ function processEnemyTurns(state: GameState): GameState {
       const crit = rollIceCrit(enemy, autoDmg, Math.random);
       autoDmg = alarmDamage(crit.damage, state.alarmLevel);
 
-      playerHp = Math.max(0, playerHp - autoDmg);
+      // ADR-0255: the player's shield pool and evasion stand between the
+      // ICE's hit and the player's HP.
+      const autoMitigated = applyPlayerMitigation(working, autoDmg);
+      working = autoMitigated.state;
+      playerHp = Math.max(0, playerHp - autoMitigated.damage);
+      if (autoMitigated.absorbed > 0 || autoMitigated.dodged > 0) {
+        logMessages.push(
+          `>>> shield absorbed ${autoMitigated.absorbed}, evasion dodged ${autoMitigated.dodged}`,
+        );
+      }
       enemyTurnVfx.push(
         import_vfx_deterministic(
           "player_hit",

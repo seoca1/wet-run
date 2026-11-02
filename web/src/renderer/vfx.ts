@@ -91,6 +91,7 @@ export const STATUS_GLYPHS: Readonly<Record<string, string>> = {
   shield: "D",
   regen: "R",
   powered: "P",
+  evasive: "E",
 };
 
 export function formatStatusGlyph(effects: readonly string[]): string {

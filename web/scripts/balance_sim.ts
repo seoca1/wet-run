@@ -15,7 +15,11 @@
  * stalls. That is recorded as `stalled` rather than papered over.
  */
 import { AUTO_ATTACK_INTERVAL_MS } from "../src/core/combat/combat_engine";
-import { idleAlarmAction, IDLE_ALARM_TUNING } from "../src/core/combat/idle_alarm";
+import { programEffect } from "../src/core/combat/program_effects";
+import {
+  idleAlarmAction,
+  IDLE_ALARM_TUNING,
+} from "../src/core/combat/idle_alarm";
 import { ALARM_TICK_INTERVAL_MS } from "../src/core/combat/combat_engine";
 import { iceHpForGrade, missionGradeOf } from "../src/core/combat/ice_scaling";
 import { resolveMatrixRoster } from "../src/core/dungeon/matrix";
@@ -60,14 +64,37 @@ const CLOCK_ORIGIN_MS = 1_000_000;
  * grade-scaled ICE answers "does a developed deck meet the grade?" — the
  * counterpart to the fixed opening-hand measurement.
  */
-export function deckForGrade(catalog: Readonly<Record<string, Program>>, grade: number): Program[] {
-  const tier = Math.max(1, Math.min(5, Math.round(Number.isFinite(grade) ? grade : 1)));
-  const all = Object.values(catalog).filter((p): p is Program => p !== undefined);
+export function deckForGrade(
+  catalog: Readonly<Record<string, Program>>,
+  grade: number,
+): Program[] {
+  const tier = Math.max(
+    1,
+    Math.min(5, Math.round(Number.isFinite(grade) ? grade : 1)),
+  );
+  const all = Object.values(catalog).filter(
+    (p): p is Program => p !== undefined,
+  );
   const eligible = all.filter((p) => p.tier <= tier);
   const pool = eligible.length >= 5 ? eligible : all;
+  // ADR-0255: "the strongest 5" has to be effect-aware. A support card
+  // (shield / empower / evade / decoy) does not scale with tier the way an
+  // attack does, and a deck of nothing but support cannot win a fight, so
+  // within a tier the attacks rank first.
   return [...pool]
-    .sort((a, b) => b.tier - a.tier || b.cost - a.cost || a.id.localeCompare(b.id))
+    .sort(
+      (a, b) =>
+        b.tier - a.tier ||
+        Number(isSupport(b)) - Number(isSupport(a)) ||
+        b.cost - a.cost ||
+        a.id.localeCompare(b.id),
+    )
     .slice(0, 5);
+}
+
+/** True when the program's own effect is a support effect, not an attack. */
+function isSupport(program: Program): boolean {
+  return programEffect(program).kind !== "damage";
 }
 
 function isFighting(s: GameState): boolean {
@@ -95,15 +122,21 @@ export function simulateCombat(
 
   try {
     const fallback = Object.values(iceCatalog)[0];
-    if (fallback === undefined) throw new Error("balance_sim: empty ICE catalog");
+    if (fallback === undefined)
+      throw new Error("balance_sim: empty ICE catalog");
 
     const probe = makeInitialState(mission, fallback, deck);
     // Measure the mission's normal encounter: skip boss rooms so a boss spike
     // does not decide the reported win-rate. Falls back to any ICE node if no
     // non-boss encounter exists.
     const nodes = probe.matrix?.nodes ?? [];
-    const encounterIdx = nodes.findIndex((n) => n.iceIds.length > 0 && !n.isBoss);
-    const nodeIndex = encounterIdx >= 0 ? encounterIdx : nodes.findIndex((n) => n.iceIds.length > 0);
+    const encounterIdx = nodes.findIndex(
+      (n) => n.iceIds.length > 0 && !n.isBoss,
+    );
+    const nodeIndex =
+      encounterIdx >= 0
+        ? encounterIdx
+        : nodes.findIndex((n) => n.iceIds.length > 0);
     const roster =
       nodeIndex >= 0 && probe.matrix !== null
         ? resolveMatrixRoster(probe.matrix, nodeIndex, iceCatalog)
@@ -139,9 +172,10 @@ export function simulateCombat(
         stalled = true;
         break;
       }
-      const idleMs = typeof config.idleMsPerTurn === "number"
-        ? config.idleMsPerTurn
-        : config.idleMsPerTurn?.[turns] ?? 0;
+      const idleMs =
+        typeof config.idleMsPerTurn === "number"
+          ? config.idleMsPerTurn
+          : (config.idleMsPerTurn?.[turns] ?? 0);
       if (idleMs > 0) {
         const idleSinceMs = clock;
         const resumeMs = clock + idleMs;
@@ -189,7 +223,10 @@ export interface SuiteStats {
 
 function percentile(sorted: ReadonlyArray<number>, p: number): number {
   if (sorted.length === 0) return 0;
-  const idx = Math.min(sorted.length - 1, Math.max(0, Math.round((p / 100) * (sorted.length - 1))));
+  const idx = Math.min(
+    sorted.length - 1,
+    Math.max(0, Math.round((p / 100) * (sorted.length - 1))),
+  );
   return sorted[idx] ?? 0;
 }
 
@@ -210,7 +247,11 @@ export function runSuite(
   const hpEnds: number[] = [];
 
   for (let i = 0; i < runs; i++) {
-    const outcome = simulateCombat(mission, iceCatalog, deck, { seed: baseSeed + i, maxTurns, idleMsPerTurn });
+    const outcome = simulateCombat(mission, iceCatalog, deck, {
+      seed: baseSeed + i,
+      maxTurns,
+      idleMsPerTurn,
+    });
     if (outcome.won) wins += 1;
     if (outcome.stalled) stalls += 1;
     turnSum += outcome.turns;

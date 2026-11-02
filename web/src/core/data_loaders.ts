@@ -12,6 +12,7 @@
  *
  * No new dependencies — pure type-guard validation.
  */
+import { programEffectDescription } from "./combat/program_effects";
 import {
   parseIceSkills,
   parseIceSkillDefs,
@@ -232,15 +233,11 @@ export function parseProgram(raw: unknown, idHint: string): Program {
     typeof r.planned_description === "string" ? r.planned_description : "";
   const effect = typeof r.effect === "string" ? r.effect : "attack";
   const aoe = r.aoe === true;
-  // ADR-0251 rule 5: the description states what the program does. The web
-  // reducer gives every program the same damage path — `baseDamage:
-  // program.tier * 5` — so that is what the text says. The catalog's
-  // designed effect (shield, buff, decoy, ...) is not wired in this tier
-  // and stays in `plannedDescription`.
-  const damage = tier * 5;
-  const description = aoe
-    ? `Deals ${damage} damage to every ICE.`
-    : `Deals ${damage} damage to the ICE.`;
+  // ADR-0251 rule 5: the description states what the program does. The
+  // text is built from the mechanic (program_effects.ts), so it cannot
+  // drift away from the reducer. The catalog's designed effect that is not
+  // wired yet stays in `plannedDescription`.
+  const description = programEffectDescription({ id: idHint, tier, aoe });
   return {
     id: idHint,
     name,

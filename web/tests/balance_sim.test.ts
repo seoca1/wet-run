@@ -126,10 +126,13 @@ describe("balance sim — determinism", () => {
 
 describe("balance sim — grade scaling", () => {
   it.each([
-    { mode: "opening", expected: [100.0, 88.3, 70.5, 39.5, 36.2, 0.0] },
-    { mode: "ppl", expected: [100.0, 79.1, 98.9, 83.0, 44.4, 24.7] },
+    // ADR-0256 — the card effects moved the grade curve; this is the
+    // re-baselined curve that ADR accepts. The shape still falls
+    // monotonically and g6 stays lethal.
+    { mode: "opening", expected: [100.0, 100.0, 97.5, 53.4, 44.1, 0.3] },
+    { mode: "ppl", expected: [100.0, 100.0, 99.3, 84.1, 44.4, 27.3] },
   ])(
-    "reproduces ADR-0239 exactly with idle disabled ($mode)",
+    "reproduces the ADR-0256 baseline exactly with idle disabled ($mode)",
     ({ mode, expected }) => {
       // Given
       const grades = [1, 2, 3, 4, 5, 6];

@@ -288,7 +288,9 @@ export type StatusEffectKind =
   | "fatigue"
   | "confused"
   | "terrified"
-  | "shield";
+  | "shield"
+  /** Player-only: incoming damage is reduced by `magnitude` percent. */
+  | "evasive";
 
 /** Active status effect instance (Tier 5 state machine).
  *

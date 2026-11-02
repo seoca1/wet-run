@@ -209,13 +209,6 @@
   <code>web/src/audio/</code> · <code>web/src/core/sound_system.ts</code> · 자산: <code>web/public/sounds/</code>
 </div>
 
-<div style="background:#1a1200;border:1px solid #6b4a00;border-left:3px solid #ffaa55;border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13px;color:#c5d4e3;">
-  <strong style="color:#ffaa55;">⚠️ 폐기 구간 안내</strong> — 아래 <code>Categories</code> · <code>Sound Files</code> 절은
-  <strong>2026-09-15에 폐기된 Python 프로시저럴 사운드 시스템</strong>(<code>src/wet_run/audio/</code>, afplay/aplay)을 기술한다.
-  현행 구현은 <code>web/src/audio/</code> + <code>web/src/core/sound_system.ts</code> (Howler.js)이며, 실제 자산은
-  <code>web/public/sounds/</code> 에 있다. 이 두 절은 <strong>참고용 역사 기록</strong>으로 남아 있다.
-  실제 사운드 목록은 아래 <code>전체 트랙 감상</code> 과 <code>Engine Integration</code> 을 본다.
-</div>
 
 <!-- Stats -->
 <div class="stats-panel">
@@ -250,54 +243,59 @@
 </div>
 
 <!-- Categories -->
-<h2>📂 Categories (6) — <span style="color:#ffaa55;font-size:13px;">⚠️ retired 2026-09-15</span></h2>
+<h2>📂 Asset Groups</h2>
+<p style="color:#8a9aa8;font-size:13px;margin-bottom:16px;">
+  현행 <code>web/public/sounds/</code> 자산 44개 (BGM 20 + SFX 24) 의 그룹 구분.
+  음량·음소거는 SETTINGS 화면(<code>master</code> · <code>bgm</code> · <code>sfx</code> · <code>mute</code>)에서 조정하고,
+  전역 <code>M</code> 키로 음소거를 토글한다.
+</p>
 <div class="category-grid" data-sound-categories>
   <div class="category-card theme">
     <div class="name">THEME</div>
-    <div class="name-en">배경음악 (Background music / ambient)</div>
-    <div class="key">T</div>
-    <div class="default-state on">● ON by default</div>
-    <div class="sound-count">5</div>
+    <div class="name-en">배경음악 (situational 15 + theme 5)</div>
+    <div class="key">SETTINGS → bgm</div>
+    <div class="default-state on">master × bgm × track</div>
+    <div class="sound-count">20</div>
   </div>
   <div class="category-card events">
     <div class="name">EVENTS</div>
-    <div class="name-en">이벤트 (Story / event triggers)</div>
-    <div class="key">E</div>
-    <div class="default-state on">● ON by default</div>
-    <div class="sound-count">3</div>
+    <div class="name-en">이벤트 · 스토리 (승리 · 사망 · 루트 · 보스)</div>
+    <div class="key">SETTINGS → sfx</div>
+    <div class="default-state on">BGM duck 없음</div>
+    <div class="sound-count">8</div>
   </div>
   <div class="category-card keys">
     <div class="name">KEYS</div>
-    <div class="name-en">키보드 (UI key sounds)</div>
-    <div class="key">K</div>
-    <div class="default-state off">● OFF by default</div>
-    <div class="sound-count">5</div>
+    <div class="name-en">UI 키 사운드</div>
+    <div class="key">SETTINGS → sfx</div>
+    <div class="default-state on">BGM duck 없음</div>
+    <div class="sound-count">3</div>
   </div>
   <div class="category-card combat">
     <div class="name">COMBAT</div>
-    <div class="name-en">전투 (Combat effects)</div>
-    <div class="key">B</div>
-    <div class="default-state on">● ON by default</div>
-    <div class="sound-count">12</div>
+    <div class="name-en">전투 임팩트 · 스킬 대지</div>
+    <div class="key">SETTINGS → sfx</div>
+    <div class="default-state on">● 9종은 BGM 자동 감쇠</div>
+    <div class="sound-count">9</div>
   </div>
   <div class="category-card movement">
     <div class="name">MOVEMENT</div>
-    <div class="name-en">이동 (Movement / navigation)</div>
-    <div class="key">V</div>
-    <div class="default-state on">● ON by default</div>
-    <div class="sound-count">4</div>
+    <div class="name-en">이동 · 내비게이션</div>
+    <div class="key">SETTINGS → sfx</div>
+    <div class="default-state on">BGM duck 없음</div>
+    <div class="sound-count">2</div>
   </div>
   <div class="category-card items">
     <div class="name">ITEMS</div>
-    <div class="name-en">아이템 (Inventory / equipment)</div>
-    <div class="key">I</div>
-    <div class="default-state on">● ON by default</div>
-    <div class="sound-count">3</div>
+    <div class="name-en">장비 · 치유</div>
+    <div class="key">SETTINGS → sfx</div>
+    <div class="default-state on">BGM duck 없음</div>
+    <div class="sound-count">2</div>
   </div>
 </div>
 
 <!-- Themes -->
-<h2>🎵 Themes (5 + 7 ambient)</h2>
+<h2>🎵 Themes (12)</h2>
 <p style="color:#8a9aa8;font-size:13px;margin-bottom:16px;">아래에서 직접 들어보세요. 파일은 <code>sounds/full/</code> 디렉토리에 있습니다 (MP3).</p>
 
 <!-- BGM Player -->
@@ -594,181 +592,278 @@ buildButtons();
   </div>
 </div>
 
-<!-- Sound list -->
-<h2>🔉 Sound Files (46) — <span style="color:#ffaa55;font-size:13px;">⚠️ retired 2026-09-15</span></h2>
+<h2>🔉 Sound Files (44)</h2>
 <div class="sound-list" data-sound-list>
   <div class="sound-row header">
     <div>File</div>
-    <div>Category</div>
-    <div>Description</div>
+    <div>Group</div>
+    <div>Trigger</div>
     <div style="text-align: right">Size</div>
   </div>
 
-  <div class="sound-row" data-cat="combat">
-    <div class="name">combat_block</div>
-    <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>방어/블록 시</div>
-    <div class="size">~44KB</div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">title.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>타이틀 화면</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">menu.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>메인 메뉴</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">exploration.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>탐색</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">combat_normal.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>일반 전투</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">combat_boss.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>보스 전투</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">combat_multi.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>다수 적 전투</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">shop.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>상점</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">ending_good.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>결말 · 좋음</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">ending_bad.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>결말 · 나쁨</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">ending_neutral.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>결말 · 중립</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">death.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>사망</div>
+    <div class="size">861.4 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">victory.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>승리</div>
+    <div class="size">861.4 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">event_special.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>특별 이벤트</div>
+    <div class="size">1722.7 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">ambient_low.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>안전 구역 앰비언트</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">ambient_high.wav</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>위험 구역 앰비언트</div>
+    <div class="size">2584.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">theme_chiba.mp3</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>테마 · 시바 네온 거리</div>
+    <div class="size">7068.6 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">theme_sense_net.mp3</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>테마 · 테세르-애쉬풀</div>
+    <div class="size">5564.1 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">theme_matrix_rain.mp3</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>테마 · 매트릭스 진입</div>
+    <div class="size">8174.7 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">theme_broadcast.mp3</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>테마 · 스토리 · 이벤트</div>
+    <div class="size">6663.7 KB</div>
+  </div>
+  <div class="sound-row" data-cat="theme">
+    <div class="name">theme_industrial.mp3</div>
+    <div class="category"><span class="pill theme">THEME</span></div>
+    <div>테마 · 전투</div>
+    <div class="size">8016.4 KB</div>
+  </div>
+  <div class="sound-row" data-cat="keys">
+    <div class="name">click.wav</div>
+    <div class="category"><span class="pill keys">KEYS</span></div>
+    <div>UI 클릭</div>
+    <div class="size">43.1 KB</div>
+  </div>
+  <div class="sound-row" data-cat="keys">
+    <div class="name">confirm.wav</div>
+    <div class="category"><span class="pill keys">KEYS</span></div>
+    <div>UI 확인</div>
+    <div class="size">43.1 KB</div>
+  </div>
+  <div class="sound-row" data-cat="keys">
+    <div class="name">back.wav</div>
+    <div class="category"><span class="pill keys">KEYS</span></div>
+    <div>UI 뒤로가기</div>
+    <div class="size">43.1 KB</div>
   </div>
   <div class="sound-row" data-cat="combat">
-    <div class="name">combat_defeat</div>
-    <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>전투 패배 (HP 0)</div>
-    <div class="size">~44KB</div>
-  </div>
-  <div class="sound-row" data-cat="combat">
-    <div class="name">combat_hit_crit</div>
-    <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>크리티컬 명중</div>
-    <div class="size">~44KB</div>
-  </div>
-  <div class="sound-row" data-cat="combat">
-    <div class="name">combat_hit_miss</div>
-    <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>빗나감</div>
-    <div class="size">~44KB</div>
-  </div>
-  <div class="sound-row" data-cat="combat">
-    <div class="name">combat_hit_normal</div>
+    <div class="name">sfx_combat_hit.wav</div>
     <div class="category"><span class="pill combat">COMBAT</span></div>
     <div>일반 명중</div>
-    <div class="size">~44KB</div>
+    <div class="size">3.5 KB</div>
   </div>
   <div class="sound-row" data-cat="combat">
-    <div class="name">combat_skill_buff</div>
+    <div class="name">attack.wav</div>
     <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>스킬 버프</div>
-    <div class="size">~44KB</div>
+    <div>공격</div>
+    <div class="size">43.1 KB</div>
   </div>
   <div class="sound-row" data-cat="combat">
-    <div class="name">combat_skill_debuff</div>
+    <div class="name">damage.wav</div>
     <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>스킬 디버프</div>
-    <div class="size">~44KB</div>
+    <div>피해</div>
+    <div class="size">43.1 KB</div>
   </div>
   <div class="sound-row" data-cat="combat">
-    <div class="name">combat_skill_heal</div>
+    <div class="name">ice_break.wav</div>
     <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>스킬 치유</div>
-    <div class="size">~44KB</div>
+    <div>ICE 파괴</div>
+    <div class="size">43.1 KB</div>
   </div>
   <div class="sound-row" data-cat="combat">
-    <div class="name">combat_skill_magic</div>
+    <div class="name">combat_block.wav</div>
     <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>매직 스킬 (viral)</div>
-    <div class="size">~44KB</div>
+    <div>방어 · 블록</div>
+    <div class="size">25.9 KB</div>
   </div>
   <div class="sound-row" data-cat="combat">
-    <div class="name">combat_skill_physical</div>
+    <div class="name">combat_skill_strike.wav</div>
     <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>물리 스킬</div>
-    <div class="size">~44KB</div>
+    <div>스킬 대지 · 공격형</div>
+    <div class="size">15.5 KB</div>
   </div>
   <div class="sound-row" data-cat="combat">
-    <div class="name">combat_stun</div>
+    <div class="name">combat_skill_burst.wav</div>
     <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>스턴</div>
-    <div class="size">~44KB</div>
+    <div>스킬 대지 · 폭발형</div>
+    <div class="size">30.2 KB</div>
   </div>
   <div class="sound-row" data-cat="combat">
-    <div class="name">combat_victory</div>
+    <div class="name">combat_skill_guard.wav</div>
     <div class="category"><span class="pill combat">COMBAT</span></div>
-    <div>전투 승리 (REWARD 진입)</div>
-    <div class="size">~44KB</div>
+    <div>스킬 대지 · 방어형</div>
+    <div class="size">27.6 KB</div>
   </div>
-
+  <div class="sound-row" data-cat="combat">
+    <div class="name">combat_skill_support.wav</div>
+    <div class="category"><span class="pill combat">COMBAT</span></div>
+    <div>스킬 대지 · 지원형</div>
+    <div class="size">21.6 KB</div>
+  </div>
+  <div class="sound-row" data-cat="movement">
+    <div class="name">movement_step.wav</div>
+    <div class="category"><span class="pill movement">MOVEMENT</span></div>
+    <div>이동 · 스텝</div>
+    <div class="size">13.0 KB</div>
+  </div>
+  <div class="sound-row" data-cat="movement">
+    <div class="name">movement_node.wav</div>
+    <div class="category"><span class="pill movement">MOVEMENT</span></div>
+    <div>이동 · 노드 진입</div>
+    <div class="size">38.8 KB</div>
+  </div>
   <div class="sound-row" data-cat="items">
-    <div class="name">items_cant</div>
-    <div class="category"><span class="pill items">ITEMS</span></div>
-    <div>사용 불가</div>
-    <div class="size">~44KB</div>
-  </div>
-  <div class="sound-row" data-cat="items">
-    <div class="name">items_equip</div>
+    <div class="name">equip.wav</div>
     <div class="category"><span class="pill items">ITEMS</span></div>
     <div>장비 장착</div>
-    <div class="size">~44KB</div>
+    <div class="size">43.1 KB</div>
   </div>
   <div class="sound-row" data-cat="items">
-    <div class="name">items_pickup</div>
+    <div class="name">heal.wav</div>
     <div class="category"><span class="pill items">ITEMS</span></div>
-    <div>아이템 획득</div>
-    <div class="size">~44KB</div>
-  </div>
-
-  <div class="sound-row" data-cat="movement">
-    <div class="name">movement_jack_in</div>
-    <div class="category"><span class="pill movement">MOVEMENT</span></div>
-    <div>잭-인 (matrix 진입)</div>
-    <div class="size">~44KB</div>
-  </div>
-  <div class="sound-row" data-cat="movement">
-    <div class="name">movement_jack_out</div>
-    <div class="category"><span class="pill movement">MOVEMENT</span></div>
-    <div>잭-아웃 (JACK_OUT 진입)</div>
-    <div class="size">~44KB</div>
-  </div>
-  <div class="sound-row" data-cat="movement">
-    <div class="name">movement_nav_block</div>
-    <div class="category"><span class="pill movement">MOVEMENT</span></div>
-    <div>이동 차단 (벽)</div>
-    <div class="size">~44KB</div>
-  </div>
-  <div class="sound-row" data-cat="movement">
-    <div class="name">movement_nav_step</div>
-    <div class="category"><span class="pill movement">MOVEMENT</span></div>
-    <div>한 칸 이동</div>
-    <div class="size">~44KB</div>
-  </div>
-
-  <div class="sound-row" data-cat="events">
-    <div class="name">story_dialogue_advance</div>
-    <div class="category"><span class="pill events">EVENTS</span></div>
-    <div>대화 진행</div>
-    <div class="size">~44KB</div>
+    <div>치유</div>
+    <div class="size">43.1 KB</div>
   </div>
   <div class="sound-row" data-cat="events">
-    <div class="name">story_event_trigger</div>
+    <div class="name">boss_intro.wav</div>
     <div class="category"><span class="pill events">EVENTS</span></div>
-    <div>이벤트 트리거</div>
-    <div class="size">~44KB</div>
+    <div>보스 등장</div>
+    <div class="size">43.1 KB</div>
   </div>
   <div class="sound-row" data-cat="events">
-    <div class="name">story_text_typing</div>
+    <div class="name">phase_change.wav</div>
     <div class="category"><span class="pill events">EVENTS</span></div>
-    <div>텍스트 타이핑</div>
-    <div class="size">~44KB</div>
+    <div>위상 전환</div>
+    <div class="size">43.1 KB</div>
   </div>
-
-  <div class="sound-row" data-cat="keys">
-    <div class="name">ui_error</div>
-    <div class="category"><span class="pill keys">KEYS</span></div>
-    <div>에러 (잘못된 입력)</div>
-    <div class="size">~44KB</div>
+  <div class="sound-row" data-cat="events">
+    <div class="name">victory.wav</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>승리</div>
+    <div class="size">43.1 KB</div>
   </div>
-  <div class="sound-row" data-cat="keys">
-    <div class="name">ui_menu_cancel</div>
-    <div class="category"><span class="pill keys">KEYS</span></div>
-    <div>메뉴 취소 (ESC)</div>
-    <div class="size">~44KB</div>
+  <div class="sound-row" data-cat="events">
+    <div class="name">death.wav</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>사망</div>
+    <div class="size">43.1 KB</div>
   </div>
-  <div class="sound-row" data-cat="keys">
-    <div class="name">ui_menu_confirm</div>
-    <div class="category"><span class="pill keys">KEYS</span></div>
-    <div>메뉴 확인 (ENTER)</div>
-    <div class="size">~44KB</div>
+  <div class="sound-row" data-cat="events">
+    <div class="name">sfx_defeat.wav</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>패배</div>
+    <div class="size">34.5 KB</div>
   </div>
-  <div class="sound-row" data-cat="keys">
-    <div class="name">ui_menu_select</div>
-    <div class="category"><span class="pill keys">KEYS</span></div>
-    <div>메뉴 선택 (탐색)</div>
-    <div class="size">~44KB</div>
+  <div class="sound-row" data-cat="events">
+    <div class="name">loot_drop.wav</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>루트 획득</div>
+    <div class="size">43.1 KB</div>
   </div>
-  <div class="sound-row" data-cat="keys">
-    <div class="name">ui_notification</div>
-    <div class="category"><span class="pill keys">KEYS</span></div>
-    <div>알림 (메시지)</div>
-    <div class="size">~44KB</div>
+  <div class="sound-row" data-cat="events">
+    <div class="name">credit_gain.wav</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>크레딧 획득</div>
+    <div class="size">43.1 KB</div>
+  </div>
+  <div class="sound-row" data-cat="events">
+    <div class="name">credit_spend.wav</div>
+    <div class="category"><span class="pill events">EVENTS</span></div>
+    <div>크레딧 사용</div>
+    <div class="size">43.1 KB</div>
   </div>
 </div>
 

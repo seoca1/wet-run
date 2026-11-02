@@ -55,7 +55,7 @@ export function renderEndingScreen(
     grid,
     Math.max(2, Math.floor((cols - 28) / 2)),
     rows - 2,
-    "ENTER: continue | ESC: back",
+    "ENTER / ESC: return to title",
     PALETTE.GRAY_DARK,
   );
   return grid;

@@ -1,0 +1,167 @@
+{
+  "renderer": "Actual AsciiRenderer (web/src/renderer/canvas.ts) bundled with esbuild, 10x18 cells, DPR 1, system monospace fallback; renderRunScreen (ending) and renderPreGameScreen (main menu) grids plus HUD column at the layout preset hudCols (24/20/16)",
+  "captures": [
+    {
+      "file": "continue-after-run-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T12:14:31.693Z"
+    },
+    {
+      "file": "continue-after-run-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T12:14:31.759Z"
+    },
+    {
+      "file": "continue-after-run-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T12:14:31.847Z"
+    },
+    {
+      "file": "ending-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T12:14:31.919Z"
+    },
+    {
+      "file": "ending-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T12:14:31.969Z"
+    },
+    {
+      "file": "ending-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T12:14:32.039Z"
+    },
+    {
+      "file": "ending-confirm-40x60-before.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T12:14:32.086Z"
+    },
+    {
+      "file": "ending-confirm-60x40-before.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T12:14:32.139Z"
+    },
+    {
+      "file": "ending-confirm-80x50-before.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T12:14:32.208Z"
+    },
+    {
+      "file": "continue-after-run-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T12:14:32.629Z"
+    },
+    {
+      "file": "continue-after-run-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T12:14:32.691Z"
+    },
+    {
+      "file": "continue-after-run-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T12:14:32.757Z"
+    },
+    {
+      "file": "ending-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T12:14:32.822Z"
+    },
+    {
+      "file": "ending-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T12:14:32.871Z"
+    },
+    {
+      "file": "ending-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T12:14:32.933Z"
+    },
+    {
+      "file": "ending-confirm-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-02T12:14:33.010Z"
+    },
+    {
+      "file": "ending-confirm-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-02T12:14:33.063Z"
+    },
+    {
+      "file": "ending-confirm-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-02T12:14:33.128Z"
+    }
+  ]
+}

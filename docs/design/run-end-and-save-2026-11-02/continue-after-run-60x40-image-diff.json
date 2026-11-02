@@ -1,0 +1,92 @@
+{
+  "command": "image-diff",
+  "dimensionsMatch": true,
+  "reference": {
+    "width": 800,
+    "height": 720
+  },
+  "actual": {
+    "width": 800,
+    "height": 720
+  },
+  "totalPixels": 576000,
+  "diffPixels": 2569,
+  "diffRatio": 0.0045,
+  "similarityScore": 100,
+  "alphaChannelIntact": true,
+  "hotspots": [
+    {
+      "gridX": 2,
+      "gridY": 5,
+      "x": 200,
+      "y": 450,
+      "width": 100,
+      "height": 90,
+      "diffRatio": 0.0674
+    },
+    {
+      "gridX": 2,
+      "gridY": 3,
+      "x": 200,
+      "y": 270,
+      "width": 100,
+      "height": 90,
+      "diffRatio": 0.0668
+    },
+    {
+      "gridX": 3,
+      "gridY": 5,
+      "x": 300,
+      "y": 450,
+      "width": 100,
+      "height": 90,
+      "diffRatio": 0.0639
+    },
+    {
+      "gridX": 3,
+      "gridY": 3,
+      "x": 300,
+      "y": 270,
+      "width": 100,
+      "height": 90,
+      "diffRatio": 0.0347
+    },
+    {
+      "gridX": 4,
+      "gridY": 3,
+      "x": 400,
+      "y": 270,
+      "width": 100,
+      "height": 90,
+      "diffRatio": 0.0196
+    },
+    {
+      "gridX": 1,
+      "gridY": 3,
+      "x": 100,
+      "y": 270,
+      "width": 100,
+      "height": 90,
+      "diffRatio": 0.0166
+    },
+    {
+      "gridX": 4,
+      "gridY": 5,
+      "x": 400,
+      "y": 450,
+      "width": 100,
+      "height": 90,
+      "diffRatio": 0.0128
+    },
+    {
+      "gridX": 1,
+      "gridY": 5,
+      "x": 100,
+      "y": 450,
+      "width": 100,
+      "height": 90,
+      "diffRatio": 0.0038
+    }
+  ],
+  "summary": "100/100 similarity; 2569/576000 pixels differ; 8 hotspot region(s)."
+}

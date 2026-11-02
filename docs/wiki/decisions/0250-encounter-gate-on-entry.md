@@ -166,6 +166,13 @@ ADR-0246의 `## Implementation Status`에 이 ADR을 가리키는 주석을 추�
 - 테스트: 신규 `encounter_escape.test.ts` **HEAD 32 failed / 8 passed → 40 passed**. 기존 5개 파일의 대체된 계약 단언만 조정(삭제 없음; 증거 README 표). `npm test` **171 files / 3857 passed**, typecheck 0, lint 0 errors(기존 warning 1), build PASS, Prettier PASS, 양 덱 balance byte-identical(ADR-0239), E2E **82 passed / 4 skipped / 0 failed**(5195 유지), 폭 검사 27/27, 대비 최소 10.15:1.
 - 결과: JACK OUT/ESC는 이제 실제로 런을 끝낸다(확인 단계 없음, 자동 저장 슬롯은 유지). 증거: [matrix-encounter-escape-2026-11-01](../../design/matrix-encounter-escape-2026-11-01/README.md).
 
+### 후속 — 세이브 시점과 런 완료 (ADR-0252, 2026-11-02)
+
+**새 증거** (오너: "맵에서 보스를 쓰러뜨린후 이동하려니 또 보스가 나와서 회복 못하고 패배하게 되던데."). 5195 실제 키 로그: 자동 저장이 전투 프레임에서만 돌아 보스 격파·loot·이동이 슬롯에 없었고(`clr [18]` vs 메모리 `[18,20]`), 엔딩은 입력을 영원히 붙잡았으며, 리로드 + CONTINUE가 결정 2·4대로 보스 결정을 열어 만피 재전투(`wintermute 140/140`, 잘못된 기반 ICE)를 강제했다.
+
+**이 ADR에 대한 영향**: 결정 1~6 **불변**. "로드 = 도착"은 그대로 동작하며, 이제 세이브가 확정 상태를 담으므로 그 가정이 성립한다. 전투 중 저장 슬롯은 여전히 결정을 다시 열고(보스 BYPASS 차단 유지) — `run_end_save.test.ts`의 ADR-0250 가드 2개(HEAD·수정 후 모두 통과)와 실제 키 trace `boss-fight-reload`가 증거. 클리어된 종결 노드 슬롯은 loot 화면으로 복원되어 결정을 열지 않는다(해결된 노드이므로 회피가 아님).
+- 상세·증거: [ADR-0252](./0252-run-end-and-save-timing.md), [run-end-and-save-2026-11-02](../../design/run-end-and-save-2026-11-02/README.md).
+
 ## 변경 이력
 
 - **2026-11-02**: 신규. 오너의 "그래 C로 가자" 승인으로 Accepted. ADR-0246 조항 2건 대체, 나머지 불변.

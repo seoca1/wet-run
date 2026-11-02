@@ -32,6 +32,8 @@ import { applyIdleAlarmTick } from "../combat/idle_alarm";
 import { DIXIE_ATTACK_EVERY_N_PLAYER_TURNS } from "../combat/state_actions_combat";
 import { DEFAULT_FACTION_SCORES } from "./faction_reputation";
 import { openArrivalEncounter } from "./encounter_verbs";
+import { missionIce } from "./mission_ice";
+import { isTerminalNode } from "./run_end";
 import missionsData from "../../data/missions.json";
 import type { RunMutator } from "./run_mutators";
 import {
@@ -268,15 +270,21 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
   };
 }
 
-/** Reconstruct a GameState from a SaveSlot (CONTINUE option reverse). */
+/** Reconstruct a GameState from a SaveSlot (CONTINUE option reverse).
+ *
+ * With `iceCatalog`, the run's base ICE is re-derived from the mission as the
+ * run start does (ADR-0252), so encounters rebuild the same roster; without
+ * it, `iceFallback` is used as before. */
 export function slotToGameState(
   slot: SaveSlot,
   missionCatalog: ReadonlyArray<Mission>,
   programCatalog: Readonly<Record<string, Program>>,
   iceFallback: Ice,
+  iceCatalog?: Readonly<Record<string, Ice>>,
 ): GameState | null {
   const mission = missionCatalog.find((m) => m.id === slot.missionId);
   if (!mission) return null;
+  const baseIce = iceCatalog ? missionIce(mission, iceCatalog) : iceFallback;
   const findProgram = (id: string): Program | undefined => programCatalog[id];
   const restoreHand = (ids: ReadonlyArray<string>): ReadonlyArray<Program> =>
     ids.map(findProgram).filter((p): p is Program => p !== undefined);
@@ -348,11 +356,11 @@ export function slotToGameState(
       : matrix.startNode;
 
   // Restoring onto unresolved ICE is an arrival: the decision opens again.
-  return openArrivalEncounter({
+  const restored = openArrivalEncounter({
     phase: "approach",
     mission,
     player,
-    ice: iceFallback,
+    ice: baseIce,
     deck,
     drawPile,
     discardPile,
@@ -363,7 +371,7 @@ export function slotToGameState(
     graphicNovel,
     runPhase: "matrix",
     statusEffects: [],
-    iceRoster: [iceFallback],
+    iceRoster: [baseIce],
     activeIceIndex: 0,
     currentNodeIndex,
     matrix,
@@ -394,6 +402,15 @@ export function slotToGameState(
     longestRunMinutes: 0,
     factionScores: DEFAULT_FACTION_SCORES,
   });
+  // ADR-0252: a cleared terminal node can only be saved from the winning
+  // loot screen (its confirm ends the run and retires the slot), so resume
+  // there; the board would offer no way to finish the run.
+  const wonTerminal =
+    restored.clearedEncounterNodes?.includes(currentNodeIndex) === true &&
+    isTerminalNode(restored);
+  return wonTerminal
+    ? { ...restored, runPhase: "loot", phase: "victory" }
+    : restored;
 }
 
 /** Load all missions from JSON. */

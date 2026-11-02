@@ -1,0 +1,234 @@
+
+Running 6 tests using 1 worker
+
+  ✘  1 [desktop-chromium] › e2e/run_end_save.spec.ts:157:1 › a committed move is in the next autosave (6.0s)
+  ✘  2 [desktop-chromium] › e2e/run_end_save.spec.ts:163:1 › a combat win is in the autosave: cleared node, HP, credits (6.1s)
+  ✘  3 [desktop-chromium] › e2e/run_end_save.spec.ts:177:1 › the ending returns to the title, ends the run, and CONTINUE cannot reopen it (6.2s)
+  ✘  4 [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:157:1 › a committed move is in the next autosave (5.9s)
+  ✘  5 [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:163:1 › a combat win is in the autosave: cleared node, HP, credits (6.2s)
+  ✘  6 [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:177:1 › the ending returns to the title, ends the run, and CONTINUE cannot reopen it (6.4s)
+
+
+  1) [desktop-chromium] › e2e/run_end_save.spec.ts:157:1 › a committed move is in the next autosave 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 25
+    Received: undefined
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      158 |   await launch(page);
+      159 |   await travel(page, 25);
+    > 160 |   await expect.poll(async () => (await readSlot(page))?.currentNodeIndex, { timeout: 5000 }).toBe(25);
+          |                                                                                              ^
+      161 | });
+      162 |
+      163 | test("a combat win is in the autosave: cleared node, HP, credits", async ({ page }) => {
+        at /Users/emilio/projects/opencodework/Game/wet_run/web/e2e/run_end_save.spec.ts:160:94
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/run_end_save-a-committed-move-is-in-the-next-autosave-desktop-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/run_end_save-a-committed-move-is-in-the-next-autosave-desktop-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/run_end_save-a-committed-move-is-in-the-next-autosave-desktop-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/run_end_save-a-committed-move-is-in-the-next-autosave-desktop-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [desktop-chromium] › e2e/run_end_save.spec.ts:163:1 › a combat win is in the autosave: cleared node, HP, credits 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 2
+
+      Object {
+    -   "cleared": Array [
+    -     18,
+    -   ],
+    -   "credits": 4550,
+    +   "cleared": Array [],
+    +   "credits": 0,
+        "hp": 100,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      172 |       return slot && { cleared: slot.clearedEncounterNodes, hp: slot.playerHp, credits: slot.playerCredits };
+      173 |     }, { timeout: 5000 })
+    > 174 |     .toEqual({ cleared: [18], hp: live?.hp, credits: live?.credits });
+          |      ^
+      175 | });
+      176 |
+      177 | test("the ending returns to the title, ends the run, and CONTINUE cannot reopen it", async ({ page }) => {
+        at /Users/emilio/projects/opencodework/Game/wet_run/web/e2e/run_end_save.spec.ts:174:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/run_end_save-a-combat-win--cf3a8-ave-cleared-node-HP-credits-desktop-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/run_end_save-a-combat-win--cf3a8-ave-cleared-node-HP-credits-desktop-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/run_end_save-a-combat-win--cf3a8-ave-cleared-node-HP-credits-desktop-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/run_end_save-a-combat-win--cf3a8-ave-cleared-node-HP-credits-desktop-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [desktop-chromium] › e2e/run_end_save.spec.ts:177:1 › the ending returns to the title, ends the run, and CONTINUE cannot reopen it 
+
+    Error: expect(received).toBeNull()
+
+    Received: {"bypassedEncounterNodes": [], "clearedEncounterNodes": [18], "currentNodeIndex": 20, "deckIds": ["barrier", "boost", "cloak", "decoy"], "discardIds": ["backdoor"], "drawIds": [], "graphicNovelProgress": null, "missionId": "aleph_fragment", "playerAlarm": 0, "playerCredits": 4550, "playerHp": 100, "playerMaxHp": 100, "savedAt": "2026-11-02T12:00:46.296Z", "turnCount": 8, "version": 1}
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      187 |   await expect.poll(async () => (await snap(page))?.runPhase).toBe("ending");
+      188 |   // Reaching the ending retires the autosave.
+    > 189 |   await expect.poll(() => readSlot(page), { timeout: 5000 }).toBeNull();
+          |                                                              ^
+      190 |   await page.keyboard.press("Enter");
+      191 |   await expect.poll(() => page.evaluate(() => (window as unknown as { wetrun: Hook }).wetrun.getScreen())).toBe("menu");
+      192 |   expect(await snap(page)).toBeNull();
+        at /Users/emilio/projects/opencodework/Game/wet_run/web/e2e/run_end_save.spec.ts:189:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/run_end_save-the-ending-re-77f20-d-CONTINUE-cannot-reopen-it-desktop-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/run_end_save-the-ending-re-77f20-d-CONTINUE-cannot-reopen-it-desktop-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/run_end_save-the-ending-re-77f20-d-CONTINUE-cannot-reopen-it-desktop-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/run_end_save-the-ending-re-77f20-d-CONTINUE-cannot-reopen-it-desktop-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:157:1 › a committed move is in the next autosave 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 25
+    Received: undefined
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      158 |   await launch(page);
+      159 |   await travel(page, 25);
+    > 160 |   await expect.poll(async () => (await readSlot(page))?.currentNodeIndex, { timeout: 5000 }).toBe(25);
+          |                                                                                              ^
+      161 | });
+      162 |
+      163 | test("a combat win is in the autosave: cleared node, HP, credits", async ({ page }) => {
+        at /Users/emilio/projects/opencodework/Game/wet_run/web/e2e/run_end_save.spec.ts:160:94
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/run_end_save-a-committed-move-is-in-the-next-autosave-mobile-portrait-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/run_end_save-a-committed-move-is-in-the-next-autosave-mobile-portrait-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/run_end_save-a-committed-move-is-in-the-next-autosave-mobile-portrait-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/run_end_save-a-committed-move-is-in-the-next-autosave-mobile-portrait-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:163:1 › a combat win is in the autosave: cleared node, HP, credits 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 4
+    + Received  + 2
+
+      Object {
+    -   "cleared": Array [
+    -     18,
+    -   ],
+    -   "credits": 4550,
+    +   "cleared": Array [],
+    +   "credits": 0,
+        "hp": 100,
+      }
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      172 |       return slot && { cleared: slot.clearedEncounterNodes, hp: slot.playerHp, credits: slot.playerCredits };
+      173 |     }, { timeout: 5000 })
+    > 174 |     .toEqual({ cleared: [18], hp: live?.hp, credits: live?.credits });
+          |      ^
+      175 | });
+      176 |
+      177 | test("the ending returns to the title, ends the run, and CONTINUE cannot reopen it", async ({ page }) => {
+        at /Users/emilio/projects/opencodework/Game/wet_run/web/e2e/run_end_save.spec.ts:174:6
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/run_end_save-a-combat-win--cf3a8-ave-cleared-node-HP-credits-mobile-portrait-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/run_end_save-a-combat-win--cf3a8-ave-cleared-node-HP-credits-mobile-portrait-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/run_end_save-a-combat-win--cf3a8-ave-cleared-node-HP-credits-mobile-portrait-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/run_end_save-a-combat-win--cf3a8-ave-cleared-node-HP-credits-mobile-portrait-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:177:1 › the ending returns to the title, ends the run, and CONTINUE cannot reopen it 
+
+    Error: expect(received).toBeNull()
+
+    Received: {"bypassedEncounterNodes": [], "clearedEncounterNodes": [18], "currentNodeIndex": 20, "deckIds": ["barrier", "boost", "cloak", "decoy"], "discardIds": ["backdoor"], "drawIds": [], "graphicNovelProgress": null, "missionId": "aleph_fragment", "playerAlarm": 0, "playerCredits": 4550, "playerHp": 100, "playerMaxHp": 100, "savedAt": "2026-11-02T12:01:05.793Z", "turnCount": 8, "version": 1}
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      187 |   await expect.poll(async () => (await snap(page))?.runPhase).toBe("ending");
+      188 |   // Reaching the ending retires the autosave.
+    > 189 |   await expect.poll(() => readSlot(page), { timeout: 5000 }).toBeNull();
+          |                                                              ^
+      190 |   await page.keyboard.press("Enter");
+      191 |   await expect.poll(() => page.evaluate(() => (window as unknown as { wetrun: Hook }).wetrun.getScreen())).toBe("menu");
+      192 |   expect(await snap(page)).toBeNull();
+        at /Users/emilio/projects/opencodework/Game/wet_run/web/e2e/run_end_save.spec.ts:189:62
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/run_end_save-the-ending-re-77f20-d-CONTINUE-cannot-reopen-it-mobile-portrait-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/run_end_save-the-ending-re-77f20-d-CONTINUE-cannot-reopen-it-mobile-portrait-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/run_end_save-the-ending-re-77f20-d-CONTINUE-cannot-reopen-it-mobile-portrait-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/run_end_save-the-ending-re-77f20-d-CONTINUE-cannot-reopen-it-mobile-portrait-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6 failed
+    [desktop-chromium] › e2e/run_end_save.spec.ts:157:1 › a committed move is in the next autosave ─
+    [desktop-chromium] › e2e/run_end_save.spec.ts:163:1 › a combat win is in the autosave: cleared node, HP, credits 
+    [desktop-chromium] › e2e/run_end_save.spec.ts:177:1 › the ending returns to the title, ends the run, and CONTINUE cannot reopen it 
+    [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:157:1 › a committed move is in the next autosave 
+    [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:163:1 › a combat win is in the autosave: cleared node, HP, credits 
+    [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:177:1 › the ending returns to the title, ends the run, and CONTINUE cannot reopen it 

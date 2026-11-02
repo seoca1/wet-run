@@ -1,0 +1,11 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [desktop-chromium] › e2e/run_end_save.spec.ts:157:1 › a committed move is in the next autosave (1.4s)
+  ✓  2 [desktop-chromium] › e2e/run_end_save.spec.ts:163:1 › a combat win is in the autosave: cleared node, HP, credits (1.7s)
+  ✓  3 [desktop-chromium] › e2e/run_end_save.spec.ts:177:1 › the ending returns to the title, ends the run, and CONTINUE cannot reopen it (2.8s)
+  ✓  4 [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:157:1 › a committed move is in the next autosave (928ms)
+  ✓  5 [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:163:1 › a combat win is in the autosave: cleared node, HP, credits (1.0s)
+  ✓  6 [mobile-portrait-chromium] › e2e/run_end_save.spec.ts:177:1 › the ending returns to the title, ends the run, and CONTINUE cannot reopen it (2.8s)
+
+  6 passed (11.6s)

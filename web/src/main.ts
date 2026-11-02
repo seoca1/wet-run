@@ -101,15 +101,17 @@ import {
   openArrivalEncounter,
   runAbandoned,
 } from "./core/state/encounter_verbs";
+import { missionIce } from "./core/state/mission_ice";
 import {
-  encounterIceIdForGrade,
-  missionGradeOf,
-  missionSeedOf,
-} from "./core/combat/ice_scaling";
+  autosaveIntent,
+  runCompleted,
+  RUN_COMPLETE_MESSAGE,
+} from "./core/state/run_end";
 import { makeGrid, type Grid } from "./core/grid";
 import {
   save as saveToSlot,
   load as loadFromSlot,
+  clear as clearSlot,
   hasSave as slotHasSave,
   getSaveMeta,
 } from "./save/storage";
@@ -190,50 +192,6 @@ const PROGRAMS: Readonly<Record<string, Program>> =
 
 /** ICE types catalog (validated). Field aliases (defense → armor) normalized. */
 const ICE_TYPES: Readonly<Record<string, Ice>> = loadIceCatalog(iceTypesData);
-
-/** Pick the ICE type best matched to the mission's `ice_id` (fallback: first). */
-function loadIce(
-  mission: Mission,
-  iceTypes: Readonly<Record<string, Ice>>,
-): Ice {
-  const keys = Object.keys(iceTypes);
-  const preferred = (mission as { ice_id?: string }).ice_id;
-  const normalize = (raw: Ice): Ice => {
-    // ice_types.json uses legacy Python field names (`defense`, `hp_base`,
-    // `hp_per_grade`) and carries no precomputed `hp`. Normalize them so
-    // combat math and grade scaling never receive undefined.
-    const r = raw as Ice & {
-      defense?: number;
-      hp_base?: number;
-      hp_per_grade?: number;
-    };
-    const armor = r.armor ?? r.defense ?? 0;
-    const hpBase = r.hpBase ?? r.hp_base;
-    const hpPerGrade = r.hpPerGrade ?? r.hp_per_grade;
-    const hp = Number.isFinite(r.hp) ? r.hp : (hpBase ?? 100);
-    return {
-      ...r,
-      armor,
-      hp,
-      ...(hpBase !== undefined ? { hpBase } : {}),
-      ...(hpPerGrade !== undefined ? { hpPerGrade } : {}),
-    };
-  };
-  if (preferred && preferred in iceTypes) {
-    const ice = iceTypes[preferred];
-    if (ice) return normalize(ice);
-  }
-  const graded =
-    iceTypes[
-      encounterIceIdForGrade(missionGradeOf(mission), missionSeedOf(mission))
-    ];
-  if (graded) return normalize(graded);
-  const first = keys[0];
-  if (!first) throw new Error("No ICE types in ice_types.json");
-  const fallback = iceTypes[first];
-  if (!fallback) throw new Error("ICE entry empty");
-  return normalize(fallback);
-}
 
 /** Build the first 5 programs for the deck (deterministic order from program id). */
 function loadDeck(
@@ -320,6 +278,9 @@ class Game {
    * never on `GameState`, so it is neither saved nor seen by the reducer.
    * Null under reduced motion, and replaced by the next input. */
   private matrixTravel: MatrixTravel | null = null;
+  /** ADR-0252: slot-0 writes and the retirement run in order. */
+  private persistQueue: Promise<void> = Promise.resolve();
+  private lastPersistedState: GameState | null = null;
   /** P10 — effective reduced-motion state. True suppresses the P1 canvas
    * shake and the hit-stop hold. */
   private reducedMotion = false;
@@ -493,6 +454,18 @@ class Game {
         this.matrixTravel = null;
         this.screen = "menu";
         void this.refreshSaveCache();
+        this.draw();
+        return;
+      }
+      if (runCompleted(previous, this.state)) {
+        // ADR-0252: the ending is the end. The slot was retired on arrival.
+        this.state = null;
+        this.matrixTravel = null;
+        this.screen = "menu";
+        this._message = RUN_COMPLETE_MESSAGE;
+        this.persistQueue = this.persistQueue
+          .then(() => this.refreshSaveCache())
+          .catch(() => undefined);
         this.draw();
         return;
       }
@@ -1150,8 +1123,10 @@ class Game {
   private async refreshSaveCache(): Promise<void> {
     this.hasSaveCache = await slotHasSave(0);
     this.saveMetaCache = await getSaveMeta(0);
-    // Re-draw menu to reflect availability change (if on menu screen).
-    if (this.screen === "menu") this.draw();
+    // Re-draw the title menu to reflect availability. In a run `screen` can
+    // also be "menu" (after CONTINUE); redrawing it would re-trigger the
+    // autosave and loop on every write.
+    if (this.screen === "menu" && this.state === null) this.draw();
   }
 
   /** Load autosave (slot 0) and resume from saved state.
@@ -1183,6 +1158,7 @@ class Game {
       this.missions,
       this.programs,
       fallbackIce,
+      this.iceTypes,
     );
     if (!restored) {
       // Mission no longer in catalog or all programs disappeared.
@@ -1204,7 +1180,7 @@ class Game {
     if (!mission) return;
     const programs = PROGRAMS;
     const deck = loadDeck(programs);
-    const ice = loadIce(mission, this.iceTypes);
+    const ice = missionIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
     this.state = openArrivalEncounter({
       ...initial,
@@ -1228,16 +1204,22 @@ class Game {
     this.draw();
   }
 
+  /** ADR-0252: write the rendered run state to slot 0, or retire the slot
+   * once the run has reached its ending. Storage operations are chained so
+   * a retirement can never be overtaken by an earlier, slower write. */
   private autosave(): void {
-    if (this.state === null) return;
-    // saveToSlot is async (Tier 3 IDB backend). Fire-and-forget: autosave is best-effort.
-    saveToSlot(0, stateToSaveSlot(this.state))
-      .then(() => {
-        // Refresh save metadata so menu reflects current save state.
-        void this.refreshSaveCache();
-      })
+    const state = this.state;
+    const intent = autosaveIntent(state);
+    if (state === null || intent === "skip") return;
+    if (state === this.lastPersistedState) return; // unchanged frame
+    this.lastPersistedState = state;
+    // Snapshot now: the slot must hold this frame, not a later one.
+    const slot = intent === "write" ? stateToSaveSlot(state) : null;
+    this.persistQueue = this.persistQueue
+      .then(() => (slot === null ? clearSlot(0) : saveToSlot(0, slot)))
+      .then(() => this.refreshSaveCache())
       .catch(() => {
-        // Autosave is best-effort; user can manually save later.
+        // Best-effort (fire-and-forget, ADR-0209); the chain must stay usable.
       });
   }
 
@@ -1269,6 +1251,9 @@ class Game {
       this.state !== null &&
       ["matrix", "ending", "loot"].includes(this.state.runPhase)
     ) {
+      // ADR-0252: a committed move, a won fight and the ending are saved
+      // (or retire the slot) like combat frames are.
+      if (persist) this.autosave();
       updateProgramRow([]);
       // A traversal frame (visual only) replaces the board for ~220 ms.
       const travel = matrixTravelFrame(this.matrixTravel, performance.now());

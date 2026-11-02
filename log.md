@@ -2868,3 +2868,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - 검증: 신규·변경 테스트 HEAD 대비 29 failed/16 passed(+2 suite 로드 실패), 헬퍼만 추가 시 43/43(HEAD 리듀서와 청구 일치 증명) → 86 passed; `npm test` **174 files / 3914 passed**; typecheck 0; lint 0 errors(기존 warning 1); build PASS; balance 양 덱 HEAD·ADR-0239와 byte-identical; E2E **82 passed / 4 skipped / 0 failed**(이전 빌드 1회차 `idle_alarm.spec.ts:48` 타임아웃 1건, 단독·재실행 통과), 5195 preview(pid 75395) 유지. 실제 빌드 키/탭 trace로 표시 숫자 → 그 행·그 COST 소비 확인(double_alarm + 상한 포함). 시각 QA: explore 서브에이전트 REVISE 1건 수정, 84행 전수 대조, 대비 최소 6.58:1.
 - 발견·미변경: 결정타는 COST 미청구(라벨 과대 표시), `tickIceEffects` 인덱스 결함 — ADR-0251 열린 질문 (a)(b). 선택-확인 모델 미결정.
 - 증거: [combat-affordance-2026-11-02](docs/design/combat-affordance-2026-11-02/README.md). ADR-0251 신규, ADR-0243 무변경. 미커밋·미스테이징.
+
+## [2026-11-02] fix(gameplay) | ADR-0252 세이브는 확정된 상태를 담고, 엔딩은 런을 끝낸다 — 보스 격파 후 강제 재전투 해소
+
+- 오너 "맵에서 보스를 쓰러뜨린후 이동하려니 또 보스가 나와서 회복 못하고 패배하게 되던데." / 승인 "모두 수정해." 5195 실제 키 trace(슬롯 IDB 디코드)로 재현: 자동 저장이 전투 프레임에서만 돌아 보스 격파 시 메모리 `clr [18,20]` vs 슬롯 `clr [18]`, 엔딩이 `ending/menu`로 입력을 영원히 붙잡음, 리로드 + CONTINUE가 보스 결정을 열고 BREACH가 `wintermute 140/140`(잘못된 기반 ICE; 실전 165) 재전투.
+- 수정: (A) `draw()`가 Matrix·loot 프레임도 저장, 순서 큐 + 동일 상태 생략, 런 중 캐시 갱신 재그리기 루프 차단. (B) 엔딩 도착 시 슬롯 폐기, 엔딩 Enter/ESC → 제목(상태 null, `Run complete. Autosave cleared.`), footer `ENTER / ESC: return to title`; 완료 런은 CONTINUE `(no save)`. 클리어된 종결 노드 슬롯은 loot 화면으로 복원. (C) `slotToGameState(…, iceCatalog?)`가 기반 ICE를 `missionIce`(이전 `main.ts loadIce` 이동)로 유도 — 세이브 필드·버전 무변경.
+- 불변: ADR-0250 "로드 = 도착"(전투 중 슬롯은 결정 재개방, 보스 BYPASS 차단), 가격·피해·RNG·던전·게이트·ADR-0251·세이브 스키마. 종결 경로 15% 회복 부재는 의도로 판단(엔딩 판정이 hp를 입력으로 씀) — 보고만, 미변경.
+- LOC(total/non-blank): `main.ts` 1809/1742 → 1794/1728, `state.ts` 411/393 → 428/410, `state_actions_phases.ts` 372/360 → 370/358, `ending.ts` 155/142 → 155/142; 신규 `run_end.ts` 39/35, `mission_ice.ts` 56/55.
+- 검증: 신규 `run_end_save.test.ts` HEAD 12 failed/6 passed → 18 passed; 신규 `e2e/run_end_save.spec.ts` HEAD 빌드 6 failed → 6 passed; `npm test` **175 files / 3932 passed**; typecheck 0; lint 0 errors(기존 warning 1); build PASS; Prettier PASS; balance 양 덱 byte-identical(ADR-0239); E2E **88 passed / 4 skipped / 0 failed**, 5195 preview(pid 75395) 유지, `continue.spec.ts` 무수정.
+- 증거: [run-end-and-save-2026-11-02](docs/design/run-end-and-save-2026-11-02/README.md) (before/after trace 3 시나리오, 3 사례 × 3 레이아웃, 폭 검사 9/9). ADR-0252 신규, ADR-0250·0246은 Implementation Status에 후속 주석만. 미커밋·미스테이징.

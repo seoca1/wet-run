@@ -1,0 +1,34 @@
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90m/Users/emilio/.openclaw/tmp/opencode/runend/head/web[39m
+
+ [33m❯[39m tests/run_end_save.test.ts [2m ([22m[2m18 tests[22m [2m|[22m [31m12 failed[39m[2m)[22m[90m 71[2mms[22m[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 A — the save reflects committed state[2m > [22mthe controller writes the slot on Matrix, loot, combat and death frames[39m
+[31m     → Failed to load url ../src/core/state/run_end (resolved id: ../src/core/state/run_end) in /Users/emilio/.openclaw/tmp/opencode/runend/head/web/tests/run_end_save.test.ts. Does the file exist?[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — the ending ends the run[2m > [22mthe controller retires the slot once the run reaches its ending[39m
+[31m     → Failed to load url ../src/core/state/run_end (resolved id: ../src/core/state/run_end) in /Users/emilio/.openclaw/tmp/opencode/runend/head/web/tests/run_end_save.test.ts. Does the file exist?[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — the ending ends the run[2m > [22mconfirm and ESC on the ending complete the run; nothing else does[39m
+[31m     → Failed to load url ../src/core/state/run_end (resolved id: ../src/core/state/run_end) in /Users/emilio/.openclaw/tmp/opencode/runend/head/web/tests/run_end_save.test.ts. Does the file exist?[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — the ending ends the run[2m > [22ma slot written on the boss loot screen restores to that loot screen, and Enter ends the run[39m
+[31m     → expected 'matrix' to be 'loot' // Object.is equality[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 C — CONTINUE rebuilds the same fight[2m > [22mthe restored boss roster uses the mission ICE, as the live fight does (live: wintermute 165; HEAD restore: 140)[39m
+[31m     → expected [ 'wintermute:140' ] to deeply equal [ 'wintermute:165' ][39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 C — CONTINUE rebuilds the same fight[2m > [22mthe restored roster deep-equals the live one when the run starts from the mission ICE[39m
+[31m     → Failed to load url ../src/core/state/mission_ice (resolved id: ../src/core/state/mission_ice) in /Users/emilio/.openclaw/tmp/opencode/runend/head/web/tests/run_end_save.test.ts. Does the file exist?[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — what the player sees[2m > [22mthe ending footer says where Enter goes (80x50)[39m
+[31m     → expected false to be true // Object.is equality[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — what the player sees[2m > [22mthe ending footer says where Enter goes (60x40)[39m
+[31m     → expected false to be true // Object.is equality[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — what the player sees[2m > [22mthe ending footer says where Enter goes (40x60)[39m
+[31m     → expected false to be true // Object.is equality[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — what the player sees[2m > [22mthe title after a completed run offers no CONTINUE and says why (80x50)[39m
+[31m     → Failed to load url ../src/core/state/run_end (resolved id: ../src/core/state/run_end) in /Users/emilio/.openclaw/tmp/opencode/runend/head/web/tests/run_end_save.test.ts. Does the file exist?[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — what the player sees[2m > [22mthe title after a completed run offers no CONTINUE and says why (60x40)[39m
+[31m     → Failed to load url ../src/core/state/run_end (resolved id: ../src/core/state/run_end) in /Users/emilio/.openclaw/tmp/opencode/runend/head/web/tests/run_end_save.test.ts. Does the file exist?[39m
+[31m   [33m❯[31m tests/run_end_save.test.ts[2m > [22mADR-0252 B — what the player sees[2m > [22mthe title after a completed run offers no CONTINUE and says why (40x60)[39m
+[31m     → Failed to load url ../src/core/state/run_end (resolved id: ../src/core/state/run_end) in /Users/emilio/.openclaw/tmp/opencode/runend/head/web/tests/run_end_save.test.ts. Does the file exist?[39m
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m12 failed[39m[22m[2m | [22m[1m[32m6 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 21:05:30
+[2m   Duration [22m 328ms[2m (transform 141ms, setup 8ms, collect 130ms, tests 71ms, environment 0ms, prepare 38ms)[22m
+

@@ -31,6 +31,7 @@ import {
   openArrivalEncounter,
 } from "./encounter_verbs";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
+import { isTerminalNode } from "./run_end";
 import {
   resolveEnding,
   type EndingContext,
@@ -163,11 +164,8 @@ export function applyLootAction(
     };
   }
   if (action.type !== "confirm") return state;
-  const node = state.matrix?.nodes[state.currentNodeIndex];
   // Mission complete: matrix cleared, OR dead-end node (no forward path), OR boss defeated.
-  const missionComplete =
-    !state.matrix || !node || node.adjacent.length === 0 || node.isBoss;
-  if (missionComplete) {
+  if (isTerminalNode(state)) {
     const missionFaction = getMissionFaction(state.mission.id);
     let updatedScores = state.factionScores;
     if (missionFaction) {

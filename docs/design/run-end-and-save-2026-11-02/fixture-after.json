@@ -1,0 +1,45 @@
+{
+  "mission": "aleph_fragment",
+  "route": [
+    0,
+    25,
+    16,
+    18,
+    20
+  ],
+  "deck": [
+    "backdoor",
+    "barrier",
+    "boost",
+    "cloak",
+    "decoy"
+  ],
+  "ending": {
+    "runPhase": "ending",
+    "phase": "victory",
+    "node": 20,
+    "cleared": [
+      18,
+      20
+    ],
+    "hp": 100,
+    "credits": 10100,
+    "ending": "arc4_liberation_front",
+    "message": "ICE — Standard defeated! +5550 credits Loot: combat_modulex2, construct_shardx1, data_fragmentx3"
+  },
+  "afterEndingConfirm": {
+    "runPhase": "ending",
+    "phase": "menu",
+    "node": 20,
+    "cleared": [
+      18,
+      20
+    ],
+    "hp": 100,
+    "credits": 10100,
+    "ending": "arc4_liberation_front",
+    "message": "Ending arc4_liberation_front: returning to title"
+  },
+  "continueIndex": 4,
+  "runCompleteMessage": "Run complete. Autosave cleared."
+}

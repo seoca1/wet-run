@@ -1,0 +1,60 @@
+                                        
+ ╔════════════════════════════════════╗ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║              WET RUN               ║ 
+ ║                                    ║ 
+ ║ A cyberpunk roguelike based on Gibs║ 
+ ║                                    ║ 
+ ║ ────────────────────────────────── ║ 
+ ║                                    ║ 
+ ║    ▸ [1] NEW RUN                   ║ 
+ ║      [2] FAR GRID    (locked)      ║ 
+ ║      [3] DUNGEON CRAWL             ║ 
+ ║      [4] GRAPHIC NOVEL             ║ 
+ ║      [5] CONTINUE    (no save)     ║ 
+ ║      [6] SETTINGS                  ║ 
+ ║      [7] CRAFT                     ║ 
+ ║      [8] EQUIPMENT                 ║ 
+ ║      [9] CREDITS                   ║ 
+ ║      [10] HALL OF DEAD             ║ 
+ ║      [11] HELP                     ║ 
+ ║      [12] ENDINGS                  ║ 
+ ║      [13] STATS                    ║ 
+ ║      [14] TUTORIAL                 ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║  Run complete. Autosave cleared.   ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║                                    ║ 
+ ║ ↑↓: navigate | ENTER: select | ESC:║ 
+ ║ Tier 4 · v0.1.0 · ADR-0209 IDB     ║ 
+ ╚════════════════════════════════════╝ 
+                                        

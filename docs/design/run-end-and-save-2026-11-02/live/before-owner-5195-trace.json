@@ -1,0 +1,1500 @@
+{
+ "phase": "before",
+ "base": "http://127.0.0.1:5195/",
+ "trace": [
+  {
+   "key": "Enter",
+   "note": "menu",
+   "screen": "mission_select",
+   "state": null,
+   "slot": null
+  },
+  {
+   "key": "Enter",
+   "note": "launch",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 0,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Mission: Aleph Fragment",
+   "slot": null
+  },
+  {
+   "key": "-",
+   "note": "run started on node 0",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 0,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Mission: Aleph Fragment",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 25",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 0,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 25",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 0,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 25",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 0,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination",
+   "slot": null
+  },
+  {
+   "key": "Enter",
+   "note": "travel to 25 (committed move)",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 25,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Moved to surface — ↑↓ picks the next route",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 16",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 25,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 16",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 25,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 16",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 25,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination",
+   "slot": null
+  },
+  {
+   "key": "Enter",
+   "note": "travel to 16 (committed move)",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 16,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Moved to surface — ↑↓ picks the next route",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 18",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 16,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 18",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 16,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination",
+   "slot": null
+  },
+  {
+   "key": "Enter",
+   "note": "travel to 18 (committed move)",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 18,
+   "decision": "open",
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BREACH",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 18,
+   "decision": "PROBE",
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BREACH",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 18,
+   "decision": "BYPASS",
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+   "slot": null
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BREACH",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 18,
+   "decision": "BREACH",
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run.",
+   "slot": null
+  },
+  {
+   "key": "Enter",
+   "note": "commit BREACH",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "approach",
+   "cur": 18,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [
+    "yakuza_enforcer:165/165"
+   ],
+   "ending": null,
+   "msg": "Entering mid... (1 ICE)",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 100,
+    "credits": 0,
+    "turn": 4
+   }
+  },
+  {
+   "key": "Enter",
+   "note": "engage",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 18,
+   "decision": null,
+   "hp": 100,
+   "credits": 0,
+   "cost": 0,
+   "cleared": [],
+   "roster": [
+    "yakuza_enforcer:165/165"
+   ],
+   "ending": null,
+   "msg": "Combat vs ICE — Yakuza Enforcer",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 100,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 1",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 18,
+   "decision": null,
+   "hp": 87,
+   "credits": 0,
+   "cost": 2,
+   "cleared": [],
+   "roster": [
+    "yakuza_enforcer:142/165"
+   ],
+   "ending": null,
+   "msg": ">>> Dixie attacks: 11 dmg",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 87,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 2",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 18,
+   "decision": null,
+   "hp": 87,
+   "credits": 0,
+   "cost": 5,
+   "cleared": [],
+   "roster": [
+    "yakuza_enforcer:131/165"
+   ],
+   "ending": null,
+   "msg": "Barrier → 11 dmg (ICE HP: 131)",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 87,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 3",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 18,
+   "decision": null,
+   "hp": 87,
+   "credits": 0,
+   "cost": 7,
+   "cleared": [],
+   "roster": [
+    "yakuza_enforcer:102/165"
+   ],
+   "ending": null,
+   "msg": ">>> Dixie attacks: 17 dmg",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 87,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 4",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 18,
+   "decision": null,
+   "hp": 87,
+   "credits": 0,
+   "cost": 9,
+   "cleared": [],
+   "roster": [
+    "yakuza_enforcer:94/165"
+   ],
+   "ending": null,
+   "msg": "Cloak → 8 dmg (ICE HP: 94)",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 87,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 5",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 18,
+   "decision": null,
+   "hp": 74,
+   "credits": 0,
+   "cost": 11,
+   "cleared": [],
+   "roster": [
+    "yakuza_enforcer:52/165"
+   ],
+   "ending": null,
+   "msg": ">>> Dixie attacks: 23 dmg",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 6",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 18,
+   "decision": null,
+   "hp": 74,
+   "credits": 0,
+   "cost": 13,
+   "cleared": [],
+   "roster": [
+    "yakuza_enforcer:21/165"
+   ],
+   "ending": null,
+   "msg": "Backdoor → 31 dmg (ICE HP: 21)",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 7",
+   "screen": "mission_select",
+   "runPhase": "loot",
+   "phase": "victory",
+   "cur": 18,
+   "decision": null,
+   "hp": 74,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "yakuza_enforcer:0/165"
+   ],
+   "ending": null,
+   "msg": "ICE — Yakuza Enforcer defeated! +4500 credits",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "-",
+   "note": "fight at 18 over",
+   "screen": "mission_select",
+   "runPhase": "loot",
+   "phase": "victory",
+   "cur": 18,
+   "decision": null,
+   "hp": 74,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "yakuza_enforcer:0/165"
+   ],
+   "ending": null,
+   "msg": "ICE — Yakuza Enforcer defeated! +4500 credits",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "Enter",
+   "note": "loot -> route selection",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 18,
+   "decision": null,
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Choose an adjacent route — healed to 89/100",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 20",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 18,
+   "decision": null,
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER to travel; ↑↓ to change destination",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "target 20",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 18,
+   "decision": null,
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Route highlighted — ENTER enters its ICE; ↑↓ to change destination",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "Enter",
+   "note": "travel to 20 (committed move)",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "open",
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run.",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BREACH",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "PROBE",
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run.",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BREACH",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "BYPASS",
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run.",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BREACH",
+   "screen": "mission_select",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "BREACH",
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run.",
+   "slot": {
+    "node": 18,
+    "cleared": [],
+    "hp": 74,
+    "credits": 0,
+    "turn": 5
+   }
+  },
+  {
+   "key": "Enter",
+   "note": "commit BREACH",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "approach",
+   "cur": 20,
+   "decision": null,
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:165/165"
+   ],
+   "ending": null,
+   "msg": "Entering core-deep... (1 ICE)",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 89,
+    "credits": 4500,
+    "turn": 7
+   }
+  },
+  {
+   "key": "Enter",
+   "note": "engage",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 89,
+   "credits": 4500,
+   "cost": 16,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:165/165"
+   ],
+   "ending": null,
+   "msg": "Combat vs ICE — Yakuza Enforcer",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 89,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 1",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 76,
+   "credits": 4500,
+   "cost": 18,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:160/165"
+   ],
+   "ending": null,
+   "msg": ">>> ICE — Yakuza Enforcer uses Enforce Contract: 13 dmg",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 76,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 2",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 76,
+   "credits": 4500,
+   "cost": 20,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:119/165"
+   ],
+   "ending": null,
+   "msg": ">>> Dixie attacks: 35 dmg",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 76,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 3",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 76,
+   "credits": 4500,
+   "cost": 22,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:113/165"
+   ],
+   "ending": null,
+   "msg": "Decoy → 6 dmg (ICE HP: 113)",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 76,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 4",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 76,
+   "credits": 4500,
+   "cost": 24,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:67/165"
+   ],
+   "ending": null,
+   "msg": ">>> Dixie attacks: 41 dmg",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 76,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 5",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 4500,
+   "cost": 27,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:56/165"
+   ],
+   "ending": null,
+   "msg": ">>> ICE — Yakuza Enforcer attacks: 13 dmg",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 6",
+   "screen": "mission_select",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:3/165"
+   ],
+   "ending": null,
+   "msg": ">>> Dixie attacks: 47 dmg",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "digit",
+   "note": "turn 7",
+   "screen": "mission_select",
+   "runPhase": "loot",
+   "phase": "victory",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 10600,
+   "cost": 29,
+   "cleared": [
+    18,
+    20
+   ],
+   "roster": [
+    "wintermute:0/165"
+   ],
+   "ending": null,
+   "msg": "ICE — Yakuza Enforcer defeated! +6100 credits Loot: combat_modulex2, construct_shardx1, data_fragmentx3",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "-",
+   "note": "fight at 20 over",
+   "screen": "mission_select",
+   "runPhase": "loot",
+   "phase": "victory",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 10600,
+   "cost": 29,
+   "cleared": [
+    18,
+    20
+   ],
+   "roster": [
+    "wintermute:0/165"
+   ],
+   "ending": null,
+   "msg": "ICE — Yakuza Enforcer defeated! +6100 credits Loot: combat_modulex2, construct_shardx1, data_fragmentx3",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "shot": "before-boss-loot.png"
+  },
+  {
+   "key": "Enter",
+   "note": "loot confirm at the boss -> ending",
+   "screen": "mission_select",
+   "runPhase": "ending",
+   "phase": "victory",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 10600,
+   "cost": 29,
+   "cleared": [
+    18,
+    20
+   ],
+   "roster": [],
+   "ending": "arc4_liberation_front",
+   "msg": "ICE — Yakuza Enforcer defeated! +6100 credits Loot: combat_modulex2, construct_shardx1, data_fragmentx3",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "shot": "before-ending.png"
+  },
+  {
+   "key": "Enter",
+   "note": "Enter on the ending",
+   "screen": "mission_select",
+   "runPhase": "ending",
+   "phase": "menu",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 10600,
+   "cost": 29,
+   "cleared": [
+    18,
+    20
+   ],
+   "roster": [],
+   "ending": "arc4_liberation_front",
+   "msg": "Ending arc4_liberation_front: returning to title",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "shot": "before-after-ending-enter.png"
+  },
+  {
+   "key": "Enter",
+   "note": "Enter again",
+   "screen": "mission_select",
+   "runPhase": "ending",
+   "phase": "menu",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 10600,
+   "cost": 29,
+   "cleared": [
+    18,
+    20
+   ],
+   "roster": [],
+   "ending": "arc4_liberation_front",
+   "msg": "Ending arc4_liberation_front: returning to title",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "Escape",
+   "note": "Esc",
+   "screen": "mission_select",
+   "runPhase": "ending",
+   "phase": "menu",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 10600,
+   "cost": 29,
+   "cleared": [
+    18,
+    20
+   ],
+   "roster": [],
+   "ending": "arc4_liberation_front",
+   "msg": "Ending arc4_liberation_front: returning to title",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "shot": "before-after-ending-esc.png"
+  },
+  {
+   "key": "-",
+   "note": "settled; reloading",
+   "screen": "mission_select",
+   "runPhase": "ending",
+   "phase": "menu",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 10600,
+   "cost": 29,
+   "cleared": [
+    18,
+    20
+   ],
+   "roster": [],
+   "ending": "arc4_liberation_front",
+   "msg": "Ending arc4_liberation_front: returning to title",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "-",
+   "note": "after reload (menu)",
+   "screen": "menu",
+   "state": null,
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "note": "menu hasSaveCache=true"
+  },
+  {
+   "shot": "before-menu-after-reload.png"
+  },
+  {
+   "key": "ArrowDown",
+   "note": "menu -> CONTINUE",
+   "screen": "menu",
+   "state": null,
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "menu -> CONTINUE",
+   "screen": "menu",
+   "state": null,
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "menu -> CONTINUE",
+   "screen": "menu",
+   "state": null,
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "menu -> CONTINUE",
+   "screen": "menu",
+   "state": null,
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "shot": "before-menu-continue-selected.png"
+  },
+  {
+   "key": "Enter",
+   "note": "CONTINUE",
+   "screen": "menu",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "open",
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run.",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "-",
+   "note": "after CONTINUE",
+   "screen": "menu",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "open",
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run.",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "shot": "before-after-continue.png"
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BYPASS",
+   "screen": "menu",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "PROBE",
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run.",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BYPASS",
+   "screen": "menu",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "BYPASS",
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run.",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "Enter",
+   "note": "commit BYPASS",
+   "screen": "menu",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "BYPASS",
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "BYPASS blocked — Must BREACH to complete the run.",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "shot": "before-bypass-at-boss.png"
+  },
+  {
+   "key": "ArrowDown",
+   "note": "seek BREACH",
+   "screen": "menu",
+   "runPhase": "matrix",
+   "phase": "approach",
+   "cur": 20,
+   "decision": "BREACH",
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [],
+   "ending": null,
+   "msg": "BYPASS blocked — Must BREACH to complete the run.",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 8
+   }
+  },
+  {
+   "key": "Enter",
+   "note": "commit BREACH",
+   "screen": "menu",
+   "runPhase": "combat",
+   "phase": "approach",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:140/140"
+   ],
+   "ending": null,
+   "msg": "Entering core-deep... (1 ICE)",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 9
+   }
+  },
+  {
+   "key": "Enter",
+   "note": "engage",
+   "screen": "menu",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:140/140"
+   ],
+   "ending": null,
+   "msg": "Combat vs ICE — Standard",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 10
+   }
+  },
+  {
+   "key": "-",
+   "note": "forced re-fight: roster at engage",
+   "screen": "menu",
+   "runPhase": "combat",
+   "phase": "combat",
+   "cur": 20,
+   "decision": null,
+   "hp": 63,
+   "credits": 4500,
+   "cost": 29,
+   "cleared": [
+    18
+   ],
+   "roster": [
+    "wintermute:140/140"
+   ],
+   "ending": null,
+   "msg": "Combat vs ICE — Standard",
+   "slot": {
+    "node": 20,
+    "cleared": [
+     18
+    ],
+    "hp": 63,
+    "credits": 4500,
+    "turn": 10
+   }
+  },
+  {
+   "shot": "before-forced-refight.png"
+  }
+ ]
+}

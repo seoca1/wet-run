@@ -2889,3 +2889,4 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - 검증: `npm run typecheck` 0 에러; `npm test` **175 files / 3932 tests passed** (ADR-0252 베이스라인과 동일 — 무회귀); `npm run build` PASS. 오디오 참조 실재 확인 — `sound.html` audio 12개 전부 resolve, 잔여 `.wav` 참조 0, `SoundCategory`·`afplay`·`toggle_category`·`_full_` 잔여 0(의도된 폐기 안내 배너 1건만 잔존). `web/public/sounds/` symlink 5개 전부 resolve, `manager.ts` BGM 참조 5종 resolve. 대시보드 22개 HTML 스캔 `src/wet_run`·`prototype/src` 잔여 0. `combat.html` 참조 파일 15개 전부 실재.
 - 잔여(별도 세션 필요): `Game/dashboard/scripts/aggregate-stats.mjs` 가 옛 경로(`Game/wet_run/dashboard/data/...`)를 가리켜 `docs/dashboard/data/*.json` 재생성 파이프라인이 끊긴 상태로 추정된다 — 별도 repo · 범위 밖. `sound.html` 의 Categories·Sound Files 절은 "retired" 표기만 하고 내용 유지 — 실제 `web/` 기준 전면 재작성은 별도 작업.
 - 결정: ADR-0253 신규 (Option 2 채택 — 정본 1세대 + 대시보드 참조 통합). ADR-0250 링크 수정만. 미커밋·미스테이징.
+[2026-11-02] verify | wet_run_verify (1/2/3) — audit=True

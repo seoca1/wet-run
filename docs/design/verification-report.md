@@ -1,6 +1,6 @@
 # Wet-Run 통합 검증 보고
 
-**시간**: 2026-10-14T09:50:01Z  
+**시간**: 2026-11-02T23:52:08Z  
 **버전**: 1.0.0  
 
 ## 1_balance
@@ -51,13 +51,17 @@
 }
 
 ## 2_jev
-null
+{
+  "status": "advisory_maybe",
+  "p": 0.75,
+  "note": "WF1 gold Noul 평가 완료 (p=0.75 ≥ 0.6 → block 허용, never-route 아님)."
+}
 
 ## 3_audit
 {
   "clean": true,
   "exit": 0,
-  "summary": "Scanning 4714 markdown files...\n\n======================================================================\nVAULT AUDIT REPORT\n======================================================================\nTotal files scanned: 4714\n\n--- PRODUCTION BROKEN LINKS ---\n  ✓ None\n\n  TOTAL: 0\n\n--- AUDIT ARTIFACTS (false positives, NOT broken) ---\n  vault_root_relative: 12\n  https_url: 4\n  build_log: 4\n  TOTAL: 20\n\n--- ORPHAN PAGES (not linked from index.md) ---\n\n  ### infra/llm/wiki/ (1)\n    JEV_ALTERNATIVES_2026-10-12.md\n\n  TOTAL: 1\n\n======================================================================\nSTATUS: ✅ CLEAN\n======================================================================\n"
+  "summary": "Scanning 4697 markdown files...\n\n======================================================================\nVAULT AUDIT REPORT\n======================================================================\nTotal files scanned: 4697\n\n--- PRODUCTION BROKEN LINKS ---\n  ✓ None\n\n  TOTAL: 0\n\n--- AUDIT ARTIFACTS (false positives, NOT broken) ---\n  vault_root_relative: 12\n  https_url: 9\n  build_log: 4\n  TOTAL: 25\n\n--- ORPHAN PAGES (not linked from index.md) ---\n  ✓ None\n\n  TOTAL: 0\n\n======================================================================\nSTATUS: ✅ CLEAN\n======================================================================\n"
 }
 
 > 규약 준수: raw/ 미수정 · 원시 Jev 응答 아카이브 안함 · p<0.6 시 never-route

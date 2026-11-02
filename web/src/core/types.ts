@@ -63,7 +63,17 @@ export interface Program {
   readonly tier: number;
   readonly cost: number; // alarm cost
   readonly effect: string; // free-form effect identifier
+  /**
+   * What the program actually does in the web tier.
+   *
+   * ADR-0251 rule 5: the text must state what the screen does. The web
+   * reducer gives every program the same damage path (`tier * 5`), so the
+   * catalog's design intent lives in `plannedDescription` instead — the
+   * per-program shield / buff / decoy effects are not wired yet.
+   */
   readonly description: string;
+  /** The designed effect, not yet implemented in the web tier. */
+  readonly plannedDescription?: string;
   readonly aoe: boolean;
 }
 

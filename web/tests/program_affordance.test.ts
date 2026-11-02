@@ -96,21 +96,24 @@ describe("COST label = the reducer's charge", () => {
   it.each([
     ["normal", [] as RunMutator[]],
     ["double_alarm", ["double_alarm"] as RunMutator[]],
-  ])("%s: every slot's COST and AFTER equal what use_program does", (_label, mutators) => {
-    vi.spyOn(Math, "random").mockReturnValue(0.99);
-    const state = combat(38, mutators);
-    const rows = programAffordances(state);
-    expect(rows).toHaveLength(HAND.length);
-    for (const row of rows) {
-      const next = applyAction(state, {
-        type: "use_program",
-        programId: row.programId,
-      });
-      expect(row.blocked).toBe(false);
-      expect(next.player.alarm - state.player.alarm).toBe(row.cost);
-      expect(next.player.alarm).toBe(row.after);
-    }
-  });
+  ])(
+    "%s: every slot's COST and AFTER equal what use_program does",
+    (_label, mutators) => {
+      vi.spyOn(Math, "random").mockReturnValue(0.99);
+      const state = combat(38, mutators);
+      const rows = programAffordances(state);
+      expect(rows).toHaveLength(HAND.length);
+      for (const row of rows) {
+        const next = applyAction(state, {
+          type: "use_program",
+          programId: row.programId,
+        });
+        expect(row.blocked).toBe(false);
+        expect(next.player.alarm - state.player.alarm).toBe(row.cost);
+        expect(next.player.alarm).toBe(row.after);
+      }
+    },
+  );
 
   it("double_alarm doubles and floors exactly like the reducer", () => {
     expect(programAlarmCost(program("a", 3), [])).toBe(3);
@@ -132,7 +135,10 @@ describe("COST label = the reducer's charge", () => {
       const state = combat(alarm, mutators, [program("probe", cost)]);
       const [row] = programAffordances(state);
       expect(row?.blocked).toBe(blocked);
-      const next = applyAction(state, { type: "use_program", programId: "probe" });
+      const next = applyAction(state, {
+        type: "use_program",
+        programId: "probe",
+      });
       if (blocked) {
         expect(next.message).toBe("Cost too high — program failed");
         expect(next.deck).toEqual(state.deck);
@@ -184,28 +190,34 @@ describe("row text", () => {
       combat(38, [], [program("strike", 3), program("split", 8, true)]),
     );
     expect(rows.map(formatAffordanceRow)).toEqual([
-      "1 STRIKE    COST +3  → 41/100   TARGET ICE",
-      "2 SPLIT     COST +8  → 46/100   TARGET ALL ICE",
+      "1 STRIKE    COST +3          TARGET ICE",
+      "2 SPLIT     COST +8          TARGET ALL ICE",
     ]);
     const blocked = programAffordances(combat(95, [], [program("wisp", 8)]));
     expect(formatAffordanceRow(blocked[0]!)).toBe(
-      "1 WISP      COST +8  → BLOCKED  TARGET ICE",
+      "1 WISP      COST +8  BLOCKED TARGET ICE",
     );
   });
 
   it("narrow rows line up under their legend and keep every fact", () => {
     const rows = programAffordances(
-      combat(95, ["double_alarm"], [program("strike", 2), program("split", 3, true)]),
+      combat(
+        95,
+        ["double_alarm"],
+        [program("strike", 2), program("split", 3, true)],
+      ),
     );
     const lines = rows.map(formatCompactAffordanceRow);
-    expect(COMPACT_HAND_HEADER).toBe("HAND        COST AFTER    TARGET");
+    expect(COMPACT_HAND_HEADER).toBe("HAND        COST          TARGET");
     expect(lines).toEqual([
-      "1 STRIKE    +4   99/100   ICE",
+      "1 STRIKE    +4            ICE",
       "2 SPLIT     +6   BLOCKED  ALL ICE",
     ]);
     for (const line of lines) {
       expect(line.indexOf("+")).toBe(COMPACT_HAND_HEADER.indexOf("COST"));
-      expect(line.indexOf(" ICE") + 1 >= COMPACT_HAND_HEADER.indexOf("TARGET")).toBe(true);
+      expect(
+        line.indexOf(" ICE") + 1 >= COMPACT_HAND_HEADER.indexOf("TARGET"),
+      ).toBe(true);
       expect(line.length).toBeLessThanOrEqual(34);
     }
   });
@@ -236,11 +248,11 @@ describe("touch label = canvas semantics", () => {
     expect(touchAffordanceLines(ok!)).toEqual([
       "1 COST+3",
       "STRIKE",
-      "→ 41/100",
+      "",
       "ICE",
     ]);
     expect(affordanceAriaLabel(aoe!)).toBe(
-      "2 SPLIT, COST plus 8, to 46 of 100, target ALL ICE",
+      "2 SPLIT, COST plus 8, cost on the card, target ALL ICE",
     );
     const [blocked] = programAffordances(combat(95, [], [program("wisp", 8)]));
     expect(touchAffordanceLines(blocked!)).toEqual([
@@ -279,10 +291,13 @@ describe("hand block placement", () => {
     [50, 42],
     [40, 32],
     [60, 51],
-  ])("rows=%i: header row %i, five slots end inside the frame", (rows, header) => {
-    expect(combatHandRow(rows)).toBe(header);
-    expect(combatHandRow(rows) + 5).toBeLessThanOrEqual(rows - 3);
-  });
+  ])(
+    "rows=%i: header row %i, five slots end inside the frame",
+    (rows, header) => {
+      expect(combatHandRow(rows)).toBe(header);
+      expect(combatHandRow(rows) + 5).toBeLessThanOrEqual(rows - 3);
+    },
+  );
 });
 
 describe("wiring", () => {
@@ -317,5 +332,42 @@ describe("wiring", () => {
         expect(row).toBeLessThan(combatHandRow(rows));
       }
     }
+  });
+});
+
+/** ADR-0251 rule 5 — the hand must not predict a COST the reducer may not charge.
+ *
+ * The killing blow charges nothing (the reducer branches to the victory
+ * path before it applies `alarm: newAlarm`). A predicted "COST left after
+ * this play" is therefore wrong on exactly the play where the player most
+ * needs the number to be right, and kill prediction is forbidden, so the
+ * prediction cannot be kept and corrected per card.
+ */
+describe("hand labels never predict the remaining COST", () => {
+  it("carries no after-value in any channel", () => {
+    const rows = programAffordances(
+      combat(38, [], [program("strike", 3), program("split", 8, true)]),
+    );
+    for (const row of rows) {
+      const after = `${row.after}/${COST_LIMIT}`;
+      const texts = [
+        formatAffordanceRow(row),
+        formatCompactAffordanceRow(row),
+        affordanceAriaLabel(row),
+        ...touchAffordanceLines(row),
+      ];
+      for (const text of texts) {
+        expect(text).not.toContain(after);
+        expect(text).not.toContain(`→ ${row.after}`);
+        expect(text).not.toContain(`${row.after} of`);
+      }
+    }
+  });
+
+  it("still states the card's own COST and its target", () => {
+    const [ok] = programAffordances(combat(38, [], [program("strike", 3)]));
+    expect(formatAffordanceRow(ok!)).toContain("COST +3");
+    expect(formatAffordanceRow(ok!)).toContain("TARGET ICE");
+    expect(affordanceAriaLabel(ok!)).toContain("COST plus 3");
   });
 });

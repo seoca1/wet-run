@@ -228,9 +228,19 @@ export function parseProgram(raw: unknown, idHint: string): Program {
       `[data_loaders] program '${name}' requires 'cost' or 'ap_cost' as finite number`,
     );
   }
-  const description = typeof r.description === "string" ? r.description : "";
+  const plannedDescription =
+    typeof r.planned_description === "string" ? r.planned_description : "";
   const effect = typeof r.effect === "string" ? r.effect : "attack";
   const aoe = r.aoe === true;
+  // ADR-0251 rule 5: the description states what the program does. The web
+  // reducer gives every program the same damage path — `baseDamage:
+  // program.tier * 5` — so that is what the text says. The catalog's
+  // designed effect (shield, buff, decoy, ...) is not wired in this tier
+  // and stays in `plannedDescription`.
+  const damage = tier * 5;
+  const description = aoe
+    ? `Deals ${damage} damage to every ICE.`
+    : `Deals ${damage} damage to the ICE.`;
   return {
     id: idHint,
     name,
@@ -238,6 +248,7 @@ export function parseProgram(raw: unknown, idHint: string): Program {
     cost,
     effect,
     description,
+    ...(plannedDescription ? { plannedDescription } : {}),
     aoe,
   };
 }

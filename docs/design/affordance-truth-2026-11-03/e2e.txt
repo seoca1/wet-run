@@ -1,0 +1,8 @@
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [desktop-chromium] › e2e/idle_alarm.spec.ts:48:1 › real input prevents alarm growth despite elapsed combat time 
+    [mobile-portrait-chromium] › e2e/idle_alarm.spec.ts:48:1 › real input prevents alarm growth despite elapsed combat time 
+  4 skipped
+  86 passed (4.9m)

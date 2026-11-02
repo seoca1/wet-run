@@ -1,0 +1,3 @@
+LOOT
+
+↑↓: navigate | ENTER: continue | ESC: back

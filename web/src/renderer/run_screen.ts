@@ -5,6 +5,8 @@ import type { ScreenView } from "./screen_view";
 import { renderGrid } from "./combat_grid";
 import { groupStatusByTarget } from "./status_hud";
 import { buildHudLines } from "../core/state/state";
+import { isTerminalNode } from "../core/state/run_end";
+import { ENDINGS } from "../core/combat/ending_resolver";
 import { composeCombatVfx } from "./combat_vfx";
 import { composeFloatingDamage, overlayShake } from "./combat_overlay";
 import type { ShakeState } from "./screen_shake";
@@ -14,6 +16,19 @@ import type { MatrixTravelFrame } from "./matrix_travel";
 /** The same full-grid dimensions used by matrix, loot, ending and combat views. */
 export function runScreenLayout(cols: number, rows: number) {
   return { cols, rows } as const;
+}
+
+/**
+ * The ending's arc number, for the narrow right-hand HUD.
+ *
+ * The HUD panel is 10 columns wide at the 40-column layout, so a line has
+ * to stay short: the canvas squeezes an over-long line instead of
+ * truncating it, and the glyphs overlap. The ending's own name is already
+ * on the grid, so the arc number is the part the HUD adds.
+ */
+export function endingArcLabel(choice: string | null): string {
+  const ending = choice ? ENDINGS.find((e) => e.id === choice) : undefined;
+  return ending ? `ARC ${ending.arc}` : "ARC ?";
 }
 
 /** Compose non-combat run phases, retaining message-derived loot and HUD text.
@@ -58,7 +73,13 @@ export function renderRunScreen(
     case "ending":
       return {
         grid: renderEndingScreen(state.endingChoice, layout.cols, layout.rows),
-        hud: ["ENDING", "", `Choice: ${state.endingChoice ?? "?"}`],
+        // The grid already shows the ending's name, so the HUD carries the
+        // arc number. The raw id ("arc4_liberation_front", 23 chars) was
+        // squeezed by the canvas HUD at the 40-column layout, where the
+        // panel is 10 columns wide — the glyphs overlapped and the line
+        // was unreadable (ADR-0251 rule 5: the screen must be readable
+        // and must say what it means).
+        hud: ["ENDING", "", endingArcLabel(state.endingChoice)],
       };
     case "loot": {
       const creditsMatch = state.message.match(/\+(\d[\d,]*)\s+credits/);
@@ -67,6 +88,8 @@ export function renderRunScreen(
         ? parseInt((creditsMatch[1] ?? "").replace(/,/g, ""), 10)
         : 0;
       const lootText = lootMatch ? `Loot: ${lootMatch[1]}` : "";
+      // A terminal node ends the run on confirm — no heal, no route.
+      const terminal = isTerminalNode(state);
       return {
         grid: renderLootScreen(
           state.player.hp,
@@ -75,8 +98,15 @@ export function renderRunScreen(
           layout.rows,
           rewardCredits,
           lootText,
+          terminal,
         ),
-        hud: ["LOOT", "", "↑↓: navigate | ENTER: continue | ESC: back"],
+        // Only ENTER does anything on the loot screen: `applyLootAction`
+        // ignores cancel and the move keys, so promising "↑↓: navigate" or
+        // "ESC: back" would be a false affordance (ADR-0251 rule 5). The
+        // line is kept short for the HUD panel — the canvas squeezes an
+        // over-long line instead of truncating it — and the grid footer
+        // carries the full wording.
+        hud: ["LOOT", "", terminal ? "ENTER: run ends" : "ENTER: route"],
       };
     }
     default:

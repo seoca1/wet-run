@@ -1,0 +1,4 @@
+dist/assets/index-UidAimNC.js                 111.74 kB │ gzip: 36.77 kB │ map: 545.17 kB
+dist/assets/story-DqvzG_Kk.js                 131.83 kB │ gzip: 52.99 kB │ map:  49.07 kB
+dist/assets/game-core-DAAoq5kg.js             144.03 kB │ gzip: 39.53 kB │ map: 411.80 kB
+✓ built in 509ms

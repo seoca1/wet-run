@@ -53,7 +53,23 @@ describe("run screen composition", () => {
     const state = runState({ runPhase: "ending", endingChoice: null });
     const view = renderRunScreen(state, 40, 30);
     expect(view?.grid.cells).toEqual(renderEndingScreen(null, 40, 30).cells);
-    expect(view?.hud).toEqual(["ENDING", "", "Choice: ?"]);
+    expect(view?.hud).toEqual(["ENDING", "", "ARC ?"]);
+  });
+
+  it("keeps the ending HUD line inside the narrow HUD panel", () => {
+    // The HUD panel is 10 columns wide at the 40-column layout. The canvas
+    // squeezes an over-long HUD line instead of truncating it, so a raw
+    // ending id made the glyphs overlap and the line unreadable.
+    const state = runState({
+      runPhase: "ending",
+      endingChoice: "arc4_liberation_front",
+    });
+    const view = renderRunScreen(state, 40, 30);
+    const hud = view?.hud ?? [];
+    for (const line of hud) {
+      expect(line.length).toBeLessThanOrEqual(9);
+    }
+    expect(hud.join(" ")).not.toContain("arc4_liberation_front");
   });
 
   it.each([
@@ -72,11 +88,10 @@ describe("run screen composition", () => {
         loot,
       ).cells,
     );
-    expect(view?.hud).toEqual([
-      "LOOT",
-      "",
-      "↑↓: navigate | ENTER: continue | ESC: back",
-    ]);
+    // Only ENTER does anything on the loot screen: `applyLootAction`
+    // ignores cancel and the move keys, so promising them was a false
+    // affordance (ADR-0251 rule 5).
+    expect(view?.hud).toEqual(["LOOT", "", "ENTER: route"]);
   });
 
   it("leaves combat routing to the controller", () => {

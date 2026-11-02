@@ -69,6 +69,7 @@ export function renderLootScreen(
   rows: number,
   rewardCredits: number = 0,
   lootMessage: string = "",
+  terminal: boolean = false,
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -117,12 +118,19 @@ export function renderLootScreen(
   }
 
   // HEAL preview (applied on loot confirm, without travelling).
+  //
+  // ADR-0251 rule 5: the screen states what will actually happen. A
+  // terminal node ends the run on confirm — `applyLootAction` branches to
+  // runPhase "ending" and no heal is applied — so this screen must not
+  // promise one, and must not promise a route either.
   const healed = Math.min(maxHp, hp + Math.floor(maxHp * 0.15));
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - 22) / 2)),
     Math.floor(rows / 2) + 5,
-    `HEAL applied → ${healed}/${maxHp}`,
+    terminal
+      ? "NO HEAL — this was the last node"
+      : `HEAL applied → ${healed}/${maxHp}`,
     PALETTE.GRAY_DARK,
   );
 
@@ -131,7 +139,7 @@ export function renderLootScreen(
     grid,
     Math.max(2, Math.floor((cols - 28) / 2)),
     rows - 2,
-    "ENTER: route selection | ESC: back",
+    terminal ? "ENTER: run ends" : "ENTER: route selection",
     PALETTE.GRAY_DARK,
   );
   return grid;

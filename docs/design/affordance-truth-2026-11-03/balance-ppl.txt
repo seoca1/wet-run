@@ -1,0 +1,9 @@
+
+Idle: 0ms (scalar = every turn; schedule = once, then 0)
+grade  missions  win-rate  stalled  mean-turns  mean-HP-end  p5/p95
+    1         4    100.0%     0.0%         3.9         80.7   79/85
+    2        16     79.1%     0.0%         4.3         38.9   28/45
+    3        11     98.9%     0.0%         5.7         30.2   19/39
+    4        10     83.0%     0.0%         5.9         22.1   11/29
+    5         9     44.4%     0.0%         5.2         15.3   11/18
+    6         3     24.7%     0.0%         5.2          1.2    0/2

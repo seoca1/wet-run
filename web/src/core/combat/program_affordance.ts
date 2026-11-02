@@ -79,26 +79,38 @@ export function programAffordances(
 }
 
 function afterText(a: ProgramAffordance): string {
-  return a.blocked ? "BLOCKED" : `${a.after}/${COST_LIMIT}`;
+  return a.blocked ? "BLOCKED" : "";
 }
 
-/** Full canvas row, e.g. `1 STRIKE    COST +3  → 41/100   TARGET ICE`. */
+/**
+ * Full canvas row, e.g. `1 STRIKE    COST +3   TARGET ICE`.
+ *
+ * ADR-0251 rule 5: the hand states what the screen will do. The row used
+ * to end with `→ 41/100` — the COST left after the play. That figure is a
+ * prediction, and it is wrong on the killing blow: the reducer charges
+ * nothing when the play defeats the last ICE, so the row promised a COST
+ * that was never charged. Kill prediction is forbidden (rule 5), so the row
+ * cannot special-case the killing card either — the honest form is the
+ * card's own COST, and the current total stays in the HUD.
+ */
 export function formatAffordanceRow(a: ProgramAffordance): string {
   const name = a.name.padEnd(NAME_WIDTH);
   const cost = `+${a.cost}`.padEnd(3);
-  return `${a.slot} ${name} COST ${cost} → ${afterText(a).padEnd(7)}  TARGET ${a.target}`;
+  const blocked = afterText(a).padEnd(7);
+  return `${a.slot} ${name} COST ${cost} ${blocked} TARGET ${a.target}`;
 }
 
-/** Narrow canvas row, e.g. `1 STRIKE    +3   41/100   ICE`; its columns line
+/** Narrow canvas row, e.g. `1 STRIKE    +3   ICE`; its columns line
  * up under `COMPACT_HAND_HEADER`, which names them. */
 export function formatCompactAffordanceRow(a: ProgramAffordance): string {
   const name = a.name.padEnd(NAME_WIDTH);
   const cost = `+${a.cost}`.padEnd(4);
-  return `${a.slot} ${name} ${cost} ${afterText(a).padEnd(8)} ${a.target}`;
+  const blocked = afterText(a).padEnd(8);
+  return `${a.slot} ${name} ${cost} ${blocked} ${a.target}`;
 }
 
 /** Column legend for the narrow rows. */
-export const COMPACT_HAND_HEADER = `${"HAND".padEnd(NAME_WIDTH + 3)}${"COST".padEnd(5)}${"AFTER".padEnd(9)}TARGET`;
+export const COMPACT_HAND_HEADER = `${"HAND".padEnd(NAME_WIDTH + 3)}${"COST".padEnd(5)}${"".padEnd(9)}TARGET`;
 
 /** Longest full row a hand can produce (two-digit COST, `100/100`, `ALL ICE`). */
 export const FULL_ROW_WIDTH = formatAffordanceRow({
@@ -116,7 +128,7 @@ export function touchAffordanceLines(a: ProgramAffordance): readonly string[] {
   return [
     `${a.slot} COST+${a.cost}`,
     a.name,
-    a.blocked ? "BLOCKED" : `→ ${a.after}/${COST_LIMIT}`,
+    a.blocked ? "BLOCKED" : "",
     a.target,
   ];
 }
@@ -125,7 +137,7 @@ export function touchAffordanceLines(a: ProgramAffordance): readonly string[] {
 export function affordanceAriaLabel(a: ProgramAffordance): string {
   const outcome = a.blocked
     ? `blocked, over ${COST_LIMIT}`
-    : `to ${a.after} of ${COST_LIMIT}`;
+    : "cost on the card";
   return `${a.slot} ${a.name}, COST plus ${a.cost}, ${outcome}, target ${a.target}`;
 }
 

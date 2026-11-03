@@ -2937,3 +2937,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **검증**: vitest **180 files / 3985 passed**(베이스라인 180/3978) · tsc 0 · eslint 0 · build PASS · 밸런스 **byte-identical**(opening 100.0/100.0/81.4/42.6/36.6/0.0 · PPL 100.0/100.0/99.3/84.1/44.4/27.3 — 표시·사운드 전용) · 3레이아웃 캡처 18케이스 그리드/HUD 초과 **0** · 실플레이(ego-lite) `1` = `loot`+`taken:"kraken"`+`"Acquired Kraken"` → ENTER = `matrix`+`taken:null`+`"Took Kraken."`, console error 0.
 - **증거**: `Game/wet_run/docs/design/growth-feedback-2026-11-03/` — 3레이아웃 캡처(제시/획득/종결) + 폭 검사 + 밸런스/테스트 로그.
 - **남은 항목**: (a) 도착지 강조는 아직 메시지 텍스트뿐 — 더 강조하려면 매트릭스 배너 밴드(별도 슬라이스) (b) 하네스가 성장을 모델링하지 않음 (c) 제시 카드 tier 가중치.
+
+## [2026-11-03] docs(design) | 성장 연출 시안 — Manus 시안 4안 + Jev 제약 게이트 (검토 대기)
+
+- **계기**: 오너 "이벤트나 효과 시안은 마누스 도움을 받아서 시도해도 돼." ADR-0261 의 3박자(소리·멈춤·표시)는 들어갔지만 **연출이 텍스트 색 변화가 전부**라 성장의 순간이 사건처럼 느껴지지 않는다.
+- **방법**: 먼저 이 저장소를 읽어 실제 제약을 확정(① VFX 는 **전투 화면 경로에서만** 합성된다 ② **표시 전용·벽시계 선례 2개**가 `main.ts` 안에 있다 — `matrixTravelFrame`(220ms) · `pressFeedback` ③ `renderRunScreen(..., matrixTravel)` 이 프레임을 인자로 받아 그린다 ④ loot 세로 여유: 80×50 위 6행·아래 10행, 40×60 위 6행·아래 16행 ⑤ `data_acquired` VFX 는 실제로 렌더된다) → 그 제약을 그대로 프롬프트에 넣어 **Manus(max)** 에 시안 요청(구조화 출력) → **Jev 결정 계층**으로 제약 게이트.
+- **Manus 시안 4안**: ① **TERMINAL COMMIT**(기업 터미널이 불완전 데이터를 덱에 강제 커밋 — `PROGRAM SLOT`/`DATA LINK OPEN`/`SIGNATURE`/`DECK COMMIT [####] 100%`/`[+] PROGRAM ACQUIRED`, ~420ms, 비용 작음) ② GHOST TRACE(덱 슬롯 연결선 `──╼ DECK[07]`) ③ **COLD BOOT**(`BOOT .... READY` 부팅 은유) ④ **ARRIVAL: ROUTE HANDOFF**(매트릭스 도착에서 `+ PROGRAM: KRAKEN` 으로 성장을 다음 경로 선택에 연결).
+- **Jev 게이트 결과**(중요): 추천은 **안1+안4 결합**(0.97/conf 0.96 — Manus 1위와 일치). 위반 판정 — **안2 제외**(noul **0.70**: `DECK[07]` 의 덱 슬롯 번호는 게임 상태에 없는 값 → 어포던스 진실성 위반) · **안3 문구 수정 필요**(noul **0.61**: `READY` 는 과대 주장 — 새 카드는 손패가 아니라 **뽑기 더미**에 들어간다 → `QUEUED`/`STAGED` 로) · 안1(0.24) 안4(0.18) 통과.
+- **"만들지 마라" 7항**(Manus 제시 + 제약 도출): 카드가 날아가 꽂히는 연출(40×60 폭 없음·가로 스크롤 금지) · VFX 끝날 때까지 입력 차단 · 전투용 `data_acquired` 의 loot 주입 · 랜덤 파티클/미리보기(RNG 소비 = 밸런스 위반) · 축하 폭죽·레벨업 게이지(톤 파괴) · **없는 덱 슬롯/레벨/희귀도**(안2 가 정확히 이 함정) · Y/N 확인창.
+- **구현 형태(권고)**: 리듀서 무변경, `main.ts` 표시 전용 프레임 2개(`lootCommitFrame`, `matrixArrivalFrame`), 벽시계 delta 로만 진행, **애니메이션 종료를 리듀서로 보내지 않음**, reduced-motion 이면 최종 문구만.
+- **산출물**: `docs/design/growth-direction-2026-11-03/` — `README.md`(시안 정리 + 오너 선택지 A~E) · `manus-raw.md`(Manus 원문 462행, 목업 포함) · `manus-structured.json`.
+- **상태**: **시안 (decision pending)** — 오너 선택 대기. 추천 A(안1+안4).

@@ -189,7 +189,10 @@ async function snap(page: Page): Promise<Snap> {
         visited: st.visitedNodes ?? [],
         cleared: st.clearedEncounterNodes ?? [],
         bypassed: st.bypassedEncounterNodes ?? [],
-        msg: st.message,
+        // The idle alarm rewrites its own TRACE line on a wall clock, with no
+        // key pressed. Normalising it keeps a self-driven change from masking
+        // a real freeze (this is what hid the COST-cap freeze below).
+        msg: /^TRACE \d+\/\d+$/.test(st.message) ? "(trace)" : st.message,
         taken: st.cardRewardTaken ?? null,
         verb: st.encounterDecision?.selectedVerb ?? null,
         decision: st.encounterDecision != null,
@@ -201,6 +204,35 @@ async function snap(page: Page): Promise<Snap> {
 }
 
 const hash = (s: Snap): string => JSON.stringify(s);
+
+/** The same snapshot without the message text. A freeze is about whether the
+ * *state* can move; refusal text is not progress, and worse, two refusals can
+ * alternate ("Cost too high" / "Hand slot 6 is empty"), which made a frozen
+ * fight look alive on every sweep. The idle alarm's own TRACE line is text
+ * too, so leaving the message out covers that as well. */
+const structural = (s: Snap): string => {
+  if (s.state === null)
+    return JSON.stringify({ screen: s.screen, state: null });
+  const st = s.state;
+  return JSON.stringify([
+    s.screen,
+    st.runPhase,
+    st.phase,
+    st.cur,
+    st.sel,
+    st.hp,
+    st.alarm,
+    st.turn,
+    st.deck,
+    st.ice,
+    st.visited,
+    st.cleared,
+    st.bypassed,
+    st.taken,
+    st.verb,
+    st.decision,
+  ]);
+};
 
 /** Deterministic PRNG so the "random" policy reproduces from SEED. */
 function mulberry32(seed: number): () => number {
@@ -227,15 +259,20 @@ async function pressAndWatch(
   return hash(await snap(page)) !== before;
 }
 
-/** Does *no* progress key do anything? Two passes: the first absorbs one-shot
- * messages (a refused program writes "Cost too high" exactly once), the second
- * is the real question. Escape is not in this set. */
+/** Does *no* progress key move the state? Compared structurally (see
+ * `structural`), so a message that only rewrites itself is not a move. Two
+ * passes so a one-shot result cannot be mistaken for progress. The give-up
+ * keys are not in this set. */
 async function inertProgressKeys(page: Page): Promise<boolean> {
+  const press = async (key: string): Promise<boolean> => {
+    const before = structural(await snap(page));
+    await page.keyboard.press(key);
+    await page.waitForTimeout(18);
+    return structural(await snap(page)) !== before;
+  };
+  for (const key of PROGRESS_KEYS) await press(key);
   for (const key of PROGRESS_KEYS) {
-    await pressAndWatch(page, key, hash(await snap(page)));
-  }
-  for (const key of PROGRESS_KEYS) {
-    if (await pressAndWatch(page, key, hash(await snap(page)))) return false;
+    if (await press(key)) return false;
   }
   return true;
 }
@@ -516,16 +553,18 @@ test.describe("direct-control playthrough soak", () => {
           outcome = "completed";
           break;
         }
-        const escBefore = hash(await snap(page));
+        const escBefore = structural(await snap(page));
         let afterEsc = await snap(page);
         for (const giveUp of GIVE_UP_KEYS) {
           await page.keyboard.press(giveUp);
           await page.waitForTimeout(200);
           afterEsc = await snap(page);
-          if (hash(afterEsc) !== escBefore) break;
+          if (structural(afterEsc) !== escBefore) break;
         }
         outcome =
-          hash(afterEsc) === escBefore ? "deadlocked" : "only_escape_loses";
+          structural(afterEsc) === escBefore
+            ? "deadlocked"
+            : "only_escape_loses";
         detail = {
           endPhase: `${st.runPhase}/${st.phase}`,
           endAlarm: st.alarm,

@@ -11,7 +11,7 @@
 | 디렉토리 | 에이전트의 역할 | 절대 규칙 |
 | --- | --- | --- |
 | `web/` | **활성 코드베이스** | TypeScript + Vite + Vitest. 모든 변경은 `web/` 에서. 명령은 `cd web && npm ...`. |
-| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. 하위: `docs/wiki/`(ADR·lore·world) · `docs/design/`(활성 스펙·증거) · `docs/testcases/` · `docs/sessions/`(세션 요약) · `docs/dashboard/` · `docs/playtest/`(수동 플레이 기록) · `docs/architecture/`(redirect-only) · `docs/diagnostics/`(도구 진단 기록). **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (189 ADRs, 0001–0269). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
+| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. 하위: `docs/wiki/`(ADR·lore·world) · `docs/design/`(활성 스펙·증거) · `docs/testcases/` · `docs/sessions/`(세션 요약) · `docs/dashboard/` · `docs/playtest/`(수동 플레이 기록) · `docs/architecture/`(redirect-only) · `docs/diagnostics/`(도구 진단 기록). **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (190 ADRs, 0001–0270). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
 | `data/` | **삭제됨 (2026-10-20)** | 이전 prototype/ 잔재 (sounds_test WAVs, jockeys/deceased.json). 모든 게임 데이터는 `web/src/data/*.json` 과 `web/public/sounds/` 에 존재. |
 | `scripts/` | 자유롭게 편집 | 보조 도구 (`scripts/tools/` — audit_sprawl.py, find_broken_links.py, README.md). |
 | 루트 메타 파일 | 신중히 수정 | README, AGENTS, log, ROADMAP, CHANGELOG, MIGRATION, VALIDATION_SCENARIO, mkdocs.yml |
@@ -35,6 +35,10 @@
    이 문서(AGENTS.md)가 가리키는 **경로가 실제로 있는지**, 적어둔 **수치가 실측과 같은지**를 대조한다. 수치에 `+` 를 붙이면 **하한**이 된다(`180+ files` = 180 이상) — 늘어나는 수치는 하한으로 두고, 줄어들면 실패한다(스위트 축소 알람).
    테스트 수까지 세려면 `--tests` (vitest 실행). ADR 번호 중복은 **경고**다 — 재번호는 Accepted ADR
    인용을 깨므로 오너 결정이지 자동 수정이 아니다.
+6. **원작 문구 검사** (2026-11-04, ADR-0270): `python3 scripts/check_no_novel_prose.py` — **exit 0 필수**.
+   게임의 사용자 노출 문자열과 `Fiction/wiki` 의 원작 인용을 **8단어 연속**으로 대조한다.
+   용어와 톤은 쓰되 **문장은 새로 쓴다**(패러프레이즈). 걸리면 그 문장을 고치고, 일반 문구 우연 일치로
+   보이면 `--ngram` 을 올려 재확인한다.
 
 ### 3.2 게임 디자인 변경
 1. `decisions/` 에 새 ADR 작성 또는 기존 ADR Status 변경

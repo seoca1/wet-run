@@ -100,6 +100,32 @@ Dixie 데미지가 콤보에 비례해 80~98 까지 오르므로, **상한에 �
 | 5 | **이정표 문구** — 구역 진입/보스 접근/마지막 노드에 한 줄 | 작음 (표시) |
 | 6 | **회복 문구 정직화** — 이미 최대면 `HEAL — already full` | 아주 작음 (표시) |
 
+## 스토리 일관성 — 프롤로그 → 엔딩 (2026-11-04, ADR-0270)
+
+| 측정 | 값 |
+|---|---|
+| 프롤로그 | **27 씬** (3 자키 × 9) — **런과 분리된 모드**(런은 미션 선택에서 시작) |
+| 미션 | 53, arc 1–5 (20/14/8/7/4) |
+| 엔딩 카탈로그 | **29** (7/6/6/5/5) — `docs/design/story_skeleton.md` 계약 |
+| `requiresFaction`/`requiresChoice` 선언 | **0** → 리졸버 두 분기 **죽은 코드** |
+| `missionsCompleted` | **항상 1** → `>=3` (liberation) 분기 **도달 불가** |
+
+**평범한 런이 어디로 끝나는가** (중간 HP·적은 크레딧·미션 1회 — 이 티어가 만들 수 있는 유일한 형태):
+
+```
+arc1 → arc1_wage_slave (status_quo)         ✅ 의도
+arc2 → arc2_ghost_dancer (transcendence)    ⚠️ status_quo 없음 → 배열 0번
+arc3 → arc3_neutrality (status_quo)         ✅
+arc4 → arc4_liberation_front (liberation)   ⚠️ status_quo 없음 → "The AIs are free"
+arc5 → arc5_unknown (status_quo)            ✅
+```
+
+## 원작 문구 (ADR-0270)
+
+`Fiction/wiki` 의 원작 인용을 코퍼스로 게임 문자열을 검사한다(`scripts/check_no_novel_prose.py`).
+감사 전 **두 씬(한/영)이 뉴로맨서 첫 문장을 그대로 인용**하고 있었고, 지금은 패러프레이즈됐다.
+현재 **252개 문자열 · 8단어 연속 일치 0**.
+
 ## 재현
 
 ```bash

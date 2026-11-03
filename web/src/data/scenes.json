@@ -138,8 +138,8 @@
           "speaker": "case",
           "speaker_ko": "케이",
           "portrait": "art:case_hands",
-          "text_en": "I jack in. The world goes the color of television, tuned to a dead channel — no, that is not right. The world goes gray. The Ono-Sendai deck hums against my spine like a second heart. Data streams flow in pale columns. I am inside the matrix. I have always been inside the matrix.",
-          "text_ko": "잭인한다. 세계는 죽은 채널에 맞춘 텔레비전 색이 된다 — 아니, 그건 아니다. 세계가 회색이 된다. Ono-Sendai 데크가 두 번째 심장처럼 척추에 닿아 윙윙거린다. 데이터 스트림이 엷은 기둥처럼 흐른다. 매트릭스 안이다. 나는 늘 매트릭스 안에 있었다.",
+          "text_en": "I jack in. The world goes flat, then gray, like a screen with no signal left — no, that is not right either. The world goes gray. The Ono-Sendai deck hums against my spine like a second heart. Data streams flow in pale columns. I am inside the matrix. I have always been inside the matrix.",
+          "text_ko": "잭인한다. 세계는 신호가 끊긴 화면처럼 밋밋해지다가 회색이 된다 — 아니, 그건 아니다. 세계가 회색이 된다. Ono-Sendai 데크가 두 번째 심장처럼 척추에 닿아 윙윙거린다. 데이터 스트림이 엷은 기둥처럼 흐른다. 매트릭스 안이다. 나는 늘 매트릭스 안에 있었다.",
           "duration_ms": 14000,
           "sound": "jack_in_zap"
         },
@@ -367,8 +367,8 @@
           "speaker": "narrator",
           "speaker_ko": "내레이터",
           "portrait": null,
-          "text_en": "Case buys a paper coffee and a one-way ticket to the L5 shuttle. The clerk does not look at his face. Case does not look at the clerk. Above them both, the Chiba sky is the color of television, tuned to a dead channel — a phrase he has heard so many times that he has forgotten where he first heard it, but he knows, with the certainty of a man who has stopped running, that he will never have to remember where he heard it again. The flight is in two hours. The clinic in Freeside is in six hours. The new name is in a sealed envelope in his breast pocket, and the old name is in a chip that he intends to feed to a trash compactor in the back of the noodle bar. He finishes the coffee. He throws the cup into the street. He has not been this light in years.",
-          "text_ko": "케이는 종이 커피 한 잔과 L5 셔틀 편도표를 산다. 직원이 그의 얼굴을 보지 않는다. 케이는 직원을 보지 않는다. 두 사람 모두의 머리 위에서 지바 하늘은 television 색 — 죽은 채널에 맞춰진 색이다. 너무 많이 들어서 어디서 처음 들었는지 잊어버린 문장. 그러나 달리기 멈춘 남자의 확신으로, 그는 다시는 그것을 어디서 들었는지 기억하지 않아도 될 것이라는 것을 안다. 비행기는 두 시간 후. Freeside의 클리닉은 여섯 시간 후. 새 이름은 가슴 주머니의 봉인된 봉투에. 옛 이름은 노드 바 뒤 쓰레기 압축기에 먹일 칩 안에. 그는 커피를 마저 마신다. 컵을 거리로 던진다. 수년 만에 이렇게 가볍다.",
+          "text_en": "Case buys a paper coffee and a one-way ticket to the L5 shuttle. The clerk does not look at his face. Case does not look at the clerk. Above them both, the Chiba sky is a dead screen — a phrase he has heard so many times that he has forgotten where he first heard it, but he knows, with the certainty of a man who has stopped running, that he will never have to remember where he heard it again. The flight is in two hours. The clinic in Freeside is in six hours. The new name is in a sealed envelope in his breast pocket, and the old name is in a chip that he intends to feed to a trash compactor in the back of the noodle bar. He finishes the coffee. He throws the cup into the street. He has not been this light in years.",
+          "text_ko": "케이는 종이 커피 한 잔과 L5 셔틀 편도표를 산다. 직원이 그의 얼굴을 보지 않는다. 케이는 직원을 보지 않는다. 두 사람 모두의 머리 위에서 지바 하늘은 신호가 죽은 화면 같은 잿빛이다. 너무 많이 들어서 어디서 처음 들었는지 잊어버린 문장. 그러나 달리기 멈춘 남자의 확신으로, 그는 다시는 그것을 어디서 들었는지 기억하지 않아도 될 것이라는 것을 안다. 비행기는 두 시간 후. Freeside의 클리닉은 여섯 시간 후. 새 이름은 가슴 주머니의 봉인된 봉투에. 옛 이름은 노드 바 뒤 쓰레기 압축기에 먹일 칩 안에. 그는 커피를 마저 마신다. 컵을 거리로 던진다. 수년 만에 이렇게 가볍다.",
           "duration_ms": 24000,
           "sound": "movement_neon_hum"
         }

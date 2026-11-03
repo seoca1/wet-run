@@ -267,6 +267,7 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     ...(state.cardRewardTaken
       ? { cardRewardTaken: state.cardRewardTaken }
       : {}),
+    ...(state.jockeyId ? { jockeyId: state.jockeyId } : {}),
     discardIds: state.discardPile.map((p: Program) => p.id),
     drawIds: state.drawPile.map((p: Program) => p.id),
     savedAt: new Date().toISOString(),
@@ -386,6 +387,7 @@ export function slotToGameState(
     clearedEncounterNodes: slot.clearedEncounterNodes ?? [],
     bypassedEncounterNodes: slot.bypassedEncounterNodes ?? [],
     cardRewardTaken: slot.cardRewardTaken ?? null,
+    jockeyId: slot.jockeyId ?? null,
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],

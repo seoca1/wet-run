@@ -129,6 +129,7 @@ export type GamePhase =
 export type ScreenKind =
   | "menu" // Main menu (9 options, current screen on boot)
   | "mission_select" // NEW RUN → mission select (Tier 3 curated 30 missions)
+  | "jockey_select" // ADR-0274 — who is jacking in, before the mission
   | "briefing" // Mission briefing (Finn's office) — NEW
   | "travel" // Travel to jack-in point animation — NEW
   | "bypass_security" // Bypass corporate security — NEW
@@ -215,6 +216,9 @@ export interface GameState {
    * the acquisition and a reload cannot take a second one. Cleared on the way
    * out of loot. Optional; missing means nothing taken yet. */
   readonly cardRewardTaken?: string | null;
+  /** ADR-0274: the jockey this run belongs to ("novice"|"veteran"|"heretic").
+   * Display-only — it names the runner in the intro and the ending summary. */
+  readonly jockeyId?: string | null;
   readonly bossPhase: BossPhase; // 0 = no boss active, 1..4 = boss phase
   readonly endingChoice: EndingChoice | null;
   // Tier 5.5: active combat VFX (animation overlay).
@@ -477,6 +481,8 @@ export interface SaveSlot {
   /** ADR-0261 the card taken from the current loot offer; older version-1
    * slots omit it (no card taken yet). */
   readonly cardRewardTaken?: string;
+  /** ADR-0274 — the jockey the run belongs to; older slots omit it. */
+  readonly jockeyId?: string;
 }
 
 /** Game action — keyboard input → state mutation. */

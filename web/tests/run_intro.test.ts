@@ -76,7 +76,7 @@ describe("ADR-0272 — run intro", () => {
       "if(this.runIntroArc!==null){this.runIntroArc=null;",
     );
     expect(main).toContain(
-      "renderRunIntro(this.runIntroArc,this.layout.cols,this.layout.rows)",
+      "renderRunIntro(this.runIntroArc,this.layout.cols,this.layout.rows,jockeyHandle(this.state?.jockeyId),)",
     );
   });
 });

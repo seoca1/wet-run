@@ -255,7 +255,8 @@ function isSaveSlot(value: unknown): value is SaveSlot {
     isCurrentNodeIndex(v.currentNodeIndex) &&
     isOptionalNodeList(v.clearedEncounterNodes) &&
     isOptionalNodeList(v.bypassedEncounterNodes) &&
-    isOptionalId(v.cardRewardTaken)
+    isOptionalId(v.cardRewardTaken) &&
+    isOptionalId(v.jockeyId)
   );
 }
 

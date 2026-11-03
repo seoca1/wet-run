@@ -1,7 +1,9 @@
 {
   "base": "http://127.0.0.1:5195",
   "shots": [
+    "00-jockey-select",
     "01-mission-select",
+    "01b-run-intro",
     "02-encounter",
     "03-combat",
     "04-loot",
@@ -9,5 +11,5 @@
     "06-ending",
     "07-title-after-ending"
   ],
-  "steps": 84
+  "steps": 80
 }

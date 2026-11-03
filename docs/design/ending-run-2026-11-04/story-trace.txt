@@ -9,164 +9,156 @@
       "Combat vs ICE — Yakuza Enforcer"
 [4] combat/combat @mid | HP 87 COST 1 | ICE 153/165 | hand backdoor+2 boost+2 barrier+3 decoy+2
       ">>> Dixie attacks: 11 dmg"
-[5] combat/combat @mid | HP 87 COST 3 | ICE 146/165 | hand boost+2 barrier+3 decoy+2
-      "Backdoor → 7 dmg (ICE HP: 146)"
-[6] combat/combat @mid | HP 87 COST 5 | ICE 122/165 | hand barrier+3 decoy+2
+[5] combat/combat @mid | HP 87 COST 3 | ICE 141/165 | hand boost+2 barrier+3 decoy+2
+      "Backdoor → 9 dmg (ICE HP: 141)"
+[6] combat/combat @mid | HP 87 COST 5 | ICE 111/165 | hand barrier+3 decoy+2
       ">>> Dixie attacks: 17 dmg"
-[7] combat/combat @mid | HP 87 COST 7 | ICE 107/165 | hand barrier+3
-      "Decoy → 15 dmg (ICE HP: 107)"
-[8] combat/combat @mid | HP 87 COST 10 | ICE 54/165 | hand strike+1 backdoor+2 boost+2 decoy+2 barrier+3
+[7] combat/combat @mid | HP 87 COST 7 | ICE 94/165 | hand barrier+3
+      "Decoy → 14 dmg (ICE HP: 94)"
+[8] combat/combat @mid | HP 87 COST 10 | ICE 18/165 | hand strike+1 backdoor+2 boost+2 decoy+2 barrier+3
       ">>> Dixie attacks: 23 dmg"
-[9] combat/combat @mid | HP 87 COST 11 | ICE 46/165 | hand backdoor+2 boost+2 decoy+2 barrier+3
-      "Strike → 8 dmg (ICE HP: 46)"
-[10] combat/combat @mid | HP 87 COST 13 | ICE 15/165 | hand boost+2 decoy+2 barrier+3
-      ">>> Dixie attacks: 26 dmg"
-[11] combat/combat @mid | HP 87 COST 15 | ICE 6/165 | hand decoy+2 barrier+3
-      "Boost → 6 dmg (ICE HP: 6)"
-[12] loot/victory @mid | HP 87 COST 15 | ICE 0/165 | hand barrier+3
+[9] combat/combat @mid | HP 87 COST 11 | ICE 5/165 | hand backdoor+2 boost+2 decoy+2 barrier+3
+      "Strike → 10 dmg (ICE HP: 5)"
+[10] loot/victory @mid | HP 87 COST 11 | ICE 0/165 | hand boost+2 decoy+2 barrier+3
       "ICE — Yakuza Enforcer defeated! (no COST) +4625 credits Loot: ice_shardx2"
-[13] loot/victory @mid | HP 87 COST 15 | ICE 0/165 | hand barrier+3
+[11] loot/victory @mid | HP 87 COST 11 | ICE 0/165 | hand boost+2 decoy+2 barrier+3
       "Acquired Kraken — press ENTER to continue"
-[14] matrix/approach @mid | HP 100 COST 15 | ICE 0/165 | hand barrier+3
+[12] matrix/approach @mid | HP 100 COST 11 | ICE 0/165 | hand boost+2 decoy+2 barrier+3
       "Took Kraken. Choose an adjacent route — healed to 100/100"
-[15] matrix/approach @surface | HP 100 COST 15 | ICE 0/165 | hand barrier+3
+[13] matrix/approach @surface | HP 100 COST 11 | ICE 0/165 | hand boost+2 decoy+2 barrier+3
       "Moved to surface — ↑↓ picks the next route"
-[17] matrix/approach @mid | HP 100 COST 15 | ICE 0/165 | hand barrier+3
+[15] matrix/approach @mid | HP 100 COST 11 | ICE 0/165 | hand boost+2 decoy+2 barrier+3
       "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
-[18] combat/approach @mid | HP 100 COST 15 | ICE 165/165 | hand barrier+3
+[16] combat/approach @mid | HP 100 COST 11 | ICE 165/165 | hand boost+2 decoy+2 barrier+3
       "Entering mid... (1 ICE)"
-[18] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
-[19] combat/combat @mid | HP 100 COST 15 | ICE 165/165 | hand barrier+3
+[16] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
+[17] combat/combat @mid | HP 100 COST 11 | ICE 165/165 | hand boost+2 decoy+2 barrier+3
       "Combat vs ICE — Yakuza Enforcer"
-[20] combat/combat @mid | HP 100 COST 18 | ICE 129/165 | hand kraken+4 strike+1 backdoor+2 boost+2 decoy+2
+[18] combat/combat @mid | HP 100 COST 13 | ICE 125/165 | hand decoy+2 barrier+3
       ">>> Dixie attacks: 26 dmg"
-[21] combat/combat @mid | HP 100 COST 19 | ICE 128/165 | hand kraken+4 backdoor+2 boost+2 decoy+2
-      "Strike → 1 dmg (ICE HP: 128)"
-[22] combat/combat @mid | HP 100 COST 21 | ICE 96/165 | hand kraken+4 boost+2 decoy+2
+[19] combat/combat @mid | HP 100 COST 15 | ICE 117/165 | hand barrier+3
+      "Decoy → 8 dmg (ICE HP: 117)"
+[20] combat/combat @mid | HP 100 COST 18 | ICE 78/165 | hand kraken+4 strike+1 backdoor+2 boost+2 decoy+2
       ">>> Dixie attacks: 26 dmg"
-[23] combat/combat @mid | HP 100 COST 23 | ICE 89/165 | hand kraken+4 decoy+2
-      "Boost → 7 dmg (ICE HP: 89)"
-[24] combat/combat @mid | HP 100 COST 25 | ICE 52/165 | hand kraken+4
+[21] combat/combat @mid | HP 100 COST 19 | ICE 77/165 | hand kraken+4 backdoor+2 boost+2 decoy+2
+      "Strike → 1 dmg (ICE HP: 77)"
+[22] combat/combat @mid | HP 100 COST 21 | ICE 42/165 | hand kraken+4 boost+2 decoy+2
       ">>> Dixie attacks: 26 dmg"
-[25] combat/combat @mid | HP 100 COST 29 | ICE 38/165 | hand barrier+3 strike+1 backdoor+2 boost+2 decoy+2
-      "Kraken → 14 dmg (ICE HP: 38)"
-[26] combat/combat @mid | HP 100 COST 30 | ICE 11/165 | hand barrier+3 backdoor+2 boost+2 decoy+2
-      ">>> Dixie attacks: 26 dmg"
-[27] loot/victory @mid | HP 100 COST 30 | ICE 0/165 | hand barrier+3 boost+2 decoy+2
-      "ICE — Yakuza Enforcer defeated! (no COST) +4575 credits Loot: data_fragmentx1"
-[28] loot/victory @mid | HP 100 COST 30 | ICE 0/165 | hand barrier+3 boost+2 decoy+2
+[23] combat/combat @mid | HP 100 COST 23 | ICE 37/165 | hand kraken+4 decoy+2
+      "Boost → 5 dmg (ICE HP: 37)"
+[24] loot/victory @mid | HP 100 COST 25 | ICE 0/165 | hand kraken+4
+      "ICE — Yakuza Enforcer defeated! +4575 credits"
+[25] loot/victory @mid | HP 100 COST 25 | ICE 0/165 | hand kraken+4
       "Acquired Virus — press ENTER to continue"
-[29] matrix/approach @mid | HP 100 COST 30 | ICE 0/165 | hand barrier+3 boost+2 decoy+2
+[26] matrix/approach @mid | HP 100 COST 25 | ICE 0/165 | hand kraken+4
       "Took Virus. Choose an adjacent route — already at full HP"
-[30] matrix/approach @mid | HP 100 COST 30 | ICE 0/165 | hand barrier+3 boost+2 decoy+2
+[27] matrix/approach @mid | HP 100 COST 25 | ICE 0/165 | hand kraken+4
       "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
-[31] combat/approach @mid | HP 100 COST 30 | ICE 165/165 | hand barrier+3 boost+2 decoy+2
+[28] combat/approach @mid | HP 100 COST 25 | ICE 165/165 | hand kraken+4
       "Entering mid... (1 ICE)"
-[31] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
-[32] combat/combat @mid | HP 100 COST 30 | ICE 165/165 | hand barrier+3 boost+2 decoy+2
+[28] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
+[29] combat/combat @mid | HP 100 COST 25 | ICE 165/165 | hand kraken+4
       "Combat vs ICE — Yakuza Enforcer"
-[33] combat/combat @mid | HP 100 COST 32 | ICE 132/165 | hand barrier+3 decoy+2
+[30] combat/combat @mid | HP 100 COST 29 | ICE 144/165 | hand barrier+3 virus+2 strike+1 backdoor+2 boost+2
+      "Kraken → 21 dmg (ICE HP: 144)"
+[31] combat/combat @mid | HP 100 COST 30 | ICE 117/165 | hand barrier+3 virus+2 backdoor+2 boost+2
       ">>> Dixie attacks: 26 dmg"
-[34] combat/combat @mid | HP 100 COST 34 | ICE 121/165 | hand barrier+3
-      "Decoy → 8 dmg (ICE HP: 121)"
-[35] combat/combat @mid | HP 100 COST 37 | ICE 72/165 | hand kraken+4 virus+2 strike+1 backdoor+2 boost+2
+[32] combat/combat @mid | HP 100 COST 32 | ICE 113/165 | hand barrier+3 backdoor+2 boost+2
+      "Virus → 4 dmg (ICE HP: 113)"
+[33] combat/combat @mid | HP 100 COST 34 | ICE 78/165 | hand barrier+3 boost+2
       ">>> Dixie attacks: 26 dmg"
-[36] combat/combat @mid | HP 100 COST 38 | ICE 71/165 | hand kraken+4 virus+2 backdoor+2 boost+2
-      "Strike → 1 dmg (ICE HP: 71)"
-[37] combat/combat @mid | HP 100 COST 40 | ICE 39/165 | hand kraken+4 backdoor+2 boost+2
+[34] combat/combat @mid | HP 100 COST 36 | ICE 72/165 | hand barrier+3
+      "Boost → 6 dmg (ICE HP: 72)"
+[35] combat/combat @mid | HP 100 COST 39 | ICE 31/165 | hand decoy+2 kraken+4 strike+1 virus+2 backdoor+2
       ">>> Dixie attacks: 26 dmg"
-[38] combat/combat @mid | HP 100 COST 42 | ICE 34/165 | hand kraken+4 boost+2
-      "Backdoor → 5 dmg (ICE HP: 34)"
-[39] combat/combat @mid | HP 100 COST 44 | ICE 4/165 | hand kraken+4
-      ">>> Dixie attacks: 26 dmg"
-[40] loot/victory @mid | HP 100 COST 44 | ICE 0/165 | hand decoy+2 barrier+3 strike+1 virus+2 backdoor+2
-      "ICE — Yakuza Enforcer defeated! (no COST) +4650 credits Loot: data_fragmentx1"
-[41] loot/victory @mid | HP 100 COST 44 | ICE 0/165 | hand decoy+2 barrier+3 strike+1 virus+2 backdoor+2
+[36] combat/combat @mid | HP 100 COST 40 | ICE 29/165 | hand decoy+2 kraken+4 virus+2 backdoor+2
+      "Strike → 2 dmg (ICE HP: 29)"
+[37] loot/victory @mid | HP 100 COST 42 | ICE 0/165 | hand kraken+4 virus+2 backdoor+2
+      "ICE — Yakuza Enforcer defeated! +4650 credits"
+[38] loot/victory @mid | HP 100 COST 42 | ICE 0/165 | hand kraken+4 virus+2 backdoor+2
       "Acquired Wardrone — press ENTER to continue"
-[42] matrix/approach @mid | HP 100 COST 44 | ICE 0/165 | hand decoy+2 barrier+3 strike+1 virus+2 backdoor+2
+[39] matrix/approach @mid | HP 100 COST 42 | ICE 0/165 | hand kraken+4 virus+2 backdoor+2
       "Took Wardrone. Choose an adjacent route — already at full HP"
-[43] matrix/approach @surface | HP 100 COST 44 | ICE 0/165 | hand decoy+2 barrier+3 strike+1 virus+2 backdoor+2
+[40] matrix/approach @surface | HP 100 COST 42 | ICE 0/165 | hand kraken+4 virus+2 backdoor+2
       "Moved to surface — ↑↓ picks the next route"
-[44] matrix/approach @mid | HP 100 COST 44 | ICE 0/165 | hand decoy+2 barrier+3 strike+1 virus+2 backdoor+2
+[41] matrix/approach @mid | HP 100 COST 42 | ICE 0/165 | hand kraken+4 virus+2 backdoor+2
       "Travel blocked. BREACH: fight. BYPASS: COST too high. JACK OUT: abandon run."
-[45] combat/approach @mid | HP 100 COST 44 | ICE 165/165 | hand decoy+2 barrier+3 strike+1 virus+2 backdoor+2
+[42] combat/approach @mid | HP 100 COST 42 | ICE 165/165 | hand kraken+4 virus+2 backdoor+2
       "Entering mid... (1 ICE)"
-[45] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
-[46] combat/combat @mid | HP 100 COST 44 | ICE 165/165 | hand decoy+2 barrier+3 strike+1 virus+2 backdoor+2
+[42] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
+[43] combat/combat @mid | HP 100 COST 42 | ICE 165/165 | hand kraken+4 virus+2 backdoor+2
       "Combat vs ICE — Yakuza Enforcer"
-[47] combat/combat @mid | HP 87 COST 45 | ICE 137/165 | hand decoy+2 barrier+3 virus+2 backdoor+2
+[44] combat/combat @mid | HP 87 COST 44 | ICE 161/165 | hand kraken+4 backdoor+2
+      ">>> ICE — Yakuza Enforcer uses Enforce Contract: 13 dmg"
+[45] combat/combat @mid | HP 87 COST 46 | ICE 129/165 | hand kraken+4
       ">>> Dixie attacks: 26 dmg"
-[48] combat/combat @mid | HP 87 COST 47 | ICE 129/165 | hand barrier+3 virus+2 backdoor+2
-      "Decoy → 8 dmg (ICE HP: 129)"
-[49] combat/combat @mid | HP 87 COST 49 | ICE 98/165 | hand barrier+3 backdoor+2
+[46] combat/combat @mid | HP 87 COST 50 | ICE 106/165 | hand boost+2 barrier+3 wardrone+2 strike+1 decoy+2
+      "Kraken → 20 dmg (ICE HP: 106)"
+[47] combat/combat @mid | HP 87 COST 51 | ICE 79/165 | hand boost+2 barrier+3 wardrone+2 decoy+2
       ">>> Dixie attacks: 26 dmg"
-[50] combat/combat @mid | HP 87 COST 51 | ICE 90/165 | hand barrier+3
-      "Backdoor → 8 dmg (ICE HP: 90)"
-[51] combat/combat @mid | HP 87 COST 54 | ICE 53/165 | hand boost+2 kraken+4 wardrone+2 strike+1 decoy+2
+[48] combat/combat @mid | HP 87 COST 53 | ICE 75/165 | hand barrier+3 wardrone+2 decoy+2
+      "Boost → 4 dmg (ICE HP: 75)"
+[49] combat/combat @mid | HP 87 COST 55 | ICE 32/165 | hand barrier+3 decoy+2
       ">>> Dixie attacks: 26 dmg"
-[52] combat/combat @mid | HP 87 COST 55 | ICE 52/165 | hand boost+2 kraken+4 wardrone+2 decoy+2
-      "Strike → 1 dmg (ICE HP: 52)"
-[53] combat/combat @mid | HP 87 COST 57 | ICE 22/165 | hand kraken+4 wardrone+2 decoy+2
-      ">>> Dixie attacks: 26 dmg"
-[54] combat/combat @mid | HP 87 COST 59 | ICE 6/165 | hand kraken+4 decoy+2
-      "Wardrone → 16 dmg (ICE HP: 6)"
-[55] loot/victory @mid | HP 87 COST 59 | ICE 0/165 | hand kraken+4
-      "ICE — Yakuza Enforcer defeated! (no COST) +4600 credits Loot: ice_shardx2"
-[56] loot/victory @mid | HP 87 COST 59 | ICE 0/165 | hand kraken+4
+[50] combat/combat @mid | HP 87 COST 57 | ICE 24/165 | hand barrier+3
+      "Decoy → 8 dmg (ICE HP: 24)"
+[51] loot/victory @mid | HP 87 COST 60 | ICE 0/165 | hand virus+2 backdoor+2 kraken+4 strike+1 boost+2
+      "ICE — Yakuza Enforcer defeated! +4600 credits"
+[52] loot/victory @mid | HP 87 COST 60 | ICE 0/165 | hand virus+2 backdoor+2 kraken+4 strike+1 boost+2
       "Acquired Inspire — press ENTER to continue"
-[57] matrix/approach @mid | HP 100 COST 59 | ICE 0/165 | hand kraken+4
+[53] matrix/approach @mid | HP 100 COST 60 | ICE 0/165 | hand virus+2 backdoor+2 kraken+4 strike+1 boost+2
       "Took Inspire. Choose an adjacent route — healed to 100/100"
-[58] matrix/approach @surface | HP 100 COST 59 | ICE 0/165 | hand kraken+4
+[54] matrix/approach @surface | HP 100 COST 60 | ICE 0/165 | hand virus+2 backdoor+2 kraken+4 strike+1 boost+2
       "Moved to surface — ↑↓ picks the next route"
-[60] matrix/approach @mid | HP 100 COST 59 | ICE 0/165 | hand kraken+4
+[56] matrix/approach @mid | HP 100 COST 60 | ICE 0/165 | hand virus+2 backdoor+2 kraken+4 strike+1 boost+2
       "Travel blocked. BREACH: fight. BYPASS: COST too high. JACK OUT: abandon run."
-[61] combat/approach @mid | HP 100 COST 59 | ICE 165/165 | hand kraken+4
+[57] combat/approach @mid | HP 100 COST 60 | ICE 165/165 | hand virus+2 backdoor+2 kraken+4 strike+1 boost+2
       "Entering mid... (1 ICE)"
-[61] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
-[62] combat/combat @mid | HP 100 COST 59 | ICE 165/165 | hand kraken+4
+[57] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
+[58] combat/combat @mid | HP 100 COST 60 | ICE 165/165 | hand virus+2 backdoor+2 kraken+4 strike+1 boost+2
       "Combat vs ICE — Yakuza Enforcer"
-[63] combat/combat @mid | HP 100 COST 63 | ICE 111/165 | hand virus+2 backdoor+2 barrier+3 inspire+1 strike+1
+[59] combat/combat @mid | HP 100 COST 61 | ICE 164/165 | hand virus+2 backdoor+2 kraken+4 boost+2
+      "Strike → 1 dmg (ICE HP: 164)"
+[60] combat/combat @mid | HP 100 COST 63 | ICE 131/165 | hand backdoor+2 kraken+4 boost+2
       ">>> Dixie attacks: 26 dmg"
-[64] combat/combat @mid | HP 100 COST 64 | ICE 110/165 | hand virus+2 backdoor+2 barrier+3 strike+1
-      "Inspire → 1 dmg (ICE HP: 110)"
-[65] combat/combat @mid | HP 100 COST 65 | ICE 83/165 | hand virus+2 backdoor+2 barrier+3
+[61] combat/combat @mid | HP 100 COST 65 | ICE 122/165 | hand kraken+4 boost+2
+      "Backdoor → 9 dmg (ICE HP: 122)"
+[62] combat/combat @mid | HP 100 COST 67 | ICE 90/165 | hand kraken+4
       ">>> Dixie attacks: 26 dmg"
-[66] combat/combat @mid | HP 100 COST 67 | ICE 79/165 | hand backdoor+2 barrier+3
-      "Virus → 4 dmg (ICE HP: 79)"
-[67] combat/combat @mid | HP 100 COST 69 | ICE 44/165 | hand barrier+3
+[63] combat/combat @mid | HP 100 COST 71 | ICE 49/165 | hand wardrone+2 decoy+2 barrier+3 inspire+1 strike+1
+      "Kraken → 38 dmg (ICE HP: 49)"
+[64] combat/combat @mid | HP 100 COST 72 | ICE 20/165 | hand wardrone+2 decoy+2 barrier+3 strike+1
       ">>> Dixie attacks: 26 dmg"
-[68] combat/combat @mid | HP 100 COST 72 | ICE 25/165 | hand boost+2 wardrone+2 decoy+2 kraken+4 inspire+1
-      "Barrier → 19 dmg (ICE HP: 25)"
-[69] loot/victory @mid | HP 100 COST 73 | ICE 0/165 | hand boost+2 wardrone+2 decoy+2 kraken+4
-      "ICE — Yakuza Enforcer defeated! +4500 credits"
-[70] loot/victory @mid | HP 100 COST 73 | ICE 0/165 | hand boost+2 wardrone+2 decoy+2 kraken+4
+[65] combat/combat @mid | HP 100 COST 73 | ICE 19/165 | hand wardrone+2 decoy+2 barrier+3
+      "Strike → 1 dmg (ICE HP: 19)"
+[66] loot/victory @mid | HP 100 COST 73 | ICE 0/165 | hand decoy+2 barrier+3
+      "ICE — Yakuza Enforcer defeated! (no COST) +4500 credits Loot: ice_shardx2"
+[67] loot/victory @mid | HP 100 COST 73 | ICE 0/165 | hand decoy+2 barrier+3
       "Acquired Shield — press ENTER to continue"
-[71] matrix/approach @mid | HP 100 COST 73 | ICE 0/165 | hand boost+2 wardrone+2 decoy+2 kraken+4
+[68] matrix/approach @mid | HP 100 COST 73 | ICE 0/165 | hand decoy+2 barrier+3
       "Took Shield. Choose an adjacent route — already at full HP"
-[72] matrix/approach @core-deep | HP 100 COST 73 | ICE 0/165 | hand boost+2 wardrone+2 decoy+2 kraken+4
+[69] matrix/approach @core-deep | HP 100 COST 73 | ICE 0/165 | hand decoy+2 barrier+3
       "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run."
-[73] combat/approach @core-deep | HP 100 COST 73 | ICE 165/165 | hand boost+2 wardrone+2 decoy+2 kraken+4
+[70] combat/approach @core-deep | HP 100 COST 73 | ICE 165/165 | hand decoy+2 barrier+3
       "Entering core-deep... (1 ICE)"
-[73] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
-[74] combat/combat @core-deep | HP 100 COST 73 | ICE 165/165 | hand boost+2 wardrone+2 decoy+2 kraken+4
+[70] ⚠ 입력이 아무것도 바꾸지 않음 (sweep 에서 변화 발견)
+[71] combat/combat @core-deep | HP 100 COST 73 | ICE 165/165 | hand decoy+2 barrier+3
       "Combat vs ICE — Yakuza Enforcer"
-[75] combat/combat @core-deep | HP 100 COST 75 | ICE 160/165 | hand wardrone+2 decoy+2 kraken+4
-      "Boost → 5 dmg (ICE HP: 160)"
-[76] combat/combat @core-deep | HP 100 COST 77 | ICE 117/165 | hand decoy+2 kraken+4
+[72] combat/combat @core-deep | HP 100 COST 75 | ICE 133/165 | hand barrier+3
       ">>> Dixie attacks: 26 dmg"
-[77] combat/combat @core-deep | HP 100 COST 79 | ICE 109/165 | hand kraken+4
-      "Decoy → 8 dmg (ICE HP: 109)"
-[78] combat/combat @core-deep | HP 100 COST 83 | ICE 64/165 | hand strike+1 virus+2 backdoor+2 barrier+3 shield+1
+[73] combat/combat @core-deep | HP 100 COST 78 | ICE 118/165 | hand virus+2 backdoor+2 boost+2 kraken+4 shield+1
+      "Barrier → 12 dmg (ICE HP: 118)"
+[74] combat/combat @core-deep | HP 100 COST 79 | ICE 91/165 | hand virus+2 backdoor+2 boost+2 kraken+4
       ">>> Dixie attacks: 26 dmg"
-[79] combat/combat @core-deep | HP 100 COST 84 | ICE 63/165 | hand virus+2 backdoor+2 barrier+3 shield+1
-      "Strike → 1 dmg (ICE HP: 63)"
-[80] combat/combat @core-deep | HP 100 COST 85 | ICE 33/165 | hand virus+2 backdoor+2 barrier+3
+[75] combat/combat @core-deep | HP 100 COST 81 | ICE 87/165 | hand backdoor+2 boost+2 kraken+4
+      "Virus → 4 dmg (ICE HP: 87)"
+[76] combat/combat @core-deep | HP 100 COST 83 | ICE 44/165 | hand boost+2 kraken+4
       ">>> Dixie attacks: 26 dmg"
-[81] combat/combat @core-deep | HP 100 COST 87 | ICE 24/165 | hand backdoor+2 barrier+3
-      "Virus → 9 dmg (ICE HP: 24)"
-[82] loot/victory @core-deep | HP 100 COST 89 | ICE 0/165 | hand barrier+3
+[77] combat/combat @core-deep | HP 100 COST 85 | ICE 35/165 | hand kraken+4
+      "Boost → 9 dmg (ICE HP: 35)"
+[78] loot/victory @core-deep | HP 100 COST 89 | ICE 0/165 | hand inspire+1 strike+1 wardrone+2 decoy+2 barrier+3
       "ICE — Yakuza Enforcer defeated! +4550 credits"
 
-[84] ── 타이틀 복귀 (runPhase null, screen=menu)
+[80] ── 타이틀 복귀 (runPhase null, screen=menu)
 
-[최종] {"screen":"menu","state":null,"steps":84}
+[최종] {"screen":"menu","state":null,"steps":80}

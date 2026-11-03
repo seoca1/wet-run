@@ -18,6 +18,8 @@ import { ENDINGS } from "../core/combat/ending_resolver";
  * the ending (ADR-0269). */
 export interface EndingSummary {
   readonly mission: string;
+  /** ADR-0274 — whose run this was, when the run knows. */
+  readonly jockey?: string | null;
   readonly hp: number;
   readonly maxHp: number;
   readonly credits: number;
@@ -74,7 +76,10 @@ export function renderEndingScreen(
   // columns (the narrowest layout) and truncated rather than wrapped.
   if (summary !== null) {
     const width = Math.max(8, cols - 4);
-    const mission = summary.mission.slice(0, width);
+    const who = summary.jockey ?? null;
+    const mission = (
+      who === null ? summary.mission : `${who} — ${summary.mission}`
+    ).slice(0, width);
     const stats =
       `HP ${summary.hp}/${summary.maxHp} · ` +
       `${summary.credits.toLocaleString()}cr · ` +

@@ -50,6 +50,8 @@ import { offeredCardIds, rewardProgram } from "./core/state/card_reward";
 import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
+import { renderJockeySelect } from "./renderer/jockey_select";
+import { JOCKEYS, jockeyHandle } from "./core/state/jockey";
 import { tick as gnTick } from "./core/graphic_novel/graphic_novel_player";
 import type { ArcId } from "./core/combat/ending_resolver";
 import { FpsCounter, getMetrics } from "./core/state/performance";
@@ -237,6 +239,8 @@ class Game {
   private screen: ScreenKind = "menu";
   private selectedMenuIndex = 0;
   private selectedMission = 0;
+  /** ADR-0274 — the jockey chosen for the next run (index into JOCKEYS). */
+  private selectedJockey = 0;
   private renderer: AsciiRenderer;
   private input: KeyboardInput;
   private gamepad: GamepadInput;
@@ -394,6 +398,7 @@ class Game {
         this.screen !== "dungeon" &&
         this.screen !== "pause" &&
         this.screen !== "graphic_novel" &&
+        this.screen !== "jockey_select" &&
         this.state === null
       ) {
         this.handleStubInput(action);
@@ -884,6 +889,24 @@ class Game {
       }
       return;
     }
+    if (this.screen === "jockey_select") {
+      if (action.type === "move_south") {
+        this.selectedJockey = (this.selectedJockey + 1) % JOCKEYS.length;
+        this.draw();
+      } else if (action.type === "move_north") {
+        this.selectedJockey =
+          (this.selectedJockey - 1 + JOCKEYS.length) % JOCKEYS.length;
+        this.draw();
+      } else if (action.type === "confirm") {
+        this.screen = "mission_select";
+        this.selectedMission = 0;
+        this.draw();
+      } else if (action.type === "jack_out") {
+        this.screen = "menu";
+        this.draw();
+      }
+      return;
+    }
     if (this.screen === "mission_select") {
       // ADR-0213 isolation: the Sprawl board lists sprawl-universe missions
       // only; far-grid missions live behind the gated hub.
@@ -1152,8 +1175,9 @@ class Game {
     if (!option) return Promise.resolve();
     switch (option) {
       case "new_run":
-        this.screen = "mission_select";
-        this.selectedMission = 0;
+        // ADR-0274: choose the jockey first, so the run belongs to someone.
+        this.screen = "jockey_select";
+        this.selectedJockey = 0;
         this.draw();
         break;
       case "dungeon_crawl":
@@ -1286,6 +1310,7 @@ class Game {
     const initial = makeInitialState(mission, ice, deck);
     this.state = openArrivalEncounter({
       ...initial,
+      jockeyId: JOCKEYS[this.selectedJockey]?.id ?? null,
       grid: makeGrid(this.layout.cols, this.layout.rows),
       currentNodeIndex: 0,
       runPhase: "matrix",
@@ -1359,7 +1384,12 @@ class Game {
     if (this.runIntroArc !== null && this.state !== null) {
       updateProgramRow([]);
       this.renderer.render(
-        renderRunIntro(this.runIntroArc, this.layout.cols, this.layout.rows),
+        renderRunIntro(
+          this.runIntroArc,
+          this.layout.cols,
+          this.layout.rows,
+          jockeyHandle(this.state?.jockeyId),
+        ),
         ["JACK-IN", "", "ANY KEY"],
       );
       return;
@@ -1454,6 +1484,18 @@ class Game {
       }
       if (this.screen === "graphic_novel") {
         this.renderGraphicNovel();
+        return;
+      }
+      if (this.screen === "jockey_select") {
+        updateProgramRow([]);
+        this.renderer.render(
+          renderJockeySelect(
+            this.selectedJockey,
+            this.layout.cols,
+            this.layout.rows,
+          ),
+          ["JOCKEY", "", `${this.selectedJockey + 1}/${JOCKEYS.length}`],
+        );
         return;
       }
       const language = this.settingsState?.language ?? "en";

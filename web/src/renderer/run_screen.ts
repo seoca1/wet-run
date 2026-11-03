@@ -1,6 +1,7 @@
 import type { GameState } from "../core/types";
 import { renderMatrix } from "./matrix";
 import { renderEndingScreen, renderLootScreen } from "./ending";
+import { jockeyHandle } from "../core/state/jockey";
 import type { ScreenView } from "./screen_view";
 import { renderGrid } from "./combat_grid";
 import { groupStatusByTarget } from "./status_hud";
@@ -81,6 +82,7 @@ export function renderRunScreen(
       return {
         grid: renderEndingScreen(state.endingChoice, layout.cols, layout.rows, {
           mission: state.mission.title,
+          jockey: jockeyHandle(state.jockeyId),
           hp: state.player.hp,
           maxHp: state.player.maxHp,
           credits: state.inventory.credits,

@@ -74,12 +74,17 @@ export function wrapIntroLines(
 }
 
 /** The intro card: title in amber, body in grey, a single exit line. */
-export function renderRunIntro(arc: ArcId, cols: number, rows: number): Grid {
+export function renderRunIntro(
+  arc: ArcId,
+  cols: number,
+  rows: number,
+  jockey: string | null = null,
+): Grid {
   let grid = makeGrid(cols, rows);
   const width = runIntroWidth(cols);
   const [title = "", ...body] = RUN_INTRO[arc] ?? RUN_INTRO[1];
   const wrapped = wrapIntroLines(body, width);
-  const total = 1 + wrapped.length;
+  const total = 1 + wrapped.length + (jockey === null ? 0 : 1);
   let y = Math.max(3, Math.floor(rows / 2) - Math.floor(total / 2));
 
   grid = setText(
@@ -89,6 +94,17 @@ export function renderRunIntro(arc: ArcId, cols: number, rows: number): Grid {
     title,
     PALETTE.YELLOW_AMBER,
   );
+  if (jockey !== null) {
+    // ADR-0274: the runner is somebody. The prologue chose them; the run says so.
+    const who = `${jockey} JACKS IN`;
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - who.length) / 2)),
+      y + 1,
+      who,
+      PALETTE.CYAN_LIGHT,
+    );
+  }
   y += 2;
   for (const line of wrapped) {
     grid = setText(

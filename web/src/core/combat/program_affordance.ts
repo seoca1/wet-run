@@ -18,6 +18,11 @@
  */
 import type { GameState, Program } from "../types";
 import { programEffectTag } from "./program_effects";
+import {
+  offeredCardIds,
+  rewardProgram,
+  type RewardSource,
+} from "../state/card_reward";
 import type { RunMutator } from "../state/run_mutators";
 
 /** COST cap: a play that would take COST above this is refused. */
@@ -152,6 +157,45 @@ export function affordanceAriaLabel(a: ProgramAffordance): string {
   }
   const effect = a.effectTag ? `, ${a.effectTag}` : "";
   return `${a.slot} ${a.name}, COST plus ${a.cost}${effect}, target ${a.target}`;
+}
+
+/**
+ * Affordance rows for the loot screen's card offer (ADR-0259).
+ *
+ * The row shape is the same as the hand's, so the touch row renders the
+ * reward with the same facts and the same tap handler shape.
+ */
+export function rewardAffordances(
+  state: RewardSource & Pick<GameState, "player" | "activeMutators">,
+): ReadonlyArray<ProgramAffordance> {
+  return offeredCardIds(state).map((id, i) => {
+    const card = rewardProgram(id);
+    const cost = card ? programAlarmCost(card, state.activeMutators) : 0;
+    return {
+      slot: i + 1,
+      programId: id,
+      name: (card?.name ?? id).toUpperCase().slice(0, NAME_WIDTH),
+      cost,
+      after: state.player.alarm + cost,
+      // A reward is not being played now, so it is never refused.
+      blocked: false,
+      target:
+        card && programHitsAllIce(card)
+          ? ("ALL ICE" as const)
+          : ("ICE" as const),
+      effectTag: card ? programEffectTag(card) : "",
+    };
+  });
+}
+
+/** One line of the loot screen's card offer, e.g. `1 BACKDOOR   PIERCE 2`. */
+export function formatRewardOption(slot: number, program: Program): string {
+  const name = program.name
+    .toUpperCase()
+    .slice(0, NAME_WIDTH)
+    .padEnd(NAME_WIDTH);
+  const tag = programEffectTag(program);
+  return `${slot} ${name} ${tag}`.trimEnd();
 }
 
 /** Row of the hand header in the combat grid. The list below it holds

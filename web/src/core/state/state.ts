@@ -191,6 +191,10 @@ export function resolveProgramSelection(
   action: GameAction,
 ): { readonly type: "use_program"; readonly programId: string } | null {
   if (action.type !== "select_program") return null;
+  // ADR-0259: a digit means "play the program" only in combat. On the loot
+  // screen the same digits pick a card reward, and leftover hand cards must
+  // not turn the press into a play.
+  if (state.runPhase !== "combat") return null;
   const idx = action.handIndex - 1;
   if (idx < 0 || idx >= state.deck.length) return null;
   const program = state.deck[idx];

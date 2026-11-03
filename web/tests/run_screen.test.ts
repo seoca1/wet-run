@@ -7,6 +7,8 @@ import {
 } from "../src/renderer/run_screen";
 import { renderMatrix } from "../src/renderer/matrix";
 import { renderEndingScreen, renderLootScreen } from "../src/renderer/ending";
+import { offeredCardIds, rewardProgram } from "../src/core/state/card_reward";
+import { formatRewardOption } from "../src/core/combat/program_affordance";
 import { renderGrid } from "../src/renderer/combat_grid";
 import { groupStatusByTarget } from "../src/renderer/status_hud";
 import { buildHudLines } from "../src/core/state/state";
@@ -78,6 +80,14 @@ describe("run screen composition", () => {
   ] as const)("preserves parsed loot for %s", (message, credits, loot) => {
     const state = runState({ runPhase: "loot", message });
     const view = renderRunScreen(state, 80, 50);
+    // ADR-0259: a non-terminal win also offers cards. The controller and the
+    // renderer derive the same offer from the same run.
+    const offers = offeredCardIds(state)
+      .map((id, i) => {
+        const card = rewardProgram(id);
+        return card ? formatRewardOption(i + 1, card) : "";
+      })
+      .filter((line) => line.length > 0);
     expect(view?.grid.cells).toEqual(
       renderLootScreen(
         state.player.hp,
@@ -86,12 +96,25 @@ describe("run screen composition", () => {
         50,
         credits,
         loot,
+        false,
+        offers,
       ).cells,
     );
-    // Only ENTER does anything on the loot screen: `applyLootAction`
-    // ignores cancel and the move keys, so promising them was a false
-    // affordance (ADR-0251 rule 5).
-    expect(view?.hud).toEqual(["LOOT", "", "ENTER: route"]);
+    // Only ENTER and the reward digits do anything on the loot screen:
+    // `applyLootAction` ignores cancel and the move keys, so promising them
+    // was a false affordance (ADR-0251 rule 5).
+    expect(view?.hud).toEqual(["LOOT", "", "1-3: card"]);
+  });
+
+  it("offers no card on the terminal node, since the run ends there", () => {
+    const state = runState({ runPhase: "loot", message: "No rewards" });
+    if (!state.matrix) throw new Error("fixture requires a matrix");
+    const terminal = {
+      ...state,
+      currentNodeIndex: state.matrix.nodes.length - 1,
+    };
+    const view = renderRunScreen(terminal, 80, 50);
+    expect(view?.hud).toEqual(["LOOT", "", "ENTER: run ends"]);
   });
 
   it("leaves combat routing to the controller", () => {

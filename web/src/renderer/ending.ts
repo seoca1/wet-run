@@ -70,6 +70,7 @@ export function renderLootScreen(
   rewardCredits: number = 0,
   lootMessage: string = "",
   terminal: boolean = false,
+  offers: readonly string[] = [],
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -117,6 +118,30 @@ export function renderLootScreen(
     );
   }
 
+  // ADR-0259: the card offer — the run's growth. One line per option, under a
+  // short header, so the digits the player presses are obvious.
+  if (offers.length > 0) {
+    grid = setText(
+      grid,
+      Math.max(2, Math.floor((cols - 12) / 2)),
+      Math.floor(rows / 2) + 5,
+      "NEW PROGRAM",
+      PALETTE.YELLOW_AMBER,
+    );
+    // Left-align the block under one margin so the slot digits line up.
+    const widest = offers.reduce((w, l) => Math.max(w, l.length), 0);
+    const offerX = Math.max(2, Math.floor((cols - widest) / 2));
+    offers.forEach((line, i) => {
+      grid = setText(
+        grid,
+        offerX,
+        Math.floor(rows / 2) + 6 + i,
+        line,
+        PALETTE.CYAN_LIGHT,
+      );
+    });
+  }
+
   // HEAL preview (applied on loot confirm, without travelling).
   //
   // ADR-0251 rule 5: the screen states what will actually happen. A
@@ -124,10 +149,12 @@ export function renderLootScreen(
   // runPhase "ending" and no heal is applied — so this screen must not
   // promise one, and must not promise a route either.
   const healed = Math.min(maxHp, hp + Math.floor(maxHp * 0.15));
+  const healRow =
+    Math.floor(rows / 2) + 5 + (offers.length > 0 ? offers.length + 3 : 0);
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - 22) / 2)),
-    Math.floor(rows / 2) + 5,
+    healRow,
     terminal
       ? "NO HEAL — this was the last node"
       : `HEAL applied → ${healed}/${maxHp}`,
@@ -135,11 +162,16 @@ export function renderLootScreen(
   );
 
   // Footer
+  const footer = terminal
+    ? "ENTER: run ends"
+    : offers.length > 0
+      ? "1-3: take a card | ENTER: skip"
+      : "ENTER: route selection";
   grid = setText(
     grid,
-    Math.max(2, Math.floor((cols - 28) / 2)),
+    Math.max(2, Math.floor((cols - footer.length) / 2)),
     rows - 2,
-    terminal ? "ENTER: run ends" : "ENTER: route selection",
+    footer,
     PALETTE.GRAY_DARK,
   );
   return grid;

@@ -32,6 +32,7 @@ import {
 } from "./encounter_verbs";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
+import { offeredCardIds, rewardProgram } from "./card_reward";
 import {
   resolveEnding,
   type EndingContext,
@@ -157,47 +158,102 @@ export function applyLootAction(
   state: GameState,
   action: GameAction,
 ): GameState {
-  if (action.type === "select_program" || action.type === "use_program") {
+  // Mission complete: matrix cleared, OR dead-end node (no forward path), OR boss defeated.
+  if (isTerminalNode(state)) return applyTerminalLoot(state, action);
+
+  // ADR-0259: a non-terminal win offers cards — the run's only growth.
+  if (action.type === "select_program") {
+    return takeCardReward(state, action.handIndex - 1);
+  }
+  if (action.type === "use_program") {
     return {
       ...state,
       message: "Hand empty — press ENTER to return to route selection",
     };
   }
   if (action.type !== "confirm") return state;
-  // Mission complete: matrix cleared, OR dead-end node (no forward path), OR boss defeated.
-  if (isTerminalNode(state)) {
-    const missionFaction = getMissionFaction(state.mission.id);
-    let updatedScores = state.factionScores;
-    if (missionFaction) {
-      updatedScores = onMissionComplete(updatedScores, missionFaction);
-    }
-    const arc: ArcId = (state.mission.arc as ArcId) || 1;
-    // ADR-0213 Phase 2 + tightening: full Sprawl Arc-1 clear unlocks the Far
-    // Grid. Always record the mission id; on Arc-1, route the unlock decision
-    // through the helper (legacy flag short-circuits to keep already-unlocked
-    // saves unlocked; otherwise the helper evaluates the full-clear rule).
-    recordMissionComplete(state.mission.id);
-    if (arc === 1) {
-      evaluateFarGridUnlock();
-    }
-    const ctx: EndingContext = {
-      arc,
-      hp: state.player.hp,
-      maxHp: state.player.maxHp,
-      credits: state.inventory.credits,
-      missionsCompleted: 1, // single-mission run: this mission just completed
-      totalDeaths: state.totalDeaths,
-      factionScores: updatedScores,
-      choices: [],
-    };
-    const ending = resolveEnding(ctx);
+  // ENTER skips the card and travels on.
+  return continueToMatrix(state);
+}
+
+/** Confirm (or ESC) on a terminal loot screen: the run is over. */
+function applyTerminalLoot(state: GameState, action: GameAction): GameState {
+  if (action.type === "select_program" || action.type === "use_program") {
     return {
       ...state,
-      runPhase: "ending",
-      endingChoice: ending.id as EndingChoice,
-      factionScores: updatedScores,
+      message: "Hand empty — press ENTER to finish the run",
     };
   }
+  // ADR-0254: the terminal loot footer promises only ENTER, and cancel stays
+  // a no-op, so the screen keeps saying the truth.
+  if (action.type !== "confirm") return state;
+  const missionFaction = getMissionFaction(state.mission.id);
+  let updatedScores = state.factionScores;
+  if (missionFaction) {
+    updatedScores = onMissionComplete(updatedScores, missionFaction);
+  }
+  const arc: ArcId = (state.mission.arc as ArcId) || 1;
+  // ADR-0213 Phase 2 + tightening: full Sprawl Arc-1 clear unlocks the Far
+  // Grid. Always record the mission id; on Arc-1, route the unlock decision
+  // through the helper (legacy flag short-circuits to keep already-unlocked
+  // saves unlocked; otherwise the helper evaluates the full-clear rule).
+  recordMissionComplete(state.mission.id);
+  if (arc === 1) {
+    evaluateFarGridUnlock();
+  }
+  const ctx: EndingContext = {
+    arc,
+    hp: state.player.hp,
+    maxHp: state.player.maxHp,
+    credits: state.inventory.credits,
+    missionsCompleted: 1, // single-mission run: this mission just completed
+    totalDeaths: state.totalDeaths,
+    factionScores: updatedScores,
+    choices: [],
+  };
+  const ending = resolveEnding(ctx);
+  return {
+    ...state,
+    runPhase: "ending",
+    endingChoice: ending.id as EndingChoice,
+    factionScores: updatedScores,
+  };
+}
+
+/** Take the offered card at `index` (0-based), then travel on. */
+function takeCardReward(state: GameState, index: number): GameState {
+  const offered = offeredCardIds(state);
+  const id = index >= 0 && index < offered.length ? offered[index] : undefined;
+  if (id === undefined) {
+    return {
+      ...state,
+      message:
+        offered.length === 0
+          ? "No new programs left — press ENTER to continue"
+          : `Reward ${index + 1} does not exist — press ENTER to continue`,
+    };
+  }
+  const card = rewardProgram(id);
+  if (card === undefined) {
+    return {
+      ...state,
+      message: "Reward unavailable — press ENTER to continue",
+    };
+  }
+  const grown: GameState = {
+    ...state,
+    // The card joins the draw pile, so it arrives when the hand recycles.
+    drawPile: [...state.drawPile, card],
+    inventory: {
+      ...state.inventory,
+      programs: [...state.inventory.programs, card],
+    },
+  };
+  return continueToMatrix(grown, `Took ${card.name} — added to your deck`);
+}
+
+/** Non-terminal loot resolution: heal 15% and return to route selection. */
+function continueToMatrix(state: GameState, message?: string): GameState {
   const newVisited = state.visitedNodes.includes(state.currentNodeIndex)
     ? state.visitedNodes
     : [...state.visitedNodes, state.currentNodeIndex];
@@ -213,7 +269,9 @@ export function applyLootAction(
     visitedNodes: newVisited,
     phase: "approach",
     player: { ...state.player, hp: healedHp },
-    message: `Choose an adjacent route — healed to ${healedHp}/${state.player.maxHp}`,
+    message:
+      message ??
+      `Choose an adjacent route — healed to ${healedHp}/${state.player.maxHp}`,
   };
 }
 

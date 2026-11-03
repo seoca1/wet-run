@@ -8,7 +8,12 @@
  * The numbers come from the real reducer (see balance_sim.ts), so a constant
  * change in combat_engine.ts / boss_phases.ts shows up here immediately.
  */
-import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
+import {
+  loadIceCatalog,
+  loadMissionsCatalog,
+  loadProgramsCatalog,
+} from "../src/core/data_loaders";
+import { startingDeck } from "../src/core/state/starting_deck";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
 import type { Mission, Program } from "../src/core/types";
 import { deckForGrade, runSuite } from "./balance_sim";
@@ -30,13 +35,12 @@ function parseDeck(argv: ReadonlyArray<string>): "opening" | "ppl" {
   return idx >= 0 && argv[idx + 1] === "ppl" ? "ppl" : "opening";
 }
 
-/** Same opening hand the game builds on NEW RUN (see main.ts loadDeck). */
-function openingDeck(catalog: Readonly<Record<string, Program>>, size = 5): Program[] {
-  return Object.keys(catalog)
-    .sort()
-    .slice(0, size)
-    .map((id) => catalog[id])
-    .filter((p): p is Program => p !== undefined);
+/** The same opening hand the game builds on NEW RUN (ADR-0260). */
+function openingDeck(
+  catalog: Readonly<Record<string, Program>>,
+  size = 5,
+): Program[] {
+  return startingDeck(catalog).slice(0, size);
 }
 
 function pct(value: number): string {
@@ -53,10 +57,16 @@ function main(): void {
   const runs = parseRuns(argv);
   const deckMode = parseDeck(argv);
   const idleIndex = argv.indexOf("--idle-ms");
-  const idleRaw = idleIndex >= 0 ? argv[idleIndex + 1] ?? "" : undefined;
-  const idleValues = idleRaw === undefined ? [] : idleRaw.split(",").map(Number);
-  if (idleRaw === "" || idleValues.some((ms) => !Number.isFinite(ms) || ms < 0)) {
-    throw new RangeError("--idle-ms must contain non-negative finite durations");
+  const idleRaw = idleIndex >= 0 ? (argv[idleIndex + 1] ?? "") : undefined;
+  const idleValues =
+    idleRaw === undefined ? [] : idleRaw.split(",").map(Number);
+  if (
+    idleRaw === "" ||
+    idleValues.some((ms) => !Number.isFinite(ms) || ms < 0)
+  ) {
+    throw new RangeError(
+      "--idle-ms must contain non-negative finite durations",
+    );
   }
   const idleMsPerTurn = idleRaw?.includes(",") ? idleValues : idleValues[0];
   const missions = loadMissionsCatalog(missionsJson);
@@ -77,9 +87,15 @@ function main(): void {
       ? "Balance harness — PPL deck (grade-appropriate: tier <= grade, top 5)"
       : `Balance harness — opening deck [${deck.map((p) => p.id).join(", ")}]`,
   );
-  console.log(`Missions: ${missions.length}, ICE types: ${Object.keys(iceCatalog).length}, runs/mission: ${runs}\n`);
-  console.log(`Idle: ${idleRaw ?? 0}ms (scalar = every turn; schedule = once, then 0)`);
-  console.log("grade  missions  win-rate  stalled  mean-turns  mean-HP-end  p5/p95");
+  console.log(
+    `Missions: ${missions.length}, ICE types: ${Object.keys(iceCatalog).length}, runs/mission: ${runs}\n`,
+  );
+  console.log(
+    `Idle: ${idleRaw ?? 0}ms (scalar = every turn; schedule = once, then 0)`,
+  );
+  console.log(
+    "grade  missions  win-rate  stalled  mean-turns  mean-HP-end  p5/p95",
+  );
 
   for (const grade of [...byGrade.keys()].sort((a, b) => a - b)) {
     const bucket = byGrade.get(grade) ?? [];
@@ -92,8 +108,18 @@ function main(): void {
 
     for (const mission of bucket) {
       const deckForMission =
-        deckMode === "ppl" ? deckForGrade(programCatalog, missionGradeOf(mission)) : deck;
-      const stats = runSuite(mission, iceCatalog, deckForMission, runs, 1, undefined, idleMsPerTurn);
+        deckMode === "ppl"
+          ? deckForGrade(programCatalog, missionGradeOf(mission))
+          : deck;
+      const stats = runSuite(
+        mission,
+        iceCatalog,
+        deckForMission,
+        runs,
+        1,
+        undefined,
+        idleMsPerTurn,
+      );
       wins += stats.wins;
       stalls += stats.stalls;
       turns += stats.meanTurns;

@@ -231,9 +231,16 @@ describe("keyboard mapping", () => {
 });
 
 describe("resolveProgramSelection (input → reducer bridge)", () => {
-  it("resolves hand index 1 to first program", () => {
-    const state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    const resolved = resolveProgramSelection(state, {
+  // ADR-0259: a digit plays a program only in combat, so the bridge is a
+  // combat-only transform.
+  const inCombat = () => ({
+    ...makeInitialState(mockMission, mockIce, [mockProgram]),
+    runPhase: "combat" as const,
+    phase: "combat" as const,
+  });
+
+  it("resolves hand index 1 to first program in combat", () => {
+    const resolved = resolveProgramSelection(inCombat(), {
       type: "select_program",
       handIndex: 1,
     });
@@ -241,8 +248,7 @@ describe("resolveProgramSelection (input → reducer bridge)", () => {
   });
 
   it("returns null for out-of-range index", () => {
-    const state = makeInitialState(mockMission, mockIce, [mockProgram]);
-    const resolved = resolveProgramSelection(state, {
+    const resolved = resolveProgramSelection(inCombat(), {
       type: "select_program",
       handIndex: 5,
     });
@@ -250,9 +256,16 @@ describe("resolveProgramSelection (input → reducer bridge)", () => {
   });
 
   it("returns null for non-select actions", () => {
-    const state = makeInitialState(mockMission, mockIce, [mockProgram]);
+    const state = inCombat();
     expect(resolveProgramSelection(state, { type: "confirm" })).toBeNull();
     expect(resolveProgramSelection(state, { type: "move_north" })).toBeNull();
+  });
+
+  it("returns null outside combat, so loot digits pick rewards instead", () => {
+    const loot = { ...inCombat(), runPhase: "loot" as const };
+    expect(
+      resolveProgramSelection(loot, { type: "select_program", handIndex: 1 }),
+    ).toBeNull();
   });
 });
 

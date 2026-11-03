@@ -31,8 +31,12 @@ import {
 } from "./renderer/combat_vfx";
 import { hitStopActiveAt, hitStopDeadlineFor } from "./renderer/screen_shake";
 import { pickTransitionSfx } from "./core/combat/combat_sfx";
-import { programAffordances } from "./core/combat/program_affordance";
+import {
+  programAffordances,
+  rewardAffordances,
+} from "./core/combat/program_affordance";
 import { idleAlarmAction } from "./core/combat/idle_alarm";
+import { startingDeck } from "./core/state/starting_deck";
 import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
@@ -104,6 +108,7 @@ import {
 import { missionIce } from "./core/state/mission_ice";
 import {
   autosaveIntent,
+  isTerminalNode,
   runCompleted,
   RUN_COMPLETE_MESSAGE,
 } from "./core/state/run_end";
@@ -192,33 +197,6 @@ const PROGRAMS: Readonly<Record<string, Program>> =
 
 /** ICE types catalog (validated). Field aliases (defense → armor) normalized. */
 const ICE_TYPES: Readonly<Record<string, Ice>> = loadIceCatalog(iceTypesData);
-
-/** Build the first 5 programs for the deck (deterministic order from program id). */
-function loadDeck(
-  programs: Readonly<Record<string, Program>>,
-  count = 5,
-): ReadonlyArray<Program> {
-  const ids = Object.keys(programs).sort().slice(0, count);
-  return ids
-    .map((id) => {
-      const p = programs[id];
-      if (!p) return undefined;
-      // programs.json entries are keyed by id but don't carry id in the
-      // value (legacy schema). Inject it so save/load round-trip works.
-      // Also normalize ap_cost (legacy Python schema field) to cost
-      // (the field the TS Program type + useProgram handler read).
-      const apCost = (p as { ap_cost?: number }).ap_cost;
-      const normalized: Program = {
-        ...p,
-        id,
-        ...(apCost !== undefined && p.cost === undefined
-          ? { cost: apCost }
-          : {}),
-      } as Program;
-      return normalized;
-    })
-    .filter((p): p is Program => p !== undefined);
-}
 
 /** Format a mission for the select screen (Tier 2a). */
 function formatMissionOption(
@@ -1179,7 +1157,7 @@ class Game {
     const mission = MISSIONS[this.selectedMission];
     if (!mission) return;
     const programs = PROGRAMS;
-    const deck = loadDeck(programs);
+    const deck = startingDeck(programs);
     const ice = missionIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
     this.state = openArrivalEncounter({
@@ -1254,7 +1232,16 @@ class Game {
       // ADR-0252: a committed move, a won fight and the ending are saved
       // (or retire the slot) like combat frames are.
       if (persist) this.autosave();
-      updateProgramRow([]);
+      // ADR-0259: on a non-terminal loot screen the same row picks the card
+      // reward, so touch players get the same choice as the digits.
+      const rewards =
+        this.state.runPhase === "loot" && !isTerminalNode(this.state)
+          ? rewardAffordances(this.state)
+          : [];
+      updateProgramRow(
+        rewards,
+        rewards.length > 0 ? (i) => this.handleRewardButton(i) : undefined,
+      );
       // A traversal frame (visual only) replaces the board for ~220 ms.
       const travel = matrixTravelFrame(this.matrixTravel, performance.now());
       const view =
@@ -1588,6 +1575,15 @@ class Game {
   /** External entry point for touch gamepad program buttons.
    * Resolves hand index → programId via resolveProgramSelection, then applies.
    */
+  /** Touch path for a loot card reward (ADR-0259). The digit path and this
+   * both dispatch `select_program`, which `applyLootAction` handles. */
+  handleRewardButton(handIndex: number): void {
+    this.idleSinceMs = Date.now();
+    if (this.state === null || this.state.runPhase !== "loot") return;
+    this.state = applyAction(this.state, { type: "select_program", handIndex });
+    this.draw(false);
+  }
+
   handleProgramButton(handIndex: number): void {
     this.idleSinceMs = Date.now();
     if (this.state === null) return;

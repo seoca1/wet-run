@@ -6,6 +6,8 @@ import { renderGrid } from "./combat_grid";
 import { groupStatusByTarget } from "./status_hud";
 import { buildHudLines } from "../core/state/state";
 import { isTerminalNode } from "../core/state/run_end";
+import { offeredCardIds, rewardProgram } from "../core/state/card_reward";
+import { formatRewardOption } from "../core/combat/program_affordance";
 import { ENDINGS } from "../core/combat/ending_resolver";
 import { composeCombatVfx } from "./combat_vfx";
 import { composeFloatingDamage, overlayShake } from "./combat_overlay";
@@ -90,6 +92,15 @@ export function renderRunScreen(
       const lootText = lootMatch ? `Loot: ${lootMatch[1]}` : "";
       // A terminal node ends the run on confirm — no heal, no route.
       const terminal = isTerminalNode(state);
+      // ADR-0259: a non-terminal win offers cards; a terminal one ends the run.
+      const offers = terminal
+        ? []
+        : offeredCardIds(state)
+            .map((id, i) => {
+              const card = rewardProgram(id);
+              return card ? formatRewardOption(i + 1, card) : "";
+            })
+            .filter((line) => line.length > 0);
       return {
         grid: renderLootScreen(
           state.player.hp,
@@ -99,6 +110,7 @@ export function renderRunScreen(
           rewardCredits,
           lootText,
           terminal,
+          offers,
         ),
         // Only ENTER does anything on the loot screen: `applyLootAction`
         // ignores cancel and the move keys, so promising "↑↓: navigate" or
@@ -106,7 +118,15 @@ export function renderRunScreen(
         // line is kept short for the HUD panel — the canvas squeezes an
         // over-long line instead of truncating it — and the grid footer
         // carries the full wording.
-        hud: ["LOOT", "", terminal ? "ENTER: run ends" : "ENTER: route"],
+        hud: [
+          "LOOT",
+          "",
+          terminal
+            ? "ENTER: run ends"
+            : offers.length > 0
+              ? "1-3: card"
+              : "ENTER: route",
+        ],
       };
     }
     default:

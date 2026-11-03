@@ -11,12 +11,12 @@
 | 디렉토리 | 에이전트의 역할 | 절대 규칙 |
 | --- | --- | --- |
 | `web/` | **활성 코드베이스** | TypeScript + Vite + Vitest. 모든 변경은 `web/` 에서. 명령은 `cd web && npm ...`. |
-| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (130 ADRs, 0001–0213). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
+| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (187 ADRs, 0001–0267). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
 | `data/` | **삭제됨 (2026-10-20)** | 이전 prototype/ 잔재 (sounds_test WAVs, jockeys/deceased.json). 모든 게임 데이터는 `web/src/data/*.json` 과 `web/public/sounds/` 에 존재. |
 | `scripts/` | 자유롭게 편집 | 보조 도구 (`scripts/tools/` — audit_sprawl.py, find_broken_links.py, README.md). |
 | 루트 메타 파일 | 신중히 수정 | README, AGENTS, log, ROADMAP, CHANGELOG, MIGRATION, VALIDATION_SCENARIO, mkdocs.yml |
 
-> **2026-10-20 정합 노트**: 본 표는 현행 트리 기준이다. 이전 버전이 나열하던 `raw/`, `wiki/`, `design/`, `testcases/`, `decisions/`, `prototype/`, `dashboard/` 행은 모두 프로토타입 시절 경로로 현재 존재하지 않는다 — `raw/` 와 `prototype/` 은 2026-09-15 Python 프로토타입 통합으로 삭제되었고, `wiki/` / `design/` / `testcases/` / `decisions/` 는 `docs/` 하위로 이관되었으며, `dashboard/` 는 `docs/dashboard/` 로 이동했다. 깁슨 분석 wiki는 Fiction 프로젝트(`../../../Fiction/wiki/`)에서 별도 유지된다.
+> **2026-10-20 정합 노트**: 본 표는 현행 트리 기준이다. 이전 버전이 나열하던 `raw/`, `wiki/`, `design/`, `testcases/`, `decisions/`, `prototype/`, `dashboard/` 행은 모두 프로토타입 시절 경로로 현재 존재하지 않는다 — `raw/` 와 `prototype/` 은 2026-09-15 Python 프로토타입 통합으로 삭제되었고, `wiki/` / `design/` / `testcases/` / `decisions/` 는 `docs/` 하위로 이관되었으며, `dashboard/` 는 `docs/dashboard/` 로 이동했다. 깁슨 분석 wiki는 Fiction 프로젝트(`../../Fiction/wiki/`)에서 별도 유지된다.
 
 ## 3. 작업 워크플로우
 
@@ -31,6 +31,10 @@
 4. 검증 (새) — 변경 완료 후 **워크스페이스 루트에서** 실행 (스크립트의 GOLD·로그 경로가 루트 상대):
    `cd ../.. && python3 scripts/wet_run_verify.py --full --out Game/wet_run/docs/design/verification-report.md`
    → audit 0 + Jev p ≥ 0.6 확인; `log.md` 기록.
+5. **문서 주장 검사** (2026-11-04, ADR-0267): `python3 scripts/check_doc_claims.py` — **exit 0 필수**.
+   이 문서(AGENTS.md)가 가리키는 **경로가 실제로 있는지**, 적어둔 **수치가 실측과 같은지**를 대조한다.
+   테스트 수까지 세려면 `--tests` (vitest 실행). ADR 번호 중복은 **경고**다 — 재번호는 Accepted ADR
+   인용을 깨므로 오너 결정이지 자동 수정이 아니다.
 
 ### 3.2 게임 디자인 변경
 1. `decisions/` 에 새 ADR 작성 또는 기존 ADR Status 변경
@@ -41,7 +45,7 @@
    - 🟢 **Deferred**: 의도적으로 미래로 연기
 3. 영향 받는 `design/systems/*.md` 갱신
 4. `testcases/` 에 회귀 테스트 추가/갱신
-5. `design/GDD.md` 의 본문 또는 Open Questions 갱신
+5. `docs/design/GDD.md` 의 본문 또는 Open Questions 갱신
 6. `log.md` 에 기록
 
 **Implementation Status 형식** (0156/0188 모델):
@@ -57,7 +61,7 @@
 ```
 
 ### 3.3 결정 요청
-- `decisions/template.md` 사용
+- `docs/wiki/decisions/template.md` 사용
 - 옵션 비교표 + 추천안 + 열린 질문 포함 필수
 - 사용자가 결정하면 Status를 "Accepted"로 변경하고 결과(Consequences) 섹션 채우기
 
@@ -86,22 +90,22 @@
 
 ### 4.1 World Source: Fiction wiki
 
-게임의 세계관은 **`../../../../Fiction/wiki/`** (깁슨 분석 wiki)를 *Primary source*로 참조한다.
+게임의 세계관은 **`../../Fiction/wiki/`** (깁슨 분석 wiki)를 *Primary source*로 참조한다.
 (이는 `Projects/Fiction/wiki/` — Fiction 프로젝트의 위키 디렉토리)
 
 - 게임 wiki (`Game/wet_run/docs/wiki/world/`)는 게임용 요약/적응 (예전 `Game/wet_run/wiki/world/` 경로는 2026-09 통합으로 `docs/wiki/` 로 이동)
 - 깊은 분석/원문 인용/캐릭터 디테일은 Fiction wiki 참조
-- **절대 경로**: `../../../../Fiction/wiki/...` (위치: `wiki/` 하위 MD 파일 기준 4단계 상승)
-- AGENTS.md 기준 절대 경로: `../../../Fiction/wiki/...`
+- **절대 경로**: `../../Fiction/wiki/...` (위치: `wiki/` 하위 MD 파일 기준 4단계 상승)
+- AGENTS.md 기준 절대 경로: `../../Fiction/wiki/...`
 - Fiction wiki 페이지 예시:
-  - `../../../../Fiction/wiki/authors/william-gibson.md`
-  - `../../../../Fiction/wiki/works/neuromancer.md` (1984)
-  - `../../../../Fiction/wiki/works/count-zero.md` (1986)
-  - `../../../../Fiction/wiki/works/mona-lisa-overdrive.md` (1988)
-  - `../../../../Fiction/wiki/characters/case.md`
-  - `../../../../Fiction/wiki/characters/molly-millions.md`
-  - `../../../../Fiction/wiki/settings/cyberspace.md`
-  - `../../../../Fiction/wiki/index.md`
+  - `../../Fiction/wiki/authors/william-gibson.md`
+  - `../../Fiction/wiki/works/neuromancer.md` (1984)
+  - `../../Fiction/wiki/works/count-zero.md` (1986)
+  - `../../Fiction/wiki/works/mona-lisa-overdrive.md` (1988)
+  - `../../Fiction/wiki/characters/case.md`
+  - `../../Fiction/wiki/characters/molly-millions.md`
+  - `../../Fiction/wiki/settings/cyberspace.md`
+  - `../../Fiction/wiki/index.md`
 
 게임 내 텍스트 작성 시:
 1. Fiction wiki에서 원문 톤 확인
@@ -113,9 +117,9 @@
 
 이 프로젝트는 표준 LLM Wiki 패턴을 따른다.
 
-> **2026-10-20 정합 노트**: 워크스페이스 표준의 3계층 (raw / wiki / schema) 가운데 `raw/` 는 Python 프로토타입 통합 (2026-09-15) 으로 retired — wet_run 트리에서 더 이상 존재하지 않는다. 게임 위키는 `docs/wiki/` (`decisions/`, `lore/`, `world/` 하위) 로 통합되었고, 디자인 스펙은 `docs/design/` 에 단일 canonical 으로 존재한다 (2026-10-20: `docs/wiki/design/` 중복 디렉토리 삭제). 깁슨 분석용 primary source 는 Fiction 프로젝트의 `../../../Fiction/wiki/` 가 담당한다. 신규 ingest 시 깁슨 원문 인용은 Fiction wiki 를 우선 참조하고, 게임용 요약/적응은 `docs/wiki/` 에 둔다.
+> **2026-10-20 정합 노트**: 워크스페이스 표준의 3계층 (raw / wiki / schema) 가운데 `raw/` 는 Python 프로토타입 통합 (2026-09-15) 으로 retired — wet_run 트리에서 더 이상 존재하지 않는다. 게임 위키는 `docs/wiki/` (`decisions/`, `lore/`, `world/` 하위) 로 통합되었고, 디자인 스펙은 `docs/design/` 에 단일 canonical 으로 존재한다 (2026-10-20: `docs/wiki/design/` 중복 디렉토리 삭제). 깁슨 분석용 primary source 는 Fiction 프로젝트의 `../../Fiction/wiki/` 가 담당한다. 신규 ingest 시 깁슨 원문 인용은 Fiction wiki 를 우선 참조하고, 게임용 요약/적응은 `docs/wiki/` 에 둔다.
 
-- **Ingest**: 깁슨 원문 발췌가 생기면 Fiction wiki (`../../../Fiction/wiki/`) 에 먼저 인제스트 → 게임용 요약/적응을 `docs/wiki/world/` (또는 `docs/wiki/lore/`) 에 작성/갱신 → `docs/wiki/index.md` 갱신 → `log.md` 에 `[YYYY-MM-DD] ingest | 제목` 형식으로 기록
+- **Ingest**: 깁슨 원문 발췌가 생기면 Fiction wiki (`../../Fiction/wiki/`) 에 먼저 인제스트 → 게임용 요약/적응을 `docs/wiki/world/` (또는 `docs/wiki/lore/`) 에 작성/갱신 → `docs/wiki/index.md` 갱신 → `log.md` 에 `[YYYY-MM-DD] ingest | 제목` 형식으로 기록
 - **Query**: 사용자가 질문 → `docs/wiki/index.md` 로 관련 페이지 찾기 → Fiction wiki 인용과 함께 답변 → 가치가 있으면 결과를 새 `docs/wiki/` 페이지로 file-back
 - **Lint**: 주기적으로 wiki 건강 점검
   - orphan 페이지 (인바운드 링크 없음)
@@ -144,7 +148,7 @@
 ```bash
 cd web
 npm install            # 1회 (또는 의존성 변경 시)
-npm test               # vitest run — 107 files, 2654 tests, 0 failures
+npm test               # vitest run — 182 files, 4021 tests, 0 failures
 npm run test:watch     # watch 모드
 npm run typecheck      # tsc --noEmit (strict)
 npm run lint           # eslint src scripts
@@ -184,7 +188,7 @@ Game/wet_run/
 │   │   ├── renderer/        # Canvas2D ASCII renderer (palette.ts, canvas.ts 등)
 │   │   ├── data/            # 정적 JSON (hand-maintained; export 파이프라인 retired)
 │   │   └── save/            # compress.ts / storage.ts / storage_idb.ts / storage_quota.ts
-│   ├── tests/              # 107 vitest 파일 (2654 tests, 0 failures)
+│   ├── tests/              # 182 vitest 파일 (4021 tests, 0 failures)
 │   ├── e2e/                # Playwright e2e specs (web/src/e2e/ 아님)
 │   └── scripts/            # balance_harness.ts / balance_sim.ts 등 보조 스크립트
 ├── docs/                   # 디자인 / ADR / 세션 요약
@@ -265,7 +269,7 @@ npm run build && npm run preview
 
 ### ECS-lite 사용 규칙 (ADR-0194, Accepted 2026-08-26) — 이전 prototype/ 잔재
 
-> **2026-09 노트**: ECS 결정은 prototype/ Python 코드에 적용됨. web/ TypeScript 마이그레이션에서는 상태가 `web/src/core/state.ts` 의 reducer 패턴 + `GameState` 인터페이스로 통합되어, 별도 ECS 레이어가 없음. 신규 web 컴포넌트는 **순수 OOP + `interface` 타입** 권장.
+> **2026-09 노트**: ECS 결정은 prototype/ Python 코드에 적용됨. web/ TypeScript 마이그레이션에서는 상태가 `web/src/core/state/state.ts` 의 reducer 패턴 + `GameState` 인터페이스로 통합되어, 별도 ECS 레이어가 없음. 신규 web 컴포넌트는 **순수 OOP + `interface` 타입** 권장.
 
 **기본 (신규 시스템 추가 시)**: OOP / `@dataclass` 사용.
 
@@ -279,7 +283,7 @@ npm run build && npm run preview
 
 **World naming collision**: ECS 사용 시 `from wet_run.ecs import World as EcsWorld` 별칭 도입 (Python). web/ TypeScript에는 해당 없음.
 
-**참조**: [`decisions/0194-ecs-role-clarification.md`](./docs/wiki/decisions/0194-ecs-role-clarification.md)
+**참조**: [`docs/wiki/decisions/0194-ecs-role-clarification.md`](./docs/wiki/decisions/0194-ecs-role-clarification.md)
 
 ## 7. CJK 혼용 방지 가이드
 
@@ -359,15 +363,15 @@ npm run build && npm run preview
 - 한 세션에 너무 많은 문서/파일 변경 (사용자 검토 부담)
 - 원작에 없는 사실의 무성한 단언
 - 다른 사이버펑크 작품의 톤/용어 차용 (Cyberpunk 2077, Shadowrun, D&D 등)
-- Fiction wiki (`../../../Fiction/wiki/`) 수정 — 깁슨 분석은 Fiction 프로젝트 영역
+- Fiction wiki (`../../Fiction/wiki/`) 수정 — 깁슨 분석은 Fiction 프로젝트 영역
 
 ## 8. 작업 시작 체크리스트
 
-- [ ] `SESSION_SUMMARY.md` — 현재 세션 요약 (가장 먼저)
+- [ ] `docs/sessions/` — 최근 세션 요약 (가장 먼저)
 - [ ] `ROADMAP.md` 의 "Current Phase" 확인
 - [ ] **GitHub Projects 보드** — https://github.com/users/seoca1/projects (이슈 카드 확인)
 - [ ] `decisions/README.md` 에서 미해결 결정 확인
-- [ ] `CHARACTER_PATHS.md` — 캐릭터 비교
+- [ ] `../../Fiction/wiki/characters/` — 캐릭터 비교
 - [ ] `index.md` 에서 관련 위키 페이지 찾기
 - [ ] 작업 완료 후 `log.md` 갱신
 
@@ -386,15 +390,15 @@ Web UI에서 보드 생성:
 
 - [ ] `index.md` 가 새 페이지를 모두 가리키는가
 - [ ] `log.md` 에 이번 세션 작업이 기록되었는가
-- [ ] 영향 받는 `design/`/`testcases/`/`decisions/`가 동기화되었는가
+- [ ] 영향 받는 `docs/design/`/`docs/testcases/`/`docs/wiki/decisions/`가 동기화되었는가
 - [ ] raw에서 읽은 자료는 모두 인용되었는가
-- [ ] 세션 종료 시 `SESSION_SUMMARY.md` 갱신 (해당 시)
+- [ ] 세션 종료 시 `docs/sessions/` 에 세션 요약 추가 (해당 시)
 
 ## 10. 그래픽 노블 모드 (ADR-0032)
 
 게임 시작 시 메인메뉴(7 옵션)에서 진입 가능한 비주얼 노블 자동플레이.
 
-> **2026-09 통합 노트**: 본 섹션은 prototype/ Python 시절 ADR-0032/0040/0041-44 그래픽 노블 명세를 보존합니다. web/ TypeScript 포트는 다음에 위치: `web/src/core/graphic_novel*.ts` (5 modules), `web/src/main.ts` 메뉴 옵션 2 (`GRAPHIC NOVEL`), `web/src/ui/GraphicNovelMenu.tsx` 등. **web/ 테스트는 `web/tests/graphic_novel*.test.ts`** (Tier 4 기준 — ADR-0199 이월).
+> **2026-09 통합 노트**: 본 섹션은 prototype/ Python 시절 ADR-0032/0040/0041-44 그래픽 노블 명세를 보존합니다. web/ TypeScript 포트는 다음에 위치: `web/src/core/graphic_novel*.ts` (5 modules), `web/src/main.ts` 메뉴 옵션 2 (`GRAPHIC NOVEL`), `web/src/renderer/graphic_novel_screen.ts` 등. **web/ 테스트는 `web/tests/graphic_novel*.test.ts`** (Tier 4 기준 — ADR-0199 이월).
 
 ### 메인메뉴 옵션 (7) — ADR-0032 + ADR-0040 + Phase 7
 1. **NEW RUN** — 자키 선택부터 일반 게임플레이

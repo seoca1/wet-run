@@ -1,0 +1,111 @@
+{
+ "do_not_do": [
+  "추가로 이 문서를 보는 독자에게 질문을 던지려는 행위 금지",
+  "문서의 구조를 무시하고 외부 소스나 추측으로 해석을 덧붙이려는 시도 금지",
+  "현재 상태를 반영하지 않는 임의의 숫자 조정이나 재정렬 금지",
+  "문서 내 잘못된 부분을 단순히 삭제해 ‘정상화’로 포장하려는 행위 금지",
+  "해당 저장소의 규칙 밖에서 합리화된 해석을 문서에 주입하려는 시도 금지"
+ ],
+ "first_action": {
+  "action": "문서 구조 무결성 검사(CI 기반) 도입 및 ADR 레지스트리 강제화",
+  "why": "신규 합류자가 문서만으로 상태를 판단 가능하려면, 구조적 무결성을 자동으로 보장하는 체계가 필요하다"
+ },
+ "guardrails": [
+  {
+   "confidence": "높음",
+   "cost": "작음",
+   "how_it_works": "모든 문서의 경로가 실제 파일 시스템 내에 존재하는지 CI에서 자동 체크합니다.workspace 밖 경로나 삭제/이동 흔적을 오류로 표시합니다.",
+   "name": "경로 무결성 검사(Workspace 내 경로 검증)"
+  },
+  {
+   "confidence": "높음",
+   "cost": "중간",
+   "how_it_works": "ADR의 canonical_path를 단일 레지스트리에 강제하고 ID 중복/결번 상태를 자동으로 관리합니다.",
+   "name": "ADR 레지스트리 관리 및 정본 강제화"
+  },
+  {
+   "confidence": "중간",
+   "cost": "중간",
+   "how_it_works": "문서와 파일 집합의 자동 동기화를 위한 빌드 스텝을 추가하고, docs/dashboard 같은 수치가 빌드 시 생성되도록 만듭니다.",
+   "name": "문서-파일 집합 자동 동기화"
+  },
+  {
+   "confidence": "중간",
+   "cost": "큼",
+   "how_it_works": "문서 주장 수치(ADR 수, 파일 수, 테스트 수 등)를 실제 코드/빌드에서 생성된 값과 CI에서 비교합니다.",
+   "name": "수치 주장 자동 검증(CI)"
+  }
+ ],
+ "questions_newcomer_cannot_answer": [
+  {
+   "question": "현재 유효한 ADR 전체 목록과 각 ADR의 정본 경로는 어디에 있는가?",
+   "why_structure_blocks": "A/C/D의 경로 혼재와 정본 위치의 불일치로 독자가 한 곳에서 ADR의 실체를 확인하기 어렵다."
+  },
+  {
+   "question": "ADR-0065의 현재 위치와 상태는 무엇인가?",
+   "why_structure_blocks": "정본 위치가 누락되고 prototype 잔재가 남아 있어 단일 참조가 불가능하다."
+  },
+  {
+   "question": "web/src/core/state.ts와 web/src/core/state/state.ts 중 무엇이 현재 실무에 사용되는 파일인가?",
+   "why_structure_blocks": "경로 변경 이력은 존재하지만 문서가 현재 의도된 구조를 명확히 설명하지 않는다."
+  },
+  {
+   "question": "ADR의 숫자 주장과 실측 숫자는 어떤 근거로 산출되었는가?",
+   "why_structure_blocks": "문서의 수치가 실제 값과 불일치하고 이를 검증하는 절차가 문서에 없다."
+  },
+  {
+   "question": "ADR 네임스페이스의 중복/사이드카 파일의 관계는 어떻게 관리되는가?",
+   "why_structure_blocks": "중복 번호와 사이드카 파일이 공존하는 구조가 명확한 정책 없이 남아 있다."
+  },
+  {
+   "question": "AGENTS.md가 신규 합류자에게 진입점으로 충분한가?",
+   "why_structure_blocks": "하위 디렉터리(doc/sessions, playtest, diagnostics) 문서의 존재 여부와 위치가 AGENTS.md에 반영되지 않았다."
+  },
+  {
+   "question": "최근 ADR 추가와 코드 변화가 문서에 어떻게 반영되었는가?",
+   "why_structure_blocks": "코드 변화와 문서/ADR 간 동기화 규칙이 없고, drift를 방지하는 자동화가 필요하다."
+  }
+ ],
+ "structural_defects": [
+  {
+   "confidence": "높음",
+   "cost": "큼",
+   "evidence": "A/C/D",
+   "if_unfixed": "정본 위치의 불일치와 네임스페이스 혼재로 참조가 모호해져, 문서를 따라도 실제 상태를 확정하기 어렵다.",
+   "name": "정본 위치/네임스페이스 불일치",
+   "why_structural": "같은 ADR이 서로 다른 위치에 중복되거나, 정본 경로가 나오지 않아 독자 해석이 달라진다."
+  },
+  {
+   "confidence": "높음",
+   "cost": "중간",
+   "evidence": "D/F",
+   "if_unfixed": "문서 지도 업데이트가 낡아 신규 합류자 진입점이 왜곡된다.",
+   "name": "AGENTS.md의 교육적 정확성 결여",
+   "why_structural": "문서의 구조를 지시하는 메타문서가 실제 구조를 반영하지 못한다."
+  },
+  {
+   "confidence": "높음",
+   "cost": "중간",
+   "evidence": "B/E/F",
+   "if_unfixed": "문서의 숫자-실측 불일치로 신뢰가 무너진다.",
+   "name": "숫자 주장과 실측의 불일치",
+   "why_structural": "측정값과 주장값 간 자동 검증이 없어 drift가 심화된다."
+  },
+  {
+   "confidence": "중간",
+   "cost": "중간",
+   "evidence": "E",
+   "if_unfixed": "핵심 구조를 검증하는 자동화가 부족해 drift를 조기에 발견하지 못한다.",
+   "name": "감사 도구의 구조 검사 한계",
+   "why_structural": "CLEAN 결과에 의존하되 구조적 드 drift를 포착하지 못한다."
+  },
+  {
+   "confidence": "중간",
+   "cost": "큼",
+   "evidence": "A/C/D/F",
+   "if_unfixed": "문서의 시간축/상태 표현 부재로 변경 이력의 맥락이 사라진다.",
+   "name": "시간축/상태 표현 부재",
+   "why_structural": "프로젝트의 변화 이력을 독자가 시간 흐름 속에서 읽어내기 어렵다."
+  }
+ ]
+}

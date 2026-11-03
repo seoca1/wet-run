@@ -30,17 +30,48 @@ function parseRuns(argv: ReadonlyArray<string>): number {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : 100;
 }
 
-function parseDeck(argv: ReadonlyArray<string>): "opening" | "ppl" {
+type DeckMode = "opening" | "ppl" | "novice" | "veteran" | "heretic";
+
+function parseDeck(argv: ReadonlyArray<string>): DeckMode {
   const idx = argv.indexOf("--deck");
-  return idx >= 0 && argv[idx + 1] === "ppl" ? "ppl" : "opening";
+  const raw = idx >= 0 ? argv[idx + 1] : undefined;
+  // ADR-0276: the jockey decks are measured by name, so a run's deck can be
+  // checked against the curve it belongs to.
+  if (raw === "ppl" || raw === "veteran" || raw === "heretic") return raw;
+  return "opening";
 }
 
-/** The same opening hand the game builds on NEW RUN (ADR-0260). */
+/** Measure an arbitrary candidate deck before it ships (ADR-0276).
+ *
+ * A jockey's deck is a design claim ("SIL cracks corporate ice", "KAS does not
+ * defend"), and a claim about balance should be measured, not assumed. This
+ * lets a candidate be scored on the same curve as the shipped deck, so a swap
+ * that silently makes a choice a trap can be caught before it is written down.
+ * `--deck-ids strike,exploit,virus,surge,decoy`. */
+function parseDeckIds(argv: ReadonlyArray<string>): readonly string[] | null {
+  const idx = argv.indexOf("--deck-ids");
+  if (idx < 0) return null;
+  const raw = argv[idx + 1] ?? "";
+  const ids = raw
+    .split(",")
+    .map((id) => id.trim())
+    .filter((id) => id.length > 0);
+  if (ids.length === 0) {
+    throw new RangeError("--deck-ids must name at least one program id");
+  }
+  return ids;
+}
+
+/** The same opening hand the game builds on NEW RUN, per jockey (ADR-0276).
+ * `--deck opening` is the curated CASE deck; `--deck veteran|heretic` measures
+ * the SIL and KAS decks the game actually deals. */
 function openingDeck(
   catalog: Readonly<Record<string, Program>>,
+  mode: DeckMode = "opening",
   size = 5,
 ): Program[] {
-  return startingDeck(catalog).slice(0, size);
+  const jockey = mode === "opening" ? null : mode;
+  return startingDeck(catalog, jockey).slice(0, size);
 }
 
 function pct(value: number): string {
@@ -72,7 +103,13 @@ function main(): void {
   const missions = loadMissionsCatalog(missionsJson);
   const iceCatalog = loadIceCatalog(iceTypesJson);
   const programCatalog = loadProgramsCatalog(programsJson);
-  const deck = openingDeck(programCatalog);
+  const customIds = parseDeckIds(argv);
+  const deck =
+    customIds === null
+      ? openingDeck(programCatalog, deckMode)
+      : customIds
+          .map((id) => programCatalog[id])
+          .filter((p): p is Program => p !== undefined);
 
   const byGrade = new Map<number, Mission[]>();
   for (const m of missions) {
@@ -85,7 +122,7 @@ function main(): void {
   console.log(
     deckMode === "ppl"
       ? "Balance harness — PPL deck (grade-appropriate: tier <= grade, top 5)"
-      : `Balance harness — opening deck [${deck.map((p) => p.id).join(", ")}]`,
+      : `Balance harness — ${customIds === null ? deckMode : "custom"} deck [${deck.map((p) => p.id).join(", ")}]`,
   );
   console.log(
     `Missions: ${missions.length}, ICE types: ${Object.keys(iceCatalog).length}, runs/mission: ${runs}\n`,

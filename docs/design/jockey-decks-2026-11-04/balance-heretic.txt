@@ -1,0 +1,15 @@
+
+> wetrun-web@0.1.0 balance
+> tsx scripts/balance_harness.ts --deck heretic
+
+Balance harness — heretic deck [strike, exploit, virus, surge, decoy]
+Missions: 53, ICE types: 97, runs/mission: 100
+
+Idle: 0ms (scalar = every turn; schedule = once, then 0)
+grade  missions  win-rate  stalled  mean-turns  mean-HP-end  p5/p95
+    1         4    100.0%     0.0%         3.0         87.0   86/90
+    2        16    100.0%     0.0%         4.3         43.9   35/57
+    3        11     78.6%     0.0%         7.3         12.1    2/26
+    4        10     38.8%     0.0%         7.4          4.9    0/8
+    5         9     33.2%     0.0%         6.2          4.2    0/8
+    6         3      0.0%     0.0%         5.3          0.0    0/0

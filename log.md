@@ -2989,3 +2989,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **문서 정정**: ADR-0263 (a)·Notes 의 "죽음 프레임이 저장되지 않는다" 를 **오진으로 명시하고 정정**. ADR-0252 는 Accepted 이고 결정 내용은 불변이므로 `## Implementation Status` 에만 ADR-0264 갱신 주석(전역 규칙 허용).
 - **검증 수치**: vitest **181 files / 4014 tests passed** · tsc 0 · eslint 0 errors · build PASS.
 - **남은 항목**: (a) 죽음 화면 재표시가 필요하면 Option B(슬롯에 `runOver` 저장) (b) `deceasedJockeys` 아카이브 영속(ADR-0040 Option A) (c) COST 상한 시 탈출 안내 한 줄.
+
+## [2026-11-04] feat(balance) | 자키가 시작 덱을 정한다 — 후보 8종 측정으로 함정 제거 (ADR-0276)
+
+- **오너**: "자키가 런에 실제 영향" → "계속."
+- **문제**: ADR-0274 는 자키가 **이름**만 정하게 했다. 시작 덱은 누구든 고정(`strike, backdoor, boost, barrier, decoy`, ADR-0260). 이 계열 작업에서 **처음으로 밸런스에 닿는** 변경.
+- **측정 우선(구조 확인)**: 리듀서는 데미지 경로가 `tier*5` 하나이고 **실제 효과가 배선된 프로그램은 5개뿐**(`backdoor`/`barrier`/`boost`/`cloak`/`decoy`). CASE 덱이 그중 **4개**를 쥐고 있다 → 효과를 버리고 평타를 얻는 교체는 **하향**이다.
+- **수정**: `JOCKEY_DECK_IDS` 로 자키별 시작 덱 — `novice=[strike,backdoor,boost,barrier,decoy]` · `veteran=[strike,backdoor,exploit,barrier,decoy]` · `heretic=[strike,exploit,virus,surge,decoy]`. `startingDeck(catalog, jockeyId?)` 가 해석, 미지 id 는 큐레이션 덱 폴백. 하네스에 **`--deck veteran|heretic`** + **`--deck-ids a,b,c,d,e`** 추가(후보를 출시 전 채점).
+- **측정이 초안을 바꿨다**: 첫 KAS 덱(`strike,backdoor,virus,surge,decoy`)은 `boost`·`barrier`(효과 2개)를 `virus`·`surge`(같은 tier **평타**)로 바꾼 것 → 3등급 **72.4%**, 기본 덱(78.4%)보다 5점 낮은 **함정**이라 **기각**. tier 상향만이 보상되는 교환(SIL 의 `boost`→`exploit` = +5점). KAS 를 tier 로 공격성을 사도록 재설계 → **CASE 와 동급**(3등급 78.6 vs 78.4).
+- **곡선(100 runs/mission)**: CASE `100.0/100.0/78.4/38.9/33.4/0.0` · SIL `100.0/100.0/83.8/44.5/38.3/0.0` · KAS `100.0/100.0/78.6/38.8/33.2/0.0`. 후보 8종(C1~C10) 측정·기각 근거: `docs/design/jockey-decks-2026-11-04/`.
+- **실브라우저**: `NEW RUN → (CASE|SIL|KAS) → 미션 → 발사` 후 `window.wetrun.state.deck` 이 각자 덱. 1·2·6 등급은 세 덱 모두 100/100/0 — 차이는 3~5 등급에 산다.
+- **불변**: `SaveSlot.version` 1 유지(덱은 매 런 결정, 저장 스키마 무변경). 세 덱 모두 ADR-0260 형태(공격 다수 + 방어 ≥1); 전부 공격인 C10 은 2등급에서 무너져 기각.
+- **검증**: vitest **188 files / 4056 tests** · tsc 0 · eslint 0 errors · build PASS · `check_doc_claims.py` · `check_no_novel_prose.py` exit 0.
+- **남은 항목(오너 결정)**: (a) 덱이 **종류로** 달라지려면 `plannedDescription` 의 효과 배선(virus=도트 등) — 지금은 tier 로만 다름 (b) 자키 선택 ↔ 프롤로그 체인 일치(프롤로그는 `novice` 고정) (c) 등급 6 이 세 덱 모두 0.0%(PPL 도 27.3%) — 등급 6 자체 미완성 (d) 선택 화면 소개문에 덱 언급.

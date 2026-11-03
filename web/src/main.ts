@@ -1315,7 +1315,11 @@ class Game {
     // this (a resumed run is mid-story); only a fresh run does.
     this.runIntroArc = ((mission.arc as ArcId) || 1) as ArcId;
     const programs = PROGRAMS;
-    const deck = startingDeck(programs);
+    // ADR-0276: the jockey decides the opening deck, not just the name.
+    const deck = startingDeck(
+      programs,
+      JOCKEYS[this.selectedJockey]?.id ?? null,
+    );
     const ice = missionIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
     this.state = openArrivalEncounter({

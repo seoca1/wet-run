@@ -129,7 +129,13 @@ describe("balance sim — grade scaling", () => {
     // ADR-0256 — the card effects moved the grade curve; this is the
     // re-baselined curve that ADR accepts. The shape still falls
     // monotonically and g6 stays lethal.
-    { mode: "opening", expected: [100.0, 100.0, 97.5, 53.4, 44.1, 0.3] },
+    //
+    // ADR-0268 caps Dixie's combo synergy at the combo ceiling (6). This deck
+    // is the alphabetical five, not the curated opening deck, so the cap only
+    // shows up where a fight runs long enough to build combo: g3 97.5 -> 97.2.
+    // The curated starting deck moves more (g3 81.4 -> 78.4, g4 42.6 -> 38.9,
+    // g5 36.6 -> 33.4) — see `npm run balance`.
+    { mode: "opening", expected: [100.0, 100.0, 97.2, 53.4, 44.1, 0.3] },
     { mode: "ppl", expected: [100.0, 100.0, 99.3, 84.1, 44.4, 27.3] },
   ])(
     "reproduces the ADR-0256 baseline exactly with idle disabled ($mode)",

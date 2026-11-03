@@ -12,7 +12,7 @@
 
 import type { GameState, GameAction, Ice, BossPhase } from "../types";
 import type { CombatVfxInstance } from "../../renderer/combat_vfx";
-import { AUTO_ATTACK_INTERVAL_MS } from "./combat_engine";
+import { AUTO_ATTACK_INTERVAL_MS, COMBO_BONUSES } from "./combat_engine";
 import { DEFAULT_BOSS_PROFILE, checkPhaseTransition } from "./boss_phases";
 import { enemyShouldUseSkill, selectSkillByPersonality } from "./ice_ai";
 import { rollIceCrit } from "./ice_crit";
@@ -47,6 +47,18 @@ import { everyProgramBlocked } from "./program_affordance";
 export const DIXIE_ATTACK_EVERY_N_PLAYER_TURNS = 2;
 export const DIXIE_BASE_DAMAGE = 8;
 export const DIXIE_SYNERGY_BONUS = 3;
+
+/** The combo ceiling the damage table defines: `COMBO_BONUSES` ends at 6 and
+ * a card above it already falls back to 1.0. Dixie's synergy read the raw
+ * counter, which nothing resets inside a run (`openArrivalEncounter` keeps
+ * it), so by the later fights she hit for 68-92 while a card hit for 4-17 --
+ * the ally fought the fights and the player watched (ADR-0268). */
+export const MAX_COMBO = Math.max(...Object.keys(COMBO_BONUSES).map(Number));
+
+/** Dixie's damage for a combo, capped at the ceiling the combo system defines. */
+export function dixieDamage(combo: number): number {
+  return DIXIE_BASE_DAMAGE + Math.min(combo, MAX_COMBO) * DIXIE_SYNERGY_BONUS;
+}
 
 export function applyCombatAction(
   state: GameState,
@@ -170,7 +182,7 @@ function processDixieTurn(state: GameState): GameState {
   if (turns < DIXIE_ATTACK_EVERY_N_PLAYER_TURNS || targetIdx < 0) {
     return { ...state, dixiePlayerTurnsSinceAttack: turns };
   }
-  const dixieDmg = DIXIE_BASE_DAMAGE + state.playerCombo * DIXIE_SYNERGY_BONUS;
+  const dixieDmg = dixieDamage(state.playerCombo);
   const message = `>>> Dixie attacks: ${dixieDmg} dmg`;
   return {
     ...state,

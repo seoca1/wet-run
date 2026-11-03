@@ -247,7 +247,7 @@ def claim_checks(
     checks: list[tuple[str, re.Pattern[str], str, callable, callable]] = [
         (
             "ADR count",
-            re.compile(r"(\d+)\s+ADRs"),
+            re.compile(r"(\d+)(\+?)\s+ADRs"),
             "ADR files",
             lambda: adrs["count"],
             lambda line: True,
@@ -261,7 +261,7 @@ def claim_checks(
         ),
         (
             "test files",
-            re.compile(r"(\d+)\s+(?:vitest\s+)?(?:files|파일)"),
+            re.compile(r"(\d+)(\+?)\s+(?:vitest\s+)?(?:files|파일)"),
             "web/tests/*.test.ts",
             measure_test_files,
             is_vitest_line,
@@ -271,7 +271,7 @@ def claim_checks(
         checks.append(
             (
                 "test count",
-                re.compile(r"(\d+)\s+tests?"),
+                re.compile(r"(\d+)(\+?)\s+tests?"),
                 "vitest numTotalTests",
                 measure_tests,
                 is_vitest_line,
@@ -291,7 +291,13 @@ def check_claims(text: str, with_tests: bool) -> list[tuple[str, str, str, int]]
             if not keep(lines[line_no - 1] if line_no <= len(lines) else ""):
                 continue
             claimed = int(match.group(1))
-            if claimed != int(measured):
+            floor = match.lastindex is not None and match.lastindex >= 2 and match.group(2) == "+"
+            # "180+ files" is a floor: growth keeps the claim true, shrinkage
+            # fails it. Exact counts are checked exactly.
+            if floor:
+                if claimed > int(measured):
+                    drift.append((label, f"{claimed}+", f"{measured} ({what})", line_no))
+            elif claimed != int(measured):
                 drift.append((label, str(claimed), f"{measured} ({what})", line_no))
     return drift
 

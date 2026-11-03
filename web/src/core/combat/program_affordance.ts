@@ -188,14 +188,22 @@ export function rewardAffordances(
   });
 }
 
-/** One line of the loot screen's card offer, e.g. `1 BACKDOOR   PIERCE 2`. */
-export function formatRewardOption(slot: number, program: Program): string {
+/** One line of the loot screen's card offer, e.g. `1 BACKDOOR   PIERCE 2`.
+ * ADR-0261: the taken card is marked, and shows what the run gained. */
+export function formatRewardOption(
+  slot: number,
+  program: Program,
+  taken = false,
+): string {
   const name = program.name
     .toUpperCase()
     .slice(0, NAME_WIDTH)
     .padEnd(NAME_WIDTH);
   const tag = programEffectTag(program);
-  return `${slot} ${name} ${tag}`.trimEnd();
+  const body = `${slot} ${name} ${tag}`.trimEnd();
+  // The caret marks the card the player actually took; the others are spent,
+  // so nothing on them should read as still selectable.
+  return taken ? `> ${body}  ACQUIRED` : body;
 }
 
 /** Row of the hand header in the combat grid. The list below it holds

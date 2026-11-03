@@ -94,7 +94,8 @@ function materialCount(state: EventSnapshot): number {
  *
  * `CREDIT_SPEND` is deliberately absent: no in-game action lowers
  * `player.credits` (`purchaseItem` has no caller), so there is no event to
- * name. Pure over (previous, next); no RNG, no clock.
+ * name. ADR-0261 adds `EQUIP` on deck growth. Pure over (previous, next);
+ * no RNG, no clock.
  */
 export function pickEventSfx(
   previous: EventSnapshot,
@@ -115,6 +116,12 @@ export function pickEventSfx(
   }
   if (materialCount(next) > materialCount(previous)) {
     ids.push(SFX_IDS.LOOT_DROP);
+  }
+  // ADR-0261: the run gained a program — the growth moment gets its own
+  // sound. `EQUIP` was defined with a WAV but never dispatched; a new card
+  // joining the deck is exactly what it names.
+  if (next.inventory.programs.length > previous.inventory.programs.length) {
+    ids.push(SFX_IDS.EQUIP);
   }
   if (previous.player.hp > 0 && next.player.hp > previous.player.hp) {
     ids.push(SFX_IDS.HEAL);

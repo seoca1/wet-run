@@ -135,44 +135,69 @@ describe("card reward — the offer", () => {
   });
 });
 
-describe("card reward — taking it", () => {
-  it("adds the chosen card to the draw pile and travels on", () => {
+describe("card reward — taking it (ADR-0261 beat)", () => {
+  it("adds the chosen card to the draw pile and holds the moment", () => {
     const before = lootState();
     const offered = offeredCardIds(before);
     const after = applyLootAction(before, {
       type: "select_program",
       handIndex: 1,
     });
-    expect(after.runPhase).toBe("matrix");
+    // The card is in the deck...
     expect(after.drawPile.map((p) => p.id)).toContain(offered[0]);
-    // and it is recorded as owned
     expect(after.inventory.programs.map((p) => p.id)).toContain(offered[0]);
-    // the card it did NOT pick is not granted
+    // ...and the screen stays put so the acquisition is visible.
+    expect(after.runPhase).toBe("loot");
+    expect(after.cardRewardTaken).toBe(offered[0]);
+    expect(after.message).toContain("Acquired");
+    // the cards it did NOT pick are not granted
     expect(after.drawPile.map((p) => p.id)).not.toContain(offered[1]);
   });
 
-  it("grants the picked card exactly once", () => {
+  it("keeps the offer steady after taking, so the set does not shuffle", () => {
     const before = lootState();
     const offered = offeredCardIds(before);
     const after = applyLootAction(before, {
       type: "select_program",
-      handIndex: 2,
+      handIndex: 1,
     });
-    const owned = [...after.deck, ...after.drawPile, ...after.discardPile].map(
-      (p) => p.id,
-    );
-    expect(owned.filter((id) => id === offered[1]).length).toBe(1);
-    // the other two options are not granted by taking one
-    expect(owned).not.toContain(offered[0]);
-    expect(owned).not.toContain(offered[2]);
+    expect(offeredCardIds(after)).toEqual([...offered]);
   });
 
-  it("ENTER skips the card and travels on", () => {
+  it("refuses a second card: one fight, one reward", () => {
+    const before = lootState();
+    const once = applyLootAction(before, {
+      type: "select_program",
+      handIndex: 1,
+    });
+    const twice = applyLootAction(once, {
+      type: "select_program",
+      handIndex: 2,
+    });
+    expect(twice.cardRewardTaken).toBe(once.cardRewardTaken);
+    expect(twice.drawPile).toHaveLength(once.drawPile.length);
+    expect(twice.message).toContain("already taken");
+  });
+
+  it("ENTER carries on, heals, and clears the offer memory", () => {
+    const taken = applyLootAction(lootState(), {
+      type: "select_program",
+      handIndex: 1,
+    });
+    const after = applyLootAction(taken, { type: "confirm" });
+    expect(after.runPhase).toBe("matrix");
+    expect(after.cardRewardTaken).toBeNull();
+    expect(after.player.hp).toBeGreaterThan(taken.player.hp);
+    // the destination names the growth
+    expect(after.message).toContain("Took ");
+  });
+
+  it("ENTER without taking still travels, and names no card", () => {
     const before = lootState();
     const after = applyLootAction(before, { type: "confirm" });
     expect(after.runPhase).toBe("matrix");
     expect(after.drawPile).toHaveLength(before.drawPile.length);
-    expect(after.player.hp).toBeGreaterThan(before.player.hp);
+    expect(after.message).not.toContain("Took ");
   });
 
   it("rejects a slot that is not offered", () => {
@@ -182,6 +207,7 @@ describe("card reward — taking it", () => {
       handIndex: 9,
     });
     expect(after.runPhase).toBe("loot");
+    expect(after.cardRewardTaken ?? null).toBeNull();
     expect(after.drawPile).toHaveLength(before.drawPile.length);
   });
 });

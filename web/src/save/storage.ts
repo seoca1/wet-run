@@ -254,8 +254,14 @@ function isSaveSlot(value: unknown): value is SaveSlot {
     isGraphicNovelProgress(v.graphicNovelProgress) &&
     isCurrentNodeIndex(v.currentNodeIndex) &&
     isOptionalNodeList(v.clearedEncounterNodes) &&
-    isOptionalNodeList(v.bypassedEncounterNodes)
+    isOptionalNodeList(v.bypassedEncounterNodes) &&
+    isOptionalId(v.cardRewardTaken)
   );
+}
+
+/** ADR-0261: the taken reward id is a non-empty string when present. */
+function isOptionalId(value: unknown): boolean {
+  return value === undefined || (typeof value === "string" && value.length > 0);
 }
 
 function isOptionalNodeList(value: unknown): boolean {

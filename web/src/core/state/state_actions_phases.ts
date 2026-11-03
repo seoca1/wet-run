@@ -220,8 +220,22 @@ function applyTerminalLoot(state: GameState, action: GameAction): GameState {
   };
 }
 
-/** Take the offered card at `index` (0-based), then travel on. */
+/**
+ * Take the offered card at `index` (0-based).
+ *
+ * ADR-0261: taking no longer travels on immediately. The screen holds the
+ * moment so the acquisition is visible, and ENTER carries on — the classic
+ * "pick, then proceed" beat. `cardRewardTaken` records the choice so a reload
+ * shows the same thing instead of offering a second card.
+ */
 function takeCardReward(state: GameState, index: number): GameState {
+  if (state.cardRewardTaken) {
+    const already = rewardProgram(state.cardRewardTaken);
+    return {
+      ...state,
+      message: `${already?.name ?? state.cardRewardTaken} already taken — press ENTER`,
+    };
+  }
   const offered = offeredCardIds(state);
   const id = index >= 0 && index < offered.length ? offered[index] : undefined;
   if (id === undefined) {
@@ -240,7 +254,7 @@ function takeCardReward(state: GameState, index: number): GameState {
       message: "Reward unavailable — press ENTER to continue",
     };
   }
-  const grown: GameState = {
+  return {
     ...state,
     // The card joins the draw pile, so it arrives when the hand recycles.
     drawPile: [...state.drawPile, card],
@@ -248,12 +262,13 @@ function takeCardReward(state: GameState, index: number): GameState {
       ...state.inventory,
       programs: [...state.inventory.programs, card],
     },
+    cardRewardTaken: card.id,
+    message: `Acquired ${card.name} — press ENTER to continue`,
   };
-  return continueToMatrix(grown, `Took ${card.name} — added to your deck`);
 }
 
 /** Non-terminal loot resolution: heal 15% and return to route selection. */
-function continueToMatrix(state: GameState, message?: string): GameState {
+function continueToMatrix(state: GameState): GameState {
   const newVisited = state.visitedNodes.includes(state.currentNodeIndex)
     ? state.visitedNodes
     : [...state.visitedNodes, state.currentNodeIndex];
@@ -262,6 +277,12 @@ function continueToMatrix(state: GameState, message?: string): GameState {
     state.player.maxHp,
     state.player.hp + Math.floor(state.player.maxHp * 0.15),
   );
+  // ADR-0261: name the card the player just took, so the destination carries
+  // the growth instead of the reward vanishing with the screen.
+  const taken = state.cardRewardTaken
+    ? rewardProgram(state.cardRewardTaken)
+    : undefined;
+  const grown = taken ? `Took ${taken.name}. ` : "";
   return {
     ...state,
     runPhase: "matrix",
@@ -269,9 +290,9 @@ function continueToMatrix(state: GameState, message?: string): GameState {
     visitedNodes: newVisited,
     phase: "approach",
     player: { ...state.player, hp: healedHp },
-    message:
-      message ??
-      `Choose an adjacent route — healed to ${healedHp}/${state.player.maxHp}`,
+    // Clear the offer memory on the way out.
+    cardRewardTaken: null,
+    message: `${grown}Choose an adjacent route — healed to ${healedHp}/${state.player.maxHp}`,
   };
 }
 

@@ -1,0 +1,231 @@
+
+ RUN  v1.6.1 /Users/emilio/projects/opencodework/Game/wet_run/web
+
+ ✓ tests/achievements.test.ts  (58 tests) 6ms
+ ✓ tests/crafting.test.ts  (71 tests) 5ms
+ ✓ tests/graphic_novel.test.ts  (74 tests) 9ms
+ ✓ tests/graphic_novel_player.test.ts  (85 tests) 11ms
+ ✓ tests/dungeon.test.ts  (40 tests) 19ms
+ ✓ tests/data_loaders.test.ts  (41 tests) 44ms
+ ✓ tests/equipment.test.ts  (132 tests) 16ms
+ ✓ tests/combat_models.test.ts  (43 tests) 8ms
+ ✓ tests/dungeon_layout.test.ts  (67 tests) 28ms
+ ✓ tests/hub.test.ts  (80 tests) 10ms
+ ✓ tests/audio.test.ts  (53 tests) 9ms
+ ✓ tests/achievement_definitions.test.ts  (61 tests) 14ms
+ ✓ tests/dialogue.test.ts  (61 tests) 7ms
+ ✓ tests/ice_combat_effects.test.ts  (32 tests) 23ms
+ ✓ tests/menu_stage_combat_flow.test.ts  (25 tests) 29ms
+ ✓ tests/combat_engine.test.ts  (31 tests) 4ms
+ ✓ tests/ice_ai.test.ts  (43 tests) 6ms
+ ✓ tests/ko_content_missions.test.ts  (21 tests) 10ms
+ ✓ tests/graphic_novel_types.test.ts  (28 tests) 6ms
+ ✓ tests/encounter_escape.test.ts  (40 tests) 67ms
+ ✓ tests/death_cycle.test.ts  (27 tests) 23ms
+ ✓ tests/state_actions.test.ts  (31 tests) 19ms
+ ✓ tests/settings.test.ts  (29 tests) 51ms
+ ✓ tests/encounter_entry_gate.test.ts  (28 tests) 69ms
+ ✓ tests/screen_shake.test.ts  (39 tests) 10ms
+ ✓ tests/equipment_sets.test.ts  (37 tests) 4ms
+ ✓ tests/program_affordance.test.ts  (28 tests) 29ms
+ ✓ tests/ice_scaling.test.ts  (23 tests) 7ms
+ ✓ tests/ending_resolver.test.ts  (36 tests) 4ms
+ ✓ tests/encounter_verbs.test.ts  (19 tests) 61ms
+ ✓ tests/info_market.test.ts  (58 tests) 8ms
+ ✓ tests/crafting_flow.test.ts  (38 tests) 5ms
+ ✓ tests/loadout.test.ts  (54 tests) 7ms
+ ✓ tests/graphic_novel_loaders.test.ts  (53 tests) 8ms
+ ✓ tests/matrix_navigation.test.ts  (13 tests) 191ms
+ ✓ tests/panel.test.ts  (54 tests) 5ms
+ ✓ tests/far_grid_gate.test.ts  (37 tests) 6ms
+ ✓ tests/graphic_novel_text.test.ts  (73 tests) 6ms
+ ✓ tests/run_mutators.test.ts  (34 tests) 7ms
+ ✓ tests/combat_grid.test.ts  (22 tests) 35ms
+ ✓ tests/crafting_integration.test.ts  (28 tests) 8ms
+ ✓ tests/run_end_save.test.ts  (18 tests) 98ms
+ ✓ tests/matrix_travel.test.ts  (15 tests) 888ms
+ ✓ tests/equipment_catalog.test.ts  (86 tests) 10ms
+ ✓ tests/wetware.test.ts  (51 tests) 11ms
+ ✓ tests/audio_ducking.test.ts  (46 tests) 9ms
+ ✓ tests/faction_reputation.test.ts  (46 tests) 4ms
+ ✓ tests/state.test.ts  (30 tests) 23ms
+ ✓ tests/dungeon_bsp.test.ts  (34 tests) 19ms
+ ✓ tests/set_bonus.test.ts  (46 tests) 5ms
+ ✓ tests/slot_restore.test.ts  (14 tests) 14ms
+ ✓ tests/types.test.ts  (52 tests) 5ms
+ ✓ tests/far_grid_hub.test.ts  (15 tests) 8ms
+ ✓ tests/sound_system.test.ts  (50 tests) 8ms
+ ✓ tests/screen_frames.test.ts  (19 tests) 80ms
+ ✓ tests/howler_integration.test.ts  (45 tests) 7ms
+ ✓ tests/boss.test.ts  (47 tests) 9ms
+ ✓ tests/status.test.ts  (28 tests) 29ms
+ ✓ tests/settings_language_toggle.test.ts  (22 tests) 21ms
+ ✓ tests/exploration.test.ts  (26 tests) 4ms
+ ✓ tests/settings_pwa_rows.test.ts  (87 tests) 171ms
+ ✓ tests/colorblind_palette.test.ts  (29 tests) 9ms
+ ✓ tests/matrix.test.ts  (41 tests) 10ms
+ ✓ tests/matrix_route_choice.test.ts  (10 tests) 30ms
+ ✓ tests/encounter_programs.test.ts  (21 tests) 54ms
+ ✓ tests/performance.test.ts  (27 tests) 7ms
+ ✓ tests/i18n.test.ts  (32 tests) 6ms
+ ✓ tests/status_hud.test.ts  (21 tests) 3ms
+ ✓ tests/sound_triggers.test.ts  (13 tests) 10ms
+ ✓ tests/ui_controls_standardization.test.ts  (17 tests) 9ms
+ ✓ tests/far_grid_gate_signal.test.ts  (10 tests) 13ms
+ ✓ tests/card_reward.test.ts  (12 tests) 16ms
+ ✓ tests/onboarding.test.ts  (25 tests) 4ms
+ ✓ tests/state_helpers.test.ts  (37 tests) 7ms
+ ✓ tests/ice_crit.test.ts  (10 tests) 17ms
+ ✓ tests/combat_vfx_v2.test.ts  (25 tests) 12ms
+ ✓ tests/floating_damage.test.ts  (28 tests) 5ms
+ ✓ tests/grid.test.ts  (29 tests) 8ms
+ ✓ tests/menu_hub_i18n.test.ts  (15 tests) 22ms
+ ✓ tests/combat_status_feedback.test.ts  (11 tests) 17ms
+ ✓ tests/matrix_render.test.ts  (14 tests) 22ms
+ ✓ tests/design_conformance.test.ts  (18 tests) 7ms
+ ✓ tests/save_load_roundtrip.test.ts  (13 tests) 27ms
+ ✓ tests/run_screen.test.ts  (12 tests) 50ms
+ ✓ tests/compress.test.ts  (18 tests) 15ms
+ ✓ tests/effects_schema.test.ts  (12 tests) 6ms
+ ✓ tests/idle_tick.test.ts  (12 tests) 24ms
+ ✓ tests/vfx.test.ts  (33 tests) 6ms
+ ✓ tests/pre_game_screen.test.ts  (13 tests) 75ms
+ ✓ tests/boss_ai.test.ts  (7 tests) 13ms
+ ✓ tests/matrix_frame.test.ts  (9 tests) 16ms
+ ✓ tests/storage_quota.test.ts  (20 tests) 4ms
+ ✓ tests/combat_entry_vfx.test.ts  (11 tests) 10ms
+ ✓ tests/matrix_structure.test.ts  (9 tests) 125ms
+ ✓ tests/property_save_fuzz.test.ts  (7 tests) 1894ms
+ ✓ tests/combat_event_sfx.test.ts  (14 tests) 8ms
+ ✓ tests/combat_sfx.test.ts  (15 tests) 17ms
+ ✓ tests/companion.test.ts  (7 tests) 12ms
+ ✓ tests/fuzz_combat.test.ts  (2 tests) 734ms
+ ✓ tests/vfx_ms_timing.test.ts  (16 tests) 5ms
+ ✓ tests/program_effects.test.ts  (7 tests) 12ms
+ ✓ tests/encounter_bypass_eligibility.test.ts  (14 tests) 27ms
+ ✓ tests/edge_cases_extended.test.ts  (2 tests) 6ms
+ ✓ tests/touch_feedback.test.ts  (17 tests) 2ms
+ ✓ tests/vfx_rng_neutrality.test.ts  (4 tests) 7ms
+ ✓ tests/combat_vfx.test.ts  (36 tests) 22ms
+ ✓ tests/mutator_integration.test.ts  (10 tests) 8ms
+ ✓ tests/ice_alarm_multiplier.test.ts  (18 tests) 9ms
+ ✓ tests/boss_phase_vfx.test.ts  (9 tests) 10ms
+ ✓ tests/menu_far_grid_gate.test.ts  (6 tests) 12ms
+ ✓ tests/dungeon_player.test.ts  (6 tests) 20ms
+ ✓ tests/crafting_screen.test.ts  (5 tests) 12ms
+ ✓ tests/missions.test.ts  (13 tests) 4ms
+ ✓ tests/event_matrix.test.ts  (14 tests) 3ms
+ ✓ tests/hp_nan_bug.test.ts  (2 tests) 10ms
+ ✓ tests/slow_effect.test.ts  (6 tests) 11ms
+ ✓ tests/crit_vfx_link.test.ts  (4 tests) 14ms
+ ✓ tests/personality_skill.test.ts  (4 tests) 8ms
+ ✓ tests/dungeon_death.test.ts  (6 tests) 9ms
+ ✓ tests/achievement_triggers.test.ts  (8 tests) 12ms
+ ✓ tests/boss_phases.test.ts  (10 tests) 4ms
+ ✓ tests/edge_cases.test.ts  (3 tests) 12ms
+ ✓ tests/equipment_screen.test.ts  (4 tests) 7ms
+ ✓ tests/multi_enemy.test.ts  (7 tests) 7ms
+ ✓ tests/dungeon_frame.test.ts  (7 tests) 12ms
+ ✓ tests/reduced_motion_gate.test.ts  (12 tests) 2ms
+ ✓ tests/menu.test.ts  (7 tests) 12ms
+ ✓ tests/loot_advance.test.ts  (2 tests) 11ms
+ ✓ tests/skill_cooldown.test.ts  (4 tests) 9ms
+ ✓ tests/state_save.test.ts  (4 tests) 11ms
+ ✓ tests/loot.test.ts  (9 tests) 3ms
+ ✓ tests/graphic_novel_save.test.ts  (4 tests) 7ms
+ ✓ tests/canvas_geometry.test.ts  (15 tests) 3ms
+ ✓ tests/killing_blow_cost.test.ts  (3 tests) 6ms
+ ✓ tests/nav_index.test.ts  (4 tests) 8ms
+ ✓ tests/loot_heal.test.ts  (2 tests) 9ms
+ ✓ tests/loot_screen.test.ts  (8 tests) 8ms
+ ✓ tests/aoe_skill.test.ts  (4 tests) 9ms
+ ✓ tests/verify_edge.test.ts  (3 tests) 10ms
+ ✓ tests/program_catalog_text.test.ts  (4 tests) 3ms
+ ✓ tests/graphic_novel_screen.test.ts  (4 tests) 4ms
+ ✓ tests/dungeon_crawler_wiring.test.ts  (3 tests) 5ms
+ ✓ tests/empty_deck_feedback.test.ts  (1 test) 7ms
+ ✓ tests/combat_hints.test.ts  (5 tests) 5ms
+ ✓ tests/boss_defeat_ending.test.ts  (1 test) 7ms
+ ✓ tests/boot_init.test.ts  (3 tests) 2ms
+ ✓ tests/matrix_ice_bug.test.ts  (3 tests) 14ms
+ ✓ tests/loot_advance_debug.test.ts  (1 test) 4ms
+stdout | tests/loot_advance_debug.test.ts > LOOT advancement debug > debug: trace transitions at node 1
+STEP0 deck=["backdoor","barrier","boost","cloak","decoy"]
+STEP0 iceRoster=[{}]
+STEP1 runPhase=combat phase=approach
+STEP1b runPhase=combat phase=combat
+STEP2 iceHps=[0]
+STEP3 runPhase=loot phase=victory message=ICE — Standard defeated! (no COST) +4075 credits
+STEP3 iceHps=[0]
+STEP3 activeIceIndex=0 iceRoster.length=1
+STEP3 deck.length=4
+
+ ✓ tests/menu_layout.test.ts  (3 tests) 7ms
+ ✓ tests/starting_deck.test.ts  (8 tests) 2ms
+ ✓ tests/missions_filter.test.ts  (5 tests) 5ms
+ ✓ tests/loot_input_contract.test.ts  (2 tests) 2ms
+ ✓ tests/dungeon_pickups.test.ts  (10 tests) 5ms
+ ✓ tests/dungeon_pool_separation.test.ts  (4 tests) 2ms
+ ✓ tests/jackout_combat_runphase.test.ts  (1 test) 6ms
+ ✓ tests/menu_stub_message.test.ts  (3 tests) 9ms
+ ✓ tests/mission_loader.test.ts  (4 tests) 6ms
+ ✓ tests/settings_tab.test.ts  (2 tests) 2ms
+ ✓ tests/pwa.test.ts  (3 tests) 2ms
+ ✓ tests/index_html.test.ts  (3 tests) 2ms
+ ✓ tests/accessibility.test.ts  (35 tests) 5ms
+ ✓ tests/pwa_manager.test.ts  (23 tests) 10ms
+ ✓ tests/pwa_boot.test.ts  (25 tests) 22ms
+ ✓ tests/touch.test.ts  (19 tests) 76ms
+ ✓ tests/accessibility_modes.test.ts  (32 tests) 5ms
+ ✓ tests/responsive.test.ts  (31 tests) 5ms
+stdout | tests/save_compression_size.test.ts > save compression byte measurement (Tier 5) > measures wire size at three realistic tiers + reports reductions
+[Tier 5] save compression byte measurement:
+  Tier                       Raw  Stored │ compressed │ reduction
+  small (3 programs)         489     559 │      no    │  -14.3%
+  mid (15 programs)         1534     710 │     yes    │  53.7%
+  large (30 programs)       2839     969 │     yes    │  65.9%
+
+ ✓ tests/save_compression_size.test.ts  (7 tests) 10ms
+ ✓ tests/canvas_text_scale.test.ts  (11 tests) 63ms
+ ✓ tests/settings_accessibility.test.ts  (17 tests) 55ms
+ ✓ tests/layout.test.ts  (17 tests) 6ms
+ ✓ tests/keyboard_locale.test.ts  (18 tests) 7ms
+ ✓ tests/matrix_affordance.test.ts  (20 tests) 5897ms
+ ✓ tests/ascii_renderer_color_for.test.ts  (4 tests) 4ms
+ ✓ tests/storage.test.ts  (12 tests) 3ms
+ ✓ tests/gamepad.test.ts  (6 tests) 6ms
+ ✓ tests/property_reducer_fuzz.test.ts  (2 tests) 7126ms
+ ✓ tests/tick_kill_loot.test.ts  (1 test) 4ms
+stderr | tests/tick_kill_loot.test.ts
+Error: Not implemented: HTMLMediaElement.prototype.play
+    at module.exports (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLAudioElementImpl.play (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/living/nodes/HTMLMediaElement-impl.js:118:5)
+    at HTMLAudioElement.play (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/living/generated/HTMLMediaElement.js:148:60)
+    at HowlerGlobal._obtainHtml5Audio (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:431:34)
+    at Sound.create (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2257:29)
+    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2235:12)
+    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:3154:14)
+    at new Sound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2207:10)
+    at Howl._inactiveSound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2068:14)
+    at Howl.play (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:776:51) undefined
+Error: Not implemented: HTMLMediaElement.prototype.load
+    at module.exports (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at HTMLAudioElementImpl.load (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/living/nodes/HTMLMediaElement-impl.js:112:5)
+    at HTMLAudioElement.load (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/jsdom/lib/jsdom/living/generated/HTMLMediaElement.js:111:34)
+    at Sound.create (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2278:20)
+    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2235:12)
+    at Sound.init (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:3154:14)
+    at new Sound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2207:10)
+    at Howl._inactiveSound (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:2068:14)
+    at Howl.play (/Users/emilio/projects/opencodework/Game/wet_run/web/node_modules/howler/dist/howler.js:776:51)
+    at AudioManager.playSfx (/Users/emilio/projects/opencodework/Game/wet_run/web/src/audio/manager.ts:687:12) undefined
+
+ ✓ tests/matrix_board.test.ts  (13 tests) 8137ms
+ ✓ tests/sustained_idle_balance.test.ts  (1 test) 2968ms
+ ✓ tests/balance_sim.test.ts  (16 tests) 7221ms
+
+ Test Files  180 passed (180)
+      Tests  3985 passed (3985)
+   Start at  20:30:29
+   Duration  10.12s (transform 2.35s, setup 682ms, collect 9.78s, tests 37.74s, environment 3.81s, prepare 7.63s)
+

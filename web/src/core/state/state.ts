@@ -264,6 +264,9 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     playerCredits: state.player.credits,
     turnCount: state.turnCount,
     deckIds: state.deck.map((p: Program) => p.id),
+    ...(state.cardRewardTaken
+      ? { cardRewardTaken: state.cardRewardTaken }
+      : {}),
     discardIds: state.discardPile.map((p: Program) => p.id),
     drawIds: state.drawPile.map((p: Program) => p.id),
     savedAt: new Date().toISOString(),
@@ -382,6 +385,7 @@ export function slotToGameState(
     visitedNodes: [],
     clearedEncounterNodes: slot.clearedEncounterNodes ?? [],
     bypassedEncounterNodes: slot.bypassedEncounterNodes ?? [],
+    cardRewardTaken: slot.cardRewardTaken ?? null,
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],

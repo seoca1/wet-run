@@ -26,14 +26,45 @@ const ICE: Ice = { id: "i", name: "ICE", hp: 100, armor: 0, tier: 1 };
 
 function base(over: Partial<GameState> = {}): GameState {
   const s = makeInitialState(MISSION, ICE, []);
-  return { ...s, iceRoster: [ICE], phase: "combat", runPhase: "combat", ...over };
+  return {
+    ...s,
+    iceRoster: [ICE],
+    phase: "combat",
+    runPhase: "combat",
+    ...over,
+  };
 }
-const withPlayer = (s: GameState, p: Partial<GameState["player"]>): GameState => ({
+const withPlayer = (
+  s: GameState,
+  p: Partial<GameState["player"]>,
+): GameState => ({
   ...s,
   player: { ...s.player, ...p },
 });
 
 describe("pickEventSfx", () => {
+  it("a program joins the deck → equip (ADR-0261 growth)", () => {
+    const prev = base();
+    const card = {
+      id: "payload",
+      name: "Payload",
+      tier: 3,
+      cost: 4,
+      effect: "attack",
+      description: "d",
+      aoe: false,
+    };
+    const next = base({
+      inventory: { ...prev.inventory, programs: [card] },
+    });
+    expect(pickEventSfx(prev, next)).toContain(SFX_IDS.EQUIP);
+  });
+
+  it("does not sound equip when the deck did not grow", () => {
+    const prev = base();
+    expect(pickEventSfx(prev, prev)).not.toContain(SFX_IDS.EQUIP);
+  });
+
   it("boss phase transition → phase_change", () => {
     const prev = base({ bossPhase: 1 });
     expect(pickEventSfx(prev, { ...prev, bossPhase: 2 })).toContain(
@@ -79,7 +110,9 @@ describe("pickEventSfx", () => {
   });
 
   it("a restart from a flatline is not a heal", () => {
-    const prev = withPlayer(base({ runPhase: "dead", phase: "defeat" }), { hp: 0 });
+    const prev = withPlayer(base({ runPhase: "dead", phase: "defeat" }), {
+      hp: 0,
+    });
     expect(pickEventSfx(prev, withPlayer(prev, { hp: 100 }))).not.toContain(
       SFX_IDS.HEAL,
     );
@@ -88,7 +121,10 @@ describe("pickEventSfx", () => {
   it("player HP reaches 0 → death; jacking out is not a death", () => {
     const prev = withPlayer(base(), { hp: 12 });
     expect(
-      pickEventSfx(prev, withPlayer({ ...prev, phase: "defeat", runPhase: "dead" }, { hp: 0 })),
+      pickEventSfx(
+        prev,
+        withPlayer({ ...prev, phase: "defeat", runPhase: "dead" }, { hp: 0 }),
+      ),
     ).toContain(SFX_IDS.DEATH);
     expect(
       pickEventSfx(prev, { ...prev, phase: "defeat", runPhase: "dead" }),
@@ -119,7 +155,8 @@ describe("dispatch sites", () => {
   ).replace(/\s+/g, "");
 
   it("both the key handler and the touch program buttons use the full picker", () => {
-    const uses = mainSource.match(/pickTransitionSfx\(previous,nextState\)/g) ?? [];
+    const uses =
+      mainSource.match(/pickTransitionSfx\(previous,nextState\)/g) ?? [];
     expect(uses).toHaveLength(2);
     expect(mainSource).not.toContain("pickCombatSfxLayers(previous,nextState)");
   });

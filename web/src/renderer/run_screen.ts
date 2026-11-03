@@ -93,14 +93,15 @@ export function renderRunScreen(
       // A terminal node ends the run on confirm — no heal, no route.
       const terminal = isTerminalNode(state);
       // ADR-0259: a non-terminal win offers cards; a terminal one ends the run.
-      const offers = terminal
-        ? []
-        : offeredCardIds(state)
-            .map((id, i) => {
-              const card = rewardProgram(id);
-              return card ? formatRewardOption(i + 1, card) : "";
-            })
-            .filter((line) => line.length > 0);
+      const takenId = state.cardRewardTaken ?? null;
+      const ids = terminal ? [] : offeredCardIds(state);
+      const offers = ids
+        .map((id, i) => {
+          const card = rewardProgram(id);
+          return card ? formatRewardOption(i + 1, card, id === takenId) : "";
+        })
+        .filter((line) => line.length > 0);
+      const takenIndex = takenId === null ? -1 : ids.indexOf(takenId);
       return {
         grid: renderLootScreen(
           state.player.hp,
@@ -111,6 +112,7 @@ export function renderRunScreen(
           lootText,
           terminal,
           offers,
+          takenIndex,
         ),
         // Only ENTER does anything on the loot screen: `applyLootAction`
         // ignores cancel and the move keys, so promising "↑↓: navigate" or
@@ -123,9 +125,11 @@ export function renderRunScreen(
           "",
           terminal
             ? "ENTER: run ends"
-            : offers.length > 0
-              ? "1-3: card"
-              : "ENTER: route",
+            : takenIndex >= 0
+              ? "ENTER: continue"
+              : offers.length > 0
+                ? "1-3: card"
+                : "ENTER: route",
         ],
       };
     }

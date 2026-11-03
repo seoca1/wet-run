@@ -27,6 +27,36 @@ function loadFirstNDeck(n: number) {
 }
 
 describe("save/load round-trip", () => {
+  it("keeps the taken card reward so a reload cannot claim a second one (ADR-0261)", () => {
+    // Given: a loot frame where the player already took a card
+    const mission = missions[0];
+    const ice = Object.values(iceTypes)[0];
+    const initial = makeInitialState(mission, ice, loadFirstNDeck(5));
+    const state = {
+      ...initial,
+      runPhase: "loot" as const,
+      phase: "victory" as const,
+      cardRewardTaken: "payload",
+      drawPile: [...initial.drawPile, programs["payload"]!],
+    };
+    // When
+    const restored = slotToGameState(
+      stateToSaveSlot(state),
+      missions,
+      programs,
+      ice,
+    );
+    // Then
+    expect(restored?.cardRewardTaken).toBe("payload");
+  });
+
+  it("omits the reward memory when nothing was taken", () => {
+    const mission = missions[0];
+    const ice = Object.values(iceTypes)[0];
+    const state = makeInitialState(mission, ice, loadFirstNDeck(5));
+    expect(stateToSaveSlot(state).cardRewardTaken).toBeUndefined();
+  });
+
   it("keeps cleared encounters unrepeatable after storage and CONTINUE", async () => {
     // Given: the current node and a different node have already been cleared.
     const mission = missions[0];

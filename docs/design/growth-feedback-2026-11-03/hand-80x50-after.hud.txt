@@ -1,0 +1,9 @@
+HP 61/100
+COST 16/100
+Credits 4075
+Equipped: 0/8
+
+Phase: combat
+> [1] Yakuza Enf HP: 165
+
+Mission: Aleph Fragment

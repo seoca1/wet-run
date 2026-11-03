@@ -106,6 +106,20 @@ describe("run screen composition", () => {
     expect(view?.hud).toEqual(["LOOT", "", "1-3: card"]);
   });
 
+  it("shows the taken card as ACQUIRED and waits for ENTER (ADR-0261)", () => {
+    const base = runState({ runPhase: "loot", message: "No rewards" });
+    const offered = offeredCardIds(base);
+    const state = { ...base, cardRewardTaken: offered[0]! };
+    const view = renderRunScreen(state, 80, 50);
+    const text = view!.grid.cells
+      .map((row) => row.map((c) => c?.char ?? " ").join(""))
+      .join("\n");
+    expect(text).toContain("ACQUIRED");
+    // the reward is spent, so the digits are not promised any more
+    expect(view?.hud).toEqual(["LOOT", "", "ENTER: continue"]);
+    expect(text).not.toContain("1-3: take a card");
+  });
+
   it("offers no card on the terminal node, since the run ends there", () => {
     const state = runState({ runPhase: "loot", message: "No rewards" });
     if (!state.matrix) throw new Error("fixture requires a matrix");

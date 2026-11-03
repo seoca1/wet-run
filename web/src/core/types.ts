@@ -211,6 +211,10 @@ export interface GameState {
   /** Nodes passed by paid BYPASS this run (ADR-0250): resolved for travel, but
    * never cleared, rewarded or healed. Optional; missing means none. */
   readonly bypassedEncounterNodes?: ReadonlyArray<number>;
+  /** ADR-0261: the card taken from this loot's offer, so the screen can show
+   * the acquisition and a reload cannot take a second one. Cleared on the way
+   * out of loot. Optional; missing means nothing taken yet. */
+  readonly cardRewardTaken?: string | null;
   readonly bossPhase: BossPhase; // 0 = no boss active, 1..4 = boss phase
   readonly endingChoice: EndingChoice | null;
   // Tier 5.5: active combat VFX (animation overlay).
@@ -470,6 +474,9 @@ export interface SaveSlot {
   readonly clearedEncounterNodes?: ReadonlyArray<number>;
   /** ADR-0250 run memory of BYPASS; older version-1 slots omit it. */
   readonly bypassedEncounterNodes?: ReadonlyArray<number>;
+  /** ADR-0261 the card taken from the current loot offer; older version-1
+   * slots omit it (no card taken yet). */
+  readonly cardRewardTaken?: string;
 }
 
 /** Game action — keyboard input → state mutation. */

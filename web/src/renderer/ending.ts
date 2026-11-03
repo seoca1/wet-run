@@ -71,6 +71,7 @@ export function renderLootScreen(
   lootMessage: string = "",
   terminal: boolean = false,
   offers: readonly string[] = [],
+  takenIndex: number = -1,
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -132,13 +133,16 @@ export function renderLootScreen(
     const widest = offers.reduce((w, l) => Math.max(w, l.length), 0);
     const offerX = Math.max(2, Math.floor((cols - widest) / 2));
     offers.forEach((line, i) => {
-      grid = setText(
-        grid,
-        offerX,
-        Math.floor(rows / 2) + 6 + i,
-        line,
-        PALETTE.CYAN_LIGHT,
-      );
+      // ADR-0261: the card the player took stands out; once one is taken the
+      // rest are spent, so they fade back.
+      const isTaken = i === takenIndex;
+      const color =
+        takenIndex < 0
+          ? PALETTE.CYAN_LIGHT
+          : isTaken
+            ? PALETTE.GREEN_NEON
+            : PALETTE.GRAY_DARK;
+      grid = setText(grid, offerX, Math.floor(rows / 2) + 6 + i, line, color);
     });
   }
 
@@ -164,9 +168,11 @@ export function renderLootScreen(
   // Footer
   const footer = terminal
     ? "ENTER: run ends"
-    : offers.length > 0
-      ? "1-3: take a card | ENTER: skip"
-      : "ENTER: route selection";
+    : takenIndex >= 0
+      ? "ENTER: continue"
+      : offers.length > 0
+        ? "1-3: take a card | ENTER: skip"
+        : "ENTER: route selection";
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - footer.length) / 2)),

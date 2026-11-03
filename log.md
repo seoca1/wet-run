@@ -2925,3 +2925,15 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **보류(Oracle 권고)**: select→confirm 모델(ADR-0243 대체 필요, 별도 ADR) · TARGET FIRST(`>` 마커 + `TARGET ICE` 로 충분).
 - **검증**: vitest **179 files / 3960 passed**(베이스라인 179/3956, 손패 효과 테스트 +4) · tsc 0 · eslint 0 errors · build PASS · 4채널 커버리지를 테스트가 고정 · 실플레이(ego-lite) 스크린샷으로 5행 렌더 확인.
 - **증거**: `docs/design/hand-effect-column-2026-11-03/` — 3레이아웃 before/after 캡처 + 폭 검사 + 밸런스/테스트/typecheck/lint/build 로그.
+
+## [2026-11-03] feat(gameplay) | wet_run ADR-0261 — 성장의 순간을 보여준다 (획득 3박자)
+
+- **오너 요청**: "성장에 대한 효과 이벤트나 표시가 있었으면 좋겠어. 재미 요소 중 하나라서 중요해."
+- **문제**: ADR-0259 가 카드 보상을 넣었지만 **획득의 순간이 보이지 않았다** — 카드가 즉시 덱에 들어가고 화면이 바로 넘어갔으며, 소리·시각 강조·멈춤이 없고 HUD 메시지 한 줄만 지나갔다. "성장하는 재미"가 오너가 중요하다 한 요소인데 정작 성장의 순간이 사건으로서 존재하지 않았다.
+- **3박자**: **① 소리** `SFX_IDS.EQUIP` — 정의·WAV 는 있는데 **한 번도 재생되지 않던** built-but-unwired id; 덱이 커지는 전환이 그것이 이름하는 사건이다(`pickEventSfx`). **② 멈춤** `takeCardReward` 가 더 이상 `continueToMatrix` 를 호출하지 않는다 — 획득 상태로 머물고 ENTER 가 진행한다(로그라이크의 "고르고, 진행"). **③ 표시** 고른 카드 `> 1 KRAKEN  ACQUIRED`(밝은 초록) · 나머지 둘 흐림(소진) · footer `ENTER: continue`. 도착지 메시지가 성장을 이어받는다: `Took Kraken. Choose an adjacent route — healed to 78/100`.
+- **저장 무결성**: 획득은 플레이어 선택이라 유도 불가 → `cardRewardTaken` 을 **선택 필드**로 추가(`currentNodeIndex`·`clearedEncounterNodes`·`bypassedEncounterNodes` 와 같은 패턴, `version` 1 유지). 재로드 시 **두 번째 획득 불가**(한 전투 한 장). 제시 목록은 `ownedIds` 가 taken 을 되돌려 **안정**(하나를 고르면 나머지 둘의 자리가 밀리지 않는다). loot 를 떠날 때 `null` 로 정리.
+  - ADR-0259 는 "새 영속 필드 없음"을 제약으로 삼았고, 이 ADR 은 **획득 박자를 위해 그 제약을 한 필드만큼 푼다** — 대가는 선택 필드 1개 + 검증 1줄, 이득은 저장 무결성과 재현 가능한 화면.
+- **금지 목록 준수**: 벽시계·입력 락·애니메이션 큐 없음(ADR-0251 §"이건 짓지 마라"). 박자는 플레이어의 ENTER 가 만든다.
+- **검증**: vitest **180 files / 3985 passed**(베이스라인 180/3978) · tsc 0 · eslint 0 · build PASS · 밸런스 **byte-identical**(opening 100.0/100.0/81.4/42.6/36.6/0.0 · PPL 100.0/100.0/99.3/84.1/44.4/27.3 — 표시·사운드 전용) · 3레이아웃 캡처 18케이스 그리드/HUD 초과 **0** · 실플레이(ego-lite) `1` = `loot`+`taken:"kraken"`+`"Acquired Kraken"` → ENTER = `matrix`+`taken:null`+`"Took Kraken."`, console error 0.
+- **증거**: `Game/wet_run/docs/design/growth-feedback-2026-11-03/` — 3레이아웃 캡처(제시/획득/종결) + 폭 검사 + 밸런스/테스트 로그.
+- **남은 항목**: (a) 도착지 강조는 아직 메시지 텍스트뿐 — 더 강조하려면 매트릭스 배너 밴드(별도 슬라이스) (b) 하네스가 성장을 모델링하지 않음 (c) 제시 카드 tier 가중치.

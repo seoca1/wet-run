@@ -37,13 +37,20 @@ export type RewardSource = Pick<
   | "mission"
   | "turnCount"
   | "currentNodeIndex"
+  | "cardRewardTaken"
 >;
 
-/** Every program object a run currently holds, hand and piles alike. */
+/**
+ * Every program the run holds, hand and piles alike — minus the card taken
+ * from this very offer. Keeping the taken card in the pool holds the offer
+ * steady, so taking one does not shuffle the other two.
+ */
 function ownedIds(state: RewardSource): ReadonlySet<string> {
-  return new Set(
+  const owned = new Set(
     [...state.deck, ...state.drawPile, ...state.discardPile].map((p) => p.id),
   );
+  if (state.cardRewardTaken) owned.delete(state.cardRewardTaken);
+  return owned;
 }
 
 /** The three program ids offered to whoever just won at this node. */

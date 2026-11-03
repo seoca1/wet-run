@@ -2970,7 +2970,9 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **수정(Option A, 최소)**: ① `applyDeathAction` 이 `confirm`/`jack_out` → `phase:"menu"`(runPhase 는 `dead` 유지) ② `runFailed(previous,next)` 판정 — 엔딩의 `runCompleted` 와 **같은 모양** ③ 죽음 화면에 `ENTER / ESC: return to title`(손패 자리, ADR-0251 §5) ④ `main.ts` 가 `runFailed` 이면 `state=null; screen="menu"`.
 - **`select_restart` 미재사용 이유**: `main_menu` 와 `same_jockey` 가 **둘 다** `phase:"menu", runPhase:"matrix"` 를 반환해 컨트롤러가 구분할 수 없고, `runPhase:"matrix"` 는 타이틀 대신 매트릭스를 그리게 한다.
 - **검증**: `run_end_save.test.ts`(runFailed 판정 8케이스 + main/combat_grid 소스 배선) · `combat_grid.test.ts`(3레이아웃 프롬프트 + 전투 중엔 없음). 3레이아웃 before/after 캡처(신규 `defeat` 케이스, 그리드 초과 **0**; HUD 초과는 before/after 동일한 **기존** 결함). 실브라우저 재현: 수정 전 8키 무반응 → **수정 후 `Enter` 로 탈출**.
-- **불변**: 밸런스 byte-identical · 죽음 프레임은 계속 저장(ADR-0252 §A `"write"` 유지) · ADR-0040 선택지/`lastDeathSummary`/`deceasedJockeys` 무변경.
+- **불변**: 밸런스 byte-identical · ADR-0040 선택지/`lastDeathSummary`/`deceasedJockeys` 무변경.
+- **관찰(수정 필요, 열린 질문)**: `autosaveIntent(dead)` 는 `"write"` 인데 **라이브에서는 죽음 프레임이 슬롯에 남지 않았다** — 잭아웃 사망 후 타이틀이 `CONTINUE (no save)`, `hasSaveCache=false`. 죽은 런은 다시 열리지 않는다. 원인(쓰기 실패/복원 거부/retire 의도)은 별도 조사.
+- **부수 발견**: 전투에서 COST(alarm)가 상한이면 프로그램이 전부 BLOCKED 이고 유일한 출구는 `ESC`(JACK OUT) → **런 실패** → 죽음 화면이다(설계 ADR-0240/0242). 플레이어가 막힌 지점이 정확히 이 조합이다.
 - **산출물**: `docs/wiki/decisions/0263-defeat-screen-must-be-escapable.md` + README 인덱스 · `docs/design/defeat-escape-2026-11-03/`(캡처 + 실브라우저 스크린샷).
 - **검증 수치**: vitest **181 files / 4014 tests passed** · tsc 0 · eslint 0 errors · build PASS.
 - **남은 항목**: (a) 죽음 시 슬롯 retire 여부(현재는 `CONTINUE` 가 죽은 런을 다시 연다) (b) ADR-0040 의 죽음 선택지 메뉴(`SAME JOCKEY`/`NEW JOCKEY`/`HALL OF DEAD`) 미배선 (c) 좁은 레이아웃 HUD 압착(기존).

@@ -56,6 +56,11 @@ export function runFailed(previous: GameState, next: GameState): boolean {
 /** Title-screen status line after a completed run (CONTINUE is then empty). */
 export const RUN_COMPLETE_MESSAGE = "Run complete. Autosave cleared.";
 
-/** Title-screen status line after a flatline. The dead frame is saved
- * (ADR-0252 §A: death frames are written), so CONTINUE still lists it. */
+/** Title-screen status line after a flatline.
+ *
+ * Live observation (ADR-0263): a death does *not* leave a resumable slot —
+ * after a jack-out death the title showed `CONTINUE (no save)` and
+ * `hasSaveCache` was false, even though `autosaveIntent` answers `"write"`
+ * for a dead frame. Whether the write lands is an open question, not a claim
+ * made here. */
 export const FLATLINE_MESSAGE = "Flatline — back at the title.";

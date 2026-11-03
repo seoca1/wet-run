@@ -404,7 +404,7 @@ describe("ADR-0263 — the defeat screen is escapable", () => {
     expect(key(ending, "confirm").phase).toBe("menu");
   });
 
-  it("still writes the dead frame (ADR-0252 §A: death is a saved frame)", async () => {
+  it("still reports a write intent for the dead frame (ADR-0252 §A)", async () => {
     const { autosaveIntent } = await runEnd();
     expect(autosaveIntent(dead())).toBe("write");
   });

@@ -18,6 +18,8 @@ export interface GraphicNovelView {
   readonly dialogueText: string | null;
   readonly progress: number;
   readonly isPaused: boolean;
+  /** ADR-0273: the chain finished — the screen offers the run that follows. */
+  readonly done?: boolean;
 }
 
 /** Original dialogue area and footer rows, including the 15-line page size. */
@@ -88,7 +90,9 @@ export function renderGraphicNovelScreen(
     grid,
     2,
     layout.hintY,
-    "ENTER: skip dialogue | P: pause | ESC: exit",
+    view.done === true
+      ? "ENTER: start a run | ESC: exit"
+      : "ENTER: continue | TAB: pause | ESC: exit",
     PALETTE.GRAY_DARK,
   );
 }

@@ -50,6 +50,7 @@ import { offeredCardIds, rewardProgram } from "./core/state/card_reward";
 import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
+import { tick as gnTick } from "./core/graphic_novel/graphic_novel_player";
 import type { ArcId } from "./core/combat/ending_resolver";
 import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
@@ -392,6 +393,7 @@ class Game {
         this.screen !== "settings" &&
         this.screen !== "dungeon" &&
         this.screen !== "pause" &&
+        this.screen !== "graphic_novel" &&
         this.state === null
       ) {
         this.handleStubInput(action);
@@ -423,6 +425,14 @@ class Game {
       if (this.screen === "dungeon") {
         this.handleDungeonInput(action);
         this.draw();
+        return;
+      }
+      // ADR-0273: the graphic novel is its own screen with its own keys. The
+      // renderer had always printed "ENTER: skip dialogue | P: pause | ESC:
+      // exit", but nothing routed them: the mode showed one frame and ENTER
+      // fell through to the menu, so the prologue could not be read at all.
+      if (this.screen === "graphic_novel") {
+        this.handleGraphicNovelInput(action);
         return;
       }
       if (this.state === null) {
@@ -763,23 +773,25 @@ class Game {
       void import("./renderer/graphic_novel_screen.ts").then(
         ({ renderGraphicNovelScreen }) => {
           if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
-          const state = this.graphicNovelState;
           const player = this.graphicNovelPlayer;
-          const scene = state.currentScene;
 
+          const live = gn.currentScene(player);
           const grid = renderGraphicNovelScreen(
             {
-              chapter: scene
+              chapter: live
                 ? {
-                    order: scene.order,
+                    order: live.order,
                     title: gn.currentTitle(player, this.gnLanguage),
                     speaker: gn.currentSpeaker(player, this.gnLanguage),
                   }
                 : null,
-              text: state.currentText,
+              // Read from the player, not from the snapshot taken at entry:
+              // the wall-clock tick advances it and the snapshot would be stale.
+              text: gn.currentText(player, this.gnLanguage),
               dialogueText: gn.currentDialogue(player)?.text_en ?? null,
               progress: gn.progress(player),
-              isPaused: state.isPaused,
+              isPaused: player.paused,
+              done: player.done,
             },
             this.layout.cols,
             this.layout.rows,
@@ -788,6 +800,58 @@ class Game {
         },
       );
     });
+  }
+
+  /** ADR-0273 — the graphic novel's keys, as its own footer promises. */
+  private handleGraphicNovelInput(action: GameAction): void {
+    const player = this.graphicNovelPlayer;
+    if (!player) {
+      this.exitGraphicNovel();
+      return;
+    }
+    if (action.type === "jack_out" || action.type === "cancel") {
+      this.exitGraphicNovel();
+      return;
+    }
+    if (action.type === "cycle_target") {
+      void loadStorySystem().then((gn) => {
+        gn.togglePause(player);
+        this.graphicNovelState = this.graphicNovelState
+          ? { ...this.graphicNovelState, isPaused: player.paused }
+          : this.graphicNovelState;
+        this.draw();
+      });
+      return;
+    }
+    if (action.type !== "confirm") return;
+    void loadStorySystem().then((gn) => {
+      if (this.graphicNovelPlayer !== player) return;
+      if (player.done) {
+        this.startRunFromGraphicNovel();
+        return;
+      }
+      // First press finishes the typed page, the next moves the story on.
+      if (!gn.isDialogueComplete(player)) gn.skipCurrentDialogue(player);
+      else if (!gn.advanceDialogue(player)) gn.advanceScene(player);
+      this.draw();
+    });
+  }
+
+  private exitGraphicNovel(): void {
+    this.graphicNovelPlayer = null;
+    this.graphicNovelState = null;
+    this.screen = "menu";
+    this.draw();
+  }
+
+  /** ADR-0273: the prologue's epilogue hands over to the run — "the next
+   * jack" is the player. The arc intro (ADR-0272) then opens the run. */
+  private startRunFromGraphicNovel(): void {
+    this.graphicNovelPlayer = null;
+    this.graphicNovelState = null;
+    this.screen = "mission_select";
+    this.selectedMission = 0;
+    this.draw();
   }
 
   private handlePreGameInput(action: GameAction): void {
@@ -1570,6 +1634,17 @@ class Game {
         this.idleSinceMs = Date.now();
     } else {
       this.idleSinceMs = Date.now();
+    }
+
+    // ADR-0273: the graphic novel plays on the wall clock, like every other
+    // display-only animation here. Redraw only when the story actually moved.
+    if (
+      this.screen === "graphic_novel" &&
+      this.state === null &&
+      this.graphicNovelPlayer !== null
+    ) {
+      const events = gnTick(this.graphicNovelPlayer, deltaMs);
+      if (events.length > 0) this.draw(false);
     }
 
     // Matrix traversal frames run on the wall clock; the last one restores

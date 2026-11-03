@@ -9,7 +9,7 @@ import { rowText } from "./view_fixtures";
 
 const view: GraphicNovelView = {
   chapter: { order: 4, title: "Night", speaker: "Case" },
-  text: "The sky above the port.",
+  text: "The port is quiet tonight.",
   dialogueText: null,
   progress: 0.236,
   isPaused: false,
@@ -37,7 +37,7 @@ describe("graphic novel screen", () => {
       "[PLAYING] Progress: 24%",
     );
     expect(rowText(grid, 49).slice(2).trimEnd()).toBe(
-      "ENTER: skip dialogue | P: pause | ESC: exit",
+      "ENTER: continue | TAB: pause | ESC: exit",
     );
   });
 
@@ -76,5 +76,16 @@ describe("graphic novel screen", () => {
     );
     expect(rowText(grid, 8).slice(2).trimEnd()).toBe("aaaa bbbb cccc");
     expect(rowText(grid, 9).slice(2).trimEnd()).toBe("dddd eeee");
+  });
+});
+
+describe("ADR-0273 — the graphic novel's exit key", () => {
+  it("offers the run that follows once the chain is done", () => {
+    const grid = renderGraphicNovelScreen({ ...view, done: true }, 80, 50);
+    const text = grid.cells
+      .map((r) => r.map((c) => c.char).join(""))
+      .join("\n");
+    expect(text).toContain("ENTER: start a run");
+    expect(text).not.toContain("ENTER: continue");
   });
 });

@@ -76,7 +76,9 @@ def game_strings() -> list[tuple[str, str]]:
             elif isinstance(item, list):
                 stack.extend(item)
     literal = re.compile(r'"((?:[^"\\]|\\.){40,})"')
-    for path in sorted(SRC.rglob("*.ts")):
+    # Tests count too: the rule is about the novels' words anywhere in the
+    # repo, and a fixture is where a quote tends to survive unremarked.
+    for path in sorted(list(SRC.rglob("*.ts")) + list((ROOT / "web/tests").rglob("*.ts"))):
         text = path.read_text(encoding="utf-8", errors="ignore")
         for i, line in enumerate(text.splitlines(), 1):
             if line.lstrip().startswith(("//", "*", "/*")):

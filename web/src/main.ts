@@ -183,6 +183,20 @@ function fallbackSettingsState(): import("./renderer/settings.ts").SettingsState
 }
 
 const loadStorySystem = () => import("./core/graphic_novel/graphic_novel.ts");
+
+/** Pre-game screens that handle their own keys (ADR-0275). A screen missing
+ * from this set is a stub: no run state, ENTER returns to the title. Adding a
+ * screen means adding it here, in one place, with a handler. */
+const SCREENS_WITH_INPUT: ReadonlySet<ScreenKind> = new Set([
+  "menu",
+  "mission_select",
+  "jockey_select",
+  "tutorial",
+  "settings",
+  "dungeon",
+  "pause",
+  "graphic_novel",
+]);
 const loadAudioSystemRaw = () => import("./audio/manager.ts");
 
 /** P9 render loop — maximum frame interval (ms) that still advances VFX.
@@ -390,17 +404,13 @@ class Game {
     document.addEventListener("visibilitychange", resetIdle);
     const handler = (action: GameAction): void => {
       resetIdle();
-      if (
-        this.screen !== "menu" &&
-        this.screen !== "mission_select" &&
-        this.screen !== "tutorial" &&
-        this.screen !== "settings" &&
-        this.screen !== "dungeon" &&
-        this.screen !== "pause" &&
-        this.screen !== "graphic_novel" &&
-        this.screen !== "jockey_select" &&
-        this.state === null
-      ) {
+      // Screens that own their input. This used to be an inline list of
+      // screens to *exclude*, so any screen someone forgot to add fell into
+      // `handleStubInput` and ENTER bounced to the menu -- which is exactly
+      // what happened to the graphic novel (ADR-0273) and then to the jockey
+      // select (ADR-0274) in the same session. Anything with no run state that
+      // is not in this set is a stub, by construction.
+      if (this.state === null && !SCREENS_WITH_INPUT.has(this.screen)) {
         this.handleStubInput(action);
         return;
       }

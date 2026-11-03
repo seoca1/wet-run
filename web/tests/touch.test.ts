@@ -18,7 +18,10 @@ import {
 
 // jsdom doesn't ship matchMedia — polyfill before tests run.
 beforeAll(() => {
-  if (typeof window !== "undefined" && typeof window.matchMedia !== "function") {
+  if (
+    typeof window !== "undefined" &&
+    typeof window.matchMedia !== "function"
+  ) {
     Object.defineProperty(window, "matchMedia", {
       value: (query: string) => ({
         matches: query.includes("coarse"),
@@ -107,9 +110,36 @@ describe("virtual gamepad overlay", () => {
 describe("program row (P12)", () => {
   // ADR-0251: the row is fed the same affordance rows the canvas draws.
   const DECK: ReadonlyArray<ProgramAffordance> = [
-    { slot: 1, programId: "backdoor", name: "BACKDOOR", cost: 2, after: 12, blocked: false, target: "ICE" },
-    { slot: 2, programId: "barrier", name: "BARRIER", cost: 3, after: 13, blocked: false, target: "ICE" },
-    { slot: 3, programId: "boost", name: "BOOST", cost: 2, after: 12, blocked: false, target: "ICE" },
+    {
+      slot: 1,
+      programId: "backdoor",
+      name: "BACKDOOR",
+      cost: 2,
+      after: 12,
+      blocked: false,
+      target: "ICE",
+      effectTag: "PIERCE 2",
+    },
+    {
+      slot: 2,
+      programId: "barrier",
+      name: "BARRIER",
+      cost: 3,
+      after: 13,
+      blocked: false,
+      target: "ICE",
+      effectTag: "SHIELD 2",
+    },
+    {
+      slot: 3,
+      programId: "boost",
+      name: "BOOST",
+      cost: 2,
+      after: 12,
+      blocked: false,
+      target: "ICE",
+      effectTag: "ATK +2",
+    },
   ];
 
   beforeAll(() => {
@@ -217,8 +247,26 @@ describe("program row (P12)", () => {
   it("labels each button with the canvas row's facts, visibly and for assistive tech (ADR-0251)", () => {
     const rows: ReadonlyArray<ProgramAffordance> = [
       ...DECK.slice(0, 2),
-      { slot: 3, programId: "sweep", name: "SWEEP", cost: 1, after: 11, blocked: false, target: "ALL ICE" },
-      { slot: 4, programId: "kraken", name: "KRAKEN", cost: 4, after: 104, blocked: true, target: "ICE" },
+      {
+        slot: 3,
+        programId: "sweep",
+        name: "SWEEP",
+        cost: 1,
+        after: 11,
+        blocked: false,
+        target: "ALL ICE",
+        effectTag: "",
+      },
+      {
+        slot: 4,
+        programId: "kraken",
+        name: "KRAKEN",
+        cost: 4,
+        after: 104,
+        blocked: true,
+        target: "ICE",
+        effectTag: "",
+      },
     ];
     const pressed: number[] = [];
     updateProgramRow(rows, (idx) => pressed.push(idx));
@@ -228,12 +276,16 @@ describe("program row (P12)", () => {
       const row = rows[i]!;
       expect(btn.dataset.handIndex).toBe(String(row.slot));
       expect(btn.getAttribute("aria-label")).toBe(affordanceAriaLabel(row));
-      const lines = Array.from(btn.querySelectorAll("span")).map((el) => el.textContent);
+      const lines = Array.from(btn.querySelectorAll("span")).map(
+        (el) => el.textContent,
+      );
       expect(lines).toEqual([...touchAffordanceLines(row)]);
     });
     expect(buttons[3]?.textContent).toContain("BLOCKED");
     expect(buttons[2]?.getAttribute("aria-label")).toContain("ALL ICE");
-    buttons[3]?.dispatchEvent(new Event("pointerdown", { bubbles: true, cancelable: true }));
+    buttons[3]?.dispatchEvent(
+      new Event("pointerdown", { bubbles: true, cancelable: true }),
+    );
     expect(pressed).toEqual([4]);
   });
 

@@ -190,13 +190,37 @@ describe("row text", () => {
       combat(38, [], [program("strike", 3), program("split", 8, true)]),
     );
     expect(rows.map(formatAffordanceRow)).toEqual([
-      "1 STRIKE    COST +3          TARGET ICE",
-      "2 SPLIT     COST +8          TARGET ALL ICE",
+      "1 STRIKE    COST +3             TARGET ICE",
+      "2 SPLIT     COST +8             TARGET ALL ICE",
     ]);
     const blocked = programAffordances(combat(95, [], [program("wisp", 8)]));
     expect(formatAffordanceRow(blocked[0]!)).toBe(
-      "1 WISP      COST +8  BLOCKED TARGET ICE",
+      "1 WISP      COST +8   BLOCKED   TARGET ICE",
     );
+  });
+
+  it("states the card's effect so the player can choose deliberately (ADR-0257)", () => {
+    const rows = programAffordances(
+      combat(38, [], [program("barrier", 3), program("strike", 3)]),
+    );
+    // A card with an effect names it; a plain attack leaves the column blank.
+    expect(formatAffordanceRow(rows[0]!)).toBe(
+      "1 BARRIER   COST +3   SHIELD 2  TARGET ICE",
+    );
+    expect(formatAffordanceRow(rows[1]!)).toBe(
+      "2 STRIKE    COST +3             TARGET ICE",
+    );
+    expect(rows[0]!.effectTag).toBe("SHIELD 2");
+    expect(rows[1]!.effectTag).toBe("");
+  });
+
+  it("gives up the effect column to BLOCKED, since a refused card does nothing", () => {
+    const [blocked] = programAffordances(
+      combat(95, [], [program("barrier", 8)]),
+    );
+    expect(blocked!.effectTag).toBe("SHIELD 2");
+    expect(formatAffordanceRow(blocked!)).toContain("BLOCKED");
+    expect(formatAffordanceRow(blocked!)).not.toContain("SHIELD");
   });
 
   it("narrow rows line up under their legend and keep every fact", () => {
@@ -208,7 +232,7 @@ describe("row text", () => {
       ),
     );
     const lines = rows.map(formatCompactAffordanceRow);
-    expect(COMPACT_HAND_HEADER).toBe("HAND        COST          TARGET");
+    expect(COMPACT_HAND_HEADER).toBe("HAND        COST EFFECT   TARGET");
     expect(lines).toEqual([
       "1 STRIKE    +4            ICE",
       "2 SPLIT     +6   BLOCKED  ALL ICE",
@@ -240,6 +264,25 @@ describe("row text", () => {
   });
 });
 
+describe("the effect reaches every hand channel (ADR-0257)", () => {
+  it("names the effect in the canvas row, the touch button and the spoken label", () => {
+    const [barrier] = programAffordances(
+      combat(38, [], [program("barrier", 3)]),
+    );
+    expect(formatAffordanceRow(barrier!)).toContain("SHIELD 2");
+    expect(formatCompactAffordanceRow(barrier!)).toContain("SHIELD 2");
+    expect(touchAffordanceLines(barrier!)).toContain("SHIELD 2");
+    expect(affordanceAriaLabel(barrier!)).toContain("SHIELD 2");
+  });
+
+  it("leaves a plain attack's effect column blank everywhere", () => {
+    const [strike] = programAffordances(combat(38, [], [program("strike", 3)]));
+    expect(touchAffordanceLines(strike!)[2]).toBe("");
+    expect(affordanceAriaLabel(strike!)).not.toContain("PIERCE");
+    expect(affordanceAriaLabel(strike!)).not.toContain("SHIELD");
+  });
+});
+
 describe("touch label = canvas semantics", () => {
   it("states slot, name, COST, outcome and target", () => {
     const [ok, aoe] = programAffordances(
@@ -252,7 +295,7 @@ describe("touch label = canvas semantics", () => {
       "ICE",
     ]);
     expect(affordanceAriaLabel(aoe!)).toBe(
-      "2 SPLIT, COST plus 8, cost on the card, target ALL ICE",
+      "2 SPLIT, COST plus 8, target ALL ICE",
     );
     const [blocked] = programAffordances(combat(95, [], [program("wisp", 8)]));
     expect(touchAffordanceLines(blocked!)).toEqual([

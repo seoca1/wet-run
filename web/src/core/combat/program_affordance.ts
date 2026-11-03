@@ -17,6 +17,7 @@
  * Pure: no `Math.random`, no clock, no DOM.
  */
 import type { GameState, Program } from "../types";
+import { programEffectTag } from "./program_effects";
 import type { RunMutator } from "../state/run_mutators";
 
 /** COST cap: a play that would take COST above this is refused. */
@@ -57,6 +58,10 @@ export interface ProgramAffordance {
   /** True when the play would exceed `COST_LIMIT` and is refused. */
   readonly blocked: boolean;
   readonly target: "ICE" | "ALL ICE";
+  /** ADR-0257: what this card does besides damage, ≤ 8 chars. Empty for a
+   * plain attack. Read from the mechanic (program_effects.ts), so the row
+   * cannot claim an effect the reducer does not apply. */
+  readonly effectTag: string;
 }
 
 /** Affordance rows for the current hand, in slot order. */
@@ -74,12 +79,16 @@ export function programAffordances(
       after,
       blocked: after > COST_LIMIT,
       target: programHitsAllIce(program) ? "ALL ICE" : "ICE",
+      effectTag: programEffectTag(program),
     };
   });
 }
 
-function afterText(a: ProgramAffordance): string {
-  return a.blocked ? "BLOCKED" : "";
+/** The effect column of a hand row: the card's effect, or `BLOCKED` when the
+ * play is refused (a refused card's effect cannot happen, so it does not
+ * claim the space). */
+function effectText(a: ProgramAffordance): string {
+  return a.blocked ? "BLOCKED" : a.effectTag;
 }
 
 /**
@@ -96,23 +105,23 @@ function afterText(a: ProgramAffordance): string {
 export function formatAffordanceRow(a: ProgramAffordance): string {
   const name = a.name.padEnd(NAME_WIDTH);
   const cost = `+${a.cost}`.padEnd(3);
-  const blocked = afterText(a).padEnd(7);
-  return `${a.slot} ${name} COST ${cost} ${blocked} TARGET ${a.target}`;
+  const effect = effectText(a).padEnd(8);
+  return `${a.slot} ${name} COST ${cost}  ${effect}  TARGET ${a.target}`;
 }
 
-/** Narrow canvas row, e.g. `1 STRIKE    +3   ICE`; its columns line
+/** Narrow canvas row, e.g. `1 BARRIER   +3   SHIELD 2 ICE`; its columns line
  * up under `COMPACT_HAND_HEADER`, which names them. */
 export function formatCompactAffordanceRow(a: ProgramAffordance): string {
   const name = a.name.padEnd(NAME_WIDTH);
   const cost = `+${a.cost}`.padEnd(4);
-  const blocked = afterText(a).padEnd(8);
-  return `${a.slot} ${name} ${cost} ${blocked} ${a.target}`;
+  const effect = effectText(a).padEnd(8);
+  return `${a.slot} ${name} ${cost} ${effect} ${a.target}`;
 }
 
 /** Column legend for the narrow rows. */
-export const COMPACT_HAND_HEADER = `${"HAND".padEnd(NAME_WIDTH + 3)}${"COST".padEnd(5)}${"".padEnd(9)}TARGET`;
+export const COMPACT_HAND_HEADER = `${"HAND".padEnd(NAME_WIDTH + 3)}${"COST".padEnd(5)}${"EFFECT".padEnd(9)}TARGET`;
 
-/** Longest full row a hand can produce (two-digit COST, `100/100`, `ALL ICE`). */
+/** Longest full row a hand can produce (two-digit COST, `SHIELD 2`, `ALL ICE`). */
 export const FULL_ROW_WIDTH = formatAffordanceRow({
   slot: 9,
   programId: "",
@@ -121,6 +130,7 @@ export const FULL_ROW_WIDTH = formatAffordanceRow({
   after: COST_LIMIT,
   blocked: false,
   target: "ALL ICE",
+  effectTag: "SHIELD 2",
 }).length;
 
 /** Visible lines of a touch button (narrow enough for five in a phone row). */
@@ -128,17 +138,20 @@ export function touchAffordanceLines(a: ProgramAffordance): readonly string[] {
   return [
     `${a.slot} COST+${a.cost}`,
     a.name,
-    a.blocked ? "BLOCKED" : "",
+    a.blocked ? "BLOCKED" : a.effectTag,
     a.target,
   ];
 }
 
 /** Spoken label for a touch button; says the same facts as the canvas row. */
 export function affordanceAriaLabel(a: ProgramAffordance): string {
-  const outcome = a.blocked
-    ? `blocked, over ${COST_LIMIT}`
-    : "cost on the card";
-  return `${a.slot} ${a.name}, COST plus ${a.cost}, ${outcome}, target ${a.target}`;
+  // ADR-0257: the spoken label carries the effect too, so a screen reader
+  // gets the same information as the row.
+  if (a.blocked) {
+    return `${a.slot} ${a.name}, COST plus ${a.cost}, blocked, over ${COST_LIMIT}, target ${a.target}`;
+  }
+  const effect = a.effectTag ? `, ${a.effectTag}` : "";
+  return `${a.slot} ${a.name}, COST plus ${a.cost}${effect}, target ${a.target}`;
 }
 
 /** Row of the hand header in the combat grid. The list below it holds

@@ -2913,3 +2913,15 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **검증**: vitest **179 files / 3956 passed**(베이스라인 178/3948) · tsc 0 · eslint 0 errors · build PASS · 효과 테스트 7건 신규(관통 상한·평범한 카드 효과 없음 포함) · 카탈로그 텍스트 테스트가 "설명문이 기계에서 파생됨"을 고정 · `balance_sim.test.ts` 가 새 기준선 고정.
 - **증거**: `docs/design/card-effects-2026-11-03/` — 밸런스 출력 2종 + 테스트/typecheck/lint/build 로그.
 - **남은 항목(오너 결정)**: (a) **오프닝 손패 구성** — 5장 중 4장이 지원 카드여서 g2·g3 이 100% 로 오른 증폭 원인이었다. 공격 3 + 지원 2 로 큐레이션하면 곡선 이동이 줄고 도입도 나아진다 (b) 나머지 25개 프로그램의 효과 배선 (c) 결정타 COST 0 규칙의 화면 안내 위치.
+
+## [2026-11-03] feat(combat) | ADR-0257 손패 효과 열 — 카드가 무엇을 하는지 화면이 말한다
+
+- **계기**: 오너 요청("upgrade battle interaction"). Oracle 합성이 전투 UI 축1 1순위를 `PROGRAM INSPECT`(정보 계층)로 정했으나, 전제였던 "모든 프로그램이 같은 피해 경로" 때문에 보류 상태였다. **ADR-0255 가 효과를 실재로 만들자 그 전제가 풀렸다.**
+- **빈 열**: ADR-0254 가 거짓 예측 표기(`→ N/100`)를 걷어내며 손패 행에 빈 열이 생겼다. 그 열이 정확히 효과가 들어갈 자리였다.
+- **구현**: 손패 행에 효과 태그 — `PIERCE 2` · `SHIELD 2` · `ATK +2` · `EVADE 15%` · `DECOY 50%`. 4채널 커버(캔버스 full/compact·터치 버튼·aria-label) + 40×60 헤더 `EFFECT` 열. **BLOCKED 우선** — 상한 초과로 거절되는 카드는 효과 대신 BLOCKED(거절된 카드의 효과는 일어날 수 없으므로).
+- **파생**: 태그는 `program_effects.ts` 한 표에서 온다 — 라벨·설명문·리듀서와 같은 진실이라 행이 적용되지 않는 효과를 주장할 수 없다(규칙 5).
+- **폭 검사**: 80×50 텍스트폭 75 · 60×40 55 · 40×60 35 → full 최대 46 / compact 최대 33, **그리드 초과 0**(3레이아웃). 태그를 ≤9자로 유지한 이유가 40×60 폭 35자. HUD 초과 24/23 은 before/after 동일한 **기존 결함**(ADR-0254 (c)).
+- **표시 전용 확인**: 밸런스 **byte-identical**(opening 100.0/100.0/97.5/53.4/44.1/0.3 · PPL 100.0/100.0/99.3/84.1/44.4/27.3 — ADR-0256 기준선) · 리듀서·RNG·상태 스키마 무변경.
+- **보류(Oracle 권고)**: select→confirm 모델(ADR-0243 대체 필요, 별도 ADR) · TARGET FIRST(`>` 마커 + `TARGET ICE` 로 충분).
+- **검증**: vitest **179 files / 3960 passed**(베이스라인 179/3956, 손패 효과 테스트 +4) · tsc 0 · eslint 0 errors · build PASS · 4채널 커버리지를 테스트가 고정 · 실플레이(ego-lite) 스크린샷으로 5행 렌더 확인.
+- **증거**: `docs/design/hand-effect-column-2026-11-03/` — 3레이아웃 before/after 캡처 + 폭 검사 + 밸런스/테스트/typecheck/lint/build 로그.

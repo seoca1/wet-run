@@ -11,12 +11,12 @@ import {
 
 describe("ending_resolver", () => {
   describe("ENDINGS constant", () => {
-    it("has exactly 29 endings", () => {
-      expect(ENDINGS.length).toBe(29);
+    it("has exactly 32 endings (ADR-0271)", () => {
+      expect(ENDINGS.length).toBe(32);
     });
 
     it("covers all 5 arcs", () => {
-      const arcs = new Set(ENDINGS.map(e => e.arc));
+      const arcs = new Set(ENDINGS.map((e) => e.arc));
       expect(arcs.size).toBe(5);
       expect(arcs.has(1)).toBe(true);
       expect(arcs.has(2)).toBe(true);
@@ -26,7 +26,7 @@ describe("ending_resolver", () => {
     });
 
     it("all endings have unique IDs", () => {
-      const ids = ENDINGS.map(e => e.id);
+      const ids = ENDINGS.map((e) => e.id);
       const uniqueIds = new Set(ids);
       expect(uniqueIds.size).toBe(ids.length);
     });
@@ -69,31 +69,31 @@ describe("ending_resolver", () => {
     it("Arc 1 has 7 endings", () => {
       const arc1 = getEndingsForArc(1);
       expect(arc1.length).toBe(7);
-      expect(arc1.every(e => e.arc === 1)).toBe(true);
+      expect(arc1.every((e) => e.arc === 1)).toBe(true);
     });
 
-    it("Arc 2 has 6 endings", () => {
+    it("Arc 2 has 7 endings", () => {
       const arc2 = getEndingsForArc(2);
-      expect(arc2.length).toBe(6);
-      expect(arc2.every(e => e.arc === 2)).toBe(true);
+      expect(arc2.length).toBe(7);
+      expect(arc2.every((e) => e.arc === 2)).toBe(true);
     });
 
     it("Arc 3 has 6 endings", () => {
       const arc3 = getEndingsForArc(3);
       expect(arc3.length).toBe(6);
-      expect(arc3.every(e => e.arc === 3)).toBe(true);
+      expect(arc3.every((e) => e.arc === 3)).toBe(true);
     });
 
-    it("Arc 4 has 5 endings", () => {
+    it("Arc 4 has 6 endings", () => {
       const arc4 = getEndingsForArc(4);
-      expect(arc4.length).toBe(5);
-      expect(arc4.every(e => e.arc === 4)).toBe(true);
+      expect(arc4.length).toBe(6);
+      expect(arc4.every((e) => e.arc === 4)).toBe(true);
     });
 
-    it("Arc 5 has 5 endings", () => {
+    it("Arc 5 has 6 endings", () => {
       const arc5 = getEndingsForArc(5);
-      expect(arc5.length).toBe(5);
-      expect(arc5.every(e => e.arc === 5)).toBe(true);
+      expect(arc5.length).toBe(6);
+      expect(arc5.every((e) => e.arc === 5)).toBe(true);
     });
   });
 
@@ -127,16 +127,16 @@ describe("ending_resolver", () => {
     it("returns correct count per arc", () => {
       const counts = getEndingCounts();
       expect(counts[1]).toBe(7);
-      expect(counts[2]).toBe(6);
+      expect(counts[2]).toBe(7);
       expect(counts[3]).toBe(6);
-      expect(counts[4]).toBe(5);
-      expect(counts[5]).toBe(5);
+      expect(counts[4]).toBe(6);
+      expect(counts[5]).toBe(6);
     });
 
-    it("total count equals 29", () => {
+    it("total count equals 32", () => {
       const counts = getEndingCounts();
       const total = counts[1] + counts[2] + counts[3] + counts[4] + counts[5];
-      expect(total).toBe(29);
+      expect(total).toBe(32);
     });
   });
 
@@ -233,7 +233,7 @@ describe("ending_resolver", () => {
         choices: [],
       };
       const arcEndings = getEndingsForArc(2);
-      const choiceEnding = arcEndings.find(e => e.requiresChoice);
+      const choiceEnding = arcEndings.find((e) => e.requiresChoice);
       if (choiceEnding) {
         const ctxWithChoice: EndingContext = {
           ...ctx,
@@ -256,7 +256,7 @@ describe("ending_resolver", () => {
         choices: [],
       };
       const arcEndings = getEndingsForArc(3);
-      const factionEnding = arcEndings.find(e => e.requiresFaction);
+      const factionEnding = arcEndings.find((e) => e.requiresFaction);
       if (factionEnding) {
         const ctxWithFaction: EndingContext = {
           ...ctx,
@@ -401,7 +401,7 @@ describe("ending_resolver", () => {
         choices: [],
       };
       const arcEndings = getEndingsForArc(3);
-      const factionEnding = arcEndings.find(e => e.requiresFaction);
+      const factionEnding = arcEndings.find((e) => e.requiresFaction);
       if (factionEnding) {
         const ctxWithFaction: EndingContext = {
           ...ctx,
@@ -424,7 +424,7 @@ describe("ending_resolver", () => {
         choices: [],
       };
       const arcEndings = getEndingsForArc(3);
-      const factionEnding = arcEndings.find(e => e.requiresFaction);
+      const factionEnding = arcEndings.find((e) => e.requiresFaction);
       if (factionEnding) {
         const ctxWithFaction: EndingContext = {
           ...ctx,

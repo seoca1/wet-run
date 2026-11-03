@@ -106,7 +106,10 @@
 - 최종 의뢰: T-A / Straylight / Zion 등
 - 플레이어의 누적 world state에 따라 결과 분기
 - "최종 의뢰"는 4개 variants 중 하나
-- 엔딩은 **29개** (v1.4.0): 9 자키 × A/B/C ending + Salvation Phase 통합 (ADR-0090, ADR-0192)
+- 엔딩은 **32개** (v1.4.1): 9 자키 × A/B/C ending + Salvation Phase 통합 (ADR-0090, ADR-0192).
+  v1.4.1 (ADR-0271): **arc 2·4 에 `status_quo`, arc 5 에 `control` 엔딩 추가** — 없어서 평범한 런이 배열 0번
+  (`arc2_ghost_dancer` / `arc4_liberation_front`) 으로 떨어졌고, 미션 하나 끝낸 런이
+  "The AIs are free" 로 끝났다.
 
 **주요 이벤트 (ADR-0013)**:
 - "3Jane's Shadow" (construct) — 3Jane 등장, special construct

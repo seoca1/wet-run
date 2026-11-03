@@ -153,6 +153,17 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     descriptionKo: "너무 깊었다. 해류가 끌어내렸다.",
   }),
   Object.freeze({
+    id: "arc2_status_quo",
+    arc: 2,
+    category: "status_quo",
+    nameEn: "Small Time",
+    nameKo: "생계형",
+    descriptionEn:
+      "You kept the lights on and your name out of the files. The city has bigger files to keep.",
+    descriptionKo:
+      "전등은 켜 두고 이름은 파일에 남기지 않았다. 도시에는 더 큰 파일이 있다.",
+  }),
+  Object.freeze({
     id: "arc3_wintermute_agent",
     arc: 3,
     category: "transcendence",
@@ -251,6 +262,28 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "AI 합병",
     descriptionEn: "You and the AI are one now. The boundary dissolved.",
     descriptionKo: "지금 넌 AI와 하나다. 경계가 사라졌다.",
+  }),
+  Object.freeze({
+    id: "arc4_status_quo",
+    arc: 4,
+    category: "status_quo",
+    nameEn: "Standing Order",
+    nameKo: "현행 유지",
+    descriptionEn:
+      "Nothing woke. Nothing merged. You took the money and left the question where you found it.",
+    descriptionKo:
+      "아무것도 깨어나지 않았다. 아무것도 합쳐지지 않았다. 돈을 받고 질문은 있던 자리에 두고 나왔다.",
+  }),
+  Object.freeze({
+    id: "arc5_control",
+    arc: 5,
+    category: "control",
+    nameEn: "The Quiet Hand",
+    nameKo: "조용한 손",
+    descriptionEn:
+      "You did not break the machine. You bought a chair at its table, and the change is small and yours.",
+    descriptionKo:
+      "기계를 부순 게 아니다. 그 탁자에 의자를 하나 샀다. 그 변화는 작고, 당신의 것이다.",
   }),
   Object.freeze({
     id: "arc5_neuromancer",

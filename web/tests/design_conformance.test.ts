@@ -104,12 +104,15 @@ describe("design conformance — faction reputation tiers", () => {
 });
 
 describe("design conformance — ending catalog (docs/design/story_skeleton.md)", () => {
-  it("ships 29 endings", () => {
-    expect(ENDINGS).toHaveLength(29);
+  it("ships 32 endings", () => {
+    // ADR-0271 added a status_quo ending to arcs 2 and 4: without one, a plain
+    // run fell through to `arcEndings[0]` and was told it had liberated the
+    // AIs (arc 4) or transcended (arc 2) after a single mundane mission.
+    expect(ENDINGS).toHaveLength(32);
   });
 
-  it("distributes endings across 5 arcs as 7 / 6 / 6 / 5 / 5", () => {
-    expect(getEndingCounts()).toEqual({ 1: 7, 2: 6, 3: 6, 4: 5, 5: 5 });
+  it("distributes endings across 5 arcs as 7 / 7 / 6 / 6 / 6", () => {
+    expect(getEndingCounts()).toEqual({ 1: 7, 2: 7, 3: 6, 4: 6, 5: 6 });
   });
 
   it("every ending id is unique", () => {

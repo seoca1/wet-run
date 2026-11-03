@@ -37,6 +37,10 @@ HEAL applied → 100/100                       ENTER: continue
 | `*-width-check.json` | 그리드/HUD 초과 검사 — 신규 케이스 전부 **초과 0** |
 | `capture-receipt.json` | 캡처 방법(실제 `AsciiRenderer`, 10×18 셀, before=HEAD) |
 | `live/`, `live-rm/` | **실플레이** 스크린샷·로그 (preview 5195, 독립 headless Chromium) |
+| `live/growth-reveal-live.gif` | **ego lite 브라우저에서 실제로 플레이한 화면**의 움직임 (제안 → 카드 획득 → 커밋 패널 정착 → ENTER → 도착 노트 → 소멸) |
+| `live/ego-*.png` | 그 실플레이의 정지 프레임 (제안 / 커밋 패널 정착 / 매트릭스 도착 노트) |
 
 `before` 는 HEAD(ADR-0261 시점), `after` 는 작업 트리다.
 `live/` 는 기본 모드, `live-rm/` 은 reduced-motion 재실행이다.
+`live/growth-reveal-live.gif` 와 `ego-*.png` 는 **ego lite(실제 브라우저)에서 키보드로 직접 플레이**해 얻었다 —
+주사위 상태 조작 없이 실제 전투를 이겨 loot 화면에 도달했다.

@@ -97,6 +97,10 @@ HEAL applied → 100/100                       ENTER: continue
   → 단계 정착 → ENTER **9ms** 로 매트릭스 → 도착 노트 같은 이름 → +0.6s 표시 → +2.0s 소멸, 입력 살아있음
   (경로 선택됨) → **PASS**. reduced-motion 재실행: 커밋 패널은 **최종 문구로 즉시** 표시, 도착 노트 없음 → **PASS**.
   스크린샷·로그: `docs/design/growth-reveal-2026-11-03/live/`, `.../live-rm/`.
+- **실브라우저 직접 플레이(ego lite)**: 주사위 상태 조작 없이 **실제 전투를 키보드로 이겨** loot 화면에 도달 →
+  카드 획득 → 커밋 패널 정착 → ENTER → 매트릭스 도착 노트 → 소멸. 움직임을 GIF 로 기록:
+  [`live/growth-reveal-live.gif`](../../design/growth-reveal-2026-11-03/live/growth-reveal-live.gif)
+  (정지 프레임 `live/ego-*.png`).
 - vitest **181 files / 4006 tests passed** · tsc 0 · eslint 0 errors · build PASS.
 
 **Notes**:

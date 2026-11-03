@@ -81,7 +81,9 @@ export type MotionKind =
   | "flash"
   | "floating_damage"
   /** The Matrix board's corridor traversal after a confirmed move. */
-  | "travel";
+  | "travel"
+  /** ADR-0262: the staged reveal when a card joins the deck. */
+  | "reveal";
 
 /** Narrow a string to a `ColorblindMode`. */
 export function isColorblindMode(value: string): value is ColorblindMode {
@@ -139,7 +141,8 @@ export function suppressMotion(
     kind === "hit_stop" ||
     kind === "flash" ||
     kind === "floating_damage" ||
-    kind === "travel"
+    kind === "travel" ||
+    kind === "reveal"
   );
 }
 

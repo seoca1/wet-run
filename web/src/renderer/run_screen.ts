@@ -6,6 +6,7 @@ import { renderGrid } from "./combat_grid";
 import { groupStatusByTarget } from "./status_hud";
 import { buildHudLines } from "../core/state/state";
 import { isTerminalNode } from "../core/state/run_end";
+import type { GrowthReveal } from "./growth_reveal";
 import { offeredCardIds, rewardProgram } from "../core/state/card_reward";
 import { formatRewardOption } from "../core/combat/program_affordance";
 import { ENDINGS } from "../core/combat/ending_resolver";
@@ -41,6 +42,7 @@ export function renderRunScreen(
   rows: number,
   matrixEntryHint = false,
   matrixTravel: MatrixTravelFrame | null = null,
+  growth: GrowthReveal | null = null,
 ): ScreenView | null {
   const layout = runScreenLayout(cols, rows);
   switch (state.runPhase) {
@@ -69,6 +71,9 @@ export function renderRunScreen(
           "MATRIX",
           "",
           `Node ${state.currentNodeIndex + 1}/${matrix.nodes.length}`,
+          // ADR-0262: the arrival note — the board otherwise never shows the
+          // growth, so the card is named while the runner is back in play.
+          ...(growth?.arrivalLines ?? []),
         ],
       };
     }
@@ -113,6 +118,7 @@ export function renderRunScreen(
           terminal,
           offers,
           takenIndex,
+          growth?.lootCommit ?? null,
         ),
         // Only ENTER does anything on the loot screen: `applyLootAction`
         // ignores cancel and the move keys, so promising "↑↓: navigate" or

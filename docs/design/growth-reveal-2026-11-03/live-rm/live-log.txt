@@ -1,0 +1,9 @@
+출발: runPhase=matrix
+경로 도착: node 18 (ICE)
+전투 승리 → loot 화면
+카드 획득 직후: lootCommit=true slot=1 name=Virus
+정착: lootCommit=true name=Virus (runPhase=loot)
+ENTER 즉시 (9ms): runPhase=matrix arrival=false name=null
++0.6s: arrival=false
++2.0s: arrival=false (사라져야 함), selected=16 (입력 살아있음)
+RESULT: PASS

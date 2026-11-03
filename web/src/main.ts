@@ -37,6 +37,17 @@ import {
 } from "./core/combat/program_affordance";
 import { idleAlarmAction } from "./core/combat/idle_alarm";
 import { startingDeck } from "./core/state/starting_deck";
+import {
+  beginLootCommit,
+  beginMatrixArrival,
+  lootCommitStage,
+  matrixArrivalActive,
+  resolveGrowthReveal,
+  type LootCommit,
+  type MatrixArrival,
+} from "./renderer/growth_reveal";
+import { offeredCardIds, rewardProgram } from "./core/state/card_reward";
+import { programEffectTag } from "./core/combat/program_effects";
 import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
@@ -256,6 +267,14 @@ class Game {
    * never on `GameState`, so it is neither saved nor seen by the reducer.
    * Null under reduced motion, and replaced by the next input. */
   private matrixTravel: MatrixTravel | null = null;
+  /** ADR-0262 — display-only growth reveal. Controller-owned and transient:
+   * never on `GameState`, so it cannot reach a save, the reducer or the
+   * harness. The `matrixTravel` pattern, applied to a card joining the deck. */
+  private lootCommit: LootCommit | null = null;
+  private matrixArrival: MatrixArrival | null = null;
+  /** The commit stage last drawn — the loop redraws only when the clock
+   * pushes the panel to a new stage, then stops (ADR-0262). */
+  private lootCommitStageShown = -1;
   /** ADR-0252: slot-0 writes and the retirement run in order. */
   private persistQueue: Promise<void> = Promise.resolve();
   private lastPersistedState: GameState | null = null;
@@ -430,6 +449,8 @@ class Game {
         // JACK OUT ends the run: leave the board for the main menu.
         this.state = null;
         this.matrixTravel = null;
+        this.lootCommit = null;
+        this.matrixArrival = null;
         this.screen = "menu";
         void this.refreshSaveCache();
         this.draw();
@@ -439,6 +460,8 @@ class Game {
         // ADR-0252: the ending is the end. The slot was retired on arrival.
         this.state = null;
         this.matrixTravel = null;
+        this.lootCommit = null;
+        this.matrixArrival = null;
         this.screen = "menu";
         this._message = RUN_COMPLETE_MESSAGE;
         this.persistQueue = this.persistQueue
@@ -455,6 +478,7 @@ class Game {
         performance.now(),
         this.reducedMotion,
       );
+      this.syncGrowthReveal(previous, this.state);
       void loadAudioSystem().then((audio) => {
         if (!audio) return;
         const manager = audio.AudioManager.getInstance();
@@ -1156,6 +1180,9 @@ class Game {
   private launchSelected(): void {
     const mission = MISSIONS[this.selectedMission];
     if (!mission) return;
+    // A fresh run carries no reveal from the previous one (ADR-0262).
+    this.lootCommit = null;
+    this.matrixArrival = null;
     const programs = PROGRAMS;
     const deck = startingDeck(programs);
     const ice = missionIce(mission, this.iceTypes);
@@ -1244,6 +1271,15 @@ class Game {
       );
       // A traversal frame (visual only) replaces the board for ~220 ms.
       const travel = matrixTravelFrame(this.matrixTravel, performance.now());
+      const growth = resolveGrowthReveal(
+        this.lootCommit,
+        this.matrixArrival,
+        performance.now(),
+        this.reducedMotion,
+      );
+      // Remember which commit stage this frame drew, so the loop can tell
+      // when the clock has moved the panel on (ADR-0262).
+      this.lootCommitStageShown = growth?.lootCommit?.stage ?? -1;
       const view =
         travel === null
           ? renderRunScreen(
@@ -1251,6 +1287,8 @@ class Game {
               this.layout.cols,
               this.layout.rows,
               shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
+              null,
+              growth,
             )
           : renderRunScreen(
               this.state,
@@ -1258,6 +1296,7 @@ class Game {
               this.layout.rows,
               shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
               travel,
+              growth,
             );
       if (view) this.renderer.render(view.grid, view.hud);
       return;
@@ -1491,6 +1530,27 @@ class Game {
       if (this.state !== null) this.draw(false);
     }
 
+    // ADR-0262 — the arrival note is a display-only window on the clock;
+    // when it lapses the board redraws without it. No input is affected.
+    if (
+      this.matrixArrival !== null &&
+      !matrixArrivalActive(this.matrixArrival, now)
+    ) {
+      this.matrixArrival = null;
+      if (this.state !== null) this.draw(false);
+    }
+
+    // ADR-0262 — the commit panel steps through its fixed stages on the
+    // clock. Redraw only when the clock moves it to a new stage, so it
+    // settles into its final frame and then stops (no per-frame churn).
+    if (
+      this.lootCommit !== null &&
+      lootCommitStage(this.lootCommit, now, this.reducedMotion) !==
+        this.lootCommitStageShown
+    ) {
+      if (this.state !== null) this.draw(false);
+    }
+
     // P12 — expire the touch press acknowledgement on the wall clock. This
     // runs before the VFX early-return so the acknowledgement clears even
     // when no VFX instance is alive.
@@ -1580,8 +1640,45 @@ class Game {
   handleRewardButton(handIndex: number): void {
     this.idleSinceMs = Date.now();
     if (this.state === null || this.state.runPhase !== "loot") return;
+    const previous = this.state;
     this.state = applyAction(this.state, { type: "select_program", handIndex });
+    // ADR-0262: the touch reward path must stage the commit like the digit
+    // path does, or a touch player gets the old colour-only change.
+    this.syncGrowthReveal(previous, this.state);
     this.draw(false);
+  }
+
+  /**
+   * ADR-0262: derive the growth reveal from a (previous → next) state pair,
+   * the same way `beginMatrixTravel` derives the traversal. Pure bookkeeping
+   * on the controller: no reducer state, no RNG, no input lock.
+   */
+  private syncGrowthReveal(previous: GameState, next: GameState): void {
+    const now = performance.now();
+    if (
+      next.cardRewardTaken &&
+      next.cardRewardTaken !== previous.cardRewardTaken
+    ) {
+      const card = rewardProgram(next.cardRewardTaken);
+      const slot = offeredCardIds(next).indexOf(next.cardRewardTaken) + 1;
+      this.lootCommit = beginLootCommit(
+        card?.name ?? next.cardRewardTaken,
+        card ? programEffectTag(card) : "",
+        slot > 0 ? slot : 1,
+        now,
+      );
+    }
+    // Leaving the loot screen retires the commit and — only when the run
+    // stepped back out onto the board — announces the card there. A terminal
+    // node goes to the ending, which draws its own screen, so no note.
+    if (previous.runPhase === "loot" && next.runPhase !== "loot") {
+      const taken = this.lootCommit?.cardName ?? null;
+      this.lootCommit = null;
+      this.matrixArrival =
+        taken !== null && next.runPhase === "matrix"
+          ? beginMatrixArrival(taken, now, this.reducedMotion)
+          : null;
+    }
   }
 
   handleProgramButton(handIndex: number): void {

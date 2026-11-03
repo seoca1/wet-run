@@ -1,0 +1,40 @@
+                                                            
+ ╔════════════════════════════════════════════════════════╗ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                  MATRIX — CYBERSPACE                   ║ 
+ ║                                                        ║ 
+ ║                                     1/2 nodes          ║ 
+ ║                                                        ║ 
+ ║                     [@]───────[·]                      ║ 
+ ║                                                        ║ 
+ ║          @ you ◆ boss >·< target #·# ICE               ║ 
+ ║          · NEW ✓ SEEN + CLEAR ─route ┄link             ║ 
+ ║                                                        ║ 
+ ║          ▸ PRESS ↓ OR ↑ TO PICK A ROUTE                ║ 
+ ║          @ ⚔ N01 MID · SEEN                            ║ 
+ ║            0 ICE · 0cr · COMBAT                        ║ 
+ ║                                                        ║ 
+ ║          ROUTES (1): ↓1 N02                            ║ 
+ ║                                                        ║ 
+ ║          ◆ No objective in this matrix                 ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║                                                        ║ 
+ ║ ↑↓: pick route | ESC: jack out                         ║ 
+ ╚════════════════════════════════════════════════════════╝ 
+                                                            

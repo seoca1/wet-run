@@ -313,8 +313,11 @@ describe("Matrix affordance — one-time entry hint (reuses the ADR-0235 onboard
 
   it("main.ts shows it once: gated by its flag, dismissed by the first input on the board", () => {
     expect(mainSource).toContain("privatematrixEntryHintShown=false;");
+    // ADR-0262 appended display-only args (the travel frame and the growth
+    // reveal) after the entry hint, so the call is matched for containing it
+    // rather than for ending on it.
     expect(mainSource).toMatch(
-      /renderRunScreen\(this\.state,this\.layout\.cols,this\.layout\.rows,shouldShowMatrixEntryHint\(this\.matrixEntryHintShown,this\.state\),?\)/,
+      /renderRunScreen\(this\.state,this\.layout\.cols,this\.layout\.rows,shouldShowMatrixEntryHint\(this\.matrixEntryHintShown,this\.state\),[^)]*\)/,
     );
     expect(mainSource).toMatch(
       /if\(shouldShowMatrixEntryHint\(this\.matrixEntryHintShown,this\.state\)\)this\.matrixEntryHintShown=true;[\s\S]{0,200}this\.state=applyAction\(this\.state,resolved\)/,

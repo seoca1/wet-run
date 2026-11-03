@@ -1,0 +1,213 @@
+{
+  "renderer": "Actual AsciiRenderer (web/src/renderer/canvas.ts) bundled with esbuild, 10x18 cells, DPR 1, system monospace fallback; renderGrid (combat hand) and renderRunScreen (loot / ending) grids plus the HUD column at the layout preset hudCols (24/20/16)",
+  "before": "HEAD web/src (git archive)",
+  "after": "working tree web/src",
+  "layouts": [
+    {
+      "cols": 80,
+      "rows": 50,
+      "hudCols": 24
+    },
+    {
+      "cols": 60,
+      "rows": 40,
+      "hudCols": 20
+    },
+    {
+      "cols": 40,
+      "rows": 60,
+      "hudCols": 16
+    }
+  ],
+  "captures": [
+    {
+      "file": "hand-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-03T11:56:36.909Z"
+    },
+    {
+      "file": "loot-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-03T11:56:36.987Z"
+    },
+    {
+      "file": "loot-terminal-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-03T11:56:37.067Z"
+    },
+    {
+      "file": "loot-acquired-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-03T11:56:37.139Z"
+    },
+    {
+      "file": "ending-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-03T11:56:37.214Z"
+    },
+    {
+      "file": "loot-commit-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-03T11:56:37.297Z"
+    },
+    {
+      "file": "matrix-arrival-80x50-after.png",
+      "width": 1040,
+      "height": 900,
+      "textRows": 50,
+      "textCols": 80,
+      "hudCols": 24,
+      "captured": "2026-11-03T11:56:37.372Z"
+    },
+    {
+      "file": "hand-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-03T11:56:37.448Z"
+    },
+    {
+      "file": "loot-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-03T11:56:37.512Z"
+    },
+    {
+      "file": "loot-terminal-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-03T11:56:37.559Z"
+    },
+    {
+      "file": "loot-acquired-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-03T11:56:37.614Z"
+    },
+    {
+      "file": "ending-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-03T11:56:37.665Z"
+    },
+    {
+      "file": "loot-commit-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-03T11:56:37.718Z"
+    },
+    {
+      "file": "matrix-arrival-60x40-after.png",
+      "width": 800,
+      "height": 720,
+      "textRows": 40,
+      "textCols": 60,
+      "hudCols": 20,
+      "captured": "2026-11-03T11:56:37.770Z"
+    },
+    {
+      "file": "hand-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-03T11:56:37.821Z"
+    },
+    {
+      "file": "loot-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-03T11:56:37.859Z"
+    },
+    {
+      "file": "loot-terminal-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-03T11:56:37.923Z"
+    },
+    {
+      "file": "loot-acquired-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-03T11:56:37.979Z"
+    },
+    {
+      "file": "ending-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-03T11:56:38.036Z"
+    },
+    {
+      "file": "loot-commit-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-03T11:56:38.085Z"
+    },
+    {
+      "file": "matrix-arrival-40x60-after.png",
+      "width": 560,
+      "height": 1080,
+      "textRows": 60,
+      "textCols": 40,
+      "hudCols": 16,
+      "captured": "2026-11-03T11:56:38.131Z"
+    }
+  ]
+}

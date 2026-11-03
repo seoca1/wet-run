@@ -2948,3 +2948,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **구현 형태(권고)**: 리듀서 무변경, `main.ts` 표시 전용 프레임 2개(`lootCommitFrame`, `matrixArrivalFrame`), 벽시계 delta 로만 진행, **애니메이션 종료를 리듀서로 보내지 않음**, reduced-motion 이면 최종 문구만.
 - **산출물**: `docs/design/growth-direction-2026-11-03/` — `README.md`(시안 정리 + 오너 선택지 A~E) · `manus-raw.md`(Manus 원문 462행, 목업 포함) · `manus-structured.json`.
 - **상태**: **시안 (decision pending)** — 오너 선택 대기. 추천 A(안1+안4).
+
+## [2026-11-03] feat(run) | 성장을 사건으로 만든다 — 터미널 커밋 + 도착 인수인계 (ADR-0262)
+
+- **계기**: 오너 "추천대로 구현해줘." 앞선 세션에서 Manus 시안 4안 + Jev 게이트로 **안1+안4** 를 추천했고(choice 0.97/conf 0.96), 그대로 구현.
+- **구현 형태**: 리듀서 무변경. `main.ts` 에 `matrixTravelFrame`(ADR-0249)과 같은 종류의 **표시 전용·벽시계 상태 3개**(`lootCommit`·`matrixArrival`·`lootCommitStageShown`) + `syncGrowthReveal(previous, next)`. 새 순수 모듈 `web/src/renderer/growth_reveal.ts`(커밋 단계·바·문구·도착 노트·프레임 해석). 새 VFX 종류·이벤트 버스·리듀서 상태·저장 필드 **0**.
+- **커밋 패널**(loot): 카드 획득 전환에서만 시작(리듀서가 이미 덱에 넣은 뒤 → `100%` 는 참) — `PROGRAM SLOT 01` / `> 1 VIRUS [PIERCE 2]` / `DATA LINK ... OPEN` / `SIGNATURE ... VIRUS` / `DECK COMMIT [##########] 100%` / `[+] PROGRAM ACQUIRED`. 단계 오프셋 `[0, 90, 220, 320]ms`. 40열은 compact 문구.
+- **도착 노트**(매트릭스): HUD 에 `+ PROGRAM` / `  VIRUS`. **결함 발견** — 매트릭스는 `state.message` 를 렌더하지 않아 ADR-0261 의 도착 메시지가 화면과 함께 사라졌다. 이 노트가 그 구멍을 메운다. ~1200ms 창 후 자동 소멸.
+- **하드 제약**: 입력 락 0(실측 ENTER 응답 **9ms**) · VFX 대기 0 · reduced-motion 은 **최종 문구만**(도착 노트 생략) · 색 중복(글리프·텍스트로 판독) · 3레이아웃 초과 **0** · RNG 0 · **밸런스 byte-identical**(opening 100.0/100.0/81.4/42.6/36.6/0.0, PPL 100.0/100.0/99.3/84.1/44.4/27.3) · 금지 목록 무위반.
+- **구현 중 실플레이에서만 드러난 결함 2개 수정**: ① loot 화면은 **입력당 한 번만** 그려서 커밋 패널이 첫 단계에서 멈췄다 → 렌더 루프가 **단계가 바뀔 때만** 다시 그리도록(정지 후 정지). ② **터치 보상 경로**(`handleRewardButton`)가 `syncGrowthReveal` 을 안 거쳐 터치 플레이어는 옛 색 변화만 봤다 → 같은 훅을 지나게.
+- **검증**: `growth_reveal.test.ts` 21 tests(단계/클램프/RM 고정/바/wide·compact/도착 창/HUD 폭/프레임 해석 + 소스 스캔). 3레이아웃 before/after 캡처 21 PNG + 21 쌍(초과 0). **실플레이**(preview 5195, 독립 headless Chromium): 획득 → `lootCommit` 설정 → 정착 → ENTER 9ms → 도착 노트 → +0.6s 표시 → +2.0s 소멸, 입력 살아있음 → **PASS**; reduced-motion 재실행 → 최종 문구 즉시 + 노트 없음 → **PASS**.
+- **산출물**: `docs/wiki/decisions/0262-growth-reads-as-an-event.md` + README 인덱스 · `docs/design/growth-reveal-2026-11-03/`(캡처 + `live/`·`live-rm/` 스크린샷·로그).
+- **검증 수치**: vitest **181 files / 4006 tests passed** · tsc 0 · eslint 0 errors · build PASS · 밸런스 재측정 동일.
+- **남은 항목**: (a) 안3 `QUEUED`/`STAGED` 기상 연출(별도 슬라이스) (b) 하네스가 성장을 모델링하지 않음 (c) narrow-layout HUD 압착(기존 결함).

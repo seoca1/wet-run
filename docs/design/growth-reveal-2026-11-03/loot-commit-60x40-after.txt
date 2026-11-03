@@ -1,0 +1,40 @@
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                        DATA SALVAGE                        
+                                                            
+                                                            
+                         HP 61/100                          
+                                                            
+                       +4,075 credits                       
+                                                            
+                                                            
+                                                            
+          PROGRAM SLOT 01                                   
+          > 1 KRAKEN  [PIERCE 2]                            
+          DATA LINK ............ OPEN                       
+          SIGNATURE ............ KRAKEN                     
+          DECK COMMIT ......... [##########] 100%           
+          [+] PROGRAM ACQUIRED                              
+                                                            
+                   HEAL applied → 76/100                    
+                                                            
+                                                            
+                                                            
+                                                            
+                                                            
+                      ENTER: continue                       
+                                                            

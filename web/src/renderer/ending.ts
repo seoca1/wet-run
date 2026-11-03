@@ -6,6 +6,11 @@
 import type { EndingChoice, Grid } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { PALETTE } from "./palette";
+import {
+  drawLootCommit,
+  LOOT_COMMIT_MAX_LINES,
+  type LootCommitFrame,
+} from "./growth_reveal";
 import { ENDINGS } from "../core/combat/ending_resolver";
 
 export function renderEndingScreen(
@@ -72,6 +77,7 @@ export function renderLootScreen(
   terminal: boolean = false,
   offers: readonly string[] = [],
   takenIndex: number = -1,
+  commitFrame: LootCommitFrame | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -119,9 +125,18 @@ export function renderLootScreen(
     );
   }
 
-  // ADR-0259: the card offer — the run's growth. One line per option, under a
-  // short header, so the digits the player presses are obvious.
-  if (offers.length > 0) {
+  // ADR-0262: once a card is taken the terminal commit panel takes the
+  // offer's rows — the acquisition as a settled event, not a colour change.
+  if (commitFrame !== null) {
+    grid = drawLootCommit(
+      grid,
+      { x: 0, y: 0, width: cols, height: rows },
+      commitFrame.commit,
+      commitFrame.stage,
+      Math.floor(rows / 2) + 5,
+      cols >= 60,
+    );
+  } else if (offers.length > 0) {
     grid = setText(
       grid,
       Math.max(2, Math.floor((cols - 12) / 2)),
@@ -153,8 +168,13 @@ export function renderLootScreen(
   // runPhase "ending" and no heal is applied — so this screen must not
   // promise one, and must not promise a route either.
   const healed = Math.min(maxHp, hp + Math.floor(maxHp * 0.15));
-  const healRow =
-    Math.floor(rows / 2) + 5 + (offers.length > 0 ? offers.length + 3 : 0);
+  const reserved =
+    commitFrame !== null
+      ? LOOT_COMMIT_MAX_LINES + 1
+      : offers.length > 0
+        ? offers.length + 3
+        : 0;
+  const healRow = Math.floor(rows / 2) + 5 + reserved;
   grid = setText(
     grid,
     Math.max(2, Math.floor((cols - 22) / 2)),

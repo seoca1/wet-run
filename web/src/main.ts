@@ -49,6 +49,8 @@ import {
 import { offeredCardIds, rewardProgram } from "./core/state/card_reward";
 import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
+import { renderRunIntro } from "./renderer/run_intro";
+import type { ArcId } from "./core/combat/ending_resolver";
 import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
@@ -275,6 +277,10 @@ class Game {
    * harness. The `matrixTravel` pattern, applied to a card joining the deck. */
   private lootCommit: LootCommit | null = null;
   private matrixArrival: MatrixArrival | null = null;
+  /** ADR-0272 — the arc's framing beat, shown once when a run starts. Null
+   * when there is no run, or once a key has dismissed it. Never saved, so a
+   * resumed run does not replay its introduction. */
+  private runIntroArc: ArcId | null = null;
   /** The commit stage last drawn — the loop redraws only when the clock
    * pushes the panel to a new stage, then stops (ADR-0262). */
   private lootCommitStageShown = -1;
@@ -436,6 +442,13 @@ class Game {
       }
       if (this.screen === "pause") {
         this.handlePauseInput(action);
+        this.draw();
+        return;
+      }
+      // ADR-0272: the opening beat consumes the first key. It is a screen, not
+      // an animation gate: nothing advances on its own and nothing is queued.
+      if (this.runIntroArc !== null) {
+        this.runIntroArc = null;
         this.draw();
         return;
       }
@@ -1200,6 +1213,9 @@ class Game {
     // A fresh run carries no reveal from the previous one (ADR-0262).
     this.lootCommit = null;
     this.matrixArrival = null;
+    // ADR-0272: the run opens on the arc's framing beat. CONTINUE does not set
+    // this (a resumed run is mid-story); only a fresh run does.
+    this.runIntroArc = ((mission.arc as ArcId) || 1) as ArcId;
     const programs = PROGRAMS;
     const deck = startingDeck(programs);
     const ice = missionIce(mission, this.iceTypes);
@@ -1274,6 +1290,16 @@ class Game {
   /** Render the current state. `persist` is false for render-loop frames:
    * a redraw must not trigger the autosave side effect. */
   private draw(persist: boolean = true): void {
+    // ADR-0272: the run's opening beat owns the screen until a key dismisses
+    // it. Display-only, static text — no clock, no animation, no save.
+    if (this.runIntroArc !== null && this.state !== null) {
+      updateProgramRow([]);
+      this.renderer.render(
+        renderRunIntro(this.runIntroArc, this.layout.cols, this.layout.rows),
+        ["JACK-IN", "", "ANY KEY"],
+      );
+      return;
+    }
     // Tier 5: matrix / loot / ending screens render with a real GameState
     // but their UI is non-combat. Route by runPhase.
     if (

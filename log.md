@@ -2961,3 +2961,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **산출물**: `docs/wiki/decisions/0262-growth-reads-as-an-event.md` + README 인덱스 · `docs/design/growth-reveal-2026-11-03/`(캡처 + `live/`·`live-rm/` 스크린샷·로그).
 - **검증 수치**: vitest **181 files / 4006 tests passed** · tsc 0 · eslint 0 errors · build PASS · 밸런스 재측정 동일.
 - **남은 항목**: (a) 안3 `QUEUED`/`STAGED` 기상 연출(별도 슬라이스) (b) 하네스가 성장을 모델링하지 않음 (c) narrow-layout HUD 압착(기존 결함).
+
+## [2026-11-03] fix(run) | 죽음 화면에서 빠져나올 수 없던 블로킹 버그 (ADR-0263)
+
+- **계기**: 오너 플레이 리포트 "플레이 한번 해봤는데, **보스 배틀 이후 빠져나오지 못한 버그**가 있어." — 실제 브라우저(ego lite) 세션에서 발견.
+- **재현(독립 headless Chromium, preview 5195)**: 실제 전투에서 사망 → `runPhase "dead"`/`phase "defeat"`/"FLATLINE" → **`Enter`·`Escape`·`←↑↓→`·`1`·`4`·`Space`·`q` 8개 키 전부 무반응**. 브라우저 새로고침만이 탈출이었고, ADR-0252 §A 때문에 죽음 프레임이 저장되어 `CONTINUE` 가 **같은 화면으로 되돌렸다**.
+- **원인**: 죽음 화면의 유일한 탈출 액션 `select_restart` 가 **`web/src` 전체에서 한 번도 디스패치되지 않음**(테스트/퍼저에만 존재). 리듀서 `applyDeathAction` 은 `confirm`/`jack_out` 을 무시했고, `combat_grid.ts` 의 `phase === "defeat"` 분기는 아트만 그리고 **안내 문구 0**.
+- **수정(Option A, 최소)**: ① `applyDeathAction` 이 `confirm`/`jack_out` → `phase:"menu"`(runPhase 는 `dead` 유지) ② `runFailed(previous,next)` 판정 — 엔딩의 `runCompleted` 와 **같은 모양** ③ 죽음 화면에 `ENTER / ESC: return to title`(손패 자리, ADR-0251 §5) ④ `main.ts` 가 `runFailed` 이면 `state=null; screen="menu"`.
+- **`select_restart` 미재사용 이유**: `main_menu` 와 `same_jockey` 가 **둘 다** `phase:"menu", runPhase:"matrix"` 를 반환해 컨트롤러가 구분할 수 없고, `runPhase:"matrix"` 는 타이틀 대신 매트릭스를 그리게 한다.
+- **검증**: `run_end_save.test.ts`(runFailed 판정 8케이스 + main/combat_grid 소스 배선) · `combat_grid.test.ts`(3레이아웃 프롬프트 + 전투 중엔 없음). 3레이아웃 before/after 캡처(신규 `defeat` 케이스, 그리드 초과 **0**; HUD 초과는 before/after 동일한 **기존** 결함). 실브라우저 재현: 수정 전 8키 무반응 → **수정 후 `Enter` 로 탈출**.
+- **불변**: 밸런스 byte-identical · 죽음 프레임은 계속 저장(ADR-0252 §A `"write"` 유지) · ADR-0040 선택지/`lastDeathSummary`/`deceasedJockeys` 무변경.
+- **산출물**: `docs/wiki/decisions/0263-defeat-screen-must-be-escapable.md` + README 인덱스 · `docs/design/defeat-escape-2026-11-03/`(캡처 + 실브라우저 스크린샷).
+- **검증 수치**: vitest **181 files / 4014 tests passed** · tsc 0 · eslint 0 errors · build PASS.
+- **남은 항목**: (a) 죽음 시 슬롯 retire 여부(현재는 `CONTINUE` 가 죽은 런을 다시 연다) (b) ADR-0040 의 죽음 선택지 메뉴(`SAME JOCKEY`/`NEW JOCKEY`/`HALL OF DEAD`) 미배선 (c) 좁은 레이아웃 HUD 압착(기존).

@@ -35,5 +35,27 @@ export function runCompleted(previous: GameState, next: GameState): boolean {
   );
 }
 
+/**
+ * Confirm (or ESC) on the defeat screen: the flatline ends the run and the
+ * controller returns to the title with the run state cleared.
+ *
+ * Mirrors `runCompleted`, and exists because the defeat screen used to accept
+ * no input at all — `FLATLINE` parked the player on a screen with no exit and
+ * nothing to press. (The richer ADR-0040 death cycle — same jockey / new
+ * jockey — stays a later slice.)
+ */
+export function runFailed(previous: GameState, next: GameState): boolean {
+  return (
+    previous.runPhase === "dead" &&
+    previous.phase !== "menu" &&
+    next.runPhase === "dead" &&
+    next.phase === "menu"
+  );
+}
+
 /** Title-screen status line after a completed run (CONTINUE is then empty). */
 export const RUN_COMPLETE_MESSAGE = "Run complete. Autosave cleared.";
+
+/** Title-screen status line after a flatline. The dead frame is saved
+ * (ADR-0252 §A: death frames are written), so CONTINUE still lists it. */
+export const FLATLINE_MESSAGE = "Flatline — back at the title.";

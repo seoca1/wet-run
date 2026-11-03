@@ -326,6 +326,12 @@ export function applyDeathAction(
       message: "FLATLINE",
     };
   }
+  if (action.type === "confirm" || action.type === "jack_out") {
+    // The defeat screen must be escapable. ENTER / ESC end the run at the
+    // title, mirroring the ending screen (ADR-0252). Before this the screen
+    // accepted no input at all, so a flatline parked the player forever.
+    return { ...state, phase: "menu", message: "FLATLINE — back at the title" };
+  }
   if (action.type === "select_restart") {
     switch (action.choice) {
       case "new_jockey":

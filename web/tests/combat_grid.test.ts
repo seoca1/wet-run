@@ -387,3 +387,36 @@ describe("combat grid program hand (ADR-0251)", () => {
     expect(text.join("\n")).not.toContain("HAND");
   });
 });
+
+/** ADR-0263: a defeat screen with no prompt is a trap. */
+function allText(grid: ReturnType<typeof renderGrid>): string {
+  const rows: string[] = [];
+  for (let y = 0; y < grid.height; y += 1) rows.push(rowText(grid, y));
+  return rows.join("\n");
+}
+
+describe("combat grid defeat prompt (ADR-0263)", () => {
+  it.each([
+    [80, 50],
+    [60, 40],
+    [40, 60],
+  ])("states how to leave the defeat screen at %ix%i", (cols, rows) => {
+    // Given the state a lost fight leaves.
+    const dead = makeState({
+      phase: "defeat",
+      runPhase: "dead",
+      player: { ...makeState().player, hp: 0 },
+    });
+
+    // When the real grid is rendered.
+    const grid = renderGrid(dead, null, null, [], cols, rows);
+
+    // Then the screen says exactly how to get out.
+    expect(allText(grid)).toContain("ENTER / ESC: return to title");
+  });
+
+  it("shows no such prompt while the fight is still on", () => {
+    const grid = renderGrid(makeState());
+    expect(allText(grid)).not.toContain("return to title");
+  });
+});

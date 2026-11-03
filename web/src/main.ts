@@ -119,8 +119,10 @@ import {
 import { missionIce } from "./core/state/mission_ice";
 import {
   autosaveIntent,
+  FLATLINE_MESSAGE,
   isTerminalNode,
   runCompleted,
+  runFailed,
   RUN_COMPLETE_MESSAGE,
 } from "./core/state/run_end";
 import { makeGrid, type Grid } from "./core/grid";
@@ -467,6 +469,20 @@ class Game {
         this.persistQueue = this.persistQueue
           .then(() => this.refreshSaveCache())
           .catch(() => undefined);
+        this.draw();
+        return;
+      }
+      if (runFailed(previous, this.state)) {
+        // ADR-0263: a flatline must not trap the player. ENTER / ESC leave the
+        // defeat screen and the run ends at the title, the same shape as the
+        // ending. The dead frame itself was already autosaved (ADR-0252 §A).
+        this.state = null;
+        this.matrixTravel = null;
+        this.lootCommit = null;
+        this.matrixArrival = null;
+        this.screen = "menu";
+        this._message = FLATLINE_MESSAGE;
+        void this.refreshSaveCache();
         this.draw();
         return;
       }

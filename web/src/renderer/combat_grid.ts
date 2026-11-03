@@ -247,6 +247,19 @@ export function renderGrid(
   }
 
   if (showHand && !handOnOverlay) grid = drawHand(grid, inner, state, handRow);
+  else if (state.phase === "defeat") {
+    // ADR-0263: a screen with no way out is a trap, and ADR-0251 rule 5 says
+    // a screen must state what it does. The prompt goes where the hand would
+    // be — free on the defeat screen, which shows art there instead.
+    grid = setInnerText(
+      grid,
+      inner,
+      textX,
+      handRow,
+      "ENTER / ESC: return to title",
+      PALETTE.GRAY_LIGHT,
+    );
+  }
 
   // Frame last, so an overlong message line can never erase a rail.
   grid = drawPanel(grid, frame).grid;

@@ -48,6 +48,7 @@ import {
 } from "./renderer/growth_reveal";
 import { offeredCardIds, rewardProgram } from "./core/state/card_reward";
 import { programEffectTag } from "./core/combat/program_effects";
+import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
@@ -1258,7 +1259,14 @@ class Game {
         this.pressedProgramName ?? undefined,
       );
     }
-    const out = renderCombatHints(grid, { showHint, pressLabel });
+    // ADR-0266: state the cap when it blocks every program, so the pass is
+    // discoverable instead of the screen going quiet. Same predicate the
+    // reducer uses, so the line cannot promise a key that does nothing.
+    const costCapped =
+      this.state?.phase === "combat" &&
+      everyProgramBlocked(this.state) &&
+      combatEntryHintFits(this.layout.rows);
+    const out = renderCombatHints(grid, { showHint, pressLabel, costCapped });
     if (showHint) this.combatEntryHintShown = true;
     return out;
   }

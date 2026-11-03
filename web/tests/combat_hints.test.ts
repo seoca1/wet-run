@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  COST_CAPPED_LINE,
   combatHintsLayout,
   renderCombatHints,
 } from "../src/renderer/combat_hints";
@@ -64,5 +65,44 @@ describe("combat hint composition", () => {
     expect(rowText(out, row).slice(2, 13)).toBe("Pressed ATK");
     expect(out.cells[row]?.[2]?.fg).toBe(PALETTE.GREEN_NEON);
     expect(rowText(grid, row).trim()).toBe("");
+  });
+});
+
+describe("COST-capped pass line (ADR-0266)", () => {
+  it("appears on the last hint row, in red, exactly when asked", () => {
+    const grid = makeGrid(80, 50);
+    const out = renderCombatHints(grid, {
+      showHint: false,
+      pressLabel: null,
+      costCapped: true,
+    });
+    const row = combatEntryHintRows(50)[COMBAT_ENTRY_HINT_LINES.length - 1];
+    expect(rowText(out, row!).slice(2).trimEnd()).toBe(COST_CAPPED_LINE);
+    expect(out.cells[row!]?.[2]?.fg).toBe(PALETTE.RED_BRIGHT);
+    // And it is not there when the cap is not hit.
+    const plain = renderCombatHints(makeGrid(80, 50), {
+      showHint: false,
+      pressLabel: null,
+      costCapped: false,
+    });
+    expect(rowText(plain, row!)).not.toContain("COST capped");
+  });
+
+  it("fits the narrowest layout whole — a clipped instruction is a lie", () => {
+    // 40 columns is the tightest grid; the line must fit inside the frame
+    // (x=2, so 40 - 2 = 38 cells, minus the rail).
+    expect(COST_CAPPED_LINE.length + 2).toBeLessThanOrEqual(40 - 2);
+    const grid = makeGrid(40, 60);
+    const out = renderCombatHints(grid, {
+      showHint: false,
+      pressLabel: null,
+      costCapped: true,
+    });
+    const row = combatEntryHintRows(60)[COMBAT_ENTRY_HINT_LINES.length - 1];
+    expect(rowText(out, row!).slice(2).trimEnd()).toBe(COST_CAPPED_LINE);
+    // Nothing spills past the grid either.
+    for (let y = 0; y < out.height; y += 1) {
+      expect(rowText(out, y).length).toBeLessThanOrEqual(40);
+    }
   });
 });

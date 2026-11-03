@@ -198,8 +198,10 @@ describe("P11 — main.ts wiring", () => {
   });
 
   it("draws the combat-entry hint lines onto the grid", () => {
-    expect(mainSource).toContain(
-      "renderCombatHints(grid,{showHint,pressLabel})",
+    // ADR-0266 appended the COST-capped flag; the entry hint's own wiring must
+    // still be there.
+    expect(mainSource).toMatch(
+      /renderCombatHints\(grid,\{showHint,pressLabel(?:,costCapped)?\}\)/,
     );
     const grid = renderCombatHints(makeGrid(80, 50), {
       showHint: true,
@@ -216,7 +218,9 @@ describe("P11 — main.ts wiring", () => {
       /constshowHint=!this\.combatEntryHintShown&&[\s\S]*?combatEntryHintFits\(this\.layout\.rows\)/,
     );
     expect(mainSource).toMatch(
-      /renderCombatHints\(grid,\{showHint,pressLabel\}\);if\(showHint\)this\.combatEntryHintShown=true/,
+      /renderCombatHints\(grid,\{showHint,pressLabel(?:,costCapped)?\}\);if\(showHint\)this\.combatEntryHintShown=true/,
     );
+    // ADR-0266: the cap flag comes from the same predicate the reducer uses.
+    expect(mainSource).toContain("everyProgramBlocked(this.state)");
   });
 });

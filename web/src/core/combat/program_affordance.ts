@@ -89,6 +89,18 @@ export function programAffordances(
   });
 }
 
+/** Every program in hand would exceed `COST_LIMIT` -- the state in which a turn
+ * cannot advance by playing, because a refused play leaves the hand unchanged
+ * and the hand only refills once it is empty (ADR-0266). The hand row, the
+ * refusal in `useProgram` and this gate all read the same affordances, so they
+ * cannot disagree about what is blocked. */
+export function everyProgramBlocked(
+  state: Pick<GameState, "deck" | "player" | "activeMutators">,
+): boolean {
+  const rows = programAffordances(state);
+  return rows.length > 0 && rows.every((row) => row.blocked);
+}
+
 /** The effect column of a hand row: the card's effect, or `BLOCKED` when the
  * play is refused (a refused card's effect cannot happen, so it does not
  * claim the space). */

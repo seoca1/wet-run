@@ -36,6 +36,7 @@ import {
   durationMsForKind,
 } from "../state/state_helpers";
 import { useProgram, advanceDeadTarget } from "./state_actions_programs";
+import { everyProgramBlocked } from "./program_affordance";
 
 /** Dixie companion tuning (ADR-0244 option 2).
  * N=2 preserves the 2000ms harness baseline: first player turn, then alternate
@@ -70,35 +71,24 @@ export function applyCombatAction(
   if (action.type === "use_program") {
     const result = useProgram(state, action.programId);
     if (result.deck.length === state.deck.length) return result;
-    const afterEnemies = drawHand(processDixieTurn(processEnemyTurns(result)));
-
-    const allDefeated = afterEnemies.iceRoster.every((ice) => ice.hp === 0);
-    if (
-      allDefeated &&
-      afterEnemies.iceRoster.length > 0 &&
-      afterEnemies.runPhase === "combat"
-    ) {
-      const totalReward =
-        afterEnemies.mission.rewards.credits +
-        (afterEnemies.matrix?.nodes[afterEnemies.currentNodeIndex]?.reward
-          .credits ?? 0);
-      return {
-        ...afterEnemies,
-        runPhase: "loot",
-        phase: "victory",
-        message: `${afterEnemies.ice.name} defeated! +${totalReward} credits`,
-        player: {
-          ...afterEnemies.player,
-          credits: afterEnemies.player.credits + totalReward,
-        },
-        vfxInstances: [
-          ...afterEnemies.vfxInstances,
-          import_vfx("victory", "", 5),
-        ],
-      };
-    }
-
-    return afterEnemies;
+    return finishPlayerTurn(result);
+  }
+  // ADR-0266: when every program in hand is over the COST limit, playing is
+  // refused and the hand never empties -- so the turn never advanced and the
+  // fight froze until JACK OUT. ENTER now ends that turn instead: the hand is
+  // discarded, the enemies act, and a fresh hand is dealt. COST does not
+  // fall, so the pressure stands and the run is decided by the fight, not by
+  // a screen that stopped answering.
+  if (action.type === "confirm" && everyProgramBlocked(state)) {
+    const discarding: GameState = {
+      ...state,
+      deck: [],
+      discardPile: [...state.discardPile, ...state.deck],
+    };
+    const passed = finishPlayerTurn(discarding);
+    return passed.runPhase === "combat"
+      ? { ...passed, message: "COST capped — turn passed" }
+      : passed;
   }
   if (action.type === "jack_out") {
     return {
@@ -109,6 +99,39 @@ export function applyCombatAction(
     };
   }
   return state;
+}
+
+/** The tail of a full player turn: the enemies act, the empty hand recycles,
+ * and a wiped roster resolves as a victory. Shared by playing a program and by
+ * passing a turn (ADR-0266), so both can reach the same outcome. */
+function finishPlayerTurn(state: GameState): GameState {
+  const afterEnemies = drawHand(processDixieTurn(processEnemyTurns(state)));
+  const allDefeated = afterEnemies.iceRoster.every((ice) => ice.hp === 0);
+  if (
+    allDefeated &&
+    afterEnemies.iceRoster.length > 0 &&
+    afterEnemies.runPhase === "combat"
+  ) {
+    const totalReward =
+      afterEnemies.mission.rewards.credits +
+      (afterEnemies.matrix?.nodes[afterEnemies.currentNodeIndex]?.reward
+        .credits ?? 0);
+    return {
+      ...afterEnemies,
+      runPhase: "loot",
+      phase: "victory",
+      message: `${afterEnemies.ice.name} defeated! +${totalReward} credits`,
+      player: {
+        ...afterEnemies.player,
+        credits: afterEnemies.player.credits + totalReward,
+      },
+      vfxInstances: [
+        ...afterEnemies.vfxInstances,
+        import_vfx("victory", "", 5),
+      ],
+    };
+  }
+  return afterEnemies;
 }
 
 function cycleTarget(state: GameState): GameState {

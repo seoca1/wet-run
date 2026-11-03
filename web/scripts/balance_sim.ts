@@ -16,6 +16,7 @@
  */
 import { AUTO_ATTACK_INTERVAL_MS } from "../src/core/combat/combat_engine";
 import { programEffect } from "../src/core/combat/program_effects";
+import { everyProgramBlocked } from "../src/core/combat/program_affordance";
 import {
   idleAlarmAction,
   IDLE_ALARM_TUNING,
@@ -192,7 +193,15 @@ export function simulateCombat(
         clock = resumeMs;
       }
       clock += AUTO_ATTACK_INTERVAL_MS;
-      s = applyAction(s, { type: "use_program", programId: card.id });
+      // ADR-0266: when every program is over the COST cap the game now lets
+      // ENTER pass the turn instead of freezing. The sim has to do the same,
+      // or it keeps scoring a capped fight as a spin-out that the real game
+      // no longer has. Same reducer action the controller dispatches.
+      if (everyProgramBlocked(s)) {
+        s = applyAction(s, { type: "confirm" });
+      } else {
+        s = applyAction(s, { type: "use_program", programId: card.id });
+      }
       turns += 1;
     }
 

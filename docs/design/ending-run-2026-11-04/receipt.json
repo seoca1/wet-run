@@ -1,0 +1,13 @@
+{
+  "base": "http://127.0.0.1:5195",
+  "shots": [
+    "01-mission-select",
+    "02-encounter",
+    "03-combat",
+    "04-loot",
+    "05-boss-encounter",
+    "06-ending",
+    "07-title-after-ending"
+  ],
+  "steps": 65
+}

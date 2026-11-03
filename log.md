@@ -2976,3 +2976,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **산출물**: `docs/wiki/decisions/0263-defeat-screen-must-be-escapable.md` + README 인덱스 · `docs/design/defeat-escape-2026-11-03/`(캡처 + 실브라우저 스크린샷).
 - **검증 수치**: vitest **181 files / 4014 tests passed** · tsc 0 · eslint 0 errors · build PASS.
 - **남은 항목**: (a) 죽음 시 슬롯 retire 여부(현재는 `CONTINUE` 가 죽은 런을 다시 연다) (b) ADR-0040 의 죽음 선택지 메뉴(`SAME JOCKEY`/`NEW JOCKEY`/`HALL OF DEAD`) 미배선 (c) 좁은 레이아웃 HUD 압착(기존).
+
+## [2026-11-03] fix(run) | 죽음은 런을 끝낸다 — 죽음 시 슬롯 retire (ADR-0264)
+
+- **계기**: 오너 "어떻게 수정해야 돼?" — ADR-0263 의 열린 질문 (a). 그 과정에서 **내 진단이 오진이었음을 확인·정정**: 죽음 프레임은 저장되지 않는 게 아니라 **정상 저장**되고 있었고(라이브 `(no save)` 는 필자의 `deleteDatabase` 실험 절차가 만든 착시), 진짜 원인은 **복원**이었다.
+- **진짜 원인**: `SaveSlot` 에 **`runPhase` 가 없고**, `slotToGameState` 가 **모든 저장을 `runPhase: "matrix"`, `phase: "approach"` 로** 복원한다. 그래서 죽음 프레임(write)이 매트릭스 프레임으로 되살아난다.
+- **실측(before, 독립 headless Chromium)**: ① **HP 0 사망 → 리로드 → CONTINUE → `runPhase matrix`, hp 0, 도착 조우 재개방** (플레이 불가능한 유령 보드) ② **잭아웃 사망(ESC) → CONTINUE → hp 40 부활** — 잭아웃은 COST 상한 시 유일한 출구이므로 **죽기 직전 ESC 후 새로고침 = 생존**이라는 익스플로잇.
+- **부수 확인**: `deceasedJockeys`/`lastDeathSummary`/`totalDeaths` 는 슬롯에 없다(`slotToGameState` 가 `[]`/`null` 로 시작) → **죽음 기록은 원래 휘발**, 저장해도 잃을 것이 없다.
+- **수정(오너 선택 "A만", Option A)**: `autosaveIntent` 가 `ending` 에 더해 `dead` 도 `"retire"` — 한 조건. 부활 익스플로잇과 HP 0 유령 보드를 동시에 제거하고 ADR-0252 원칙("끝난 런은 재개할 수 없다")과 일치.
+- **실측(after)**: 두 죽음 모두 리로드 후 `hasSave: false`, `meta: null`, CONTINUE 무동작(타이틀 유지). 증거 `docs/design/death-retires-run-2026-11-03/`(before/after 프로브 로그).
+- **불변**: **스키마 무변경**(필드 추가 0, `version` 1, 마이그레이션 불필요) · **밸런스 byte-identical**(하네스는 죽음을 걷지 않음) · 살아있는 런 프레임은 계속 write · ADR-0263 의 죽음 화면 탈출 무변경 · ADR-0040 선택지 무변경.
+- **문서 정정**: ADR-0263 (a)·Notes 의 "죽음 프레임이 저장되지 않는다" 를 **오진으로 명시하고 정정**. ADR-0252 는 Accepted 이고 결정 내용은 불변이므로 `## Implementation Status` 에만 ADR-0264 갱신 주석(전역 규칙 허용).
+- **검증 수치**: vitest **181 files / 4014 tests passed** · tsc 0 · eslint 0 errors · build PASS.
+- **남은 항목**: (a) 죽음 화면 재표시가 필요하면 Option B(슬롯에 `runOver` 저장) (b) `deceasedJockeys` 아카이브 영속(ADR-0040 Option A) (c) COST 상한 시 탈출 안내 한 줄.

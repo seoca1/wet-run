@@ -1,0 +1,8 @@
+# 죽음 후 CONTINUE 가 무엇을 복원하는가 — 수정 전 (커밋 3b937caa, ADR-0264 이전)
+# 독립 headless Chromium, preview 5195, 실제 전투. 프로브: death-continue-probe.mjs
+A. HP0 사망 직후: {"runPhase":"dead","phase":"defeat","hp":0,"cost":1,"cur":18,"cleared":[],"decision":false}
+A. 리로드 후 요약: {"hasSave":true,"meta":{"missionId":"aleph_fragment","turnCount":5,"savedAt":"2026-11-03T12:43:15.425Z"}}
+A. CONTINUE 복원 결과: {"runPhase":"matrix","phase":"approach","hp":0,"cost":1,"cur":18,"cleared":[],"decision":true}
+B. 잭아웃 사망 직후: {"runPhase":"dead","phase":"defeat","hp":40,"cost":0,"cur":18,"cleared":[],"decision":false}
+B. 리로드 후 요약: {"hasSave":true,"meta":{"missionId":"aleph_fragment","turnCount":5,"savedAt":"2026-11-03T12:43:19.537Z"}}
+B. CONTINUE 복원 결과: {"runPhase":"matrix","phase":"approach","hp":40,"cost":0,"cur":18,"cleared":[],"decision":true}

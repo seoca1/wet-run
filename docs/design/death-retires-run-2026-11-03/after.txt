@@ -1,0 +1,6 @@
+A. HP0 사망 직후: {"runPhase":"dead","phase":"defeat","hp":0,"cost":1,"cur":18,"cleared":[],"decision":false}
+A. 리로드 후 요약: {"hasSave":false,"meta":null}
+A. CONTINUE 복원 결과: {"state":null,"screen":"menu"}
+B. 잭아웃 사망 직후: {"runPhase":"dead","phase":"defeat","hp":40,"cost":0,"cur":18,"cleared":[],"decision":false}
+B. 리로드 후 요약: {"hasSave":false,"meta":null}
+B. CONTINUE 복원 결과: {"state":null,"screen":"menu"}

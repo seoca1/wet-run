@@ -162,7 +162,7 @@ describe("ADR-0252 A — the save reflects committed state", () => {
     expect(slot.playerCredits).toBe(live.player.credits);
   });
 
-  it("the controller writes the slot on Matrix, loot, combat and death frames", async () => {
+  it("the controller writes the slot on Matrix, loot and combat frames", async () => {
     const { autosaveIntent } = await runEnd();
     const { live, before18 } = walk(FALLBACK, "boss-loot");
     expect(autosaveIntent(travel(launch(FALLBACK), 25))).toBe("write");
@@ -171,9 +171,6 @@ describe("ADR-0252 A — the save reflects committed state", () => {
     expect(
       autosaveIntent({ ...live, runPhase: "combat", phase: "combat" }),
     ).toBe("write");
-    expect(autosaveIntent({ ...live, runPhase: "dead", phase: "defeat" })).toBe(
-      "write",
-    );
     expect(autosaveIntent(null)).toBe("skip");
   });
 });
@@ -404,9 +401,13 @@ describe("ADR-0263 — the defeat screen is escapable", () => {
     expect(key(ending, "confirm").phase).toBe("menu");
   });
 
-  it("still reports a write intent for the dead frame (ADR-0252 §A)", async () => {
+  it("retires the slot on death, so a flatline is not a resumable run (ADR-0264)", async () => {
     const { autosaveIntent } = await runEnd();
-    expect(autosaveIntent(dead())).toBe("write");
+    expect(autosaveIntent(dead())).toBe("retire");
+    // Still alive == still written; the sliver between the two is the run.
+    expect(
+      autosaveIntent({ ...dead(), runPhase: "combat", phase: "combat" }),
+    ).toBe("write");
   });
 
   it("main.ts turns that exit into the title, and the screen states the key", () => {

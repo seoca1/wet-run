@@ -13,15 +13,23 @@ export function isTerminalNode(state: GameState): boolean {
 
 /** What the controller does with slot 0 for a rendered state.
  *
- * Every run frame is written — Matrix moves and the loot screen included —
- * so a reload resumes the committed state, never the last combat frame.
- * Once the run reaches its ending the slot is retired: a finished mission
- * cannot be resumed. */
+ * Every live run frame is written — Matrix moves and the loot screen
+ * included — so a reload resumes the committed state, never the last combat
+ * frame.
+ *
+ * Once the run is over the slot is retired: a finished run cannot be resumed.
+ * That is both the ending *and* a death (ADR-0264). A dead frame is not a
+ * resumable frame: the slot carries no `runPhase`, so `slotToGameState`
+ * rebuilds any save as `runPhase: "matrix"` — resuming a death restored a
+ * board with 0 HP after a flatline, and resurrected a jacked-out runner at
+ * full health. Retiring on death closes both. */
 export function autosaveIntent(
   state: GameState | null,
 ): "write" | "retire" | "skip" {
   if (state === null) return "skip";
-  return state.runPhase === "ending" ? "retire" : "write";
+  return state.runPhase === "ending" || state.runPhase === "dead"
+    ? "retire"
+    : "write";
 }
 
 /** Confirm (or ESC) on the ending screen: the run is complete and the

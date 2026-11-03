@@ -54,7 +54,18 @@ describe("run screen composition", () => {
   it("preserves ending fallback and the literal question-mark HUD", () => {
     const state = runState({ runPhase: "ending", endingChoice: null });
     const view = renderRunScreen(state, 40, 30);
-    expect(view?.grid.cells).toEqual(renderEndingScreen(null, 40, 30).cells);
+    // ADR-0269: the ending now carries the run's own numbers, so the expected
+    // grid is the same renderer with the same summary -- this assertion is
+    // about the null-choice fallback, not about the summary's shape.
+    expect(view?.grid.cells).toEqual(
+      renderEndingScreen(null, 40, 30, {
+        mission: state.mission.title,
+        hp: state.player.hp,
+        maxHp: state.player.maxHp,
+        credits: state.inventory.credits,
+        turns: state.turnCount,
+      }).cells,
+    );
     expect(view?.hud).toEqual(["ENDING", "", "ARC ?"]);
   });
 

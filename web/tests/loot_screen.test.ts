@@ -77,3 +77,30 @@ describe("renderLootScreen — terminal node", () => {
     }
   });
 });
+
+describe("loot screen — the heal line tells the truth (ADR-0269)", () => {
+  const text = (grid: ReturnType<typeof renderLootScreen>) =>
+    grid.cells.map((row) => row.map((c) => c.char).join("")).join("\n");
+
+  it("says so when nothing was healed, instead of 'applied'", () => {
+    // HP already at maximum: a 15% heal does nothing.
+    expect(text(renderLootScreen(100, 100, 80, 50))).toContain(
+      "HEAL — already full",
+    );
+    expect(text(renderLootScreen(100, 100, 80, 50))).not.toContain(
+      "HEAL applied",
+    );
+  });
+
+  it("still reports the applied amount when there was room to heal", () => {
+    const grid = renderLootScreen(50, 100, 80, 50);
+    expect(text(grid)).toContain("HEAL applied → 65/100");
+    expect(text(grid)).not.toContain("already full");
+  });
+
+  it("keeps the terminal node's refusal", () => {
+    expect(text(renderLootScreen(50, 100, 80, 50, 0, "", true))).toContain(
+      "NO HEAL — this was the last node",
+    );
+  });
+});

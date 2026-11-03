@@ -292,7 +292,13 @@ function continueToMatrix(state: GameState): GameState {
     player: { ...state.player, hp: healedHp },
     // Clear the offer memory on the way out.
     cardRewardTaken: null,
-    message: `${grown}Choose an adjacent route — healed to ${healedHp}/${state.player.maxHp}`,
+    // Say what happened: at full HP the 15% heal heals nothing, and claiming
+    // otherwise makes the screen lie about the run's state (ADR-0269).
+    message: `${grown}Choose an adjacent route — ${
+      healedHp > state.player.hp
+        ? `healed to ${healedHp}/${state.player.maxHp}`
+        : "already at full HP"
+    }`,
   };
 }
 

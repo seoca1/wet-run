@@ -84,6 +84,9 @@ export function dixieDamage(combo: number): number {
 - `web/tests/dixie_combo_cap.test.ts` (3) — 상한값 6, combo 0/1/6 공식, **7·12·28·60 이 모두 26**.
 - `web/tests/balance_sim.test.ts` — 기준선 갱신(이유를 주석에 명시).
 - `npm run balance` 재측정: 위 표. `npm run balance -- --deck ppl`: 불변.
+- **소크 재측정**(`random` 53셀, 상한 후): **완주 53/53 · 정지 0**, 그중 **17런이 COST 상한 도달**하고
+  **17런 전부 완주**. 즉 상한은 이제 **생존 가능한 상태**이고(동료 최대 26), 정지는 없다.
+  기록: `docs/design/ending-run-2026-11-04/report-dixie-cap.json`.
 - vitest **183 files / 4024 tests** · tsc 0 · eslint 0 errors · build PASS.
 
 **Notes**:

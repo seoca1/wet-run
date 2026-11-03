@@ -13,10 +13,22 @@ import {
 } from "./growth_reveal";
 import { ENDINGS } from "../core/combat/ending_resolver";
 
+/** What the run cost and what it earned, shown under the ending letter.
+ * Display-only: the values are the run's own final numbers, not a claim about
+ * the ending (ADR-0269). */
+export interface EndingSummary {
+  readonly mission: string;
+  readonly hp: number;
+  readonly maxHp: number;
+  readonly credits: number;
+  readonly turns: number;
+}
+
 export function renderEndingScreen(
   choice: EndingChoice | null,
   cols: number,
   rows: number,
+  summary: EndingSummary | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const c = choice ?? "arc1_wage_slave";
@@ -54,6 +66,29 @@ export function renderEndingScreen(
       PALETTE.GRAY_LIGHT,
     );
     y += 1;
+  }
+
+  // The run's own numbers, two lines above the footer. The ending text is a
+  // verdict; without this the screen never says what the run actually was --
+  // which mission, at what cost, for what. Kept to two lines that fit 40
+  // columns (the narrowest layout) and truncated rather than wrapped.
+  if (summary !== null) {
+    const width = Math.max(8, cols - 4);
+    const mission = summary.mission.slice(0, width);
+    const stats =
+      `HP ${summary.hp}/${summary.maxHp} · ` +
+      `${summary.credits.toLocaleString()}cr · ` +
+      `${summary.turns} turns`;
+    const statLine = stats.length > width ? stats.slice(0, width) : stats;
+    [mission, statLine].forEach((line, i) => {
+      grid = setText(
+        grid,
+        Math.max(2, Math.floor((cols - line.length) / 2)),
+        rows - 5 + i,
+        line,
+        PALETTE.GRAY_MID,
+      );
+    });
   }
 
   grid = setText(
@@ -181,7 +216,9 @@ export function renderLootScreen(
     healRow,
     terminal
       ? "NO HEAL — this was the last node"
-      : `HEAL applied → ${healed}/${maxHp}`,
+      : hp >= maxHp
+        ? "HEAL — already full"
+        : `HEAL applied → ${healed}/${maxHp}`,
     PALETTE.GRAY_DARK,
   );
 

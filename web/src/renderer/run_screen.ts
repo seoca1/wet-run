@@ -79,7 +79,13 @@ export function renderRunScreen(
     }
     case "ending":
       return {
-        grid: renderEndingScreen(state.endingChoice, layout.cols, layout.rows),
+        grid: renderEndingScreen(state.endingChoice, layout.cols, layout.rows, {
+          mission: state.mission.title,
+          hp: state.player.hp,
+          maxHp: state.player.maxHp,
+          credits: state.inventory.credits,
+          turns: state.turnCount,
+        }),
         // The grid already shows the ending's name, so the HUD carries the
         // arc number. The raw id ("arc4_liberation_front", 23 chars) was
         // squeezed by the canvas HUD at the 40-column layout, where the

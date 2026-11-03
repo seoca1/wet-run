@@ -90,4 +90,13 @@ describe("COST charged by a play", () => {
     expect(after.player.alarm).toBe(10);
     expect(after.runPhase).toBe("loot");
   });
+
+  it("says so in the victory message, since the hand row may not predict it", () => {
+    // ADR-0258: the exemption is stated where it happens.
+    const after = useProgram(combatState(1), "p1");
+    expect(after.message).toContain("(no COST)");
+    // A normal play does not claim the exemption.
+    const normal = useProgram(combatState(165), "p1");
+    expect(normal.message).not.toContain("no COST");
+  });
 });

@@ -34,6 +34,26 @@ describe("combat hint composition", () => {
     });
   });
 
+  it("states the killing-blow COST rule once, at combat entry (ADR-0258)", () => {
+    // The hand row may not predict the killing blow (kill prediction is
+    // forbidden), so the rule is taught here.
+    expect(COMBAT_ENTRY_HINT_LINES.join(" ")).toContain("last-hit");
+    expect(COMBAT_ENTRY_HINT_LINES.join(" ")).toContain("no COST");
+    // The new line fits the narrowest layout (40 columns, x=2).
+    const rule = COMBAT_ENTRY_HINT_LINES.find((l) => l.includes("last-hit"));
+    expect(rule).toBeDefined();
+    expect(rule!.length).toBeLessThanOrEqual(38);
+  });
+
+  it("draws every entry line, including the COST rule", () => {
+    const grid = makeGrid(80, 50);
+    const out = renderCombatHints(grid, { showHint: true, pressLabel: null });
+    const rows = combatEntryHintRows(50);
+    expect(rows).toHaveLength(COMBAT_ENTRY_HINT_LINES.length);
+    const text = rows.map((r) => rowText(out, r).trim()).join("\n");
+    expect(text).toContain("last-hit");
+  });
+
   it("draws press acknowledgement last in green over the entry hint", () => {
     const grid = makeGrid(80, 50);
     const out = renderCombatHints(grid, {

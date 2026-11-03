@@ -421,7 +421,9 @@ export function useProgram(state: GameState, programId: string): GameState {
     ];
     totalReward += achCredits;
 
-    const victoryMessage = `${stateWithLoot.ice.name} defeated! +${totalReward} credits${lootMessage}`;
+    // ADR-0258: this branch IS the killing blow, so it is where the COST
+    // exemption applies. State it here; the hand row may not predict it.
+    const victoryMessage = `${stateWithLoot.ice.name} defeated! (no COST) +${totalReward} credits${lootMessage}`;
 
     return {
       ...stateWithLoot,

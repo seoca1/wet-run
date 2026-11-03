@@ -74,6 +74,9 @@ export function shouldAutoShowTutorial(
 export const COMBAT_ENTRY_HINT_LINES: readonly string[] = [
   "1-9: USE PROGRAM   (tap the program buttons on touch devices)",
   "ICE first. You first. COST over 100 blocks programs.",
+  // ADR-0258: the killing blow charges no COST. The hand row may not predict
+  // it (kill prediction is forbidden), so the rule is stated once here.
+  "The last-hit program costs no COST.",
 ] as const;
 
 /** A combat-entry hint rendered as a single line (used by the HUD). */
@@ -90,7 +93,8 @@ export function combatEntryHint(): string {
  */
 export function combatEntryHintRows(rows: number): readonly number[] {
   const handRow = combatHandRow(rows);
-  return [handRow - 2, handRow - 1];
+  const lines = COMBAT_ENTRY_HINT_LINES.length;
+  return Array.from({ length: lines }, (_, i) => handRow - lines + i);
 }
 
 /**

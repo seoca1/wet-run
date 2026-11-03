@@ -158,7 +158,8 @@ describe("P11 — combat-entry hint", () => {
     const rows = 50;
     const handRow = Math.max(8, rows - Math.floor(rows * 0.16));
     const hintRows = combatEntryHintRows(rows);
-    expect(hintRows).toHaveLength(2);
+    // One row per entry line (ADR-0258 added the COST rule line).
+    expect(hintRows).toHaveLength(COMBAT_ENTRY_HINT_LINES.length);
     for (const row of hintRows) {
       expect(row).toBeLessThan(handRow);
     }

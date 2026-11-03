@@ -1,0 +1,9 @@
+# 전투 정지 실측 — COST 상한 (프리뷰 5195, 독립 headless Chromium, 실제 키)
+# 프로브: combat-stuck-probe.mjs — 실제 전투에 들어간 뒤 COST 를 상한으로 두고 모든 키를 눌러본다.
+# (COST 를 100 으로 두는 것은 상태 도달을 빠르게 하려는 어시스트일 뿐, 키 입력 경로는 실제 그대로다.)
+전투 시작: {"runPhase":"combat","phase":"combat","hp":100,"alarm":0,"turn":5,"hand":["strike(c1)","backdoor(c2)","boost(c2)","barrier(c3)","decoy(c2)"],"ice":[165],"msg":"Combat vs ICE — Yakuza Enforcer","cur":18,"blocked":false}
+COST 상한 상태: {"runPhase":"combat","phase":"combat","hp":100,"alarm":100,"turn":5,"hand":["strike(c1)","backdoor(c2)","boost(c2)","barrier(c3)","decoy(c2)"],"ice":[165],"msg":"Combat vs ICE — Yakuza Enforcer","cur":18,"blocked":true}
+  "Enter"        변화 없음
+  " "            변화 없음
+  "Escape"       변화: {"runPhase":"dead","phase":"defeat","hp":100,"alarm":100,"turn":5,"hand":["strike(c1)","backdoor(c2)","boost(c2)","barrier(c3)","decoy(c2)"],"ice":[165],"msg":"Jacked out — mission failed","cur":18,"blocked":true}
+20초 무입력: hp 100 → 100, alarm 100, hand 5, msg "Jacked out — mission failed"

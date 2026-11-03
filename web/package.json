@@ -1,7 +1,7 @@
 {
   "name": "wetrun-web",
   "version": "0.1.0",
-  "description": "Browser MVP of wet_run — TypeScript + Canvas2D ASCII renderer. Tier 1 of web version per ADR-0199.",
+  "description": "Browser MVP of wet_run \u2014 TypeScript + Canvas2D ASCII renderer. Tier 1 of web version per ADR-0199.",
   "private": true,
   "type": "module",
   "scripts": {
@@ -18,7 +18,8 @@
     "e2e:ui": "playwright test --ui",
     "smoke": "playwright test e2e/smoke.spec.ts",
     "lint": "eslint src scripts --ext ts",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\""
+    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "soak": "SOAK=1 PLAYWRIGHT_BASE_URL=${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5195} playwright test e2e/soak_playthrough.spec.ts --project=desktop-chromium"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

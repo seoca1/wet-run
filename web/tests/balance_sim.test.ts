@@ -135,8 +135,13 @@ describe("balance sim — grade scaling", () => {
     // shows up where a fight runs long enough to build combo: g3 97.5 -> 97.2.
     // The curated starting deck moves more (g3 81.4 -> 78.4, g4 42.6 -> 38.9,
     // g5 36.6 -> 33.4) — see `npm run balance`.
+    //
+    // ADR-0277 wires `exploit` (half the armor ignored). The alphabetical five
+    // do not hold it, so this row is unchanged; PPL picks the strongest five
+    // per grade, and `exploit` is in its grades 3-6 decks, so g4 84.1 -> 89.3
+    // and g6 27.3 -> 28.3.
     { mode: "opening", expected: [100.0, 100.0, 97.2, 53.4, 44.1, 0.3] },
-    { mode: "ppl", expected: [100.0, 100.0, 99.3, 84.1, 44.4, 27.3] },
+    { mode: "ppl", expected: [100.0, 100.0, 99.3, 89.3, 44.4, 28.3] },
   ])(
     "reproduces the ADR-0256 baseline exactly with idle disabled ($mode)",
     ({ mode, expected }) => {

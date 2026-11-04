@@ -1,0 +1,15 @@
+
+> wetrun-web@0.1.0 balance
+> tsx scripts/balance_harness.ts --deck veteran
+
+Balance harness — veteran deck [strike, backdoor, exploit, barrier, decoy]
+Missions: 53, ICE types: 97, runs/mission: 100
+
+Idle: 0ms (scalar = every turn; schedule = once, then 0)
+grade  missions  win-rate  stalled  mean-turns  mean-HP-end  p5/p95
+    1         4    100.0%     0.0%         3.0         86.9   86/92
+    2        16    100.0%     0.0%         4.1         47.3   39/60
+    3        11     86.5%     0.0%         7.1         17.2    3/37
+    4        10     47.0%     0.0%         7.4          7.0    0/9
+    5         9     40.3%     0.0%         6.1          6.4    1/9
+    6         3      0.0%     0.0%         5.4          0.0    0/0

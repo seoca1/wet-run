@@ -70,6 +70,9 @@ describe("program catalog text", () => {
       if (effect.kind === "pierce") {
         expect(program.description).toMatch(/ignores \d+ points of its armor/);
       }
+      if (effect.kind === "armor_ignore") {
+        expect(program.description).toMatch(/ignores \d+% of its armor/);
+      }
       if (effect.kind === "empower") {
         expect(program.description).toMatch(/adds \d+ damage to your attacks/i);
       }

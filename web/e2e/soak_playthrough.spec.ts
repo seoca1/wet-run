@@ -402,10 +402,35 @@ async function play(
   return moved;
 }
 
-/** NEW RUN, pick a mission, launch. */
-async function startRun(page: Page, missionOffset: number): Promise<void> {
+/** NEW RUN, pick a jockey, pick a mission, launch. */
+async function startRun(
+  page: Page,
+  missionOffset: number,
+  jockey = 0,
+): Promise<void> {
   await gotoMenuOption(page, "new_run");
   await page.keyboard.press("Enter");
+  // ADR-0274: NEW RUN opens the jockey select first. Without this the harness
+  // waited for a mission list that the jockey screen was covering.
+  await page.waitForFunction(
+    () =>
+      ["jockey_select", "mission_select"].includes(
+        (
+          window as unknown as { wetrun: { getScreen(): string } }
+        ).wetrun.getScreen(),
+      ),
+    undefined,
+    { timeout: 10000 },
+  );
+  const screen = (): Promise<string> =>
+    page.evaluate(
+      () =>
+        (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen(),
+    );
+  if ((await screen()) === "jockey_select") {
+    for (let i = 0; i < jockey; i += 1) await page.keyboard.press("ArrowDown");
+    await page.keyboard.press("Enter");
+  }
   await page.waitForFunction(
     () =>
       (

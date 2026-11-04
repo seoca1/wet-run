@@ -116,6 +116,74 @@ describe("ADR-0255 program effects", () => {
     expect(piercedDamage - plainDamage).toBe(2);
   });
 
+  it("exploit ignores half of the ICE's armor", () => {
+    // Fixed RNG: damage variance would otherwise blur the armor difference.
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
+    // Same tier, same base damage — only the armor treatment differs.
+    const plain = useProgram(
+      makeState({ deck: [program({ id: "strike", tier: 3 })] }),
+      "strike",
+    );
+    const exploited = useProgram(
+      makeState({ deck: [program({ id: "exploit", tier: 3 })] }),
+      "exploit",
+    );
+    const plainDamage = 165 - (plain.iceRoster[0]?.hp ?? 0);
+    const exploitDamage = 165 - (exploited.iceRoster[0]?.hp ?? 0);
+    // Armor 5 -> floor(5 * 0.5) = 2, so the hit lands 3 harder.
+    expect(exploitDamage - plainDamage).toBe(3);
+  });
+
+  it("exploit is worth nothing against an unarmored ICE", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
+    const plain = useProgram(
+      makeState({
+        deck: [program({ id: "strike", tier: 3 })],
+        iceRoster: [iceWithArmor(0)],
+      }),
+      "strike",
+    );
+    const exploited = useProgram(
+      makeState({
+        deck: [program({ id: "exploit", tier: 3 })],
+        iceRoster: [iceWithArmor(0)],
+      }),
+      "exploit",
+    );
+    const plainDamage = 165 - (plain.iceRoster[0]?.hp ?? 0);
+    const exploitDamage = 165 - (exploited.iceRoster[0]?.hp ?? 0);
+    expect(exploitDamage).toBe(plainDamage);
+  });
+
+  it("exploit grows with the armor it is pointed at", () => {
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
+    const gain = (armor: number): number => {
+      const plain = useProgram(
+        makeState({
+          deck: [program({ id: "strike", tier: 3 })],
+          iceRoster: [iceWithArmor(armor)],
+        }),
+        "strike",
+      );
+      const exploited = useProgram(
+        makeState({
+          deck: [program({ id: "exploit", tier: 3 })],
+          iceRoster: [iceWithArmor(armor)],
+        }),
+        "exploit",
+      );
+      return (
+        165 -
+        (exploited.iceRoster[0]?.hp ?? 0) -
+        (165 - (plain.iceRoster[0]?.hp ?? 0))
+      );
+    };
+    // The ICE armor curve runs 1.0 at tier 1 to 10.5 at tier 6, so the same
+    // card is worth more the deeper the run goes — that is the point of it.
+    expect(gain(2)).toBe(1);
+    expect(gain(10)).toBe(5);
+  });
+
   it("barrier grants a 2-point shield for 2 turns", () => {
     const after = useProgram(
       makeState({ deck: [program({ id: "barrier" })] }),

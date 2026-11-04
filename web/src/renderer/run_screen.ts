@@ -85,7 +85,7 @@ export function renderRunScreen(
           jockey: jockeyHandle(state.jockeyId),
           hp: state.player.hp,
           maxHp: state.player.maxHp,
-          credits: state.inventory.credits,
+          credits: state.player.credits,
           turns: state.turnCount,
         }),
         // The grid already shows the ending's name, so the HUD carries the

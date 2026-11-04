@@ -86,10 +86,16 @@ export function useProgram(state: GameState, programId: string): GameState {
   // ADR-0255: Backdoor ignores N points of the ICE's armor. Armor is a flat
   // subtraction, so a pierce has to remove points from it — a share of the
   // armor would round away to nothing on the lightly armored ICEs.
+  // ADR-0277: `exploit` is the other direction — it keeps a share of the
+  // armor, so it is worth nothing on a bare ICE and a lot on a plated one.
   const effect = programEffect(program);
   const piercePoints = effect.kind === "pierce" ? effect.amount : 0;
+  const armorKeptPct =
+    effect.kind === "armor_ignore" ? 100 - effect.amount : 100;
   const defenderArmor = defenderIce.armor ?? 0;
-  const effectiveArmor = Math.max(0, defenderArmor - piercePoints);
+  const effectiveArmor = Math.floor(
+    (Math.max(0, defenderArmor - piercePoints) * armorKeptPct) / 100,
+  );
 
   const damageCtx = {
     baseDamage: program.tier * 5,

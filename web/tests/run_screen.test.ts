@@ -62,11 +62,32 @@ describe("run screen composition", () => {
         mission: state.mission.title,
         hp: state.player.hp,
         maxHp: state.player.maxHp,
-        credits: state.inventory.credits,
+        credits: state.player.credits,
         turns: state.turnCount,
       }).cells,
     );
     expect(view?.hud).toEqual(["ENDING", "", "ARC ?"]);
+  });
+
+  it("reports the money the run earned, not the mission's base reward", () => {
+    // ADR-0277: fight rewards land in `player.credits` — the number the HUD
+    // shows and the save keeps. `inventory.credits` holds the mission's base
+    // reward and is only ever spent on crafting. The ending read the second
+    // one, so a run that earned 2,300 credits ended on a screen saying 500.
+    const state = runState({
+      runPhase: "ending",
+      endingChoice: "arc1_wage_slave",
+    });
+    const spent = {
+      ...state,
+      player: { ...state.player, credits: 2300 },
+      inventory: { ...state.inventory, credits: 500 },
+    };
+    const view = renderRunScreen(spent, 80, 30);
+    if (!view) throw new Error("ending screen did not render");
+    const text = view.grid.cells.map((_, y) => rowText(view.grid, y)).join("\n");
+    expect(text).toContain("2,300cr");
+    expect(text).not.toContain("500cr");
   });
 
   it("keeps the ending HUD line inside the narrow HUD panel", () => {

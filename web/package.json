@@ -19,7 +19,8 @@
     "smoke": "playwright test e2e/smoke.spec.ts",
     "lint": "eslint src scripts --ext ts",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "soak": "SOAK=1 PLAYWRIGHT_BASE_URL=${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5195} playwright test e2e/soak_playthrough.spec.ts --project=desktop-chromium"
+    "soak": "SOAK=1 PLAYWRIGHT_BASE_URL=${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5195} playwright test e2e/soak_playthrough.spec.ts --project=desktop-chromium",
+    "story": "STORY=1 PLAYWRIGHT_BASE_URL=${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5195} playwright test e2e/story_trace.spec.ts --project=desktop-chromium"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

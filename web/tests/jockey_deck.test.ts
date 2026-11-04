@@ -85,6 +85,25 @@ describe("ADR-0276 — per-jockey starting decks", () => {
     expect(startingDeck(partial, "veteran")).toHaveLength(4);
   });
 
+  it("ADR-0277: every deck answers armor, and SIL answers it twice", () => {
+    // Wiring `exploit` made it the card that separates a deck from the pack,
+    // so every deck holds one; SIL is the one that also holds the flat pierce.
+    for (const [jockey, ids] of Object.entries(JOCKEY_DECK_IDS)) {
+      expect(ids, jockey).toContain("exploit");
+    }
+    expect(JOCKEY_DECK_IDS.veteran).toContain("backdoor");
+    expect(JOCKEY_DECK_IDS.novice).not.toContain("backdoor");
+  });
+
+  it("no deck drops the cheap swing", () => {
+    // Measured: swapping the t1 `strike` for any t3 card took grade 3 from
+    // 78.4% to 99.5%. A turn passes only when the hand empties, so the
+    // cheapest card is the deck's brake -- dropping it is not a swap.
+    for (const [jockey, ids] of Object.entries(JOCKEY_DECK_IDS)) {
+      expect(ids, jockey).toContain("strike");
+    }
+  });
+
   it("main.ts deals the jockey's deck", () => {
     const main = readFileSync(
       fileURLToPath(new URL("../src/main.ts", import.meta.url)),

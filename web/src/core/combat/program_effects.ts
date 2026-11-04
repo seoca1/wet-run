@@ -17,6 +17,8 @@ export type ProgramEffectKind =
   | "damage"
   /** The attack ignores N points of the target's armor. */
   | "pierce"
+  /** The attack ignores N percent of the target's armor (ADR-0277). */
+  | "armor_ignore"
   /** A pool that absorbs incoming damage. */
   | "shield"
   /** The player's damage rises for a few turns. */
@@ -44,10 +46,10 @@ export const NO_EFFECT: ProgramEffect = Object.freeze({
 });
 
 /**
- * The opening hand (main.ts `loadDeck` picks the first five program ids).
- * These are the cards a player actually holds, so their mechanics are the
- * ones that have to be real. Every other catalog program stays a plain
- * tier * 5 attack and its designed effect stays in `plannedDescription`.
+ * The programs whose mechanics are wired. These are the cards the jockey
+ * decks actually hold (ADR-0260, ADR-0276), so their mechanics are the ones
+ * that have to be real. Every other catalog program stays a plain tier * 5
+ * attack and its designed effect stays in `plannedDescription`.
  */
 export const PROGRAM_EFFECTS: Readonly<Record<string, ProgramEffect>> =
   Object.freeze({
@@ -55,6 +57,13 @@ export const PROGRAM_EFFECTS: Readonly<Record<string, ProgramEffect>> =
     // against a tier*5 player hit: a 3-point pierce is a real gain on the
     // lightly armored ICEs without doubling the hit on the armored ones.
     backdoor: Object.freeze({ kind: "pierce", amount: 2, turns: 0 }),
+    // ADR-0277: `exploit` is the generalist's answer to armor. A flat pierce
+    // is worth nothing against an unarmored ICE and everything against a
+    // heavily armored one; a share of the armor scales with the target, which
+    // is the ICE tier curve itself (armor runs 1.0 at tier 1 to 10.5 at
+    // tier 6). Half is sized so the card stays a tier-3 attack on light ICE
+    // and turns into roughly a tier-4 hit on the armored ones.
+    exploit: Object.freeze({ kind: "armor_ignore", amount: 50, turns: 0 }),
     barrier: Object.freeze({ kind: "shield", amount: 2, turns: 2 }),
     // `powered` adds a flat bonus to the player's attacks (combat_engine.ts
     // reads `attackerAttackBonus`), so the amount is points, not percent.
@@ -86,6 +95,8 @@ export function programEffectDescription(
   switch (effect.kind) {
     case "pierce":
       return `${damage} and ignores ${effect.amount} points of its armor.`;
+    case "armor_ignore":
+      return `${damage} and ignores ${effect.amount}% of its armor.`;
     case "shield":
       return `${damage} and grants a ${effect.amount}-point shield for ${effect.turns} turns.`;
     case "empower":
@@ -105,6 +116,8 @@ export function programEffectTag(program: Pick<Program, "id">): string {
   switch (effect.kind) {
     case "pierce":
       return `PIERCE ${effect.amount}`;
+    case "armor_ignore":
+      return `ARMOR -${effect.amount}%`;
     case "shield":
       return `SHIELD ${effect.amount}`;
     case "empower":

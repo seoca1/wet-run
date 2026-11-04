@@ -2934,7 +2934,7 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **저장 무결성**: 획득은 플레이어 선택이라 유도 불가 → `cardRewardTaken` 을 **선택 필드**로 추가(`currentNodeIndex`·`clearedEncounterNodes`·`bypassedEncounterNodes` 와 같은 패턴, `version` 1 유지). 재로드 시 **두 번째 획득 불가**(한 전투 한 장). 제시 목록은 `ownedIds` 가 taken 을 되돌려 **안정**(하나를 고르면 나머지 둘의 자리가 밀리지 않는다). loot 를 떠날 때 `null` 로 정리.
   - ADR-0259 는 "새 영속 필드 없음"을 제약으로 삼았고, 이 ADR 은 **획득 박자를 위해 그 제약을 한 필드만큼 푼다** — 대가는 선택 필드 1개 + 검증 1줄, 이득은 저장 무결성과 재현 가능한 화면.
 - **금지 목록 준수**: 벽시계·입력 락·애니메이션 큐 없음(ADR-0251 §"이건 짓지 마라"). 박자는 플레이어의 ENTER 가 만든다.
-- **검증**: vitest **180 files / 3985 passed**(베이스라인 180/3978) · tsc 0 · eslint 0 · build PASS · 밸런스 **byte-identical**(opening 100.0/100.0/81.4/42.6/36.6/0.0 · PPL 100.0/100.0/99.3/84.1/44.4/27.3 — 표시·사운드 전용) · 3레이아웃 캡처 18케이스 그리드/HUD 초과 **0** · 실플레이(ego-lite) `1` = `loot`+`taken:"kraken"`+`"Acquired Kraken"` → ENTER = `matrix`+`taken:null`+`"Took Kraken."`, console error 0.
+- **검증**: vitest **180 files / 3985 passed**(베이스라인 180/3978) · tsc 0 · eslint 0 errors (1 pre-existing warning) · build PASS · 밸런스 **byte-identical**(opening 100.0/100.0/81.4/42.6/36.6/0.0 · PPL 100.0/100.0/99.3/84.1/44.4/27.3 — 표시·사운드 전용) · 3레이아웃 캡처 18케이스 그리드/HUD 초과 **0** · 실플레이(ego-lite) `1` = `loot`+`taken:"kraken"`+`"Acquired Kraken"` → ENTER = `matrix`+`taken:null`+`"Took Kraken."`, console error 0.
 - **증거**: `Game/wet_run/docs/design/growth-feedback-2026-11-03/` — 3레이아웃 캡처(제시/획득/종결) + 폭 검사 + 밸런스/테스트 로그.
 - **남은 항목**: (a) 도착지 강조는 아직 메시지 텍스트뿐 — 더 강조하려면 매트릭스 배너 밴드(별도 슬라이스) (b) 하네스가 성장을 모델링하지 않음 (c) 제시 카드 tier 가중치.
 
@@ -3002,3 +3002,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **불변**: `SaveSlot.version` 1 유지(덱은 매 런 결정, 저장 스키마 무변경). 세 덱 모두 ADR-0260 형태(공격 다수 + 방어 ≥1); 전부 공격인 C10 은 2등급에서 무너져 기각.
 - **검증**: vitest **188 files / 4056 tests** · tsc 0 · eslint 0 errors · build PASS · `check_doc_claims.py` · `check_no_novel_prose.py` exit 0.
 - **남은 항목(오너 결정)**: (a) 덱이 **종류로** 달라지려면 `plannedDescription` 의 효과 배선(virus=도트 등) — 지금은 tier 로만 다름 (b) 자키 선택 ↔ 프롤로그 체인 일치(프롤로그는 `novice` 고정) (c) 등급 6 이 세 덱 모두 0.0%(PPL 도 27.3%) — 등급 6 자체 미완성 (d) 선택 화면 소개문에 덱 언급.
+
+## [2026-11-04] feat(balance) | `exploit` 이 방어도의 절반을 무시한다 — 큐레이션 덱 교체 + 엔딩 크레딧 표시 수정 (ADR-0277)
+
+- **배경**: ADR-0276 열린 질문 (a) — 자키 덱이 tier 로만 갈리고 메커니즘으로는 안 갈린다. 이유는 배선된 효과가 5개뿐이고 기본 덱이 그중 4개를 이미 쥐고 있었기 때문.
+- **수정**: `exploit` 을 `armor_ignore` 50% 로 배선. `effectiveArmor = floor(max(0, armor - pierce) * (100 - amount) / 100)` — `amount = 0` 인 모든 카드는 수치 불변. 텍스트/태그는 기계에서 생성(`ARMOR -50%`).
+- **측정이 초안을 뒤집었다**: 배선 직후 큐레이션 덱만 `exploit` 이 없어 3등급 **78.4%**(SIL 86.5, **-8.1**) — ADR-0276 의 ±5%p 기준 위반. `backdoor` → `exploit` 교체. 기각: 그대로(78.4) · `strike` 제거(99.5) · `barrier` 제거(81.5) · `decoy` 제거(70.1) · `strike`→`surge`(99.6).
+- **최종 곡선(100 runs/mission)**: g3 `89.1/86.5/84.3` · g4 `47.4/47.0/43.3` · g5 `40.7/40.3/36.4` — 최대 차 4.8/4.1/4.3. PPL 참조 `100/100/99.3/89.3/44.4/28.3`.
+- **턴 모델 발견**: 턴은 손패가 비었을 때만 넘어간다 → 덱 화력은 tier 합이 아니라 **카드 tier**. 그래서 가장 싼 카드를 빼는 것이 가장 큰 상향(`strike` 제거 = +20점). `tests/jockey_deck.test.ts` 가 "어떤 덱도 `strike` 를 버리지 않는다"를 고정.
+- **같이 고친 표시 버그**: 엔딩 요약이 `inventory.credits`(미션 기본 보상)를 읽어 2,300cr 런이 **500cr** 로 표시 → `player.credits`. `tests/run_screen.test.ts` 가 "런이 번 돈을 표시한다"를 고정. 실화면: `CASE — First Jack / HP 100/100 · 2,300cr · 7 turns`.
+- **서사 검증**: `web/e2e/story_trace.spec.ts`(`npm run story`) — 실브라우저·실키 15스텝, 정지 0, 엔딩 `arc1_wage_slave` 도달. `docs/design/jockey-identity-2026-11-04/story-narration.md` 에 이야기로 옮기고 그럴듯함을 판정. 드러난 결함: 받은 카드(Scan)가 짧은 런에서 손에 안 들어옴 · 전투 사이 손패 미초기화 · 한 미션 두 ICE 동일 타입 · 자키 소개("deck is already warm") vs arc1 인트로("cold in your hands") 톤 충돌 · 구역명(surface vs mid/core-deep) · `Loot: ice_shardx1` 공백.
+- **소크**: `SOAK_RUNS=3 npm run soak` → completed 3, frozen 0 (ADR-0274 자키 선택 화면을 `startRun` 이 통과하도록 수정).
+- **검증**: vitest **188 files / 4062 tests** · typecheck 0 · lint 0 errors (1 pre-existing warning) · build PASS · `check_doc_claims.py` exit 0 · `check_no_novel_prose.py` exit 0 (1745 strings).
+- **남은 항목(오너 결정)**: (a) 전투 시작 시 손패 리필(성장 카드가 실제로 손에 들어오게 — 밸런스 재측정 필요) (b) 미션 내 ICE 타입 중복 제거 (c) 엔딩 `control` 분기의 크레딧 출처(`inventory.credits > 5000`)와 `hp > 75%` 조건 — ADR-0277 열린 질문 (c).

@@ -4,7 +4,7 @@
 **날짜**: 2026-11-04
 **결정자**: 오너 ("자키가 런에 실제 영향" → "계속.")
 **우선순위**: P1 (게임플레이 · 밸런스) · P2 (측정 가능성)
-**관련**: [ADR-0274 — 런은 자키의 것이다](./0274-the-run-belongs-to-someone.md) · [ADR-0260 — 시작 덱 큐레이션](./0260-the-opening-deck-is-chosen.md) · [ADR-0255 — 프로그램 효과](./0255-program-effects-are-real.md) · [ADR-0251 — 텍스트는 화면이 하는 일을 말한다](./0251-the-text-states-what-the-screen-does.md)
+**관련**: [ADR-0274 — 런은 자키의 것이다](./0274-the-run-belongs-to-someone.md) · [ADR-0260 — 시작 덱 큐레이션](./0260-starting-deck-is-chosen.md) · [ADR-0255 — 프로그램 효과](./0255-card-effects-are-real.md) · [ADR-0251 — 텍스트는 화면이 하는 일을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md)
 
 > ADR-0274 는 자키가 **누구인지**만 말하게 했다(런 인트로·엔딩 요약, 표시 전용). 이 ADR 은 자키가
 > **어떻게 플레이되는지**를 정하게 한다 — 시작 덱을 자키별로 나눈다. 이 계열 작업에서 **처음으로 밸런스에 닿는**

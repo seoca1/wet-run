@@ -14,7 +14,7 @@
 
 전체 마크다운 파일:
 
-[자키 정체성 설계 제안서](\/home\/ubuntu\/jockey_identity_proposal.md)
+[자키 정체성 설계 제안서](./proposal.md)
 
 ---
 

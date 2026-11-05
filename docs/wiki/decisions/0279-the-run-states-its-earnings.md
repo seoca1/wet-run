@@ -122,6 +122,12 @@ ADR-0269("엔딩은 런을 돌아본다")와 ADR-0270("엔딩 선택을 우연�
 
 - `inventory.credits` 는 계속 미션 기본 보상으로 시작한다(기존 동작). 두 지갑의 관계를 하나로
   합치는 것은 별도 결정 — `purchaseItem` 에 호출자가 없어 지금은 쓰이지 않는다.
+- **Manus 독립 리뷰 (2026-11-05):** `docs/design/adr-review-2026-11-05/manus-review.md` (task `LXHmpxarQHm38S4FT5XXPX`, agent `lite`) — verdict **approve-with-caveats**. Findings: (1) high — 최종 분포 측정 분리 → 위 재확인으로 해소, (2) medium — 터미널 승리 멱등성 미입증 → `adr0279_mission_reward.test.ts` 에 "mission complete" 단일 언급 테스트 추가, (3) medium — `isTerminalNode` 경계 불명확 → `run_end.ts` 주석 보강, (4) medium — ADR-0130 `rewards.credits` 권위 관계 미해소 (후속), (5) low — `control` 카탈로그 존재 vs 도달성 표현 혼재 (후속). 오픈 질문 (a) 부분 가능, (b) 현재 증거로 결정 불가, (c) 답할 수 없음.
+- **최종 분포 재확인 (2026-11-05, Manus 리뷰 high finding 대응):** `resolveVictory` 1회 지급 + `player.credits`
+  리졸버 **두 변경이 모두 적용된** 최종 코드에서 `npm run endings` 재실행 → 위 표의 `player` 열과 동일
+  (arc1_wage_slave 20 · arc2_status_quo 14 · arc3_neutrality 7 · arc3_double_agent 1 · arc4_new_order 7 ·
+  arc5_control 4, mean earned 3750, 12/53 런이 5,000 초과). 즉 표는 최종 상태의 분포이며, 리졸버 지갑만
+  교체한 비교가 아니다.
 - 소크 하네스는 이제 `ending` 을 리포트에 남긴다(측정 공백 보완).
 
 ## 열린 질문

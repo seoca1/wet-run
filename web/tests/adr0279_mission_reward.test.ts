@@ -209,6 +209,18 @@ describe("ADR-0279 · the resolver reads what the run earned", () => {
     }
   });
 
+  it("the terminal victory mentions 'mission complete' exactly once (idempotent display)", () => {
+    // Given: a full clear of an 800cr mission.
+    const first = winFight(twoFightMission());
+    const won = winFight(walkToBoss(first));
+
+    // Then: the mission reward is announced a single time, even though the
+    // terminal fight could in principle re-enter the victory path.
+    const mentions = (won.message.match(/mission complete/g) ?? []).length;
+    expect(mentions).toBe(1);
+    expect(won.player.credits).toBe(1975);
+  });
+
   it("First Jack's mission reward is the 500 the select screen shows", () => {
     // Given / When: the mission the mission-select screen prints as 500cr.
     const mission = Object.values(missions).find((m) => m.id === "first_jack");

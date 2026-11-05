@@ -5,7 +5,16 @@
 import type { GameState } from "../types";
 
 /** A node whose win ends the mission (the `applyLootAction` rule): no
- * matrix, an unknown node, a dead end, or the boss. */
+ * matrix, an unknown node, a dead end, or the boss.
+ *
+ * ADR-0279: this is the single gate for "pay the mission reward". A terminal
+ * win (boss or dead-end) pays `mission.rewards.credits` once, on top of the
+ * node reward; a non-terminal win pays only the node reward. The four cases:
+ *   - no matrix (run already over)        → terminal
+ *   - unknown node index                   → terminal (defensive)
+ *   - node with no adjacent nodes (dead end) → terminal
+ *   - boss node (node.isBoss)              → terminal
+ * Every other node is a mid-mission encounter → non-terminal. */
 export function isTerminalNode(state: GameState): boolean {
   const node = state.matrix?.nodes[state.currentNodeIndex];
   return !state.matrix || !node || node.adjacent.length === 0 || node.isBoss;

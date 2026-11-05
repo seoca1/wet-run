@@ -1,0 +1,80 @@
+ending distribution — 53 missions, seed 20261105, policy "expensive", resolver credits=player
+
+ending                    n   share
+arc1_wage_slave           20   37.7%
+arc2_status_quo           14   26.4%
+arc4_new_order             7   13.2%
+arc3_neutrality            7   13.2%
+arc5_control               4   7.5%
+arc3_double_agent          1   1.9%
+
+mean earned (player.credits): 3750  ·  mean mission base: 1839
+runs with player.credits > 5000: 12/53
+
+  g1 first_jack                   arc1_wage_slave          hp 80/100 cr 1725 (base 500)
+  g1 moat_burned_blue             arc1_wage_slave          hp 80/100 cr 1725 (base 500)
+  g1 rogers_backyard              arc1_wage_slave          hp 80/100 cr 1725 (base 500)
+  g1 watchdog_patrol              arc1_wage_slave          hp 100/100 cr 2075 (base 750)
+  g2 arkady_in_orange             arc1_wage_slave          hp 100/100 cr 2975 (base 900)
+  g2 blue_silk_wall               arc1_wage_slave          hp 80/100 cr 1750 (base 600)
+  g2 data_retrieval               arc1_wage_slave          hp 80/100 cr 1825 (base 500)
+  g2 deathspiders_news            arc1_wage_slave          hp 80/100 cr 1925 (base 600)
+  g2 delivery_to_finn             arc1_wage_slave          hp 95/100 cr 2825 (base 800)
+  g2 don_mac_audit                arc1_wage_slave          hp 80/100 cr 1900 (base 600)
+  g2 erythrinas_list              arc2_status_quo          hp 95/100 cr 2700 (base 900)
+  g2 far_grid_prelude             arc1_wage_slave          hp 95/100 cr 2350 (base 600)
+  g2 first_trace                  arc2_status_quo          hp 100/100 cr 2825 (base 800)
+  g2 hetmans_meeting              arc1_wage_slave          hp 95/100 cr 2925 (base 1000)
+  g2 ice_run                      arc1_wage_slave          hp 80/100 cr 1675 (base 500)
+  g2 maidens_first_run            arc1_wage_slave          hp 80/100 cr 1900 (base 600)
+  g2 mailmans_last_letter         arc2_status_quo          hp 100/100 cr 2800 (base 700)
+  g2 pollack_after_dark           arc1_wage_slave          hp 80/100 cr 2350 (base 700)
+  g2 tutorial_maze                arc1_wage_slave          hp 95/100 cr 2200 (base 300)
+  g2 warren_meadow                arc1_wage_slave          hp 80/100 cr 1775 (base 600)
+  g3 armitage_infiltration        arc2_status_quo          hp 100/100 cr 3600 (base 1500)
+  g3 dirtgirl_dispatch            arc2_status_quo          hp 80/100 cr 3150 (base 1400)
+  g3 first_contact                arc2_status_quo          hp 100/100 cr 3200 (base 800)
+  g3 flatline_call                arc2_status_quo          hp 80/100 cr 2875 (base 1200)
+  g3 limeys_long_game             arc3_neutrality          hp 100/100 cr 4200 (base 2200)
+  g3 maurice_princes              arc1_wage_slave          hp 88/100 cr 3200 (base 1200)
+  g3 mollys_market                arc2_status_quo          hp 80/100 cr 2950 (base 1200)
+  g3 sally_sandii_3am             arc2_status_quo          hp 80/100 cr 2850 (base 1100)
+  g3 sense_net_tip                arc2_status_quo          hp 80/100 cr 2875 (base 1200)
+  g3 wileys_gate                  arc2_status_quo          hp 100/100 cr 2950 (base 1100)
+  g3 yakuza_deal                  arc2_status_quo          hp 100/100 cr 3400 (base 1500)
+  g4 black_ice_dream              arc3_neutrality          hp 100/100 cr 4325 (base 2000)
+  g4 dodgers_office               arc1_wage_slave          hp 80/100 cr 3600 (base 1800)
+  g4 firebuds_chair               arc2_status_quo          hp 80/100 cr 3525 (base 1700)
+  g4 hosaka_extraction            arc3_neutrality          hp 80/100 cr 4925 (base 3000)
+  g4 mollys_razor                 arc3_neutrality          hp 80/100 cr 4325 (base 2500)
+  g4 neuromancer_whisper          arc3_neutrality          hp 96/100 cr 4375 (base 2200)
+  g4 sally_returns_arc3           arc3_neutrality          hp 80/100 cr 4425 (base 2500)
+  g4 ta_heist                     arc3_double_agent        hp 80/100 cr 5275 (base 3500)
+  g4 tin_soldiers_end             arc1_wage_slave          hp 80/100 cr 4525 (base 2600)
+  g4 vegas_stakeout               arc3_neutrality          hp 100/100 cr 4175 (base 1800)
+  g5 aleph_fragment               arc4_new_order           hp 100/100 cr 6600 (base 4000)
+  g5 craft_job                    arc2_status_quo          hp 80/100 cr 3250 (base 1000)
+  g5 dixies_choice                arc4_new_order           hp 100/100 cr 7125 (base 3500)
+  g5 dixies_offer                 arc4_new_order           hp 91/100 cr 5125 (base 3000)
+  g5 final_choice                 arc5_control             hp 80/100 cr 7550 (base 5500)
+  g5 matrix_revelation            arc4_new_order           hp 100/100 cr 5800 (base 2800)
+  g5 ta_defection                 arc4_new_order           hp 100/100 cr 7100 (base 4500)
+  g5 voodoo_loa_encounter         arc4_new_order           hp 100/100 cr 6450 (base 3500)
+  g5 winter_infiltrate            arc4_new_order           hp 80/100 cr 5275 (base 3200)
+  g6 neuromancer_merger           arc5_control             hp 80/100 cr 7100 (base 5000)
+  g6 wintermute_negotiation       arc5_control             hp 80/100 cr 8150 (base 6000)
+  g6 zion_express                 arc5_control             hp 96/100 cr 6575 (base 4500)
+
+=== resolver credits=inventory (the pre-ADR-0279 source) ===
+ending distribution — 53 missions, seed 20261105, policy "expensive", resolver credits=inventory
+
+ending                    n   share
+arc1_wage_slave           20   37.7%
+arc2_status_quo           14   26.4%
+arc3_neutrality            8   15.1%
+arc4_status_quo            7   13.2%
+arc5_control               2   3.8%
+arc5_unknown               2   3.8%
+
+mean earned (player.credits): 3750  ·  mean mission base: 1839
+runs with player.credits > 5000: 12/53

@@ -60,7 +60,15 @@ re-measurement. Full ledger with evidence: `story-narration.md` §정정 및 재
 | 8 | Loot heals to full at every node | **false positive** — it heals 15%; the run was at 96/100 |
 | 9 | The fight names the wrong ICE (`Combat vs ICE — Wisp` for the wintermute boss) | fixed — the screen reads the roster |
 | 10 | The payout depended on who landed the killing blow | fixed — kills are credited where they happen |
-| 11 | The mission base reward is paid on every encounter | **open** — owner decision (economy) |
+| 11 | The mission base reward is paid on every encounter | **fixed** — paid once, on the fight that ends the mission (ADR-0279) |
+| 12 | The ending resolver read a wallet combat cannot fill | **fixed** — reads `player.credits`, the number the ending prints (ADR-0279) |
+
+## Ending distribution (ADR-0279)
+
+`npm run endings` — 53 missions, seeded, deterministic. `control` went from a
+branch reachable on 2 of 53 missions to 12 runs (arc 3: 1, arc 4: 7, arc 5: 4).
+Arcs 1–2 still do not reach it (their rewards are too small to clear 5,000).
+Raw: `ending-distribution.txt`.
 
 ## Reproduce
 

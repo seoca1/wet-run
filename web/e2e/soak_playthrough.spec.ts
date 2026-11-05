@@ -105,6 +105,8 @@ type Run = {
   readonly decision: boolean;
   readonly grade: number;
   readonly missionId: string;
+  /** The ending the run reached, or null while the run is live. */
+  readonly ending: string | null;
 };
 
 type Snap = { readonly screen: string; readonly state: Run | null };
@@ -136,6 +138,8 @@ type RunReport = {
   readonly endMsg?: string;
   readonly endBusiness?: number;
   readonly escapeResult?: string;
+  /** The ending id — the run's outcome as a story beat, not just a phase. */
+  readonly ending?: string | null;
 };
 
 /** Semantic projection: the fields that mean "something happened". Volatile
@@ -167,6 +171,7 @@ async function snap(page: Page): Promise<Snap> {
       clearedEncounterNodes?: number[];
       bypassedEncounterNodes?: number[];
       mission?: { id?: string; grade_max?: number; grade?: number };
+      endingChoice?: string | null;
     };
     const node = st.matrix?.nodes[st.currentNodeIndex];
     return {
@@ -198,6 +203,7 @@ async function snap(page: Page): Promise<Snap> {
         decision: st.encounterDecision != null,
         grade: st.mission?.grade_max ?? st.mission?.grade ?? 0,
         missionId: st.mission?.id ?? "?",
+        ending: st.endingChoice ?? null,
       },
     };
   });
@@ -544,9 +550,11 @@ test.describe("direct-control playthrough soak", () => {
           now.state !== null &&
           (now.state.runPhase === "dead" || now.state.runPhase === "ending")
         ) {
+          const reached = now.state.ending;
           await page.keyboard.press("Enter");
           await page.waitForTimeout(250);
           outcome = now.state.runPhase === "dead" ? "failed" : "completed";
+          detail = { endPhase: `${now.state.runPhase}/${now.state.phase}`, ending: reached };
           steps += 1;
           break;
         }

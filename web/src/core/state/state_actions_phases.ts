@@ -207,7 +207,12 @@ function applyTerminalLoot(state: GameState, action: GameAction): GameState {
     arc,
     hp: state.player.hp,
     maxHp: state.player.maxHp,
-    credits: state.inventory.credits,
+    // ADR-0279: the resolver reads what the run actually earned, the same
+    // number the ending screen prints (ADR-0277). `inventory.credits` is the
+    // mission's base reward seeded for crafting and never grows from combat, so
+    // the `control` branch used it to test a wallet that combat could not fill:
+    // reachable on 2 of 53 missions.
+    credits: state.player.credits,
     missionsCompleted: 1, // single-mission run: this mission just completed
     totalDeaths: state.totalDeaths,
     factionScores: updatedScores,

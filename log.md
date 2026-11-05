@@ -3036,3 +3036,19 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **소크**: `SOAK_RUNS=15 npm run soak` → **15/15 completed, frozen 0** (g1–g5, g5 6런 포함).
 - **검증**: vitest **190 files / 4077 tests** · typecheck 0 · lint 0 errors(기존 `keyboard.ts` 경고 1) · build PASS · `check_doc_claims.py` exit 0 (111 paths, 198 ADRs) · `check_no_novel_prose.py` exit 0 (1760 strings) · `mixed_language_audit.py` 0.
 - **남은 항목(오너 결정)**: 미션 기본 보상이 **교전마다** 지급된다(`mission.rewards.credits + node.reward.credits`). `First Jack` 은 500 을 약속하는데 두 교전에서 500 이 두 번 들어갔다(625 / 1675). 미션 선택 화면이 `[T1 | 500cr]` 이라고 말하므로 "화면이 약속한 것과 게임이 하는 것" 계열이다. 권고: 미션 보상은 엔딩에서 한 번, 교전 승리는 노드 보상만 — 경제 변경이라 ADR-0278 열린 질문 (a).
+
+## [2026-11-05] fix(economy) | 런이 번 돈을 런이 말한다 — 미션 보상 1회 지급 + 엔딩 지갑 정합 (ADR-0279)
+
+- **배경**: ADR-0278 열린 질문 (a)·(b) = ADR-0277 (c). **같은 뿌리 둘** — 모두 "화면이 약속한 것과 게임이 하는 것" 계열.
+- **결함 ①**: `mission.rewards.credits + node.reward.credits` 가 **모든 교전 승리**에 더해졌다. `First Jack` 의 500cr 이 두 교전에서 **두 번** 들어갔는데, 미션 선택 화면은 `First Jack [T1 | 500cr]` 로 **한 번**을 약속한다(2026-11-02 트레이스에도 `cr=4500` → `+6100`).
+- **결함 ②**: 엔딩 리졸버가 `inventory.credits` 를 읽었다. 그 지갑은 미션 기본 보상으로 시작해 **전투로 늘지 않는다**(전투 보상은 `player.credits`). 그래서 `control` 분기(`credits > 5000`)가 53개 미션 중 **2개**에서만 도달 가능했고, arc 1–4 의 `control` 엔딩(`arc1_cowboy_up`·`arc2_data_thief`·`arc3_double_agent`·`arc4_new_order`)이 **사실상 죽은 분기**였다 — 엔딩 화면은 `player.credits` 를 인쇄하면서(ADR-0277).
+- **수정 ①**: `resolveVictory` 가 `isTerminalNode` 로 갈라 미션 보상은 **미션이 끝나는 교전**에서 1회만 지급(`(mission complete)` 표기). 전리품 화면이 `state.message` 의 `+N credits` 를 파싱해 그리므로, 엔딩 확정 단계가 아니라 **그 전투에** 얹어 표시 불일치를 만들지 않는다.
+- **수정 ②**: `EndingContext.credits = state.player.credits` — 엔딩 화면이 인쇄하는 수와 **같은 수**로 판정(ADR-0269·0270 규칙의 연장).
+- **측정 도구 신설**: `npm run endings`(`web/scripts/ending_distribution.ts`). 소크는 실제 벽시계·비시드 `Math.random` 이라 분포가 회차마다 흔들리므로(같은 코드로 15런에서 `arc5_control` 이 1~5 사이로 변동), 시드 고정 리듀서로 53미션 결정론 분포를 낸다.
+- **측정 결과 (53미션, seed 20261105, 정책 `expensive`, 리졸버 지갑만 교체)**: `control` **2 → 12 런** (arc3 `arc3_double_agent` 0→1 · arc4 `arc4_new_order` 0→**7** · arc5_control 2→4), `arc4_status_quo` 7→0 · `arc5_unknown` 2→0. arc 1·2 는 여전히 미도달 — 기본 보상이 낮아 런 총액이 5,000 미만이라 **분기가 등급 규모에 맞게** 살아났다. 원자료 `docs/design/jockey-identity-2026-11-04/ending-distribution.txt`.
+- **보상 변화**: 2교전 완주에서 **중복 500cr 제거**. 런 총액은 업적에 따라 변동하므로(같은 런이 `combo_master` 를 켜면 2,300 처럼 보인다) 결정론 고정은 테스트가 한다 — `adr0279_mission_reward.test.ts` 가 800cr 미션 2교전 완주를 **1,975cr**(노드 50+75, 미션 800×1, `first_blood` 50, `boss_slayer` 1,000)로 못박는다.
+- **불변(측정)**: `npm run balance` byte-identical(`100.0/100.0/89.1/47.4/40.7/0.0`) · RNG 소비 0 · 저장 스키마 무변경.
+- **실플레이**: `STORY_MISSION=9 npm run story` — 1교전 `+125 credits`(노드 75 + `first_blood` 50, 미션 보상 **미포함**) → 보스 `+2175 credits (mission complete) Loot: combat_module x2, …` → 엔딩 `arc1_wage_slave`.
+- **소크**: `SOAK_RUNS=15 npm run soak` → **15/15 completed, frozen 0**, 엔딩 다양(`arc4_new_order` 3 · `arc2_status_quo` 5 · `arc1_wage_slave` 2 · `arc5_control` 1 · `arc3_neutrality` 1 · `arc4_status_quo` 1). 하네스 리포트에 `ending` 추가.
+- **검증**: vitest **191 files / 4084 tests** · typecheck 0 · lint 0 errors · build PASS · `check_doc_claims.py` exit 0 (111 paths, **199 ADRs**) · `check_no_novel_prose.py` exit 0 (1769 strings) · `mixed_language_audit.py` 0.
+- **남은 항목**: (a) `hp > 75%` 조건이 실제로 얼마나 자주 참인지(`npm run endings` 가 HP 를 남기므로 측정 가능) (b) `player.credits` ↔ `inventory.credits` 두 지갑 통합(crafting 상점 배선 시 필수) (c) 노드 보상 곡선(`50 + idx*25`) 재검토.

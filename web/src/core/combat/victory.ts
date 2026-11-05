@@ -32,6 +32,7 @@ import {
   durationForKind,
 } from "../state/state_helpers";
 import { defeatedIceName } from "./roster";
+import { isTerminalNode } from "../state/run_end";
 
 /** The faction an ICE belongs to — its id carries the name. */
 export function iceFactionOf(iceId: string): FactionId | null {
@@ -101,6 +102,13 @@ export type VictoryKind = "program" | "companion";
  *
  * The caller has already credited the loot (see `creditKills`); `drops` is
  * what was rolled, so the message can name it.
+ *
+ * ADR-0279: the **mission** reward (`mission.rewards.credits`) is paid exactly
+ * once, and paid here only when this win ends the mission (the boss, or a dead
+ * end). It used to be added to *every* encounter win, so `First Jack`'s 500cr
+ * was paid twice on a two-fight mission while the mission-select screen
+ * promised 500 once. A fight that does not end the mission pays the node's own
+ * reward.
  */
 export function resolveVictory(
   state: GameState,
@@ -134,10 +142,11 @@ export function resolveVictory(
     achievementCredits += 500;
   }
 
-  const totalReward =
-    state.mission.rewards.credits +
-    (state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0) +
-    achievementCredits;
+  const terminal = isTerminalNode(state);
+  const nodeReward =
+    state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0;
+  const missionReward = terminal ? state.mission.rewards.credits : 0;
+  const totalReward = nodeReward + missionReward + achievementCredits;
 
   const lootMessage =
     drops.length > 0
@@ -146,7 +155,8 @@ export function resolveVictory(
   // ADR-0258: only the card that drops the last ICE is exempt from COST. A
   // companion's finishing blow exempts nothing, so it does not claim it.
   const costNote = kind === "program" ? " (no COST)" : "";
-  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${lootMessage}`;
+  const bountyNote = missionReward > 0 ? " (mission complete)" : "";
+  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${bountyNote}${lootMessage}`;
 
   return {
     ...state,

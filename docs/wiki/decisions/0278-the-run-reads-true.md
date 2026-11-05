@@ -4,7 +4,7 @@
 **날짜**: 2026-11-05
 **결정자**: 오너 ("응 결함 수정해줘. 그리고 더 찾아봐줘.")
 **우선순위**: P1 (게임플레이 · 성장) · P1 (서사 정합) · P2 (표시)
-**관련**: [ADR-0277 — `exploit` 과 서사 검증](./0277-exploit-ignores-half-the-armor.md) · [ADR-0247 — SCAN 의 비용](./0247-encounter-intel-costs-a-card.md) · [ADR-0258 — 결정타 COST 면제](./0258-killing-blow-cost-rule-notice.md) · [ADR-0259 — 카드 보상이 성장이다](./0259-card-reward-growth.md) · [ADR-0261 — 성장은 사건으로 보인다](./0261-growth-moment-is-shown.md) · [ADR-0269 — 엔딩은 런을 돌아본다](./0269-the-ending-looks-back.md)
+**관련**: [ADR-0277 — `exploit` 과 서사 검증](./0277-exploit-ignores-half-the-armor.md) · [ADR-0247 — SCAN 의 비용](./0247-dungeon-role-supplement-manus-second-opinion.md) · [ADR-0258 — 결정타 COST 면제](./0258-killing-blow-cost-rule-notice.md) · [ADR-0259 — 카드 보상이 성장이다](./0259-card-reward-growth.md) · [ADR-0261 — 성장은 사건으로 보인다](./0261-growth-moment-is-shown.md) · [ADR-0269 — 엔딩은 런을 돌아본다](./0269-the-ending-looks-back.md)
 
 > ADR-0277 의 서사 검증(`docs/design/jockey-identity-2026-11-04/story-narration.md`)이 남긴 결함 목록을
 > 닫는다. 그 검증은 **런을 이야기로 옮겨 읽는** 방식이었고, 그 방식이 리듀서 테스트가 못 잡는 것을

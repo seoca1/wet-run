@@ -3052,3 +3052,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **소크**: `SOAK_RUNS=15 npm run soak` → **15/15 completed, frozen 0**, 엔딩 다양(`arc4_new_order` 3 · `arc2_status_quo` 5 · `arc1_wage_slave` 2 · `arc5_control` 1 · `arc3_neutrality` 1 · `arc4_status_quo` 1). 하네스 리포트에 `ending` 추가.
 - **검증**: vitest **191 files / 4084 tests** · typecheck 0 · lint 0 errors · build PASS · `check_doc_claims.py` exit 0 (111 paths, **199 ADRs**) · `check_no_novel_prose.py` exit 0 (1769 strings) · `mixed_language_audit.py` 0.
 - **남은 항목**: (a) `hp > 75%` 조건이 실제로 얼마나 자주 참인지(`npm run endings` 가 HP 를 남기므로 측정 가능) (b) `player.credits` ↔ `inventory.credits` 두 지갑 통합(crafting 상점 배선 시 필수) (c) 노드 보상 곡선(`50 + idx*25`) 재검토.
+
+## [2026-11-05] manus | ADR-0279 독립 리뷰 (approve-with-caveats)
+
+- **입력**: `docs/wiki/decisions/0279-the-run-states-its-earnings.md`
+- **산출물**: `docs/design/adr-review-2026-11-05/manus-review.md` (task `LXHmpxarQHm38S4FT5XXPX`, agent `lite`)
+- **결론**: approve-with-caveats. 핵심 지적 — (1) `resolveVictory` 1회 지급 + `player.credits` 리졸버 변경이 함께 적용된 **최종 분포 측정 누락** (현재는 리졸버 지갑만 교체), (2) 터미널 승리 재처리 시 **멱등성** 미입증, (3) `isTerminalNode` 보스/막다른 경계 불명확, (4) ADR-0130 `rewards.credits` 권위 관계 미해소, (5) `control` 카탈로그 존재 vs 도달성 표현 혼재.
+- **오픈 질문 판정**: (a) 부분 가능(HP 기록은 있으나 충족률 미제공), (b) 현재 증거로 결정 불가, (c) 답할 수 없음(보상 곡선 재설계 근거 부족).
+- **후속**: ADR-0279 `## Implementation Status` Notes 에 Manus 리뷰 인용 추가 검토.

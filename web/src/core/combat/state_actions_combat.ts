@@ -29,7 +29,6 @@ import {
 } from "../state/death_cycle";
 import {
   COMBAT_LOG_CAP,
-  import_vfx,
   import_vfx_deterministic,
   import_vfx_ms,
   durationForKind,
@@ -37,6 +36,8 @@ import {
 } from "../state/state_helpers";
 import { useProgram, advanceDeadTarget } from "./state_actions_programs";
 import { everyProgramBlocked } from "./program_affordance";
+import { refillHand } from "./hand";
+import { creditKills, killedBetween, resolveVictory } from "./victory";
 
 /** Dixie companion tuning (ADR-0244 option 2).
  * N=2 preserves the 2000ms harness baseline: first player turn, then alternate
@@ -118,32 +119,27 @@ export function applyCombatAction(
  * passing a turn (ADR-0266), so both can reach the same outcome. */
 function finishPlayerTurn(state: GameState): GameState {
   const afterEnemies = drawHand(processDixieTurn(processEnemyTurns(state)));
-  const allDefeated = afterEnemies.iceRoster.every((ice) => ice.hp === 0);
+  // ADR-0278: a kill that lands in the enemy phase (Dixie, a DoT) owes the
+  // player the same loot and the same achievements as a program kill. The
+  // loot belongs to the kill, so it is credited where the kill happened.
+  const { state: withLoot, drops } = creditKills(
+    afterEnemies,
+    state.iceRoster,
+    afterEnemies.iceRoster,
+  );
+  const allDefeated = withLoot.iceRoster.every((ice) => ice.hp === 0);
   if (
     allDefeated &&
-    afterEnemies.iceRoster.length > 0 &&
-    afterEnemies.runPhase === "combat"
+    withLoot.iceRoster.length > 0 &&
+    withLoot.runPhase === "combat"
   ) {
-    const totalReward =
-      afterEnemies.mission.rewards.credits +
-      (afterEnemies.matrix?.nodes[afterEnemies.currentNodeIndex]?.reward
-        .credits ?? 0);
-    return {
-      ...afterEnemies,
-      runPhase: "loot",
-      phase: "victory",
-      message: `${afterEnemies.ice.name} defeated! +${totalReward} credits`,
-      player: {
-        ...afterEnemies.player,
-        credits: afterEnemies.player.credits + totalReward,
-      },
-      vfxInstances: [
-        ...afterEnemies.vfxInstances,
-        import_vfx("victory", "", 5),
-      ],
-    };
+    return resolveVictory(withLoot, {
+      defeated: killedBetween(state.iceRoster, withLoot.iceRoster),
+      drops,
+      kind: "companion",
+    });
   }
-  return afterEnemies;
+  return withLoot;
 }
 
 function cycleTarget(state: GameState): GameState {
@@ -162,18 +158,13 @@ function cycleTarget(state: GameState): GameState {
  * cards. Order is preserved (no shuffle) so the draw consumes no RNG and stays
  * deterministic; the fight is bounded by the alarm cap. Runs after the enemy
  * turn so the "was a program played" guard in applyCombatAction still works.
+ *
+ * ADR-0278: the same refill is used when the loot screen closes, so a fight
+ * opens on a full hand and a card taken at the loot screen is dealt.
  */
 function drawHand(state: GameState): GameState {
   if (state.deck.length > 0) return state;
-  const pool = [...state.drawPile, ...state.discardPile];
-  if (pool.length === 0) return state;
-  const size = state.player.handSize;
-  return {
-    ...state,
-    deck: pool.slice(0, size),
-    drawPile: pool.slice(size),
-    discardPile: [],
-  };
+  return refillHand(state);
 }
 
 function processDixieTurn(state: GameState): GameState {

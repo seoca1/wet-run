@@ -239,6 +239,17 @@ export function dungeonToMatrix(
     return !nodes.some((n) => n.iceIds.length > 0 && !n.isBoss);
   };
 
+  // ADR-0278: each ICE room gets the next slot of the grade's band instead of
+  // the same slot. Two encounters in one mission used to be the same ICE type,
+  // which made a mission read as one fight repeated.
+  let iceOrdinal = 0;
+  const iceIdForRoom = (): string => {
+    if (seed === undefined) return encounterIceIdForGrade(grade);
+    const id = encounterIceIdForGrade(grade, seed + iceOrdinal * 7);
+    iceOrdinal += 1;
+    return id;
+  };
+
   const rawNodes: MatrixNode[] = sorted.map((room, idx) => {
     const adjacent = graph.edges
       .filter((e) => e.src === room.id || e.dst === room.id)
@@ -252,7 +263,7 @@ export function dungeonToMatrix(
     let iceIds: ReadonlyArray<string>;
     let iceHp: ReadonlyArray<number>;
     if (room.roomType === "ice") {
-      iceIds = [encounterIceIdForGrade(grade, seed)];
+      iceIds = [iceIdForRoom()];
       iceHp = [];
     } else if (isBoss) {
       iceIds = ["wintermute"];
@@ -291,7 +302,7 @@ export function dungeonToMatrix(
             ? {
                 ...n,
                 zone: "mid",
-                iceIds: [encounterIceIdForGrade(grade, seed)],
+                iceIds: [iceIdForRoom()],
                 iceHp: [],
               }
             : n,

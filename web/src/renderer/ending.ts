@@ -152,7 +152,7 @@ export function renderLootScreen(
     );
   }
 
-  // Items dropped (raw loot message, e.g. "Loot: ice_shardx1, data_fragmentx1")
+  // Items dropped (raw loot message, e.g. "Loot: ice_shard x1, data_fragment x1")
   if (lootMessage) {
     grid = setText(
       grid,

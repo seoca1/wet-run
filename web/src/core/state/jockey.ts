@@ -25,7 +25,10 @@ export const JOCKEYS: ReadonlyArray<JockeyProfile> = [
   {
     id: "novice",
     handle: "CASE",
-    tagline: "New hands. Old reflexes. The deck is already warm.",
+    // ADR-0278: the old line ("The deck is already warm") argued with the arc-1
+    // intro ("The deck is cold in your hands"). This one keeps the "old
+    // reflexes" idea without claiming a temperature the next screen contradicts.
+    tagline: "New hands. Old reflexes. The deck remembers.",
   },
   {
     id: "veteran",

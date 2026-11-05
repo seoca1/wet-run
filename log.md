@@ -3015,3 +3015,24 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **소크**: `SOAK_RUNS=3 npm run soak` → completed 3, frozen 0 (ADR-0274 자키 선택 화면을 `startRun` 이 통과하도록 수정).
 - **검증**: vitest **188 files / 4062 tests** · typecheck 0 · lint 0 errors (1 pre-existing warning) · build PASS · `check_doc_claims.py` exit 0 · `check_no_novel_prose.py` exit 0 (1745 strings).
 - **남은 항목(오너 결정)**: (a) 전투 시작 시 손패 리필(성장 카드가 실제로 손에 들어오게 — 밸런스 재측정 필요) (b) 미션 내 ICE 타입 중복 제거 (c) 엔딩 `control` 분기의 크레딧 출처(`inventory.credits > 5000`)와 `hp > 75%` 조건 — ADR-0277 열린 질문 (c).
+
+## [2026-11-05] fix(core) | 런이 사실대로 읽힌다 — 서사 검증이 찾은 결함 6+2건 수정 (ADR-0278)
+
+- **배경**: ADR-0277 의 서사 검증(`story-narration.md`)이 남긴 결함 8개. 오너 "결함 수정해줘. 그리고 더 찾아봐줘."
+- **계기를 먼저 고쳤다**: 트레이스가 `state.message`(최신 한 줄)만 캡처해 전투 로그가 사라졌고, 그래서 "동료가 로그 첫 줄을 가져간다"는 **오탐**이 나왔다. 이제 `combatLog` 전체를 중복 없이 오래된 순으로 남긴다.
+- **고친 것 6**:
+  1. 받은 카드가 런에서 한 번도 안 나옴(성장 무효) → 전리품 화면을 닫을 때 `refillHand` 로 `handSize` 까지 채우고(`combat/hand.ts`), 보상 카드는 드로우 파일 **맨 위**에 얹는다. 리필 지점을 **BREACH 가 아니라 전리품**에 둬서 SCAN 으로 쓴 카드는 그 전투 동안 계속 빠져 있다(ADR-0247 비용 유지).
+  2. 손패가 교전 사이에 초기화 안 됨 → 같은 수정으로 해결.
+  3. 한 미션의 두 ICE 가 같은 타입 → `iceIdForRoom` 이 ICE 방마다 등급 밴드 다음 슬롯(`seed + iceOrdinal * 7`).
+  4. 자키 태그라인 톤 충돌 → `New hands. Old reflexes. The deck remembers.`
+  5. 전리품 표기 `ice_shardx1` → `${item} x${qty}`.
+  6. `encounterRoster` 가 `state.ice` 를 **복제**해 id/hp 만 바꿈 → 모든 교전이 미션 기준 ICE 를 입었고 **보스 방이 35 HP "Wisp"** 로 싸워졌다. 이제 노드 `iceIds` 를 ICE **카탈로그**에서 해석.
+- **재측정에서 새로 찾은 2**:
+  7. 전투가 상대 이름을 안 말함 — `state.ice` 는 런의 기준 ICE 라 보스 방도 `Combat vs ICE — Wisp`. 실제 상대는 wintermute(armor 8, tier 4). `combat/roster.ts` 의 `activeIceOf`/`defeatedIceName` 이 **로스터**에서 읽는다.
+  8. **막타를 누가 쳤는지가 보상을 정했다** — 카드 막타는 전리품·업적(`boss_slayer` 1,000cr)·진영 점수 전부, Dixie 막타는 **크레딧만**. 보스 전리품(`combat_module x2` 등)과 `boss_slayer` 가 카드가 막타를 친 런에만 존재했다. `combat/victory.ts` 의 `creditKills`/`resolveVictory` 로 **킬이 일어난 지점**에서 적립. 남는 차이는 하나 — ADR-0258 의 `(no COST)` 는 막타를 친 카드의 것이므로 동료 킬은 주장하지 않는다.
+- **오탐 정정 3** (문서): 구역 이름(미션 zone ≠ 노드 zone, 의도) · 동료 첫 줄(캡처 손실) · 만피 회복(실제 **15%**, 그 런이 96/100 이었을 뿐).
+- **불변(측정)**: `npm run balance` 산출이 ADR-0277 기준선과 **완전히 동일**(`100.0/100.0/89.1/47.4/40.7/0.0`) · RNG 소비 0 · 저장 스키마 무변경.
+- **실플레이**: `STORY_MISSION=9 npm run story` — 16스텝, 보스 `Combat vs ICE — Wintermute` → `+1675 credits Loot: combat_module x2, construct_shard x1, data_fragment x3`, 엔딩 `arc1_wage_slave` 까지 무정지.
+- **소크**: `SOAK_RUNS=15 npm run soak` → **15/15 completed, frozen 0** (g1–g5, g5 6런 포함).
+- **검증**: vitest **190 files / 4077 tests** · typecheck 0 · lint 0 errors(기존 `keyboard.ts` 경고 1) · build PASS · `check_doc_claims.py` exit 0 (111 paths, 198 ADRs) · `check_no_novel_prose.py` exit 0 (1760 strings) · `mixed_language_audit.py` 0.
+- **남은 항목(오너 결정)**: 미션 기본 보상이 **교전마다** 지급된다(`mission.rewards.credits + node.reward.credits`). `First Jack` 은 500 을 약속하는데 두 교전에서 500 이 두 번 들어갔다(625 / 1675). 미션 선택 화면이 `[T1 | 500cr]` 이라고 말하므로 "화면이 약속한 것과 게임이 하는 것" 계열이다. 권고: 미션 보상은 엔딩에서 한 번, 교전 승리는 노드 보상만 — 경제 변경이라 ADR-0278 열린 질문 (a).

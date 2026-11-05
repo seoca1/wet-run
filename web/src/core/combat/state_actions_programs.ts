@@ -21,20 +21,17 @@ import {
 } from "../status";
 import { AudioManager } from "../../audio/manager";
 import { calculateDamage, countRoleSynergy } from "./combat_engine";
-import { rollLoot, getLootTable, type LootDrop } from "../state/loot";
 import { absorbIceDamage } from "./ice_combat_effects";
 import { programEffect } from "./program_effects";
-import iceTypesData from "../../data/ice_types.json";
 import {
   COST_LIMIT,
   programAlarmCost,
   programHitsAllIce,
 } from "./program_affordance";
-import { onIceKill, type FactionId } from "../state/faction_reputation";
+import { creditKills, killedBetween, resolveVictory } from "./victory";
 import {
   COMBAT_LOG_CAP,
   import_vfx,
-  import_vfx_deterministic,
   import_vfx_ms,
   pickProgramVfxKind,
   pickProgramSfxId,
@@ -353,114 +350,33 @@ export function useProgram(state: GameState, programId: string): GameState {
       : []),
   ];
 
-  const newlyDefeated = finalState.iceRoster.filter(
-    (ice, i) => ice.hp === 0 && state.iceRoster[i]?.hp !== 0,
+  // ADR-0278: the loot and the faction credit belong to the kill, not to the
+  // victory — so they are credited here for a program kill, and in
+  // `finishPlayerTurn` for a companion kill. One rule, either way.
+  const { state: stateWithLoot, drops: lootDrops } = creditKills(
+    finalState,
+    state.iceRoster,
+    finalState.iceRoster,
   );
-  const lootDrops: LootDrop[] = [];
-  let updatedFactionScores = state.factionScores;
-  for (const dead of newlyDefeated) {
-    const lootTable = getLootTable(
-      dead.id,
-      iceTypesData as Record<
-        string,
-        { loot_table?: { item: string; chance: number; quantity: number }[] }
-      >,
-    );
-    const drops = rollLoot(lootTable);
-    lootDrops.push(...drops);
-    const iceFaction = getIceFaction(dead.id);
-    if (iceFaction) {
-      updatedFactionScores = onIceKill(updatedFactionScores, iceFaction);
-    }
-  }
-
-  let stateWithLoot = finalState;
-  if (lootDrops.length > 0) {
-    const newMaterials = { ...finalState.inventory.materials };
-    for (const drop of lootDrops) {
-      newMaterials[drop.item] = (newMaterials[drop.item] ?? 0) + drop.quantity;
-    }
-    stateWithLoot = {
-      ...finalState,
-      inventory: { ...finalState.inventory, materials: newMaterials },
-    };
-  }
+  const newlyDefeated = killedBetween(state.iceRoster, finalState.iceRoster);
 
   if (allDefeated && stateWithLoot.iceRoster.length > 0) {
-    let totalReward =
-      state.mission.rewards.credits +
-      (state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0);
-    const lootMessage =
-      lootDrops.length > 0
-        ? ` Loot: ${lootDrops.map((d) => `${d.item}x${d.quantity}`).join(", ")}`
-        : "";
-
-    const newAchievements: string[] = [];
-    let achCredits = 0;
-
-    if (
-      stateWithLoot.unlockedAchievements.length === 0 &&
-      newlyDefeated.length > 0
-    ) {
-      newAchievements.push("first_blood");
-      achCredits += 50;
-    }
-
-    if (stateWithLoot.bossPhase > 0 && newlyDefeated.length > 0) {
-      if (!stateWithLoot.unlockedAchievements.includes("boss_slayer")) {
-        newAchievements.push("boss_slayer");
-        achCredits += 1000;
-      }
-    }
-
-    if (
-      stateWithLoot.playerCombo >= 6 &&
-      !stateWithLoot.unlockedAchievements.includes("combo_master")
-    ) {
-      newAchievements.push("combo_master");
-      achCredits += 500;
-    }
-
-    const allUnlocked = [
-      ...stateWithLoot.unlockedAchievements,
-      ...newAchievements,
-    ];
-    totalReward += achCredits;
-
     // ADR-0258: this branch IS the killing blow, so it is where the COST
     // exemption applies. State it here; the hand row may not predict it.
-    const victoryMessage = `${stateWithLoot.ice.name} defeated! (no COST) +${totalReward} credits${lootMessage}`;
-
-    return {
-      ...stateWithLoot,
-      iceRoster: stateWithLoot.iceRoster,
-      deck: newDeck,
-      discardPile: discard,
-      runPhase: "loot",
-      phase: "victory",
-      message: victoryMessage,
-      combatLog: [
-        victoryMessage,
-        ...statusLines,
-        ...stateWithLoot.combatLog,
-      ].slice(0, COMBAT_LOG_CAP),
-      player: {
-        ...stateWithLoot.player,
-        credits: stateWithLoot.player.credits + totalReward,
-      },
-      vfxInstances: [
-        ...vfxNew,
-        import_vfx_deterministic(
-          "ice_death",
-          stateWithLoot.ice.name,
-          durationForKind("ice_death"),
+    const victory = resolveVictory(
+      {
+        ...stateWithLoot,
+        deck: newDeck,
+        discardPile: discard,
+        combatLog: [...statusLines, ...stateWithLoot.combatLog].slice(
+          0,
+          COMBAT_LOG_CAP,
         ),
-        import_vfx("victory", "", 5),
-      ],
-      unlockedAchievements: allUnlocked,
-      achievementCredits: stateWithLoot.achievementCredits + achCredits,
-      factionScores: updatedFactionScores,
-    };
+        vfxInstances: vfxNew,
+      },
+      { defeated: newlyDefeated, drops: lootDrops, kind: "program" },
+    );
+    return victory;
   }
   const activeIceNewHp = finalState.iceRoster[targetIdx]?.hp ?? 0;
   const shieldNote = shieldAbsorbed > 0 ? ` (${shieldAbsorbed} absorbed)` : "";
@@ -482,14 +398,6 @@ export function useProgram(state: GameState, programId: string): GameState {
     vfxInstances: vfxNew,
     unlockedAchievements: stateWithLoot.unlockedAchievements,
     achievementCredits: stateWithLoot.achievementCredits,
-    factionScores: updatedFactionScores,
+    factionScores: stateWithLoot.factionScores,
   };
-}
-
-function getIceFaction(iceId: string): FactionId | null {
-  if (iceId.includes("hosaka")) return "hosaka";
-  if (iceId.includes("maas")) return "maas";
-  if (iceId.includes("sense") || iceId.includes("net")) return "sense_net";
-  if (iceId.includes("ta") || iceId.includes("construct")) return "ta";
-  return null;
 }

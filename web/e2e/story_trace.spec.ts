@@ -50,6 +50,7 @@ type Snap = {
     readonly cleared: readonly number[];
     readonly bypassed: readonly number[];
     readonly msg: string;
+    readonly log: readonly string[];
     readonly taken: string | null;
     readonly verb: string | null;
     readonly decision: boolean;
@@ -81,6 +82,7 @@ async function snap(page: Page): Promise<Snap> {
         nodes: { adjacent: number[]; iceIds?: string[]; isBoss?: boolean }[];
       };
       message: string;
+      combatLog?: string[];
       cardRewardTaken?: string | null;
       encounterDecision?: { selectedVerb: string | null } | null;
       visitedNodes?: number[];
@@ -116,6 +118,10 @@ async function snap(page: Page): Promise<Snap> {
         cleared: st.clearedEncounterNodes ?? [],
         bypassed: st.bypassedEncounterNodes ?? [],
         msg: /^TRACE \d+\/\d+$/.test(st.message) ? "(trace)" : st.message,
+        // The combat log is the record of what actually happened — `message`
+        // is only the newest line, so a trace that reads only `message`
+        // misses everything that came before it.
+        log: st.combatLog ?? [],
         taken: st.cardRewardTaken ?? null,
         verb: st.encounterDecision?.selectedVerb ?? null,
         decision: st.encounterDecision != null,
@@ -231,6 +237,9 @@ test.describe("story trace", () => {
     let lastPhase = "";
     let ending: string | null = null;
     let summary = "";
+    // The combat log is newest-first and capped, so the trace records each
+    // line once, in the order it was written.
+    const logged = new Set<string>();
 
     /** One still per beat, so the narration can be checked against a frame. */
     const shoot = async (name: string): Promise<void> => {
@@ -276,6 +285,12 @@ test.describe("story trace", () => {
           );
           lastMsg = st.msg;
           lastPhase = phase;
+        }
+        // Combat log lines, oldest first, each written once.
+        for (const entry of [...st.log].reverse()) {
+          if (logged.has(entry)) continue;
+          logged.add(entry);
+          lines.push(`      log: ${entry}`);
         }
         if (st.runPhase === "ending") {
           ending = st.ending;

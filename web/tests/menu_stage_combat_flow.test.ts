@@ -47,12 +47,16 @@ const mockProgram: Program = {
   aoe: false,
 };
 
+// ADR-0278: the encounter roster resolves the node's `iceIds` against the ICE
+// catalog, so the fixture ICE is a real catalog row. `wisp` (tier 1, armor 0)
+// is the encounter ICE of the first mission — a tier-1 program (5 base damage)
+// kills it outright, which is what the flow fixtures below need.
 const mockMatrix = {
   nodes: [
     {
       id: 0,
       zone: "surface" as const,
-      iceIds: ["watchdog"],
+      iceIds: ["wisp"],
       iceHp: [100],
       reward: { credits: 50 },
       isBoss: false,
@@ -61,7 +65,7 @@ const mockMatrix = {
     {
       id: 1,
       zone: "mid" as const,
-      iceIds: ["watchdog"],
+      iceIds: ["wisp"],
       iceHp: [100],
       reward: { credits: 75 },
       isBoss: false,
@@ -344,7 +348,7 @@ describe("Full run completion", () => {
         {
           id: 0,
           zone: "surface" as const,
-          iceIds: ["watchdog"],
+          iceIds: ["wisp"],
           iceHp: [5],
           reward: { credits: 50 },
           isBoss: false,
@@ -353,7 +357,7 @@ describe("Full run completion", () => {
         {
           id: 1,
           zone: "mid" as const,
-          iceIds: ["watchdog"],
+          iceIds: ["wisp"],
           iceHp: [5],
           reward: { credits: 75 },
           isBoss: false,

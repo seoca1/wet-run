@@ -33,6 +33,8 @@ import {
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram } from "./card_reward";
+import { refillHand } from "../combat/hand";
+import { activeIceOf } from "../combat/roster";
 import {
   resolveEnding,
   type EndingContext,
@@ -256,8 +258,10 @@ function takeCardReward(state: GameState, index: number): GameState {
   }
   return {
     ...state,
-    // The card joins the draw pile, so it arrives when the hand recycles.
-    drawPile: [...state.drawPile, card],
+    // ADR-0278: the card goes on TOP of the draw pile, and the next encounter
+    // opens on a full hand — so the card taken here is the next one dealt
+    // instead of waiting for a recycle that a short run never reaches.
+    drawPile: [card, ...state.drawPile],
     inventory: {
       ...state.inventory,
       programs: [...state.inventory.programs, card],
@@ -283,15 +287,21 @@ function continueToMatrix(state: GameState): GameState {
     ? rewardProgram(state.cardRewardTaken)
     : undefined;
   const grown = taken ? `Took ${taken.name}. ` : "";
-  return {
+  // ADR-0278: the next encounter opens on a full hand. This runs after the card
+  // reward is in the draw pile, so the card just taken is dealt here — a short
+  // run used to end with the reward still unseen. Refilling at loot (not at
+  // BREACH) keeps a SCAN spent on the encounter screen spent for that fight.
+  const ready = refillHand({
     ...state,
+    player: { ...state.player, hp: healedHp },
+    cardRewardTaken: null,
+  });
+  return {
+    ...ready,
     runPhase: "matrix",
     selectedMatrixNodeIndex: null,
     visitedNodes: newVisited,
     phase: "approach",
-    player: { ...state.player, hp: healedHp },
-    // Clear the offer memory on the way out.
-    cardRewardTaken: null,
     // Say what happened: at full HP the 15% heal heals nothing, and claiming
     // otherwise makes the screen lie about the run's state (ADR-0269).
     message: `${grown}Choose an adjacent route — ${
@@ -413,16 +423,19 @@ export function applyApproachAction(
     // `import_vfx_deterministic` draws no `Math.random` value — the balance
     // harness seeds `Math.random`, so a new `import_vfx` call here would
     // silently shift the ADR-0229 grade curve.
+    // ADR-0278: name the ICE that is actually in front of the player. The
+    // base ICE (`state.ice`) is only the mission's opening opponent.
+    const opponent = activeIceOf(state);
     return {
       ...state,
       phase: "combat",
-      message: `Combat vs ${state.ice.name}`,
+      message: `Combat vs ${opponent.name}`,
       turnCount: state.turnCount + 1,
       vfxInstances: [
         ...state.vfxInstances,
         import_vfx_deterministic(
           "ice_intro",
-          iceIntroPayload(state.ice.name),
+          iceIntroPayload(opponent.name),
           durationForKind("ice_intro"),
         ),
       ],

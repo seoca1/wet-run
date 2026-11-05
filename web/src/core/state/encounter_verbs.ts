@@ -1,5 +1,7 @@
 import type { GameAction, GameState, Ice, Program } from "../types";
 import programs from "../../data/programs.json";
+import iceTypesData from "../../data/ice_types.json";
+import { loadIceCatalog } from "../data_loaders";
 import { iceHpForGrade, missionGradeOf } from "../combat/ice_scaling";
 import { clearIceEffects } from "../combat/ice_combat_effects";
 import { durationForKind, import_vfx } from "./state_helpers";
@@ -119,20 +121,34 @@ function selectableVerbs(state: GameState): readonly EncounterVerb[] {
   return ENCOUNTER_VERBS.filter((verb) => verb !== "SCAN" || scannable);
 }
 
-/** Shared by paid intel and Breach so mutator copies and HP fallbacks agree. */
+/** The ICE catalog, loaded once. `encounterRoster` resolves the node's ids
+ * against it; cloning the mission's opening ICE made every encounter a copy of
+ * that one ICE (name, armor, skills) with only the id swapped — the boss room
+ * was fought as a 35 HP "Wisp". */
+let iceCatalogCache: Readonly<Record<string, Ice>> | null = null;
+function iceCatalog(): Readonly<Record<string, Ice>> {
+  iceCatalogCache ??= loadIceCatalog(iceTypesData);
+  return iceCatalogCache;
+}
+
 export function encounterRoster(state: GameState): readonly Ice[] {
   const node = state.matrix?.nodes[state.currentNodeIndex];
   if (!node || node.iceIds.length === 0) return [];
+  const catalog = iceCatalog();
   const activeIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
   const encounterMultiplier = state.activeMutators.includes("ice_x2") ? 2 : 1;
   const baseCount = Math.min(node.iceIds.length * encounterMultiplier, 4);
+  const grade = missionGradeOf(state.mission);
   // Preserve the existing roster construction, including ICE_X2 cycling.
   return Array.from({ length: baseCount }, (_, i) => {
     const id = node.iceIds[i % node.iceIds.length] ?? activeIce.id;
+    // The node names the ICE; the catalog is what that name means. Falling
+    // back to `activeIce` keeps a hand-built state (tests, old saves) playable.
+    const entry = catalog[id] ?? activeIce;
     const hp =
-      node.iceHp[i % node.iceHp.length] ??
-      iceHpForGrade(activeIce, missionGradeOf(state.mission));
-    return { ...activeIce, id, hp, maxHp: hp };
+      node.iceHp[i % Math.max(1, node.iceHp.length)] ??
+      iceHpForGrade(entry, grade);
+    return { ...entry, id, hp, maxHp: hp };
   });
 }
 

@@ -1,0 +1,52 @@
+ADR-0280 — a measurement bug that invalidated the first curve tuning.
+
+WHAT WAS WRONG
+The run policy (`scripts/play_policy.ts`) navigated to the BOSS with a BFS
+shortest path. `first_jack` is:
+
+  node 0 (start, no ICE)  adj [1, 2]
+  node 1 (wisp)           adj [0, 3]
+  node 2 (no ICE)         adj [0, 4, 5]
+  node 5 (boss)           adj [2, 3]
+
+so 0 -> 2 -> 5 reaches the boss with NO encounter at all. The policy took that
+path, which means every measurement was a BOSS-ONLY run: no normal fight, no
+non-terminal loot screen, therefore NO CARD REWARD and no deck growth. Measured
+deck size at the end was 5.0-5.2 cards and best tier 3 at every grade, with 7.4
+encounters at g5 -- the build-up the run is built around never happened.
+
+The policy now walks to the NEAREST unresolved encounter, which is what playing
+the mission means.
+
+WHAT IT INVALIDATED
+The curve committed in the previous step was tuned against the boss-only metric,
+so its "grades 1-4 hit their targets" claim does not hold. Re-measured honestly
+(20 seeds x 53 missions, opening deck):
+
+                      g1     g2     g3     g4     g5     g6
+  boss-only (wrong)  100.0  99.1   33.2   11.5    0.0    0.0
+  honest             100.0  96.6   71.8   50.0    0.0    0.0
+  target             100    95     80     50     25     10
+
+The honest baseline is materially harder at g3/g4 because the runner now fights
+the encounters the mission actually contains.
+
+WHAT SURVIVED
+- The boss-per-grade fix (ADR-0280 §5) is unaffected: it is about which ICE
+  spawns, not about routing.
+- The per-encounter curve (`balance_sim`) is unaffected: it never navigates.
+- The finding that the deck does NOT grow is now stronger, not weaker: at g4-g6
+  the runner dies in its FIRST fight (0.6-0.8 fights/run), so it never reaches a
+  second reward. Cards cannot rescue a run that loses the opening fight.
+
+FURTHER CONFIRMATION OF THE g5/g6 WALL
+Tested whether a stronger STARTING deck is the lever, using the grade-appropriate
+deck `balance_sim.deckForGrade` (every program of tier <= grade, strongest five):
+
+  starting deck   g1     g2     g3     g4     g5     g6
+  opening        100.0  75.8   51.7   20.6    0.0    0.0
+  ppl            100.0  68.4   64.8   28.7    0.7    2.1
+
+Even the developed deck leaves g5 at 0.7%. The per-encounter win rate at g5 is
+~41% (harness), and a g5 mission is 7.4 encounters, so survival is ~0 no matter
+what the deck is. Deck strength is not the binding constraint either.

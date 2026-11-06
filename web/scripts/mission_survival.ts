@@ -17,7 +17,7 @@
  */
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
-import { mulberry32, playRun } from "./play_policy";
+import { mulberry32, playRun, type CardPolicy } from "./play_policy";
 import type { Mission } from "../src/core/types";
 import iceJson from "../src/data/ice_types.json" with { type: "json" };
 import missionsJson from "../src/data/missions.json" with { type: "json" };
@@ -44,6 +44,13 @@ const BY_GRADE = process.argv.includes("--by-grade");
  * ADR-0280 found the boss was the whole loss mode once, so this is the first
  * thing to look at when a grade misses its target. */
 const SHOW_DEATHS = process.argv.includes("--deaths");
+/** Card-offer policy: `first` (take anything) or `best` (spend the choice). */
+const deckIdx = process.argv.indexOf("--deck");
+const DECK_MODE: "opening" | "ppl" =
+  deckIdx >= 0 && process.argv[deckIdx + 1] === "ppl" ? "ppl" : "opening";
+const cardsIdx = process.argv.indexOf("--cards");
+const CARD_POLICY: CardPolicy =
+  cardsIdx >= 0 && process.argv[cardsIdx + 1] === "best" ? "best" : "first";
 /** Restrict the sweep to one grade — a probe for tuning, ~1s instead of ~15. */
 const onlyIdx = process.argv.indexOf("--grade");
 const ONLY_GRADE = onlyIdx >= 0 ? Number(process.argv[onlyIdx + 1]) : null;
@@ -71,7 +78,7 @@ try {
     for (const mission of Object.values(missions) as Mission[]) {
       const grade = missionGradeOf(mission);
       if (ONLY_GRADE !== null && grade !== ONLY_GRADE) continue;
-      const final = playRun(mission, ice, programs, clockRef);
+      const final = playRun(mission, ice, programs, clockRef, "novice", CARD_POLICY, DECK_MODE);
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
       g.completed += completed;
@@ -93,7 +100,7 @@ try {
 }
 
 console.log(
-  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", jockey "novice"`,
+  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", jockey "novice"`,
 );
 console.log("");
 console.log("grade  missions  runs  completed  rate    target  delta");

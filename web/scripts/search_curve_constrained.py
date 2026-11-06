@@ -92,6 +92,13 @@ def evaluate(hp: list[int], dmg: list[int]) -> tuple[float, list[float], list[fl
     if sorted(p) != [1, 2, 3, 4, 5, 6]:
         raise RuntimeError(f"probe did not report every grade:\n{out}")
 
+    # Constraint (ADR-0229, pinned by tests/ice_scaling.test.ts): "the late
+    # grades buy their contest from HP, not from damage" -- the damage bonus must
+    # not rise from g4 to g5/g6. A search that uses the damage bonus as its main
+    # knob will otherwise break it (g5 0 > g4 -20).
+    if not (dmg[3] >= dmg[4] >= dmg[5]):
+        return None
+
     # Constraint: per-encounter win rate monotonic non-increasing by grade.
     for g in range(2, 7):
         if p[g] > p[g - 1] + 0.05:  # 0.05 = probe noise allowance, ~2 runs

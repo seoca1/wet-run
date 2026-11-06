@@ -14,10 +14,50 @@ import { applyAction, makeInitialState } from "../src/core/state/state";
 import { startingDeck } from "../src/core/state/starting_deck";
 import { offeredCardIds } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
+import { programEffect } from "../src/core/combat/program_effects";
+import { deckForGrade } from "./balance_sim";
+import { rewardProgram } from "../src/core/state/card_reward";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 export const COST_LIMIT = 100;
 export const MAX_STEPS = 600;
+
+/** How the runner picks from a card offer (ADR-0281 probe).
+ *
+ * `first` is the soak's original policy — take whatever is offered, which is
+ * what a player who does not read the offer does. `best` spends the choice: the
+ * offer pool is not tier-gated, so a grade-1 mission can be offered a tier-5
+ * program, and taking the strongest one is how a run is supposed to scale.
+ */
+export type CardPolicy = "first" | "best";
+
+/** Higher is better: armour answers first, then tier (damage is tier * 5). */
+function cardScore(p: Program): number {
+  const effect = programEffect(p);
+  const armorAnswer =
+    effect.kind === "armor_ignore" ? 2 : effect.kind === "pierce" ? 1 : 0;
+  return armorAnswer * 100 + p.tier;
+}
+
+/** The hand slot (1-based) the policy picks from an offer. */
+export function pickRewardIndex(
+  offers: ReadonlyArray<Program | undefined>,
+  policy: CardPolicy,
+): number {
+  if (policy === "first") return 1;
+  let bestIdx = 1;
+  let bestScore = -1;
+  for (let i = 0; i < offers.length; i += 1) {
+    const p = offers[i];
+    if (!p) continue;
+    const score = cardScore(p);
+    if (score > bestScore) {
+      bestScore = score;
+      bestIdx = i + 1;
+    }
+  }
+  return bestIdx;
+}
 
 /** Mulberry32 — the same PRNG the balance harness uses. */
 export function mulberry32(seed: number): () => number {
@@ -29,6 +69,11 @@ export function mulberry32(seed: number): () => number {
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
+}
+
+/** Card lookup for the reward policy (name shadows nothing here). */
+function cardOf(id: string): Program | undefined {
+  return rewardProgram(id);
 }
 
 /** Shortest-path first step from `from` to `to` on the matrix. */
@@ -54,21 +99,40 @@ function nextStep(state: GameState, from: number, to: number): number | null {
   return null;
 }
 
-/** The first node that still holds an unresolved encounter, preferring the boss. */
+/** The nearest node that still holds an unresolved encounter.
+ *
+ * This used to route straight for the boss, and BFS happily found an ICE-free
+ * path: `first_jack` is `0 -> 2 -> 5` with the only normal encounter at node 1,
+ * so the runner skipped it. That made every measurement a **boss-only** run --
+ * no normal fight, therefore no card reward, therefore no deck growth, which
+ * hid the very build-up the run is built around.
+ *
+ * The policy now walks to the closest unresolved encounter, which is what
+ * playing the mission means.
+ */
 function objective(state: GameState): number | null {
   const nodes = state.matrix?.nodes ?? [];
+  if (nodes.length === 0) return null;
   const cleared = new Set(state.clearedEncounterNodes ?? []);
   const bypassed = new Set(state.bypassedEncounterNodes ?? []);
-  const boss = state.matrix?.bossNode ?? -1;
-  for (let i = 0; i < nodes.length; i += 1) {
-    if (cleared.has(i) || bypassed.has(i)) continue;
-    if (nodes[i].isBoss) return i;
+  const blocked = (i: number): boolean =>
+    cleared.has(i) ||
+    bypassed.has(i) ||
+    (nodes[i]?.iceIds.length ?? 0) === 0;
+  if (blocked(state.currentNodeIndex) === false)
+    return state.currentNodeIndex; // standing on one
+  const seen = new Set<number>([state.currentNodeIndex]);
+  const queue: number[] = [state.currentNodeIndex];
+  while (queue.length > 0) {
+    const at = queue.shift() as number;
+    for (const nx of nodes[at]?.adjacent ?? []) {
+      if (seen.has(nx)) continue;
+      seen.add(nx);
+      if (!blocked(nx)) return nx;
+      queue.push(nx);
+    }
   }
-  for (let i = 0; i < nodes.length; i += 1) {
-    if (cleared.has(i) || bypassed.has(i)) continue;
-    if (nodes[i].iceIds.length > 0) return i;
-  }
-  return boss >= 0 ? boss : null;
+  return state.matrix?.bossNode ?? null;
 }
 
 /** One full run with the greedy policy. Returns the final state.
@@ -82,14 +146,19 @@ export function playRun(
   programCatalog: Readonly<Record<string, Program>>,
   clockRef: { now: number },
   jockeyId = "novice",
+  cardPolicy: CardPolicy = "first",
+  deckMode: "opening" | "ppl" = "opening",
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
-  let state = makeInitialState(
-    mission,
-    fallback,
-    startingDeck(programCatalog, jockeyId),
-  );
+  // `ppl` = the grade-appropriate deck `balance_sim.deckForGrade` builds (every
+  // program of tier <= grade, strongest five). Used to test whether a stronger
+  // STARTING deck is the lever, as opposed to cards earned during the run.
+  const deck =
+    deckMode === "ppl"
+      ? deckForGrade(programCatalog, mission.grade ?? 1)
+      : startingDeck(programCatalog, jockeyId);
+  let state = makeInitialState(mission, fallback, deck);
   for (let step = 0; step < MAX_STEPS; step += 1) {
     if (state.runPhase === "ending" || state.runPhase === "dead") return state;
     const before = state;
@@ -139,7 +208,11 @@ export function playRun(
       if (!isTerminalNode(state)) {
         const ids = offeredCardIds(state);
         if (state.cardRewardTaken === null && ids.length > 0) {
-          state = applyAction(state, { type: "select_program", handIndex: 1 });
+          const offers = ids.map((id) => cardOf(id));
+          state = applyAction(state, {
+            type: "select_program",
+            handIndex: pickRewardIndex(offers, cardPolicy),
+          });
         }
       }
       state = applyAction(state, { type: "confirm" });

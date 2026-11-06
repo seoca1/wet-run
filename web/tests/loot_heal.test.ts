@@ -5,6 +5,8 @@ import missionsData from "../src/data/missions.json";
 import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
 import type { Program, Ice } from "../src/core/types";
+import { lootHealPctForGrade } from "../src/core/state/loot_heal";
+import { missionGradeOf } from "../src/core/combat/ice_scaling";
 
 function loadDeck(programs: Record<string, Program>): Program[] {
   const ids = Object.keys(programs).sort().slice(0, 5);
@@ -23,7 +25,7 @@ function loadDeck(programs: Record<string, Program>): Program[] {
 }
 
 describe("Bug #7 regression: applyLootAction heals player on advance", () => {
-  it("heals player HP by 15% of maxHp when advancing from LOOT", () => {
+  it("heals the grade's share of maxHp when advancing from LOOT (ADR-0280)", () => {
     const mission = Object.values(missionsData)[0]!;
     const iceTypes = iceTypesData as unknown as Record<string, Ice>;
     const programs = programsData as unknown as Record<string, Program>;
@@ -44,9 +46,15 @@ describe("Bug #7 regression: applyLootAction heals player on advance", () => {
 
     const damagedState = { ...state, player: { ...state.player, hp: 50 } };
     const advanced = applyAction(damagedState, { type: "confirm" });
+    // ADR-0280: the share scales with the mission grade (a grade-5 mission is
+    // 7.4 encounters long, a flat 15% does not fit it).
     const expectedHeal = Math.min(
       damagedState.player.maxHp,
-      50 + Math.floor(damagedState.player.maxHp * 0.15),
+      50 +
+        Math.floor(
+          damagedState.player.maxHp *
+            (lootHealPctForGrade(missionGradeOf(mission as never)) / 100),
+        ),
     );
     expect(advanced.runPhase).toBe("matrix");
     expect(advanced.player.hp).toBe(expectedHeal);

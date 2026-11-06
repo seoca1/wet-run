@@ -1,0 +1,55 @@
+ADR-0280 question (d) option C — the healing levers, measured.
+
+Target mission completion: 100 / 95 / 80 / 50 / 25 / 10   (g1..g6)
+
+A. SHIPPED — the between-fight loot heal scaled by grade
+   LOOT_HEAL_PCT_BY_GRADE 15/15/25/40/55/65 (was a flat 15).
+   g1 100.0  g2 99.0  g3 36.7  g4 6.3  g5 0.0  g6 0.0
+   Worth about +3.5pp at grade 3 and noise elsewhere.
+   It cannot distort the per-encounter curve: `balance_sim` starts every
+   encounter at full HP and stops at the win, so it never sees a loot screen.
+   Verified: `npm run balance` is byte-identical after the change.
+
+B. CEILING TEST — a FULL heal between every fight (100%)
+   g1 100.0  g2 100.0  g3 54.5  g4 10.0  g5 0.0  g6 0.0
+   So healing between fights cannot reach the targets even at its maximum.
+   Reason: a run that loses a fight never reaches the next loot screen. The
+   binding constraint is lethality INSIDE a fight, not cumulative attrition.
+
+C. IN-FIGHT REGEN — measured by a probe (not shipped). The player-regen path is
+   already fully wired (`regen` status with `healPerTick`, tick effects,
+   `no_heal` mutator) and simply has no source in the game. Probe: grant the
+   runner R HP per enemy turn for the encounter.
+
+     R      g1      g2      g3      g4      g5      g6
+     0    100.0    98.8    38.1     4.4     0.0     ~0
+     3    100.0   100.0    63.6    23.8     0.0     ~0
+     5    100.0   100.0    86.9    43.8     1.4     ~0
+     8    100.0   100.0    99.4    77.5     1.4     ~0
+   target 100      95      80      50      25      10
+
+   In-fight regen is an order of magnitude stronger than the loot heal, and
+   R=5 lands grades 3 and 4 (86.9 vs 80, 43.8 vs 50 — both inside tolerance).
+
+D. WHY GRADES 5 AND 6 DO NOT MOVE AT ANY R
+   Not survivability — damage throughput. 34 of the 36 ICE at tier 4+ carry
+   armor 5 or more, and the opening deck's cheap cards are tier 1:
+
+     strike   (tier 1) does max(1, 5  - armor) = 1 damage against armor >= 5
+     exploit  (tier 3) does 10-12
+     neuromancer: armor 9, 165 HP  ->  about 16 cards of `exploit` alone
+
+   The runner cannot kill the ICE, so no amount of HP helps. This is the
+   missing-progression problem, not a healing problem: `balance_sim` measures
+   every grade with the SAME opening deck, and the upper grades were designed
+   around a developed one (the PPL deck in ADR-0229's own tables).
+
+So: healing fixes g3/g4 and cannot fix g5/g6. Reaching g5/g6 needs the armor
+versus deck-damage question — either a stronger deck at high grades
+(progression) or ICE armor that follows the grade.
+
+Item/consumable healing (option c) sits in the same class as regen: it heals
+inside a fight, so it attacks the binding constraint, and it costs more (loot
+table entry, inventory slot, save schema, a combat action, HUD). It would be
+strictly weaker than baseline regen for the same nominal HP unless the supply is
+scarce, in which case it adds a decision rather than raw survivability.

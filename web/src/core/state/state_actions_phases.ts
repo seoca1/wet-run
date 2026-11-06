@@ -34,6 +34,8 @@ import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram } from "./card_reward";
 import { refillHand } from "../combat/hand";
+import { lootHealPctForGrade } from "./loot_heal";
+import { missionGradeOf } from "../combat/ice_scaling";
 import { activeIceOf } from "../combat/roster";
 import {
   resolveEnding,
@@ -276,16 +278,20 @@ function takeCardReward(state: GameState, index: number): GameState {
   };
 }
 
-/** Non-terminal loot resolution: heal 15% and return to route selection. */
+/** Non-terminal loot resolution: heal and return to route selection.
+ *
+ * ADR-0280: the heal scales with the grade (`lootHealPctForGrade`), because a
+ * mission's length does. It is the only lever that does not move the
+ * per-encounter curve: `balance_sim` never reaches a loot screen.
+ */
 function continueToMatrix(state: GameState): GameState {
   const newVisited = state.visitedNodes.includes(state.currentNodeIndex)
     ? state.visitedNodes
     : [...state.visitedNodes, state.currentNodeIndex];
-  // Apply loot HEAL preview: 15% of max HP (matches renderLootScreen label).
-  const healedHp = Math.min(
-    state.player.maxHp,
-    state.player.hp + Math.floor(state.player.maxHp * 0.15),
-  );
+  // Apply the loot HEAL preview (matches renderLootScreen's label).
+  const healPct = lootHealPctForGrade(missionGradeOf(state.mission));
+  const healAmount = Math.floor(state.player.maxHp * (healPct / 100));
+  const healedHp = Math.min(state.player.maxHp, state.player.hp + healAmount);
   // ADR-0261: name the card the player just took, so the destination carries
   // the growth instead of the reward vanishing with the screen.
   const taken = state.cardRewardTaken
@@ -307,7 +313,7 @@ function continueToMatrix(state: GameState): GameState {
     selectedMatrixNodeIndex: null,
     visitedNodes: newVisited,
     phase: "approach",
-    // Say what happened: at full HP the 15% heal heals nothing, and claiming
+    // Say what happened: at full HP the heal heals nothing, and claiming
     // otherwise makes the screen lie about the run's state (ADR-0269).
     message: `${grown}Choose an adjacent route — ${
       healedHp > state.player.hp

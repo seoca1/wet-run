@@ -34,11 +34,15 @@ describe("Bug #9: rapid input", () => {
       state = applyAction(state, { type: "use_program", programId: prog.id });
     }
     
-    // State should still be valid
-    expect(state.player.hp).toBeGreaterThan(0);
+    // State should still be valid -- the point is "no corruption under rapid
+    // input", not survival. ADR-0280 makes the enemy act per card, so ten cards
+    // against a grade-5 ICE with a tier-1 deck is now lethal, and a flatline is
+    // a valid outcome here.
+    expect(Number.isFinite(state.player.hp)).toBe(true);
+    expect(state.player.hp).toBeGreaterThanOrEqual(0);
     expect(state.player.alarm).toBeGreaterThanOrEqual(0);
     expect(state.player.alarm).toBeLessThanOrEqual(100);
-    expect(state.runPhase).toMatch(/combat|loot/);
+    expect(state.runPhase).toMatch(/combat|loot|dead/);
   });
   
   it("selecting handIndex beyond available programs gives feedback, not error", () => {

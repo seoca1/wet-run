@@ -14,6 +14,7 @@ import { applyAction, makeInitialState } from "../src/core/state/state";
 import { startingDeck } from "../src/core/state/starting_deck";
 import { offeredCardIds } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
+import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
 import { programEffect } from "../src/core/combat/program_effects";
 import { deckForGrade } from "./balance_sim";
 import { rewardProgram } from "../src/core/state/card_reward";
@@ -30,6 +31,13 @@ export const MAX_STEPS = 600;
  * program, and taking the strongest one is how a run is supposed to scale.
  */
 export type CardPolicy = "first" | "best";
+
+/** How the runner picks routes (ADR-0281 measurement).
+ *
+ * `long` takes every unresolved encounter (nearest first) -- the run the design
+ * assumes. `short` walks the fewest-fights line to the boss, which is the choice
+ * the route card now prices: fewer fights, a thinner deck, a shorter mission. */
+export type RoutePolicy = "long" | "short";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -110,9 +118,21 @@ function nextStep(state: GameState, from: number, to: number): number | null {
  * The policy now walks to the closest unresolved encounter, which is what
  * playing the mission means.
  */
-function objective(state: GameState): number | null {
+function objective(
+  state: GameState,
+  routePolicy: RoutePolicy = "long",
+): number | null {
   const nodes = state.matrix?.nodes ?? [];
   if (nodes.length === 0) return null;
+  if (routePolicy === "short") {
+    // Fewest fights to the boss: skip what can be walked past.
+    return fewestFightsNextHop(
+      state.matrix as never,
+      state.clearedEncounterNodes ?? [],
+      state.bypassedEncounterNodes ?? [],
+      state.currentNodeIndex,
+    );
+  }
   const cleared = new Set(state.clearedEncounterNodes ?? []);
   const bypassed = new Set(state.bypassedEncounterNodes ?? []);
   const blocked = (i: number): boolean =>
@@ -148,6 +168,7 @@ export function playRun(
   jockeyId = "novice",
   cardPolicy: CardPolicy = "first",
   deckMode: "opening" | "ppl" = "opening",
+  routePolicy: RoutePolicy = "long",
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -176,7 +197,7 @@ export function playRun(
         }
         state = applyAction(state, { type: "confirm" });
       } else {
-        const goal = objective(state);
+        const goal = objective(state, routePolicy);
         const hop =
           goal === null || goal === state.currentNodeIndex
             ? null

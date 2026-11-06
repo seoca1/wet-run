@@ -6,6 +6,7 @@
  */
 import type { Matrix, MatrixNode } from "../core/types";
 import { EVENT_GLYPHS, EVENT_LABELS } from "../core/event_matrix";
+import { routePreview, routePreviewLine } from "../core/dungeon/route_preview";
 import { PALETTE } from "./palette";
 import { frontierOf, isBossNode, nodeState } from "./matrix_board";
 
@@ -15,6 +16,8 @@ export interface MatrixPosition {
   readonly visited: readonly number[];
   readonly cleared: readonly number[];
   readonly selected: number | null;
+  /** Nodes the runner walked past instead of fighting (ADR-0281 route pricing). */
+  readonly bypassed?: readonly number[];
 }
 
 export interface MatrixLine {
@@ -101,9 +104,23 @@ export function matrixCardLines(
       ? matrix.nodes[selected]
       : undefined;
   const shown = target ?? here;
-  if (target && selected !== null)
+  if (target && selected !== null) {
     add(`> ${name(target, selected)}`, PALETTE.GREEN_NEON);
-  else
+    // ADR-0281: the card already priced ONE node; the player's actual decision
+    // is the route, so say what it costs from here to the end and what is left
+    // on offer. This is the run's shape, before committing to it.
+    add(
+      routePreviewLine(
+        routePreview(
+          position.matrix,
+          position.cleared,
+          position.bypassed ?? [],
+          selected,
+        ),
+      ),
+      PALETTE.CYAN_LIGHT,
+    );
+  } else
     add(
       frontier.length > 0 ? MATRIX_ROUTE_PROMPT : "▸ NO ROUTES — ENTER: ICE",
       PALETTE.YELLOW_AMBER,

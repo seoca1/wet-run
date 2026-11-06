@@ -17,7 +17,12 @@
  */
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
-import { mulberry32, playRun, type CardPolicy } from "./play_policy";
+import {
+  mulberry32,
+  playRun,
+  type CardPolicy,
+  type RoutePolicy,
+} from "./play_policy";
 import type { Mission } from "../src/core/types";
 import iceJson from "../src/data/ice_types.json" with { type: "json" };
 import missionsJson from "../src/data/missions.json" with { type: "json" };
@@ -45,6 +50,9 @@ const BY_GRADE = process.argv.includes("--by-grade");
  * thing to look at when a grade misses its target. */
 const SHOW_DEATHS = process.argv.includes("--deaths");
 /** Card-offer policy: `first` (take anything) or `best` (spend the choice). */
+const routeIdx = process.argv.indexOf("--route");
+const ROUTE_POLICY: RoutePolicy =
+  routeIdx >= 0 && process.argv[routeIdx + 1] === "short" ? "short" : "long";
 const deckIdx = process.argv.indexOf("--deck");
 const DECK_MODE: "opening" | "ppl" =
   deckIdx >= 0 && process.argv[deckIdx + 1] === "ppl" ? "ppl" : "opening";
@@ -78,7 +86,16 @@ try {
     for (const mission of Object.values(missions) as Mission[]) {
       const grade = missionGradeOf(mission);
       if (ONLY_GRADE !== null && grade !== ONLY_GRADE) continue;
-      const final = playRun(mission, ice, programs, clockRef, "novice", CARD_POLICY, DECK_MODE);
+      const final = playRun(
+        mission,
+        ice,
+        programs,
+        clockRef,
+        "novice",
+        CARD_POLICY,
+        DECK_MODE,
+        ROUTE_POLICY,
+      );
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
       g.completed += completed;
@@ -100,7 +117,7 @@ try {
 }
 
 console.log(
-  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", jockey "novice"`,
+  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", jockey "novice"`,
 );
 console.log("");
 console.log("grade  missions  runs  completed  rate    target  delta");

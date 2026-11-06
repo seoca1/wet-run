@@ -1,0 +1,25 @@
+ADR-0281 — the route choice, measured.
+npm run survival --seeds 16, opening deck, cards=first
+
+route "long" (take every unresolved encounter — the design's run)
+
+grade  missions  runs  completed  rate    target  delta
+  1       4       64     64      100.0%   100%  +0.0
+  2      16      256    245       95.7%    95%  +0.7
+  3      11      176    121       68.8%    80%  -11.3  <-- MISS
+  4      10      160     66       41.3%    50%  -8.8  <-- MISS
+  5       9      144      0        0.0%    25%  -25.0  <-- MISS
+
+route "short" (fewest fights to the boss — the choice the card now prices)
+
+grade  missions  runs  completed  rate    target  delta
+  1       4       64     64      100.0%   100%  +0.0
+  2      16      256    256      100.0%    95%  +5.0
+  3      11      176    128       72.7%    80%  -7.3
+  4      10      160    106       66.3%    50%  +16.2  <-- MISS
+  5       9      144      0        0.0%    25%  -25.0  <-- MISS
+
+Grade 4 is the headline: 41.3% -> 66.3%, +25.0pp, for no code change to the
+reducer, the curve or the save schema — the player's route is the lever.
+Grades 5-6 stay at 0%: the shortest line still means meeting the apex ICE
+with a five-card tier-3 deck, so they need proposal B or C (ADR-0280 (g)).

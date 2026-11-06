@@ -3143,3 +3143,15 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **g5·g6 벽 네 방향 확인**: 회복(§6) · 곡선 완화(§8·§9) · **덱 강도**(`deckForGrade` 로 시작 → g5 **0.7%**, g6 2.1%) · 불변식. g5 교전 승률 ~41% × 7.4교전 → 덱이 무엇이든 ~0.
 - **오너 지시 반영 — 선택지 확대 제안** (`docs/design/adr-0280/choice-expansion-proposal.md`): "사용자의 선택지를 늘리는 방식, 영향도 커도 됨, 몰입도 높아야". 제안 4개 — **A** 매트릭스 경로를 "런 설계"로(교전 수·난도·보상 표시, 리듀서·스키마 무변경) · **B** 전리품을 택1(카드/수리/크레딧)로 · **C** 잭인 전 로드아웃(크레딧에 쓰임을 줌) · **D** 교전 중 물러나기·아이템. **권고 A → B → C**, A 는 `npm run survival` 최단/최장 경로 정책으로 "선택이 난도를 얼마나 바꾸는가"를 측정 검증 가능.
 - **검증**: vitest **191 files / 4089 tests** · typecheck 0 · lint 0 errors · build PASS · 소크 15런 frozen 0 · story trace 통과. 재기준화 테스트 2행(balance_sim).
+
+## [2026-11-06] feat(route) | 경로가 런의 모양이다 — 선택지를 늘려 난도를 플레이어에게 (ADR-0281)
+
+- **배경**: 오너 "사용자의 선택지를 늘리는 방식으로 개선하고 싶어. 영향도가 커도 상관없어. 몰입도도 높아야 해." → "권장대로 해줘." = ADR-0280 (g) 제안 A.
+- **단서**: ADR-0280 의 측정 도구 결함이 우연히 증명했다 — 런 정책이 보스로 최단 경로를 그렸더니 `first_jack` 의 `0 → 2 → 5` 로 **교전을 건너뛸 수 있었다**. 즉 **경로 선택이 이미 미션 길이를 정하고 있었고**, 화면이 말하지 않았을 뿐이다.
+- **수정**: `core/dungeon/route_preview.ts`(순수 함수) — `fightsToBoss`(0-1 BFS, 교전 칸 비용 1, **도착지 자체 교전 포함**) · `fightsAvailable`(목적지 너머 남은 교전) · `creditsAvailable`. **두 수가 다른 지점이 곧 선택지**. 경로를 고르면 카드에 한 줄: `route: 2 fights · 250cr`(교전 경유) vs `route: 1 to boss · 2 open · 250cr`(건너뛰는 길).
+- **화면**: `matrixCardLines` 에 추가, `bypassed` 를 `MatrixPosition` 으로 전달. **80×50 · 60×40 · 40×60 세 레이아웃 모두 렌더**(CARD_WIDTH 36 이내).
+- **측정 (`npm run survival --route long|short`)**: g2 `95.7→100.0` · g3 `68.8→72.7` · **g4 `41.3→66.3` (+25.0pp)** · g5 0. **리듀서·등급 곡선·저장 스키마 무변경**으로 얻은 폭이다. 원자료 `docs/design/adr-0281/route-choice-spread.txt`.
+- **몰입**: 잭인 뒤 "어디로 갈까"가 **우연이 아니라 계획**이 된다. 두 수(최소 교전 vs 남은 교전)가 다르면 그게 선택지다.
+- **구현 중 모델 버그 둘 수정**: ① 테스트 픽스처의 노드 id 가 배열 인덱스와 달랐다(실제 매트릭스는 `id === index`) ② **도착지 자체의 교전을 세지 않았다** — 교전 칸으로 이동하면 그 교전이 열리므로 반드시 세야 한다. 고치기 전에는 두 경로가 똑같이 "1 to boss" 로 보였다.
+- **검증**: vitest **192 files / 4098 tests** · typecheck 0 · lint 0 errors · build PASS · 소크 12런 frozen 0 · story trace 통과 · `npm run balance`(교전 단위) 무변경(하네스는 경로를 고르지 않는다) · doc-claims/no-novel-prose/mixed-language 0.
+- **남은 것**: g5·g6 는 최소 교전 경로로도 0%(정점 ICE 를 5장 tier-3 덱으로 만남) → 제안 B(전리품 택1) 또는 C(잭인 전 로드아웃) 필요. 경로 정보 밀도(인접 경로 전부 표시?)와 매트릭스 생성기 변경(명시적 short/thin vs long/thick)도 열린 질문.

@@ -151,6 +151,7 @@ export function renderMatrix(
     visited,
     cleared,
     selected: selectedNodeIndex,
+    bypassed,
   };
   const put = (x: number, y: number, text: string, fg: string): void => {
     if (y < footerY) grid = putInside(grid, inner, x, y, text, fg);

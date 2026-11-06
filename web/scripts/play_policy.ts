@@ -16,8 +16,10 @@ import { offeredCardIds } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
 import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
 import { LOOT_REPAIR_SLOT } from "../src/core/state/loot_choice";
+import { prepHpBonus } from "../src/core/state/prep";
 import { programEffect } from "../src/core/combat/program_effects";
 import { deckForGrade } from "./balance_sim";
+import { missionGradeOf } from "../src/core/combat/ice_scaling";
 import { rewardProgram } from "../src/core/state/card_reward";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
@@ -178,6 +180,8 @@ export function playRun(
   deckMode: "opening" | "ppl" = "opening",
   routePolicy: RoutePolicy = "long",
   lootPolicy: LootPolicy = "card",
+  hpBonus = 0,
+  handBonus = 0,
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -189,6 +193,26 @@ export function playRun(
       ? deckForGrade(programCatalog, mission.grade ?? 1)
       : startingDeck(programCatalog, jockeyId);
   let state = makeInitialState(mission, fallback, deck);
+  // ADR-0283 (C'): prep buys CAPACITY, not cards -- extra max HP is the most
+  // local form of it. Applied here so the lever can be measured before any
+  // screen is built (the card-prep shop was built first and then rejected).
+  // ADR-0283 (C'): a bigger hand is the other way to add capacity -- it raises
+  // the damage a turn can deliver instead of the HP it can absorb.
+  if (handBonus > 0) {
+    state = {
+      ...state,
+      player: { ...state.player, handSize: state.player.handSize + handBonus },
+    };
+  }
+  const prepBonus =
+    hpBonus > 0 ? hpBonus : prepHpBonus(missionGradeOf(mission));
+  if (prepBonus > 0) {
+    const maxHp = state.player.maxHp + prepBonus;
+    state = {
+      ...state,
+      player: { ...state.player, maxHp, hp: maxHp },
+    };
+  }
   for (let step = 0; step < MAX_STEPS; step += 1) {
     if (state.runPhase === "ending" || state.runPhase === "dead") return state;
     const before = state;

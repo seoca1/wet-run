@@ -9,8 +9,8 @@ summary: mission First Jack · arc 1 · HP 88/100 · 1800cr earned (base 500) ·
 [1] matrix/approach @node1 | HP 100/100 COST 0 T1 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
 [2] combat/approach @node1 | HP 100/100 COST 0 T2 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Entering mid... (1 ICE)"
 [3] combat/combat @node1 | HP 100/100 COST 0 T3 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Combat vs ICE — Wisp"
-[4] combat/combat @node1 | HP 96/100 COST 3 T3 | ICE 11 | hand strike+1 boost+2 barrier+3 decoy+2 | ">>> Dixie attacks: 11 dmg"
-      log: Exploit → 13 dmg (ICE HP: 22)
+[4] combat/combat @node1 | HP 96/100 COST 3 T3 | ICE 7 | hand strike+1 boost+2 barrier+3 decoy+2 | ">>> Dixie attacks: 11 dmg"
+      log: Exploit → 17 dmg (ICE HP: 18)
       log: >>> ICE — Wisp attacks: 4 dmg
       log: >>> Dixie attacks: 11 dmg
 [5] loot/victory @node1 | HP 96/100 COST 3 T3 | hand strike+1 boost+2 decoy+2 | "ICE — Wisp defeated! (no COST) +125 credits"
@@ -22,21 +22,17 @@ summary: mission First Jack · arc 1 · HP 88/100 · 1800cr earned (base 500) ·
 [9] matrix/approach @node5 | HP 96/100 COST 3 T5 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run."
 [10] combat/approach @node5 | HP 96/100 COST 3 T6 | ICE 60 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Entering core-deep... (1 ICE)"
 [11] combat/combat @node5 | HP 96/100 COST 3 T7 | ICE 60 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Combat vs ICE — Hosaka Courier"
-[12] combat/combat @node5 | HP 93/100 COST 6 T7 | ICE 22 | hand strike+1 boost+2 decoy+2 scan+1 | ">>> Dixie attacks: 17 dmg"
-      log: ICE BURN on
-      log: Exploit → 18 dmg (ICE HP: 39)
-      log: ★ BOSS PHASE 2 — Alert
+[12] combat/combat @node5 | HP 93/100 COST 6 T7 | ICE 30 | hand strike+1 boost+2 decoy+2 scan+1 | ">>> Dixie attacks: 17 dmg"
+      log: Exploit → 13 dmg (ICE HP: 47)
       log: >>> shield absorbed 2, evasion dodged 0
       log: >>> ICE — Hosaka Courier attacks: 5 dmg
       log: >>> Dixie attacks: 17 dmg
-[13] combat/combat @node5 | HP 88/100 COST 8 T7 | ICE 2 | hand strike+1 decoy+2 scan+1 | ">>> ICE — Hosaka Courier attacks: 5 dmg"
-      log: ICE BURN off
-      log: Boost → 20 dmg (ICE HP: 2)
-      log: ★ BOSS PHASE 4 — Terminal
-[14] loot/victory @node5 | HP 88/100 COST 8 T7 | ICE 7 | hand strike+1 scan+1 | ">>> Dixie attacks: 23 dmg"
+[13] combat/combat @node5 | HP 88/100 COST 8 T7 | ICE 17 | hand strike+1 decoy+2 scan+1 | ">>> ICE — Hosaka Courier attacks: 5 dmg"
+      log: YOU POWERED on
+      log: Boost → 13 dmg (ICE HP: 17)
+      log: ★ BOSS PHASE 3 — Berserk
+[14] loot/victory @node5 | HP 88/100 COST 8 T7 | hand strike+1 scan+1 | "ICE — Hosaka Courier defeated! (no COST) +1675 credits (mission complete) Loot: data_fragment x1"
       log: YOU EVASIVE on
-      log: ICE — Hosaka Courier defeated! (no COST) +1675 credits (mission complete) Loot: ice_shard x1, data_fragment x1
-      log: ★ PHASE 4: Drone deployed!
-      log: >>> Dixie attacks: 23 dmg
-[15] ending/victory @node5 | HP 88/100 COST 8 T7 | ICE 7 | hand strike+1 scan+1 | ">>> Dixie attacks: 23 dmg"
+      log: ICE — Hosaka Courier defeated! (no COST) +1675 credits (mission complete) Loot: data_fragment x1
+[15] ending/victory @node5 | HP 88/100 COST 8 T7 | hand strike+1 scan+1 | "ICE — Hosaka Courier defeated! (no COST) +1675 credits (mission complete) Loot: data_fragment x1"
 [15] ending screen: arc1_wage_slave

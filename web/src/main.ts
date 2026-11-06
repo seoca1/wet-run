@@ -123,6 +123,7 @@ import {
   runAbandoned,
 } from "./core/state/encounter_verbs";
 import { missionIce } from "./core/state/mission_ice";
+import { applyPrep } from "./core/state/prep";
 import {
   autosaveIntent,
   FLATLINE_MESSAGE,
@@ -1323,7 +1324,7 @@ class Game {
     const ice = missionIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
     this.state = openArrivalEncounter({
-      ...initial,
+      ...applyPrep(initial),
       jockeyId: JOCKEYS[this.selectedJockey]?.id ?? null,
       grid: makeGrid(this.layout.cols, this.layout.rows),
       currentNodeIndex: 0,

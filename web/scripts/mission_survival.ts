@@ -51,6 +51,12 @@ const BY_GRADE = process.argv.includes("--by-grade");
  * thing to look at when a grade misses its target. */
 const SHOW_DEATHS = process.argv.includes("--deaths");
 /** Card-offer policy: `first` (take anything) or `best` (spend the choice). */
+const hpIdx = process.argv.indexOf("--hp");
+/** ADR-0283 (C'): extra starting max HP from prep. */
+const HP_BONUS = hpIdx >= 0 ? Number(process.argv[hpIdx + 1]) || 0 : 0;
+const handIdx = process.argv.indexOf("--hand");
+/** ADR-0283 (C'): extra hand slots from prep. */
+const HAND_BONUS = handIdx >= 0 ? Number(process.argv[handIdx + 1]) || 0 : 0;
 const lootIdx = process.argv.indexOf("--loot");
 const LOOT_POLICY: LootPolicy =
   lootIdx >= 0 &&
@@ -103,6 +109,8 @@ try {
         DECK_MODE,
         ROUTE_POLICY,
         LOOT_POLICY,
+        HP_BONUS,
+        HAND_BONUS,
       );
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
@@ -125,7 +133,7 @@ try {
 }
 
 console.log(
-  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", jockey "novice"`,
+  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", hp +${HP_BONUS}, hand +${HAND_BONUS}, jockey "novice"`,
 );
 console.log("");
 console.log("grade  missions  runs  completed  rate    target  delta");

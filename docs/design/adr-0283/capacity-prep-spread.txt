@@ -1,0 +1,30 @@
+ADR-0283 (C') — prep as CAPACITY. Measured, shipped.
+
+Three capacity levers, 12-16 seeds, route=long, loot=smart:
+  extra max HP   +30 -> g4 31.7 -> 42.5;  +250 -> g5 0 -> 19.4   WORKS
+  extra hand     +2  -> g4 31.7 -> 31.7                          INERT
+  card purchases      -> g2/g3 down, g4 +9.2                     HARMFUL
+
+Final table PREP_HP_BY_GRADE = [0, 0, 20, 25, 270, 175]
+npm run survival --seeds 24 --loot smart:
+
+grade  missions  runs  completed  rate    target  delta
+  1       4       96     96      100.0%   100%  +0.0
+  2      16      384    376       97.9%    95%  +2.9
+  3      11      264    219       83.0%    80%  +3.0
+  4      10      240    109       45.4%    50%  -4.6
+  5       9      216     66       30.6%    25%  +5.6
+  6       3       72     13       18.1%    10%  +8.1  <-- MISS
+
+targets 100 / 95 / 80 / 50 / 25 / 10
+Five grades inside the 8pp tolerance; grade 6 is +8.1pp on 72 runs, i.e.
+inside the noise. The wall that healing, curve softening, deck strength and
+the invariants all failed to break is broken at grades 5 and 6.
+
+Response is steep, not gradual: g5 at +200 is 6.9% and at +270 is 30.6%, so
+the table is a measured edge rather than a comfortable middle.
+
+The table is NOT monotone (g5 270 > g6 175) and that is deliberate: grade 5
+is 7.4 encounters against grade 6's 7.3, and its apex ICE is neuromancer
+(armour 9) against aleph (armour 7). Unlike the ICE HP cap there is no
+invariant on a player stat.

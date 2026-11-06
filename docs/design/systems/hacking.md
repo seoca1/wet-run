@@ -223,16 +223,23 @@ Phase 5에서는 **placeholder** (combat은 미구현). 노드 진입 시:
     "title": "First Jack",
     "fixer": "finn",
     "arc": 1,
+    "zone": "surface",
     "grade_min": 1,
     "grade_max": 1,
-    "objective": "Extract the demo file from Sense/Net subsidiary.",
+    "rewards": { "credits": 500, "materials": { "data_fragment": 2 } },
     "matrix_seed": 42,
-    "zone": "surface",
-    "reward_tier": 1,
-    "reward_credits": 500
+    "primary_objective": { "type": "extract_data", "data_id": "demo_file" },
+    "secondary_objectives": [
+      { "type": "defeat", "enemy": "ice.standard", "count": 1 }
+    ],
+    "title_ko": "첫 잭인"
   }
 }
 ```
+
+> **2026-11-06 갱신 (ADR-0279):** 예시가 레거시 평면 필드(`reward_tier`·`reward_credits`)를 쓰고
+> 있었다. 권위 필드는 **`rewards.credits`**(nested, ADR-0130)이고, 평면 `reward_credits` 는
+> **폐기되어 데이터에서 제거됐다**(ADR-0279 — 33개 미션 전부 `rewards.credits` 와 값이 달랐다).
 
 ## 향후 결정
 

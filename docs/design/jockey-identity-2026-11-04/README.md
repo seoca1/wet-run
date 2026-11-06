@@ -68,6 +68,25 @@ re-measurement. Full ledger with evidence: `story-narration.md` §정정 및 재
 `npm run endings` — 53 missions, seeded, deterministic. `control` went from a
 branch reachable on 2 of 53 missions to 12 runs (arc 3: 1, arc 4: 7, arc 5: 4).
 Arcs 1–2 still do not reach it (their rewards are too small to clear 5,000).
+
+**The number depends on the time model**, because the enemy phase is wall-clock
+gated (`AUTO_ATTACK_INTERVAL_MS`). The tool takes `--tick-every N`:
+
+| model | reached an ending | `hp > 75%` | `credits > 5000` | `control` |
+|---|---:|---:|---:|---:|
+| `tick-every=0` (enemy gated off — a fast browser session) | 53/53 | 53/53 | 12/53 | 4/53 |
+| `tick-every=1` (the balance harness's model) | **5/53** | 0/53 | 0/53 | 0/53 |
+
+Two readings follow, and both matter:
+
+- In the regime where runs survive, the **HP gate never binds** (53/53) — credits
+  are what decide. ADR-0278 (c)'s suspicion that the ending HP is uninformative
+  holds, but for the opposite reason to the guess: the 15% loot heal always
+  covers the damage taken.
+- In the harness's own model, **runs mostly flatline before the ending**
+  (48/53), so the ending distribution is decided by *survival* first. That is a
+  difficulty question, out of ADR-0279's scope.
+
 Raw: `ending-distribution.txt`.
 
 ## Reproduce

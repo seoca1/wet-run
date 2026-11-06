@@ -22,7 +22,12 @@ import {
   loadMissionsCatalog,
   loadProgramsCatalog,
 } from "../src/core/data_loaders";
-import { applyAction, makeInitialState } from "../src/core/state/state";
+import {
+  applyAction,
+  makeInitialState,
+  slotToGameState,
+  stateToSaveSlot,
+} from "../src/core/state/state";
 import { startingDeck } from "../src/core/state/starting_deck";
 import { resolveEnding } from "../src/core/combat/ending_resolver";
 import type { GameState } from "../src/core/types";
@@ -189,7 +194,7 @@ describe("ADR-0279 · the resolver reads what the run earned", () => {
     expect(ending.category).toBe("status_quo");
   });
 
-  it("every arc has a control ending (the rich branch is never a fallback)", () => {
+  it("every arc defines a control ending (catalog presence, not reachability)", () => {
     // Given: a rich, healthy run in each arc.
     for (const arc of [1, 2, 3, 4, 5] as const) {
       const ending = resolveEnding({
@@ -203,7 +208,9 @@ describe("ADR-0279 · the resolver reads what the run earned", () => {
         choices: [],
       });
 
-      // Then
+      // Then: the *catalog* has a control ending per arc.
+      // Whether a real run reaches it is a different claim, answered by
+      // `npm run endings` (ADR-0279 measures control at arcs 3-5 only).
       expect(ending.category).toBe("control");
       expect(ending.arc).toBe(arc);
     }
@@ -228,5 +235,96 @@ describe("ADR-0279 · the resolver reads what the run earned", () => {
     // Then: the screen's number is the mission's own reward, and it is paid
     // by the win that ends the mission (see the tests above), not per fight.
     expect(mission?.rewards.credits).toBe(500);
+  });
+});
+
+/**
+ * The reviewers' residual risk: a path that re-runs the terminal win, or
+ * restores a checkpoint taken after the payment, must not pay twice.
+ *
+ * The payment happens in `resolveVictory` — the transition that *wins* the
+ * fight. The terminal loot screen's confirm only resolves the ending, so it
+ * has nothing to pay. These tests pin that separation.
+ */
+describe("ADR-0279 · the mission reward survives replay and resume", () => {
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.3);
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("confirming the terminal loot screen pays nothing again", () => {
+    // Given: a completed mission sitting on its terminal loot screen.
+    const first = winFight(twoFightMission());
+    const won = winFight(walkToBoss(first));
+    expect(won.runPhase).toBe("loot");
+    const earned = won.player.credits;
+    expect(earned).toBe(1975);
+
+    // When: ENTER ends the run.
+    const ended = applyAction(won, { type: "confirm" });
+
+    // Then: the ending carries the same ledger — no second payout.
+    expect(ended.runPhase).toBe("ending");
+    expect(ended.player.credits).toBe(earned);
+  });
+
+  it("confirming the ending pays nothing again", () => {
+    // Given: an ended run.
+    const first = winFight(twoFightMission());
+    const ended = applyAction(winFight(walkToBoss(first)), { type: "confirm" });
+    const earned = ended.player.credits;
+
+    // When: ENTER leaves the ending for the title.
+    const back = applyAction(ended, { type: "confirm" });
+
+    // Then
+    expect(back.phase).toBe("menu");
+    expect(back.player.credits).toBe(earned);
+  });
+
+  it("a save taken after the payment restores the same ledger", () => {
+    // Given: a completed mission (reward paid) on its terminal loot screen.
+    const first = winFight(twoFightMission());
+    const won = winFight(walkToBoss(first));
+    const earned = won.player.credits;
+
+    // When: the autosave round-trips it. The mission has to exist in a real
+    // catalog for the restore to resolve, so this uses `first_jack`.
+    const real = Object.values(missions).find((m) => m.id === "first_jack");
+    expect(real).toBeDefined();
+    const slot = stateToSaveSlot({ ...won, mission: real as never });
+    const restored = slotToGameState(
+      slot,
+      Object.values(missions),
+      programs,
+      Object.values(ice)[0] as never,
+      ice,
+    );
+
+    // Then: the credits are the ones that were saved — the restore is not a
+    // second payment and does not drop the payment either.
+    expect(restored).not.toBeNull();
+    expect(restored?.player.credits).toBe(earned);
+  });
+
+  it("a save taken before the win does not pay on reload", () => {
+    // Given: a run saved mid-mission, before the terminal fight.
+    const started = twoFightMission();
+    const real = Object.values(missions).find((m) => m.id === "first_jack");
+    const slot = stateToSaveSlot({ ...started, mission: real as never });
+    const restored = slotToGameState(
+      slot,
+      Object.values(missions),
+      programs,
+      Object.values(ice)[0] as never,
+      ice,
+    );
+    expect(restored).not.toBeNull();
+
+    // Then: the resumed run starts with an empty ledger; the reward is still
+    // ahead of it, not already paid.
+    expect(restored?.player.credits).toBe(0);
   });
 });

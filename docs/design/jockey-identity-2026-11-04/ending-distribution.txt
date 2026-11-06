@@ -1,4 +1,11 @@
-ending distribution — 53 missions, seed 20261105, policy "expensive", resolver credits=player
+wet_run — ending distribution (ADR-0279). Deterministic reducer sweep, 53 missions, seed 20261105.
+The enemy phase is wall-clock gated (AUTO_ATTACK_INTERVAL_MS). --tick-every sets enemy ticks per action:
+  tick-every=0  enemy phase gated off (what a real browser session with fast keys does today)
+  tick-every=1  the balance harness's model (one enemy phase per action) — a deliberating player
+  tick-every=2  harsher than the harness
+
+### tick-every=0 (the browser session's regime)
+ending distribution — 53 missions, seed 20261105, policy "expensive", resolver credits=player, tick-every=0
 
 ending                    n   share
 arc1_wage_slave           20   37.7%
@@ -10,6 +17,17 @@ arc3_double_agent          1   1.9%
 
 mean earned (player.credits): 3750  ·  mean mission base: 1839
 runs with player.credits > 5000: 12/53
+
+hp > 75% at the ending: 53/53
+hp > 75% AND credits > 5000 (the control gate): 12/53
+control endings actually resolved: 4/53
+runs that flatlined before the ending: 0/53
+hp at the ending:
+  100%    16
+  76-99%  37
+  51-75%  0
+  26-50%  0
+  0-25%   0
 
   g1 first_jack                   arc1_wage_slave          hp 80/100 cr 1725 (base 500)
   g1 moat_burned_blue             arc1_wage_slave          hp 80/100 cr 1725 (base 500)
@@ -65,8 +83,8 @@ runs with player.credits > 5000: 12/53
   g6 wintermute_negotiation       arc5_control             hp 80/100 cr 8150 (base 6000)
   g6 zion_express                 arc5_control             hp 96/100 cr 6575 (base 4500)
 
-=== resolver credits=inventory (the pre-ADR-0279 source) ===
-ending distribution — 53 missions, seed 20261105, policy "expensive", resolver credits=inventory
+### tick-every=0, resolver credits=inventory (the pre-ADR-0279 source)
+ending distribution — 53 missions, seed 20261105, policy "expensive", resolver credits=inventory, tick-every=0
 
 ending                    n   share
 arc1_wage_slave           20   37.7%
@@ -78,3 +96,58 @@ arc5_unknown               2   3.8%
 
 mean earned (player.credits): 3750  ·  mean mission base: 1839
 runs with player.credits > 5000: 12/53
+
+hp > 75% at the ending: 53/53
+hp > 75% AND credits > 5000 (the control gate): 12/53
+control endings actually resolved: 2/53
+runs that flatlined before the ending: 0/53
+hp at the ending:
+  100%    16
+  76-99%  37
+  51-75%  0
+  26-50%  0
+  0-25%   0
+
+### tick-every=1 (the balance harness's model)
+ending distribution — 53 missions, seed 20261105, policy "expensive", resolver credits=player, tick-every=1
+
+ending                    n   share
+(dead)                    48   90.6%
+arc1_wage_slave            3   5.7%
+arc2_status_quo            2   3.8%
+
+mean earned (player.credits): 575  ·  mean mission base: 1839
+runs with player.credits > 5000: 0/53
+
+hp > 75% at the ending: 0/53
+hp > 75% AND credits > 5000 (the control gate): 0/53
+control endings actually resolved: 0/53
+runs that flatlined before the ending: 48/53
+hp at the ending:
+  100%    0
+  76-99%  0
+  51-75%  1
+  26-50%  1
+  0-25%   51
+
+### tick-every=2
+ending distribution — 53 missions, seed 20261105, policy "expensive", resolver credits=player, tick-every=2
+
+ending                    n   share
+(dead)                    48   90.6%
+arc1_wage_slave            3   5.7%
+arc2_status_quo            2   3.8%
+
+mean earned (player.credits): 575  ·  mean mission base: 1839
+runs with player.credits > 5000: 0/53
+
+hp > 75% at the ending: 0/53
+hp > 75% AND credits > 5000 (the control gate): 0/53
+control endings actually resolved: 0/53
+runs that flatlined before the ending: 48/53
+hp at the ending:
+  100%    0
+  76-99%  0
+  51-75%  1
+  26-50%  1
+  0-25%   51

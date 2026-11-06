@@ -192,7 +192,28 @@
 
 ---
 
+## Implementation Status (2026-11-06)
+
+**Status**: 🟡 Partial — 남은 항목 하나(평면 보상 필드 폐기)가 닫혔다.
+
+**Evidence**:
+
+- 권위 필드 `rewards.credits`(nested): `web/src/core/data_loaders.ts` 가 미션을 파싱할 때 nested 만 읽는다.
+  평면 `reward_credits` 를 읽는 런타임 코드는 **0곳**이었다(전수 grep).
+- **폐기 완료 (2026-11-06, [ADR-0279](./0279-the-run-states-its-earnings.md))**: 33개 Sprawl 미션이
+  가진 `reward_credits`(top)·`reward_tier` 를 데이터에서 제거. 33개 **전부** `rewards.credits` 와
+  값이 달라(5.7~11x 작은 레거시 값) fallback 부활 시 조용한 과소 지급 함정이었다.
+  제거 후 53개 미션이 같은 모양이며 vitest 191 files / 4089 tests 무회귀.
+- 문서 정합: `docs/design/systems/hacking.md` 의 미션 스키마 예시를 현재 스키마로 정정,
+  `docs/design/balance/ppl_zdr_balance.md` 의 "향후 deprecation 검토 (P3)" 를 종결로 갱신.
+
+**Notes**: PPL/ZDR 표 sync·Arc 1 보상 재검토 등 나머지 Option 1 항목의 현재 상태는 이 ADR 의
+범위 밖이며, 후속 세션에서 확인이 필요하다. 이 Status 는 **평면 보상 필드 폐기 항목만** 닫는다.
+
+---
+
 ## 변경 이력
 
 - 2026-07-27: Draft 작성 (Phase 1 of 게임성 점검)
 - 2026-07-27: **Accepted (Option 1)** — 사용자 선택. 문서 sync 적용, ADR-0131+/0132+ 로 잔존 이슈 분리
+- 2026-11-06: Implementation Status 추가 — 평면 `reward_credits`/`reward_tier` 폐기 완료 (ADR-0279).

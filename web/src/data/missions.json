@@ -25,8 +25,6 @@
         "count": 2
       }
     ],
-    "reward_credits": 1100,
-    "reward_tier": 4,
     "title_ko": "알레프 파편"
   },
   "black_ice_dream": {
@@ -56,8 +54,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 300,
-    "reward_tier": 2,
     "title_ko": "블랙 ICE의 꿈"
   },
   "craft_job": {
@@ -88,8 +84,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 300,
-    "reward_tier": 2,
     "title_ko": "제작 의뢰"
   },
   "data_retrieval": {
@@ -118,8 +112,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 75,
-    "reward_tier": 1,
     "title_ko": "데이터 회수"
   },
   "delivery_to_finn": {
@@ -149,8 +141,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 75,
-    "reward_tier": 1,
     "title_ko": "핀에게 배달"
   },
   "dixies_choice": {
@@ -179,8 +169,6 @@
         "count": 3
       }
     ],
-    "reward_credits": 600,
-    "reward_tier": 3,
     "title_ko": "디시의 선택"
   },
   "dixies_offer": {
@@ -209,8 +197,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 600,
-    "reward_tier": 3,
     "title_ko": "디시의 제안"
   },
   "final_choice": {
@@ -239,8 +225,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 1100,
-    "reward_tier": 4,
     "title_ko": "최후의 선택"
   },
   "first_contact": {
@@ -269,8 +253,6 @@
         "count": 2
       }
     ],
-    "reward_credits": 150,
-    "reward_tier": 1,
     "title_ko": "첫 접촉"
   },
   "first_jack": {
@@ -299,8 +281,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 75,
-    "reward_tier": 1,
     "title_ko": "첫 잭인"
   },
   "first_trace": {
@@ -329,8 +309,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 150,
-    "reward_tier": 1,
     "title_ko": "첫 흔적"
   },
   "flatline_call": {
@@ -360,8 +338,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 150,
-    "reward_tier": 1,
     "title_ko": "플랫라인의 부름"
   },
   "ice_run": {
@@ -391,8 +367,6 @@
         "count": 2
       }
     ],
-    "reward_credits": 75,
-    "reward_tier": 1,
     "title_ko": "ICE 런"
   },
   "matrix_revelation": {
@@ -421,8 +395,6 @@
         "count": 3
       }
     ],
-    "reward_credits": 600,
-    "reward_tier": 3,
     "title_ko": "매트릭스 계시"
   },
   "mollys_market": {
@@ -451,8 +423,6 @@
         "count": 2
       }
     ],
-    "reward_credits": 150,
-    "reward_tier": 1,
     "title_ko": "몰리의 시장"
   },
   "mollys_razor": {
@@ -481,8 +451,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 300,
-    "reward_tier": 2,
     "title_ko": "몰리의 레이저"
   },
   "neuromancer_merger": {
@@ -511,8 +479,6 @@
         "count": 3
       }
     ],
-    "reward_credits": 1100,
-    "reward_tier": 4,
     "title_ko": "Neuromancer 합병"
   },
   "neuromancer_whisper": {
@@ -541,8 +507,6 @@
         "count": 2
       }
     ],
-    "reward_credits": 300,
-    "reward_tier": 2,
     "title_ko": "Neuromancer의 속삭임"
   },
   "sally_returns_arc3": {
@@ -570,8 +534,6 @@
         "npc": "finn_construct"
       }
     ],
-    "reward_credits": 300,
-    "reward_tier": 2,
     "title_ko": "살리의 귀환"
   },
   "sally_sandii_3am": {
@@ -599,8 +561,6 @@
         "npc": "sally_younger"
       }
     ],
-    "reward_credits": 150,
-    "reward_tier": 1,
     "title_ko": "로즈 호텔, 새벽 3시"
   },
   "sense_net_tip": {
@@ -629,8 +589,6 @@
         "count": 2
       }
     ],
-    "reward_credits": 150,
-    "reward_tier": 1,
     "title_ko": "센스넷 제보"
   },
   "ta_heist": {
@@ -659,8 +617,6 @@
         "count": 2
       }
     ],
-    "reward_credits": 600,
-    "reward_tier": 3,
     "title_ko": "T-A 강탈"
   },
   "tutorial_maze": {
@@ -689,8 +645,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 75,
-    "reward_tier": 1,
     "title_ko": "튜토리얼 미로"
   },
   "vegas_stakeout": {
@@ -719,8 +673,6 @@
         "count": 2
       }
     ],
-    "reward_credits": 300,
-    "reward_tier": 2,
     "title_ko": "베이거스 잠복"
   },
   "voodoo_loa_encounter": {
@@ -750,8 +702,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 600,
-    "reward_tier": 3,
     "title_ko": "부두 로아 조우"
   },
   "watchdog_patrol": {
@@ -781,8 +731,6 @@
         "count": 3
       }
     ],
-    "reward_credits": 75,
-    "reward_tier": 1,
     "title_ko": "워치독 순찰"
   },
   "winter_infiltrate": {
@@ -811,8 +759,6 @@
         "count": 3
       }
     ],
-    "reward_credits": 600,
-    "reward_tier": 3,
     "title_ko": "윈터 잠입"
   },
   "yakuza_deal": {
@@ -842,8 +788,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 150,
-    "reward_tier": 1,
     "title_ko": "야쿠자 거래"
   },
   "zion_express": {
@@ -872,8 +816,6 @@
         "count": 3
       }
     ],
-    "reward_credits": 1100,
-    "reward_tier": 4,
     "title_ko": "Zion 특송"
   },
   "armitage_infiltration": {
@@ -903,8 +845,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 150,
-    "reward_tier": 1,
     "title_ko": "아미티지의 첫 잠입"
   },
   "hosaka_extraction": {
@@ -934,8 +874,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 300,
-    "reward_tier": 2,
     "title_ko": "호사카 내부 추출"
   },
   "ta_defection": {
@@ -966,8 +904,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 600,
-    "reward_tier": 3,
     "title_ko": "테시에르-애시풀 이탈"
   },
   "wintermute_negotiation": {
@@ -997,8 +933,6 @@
         "count": 1
       }
     ],
-    "reward_credits": 1100,
-    "reward_tier": 4,
     "title_ko": "윈터M 협상"
   },
   "far_grid_prelude": {

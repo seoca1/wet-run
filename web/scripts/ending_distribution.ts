@@ -41,6 +41,21 @@ const CREDITS_SOURCE: "player" | "inventory" =
 const SEED = Number(
   process.argv[process.argv.indexOf("--seed") + 1] ?? 20261105,
 ) || 20261105;
+/**
+ * Enemy ticks per action. `1` is the balance harness's convention (one enemy
+ * phase per played action) — the project's own time model. `0` disables the
+ * enemy phase entirely, which is the optimistic bound: `processEnemyTurns`
+ * returns early inside `AUTO_ATTACK_INTERVAL_MS`, so combat costs almost no HP.
+ *
+ * Neither is "real play": a human deliberating on a card spends ~1-3s, i.e.
+ * roughly one tick per action, while a scripted key press is ~20ms and gates
+ * the enemy off. Report both so an HP reading cannot be mistaken for a fact.
+ */
+const TICK_EVERY = (() => {
+  const i = process.argv.indexOf("--tick-every");
+  const raw = i >= 0 ? Number(process.argv[i + 1]) : 1;
+  return Number.isFinite(raw) && raw >= 0 ? raw : 1;
+})();
 const COST_LIMIT = 100;
 const MAX_STEPS = 600;
 
@@ -95,7 +110,13 @@ function objective(state: GameState): number | null {
   return boss >= 0 ? boss : null;
 }
 
-/** One full run with the greedy policy. Returns the final state or null. */
+/** One full run with the greedy policy. Returns the final state or null.
+ *
+ * `clock` advances by one enemy tick per action, exactly as `balance_sim.ts`
+ * does. Without it the enemy phase is gated off (`processEnemyTurns` returns
+ * early inside `AUTO_ATTACK_INTERVAL_MS`), combat costs almost no HP, and any
+ * HP-based reading would be a fiction.
+ */
 function playRun(mission: Mission, catalog: ReturnType<typeof loadIceCatalog>): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -103,6 +124,7 @@ function playRun(mission: Mission, catalog: ReturnType<typeof loadIceCatalog>): 
   for (let step = 0; step < MAX_STEPS; step += 1) {
     if (state.runPhase === "ending" || state.runPhase === "dead") return state;
     const before = state;
+    if (TICK_EVERY > 0) clock += AUTO_ATTACK_INTERVAL_MS * TICK_EVERY;
 
     if (state.runPhase === "matrix") {
       if (state.encounterDecision) {
@@ -231,11 +253,12 @@ try {
 
 const counts = new Map<string, number>();
 for (const r of rows) counts.set(r.ending, (counts.get(r.ending) ?? 0) + 1);
+const died = rows.filter((r) => r.ending === "(dead)").length;
 const earned = rows.reduce((a, r) => a + r.credits, 0);
 const base = rows.reduce((a, r) => a + r.baseCredits, 0);
 
 console.log(
-  `ending distribution — ${rows.length} missions, seed ${SEED}, policy "expensive", resolver credits=${CREDITS_SOURCE}`,
+  `ending distribution — ${rows.length} missions, seed ${SEED}, policy "expensive", resolver credits=${CREDITS_SOURCE}, tick-every=${TICK_EVERY}`,
 );
 console.log("");
 console.log("ending                    n   share");
@@ -250,6 +273,30 @@ console.log(
 );
 const over = rows.filter((r) => r.credits > 5000).length;
 console.log(`runs with player.credits > 5000: ${over}/${rows.length}`);
+
+// ADR-0279 open question (a): how often does the `control` branch's HP gate
+// actually hold? The loot heal is 15%, so "full HP at the ending" is not a
+// given. Report the gate's two halves separately and together.
+const withHp = rows.filter((r) => r.maxHp > 0);
+const hpOk = withHp.filter((r) => r.hp / r.maxHp > 0.75).length;
+const both = withHp.filter((r) => r.hp / r.maxHp > 0.75 && r.credits > 5000).length;
+const controlEndings = rows.filter((r) => r.ending.includes("control")).length;
+console.log("");
+console.log(`hp > 75% at the ending: ${hpOk}/${withHp.length}`);
+console.log(`hp > 75% AND credits > 5000 (the control gate): ${both}/${withHp.length}`);
+console.log(`control endings actually resolved: ${controlEndings}/${rows.length}`);
+console.log(`runs that flatlined before the ending: ${died}/${rows.length}`);
+const hpHist = new Map<string, number>();
+for (const r of withHp) {
+  const pct = r.maxHp > 0 ? (r.hp / r.maxHp) * 100 : 0;
+  const bucket =
+    pct >= 100 ? "100%" : pct >= 76 ? "76-99%" : pct >= 51 ? "51-75%" : pct >= 26 ? "26-50%" : "0-25%";
+  hpHist.set(bucket, (hpHist.get(bucket) ?? 0) + 1);
+}
+console.log("hp at the ending:");
+for (const b of ["100%", "76-99%", "51-75%", "26-50%", "0-25%"]) {
+  console.log(`  ${b.padEnd(7)} ${hpHist.get(b) ?? 0}`);
+}
 
 if (VERBOSE) {
   console.log("");

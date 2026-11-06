@@ -3060,3 +3060,17 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **결론**: approve-with-caveats. 핵심 지적 — (1) `resolveVictory` 1회 지급 + `player.credits` 리졸버 변경이 함께 적용된 **최종 분포 측정 누락** (현재는 리졸버 지갑만 교체), (2) 터미널 승리 재처리 시 **멱등성** 미입증, (3) `isTerminalNode` 보스/막다른 경계 불명확, (4) ADR-0130 `rewards.credits` 권위 관계 미해소, (5) `control` 카탈로그 존재 vs 도달성 표현 혼재.
 - **오픈 질문 판정**: (a) 부분 가능(HP 기록은 있으나 충족률 미제공), (b) 현재 증거로 결정 불가, (c) 답할 수 없음(보상 곡선 재설계 근거 부족).
 - **후속**: ADR-0279 `## Implementation Status` Notes 에 Manus 리뷰 인용 추가 검토.
+
+## [2026-11-06] fix(economy)·docs | 리뷰 후속 번들 — 권위 매핑·데이터 위생·잔여 위험·HP 측정 (ADR-0279)
+
+- **배경**: ADR-0279 Manus 독립 리뷰(`approve-with-caveats`)의 미해소 finding (4)·(5) + 잔여 위험 + 열린 질문 (a). 오너 "묶어서 하자".
+- **finding (4) — 세 필드 권위 매핑 + 데이터 위생**: ADR-0130 이 `rewards.credits`(nested)를 권위로 결정했는데, 평면 `reward_credits`(top)가 33개 Sprawl 미션에 남아 있었고 **33개 전부** `rewards.credits` 와 값이 달랐다(레거시 5.7~11x 작음 — `first_jack` top 75 vs nested 500). 런타임 독자는 **0곳**(전수 grep). ADR-0130 의 "deprecated 또는 alias" 결정에 따라 `reward_credits`·`reward_tier` **제거** → 53개 미션이 같은 모양. ADR-0279 에 "세 필드의 권위 매핑" 절 추가(`mission.rewards.credits`=권위 지급액 / `reward_credits`=폐기 / `inventory.credits`=crafting 보증금 / `player.credits`=런 원장). ADR-0130 에 Implementation Status 추가, `hacking.md` 스키마 예시 정정, `ppl_zdr_balance.md` deprecation 노트 종결.
+- **finding (5) — 존재 vs 도달 분리**: "5개 arc 모두 `control` 보유"를 **카탈로그 존재**로 한정하고(테스트 이름·주석 포함), 도달성은 측정이 답하도록 분리.
+- **잔여 위험 — 재지급**: 테스트 4건 추가 — 터미널 전리품 confirm 이 재지급 안 함 · 엔딩 confirm 이 재지급 안 함 · 지급 후 저장/복원이 같은 원장 · 지급 전 저장은 원장 0.
+- **열린 질문 (a) — 측정 완료, 그리고 정정**: `npm run endings` 에 `--tick-every N` 추가(적이 벽시계로 게이트되므로 시간 모델이 분포를 정한다). 결과:
+  - `tick-every=0` (브라우저 세션 구간): 결말 53/53 · **`hp > 75%` 53/53** · `credits > 5000` 12/53 · `control` 해결 **4/53** (12중 8은 팩션 분기가 먼저 잡음).
+  - `tick-every=1` (하네스 모델): 결말 **5/53** (48 flatline) · `hp > 75%` 0/53 · `control` 0/53.
+  - **인과**: HP 조건은 살아남은 런에서 **항상 참**(회복 15%가 손실을 덮음) → 조건이 아니라 **크레딧**이 가른다. ADR-0278 (c) 의 추측은 반대 이유로 성립.
+  - **더 큰 발견**: 하네스 모델에서는 **런이 결말에 못 간다**. 단일 교전 g4 47.4% 기준이면 2~4교전 런은 그 곱만큼 낮다 → 엔딩 분포는 "얼마나 벌었나"보다 **"살아남았나"** 가 먼저 정한다. 난이도 문제로 ADR-0279 범위 밖.
+  - 부수: 난이도가 **플레이어 숙고 시간**에 의존한다(빠른 키 세션 53/53 완주 vs 숙고 48/53 사망). 벽시계 게이트의 의도인지 결함인지는 별도 질문.
+- **검증**: vitest **191 files / 4089 tests** · typecheck 0 · lint 0 errors · build PASS.

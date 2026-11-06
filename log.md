@@ -3086,3 +3086,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **원인 = 보스, 그리고 아무도 그것을 측정한 적이 없다**: 죽은 위치를 세니 **g1·g2 는 일반 교전 사망 0** — 지는 곳은 보스뿐(사망 중 보스 비중 **g1·g2 100%**, g3 91%, g4 87%, g5 65%, g6 67%). 그런데 `balance_sim.ts` 는 주석에 *"skip boss rooms so a boss spike does not decide the reported win-rate"* 라 적어 두었다 — **기록된 곡선은 보스를 한 번도 본 적이 없다**. 보스는 모든 등급에서 `wintermute`(tier 4 · armor 8 · `dmg_base` 11 → 자동공격 20) 고정이고 등급이 조절하는 것은 **HP 상한뿐**(g1 75). 카탈로그의 `boss` aggression ICE 는 **전부 tier 4+** 라 낮은 등급 보스가 데이터에 없다.
 - **검증**: vitest **191 files / 4089 tests** · typecheck 0. 원자료 `docs/design/adr-0280/mission-survival-before.txt` · `docs/design/adr-0280/death-location.txt`.
 - **남은 결정**: 열린 질문 (a) **보스를 어떻게 등급에 맞출 것인가** — 권고는 "등급 밴드의 최상위 ICE 를 엘리트 보스로 승격"(데이터에 이미 있고, 등급별 보스가 자연히 생기며, `wintermute` 는 상위 등급 전용이 됨). (b) g6 10% 목표가 ADR-0229 불변식("오프너는 클라이맥스를 못 이긴다")과 충돌 → 등급 단위로 재정의 필요. (c) 콤보 창.
+
+## [2026-11-06] fix(balance) | 보스를 등급에 맞춘다 — g1 튜토리얼이 실패하던 진짜 원인 (ADR-0280)
+
+- **배경**: 오너 "추천대로" → ADR-0280 열린 질문 (a) B안(등급 밴드의 정점을 보스로) + g6 목표 5% 조정.
+- **수정**: 출구 방이 고정 `wintermute`(tier 4 · armor 8 · 자동공격 20) 대신 **그 등급 밴드의 정점**을 쓴다 — `BOSS_ICE_BY_GRADE`: g1 `hosaka_courier` → g2 `corporate_guard` → g3 `hosaka_defender` → g4 `ta_sentinel` → g5 `neuromancer` → g6 `aleph`. 정점은 데이터에서 계산했다(`iceHpForGrade(x,g) * (tier*3 + armor)` 최대). 상위 셋(`ta_sentinel`·`neuromancer`·`aleph`)은 카탈로그에서 이미 `aggression: "boss"` 라 진짜 보스가 유지된다.
+- **효과 (20시드×53미션)**: 미션 완주율 **32.5/14.7/5.0/3.5/1.7/5.0 → 100.0/99.1/33.2/11.5/0.0/0.0**. **g1·g2 가 목표(100/95)에 들어왔다** — g1 은 3번 중 2번 실패하던 튜토리얼이었다. 교전 단위 곡선은 **byte-identical**(`100.0/100.0/89.1/47.4/40.7/0.0`) 이라 하네스 기준선 테스트가 그대로 통과.
+- **곡선 재조정은 중단 — 하고 나서 되돌렸다**: `scripts/tune_curve.py`(등급별 HP 상한·피해 보너스 격자 탐색 + `npm run survival --grade N` 프로브)로 6개 중 5개를 목표 안에 맞췄다(`100.0/100.0/77.3/67.0/21.1/6.7`). 그런데 그 해의 **교전 단위 곡선이 역전**됐다: **g4 7.2% · g6 99.3%** — 등급 4 ICE 가 등급 6 ICE 보다 치명적. ADR-0229 의 단조 비증가 불변식 위반이고 설계로도 앞뒤가 안 맞아 **커밋하지 않고 되돌렸다**(원자료 `docs/design/adr-0280/retune-attempt.txt`).
+- **원인 규명**: ① `balance_sim` 이 **교전마다 러너를 만피로 리셋**하므로 교전 승률로 미션 난이도를 표현할 수 없다(런은 피해를 이월한다) ② 등급별 **미션 길이**(2.3/3.2/3.6/4.3/7.4/7.3 교전)가 목표(100/95/80/50/25/10)와 함께 주어지면 두 곡선을 동시에 만족시키려면 교전 난이도가 **비단조**여야 한다.
+- **세 갈래로 기록** (열린 질문 (d)): A 비단조 교전 곡선 수용(ADR-0229 개정) · B 미션 길이를 등급에 맞춤(콘텐츠 변경) · C **세 번째 레버 = 전리품 회복량 스케일**(현재 미조정, 콘텐츠 변경 없음). 권고는 **C 먼저, 그다음 B**.
+- **검증**: vitest **191 files / 4089 tests** (보스 고정 테스트 3개를 새 의도로 갱신) · typecheck 0 · lint 0 errors · `npm run balance` baseline byte-identical · 소크 15런 11 completed / 4 failed · frozen 0 · `npm run story` 통과. 신규 도구: `npm run survival`(미션 완주율) · `scripts/play_policy.ts` · `scripts/tune_curve.py`(경고 헤더 포함).

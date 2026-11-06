@@ -1,0 +1,37 @@
+ADR-0280 — the re-tune attempt and why it stopped short.
+
+Step 1 — boss per grade, ICE curve untouched. `npm run survival`:
+  g1 100.0%  g2 99.1%  g3 33.2%  g4 11.5%  g5 0.0%  g6 0.0%
+  (targets 100 / 95 / 80 / 50 / 25 / 10)
+Versus before the boss fix: 32.5 / 14.7 / 5.0 / 3.5 / 1.7 / 5.0.
+So the lower grades are fixed — g1 was a tutorial that failed 2 runs in 3.
+The per-encounter curve (`npm run balance`) is unchanged, byte for byte.
+
+Step 2 — searching the curve to hit the mission targets (scripts/tune_curve.py,
+grid search per grade on the HP cap and the damage bonus). It reaches
+  100.0 / 100.0 / 77.3 / 67.0 / 21.1 / 6.7
+— five of six grades inside tolerance — but look at what that costs:
+
+  grade   mission survival   per-encounter win rate (npm run balance)
+    3        77.3% (80)          56.2%
+    4        67.0% (50)           7.2%
+    5        21.1% (25)          36.6%
+    6         6.7% (10)          99.3%
+
+The per-encounter curve is INVERTED: a grade-6 encounter becomes the easiest
+in the game (99.3%) while grade 4 becomes the deadliest (7.2%). That breaks
+ADR-0229's monotonic non-increasing invariant, and it is incoherent design —
+grade 4 ICE would hit harder than grade 6 ICE. It is not fit to commit.
+
+Why it happens: `balance_sim` resets the runner to full HP at the start of
+every encounter, so its per-encounter rate cannot express mission difficulty —
+a run carries its damage forward. And the two schedules pull against each
+other: mission lengths differ by grade (2.3 / 3.2 / 3.6 / 4.3 / 7.4 / 7.3
+encounters) while the targets (100/95/80/50/25/10) do not scale with them, so
+the per-encounter curve has to be non-monotonic for both to hold at once.
+
+Three ways out, all of them design decisions rather than tuning:
+  (a) accept a non-monotonic per-encounter curve — needs an ADR-0229 amendment
+  (b) make mission length track the grade (shorter missions at high grades)
+  (c) add the third lever the curve lacks: scale the 15% loot heal, which is
+      what actually regulates a long mission's cumulative damage

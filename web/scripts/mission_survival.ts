@@ -40,6 +40,13 @@ const TOLERANCE_PP = 8;
 const seedArg = process.argv.indexOf("--seeds");
 const SEEDS = seedArg >= 0 ? Number(process.argv[seedArg + 1]) || 20 : 20;
 const BY_GRADE = process.argv.includes("--by-grade");
+/** Where losses happen: the exit room (the apex ICE) or a normal encounter.
+ * ADR-0280 found the boss was the whole loss mode once, so this is the first
+ * thing to look at when a grade misses its target. */
+const SHOW_DEATHS = process.argv.includes("--deaths");
+/** Restrict the sweep to one grade — a probe for tuning, ~1s instead of ~15. */
+const onlyIdx = process.argv.indexOf("--grade");
+const ONLY_GRADE = onlyIdx >= 0 ? Number(process.argv[onlyIdx + 1]) : null;
 const BASE_SEED = 20261106;
 
 const ice = loadIceCatalog(iceJson);
@@ -52,6 +59,7 @@ const originalNow = Date.now;
 type Cell = { completed: number; runs: number };
 const byGrade = new Map<number, Cell>();
 const byGradeMission = new Map<string, Cell>();
+const deaths = new Map<string, number>();
 
 try {
   for (let s = 0; s < SEEDS; s += 1) {
@@ -62,12 +70,16 @@ try {
 
     for (const mission of Object.values(missions) as Mission[]) {
       const grade = missionGradeOf(mission);
+      if (ONLY_GRADE !== null && grade !== ONLY_GRADE) continue;
       const final = playRun(mission, ice, programs, clockRef);
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
       g.completed += completed;
       g.runs += 1;
       byGrade.set(grade, g);
+      const atBoss = final?.matrix?.nodes[final.currentNodeIndex]?.isBoss === true;
+      const where = completed === 1 ? "finished" : atBoss ? "boss" : "normal";
+      deaths.set(`${grade}|${where}`, (deaths.get(`${grade}|${where}`) ?? 0) + 1);
       const key = `${grade}|${mission.id}`;
       const m = byGradeMission.get(key) ?? { completed: 0, runs: 0 };
       m.completed += completed;
@@ -103,6 +115,21 @@ for (const grade of [...byGrade.keys()].sort((a, b) => a - b)) {
 console.log("");
 console.log(`worst miss: ${worst.toFixed(1)}pp (tolerance ${TOLERANCE_PP}pp)`);
 console.log("invariant (ADR-0229): rates must be monotonic non-increasing by grade");
+
+if (SHOW_DEATHS) {
+  console.log("");
+  console.log("where losses happen:");
+  console.log("grade  finished  lost:boss  lost:normal  boss share");
+  for (const grade of [...byGrade.keys()].sort((a, b) => a - b)) {
+    const f = deaths.get(`${grade}|finished`) ?? 0;
+    const b = deaths.get(`${grade}|boss`) ?? 0;
+    const n = deaths.get(`${grade}|normal`) ?? 0;
+    const share = b + n > 0 ? `${((b / (b + n)) * 100).toFixed(0)}%` : "-";
+    console.log(
+      `  ${grade}      ${String(f).padStart(4)}      ${String(b).padStart(4)}       ${String(n).padStart(4)}        ${share}`,
+    );
+  }
+}
 
 if (BY_GRADE) {
   console.log("");

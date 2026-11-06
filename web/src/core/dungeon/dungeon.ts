@@ -7,7 +7,10 @@
  * stable public entry point for the dungeon system.
  */
 import type { Matrix, MatrixNode, ZoneDepth } from "../types";
-import { encounterIceIdForGrade } from "../combat/ice_scaling";
+import {
+  bossIceIdForGrade,
+  encounterIceIdForGrade,
+} from "../combat/ice_scaling";
 
 // ============================================================================
 //  Public type definitions
@@ -266,7 +269,8 @@ export function dungeonToMatrix(
       iceIds = [iceIdForRoom()];
       iceHp = [];
     } else if (isBoss) {
-      iceIds = ["wintermute"];
+      // ADR-0280: the apex of this grade's own band, not a fixed `wintermute`.
+      iceIds = [bossIceIdForGrade(grade)];
       iceHp = [];
     } else {
       iceIds = [];

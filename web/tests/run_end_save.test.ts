@@ -273,7 +273,7 @@ describe("ADR-0250 holds — a load cannot dodge an unresolved ICE", () => {
 });
 
 describe("ADR-0252 C — CONTINUE rebuilds the same fight", () => {
-  it("the restored boss roster uses the mission ICE, as the live fight does (live: wintermute 165; HEAD restore: 140)", () => {
+  it("the restored boss roster uses the mission ICE, as the live fight does (ADR-0280: the apex of the grade)", () => {
     const { live } = walk(FALLBACK, "boss-arrival");
     const restored = slotToGameState(
       stateToSaveSlot(live),
@@ -284,7 +284,7 @@ describe("ADR-0252 C — CONTINUE rebuilds the same fight", () => {
     ) as GameState;
     const restoredRoster = encounterRoster(restored);
     expect(restoredRoster.map((i) => `${i.id}:${i.hp}`)).toEqual([
-      "wintermute:165",
+      "neuromancer:165",
     ]);
   });
 

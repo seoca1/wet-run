@@ -310,13 +310,15 @@ describe("ADR-0278 · two ICE rooms are not the same ICE", () => {
     expect(a.nodes.map((n) => n.iceIds)).toEqual(b.nodes.map((n) => n.iceIds));
   });
 
-  it("pins the boss room to wintermute", () => {
-    // Given
-    const matrix = generateProceduralMatrix(1, 42, "adr0278-variety");
+  it("pins the boss room to the grade's apex ICE (ADR-0280)", () => {
+    // Given: a grade-1 mission and a grade-5 mission.
+    const g1 = generateProceduralMatrix(1, 42, "adr0278-variety");
+    const g5 = generateProceduralMatrix(5, 42, "adr0278-variety");
 
-    // Then
-    const boss = matrix.nodes[matrix.bossNode];
-    expect(boss?.isBoss).toBe(true);
-    expect(boss?.iceIds).toEqual(["wintermute"]);
+    // Then: each gets its own apex, not a fixed wintermute (which outclasses a
+    // grade-1 deck: armor 8 and a tier-4 auto-attack).
+    expect(g1.nodes[g1.bossNode]?.isBoss).toBe(true);
+    expect(g1.nodes[g1.bossNode]?.iceIds).toEqual(["hosaka_courier"]);
+    expect(g5.nodes[g5.bossNode]?.iceIds).toEqual(["neuromancer"]);
   });
 });

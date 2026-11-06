@@ -134,6 +134,42 @@ export function clampGrade(grade: number): number {
   return Math.max(1, Math.min(6, g));
 }
 
+/** The mission's apex ICE by grade (ADR-0280).
+ *
+ * The exit room used to pin `wintermute` at every grade — tier 4, armor 8, a
+ * 20-point auto-attack. Only its HP followed the grade (`ENCOUNTER_HP_BY_GRADE`
+ * caps it at 75 at g1), so a grade-1 runner met a tier-4 opponent with a tier-1
+ * deck. Measured: at grades 1-2 **every** death was here, and no run ever lost a
+ * normal encounter; `balance_sim.ts` skips boss rooms by design, so the recorded
+ * curve had never looked at a boss at all.
+ *
+ * The pick is the apex of the grade's **own** band: the `ENCOUNTER_ICE_BY_GRADE`
+ * member with the highest `iceHpForGrade(x, g) * (tier * 3 + armor)` — the
+ * game's own measure of "the biggest thing at this grade". Escalation falls out
+ * of the data instead of being asserted:
+ *
+ *   g1 courier -> g2 guard -> g3 defender -> g4 sentinel -> g5 neuromancer
+ *   -> g6 aleph
+ *
+ * `ta_sentinel`, `neuromancer` and `aleph` also carry `aggression: "boss"`, so
+ * the upper grades keep a real boss; the lower ones get a grade-appropriate
+ * elite rather than a boss that outclasses the deck. Every boss-aggression ICE
+ * in the catalog is tier 4 or higher, so there was no lower-tier boss to pick.
+ */
+export const BOSS_ICE_BY_GRADE: Readonly<Record<number, string>> = {
+  1: "hosaka_courier",
+  2: "corporate_guard",
+  3: "hosaka_defender",
+  4: "ta_sentinel",
+  5: "neuromancer",
+  6: "aleph",
+};
+
+/** The ICE that spawns in the exit room for a grade. */
+export function bossIceIdForGrade(grade: number): string {
+  return BOSS_ICE_BY_GRADE[clampGrade(grade)] ?? "aleph";
+}
+
 /** Pick the encounter ICE id for a mission grade.
  *
  * When `seed` is `undefined`, returns the first id of the band (legacy

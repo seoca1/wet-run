@@ -9,6 +9,7 @@ import {
   missionSeedOf,
 } from "../src/core/combat/ice_scaling";
 import { generateProceduralMatrix, resolveMatrixRoster } from "../src/core/dungeon/matrix";
+import { bossIceIdForGrade } from "../src/core/combat/ice_scaling";
 import { loadIceCatalog } from "../src/core/data_loaders";
 import type { Ice } from "../src/core/types";
 import iceTypesJson from "../src/data/ice_types.json";
@@ -305,10 +306,15 @@ describe("grade-driven encounters in the procedural matrix", () => {
     expect(ids.size).toBeGreaterThan(1);
   });
 
-  it("keeps boss rooms on wintermute (does not rotate boss ICE)", () => {
-    const matrix = generateProceduralMatrix(5, 42);
-    const boss = matrix.nodes[matrix.bossNode];
-    expect(boss).toBeDefined();
-    expect(boss?.iceIds[0]).toBe("wintermute");
+  it("keeps the boss on the grade's apex ICE and does not rotate it (ADR-0280)", () => {
+    // The boss follows the GRADE (so a grade-1 runner does not meet a tier-4
+    // ICE), but it is seed-independent — the seed rotates encounters, not the
+    // apex.
+    for (const grade of [1, 3, 5] as const) {
+      const a = generateProceduralMatrix(grade, 42);
+      const b = generateProceduralMatrix(grade, 99);
+      expect(a.nodes[a.bossNode]?.iceIds[0]).toBe(bossIceIdForGrade(grade));
+      expect(b.nodes[b.bossNode]?.iceIds[0]).toBe(bossIceIdForGrade(grade));
+    }
   });
 });

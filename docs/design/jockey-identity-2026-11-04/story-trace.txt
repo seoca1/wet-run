@@ -3,14 +3,14 @@ build: local dist
 jockey index 0, mission index 9
 steps: 16
 ending: arc1_wage_slave
-summary: mission First Jack · arc 1 · HP 100/100 · 1800cr earned (base 500) · 7 turns
+summary: mission First Jack · arc 1 · HP 47/100 · 1800cr earned (base 500) · 7 turns
 
 [0] matrix/approach @node0 | HP 100/100 COST 0 T0 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Mission: First Jack"
 [1] matrix/approach @node1 | HP 100/100 COST 0 T1 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
 [2] combat/approach @node1 | HP 100/100 COST 0 T2 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Entering mid... (1 ICE)"
 [3] combat/combat @node1 | HP 100/100 COST 0 T3 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Combat vs ICE — Wisp"
-[4] combat/combat @node1 | HP 96/100 COST 3 T3 | ICE 7 | hand strike+1 boost+2 barrier+3 decoy+2 | ">>> Dixie attacks: 11 dmg"
-      log: Exploit → 17 dmg (ICE HP: 18)
+[4] combat/combat @node1 | HP 96/100 COST 3 T3 | ICE 10 | hand strike+1 boost+2 barrier+3 decoy+2 | ">>> Dixie attacks: 11 dmg"
+      log: Exploit → 14 dmg (ICE HP: 21)
       log: >>> ICE — Wisp attacks: 4 dmg
       log: >>> Dixie attacks: 11 dmg
 [5] loot/victory @node1 | HP 96/100 COST 3 T3 | hand strike+1 boost+2 decoy+2 | "ICE — Wisp defeated! (no COST) +125 credits"
@@ -22,17 +22,23 @@ summary: mission First Jack · arc 1 · HP 100/100 · 1800cr earned (base 500) �
 [9] matrix/approach @node5 | HP 100/100 COST 3 T5 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run."
 [10] combat/approach @node5 | HP 100/100 COST 3 T6 | ICE 75 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Entering core-deep... (1 ICE)"
 [11] combat/combat @node5 | HP 100/100 COST 3 T7 | ICE 75 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Combat vs ICE — Wintermute"
-[12] combat/combat @node5 | HP 100/100 COST 6 T7 | ICE 42 | hand strike+1 boost+2 decoy+2 scan+1 | ">>> Dixie attacks: 17 dmg"
-      log: Exploit → 16 dmg (ICE HP: 59)
-      log: >>> Dixie attacks: 17 dmg
-[13] combat/combat @node5 | HP 100/100 COST 8 T7 | ICE 34 | hand strike+1 decoy+2 scan+1 | "Boost → 8 dmg (ICE HP: 34)"
-      log: YOU SHIELD off
-      log: Boost → 8 dmg (ICE HP: 34)
-[14] loot/victory @node5 | HP 100/100 COST 10 T7 | hand strike+1 scan+1 | "ICE — Wintermute defeated! +1675 credits (mission complete) Loot: combat_module x2, construct_shard x1, data_fragment x3"
-      log: YOU EVASIVE on
+[12] combat/combat @node5 | HP 82/100 COST 6 T7 | ICE 43 | hand strike+1 boost+2 decoy+2 scan+1 | ">>> Dixie attacks: 17 dmg"
       log: ICE SLOW on
-      log: Decoy → 15 dmg (ICE HP: 19)
+      log: Exploit → 15 dmg (ICE HP: 60)
+      log: >>> shield absorbed 2, evasion dodged 0
+      log: >>> ICE — Wintermute attacks: 20 dmg
+      log: >>> Dixie attacks: 17 dmg
+[13] combat/combat @node5 | HP 62/100 COST 8 T7 | ICE 34 | hand strike+1 decoy+2 scan+1 | ">>> ICE — Wintermute attacks: 20 dmg"
+      log: ICE SLOW off
+      log: YOU POWERED on
+      log: Boost → 6 dmg (ICE HP: 34)
+      log: ★ BOSS PHASE 3 — Berserk
+[14] loot/victory @node5 | HP 47/100 COST 10 T7 | hand strike+1 scan+1 | "ICE — Wintermute defeated! +1675 credits (mission complete) Loot: combat_module x2, construct_shard x1, data_fragment x3"
+      log: ICE BURN off
+      log: Decoy → 11 dmg (ICE HP: 23)
+      log: >>> shield absorbed 0, evasion dodged 15
+      log: >>> ICE — Wintermute AoE: 30 dmg (hits all!)
       log: >>> Dixie attacks: 23 dmg
       log: ICE — Wintermute defeated! +1675 credits (mission complete) Loot: combat_module x2, construct_shard x1, data_fragment x3
-[15] ending/victory @node5 | HP 100/100 COST 10 T7 | hand strike+1 scan+1 | "ICE — Wintermute defeated! +1675 credits (mission complete) Loot: combat_module x2, construct_shard x1, data_fragment x3"
+[15] ending/victory @node5 | HP 47/100 COST 10 T7 | hand strike+1 scan+1 | "ICE — Wintermute defeated! +1675 credits (mission complete) Loot: combat_module x2, construct_shard x1, data_fragment x3"
 [15] ending screen: arc1_wage_slave

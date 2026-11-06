@@ -3108,3 +3108,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **마누스 비교 검증**: 독립 비교 의뢰(`scripts/manus_heal_compare.sh`, `agent_profile=standard`) — 위 수치와 6개 레버(a 회복 스케일 · b 재생 · c 아이템 · d 미션 길이 · e 교전 곡선 완화 · f 목표 하향)의 랭킹·리스크를 질문.
 - **검증**: vitest **191 files / 4089 tests**(전리품 회복이 등급 스케일이 되면서 고정값을 쓰던 테스트 2개를 새 의도로 갱신 — 하나는 "등급의 몫을 회복한다", 하나는 "빠른 입력에서 상태가 깨지지 않는다"로 hp>0 단정 제거) · typecheck 0 · lint 0 errors · build PASS · balance baseline byte-identical · `check_doc_claims` 0 · `check_no_novel_prose` 0.
 - **남은 결정**: (e) 싸움 중 재생의 **원천**(권고: 카드 — 배선 재사용·스키마 무변경·플레이어 선택) · (f) g5·g6 화력 벽(등급별 덱 진행 or armor 스케일링) · (d) 두 곡선의 충돌.
+
+## [2026-11-06] docs(balance) | 마누스 독립 비교 검증 — 내가 시험한 것과 마누스 1순위는 다른 실험이었다 (ADR-0280 §7)
+
+- **의뢰**: `scripts/manus_heal_compare.sh` → task `jheQM4ZVbMNdwnP5gZpxdi`. 요청은 `standard` 였으나 **무료 계정이라 `manus-1.6-lite` 로 다운그레이드**(응답 frontmatter 에 기록). 결과 `docs/design/adr-0280/manus-heal-compare.json`.
+- **동의**: 교전 사이 회복은 천장 때문에 불가(100% 로도 g3 54.5%) · 아이템 회복은 비용 대비 이득 미정량 · 목표 하향은 문제를 해결하지 않음 · **g3·g4 변화는 노이즈**(±3pp, 맞다).
+- **단서**: 이 리뷰는 **재생 스윕을 받기 전**에 작성됐다. "싸움 중 재생의 필요 강도는 데이터로 결론 불가"라 적었는데 — 당시 데이터 기준으로 **정확**하고, 지금은 §6 C 가 그 수치(R=5 → 86.9/43.8)를 채웠다.
+- **가장 유용한 입력**: 마누스 1순위는 **(e) 단조성을 유지하며 교전 곡선 완화**. 그런데 §5 의 실패한 탐색은 **단조성을 제약으로 걸지 않아** 역전(g4 7.2% vs g6 99.3%)이 났다 → **"(e) 는 실패한 것이 아니라 아직 시험하지 않은 것"**. 이 구분을 ADR 에 명시했다.
+- **종합**: g3·g4 = 싸움 중 재생 R≈5(측정 완료, 배선 존재). g5·g6 = **화력 벽**(tier 4+ 34/36 armor ≥5, 오프닝 `strike` 1 피해) — 마누스의 (d) 미션 길이와 이 ADR 의 (f) armor/덱 진행이 **상위 등급만** 손봐야 한다는 점에서 일치. 두 곡선 충돌의 남은 실험 = **단조성 제약을 건 탐색**.
+- **스크립트 버그 수정**: 첫 폴링이 30분 타임아웃했다. 원인 둘 — ① `task.listMessages` 의 메시지는 **최신 우선**이고 `status_update` 이벤트에 **이미 지나간 상태**가 섞여 있어 완료된 태스크를 "running" 으로 읽었다 ② 메시지 봉투에 `status`/`role` 필드가 없다. 이제 **`task.detail` 의 `task.status` + `has_running_background_jobs`** 로 판정하고, 어시스턴트 텍스트는 `type == "assistant_message"` 로 추출한다.
+- **검증**: `check_doc_claims` 0 · `check_no_novel_prose` 0 · mixed-language 0 · `bash -n` 통과.

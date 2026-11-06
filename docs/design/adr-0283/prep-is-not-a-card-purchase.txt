@@ -1,0 +1,59 @@
+ADR-0283 — pre-run prep, tried and REJECTED (not shipped).
+
+WHY IT WAS TRIED
+ADR-0280 §9: at grades 4-6 the runner loses its FIRST fight (0.6-0.8 fights/run),
+so nothing that happens BETWEEN fights can reach it. ADR-0281 (route) and
+ADR-0282 (loot) both move the middle grades and leave 4-6 at 0. The only place
+left is before the fight, and it is also where the mission advance could finally
+buy something (`inventory.credits`, "seeded with the mission reward and never
+spent" per ADR-0279).
+
+WHAT WAS BUILT (then reverted)
+A `loadout` screen between mission select and jack-in: the advance is
+`LOADOUT_ADVANCE_SHARE x mission.rewards.credits`, the shelf is every program
+not in the starting deck, priced `tier^2 x 60`, and bought cards join the deck.
+Three shopping/deck policies were measured. None of them was a win.
+
+A. Buy the strongest, PREPENDED to the deck (so they are in the opening hand)
+   grade   no prep   prep     delta
+     2      76.6      68.8     -7.8
+     3      29.5      19.7     -9.8
+     4      30.0      26.7     -3.3
+     5       0.0       0.0      0
+
+B. Buy the strongest, REPLACING the weakest starting cards (deck size kept)
+     2      76.6      68.8     -7.8
+     3      29.5      18.9    -10.6
+     4      30.0      39.2     +9.2
+     5       0.0       0.0      0
+
+C. Buy by ARMOUR ANSWER first, then tier (the reward policy's ranking)
+     2      76.6      63.7    -12.9
+     3      29.5      27.8     -1.7
+     4      30.0      29.4     -0.6
+     5       0.0       0.0      0
+
+NOTE: `--cards best` was already measured (ADR-0280 §) to move grade 4 by only
++3pp, so this is not a "the bot shops badly" artifact — three shopping
+strategies and two deck-placement rules all fail.
+
+WHY IT FAILS — the opening deck is a calibrated five-slot instrument
+ADR-0260 chose the opening hand deliberately: "three cards that press the attack
+and two that blunt the counter-attack", and it explicitly measured and rejected
+an all-defence opening. Under the ADR-0280 model (one enemy phase per card) every
+slot is load-bearing: a turn costs HP, so a defensive slot is worth more than a
+tier buys. Any prep that swaps a card removes a role.
+
+The one gain is honest and narrow: replacing the weakest slots helps grade 4 by
++9.2pp, because there the deck genuinely cannot kill armour 9 — and hurts grades
+2-3, where the curated mix was already right. So card-prep trades low-grade
+integrity for high-grade punch; it is not a universal improvement.
+
+WHAT TO TRY INSTEAD
+Prep must add CAPACITY, not swap roles — the deck has no spare slot to spend:
+  - +1 hand slot (the hand is the turn's damage budget),
+  - +max HP (the first fight is a survivability check),
+  - a starting shield pool.
+None of these displaces `barrier` or `decoy`, and all three act on the fight that
+actually kills the runner. That is the next experiment, and it needs the owner
+because it changes a character stat rather than the shop.

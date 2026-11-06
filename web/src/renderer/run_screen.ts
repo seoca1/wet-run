@@ -10,6 +10,13 @@ import { isTerminalNode } from "../core/state/run_end";
 import type { GrowthReveal } from "./growth_reveal";
 import { offeredCardIds, rewardProgram } from "../core/state/card_reward";
 import { formatRewardOption } from "../core/combat/program_affordance";
+import { missionGradeOf } from "../core/combat/ice_scaling";
+import {
+  LOOT_CREDITS_SLOT,
+  LOOT_REPAIR_SLOT,
+  lootCreditsForGrade,
+  lootRepairAmount,
+} from "../core/state/loot_choice";
 import { ENDINGS } from "../core/combat/ending_resolver";
 import { composeCombatVfx } from "./combat_vfx";
 import { composeFloatingDamage, overlayShake } from "./combat_overlay";
@@ -108,6 +115,9 @@ export function renderRunScreen(
       // ADR-0259: a non-terminal win offers cards; a terminal one ends the run.
       const takenId = state.cardRewardTaken ?? null;
       const ids = terminal ? [] : offeredCardIds(state);
+      // ADR-0282: the loot screen is a spend — programs 1-3, repair 4,
+      // credits 5. Built here so the renderer just prints the lines.
+      const grade = missionGradeOf(state.mission);
       const offers = ids
         .map((id, i) => {
           const card = rewardProgram(id);
@@ -115,6 +125,16 @@ export function renderRunScreen(
         })
         .filter((line) => line.length > 0);
       const takenIndex = takenId === null ? -1 : ids.indexOf(takenId);
+      if (!terminal && takenId === null) {
+        const repair = lootRepairAmount(state.player.maxHp, grade);
+        const healed = Math.min(state.player.maxHp, state.player.hp + repair);
+        offers.push(
+          `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${healed}/${state.player.maxHp}`,
+        );
+        offers.push(
+          `${LOOT_CREDITS_SLOT} SALVAGE         +${lootCreditsForGrade(grade)}cr`,
+        );
+      }
       return {
         grid: renderLootScreen(
           state.player.hp,
@@ -142,7 +162,7 @@ export function renderRunScreen(
             : takenIndex >= 0
               ? "ENTER: continue"
               : offers.length > 0
-                ? "1-3: card"
+                ? "1-3: card · 4: repair · 5: credits"
                 : "ENTER: route",
         ],
       };

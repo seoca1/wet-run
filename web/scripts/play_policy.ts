@@ -15,6 +15,7 @@ import { startingDeck } from "../src/core/state/starting_deck";
 import { offeredCardIds } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
 import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
+import { LOOT_REPAIR_SLOT } from "../src/core/state/loot_choice";
 import { programEffect } from "../src/core/combat/program_effects";
 import { deckForGrade } from "./balance_sim";
 import { rewardProgram } from "../src/core/state/card_reward";
@@ -38,6 +39,13 @@ export type CardPolicy = "first" | "best";
  * assumes. `short` walks the fewest-fights line to the boss, which is the choice
  * the route card now prices: fewer fights, a thinner deck, a shorter mission. */
 export type RoutePolicy = "long" | "short";
+
+/** How the runner spends a loot stop (ADR-0282).
+ *
+ * `card` grows the deck and never repairs — the old automatic heal meant this
+ * was free. `repair` always takes the HP. `smart` repairs below half health,
+ * which is what the choice is for. */
+export type LootPolicy = "card" | "repair" | "smart";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -169,6 +177,7 @@ export function playRun(
   cardPolicy: CardPolicy = "first",
   deckMode: "opening" | "ppl" = "opening",
   routePolicy: RoutePolicy = "long",
+  lootPolicy: LootPolicy = "card",
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -229,10 +238,16 @@ export function playRun(
       if (!isTerminalNode(state)) {
         const ids = offeredCardIds(state);
         if (state.cardRewardTaken === null && ids.length > 0) {
+          const wantRepair =
+            lootPolicy === "repair" ||
+            (lootPolicy === "smart" &&
+              state.player.hp < Math.floor(state.player.maxHp * 0.5));
           const offers = ids.map((id) => cardOf(id));
           state = applyAction(state, {
             type: "select_program",
-            handIndex: pickRewardIndex(offers, cardPolicy),
+            handIndex: wantRepair
+              ? LOOT_REPAIR_SLOT
+              : pickRewardIndex(offers, cardPolicy),
           });
         }
       }

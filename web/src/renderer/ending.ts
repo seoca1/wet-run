@@ -201,13 +201,10 @@ export function renderLootScreen(
     });
   }
 
-  // HEAL preview (applied on loot confirm, without travelling).
-  //
-  // ADR-0251 rule 5: the screen states what will actually happen. A
-  // terminal node ends the run on confirm — `applyLootAction` branches to
-  // runPhase "ending" and no heal is applied — so this screen must not
-  // promise one, and must not promise a route either.
-  const healed = Math.min(maxHp, hp + Math.floor(maxHp * 0.15));
+  // ADR-0282: there is no automatic heal any more — slot 4 is the repair, and
+  // ENTER takes nothing. The old line promised a heal on confirm, which would
+  // now be a lie (ADR-0251 rule 5).
+  const healed = hp;
   const reserved =
     commitFrame !== null
       ? LOOT_COMMIT_MAX_LINES + 1
@@ -220,10 +217,10 @@ export function renderLootScreen(
     Math.max(2, Math.floor((cols - 22) / 2)),
     healRow,
     terminal
-      ? "NO HEAL — this was the last node"
-      : hp >= maxHp
-        ? "HEAL — already full"
-        : `HEAL applied → ${healed}/${maxHp}`,
+      ? "NO OPTIONS — this was the last node"
+      : takenIndex >= 0
+        ? `ENTER → ${healed}/${maxHp}`
+        : "ENTER: take nothing",
     PALETTE.GRAY_DARK,
   );
 
@@ -233,7 +230,11 @@ export function renderLootScreen(
     : takenIndex >= 0
       ? "ENTER: continue"
       : offers.length > 0
-        ? "1-3: take a card | ENTER: skip"
+        ? // ADR-0282: the full wording is 48 columns, so the narrow presets get a
+          // shorter one rather than a clipped promise (ADR-0251 rule 5).
+          cols >= 48
+          ? "1-3: card | 4: repair | 5: credits | ENTER: none"
+          : "1-3 card · 4 repair · 5 creds"
         : "ENTER: route selection";
   grid = setText(
     grid,

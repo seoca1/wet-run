@@ -135,12 +135,13 @@ describe("explicit matrix routes (ADR-0246 first slice)", () => {
     };
     // When
     const result = applyAction(state, { type: "confirm" });
-    // Then: existing heal still applies, but no next node is selected or visited.
+    // Then: no next node is selected or visited (ADR-0282 removed the automatic
+    // heal, so HP is untouched here too).
     expect(result.runPhase).toBe("matrix");
     expect(result.currentNodeIndex).toBe(0);
     expect(result.selectedMatrixNodeIndex).toBeNull();
     expect(result.visitedNodes).toEqual([0]);
-    expect(result.player.hp).toBe(65);
+    expect(result.player.hp).toBe(50);
   });
 
   it.each([1, 12])(

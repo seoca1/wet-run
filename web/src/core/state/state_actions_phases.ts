@@ -34,7 +34,11 @@ import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram } from "./card_reward";
 import { refillHand } from "../combat/hand";
-import { lootHealPctForGrade } from "./loot_heal";
+import {
+  lootCreditsForGrade,
+  lootRepairAmount,
+  lootSlotChoice,
+} from "./loot_choice";
 import { missionGradeOf } from "../combat/ice_scaling";
 import { activeIceOf } from "../combat/roster";
 import {
@@ -166,7 +170,11 @@ export function applyLootAction(
   if (isTerminalNode(state)) return applyTerminalLoot(state, action);
 
   // ADR-0259: a non-terminal win offers cards — the run's only growth.
+  // ADR-0282: the same screen is a spend — a program, a repair, or the credits.
   if (action.type === "select_program") {
+    const choice = lootSlotChoice(action.handIndex);
+    if (choice === "repair") return takeLootRepair(state);
+    if (choice === "credits") return takeLootCredits(state);
     return takeCardReward(state, action.handIndex - 1);
   }
   if (action.type === "use_program") {
@@ -278,20 +286,16 @@ function takeCardReward(state: GameState, index: number): GameState {
   };
 }
 
-/** Non-terminal loot resolution: heal and return to route selection.
+/** Non-terminal loot resolution: travel on, taking whatever was chosen.
  *
- * ADR-0280: the heal scales with the grade (`lootHealPctForGrade`), because a
- * mission's length does. It is the only lever that does not move the
- * per-encounter curve: `balance_sim` never reaches a loot screen.
+ * ADR-0282: this no longer heals. Recovery is now the repair option on the loot
+ * screen, so a runner that wants HP gives up the card for it. ENTER means "take
+ * nothing and move on", which is a real choice rather than a no-op.
  */
-function continueToMatrix(state: GameState): GameState {
+function continueToMatrix(state: GameState, note = ""): GameState {
   const newVisited = state.visitedNodes.includes(state.currentNodeIndex)
     ? state.visitedNodes
     : [...state.visitedNodes, state.currentNodeIndex];
-  // Apply the loot HEAL preview (matches renderLootScreen's label).
-  const healPct = lootHealPctForGrade(missionGradeOf(state.mission));
-  const healAmount = Math.floor(state.player.maxHp * (healPct / 100));
-  const healedHp = Math.min(state.player.maxHp, state.player.hp + healAmount);
   // ADR-0261: name the card the player just took, so the destination carries
   // the growth instead of the reward vanishing with the screen.
   const taken = state.cardRewardTaken
@@ -304,7 +308,8 @@ function continueToMatrix(state: GameState): GameState {
   // BREACH) keeps a SCAN spent on the encounter screen spent for that fight.
   const ready = refillHand({
     ...state,
-    player: { ...state.player, hp: healedHp },
+    // ADR-0282: the next fight opens on a full hand; the reward card taken here
+    // is the next one dealt.
     cardRewardTaken: null,
   });
   return {
@@ -313,14 +318,38 @@ function continueToMatrix(state: GameState): GameState {
     selectedMatrixNodeIndex: null,
     visitedNodes: newVisited,
     phase: "approach",
-    // Say what happened: at full HP the heal heals nothing, and claiming
-    // otherwise makes the screen lie about the run's state (ADR-0269).
-    message: `${grown}Choose an adjacent route — ${
-      healedHp > state.player.hp
-        ? `healed to ${healedHp}/${state.player.maxHp}`
-        : "already at full HP"
-    }`,
+    message: `${grown}${note}Choose an adjacent route — HP ${ready.player.hp}/${ready.player.maxHp}`,
   };
+}
+
+/** ADR-0282: spend the loot stop on a repair instead of a card. */
+function takeLootRepair(state: GameState): GameState {
+  const amount = lootRepairAmount(
+    state.player.maxHp,
+    missionGradeOf(state.mission),
+  );
+  return continueToMatrix(
+    {
+      ...state,
+      player: {
+        ...state.player,
+        hp: Math.min(state.player.maxHp, state.player.hp + amount),
+      },
+    },
+    `Repair +${amount} HP. `,
+  );
+}
+
+/** ADR-0282: spend the loot stop on credits instead of a card. */
+function takeLootCredits(state: GameState): GameState {
+  const amount = lootCreditsForGrade(missionGradeOf(state.mission));
+  return continueToMatrix(
+    {
+      ...state,
+      player: { ...state.player, credits: state.player.credits + amount },
+    },
+    `Salvage +${amount}cr. `,
+  );
 }
 
 export function applyDeathAction(

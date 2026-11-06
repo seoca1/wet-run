@@ -9,6 +9,13 @@ import { renderMatrix } from "../src/renderer/matrix";
 import { renderEndingScreen, renderLootScreen } from "../src/renderer/ending";
 import { offeredCardIds, rewardProgram } from "../src/core/state/card_reward";
 import { formatRewardOption } from "../src/core/combat/program_affordance";
+import { missionGradeOf } from "../src/core/combat/ice_scaling";
+import {
+  LOOT_CREDITS_SLOT,
+  LOOT_REPAIR_SLOT,
+  lootCreditsForGrade,
+  lootRepairAmount,
+} from "../src/core/state/loot_choice";
 import { renderGrid } from "../src/renderer/combat_grid";
 import { groupStatusByTarget } from "../src/renderer/status_hud";
 import { buildHudLines } from "../src/core/state/state";
@@ -120,6 +127,16 @@ describe("run screen composition", () => {
         return card ? formatRewardOption(i + 1, card) : "";
       })
       .filter((line) => line.length > 0);
+    // ADR-0282: the loot screen is a spend, so the repair and credits options
+    // are part of the offer block.
+    const grade = missionGradeOf(state.mission);
+    const repair = lootRepairAmount(state.player.maxHp, grade);
+    offers.push(
+      `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${Math.min(state.player.maxHp, state.player.hp + repair)}/${state.player.maxHp}`,
+    );
+    offers.push(
+      `${LOOT_CREDITS_SLOT} SALVAGE         +${lootCreditsForGrade(grade)}cr`,
+    );
     expect(view?.grid.cells).toEqual(
       renderLootScreen(
         state.player.hp,
@@ -132,10 +149,15 @@ describe("run screen composition", () => {
         offers,
       ).cells,
     );
-    // Only ENTER and the reward digits do anything on the loot screen:
+    // Only ENTER and the loot digits do anything on the loot screen:
     // `applyLootAction` ignores cancel and the move keys, so promising them
-    // was a false affordance (ADR-0251 rule 5).
-    expect(view?.hud).toEqual(["LOOT", "", "1-3: card"]);
+    // was a false affordance (ADR-0251 rule 5). ADR-0282 adds the repair and
+    // credits slots, so the HUD names all three.
+    expect(view?.hud).toEqual([
+      "LOOT",
+      "",
+      "1-3: card · 4: repair · 5: credits",
+    ]);
   });
 
   it("shows the taken card as ACQUIRED and waits for ENTER (ADR-0261)", () => {

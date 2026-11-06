@@ -21,6 +21,7 @@ import {
   mulberry32,
   playRun,
   type CardPolicy,
+  type LootPolicy,
   type RoutePolicy,
 } from "./play_policy";
 import type { Mission } from "../src/core/types";
@@ -50,6 +51,12 @@ const BY_GRADE = process.argv.includes("--by-grade");
  * thing to look at when a grade misses its target. */
 const SHOW_DEATHS = process.argv.includes("--deaths");
 /** Card-offer policy: `first` (take anything) or `best` (spend the choice). */
+const lootIdx = process.argv.indexOf("--loot");
+const LOOT_POLICY: LootPolicy =
+  lootIdx >= 0 &&
+  ["card", "repair", "smart"].includes(process.argv[lootIdx + 1] ?? "")
+    ? (process.argv[lootIdx + 1] as LootPolicy)
+    : "card";
 const routeIdx = process.argv.indexOf("--route");
 const ROUTE_POLICY: RoutePolicy =
   routeIdx >= 0 && process.argv[routeIdx + 1] === "short" ? "short" : "long";
@@ -95,6 +102,7 @@ try {
         CARD_POLICY,
         DECK_MODE,
         ROUTE_POLICY,
+        LOOT_POLICY,
       );
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
@@ -117,7 +125,7 @@ try {
 }
 
 console.log(
-  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", jockey "novice"`,
+  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", jockey "novice"`,
 );
 console.log("");
 console.log("grade  missions  runs  completed  rate    target  delta");

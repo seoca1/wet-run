@@ -51,7 +51,7 @@ describe("renderLootScreen — terminal node", () => {
     const grid = renderLootScreen(48, 100, 80, 50, 4075, "", true);
     const text = gridText(grid);
     expect(text).not.toContain("HEAL applied");
-    expect(text).toContain("NO HEAL");
+    expect(text).toContain("NO OPTIONS");
   });
 
   it("does not promise a route on the node that ends the run", () => {
@@ -63,9 +63,9 @@ describe("renderLootScreen — terminal node", () => {
   it("keeps the heal promise on a node that continues the run", () => {
     const grid = renderLootScreen(48, 100, 80, 50, 4075, "", false);
     const text = gridText(grid);
-    expect(text).toContain("HEAL applied → 63/100");
+    expect(text).toContain("ENTER: take nothing");
     expect(text).toContain("ENTER: route selection");
-    expect(text).not.toContain("NO HEAL");
+    expect(text).not.toContain("NO OPTIONS");
   });
 
   it("never promises ESC on a screen where ESC does nothing", () => {
@@ -85,7 +85,7 @@ describe("loot screen — the heal line tells the truth (ADR-0269)", () => {
   it("says so when nothing was healed, instead of 'applied'", () => {
     // HP already at maximum: a 15% heal does nothing.
     expect(text(renderLootScreen(100, 100, 80, 50))).toContain(
-      "HEAL — already full",
+      "ENTER: take nothing",
     );
     expect(text(renderLootScreen(100, 100, 80, 50))).not.toContain(
       "HEAL applied",
@@ -94,13 +94,13 @@ describe("loot screen — the heal line tells the truth (ADR-0269)", () => {
 
   it("still reports the applied amount when there was room to heal", () => {
     const grid = renderLootScreen(50, 100, 80, 50);
-    expect(text(grid)).toContain("HEAL applied → 65/100");
+    expect(text(grid)).toContain("ENTER: take nothing");
     expect(text(grid)).not.toContain("already full");
   });
 
   it("keeps the terminal node's refusal", () => {
     expect(text(renderLootScreen(50, 100, 80, 50, 0, "", true))).toContain(
-      "NO HEAL — this was the last node",
+      "NO OPTIONS — this was the last node",
     );
   });
 });

@@ -179,7 +179,7 @@ describe("card reward — taking it (ADR-0261 beat)", () => {
     expect(twice.message).toContain("already taken");
   });
 
-  it("ENTER carries on, heals, and clears the offer memory", () => {
+  it("ENTER carries on and clears the offer memory (no heal — ADR-0282)", () => {
     const taken = applyLootAction(lootState(), {
       type: "select_program",
       handIndex: 1,
@@ -187,7 +187,9 @@ describe("card reward — taking it (ADR-0261 beat)", () => {
     const after = applyLootAction(taken, { type: "confirm" });
     expect(after.runPhase).toBe("matrix");
     expect(after.cardRewardTaken).toBeNull();
-    expect(after.player.hp).toBeGreaterThan(taken.player.hp);
+    // ADR-0282: recovery is the loot screen's repair option now, so ENTER takes
+    // nothing. HP is unchanged, not increased.
+    expect(after.player.hp).toBe(taken.player.hp);
     // the destination names the growth
     expect(after.message).toContain("Took ");
   });

@@ -114,18 +114,32 @@ export function applyCombatAction(
   return state;
 }
 
-/** The tail of a full player turn: the enemies act, the empty hand recycles,
- * and a wiped roster resolves as a victory. Shared by playing a program and by
- * passing a turn (ADR-0266), so both can reach the same outcome. */
+/** The tail of a player action: the enemies act, the empty hand recycles, and a
+ * wiped roster resolves as a victory. Shared by playing a program and by passing
+ * a turn (ADR-0266), so both can reach the same outcome.
+ *
+ * ADR-0280: **one enemy phase per player action**, off the turn rather than off
+ * a wall clock. That is the model the balance harness has always simulated
+ * (`scripts/balance_sim.ts` advanced the clock once per action), so the recorded
+ * grade curve finally describes play instead of a clock nobody could predict.
+ * A wall-clock gate also made difficulty depend on how long the player spent on
+ * a card, and put a clock read inside the reducer.
+ *
+ * The hand still recycles only when it empties (ADR-0212): `drawHand` stays
+ * gated on that, while the enemy phase runs every action.
+ */
 function finishPlayerTurn(state: GameState): GameState {
-  const afterEnemies = drawHand(processDixieTurn(processEnemyTurns(state)));
+  const handEmptied = state.deck.length === 0;
+  const afterEnemies = processEnemyTurns(state);
+  const afterDixie = processDixieTurn(afterEnemies);
+  const ready = handEmptied ? drawHand(afterDixie) : afterDixie;
   // ADR-0278: a kill that lands in the enemy phase (Dixie, a DoT) owes the
   // player the same loot and the same achievements as a program kill. The
   // loot belongs to the kill, so it is credited where the kill happened.
   const { state: withLoot, drops } = creditKills(
-    afterEnemies,
+    ready,
     state.iceRoster,
-    afterEnemies.iceRoster,
+    ready.iceRoster,
   );
   const allDefeated = withLoot.iceRoster.every((ice) => ice.hp === 0);
   if (
@@ -189,13 +203,25 @@ function processDixieTurn(state: GameState): GameState {
   };
 }
 
+/** One enemy phase. The caller decides *when* — the turn, not a clock.
+ *
+ * ADR-0280. This used to open with a wall-clock gate:
+ *
+ *     const currentMs = Date.now();
+ *     if (currentMs - state.lastEnemyAttackMs < AUTO_ATTACK_INTERVAL_MS) return state;
+ *
+ * which made difficulty depend on how long the player took per card, left the
+ * reducer impure in a way the balance harness had to monkey-patch `Date.now`
+ * to work around, and made a mission's real shape (4.4 encounters on average)
+ * unmeasurable: the harness's per-encounter curve implied a grade-4 mission
+ * survives 4% of the time, while a real browser session finished 53 of 53.
+ *
+ * `AUTO_ATTACK_INTERVAL_MS` survives as the **nominal unit** for authored
+ * durations (`skillCooldowns` are written in ms; one enemy phase is worth
+ * `AUTO_ATTACK_INTERVAL_MS` of them), so no authored number changes meaning.
+ */
 function processEnemyTurns(state: GameState): GameState {
   state = advanceDeadTarget(state);
-  const currentMs = Date.now();
-
-  if (currentMs - state.lastEnemyAttackMs < AUTO_ATTACK_INTERVAL_MS) {
-    return state;
-  }
 
   let playerHp = state.player.hp;
   const logMessages: string[] = [];
@@ -223,7 +249,10 @@ function processEnemyTurns(state: GameState): GameState {
         tracker,
         bossIce.hp,
         bossIce.maxHp ?? 100,
-        currentMs,
+        // ADR-0280: the phase is HP-threshold based; `tickMs` only stamps
+        // `phaseChangeMs`, which nothing reads. Passing 0 keeps the reducer
+        // clock-free.
+        0,
       );
       if (updated.currentPhase > state.bossPhase && updated.currentPhase <= 4) {
         newBossPhase = updated.currentPhase as BossPhase;
@@ -248,7 +277,10 @@ function processEnemyTurns(state: GameState): GameState {
   let rosterForReturn = state.iceRoster;
   if (state.bossPhase >= 4 && state.iceRoster.length < 3) {
     const minion: Ice = {
-      id: `minion_${Date.now()}`,
+      // ADR-0280: a content-stable id. `Date.now()` here made two identical
+      // reducer calls produce different ids, which the reducer-determinism
+      // invariant forbids (and it read a clock inside the reducer).
+      id: `minion_${state.turnCount}_${state.iceRoster.length}`,
       name: "Drone",
       tier: 1,
       hp: 30,
@@ -430,7 +462,7 @@ function processEnemyTurns(state: GameState): GameState {
   const iceEffectsBeforeTick = working.statusEffects;
   working = tickIceEffects(working);
   // ADR-0251 slice B: the tick used to drop ended ICE-cast effects silently.
-  // Log lines only — `logMessages` (and so `anyEnemyAttacked`) is untouched.
+  // Log lines only — `logMessages` is untouched.
   const endedIceEffectLines = statusEventLines(
     endedStatuses(iceEffectsBeforeTick, working.statusEffects),
     "off",
@@ -444,8 +476,6 @@ function processEnemyTurns(state: GameState): GameState {
     ...working.iceRoster,
     ...rosterForReturn.slice(working.iceRoster.length),
   ];
-
-  const anyEnemyAttacked = logMessages.length > 0;
 
   if (playerHp <= 0) {
     const jockey = createDeceasedJockey({
@@ -482,10 +512,12 @@ function processEnemyTurns(state: GameState): GameState {
         ...enemyTurnVfx,
         import_vfx_deterministic("defeat", "", durationForKind("defeat")),
       ],
-      lastEnemyAttackMs: anyEnemyAttacked ? currentMs : state.lastEnemyAttackMs,
-      counterWindowOpenMs: anyEnemyAttacked
-        ? currentMs
-        : state.counterWindowOpenMs,
+      // ADR-0280: `lastEnemyAttackMs` / `counterWindowOpenMs` were wall-clock
+      // stamps written here and read nowhere (the gate that read the first one
+      // is gone). Left untouched rather than re-stamped with a clock the
+      // reducer no longer reads.
+      lastEnemyAttackMs: state.lastEnemyAttackMs,
+      counterWindowOpenMs: state.counterWindowOpenMs,
     };
   }
 
@@ -512,10 +544,8 @@ function processEnemyTurns(state: GameState): GameState {
     statusEffects: working.statusEffects,
     bossPhase: newBossPhase,
     player: { ...state.player, hp: playerHp },
-    lastEnemyAttackMs: anyEnemyAttacked ? currentMs : state.lastEnemyAttackMs,
-    counterWindowOpenMs: anyEnemyAttacked
-      ? currentMs
-      : state.counterWindowOpenMs,
+    lastEnemyAttackMs: state.lastEnemyAttackMs,
+    counterWindowOpenMs: state.counterWindowOpenMs,
     message:
       logMessages.length > 0
         ? logMessages[logMessages.length - 1]

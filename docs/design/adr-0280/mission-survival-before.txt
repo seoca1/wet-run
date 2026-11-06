@@ -1,0 +1,16 @@
+
+> wetrun-web@0.1.0 survival
+> tsx scripts/mission_survival.ts
+
+mission survival — 20 seeds x 53 missions, policy "expensive", jockey "novice"
+
+grade  missions  runs  completed  rate    target  delta
+  1       4       80     26       32.5%   100%  -67.5  <-- MISS
+  2      16      320     47       14.7%    95%  -80.3  <-- MISS
+  3      11      220     11        5.0%    80%  -75.0  <-- MISS
+  4      10      200      7        3.5%    50%  -46.5  <-- MISS
+  5       9      180      3        1.7%    25%  -23.3  <-- MISS
+  6       3       60      3        5.0%    10%  -5.0
+
+worst miss: 80.3pp (tolerance 8pp)
+invariant (ADR-0229): rates must be monotonic non-increasing by grade

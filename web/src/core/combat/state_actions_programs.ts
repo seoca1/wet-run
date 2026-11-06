@@ -76,7 +76,13 @@ export function useProgram(state: GameState, programId: string): GameState {
   const attackerAttackBonus = statusAttackBonus + equipStats.attackBonus;
 
   const newCombo = state.playerCombo + 1;
-  const currentMs = Date.now();
+  // ADR-0280: no clock in the reducer. `comboLastHitMs` was stamped with
+  // `Date.now()` and read only by `tickCombo`, which has no caller — the
+  // combo window (`COMBO_WINDOW_MS`) is authored but never enforced. Stamping
+  // 0 keeps the field's meaning ("no hit recorded") without reading a clock.
+  // Making the window real is a separate decision: it is a wall-clock rule in
+  // a turn-based fight (ADR-0280), so it would need a turn-based form.
+  const currentMs = 0;
 
   const defenderIce = state.iceRoster[state.activeIceIndex] ?? state.ice;
 

@@ -3074,3 +3074,15 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   - **더 큰 발견**: 하네스 모델에서는 **런이 결말에 못 간다**. 단일 교전 g4 47.4% 기준이면 2~4교전 런은 그 곱만큼 낮다 → 엔딩 분포는 "얼마나 벌었나"보다 **"살아남았나"** 가 먼저 정한다. 난이도 문제로 ADR-0279 범위 밖.
   - 부수: 난이도가 **플레이어 숙고 시간**에 의존한다(빠른 키 세션 53/53 완주 vs 숙고 48/53 사망). 벽시계 게이트의 의도인지 결함인지는 별도 질문.
 - **검증**: vitest **191 files / 4089 tests** · typecheck 0 · lint 0 errors · build PASS.
+
+## [2026-11-06] fix(core) | 적은 벽시계가 아니라 턴에 때린다 — 그리고 보스가 한 번도 측정된 적 없다는 발견 (ADR-0280)
+
+- **배경**: 오너 "턴 전환." → "카드당 1회 + 목표 곡선으로 재조정". 프로젝트 제약 "no wall clock/RNG in reducer" 를 적 페이즈가 위반하고 있었다: `if (currentMs - state.lastEnemyAttackMs < AUTO_ATTACK_INTERVAL_MS) return state;`
+- **수정**: 적은 **플레이어 행동마다 1회**, 벽시계 없이. 손패 리사이클만 손패가 빌 때(ADR-0212). `AUTO_ATTACK_INTERVAL_MS` 는 **명목 단위**로 유지(스킬 쿨다운이 ms 저작값이라 "적 1회 = 그 ms" 의미 보존 — 저작 숫자 무변경). Dixie 카드당 유지(ADR-0244).
+- **같은 계열 위반 둘 정리**: `comboLastHitMs` 가 리듀서에서 `Date.now()` 를 읽고 있었다(`tickCombo` 는 **호출자 0** → 콤보 창 `COMBO_WINDOW_MS` 는 한 번도 작동한 적 없음, 별도 결정으로 남김) · 미니언 id 가 `Date.now()` 라 같은 입력에 다른 id(리듀서 결정론 위반).
+- **검증(핵심)**: 트리거를 카드당으로 두면 `npm run balance` 가 ADR-0229/0277 기준선과 **정확히 일치**(`100.0/100.0/89.1/47.4/40.7/0.0`) · balance_sim 16 테스트 통과. → **기존 벽시계 ≡ "카드 1장당 적 1회"**. 즉 이 변경은 난이도를 바꾸지 않고 **결정론적으로** 만든다. 바뀌는 것은 "누가 그 난이도를 겪느냐".
+- **처음으로 진실이 드러남**: 교전 단위 곡선은 미션의 모양(평균 4.4교전·최대 10)을 말하지 못한다 → **미션 단위 도구 신설** `npm run survival`(`web/scripts/mission_survival.ts`, 20시드×53미션, `scripts/play_policy.ts` 공유).
+  - 실측 미션 완주율: **g1 32.5% · g2 14.7% · g3 5.0% · g4 3.5% · g5 1.7% · g6 5.0%** (목표 100/95/80/50/25/10).
+- **원인 = 보스, 그리고 아무도 그것을 측정한 적이 없다**: 죽은 위치를 세니 **g1·g2 는 일반 교전 사망 0** — 지는 곳은 보스뿐(사망 중 보스 비중 **g1·g2 100%**, g3 91%, g4 87%, g5 65%, g6 67%). 그런데 `balance_sim.ts` 는 주석에 *"skip boss rooms so a boss spike does not decide the reported win-rate"* 라 적어 두었다 — **기록된 곡선은 보스를 한 번도 본 적이 없다**. 보스는 모든 등급에서 `wintermute`(tier 4 · armor 8 · `dmg_base` 11 → 자동공격 20) 고정이고 등급이 조절하는 것은 **HP 상한뿐**(g1 75). 카탈로그의 `boss` aggression ICE 는 **전부 tier 4+** 라 낮은 등급 보스가 데이터에 없다.
+- **검증**: vitest **191 files / 4089 tests** · typecheck 0. 원자료 `docs/design/adr-0280/mission-survival-before.txt` · `docs/design/adr-0280/death-location.txt`.
+- **남은 결정**: 열린 질문 (a) **보스를 어떻게 등급에 맞출 것인가** — 권고는 "등급 밴드의 최상위 ICE 를 엘리트 보스로 승격"(데이터에 이미 있고, 등급별 보스가 자연히 생기며, `wintermute` 는 상위 등급 전용이 됨). (b) g6 10% 목표가 ADR-0229 불변식("오프너는 클라이맥스를 못 이긴다")과 충돌 → 등급 단위로 재정의 필요. (c) 콤보 창.

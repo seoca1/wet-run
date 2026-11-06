@@ -3118,3 +3118,17 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **종합**: g3·g4 = 싸움 중 재생 R≈5(측정 완료, 배선 존재). g5·g6 = **화력 벽**(tier 4+ 34/36 armor ≥5, 오프닝 `strike` 1 피해) — 마누스의 (d) 미션 길이와 이 ADR 의 (f) armor/덱 진행이 **상위 등급만** 손봐야 한다는 점에서 일치. 두 곡선 충돌의 남은 실험 = **단조성 제약을 건 탐색**.
 - **스크립트 버그 수정**: 첫 폴링이 30분 타임아웃했다. 원인 둘 — ① `task.listMessages` 의 메시지는 **최신 우선**이고 `status_update` 이벤트에 **이미 지나간 상태**가 섞여 있어 완료된 태스크를 "running" 으로 읽었다 ② 메시지 봉투에 `status`/`role` 필드가 없다. 이제 **`task.detail` 의 `task.status` + `has_running_background_jobs`** 로 판정하고, 어시스턴트 텍스트는 `type == "assistant_message"` 로 추출한다.
 - **검증**: `check_doc_claims` 0 · `check_no_novel_prose` 0 · mixed-language 0 · `bash -n` 통과.
+
+## [2026-11-06] fix(balance) | 단조성 제약을 건 곡선 탐색 — g1–g4 목표 안, g5·g6 는 구조적으로 불가 (ADR-0280 §8)
+
+- **배경**: 오너 "그래." → 마누스 1순위 실험. §5 의 실패한 탐색은 **단조성을 제약으로 걸지 않아** 역전(g4 7.2% vs g6 99.3%)이 났고, 따라서 "단조성 유지 완화"는 **시험된 적이 없었다**.
+- **방법**: `scripts/search_curve_constrained.py` — 12개 파라미터(등급별 HP 상한 6 + 피해 보너스 6) 좌표 탐색, 후보마다 두 제약을 **강제**(① HP 상한 단조 비감소 ② 측정된 교전 승률 단조 비증가). 평가는 `scripts/curve_probe.ts` 하나로 두 지표를 **1.4초**에(교전 = `runSuite`, 미션 = `playRun`).
+- **결과**: `hp [95,95,95,125,165,165]` · `dmg [50,90,-12,40,0,-20]`.
+  - 교전 p **100.0 / 100.0 / 100.0 / 47.0 / 40.7 / 0.0** — **단조 비증가 유지**
+  - 미션 m **100.0 / 95.0 / 81.8 / 48.0 / 0.0 / 0.0** vs 목표 100/95/80/50/25/10
+  - 차 **0.0 / 0.0 / +1.8 / -2.0 / -25.0 / -10.0** → **g1–g4 전부 허용 오차 안**, g2 정확히 일치
+  - 점수(절대오차 합) **125.1 → 29.8**
+- **g5·g6 불가의 증명**: 단조성이 `p5 ≤ p4` 를 강제 → p4=47% 이므로 p5 ≤ 47%. 그런데 g5 는 **7.4교전**이라 47% 로 완주율 0%. 7.4교전에서 25% 를 얻으려면 교전당 **~90%** 필요 → p4 를 넘어 **다시 역전**. 즉 **미션 길이가 등급을 따라 늘어나는 한 두 곡선은 양립 불가**. 물러날 것: 미션 길이 / 단조성 불변식(ADR-0229 개정) / g5·g6 목표.
+- **부수 관찰**: 곡선이 부드러워지자 g1–g3 사망이 **다시 100% 보스**(일반 교전 사망 0) — §5 의 "낮은 등급은 정점 ICE 가 유일한 벽" 과 일치.
+- **갱신한 테스트 4개**(전부 커브 변경에 따른 재기준화): `balance_sim` 기준선 2행(ADR-0280 재기준 명시) · `ice_scaling` fallback(g3 상한 95 가 먼저 묶음) · `menu_stage_combat_flow` 의 피해 기대값(등급 피해 보너스 반영).
+- **검증**: vitest **191 files / 4089 tests** · typecheck 0 · lint 0 errors · build PASS · `npm run balance` 새 기준선 `100/100/100/47.0/40.7/0.0`(단조) · `npm run survival` 위 수치 · 소크 15런 8 completed / 7 failed · **frozen 0** · story trace 통과. 원자료 `docs/design/adr-0280/constrained-search.txt` · `mission-survival-after-constrained-search.txt`.

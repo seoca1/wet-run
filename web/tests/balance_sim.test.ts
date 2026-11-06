@@ -140,8 +140,12 @@ describe("balance sim — grade scaling", () => {
     // do not hold it, so this row is unchanged; PPL picks the strongest five
     // per grade, and `exploit` is in its grades 3-6 decks, so g4 84.1 -> 89.3
     // and g6 27.3 -> 28.3.
-    { mode: "opening", expected: [100.0, 100.0, 97.2, 53.4, 44.1, 0.3] },
-    { mode: "ppl", expected: [100.0, 100.0, 99.3, 89.3, 44.4, 28.3] },
+    // ADR-0280 re-baselines: the enemy phase moved off the wall clock onto the
+    // turn, and the per-grade curve was re-tuned with the per-encounter rate
+    // held monotonic non-increasing (g3 caps down so it is winnable, g4 keeps
+    // its bite). The previous row was [100, 100, 97.2, 53.4, 44.1, 0.3].
+    { mode: "opening", expected: [100.0, 100.0, 100.0, 58.4, 44.1, 0.3] },
+    { mode: "ppl", expected: [100.0, 100.0, 100.0, 62.3, 44.4, 28.3] },
   ])(
     "reproduces the ADR-0256 baseline exactly with idle disabled ($mode)",
     ({ mode, expected }) => {

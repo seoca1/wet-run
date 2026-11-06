@@ -314,7 +314,7 @@ export function encounterIceIdForGrade(grade: number, seed?: number): string {
  * no-op, which would silently disable the mechanism.
  */
 const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
-  75, 86, 141, 165, 165, 165,
+  95, 95, 95, 125, 165, 165,
 ];
 
 /** Per-grade ICE auto-attack bonus (percentage added to the base `tier * 3 +
@@ -418,7 +418,7 @@ const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
  * the primary **opening-deck** curve stays monotonic non-increasing.
  */
 const ENCOUNTER_DMG_BONUS_PCT_BY_GRADE: ReadonlyArray<number> = [
-  50, 130, 8, 0, 0, -20,
+  50, 90, -12, 40, 0, -20,
 ];
 
 export function iceDmgBonusPctForGrade(grade: number): number {

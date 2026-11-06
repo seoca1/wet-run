@@ -89,7 +89,14 @@ describe("ice_scaling", () => {
 
   it("falls back to a finite HP when scaling fields are missing", () => {
     expect(iceHpForGrade({ id: "x", name: "X", hp: 77, armor: 0, tier: 1 }, 3)).toBe(77);
-    expect(iceHpForGrade({ id: "x", name: "X", hp: Number.NaN, armor: 0, tier: 1 }, 3)).toBe(100);
+    // The fallback is 100, but the grade ceiling applies to it too -- and since
+    // ADR-0280 re-tuned the g3 ceiling to 95, the ceiling is what binds.
+    const fallback = iceHpForGrade(
+      { id: "x", name: "X", hp: Number.NaN, armor: 0, tier: 1 },
+      3,
+    );
+    expect(Number.isFinite(fallback)).toBe(true);
+    expect(fallback).toBe(95);
   });
 
   it("applies a negative ICE dmg modifier at the g6 climax", () => {

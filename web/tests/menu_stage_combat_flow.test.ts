@@ -13,6 +13,10 @@ import {
 import type { Ice, Mission, Program, GameState } from "../src/core/types";
 import { KEYBOARD_MAPPING } from "../src/core/types";
 import { breachEncounter } from "./encounter_test_helpers";
+import {
+  iceDmgBonusPctForGrade,
+  missionGradeOf,
+} from "../src/core/combat/ice_scaling";
 
 // ============================================================================
 // Test fixtures
@@ -438,7 +442,13 @@ describe("State consistency during transitions", () => {
     const initialAlarm = state.player.alarm;
     const iceTier = state.iceRoster[state.activeIceIndex]?.tier ?? 1;
     const iceArmor = state.iceRoster[state.activeIceIndex]?.armor ?? 0;
-    const enemyDmg = Math.max(1, iceTier * 3 + iceArmor);
+    // ADR-0280: the per-grade ICE damage modifier is part of the auto-attack,
+    // so the expectation has to include it (a step function on the base).
+    const bonus = iceDmgBonusPctForGrade(missionGradeOf(state.mission));
+    const enemyDmg = Math.max(
+      1,
+      Math.floor((iceTier * 3 + iceArmor) * (1 + bonus / 100)),
+    );
 
     state = applyAction(state, {
       type: "use_program",

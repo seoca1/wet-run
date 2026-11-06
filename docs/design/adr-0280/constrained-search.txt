@@ -1,0 +1,43 @@
+ADR-0280 — the monotonicity-constrained curve search (Manus review's first choice).
+
+WHY THIS EXPERIMENT EXISTS
+The §5 attempt optimised mission completion directly and did not constrain the
+per-encounter curve. It reached five of six targets but inverted that curve
+(g4 7.2% per encounter while g6 sat at 99.3%), breaking ADR-0229's monotonic
+non-increasing invariant. The Manus review ranked "soften the per-encounter curve
+while keeping it monotonic" first, noting the invariant had to hold. That is a
+different experiment from the one that failed, so it was run.
+
+METHOD
+`scripts/search_curve_constrained.py` coordinate-searches the 12 parameters
+(6 HP caps + 6 damage bonuses) and rejects any candidate where
+  (a) the HP caps are not monotonically non-decreasing, or
+  (b) the measured per-encounter win rate is not monotonically non-increasing.
+Each evaluation calls `scripts/curve_probe.ts`, which reports BOTH metrics in one
+1.4s pass (per-encounter through `runSuite`, mission through `playRun`).
+Objective: sum |mission completion - target| over the six grades.
+
+RESULT — grades 1-4 hit, 5-6 impossible under the constraint
+Per-encounter p: 100.0 / 100.0 / 100.0 / 47.0 / 40.7 / 0.0   (monotonic: yes)
+Mission m:       100.0 /  95.0 /  81.8 / 48.0 /  0.0 /  0.0
+Target:          100   /  95   /  80   / 50   / 25   / 10
+Delta:             0.0 /   0.0 /  +1.8 / -2.0 / -25.0 / -10.0
+
+Score improved from 125.1 to 29.8 (sum of absolute deltas). Grades 1-4 are all
+inside the tool's 8pp tolerance; grade 2 lands exactly.
+
+WHY 5 AND 6 CANNOT MOVE — the structural conflict, now proven
+Monotonicity forces p5 <= p4. The search put p4 at 47.0%, so p5 <= 47.0%. But a
+grade-5 mission is 7.4 encounters long: at 47% per encounter it finishes 0% of
+the time. To get 25% completion over 7.4 encounters you need roughly 90% per
+encounter -- which would exceed p4 and invert the curve again.
+
+So the two curves are not reconcilable while mission length keeps growing with
+grade. One of these has to give:
+  - mission length at grades 5-6 (option B), or
+  - the monotonicity invariant (option A, needs an ADR-0229 amendment), or
+  - the targets at grades 5-6 (option D).
+
+Side observation: with the softer curve, deaths at grades 1-3 are now 100% at the
+boss and normal encounters never kill (see death location). The apex ICE is once
+again the only wall at low grades, which is what the earlier boss fix addressed.

@@ -87,6 +87,13 @@ Two readings follow, and both matter:
   (48/53), so the ending distribution is decided by *survival* first. That is a
   difficulty question, out of ADR-0279's scope.
 
+> **ADR-0280 supersedes that reading.** The enemy phase is now off the wall
+> clock, the boss follows the grade, and the per-grade curve was re-tuned with
+> the per-encounter rate held monotonic. Mission completion is now
+> **100 / 95 / 81.8 / 48 / 0 / 0** against targets of 100 / 95 / 80 / 50 / 25 / 10
+> — grades 1-4 inside tolerance. Grades 5-6 are structurally unreachable under
+> the monotonicity constraint (see `../adr-0280/constrained-search.txt`).
+
 Raw: `ending-distribution.txt`.
 
 ## Reproduce

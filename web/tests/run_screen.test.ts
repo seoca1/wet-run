@@ -11,9 +11,7 @@ import { offeredCardIds, rewardProgram } from "../src/core/state/card_reward";
 import { formatRewardOption } from "../src/core/combat/program_affordance";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
 import {
-  LOOT_CREDITS_SLOT,
   LOOT_REPAIR_SLOT,
-  lootCreditsForGrade,
   lootRepairAmount,
 } from "../src/core/state/loot_choice";
 import { renderGrid } from "../src/renderer/combat_grid";
@@ -134,9 +132,6 @@ describe("run screen composition", () => {
     offers.push(
       `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${Math.min(state.player.maxHp, state.player.hp + repair)}/${state.player.maxHp}`,
     );
-    offers.push(
-      `${LOOT_CREDITS_SLOT} SALVAGE         +${lootCreditsForGrade(grade)}cr`,
-    );
     expect(view?.grid.cells).toEqual(
       renderLootScreen(
         state.player.hp,
@@ -156,7 +151,7 @@ describe("run screen composition", () => {
     expect(view?.hud).toEqual([
       "LOOT",
       "",
-      "1-3: card · 4: repair · 5: credits",
+      "1-3: card · 4: repair",
     ]);
   });
 

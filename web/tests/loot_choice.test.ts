@@ -16,10 +16,9 @@ import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
 import type { Program, Ice, GameState } from "../src/core/types";
 import {
-  LOOT_CREDITS_SLOT,
   LOOT_REPAIR_SLOT,
-  lootCreditsForGrade,
   lootRepairAmount,
+  lootSlotChoice,
 } from "../src/core/state/loot_choice";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
 
@@ -115,21 +114,15 @@ describe("ADR-0282 — the loot screen is a spend", () => {
     expect(moved.player.hp).toBe(loot.player.maxHp);
   });
 
-  it("slot 5 spends the stop on credits, sized by the grade", () => {
-    // Given
-    const loot = atLoot(50);
-    const before = loot.player.credits;
+  it("has no fifth option: a third stop was measured and removed (ADR-0285)", () => {
+    // The slot that once paid credits, then patched, is gone — three cards and a
+    // repair only, because a third stop could not be made competitive.
 
-    // When
-    const moved = applyAction(loot, {
-      type: "select_program",
-      handIndex: LOOT_CREDITS_SLOT,
-    });
-
-    // Then
-    expect(moved.player.credits).toBe(before + lootCreditsForGrade(GRADE));
-    expect(moved.player.hp).toBe(50); // no heal came with the credits
-    expect(moved.cardRewardTaken).toBeNull();
+    // Then: the fifth key is not a loot option, so it falls through to
+    // `takeCardReward` and simply finds no offer there.
+    expect(lootSlotChoice(5)).toBeNull();
+    expect(lootSlotChoice(4)).toBe("repair");
+    expect(lootSlotChoice(3)).toBe("program");
   });
 
   it("slots 1-3 still take a program and hold the screen (ADR-0261)", () => {

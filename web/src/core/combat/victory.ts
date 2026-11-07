@@ -33,6 +33,7 @@ import {
 } from "../state/state_helpers";
 import { defeatedIceName } from "./roster";
 import { isTerminalNode } from "../state/run_end";
+import { addPrepWallet, PREP_WALLET_BANK_SHARE } from "../state/prep_wallet";
 
 /** The faction an ICE belongs to — its id carries the name. */
 export function iceFactionOf(iceId: string): FactionId | null {
@@ -147,6 +148,11 @@ export function resolveVictory(
     state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0;
   const missionReward = terminal ? state.mission.rewards.credits : 0;
   const totalReward = nodeReward + missionReward + achievementCredits;
+
+  // ADR-0285: the loot SALVAGE slot no longer pays credits (it patches now), so
+  // the prep stockpile banks from what a win pays instead. Same precedent as the
+  // far-grid gate: the reducer already owns that localStorage write.
+  addPrepWallet(Math.floor(totalReward * PREP_WALLET_BANK_SHARE));
 
   const lootMessage =
     drops.length > 0

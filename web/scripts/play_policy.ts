@@ -312,9 +312,10 @@ export function playRun(
           const offers = ids.map((id) => cardOf(id));
           state = applyAction(state, {
             type: "select_program",
-            handIndex: wantRepair
-              ? LOOT_REPAIR_SLOT
-              : pickRewardIndex(offers, cardPolicy),
+            handIndex:
+              wantRepair
+                ? LOOT_REPAIR_SLOT
+                : pickRewardIndex(offers, cardPolicy),
           });
         }
       }

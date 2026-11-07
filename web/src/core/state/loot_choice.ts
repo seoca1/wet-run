@@ -19,7 +19,6 @@ import { clampGrade } from "../combat/ice_scaling";
 /** The loot screen's option slots. Programs occupy 1..CARD_REWARD_COUNT. */
 export const LOOT_PROGRAM_SLOTS = 3;
 export const LOOT_REPAIR_SLOT = LOOT_PROGRAM_SLOTS + 1; // 4
-export const LOOT_CREDITS_SLOT = LOOT_PROGRAM_SLOTS + 2; // 5
 
 /** Percent of max HP repaired, per grade — the price of giving up a card.
  *
@@ -28,11 +27,6 @@ export const LOOT_CREDITS_SLOT = LOOT_PROGRAM_SLOTS + 2; // 5
  */
 export const LOOT_REPAIR_PCT_BY_GRADE: ReadonlyArray<number> = [
   70, 70, 85, 100, 100, 100,
-];
-
-/** Credits taken instead of a card, per grade. */
-export const LOOT_CREDITS_BY_GRADE: ReadonlyArray<number> = [
-  50, 60, 80, 120, 160, 200,
 ];
 
 /** The repair, as a percent of max HP, for a mission grade. */
@@ -45,17 +39,11 @@ export function lootRepairAmount(maxHp: number, grade: number): number {
   return Math.floor(maxHp * (lootRepairPctForGrade(grade) / 100));
 }
 
-/** The credits offered instead of a card, for a mission grade. */
-export function lootCreditsForGrade(grade: number): number {
-  return LOOT_CREDITS_BY_GRADE[clampGrade(grade) - 1] ?? 50;
-}
-
 /** The slot a loot keypress refers to, or null when it is not a loot option. */
 export function lootSlotChoice(
   slot: number,
-): "program" | "repair" | "credits" | null {
+): "program" | "repair" | null {
   if (slot >= 1 && slot <= LOOT_PROGRAM_SLOTS) return "program";
   if (slot === LOOT_REPAIR_SLOT) return "repair";
-  if (slot === LOOT_CREDITS_SLOT) return "credits";
   return null;
 }

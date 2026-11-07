@@ -11,12 +11,7 @@ import type { GrowthReveal } from "./growth_reveal";
 import { offeredCardIds, rewardProgram } from "../core/state/card_reward";
 import { formatRewardOption } from "../core/combat/program_affordance";
 import { missionGradeOf } from "../core/combat/ice_scaling";
-import {
-  LOOT_CREDITS_SLOT,
-  LOOT_REPAIR_SLOT,
-  lootCreditsForGrade,
-  lootRepairAmount,
-} from "../core/state/loot_choice";
+import { LOOT_REPAIR_SLOT, lootRepairAmount } from "../core/state/loot_choice";
 import { ENDINGS } from "../core/combat/ending_resolver";
 import { composeCombatVfx } from "./combat_vfx";
 import { composeFloatingDamage, overlayShake } from "./combat_overlay";
@@ -131,9 +126,6 @@ export function renderRunScreen(
         offers.push(
           `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${healed}/${state.player.maxHp}`,
         );
-        offers.push(
-          `${LOOT_CREDITS_SLOT} SALVAGE         +${lootCreditsForGrade(grade)}cr`,
-        );
       }
       return {
         grid: renderLootScreen(
@@ -162,7 +154,7 @@ export function renderRunScreen(
             : takenIndex >= 0
               ? "ENTER: continue"
               : offers.length > 0
-                ? "1-3: card · 4: repair · 5: credits"
+                ? "1-3: card · 4: repair"
                 : "ENTER: route",
         ],
       };

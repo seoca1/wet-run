@@ -1,0 +1,32 @@
+ADR-0285 — can the loot screen carry a third option? Measured; no.
+
+The slot paid credits (ADR-0282), then banked them for prep (ADR-0284), and
+both times it was worth less than a card or a repair. This tried capacity:
+a flat max-HP PATCH in slot 5 (+12/14/18/24/60/40 by grade).
+
+npm run survival --seeds 16, prep=stim
+
+loot=card   (never spend)    100.0 / 75.4 / 44.3 / 33.1 /  9.0 / 4.2
+loot=patch  (always patch)   100.0 / 96.1 / 53.4 / 35.6 /  6.9 / 0.0
+loot=smart  (repair if hurt) 100.0 / 98.0 / 81.8 / 45.6 / 31.9 / 18.8
+loot=mixed  (patch if well)  100.0 / 81.3 / 48.9 / 33.1 /  9.0 / 4.2
+
+READING
+  - patch beats never-spending at grades 2-4, so it is not a trap like
+    credits were.
+  - but it is DOMINATED by a timely repair everywhere it matters, and the
+    decisive comparison is mixed against smart: patching when healthy is far
+    worse (g3 48.9 against 81.8), because it forgoes the card and growth is
+    worth more than capacity at a loot stop.
+  - a repair restores 50-80% of max HP; a flat patch adds 60 at grade 5.
+    Making the patch a share of max HP would let it compound with the STIM
+    prep and stack six times, which is worse.
+
+DECISION: the slot is REMOVED. Three cards and a repair, both of which are
+worth a stop. A dominated third option is not a choice, it is a trap of a
+different shape, and shipping it to look generous would be lying about the
+decision the player is making.
+
+The prep stockpile keeps its purpose: it now banks from what a WIN pays
+(resolveVictory) instead of from the removed slot, so credits still reach the
+next run's prep.

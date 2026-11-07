@@ -14,7 +14,12 @@
  * from `state_actions.ts` so existing imports keep working.
  */
 
-import type { GameState, GameAction, EndingChoice } from "../types";
+import type {
+  GameState,
+  GameAction,
+  EndingChoice,
+  Program,
+} from "../types";
 import {
   import_vfx,
   import_vfx_deterministic,
@@ -34,10 +39,7 @@ import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram } from "./card_reward";
 import { refillHand } from "../combat/hand";
-import {
-  intelTargets,
-  VENT_COST,
-  ventHpPrice,
+import { BURN_COST, intelTargets, VENT_COST, ventHpPrice,
   lootIntelPrice,
   lootRepairAmount,
   lootSlotChoice,
@@ -190,6 +192,7 @@ export function applyLootAction(
     if (choice === "repair") return takeLootRepair(state);
     if (choice === "intel") return takeLootIntel(state);
     if (choice === "vent") return takeLootVent(state);
+    if (choice === "burn") return takeLootBurn(state);
     return takeCardReward(state, action.handIndex - 1);
   }
   if (action.type === "use_program") {
@@ -381,6 +384,79 @@ function takeLootVent(state: GameState): GameState {
       alarm: Math.max(0, state.player.alarm - VENT_COST),
     },
     message: `Vented ${cleared} COST for ${price} HP (COST ${state.player.alarm - cleared}/100).`,
+  };
+}
+
+/** The card a burn would take: the one the run would miss most (ADR-0296).
+ *
+ * Deterministic on purpose — the screen has no card picker, and asking the player
+ * to choose WHICH card to lose turns a quick decision into a menu.
+ *
+ * The STRONGEST card is the measured choice, not the intuitive one: burning the
+ * weakest is free (it was never going to be played), and the measurement showed
+ * exactly that — it reopened the fight/skip lead at +6.9pp. Burning the card the
+ * deck leans on is the first version that costs something.
+ */
+export function burnTarget(state: GameState): Program | null {
+  const pools = [state.deck, state.drawPile, state.discardPile];
+  let best: Program | null = null;
+  for (const pile of pools) {
+    for (const card of pile) {
+      if (
+        best === null ||
+        card.tier > best.tier ||
+        (card.tier === best.tier && card.id > best.id)
+      ) {
+        best = card;
+      }
+    }
+  }
+  return best;
+}
+
+/** True when there is a card the run can spare (it never burns the last one). */
+function canBurn(state: GameState): boolean {
+  const total =
+    state.deck.length + state.drawPile.length + state.discardPile.length;
+  return total > 1 && burnTarget(state) !== null;
+}
+
+/** ADR-0296: burn a card to clear the trace, instead of paying in HP.
+ *
+ * The curve never reads a card away from the runner, so this is the one exit that
+ * cannot break the fitted balance; what it costs is the growth a fight was for.
+ */
+function takeLootBurn(state: GameState): GameState {
+  const target = burnTarget(state);
+  if (!target || !canBurn(state)) {
+    return {
+      ...state,
+      message: "Nothing to burn — the deck cannot lose its last program.",
+    };
+  }
+  const drop = (pile: ReadonlyArray<Program>): Program[] => {
+    const out: Program[] = [];
+    let removed = false;
+    for (const card of pile) {
+      if (!removed && card.id === target.id) {
+        removed = true;
+        continue;
+      }
+      out.push(card);
+    }
+    return out;
+  };
+  const cleared = Math.min(BURN_COST, state.player.alarm);
+  return {
+    ...state,
+    deck: drop(state.deck),
+    drawPile: drop(state.drawPile),
+    discardPile: drop(state.discardPile),
+    player: {
+      ...state.player,
+      alarm: Math.max(0, state.player.alarm - BURN_COST),
+    },
+    message: `Burned ${target.id} for ${cleared} COST (COST ${state.player.alarm - cleared}/100).`,
   };
 }
 

@@ -7,13 +7,16 @@ import { renderGrid } from "./combat_grid";
 import { groupStatusByTarget } from "./status_hud";
 import { buildHudLines } from "../core/state/state";
 import { isTerminalNode } from "../core/state/run_end";
+import { burnTarget } from "../core/state/state_actions_phases";
 import type { GrowthReveal } from "./growth_reveal";
 import { offeredCardIds, rewardProgram } from "../core/state/card_reward";
 import { formatRewardOption } from "../core/combat/program_affordance";
 import { missionGradeOf } from "../core/combat/ice_scaling";
 import {
+  BURN_COST,
   LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
+  LOOT_BURN_SLOT,
   LOOT_VENT_SLOT,
   VENT_COST,
   ventHpPrice,
@@ -149,6 +152,13 @@ export function renderRunScreen(
           offers.push(
             `${LOOT_VENT_SLOT} VENT            ${ventHp} HP — clear ${ventedNow} COST → ${state.player.alarm - ventedNow}/100`,
           );
+          // ADR-0296: the same capacity bought with growth instead of body.
+          const spare = burnTarget(state);
+          if (spare) {
+            offers.push(
+              `${LOOT_BURN_SLOT} BURN            ${spare.id} (T${spare.tier}) — clear ${Math.min(BURN_COST, state.player.alarm)} COST`,
+            );
+          }
         }
       }
       return {
@@ -178,7 +188,7 @@ export function renderRunScreen(
             : takenIndex >= 0
               ? "ENTER: continue"
               : offers.length > 0
-                ? "1-3: card · 4: repair · 5: intel · 6: vent"
+                ? "1-3: card · 4: repair · 5: intel · 6: vent · 7: burn"
                 : "ENTER: route",
         ],
       };

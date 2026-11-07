@@ -17,11 +17,13 @@ import { isTerminalNode } from "../src/core/state/run_end";
 import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
 import { bossGateNeed } from "../src/core/combat/ice_scaling";
 import {
+  LOOT_BURN_SLOT,
   LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
   LOOT_VENT_SLOT,
   ventHpPrice,
 } from "../src/core/state/loot_choice";
+import { burnTarget } from "../src/core/state/state_actions_phases";
 import { prepGrantFor, type PrepChoice } from "../src/core/state/prep";
 import { programEffect } from "../src/core/combat/program_effects";
 import { deckForGrade } from "./balance_sim";
@@ -67,7 +69,8 @@ export type LootPolicy =
   | "smart"
   | "intel"
   | "smartintel"
-  | "smartvent";
+  | "smartvent"
+  | "smartburn";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -457,6 +460,11 @@ export function playRun(
         // stop has nothing worth taking, so `smartintel` does exactly that: only
         // when every offered card is tier 1 and the runner is not hurt.
         // ADR-0295: vent when the budget, not the body, is what will kill it.
+        // ADR-0296: burn growth, not body, when the budget is what will kill it.
+        const wantBurn =
+          lootPolicy === "smartburn" &&
+          state.player.alarm >= 70 &&
+          burnTarget(state) !== null;
         const wantVent =
           lootPolicy === "smartvent" &&
           state.player.alarm >= 70 &&
@@ -473,13 +481,20 @@ export function playRun(
             ((lootPolicy === "smart" ||
               lootPolicy === "intel" ||
               lootPolicy === "smartintel" ||
-              lootPolicy === "smartvent") &&
+              lootPolicy === "smartvent" ||
+              lootPolicy === "smartburn") &&
               state.player.hp < Math.floor(state.player.maxHp * 0.5));
           const offers = ids.map((id) => cardOf(id));
           if (wantVent) {
             state = applyAction(state, {
               type: "select_program",
               handIndex: LOOT_VENT_SLOT,
+            });
+          }
+          if (wantBurn) {
+            state = applyAction(state, {
+              type: "select_program",
+              handIndex: LOOT_BURN_SLOT,
             });
           }
           state = applyAction(state, {

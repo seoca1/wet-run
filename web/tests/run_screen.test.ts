@@ -8,11 +8,13 @@ import {
 import { renderMatrix } from "../src/renderer/matrix";
 import { renderEndingScreen, renderLootScreen } from "../src/renderer/ending";
 import { offeredCardIds, rewardProgram } from "../src/core/state/card_reward";
+import { burnTarget } from "../src/core/state/state_actions_phases";
 import { formatRewardOption } from "../src/core/combat/program_affordance";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
 import {
   LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
+  LOOT_BURN_SLOT,
   LOOT_VENT_SLOT,
   VENT_COST,
   ventHpPrice,
@@ -146,6 +148,13 @@ describe("run screen composition", () => {
       offers.push(
         `${LOOT_VENT_SLOT} VENT            ${ventHpPrice(state.player.maxHp)} HP — clear ${vented} COST → ${state.player.alarm - vented}/100`,
       );
+      // ADR-0296: and the same capacity can be bought with a card.
+      const spare = burnTarget(state);
+      if (spare) {
+        offers.push(
+          `${LOOT_BURN_SLOT} BURN            ${spare.id} (T${spare.tier}) — clear ${vented} COST`,
+        );
+      }
     }
     expect(view?.grid.cells).toEqual(
       renderLootScreen(
@@ -166,7 +175,7 @@ describe("run screen composition", () => {
     expect(view?.hud).toEqual([
       "LOOT",
       "",
-      "1-3: card · 4: repair · 5: intel · 6: vent",
+      "1-3: card · 4: repair · 5: intel · 6: vent · 7: burn",
     ]);
   });
 

@@ -74,6 +74,28 @@ export function lootIntelPrice(grade: number): number {
  */
 export const VENT_COST = 10;
 
+/** A card can be burned instead of the body (ADR-0296).
+ *
+ * ADR-0295 gave the trace an exit paid in HP, and measured that a CHEAP exit
+ * undoes ADR-0294's trade. A card costs something the curve does not read at all
+ * — growth — so burning one is a different currency: you give up a program that
+ * would have helped later in exchange for capacity right now. That is the most
+ * game-shaped price of the three, and it is also the one the fitted curve can
+ * never be broken by.
+ */
+export const LOOT_BURN_SLOT = LOOT_VENT_SLOT + 1; // 7
+
+/** COST one burned card clears.
+ *
+ * Measured, and both the target and the amount came out of the measurement:
+ * burning the WEAKEST card is a free lunch (g5 50.5 vs 43.3, g6 20.8 vs 13.9 —
+ * the weakest program is rarely played, so the "price" costs nothing), and at the
+ * vent's full 10 COST even burning the strongest still left fighting ahead by
+ * 4.2pp at g6. Burning the strongest for 7 lands the trade: g5 45.6/43.3 and
+ * g6 12.5/13.3 at 48 seeds.
+ */
+export const BURN_COST = 7;
+
 /** Percent of max HP one vent costs.
  *
  * ADR-0295: the first design sold the vent for credits, and the measurement
@@ -100,11 +122,12 @@ export function ventHpPrice(maxHp: number): number {
 /** The slot a loot keypress refers to, or null when it is not a loot option. */
 export function lootSlotChoice(
   slot: number,
-): "program" | "repair" | "intel" | "vent" | null {
+): "program" | "repair" | "intel" | "vent" | "burn" | null {
   if (slot >= 1 && slot <= LOOT_PROGRAM_SLOTS) return "program";
   if (slot === LOOT_REPAIR_SLOT) return "repair";
   if (slot === LOOT_INTEL_SLOT) return "intel";
   if (slot === LOOT_VENT_SLOT) return "vent";
+  if (slot === LOOT_BURN_SLOT) return "burn";
   return null;
 }
 

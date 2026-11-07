@@ -102,62 +102,131 @@ const ice = loadIceCatalog(iceJson);
 const programs = loadProgramsCatalog(programsJson);
 const missions = loadMissionsCatalog(missionsJson);
 
-const originalRandom = Math.random;
-const originalNow = Date.now;
-
 type Cell = { completed: number; runs: number };
-const byGrade = new Map<number, Cell>();
-const byGradeMission = new Map<string, Cell>();
-const deaths = new Map<string, number>();
 
-try {
-  for (let s = 0; s < SEEDS; s += 1) {
-    const seed = BASE_SEED + s * 7919;
-    Math.random = mulberry32(seed);
-    const clockRef = { now: 1_700_000_000_000 + s * 100_000 };
-    Date.now = () => clockRef.now;
-
-    for (const mission of Object.values(missions) as Mission[]) {
-      const grade = missionGradeOf(mission);
-      if (ONLY_GRADE !== null && grade !== ONLY_GRADE) continue;
-      const final = playRun(
-        mission,
-        ice,
-        programs,
-        clockRef,
-        "novice",
-        CARD_POLICY,
-        DECK_MODE,
-        ROUTE_POLICY,
-        LOOT_POLICY,
-        HP_BONUS,
-        HAND_BONUS,
-        SHIELD_BONUS,
-        PREP_CHOICE,
-        WALLET,
-        ICE_LIMIT,
-        INTEL_FREE,
-      );
-      const completed = final?.runPhase === "ending" ? 1 : 0;
-      const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
-      g.completed += completed;
-      g.runs += 1;
-      byGrade.set(grade, g);
-      const atBoss = final?.matrix?.nodes[final.currentNodeIndex]?.isBoss === true;
-      const where = completed === 1 ? "finished" : atBoss ? "boss" : "normal";
-      deaths.set(`${grade}|${where}`, (deaths.get(`${grade}|${where}`) ?? 0) + 1);
-      const key = `${grade}|${mission.id}`;
-      const m = byGradeMission.get(key) ?? { completed: 0, runs: 0 };
-      m.completed += completed;
-      m.runs += 1;
-      byGradeMission.set(key, m);
-    }
-  }
-} finally {
-  Math.random = originalRandom;
-  Date.now = originalNow;
+/** One sweep's results — per grade, per mission, and where losses happened. */
+interface SweepResult {
+  readonly byGrade: Map<number, Cell>;
+  readonly byGradeMission: Map<string, Cell>;
+  readonly deaths: Map<string, number>;
 }
 
+/** Run one policy set across every mission and seed. */
+function runSweep(cfg: {
+  readonly card: CardPolicy;
+  readonly loot: LootPolicy;
+  readonly route: RoutePolicy;
+}): SweepResult {
+  const byGrade = new Map<number, Cell>();
+  const byGradeMission = new Map<string, Cell>();
+  const deaths = new Map<string, number>();
+  const originalRandom = Math.random;
+  const originalNow = Date.now;
+
+  try {
+    for (let s = 0; s < SEEDS; s += 1) {
+      const seed = BASE_SEED + s * 7919;
+      Math.random = mulberry32(seed);
+      const clockRef = { now: 1_700_000_000_000 + s * 100_000 };
+      Date.now = () => clockRef.now;
+
+      for (const mission of Object.values(missions) as Mission[]) {
+        const grade = missionGradeOf(mission);
+        if (ONLY_GRADE !== null && grade !== ONLY_GRADE) continue;
+        const final = playRun(
+          mission,
+          ice,
+          programs,
+          clockRef,
+          "novice",
+          cfg.card,
+          DECK_MODE,
+          cfg.route,
+          cfg.loot,
+          HP_BONUS,
+          HAND_BONUS,
+          SHIELD_BONUS,
+          PREP_CHOICE,
+          WALLET,
+          ICE_LIMIT,
+          INTEL_FREE,
+        );
+        const completed = final?.runPhase === "ending" ? 1 : 0;
+        const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
+        g.completed += completed;
+        g.runs += 1;
+        byGrade.set(grade, g);
+        const atBoss = final?.matrix?.nodes[final.currentNodeIndex]?.isBoss === true;
+        const where = completed === 1 ? "finished" : atBoss ? "boss" : "normal";
+        deaths.set(`${grade}|${where}`, (deaths.get(`${grade}|${where}`) ?? 0) + 1);
+        const key = `${grade}|${mission.id}`;
+        const m = byGradeMission.get(key) ?? { completed: 0, runs: 0 };
+        m.completed += completed;
+        m.runs += 1;
+        byGradeMission.set(key, m);
+      }
+    }
+  } finally {
+    Math.random = originalRandom;
+    Date.now = originalNow;
+  }
+  return { byGrade, byGradeMission, deaths };
+}
+
+/** ADR-0302: the two curves whose GAP is the skill gap.
+ *
+ * `default` is what the harness has always measured: take the first card offered
+ * and never spend the loot stop on anything else. `optimal` is the best set the
+ * session's measurements found: choose the card, and use the stop (repair when
+ * hurt, vent/burn when the trace is hot).
+ *
+ * The interest is not either number. It is the distance between them: it says how
+ * much the CHOICES are worth, which is the thing the whole session was buying. A
+ * change that widens the gap has made skill matter more; a change that closes it
+ * has made the choices decorative.
+ */
+const SHOW_POLICIES = process.argv.includes("--policies");
+
+if (SHOW_POLICIES) {
+  console.log(
+    `skill gap — ${SEEDS} seeds x ${Object.keys(missions).length} missions, deck "${DECK_MODE}", route "long"`,
+  );
+  console.log("");
+  const base = runSweep({ card: "first", loot: "card", route: "long" });
+  const best = runSweep({
+    card: "best",
+    loot: "smartcombo",
+    route: "long",
+  });
+  console.log("grade  default  optimal  gap");
+  const grades = [...base.byGrade.keys()].sort((a, b) => a - b);
+  const gaps: number[] = [];
+  for (const grade of grades) {
+    const a = base.byGrade.get(grade) as Cell;
+    const b = best.byGrade.get(grade) as Cell;
+    const ar = (a.completed / a.runs) * 100;
+    const br = (b.completed / b.runs) * 100;
+    const gap = br - ar;
+    gaps.push(gap);
+    console.log(
+      `  ${grade}     ${ar.toFixed(1).padStart(5)}%   ${br.toFixed(1).padStart(5)}%  ${gap >= 0 ? "+" : ""}${gap.toFixed(1)}`,
+    );
+  }
+  const mean = gaps.reduce((s, g) => s + g, 0) / Math.max(1, gaps.length);
+  const widest = gaps.reduce((w, g) => (Math.abs(g) > Math.abs(w) ? g : w), 0);
+  console.log("");
+  console.log(
+    `mean gap: ${mean >= 0 ? "+" : ""}${mean.toFixed(1)}pp · widest: ${widest >= 0 ? "+" : ""}${widest.toFixed(1)}pp`,
+  );
+  console.log(
+    "reading: a positive gap means using the choices beats taking whatever is offered.",
+  );
+} else {
+  const { byGrade, byGradeMission, deaths } = runSweep({
+    card: CARD_POLICY,
+    loot: LOOT_POLICY,
+    route: ROUTE_POLICY,
+  });
 console.log(
   `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", hp +${HP_BONUS}, hand +${HAND_BONUS}, prep "${PREP_CHOICE}", wallet ${WALLET}, jockey "novice"`,
 );
@@ -207,4 +276,5 @@ if (BY_GRADE) {
       `  g${grade} ${id.padEnd(28)} ${(cell.completed / cell.runs * 100).toFixed(0).padStart(3)}%  (${cell.completed}/${cell.runs})`,
     );
   }
+}
 }

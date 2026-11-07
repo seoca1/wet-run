@@ -132,6 +132,17 @@ export function renderRunScreen(
         })
         .filter((line) => line.length > 0);
       const takenIndex = takenId === null ? -1 : ids.indexOf(takenId);
+      // ADR-0251 rule 5: do not promise a key that does nothing. The trace exits
+      // only exist while there is a trace, and both of them stay open, so a deep
+      // hole can be cleared in one stop (ADR-0297) — which is worth saying.
+      const traceExits: string[] = [];
+      if (!terminal && state.player.alarm > 0) {
+        traceExits.push("6: vent");
+        if (burnTarget(state)) traceExits.push("7: burn");
+      }
+      const lootHint =
+        ["1-3: card", "4: repair", "5: intel", ...traceExits].join(" · ") +
+        (traceExits.length === 2 ? " · 6+7 stack" : "");
       if (!terminal && takenId === null) {
         const repair = lootRepairAmount(state.player.maxHp, grade);
         const healed = Math.min(state.player.maxHp, state.player.hp + repair);
@@ -188,7 +199,7 @@ export function renderRunScreen(
             : takenIndex >= 0
               ? "ENTER: continue"
               : offers.length > 0
-                ? "1-3: card · 4: repair · 5: intel · 6: vent · 7: burn"
+                ? lootHint
                 : "ENTER: route",
         ],
       };

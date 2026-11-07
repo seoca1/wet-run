@@ -175,7 +175,30 @@ describe("run screen composition", () => {
     expect(view?.hud).toEqual([
       "LOOT",
       "",
-      "1-3: card · 4: repair · 5: intel · 6: vent · 7: burn",
+      // ADR-0251 rule 5: a run with no trace has no vent/burn, so the HUD does
+      // not promise those keys.
+      "1-3: card · 4: repair · 5: intel",
+    ]);
+  });
+
+  it("names both trace exits and says they stack (ADR-0297)", () => {
+    // Given: a loot stop with a trace to clear.
+    const base = runState({ runPhase: "loot", message: "No rewards" });
+    const state = {
+      ...base,
+      player: { ...base.player, alarm: 80 },
+    };
+
+    // When
+    const view = renderRunScreen(state, 80, 50);
+
+    // Then: the keys that work are named, and so is the fact that both can be
+    // taken before ENTER — the measurement says using both is worth ~2pp and the
+    // player cannot discover that from the digits alone.
+    expect(view?.hud).toEqual([
+      "LOOT",
+      "",
+      "1-3: card · 4: repair · 5: intel · 6: vent · 7: burn · 6+7 stack",
     ]);
   });
 

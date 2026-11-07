@@ -70,7 +70,8 @@ export type LootPolicy =
   | "intel"
   | "smartintel"
   | "smartvent"
-  | "smartburn";
+  | "smartburn"
+  | "smartcombo";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -462,11 +463,16 @@ export function playRun(
         // ADR-0295: vent when the budget, not the body, is what will kill it.
         // ADR-0296: burn growth, not body, when the budget is what will kill it.
         const wantBurn =
-          lootPolicy === "smartburn" &&
+          (lootPolicy === "smartburn" || lootPolicy === "smartcombo") &&
           state.player.alarm >= 70 &&
           burnTarget(state) !== null;
+        // ADR-0297: the combination -- both prices at once, for a deep hole.
+        const wantComboVent =
+          lootPolicy === "smartcombo" &&
+          state.player.alarm >= 85 &&
+          state.player.hp > ventHpPrice(state.player.maxHp) * 2;
         const wantVent =
-          lootPolicy === "smartvent" &&
+          (lootPolicy === "smartvent" || wantComboVent) &&
           state.player.alarm >= 70 &&
           state.player.hp > ventHpPrice(state.player.maxHp) * 2;
         const wantIntel =
@@ -482,7 +488,8 @@ export function playRun(
               lootPolicy === "intel" ||
               lootPolicy === "smartintel" ||
               lootPolicy === "smartvent" ||
-              lootPolicy === "smartburn") &&
+              lootPolicy === "smartburn" ||
+              lootPolicy === "smartcombo") &&
               state.player.hp < Math.floor(state.player.maxHp * 0.5));
           const offers = ids.map((id) => cardOf(id));
           if (wantVent) {

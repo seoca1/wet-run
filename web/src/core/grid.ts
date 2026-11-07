@@ -64,6 +64,27 @@ export function setCell(grid: Grid, pos: Position, cell: Cell): Grid {
   return makeGridFromCells(grid.width, grid.height, newCells);
 }
 
+/** Strings `setText` had to cut at the right edge since the last drain
+ * (ADR-0300).
+ *
+ * The loot screen shipped twice with prices clipped mid-number ("+75 HP → 2")
+ * because a line can only be checked against a width at the moment it is drawn.
+ * Recording the cut here makes that check automatic: a test renders every screen
+ * at every layout and asserts the list is empty, so an option that does not fit
+ * fails the build instead of quietly losing its digits.
+ *
+ * Bounded so a pathological frame cannot grow it without limit.
+ */
+let clipped: string[] = [];
+const CLIPPED_CAP = 64;
+
+/** The strings cut since the last call, and clears the record. */
+export function takeClippedText(): readonly string[] {
+  const out = clipped;
+  clipped = [];
+  return out;
+}
+
 /** Render a static text block. */
 export function setText(
   grid: Grid,
@@ -72,6 +93,9 @@ export function setText(
   text: string,
   fg: string = PALETTE.GREEN_NEON,
 ): Grid {
+  if (x + text.length > grid.width && clipped.length < CLIPPED_CAP) {
+    clipped.push(text);
+  }
   let current = grid;
   for (let i = 0; i < text.length && x + i < grid.width; i++) {
     const ch = text[i];

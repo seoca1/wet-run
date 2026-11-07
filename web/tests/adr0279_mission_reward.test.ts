@@ -130,7 +130,8 @@ describe("ADR-0279 · the mission reward is paid once", () => {
 
     // Then: the mission's 800cr is NOT in this payout.
     expect(won.runPhase).toBe("loot");
-    expect(won.message).toContain("+100 credits"); // 50 node + 50 first_blood
+    // 50 node + 50 first_blood + 25 bounty (ADR-0293: a tier-1 kill pays 25).
+    expect(won.message).toContain("+125 credits");
     expect(won.message).not.toContain("800");
     expect(won.message).not.toContain("mission complete");
   });
@@ -140,9 +141,9 @@ describe("ADR-0279 · the mission reward is paid once", () => {
     const first = winFight(twoFightMission());
     const won = winFight(walkToBoss(first));
 
-    // Then: node 75 + mission 800 + boss_slayer 1000.
+    // Then: node 75 + mission 800 + boss_slayer 1000 + bounty 25.
     expect(won.runPhase).toBe("loot");
-    expect(won.message).toContain("+1875 credits");
+    expect(won.message).toContain("+1900 credits");
     expect(won.message).toContain("(mission complete)");
   });
 
@@ -151,9 +152,9 @@ describe("ADR-0279 · the mission reward is paid once", () => {
     const first = winFight(twoFightMission());
     const won = winFight(walkToBoss(first));
 
-    // Then: earned = 100 (first) + 1875 (boss) = 1975, which counts the 800
+    // Then: earned = 125 (first) + 1900 (boss) = 2025, which counts the 800
     // exactly once. Paying it per fight would have counted it twice.
-    expect(won.player.credits).toBe(1975);
+    expect(won.player.credits).toBe(2025);
   });
 });
 
@@ -225,7 +226,7 @@ describe("ADR-0279 · the resolver reads what the run earned", () => {
     // terminal fight could in principle re-enter the victory path.
     const mentions = (won.message.match(/mission complete/g) ?? []).length;
     expect(mentions).toBe(1);
-    expect(won.player.credits).toBe(1975);
+    expect(won.player.credits).toBe(2025);
   });
 
   it("First Jack's mission reward is the 500 the select screen shows", () => {
@@ -260,7 +261,7 @@ describe("ADR-0279 · the mission reward survives replay and resume", () => {
     const won = winFight(walkToBoss(first));
     expect(won.runPhase).toBe("loot");
     const earned = won.player.credits;
-    expect(earned).toBe(1975);
+    expect(earned).toBe(2025);
 
     // When: ENTER ends the run.
     const ended = applyAction(won, { type: "confirm" });

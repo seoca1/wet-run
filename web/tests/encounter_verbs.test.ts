@@ -256,7 +256,8 @@ describe("fixed encounter verbs (ADR-0246 slice 2)", () => {
     expect(breach.player.alarm).toBe(0);
     expect(fighting.phase).toBe("combat");
     expect(won.runPhase).toBe("loot");
-    expect(won.player.credits - initial.player.credits).toBe(125);
+    // Node reward plus the kill's own bounty (ADR-0293).
+    expect(won.player.credits - initial.player.credits).toBe(150);
     expect(won.clearedEncounterNodes).toContain(0);
   });
 

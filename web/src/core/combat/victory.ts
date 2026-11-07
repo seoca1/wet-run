@@ -111,6 +111,27 @@ export type VictoryKind = "program" | "companion";
  * promised 500 once. A fight that does not end the mission pays the node's own
  * reward.
  */
+/** Credits a defeated ICE pays on top of the node's own reward, by tier
+ * (ADR-0293).
+ *
+ * ADR-0292 made a drop worth its ICE, which gave the middle grades a reason to
+ * choose one fight over another. It could not do that at g6: every card there is
+ * already high tier, so "this fight drops better cards" has nothing left to say.
+ * Money is the axis the top grade still had room on — and it is legible in the
+ * fiction: a Neuromancer is worth more than a Watchdog.
+ *
+ * Deliberately not a power lever: credits buy prep capacity between runs and
+ * intel inside one, and nothing in combat reads them, so the fitted per-encounter
+ * curve is untouched.
+ */
+export const BOUNTY_BY_TIER: ReadonlyArray<number> = [0, 25, 50, 90, 140, 200];
+
+/** What one defeated ICE pays on top of its node's reward. */
+export function bountyFor(ice: { readonly tier: number }): number {
+  const tier = Math.max(0, Math.min(BOUNTY_BY_TIER.length - 1, Math.round(ice.tier)));
+  return BOUNTY_BY_TIER[tier] ?? 0;
+}
+
 export function resolveVictory(
   state: GameState,
   opts: {
@@ -147,7 +168,10 @@ export function resolveVictory(
   const nodeReward =
     state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0;
   const missionReward = terminal ? state.mission.rewards.credits : 0;
-  const totalReward = nodeReward + missionReward + achievementCredits;
+  // ADR-0293: each kill carries its own bounty, so a strong ICE is worth more
+  // than a routine one even when the cards it drops are indistinguishable.
+  const bounty = defeated.reduce((sum, ice) => sum + bountyFor(ice), 0);
+  const totalReward = nodeReward + missionReward + achievementCredits + bounty;
 
   // ADR-0285: the loot SALVAGE slot no longer pays credits (it patches now), so
   // the prep stockpile banks from what a win pays instead. Same precedent as the
@@ -161,8 +185,9 @@ export function resolveVictory(
   // ADR-0258: only the card that drops the last ICE is exempt from COST. A
   // companion's finishing blow exempts nothing, so it does not claim it.
   const costNote = kind === "program" ? " (no COST)" : "";
-  const bountyNote = missionReward > 0 ? " (mission complete)" : "";
-  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${bountyNote}${lootMessage}`;
+  const missionNote = missionReward > 0 ? " (mission complete)" : "";
+  const bountyNote = bounty > 0 ? ` (bounty ${bounty})` : "";
+  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${missionNote}${bountyNote}${lootMessage}`;
 
   return {
     ...state,

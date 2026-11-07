@@ -266,10 +266,17 @@ function objective(
       return n && !n.isBoss && n.iceIds.length > 0 && !cleared.has(i) && !bypassed.has(i);
     });
     if (known.length === 0) return nearestObjective(state);
-    return (
-      [...known].sort((a, b) => strength(a) - strength(b) || a - b)[0] ??
-      nearestObjective(state)
-    );
+    // ADR-0292: a drop is worth its ICE's tier, so the best use of bought intel
+    // is the STRONGEST encounter the hand can still crack — not the weakest.
+    // Falling back to the weakest keeps the policy sane when everything on the
+    // board is above the line.
+    const beatable = known.filter((i) => strength(i) <= iceLimit);
+    const pool = beatable.length > 0 ? beatable : known;
+    const cmp = (a: number, b: number): number =>
+      beatable.length > 0
+        ? strength(b) - strength(a) || a - b
+        : strength(a) - strength(b) || a - b;
+    return [...pool].sort(cmp)[0] ?? nearestObjective(state);
   }
 
   if (routePolicy === "short") {

@@ -38,7 +38,24 @@ export type RewardSource = Pick<
   | "turnCount"
   | "currentNodeIndex"
   | "cardRewardTaken"
->;
+> & {
+  /** The ICE that was just beaten. Optional: hand-built states, old saves and
+   * tests without a roster fall back to the neutral tier (ADR-0292). */
+  readonly iceRoster?: ReadonlyArray<{ readonly tier: number }>;
+};
+
+/** The tier of the fight that produced this reward (ADR-0292).
+ *
+ * A multi-ICE room counts as its hardest member — the reward is the room's, not
+ * the last kill's. Falling back to 1 keeps every caller that has no roster
+ * exactly where it was before.
+ */
+function iceTierOf(state: RewardSource): number {
+  const tiers = (state.iceRoster ?? [])
+    .map((ice) => ice.tier)
+    .filter((t): t is number => Number.isFinite(t));
+  return tiers.length > 0 ? Math.max(...tiers) : 1;
+}
 
 /**
  * Every program the run holds, hand and piles alike — minus the card taken
@@ -73,16 +90,38 @@ export function offeredCardIds(
     0;
   const rng = makeMulberry32(seed);
 
-  // Partial Fisher-Yates: pick `count` distinct entries without a full shuffle.
+  // ADR-0292: a card's weight is how close its tier is to the ICE that dropped
+  // it. `1 / (1 + d^2)` keeps a rare ICE from being a guaranteed rare card and
+  // still makes a strong fight worth more than a weak one — which is the thing
+  // bought intel can now forecast (ADR-0291 measured information at ~zero while
+  // every fight in a grade dropped the same pool).
+  const iceTier = iceTierOf(state);
+  const weight = (id: string): number => {
+    const tier = catalog()[id]?.tier ?? 1;
+    const d = Math.abs(tier - iceTier);
+    return 1 / (1 + d * d);
+  };
+
+  // Weighted selection without replacement, still consuming exactly `count`
+  // draws from the same seed, so a fight's offer stays a pure function of it.
   const picked: string[] = [];
   const remaining = [...pool];
   const n = Math.min(count, remaining.length);
   for (let i = 0; i < n; i += 1) {
-    const j = i + Math.floor(rng() * (remaining.length - i));
-    const chosen = remaining[j];
+    let total = 0;
+    for (const id of remaining) total += weight(id);
+    let roll = rng() * total;
+    let index = remaining.length - 1;
+    for (let j = 0; j < remaining.length; j += 1) {
+      roll -= weight(remaining[j] as string);
+      if (roll <= 0) {
+        index = j;
+        break;
+      }
+    }
+    const chosen = remaining[index];
     if (chosen === undefined) break;
-    remaining[j] = remaining[i] as string;
-    remaining[i] = chosen;
+    remaining.splice(index, 1);
     picked.push(chosen);
   }
   return picked;

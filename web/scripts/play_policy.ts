@@ -16,11 +16,7 @@ import { offeredCardIds } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
 import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
 import { LOOT_REPAIR_SLOT } from "../src/core/state/loot_choice";
-import {
-  prepHpBonus,
-  prepShieldForGrade,
-  type PrepChoice,
-} from "../src/core/state/prep";
+import { prepGrantFor, type PrepChoice } from "../src/core/state/prep";
 import { programEffect } from "../src/core/combat/program_effects";
 import { deckForGrade } from "./balance_sim";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
@@ -188,6 +184,7 @@ export function playRun(
   handBonus = 0,
   shieldBonus = 0,
   prepChoice: PrepChoice = "stim",
+  walletBalance = 0,
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -231,9 +228,10 @@ export function playRun(
   }
   // ADR-0283 C''': the prep CHOICE. `--prep ice` takes the shield instead of
   // the pool, which is the decision the screen offers.
+  const grade = missionGradeOf(mission);
+  const grant = prepGrantFor(grade, prepChoice, walletBalance);
   if (prepChoice === "ice") {
-    const pool =
-      shieldBonus > 0 ? shieldBonus : prepShieldForGrade(missionGradeOf(mission));
+    const pool = shieldBonus > 0 ? shieldBonus : grant.total;
     if (pool > 0) {
       state = {
         ...state,
@@ -250,11 +248,7 @@ export function playRun(
     }
   }
   const prepBonus =
-    prepChoice === "ice"
-      ? 0
-      : hpBonus > 0
-        ? hpBonus
-        : prepHpBonus(missionGradeOf(mission));
+    prepChoice === "ice" ? 0 : hpBonus > 0 ? hpBonus : grant.total;
   if (prepBonus > 0) {
     const maxHp = state.player.maxHp + prepBonus;
     state = {

@@ -16,7 +16,7 @@ import {
   PREP_HP_BY_GRADE,
   PREP_OPTIONS,
   PREP_SHIELD_BY_GRADE,
-  prepAmountFor,
+  prepGrantFor,
 } from "../src/core/state/prep";
 
 function text(grid: { cells: ReadonlyArray<ReadonlyArray<{ char: string }>> }): string {
@@ -25,18 +25,23 @@ function text(grid: { cells: ReadonlyArray<ReadonlyArray<{ char: string }>> }): 
     .join("\n");
 }
 
-function view(grade: number, cursor = 0) {
+function view(grade: number, cursor = 0, wallet = 0) {
   return {
     missionTitle: "Test Mission",
     grade,
     cursor,
-    options: PREP_OPTIONS.map((o) => ({
-      id: o.id,
-      label: o.label,
-      amount: prepAmountFor(grade, o.id),
-      unit: o.id === "ice" ? "shield" : "HP",
-      note: o.short,
-    })),
+    wallet,
+    options: PREP_OPTIONS.map((o) => {
+      const grant = prepGrantFor(grade, o.id, wallet);
+      return {
+        id: o.id,
+        label: o.label,
+        amount: grant.total,
+        fromWallet: grant.fromWallet,
+        unit: o.id === "ice" ? "shield" : "HP",
+        note: o.short,
+      };
+    }),
   };
 }
 

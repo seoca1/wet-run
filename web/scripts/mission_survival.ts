@@ -55,6 +55,9 @@ const SHOW_DEATHS = process.argv.includes("--deaths");
 const hpIdx = process.argv.indexOf("--hp");
 /** ADR-0283 (C'): extra starting max HP from prep. */
 const HP_BONUS = hpIdx >= 0 ? Number(process.argv[hpIdx + 1]) || 0 : 0;
+const walletIdx = process.argv.indexOf("--wallet");
+/** ADR-0284: the prep stockpile's balance, for measuring its curve impact. */
+const WALLET = walletIdx >= 0 ? Number(process.argv[walletIdx + 1]) || 0 : 0;
 const prepIdx = process.argv.indexOf("--prep");
 /** ADR-0283 C''': which prep option the advance buys. */
 const PREP_CHOICE: PrepChoice =
@@ -121,6 +124,7 @@ try {
         HAND_BONUS,
         SHIELD_BONUS,
         PREP_CHOICE,
+        WALLET,
       );
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
@@ -143,7 +147,7 @@ try {
 }
 
 console.log(
-  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", hp +${HP_BONUS}, hand +${HAND_BONUS}, prep "${PREP_CHOICE}", jockey "novice"`,
+  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", hp +${HP_BONUS}, hand +${HAND_BONUS}, prep "${PREP_CHOICE}", wallet ${WALLET}, jockey "novice"`,
 );
 console.log("");
 console.log("grade  missions  runs  completed  rate    target  delta");

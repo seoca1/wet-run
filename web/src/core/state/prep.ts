@@ -26,6 +26,11 @@
 import type { GameState } from "../types";
 import { missionGradeOf } from "../combat/ice_scaling";
 import { clampGrade } from "../combat/ice_scaling";
+import {
+  PREP_WALLET_FLOOR_HP,
+  PREP_WALLET_FLOOR_SHIELD,
+  prepWalletContribution,
+} from "./prep_wallet";
 
 /** What the advance is spent on. The two options trade off, and the trade-off
  * inverts with grade (ADR-0283 C''):
@@ -74,6 +79,35 @@ export function prepAmountFor(grade: number, choice: PrepChoice): number {
   return choice === "ice" ? prepShieldForGrade(grade) : prepHpBonus(grade);
 }
 
+/** The grade's own value for an option. */
+function prepTableValue(grade: number, choice: PrepChoice): number {
+  return choice === "ice" ? prepShieldForGrade(grade) : prepHpBonus(grade);
+}
+
+/** The stockpile's share of a prep, and what it costs (ADR-0284). */
+export function prepWalletUse(
+  grade: number,
+  choice: PrepChoice,
+  balance: number,
+): number {
+  return prepWalletContribution(
+    prepTableValue(grade, choice),
+    balance,
+    choice === "ice" ? PREP_WALLET_FLOOR_SHIELD : PREP_WALLET_FLOOR_HP,
+  );
+}
+
+/** What a prep actually grants: the grade's table plus the stockpile's share. */
+export function prepGrantFor(
+  grade: number,
+  choice: PrepChoice,
+  walletBalance = 0,
+): { readonly base: number; readonly fromWallet: number; readonly total: number } {
+  const base = prepTableValue(grade, choice);
+  const fromWallet = prepWalletUse(grade, choice, walletBalance);
+  return { base, fromWallet, total: base + fromWallet };
+}
+
 /**
  * Apply prep to a freshly built run: a bigger pool, filled.
  *
@@ -84,11 +118,13 @@ export function prepAmountFor(grade: number, choice: PrepChoice): number {
 export function applyPrep(
   state: GameState,
   choice: PrepChoice = "stim",
+  walletBalance = 0,
 ): GameState {
   const grade = missionGradeOf(state.mission);
+  const grant = prepGrantFor(grade, choice, walletBalance);
+  if (grant.total <= 0) return state;
   if (choice === "ice") {
-    const pool = prepShieldForGrade(grade);
-    if (pool <= 0) return state;
+    const pool = grant.total;
     return {
       ...state,
       statusEffects: [
@@ -105,8 +141,7 @@ export function applyPrep(
       ],
     };
   }
-  const bonus = prepHpBonus(grade);
-  if (bonus <= 0) return state;
+  const bonus = grant.total;
   const maxHp = state.player.maxHp + bonus;
   return { ...state, player: { ...state.player, maxHp, hp: maxHp } };
 }

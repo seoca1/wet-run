@@ -34,6 +34,7 @@ import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram } from "./card_reward";
 import { refillHand } from "../combat/hand";
+import { addPrepWallet, PREP_WALLET_BANK_SHARE } from "./prep_wallet";
 import {
   lootCreditsForGrade,
   lootRepairAmount,
@@ -340,15 +341,23 @@ function takeLootRepair(state: GameState): GameState {
   );
 }
 
-/** ADR-0282: spend the loot stop on credits instead of a card. */
+/** ADR-0282: spend the loot stop on credits instead of a card.
+ *
+ * ADR-0284: the same credits also go into the prep stockpile, which is what
+ * gives this slot a point. They were a near-trap before — strictly worse than a
+ * card or a repair — because the prep budget came from the mission's advance and
+ * nothing else. Half is banked, so the slot pays now *and* later.
+ */
 function takeLootCredits(state: GameState): GameState {
   const amount = lootCreditsForGrade(missionGradeOf(state.mission));
+  const banked = Math.floor(amount * PREP_WALLET_BANK_SHARE);
+  addPrepWallet(banked);
   return continueToMatrix(
     {
       ...state,
       player: { ...state.player, credits: state.player.credits + amount },
     },
-    `Salvage +${amount}cr. `,
+    `Salvage +${amount}cr (${banked} banked for prep). `,
   );
 }
 

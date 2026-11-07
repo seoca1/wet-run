@@ -16,8 +16,10 @@ import type { PrepChoice } from "../core/state/prep";
 export interface PrepOptionRow {
   readonly id: PrepChoice;
   readonly label: string;
-  /** What this option is worth at the mission's grade; 0 means nothing to buy. */
+  /** What this option is worth here, including the stockpile's share. */
   readonly amount: number;
+  /** How much of `amount` came from the stockpile (ADR-0284). */
+  readonly fromWallet: number;
   readonly unit: string;
   readonly note: string;
 }
@@ -26,6 +28,8 @@ export interface PrepView {
   readonly missionTitle: string;
   readonly grade: number;
   readonly cursor: number;
+  /** The runner's banked credits, or 0 when there is none. */
+  readonly wallet: number;
   readonly options: readonly PrepOptionRow[];
 }
 
@@ -48,12 +52,24 @@ export function renderPrep(view: PrepView, cols: number, rows: number): Grid {
   const top = Math.max(1, Math.floor(rows / 2) - 6);
   put(top, "PREP", PALETTE.GREEN_NEON);
   put(top + 1, view.missionTitle, PALETTE.CYAN_LIGHT);
-  put(top + 2, `grade ${view.grade} — the fixer's advance`, PALETTE.GRAY_LIGHT);
+  put(
+    top + 2,
+    view.wallet > 0
+      ? `grade ${view.grade} — advance + ${view.wallet}cr banked`
+      : `grade ${view.grade} — the fixer's advance`,
+    PALETTE.GRAY_LIGHT,
+  );
 
   view.options.forEach((option, i) => {
     const mark = i === view.cursor ? ">" : " ";
+    // Show the split when the stockpile paid for part of it: the screen must
+    // not claim the mission gave more than it did (ADR-0251 rule 5).
     const worth =
-      option.amount > 0 ? `+${option.amount} ${option.unit}` : "nothing offered";
+      option.amount <= 0
+        ? "nothing offered"
+        : option.fromWallet > 0
+          ? `+${option.amount} ${option.unit} (${option.fromWallet} banked)`
+          : `+${option.amount} ${option.unit}`;
     put(
       top + 4 + i * 2,
       `${mark} ${option.label}  ${worth}`,

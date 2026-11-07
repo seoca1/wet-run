@@ -3228,3 +3228,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **`run_end_save.spec.ts` 3건 실패는 변경 전부터** 있었다 — `git stash` 후 HEAD 에서 재현 확인.
 - **검증**: vitest **194 files / 4110 tests**(`prep.test.ts` 4 · `prep_screen.test.ts` 5 신규) · typecheck 0 · lint 0 errors · build PASS · 소크 10런 **frozen 0** · story trace 통과 · doc-claims/no-novel-prose/mixed-language 0.
 - **남은 질문**: (a) 테이블이 **측정된 절벽의 가장자리**다(g5 `+200 → 6.9%`, `+270 → 30.6%`) (b) g3 에서 실드가 약하다(−11.8) (c) 전리품 `5 SALVAGE` 가 여전히 거의 함정(크레딧이 prep 예산이 아님) (d) 세 번째 옵션(핸드 슬롯은 무효였다).
+
+## [2026-11-07] feat(economy) | 크레딧이 prep 으로 간다 — 곡선이 상한을 정했다 (ADR-0284)
+
+- **배경**: 오너 "응." ADR-0283 (c) — 전리품 `SALVAGE` 가 크레딧을 `player.credits` 에 넣었는데 prep 예산은 미션 보상 파생이라 **살 것이 없었다**(카드·수리보다 엄격히 나쁜 칸).
+- **수정**: `prep_wallet.ts` — localStorage `wetrun_prep_wallet`(**`SaveSlot` 밖 → 저장 스키마 무변경**, far-grid unlock 과 같은 패턴). SALVAGE 수입의 **절반** 적립, prep 사용 시 **소비**(영구 보너스 아님). 화면이 `advance + N cr banked` · `+X (N banked)` 로 **출처를 구분**(ADR-0251 규칙 5).
+- **측정이 상한을 정했다 (`--wallet`)**: share **0.5** 면 wallet 500 에서 **g5 18.8→51.4 (+19.5pp) · g6 18.8→29.2 (+10.4pp)** — **ADR-0283 의 fitted 곡선이 무너진다**(테이블에 여유가 없다). share **0**(채택)이면 스톡파일이 **fitted 등급에 얹히지 않고** `tableValue === 0` 인 등급만 채운다 → g4–g6 **동일**, g2 만 소폭(98.0→100.0).
+- **정직한 결론**: 곡선-안전한 스톡파일은 **약하다** — `SALVAGE` 는 여전히 거의 함정이다. 이건 실패가 아니라 **측정된 상한**이다. 유일한 해법은 **테이블을 낮추고 스톡파일이 차이를 메우는 재조정**(= 메타 진행, 신규 러너가 더 어려움)이고 열린 질문 (a) 로 기록.
+- **검증**: vitest **195 files / 4117 tests**(`prep_wallet.test.ts` 7 신규) · typecheck 0 · lint 0 errors · build PASS · 소크 8런 frozen 0 · story trace 통과. **e2e 드라이버는 이번엔 수정 불필요**(화면 수 그대로 — `prep` 재사용). 원자료 `docs/design/adr-0284/credit-to-prep-spread.txt`.

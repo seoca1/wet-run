@@ -128,9 +128,13 @@ import { missionGradeOf } from "./core/combat/ice_scaling";
 import {
   applyPrep,
   PREP_OPTIONS,
-  prepAmountFor,
+  prepGrantFor,
   type PrepChoice,
 } from "./core/state/prep";
+import {
+  readPrepWallet,
+  spendPrepWallet,
+} from "./core/state/prep_wallet";
 import {
   autosaveIntent,
   FLATLINE_MESSAGE,
@@ -267,6 +271,8 @@ class Game {
   /** ADR-0283: the prep row under the cursor, and what it will buy. */
   private prepCursor = 0;
   private prepChoice: PrepChoice = "stim";
+  /** ADR-0284: what the stockpile will pay for the run about to start. */
+  private prepWalletOutlay = 0;
   private renderer: AsciiRenderer;
   private input: KeyboardInput;
   private gamepad: GamepadInput;
@@ -942,6 +948,17 @@ class Game {
       } else if (action.type === "confirm") {
         const picked = PREP_OPTIONS[this.prepCursor];
         this.prepChoice = picked?.id ?? "stim";
+        // Spend the stockpile's share, then launch.
+        const mission = MISSIONS[this.selectedMission];
+        if (mission) {
+          const grant = prepGrantFor(
+            missionGradeOf(mission),
+            this.prepChoice,
+            readPrepWallet(),
+          );
+          this.prepWalletOutlay = grant.fromWallet;
+          spendPrepWallet(grant.fromWallet);
+        }
         this.launchSelected();
       } else if (action.type === "jack_out") {
         this.screen = "mission_select";
@@ -1359,7 +1376,13 @@ class Game {
     const ice = missionIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
     this.state = openArrivalEncounter({
-      ...applyPrep(initial, this.prepChoice),
+      // ADR-0284: whatever the stockpile paid for is spent here, so it is a
+      // hoard rather than a permanent bonus.
+      ...applyPrep(
+        initial,
+        this.prepChoice,
+        this.prepWalletOutlay,
+      ),
       jockeyId: JOCKEYS[this.selectedJockey]?.id ?? null,
       grid: makeGrid(this.layout.cols, this.layout.rows),
       currentNodeIndex: 0,
@@ -1550,13 +1573,22 @@ class Game {
                 missionTitle: mission.title,
                 grade,
                 cursor: this.prepCursor,
-                options: PREP_OPTIONS.map((option) => ({
-                  id: option.id,
-                  label: option.label,
-                  amount: prepAmountFor(grade, option.id),
-                  unit: option.id === "ice" ? "shield" : "HP",
-                  note: option.short,
-                })),
+                wallet: readPrepWallet(),
+                options: PREP_OPTIONS.map((option) => {
+                  const grant = prepGrantFor(
+                    grade,
+                    option.id,
+                    readPrepWallet(),
+                  );
+                  return {
+                    id: option.id,
+                    label: option.label,
+                    amount: grant.total,
+                    fromWallet: grant.fromWallet,
+                    unit: option.id === "ice" ? "shield" : "HP",
+                    note: option.short,
+                  };
+                }),
               },
               this.layout.cols,
               this.layout.rows,

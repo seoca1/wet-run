@@ -1,0 +1,24 @@
+ADR-0284 — credits into prep: measured, and bounded by the curve.
+
+npm run survival --seeds 16, loot=smart, prep=stim
+
+A. share = 0.5 of the table (the first attempt)
+   wallet 0    100.0 / 98.0 / 81.8 / 45.6 / 31.9 / 18.8
+   wallet 500  100.0 / 100.0 / 83.5 / 60.6 / 51.4 / 29.2
+   -> g5 +19.5pp, g6 +10.4pp. It BREAKS the ADR-0283 curve, because those
+      tables are already fitted to their targets and have no headroom.
+
+B. share = 0 (shipped): the stockpile does not stack on a tuned grant
+   wallet 0    100.0 / 98.0 / 81.8 / 45.6 / 31.9 / 18.8
+   wallet 500  100.0 / 100.0 / 79.0 / 45.0 / 31.9 / 18.8
+   -> the tuned grades are unchanged; g2 gains a little where its advance
+      offers nothing.
+
+WHAT THIS MEANS FOR THE SALVAGE SLOT -- the honest version
+A curve-safe stockpile cannot make SALVAGE competitive: a card or a repair is
+still worth more, so the slot stays near-trap. Credits can only matter if the
+tables are re-tuned DOWN to leave them headroom, which is a decision about
+whether a returning runner should have an easier time than a new one.
+
+Shipped: the curve-safe version, so credits are not a dead end and the tuned
+curve is untouched. The re-tune is the open question.

@@ -76,7 +76,7 @@ const HAND_BONUS = handIdx >= 0 ? Number(process.argv[handIdx + 1]) || 0 : 0;
 const lootIdx = process.argv.indexOf("--loot");
 const LOOT_POLICY: LootPolicy =
   lootIdx >= 0 &&
-  ["card", "repair", "smart", "intel", "smartintel", "smartvent", "smartburn", "smartcombo", "smartrecover"].includes(process.argv[lootIdx + 1] ?? "")
+  ["card", "repair", "smart", "intel", "smartintel", "smartvent", "smartburn", "smartcombo", "smartrecover", "value"].includes(process.argv[lootIdx + 1] ?? "")
     ? (process.argv[lootIdx + 1] as LootPolicy)
     : "card";
 const routeIdx = process.argv.indexOf("--route");
@@ -195,7 +195,7 @@ if (SHOW_POLICIES) {
   const base = runSweep({ card: "first", loot: "card", route: "long" });
   const best = runSweep({
     card: "best",
-    loot: "smartcombo",
+    loot: "value",
     route: "long",
   });
   console.log("grade  default  optimal  gap");

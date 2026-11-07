@@ -23,6 +23,7 @@ import {
   canRecover,
   LOOT_REPAIR_SLOT,
   LOOT_VENT_SLOT,
+  lootRepairAmount,
   ventHpPrice,
 } from "../src/core/state/loot_choice";
 import { burnTarget } from "../src/core/state/state_actions_phases";
@@ -74,7 +75,8 @@ export type LootPolicy =
   | "smartvent"
   | "smartburn"
   | "smartcombo"
-  | "smartrecover";
+  | "smartrecover"
+  | "value";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -484,13 +486,52 @@ export function playRun(
         // when every offered card is tier 1 and the runner is not hurt.
         // ADR-0295: vent when the budget, not the body, is what will kill it.
         // ADR-0296: burn growth, not body, when the budget is what will kill it.
+        // ADR-0305: the value model, calibrated against a measurement rather than
+        // a guess. Repairing a stop is worth far more than a card there:
+        //
+        //   grade  card-only  repair-only
+        //     g3     48.1       97.7
+        //     g5     10.6       65.7
+        //     g6      9.7       25.0
+        //
+        // So the stop is spent on HP unless HP is nearly full (a repair that
+        // overflows is the only wasted one). The vent/burn/syphon purchases are
+        // NOT part of this policy: layered on top of repair-heavy play they
+        // measurably hurt (g6 30.6 -> 15.3), because each spends the resource the
+        // repair just bought.
+        const hpPressure = 1 - state.player.hp / Math.max(1, state.player.maxHp);
+        const costPressure = state.player.alarm / COST_LIMIT;
+        if (lootPolicy === "value") {
+          // One rule, measured: a repair restores 70-100% of max HP and a card is
+          // worth far less than that here (g5 65.7% repairing vs 10.6% taking
+          // cards; g3 97.7 vs 48.1). The only wasted repair is one that is mostly
+          // overflow, so the stop goes to HP whenever it can restore a quarter of
+          // the pool, and to the card otherwise.
+          const healable = state.player.maxHp - state.player.hp;
+          const gain = Math.min(healable, lootRepairAmount(state.player.maxHp, grade));
+          state = applyAction(state, {
+            type: "select_program",
+            handIndex:
+              gain >= state.player.maxHp * 0.25
+                ? LOOT_REPAIR_SLOT
+                : pickRewardIndex(ids.map((id) => cardOf(id)), cardPolicy),
+          });
+        } else {
+        const valued = false;
         const wantBurn =
-          (lootPolicy === "smartburn" || lootPolicy === "smartcombo") &&
+          (lootPolicy === "smartburn" ||
+            lootPolicy === "smartcombo" ||
+            (valued && costPressure >= 0.6 && hpPressure < costPressure)) &&
           state.player.alarm >= 70 &&
           burnTarget(state) !== null;
         // ADR-0298: spend spare capacity on body when the body is what is short.
         const wantRecover =
-          lootPolicy === "smartrecover" &&
+          (lootPolicy === "smartrecover" ||
+            // ADR-0305: a repair is worth far more than a card (measured: g5
+            // 67.6% repairing vs 10.6% taking cards), so the stop should be
+            // spent on HP whenever HP is not already full. Only overflow makes
+            // it a waste.
+            (valued && hpPressure > 0.45)) &&
           canRecover(state) &&
           state.player.hp < Math.floor(state.player.maxHp * 0.6);
         // ADR-0297: the combination -- both prices at once, for a deep hole.
@@ -499,7 +540,9 @@ export function playRun(
           state.player.alarm >= 85 &&
           state.player.hp > ventHpPrice(state.player.maxHp) * 2;
         const wantVent =
-          (lootPolicy === "smartvent" || wantComboVent) &&
+          (lootPolicy === "smartvent" ||
+            wantComboVent ||
+            (valued && false)) &&
           state.player.alarm >= 70 &&
           state.player.hp > ventHpPrice(state.player.maxHp) * 2;
         const wantIntel =
@@ -517,7 +560,8 @@ export function playRun(
               lootPolicy === "smartvent" ||
               lootPolicy === "smartburn" ||
               lootPolicy === "smartcombo" ||
-              lootPolicy === "smartrecover") &&
+              lootPolicy === "smartrecover" ||
+              (valued && hpPressure > 0.45)) &&
               state.player.hp < Math.floor(state.player.maxHp * 0.5));
           const offers = ids.map((id) => cardOf(id));
           if (wantVent) {
@@ -547,6 +591,7 @@ export function playRun(
                   ? LOOT_REPAIR_SLOT
                   : pickRewardIndex(offers, cardPolicy),
           });
+        }
         }
       }
       state = applyAction(state, { type: "confirm" });

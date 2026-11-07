@@ -507,12 +507,18 @@ export function playRun(
           // cards; g3 97.7 vs 48.1). The only wasted repair is one that is mostly
           // overflow, so the stop goes to HP whenever it can restore a quarter of
           // the pool, and to the card otherwise.
+          // ADR-0305: the exchange rate, measured. A repair and a card are worth
+          // about the same when the repair restores ~5-6% of the pool (g3 48.1 vs
+          // 50.4, g5 10.6 vs 16.2), so the stop goes to HP only when the repair
+          // clears that bar AND there is something to heal.
           const healable = state.player.maxHp - state.player.hp;
           const gain = Math.min(healable, lootRepairAmount(state.player.maxHp, grade));
+          const gainPct = (gain / Math.max(1, state.player.maxHp)) * 100;
+          const CARD_HP_EQUIV_PCT = 6;
           state = applyAction(state, {
             type: "select_program",
             handIndex:
-              gain >= state.player.maxHp * 0.25
+              hpPressure > 0.15 && gainPct >= CARD_HP_EQUIV_PCT
                 ? LOOT_REPAIR_SLOT
                 : pickRewardIndex(ids.map((id) => cardOf(id)), cardPolicy),
           });

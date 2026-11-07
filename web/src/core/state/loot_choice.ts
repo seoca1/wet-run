@@ -24,12 +24,18 @@ export const LOOT_VENT_SLOT = LOOT_PROGRAM_SLOTS + 3; // 6
 
 /** Percent of max HP repaired, per grade — the price of giving up a card.
  *
- * Higher than the old automatic heal (15/15/25/40/55/65) because it now costs
- * the card: you cannot repair and grow at the same stop.
+ * **ADR-0305 measured what this costs and left it alone.** Against always-taking-a-
+ * card, a repair at these values is worth +18.8pp at g3 and +44.0pp at g5, so the
+ * stop's "choice" has one answer.
+ *
+ * Re-pricing to 5/5/6/8/12/18 DOES balance it (g3 48.1 card vs 50.4 repair, g5
+ * 10.6 vs 16.2) — and takes the whole game with it: the best play falls from
+ * 100/100/96/100/55/45 to 100/79/54/34/27/24 across the grades. The repair is what
+ * carried the difficulty. Balancing the choice and keeping the curve are mutually
+ * exclusive with the current numbers, so this is an owner decision and not a
+ * silent re-tune.
  */
-export const LOOT_REPAIR_PCT_BY_GRADE: ReadonlyArray<number> = [
-  70, 70, 85, 100, 100, 100,
-];
+export const LOOT_REPAIR_PCT_BY_GRADE: ReadonlyArray<number> = [70, 70, 85, 100, 100, 100];
 
 /** The repair, as a percent of max HP, for a mission grade. */
 export function lootRepairPctForGrade(grade: number): number {

@@ -14,14 +14,18 @@ import { formatRewardOption } from "../core/combat/program_affordance";
 import { missionGradeOf } from "../core/combat/ice_scaling";
 import {
   BURN_COST,
-  LOOT_INTEL_SLOT,
-  LOOT_REPAIR_SLOT,
   LOOT_BURN_SLOT,
+  LOOT_INTEL_SLOT,
+  LOOT_RECOVER_SLOT,
+  LOOT_REPAIR_SLOT,
   LOOT_VENT_SLOT,
+  RECOVER_COST,
   VENT_COST,
-  ventHpPrice,
+  canRecover,
   lootIntelPrice,
   lootRepairAmount,
+  recoverHpAmount,
+  ventHpPrice,
 } from "../core/state/loot_choice";
 import { ENDINGS } from "../core/combat/ending_resolver";
 import { composeCombatVfx } from "./combat_vfx";
@@ -140,9 +144,14 @@ export function renderRunScreen(
         traceExits.push("6: vent");
         if (burnTarget(state)) traceExits.push("7: burn");
       }
+      if (!terminal && canRecover(state)) {
+        traceExits.push("8: syphon");
+      }
       const lootHint =
         ["1-3: card", "4: repair", "5: intel", ...traceExits].join(" · ") +
-        (traceExits.length === 2 ? " · 6+7 stack" : "");
+        (traceExits.includes("6: vent") && traceExits.includes("7: burn")
+          ? " · 6+7 stack"
+          : "");
       if (!terminal && takenId === null) {
         const repair = lootRepairAmount(state.player.maxHp, grade);
         const healed = Math.min(state.player.maxHp, state.player.hp + repair);
@@ -168,6 +177,14 @@ export function renderRunScreen(
           if (spare) {
             offers.push(
               `${LOOT_BURN_SLOT} BURN            ${spare.id} (T${spare.tier}) — clear ${Math.min(BURN_COST, state.player.alarm)} COST`,
+            );
+          }
+          // ADR-0298: the same trade in the other direction — spare capacity
+          // bought back into body.
+          if (canRecover(state)) {
+            const healed = recoverHpAmount(state.player.maxHp);
+            offers.push(
+              `${LOOT_RECOVER_SLOT} SYPHON          ${RECOVER_COST} COST — +${healed} HP → ${Math.min(state.player.maxHp, state.player.hp + healed)}/${state.player.maxHp}`,
             );
           }
         }

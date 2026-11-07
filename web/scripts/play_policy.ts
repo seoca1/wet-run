@@ -19,6 +19,8 @@ import { bossGateNeed } from "../src/core/combat/ice_scaling";
 import {
   LOOT_BURN_SLOT,
   LOOT_INTEL_SLOT,
+  LOOT_RECOVER_SLOT,
+  canRecover,
   LOOT_REPAIR_SLOT,
   LOOT_VENT_SLOT,
   ventHpPrice,
@@ -71,7 +73,8 @@ export type LootPolicy =
   | "smartintel"
   | "smartvent"
   | "smartburn"
-  | "smartcombo";
+  | "smartcombo"
+  | "smartrecover";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -466,6 +469,11 @@ export function playRun(
           (lootPolicy === "smartburn" || lootPolicy === "smartcombo") &&
           state.player.alarm >= 70 &&
           burnTarget(state) !== null;
+        // ADR-0298: spend spare capacity on body when the body is what is short.
+        const wantRecover =
+          lootPolicy === "smartrecover" &&
+          canRecover(state) &&
+          state.player.hp < Math.floor(state.player.maxHp * 0.6);
         // ADR-0297: the combination -- both prices at once, for a deep hole.
         const wantComboVent =
           lootPolicy === "smartcombo" &&
@@ -489,7 +497,8 @@ export function playRun(
               lootPolicy === "smartintel" ||
               lootPolicy === "smartvent" ||
               lootPolicy === "smartburn" ||
-              lootPolicy === "smartcombo") &&
+              lootPolicy === "smartcombo" ||
+              lootPolicy === "smartrecover") &&
               state.player.hp < Math.floor(state.player.maxHp * 0.5));
           const offers = ids.map((id) => cardOf(id));
           if (wantVent) {
@@ -502,6 +511,12 @@ export function playRun(
             state = applyAction(state, {
               type: "select_program",
               handIndex: LOOT_BURN_SLOT,
+            });
+          }
+          if (wantRecover) {
+            state = applyAction(state, {
+              type: "select_program",
+              handIndex: LOOT_RECOVER_SLOT,
             });
           }
           state = applyAction(state, {

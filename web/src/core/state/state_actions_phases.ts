@@ -39,7 +39,14 @@ import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram } from "./card_reward";
 import { refillHand } from "../combat/hand";
-import { BURN_COST, intelTargets, VENT_COST, ventHpPrice,
+import {
+  BURN_COST,
+  intelTargets,
+  RECOVER_COST,
+  RECOVER_MIN_COST,
+  recoverHpAmount,
+  VENT_COST,
+  ventHpPrice,
   lootIntelPrice,
   lootRepairAmount,
   lootSlotChoice,
@@ -193,6 +200,7 @@ export function applyLootAction(
     if (choice === "intel") return takeLootIntel(state);
     if (choice === "vent") return takeLootVent(state);
     if (choice === "burn") return takeLootBurn(state);
+    if (choice === "recover") return takeLootRecover(state);
     return takeCardReward(state, action.handIndex - 1);
   }
   if (action.type === "use_program") {
@@ -457,6 +465,34 @@ function takeLootBurn(state: GameState): GameState {
       alarm: Math.max(0, state.player.alarm - BURN_COST),
     },
     message: `Burned ${target.id} for ${cleared} COST (COST ${state.player.alarm - cleared}/100).`,
+  };
+}
+
+/** ADR-0298: turn spare capacity back into body.
+ *
+ * The mirror of `takeLootVent`, and the only way to spend a budget the run did not
+ * need. It stays on the screen for the same reason: it is a purchase, not a loot
+ * pick, so it never costs the card.
+ */
+function takeLootRecover(state: GameState): GameState {
+  if (state.player.alarm < RECOVER_MIN_COST) {
+    return {
+      ...state,
+      message: `The trace is too cold to draw on — needs ${RECOVER_MIN_COST} COST, you have ${state.player.alarm}.`,
+    };
+  }
+  if (state.player.hp >= state.player.maxHp) {
+    return { ...state, message: "Nothing to recover — already at full HP." };
+  }
+  const healed = recoverHpAmount(state.player.maxHp);
+  return {
+    ...state,
+    player: {
+      ...state.player,
+      alarm: state.player.alarm - RECOVER_COST,
+      hp: Math.min(state.player.maxHp, state.player.hp + healed),
+    },
+    message: `Recovered ${healed} HP for ${RECOVER_COST} COST (COST ${state.player.alarm - RECOVER_COST}/100).`,
   };
 }
 

@@ -96,6 +96,46 @@ export const LOOT_BURN_SLOT = LOOT_VENT_SLOT + 1; // 7
  */
 export const BURN_COST = 7;
 
+/** The reverse exchange: spare capacity bought back into body (ADR-0298).
+ *
+ * ADR-0295 turned HP into COST; nothing turned COST into HP, so a runner who
+ * banked capacity and then took a beating could only watch the budget go unused.
+ * The rate is deliberately WORSE than the vent's, so the two cannot be cycled:
+ * venting 10 COST costs 40% of max HP, and recovering 10 COST gives 25% back —
+ * a round trip always loses 15%.
+ */
+export const LOOT_RECOVER_SLOT = LOOT_BURN_SLOT + 1; // 8
+export const RECOVER_COST = 10;
+export const RECOVER_HP_PCT = 25;
+
+/** Only a HOT trace can be bled off (ADR-0298).
+ *
+ * The measurement is the reason this exists. COST is surplus at the end of a
+ * fight-heavy run (55-74 of 100), so converting it to HP is nearly free: at any
+ * price the reverse exchange made fighting better and a bigger heal made it
+ * better still (g5 47.5 -> 54.2 as the price rose, which is the tell). A
+ * once-per-run cap did not fix it either.
+ *
+ * What does: only allow the draw when the trace is hot enough to have spare
+ * pressure. At 70+ the trade holds (g5 41.9 vs 43.3, g6 11.8 vs 13.9), because
+ * the runner who needs the budget later has already spent it.
+ */
+export const RECOVER_MIN_COST = 70;
+
+/** HP one recovery returns. */
+export function recoverHpAmount(maxHp: number): number {
+  return Math.floor(maxHp * (RECOVER_HP_PCT / 100));
+}
+
+/** Can the runner draw on the trace right now? */
+export function canRecover(state: {
+  readonly player: { readonly alarm: number; readonly hp: number; readonly maxHp: number };
+}): boolean {
+  return (
+    state.player.alarm >= RECOVER_MIN_COST && state.player.hp < state.player.maxHp
+  );
+}
+
 /** Percent of max HP one vent costs.
  *
  * ADR-0295: the first design sold the vent for credits, and the measurement
@@ -122,12 +162,13 @@ export function ventHpPrice(maxHp: number): number {
 /** The slot a loot keypress refers to, or null when it is not a loot option. */
 export function lootSlotChoice(
   slot: number,
-): "program" | "repair" | "intel" | "vent" | "burn" | null {
+): "program" | "repair" | "intel" | "vent" | "burn" | "recover" | null {
   if (slot >= 1 && slot <= LOOT_PROGRAM_SLOTS) return "program";
   if (slot === LOOT_REPAIR_SLOT) return "repair";
   if (slot === LOOT_INTEL_SLOT) return "intel";
   if (slot === LOOT_VENT_SLOT) return "vent";
   if (slot === LOOT_BURN_SLOT) return "burn";
+  if (slot === LOOT_RECOVER_SLOT) return "recover";
   return null;
 }
 

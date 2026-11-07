@@ -166,6 +166,11 @@ describe("run screen composition", () => {
         loot,
         false,
         offers,
+        -1,
+        null,
+        // ADR-0299: the panel footer is the caller's wording now, so the
+        // expectation has to pass the same hint the screen uses.
+        "1-3: card · 4: repair · 5: intel",
       ).cells,
     );
     // Only ENTER and the loot digits do anything on the loot screen:

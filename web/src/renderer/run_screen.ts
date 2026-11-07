@@ -136,6 +136,13 @@ export function renderRunScreen(
         })
         .filter((line) => line.length > 0);
       const takenIndex = takenId === null ? -1 : ids.indexOf(takenId);
+      // ADR-0299: at 40 columns the full offer lines were clipped mid-word
+      // ("name the rout", "+75 HP → 2"), which hides the price the player is
+      // being asked to pay. Narrow layouts get short forms that still say the
+      // number that matters.
+      // 76 is the widest full line (intel, 72) plus the margin. Below it the
+      // short form is used, so the offered numbers still fit on the panel.
+      const narrow = cols < 76;
       // ADR-0251 rule 5: do not promise a key that does nothing. The trace exits
       // only exist while there is a trace, and both of them stay open, so a deep
       // hole can be cleared in one stop (ADR-0297) — which is worth saying.
@@ -147,22 +154,32 @@ export function renderRunScreen(
       if (!terminal && canRecover(state)) {
         traceExits.push("8: syphon");
       }
-      const lootHint =
+      const lootHintFull =
         ["1-3: card", "4: repair", "5: intel", ...traceExits].join(" · ") +
         (traceExits.includes("6: vent") && traceExits.includes("7: burn")
           ? " · 6+7 stack"
           : "");
+      // ADR-0299: the 40-column panel has 36 usable columns, so the hint gets a
+      // short form rather than being clipped mid-word.
+      const lootHint =
+        lootHintFull.length <= cols - 4
+          ? lootHintFull
+          : `1-3 card · 4-${terminal ? 5 : 5 + traceExits.length} options`;
       if (!terminal && takenId === null) {
         const repair = lootRepairAmount(state.player.maxHp, grade);
         const healed = Math.min(state.player.maxHp, state.player.hp + repair);
         offers.push(
-          `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${healed}/${state.player.maxHp}`,
+          narrow
+            ? `${LOOT_REPAIR_SLOT} REPAIR +${repair}HP → ${healed}/${state.player.maxHp}`
+            : `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${healed}/${state.player.maxHp}`,
         );
         // ADR-0287: information, not power. Priced so it competes with a card
         // on a decision, not on a stat.
         const intelPrice = lootIntelPrice(grade);
         offers.push(
-          `${LOOT_INTEL_SLOT} INTEL           ${intelPrice}cr — name the routes ahead (spends this stop)`,
+          narrow
+            ? `${LOOT_INTEL_SLOT} INTEL ${intelPrice}cr`
+            : `${LOOT_INTEL_SLOT} INTEL           ${intelPrice}cr — name the routes ahead (spends this stop)`,
         );
         // ADR-0295: the only way back from the trace, priced above what a kill
         // pays so it buys capacity rather than farming it.
@@ -170,13 +187,17 @@ export function renderRunScreen(
           const ventedNow = Math.min(VENT_COST, state.player.alarm);
           const ventHp = ventHpPrice(state.player.maxHp);
           offers.push(
-            `${LOOT_VENT_SLOT} VENT            ${ventHp} HP — clear ${ventedNow} COST → ${state.player.alarm - ventedNow}/100`,
+            narrow
+              ? `${LOOT_VENT_SLOT} VENT ${ventHp}HP → ${state.player.alarm - ventedNow}/100`
+              : `${LOOT_VENT_SLOT} VENT            ${ventHp} HP — clear ${ventedNow} COST → ${state.player.alarm - ventedNow}/100`,
           );
           // ADR-0296: the same capacity bought with growth instead of body.
           const spare = burnTarget(state);
           if (spare) {
             offers.push(
-              `${LOOT_BURN_SLOT} BURN            ${spare.id} (T${spare.tier}) — clear ${Math.min(BURN_COST, state.player.alarm)} COST`,
+              narrow
+                ? `${LOOT_BURN_SLOT} BURN ${spare.id}(T${spare.tier}) → ${Math.min(BURN_COST, state.player.alarm)}`
+                : `${LOOT_BURN_SLOT} BURN            ${spare.id} (T${spare.tier}) — clear ${Math.min(BURN_COST, state.player.alarm)} COST`,
             );
           }
           // ADR-0298: the same trade in the other direction — spare capacity
@@ -184,7 +205,9 @@ export function renderRunScreen(
           if (canRecover(state)) {
             const healed = recoverHpAmount(state.player.maxHp);
             offers.push(
-              `${LOOT_RECOVER_SLOT} SYPHON          ${RECOVER_COST} COST — +${healed} HP → ${Math.min(state.player.maxHp, state.player.hp + healed)}/${state.player.maxHp}`,
+              narrow
+                ? `${LOOT_RECOVER_SLOT} SYPHON ${RECOVER_COST} → +${healed}HP`
+                : `${LOOT_RECOVER_SLOT} SYPHON          ${RECOVER_COST} COST — +${healed} HP → ${Math.min(state.player.maxHp, state.player.hp + healed)}/${state.player.maxHp}`,
             );
           }
         }
@@ -201,6 +224,7 @@ export function renderRunScreen(
           offers,
           takenIndex,
           growth?.lootCommit ?? null,
+          lootHint,
         ),
         // Only ENTER does anything on the loot screen: `applyLootAction`
         // ignores cancel and the move keys, so promising "↑↓: navigate" or

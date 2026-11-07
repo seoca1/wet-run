@@ -118,6 +118,10 @@ export function renderLootScreen(
   offers: readonly string[] = [],
   takenIndex: number = -1,
   commitFrame: LootCommitFrame | null = null,
+  /** ADR-0299: the caller knows which exits actually exist, so it owns the
+   * footer's wording. Without this the panel kept promising slots 1-5 while the
+   * screen offered 1-8 — a false affordance under ADR-0251 rule 5. */
+  hint: string | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -230,11 +234,7 @@ export function renderLootScreen(
     : takenIndex >= 0
       ? "ENTER: continue"
       : offers.length > 0
-        ? // ADR-0282: the full wording is 48 columns, so the narrow presets get a
-          // shorter one rather than a clipped promise (ADR-0251 rule 5).
-          cols >= 48
-          ? "1-3: card | 4: repair | 5: intel"
-          : "1-3 card · 4 repair · 5 intel"
+        ? (hint ?? "1-3: card | 4: repair | 5: intel")
         : "ENTER: route selection";
   grid = setText(
     grid,

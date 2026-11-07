@@ -4,7 +4,7 @@
 **날짜**: 2026-11-08
 **결정자**: 오너 ("Continue." — ADR-0305 (a) A안 = 곡예)
 **우선순위**: **P0 (밸런스 재설계)** · P1 (선택지)
-**관련**: [ADR-0305 — 수리는 카드보다 비싸다](./0305-repair-is-worth-far-more-than-a-card.md) · [ADR-0283 — prep 은 용량](./0283-prep-is-capacity.md) · [ADR-0229 — 곡선 재기준화](./0229-grade-curve-rebaseline.md) · [ADR-0290 — 곡선 + gate](./0290-the-curve-moves-and-the-core-opens-after-a-path.md)
+**관련**: [ADR-0305 — 수리는 카드보다 비싸다](./0305-repair-is-worth-far-more-than-a-card.md) · [ADR-0283 — prep 은 용량](./0283-prep-is-capacity-not-cards.md) · [ADR-0229 — 곡선 재기준화](./0229-grade-curve-rebaseline.md) · [ADR-0290 — 곡선 + gate](./0290-the-curve-moves-and-the-core-opens-after-a-path.md)
 
 > ADR-0305 는 세 가지 가격 실험을 모두 닫고 **제품 결정**을 남겼다: 미션이 **"패치하며 버티는
 > 곡예"** 인가, **"스톱마다 리셋되는 런"** 인가. 오너가 **곡예**를 골랐다. 그래서 수리를 줄이고,

@@ -4,7 +4,7 @@
 **날짜**: 2026-11-07
 **결정자**: 오너 ("더 가자." — ADR-0291 (a))
 **우선순위**: P1 (성장 · 전리품) · P2 (정보)
-**관련**: [ADR-0291 — 정보의 값](./0291-what-the-information-is-worth.md) · [ADR-0290 — 곡선 재기준화 + gate](./0290-the-curve-moves-and-the-core-opens-after-a-path.md) · [ADR-0259 — 카드 보상](./0259-card-reward.md) · [ADR-0287 — 크레딧은 정보를 산다](./0287-credits-buy-information.md)
+**관련**: [ADR-0291 — 정보의 값](./0291-what-the-information-is-worth.md) · [ADR-0290 — 곡선 재기준화 + gate](./0290-the-curve-moves-and-the-core-opens-after-a-path.md) · [ADR-0259 — 카드 보상](./0259-card-reward-growth.md) · [ADR-0287 — 크레딧은 정보를 산다](./0287-credits-buy-information.md)
 
 > ADR-0291 의 답은 불편했다: **산 정보의 값이 ≈0** 이었다. 이유는 정보가 나빠서가 아니라
 > **정보가 바꿀 결정이 없어서**다 — 한 등급의 모든 교전이 **같은 카드 풀**에서 드롭했으므로

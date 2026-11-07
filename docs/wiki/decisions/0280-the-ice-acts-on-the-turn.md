@@ -4,7 +4,7 @@
 **날짜**: 2026-11-06
 **결정자**: 오너 ("턴 전환." → "카드당 1회 + 목표 곡선으로 재조정")
 **우선순위**: P1 (핵심 루프 · 밸런스 · 리듀서 순수성)
-**관련**: [ADR-0212 — 턴은 손패가 빌 때](./0212-turn-model.md) · [ADR-0229 — 등급 곡선 표류 정책](./0229-grade-curve-drift-policy.md) · [ADR-0266 — 막힌 턴은 ENTER 로 넘긴다](./0266-pass-the-turn.md) · [ADR-0244 — Dixie 케이던스](./0244-dixie-companion.md) · [ADR-0149/0162 — 보스 페이즈](./0149-boss-phase4-finale.md) · [ADR-0279 — 런이 번 돈을 런이 말한다](./0279-the-run-states-its-earnings.md)
+**관련**: [ADR-0212 — 턴은 손패가 빌 때](./0212-grade-driven-ice-encounters.md) · [ADR-0229 — 등급 곡선 표류 정책](./0229-grade-curve-rebaseline.md) · [ADR-0266 — 막힌 턴은 ENTER 로 넘긴다](./0266-cost-cap-turn-pass.md) · [ADR-0244 — Dixie 케이던스](./0244-clock-dependent-combat-term.md) · [ADR-0149/0162 — 보스 페이즈](./0149-boss-phase4-finale.md) · [ADR-0279 — 런이 번 돈을 런이 말한다](./0279-the-run-states-its-earnings.md)
 
 > 적이 **언제** 때리는지를 벽시계에서 **턴**으로 옮긴다. 그리고 그 과정에서 이 게임의
 > 난이도가 **한 번도 측정된 적 없다**는 사실이 드러났다 — 측정된 것은 "교전 1회"였고,

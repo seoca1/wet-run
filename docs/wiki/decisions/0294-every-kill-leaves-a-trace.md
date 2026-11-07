@@ -4,7 +4,7 @@
 **날짜**: 2026-11-08
 **결정자**: 오너 ("응." — ADR-0293 (a))
 **우선순위**: P1 (설계 · 트레이드오프)
-**관련**: [ADR-0293 — 처치는 자기 몫을 낸다](./0293-a-kill-pays-its-bounty.md) · [ADR-0292 — 드롭은 그 ICE 의 값](./0292-a-drop-is-worth-its-ice.md) · [ADR-0290 — 곡선 재기준화 + gate](./0290-the-curve-moves-and-the-core-opens-after-a-path.md) · [ADR-0211 — COST](../0229-grade-curve-rebaseline.md)
+**관련**: [ADR-0293 — 처치는 자기 몫을 낸다](./0293-a-kill-pays-its-bounty.md) · [ADR-0292 — 드롭은 그 ICE 의 값](./0292-a-drop-is-worth-its-ice.md) · [ADR-0290 — 곡선 재기준화 + gate](./0290-the-curve-moves-and-the-core-opens-after-a-path.md) · [ADR-0229 — 곡선 재기준화](./0229-grade-curve-rebaseline.md)
 
 > ADR-0293 은 g6 에 **보상** 축을 줬고, 그 측정이 남은 문제의 **모양**을 드러냈다:
 > 비용 없이 보상만 늘리면 **"다 싸운다"가 완료율과 크레딧 모두에서 앞선다**. 그건 선택이

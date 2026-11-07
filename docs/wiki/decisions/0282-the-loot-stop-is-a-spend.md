@@ -4,7 +4,7 @@
 **날짜**: 2026-11-06
 **결정자**: 오너 ("사용자의 선택지를 늘리는 방식으로 개선하고 싶어. 영향도가 커도 상관없어. 몰입도도 높아야 해." → ADR-0281 "권장대로" → ADR-0282 "응.")
 **우선순위**: P1 (핵심 루프 · 난이도 · 몰입)
-**관련**: [ADR-0281 — 경로가 런의 모양이다](./0281-the-route-is-the-run.md) · [ADR-0280 — 적은 턴에 때린다 (§6 회복)](./0280-the-ice-acts-on-the-turn.md) · [ADR-0259 — 카드 보상이 성장이다](./0259-card-reward-growth.md) · [ADR-0261 — 성장은 사건으로 보인다](./0261-growth-moment-is-shown.md) · [ADR-0269 — 엔딩은 런을 돌아본다](./0269-the-ending-looks-back.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-the-screen-states-what-happens.md)
+**관련**: [ADR-0281 — 경로가 런의 모양이다](./0281-the-route-is-the-run.md) · [ADR-0280 — 적은 턴에 때린다 (§6 회복)](./0280-the-ice-acts-on-the-turn.md) · [ADR-0259 — 카드 보상이 성장이다](./0259-card-reward-growth.md) · [ADR-0261 — 성장은 사건으로 보인다](./0261-growth-moment-is-shown.md) · [ADR-0269 — 엔딩은 런을 돌아본다](./0269-the-ending-looks-back.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md)
 
 > 전리품 화면이 **카드 3장 + 자동 회복**이었다. 그래서 ENTER 는 카드를 건너뛰는 키였고,
 > 회복은 **플레이어의 결정이 아니었다.** 이제 **지출**이다 — 프로그램을 가질지, 수리할지,

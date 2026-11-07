@@ -4,7 +4,7 @@
 **날짜**: 2026-11-07
 **결정자**: 오너 ("응.")
 **우선순위**: P2 (경제 연결) · P1 (곡선 보호)
-**관련**: [ADR-0283 — prep 은 용량이다](./0283-prep-is-capacity-not-cards.md) · [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0279 — 지갑 매핑](./0279-the-run-states-its-earnings.md) · [ADR-0252 — 런 종료 시 슬롯 은퇴](./0252-when-the-autosave-is-written.md) · [ADR-0275 — 화면은 자기 입력을 소유한다](./0275-screens-own-their-input.md)
+**관련**: [ADR-0283 — prep 은 용량이다](./0283-prep-is-capacity-not-cards.md) · [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0279 — 지갑 매핑](./0279-the-run-states-its-earnings.md) · [ADR-0252 — 런 종료 시 슬롯 은퇴](./0252-run-end-and-save-timing.md) · [ADR-0275 — 화면은 자기 입력을 소유한다](./0275-screens-own-their-input.md)
 
 > ADR-0282 의 전리품 `SALVAGE` 칸은 크레딧을 `player.credits`(런 원장)에 넣었는데,
 > **prep 예산은 미션 보상에서 파생**되므로(ADR-0283) 크레딧으로 살 수 있는 것이 없었다 —

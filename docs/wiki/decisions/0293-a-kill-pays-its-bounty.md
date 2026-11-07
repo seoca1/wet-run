@@ -4,7 +4,7 @@
 **날짜**: 2026-11-08
 **결정자**: 오너 ("응." — ADR-0292 (a))
 **우선순위**: P1 (성장 · 보상) · P2 (g6)
-**관련**: [ADR-0292 — 드롭은 그 ICE 의 값이다](./0292-a-drop-is-worth-its-ice.md) · [ADR-0290 — 곡선 재기준화](./0290-the-curve-moves-and-the-core-opens-after-a-path.md) · [ADR-0284 — 크레딧이 prep 으로](./0284-credits-reach-prep.md) · [ADR-0279 — 미션 보상은 한 번](./0279-the-mission-reward-is-paid-once.md)
+**관련**: [ADR-0292 — 드롭은 그 ICE 의 값이다](./0292-a-drop-is-worth-its-ice.md) · [ADR-0290 — 곡선 재기준화](./0290-the-curve-moves-and-the-core-opens-after-a-path.md) · [ADR-0284 — 크레딧이 prep 으로](./0284-credits-reach-prep.md) · [ADR-0279 — 미션 보상은 한 번](./0279-the-run-states-its-earnings.md)
 
 > ADR-0292 는 **드롭을 그 ICE 의 값**으로 만들었고, 그 덕에 중간 등급에서 "어느 교전을 칠까"가
 > 결정이 됐다. **g6 에서는 그 축이 이미 포화**다 — g6 카드는 전부 고 tier 라 "더 좋은 카드"가 남아

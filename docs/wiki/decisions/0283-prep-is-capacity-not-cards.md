@@ -4,7 +4,7 @@
 **날짜**: 2026-11-06 (C, 기각) · 2026-11-07 (C′, C″, C‴)
 **결정자**: 오너 ("사용자의 선택지를 늘리는 방식" → ADR-0281 "권장대로" → "응." → "권고대로" → "응.")
 **우선순위**: P1 (핵심 루프 · 난이도 · 몰입)
-**관련**: [ADR-0280 — 적은 턴에 때린다 (§9 첫 교전)](./0280-the-ice-acts-on-the-turn.md) · [ADR-0281 — 경로가 런의 모양](./0281-the-route-is-the-run.md) · [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0260 — 시작 덱 큐레이션](./0260-starting-deck-is-chosen.md) · [ADR-0275 — 화면은 자기 입력을 소유한다](./0275-screens-own-their-input.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-the-screen-states-what-happens.md) · [ADR-0279 — 지갑 매핑](./0279-the-run-states-its-earnings.md)
+**관련**: [ADR-0280 — 적은 턴에 때린다 (§9 첫 교전)](./0280-the-ice-acts-on-the-turn.md) · [ADR-0281 — 경로가 런의 모양](./0281-the-route-is-the-run.md) · [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0260 — 시작 덱 큐레이션](./0260-starting-deck-is-chosen.md) · [ADR-0275 — 화면은 자기 입력을 소유한다](./0275-screens-own-their-input.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md) · [ADR-0279 — 지갑 매핑](./0279-the-run-states-its-earnings.md)
 
 > **한 ADR 안에 기각과 채택이 같이 있다.** 카드 구매 prep 은 **만들고 측정해서 기각**했고(§C),
 > 살아남은 레버로 **용량 prep** 을 채택했다(§C′). 그리고 그 다음 단계인 "선택"까지 갔다(§C″·§C‴).

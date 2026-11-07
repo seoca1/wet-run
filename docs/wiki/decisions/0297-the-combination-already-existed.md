@@ -4,7 +4,7 @@
 **날짜**: 2026-11-08
 **결정자**: 오너 ("C." — ADR-0296 (c))
 **우선순위**: P2 (UI · 선택지)
-**관련**: [ADR-0296 — 카드를 태워 숨통을 튼다](./0296-burn-a-card-for-capacity.md) · [ADR-0295 — 흔적은 뺄 수 있다](./0295-the-trace-can-be-vented.md) · [ADR-0294 — 처치는 흔적을 남긴다](./0294-every-kill-leaves-a-trace.md) · [ADR-0291 — 정보의 값](./0291-what-the-information-is-worth.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-the-screen-states-what-happens.md)
+**관련**: [ADR-0296 — 카드를 태워 숨통을 튼다](./0296-burn-a-card-for-capacity.md) · [ADR-0295 — 흔적은 뺄 수 있다](./0295-the-trace-can-be-vented.md) · [ADR-0294 — 처치는 흔적을 남긴다](./0294-every-kill-leaves-a-trace.md) · [ADR-0291 — 정보의 값](./0291-what-the-information-is-worth.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md)
 
 > 오너가 고른 (c)는 "몸·성장·정보를 **함께** 내고 **더 많이** 회수하는" 형태였다. 만들어보니
 > **조합은 이미 있었다** — vent(0295)와 burn(0296) 둘 다 **화면을 닫지 않으므로** 한 stop 에서

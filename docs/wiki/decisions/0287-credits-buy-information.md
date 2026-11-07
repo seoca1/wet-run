@@ -4,7 +4,7 @@
 **날짜**: 2026-11-07
 **결정자**: 오너 ("권장대로 해줘" — ADR-0286 (b))
 **우선순위**: P1 (경제) · P1 (곡선 보호)
-**관련**: [ADR-0286 — 상점은 자리가 없다](./0286-the-shop-has-no-room.md) · [ADR-0285 — 세 번째 전리품 칸 없음](./0285-there-is-no-third-loot-option.md) · [ADR-0284 — 크레딧이 prep 으로](./0284-credits-reach-prep.md) · [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0281 — 경로가 런의 모양](./0281-the-route-is-the-run.md) · [ADR-0247 — SCAN 의 비용](./0247-encounter-intel-costs-a-card.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-the-screen-states-what-happens.md)
+**관련**: [ADR-0286 — 상점은 자리가 없다](./0286-the-shop-has-no-room.md) · [ADR-0285 — 세 번째 전리품 칸 없음](./0285-there-is-no-third-loot-option.md) · [ADR-0284 — 크레딧이 prep 으로](./0284-credits-reach-prep.md) · [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0281 — 경로가 런의 모양](./0281-the-route-is-the-run.md) · [ADR-0247 — SCAN 의 비용](./0247-dungeon-role-supplement-manus-second-opinion.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md)
 
 > **다섯 번째 시도이고, 처음으로 곡선을 안 건드린다.** ADR-0282·0284·0285·0286 은 모두
 > **전력을 주는** 소비처였고, fitted 곡선에 자리가 없어 전부 "약하다 or 너무 세다" 로 끝났다.

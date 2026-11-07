@@ -4,7 +4,7 @@
 **날짜**: 2026-11-07
 **결정자**: 오너 ("c." — ADR-0284 열린 질문 (c): `SALVAGE` 에 다른 보상을 주기)
 **우선순위**: P1 (선택의 정직성)
-**관련**: [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0284 — 크레딧이 prep 으로](./0284-credits-reach-prep.md) · [ADR-0283 — prep 은 용량](./0283-prep-is-capacity-not-cards.md) · [ADR-0260 — 시작 덱 큐레이션](./0260-starting-deck-is-chosen.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-the-screen-states-what-happens.md)
+**관련**: [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0284 — 크레딧이 prep 으로](./0284-credits-reach-prep.md) · [ADR-0283 — prep 은 용량](./0283-prep-is-capacity-not-cards.md) · [ADR-0260 — 시작 덱 큐레이션](./0260-starting-deck-is-chosen.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md)
 
 > 전리품 다섯 번째 칸은 **두 번 실패했다**: 크레딧(ADR-0282)은 카드·수리보다 싸서 거의 함정이었고,
 > ADR-0284 는 그 크레딧에 목적지를 줬지만 **fitted 등급에 얹지 않는** 방식이라 여전히 약했다.

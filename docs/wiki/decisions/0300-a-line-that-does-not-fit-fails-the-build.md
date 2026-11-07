@@ -4,7 +4,7 @@
 **날짜**: 2026-11-08
 **결정자**: 오너 ("Continue." — ADR-0299 (c))
 **우선순위**: P1 (UI 회귀 방지)
-**관련**: [ADR-0299 — 전리품 화면은 40열에서 잘렸다](./0299-the-loot-screen-did-not-fit.md) · [ADR-0297 — 조합은 이미 있었다](./0297-the-combination-already-existed.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-the-screen-states-what-happens.md)
+**관련**: [ADR-0299 — 전리품 화면은 40열에서 잘렸다](./0299-the-loot-screen-did-not-fit.md) · [ADR-0297 — 조합은 이미 있었다](./0297-the-combination-already-existed.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md)
 
 > 이 세션에서 **같은 실수를 두 번** 했다: 화면이 약속하지 않아야 할 것을 약속했고(거짓 어포던스),
 > 화면이 **말해야 할 값을 잘라먹었다**(`+75 HP → 2`). 둘 다 **테스트가 없어서** 늦게 발견됐다.

@@ -4,7 +4,7 @@
 **날짜**: 2026-11-08
 **결정자**: 오너 ("Continue." — ADR-0306 (a))
 **우선순위**: P2 (g6 · 정직성)
-**관련**: [ADR-0306 — 곡예로 간다](./0306-the-gauntlet-shape.md) · [ADR-0305 — 수리는 카드보다 비싸다](./0305-repair-is-worth-far-more-than-a-card.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-the-screen-states-what-happens.md)
+**관련**: [ADR-0306 — 곡예로 간다](./0306-the-gauntlet-shape.md) · [ADR-0305 — 수리는 카드보다 비싸다](./0305-repair-is-worth-far-more-than-a-card.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md)
 
 > ADR-0306 은 수리를 12~28% 로 줄여 전 등급을 목표 안에 넣었다. 그런데 **g6 에서만**
 > 카드 1.4% vs 수리 **0.0%** — 회복이 아예 통하지 않는다. 이게 의도인지 결함인지 확인했다.

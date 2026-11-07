@@ -4,7 +4,7 @@
 **날짜**: 2026-11-07
 **결정자**: 오너 ("응." — ADR-0289 (a)·(b) 승인)
 **우선순위**: P1 (곡선) · P1 (설계)
-**관련**: [ADR-0289 — 원인은 곡선이다](./0289-the-curve-is-the-problem.md) · [ADR-0288 — 싸우는 것이 손해다](./0288-fighting-does-not-pay.md) · [ADR-0283 — prep 은 용량](./0283-prep-is-capacity.md) · [ADR-0280 — 적은 턴마다](./0280-the-enemy-acts-per-action.md) · [ADR-0229 — 곡선 재기준화](./0229-grade-curve-rebaseline.md)
+**관련**: [ADR-0289 — 원인은 곡선이다](./0289-the-curve-is-the-problem.md) · [ADR-0288 — 싸우는 것이 손해다](./0288-fighting-does-not-pay.md) · [ADR-0283 — prep 은 용량](./0283-prep-is-capacity-not-cards.md) · [ADR-0280 — 적은 턴마다](./0280-the-ice-acts-on-the-turn.md) · [ADR-0229 — 곡선 재기준화](./0229-grade-curve-rebaseline.md)
 
 > ADR-0289 는 두 가지를 요구했다: **늦은 등급의 교전을 이길 수 있게** 만들고, **코어를 경로 뒤에**
 > 두는 것. 하나만 넣으면 안 된다 — 곡선만 넣으면 회피가 여전히 최적이고, gate 만 넣으면 g4 가

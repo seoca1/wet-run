@@ -4,7 +4,7 @@
 **날짜**: 2026-11-08
 **결정자**: 오너 ("Continue." — ADR-0298 (c))
 **우선순위**: P1 (UI · 정직성)
-**관련**: [ADR-0298 — SYPHON](./0298-syphon-a-hot-trace.md) · [ADR-0297 — 조합은 이미 있었다](./0297-the-combination-already-existed.md) · [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-the-screen-states-what-happens.md)
+**관련**: [ADR-0298 — SYPHON](./0298-syphon-a-hot-trace.md) · [ADR-0297 — 조합은 이미 있었다](./0297-the-combination-already-existed.md) · [ADR-0282 — 전리품은 지출](./0282-the-loot-stop-is-a-spend.md) · [ADR-0251 — 화면은 사실을 말한다](./0251-truthful-program-affordance-and-combat-integrity-rules.md)
 
 > ADR-0295~0298 이 전리품 화면을 **4칸에서 8칸으로** 키웠고, 줄도 같이 길어졌다. 40열 레이아웃에서
 > 실제로 렌더해보니 **글자가 중간에서 잘렸고**, 잘린 부분이 하필 **값(price)** 이었다.

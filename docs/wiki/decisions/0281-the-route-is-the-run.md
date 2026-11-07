@@ -4,7 +4,7 @@
 **날짜**: 2026-11-06
 **결정자**: 오너 ("사용자의 선택지를 늘리는 방식으로 개선하고 싶어. 영향도가 커도 상관없어. 몰입도도 높아야 해." → "권장대로 해줘.")
 **우선순위**: P1 (핵심 루프 · 난이도 · 몰입)
-**관련**: [ADR-0280 — 적은 턴에 때린다 (§6·§8·§9)](./0280-the-ice-acts-on-the-turn.md) · [ADR-0246 — 던전의 역할과 런 상호작용](./0246-dungeon-role-and-run-interaction.md) · [ADR-0249 — 보드는 생성된 자리에 방을 그린다](./0249-the-board-shows-the-dungeon.md) · [ADR-0259 — 카드 보상이 성장이다](./0259-card-reward-growth.md) · [ADR-0261 — 성장은 사건으로 보인다](./0261-growth-moment-is-shown.md)
+**관련**: [ADR-0280 — 적은 턴에 때린다 (§6·§8·§9)](./0280-the-ice-acts-on-the-turn.md) · [ADR-0246 — 던전의 역할과 런 상호작용](./0246-dungeon-role-and-run-interaction.md) · [ADR-0249 — 보드는 생성된 자리에 방을 그린다](./0249-matrix-operation-board.md) · [ADR-0259 — 카드 보상이 성장이다](./0259-card-reward-growth.md) · [ADR-0261 — 성장은 사건으로 보인다](./0261-growth-moment-is-shown.md)
 
 > ADR-0280 은 g5·g6 를 **네 방향에서** 못 연다고 확인했다(회복 · 곡선 완화 · 덱 강도 · 불변식).
 > 남은 자유도는 **미션의 길이**이고, 그건 **플레이어가 고를 수 있다** — 이 게임에는 이미 분기 경로가 있다.

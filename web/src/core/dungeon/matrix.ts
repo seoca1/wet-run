@@ -120,7 +120,9 @@ export function resolveMatrixRoster(
   for (let i = 0; i < node.iceIds.length; i++) {
     const id = node.iceIds[i];
     const entry = (id && iceCatalog[id]) || fallback;
-    const hpVal = node.iceHp[i] ?? iceHpForGrade(entry, matrix.grade ?? 1);
+    const hpVal =
+      node.iceHp[i] ??
+      iceHpForGrade(entry, matrix.grade ?? 1, node.isBoss === true);
     ice.push(entry);
     hp.push(hpVal);
   }

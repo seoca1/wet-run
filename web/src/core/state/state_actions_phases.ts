@@ -40,7 +40,7 @@ import {
   lootRepairAmount,
   lootSlotChoice,
 } from "./loot_choice";
-import { missionGradeOf } from "../combat/ice_scaling";
+import { bossGateNeed, missionGradeOf } from "../combat/ice_scaling";
 import { activeIceOf } from "../combat/roster";
 import {
   resolveEnding,
@@ -70,6 +70,17 @@ export function applyMatrixAction(
     if (destination != null && node.adjacent.includes(destination)) {
       const target = state.matrix.nodes[destination];
       if (!target) return state;
+      // ADR-0290: the core opens after a real path, not after a walk.
+      if (target.isBoss) {
+        const need = bossGateNeed(state);
+        const have = (state.clearedEncounterNodes ?? []).length;
+        if (have < need) {
+          return {
+            ...state,
+            message: `Core sealed — ${need - have} more ICE must fall (${have}/${need}).`,
+          };
+        }
+      }
       void AudioManager.getInstance().playSfx(pickMovementSfxId(true));
       return openArrivalEncounter({
         ...state,

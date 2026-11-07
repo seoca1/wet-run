@@ -144,8 +144,13 @@ describe("balance sim — grade scaling", () => {
     // turn, the boss follows the grade, and the per-grade curve was re-tuned
     // against mission completion with the per-encounter rate held monotonic
     // non-increasing. The pre-0280 row was [100, 100, 97.2, 53.4, 44.1, 0.3].
-    { mode: "opening", expected: [100.0, 100.0, 100.0, 95.2, 44.1, 0.3] },
-    { mode: "ppl", expected: [100.0, 100.0, 100.0, 96.9, 44.4, 28.3] },
+    // ADR-0290 re-baselines again: ADR-0289 measured that g5/g6 encounters were
+    // unwinnable for the opener (41.9% / 0.0%), which made skipping them correct
+    // play. The late-grade damage penalty and the lower encounter HP ceiling
+    // make a fight a cost the runner can pay, so the curve now holds up at the
+    // top instead of falling to zero.
+    { mode: "opening", expected: [100.0, 100.0, 100.0, 99.7, 88.3, 52.3] },
+    { mode: "ppl", expected: [100.0, 100.0, 100.0, 98.8, 86.1, 83.7] },
   ])(
     "reproduces the ADR-0256 baseline exactly with idle disabled ($mode)",
     ({ mode, expected }) => {
@@ -176,7 +181,9 @@ describe("balance sim — grade scaling", () => {
         expect(
           rates.every((rate, index) => index === 0 || rate <= rates[index - 1]),
         ).toBe(true);
-        expect(rates[5]).toBeLessThanOrEqual(5);
+        // ADR-0290: g6 is no longer a wall (0.3%) — it is the hardest grade,
+        // not an unwinnable one. Still the lowest rung of the opening curve.
+        expect(rates[5]).toBeLessThanOrEqual(60);
       }
     },
     60_000,

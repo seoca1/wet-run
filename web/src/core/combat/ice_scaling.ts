@@ -27,11 +27,21 @@
  *   | grade | opening baseline | PPL reference |
  *   | --- | --- | --- |
  *   | g1 | 100.0% | 100.0% |
- *   | g2 | 88.6% | 77.9% |
- *   | g3 | 73.1% | 99.6% |
- *   | g4 | 39.3% | 84.8% |
- *   | g5 | 35.7% | 44.4% |
- *   | g6 | 0.0% | 28.3% |
+ *   | g2 | 100.0% | 100.0% |
+ *   | g3 | 100.0% | 100.0% |
+ *   | g4 | 99.7% | 98.8% |
+ *   | g5 | 88.3% | 86.1% |
+ *   | g6 | 52.3% | 83.7% |
+ *
+ * (ADR-0290 re-baselined the top of the curve. The ADR-0229 row was
+ * 100 / 100 / 100 / 95.2 / 44.1 / 0.3 — and 0.3% is the number that broke
+ * everything downstream: a g6 encounter the opener could not win made skipping
+ * every fight correct play, which made the loot, the credit sinks and the route
+ * decision all worth nothing. A fight you cannot win is not a choice, it is a
+ * wall. The top of the curve is now a hard grade rather than a closed one, and
+ * the mission-completion curve stays monotonic: `npm run survival` gives
+ * 100 / 97.9 / 87.9 / 72.5 / 43.5 / 15.3, with fighting and skipping within
+ * noise of each other at every grade.)
  *
  * (opening = `npm run balance`, 100 runs/mission; PPL = `npm run balance --
  * --deck ppl`. The opening curve is monotonic non-increasing; the PPL curve
@@ -128,6 +138,49 @@ export const ENCOUNTER_ICE_BY_GRADE: Readonly<
   5: ["neuromancer", "sense_net_reporter", "loa_entity", "yakuza_enforcer"],
   6: ["neuromancer", "standard_ascended", "ta_sentinel", "aleph"],
 };
+
+/** Encounters the core demands before it opens, by grade (ADR-0290).
+ *
+ * ADR-0288/0289 measured why this exists: skipping an encounter was FREE, so
+ * from grade 4 up walking to the boss beat seeking encounters by up to +47pp,
+ * and no reward could close it — a fight the opening deck usually loses is a
+ * cost with no payoff. The reward was never the problem; the escape was.
+ *
+ * Skipping cannot be *priced* (every branch you do not take is a skip, so a ward
+ * per unresolved node punishes everyone) — it has to be *conditioned*. The core
+ * opens after a real path. The runner still chooses WHICH encounters, and that
+ * is the decision bought intel (ADR-0287) can inform.
+ *
+ * Kept as low as the curve allows: one clear is enough to make the mission about
+ * the path, and the numbers are re-measured per grade (ADR-0290).
+ */
+export const BOSS_GATE_CLEARS_BY_GRADE: ReadonlyArray<number> = [0, 1, 1, 1, 1, 1];
+
+/** Clears the apex demands at a grade. */
+export function bossGateClears(grade: number): number {
+  return BOSS_GATE_CLEARS_BY_GRADE[clampGrade(grade) - 1] ?? 0;
+}
+
+/** What the apex actually demands on THIS board.
+ *
+ * Clamped to the non-boss ICE the matrix holds, so a mission with one encounter
+ * opens after one clear and a mission with none is never sealed. Without this
+ * clamp a short mission could be shut for good (ADR-0289).
+ */
+export function bossGateNeed(state: {
+  readonly mission: { readonly grade?: number; readonly grade_max?: number };
+  readonly matrix: {
+    readonly nodes: ReadonlyArray<{
+      readonly isBoss: boolean;
+      readonly iceIds: ReadonlyArray<string>;
+    }>;
+  } | null;
+}): number {
+  const available = (state.matrix?.nodes ?? []).filter(
+    (n) => !n.isBoss && n.iceIds.length > 0,
+  ).length;
+  return Math.min(bossGateClears(missionGradeOf(state.mission)), available);
+}
 
 export function clampGrade(grade: number): number {
   const g = Number.isFinite(grade) ? Math.round(grade) : 1;
@@ -313,8 +366,20 @@ export function encounterIceIdForGrade(grade: number, seed?: number): string {
  * (4) the max cap stays at 165 — a cap above the ICE's natural HP is a
  * no-op, which would silently disable the mechanism.
  */
+/** **ADR-0290 supersedes the per-grade narrative below.** The paragraphs that
+ * follow explain how each cap was found under the old objective (the opening
+ * deck must LOSE the late grades). ADR-0289 measured what that objective cost:
+ * g5 encounters were won 41.9% of the time and g6 ones 0.0%, so skipping was
+ * correct play and every reward, sink and route decision downstream was worth
+ * nothing. A fight you cannot win is not a choice.
+ *
+ * The cap now stays at 95 through g6, so an ordinary late-grade fight is a cost
+ * the runner can pay, and the climax gets its own ceiling (`BOSS_HP_BY_GRADE`).
+ * The per-grade discussion below is kept for the mechanism (why the cap is a
+ * step function), not as a description of the current numbers.
+ */
 const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
-  95, 95, 95, 95, 165, 165,
+  95, 95, 95, 95, 95, 95,
 ];
 
 /** Per-grade ICE auto-attack bonus (percentage added to the base `tier * 3 +
@@ -417,8 +482,13 @@ const ENCOUNTER_HP_BY_GRADE: ReadonlyArray<number> = [
  * PPL curve is a **reference, not a target** (§C of the drift policy), and
  * the primary **opening-deck** curve stays monotonic non-increasing.
  */
+/** **ADR-0290:** g4 is 0 and g5/g6 are −10, so the late grades hit no harder
+ * than g4 does and a late-grade fight stops being a coin flip. The paragraphs
+ * above describe how this knob behaves (a step function with cliffs) and why the
+ * early grades need it; they predate the re-baseline.
+ */
 const ENCOUNTER_DMG_BONUS_PCT_BY_GRADE: ReadonlyArray<number> = [
-  50, 30, -32, 20, 0, -20,
+  50, 30, -32, 0, -10, -10,
 ];
 
 export function iceDmgBonusPctForGrade(grade: number): number {
@@ -426,7 +496,23 @@ export function iceDmgBonusPctForGrade(grade: number): number {
   return ENCOUNTER_DMG_BONUS_PCT_BY_GRADE[idx] ?? 0;
 }
 
-export function iceHpForGrade(ice: Ice, grade: number): number {
+/** Per-grade HP ceiling for the CLIMAX, separate from the encounter cap
+ * (ADR-0290).
+ *
+ * The two used to share one ceiling, which made them inseparable: ADR-0289's
+ * sweep lowered the cap to make ordinary encounters winnable and thereby cut the
+ * apex's HP by 42% at g5/g6, which is why the mission numbers jumped to 98-100%
+ * there. The climax is the one fight a mission is built around, so its budget is
+ * its own. Values reproduce the pre-ADR-0290 boss HP exactly, so nothing about
+ * the climax changes in this decision.
+ */
+export const BOSS_HP_BY_GRADE: ReadonlyArray<number> = [95, 95, 95, 95, 165, 165];
+
+export function iceHpForGrade(
+  ice: Ice,
+  grade: number,
+  isBoss = false,
+): number {
   const g = clampGrade(grade);
   const base = ice.hpBase;
   const perGrade = ice.hpPerGrade;
@@ -436,7 +522,8 @@ export function iceHpForGrade(ice: Ice, grade: number): number {
       : Number.isFinite(ice.hp)
         ? ice.hp
         : 100;
-  const cap = ENCOUNTER_HP_BY_GRADE[g - 1];
+  const table = isBoss ? BOSS_HP_BY_GRADE : ENCOUNTER_HP_BY_GRADE;
+  const cap = table[g - 1];
   return cap !== undefined ? Math.min(dataHp, cap) : dataHp;
 }
 

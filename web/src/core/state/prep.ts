@@ -58,11 +58,11 @@ export const PREP_OPTIONS: ReadonlyArray<{
 ];
 
 /** Extra starting max HP per grade, measured against the mission targets. */
-export const PREP_HP_BY_GRADE: ReadonlyArray<number> = [0, 0, 20, 25, 270, 175];
+export const PREP_HP_BY_GRADE: ReadonlyArray<number> = [0, 0, 20, 55, 240, 175];
 
 /** Starting shield pool per grade, sized so the option is competitive where it
  * is strong rather than a token alternative (ADR-0283 C''). */
-export const PREP_SHIELD_BY_GRADE: ReadonlyArray<number> = [0, 0, 35, 45, 650, 250];
+export const PREP_SHIELD_BY_GRADE: ReadonlyArray<number> = [0, 0, 35, 65, 400, 250];
 
 /** Extra max HP the advance buys at a grade. */
 export function prepHpBonus(grade: number): number {

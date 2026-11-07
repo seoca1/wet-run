@@ -147,7 +147,7 @@ export function encounterRoster(state: GameState): readonly Ice[] {
     const entry = catalog[id] ?? activeIce;
     const hp =
       node.iceHp[i % Math.max(1, node.iceHp.length)] ??
-      iceHpForGrade(entry, grade);
+      iceHpForGrade(entry, grade, node.isBoss === true);
     return { ...entry, id, hp, maxHp: hp };
   });
 }

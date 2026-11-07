@@ -99,27 +99,26 @@ describe("ice_scaling", () => {
     expect(fallback).toBe(95);
   });
 
-  it("applies a negative ICE dmg modifier at the g6 climax", () => {
-    // The g6 band is tanky enough that the developed deck flatlined at the HP
-    // cap; the climax needs an ICE dmg penalty (a higher cap is forbidden by
-    // the HP-monotonicity invariant) to stay attainable.
-    expect(iceDmgBonusPctForGrade(6)).toBeLessThan(0);
-    // g5 carries NO dmg penalty: the ADR-0211 original value is restored
-    // (0). The rejected post-ADR-0224 recalibration used -79 to make g5's
-    // `ta_sentinel` (tier 4, 272 natural HP, 50% skill-cast rate, 15-damage
-    // unscaled skill) winnable for the opening deck — but the same deep
-    // auto-attack reduction also made `neuromancer` winnable for the PPL
-    // deck (PPL g5 44.4% → 100.0%, +55.6pp) and required gutting the HP
-    // cap to 560. The g5 slot repair (slot 2 is now `loa_entity`, tier 3,
-    // 188 natural HP, 5 auto-attack, poison skill that fires) removes the
-    // need for that lever, so g5 is back to 0. What the invariant still
-    // requires is that g5 ICE hit no harder than the g4 grade does and g6
-    // ICE hit no harder than g4 either — the late grades buy their contest
-    // from HP, not from damage.
-    expect(iceDmgBonusPctForGrade(5)).toBe(0);
-    expect(iceDmgBonusPctForGrade(6)).toBeLessThan(0);
-    expect(iceDmgBonusPctForGrade(5)).toBeLessThanOrEqual(iceDmgBonusPctForGrade(4));
-    expect(iceDmgBonusPctForGrade(6)).toBeLessThan(iceDmgBonusPctForGrade(4));
+  it("makes the late grades hit no harder than g4 (ADR-0290)", () => {
+    // ADR-0289 measured the problem this settles: g5 encounters were won 41.9%
+    // of the time and g6 ones 0.0%, so avoiding them was correct play and no
+    // reward could outbid it. The late grades now carry a damage penalty so a
+    // fight is a cost the runner can pay, and the contest comes from HP.
+    //
+    // The invariant survives in the direction that matters: g5 hits no harder
+    // than g4, and g6 no harder than g4 either.
+    expect(iceDmgBonusPctForGrade(5)).toBeLessThanOrEqual(
+      iceDmgBonusPctForGrade(4),
+    );
+    expect(iceDmgBonusPctForGrade(6)).toBeLessThanOrEqual(
+      iceDmgBonusPctForGrade(4),
+    );
+    // g5 and g6 share the penalty: what separates them is the band (aleph
+    // carries three skills against neuromancer's none) and the apex, not the
+    // auto-attack bonus.
+    expect(iceDmgBonusPctForGrade(6)).toBeLessThanOrEqual(
+      iceDmgBonusPctForGrade(5),
+    );
   });
 
   it("reads grade with the grade_max -> grade_min -> grade fallback", () => {

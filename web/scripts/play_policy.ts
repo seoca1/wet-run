@@ -15,6 +15,7 @@ import { startingDeck } from "../src/core/state/starting_deck";
 import { offeredCardIds } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
 import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
+import { bossGateNeed } from "../src/core/combat/ice_scaling";
 import {
   LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
@@ -139,17 +140,27 @@ function nextStep(state: GameState, from: number, to: number): number | null {
  * The policy now walks to the closest unresolved encounter, which is what
  * playing the mission means.
  */
-/** The nearest unresolved encounter — the "fight everything" objective. */
+/** The nearest unresolved encounter — the "fight everything" objective.
+ *
+ * The boss is not a *nearest encounter* while the core is sealed (ADR-0290): it
+ * is adjacency-first in most graphs, so treating it as one makes the policy walk
+ * into the seal and stop there. Once the seal is open the boss is a fine
+ * destination, and standing on it ends the walk by returning the current node.
+ */
 function nearestObjective(state: GameState): number | null {
   const nodes = state.matrix?.nodes ?? [];
   if (nodes.length === 0) return null;
+  const boss = state.matrix?.bossNode ?? null;
   const cleared = new Set(state.clearedEncounterNodes ?? []);
   const bypassed = new Set(state.bypassedEncounterNodes ?? []);
-  const blocked = (i: number): boolean =>
-    cleared.has(i) ||
-    bypassed.has(i) ||
-    (nodes[i]?.iceIds.length ?? 0) === 0;
-  if (blocked(state.currentNodeIndex) === false) return state.currentNodeIndex;
+  const sealed = (state.clearedEncounterNodes ?? []).length < bossGateNeed(state);
+  const target = (i: number): boolean => {
+    const n = nodes[i];
+    if (!n || n.iceIds.length === 0) return false;
+    if (cleared.has(i) || bypassed.has(i)) return false;
+    return !(sealed && i === boss);
+  };
+  if (target(state.currentNodeIndex)) return state.currentNodeIndex;
   const seen = new Set<number>([state.currentNodeIndex]);
   const queue: number[] = [state.currentNodeIndex];
   while (queue.length > 0) {
@@ -157,14 +168,19 @@ function nearestObjective(state: GameState): number | null {
     for (const nx of nodes[at]?.adjacent ?? []) {
       if (seen.has(nx)) continue;
       seen.add(nx);
-      if (!blocked(nx)) return nx;
+      if (target(nx)) return nx;
       queue.push(nx);
     }
   }
-  return state.matrix?.bossNode ?? null;
+  return boss;
 }
 
 /** Where to head next, given the route policy (ADR-0281 / ADR-0287). */
+/** Is the apex closed until more encounters are cleared? (ADR-0290) */
+function bossSealed(state: GameState): boolean {
+  return (state.clearedEncounterNodes ?? []).length < bossGateNeed(state);
+}
+
 function objective(
   state: GameState,
   routePolicy: RoutePolicy = "long",
@@ -218,7 +234,9 @@ function objective(
       )[0];
       return target ?? nearestObjective(state);
     }
-    // Nothing worth fighting: head for the end.
+    // Nothing worth fighting: head for the end — unless the core is sealed
+    // (ADR-0290), in which case something has to fall.
+    if (bossSealed(state)) return nearestObjective(state);
     return state.matrix?.bossNode ?? null;
   }
 

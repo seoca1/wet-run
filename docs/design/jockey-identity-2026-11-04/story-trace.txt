@@ -3,19 +3,19 @@ build: local dist
 jockey index 0, mission index 9
 steps: 15
 ending: arc1_wage_slave
-summary: mission First Jack · arc 1 · HP 96/100 · 1850cr earned (base 500) · 7 turns
+summary: mission First Jack · arc 1 · HP 93/100 · 1850cr earned (base 500) · 7 turns
 
 [0] matrix/approach @node0 | HP 100/100 COST 0 T0 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Mission: First Jack"
 [1] matrix/approach @node1 | HP 100/100 COST 0 T1 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
 [2] combat/approach @node1 | HP 100/100 COST 0 T2 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Entering mid... (1 ICE)"
 [3] combat/combat @node1 | HP 100/100 COST 0 T3 | ICE 35 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Combat vs ICE — Wisp"
-[4] combat/combat @node1 | HP 96/100 COST 3 T3 | ICE 11 | hand strike+1 boost+2 barrier+3 decoy+2 | ">>> Dixie attacks: 11 dmg"
-      log: ICE SLOW on
-      log: Exploit → 13 dmg (ICE HP: 22)
+[4] combat/combat @node1 | HP 96/100 COST 3 T3 | ICE 5 | hand strike+1 boost+2 barrier+3 decoy+2 | ">>> Dixie attacks: 11 dmg"
+      log: ICE BURN on
+      log: Exploit → 16 dmg (ICE HP: 16)
       log: >>> ICE — Wisp attacks: 4 dmg
       log: >>> Dixie attacks: 11 dmg
 [5] loot/victory @node1 | HP 96/100 COST 4 T3 | hand strike+1 boost+2 decoy+2 | "ICE — Wisp defeated! (no COST) +150 credits (bounty 25) · trace +1"
-      log: ICE SLOW off
+      log: ICE BURN off
       log: ICE — Wisp defeated! (no COST) +150 credits (bounty 25) · trace +1
 [6] loot/victory @node1 | HP 96/100 COST 4 T3 | hand strike+1 boost+2 decoy+2 | "Acquired Scan — press ENTER to continue"
 [7] matrix/approach @node1 | HP 96/100 COST 4 T3 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Took Scan. Choose an adjacent route — HP 96/100"
@@ -23,13 +23,13 @@ summary: mission First Jack · arc 1 · HP 96/100 · 1850cr earned (base 500) ·
 [9] matrix/approach @node5 | HP 96/100 COST 4 T5 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run."
 [10] combat/approach @node5 | HP 96/100 COST 4 T6 | ICE 60 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Entering core-deep... (1 ICE)"
 [11] combat/combat @node5 | HP 96/100 COST 4 T7 | ICE 60 | hand strike+1 boost+2 decoy+2 scan+1 exploit+3 | "Combat vs ICE — Hosaka Courier"
-[12] combat/combat @node5 | HP 96/100 COST 7 T7 | ICE 11 | hand strike+1 boost+2 decoy+2 scan+1 | ">>> Dixie attacks: 17 dmg"
-      log: Exploit → 32 dmg (ICE HP: 28)
+[12] combat/combat @node5 | HP 93/100 COST 7 T7 | ICE 11 | hand strike+1 boost+2 decoy+2 scan+1 | ">>> Dixie attacks: 17 dmg"
+      log: Exploit → 29 dmg (ICE HP: 28)
       log: ★ BOSS PHASE 3 — Berserk
-      log: >>> ICE — Hosaka Courier empowers its attacks (+3)
+      log: >>> shield absorbed 2, evasion dodged 0
+      log: >>> ICE — Hosaka Courier attacks: 5 dmg
       log: >>> Dixie attacks: 17 dmg
-[13] loot/victory @node5 | HP 96/100 COST 8 T7 | hand strike+1 decoy+2 scan+1 | "ICE — Hosaka Courier defeated! (no COST) +1700 credits (mission complete) (bounty 25) · trace +1"
-      log: YOU SHIELD off
-      log: ICE — Hosaka Courier defeated! (no COST) +1700 credits (mission complete) (bounty 25) · trace +1
-[14] ending/victory @node5 | HP 96/100 COST 8 T7 | hand strike+1 decoy+2 scan+1 | "ICE — Hosaka Courier defeated! (no COST) +1700 credits (mission complete) (bounty 25) · trace +1"
+[13] loot/victory @node5 | HP 93/100 COST 8 T7 | hand strike+1 decoy+2 scan+1 | "ICE — Hosaka Courier defeated! (no COST) +1700 credits (mission complete) (bounty 25) · trace +1 Loot: data_fragment x1"
+      log: ICE — Hosaka Courier defeated! (no COST) +1700 credits (mission complete) (bounty 25) · trace +1 Loot: data_fragment x1
+[14] ending/victory @node5 | HP 93/100 COST 8 T7 | hand strike+1 decoy+2 scan+1 | "ICE — Hosaka Courier defeated! (no COST) +1700 credits (mission complete) (bounty 25) · trace +1 Loot: data_fragment x1"
 [14] ending screen: arc1_wage_slave

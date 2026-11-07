@@ -135,7 +135,7 @@ describe("run screen composition", () => {
       `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${Math.min(state.player.maxHp, state.player.hp + repair)}/${state.player.maxHp}`,
     );
     offers.push(
-      `${LOOT_INTEL_SLOT} INTEL           ${lootIntelPrice(grade)}cr — map the routes ahead`,
+      `${LOOT_INTEL_SLOT} INTEL           ${lootIntelPrice(grade)}cr — name the routes ahead (spends this stop)`,
     );
     expect(view?.grid.cells).toEqual(
       renderLootScreen(

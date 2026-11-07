@@ -52,6 +52,8 @@ const BY_GRADE = process.argv.includes("--by-grade");
  * thing to look at when a grade misses its target. */
 const SHOW_DEATHS = process.argv.includes("--deaths");
 /** Card-offer policy: `first` (take anything) or `best` (spend the choice). */
+/** ADR-0290 (d): grant the intel without charging a loot stop. */
+const INTEL_FREE = process.argv.includes("--intel-free");
 const limitIdx = process.argv.indexOf("--ice-limit");
 /** ADR-0287: what `picky` is willing to fight (tier + armour). */
 const ICE_LIMIT = limitIdx >= 0 ? Number(process.argv[limitIdx + 1]) || 12 : 12;
@@ -74,13 +76,15 @@ const HAND_BONUS = handIdx >= 0 ? Number(process.argv[handIdx + 1]) || 0 : 0;
 const lootIdx = process.argv.indexOf("--loot");
 const LOOT_POLICY: LootPolicy =
   lootIdx >= 0 &&
-  ["card", "repair", "smart", "intel"].includes(process.argv[lootIdx + 1] ?? "")
+  ["card", "repair", "smart", "intel", "smartintel"].includes(process.argv[lootIdx + 1] ?? "")
     ? (process.argv[lootIdx + 1] as LootPolicy)
     : "card";
 const routeIdx = process.argv.indexOf("--route");
 const ROUTE_POLICY: RoutePolicy =
   routeIdx >= 0 &&
-  ["short", "intel", "picky"].includes(process.argv[routeIdx + 1] ?? "")
+  ["short", "intel", "picky", "blind"].includes(
+    process.argv[routeIdx + 1] ?? "",
+  )
     ? (process.argv[routeIdx + 1] as RoutePolicy)
     : "long";
 const deckIdx = process.argv.indexOf("--deck");
@@ -132,6 +136,7 @@ try {
         PREP_CHOICE,
         WALLET,
         ICE_LIMIT,
+        INTEL_FREE,
       );
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };

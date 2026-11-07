@@ -136,7 +136,7 @@ export function renderRunScreen(
         // on a decision, not on a stat.
         const intelPrice = lootIntelPrice(grade);
         offers.push(
-          `${LOOT_INTEL_SLOT} INTEL           ${intelPrice}cr — map the routes ahead`,
+          `${LOOT_INTEL_SLOT} INTEL           ${intelPrice}cr — name the routes ahead (spends this stop)`,
         );
       }
       return {

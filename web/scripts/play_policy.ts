@@ -44,7 +44,7 @@ export type CardPolicy = "first" | "best";
  * `long` takes every unresolved encounter (nearest first) -- the run the design
  * assumes. `short` walks the fewest-fights line to the boss, which is the choice
  * the route card now prices: fewer fights, a thinner deck, a shorter mission. */
-export type RoutePolicy = "long" | "short" | "intel" | "picky";
+export type RoutePolicy = "long" | "short" | "intel" | "picky" | "blind";
 
 /** "Beatable" threshold for `picky`: tier + armour, the ADR-0287 measure.
  *
@@ -59,7 +59,7 @@ export const DEFAULT_ICE_LIMIT = 12;
  * `card` grows the deck and never repairs — the old automatic heal meant this
  * was free. `repair` always takes the HP. `smart` repairs below half health,
  * which is what the choice is for. */
-export type LootPolicy = "card" | "repair" | "smart" | "intel";
+export type LootPolicy = "card" | "repair" | "smart" | "intel" | "smartintel";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -240,6 +240,38 @@ function objective(
     return state.matrix?.bossNode ?? null;
   }
 
+  if (routePolicy === "blind") {
+    // ADR-0290 (d): the honest test of what bought intel is worth.
+    //
+    // Every other policy reads `matrix.nodes` straight out of the state, so it
+    // knows the ICE on a route whether or not the runner paid for it -- which
+    // makes information worthless to it by construction, and is exactly why
+    // ADR-0287 could not price the sink.
+    //
+    // `blind` refuses to look. With no bought intel it takes the nearest
+    // unresolved encounter, the way a player who knows nothing does. With intel
+    // it takes the WEAKEST revealed one. Same runner, same board, same gate --
+    // the only difference is whether the information was paid for, so the
+    // difference in completion IS the value of the information.
+    if (!bossSealed(state)) return state.matrix?.bossNode ?? null;
+    const intel = new Set(state.intelNodes ?? []);
+    if (intel.size === 0) return nearestObjective(state);
+    const strength = (i: number): number => {
+      const id = nodes[i]?.iceIds[0];
+      const ice = id ? catalog[id] : undefined;
+      return (ice?.tier ?? 1) + (ice?.armor ?? 0);
+    };
+    const known = [...intel].filter((i) => {
+      const n = nodes[i];
+      return n && !n.isBoss && n.iceIds.length > 0 && !cleared.has(i) && !bypassed.has(i);
+    });
+    if (known.length === 0) return nearestObjective(state);
+    return (
+      [...known].sort((a, b) => strength(a) - strength(b) || a - b)[0] ??
+      nearestObjective(state)
+    );
+  }
+
   if (routePolicy === "short") {
     return fewestFightsNextHop(
       state.matrix as never,
@@ -272,6 +304,7 @@ export function playRun(
   prepChoice: PrepChoice = "stim",
   walletBalance = 0,
   iceLimit = DEFAULT_ICE_LIMIT,
+  intelFree = false,
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -315,6 +348,18 @@ export function playRun(
   }
   // ADR-0283 C''': the prep CHOICE. `--prep ice` takes the shield instead of
   // the pool, which is the decision the screen offers.
+  // ADR-0290 (d): measurement-only. Isolates what the INFORMATION is worth from
+  // what the loot stop costs -- the two are conflated when intel is bought with
+  // a stop, and the stop is worth more than the information at most grades.
+  if (intelFree && state.matrix) {
+    const nodes = state.matrix.nodes;
+    state = {
+      ...state,
+      intelNodes: nodes
+        .map((n, i) => (!n.isBoss && n.iceIds.length > 0 ? i : -1))
+        .filter((i) => i >= 0),
+    };
+  }
   const grade = missionGradeOf(mission);
   const grant = prepGrantFor(grade, prepChoice, walletBalance);
   if (prepChoice === "ice") {
@@ -391,16 +436,29 @@ export function playRun(
     } else if (state.runPhase === "loot") {
       if (!isTerminalNode(state)) {
         const ids = offeredCardIds(state);
+        const offersNow = ids.map((id) => cardOf(id));
+        // ADR-0291: buying intel ALWAYS is the worst case for it -- it trades a
+        // card or a repair for names. A player spends the stop on intel when the
+        // stop has nothing worth taking, so `smartintel` does exactly that: only
+        // when every offered card is tier 1 and the runner is not hurt.
+        const wantIntel =
+          (lootPolicy === "intel" && (state.intelNodes ?? []).length === 0) ||
+          (lootPolicy === "smartintel" &&
+            (state.intelNodes ?? []).length === 0 &&
+            offersNow.every((c) => (c?.tier ?? 9) <= 2) &&
+            state.player.hp >= Math.floor(state.player.maxHp * 0.5));
         if (state.cardRewardTaken === null && ids.length > 0) {
           const wantRepair =
             lootPolicy === "repair" ||
-            (lootPolicy === "smart" &&
+            ((lootPolicy === "smart" ||
+              lootPolicy === "intel" ||
+              lootPolicy === "smartintel") &&
               state.player.hp < Math.floor(state.player.maxHp * 0.5));
           const offers = ids.map((id) => cardOf(id));
           state = applyAction(state, {
             type: "select_program",
             handIndex:
-              lootPolicy === "intel"
+              wantIntel
                 ? LOOT_INTEL_SLOT
                 : wantRepair
                   ? LOOT_REPAIR_SLOT

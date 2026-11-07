@@ -16,9 +16,10 @@ import iceTypesData from "../src/data/ice_types.json";
 import programsData from "../src/data/programs.json";
 import type { Program, Ice, GameState } from "../src/core/types";
 import {
+  LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
+  lootIntelPrice,
   lootRepairAmount,
-  lootSlotChoice,
 } from "../src/core/state/loot_choice";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
 
@@ -114,15 +115,52 @@ describe("ADR-0282 — the loot screen is a spend", () => {
     expect(moved.player.hp).toBe(loot.player.maxHp);
   });
 
-  it("has no fifth option: a third stop was measured and removed (ADR-0285)", () => {
-    // The slot that once paid credits, then patched, is gone — three cards and a
-    // repair only, because a third stop could not be made competitive.
+  it("slot 5 buys route intel — information, never power (ADR-0287)", () => {
+    // Given: a runner with credits on a loot screen.
+    const loot = atLoot(50);
+    const rich = {
+      ...loot,
+      player: { ...loot.player, credits: 500 },
+      // A matrix with an unresolved encounter to reveal.
+      matrix: loot.matrix,
+    };
 
-    // Then: the fifth key is not a loot option, so it falls through to
-    // `takeCardReward` and simply finds no offer there.
-    expect(lootSlotChoice(5)).toBeNull();
-    expect(lootSlotChoice(4)).toBe("repair");
-    expect(lootSlotChoice(3)).toBe("program");
+    // When
+    const bought = applyAction(rich, {
+      type: "select_program",
+      handIndex: LOOT_INTEL_SLOT,
+    });
+
+    // Then: credits fall by the grade's price, the routes ahead are known, and
+    // nothing about the runner's power changed.
+    const price = lootIntelPrice(GRADE);
+    expect(bought.player.credits).toBe(500 - price);
+    expect(bought.intelNodes?.length ?? 0).toBeGreaterThan(0);
+    expect(bought.player.hp).toBe(rich.player.hp);
+    expect(bought.player.maxHp).toBe(rich.player.maxHp);
+    // No card was taken: the deck's total is the same. (The HAND grows, because
+    // returning to the matrix refills it — that is the ADR-0283 refill.)
+    const total = (s: typeof rich) =>
+      s.deck.length + s.drawPile.length + s.discardPile.length;
+    expect(total(bought)).toBe(total(rich));
+  });
+
+  it("refuses intel the runner cannot afford", () => {
+    // Given: no credits.
+    const loot = atLoot(50);
+    const broke = { ...loot, player: { ...loot.player, credits: 0 } };
+
+    // When
+    const refused = applyAction(broke, {
+      type: "select_program",
+      handIndex: LOOT_INTEL_SLOT,
+    });
+
+    // Then: still on the loot screen, nothing spent, nothing revealed.
+    expect(refused.runPhase).toBe("loot");
+    expect(refused.player.credits).toBe(0);
+    expect(refused.intelNodes ?? []).toEqual([]);
+    expect(refused.message).toContain("costs");
   });
 
   it("slots 1-3 still take a program and hold the screen (ADR-0261)", () => {

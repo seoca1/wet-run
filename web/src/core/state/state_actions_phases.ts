@@ -34,7 +34,12 @@ import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram } from "./card_reward";
 import { refillHand } from "../combat/hand";
-import { lootRepairAmount, lootSlotChoice } from "./loot_choice";
+import {
+  intelTargets,
+  lootIntelPrice,
+  lootRepairAmount,
+  lootSlotChoice,
+} from "./loot_choice";
 import { missionGradeOf } from "../combat/ice_scaling";
 import { activeIceOf } from "../combat/roster";
 import {
@@ -170,6 +175,7 @@ export function applyLootAction(
   if (action.type === "select_program") {
     const choice = lootSlotChoice(action.handIndex);
     if (choice === "repair") return takeLootRepair(state);
+    if (choice === "intel") return takeLootIntel(state);
     return takeCardReward(state, action.handIndex - 1);
   }
   if (action.type === "use_program") {
@@ -332,6 +338,37 @@ function takeLootRepair(state: GameState): GameState {
       },
     },
     `Repair +${amount} HP. `,
+  );
+}
+
+/** ADR-0287: spend the loot stop on route intel instead of a card.
+ *
+ * Information, never power: it reveals which ICE the routes ahead hold, and
+ * nothing in combat or the ending resolver reads it. Buying it therefore cannot
+ * move the difficulty curve, which is exactly why it is the one sink that four
+ * rejected power-granting sinks left standing (ADR-0286).
+ */
+function takeLootIntel(state: GameState): GameState {
+  const price = lootIntelPrice(missionGradeOf(state.mission));
+  if (state.player.credits < price) {
+    return {
+      ...state,
+      message: `Intel costs ${price}cr — you have ${state.player.credits}.`,
+    };
+  }
+  const targets = intelTargets(
+    state.matrix?.nodes ?? [],
+    state.clearedEncounterNodes ?? [],
+    state.bypassedEncounterNodes ?? [],
+  );
+  const revealed = new Set([...(state.intelNodes ?? []), ...targets]);
+  return continueToMatrix(
+    {
+      ...state,
+      player: { ...state.player, credits: state.player.credits - price },
+      intelNodes: [...revealed],
+    },
+    `Intel paid (${price}cr): ${targets.length} encounters mapped. `,
   );
 }
 

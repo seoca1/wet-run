@@ -1,0 +1,36 @@
+ADR-0287 — the one credit sink that grants no power: route intel.
+
+Four power-granting sinks were measured and rejected (0282 credits, 0284 prep
+stockpile, 0285 loot patch, 0286 shop) because the curve is fitted. This one
+sells information, so the question is whether it evades that trap.
+
+A. IT GRANTS NO POWER — verified
+   loot=intel   100.0 / 84.4 / 43.8 / 37.5 / 8.3 / 0.0
+   loot=card    100.0 / 75.4 / 44.3 / 33.1 / 9.0 / 4.2
+   loot=smart   100.0 / 98.0 / 81.8 / 45.6 / 31.9 / 18.8
+   Intel tracks 'forgo the card', not 'gain a stat': spending the stop on
+   knowledge buys no HP, no deck and no shield, so no fitted grade moves.
+
+B. WHAT THE PLAYER SEES (First Jack, grade 1, price 30cr)
+   before paying:  node 1  route: 2 fights · 250cr
+                   node 2  route: 1 to boss · 2 open · 250cr
+   after paying:   node 1  route: wisp, hosaka_couri
+                   node 2  route: hosaka_couri, wisp
+   That is the information the board never gave: WHICH ICE is ahead, which is
+   what decides whether your hand can answer it.
+
+C. DECISION VALUE — NOT MEASURABLE HERE, and that is a property of the bot
+   A policy that routes toward the weakest revealed ICE:
+     routed by intel     100.0 / 82.0 / 46.6 / 37.5 / 8.3 / 0.0
+     routed blindly      100.0 / 84.4 / 43.8 / 37.5 / 8.3 / 0.0
+   Within noise. The bot already reads the matrix node list directly to navigate, so
+   it has perfect knowledge of the graph and the ICE composition regardless of
+   what it pays for — bought intel cannot help a player who already sees
+   everything. A human sees the graph but NOT the ICE, so the value is a
+   perception/decision one this harness cannot price.
+
+CONCLUSION
+  - It does not move the curve (A), which is the property the owner asked for.
+  - Its value is unmeasured (C), stated plainly rather than dressed up.
+  - Cost is deliberately low (30cr at grade 1, 120 at grade 6) because
+    information should be a decision, not a tax.

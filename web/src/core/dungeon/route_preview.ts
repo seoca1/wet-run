@@ -17,6 +17,11 @@
 import type { Matrix } from "../types";
 
 export interface RoutePreview {
+  /** ICE ids on the routes ahead that the runner has BOUGHT knowledge of
+   * (ADR-0287). Empty when the intel was not paid for — the game already sells
+   * threat knowledge for COST at the encounter gate (PROBE), and this is the
+   * same sale, for credits and about the route rather than the current node. */
+  readonly knownIce: readonly string[];
   /** Encounters on the shortest route from the destination to the boss,
    * counting the destination if it holds one and always counting the boss. */
   readonly fightsToBoss: number;
@@ -55,6 +60,7 @@ export function routePreview(
   clearedNodes: readonly number[],
   bypassedNodes: readonly number[],
   destination: number,
+  intelNodes: readonly number[] = [],
 ): RoutePreview {
   const cleared = new Set(clearedNodes);
   const bypassed = new Set(bypassedNodes);
@@ -66,6 +72,7 @@ export function routePreview(
       fightsAvailable: 0,
       creditsAvailable: 0,
       destinationIsBoss: false,
+      knownIce: [],
     };
   }
 
@@ -113,18 +120,31 @@ export function routePreview(
   }
   const fightsToBoss = cost.get(bossNode) ?? 0;
 
+  // Named only where the intel was bought: an unrevealed route stays a count.
+  const intel = new Set(intelNodes);
+  const knownIce = reachable
+    .filter((i) => intel.has(i))
+    .flatMap((i) => nodes[i]?.iceIds ?? []);
+
   return {
     fightsToBoss,
     fightsAvailable: reachable.length,
     creditsAvailable,
     destinationIsBoss: destination === bossNode,
+    knownIce,
   };
 }
 
 /** One short line for the route card, or "" when there is nothing to say. */
 export function routePreviewLine(preview: RoutePreview): string {
-  const { fightsToBoss, fightsAvailable, creditsAvailable } = preview;
+  const { fightsToBoss, fightsAvailable, creditsAvailable, knownIce } = preview;
   if (fightsAvailable === 0) return "route: clear — no ICE left";
+  if (knownIce.length > 0) {
+    // The paid intel: name what is ahead instead of counting it.
+    const names = knownIce.slice(0, 2).map((id) => id.slice(0, 12));
+    const more = knownIce.length > 2 ? ` +${knownIce.length - 2}` : "";
+    return `route: ${names.join(", ")}${more}`;
+  }
   // Kept inside CARD_WIDTH (36) so the matrix card never clips the choice.
   if (fightsAvailable > fightsToBoss) {
     return `route: ${fightsToBoss} to boss · ${fightsAvailable} open · ${creditsAvailable}cr`;

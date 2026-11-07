@@ -137,6 +137,7 @@ export function renderMatrix(
   entryHint = false,
   travel: MatrixTravelFrame | null = null,
   bypassed: readonly number[] = [],
+  intel: readonly number[] = [],
 ): Grid {
   const gates = (i: number): boolean =>
     (matrix.nodes[i]?.iceIds.length ?? 0) > 0 &&
@@ -152,6 +153,7 @@ export function renderMatrix(
     cleared,
     selected: selectedNodeIndex,
     bypassed,
+    intel,
   };
   const put = (x: number, y: number, text: string, fg: string): void => {
     if (y < footerY) grid = putInside(grid, inner, x, y, text, fg);

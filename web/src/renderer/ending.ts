@@ -233,8 +233,8 @@ export function renderLootScreen(
         ? // ADR-0282: the full wording is 48 columns, so the narrow presets get a
           // shorter one rather than a clipped promise (ADR-0251 rule 5).
           cols >= 48
-          ? "1-3: card | 4: repair | ENTER: none"
-          : "1-3 card · 4 repair"
+          ? "1-3: card | 4: repair | 5: intel"
+          : "1-3 card · 4 repair · 5 intel"
         : "ENTER: route selection";
   grid = setText(
     grid,

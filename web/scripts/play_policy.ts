@@ -15,7 +15,10 @@ import { startingDeck } from "../src/core/state/starting_deck";
 import { offeredCardIds } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
 import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
-import { LOOT_REPAIR_SLOT } from "../src/core/state/loot_choice";
+import {
+  LOOT_INTEL_SLOT,
+  LOOT_REPAIR_SLOT,
+} from "../src/core/state/loot_choice";
 import { prepGrantFor, type PrepChoice } from "../src/core/state/prep";
 import { programEffect } from "../src/core/combat/program_effects";
 import { deckForGrade } from "./balance_sim";
@@ -40,14 +43,14 @@ export type CardPolicy = "first" | "best";
  * `long` takes every unresolved encounter (nearest first) -- the run the design
  * assumes. `short` walks the fewest-fights line to the boss, which is the choice
  * the route card now prices: fewer fights, a thinner deck, a shorter mission. */
-export type RoutePolicy = "long" | "short";
+export type RoutePolicy = "long" | "short" | "intel";
 
 /** How the runner spends a loot stop (ADR-0282).
  *
  * `card` grows the deck and never repairs — the old automatic heal meant this
  * was free. `repair` always takes the HP. `smart` repairs below half health,
  * which is what the choice is for. */
-export type LootPolicy = "card" | "repair" | "smart";
+export type LootPolicy = "card" | "repair" | "smart" | "intel";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -128,29 +131,17 @@ function nextStep(state: GameState, from: number, to: number): number | null {
  * The policy now walks to the closest unresolved encounter, which is what
  * playing the mission means.
  */
-function objective(
-  state: GameState,
-  routePolicy: RoutePolicy = "long",
-): number | null {
+/** The nearest unresolved encounter — the "fight everything" objective. */
+function nearestObjective(state: GameState): number | null {
   const nodes = state.matrix?.nodes ?? [];
   if (nodes.length === 0) return null;
-  if (routePolicy === "short") {
-    // Fewest fights to the boss: skip what can be walked past.
-    return fewestFightsNextHop(
-      state.matrix as never,
-      state.clearedEncounterNodes ?? [],
-      state.bypassedEncounterNodes ?? [],
-      state.currentNodeIndex,
-    );
-  }
   const cleared = new Set(state.clearedEncounterNodes ?? []);
   const bypassed = new Set(state.bypassedEncounterNodes ?? []);
   const blocked = (i: number): boolean =>
     cleared.has(i) ||
     bypassed.has(i) ||
     (nodes[i]?.iceIds.length ?? 0) === 0;
-  if (blocked(state.currentNodeIndex) === false)
-    return state.currentNodeIndex; // standing on one
+  if (blocked(state.currentNodeIndex) === false) return state.currentNodeIndex;
   const seen = new Set<number>([state.currentNodeIndex]);
   const queue: number[] = [state.currentNodeIndex];
   while (queue.length > 0) {
@@ -163,6 +154,49 @@ function objective(
     }
   }
   return state.matrix?.bossNode ?? null;
+}
+
+/** Where to head next, given the route policy (ADR-0281 / ADR-0287). */
+function objective(
+  state: GameState,
+  routePolicy: RoutePolicy = "long",
+  catalog: Readonly<Record<string, Ice>> = {},
+): number | null {
+  const nodes = state.matrix?.nodes ?? [];
+  if (nodes.length === 0) return null;
+  const cleared = new Set(state.clearedEncounterNodes ?? []);
+  const bypassed = new Set(state.bypassedEncounterNodes ?? []);
+
+  if (routePolicy === "intel") {
+    // ADR-0287: walk toward the WEAKEST revealed encounter (lowest tier +
+    // armour). That is what bought information is for. Without intel there is
+    // nothing to read, so it falls back to the nearest.
+    const intel = new Set(state.intelNodes ?? []);
+    const candidates = [...intel].filter((i) => {
+      const n = nodes[i];
+      return n && n.iceIds.length > 0 && !cleared.has(i) && !bypassed.has(i);
+    });
+    if (candidates.length === 0) return nearestObjective(state);
+    const strength = (i: number): number => {
+      const id = nodes[i]?.iceIds[0];
+      const ice = id ? catalog[id] : undefined;
+      return (ice?.tier ?? 1) + (ice?.armor ?? 0);
+    };
+    const weakest = [...candidates].sort(
+      (a, b) => strength(a) - strength(b) || a - b,
+    )[0];
+    return weakest ?? nearestObjective(state);
+  }
+
+  if (routePolicy === "short") {
+    return fewestFightsNextHop(
+      state.matrix as never,
+      state.clearedEncounterNodes ?? [],
+      state.bypassedEncounterNodes ?? [],
+      state.currentNodeIndex,
+    );
+  }
+  return nearestObjective(state);
 }
 
 /** One full run with the greedy policy. Returns the final state.
@@ -273,7 +307,7 @@ export function playRun(
         }
         state = applyAction(state, { type: "confirm" });
       } else {
-        const goal = objective(state, routePolicy);
+        const goal = objective(state, routePolicy, catalog);
         const hop =
           goal === null || goal === state.currentNodeIndex
             ? null
@@ -313,9 +347,11 @@ export function playRun(
           state = applyAction(state, {
             type: "select_program",
             handIndex:
-              wantRepair
-                ? LOOT_REPAIR_SLOT
-                : pickRewardIndex(offers, cardPolicy),
+              lootPolicy === "intel"
+                ? LOOT_INTEL_SLOT
+                : wantRepair
+                  ? LOOT_REPAIR_SLOT
+                  : pickRewardIndex(offers, cardPolicy),
           });
         }
       }

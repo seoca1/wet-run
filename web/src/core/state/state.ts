@@ -117,6 +117,7 @@ export function makeInitialState(
     visitedNodes: [],
     clearedEncounterNodes: [],
     bypassedEncounterNodes: [],
+    intelNodes: [],
     bossPhase: 0,
     endingChoice: null,
     vfxInstances: [],
@@ -275,6 +276,9 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     currentNodeIndex: state.currentNodeIndex,
     clearedEncounterNodes: state.clearedEncounterNodes ?? [],
     bypassedEncounterNodes: state.bypassedEncounterNodes ?? [],
+    ...((state.intelNodes ?? []).length > 0
+      ? { intelNodes: state.intelNodes ?? [] }
+      : {}),
   };
 }
 
@@ -386,6 +390,11 @@ export function slotToGameState(
     visitedNodes: [],
     clearedEncounterNodes: slot.clearedEncounterNodes ?? [],
     bypassedEncounterNodes: slot.bypassedEncounterNodes ?? [],
+    // ADR-0287: the runner paid for this knowledge, so a reload keeps it. Older
+    // slots omit it and see nothing revealed, exactly as before.
+    intelNodes: (slot.intelNodes ?? []).filter(
+      (i) => Number.isInteger(i) && i >= 0 && i < matrix.nodes.length,
+    ),
     cardRewardTaken: slot.cardRewardTaken ?? null,
     jockeyId: slot.jockeyId ?? null,
     bossPhase: 0,

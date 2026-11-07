@@ -71,12 +71,15 @@ const HAND_BONUS = handIdx >= 0 ? Number(process.argv[handIdx + 1]) || 0 : 0;
 const lootIdx = process.argv.indexOf("--loot");
 const LOOT_POLICY: LootPolicy =
   lootIdx >= 0 &&
-  ["card", "repair", "smart"].includes(process.argv[lootIdx + 1] ?? "")
+  ["card", "repair", "smart", "intel"].includes(process.argv[lootIdx + 1] ?? "")
     ? (process.argv[lootIdx + 1] as LootPolicy)
     : "card";
 const routeIdx = process.argv.indexOf("--route");
 const ROUTE_POLICY: RoutePolicy =
-  routeIdx >= 0 && process.argv[routeIdx + 1] === "short" ? "short" : "long";
+  routeIdx >= 0 &&
+  ["short", "intel"].includes(process.argv[routeIdx + 1] ?? "")
+    ? (process.argv[routeIdx + 1] as RoutePolicy)
+    : "long";
 const deckIdx = process.argv.indexOf("--deck");
 const DECK_MODE: "opening" | "ppl" =
   deckIdx >= 0 && process.argv[deckIdx + 1] === "ppl" ? "ppl" : "opening";

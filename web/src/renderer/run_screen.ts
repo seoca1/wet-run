@@ -11,7 +11,12 @@ import type { GrowthReveal } from "./growth_reveal";
 import { offeredCardIds, rewardProgram } from "../core/state/card_reward";
 import { formatRewardOption } from "../core/combat/program_affordance";
 import { missionGradeOf } from "../core/combat/ice_scaling";
-import { LOOT_REPAIR_SLOT, lootRepairAmount } from "../core/state/loot_choice";
+import {
+  LOOT_INTEL_SLOT,
+  LOOT_REPAIR_SLOT,
+  lootIntelPrice,
+  lootRepairAmount,
+} from "../core/state/loot_choice";
 import { ENDINGS } from "../core/combat/ending_resolver";
 import { composeCombatVfx } from "./combat_vfx";
 import { composeFloatingDamage, overlayShake } from "./combat_overlay";
@@ -69,6 +74,7 @@ export function renderRunScreen(
           matrixEntryHint,
           matrixTravel,
           state.bypassedEncounterNodes ?? [],
+          state.intelNodes ?? [],
         ),
         hud: [
           "MATRIX",
@@ -126,6 +132,12 @@ export function renderRunScreen(
         offers.push(
           `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${healed}/${state.player.maxHp}`,
         );
+        // ADR-0287: information, not power. Priced so it competes with a card
+        // on a decision, not on a stat.
+        const intelPrice = lootIntelPrice(grade);
+        offers.push(
+          `${LOOT_INTEL_SLOT} INTEL           ${intelPrice}cr — map the routes ahead`,
+        );
       }
       return {
         grid: renderLootScreen(
@@ -154,7 +166,7 @@ export function renderRunScreen(
             : takenIndex >= 0
               ? "ENTER: continue"
               : offers.length > 0
-                ? "1-3: card · 4: repair"
+                ? "1-3: card · 4: repair · 5: intel"
                 : "ENTER: route",
         ],
       };

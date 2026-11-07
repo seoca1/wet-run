@@ -199,6 +199,15 @@ export interface GameState {
   readonly currentNodeIndex: number;
   /** Transient route highlight; omitted by old states/saves, never auto-selected. */
   readonly selectedMatrixNodeIndex?: number | null;
+  /** ADR-0287: nodes whose ICE composition the runner has BOUGHT knowledge of.
+   *
+   * Information only — nothing in combat or the ending resolver reads it. A
+   * credit sink that grants power cannot fit the fitted difficulty curve
+   * (ADR-0286), and PROBE already sets the precedent that threat knowledge is
+   * something the game sells. Optional like `bypassedEncounterNodes`; absent on
+   * old states and saves.
+   */
+  readonly intelNodes?: ReadonlyArray<number>;
   /** Transient encounter menu/intel; omitted from saves, reset on travel. */
   readonly encounterDecision?: {
     readonly selectedVerb:
@@ -484,6 +493,8 @@ export interface SaveSlot {
   readonly cardRewardTaken?: string;
   /** ADR-0274 — the jockey the run belongs to; older slots omit it. */
   readonly jockeyId?: string;
+  /** ADR-0287 bought intel; older version-1 slots omit it (nothing revealed). */
+  readonly intelNodes?: ReadonlyArray<number>;
 }
 
 /** Game action — keyboard input → state mutation. */

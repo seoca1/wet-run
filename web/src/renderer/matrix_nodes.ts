@@ -18,6 +18,8 @@ export interface MatrixPosition {
   readonly selected: number | null;
   /** Nodes the runner walked past instead of fighting (ADR-0281 route pricing). */
   readonly bypassed?: readonly number[];
+  /** ADR-0287: nodes the runner paid to know about. */
+  readonly intel?: readonly number[];
 }
 
 export interface MatrixLine {
@@ -116,6 +118,7 @@ export function matrixCardLines(
           position.cleared,
           position.bypassed ?? [],
           selected,
+          position.intel ?? [],
         ),
       ),
       PALETTE.CYAN_LIGHT,

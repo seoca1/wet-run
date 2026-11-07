@@ -24,6 +24,7 @@ import {
   canRecover,
   lootIntelPrice,
   lootRepairAmount,
+  lootRepairPctForGrade,
   recoverHpAmount,
   ventHpPrice,
 } from "../core/state/loot_choice";
@@ -167,11 +168,15 @@ export function renderRunScreen(
           : `1-3 card · 4-${terminal ? 5 : 5 + traceExits.length} options`;
       if (!terminal && takenId === null) {
         const repair = lootRepairAmount(state.player.maxHp, grade);
+        const repairPct = lootRepairPctForGrade(grade);
         const healed = Math.min(state.player.maxHp, state.player.hp + repair);
         offers.push(
+          // ADR-0307: the percent matters more than the points. At g6 a 28% patch
+          // looks like a big number and is not — the ICE hits for more than that
+          // per turn — so the screen states the share, not just the HP.
           narrow
-            ? `${LOOT_REPAIR_SLOT} REPAIR +${repair}HP → ${healed}/${state.player.maxHp}`
-            : `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${healed}/${state.player.maxHp}`,
+            ? `${LOOT_REPAIR_SLOT} REPAIR +${repairPct}% (${repair}HP) → ${healed}/${state.player.maxHp}`
+            : `${LOOT_REPAIR_SLOT} REPAIR          +${repairPct}% (${repair} HP)  → ${healed}/${state.player.maxHp}`,
         );
         // ADR-0287: information, not power. Priced so it competes with a card
         // on a decision, not on a stat.

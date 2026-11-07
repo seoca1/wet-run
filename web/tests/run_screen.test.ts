@@ -20,6 +20,7 @@ import {
   ventHpPrice,
   lootIntelPrice,
   lootRepairAmount,
+  lootRepairPctForGrade,
 } from "../src/core/state/loot_choice";
 import { renderGrid } from "../src/renderer/combat_grid";
 import { groupStatusByTarget } from "../src/renderer/status_hud";
@@ -137,7 +138,7 @@ describe("run screen composition", () => {
     const grade = missionGradeOf(state.mission);
     const repair = lootRepairAmount(state.player.maxHp, grade);
     offers.push(
-      `${LOOT_REPAIR_SLOT} REPAIR          +${repair} HP  → ${Math.min(state.player.maxHp, state.player.hp + repair)}/${state.player.maxHp}`,
+      `${LOOT_REPAIR_SLOT} REPAIR          +${lootRepairPctForGrade(grade)}% (${repair} HP)  → ${Math.min(state.player.maxHp, state.player.hp + repair)}/${state.player.maxHp}`,
     );
     offers.push(
       `${LOOT_INTEL_SLOT} INTEL           ${lootIntelPrice(grade)}cr — name the routes ahead (spends this stop)`,

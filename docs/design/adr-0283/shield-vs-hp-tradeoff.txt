@@ -1,0 +1,30 @@
+ADR-0283 (C'') — is the starting shield a REAL second option, or dominated?
+
+The question matters because a choice needs each option to win somewhere.
+Everything below is 12 seeds, loot=smart, route=long.
+
+grade   HP prep (production)   shield +60   +120   +240   +400
+  3        84.1%                87.1   92.4  100.0    -
+  4        45.8%                57.5   67.5   81.7    -
+  5        28.7% (hp +270)        -      -      -     11.1
+
+THE TRADE-OFF IS REAL AND IT INVERTS WITH GRADE
+  - grades 3-4: a SHIELD beats the same advance spent on HP. A small pool
+    covers the early fights, where the damage per fight is modest.
+  - grade 5: HP wins, and by a lot (28.7% against 11.1% at a shield four
+    times the size).
+
+WHY HP WINS UP TOP -- and it is worth knowing: the loot repair is a
+PERCENTAGE OF MAX HP (ADR-0282). So a bigger pool compounds: it absorbs
+more now AND makes every later repair bigger. A shield is spent once and
+never comes back. That is the whole asymmetry.
+
+SO: prep can be a choice. Two grade-scaled tables, one per option:
+  PREP_HP_BY_GRADE     [0, 0, 20, 25, 270, 175]   (shipped)
+  PREP_SHIELD_BY_GRADE [0, 0, ~30, ~40, ~700, ~400]  (untuned; sized so the
+    option is competitive where it is strong rather than a token alternative)
+
+The screen is NOT built yet, on purpose: the card-prep shop was built first
+and then rejected by measurement, and this session has repeatedly shown that
+measuring first is cheaper. The lever is now validated; the screen is the
+next step.

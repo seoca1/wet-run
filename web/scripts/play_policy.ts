@@ -182,6 +182,7 @@ export function playRun(
   lootPolicy: LootPolicy = "card",
   hpBonus = 0,
   handBonus = 0,
+  shieldBonus = 0,
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -202,6 +203,25 @@ export function playRun(
     state = {
       ...state,
       player: { ...state.player, handSize: state.player.handSize + handBonus },
+    };
+  }
+  // ADR-0283 (C''): a starting shield pool is the second capacity lever -- it
+  // absorbs the opening hits instead of widening the pool. `remaining` is
+  // nominal: the pool drains by absorbing damage (applyPlayerMitigation), and a
+  // plain (non-enemy-tick) shield is only decremented by `tickStatus`, so it is
+  // given a lifetime longer than any run.
+  if (shieldBonus > 0) {
+    state = {
+      ...state,
+      statusEffects: [
+        ...state.statusEffects,
+        {
+          kind: "shield" as const,
+          target: "player" as const,
+          magnitude: shieldBonus,
+          remaining: 9999,
+        },
+      ],
     };
   }
   const prepBonus =

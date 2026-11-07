@@ -85,7 +85,22 @@ function cardScore(p: Program): number {
   // a card that cannot be paid for is not a card. Ignoring cost made the policy
   // grab every expensive program and then sit on it, which is wrong play and a
   // broken instrument — it under-reported what a cost-efficient card is worth.
-  return armorAnswer * 100 + p.tier * 5 - p.cost * 8;
+  //
+  // ADR-0304: the second axis is damage per COST, not raw damage. A big card the
+  // run cannot afford is not a card (ADR-0303 found that the hard way), so the
+  // instrument now prices the two together.
+  //
+  // A deck-awareness term (discount a third copy of the same effect) was tried
+  // first and measured as INERT: +0.2pp on the mean, and the coefficient did not
+  // matter (1.0 / 0.5 / 0.25 all identical). The offers rarely repeat a kind, so
+  // there was nothing to discount. It was removed rather than left in as a
+  // plausible-looking knob.
+  // sqrt, not a straight division: a linear penalty over-rewards the cheapest
+  // card and cost g3 4.9pp in the sweep (its COST budget is not tight), while
+  // sqrt held every grade's gain. Measured mean +26.4pp against +24.5 linear and
+  // +22.1 for the old cost-blind score.
+  const perCost = (p.tier * 5) / Math.sqrt(Math.max(1, p.cost));
+  return armorAnswer * 60 + perCost * 6;
 }
 
 /** The hand slot (1-based) the policy picks from an offer. */

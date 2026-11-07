@@ -14,6 +14,9 @@ import { missionGradeOf } from "../core/combat/ice_scaling";
 import {
   LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
+  LOOT_VENT_SLOT,
+  VENT_COST,
+  ventHpPrice,
   lootIntelPrice,
   lootRepairAmount,
 } from "../core/state/loot_choice";
@@ -138,6 +141,15 @@ export function renderRunScreen(
         offers.push(
           `${LOOT_INTEL_SLOT} INTEL           ${intelPrice}cr — name the routes ahead (spends this stop)`,
         );
+        // ADR-0295: the only way back from the trace, priced above what a kill
+        // pays so it buys capacity rather than farming it.
+        if (state.player.alarm > 0) {
+          const ventedNow = Math.min(VENT_COST, state.player.alarm);
+          const ventHp = ventHpPrice(state.player.maxHp);
+          offers.push(
+            `${LOOT_VENT_SLOT} VENT            ${ventHp} HP — clear ${ventedNow} COST → ${state.player.alarm - ventedNow}/100`,
+          );
+        }
       }
       return {
         grid: renderLootScreen(
@@ -166,7 +178,7 @@ export function renderRunScreen(
             : takenIndex >= 0
               ? "ENTER: continue"
               : offers.length > 0
-                ? "1-3: card · 4: repair · 5: intel"
+                ? "1-3: card · 4: repair · 5: intel · 6: vent"
                 : "ENTER: route",
         ],
       };

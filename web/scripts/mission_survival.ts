@@ -76,7 +76,7 @@ const HAND_BONUS = handIdx >= 0 ? Number(process.argv[handIdx + 1]) || 0 : 0;
 const lootIdx = process.argv.indexOf("--loot");
 const LOOT_POLICY: LootPolicy =
   lootIdx >= 0 &&
-  ["card", "repair", "smart", "intel", "smartintel"].includes(process.argv[lootIdx + 1] ?? "")
+  ["card", "repair", "smart", "intel", "smartintel", "smartvent"].includes(process.argv[lootIdx + 1] ?? "")
     ? (process.argv[lootIdx + 1] as LootPolicy)
     : "card";
 const routeIdx = process.argv.indexOf("--route");

@@ -20,6 +20,7 @@ import { clampGrade } from "../combat/ice_scaling";
 export const LOOT_PROGRAM_SLOTS = 3;
 export const LOOT_REPAIR_SLOT = LOOT_PROGRAM_SLOTS + 1; // 4
 export const LOOT_INTEL_SLOT = LOOT_PROGRAM_SLOTS + 2; // 5
+export const LOOT_VENT_SLOT = LOOT_PROGRAM_SLOTS + 3; // 6
 
 /** Percent of max HP repaired, per grade — the price of giving up a card.
  *
@@ -57,13 +58,53 @@ export function lootIntelPrice(grade: number): number {
   return LOOT_INTEL_PRICE_BY_GRADE[clampGrade(grade) - 1] ?? 30;
 }
 
+/** COST the vent clears, and what that costs in credits (ADR-0295).
+ *
+ * ADR-0294 made every kill leave a trace worth its ICE's tier, which turned
+ * "how much do I fight" into a trade. A trade with no way out is a trap, though:
+ * once the budget is exhausted the runner can only sit there and watch. So the
+ * trace can be vented — for money, at a price that is deliberately WORSE than
+ * earning it back.
+ *
+ * The arithmetic: a kill pays its bounty (ADR-0293) and leaves 1 COST per tier.
+ * At g6 that is 200cr for 6 COST, i.e. ~33cr per point. Venting costs 40 per
+ * point, so clearing a kill's whole trace loses money. Venting is therefore for
+ * the moment when capacity is worth more than the credits — which is a decision,
+ * not a discount.
+ */
+export const VENT_COST = 10;
+
+/** Percent of max HP one vent costs.
+ *
+ * ADR-0295: the first design sold the vent for credits, and the measurement
+ * killed it twice — cheap (40cr/COST) it reopened the fight/skip lead at +5.5pp,
+ * because money minted capacity; expensive (190cr) it was never affordable, so it
+ * was dead weight. There is no price in between that balances both g5 and g6.
+ *
+ * Paying in HP is the version that cannot inflate anything: the vent is a
+ * REALLOCATION, body into capacity, at a loss. The run's total resource is the
+ * same, so the fight/skip trade survives by construction.
+ *
+ * 40% of max HP is measured, not chosen for feel: at 15% the vent is strong
+ * enough to reopen the lead (g6 31.7 vs 13.3 for skipping), at 30% it is +5.0,
+ * and at 40% it is +2.5 — an emergency valve that fires occasionally (g6 15.8
+ * against 14.6 with no vent at all) without buying the answer.
+ */
+export const VENT_HP_PCT = 40;
+
+/** What one vent costs in HP. */
+export function ventHpPrice(maxHp: number): number {
+  return Math.ceil(maxHp * (VENT_HP_PCT / 100));
+}
+
 /** The slot a loot keypress refers to, or null when it is not a loot option. */
 export function lootSlotChoice(
   slot: number,
-): "program" | "repair" | "intel" | null {
+): "program" | "repair" | "intel" | "vent" | null {
   if (slot >= 1 && slot <= LOOT_PROGRAM_SLOTS) return "program";
   if (slot === LOOT_REPAIR_SLOT) return "repair";
   if (slot === LOOT_INTEL_SLOT) return "intel";
+  if (slot === LOOT_VENT_SLOT) return "vent";
   return null;
 }
 

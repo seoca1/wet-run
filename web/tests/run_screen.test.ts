@@ -13,6 +13,9 @@ import { missionGradeOf } from "../src/core/combat/ice_scaling";
 import {
   LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
+  LOOT_VENT_SLOT,
+  VENT_COST,
+  ventHpPrice,
   lootIntelPrice,
   lootRepairAmount,
 } from "../src/core/state/loot_choice";
@@ -137,6 +140,13 @@ describe("run screen composition", () => {
     offers.push(
       `${LOOT_INTEL_SLOT} INTEL           ${lootIntelPrice(grade)}cr — name the routes ahead (spends this stop)`,
     );
+    // ADR-0295: the vent is only offered while there is a trace to clear.
+    if (state.player.alarm > 0) {
+      const vented = Math.min(VENT_COST, state.player.alarm);
+      offers.push(
+        `${LOOT_VENT_SLOT} VENT            ${ventHpPrice(state.player.maxHp)} HP — clear ${vented} COST → ${state.player.alarm - vented}/100`,
+      );
+    }
     expect(view?.grid.cells).toEqual(
       renderLootScreen(
         state.player.hp,
@@ -156,7 +166,7 @@ describe("run screen composition", () => {
     expect(view?.hud).toEqual([
       "LOOT",
       "",
-      "1-3: card · 4: repair · 5: intel",
+      "1-3: card · 4: repair · 5: intel · 6: vent",
     ]);
   });
 

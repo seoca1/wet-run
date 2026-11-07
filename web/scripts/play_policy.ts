@@ -19,6 +19,8 @@ import { bossGateNeed } from "../src/core/combat/ice_scaling";
 import {
   LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
+  LOOT_VENT_SLOT,
+  ventHpPrice,
 } from "../src/core/state/loot_choice";
 import { prepGrantFor, type PrepChoice } from "../src/core/state/prep";
 import { programEffect } from "../src/core/combat/program_effects";
@@ -59,7 +61,13 @@ export const DEFAULT_ICE_LIMIT = 12;
  * `card` grows the deck and never repairs — the old automatic heal meant this
  * was free. `repair` always takes the HP. `smart` repairs below half health,
  * which is what the choice is for. */
-export type LootPolicy = "card" | "repair" | "smart" | "intel" | "smartintel";
+export type LootPolicy =
+  | "card"
+  | "repair"
+  | "smart"
+  | "intel"
+  | "smartintel"
+  | "smartvent";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -448,6 +456,11 @@ export function playRun(
         // card or a repair for names. A player spends the stop on intel when the
         // stop has nothing worth taking, so `smartintel` does exactly that: only
         // when every offered card is tier 1 and the runner is not hurt.
+        // ADR-0295: vent when the budget, not the body, is what will kill it.
+        const wantVent =
+          lootPolicy === "smartvent" &&
+          state.player.alarm >= 70 &&
+          state.player.hp > ventHpPrice(state.player.maxHp) * 2;
         const wantIntel =
           (lootPolicy === "intel" && (state.intelNodes ?? []).length === 0) ||
           (lootPolicy === "smartintel" &&
@@ -459,9 +472,16 @@ export function playRun(
             lootPolicy === "repair" ||
             ((lootPolicy === "smart" ||
               lootPolicy === "intel" ||
-              lootPolicy === "smartintel") &&
+              lootPolicy === "smartintel" ||
+              lootPolicy === "smartvent") &&
               state.player.hp < Math.floor(state.player.maxHp * 0.5));
           const offers = ids.map((id) => cardOf(id));
+          if (wantVent) {
+            state = applyAction(state, {
+              type: "select_program",
+              handIndex: LOOT_VENT_SLOT,
+            });
+          }
           state = applyAction(state, {
             type: "select_program",
             handIndex:

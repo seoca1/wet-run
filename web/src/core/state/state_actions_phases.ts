@@ -36,6 +36,8 @@ import { offeredCardIds, rewardProgram } from "./card_reward";
 import { refillHand } from "../combat/hand";
 import {
   intelTargets,
+  VENT_COST,
+  ventHpPrice,
   lootIntelPrice,
   lootRepairAmount,
   lootSlotChoice,
@@ -187,6 +189,7 @@ export function applyLootAction(
     const choice = lootSlotChoice(action.handIndex);
     if (choice === "repair") return takeLootRepair(state);
     if (choice === "intel") return takeLootIntel(state);
+    if (choice === "vent") return takeLootVent(state);
     return takeCardReward(state, action.handIndex - 1);
   }
   if (action.type === "use_program") {
@@ -350,6 +353,35 @@ function takeLootRepair(state: GameState): GameState {
     },
     `Repair +${amount} HP. `,
   );
+}
+
+/** ADR-0295: spend credits to clear the trace the last kill left behind.
+ *
+ * ADR-0294 made the trace the cost of fighting. A cost with no answer is a trap,
+ * so it can be paid off — but at a rate worse than the bounty that earned it
+ * (~33cr per COST at g6 against 40), so venting is never a way to farm, only a
+ * way to buy capacity when the next fight needs it more than the money does.
+ */
+function takeLootVent(state: GameState): GameState {
+  const price = ventHpPrice(state.player.maxHp);
+  if (state.player.hp <= price) {
+    return {
+      ...state,
+      message: `Venting costs ${price} HP — you have ${state.player.hp}.`,
+    };
+  }
+  const cleared = Math.min(VENT_COST, state.player.alarm);
+  // Staying on the screen is the point: venting is a purchase, not a loot pick,
+  // so it does not cost the card. The price is the whole cost.
+  return {
+    ...state,
+    player: {
+      ...state.player,
+      hp: state.player.hp - price,
+      alarm: Math.max(0, state.player.alarm - VENT_COST),
+    },
+    message: `Vented ${cleared} COST for ${price} HP (COST ${state.player.alarm - cleared}/100).`,
+  };
 }
 
 /** ADR-0287: spend the loot stop on route intel instead of a card.

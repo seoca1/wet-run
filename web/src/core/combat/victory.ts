@@ -32,6 +32,7 @@ import {
   durationForKind,
 } from "../state/state_helpers";
 import { defeatedIceName } from "./roster";
+import { COST_LIMIT } from "./program_affordance";
 import { isTerminalNode } from "../state/run_end";
 import { addPrepWallet, PREP_WALLET_BANK_SHARE } from "../state/prep_wallet";
 
@@ -126,6 +127,31 @@ export type VictoryKind = "program" | "companion";
  */
 export const BOUNTY_BY_TIER: ReadonlyArray<number> = [0, 25, 50, 90, 140, 200];
 
+/** COST a kill leaves behind, per tier of the ICE that fell (ADR-0294).
+ *
+ * ADR-0293 gave the top grade a reward axis, and the measurement then showed the
+ * remaining shape of the problem: with no cost that scales with FIGHTING, "fight
+ * everything" led on both completion and credits at g5 and g6 (+6.3pp each), so
+ * the top grades had an answer rather than a trade-off. Raising encounter strength
+ * did not converge the two strategies -- it widened the gap, because the runner
+ * who fights arrives at the core with gear and the other does not.
+ *
+ * What does scale with fighting is the run's COST budget, and it is already the
+ * game's clock: programs spend it, it never refills, and at 100 nothing can be
+ * cast. A kill now leaves a trace worth its ICE's tier, so every fight is paid
+ * for twice -- once in HP during it, once in capacity after it. Measured at
+ * tier x 1 over 48 seeds: long/blind 85.6/89.2 (g3), 76.7/74.4 (g4), 40.0/43.3
+ * (g5), 14.6/13.9 (g6) -- a real trade-off at every grade instead of a lean.
+ */
+export const TRACE_COST_PER_TIER = 1;
+
+/** COST one kill leaves behind. */
+export function traceCostFor(ice: { readonly tier?: number }): number {
+  const tier = Math.round(Number(ice.tier));
+  if (!Number.isFinite(tier) || tier <= 0) return 0;
+  return tier * TRACE_COST_PER_TIER;
+}
+
 /** What one defeated ICE pays on top of its node's reward. */
 export function bountyFor(ice: { readonly tier: number }): number {
   const tier = Math.max(0, Math.min(BOUNTY_BY_TIER.length - 1, Math.round(ice.tier)));
@@ -171,6 +197,7 @@ export function resolveVictory(
   // ADR-0293: each kill carries its own bounty, so a strong ICE is worth more
   // than a routine one even when the cards it drops are indistinguishable.
   const bounty = defeated.reduce((sum, ice) => sum + bountyFor(ice), 0);
+  const trace = defeated.reduce((sum, ice) => sum + traceCostFor(ice), 0);
   const totalReward = nodeReward + missionReward + achievementCredits + bounty;
 
   // ADR-0285: the loot SALVAGE slot no longer pays credits (it patches now), so
@@ -187,7 +214,8 @@ export function resolveVictory(
   const costNote = kind === "program" ? " (no COST)" : "";
   const missionNote = missionReward > 0 ? " (mission complete)" : "";
   const bountyNote = bounty > 0 ? ` (bounty ${bounty})` : "";
-  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${missionNote}${bountyNote}${lootMessage}`;
+  const traceNote = trace > 0 ? ` · trace +${trace}` : "";
+  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${missionNote}${bountyNote}${traceNote}${lootMessage}`;
 
   return {
     ...state,
@@ -197,6 +225,10 @@ export function resolveVictory(
     combatLog: [victoryMessage, ...state.combatLog].slice(0, COMBAT_LOG_CAP),
     player: {
       ...state.player,
+      // ADR-0294: the trace closes in. Capped at the run's COST ceiling, so a
+      // kill can exhaust the budget but can never make a program cost more than
+      // the ceiling itself.
+      alarm: Math.min(COST_LIMIT, state.player.alarm + trace),
       credits: state.player.credits + totalReward,
     },
     vfxInstances: [

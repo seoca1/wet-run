@@ -24,18 +24,22 @@ export const LOOT_VENT_SLOT = LOOT_PROGRAM_SLOTS + 3; // 6
 
 /** Percent of max HP repaired, per grade — the price of giving up a card.
  *
- * **ADR-0305 measured what this costs and left it alone.** Against always-taking-a-
- * card, a repair at these values is worth +18.8pp at g3 and +44.0pp at g5, so the
- * stop's "choice" has one answer.
+ * **ADR-0306 cut this from 70/70/85/100/100/100 and re-tuned the difficulty around
+ * it.** ADR-0305 measured the old values as a fake choice: against always-taking-a-
+ * card a repair was worth +18.8pp at g3 and +44.0pp at g5, because one stop
+ * restored the whole pool — "restart the run here".
  *
- * Re-pricing to 5/5/6/8/12/18 DOES balance it (g3 48.1 card vs 50.4 repair, g5
- * 10.6 vs 16.2) — and takes the whole game with it: the best play falls from
- * 100/100/96/100/55/45 to 100/79/54/34/27/24 across the grades. The repair is what
- * carried the difficulty. Balancing the choice and keeping the curve are mutually
- * exclusive with the current numbers, so this is an owner decision and not a
- * silent re-tune.
+ * Every pricing route was measured and closed first: cutting the size alone costs
+ * 40pp of difficulty (g4 100% -> 34%), charging COST either leaves it dominant or
+ * locks it out at g5/g6, and reshaping it into a patch is stronger (regen prevents
+ * the death instead of overflowing) or non-monotonic.
+ *
+ * So the size came down AND the difficulty moved with it: prep capacity was re-tuned
+ * to 0/0/20/70/185/140 at the same time, which puts best play back inside 3.5pp of
+ * the targets at every grade (100/98/76.7/51.2/26.0/13.5 against 100/95/80/50/25/10)
+ * with the stop now a real decision.
  */
-export const LOOT_REPAIR_PCT_BY_GRADE: ReadonlyArray<number> = [70, 70, 85, 100, 100, 100];
+export const LOOT_REPAIR_PCT_BY_GRADE: ReadonlyArray<number> = [12, 12, 15, 18, 22, 28];
 
 /** The repair, as a percent of max HP, for a mission grade. */
 export function lootRepairPctForGrade(grade: number): number {

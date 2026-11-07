@@ -58,7 +58,11 @@ export const PREP_OPTIONS: ReadonlyArray<{
 ];
 
 /** Extra starting max HP per grade, measured against the mission targets. */
-export const PREP_HP_BY_GRADE: ReadonlyArray<number> = [0, 0, 20, 55, 240, 175];
+/** ADR-0306: re-tuned with the smaller repair. With a 70-100% heal the curve was
+ * carried by the healing itself; once the stop became a real choice (12-28%) the
+ * capacity had to carry more of it, and g4 needed the most (25 -> 70). The
+ * result lands best play inside 3.5pp of every mission target. */
+export const PREP_HP_BY_GRADE: ReadonlyArray<number> = [0, 0, 20, 70, 185, 140];
 
 /** Starting shield pool per grade, sized so the option is competitive where it
  * is strong rather than a token alternative (ADR-0283 C''). */

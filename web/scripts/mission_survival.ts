@@ -52,6 +52,9 @@ const BY_GRADE = process.argv.includes("--by-grade");
  * thing to look at when a grade misses its target. */
 const SHOW_DEATHS = process.argv.includes("--deaths");
 /** Card-offer policy: `first` (take anything) or `best` (spend the choice). */
+const limitIdx = process.argv.indexOf("--ice-limit");
+/** ADR-0287: what `picky` is willing to fight (tier + armour). */
+const ICE_LIMIT = limitIdx >= 0 ? Number(process.argv[limitIdx + 1]) || 12 : 12;
 const hpIdx = process.argv.indexOf("--hp");
 /** ADR-0283 (C'): extra starting max HP from prep. */
 const HP_BONUS = hpIdx >= 0 ? Number(process.argv[hpIdx + 1]) || 0 : 0;
@@ -77,7 +80,7 @@ const LOOT_POLICY: LootPolicy =
 const routeIdx = process.argv.indexOf("--route");
 const ROUTE_POLICY: RoutePolicy =
   routeIdx >= 0 &&
-  ["short", "intel"].includes(process.argv[routeIdx + 1] ?? "")
+  ["short", "intel", "picky"].includes(process.argv[routeIdx + 1] ?? "")
     ? (process.argv[routeIdx + 1] as RoutePolicy)
     : "long";
 const deckIdx = process.argv.indexOf("--deck");
@@ -128,6 +131,7 @@ try {
         SHIELD_BONUS,
         PREP_CHOICE,
         WALLET,
+        ICE_LIMIT,
       );
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };

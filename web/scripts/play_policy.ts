@@ -43,7 +43,15 @@ export type CardPolicy = "first" | "best";
  * `long` takes every unresolved encounter (nearest first) -- the run the design
  * assumes. `short` walks the fewest-fights line to the boss, which is the choice
  * the route card now prices: fewer fights, a thinner deck, a shorter mission. */
-export type RoutePolicy = "long" | "short" | "intel";
+export type RoutePolicy = "long" | "short" | "intel" | "picky";
+
+/** "Beatable" threshold for `picky`: tier + armour, the ADR-0287 measure.
+ *
+ * 12 is above the grade-3 band (8-9) and below the grade-4/5 apexes (11-14), so
+ * the policy fights what the opening deck can crack and walks past what it
+ * cannot. The point of the experiment is that this judgement needs the ICE, not
+ * the count. */
+export const DEFAULT_ICE_LIMIT = 12;
 
 /** How the runner spends a loot stop (ADR-0282).
  *
@@ -161,6 +169,7 @@ function objective(
   state: GameState,
   routePolicy: RoutePolicy = "long",
   catalog: Readonly<Record<string, Ice>> = {},
+  iceLimit = DEFAULT_ICE_LIMIT,
 ): number | null {
   const nodes = state.matrix?.nodes ?? [];
   if (nodes.length === 0) return null;
@@ -186,6 +195,31 @@ function objective(
       (a, b) => strength(a) - strength(b) || a - b,
     )[0];
     return weakest ?? nearestObjective(state);
+  }
+
+  if (routePolicy === "picky") {
+    // Fight only what the hand can crack. Without bought intel this policy has
+    // no ICE to read, so it degrades to "fight everything" — which is exactly
+    // the comparison the experiment needs.
+    const intel = new Set(state.intelNodes ?? []);
+    const strength = (i: number): number => {
+      const id = nodes[i]?.iceIds[0];
+      const ice = id ? catalog[id] : undefined;
+      return (ice?.tier ?? 1) + (ice?.armor ?? 0);
+    };
+    const open = [...intel].filter((i) => {
+      const n = nodes[i];
+      return n && n.iceIds.length > 0 && !cleared.has(i) && !bypassed.has(i);
+    });
+    const beatable = open.filter((i) => strength(i) <= iceLimit);
+    if (beatable.length > 0) {
+      const target = [...beatable].sort(
+        (a, b) => strength(a) - strength(b) || a - b,
+      )[0];
+      return target ?? nearestObjective(state);
+    }
+    // Nothing worth fighting: head for the end.
+    return state.matrix?.bossNode ?? null;
   }
 
   if (routePolicy === "short") {
@@ -219,6 +253,7 @@ export function playRun(
   shieldBonus = 0,
   prepChoice: PrepChoice = "stim",
   walletBalance = 0,
+  iceLimit = DEFAULT_ICE_LIMIT,
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -307,7 +342,7 @@ export function playRun(
         }
         state = applyAction(state, { type: "confirm" });
       } else {
-        const goal = objective(state, routePolicy, catalog);
+        const goal = objective(state, routePolicy, catalog, iceLimit);
         const hop =
           goal === null || goal === state.currentNodeIndex
             ? null

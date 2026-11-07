@@ -51,6 +51,7 @@ import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
 import { renderJockeySelect } from "./renderer/jockey_select";
+import { renderPrep } from "./renderer/prep";
 import { JOCKEYS, jockeyHandle } from "./core/state/jockey";
 import { tick as gnTick } from "./core/graphic_novel/graphic_novel_player";
 import type { ArcId } from "./core/combat/ending_resolver";
@@ -123,7 +124,13 @@ import {
   runAbandoned,
 } from "./core/state/encounter_verbs";
 import { missionIce } from "./core/state/mission_ice";
-import { applyPrep } from "./core/state/prep";
+import { missionGradeOf } from "./core/combat/ice_scaling";
+import {
+  applyPrep,
+  PREP_OPTIONS,
+  prepAmountFor,
+  type PrepChoice,
+} from "./core/state/prep";
 import {
   autosaveIntent,
   FLATLINE_MESSAGE,
@@ -192,6 +199,7 @@ const SCREENS_WITH_INPUT: ReadonlySet<ScreenKind> = new Set([
   "menu",
   "mission_select",
   "jockey_select",
+  "prep",
   "tutorial",
   "settings",
   "dungeon",
@@ -256,6 +264,9 @@ class Game {
   private selectedMission = 0;
   /** ADR-0274 — the jockey chosen for the next run (index into JOCKEYS). */
   private selectedJockey = 0;
+  /** ADR-0283: the prep row under the cursor, and what it will buy. */
+  private prepCursor = 0;
+  private prepChoice: PrepChoice = "stim";
   private renderer: AsciiRenderer;
   private input: KeyboardInput;
   private gamepad: GamepadInput;
@@ -918,6 +929,26 @@ class Game {
       }
       return;
     }
+    if (this.screen === "prep") {
+      // ADR-0283 C: spend the fixer's advance. Two rows, so the screen needs no
+      // new key -- ↑↓ picks, ENTER jacks in with the pick, ESC goes back.
+      const count = PREP_OPTIONS.length;
+      if (action.type === "move_south" || action.type === "move_east") {
+        this.prepCursor = (this.prepCursor + 1) % count;
+        this.draw();
+      } else if (action.type === "move_north" || action.type === "move_west") {
+        this.prepCursor = (this.prepCursor - 1 + count) % count;
+        this.draw();
+      } else if (action.type === "confirm") {
+        const picked = PREP_OPTIONS[this.prepCursor];
+        this.prepChoice = picked?.id ?? "stim";
+        this.launchSelected();
+      } else if (action.type === "jack_out") {
+        this.screen = "mission_select";
+        this.draw();
+      }
+      return;
+    }
     if (this.screen === "mission_select") {
       // ADR-0213 isolation: the Sprawl board lists sprawl-universe missions
       // only; far-grid missions live behind the gated hub.
@@ -936,7 +967,9 @@ class Game {
         const fullIndex = picked ? MISSIONS.indexOf(picked) : -1;
         if (fullIndex >= 0) {
           this.selectedMission = fullIndex;
-          this.launchSelected();
+          this.prepCursor = 0;
+          this.screen = "prep";
+          this.draw();
         }
       } else if (action.type === "jack_out") {
         this.screen = "menu";
@@ -975,7 +1008,9 @@ class Game {
         const fullIndex = picked ? MISSIONS.indexOf(picked) : -1;
         if (fullIndex >= 0) {
           this.selectedMission = fullIndex;
-          this.launchSelected();
+          this.prepCursor = 0;
+          this.screen = "prep";
+          this.draw();
         }
       } else if (action.type === "jack_out") {
         this.screen = "menu";
@@ -1324,7 +1359,7 @@ class Game {
     const ice = missionIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
     this.state = openArrivalEncounter({
-      ...applyPrep(initial),
+      ...applyPrep(initial, this.prepChoice),
       jockeyId: JOCKEYS[this.selectedJockey]?.id ?? null,
       grid: makeGrid(this.layout.cols, this.layout.rows),
       currentNodeIndex: 0,
@@ -1500,6 +1535,36 @@ class Game {
       if (this.screen === "graphic_novel") {
         this.renderGraphicNovel();
         return;
+      }
+      if (this.screen === "prep") {
+        // ADR-0283 C: the advance, and what each option is worth here. The
+        // amounts come from the same tables `applyPrep` reads, so the screen and
+        // the run cannot disagree (ADR-0251 rule 5).
+        const mission = MISSIONS[this.selectedMission];
+        if (mission) {
+          const grade = missionGradeOf(mission);
+          updateProgramRow([]);
+          this.renderer.render(
+            renderPrep(
+              {
+                missionTitle: mission.title,
+                grade,
+                cursor: this.prepCursor,
+                options: PREP_OPTIONS.map((option) => ({
+                  id: option.id,
+                  label: option.label,
+                  amount: prepAmountFor(grade, option.id),
+                  unit: option.id === "ice" ? "shield" : "HP",
+                  note: option.short,
+                })),
+              },
+              this.layout.cols,
+              this.layout.rows,
+            ),
+            ["PREP", "", `T${grade}`],
+          );
+          return;
+        }
       }
       if (this.screen === "jockey_select") {
         updateProgramRow([]);

@@ -206,6 +206,17 @@ async function startRun(page: Page, jockey: number, mission: number): Promise<vo
     await page.waitForTimeout(80);
   }
   await page.keyboard.press("Enter");
+  // ADR-0283 C: mission select now opens the PREP screen, so one more ENTER
+  // jacks in with the first option. (A new screen silently breaking the drivers
+  // is the ADR-0273/0274 lesson; this is that fix.)
+  await page.waitForFunction(
+    () =>
+      (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen() ===
+      "prep",
+    undefined,
+    { timeout: 10000 },
+  );
+  await page.keyboard.press("Enter");
   await page.waitForFunction(
     () =>
       (window as unknown as { wetrun: { state?: { runPhase?: string } | null } }).wetrun

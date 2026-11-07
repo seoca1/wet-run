@@ -449,6 +449,18 @@ async function startRun(
     await page.keyboard.press("ArrowDown");
   }
   await page.keyboard.press("Enter");
+  // ADR-0283 C: mission select opens PREP, so one more ENTER jacks in.
+  await page.waitForFunction(
+    () =>
+      (
+        window as unknown as {
+          wetrun: { getScreen(): string };
+        }
+      ).wetrun.getScreen() === "prep",
+    undefined,
+    { timeout: 10000 },
+  );
+  await page.keyboard.press("Enter");
   await page.waitForFunction(
     () =>
       (

@@ -151,6 +151,13 @@ async function launch(page: Page): Promise<void> {
   await page.keyboard.press("Enter");
   await expect.poll(() => page.evaluate(() => (window as unknown as { wetrun: Hook }).wetrun.getScreen())).toBe("mission_select");
   await page.keyboard.press("Enter");
+  // ADR-0283 C: mission select opens PREP, so one more ENTER jacks in.
+  await expect
+    .poll(() =>
+      page.evaluate(() => (window as unknown as { wetrun: Hook }).wetrun.getScreen()),
+    )
+    .toBe("prep");
+  await page.keyboard.press("Enter");
   await expect.poll(async () => (await snap(page))?.runPhase).toBe("matrix");
 }
 

@@ -24,6 +24,7 @@ import {
   type LootPolicy,
   type RoutePolicy,
 } from "./play_policy";
+import type { PrepChoice } from "../src/core/state/prep";
 import type { Mission } from "../src/core/types";
 import iceJson from "../src/data/ice_types.json" with { type: "json" };
 import missionsJson from "../src/data/missions.json" with { type: "json" };
@@ -54,6 +55,10 @@ const SHOW_DEATHS = process.argv.includes("--deaths");
 const hpIdx = process.argv.indexOf("--hp");
 /** ADR-0283 (C'): extra starting max HP from prep. */
 const HP_BONUS = hpIdx >= 0 ? Number(process.argv[hpIdx + 1]) || 0 : 0;
+const prepIdx = process.argv.indexOf("--prep");
+/** ADR-0283 C''': which prep option the advance buys. */
+const PREP_CHOICE: PrepChoice =
+  prepIdx >= 0 && process.argv[prepIdx + 1] === "ice" ? "ice" : "stim";
 const shieldIdx = process.argv.indexOf("--shield");
 /** ADR-0283 (C''): starting shield pool from prep. */
 const SHIELD_BONUS = shieldIdx >= 0 ? Number(process.argv[shieldIdx + 1]) || 0 : 0;
@@ -115,6 +120,7 @@ try {
         HP_BONUS,
         HAND_BONUS,
         SHIELD_BONUS,
+        PREP_CHOICE,
       );
       const completed = final?.runPhase === "ending" ? 1 : 0;
       const g = byGrade.get(grade) ?? { completed: 0, runs: 0 };
@@ -137,7 +143,7 @@ try {
 }
 
 console.log(
-  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", hp +${HP_BONUS}, hand +${HAND_BONUS}, shield +${SHIELD_BONUS}, jockey "novice"`,
+  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", hp +${HP_BONUS}, hand +${HAND_BONUS}, prep "${PREP_CHOICE}", jockey "novice"`,
 );
 console.log("");
 console.log("grade  missions  runs  completed  rate    target  delta");

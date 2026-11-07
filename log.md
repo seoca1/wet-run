@@ -3212,3 +3212,19 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **화면은 아직 안 지었다 — 의도적이다.** 카드 상점을 먼저 지었다가 측정으로 기각한 전례가 있고, 이 세션은 "먼저 재는 것이 싸다"를 반복 확인했다. 레버는 이제 검증됐고, 화면이 다음 단계다.
 - **원자료**: `docs/design/adr-0283/shield-vs-hp-tradeoff.txt`. 하네스에 `--shield N` 측정 플래그 추가(운영 영향 없음).
 - **검증**: vitest 193 files / 4105 tests · typecheck 0.
+
+## [2026-11-07] feat(prep) | prep 선택 화면 — STIM(HP) vs ICE(실드), 등급에 따라 답이 다르다 (ADR-0283 C‴)
+
+- **배경**: 오너 "권고대로" → "응." ADR-0283 C″ 에서 실드가 **진짜 두 번째 레버**임을 확인했으므로 화면을 지을 근거가 생겼다.
+- **테이블 조정**: `PREP_SHIELD_BY_GRADE = [0, 0, 35, 45, 650, 250]` (g6 를 400→250 으로 낮춰 33.3% → 8.3% 로 목표 근접).
+- **20시드 측정 (두 옵션)**:
+  - `stim`: **100.0 / 98.1 / 82.3 / 46.5 / 30.6 / 16.7** — **6개 등급 모두 허용 오차 안**
+  - `ice`: **100.0 / 98.8 / 68.2 / 53.5 / 22.2 / 10.0** — 5개(g3 −11.8)
+  - **교차한다**: stim 은 **g3·g5**, ice 는 **g4·g6** 에서 이긴다 → **미션을 보고 고르는 결정**.
+- **화면**: `prep` — 미션 선택 뒤, **2행**(STIM/ICE) + 각 옵션이 **이 미션에서 얼마인지**(테이블에서 읽음 → 화면이 거짓말할 수 없음, ADR-0251 규칙 5) + **차이를 말하는 한 줄**("lasts — repairs scale with the pool" / "absorbs now — spent once"). **↑↓/←→ 이동 · ENTER 잭인 · ESC 뒤로 — 새 키 불필요.** 80×50·60×40·**40×60** 렌더 확인.
+- **리듀서·저장 스키마 무변경**: prep 은 런 상태 생성 **전**의 준비(자키 선택과 같은 성격) → 컨트롤러 화면 + 순수 함수. `launchSelected` 가 `applyPrep(initial, choice)`.
+- **ADR-0275 준수**: `SCREENS_WITH_INPUT` 에 `"prep"` 등록(빠뜨리면 키가 스텁으로 새는 함정).
+- **e2e 드라이버 2개 수정**: `story_trace`·`soak_playthrough` — 미션 ENTER 가 이제 prep 으로 가므로 ENTER 하나 더. **ADR-0273/0274 와 같은 함정이 세 번째**로 확인됐다. `enterForRunPhase` 를 쓰는 스펙들은 ENTER 재시도라 자동 견딤.
+- **`run_end_save.spec.ts` 3건 실패는 변경 전부터** 있었다 — `git stash` 후 HEAD 에서 재현 확인.
+- **검증**: vitest **194 files / 4110 tests**(`prep.test.ts` 4 · `prep_screen.test.ts` 5 신규) · typecheck 0 · lint 0 errors · build PASS · 소크 10런 **frozen 0** · story trace 통과 · doc-claims/no-novel-prose/mixed-language 0.
+- **남은 질문**: (a) 테이블이 **측정된 절벽의 가장자리**다(g5 `+200 → 6.9%`, `+270 → 30.6%`) (b) g3 에서 실드가 약하다(−11.8) (c) 전리품 `5 SALVAGE` 가 여전히 거의 함정(크레딧이 prep 예산이 아님) (d) 세 번째 옵션(핸드 슬롯은 무효였다).

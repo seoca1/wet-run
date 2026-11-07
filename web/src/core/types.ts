@@ -130,6 +130,7 @@ export type ScreenKind =
   | "menu" // Main menu (9 options, current screen on boot)
   | "mission_select" // NEW RUN → mission select (Tier 3 curated 30 missions)
   | "jockey_select" // ADR-0274 — who is jacking in, before the mission
+  | "prep" // ADR-0283 — what the fixer's advance buys, before jacking in
   | "briefing" // Mission briefing (Finn's office) — NEW
   | "travel" // Travel to jack-in point animation — NEW
   | "bypass_security" // Bypass corporate security — NEW

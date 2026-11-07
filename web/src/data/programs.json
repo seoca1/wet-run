@@ -283,5 +283,31 @@
     "aoe": true,
     "planned_description": "AOE sweep attack. Hits all adjacent ICE.",
     "role": "strike"
+  },
+  "ghost_key": {
+    "name": "Ghost Key",
+    "tier": 6,
+    "type": "attack",
+    "ap_cost": 2,
+    "damage": 30,
+    "planned_description": "Tier-6 attack. Ignores the target's armor completely.",
+    "role": "strike"
+  },
+  "null_pointer": {
+    "name": "Null Pointer",
+    "tier": 6,
+    "type": "defense",
+    "ap_cost": 2,
+    "shield": 8,
+    "planned_description": "Tier-6 defense. Raises a shield that outlasts one exchange.",
+    "role": "guard"
+  },
+  "red_shift": {
+    "name": "Red Shift",
+    "tier": 6,
+    "type": "support",
+    "ap_cost": 2,
+    "planned_description": "Tier-6 support. Soaks the next hit entirely.",
+    "role": "support"
   }
 }

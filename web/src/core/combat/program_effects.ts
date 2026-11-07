@@ -70,6 +70,14 @@ export const PROGRAM_EFFECTS: Readonly<Record<string, ProgramEffect>> =
     boost: Object.freeze({ kind: "empower", amount: 2, turns: 2 }),
     cloak: Object.freeze({ kind: "evade", amount: 15, turns: 2 }),
     decoy: Object.freeze({ kind: "decoy", amount: 50, turns: 1 }),
+    // ADR-0303: the three tier-6 programs are g6-only drops (card_reward gates
+    // them). Each is a different answer to the same 30-damage hit, so the choice
+    // between them is about WHAT the deck cannot do, not about a bigger number:
+    // armor so thick nothing else gets through, a body that has to survive one
+    // more exchange, or one hit that must not land at all.
+    ghost_key: Object.freeze({ kind: "armor_ignore", amount: 100, turns: 0 }),
+    null_pointer: Object.freeze({ kind: "shield", amount: 8, turns: 3 }),
+    red_shift: Object.freeze({ kind: "decoy", amount: 100, turns: 1 }),
   });
 
 /** The effect of a program — the plain attack when it has no special one. */

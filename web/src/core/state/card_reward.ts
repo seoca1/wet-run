@@ -70,14 +70,39 @@ function ownedIds(state: RewardSource): ReadonlySet<string> {
   return owned;
 }
 
+/** Programs that only a tier-6 fight can drop (ADR-0303).
+ *
+ * ADR-0302 measured the skill gap: how much better the run goes when the runner
+ * uses the choices. It read +40pp at g3-g4 and **+2.8 at g6** — at the top grade
+ * the choices were worth nothing, because every card there is already tier 5 and
+ * the drop weighting (ADR-0292) had no distance left to exploit.
+ *
+ * These three are the g6 axis. They are not stronger versions of the same card —
+ * all three hit for the same 30 — they are three different answers to the same
+ * hit (armor, body, or the hit itself), so picking one is picking what the deck
+ * cannot do. And because ADR-0296 burns the strongest card for capacity, a g6
+ * runner now has something worth burning.
+ */
+export const UNIQUE_PROGRAMS: ReadonlySet<string> = new Set([
+  "ghost_key",
+  "null_pointer",
+  "red_shift",
+]);
+
+/** The tier a fight must be to drop a unique program. Tier 6 is the g6 band. */
+export const UNIQUE_MIN_ICE_TIER = 6;
+
 /** The three program ids offered to whoever just won at this node. */
 export function offeredCardIds(
   state: RewardSource,
   count: number = CARD_REWARD_COUNT,
 ): readonly string[] {
   const owned = ownedIds(state);
+  const iceTier = iceTierOf(state);
   const pool = Object.keys(catalog())
     .filter((id) => !owned.has(id))
+    // ADR-0303: the uniques are the top grade's own axis, not a mid-run upgrade.
+    .filter((id) => !UNIQUE_PROGRAMS.has(id) || iceTier >= UNIQUE_MIN_ICE_TIER)
     .sort();
   if (pool.length === 0) return [];
 
@@ -95,8 +120,11 @@ export function offeredCardIds(
   // still makes a strong fight worth more than a weak one — which is the thing
   // bought intel can now forecast (ADR-0291 measured information at ~zero while
   // every fight in a grade dropped the same pool).
-  const iceTier = iceTierOf(state);
   const weight = (id: string): number => {
+    // ADR-0303: a unique is a FIND, not a flood. Measured: equal weighting at g6
+    // dropped completion 9.7 -> 6.9 because every offer became tier-6 and the
+    // tier-5 cards the deck actually wanted stopped appearing.
+    if (UNIQUE_PROGRAMS.has(id)) return 0.35;
     const tier = catalog()[id]?.tier ?? 1;
     const d = Math.abs(tier - iceTier);
     return 1 / (1 + d * d);

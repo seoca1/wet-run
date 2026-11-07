@@ -81,7 +81,11 @@ function cardScore(p: Program): number {
   const effect = programEffect(p);
   const armorAnswer =
     effect.kind === "armor_ignore" ? 2 : effect.kind === "pierce" ? 1 : 0;
-  return armorAnswer * 100 + p.tier;
+  // ADR-0303: COST is the run's scarcest resource after the trace (ADR-0294), so
+  // a card that cannot be paid for is not a card. Ignoring cost made the policy
+  // grab every expensive program and then sit on it, which is wrong play and a
+  // broken instrument — it under-reported what a cost-efficient card is worth.
+  return armorAnswer * 100 + p.tier * 5 - p.cost * 8;
 }
 
 /** The hand slot (1-based) the policy picks from an offer. */

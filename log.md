@@ -3508,3 +3508,17 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **기각**: g6 전용 회복(즉시 40% + 재생) — 40%는 여전히 카드보다 약하고, 55~70%는 목표를 넘긴다.
 - **검증**: vitest **206 files / 4178 tests** · typecheck 0 · lint 0 errors · build PASS · 두 폭(40·80열)에서 수리 줄 48자 이내(ADR-0300 폭 가드 통과) · **생산 밸런스 무변경**.
 - **남은 질문**: (a) g6 의 **두 번째 성장 축** — 지금 g6는 "카드가 유일한 답"인데 ADR-0292 는 "g6 카드 축 포화"라 적었다. 답은 있는데 **선택은 아니다**(0303 이 부분 시도, +9.7→+12.5) (b) g6 교전 피해 곡선(한 턴 28% 이상)이 적절한가 (c) "이 회복으로 몇 턴 버티는가"를 보여주려면 intel(0287)과 엮어야 함.
+
+## [2026-11-08] test(e2e) | 브라우저 검증이 낡은 e2e 22건 · 소크 하네스 · story 시드를 드러냈다 (D1–D5)
+
+- **오너 요청**: "반영된 것을 브라우저 실행 테스트로 검증 + 여러 회차 통계 + 오류 발견."
+- **정상 확인(수정 전)**: 빌드 PASS · 소크 159런(실제 키) **frozen 0/159**(Wilson 95% 0–2.36%) · `survival --policies --seeds 32` 가 기록치와 **소수점까지 일치**(optimal 100/98.2/76.7/51.2/26.0/13.5 · default 100/78.3/47.4/36.3/4.9/2.1 · gap +16.1pp).
+- **D1 — e2e 22건 red, 게임 회귀 아님**: ADR-0274(`jockey_select`)·ADR-0283 C‴(`prep`)가 런치 흐름에 화면을 끼웠는데 스펙은 "Enter 한 번"을 세고 있었다(ADR-0274 커밋 `966ba646` 은 `web/e2e/` 무수정). desktop `24 passed/21 failed/6 skipped` + mobile 1 → `menu-nav.ts` 에 `openMissionSelect`·`launchRun` 추가, 13개 스펙 갱신 → **desktop+mobile 94 passed / 0 failed / 8 skipped**. 4일간 red 였고 세션들은 soak/story 만 돌려 못 봤다.
+- **D2 — census 커버리지**: `MISSION_COUNT=53` 가정이 틀렸다(미션 선택 목록은 sprawl **33**개) → 오프셋 wrap 으로 159런이 33미션만, 60런 중복. 목록에서 파생하도록 수정. 이어 **정책 회전 결함**도 드러남(미션 수가 정책 수의 배수면 미션 k ∈ 정책 k%3 에 고정 → 33미션 각 1정책) → `mission = floor(run/policies)` 로 분리, **99셀 = 33미션 × 3정책** 확인.
+- **D3 — 하네스가 ADR-0290 게이트에서 교착**: `nextHop` 이 **봉인된 보스**를 목표로 삼아 18/159 런이 320스텝 소진(`Core sealed … (0/1)`), 8개 미션에 집중(3정책 공통). 봉인이 풀릴 때까지 보스를 business 에서 제외 → 교착 18 → 3.
+- **D5 — 실제 게임 회귀(유휴 알람)**: `prep`(ADR-0283 C‴)이 유휴 알람 화이트리스트(`main.ts:1778`)에 없어 `launchSelected` 후 `screen="prep"` 고정 → **유휴 TRACE 상승이 죽어 있었다.** `"prep"` 추가(ADR-0275 "화면 등록" 함정 재발).
+- **D4 — story 비결정적**: 게임은 전투에 `Math.random` 을 쓴다(헤드리스만 시드). 브라우저 하네스는 시드가 없어 같은 셀이 **53/60/58 스텝**. soak/story 에 시드 `Math.random` 주입 → **2회 동일**. story 출력을 `web/story-out/`(gitignored) 로 이동 — 이전엔 추적 파일 5개를 매 실행 덮어썼다.
+- **D6 — 실제 소프트락(미수정, 오너 결정)**: **BYPASS 는 노드를 `bypassedEncounterNodes` 에 넣지만 ICE 를 지우지 않고, `bossGateNeed` 는 `iceIds.length>0` 을 센다** → 보드의 유일한 비-보스 교전을 우회하면 **코어가 영구 봉인**(탈출은 JACK OUT). 재현: `Flatline's Call` → ICE(9) BYPASS → 보스 앞 ENTER → `Core sealed — 1 more ICE must fall (0/1)`(bypassed=[9], cleared=[]). 최종 census 의 `no_end_in_steps` **3/99 가 전부 이 원인**(random 정책만 BYPASS 시도). 후보: ⓐ 게이트 clamp 에서 우회 노드 제외 ⓑ `have = cleared + bypassed`.
+- **최종 census(수정 후)**: 99런 = **33미션 × 3정책** · **completed 73 / failed 23 / no_end_in_steps 3(=D6)** · **frozen 0/99**(Wilson 95% 0–3.74%) · meanSteps 31.1 · **11.2분**(수정 전 159런은 4.6시간 — 교착이 상한을 태웠다).
+- **검증**: desktop+mobile e2e **94/0/8** · typecheck 0 · lint 0 errors(기존 warning 1) · build PASS · story 결정적 · `check_doc_claims.py` exit 0 · `check_no_novel_prose.py` exit 0 · 추적 파일 무오염.
+- **미커밋**: D1–D5 변경 + 이 로그. 커밋/푸시는 오너 확인 후.

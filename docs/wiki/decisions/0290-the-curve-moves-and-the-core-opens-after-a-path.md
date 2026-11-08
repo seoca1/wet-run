@@ -119,8 +119,9 @@ export const BOSS_GATE_CLEARS_BY_GRADE = [0, 1, 1, 1, 1, 1];
   → ICE(9) BYPASS → 보스 앞 ENTER → `Core sealed — 1 more ICE must fall (0/1)`(bypassed=[9], cleared=[]).
   최종 census 의 `no_end_in_steps` **3/99 가 전부 이 원인**(`random` 정책만 BYPASS 를 시도한다).
   후보: **ⓐ** clamp 에서 이미 우회한 노드를 제외 → 우회가 "해결된 교전"으로 인정됨 **ⓑ**
-  `have = cleared.length + bypassed.length`. 어느 쪽이든 **이 ADR 의 게이트 규칙 변경**이라
-  오너 결정 + ADR 이 필요하다(임의 수정하지 않았다).
+  `have = cleared.length + bypassed.length`. **→ ADR-0308 로 종결**: Jev Choice **p = 0.94** 로
+  **ⓐ 채택**(clamp 에서 우회 노드 제외). 소크 census `no_end_in_steps` **3 → 0**, 밸런스
+  **byte-identical**(헤드리스 정책은 BREACH 만 쓴다).
 
 ## 열린 질문
 

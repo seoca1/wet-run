@@ -114,7 +114,8 @@ COST 상한 + 손패 5장 → blocked: true
   셀이 매번 달랐다(story trace 3회 = **53/60/58 스텝**). 둘 다 수정(미션 수를 보드에서 파생 · 정책 회전
   분리 · 시드 `Math.random` 주입)했고, 이후 census: **frozen 0/99**(Wilson 95% **0–3.74%**) ·
   completed 73 · failed 23 · `no_end_in_steps` 3 · **11분**(수정 전 159런은 교착이 상한을 태워 4.6시간).
-  남은 `no_end_in_steps` 3건은 하네스가 아니라 **ADR-0290 게이트의 BYPASS 소프트락**이다(그 ADR 참조).
+  남은 `no_end_in_steps` 3건은 하네스가 아니라 **ADR-0290 게이트의 BYPASS 소프트락**이었다
+  (→ **ADR-0308 로 수정**: clamp 에서 우회 노드 제외. 이후 census `no_end_in_steps` **0**).
 
 ## 열린 질문
 

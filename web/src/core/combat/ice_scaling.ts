@@ -163,9 +163,15 @@ export function bossGateClears(grade: number): number {
 
 /** What the apex actually demands on THIS board.
  *
- * Clamped to the non-boss ICE the matrix holds, so a mission with one encounter
- * opens after one clear and a mission with none is never sealed. Without this
- * clamp a short mission could be shut for good (ADR-0289).
+ * Clamped to the non-boss ICE the matrix holds **that the runner has not already
+ * resolved**, so a mission with one encounter opens after one clear and a
+ * mission with none is never sealed. Without this clamp a short mission could be
+ * shut for good (ADR-0289).
+ *
+ * A BYPASS counts as resolved (ADR-0308). It costs 60 COST, and while it did not
+ * count, bypassing a board's only encounter left the core sealed with JACK OUT
+ * as the only exit -- reproduced by hand on `Flatline's Call` and by 3 of 99
+ * soak runs. Bypassing one of two encounters still leaves the other required.
  */
 export function bossGateNeed(state: {
   readonly mission: { readonly grade?: number; readonly grade_max?: number };
@@ -175,9 +181,12 @@ export function bossGateNeed(state: {
       readonly iceIds: ReadonlyArray<string>;
     }>;
   } | null;
+  /** Nodes the runner paid BYPASS for. */
+  readonly bypassedEncounterNodes?: readonly number[];
 }): number {
+  const bypassed = new Set(state.bypassedEncounterNodes ?? []);
   const available = (state.matrix?.nodes ?? []).filter(
-    (n) => !n.isBoss && n.iceIds.length > 0,
+    (n, i) => !n.isBoss && n.iceIds.length > 0 && !bypassed.has(i),
   ).length;
   return Math.min(bossGateClears(missionGradeOf(state.mission)), available);
 }

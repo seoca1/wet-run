@@ -5,7 +5,7 @@
  * player journey from boot to combat victory.
  */
 import { test, expect } from "@playwright/test";
-import { gotoMenuOption, enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase } from "./menu-nav";
+import { gotoMenuOption, enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase, openMissionSelect, launchRun } from "./menu-nav";
 
 test.describe("Wet Run Game", () => {
   test.beforeEach(async ({ page }) => {
@@ -60,8 +60,7 @@ test.describe("Wet Run Game", () => {
     });
     expect(initialScreen).toBe("menu");
 
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await openMissionSelect(page);
 
     const newScreen = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getScreen(): string } };
@@ -137,8 +136,7 @@ test.describe("Wet Run Game", () => {
   });
 
   test("full flow: menu → mission select → approach → combat", async ({ page }) => {
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await openMissionSelect(page);
 
     const missionScreen = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getScreen(): string } };
@@ -146,8 +144,8 @@ test.describe("Wet Run Game", () => {
     });
     expect(missionScreen).toBe("mission_select");
 
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await launchRun(page);
+    await enterForPhase(page, "approach");
 
     const phase = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getPhase(): string | null } };
@@ -202,8 +200,7 @@ test.describe("Wet Run Game", () => {
   });
 
   test("navigation between mission select options", async ({ page }) => {
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await openMissionSelect(page);
 
     const screen = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getScreen(): string } };
@@ -224,8 +221,7 @@ test.describe("Wet Run Game", () => {
   });
 
   test("ESC from mission select returns to menu", async ({ page }) => {
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await openMissionSelect(page);
 
     const missionScreen = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getScreen(): string } };

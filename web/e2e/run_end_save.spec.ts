@@ -11,7 +11,7 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import LZString from "lz-string";
-import { gotoMenuOption } from "./menu-nav";
+import { gotoMenuOption, openMissionSelect, launchRun } from "./menu-nav";
 
 interface Snap {
   readonly runPhase: string;
@@ -147,18 +147,10 @@ async function launch(page: Page): Promise<void> {
   await page.reload();
   await page.waitForFunction(() => (window as unknown as { wetrun?: Hook }).wetrun !== undefined);
   await page.waitForTimeout(300);
-  await gotoMenuOption(page, "new_run");
-  await page.keyboard.press("Enter");
-  await expect.poll(() => page.evaluate(() => (window as unknown as { wetrun: Hook }).wetrun.getScreen())).toBe("mission_select");
-  await page.keyboard.press("Enter");
-  // ADR-0283 C: mission select opens PREP, so one more ENTER jacks in.
-  await expect
-    .poll(() =>
-      page.evaluate(() => (window as unknown as { wetrun: Hook }).wetrun.getScreen()),
-    )
-    .toBe("prep");
-  await page.keyboard.press("Enter");
-  await expect.poll(async () => (await snap(page))?.runPhase).toBe("matrix");
+  // NEW RUN → jockey select (ADR-0274) → mission select.
+  await openMissionSelect(page);
+  // mission select → PREP (ADR-0283) → matrix.
+  await launchRun(page);
 }
 
 test("a committed move is in the next autosave", async ({ page }) => {

@@ -1,6 +1,6 @@
 /** Matrix event routing + combat VFX overlay E2E (Tier 5.5). */
 import { test, expect } from "@playwright/test";
-import { enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase } from "./menu-nav";
+import { enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase, openMissionSelect, launchRun } from "./menu-nav";
 
 test.describe("Tier 5.5 VFX", () => {
   test.beforeEach(async ({ page }) => {
@@ -17,10 +17,8 @@ test.describe("Tier 5.5 VFX", () => {
 
   test("matrix shows event glyphs (combat/discovery/trap/etc.)", async ({ page }) => {
     // Navigate to NEW_RUN -> mission_select -> launch.
-    await page.keyboard.press("Enter"); // NEW_RUN
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // launch first mission
-    await page.waitForTimeout(300);
+    await openMissionSelect(page); // NEW_RUN → jockey select → mission select
+    await launchRun(page); // launch first mission → PREP → matrix
 
     // After launch, state.runPhase="matrix" (the screen field stays
     // "mission_select" but draw() routes by runPhase). Verify via state.

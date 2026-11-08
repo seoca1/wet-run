@@ -6,7 +6,7 @@
  * continues to function after SFX dispatch calls.
  */
 import { test, expect } from "@playwright/test";
-import { gotoIceNode } from "./menu-nav";
+import { gotoIceNode, openMissionSelect, launchRun } from "./menu-nav";
 
 test.describe("Sound Triggers", () => {
   test.beforeEach(async ({ page }) => {
@@ -31,10 +31,8 @@ test.describe("Sound Triggers", () => {
     });
 
     // Navigate through full combat flow.
-    await page.keyboard.press("Enter"); // NEW_RUN
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // launch
-    await page.waitForTimeout(300);
+    await openMissionSelect(page); // NEW_RUN → jockey select → mission select
+    await launchRun(page); // launch → PREP → matrix
     await gotoIceNode(page);
 
     // Use a program (combat_hit SFX + possible burn proc + boss phase if applicable).

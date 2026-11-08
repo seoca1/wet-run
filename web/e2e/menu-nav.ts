@@ -139,3 +139,20 @@ export async function enterForScreen(page: Page, want: string, tries = 6): Promi
   }
   throw new Error(`enterForScreen: screen ${want} not reached`);
 }
+
+/** Walk from the main menu to the mission list: NEW RUN → jockey select
+ *  (ADR-0274) → mission select. */
+export async function openMissionSelect(page: Page): Promise<void> {
+  await gotoMenuOption(page, "new_run");
+  await page.keyboard.press("Enter");
+  await enterForScreen(page, "mission_select");
+}
+
+/** Launch the highlighted mission: mission select → PREP (ADR-0283) → matrix.
+ *  Two screens were inserted here after the drivers were first written, and
+ *  each one silently broke every spec that pressed ENTER a fixed number of
+ *  times; walk to the phase instead of counting keys. */
+export async function launchRun(page: Page): Promise<void> {
+  await enterForScreen(page, "prep");
+  await enterForRunPhase(page, "matrix");
+}

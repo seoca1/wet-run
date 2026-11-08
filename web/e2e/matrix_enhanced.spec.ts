@@ -6,7 +6,7 @@
  * - State markers (▸ current, ✓ visited, → adjacent)
  */
 import { test, expect } from "@playwright/test";
-import { gotoIceNode } from "./menu-nav";
+import { gotoIceNode, openMissionSelect, launchRun } from "./menu-nav";
 
 test.describe("Matrix Enhanced", () => {
   test.beforeEach(async ({ page }) => {
@@ -23,10 +23,8 @@ test.describe("Matrix Enhanced", () => {
 
   test("matrix shows zone-colored nodes with ICE preview panel", async ({ page }) => {
     // Navigate to matrix.
-    await page.keyboard.press("Enter"); // NEW_RUN
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // launch first mission
-    await page.waitForTimeout(300);
+    await openMissionSelect(page); // NEW_RUN → jockey select → mission select
+    await launchRun(page); // launch first mission → PREP → matrix
 
     // Verify in matrix state.
     const runPhase = await page.evaluate(() => {
@@ -47,10 +45,8 @@ test.describe("Matrix Enhanced", () => {
 
   test("matrix ICE preview shows current node info (runPhase=combat too)", async ({ page }) => {
     // Navigate matrix -> enter first node -> approach -> combat.
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await openMissionSelect(page);
+    await launchRun(page);
     await gotoIceNode(page);
 
     // Verify iceRoster populated.

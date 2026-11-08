@@ -5,6 +5,7 @@ import {
   chooseEncounterVerb,
   enterForScreen,
   gotoEncounterDecision,
+  launchRun,
 } from "./menu-nav";
 
 test.beforeEach(async ({ page }) => {
@@ -14,7 +15,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto("./");
   await page.waitForFunction(() => window.wetrun !== undefined);
   await enterForScreen(page, "mission_select");
-  await page.keyboard.press("Enter");
+  await launchRun(page);
   await gotoEncounterDecision(page);
 });
 

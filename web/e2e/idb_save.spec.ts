@@ -13,7 +13,7 @@
  * 5. Verifies save survives (via IDB read)
  */
 import { test, expect } from "@playwright/test";
-import { gotoIceNode } from "./menu-nav";
+import { gotoIceNode, openMissionSelect, launchRun } from "./menu-nav";
 
 test.describe("IDB Save", () => {
   test.beforeEach(async ({ page }) => {
@@ -29,11 +29,9 @@ test.describe("IDB Save", () => {
   });
 
   test("IDB save survives page reload", async ({ page }) => {
-    // Phase 1: enter main menu -> NEW_RUN -> mission_select -> Enter -> combat.
-    await page.keyboard.press("Enter"); // NEW_RUN (highlighted)
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // launch mission
-    await page.waitForTimeout(300);
+    // Phase 1: enter main menu -> NEW_RUN -> mission_select -> launch -> combat.
+    await openMissionSelect(page); // NEW_RUN → jockey select → mission select
+    await launchRun(page); // launch mission → PREP → matrix
     await gotoIceNode(page);
 
     // Inspect autosave state (IDB write should have happened on draw()).

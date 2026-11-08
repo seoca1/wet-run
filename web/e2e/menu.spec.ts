@@ -5,7 +5,7 @@
  * render for Tier 5+ options.
  */
 import { test, expect } from "@playwright/test";
-import { gotoMenuOption } from "./menu-nav";
+import { gotoMenuOption, openMissionSelect } from "./menu-nav";
 
 test.describe("Main Menu", () => {
   test.beforeEach(async ({ page }) => {
@@ -37,8 +37,7 @@ test.describe("Main Menu", () => {
   });
 
   test("NEW_RUN option navigates to mission select", async ({ page }) => {
-    await page.keyboard.press("Enter");
-    await page.waitForTimeout(300);
+    await openMissionSelect(page);
 
     const screen = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getScreen(): string } };

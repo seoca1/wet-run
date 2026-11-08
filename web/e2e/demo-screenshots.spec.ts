@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import * as fs from "fs";
 import * as path from "path";
-import { chooseEncounterVerb, gotoEncounterDecision } from "./menu-nav";
+import { chooseEncounterVerb, gotoEncounterDecision, openMissionSelect, launchRun } from "./menu-nav";
 
 const SCREENSHOT_DIR = path.resolve(
   import.meta.dirname,
@@ -42,14 +42,14 @@ test.describe("Game Demo - Menu to Combat", () => {
     });
     expect(screen).toBe("menu");
     
-    // 2. MISSION SELECT - Press Enter
-    await page.keyboard.press("Enter");
+    // 2. MISSION SELECT - NEW_RUN → jockey select → mission select
+    await openMissionSelect(page);
     await page.waitForTimeout(1000);
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, "02-mission-select.png"), fullPage: true });
     console.log("📸 02-mission-select.png captured");
     
-    // 3. LAUNCH MISSION - Press Enter
-    await page.keyboard.press("Enter");
+    // 3. LAUNCH MISSION - mission select → PREP → matrix
+    await launchRun(page);
     await page.waitForTimeout(1000);
     await page.screenshot({ path: path.join(SCREENSHOT_DIR, "03-matrix.png"), fullPage: true });
     console.log("📸 03-matrix.png captured");

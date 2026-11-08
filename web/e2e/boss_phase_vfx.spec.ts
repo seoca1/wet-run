@@ -10,6 +10,7 @@
  *   - no JS errors during boss phase VFX dispatch
  */
 import { test, expect } from "@playwright/test";
+import { openMissionSelect, launchRun } from "./menu-nav";
 
 test.describe("Boss Phase VFX", () => {
   test.beforeEach(async ({ page }) => {
@@ -29,10 +30,8 @@ test.describe("Boss Phase VFX", () => {
     page.on("pageerror", (err) => errors.push(`PAGE_ERROR: ${err.message}`));
 
     // Navigate to matrix (won't set bossPhase yet, but exercises flow).
-    await page.keyboard.press("Enter"); // NEW_RUN
-    await page.waitForTimeout(300);
-    await page.keyboard.press("Enter"); // launch (uses watchdog = not boss, so bossPhase=0)
-    await page.waitForTimeout(300);
+    await openMissionSelect(page); // NEW_RUN → jockey select → mission select
+    await launchRun(page); // launch (uses watchdog = not boss, so bossPhase=0)
 
     // State should be matrix now.
     const phase = await page.evaluate(() => {

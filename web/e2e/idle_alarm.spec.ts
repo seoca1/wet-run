@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { enterForScreen, gotoIceNode } from "./menu-nav";
+import { enterForScreen, gotoIceNode, launchRun } from "./menu-nav";
 import type { GameState } from "../src/core/types";
 
 declare global {
@@ -17,13 +17,18 @@ test.beforeEach(async ({ page }) => {
   await page.waitForFunction(() => window.wetrun !== undefined);
   await page.clock.pauseAt(new Date("2026-11-01T00:01:00Z"));
   await enterForScreen(page, "mission_select");
-  await page.keyboard.press("Enter");
+  await launchRun(page);
   await gotoIceNode(page);
 });
 
+// The mocked clock is slow: `page.clock.runFor` steps one rAF at a time and the
+// game runs two rAF loops, so ~0.7ms of real time buys 1ms of mocked time. The
+// 20s idle below costs ~15s real and the 5x9s loop ~35s -- both over the 30s
+// default. Raise the ceiling rather than weaken the assertions.
 test("idle rAF dispatch raises alarm without directly attacking", async ({
   page,
 }) => {
+  test.setTimeout(120_000);
   // Given
   const before = await page.evaluate(() => ({
     alarm: window.wetrun?.state?.alarmLevel,
@@ -48,6 +53,7 @@ test("idle rAF dispatch raises alarm without directly attacking", async ({
 test("real input prevents alarm growth despite elapsed combat time", async ({
   page,
 }) => {
+  test.setTimeout(120_000);
   // Given
   expect(await page.evaluate(() => window.wetrun?.state?.alarmLevel)).toBe(0);
   // When

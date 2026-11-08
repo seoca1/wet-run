@@ -7,7 +7,7 @@
  * Covers:
  *   - virtual gamepad auto-shows on touch devices
  *   - D-pad touch navigates menu
- *   - A button touch confirms (NEW_RUN → mission_select)
+ *   - A button touch confirms (NEW_RUN → jockey_select)
  *   - program row touch uses a program in combat
  */
 import { test, expect, type Page } from "@playwright/test";
@@ -53,7 +53,7 @@ test.describe("mobile touch input", () => {
     await expect(page.locator("canvas#game-canvas")).toBeVisible();
   });
 
-  test("A button touch confirms NEW_RUN → mission_select", async ({ page }, info) => {
+  test("A button touch confirms NEW_RUN → jockey_select", async ({ page }, info) => {
     test.skip(await isDesktop(page), "overlay absent on desktop by design");
     const aBtn = page.locator("#wetrun-gamepad-root button").filter({ hasText: "A" });
     await expect(aBtn).toBeVisible();
@@ -61,12 +61,12 @@ test.describe("mobile touch input", () => {
     // Tap A on the highlighted NEW_RUN option.
     await tap(page, aBtn);
 
-    // Should transition to mission_select screen.
+    // Should advance from the menu; ADR-0274 inserts jockey_select first.
     const screen = await page.evaluate(() => {
       const w = window as unknown as { wetrun?: { getScreen(): string | null } };
       return w.wetrun?.getScreen() ?? null;
     });
-    expect(screen).toBe("mission_select");
+    expect(screen).toBe("jockey_select");
   });
 
   test("program row touch uses a program in combat", async ({ page }, info) => {

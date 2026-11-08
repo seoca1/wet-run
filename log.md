@@ -3523,3 +3523,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **검증**: desktop+mobile e2e **94/0/8** · typecheck 0 · lint 0 errors(기존 warning 1) · build PASS · story 결정적 · `check_doc_claims.py` exit 0 · `check_no_novel_prose.py` exit 0 · 추적 파일 무오염.
 - **커밋**: `6a2decfd`(D5) · `b0cb42bf`(D1) · `8017e04d`(D2–D4) · `980c2d10`(이 로그) → `origin/main`.
 - **후속(같은 날)**: ADR-0265 · 0283 · 0290 의 `## Implementation Status` 에 갱신 주석(수치 정정 · prep 회귀 · BYPASS 소프트락). 위 "미커밋" 은 해소됐다.
+
+## [2026-11-08] fix(core) | 우회는 게이트를 통과한다 — 유일 교전을 우회하면 미션이 잠겼다 (ADR-0308)
+
+- **배경**: 위 검증 항목이 남긴 열린 결함 D6. **BYPASS 는 노드를 `bypassedEncounterNodes` 에 넣지만 `iceIds` 를 지우지 않고**, ADR-0290 의 `bossGateNeed` clamp 는 `iceIds.length > 0` 을 세므로 **보드의 유일한 비-보스 교전을 우회하면 코어가 영구 봉인**(탈출은 JACK OUT). 실브라우저 재현: `Flatline's Call` → ICE(9) BYPASS → 보스 앞 ENTER → `Core sealed — 1 more ICE must fall (0/1)`(bypassed=[9], cleared=[]). 소크 census 의 `no_end_in_steps` **3/99 가 전부 이 원인**(`random` 정책만 BYPASS 시도).
+- **판정**: **Jev Choice** — 후보 ⓐ clamp 에서 우회 노드 제외 / ⓑ `have = cleared + bypassed` / defer → **ⓐ p = 0.94, confidence 0.91**(ⓑ 0.05 · defer 0.01). Choice 임계 0.5 · 보수 임계 0.85 모두 상회.
+- **수정**: `bossGateNeed` 가 `bypassedEncounterNodes` 를 `available` 에서 제외 = **우회를 "해결된 교전"으로 인정**(60 COST 를 이미 냈고, 하네스 `hasBusiness` 와 같은 의미). 교전이 둘 이상이면 **우회한 것 말고 나머지는 여전히 요구**된다.
+- **부수 — D4 잔여 결함 수정**: 페이지 전역 시드는 **셀 k 의 주사위를 이전 셀들에 의존**시켜 docstring 의 "셀 재현" 주장이 거짓이었다. **셀 단위 재시드**(seed = `SEED + mission*31 + policyIdx`)로 교체. 검증: 같은 셀이 **단독 실행과 다른 스윕의 run#1 에서 동일 결과**(steps 13 · `arc2_status_quo`).
+- **측정**: 밸런스 **byte-identical** — `survival --policies --seeds 32` = optimal 100/98.2/76.7/51.2/26.0/13.5 · default 100/78.3/47.4/36.3/4.9/2.1 · gap +16.1pp(헤드리스 정책은 BREACH 만 쓴다). 소크 census(99런 = 33미션 × 3정책, per-cell 시드): **completed 68 / failed 31 / no_end_in_steps 0**(직전 3) · **frozen 0/99**(Wilson 95% 0–3.74%) · 교착 0 · meanSteps 22.2 · **8.5분**.
+- **검증**: vitest **207 files / 4181 tests**(+1 file / +3 tests — `adr0308_bypass_resolves_the_gate.test.ts`) · typecheck 0 · lint 0 errors · build PASS · e2e desktop+mobile **94 passed / 0 failed / 8 skipped** · `check_doc_claims.py` exit 0(ADR 추가로 **AGENTS.md 카운트 227/0307 → 228/0308** 갱신) · `check_no_novel_prose.py` exit 0.
+- **ADR**: 신규 **0308**(색인 등록) · 0290 · 0265 `Implementation Status` 에 참조 주석.

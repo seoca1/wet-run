@@ -6,13 +6,14 @@
  * build in a real browser with real key presses across the mission list, and
  * reports where and how often a run cannot progress.
  *
- * The run is deterministic -- the matrix generator, the combat dice and the
- * program order are all seeded from the mission, and the policy is a pure
- * function of the observable state (except the seeded "random" policy). So
- * repeating one (mission, policy) cell reproduces the same run exactly;
- * variance comes from covering *different cells*, which is why this enumerates
- * missions instead of repeating a few. The reported rate is a census over
- * those cells, not a sample.
+ * The board is seeded from the mission, but the combat dice are not: the game
+ * draws them from the page's `Math.random`, and only the *headless* harnesses
+ * (balance_sim, mission_survival) replace it. So this spec installs a seeded
+ * `Math.random` (SEED) before the page loads. Without that the run varies from
+ * run to run -- three story traces of the same cell came out 53/60/58 steps --
+ * and the reported rate would be a sample, not a census. With it, repeating one
+ * (mission, policy) cell reproduces the same run exactly, and variance comes
+ * from covering *different cells*.
  *
  * Rules this harness holds itself to:
  *   - real keys only. It never writes `wetrun.state`; the reducer and the
@@ -27,19 +28,34 @@
  *                         does something -- and that something is losing the run
  *
  * Run it:
- *   npm run soak
- *   SOAK_RUNS=159 SOAK_POLICY=mixed npm run soak
+ *   npm run soak                  # 9 runs, a smoke pass
+ *   SOAK_RUNS=99 npm run soak     # the full census: 33 missions x 3 policies
  *
  * Skipped unless SOAK is set, so `npm run e2e` stays fast.
  */
 import { test, type Page } from "@playwright/test";
 import { gotoMenuOption } from "./menu-nav";
+import { loadMissionsCatalog } from "../src/core/data_loaders";
+import { filterMissionsByUniverse } from "../src/core/missions_filter";
+import { bossGateClears } from "../src/core/combat/ice_scaling";
+import missionsJson from "../src/data/missions.json" with { type: "json" };
+
+/** The board the mission select screen offers: sprawl-universe missions only
+ * (ADR-0213), which is shorter than `missions.json`. `startRun` wraps with
+ * ArrowDown, so assuming the full catalog here made 60 of 159 runs duplicates
+ * and left 20 missions never soaked. Derive it so it cannot drift again. */
+const SPRAWL_MISSION_COUNT = filterMissionsByUniverse(
+  loadMissionsCatalog(missionsJson),
+  "sprawl",
+).length;
 
 const RUNS = Number(process.env.SOAK_RUNS ?? "9");
 const POLICY = process.env.SOAK_POLICY ?? "mixed";
 const MAX_STEPS = Number(process.env.SOAK_MAX_STEPS ?? "320");
 const SEED = Number(process.env.SOAK_SEED ?? "20261103");
-const MISSION_COUNT = Number(process.env.SOAK_MISSION_COUNT ?? "53");
+const MISSION_COUNT = Number(
+  process.env.SOAK_MISSION_COUNT ?? String(SPRAWL_MISSION_COUNT),
+);
 const MISSION_BASE = Number(process.env.SOAK_MISSION_BASE ?? "0");
 const TRACE = process.env.SOAK_TRACE === "1";
 const COST_LIMIT = 100;
@@ -252,6 +268,22 @@ function mulberry32(seed: number): () => number {
   };
 }
 
+/** Install a seeded `Math.random` in the page before it boots. The game draws
+ * combat dice from `Math.random` (the headless harnesses replace it; the
+ * browser does not), so without this the census is a sample, not a census. */
+async function seedMathRandom(page: Page, seed: number): Promise<void> {
+  await page.addInitScript((s: number) => {
+    let a = s >>> 0;
+    Math.random = () => {
+      a = (a + 0x6d2b79f5) >>> 0;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }, seed);
+}
+
 /** Press one key and wait (briefly) for the projection to move. */
 async function pressAndWatch(
   page: Page,
@@ -283,14 +315,27 @@ async function inertProgressKeys(page: Page): Promise<boolean> {
   return true;
 }
 
+/** Clears the apex demands on this board (ADR-0290), clamped to the non-boss
+ * ICE it holds -- mirrors `bossGateNeed`. */
+function gateNeed(st: Run): number {
+  const available = st.nodes.filter((n) => !n.boss && n.ice > 0).length;
+  return Math.min(bossGateClears(st.grade), available);
+}
+
 /** Is this node still worth visiting: unresolved ICE, or a boss not cleared?
  * Bypassed nodes count as resolved -- otherwise a policy that BYPASSes keeps
- * routing back to the node it just bypassed, forever. */
+ * routing back to the node it just bypassed, forever.
+ *
+ * ADR-0290 seals the apex until the board's encounters fall, so a sealed boss
+ * is not business yet: routing to it just presses ENTER on "Core sealed" for
+ * the whole step ceiling. 18 of 159 census runs stalled exactly that way, on
+ * the 8 missions where the boss sorts before an ICE in the adjacency list. */
 function hasBusiness(st: Run, i: number): boolean {
   const n = st.nodes[i];
   if (!n) return false;
   if (st.cleared.includes(i) || st.bypassed.includes(i)) return false;
-  return n.ice > 0 || n.boss;
+  if (n.boss) return st.cleared.length >= gateNeed(st);
+  return n.ice > 0;
 }
 
 /** First step of a BFS from the current node toward the nearest node that
@@ -488,6 +533,7 @@ test.describe("direct-control playthrough soak", () => {
     await page.addInitScript(() =>
       localStorage.setItem("wetrun_tutorial_completed", "true"),
     );
+    await seedMathRandom(page, SEED);
     await page.goto("./");
     await page.waitForFunction(
       () => (window as unknown as { wetrun?: unknown }).wetrun !== undefined,
@@ -495,7 +541,13 @@ test.describe("direct-control playthrough soak", () => {
 
     for (let run = 0; run < RUNS; run += 1) {
       const policy = policies[run % policies.length] as string;
-      const mission = (MISSION_BASE + run) % MISSION_COUNT;
+      // Decouple the two cycles. With `mission = run % MISSION_COUNT` and
+      // `policy = run % policies.length` they move in lockstep whenever the
+      // mission count is a multiple of the policy count -- 33 is -- so mission
+      // k only ever met policy k % 3 and the census quietly dropped two thirds
+      // of its cells (0 of 33 missions saw more than one policy).
+      const mission =
+        (MISSION_BASE + Math.floor(run / policies.length)) % MISSION_COUNT;
       const started = Date.now();
       let steps = 0;
       let outcome: Outcome = "no_end_in_steps";

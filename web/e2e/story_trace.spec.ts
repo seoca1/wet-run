@@ -2,9 +2,12 @@
  *
  * ADR-0277 changed what the curated deck holds, and a balance table cannot say
  * whether the run *reads*. This plays one run with real key presses against
- * the real build, records every line the game prints, and writes the result to
- * `docs/design/jockey-identity-2026-11-04/story-trace.txt` so the narration can
- * be checked against something that actually happened.
+ * the real build and records every line the game prints.
+ *
+ * Output goes to `web/test-results/story/` (gitignored). It used to overwrite
+ * five tracked files under `docs/design/`, so every run dirtied the tree; and
+ * because the page's `Math.random` was unseeded, a fresh capture never matched
+ * the committed one (the same cell came out 53/60/58 steps on three runs).
  *
  * Rules it holds itself to (same as the soak, ADR-0265):
  *   - real keys only; it never writes `wetrun.state`.
@@ -16,19 +19,32 @@
  *   npm run story
  */
 import { test, type Page } from "@playwright/test";
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { join } from "node:path";
 import { gotoMenuOption } from "./menu-nav";
 
 const JOCKEY = Number(process.env.STORY_JOCKEY ?? "0");
 const MISSION = Number(process.env.STORY_MISSION ?? "0");
 const MAX_STEPS = Number(process.env.STORY_MAX_STEPS ?? "400");
-const OUT = fileURLToPath(
-  new URL(
-    "../../docs/design/jockey-identity-2026-11-04/story-trace.txt",
-    import.meta.url,
-  ),
-);
+const SEED = Number(process.env.STORY_SEED ?? "20261108");
+const OUT_DIR = fileURLToPath(new URL("../story-out/", import.meta.url));
+const OUT = join(OUT_DIR, "story-trace.txt");
+
+/** Install a seeded `Math.random` in the page before it boots. The game draws
+ * combat dice from `Math.random`, and only the headless harnesses replace it. */
+async function seedMathRandom(page: Page, seed: number): Promise<void> {
+  await page.addInitScript((s: number) => {
+    let a = s >>> 0;
+    Math.random = () => {
+      a = (a + 0x6d2b79f5) >>> 0;
+      let t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }, seed);
+}
 
 type NodeMeta = { readonly adj: readonly number[]; readonly ice: number; readonly boss: boolean };
 
@@ -181,14 +197,7 @@ async function startRun(page: Page, jockey: number, mission: number): Promise<vo
     undefined,
     { timeout: 10000 },
   );
-  await page.screenshot({
-    path: fileURLToPath(
-      new URL(
-        "../../docs/design/jockey-identity-2026-11-04/00-jockey-select.png",
-        import.meta.url,
-      ),
-    ),
-  });
+  await page.screenshot({ path: join(OUT_DIR, "00-jockey-select.png") });
   for (let i = 0; i < jockey; i += 1) {
     await page.keyboard.press("ArrowDown");
     await page.waitForTimeout(80);
@@ -231,9 +240,11 @@ test.describe("story trace", () => {
   test.setTimeout(0);
 
   test("plays one run and writes down every line", async ({ page }) => {
+    mkdirSync(OUT_DIR, { recursive: true });
     await page.addInitScript(() =>
       localStorage.setItem("wetrun_tutorial_completed", "true"),
     );
+    await seedMathRandom(page, SEED);
     await page.goto("./");
     await page.waitForFunction(
       () => (window as unknown as { wetrun?: unknown }).wetrun !== undefined,
@@ -256,14 +267,7 @@ test.describe("story trace", () => {
     const shoot = async (name: string): Promise<void> => {
       if (shots.has(name)) return;
       shots.add(name);
-      await page.screenshot({
-        path: fileURLToPath(
-          new URL(
-            `../../docs/design/jockey-identity-2026-11-04/${name}.png`,
-            import.meta.url,
-          ),
-        ),
-      });
+      await page.screenshot({ path: join(OUT_DIR, `${name}.png`) });
     };
 
     await shoot("01-run-intro");

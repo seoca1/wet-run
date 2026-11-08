@@ -38,6 +38,10 @@ the file would have been overwritten by the adopted deck. Raw files:
   CASE, `First Jack` (arc 1), two fights, ending `arc1_wage_slave`, 2,300cr,
   7 turns. The trace records the `combatLog` too, so a card's hit is not lost
   behind the newest line.
+  **As of 2026-11-08 the tool writes to `web/story-out/` (gitignored),
+  not here** — it used to overwrite this file and four stills on every run, and
+  the page's `Math.random` was unseeded, so a fresh capture never matched the
+  committed one. This file is the historical capture.
 - `story-narration.md` — that trace retold as prose, plus the plausibility
   verdict, the corrections, and the defects the retelling exposed.
 - `00-jockey-select.png` … `04-ending.png` — one still per beat.
@@ -101,7 +105,7 @@ Raw: `ending-distribution.txt`.
 ```bash
 cd web
 npm run build
-npm run story            # writes story-trace.txt + screenshots (needs :5195)
+npm run story            # writes web/story-out/ (needs :5195)
 STORY_MISSION=9 npm run story   # "First Jack" specifically
 npm run balance -- --deck opening|veteran|heretic
 npm run soak             # direct-control sweep, freeze statistics

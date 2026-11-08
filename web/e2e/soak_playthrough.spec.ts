@@ -9,11 +9,11 @@
  * The board is seeded from the mission, but the combat dice are not: the game
  * draws them from the page's `Math.random`, and only the *headless* harnesses
  * (balance_sim, mission_survival) replace it. So this spec installs a seeded
- * `Math.random` (SEED) before the page loads. Without that the run varies from
- * run to run -- three story traces of the same cell came out 53/60/58 steps --
- * and the reported rate would be a sample, not a census. With it, repeating one
- * (mission, policy) cell reproduces the same run exactly, and variance comes
- * from covering *different cells*.
+ * `Math.random` and **reseeds it per cell** (the seed comes from mission +
+ * policy) before each run. Without that the run varies from run to run -- three
+ * story traces of the same cell came out 53/60/58 steps -- and the reported rate
+ * would be a sample, not a census. With it, a cell reproduces on its own, not
+ * only as part of the whole sweep.
  *
  * Rules this harness holds itself to:
  *   - real keys only. It never writes `wetrun.state`; the reducer and the
@@ -268,19 +268,33 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-/** Install a seeded `Math.random` in the page before it boots. The game draws
- * combat dice from `Math.random` (the headless harnesses replace it; the
- * browser does not), so without this the census is a sample, not a census. */
+/** Install a seeded `Math.random` in the page and expose a reseed hook, so each
+ * (mission, policy) cell draws the same dice no matter which cells ran before
+ * it. A single page-wide seed would make cell k depend on runs 0..k-1 -- the run
+ * would be reproducible only as part of the whole sweep, not on its own. */
 async function seedMathRandom(page: Page, seed: number): Promise<void> {
   await page.addInitScript((s: number) => {
-    let a = s >>> 0;
-    Math.random = () => {
-      a = (a + 0x6d2b79f5) >>> 0;
-      let t = a;
-      t = Math.imul(t ^ (t >>> 15), t | 1);
-      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    const w = window as unknown as { __seedMathRandom?: (n: number) => void };
+    const install = (n: number): void => {
+      let a = n >>> 0;
+      Math.random = () => {
+        a = (a + 0x6d2b79f5) >>> 0;
+        let t = a;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
     };
+    w.__seedMathRandom = install;
+    install(s);
+  }, seed);
+}
+
+/** Reseed the page's dice for one cell. */
+async function reseedForCell(page: Page, seed: number): Promise<void> {
+  await page.evaluate((s: number) => {
+    (window as unknown as { __seedMathRandom?: (n: number) => void })
+      .__seedMathRandom?.(s);
   }, seed);
 }
 
@@ -526,7 +540,6 @@ test.describe("direct-control playthrough soak", () => {
     page,
   }) => {
     const reports: RunReport[] = [];
-    const rng = mulberry32(SEED);
     const policies =
       POLICY === "mixed" ? ["cheap", "expensive", "random"] : [POLICY];
 
@@ -548,6 +561,10 @@ test.describe("direct-control playthrough soak", () => {
       // of its cells (0 of 33 missions saw more than one policy).
       const mission =
         (MISSION_BASE + Math.floor(run / policies.length)) % MISSION_COUNT;
+      // A cell's dice come from the cell, not from how many cells ran before it.
+      const cellSeed = SEED + mission * 31 + policies.indexOf(policy);
+      await reseedForCell(page, cellSeed);
+      const rng = mulberry32(cellSeed);
       const started = Date.now();
       let steps = 0;
       let outcome: Outcome = "no_end_in_steps";

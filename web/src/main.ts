@@ -1775,7 +1775,12 @@ class Game {
 
     if (
       this.state !== null &&
-      ["menu", "mission_select", "far_grid_hub"].includes(this.screen) &&
+      // A live run keeps the last menu screen in `this.screen` (draw() routes
+      // by runPhase), so this list has to name every screen a run can be
+      // launched from. PREP (ADR-0283 C''') was missing, and the idle alarm
+      // stopped firing entirely -- the same "register the screen" footgun as
+      // ADR-0275's input handlers.
+      ["menu", "mission_select", "prep", "far_grid_hub"].includes(this.screen) &&
       !this.tutorialActive &&
       !document.hidden
     ) {

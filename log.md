@@ -3521,4 +3521,5 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **D6 — 실제 소프트락(미수정, 오너 결정)**: **BYPASS 는 노드를 `bypassedEncounterNodes` 에 넣지만 ICE 를 지우지 않고, `bossGateNeed` 는 `iceIds.length>0` 을 센다** → 보드의 유일한 비-보스 교전을 우회하면 **코어가 영구 봉인**(탈출은 JACK OUT). 재현: `Flatline's Call` → ICE(9) BYPASS → 보스 앞 ENTER → `Core sealed — 1 more ICE must fall (0/1)`(bypassed=[9], cleared=[]). 최종 census 의 `no_end_in_steps` **3/99 가 전부 이 원인**(random 정책만 BYPASS 시도). 후보: ⓐ 게이트 clamp 에서 우회 노드 제외 ⓑ `have = cleared + bypassed`.
 - **최종 census(수정 후)**: 99런 = **33미션 × 3정책** · **completed 73 / failed 23 / no_end_in_steps 3(=D6)** · **frozen 0/99**(Wilson 95% 0–3.74%) · meanSteps 31.1 · **11.2분**(수정 전 159런은 4.6시간 — 교착이 상한을 태웠다).
 - **검증**: desktop+mobile e2e **94/0/8** · typecheck 0 · lint 0 errors(기존 warning 1) · build PASS · story 결정적 · `check_doc_claims.py` exit 0 · `check_no_novel_prose.py` exit 0 · 추적 파일 무오염.
-- **미커밋**: D1–D5 변경 + 이 로그. 커밋/푸시는 오너 확인 후.
+- **커밋**: `6a2decfd`(D5) · `b0cb42bf`(D1) · `8017e04d`(D2–D4) · `980c2d10`(이 로그) → `origin/main`.
+- **후속(같은 날)**: ADR-0265 · 0283 · 0290 의 `## Implementation Status` 에 갱신 주석(수치 정정 · prep 회귀 · BYPASS 소프트락). 위 "미커밋" 은 해소됐다.

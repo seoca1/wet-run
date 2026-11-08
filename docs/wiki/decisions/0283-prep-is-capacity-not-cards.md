@@ -126,6 +126,18 @@ tier 상승보다 비싸다 → 카드를 바꾸는 prep 은 **역할을 없앤�
 - `run_end_save.spec.ts` 의 3개 실패는 **이 변경 이전부터 실패**였다(HEAD 에서 stash 후 확인).
 - 수리 수치가 `maxHp` 비율이라 **HP prep 과 강하게 상호작용한다** — 수리 공식을 바꾸면 §C″ 의
   교차점도 함께 움직인다.
+- **2026-11-08 갱신 (브라우저 재검증) — 회귀 1건 + 드라이버 수 정정.**
+  ⑴ **회귀**: `prep` 이 **유휴 알람의 화면 화이트리스트**(`web/src/main.ts` 의 rAF `loop`)에 빠져
+  있었다. 런이 살아 있는 동안 `this.screen` 은 마지막 메뉴 화면으로 남으므로(`draw()` 는 `runPhase`
+  로 분기) 그 목록은 "런을 시작할 수 있는 **모든** 화면"을 담아야 하는데, `prep` 이 없어
+  `launchSelected()` 이후 화면이 `"prep"` 로 고정 → **유휴 TRACE 상승이 완전히 죽었다**(TRACE 2/5 가
+  영영 안 뜬다). 수정: 목록에 `"prep"` 추가. **ADR-0275 의 "화면 등록" 함정이 세 번째 재발**
+  (입력 → 소크/스토리 드라이버 → 유휴 알람).
+  ⑵ **드라이버는 2개가 아니었다**: 아래 Notes 의 "e2e 드라이버 2개" 는 이 ADR 이 직접 건드린 것만 센
+  것이다. 실제로는 ADR-0274 의 `jockey_select` 까지 겹쳐 **낡은 스펙 22건**(desktop 21 + mobile 1)이
+  red 였고, 4일간 방치됐다(그 사이 세션들은 soak/story 만 돌려 "통과"로 기록했다). `menu-nav.ts` 에
+  `openMissionSelect` · `launchRun` 을 추가해 13개 스펙을 고쳤다 → suite **94 passed / 0 failed /
+  8 skipped**(desktop + mobile).
 
 ## 열린 질문
 

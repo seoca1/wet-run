@@ -108,6 +108,19 @@ export const BOSS_GATE_CLEARS_BY_GRADE = [0, 1, 1, 1, 1, 1];
 - **e2e 드라이버 수정 불필요** — 새 화면 없음. story trace 는 봉인을 만나면 교전하고 코어로 간다.
 - **`picky` 의 이전 g6 0.0% 의혹(`fewestFightsNextHop`)은 별개**로 남는다 — 이 결정은 그 정책을
   쓰지 않는다.
+- **2026-11-08 갱신 (브라우저 재검증) — 하네스 미반영 + 소프트락 1건.**
+  ⑴ **위 Evidence 의 봉인 회피는 `play_policy.ts`(헤드리스)에만 들어갔다.** 브라우저 소크의
+  `nextHop`(`soak_playthrough.spec.ts`)은 봉인된 apex 를 그대로 목표로 삼아, 159런 중 **18런**이
+  `Core sealed — 1 more ICE must fall (0/1)` 를 **320스텝 동안** 누르며 헛돌았다(보스가 인접 ICE 보다
+  먼저 정렬되는 8개 미션, 3정책 공통). 봉인이 풀릴 때까지 보스를 business 에서 제외해 **18 → 3**.
+  ⑵ **소프트락 — 미수정, 오너 결정 필요.** `BYPASS` 는 노드를 `bypassedEncounterNodes` 에 넣지만
+  `iceIds` 를 지우지 않고, `bossGateNeed` 의 clamp 는 `iceIds.length > 0` 을 센다. 그래서 보드의
+  **유일한 비-보스 교전을 우회하면 코어가 영구히 봉인**된다(탈출은 JACK OUT 뿐). 재현: `Flatline's Call`
+  → ICE(9) BYPASS → 보스 앞 ENTER → `Core sealed — 1 more ICE must fall (0/1)`(bypassed=[9], cleared=[]).
+  최종 census 의 `no_end_in_steps` **3/99 가 전부 이 원인**(`random` 정책만 BYPASS 를 시도한다).
+  후보: **ⓐ** clamp 에서 이미 우회한 노드를 제외 → 우회가 "해결된 교전"으로 인정됨 **ⓑ**
+  `have = cleared.length + bypassed.length`. 어느 쪽이든 **이 ADR 의 게이트 규칙 변경**이라
+  오너 결정 + ADR 이 필요하다(임의 수정하지 않았다).
 
 ## 열린 질문
 

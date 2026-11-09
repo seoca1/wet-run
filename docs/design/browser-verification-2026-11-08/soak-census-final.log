@@ -1,0 +1,222 @@
+
+> wetrun-web@0.1.0 soak
+> SOAK=1 PLAYWRIGHT_BASE_URL=${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5195} playwright test e2e/soak_playthrough.spec.ts --project=desktop-chromium
+
+
+Running 1 test using 1 worker
+
+SOAK-RUN {"run":0,"mission":"aleph_fragment","grade":5,"policy":"cheap","outcome":"completed","steps":33,"ms":5663,"maxAlarm":54,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":1,"mission":"aleph_fragment","grade":5,"policy":"expensive","outcome":"completed","steps":38,"ms":6649,"maxAlarm":63,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":2,"mission":"aleph_fragment","grade":5,"policy":"random","outcome":"failed","steps":44,"ms":6623,"maxAlarm":100,"minAffordable":0,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":3,"mission":"black_ice_dream","grade":4,"policy":"cheap","outcome":"completed","steps":18,"ms":3319,"maxAlarm":32,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":4,"mission":"black_ice_dream","grade":4,"policy":"expensive","outcome":"completed","steps":17,"ms":3160,"maxAlarm":26,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":5,"mission":"black_ice_dream","grade":4,"policy":"random","outcome":"failed","steps":21,"ms":3815,"maxAlarm":92,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":6,"mission":"craft_job","grade":5,"policy":"cheap","outcome":"failed","steps":25,"ms":4960,"maxAlarm":47,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":7,"mission":"craft_job","grade":5,"policy":"expensive","outcome":"completed","steps":26,"ms":4754,"maxAlarm":49,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":8,"mission":"craft_job","grade":5,"policy":"random","outcome":"completed","steps":27,"ms":4746,"maxAlarm":49,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":9,"mission":"data_retrieval","grade":2,"policy":"cheap","outcome":"completed","steps":15,"ms":2804,"maxAlarm":18,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":10,"mission":"data_retrieval","grade":2,"policy":"expensive","outcome":"completed","steps":16,"ms":2874,"maxAlarm":20,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":11,"mission":"data_retrieval","grade":2,"policy":"random","outcome":"completed","steps":17,"ms":2961,"maxAlarm":22,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":12,"mission":"delivery_to_finn","grade":2,"policy":"cheap","outcome":"completed","steps":11,"ms":2460,"maxAlarm":20,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":13,"mission":"delivery_to_finn","grade":2,"policy":"expensive","outcome":"completed","steps":11,"ms":2442,"maxAlarm":23,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":14,"mission":"delivery_to_finn","grade":2,"policy":"random","outcome":"completed","steps":12,"ms":2481,"maxAlarm":20,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":15,"mission":"dixies_choice","grade":5,"policy":"cheap","outcome":"completed","steps":44,"ms":8078,"maxAlarm":90,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":16,"mission":"dixies_choice","grade":5,"policy":"expensive","outcome":"failed","steps":37,"ms":7208,"maxAlarm":71,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":17,"mission":"dixies_choice","grade":5,"policy":"random","outcome":"failed","steps":39,"ms":7302,"maxAlarm":68,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":18,"mission":"dixies_offer","grade":5,"policy":"cheap","outcome":"failed","steps":24,"ms":4956,"maxAlarm":48,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":19,"mission":"dixies_offer","grade":5,"policy":"expensive","outcome":"failed","steps":25,"ms":5005,"maxAlarm":50,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":20,"mission":"dixies_offer","grade":5,"policy":"random","outcome":"failed","steps":44,"ms":7215,"maxAlarm":100,"minAffordable":0,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":21,"mission":"final_choice","grade":5,"policy":"cheap","outcome":"completed","steps":44,"ms":7863,"maxAlarm":68,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":22,"mission":"final_choice","grade":5,"policy":"expensive","outcome":"completed","steps":42,"ms":7888,"maxAlarm":65,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":23,"mission":"final_choice","grade":5,"policy":"random","outcome":"failed","steps":39,"ms":8038,"maxAlarm":70,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":24,"mission":"first_contact","grade":3,"policy":"cheap","outcome":"failed","steps":22,"ms":4970,"maxAlarm":39,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":25,"mission":"first_contact","grade":3,"policy":"expensive","outcome":"completed","steps":23,"ms":4716,"maxAlarm":38,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":26,"mission":"first_contact","grade":3,"policy":"random","outcome":"failed","steps":30,"ms":4772,"maxAlarm":100,"minAffordable":0,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":27,"mission":"first_jack","grade":1,"policy":"cheap","outcome":"completed","steps":7,"ms":1972,"maxAlarm":9,"minAffordable":5,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":28,"mission":"first_jack","grade":1,"policy":"expensive","outcome":"completed","steps":7,"ms":2003,"maxAlarm":9,"minAffordable":5,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":29,"mission":"first_jack","grade":1,"policy":"random","outcome":"completed","steps":8,"ms":2023,"maxAlarm":9,"minAffordable":5,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":30,"mission":"first_trace","grade":2,"policy":"cheap","outcome":"completed","steps":17,"ms":3912,"maxAlarm":26,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":31,"mission":"first_trace","grade":2,"policy":"expensive","outcome":"completed","steps":22,"ms":4199,"maxAlarm":38,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":32,"mission":"first_trace","grade":2,"policy":"random","outcome":"completed","steps":14,"ms":3663,"maxAlarm":27,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":33,"mission":"flatline_call","grade":3,"policy":"cheap","outcome":"completed","steps":14,"ms":3099,"maxAlarm":25,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":34,"mission":"flatline_call","grade":3,"policy":"expensive","outcome":"completed","steps":15,"ms":3135,"maxAlarm":28,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":35,"mission":"flatline_call","grade":3,"policy":"random","outcome":"completed","steps":15,"ms":3195,"maxAlarm":27,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":36,"mission":"ice_run","grade":2,"policy":"cheap","outcome":"completed","steps":16,"ms":3969,"maxAlarm":25,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":37,"mission":"ice_run","grade":2,"policy":"expensive","outcome":"completed","steps":17,"ms":4084,"maxAlarm":28,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":38,"mission":"ice_run","grade":2,"policy":"random","outcome":"completed","steps":17,"ms":3358,"maxAlarm":83,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":39,"mission":"matrix_revelation","grade":5,"policy":"cheap","outcome":"failed","steps":30,"ms":7024,"maxAlarm":61,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":40,"mission":"matrix_revelation","grade":5,"policy":"expensive","outcome":"failed","steps":31,"ms":7143,"maxAlarm":62,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":41,"mission":"matrix_revelation","grade":5,"policy":"random","outcome":"failed","steps":38,"ms":9675,"maxAlarm":100,"minAffordable":0,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":42,"mission":"mollys_market","grade":3,"policy":"cheap","outcome":"completed","steps":18,"ms":3455,"maxAlarm":30,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":43,"mission":"mollys_market","grade":3,"policy":"expensive","outcome":"completed","steps":15,"ms":3301,"maxAlarm":28,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":44,"mission":"mollys_market","grade":3,"policy":"random","outcome":"completed","steps":48,"ms":7270,"maxAlarm":74,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":45,"mission":"mollys_razor","grade":4,"policy":"cheap","outcome":"completed","steps":19,"ms":3721,"maxAlarm":26,"minAffordable":1,"endPhase":"ending/victory","ending":"arc3_neutrality"}
+SOAK-RUN {"run":46,"mission":"mollys_razor","grade":4,"policy":"expensive","outcome":"completed","steps":16,"ms":3665,"maxAlarm":26,"minAffordable":1,"endPhase":"ending/victory","ending":"arc3_neutrality"}
+SOAK-RUN {"run":47,"mission":"mollys_razor","grade":4,"policy":"random","outcome":"failed","steps":18,"ms":3766,"maxAlarm":28,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":48,"mission":"neuromancer_merger","grade":6,"policy":"cheap","outcome":"completed","steps":26,"ms":5324,"maxAlarm":33,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":49,"mission":"neuromancer_merger","grade":6,"policy":"expensive","outcome":"completed","steps":27,"ms":5565,"maxAlarm":40,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":50,"mission":"neuromancer_merger","grade":6,"policy":"random","outcome":"failed","steps":26,"ms":5829,"maxAlarm":37,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":51,"mission":"neuromancer_whisper","grade":4,"policy":"cheap","outcome":"failed","steps":15,"ms":4413,"maxAlarm":30,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":52,"mission":"neuromancer_whisper","grade":4,"policy":"expensive","outcome":"failed","steps":16,"ms":4410,"maxAlarm":32,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":53,"mission":"neuromancer_whisper","grade":4,"policy":"random","outcome":"completed","steps":16,"ms":4085,"maxAlarm":30,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":54,"mission":"sally_returns_arc3","grade":4,"policy":"cheap","outcome":"failed","steps":14,"ms":3416,"maxAlarm":29,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":55,"mission":"sally_returns_arc3","grade":4,"policy":"expensive","outcome":"completed","steps":16,"ms":3487,"maxAlarm":34,"minAffordable":1,"endPhase":"ending/victory","ending":"arc3_neutrality"}
+SOAK-RUN {"run":56,"mission":"sally_returns_arc3","grade":4,"policy":"random","outcome":"completed","steps":19,"ms":4860,"maxAlarm":35,"minAffordable":1,"endPhase":"ending/victory","ending":"arc3_neutrality"}
+SOAK-RUN {"run":57,"mission":"sally_sandii_3am","grade":3,"policy":"cheap","outcome":"completed","steps":13,"ms":3521,"maxAlarm":25,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":58,"mission":"sally_sandii_3am","grade":3,"policy":"expensive","outcome":"completed","steps":13,"ms":3536,"maxAlarm":25,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":59,"mission":"sally_sandii_3am","grade":3,"policy":"random","outcome":"completed","steps":14,"ms":3606,"maxAlarm":31,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":60,"mission":"sense_net_tip","grade":3,"policy":"cheap","outcome":"completed","steps":18,"ms":3881,"maxAlarm":36,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":61,"mission":"sense_net_tip","grade":3,"policy":"expensive","outcome":"completed","steps":14,"ms":3685,"maxAlarm":28,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":62,"mission":"sense_net_tip","grade":3,"policy":"random","outcome":"completed","steps":13,"ms":3643,"maxAlarm":25,"minAffordable":1,"endPhase":"ending/victory","ending":"arc2_status_quo"}
+SOAK-RUN {"run":63,"mission":"ta_heist","grade":4,"policy":"cheap","outcome":"completed","steps":25,"ms":6351,"maxAlarm":34,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":64,"mission":"ta_heist","grade":4,"policy":"expensive","outcome":"completed","steps":20,"ms":4966,"maxAlarm":37,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":65,"mission":"ta_heist","grade":4,"policy":"random","outcome":"completed","steps":25,"ms":5504,"maxAlarm":98,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":66,"mission":"tutorial_maze","grade":2,"policy":"cheap","outcome":"completed","steps":11,"ms":3342,"maxAlarm":23,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":67,"mission":"tutorial_maze","grade":2,"policy":"expensive","outcome":"completed","steps":11,"ms":3372,"maxAlarm":20,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":68,"mission":"tutorial_maze","grade":2,"policy":"random","outcome":"completed","steps":7,"ms":2282,"maxAlarm":70,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":69,"mission":"vegas_stakeout","grade":4,"policy":"cheap","outcome":"failed","steps":14,"ms":3830,"maxAlarm":26,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":70,"mission":"vegas_stakeout","grade":4,"policy":"expensive","outcome":"completed","steps":14,"ms":3929,"maxAlarm":27,"minAffordable":1,"endPhase":"ending/victory","ending":"arc3_neutrality"}
+SOAK-RUN {"run":71,"mission":"vegas_stakeout","grade":4,"policy":"random","outcome":"failed","steps":16,"ms":4098,"maxAlarm":29,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":72,"mission":"voodoo_loa_encounter","grade":5,"policy":"cheap","outcome":"completed","steps":42,"ms":10329,"maxAlarm":63,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":73,"mission":"voodoo_loa_encounter","grade":5,"policy":"expensive","outcome":"completed","steps":34,"ms":8495,"maxAlarm":60,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":74,"mission":"voodoo_loa_encounter","grade":5,"policy":"random","outcome":"failed","steps":28,"ms":7291,"maxAlarm":51,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":75,"mission":"watchdog_patrol","grade":1,"policy":"cheap","outcome":"completed","steps":10,"ms":3961,"maxAlarm":15,"minAffordable":5,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":76,"mission":"watchdog_patrol","grade":1,"policy":"expensive","outcome":"completed","steps":13,"ms":4704,"maxAlarm":15,"minAffordable":5,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":77,"mission":"watchdog_patrol","grade":1,"policy":"random","outcome":"completed","steps":16,"ms":4958,"maxAlarm":20,"minAffordable":1,"endPhase":"ending/victory","ending":"arc1_wage_slave"}
+SOAK-RUN {"run":78,"mission":"winter_infiltrate","grade":5,"policy":"cheap","outcome":"failed","steps":20,"ms":4929,"maxAlarm":27,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":79,"mission":"winter_infiltrate","grade":5,"policy":"expensive","outcome":"failed","steps":20,"ms":4937,"maxAlarm":32,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":80,"mission":"winter_infiltrate","grade":5,"policy":"random","outcome":"failed","steps":21,"ms":5055,"maxAlarm":29,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":81,"mission":"yakuza_deal","grade":3,"policy":"cheap","outcome":"completed","steps":34,"ms":9119,"maxAlarm":47,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":82,"mission":"yakuza_deal","grade":3,"policy":"expensive","outcome":"completed","steps":29,"ms":7548,"maxAlarm":38,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":83,"mission":"yakuza_deal","grade":3,"policy":"random","outcome":"failed","steps":27,"ms":8142,"maxAlarm":100,"minAffordable":0,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":84,"mission":"zion_express","grade":6,"policy":"cheap","outcome":"completed","steps":16,"ms":5038,"maxAlarm":32,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":85,"mission":"zion_express","grade":6,"policy":"expensive","outcome":"completed","steps":16,"ms":5065,"maxAlarm":32,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":86,"mission":"zion_express","grade":6,"policy":"random","outcome":"completed","steps":19,"ms":5662,"maxAlarm":93,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":87,"mission":"armitage_infiltration","grade":3,"policy":"cheap","outcome":"completed","steps":24,"ms":7070,"maxAlarm":38,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":88,"mission":"armitage_infiltration","grade":3,"policy":"expensive","outcome":"completed","steps":24,"ms":7091,"maxAlarm":38,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":89,"mission":"armitage_infiltration","grade":3,"policy":"random","outcome":"completed","steps":24,"ms":7176,"maxAlarm":38,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":90,"mission":"hosaka_extraction","grade":4,"policy":"cheap","outcome":"completed","steps":21,"ms":6029,"maxAlarm":32,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":91,"mission":"hosaka_extraction","grade":4,"policy":"expensive","outcome":"completed","steps":20,"ms":5924,"maxAlarm":25,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":92,"mission":"hosaka_extraction","grade":4,"policy":"random","outcome":"completed","steps":27,"ms":7067,"maxAlarm":91,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":93,"mission":"ta_defection","grade":5,"policy":"cheap","outcome":"completed","steps":34,"ms":9867,"maxAlarm":60,"minAffordable":1,"endPhase":"not-in-run","endBusiness":0}
+SOAK-RUN {"run":94,"mission":"ta_defection","grade":5,"policy":"expensive","outcome":"failed","steps":32,"ms":9975,"maxAlarm":69,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":95,"mission":"ta_defection","grade":5,"policy":"random","outcome":"failed","steps":49,"ms":12858,"maxAlarm":100,"minAffordable":0,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":96,"mission":"wintermute_negotiation","grade":6,"policy":"cheap","outcome":"failed","steps":16,"ms":5001,"maxAlarm":26,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":97,"mission":"wintermute_negotiation","grade":6,"policy":"expensive","outcome":"failed","steps":17,"ms":5135,"maxAlarm":29,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-RUN {"run":98,"mission":"wintermute_negotiation","grade":6,"policy":"random","outcome":"failed","steps":17,"ms":5223,"maxAlarm":24,"minAffordable":1,"endPhase":"dead/defeat","ending":null}
+SOAK-SUMMARY {
+  "harness": {
+    "seed": 20261103,
+    "runs": 99,
+    "missions": 33,
+    "requestedPolicy": "mixed",
+    "maxSteps": 320,
+    "deterministic": "the run is seeded from the mission; the policy is a pure function of state (except the seeded 'random' policy)",
+    "classification": {
+      "deadlocked": "no key changes the state at all",
+      "only_escape_loses": "every progress key is inert; Escape changes it and that is a lost run",
+      "no_end_in_steps": "state kept changing but the run never ended within maxSteps"
+    }
+  },
+  "byOutcome": {
+    "completed": 68,
+    "failed": 31
+  },
+  "byPolicy": [
+    {
+      "policy": "cheap",
+      "runs": 33,
+      "frozen": 0
+    },
+    {
+      "policy": "expensive",
+      "runs": 33,
+      "frozen": 0
+    },
+    {
+      "policy": "random",
+      "runs": 33,
+      "frozen": 0
+    }
+  ],
+  "frozenRate": 0,
+  "frozenRate95": [
+    0,
+    0.0374
+  ],
+  "costCap": {
+    "note": "COST (player.alarm) only rises from playing programs, and the turn only ends when the hand empties -- so the cap is where a fight can stop being playable",
+    "limit": 100,
+    "runsReachingCap": 6,
+    "runsWithNoAffordableCard": 6,
+    "capMissions": [
+      {
+        "mission": "aleph_fragment",
+        "grade": 5,
+        "policy": "random",
+        "outcome": "failed",
+        "maxAlarm": 100,
+        "minAffordable": 0
+      },
+      {
+        "mission": "dixies_offer",
+        "grade": 5,
+        "policy": "random",
+        "outcome": "failed",
+        "maxAlarm": 100,
+        "minAffordable": 0
+      },
+      {
+        "mission": "first_contact",
+        "grade": 3,
+        "policy": "random",
+        "outcome": "failed",
+        "maxAlarm": 100,
+        "minAffordable": 0
+      },
+      {
+        "mission": "matrix_revelation",
+        "grade": 5,
+        "policy": "random",
+        "outcome": "failed",
+        "maxAlarm": 100,
+        "minAffordable": 0
+      },
+      {
+        "mission": "yakuza_deal",
+        "grade": 3,
+        "policy": "random",
+        "outcome": "failed",
+        "maxAlarm": 100,
+        "minAffordable": 0
+      },
+      {
+        "mission": "ta_defection",
+        "grade": 5,
+        "policy": "random",
+        "outcome": "failed",
+        "maxAlarm": 100,
+        "minAffordable": 0
+      }
+    ]
+  },
+  "runsByGrade": {
+    "g5": 27,
+    "g4": 21,
+    "g2": 15,
+    "g3": 21,
+    "g1": 6,
+    "g6": 9
+  },
+  "frozenByGrade": {},
+  "frozenByPhase": {},
+  "frozenDetail": [],
+  "noEndInSteps": [],
+  "meanSteps": 22.2,
+  "meanMs": 5151
+}
+  ✓  1 [desktop-chromium] › e2e/soak_playthrough.spec.ts:539:3 › direct-control playthrough soak › plays the mission list and reports freeze statistics (8.5m)
+
+  Slow test file: [desktop-chromium] › e2e/soak_playthrough.spec.ts (8.5m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  1 passed (8.5m)

@@ -1,0 +1,115 @@
+wet_run — one run, written down in the game's own words
+build: local dist
+jockey index 0, mission index 0
+steps: 58
+ending: (none reached)
+summary: (none)
+
+[0] matrix/approach @node0 | HP 285/285 COST 0 T0 | ICE 100 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Mission: Aleph Fragment"
+[1] matrix/approach @node1 | HP 285/285 COST 0 T1 | ICE 100 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+[2] combat/approach @node1 | HP 285/285 COST 0 T2 | ICE 95 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Entering mid... (1 ICE)"
+[3] combat/combat @node1 | HP 285/285 COST 0 T3 | ICE 95 | hand strike+1 exploit+3 boost+2 barrier+3 decoy+2 | "Combat vs ICE — Yakuza Enforcer"
+[4] combat/combat @node1 | HP 274/285 COST 3 T3 | ICE 71 | hand strike+1 boost+2 barrier+3 decoy+2 | ">>> Dixie attacks: 11 dmg"
+      log: ICE SLOW on
+      log: Exploit → 13 dmg (ICE HP: 82)
+      log: >>> ICE — Yakuza Enforcer attacks: 11 dmg
+      log: >>> Dixie attacks: 11 dmg
+[5] combat/combat @node1 | HP 265/285 COST 6 T3 | ICE 62 | hand strike+1 boost+2 decoy+2 | ">>> ICE — Yakuza Enforcer attacks: 11 dmg"
+      log: ICE SLOW off
+      log: Barrier → 9 dmg (ICE HP: 62)
+      log: >>> shield absorbed 2, evasion dodged 0
+[6] combat/combat @node1 | HP 254/285 COST 8 T3 | ICE 37 | hand strike+1 decoy+2 | ">>> Dixie attacks: 17 dmg"
+      log: YOU POWERED on
+      log: Boost → 8 dmg (ICE HP: 54)
+      log: >>> Dixie attacks: 17 dmg
+[7] combat/combat @node1 | HP 248/285 COST 10 T3 | ICE 25 | hand strike+1 | ">>> ICE — Yakuza Enforcer attacks: 11 dmg"
+      log: YOU EVASIVE on
+      log: Decoy → 12 dmg (ICE HP: 25)
+      log: >>> shield absorbed 0, evasion dodged 5
+[8] loot/victory @node1 | HP 235/285 COST 14 T3 | hand exploit+3 barrier+3 boost+2 decoy+2 strike+1 | "ICE — Yakuza Enforcer defeated! +215 credits (bounty 90) · trace +3"
+      log: YOU POWERED+EVASIVE off
+      log: Strike → 6 dmg (ICE HP: 19)
+      log: >>> ICE — Yakuza Enforcer uses Enforce Contract: 13 dmg
+      log: >>> Dixie attacks: 23 dmg
+      log: ICE — Yakuza Enforcer defeated! +215 credits (bounty 90) · trace +3
+[9] loot/victory @node1 | HP 235/285 COST 14 T3 | hand exploit+3 barrier+3 boost+2 decoy+2 strike+1 | "Acquired Inspire — press ENTER to continue"
+[10] matrix/approach @node1 | HP 235/285 COST 14 T3 | hand exploit+3 barrier+3 boost+2 decoy+2 strike+1 | "Took Inspire. Choose an adjacent route — HP 235/285"
+[11] matrix/approach @node0 | HP 235/285 COST 14 T4 | hand exploit+3 barrier+3 boost+2 decoy+2 strike+1 | "Moved to surface — ↑↓ picks the next route"
+[13] matrix/approach @node21 | HP 235/285 COST 14 T6 | hand exploit+3 barrier+3 boost+2 decoy+2 strike+1 | "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+[14] combat/approach @node21 | HP 235/285 COST 14 T7 | ICE 95 | hand exploit+3 barrier+3 boost+2 decoy+2 strike+1 | "Entering mid... (1 ICE)"
+[15] combat/combat @node21 | HP 235/285 COST 14 T8 | ICE 95 | hand exploit+3 barrier+3 boost+2 decoy+2 strike+1 | "Combat vs ICE — Neuromancer"
+[16] combat/combat @node21 | HP 214/285 COST 17 T8 | ICE 63 | hand barrier+3 boost+2 decoy+2 strike+1 | ">>> ICE — Neuromancer attacks: 21 dmg"
+      log: Exploit → 32 dmg (ICE HP: 63)
+      log: >>> ICE — Neuromancer attacks: 21 dmg
+[17] combat/combat @node21 | HP 195/285 COST 20 T8 | ICE 31 | hand boost+2 decoy+2 strike+1 | ">>> Dixie attacks: 26 dmg"
+      log: YOU SHIELD on
+      log: Barrier → 6 dmg (ICE HP: 57)
+      log: >>> Dixie attacks: 26 dmg
+[18] combat/combat @node21 | HP 174/285 COST 22 T8 | ICE 30 | hand decoy+2 strike+1 | ">>> ICE — Neuromancer attacks: 21 dmg"
+      log: Boost → 1 dmg (ICE HP: 30)
+[19] loot/victory @node21 | HP 163/285 COST 29 T8 | hand strike+1 | "ICE — Neuromancer defeated! +1275 credits (bounty 200) · trace +5 Loot: combat_module x3, construct_shard x2, data_fragment x5"
+      log: Decoy → 3 dmg (ICE HP: 24)
+      log: >>> shield absorbed 0, evasion dodged 10
+      log: ICE — Neuromancer defeated! +1275 credits (bounty 200) · trace +5 Loot: combat_module x3, construct_shard x2, data_fragment x5
+[20] loot/victory @node21 | HP 163/285 COST 29 T8 | hand strike+1 | "Acquired Wardrone — press ENTER to continue"
+[21] matrix/approach @node21 | HP 163/285 COST 29 T8 | hand strike+1 wardrone+2 inspire+1 exploit+3 barrier+3 | "Took Wardrone. Choose an adjacent route — HP 163/285"
+[22] matrix/approach @node24 | HP 163/285 COST 29 T9 | hand strike+1 wardrone+2 inspire+1 exploit+3 barrier+3 | "Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+[23] combat/approach @node24 | HP 163/285 COST 29 T10 | ICE 95 | hand strike+1 wardrone+2 inspire+1 exploit+3 barrier+3 | "Entering mid... (1 ICE)"
+[24] combat/combat @node24 | HP 163/285 COST 29 T11 | ICE 95 | hand strike+1 wardrone+2 inspire+1 exploit+3 barrier+3 | "Combat vs ICE — Loa Entity"
+[25] combat/combat @node24 | HP 153/285 COST 31 T11 | ICE 80 | hand strike+1 inspire+1 exploit+3 barrier+3 | ">>> ICE — Loa Entity attacks: 10 dmg"
+      log: ICE BURN off
+      log: Wardrone → 15 dmg (ICE HP: 80)
+      log: >>> ICE — Loa Entity attacks: 10 dmg
+[26] combat/combat @node24 | HP 143/285 COST 34 T11 | ICE 39 | hand strike+1 inspire+1 barrier+3 | ">>> Dixie attacks: 26 dmg"
+      log: Exploit → 15 dmg (ICE HP: 65)
+[27] combat/combat @node24 | HP 134/285 COST 37 T11 | ICE 26 | hand strike+1 inspire+1 | ">>> ICE — Loa Entity uses Voodoo Curse: 11 dmg"
+      log: Barrier → 13 dmg (ICE HP: 26)
+      log: >>> ICE — Loa Entity uses Voodoo Curse: 11 dmg
+[28] loot/victory @node24 | HP 124/285 COST 41 T11 | hand inspire+1 | "ICE — Loa Entity defeated! +740 credits (bounty 90) · trace +3 Loot: ice_shard x2"
+      log: Strike → 1 dmg (ICE HP: 25)
+      log: ICE — Loa Entity defeated! +740 credits (bounty 90) · trace +3 Loot: ice_shard x2
+[29] loot/victory @node24 | HP 124/285 COST 41 T11 | hand inspire+1 | "Acquired Ward — press ENTER to continue"
+[30] matrix/approach @node24 | HP 124/285 COST 41 T11 | hand inspire+1 ward+2 boost+2 decoy+2 wardrone+2 | "Took Ward. Choose an adjacent route — HP 124/285"
+[31] matrix/approach @node27 | HP 124/285 COST 41 T12 | hand inspire+1 ward+2 boost+2 decoy+2 wardrone+2 | "Moved to surface — ↑↓ picks the next route"
+[32] matrix/approach @node22 | HP 124/285 COST 41 T13 | hand inspire+1 ward+2 boost+2 decoy+2 wardrone+2 | "Travel blocked. BREACH: fight. BYPASS: COST too high. JACK OUT: abandon run."
+[33] combat/approach @node22 | HP 124/285 COST 41 T14 | ICE 95 | hand inspire+1 ward+2 boost+2 decoy+2 wardrone+2 | "Entering mid... (1 ICE)"
+[34] combat/combat @node22 | HP 124/285 COST 41 T15 | ICE 95 | hand inspire+1 ward+2 boost+2 decoy+2 wardrone+2 | "Combat vs ICE — Yakuza Enforcer"
+[35] combat/combat @node22 | HP 113/285 COST 43 T15 | ICE 82 | hand inspire+1 ward+2 boost+2 decoy+2 | ">>> ICE — Yakuza Enforcer attacks: 11 dmg"
+      log: Wardrone → 13 dmg (ICE HP: 82)
+[36] combat/combat @node22 | HP 102/285 COST 45 T15 | ICE 44 | hand inspire+1 boost+2 decoy+2 | ">>> Dixie attacks: 26 dmg"
+      log: Ward → 12 dmg (ICE HP: 70)
+[37] combat/combat @node22 | HP 91/285 COST 47 T15 | ICE 40 | hand inspire+1 decoy+2 | ">>> ICE — Yakuza Enforcer attacks: 11 dmg"
+      log: Boost → 4 dmg (ICE HP: 40)
+[38] combat/combat @node22 | HP 84/285 COST 49 T15 | ICE 2 | hand inspire+1 | ">>> Dixie attacks: 26 dmg"
+      log: ICE BURN on
+      log: Decoy → 9 dmg (ICE HP: 28)
+      log: >>> shield absorbed 0, evasion dodged 6
+[39] loot/victory @node22 | HP 84/285 COST 52 T15 | hand exploit+3 barrier+3 strike+1 wardrone+2 ward+2 | "ICE — Yakuza Enforcer defeated! (no COST) +690 credits (bounty 90) · trace +3 Loot: ice_shard x2"
+      log: ICE — Yakuza Enforcer defeated! (no COST) +690 credits (bounty 90) · trace +3 Loot: ice_shard x2
+[40] loot/victory @node22 | HP 84/285 COST 52 T15 | hand exploit+3 barrier+3 strike+1 wardrone+2 ward+2 | "Acquired Heal — press ENTER to continue"
+[41] matrix/approach @node22 | HP 84/285 COST 52 T15 | hand exploit+3 barrier+3 strike+1 wardrone+2 ward+2 | "Took Heal. Choose an adjacent route — HP 84/285"
+[42] matrix/approach @node14 | HP 84/285 COST 52 T16 | hand exploit+3 barrier+3 strike+1 wardrone+2 ward+2 | "Moved to surface — ↑↓ picks the next route"
+[44] matrix/approach @node18 | HP 84/285 COST 52 T18 | hand exploit+3 barrier+3 strike+1 wardrone+2 ward+2 | "Travel blocked. BREACH: fight. BYPASS: COST too high. JACK OUT: abandon run."
+[45] combat/approach @node18 | HP 84/285 COST 52 T19 | ICE 95 | hand exploit+3 barrier+3 strike+1 wardrone+2 ward+2 | "Entering mid... (1 ICE)"
+[46] combat/combat @node18 | HP 84/285 COST 52 T20 | ICE 95 | hand exploit+3 barrier+3 strike+1 wardrone+2 ward+2 | "Combat vs ICE — Sense/Net Reporter"
+[47] combat/combat @node18 | HP 72/285 COST 54 T20 | ICE 56 | hand exploit+3 barrier+3 strike+1 ward+2 | ">>> Dixie attacks: 26 dmg"
+      log: >>> ICE — Sense/Net Reporter uses Narrative Attack: 12 dmg
+[48] combat/combat @node18 | HP 61/285 COST 57 T20 | ICE 43 | hand barrier+3 strike+1 ward+2 | ">>> ICE — Sense/Net Reporter attacks: 11 dmg"
+      log: Exploit → 13 dmg (ICE HP: 43)
+      log: >>> ICE — Sense/Net Reporter attacks: 11 dmg
+[49] loot/victory @node18 | HP 52/285 COST 63 T20 | hand strike+1 ward+2 | "ICE — Sense/Net Reporter defeated! +590 credits (bounty 90) · trace +3 Loot: ice_shard x2, data_fragment x1"
+      log: Barrier → 19 dmg (ICE HP: 24)
+      log: ICE — Sense/Net Reporter defeated! +590 credits (bounty 90) · trace +3 Loot: ice_shard x2, data_fragment x1
+[50] loot/victory @node18 | HP 52/285 COST 63 T20 | hand strike+1 ward+2 | "Acquired Scan — press ENTER to continue"
+[51] matrix/approach @node18 | HP 52/285 COST 63 T20 | hand strike+1 ward+2 scan+1 heal+2 boost+2 | "Took Scan. Choose an adjacent route — HP 52/285"
+[52] matrix/approach @node20 | HP 52/285 COST 63 T21 | hand strike+1 ward+2 scan+1 heal+2 boost+2 | "Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run."
+[53] combat/approach @node20 | HP 52/285 COST 63 T22 | ICE 165 | hand strike+1 ward+2 scan+1 heal+2 boost+2 | "Entering core-deep... (1 ICE)"
+[54] combat/combat @node20 | HP 52/285 COST 63 T23 | ICE 165 | hand strike+1 ward+2 scan+1 heal+2 boost+2 | "Combat vs ICE — Neuromancer"
+[55] combat/combat @node20 | HP 28/285 COST 65 T23 | ICE 163 | hand strike+1 scan+1 heal+2 boost+2 | ">>> ICE — Neuromancer attacks: 24 dmg"
+      log: Ward → 2 dmg (ICE HP: 163)
+      log: >>> ICE — Neuromancer attacks: 24 dmg
+[56] combat/combat @node20 | HP 4/285 COST 67 T23 | ICE 136 | hand strike+1 scan+1 heal+2 | ">>> Dixie attacks: 26 dmg"
+      log: Boost → 1 dmg (ICE HP: 162)
+[57] dead/defeat @node20 | HP 0/285 COST 68 T23 | ICE 135 | hand scan+1 heal+2 | "FLATLINE"
+      log: Strike → 1 dmg (ICE HP: 135)
+[57] ending screen: ?

@@ -1,0 +1,10 @@
+{"type":"choice","choice":"exclude_bypassed_from_clamp","probabilities":{"exclude_bypassed_from_clamp":0.94,"count_bypassed_as_clears":0.05,"defer_to_owner":0.01},"confidence":0.91}
+
+// Jev Choice — ADR-0308 후보 선정 (2026-11-08).
+//   state  : ADR-0290 게이트 + BYPASS 가 iceIds 를 안 지우는 사실 + 실브라우저 재현 +
+//            소크 census 3/99 + 우회가 이미 60 COST 를 냈다는 맥락
+//   질문    : "Which fix should be adopted for the ADR-0290 boss gate?"
+//   옵션    : exclude_bypassed_from_clamp | count_bypassed_as_clears | defer_to_owner
+//   판정    : exclude_bypassed_from_clamp p=0.94, confidence 0.91
+//   임계    : Choice 0.5 · 보수 0.85 — 둘 다 상회 → 자동 채택
+// 원문은 세션 트랜스크립트에 있고, ADR-0308 §추천 에 인용했다.

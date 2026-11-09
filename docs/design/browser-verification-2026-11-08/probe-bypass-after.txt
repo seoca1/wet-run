@@ -1,0 +1,6 @@
+Mission: Flatline's Call | non-boss ICE: [9] | boss: [3]
+at ICE node cur=9 msg="Travel blocked. BREACH: fight. BYPASS: 60 COST (once per run). JACK OUT: abandon run."
+after BYPASS: msg="Bypassed — no reward. Routes are open: ↑↓ then ENTER." bypassed=[9] cleared=[]
+at node cur=10 (boss=false) msg="Moved to surface — ↑↓ picks the next route"
+ENTER toward boss -> cur=3 phase=approach msg="Travel blocked. BREACH: fight. BYPASS: blocked here. JACK OUT: abandon run."
+RESULT: core OPENED (bypass counted as resolved) ✓

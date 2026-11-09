@@ -1,0 +1,108 @@
+
+> wetrun-web@0.1.0 soak
+> SOAK=1 PLAYWRIGHT_BASE_URL=${PLAYWRIGHT_BASE_URL:-http://127.0.0.1:5195} playwright test e2e/soak_playthrough.spec.ts --project=desktop-chromium
+
+
+Running 1 test using 1 worker
+
+SOAK-STEP {"step":0,"phase":"matrix/approach","cur":0,"sel":null,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[],"msg":"Mission: Rose Hotel, 3AM"}
+SOAK-STEP {"step":1,"phase":"matrix/approach","cur":1,"sel":null,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Moved to surface — ↑↓ picks the next route"}
+SOAK-STEP {"step":2,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":3,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":4,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":5,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":6,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":7,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":8,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":9,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":10,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":11,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":12,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":13,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":14,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":15,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":16,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":17,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":18,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":19,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":20,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":21,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":22,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":23,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":24,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":25,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":26,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":27,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":28,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":29,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":30,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":31,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":32,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":33,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":34,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":35,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":36,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":37,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-STEP {"step":38,"phase":"matrix/approach","cur":1,"sel":6,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Core sealed — 1 more ICE must fall (0/1)."}
+SOAK-STEP {"step":39,"phase":"matrix/approach","cur":1,"sel":8,"ice":[95],"hand":5,"alarm":0,"decision":false,"verb":null,"cleared":[],"visited":[1],"msg":"Route highlighted — ENTER to travel; ↑↓ to change destination"}
+SOAK-RUN {"run":0,"mission":"sally_sandii_3am","grade":3,"policy":"cheap","outcome":"no_end_in_steps","steps":40,"ms":20889,"maxAlarm":0,"endPhase":"matrix/approach","endAlarm":0,"endTurn":1,"endIceHp":[95],"endHand":5,"endMsg":"Core sealed — 1 more ICE must fall (0/1).","endBusiness":3}
+SOAK-SUMMARY {
+  "harness": {
+    "seed": 20261103,
+    "runs": 1,
+    "missions": 53,
+    "requestedPolicy": "cheap",
+    "maxSteps": 40,
+    "deterministic": "the run is seeded from the mission; the policy is a pure function of state (except the seeded 'random' policy)",
+    "classification": {
+      "deadlocked": "no key changes the state at all",
+      "only_escape_loses": "every progress key is inert; Escape changes it and that is a lost run",
+      "no_end_in_steps": "state kept changing but the run never ended within maxSteps"
+    }
+  },
+  "byOutcome": {
+    "no_end_in_steps": 1
+  },
+  "byPolicy": [
+    {
+      "policy": "cheap",
+      "runs": 1,
+      "frozen": 0
+    }
+  ],
+  "frozenRate": 0,
+  "frozenRate95": [
+    0,
+    0.7935
+  ],
+  "costCap": {
+    "note": "COST (player.alarm) only rises from playing programs, and the turn only ends when the hand empties -- so the cap is where a fight can stop being playable",
+    "limit": 100,
+    "runsReachingCap": 0,
+    "runsWithNoAffordableCard": 0,
+    "capMissions": []
+  },
+  "runsByGrade": {
+    "g3": 1
+  },
+  "frozenByGrade": {},
+  "frozenByPhase": {},
+  "frozenDetail": [],
+  "noEndInSteps": [
+    {
+      "run": 0,
+      "mission": "sally_sandii_3am",
+      "grade": 3,
+      "policy": "cheap",
+      "phase": "matrix/approach",
+      "turn": 1,
+      "alarm": 0,
+      "businessLeft": 3
+    }
+  ],
+  "meanSteps": 40,
+  "meanMs": 20889
+}
+  ✓  1 [desktop-chromium] › e2e/soak_playthrough.spec.ts:480:3 › direct-control playthrough soak › plays the mission list and reports freeze statistics (21.4s)
+
+  1 passed (21.8s)

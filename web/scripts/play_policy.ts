@@ -12,7 +12,7 @@
  */
 import { applyAction, makeInitialState } from "../src/core/state/state";
 import { startingDeck } from "../src/core/state/starting_deck";
-import { offeredCardIds } from "../src/core/state/card_reward";
+import { offeredCardIds, UNIQUE_PROGRAMS } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
 import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
 import { bossGateNeed } from "../src/core/combat/ice_scaling";
@@ -76,7 +76,8 @@ export type LootPolicy =
   | "smartburn"
   | "smartcombo"
   | "smartrecover"
-  | "value";
+  | "value"
+  | "valueunique";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
 function cardScore(p: Program): number {
@@ -501,7 +502,7 @@ export function playRun(
         // repair just bought.
         const hpPressure = 1 - state.player.hp / Math.max(1, state.player.maxHp);
         const costPressure = state.player.alarm / COST_LIMIT;
-        if (lootPolicy === "value") {
+        if (lootPolicy === "value" || lootPolicy === "valueunique") {
           // One rule, measured: a repair restores 70-100% of max HP and a card is
           // worth far less than that here (g5 65.7% repairing vs 10.6% taking
           // cards; g3 97.7 vs 48.1). The only wasted repair is one that is mostly
@@ -515,12 +516,20 @@ export function playRun(
           const gain = Math.min(healable, lootRepairAmount(state.player.maxHp, grade));
           const gainPct = (gain / Math.max(1, state.player.maxHp)) * 100;
           const CARD_HP_EQUIV_PCT = 6;
+          const cardIdx = pickRewardIndex(ids.map((id) => cardOf(id)), cardPolicy);
+          // ADR-0307 (a) measurement: is a unique worth the repair it displaces?
+          // The accepted economy spends the stop on HP (ADR-0305/0306), so under
+          // `value` a unique is almost never taken. `valueunique` takes it when
+          // the top-scored offer is one of the tier-6 uniques and compares.
+          const topIsUnique =
+            cardIdx >= 1 && UNIQUE_PROGRAMS.has(ids[cardIdx - 1] as string);
+          const takeUnique = lootPolicy === "valueunique" && topIsUnique;
           state = applyAction(state, {
             type: "select_program",
             handIndex:
-              hpPressure > 0.15 && gainPct >= CARD_HP_EQUIV_PCT
+              !takeUnique && hpPressure > 0.15 && gainPct >= CARD_HP_EQUIV_PCT
                 ? LOOT_REPAIR_SLOT
-                : pickRewardIndex(ids.map((id) => cardOf(id)), cardPolicy),
+                : cardIdx,
           });
         } else {
         const valued = false;

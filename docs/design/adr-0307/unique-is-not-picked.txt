@@ -1,0 +1,64 @@
+ADR-0307 (a) — is g6 missing a SECOND growth axis, or is the FIRST one unreachable?
+
+Premise being tested (ADR-0303 (a)): "collect all three uniques and picking
+loses its meaning". Measured: that never happens. A g6 run ends with AT MOST
+one unique, under every policy tried.
+
+INSTRUMENTATION (temporary, reverted)
+  96 g6 runs, optimal policy (card "best", loot "value")
+    card offers                    321
+    offered at a tier-6 ICE         65
+    those containing a unique       65   (100%)
+    final holdings:                 0 uniques 95  |  1 unique 1  |  2+  0
+
+  -> the unique is OFFERED at every tier-6 fight and is almost never taken.
+
+WHY: the loot stop is spent on the repair. ADR-0305/0306 made "repair beats
+card" the accepted rule (measured at g6: card-only 9.7 vs repair-only 25.0),
+so the winning line never spends its single stop on a card. The uniques are
+reachable in the data and unreachable in play.
+
+IS THE UNIQUE WORTH THE REPAIR IT DISPLACES?
+  Instrument: `--loot valueunique` (harness-only, shipped with this note).
+  It takes the unique when the best-scored offer is one, and otherwise behaves
+  exactly like `value`. No game rule changed — the game never uses a policy.
+
+  g6 completion         32 seeds        64 seeds
+  value (shipped)       10.4% (10/96)   11.5% (22/192)
+  valueunique           27.1% (26/96)   21.9% (42/192)
+  delta                 +16.7pp         +10.4pp
+
+  Full sweep with the same seeding as the recorded curve (32 seeds):
+    value       g6 13.5%   (recorded optimal)
+    valueunique g6 22.9%   (+9.4pp)
+
+  Note on the other grades: they move by <=1.7pp, and that movement is an
+  RNG-stream artifact, not the rule. `mission_survival` reseeds once per sweep
+  and shares the stream across missions in JSON order, so a policy change that
+  alters g6 consumption shifts the draws of missions that run after it. The
+  uniques only exist at tier-6 ICE, so no other grade can be affected by the
+  rule itself.
+
+CONCLUSIONS
+  1. "One unique per run" is a NO-OP. The rule was implemented, measured, and
+     reverted: the recorded curve was byte-identical (2.1 / 13.5, gap +16.1).
+     No run ever holds a second unique (0 of 96 in every configuration).
+  2. The first axis is not saturated — it is UNREACHABLE. One loot slot, and
+     the repair owns it.
+  3. The unique is worth about twice the repair at g6 (+10pp on 192 runs).
+     The cards are good; the DELIVERY is what fails.
+  4. Making them reachable OVERSHOOTS the g6 target (10%) by +9.4 to +16.7pp.
+     g6 needs a retune in the same pass (ADR-0307 (b) damage curve or a
+     lowering elsewhere).
+
+NOT DONE ON PURPOSE
+  No game rule changed, no ADR written, nothing committed for the rule itself.
+  The remaining decision is the owner's: deliver the unique outside the loot
+  stop (grant on a tier-6 win), split the loot screen into two stops, or leave
+  it and accept that g6 growth is theoretical.
+
+REPRODUCE
+  cd web
+  npm run survival -- --policies --seeds 32                       # recorded baseline
+  npm run survival -- --seeds 64 --cards best --loot value        # g6 11.5%
+  npm run survival -- --seeds 64 --cards best --loot valueunique  # g6 21.9%

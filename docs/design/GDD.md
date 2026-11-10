@@ -295,6 +295,7 @@ Phase 15-17 동안 추가된 6개 engine 통합 (deck picker / telemetry opt-in 
 
 **이전 known issues**:
 - ~~Content totals 가 v1.0.0 (2026-08-03) 기준~~ → 2026-08-27 갱신: v1.4.0 (209 미션, 97 ICE, 29 엔딩) 으로 통일.
+- **2026-11-10 현재 (web/ 실측)**: **53 미션** (`web/src/data/missions.json`) · **97 ICE** (`web/src/data/ice_types.json`) · **32 엔딩** (`web/src/core/combat/ending_resolver.ts` — ADR-0271 로 29→32). 위 209 미션은 Python 프로토타입 시절 수치이며, web/ 이관 후 미션 데이터는 53개로 통합되었다 (보드 기준 33교전 — ADR-0265 Implementation Status).
 - 로드맵 항목 `Hardcore mode` (Phase 4 polish) 은 §3 Game Structure 에서 별도 다룸.
 
 **후속 예정** (Phase 19+):

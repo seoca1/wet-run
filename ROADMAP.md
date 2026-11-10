@@ -340,9 +340,9 @@ Phase 7: 알파 빌드
 ## 현재 위치
 
 **현재 Phase**: **wet_run-web Tier 1~4 + Content authoring + IDB save backend** (Python 프로토타입은 2026-09-15 통합으로 retired — Phase 표기는 wet_run-web 기준)
-**누적 테스트**: **wet_run-web 2654 passed, 0 failures (2026-09-24 확인)** — 107 vitest 파일. (이전 Python pytest/ruff/mypy 수치는 prototype retired (2026-09-15) 으로 historical — **참고용**: 4045 passed / ruff ✅ / mypy strict ✅)
-**검증 상태**: `npm test` 2654 pass (107 files, 0 failures) / `npx tsc --noEmit -p tsconfig.json` 0 errors / `npm run build` OK / `scripts/tools/audit_sprawl.py` 0 broken, 5 expected orphans / `scripts/tools/find_broken_links.py` 0 broken
-**ADR 누적**: 200+ (Accepted 180+, Draft 일부, status docs 2개) — Implementation status sweep 60 ADR (0140-0199)
+**누적 테스트**: **wet_run-web 4181 passed, 0 failures (2026-11-10 확인)** — 207 vitest 파일. (이전 Python pytest/ruff/mypy 수치는 prototype retired (2026-09-15) 으로 historical — **참고용**: 4045 passed / ruff ✅ / mypy strict ✅)
+**검증 상태**: `npm test` 4181 pass (207 files, 0 failures) / `npx tsc --noEmit -p tsconfig.json` 0 errors / `npm run build` OK / `scripts/tools/audit_sprawl.py` 0 broken, 27 orphans (decisions 19 · lore episodic 4 · world 3 · log 1 — 인바운드 링크 없는 문서이며 깨진 링크 아님) / `scripts/tools/find_broken_links.py` 0 broken
+**ADR 누적**: **228 ADR (IDs 0001–0308)** — Accepted 217 · Draft 1 · evidence/legacy 표기 10. Implementation status sweep 60 ADR (0140-0199)
 
 **Phase 6+ 사이클 요약 (2026-07-04)**:
 - **lint/mypy 174 errors → 0** (29c3eeb) — 43 files 변경, +717/-645 lines

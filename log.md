@@ -3533,3 +3533,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **측정**: 밸런스 **byte-identical** — `survival --policies --seeds 32` = optimal 100/98.2/76.7/51.2/26.0/13.5 · default 100/78.3/47.4/36.3/4.9/2.1 · gap +16.1pp(헤드리스 정책은 BREACH 만 쓴다). 소크 census(99런 = 33미션 × 3정책, per-cell 시드): **completed 68 / failed 31 / no_end_in_steps 0**(직전 3) · **frozen 0/99**(Wilson 95% 0–3.74%) · 교착 0 · meanSteps 22.2 · **8.5분**.
 - **검증**: vitest **207 files / 4181 tests**(+1 file / +3 tests — `adr0308_bypass_resolves_the_gate.test.ts`) · typecheck 0 · lint 0 errors · build PASS · e2e desktop+mobile **94 passed / 0 failed / 8 skipped** · `check_doc_claims.py` exit 0(ADR 추가로 **AGENTS.md 카운트 227/0307 → 228/0308** 갱신) · `check_no_novel_prose.py` exit 0.
 - **ADR**: 신규 **0308**(색인 등록) · 0290 · 0265 `Implementation Status` 에 참조 주석.
+
+## [2026-11-10] docs | 로드맵·GDD 수치 드리프트 정정 + 백로그 중복 3행 병합
+
+- **배경**: 프로젝트 점검에서 `ROADMAP.md` "현재 위치" 와 `docs/design/GDD.md` §9 의 수치가 실측과 어긋나 있었다. `check_doc_claims.py`(ADR-0267)는 **`AGENTS.md` 만** 검사하므로 두 파일은 사각지대였다.
+- **ROADMAP "현재 위치"**: 테스트 **2654 / 107 files → 4181 / 207 files**(2026-11-10 실측) · ADR **200+ → 228 (IDs 0001–0308)** — Accepted 217 · Draft 1 · evidence/legacy 10 · orphan **5 expected → 27**. `0 broken` 은 재측정으로 유지.
+- **orphan 27 의 실측 분해**(주장을 쓰기 전에 확인): decisions **19** · lore episodic **4** · world **3** · `docs/wiki/log.md` **1** — 전부 **인바운드 링크가 없는** 문서이고 깨진 링크가 아니다. (`audit_sprawl.py` 는 20건에서 잘려 보여주므로 전체 목록을 따로 뽑아 셌다.)
+- **GDD §9**: 2026-08-27 문장(`v1.4.0 209 미션 / 97 ICE / 29 엔딩`)은 **historical 이라 보존**하고 그 아래에 현재값을 덧붙였다 — **53 미션**(`web/src/data/missions.json`) · **97 ICE**(`ice_types.json`) · **32 엔딩**(`core/combat/ending_resolver.ts`, ADR-0271 로 29→32). 209 는 Python 프로토타입 시절 수치이고 web/ 이관 후 미션 데이터는 53개(보드 기준 33교전 — ADR-0265).
+- **백로그 위생**: `NEXT_SESSION_TODO.md` 활성 wet_run 표의 **"경로 카드에 예상 흔적" 3행**(ADR-0287 (b)·(c) / 0294 (c) ×2)을 **1행으로 병합**. 표 무결성 재검사 — 모든 행 4파이프, 활성(📋) 항목명 중복 **0**.
+- **하지 않은 것**: **g6 의 두 번째 성장 축(ADR-0307 a)** 과 **곡선 낮춰 소비처 자리 만들기(ADR-0286 a)** 는 **오너 결정**이라 손대지 않았다(밸런스 = 오너 영역, ADR-0306 선례). 측정·구현도 하지 않았다.
+- **검증**: `audit_sprawl.py` 0 broken / 27 orphans(변동 없음) · `find_broken_links.py` 0 · `check_doc_claims.py` exit 0(228 ADR · 111 paths) · `check_no_novel_prose.py` exit 0(1828 strings) · workspace `audit_vault.py` CLEAN · `mixed_language_audit.py` 0 · vitest **207 files / 4181 tests**(코드 무변경 확인).

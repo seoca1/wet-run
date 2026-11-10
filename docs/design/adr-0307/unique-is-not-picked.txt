@@ -62,3 +62,47 @@ REPRODUCE
   npm run survival -- --policies --seeds 32                       # recorded baseline
   npm run survival -- --seeds 64 --cards best --loot value        # g6 11.5%
   npm run survival -- --seeds 64 --cards best --loot valueunique  # g6 21.9%
+
+======================================================================
+OPTIONS 1 AND 2 — tried in order, 64 seeds, full sweep
+======================================================================
+
+                         g1     g2     g3     g4     g5     g6
+  target                100     95     80     50     25     10
+  3. status quo         100.0   98.0   76.8   50.5   25.7   11.5
+  1. unique outside     100.0   97.1   75.9   50.3   26.0   34.9
+  2. loot split         100.0   92.6   78.1   56.6   22.2   46.4
+
+  1 = `--loot valueuniqueplus`   the unique is granted outside the stop; the
+      stop still spends as it always did (repair when it clears the bar).
+  2 = `--loot valuecard`         the screen is split, so card and repair no
+      longer compete; both are taken at every stop.
+  1b = `--loot valueuniqueonce`  option 1, capped at one unique per run.
+      g6 = 34.9% (67/192) — the SAME count as 1. The cap never binds: no run
+      wins a second tier-6 fight with a grant in hand.
+
+READING
+  - Option 1 is SURGICAL. g1-g5 move by at most 0.9pp, which is inside the
+    noise band measured earlier (0.0-1.7pp on a stream-shared harness); g6
+    triples (11.5 -> 34.9).
+  - Option 2 is GLOBAL and NOT UNIFORM. g2 -5.4, g4 +6.1, g5 -3.5, g6 +34.9.
+    Most of that is real, not stream noise: taking a card at every stop
+    dilutes the draw pile, and the dilution hurts a grade whose offers are
+    weak (g2) while the extra repair helps a grade that is HP-bound (g4).
+  - Both OVERSHOOT the g6 target (10%) by 25pp and 36pp. Either option needs a
+    g6 retune in the same pass; option 2 additionally needs g1-g5 revalidated.
+  - Marginal value of option 2 over option 1 at g6: +11.5pp, paid for with a
+    damaged g2 and g5. Option 1 buys +23.4pp at g6 and touches nothing else.
+
+CAVEAT ON THE INSTRUMENT
+  `mission_survival` reseeds once per sweep and shares the stream across
+  missions in JSON order. A policy that changes consumption in one grade
+  shifts the draws of missions that run after it. The comparisons above are
+  same-harness, but the clean fix is per-cell seeding (the ADR-0265 lesson
+  applied to `survival`). Until then, treat deltas under ~2pp as noise.
+
+REPRODUCE (options)
+  npm run survival -- --seeds 64 --cards best --loot valueuniqueplus
+  npm run survival -- --seeds 64 --cards best --loot valueuniqueonce
+  npm run survival -- --seeds 64 --cards best --loot valuecard
+

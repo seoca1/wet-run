@@ -3615,3 +3615,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **재기준화 정책**: Accepted ADR(0280/0306/0309)의 표는 **역사적 측정으로 보존**. ADR-0309 에는 스트림 정정 주석만 달았다(결정 내용 불변, ADR-0195 허용 범위).
 - **문서**: 신규 **ADR-0310** + README 색인 · AGENTS.md 카운트 **229/0309 → 230/0310**.
 - **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 / 4185** · `check_doc_claims.py --tests` exit 0 · `audit_sprawl.py` 0 broken · `audit_vault.py` CLEAN.
+
+## [2026-11-12] feat(balance) | 고유 카드는 고른다 — 전리품 화면의 무료 하위 단계 (ADR-0311)
+
+- **판단(Jev)**: 오너 지시 "판단이 필요할 때는 jev ai 도움". ⑴ 화면 위치 → `dedicated_screen_after_win` **0.94**(conf 0.91). ⑵ 같은 경험의 두 구현 → `loot_subphase` **1.00**(새 runPhase 는 소프트락 선례 3건). ⑶ 런당 1장 → **p=0.49**(애매) → ADR-0303 의 "내 덱이 못 하는 것" 전제로 **1장**.
+- **규칙**: tier-6 비종결 승리에서 **세 고유를 보여주고 하나를 고른다**. 선택은 **무료** — `cardRewardTaken` 을 건드리지 않아 **전리품 stop 이 그대로 남는다**. ENTER 는 건너뛰기. **런당 1장**(소유하면 제안이 비므로 재로드 중복도 구조적으로 막힘).
+- **구현**: `uniqueChoicesFor`(난수 0, 고정 순서) · `applyLootAction` 하위 단계 · `renderLootScreen(mode:"unique")` — 제목 `UNIQUE PROGRAM`, 헤더 `CHOOSE ONE`, 푸터 `1-3: unique · ENTER: skip` · 터치 행(`rewardAffordances`) · `SaveSlot.uniquePickDone?`.
+- **측정(per-cell 64시드)**: **100 / 97.1 / 75.9 / 51.4 / 26.9 / 32.3** = ADR-0309 자동 지급과 **완전 동일(62/192)**. 즉 **선택은 전력 중립**이고 목표도 그대로 통과(최대 이탈 4.1pp). 이유 두 가지: 고유는 덱에서 한 장이라 결정적 교전 전에 잘 안 나오고, 셋은 **같은 30 피해의 sidegrade**라 선택이 "전력"이 아니라 "커버리지"다.
+- **정직한 한계**: 하네스 봇은 `cardScore` 최고인 `ghost_key` 를 항상 고른다 — 측정은 "선택이 비용이 없다"는 뜻이지 "선택이 가치 없다"는 뜻이 아니다.
+- **테스트**: `adr0311_unique_pick_screen.test.ts` 6건 + ADR-0300 폭 가드에 `unique pick` 케이스. 전체 **208 files / 4190 tests**.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · build PASS · e2e desktop `progression`·`run_end_save` **5/5** · **소크 99런 completed 67 / failed 32 · frozen 0/99 · noEndInSteps 0 · meanSteps 22.3** · `check_doc_claims.py --tests` exit 0 · `audit_sprawl.py` 0 broken.

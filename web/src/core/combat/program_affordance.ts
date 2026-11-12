@@ -21,6 +21,7 @@ import { programEffectTag } from "./program_effects";
 import {
   offeredCardIds,
   rewardProgram,
+  uniqueChoicesFor,
   type RewardSource,
 } from "../state/card_reward";
 import type { RunMutator } from "../state/run_mutators";
@@ -180,7 +181,11 @@ export function affordanceAriaLabel(a: ProgramAffordance): string {
 export function rewardAffordances(
   state: RewardSource & Pick<GameState, "player" | "activeMutators">,
 ): ReadonlyArray<ProgramAffordance> {
-  return offeredCardIds(state).map((id, i) => {
+  // ADR-0311: while the unique pick is open, the touch row carries those three
+  // answers instead of the card offer — the pick is what the screen is asking.
+  const unique = uniqueChoicesFor(state);
+  const ids = unique.length > 0 ? unique : offeredCardIds(state);
+  return ids.map((id, i) => {
     const card = rewardProgram(id);
     const cost = card ? programAlarmCost(card, state.activeMutators) : 0;
     return {

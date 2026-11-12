@@ -31,6 +31,16 @@ function lootState() {
   };
 }
 
+/** ADR-0311: the free unique pick renders in the same panel. */
+function uniquePickState() {
+  const base = runState({ runPhase: "loot", message: "wisp defeated!" });
+  return {
+    ...base,
+    iceRoster: [{ ...base.iceRoster[0], tier: 6 }],
+    uniquePickDone: false,
+  };
+}
+
 describe("ADR-0300 · the cut recorder", () => {
   it("records a line that runs past the right edge", () => {
     // Given: a 10-column grid.
@@ -60,6 +70,7 @@ describe("ADR-0300 · the cut recorder", () => {
 
 describe.each([
   ["loot with a full trace", lootState()],
+  ["unique pick", uniquePickState()],
   ["loot with no trace", runState({ runPhase: "loot", message: "No rewards" })],
   ["matrix", runState({ runPhase: "matrix" })],
   ["ending", runState({ runPhase: "ending", endingChoice: "arc4_liberation_front" })],

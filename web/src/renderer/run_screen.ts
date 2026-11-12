@@ -9,7 +9,7 @@ import { buildHudLines } from "../core/state/state";
 import { isTerminalNode } from "../core/state/run_end";
 import { burnTarget } from "../core/state/state_actions_phases";
 import type { GrowthReveal } from "./growth_reveal";
-import { offeredCardIds, rewardProgram } from "../core/state/card_reward";
+import { offeredCardIds, rewardProgram, uniqueChoicesFor } from "../core/state/card_reward";
 import { formatRewardOption } from "../core/combat/program_affordance";
 import { missionGradeOf } from "../core/combat/ice_scaling";
 import {
@@ -124,6 +124,38 @@ export function renderRunScreen(
       const lootText = lootMatch ? `Loot: ${lootMatch[1]}` : "";
       // A terminal node ends the run on confirm — no heal, no route.
       const terminal = isTerminalNode(state);
+      // ADR-0311: the free unique pick renders first, in the same panel. It is
+      // one row per answer, and ENTER skips it.
+      const uniqueIds = terminal ? [] : uniqueChoicesFor(state);
+      if (uniqueIds.length > 0) {
+        const uniqueOffers = uniqueIds
+          .map((id, i) => {
+            const card = rewardProgram(id);
+            return card ? formatRewardOption(i + 1, card) : "";
+          })
+          .filter((line) => line.length > 0);
+        const uniqueHint =
+          cols < 40
+            ? `1-${uniqueIds.length}: pick`
+            : `1-${uniqueIds.length}: unique · ENTER: skip`;
+        return {
+          grid: renderLootScreen(
+            state.player.hp,
+            state.player.maxHp,
+            layout.cols,
+            layout.rows,
+            rewardCredits,
+            lootText,
+            terminal,
+            uniqueOffers,
+            -1,
+            growth?.lootCommit ?? null,
+            uniqueHint,
+            "unique",
+          ),
+          hud: ["UNIQUE", "", uniqueHint],
+        };
+      }
       // ADR-0259: a non-terminal win offers cards; a terminal one ends the run.
       const takenId = state.cardRewardTaken ?? null;
       const ids = terminal ? [] : offeredCardIds(state);

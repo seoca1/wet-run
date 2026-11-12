@@ -37,7 +37,7 @@ import {
 } from "./encounter_verbs";
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
-import { offeredCardIds, rewardProgram } from "./card_reward";
+import { offeredCardIds, rewardProgram, uniqueChoicesFor } from "./card_reward";
 import { refillHand } from "../combat/hand";
 import {
   BURN_COST,
@@ -191,6 +191,42 @@ export function applyLootAction(
 ): GameState {
   // Mission complete: matrix cleared, OR dead-end node (no forward path), OR boss defeated.
   if (isTerminalNode(state)) return applyTerminalLoot(state, action);
+
+  // ADR-0311: the unique pick comes before the stop and is free — it does not
+  // touch `cardRewardTaken`, so every loot option is still available after it.
+  const uniques = uniqueChoicesFor(state);
+  if (uniques.length > 0) {
+    if (action.type === "select_program") {
+      const id = uniques[action.handIndex - 1];
+      if (id === undefined) {
+        return {
+          ...state,
+          message: `Pick 1-${uniques.length} — ENTER takes nothing`,
+        };
+      }
+      const card = rewardProgram(id);
+      if (card === undefined) return { ...state, uniquePickDone: true };
+      return {
+        ...state,
+        // ADR-0278: on top of the draw pile, so the next encounter deals it.
+        drawPile: [card, ...state.drawPile],
+        inventory: {
+          ...state.inventory,
+          programs: [...state.inventory.programs, card],
+        },
+        uniquePickDone: true,
+        message: `Acquired ${card.name} — ENTER for the loot stop`,
+      };
+    }
+    if (action.type === "confirm" || action.type === "cancel") {
+      return {
+        ...state,
+        uniquePickDone: true,
+        message: "Unique skipped — ENTER for the loot stop",
+      };
+    }
+    return state;
+  }
 
   // ADR-0259: a non-terminal win offers cards — the run's only growth.
   // ADR-0282: the same screen is a spend — a program, a repair, or the credits.

@@ -38,6 +38,7 @@ export type RewardSource = Pick<
   | "turnCount"
   | "currentNodeIndex"
   | "cardRewardTaken"
+  | "uniquePickDone"
 > & {
   /** The ICE that was just beaten. Optional: hand-built states, old saves and
    * tests without a roster fall back to the neutral tier (ADR-0292). */
@@ -160,21 +161,23 @@ export function rewardProgram(id: string): Program | undefined {
   return catalog()[id];
 }
 
-/** The unique a tier-6 win hands over outside the loot stop (ADR-0309).
+/** The uniques a tier-6 win offers the player (ADR-0311).
  *
- * ADR-0307 (a) measured why the g6 axis was dead: the loot stop has one slot and
- * the repair owns it (ADR-0305/0306). The unique was offered at every tier-6
- * fight (65 of 65) and taken in 1 of 96 runs. Handing it over outside the stop
- * lifts g6 completion from 11.5% to 34.9% (64 seeds) and leaves g1-g5 alone.
+ * ADR-0309 handed over the first unique the fight's offer named, so the runner
+ * never saw the three answers ADR-0303 designed. The pick screen restores that:
+ * a non-terminal tier-6 win offers all three and the runner takes one.
  *
- * Deterministic: it is the first unique the fight's own offer would have named,
- * so it consumes no `Math.random` and a reload offers the same one.
+ * **One per run.** Collecting all three turns the choice back into a checklist,
+ * and the answer should stay a build decision (ADR-0303). It also makes the
+ * offer safe across a reload: once a unique is owned there is nothing to
+ * re-offer, so a save taken after the pick cannot hand out a second one.
+ *
+ * Pure and deterministic: fixed catalog order, no `Math.random` consumed.
  */
-export function uniqueGrantFor(
-  state: RewardSource,
-  maxDefeatedTier: number,
-  terminal: boolean,
-): string | null {
-  if (terminal || maxDefeatedTier < UNIQUE_MIN_ICE_TIER) return null;
-  return offeredCardIds(state).find((id) => UNIQUE_PROGRAMS.has(id)) ?? null;
+export function uniqueChoicesFor(state: RewardSource): readonly string[] {
+  if (state.uniquePickDone) return [];
+  if (iceTierOf(state) < UNIQUE_MIN_ICE_TIER) return [];
+  const owned = ownedIds(state);
+  if ([...owned].some((id) => UNIQUE_PROGRAMS.has(id))) return [];
+  return [...UNIQUE_PROGRAMS];
 }

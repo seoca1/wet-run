@@ -268,6 +268,7 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     ...(state.cardRewardTaken
       ? { cardRewardTaken: state.cardRewardTaken }
       : {}),
+    ...(state.uniquePickDone ? { uniquePickDone: true } : {}),
     ...(state.jockeyId ? { jockeyId: state.jockeyId } : {}),
     discardIds: state.discardPile.map((p: Program) => p.id),
     drawIds: state.drawPile.map((p: Program) => p.id),
@@ -396,6 +397,7 @@ export function slotToGameState(
       (i) => Number.isInteger(i) && i >= 0 && i < matrix.nodes.length,
     ),
     cardRewardTaken: slot.cardRewardTaken ?? null,
+    ...(slot.uniquePickDone ? { uniquePickDone: true } : {}),
     jockeyId: slot.jockeyId ?? null,
     bossPhase: 0,
     endingChoice: null,

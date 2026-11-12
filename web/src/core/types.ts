@@ -226,6 +226,10 @@ export interface GameState {
    * the acquisition and a reload cannot take a second one. Cleared on the way
    * out of loot. Optional; missing means nothing taken yet. */
   readonly cardRewardTaken?: string | null;
+  /** ADR-0311: the tier-6 unique pick has been resolved for this win (taken or
+   * skipped). Cleared by the next tier-6 victory. Optional; missing means the
+   * pick is still open — but only when the run holds no unique. */
+  readonly uniquePickDone?: boolean;
   /** ADR-0274: the jockey this run belongs to ("novice"|"veteran"|"heretic").
    * Display-only — it names the runner in the intro and the ending summary. */
   readonly jockeyId?: string | null;
@@ -491,6 +495,9 @@ export interface SaveSlot {
   /** ADR-0261 the card taken from the current loot offer; older version-1
    * slots omit it (no card taken yet). */
   readonly cardRewardTaken?: string;
+  /** ADR-0311 the unique pick for the current win is resolved; older version-1
+   * slots omit it (nothing picked yet). */
+  readonly uniquePickDone?: boolean;
   /** ADR-0274 — the jockey the run belongs to; older slots omit it. */
   readonly jockeyId?: string;
   /** ADR-0287 bought intel; older version-1 slots omit it (nothing revealed). */

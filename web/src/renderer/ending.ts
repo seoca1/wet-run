@@ -122,6 +122,8 @@ export function renderLootScreen(
    * footer's wording. Without this the panel kept promising slots 1-5 while the
    * screen offered 1-8 — a false affordance under ADR-0251 rule 5. */
   hint: string | null = null,
+  /** ADR-0311: the same panel carries the free unique pick before the stop. */
+  mode: "loot" | "unique" = "loot",
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -130,7 +132,7 @@ export function renderLootScreen(
     grid,
     Math.max(2, Math.floor((cols - 12) / 2)),
     Math.floor(rows / 2) - 4,
-    "DATA SALVAGE",
+    mode === "unique" ? "UNIQUE PROGRAM" : "DATA SALVAGE",
     PALETTE.GREEN_NEON,
   );
 
@@ -185,7 +187,7 @@ export function renderLootScreen(
       grid,
       Math.max(2, Math.floor((cols - 12) / 2)),
       Math.floor(rows / 2) + 5,
-      "NEW PROGRAM",
+      mode === "unique" ? "CHOOSE ONE" : "NEW PROGRAM",
       PALETTE.YELLOW_AMBER,
     );
     // Left-align the block under one margin so the slot digits line up.
@@ -222,9 +224,11 @@ export function renderLootScreen(
     healRow,
     terminal
       ? "NO OPTIONS — this was the last node"
-      : takenIndex >= 0
-        ? `ENTER → ${healed}/${maxHp}`
-        : "ENTER: take nothing",
+      : mode === "unique"
+        ? "ENTER: take nothing"
+        : takenIndex >= 0
+          ? `ENTER → ${healed}/${maxHp}`
+          : "ENTER: take nothing",
     PALETTE.GRAY_DARK,
   );
 
@@ -234,7 +238,10 @@ export function renderLootScreen(
     : takenIndex >= 0
       ? "ENTER: continue"
       : offers.length > 0
-        ? (hint ?? "1-3: card | 4: repair | 5: intel")
+        ? (hint ??
+          (mode === "unique"
+            ? "1-3: unique | ENTER: skip"
+            : "1-3: card | 4: repair | 5: intel"))
         : "ENTER: route selection";
   grid = setText(
     grid,

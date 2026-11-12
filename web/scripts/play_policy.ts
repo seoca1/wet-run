@@ -12,7 +12,7 @@
  */
 import { applyAction, makeInitialState } from "../src/core/state/state";
 import { startingDeck } from "../src/core/state/starting_deck";
-import { offeredCardIds, UNIQUE_PROGRAMS } from "../src/core/state/card_reward";
+import { offeredCardIds, UNIQUE_PROGRAMS, uniqueChoicesFor } from "../src/core/state/card_reward";
 import { isTerminalNode } from "../src/core/state/run_end";
 import { fewestFightsNextHop } from "../src/core/dungeon/route_preview";
 import { bossGateNeed } from "../src/core/combat/ice_scaling";
@@ -479,7 +479,17 @@ export function playRun(
         state = applyAction(state, { type: "confirm" });
       }
     } else if (state.runPhase === "loot") {
-      if (!isTerminalNode(state)) {
+      const lootUniques = isTerminalNode(state) ? [] : uniqueChoicesFor(state);
+      if (lootUniques.length > 0) {
+        // ADR-0311: the free pick comes first; the stop is handled next pass.
+        state = applyAction(state, {
+          type: "select_program",
+          handIndex: pickRewardIndex(
+            lootUniques.map((id) => cardOf(id)),
+            cardPolicy,
+          ),
+        });
+      } else if (!isTerminalNode(state)) {
         const ids = offeredCardIds(state);
         const offersNow = ids.map((id) => cardOf(id));
         // ADR-0291: buying intel ALWAYS is the worst case for it -- it trades a
@@ -625,7 +635,9 @@ export function playRun(
         }
         }
       }
-      state = applyAction(state, { type: "confirm" });
+      if (lootUniques.length === 0) {
+        state = applyAction(state, { type: "confirm" });
+      }
     } else {
       break;
     }

@@ -1,0 +1,37 @@
+ADR-0311 — is the pick power-neutral?
+
+Question: with the instrument fixed (ADR-0310), does letting the player CHOOSE
+the tier-6 unique raise g6 above the 30% target? If it does, the target has to
+move with it.
+
+Method: per-cell seeding, 64 seeds, optimal policy, shipped rule.
+
+  g6 completion        ADR-0309 (first unique granted)   ADR-0311 (player picks)
+  64 seeds                    32.3%  (62/192)                 32.3%  (62/192)
+
+IDENTICAL COUNT. Which unique the runner gets does not move the mission outcome
+in the harness. Two readings, both consistent with the design:
+
+  1. The unique is one card in a growing deck. It is rarely dealt before the
+     fight that decides the run, so the identity of the extra answer is worth
+     less than the repair it sits beside (ADR-0305/0306).
+  2. The three are sidegrades — same 30 damage, same cost — so the choice is
+     about COVERAGE (which answer the deck lacks), not power.
+
+So the pick restores agency at no measured cost, and the target still holds:
+
+  grade    rate   target   delta
+    1     100.0    100      +0.0
+    2      97.1     95      +2.1
+    3      75.9     80      -4.1
+    4      51.4     50      +1.4
+    5      26.9     25      +1.9
+    6      32.3     30      +2.3
+
+  worst miss 4.1pp (tolerance 8pp)
+
+CAVEAT ON THE HARNESS
+  The bot's cardScore ranks ghost_key (armor ignore) highest, so it picks the
+  same answer in every run. A human picks for the deck in front of them, which
+  the harness does not model — the measurement says the pick costs nothing, not
+  that the choice is worthless.

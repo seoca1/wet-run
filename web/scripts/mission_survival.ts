@@ -31,14 +31,19 @@ import missionsJson from "../src/data/missions.json" with { type: "json" };
 import programsJson from "../src/data/programs.json" with { type: "json" };
 
 /** Target **mission completion** by grade (ADR-0280). The recorded per-encounter
- * curve cannot express this: it says nothing about how many fights a mission is. */
+ * curve cannot express this: it says nothing about how many fights a mission is.
+ *
+ * ADR-0309 raised g6 from 10% to 30% when the unique was moved outside the loot
+ * stop: the grade is the growth grade, and the measured 34.9% (64 seeds) is the
+ * point the ladder now lands on. That makes the TOP of the mission target curve
+ * flat-to-rising on purpose — see the invariant note below. */
 export const GRADE_TARGETS: Readonly<Record<number, number>> = {
   1: 1.0,
   2: 0.95,
   3: 0.8,
   4: 0.5,
   5: 0.25,
-  6: 0.1,
+  6: 0.3,
 };
 
 /** Tolerance around a target before the sweep reports a miss. */
@@ -76,7 +81,7 @@ const HAND_BONUS = handIdx >= 0 ? Number(process.argv[handIdx + 1]) || 0 : 0;
 const lootIdx = process.argv.indexOf("--loot");
 const LOOT_POLICY: LootPolicy =
   lootIdx >= 0 &&
-  ["card", "repair", "smart", "intel", "smartintel", "smartvent", "smartburn", "smartcombo", "smartrecover", "value", "valueunique", "valueuniqueplus", "valueuniqueonce", "valuecard"].includes(process.argv[lootIdx + 1] ?? "")
+  ["card", "repair", "smart", "intel", "smartintel", "smartvent", "smartburn", "smartcombo", "smartrecover", "value", "valueunique", "valuecard"].includes(process.argv[lootIdx + 1] ?? "")
     ? (process.argv[lootIdx + 1] as LootPolicy)
     : "card";
 const routeIdx = process.argv.indexOf("--route");
@@ -249,7 +254,12 @@ for (const grade of [...byGrade.keys()].sort((a, b) => a - b)) {
 }
 console.log("");
 console.log(`worst miss: ${worst.toFixed(1)}pp (tolerance ${TOLERANCE_PP}pp)`);
-console.log("invariant (ADR-0229): rates must be monotonic non-increasing by grade");
+console.log(
+  "invariant (ADR-0229): per-encounter rates must be monotonic non-increasing by grade",
+);
+console.log(
+  "  (mission completion: g6 is the growth grade and may exceed g5 — ADR-0309)",
+);
 
 if (SHOW_DEATHS) {
   console.log("");

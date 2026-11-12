@@ -11,7 +11,7 @@
 | 디렉토리 | 에이전트의 역할 | 절대 규칙 |
 | --- | --- | --- |
 | `web/` | **활성 코드베이스** | TypeScript + Vite + Vitest. 모든 변경은 `web/` 에서. 명령은 `cd web && npm ...`. |
-| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. 하위: `docs/wiki/`(ADR·lore·world) · `docs/design/`(활성 스펙·증거) · `docs/testcases/` · `docs/sessions/`(세션 요약) · `docs/dashboard/` · `docs/playtest/`(수동 플레이 기록) · `docs/architecture/`(redirect-only) · `docs/diagnostics/`(도구 진단 기록). **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (228 ADRs, 0001–0308). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
+| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. 하위: `docs/wiki/`(ADR·lore·world) · `docs/design/`(활성 스펙·증거) · `docs/testcases/` · `docs/sessions/`(세션 요약) · `docs/dashboard/` · `docs/playtest/`(수동 플레이 기록) · `docs/architecture/`(redirect-only) · `docs/diagnostics/`(도구 진단 기록). **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (229 ADRs, 0001–0309). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
 | `data/` | **삭제됨 (2026-10-20)** | 이전 prototype/ 잔재 (sounds_test WAVs, jockeys/deceased.json). 모든 게임 데이터는 `web/src/data/*.json` 과 `web/public/sounds/` 에 존재. |
 | `scripts/` | 자유롭게 편집 | 보조 도구 (`scripts/tools/` — audit_sprawl.py, find_broken_links.py, README.md). |
 | 루트 메타 파일 | 신중히 수정 | README, AGENTS, log, ROADMAP, CHANGELOG, MIGRATION, VALIDATION_SCENARIO, mkdocs.yml |

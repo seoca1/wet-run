@@ -159,3 +159,22 @@ export function offeredCardIds(
 export function rewardProgram(id: string): Program | undefined {
   return catalog()[id];
 }
+
+/** The unique a tier-6 win hands over outside the loot stop (ADR-0309).
+ *
+ * ADR-0307 (a) measured why the g6 axis was dead: the loot stop has one slot and
+ * the repair owns it (ADR-0305/0306). The unique was offered at every tier-6
+ * fight (65 of 65) and taken in 1 of 96 runs. Handing it over outside the stop
+ * lifts g6 completion from 11.5% to 34.9% (64 seeds) and leaves g1-g5 alone.
+ *
+ * Deterministic: it is the first unique the fight's own offer would have named,
+ * so it consumes no `Math.random` and a reload offers the same one.
+ */
+export function uniqueGrantFor(
+  state: RewardSource,
+  maxDefeatedTier: number,
+  terminal: boolean,
+): string | null {
+  if (terminal || maxDefeatedTier < UNIQUE_MIN_ICE_TIER) return null;
+  return offeredCardIds(state).find((id) => UNIQUE_PROGRAMS.has(id)) ?? null;
+}

@@ -3574,3 +3574,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **공통**: 둘 다 g6 목표(10%)를 +24.9 ~ +36.4pp 초과하므로 **g6 재조정이 같은 패스에 필수**. ②는 g1–g5 재검증까지 필요.
 - **계측 한계**: `mission_survival` 이 스윕당 1회 시드 후 미션 순서로 스트림을 공유 → 등급 간 이동에 잡음이 섞인다(≈2pp 이하는 잡음으로 취급). 근본 수정은 per-cell 시드(ADR-0265 교훈의 survival 적용).
 - **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **207 / 4181** · 기록 기준선(`--policies --seeds 32`) **불변**. 근거 `docs/design/adr-0307/unique-is-not-picked.txt`.
+
+## [2026-11-12] feat(balance) | g6 성장은 전리품 칸을 쓰지 않는다 — 고유 카드는 밖에서 온다 (ADR-0309)
+
+- **오너 결정**: "b로 하자" = ADR-0307 (a) 이후 제시한 세 방향 중 **목표 재정의안**. ①전리품 밖 지급 + **g6 목표 10% → 30%**.
+- **왜 목표만 올릴 수 없나**: 목표는 실제 게임에서 도달 가능해야 한다. 현 상태로는 고유가 **1/96** 런에서만 잡히므로, ①을 **규칙으로** 넣는 것이 (b)의 전제다.
+- **규칙**: `uniqueGrantFor`(tier-6 · 비종결 승리에서 그 싸움의 제안이 지목한 **첫 고유**, 난수 소비 **0**) → `resolveVictory` 가 **드로우 파일 맨 위 + inventory** 에 넣고 메시지에 `· unique <name>`. **전리품 stop 은 소비되지 않는다**(ADR-0305/0306 의 수리 선택 보존).
+- **목표**: `GRADE_TARGETS[6] = 0.30`. 하네스 불변식 문구도 정정 — **교전당 곡선(ADR-0229 §B)은 그대로**이고, 미션 완주율의 최상단만 예외.
+- **측정(64시드, 최적 정책)**: **100 / 97.2 / 75.6 / 50.6 / 26.0 / 35.4** vs 목표 100/95/80/50/25/30 → **최대 이탈 5.4pp**(허용 8). g6 는 11.5 → **35.4**.
+- **교전당 곡선**: 변경 전후 **byte-identical**(`100/100/100/98.9/83.9/32.3`) — 지급은 전투가 끝난 뒤에만 일어나고 하네스는 교전을 잇지 않는다.
+- **대가(정직하게)**: ADR-0303 의 "내 덱이 못 하는 것을 **고른다**"가 "**발견한다**"로 바뀐다. 선택을 되살리려면 별도 고유 선택 화면이 필요(ADR-0309 열린 질문 a). 그리고 사다리 꼭대기가 비단조가 된다(g5 26.0 < g6 35.4) — "최상위는 성장의 등급"이라는 전제를 택한 결과(열린 질문 b).
+- **문서**: 신규 **ADR-0309** + README 색인 · ADR-0307 `Implementation Status` 에 (a) 종결 주석 · AGENTS.md ADR 카운트 **228/0308 → 229/0309**.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 files / 4185 tests**(+1 file/+4 tests) · `check_doc_claims.py --tests` exit 0 · `audit_sprawl.py` 0 broken · `audit_vault.py` CLEAN · `mixed_language_audit.py` 0.
+- **테스트**: `web/tests/adr0309_unique_outside_the_loot_stop.test.ts` — 지급 · tier 게이트 · 종결 승리 제외 · 재로드 결정성.

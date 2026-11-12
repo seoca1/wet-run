@@ -78,8 +78,6 @@ export type LootPolicy =
   | "smartrecover"
   | "value"
   | "valueunique"
-  | "valueuniqueplus"
-  | "valueuniqueonce"
   | "valuecard";
 
 /** Higher is better: armour answers first, then tier (damage is tier * 5). */
@@ -508,8 +506,6 @@ export function playRun(
         if (
           lootPolicy === "value" ||
           lootPolicy === "valueunique" ||
-          lootPolicy === "valueuniqueplus" ||
-          lootPolicy === "valueuniqueonce" ||
           lootPolicy === "valuecard"
         ) {
           // One rule, measured: a repair restores 70-100% of max HP and a card is
@@ -528,49 +524,10 @@ export function playRun(
           const cardIdx = pickRewardIndex(ids.map((id) => cardOf(id)), cardPolicy);
           const worthRepair = hpPressure > 0.15 && gainPct >= CARD_HP_EQUIV_PCT;
           // ADR-0307 (a) measurement: is a unique worth the repair it displaces?
-          const uniqueIdx = ids.findIndex((id) => UNIQUE_PROGRAMS.has(id)) + 1;
           const topIsUnique =
             cardIdx >= 1 && UNIQUE_PROGRAMS.has(ids[cardIdx - 1] as string);
 
-          if (lootPolicy === "valueuniqueplus" && uniqueIdx >= 1) {
-            // Option 1: the unique is granted OUTSIDE the stop, so the stop still
-            // spends as it always did (repair when it clears the bar).
-            state = applyAction(state, {
-              type: "select_program",
-              handIndex: uniqueIdx,
-            });
-            if (worthRepair) {
-              state = applyAction(state, {
-                type: "select_program",
-                handIndex: LOOT_REPAIR_SLOT,
-              });
-            }
-          } else if (lootPolicy === "valueuniqueonce" && uniqueIdx >= 1) {
-            // Option 1b: the same grant, but only while the run holds no unique —
-            // keeps the "one answer, chosen" intent now that the grant is free.
-            const holdsUnique = [
-              ...state.deck,
-              ...state.drawPile,
-              ...state.discardPile,
-            ].some((p) => UNIQUE_PROGRAMS.has(p.id));
-            if (!holdsUnique) {
-              state = applyAction(state, {
-                type: "select_program",
-                handIndex: uniqueIdx,
-              });
-              if (worthRepair) {
-                state = applyAction(state, {
-                  type: "select_program",
-                  handIndex: LOOT_REPAIR_SLOT,
-                });
-              }
-            } else {
-              state = applyAction(state, {
-                type: "select_program",
-                handIndex: worthRepair ? LOOT_REPAIR_SLOT : cardIdx,
-              });
-            }
-          } else if (lootPolicy === "valuecard") {
+          if (lootPolicy === "valuecard") {
             // Option 2: the loot screen is split, so the card no longer competes
             // with the repair. Both are taken.
             state = applyAction(state, {

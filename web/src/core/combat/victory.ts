@@ -35,6 +35,7 @@ import { defeatedIceName } from "./roster";
 import { COST_LIMIT } from "./program_affordance";
 import { isTerminalNode } from "../state/run_end";
 import { addPrepWallet, PREP_WALLET_BANK_SHARE } from "../state/prep_wallet";
+import { rewardProgram, uniqueGrantFor } from "../state/card_reward";
 
 /** The faction an ICE belongs to — its id carries the name. */
 export function iceFactionOf(iceId: string): FactionId | null {
@@ -191,6 +192,15 @@ export function resolveVictory(
   }
 
   const terminal = isTerminalNode(state);
+  // ADR-0309: a tier-6 win hands over one unique OUTSIDE the loot stop, so the
+  // stop stays a real choice (ADR-0305/0306) and g6 still has growth. Measured:
+  // g6 11.5% -> 34.9% (64 seeds), g1-g5 within 0.9pp. No `Math.random` consumed.
+  const grantedId = uniqueGrantFor(
+    state,
+    defeated.reduce((max, ice) => Math.max(max, ice.tier ?? 0), 0),
+    terminal,
+  );
+  const granted = grantedId === null ? undefined : rewardProgram(grantedId);
   const nodeReward =
     state.matrix?.nodes[state.currentNodeIndex]?.reward.credits ?? 0;
   const missionReward = terminal ? state.mission.rewards.credits : 0;
@@ -215,7 +225,7 @@ export function resolveVictory(
   const missionNote = missionReward > 0 ? " (mission complete)" : "";
   const bountyNote = bounty > 0 ? ` (bounty ${bounty})` : "";
   const traceNote = trace > 0 ? ` · trace +${trace}` : "";
-  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${missionNote}${bountyNote}${traceNote}${lootMessage}`;
+  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${missionNote}${bountyNote}${traceNote}${lootMessage}${granted ? ` · unique ${granted.name}` : ""}`;
 
   return {
     ...state,
@@ -223,6 +233,12 @@ export function resolveVictory(
     phase: "victory",
     message: victoryMessage,
     combatLog: [victoryMessage, ...state.combatLog].slice(0, COMBAT_LOG_CAP),
+    // ADR-0309: the granted unique goes on TOP of the draw pile, the same place
+    // ADR-0278 puts a card taken at the loot screen, so the next encounter deals it.
+    drawPile: granted ? [granted, ...state.drawPile] : state.drawPile,
+    inventory: granted
+      ? { ...state.inventory, programs: [...state.inventory.programs, granted] }
+      : state.inventory,
     player: {
       ...state.player,
       // ADR-0294: the trace closes in. Capped at the run's COST ceiling, so a

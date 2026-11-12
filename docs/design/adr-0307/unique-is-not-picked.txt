@@ -106,3 +106,26 @@ REPRODUCE (options)
   npm run survival -- --seeds 64 --cards best --loot valueuniqueonce
   npm run survival -- --seeds 64 --cards best --loot valuecard
 
+======================================================================
+STATUS 2026-11-12 — option 1 SHIPPED as a game rule (ADR-0309)
+======================================================================
+
+The owner chose option 1 ("b") and the g6 target was redefined to 30%.
+So option 1 is no longer a policy: `resolveVictory` grants the unique on a
+non-terminal tier-6 win, and `--loot value` (the recorded optimal) now
+measures the shipped rule.
+
+  shipped rule, 64 seeds:  100.0 / 97.2 / 75.6 / 50.6 / 26.0 / 35.4
+  targets (new)           100    95    80    50    25    30
+  worst miss: 5.4pp
+
+The `valueuniqueplus` and `valueuniqueonce` policies were REMOVED — with the
+grant in the engine they would have stacked a second unique and measured
+something nobody proposed. `valueunique` (take a second unique instead of
+repairing) and `valuecard` (split loot) remain as instruments.
+
+Consequence for reproducing the table above: it is the pre-rule comparison.
+It is reproducible only by reverting the grant in `victory.ts`; the numbers
+stand as measured. `valuecard` still reproduces option 2 today.
+
+

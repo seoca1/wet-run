@@ -128,4 +128,10 @@ Consequence for reproducing the table above: it is the pre-rule comparison.
 It is reproducible only by reverting the grant in `victory.ts`; the numbers
 stand as measured. `valuecard` still reproduces option 2 today.
 
+STREAM NOTE (2026-11-12): every number in this file was measured on the
+SHARED random stream (one reseed per sweep, missions walked in catalog order).
+`--per-cell` now exists and shows that the shared stream biases g6 upward and
+makes the same cells depend on the filter: the shipped rule reads 32.3% under
+per-cell, not 35.4%. See `docs/design/harness-per-cell-2026-11-12/`.
+
 

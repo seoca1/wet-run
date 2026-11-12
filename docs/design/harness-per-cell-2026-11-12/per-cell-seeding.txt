@@ -1,0 +1,77 @@
+HARNESS — each cell owns its dice (2026-11-12)
+
+WHY THIS EXISTS
+  `mission_survival` reseeded `Math.random` once per sweep seed and then walked
+  the missions in catalog order on that one stream. So a cell's result depended
+  on every mission that ran before it. Two symptoms were observed in the g6 work:
+
+    1. The same cells gave different answers depending on the filter.
+    2. A policy change inside one grade moved OTHER grades by up to 1.7pp.
+
+  ADR-0265 fixed exactly this in the soak census (per-cell reseed). This applies
+  the same fix to survival and measures the size of the bias.
+
+WHAT CHANGED
+  `--per-cell` reseeds per (sweep seed, mission index) and resets the clock per
+  cell. The mission's index is its position in the FULL catalog, so `--grade`
+  filtering cannot change a cell. Off by default: the recorded baseline was
+  measured on the shared stream and must stay reproducible.
+
+THE TEST — the same cell must not care what ran before it
+  32 seeds, g6 (3 missions = 96 cells), optimal policy:
+
+    stream      full sweep    filtered --grade 6    difference
+    shared        33.3%            35.4%              +2.1pp
+    per-cell      31.3%            31.3%               0.0pp
+
+  64 seeds, same test:
+
+    stream      full sweep    filtered --grade 6    difference
+    shared        35.4%            39.6%              +4.2pp
+    per-cell      32.3%            32.3%               0.0pp
+
+  THE FILTER CAN FLIP A PASS. At 64 seeds the shared filtered run reports 39.6%,
+  which is +9.6pp against the 30% target — outside the 8pp tolerance. The same
+  cells measured per-cell read 32.3%, +2.3pp, inside it. The instrument decides
+  whether the decision passes.
+
+PAIRED CURVES — 32 seeds, `--policies`
+
+    grade   shared d/opt     per-cell d/opt
+      1     100.0 / 100.0     100.0 / 100.0
+      2      78.1 /  96.5      77.0 /  96.5
+      3      48.0 /  75.3      47.2 /  74.4
+      4      36.9 /  50.3      36.6 /  50.6
+      5       5.9 /  28.5       5.2 /  29.9
+      6       3.1 /  33.3       2.1 /  31.3
+
+  Movement is 0.0-1.4pp on the optimal curve, but it is not random: it is the
+  fingerprint of mission order. The default curve moves more at g5-g6 (0.7 and
+  1.0pp) — the grades whose runs are long enough to consume more draws.
+
+RE-CHECK OF THE SHIPPED DECISION (ADR-0309)
+  64 seeds, optimal, per-cell:
+
+    grade    rate    target   delta
+      1     100.0     100      +0.0
+      2      97.1      95      +2.1
+      3      75.9      80      -4.1
+      4      51.4      50      +1.4
+      5      26.9      25      +1.9
+      6      32.3      30      +2.3
+
+  worst miss 4.1pp (tolerance 8pp). The decision HOLDS on the better instrument.
+  Its g6 margin shrinks: the shared stream reported +5.4pp on the same sweep,
+  per-cell is +2.3pp. And the shared FILTERED run reports +9.6pp (a MISS) — so
+  the apparent margin was mostly stream ordering, not the rule.
+
+DETERMINISM
+  Repeated 64-seed per-cell run returns 32.3% (62/192) again, and the filtered
+  run returns the same count — a cell is now a pure function of its seed.
+
+HOW TO USE
+  npm run survival -- --seeds 64 --cards best --loot value --per-cell
+  npm run survival -- --seeds 32 --policies --per-cell
+
+  Use per-cell for new decisions. The shared stream remains the only way to
+  reproduce the historic numbers (ADR-0280/0306/0309 tables).

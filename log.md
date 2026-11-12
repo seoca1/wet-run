@@ -3587,3 +3587,22 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **문서**: 신규 **ADR-0309** + README 색인 · ADR-0307 `Implementation Status` 에 (a) 종결 주석 · AGENTS.md ADR 카운트 **228/0308 → 229/0309**.
 - **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 files / 4185 tests**(+1 file/+4 tests) · `check_doc_claims.py --tests` exit 0 · `audit_sprawl.py` 0 broken · `audit_vault.py` CLEAN · `mixed_language_audit.py` 0.
 - **테스트**: `web/tests/adr0309_unique_outside_the_loot_stop.test.ts` — 지급 · tier 게이트 · 종결 승리 제외 · 재로드 결정성.
+
+## [2026-11-12] test(harness) | 같은 셀이 무엇이 먼저 돌았는지에 따라 답이 바뀌었다 — per-cell 시드
+
+- **문제**: `mission_survival` 은 스윕 시드마다 **한 번만** 시드하고 미션을 카탈로그 순서로 걸었다. 그래서 한 셀의 결과가 **먼저 돈 미션들에 의존**한다. g6 작업 중 두 증상: ⑴ `--grade` 필터 유무로 같은 셀이 다른 값 ⑵ 한 등급의 정책 변경이 다른 등급을 최대 1.7pp 움직임.
+- **수정**: `--per-cell` 플래그 — `(스윕 시드, 미션 인덱스)` 로 셀마다 재시드하고 clock 도 셀마다 초기화. 인덱스는 **전체 카탈로그 기준**이라 필터가 셀을 바꾸지 않는다. **기본값 off** — 기록 기준선은 공유 스트림으로 측정됐고 재현돼야 한다.
+- **측정(최적 정책, g6 = 96/192 셀)**:
+
+  | 스트림 | 전수 스윕 | `--grade 6` | 차이 |
+  |---|---:|---:|---:|
+  | 공유 · 32시드 | 33.3% | 35.4% | **+2.1pp** |
+  | 공유 · 64시드 | 35.4% | **39.6%** | **+4.2pp** |
+  | per-cell · 32시드 | 31.3% | 31.3% | 0.0pp |
+  | per-cell · 64시드 | 32.3% | 32.3% | 0.0pp |
+
+- **핵심**: 필터가 **합격/불합격을 뒤집는다**. 64시드 공유 필터 실행은 g6 39.6% = 목표 30 대비 **+9.6pp(허용 8pp 초과, MISS)**. 같은 셀을 per-cell 로 재면 32.3% = **+2.3pp(통과)**. ADR-0309 의 여유(+5.4pp)는 **절반 이상이 스트림 순서**였다.
+- **ADR-0309 재확인(per-cell, 64시드)**: **100 / 97.1 / 75.9 / 51.4 / 26.9 / 32.3** vs 목표 100/95/80/50/25/30 → **최대 이탈 4.1pp**. 결정은 더 정확한 계측기에서도 **성립**한다.
+- **결정성**: per-cell 64시드 재실행이 **동일**(62/192), 필터 실행도 동일 카운트 — 이제 셀은 시드의 순수 함수다.
+- **미결(오너)**: 기본값을 per-cell 로 뒤집을지. 뒤집으면 기록 기준선(ADR-0280/0306/0309 표) 전면 재기준화가 필요하다.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 / 4185** · `check_doc_claims.py` exit 0 · `audit_sprawl.py` 0 broken. 근거 `docs/design/harness-per-cell-2026-11-12/per-cell-seeding.txt`.

@@ -101,15 +101,18 @@ const CARD_POLICY: CardPolicy =
 /** Restrict the sweep to one grade — a probe for tuning, ~1s instead of ~15. */
 const onlyIdx = process.argv.indexOf("--grade");
 const ONLY_GRADE = onlyIdx >= 0 ? Number(process.argv[onlyIdx + 1]) : null;
-/** Seed every cell on its own (ADR-0265's fix, applied to survival).
+/** Seed every cell on its own (ADR-0310, which flipped this to the default).
  *
- * The default shares one `Math.random` stream across the missions of a sweep
- * seed, so a change in one grade shifts the dice of every mission that runs
- * after it — and filtering with `--grade` changes the answer for the same cell.
- * This flag reseeds per (sweep seed, mission), so a cell's result no longer
- * depends on what ran before it. Off by default: the recorded baseline was
- * measured with the shared stream and must stay reproducible. */
-const PER_CELL = process.argv.includes("--per-cell");
+ * The shared stream (one `Math.random` per sweep seed, missions walked in
+ * catalog order) made a cell depend on what ran before it: the same g6 cells
+ * read 33.3% vs 35.4% at 32 seeds and 35.4% vs 39.6% at 64 seeds depending on
+ * `--grade`, and the filtered run could flip a pass into a miss.
+ *
+ * Per-cell reseeds on `(sweep seed, mission index)` and resets the clock per
+ * cell; the index is the mission's position in the FULL catalog, so filtering
+ * cannot move a cell. `--shared-stream` restores the old behaviour, which is
+ * the only way to reproduce the numbers recorded before ADR-0310. */
+const PER_CELL = !process.argv.includes("--shared-stream");
 const BASE_SEED = 20261106;
 
 const ice = loadIceCatalog(iceJson);
@@ -211,7 +214,7 @@ const SHOW_POLICIES = process.argv.includes("--policies");
 
 if (SHOW_POLICIES) {
   console.log(
-    `skill gap — ${SEEDS} seeds x ${Object.keys(missions).length} missions, deck "${DECK_MODE}", route "long"${PER_CELL ? " · per-cell seed" : ""}`,
+    `skill gap — ${SEEDS} seeds x ${Object.keys(missions).length} missions, deck "${DECK_MODE}", route "long"${PER_CELL ? " · per-cell seed" : " · shared stream (historic)"}`,
   );
   console.log("");
   const base = runSweep({ card: "first", loot: "card", route: "long" });
@@ -250,7 +253,7 @@ if (SHOW_POLICIES) {
     route: ROUTE_POLICY,
   });
 console.log(
-  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", hp +${HP_BONUS}, hand +${HAND_BONUS}, prep "${PREP_CHOICE}", wallet ${WALLET}, jockey "novice"${PER_CELL ? " · per-cell seed" : ""}`,
+  `mission survival — ${SEEDS} seeds x ${Object.keys(missions).length} missions, policy "expensive", cards "${CARD_POLICY}", deck "${DECK_MODE}", route "${ROUTE_POLICY}", loot "${LOOT_POLICY}", hp +${HP_BONUS}, hand +${HAND_BONUS}, prep "${PREP_CHOICE}", wallet ${WALLET}, jockey "novice"${PER_CELL ? " · per-cell seed" : " · shared stream (historic)"}`,
 );
 console.log("");
 console.log("grade  missions  runs  completed  rate    target  delta");

@@ -3606,3 +3606,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **결정성**: per-cell 64시드 재실행이 **동일**(62/192), 필터 실행도 동일 카운트 — 이제 셀은 시드의 순수 함수다.
 - **미결(오너)**: 기본값을 per-cell 로 뒤집을지. 뒤집으면 기록 기준선(ADR-0280/0306/0309 표) 전면 재기준화가 필요하다.
 - **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 / 4185** · `check_doc_claims.py` exit 0 · `audit_sprawl.py` 0 broken. 근거 `docs/design/harness-per-cell-2026-11-12/per-cell-seeding.txt`.
+
+## [2026-11-12] test(harness) | per-cell 이 기본값이 된다 — 계측기가 결정의 통과 여부를 바꿨다 (ADR-0310)
+
+- **전환**: `PER_CELL = !argv.has("--shared-stream")`. 기본 명령이 **정직한 수치**를 내고, 과거 표는 `--shared-stream` 으로 재현. 헤더가 `· per-cell seed` / `· shared stream (historic)` 로 모드를 말한다.
+- **근거(같은 셀, 필터 의존)**: 공유 32시드 **33.3 vs 35.4%** · 공유 64시드 **35.4 vs 39.6%(+9.6pp = 허용 8pp 초과 = MISS)** · per-cell **31.3/31.3 · 32.3/32.3**. 즉 계측기가 합격/불합격을 뒤집었다.
+- **새 기준선(per-cell)**: `--policies --seeds 32` default/optimal **100/100 · 77.0/96.5 · 47.2/74.4 · 36.6/50.6 · 5.2/29.9 · 2.1/31.3**. 미션 완주율 64시드 **100/97.1/75.9/51.4/26.9/32.3**, 최대 이탈 4.1pp.
+- **재기준화 정책**: Accepted ADR(0280/0306/0309)의 표는 **역사적 측정으로 보존**. ADR-0309 에는 스트림 정정 주석만 달았다(결정 내용 불변, ADR-0195 허용 범위).
+- **문서**: 신규 **ADR-0310** + README 색인 · AGENTS.md 카운트 **229/0309 → 230/0310**.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 / 4185** · `check_doc_claims.py --tests` exit 0 · `audit_sprawl.py` 0 broken · `audit_vault.py` CLEAN.

@@ -14,8 +14,11 @@ WHY THIS EXISTS
 WHAT CHANGED
   `--per-cell` reseeds per (sweep seed, mission index) and resets the clock per
   cell. The mission's index is its position in the FULL catalog, so `--grade`
-  filtering cannot change a cell. Off by default: the recorded baseline was
-  measured on the shared stream and must stay reproducible.
+  filtering cannot change a cell.
+
+  ADR-0310 FLIPPED THE DEFAULT (2026-11-12): per-cell is now what plain
+  `npm run survival` does, and `--shared-stream` restores the old behaviour for
+  reproducing the numbers recorded before that date.
 
 THE TEST — the same cell must not care what ran before it
   32 seeds, g6 (3 missions = 96 cells), optimal policy:

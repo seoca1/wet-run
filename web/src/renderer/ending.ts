@@ -165,9 +165,13 @@ export function renderLootScreen(
       Math.max(2, Math.floor((cols - lootMessage.length) / 2)),
       Math.floor(rows / 2) + 3,
       lootMessage,
-      lootMessage.startsWith("Loot: ")
-        ? PALETTE.YELLOW_AMBER
-        : PALETTE.GRAY_LIGHT,
+      // ADR-0311: a unique joining the deck is growth, not salvage — say it in
+      // the acquisition colour so the pick does not read as another drop.
+      lootMessage.startsWith("Acquired ")
+        ? PALETTE.GREEN_NEON
+        : lootMessage.startsWith("Loot: ")
+          ? PALETTE.YELLOW_AMBER
+          : PALETTE.GRAY_LIGHT,
     );
   }
 

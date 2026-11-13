@@ -122,6 +122,14 @@ export function renderRunScreen(
         ? parseInt((creditsMatch[1] ?? "").replace(/,/g, ""), 10)
         : 0;
       const lootText = lootMatch ? `Loot: ${lootMatch[1]}` : "";
+      // ADR-0311: the unique does not spend the stop, so its confirmation must
+      // not take the offer rows the way the loot-card commit panel does. It
+      // goes on the message row instead, and the options stay visible.
+      const acquired =
+        lootText === "" && state.message.startsWith("Acquired ")
+          ? (state.message.split(" — ")[0] ?? "")
+          : "";
+      const messageLine = lootText !== "" ? lootText : acquired;
       // A terminal node ends the run on confirm — no heal, no route.
       const terminal = isTerminalNode(state);
       // ADR-0311: the free unique pick renders first, in the same panel. It is
@@ -131,7 +139,8 @@ export function renderRunScreen(
         const uniqueOffers = uniqueIds
           .map((id, i) => {
             const card = rewardProgram(id);
-            return card ? formatRewardOption(i + 1, card) : "";
+            // The whole answer name matters here; the 40-column layout fits it.
+            return card ? formatRewardOption(i + 1, card, false, 14) : "";
           })
           .filter((line) => line.length > 0);
         const uniqueHint =
@@ -145,7 +154,7 @@ export function renderRunScreen(
             layout.cols,
             layout.rows,
             rewardCredits,
-            lootText,
+            messageLine,
             terminal,
             uniqueOffers,
             -1,
@@ -256,7 +265,7 @@ export function renderRunScreen(
           layout.cols,
           layout.rows,
           rewardCredits,
-          lootText,
+          messageLine,
           terminal,
           offers,
           takenIndex,

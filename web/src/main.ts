@@ -46,7 +46,7 @@ import {
   type LootCommit,
   type MatrixArrival,
 } from "./renderer/growth_reveal";
-import { offeredCardIds, rewardProgram } from "./core/state/card_reward";
+import { offeredCardIds, rewardProgram, UNIQUE_PROGRAMS } from "./core/state/card_reward";
 import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
@@ -212,6 +212,17 @@ const SCREENS_WITH_INPUT: ReadonlySet<ScreenKind> = new Set([
 ]);
 const loadAudioSystemRaw = () => import("./audio/manager.ts");
 
+/** ADR-0311: the unique the run holds, if any. Display-only — the controller
+ * uses it to tell "this pick added a unique" from "it added a card". */
+function ownUniqueId(state: GameState): string | null {
+  for (const pile of [state.deck, state.drawPile, state.discardPile]) {
+    for (const card of pile) {
+      if (UNIQUE_PROGRAMS.has(card.id)) return card.id;
+    }
+  }
+  return null;
+}
+
 /** P9 render loop — maximum frame interval (ms) that still advances VFX.
  *
  * A longer frame (GC pause, background-tab wake-up) is a stall: the VFX
@@ -313,6 +324,10 @@ class Game {
    * never on `GameState`, so it cannot reach a save, the reducer or the
    * harness. The `matrixTravel` pattern, applied to a card joining the deck. */
   private lootCommit: LootCommit | null = null;
+  /** ADR-0311 — the unique taken at the free pick. The loot commit panel owns
+   * the offer rows (a card ends the stop), so the unique is confirmed inline
+   * and its name is carried to the board arrival instead. */
+  private uniqueCommitName: string | null = null;
   private matrixArrival: MatrixArrival | null = null;
   /** ADR-0272 — the arc's framing beat, shown once when a run starts. Null
    * when there is no run, or once a key has dismissed it. Never saved, so a
@@ -1951,13 +1966,24 @@ class Game {
         slot > 0 ? slot : 1,
         now,
       );
+    } else {
+      // ADR-0311: a unique taken at the free pick is deck growth too, but it
+      // does not spend the stop — so it must not take the offer rows. Record
+      // the name for the inline confirmation and the board arrival.
+      const before = ownUniqueId(previous);
+      const after = ownUniqueId(next);
+      if (before === null && after !== null) {
+        const card = rewardProgram(after);
+        this.uniqueCommitName = card?.name ?? after;
+      }
     }
     // Leaving the loot screen retires the commit and — only when the run
     // stepped back out onto the board — announces the card there. A terminal
     // node goes to the ending, which draws its own screen, so no note.
     if (previous.runPhase === "loot" && next.runPhase !== "loot") {
-      const taken = this.lootCommit?.cardName ?? null;
+      const taken = this.lootCommit?.cardName ?? this.uniqueCommitName;
       this.lootCommit = null;
+      this.uniqueCommitName = null;
       this.matrixArrival =
         taken !== null && next.runPhase === "matrix"
           ? beginMatrixArrival(taken, now, this.reducedMotion)

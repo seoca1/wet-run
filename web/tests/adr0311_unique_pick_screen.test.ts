@@ -23,6 +23,7 @@ import {
   uniqueChoicesFor,
 } from "../src/core/state/card_reward";
 import type { GameState } from "../src/core/types";
+import { renderRunScreen } from "../src/renderer/run_screen";
 import iceJson from "../src/data/ice_types.json" with { type: "json" };
 import programsJson from "../src/data/programs.json" with { type: "json" };
 
@@ -185,3 +186,42 @@ describe("ADR-0311 · the unique pick", () => {
 function selectedUniquePickDone(state: GameState): boolean | undefined {
   return state.uniquePickDone;
 }
+
+/** What the panel actually says, so the assertions are about the screen. */
+function screenText(state: GameState): string {
+  const view = renderRunScreen(state, 80, 50);
+  return (view?.grid.cells ?? [])
+    .map((row) => row.map((c) => c?.char ?? " ").join(""))
+    .join("\n");
+}
+
+describe("ADR-0311 · the pick is on screen", () => {
+  beforeEach(() => {
+    vi.spyOn(Math, "random").mockReturnValue(0.3);
+  });
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("names all three answers before the pick", () => {
+    const text = screenText(win(wonFight(6, false)));
+    expect(text).toContain("UNIQUE PROGRAM");
+    expect(text).toContain("GHOST KEY");
+    expect(text).toContain("NULL POINTER");
+    expect(text).toContain("RED SHIFT");
+  });
+
+  it("confirms the pick without hiding the loot stop", () => {
+    // Given / When
+    const picked = applyAction(win(wonFight(6, false)), {
+      type: "select_program",
+      handIndex: 1,
+    });
+
+    // Then: the panel says what joined the deck AND still offers the stop.
+    const text = screenText(picked);
+    expect(text).toContain("Acquired Ghost Key");
+    expect(text).toContain("REPAIR");
+    expect(text).toContain("DATA SALVAGE");
+  });
+});

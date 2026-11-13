@@ -211,11 +211,14 @@ export function formatRewardOption(
   slot: number,
   program: Program,
   taken = false,
+  /** ADR-0311: the pick screen has room for the whole name — a 9-character
+   * truncation turns "NULL POINTER" into "NULL POIN", which is not a choice. */
+  nameWidth: number = NAME_WIDTH,
 ): string {
   const name = program.name
     .toUpperCase()
-    .slice(0, NAME_WIDTH)
-    .padEnd(NAME_WIDTH);
+    .slice(0, nameWidth)
+    .padEnd(nameWidth);
   const tag = programEffectTag(program);
   const body = `${slot} ${name} ${tag}`.trimEnd();
   // The caret marks the card the player actually took; the others are spent,

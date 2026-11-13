@@ -3625,3 +3625,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **정직한 한계**: 하네스 봇은 `cardScore` 최고인 `ghost_key` 를 항상 고른다 — 측정은 "선택이 비용이 없다"는 뜻이지 "선택이 가치 없다"는 뜻이 아니다.
 - **테스트**: `adr0311_unique_pick_screen.test.ts` 6건 + ADR-0300 폭 가드에 `unique pick` 케이스. 전체 **208 files / 4190 tests**.
 - **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · build PASS · e2e desktop `progression`·`run_end_save` **5/5** · **소크 99런 completed 67 / failed 32 · frozen 0/99 · noEndInSteps 0 · meanSteps 22.3** · `check_doc_claims.py --tests` exit 0 · `audit_sprawl.py` 0 broken.
+
+## [2026-11-14] feat(ui) | 고유 획득 연출 — 사운드는 이미 있었고, 표시가 없었다
+
+- **배경**: ADR-0311 열린 질문 (a). 고유를 골라도 화면이 곧바로 전리품 옵션으로 넘어가 **무엇을 얻었는지 확인이 없었다**.
+- **사운드는 이미 동작**: 픽이 `inventory.programs` 를 늘리므로 `pickEventSfx` 가 `EQUIP` 을 낸다(ADR-0261 경로). 추가 배선 불필요 — 확인만 했다.
+- **표시 ⑴ 즉시**: 전리품 패널 메시지 행에 `Acquired <name>` 을 **성장 색**(GREEN_NEON)으로. `state.message` 가 이미 그 문장을 갖고 있어 리듀서 무변경, 렌더러가 앞부분만 읽는다.
+- **표시 ⑵ 보드 복귀**: `main.ts` 컨트롤러가 이번 픽으로 **새 고유가 생겼는지**(piles 차집합)를 보고 이름을 기억했다가, 전리품을 떠날 때 ADR-0262 의 **도착 노트**로 넘긴다.
+- **커밋 패널을 쓰지 않은 이유**: 그 패널(ADR-0262)은 offer 행을 차지한다. 전리품 **카드**는 stop 을 끝내므로 괜찮지만, **고유는 stop 을 남겨야** 하므로 선택지를 가리면 거짓 어포던스가 된다.
+- **버그 수정**: 고유 행이 `formatRewardOption` 의 **9자 절단**을 써서 `NULL POIN` 으로 보였다 — 이름이 곧 선택인 화면에서 선택을 지운다. `nameWidth` 파라미터(기본 9) 추가, 고유 행은 **14**.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 files / 4192 tests**(+2) · ADR-0300 폭 가드 **40/60/80 전부 0건** · 교전당 밸런스 **byte-identical**(`100/100/100/98.9/83.9/32.3`).

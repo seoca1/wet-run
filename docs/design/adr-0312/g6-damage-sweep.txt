@@ -1,0 +1,62 @@
+ADR-0312 — how hard should a g6 fight hit?  (ADR-0307 (b))
+
+QUESTION
+  ADR-0307 measured g6 as "short and lethal": a 28% repair (67 of 240 max HP)
+  is smaller than one turn of a 3-ICE room (~60). Does lowering the per-turn
+  damage make the repair meaningful, and what does it cost?
+
+LEVER
+  ENCOUNTER_DMG_BONUS_PCT_BY_GRADE[5] — g6 only; g5 keeps its own -10.
+  ICE auto-attack = floor((tier * 3 + armor) * (1 + pct / 100)).
+  Current g6 band: neuromancer 21, standard_ascended 18, ta_sentinel 17,
+  aleph 22; boss (neuromancer) 21.
+
+INSTRUMENT
+  per-cell seeding (ADR-0310), 64 seeds, `--grade 6`, optimal policy.
+
+  g6 dmg   g6 mission   enc g6   card-only   repair-only   mixed (shipped)
+   -10       32.3%       32.3%      2.1%        9.9%          32.3%
+   -14       33.3%       42.3%
+   -18       34.4%       52.7%      3.6%       15.6%          34.4%
+   -22       35.4%       59.0%      4.7%       20.3%          35.4%
+   -25       37.0%       79.7%
+   -40       46.4%       92.7%   <- B1 violation
+   -55       43.2%       96.0%   <- B1 violation
+
+  g1-g5 are BYTE-IDENTICAL at every value. The knob is g6-only, and per-cell
+  seeding stops a g6 change from moving another grade's cells.
+
+READING
+  - The lever is a STEP FUNCTION with a cliff. Between -22 and -25 the
+    per-encounter g6 win rate jumps 59.0 -> 79.7. There is no smooth dial.
+  - ADR-0229 B1 caps it: the per-encounter curve must stay monotonic
+    non-increasing and g5 is 83.9, so -40 (92.7) and -55 (96.0) are out.
+    The usable range is about -10..-30.
+  - The mission target (30, tolerance 8pp) is spent slowly: -22 costs +3.1pp
+    (32.3 -> 35.4); -25 costs +4.7pp (37.0). Both still pass.
+  - THE PREMISE IS STALE. ADR-0307 (b) assumed the repair was dead at g6 (it
+    measured "repair 28% -> 0.0"). At today's balance the mixed policy beats
+    repair-only 32.3 to 9.9 and card-only 2.1 — the repair is a live part of
+    the winning line. What changed the grade was the free unique
+    (ADR-0309/0311), not the repair.
+  - Lowering damage makes HP less scarce, so ALL strategies rise and the
+    ordering does not change: the repair gains in absolute terms (9.9 -> 20.3
+    at -22) but the mix stays decisively best.
+
+JEV (advisory — difficulty taste has no ground truth)
+  Choice keep_-10 / -18 / -22 / -25: 0.10 / 0.27 / 0.38 / 0.25,
+  confidence 0.17. The mass is on lowering (0.90) but the value is not
+  determined, so this is an owner call, not an auto-change.
+
+RECOMMENDATION
+  If the goal is a longer, patch-and-endure g6: -18 or -22, the last points
+  before the cliff, costing 4.4-5.4pp of margin. -25 is the last value inside
+  tolerance. If the goal is "the repair should matter", the measurement says
+  it already does and no change is needed.
+
+REPRODUCE
+  cd web
+  # patch ENCOUNTER_DMG_BONUS_PCT_BY_GRADE[5], then:
+  npm run survival -- --seeds 64 --grade 6 --cards best --loot value
+  npm run survival -- --seeds 64 --grade 6 --cards best --loot repair
+  npm run balance

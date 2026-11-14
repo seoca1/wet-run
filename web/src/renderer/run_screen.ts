@@ -11,6 +11,7 @@ import { burnTarget } from "../core/state/state_actions_phases";
 import type { GrowthReveal } from "./growth_reveal";
 import { offeredCardIds, rewardProgram, uniqueChoicesFor } from "../core/state/card_reward";
 import { formatRewardOption } from "../core/combat/program_affordance";
+import { programEffectExplain } from "../core/combat/program_effects";
 import { missionGradeOf } from "../core/combat/ice_scaling";
 import {
   BURN_COST,
@@ -136,13 +137,19 @@ export function renderRunScreen(
       // one row per answer, and ENTER skips it.
       const uniqueIds = terminal ? [] : uniqueChoicesFor(state);
       if (uniqueIds.length > 0) {
-        const uniqueOffers = uniqueIds
-          .map((id, i) => {
-            const card = rewardProgram(id);
-            // The whole answer name matters here; the 40-column layout fits it.
-            return card ? formatRewardOption(i + 1, card, false, 14) : "";
-          })
-          .filter((line) => line.length > 0);
+        const uniqueOffers: string[] = [];
+        const detailRows: number[] = [];
+        uniqueIds.forEach((id, i) => {
+          const card = rewardProgram(id);
+          if (!card) return;
+          // The whole answer name matters here; the 40-column layout fits it.
+          uniqueOffers.push(formatRewardOption(i + 1, card, false, 14));
+          const explain = programEffectExplain(card, cols < 60);
+          if (explain !== "") {
+            detailRows.push(uniqueOffers.length);
+            uniqueOffers.push(`   ${explain}`);
+          }
+        });
         const uniqueHint =
           cols < 40
             ? `1-${uniqueIds.length}: pick`
@@ -161,6 +168,7 @@ export function renderRunScreen(
             growth?.lootCommit ?? null,
             uniqueHint,
             "unique",
+            detailRows,
           ),
           hud: ["UNIQUE", "", uniqueHint],
         };

@@ -124,6 +124,9 @@ export function renderLootScreen(
   hint: string | null = null,
   /** ADR-0311: the same panel carries the free unique pick before the stop. */
   mode: "loot" | "unique" = "loot",
+  /** ADR-0311: rows of `offers` that explain an answer rather than name one.
+   * They render dim so the three choices still read as three. */
+  detailRows: readonly number[] = [],
 ): Grid {
   let grid = makeGrid(cols, rows);
 
@@ -202,11 +205,13 @@ export function renderLootScreen(
       // rest are spent, so they fade back.
       const isTaken = i === takenIndex;
       const color =
-        takenIndex < 0
-          ? PALETTE.CYAN_LIGHT
-          : isTaken
-            ? PALETTE.GREEN_NEON
-            : PALETTE.GRAY_DARK;
+        detailRows.includes(i)
+          ? PALETTE.GRAY_DARK
+          : takenIndex < 0
+            ? PALETTE.CYAN_LIGHT
+            : isTaken
+              ? PALETTE.GREEN_NEON
+              : PALETTE.GRAY_DARK;
       grid = setText(grid, offerX, Math.floor(rows / 2) + 6 + i, line, color);
     });
   }

@@ -3635,3 +3635,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **커밋 패널을 쓰지 않은 이유**: 그 패널(ADR-0262)은 offer 행을 차지한다. 전리품 **카드**는 stop 을 끝내므로 괜찮지만, **고유는 stop 을 남겨야** 하므로 선택지를 가리면 거짓 어포던스가 된다.
 - **버그 수정**: 고유 행이 `formatRewardOption` 의 **9자 절단**을 써서 `NULL POIN` 으로 보였다 — 이름이 곧 선택인 화면에서 선택을 지운다. `nameWidth` 파라미터(기본 9) 추가, 고유 행은 **14**.
 - **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 files / 4192 tests**(+2) · ADR-0300 폭 가드 **40/60/80 전부 0건** · 교전당 밸런스 **byte-identical**(`100/100/100/98.9/83.9/32.3`).
+
+## [2026-11-14] feat(ui) | 세 답이 무엇을 하는지 화면이 말한다 (ADR-0311 b)
+
+- **판단(Jev)**: `plain_language_line` **p=0.73**(conf 0.64). 대안(현재 핸드 표시 0.05 · 공통 기준선 한 줄 0.22)보다 높았다.
+- **문제**: 세 고유는 **비용 2 · 피해 30 이 모두 같고** 효과만 다르다 — 그런데 화면은 `ARMOR -100%` 같은 태그 한 줄뿐이라, "내 덱이 못 하는 것"을 고르려면 플레이어가 태그를 해석해야 했다.
+- **수정**: 각 답 **아래에 평문 한 줄** — `armor cannot reduce this hit` · `absorbs 8 of the next hit` · `erases the next hit`. 40열은 짧은 형(`ignores armor` · `absorbs 8 dmg` · `erases the hit`).
+- **거짓말 불가**: 문장은 `programEffectExplain` 이 `programEffect` 에서 파생한다 — 카드 수치가 바뀌면 문장도 바뀐다. 하드코딩 아님.
+- **렌더러**: `renderLootScreen` 에 `detailRows` 를 추가해 설명 행을 **dim** 으로 그린다(세 선택이 셋으로 읽히게).
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **208 files / 4193 tests**(+1) · 폭 가드 40/60/80 **0건** · 교전당 밸런스 **byte-identical**.

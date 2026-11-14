@@ -118,6 +118,39 @@ export function programEffectDescription(
   }
 }
 
+/** One plain-language line for the unique pick (ADR-0311).
+ *
+ * The pick screen shows three answers whose cost and damage are identical, so
+ * the tag (`ARMOR -100%`, `SHIELD 8`) is the whole difference. Jev chose a plain
+ * sentence over a shared baseline line or the runner's hand: it says what the
+ * answer DOES, which is the thing the player is choosing between. `short` keeps
+ * it inside 36 usable columns at the 40-column layout.
+ */
+export function programEffectExplain(
+  program: Pick<Program, "id">,
+  short = false,
+): string {
+  const effect = programEffect(program);
+  switch (effect.kind) {
+    case "armor_ignore":
+      return short ? "ignores armor" : "armor cannot reduce this hit";
+    case "pierce":
+      return short ? `pierces ${effect.amount}` : `armor counts ${effect.amount} less`;
+    case "shield":
+      return short
+        ? `absorbs ${effect.amount} dmg`
+        : `absorbs ${effect.amount} of the next hit`;
+    case "decoy":
+      return short ? "erases the hit" : "erases the next hit";
+    case "empower":
+      return short ? `+${effect.amount} dmg` : `+${effect.amount} damage for ${effect.turns} turns`;
+    case "evade":
+      return short ? `dodge ${effect.amount}%` : `dodges ${effect.amount}% of incoming damage`;
+    default:
+      return "";
+  }
+}
+
 /** Short effect tag for the hand row — the affordance must read without color. */
 export function programEffectTag(program: Pick<Program, "id">): string {
   const effect = programEffect(program);

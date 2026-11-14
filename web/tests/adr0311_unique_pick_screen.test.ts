@@ -188,8 +188,8 @@ function selectedUniquePickDone(state: GameState): boolean | undefined {
 }
 
 /** What the panel actually says, so the assertions are about the screen. */
-function screenText(state: GameState): string {
-  const view = renderRunScreen(state, 80, 50);
+function screenText(state: GameState, cols = 80, rows = 50): string {
+  const view = renderRunScreen(state, cols, rows);
   return (view?.grid.cells ?? [])
     .map((row) => row.map((c) => c?.char ?? " ").join(""))
     .join("\n");
@@ -209,6 +209,20 @@ describe("ADR-0311 · the pick is on screen", () => {
     expect(text).toContain("GHOST KEY");
     expect(text).toContain("NULL POINTER");
     expect(text).toContain("RED SHIFT");
+  });
+
+  it("explains what each answer does (ADR-0311 b)", () => {
+    // Given / When: the wide layout uses the full sentence.
+    const wide = screenText(win(wonFight(6, false)));
+    expect(wide).toContain("armor cannot reduce this hit");
+    expect(wide).toContain("absorbs 8 of the next hit");
+    expect(wide).toContain("erases the next hit");
+
+    // And: 40 columns still says it, in the short form.
+    const narrow = screenText(win(wonFight(6, false)), 40, 60);
+    expect(narrow).toContain("ignores armor");
+    expect(narrow).toContain("absorbs 8 dmg");
+    expect(narrow).toContain("erases the hit");
   });
 
   it("confirms the pick without hiding the loot stop", () => {

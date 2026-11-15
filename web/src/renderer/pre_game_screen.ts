@@ -1,6 +1,6 @@
 import { makeGrid } from "../core/grid";
 import type { ScreenKind, Mission } from "../core/types";
-import type { Language } from "../core/i18n";
+import { t, type Language } from "../core/i18n";
 import type { DungeonCrawler } from "../core/dungeon/dungeon_crawler";
 import { MENU_OPTIONS, renderMainMenu, renderStubScreen } from "./menu";
 import { renderMissionList } from "./mission_select";
@@ -150,7 +150,9 @@ export function renderPreGameScreen(
     }
     default: {
       const opt = MENU_OPTIONS[view.menuIndex];
-      const label = opt ? opt.label.toUpperCase() : "WET RUN";
+      const label = opt
+        ? t(opt.label, view.language).toUpperCase()
+        : "WET RUN";
       return {
         grid: renderStubScreen(label, cols, rows),
         hud: ["STUB", "", "Coming soon — Tier 5+"],

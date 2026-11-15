@@ -5,28 +5,38 @@ import {
   renderStubScreen,
   MENU_OPTIONS,
 } from "../src/renderer/menu";
-import { mainMenuLayout } from "../src/renderer/menu_main";
-import { makeGrid } from "../src/core/grid";
+import { t } from "../src/core/i18n";
 
 describe("main menu renderer", () => {
   it("has 14 options including far_grid_hub, craft, equipment, and dungeon_crawl", () => {
     expect(MENU_OPTIONS.length).toBe(14);
+    // ADR-0315: grouped order, CONTINUE first (the likely action).
     expect(MENU_OPTIONS.map((o) => o.key)).toEqual([
+      "continue",
       "new_run",
       "far_grid_hub",
       "dungeon_crawl",
       "graphic_novel",
-      "continue",
-      "settings",
+      "tutorial",
       "craft",
       "equipment",
-      "credits",
       "hall_of_dead",
-      "help",
       "endings",
       "stats",
-      "tutorial",
+      "settings",
+      "help",
+      "credits",
     ]);
+  });
+
+  it("every entry names what it is (ADR-0315)", () => {
+    // The point of the redesign: no option is a bare word. Each has a
+    // description key that resolves to a one-liner, and each belongs to a
+    // group whose header is printed above it.
+    for (const opt of MENU_OPTIONS) {
+      expect(t(opt.desc, "en").length).toBeGreaterThan(0);
+    }
+    expect(MENU_OPTIONS.filter((o) => o.group !== undefined).length).toBe(4);
   });
 
   it("all options marked available (Tier 4 — stubs render 'Coming soon')", () => {
@@ -36,7 +46,9 @@ describe("main menu renderer", () => {
   it("renders all options as visible text in the grid", () => {
     const cols = 80;
     const rows = 50;
-    const grid = renderMainMenu(0, cols, rows);
+    // hasSave=true so CONTINUE is not gated (its description shows instead of
+    // "(no save)") — the point is that every entry explains itself.
+    const grid = renderMainMenu(0, cols, rows, true);
 
     let allText = "";
     for (let y = 0; y < rows; y++) {
@@ -48,34 +60,29 @@ describe("main menu renderer", () => {
 
     // Title visible
     expect(allText).toContain("WET RUN");
-    // All 9 labels visible
+    // Every label AND its description are on screen — that is the redesign.
     for (const opt of MENU_OPTIONS) {
-      expect(allText).toContain(opt.label);
+      expect(allText).toContain(t(opt.label, "en"));
+      expect(allText).toContain(t(opt.desc, "en"));
     }
   });
 
-  it("selected option shows ▸ marker at the right index", () => {
+  it("selected option shows ▸ marker on its own row", () => {
     const cols = 80;
     const rows = 50;
-    // Select index 2 (CONTINUE)
+    // Index 2 is FAR GRID in the grouped order.
     const grid = renderMainMenu(2, cols, rows);
 
-    let rowWithMarker = -1;
+    let markerRow = "";
     for (let y = 0; y < rows; y++) {
       let rowText = "";
       for (let x = 0; x < cols; x++) {
         const cell = grid.get(x, y);
         if (cell) rowText += cell.char;
       }
-      if (rowText.includes("▸")) {
-        rowWithMarker = y;
-        break;
-      }
+      if (rowText.includes("▸")) markerRow = rowText;
     }
-    expect(rowWithMarker).toBeGreaterThan(0);
-    // Marker at row = optionsY (frame-composed) + selectedIndex (2)
-    const { optionsY } = mainMenuLayout(makeGrid(cols, rows));
-    expect(rowWithMarker).toBe(optionsY + 2);
+    expect(markerRow).toContain(t("menu.far_grid_hub", "en"));
   });
 
   it("grid dimensions match requested cols/rows", () => {

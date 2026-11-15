@@ -85,6 +85,14 @@ export function takeClippedText(): readonly string[] {
   return out;
 }
 
+/** Record a string that had to be cut, so panel-clipped text is caught by the
+ * same ADR-0300 guard as `setText` overflow. `setInnerText` truncates before
+ * it reaches `setText`, so without this a panel could lose its right edge
+ * silently. */
+export function recordClippedText(text: string): void {
+  if (clipped.length < CLIPPED_CAP) clipped.push(text);
+}
+
 /** Render a static text block. */
 export function setText(
   grid: Grid,
@@ -93,8 +101,8 @@ export function setText(
   text: string,
   fg: string = PALETTE.GREEN_NEON,
 ): Grid {
-  if (x + text.length > grid.width && clipped.length < CLIPPED_CAP) {
-    clipped.push(text);
+  if (x + text.length > grid.width) {
+    recordClippedText(text);
   }
   let current = grid;
   for (let i = 0; i < text.length && x + i < grid.width; i++) {

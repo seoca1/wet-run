@@ -13,6 +13,7 @@ import { mainMenuLayout } from "../src/renderer/menu_main";
 import { makeGrid } from "../src/core/grid";
 import type { Cell } from "../src/core/types";
 import { FAR_GRID_LOCKED_MESSAGE } from "../src/core/dungeon/far_grid_gate";
+import { PALETTE } from "../src/renderer/palette";
 
 function gridText(grid: { cells: ReadonlyArray<ReadonlyArray<Cell>> }): string {
   return grid.cells
@@ -39,17 +40,12 @@ describe("main menu: FAR GRID gate (ADR-0213 Phase 2)", () => {
   it("renders FAR GRID with '(locked)' suffix when farGridUnlocked=false", () => {
     const cols = 80;
     const rows = 50;
-    // farGridUnlocked=false → FAR GRID row shows "(locked)"
     const grid = renderMainMenu(1, cols, rows, false, null, "", false);
-    // FAR GRID is index 1 in MENU_OPTIONS, rendered at row = optionsY + 1.
-    // The label format is: `▸ [2] FAR GRID    (locked)` starting at optionsX.
-    // Offsets: +0='▸' +1=' ' +2..+4='[2]' +5=' ' +6..+13='FAR GRID' +14..+17='    '
-    // +18..+25='(locked)'
+    // ADR-0315: the grouped order puts PLAY, CONTINUE, NEW RUN, then FAR GRID.
     const { optionsX, optionsY } = mainMenuLayout(makeGrid(cols, rows));
-    const lockedSuffix = "(locked)";
-    expect(
-      getRowText(grid, optionsY + 1, optionsX + 18, lockedSuffix.length),
-    ).toBe(lockedSuffix);
+    const row = getRowText(grid, optionsY + 3, optionsX, 40);
+    expect(row).toContain("FAR GRID");
+    expect(row).toContain("(locked)");
   });
 
   it("does NOT render '(locked)' suffix when farGridUnlocked=true", () => {
@@ -68,13 +64,14 @@ describe("main menu: FAR GRID gate (ADR-0213 Phase 2)", () => {
     const cols = 80;
     const rows = 50;
     const grid = renderMainMenu(1, cols, rows, false, null, "", false);
-    // Inspect the cells on the FAR GRID line (optionsY + 1) when locked.
-    // Cell color comparison is loose — we just verify the text exists at
-    // the row. Color discipline is enforced via the renderer contract.
     const { optionsX, optionsY } = mainMenuLayout(makeGrid(cols, rows));
-    const rowText = getRowText(grid, optionsY + 1, optionsX, 30);
-    expect(rowText).toContain("FAR GRID");
-    expect(rowText).toContain("(locked)");
+    const row = getRowText(grid, optionsY + 3, optionsX, 40);
+    expect(row).toContain("FAR GRID");
+    expect(row).toContain("(locked)");
+    // The label itself is dim: find the "F" of FAR GRID and read its colour.
+    const labelX = optionsX + row.indexOf("FAR GRID");
+    const cell = grid.cells[optionsY + 3]?.[labelX];
+    expect(cell?.fg).toBe(PALETTE.GRAY_DARK);
   });
 
   it("other menu rows are not affected by farGridUnlocked=false", () => {

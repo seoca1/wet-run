@@ -40,32 +40,65 @@ export type MenuOption =
   | "far_grid_hub"
   | "dungeon_crawl";
 
-/** All 14 menu options in display order. Order matches Python OPTION_* constants. */
-export const MENU_OPTIONS: ReadonlyArray<{
-  key: MenuOption;
-  label: string;
-  available: boolean;
-}> = [
-  { key: "new_run", label: "NEW RUN", available: true },
-  { key: "far_grid_hub", label: "FAR GRID", available: true },
-  { key: "dungeon_crawl", label: "DUNGEON CRAWL", available: true },
-  { key: "graphic_novel", label: "GRAPHIC NOVEL", available: true },
-  { key: "continue", label: "CONTINUE", available: true },
-  { key: "settings", label: "SETTINGS", available: true },
-  { key: "craft", label: "CRAFT", available: true },
-  { key: "equipment", label: "EQUIPMENT", available: true },
-  { key: "credits", label: "CREDITS", available: true },
-  { key: "hall_of_dead", label: "HALL OF DEAD", available: true },
-  { key: "help", label: "HELP", available: true },
-  { key: "endings", label: "ENDINGS", available: true },
-  { key: "stats", label: "STATS", available: true },
-  { key: "tutorial", label: "TUTORIAL", available: true },
+/** All 14 menu options, grouped, each with a one-line description.
+ *
+ * ADR-0315: the flat list of 14 was an enumeration the player could not read —
+ * CRAFT, EQUIPMENT and STATS said nothing about what they do. Entries now carry
+ * a `desc` and a `group`, and the renderer prints the group header and the
+ * description, so the column is a set of choices rather than a list of words.
+ * The order is still a flat index (digit keys and up/down are unchanged).
+ */
+export interface MenuEntry {
+  readonly key: MenuOption;
+  /** i18n key for the label. */
+  readonly label: string;
+  /** i18n key for the one-line description. */
+  readonly desc: string;
+  readonly available: boolean;
+  /** i18n key for the group header printed ABOVE this entry (undefined =
+   * same group as the previous entry). */
+  readonly group?: string;
+}
+
+export const MENU_OPTIONS: ReadonlyArray<MenuEntry> = [
+  // PLAY
+  { key: "continue", label: "menu.continue", desc: "menu.desc.continue", available: true, group: "menu.group.play" },
+  { key: "new_run", label: "menu.new_run", desc: "menu.desc.new_run", available: true },
+  { key: "far_grid_hub", label: "menu.far_grid_hub", desc: "menu.desc.far_grid_hub", available: true },
+  { key: "dungeon_crawl", label: "menu.dungeon_crawl", desc: "menu.desc.dungeon_crawl", available: true },
+  { key: "graphic_novel", label: "menu.graphic_novel", desc: "menu.desc.graphic_novel", available: true },
+  { key: "tutorial", label: "menu.tutorial", desc: "menu.desc.tutorial", available: true },
+  // WORKSHOP
+  { key: "craft", label: "menu.craft", desc: "menu.desc.craft", available: true, group: "menu.group.workshop" },
+  { key: "equipment", label: "menu.equipment", desc: "menu.desc.equipment", available: true },
+  // ARCHIVE
+  { key: "hall_of_dead", label: "menu.hall_of_dead", desc: "menu.desc.hall_of_dead", available: true, group: "menu.group.archive" },
+  { key: "endings", label: "menu.endings", desc: "menu.desc.endings", available: true },
+  { key: "stats", label: "menu.stats", desc: "menu.desc.stats", available: true },
+  // SYSTEM
+  { key: "settings", label: "menu.settings", desc: "menu.desc.settings", available: true, group: "menu.group.system" },
+  { key: "help", label: "menu.help", desc: "menu.desc.help", available: true },
+  { key: "credits", label: "menu.credits", desc: "menu.desc.credits", available: true },
 ] as const;
 
+/** Rows the option block needs: one per entry plus one per group header. */
+const MENU_OPTION_ROWS =
+  MENU_OPTIONS.length +
+  MENU_OPTIONS.filter((o) => o.group !== undefined).length;
+
 /** Rows from the title to the status line: title, subtitle, divider (two-row
- * gaps), the option list, then a blank row, the save hint and the status line.
+ * gaps), the option block, then a blank row, the save hint and the status line.
  */
-const MENU_BLOCK_ROWS = 6 + MENU_OPTIONS.length + 3;
+const MENU_BLOCK_ROWS = 6 + MENU_OPTION_ROWS + 3;
+
+/** Width of the label column, so descriptions line up under each other. */
+function labelColumnWidth(language: Language): number {
+  let widest = 0;
+  for (const opt of MENU_OPTIONS) {
+    widest = Math.max(widest, t(opt.label, language).length);
+  }
+  return widest;
+}
 
 /** Where the main menu places its content inside the Green Grid frame. */
 export interface MainMenuLayout {
@@ -80,17 +113,18 @@ export interface MainMenuLayout {
 
 /** Widest option row in any gating state, so the column never jumps. */
 function widestOptionRow(language: Language): number {
-  let widest = 0;
-  for (let i = 0; i < MENU_OPTIONS.length; i++) {
-    const opt = MENU_OPTIONS[i];
-    if (!opt) continue;
-    let label = `${formatNavIndex(i)} ${t(`menu.${opt.key}`, language)}`;
-    if (opt.key === "continue") label += `    ${t("menu.no_save", language)}`;
-    if (opt.key === "far_grid_hub")
-      label += `    ${t("menu.locked", language)}`;
-    widest = Math.max(widest, label.length + 2);
+  const labelW = labelColumnWidth(language);
+  // marker + space + [NN] + space (two-digit indices are the widest)
+  const prefix = 5;
+  let widestDesc = 0;
+  for (const opt of MENU_OPTIONS) {
+    widestDesc = Math.max(widestDesc, t(opt.desc, language).length);
   }
-  return widest;
+  const gated = Math.max(
+    t("menu.no_save", language).length,
+    t("menu.locked", language).length,
+  );
+  return prefix + labelW + 1 + Math.max(widestDesc, gated) + 2;
 }
 
 /** Compose the main menu inside a screen frame inset one cell from the grid
@@ -179,50 +213,65 @@ export function renderMainMenu(
     PALETTE.GRAY_MID,
   );
 
-  // Options list
+  // Options list — grouped, each entry with its one-line description so the
+  // column reads as choices rather than a list of words (ADR-0315).
+  const labelW = labelColumnWidth(language);
+  let row = startY;
+  let lastRow = startY;
   for (let i = 0; i < MENU_OPTIONS.length; i++) {
     const opt = MENU_OPTIONS[i];
     if (!opt) continue;
+    if (row >= footerY) break;
+    if (opt.group !== undefined) {
+      grid = setInnerText(
+        grid,
+        inner,
+        optionsX,
+        row,
+        t(opt.group, language),
+        PALETTE.GRAY_MID,
+      );
+      row += 1;
+      if (row >= footerY) break;
+    }
     const isSelected = i === selected;
     const marker = isSelected ? "▸" : " ";
     const num = formatNavIndex(i);
-    const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
-    const row = startY + i;
-    if (row >= footerY) break;
-    let label = `${num} ${t(`menu.${opt.key}`, language)}`;
-    // CONTINUE option gating — gray out + suffix when no save.
+    const label = t(opt.label, language).padEnd(labelW);
+    // Gating replaces the description with the reason, so the row still says
+    // what is wrong instead of going quiet (ADR-0251 rule 5).
+    let suffix = t(opt.desc, language);
+    let gated = false;
     if (opt.key === "continue" && !hasSave) {
-      label = `${num} ${t("menu.continue", language)}    ${t("menu.no_save", language)}`;
-      grid = setInnerText(
-        grid,
-        inner,
-        optionsX,
-        row,
-        `${marker} ${label}`,
-        PALETTE.GRAY_DARK,
-      );
-      continue;
+      suffix = t("menu.no_save", language);
+      gated = true;
     }
-    // FAR GRID option gating — gray out + suffix when locked (ADR-0213 Phase 2).
     if (opt.key === "far_grid_hub" && !farGridUnlocked) {
-      label = `${num} ${t("menu.far_grid_hub", language)}    ${t("menu.locked", language)}`;
-      grid = setInnerText(
-        grid,
-        inner,
-        optionsX,
-        row,
-        `${marker} ${label}`,
-        PALETTE.GRAY_DARK,
-      );
-      continue;
+      suffix = t("menu.locked", language);
+      gated = true;
     }
-    grid = setInnerText(grid, inner, optionsX, row, `${marker} ${label}`, fg);
+    const fg = gated
+      ? PALETTE.GRAY_DARK
+      : isSelected
+        ? PALETTE.GREEN_NEON
+        : PALETTE.GRAY_LIGHT;
+    const head = `${marker} ${num} ${label} `;
+    grid = setInnerText(grid, inner, optionsX, row, head, fg);
+    grid = setInnerText(
+      grid,
+      inner,
+      optionsX + head.length,
+      row,
+      suffix,
+      gated ? PALETTE.GRAY_DARK : PALETTE.GRAY_MID,
+    );
+    lastRow = row;
+    row += 1;
   }
 
-  // Continue hint sub-line (when save exists). Place below all menu items
-  // (MENU_OPTIONS.length + 1 row after startY) to avoid overlap.
+  // Continue hint sub-line (when save exists). Place below the option block.
   if (hasSave && saveMeta) {
-    const hintRow = startY + MENU_OPTIONS.length + 1;
+    const hintRow = lastRow + 2;
     if (hintRow < footerY) {
       const hint = `→ ${saveMeta.missionId} (turn ${saveMeta.turnCount + 1})`;
       grid = setInnerText(
@@ -238,7 +287,7 @@ export function renderMainMenu(
 
   // Status message line (shown after save hint, before footer).
   if (statusMessage) {
-    const msgRow = startY + MENU_OPTIONS.length + 2;
+    const msgRow = lastRow + 3;
     if (msgRow < footerY) {
       const msgX = Math.max(inner.x + 1, optionsX - 2);
       grid = setInnerText(

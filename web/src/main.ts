@@ -1317,6 +1317,19 @@ class Game {
     }
   }
 
+  /** ADR-0315: never park the cursor on an entry that cannot be taken.
+   * CONTINUE sits first in the grouped menu and FAR GRID is gated, so a fresh
+   * player would otherwise open on a dead row. */
+  private normalizeMenuSelection(): void {
+    const gated = (opt: (typeof MENU_OPTIONS)[number]): boolean =>
+      (opt.key === "continue" && !this.hasSaveCache) ||
+      (opt.key === "far_grid_hub" && !this.farGridUnlockedCache);
+    const current = MENU_OPTIONS[this.selectedMenuIndex];
+    if (current !== undefined && !gated(current)) return;
+    const first = MENU_OPTIONS.findIndex((o) => !gated(o));
+    if (first >= 0) this.selectedMenuIndex = first;
+  }
+
   /** Reload hasSave + meta caches from storage. Call after save/load/clear. */
   private async refreshSaveCache(): Promise<void> {
     this.hasSaveCache = await slotHasSave(0);
@@ -1625,6 +1638,7 @@ class Game {
         );
         return;
       }
+      if (this.screen === "menu") this.normalizeMenuSelection();
       const language = this.settingsState?.language ?? "en";
       const view = renderPreGameScreen(
         {

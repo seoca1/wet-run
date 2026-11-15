@@ -20,7 +20,7 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
 
   // Main menu surface (ADR-0207/0209 renderers: menu_main.ts)
   "menu.title": "WET RUN",
-  "menu.subtitle": "A cyberpunk roguelike based on Gibson's Sprawl trilogy",
+  "menu.subtitle": "Gibson's Sprawl, as a roguelike",
   "menu.far_grid_hub": "FAR GRID",
   "menu.dungeon_crawl": "DUNGEON CRAWL",
   "menu.craft": "CRAFT",
@@ -30,7 +30,27 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "menu.tutorial": "TUTORIAL",
   "menu.no_save": "(no save)",
   "menu.locked": "(locked)",
-  "menu.footer": "↑↓: navigate | ENTER: select | ESC: back",
+  // ADR-0315: group headers + one-line descriptions, so the menu reads as
+  // choices rather than a list of words.
+  "menu.group.play": "PLAY",
+  "menu.group.workshop": "WORKSHOP",
+  "menu.group.archive": "ARCHIVE",
+  "menu.group.system": "SYSTEM",
+  "menu.desc.continue": "resume run",
+  "menu.desc.new_run": "start a run",
+  "menu.desc.far_grid_hub": "orbit grid",
+  "menu.desc.dungeon_crawl": "side crawl",
+  "menu.desc.graphic_novel": "the story",
+  "menu.desc.tutorial": "first steps",
+  "menu.desc.craft": "spend parts",
+  "menu.desc.equipment": "fit deck",
+  "menu.desc.hall_of_dead": "the fallen",
+  "menu.desc.endings": "your ending",
+  "menu.desc.stats": "your stats",
+  "menu.desc.settings": "audio, keys",
+  "menu.desc.help": "how to play",
+  "menu.desc.credits": "who made it",
+  "menu.footer": "↑↓ move · ENTER pick · ESC back",
   "menu.version": "Tier 4 · v0.1.0 · ADR-0209 IDB",
 
   // Far Grid hub surface (ADR-0213 renderer: far_grid_hub.ts)
@@ -107,7 +127,7 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
 
   // Main menu surface (ADR-0207/0209 renderers: menu_main.ts)
   "menu.title": "WET RUN",
-  "menu.subtitle": "깁슨의 스프롤 3부작을 바탕으로 한 사이버펑크 로그라이크",
+  "menu.subtitle": "깁슨 스프롤 3부작 로그라이크",
   "menu.far_grid_hub": "FAR GRID",
   "menu.dungeon_crawl": "던전 크롤",
   "menu.craft": "제작",
@@ -117,6 +137,25 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "menu.tutorial": "튜토리얼",
   "menu.no_save": "(저장 없음)",
   "menu.locked": "(잠김)",
+  // ADR-0315
+  "menu.group.play": "플레이",
+  "menu.group.workshop": "작업대",
+  "menu.group.archive": "기록",
+  "menu.group.system": "시스템",
+  "menu.desc.continue": "런 이어하기",
+  "menu.desc.new_run": "런 시작",
+  "menu.desc.far_grid_hub": "궤도 그리드",
+  "menu.desc.dungeon_crawl": "사이드 크롤",
+  "menu.desc.graphic_novel": "스토리",
+  "menu.desc.tutorial": "첫 걸음",
+  "menu.desc.craft": "재료 소모",
+  "menu.desc.equipment": "장비 맞추기",
+  "menu.desc.hall_of_dead": "죽은 자키",
+  "menu.desc.endings": "도달한 결말",
+  "menu.desc.stats": "내 기록",
+  "menu.desc.settings": "오디오 · 키",
+  "menu.desc.help": "조작법",
+  "menu.desc.credits": "만든 사람",
   "menu.footer": "↑↓: 이동 | ENTER: 선택 | ESC: 뒤로",
   "menu.version": "Tier 4 · v0.1.0 · ADR-0209 IDB",
 

@@ -246,7 +246,7 @@ describe("renderMainMenu — language wiring is now active", () => {
     const explicitEn = renderMainMenu(1, 80, 50, false, null, "", false, "en");
     expect(gridText(defaultCall)).toBe(gridText(explicitEn));
     // Spot-check that EN literals are on the page.
-    expect(gridText(defaultCall)).toContain("[1] NEW RUN");
+    expect(gridText(defaultCall)).toContain("[2] NEW RUN");
     expect(gridText(defaultCall)).toContain("[7] CRAFT");
   });
 
@@ -254,7 +254,7 @@ describe("renderMainMenu — language wiring is now active", () => {
     const text = gridText(
       renderMainMenu(1, 80, 50, false, null, "", false, "ko"),
     );
-    expect(text).toContain("[1] 새 런");
+    expect(text).toContain("[2] 새 런");
     expect(text).toContain("[7] 제작");
     expect(text).toContain("↑↓: 이동 | ENTER: 선택 | ESC: 뒤로");
   });
@@ -263,7 +263,7 @@ describe("renderMainMenu — language wiring is now active", () => {
     const text = gridText(
       renderMainMenu(4, 80, 50, false, null, "", true, "ko"),
     );
-    expect(text).toContain("이어서 하기    (저장 없음)");
+    expect(text).toContain("이어서 하기   (저장 없음)");
   });
 });
 

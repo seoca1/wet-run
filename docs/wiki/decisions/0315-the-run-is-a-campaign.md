@@ -1,8 +1,8 @@
 # ADR-0315: 런은 캠페인이다 — 메뉴와 진행 구조 재설계
 
-**상태**: Draft (오너 결정 대기 — 코드 무변경)
+**상태**: Accepted (Q1–Q5 결정 · 슬라이스 1 구현 완료)
 **날짜**: 2026-11-15
-**결정자**: 사용자 (오너 "메뉴와 게임 진행 구조도 자연스럽게 바꾸고 싶어")
+**결정자**: AI 위임 (오너 원칙: "나열과 무엇인지 감도 못 잡는 것을 선택해야 하는 상황을 없애거나 줄여서 선택해줘")
 **우선순위**: P1 (구조 · 진행)
 
 ## 컨텍스트 (Context)
@@ -59,19 +59,56 @@
 - 이월 자원: 덱 ✅(측정상 중립) · 크레딧 ✅(ADR-0314 로 엔딩 조건) · COST ❌(미션 단위 예산) ·
   **고유 ⚠️ 캠페인당 1장**(현행 "런당 1장" = 캠페인당 1장).
 
+## 사용자 결정 (Decision)
+
+**원칙(오너)**: "나열과 무엇인지 감도 못 잡는 것을 선택해야 하는 상황을 없애거나 줄인다."
+아래 선택은 전부 이 원칙에서 나왔다.
+
+- [x] **Q1 — 한 화면 + 그룹 헤더 + 항목마다 한 줄 설명** (PLAY · WORKSHOP · ARCHIVE · SYSTEM).
+  하위 화면을 만들지 않는다 — 화면 등록 누락은 이 프로젝트의 소프트락 원인 3건이다
+  (ADR-0273/0275/0283). 14개를 그냥 나열하면 `CRAFT`·`STATS`가 뭔지 알 수 없다.
+  **설명을 붙이면 목록이 아니라 선택지**가 된다.
+- [x] **Q2 — 길이를 플레이어가 고르지 않는다.** "3미션? arc 전체?" 자체가 감 못 잡는 선택이다.
+  **계약(contract)을 계속 받으면 캠페인**, 그만두면 끝난다.
+- [x] **Q3 — HP는 미션마다 리셋**(현행 prep 유지). 이월/리셋을 고르게 하면 **이해할 규칙이
+  하나 더** 생긴다. 새 규칙 0.
+- [x] **Q4 — QUICK RUN 모드 없음.** 모드 2개를 고르게 하면 "뭐가 다른데?"가 생긴다.
+  **계약 하나만 받고 끝내면 그게 quick run**이다 — 모드 열거 자체를 없앤다.
+- [x] **Q5 — 메뉴부터** (밸런스 무영향 · 화면 1개).
+
+**핵심**: `CAMPAIGN vs QUICK RUN` 이라는 **모드 열거를 없앴다.** 단위는 **계약** 하나이고,
+계속 받으면 캠페인이 된다.
+
+## 슬라이스 1 결과 (메뉴 · 2026-11-15 구현)
+
+```
+PLAY                       WORKSHOP          ARCHIVE               SYSTEM
+  ▸ [1] CONTINUE  resume run   [7] CRAFT  spend parts   [9] HALL OF DEAD  the fallen   [12] SETTINGS  audio, keys
+    [2] NEW RUN   start a run  [8] EQUIPMENT fit deck   [10] ENDINGS     your ending  [13] HELP      how to play
+    [3] FAR GRID  orbit grid                            [11] STATS       your stats   [14] CREDITS   who made it
+    [4] DUNGEON CRAWL side crawl
+    [5] GRAPHIC NOVEL the story
+    [6] TUTORIAL  first steps
+```
+
+- **40열에서 0건 잘림**(부제·footer 포함). 그 과정에서 **ADR-0300 폭 가드가 패널 클리핑을
+  감시하지 않던 구멍**을 찾았다 — `setInnerText` 가 `setText` 전에 잘라 기록되지 않았다.
+  `recordClippedText` 로 봉합하고 **메뉴를 가드 케이스에 추가**(3 레이아웃).
+- **커서가 죽은 행에 앉지 않는다**: 세이브가 없으면 첫 항목 `CONTINUE` 대신 첫 사용 가능
+  항목으로 이동(`normalizeMenuSelection`).
+- 부제·footer 단축(40열 적합), 설명 11자 이하. 밸런스 무영향. **209 files / 4200 tests**.
+
 ## 추천 (Recommendation)
 
-1. **메뉴 A안(3그룹)** — Jev 최빈값이고, 플레이/기록/설정 분리가 가장 예측 가능하다.
-2. **캠페인 기본 + QUICK RUN 유지** — Jev p=0.76. 단일 미션을 없애면 기존 목표 곡선(전부
-   미션 단위)이 검증 불가가 된다.
-3. **첫 슬라이스는 메뉴 그룹화** — 화면 1개 + 입력 라우팅 + 폭 가드. **밸런스 무영향**이고,
-   캠페인 골격이 들어갈 자리를 만든다.
+1. ~~메뉴 A안~~ → **채택·구현**(위 슬라이스 1).
+2. **캠페인 기본, 모드 열거 없음** — Jev p=0.76 이되 QUICK RUN 을 모드로 만들지 않는다(Q4).
+3. 다음 슬라이스는 **캠페인 골격**(`missionsCompleted` 카운트 + 미션 연쇄 + `liberation` 개방).
 
 ## 열린 질문
 
-- **(a) 캠페인 길이.** 3미션이면 `liberation`(>=3)이 정확히 열린다. arc 전체는 g1 20미션이라
-  길다. **오너 결정.**
-- **(b) HP 이월과 회복.** 이월하면 g1–g5 가 쉬워진다. 미션 사이 회복(전리품 밖) 규칙이 필요.
+- **(a) 계약 하나의 길이.** 3미션이면 `liberation`(>=3)이 정확히 열린다. arc 전체는 g1 20미션.
+  Q2 로 "플레이어가 길이를 고르지 않는다"를 정했으므로, **계약의 미션 수를 우리가 정한다**.
+- **(b) 캠페인 사이 HP.** Q3 로 미션마다 리셋. 미션 사이 회복은 전리품(prep)이 담당한다.
 - **(c) g6 고유 누적.** 캠페인 후반 g6 는 +32.3pp. 캠페인 기준 목표를 새로 잡거나 고유 규칙을
   조정해야 한다.
 - **(d) 캠페인 지표.** 현행 하네스는 **미션 단위**다. "N미션 생존율"이 없으면 캠페인 밸런스를
@@ -81,16 +118,19 @@
 
 ## Implementation Status (2026-11-15)
 
-**Status**: ❌ Not started (Draft — 오너 결정 대기, 코드 무변경)
+**Status**: 🟡 Partial (슬라이스 1 ✅ · 슬라이스 2–4 ❌ Not started)
 
 **Evidence**:
+- `web/src/renderer/menu_main.ts` — 그룹·설명·레이아웃
+- `web/src/core/i18n.ts` — `menu.group.*` · `menu.desc.*` (en/ko)
+- `web/src/core/grid.ts` · `web/src/renderer/panel.ts` — `recordClippedText`(폭 가드 봉합)
+- `web/src/main.ts` — `normalizeMenuSelection`
+- `web/tests/adr0300_no_text_is_cut_off.test.ts` — 메뉴 3 레이아웃 가드
 - `docs/design/campaign-and-menu-2026-11-15.md` — 설계 전문
-- 측정: 하네스에 **이월 덱 파라미터**를 추가해 32시드 비교(슬라이스 4 의 캠페인 지표 도구로 유지)
-- `web/src/renderer/menu_main.ts` — 평면 14항목(현행)
-- `web/src/core/state/state_actions_phases.ts` — `missionsCompleted: 1` 하드코딩
+- 측정: 하네스의 **이월 덱 파라미터**(슬라이스 4 의 캠페인 지표 도구)
 
-**Notes**: 이 ADR 은 ADR-0199("단일 미션 런 MVP")의 범위를 넓힌다. 결정 전에는 코드를
-바꾸지 않는다.
+**Notes**: 이 ADR 은 ADR-0199("단일 미션 런 MVP")의 범위를 넓힌다. 슬라이스 1 은 밸런스
+무영향. 슬라이스 2 부터는 저장 스키마와 밸런스 기준선에 닿는다.
 
 ## 관련 결정
 

@@ -29,7 +29,7 @@ describe("Menu: stub options show 'coming soon' status (Bug regression)", () => 
     const text = gridText(grid);
     const idxHint = text.indexOf("aleph_fragment");
     const idxStatus = text.indexOf("coming soon");
-    const idxFooter = text.indexOf("navigate | ENTER");
+    const idxFooter = text.indexOf("ENTER pick");
     expect(idxHint).toBeGreaterThan(-1);
     expect(idxStatus).toBeGreaterThan(idxHint);
     expect(idxFooter).toBeGreaterThan(idxStatus);

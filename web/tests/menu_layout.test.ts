@@ -26,7 +26,9 @@ describe("renderMainMenu (Bug A regression: CONTINUE hint placement)", () => {
     const saveMeta = { missionId: "aleph_fragment", turnCount: 3 };
     const grid = renderMainMenu(0, cols, rows, true, saveMeta);
     const { optionsX, optionsY } = mainMenuLayout(makeGrid(cols, rows));
-    const hintRow = optionsY + 14 + 1;
+    // ADR-0315: 14 entries + 4 group headers = 18 rows, so the hint sits at
+    // lastRow + 2 = optionsY + 17 + 2.
+    const hintRow = optionsY + 19;
     const hintText = "→ aleph_fragment (turn 4)";
     const found = getGridText(grid, hintRow, optionsX + 2, hintText.length);
     expect(found, `Hint '${hintText}' should appear on row ${hintRow}`).toBe(
@@ -47,27 +49,31 @@ describe("renderMainMenu (Bug A regression: CONTINUE hint placement)", () => {
       missionId: "x",
       turnCount: 0,
     });
+    const rows: string[] = [];
+    for (let y = 0; y < 50; y++) rows.push(getGridText(grid, y, 0, 80));
+    // ADR-0315 grouped order, with the group headers printed above each group.
     const expected = [
-      "[1] NEW RUN",
-      "[2] FAR GRID",
-      "[3] DUNGEON CRAWL",
-      "[4] GRAPHIC NOVEL",
-      "[5] CONTINUE",
-      "[6] SETTINGS",
+      "[1] CONTINUE",
+      "[2] NEW RUN",
+      "[3] FAR GRID",
+      "[4] DUNGEON CRAWL",
+      "[5] GRAPHIC NOVEL",
+      "[6] TUTORIAL",
       "[7] CRAFT",
       "[8] EQUIPMENT",
-      "[9] CREDITS",
-      "[10] HALL OF DEAD",
-      "[11] HELP",
-      "[12] ENDINGS",
-      "[13] STATS",
-      "[14] TUTORIAL",
+      "[9] HALL OF DEAD",
+      "[10] ENDINGS",
+      "[11] STATS",
+      "[12] SETTINGS",
+      "[13] HELP",
+      "[14] CREDITS",
     ];
-    const { optionsX, optionsY } = mainMenuLayout(makeGrid(80, 50));
-    for (let i = 0; i < expected.length; i++) {
-      const rowText = getGridText(grid, optionsY + i, optionsX, 30);
-      const label = `row ${optionsY + i} should contain '${expected[i]}'`;
-      expect(rowText, label).toContain(expected[i]!);
+    for (const label of expected) {
+      const hits = rows.filter((r) => r.includes(label));
+      expect(hits.length, `${label} should appear on exactly one row`).toBe(1);
+    }
+    for (const group of ["PLAY", "WORKSHOP", "ARCHIVE", "SYSTEM"]) {
+      expect(rows.some((r) => r.includes(group))).toBe(true);
     }
   });
 });

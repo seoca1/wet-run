@@ -12,6 +12,7 @@
 import { describe, expect, it } from "vitest";
 import { makeGrid, setText, takeClippedText } from "../src/core/grid";
 import { renderRunScreen } from "../src/renderer/run_screen";
+import { renderMainMenu } from "../src/renderer/menu";
 import { runState } from "./view_fixtures";
 
 const LAYOUTS = [
@@ -81,6 +82,17 @@ describe.each([
     renderRunScreen(state as never, w, h);
 
     // Then
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0315: the menu is a panel screen too, and its rows are the longest in
+// the game — the redesign put a description on every line, so the guard must
+// cover it or a 40-column layout can eat the right edge silently.
+describe("ADR-0300 · main menu", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    takeClippedText();
+    renderMainMenu(0, w, h, true, { missionId: "aleph_fragment", turnCount: 3 });
     expect(takeClippedText()).toEqual([]);
   });
 });

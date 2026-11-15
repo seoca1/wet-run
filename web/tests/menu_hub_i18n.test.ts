@@ -52,7 +52,7 @@ function makeMission(id: string, title: string): Mission {
 }
 
 const FOOTER_HUB_EN = "↑↓: navigate | ENTER: launch | ESC: back";
-const FOOTER_MENU_EN = "↑↓: navigate | ENTER: select | ESC: back";
+const FOOTER_MENU_EN = "↑↓ move · ENTER pick · ESC back";
 
 describe("renderMainMenu i18n — EN byte-identical", () => {
   it("default language equals explicit en (locked, no save)", () => {
@@ -83,12 +83,12 @@ describe("renderMainMenu i18n — EN byte-identical", () => {
     const text = gridText(grid);
     expect(text).toContain("WET RUN");
     expect(text).toContain(
-      "A cyberpunk roguelike based on Gibson's Sprawl trilogy",
+      "Gibson's Sprawl, as a roguelike",
     );
-    expect(text).toContain("[1] NEW RUN");
-    expect(text).toContain("[3] DUNGEON CRAWL");
-    expect(text).toContain("[5] CONTINUE    (no save)");
-    expect(text).toContain("[2] FAR GRID    (locked)");
+    expect(text).toContain("[2] NEW RUN");
+    expect(text).toContain("[4] DUNGEON CRAWL");
+    expect(text).toContain("[1] CONTINUE      (no save)");
+    expect(text).toContain("[3] FAR GRID      (locked)");
     expect(text).toContain("[7] CRAFT");
     expect(text).toContain("[8] EQUIPMENT");
     expect(text).toContain(FOOTER_MENU_EN);
@@ -97,7 +97,7 @@ describe("renderMainMenu i18n — EN byte-identical", () => {
 
   it("keeps the (locked) suffix off the FAR GRID row when unlocked", () => {
     const grid = renderMainMenu(1, 80, 50, false, null, "", true, "en");
-    expect(gridText(grid)).toContain("[2] FAR GRID");
+    expect(gridText(grid)).toContain("[3] FAR GRID");
     expect(gridText(grid)).not.toContain("(locked)");
   });
 });
@@ -116,7 +116,7 @@ describe("renderMainMenu i18n — KO", () => {
     const text = gridText(
       renderMainMenu(4, 80, 50, false, null, "", true, "ko"),
     );
-    expect(text).toContain("이어서 하기    (저장 없음)");
+    expect(text).toContain("이어서 하기   (저장 없음)");
     expect(text).not.toContain("(no save)");
   });
 
@@ -126,7 +126,7 @@ describe("renderMainMenu i18n — KO", () => {
     );
     expect(text).toContain("[7] 제작");
     expect(text).toContain("[8] 장비");
-    expect(text).toContain("[3] 던전 크롤");
+    expect(text).toContain("[4] 던전 크롤");
     expect(text).toContain("↑↓: 이동 | ENTER: 선택 | ESC: 뒤로");
   });
 });

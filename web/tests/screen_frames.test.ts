@@ -96,7 +96,7 @@ describe("main menu frame", () => {
     const { footerY } = mainMenuLayout(grid);
     expect(footerY).toBe(46);
     expect(rowText(grid, 46)).toContain(
-      "↑↓: navigate | ENTER: select | ESC: back",
+      "↑↓ move · ENTER pick · ESC back",
     );
     expect(rowText(grid, 47)).toContain("Tier 4 · v0.1.0 · ADR-0209 IDB");
   });
@@ -104,18 +104,23 @@ describe("main menu frame", () => {
   it("centres the title-to-status block instead of clustering it at the top", () => {
     const layout = mainMenuLayout(makeGrid(80, 50));
     const gapAbove = layout.titleY - layout.inner.y;
-    const statusRow = layout.optionsY + 14 + 2;
+    const statusRow = layout.optionsY + 20;
     const gapBelow = layout.footerY - 1 - statusRow;
     expect(layout.optionsY).toBeGreaterThan(8);
     expect(Math.abs(gapAbove - gapBelow)).toBeLessThanOrEqual(1);
   });
 
-  it("centres the option column on the widest gated row", () => {
+  it("centres the option column on the widest row", () => {
     const grid = renderMainMenu(0, 80, 50, false, null, "", false);
     const { optionsX, optionsY } = mainMenuLayout(grid);
-    const widest = "▸ [5] CONTINUE    (no save)".length;
-    expect(optionsX).toBe(2 + Math.floor((76 - widest) / 2));
-    expect(rowText(grid, optionsY).slice(optionsX)).toMatch(/^▸ \[1\] NEW RUN/);
+    // ADR-0315: the widest row is a label padded to the 13-char column plus the
+    // longest description, plus the 2-char right margin the column reserves.
+    // inner.x = 2, inner.width = 76, widest row = 32 -> 2 + floor(44 / 2).
+    expect(optionsX).toBe(2 + Math.floor((76 - 32) / 2));
+    expect(rowText(grid, optionsY)).toContain("PLAY");
+    expect(rowText(grid, optionsY + 1).slice(optionsX)).toMatch(
+      /^▸ \[1\] CONTINUE/,
+    );
   });
 
   it("falls back to the original inner offsets on a short grid without losing the frame", () => {

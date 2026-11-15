@@ -4,7 +4,7 @@
  * the requested frame; it never moves its borders or reflows its labels.
  */
 import type { Grid } from "../core/types";
-import { setText } from "../core/grid";
+import { recordClippedText, setText } from "../core/grid";
 import { PALETTE } from "./palette";
 
 /** Grid-space rectangle; dimensions include the border when used as a frame. */
@@ -100,7 +100,11 @@ export function setInnerText(
   fg?: string,
 ): Grid {
   if (y < inner.y || y >= inner.y + inner.height) return grid;
-  return setText(grid, x, y, clipToInner(inner, x, text), fg);
+  const clippedToPanel = clipToInner(inner, x, text);
+  // ADR-0300: a panel that eats the right edge must fail the guard, not lose
+  // the text quietly.
+  if (clippedToPanel.length < text.length) recordClippedText(text);
+  return setText(grid, x, y, clippedToPanel, fg);
 }
 
 interface PanelRule {

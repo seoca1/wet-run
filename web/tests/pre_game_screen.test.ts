@@ -173,7 +173,9 @@ describe("pre-game screen composition", () => {
         80,
         50,
       );
-      const label = menuIndex === 0 ? "NEW RUN" : "WET RUN";
+      // ADR-0315: index 0 is CONTINUE in the grouped order; -1 has no option
+      // and falls back to the title.
+      const label = menuIndex === 0 ? "CONTINUE" : "WET RUN";
       expect(view.grid.cells).toEqual(renderStubScreen(label, 80, 50).cells);
       expect(view.hud).toEqual(["STUB", "", "Coming soon — Tier 5+"]);
     },

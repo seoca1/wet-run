@@ -350,6 +350,10 @@ export function playRun(
   walletBalance = 0,
   iceLimit = DEFAULT_ICE_LIMIT,
   intelFree = false,
+  /** ADR-0315 measurement: carry a deck in from the previous mission, the way
+   * a campaign would. `handSize` cards become the opening hand, the rest the
+   * draw pile. Harness-only — the game builds its deck from the jockey. */
+  carryDeck?: ReadonlyArray<Program>,
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -361,6 +365,15 @@ export function playRun(
       ? deckForGrade(programCatalog, mission.grade ?? 1)
       : startingDeck(programCatalog, jockeyId);
   let state = makeInitialState(mission, fallback, deck);
+  if (carryDeck !== undefined) {
+    // ADR-0315: a campaign hands the previous mission's deck to the next one.
+    const hand = Math.max(1, state.player.handSize);
+    state = {
+      ...state,
+      deck: carryDeck.slice(0, hand),
+      drawPile: carryDeck.slice(hand),
+    };
+  }
   // ADR-0283 (C'): prep buys CAPACITY, not cards -- extra max HP is the most
   // local form of it. Applied here so the lever can be measured before any
   // screen is built (the card-prep shop was built first and then rejected).

@@ -1,0 +1,55 @@
+ADR-0314 — the control ending was structurally unreachable
+
+QUESTION
+  The `control` ending needed `hp > 75% AND credits > 5000`. Was it reachable?
+  `npm run endings` (greedy, one seed) reported 0/53, which looked like a
+  sample-size artifact. It is not.
+
+MEASUREMENT (per-cell, 64 seeds, 3392 runs, optimal policy, 2330 endings)
+
+  credits > 5000        260 endings   (11.2%)
+  hp > 75%              419 endings   (18.0%)
+  BOTH                    0 endings   ( 0.0%)
+
+  hp% at the ending: p10 = 9 · p50 = 39 · p90 = 87 · max = 97
+  mean credits at the ending: g1 2,069 · g2 2,815 · g3 3,723 · g4 4,717 ·
+  g5 7,546 · g6 8,762
+
+  The two conditions are ANTI-CORRELATED BY CONSTRUCTION: credits are earned by
+  fighting (bounty per kill, ADR-0293) and fighting spends HP. The runs that get
+  rich are the runs that get hurt. They never overlap.
+
+CANDIDATE GATES (same 2330 endings)
+
+  G0  hp>75 && cr>5000 (current)     0    0.0%
+  G1  cr>5000                      260   11.2%   arc1 15 · arc2 8 · arc3 28 · arc4 118 · arc5 91
+  G2  cr>3000                     1306   56.1%
+  G3  cr>5000 && hp>50%              0    0.0%
+  G4  cr>4000 && hp>40%            162    7.0%
+  G5  hp>75%                       419   18.0%   arc1 407 · arc2 6 · arc3 6
+
+  G3 is 0 as well — relaxing HP to 50% still never meets 5000 credits, which
+  confirms the anti-correlation rather than a threshold problem.
+  G5 puts the outcome at arc1 (407 of 419), the wrong place narratively.
+  G1 concentrates it where control belongs: 209 of 260 at arc4/arc5.
+
+DECISION
+  G1 — credits alone. 11.2% of endings, 80% of them at the late arcs, and it
+  costs nothing on the difficulty curve (the gate is not power).
+
+  This also answers "money means nothing" without a sink: four credit sinks
+  were measured and rejected (ADR-0282/0284/0285/0286) because the fitted
+  curve has no room for a power purchase. Wealth as an ENDING CONDITION needs
+  no room — it is a read, not a grant.
+
+REPRODUCE
+  cd web
+  npm run endings          # greedy setup earns ~1k, still 0 — see note below
+  # the optimal policy is what reaches the gate; measured with a probe over
+  # 64 seeds using playRun(card "best", loot "value", route "long")
+
+NOTE ON THE TOOL
+  `npm run endings` walks one seed with the greedy policy and earns ~969cr, so
+  it still prints 0 for the gate. That is a property of that setup, not of the
+  rule. The tool now labels the row as the OLD gate so the number is not read
+  as the new one.

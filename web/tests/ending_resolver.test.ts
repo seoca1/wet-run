@@ -299,7 +299,10 @@ describe("ending_resolver", () => {
       expect(ending.arc).toBe(2);
     });
 
-    it("maxHp boundary: exactly 75% returns status_quo (not control)", () => {
+    it("ADR-0314: HP no longer gates control — wealth alone decides", () => {
+      // The old gate was `hp > 75% && credits > 5000`, which measured 0 hits
+      // on 2330 endings (the two are anti-correlated). Wealth alone decides
+      // now, so a rich run at exactly 75% HP is control, not status_quo.
       const ctx: EndingContext = {
         arc: 1,
         hp: 75,
@@ -311,7 +314,7 @@ describe("ending_resolver", () => {
         choices: [],
       };
       const ending = resolveEnding(ctx);
-      expect(ending.category).toBe("status_quo");
+      expect(ending.category).toBe("control");
     });
 
     it("maxHp boundary: 76% + high credits returns control", () => {

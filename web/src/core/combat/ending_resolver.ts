@@ -3,12 +3,17 @@
  * Ports Python's 29 endings across 5 arcs (ADR-0010 story skeleton).
  *
  * Tier scope (ADR-0199 — single-mission-per-run MVP): of the six branches in
- * `resolveEnding`, three are reachable — HP = 0 (sacrifice), HP > 75% with
- * 5k+ credits (control), and the status_quo default. The `requiresChoice`
+ * `resolveEnding`, three are reachable — HP = 0 (sacrifice), 5k+ credits
+ * (control), and the status_quo default. The `requiresChoice`
  * branch needs a choice system and the `missionsCompleted >= 3` branch needs
  * cross-run meta-progression; both are out of this tier. `requiresFaction` is
  * reachable in principle (faction scores are live) but no ending declares it
  * yet. `tests/design_conformance.test.ts` enforces this boundary.
+ *
+ * ADR-0314: the control branch used to require hp > 75% as well. Measured on
+ * 2330 endings, credits > 5000 and hp > 75% never co-occurred (260 and 419
+ * separately, 0 together) — money is earned by fighting and fighting spends
+ * HP — so the branch was structurally dead. Wealth alone decides now.
  */
 
 export type ArcId = 1 | 2 | 3 | 4 | 5;
@@ -363,7 +368,10 @@ export function resolveEnding(ctx: EndingContext): Ending {
   if (hpPct <= 0) {
     return arcEndings.find((e) => e.category === "sacrifice") ?? arcEndings[0];
   }
-  if (hpPct > 0.75 && ctx.credits > 5000) {
+  // ADR-0314: wealth alone buys control. The old gate also required hp > 75%,
+  // and those two are anti-correlated by construction — credits come from
+  // fighting and fighting costs HP — so it fired on 0 of 2330 endings.
+  if (ctx.credits > 5000) {
     return arcEndings.find((e) => e.category === "control") ?? arcEndings[0];
   }
   if (ctx.missionsCompleted >= 3) {

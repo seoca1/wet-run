@@ -274,16 +274,18 @@ console.log(
 const over = rows.filter((r) => r.credits > 5000).length;
 console.log(`runs with player.credits > 5000: ${over}/${rows.length}`);
 
-// ADR-0279 open question (a): how often does the `control` branch's HP gate
-// actually hold? The loot heal is 15%, so "full HP at the ending" is not a
-// given. Report the gate's two halves separately and together.
+// ADR-0279 open question (a), answered by ADR-0314: the `control` branch used
+// to require hp > 75% AND credits > 5000, and those never co-occurred. The HP
+// half is reported for the record; the gate is credits alone now.
 const withHp = rows.filter((r) => r.maxHp > 0);
 const hpOk = withHp.filter((r) => r.hp / r.maxHp > 0.75).length;
-const both = withHp.filter((r) => r.hp / r.maxHp > 0.75 && r.credits > 5000).length;
+const oldBoth = withHp.filter((r) => r.hp / r.maxHp > 0.75 && r.credits > 5000).length;
 const controlEndings = rows.filter((r) => r.ending.includes("control")).length;
 console.log("");
 console.log(`hp > 75% at the ending: ${hpOk}/${withHp.length}`);
-console.log(`hp > 75% AND credits > 5000 (the control gate): ${both}/${withHp.length}`);
+console.log(
+  `old gate (hp > 75% AND cr > 5000): ${oldBoth}/${withHp.length} — ADR-0314 dropped the HP half`,
+);
 console.log(`control endings actually resolved: ${controlEndings}/${rows.length}`);
 console.log(`runs that flatlined before the ending: ${died}/${rows.length}`);
 const hpHist = new Map<string, number>();

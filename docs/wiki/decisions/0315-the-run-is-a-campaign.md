@@ -59,6 +59,30 @@
 - 이월 자원: 덱 ✅(측정상 중립) · 크레딧 ✅(ADR-0314 로 엔딩 조건) · COST ❌(미션 단위 예산) ·
   **고유 ⚠️ 캠페인당 1장**(현행 "런당 1장" = 캠페인당 1장).
 
+## 슬라이스 1.5 결과 (점진적 노출 + 자키 화면 · 2026-11-15 구현)
+
+오너 제안: "초반에는 선택형 메뉴가 없는 것처럼 진행하는 것도 가능하지 않을까? 저장/로드처럼
+실제로 필요한 별도 기능이 있을 때 노출하는 방식으로."
+
+- **첫 실행은 메뉴를 건너뛴다.** 프로필이 런을 한 번도 시작한 적이 없으면(`wetrun_has_played`
+  없음) **부팅이 곧장 `jockey_select`** 로 간다. 메뉴는 ESC 한 번 거리에 있고, 첫 런을 시작한
+  뒤부터 정상적으로 뜬다. 판정은 **동기**(localStorage) — 비동기 저장 캐시 갱신에서 결정하면
+  첫 프레임에 메뉴가 번쩍이고 첫 키 입력과 경쟁한다(실제로 e2e 에서 그 레이스를 잡았다).
+- **자키 화면이 자기설명적이 된다.** 이 화면은 첫 실행의 **첫 화면**인데 `1 CASE / 2 SIL /
+  3 KAS` 만 보여줬다 — 자키는 **시작 덱을 바꾸는데**(ADR-0276) 화면이 그걸 말하지 않았다.
+  이제 tagline 과 `deck: strike exploit virus surge decoy` 를 **줄바꿈해서** 보여준다.
+  40열에서 단어 중간에 잘리던 것도 함께 고쳤다(`The deck`, `ice. Sh`).
+- **죽은 코드 제거**: 쓰이지 않던 `jockeySelectFits`(rows >= 12)를 지웠다 — 새 레이아웃에서도
+  거짓이었다.
+
+### 이 과정에서 찾은 결함 2건
+
+1. **폭 가드가 패널 클리핑을 감시하지 않았다** — `setInnerText` 가 `setText` 전에
+   `clipToInner` 로 잘라 기록이 안 됐다(메뉴 부제가 40열에서 조용히 잘려 있었음).
+   `recordClippedText` 로 봉합하고 메뉴·자키 화면을 가드 케이스에 추가.
+2. **커서 정규화가 매 프레임 실행돼 커서가 갇혔다** — `normalizeMenuSelection` 이 잠긴 행
+   (FAR GRID)에 닿을 때마다 되돌려 **1↔2 고착**. e2e 3건이 이걸 잡았다. 방문당 1회로 고쳤다.
+
 ## 사용자 결정 (Decision)
 
 **원칙(오너)**: "나열과 무엇인지 감도 못 잡는 것을 선택해야 하는 상황을 없애거나 줄인다."
@@ -118,14 +142,16 @@ PLAY                       WORKSHOP          ARCHIVE               SYSTEM
 
 ## Implementation Status (2026-11-15)
 
-**Status**: 🟡 Partial (슬라이스 1 ✅ · 슬라이스 2–4 ❌ Not started)
+**Status**: 🟡 Partial (슬라이스 1 ✅ · 1.5 점진적 노출 ✅ · 슬라이스 2–4 ❌ Not started)
 
 **Evidence**:
 - `web/src/renderer/menu_main.ts` — 그룹·설명·레이아웃
-- `web/src/core/i18n.ts` — `menu.group.*` · `menu.desc.*` (en/ko)
+- `web/src/renderer/jockey_select.ts` — tagline·deck 줄바꿈
+- `web/src/core/state/onboarding.ts` — `wetrun_has_played` (첫 실행 판정)
+- `web/src/main.ts` — 동기 부팅 판정 · `normalizeMenuSelection`(방문당 1회)
 - `web/src/core/grid.ts` · `web/src/renderer/panel.ts` — `recordClippedText`(폭 가드 봉합)
-- `web/src/main.ts` — `normalizeMenuSelection`
-- `web/tests/adr0300_no_text_is_cut_off.test.ts` — 메뉴 3 레이아웃 가드
+- `web/e2e/menu-nav.ts` — `ensureMenu`(부팅 경로를 스펙에서 숨긴다)
+- `web/tests/adr0300_no_text_is_cut_off.test.ts` — 메뉴·자키 3 레이아웃 가드
 - `docs/design/campaign-and-menu-2026-11-15.md` — 설계 전문
 - 측정: 하네스의 **이월 덱 파라미터**(슬라이스 4 의 캠페인 지표 도구)
 

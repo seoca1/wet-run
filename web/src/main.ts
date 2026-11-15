@@ -59,6 +59,8 @@ import { FpsCounter, getMetrics } from "./core/state/performance";
 import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
   combatEntryHintFits,
+  hasPlayedBefore,
+  markPlayed,
   shouldAutoShowTutorial,
   shouldShowMatrixEntryHint,
 } from "./core/state/onboarding";
@@ -276,6 +278,8 @@ class Game {
   private state: GameState | null = null;
   private screen: ScreenKind = "menu";
   private selectedMenuIndex = 0;
+  /** ADR-0315: the cursor is normalized once per visit, not per frame. */
+  private menuSelectionNormalized = false;
   private selectedMission = 0;
   /** ADR-0274 — the jockey chosen for the next run (index into JOCKEYS). */
   private selectedJockey = 0;
@@ -428,6 +432,17 @@ class Game {
     // ADR-0213 Phase 2: load Far Grid unlock cache synchronously. localStorage
     // read is cheap and synchronous — no need for async refresh.
     this.farGridUnlockedCache = isFarGridUnlocked();
+    // ADR-0315 progressive disclosure, decided SYNCHRONOUSLY before the first
+    // frame: a profile that has never started a run has nothing to continue and
+    // nothing to archive, so the title menu is a wall of words between the
+    // player and the game. The flag is localStorage, so no IDB round-trip is
+    // needed — doing this in the async save-cache refresh flashed the menu for
+    // a frame and raced the first keypress.
+    if (typeof localStorage !== "undefined" && !hasPlayedBefore(localStorage)) {
+      markPlayed(localStorage);
+      this.screen = "jockey_select";
+      this.selectedJockey = 0;
+    }
     void this.refreshSaveCache();
     const resetIdle = (): void => {
       this.idleSinceMs = Date.now();
@@ -1317,10 +1332,13 @@ class Game {
     }
   }
 
-  /** ADR-0315: never park the cursor on an entry that cannot be taken.
-   * CONTINUE sits first in the grouped menu and FAR GRID is gated, so a fresh
-   * player would otherwise open on a dead row. */
+  /** ADR-0315: never OPEN the menu with the cursor on an entry that cannot be
+   * taken — CONTINUE sits first and FAR GRID is gated. Applied once per visit
+   * to the menu: normalizing on every frame would snap the cursor back off a
+   * gated row the player deliberately walked to. */
   private normalizeMenuSelection(): void {
+    if (this.menuSelectionNormalized) return;
+    this.menuSelectionNormalized = true;
     const gated = (opt: (typeof MENU_OPTIONS)[number]): boolean =>
       (opt.key === "continue" && !this.hasSaveCache) ||
       (opt.key === "far_grid_hub" && !this.farGridUnlockedCache);
@@ -1639,6 +1657,7 @@ class Game {
         return;
       }
       if (this.screen === "menu") this.normalizeMenuSelection();
+      else this.menuSelectionNormalized = false;
       const language = this.settingsState?.language ?? "en";
       const view = renderPreGameScreen(
         {

@@ -1,9 +1,28 @@
 import { expect, type Page } from "@playwright/test";
 import type { EncounterVerb } from "../src/core/state/encounter_verbs";
 
+/** ADR-0315: a fresh profile boots into the run flow (jockey select), not the
+ *  title menu. Every spec that wants the menu starts here, so the boot path
+ *  stays an implementation detail of the game. */
+export async function ensureMenu(page: Page): Promise<void> {
+  // A fresh profile also auto-shows the tutorial overlay, which eats Escape
+  // (one step per press), so allow enough attempts to walk through it and
+  // then out of the jockey screen.
+  for (let i = 0; i < 14; i += 1) {
+    const screen = await page.evaluate(() => {
+      const w = window as unknown as { wetrun?: { getScreen?(): string } };
+      return w.wetrun?.getScreen?.() ?? "";
+    });
+    if (screen === "menu") return;
+    await page.keyboard.press("Escape");
+    await page.waitForTimeout(150);
+  }
+}
+
 /** Resolve a menu option's live index and walk to it. Position-independent:
  *  hardcoded ArrowDown counts broke when FAR GRID et al. were inserted. */
 export async function gotoMenuOption(page: Page, key: string): Promise<void> {
+  await ensureMenu(page);
   const nav = await page.evaluate((k: string) => {
     const w = window as unknown as {
       wetrun?: { getMenuOptionKeys(): string[]; getSelectedMenuIndex(): number };

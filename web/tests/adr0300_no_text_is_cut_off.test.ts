@@ -13,6 +13,7 @@ import { describe, expect, it } from "vitest";
 import { makeGrid, setText, takeClippedText } from "../src/core/grid";
 import { renderRunScreen } from "../src/renderer/run_screen";
 import { renderMainMenu } from "../src/renderer/menu";
+import { renderJockeySelect } from "../src/renderer/jockey_select";
 import { runState } from "./view_fixtures";
 
 const LAYOUTS = [
@@ -93,6 +94,16 @@ describe("ADR-0300 · main menu", () => {
   it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
     takeClippedText();
     renderMainMenu(0, w, h, true, { missionId: "aleph_fragment", turnCount: 3 });
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0315: the jockey screen carries a tagline and a deck line per entry, and
+// the first boot now lands here — it must not cut a word at 40 columns.
+describe("ADR-0300 · jockey select", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    takeClippedText();
+    renderJockeySelect(0, w, h);
     expect(takeClippedText()).toEqual([]);
   });
 });

@@ -26,6 +26,9 @@ import { combatHandRow } from "../combat/program_affordance";
 /** localStorage key the tutorial overlay writes on completion. */
 export const TUTORIAL_COMPLETED_KEY = "wetrun_tutorial_completed";
 
+/** localStorage key written when the player has started a run at least once. */
+export const HAS_PLAYED_KEY = "wetrun_has_played";
+
 /** Minimal storage port — `localStorage` in the browser, a stub in tests. */
 export interface OnboardingStorage {
   getItem(key: string): string | null;
@@ -54,6 +57,30 @@ export function markTutorialCompleted(
     storage.setItem(TUTORIAL_COMPLETED_KEY, "true");
   } catch {
     // ignore — the tutorial is a nicety, never a hard requirement.
+  }
+}
+
+/** Has this profile started a run at least once? (ADR-0315) */
+export function hasPlayedBefore(
+  storage: OnboardingStorage | null | undefined,
+): boolean {
+  if (!storage) return false;
+  try {
+    return storage.getItem(HAS_PLAYED_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+/** Record that a run has been started. No-ops without storage. */
+export function markPlayed(
+  storage: OnboardingStorage | null | undefined,
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(HAS_PLAYED_KEY, "true");
+  } catch {
+    // ignore
   }
 }
 

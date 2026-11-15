@@ -13,11 +13,14 @@ import { makeGrid } from "../src/core/grid";
 import { renderCombatHints } from "../src/renderer/combat_hints";
 import {
   COMBAT_ENTRY_HINT_LINES,
+  HAS_PLAYED_KEY,
   TUTORIAL_COMPLETED_KEY,
   combatEntryHint,
   combatEntryHintFits,
   combatEntryHintRows,
+  hasPlayedBefore,
   isTutorialCompleted,
+  markPlayed,
   markTutorialCompleted,
   shouldAutoShowTutorial,
   type OnboardingStorage,
@@ -97,6 +100,30 @@ describe("P11 — tutorial completion flag", () => {
       },
     };
     expect(() => markTutorialCompleted(throwing)).not.toThrow();
+  });
+});
+
+describe("ADR-0315 — the has-played flag gates the first boot", () => {
+  function store(initial: Record<string, string> = {}) {
+    const map = new Map(Object.entries(initial));
+    return {
+      getItem: (k: string) => map.get(k) ?? null,
+      setItem: (k: string, v: string) => void map.set(k, v),
+      map,
+    };
+  }
+
+  it("is false on a fresh profile and true after a run is started", () => {
+    const s = store();
+    expect(hasPlayedBefore(s)).toBe(false);
+    markPlayed(s);
+    expect(s.map.get(HAS_PLAYED_KEY)).toBe("true");
+    expect(hasPlayedBefore(s)).toBe(true);
+  });
+
+  it("survives missing storage and never throws", () => {
+    expect(hasPlayedBefore(null)).toBe(false);
+    expect(() => markPlayed(undefined)).not.toThrow();
   });
 });
 

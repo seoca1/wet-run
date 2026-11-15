@@ -1,0 +1,68 @@
+ADR-0313 — the boss axis has no room (ADR-0312 follow-up)
+
+WHY THIS EXISTS
+  ADR-0312 measured 100% of g6 mission deaths at the boss and 0 in ordinary
+  encounters. That looked like a shape defect with a cheap fix: move some
+  difficulty off the boss and into the fights. This probe tests that.
+
+INSTRUMENT
+  per-cell (ADR-0310). Mission rows = 128 seeds (384 runs), `--grade 6`,
+  optimal policy. Enc rows = the per-encounter balance harness (opening deck).
+
+KNOB 1 — BOSS HP (BOSS_HP_BY_GRADE[5], now 165)
+  enc -10 (unchanged), 64 seeds:
+
+    boss HP   g6 mission   boss share
+     165        32.3%       100%
+     140        66.7%       100%     +34.4pp for 25 HP
+     120        80.7%       100%     +48.4pp for 45 HP
+
+  A cliff. There is no HP value that trims the wall by a few points.
+
+KNOB 2 — ENCOUNTER DAMAGE (ENCOUNTER_DMG_BONUS_PCT_BY_GRADE[5], now -10)
+  boss 165, 128 seeds:
+
+    enc    g6 mission   enc g6   normal deaths   boss share
+    -10      30.7%       32.3%        0             100%
+     -5      27.9%       29.7%        1             100%
+     -3      29.7%        4.7%        3              99%
+      0      26.6%        2.0%        6              96%
+
+  Raising the encounter damage is the only way to make ordinary fights lethal
+  — but the per-encounter curve is a violent step function (29.7% at -5,
+  4.7% at -3). And it costs mission completion.
+
+KNOB 3 — THE COMBINATION THAT LANDS ON TARGET
+  g5 and g6 are coupled by a test (`iceDmgBonusPctForGrade(6) <= (5)`), so g6
+  cannot rise alone. With BOTH at 0 and boss 160:
+
+    grade   mission   target   enc
+      5      24.1%      25%    46.7%
+      6      29.9%      30%     2.0%     normal deaths 7, boss share 97%
+
+  Both late grades land on target and the deaths spread. But the opening-deck
+  reference curve moves hard (g5 83.9 -> 46.7, g6 32.3 -> 2.0), and the
+  player-visible change is that 7 of 384 g6 runs (1.8%) now die in a fight
+  instead of at the boss.
+
+DECISION
+  KEEP. The blast radius (two grades, two knobs) is out of proportion to the
+  effect (1.8% of runs change where they die). g6 is already on target
+  (30.7% at 128 seeds against 30). Every lever is a cliff, so a future tweak
+  cannot be small.
+
+  ADR-0290's decision ("the late grades hit no harder than g4") is satisfied
+  either way, and the option above is legal — it is simply not worth it.
+
+WHAT THIS MEANS FOR THE THREAD
+  This is the second consecutive lever measured and kept (ADR-0312 was the
+  first). The g6/curve thread has no remaining knob that buys a player-visible
+  change at a proportional cost. The next work belongs to a different axis
+  (run shape, economy, content), not to this one.
+
+REPRODUCE
+  cd web
+  # patch ENCOUNTER_DMG_BONUS_PCT_BY_GRADE[4..5] and BOSS_HP_BY_GRADE[5], then:
+  npm run survival -- --seeds 128 --grade 6 --cards best --loot value --deaths
+  npm run survival -- --seeds 128 --grade 5 --cards best --loot value
+  npm run balance

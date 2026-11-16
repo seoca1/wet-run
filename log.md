@@ -3709,3 +3709,54 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **추천**: **첫 슬라이스는 메뉴 그룹화** — 화면 1개 + 입력 라우팅 + 폭 가드, **밸런스 무영향**이고 캠페인 골격이 들어갈 자리를 만든다.
 - **미결정(Q1–Q5)**: 메뉴 모양 · 캠페인 길이 · HP 이월 · QUICK RUN · 첫 슬라이스. 설계 전문 `docs/design/campaign-and-menu-2026-11-15.md`.
 - **검증**: 코드 무변경(설계·측정만) · 하네스 이월 파라미터는 슬라이스 4 지표 도구로 유지.
+
+## [2026-11-15] feat(menu) | 메뉴를 "읽히는 선택지"로 — 그룹 + 항목별 설명 (ADR-0315 슬라이스 1)
+
+- **오너 원칙**: "나열과 무엇인지 감도 못 잡는 것을 선택해야 하는 상황을 없애거나 줄여서 선택해줘." → **Q1–Q5 결정** 후 슬라이스 1 착수.
+- **결정**: Q1 한 화면+그룹+**항목별 한 줄 설명** · Q2 길이 선택 없음(계약을 계속 받으면 캠페인) · Q3 HP 미션마다 리셋 · **Q4 QUICK RUN 모드 없음**(계약 하나 = quick run) · Q5 메뉴부터. **모드 열거 자체를 제거**했다.
+- **구현**: `MENU_OPTIONS` 가 `group`·`desc` 를 갖고 4그룹(PLAY · WORKSHOP · ARCHIVE · SYSTEM)으로 재배열(CONTINUE 최상단). 렌더러가 그룹 헤더 + 라벨(선택 시 밝게) + **설명(항상 dim)** 을 그린다. i18n en/ko 30키 추가.
+- **40열 정합**: 부제·footer·설명을 단축해 **3 레이아웃 모두 0건 잘림**.
+- **폭 가드 구멍 발견·봉합**: ADR-0300 가드는 `setText` 만 감시했다 — `setInnerText` 는 `clipToInner` 로 먼저 잘라 **패널 클리핑이 기록되지 않았다**(메뉴 부제가 40열에서 조용히 잘려 있었음). `recordClippedText` 를 도입해 `setInnerText` 도 기록하게 하고 **메뉴를 가드 케이스에 추가**.
+- **커서 정규화**: 세이브가 없으면 첫 항목 CONTINUE 대신 첫 사용 가능 항목으로(`normalizeMenuSelection`) — 죽은 행에 앉지 않는다.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **209 files / 4200 tests**(+4) · 메뉴 폭 가드 3레이아웃 0건 · 밸런스 무영향.
+- **남은 슬라이스**: 2 캠페인 골격 · 3 이월 규칙 · 4 캠페인 지표.
+
+## [2026-11-15] feat(ui) | 첫 실행은 메뉴를 건너뛴다 + 자키 화면이 자기설명적이 된다 (ADR-0315 슬라이스 1.5)
+
+- **오너 제안**: "초반에는 선택형 메뉴가 없는 것처럼 진행… 저장/로드처럼 실제로 필요한 별도 기능이 있을 때 노출."
+- **점진적 노출**: 프로필이 런을 시작한 적이 없으면(`wetrun_has_played` 없음) **부팅이 곧장 `jockey_select`**. 메뉴는 ESC 한 번 거리이고, 첫 런 뒤부터 정상 노출. 판정은 **동기**(localStorage) — 비동기에서 하면 첫 프레임에 메뉴가 번쩍이고 첫 키와 경쟁한다(그 레이스를 e2e 가 잡았다).
+- **자키 화면 = 첫 실행의 첫 화면**인데 `1 CASE / 2 SIL / 3 KAS` 만 보여줬다. 자키는 **시작 덱을 바꾸는데**(ADR-0276) 화면이 말하지 않았다 → tagline + `deck: strike exploit virus surge decoy` 를 **줄바꿈**해서 표시. 40열 단어 중간 잘림(`The deck`·`ice. Sh`)도 해소. 죽은 `jockeySelectFits` 제거.
+- **결함 2건 발견·수정**: ⑴ **폭 가드가 패널 클리핑을 감시하지 않았다**(`setInnerText` → `recordClippedText` 봉합, 메뉴·자키를 가드 케이스에 추가) ⑵ **커서 정규화가 매 프레임 실행돼 1↔2 고착**(FAR GRID 잠김 행에서 되돌림) → 방문당 1회.
+- **e2e**: `ensureMenu` 헬퍼 추가(부팅 경로를 스펙에서 숨김, 튜토리얼 오버레이가 ESC 를 먹는 것 포함) · progression·run_end_save·game **17/17**.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **210 files / 4209 tests**(+9) · 메뉴·자키 폭 가드 3레이아웃 0건 · 밸런스 무영향.
+
+## [2026-11-16] feat(ui) | 메뉴가 플레이어와 함께 자란다 (ADR-0315 슬라이스 1.6)
+
+- **오너 제안**: "필요한 메뉴를 하나씩 노출시키는 방식은 어떨까?"
+- **규칙**: 항상(NEW RUN · GRAPHIC NOVEL · SETTINGS · HELP · CREDITS) · CONTINUE(**세이브가 있을 때만**) · FAR GRID(**해금 시**) · TUTORIAL(**완료 전까지만**) · DUNGEON/CRAFT/EQUIPMENT/HALL/ENDINGS/STATS(**런을 한 번 끝낸 뒤**).
+- **첫 런 직후 메뉴는 7항목** — `CONTINUE · NEW RUN · GRAPHIC NOVEL · TUTORIAL` + `SETTINGS · HELP · CREDITS`. 나머지는 열 것이 아직 없다.
+- **새 신호**: `wetrun_runs_finished`(엔딩·플랫라인 둘 다 증가). **한계(정직하게)**: 죽음·엔딩·재료는 저장되지 않아 "HALL OF DEAD = 죽은 자키 있음" 대신 **"런을 한 번 끝냄"으로 근사**했다 — 정밀하게 하려면 그 신호를 먼저 저장해야 한다(ADR-0315 (g)).
+- **구현**: `visibleMenuOptions(reveal)` 한 곳이 목록을 만들고 **렌더·입력·`getMenuOptionKeys`·커서 정규화가 모두 그 목록**을 쓴다. 그룹 헤더는 보이는 항목이 있는 그룹만.
+- **e2e 수정**: `menu.spec` 의 스텁 테스트가 숨겨진 ENDINGS 대신 CREDITS 사용 · `run_end_save` 는 CONTINUE 가 **목록에 없음**을 단언(더 강한 형태).
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **211 files / 4215 tests**(+6) · e2e **24/24** · 폭 가드 3레이아웃 0건 · 밸런스 무영향.
+
+## [2026-11-16] feat(content) | 미션은 자기 이야기를 말한다 — 파생 소설에서 브리핑 (ADR-0316)
+
+- **오너**: "그래픽 노블과 게임 진행을 비교해줘. 처음 의도는 파생 소설을 스토리에 적용하기 위한 검증이었을거야." → **가설 검증 + 적용 착수**.
+- **실측**: 파생 소설 **455 파일 / 213 미션 id** · GN **27씬 / 15 미션** · 게임 `story` **20(far-grid, 경로 라벨뿐)** · **sprawl 미션엔 브리핑조차 없음**.
+- **가설 확인**: GN 씬이 소설 `2026-06-23_case_jackout-30sec.md` 의 문장을 **그대로** 쓴다("Thirty seconds. The Ono-Sendai electrodes lift from my scalp…") → **개작 검증은 맞았다.** 그러나 GN은 **캐릭터 앤솔로지**라 고른 미션의 이야기를 보여주지 않는다.
+- **수정(A)**: `scripts/tools/import_briefings.py` — `plot_summary`(166편, **슬롭 0건**)를 정리(따옴표/이스케이프 해제 · **중복 단어 복구**(`the the`→`the`) · 150자 절단 · 꼬리 잘림 `…`)해 **sprawl 32미션**에 `briefing` 을 채운다. **멱등 · far-grid 보존 · 슬롭 거부**.
+- **화면**: `renderMissionList(..., briefing)` 이 목록 아래에 줄바꿈해 표시(40열 3줄). 40열 힌트가 잘리던 것도 짧은 형으로 해소. 미션 선택을 ADR-0300 폭 가드 케이스로 추가.
+- **결과**: 미션 선택이 **"무엇에 관한 미션인지"** 를 말한다. `first_jack` → "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix."
+- **남은 것(C·B)**: 고아 id **181개**(213 중 게임에 32개만 존재) · GN을 고른 미션의 씬으로.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **212 files / 4223 tests**(+5) · e2e menu·progression **6/6** · `check_no_novel_prose.py` 1878 문자열 0건 · 표시 전용(밸런스 무영향).
+
+## [2026-11-16] design | 그래픽 노블은 발판이다 — 완성 시 스토리로 녹이고 메뉴에서 지운다 (ADR-0317)
+
+- **오너 방침**: "GN 메뉴는 검증용으로 당분간 활용. 완성 시점에서는 스토리에 모두 녹여내고 없앨거야. 프롤로그 및 이벤트에도 모두 반영해야 돼."
+- **실측**: 미션 브리핑 ✅(ADR-0316) · GN = **메뉴 항목 + 27씬/15미션**(캐릭터 앤솔로지라 고른 미션의 이야기가 아니다) · **`docs/design/story/event_dialogues.json` v0.2**(파생 소설 출처 + NPC + 대사)가 **코드에서 미사용**(grep 0건).
+- **결정**: ⑴ GN 메뉴 항목 **완성 시 제거**, 그때까지 **새 기능 금지**(씬은 이관 자산) ⑵ 씬 27개를 **프롤로그(런 도입) + 이벤트(런 중 비트)** 로 분해 ⑶ `event_dialogues.json` **배선** ⑷ 모든 서사 표면이 **같은 출처**(파생 소설)를 인용.
+- **이관 순서**: ① 브리핑 ✅ → ② **프롤로그를 런에 결합**(`startRunFromGraphicNovel` 핸드오프가 이미 있음) → ③ **이벤트 배선** → ④ **메뉴 항목 제거**(ADR-0315 노출 규칙에서도).
+- **지금 바뀌는 것**: 없음(방침 기록). GN 메뉴는 계속 보인다 — 검증용.
+- **열린 질문**: 프롤로그 트리거(자키 직후 vs 미션 후) · 이벤트 조건/빈도 · 씬 27개의 이관 매핑 · `prologue.md` 의 깁슨 인용은 이관 시 **패러프레이즈**(ADR-0270) · KO.
+- **문서**: 신규 **ADR-0317** + README 색인 · AGENTS 카운트 **236/0316 → 237/0317** · 설계 문서 `campaign-and-menu` §0-b 에 종착점 표 추가 · NEXT_SESSION_TODO 에 이관 행.

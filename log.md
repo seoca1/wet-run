@@ -3760,3 +3760,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **지금 바뀌는 것**: 없음(방침 기록). GN 메뉴는 계속 보인다 — 검증용.
 - **열린 질문**: 프롤로그 트리거(자키 직후 vs 미션 후) · 이벤트 조건/빈도 · 씬 27개의 이관 매핑 · `prologue.md` 의 깁슨 인용은 이관 시 **패러프레이즈**(ADR-0270) · KO.
 - **문서**: 신규 **ADR-0317** + README 색인 · AGENTS 카운트 **236/0316 → 237/0317** · 설계 문서 `campaign-and-menu` §0-b 에 종착점 표 추가 · NEXT_SESSION_TODO 에 이관 행.
+
+## [2026-11-16] feat(story) | 프롤로그가 런의 첫 비트가 된다 (ADR-0317 이관 2단계)
+
+- **오너**: "응." → ADR-0317 이관 경로 ② 착수.
+- **변경**: `NEW RUN → 자키 선택 → **[그 자키의 프롤로그]** → 미션 선택 → prep → 런`. 예전엔 자키 선택이 곧바로 미션 목록으로 갔다.
+- **ESC는 이야기만 건너뛴다**: `prologueForRun` 플래그가 `exitGraphicNovel` 을 미션 목록으로 보낸다(메뉴로 튕기지 않음). 완주하면 기존 `startRunFromGraphicNovel()` 이 그대로 잇는다.
+- **메뉴의 GRAPHIC NOVEL 은 검증용으로 유지** — 거기서는 ESC 가 타이틀로 돌아간다(`prologueForRun = false` 로 구분).
+- **GN 모드 선택 화면은 웹에 없다**(`"novice"` 하드코딩) → 자키 id 를 모드로 그대로 쓴다(`novice`/`veteran`/`heretic`).
+- **e2e**: 신규 `e2e/prologue.spec.ts` 2건(런 프롤로그 / 메뉴 GN 구분) · `openMissionSelect` 헬퍼가 프롤로그를 건너뛰도록 수정 · 기존 3개 스펙(progression·continue·game)이 헬퍼를 쓰도록 정리 · **소크 `startRun` 도 프롤로그를 건너뛰게 수정**(수정 전 소크가 타임아웃으로 실패 — 실제로 잡았다).
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **212 files / 4223 tests** · e2e **26/26**(+2) · 소크 99런 frozen 0 · noEndInSteps 0.
+- **소크 델타(정직하게)**: 완주 **67 → 70**(+3). 원인은 **하네스의 벽시계 의존**이다 — idle alarm 이 실시간으로 TRACE 를 쌓고(스펙 213줄에 명시), 프롤로그 1회(ESC)가 리듬을 바꿔 몇 셀이 뒤집힌다. **결정적 지표로 교차 확인**: 교전당 곡선 **byte-identical**(`100/100/100/98.9/83.9/32.3`) · 미션 곡선(per-cell 64시드) **동일**(`100/97.1/75.9/51.4/26.9/32.3`, 최대 이탈 4.1pp). 즉 **게임플레이 영향 0**. (이 하네스의 비결정성은 NEXT_SESSION_TODO 의 "난이도의 시간 의존성" 항목과 같은 뿌리다.)

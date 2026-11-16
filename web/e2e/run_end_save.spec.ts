@@ -11,7 +11,7 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import LZString from "lz-string";
-import { gotoMenuOption, openMissionSelect, launchRun } from "./menu-nav";
+import { ensureMenu, openMissionSelect, launchRun } from "./menu-nav";
 
 interface Snap {
   readonly runPhase: string;
@@ -194,14 +194,20 @@ test("the ending returns to the title, ends the run, and CONTINUE cannot reopen 
     await page.keyboard.press(k);
     expect(await snap(page)).toBeNull();
   }
-  // Reload: CONTINUE offers nothing.
+  // Reload: CONTINUE offers nothing — ADR-0315 hides it entirely when there is
+  // no save, which is the strongest form of "it offers nothing".
   await page.reload();
   await page.waitForFunction(() => (window as unknown as { wetrun?: Hook }).wetrun !== undefined);
   await page.waitForTimeout(500);
   expect(await readSlot(page)).toBeNull();
-  await gotoMenuOption(page, "continue");
+  const menuKeys = await page.evaluate(() => {
+    const w = window as unknown as { wetrun: Hook };
+    return w.wetrun.getMenuOptionKeys();
+  });
+  expect(menuKeys).not.toContain("continue");
+  await ensureMenu(page);
   await page.keyboard.press("Enter");
   await page.waitForTimeout(500);
-  expect(await page.evaluate(() => (window as unknown as { wetrun: Hook }).wetrun.getScreen())).toBe("menu");
+  expect(await page.evaluate(() => (window as unknown as { wetrun: Hook }).wetrun.getScreen())).not.toBe("run");
   expect(await snap(page)).toBeNull();
 });

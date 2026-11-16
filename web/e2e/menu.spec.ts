@@ -61,7 +61,9 @@ test.describe("Main Menu", () => {
   });
 
   test("stub options render 'Coming soon' message", async ({ page }) => {
-    await gotoMenuOption(page, "endings");
+    // ADR-0315: ENDINGS is hidden until a run has been finished, so a fresh
+    // profile uses CREDITS — the other always-visible stub.
+    await gotoMenuOption(page, "credits");
     await page.keyboard.press("Enter");
     await page.waitForTimeout(300);
 

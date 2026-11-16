@@ -6,7 +6,7 @@ import {
   updateProgramRow,
   isTouchDevice,
 } from "./input/touch";
-import { MENU_OPTIONS, type MenuOption } from "./renderer/menu";
+import { visibleMenuOptions, type MenuEntry, type MenuOption } from "./renderer/menu";
 import { renderPreGameScreen } from "./renderer/pre_game_screen";
 import {
   renderRunScreen,
@@ -60,7 +60,10 @@ import { createTutorialOverlay, resetTutorial } from "./renderer/tutorial";
 import {
   combatEntryHintFits,
   hasPlayedBefore,
+  isTutorialCompleted,
   markPlayed,
+  markRunFinished,
+  runsFinished,
   shouldAutoShowTutorial,
   shouldShowMatrixEntryHint,
 } from "./core/state/onboarding";
@@ -553,6 +556,7 @@ class Game {
         this.matrixArrival = null;
         this.screen = "menu";
         this._message = RUN_COMPLETE_MESSAGE;
+        this.noteRunFinished();
         this.persistQueue = this.persistQueue
           .then(() => this.refreshSaveCache())
           .catch(() => undefined);
@@ -569,6 +573,7 @@ class Game {
         this.matrixArrival = null;
         this.screen = "menu";
         this._message = FLATLINE_MESSAGE;
+        this.noteRunFinished();
         void this.refreshSaveCache();
         this.draw();
         return;
@@ -920,26 +925,27 @@ class Game {
   private handlePreGameInput(action: GameAction): void {
     // Digit keys 1-9 → menu selection on menu screen (otherwise → combat program select).
     if (action.type === "select_program" && this.screen === "menu") {
+      const options = this.visibleMenu();
       const idx = action.handIndex - 1;
-      if (idx >= 0 && idx < MENU_OPTIONS.length) {
+      if (idx >= 0 && idx < options.length) {
         this.selectedMenuIndex = idx;
-        const opt = MENU_OPTIONS[idx];
+        const opt = options[idx];
         this.selectMenuOption(opt ? opt.key : undefined);
       }
       return;
     }
     if (this.screen === "menu") {
+      const options = this.visibleMenu();
+      const count = Math.max(1, options.length);
       if (action.type === "move_south") {
-        this.selectedMenuIndex =
-          (this.selectedMenuIndex + 1) % MENU_OPTIONS.length;
+        this.selectedMenuIndex = (this.selectedMenuIndex + 1) % count;
         this.draw();
       } else if (action.type === "move_north") {
         this.selectedMenuIndex =
-          (this.selectedMenuIndex - 1 + MENU_OPTIONS.length) %
-          MENU_OPTIONS.length;
+          (this.selectedMenuIndex - 1 + count) % count;
         this.draw();
       } else if (action.type === "confirm") {
-        const opt = MENU_OPTIONS[this.selectedMenuIndex];
+        const opt = options[this.selectedMenuIndex];
         this.selectMenuOption(opt ? opt.key : undefined);
       } else if (action.type === "jack_out") {
         // No-op: already at top-level menu
@@ -1332,6 +1338,26 @@ class Game {
     }
   }
 
+  /** ADR-0315: the menu grows with the player. A finished run (ending or
+   * flatline) unlocks the archive/workshop entries, which otherwise open onto
+   * nothing. Also re-normalizes the cursor, since the visible list just grew. */
+  private noteRunFinished(): void {
+    if (typeof localStorage === "undefined") return;
+    markRunFinished(localStorage);
+    this.menuSelectionNormalized = false;
+  }
+
+  /** ADR-0315: the entries this profile has unlocked (the menu grows). */
+  private visibleMenu(): ReadonlyArray<MenuEntry> {
+    const storage = typeof localStorage === "undefined" ? null : localStorage;
+    return visibleMenuOptions({
+      hasSave: this.hasSaveCache,
+      farGridUnlocked: this.farGridUnlockedCache,
+      runsFinished: runsFinished(storage),
+      tutorialCompleted: isTutorialCompleted(storage),
+    });
+  }
+
   /** ADR-0315: never OPEN the menu with the cursor on an entry that cannot be
    * taken — CONTINUE sits first and FAR GRID is gated. Applied once per visit
    * to the menu: normalizing on every frame would snap the cursor back off a
@@ -1339,13 +1365,10 @@ class Game {
   private normalizeMenuSelection(): void {
     if (this.menuSelectionNormalized) return;
     this.menuSelectionNormalized = true;
-    const gated = (opt: (typeof MENU_OPTIONS)[number]): boolean =>
-      (opt.key === "continue" && !this.hasSaveCache) ||
-      (opt.key === "far_grid_hub" && !this.farGridUnlockedCache);
-    const current = MENU_OPTIONS[this.selectedMenuIndex];
-    if (current !== undefined && !gated(current)) return;
-    const first = MENU_OPTIONS.findIndex((o) => !gated(o));
-    if (first >= 0) this.selectedMenuIndex = first;
+    const options = this.visibleMenu();
+    if (options.length === 0) return;
+    // The list is already filtered, so index 0 is always available.
+    if (this.selectedMenuIndex >= options.length) this.selectedMenuIndex = 0;
   }
 
   /** Reload hasSave + meta caches from storage. Call after save/load/clear. */
@@ -1663,6 +1686,7 @@ class Game {
         {
           screen: this.screen,
           menuIndex: this.selectedMenuIndex,
+          menuOptions: this.visibleMenu(),
           missionIndex: this.selectedMission,
           missionRows:
             this.screen === "mission_select"
@@ -1954,7 +1978,7 @@ class Game {
 
   /** E2E hook: menu option keys in order (pair with getSelectedMenuIndex). */
   getMenuOptionKeys(): string[] {
-    return MENU_OPTIONS.map((o) => o.key);
+    return this.visibleMenu().map((o) => o.key);
   }
 
   /** Read-only BGM volume accessor for e2e/integration tests. */

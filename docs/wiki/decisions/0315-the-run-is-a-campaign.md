@@ -83,6 +83,31 @@
 2. **커서 정규화가 매 프레임 실행돼 커서가 갇혔다** — `normalizeMenuSelection` 이 잠긴 행
    (FAR GRID)에 닿을 때마다 되돌려 **1↔2 고착**. e2e 3건이 이걸 잡았다. 방문당 1회로 고쳤다.
 
+## 슬라이스 1.6 결과 (메뉴가 플레이어와 함께 자란다 · 2026-11-15~16 구현)
+
+오너 제안: "필요한 메뉴를 하나씩 노출시키는 방식은 어떨까?"
+
+메뉴는 이제 **플레이어가 가진 것만** 보여준다.
+
+| 항목 | 나타나는 시점 |
+|---|---|
+| NEW RUN · GRAPHIC NOVEL · SETTINGS · HELP · CREDITS | **항상** |
+| CONTINUE | **세이브가 있을 때만** (없으면 죽은 행이었다) |
+| FAR GRID | **해금됐을 때만** (ADR-0213) |
+| TUTORIAL | **완료 전까지만** (끝나면 사라진다) |
+| DUNGEON CRAWL · CRAFT · EQUIPMENT · HALL OF DEAD · ENDINGS · STATS | **런을 한 번 끝낸 뒤** |
+
+- **첫 런 직후의 메뉴는 7항목**이다 — `CONTINUE · NEW RUN · GRAPHIC NOVEL · TUTORIAL` +
+  `SETTINGS · HELP · CREDITS`. 나머지는 아직 열 것이 없다.
+- **런을 끝내면 자란다.** `wetrun_runs_finished` 를 새로 저장하고(엔딩·플랫라인 둘 다),
+  그 뒤로 archive/workshop 이 나타난다.
+- **신호의 한계(정직하게)**: 죽음·엔딩·재료는 **저장되지 않는다**. 그래서 "HALL OF DEAD 는
+  죽은 자키가 있을 때" 대신 **"런을 한 번 끝냈을 때"** 로 근사했다. 더 정밀하게 하려면
+  그 신호들을 먼저 저장해야 한다(열린 질문 (g)).
+- 구현: `visibleMenuOptions(reveal)` 이 목록을 만들고, **렌더·입력·`getMenuOptionKeys`·
+  커서 정규화가 모두 같은 목록**을 쓴다. 그룹 헤더는 보이는 항목이 있는 그룹만 나온다.
+- 테스트 **211 files / 4215 tests** · e2e **24/24**.
+
 ## 사용자 결정 (Decision)
 
 **원칙(오너)**: "나열과 무엇인지 감도 못 잡는 것을 선택해야 하는 상황을 없애거나 줄인다."
@@ -139,16 +164,19 @@ PLAY                       WORKSHOP          ARCHIVE               SYSTEM
   검증할 수 없다 — 슬라이스 4.
 - **(e) 저장 스키마.** 계약·미션 인덱스·이월 자원을 `version 1` 선택 필드로(ADR-0287/0311 관례).
 - **(f) 프롤로그 연결.** ADR-0272/0274 의 "프롤로그 → 자키 → 런 → 엔딩" 흐름이 캠페인과 만난다.
+- **(g) 노출 신호의 정밀도.** 지금 archive/workshop 은 "런을 한 번 끝냄"으로 열린다. 진짜
+  조건은 "죽은 자키가 있음"(HALL OF DEAD)·"도달한 엔딩이 있음"(ENDINGS)·"재료가 있음"(CRAFT)
+  인데 **그 신호들이 저장되지 않는다.** 정밀하게 하려면 먼저 저장해야 한다.
 
 ## Implementation Status (2026-11-15)
 
-**Status**: 🟡 Partial (슬라이스 1 ✅ · 1.5 점진적 노출 ✅ · 슬라이스 2–4 ❌ Not started)
+**Status**: 🟡 Partial (슬라이스 1·1.5·1.6 ✅ · 슬라이스 2–4 ❌ Not started)
 
 **Evidence**:
-- `web/src/renderer/menu_main.ts` — 그룹·설명·레이아웃
+- `web/src/renderer/menu_main.ts` — 그룹·설명·**`visibleMenuOptions`(노출 규칙)**
 - `web/src/renderer/jockey_select.ts` — tagline·deck 줄바꿈
-- `web/src/core/state/onboarding.ts` — `wetrun_has_played` (첫 실행 판정)
-- `web/src/main.ts` — 동기 부팅 판정 · `normalizeMenuSelection`(방문당 1회)
+- `web/src/core/state/onboarding.ts` — `wetrun_has_played` · **`wetrun_runs_finished`**
+- `web/src/main.ts` — 동기 부팅 판정 · `visibleMenu()` · `noteRunFinished`
 - `web/src/core/grid.ts` · `web/src/renderer/panel.ts` — `recordClippedText`(폭 가드 봉합)
 - `web/e2e/menu-nav.ts` — `ensureMenu`(부팅 경로를 스펙에서 숨긴다)
 - `web/tests/adr0300_no_text_is_cut_off.test.ts` — 메뉴·자키 3 레이아웃 가드

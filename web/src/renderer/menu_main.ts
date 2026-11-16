@@ -81,15 +81,54 @@ export const MENU_OPTIONS: ReadonlyArray<MenuEntry> = [
   { key: "credits", label: "menu.credits", desc: "menu.desc.credits", available: true },
 ] as const;
 
-/** Rows the option block needs: one per entry plus one per group header. */
-const MENU_OPTION_ROWS =
-  MENU_OPTIONS.length +
-  MENU_OPTIONS.filter((o) => o.group !== undefined).length;
+/** What the menu knows about the player (ADR-0315).
+ *
+ * The menu grows with the player: an entry appears when it has something to
+ * offer. A brand-new profile never even sees the menu (the boot goes straight
+ * into a run), and the archive/workshop entries wait until a run has actually
+ * been finished — otherwise they are rows that open onto nothing. */
+export interface MenuReveal {
+  /** A save exists, so CONTINUE has somewhere to go. */
+  readonly hasSave: boolean;
+  /** Far Grid is unlocked (Arc 1 cleared). */
+  readonly farGridUnlocked: boolean;
+  /** Runs finished at least once (deaths and endings both count). */
+  readonly runsFinished: number;
+  /** The tutorial has been completed. */
+  readonly tutorialCompleted: boolean;
+}
 
-/** Rows from the title to the status line: title, subtitle, divider (two-row
- * gaps), the option block, then a blank row, the save hint and the status line.
- */
-const MENU_BLOCK_ROWS = 6 + MENU_OPTION_ROWS + 3;
+/** The entries to show for this player, in display order. */
+export function visibleMenuOptions(
+  reveal: MenuReveal,
+): ReadonlyArray<MenuEntry> {
+  return MENU_OPTIONS.filter((opt) => {
+    switch (opt.key) {
+      case "continue":
+        return reveal.hasSave;
+      case "far_grid_hub":
+        return reveal.farGridUnlocked;
+      case "tutorial":
+        return !reveal.tutorialCompleted;
+      case "dungeon_crawl":
+      case "craft":
+      case "equipment":
+      case "hall_of_dead":
+      case "endings":
+      case "stats":
+        return reveal.runsFinished > 0;
+      default:
+        return true;
+    }
+  });
+}
+
+/** Rows an option block needs: one per entry plus one per group header. */
+export function menuBlockRows(
+  options: ReadonlyArray<MenuEntry>,
+): number {
+  return options.length + options.filter((o) => o.group !== undefined).length;
+}
 
 /** Width of the label column, so descriptions line up under each other. */
 function labelColumnWidth(language: Language): number {
@@ -139,13 +178,16 @@ function widestOptionRow(language: Language): number {
 export function mainMenuLayout(
   grid: Grid,
   language: Language = "en",
+  options: ReadonlyArray<MenuEntry> = MENU_OPTIONS,
 ): MainMenuLayout {
   const frame = screenFrameRect(grid);
   const inner = panelInnerRect(grid, frame);
   const footerY = inner.y + inner.height - 2;
   const available = footerY - 1 - inner.y;
+  // 6 title rows + the option block + 3 footer/hint rows.
+  const blockRows = 6 + menuBlockRows(options) + 3;
   const titleY =
-    inner.y + Math.max(1, Math.floor((available - MENU_BLOCK_ROWS) / 2));
+    inner.y + Math.max(1, Math.floor((available - blockRows) / 2));
   const optionsX =
     inner.x +
     Math.max(3, Math.floor((inner.width - widestOptionRow(language)) / 2));
@@ -177,9 +219,12 @@ export function renderMainMenu(
   statusMessage: string = "",
   farGridUnlocked: boolean = true,
   language: Language = "en",
+  /** ADR-0315: the entries this player has unlocked. Defaults to all of them
+   * so a caller that does not care about the reveal still works. */
+  options: ReadonlyArray<MenuEntry> = MENU_OPTIONS,
 ): Grid {
   let grid = makeGrid(cols, rows);
-  const layout = mainMenuLayout(grid, language);
+  const layout = mainMenuLayout(grid, language, options);
   const { inner, titleY, optionsX, optionsY: startY, footerY } = layout;
 
   // Title block
@@ -218,8 +263,8 @@ export function renderMainMenu(
   const labelW = labelColumnWidth(language);
   let row = startY;
   let lastRow = startY;
-  for (let i = 0; i < MENU_OPTIONS.length; i++) {
-    const opt = MENU_OPTIONS[i];
+  for (let i = 0; i < options.length; i++) {
+    const opt = options[i];
     if (!opt) continue;
     if (row >= footerY) break;
     if (opt.group !== undefined) {

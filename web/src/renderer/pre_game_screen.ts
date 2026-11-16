@@ -2,7 +2,7 @@ import { makeGrid } from "../core/grid";
 import type { ScreenKind, Mission } from "../core/types";
 import { t, type Language } from "../core/i18n";
 import type { DungeonCrawler } from "../core/dungeon/dungeon_crawler";
-import { MENU_OPTIONS, renderMainMenu, renderStubScreen } from "./menu";
+import { MENU_OPTIONS, renderMainMenu, renderStubScreen, type MenuEntry } from "./menu";
 import { renderMissionList } from "./mission_select";
 import { renderFarGridHub } from "./far_grid_hub";
 import { renderSettingsScreen, type SettingsState } from "./settings";
@@ -17,6 +17,8 @@ import { PALETTE } from "./palette";
 export interface PreGameView {
   readonly screen: ScreenKind;
   readonly menuIndex: number;
+  /** ADR-0315: the menu entries this profile has unlocked. */
+  readonly menuOptions?: ReadonlyArray<MenuEntry>;
   readonly missionIndex: number;
   readonly missionRows: readonly string[];
   readonly farGridMissions: readonly Mission[];
@@ -59,11 +61,12 @@ export function renderPreGameScreen(
           view.message,
           view.farGridUnlocked,
           view.language,
+          view.menuOptions ?? MENU_OPTIONS,
         ),
         hud: [
           "MAIN MENU",
           "",
-          `Selected: ${view.menuIndex + 1}/${MENU_OPTIONS.length}`,
+          `Selected: ${view.menuIndex + 1}/${(view.menuOptions ?? MENU_OPTIONS).length}`,
         ],
       };
     case "mission_select":
@@ -149,7 +152,7 @@ export function renderPreGameScreen(
       };
     }
     default: {
-      const opt = MENU_OPTIONS[view.menuIndex];
+      const opt = (view.menuOptions ?? MENU_OPTIONS)[view.menuIndex];
       const label = opt
         ? t(opt.label, view.language).toUpperCase()
         : "WET RUN";

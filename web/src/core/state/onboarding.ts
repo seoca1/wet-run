@@ -60,6 +60,35 @@ export function markTutorialCompleted(
   }
 }
 
+/** localStorage key: how many runs this profile has finished (ADR-0315). */
+export const RUNS_FINISHED_KEY = "wetrun_runs_finished";
+
+/** Runs finished — deaths and endings both count. 0 on a fresh profile. */
+export function runsFinished(
+  storage: OnboardingStorage | null | undefined,
+): number {
+  if (!storage) return 0;
+  try {
+    const raw = storage.getItem(RUNS_FINISHED_KEY);
+    const n = raw === null ? 0 : Number(raw);
+    return Number.isFinite(n) && n > 0 ? Math.floor(n) : 0;
+  } catch {
+    return 0;
+  }
+}
+
+/** Record a finished run. No-ops without storage. */
+export function markRunFinished(
+  storage: OnboardingStorage | null | undefined,
+): void {
+  if (!storage) return;
+  try {
+    storage.setItem(RUNS_FINISHED_KEY, String(runsFinished(storage) + 1));
+  } catch {
+    // ignore
+  }
+}
+
 /** Has this profile started a run at least once? (ADR-0315) */
 export function hasPlayedBefore(
   storage: OnboardingStorage | null | undefined,

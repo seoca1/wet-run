@@ -66,12 +66,36 @@ export function missionListLayout(
   };
 }
 
-/** Render the framed mission select from pre-formatted row labels. */
+/** Word-wrap to `width`, at most `maxLines` lines. */
+function wrap(text: string, width: number, maxLines: number): string[] {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let current = "";
+  for (const word of words) {
+    const next = current === "" ? word : `${current} ${word}`;
+    if (next.length > width && current !== "") {
+      lines.push(current);
+      current = word;
+      if (lines.length === maxLines) return lines;
+    } else {
+      current = next;
+    }
+  }
+  if (current !== "") lines.push(current);
+  return lines.slice(0, maxLines);
+}
+
+/** Render the framed mission select from pre-formatted row labels.
+ *
+ * ADR-0316: the selected mission's `briefing` (lifted from the derivative
+ * fiction) is shown under the list, wrapped, so the screen says what the
+ * mission is about instead of only its title and grade. */
 export function renderMissionList(
   rowLabels: readonly string[],
   selected: number,
   cols: number,
   rows: number,
+  briefing: string | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const layout = missionListLayout(grid, rowLabels);
@@ -84,23 +108,46 @@ export function renderMissionList(
     "WET RUN — Select Mission",
     PALETTE.GREEN_NEON,
   );
+  const hint = "↑↓: navigate | ENTER: launch | ESC: back";
+  const shortHint = "↑↓ pick · ENTER launch · ESC back";
   grid = setInnerText(
     grid,
     inner,
     inner.x + 1,
     inner.y + 2,
-    "↑↓: navigate | ENTER: launch | ESC: back",
+    hint.length <= inner.width - 2 ? hint : shortHint,
     PALETTE.GRAY_LIGHT,
+  );
+  // Reserve the bottom rows for the briefing before placing the list.
+  const briefLines =
+    briefing !== null && briefing !== ""
+      ? wrap(briefing, Math.max(16, inner.width - 4), 3)
+      : [];
+  const briefTop =
+    inner.y + inner.height - (briefLines.length > 0 ? briefLines.length + 1 : 0);
+  const listBottom = Math.min(
+    layout.listBottom,
+    briefLines.length > 0 ? briefTop - 2 : layout.listBottom,
   );
   for (let i = 0; i < rowLabels.length; i++) {
     const y = layout.listY + i;
-    if (y > layout.listBottom) break;
+    if (y > listBottom) break;
     const isSelected = i === selected;
     const fg = isSelected ? PALETTE.GREEN_NEON : PALETTE.GRAY_LIGHT;
     const marker = isSelected ? "▸" : " ";
     const row = `${marker} ${rowLabels[i]}`;
     grid = setInnerText(grid, inner, layout.listX, y, row, fg);
   }
+  briefLines.forEach((line, i) => {
+    grid = setInnerText(
+      grid,
+      inner,
+      inner.x + 2,
+      briefTop + i,
+      line,
+      PALETTE.GRAY_LIGHT,
+    );
+  });
   grid = drawPanel(grid, layout.frame).grid;
   return drawPanelSeparator(grid, layout.frame, layout.separatorY);
 }

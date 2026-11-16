@@ -21,6 +21,8 @@ export interface PreGameView {
   readonly menuOptions?: ReadonlyArray<MenuEntry>;
   readonly missionIndex: number;
   readonly missionRows: readonly string[];
+  /** ADR-0316: the selected mission's briefing, or null when it has none. */
+  readonly missionBriefing?: string | null;
   readonly farGridMissions: readonly Mission[];
   readonly hasSave: boolean;
   readonly saveMeta: {
@@ -76,6 +78,7 @@ export function renderPreGameScreen(
           view.missionIndex,
           cols,
           rows,
+          view.missionBriefing ?? null,
         ),
         hud: [
           "MISSION SELECT",

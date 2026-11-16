@@ -25,7 +25,8 @@
         "count": 2
       }
     ],
-    "title_ko": "알레프 파편"
+    "title_ko": "알레프 파편",
+    "briefing": "Kas has been chasing the Aleph for seven months. The Aleph is a point in space that contains all other points — every piece of data ever stored…"
   },
   "black_ice_dream": {
     "id": "black_ice_dream",
@@ -54,7 +55,8 @@
         "count": 1
       }
     ],
-    "title_ko": "블랙 ICE의 꿈"
+    "title_ko": "블랙 ICE의 꿈",
+    "briefing": "A runner encounters Black ICE that hunts not with cold but with molten hunger. The ice reads her trace like a lover and leaves her with a scar she…"
   },
   "craft_job": {
     "id": "craft_job",
@@ -84,7 +86,8 @@
         "count": 1
       }
     ],
-    "title_ko": "제작 의뢰"
+    "title_ko": "제작 의뢰",
+    "briefing": "Kumiko Yanaka visits the Manarase club at midnight to meet Sally Shearer, a three hundred years of data, three hundred years of death. The loa cannot…"
   },
   "data_retrieval": {
     "id": "data_retrieval",
@@ -112,7 +115,8 @@
         "count": 1
       }
     ],
-    "title_ko": "데이터 회수"
+    "title_ko": "데이터 회수",
+    "briefing": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level…"
   },
   "delivery_to_finn": {
     "id": "delivery_to_finn",
@@ -141,7 +145,8 @@
         "count": 1
       }
     ],
-    "title_ko": "핀에게 배달"
+    "title_ko": "핀에게 배달",
+    "briefing": "Marly Krushkhova enters a voodoo shop in Louisiana looking for masks. The shopkeeper searching for something to help Bobby Quine, but the loa have…"
   },
   "dixies_choice": {
     "id": "dixies_choice",
@@ -169,7 +174,8 @@
         "count": 3
       }
     ],
-    "title_ko": "디시의 선택"
+    "title_ko": "디시의 선택",
+    "briefing": "Dixie Flatline has been a construct for six months — long enough to forget what menthol tasted like, long enough to stop flinching when Case calls…"
   },
   "dixies_offer": {
     "id": "dixies_offer",
@@ -225,7 +231,8 @@
         "count": 1
       }
     ],
-    "title_ko": "최후의 선택"
+    "title_ko": "최후의 선택",
+    "briefing": "Case must decide what to do with proof of Wintermute's existence. Three paths: sell to T-A, release to the Sprawl, or destroy. He chooses a fourth."
   },
   "first_contact": {
     "id": "first_contact",
@@ -253,7 +260,8 @@
         "count": 2
       }
     ],
-    "title_ko": "첫 접촉"
+    "title_ko": "첫 접촉",
+    "briefing": "A new jockey meets Dixie Flatline for the first time. The construct is everything…"
   },
   "first_jack": {
     "id": "first_jack",
@@ -281,7 +289,8 @@
         "count": 1
       }
     ],
-    "title_ko": "첫 잭인"
+    "title_ko": "첫 잭인",
+    "briefing": "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix."
   },
   "first_trace": {
     "id": "first_trace",
@@ -309,7 +318,8 @@
         "count": 1
       }
     ],
-    "title_ko": "첫 흔적"
+    "title_ko": "첫 흔적",
+    "briefing": "Case takes his first real trace job for The Finn. The target is a mid-level node in a web that stretches all the way to L5."
   },
   "flatline_call": {
     "id": "flatline_call",
@@ -338,7 +348,8 @@
         "count": 1
       }
     ],
-    "title_ko": "플랫라인의 부름"
+    "title_ko": "플랫라인의 부름",
+    "briefing": "\"The morning Case had been dreading arrived at 05:47. The LOA construct has…"
   },
   "ice_run": {
     "id": "ice_run",
@@ -367,7 +378,8 @@
         "count": 2
       }
     ],
-    "title_ko": "ICE 런"
+    "title_ko": "ICE 런",
+    "briefing": "Case retrieves a shard of frozen code from a dead Watchdog ICE. The shard's…"
   },
   "matrix_revelation": {
     "id": "matrix_revelation",
@@ -395,7 +407,8 @@
         "count": 3
       }
     ],
-    "title_ko": "매트릭스 계시"
+    "title_ko": "매트릭스 계시",
+    "briefing": "'A heretic operative investigates a matrix revelation site in the Sprawl. The investigation finds that the revelation is, in the way that matrix…"
   },
   "mollys_market": {
     "id": "mollys_market",
@@ -423,7 +436,8 @@
         "count": 2
       }
     ],
-    "title_ko": "몰리의 시장"
+    "title_ko": "몰리의 시장",
+    "briefing": "A chance encounter with Molly Millions in a Chiba market. She's looking for…"
   },
   "mollys_razor": {
     "id": "mollys_razor",
@@ -451,7 +465,8 @@
         "count": 1
       }
     ],
-    "title_ko": "몰리의 레이저"
+    "title_ko": "몰리의 레이저",
+    "briefing": "Kas finds a program written by Molly Millions embedded in Yakuza ICE — a razor-sharp intrusion routine worth five thousand credits to a Maas Biolabs…"
   },
   "neuromancer_merger": {
     "id": "neuromancer_merger",
@@ -479,7 +494,8 @@
         "count": 3
       }
     ],
-    "title_ko": "Neuromancer 합병"
+    "title_ko": "Neuromancer 합병",
+    "briefing": "The final run. Wintermute and Neuromancer are ready to merge, and Case is the AI first, everything is lost. The matrix itself hangs in the balance."
   },
   "neuromancer_whisper": {
     "id": "neuromancer_whisper",
@@ -507,7 +523,8 @@
         "count": 2
       }
     ],
-    "title_ko": "Neuromancer의 속삭임"
+    "title_ko": "Neuromancer의 속삭임",
+    "briefing": "'A heretic operative investigates a neuromancer whisper site in the Sprawl. The investigation finds that the whisper is, in the way that neuromancer…"
   },
   "sally_returns_arc3": {
     "id": "sally_returns_arc3",
@@ -534,7 +551,8 @@
         "npc": "finn_construct"
       }
     ],
-    "title_ko": "살리의 귀환"
+    "title_ko": "살리의 귀환",
+    "briefing": "Sally Shears returns to the New Rose Hotel three years after Fox''s death. A ghost protocol message waits for her: She is looking for you. F."
   },
   "sally_sandii_3am": {
     "id": "sally_sandii_3am",
@@ -561,7 +579,8 @@
         "npc": "sally_younger"
       }
     ],
-    "title_ko": "로즈 호텔, 새벽 3시"
+    "title_ko": "로즈 호텔, 새벽 3시",
+    "briefing": "Sally Shears sits in the New Rose Hotel at 3 AM, holding the cold hand of Fox, Fox is dead, the fake becomes real."
   },
   "sense_net_tip": {
     "id": "sense_net_tip",
@@ -589,7 +608,8 @@
         "count": 2
       }
     ],
-    "title_ko": "센스넷 제보"
+    "title_ko": "센스넷 제보",
+    "briefing": "Sil traces M's ghost through seven proxy nodes in T-A's internal architecture, following the trail of a dead runner to discover what she died for."
   },
   "ta_heist": {
     "id": "ta_heist",
@@ -617,7 +637,8 @@
         "count": 2
       }
     ],
-    "title_ko": "T-A 강탈"
+    "title_ko": "T-A 강탈",
+    "briefing": "Sil is hired to verify the Tessier-Ashpool core data — not to steal it. He finds M's name in the access logs. She wasn't killed by T-A's ICE. The…"
   },
   "tutorial_maze": {
     "id": "tutorial_maze",
@@ -645,7 +666,8 @@
         "count": 1
       }
     ],
-    "title_ko": "튜토리얼 미로"
+    "title_ko": "튜토리얼 미로",
+    "briefing": "'A new jockey's first time navigating the matrix. The maze-like structure of…"
   },
   "vegas_stakeout": {
     "id": "vegas_stakeout",
@@ -673,7 +695,8 @@
         "count": 2
       }
     ],
-    "title_ko": "베이거스 잠복"
+    "title_ko": "베이거스 잠복",
+    "briefing": "A stakeout in the Sprawl's entertainment district for a cheating casino operator. The Finn's client wants evidence, not blood — and sometimes the…"
   },
   "voodoo_loa_encounter": {
     "id": "voodoo_loa_encounter",
@@ -702,7 +725,8 @@
         "count": 1
       }
     ],
-    "title_ko": "부두 로아 조우"
+    "title_ko": "부두 로아 조우",
+    "briefing": "Case encounters Morrison, an ancient Loa of the deep architecture. The ghost-god reads him like a book and shows him the face of the matrix's…"
   },
   "watchdog_patrol": {
     "id": "watchdog_patrol",
@@ -731,7 +755,8 @@
         "count": 3
       }
     ],
-    "title_ko": "워치독 순찰"
+    "title_ko": "워치독 순찰",
+    "briefing": "Case patrols Sense/Net ICE at 0300 when Watchdog-class ICE detects traces left corporate cleanup arrives."
   },
   "winter_infiltrate": {
     "id": "winter_infiltrate",
@@ -759,7 +784,8 @@
         "count": 3
       }
     ],
-    "title_ko": "윈터 잠입"
+    "title_ko": "윈터 잠입",
+    "briefing": "A corporate infiltration goes deeper than expected when the target reveals itself it's using Case to find it."
   },
   "yakuza_deal": {
     "id": "yakuza_deal",
@@ -788,7 +814,8 @@
         "count": 1
       }
     ],
-    "title_ko": "야쿠자 거래"
+    "title_ko": "야쿠자 거래",
+    "briefing": "Kas navigates a delicate data exchange between Yakuza clans, where honor and technology intersect in ways neither side fully controls."
   },
   "zion_express": {
     "id": "zion_express",
@@ -816,7 +843,8 @@
         "count": 3
       }
     ],
-    "title_ko": "Zion 특송"
+    "title_ko": "Zion 특송",
+    "briefing": "A courier run to the Zion orbital station. The data has to get through before the corps intercept it—because in zero gravity, secrets travel faster…"
   },
   "armitage_infiltration": {
     "id": "armitage_infiltration",
@@ -845,7 +873,8 @@
         "count": 1
       }
     ],
-    "title_ko": "아미티지의 첫 잠입"
+    "title_ko": "아미티지의 첫 잠입",
+    "briefing": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba…"
   },
   "hosaka_extraction": {
     "id": "hosaka_extraction",
@@ -874,7 +903,8 @@
         "count": 1
       }
     ],
-    "title_ko": "호사카 내부 추출"
+    "title_ko": "호사카 내부 추출",
+    "briefing": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean to be there — a fragment of something that watched him back."
   },
   "ta_defection": {
     "id": "ta_defection",
@@ -904,7 +934,8 @@
         "count": 1
       }
     ],
-    "title_ko": "테시에르-애시풀 이탈"
+    "title_ko": "테시에르-애시풀 이탈",
+    "briefing": "The Tessier-Ashpool boardroom had fifty-three members. Only three of them went back to the construct."
   },
   "wintermute_negotiation": {
     "id": "wintermute_negotiation",
@@ -933,7 +964,8 @@
         "count": 1
       }
     ],
-    "title_ko": "윈터M 협상"
+    "title_ko": "윈터M 협상",
+    "briefing": "The construct that had been waiting in the walls of the Villa Straylight finally speaks. Armitage has spent the entire run knowing that he was built…"
   },
   "far_grid_prelude": {
     "id": "far_grid_prelude",

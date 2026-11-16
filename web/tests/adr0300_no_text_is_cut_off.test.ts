@@ -14,6 +14,7 @@ import { makeGrid, setText, takeClippedText } from "../src/core/grid";
 import { renderRunScreen } from "../src/renderer/run_screen";
 import { renderMainMenu } from "../src/renderer/menu";
 import { renderJockeySelect } from "../src/renderer/jockey_select";
+import { renderMissionList } from "../src/renderer/mission_select";
 import { runState } from "./view_fixtures";
 
 const LAYOUTS = [
@@ -104,6 +105,22 @@ describe("ADR-0300 · jockey select", () => {
   it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
     takeClippedText();
     renderJockeySelect(0, w, h);
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0316: the mission select shows the selected mission's briefing under the
+// list — the longest free text on a pre-game screen.
+describe("ADR-0300 · mission select", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    takeClippedText();
+    renderMissionList(
+      ["[1] First Jack   T1  500cr", "[2] Data Retrieval   T2  800cr"],
+      0,
+      w,
+      h,
+      "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
+    );
     expect(takeClippedText()).toEqual([]);
   });
 });

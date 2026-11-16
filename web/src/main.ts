@@ -1694,6 +1694,16 @@ class Game {
                   formatMissionOption(m, i, language),
                 )
               : [],
+          // ADR-0316: the story the mission carries, lifted from the derivative
+          // fiction, so the screen says what it is about.
+          missionBriefing: (() => {
+            if (this.screen !== "mission_select") return null;
+            const m = filterMissionsByUniverse(MISSIONS, "sprawl")[
+              this.selectedMission
+            ];
+            if (!m) return null;
+            return (language === "ko" && m.briefing_ko) || m.briefing || null;
+          })(),
           farGridMissions:
             this.screen === "far_grid_hub"
               ? filterMissionsByUniverse(MISSIONS, "far-grid")

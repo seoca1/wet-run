@@ -160,10 +160,17 @@ export async function enterForScreen(page: Page, want: string, tries = 6): Promi
 }
 
 /** Walk from the main menu to the mission list: NEW RUN → jockey select
- *  (ADR-0274) → mission select. */
+ *  (ADR-0274) → the run's prologue (ADR-0317) → mission select.
+ *
+ *  The prologue is skipped with ESC: ADR-0317 makes ESC skip the STORY, not the
+ *  run, so this is the same door a player uses. */
 export async function openMissionSelect(page: Page): Promise<void> {
   await gotoMenuOption(page, "new_run");
-  await page.keyboard.press("Enter");
+  await page.keyboard.press("Enter"); // → jockey select
+  await enterForScreen(page, "jockey_select");
+  await page.keyboard.press("Enter"); // → the run's prologue
+  await enterForScreen(page, "graphic_novel");
+  await page.keyboard.press("Escape"); // skip the prologue → mission list
   await enterForScreen(page, "mission_select");
 }
 

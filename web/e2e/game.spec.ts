@@ -5,7 +5,7 @@
  * player journey from boot to combat victory.
  */
 import { test, expect } from "@playwright/test";
-import { gotoMenuOption, enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase, openMissionSelect, launchRun } from "./menu-nav";
+import { gotoMenuOption, enterForPhase, gotoIceNode, enterForRunPhase, openMissionSelect, launchRun } from "./menu-nav";
 
 test.describe("Wet Run Game", () => {
   test.beforeEach(async ({ page }) => {
@@ -158,7 +158,7 @@ test.describe("Wet Run Game", () => {
   });
 
   test("can progress through approach to combat", async ({ page }) => {
-    await enterForScreen(page, "mission_select");
+    await openMissionSelect(page);
     await enterForRunPhase(page, "matrix");
     await enterForPhase(page, "approach");
 
@@ -178,7 +178,7 @@ test.describe("Wet Run Game", () => {
   });
 
   test("can use program in combat via digit key", async ({ page }) => {
-    await enterForScreen(page, "mission_select");
+    await openMissionSelect(page);
     await enterForRunPhase(page, "matrix");
     await enterForPhase(page, "approach");
     await gotoIceNode(page);

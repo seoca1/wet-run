@@ -12,7 +12,7 @@
  * If CONTINUE works, the player sees their previous HP/turn state.
  */
 import { test, expect } from "@playwright/test";
-import { chooseEncounterVerb, enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase } from "./menu-nav";
+import { chooseEncounterVerb, enterForPhase, openMissionSelect, gotoIceNode, enterForRunPhase } from "./menu-nav";
 
 test.describe("CONTINUE Option", () => {
   test.beforeEach(async ({ page }) => {
@@ -29,7 +29,7 @@ test.describe("CONTINUE Option", () => {
 
   test("CONTINUE option resumes saved state from IDB", async ({ page }) => {
     // Boot + launch mission -> walk to ICE -> combat (autosave fires on draw()).
-    await enterForScreen(page, "mission_select");
+    await openMissionSelect(page);
     await enterForRunPhase(page, "matrix");
     await enterForPhase(page, "approach");
     await gotoIceNode(page);
@@ -119,7 +119,7 @@ test.describe("CONTINUE Option", () => {
    */
   test("CONTINUE restores a playable state (matrix present, input is actionable)", async ({ page }) => {
     // Boot + launch mission -> walk to ICE -> combat (autosave fires on draw()).
-    await enterForScreen(page, "mission_select");
+    await openMissionSelect(page);
     await enterForRunPhase(page, "matrix");
     await enterForPhase(page, "approach");
     await gotoIceNode(page);

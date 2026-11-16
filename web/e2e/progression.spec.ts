@@ -10,7 +10,7 @@
  * If this test fails in CI, the phone-experience regression has returned.
  */
 import { test, expect } from "@playwright/test";
-import { enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase } from "./menu-nav";
+import { enterForPhase, openMissionSelect, gotoIceNode, enterForRunPhase } from "./menu-nav";
 
 test.describe("combat progression (regression)", () => {
   test.beforeEach(async ({ page }) => {
@@ -28,7 +28,7 @@ test.describe("combat progression (regression)", () => {
   test("menu → mission_select → approach → combat → victory via digit key", async ({ page }) => {
     // Main menu renders; press Enter to select NEW_RUN (highlighted).
     await expect(page.locator("canvas#game-canvas")).toBeVisible();
-    await enterForScreen(page, "mission_select");
+    await openMissionSelect(page);
 
     // Mission select screen renders; press Enter to launch the first mission.
     await enterForRunPhase(page, "matrix");

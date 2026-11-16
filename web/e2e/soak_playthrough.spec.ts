@@ -495,6 +495,21 @@ async function startRun(
   if ((await screen()) === "jockey_select") {
     for (let i = 0; i < jockey; i += 1) await page.keyboard.press("ArrowDown");
     await page.keyboard.press("Enter");
+    // ADR-0317: the jockey's prologue now opens the run. ESC skips the STORY,
+    // not the run, so it is the same door a player uses.
+    await page.waitForFunction(
+      () =>
+        ["graphic_novel", "mission_select"].includes(
+          (
+            window as unknown as { wetrun: { getScreen(): string } }
+          ).wetrun.getScreen(),
+        ),
+      undefined,
+      { timeout: 10000 },
+    );
+    if ((await screen()) === "graphic_novel") {
+      await page.keyboard.press("Escape");
+    }
   }
   await page.waitForFunction(
     () =>

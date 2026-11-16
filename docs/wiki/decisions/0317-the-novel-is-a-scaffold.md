@@ -48,11 +48,28 @@
 ## 이관 경로 (순서)
 
 1. ~~미션 브리핑~~ — **완료**(ADR-0316).
-2. **프롤로그를 런에 결합** — GN 씬을 런 시작에 재생하고, 메뉴 모드는 그 뒤에 제거한다.
-   (지금도 `startRunFromGraphicNovel()` 이 프롤로그 종료 → 미션 선택을 잇는다.)
+2. **프롤로그를 런에 결합** — **완료(2026-11-16)**: 아래 참조.
 3. **이벤트 배선** — `event_dialogues.json` 을 읽어 런 중 비트에 붙인다.
-4. **메뉴 항목 제거** — 2·3 이 끝나면 `graphic_novel` 항목과 화면을 지운다(ADR-0315 의 노출
+4. **메뉴 항목 제거** — 3 이 끝나면 `graphic_novel` 항목과 화면을 지운다(ADR-0315 의 노출
    규칙에서도 빠진다).
+
+### 이관 2단계 결과 — 프롤로그가 런의 첫 비트가 됐다 (2026-11-16)
+
+```
+NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 → prep → 런
+                         ↑ ESC = 이야기만 건너뛰고 런은 계속
+```
+
+- 자키 선택의 `confirm` 이 이제 **프롤로그를 연다**(`initGraphicNovel(자키 id)`), 그 뒤 미션
+  목록으로 넘어간다. 예전에는 곧바로 미션 목록이었다.
+- **ESC 는 이야기만 건너뛴다** — `prologueForRun` 플래그가 `exitGraphicNovel` 을 미션 목록으로
+  보낸다(메뉴로 튕기지 않는다). 완주하면 `startRunFromGraphicNovel()` 이 그대로 잇는다.
+- **메뉴의 GRAPHIC NOVEL 은 그대로 둔다**(검증용) — 거기서는 ESC 가 타이틀로 돌아간다.
+  `prologueForRun = false` 로 구분한다.
+- GN 모드 선택 화면은 웹에 없다(`"novice"` 하드코딩이었다) → 자키 id 를 그대로 모드로 쓴다
+  (`novice`/`veteran`/`heretic`).
+- e2e: `e2e/prologue.spec.ts` — ⑴ NEW RUN → 자키 → 프롤로그 → ESC → 미션 목록, ⑵ 메뉴 GN 은
+  ESC 로 타이틀(런 아님). 기존 스펙들은 `openMissionSelect` 헬퍼가 프롤로그를 건너뛴다.
 
 ## 결과 (Consequences)
 
@@ -75,15 +92,18 @@
 
 ## Implementation Status (2026-11-16)
 
-**Status**: ❌ Not started (방침 확정. 이관 경로 1단계인 브리핑은 ADR-0316 으로 완료)
+**Status**: 🟡 Partial (이관 1·2단계 ✅ · 3·4 ❌)
 
 **Evidence**:
+- `web/src/main.ts` — `initGraphicNovel(mode)` · 자키 confirm 이 프롤로그를 연다 ·
+  `prologueForRun` 이 ESC 를 미션 목록으로 보낸다
+- `web/e2e/prologue.spec.ts` — 2 tests(런 프롤로그 / 메뉴 GN)
+- `web/e2e/menu-nav.ts` — `openMissionSelect` 가 프롤로그를 건너뛴다
 - `docs/design/story/event_dialogues.json` — v0.2, `derivative_sources` + NPC + 대사 (미배선)
 - `web/src/data/scenes.json` — 27씬 / 15미션 (이관 대상)
-- `web/src/main.ts` — `startRunFromGraphicNovel()`(프롤로그 → 미션 선택 핸드오프, 이미 존재)
 - `docs/design/story/prologue.md` — 프롤로그 설계(깁슨 인용 포함 → 이관 시 패러프레이즈)
 
-**Notes**: 이 ADR 은 **방침**이다. 코드 변경은 이관 경로 2단계부터.
+**Notes**: 이관 2단계까지 구현. 3(이벤트 배선)과 4(메뉴 제거)가 남았다.
 
 ## 관련 결정
 

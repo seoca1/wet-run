@@ -53,6 +53,7 @@ import { renderRunIntro } from "./renderer/run_intro";
 import { renderJockeySelect } from "./renderer/jockey_select";
 import { renderPrep } from "./renderer/prep";
 import { JOCKEYS, jockeyHandle } from "./core/state/jockey";
+import type { PlayMode } from "./core/graphic_novel/graphic_novel_types";
 import { tick as gnTick } from "./core/graphic_novel/graphic_novel_player";
 import type { ArcId } from "./core/combat/ending_resolver";
 import { FpsCounter, getMetrics } from "./core/state/performance";
@@ -821,9 +822,14 @@ class Game {
     }
   }
 
-  private initGraphicNovel(): void {
+  /** ADR-0317: the prologue is the run's opening, not a menu mode. When set,
+   * the graphic novel is playing as part of a run and leaving it (done or
+   * skipped) hands over to the mission list instead of the title. */
+  private prologueForRun = false;
+
+  private initGraphicNovel(mode: PlayMode = "novice"): void {
     void loadStorySystem().then((gn) => {
-      const player = gn.createPlayer({ mode: "novice" });
+      const player = gn.createPlayer({ mode });
       this.graphicNovelPlayer = player;
       this.graphicNovelState = {
         player,
@@ -908,6 +914,12 @@ class Game {
   private exitGraphicNovel(): void {
     this.graphicNovelPlayer = null;
     this.graphicNovelState = null;
+    // ADR-0317: skipping the run's prologue skips the STORY, not the run.
+    if (this.prologueForRun) {
+      this.prologueForRun = false;
+      this.startRunFromGraphicNovel();
+      return;
+    }
     this.screen = "menu";
     this.draw();
   }
@@ -917,6 +929,7 @@ class Game {
   private startRunFromGraphicNovel(): void {
     this.graphicNovelPlayer = null;
     this.graphicNovelState = null;
+    this.prologueForRun = false;
     this.screen = "mission_select";
     this.selectedMission = 0;
     this.draw();
@@ -962,9 +975,17 @@ class Game {
           (this.selectedJockey - 1 + JOCKEYS.length) % JOCKEYS.length;
         this.draw();
       } else if (action.type === "confirm") {
-        this.screen = "mission_select";
+        // ADR-0317: the prologue opens the run — this jockey's story plays,
+        // then the mission list. ESC skips the story, not the run.
+        this.prologueForRun = true;
+        this.screen = "graphic_novel";
         this.selectedMission = 0;
-        this.draw();
+        const jockeyId = JOCKEYS[this.selectedJockey]?.id;
+        this.initGraphicNovel(
+          jockeyId === "veteran" || jockeyId === "heretic"
+            ? jockeyId
+            : "novice",
+        );
       } else if (action.type === "jack_out") {
         this.screen = "menu";
         this.draw();
@@ -1296,6 +1317,9 @@ class Game {
         this.draw();
         break;
       case "graphic_novel":
+        // ADR-0317: the menu entry is the validation scaffold. Playing it from
+        // here is browsing the story, not opening a run.
+        this.prologueForRun = false;
         this.screen = "graphic_novel";
         this.initGraphicNovel();
         this.draw();

@@ -1,5 +1,21 @@
 import { expect, type Page } from "@playwright/test";
 import type { EncounterVerb } from "../src/core/state/encounter_verbs";
+import { beatKey } from "../src/core/state/story_flags";
+
+/** ADR-0317 (3b): pre-mark the profile's one-time story beats as heard.
+ *
+ * The first-fight and first-victory cards each own the screen until a key, so
+ * they would eat a keypress mid-run and break every spec that counts keys —
+ * exactly what happened when they shipped (run_end_save, continue). This is the
+ * same treatment the tutorial overlay gets. The beats have their own spec
+ * (`narrative_beats.spec.ts`) and the story trace, which do not come through
+ * here. */
+export async function suppressStoryBeats(page: Page): Promise<void> {
+  const keys = [beatKey("first_fight_warning"), beatKey("first_victory")];
+  await page.evaluate((ks: string[]) => {
+    for (const k of ks) localStorage.setItem(k, "true");
+  }, keys);
+}
 
 /** ADR-0315: a fresh profile boots into the run flow (jockey select), not the
  *  title menu. Every spec that wants the menu starts here, so the boot path
@@ -165,6 +181,7 @@ export async function enterForScreen(page: Page, want: string, tries = 6): Promi
  *  The prologue is skipped with ESC: ADR-0317 makes ESC skip the STORY, not the
  *  run, so this is the same door a player uses. */
 export async function openMissionSelect(page: Page): Promise<void> {
+  await suppressStoryBeats(page);
   await gotoMenuOption(page, "new_run");
   await page.keyboard.press("Enter"); // → jockey select
   await enterForScreen(page, "jockey_select");

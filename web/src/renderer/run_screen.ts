@@ -55,6 +55,18 @@ export function endingArcLabel(choice: string | null): string {
   return ending ? `ARC ${ending.arc}` : "ARC ?";
 }
 
+/** Display-only narrative a run screen speaks (ADR-0317 3b).
+ *
+ * Passed in rather than read from `GameState`: it depends on the profile (which
+ * beats have been heard, the UI language), not on the run. Both fields are
+ * optional and mutually exclusive in practice — the encounter screen and the
+ * ending screen are different `runPhase`s.
+ */
+export interface RunNarrative {
+  readonly iceVoice?: DialogueBeat | null;
+  readonly signoff?: DialogueBeat | null;
+}
+
 /** Compose non-combat run phases, retaining message-derived loot and HUD text.
  * `matrixTravel` is the controller's current traversal frame (visual only). */
 export function renderRunScreen(
@@ -64,15 +76,18 @@ export function renderRunScreen(
   matrixEntryHint = false,
   matrixTravel: MatrixTravelFrame | null = null,
   growth: GrowthReveal | null = null,
-  /** ADR-0317 (3b): the ICE's tagline on the encounter screen, once the threat
-   * is revealed. Passed in because it depends on the profile, not the state. */
-  iceVoice: DialogueBeat | null = null,
+  narrative: RunNarrative | null = null,
 ): ScreenView | null {
   const layout = runScreenLayout(cols, rows);
   switch (state.runPhase) {
     case "matrix": {
       if (state.encounterDecision)
-        return renderEncounterDecision(state, cols, rows, iceVoice);
+        return renderEncounterDecision(
+          state,
+          cols,
+          rows,
+          narrative?.iceVoice ?? null,
+        );
       const matrix = state.matrix;
       if (!matrix) return null;
       return {
@@ -104,14 +119,20 @@ export function renderRunScreen(
     }
     case "ending":
       return {
-        grid: renderEndingScreen(state.endingChoice, layout.cols, layout.rows, {
-          mission: state.mission.title,
-          jockey: jockeyHandle(state.jockeyId),
-          hp: state.player.hp,
-          maxHp: state.player.maxHp,
-          credits: state.player.credits,
-          turns: state.turnCount,
-        }),
+        grid: renderEndingScreen(
+          state.endingChoice,
+          layout.cols,
+          layout.rows,
+          {
+            mission: state.mission.title,
+            jockey: jockeyHandle(state.jockeyId),
+            hp: state.player.hp,
+            maxHp: state.player.maxHp,
+            credits: state.player.credits,
+            turns: state.turnCount,
+          },
+          narrative?.signoff ?? null,
+        ),
         // The grid already shows the ending's name, so the HUD carries the
         // arc number. The raw id ("arc4_liberation_front", 23 chars) was
         // squeezed by the canvas HUD at the 40-column layout, where the

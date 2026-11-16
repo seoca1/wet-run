@@ -125,3 +125,36 @@ export function iceIntroBeat(
 ): DialogueBeat | null {
   return dialogueBeat(`ice_${iceId}_intro`, language, ICE_BEAT_LINES);
 }
+
+/** How many lines a story card shows. Roomier than the run intro: these are
+ * read once, at a beat the player stopped for. */
+export const STORY_BEAT_LINES = 4;
+
+/** The construct's warning before the profile's first fight (ADR-0317 3b).
+ *
+ * The design line named a Wisp and a program the starter deck does not hold, so
+ * it was rewritten to fit any ICE. It fires once per profile, at the first
+ * combat, where the advice is something the player can act on.
+ */
+export function firstFightWarningBeat(
+  language: Language = "en",
+): DialogueBeat | null {
+  return dialogueBeat("dixie_warning", language, STORY_BEAT_LINES);
+}
+
+/** The construct's relief after the profile's first win (ADR-0317 3b). */
+export function firstVictoryBeat(language: Language = "en"): DialogueBeat | null {
+  return dialogueBeat("dixie_postcombat", language, STORY_BEAT_LINES);
+}
+
+/** The construct's last word on the ending screen (ADR-0317 3b).
+ *
+ * The design's two ending scenes were written for a burn/keep choice the game
+ * never had — its endings are arc outcomes — so they were replaced by one
+ * arc-agnostic sign-off that fits every ending the screen can show.
+ */
+export function endingSignoffBeat(
+  language: Language = "en",
+): DialogueBeat | null {
+  return dialogueBeat("dixie_signoff", language, STORY_BEAT_LINES);
+}

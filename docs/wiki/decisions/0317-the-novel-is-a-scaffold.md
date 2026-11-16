@@ -135,9 +135,45 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
   한 목소리면 발화자를 **머리말**로 한 번, 여러 목소리면 **줄마다 자기 이름**을 붙인다 —
   줄이 엉뚱한 화자에게 귀속되지 않는다.
 - e2e: `web/e2e/ice_voice.spec.ts` — PROBE 가 태그라인을 기억하는지(단위 테스트가 못 보는 배선).
-- **남은 것**: `dixie_warning`(첫 ICE 경고) · `dixie_postcombat`(전투 후) · 엔딩 대사 ·
-  허브/메타 대사(`finn`·`wim`·`maelcum`·`ta`)와 **4단계(메뉴 제거)**. **단, 남은 대사들은
-  트리거가 게임과 1:1로 맞지 않아 매핑 결정이 필요하다**(아래 열린 질문).
+
+### 이관 3b 결과 — 나머지 대사를 **게임 구조에 맞춰 각색**했다 (2026-11-16)
+
+**원칙**: 구조를 임의 스토리에 맞추지 않는다. **스토리를 구조에 맞춘다.**
+
+| 대사 | 데이터가 가정하던 것 | 게임의 구조 | 각색 |
+|---|---|---|---|
+| `dixie_warning` | 앞에 **Wisp**, 그리고 `Viral Stun` | 첫 전투는 아무 ICE나 될 수 있고, 시작 덱에 Viral Stun 이 **없다** | "That's ICE, and it's already awake" · "You get one clean shot" — **아무 ICE·아무 덱**에 맞게 |
+| `dixie_postcombat` | **Wisp** 가 사라짐 | 아무 ICE나 | "It's gone." |
+| `dixie_ending_a/b_novice` | **novice 전용 + 데이터를 태우냐/가지냐** | 엔딩은 **아크 결과**(`arc*`)이고 그런 선택이 없다 | 두 장면을 **하나의 `dixie_signoff`** 로 대체 — 모든 엔딩에 맞는 마지막 말 |
+
+- **트리거는 게임의 구조에서 가져왔다**: 첫 전투(프로필 1회) · 첫 승리(프로필 1회) · 엔딩 화면.
+- **비트 카드**(`renderer/beat_card.ts`): 첫 전투·첫 승리는 **전체 화면 카드**(아무 키)로 말한다.
+  교전·전리품 패널은 이미 빽빽해서(아래 검증기 항목 참조) 인라인으로 넣으면 키 안내를 밀어낸다.
+  런 인트로(ADR-0272)가 증명한 모양을 그대로 쓴다.
+- **엔딩은 카드가 아니라 화면 안**: 엔딩 화면은 판결 아래에 자리가 있어, 런이 끝난 뒤 **키를 한 번 더**
+  요구하지 않는다.
+- **프로필 1회 플래그**(`core/state/story_flags.ts`): 플래그마다 키 하나. 값이 깨져도 **그 비트 하나만**
+  반복될 뿐이다.
+- **드라이버 함정을 또 밟았다**: 카드는 화면을 차지하므로 **키를 하나 먹는다**. 커밋 전 e2e 에서
+  `run_end_save` 2건·`continue` 1건이 실제로 실패했다(전리품이 안 넘어가고, 승리가 저장되지 않았다).
+  튜토리얼과 같은 방식으로 **공유 헬퍼(`suppressStoryBeats`)가 1회성 비트를 미리 "들은 것으로"**
+  표시하고, 카드 자체는 전용 스펙 `narrative_beats.spec.ts` 와 story trace 가 검증한다.
+- **남은 것**: 허브/메타 대사 6편(`finn`·`wim`·`maelcum`·`ta`)은 **대화 트리 화면**이 필요하다.
+  그리고 **죽음(FLATLINE)에는 설계된 대사가 없다** — 서명은 엔딩 화면에만 나온다(열린 질문 f).
+
+### 검증기도 함께 고쳤다 (2026-11-16)
+
+서사를 붙이다가 **검증기의 사각지대 셋**을 찾았다. 셋 다 "아무것도 실패하지 않아서" 오래 살아남았다.
+
+| 검증기 | 사각지대 | 고친 방법 |
+|---|---|---|
+| 폭 가드 (ADR-0300) | **가로만** 봤다 — 세로로 밀린 줄은 조용히 사라졌다 | `setText`·`setInnerText` 가 **화면/패널 밖으로 나간 줄도 기록**. 실제 버그(교전 화면의 `ESC: jack out`)를 잡는 것을 **증명**(트림을 빼면 실패, 넣으면 통과) |
+| 서사 원장 (신규) | 미배선 대사를 **아무도 세지 않았다** — `event_dialogues.json` 전체가 그렇게 방치됐다 | `adr0317_narrative_coverage.test.ts`: 모든 대사가 **배선됨**이거나 **이유와 함께 미배선 목록**에 있어야 하고, 목록에 **낡은 항목이 없어야** 한다 |
+| story trace (`e2e/story_trace.spec.ts`) | **낡아 있었고**(프롤로그·브리핑을 몰랐다) **skip** 이라 아무도 몰랐다. 기본 미션도 grade 5 라 대개 죽었다 | 드라이버를 **공유 헬퍼**로 교체(다시 낡을 수 없다) · 기본 미션을 **가장 쉬운 것**으로 · **기록만 하지 않고 단언**(도달한 상태에 조건부) · 기본 스위트에서 실행 |
+
+- 부수 발견: `EndingChoice` **타입이 카탈로그보다 3개 뒤처져 있었다**(ADR-0271 이 만든 드리프트).
+  `arc2_status_quo`(소크에서 가장 흔한 엔딩)가 **타입에 없었고**, 캐스트 하나가 그것을 가렸다.
+  이제 타입은 카탈로그에서 **파생**된다(ADR-0271 구현 상태).
 
 ## 결과 (Consequences)
 
@@ -157,38 +193,44 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
 - **(d) `prologue.md` 의 깁슨 인용.** 그 문서는 원문 첫 문장을 인용한다. **게임 문자열에는
   금지**(ADR-0270, `check_no_novel_prose.py`). 이관 시 패러프레이즈한다.
 - **(e) KO.** `plot_summary.ko`·씬 `title_ko` 는 부분적이다. 이관과 함께 채울지 별도로 볼지.
-- **(f) 남은 대사의 트리거 (2026-11-16 실측).** 나머지 대사는 게임과 1:1로 맞지 않는다:
-  `dixie_warning` 은 **Wisp 를 지목**하는데 첫 ICE 가 Wisp 라는 보장이 없고, 엔딩 대사는
-  **novice 전용 + 데이터를 태우냐/가지냐**를 전제하는데 게임의 엔딩 id 는 `arc*` 다.
-  허브/메타 대사(`finn_intro`·`wim_hub`·`maelcum_*`·`ta_warning`)는 **대화 트리 화면**이
-  필요한데 `DIALOGUE_TREES` 는 여전히 미배선이다. → **일반화해서 다시 쓰거나, 대사에 맞춰
-  트리거를 만들거나, 그대로 두거나** — 오너 결정.
+- **(f) 남은 대사의 트리거 (2026-11-16 실측 → 일부 해소).** ~~나머지 대사는 게임과 1:1로 맞지
+  않는다.~~ **해소된 것**: `dixie_warning`·`dixie_postcombat` 은 **고유명사를 빼고** 아무 ICE·아무
+  덱에 맞게 다시 썼고, 엔딩 두 장면(태우기/지키기)은 게임에 없는 선택을 전제하므로 **하나의
+  `dixie_signoff`** 로 대체했다. 트리거는 게임의 구조에서 가져왔다(첫 전투·첫 승리·엔딩 화면).
+  **남은 것**: ⑴ 허브/메타 대사 6편은 **대화 트리 화면**이 필요하다(`DIALOGUE_TREES` 미배선),
+  ⑵ **죽음(FLATLINE)에는 설계된 대사가 없다** — 서명은 엔딩 화면에만 나온다. 죽음에도 마지막 말을
+  붙일지는 **오너 결정**(설계에 없는 대사를 새로 쓰는 일이라 자동으로 하지 않았다).
 
 ## Implementation Status (2026-11-16)
 
-**Status**: 🟡 Partial (이관 1·2·3a ✅ · 3b 일부 · 4 ❌)
+**Status**: 🟡 Partial (이관 1·2·3a ✅ · 3b 대부분 ✅ · 4 ❌)
 
 **Evidence**:
 - `web/src/renderer/menu_dialogue.ts` — `renderMissionBriefing`(줄바꿈 · 정직한 footer)
 - `web/src/renderer/run_intro.ts` — `renderRunIntro(..., beat)`(아크 틀 + 동료의 대사)
-- `web/src/core/state/event_beats.ts` — `dialogueBeat` · `runOpeningBeat` · `iceIntroBeat`
-- `web/src/core/state/ice_intros.ts` — 들은 ICE 태그라인 기억(`wetrun_ice_intro_seen`)
-- `web/src/renderer/encounter.ts` — 교전 화면이 `iceVoice` 를 렌더
+- `web/src/renderer/beat_card.ts` — `renderBeatCard`(중간 비트용 전체 화면 카드)
+- `web/src/renderer/encounter.ts` — 교전 화면이 `iceVoice` 를 렌더(남은 행만큼만)
+- `web/src/renderer/ending.ts` — 엔딩 화면이 `signoff` 를 렌더
+- `web/src/renderer/run_screen.ts` — `RunNarrative { iceVoice, signoff }`
+- `web/src/core/state/event_beats.ts` — `dialogueBeat` · `runOpeningBeat` · `iceIntroBeat` ·
+  `firstFightWarningBeat` · `firstVictoryBeat` · `endingSignoffBeat`
+- `web/src/core/state/ice_intros.ts` — 들은 ICE 태그라인 기억
+- `web/src/core/state/story_flags.ts` — 프로필 1회 비트 플래그
 - `web/src/data/event_dialogues.json` — 앱이 읽는 사본(설계 파일에서 복사)
 - `scripts/tools/import_event_dialogues.py` — 설계 → 앱 복사 + 닿을 수 없는 id 보고
-- `web/src/main.ts` — `briefing` 화면 흐름 · `SCREENS_WITH_INPUT` 등록 · `initGraphicNovel(mode)` ·
-  `prologueForRun` · `runIntroBeat` · `encounterVoice()` · `getRunIntroBeat()`
+- `web/src/main.ts` — `briefing` 흐름 · `SCREENS_WITH_INPUT` · `prologueForRun` · `runIntroBeat` ·
+  `beatCard` · `encounterVoice()` · `endingSignoff()` · e2e 훅 3개
 - `web/tests/adr0317_mission_briefing_screen.test.ts` — 4 tests
-- `web/tests/event_beats.test.ts` — 8 tests
-- `web/tests/ice_intros.test.ts` — 5 tests
-- `web/tests/adr0317_ice_voice.test.ts` — 4 tests
-- `web/e2e/prologue.spec.ts` — 2 tests(런 프롤로그 / 메뉴 GN)
-- `web/e2e/run_intro.spec.ts` — 2 tests(첫 잭인 / 두 번째 런)
-- `web/e2e/ice_voice.spec.ts` — 1 test(PROBE 가 태그라인을 기억)
-- `web/e2e/menu-nav.ts` — `openMissionSelect`·`launchRun` 이 프롤로그·브리핑을 건너뛴다
+- `web/tests/event_beats.test.ts` — 8 tests · `web/tests/ice_intros.test.ts` — 5 tests
+- `web/tests/story_flags.test.ts` — 3 tests · `web/tests/adr0317_beat_card.test.ts` — 6 tests
+- `web/tests/adr0317_ice_voice.test.ts` — 5 tests
+- **`web/tests/adr0317_narrative_coverage.test.ts` — 서사 원장(미배선 대사 + 이유 + 낡은 항목 감지)**
+- `web/e2e/prologue.spec.ts` · `run_intro.spec.ts` · `ice_voice.spec.ts` · `narrative_beats.spec.ts`
+- `web/e2e/menu-nav.ts` — `suppressStoryBeats`(1회성 비트를 미리 들은 것으로 표시)
+- `web/e2e/story_trace.spec.ts` — 드라이버를 공유 헬퍼로 교체 + 비트 **단언**
 
-**Notes**: 이관 3b 는 **첫 잭인 + ICE 태그라인**까지. 남은 대사는 **매핑 결정**이 필요하다
-(열린 질문 f). 4(메뉴 제거)는 그 뒤다.
+**Notes**: 3b 는 첫 잭인 · ICE 태그라인 · 첫 전투 경고 · 첫 승리 · 엔딩 서명까지. 남은 것은
+허브/메타 대사(대화 트리 화면 필요)와 **죽음 비트(설계에 없음 — 오너 결정)**. 4(메뉴 제거)는 그 뒤다.
 
 ## 관련 결정
 
@@ -203,3 +245,5 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
 - 2026-11-16: Accepted — 오너 방침 기록 + 이관 경로 정의
 - 2026-11-16: 이관 3b(첫 비트) — 동료의 첫 대사를 런 인트로 카드에 배선 · 데이터 임포터 추가
 - 2026-11-16: 이관 3b(ICE 태그라인) — 교전 화면이 정체를 본 뒤 ICE 의 방송을 말한다(프로필당 1회)
+- 2026-11-16: 이관 3b(각색) — 나머지 대사를 **게임 구조에 맞춰 다시 썼다**(아무 ICE·아무 덱·아무 엔딩) ·
+  비트 카드·엔딩 서명 배선 · **검증기 3종 보강**(세로 가드 · 서사 원장 · story trace 수리)

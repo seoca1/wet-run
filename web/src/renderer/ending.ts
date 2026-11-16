@@ -12,6 +12,7 @@ import {
   type LootCommitFrame,
 } from "./growth_reveal";
 import { ENDINGS } from "../core/combat/ending_resolver";
+import type { DialogueBeat } from "../core/state/event_beats";
 
 /** What the run cost and what it earned, shown under the ending letter.
  * Display-only: the values are the run's own final numbers, not a claim about
@@ -31,6 +32,9 @@ export function renderEndingScreen(
   cols: number,
   rows: number,
   summary: EndingSummary | null = null,
+  /** ADR-0317 (3b): the construct's last word, under the verdict. Passed in
+   * because it depends on the profile's language, not on the run's state. */
+  signoff: DialogueBeat | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const c = choice ?? "arc1_wage_slave";
@@ -68,6 +72,30 @@ export function renderEndingScreen(
       PALETTE.GRAY_LIGHT,
     );
     y += 1;
+  }
+
+  // ADR-0317 (3b): the construct gets the last word, under the verdict and
+  // above the run's numbers. If the ending text already filled the screen it is
+  // dropped rather than crowding the numbers -- but the three supported layouts
+  // all have room, and a test holds that.
+  if (signoff !== null) {
+    const spoken = [
+      ...(signoff.speaker.length > 0 ? [signoff.speaker] : []),
+      ...signoff.lines.flatMap((line) => wrapText(line, wrapWidth)),
+    ];
+    const start = y + 1;
+    if (start + spoken.length <= rows - 6) {
+      spoken.forEach((line, i) => {
+        const heading = signoff.speaker.length > 0 && i === 0;
+        grid = setText(
+          grid,
+          Math.max(2, Math.floor((cols - line.length) / 2)),
+          start + i,
+          line,
+          heading ? PALETTE.YELLOW_AMBER : PALETTE.CYAN_LIGHT,
+        );
+      });
+    }
   }
 
   // The run's own numbers, two lines above the footer. The ending text is a

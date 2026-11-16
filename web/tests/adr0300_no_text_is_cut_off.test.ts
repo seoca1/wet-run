@@ -11,13 +11,21 @@
  */
 import { describe, expect, it } from "vitest";
 import { makeGrid, setText, takeClippedText } from "../src/core/grid";
+import { setInnerText } from "../src/renderer/panel";
 import { renderRunScreen } from "../src/renderer/run_screen";
 import { renderMainMenu } from "../src/renderer/menu";
 import { renderJockeySelect } from "../src/renderer/jockey_select";
 import { renderMissionList } from "../src/renderer/mission_select";
 import { renderMissionBriefing } from "../src/renderer/menu_dialogue";
 import { renderRunIntro } from "../src/renderer/run_intro";
-import { dialogueBeat, iceIntroBeat } from "../src/core/state/event_beats";
+import { renderBeatCard } from "../src/renderer/beat_card";
+import { renderEndingScreen } from "../src/renderer/ending";
+import {
+  dialogueBeat,
+  endingSignoffBeat,
+  firstFightWarningBeat,
+  iceIntroBeat,
+} from "../src/core/state/event_beats";
 import { runState } from "./view_fixtures";
 
 const LAYOUTS = [
@@ -71,6 +79,28 @@ describe("ADR-0300 · the cut recorder", () => {
     // Then: empty, and the record stays empty on the next read.
     expect(takeClippedText()).toEqual([]);
     expect(takeClippedText()).toEqual([]);
+  });
+
+  // ADR-0300 (2026-11-16): the recorder used to watch only the right edge. A
+  // line pushed off the bottom of the screen was lost just as silently, so the
+  // instrument has to see both.
+  it("records a line drawn past the bottom edge", () => {
+    const grid = makeGrid(20, 3);
+    takeClippedText();
+
+    setText(grid, 0, 7, "off the bottom");
+
+    expect(takeClippedText()).toEqual(["off the bottom"]);
+  });
+
+  it("records a line a panel drops off its bottom", () => {
+    const grid = makeGrid(20, 10);
+    const inner = { x: 1, y: 1, width: 18, height: 4 };
+    takeClippedText();
+
+    setInnerText(grid, inner, 2, 9, "ESC: jack out");
+
+    expect(takeClippedText()).toEqual(["ESC: jack out"]);
   });
 });
 
@@ -154,11 +184,47 @@ describe("ADR-0300 · run intro with a beat", () => {
   });
 });
 
+// ADR-0317 (3b): the mid-run beats are full-screen cards — the same "longest
+// free text on the screen" risk as the run intro.
+describe("ADR-0300 · beat card", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    takeClippedText();
+    renderBeatCard("ICE AHEAD", firstFightWarningBeat()!, w, h);
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0317 (3b): the ending screen carries the construct's sign-off under the
+// verdict, above the run's numbers.
+describe("ADR-0300 · ending with a sign-off", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    takeClippedText();
+    renderEndingScreen(
+      "arc2_status_quo",
+      w,
+      h,
+      {
+        mission: "First Jack",
+        jockey: "CASE",
+        hp: 40,
+        maxHp: 100,
+        credits: 1234,
+        turns: 12,
+      },
+      endingSignoffBeat(),
+    );
+    expect(takeClippedText()).toEqual([]);
+  });
+});
 // ADR-0317 (3b): the ICE's tagline is free text on the encounter screen, and it
-// must wrap rather than cut.
+// must wrap rather than cut. The worst case is deliberate: the 60x40 layout
+// with three ICE on the node and Black ICE's three-voice tagline is what pushed
+// the "ESC: jack out" footer off the bottom (2026-11-16) — the guard has to
+// watch the bottom edge too, or that loss is silent.
 describe("ADR-0300 · encounter with an ICE voice", () => {
   it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
     const base = runState({ runPhase: "matrix" });
+    const iceIds = ["black", "black", "black"];
     const state = {
       ...base,
       currentNodeIndex: 0,
@@ -170,8 +236,8 @@ describe("ADR-0300 · encounter with an ICE voice", () => {
           {
             id: 0,
             zone: "surface",
-            iceIds: ["wisp"],
-            iceHp: [20],
+            iceIds,
+            iceHp: iceIds.map(() => 20),
             reward: { credits: 75 },
             adjacent: [1],
             isBoss: false,
@@ -189,7 +255,9 @@ describe("ADR-0300 · encounter with an ICE voice", () => {
       },
     };
     takeClippedText();
-    renderRunScreen(state as never, w, h, false, null, null, iceIntroBeat("wisp"));
+    renderRunScreen(state as never, w, h, false, null, null, {
+      iceVoice: iceIntroBeat("black"),
+    });
     expect(takeClippedText()).toEqual([]);
   });
 });

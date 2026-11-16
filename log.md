@@ -3803,3 +3803,21 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **e2e**: `e2e/ice_voice.spec.ts` — PROBE 가 태그라인을 기억하는지(단위 테스트가 못 보는 배선).
 - **남은 것**: `dixie_warning`·`dixie_postcombat`·엔딩·허브/메타 대사. **단 트리거가 게임과 1:1로 맞지 않아 매핑 결정이 필요**(ADR-0317 열린 질문 f: `dixie_warning` 은 Wisp 를 지목, 엔딩 대사는 novice+태우기/가지기 전제, 허브 대사는 대화 트리 화면 필요).
 - **검증**: typecheck 0 · lint 0 errors · vitest **216 files / 4256 tests**(+15) · **전체 e2e 50 passed / 6 skipped / 0 failed**(56; 신규 `ice_voice` 1건) · 폭 가드(교전 목소리 포함) 0건 · **결정적 곡선 byte-identical**(밸런스 `100/100/100/98.9/83.9/32.3` · 생존 `100/97.1/75.9/51.4/26.9/32.3`, 최대 이탈 4.1pp) · 표시 전용(GameState 무변경).
+
+## [2026-11-16] feat(story) | 나머지 대사를 게임 구조에 맞춰 각색한다 (ADR-0317 3b 각색 + 검증기 보강)
+
+- **원칙**: 구조를 임의 스토리에 맞추지 않는다. **스토리를 구조에 맞춘다.**
+- **각색 3건**(설계 파일 `docs/design/story/event_dialogues.json` = 단일 진실 공급원):
+  - `dixie_warning`: **Wisp** 를 지목하고 시작 덱에 없는 **Viral Stun** 을 언급 → "That's ICE, and it's already awake" · "You get one clean shot" — **아무 ICE·아무 덱**에 맞게.
+  - `dixie_postcombat`: **Wisp** 제거 → "It's gone."
+  - 엔딩 2편(태우기/지키기 — 게임에 **없는 선택**을 전제) → **`dixie_signoff` 1편**(모든 엔딩에 맞는 마지막 말). 14편 → 13편.
+- **배선**: 첫 전투 경고·첫 승리 = **비트 카드**(`renderer/beat_card.ts` — 아무 키, 프로필 1회 플래그는 `core/state/story_flags.ts`) · 엔딩 서명 = **엔딩 화면 안**(런이 끝난 뒤 키를 한 번 더 요구하지 않는다). 교전·전리품 패널은 빽빽해서 인라인은 **키 안내를 밀어낸다**.
+- **트리거는 게임의 구조에서**: 첫 전투(프로필 1회) · 첫 승리(프로필 1회) · 엔딩 화면.
+- **검증기 사각지대 셋을 찾아 고쳤다**(모두 "아무것도 실패하지 않아서" 살아남았다):
+  1. **폭 가드가 가로만 봤다** → `setText`·`setInnerText` 가 **세로로 나간 줄도 기록**. 실제 버그를 잡는 것을 **증명**(트림을 빼면 `ESC: jack out (abandon run)` 이 잡혀 실패, 넣으면 통과). **ADR-0300 열린 질문 (c) 닫음**.
+  2. **미배선 대사를 아무도 세지 않았다** → 신규 **서사 원장** `tests/adr0317_narrative_coverage.test.ts`(배선됨이거나 **이유 있는 미배선**, 낡은 항목 감지).
+  3. **story trace 가 낡았고 skip 이었다** → 드라이버를 **공유 헬퍼**로 교체(다시 낡을 수 없다) · 기본 미션을 **가장 쉬운 것**(예전엔 grade 5 라 대개 죽었다) · **기록만 하지 않고 단언**(도달한 상태에 조건부) · **기본 스위트에서 실행**(3초).
+- **부수 발견**: `EndingChoice` **타입이 카탈로그보다 3개 뒤처져 있었다** — ADR-0271 이 29→32 로 늘릴 때 union 은 29 로 남았고 `ending.id as EndingChoice` 캐스트가 가렸다. `arc2_status_quo`(소크에서 **가장 흔한 엔딩**)가 타입에 없었다 → 타입을 카탈로그에서 **파생**(ADR-0271 구현 상태).
+- **드라이버 함정을 또 밟았다**: 카드는 **키를 하나 먹는다** → 커밋 전 e2e 에서 `run_end_save` 2건·`continue` 1건이 **실제로 실패**(전리품이 안 넘어가고 승리가 저장되지 않았다). 튜토리얼과 같이 **공유 헬퍼(`suppressStoryBeats`)가 1회성 비트를 미리 "들은 것으로"** 표시하고, 카드 자체는 전용 스펙 `narrative_beats.spec.ts` 와 story trace 가 검증한다.
+- **남은 것**: 허브/메타 대사 6편(**대화 트리 화면** 필요) · **죽음(FLATLINE) 비트는 설계에 없다**(서명은 엔딩 화면에만 — 오너 결정) · **④ 메뉴 제거**.
+- **검증**: typecheck 0 · lint 0 errors · vitest **219 files / 4279 tests**(+23) · **전체 e2e 52 passed / 5 skipped / 0 failed**(57; 신규 story trace·narrative_beats 포함) · 폭 가드 0건 · **결정적 곡선 byte-identical**(밸런스 `100/100/100/98.9/83.9/32.3` · 생존 `100/97.1/75.9/51.4/26.9/32.3`, 최대 이탈 4.1pp) · story trace 3.2초(가장 쉬운 미션 완주, 세 비트 모두 확인).

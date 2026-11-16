@@ -18,18 +18,38 @@
  * Run it:
  *   npm run story
  */
-import { test, type Page } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
-import { gotoMenuOption } from "./menu-nav";
+import { enterForScreen, gotoMenuOption } from "./menu-nav";
+import missionsJson from "../src/data/missions.json" with { type: "json" };
+
+/** The easiest Sprawl mission's index in the board order the trace walks.
+ * The board lists sprawl-universe missions only (ADR-0213), in catalog order. */
+const EASIEST_MISSION: number = (() => {
+  const all = Object.values(
+    missionsJson as Record<string, { id?: string; grade_max?: number; source_universe?: string }>,
+  ).filter((m) => m.source_universe !== "far-grid");
+  const lowest = Math.min(...all.map((m) => m.grade_max ?? 99));
+  const at = all.findIndex((m) => (m.grade_max ?? 99) === lowest);
+  return at < 0 ? 0 : at;
+})();
 
 const JOCKEY = Number(process.env.STORY_JOCKEY ?? "0");
-const MISSION = Number(process.env.STORY_MISSION ?? "0");
+/** The easiest Sprawl mission, unless told otherwise.
+ *
+ * The default used to be index 0, which is `aleph_fragment` (grade 5) — a
+ * mission a new player cannot pick. The trace's job is to show what a plausible
+ * run reads like, and a grade-5 run mostly reads like a flatline: the run ended
+ * on the defeat screen and never reached the ending, so the ending's beats were
+ * never exercised. The easiest mission is what the first mission actually is. */
+const MISSION = Number(process.env.STORY_MISSION ?? String(EASIEST_MISSION));
 const MAX_STEPS = Number(process.env.STORY_MAX_STEPS ?? "400");
 const SEED = Number(process.env.STORY_SEED ?? "20261108");
 const OUT_DIR = fileURLToPath(new URL("../story-out/", import.meta.url));
 const OUT = join(OUT_DIR, "story-trace.txt");
+
 
 /** Install a seeded `Math.random` in the page before it boots. The game draws
  * combat dice from `Math.random`, and only the headless harnesses replace it. */
@@ -185,46 +205,37 @@ function nextHop(st: NonNullable<Snap["state"]>): number {
   return pool.length === 0 ? st.cur : (pool[0] as number);
 }
 
-/** NEW RUN → jockey → mission → launch. */
+/** NEW RUN → jockey → prologue → mission list → briefing → prep → run.
+ *
+ * This used to hand-roll the walk and fell behind twice: the prologue (ADR-0317
+ * step 2) and the briefing (step 3a) both landed between the screens it named,
+ * so the trace timed out — and nobody saw it, because the spec is skipped
+ * unless `STORY` is set. It walks the shared helpers now, which is the only
+ * version of this that cannot drift again. */
 async function startRun(page: Page, jockey: number, mission: number): Promise<void> {
   await gotoMenuOption(page, "new_run");
   await page.keyboard.press("Enter");
-  await page.waitForFunction(
-    () =>
-      ["jockey_select", "mission_select"].includes(
-        (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen(),
-      ),
-    undefined,
-    { timeout: 10000 },
-  );
+  await enterForScreen(page, "jockey_select");
   await page.screenshot({ path: join(OUT_DIR, "00-jockey-select.png") });
   for (let i = 0; i < jockey; i += 1) {
     await page.keyboard.press("ArrowDown");
     await page.waitForTimeout(80);
   }
   await page.keyboard.press("Enter");
-  await page.waitForFunction(
-    () =>
-      (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen() ===
-      "mission_select",
-    undefined,
-    { timeout: 10000 },
-  );
+  // ADR-0317 step 2: the jockey's prologue opens the run. ESC skips the STORY,
+  // not the run — the same door a player uses.
+  await enterForScreen(page, "graphic_novel");
+  await page.keyboard.press("Escape");
+  await enterForScreen(page, "mission_select");
   for (let i = 0; i < mission; i += 1) {
     await page.keyboard.press("ArrowDown");
     await page.waitForTimeout(80);
   }
   await page.keyboard.press("Enter");
-  // ADR-0283 C: mission select now opens the PREP screen, so one more ENTER
-  // jacks in with the first option. (A new screen silently breaking the drivers
-  // is the ADR-0273/0274 lesson; this is that fix.)
-  await page.waitForFunction(
-    () =>
-      (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen() ===
-      "prep",
-    undefined,
-    { timeout: 10000 },
-  );
+  // ADR-0317 step 3a: the fixer briefs the job before the advance.
+  await enterForScreen(page, "briefing");
+  await page.keyboard.press("Enter");
+  await enterForScreen(page, "prep");
   await page.keyboard.press("Enter");
   await page.waitForFunction(
     () =>
@@ -235,9 +246,33 @@ async function startRun(page: Page, jockey: number, mission: number): Promise<vo
   );
 }
 
+/** The beat card on screen, or null. Display-only, so it never moves `state`. */
+async function beatCard(page: Page) {
+  return page.evaluate(() => {
+    const w = window as unknown as {
+      wetrun?: { getBeatCard?(): { title: string; lines: string[] } | null };
+    };
+    return w.wetrun?.getBeatCard?.() ?? null;
+  });
+}
+
+/** The run's opening beat, or null (ADR-0317 3b). */
+async function runIntroBeat(page: Page) {
+  return page.evaluate(() => {
+    const w = window as unknown as {
+      wetrun?: { getRunIntroBeat?(): { speaker: string; lines: string[] } | null };
+    };
+    return w.wetrun?.getRunIntroBeat?.() ?? null;
+  });
+}
+
 test.describe("story trace", () => {
-  test.skip(!process.env.STORY, "story trace runs only via `npm run story`");
-  test.setTimeout(0);
+  // ADR-0317 (3b): this used to be skipped unless `STORY` was set, and that is
+  // exactly why it drifted — two new screens landed between the screens its
+  // driver named and nothing noticed. It runs in the suite now; on the easiest
+  // mission it is a few seconds, and its assertions are what the narrative
+  // wiring is verified by. `npm run story` still works for the verbose file.
+  test.setTimeout(180_000);
 
   test("plays one run and writes down every line", async ({ page }) => {
     mkdirSync(OUT_DIR, { recursive: true });
@@ -254,6 +289,13 @@ test.describe("story trace", () => {
 
     const lines: string[] = [];
     const shots = new Set<string>();
+    const beatsSeen = new Set<string>();
+    let signoffSeen = false;
+    // What the run actually reached. The beat assertions are conditional on
+    // these, so a balance change that makes the run lose does not read as a
+    // broken narrative trigger.
+    let enteredCombat = false;
+    let sawLoot = false;
     let step = 0;
     let lastMsg = "";
     let lastPhase = "";
@@ -271,6 +313,14 @@ test.describe("story trace", () => {
     };
 
     await shoot("01-run-intro");
+    // ADR-0317 (3b): the run's opening beat is the migration's headline, so the
+    // trace asserts it exists rather than only screenshotting the card.
+    const introBeat = await runIntroBeat(page);
+    expect(
+      introBeat,
+      "the run's opening beat never appeared",
+    ).not.toBeNull();
+    lines.push(`[0] run intro beat: ${introBeat?.speaker ?? "?"}`);
 
     for (; step < MAX_STEPS; step += 1) {
       const s = await snap(page);
@@ -278,8 +328,22 @@ test.describe("story trace", () => {
 
       if (st === null && s.screen === "menu") break;
 
+      // ADR-0317 (3b): a mid-run beat card owns the screen until a key. Record
+      // it and dismiss it — that is what a player does, and skipping it here is
+      // how a beat could stop reaching the player without anyone noticing.
+      const card = await beatCard(page);
+      if (card !== null) {
+        beatsSeen.add(card.title);
+        lines.push(`[${step}] beat card "${card.title}"`);
+        for (const line of card.lines) lines.push(`      beat: ${line}`);
+        await press(page, "Enter");
+        continue;
+      }
+
       if (st !== null) {
         const phase = `${st.runPhase}/${st.phase}`;
+        if (st.runPhase === "combat" && st.phase === "combat") enteredCombat = true;
+        if (st.runPhase === "loot") sawLoot = true;
         const ice = st.ice.reduce((a, b) => a + b, 0);
         if (
           process.env.STORY_VERBOSE === "1" ||
@@ -310,6 +374,22 @@ test.describe("story trace", () => {
         if (st.runPhase === "ending") {
           ending = st.ending;
           summary = `mission ${st.mission} · arc ${st.arc} · HP ${st.hp}/${st.maxHp} · ${st.credits}cr earned (base ${st.baseCredits}) · ${st.turn} turns`;
+          // ADR-0317 (3b): the construct's last word lives on this screen.
+          if (!signoffSeen) {
+            const signoff = await page.evaluate(() => {
+              const w = window as unknown as {
+                wetrun?: {
+                  getEndingSignoff?(): { speaker: string; lines: string[] } | null;
+                };
+              };
+              return w.wetrun?.getEndingSignoff?.() ?? null;
+            });
+            if (signoff !== null) {
+              signoffSeen = true;
+              lines.push(`[${step}] ending sign-off: ${signoff.speaker}`);
+              for (const line of signoff.lines) lines.push(`      beat: ${line}`);
+            }
+          }
         }
         if (st.runPhase === "combat" && st.phase === "combat") await shoot("02-combat");
         if (st.runPhase === "loot") await shoot("03-loot");
@@ -374,9 +454,34 @@ test.describe("story trace", () => {
       `steps: ${step}`,
       `ending: ${ending ?? "(none reached)"}`,
       `summary: ${summary || "(none)"}`,
+      `beats: ${[...beatsSeen].join(", ") || "(none)"}${signoffSeen ? ", ending sign-off" : ""}`,
       "",
     ];
     writeFileSync(OUT, [...header, ...lines, ""].join("\n"), "utf-8");
+
+    // ADR-0317 (3b): the beats are the point of the migration, so the trace
+    // asserts they reached the player — but only for the states the run actually
+    // reached, so a balance change that ends the run early reads as a short run
+    // rather than a broken trigger.
+    if (enteredCombat) {
+      expect(
+        beatsSeen,
+        "the run fought but the first-fight warning never reached the player",
+      ).toContain("ICE AHEAD");
+    }
+    if (sawLoot) {
+      expect(
+        beatsSeen,
+        "the run won a fight but the first-victory beat never reached the player",
+      ).toContain("FIRST BLOOD");
+    }
+    if (ending !== null) {
+      expect(
+        signoffSeen,
+        "the run reached the ending but the sign-off never reached the player",
+      ).toBe(true);
+    }
+
     // eslint-disable-next-line no-console
     console.log(`STORY ending=${ending ?? "none"} steps=${step} lines=${lines.length} -> ${OUT}`);
   });

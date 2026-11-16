@@ -188,26 +188,26 @@
       "npc": "dixie",
       "title_en": "First ICE Warning",
       "title_ko": "첫 ICE 경고",
-      "context_en": "Player approaches first ICE. Dixie is urgent.",
-      "context_ko": "플레이어가 첫 ICE에 접근. Dixie가 다급함.",
+      "context_en": "The profile's first fight begins. Dixie is urgent.",
+      "context_ko": "프로필의 첫 전투가 시작된다. Dixie가 다급함.",
       "lines": [
         {
           "speaker": "Dixie Flatline",
           "speaker_ko": "딕시 플랫라인",
-          "text_en": "Hold up. Hold up. I see Wisp ahead. Cheap ICE, but lethal.",
-          "text_ko": "잠깐. 잠깐. 앞에 Wisp 보임. 싸구려 ICE지만 치명적."
+          "text_en": "Hold up. Hold up. That's ICE, and it's already awake.",
+          "text_ko": "잠깐. 잠깐. 저건 ICE야. 벌써 깨어 있어."
         },
         {
           "speaker": "Dixie Flatline",
           "speaker_ko": "딕시 플랫라인",
-          "text_en": "Don't go in cocky. Wisp is fast. It stuns, then bleeds you.",
-          "text_ko": "건방 떨지 말고 들어가. Wisp는 빨라. 기절시키고, 그다음 피를 빼."
+          "text_en": "Don't go in cocky. It's fast. It stuns you, then it bleeds you.",
+          "text_ko": "건방 떨지 말고 들어가. 빠르다. 기절시키고, 그다음 피를 빼."
         },
         {
           "speaker": "Dixie Flatline",
           "speaker_ko": "딕시 플랫라인",
-          "text_en": "Your Viral Stun works once. Use it right. Then go for the throat.",
-          "text_ko": "네 Viral Stun은 한 번만 쓸 수 있어. 잘 써. 그다음 목을 노려."
+          "text_en": "You get one clean shot. Make it count, then go for the throat.",
+          "text_ko": "깨끗한 한 방이 전부야. 아껴 써. 그다음 목을 노려."
         },
         {
           "speaker": "Dixie Flatline",
@@ -222,8 +222,8 @@
       "npc": "dixie",
       "title_en": "After ICE Victory",
       "title_ko": "ICE 승리 후",
-      "context_en": "ICE broken. Data node accessible. Dixie is relieved.",
-      "context_ko": "ICE 분해됨. 데이터 노드 진입 가능. Dixie가 안도.",
+      "context_en": "The profile's first ICE is broken. Data node accessible. Dixie is relieved.",
+      "context_ko": "프로필의 첫 ICE가 부서졌다. 데이터 노드 진입 가능. Dixie가 안도.",
       "lines": [
         {
           "speaker": "Dixie Flatline",
@@ -234,8 +234,8 @@
         {
           "speaker": "Dixie Flatline",
           "speaker_ko": "딕시 플랫라인",
-          "text_en": "Wisp is gone. Data's there. Take it. Jack out.",
-          "text_ko": "Wisp 사라짐. 데이터 거기 있어. 가져가. 잭아웃."
+          "text_en": "It's gone. The data's there. Take it. Jack out.",
+          "text_ko": "녀석은 사라졌어. 데이터는 거기 있어. 가져가. 잭아웃."
         },
         {
           "speaker": "Dixie Flatline",
@@ -245,71 +245,31 @@
         }
       ]
     },
-    "dixie_ending_a_novice": {
-      "id": "dixie_ending_a_novice",
+    "dixie_signoff": {
+      "id": "dixie_signoff",
       "npc": "dixie",
-      "title_en": "Ending A: K Burns the Data",
-      "title_ko": "엔딩 A: 케이가 데이터를 태움",
-      "context_en": "Player chose to burn the data. Dixie is approving.",
-      "context_ko": "플레이어가 데이터를 태우기로 선택. Dixie가 인정.",
+      "title_en": "After the Run",
+      "title_ko": "런이 끝난 뒤",
+      "context_en": "The run is over, whatever it was. The construct has the last word. (2026-11-16: adapted from the burn/keep ending scenes, which had no structural home — the game's endings are arc outcomes, not a data choice.)",
+      "context_ko": "런이 끝났다. 무엇이었든. 구성체가 마지막 말을 한다. (2026-11-16 각색: 태우기/지키기 엔딩 장면은 게임 구조에 자리가 없었다 — 게임의 엔딩은 아크 결과이지 데이터 선택이 아니다.)",
       "lines": [
         {
-          "speaker": "K",
-          "speaker_ko": "케이",
-          "text_en": "I burn it. I just wanted the money.",
-          "text_ko": "태워버릴 거야. 돈만 필요했어."
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "There. It's over.",
+          "text_ko": "됐어. 끝났어."
         },
         {
           "speaker": "Dixie Flatline",
           "speaker_ko": "딕시 플랫라인",
-          "text_en": "Smart. The Sprawl has a short memory for those who don't make waves.",
-          "text_ko": "현명하네. 물결을 일으키지 않는 자들에 대해 스프롤은 금방 잊어버려."
+          "text_en": "The Sprawl files it under something and moves on.",
+          "text_ko": "스프롤은 아무 항목에나 끼워 넣고 다음으로 넘어가."
         },
         {
           "speaker": "Dixie Flatline",
           "speaker_ko": "딕시 플랫라인",
-          "text_en": "I know a tunnel out. Chiba-side. Wim'll get you to the shuttle.",
-          "text_ko": "빠져나갈 터널을 알아. 치바 쪽. Wim이 셔틀까지 데려다 줄 거야."
-        },
-        {
-          "speaker": "Dixie Flatline",
-          "speaker_ko": "딕시 플랫라인",
-          "text_en": "Don't come back to the Sprawl, cowboy. Not for a long time.",
-          "text_ko": "스프롤로 돌아오지 마, 카우보이. 한동안은."
-        }
-      ]
-    },
-    "dixie_ending_b_novice": {
-      "id": "dixie_ending_b_novice",
-      "npc": "dixie",
-      "title_en": "Ending B: K Keeps the Data",
-      "title_ko": "엔딩 B: 케이가 데이터를 지킴",
-      "context_en": "Player chose to keep the data. Dixie's voice is colder.",
-      "context_ko": "플레이어가 데이터를 지키기로 선택. Dixie의 목소리가 더 차가움.",
-      "lines": [
-        {
-          "speaker": "K",
-          "speaker_ko": "케이",
-          "text_en": "I keep it. I might need it someday.",
-          "text_ko": "지켜둘 거야. 언젠가 필요할지 모르니까."
-        },
-        {
-          "speaker": "Dixie Flatline",
-          "speaker_ko": "딕시 플랫라인",
-          "text_en": "Then Finn will find you. Tonight. Maybe sooner.",
-          "text_ko": "그러면 Finn이 자네를 찾을 거야. 오늘 밤. 어쩌면 그보다 더 빨리."
-        },
-        {
-          "speaker": "Dixie Flatline",
-          "speaker_ko": "딕시 플랫라인",
-          "text_en": "I can't help you anymore. I can't. Once you take the data, you're on your own.",
-          "text_ko": "이제 난 자네를 도울 수 없어. 정말. 데이터를 가져가는 순간, 자네 혼자야."
-        },
-        {
-          "speaker": "Dixie Flatline",
-          "speaker_ko": "딕시 플랫라인",
-          "text_en": "(voice fading) ...don't... listen for the ICE... it's already in your deck...",
-          "text_ko": "(목소리가 사라짐) ...하지 마... ICE 소리 들어... 이미 네 데크에 있어..."
+          "text_en": "I'll be in the deck. Same as always.",
+          "text_ko": "난 데크에 있을게. 늘 그랬듯이."
         }
       ]
     },

@@ -12,6 +12,7 @@ import {
   renderRunScreen,
   renderCombatScreen,
   composeCombatScreen,
+  type RunNarrative,
 } from "./renderer/run_screen";
 import {
   beginMatrixTravel,
@@ -50,8 +51,17 @@ import { offeredCardIds, rewardProgram, UNIQUE_PROGRAMS } from "./core/state/car
 import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
-import { runOpeningBeat, iceIntroBeat, type DialogueBeat } from "./core/state/event_beats";
+import { renderBeatCard } from "./renderer/beat_card";
+import {
+  runOpeningBeat,
+  iceIntroBeat,
+  firstFightWarningBeat,
+  firstVictoryBeat,
+  endingSignoffBeat,
+  type DialogueBeat,
+} from "./core/state/event_beats";
 import { markIceIntrosSeen, seenIceIntros } from "./core/state/ice_intros";
+import { hasHeardBeat, markBeatHeard } from "./core/state/story_flags";
 import { renderJockeySelect } from "./renderer/jockey_select";
 import { renderPrep } from "./renderer/prep";
 import { renderMissionBriefing } from "./renderer/menu_dialogue";
@@ -350,6 +360,11 @@ class Game {
    * card. Set with `runIntroArc` and cleared with it — display-only, never
    * saved. Null once the player has finished a run, or after the first key. */
   private runIntroBeat: DialogueBeat | null = null;
+  /** ADR-0317 (3b): a one-time beat card that owns the screen until a key.
+   * Same shape as the run intro, but for beats that arrive mid-run (the first
+   * fight, the first win) and would not fit inline on a dense panel. */
+  private beatCard: { readonly title: string; readonly beat: DialogueBeat } | null =
+    null;
   /** The commit stage last drawn — the loop redraws only when the clock
    * pushes the panel to a new stage, then stops (ADR-0262). */
   private lootCommitStageShown = -1;
@@ -539,6 +554,12 @@ class Game {
         this.draw();
         return;
       }
+      // ADR-0317 (3b): a mid-run beat card consumes the key the same way.
+      if (this.beatCard !== null) {
+        this.beatCard = null;
+        this.draw();
+        return;
+      }
       const resolved: GameAction = (() => {
         if (this.state === null) return action;
         const r = resolveProgramSelection(this.state, action);
@@ -560,6 +581,36 @@ class Game {
           typeof localStorage === "undefined" ? null : localStorage,
           encounterRoster(revealed).map((ice) => ice.id),
         );
+      }
+      // ADR-0317 (3b): the two moments that are new to the profile. The
+      // construct is in the deck for the whole run, so she speaks when the
+      // player first fights and when they first win, and never again.
+      if (revealed !== null) {
+        const storage =
+          typeof localStorage === "undefined" ? null : localStorage;
+        const language = this.settingsState?.language ?? "en";
+        if (
+          previous?.phase !== "combat" &&
+          revealed.phase === "combat" &&
+          !hasHeardBeat(storage, "first_fight_warning")
+        ) {
+          const beat = firstFightWarningBeat(language);
+          if (beat !== null) {
+            this.beatCard = { title: "ICE AHEAD", beat };
+            markBeatHeard(storage, "first_fight_warning");
+          }
+        }
+        if (
+          previous?.runPhase !== "loot" &&
+          revealed.runPhase === "loot" &&
+          !hasHeardBeat(storage, "first_victory")
+        ) {
+          const beat = firstVictoryBeat(language);
+          if (beat !== null) {
+            this.beatCard = { title: "FIRST BLOOD", beat };
+            markBeatHeard(storage, "first_victory");
+          }
+        }
       }
       if (runAbandoned(previous, this.state)) {
         // JACK OUT ends the run: leave the board for the main menu.
@@ -1602,9 +1653,30 @@ class Game {
     return null;
   }
 
+  /** ADR-0317 (3b): the construct's last word on the ending screen. */
+  private endingSignoff(): DialogueBeat | null {
+    if (this.state?.runPhase !== "ending") return null;
+    return endingSignoffBeat(this.settingsState?.language ?? "en");
+  }
+
   /** Render the current state. `persist` is false for render-loop frames:
    * a redraw must not trigger the autosave side effect. */
   private draw(persist: boolean = true): void {
+    // ADR-0317 (3b): a mid-run beat card owns the screen until a key, the same
+    // way the run's opening beat does.
+    if (this.beatCard !== null) {
+      updateProgramRow([]);
+      this.renderer.render(
+        renderBeatCard(
+          this.beatCard.title,
+          this.beatCard.beat,
+          this.layout.cols,
+          this.layout.rows,
+        ),
+        ["STORY", "", "ANY KEY"],
+      );
+      return;
+    }
     // ADR-0272: the run's opening beat owns the screen until a key dismisses
     // it. Display-only, static text — no clock, no animation, no save.
     if (this.runIntroArc !== null && this.state !== null) {
@@ -1651,7 +1723,13 @@ class Game {
       // Remember which commit stage this frame drew, so the loop can tell
       // when the clock has moved the panel on (ADR-0262).
       this.lootCommitStageShown = growth?.lootCommit?.stage ?? -1;
-      const iceVoice = this.encounterVoice();
+      // ADR-0317 (3b): the beats this frame may speak. They depend on the
+      // profile (heard flags, language), not on the run, so they are read here
+      // and passed in. Each getter short-circuits on the runPhase it belongs to.
+      const narrative: RunNarrative = {
+        iceVoice: this.encounterVoice(),
+        signoff: this.endingSignoff(),
+      };
       const view =
         travel === null
           ? renderRunScreen(
@@ -1661,7 +1739,7 @@ class Game {
               shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
               null,
               growth,
-              iceVoice,
+              narrative,
             )
           : renderRunScreen(
               this.state,
@@ -1670,7 +1748,7 @@ class Game {
               shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
               travel,
               growth,
-              iceVoice,
+              narrative,
             );
       if (view) this.renderer.render(view.grid, view.hud);
       return;
@@ -2100,6 +2178,22 @@ class Game {
     return this.runIntroBeat;
   }
 
+  /** E2E hook (ADR-0317 3b): the mid-run beat card while it owns the screen,
+   * or null. Also display-only. */
+  getBeatCard(): { title: string; speaker: string; lines: string[] } | null {
+    if (this.beatCard === null) return null;
+    return {
+      title: this.beatCard.title,
+      speaker: this.beatCard.beat.speaker,
+      lines: [...this.beatCard.beat.lines],
+    };
+  }
+
+  /** E2E hook (ADR-0317 3b): the sign-off the ending screen is showing. */
+  getEndingSignoff(): DialogueBeat | null {
+    return this.endingSignoff();
+  }
+
   /** E2E hook: current highlighted menu index (position-independent specs). */
   getSelectedMenuIndex(): number {
     return this.selectedMenuIndex;
@@ -2281,6 +2375,8 @@ class Game {
   static readonly e2eMethods = [
     "getScreen",
     "getRunIntroBeat",
+    "getBeatCard",
+    "getEndingSignoff",
     "getSelectedMenuIndex",
     "getMenuOptionKeys",
     "getPhase",

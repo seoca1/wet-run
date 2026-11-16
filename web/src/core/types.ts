@@ -407,37 +407,18 @@ export interface Matrix {
 /** Boss phase 0..4 (0 = no boss active). */
 export type BossPhase = 0 | 1 | 2 | 3 | 4;
 
-/** Ending variant (29 total across 5 arcs). */
-export type EndingChoice =
-  | "arc1_wage_slave"
-  | "arc1_first_blood"
-  | "arc1_cowboy_up"
-  | "arc1_cheap_death"
-  | "arc1_data_miner"
-  | "arc1_ice_breaker"
-  | "arc1_flatlined"
-  | "arc2_ghost_dancer"
-  | "arc2_corporate_tool"
-  | "arc2_silent_runner"
-  | "arc2_data_thief"
-  | "arc2_construct_friend"
-  | "arc2_flatlined_deep"
-  | "arc3_wintermute_agent"
-  | "arc3_ta_insider"
-  | "arc3_neutrality"
-  | "arc3_double_agent"
-  | "arc3_zealot"
-  | "arc3_sacrifice_play"
-  | "arc4_liberation_front"
-  | "arc4_new_order"
-  | "arc4_digital_exile"
-  | "arc4_corporate_victory"
-  | "arc4_ai_merger"
-  | "arc5_neuromancer"
-  | "arc5_sprawl_free"
-  | "arc5_last_jockey"
-  | "arc5_sprawl_slave"
-  | "arc5_unknown";
+/** Ending variant. Derived from the catalog in `combat/ending_resolver.ts`, so
+ * the type and the data cannot drift apart.
+ *
+ * This used to be a hand-written union, and it had fallen three ids behind the
+ * catalog: `arc2_status_quo`, `arc4_status_quo` and `arc5_control` were real
+ * endings the resolver returned but the type did not admit (2026-11-16 —
+ * `arc2_status_quo` is the most common ending in the soak). A cast at the one
+ * call site hid it. Deriving the type means adding an ending is a data change,
+ * not a data change plus a type change nobody remembers. */
+import type { EndingChoice } from "./combat/ending_resolver";
+
+export type { EndingChoice };
 
 /** Player inventory — credits, materials, and crafted/purchased programs. */
 export interface Inventory {

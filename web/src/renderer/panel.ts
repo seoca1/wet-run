@@ -99,7 +99,12 @@ export function setInnerText(
   text: string,
   fg?: string,
 ): Grid {
-  if (y < inner.y || y >= inner.y + inner.height) return grid;
+  if (y < inner.y || y >= inner.y + inner.height) {
+    // ADR-0300: a line that falls off the panel is lost exactly like a cut
+    // one — and the line that falls off is usually the footer naming the keys.
+    recordClippedText(text);
+    return grid;
+  }
   const clippedToPanel = clipToInner(inner, x, text);
   // ADR-0300: a panel that eats the right edge must fail the guard, not lose
   // the text quietly.

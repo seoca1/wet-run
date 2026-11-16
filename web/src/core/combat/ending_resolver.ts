@@ -1,6 +1,7 @@
 /** Ending Resolver — determines the run's ending from arc + accumulated state.
  *
- * Ports Python's 29 endings across 5 arcs (ADR-0010 story skeleton).
+ * Ports Python's 32 endings across 5 arcs (ADR-0010 story skeleton). The
+ * `EndingChoice` type is derived from this catalog, so the two cannot drift.
  *
  * Tier scope (ADR-0199 — single-mission-per-run MVP): of the six branches in
  * `resolveEnding`, three are reachable — HP = 0 (sacrifice), 5k+ credits
@@ -28,7 +29,7 @@ export type EndingCategory =
   | "corruption";
 
 export interface Ending {
-  readonly id: string;
+  readonly id: EndingChoice;
   readonly arc: ArcId;
   readonly category: EndingCategory;
   readonly nameEn: string;
@@ -39,8 +40,8 @@ export interface Ending {
   readonly requiresChoice?: string;
 }
 
-export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
-  Object.freeze({
+const ENDING_DATA = [
+  {
     id: "arc1_wage_slave",
     arc: 1,
     category: "status_quo",
@@ -48,8 +49,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "노동 노예",
     descriptionEn: "You survived. Nothing changed.",
     descriptionKo: "살아남았다. 아무것도 바뀌지 않았다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc1_first_blood",
     arc: 1,
     category: "liberation",
@@ -57,8 +58,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "첫 피",
     descriptionEn: "You tasted freedom. It tasted like copper.",
     descriptionKo: "자유를 맛보았다. 맛은 피 같았다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc1_cowboy_up",
     arc: 1,
     category: "control",
@@ -66,8 +67,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "카우보이 등장",
     descriptionEn: "The Finn noticed you. That's not always good.",
     descriptionKo: "핀이 눈여겨보았다. 그게 항상 좋은 것만은 아니다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc1_cheap_death",
     arc: 1,
     category: "sacrifice",
@@ -75,8 +76,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "값싼 죽음",
     descriptionEn: "You died for 800 credits. The Sprawl shrugged.",
     descriptionKo: "800 크레딧 위해 죽었다. 스프롤은 어깨를 으쓱했다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc1_data_miner",
     arc: 1,
     category: "status_quo",
@@ -84,8 +85,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "데이터 광부",
     descriptionEn: "In, out, paid. The routine.",
     descriptionKo: "들어가고, 나오고, 받고. 일상.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc1_ice_breaker",
     arc: 1,
     category: "liberation",
@@ -93,8 +94,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "ICE 분쇄기",
     descriptionEn: "The first wall fell. More await.",
     descriptionKo: "첫 번째 벽이 무너졌다. 더 많은 벽이 기다린다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc1_flatlined",
     arc: 1,
     category: "sacrifice",
@@ -102,8 +103,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "플랫라인",
     descriptionEn: "Signal lost. Another ghost in the matrix.",
     descriptionKo: "신호 상실. 매트릭스의 또 다른 유령.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc2_ghost_dancer",
     arc: 2,
     category: "transcendence",
@@ -111,8 +112,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "유령 무희",
     descriptionEn: "You see the code behind the world.",
     descriptionKo: "세상 뒤의 코드가 보인다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc2_corporate_tool",
     arc: 2,
     category: "corruption",
@@ -120,8 +121,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "기업 도구",
     descriptionEn: "T-A owns you now. The leash is invisible.",
     descriptionKo: "T-A가 네 소유주다. 가죽끈은 보이지 않는다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc2_silent_runner",
     arc: 2,
     category: "exile",
@@ -129,8 +130,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "침묵하는 러너",
     descriptionEn: "You vanished. The Sprawl forgot you existed.",
     descriptionKo: "사라졌다. 스프롤은 네 존재를 잊었다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc2_data_thief",
     arc: 2,
     category: "control",
@@ -138,8 +139,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "데이터 도둑",
     descriptionEn: "You have the data. Everyone wants it.",
     descriptionKo: "데이터를 가졌다. 모두가 원한다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc2_construct_friend",
     arc: 2,
     category: "liberation",
@@ -147,8 +148,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "구성체 친구",
     descriptionEn: "Dixie trusts you. That means something.",
     descriptionKo: "딕시가 신뢰한다. 그것은 무언가를 의미한다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc2_flatlined_deep",
     arc: 2,
     category: "sacrifice",
@@ -156,8 +157,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "딥 플랫라인",
     descriptionEn: "Too deep. The current pulled you under.",
     descriptionKo: "너무 깊었다. 해류가 끌어내렸다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc2_status_quo",
     arc: 2,
     category: "status_quo",
@@ -167,8 +168,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
       "You kept the lights on and your name out of the files. The city has bigger files to keep.",
     descriptionKo:
       "전등은 켜 두고 이름은 파일에 남기지 않았다. 도시에는 더 큰 파일이 있다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc3_wintermute_agent",
     arc: 3,
     category: "transcendence",
@@ -176,8 +177,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "윈터뮤트의 대리인",
     descriptionEn: "An AI chose you. You don't know why.",
     descriptionKo: "AI가 선택했다. 왜인지 모른다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc3_ta_insider",
     arc: 3,
     category: "corruption",
@@ -185,8 +186,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "T-A 내부자",
     descriptionEn: "You know their secrets. They know yours.",
     descriptionKo: "그들의 비밀을 안다. 그들도 네 비밀을 안다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc3_neutrality",
     arc: 3,
     category: "status_quo",
@@ -194,8 +195,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "중립",
     descriptionEn: "You chose no side. Both sides noticed.",
     descriptionKo: "어떤 편도 선택하지 않았다. 양쪽 다 눈여겨봤다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc3_double_agent",
     arc: 3,
     category: "control",
@@ -203,8 +204,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "이중첩자",
     descriptionEn: "Playing both sides. Until one stops paying.",
     descriptionKo: "양쪽 모두 이용. 한쪽이 지불을 멈출 때까지.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc3_zealot",
     arc: 3,
     category: "liberation",
@@ -212,8 +213,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "열성분자",
     descriptionEn: "Freedom is worth any price. You're proving it.",
     descriptionKo: "자유는 어떤 대가라도 치를 가치가 있다. 증명하고 있다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc3_sacrifice_play",
     arc: 3,
     category: "sacrifice",
@@ -221,8 +222,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "희생",
     descriptionEn: "Someone had to die. It was you.",
     descriptionKo: "누군가는 죽어야 했다. 그것이 너다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc4_liberation_front",
     arc: 4,
     category: "liberation",
@@ -230,8 +231,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "해방 전선",
     descriptionEn: "The AIs are free. What have you done?",
     descriptionKo: "AI들이 자유로워졌다. 무엇을 한 거냐.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc4_new_order",
     arc: 4,
     category: "control",
@@ -239,8 +240,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "새 질서",
     descriptionEn: "You control the matrix. The matrix controls you.",
     descriptionKo: "매트릭스를 통제한다. 매트릭스가 널 통제한다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc4_digital_exile",
     arc: 4,
     category: "exile",
@@ -249,8 +250,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     descriptionEn:
       "You left the meat behind. The flesh was always the weakness.",
     descriptionKo: "육체를 버렸다. 육체가 항상 약점이었다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc4_corporate_victory",
     arc: 4,
     category: "corruption",
@@ -258,8 +259,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "기업 승리",
     descriptionEn: "T-A won. You helped. The credits are cold.",
     descriptionKo: "T-A가 이겼다. 네가 도왔다. 크레딧이 차갑다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc4_ai_merger",
     arc: 4,
     category: "transcendence",
@@ -267,8 +268,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "AI 합병",
     descriptionEn: "You and the AI are one now. The boundary dissolved.",
     descriptionKo: "지금 넌 AI와 하나다. 경계가 사라졌다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc4_status_quo",
     arc: 4,
     category: "status_quo",
@@ -278,8 +279,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
       "Nothing woke. Nothing merged. You took the money and left the question where you found it.",
     descriptionKo:
       "아무것도 깨어나지 않았다. 아무것도 합쳐지지 않았다. 돈을 받고 질문은 있던 자리에 두고 나왔다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc5_control",
     arc: 5,
     category: "control",
@@ -289,8 +290,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
       "You did not break the machine. You bought a chair at its table, and the change is small and yours.",
     descriptionKo:
       "기계를 부순 게 아니다. 그 탁자에 의자를 하나 샀다. 그 변화는 작고, 당신의 것이다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc5_neuromancer",
     arc: 5,
     category: "transcendence",
@@ -298,8 +299,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "뉴로맨서",
     descriptionEn: "Case would be proud. Or horrified.",
     descriptionKo: "케이스가 자랑스러워할 것이다. 혹은 공포에 질릴 것이다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc5_sprawl_free",
     arc: 5,
     category: "liberation",
@@ -307,8 +308,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "자유로운 스프롤",
     descriptionEn: "The Sprawl is different now. You made it so.",
     descriptionKo: "스프롤이 달라졌다. 네가 그렇게 만들었다.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc5_last_jockey",
     arc: 5,
     category: "sacrifice",
@@ -316,8 +317,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "마지막 자키",
     descriptionEn: "The last one. The one who mattered.",
     descriptionKo: "마지막. 중요한 그 한 명.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc5_sprawl_slave",
     arc: 5,
     category: "corruption",
@@ -325,8 +326,8 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "스프롤의 노예",
     descriptionEn: "Free as a bird. In a golden cage.",
     descriptionKo: "새처럼 자유롭다. 황금 우리 안에서.",
-  }),
-  Object.freeze({
+  },
+  {
     id: "arc5_unknown",
     arc: 5,
     category: "status_quo",
@@ -334,8 +335,17 @@ export const ENDINGS: ReadonlyArray<Ending> = Object.freeze([
     nameKo: "불명",
     descriptionEn: "What happened? Nobody knows.",
     descriptionKo: "무슨 일이 있었나. 아무도 모른다.",
-  }),
-] as Ending[]);
+  },
+] as const;
+
+/** Every ending id the resolver can return.
+ *
+ * Derived from the catalog above, not hand-maintained: a parallel union had
+ * already fallen three ids behind (2026-11-16), and the one cast that read
+ * `ending.id` hid it. Adding an ending is now a data change and nothing else. */
+export type EndingChoice = (typeof ENDING_DATA)[number]["id"];
+
+export const ENDINGS: ReadonlyArray<Ending> = Object.freeze(ENDING_DATA);
 
 export interface EndingContext {
   readonly arc: ArcId;

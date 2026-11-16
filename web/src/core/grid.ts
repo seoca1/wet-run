@@ -64,31 +64,37 @@ export function setCell(grid: Grid, pos: Position, cell: Cell): Grid {
   return makeGridFromCells(grid.width, grid.height, newCells);
 }
 
-/** Strings `setText` had to cut at the right edge since the last drain
- * (ADR-0300).
+/** Strings a renderer had to drop or cut since the last drain (ADR-0300).
  *
- * The loot screen shipped twice with prices clipped mid-number ("+75 HP → 2")
- * because a line can only be checked against a width at the moment it is drawn.
- * Recording the cut here makes that check automatic: a test renders every screen
- * at every layout and asserts the list is empty, so an option that does not fit
- * fails the build instead of quietly losing its digits.
+ * Two ways a screen loses text, and both are silent without this record:
+ *
+ * - **Horizontal.** The loot screen shipped twice with prices clipped mid-number
+ *   because a line can only be checked against a width at the moment it is
+ *   drawn.
+ * - **Vertical.** The encounter screen's ICE voice pushed "ESC: jack out" off
+ *   the bottom of the panel (2026-11-16). Nothing failed: the line was simply
+ *   never drawn, so a guard that only checked width saw nothing wrong.
+ *
+ * A test renders every screen at every layout and asserts the list is empty, so
+ * either kind of loss fails the build instead of quietly dropping digits or a
+ * key hint.
  *
  * Bounded so a pathological frame cannot grow it without limit.
  */
 let clipped: string[] = [];
 const CLIPPED_CAP = 64;
 
-/** The strings cut since the last call, and clears the record. */
+/** The strings dropped or cut since the last call, and clears the record. */
 export function takeClippedText(): readonly string[] {
   const out = clipped;
   clipped = [];
   return out;
 }
 
-/** Record a string that had to be cut, so panel-clipped text is caught by the
- * same ADR-0300 guard as `setText` overflow. `setInnerText` truncates before
- * it reaches `setText`, so without this a panel could lose its right edge
- * silently. */
+/** Record a string that had to be dropped or cut, so panel-clipped and
+ * off-grid text is caught by the same ADR-0300 guard as `setText` overflow.
+ * `setInnerText` truncates or drops before it reaches `setText`, so without
+ * this a panel could lose its right edge or its last line silently. */
 export function recordClippedText(text: string): void {
   if (clipped.length < CLIPPED_CAP) clipped.push(text);
 }
@@ -101,7 +107,8 @@ export function setText(
   text: string,
   fg: string = PALETTE.GREEN_NEON,
 ): Grid {
-  if (x + text.length > grid.width) {
+  // Off-grid text is dropped whole — the same loss as a cut, so the same record.
+  if (x + text.length > grid.width || y < 0 || y >= grid.height) {
     recordClippedText(text);
   }
   let current = grid;

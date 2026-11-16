@@ -65,7 +65,7 @@ function screenText(
   cols = 80,
   rows = 50,
 ): string {
-  const screen = renderRunScreen(state, cols, rows, false, null, null, voice);
+  const screen = renderRunScreen(state, cols, rows, false, null, null, { iceVoice: voice });
   return (screen?.grid.cells ?? [])
     .map((row) => row.map((cell) => cell.char).join(""))
     .join("\n");

@@ -8,7 +8,7 @@
  *
  * Sources:
  *  - docs/design/systems/combat.md            (damage, boss phases, Dixie)
- *  - docs/design/story_skeleton.md            (5 arcs, 29 endings)
+ *  - docs/design/story_skeleton.md            (5 arcs, 32 endings — v1.4.1)
  *  - docs/design/balance/ppl_zdr_balance.md   (PPL/ZDR — not ported, see drift)
  *  - ADR-0152                                 (HEAL 0.20 -> 0.15)
  */
@@ -30,6 +30,7 @@ import {
   ENDINGS,
   getEndingCounts,
   resolveEnding,
+  type EndingChoice,
 } from "../src/core/combat/ending_resolver";
 import {
   TIER_MULTIPLIERS,
@@ -118,6 +119,26 @@ describe("design conformance — ending catalog (docs/design/story_skeleton.md)"
   it("every ending id is unique", () => {
     const ids = ENDINGS.map((e) => e.id);
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  // ADR-0300 lesson applied to the type layer: a hand-written `EndingChoice`
+  // union had fallen three ids behind this catalog, and a single cast at the
+  // call site hid it. The union is derived from the catalog now, so this list
+  // is a compile-time check that the three ids are admitted — and a runtime
+  // check that they still exist.
+  it("admits every id in the catalog, including the three the old union missed", () => {
+    const formerlyMissing: readonly EndingChoice[] = [
+      "arc2_status_quo",
+      "arc4_status_quo",
+      "arc5_control",
+    ];
+    const ids = ENDINGS.map((e) => e.id);
+    for (const id of formerlyMissing) expect(ids).toContain(id);
+    // And every catalog id is a value the type accepts.
+    for (const id of ids) {
+      const typed: EndingChoice = id;
+      expect(typed).toBe(id);
+    }
   });
 
   it("resolveEnding always returns a valid ending for every arc (never undefined)", () => {

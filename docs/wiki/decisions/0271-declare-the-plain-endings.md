@@ -96,3 +96,21 @@ ADR-0270 측정(코드 + 실측):
 ## 변경 이력
 
 - 2026-11-04: 오너 "계속." → status_quo 2개 · control 1개 추가 · 카탈로그 32 · 스켈레톤 v1.4.1 · 실브라우저 확인.
+
+## Implementation Status (2026-11-16)
+
+**Status**: ✅ Implemented (타입 드리프트 수정 포함)
+
+**Evidence**:
+- `web/src/core/combat/ending_resolver.ts` — `ENDING_DATA`(리터럴 카탈로그)에서
+  `EndingChoice` 를 **파생**한다 · `Ending.id: EndingChoice` · `ENDINGS: ReadonlyArray<Ending>`
+- `web/src/core/types.ts` — 손으로 적던 union 제거, `combat/ending_resolver` 에서 re-export
+- `web/src/core/state/state_actions_phases.ts` — `ending.id as EndingChoice` 캐스트 제거
+- `web/tests/design_conformance.test.ts` — 카탈로그의 모든 id 가 타입에 들어가는지(그리고 예전에
+  빠졌던 3개가 실제로 있는지) 확인
+
+**Notes**: **이 ADR 이 만든 드리프트**를 2026-11-16 에 발견했다. 카탈로그는 29→32 로 늘었지만
+`types.ts` 의 손으로 적은 `EndingChoice` union 은 **29 로 남았고**, `state_actions_phases.ts` 의
+`ending.id as EndingChoice` 캐스트가 그 사실을 가렸다. 그래서 `arc2_status_quo`(소크에서 **가장 흔한
+엔딩**)·`arc4_status_quo`·`arc5_control` 는 **타입이 인정하지 않는 실제 엔딩**이었다. 이제 타입은
+카탈로그에서 파생되므로 엔딩 추가는 데이터 변경 하나다.

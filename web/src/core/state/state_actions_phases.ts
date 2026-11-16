@@ -14,12 +14,7 @@
  * from `state_actions.ts` so existing imports keep working.
  */
 
-import type {
-  GameState,
-  GameAction,
-  EndingChoice,
-  Program,
-} from "../types";
+import type { GameState, GameAction, Program } from "../types";
 import {
   import_vfx,
   import_vfx_deterministic,
@@ -294,7 +289,7 @@ function applyTerminalLoot(state: GameState, action: GameAction): GameState {
   return {
     ...state,
     runPhase: "ending",
-    endingChoice: ending.id as EndingChoice,
+    endingChoice: ending.id,
     factionScores: updatedScores,
   };
 }

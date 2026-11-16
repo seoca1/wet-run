@@ -1,6 +1,6 @@
 /** Matrix event routing + combat VFX overlay E2E (Tier 5.5). */
 import { test, expect } from "@playwright/test";
-import { enterForPhase, enterForScreen, gotoIceNode, enterForRunPhase, openMissionSelect, launchRun } from "./menu-nav";
+import { enterForPhase,  gotoIceNode,  enterForRunPhase,  openMissionSelect,  launchRun  } from "./menu-nav";
 
 test.describe("Tier 5.5 VFX", () => {
   test.beforeEach(async ({ page }) => {
@@ -31,7 +31,7 @@ test.describe("Tier 5.5 VFX", () => {
 
   test("combat triggers VFX (canvas changes after card use)", async ({ page }) => {
     // Navigate: NEW_RUN -> launch (runPhase matrix) -> walk to ICE -> combat.
-    await enterForScreen(page, "mission_select");
+    await openMissionSelect(page);
     await enterForRunPhase(page, "matrix");
     await enterForPhase(page, "approach");
     await gotoIceNode(page);

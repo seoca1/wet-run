@@ -15,6 +15,9 @@ import { renderRunScreen } from "../src/renderer/run_screen";
 import { renderMainMenu } from "../src/renderer/menu";
 import { renderJockeySelect } from "../src/renderer/jockey_select";
 import { renderMissionList } from "../src/renderer/mission_select";
+import { renderMissionBriefing } from "../src/renderer/menu_dialogue";
+import { renderRunIntro } from "../src/renderer/run_intro";
+import { dialogueBeat } from "../src/core/state/event_beats";
 import { runState } from "./view_fixtures";
 
 const LAYOUTS = [
@@ -121,6 +124,32 @@ describe("ADR-0300 · mission select", () => {
       h,
       "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
     );
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0317: the briefing screen carries the mission's story as the fixer's
+// words — free text again, and the footer must fit.
+describe("ADR-0300 · mission briefing", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    takeClippedText();
+    renderMissionBriefing(
+      "First Jack",
+      "finn",
+      "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
+      w,
+      h,
+    );
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0317 (3b): the run's opening card now carries the companion's beat — the
+// longest free text on the card, and it must wrap rather than cut.
+describe("ADR-0300 · run intro with a beat", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    takeClippedText();
+    renderRunIntro(1, w, h, "CASE", dialogueBeat("dixie_intro"));
     expect(takeClippedText()).toEqual([]);
   });
 });

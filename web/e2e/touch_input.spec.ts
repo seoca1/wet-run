@@ -11,7 +11,7 @@
  *   - program row touch uses a program in combat
  */
 import { test, expect, type Page } from "@playwright/test";
-import { enterForScreen, enterForRunPhase, gotoIceNode } from "./menu-nav";
+import { enterForRunPhase,  gotoIceNode,  openMissionSelect  } from "./menu-nav";
 
 // Touch-only spec. The virtual gamepad overlay mounts only on touch
 // devices (touch.ts isTouchDevice + main.ts:456); on desktop-chromium
@@ -73,7 +73,7 @@ test.describe("mobile touch input", () => {
     test.skip(await isDesktop(page), "overlay absent on desktop by design");
     // Navigate into combat via keyboard first (establishes state), then
     // verify the program row is touchable.
-    await enterForScreen(page, "mission_select");
+    await openMissionSelect(page);
     await enterForRunPhase(page, "matrix");
     await gotoIceNode(page);
     await enterForRunPhase(page, "combat");

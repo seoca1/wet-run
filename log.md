@@ -3771,3 +3771,25 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **e2e**: 신규 `e2e/prologue.spec.ts` 2건(런 프롤로그 / 메뉴 GN 구분) · `openMissionSelect` 헬퍼가 프롤로그를 건너뛰도록 수정 · 기존 3개 스펙(progression·continue·game)이 헬퍼를 쓰도록 정리 · **소크 `startRun` 도 프롤로그를 건너뛰게 수정**(수정 전 소크가 타임아웃으로 실패 — 실제로 잡았다).
 - **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **212 files / 4223 tests** · e2e **26/26**(+2) · 소크 99런 frozen 0 · noEndInSteps 0.
 - **소크 델타(정직하게)**: 완주 **67 → 70**(+3). 원인은 **하네스의 벽시계 의존**이다 — idle alarm 이 실시간으로 TRACE 를 쌓고(스펙 213줄에 명시), 프롤로그 1회(ESC)가 리듬을 바꿔 몇 셀이 뒤집힌다. **결정적 지표로 교차 확인**: 교전당 곡선 **byte-identical**(`100/100/100/98.9/83.9/32.3`) · 미션 곡선(per-cell 64시드) **동일**(`100/97.1/75.9/51.4/26.9/32.3`, 최대 이탈 4.1pp). 즉 **게임플레이 영향 0**. (이 하네스의 비결정성은 NEXT_SESSION_TODO 의 "난이도의 시간 의존성" 항목과 같은 뿌리다.)
+
+## [2026-11-16] feat(story) | 픽서가 잭인 전에 미션을 브리핑한다 (ADR-0317 이관 3a)
+
+- **미배선 서사 표면 발견**: `screen: "briefing"`(ScreenKind) · `renderBriefingScreen`(Finn 사무실) · `DIALOGUE_TREES` 엔진이 **설계만 되고 코드에서 호출되지 않았다**.
+- **변경**: `미션 선택 → **[브리핑]** → prep → 런`. 픽서가 그 미션의 이야기(ADR-0316 의 `briefing`)를 말한다. ENTER 계속 · ESC 목록으로.
+- **새 렌더러** `renderMissionBriefing`: **줄바꿈**하고 **동작하는 키만 약속**(ADR-0251 rule 5). 기존 `renderBriefingScreen` 은 대사를 잘라내고 40열에서 넘쳤다.
+- **`SCREENS_WITH_INPUT` 에 `briefing` 등록** — 빠뜨리면 ENTER 가 메뉴로 튕긴다(ADR-0273/0275 함정).
+- **드라이버**: `launchRun` 이 브리핑을 거치도록 · 소크 `startRun` 도. **소크와 idle_alarm 이 실제로 실패해서** 누락을 잡았다(idle_alarm 은 부팅 경로도 `openMissionSelect` 로 정리). 전체 e2e 1차에서 **encounter_verbs·status_effect·tier55_vfx·touch_input** 4개 스펙도 같은 이유로 실패 → `openMissionSelect` 로 정리. `demo-screenshots` 의 Tutorial 은 **flake**(재실행 통과, 30초 스크린샷 타임아웃).
+- **남은 것(3b)**: `event_dialogues.json` v0.2 의 NPC 대사 14편(첫 ICE 경고·전투 후·엔딩)을 앱 데이터로 들여와 런 중 비트에.
+- **검증**: typecheck 0 · lint 0 errors(기존 warning 1) · vitest **213 files / 4230 tests**(+7) · **전체 e2e 49 passed / 6 skipped / 0 failed**(55) · 폭 가드(브리핑 포함) 0건.
+- **타임아웃 정리**: `continue.spec`(90초) · `demo-screenshots`(120초) — 흐름에 화면 2개가 늘어 30초 기본값을 넘겼다. 기능 결함이 아니라 드라이버 설정.
+
+## [2026-11-16] feat(story) | 동료가 첫 잭인에서 말을 건다 (ADR-0317 이관 3b · 첫 비트)
+
+- **데이터 배선**: `docs/design/story/event_dialogues.json`(v0.2)은 작성만 되고 **코드에서 한 번도 읽히지 않았다**(grep 0). 새 도구 `scripts/tools/import_event_dialogues.py` 가 **게임이 읽는 필드만** `web/src/data/event_dialogues.json` 으로 복사하고, **닿을 수 없는 대사 id**를 보고한다(`ice_hammer_intro` 는 그런 ICE 가 없다 — 정직하게 보고).
+- **id→대사 한 곳**: `web/src/core/state/event_beats.ts` — `dialogueBeat(id, lang, max)` · `runOpeningBeat(finishedRuns, lang)`. 화면이 데이터와 어긋날 수 없다.
+- **런 인트로 카드가 동료를 말한다**: `renderRunIntro` 가 선택적 `beat` 를 받아 아크의 틀 문장 아래에 **발화자 + 대사**(cyan)를 렌더. 3줄 제한 — 카드는 대화가 아니다.
+- **프로필당 한 번**: `runsFinished === 0` 일 때만(런을 끝낸 프로필은 이미 그녀를 만났다). CONTINUE 로 이어가는 런은 도입을 재생하지 않는다(ADR-0272 규칙). **언어 인식**(ko 면 `text_ko`/`speaker_ko`, 줄 단위 영어 폴백).
+- **표시 전용**: `GameState` 를 건드리지 않는다 → **결정적 곡선 byte-identical**(밸런스 `100/100/100/98.9/83.9/32.3` · 생존 `100/97.1/75.9/51.4/26.9/32.3`, 최대 이탈 4.1pp).
+- **e2e**: 신규 `e2e/run_intro.spec.ts` 2건 — ⑴ 새 프로필은 동료를 듣는다(그리고 다음 키에 사라진다), ⑵ 런을 끝낸 프로필은 다시 듣지 않는다. 읽기 전용 훅 `getRunIntroBeat()` 추가.
+- **남은 것**: 나머지 대사(첫 ICE 경고 `dixie_warning` · 전투 후 `dixie_postcombat` · ICE 태그라인 · 엔딩)와 **4단계(메뉴 제거)**.
+- **검증**: typecheck 0 · lint 0 errors · vitest **214 files / 4241 tests**(+11) · **전체 e2e 49 passed / 6 skipped / 0 failed** · 폭 가드(런 인트로 포함) 0건 · 소크 99런 완주 **70**(변동 없음).

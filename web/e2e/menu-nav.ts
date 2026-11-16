@@ -174,11 +174,14 @@ export async function openMissionSelect(page: Page): Promise<void> {
   await enterForScreen(page, "mission_select");
 }
 
-/** Launch the highlighted mission: mission select → PREP (ADR-0283) → matrix.
- *  Two screens were inserted here after the drivers were first written, and
+/** Launch the highlighted mission: mission select → briefing (ADR-0317) →
+ *  PREP (ADR-0283) → matrix.
+ *  Screens keep being inserted here after the drivers were first written, and
  *  each one silently broke every spec that pressed ENTER a fixed number of
  *  times; walk to the phase instead of counting keys. */
 export async function launchRun(page: Page): Promise<void> {
+  await enterForScreen(page, "briefing");
+  await page.keyboard.press("Enter"); // briefing → prep
   await enterForScreen(page, "prep");
   await enterForRunPhase(page, "matrix");
 }

@@ -35,6 +35,25 @@ describe("ADR-0272 — run intro", () => {
     expect(lines.join("\n")).toContain("PRESS ANY KEY");
   });
 
+  // ADR-0317 (3b): the companion speaks on the opening card.
+  it("speaks the companion's beat, speaker and lines", () => {
+    const beat = {
+      speaker: "Dixie Flatline",
+      lines: ["Hey. Hey cowboy. You hear me?", "I'm in your deck."],
+    };
+    const joined = text(renderRunIntro(1, 80, 50, "CASE", beat)).join("\n");
+    expect(joined).toContain("FIRST JACK");
+    expect(joined).toContain("Dixie Flatline");
+    expect(joined).toContain("Hey cowboy");
+    expect(joined).toContain("I'm in your deck");
+  });
+
+  it("still renders without a beat (CONTINUE never replays it)", () => {
+    const joined = text(renderRunIntro(1, 80, 50, "CASE", null)).join("\n");
+    expect(joined).toContain("FIRST JACK");
+    expect(joined).not.toContain("Dixie");
+  });
+
   it("fits the 40-column layout after wrapping", () => {
     for (const arc of ARCS) {
       const width = runIntroWidth(40);
@@ -49,15 +68,25 @@ describe("ADR-0272 — run intro", () => {
   });
 
   it("never spills a line past the grid at any layout", () => {
+    const beat = {
+      speaker: "Dixie Flatline",
+      lines: [
+        "Hey. Hey cowboy. You hear me?",
+        "I'm in your deck. Construct. Don't ask how. I don't know either.",
+        "I'm your backup. The Finn hired me before he hired you.",
+      ],
+    };
     for (const [cols, rows] of [
       [80, 50],
       [60, 40],
       [40, 60],
     ] as const) {
       for (const arc of ARCS) {
-        const grid = renderRunIntro(arc, cols, rows);
-        for (const row of text(grid)) {
-          expect([...row].length).toBeLessThanOrEqual(cols);
+        for (const b of [null, beat]) {
+          const grid = renderRunIntro(arc, cols, rows, "CASE", b);
+          for (const row of text(grid)) {
+            expect([...row].length).toBeLessThanOrEqual(cols);
+          }
         }
       }
     }
@@ -73,10 +102,10 @@ describe("ADR-0272 — run intro", () => {
       "this.runIntroArc=((mission.arcasArcId)||1)asArcId;",
     );
     expect(main).toContain(
-      "if(this.runIntroArc!==null){this.runIntroArc=null;",
+      "if(this.runIntroArc!==null){this.runIntroArc=null;this.runIntroBeat=null;",
     );
     expect(main).toContain(
-      "renderRunIntro(this.runIntroArc,this.layout.cols,this.layout.rows,jockeyHandle(this.state?.jockeyId),)",
+      "renderRunIntro(this.runIntroArc,this.layout.cols,this.layout.rows,jockeyHandle(this.state?.jockeyId),this.runIntroBeat,)",
     );
   });
 });

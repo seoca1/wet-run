@@ -15,6 +15,10 @@ import { test, expect } from "@playwright/test";
 import { chooseEncounterVerb, enterForPhase, openMissionSelect, gotoIceNode, enterForRunPhase } from "./menu-nav";
 
 test.describe("CONTINUE Option", () => {
+  // ADR-0317/0316: reaching combat now walks jockey → prologue → mission list →
+  // briefing → prep, then a reload and an IDB round-trip. The 30s default was
+  // measured against a flow two screens shorter.
+  test.describe.configure({ timeout: 90_000 });
   test.beforeEach(async ({ page }) => {
     // Pre-mark tutorial as completed to avoid tutorial overlay
     await page.goto("./");

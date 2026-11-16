@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { enterForScreen, gotoIceNode, launchRun } from "./menu-nav";
+import { openMissionSelect, gotoIceNode, launchRun } from "./menu-nav";
 import type { GameState } from "../src/core/types";
 
 declare global {
@@ -16,7 +16,7 @@ test.beforeEach(async ({ page }) => {
   await page.goto("./");
   await page.waitForFunction(() => window.wetrun !== undefined);
   await page.clock.pauseAt(new Date("2026-11-01T00:01:00Z"));
-  await enterForScreen(page, "mission_select");
+  await openMissionSelect(page);
   await launchRun(page);
   await gotoIceNode(page);
 });

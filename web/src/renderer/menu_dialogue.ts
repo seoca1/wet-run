@@ -8,6 +8,80 @@ import type { Grid } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { PALETTE } from "./palette";
 
+/** Render the mission briefing: the fixer hands over the job (ADR-0317).
+ *
+ * ADR-0316 lifted each Sprawl mission's story out of the derivative fiction;
+ * this screen is where the runner hears it, right before choosing the advance
+ * (prep) and jacking in. Wrapped, and the footer promises only the keys that
+ * work (ADR-0251 rule 5).
+ */
+export function renderMissionBriefing(
+  title: string,
+  fixer: string,
+  story: string,
+  cols: number,
+  rows: number,
+): Grid {
+  let grid = makeGrid(cols, rows);
+  const width = Math.max(16, cols - 8);
+  const centre = (text: string): number =>
+    Math.max(2, Math.floor((cols - text.length) / 2));
+
+  grid = setText(
+    grid,
+    centre("MISSION BRIEFING"),
+    2,
+    "MISSION BRIEFING",
+    PALETTE.GREEN_NEON,
+  );
+  const heading = `Mission: ${title}`;
+  grid = setText(
+    grid,
+    centre(heading.slice(0, Math.max(10, cols - 4))),
+    4,
+    heading.slice(0, Math.max(10, cols - 4)),
+    PALETTE.YELLOW_AMBER,
+  );
+
+  const speaker = fixer.toUpperCase();
+  const lines = wrap(`${speaker}: ${story}`, width, 8);
+  let y = 7;
+  for (const line of lines) {
+    grid = setText(grid, 4, y, line, PALETTE.GRAY_LIGHT);
+    y += 1;
+  }
+
+  const footer = "ENTER: continue | ESC: back to mission select";
+  const shortFooter = "ENTER continue · ESC back";
+  grid = setText(
+    grid,
+    2,
+    rows - 2,
+    footer.length <= cols - 2 ? footer : shortFooter,
+    PALETTE.GRAY_DARK,
+  );
+  return grid;
+}
+
+/** Word-wrap to `width`, at most `maxLines` lines. */
+function wrap(text: string, width: number, maxLines: number): string[] {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let current = "";
+  for (const word of words) {
+    const next = current === "" ? word : `${current} ${word}`;
+    if (next.length > width && current !== "") {
+      lines.push(current);
+      current = word;
+      if (lines.length === maxLines) return lines;
+    } else {
+      current = next;
+    }
+  }
+  if (current !== "") lines.push(current);
+  return lines.slice(0, maxLines);
+}
+
 /** Render the mission briefing screen (Finn's office).
  *
  * Stage: briefing — Finn's office ASCII with fixer dialogue.

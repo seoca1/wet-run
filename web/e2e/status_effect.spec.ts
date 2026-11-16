@@ -5,7 +5,7 @@
  * (stun/slow/silence/vulnerable) are tested at unit level.
  */
 import { test, expect } from "@playwright/test";
-import { enterForScreen, gotoIceNode, launchRun } from "./menu-nav";
+import { gotoIceNode,  launchRun,  openMissionSelect  } from "./menu-nav";
 
 test("use_program triggers burn status effect on ICE (probabilistic)", async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem("wetrun_tutorial_completed", "true"));
@@ -14,7 +14,7 @@ test("use_program triggers burn status effect on ICE (probabilistic)", async ({ 
   await page.waitForTimeout(500);
 
   // Navigate to combat: NEW_RUN → launch → matrix → enter → combat.
-  await enterForScreen(page, "mission_select");
+  await openMissionSelect(page);
   await launchRun(page);
   await gotoIceNode(page);
 

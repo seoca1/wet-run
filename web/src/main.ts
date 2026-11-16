@@ -50,8 +50,10 @@ import { offeredCardIds, rewardProgram, UNIQUE_PROGRAMS } from "./core/state/car
 import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
+import { runOpeningBeat, type DialogueBeat } from "./core/state/event_beats";
 import { renderJockeySelect } from "./renderer/jockey_select";
 import { renderPrep } from "./renderer/prep";
+import { renderMissionBriefing } from "./renderer/menu_dialogue";
 import { JOCKEYS, jockeyHandle } from "./core/state/jockey";
 import type { PlayMode } from "./core/graphic_novel/graphic_novel_types";
 import { tick as gnTick } from "./core/graphic_novel/graphic_novel_player";
@@ -209,6 +211,7 @@ const SCREENS_WITH_INPUT: ReadonlySet<ScreenKind> = new Set([
   "menu",
   "mission_select",
   "jockey_select",
+  "briefing",
   "prep",
   "tutorial",
   "settings",
@@ -341,6 +344,10 @@ class Game {
    * when there is no run, or once a key has dismissed it. Never saved, so a
    * resumed run does not replay its introduction. */
   private runIntroArc: ArcId | null = null;
+  /** ADR-0317 (3b): the companion's first words, spoken on the run's opening
+   * card. Set with `runIntroArc` and cleared with it — display-only, never
+   * saved. Null once the player has finished a run, or after the first key. */
+  private runIntroBeat: DialogueBeat | null = null;
   /** The commit stage last drawn — the loop redraws only when the clock
    * pushes the panel to a new stage, then stops (ADR-0262). */
   private lootCommitStageShown = -1;
@@ -526,6 +533,7 @@ class Game {
       // an animation gate: nothing advances on its own and nothing is queued.
       if (this.runIntroArc !== null) {
         this.runIntroArc = null;
+        this.runIntroBeat = null;
         this.draw();
         return;
       }
@@ -992,6 +1000,12 @@ class Game {
       }
       return;
     }
+    if (this.screen === "briefing") {
+      // ADR-0317: ENTER continues to the advance; ESC goes back to the list.
+      this.screen = action.type === "jack_out" ? "mission_select" : "prep";
+      this.draw();
+      return;
+    }
     if (this.screen === "prep") {
       // ADR-0283 C: spend the fixer's advance. Two rows, so the screen needs no
       // new key -- ↑↓ picks, ENTER jacks in with the pick, ESC goes back.
@@ -1042,7 +1056,9 @@ class Game {
         if (fullIndex >= 0) {
           this.selectedMission = fullIndex;
           this.prepCursor = 0;
-          this.screen = "prep";
+          // ADR-0317: the fixer briefs you on the job before you choose the
+          // advance. ENTER there continues to prep; ESC comes back here.
+          this.screen = "briefing";
           this.draw();
         }
       } else if (action.type === "jack_out") {
@@ -1460,6 +1476,12 @@ class Game {
     // ADR-0272: the run opens on the arc's framing beat. CONTINUE does not set
     // this (a resumed run is mid-story); only a fresh run does.
     this.runIntroArc = ((mission.arc as ArcId) || 1) as ArcId;
+    // ADR-0317 (3b): the construct introduces herself on the first jack-in, and
+    // only then — a profile that has finished a run has already met her.
+    this.runIntroBeat = runOpeningBeat(
+      runsFinished(typeof localStorage === "undefined" ? null : localStorage),
+      this.settingsState?.language ?? "en",
+    );
     const programs = PROGRAMS;
     // ADR-0276: the jockey decides the opening deck, not just the name.
     const deck = startingDeck(
@@ -1555,6 +1577,7 @@ class Game {
           this.layout.cols,
           this.layout.rows,
           jockeyHandle(this.state?.jockeyId),
+          this.runIntroBeat,
         ),
         ["JACK-IN", "", "ANY KEY"],
       );
@@ -1651,6 +1674,30 @@ class Game {
       if (this.screen === "graphic_novel") {
         this.renderGraphicNovel();
         return;
+      }
+      if (this.screen === "briefing") {
+        // ADR-0317: the fixer hands over the job — the mission's story from
+        // ADR-0316 — right before the advance (prep) and the jack-in.
+        const mission = MISSIONS[this.selectedMission];
+        if (mission) {
+          const language = this.settingsState?.language ?? "en";
+          const story =
+            (language === "ko" && mission.briefing_ko) ||
+            mission.briefing ||
+            "No briefing on file. Jack in and see for yourself.";
+          updateProgramRow([]);
+          this.renderer.render(
+            renderMissionBriefing(
+              mission.title,
+              mission.fixer,
+              story,
+              this.layout.cols,
+              this.layout.rows,
+            ),
+            ["BRIEFING", "", "ENTER: continue"],
+          );
+          return;
+        }
       }
       if (this.screen === "prep") {
         // ADR-0283 C: the advance, and what each option is worth here. The
@@ -2005,6 +2052,13 @@ class Game {
     return this.screen;
   }
 
+  /** E2E hook (ADR-0317 3b): the companion's beat while it is on screen, or
+   * null once a key has dismissed it (or when the profile has finished a run).
+   * Display-only state that never touches GameState. */
+  getRunIntroBeat(): DialogueBeat | null {
+    return this.runIntroBeat;
+  }
+
   /** E2E hook: current highlighted menu index (position-independent specs). */
   getSelectedMenuIndex(): number {
     return this.selectedMenuIndex;
@@ -2185,6 +2239,7 @@ class Game {
   /** Expose methods for e2e testing */
   static readonly e2eMethods = [
     "getScreen",
+    "getRunIntroBeat",
     "getSelectedMenuIndex",
     "getMenuOptionKeys",
     "getPhase",

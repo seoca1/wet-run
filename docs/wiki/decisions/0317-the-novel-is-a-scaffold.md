@@ -13,10 +13,11 @@
 |---|---|---|---|
 | **미션 브리핑** | sprawl 32미션 | `plot_summary` → `missions.json` | ✅ **ADR-0316 완료** |
 | **그래픽 노블(프롤로그)** | 메뉴 항목 + 27씬(15미션) | 씬이 소설 문장을 직접 인용 | 🟡 **검증용 발판** |
-| **이벤트** | `docs/design/story/event_dialogues.json` v0.2 | `derivative_sources` 가 파생 소설을 가리킴 | ❌ **코드에서 미사용** |
+| **이벤트** | `docs/design/story/event_dialogues.json` v0.2 | `derivative_sources` 가 파생 소설을 가리킴 | 🟡 **첫 비트 배선(3b)** |
 
 `event_dialogues.json` 은 이미 NPC·대사·파생 소설 출처를 담고 있지만 **게임에 배선되지 않았다**
-(`grep` 0건). 그리고 그래픽 노블은 **캐릭터 앤솔로지**(자키 3명 × 8씬 셔플)라, 고른 미션의
+(`grep` 0건). 2026-11-16 에 **첫 비트(동료의 첫 대사)를 배선**했고 나머지 대사는 아직 데이터로만
+남아 있다. 그리고 그래픽 노블은 **캐릭터 앤솔로지**(자키 3명 × 8씬 셔플)라, 고른 미션의
 이야기를 보여주지 않는다.
 
 **오너 방침**: 그래픽 노블 메뉴는 **검증용**이며, **완성 시점에는 스토리에 모두 녹여내고 없앤다.**
@@ -41,16 +42,22 @@
 |---|---|---|---|
 | 미션 브리핑 | 이 미션이 무엇인지 한 줄 | `plot_summary` | ✅ |
 | **프롤로그** | 이 런의 자키가 누구인지 (런 시작 1회) | GN 씬 + `prologue.md` | 🟡 메뉴 모드 |
-| **이벤트** | 런 중 결정적 순간의 대사 | `event_dialogues.json` | ❌ 미배선 |
+| **이벤트** | 런 중 결정적 순간의 대사 | `event_dialogues.json` | 🟡 첫 비트 배선 |
 | 엔딩 | 런이 어떻게 끝났는지 | `ending_resolver` + 소설 요약 | ✅ (요약 문구) |
 | ~~그래픽 노블 메뉴~~ | — | — | **제거 예정** |
 
 ## 이관 경로 (순서)
 
 1. ~~미션 브리핑~~ — **완료**(ADR-0316).
-2. **프롤로그를 런에 결합** — **완료(2026-11-16)**: 아래 참조.
-3. **이벤트 배선** — `event_dialogues.json` 을 읽어 런 중 비트에 붙인다.
-4. **메뉴 항목 제거** — 3 이 끝나면 `graphic_novel` 항목과 화면을 지운다(ADR-0315 의 노출
+2. **프롤로그를 런에 결합** — **완료(2026-11-16)**.
+3. **이벤트 배선** — 3a **완료**, 3b **첫 비트 완료 · 나머지 대사 남음**:
+   - **3a 브리핑 화면** ✅(2026-11-16): 미션 선택 → **브리핑** → prep → 런. 픽서가 미션의
+     이야기(ADR-0316)를 말한다. 웹에 **설계만 되고 미배선이던** `briefing` 화면과
+     `renderBriefingScreen`(Finn 사무실)을 실제로 연결했다.
+   - **3b `event_dialogues.json`** 🟡(2026-11-16): 데이터를 앱으로 들여오고(`import_event_dialogues.py`)
+     **동료의 첫 대사**를 런 인트로 카드에 배선했다. 나머지 대사(첫 ICE 경고 · 전투 후 · 엔딩)는
+     아직 데이터로만 있다.
+4. **메뉴 항목 제거** — 3b 가 끝나면 `graphic_novel` 항목과 화면을 지운다(ADR-0315 의 노출
    규칙에서도 빠진다).
 
 ### 이관 2단계 결과 — 프롤로그가 런의 첫 비트가 됐다 (2026-11-16)
@@ -70,6 +77,47 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
   (`novice`/`veteran`/`heretic`).
 - e2e: `e2e/prologue.spec.ts` — ⑴ NEW RUN → 자키 → 프롤로그 → ESC → 미션 목록, ⑵ 메뉴 GN 은
   ESC 로 타이틀(런 아님). 기존 스펙들은 `openMissionSelect` 헬퍼가 프롤로그를 건너뛴다.
+
+### 이관 3a 결과 — 브리핑 화면이 배선됐다 (2026-11-16)
+
+```
+미션 선택 → [브리핑: 픽서가 미션의 이야기를 말한다] → prep → 런
+              ↑ ENTER 계속 · ESC 목록으로
+```
+
+- 웹에는 **설계만 되고 배선되지 않은** 서사 표면이 셋 있었다: `screen: "briefing"`(ScreenKind),
+  `renderBriefingScreen`(Finn 사무실), `DIALOGUE_TREES` 엔진. 이 중 **브리핑 화면**을 연결했다.
+- 새 렌더러 `renderMissionBriefing` 은 **줄바꿈**하고 **동작하는 키만 약속**한다(ADR-0251 rule 5).
+  기존 `renderBriefingScreen` 은 대사를 가운데 정렬로 잘라내고 40열에서 넘쳤다.
+- **`SCREENS_WITH_INPUT` 에 `briefing` 을 등록**했다 — 이 등록을 빠뜨리면 ENTER 가 메뉴로 튕긴다
+  (ADR-0273/0275 의 함정).
+- e2e: `launchRun` 헬퍼와 소크 `startRun` 이 브리핑을 거치도록 수정. **소크와 idle_alarm 이
+  실제로 실패해서** 드라이버 누락을 잡았다.
+
+### 이관 3b 결과 — 동료가 첫 잭인에서 말을 건다 (2026-11-16)
+
+```
+미션 선택 → 브리핑 → prep → [런 인트로 카드: 이 아크의 틀 + 동료의 첫 대사] → 매트릭스
+                                                        ↑ 아무 키나 누르면 사라진다
+```
+
+- **데이터를 들여왔다**: `scripts/tools/import_event_dialogues.py` 가
+  `docs/design/story/event_dialogues.json`(v0.2) → `web/src/data/event_dialogues.json` 으로
+  **게임이 읽는 필드만** 복사하고, **닿을 수 없는 대사 id 를 보고**한다(`ice_hammer_intro` 는
+  그런 ICE 가 없다). 설계 파일이 계속 단일 진실 공급원이다.
+- **한 곳에서만 id→대사**: `web/src/core/state/event_beats.ts` 의 `dialogueBeat(id, lang)` ·
+  `runOpeningBeat(finishedRuns, lang)`. 화면이 데이터와 어긋날 수 없다.
+- **런 인트로 카드가 동료를 말한다**: `renderRunIntro` 가 선택적 `beat` 를 받아 아크의 틀 문장
+  아래에 **발화자 + 대사**를 렌더한다(동료는 cyan). 3줄로 제한 — 카드는 대화가 아니다.
+- **프로필당 한 번**: `runsFinished === 0` 일 때만. 런을 끝낸 프로필은 이미 그녀를 만났고,
+  CONTINUE 로 이어가는 런은 도입을 다시 재생하지 않는다(ADR-0272 와 같은 규칙).
+- **언어 인식**: `language === "ko"` 면 `text_ko`/`speaker_ko`, 없으면 줄 단위로 영어로 폴백.
+- **표시 전용**: `GameState` 를 건드리지 않는다. 밸런스/생존 곡선은 **byte-identical**
+  (교전당 `100/100/100/98.9/83.9/32.3` · 미션 `100/97.1/75.9/51.4/26.9/32.3`).
+- e2e: `web/e2e/run_intro.spec.ts` — ⑴ 새 프로필은 동료를 듣는다, ⑵ 런을 끝낸 프로필은
+  다시 듣지 않는다. (읽기 전용 훅 `getRunIntroBeat()`)
+- **남은 것**: 나머지 대사(첫 ICE 경고 `dixie_warning` · 전투 후 `dixie_postcombat` · ICE
+  태그라인 · 엔딩)와 **4단계(메뉴 제거)**.
 
 ## 결과 (Consequences)
 
@@ -92,18 +140,24 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
 
 ## Implementation Status (2026-11-16)
 
-**Status**: 🟡 Partial (이관 1·2단계 ✅ · 3·4 ❌)
+**Status**: 🟡 Partial (이관 1·2·3a·3b ✅ · 4 ❌)
 
 **Evidence**:
-- `web/src/main.ts` — `initGraphicNovel(mode)` · 자키 confirm 이 프롤로그를 연다 ·
-  `prologueForRun` 이 ESC 를 미션 목록으로 보낸다
+- `web/src/renderer/menu_dialogue.ts` — `renderMissionBriefing`(줄바꿈 · 정직한 footer)
+- `web/src/renderer/run_intro.ts` — `renderRunIntro(..., beat)`(아크 틀 + 동료의 대사)
+- `web/src/core/state/event_beats.ts` — `dialogueBeat` · `runOpeningBeat`(id→대사, 언어 인식)
+- `web/src/data/event_dialogues.json` — 앱이 읽는 사본(설계 파일에서 복사)
+- `scripts/tools/import_event_dialogues.py` — 설계 → 앱 복사 + 닿을 수 없는 id 보고
+- `web/src/main.ts` — `briefing` 화면 흐름 · `SCREENS_WITH_INPUT` 등록 · `initGraphicNovel(mode)` ·
+  `prologueForRun` · `runIntroBeat` · `getRunIntroBeat()`
+- `web/tests/adr0317_mission_briefing_screen.test.ts` — 4 tests
+- `web/tests/event_beats.test.ts` — 6 tests
 - `web/e2e/prologue.spec.ts` — 2 tests(런 프롤로그 / 메뉴 GN)
-- `web/e2e/menu-nav.ts` — `openMissionSelect` 가 프롤로그를 건너뛴다
-- `docs/design/story/event_dialogues.json` — v0.2, `derivative_sources` + NPC + 대사 (미배선)
-- `web/src/data/scenes.json` — 27씬 / 15미션 (이관 대상)
-- `docs/design/story/prologue.md` — 프롤로그 설계(깁슨 인용 포함 → 이관 시 패러프레이즈)
+- `web/e2e/run_intro.spec.ts` — 2 tests(첫 잭인 / 두 번째 런)
+- `web/e2e/menu-nav.ts` — `openMissionSelect`·`launchRun` 이 프롤로그·브리핑을 건너뛴다
 
-**Notes**: 이관 2단계까지 구현. 3(이벤트 배선)과 4(메뉴 제거)가 남았다.
+**Notes**: 이관 3b 의 **첫 비트**까지 구현. 나머지 대사(ICE 경고 · 전투 후 · 엔딩)와 4(메뉴
+제거)가 남았다.
 
 ## 관련 결정
 
@@ -116,3 +170,4 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
 ## 변경 이력
 
 - 2026-11-16: Accepted — 오너 방침 기록 + 이관 경로 정의
+- 2026-11-16: 이관 3b(첫 비트) — 동료의 첫 대사를 런 인트로 카드에 배선 · 데이터 임포터 추가

@@ -1,12 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { parseProgram } from "../src/core/data_loaders";
 import programs from "../src/data/programs.json" with { type: "json" };
-import {
-  chooseEncounterVerb,
-  enterForScreen,
-  gotoEncounterDecision,
-  launchRun,
-} from "./menu-nav";
+import { chooseEncounterVerb,  gotoEncounterDecision,  launchRun,  openMissionSelect  } from "./menu-nav";
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() =>
@@ -14,7 +9,7 @@ test.beforeEach(async ({ page }) => {
   );
   await page.goto("./");
   await page.waitForFunction(() => window.wetrun !== undefined);
-  await enterForScreen(page, "mission_select");
+  await openMissionSelect(page);
   await launchRun(page);
   await gotoEncounterDecision(page);
 });

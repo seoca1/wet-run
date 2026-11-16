@@ -523,7 +523,28 @@ async function startRun(
     await page.keyboard.press("ArrowDown");
   }
   await page.keyboard.press("Enter");
-  // ADR-0283 C: mission select opens PREP, so one more ENTER jacks in.
+  // ADR-0317: mission select opens the BRIEFING; ADR-0283 C: ENTER there opens
+  // PREP, and one more ENTER jacks in.
+  await page.waitForFunction(
+    () =>
+      ["briefing", "prep"].includes(
+        (
+          window as unknown as {
+            wetrun: { getScreen(): string };
+          }
+        ).wetrun.getScreen(),
+      ),
+    undefined,
+    { timeout: 10000 },
+  );
+  if (
+    (await page.evaluate(
+      () =>
+        (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen(),
+    )) === "briefing"
+  ) {
+    await page.keyboard.press("Enter");
+  }
   await page.waitForFunction(
     () =>
       (

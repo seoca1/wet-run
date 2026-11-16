@@ -11,6 +11,7 @@
  * shows it once at run start and any key dismisses it.
  */
 import type { ArcId } from "../core/combat/ending_resolver";
+import type { DialogueBeat } from "../core/state/event_beats";
 import { setText } from "../core/grid";
 import type { Grid } from "../core/types";
 import { makeGrid } from "../core/grid";
@@ -73,56 +74,58 @@ export function wrapIntroLines(
   return out;
 }
 
-/** The intro card: title in amber, body in grey, a single exit line. */
+/** The intro card: title in amber, body in grey, a single exit line.
+ *
+ * ADR-0317 (3b): `beat` is the companion's voice, spoken once the arc's framing
+ * lines have set the scene — the run's opening, not a menu mode. It is optional
+ * so the card still renders without it (CONTINUE never replays it).
+ */
 export function renderRunIntro(
   arc: ArcId,
   cols: number,
   rows: number,
   jockey: string | null = null,
+  beat: DialogueBeat | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const width = runIntroWidth(cols);
+  const centre = (text: string): number =>
+    Math.max(2, Math.floor((cols - text.length) / 2));
   const [title = "", ...body] = RUN_INTRO[arc] ?? RUN_INTRO[1];
   const wrapped = wrapIntroLines(body, width);
-  const total = 1 + wrapped.length + (jockey === null ? 0 : 1);
+  const beatLines = beat === null ? [] : wrapIntroLines(beat.lines, width);
+  // A blank separator, the speaker's name, then the lines.
+  const beatBlock = beat === null ? 0 : 2 + beatLines.length;
+  const total = 1 + wrapped.length + (jockey === null ? 0 : 1) + beatBlock;
   let y = Math.max(3, Math.floor(rows / 2) - Math.floor(total / 2));
 
-  grid = setText(
-    grid,
-    Math.max(2, Math.floor((cols - title.length) / 2)),
-    y,
-    title,
-    PALETTE.YELLOW_AMBER,
-  );
+  grid = setText(grid, centre(title), y, title, PALETTE.YELLOW_AMBER);
   if (jockey !== null) {
     // ADR-0274: the runner is somebody. The prologue chose them; the run says so.
     const who = `${jockey} JACKS IN`;
-    grid = setText(
-      grid,
-      Math.max(2, Math.floor((cols - who.length) / 2)),
-      y + 1,
-      who,
-      PALETTE.CYAN_LIGHT,
-    );
+    grid = setText(grid, centre(who), y + 1, who, PALETTE.CYAN_LIGHT);
   }
   y += 2;
   for (const line of wrapped) {
-    grid = setText(
-      grid,
-      Math.max(2, Math.floor((cols - line.length) / 2)),
-      y,
-      line,
-      PALETTE.GRAY_LIGHT,
-    );
+    grid = setText(grid, centre(line), y, line, PALETTE.GRAY_LIGHT);
     y += 1;
   }
+  if (beat !== null) {
+    y += 1; // the voice gets air between it and the framing lines.
+    grid = setText(
+      grid,
+      centre(beat.speaker),
+      y,
+      beat.speaker,
+      PALETTE.YELLOW_AMBER,
+    );
+    y += 1;
+    for (const line of beatLines) {
+      grid = setText(grid, centre(line), y, line, PALETTE.CYAN_LIGHT);
+      y += 1;
+    }
+  }
 
-  grid = setText(
-    grid,
-    Math.max(2, Math.floor((cols - 20) / 2)),
-    rows - 3,
-    "PRESS ANY KEY",
-    PALETTE.GRAY_DARK,
-  );
+  grid = setText(grid, centre("PRESS ANY KEY"), rows - 3, "PRESS ANY KEY", PALETTE.GRAY_DARK);
   return grid;
 }

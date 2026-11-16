@@ -11,6 +11,11 @@ const SCREENSHOT_DIR = path.resolve(
 );
 
 test.describe("Game Demo - Menu to Combat", () => {
+  // ADR-0317: the flow now walks jockey → prologue → mission list → briefing →
+  // prep → matrix, and this spec sleeps 1s and screenshots at every step. Each
+  // step has to be paid for, so the 30s default is not enough.
+  test.describe.configure({ timeout: 120_000 });
+
   test.beforeEach(async ({ page }) => {
     // Create screenshot directory
     if (!fs.existsSync(SCREENSHOT_DIR)) {

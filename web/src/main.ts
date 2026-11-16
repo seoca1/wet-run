@@ -50,7 +50,8 @@ import { offeredCardIds, rewardProgram, UNIQUE_PROGRAMS } from "./core/state/car
 import { programEffectTag } from "./core/combat/program_effects";
 import { everyProgramBlocked } from "./core/combat/program_affordance";
 import { renderRunIntro } from "./renderer/run_intro";
-import { runOpeningBeat, type DialogueBeat } from "./core/state/event_beats";
+import { runOpeningBeat, iceIntroBeat, type DialogueBeat } from "./core/state/event_beats";
+import { markIceIntrosSeen, seenIceIntros } from "./core/state/ice_intros";
 import { renderJockeySelect } from "./renderer/jockey_select";
 import { renderPrep } from "./renderer/prep";
 import { renderMissionBriefing } from "./renderer/menu_dialogue";
@@ -129,6 +130,7 @@ import {
 } from "./core/state/state";
 import {
   openArrivalEncounter,
+  encounterRoster,
   runAbandoned,
 } from "./core/state/encounter_verbs";
 import { missionIce } from "./core/state/mission_ice";
@@ -546,6 +548,19 @@ class Game {
       if (shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state))
         this.matrixEntryHintShown = true;
       this.state = applyAction(this.state, resolved);
+      // ADR-0317 (3b): the reveal is the one moment this ICE's voice is new.
+      // Remember it so the tagline is spoken once per profile, not per node.
+      const revealed = this.state;
+      if (
+        revealed !== null &&
+        previous?.encounterDecision?.probed !== true &&
+        revealed.encounterDecision?.probed === true
+      ) {
+        markIceIntrosSeen(
+          typeof localStorage === "undefined" ? null : localStorage,
+          encounterRoster(revealed).map((ice) => ice.id),
+        );
+      }
       if (runAbandoned(previous, this.state)) {
         // JACK OUT ends the run: leave the board for the main menu.
         this.state = null;
@@ -1564,6 +1579,29 @@ class Game {
     return out;
   }
 
+  /** ADR-0317 (3b): the ICE's tagline for this encounter, or null.
+   *
+   * Only after the threat is revealed: the ICE's identity is what PROBE sells,
+   * so the voice waits for the reveal rather than handing it over. Only the
+   * first time this profile meets that ICE — a heard tagline is not repeated.
+   * A silent ICE (most of them) returns null.
+   */
+  private encounterVoice(): DialogueBeat | null {
+    const state = this.state;
+    if (state?.runPhase !== "matrix" || state.encounterDecision?.probed !== true)
+      return null;
+    const seen = seenIceIntros(
+      typeof localStorage === "undefined" ? null : localStorage,
+    );
+    const language = this.settingsState?.language ?? "en";
+    for (const ice of encounterRoster(state)) {
+      if (seen.has(ice.id)) continue;
+      const beat = iceIntroBeat(ice.id, language);
+      if (beat !== null) return beat;
+    }
+    return null;
+  }
+
   /** Render the current state. `persist` is false for render-loop frames:
    * a redraw must not trigger the autosave side effect. */
   private draw(persist: boolean = true): void {
@@ -1613,6 +1651,7 @@ class Game {
       // Remember which commit stage this frame drew, so the loop can tell
       // when the clock has moved the panel on (ADR-0262).
       this.lootCommitStageShown = growth?.lootCommit?.stage ?? -1;
+      const iceVoice = this.encounterVoice();
       const view =
         travel === null
           ? renderRunScreen(
@@ -1622,6 +1661,7 @@ class Game {
               shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
               null,
               growth,
+              iceVoice,
             )
           : renderRunScreen(
               this.state,
@@ -1630,6 +1670,7 @@ class Game {
               shouldShowMatrixEntryHint(this.matrixEntryHintShown, this.state),
               travel,
               growth,
+              iceVoice,
             );
       if (view) this.renderer.render(view.grid, view.hud);
       return;

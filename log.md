@@ -3793,3 +3793,13 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **e2e**: 신규 `e2e/run_intro.spec.ts` 2건 — ⑴ 새 프로필은 동료를 듣는다(그리고 다음 키에 사라진다), ⑵ 런을 끝낸 프로필은 다시 듣지 않는다. 읽기 전용 훅 `getRunIntroBeat()` 추가.
 - **남은 것**: 나머지 대사(첫 ICE 경고 `dixie_warning` · 전투 후 `dixie_postcombat` · ICE 태그라인 · 엔딩)와 **4단계(메뉴 제거)**.
 - **검증**: typecheck 0 · lint 0 errors · vitest **214 files / 4241 tests**(+11) · **전체 e2e 49 passed / 6 skipped / 0 failed** · 폭 가드(런 인트로 포함) 0건 · 소크 99런 완주 **70**(변동 없음).
+
+## [2026-11-16] feat(story) | ICE 가 자기 태그라인을 말한다 (ADR-0317 이관 3b · ICE 목소리)
+
+- **매핑이 자명한 조각**: 대사 id 가 `ice_<카탈로그 id>_intro` — ICE 의 자기 id 가 곧 열쇠다(`event_beats.iceIntroBeat`). 맞출 표가 없다. 설계대로 **대부분의 ICE 는 침묵**(`null`)하고 `wisp`·`black` 만 말한다.
+- **정체를 본 뒤에만**: ICE 의 정체는 **PROBE 가 파는 정보**다. 태그라인이 먼저 나오면 그 정보를 공짜로 흘린다 → **PROBE/SCAN 으로 정체가 드러난 순간**에만 목소리가 나온다(`encounter.ts` 의 `iceVoice`). 덤으로 PROBE 의 값이 "수치를 본다" → "그것이 무엇인지 듣는다"로 선명해졌다.
+- **프로필당 한 번**: `web/src/core/state/ice_intros.ts` 가 들은 id 를 `wetrun_ice_intro_seen`(JSON 배열)에 기억. 저장이 막히거나 값이 깨져도 **"아직 못 들음"으로 물러설 뿐** 렌더 프레임을 깨뜨리지 않는다. `main.ts` 는 `probed` 가 false→true 로 **뒤집히는 순간**에만 기록한다.
+- **여러 목소리**: `ice_black_intro` 는 Black ICE·내레이터·딕시가 차례로 말한다. `dialogueBeat` 가 **한 목소리면 발화자를 머리말로, 여러 목소리면 줄마다 자기 이름**을 붙인다 — 줄이 엉뚱한 화자에게 귀속되지 않는다.
+- **e2e**: `e2e/ice_voice.spec.ts` — PROBE 가 태그라인을 기억하는지(단위 테스트가 못 보는 배선).
+- **남은 것**: `dixie_warning`·`dixie_postcombat`·엔딩·허브/메타 대사. **단 트리거가 게임과 1:1로 맞지 않아 매핑 결정이 필요**(ADR-0317 열린 질문 f: `dixie_warning` 은 Wisp 를 지목, 엔딩 대사는 novice+태우기/가지기 전제, 허브 대사는 대화 트리 화면 필요).
+- **검증**: typecheck 0 · lint 0 errors · vitest **216 files / 4256 tests**(+15) · **전체 e2e 50 passed / 6 skipped / 0 failed**(56; 신규 `ice_voice` 1건) · 폭 가드(교전 목소리 포함) 0건 · **결정적 곡선 byte-identical**(밸런스 `100/100/100/98.9/83.9/32.3` · 생존 `100/97.1/75.9/51.4/26.9/32.3`, 최대 이탈 4.1pp) · 표시 전용(GameState 무변경).

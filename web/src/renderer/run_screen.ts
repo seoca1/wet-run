@@ -34,6 +34,7 @@ import { composeCombatVfx } from "./combat_vfx";
 import { composeFloatingDamage, overlayShake } from "./combat_overlay";
 import type { ShakeState } from "./screen_shake";
 import { renderEncounterDecision } from "./encounter";
+import type { DialogueBeat } from "../core/state/event_beats";
 import type { MatrixTravelFrame } from "./matrix_travel";
 
 /** The same full-grid dimensions used by matrix, loot, ending and combat views. */
@@ -63,12 +64,15 @@ export function renderRunScreen(
   matrixEntryHint = false,
   matrixTravel: MatrixTravelFrame | null = null,
   growth: GrowthReveal | null = null,
+  /** ADR-0317 (3b): the ICE's tagline on the encounter screen, once the threat
+   * is revealed. Passed in because it depends on the profile, not the state. */
+  iceVoice: DialogueBeat | null = null,
 ): ScreenView | null {
   const layout = runScreenLayout(cols, rows);
   switch (state.runPhase) {
     case "matrix": {
       if (state.encounterDecision)
-        return renderEncounterDecision(state, cols, rows);
+        return renderEncounterDecision(state, cols, rows, iceVoice);
       const matrix = state.matrix;
       if (!matrix) return null;
       return {

@@ -17,7 +17,7 @@ import { renderJockeySelect } from "../src/renderer/jockey_select";
 import { renderMissionList } from "../src/renderer/mission_select";
 import { renderMissionBriefing } from "../src/renderer/menu_dialogue";
 import { renderRunIntro } from "../src/renderer/run_intro";
-import { dialogueBeat } from "../src/core/state/event_beats";
+import { dialogueBeat, iceIntroBeat } from "../src/core/state/event_beats";
 import { runState } from "./view_fixtures";
 
 const LAYOUTS = [
@@ -150,6 +150,46 @@ describe("ADR-0300 · run intro with a beat", () => {
   it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
     takeClippedText();
     renderRunIntro(1, w, h, "CASE", dialogueBeat("dixie_intro"));
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0317 (3b): the ICE's tagline is free text on the encounter screen, and it
+// must wrap rather than cut.
+describe("ADR-0300 · encounter with an ICE voice", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    const base = runState({ runPhase: "matrix" });
+    const state = {
+      ...base,
+      currentNodeIndex: 0,
+      encounterDecision: { selectedVerb: null, probed: true },
+      matrix: {
+        startNode: 0,
+        bossNode: 1,
+        nodes: [
+          {
+            id: 0,
+            zone: "surface",
+            iceIds: ["wisp"],
+            iceHp: [20],
+            reward: { credits: 75 },
+            adjacent: [1],
+            isBoss: false,
+          },
+          {
+            id: 1,
+            zone: "mid",
+            iceIds: [],
+            iceHp: [],
+            reward: { credits: 0 },
+            adjacent: [0],
+            isBoss: true,
+          },
+        ],
+      },
+    };
+    takeClippedText();
+    renderRunScreen(state as never, w, h, false, null, null, iceIntroBeat("wisp"));
     expect(takeClippedText()).toEqual([]);
   });
 });

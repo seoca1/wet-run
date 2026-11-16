@@ -15,7 +15,13 @@
 import eventDialogues from "../../data/event_dialogues.json";
 import type { Language } from "../i18n";
 
-/** A spoken beat: who is talking, and what they say. */
+/** A spoken beat: who is talking, and what they say.
+ *
+ * `speaker` is set only when every line has the same voice — the screens then
+ * print it once as a heading. When a beat has more than one voice (Black ICE
+ * answers with the Narrator and Dixie), `speaker` is empty and each line is
+ * already prefixed with its own, so nothing is misattributed.
+ */
 export interface DialogueBeat {
   readonly speaker: string;
   readonly lines: readonly string[];
@@ -41,6 +47,9 @@ const DIALOGUES: Readonly<Record<string, Dialogue>> = (
 /** How many lines of a beat a card shows. Kept small: the run intro is a card,
  * not a conversation, and the player should be in the matrix in one keypress. */
 export const BEAT_LINES = 3;
+
+/** ICE taglines are shorter — an ICE broadcasts a warning, not a speech. */
+export const ICE_BEAT_LINES = 3;
 
 /** The line's text in the requested language, falling back to English. */
 function lineText(line: DialogueLine, language: Language): string {
@@ -74,9 +83,18 @@ export function dialogueBeat(
     .slice(0, Math.max(1, maxLines));
   const first = spoken[0];
   if (first === undefined) return null;
+  // One voice -> a heading. Several voices -> each line names its own, so a
+  // line is never attributed to whoever spoke first.
+  const oneVoice =
+    spoken.every((line) => line.speaker === first.speaker) &&
+    first.speaker.length > 0;
   return {
-    speaker: first.speaker,
-    lines: spoken.map((line) => line.text),
+    speaker: oneVoice ? first.speaker : "",
+    lines: spoken.map((line) =>
+      oneVoice || line.speaker.length === 0
+        ? line.text
+        : `${line.speaker}: ${line.text}`,
+    ),
   };
 }
 
@@ -92,4 +110,18 @@ export function runOpeningBeat(
 ): DialogueBeat | null {
   if (finishedRuns > 0) return null;
   return dialogueBeat("dixie_intro", language);
+}
+
+/** An ICE's own tagline, if it has one (ADR-0317 3b).
+ *
+ * The design file names these `ice_<catalog id>_intro`, so the mapping is the
+ * ICE's own id — there is nothing to guess and no table to keep in sync. Most
+ * ICE are silent, as the design file says they should be; only the ones with a
+ * tagline return a beat, and `null` means "this one says nothing".
+ */
+export function iceIntroBeat(
+  iceId: string,
+  language: Language = "en",
+): DialogueBeat | null {
+  return dialogueBeat(`ice_${iceId}_intro`, language, ICE_BEAT_LINES);
 }

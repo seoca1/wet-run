@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import {
   BEAT_LINES,
   dialogueBeat,
+  iceIntroBeat,
   runOpeningBeat,
 } from "../src/core/state/event_beats";
 
@@ -67,7 +68,31 @@ describe("ADR-0317 (3b) — event beats", () => {
     for (const id of Object.keys(design.dialogues)) {
       const beat = dialogueBeat(id, "en");
       expect(beat, `"${id}" produced no beat`).not.toBeNull();
-      expect(beat?.speaker.length, `"${id}" has no speaker`).toBeGreaterThan(0);
+      expect(beat?.lines.length, `"${id}" has no lines`).toBeGreaterThan(0);
+      // Every line is attributed: either the beat prints one speaker heading,
+      // or each line names its own voice (Black ICE answers with three).
+      if (beat && beat.speaker.length === 0) {
+        for (const line of beat.lines) {
+          expect(line, `"${id}" has an unattributed line`).toMatch(/.+: .+/);
+        }
+      }
     }
+  });
+
+  it("names each voice when a beat has more than one", () => {
+    // ice_black_intro is Black ICE, the Narrator, then Dixie.
+    const beat = dialogueBeat("ice_black_intro", "en");
+    expect(beat?.speaker).toBe("");
+    expect(beat?.lines.join("\n")).toContain("Narrator:");
+    expect(beat?.lines.join("\n")).toContain("Dixie Flatline:");
+  });
+
+  it("maps an ICE's tagline to its own id, and silent ICE to nothing", () => {
+    const wisp = iceIntroBeat("wisp");
+    expect(wisp?.speaker).toBe("Wisp ICE");
+    expect(wisp?.lines.join(" ")).toContain("subversion protocol");
+    // Most ICE are silent, as the design file says they should be.
+    expect(iceIntroBeat("goliath")).toBeNull();
+    expect(iceIntroBeat("no_such_ice")).toBeNull();
   });
 });

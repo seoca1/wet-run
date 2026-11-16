@@ -94,8 +94,10 @@ export function renderRunIntro(
   const [title = "", ...body] = RUN_INTRO[arc] ?? RUN_INTRO[1];
   const wrapped = wrapIntroLines(body, width);
   const beatLines = beat === null ? [] : wrapIntroLines(beat.lines, width);
-  // A blank separator, the speaker's name, then the lines.
-  const beatBlock = beat === null ? 0 : 2 + beatLines.length;
+  // A blank separator, the speaker's name when the beat has one voice, then
+  // the lines.
+  const beatBlock =
+    beat === null ? 0 : (beat.speaker.length > 0 ? 1 : 0) + 1 + beatLines.length;
   const total = 1 + wrapped.length + (jockey === null ? 0 : 1) + beatBlock;
   let y = Math.max(3, Math.floor(rows / 2) - Math.floor(total / 2));
 
@@ -112,14 +114,16 @@ export function renderRunIntro(
   }
   if (beat !== null) {
     y += 1; // the voice gets air between it and the framing lines.
-    grid = setText(
-      grid,
-      centre(beat.speaker),
-      y,
-      beat.speaker,
-      PALETTE.YELLOW_AMBER,
-    );
-    y += 1;
+    if (beat.speaker.length > 0) {
+      grid = setText(
+        grid,
+        centre(beat.speaker),
+        y,
+        beat.speaker,
+        PALETTE.YELLOW_AMBER,
+      );
+      y += 1;
+    }
     for (const line of beatLines) {
       grid = setText(grid, centre(line), y, line, PALETTE.CYAN_LIGHT);
       y += 1;

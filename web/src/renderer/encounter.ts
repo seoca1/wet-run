@@ -11,6 +11,7 @@ import {
 import { drawPanel, screenFrameRect, setInnerText } from "./panel";
 import { PALETTE } from "./palette";
 import type { ScreenView } from "./screen_view";
+import type { DialogueBeat } from "../core/state/event_beats";
 
 /** The verbs that resolve the node or end the run, in arrow order. */
 const EXIT_VERBS: readonly EncounterVerb[] = ["BYPASS", "BREACH", "JACK OUT"];
@@ -19,6 +20,9 @@ export function renderEncounterDecision(
   state: GameState,
   cols: number,
   rows: number,
+  /** ADR-0317 (3b): the ICE's own tagline, once the runner has looked at it.
+   * Null for silent ICE, which is most of them, and for an already-heard one. */
+  iceVoice: DialogueBeat | null = null,
 ): ScreenView {
   const panel = drawPanel(
     makeGrid(cols, rows),
@@ -117,6 +121,27 @@ export function renderEncounterDecision(
     write("Threat hidden — PROBE or SCAN");
   }
   y += 1;
+  if (iceVoice !== null) {
+    // ADR-0317 (3b): the ICE broadcasts once the runner has looked at it. Its
+    // identity is what PROBE sells, so the voice waits for the reveal — it
+    // never gives that away for free.
+    const body: string[] = [];
+    for (const line of iceVoice.lines) body.push(...wrapWords(line, width));
+    // The footer names the keys that act, so the voice never pushes it off the
+    // panel (ADR-0251 rule 5). Reserve the three footer rows plus the blank
+    // that separates the voice from them. The worst case is the 60x40 layout
+    // with three ICE on the node and Black ICE's three-voice tagline; a tight
+    // screen shows what fits rather than losing the footer.
+    const capacity = inner.y + inner.height - y - 4;
+    const hasSpeaker = iceVoice.speaker.length > 0;
+    const bodyRows = Math.max(0, hasSpeaker ? capacity - 1 : capacity);
+    if (bodyRows >= 1) {
+      if (hasSpeaker) write(iceVoice.speaker, PALETTE.YELLOW_AMBER);
+      for (const row of body.slice(0, bodyRows))
+        write(row, PALETTE.CYAN_LIGHT);
+      y += 1;
+    }
+  }
   if (state.encounterDecision?.selectedVerb == null)
     write("Nothing selected — press ↓ to pick", PALETTE.YELLOW_AMBER);
   write("↑↓/←→: choose · ENTER/SPACE: act");

@@ -13,7 +13,7 @@
 |---|---|---|---|
 | **미션 브리핑** | sprawl 32미션 | `plot_summary` → `missions.json` | ✅ **ADR-0316 완료** |
 | **그래픽 노블(프롤로그)** | 메뉴 항목 + 27씬(15미션) | 씬이 소설 문장을 직접 인용 | 🟡 **검증용 발판** |
-| **이벤트** | `docs/design/story/event_dialogues.json` v0.2 | `derivative_sources` 가 파생 소설을 가리킴 | 🟡 **첫 비트 배선(3b)** |
+| **이벤트** | `docs/design/story/event_dialogues.json` v0.2 | `derivative_sources` 가 파생 소설을 가리킴 | 🟡 **일부 배선(3b)** |
 
 `event_dialogues.json` 은 이미 NPC·대사·파생 소설 출처를 담고 있지만 **게임에 배선되지 않았다**
 (`grep` 0건). 2026-11-16 에 **첫 비트(동료의 첫 대사)를 배선**했고 나머지 대사는 아직 데이터로만
@@ -42,7 +42,7 @@
 |---|---|---|---|
 | 미션 브리핑 | 이 미션이 무엇인지 한 줄 | `plot_summary` | ✅ |
 | **프롤로그** | 이 런의 자키가 누구인지 (런 시작 1회) | GN 씬 + `prologue.md` | 🟡 메뉴 모드 |
-| **이벤트** | 런 중 결정적 순간의 대사 | `event_dialogues.json` | 🟡 첫 비트 배선 |
+| **이벤트** | 런 중 결정적 순간의 대사 | `event_dialogues.json` | 🟡 첫 잭인 + ICE 태그라인 |
 | 엔딩 | 런이 어떻게 끝났는지 | `ending_resolver` + 소설 요약 | ✅ (요약 문구) |
 | ~~그래픽 노블 메뉴~~ | — | — | **제거 예정** |
 
@@ -55,8 +55,8 @@
      이야기(ADR-0316)를 말한다. 웹에 **설계만 되고 미배선이던** `briefing` 화면과
      `renderBriefingScreen`(Finn 사무실)을 실제로 연결했다.
    - **3b `event_dialogues.json`** 🟡(2026-11-16): 데이터를 앱으로 들여오고(`import_event_dialogues.py`)
-     **동료의 첫 대사**를 런 인트로 카드에 배선했다. 나머지 대사(첫 ICE 경고 · 전투 후 · 엔딩)는
-     아직 데이터로만 있다.
+     **동료의 첫 대사**(런 인트로 카드)와 **ICE 태그라인**(교전 화면, 정체를 본 뒤)을 배선했다.
+     나머지 대사는 트리거 매핑 결정이 필요하다(열린 질문 f).
 4. **메뉴 항목 제거** — 3b 가 끝나면 `graphic_novel` 항목과 화면을 지운다(ADR-0315 의 노출
    규칙에서도 빠진다).
 
@@ -116,8 +116,28 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
   (교전당 `100/100/100/98.9/83.9/32.3` · 미션 `100/97.1/75.9/51.4/26.9/32.3`).
 - e2e: `web/e2e/run_intro.spec.ts` — ⑴ 새 프로필은 동료를 듣는다, ⑵ 런을 끝낸 프로필은
   다시 듣지 않는다. (읽기 전용 훅 `getRunIntroBeat()`)
-- **남은 것**: 나머지 대사(첫 ICE 경고 `dixie_warning` · 전투 후 `dixie_postcombat` · ICE
-  태그라인 · 엔딩)와 **4단계(메뉴 제거)**.
+
+### 이관 3b 결과 — ICE가 자기 태그라인을 말한다 (2026-11-16)
+
+```
+[교전 화면]  PROBE / SCAN 으로 정체를 보는 순간 → 그 ICE가 방송을 흘린다 (프로필당 1회)
+```
+
+- **매핑이 자명한 유일한 조각**: 대사 id 가 `ice_<카탈로그 id>_intro` 다. ICE 의 **자기 id**가
+  곧 열쇠라 맞출 표가 없다. 대부분의 ICE 는 설계대로 **침묵**하고(`null`), 태그라인이 있는
+  것만 말한다(`wisp` · `black`).
+- **정체를 본 뒤에만 말한다**: ICE 의 정체는 **PROBE 가 파는 정보**다. 태그라인이 먼저 나오면
+  그 정보를 공짜로 흘리게 된다 — 그래서 **PROBE/SCAN 으로 정체가 드러난 순간**에만 목소리가
+  나온다. (덤: PROBE 의 값이 "수치를 본다"에서 "그것이 무엇인지 듣는다"로 선명해진다.)
+- **프로필당 한 번**: 들은 id 를 `wetrun_ice_intro_seen`(JSON 배열)에 기억한다. 저장이
+  막히거나 값이 깨져도 **"아직 못 들음"으로 물러설 뿐**, 렌더 프레임을 깨뜨리지 않는다.
+- **여러 목소리 처리**: `ice_black_intro` 는 Black ICE·내레이터·딕시가 차례로 말한다.
+  한 목소리면 발화자를 **머리말**로 한 번, 여러 목소리면 **줄마다 자기 이름**을 붙인다 —
+  줄이 엉뚱한 화자에게 귀속되지 않는다.
+- e2e: `web/e2e/ice_voice.spec.ts` — PROBE 가 태그라인을 기억하는지(단위 테스트가 못 보는 배선).
+- **남은 것**: `dixie_warning`(첫 ICE 경고) · `dixie_postcombat`(전투 후) · 엔딩 대사 ·
+  허브/메타 대사(`finn`·`wim`·`maelcum`·`ta`)와 **4단계(메뉴 제거)**. **단, 남은 대사들은
+  트리거가 게임과 1:1로 맞지 않아 매핑 결정이 필요하다**(아래 열린 질문).
 
 ## 결과 (Consequences)
 
@@ -137,27 +157,38 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
 - **(d) `prologue.md` 의 깁슨 인용.** 그 문서는 원문 첫 문장을 인용한다. **게임 문자열에는
   금지**(ADR-0270, `check_no_novel_prose.py`). 이관 시 패러프레이즈한다.
 - **(e) KO.** `plot_summary.ko`·씬 `title_ko` 는 부분적이다. 이관과 함께 채울지 별도로 볼지.
+- **(f) 남은 대사의 트리거 (2026-11-16 실측).** 나머지 대사는 게임과 1:1로 맞지 않는다:
+  `dixie_warning` 은 **Wisp 를 지목**하는데 첫 ICE 가 Wisp 라는 보장이 없고, 엔딩 대사는
+  **novice 전용 + 데이터를 태우냐/가지냐**를 전제하는데 게임의 엔딩 id 는 `arc*` 다.
+  허브/메타 대사(`finn_intro`·`wim_hub`·`maelcum_*`·`ta_warning`)는 **대화 트리 화면**이
+  필요한데 `DIALOGUE_TREES` 는 여전히 미배선이다. → **일반화해서 다시 쓰거나, 대사에 맞춰
+  트리거를 만들거나, 그대로 두거나** — 오너 결정.
 
 ## Implementation Status (2026-11-16)
 
-**Status**: 🟡 Partial (이관 1·2·3a·3b ✅ · 4 ❌)
+**Status**: 🟡 Partial (이관 1·2·3a ✅ · 3b 일부 · 4 ❌)
 
 **Evidence**:
 - `web/src/renderer/menu_dialogue.ts` — `renderMissionBriefing`(줄바꿈 · 정직한 footer)
 - `web/src/renderer/run_intro.ts` — `renderRunIntro(..., beat)`(아크 틀 + 동료의 대사)
-- `web/src/core/state/event_beats.ts` — `dialogueBeat` · `runOpeningBeat`(id→대사, 언어 인식)
+- `web/src/core/state/event_beats.ts` — `dialogueBeat` · `runOpeningBeat` · `iceIntroBeat`
+- `web/src/core/state/ice_intros.ts` — 들은 ICE 태그라인 기억(`wetrun_ice_intro_seen`)
+- `web/src/renderer/encounter.ts` — 교전 화면이 `iceVoice` 를 렌더
 - `web/src/data/event_dialogues.json` — 앱이 읽는 사본(설계 파일에서 복사)
 - `scripts/tools/import_event_dialogues.py` — 설계 → 앱 복사 + 닿을 수 없는 id 보고
 - `web/src/main.ts` — `briefing` 화면 흐름 · `SCREENS_WITH_INPUT` 등록 · `initGraphicNovel(mode)` ·
-  `prologueForRun` · `runIntroBeat` · `getRunIntroBeat()`
+  `prologueForRun` · `runIntroBeat` · `encounterVoice()` · `getRunIntroBeat()`
 - `web/tests/adr0317_mission_briefing_screen.test.ts` — 4 tests
-- `web/tests/event_beats.test.ts` — 6 tests
+- `web/tests/event_beats.test.ts` — 8 tests
+- `web/tests/ice_intros.test.ts` — 5 tests
+- `web/tests/adr0317_ice_voice.test.ts` — 4 tests
 - `web/e2e/prologue.spec.ts` — 2 tests(런 프롤로그 / 메뉴 GN)
 - `web/e2e/run_intro.spec.ts` — 2 tests(첫 잭인 / 두 번째 런)
+- `web/e2e/ice_voice.spec.ts` — 1 test(PROBE 가 태그라인을 기억)
 - `web/e2e/menu-nav.ts` — `openMissionSelect`·`launchRun` 이 프롤로그·브리핑을 건너뛴다
 
-**Notes**: 이관 3b 의 **첫 비트**까지 구현. 나머지 대사(ICE 경고 · 전투 후 · 엔딩)와 4(메뉴
-제거)가 남았다.
+**Notes**: 이관 3b 는 **첫 잭인 + ICE 태그라인**까지. 남은 대사는 **매핑 결정**이 필요하다
+(열린 질문 f). 4(메뉴 제거)는 그 뒤다.
 
 ## 관련 결정
 
@@ -171,3 +202,4 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
 
 - 2026-11-16: Accepted — 오너 방침 기록 + 이관 경로 정의
 - 2026-11-16: 이관 3b(첫 비트) — 동료의 첫 대사를 런 인트로 카드에 배선 · 데이터 임포터 추가
+- 2026-11-16: 이관 3b(ICE 태그라인) — 교전 화면이 정체를 본 뒤 ICE 의 방송을 말한다(프로필당 1회)

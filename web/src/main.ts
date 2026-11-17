@@ -57,6 +57,7 @@ import {
   iceIntroBeat,
   firstFightWarningBeat,
   firstVictoryBeat,
+  flatlineBeat,
   endingSignoffBeat,
   type DialogueBeat,
 } from "./core/state/event_beats";
@@ -611,6 +612,13 @@ class Game {
             this.beatCard = { title: "FIRST BLOOD", beat };
             markBeatHeard(storage, "first_victory");
           }
+        }
+        // ADR-0317 3b: the one moment the story went silent was the one it had
+        // been building to. She warned that she can only watch; this is her
+        // watching. Once per run, right after the killing blow.
+        if (previous?.runPhase !== "dead" && revealed.runPhase === "dead") {
+          const beat = flatlineBeat(language);
+          if (beat !== null) this.beatCard = { title: "FLATLINE", beat };
         }
         // ADR-0315 slice 2: a contract's next leg opens with the fixer handing
         // over the job — the mission's own briefing (ADR-0316), on the card the

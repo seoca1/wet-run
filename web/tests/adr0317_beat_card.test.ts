@@ -16,6 +16,7 @@ import {
   endingSignoffBeat,
   firstFightWarningBeat,
   firstVictoryBeat,
+  flatlineBeat,
 } from "../src/core/state/event_beats";
 import type { Grid } from "../src/core/types";
 
@@ -43,6 +44,19 @@ describe("ADR-0317 (3b) — beat card", () => {
     // The last line is the one a naive renderer would lose (it wraps).
     expect(drawn).toContain("flatline");
     expect(drawn).toContain("construct");
+  });
+
+  // ADR-0317 3b: the one moment the story went silent was the one it had been
+  // building to — she says she can only watch, and then said nothing when it
+  // happened. The text is new (the design file had no death beat).
+  it("speaks the death beat", () => {
+    const beat = flatlineBeat();
+    expect(beat).not.toBeNull();
+    const drawn = text(renderBeatCard("FLATLINE", beat!, 80, 50));
+    expect(drawn).toContain("FLATLINE");
+    expect(drawn).toContain("Dixie Flatline");
+    expect(drawn).toContain("I'm sorry");
+    expect(drawn).toContain("nothing left in there");
   });
 
   it("speaks the victory beat too", () => {

@@ -18,6 +18,7 @@ import {
   endingSignoffBeat,
   firstFightWarningBeat,
   firstVictoryBeat,
+  flatlineBeat,
   iceIntroBeat,
   runOpeningBeat,
 } from "../src/core/state/event_beats";
@@ -44,6 +45,7 @@ function wiredIds(): ReadonlySet<string> {
   if (runOpeningBeat(0) !== null) wired.add("dixie_intro");
   if (firstFightWarningBeat() !== null) wired.add("dixie_warning");
   if (firstVictoryBeat() !== null) wired.add("dixie_postcombat");
+  if (flatlineBeat() !== null) wired.add("dixie_flatline");
   if (endingSignoffBeat() !== null) wired.add("dixie_signoff");
   for (const iceId of Object.keys(iceTypes)) {
     if (iceIntroBeat(iceId) !== null) wired.add(`ice_${iceId}_intro`);
@@ -85,6 +87,7 @@ describe("ADR-0317 (3b) — narrative coverage ledger", () => {
       runOpeningBeat(0),
       firstFightWarningBeat(),
       firstVictoryBeat(),
+      flatlineBeat(),
       endingSignoffBeat(),
       iceIntroBeat("wisp"),
     ];

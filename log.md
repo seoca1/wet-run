@@ -3855,3 +3855,17 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   - `CONTRACT n/3` 카드도 화자 제거(같은 이유).
 - **H1 가드 신규**(`adr0316_briefings_are_complete.test.ts`, 8 tests): ⑴ 데이터에 `…` 금지 — 기계적 절단의 흔적이다. `...`(3점)은 `ice_black_intro` 의 **의도된** 음성 소실이라 허용 ⑵ 브리핑은 문장으로 끝난다 ⑶ **모든 미션의 실제 브리핑**을 3 레이아웃으로 렌더해 폭 가드 0건 ⑷ 미리보기가 잘리면 표시한다.
 - **검증**: typecheck 0 · lint 0 errors · vitest **221 files / 4300 tests**(+8) · **전체 e2e 52 passed / 5 skipped / 0 failed**(57) · 게이트 5종 CLEAN.
+
+## [2026-11-17] feat(story) | 죽음에 마지막 말을 붙인다 (ADR-0317 3b · 죽음 비트)
+
+- **빈 순간**: 동료가 첫 전투에서 "If you flatline, I can't save you. I'm a construct. I just watch." 라고 경고해 놓고, 정작 flatline 하면 **아무 말도 안 했다**. 이야기가 침묵하던 순간은 **가장 오래 준비해 온 순간**이었다.
+- **신규 대사 `dixie_flatline`**(3줄, 설계 파일에 추가 → 단일 진실 공급원 유지):
+  ```
+  I'm sorry.
+  I watched it happen. That's all I can do.
+  There's nothing left in there now.
+  ```
+- **배치**: 치명타 직후 **`FLATLINE` 카드**(비트 카드 재사용). 엔딩 서명은 화면 안이지만 죽음은 카드다 — 죽음 화면은 60×40 에서 자유 행이 **3줄뿐**이고 교전 화면은 가장 빽빽하다(ADR-0300 세로 가드가 그 이유를 기록).
+- **⚠️ 오너 검토 대상**: 이 문구는 **설계에 없던 새 텍스트**다. Jev `choice` p=0.47 · **confidence 0.2** — 추론이 아니라 취향이므로 자동 적용하지 않고 표면화한다. 설계 파일의 `context_en` 에도 그 사실을 적어 두었다. 바꾸려면 `dixie_flatline` 의 `lines` 만 고치고 임포터를 다시 돌리면 된다.
+- **검증**: 신규 e2e(`narrative_beats.spec.ts`)가 **실제로 죽어서** 카드를 확인한다 — HP 1 + ICE HP 9999 로 죽음을 확정하고, **적은 행동당 1회** 행동하므로(ADR-0280) ENTER 가 아니라 **프로그램 키**를 눌러야 한다(ENTER 는 전투에서 no-op 이라 ICE 가 안 휜다). 서사 원장에 `dixie_flatline` 등록.
+- **검증 수치**: typecheck 0 · lint 0 errors · vitest **221 files / 4301 tests** · **전체 e2e 53 passed / 5 skipped / 0 failed**(58) · 게이트 5종 CLEAN.

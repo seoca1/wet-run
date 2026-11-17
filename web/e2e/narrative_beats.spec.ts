@@ -62,3 +62,65 @@ test("the first fight gets one warning card, and one key dismisses it", async ({
   await page.keyboard.press("Enter");
   await expect.poll(() => beatCard(page)).toBeNull();
 });
+
+test("a flatline gets the construct's last word", async ({ page }) => {
+  await page.addInitScript(() =>
+    localStorage.setItem("wetrun_tutorial_completed", "true"),
+  );
+  await page.goto("./");
+  await page.waitForFunction(
+    () => (window as unknown as { wetrun?: unknown }).wetrun !== undefined,
+  );
+
+  await openMissionSelect(page);
+  await launchRun(page);
+  await gotoEncounterDecision(page);
+  await chooseEncounterVerb(page, "BREACH");
+  await page.keyboard.press("Enter"); // approach -> combat
+  await expect
+    .poll(() =>
+      page.evaluate(() =>
+        (window as unknown as { wetrun: { getPhase(): string | null } }).wetrun.getPhase(),
+      ),
+    )
+    .toBe("combat");
+
+  // ADR-0317 3b: the construct warned that she can only watch. Make the death
+  // certain — one point of HP, and an ICE that will not fall first.
+  await page.evaluate(() => {
+    const game = (
+      window as unknown as {
+        wetrun: {
+          state: {
+            player: Record<string, unknown>;
+            iceRoster: Record<string, unknown>[];
+          } | null;
+        };
+      }
+    ).wetrun;
+    const s = game.state;
+    if (!s) return;
+    game.state = {
+      ...s,
+      player: { ...s.player, hp: 1 },
+      iceRoster: s.iceRoster.map((ice) => ({ ...ice, hp: 9999 })),
+    };
+  });
+  for (let i = 0; i < 14; i += 1) {
+    const phase = await page.evaluate(
+      () =>
+        (window as unknown as { wetrun: { state?: { runPhase?: string } | null } })
+          .wetrun.state?.runPhase,
+    );
+    if (phase === "dead") break;
+    // The enemy acts once per player action (ADR-0280), so this has to be a
+    // real action — ENTER in combat is a no-op and the ICE never swings.
+    await page.keyboard.press(String((i % 5) + 1));
+    await page.waitForTimeout(150);
+  }
+
+  const card = await beatCard(page);
+  expect(card?.title).toBe("FLATLINE");
+  expect(card?.lines.join(" ")).toContain("I'm sorry");
+});
+

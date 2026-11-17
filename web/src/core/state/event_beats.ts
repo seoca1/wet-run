@@ -147,6 +147,18 @@ export function firstVictoryBeat(language: Language = "en"): DialogueBeat | null
   return dialogueBeat("dixie_postcombat", language, STORY_BEAT_LINES);
 }
 
+/** The construct's last word when the runner flatlines (ADR-0317 3b).
+ *
+ * The design file had no death beat, so the one moment the story went silent was
+ * the one it had been building to: she says "If you flatline, I can't save you.
+ * I'm a construct. I just watch" before the first fight, and then said nothing
+ * when it happened. The text is new and owner-reviewable — Jev picked it at
+ * confidence 0.2, which is taste rather than deduction.
+ */
+export function flatlineBeat(language: Language = "en"): DialogueBeat | null {
+  return dialogueBeat("dixie_flatline", language, STORY_BEAT_LINES);
+}
+
 /** The construct's last word on the ending screen (ADR-0317 3b).
  *
  * The design's two ending scenes were written for a burn/keep choice the game

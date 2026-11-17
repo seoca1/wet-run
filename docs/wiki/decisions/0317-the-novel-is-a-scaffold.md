@@ -155,12 +155,17 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
   요구하지 않는다.
 - **프로필 1회 플래그**(`core/state/story_flags.ts`): 플래그마다 키 하나. 값이 깨져도 **그 비트 하나만**
   반복될 뿐이다.
+- **죽음 비트를 새로 썼다(2026-11-17)**: 이야기가 침묵하던 순간은 **가장 오래 준비해 온 순간**이었다 —
+  동료가 첫 전투에서 "If you flatline, I can't save you. I'm a construct. I just watch." 라고 해놓고
+  정작 flatline 하면 **아무 말도 안 했다**. `dixie_flatline`(3줄)을 설계 파일에 추가하고, 치명타 직후
+  **`FLATLINE` 카드**로 띄운다(엔딩 서명은 화면 안, 죽음은 카드 — 죽음 화면은 60×40 에서 자유 행이 3줄뿐).
+  **문구는 오너 검토 대상**(Jev p=0.47 · **confidence 0.2** → 취향이지 추론이 아니다).
 - **드라이버 함정을 또 밟았다**: 카드는 화면을 차지하므로 **키를 하나 먹는다**. 커밋 전 e2e 에서
   `run_end_save` 2건·`continue` 1건이 실제로 실패했다(전리품이 안 넘어가고, 승리가 저장되지 않았다).
   튜토리얼과 같은 방식으로 **공유 헬퍼(`suppressStoryBeats`)가 1회성 비트를 미리 "들은 것으로"**
   표시하고, 카드 자체는 전용 스펙 `narrative_beats.spec.ts` 와 story trace 가 검증한다.
 - **남은 것**: 허브/메타 대사 6편(`finn`·`wim`·`maelcum`·`ta`)은 **대화 트리 화면**이 필요하다.
-  그리고 **죽음(FLATLINE)에는 설계된 대사가 없다** — 서명은 엔딩 화면에만 나온다(열린 질문 f).
+  그리고 **죽음(FLATLINE)에는 설계된 대사가 없었다** → **`dixie_flatline` 신규**(2026-11-17, 아래).
 
 ### 이관 4단계 결과 — 발판을 치웠다 (2026-11-17)
 
@@ -217,8 +222,8 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 목록 →
   덱에 맞게 다시 썼고, 엔딩 두 장면(태우기/지키기)은 게임에 없는 선택을 전제하므로 **하나의
   `dixie_signoff`** 로 대체했다. 트리거는 게임의 구조에서 가져왔다(첫 전투·첫 승리·엔딩 화면).
   **남은 것**: ⑴ 허브/메타 대사 6편은 **대화 트리 화면**이 필요하다(`DIALOGUE_TREES` 미배선),
-  ⑵ **죽음(FLATLINE)에는 설계된 대사가 없다** — 서명은 엔딩 화면에만 나온다. 죽음에도 마지막 말을
-  붙일지는 **오너 결정**(설계에 없는 대사를 새로 쓰는 일이라 자동으로 하지 않았다).
+  ⑵ ~~죽음(FLATLINE)에는 설계된 대사가 없다~~ → **닫힘(2026-11-17)**: `dixie_flatline` 을 새로 썼다.
+  **단 문구는 오너 검토 대상** — Jev 선택 confidence **0.2**(추론이 아니라 취향).
 
 ## Implementation Status (2026-11-16)
 
@@ -241,7 +246,7 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 목록 →
   `beatCard` · `encounterVoice()` · `endingSignoff()` · e2e 훅 3개
 - `web/tests/adr0317_mission_briefing_screen.test.ts` — 4 tests
 - `web/tests/event_beats.test.ts` — 8 tests · `web/tests/ice_intros.test.ts` — 5 tests
-- `web/tests/story_flags.test.ts` — 3 tests · `web/tests/adr0317_beat_card.test.ts` — 6 tests
+- `web/tests/story_flags.test.ts` — 3 tests · `web/tests/adr0317_beat_card.test.ts` — 7 tests(죽음 비트 포함)
 - `web/tests/adr0317_ice_voice.test.ts` — 5 tests
 - **`web/tests/adr0317_narrative_coverage.test.ts` — 서사 원장(미배선 대사 + 이유 + 낡은 항목 감지)**
 - `web/e2e/prologue.spec.ts` · `run_intro.spec.ts` · `ice_voice.spec.ts` · `narrative_beats.spec.ts`
@@ -267,3 +272,4 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 목록 →
 - 2026-11-16: 이관 3b(각색) — 나머지 대사를 **게임 구조에 맞춰 다시 썼다**(아무 ICE·아무 덱·아무 엔딩) ·
   비트 카드·엔딩 서명 배선 · **검증기 3종 보강**(세로 가드 · 서사 원장 · story trace 수리)
 - 2026-11-17: 이관 4단계 — 메뉴 항목·화면 진입·i18n 키 삭제, 죽은 `prologueForRun` 분기 제거
+- 2026-11-17: **죽음 비트 신규**(`dixie_flatline`, 오너 검토 대상)

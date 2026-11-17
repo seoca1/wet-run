@@ -245,6 +245,34 @@
         }
       ]
     },
+    "dixie_flatline": {
+      "id": "dixie_flatline",
+      "npc": "dixie",
+      "title_en": "Flatlined",
+      "title_ko": "플랫라인",
+      "context_en": "The runner just flatlined. The construct has the last word, right after the killing blow and before the flatline screen. (2026-11-17: NEW TEXT — the design file had no death beat, so this was authored to close the one moment the story went silent. Jev chose it at confidence 0.2, i.e. it is taste, not deduction: the owner may rewrite it.)",
+      "context_ko": "러너가 방금 플랫라인했다. 구성체가 마지막 말을 한다 — 치명타 직후, 플랫라인 화면 전. (2026-11-17 신규: 설계 파일에 죽음 비트가 없어 새로 썼다. 이야기가 침묵하던 유일한 순간을 닫기 위해서다. Jev 선택 confidence 0.2 — 추론이 아니라 취향이므로 오너가 다시 써도 된다.)",
+      "lines": [
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "I'm sorry.",
+          "text_ko": "미안해."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "I watched it happen. That's all I can do.",
+          "text_ko": "지켜봤어. 내가 할 수 있는 건 그뿐이야."
+        },
+        {
+          "speaker": "Dixie Flatline",
+          "speaker_ko": "딕시 플랫라인",
+          "text_en": "There's nothing left in there now.",
+          "text_ko": "이제 그 안에 남은 건 없어."
+        }
+      ]
+    },
     "dixie_signoff": {
       "id": "dixie_signoff",
       "npc": "dixie",

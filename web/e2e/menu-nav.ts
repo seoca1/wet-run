@@ -195,6 +195,21 @@ export async function openMissionSelect(page: Page): Promise<void> {
   await enterForScreen(page, "mission_select");
 }
 
+/** Take the fixer's advance while a between-leg prep owns the screen
+ *  (ADR-0318 (a)). Legs 2 and 3 of a contract open with it, and it eats the
+ *  keys a driver would otherwise spend on the board. */
+export async function clearContractPrep(page: Page): Promise<void> {
+  for (let i = 0; i < 3; i += 1) {
+    const onPrep = await page.evaluate(() => {
+      const w = window as unknown as { wetrun?: { getScreen?(): string } };
+      return w.wetrun?.getScreen?.() === "contract_prep";
+    });
+    if (!onPrep) return;
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(60);
+  }
+}
+
 /** Launch the highlighted mission: mission select → briefing (ADR-0317) →
  *  PREP (ADR-0283) → matrix.
  *  Screens keep being inserted here after the drivers were first written, and
@@ -205,4 +220,5 @@ export async function launchRun(page: Page): Promise<void> {
   await page.keyboard.press("Enter"); // briefing → prep
   await enterForScreen(page, "prep");
   await enterForRunPhase(page, "matrix");
+  await clearContractPrep(page);
 }

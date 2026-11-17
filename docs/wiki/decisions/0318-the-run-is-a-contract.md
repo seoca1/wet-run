@@ -68,6 +68,28 @@ ADR-0315 는 "런은 캠페인"을 정하고 슬라이스 2 를 **캠페인 골�
 - **미해결로 남기는 것**: 캠페인 기준 밸런스(ADR-0315 (d)) — 하네스가 미션 단위라
   "N미션 생존율"이 아직 없다. g6 고유 누적(ADR-0315 (c))도 그대로다.
 
+## 다리 사이의 advance (2026-11-17 — ADR-0315 Q3 의 배선)
+
+ADR-0315 Q3 는 *"미션 사이 회복은 전리품(prep)이 담당한다"* 고 적었지만 **배선이 없었다.**
+그리고 구현하며 **버그를 찾았다**: `startNextLeg` 가 `makeInitialState` 를 다시 부르므로
+**런 전 advance 의 `maxHp`·실드가 첫 다리 전환에서 사라졌다**(HP 는 만피로 리셋되므로 회복할 것도 없었다).
+즉 게임의 다리 2·3 은 **advance 가 아예 없었고**, 하네스는 다리마다 advance 를 준다고 가정하고 있었다 —
+**게임이 측정보다 어려웠다.**
+
+```
+미션 선택 → 브리핑 → [prep] → 1다리 → [CONTRACT 1/3 · DONE 카드 → CONTRACT 2/3 카드]
+   → [다리 사이 advance] → 2다리 → … → 3다리 → 엔딩
+```
+
+- **advance 는 다리마다**(런 전 1회 + 다리 전환 2회) — ADR-0283 의 화면을 **그대로** 쓴다
+  (`renderPrep` + `PREP_OPTIONS` + `prepGrantFor`), 금액이 `applyPrep` 과 어긋날 수 없다.
+- **화면 순서**: 브리핑 카드가 먼저(카드가 화면을 소유), 그다음 advance. 카드는 큐로 두 장이 이어진다.
+- **ESC 는 advance 를 건너뛴다**(쓰지 않고 잭인). 강제하지 않는다.
+- `screen: "contract_prep"` 는 **런 중에만** 존재하므로 `SCREENS_WITH_INPUT`(state===null 경로)에는 넣지 않았다.
+- **드라이버 3곳을 고쳤다**(소크 · story trace · `run_end_save`): 새 화면이 키를 먹으므로
+  그대로 두면 소크가 **가짜 freeze** 를 보고한다(ADR-0273/0275 함정의 재확인).
+- **하네스와 게임이 이제 일치**한다 — 기준선(완주 30.3%)이 게임의 실제 난이도가 됐다.
+
 ## 측정 — 캠페인 기준선 (2026-11-17, `npm run campaign`)
 
 `npm run campaign`(신규 하네스, `scripts/campaign_survival.ts`) — **게임과 같은 계약**을
@@ -99,8 +121,8 @@ ADR-0315 는 "런은 캠페인"을 정하고 슬라이스 2 를 **캠페인 골�
 
 ## 열린 질문
 
-- **(a) 미션 사이의 prep.** 지금은 다리 사이에 advance 화면이 없다(HP 만 회복). 전리품으로
-  회복하게 하려면 다리 사이에 화면이 하나 필요하다.
+- **(a) 미션 사이의 prep.** ✅ **닫힘(2026-11-17)**: 다리 사이에 **advance 화면**이 생겼다
+  (`screen: "contract_prep"`). 아래 "다리 사이의 advance" 참조.
 - **(b) 계약의 선택.** 지금은 **고른 미션의 arc** 가 계약을 정한다(미션 선택 화면이 곧 계약 선택).
   arc 를 직접 고르는 화면은 ADR-0315 의 "계약(arc)"을 더 정직하게 만든다.
 - **(c) 캠페인 밸런스 기준선.** ✅ **닫힘(2026-11-17)**: `npm run campaign` 이 생겼고 위 기준선을
@@ -133,6 +155,7 @@ ADR-0315 는 "런은 캠페인"을 정하고 슬라이스 2 를 **캠페인 골�
 - `web/tests/adr0315_campaign_chain.test.ts` — 13 tests(계약 모양 · 연쇄 · 이월/리셋 · 엔딩 우선순위 · 세이브 왕복)
 - **`web/scripts/campaign_survival.ts`** — `npm run campaign`(캠페인 하네스: 다리별 · 완주율 · 엔딩 · `--fresh` 비교)
 - `web/scripts/play_policy.ts` — `carry`(크레딧·덱·고유)로 일반화
+- `web/src/main.ts` — `contract_prep` 화면(`drawPrep` · `handleContractPrepInput` · `contractPrepReturn`)
 - `web/e2e/story_trace.spec.ts` — 3미션 완주를 실제로 플레이하고, 끝난 계약의 엔딩이
   **`liberation`** 인지 단언
 

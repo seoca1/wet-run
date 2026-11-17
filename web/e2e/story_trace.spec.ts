@@ -341,6 +341,19 @@ test.describe("story trace", () => {
         continue;
       }
 
+      // ADR-0318 (a): legs 2+ open with the fixer's advance. Take it — it is
+      // what a player does, and it eats a key the trace would spend on the
+      // board.
+      if (
+        (await page.evaluate(
+          () =>
+            (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen(),
+        )) === "contract_prep"
+      ) {
+        lines.push(`[${step}] between-leg advance`);
+        await press(page, "Enter");
+        continue;
+      }
       if (st !== null) {
         const phase = `${st.runPhase}/${st.phase}`;
         if (st.runPhase === "combat" && st.phase === "combat") enteredCombat = true;

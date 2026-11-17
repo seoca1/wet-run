@@ -316,6 +316,10 @@ class Game {
   private selectedJockey = 0;
   /** ADR-0283: the prep row under the cursor, and what it will buy. */
   private prepCursor = 0;
+  /** Where the run's screen was before the between-leg advance took over
+   * (ADR-0318 (a)). Restoring it keeps the run's screen invariant intact — a
+   * CONTINUE resumes with `menu`, a fresh run with `prep`. */
+  private contractPrepReturn: ScreenKind = "prep";
   private prepChoice: PrepChoice = "stim";
   /** ADR-0284: what the stockpile will pay for the run about to start. */
   private prepWalletOutlay = 0;
@@ -553,6 +557,12 @@ class Game {
         this.handlePreGameInput(action);
         return;
       }
+      // ADR-0318 (a): the advance between a contract's legs owns the input the
+      // same way the crafting screens do — the run state is live behind it.
+      if (this.screen === "contract_prep") {
+        this.handleContractPrepInput(action);
+        return;
+      }
       if (this.screen === "crafting" || this.screen === "equipment") {
         if (this.screen === "crafting") this.handleCraftingInput(action);
         else this.handleEquipmentInput(action);
@@ -666,6 +676,12 @@ class Game {
               beat: debrief,
             });
           }
+          // ADR-0318 (a): the next leg's advance. The reducer built the leg
+          // already; the prep screen spends the fixer's advance on it. The
+          // briefing card is read first (a card owns the screen).
+          this.prepCursor = 0;
+          this.contractPrepReturn = this.screen;
+          this.screen = "contract_prep";
           this.showBeat({
             title: `CONTRACT ${(contract?.completed ?? 0) + 1}/${contract?.legs.length ?? 0}`,
             // No speaker: the briefing is the job's file, not a line the fixer
@@ -1730,6 +1746,75 @@ class Game {
     return typeof localStorage === "undefined" ? null : localStorage;
   }
 
+  /** The fixer's advance, as a screen (ADR-0283 C · ADR-0318 (a)).
+   *
+   * Shared by the pre-run prep and the between-leg prep so the amounts shown
+   * come from the same tables `applyPrep` reads — the screen and the run cannot
+   * disagree (ADR-0251 rule 5). */
+  private drawPrep(mission: Mission): void {
+    const grade = missionGradeOf(mission);
+    updateProgramRow([]);
+    this.renderer.render(
+      renderPrep(
+        {
+          missionTitle: mission.title,
+          grade,
+          cursor: this.prepCursor,
+          wallet: readPrepWallet(),
+          options: PREP_OPTIONS.map((option) => {
+            const grant = prepGrantFor(grade, option.id, readPrepWallet());
+            return {
+              id: option.id,
+              label: option.label,
+              amount: grant.total,
+              fromWallet: grant.fromWallet,
+              unit: option.id === "ice" ? "shield" : "HP",
+              note: option.short,
+            };
+          }),
+        },
+        this.layout.cols,
+        this.layout.rows,
+      ),
+      ["PREP", "", `T${grade}`],
+    );
+  }
+
+  /** The advance between a contract's legs (ADR-0318 (a)).
+   *
+   * ↑↓ picks, ENTER spends it and jacks in, ESC keeps it and jacks in anyway.
+   * The leg is already built by the reducer, so this is the one moment the
+   * player chooses what the next job's capacity is worth. */
+  private handleContractPrepInput(action: GameAction): void {
+    const state = this.state;
+    if (state === null) return;
+    const count = PREP_OPTIONS.length;
+    if (action.type === "move_south" || action.type === "move_east") {
+      this.prepCursor = (this.prepCursor + 1) % count;
+      this.draw();
+      return;
+    }
+    if (action.type === "move_north" || action.type === "move_west") {
+      this.prepCursor = (this.prepCursor - 1 + count) % count;
+      this.draw();
+      return;
+    }
+    const spent =
+      action.type === "confirm" || action.type === "jack_out" || action.type === "cancel";
+    if (!spent) return;
+    if (action.type === "confirm") {
+      const choice: PrepChoice = PREP_OPTIONS[this.prepCursor]?.id ?? "stim";
+      const grant = prepGrantFor(missionGradeOf(state.mission), choice, readPrepWallet());
+      this.prepWalletOutlay = grant.fromWallet;
+      spendPrepWallet(grant.fromWallet);
+      this.state = applyPrep(state, choice, this.prepWalletOutlay);
+    }
+    // Back to the run: `draw()` routes by runPhase once the screen is not the
+    // prep, so the leg's board takes over.
+    this.screen = this.contractPrepReturn;
+    this.draw();
+  }
+
   /** Queue a story card (ADR-0317 3b). One owns the screen at a time; the rest
    * wait their turn, so a transition can say two things in order. */
   private showBeat(card: BeatCard): void {
@@ -1775,6 +1860,14 @@ class Game {
         ),
         ["JACK-IN", "", "ANY KEY"],
       );
+      return;
+    }
+    // ADR-0318 (a): the advance between a contract's legs. The reducer has
+    // already built the next leg, so this spends the advance on it — which is
+    // what ADR-0315 Q3 meant by "the prep handles between-mission recovery".
+    // It sits after the beat card so the fixer's briefing is read first.
+    if (this.screen === "contract_prep" && this.state !== null) {
+      this.drawPrep(this.state.mission);
       return;
     }
     // Tier 5: matrix / loot / ending screens render with a real GameState
@@ -1903,41 +1996,9 @@ class Game {
         }
       }
       if (this.screen === "prep") {
-        // ADR-0283 C: the advance, and what each option is worth here. The
-        // amounts come from the same tables `applyPrep` reads, so the screen and
-        // the run cannot disagree (ADR-0251 rule 5).
         const mission = MISSIONS[this.selectedMission];
         if (mission) {
-          const grade = missionGradeOf(mission);
-          updateProgramRow([]);
-          this.renderer.render(
-            renderPrep(
-              {
-                missionTitle: mission.title,
-                grade,
-                cursor: this.prepCursor,
-                wallet: readPrepWallet(),
-                options: PREP_OPTIONS.map((option) => {
-                  const grant = prepGrantFor(
-                    grade,
-                    option.id,
-                    readPrepWallet(),
-                  );
-                  return {
-                    id: option.id,
-                    label: option.label,
-                    amount: grant.total,
-                    fromWallet: grant.fromWallet,
-                    unit: option.id === "ice" ? "shield" : "HP",
-                    note: option.short,
-                  };
-                }),
-              },
-              this.layout.cols,
-              this.layout.rows,
-            ),
-            ["PREP", "", `T${grade}`],
-          );
+          this.drawPrep(mission);
           return;
         }
       }

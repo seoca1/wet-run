@@ -20,6 +20,7 @@ import { renderMissionBriefing } from "../src/renderer/menu_dialogue";
 import { renderRunIntro } from "../src/renderer/run_intro";
 import { renderBeatCard } from "../src/renderer/beat_card";
 import { renderGraphicNovelScreen } from "../src/renderer/graphic_novel_screen";
+import { renderPrep } from "../src/renderer/prep";
 import { renderEndingScreen } from "../src/renderer/ending";
 import {
   dialogueBeat,
@@ -154,6 +155,30 @@ describe("ADR-0300 · mission select", () => {
       w,
       h,
       "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
+    );
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0283 / ADR-0318 (a): the fixer's advance is now shown between a contract's
+// legs as well as before the run, so its longest line (the mission title) has to
+// fit at every layout.
+describe("ADR-0300 · prep (the fixer's advance)", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    takeClippedText();
+    renderPrep(
+      {
+        missionTitle: "Armitage's First Infiltration",
+        grade: 5,
+        cursor: 1,
+        wallet: 1234,
+        options: [
+          { id: "stim", label: "STIM", amount: 250, fromWallet: 40, unit: "HP", note: "+250 max HP" },
+          { id: "ice", label: "ICE", amount: 400, fromWallet: 0, unit: "shield", note: "+400 shield" },
+        ],
+      },
+      w,
+      h,
     );
     expect(takeClippedText()).toEqual([]);
   });

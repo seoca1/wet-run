@@ -197,6 +197,17 @@ async function hopTowardBoss(page: Page): Promise<void> {
 async function playToEnding(page: Page): Promise<void> {
   for (let guard = 0; guard < 400; guard += 1) {
     await dismissBeats(page);
+    // ADR-0318 (a): legs 2+ open with the fixer's advance.
+    if (
+      (await page.evaluate(
+        () =>
+          (window as unknown as { wetrun: Hook }).wetrun.getScreen(),
+      )) === "contract_prep"
+    ) {
+      await page.keyboard.press("Enter");
+      await page.waitForTimeout(80);
+      continue;
+    }
     const s = await snap(page);
     if (s === null) throw new Error("playToEnding: no state");
     if (s.runPhase === "ending") return;

@@ -626,6 +626,14 @@ test.describe("direct-control playthrough soak", () => {
 
       for (; steps < MAX_STEPS; steps += 1) {
         const s = await snap(page);
+        // ADR-0318 (a): legs 2+ open with the fixer's advance, and it eats the
+        // keys the policy would otherwise spend on the board. Take it and move
+        // on — otherwise the sweep reports a freeze that is really this screen.
+        if (s.screen === "contract_prep") {
+          await page.keyboard.press("Enter");
+          await page.waitForTimeout(120);
+          continue;
+        }
         if (s.state !== null) {
           maxAlarm = Math.max(maxAlarm, s.state.alarm);
           if (s.state.runPhase === "combat") {

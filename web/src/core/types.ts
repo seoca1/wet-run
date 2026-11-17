@@ -133,6 +133,7 @@ export type ScreenKind =
   | "jockey_select" // ADR-0274 — who is jacking in, before the mission
   | "prep" // ADR-0283 — what the fixer's advance buys, before jacking in
   | "briefing" // Mission briefing (Finn's office) — NEW
+  | "contract_prep" // ADR-0318 (a): the advance between a contract's legs
   | "travel" // Travel to jack-in point animation — NEW
   | "bypass_security" // Bypass corporate security — NEW
   | "graphic_novel" // GRAPHIC NOVEL → auto-play (stub for Tier 4)

@@ -3967,3 +3967,16 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
   하네스가 이 문장을 **출력에 그대로 인쇄**하고 ADR-0318 열린 질문 **(e)** 로 올렸다.
 - **Jev `choice`**: "뒤 다리를 시작 등급 대에 묶는다" **p=0.63 · confidence 0.44** → **자동 적용하지 않는다**(취향이지 추론이 아니다). 선택지 3개(그대로 / 대에 묶기 / 길이 축소 — 문턱 충돌)와 함께 오너 결정으로 남긴다.
 - **검증**: typecheck 0 · lint 0 errors · vitest **223 files / 4318 tests** · 하네스 delta 0.0pp(측정=기록) · 게이트 7종 CLEAN. (앱 코드 무변경 → e2e 불필요.)
+
+## [2026-11-17] feat(campaign) | 다리 사이의 advance + advance 유실 버그 수정 (ADR-0318 (a))
+
+- **구현하며 버그를 찾았다**: `startNextLeg` 가 `makeInitialState` 를 다시 부르므로 **런 전 advance 의 `maxHp`·실드가 첫 다리 전환에서 사라졌다**. HP 는 만피로 리셋되므로 회복할 것도 없었고, 결과적으로 **게임의 다리 2·3 은 advance 가 아예 없었다** — 그런데 하네스는 다리마다 advance 를 준다고 가정하고 있었다. 즉 **게임이 측정보다 어려웠고**, 기준선이 게임의 실제 난이도가 아니었다.
+- **배선**: ADR-0315 Q3 의 *"미션 사이 회복은 prep 이 담당한다"* 를 실제로 연결했다.
+  ```
+  미션 선택 → 브리핑 → [prep] → 1다리 → [디브리핑 카드 → 브리핑 카드] → [다리 사이 advance] → 2다리 → … → 엔딩
+  ```
+- **새 화면 `contract_prep`**: ADR-0283 의 화면을 **그대로** 재사용(`renderPrep` + `PREP_OPTIONS` + `prepGrantFor`) — 금액이 `applyPrep` 과 어긋날 수 없다. ↑↓ 선택 · ENTER 지출 후 잭인 · **ESC 는 건너뛴다**(강제 없음). `drawPrep()` 로 렌더를 한 곳에 모았다.
+- **순서**: 브리핑 카드가 먼저(카드가 화면을 소유), 그다음 advance. 카드는 **큐**로 두 장이 이어진다(디브리핑 → 다음 작업).
+- **런 중에만 존재**하므로 `SCREENS_WITH_INPUT`(state===null 경로)에는 넣지 않았다. `contractPrepReturn` 으로 런의 screen 불변식을 지킨다(CONTINUE 는 `menu`, 새 런은 `prep`).
+- **드라이버 3곳 수정**(소크 · story trace · `run_end_save`): 새 화면이 키를 먹으므로 그대로 두면 **소크가 가짜 freeze 를 보고**한다(ADR-0273/0275 함정의 재확인). story trace 는 **카드 → advance 순서**를 지켜야 카드를 기록한다(처음에 순서를 틀려 카드가 누락됐고 trace 가 그것을 잡았다).
+- **검증**: typecheck 0 · lint 0 errors · vitest **223 files / 4321 tests**(+3) · **전체 e2e 54 passed / 5 skipped / 0 failed**(59) · story trace 3다리 완주(73스텝)에서 **디브리핑 → 브리핑 → advance** 순서를 기록 · 캠페인 하네스 **delta 0.0pp**(게임이 이제 하네스와 일치) · 게이트 7종 CLEAN.

@@ -58,6 +58,9 @@ import {
   firstFightWarningBeat,
   firstVictoryBeat,
   flatlineBeat,
+  finnIntroBeat,
+  firstReturnBeat,
+  ashpoolCallBeat,
   endingSignoffBeat,
   type DialogueBeat,
 } from "./core/state/event_beats";
@@ -295,6 +298,12 @@ function formatMissionOption(
   return `${formatNavIndex(index)} ${titleText}  [${grade} | ${credits}cr]`;
 }
 
+/** A story card: a title, and the voice it carries (ADR-0317 3b). */
+interface BeatCard {
+  readonly title: string;
+  readonly beat: DialogueBeat;
+}
+
 class Game {
   private state: GameState | null = null;
   private screen: ScreenKind = "menu";
@@ -365,8 +374,10 @@ class Game {
   /** ADR-0317 (3b): a one-time beat card that owns the screen until a key.
    * Same shape as the run intro, but for beats that arrive mid-run (the first
    * fight, the first win) and would not fit inline on a dense panel. */
-  private beatCard: { readonly title: string; readonly beat: DialogueBeat } | null =
-    null;
+  private beatCard: BeatCard | null = null;
+  /** Cards waiting their turn. A transition can have more than one thing to say
+   * (the fixer's debrief, then the next job), and a card owns the screen. */
+  private beatQueue: BeatCard[] = [];
   /** The commit stage last drawn — the loop redraws only when the clock
    * pushes the panel to a new stage, then stops (ADR-0262). */
   private lootCommitStageShown = -1;
@@ -482,6 +493,15 @@ class Game {
     document.addEventListener("visibilitychange", resetIdle);
     const handler = (action: GameAction): void => {
       resetIdle();
+      // ADR-0317 (3b): a beat card owns the screen until a key, whatever is
+      // behind it. It has to be checked FIRST: the fixer's introduction fires on
+      // the mission list, and a card that draws over a screen without consuming
+      // its keys let the briefing and prep advance invisibly behind it.
+      if (this.beatCard !== null) {
+        this.beatCard = this.beatQueue.shift() ?? null;
+        this.draw();
+        return;
+      }
       // Screens that own their input. This used to be an inline list of
       // screens to *exclude*, so any screen someone forgot to add fell into
       // `handleStubInput` and ENTER bounced to the menu -- which is exactly
@@ -556,12 +576,6 @@ class Game {
         this.draw();
         return;
       }
-      // ADR-0317 (3b): a mid-run beat card consumes the key the same way.
-      if (this.beatCard !== null) {
-        this.beatCard = null;
-        this.draw();
-        return;
-      }
       const resolved: GameAction = (() => {
         if (this.state === null) return action;
         const r = resolveProgramSelection(this.state, action);
@@ -598,7 +612,7 @@ class Game {
         ) {
           const beat = firstFightWarningBeat(language);
           if (beat !== null) {
-            this.beatCard = { title: "ICE AHEAD", beat };
+            this.showBeat({ title: "ICE AHEAD", beat });
             markBeatHeard(storage, "first_fight_warning");
           }
         }
@@ -609,7 +623,7 @@ class Game {
         ) {
           const beat = firstVictoryBeat(language);
           if (beat !== null) {
-            this.beatCard = { title: "FIRST BLOOD", beat };
+            this.showBeat({ title: "FIRST BLOOD", beat });
             markBeatHeard(storage, "first_victory");
           }
         }
@@ -618,7 +632,7 @@ class Game {
         // watching. Once per run, right after the killing blow.
         if (previous?.runPhase !== "dead" && revealed.runPhase === "dead") {
           const beat = flatlineBeat(language);
-          if (beat !== null) this.beatCard = { title: "FLATLINE", beat };
+          if (beat !== null) this.showBeat({ title: "FLATLINE", beat });
         }
         // ADR-0315 slice 2: a contract's next leg opens with the fixer handing
         // over the job — the mission's own briefing (ADR-0316), on the card the
@@ -635,7 +649,23 @@ class Game {
               leg.mission.briefing ||
               ""
             : "";
-          this.beatCard = {
+          // ADR-0317 3b: the campaign created two moments that nothing spoke at
+          // — returning from the first job, and Tessier-Ashpool noticing. Both
+          // scenes were authored for exactly these beats and had no trigger.
+          // The debrief comes first; the queue holds the job behind it.
+          const debrief =
+            contract?.completed === 1
+              ? firstReturnBeat(language)
+              : contract?.completed === 2
+                ? ashpoolCallBeat(language)
+                : null;
+          if (debrief !== null) {
+            this.showBeat({
+              title: `CONTRACT ${contract?.completed ?? 0}/${contract?.legs.length ?? 0} · DONE`,
+              beat: debrief,
+            });
+          }
+          this.showBeat({
             title: `CONTRACT ${(contract?.completed ?? 0) + 1}/${contract?.legs.length ?? 0}`,
             // No speaker: the briefing is the job's file, not a line the fixer
             // says (2026-11-17). The card names the job and prints it.
@@ -643,7 +673,7 @@ class Game {
               speaker: "",
               lines: story.length > 0 ? [story] : ["The next job."],
             },
-          };
+          });
         }
       }
       if (runAbandoned(previous, this.state)) {
@@ -1150,6 +1180,17 @@ class Game {
           this.prepCursor = 0;
           // ADR-0317: the fixer briefs you on the job before you choose the
           // advance. ENTER there continues to prep; ESC comes back here.
+          // ADR-0317 3b: the first time, he also introduces himself — the
+          // screen is his office, and the game never opened it.
+          const storage =
+            typeof localStorage === "undefined" ? null : localStorage;
+          if (!hasHeardBeat(storage, "met_the_finn")) {
+            const intro = finnIntroBeat(this.settingsState?.language ?? "en");
+            if (intro !== null) {
+              this.showBeat({ title: "THE FINN", beat: intro });
+              markBeatHeard(storage, "met_the_finn");
+            }
+          }
           this.screen = "briefing";
           this.draw();
         }
@@ -1675,6 +1716,13 @@ class Game {
       if (beat !== null) return beat;
     }
     return null;
+  }
+
+  /** Queue a story card (ADR-0317 3b). One owns the screen at a time; the rest
+   * wait their turn, so a transition can say two things in order. */
+  private showBeat(card: BeatCard): void {
+    if (this.beatCard === null) this.beatCard = card;
+    else this.beatQueue.push(card);
   }
 
   /** ADR-0317 (3b): the construct's last word on the ending screen. */

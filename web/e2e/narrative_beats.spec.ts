@@ -124,3 +124,35 @@ test("a flatline gets the construct's last word", async ({ page }) => {
   expect(card?.lines.join(" ")).toContain("I'm sorry");
 });
 
+test("the fixer introduces himself before the first briefing", async ({ page }) => {
+  await page.addInitScript(() =>
+    localStorage.setItem("wetrun_tutorial_completed", "true"),
+  );
+  await page.goto("./");
+  await page.waitForFunction(
+    () => (window as unknown as { wetrun?: unknown }).wetrun !== undefined,
+  );
+
+  // `finn_intro` was authored for the first walk into his office and had no
+  // trigger. It fires once per profile, on the way to the first briefing —
+  // which is that office.
+  await openMissionSelect(page);
+  await page.evaluate(() => localStorage.removeItem("wetrun_beat_met_finn"));
+  await page.keyboard.press("Enter"); // confirm the mission -> the card
+  await expect.poll(() => beatCard(page), { timeout: 5000 }).not.toBeNull();
+  const card = await beatCard(page);
+  expect(card?.title).toBe("THE FINN");
+  expect(card?.lines.join(" ")).toContain("Sit down");
+
+  // The card owns the screen: the briefing behind it must not advance until it
+  // is dismissed (it used to draw over the screen without eating the key).
+  await page.keyboard.press("Enter");
+  await expect.poll(() => beatCard(page)).toBeNull();
+  expect(
+    await page.evaluate(
+      () =>
+        (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen(),
+    ),
+  ).toBe("briefing");
+});
+

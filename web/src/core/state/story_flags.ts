@@ -11,11 +11,16 @@
 import type { OnboardingStorage } from "./onboarding";
 
 /** The beats that fire once per profile. */
-export type StoryBeatFlag = "first_fight_warning" | "first_victory";
+export type StoryBeatFlag =
+  | "first_fight_warning"
+  | "first_victory"
+  /** ADR-0317 3b: the fixer has introduced himself (once per profile). */
+  | "met_the_finn";
 
 const KEYS: Readonly<Record<StoryBeatFlag, string>> = {
   first_fight_warning: "wetrun_beat_first_fight",
   first_victory: "wetrun_beat_first_victory",
+  met_the_finn: "wetrun_beat_met_finn",
 };
 
 /** Has this profile already heard the beat? False without storage. */

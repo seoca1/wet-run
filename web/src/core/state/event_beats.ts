@@ -147,6 +147,40 @@ export function firstVictoryBeat(language: Language = "en"): DialogueBeat | null
   return dialogueBeat("dixie_postcombat", language, STORY_BEAT_LINES);
 }
 
+/** How many lines a conversation card shows. The fixer's introduction is five;
+ * the other debriefs are four. */
+export const CONVERSATION_BEAT_LINES = 5;
+
+/** The fixer introduces himself (ADR-0317 3b).
+ *
+ * `finn_intro` was authored for the first time the player walks into his office
+ * and was never wired: the game's first contract started with no introduction to
+ * the man handing it out. It plays once per profile, on a card before the first
+ * briefing — which is his office, and which the game never opened.
+ */
+export function finnIntroBeat(language: Language = "en"): DialogueBeat | null {
+  return dialogueBeat("finn_intro", language, CONVERSATION_BEAT_LINES);
+}
+
+/** The fixer's debrief after the contract's first job (ADR-0317 3b).
+ *
+ * `finn_followup` was authored for "the player returns from the first
+ * successful run", which is exactly the first leg transition — a moment the
+ * campaign created and nothing spoke at.
+ */
+export function firstReturnBeat(language: Language = "en"): DialogueBeat | null {
+  return dialogueBeat("finn_followup", language, STORY_BEAT_LINES);
+}
+
+/** Tessier-Ashpool's call after the contract's second job (ADR-0317 3b).
+ *
+ * `ta_warning` escalates the debrief: the fixer says they noticed, and then
+ * they call. Authored, and unwired until the campaign gave it a moment.
+ */
+export function ashpoolCallBeat(language: Language = "en"): DialogueBeat | null {
+  return dialogueBeat("ta_warning", language, STORY_BEAT_LINES);
+}
+
 /** The construct's last word when the runner flatlines (ADR-0317 3b).
  *
  * The design file had no death beat, so the one moment the story went silent was

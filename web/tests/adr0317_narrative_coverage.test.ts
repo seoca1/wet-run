@@ -15,8 +15,11 @@ import { describe, expect, it } from "vitest";
 import eventDialogues from "../src/data/event_dialogues.json";
 import iceTypes from "../src/data/ice_types.json";
 import {
+  ashpoolCallBeat,
   endingSignoffBeat,
+  finnIntroBeat,
   firstFightWarningBeat,
+  firstReturnBeat,
   firstVictoryBeat,
   flatlineBeat,
   iceIntroBeat,
@@ -30,12 +33,9 @@ const DATA: Readonly<Record<string, unknown>> = (
 /** Dialogues the game does not speak yet, and why. Adding a line here is a
  * deliberate act: this table is the only place that says "not wired". */
 const UNWIRED: Readonly<Record<string, string>> = {
-  finn_intro: "hub dialogue — needs the dialogue-tree screen (ADR-0317 open question f)",
-  finn_followup: "hub dialogue — needs the dialogue-tree screen (ADR-0317 open question f)",
   wim_hub: "hub dialogue — needs the dialogue-tree screen (ADR-0317 open question f)",
   maelcum_intro: "hub dialogue — needs the dialogue-tree screen (ADR-0317 open question f)",
   maelcum_caught: "hub dialogue — needs the dialogue-tree screen (ADR-0317 open question f)",
-  ta_warning: "hub dialogue — needs the dialogue-tree screen (ADR-0317 open question f)",
   ice_hammer_intro: "no ICE in the catalog has the id 'hammer', so nothing can trigger it",
 };
 
@@ -46,6 +46,9 @@ function wiredIds(): ReadonlySet<string> {
   if (firstFightWarningBeat() !== null) wired.add("dixie_warning");
   if (firstVictoryBeat() !== null) wired.add("dixie_postcombat");
   if (flatlineBeat() !== null) wired.add("dixie_flatline");
+  if (finnIntroBeat() !== null) wired.add("finn_intro");
+  if (firstReturnBeat() !== null) wired.add("finn_followup");
+  if (ashpoolCallBeat() !== null) wired.add("ta_warning");
   if (endingSignoffBeat() !== null) wired.add("dixie_signoff");
   for (const iceId of Object.keys(iceTypes)) {
     if (iceIntroBeat(iceId) !== null) wired.add(`ice_${iceId}_intro`);
@@ -88,6 +91,9 @@ describe("ADR-0317 (3b) — narrative coverage ledger", () => {
       firstFightWarningBeat(),
       firstVictoryBeat(),
       flatlineBeat(),
+      finnIntroBeat(),
+      firstReturnBeat(),
+      ashpoolCallBeat(),
       endingSignoffBeat(),
       iceIntroBeat("wisp"),
     ];

@@ -164,7 +164,13 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 선택 →
   `run_end_save` 2건·`continue` 1건이 실제로 실패했다(전리품이 안 넘어가고, 승리가 저장되지 않았다).
   튜토리얼과 같은 방식으로 **공유 헬퍼(`suppressStoryBeats`)가 1회성 비트를 미리 "들은 것으로"**
   표시하고, 카드 자체는 전용 스펙 `narrative_beats.spec.ts` 와 story trace 가 검증한다.
-- **남은 것**: 허브/메타 대사 6편(`finn`·`wim`·`maelcum`·`ta`)은 **대화 트리 화면**이 필요하다.
+- **캠페인이 만든 두 순간에 저자가 쓴 대사를 붙였다(2026-11-17)**: 계약이 **첫 직업에서 돌아오는 순간**과
+  **Tessier-Ashpool 이 눈치채는 순간**을 만들었는데, 그 둘을 위한 장면이 이미 저자에 의해 써 있었다
+  (`finn_followup` · `ta_warning`) — 트리거만 없었다. 다리 전환에서 **디브리핑 → 다음 작업** 순으로
+  카드가 이어지고(큐), 첫 브리핑 앞에는 **픽서의 자기소개**(`finn_intro`)가 붙는다(그 화면이 곧 그의 사무실이다).
+  **새 텍스트 0** — 셋 다 이미 있는 대사다.
+- **남은 것**: `wim_hub`(스프롤 허브/술집 화면 필요) · `maelcum_intro`·`maelcum_caught`(시온 접촉 화면 필요) ·
+  `ice_hammer_intro`(그런 ICE 가 없다). 셋 다 **새 화면**이 필요해 대화 트리로 미룬다.
   그리고 **죽음(FLATLINE)에는 설계된 대사가 없었다** → **`dixie_flatline` 신규**(2026-11-17, 아래).
 
 ### 이관 4단계 결과 — 발판을 치웠다 (2026-11-17)
@@ -221,7 +227,9 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 목록 →
   않는다.~~ **해소된 것**: `dixie_warning`·`dixie_postcombat` 은 **고유명사를 빼고** 아무 ICE·아무
   덱에 맞게 다시 썼고, 엔딩 두 장면(태우기/지키기)은 게임에 없는 선택을 전제하므로 **하나의
   `dixie_signoff`** 로 대체했다. 트리거는 게임의 구조에서 가져왔다(첫 전투·첫 승리·엔딩 화면).
-  **남은 것**: ⑴ 허브/메타 대사 6편은 **대화 트리 화면**이 필요하다(`DIALOGUE_TREES` 미배선),
+  **진행**: ⑴ 6편 중 **3편이 배선됐다**(2026-11-17 — `finn_intro` 첫 브리핑 앞 · `finn_followup` 첫 다리 뒤 ·
+  `ta_warning` 둘째 다리 뒤. **새 텍스트 0**). 남은 3편(`wim_hub`·`maelcum_intro`·`maelcum_caught`)은
+  **스프롤 허브/시온 접촉 화면**이 필요하고, `ice_hammer_intro` 는 그런 ICE 자체가 없다.
   ⑵ ~~죽음(FLATLINE)에는 설계된 대사가 없다~~ → **닫힘(2026-11-17)**: `dixie_flatline` 을 새로 썼다.
   **단 문구는 오너 검토 대상** — Jev 선택 confidence **0.2**(추론이 아니라 취향).
 
@@ -246,10 +254,12 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 목록 →
   `beatCard` · `encounterVoice()` · `endingSignoff()` · e2e 훅 3개
 - `web/tests/adr0317_mission_briefing_screen.test.ts` — 4 tests
 - `web/tests/event_beats.test.ts` — 8 tests · `web/tests/ice_intros.test.ts` — 5 tests
-- `web/tests/story_flags.test.ts` — 3 tests · `web/tests/adr0317_beat_card.test.ts` — 7 tests(죽음 비트 포함)
+- `web/tests/story_flags.test.ts` — 3 tests · `web/tests/adr0317_beat_card.test.ts` — 9 tests
+  (죽음 · 픽서 소개 · 디브리핑 · Ashpool 통화)
 - `web/tests/adr0317_ice_voice.test.ts` — 5 tests
 - **`web/tests/adr0317_narrative_coverage.test.ts` — 서사 원장(미배선 대사 + 이유 + 낡은 항목 감지)**
 - `web/e2e/prologue.spec.ts` · `run_intro.spec.ts` · `ice_voice.spec.ts` · `narrative_beats.spec.ts`
+  (첫 전투 경고 · **flatline** · **픽서 자기소개** — 실제로 죽어서/브리핑 앞에서 확인)
 - `web/e2e/menu-nav.ts` — `suppressStoryBeats`(1회성 비트를 미리 들은 것으로 표시)
 - `web/e2e/story_trace.spec.ts` — 드라이버를 공유 헬퍼로 교체 + 비트 **단언**
 
@@ -272,4 +282,5 @@ NEW RUN → 자키 선택 → [그 자키의 프롤로그] → 미션 목록 →
 - 2026-11-16: 이관 3b(각색) — 나머지 대사를 **게임 구조에 맞춰 다시 썼다**(아무 ICE·아무 덱·아무 엔딩) ·
   비트 카드·엔딩 서명 배선 · **검증기 3종 보강**(세로 가드 · 서사 원장 · story trace 수리)
 - 2026-11-17: 이관 4단계 — 메뉴 항목·화면 진입·i18n 키 삭제, 죽은 `prologueForRun` 분기 제거
-- 2026-11-17: **죽음 비트 신규**(`dixie_flatline`, 오너 검토 대상)
+- 2026-11-17: **죽음 비트 신규**(`dixie_flatline`, 오너 검토 대상) · **저자 대사 3편 배선**(픽서 소개·디브리핑·Ashpool 통화, 새 텍스트 0)
+- 2026-11-17: 카드가 **프리게임 화면 위에 그려지면서 키를 소비하지 않던 버그** 수정(브리핑·prep 이 뒤에서 넘어갔다)

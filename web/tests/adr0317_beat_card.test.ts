@@ -13,8 +13,11 @@ import { describe, expect, it } from "vitest";
 import { renderBeatCard } from "../src/renderer/beat_card";
 import { renderEndingScreen } from "../src/renderer/ending";
 import {
+  ashpoolCallBeat,
   endingSignoffBeat,
+  finnIntroBeat,
   firstFightWarningBeat,
+  firstReturnBeat,
   firstVictoryBeat,
   flatlineBeat,
 } from "../src/core/state/event_beats";
@@ -57,6 +60,30 @@ describe("ADR-0317 (3b) — beat card", () => {
     expect(drawn).toContain("Dixie Flatline");
     expect(drawn).toContain("I'm sorry");
     expect(drawn).toContain("nothing left in there");
+  });
+
+  // ADR-0317 3b: the campaign created two moments nothing spoke at — returning
+  // from the first job, and Tessier-Ashpool noticing. Both scenes were authored
+  // for exactly those beats and had no trigger until the contract existed.
+  it("speaks the fixer's introduction", () => {
+    const beat = finnIntroBeat();
+    expect(beat).not.toBeNull();
+    const drawn = text(renderBeatCard("THE FINN", beat!, 80, 50));
+    expect(drawn).toContain("THE FINN");
+    expect(drawn).toContain("Sit down");
+  });
+
+  it("speaks the first debrief and the Ashpool call", () => {
+    const back = firstReturnBeat();
+    const call = ashpoolCallBeat();
+    expect(back).not.toBeNull();
+    expect(call).not.toBeNull();
+    expect(text(renderBeatCard("CONTRACT 1/3 · DONE", back!, 80, 50))).toContain(
+      "You came back",
+    );
+    expect(text(renderBeatCard("CONTRACT 2/3 · DONE", call!, 80, 50))).toContain(
+      "Tessier-Ashpool",
+    );
   });
 
   it("speaks the victory beat too", () => {

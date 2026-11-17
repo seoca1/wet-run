@@ -11,7 +11,11 @@ import { beatKey } from "../src/core/state/story_flags";
  * (`narrative_beats.spec.ts`) and the story trace, which do not come through
  * here. */
 export async function suppressStoryBeats(page: Page): Promise<void> {
-  const keys = [beatKey("first_fight_warning"), beatKey("first_victory")];
+  const keys = [
+    beatKey("first_fight_warning"),
+    beatKey("first_victory"),
+    beatKey("met_the_finn"),
+  ];
   await page.evaluate((ks: string[]) => {
     for (const k of ks) localStorage.setItem(k, "true");
   }, keys);

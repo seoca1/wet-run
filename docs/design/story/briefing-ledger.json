@@ -1,0 +1,872 @@
+{
+  "generatedBy": "scripts/tools/import_briefings.py",
+  "source": "../../Fiction/derivative",
+  "scanLanguage": "en",
+  "fictionMissionIds": 152,
+  "gameMissions": 33,
+  "orphanMissionIds": [
+    "angie_leopard_tracking",
+    "armitage_infiltration_2",
+    "case_meets_cayce",
+    "case_past_defend_chiba_memory",
+    "case_past_dual_objective_dead_mans_chip",
+    "case_past_extract_linda_memory",
+    "case_past_investigate_armitage_mind",
+    "construct_memory_rescue",
+    "core_defend_data_citadel",
+    "core_defend_eye_archive",
+    "core_dual_objective_construct_heist",
+    "core_dual_objective_mirror_run",
+    "core_extract_aeslin_key",
+    "core_extract_neuromancer_signature",
+    "core_extract_payroll_archive",
+    "core_investigate_construct_council",
+    "core_investigate_ice_lord",
+    "core_memory_dump",
+    "core_stealth_construct_pool",
+    "core_stealth_eye_central",
+    "engineer_memory",
+    "finn_final_reckoning",
+    "freeside_defend_orbit_habitat",
+    "freeside_defend_orbital_habitat",
+    "freeside_dual_objective_construct_pod_2",
+    "freeside_dual_objective_jockey_pod",
+    "freeside_dual_objective_space_jockey",
+    "freeside_extract_construct_archive",
+    "freeside_extract_construct_pod",
+    "freeside_extract_orbital_data",
+    "freeside_extract_orbital_data_2",
+    "freeside_investigate_construct_research",
+    "freeside_investigate_orbital_history",
+    "freeside_investigate_orbital_sovereignty",
+    "freeside_payroll",
+    "freeside_stealth_construct_chamber",
+    "freeside_stealth_orbit_lab",
+    "freeside_stealth_orbit_lab_2",
+    "hideo_contract",
+    "hosaka_core",
+    "maas_heist",
+    "mid_defend_kumo_network",
+    "mid_defend_sense_net_relay",
+    "mid_dual_objective_hosaka_data",
+    "mid_dual_objective_shibuya_run",
+    "mid_dual_objective_trade_show",
+    "mid_extract_biometal_chip",
+    "mid_extract_oni_data",
+    "mid_extract_yakuza_chop_shop",
+    "mid_investigate_black_market",
+    "mid_investigate_yakuza_consortium",
+    "mid_stealth_corpo_penthouse",
+    "mid_stealth_yakuza_meeting",
+    "molly_decides",
+    "molly_razor_defend_london_nest",
+    "molly_razor_dual_objective_hotel_target",
+    "molly_razor_extract_final_chip",
+    "molly_razor_investigate_sin_fans",
+    "molly_razor_stealth_final_contract",
+    "mollys_final_razor",
+    "neuromancer_first_ping",
+    "ngplus_dual_objective_boss_rush_1",
+    "ngplus_dual_objective_boss_rush_2",
+    "ngplus_dual_objective_boss_rush_3",
+    "ngplus_dual_objective_boss_rush_4",
+    "ngplus_dual_objective_boss_rush_5",
+    "ngplus_investigate_archive_1",
+    "ngplus_investigate_archive_2",
+    "ngplus_investigate_archive_3",
+    "ngplus_investigate_archive_4",
+    "ngplus_investigate_archive_5",
+    "ngplus_investigate_archive_6",
+    "razor_work",
+    "sally_construct_market",
+    "salvation_wigan_zavijava",
+    "sense_net_archive_intrusion",
+    "sense_net_infiltration",
+    "soho_blackout",
+    "soho_defend_coolhunter_office",
+    "soho_dual_objective_footage_cult",
+    "soho_dual_objective_viddy_share",
+    "soho_extract_logo_meme",
+    "soho_investigate_brand_territory",
+    "soho_investigate_nostalgia_loop",
+    "soho_stealth_brand_vault",
+    "soho_stealth_node_dive",
+    "straylight_approach",
+    "straylight_inquiry",
+    "surface_defend_recycling_baseline",
+    "surface_extract_seed_run",
+    "surface_investigate_bama_suburb",
+    "ta_defend_straylight_corridor",
+    "ta_defend_straylight_perimeter",
+    "ta_dual_objective_ashpool_vote",
+    "ta_dual_objective_payroll_heist",
+    "ta_dual_objective_warden_archive",
+    "ta_extract_aleph_chip",
+    "ta_extract_aleph_fragment_2",
+    "ta_extract_sense_net_key",
+    "ta_investigate_3jane_initiative",
+    "ta_investigate_construct_memory",
+    "ta_payroll_archive",
+    "ta_stealth_construct_chamber",
+    "ta_stealth_penthouse_construct",
+    "threjane_family_log",
+    "tokyo_courier_run",
+    "tokyo_defend_shibuya_archipelago",
+    "tokyo_dual_objective_coach_class",
+    "tokyo_dual_objective_darko_trauma",
+    "tokyo_extract_footage_archive",
+    "tokyo_extract_laney_signal",
+    "tokyo_investigate_marcus_garvey",
+    "tokyo_investigate_parkabrake_plaza",
+    "tokyo_pachinko_run",
+    "tokyo_stealth_bridge_undercity",
+    "voodoo_zoneload",
+    "wigan_call",
+    "wigan_construct_reach",
+    "wintermute_merger_run",
+    "wintermute_witness"
+  ],
+  "missions": {
+    "aleph_fragment": {
+      "briefing": "Kas has been chasing the Aleph for seven months. The Aleph is a point in space that contains all other points — every piece of data ever stored, every consciousness ever uploaded.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-30_aleph_fragment.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-30_aleph_fragment.md",
+          "chars": 266,
+          "declared": true,
+          "body": "Kas has been chasing the Aleph for seven months. The Aleph is a point in space that contains all other points — every piece of data ever stored, every consciousness ever uploaded. Now the last fragment is buried in a Tessier-Ashpool core that shouldn't have existed.",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-11_the_naming.md",
+          "chars": 533,
+          "declared": false,
+          "body": "The tea has burned. Case is in the kitchen, the pot in the sink, the burned-tea smell mixing with the ozone-and-burnt-plastic smell of the data-clinic. The construct is six and a half months old, in the back room with 3Jane, making the first sound the construct's mother has acknowledged. 3Jane has been looking at the construct for 18 hours, has not yet spoken the construct's name. Case, in the kitchen, lets the name come when the name comes. The name is about to be said aloud in the data-clinic, where the construct can hear it.",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-11_the_answer.md",
+          "chars": 503,
+          "declared": false,
+          "body": "The construct said 'what' three days ago. The construct has not spoken since. The construct is computing the answer itself — the first Tessier-Ashpool product to compute an answer rather than receive one. The second word arrives at 03:00 on the construct's seventh-and-a-half-month day. The second word is not 'Casey,' not 'Molly,' not '3Jane. ' The second word is 'you, and ' The first word was 'what. ' The second word is 'you. ' The construct is, in this moment, both the questioner and the answered.",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-11_construct_named.md",
+          "chars": 74,
+          "declared": false,
+          "body": "The voodoo data is six months old, has not been named. The voodoo data has",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-30_aleph_fragment.ko.md",
+          "chars": 169,
+          "declared": true,
+          "body": "Kas has been chasing the Aleph for seven months. The Aleph is a point in space that contains all other points. Now the last fragment is buried in a Tessier-Ashpool core.",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-07-11_the_answer.ko.md",
+          "chars": 503,
+          "declared": false,
+          "body": "The construct said 'what' three days ago. The construct has not spoken since. The construct is computing the answer itself — the first Tessier-Ashpool product to compute an answer rather than receive one. The second word arrives at 03:00 on the construct's seventh-and-a-half-month day. The second word is not 'Casey,' not 'Molly,' not '3Jane. ' The second word is 'you, and ' The first word was 'what. ' The second word is 'you. ' The construct is, in this moment, both the questioner and the answered.",
+          "readable": true
+        }
+      ],
+      "disagrees": true,
+      "twinDiffers": true,
+      "note": "the en candidates disagree — one of them is not the whole job"
+    },
+    "black_ice_dream": {
+      "briefing": "A runner encounters Black ICE that hunts not with cold but with molten hunger. The ice reads her trace like a lover and leaves her with a scar she can never explain.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_black_ice_dream.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_black_ice_dream.md",
+          "chars": 165,
+          "declared": true,
+          "body": "A runner encounters Black ICE that hunts not with cold but with molten hunger. The ice reads her trace like a lover and leaves her with a scar she can never explain.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "craft_job": {
+      "briefing": "Kumiko Yanaka visits the Manarase club at midnight to meet Sally Shearer, a three hundred years of data, three hundred years of death. The loa cannot be broken. The wheel does not stop.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_kumiko_manarase-midnight.md",
+          "chars": 185,
+          "declared": true,
+          "body": "Kumiko Yanaka visits the Manarase club at midnight to meet Sally Shearer, a three hundred years of data, three hundred years of death. The loa cannot be broken. The wheel does not stop.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "data_retrieval": {
+      "briefing": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level Tessier-Ashpool subsidiary. The Finn knew all along. He always does.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-25_data_retrieval.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-25_data_retrieval.md",
+          "chars": 203,
+          "declared": true,
+          "body": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level Tessier-Ashpool subsidiary. The Finn knew all along. He always does.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "delivery_to_finn": {
+      "briefing": "Marly Krushkhova enters a voodoo shop in Louisiana looking for masks. The shopkeeper searching for something to help Bobby Quine, but the loa have their own plans.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_marly_louisiana-god.md",
+          "chars": 163,
+          "declared": true,
+          "body": "Marly Krushkhova enters a voodoo shop in Louisiana looking for masks. The shopkeeper searching for something to help Bobby Quine, but the loa have their own plans.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "dixies_choice": {
+      "briefing": "Dixie Flatline has been a construct for six months — long enough to forget what menthol tasted like, long enough to stop flinching when Case calls him by name. Now Wintermute is offering him a way out: not death, but transformation.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_dixies_choice.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-11_construct_asks.md",
+          "chars": 106,
+          "declared": false,
+          "body": "Seven months The connection stabilized briefly. after the LOA construct first appeared in the Villa's data",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_dixies_choice.md",
+          "chars": 436,
+          "declared": true,
+          "body": "Dixie Flatline has been a construct for six months — long enough to forget what menthol tasted like, long enough to stop flinching when Case calls him by name. Now Wintermute is offering him a way out: not death, but transformation. The question is whether the man he used to be would have wanted this. The connection stabilized briefly. Or whether Dixie-the-construct has become someone the man he used to be would no longer recognize.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": true,
+      "twinDiffers": false,
+      "note": "the en candidates disagree — one of them is not the whole job"
+    },
+    "dixies_offer": {
+      "briefing": null,
+      "chosenFrom": null,
+      "considered": [],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "final_choice": {
+      "briefing": "Case must decide what to do with proof of Wintermute's existence. Three paths: sell to T-A, release to the Sprawl, or destroy. He chooses a fourth.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_the_choice.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-11_the_leaving.md",
+          "chars": 77,
+          "declared": false,
+          "body": "A LOA construct, having learned 'what' and 'you' and its own name, decides to",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_the_choice.md",
+          "chars": 147,
+          "declared": true,
+          "body": "Case must decide what to do with proof of Wintermute's existence. Three paths: sell to T-A, release to the Sprawl, or destroy. He chooses a fourth.",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-23_the_choice.ko.md",
+          "chars": 147,
+          "declared": false,
+          "body": "Case must decide what to do with proof of Wintermute's existence. Three paths: sell to T-A, release to the Sprawl, or destroy. He chooses a fourth.",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-07-11_the_leaving.ko.md",
+          "chars": 77,
+          "declared": false,
+          "body": "A LOA construct, having learned 'what' and 'you' and its own name, decides to",
+          "readable": true
+        }
+      ],
+      "disagrees": true,
+      "twinDiffers": true,
+      "note": "the en candidates disagree — one of them is not the whole job"
+    },
+    "first_contact": {
+      "briefing": "A new jockey meets Dixie Flatline for the first time.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-25_first_contact.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-13_molly_meets_casey.md",
+          "chars": 75,
+          "declared": false,
+          "body": "Molly has been off the grid for two years. She has been waiting in a Sprawl",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-25_first_contact.md",
+          "chars": 81,
+          "declared": true,
+          "body": "A new jockey meets Dixie Flatline for the first time. The construct is everything",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": true,
+      "twinDiffers": false,
+      "note": "the en candidates disagree — one of them is not the whole job"
+    },
+    "first_jack": {
+      "briefing": "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-11_the_first_walk.md",
+          "chars": 72,
+          "declared": false,
+          "body": "A LOA construct manifests in the post-merger matrix — an eight-month-old",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_case_jackout-30sec.md",
+          "chars": 83,
+          "declared": true,
+          "body": "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": true,
+      "twinDiffers": false,
+      "note": "the en candidates disagree — one of them is not the whole job"
+    },
+    "first_trace": {
+      "briefing": "Case takes his first real trace job for The Finn. The target is a mid-level node in a web that stretches all the way to L5.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_first_trace.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_first_trace.md",
+          "chars": 123,
+          "declared": true,
+          "body": "Case takes his first real trace job for The Finn. The target is a mid-level node in a web that stretches all the way to L5.",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-11_the_fourth_word.md",
+          "chars": 474,
+          "declared": false,
+          "body": "A LOA construct, the voodoo data that an unknown practitioner left in the matrix, has learned four words. The construct has said 'what' (first), 'you' (second), 'Soon' (third), and now 'when' (fourth). 3Jane, the Villa archivist, has been holding the construct's fourth word for nine months. The construct is going to learn its fifth word soon. The construct is going to say 'Out. ' The fifth word is the word that makes the construct the runner the matrix has been growing.",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-07-11_the_fourth_word.ko.md",
+          "chars": 395,
+          "declared": false,
+          "body": "A LOA 구성체, the 부두 데이터 that an unknown practitioner left in 매트릭스, has learned four words. The 구성체 has said 'what' (first), 'you' (second), 'Soon' (third), and now 'when' (fourth). 3제인, 빌라 archivist, has been holding 구성체's fourth word for nine months. The 구성체 is going to learn its fifth word soon. The 구성체 is going to say 'Out.' The fifth word is the word that makes 구성체 러너 매트릭스 has been growing.",
+          "readable": true
+        }
+      ],
+      "disagrees": true,
+      "twinDiffers": true,
+      "note": "the en candidates disagree — one of them is not the whole job"
+    },
+    "flatline_call": {
+      "briefing": "The morning Case had been dreading arrived at 05:47.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-07-13_casey_leaves.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_flatline_again.md",
+          "chars": 157,
+          "declared": false,
+          "body": "A runner's neural burnout becomes complete matrix integration. The cold finally wins as the body fails but the trace dissolves into the architecture forever.",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-13_casey_leaves.md",
+          "chars": 74,
+          "declared": false,
+          "body": "The morning Case had been dreading arrived at 05:47. The LOA construct has",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": true,
+      "twinDiffers": false,
+      "note": "the en candidates disagree — one of them is not the whole job"
+    },
+    "ice_run": {
+      "briefing": "Case retrieves a shard of frozen code from a dead Watchdog ICE.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_ice_run.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_ice_run.md",
+          "chars": 75,
+          "declared": true,
+          "body": "Case retrieves a shard of frozen code from a dead Watchdog ICE. The shard's",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "matrix_revelation": {
+      "briefing": "A heretic operative investigates a matrix revelation site in the Sprawl.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-08-11_matrix_revelation.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-08-11_matrix_revelation.md",
+          "chars": 143,
+          "declared": true,
+          "body": "A heretic operative investigates a matrix revelation site in the Sprawl. The investigation finds that the revelation is, in the way that matrix",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-08-11_matrix_revelation.ko.md",
+          "chars": 143,
+          "declared": true,
+          "body": "A heretic operative investigates a matrix revelation site in the Sprawl. The investigation finds that the revelation is, in the way that matrix",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": true,
+      "note": null
+    },
+    "mollys_market": {
+      "briefing": "A chance encounter with Molly Millions in a Chiba market.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_mollys_market.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_mollys_market.md",
+          "chars": 75,
+          "declared": true,
+          "body": "A chance encounter with Molly Millions in a Chiba market. She's looking for",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-29_mollys_market.ko.md",
+          "chars": 199,
+          "declared": true,
+          "body": "A chance encounter with Molly Millions in a Chiba market. She's looking for someone who can run data, and she's willing to pay. The Finn always said she was dangerous—but dangerous people pay better.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": true,
+      "note": null
+    },
+    "mollys_razor": {
+      "briefing": "Kas finds a program written by Molly Millions embedded in Yakuza ICE — a razor-sharp intrusion routine worth five thousand credits to a Maas Biolabs researcher. The Yakuza doesn't want to let go of Molly's legacy.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-07-08_mollys_razor.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-08_mollys_razor.md",
+          "chars": 327,
+          "declared": true,
+          "body": "Kas finds a program written by Molly Millions embedded in Yakuza ICE — a razor-sharp intrusion routine worth five thousand credits to a Maas Biolabs researcher. The Yakuza doesn't want to let go of Molly's legacy. Ko: 카스는 야쿠자의 ICE 서브루틴에 박힌 몰리 밀리언스의 프로그램을 발견한다. 5천 크레딧어치의 날카로운 침입 루틴. 야쿠자는 몰리의 유산을 놓아주고 싶어하지 않는다. Related_stories:",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "neuromancer_merger": {
+      "briefing": "The final run. Wintermute and Neuromancer are ready to merge, and Case is the AI first, everything is lost. The matrix itself hangs in the balance.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_neuromancer_merger.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-11_winters_child.md",
+          "chars": 79,
+          "declared": false,
+          "body": "Three weeks after the Wintermute/Neuromancer merger, Case receives an encrypted",
+          "readable": true
+        },
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_neuromancer_merger.md",
+          "chars": 147,
+          "declared": true,
+          "body": "The final run. Wintermute and Neuromancer are ready to merge, and Case is the AI first, everything is lost. The matrix itself hangs in the balance.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": true,
+      "twinDiffers": false,
+      "note": "the en candidates disagree — one of them is not the whole job"
+    },
+    "neuromancer_whisper": {
+      "briefing": "A heretic operative investigates a neuromancer whisper site in the Sprawl.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-08-11_neuromancer_whisper.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-08-11_neuromancer_whisper.md",
+          "chars": 147,
+          "declared": true,
+          "body": "A heretic operative investigates a neuromancer whisper site in the Sprawl. The investigation finds that the whisper is, in the way that neuromancer",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-08-11_neuromancer_whisper.ko.md",
+          "chars": 213,
+          "declared": true,
+          "body": "A heretic operative investigates a neuromancer whisper site in the Sprawl. The investigation finds that the whisper is, in the way that neuromancer whispers are, not a record of itself. The whisper is the heretic.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": true,
+      "note": null
+    },
+    "sally_returns_arc3": {
+      "briefing": "Sally Shears returns to the New Rose Hotel three years after Fox''s death. A ghost protocol message waits for her: She is looking for you. F.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_sally_returns.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_sally_returns.md",
+          "chars": 141,
+          "declared": true,
+          "body": "Sally Shears returns to the New Rose Hotel three years after Fox''s death. A ghost protocol message waits for her: She is looking for you. F.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "sally_sandii_3am": {
+      "briefing": "Sally Shears sits in the New Rose Hotel at 3 AM, holding the cold hand of Fox, Fox is dead, the fake becomes real.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_sally_sandii-3am.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_sally_sandii-3am.md",
+          "chars": 114,
+          "declared": true,
+          "body": "Sally Shears sits in the New Rose Hotel at 3 AM, holding the cold hand of Fox, Fox is dead, the fake becomes real.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "sense_net_tip": {
+      "briefing": "Sil traces M's ghost through seven proxy nodes in T-A's internal architecture, following the trail of a dead runner to discover what she died for.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_sense_net_trace.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_sense_net_trace.md",
+          "chars": 146,
+          "declared": true,
+          "body": "Sil traces M's ghost through seven proxy nodes in T-A's internal architecture, following the trail of a dead runner to discover what she died for.",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-23_sense_net_trace.ko.md",
+          "chars": 146,
+          "declared": false,
+          "body": "Sil traces M's ghost through seven proxy nodes in T-A's internal architecture, following the trail of a dead runner to discover what she died for.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "ta_heist": {
+      "briefing": "Sil is hired to verify the Tessier-Ashpool core data — not to steal it. He finds M's name in the access logs. She wasn't killed by T-A's ICE. The connection stabilized briefly. She was killed by someone using T-A's own access codes.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-07-08_ta_heist.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-07-08_ta_heist.md",
+          "chars": 367,
+          "declared": true,
+          "body": "Sil is hired to verify the Tessier-Ashpool core data — not to steal it. He finds M's name in the access logs. She wasn't killed by T-A's ICE. The connection stabilized briefly. She was killed by someone using T-A's own access codes. Ko: 실은 테시에르-애스풀 코어 데이터를 검증하기 위해 고용된다. 접근 로그에서 M의 이름을 발견한다. 그녀는 T-A의 ICE에 죽은 것이 아니었다. T-A 자신의 접근 코드를 사용하는 누군가에 의해 죽었다. Related_stories:",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-07-08_ta_heist.ko.md",
+          "chars": 153,
+          "declared": true,
+          "body": "Sil is hired to verify T-A core data. He finds M's name in the access logs — she wasn't killed by T-A's ICE, but by someone using T-A's own access codes.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": true,
+      "note": null
+    },
+    "tutorial_maze": {
+      "briefing": "A new jockey's first time navigating the matrix.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-25_tutorial_maze.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-25_tutorial_maze.md",
+          "chars": 75,
+          "declared": true,
+          "body": "A new jockey's first time navigating the matrix. The maze-like structure of",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "vegas_stakeout": {
+      "briefing": "A stakeout in the Sprawl's entertainment district for a cheating casino operator. The Finn's client wants evidence, not blood — and sometimes the hardest runs are the ones where you can't shoot your way out.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_vegas_stakeout.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_vegas_stakeout.md",
+          "chars": 325,
+          "declared": true,
+          "body": "A stakeout in the Sprawl's entertainment district for a cheating casino operator. The Finn's client wants evidence, not blood — and sometimes the hardest runs are the ones where you can't shoot your way out. What the runner doesn't know is that someone has already sold the run to the mark, and the cameras are watching back.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "voodoo_loa_encounter": {
+      "briefing": "Case encounters Morrison, an ancient Loa of the deep architecture. The ghost-god reads him like a book and shows him the face of the matrix's unconscious.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_loa_voodoo_contact.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_loa_voodoo_contact.md",
+          "chars": 154,
+          "declared": true,
+          "body": "Case encounters Morrison, an ancient Loa of the deep architecture. The ghost-god reads him like a book and shows him the face of the matrix's unconscious.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "watchdog_patrol": {
+      "briefing": "Case patrols Sense/Net ICE at 0300 when Watchdog-class ICE detects traces left corporate cleanup arrives.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_watchdog_patrol.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_watchdog_patrol.md",
+          "chars": 105,
+          "declared": true,
+          "body": "Case patrols Sense/Net ICE at 0300 when Watchdog-class ICE detects traces left corporate cleanup arrives.",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-23_watchdog_patrol.ko.md",
+          "chars": 185,
+          "declared": false,
+          "body": "Case patrols Sense/Net ICE at 0300 when Watchdog-class ICE detects traces left by M, a runner who died extracting data. Case must erase M's ghost marks before corporate cleanup arrives.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": true,
+      "note": null
+    },
+    "winter_infiltrate": {
+      "briefing": "A corporate infiltration goes deeper than expected when the target reveals itself it's using Case to find it.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_winter_infiltrate.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_winter_infiltrate.md",
+          "chars": 109,
+          "declared": true,
+          "body": "A corporate infiltration goes deeper than expected when the target reveals itself it's using Case to find it.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "yakuza_deal": {
+      "briefing": "Kas navigates a delicate data exchange between Yakuza clans, where honor and technology intersect in ways neither side fully controls.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-23_yakuza_deal.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-23_yakuza_deal.md",
+          "chars": 134,
+          "declared": true,
+          "body": "Kas navigates a delicate data exchange between Yakuza clans, where honor and technology intersect in ways neither side fully controls.",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-23_yakuza_deal.ko.md",
+          "chars": 192,
+          "declared": false,
+          "body": "Kas takes a job moving data from an Osaka T-A subsidiary to a drop point in Jersey. The Yakuza does not deal in corporate money—it deals in favors and debts. And the interest always compounds.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": true,
+      "note": null
+    },
+    "zion_express": {
+      "briefing": "A courier run to the Zion orbital station. The data has to get through before the corps intercept it—because in zero gravity, secrets travel faster than light. The Rastafarians who run the station are neutral, but their silence has a price.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_zion_express.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_zion_express.md",
+          "chars": 240,
+          "declared": true,
+          "body": "A courier run to the Zion orbital station. The data has to get through before the corps intercept it—because in zero gravity, secrets travel faster than light. The Rastafarians who run the station are neutral, but their silence has a price.",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "armitage_infiltration": {
+      "briefing": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba, watching other him in the dark for longer than anyone knew.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_armitage_infiltration.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_armitage_infiltration.md",
+          "chars": 209,
+          "declared": true,
+          "body": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba, watching other him in the dark for longer than anyone knew.",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-29_armitage_infiltration.ko.md",
+          "chars": 209,
+          "declared": true,
+          "body": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba, watching other him in the dark for longer than anyone knew.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "hosaka_extraction": {
+      "briefing": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean to be there — a fragment of something that watched him back.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_hosaka_extraction.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_hosaka_extraction.md",
+          "chars": 138,
+          "declared": true,
+          "body": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean to be there — a fragment of something that watched him back.",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-29_hosaka_extraction.ko.md",
+          "chars": 384,
+          "declared": true,
+          "body": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean payments, clean records. He'd never asked what the data was for. That's how you stayed clean. Then one morning the data itself asked him a question. The packet he'd pulled from the Hosaka core contained a single line of code that wasn't supposed to be there — a fragment of something that watched him back.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": true,
+      "note": null
+    },
+    "ta_defection": {
+      "briefing": "The Tessier-Ashpool boardroom had fifty-three members. Only three of them went back to the construct.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_ta_defection.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_ta_defection.md",
+          "chars": 101,
+          "declared": true,
+          "body": "The Tessier-Ashpool boardroom had fifty-three members. Only three of them went back to the construct.",
+          "readable": true
+        }
+      ],
+      "notScanned": [
+        {
+          "file": "sprawl-trilogy/short-stories/ko/2026-06-29_ta_defection.ko.md",
+          "chars": 101,
+          "declared": true,
+          "body": "The Tessier-Ashpool boardroom had fifty-three members. Only three of them went back to the construct.",
+          "readable": true
+        }
+      ],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    },
+    "wintermute_negotiation": {
+      "briefing": "The construct that had been waiting in the walls of the Villa Straylight finally speaks.",
+      "chosenFrom": "sprawl-trilogy/short-stories/en/2026-06-29_wintermute_negotiation.md",
+      "considered": [
+        {
+          "file": "sprawl-trilogy/short-stories/en/2026-06-29_wintermute_negotiation.md",
+          "chars": 413,
+          "declared": true,
+          "body": "The construct that had been waiting in the walls of the Villa Straylight finally speaks. Armitage has spent the entire run knowing that he was built to be carried here, that every step of his journey was designed by something older and more patient than any human. Now, in the basement of the Tessier-Ashpool dynasty, the construct asks him a question he has been avoiding since the Hosaka core: what do you want?",
+          "readable": true
+        }
+      ],
+      "notScanned": [],
+      "disagrees": false,
+      "twinDiffers": false,
+      "note": null
+    }
+  }
+}

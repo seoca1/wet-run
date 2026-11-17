@@ -35,6 +35,7 @@ from collections import defaultdict
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 MISSIONS = os.path.join(ROOT, "web", "src", "data", "missions.json")
+LEDGER = os.path.join(ROOT, "docs", "design", "story", "briefing-ledger.json")
 FICTION = os.path.abspath(os.path.join(ROOT, "..", "..", "Fiction", "derivative"))
 
 # A briefing is the job in a sentence or two — and it has to be a WHOLE
@@ -110,11 +111,25 @@ def has_slop(text: str) -> bool:
     return any(marker in low for marker in SLOP_MARKERS)
 
 
-def collect() -> dict[str, str]:
-    """mission_id -> cleaned summary, preferring the story that declares the
-    mission in `game_integration` and is short enough to read as a briefing."""
-    candidates: dict[str, list[tuple[int, int, str]]] = defaultdict(list)
-    pattern = os.path.join(FICTION, "**", "en", "*.md")
+# The importer only reads `**/en/*.md`. The ledger below also surveys the other
+# language directories, because a twin can carry a summary the `en` file lost
+# (2026-11-17: `watchdog_patrol`'s `en` summary is missing its middle clause and
+# its `ko` twin has the whole sentence). Those are reported, not used — the
+# choice is the owner's, and changing it changes the game's text.
+SCAN_LANG = "en"
+
+
+def survey() -> dict[str, dict[str, list[dict]]]:
+    """Every candidate summary per mission id, from every language directory.
+
+    Returns `{mission_id: {"considered": [...], "other": [...]}}`, where each
+    entry is `{file, chars, declared, body}` and `considered` are the ones the
+    importer's own scan would see.
+    """
+    out: dict[str, dict[str, list[dict]]] = defaultdict(
+        lambda: {"considered": [], "other": []}
+    )
+    pattern = os.path.join(FICTION, "**", "*.md")
     for path in glob.glob(pattern, recursive=True):
         text = open(path, errors="ignore").read()
         mid = ID_RE.search(text)
@@ -122,15 +137,35 @@ def collect() -> dict[str, str]:
         if not mid or not summ:
             continue
         body = clean(summ.group(1))
-        if len(body) < 40 or has_slop(body):
-            continue
         declared = INTEG_RE.search(text)
-        declared_match = 1 if declared and declared.group(1) == mid.group(1) else 0
-        # Prefer a declared match, then the shortest readable summary.
-        candidates[mid.group(1)].append((declared_match, -len(body), body))
+        entry = {
+            "file": os.path.relpath(path, FICTION),
+            "chars": len(body),
+            "declared": bool(declared and declared.group(1) == mid.group(1)),
+            "body": body,
+            "readable": len(body) >= 40 and not has_slop(body),
+        }
+        bucket = (
+            "considered"
+            if os.sep + SCAN_LANG + os.sep in path
+            else "other"
+        )
+        out[mid.group(1)][bucket].append(entry)
+    return out
 
+
+def collect() -> dict[str, str]:
+    """mission_id -> cleaned summary, preferring the story that declares the
+    mission in `game_integration` and is short enough to read as a briefing."""
+    surveyed = survey()
     out: dict[str, str] = {}
-    for mid, options in candidates.items():
+    for mid, buckets in surveyed.items():
+        options = [
+            (1 if c["declared"] else 0, -c["chars"], c["body"])
+            for c in buckets["considered"]
+            if c["readable"]
+        ]
+        # Prefer a declared match, then the shortest readable summary.
         options.sort(reverse=True)
         for _, _, body in options:
             chosen = brief(body)
@@ -140,9 +175,67 @@ def collect() -> dict[str, str]:
     return out
 
 
+def ledger(briefings: dict[str, str], game_ids: list[str]) -> dict:
+    """What the import decided, and what it could have decided.
+
+    This is the intermediate file the pipeline did not have: the game data says
+    only what a mission's briefing IS, so a choice between candidates — or a
+    candidate the scan never saw — is invisible. 51 fiction mission ids have
+    disagreeing candidates; 14 of them are missions the game ships.
+    """
+    surveyed = survey()
+    missions: dict[str, dict] = {}
+    for mid in game_ids:
+        buckets = surveyed.get(mid, {"considered": [], "other": []})
+        chosen = briefings.get(mid)
+        distinct = {c["body"] for c in buckets["considered"] if c["readable"]}
+        missions[mid] = {
+            "briefing": chosen,
+            # `brief()` keeps the leading whole sentences, so the chosen text is
+            # a prefix of its source, not the whole of it.
+            "chosenFrom": next(
+                (
+                    c["file"]
+                    for c in buckets["considered"]
+                    if chosen is not None and c["body"].startswith(chosen)
+                ),
+                None,
+            ),
+            "considered": buckets["considered"],
+            "notScanned": buckets["other"],
+            "disagrees": len(distinct) > 1,
+            # A twin in another language directory can carry a summary the
+            # scanned one lost. `watchdog_patrol` is the case: its `en` summary
+            # is missing a clause and its `ko` twin has the whole sentence.
+            "twinDiffers": any(
+                c["body"] != chosen and c["readable"] for c in buckets["other"]
+            ),
+            "note": (
+                "the en candidates disagree — one of them is not the whole job"
+                if len(distinct) > 1
+                else None
+            ),
+        }
+    orphans = sorted(mid for mid in surveyed if mid not in game_ids)
+    return {
+        "generatedBy": "scripts/tools/import_briefings.py",
+        "source": os.path.relpath(FICTION, ROOT),
+        "scanLanguage": SCAN_LANG,
+        "fictionMissionIds": len(surveyed),
+        "gameMissions": len(game_ids),
+        "orphanMissionIds": orphans,
+        "missions": missions,
+    }
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument(
+        "--check",
+        action="store_true",
+        help="verify the ledger and the game data still agree; write nothing",
+    )
     args = ap.parse_args()
 
     if not os.path.isdir(FICTION):
@@ -151,6 +244,14 @@ def main() -> int:
 
     briefings = collect()
     missions = json.load(open(MISSIONS, encoding="utf-8"))
+    sprawl_ids = [
+        mid
+        for mid, m in missions.items()
+        if (m.get("source_universe") or "sprawl") == "sprawl"
+    ]
+
+    if args.check:
+        return check(briefings, missions, sprawl_ids)
 
     written = 0
     skipped_far_grid = 0
@@ -174,12 +275,77 @@ def main() -> int:
             json.dump(missions, fh, ensure_ascii=False, indent=2)
             fh.write("\n")
 
+    # The ledger is the intermediate file: it records what each mission's
+    # briefing came from and which candidates were passed over, so a choice the
+    # importer makes cannot be invisible (see `ledger`).
+    record = ledger(briefings, sprawl_ids)
+    if not args.dry_run:
+        os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
+        with open(LEDGER, "w", encoding="utf-8") as fh:
+            json.dump(record, fh, ensure_ascii=False, indent=2)
+            fh.write("\n")
+
+    disagree = [m for m, v in record["missions"].items() if v["disagrees"]]
+    twins = [m for m, v in record["missions"].items() if v["twinDiffers"]]
     print(f"summaries found: {len(briefings)}")
     print(f"briefings {'would be ' if args.dry_run else ''}written: {written}")
     print(f"far-grid missions left alone: {skipped_far_grid}")
     print(f"sprawl missions still without a briefing: {len(missing)}")
     if missing:
         print("  " + ", ".join(sorted(missing)[:12]))
+    print(f"ledger: {os.path.relpath(LEDGER, ROOT)}")
+    print(
+        f"missions whose candidates disagree: {len(disagree)}"
+        + (" -> " + ", ".join(sorted(disagree)[:8]) if disagree else "")
+    )
+    print(
+        f"missions whose summary differs in another language: {len(twins)}"
+        + (" -> " + ", ".join(sorted(twins)[:8]) if twins else "")
+    )
+    print(f"fiction mission ids the game does not ship: {len(record['orphanMissionIds'])}")
+    return 0
+
+
+def check(
+    briefings: dict[str, str],
+    missions: dict,
+    sprawl_ids: list[str],
+) -> int:
+    """The gate: the ledger must describe the game data that is on disk.
+
+    A stale ledger is worse than none — it would report a decision that is no
+    longer true — so this fails rather than warns, the same way the narrative
+    ledger refuses to keep a wired dialogue on its unwired list.
+    """
+    if not os.path.isfile(LEDGER):
+        print(f"ledger missing: {os.path.relpath(LEDGER, ROOT)}", file=sys.stderr)
+        return 1
+    record = json.load(open(LEDGER, encoding="utf-8"))
+    problems: list[str] = []
+    for mid in sprawl_ids:
+        on_disk = missions[mid].get("briefing")
+        in_ledger = record["missions"].get(mid, {}).get("briefing")
+        if on_disk != in_ledger:
+            problems.append(
+                f"{mid}: game has {on_disk!r}, ledger has {in_ledger!r}"
+            )
+        derived = briefings.get(mid)
+        if derived != on_disk:
+            problems.append(
+                f"{mid}: the import would write {derived!r}, the game has {on_disk!r}"
+            )
+    for mid, entry in record["missions"].items():
+        if entry["briefing"] is not None and entry["chosenFrom"] is None:
+            problems.append(f"{mid}: the ledger names no source file")
+    if problems:
+        print("briefing ledger is out of date:", file=sys.stderr)
+        for line in problems[:12]:
+            print(f"  {line}", file=sys.stderr)
+        return 1
+    print(
+        f"OK: {len(sprawl_ids)} sprawl briefings match the ledger"
+        f" ({sum(1 for v in record['missions'].values() if v['disagrees'])} with disagreeing candidates)"
+    )
     return 0
 
 

@@ -31,9 +31,9 @@ const keys = (r: MenuReveal) => visibleMenuOptions(r).map((o) => o.key);
 
 describe("ADR-0315 · the menu reveal", () => {
   it("shows only the always-on entries to a fresh profile", () => {
+    // ADR-0317: GRAPHIC NOVEL is gone; the story plays as the run's prologue.
     expect(keys(FRESH)).toEqual([
       "new_run",
-      "graphic_novel",
       "tutorial",
       "settings",
       "help",
@@ -77,7 +77,7 @@ describe("ADR-0315 · the menu reveal", () => {
   });
 
   it("never hides the game itself", () => {
-    for (const key of ["new_run", "graphic_novel", "settings", "help", "credits"]) {
+    for (const key of ["new_run", "settings", "help", "credits"]) {
       expect(keys(FRESH)).toContain(key);
     }
   });

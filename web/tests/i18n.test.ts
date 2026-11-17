@@ -132,7 +132,6 @@ describe("createI18nState()", () => {
 describe("translation coverage - menu keys", () => {
   const menuKeys = [
     "menu.new_run",
-    "menu.graphic_novel",
     "menu.continue",
     "menu.settings",
     "menu.credits",

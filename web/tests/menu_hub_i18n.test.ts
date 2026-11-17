@@ -89,8 +89,8 @@ describe("renderMainMenu i18n — EN byte-identical", () => {
     expect(text).toContain("[4] DUNGEON CRAWL");
     expect(text).toContain("[1] CONTINUE      (no save)");
     expect(text).toContain("[3] FAR GRID      (locked)");
-    expect(text).toContain("[7] CRAFT");
-    expect(text).toContain("[8] EQUIPMENT");
+    expect(text).toContain("[6] CRAFT");
+    expect(text).toContain("[7] EQUIPMENT");
     expect(text).toContain(FOOTER_MENU_EN);
     expect(text).toContain("Tier 4 · v0.1.0 · ADR-0209 IDB");
   });
@@ -124,8 +124,8 @@ describe("renderMainMenu i18n — KO", () => {
     const text = gridText(
       renderMainMenu(0, 80, 50, false, null, "", true, "ko"),
     );
-    expect(text).toContain("[7] 제작");
-    expect(text).toContain("[8] 장비");
+    expect(text).toContain("[6] 제작");
+    expect(text).toContain("[7] 장비");
     expect(text).toContain("[4] 던전 크롤");
     expect(text).toContain("↑↓: 이동 | ENTER: 선택 | ESC: 뒤로");
   });

@@ -198,3 +198,18 @@ PLAY                       WORKSHOP          ARCHIVE               SYSTEM
 ## 변경 이력
 
 - 2026-11-15: Draft 작성 — 구조 실측 + 이월 측정 + Jev 2회
+
+## Implementation Status (2026-11-17)
+
+**Status**: 🟡 Partial (슬라이스 1 구현 · 노출 규칙 일부는 ADR-0317 이 대체)
+
+**Evidence**:
+- `web/src/renderer/menu_main.ts` — `MENU_OPTIONS` · `visibleMenuOptions`(노출 규칙)
+- `web/src/core/state/onboarding.ts` — `wetrun_runs_finished` · `wetrun_has_played`
+- `web/tests/adr0315_menu_reveal.test.ts` — 노출 규칙
+- `web/tests/menu_layout.test.ts` · `web/tests/menu.test.ts` — 그룹 순서와 항목 수
+
+**Notes**: **노출 규칙 표에서 `GRAPHIC NOVEL` 이 빠졌다** — ADR-0317 4단계(2026-11-17)가 그래픽
+노블을 **런의 프롤로그**로 녹이고 메뉴 항목을 삭제했기 때문이다(그 결정이 "ADR-0315 의 노출 규칙에서도
+빠진다"고 명시했다). 그래서 **첫 런 직후 메뉴는 7항목이 아니라 6항목**이다
+(`CONTINUE · NEW RUN · TUTORIAL · SETTINGS · HELP · CREDITS`). 위 표는 결정 당시의 기록으로 남긴다.

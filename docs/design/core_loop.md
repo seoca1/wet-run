@@ -7,7 +7,7 @@
 ```
 [메인 메뉴] (real-world UI, 8 options, Phase 17)
     |   - 1. NEW RUN              (자키 선택)
-    |   - 2. GRAPHIC NOVEL        (ADR-0032, 스토리 자동재생)
+    |   - 2. GRAPHIC NOVEL        (ADR-0032 → ADR-0317 4단계로 메뉴에서 삭제; 런의 프롤로그)
     |   - 3. CONTINUE             (마지막 세이브 로드)
     |   - 4. SETTINGS             (telemetry opt-in, accessibility 등)
     |   - 5. CREDITS

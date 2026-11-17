@@ -1,6 +1,10 @@
 # 캠페인 + 메뉴 구조 재설계 (2026-11-15)
 
 > ADR-0315 의 설계 문서. **결정 완료 + 슬라이스 1(메뉴) 구현 완료.**
+>
+> **2026-11-17 갱신**: ADR-0317 4단계가 `GRAPHIC NOVEL` 메뉴 항목을 삭제했다(스토리는 런의
+> 프롤로그 한 곳). 메뉴는 **14 → 13항목**, 첫 런 직후는 **7 → 6항목**이다. 아래 Q8 행과 목록은
+> 결정 당시의 기록이며, 현행은 코드(`renderer/menu_main.ts`)와 ADR-0315 구현 상태를 본다.
 
 ## 0. 결정 (2026-11-15)
 
@@ -15,7 +19,7 @@
 | Q5 | **메뉴부터** | 밸런스 무영향 · 화면 1개 |
 | Q6 | **점진적 노출 — 첫 실행은 메뉴를 건너뛴다** (오너 제안) | 런을 시작한 적 없는 프로필은 곧장 자키 선택으로. 메뉴는 ESC 한 번 거리, 첫 런 뒤 노출. 저장/로드처럼 **실제로 필요해질 때** 드러난다 |
 | Q7 | **자키 화면이 자기설명적이 된다** | 첫 실행의 첫 화면인데 핸들만 보여줬다. 자키는 시작 덱을 바꾸므로(ADR-0276) tagline + `deck:` 을 줄바꿈해 표시 |
-| Q8 | **메뉴가 플레이어와 함께 자란다** (오너 제안) | 항상: NEW RUN·GRAPHIC NOVEL·SETTINGS·HELP·CREDITS. 조건부: CONTINUE(세이브) · FAR GRID(해금) · TUTORIAL(완료 전) · DUNGEON/CRAFT/EQUIPMENT/HALL/ENDINGS/STATS(런을 한 번 끝낸 뒤). **첫 런 직후 메뉴는 7항목** |
+| Q8 | **메뉴가 플레이어와 함께 자란다** (오너 제안) | 항상: NEW RUN·SETTINGS·HELP·CREDITS(~~GRAPHIC NOVEL~~ 은 ADR-0317 4단계로 삭제). 조건부: CONTINUE(세이브) · FAR GRID(해금) · TUTORIAL(완료 전) · DUNGEON/CRAFT/EQUIPMENT/HALL/ENDINGS/STATS(런을 한 번 끝낸 뒤). **첫 런 직후 메뉴는 6항목** |
 
 **슬라이스 1 구현 결과**: 메뉴가 4그룹(PLAY · WORKSHOP · ARCHIVE · SYSTEM) + 항목별 설명으로
 바뀌었고, **40열에서 0건 잘림**. 그 과정에서 ADR-0300 폭 가드가 **패널 클리핑을 감시하지 않던
@@ -41,7 +45,7 @@
 
 ## 1. 현재 구조 (실측)
 
-**메뉴 — 평면 14항목** (`renderer/menu_main.ts`):
+**메뉴 — 평면 14항목** (`renderer/menu_main.ts`, 2026-11-15 당시; 지금은 13항목):
 
 ```
 NEW RUN · FAR GRID · DUNGEON CRAWL · GRAPHIC NOVEL · CONTINUE · SETTINGS ·

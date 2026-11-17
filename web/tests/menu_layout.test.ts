@@ -26,9 +26,9 @@ describe("renderMainMenu (Bug A regression: CONTINUE hint placement)", () => {
     const saveMeta = { missionId: "aleph_fragment", turnCount: 3 };
     const grid = renderMainMenu(0, cols, rows, true, saveMeta);
     const { optionsX, optionsY } = mainMenuLayout(makeGrid(cols, rows));
-    // ADR-0315: 14 entries + 4 group headers = 18 rows, so the hint sits at
-    // lastRow + 2 = optionsY + 17 + 2.
-    const hintRow = optionsY + 19;
+    // ADR-0315: 13 entries + 4 group headers = 17 rows, so the hint sits at
+    // lastRow + 2 = optionsY + 16 + 2.
+    const hintRow = optionsY + 18;
     const hintText = "→ aleph_fragment (turn 4)";
     const found = getGridText(grid, hintRow, optionsX + 2, hintText.length);
     expect(found, `Hint '${hintText}' should appear on row ${hintRow}`).toBe(
@@ -44,7 +44,7 @@ describe("renderMainMenu (Bug A regression: CONTINUE hint placement)", () => {
     }
   });
 
-  it("renders all 14 menu options without overlap when save exists", () => {
+  it("renders all 13 menu options without overlap when save exists", () => {
     const grid = renderMainMenu(0, 80, 50, true, {
       missionId: "x",
       turnCount: 0,
@@ -52,21 +52,21 @@ describe("renderMainMenu (Bug A regression: CONTINUE hint placement)", () => {
     const rows: string[] = [];
     for (let y = 0; y < 50; y++) rows.push(getGridText(grid, y, 0, 80));
     // ADR-0315 grouped order, with the group headers printed above each group.
+    // ADR-0317 step 4 removed GRAPHIC NOVEL, so the list is 13 long.
     const expected = [
       "[1] CONTINUE",
       "[2] NEW RUN",
       "[3] FAR GRID",
       "[4] DUNGEON CRAWL",
-      "[5] GRAPHIC NOVEL",
-      "[6] TUTORIAL",
-      "[7] CRAFT",
-      "[8] EQUIPMENT",
-      "[9] HALL OF DEAD",
-      "[10] ENDINGS",
-      "[11] STATS",
-      "[12] SETTINGS",
-      "[13] HELP",
-      "[14] CREDITS",
+      "[5] TUTORIAL",
+      "[6] CRAFT",
+      "[7] EQUIPMENT",
+      "[8] HALL OF DEAD",
+      "[9] ENDINGS",
+      "[10] STATS",
+      "[11] SETTINGS",
+      "[12] HELP",
+      "[13] CREDITS",
     ];
     for (const label of expected) {
       const hits = rows.filter((r) => r.includes(label));

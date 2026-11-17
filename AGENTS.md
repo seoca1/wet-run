@@ -398,15 +398,17 @@ Web UI에서 보드 생성:
 - [ ] raw에서 읽은 자료는 모두 인용되었는가
 - [ ] 세션 종료 시 `docs/sessions/` 에 세션 요약 추가 (해당 시)
 
-## 10. 그래픽 노블 모드 (ADR-0032)
+## 10. 그래픽 노블 모드 (ADR-0032) — **2026-11-17: 메뉴 항목 제거됨**
 
-게임 시작 시 메인메뉴(7 옵션)에서 진입 가능한 비주얼 노블 자동플레이.
+> **2026-11-17 현행 (ADR-0317 4단계)**: 그래픽 노블은 이제 **런의 프롤로그**다. 메인메뉴의
+> `GRAPHIC NOVEL` 항목과 그 화면 진입은 **삭제**됐다 — 스토리는 `NEW RUN → 자키 선택 → 그 자키의
+> 프롤로그 → 미션 목록` 으로만 들어간다(ESC 는 이야기만 건너뛴다). 아래는 prototype/ Python 시절
+> 명세의 **역사 기록**이며, 현행 코드 위치는 `web/src/core/graphic_novel/`,
+> `web/src/renderer/graphic_novel_screen.ts`, `web/src/main.ts`(자키 confirm → `initGraphicNovel`).
 
-> **2026-09 통합 노트**: 본 섹션은 prototype/ Python 시절 ADR-0032/0040/0041-44 그래픽 노블 명세를 보존합니다. web/ TypeScript 포트는 다음에 위치: `web/src/core/graphic_novel*.ts` (5 modules), `web/src/main.ts` 메뉴 옵션 2 (`GRAPHIC NOVEL`), `web/src/renderer/graphic_novel_screen.ts` 등. **web/ 테스트는 `web/tests/graphic_novel*.test.ts`** (Tier 4 기준 — ADR-0199 이월).
-
-### 메인메뉴 옵션 (7) — ADR-0032 + ADR-0040 + Phase 7
+### ~~메인메뉴 옵션 (7) — ADR-0032 + ADR-0040 + Phase 7~~ (역사 기록)
 1. **NEW RUN** — 자키 선택부터 일반 게임플레이
-2. **GRAPHIC NOVEL** — 스토리 자동재생 (그래픽 노블 모드 진입)
+2. ~~**GRAPHIC NOVEL** — 스토리 자동재생 (그래픽 노블 모드 진입)~~ → **삭제(ADR-0317 4단계)**
 3. **CONTINUE** — 마지막 세이브 로드 (없으면 비활성)
 4. **SETTINGS**
 5. **CREDITS**

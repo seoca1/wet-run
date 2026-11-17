@@ -84,7 +84,7 @@ describe("main menu: FAR GRID gate (ADR-0213 Phase 2)", () => {
     // DUNGEON CRAWL (index 2) renders normally
     expect(text).toContain("DUNGEON CRAWL");
     // Other labels not gated by the unlock
-    expect(text).toContain("GRAPHIC NOVEL");
+    expect(text).toContain("TUTORIAL");
   });
 
   it("statusMessage parameter still works alongside farGridUnlocked gating", () => {

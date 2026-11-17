@@ -3821,3 +3821,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **드라이버 함정을 또 밟았다**: 카드는 **키를 하나 먹는다** → 커밋 전 e2e 에서 `run_end_save` 2건·`continue` 1건이 **실제로 실패**(전리품이 안 넘어가고 승리가 저장되지 않았다). 튜토리얼과 같이 **공유 헬퍼(`suppressStoryBeats`)가 1회성 비트를 미리 "들은 것으로"** 표시하고, 카드 자체는 전용 스펙 `narrative_beats.spec.ts` 와 story trace 가 검증한다.
 - **남은 것**: 허브/메타 대사 6편(**대화 트리 화면** 필요) · **죽음(FLATLINE) 비트는 설계에 없다**(서명은 엔딩 화면에만 — 오너 결정) · **④ 메뉴 제거**.
 - **검증**: typecheck 0 · lint 0 errors · vitest **219 files / 4279 tests**(+23) · **전체 e2e 52 passed / 5 skipped / 0 failed**(57; 신규 story trace·narrative_beats 포함) · 폭 가드 0건 · **결정적 곡선 byte-identical**(밸런스 `100/100/100/98.9/83.9/32.3` · 생존 `100/97.1/75.9/51.4/26.9/32.3`, 최대 이탈 4.1pp) · story trace 3.2초(가장 쉬운 미션 완주, 세 비트 모두 확인).
+
+## [2026-11-17] feat(story) | 발판을 치운다 — 그래픽 노블 메뉴 항목 제거 (ADR-0317 4단계)
+
+- **삭제**: `MENU_OPTIONS` 의 `graphic_novel` 항목 · `MenuOption` union 멤버 · `selectMenuOption` 의 케이스 · i18n 키 4개(`menu.graphic_novel`·`menu.desc.graphic_novel` EN/KO). 메뉴 **14 → 13항목**.
+- **죽은 코드가 드러났다**: 메뉴에서만 쓰이던 `prologueForRun` 플래그와 `exitGraphicNovel` 의 "타이틀로 돌아간다" 분기가 **도달 불가**가 되어 지웠다. 이제 그래픽 노블은 **런의 프롤로그 한 곳**으로만 들어가므로 나가면(완주든 ESC든) **항상 미션 목록**으로 넘어간다.
+- **화면 종류 `graphic_novel` 은 남는다** — 프롤로그가 그 화면을 쓴다. `SCREENS_WITH_INPUT` 등록도 유지(빠뜨리면 ESC 가 메뉴로 튕기는 ADR-0273/0275 함정).
+- **문서 정합**: ADR-0315 에 구현 상태(첫 런 직후 메뉴 **7 → 6항목**, `graphic_novel` 노출 규칙에서 빠짐) · `AGENTS.md` §10 을 "메뉴 항목 제거됨"으로 · `campaign-and-menu`·`core_loop` 갱신.
+- **테스트 갱신**: `menu`(14→13) · `adr0315_menu_reveal`(노출 목록) · `menu_layout`(힌트 행 이동) · `menu_hub_i18n`·`settings_language_toggle`(인덱스 시프트) · `i18n`(키 목록) · e2e `prologue`("메뉴 GN 브라우징" → **"항목이 사라졌다"**).
+- **검증**: typecheck 0 · lint 0 errors · vitest **219 files / 4279 tests** · **전체 e2e 52 passed / 5 skipped / 0 failed**(57) · 게이트 5종 CLEAN · **결정적 곡선 byte-identical**(밸런스 `100/100/100/98.9/83.9/32.3` · 생존 `100/97.1/75.9/51.4/26.9/32.3`).

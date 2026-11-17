@@ -8,15 +8,15 @@ import {
 import { t } from "../src/core/i18n";
 
 describe("main menu renderer", () => {
-  it("has 14 options including far_grid_hub, craft, equipment, and dungeon_crawl", () => {
-    expect(MENU_OPTIONS.length).toBe(14);
+  it("has 13 options including far_grid_hub, craft, equipment, and dungeon_crawl", () => {
+    expect(MENU_OPTIONS.length).toBe(13);
     // ADR-0315: grouped order, CONTINUE first (the likely action).
+    // ADR-0317: GRAPHIC NOVEL is gone — the story is the run's prologue now.
     expect(MENU_OPTIONS.map((o) => o.key)).toEqual([
       "continue",
       "new_run",
       "far_grid_hub",
       "dungeon_crawl",
-      "graphic_novel",
       "tutorial",
       "craft",
       "equipment",

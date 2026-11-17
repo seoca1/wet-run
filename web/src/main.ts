@@ -896,11 +896,10 @@ class Game {
     }
   }
 
-  /** ADR-0317: the prologue is the run's opening, not a menu mode. When set,
-   * the graphic novel is playing as part of a run and leaving it (done or
-   * skipped) hands over to the mission list instead of the title. */
-  private prologueForRun = false;
-
+  /** ADR-0317: the graphic novel is the run's opening, not a menu mode. The
+   * menu entry that let a player browse it was the validation scaffold and is
+   * gone (2026-11-17), so leaving the story — finished or skipped — always hands
+   * over to the mission list. */
   private initGraphicNovel(mode: PlayMode = "novice"): void {
     void loadStorySystem().then((gn) => {
       const player = gn.createPlayer({ mode });
@@ -988,14 +987,9 @@ class Game {
   private exitGraphicNovel(): void {
     this.graphicNovelPlayer = null;
     this.graphicNovelState = null;
-    // ADR-0317: skipping the run's prologue skips the STORY, not the run.
-    if (this.prologueForRun) {
-      this.prologueForRun = false;
-      this.startRunFromGraphicNovel();
-      return;
-    }
-    this.screen = "menu";
-    this.draw();
+    // ADR-0317: the graphic novel is only reachable as the run's prologue, so
+    // leaving it (finished or skipped) skips the STORY, not the run.
+    this.startRunFromGraphicNovel();
   }
 
   /** ADR-0273: the prologue's epilogue hands over to the run — "the next
@@ -1003,7 +997,6 @@ class Game {
   private startRunFromGraphicNovel(): void {
     this.graphicNovelPlayer = null;
     this.graphicNovelState = null;
-    this.prologueForRun = false;
     this.screen = "mission_select";
     this.selectedMission = 0;
     this.draw();
@@ -1051,7 +1044,6 @@ class Game {
       } else if (action.type === "confirm") {
         // ADR-0317: the prologue opens the run — this jockey's story plays,
         // then the mission list. ESC skips the story, not the run.
-        this.prologueForRun = true;
         this.screen = "graphic_novel";
         this.selectedMission = 0;
         const jockeyId = JOCKEYS[this.selectedJockey]?.id;
@@ -1396,14 +1388,6 @@ class Game {
       case "equipment":
         this.screen = "equipment";
         this._message = "";
-        this.draw();
-        break;
-      case "graphic_novel":
-        // ADR-0317: the menu entry is the validation scaffold. Playing it from
-        // here is browsing the story, not opening a run.
-        this.prologueForRun = false;
-        this.screen = "graphic_novel";
-        this.initGraphicNovel();
         this.draw();
         break;
       case "settings":

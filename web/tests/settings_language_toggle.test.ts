@@ -247,7 +247,7 @@ describe("renderMainMenu — language wiring is now active", () => {
     expect(gridText(defaultCall)).toBe(gridText(explicitEn));
     // Spot-check that EN literals are on the page.
     expect(gridText(defaultCall)).toContain("[2] NEW RUN");
-    expect(gridText(defaultCall)).toContain("[7] CRAFT");
+    expect(gridText(defaultCall)).toContain("[6] CRAFT");
   });
 
   it("KO renders the menu labels in Korean", () => {
@@ -255,7 +255,7 @@ describe("renderMainMenu — language wiring is now active", () => {
       renderMainMenu(1, 80, 50, false, null, "", false, "ko"),
     );
     expect(text).toContain("[2] 새 런");
-    expect(text).toContain("[7] 제작");
+    expect(text).toContain("[6] 제작");
     expect(text).toContain("↑↓: 이동 | ENTER: 선택 | ESC: 뒤로");
   });
 

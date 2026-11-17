@@ -10,7 +10,6 @@ export interface I18nState {
 const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   // Menu
   "menu.new_run": "NEW RUN",
-  "menu.graphic_novel": "GRAPHIC NOVEL",
   "menu.continue": "CONTINUE",
   "menu.settings": "SETTINGS",
   "menu.credits": "CREDITS",
@@ -40,7 +39,6 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "menu.desc.new_run": "start a run",
   "menu.desc.far_grid_hub": "orbit grid",
   "menu.desc.dungeon_crawl": "side crawl",
-  "menu.desc.graphic_novel": "the story",
   "menu.desc.tutorial": "first steps",
   "menu.desc.craft": "spend parts",
   "menu.desc.equipment": "fit deck",
@@ -117,7 +115,6 @@ const EN_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
 const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   // Menu
   "menu.new_run": "새 런",
-  "menu.graphic_novel": "그래픽 노블",
   "menu.continue": "이어서 하기",
   "menu.settings": "설정",
   "menu.credits": "크레딧",
@@ -146,7 +143,6 @@ const KO_TRANSLATIONS: Readonly<Record<string, string>> = Object.freeze({
   "menu.desc.new_run": "런 시작",
   "menu.desc.far_grid_hub": "궤도 그리드",
   "menu.desc.dungeon_crawl": "사이드 크롤",
-  "menu.desc.graphic_novel": "스토리",
   "menu.desc.tutorial": "첫 걸음",
   "menu.desc.craft": "재료 소모",
   "menu.desc.equipment": "장비 맞추기",

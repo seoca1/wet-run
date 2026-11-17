@@ -26,7 +26,6 @@ import {
 
 export type MenuOption =
   | "new_run"
-  | "graphic_novel"
   | "continue"
   | "settings"
   | "craft"
@@ -66,7 +65,6 @@ export const MENU_OPTIONS: ReadonlyArray<MenuEntry> = [
   { key: "new_run", label: "menu.new_run", desc: "menu.desc.new_run", available: true },
   { key: "far_grid_hub", label: "menu.far_grid_hub", desc: "menu.desc.far_grid_hub", available: true },
   { key: "dungeon_crawl", label: "menu.dungeon_crawl", desc: "menu.desc.dungeon_crawl", available: true },
-  { key: "graphic_novel", label: "menu.graphic_novel", desc: "menu.desc.graphic_novel", available: true },
   { key: "tutorial", label: "menu.tutorial", desc: "menu.desc.tutorial", available: true },
   // WORKSHOP
   { key: "craft", label: "menu.craft", desc: "menu.desc.craft", available: true, group: "menu.group.workshop" },

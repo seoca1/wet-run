@@ -87,3 +87,25 @@
 ## 변경 이력
 
 - 2026-11-16: Accepted — 파생 소설 → 브리핑(A) 구현
+- 2026-11-17: 브리핑이 **잘린 문장**이었다 — 도구의 150자 절단을 없애고 **문장 단위**로 바꿨다.
+  화면도 더 이상 픽서의 말로 위장하지 않는다(`Fixer:` 표기). 아래 구현 상태 참조.
+
+## Implementation Status (2026-11-17)
+
+**Status**: ✅ Implemented (절단 결함 수정 포함)
+
+**Evidence**:
+- `scripts/tools/import_briefings.py` — `brief()`(문장 단위 · `MIN_LEN` 40 · `MAX_LEN` 240 · 절단 표식 없음)
+- `web/src/data/missions.json` — sprawl 32/33 브리핑(`dixies_offer` 는 파생 소설 없음)
+- `web/src/renderer/menu_dialogue.ts` — `renderMissionBriefing` 이 `Fixer: <이름>` 을 쓰고
+  본문을 **인용하지 않는다**
+- `web/src/renderer/mission_select.ts` — 3줄 미리보기가 잘리면 `…` 로 **말한다**
+- `web/tests/adr0316_briefings_are_complete.test.ts` — 문장 완결성 · `…` 금지 · 3 레이아웃 폭 가드
+- `web/tests/adr0316_mission_briefing.test.ts` — 옛 테스트가 **절단을 규칙으로 고정하고 있었다** →
+  새 규칙으로 교체
+
+**Notes**: **이 ADR 이 만든 결함**을 2026-11-17 에 발견했다. 도구가 요약을 150자에서 잘라 `…` 를
+붙였고("a briefing is one line, not a paragraph"), 그래서 **32편 중 20편이 문장 중간에서 끝났다**
+(`"…a secret that could bring down a mid-level…"`). 그 문장을 화면은 **픽서가 말한 것처럼**
+`FINN:` 을 붙여 보여줬다 — 화면이 사실을 말하지 않았다(ADR-0251 rule 5). 이제 브리핑은 **문장
+단위**(48~240자)이고, `…` 는 데이터에 **0건**이며, 미리보기가 잘리면 그 사실을 표시한다.

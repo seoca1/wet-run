@@ -1,5 +1,5 @@
 /**
- * ADR-0317 — the fixer briefs you before you jack in.
+ * ADR-0317 — the job is on file before you jack in.
  *
  * The mission's story (ADR-0316, lifted from the derivative fiction) is spoken
  * on a screen between the mission list and the advance: mission select →
@@ -23,13 +23,13 @@ describe("ADR-0317 · mission briefing", () => {
     const text = gridText(renderMissionBriefing("First Jack", "finn", STORY, 80, 50));
     expect(text).toContain("MISSION BRIEFING");
     expect(text).toContain("Mission: First Jack");
-    expect(text).toContain("FINN:");
+    expect(text).toContain("Fixer: FINN");
     expect(text).toContain("first real trace job");
   });
 
   it("wraps instead of cutting at 40 columns", () => {
     const text = gridText(renderMissionBriefing("First Jack", "finn", STORY, 40, 60));
-    for (const word of ["FINN:", "trace", "node"]) {
+    for (const word of ["Fixer: FINN", "trace", "node"]) {
       expect(text, `"${word}" missing at 40 columns`).toContain(word);
     }
   });

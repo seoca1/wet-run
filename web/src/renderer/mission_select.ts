@@ -67,16 +67,28 @@ export function missionListLayout(
 }
 
 /** Word-wrap to `width`, at most `maxLines` lines. */
+/** Greedy wrap. When the text does not fit in `maxLines`, the last line ends
+ * with `…` so the screen says there is more (2026-11-17: the briefings became
+ * full sentences and outgrew the three-line preview; a preview that stops
+ * mid-sentence without a mark reads as the whole story). */
 function wrap(text: string, width: number, maxLines: number): string[] {
   const words = text.split(" ");
   const lines: string[] = [];
   let current = "";
-  for (const word of words) {
+  for (let i = 0; i < words.length; i += 1) {
+    const word = words[i] ?? "";
     const next = current === "" ? word : `${current} ${word}`;
     if (next.length > width && current !== "") {
       lines.push(current);
       current = word;
-      if (lines.length === maxLines) return lines;
+      if (lines.length === maxLines) {
+        // A word is still waiting, so mark the cut. `…` needs its own column.
+        const last = (lines[lines.length - 1] ?? "")
+          .slice(0, Math.max(1, width - 1))
+          .replace(/ $/, "");
+        lines[lines.length - 1] = `${last}…`;
+        return lines;
+      }
     } else {
       current = next;
     }

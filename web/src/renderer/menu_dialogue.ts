@@ -8,12 +8,14 @@ import type { Grid } from "../core/types";
 import { makeGrid, setText } from "../core/grid";
 import { PALETTE } from "./palette";
 
-/** Render the mission briefing: the fixer hands over the job (ADR-0317).
+/** Render the mission briefing: the job's file (ADR-0316, ADR-0317).
  *
- * ADR-0316 lifted each Sprawl mission's story out of the derivative fiction;
- * this screen is where the runner hears it, right before choosing the advance
- * (prep) and jacking in. Wrapped, and the footer promises only the keys that
- * work (ADR-0251 rule 5).
+ * The text is the mission's story as the fixer's file records it — a written
+ * summary, not a line anybody says. It used to be printed as `FINN: <summary>`,
+ * which claimed the fixer spoke a third-person paragraph (2026-11-17). The fixer
+ * is still named, as whose job it is.
+ *
+ * Wrapped, and the footer promises only the keys that work (ADR-0251 rule 5).
  */
 export function renderMissionBriefing(
   title: string,
@@ -42,10 +44,17 @@ export function renderMissionBriefing(
     heading.slice(0, Math.max(10, cols - 4)),
     PALETTE.YELLOW_AMBER,
   );
+  const from = `Fixer: ${fixer.toUpperCase()}`;
+  grid = setText(
+    grid,
+    centre(from.slice(0, Math.max(10, cols - 4))),
+    6,
+    from.slice(0, Math.max(10, cols - 4)),
+    PALETTE.CYAN_LIGHT,
+  );
 
-  const speaker = fixer.toUpperCase();
-  const lines = wrap(`${speaker}: ${story}`, width, 8);
-  let y = 7;
+  const lines = wrap(story, width, 12);
+  let y = 8;
   for (const line of lines) {
     grid = setText(grid, 4, y, line, PALETTE.GRAY_LIGHT);
     y += 1;

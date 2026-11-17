@@ -49,20 +49,21 @@ describe("ADR-0316 · mission briefing", () => {
     expect(missing).toEqual(["dixies_offer"]);
   });
 
-  it("keeps every imported Sprawl briefing short enough to read as one", () => {
-    // The far-grid briefings are the older, longer form (ADR-0213 Wave 2); the
-    // imported ones are capped at 150 characters by the tool.
+  it("keeps every imported Sprawl briefing to one readable brief", () => {
+    // This used to assert "≤ 151 characters, ending in '.' or '…'" — the
+    // truncation the importer did, written down as if it were the rule. It was
+    // not: the cut ended 20 of 32 briefings mid-clause, and the "…" only said
+    // so. The rules that replaced it (whole sentences, no cut marker, and the
+    // screen must fit) live in `adr0316_briefings_are_complete.test.ts`.
+    // What is checked here is that the import happened at all.
     for (const [id, m] of Object.entries(missionsJson)) {
       const mission = m as { briefing?: string; source_universe?: string };
       if (!mission.briefing) continue;
       if (mission.source_universe === "far-grid") continue;
-      expect(mission.briefing.length, `${id} briefing length`).toBeLessThanOrEqual(
-        151,
+      expect(mission.briefing.length, `${id} briefing length`).toBeGreaterThan(
+        40,
       );
-      expect(
-        mission.briefing.endsWith(".") || mission.briefing.endsWith("…"),
-        `${id} ends mid-word`,
-      ).toBe(true);
+      expect(mission.briefing, `${id} carries a cut marker`).not.toContain("…");
     }
   });
 });

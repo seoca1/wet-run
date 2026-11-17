@@ -629,8 +629,10 @@ class Game {
             : "";
           this.beatCard = {
             title: `CONTRACT ${(contract?.completed ?? 0) + 1}/${contract?.legs.length ?? 0}`,
+            // No speaker: the briefing is the job's file, not a line the fixer
+            // says (2026-11-17). The card names the job and prints it.
             beat: {
-              speaker: (leg?.mission.fixer ?? "").toUpperCase(),
+              speaker: "",
               lines: story.length > 0 ? [story] : ["The next job."],
             },
           };

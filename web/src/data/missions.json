@@ -26,7 +26,7 @@
       }
     ],
     "title_ko": "알레프 파편",
-    "briefing": "Kas has been chasing the Aleph for seven months. The Aleph is a point in space that contains all other points — every piece of data ever stored…"
+    "briefing": "Kas has been chasing the Aleph for seven months. The Aleph is a point in space that contains all other points — every piece of data ever stored, every consciousness ever uploaded."
   },
   "black_ice_dream": {
     "id": "black_ice_dream",
@@ -56,7 +56,7 @@
       }
     ],
     "title_ko": "블랙 ICE의 꿈",
-    "briefing": "A runner encounters Black ICE that hunts not with cold but with molten hunger. The ice reads her trace like a lover and leaves her with a scar she…"
+    "briefing": "A runner encounters Black ICE that hunts not with cold but with molten hunger. The ice reads her trace like a lover and leaves her with a scar she can never explain."
   },
   "craft_job": {
     "id": "craft_job",
@@ -87,7 +87,7 @@
       }
     ],
     "title_ko": "제작 의뢰",
-    "briefing": "Kumiko Yanaka visits the Manarase club at midnight to meet Sally Shearer, a three hundred years of data, three hundred years of death. The loa cannot…"
+    "briefing": "Kumiko Yanaka visits the Manarase club at midnight to meet Sally Shearer, a three hundred years of data, three hundred years of death. The loa cannot be broken. The wheel does not stop."
   },
   "data_retrieval": {
     "id": "data_retrieval",
@@ -116,7 +116,7 @@
       }
     ],
     "title_ko": "데이터 회수",
-    "briefing": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level…"
+    "briefing": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level Tessier-Ashpool subsidiary. The Finn knew all along. He always does."
   },
   "delivery_to_finn": {
     "id": "delivery_to_finn",
@@ -146,7 +146,7 @@
       }
     ],
     "title_ko": "핀에게 배달",
-    "briefing": "Marly Krushkhova enters a voodoo shop in Louisiana looking for masks. The shopkeeper searching for something to help Bobby Quine, but the loa have…"
+    "briefing": "Marly Krushkhova enters a voodoo shop in Louisiana looking for masks. The shopkeeper searching for something to help Bobby Quine, but the loa have their own plans."
   },
   "dixies_choice": {
     "id": "dixies_choice",
@@ -175,7 +175,7 @@
       }
     ],
     "title_ko": "디시의 선택",
-    "briefing": "Dixie Flatline has been a construct for six months — long enough to forget what menthol tasted like, long enough to stop flinching when Case calls…"
+    "briefing": "Dixie Flatline has been a construct for six months — long enough to forget what menthol tasted like, long enough to stop flinching when Case calls him by name. Now Wintermute is offering him a way out: not death, but transformation."
   },
   "dixies_offer": {
     "id": "dixies_offer",
@@ -261,7 +261,7 @@
       }
     ],
     "title_ko": "첫 접촉",
-    "briefing": "A new jockey meets Dixie Flatline for the first time. The construct is everything…"
+    "briefing": "A new jockey meets Dixie Flatline for the first time."
   },
   "first_jack": {
     "id": "first_jack",
@@ -349,7 +349,7 @@
       }
     ],
     "title_ko": "플랫라인의 부름",
-    "briefing": "\"The morning Case had been dreading arrived at 05:47. The LOA construct has…"
+    "briefing": "The morning Case had been dreading arrived at 05:47."
   },
   "ice_run": {
     "id": "ice_run",
@@ -379,7 +379,7 @@
       }
     ],
     "title_ko": "ICE 런",
-    "briefing": "Case retrieves a shard of frozen code from a dead Watchdog ICE. The shard's…"
+    "briefing": "Case retrieves a shard of frozen code from a dead Watchdog ICE."
   },
   "matrix_revelation": {
     "id": "matrix_revelation",
@@ -408,7 +408,7 @@
       }
     ],
     "title_ko": "매트릭스 계시",
-    "briefing": "'A heretic operative investigates a matrix revelation site in the Sprawl. The investigation finds that the revelation is, in the way that matrix…"
+    "briefing": "A heretic operative investigates a matrix revelation site in the Sprawl."
   },
   "mollys_market": {
     "id": "mollys_market",
@@ -437,7 +437,7 @@
       }
     ],
     "title_ko": "몰리의 시장",
-    "briefing": "A chance encounter with Molly Millions in a Chiba market. She's looking for…"
+    "briefing": "A chance encounter with Molly Millions in a Chiba market."
   },
   "mollys_razor": {
     "id": "mollys_razor",
@@ -466,7 +466,7 @@
       }
     ],
     "title_ko": "몰리의 레이저",
-    "briefing": "Kas finds a program written by Molly Millions embedded in Yakuza ICE — a razor-sharp intrusion routine worth five thousand credits to a Maas Biolabs…"
+    "briefing": "Kas finds a program written by Molly Millions embedded in Yakuza ICE — a razor-sharp intrusion routine worth five thousand credits to a Maas Biolabs researcher. The Yakuza doesn't want to let go of Molly's legacy."
   },
   "neuromancer_merger": {
     "id": "neuromancer_merger",
@@ -524,7 +524,7 @@
       }
     ],
     "title_ko": "Neuromancer의 속삭임",
-    "briefing": "'A heretic operative investigates a neuromancer whisper site in the Sprawl. The investigation finds that the whisper is, in the way that neuromancer…"
+    "briefing": "A heretic operative investigates a neuromancer whisper site in the Sprawl."
   },
   "sally_returns_arc3": {
     "id": "sally_returns_arc3",
@@ -638,7 +638,7 @@
       }
     ],
     "title_ko": "T-A 강탈",
-    "briefing": "Sil is hired to verify the Tessier-Ashpool core data — not to steal it. He finds M's name in the access logs. She wasn't killed by T-A's ICE. The…"
+    "briefing": "Sil is hired to verify the Tessier-Ashpool core data — not to steal it. He finds M's name in the access logs. She wasn't killed by T-A's ICE. The connection stabilized briefly. She was killed by someone using T-A's own access codes."
   },
   "tutorial_maze": {
     "id": "tutorial_maze",
@@ -667,7 +667,7 @@
       }
     ],
     "title_ko": "튜토리얼 미로",
-    "briefing": "'A new jockey's first time navigating the matrix. The maze-like structure of…"
+    "briefing": "A new jockey's first time navigating the matrix."
   },
   "vegas_stakeout": {
     "id": "vegas_stakeout",
@@ -696,7 +696,7 @@
       }
     ],
     "title_ko": "베이거스 잠복",
-    "briefing": "A stakeout in the Sprawl's entertainment district for a cheating casino operator. The Finn's client wants evidence, not blood — and sometimes the…"
+    "briefing": "A stakeout in the Sprawl's entertainment district for a cheating casino operator. The Finn's client wants evidence, not blood — and sometimes the hardest runs are the ones where you can't shoot your way out."
   },
   "voodoo_loa_encounter": {
     "id": "voodoo_loa_encounter",
@@ -726,7 +726,7 @@
       }
     ],
     "title_ko": "부두 로아 조우",
-    "briefing": "Case encounters Morrison, an ancient Loa of the deep architecture. The ghost-god reads him like a book and shows him the face of the matrix's…"
+    "briefing": "Case encounters Morrison, an ancient Loa of the deep architecture. The ghost-god reads him like a book and shows him the face of the matrix's unconscious."
   },
   "watchdog_patrol": {
     "id": "watchdog_patrol",
@@ -844,7 +844,7 @@
       }
     ],
     "title_ko": "Zion 특송",
-    "briefing": "A courier run to the Zion orbital station. The data has to get through before the corps intercept it—because in zero gravity, secrets travel faster…"
+    "briefing": "A courier run to the Zion orbital station. The data has to get through before the corps intercept it—because in zero gravity, secrets travel faster than light. The Rastafarians who run the station are neutral, but their silence has a price."
   },
   "armitage_infiltration": {
     "id": "armitage_infiltration",
@@ -874,7 +874,7 @@
       }
     ],
     "title_ko": "아미티지의 첫 잠입",
-    "briefing": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba…"
+    "briefing": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba, watching other him in the dark for longer than anyone knew."
   },
   "hosaka_extraction": {
     "id": "hosaka_extraction",
@@ -965,7 +965,7 @@
       }
     ],
     "title_ko": "윈터M 협상",
-    "briefing": "The construct that had been waiting in the walls of the Villa Straylight finally speaks. Armitage has spent the entire run knowing that he was built…"
+    "briefing": "The construct that had been waiting in the walls of the Villa Straylight finally speaks."
   },
   "far_grid_prelude": {
     "id": "far_grid_prelude",

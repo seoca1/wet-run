@@ -37,7 +37,21 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
 MISSIONS = os.path.join(ROOT, "web", "src", "data", "missions.json")
 FICTION = os.path.abspath(os.path.join(ROOT, "..", "..", "Fiction", "derivative"))
 
-MAX_LEN = 150
+# A briefing is the job in a sentence or two — and it has to be a WHOLE
+# sentence. The first version cut at 150 characters, which ended mid-clause with
+# an ellipsis ("…a secret that could bring down a mid-level…") and then handed
+# that to the screen as the fixer's words. Truncated text read as broken, and
+# marking it with "…" only said so. Complete sentences only, no truncation
+# marker, and a fragment is refused rather than papered over.
+MAX_LEN = 240
+
+# Below this a "briefing" says nothing ("A."). The floor also matches the one
+# `collect` puts on a source summary, so a candidate that only shrinks into
+# nonsense is refused rather than written.
+MIN_LEN = 40
+
+SENTENCE_RE = re.compile(r"[^.!?]+[.!?]+[\"')\]]*")
+SENTENCE_END = (".", "!", "?", '"', "'")
 
 SLOP_MARKERS = (
     "i noticed",
@@ -59,9 +73,10 @@ INTEG_RE = re.compile(r"^game_integration:\s*\n(?:\s+.*\n)*?\s+mission_id:\s*([a
 def clean(text: str) -> str:
     t = text.strip()
     # YAML may wrap the value in single or double quotes; the content escapes
-    # an apostrophe by doubling it.
-    if len(t) >= 2 and t[0] == t[-1] and t[0] in "\"'":
-        t = t[1:-1]
+    # an apostrophe by doubling it. The wrapper is not always a matched pair
+    # once a body has been rewritten, so strip whatever quotes are on the ends
+    # — a summary never legitimately opens with one.
+    t = t.strip("\"'")
     t = t.replace("''", "'").replace('\\"', '"').replace("\\'", "'")
     # Repair a slop-removal scar rather than discarding the summary: when the
     # injected filler was cut out, the join sometimes left a doubled word
@@ -71,18 +86,23 @@ def clean(text: str) -> str:
     return t
 
 
-def truncate(text: str) -> str:
-    if len(text) > MAX_LEN:
-        cut = text[:MAX_LEN]
-        space = cut.rfind(" ")
-        if space > MAX_LEN * 0.6:
-            cut = cut[:space]
-        text = cut.rstrip(" ,;:") + "…"
-    # Some source summaries are themselves fragments ("… The shard's"); a
-    # briefing that trails off reads as broken rather than mysterious.
-    if not text.endswith((".", "!", "?", "…", '"', "'")):
-        text += "…"
-    return text
+def brief(text: str) -> str | None:
+    """The leading whole sentence(s) of `text`, up to `MAX_LEN`.
+
+    `None` when there is no complete sentence inside the budget — a fragment
+    like "… The shard's" has nothing to say, and saying half of it says less.
+    """
+    sentences = [s.strip() for s in SENTENCE_RE.findall(text)]
+    if not sentences:
+        return None
+    out = sentences[0]
+    for sentence in sentences[1:]:
+        if len(out) + 1 + len(sentence) > MAX_LEN:
+            break
+        out = f"{out} {sentence}"
+    if len(out) > MAX_LEN or len(out) < MIN_LEN or not out.endswith(SENTENCE_END):
+        return None
+    return out
 
 
 def has_slop(text: str) -> bool:
@@ -112,7 +132,11 @@ def collect() -> dict[str, str]:
     out: dict[str, str] = {}
     for mid, options in candidates.items():
         options.sort(reverse=True)
-        out[mid] = truncate(options[0][2])
+        for _, _, body in options:
+            chosen = brief(body)
+            if chosen:
+                out[mid] = chosen
+                break
     return out
 
 

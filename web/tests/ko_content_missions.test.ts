@@ -6,7 +6,7 @@
  *     empty/missing field omitted). Throws on wrong-type.
  *  2. Real missions.json — every one of the 53 missions carries `title_ko`; all
  *     20 far-grid missions carry `briefing_ko` matching their EN briefing
- *     surface.
+ *     surface, and Sprawl missions carry one when the fiction has it.
  *  3. Far Grid hub renderer KO resolution — title + briefing render KO when
  *     language is "ko" and a translation exists, fall back to EN otherwise.
  *     Also CJK-safe: no Hanja / kana in any of the 53+20 new strings (sweeps
@@ -241,13 +241,24 @@ describe("missions.json: every mission carries title_ko", () => {
     expect(missing).toEqual([]);
   });
 
-  it("Sprawl (non-far-grid) missions do NOT carry briefing_ko (only far-grid does)", async () => {
+  // This used to assert the opposite — "Sprawl missions do NOT carry
+  // briefing_ko (only far-grid does)" — which wrote the GAP down as a rule: the
+  // Sprawl summaries live in the derivative fiction and the importer only read
+  // their English (2026-11-17). The fiction's `plot_summary.ko` is imported now,
+  // so a Sprawl mission may carry one, and when it does it is the same story's
+  // Korean (the importer takes both from one file).
+  it("Sprawl missions carry briefing_ko when the fiction has a Korean summary", async () => {
     const { default: data } = await import("../src/data/missions.json");
     const missions = loadMissionsCatalog(data);
     const sprawl = missions.filter((m) => m.source_universe === "sprawl");
     expect(sprawl.length).toBe(33);
-    for (const m of sprawl) {
-      expect("briefing_ko" in m).toBe(false);
+    const withKo = sprawl.filter((m) => (m.briefing_ko ?? "").length > 0);
+    // The count rises as the source work fills the Korean in; it must not be
+    // pinned, or every source improvement would fail the build.
+    expect(withKo.length).toBeGreaterThan(0);
+    for (const m of withKo) {
+      expect(m.briefing, `${m.id} has Korean but no English`).toBeTruthy();
+      expect(HANGUL.test(m.briefing_ko ?? ""), `${m.id} briefing_ko is not Korean`).toBe(true);
     }
   });
 });
@@ -273,7 +284,9 @@ describe("CJK safety sweep — title_ko + briefing_ko across all 53 missions", (
     }
     expect(violations).toEqual([]);
     expect(titleHangulCount).toBe(53);
-    expect(briefingHangulCount).toBe(20);
+    // 20 far-grid briefings are hand-written Korean; the Sprawl ones arrive from
+    // the fiction as its Korean summaries are filled in.
+    expect(briefingHangulCount).toBeGreaterThanOrEqual(20);
   });
 
   it("no parenthetical English inserts (e.g. '(잭아웃)') in KO strings", async () => {

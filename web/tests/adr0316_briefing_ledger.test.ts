@@ -31,10 +31,13 @@ interface Candidate {
   readonly chars: number;
   readonly declared: boolean;
   readonly body: string;
+  /** The Korean summary of the SAME story, or null when it has none. */
+  readonly bodyKo: string | null;
   readonly readable: boolean;
 }
 interface LedgerEntry {
   readonly briefing: string | null;
+  readonly briefingKo: string | null;
   readonly chosenFrom: string | null;
   readonly considered: readonly Candidate[];
   readonly notScanned: readonly Candidate[];
@@ -58,7 +61,31 @@ describe("ADR-0316 — the briefing ledger describes the game data", () => {
       expect(recorded?.briefing ?? null, `${mission.id} briefing`).toBe(
         mission.briefing ?? null,
       );
+      expect(recorded?.briefingKo ?? null, `${mission.id} briefing_ko`).toBe(
+        mission.briefing_ko ?? null,
+      );
     }
+  });
+
+  it("the Korean brief comes from the same story as the English one", () => {
+    // A mission id can be claimed by several stories (`aleph_fragment` has
+    // six). Taking the Korean from a different file would pair one story's
+    // summary with another story's translation.
+    let withKo = 0;
+    for (const [id, entry] of Object.entries(LEDGER.missions)) {
+      if (entry.briefingKo === null) continue;
+      withKo += 1;
+      const source = entry.considered.find((c) => c.file === entry.chosenFrom);
+      expect(source, `${id}: no source file`).toBeDefined();
+      expect(source?.bodyKo, `${id}: the source has no Korean summary`).not.toBeNull();
+      expect(
+        source?.bodyKo?.startsWith(entry.briefingKo),
+        `${id}: the Korean brief is not the opening of its source`,
+      ).toBe(true);
+    }
+    // The number is reported, not asserted to a constant: the source work is
+    // filling these in, and a rising count must not fail the build.
+    expect(withKo).toBeGreaterThan(0);
   });
 
   it("names the scan language and lists the fiction ids the game does not ship", () => {

@@ -102,6 +102,31 @@ describe("ADR-0300 — the briefings fit, on both screens, at every layout", () 
     }
   });
 
+  // ADR-0316: the Korean briefs arrive from the fiction now. Korean glyphs are
+  // wider than Latin ones, so they get their own pass at every layout.
+  it("draws nothing past the edge with a Korean briefing", () => {
+    let checked = 0;
+    for (const [cols, rows] of LAYOUTS) {
+      for (const mission of SPRAWL) {
+        if (!mission.briefing_ko) continue;
+        checked += 1;
+        takeClippedText();
+        renderMissionBriefing(
+          mission.title_ko ?? mission.title,
+          mission.fixer,
+          mission.briefing_ko,
+          cols,
+          rows,
+        );
+        expect(
+          takeClippedText(),
+          `${mission.id} Korean briefing clips at ${cols}x${rows}`,
+        ).toEqual([]);
+      }
+    }
+    expect(checked).toBeGreaterThan(0);
+  });
+
   it("draws nothing past the edge on the mission list preview", () => {
     for (const [cols, rows] of LAYOUTS) {
       for (const mission of SPRAWL) {

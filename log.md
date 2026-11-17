@@ -3894,3 +3894,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **검증 2겹**: ⑴ `import_briefings.py --check` — 원장↔게임 데이터 일치 + **다시 돌리면 같은 값** + 원본 파일 존재. 낡은 원장은 없느니만 못하므로 **실패**(exit 1). ⑵ `web/tests/adr0316_briefing_ledger.test.ts`(5 tests) — **CI 에서** 원장↔게임 데이터 + 내부 정합성 + `watchdog_patrol` 사례 고정. **`AGENTS.md` §3.1 에 게이트로 등록.**
 - **검증**: typecheck 0 · lint 0 errors · vitest **222 files / 4308 tests**(+5) · `--check` exit 0 · 게이트 6종 CLEAN.
 - **남은 오너 결정**: 후보가 갈릴 때 **무엇을 고를지**(현재 "가장 짧은 것" → 손상된 `watchdog_patrol` 을 고른 이유). 원장이 14편을 한 파일에 모아 검토 가능하게 했다.
+
+## [2026-11-17] feat(story) | 한국어 브리핑 — 번역이 없던 게 아니라 가져오지 않았다 (ADR-0316)
+
+- **발견**: 게임의 `briefing_ko` 가 **0편**이었는데, 원본 `plot_summary.ko` 는 **283 파일 중 75** 에 이미 있었다. 임포터가 **`.en` 만 읽었다** — 번역 부재가 아니라 **임포트 누락**이다.
+- **같은 이야기에서 둘 다**: 미션 id 하나를 여러 이야기가 주장할 수 있으므로(`aleph_fragment` 는 **6 파일**), `ko` 를 다른 파일에서 가져오면 **다른 이야기의 번역**이 붙는다 → **고른 파일에서 en·ko 를 함께** 가져온다.
+- **결과 13/33 즉시 켜짐**: 세 표면(미션 선택 미리보기 · 브리핑 화면 · `CONTRACT` 카드)이 **이미 `language === "ko"` 일 때 `briefing_ko` 를 우선**하도록 배선돼 있어서 배선 변경 0.
+- **거부 1건**: `first_contact` 의 ko 는 **조각**(문장 미종결)이라 `brief()` 가 거부 — `en` 과 같은 규칙. 원장의 `considered[].bodyKo` 에 원문이 남아 원본 교정 대상이 된다(그 세션이 처리).
+- **옛 테스트가 격차를 규칙으로 고정**하고 있었다: `ko_content_missions.test.ts` 의 *"Sprawl 미션은 `briefing_ko` 를 갖지 않는다(오직 far-grid 만)"* → 새 사실에 맞게 교체(가지면 한글이어야 한다 + 개수는 **고정하지 않음** — 원본이 채워지면 늘어난다).
+- **CJK 안전**: 한자·가나 **0**(검사 통과). 한글은 캔버스가 `fillText(..., maxWidth)` 로 **한 칸에 맞춰** 그리므로 패널을 넘지 않는다(기존 KO 동작).
+- **원장**: `briefingKo` + `chosenFrom`(같은 파일) 기록 · `--check` 가 **두 필드 모두** 게임 데이터와 대조 · CI 테스트에 **"ko 가 같은 이야기에서 왔는지"** 추가.
+- **검증**: typecheck 0 · lint 0 errors · vitest **222 files / 4310 tests** · **전체 e2e 54 passed / 5 skipped / 0 failed**(59) · `--check` exit 0 · 게이트 6종 CLEAN.

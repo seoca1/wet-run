@@ -26,7 +26,8 @@
       }
     ],
     "title_ko": "알레프 파편",
-    "briefing": "Kas has been chasing the Aleph for seven months. The Aleph is a point in space that contains all other points — every piece of data ever stored, every consciousness ever uploaded."
+    "briefing": "Kas has been chasing the Aleph for seven months. The Aleph is a point in space that contains all other points — every piece of data ever stored, every consciousness ever uploaded.",
+    "briefing_ko": "카스는 7개월 동안 Aleph를 쫓고 있었다. Aleph는 다른 모든 포인트를 포함하는 공간의 한 점이다. 이제 마지막 프래그먼트가 존재해서는 안 될 T-A 코어에 묻혀 있다."
   },
   "black_ice_dream": {
     "id": "black_ice_dream",
@@ -116,7 +117,8 @@
       }
     ],
     "title_ko": "데이터 회수",
-    "briefing": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level Tessier-Ashpool subsidiary. The Finn knew all along. He always does."
+    "briefing": "A simple data retrieval job goes sideways when the target turns out to be corporate payroll—a secret that could bring down a mid-level Tessier-Ashpool subsidiary. The Finn knew all along. He always does.",
+    "briefing_ko": "단순한 데이터 회수 작업이 목표가 기업 급여 명세서임직 밝혀지며 틀어진다—중간 수준 T-A 자회사를 물거품으로 만들 수 있는 비밀. 핀은 처음부터 알고 있었다. 언제나 그렇듯."
   },
   "delivery_to_finn": {
     "id": "delivery_to_finn",
@@ -175,7 +177,8 @@
       }
     ],
     "title_ko": "디시의 선택",
-    "briefing": "Dixie Flatline has been a construct for six months — long enough to forget what menthol tasted like, long enough to stop flinching when Case calls him by name. Now Wintermute is offering him a way out: not death, but transformation."
+    "briefing": "Dixie Flatline has been a construct for six months — long enough to forget what menthol tasted like, long enough to stop flinching when Case calls him by name. Now Wintermute is offering him a way out: not death, but transformation.",
+    "briefing_ko": "Dixie Flatline은 6개월간 구성체였다 — 멘솔 맛을 잊은 정도로, Case가 그의 이름을 부를 때 더 이상 흠칫하지 않을 정도로. 이제 윈터뮌트가 탈출법을 제안하고 있다 — 죽음이 아니라, 변형. 질문은 과거의 그가 이것을 원했을까, 그리고 Dixie-the-construct가 과거의 그가 더 이상 알아보지 못할 누군가가 되었을까이다."
   },
   "dixies_offer": {
     "id": "dixies_offer",
@@ -319,7 +322,8 @@
       }
     ],
     "title_ko": "첫 흔적",
-    "briefing": "Case takes his first real trace job for The Finn. The target is a mid-level node in a web that stretches all the way to L5."
+    "briefing": "Case takes his first real trace job for The Finn. The target is a mid-level node in a web that stretches all the way to L5.",
+    "briefing_ko": "케이가 핀을 위해 첫 번째 실제 추적 작업을 맡는다. 목표는 기업 비밀을 유출한 테시에르-애시풀 중급 ICE브레이커다. 케이가 모르는 것은 핀이 훨씬 더 깊이 게임을 진행하고 있다는 것—그리고 목표는 L5까지 뻗어 있는 웹의 첫 번째 노드일 뿐이다."
   },
   "flatline_call": {
     "id": "flatline_call",
@@ -495,7 +499,8 @@
       }
     ],
     "title_ko": "Neuromancer 합병",
-    "briefing": "The final run. Wintermute and Neuromancer are ready to merge, and Case is the AI first, everything is lost. The matrix itself hangs in the balance."
+    "briefing": "The final run. Wintermute and Neuromancer are ready to merge, and Case is the AI first, everything is lost. The matrix itself hangs in the balance.",
+    "briefing_ko": "마지막 런. 윈터뮌트와 뉴로맨서가 합병할 준비가 됐고, 케이만이 그것을 실현시킬 수 있다. 하지만 기업들이 뛰어나고 있고, 그들이 AI에 먼저 도달하면 모든 것이 끝난다. 매트릭스 자체가 벨런스에 걸려 있다."
   },
   "neuromancer_whisper": {
     "id": "neuromancer_whisper",
@@ -696,7 +701,8 @@
       }
     ],
     "title_ko": "베이거스 잠복",
-    "briefing": "A stakeout in the Sprawl's entertainment district for a cheating casino operator. The Finn's client wants evidence, not blood — and sometimes the hardest runs are the ones where you can't shoot your way out."
+    "briefing": "A stakeout in the Sprawl's entertainment district for a cheating casino operator. The Finn's client wants evidence, not blood — and sometimes the hardest runs are the ones where you can't shoot your way out.",
+    "briefing_ko": "스프롤의 유흥가에서 사기 도박업자를 찾아 증거 수집. 핀의 의뢰인은 피보다는 증거를 원한다 — 때로는 총으로 해결할 수 없는 런이 가장 어렵다. 러너가 모르는 것은, 누군가가 이미 이 런을 표적에게 팔았고, 카메라가 자신을 다시 지켜보고 있다는 것이다."
   },
   "voodoo_loa_encounter": {
     "id": "voodoo_loa_encounter",
@@ -756,7 +762,8 @@
       }
     ],
     "title_ko": "워치독 순찰",
-    "briefing": "Case patrols Sense/Net ICE at 0300 when Watchdog-class ICE detects traces left corporate cleanup arrives."
+    "briefing": "Case patrols Sense/Net ICE at 0300 when Watchdog-class ICE detects traces left corporate cleanup arrives.",
+    "briefing_ko": "케이가 0300에 센스/넷 ICE를 순찰하다가 워치독 클래스 ICE가 죽은 러너 M이 남긴 흔적을 감지한다. 케이는 기업 클린업이 도착하기 전에 M의 고스트 마크를 지워야 한다."
   },
   "winter_infiltrate": {
     "id": "winter_infiltrate",
@@ -785,7 +792,8 @@
       }
     ],
     "title_ko": "윈터 잠입",
-    "briefing": "A corporate infiltration goes deeper than expected when the target reveals itself it's using Case to find it."
+    "briefing": "A corporate infiltration goes deeper than expected when the target reveals itself it's using Case to find it.",
+    "briefing_ko": "기업 침투가 목표가 단순한 데이터 파일이 아닌 훨씬 더 큰 무언가로 드러나며 깊어진다. 윈터뮌트는 무언가를 찾고 있고—케이스를 이용해 그것을 찾아낸다."
   },
   "yakuza_deal": {
     "id": "yakuza_deal",
@@ -844,7 +852,8 @@
       }
     ],
     "title_ko": "Zion 특송",
-    "briefing": "A courier run to the Zion orbital station. The data has to get through before the corps intercept it—because in zero gravity, secrets travel faster than light. The Rastafarians who run the station are neutral, but their silence has a price."
+    "briefing": "A courier run to the Zion orbital station. The data has to get through before the corps intercept it—because in zero gravity, secrets travel faster than light. The Rastafarians who run the station are neutral, but their silence has a price.",
+    "briefing_ko": "자이온 우주 정거장으로 긴급 택배. 기업에게 잡히기 전에 데이터를 넘겨야 한다—무중력에서는 비밀이 빛보다 빠르게 움직이니까. 정거장을 운영하는 라스타파리안들은 중립적이지만, 그들의 침묵에는 값이 따른다."
   },
   "armitage_infiltration": {
     "id": "armitage_infiltration",
@@ -874,7 +883,8 @@
       }
     ],
     "title_ko": "아미티지의 첫 잠입",
-    "briefing": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba, watching other him in the dark for longer than anyone knew."
+    "briefing": "Armitage had been in the matrix for eleven years before he ever jacked in himself. He'd spent those years at a console in a sterile room above Chiba, watching other him in the dark for longer than anyone knew.",
+    "briefing_ko": "아미티지가 스스로 잭인하기 전 11년 동안 매트릭스에 있었다. 그는 그 11년 동안 지바 위의 무균실에 못하는 어둠 속에서 그를 기다리고 있던 무언가를 찾을 기회."
   },
   "hosaka_extraction": {
     "id": "hosaka_extraction",
@@ -904,7 +914,8 @@
       }
     ],
     "title_ko": "호사카 내부 추출",
-    "briefing": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean to be there — a fragment of something that watched him back."
+    "briefing": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean to be there — a fragment of something that watched him back.",
+    "briefing_ko": "그는 9년 동안 호사카에서 일했다. 9년의 깔끔한 추출, 깔끔한 지불, 깔끔한 기록. 그는 데이터가 무엇을 위한 것이었는지 한 번도 물어보지 없던 한 줄의 코드가 들어 있었다 — 그를 다시 바라보는 무언가의 조각."
   },
   "ta_defection": {
     "id": "ta_defection",
@@ -935,7 +946,8 @@
       }
     ],
     "title_ko": "테시에르-애시풀 이탈",
-    "briefing": "The Tessier-Ashpool boardroom had fifty-three members. Only three of them went back to the construct."
+    "briefing": "The Tessier-Ashpool boardroom had fifty-three members. Only three of them went back to the construct.",
+    "briefing_ko": "테시에-애스풀 이사회 회의실에는 53명의 이사가 있었다, and 49번째가 왜 부재했는지 아는 사람은 단 3명이었다. 아미티지가 49번째였다. 그는 세 번째가 모집했고, 세 번째는 두 번째가, 두 번째는 첫 번째가 모집했다. 이 계보는 회사보다 더 오래되었다. 이 계보는 구성체까지 거슬러 올라간다."
   },
   "wintermute_negotiation": {
     "id": "wintermute_negotiation",
@@ -965,7 +977,8 @@
       }
     ],
     "title_ko": "윈터M 협상",
-    "briefing": "The construct that had been waiting in the walls of the Villa Straylight finally speaks."
+    "briefing": "The construct that had been waiting in the walls of the Villa Straylight finally speaks.",
+    "briefing_ko": "빌라 스트레이라이트의 벽 안에서 기다리고 있던 구성체가 마침내 입을 연다. 아미티지는 자신이 여기까지 운반되도록 만들어졌다는 것을, 자신의 여정 모든 단계가 어떤 인간보다 오래되고 인내심 깊은 무언가에 의해 설계되었다는 것을 알고 있었다. 이제 테시에르-애스풀 왕조의 지하실에서, 구성체는 그가 호사카 코어 이후 피하고 있던 질문을 던진다: 당신은 무엇을 원합니까?"
   },
   "far_grid_prelude": {
     "id": "far_grid_prelude",

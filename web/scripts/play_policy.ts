@@ -350,10 +350,17 @@ export function playRun(
   walletBalance = 0,
   iceLimit = DEFAULT_ICE_LIMIT,
   intelFree = false,
-  /** ADR-0315 measurement: carry a deck in from the previous mission, the way
-   * a campaign would. `handSize` cards become the opening hand, the rest the
-   * draw pile. Harness-only — the game builds its deck from the jockey. */
-  carryDeck?: ReadonlyArray<Program>,
+  /** What a contract hands to its next leg (ADR-0318).
+   *
+   * The game's `startNextLeg` carries credits, the deck and the unique, and
+   * resets HP, COST, the turn count and the board (Q3). The harness carries the
+   * same three so a campaign measures what the game plays. `handSize` cards
+   * become the opening hand, the rest the draw pile. */
+  carry?: {
+    readonly deck?: ReadonlyArray<Program>;
+    readonly credits?: number;
+    readonly uniquePickDone?: boolean;
+  },
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -365,14 +372,22 @@ export function playRun(
       ? deckForGrade(programCatalog, mission.grade ?? 1)
       : startingDeck(programCatalog, jockeyId);
   let state = makeInitialState(mission, fallback, deck);
-  if (carryDeck !== undefined) {
-    // ADR-0315: a campaign hands the previous mission's deck to the next one.
+  if (carry?.deck !== undefined) {
     const hand = Math.max(1, state.player.handSize);
     state = {
       ...state,
-      deck: carryDeck.slice(0, hand),
-      drawPile: carryDeck.slice(hand),
+      deck: carry.deck.slice(0, hand),
+      drawPile: carry.deck.slice(hand),
     };
+  }
+  // ADR-0314 makes wealth an ending condition, and a condition only means
+  // something if it accumulates across the contract.
+  if (carry?.credits !== undefined) {
+    state = { ...state, player: { ...state.player, credits: carry.credits } };
+  }
+  // One unique per campaign, not one per mission (ADR-0303/0311).
+  if (carry?.uniquePickDone === true) {
+    state = { ...state, uniquePickDone: true };
   }
   // ADR-0283 (C'): prep buys CAPACITY, not cards -- extra max HP is the most
   // local form of it. Applied here so the lever can be measured before any

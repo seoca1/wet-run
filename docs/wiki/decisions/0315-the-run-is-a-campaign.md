@@ -160,8 +160,9 @@ PLAY                       WORKSHOP          ARCHIVE               SYSTEM
 - **(b) 캠페인 사이 HP.** Q3 로 미션마다 리셋. 미션 사이 회복은 전리품(prep)이 담당한다.
 - **(c) g6 고유 누적.** 캠페인 후반 g6 는 +32.3pp. 캠페인 기준 목표를 새로 잡거나 고유 규칙을
   조정해야 한다.
-- **(d) 캠페인 지표.** 현행 하네스는 **미션 단위**다. "N미션 생존율"이 없으면 캠페인 밸런스를
-  검증할 수 없다 — 슬라이스 4.
+- **(d) 캠페인 지표.** ✅ **닫힘(2026-11-17)**: `npm run campaign`(`scripts/campaign_survival.ts`)이
+  **N미션 생존율**을 낸다 — 게임과 같은 계약(`contractFor`)·같은 이월(`startNextLeg`)로 3다리를 플레이하고
+  다리별·계약 완주율·엔딩·`--fresh` 비교를 보고한다. 기준선은 ADR-0318 에 기록.
 - **(e) 저장 스키마.** 계약·미션 인덱스·이월 자원을 `version 1` 선택 필드로(ADR-0287/0311 관례).
 - **(f) 프롤로그 연결.** ADR-0272/0274 의 "프롤로그 → 자키 → 런 → 엔딩" 흐름이 캠페인과 만난다.
 - **(g) 노출 신호의 정밀도.** 지금 archive/workshop 은 "런을 한 번 끝냄"으로 열린다. 진짜
@@ -170,7 +171,7 @@ PLAY                       WORKSHOP          ARCHIVE               SYSTEM
 
 ## Implementation Status (2026-11-15)
 
-**Status**: 🟡 Partial (슬라이스 1·1.5·1.6·2 ✅ · 슬라이스 3–4 ❌ Not started)
+**Status**: 🟡 Partial (슬라이스 1·1.5·1.6·2 ✅ · 슬라이스 4 지표 ✅ · 3 ❌)
 
 **Evidence**:
 - `web/src/renderer/menu_main.ts` — 그룹·설명·**`visibleMenuOptions`(노출 규칙)**

@@ -42,11 +42,12 @@ describe("ADR-0317 · mission briefing", () => {
     expect(narrow).toContain("ENTER continue · ESC back");
   });
 
-  it("every Sprawl mission has a story to brief with (except dixies_offer)", () => {
+  it("every Sprawl mission has a story to brief with", () => {
     const sprawl = Object.values(missionsJson).filter(
       (m) => (m as { source_universe?: string }).source_universe !== "far-grid",
     ) as ReadonlyArray<{ id: string; briefing?: string }>;
     const missing = sprawl.filter((m) => !m.briefing).map((m) => m.id);
-    expect(missing).toEqual(["dixies_offer"]);
+    // 33/33 since the Fiction side wrote `dixies_offer` (2026-11-17).
+    expect(missing).toEqual([]);
   });
 });

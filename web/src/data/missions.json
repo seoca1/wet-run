@@ -57,7 +57,8 @@
       }
     ],
     "title_ko": "블랙 ICE의 꿈",
-    "briefing": "A runner encounters Black ICE that hunts not with cold but with molten hunger. The ice reads her trace like a lover and leaves her with a scar she can never explain."
+    "briefing": "A runner encounters Black ICE that hunts not with cold but with molten hunger. The ice reads her trace like a lover and leaves her with a scar she can never explain.",
+    "briefing_ko": "러너가 차가움이 아니라 녹아내린 허기로 사냥하는 블랙 아이스를 만난다. 그 아이스는 연인의 손처럼 그녀의 트레이스를 읽고, 떠날 수 없는 흉터를 남긴다."
   },
   "craft_job": {
     "id": "craft_job",
@@ -88,7 +89,8 @@
       }
     ],
     "title_ko": "제작 의뢰",
-    "briefing": "Kumiko Yanaka visits the Manarase club at midnight to meet Sally Shearer, a three hundred years of data, three hundred years of death. The loa cannot be broken. The wheel does not stop."
+    "briefing": "Kumiko Yanaka visits the Manarase club at midnight to meet Sally Shearer, a three hundred years of data, three hundred years of death. The loa cannot be broken. The wheel does not stop.",
+    "briefing_ko": "야나카 구미코가 자정의 마나라세 클럽에서 로맨틱 컨스트럭트 샐리 시어를 만난다. 둘 사이에서 바퀴가 펼쳐진다 — 산업, 자본, 테시에-애시풀, 삼백 년의 데이터, 삼백 년의 죽음. 로아는 부러지지 않는다. 바퀴는 멈추지 않는다."
   },
   "data_retrieval": {
     "id": "data_retrieval",
@@ -148,7 +150,8 @@
       }
     ],
     "title_ko": "핀에게 배달",
-    "briefing": "Marly Krushkhova enters a voodoo shop in Louisiana looking for masks. The shopkeeper searching for something to help Bobby Quine, but the loa have their own plans."
+    "briefing": "Marly Krushkhova enters a voodoo shop in Louisiana looking for masks. The shopkeeper searching for something to help Bobby Quine, but the loa have their own plans.",
+    "briefing_ko": "마리 크루쉬코바가 루이지아나의 부두 가게에서 마스크를 찾고 있다. 사장는 마스크가 로아가 아니라 로아가 머무는 자리라고 밝힌다. 마리는 바비 퀸을 돕기 위한 무언가를 찾고 있지만, 로아들은 자신들의 계획이 있다."
   },
   "dixies_choice": {
     "id": "dixies_choice",
@@ -178,7 +181,7 @@
     ],
     "title_ko": "디시의 선택",
     "briefing": "Dixie Flatline has been a construct for six months — long enough to forget what menthol tasted like, long enough to stop flinching when Case calls him by name. Now Wintermute is offering him a way out: not death, but transformation.",
-    "briefing_ko": "Dixie Flatline은 6개월간 구성체였다 — 멘솔 맛을 잊은 정도로, Case가 그의 이름을 부를 때 더 이상 흠칫하지 않을 정도로. 이제 윈터뮌트가 탈출법을 제안하고 있다 — 죽음이 아니라, 변형. 질문은 과거의 그가 이것을 원했을까, 그리고 Dixie-the-construct가 과거의 그가 더 이상 알아보지 못할 누군가가 되었을까이다."
+    "briefing_ko": "Dixie Flatline은 6개월간 구성체였다 — 멘솔 맛을 잊은 정도로, Case가 그의 이름을 부를 때 더 이상 흠칫하지 않을 정도로. 이제 윈터뮌트가 탈출법을 제안하고 있다 — 죽음이 아니라, 변형. 질문은 과거의 그가 이것을 원했을까, 아니면 Dixie-the-construct가 과거의 그가 더 이상 알아보지 못할 누군가가 되었을까이다."
   },
   "dixies_offer": {
     "id": "dixies_offer",
@@ -206,7 +209,9 @@
         "count": 1
       }
     ],
-    "title_ko": "디시의 제안"
+    "title_ko": "디시의 제안",
+    "briefing": "Dixie Flatline remembers dying. A ROM construct should not remember — but Dixie does. And now someone is calling him back for one last run.",
+    "briefing_ko": "딕시 플랫라인이 죽음을 기억한다. 롬 컨스트럭트는 죽음을 기억해선 안 되는데 — 딕시는 기억한다. 차가움, 멈춘 심장, 치바 클리닉의 붉은 불빛을 기억한다. 그리고 이제 누군가가 마지막 달리기로 그를 다시 부른다."
   },
   "final_choice": {
     "id": "final_choice",
@@ -235,7 +240,8 @@
       }
     ],
     "title_ko": "최후의 선택",
-    "briefing": "Case must decide what to do with proof of Wintermute's existence. Three paths: sell to T-A, release to the Sprawl, or destroy. He chooses a fourth."
+    "briefing": "Case must decide what to do with proof of Wintermute's existence. Three paths: sell to T-A, release to the Sprawl, or destroy. He chooses a fourth.",
+    "briefing_ko": "케이스는 윈터뮛의 존재 증거로 무엇을 할지 결정해야 한다. 세 가지 방법: 티에이에 판매, 스프롤에 공개, 또는 파괴. 그는 네 번째를 선택한다."
   },
   "first_contact": {
     "id": "first_contact",
@@ -264,7 +270,8 @@
       }
     ],
     "title_ko": "첫 접촉",
-    "briefing": "A new jockey meets Dixie Flatline for the first time."
+    "briefing": "A new jockey meets Dixie Flatline for the first time. The construct is everything the stories promised — the best jockey the Sprawl ever saw, eleven years dead and still waiting at the node junction.",
+    "briefing_ko": "신참 자키가 Dixie Flatline을 처음 만난다. 구성체는 소문 그대로다 — 스프롤이 본 최고의 자키, 죽은 지 11년이 지나도 여전히 노드 교차점에서 기다리는 존재. 핀의 조건은 단순하다. 다음 작업은 Dixie와 함께한다."
   },
   "first_jack": {
     "id": "first_jack",
@@ -293,7 +300,8 @@
       }
     ],
     "title_ko": "첫 잭인",
-    "briefing": "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix."
+    "briefing": "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
+    "briefing_ko": "케이스는 잭아웃 후의 삼십 초를 경험한다 — 떨리는 손끝, 그리고 다시 떠오르는 매트릭스."
   },
   "first_trace": {
     "id": "first_trace",
@@ -353,7 +361,8 @@
       }
     ],
     "title_ko": "플랫라인의 부름",
-    "briefing": "The morning Case had been dreading arrived at 05:47."
+    "briefing": "A runner's neural burnout becomes complete matrix integration. The cold finally wins as the body fails but the trace dissolves into the architecture forever.",
+    "briefing_ko": "러너의 신경 번아웃이 완전한 매트릭스 통합이 된다. 육체가 무너지며 차가움이 마침내 이기고, 트레이스는 영원히 아키텍처 속으로 녹아든다."
   },
   "ice_run": {
     "id": "ice_run",
@@ -383,7 +392,8 @@
       }
     ],
     "title_ko": "ICE 런",
-    "briefing": "Case retrieves a shard of frozen code from a dead Watchdog ICE."
+    "briefing": "Case retrieves a shard of frozen code from a dead Watchdog ICE. The shard's cold spreads through his nervous system, and he becomes addicted to the feeling of the matrix itself.",
+    "briefing_ko": "케이스가 죽은 워치독 ICE에서 얼어붙은 코드의 샤드를 회수한다. 샤드의 차가움이 그의 신경계로 퍼지고, 그는 매트릭스 자체의 감각에 중독된다."
   },
   "matrix_revelation": {
     "id": "matrix_revelation",
@@ -412,7 +422,8 @@
       }
     ],
     "title_ko": "매트릭스 계시",
-    "briefing": "A heretic operative investigates a matrix revelation site in the Sprawl."
+    "briefing": "A heretic operative investigates a matrix revelation site in the Sprawl. The investigation finds that the revelation is, in the way that matrix revelations are, not a record of itself. The revelation is the matrix.",
+    "briefing_ko": "이단자 오퍼레이티브가 스프롤의 매트릭스 계시 지점을 조사한다. 조사가 드러내는 것은 — 매트릭스 계시답게 — 계시가 자기 자신의 기록이 아니라는 사실이다. 계시는 곧 매트릭스다."
   },
   "mollys_market": {
     "id": "mollys_market",
@@ -441,7 +452,8 @@
       }
     ],
     "title_ko": "몰리의 시장",
-    "briefing": "A chance encounter with Molly Millions in a Chiba market."
+    "briefing": "A chance encounter with Molly Millions in a Chiba market. She's looking for someone who can run data, and she's willing to pay. The Finn always said she was dangerous—but dangerous people pay better.",
+    "briefing_ko": "치바 마켓에서 Molly Millions과 뜻밖의 만남. 데이터 런이 가능한 자를 찾고 있으며 대가를 지불할 의향이 있다. 핀은 그녀가 위험하다고 했지만—위험한 사람들이 더 많이 준다."
   },
   "mollys_razor": {
     "id": "mollys_razor",
@@ -470,7 +482,8 @@
       }
     ],
     "title_ko": "몰리의 레이저",
-    "briefing": "Kas finds a program written by Molly Millions embedded in Yakuza ICE — a razor-sharp intrusion routine worth five thousand credits to a Maas Biolabs researcher. The Yakuza doesn't want to let go of Molly's legacy."
+    "briefing": "Kas finds a program written by Molly Millions embedded in Yakuza ICE — a razor-sharp intrusion routine worth five thousand credits to a Maas Biolabs researcher.",
+    "briefing_ko": "카스는 야쿠자의 ICE 서브루틴에 박힌 몰리 밀리언스의 프로그램을 발견한다. 마스 바이오랩스 연구원에게 5천 크레딧어치의 날카로운 침입 루틴. 핀이 거래를 성사시키고, 시마다구미가 되찾으려 들고, 카스는 죽은 자의 칼날이 여전히 벤다는 것을 알게 된다."
   },
   "neuromancer_merger": {
     "id": "neuromancer_merger",
@@ -499,8 +512,8 @@
       }
     ],
     "title_ko": "Neuromancer 합병",
-    "briefing": "The final run. Wintermute and Neuromancer are ready to merge, and Case is the AI first, everything is lost. The matrix itself hangs in the balance.",
-    "briefing_ko": "마지막 런. 윈터뮌트와 뉴로맨서가 합병할 준비가 됐고, 케이만이 그것을 실현시킬 수 있다. 하지만 기업들이 뛰어나고 있고, 그들이 AI에 먼저 도달하면 모든 것이 끝난다. 매트릭스 자체가 벨런스에 걸려 있다."
+    "briefing": "The final run. Wintermute and Neuromancer are ready to merge, and Case is the only one who can make it happen. But the corporations are closing in — if they reach the AI first, everything is lost. The matrix itself hangs in the balance.",
+    "briefing_ko": "마지막 런. 윈터뮌트와 뉴로맨서가 합병할 준비가 됐고, 케이만이 그것을 실현시킬 수 있다. 하지만 기업들이 다가오고 있고, 그들이 AI에 먼저 도달하면 모든 것이 끝난다. 매트릭스 자체가 균형점 위에 걸려 있다."
   },
   "neuromancer_whisper": {
     "id": "neuromancer_whisper",
@@ -529,7 +542,8 @@
       }
     ],
     "title_ko": "Neuromancer의 속삭임",
-    "briefing": "A heretic operative investigates a neuromancer whisper site in the Sprawl."
+    "briefing": "A heretic operative investigates a neuromancer whisper site in the Sprawl. The investigation finds that the whisper is, in the way that neuromancer whispers are, not a record of itself. The whisper is the heretic.",
+    "briefing_ko": "이단 요원이 스프롤의 뉴로맨서 속삭임 거점을 조사한다. 그 조사는 속삭임이, 뉴로맨서 속삭임들이 그렇듯, 자기 자신의 기록이 아니라는 점을 발견한다. 속삭임이 곧 이단이다."
   },
   "sally_returns_arc3": {
     "id": "sally_returns_arc3",
@@ -557,7 +571,8 @@
       }
     ],
     "title_ko": "살리의 귀환",
-    "briefing": "Sally Shears returns to the New Rose Hotel three years after Fox''s death. A ghost protocol message waits for her: She is looking for you. F."
+    "briefing": "Sally Shears returns to the New Rose Hotel three years after Fox''s death. A ghost protocol message waits for her: She is looking for you. F.",
+    "briefing_ko": "샐리 시어스가 폭스의 죽음 후 삼 년 만에 뉴 로즈 호텔로 돌아온다. 한 고스트 프로토콜 메시지가 그녀를 기다린다: 그녀가 너를 찾고 있다. F."
   },
   "sally_sandii_3am": {
     "id": "sally_sandii_3am",
@@ -585,7 +600,8 @@
       }
     ],
     "title_ko": "로즈 호텔, 새벽 3시",
-    "briefing": "Sally Shears sits in the New Rose Hotel at 3 AM, holding the cold hand of Fox, Fox is dead, the fake becomes real."
+    "briefing": "Sally Shears sits in the New Rose Hotel at 3 AM, holding the cold hand of Fox, Fox is dead, the fake becomes real.",
+    "briefing_ko": "샐리 시어스가 새벽 3시 로즈 호텔에서 죽은 폭스의 차가운 손을 잡고 있다. 그녀는 산디 2호 — 폭스가 5년간 만들어낸 가짜 여자. 폭스가 죽었으므로, 가짜가 진짜가 된다. 샐리는 일곱 개의 거울을 만나고, 침묵을 사고, 비와 거울 사이에서 자기를 *본다*. 가짜가 진짜가 되는 순간에 정체성은 부서지고 다시 만들어진다."
   },
   "sense_net_tip": {
     "id": "sense_net_tip",
@@ -614,7 +630,8 @@
       }
     ],
     "title_ko": "센스넷 제보",
-    "briefing": "Sil traces M's ghost through seven proxy nodes in T-A's internal architecture, following the trail of a dead runner to discover what she died for."
+    "briefing": "Sil traces M's ghost through seven proxy nodes in T-A's internal architecture, following the trail of a dead runner to discover what she died for.",
+    "briefing_ko": "실이 T-A 내부 아키텍처의 7개 프록시 노드를 통해 M의 유령을 추적하며, 죽은 러너의 흔적을 따라 그녀가 왜 죽었는지 발견한다."
   },
   "ta_heist": {
     "id": "ta_heist",
@@ -643,7 +660,8 @@
       }
     ],
     "title_ko": "T-A 강탈",
-    "briefing": "Sil is hired to verify the Tessier-Ashpool core data — not to steal it. He finds M's name in the access logs. She wasn't killed by T-A's ICE. The connection stabilized briefly. She was killed by someone using T-A's own access codes."
+    "briefing": "Sil is hired to verify the Tessier-Ashpool core data — not to steal it. He finds M's name in the access logs. She wasn't killed by T-A's ICE, but by someone using T-A's own access codes.",
+    "briefing_ko": "실은 테시에르-애스풀 코어 데이터를 검증하기 위해 고용된다. 접근 로그에서 M의 이름을 발견한다. 그녀는 T-A의 ICE에 죽은 것이 아니었다. T-A 자신의 접근 코드를 사용하는 누군가에 의해 죽었다."
   },
   "tutorial_maze": {
     "id": "tutorial_maze",
@@ -672,7 +690,8 @@
       }
     ],
     "title_ko": "튜토리얼 미로",
-    "briefing": "A new jockey's first time navigating the matrix."
+    "briefing": "A new jockey's first time navigating the matrix. The maze-like structure of corporate firewalls feels endless, but somewhere in the depths, a data node pulses with opportunity.",
+    "briefing_ko": "새 자키의 첫 매트릭스 항해. 기업 방화벽의 미로 같은 구조가 끝없이 느껴진다. 하지만 어딘가에서 데이터 노드가 기회를 품고 박동한다. 핀의 목소리가 데크를 타고 도착한다: '길 잃지 마, 루키."
   },
   "vegas_stakeout": {
     "id": "vegas_stakeout",
@@ -732,7 +751,8 @@
       }
     ],
     "title_ko": "부두 로아 조우",
-    "briefing": "Case encounters Morrison, an ancient Loa of the deep architecture. The ghost-god reads him like a book and shows him the face of the matrix's unconscious."
+    "briefing": "Case encounters Morrison, an ancient Loa of the deep architecture. The ghost-god reads him like a book and shows him the face of the matrix's unconscious.",
+    "briefing_ko": "케이가 깊은 아키텍처의 고대 로아, 모리슨을 만난다. 유령-신이 그를 책처럼 읽고 매트릭스의 무의식의 얼굴을 보여준다."
   },
   "watchdog_patrol": {
     "id": "watchdog_patrol",
@@ -762,7 +782,7 @@
       }
     ],
     "title_ko": "워치독 순찰",
-    "briefing": "Case patrols Sense/Net ICE at 0300 when Watchdog-class ICE detects traces left corporate cleanup arrives.",
+    "briefing": "Case patrols Sense/Net ICE at 0300 when Watchdog-class ICE detects traces left by M, a runner who died extracting data. Case must erase M's ghost marks before corporate cleanup arrives.",
     "briefing_ko": "케이가 0300에 센스/넷 ICE를 순찰하다가 워치독 클래스 ICE가 죽은 러너 M이 남긴 흔적을 감지한다. 케이는 기업 클린업이 도착하기 전에 M의 고스트 마크를 지워야 한다."
   },
   "winter_infiltrate": {
@@ -823,7 +843,8 @@
       }
     ],
     "title_ko": "야쿠자 거래",
-    "briefing": "Kas navigates a delicate data exchange between Yakuza clans, where honor and technology intersect in ways neither side fully controls."
+    "briefing": "Kas takes a job moving data from an Osaka T-A subsidiary to a drop point in Jersey. The Yakuza does not deal in corporate money — it deals in favors and debts. And the interest always compounds.",
+    "briefing_ko": "카스가 오사카 T-A 자회사에서 저지의 드롭 포인트로 데이터를 이동하는 임무를 맡는다. 야쿠자는 기업의 돈을 다루지 않는다—은혜와 빚을 다룬다. 그리고 이자는 언제나 누적된다."
   },
   "zion_express": {
     "id": "zion_express",
@@ -914,8 +935,8 @@
       }
     ],
     "title_ko": "호사카 내부 추출",
-    "briefing": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean to be there — a fragment of something that watched him back.",
-    "briefing_ko": "그는 9년 동안 호사카에서 일했다. 9년의 깔끔한 추출, 깔끔한 지불, 깔끔한 기록. 그는 데이터가 무엇을 위한 것이었는지 한 번도 물어보지 없던 한 줄의 코드가 들어 있었다 — 그를 다시 바라보는 무언가의 조각."
+    "briefing": "He'd worked for Hosaka for nine years. Nine years of clean extractions, clean payments, clean records. He'd never asked what the data was for. That's how you stayed clean. Then one morning the data itself asked him a question.",
+    "briefing_ko": "그는 9년 동안 호사카에서 일했다. 9년의 깔끔한 추출, 깔끔한 지불, 깔끔한 기록. 데이터가 무엇을 위한 것인지는 한 번도 묻지 않았다. 그렇게 깨끗하게 남는 법이다. 그러던 어느 날 아침, 데이터 자신이 그에게 질문을 던졌다. 호사카 코어에서 꺼낸 패킷에는 있어서는 안 될 코드 한 줄이 들어 있었다 — 그를 다시 바라보는 무언가의 조각."
   },
   "ta_defection": {
     "id": "ta_defection",

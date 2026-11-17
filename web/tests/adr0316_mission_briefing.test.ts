@@ -40,13 +40,15 @@ describe("ADR-0316 · mission briefing", () => {
     }
   });
 
-  it("ships a briefing for every Sprawl mission but one", () => {
+  it("ships a briefing for every Sprawl mission", () => {
     const sprawl = Object.values(missionsJson).filter(
       (m) => (m as { source_universe?: string }).source_universe !== "far-grid",
     ) as ReadonlyArray<{ id: string; briefing?: string }>;
     const missing = sprawl.filter((m) => !m.briefing).map((m) => m.id);
-    // `dixies_offer` has no derivative story yet — recorded, not hidden.
-    expect(missing).toEqual(["dixies_offer"]);
+    // `dixies_offer` was the one mission with no derivative story. The Fiction
+    // side wrote it on 2026-11-17, so the gap is closed — and this asserts the
+    // closed state rather than the gap it used to be.
+    expect(missing).toEqual([]);
   });
 
   it("keeps every imported Sprawl briefing to one readable brief", () => {

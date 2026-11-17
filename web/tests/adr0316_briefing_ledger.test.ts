@@ -131,15 +131,19 @@ describe("ADR-0316 — the ledger is internally honest", () => {
     }
   });
 
-  it("shows the case that made the ledger worth building", () => {
-    // The `en` summary is missing its middle clause; the `ko` twin has the
-    // whole sentence. Nothing compared them, so nothing noticed.
+  it("holds the case that made the ledger worth building", () => {
+    // `watchdog_patrol`'s `en` summary was missing its middle clause while its
+    // `ko` twin had the whole sentence, and nothing compared them. The ledger
+    // made that visible, the Fiction side fixed the summary (2026-11-17), and
+    // this pins the fixed state: both languages now carry the clause that was
+    // lost, so the flag that caught it is off.
     const entry = LEDGER.missions["watchdog_patrol"];
     expect(entry).toBeDefined();
-    expect(entry?.twinDiffers).toBe(true);
-    const twin = entry?.notScanned.find((c) => c.chars > 150);
-    expect(twin, "the complete twin is recorded").toBeDefined();
-    expect(twin?.body).toContain("ghost marks");
-    expect(entry?.briefing).not.toContain("ghost marks");
+    expect(entry?.briefing, "the lost clause is back").toContain("ghost marks");
+    expect(entry?.briefingKo ?? "", "and in Korean too").toContain("고스트");
+    expect(entry?.twinDiffers, "no twin disagrees any more").toBe(false);
+    // The ledger still records the candidates it weighed, so the next
+    // divergence is visible without re-deriving anything.
+    expect((entry?.considered.length ?? 0) > 0).toBe(true);
   });
 });

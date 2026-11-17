@@ -47,6 +47,32 @@ const LOOT_POLICY =
  * checked against the metric it extends. */
 const BASE_SEED = 20261106;
 
+/** The recorded contract curve, by the START mission's grade (2026-11-17).
+ *
+ * These are **measured**, not chosen: the first run of this harness produced
+ * them at 64 seeds with the carry on, and they are recorded so a change that
+ * moves the campaign is caught. They are NOT a statement that the shape is
+ * right — see the note in the output about g4/g5.
+ *
+ * ADR-0315's mission-unit targets (`GRADE_TARGETS`) read g1 100, g2 95, g3 80,
+ * g4 50, g5 25, g6 30. A contract chains three missions, so the same mission
+ * that is a coin flip alone is 2.5% three times over — which is the finding
+ * this harness exists to make visible. */
+export const CONTRACT_TARGETS: Readonly<Record<number, number>> = {
+  1: 1.0,
+  2: 0.819,
+  3: 0.417,
+  4: 0.025,
+  5: 0.03,
+  6: 0.177,
+};
+
+/** Overall contract completion, recorded the same way. */
+export const CONTRACT_TARGET = 0.303;
+
+/** Tolerance before a sweep reports a miss, in percentage points. */
+const TOLERANCE_PP = 8;
+
 const ice = loadIceCatalog(iceJson) as Readonly<Record<string, Ice>>;
 const programs = loadProgramsCatalog(programsJson);
 const missions = loadMissionsCatalog(missionsJson);
@@ -227,13 +253,34 @@ function main(): void {
   );
   console.log("");
   console.log("by start grade (contract completion)");
-  console.log("grade  contracts  finished  rate");
+  console.log("grade  contracts  finished  rate   target  delta");
+  let worst = 0;
   for (const grade of [...byGrade.keys()].sort((a, b) => a - b)) {
     const g = byGrade.get(grade)!;
+    const rate = (g.finished / g.contracts) * 100;
+    const target = (CONTRACT_TARGETS[grade] ?? 0) * 100;
+    const delta = rate - target;
+    if (Math.abs(delta) > Math.abs(worst)) worst = delta;
     console.log(
-      `  ${grade}      ${String(g.contracts).padStart(7)}  ${String(g.finished).padStart(8)}  ${pct(g.finished, g.contracts)}`,
+      `  ${grade}      ${String(g.contracts).padStart(7)}  ${String(g.finished).padStart(8)}  ${pct(g.finished, g.contracts)}   ${target.toFixed(1).padStart(5)}%  ${delta >= 0 ? "+" : ""}${delta.toFixed(1)}`,
     );
   }
+  const overall = (totals.finished / totals.contracts) * 100;
+  const overallDelta = overall - CONTRACT_TARGET * 100;
+  console.log("");
+  console.log(
+    `overall vs recorded target: ${overall.toFixed(1)}% vs ${(CONTRACT_TARGET * 100).toFixed(1)}% ` +
+      `(${overallDelta >= 0 ? "+" : ""}${overallDelta.toFixed(1)}pp, tolerance ${TOLERANCE_PP}pp)`,
+  );
+  const misses = Math.abs(worst) > TOLERANCE_PP ? ` — worst grade misses by ${worst.toFixed(1)}pp` : "";
+  console.log(`worst grade delta: ${worst >= 0 ? "+" : ""}${worst.toFixed(1)}pp${misses}`);
+  console.log("");
+  // Recorded, not endorsed. ADR-0318 chose the contract's shape; this is what
+  // that shape does at the top of the ladder, and it is the owner's call.
+  console.log("NOTE (a question, not a target): a contract started at g4 or g5 completes");
+  console.log(" 2.5% / 3.0% of the time while g3 completes 41.7%. One g4 mission alone is");
+  console.log(" 51.4% (mission-unit curve), so the collapse is the 3-mission chain, not");
+  console.log(" one hard fight. See ADR-0318 open question (e).");
 }
 
 main();

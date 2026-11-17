@@ -3955,3 +3955,15 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **`watchdog_patrol` 이 고쳐졌다**: 중간 절이 사라졌던 `en` 요약이 온전해졌다(`"…traces left by M, a runner who died extracting data. Case must erase M's ghost marks before corporate cleanup arrives."`) — 원장이 만든 가시성으로 발견된 그 사례다. 이제 `twinDiffers` 가 **꺼졌다**(en·ko 가 일치).
 - **테스트가 또 옛 격차를 규칙으로 고정**하고 있었다: "sprawl 미션은 하나를 빼고 브리핑을 갖는다(`dixies_offer` 제외)" 2건 + 원장의 "watchdog_patrol 은 손상됨" 핀 1건 → **닫힌 상태**를 단언하도록 교체.
 - **검증**: typecheck 0 · vitest **223 files / 4318 tests** · **전체 e2e 54 passed / 5 skipped / 0 failed**(59) · `--check` exit 0 · 게이트 7종 CLEAN.
+
+## [2026-11-17] feat(tools) | 캠페인 목표치(회귀 기준선) + g4·g5 붕괴를 표면화 (ADR-0318 (e))
+
+- **목표치 추가**: `CONTRACT_TARGETS`(시작 등급별) · `CONTRACT_TARGET`(전체 30.3%) · `TOLERANCE_PP` 8.
+  하네스가 **rate / target / delta** 를 함께 인쇄하고 **worst delta** 를 보고한다 — 미션 단위 `GRADE_TARGETS` 와 같은 규율.
+- **목표치는 "측정값"이지 "의도"가 아니다**: 주석과 출력에 명시했다. 목표치를 의도로 오해하면 회귀 게이트가
+  현재 상태를 영원히 고정한다.
+- **g4·g5 붕괴를 표면화**: 미션 단위로 g4 는 **51.4%**(동전 던지기)인데 계약은 **2.5%** 다. 원인은 **연쇄** —
+  `contractFor` 가 등급 오름차순이라 g4 시작은 g4→g4·5→g5 로 에스컬레이션하고, 이월(+1.7pp)이 보상하지 못한다.
+  하네스가 이 문장을 **출력에 그대로 인쇄**하고 ADR-0318 열린 질문 **(e)** 로 올렸다.
+- **Jev `choice`**: "뒤 다리를 시작 등급 대에 묶는다" **p=0.63 · confidence 0.44** → **자동 적용하지 않는다**(취향이지 추론이 아니다). 선택지 3개(그대로 / 대에 묶기 / 길이 축소 — 문턱 충돌)와 함께 오너 결정으로 남긴다.
+- **검증**: typecheck 0 · lint 0 errors · vitest **223 files / 4318 tests** · 하네스 delta 0.0pp(측정=기록) · 게이트 7종 CLEAN. (앱 코드 무변경 → e2e 불필요.)

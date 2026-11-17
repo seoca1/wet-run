@@ -33,6 +33,7 @@ import { DIXIE_ATTACK_EVERY_N_PLAYER_TURNS } from "../combat/state_actions_comba
 import { DEFAULT_FACTION_SCORES } from "./faction_reputation";
 import { openArrivalEncounter } from "./encounter_verbs";
 import { missionIce } from "./mission_ice";
+import { campaignContinues, type Campaign } from "./campaign";
 import { isTerminalNode } from "./run_end";
 import missionsData from "../../data/missions.json";
 import type { RunMutator } from "./run_mutators";
@@ -144,6 +145,44 @@ export function makeInitialState(
   };
 }
 
+/** Start the contract's next mission (ADR-0315 slice 2).
+ *
+ * `finished` is the state the terminal loot produced: its faction scores are
+ * already updated and the mission is already recorded. What carries:
+ *
+ * - **credits** — ADR-0314 makes wealth an ending condition, and a condition
+ *   only means something if it accumulates. `inventory.credits` stays per
+ *   mission: it is the crafting wallet seeded from the mission's reward.
+ * - **the deck** — the hand, the draw pile and the discard are one deck again
+ *   and the next mission deals from it. Carrying a deck measured ~neutral
+ *   (ADR-0315), and it is the run's lasting growth besides the unique.
+ * - **the unique** — one per campaign, not one per mission (ADR-0303/0311).
+ *
+ * What resets: HP to full (Q3 — the advance between missions is where a run
+ * recovers), COST, the turn count, and the whole board. The map a run already
+ * walked belongs to the mission that had it.
+ */
+function startNextLeg(previous: GameState, finished: GameState): GameState {
+  const campaign: Campaign | undefined = previous.campaign;
+  const leg = campaign?.legs[campaign.completed + 1];
+  if (campaign === undefined || leg === undefined) return finished;
+  const deck = [...previous.deck, ...previous.drawPile, ...previous.discardPile];
+  const fresh = makeInitialState(leg.mission, leg.ice, deck);
+  return {
+    ...fresh,
+    campaign: { legs: campaign.legs, completed: campaign.completed + 1 },
+    player: { ...fresh.player, credits: previous.player.credits },
+    ...(previous.uniquePickDone ? { uniquePickDone: true } : {}),
+    jockeyId: previous.jockeyId,
+    factionScores: finished.factionScores,
+    totalRuns: previous.totalRuns,
+    totalDeaths: previous.totalDeaths,
+    unlockedAchievements: previous.unlockedAchievements,
+    achievementCredits: previous.achievementCredits,
+    message: `Contract ${campaign.completed + 2}/${campaign.legs.length} — ${leg.mission.title}`,
+  };
+}
+
 /** Pure reducer — apply an action to a state, returning a new state. */
 export function applyAction(state: GameState, action: GameAction): GameState {
   if (action.type === "idle_tick") {
@@ -153,7 +192,15 @@ export function applyAction(state: GameState, action: GameAction): GameState {
     return applyMatrixAction(state, action);
   }
   if (state.runPhase === "loot") {
-    return applyLootAction(state, action);
+    const next = applyLootAction(state, action);
+    // ADR-0315 slice 2: a finished mission with another leg behind it starts
+    // that leg instead of ending the run. The reducer resolved an ending on the
+    // way through (it cannot know about the contract), so this boundary — which
+    // owns `makeInitialState` — replaces it with the next mission.
+    if (next.runPhase === "ending" && campaignContinues(state.campaign)) {
+      return startNextLeg(state, next);
+    }
+    return next;
   }
   if (state.runPhase === "ending") {
     return applyEndingAction(state, action);
@@ -270,6 +317,14 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
       : {}),
     ...(state.uniquePickDone ? { uniquePickDone: true } : {}),
     ...(state.jockeyId ? { jockeyId: state.jockeyId } : {}),
+    // ADR-0315 slice 2: a campaign keeps its contract. Ids only, so a slot
+    // stays a recipe the restore path can rebuild from the catalogs.
+    ...(state.campaign
+      ? {
+          campaignMissionIds: state.campaign.legs.map((leg) => leg.mission.id),
+          campaignCompleted: state.campaign.completed,
+        }
+      : {}),
     discardIds: state.discardPile.map((p: Program) => p.id),
     drawIds: state.drawPile.map((p: Program) => p.id),
     savedAt: new Date().toISOString(),
@@ -281,6 +336,30 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
       ? { intelNodes: state.intelNodes ?? [] }
       : {}),
   };
+}
+
+/** Rebuild a contract from a save slot, or undefined when it cannot be trusted.
+ *
+ * The slot keeps ids, not objects (the same as `missionId`). Two things must
+ * line up before the chain is restored: the ICE catalog has to be there to
+ * derive each leg's ICE the way the run start does, and the leg the save says
+ * the run is on has to be the mission the save is on. Anything else restores as
+ * the single-mission run it was. */
+function campaignFromSlot(
+  slot: SaveSlot,
+  missionCatalog: ReadonlyArray<Mission>,
+  iceCatalog: Readonly<Record<string, Ice>> | undefined,
+): Campaign | undefined {
+  const ids = slot.campaignMissionIds;
+  if (!iceCatalog || !ids || ids.length === 0) return undefined;
+  const legs = ids
+    .map((id) => missionCatalog.find((m) => m.id === id))
+    .filter((m): m is Mission => m !== undefined)
+    .map((mission) => ({ mission, ice: missionIce(mission, iceCatalog) }));
+  const completed = Math.max(0, slot.campaignCompleted ?? 0);
+  if (legs.length !== ids.length) return undefined;
+  if (legs[completed]?.mission.id !== slot.missionId) return undefined;
+  return { legs, completed };
 }
 
 /** Reconstruct a GameState from a SaveSlot (CONTINUE option reverse).
@@ -317,6 +396,12 @@ export function slotToGameState(
     materials: {},
     programs: [],
   };
+
+  // ADR-0315 slice 2: rebuild the contract from the ids the slot kept. It is
+  // only rebuilt when the catalog is there to derive each leg's ICE from, and
+  // only when the legs still agree with the mission the save is on — a
+  // mismatched chain would send the run to the wrong job.
+  const campaign = campaignFromSlot(slot, missionCatalog, iceCatalog);
 
   let graphicNovel = null;
   if (slot.graphicNovelProgress) {
@@ -398,6 +483,7 @@ export function slotToGameState(
     ),
     cardRewardTaken: slot.cardRewardTaken ?? null,
     ...(slot.uniquePickDone ? { uniquePickDone: true } : {}),
+    ...(campaign !== undefined ? { campaign } : {}),
     jockeyId: slot.jockeyId ?? null,
     bossPhase: 0,
     endingChoice: null,

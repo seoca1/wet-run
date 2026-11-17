@@ -130,6 +130,91 @@ async function breachAndWin(page: Page): Promise<void> {
   await expect.poll(async () => (await snap(page))?.runPhase).toBe("loot");
 }
 
+/** Dismiss a one-time beat card if one owns the screen (ADR-0317 3b). A card
+ *  eats the next key, and a leg advance puts one up. */
+async function dismissBeats(page: Page): Promise<void> {
+  for (let i = 0; i < 3; i += 1) {
+    const up = await page.evaluate(() => {
+      const w = window as unknown as { wetrun?: { getBeatCard?(): unknown } };
+      return (w.wetrun?.getBeatCard?.() ?? null) !== null;
+    });
+    if (!up) return;
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(60);
+  }
+}
+
+/** Step one hop toward the boss node.
+ *
+ * The path used to be hardcoded (`25 → 16 → 18 → 20`), which held for one
+ * mission's matrix. ADR-0315 slice 2 made a run a contract of three missions,
+ * and each leg generates its own board, so the route is derived instead. */
+async function hopTowardBoss(page: Page): Promise<void> {
+  const info = await page.evaluate(() => {
+    const st = (window as unknown as { wetrun: Hook }).wetrun.state;
+    if (!st?.matrix) return null;
+    const { nodes, bossNode } = st.matrix;
+    const cur = st.currentNodeIndex;
+    const adj = nodes[cur]?.adjacent ?? [];
+    if (cur === bossNode) return { atBoss: true, next: -1, adj };
+    const prev = new Map<number, number>();
+    const queue: number[] = [cur];
+    const seen = new Set<number>([cur]);
+    while (queue.length > 0) {
+      const at = queue.shift() as number;
+      if (at === bossNode) break;
+      for (const nx of nodes[at]?.adjacent ?? []) {
+        if (seen.has(nx)) continue;
+        seen.add(nx);
+        prev.set(nx, at);
+        queue.push(nx);
+      }
+    }
+    let step = bossNode;
+    while ((prev.get(step) ?? cur) !== cur) step = prev.get(step) as number;
+    return { atBoss: false, next: step, adj };
+  });
+  if (info === null) throw new Error("hopTowardBoss: no matrix");
+  if (info.atBoss) {
+    await page.keyboard.press("Enter");
+    await page.waitForTimeout(150);
+    return;
+  }
+  for (let i = 0; i <= info.adj.length; i += 1) {
+    const selected = await page.evaluate(
+      () =>
+        (window as unknown as { wetrun: Hook }).wetrun.state
+          ?.selectedMatrixNodeIndex,
+    );
+    if (selected === info.next) break;
+    await page.keyboard.press("ArrowDown");
+  }
+  await page.keyboard.press("Enter");
+  await page.waitForTimeout(150);
+}
+
+/** Play the run through to the ending, however many legs the contract holds. */
+async function playToEnding(page: Page): Promise<void> {
+  for (let guard = 0; guard < 400; guard += 1) {
+    await dismissBeats(page);
+    const s = await snap(page);
+    if (s === null) throw new Error("playToEnding: no state");
+    if (s.runPhase === "ending") return;
+    if (s.runPhase === "dead") throw new Error("playToEnding: flatlined");
+    if (s.runPhase === "loot") {
+      await page.keyboard.press("Enter");
+      await page.waitForTimeout(150);
+      continue;
+    }
+    if (s.runPhase === "combat" || s.decision) {
+      await breachAndWin(page);
+      continue;
+    }
+    await hopTowardBoss(page);
+  }
+  throw new Error("playToEnding: never reached the ending");
+}
+
 async function launch(page: Page): Promise<void> {
   await page.addInitScript(() => {
     localStorage.setItem("wetrun_tutorial_completed", "true");
@@ -175,14 +260,9 @@ test("a combat win is in the autosave: cleared node, HP, credits", async ({ page
 
 test("the ending returns to the title, ends the run, and CONTINUE cannot reopen it", async ({ page }) => {
   await launch(page);
-  for (const to of [25, 16, 18]) await travel(page, to);
-  await breachAndWin(page);
-  await page.keyboard.press("Enter"); // loot → route selection
-  await expect.poll(async () => (await snap(page))?.runPhase).toBe("matrix");
-  await travel(page, 20);
-  expect((await snap(page))?.decision).toBe("open");
-  await breachAndWin(page);
-  await page.keyboard.press("Enter"); // boss loot → ending
+  // ADR-0315 slice 2: a run is a contract, so the ending only arrives once
+  // every leg is finished. The walk is derived from each leg's board.
+  await playToEnding(page);
   await expect.poll(async () => (await snap(page))?.runPhase).toBe("ending");
   // Reaching the ending retires the autosave.
   await expect.poll(() => readSlot(page), { timeout: 5000 }).toBeNull();

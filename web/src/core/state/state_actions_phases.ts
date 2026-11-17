@@ -280,7 +280,10 @@ function applyTerminalLoot(state: GameState, action: GameAction): GameState {
     // the `control` branch used it to test a wallet that combat could not fill:
     // reachable on 2 of 53 missions.
     credits: state.player.credits,
-    missionsCompleted: 1, // single-mission run: this mission just completed
+    // ADR-0315 slice 2: a campaign counts the missions it has finished. A run
+    // without a contract (tests, older saves) is still the single mission it
+    // always was, so it reports 1.
+    missionsCompleted: (state.campaign?.completed ?? 0) + 1,
     totalDeaths: state.totalDeaths,
     factionScores: updatedScores,
     choices: [],

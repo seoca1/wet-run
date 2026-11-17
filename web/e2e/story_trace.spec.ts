@@ -23,6 +23,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { enterForScreen, gotoMenuOption } from "./menu-nav";
+import { ENDINGS } from "../src/core/combat/ending_resolver";
 import missionsJson from "../src/data/missions.json" with { type: "json" };
 
 /** The easiest Sprawl mission's index in the board order the trace walks.
@@ -480,6 +481,19 @@ test.describe("story trace", () => {
         signoffSeen,
         "the run reached the ending but the sign-off never reached the player",
       ).toBe(true);
+      // ADR-0315 slice 2 + ADR-0318: the run is a contract, and the ending
+      // screen is only reachable once that contract is finished. So the ending
+      // must be a liberation — whatever the run earned. A campaign that ends on
+      // "you got rich" means the resolver's order went back the wrong way.
+      const category = ENDINGS.find((e) => e.id === ending)?.category;
+      expect(
+        category,
+        `a finished contract ended on ${ending} (${category ?? "?"})`,
+      ).toBe("liberation");
+      expect(
+        beatsSeen,
+        "the contract never handed over a second mission",
+      ).toContain("CONTRACT 2/3");
     }
 
     // eslint-disable-next-line no-console

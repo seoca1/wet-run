@@ -170,7 +170,7 @@ PLAY                       WORKSHOP          ARCHIVE               SYSTEM
 
 ## Implementation Status (2026-11-15)
 
-**Status**: 🟡 Partial (슬라이스 1·1.5·1.6 ✅ · 슬라이스 2–4 ❌ Not started)
+**Status**: 🟡 Partial (슬라이스 1·1.5·1.6·2 ✅ · 슬라이스 3–4 ❌ Not started)
 
 **Evidence**:
 - `web/src/renderer/menu_main.ts` — 그룹·설명·**`visibleMenuOptions`(노출 규칙)**
@@ -178,13 +178,16 @@ PLAY                       WORKSHOP          ARCHIVE               SYSTEM
 - `web/src/core/state/onboarding.ts` — `wetrun_has_played` · **`wetrun_runs_finished`**
 - `web/src/main.ts` — 동기 부팅 판정 · `visibleMenu()` · `noteRunFinished`
 - `web/src/core/grid.ts` · `web/src/renderer/panel.ts` — `recordClippedText`(폭 가드 봉합)
+- **`web/src/core/state/campaign.ts`** · `state.ts`(`startNextLeg`·세이브) — **슬라이스 2(ADR-0318)**
 - `web/e2e/menu-nav.ts` — `ensureMenu`(부팅 경로를 스펙에서 숨긴다)
 - `web/tests/adr0300_no_text_is_cut_off.test.ts` — 메뉴·자키 3 레이아웃 가드
 - `docs/design/campaign-and-menu-2026-11-15.md` — 설계 전문
 - 측정: 하네스의 **이월 덱 파라미터**(슬라이스 4 의 캠페인 지표 도구)
 
 **Notes**: 이 ADR 은 ADR-0199("단일 미션 런 MVP")의 범위를 넓힌다. 슬라이스 1 은 밸런스
-무영향. 슬라이스 2 부터는 저장 스키마와 밸런스 기준선에 닿는다.
+무영향. **슬라이스 2 는 ADR-0318 로 구현됐다**(계약 3미션 연쇄 · 완주 우선 · 세이브 · 다리 비트) —
+미션 단위 결정적 곡선은 여전히 무영향(계약이 없으면 옛 경로). 캠페인 기준 밸런스 기준선은
+아직 없다(열린 질문 d → 슬라이스 4).
 
 ## 관련 결정
 

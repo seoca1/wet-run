@@ -4,12 +4,12 @@
  * `EndingChoice` type is derived from this catalog, so the two cannot drift.
  *
  * Tier scope (ADR-0199 — single-mission-per-run MVP): of the six branches in
- * `resolveEnding`, three are reachable — HP = 0 (sacrifice), 5k+ credits
- * (control), and the status_quo default. The `requiresChoice`
- * branch needs a choice system and the `missionsCompleted >= 3` branch needs
- * cross-run meta-progression; both are out of this tier. `requiresFaction` is
- * reachable in principle (faction scores are live) but no ending declares it
- * yet. `tests/design_conformance.test.ts` enforces this boundary.
+ * `resolveEnding`, four are reachable — HP = 0 (sacrifice), a finished contract
+ * (liberation, ADR-0318), 5k+ credits (control), and the status_quo default.
+ * The `requiresChoice` branch needs a choice system; it is out of this tier.
+ * `requiresFaction` is reachable in principle (faction scores are live) but no
+ * ending declares it yet. `tests/design_conformance.test.ts` enforces this
+ * boundary.
  *
  * ADR-0314: the control branch used to require hp > 75% as well. Measured on
  * 2330 endings, credits > 5000 and hp > 75% never co-occurred (260 and 419
@@ -381,11 +381,17 @@ export function resolveEnding(ctx: EndingContext): Ending {
   // ADR-0314: wealth alone buys control. The old gate also required hp > 75%,
   // and those two are anti-correlated by construction — credits come from
   // fighting and fighting costs HP — so it fired on 0 of 2330 endings.
-  if (ctx.credits > 5000) {
-    return arcEndings.find((e) => e.category === "control") ?? arcEndings[0];
-  }
+  // ADR-0318: a finished contract is the campaign's climax, so it outranks
+  // wealth. ADR-0314 measured `credits > 5000` against ONE-mission runs, where
+  // it never co-occurred with the hp gate; a three-mission contract earns far
+  // more, so leaving control first would make almost every completed campaign
+  // read as "you got rich" instead of "you finished the job". Control is still
+  // reachable — a run that ends rich without finishing the contract.
   if (ctx.missionsCompleted >= 3) {
     return arcEndings.find((e) => e.category === "liberation") ?? arcEndings[0];
+  }
+  if (ctx.credits > 5000) {
+    return arcEndings.find((e) => e.category === "control") ?? arcEndings[0];
   }
 
   return arcEndings.find((e) => e.category === "status_quo") ?? arcEndings[0];

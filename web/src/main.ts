@@ -61,6 +61,7 @@ import {
   type DialogueBeat,
 } from "./core/state/event_beats";
 import { markIceIntrosSeen, seenIceIntros } from "./core/state/ice_intros";
+import { contractFor } from "./core/state/campaign";
 import { hasHeardBeat, markBeatHeard } from "./core/state/story_flags";
 import { renderJockeySelect } from "./renderer/jockey_select";
 import { renderPrep } from "./renderer/prep";
@@ -610,6 +611,29 @@ class Game {
             this.beatCard = { title: "FIRST BLOOD", beat };
             markBeatHeard(storage, "first_victory");
           }
+        }
+        // ADR-0315 slice 2: a contract's next leg opens with the fixer handing
+        // over the job — the mission's own briefing (ADR-0316), on the card the
+        // other beats use, so the chain is a beat rather than a silent reload.
+        const advanced =
+          previous?.campaign !== undefined &&
+          revealed.campaign !== undefined &&
+          revealed.campaign.completed > previous.campaign.completed;
+        if (advanced) {
+          const contract = revealed.campaign;
+          const leg = contract?.legs[contract.completed];
+          const story = leg
+            ? (language === "ko" && leg.mission.briefing_ko) ||
+              leg.mission.briefing ||
+              ""
+            : "";
+          this.beatCard = {
+            title: `CONTRACT ${(contract?.completed ?? 0) + 1}/${contract?.legs.length ?? 0}`,
+            beat: {
+              speaker: (leg?.mission.fixer ?? "").toUpperCase(),
+              lines: story.length > 0 ? [story] : ["The next job."],
+            },
+          };
         }
       }
       if (runAbandoned(previous, this.state)) {
@@ -1547,6 +1571,12 @@ class Game {
         initial,
         this.prepChoice,
         this.prepWalletOutlay,
+      ),
+      // ADR-0315 slice 2: the run is a contract — this mission, then the rest
+      // of its arc. The chosen mission decides the arc; the length is the
+      // resolver's (`CONTRACT_LENGTH`).
+      campaign: contractFor(mission, MISSIONS, (m) =>
+        missionIce(m, this.iceTypes),
       ),
       jockeyId: JOCKEYS[this.selectedJockey]?.id ?? null,
       grid: makeGrid(this.layout.cols, this.layout.rows),

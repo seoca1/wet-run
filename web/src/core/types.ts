@@ -1,4 +1,5 @@
 import type { EquipmentLoadout } from "./state/equipment";
+import type { Campaign } from "./state/campaign";
 
 /** Shared type definitions for wetrun-web MVP.
  *
@@ -176,6 +177,10 @@ export interface GraphicNovelState {
 export interface GameState {
   readonly phase: GamePhase;
   readonly mission: Mission;
+  /** ADR-0315 slice 2: the contract this run is playing, when it is a campaign.
+   * Absent on a non-campaign state (tests, older saves), which is why every
+   * reader treats it as optional. */
+  readonly campaign?: Campaign;
   readonly player: PlayerStats;
   readonly ice: Ice;
   readonly deck: ReadonlyArray<Program>; // hand
@@ -469,6 +474,11 @@ export interface SaveSlot {
    * node (`matrix.startNode`). When present it MUST be a finite number.
    */
   readonly currentNodeIndex?: number;
+  /** ADR-0315 slice 2: the contract's remaining mission ids, in play order, and
+   * how many have been finished. Older version-1 slots omit them, and a slot
+   * without them restores as a single-mission run — which is what it was. */
+  readonly campaignMissionIds?: ReadonlyArray<string>;
+  readonly campaignCompleted?: number;
   /** Persist encounter clears without invalidating older version-1 slots. */
   readonly clearedEncounterNodes?: ReadonlyArray<number>;
   /** ADR-0250 run memory of BYPASS; older version-1 slots omit it. */

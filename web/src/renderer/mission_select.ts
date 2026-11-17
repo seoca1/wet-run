@@ -108,6 +108,10 @@ export function renderMissionList(
   cols: number,
   rows: number,
   briefing: string | null = null,
+  /** ADR-0318: what picking this mission starts — a contract of three missions,
+   * in these grades. The row above shows a grade; a grade is now the whole
+   * contract's shape, so the choice says what it costs. */
+  contract: string | null = null,
 ): Grid {
   let grid = makeGrid(cols, rows);
   const layout = missionListLayout(grid, rowLabels);
@@ -130,16 +134,22 @@ export function renderMissionList(
     hint.length <= inner.width - 2 ? hint : shortHint,
     PALETTE.GRAY_LIGHT,
   );
-  // Reserve the bottom rows for the briefing before placing the list.
+  // Reserve the bottom rows — the contract's shape, then the briefing — before
+  // placing the list.
+  const contractLine =
+    contract !== null && contract !== "" && contract.length <= inner.width - 4
+      ? contract
+      : null;
   const briefLines =
     briefing !== null && briefing !== ""
       ? wrap(briefing, Math.max(16, inner.width - 4), 3)
       : [];
+  const blockRows = (contractLine !== null ? 1 : 0) + briefLines.length;
   const briefTop =
-    inner.y + inner.height - (briefLines.length > 0 ? briefLines.length + 1 : 0);
+    inner.y + inner.height - (blockRows > 0 ? blockRows + 1 : 0);
   const listBottom = Math.min(
     layout.listBottom,
-    briefLines.length > 0 ? briefTop - 2 : layout.listBottom,
+    blockRows > 0 ? briefTop - 2 : layout.listBottom,
   );
   for (let i = 0; i < rowLabels.length; i++) {
     const y = layout.listY + i;
@@ -150,12 +160,22 @@ export function renderMissionList(
     const row = `${marker} ${rowLabels[i]}`;
     grid = setInnerText(grid, inner, layout.listX, y, row, fg);
   }
+  if (contractLine !== null) {
+    grid = setInnerText(
+      grid,
+      inner,
+      inner.x + 2,
+      briefTop,
+      contractLine,
+      PALETTE.YELLOW_AMBER,
+    );
+  }
   briefLines.forEach((line, i) => {
     grid = setInnerText(
       grid,
       inner,
       inner.x + 2,
-      briefTop + i,
+      briefTop + (contractLine !== null ? 1 : 0) + i,
       line,
       PALETTE.GRAY_LIGHT,
     );

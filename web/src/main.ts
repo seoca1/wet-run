@@ -2039,6 +2039,24 @@ class Game {
             if (!m) return null;
             return (language === "ko" && m.briefing_ko) || m.briefing || null;
           })(),
+          // ADR-0318: a mission pick starts a three-mission contract, and the
+          // grade in the row is the contract's whole shape. Say it — a contract
+          // that completes 2.5% of the time must not look like a 51% mission
+          // (owner principle: no choice whose meaning cannot be grasped).
+          missionContract: (() => {
+            if (this.screen !== "mission_select") return null;
+            const m = filterMissionsByUniverse(MISSIONS, "sprawl")[
+              this.selectedMission
+            ];
+            if (!m) return null;
+            const contract = contractFor(m, MISSIONS, (x) =>
+              missionIce(x, this.iceTypes),
+            );
+            const grades = contract.legs.map(
+              (leg) => `T${missionGradeOf(leg.mission)}`,
+            );
+            return `CONTRACT: ${contract.legs.length} missions · ${grades.join("→")}`;
+          })(),
           farGridMissions:
             this.screen === "far_grid_hub"
               ? filterMissionsByUniverse(MISSIONS, "far-grid")

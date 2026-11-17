@@ -55,9 +55,13 @@ const BASE_SEED = 20261106;
  * right — see the note in the output about g4/g5.
  *
  * ADR-0315's mission-unit targets (`GRADE_TARGETS`) read g1 100, g2 95, g3 80,
- * g4 50, g5 25, g6 30. A contract chains three missions, so the same mission
- * that is a coin flip alone is 2.5% three times over — which is the finding
- * this harness exists to make visible. */
+ * g4 50, g5 25, g6 30. A contract chains three missions, and the chain is what
+ * collapses the top of the ladder — but NOT because "a g4 mission is a coin
+ * flip three times over". The per-leg rates below show the legs are not equal
+ * (g4: 48% -> 15% -> 34%), because a GRADE IS NOT A DIFFICULTY BAND: solo
+ * completion inside g4 spans 1.6% (`ta_heist`) to 100% (`mollys_razor`), since
+ * each mission's map is fixed by its `matrix_seed`. Three draws from a wide
+ * band is the finding this harness exists to make visible (ADR-0318 (e), (f)). */
 export const CONTRACT_TARGETS: Readonly<Record<number, number>> = {
   1: 1.0,
   2: 0.819,
@@ -192,6 +196,10 @@ function main(): void {
     creditsAtEnd: [] as number[],
   };
   const byGrade = new Map<number, { contracts: number; finished: number }>();
+  // The per-leg rates by START grade. The aggregate leg table above mixes every
+  // grade together; this is the one that shows a contract's legs are not equal,
+  // which is what rules out the "coin flip three times" reading of (e).
+  const legByGrade = new Map<number, { reached: number; completed: number }[]>();
   const originalRandom = Math.random;
 
   try {
@@ -207,6 +215,14 @@ function main(): void {
           totals.legs[i]!.completed += leg.completed;
         });
         const grade = missionGradeOf(start);
+        const legCell =
+          legByGrade.get(grade) ??
+          Array.from({ length: CONTRACT }, () => ({ reached: 0, completed: 0 }));
+        result.legs.forEach((leg, i) => {
+          legCell[i]!.reached += leg.reached;
+          legCell[i]!.completed += leg.completed;
+        });
+        legByGrade.set(grade, legCell);
         const g = byGrade.get(grade) ?? { contracts: 0, finished: 0 };
         g.contracts += result.contracts;
         g.finished += result.finished;
@@ -252,6 +268,19 @@ function main(): void {
     `finished contracts the OLD order would have called control: ${totals.wouldBeControl}/${totals.finished} = ${pct(totals.wouldBeControl, totals.finished)}`,
   );
   console.log("");
+  console.log("leg completion by START grade (conditional on reaching that leg)");
+  for (const grade of [...legByGrade.keys()].sort((a, b) => a - b)) {
+    const cells = legByGrade.get(grade)!;
+    console.log(
+      `  g${grade}   ` +
+        cells
+          .map((c, i) => `leg${i + 1} ${pct(c.completed, c.reached)}`)
+          .join("   "),
+    );
+  }
+  console.log("(a contract's legs are not equal: a grade is not a difficulty band —");
+  console.log(" solo completion inside g4 spans 1.6% to 100%; see ADR-0318 (e), (f))");
+  console.log("");
   console.log("by start grade (contract completion)");
   console.log("grade  contracts  finished  rate   target  delta");
   let worst = 0;
@@ -277,10 +306,13 @@ function main(): void {
   console.log("");
   // Recorded, not endorsed. ADR-0318 chose the contract's shape; this is what
   // that shape does at the top of the ladder, and it is the owner's call.
-  console.log("NOTE (a question, not a target): a contract started at g4 or g5 completes");
-  console.log(" 2.5% / 3.0% of the time while g3 completes 41.7%. One g4 mission alone is");
-  console.log(" 51.4% (mission-unit curve), so the collapse is the 3-mission chain, not");
-  console.log(" one hard fight. See ADR-0318 open question (e).");
+  console.log("NOTE (decided, see ADR-0318 (e)): a contract started at g4 or g5 completes");
+  console.log(" 2.5% / 3.0% while g3 completes 41.7%. The collapse is the product of the");
+  console.log(" three leg rates, and the legs are not equal (g4: 48% -> 15% -> 34%). The");
+  console.log(" reason is (f): a grade is not a difficulty band — solo completion inside");
+  console.log(" g4 spans 1.6% (ta_heist) to 100% (mollys_razor), because each mission's");
+  console.log(" map is fixed by its matrix_seed. The mission list now prints the contract's");
+  console.log(" grades, so the choice says what it costs.");
 }
 
 main();

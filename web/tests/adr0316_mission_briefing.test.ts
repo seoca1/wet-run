@@ -69,3 +69,28 @@ describe("ADR-0316 · mission briefing", () => {
     }
   });
 });
+
+describe("ADR-0318 · the mission list says what a pick starts", () => {
+  // A grade in the row used to be the whole story; the run is a three-mission
+  // contract now, so the same grade means three missions in that band. A
+  // contract that completes 2.5% of the time must not look like a 51% mission.
+  it("shows the contract's shape under the list", () => {
+    const grid = renderMissionList(
+      ["[1] First Jack   T1  500cr"],
+      0,
+      80,
+      50,
+      null,
+      "CONTRACT: 3 missions · T1→T1→T2",
+    );
+    const text = grid.cells.map((row) => row.map((c) => c.char).join("")).join("\n");
+    expect(text).toContain("CONTRACT: 3 missions");
+    expect(text).toContain("T1→T1→T2");
+  });
+
+  it("draws nothing when there is no contract to describe", () => {
+    const grid = renderMissionList(["[1] First Jack   T1  500cr"], 0, 80, 50, null, null);
+    const text = grid.cells.map((row) => row.map((c) => c.char).join("")).join("\n");
+    expect(text).not.toContain("CONTRACT");
+  });
+});

@@ -23,6 +23,8 @@ export interface PreGameView {
   readonly missionRows: readonly string[];
   /** ADR-0316: the selected mission's briefing, or null when it has none. */
   readonly missionBriefing?: string | null;
+  /** ADR-0318: the contract the highlighted mission starts, one line. */
+  readonly missionContract?: string | null;
   readonly farGridMissions: readonly Mission[];
   readonly hasSave: boolean;
   readonly saveMeta: {
@@ -79,6 +81,7 @@ export function renderPreGameScreen(
           cols,
           rows,
           view.missionBriefing ?? null,
+          view.missionContract ?? null,
         ),
         hud: [
           "MISSION SELECT",

@@ -155,6 +155,7 @@ describe("ADR-0300 · mission select", () => {
       w,
       h,
       "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
+      "CONTRACT: 3 missions · T1→T1→T2",
     );
     expect(takeClippedText()).toEqual([]);
   });

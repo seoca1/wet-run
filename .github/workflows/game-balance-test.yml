@@ -1,0 +1,99 @@
+name: Game Balance Testing
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'web/src/**'
+      - 'web/scripts/**'
+      - 'data/programs/**'
+      - 'data/decks/**'
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  balance-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'web/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./web
+        run: npm ci
+
+      - name: Run balance tests - Opening Deck
+        working-directory: ./web
+        run: npm run balance -- --deck opening
+
+      - name: Run balance tests - Veteran Deck
+        working-directory: ./web
+        run: npm run balance -- --deck veteran
+
+      - name: Run balance tests - Heretic Deck
+        working-directory: ./web
+        run: npm run balance -- --deck heretic
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: balance-test-results
+          path: |
+            web/test-results/
+            web/balance-*.log
+
+  regression-check:
+    runs-on: ubuntu-latest
+    needs: balance-test
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: 'web/package-lock.json'
+
+      - name: Install dependencies
+        working-directory: ./web
+        run: npm ci
+
+      - name: Compare with baseline
+        working-directory: ./web
+        run: |
+          npm run balance:compare -- main
+
+      - name: Comment PR with results
+        if: always()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const resultsPath = path.join(process.env.GITHUB_WORKSPACE, 'web', 'test-results', 'balance-summary.txt');
+
+            if (fs.existsSync(resultsPath)) {
+              const results = fs.readFileSync(resultsPath, 'utf8');
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `## 🎮 Balance Test Results\n\n${results}`
+              });
+            }

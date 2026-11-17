@@ -19,6 +19,7 @@ import { renderMissionList } from "../src/renderer/mission_select";
 import { renderMissionBriefing } from "../src/renderer/menu_dialogue";
 import { renderRunIntro } from "../src/renderer/run_intro";
 import { renderBeatCard } from "../src/renderer/beat_card";
+import { renderGraphicNovelScreen } from "../src/renderer/graphic_novel_screen";
 import { renderEndingScreen } from "../src/renderer/ending";
 import {
   dialogueBeat,
@@ -155,6 +156,40 @@ describe("ADR-0300 · mission select", () => {
       "Case experiences the thirty seconds after jack-out — the shaking hands, the matrix.",
     );
     expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0317 3b: the prologue's key hint lost its tail at 40 columns — "ESC: exit"
+// was cut off, which is the key the screen exists to promise (ADR-0251 rule 5).
+// The screen was not in this guard, so nothing noticed.
+describe("ADR-0300 · graphic novel", () => {
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    for (const view of [
+      { isPaused: false, done: false, seen: false },
+      { isPaused: true, done: false, seen: false },
+      { isPaused: false, done: true, seen: false },
+      { isPaused: false, done: false, seen: true },
+      { isPaused: false, done: false, progress: 0.07, seen: true },
+    ] as const) {
+      takeClippedText();
+      renderGraphicNovelScreen(
+        {
+          chapter: { order: 2, title: "The Construct Awakens", speaker: "Dixie" },
+          text: "The matrix is grey.",
+          dialogueText: "Hey. Hey cowboy. You hear me?",
+          progress: view.progress ?? 0.42,
+          isPaused: view.isPaused,
+          done: view.done,
+          seen: view.seen,
+        },
+        w,
+        h,
+      );
+      expect(
+        takeClippedText(),
+        `graphic novel clips at ${w}x${h} (${JSON.stringify(view)})`,
+      ).toEqual([]);
+    }
   });
 });
 

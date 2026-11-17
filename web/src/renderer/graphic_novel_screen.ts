@@ -20,6 +20,9 @@ export interface GraphicNovelView {
   readonly isPaused: boolean;
   /** ADR-0273: the chain finished — the screen offers the run that follows. */
   readonly done?: boolean;
+  /** ADR-0317 3b: this jockey's prologue has been watched to the end, so the
+   * player knows ESC costs nothing. */
+  readonly seen?: boolean;
 }
 
 /** Original dialogue area and footer rows, including the 15-line page size. */
@@ -79,20 +82,24 @@ export function renderGraphicNovelScreen(
     y += 1;
   }
   const statusText = view.isPaused ? "PAUSED" : "PLAYING";
+  // ADR-0317 3b: a watched prologue says so. The story does not change between
+  // runs, so the marker is what tells the player ESC is not skipping anything.
+  const status = `[${statusText}] Progress: ${Math.round(view.progress * 100)}%`;
   grid = setText(
     grid,
     2,
     layout.statusY,
-    `[${statusText}] Progress: ${Math.round(view.progress * 100)}%`,
+    view.seen === true ? `${status} · seen` : status,
     PALETTE.GRAY_DARK,
   );
-  return setText(
-    grid,
-    2,
-    layout.hintY,
-    view.done === true
-      ? "ENTER: start a run | ESC: exit"
-      : "ENTER: continue | TAB: pause | ESC: exit",
-    PALETTE.GRAY_DARK,
-  );
+  // ADR-0300: the hint used to be one string and lost its tail at 40 columns —
+  // "ESC: exit" was cut off, which is the key the screen exists to promise
+  // (ADR-0251 rule 5). The narrow form keeps all three keys inside the frame.
+  const hint = ((): string => {
+    if (view.done === true) return "ENTER: start a run | ESC: exit";
+    const full = "ENTER: continue | TAB: pause | ESC: exit";
+    const narrow = "ENTER: next | TAB: pause | ESC: exit";
+    return full.length <= cols - 2 ? full : narrow;
+  })();
+  return setText(grid, 2, layout.hintY, hint, PALETTE.GRAY_DARK);
 }

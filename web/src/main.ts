@@ -66,6 +66,7 @@ import {
 } from "./core/state/event_beats";
 import { markIceIntrosSeen, seenIceIntros } from "./core/state/ice_intros";
 import { contractFor } from "./core/state/campaign";
+import { markPrologueSeen, seenPrologues } from "./core/state/prologue_seen";
 import { hasHeardBeat, markBeatHeard } from "./core/state/story_flags";
 import { renderJockeySelect } from "./renderer/jockey_select";
 import { renderPrep } from "./renderer/prep";
@@ -1003,6 +1004,9 @@ class Game {
               progress: gn.progress(player),
               isPaused: player.paused,
               done: player.done,
+              // ADR-0317 3b: the story does not change between runs, so a
+              // watched prologue says so and ESC stops looking like a gamble.
+              seen: seenPrologues(this.storagePort()).has(player.mode),
             },
             this.layout.cols,
             this.layout.rows,
@@ -1038,6 +1042,9 @@ class Game {
     void loadStorySystem().then((gn) => {
       if (this.graphicNovelPlayer !== player) return;
       if (player.done) {
+        // Watched to the end. A player who skips has not seen it, so the
+        // marker would be a lie — only a finish counts.
+        markPrologueSeen(this.storagePort(), player.mode);
         this.startRunFromGraphicNovel();
         return;
       }
@@ -1716,6 +1723,11 @@ class Game {
       if (beat !== null) return beat;
     }
     return null;
+  }
+
+  /** The profile's storage, or null where there is none (tests, SSR). */
+  private storagePort(): Storage | null {
+    return typeof localStorage === "undefined" ? null : localStorage;
   }
 
   /** Queue a story card (ADR-0317 3b). One owns the screen at a time; the rest

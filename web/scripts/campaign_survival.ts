@@ -56,23 +56,34 @@ const BASE_SEED = 20261106;
  *
  * ADR-0315's mission-unit targets (`GRADE_TARGETS`) read g1 100, g2 95, g3 80,
  * g4 50, g5 25, g6 30. A contract chains three missions, and the chain is what
- * collapses the top of the ladder — but NOT because "a g4 mission is a coin
- * flip three times over". The per-leg rates below show the legs are not equal
- * (g4: 48% -> 15% -> 34%), because a GRADE IS NOT A DIFFICULTY BAND: solo
- * completion inside g4 spans 1.6% (`ta_heist`) to 100% (`mollys_razor`), since
- * each mission's map is fixed by its `matrix_seed`. Three draws from a wide
- * band is the finding this harness exists to make visible (ADR-0318 (e), (f)). */
+ * used to collapse the top of the ladder. ADR-0318 (f) read that collapse as "a
+ * grade is not a difficulty band": solo completion inside g4 spanned 1.6%
+ * (`ta_heist`) to 100% (`mollys_razor`), because each mission's map is fixed by
+ * its `matrix_seed`.
+ *
+ * ADR-0319 (a won fight heals the body to a floor) then split that finding in
+ * two. Inside g4 the spread collapsed to 59%..100% — g4's difficulty was
+ * ATTRITION, and a per-fight floor removes it (g4 contracts 2.5% -> 63.8%).
+ * Inside g5 the spread did not move at all (1.6%..87.5%) — g5's difficulty is
+ * the fight itself, and no between-fight recovery can reach it. The per-leg
+ * table below is the measurement that shows which one a grade is. */
 export const CONTRACT_TARGETS: Readonly<Record<number, number>> = {
   1: 1.0,
-  2: 0.819,
-  3: 0.417,
-  4: 0.025,
-  5: 0.03,
-  6: 0.177,
+  2: 0.894,
+  3: 0.549,
+  4: 0.638,
+  5: 0.031,
+  6: 0.198,
 };
 
-/** Overall contract completion, recorded the same way. */
-export const CONTRACT_TARGET = 0.303;
+/** Overall contract completion, recorded the same way.
+ *
+ * Re-recorded after ADR-0319 (a won fight heals the body to a floor). The
+ * recovery is worth most where the contract's difficulty was attrition: g4
+ * went 2.5% -> 63.8% and the overall 30.3% -> 47.4%. g5 barely moved (3.0% ->
+ * 3.1%) because it loses a single fight, and the floor cannot reach inside one.
+ */
+export const CONTRACT_TARGET = 0.474;
 
 /** Tolerance before a sweep reports a miss, in percentage points. */
 const TOLERANCE_PP = 8;
@@ -278,8 +289,8 @@ function main(): void {
           .join("   "),
     );
   }
-  console.log("(a contract's legs are not equal: a grade is not a difficulty band —");
-  console.log(" solo completion inside g4 spans 1.6% to 100%; see ADR-0318 (e), (f))");
+  console.log("(legs within a grade are equal when the grade's difficulty is attrition");
+  console.log(" (g4), and unequal when it is the fight itself (g5) — ADR-0319)");
   console.log("");
   console.log("by start grade (contract completion)");
   console.log("grade  contracts  finished  rate   target  delta");
@@ -306,13 +317,11 @@ function main(): void {
   console.log("");
   // Recorded, not endorsed. ADR-0318 chose the contract's shape; this is what
   // that shape does at the top of the ladder, and it is the owner's call.
-  console.log("NOTE (decided, see ADR-0318 (e)): a contract started at g4 or g5 completes");
-  console.log(" 2.5% / 3.0% while g3 completes 41.7%. The collapse is the product of the");
-  console.log(" three leg rates, and the legs are not equal (g4: 48% -> 15% -> 34%). The");
-  console.log(" reason is (f): a grade is not a difficulty band — solo completion inside");
-  console.log(" g4 spans 1.6% (ta_heist) to 100% (mollys_razor), because each mission's");
-  console.log(" map is fixed by its matrix_seed. The mission list now prints the contract's");
-  console.log(" grades, so the choice says what it costs.");
+  console.log("NOTE (see ADR-0318 (e)/(f) and ADR-0319): g4 contracts complete 63.8% and");
+  console.log(" g5 completes 3.1%, while g3 completes 54.9%. ADR-0319's per-fight recovery");
+  console.log(" is what moved g4 — its difficulty was attrition, and a floor removes it.");
+  console.log(" g5 did not move, because it loses a single fight. The top of the ladder is");
+  console.log(" therefore an OPEN question: g4 is now easier than g3, and g5 is untouched.");
 }
 
 main();

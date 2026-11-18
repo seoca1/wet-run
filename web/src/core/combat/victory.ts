@@ -36,6 +36,8 @@ import { COST_LIMIT } from "./program_affordance";
 import { isTerminalNode } from "../state/run_end";
 import { addPrepWallet, PREP_WALLET_BANK_SHARE } from "../state/prep_wallet";
 import { UNIQUE_MIN_ICE_TIER } from "../state/card_reward";
+import { victoryHealAmount } from "../state/loot_choice";
+import { missionGradeOf } from "./ice_scaling";
 
 /** The faction an ICE belongs to — its id carries the name. */
 export function iceFactionOf(iceId: string): FactionId | null {
@@ -205,6 +207,15 @@ export function resolveVictory(
   const bounty = defeated.reduce((sum, ice) => sum + bountyFor(ice), 0);
   const trace = defeated.reduce((sum, ice) => sum + traceCostFor(ice), 0);
   const totalReward = nodeReward + missionReward + achievementCredits + bounty;
+  // ADR-0319: a won fight heals the body on its own. Measured: the difference
+  // between a run and a wipe was mostly whether the player spent the loot stop
+  // on HP instead of growth (g5 26.9% vs 4.3%), so the recovery is the baseline
+  // and the stop is free to be about growth.
+  const victoryHeal = victoryHealAmount(
+    state.player.maxHp,
+    state.player.hp,
+    missionGradeOf(state.mission),
+  );
 
   // ADR-0285: the loot SALVAGE slot no longer pays credits (it patches now), so
   // the prep stockpile banks from what a win pays instead. Same precedent as the
@@ -221,7 +232,10 @@ export function resolveVictory(
   const missionNote = missionReward > 0 ? " (mission complete)" : "";
   const bountyNote = bounty > 0 ? ` (bounty ${bounty})` : "";
   const traceNote = trace > 0 ? ` · trace +${trace}` : "";
-  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${missionNote}${bountyNote}${traceNote}${lootMessage}`;
+  // ADR-0319: say the recovery out loud. It is the run's baseline now, and a
+  // number the player never sees is a number the player cannot learn from.
+  const healNote = victoryHeal > 0 ? ` · recovered +${victoryHeal} HP` : "";
+  const victoryMessage = `${defeatedIceName(state, defeated)} defeated!${costNote} +${totalReward} credits${missionNote}${bountyNote}${traceNote}${healNote}${lootMessage}`;
 
   return {
     ...state,
@@ -239,6 +253,8 @@ export function resolveVictory(
       // the ceiling itself.
       alarm: Math.min(COST_LIMIT, state.player.alarm + trace),
       credits: state.player.credits + totalReward,
+      // ADR-0319: the automatic recovery, capped at full.
+      hp: Math.min(state.player.maxHp, state.player.hp + victoryHeal),
     },
     vfxInstances: [
       ...state.vfxInstances,

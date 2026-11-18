@@ -22,6 +22,48 @@ export const LOOT_REPAIR_SLOT = LOOT_PROGRAM_SLOTS + 1; // 4
 export const LOOT_INTEL_SLOT = LOOT_PROGRAM_SLOTS + 2; // 5
 export const LOOT_VENT_SLOT = LOOT_PROGRAM_SLOTS + 3; // 6
 
+/** HP recovered after every WON fight (ADR-0319).
+ *
+ * The measurement that motivated this. The same run, played twice, differing only
+ * in what the loot stop is spent on:
+ *
+ *   grade   always take the card   repair when hurt
+ *     g2           78.8%                97.1%
+ *     g3           49.3%                75.9%
+ *     g4           36.3%                51.4%
+ *     g5            4.3%                26.9%
+ *     g6            2.1%                32.3%
+ *
+ * So whether a run lived was mostly NOT the fights — it was knowing to heal.
+ * A recovery the player has to discover and then buy with their growth is a
+ * hidden requirement, not a choice; the loot stop should be about growth. This
+ * is the baseline that makes that true: a fight is attrition, and the body
+ * comes back on its own afterwards.
+ *
+ * The repair slot (below) stays, as the top-up: the automatic heal is partial,
+ * so a runner who took a bad hit still has a reason to spend a stop on HP.
+ */
+export const VICTORY_HEAL_PCT_BY_GRADE: ReadonlyArray<number> = [
+  50, 50, 50, 50, 50, 50,
+];
+
+/** The automatic recovery after a win, as an HP amount.
+ *
+ * A FLOOR, not a grant: the runner comes out of a fight at least this fraction
+ * of the pool, so a bad fight cannot leave them dead-on-arrival for the next
+ * one. A flat grant would double-count with the repair slot below and measured
+ * g4 at 99.7%; a floor only pays when the body is actually below it.
+ */
+export function victoryHealAmount(
+  maxHp: number,
+  hp: number,
+  grade: number,
+): number {
+  const pct = VICTORY_HEAL_PCT_BY_GRADE[clampGrade(grade) - 1] ?? 25;
+  const floor = Math.floor(maxHp * (pct / 100));
+  return Math.max(0, Math.min(maxHp, floor) - hp);
+}
+
 /** Percent of max HP repaired, per grade — the price of giving up a card.
  *
  * **ADR-0306 cut this from 70/70/85/100/100/100 and re-tuned the difficulty around

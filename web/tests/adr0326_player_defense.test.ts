@@ -4,6 +4,9 @@
  * `defense` and `iceResistance` were numbers nobody read, and `hpBonus` /
  * `shieldBonus` never left the catalog. The order is fixed (resistance →
  * defense → shield → HP) so defense and the card's armor path stay separate.
+ *
+ * These use SYNTHETIC pieces with known stats, not catalog values — the catalog
+ * is re-tuned against the curve (ADR-0328), and this test is about the wiring.
  */
 import { describe, expect, it } from "vitest";
 import {
@@ -16,14 +19,28 @@ import {
 import { applyEquipmentSurvival } from "../src/core/state/equipment_stats";
 import { EMPTY_LOADOUT, equipOn, makeLoadout } from "../src/core/state/loadout";
 import {
-  BOOTS_GHOST,
-  MASTER_BODY,
-  STARTER_DECK,
-  SUBDERMAL,
-  TACTICAL_BODY,
+  makeEquipment,
+  makeEquipStats,
+  type Equipment,
 } from "../src/core/state/equipment";
-import type { Equipment } from "../src/core/state/equipment";
 import type { GameState } from "../src/core/types";
+
+let n = 0;
+const piece = (
+  stats: Parameters<typeof makeEquipStats>[0],
+  slot: Equipment["slot"] = "gloves",
+): Equipment => {
+  n += 1;
+  return makeEquipment({
+    id: `test_${n}`,
+    name: `Test ${n}`,
+    slot,
+    category: "cybernetic",
+    tier: "T1",
+    stats: makeEquipStats(stats),
+    description: "",
+  });
+};
 
 const withGear = (...items: Equipment[]) =>
   items.reduce((l, e) => equipOn(l, e).loadout, makeLoadout());
@@ -43,19 +60,15 @@ describe("playerDefense", () => {
   });
 
   it("reads the equipped gear", () => {
-    // Subdermal Weave Mk.II: defense 8, iceResistance 10.
-    const s = state({ equipmentLoadout: withGear(SUBDERMAL) });
+    const s = state({
+      equipmentLoadout: withGear(piece({ iceResistance: 10, defense: 8 })),
+    });
     expect(playerDefense(s)).toEqual({ iceResistance: 10, defense: 8 });
   });
 
   it("caps resistance so gear can never grant immunity", () => {
-    // Master body: iceResistance 50 — under the cap; a synthetic over-cap
-    // value is clamped.
     const s = state({
-      equipmentLoadout: {
-        totalStats: () => ({ ...MASTER_BODY.stats, iceResistance: 500 }),
-        get: () => null,
-      } as unknown as GameState["equipmentLoadout"],
+      equipmentLoadout: withGear(piece({ iceResistance: 500 })),
     });
     expect(playerDefense(s).iceResistance).toBe(ICE_RESISTANCE_CAP_PCT);
   });
@@ -83,9 +96,9 @@ describe("applyPlayerMitigation — fixed order", () => {
   });
 
   it("resistance then defense then shield", () => {
-    // Subdermal: resistance 10% → 18, defense 8 → 10, shield 4 → 6 HP.
+    // resistance 10% → 18, defense 8 → 10, shield 4 → 6 HP.
     const s = state({
-      equipmentLoadout: withGear(SUBDERMAL),
+      equipmentLoadout: withGear(piece({ iceResistance: 10, defense: 8 })),
       statusEffects: [
         { kind: "shield", target: "player", magnitude: 4, remaining: 9999 },
       ],
@@ -109,8 +122,7 @@ describe("applyPlayerMitigation — fixed order", () => {
   });
 
   it("defense can zero a small hit, but never heal", () => {
-    // Tactical body: defense 20 — a 12 hit is fully stopped.
-    const s = state({ equipmentLoadout: withGear(TACTICAL_BODY) });
+    const s = state({ equipmentLoadout: withGear(piece({ defense: 20 })) });
     const r = applyPlayerMitigation(s, 12);
     expect(r.damage).toBe(0);
     expect(r.reduced).toBe(12);
@@ -131,29 +143,23 @@ describe("applyEquipmentSurvival", () => {
   });
 
   it("raises maxHP and fills it from hpBonus", () => {
-    // Subdermal: hpBonus 20.
-    const next = applyEquipmentSurvival(state(), withGear(SUBDERMAL));
+    const next = applyEquipmentSurvival(state(), withGear(piece({ hpBonus: 20 })));
     expect(next.player.maxHp).toBe(120);
     expect(next.player.hp).toBe(120);
   });
 
   it("adds a player shield pool from shieldBonus", () => {
-    // Tactical body: hpBonus 50, shieldBonus 10.
-    const next = applyEquipmentSurvival(state(), withGear(TACTICAL_BODY));
+    const next = applyEquipmentSurvival(
+      state(),
+      withGear(piece({ hpBonus: 50, shieldBonus: 10 })),
+    );
     expect(next.player.maxHp).toBe(150);
     expect(playerShieldPool(next)).toBe(10);
   });
 
-  it("T0 starters change nothing on this axis", () => {
-    const s = state({ equipmentLoadout: withGear(STARTER_DECK) });
-    const next = applyEquipmentSurvival(s, withGear(STARTER_DECK));
+  it("gear without hp/shield leaves the pool alone", () => {
+    const next = applyEquipmentSurvival(state(), withGear(piece({ defense: 3 })));
     expect(next.player.maxHp).toBe(100);
     expect(playerShieldPool(next)).toBe(0);
-  });
-
-  it("boots (defense only, no hp/shield) leave HP alone", () => {
-    // Chameleon Boots: defense 3, hpBonus 10 — hpBonus IS present.
-    const next = applyEquipmentSurvival(state(), withGear(BOOTS_GHOST));
-    expect(next.player.maxHp).toBe(110);
   });
 });

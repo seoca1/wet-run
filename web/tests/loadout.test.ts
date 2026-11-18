@@ -263,7 +263,7 @@ describe("loadout", () => {
       loadout.equip(CHROME_GLOVES);
       const bonuses = loadout.setBonuses();
       expect(bonuses.length).toBe(1);
-      expect(bonuses[0]?.attackBonus).toBeGreaterThan(0);
+      expect(bonuses[0]?.critBonusPct).toBeGreaterThan(0);
     });
 
     it("returns frozen array", () => {
@@ -300,8 +300,8 @@ describe("loadout", () => {
       loadout.equip(MILITECH_EYES);
       loadout.equip(CHROME_GLOVES);
       const stats = loadout.totalStats();
-      const itemAttack = MILITECH_EYES.stats.attackBonus + CHROME_GLOVES.stats.attackBonus;
-      expect(stats.attackBonus).toBeGreaterThan(itemAttack);
+      const itemCrit = MILITECH_EYES.stats.critBonusPct + CHROME_GLOVES.stats.critBonusPct;
+      expect(stats.critBonusPct).toBeGreaterThan(itemCrit);
     });
   });
 

@@ -44,42 +44,16 @@ function makeStats(p: {
 export const SET_BONUSES: Readonly<Record<string, SetBonusesByThreshold>> =
   Object.freeze({
     ono_sendai: Object.freeze({
-      2: makeStats({
-        programPower: 10,
-        critBonusPct: 5,
-        extraEffect: "Ono-Sendai resonance (2pc): deck runs cooler",
-      }),
-      3: makeStats({
-        programPower: 25,
-        apRegenBonusPct: 10,
-        extraEffect: "Ono-Sendai sync (3pc): jack in 1 turn faster",
-      }),
+      2: makeStats({critBonusPct: 1, extraEffect: "Ono-Sendai resonance (2pc): deck runs cooler"}),
+      3: makeStats({programPower: 1, apRegenBonusPct: 10, extraEffect: "Ono-Sendai sync (3pc): jack in 1 turn faster"}),
     }),
     militech: Object.freeze({
-      2: makeStats({
-        attackBonus: 5,
-        critBonusPct: 10,
-        extraEffect: "Militech targeting (2pc): +hit chance",
-      }),
-      3: makeStats({
-        attackBonus: 15,
-        critBonusPct: 25,
-        shieldBonus: 2,
-        extraEffect: "Militech apex (3pc): +25% crit, +shield regen",
-      }),
+      2: makeStats({critBonusPct: 1, extraEffect: "Militech targeting (2pc): +hit chance"}),
+      3: makeStats({critBonusPct: 1, extraEffect: "Militech apex (3pc): sharper targeting"}),
     }),
     arasaka: Object.freeze({
-      2: makeStats({
-        defense: 8,
-        iceResistance: 15,
-        extraEffect: "Arasaka wards (2pc): corporate-grade shields",
-      }),
-      3: makeStats({
-        defense: 20,
-        hpBonus: 30,
-        iceResistance: 30,
-        extraEffect: "Arasaka Onikiri (3pc): +30 hp, ICE deals 30% less damage",
-      }),
+      2: makeStats({defense: 1, iceResistance: 1, extraEffect: "Arasaka wards (2pc): corporate-grade shields"}),
+      3: makeStats({defense: 1, hpBonus: 1, iceResistance: 1, extraEffect: "Arasaka Onikiri (3pc): corporate-grade plating"}),
     }),
   });
 

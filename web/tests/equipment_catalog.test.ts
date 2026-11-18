@@ -148,8 +148,7 @@ describe("equipment_catalog", () => {
       expect(STREET_DECK.tier).toBe("T1");
     });
 
-    it("has programPower and critBonusPct", () => {
-      expect(STREET_DECK.stats.programPower).toBeGreaterThan(0);
+    it("has critBonusPct", () => {
       expect(STREET_DECK.stats.critBonusPct).toBeGreaterThan(0);
     });
 
@@ -171,8 +170,7 @@ describe("equipment_catalog", () => {
       expect(MILITECH_EYES.setId).toBe("militech");
     });
 
-    it("has attackBonus and critBonusPct", () => {
-      expect(MILITECH_EYES.stats.attackBonus).toBeGreaterThan(0);
+    it("has critBonusPct", () => {
       expect(MILITECH_EYES.stats.critBonusPct).toBeGreaterThan(0);
     });
   });
@@ -196,8 +194,7 @@ describe("equipment_catalog", () => {
       expect(CORPORATE_DECK.setId).toBe("ono_sendai");
     });
 
-    it("has programPower, defense, apRegenBonusPct", () => {
-      expect(CORPORATE_DECK.stats.programPower).toBeGreaterThan(0);
+    it("has defense and apRegenBonusPct", () => {
       expect(CORPORATE_DECK.stats.defense).toBeGreaterThan(0);
       expect(CORPORATE_DECK.stats.apRegenBonusPct).toBeGreaterThan(0);
     });
@@ -212,10 +209,9 @@ describe("equipment_catalog", () => {
       expect(SUBDERMAL.tier).toBe("T2");
     });
 
-    it("has defense, hpBonus, iceResistance", () => {
+    it("has defense and hpBonus", () => {
       expect(SUBDERMAL.stats.defense).toBeGreaterThan(0);
       expect(SUBDERMAL.stats.hpBonus).toBeGreaterThan(0);
-      expect(SUBDERMAL.stats.iceResistance).toBeGreaterThan(0);
     });
   });
 
@@ -238,9 +234,11 @@ describe("equipment_catalog", () => {
       expect(TACTICAL_BODY.tier).toBe("T3");
     });
 
-    it("has high defense and hp", () => {
-      expect(TACTICAL_BODY.stats.defense).toBeGreaterThanOrEqual(20);
-      expect(TACTICAL_BODY.stats.hpBonus).toBeGreaterThanOrEqual(50);
+    it("has the heaviest defense and hp at T3", () => {
+      expect(TACTICAL_BODY.stats.defense).toBeGreaterThan(SUBDERMAL.stats.defense);
+      expect(TACTICAL_BODY.stats.hpBonus).toBeGreaterThanOrEqual(
+        SUBDERMAL.stats.hpBonus,
+      );
     });
   });
 
@@ -300,8 +298,10 @@ describe("equipment_catalog", () => {
       expect(MASTER_DECK.tier).toBe("T6");
     });
 
-    it("has very high programPower", () => {
-      expect(MASTER_DECK.stats.programPower).toBeGreaterThanOrEqual(150);
+    it("has the highest programPower", () => {
+      expect(MASTER_DECK.stats.programPower).toBeGreaterThan(
+        GHOST_DECK.stats.programPower,
+      );
     });
 
     it("grants omniscient skill", () => {
@@ -322,9 +322,9 @@ describe("equipment_catalog", () => {
       expect(MASTER_BODY.tier).toBe("T6");
     });
 
-    it("has very high defense and hp", () => {
-      expect(MASTER_BODY.stats.defense).toBeGreaterThanOrEqual(40);
-      expect(MASTER_BODY.stats.hpBonus).toBeGreaterThanOrEqual(120);
+    it("has the highest defense and hp", () => {
+      expect(MASTER_BODY.stats.defense).toBeGreaterThan(TACTICAL_BODY.stats.defense);
+      expect(MASTER_BODY.stats.hpBonus).toBeGreaterThan(TACTICAL_BODY.stats.hpBonus);
     });
 
     it("has nanoware category", () => {

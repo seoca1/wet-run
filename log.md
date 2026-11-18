@@ -4088,3 +4088,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **문서**: ADR-0324 · `crafting-and-equipment-proposal` §5 계약 + 부록 2판 절 · `decisions/README` 인덱스 · `crafting_probe.ts` 주석 · AGENTS.md ADR 카운트(243→244).
 - **검증**: 게이트 7종 CLEAN · `check_doc_claims` OK(114 paths) · typecheck/lint OK · `src/` 무변경(밸런스 byte-identical).
 - **다음**: 핸드오프 §4 "그 다음" — `materials.json`·`recipes.json` 생성 + `craftItem` 화면 배선 + 미사용 스탯 9종.
+
+## [2026-11-18] feat(crafting) | 데이터 파일 + 소유 모델 배선 (ADR-0325)
+
+- 오너 "커밋 + 데이터 파일·화면 배선" → 핸드오프 §4 "그 다음" 1~2.
+- **결함 확인**: ADR-0324 가 비용표를 확정했지만 **아무 화면도 안 읽었다** — `main.ts` 가 `makeRecipesFromData({})` 스텁으로 레시피 **0종**을 그렸고, 크래프팅 성공은 장비 대신 **임시 `Program`** 을 밀어 넣었고, 장비 메뉴는 소유와 무관하게 첫 카탈로그 항목을 장착했다.
+- **데이터**: `web/src/data/recipes.json`(16종 T1~T6, v2 비용) · `web/src/data/materials.json`(28종 = `ice_types.json` loot item 집합과 정확히 일치). 빈 registry 는 boot 시 throw.
+- **소유 모델 신설**: `web/src/core/state/owned_equipment.ts` — T0 starter 지급(카탈로그 `tier` 에서 파생) + 제작분. `localStorage` `wetrun_owned_equipment` 영속, 단조.
+- **배선**: craft = **재료 차감 + 소유 획득**(한 transaction, 재료 지갑도 영속) · EQUIPMENT 메뉴는 **소유한 것만** 장착 · 카탈로그 `requiredMaterials` 를 v2 로 동기화(유령 재료 `wetware_chip`/`biosoft_agent`/`wetware_data` 제거).
+- **테스트**: `owned_equipment.test.ts`(8) · `recipes_data.test.ts`(8, recipe↔equipment↔material↔loot 4중 조인 + 카탈로그 드리프트 가드).
+- **검증**: vitest **230 files / 4396 tests** · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0) · e2e 영향 없음(크래프팅/장비 참조 0).
+- **다음**: `buy`(시장 offer 가격 = 오너 결정 5번) · 미사용 스탯 9종 배선(플레이어 방어 단계) · `use_item` · drop 을 획득 경로로.

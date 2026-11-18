@@ -1,0 +1,33 @@
+{
+  "_comment": "Material registry (ADR-0325). Every id here is a loot_table `item` in ice_types.json; the reverse also holds — see tests/recipes_data.test.ts. Names follow docs/design/crafting-and-equipment-proposal-2026-11-18.md §1. `need` is the legacy Hub-panel target (unused by the crafting screen), kept at 0.",
+  "materials": [
+    { "id": "data_fragment", "name": "Loose Data", "need": 0 },
+    { "id": "ice_shard", "name": "ICE Shard", "need": 0 },
+    { "id": "combat_module", "name": "Combat Module", "need": 0 },
+    { "id": "construct_shard", "name": "Construct Shard", "need": 0 },
+    { "id": "ice_construct", "name": "ICE Construct", "need": 0 },
+    { "id": "rom_echo", "name": "ROM Echo", "need": 0 },
+    { "id": "glitch_fragment", "name": "Glitch Fragment", "need": 0 },
+    { "id": "loa_chip", "name": "Loa Chip", "need": 0 },
+    { "id": "t4_program", "name": "T4 Program", "need": 0 },
+    { "id": "t5_program", "name": "T5 Program", "need": 0 },
+    { "id": "t6_program", "name": "T6 Program", "need": 0 },
+    { "id": "upgrade_t2", "name": "T2 Upgrade Wafer", "need": 0 },
+    { "id": "upgrade_t4", "name": "T4 Upgrade Wafer", "need": 0 },
+    { "id": "t_a_data_fragment", "name": "T-A Data Fragment", "need": 0 },
+    { "id": "fragment.morrison_echo", "name": "Morrison Echo", "need": 0 },
+    { "id": "ta_construct", "name": "Tessier-Ashpool Construct", "need": 0 },
+    { "id": "unique_construct", "name": "Unique Construct", "need": 0 },
+    { "id": "fragment.tessier_archive", "name": "Tessier-Ashpool Archive Fragment", "need": 0 },
+    { "id": "shield_program", "name": "Shield Program", "need": 0 },
+    { "id": "wintermute_key", "name": "Wintermute Key", "need": 0 },
+    { "id": "maas_neuropozyne_dose", "name": "Maas Neuropozyne Dose", "need": 0 },
+    { "id": "hosaka_chip", "name": "Hosaka Chip", "need": 0 },
+    { "id": "hosaka_archive", "name": "Hosaka Archive", "need": 0 },
+    { "id": "yakuza_construct", "name": "Yakuza Construct", "need": 0 },
+    { "id": "aleph_shard", "name": "Aleph Shard", "need": 0 },
+    { "id": "fragment.wintermute_echo", "name": "Wintermute Echo", "need": 0 },
+    { "id": "peripheral_artifact", "name": "Peripheral Artifact", "need": 0 },
+    { "id": "fragment.timeline_echo", "name": "Timeline Echo", "need": 0 }
+  ]
+}

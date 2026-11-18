@@ -193,6 +193,13 @@ import {
   writeEquippedIds,
 } from "./core/state/equipment_store";
 import {
+  isOwned,
+  ownEquipment,
+  readOwnedIds,
+  writeOwnedIds,
+  type OwnedSet,
+} from "./core/state/owned_equipment";
+import {
   mergeRunIntoWallet,
   readWalletMaterials,
   seedRunWallet,
@@ -272,6 +279,8 @@ const loadAudioSystem = () =>
 import missionsData from "./data/missions.json" with { type: "json" };
 import programsData from "./data/programs.json" with { type: "json" };
 import iceTypesData from "./data/ice_types.json" with { type: "json" };
+import recipesData from "./data/recipes.json" with { type: "json" };
+import materialsData from "./data/materials.json" with { type: "json" };
 import {
   loadMissionsCatalog,
   loadProgramsCatalog,
@@ -287,6 +296,30 @@ const PROGRAMS: Readonly<Record<string, Program>> =
 
 /** ICE types catalog (validated). Field aliases (defense → armor) normalized. */
 const ICE_TYPES: Readonly<Record<string, Ice>> = loadIceCatalog(iceTypesData);
+
+/** The craft registry, loaded from data (ADR-0325).
+ *
+ * The recipes (16 equipment) and materials (28) are static imports. An empty
+ * registry is a developer error — a missing or malformed data file — so it
+ * throws at boot rather than rendering an empty crafting screen. (The Python
+ * prototype's `makeRecipesFromData({})` stub is what this replaces.) */
+function loadCraftingData(): {
+  readonly recipes: ReadonlyArray<Recipe>;
+  readonly materials: ReadonlyArray<MaterialDef>;
+} {
+  const recipes = makeRecipesFromData(
+    recipesData as unknown as Record<string, unknown>,
+  );
+  const materials = makeMaterialsFromData(
+    materialsData as unknown as Record<string, unknown>,
+  );
+  if (recipes.length === 0 || materials.length === 0) {
+    throw new Error(
+      "crafting: empty registry — recipes.json / materials.json missing or malformed",
+    );
+  }
+  return { recipes, materials };
+}
 
 /** Format a mission for the select screen (Tier 2a). */
 function formatMissionOption(
@@ -354,6 +387,9 @@ class Game {
   private recipes: ReadonlyArray<Recipe>;
   private materials: ReadonlyArray<MaterialDef>;
   private infoMarket: InfoMarket;
+  /** ADR-0325: the gear the runner owns (starters + crafted). The EQUIPMENT
+   *  menu equips only from this set, so a craft finally buys something wearable. */
+  private ownedEquipment: OwnedSet;
   private layout: Layout;
   private tutorialActive = false;
   private tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null =
@@ -470,8 +506,10 @@ class Game {
     };
     // ADR-0322: the menu's gear survives a reload and reaches the run.
     this.equipmentLoadout = hydrateLoadout(DEFAULT_REGISTRY, readEquippedIds());
-    this.recipes = makeRecipesFromData({});
-    this.materials = makeMaterialsFromData({});
+    this.ownedEquipment = readOwnedIds();
+    const crafting = loadCraftingData();
+    this.recipes = crafting.recipes;
+    this.materials = crafting.materials;
     this.infoMarket = makeInfoMarket({});
     // Initialize settings state synchronously at construction time with robust fallback
     try {
@@ -863,30 +901,19 @@ class Game {
         this.draw();
         return;
       }
-      // Use real craftItem API: (recipes, itemId, inventory).
+      // ADR-0325: one transaction — spend the materials AND take ownership of
+      // the piece. The recipe's itemId is a catalog equipment id.
       const result = craftItem(
         this.recipes,
         recipe.itemId,
         this.inventory.materials,
       );
       if (result.ok) {
-        // Update inventory: deduct materials + grant credits back is unchanged.
-        // Crafting yields a virtual program entry; map craftedItemId back into inventory.programs.
-        const craftedProgram: Program = {
-          id: result.craftedItemId,
-          name: recipe.name,
-          tier: recipe.tierLevel,
-          cost: 0,
-          effect: "craft",
-          description: `Crafted from recipe ${recipe.name}`,
-          aoe: false,
-        };
-        this.inventory = {
-          ...this.inventory,
-          materials: result.newInventory,
-          programs: [...this.inventory.programs, craftedProgram],
-        };
-        this._message = `Crafted ${recipe.name}!`;
+        this.inventory = { ...this.inventory, materials: result.newInventory };
+        writeWalletMaterials(this.inventory.materials);
+        this.ownedEquipment = ownEquipment(this.ownedEquipment, recipe.itemId);
+        writeOwnedIds(this.ownedEquipment);
+        this._message = `Crafted ${recipe.name} — it's yours now.`;
       } else {
         this._message = `Failed to craft ${recipe.name}: ${result.reason}`;
       }
@@ -910,12 +937,16 @@ class Game {
         this.draw();
         return;
       }
-      // Find the first equipment for this slot in the default registry that isn't already equipped.
+      // ADR-0325: equip only what the runner owns — tier-0 starters plus
+      // anything crafted. Crafting is what makes the menu grow.
       const candidate = DEFAULT_REGISTRY.all.find(
-        (e) => e.slot === slot && this.equipmentLoadout.get(slot) === null,
+        (e) =>
+          e.slot === slot &&
+          isOwned(this.ownedEquipment, e.id) &&
+          this.equipmentLoadout.get(slot) === null,
       );
       if (!candidate) {
-        this._message = `No available equipment for slot ${slot}`;
+        this._message = `No owned equipment for slot ${slot}`;
         this.draw();
         return;
       }
@@ -1693,8 +1724,9 @@ class Game {
       equipmentLoadout: this.equipmentLoadout,
       inventory: seedRunWallet(this.inventory, this.state.mission.rewards),
     };
-    this.recipes = makeRecipesFromData({});
-    this.materials = makeMaterialsFromData({});
+    const crafting = loadCraftingData();
+    this.recipes = crafting.recipes;
+    this.materials = crafting.materials;
     this.infoMarket = makeInfoMarket({});
     this.draw();
   }

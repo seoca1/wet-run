@@ -256,6 +256,10 @@ commonPileup(id) =
 
 ## 6. 구현 순서와 테스트
 
+> **진행 (2026-11-18)**: ⑴ 데이터 파일(`materials.json`·`recipes.json`) **완료**(ADR-0325) · ⑵ `makeRecipesFromData`
+> 실제 import 교체 + 빈 registry throw **완료** · ⑶~⑺ 미착수. 소유 모델은 `owned_equipment.ts`(ADR-0325)로 신설.
+> `craft` action 은 **완료**(재료 차감 + 소유, 한 transaction), `buy` 는 시장 offer 가격(오너 결정 5번) 대기.
+
 1. 데이터 파일을 추가한다: `materials.json`, `recipes.json`, `sets.json` 또는 현재 registry가 기대하는 동등한 TypeScript 상수. 모든 28 material과 18 equipment ID에 대해 schema test를 둔다.
 2. `makeRecipesFromData`, `makeMaterialsFromData`, `makeInfoMarket`를 빈 객체 호출에서 실제 data import로 바꾼다. 빈 registry는 개발 환경에서 throw한다.
 3. `loot_table -> run.inventory.materials`를 유지하고, run 시작 시 menu inventory를 덮어쓰지 않는 snapshot/merge 경계를 구현한다.

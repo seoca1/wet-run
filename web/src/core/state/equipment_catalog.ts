@@ -94,7 +94,7 @@ export const STREET_DECK: Equipment = Object.freeze({
   asciiGlyph: "[D+]",
   asciiColor: [200, 100, 0],
   upgradeSlots: 2,
-  requiredMaterials: { ice_shard: 1, data_fragment: 2 },
+  requiredMaterials: { ice_shard: 5, data_fragment: 3 },
   setId: "ono_sendai",
 } as Equipment);
 
@@ -109,7 +109,7 @@ export const MILITECH_EYES: Equipment = Object.freeze({
   asciiGlyph: "[E]",
   asciiColor: [255, 50, 50],
   upgradeSlots: 1,
-  requiredMaterials: { data_fragment: 2, wetware_chip: 1 },
+  requiredMaterials: { ice_shard: 4, data_fragment: 3 },
   setId: "militech",
 } as Equipment);
 
@@ -124,7 +124,7 @@ export const CHROME_GLOVES: Equipment = Object.freeze({
   asciiGlyph: "[G]",
   asciiColor: [180, 180, 200],
   upgradeSlots: 1,
-  requiredMaterials: { combat_module: 1 },
+  requiredMaterials: { ice_shard: 3, data_fragment: 4 },
   setId: "militech",
 } as Equipment);
 
@@ -139,7 +139,7 @@ export const CORPORATE_DECK: Equipment = Object.freeze({
   asciiGlyph: "[D]",
   asciiColor: [200, 0, 100],
   upgradeSlots: 3,
-  requiredMaterials: { ice_shard: 3, wetware_data: 1 },
+  requiredMaterials: { data_fragment: 16, ice_shard: 4 },
   setId: "ono_sendai",
 } as Equipment);
 
@@ -154,7 +154,7 @@ export const SUBDERMAL: Equipment = Object.freeze({
   asciiGlyph: "[B]",
   asciiColor: [100, 150, 100],
   upgradeSlots: 2,
-  requiredMaterials: { wetware_data: 2, data_fragment: 1 },
+  requiredMaterials: { data_fragment: 12, ice_shard: 4 },
   setId: null,
 } as Equipment);
 
@@ -175,7 +175,7 @@ export const MILITECH_DECK: Equipment = Object.freeze({
   asciiGlyph: "[D]",
   asciiColor: [0, 200, 0],
   upgradeSlots: 3,
-  requiredMaterials: { ice_construct: 1, combat_module: 2 },
+  requiredMaterials: { data_fragment: 20, combat_module: 1 },
   setId: "militech",
 } as Equipment);
 
@@ -190,7 +190,7 @@ export const TACTICAL_BODY: Equipment = Object.freeze({
   asciiGlyph: "[B]",
   asciiColor: [150, 150, 150],
   upgradeSlots: 3,
-  requiredMaterials: { combat_module: 3, ice_construct: 2 },
+  requiredMaterials: { data_fragment: 16, combat_module: 1 },
   setId: null,
 } as Equipment);
 
@@ -210,7 +210,7 @@ export const ARASAKA_DECK: Equipment = Object.freeze({
   asciiGlyph: "[D]",
   asciiColor: [255, 0, 0],
   upgradeSlots: 4,
-  requiredMaterials: { ice_construct: 3, biosoft_agent: 2 },
+  requiredMaterials: { ice_shard: 50, combat_module: 2, construct_shard: 1 },
   setId: "arasaka",
 } as Equipment);
 
@@ -225,7 +225,7 @@ export const KEREZNIKOV: Equipment = Object.freeze({
   asciiGlyph: "[K]",
   asciiColor: [200, 0, 0],
   upgradeSlots: 2,
-  requiredMaterials: { biosoft_agent: 2, rom_echo: 1 },
+  requiredMaterials: { ice_shard: 45, combat_module: 2, construct_shard: 1 },
   setId: "arasaka",
 } as Equipment);
 
@@ -245,7 +245,7 @@ export const GHOST_DECK: Equipment = Object.freeze({
   asciiGlyph: "[G]",
   asciiColor: [100, 255, 200],
   upgradeSlots: 5,
-  requiredMaterials: { biosoft_agent: 5, rom_echo: 3, ice_construct: 5 },
+  requiredMaterials: { combat_module: 30, construct_shard: 20 },
   setId: null,
 } as Equipment);
 
@@ -268,7 +268,7 @@ export const MASTER_DECK: Equipment = Object.freeze({
   asciiGlyph: "[*]",
   asciiColor: [255, 255, 255],
   upgradeSlots: 0,
-  requiredMaterials: {},
+  requiredMaterials: { combat_module: 12, construct_shard: 8, t6_program: 1 },
   setId: null,
 } as Equipment);
 
@@ -291,7 +291,7 @@ export const MASTER_BODY: Equipment = Object.freeze({
   asciiGlyph: "[#]",
   asciiColor: [255, 200, 100],
   upgradeSlots: 0,
-  requiredMaterials: {},
+  requiredMaterials: { combat_module: 10, construct_shard: 6, aleph_shard: 1 },
   setId: null,
 } as Equipment);
 
@@ -312,7 +312,7 @@ export const ZION_TRODES: Equipment = Object.freeze({
   asciiGlyph: "[Z]",
   asciiColor: [100, 255, 100],
   upgradeSlots: 0,
-  requiredMaterials: {},
+  requiredMaterials: { combat_module: 10, construct_shard: 6, t6_program: 1, aleph_shard: 1 },
   setId: null,
 } as Equipment);
 
@@ -328,7 +328,7 @@ export const NANO_HIVE: Equipment = Object.freeze({
   asciiGlyph: "[N]",
   asciiColor: [0, 255, 100],
   upgradeSlots: 2,
-  requiredMaterials: { wetware_data: 3, data_fragment: 5 },
+  requiredMaterials: { data_fragment: 22, combat_module: 1 },
   setId: null,
 } as Equipment);
 
@@ -347,7 +347,7 @@ export const TRODES_NINJA: Equipment = Object.freeze({
   asciiGlyph: "[~]",
   asciiColor: [150, 100, 200],
   upgradeSlots: 1,
-  requiredMaterials: {},
+  requiredMaterials: { data_fragment: 18, ice_shard: 3 },
   setId: null,
 } as Equipment);
 
@@ -366,7 +366,7 @@ export const BOOTS_GHOST: Equipment = Object.freeze({
   asciiGlyph: "[B]",
   asciiColor: [100, 100, 150],
   upgradeSlots: 0,
-  requiredMaterials: {},
+  requiredMaterials: { data_fragment: 15, ice_shard: 4 },
   setId: null,
 } as Equipment);
 

@@ -1,0 +1,133 @@
+{
+  "_comment": "Craft recipes (ADR-0324/0325). 16 craftable equipment pieces (T1..T6); the two T0 starters are given, not crafted. Costs are the measured v2 table from docs/design/crafting-and-equipment-proposal-2026-11-18.md (appendix) — each one clears craftableAtTier >= 0.50 at its own grade. Every material id exists in materials.json. `ready` marks hub availability.",
+  "recipes": [
+    {
+      "item_id": "deck_street",
+      "name": "Ono-Sendai 11 (Hot Rod)",
+      "tier_level": 1,
+      "glyph": "[D+]",
+      "ready": true,
+      "materials": { "data_fragment": 3, "ice_shard": 5 }
+    },
+    {
+      "item_id": "eyes_militech",
+      "name": "Militech Eagle Eye",
+      "tier_level": 1,
+      "glyph": "[E]",
+      "ready": true,
+      "materials": { "data_fragment": 3, "ice_shard": 4 }
+    },
+    {
+      "item_id": "gloves_chrome",
+      "name": "Chrome Surgical Gloves",
+      "tier_level": 1,
+      "glyph": "[G]",
+      "ready": true,
+      "materials": { "data_fragment": 4, "ice_shard": 3 }
+    },
+    {
+      "item_id": "deck_corporate",
+      "name": "Sakura Cybermod 'Samurai'",
+      "tier_level": 2,
+      "glyph": "[D]",
+      "ready": true,
+      "materials": { "data_fragment": 16, "ice_shard": 4 }
+    },
+    {
+      "item_id": "bodysuit_subdermal",
+      "name": "Subdermal Weave Mk.II",
+      "tier_level": 2,
+      "glyph": "[B]",
+      "ready": true,
+      "materials": { "data_fragment": 12, "ice_shard": 4 }
+    },
+    {
+      "item_id": "trodes_ninja",
+      "name": "Stealth Trodes",
+      "tier_level": 2,
+      "glyph": "[~]",
+      "ready": true,
+      "materials": { "data_fragment": 18, "ice_shard": 3 }
+    },
+    {
+      "item_id": "boots_ghost",
+      "name": "Chameleon Boots",
+      "tier_level": 2,
+      "glyph": "[B]",
+      "ready": true,
+      "materials": { "data_fragment": 15, "ice_shard": 4 }
+    },
+    {
+      "item_id": "deck_militech",
+      "name": "Militech Centurion",
+      "tier_level": 3,
+      "glyph": "[D]",
+      "ready": true,
+      "materials": { "data_fragment": 20, "combat_module": 1 }
+    },
+    {
+      "item_id": "bodysuit_tactical",
+      "name": "M-31 Combat Armor",
+      "tier_level": 3,
+      "glyph": "[B]",
+      "ready": true,
+      "materials": { "data_fragment": 16, "combat_module": 1 }
+    },
+    {
+      "item_id": "implant_nanohive",
+      "name": "Nano-Hive",
+      "tier_level": 3,
+      "glyph": "[N]",
+      "ready": true,
+      "materials": { "data_fragment": 22, "combat_module": 1 }
+    },
+    {
+      "item_id": "deck_arasaka",
+      "name": "Arasaka 'Onikiri'",
+      "tier_level": 4,
+      "glyph": "[D]",
+      "ready": true,
+      "materials": { "ice_shard": 50, "combat_module": 2, "construct_shard": 1 }
+    },
+    {
+      "item_id": "head_kereznikov",
+      "name": "Kereznikov Boost",
+      "tier_level": 4,
+      "glyph": "[K]",
+      "ready": true,
+      "materials": { "ice_shard": 45, "combat_module": 2, "construct_shard": 1 }
+    },
+    {
+      "item_id": "deck_ghost",
+      "name": "Ghost Cartographer",
+      "tier_level": 5,
+      "glyph": "[G]",
+      "ready": true,
+      "materials": { "combat_module": 30, "construct_shard": 20 }
+    },
+    {
+      "item_id": "deck_master",
+      "name": "Wintermute / Neuromancer (Merged)",
+      "tier_level": 6,
+      "glyph": "[*]",
+      "ready": true,
+      "materials": { "combat_module": 12, "construct_shard": 8, "t6_program": 1 }
+    },
+    {
+      "item_id": "bodysuit_master",
+      "name": "Full-Body Cyborg Conversion",
+      "tier_level": 6,
+      "glyph": "[#]",
+      "ready": true,
+      "materials": { "combat_module": 10, "construct_shard": 6, "aleph_shard": 1 }
+    },
+    {
+      "item_id": "trodes_zion",
+      "name": "Zion Direct-Neural Link",
+      "tier_level": 6,
+      "glyph": "[Z]",
+      "ready": true,
+      "materials": { "combat_module": 10, "construct_shard": 6, "t6_program": 1, "aleph_shard": 1 }
+    }
+  ]
+}

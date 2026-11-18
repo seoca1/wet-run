@@ -48,7 +48,7 @@ describe.each([
     expect(lines.some((l) => l.includes("VENT") && l.includes("70/100"))).toBe(true);
     expect(lines.some((l) => l.includes("BURN"))).toBe(true);
     expect(lines.some((l) => l.includes("SYPHON"))).toBe(true);
-    expect(lines.some((l) => /4-9 options/.test(l))).toBe(true);
+    expect(lines.some((l) => /4-\d+ options/.test(l))).toBe(true);
     expect(lines.some((l) => l.includes("GEAR"))).toBe(true);
   });
 

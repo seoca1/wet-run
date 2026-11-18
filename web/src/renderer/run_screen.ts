@@ -15,9 +15,11 @@ import { programEffectExplain } from "../core/combat/program_effects";
 import { missionGradeOf } from "../core/combat/ice_scaling";
 import { offeredEquipmentDrop } from "../core/state/equipment_drops";
 import { carriedConsumable } from "../core/state/consumables";
+import { materialOfferForGrade } from "../core/state/material_market";
 import {
   BURN_COST,
   LOOT_BURN_SLOT,
+  LOOT_BUY_SLOT,
   LOOT_GEAR_SLOT,
   LOOT_ITEM_SLOT,
   LOOT_INTEL_SLOT,
@@ -230,6 +232,11 @@ export function renderRunScreen(
         !terminal && takenId === null
           ? carriedConsumable(state.inventory.materials)
           : null;
+      // ADR-0331: the grade's material offer, bought with the run's credits.
+      const buyOffer =
+        !terminal && takenId === null
+          ? materialOfferForGrade(missionGradeOf(state.mission))
+          : null;
       // ADR-0251 rule 5: do not promise a key that does nothing. The trace exits
       // only exist while there is a trace, and both of them stay open, so a deep
       // hole can be cleared in one stop (ADR-0297) — which is worth saying.
@@ -249,18 +256,21 @@ export function renderRunScreen(
           ...traceExits,
           ...(gearDrop !== null ? ["9: gear"] : []),
           ...(useItem !== null ? ["10: use"] : []),
+          ...(buyOffer !== null ? ["11: buy"] : []),
         ].join(" · ") +
         (traceExits.includes("6: vent") && traceExits.includes("7: burn")
           ? " · 6+7 stack"
           : "");
       // ADR-0299: the 40-column panel has 36 usable columns, so the hint gets a
       // short form rather than being clipped mid-word.
-      const maxSlot = terminal
-        ? 5
-        : 5 +
-          traceExits.length +
-          (gearDrop !== null ? 1 : 0) +
-          (useItem !== null ? 1 : 0);
+      const offeredSlots = [
+        5,
+        ...traceExits.map((e) => Number(e.split(":")[0])),
+        ...(gearDrop !== null ? [9] : []),
+        ...(useItem !== null ? [10] : []),
+        ...(buyOffer !== null ? [11] : []),
+      ];
+      const maxSlot = terminal ? 5 : Math.max(...offeredSlots);
       const lootHint =
         lootHintFull.length <= cols - 4
           ? lootHintFull
@@ -300,6 +310,14 @@ export function renderRunScreen(
             narrow
               ? `${LOOT_ITEM_SLOT} USE ${useItem.name}`
               : `${LOOT_ITEM_SLOT} USE             ${useItem.name} — +${pool} shield for the next fight`,
+          );
+        }
+        // ADR-0331: buy the grade's material offer with the run's credits.
+        if (buyOffer !== null) {
+          offers.push(
+            narrow
+              ? `${LOOT_BUY_SLOT} BUY ${buyOffer.name} x${buyOffer.quantity} ${buyOffer.price}cr`
+              : `${LOOT_BUY_SLOT} BUY             ${buyOffer.name} x${buyOffer.quantity} — ${buyOffer.price}cr`,
           );
         }
         // ADR-0295: the only way back from the trace, priced above what a kill

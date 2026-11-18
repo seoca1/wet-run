@@ -166,6 +166,9 @@ export const LOOT_GEAR_SLOT = LOOT_RECOVER_SLOT + 1; // 9
 /** ADR-0330: spend a carried consumable (when the run has one). */
 export const LOOT_ITEM_SLOT = LOOT_GEAR_SLOT + 1; // 10
 
+/** ADR-0331: buy the grade's material offer with the run's credits. */
+export const LOOT_BUY_SLOT = LOOT_ITEM_SLOT + 1; // 11
+
 /** Only a HOT trace can be bled off (ADR-0298).
  *
  * The measurement is the reason this exists. COST is surplus at the end of a
@@ -229,6 +232,7 @@ export function lootSlotChoice(
   | "recover"
   | "gear"
   | "item"
+  | "buy"
   | null {
   if (slot >= 1 && slot <= LOOT_PROGRAM_SLOTS) return "program";
   if (slot === LOOT_REPAIR_SLOT) return "repair";
@@ -238,6 +242,7 @@ export function lootSlotChoice(
   if (slot === LOOT_RECOVER_SLOT) return "recover";
   if (slot === LOOT_GEAR_SLOT) return "gear";
   if (slot === LOOT_ITEM_SLOT) return "item";
+  if (slot === LOOT_BUY_SLOT) return "buy";
   return null;
 }
 

@@ -4146,3 +4146,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **소비 아이템**: loot 슬롯 10, `maas_neuropozyne_dose` → shield pool(최대HP 25%). repair 와 중복 회피(회복 아님).
 - **검증**: vitest **234/4430**(신규 `adr0330_consumables` 8) · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0).
 - **다음**: `buy`(시장 — 화면·데이터 전무) · AP/스킬/효과 서브시스템 · 장비 파워↔난이도 동시 설계.
+
+## [2026-11-18] feat(economy) | 재료 시장 — 크레딧이 게임플레이에 닿는다 (ADR-0331)
+
+- 오너 "재료 구매". 크레딧 소비처 부재(읽는 곳은 엔딩 `control` 게이트뿐) + 시장 화면·데이터·호출자 전무.
+- **위치 문제 해결**: ADR-0323 이 credits 를 메뉴에 합치지 않아 메뉴 시장은 무일푼 → **런 중 loot stop**에서 `state.player.credits` 로 구매.
+- **결정**: 슬롯 11 — 등급 밴드별 재료 offer(g1-2 df×10=300cr · g3-4 ice_shard×10=300cr · g5-6 combat_module×2=700cr), 카드 미소비, 반복 가능(가격이 한도).
+- **검증**: vitest **235/4436**(신규 `adr0331_material_market` 6) · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0).
+- **한계**: 슬롯 11개 → 80열 힌트가 `4-11 options` 짧은 형식(offer 라인이 이름 담당). 힌트 압축은 별도.
+- **다음**: AP/스킬/효과 서브시스템 · extraEffect resolver · 시장 가격 확정(오너) · 장비↔난이도 동시 설계.

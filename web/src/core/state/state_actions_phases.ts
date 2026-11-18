@@ -35,6 +35,7 @@ import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram, uniqueChoicesFor } from "./card_reward";
 import { offeredEquipmentDrop } from "./equipment_drops";
 import { carriedConsumable } from "./consumables";
+import { materialOfferForGrade } from "./material_market";
 import { refillHand } from "../combat/hand";
 import {
   BURN_COST,
@@ -236,6 +237,7 @@ export function applyLootAction(
     if (choice === "recover") return takeLootRecover(state);
     if (choice === "gear") return takeLootGear(state);
     if (choice === "item") return takeLootItem(state);
+    if (choice === "buy") return takeLootBuy(state);
     return takeCardReward(state, action.handIndex - 1);
   }
   if (action.type === "use_program") {
@@ -503,6 +505,31 @@ function takeLootBurn(state: GameState): GameState {
       alarm: Math.max(0, state.player.alarm - BURN_COST),
     },
     message: `Burned ${target.id} for ${cleared} COST (COST ${state.player.alarm - cleared}/100).`,
+  };
+}
+
+/** ADR-0331: buy the grade's material offer with the run's credits.
+ *
+ * A purchase, not a loot pick — it does not cost the card. Repeatable while the
+ * credits last; the price is the limit. */
+function takeLootBuy(state: GameState): GameState {
+  const offer = materialOfferForGrade(missionGradeOf(state.mission));
+  if (offer === null) {
+    return { ...state, message: "Nothing on the bench." };
+  }
+  if (state.player.credits < offer.price) {
+    return {
+      ...state,
+      message: `${offer.name} costs ${offer.price}cr — you have ${state.player.credits}.`,
+    };
+  }
+  const materials: Record<string, number> = { ...state.inventory.materials };
+  materials[offer.materialId] = (materials[offer.materialId] ?? 0) + offer.quantity;
+  return {
+    ...state,
+    player: { ...state.player, credits: state.player.credits - offer.price },
+    inventory: { ...state.inventory, materials: Object.freeze(materials) },
+    message: `Bought ${offer.quantity} ${offer.name} for ${offer.price}cr.`,
   };
 }
 

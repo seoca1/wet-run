@@ -1,17 +1,20 @@
 /** Crafting probe — does the drop economy support Manus's candidate recipes?
  *
- * `crafting-recipes-candidate.json` is the candidate cost table lifted from
- * `docs/design/crafting-and-equipment-proposal-2026-11-18.md` (the Manus
- * proposal), with its equipment names mapped to the real catalog ids. It is a
- * CANDIDATE list: the point of this probe is to falsify it by measurement, which
- * it does — see the note at the bottom of the output.
+ * `crafting-recipes-candidate.json` holds the cost table under test. The Manus
+ * v1 table (lifted from `docs/design/crafting-and-equipment-proposal-2026-11-18.md`
+ * with its equipment names mapped to the real catalog ids) was falsified by
+ * measurement — 18/18 recipes at 0.0%. The file now holds the **v2** table
+ * (ADR-0324), which this probe passes. It is still a CANDIDATE list: re-running
+ * it after any economy change is the point.
  *
  * ADR-0322 / the Manus proposal (`docs/design/crafting-and-equipment-
  * proposal-2026-11-18.md`). Manus could not see the repo, so its recipe costs
  * are candidates. This replays existing deterministic seeds and measures:
  *
  *   1. what a run at each grade actually yields (materials + credits)
- *   2. `craftableAtTier`: P(afford the recipe after k runs)
+ *   2. `craftableAtTier`: P(afford the recipe after k runs at the recipe's own
+ *      grade) — a gate is measured against the grade it gates, not a pool
+ *      diluted by lower grades that never drop it
  *   3. `commonPileup`: are data_fragment / ice_shard earned faster than any
  *      recipe consumes them?
  *
@@ -156,20 +159,21 @@ function main(): void {
   console.log("");
 
   // 2. reach: can a run at this grade (or below) afford the recipe?
-  console.log("recipe reach — P(afford) after this many runs at the recipe's tier or below");
-  console.log("item                    tier  P@runs   (cost)");
+  console.log("recipe reach — P(afford) after this many runs at the recipe's own tier");
+  console.log("item                    tier  P@runs  n  (cost)");
   for (const recipe of RECIPES) {
-    const pool: Yield[] = [];
-    for (const grade of [1, 2, 3, 4, 5, 6]) {
-      if (grade > recipe.tier) break;
-      pool.push(...(byGrade.get(grade) ?? []));
-    }
+    // Judge a tier-T recipe against grade-T runs. The previous model pooled
+    // every grade <= T, which made a rare, grade-localized gate (e.g. the
+    // g6-only `t6_program`) mathematically unreachable — the pool was diluted
+    // by low grades that never drop it. A gate is meaningful only against the
+    // grade it is meant to gate. (Owner decision 2026-11-18.)
+    const pool = byGrade.get(recipe.tier) ?? [];
     const reach = pool.length === 0 ? 0 : pool.filter((t) => affords(t.materials, recipe.cost)).length / pool.length;
     const cost = Object.entries(recipe.cost)
       .map(([k, v]) => `${k}x${v}`)
       .join(" ");
     console.log(
-      `  ${recipe.id.padEnd(22)}${String(recipe.tier).padStart(3)}  ${(reach * 100).toFixed(1).padStart(6)}%  ${cost}`,
+      `  ${recipe.id.padEnd(22)}${String(recipe.tier).padStart(3)}  ${(reach * 100).toFixed(1).padStart(6)}%  ${String(pool.length).padStart(3)}  ${cost}`,
     );
   }
   console.log("");

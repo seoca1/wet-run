@@ -4077,3 +4077,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **함께 처리한 드리프트**: ADR-0321 이 시드 스트림을 바꿔 캠페인이 47.4%→**46.4%** 로 이동 → `CONTRACT_TARGETS` **재기록**. 그리고 하네스 **NOTE 가 숫자를 하드코딩해 표와 어긋나던 것**을 **live 값 보간**으로 고침(새 노트는 리터럴 금지).
 - **현재 기준선**: balance `100/100/100/97.1/70.6/47.0` · survival `100/100/83.4/83.1/25.9/42.2` · campaign 완주 **46.4%** · vitest **228/4380** · e2e **54/0**.
 - **검증**: 게이트 7종 CLEAN · campaign delta 0.0pp.
+
+## [2026-11-18] feat(crafting) | 비용표 2판 + 판정 풀 수정 (ADR-0324)
+
+- 오너 "wet-run 개선 작업을 이어서 하자" → 핸드오프 §4 "다음 세션 첫 작업 = 비용표 2판".
+- **측정 먼저**: `crafting_probe.ts` 는 도달률만 내므로, 임시 캘리브레이션 스크립트로 **등급별 재료 분포(3런/8런 p50~p90)** 를 뽑아 비용을 실측에 근거해 정했다(임시 스크립트는 사용 후 삭제).
+- **구조적 발견**: `craftableAtTier` 가 **등급 ≤ tier 풀**로 도달률을 세는데, 드롭이 등급별로 국소화(g6 전용 `t6_program` 등)되어 **희귀 게이트는 원리적으로 도달 불가**(common 게이트만 ≥50%). → 오너 결정 **B: 판정 풀을 `등급 == tier` 로 수정**.
+- **비용표 2판**: T1 순수 common, 상위 tier 는 자기 등급에서 실제 나오는 재료로 게이트. 합격: **T1 3종 ≥50% @3런**(58.3/70.8/70.8) · **T2~T6 13종 전부 ≥50% @8런**(53.6~78.7), 사다리 단조.
+- **교정 #3 반박**: g2 ICE 가 `upgrade_t2` 를 8런 중앙값 **3개** 뱉음(병목 아님). **T4 는 df 아니라 ice_shard**(g4 df 중앙값 16 / ice_shard 74 — df 게이트면 27.4%).
+- **문서**: ADR-0324 · `crafting-and-equipment-proposal` §5 계약 + 부록 2판 절 · `decisions/README` 인덱스 · `crafting_probe.ts` 주석 · AGENTS.md ADR 카운트(243→244).
+- **검증**: 게이트 7종 CLEAN · `check_doc_claims` OK(114 paths) · typecheck/lint OK · `src/` 무변경(밸런스 byte-identical).
+- **다음**: 핸드오프 §4 "그 다음" — `materials.json`·`recipes.json` 생성 + `craftItem` 화면 배선 + 미사용 스탯 9종.

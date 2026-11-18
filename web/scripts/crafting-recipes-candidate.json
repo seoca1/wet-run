@@ -19,9 +19,8 @@
   "tier": 1,
   "path": "craft",
   "cost": {
-   "data_fragment": 8,
-   "ice_shard": 6,
-   "rom_echo": 1
+   "data_fragment": 3,
+   "ice_shard": 5
   }
  },
  {
@@ -30,9 +29,8 @@
   "tier": 1,
   "path": "craft 또는 g1/g2 drop",
   "cost": {
-   "data_fragment": 6,
-   "combat_module": 1,
-   "rom_echo": 1
+   "data_fragment": 3,
+   "ice_shard": 4
   }
  },
  {
@@ -41,9 +39,8 @@
   "tier": 1,
   "path": "craft",
   "cost": {
-   "data_fragment": 7,
-   "combat_module": 1,
-   "glitch_fragment": 1
+   "data_fragment": 4,
+   "ice_shard": 3
   }
  },
  {
@@ -52,10 +49,8 @@
   "tier": 2,
   "path": "craft",
   "cost": {
-   "ice_shard": 14,
-   "construct_shard": 4,
-   "ice_construct": 1,
-   "t4_program": 1
+   "data_fragment": 16,
+   "ice_shard": 4
   }
  },
  {
@@ -64,9 +59,8 @@
   "tier": 2,
   "path": "craft 또는 g2/g3 drop",
   "cost": {
-   "ice_shard": 12,
-   "combat_module": 3,
-   "shield_program": 1
+   "data_fragment": 12,
+   "ice_shard": 4
   }
  },
  {
@@ -75,9 +69,8 @@
   "tier": 2,
   "path": "craft",
   "cost": {
-   "data_fragment": 10,
-   "rom_echo": 2,
-   "glitch_fragment": 1
+   "data_fragment": 18,
+   "ice_shard": 3
   }
  },
  {
@@ -86,9 +79,8 @@
   "tier": 2,
   "path": "craft",
   "cost": {
-   "data_fragment": 10,
-   "construct_shard": 2,
-   "shield_program": 1
+   "data_fragment": 15,
+   "ice_shard": 4
   }
  },
  {
@@ -97,10 +89,8 @@
   "tier": 3,
   "path": "craft 또는 rare drop",
   "cost": {
-   "combat_module": 4,
-   "construct_shard": 5,
-   "t4_program": 1,
-   "t_a_data_fragment": 1
+   "data_fragment": 20,
+   "combat_module": 1
   }
  },
  {
@@ -109,10 +99,8 @@
   "tier": 3,
   "path": "craft",
   "cost": {
-   "ice_construct": 3,
-   "shield_program": 2,
-   "t_a_data_fragment": 1,
-   "upgrade_t2": 1
+   "data_fragment": 16,
+   "combat_module": 1
   }
  },
  {
@@ -121,9 +109,8 @@
   "tier": 3,
   "path": "craft",
   "cost": {
-   "construct_shard": 8,
-   "glitch_fragment": 2,
-   "loa_chip": 1
+   "data_fragment": 22,
+   "combat_module": 1
   }
  },
  {
@@ -132,10 +119,9 @@
   "tier": 4,
   "path": "craft",
   "cost": {
-   "ta_construct": 1,
-   "fragment.tessier_archive": 1,
-   "t4_program": 1,
-   "hosaka_chip": 1
+   "ice_shard": 50,
+   "combat_module": 2,
+   "construct_shard": 1
   }
  },
  {
@@ -144,10 +130,9 @@
   "tier": 4,
   "path": "craft",
   "cost": {
-   "hosaka_chip": 1,
-   "hosaka_archive": 1,
-   "t4_program": 1,
-   "upgrade_t4": 1
+   "ice_shard": 45,
+   "combat_module": 2,
+   "construct_shard": 1
   }
  },
  {
@@ -156,10 +141,8 @@
   "tier": 5,
   "path": "craft 또는 g5 rare drop",
   "cost": {
-   "unique_construct": 1,
-   "t5_program": 1,
-   "wintermute_key": 1,
-   "fragment.wintermute_echo": 1
+   "combat_module": 30,
+   "construct_shard": 20
   }
  },
  {
@@ -168,10 +151,9 @@
   "tier": 6,
   "path": "craft, g6 boss drop, 또는 one-time shop",
   "cost": {
-   "t6_program": 1,
-   "aleph_shard": 1,
-   "hosaka_archive": 1,
-   "fragment.timeline_echo": 1
+   "combat_module": 12,
+   "construct_shard": 8,
+   "t6_program": 1
   }
  },
  {
@@ -180,10 +162,9 @@
   "tier": 6,
   "path": "craft, g6 boss drop",
   "cost": {
-   "unique_construct": 1,
-   "t6_program": 1,
-   "peripheral_artifact": 1,
-   "upgrade_t4": 1
+   "combat_module": 10,
+   "construct_shard": 6,
+   "aleph_shard": 1
   }
  },
  {
@@ -192,10 +173,10 @@
   "tier": 6,
   "path": "craft 또는 g6 boss drop",
   "cost": {
-   "loa_chip": 1,
-   "fragment.wintermute_echo": 1,
+   "combat_module": 10,
+   "construct_shard": 6,
    "t6_program": 1,
-   "maas_neuropozyne_dose": 1
+   "aleph_shard": 1
   }
  }
 ]

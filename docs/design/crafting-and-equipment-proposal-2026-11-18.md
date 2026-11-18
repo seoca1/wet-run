@@ -45,10 +45,14 @@ Manus에는 **카탈로그 ID를 주지 않고 이름만** 줬기 때문에, Man
 ## 측정 계약 (Manus 제안)
 
 ```
-craftableAtTier(item, tier) = P(inventory after missions <= tier >= recipe cost) >= 0.50
+craftableAtTier(item, tier) = P(inventory after missions at grade == tier >= recipe cost) >= 0.50
 commonPileup(id) = median(material[id] at ENDING) - median(material[id] consumed) > ownerThreshold
 closure(tier) = runSpend / runIncomeInMaterialEquivalent
 ```
+
+> **2026-11-18 개정 (ADR-0324)**: 판정 풀을 `missions <= tier` 에서 **`grade == tier`** 로 고쳤다.
+> 옛 풀은 등급별로 국소화된 희귀 게이트(예: g6 전용 `t6_program`)를 **원리적으로 도달 불가**로 만들었다
+> (낮은 등급이 풀을 희석). 게이트는 **게이트가 겨누는 등급**에서 잰다.
 그리고 **가장 싼 반증 실험**: 새 전투를 만들지 않고 기존 결정적 시드 100개를 replay 해서
 실패/승리, ENDING 의 common 스택, 첫 T1/T2 craft 까지 걸린 런 수를 기록한다.
 
@@ -240,7 +244,9 @@ closure(tier) = runSpend / runIncomeInMaterialEquivalent
 
 ```text
 craftableAtTier(item, tier) =
-  P(material inventory after missions <= tier >= recipe cost) >= 0.50
+  P(material inventory after missions at grade == tier >= recipe cost) >= 0.50
+  # 2026-11-18 (ADR-0324): 풀은 '등급 == tier'. '등급 <= tier' 는 등급별로 국소화된
+  # 희귀 게이트를 도달 불가로 만들었다 (낮은 등급이 풀을 희석).
 
 commonPileup(id) =
   median(material[id] at ENDING) - median(material[id] consumed) > ownerThreshold
@@ -357,8 +363,26 @@ Manus의 offer `data_fragment×12 → credits 8` 은 12개를 **8크레딧**에 
 | 4 | 시장 offer 가격을 **크레딧 수입 자릿수**(≈3,000cr/런)에 맞춘다 | 위 결과 4 |
 | 5 | `craftableAtTier` 목표(≥0.50)를 **측정 가능한 통과 기준**으로 유지한다 | `npm run crafting` 이 그대로 판정한다 |
 
+## 비용표 2판 — 교정 반영 결과 (2026-11-18, ADR-0324)
+
+교정 1~4를 반영하고, **판정 풀을 `등급 == tier` 로 고친 뒤**(위 계약 개정) 하네스가 전부 통과했다.
+비용표 정본: `web/scripts/crafting-recipes-candidate.json`. 결정: ADR-0324.
+
+| tier | 항목 | 비용 | P(afford) |
+| --- | --- | --- | --- |
+| T1 @3런 | deck_street / eyes_militech / gloves_chrome | `df×3+ice_shard×5` / `df×3+ice_shard×4` / `df×4+ice_shard×3` | 58.3 / 70.8 / 70.8% |
+| T2 @8런 | corporate / subdermal / trodes_ninja / boots_ghost | `df×16+ice_shard×4` / `df×12+ice_shard×4` / `df×18+ice_shard×3` / `df×15+ice_shard×4` | 56.7 / 56.7 / 58.3 / 56.7% |
+| T3 @8런 | militech / tactical / nanohive | `df×20+cm×1` / `df×16+cm×1` / `df×22+cm×1` | 53.6% ×3 |
+| T4 @8런 | arasaka / kereznikov | `ice_shard×50+cm×2+cs×1` / `ice_shard×45+cm×2+cs×1` | 54.8% ×2 |
+| T5 @8런 | ghost | `combat_module×30+construct_shard×20` | 78.7% |
+| T6 @8런 | master / master_body / zion | `cm×12+cs×8+t6_program×1` / `cm×10+cs×6+aleph_shard×1` / `cm×10+cs×6+t6×1+aleph×1` | 63.9 / 66.7 / 63.9% |
+
+핵심: **등급마다 실제로 나오는 common 이 다르다.** g4 ICE 는 `data_fragment` 중앙값 **16** / `ice_shard` **74** 라서
+T4 를 df 로 게이트하면 27.4% 로 막힌다. 또 g2 ICE 가 `upgrade_t2` 를 8런 중앙값 **3개** 뱉어, 교정 #3 의
+"`upgrade_t*` 는 병목" 전제는 실측과 어긋난다(비용표에는 여전히 미사용 — g1 에 안 나옴).
+
 ## 남은 것
 
-- 위 교정 1–4를 반영한 **비용표 2판**은 아직 미작성 — 이 부록의 실측이 그 입력이다.
+- ~~비용표 2판 미작성~~ → **작성·통과** (위 절 · ADR-0324).
 - `--runs` 를 늘리면(예: 5–8) 희귀 재료의 상위 분위가 드러난다(중앙값 0은 "절반이 0"이라는 뜻).
-- 재료를 실패 런에서 보존할지는 여전히 **오너 결정 1번**이다 — 이 실험은 보존을 가정했다.
+- 재료를 실패 런에서 보존할지는 여전히 **오너 결정 1번**이다 — 이 실험은 보존을 가정했다(ADR-0323 으로 구현됨).

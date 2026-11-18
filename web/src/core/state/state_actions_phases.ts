@@ -34,6 +34,7 @@ import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram, uniqueChoicesFor } from "./card_reward";
 import { offeredEquipmentDrop } from "./equipment_drops";
+import { carriedConsumable } from "./consumables";
 import { refillHand } from "../combat/hand";
 import {
   BURN_COST,
@@ -234,6 +235,7 @@ export function applyLootAction(
     if (choice === "burn") return takeLootBurn(state);
     if (choice === "recover") return takeLootRecover(state);
     if (choice === "gear") return takeLootGear(state);
+    if (choice === "item") return takeLootItem(state);
     return takeCardReward(state, action.handIndex - 1);
   }
   if (action.type === "use_program") {
@@ -501,6 +503,38 @@ function takeLootBurn(state: GameState): GameState {
       alarm: Math.max(0, state.player.alarm - BURN_COST),
     },
     message: `Burned ${target.id} for ${cleared} COST (COST ${state.player.alarm - cleared}/100).`,
+  };
+}
+
+/** ADR-0330: spend a carried consumable for a one-off effect.
+ *
+ * The dose buys shield pool for the next fight, not HP — the repair slot owns
+ * HP, and a second repair would not be a decision. The spend goes through the
+ * run's material wallet, which `mergeRunIntoWallet` now decrements correctly
+ * (ADR-0330's other half). */
+function takeLootItem(state: GameState): GameState {
+  const item = carriedConsumable(state.inventory.materials);
+  if (item === null) {
+    return { ...state, message: "Nothing to use." };
+  }
+  const pool = Math.floor(state.player.maxHp * (item.shieldPct / 100));
+  const materials: Record<string, number> = { ...state.inventory.materials };
+  const left = (materials[item.id] ?? 0) - 1;
+  if (left > 0) materials[item.id] = left;
+  else delete materials[item.id];
+  return {
+    ...state,
+    inventory: { ...state.inventory, materials: Object.freeze(materials) },
+    statusEffects: [
+      ...state.statusEffects,
+      {
+        kind: "shield",
+        target: "player",
+        magnitude: pool,
+        remaining: 9999,
+      },
+    ],
+    message: `Used ${item.name} — +${pool} shield for the next fight.`,
   };
 }
 

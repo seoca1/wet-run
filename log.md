@@ -4137,3 +4137,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **테스트**: `adr0329_equipment_drops`(6) + loot 레이아웃 테스트 2건을 새 슬롯에 맞게 갱신.
 - **검증**: vitest **233/4422** · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0) · 게이트 7종 CLEAN.
 - **다음**: `buy`(오너 결정 5번) · AP/스킬/효과 서브시스템 · `use_item`(hoard 병합 수정) · 장비 파워↔난이도 동시 설계.
+
+## [2026-11-18] feat(economy) | 소비 아이템 + hoard 지출 버그 수정 (ADR-0330)
+
+- 오너 "계속" = 핸드오프 §4-4 (`use_item`).
+- **선행 결함 발견**: ADR-0323 병합 `menu + max(0, run − seed)` 는 런이 hoard 재료를 소비하면 `run < seed` 로 **지출을 지운다**(소비 아이템 공짜). 런 중 재료 소비 경로가 없어 드러나지 않았음.
+- **수정**: 병합을 재료별 `menu + (run − seed)` 로 — 즉시 잭아웃 주조 0 유지 + 지출 차감.
+- **소비 아이템**: loot 슬롯 10, `maas_neuropozyne_dose` → shield pool(최대HP 25%). repair 와 중복 회피(회복 아님).
+- **검증**: vitest **234/4430**(신규 `adr0330_consumables` 8) · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0).
+- **다음**: `buy`(시장 — 화면·데이터 전무) · AP/스킬/효과 서브시스템 · 장비 파워↔난이도 동시 설계.

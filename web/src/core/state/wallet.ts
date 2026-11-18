@@ -68,6 +68,15 @@ export function earnedMaterials(
 
 /** The hoard after a run: what it already held, plus what the run earned.
  *
+ * ADR-0323: the merge subtracts the seed rather than assigning the run's wallet
+ * back, so jacking out on frame one mints nothing.
+ *
+ * ADR-0330: the hoard is `menu + (run - seed)` PER MATERIAL, not
+ * `menu + max(0, run - seed)`. The difference matters the moment a run can
+ * SPEND a hoard item (a consumable): the clamping form cannot express a spend,
+ * so the item would be consumed for free. Subtracting the seed first keeps both
+ * halves — an inherited stack is not minted, and a spent one is gone.
+ *
  * Credits are deliberately NOT merged: nothing earns into `inventory.credits`
  * during a run, and the mission's reward is not the run's to keep until the job
  * is done. Materials are the axis this decision is about. */
@@ -77,12 +86,24 @@ export function mergeRunIntoWallet(
   seed: Inventory | null,
 ): Inventory {
   if (run === null || seed === null) return menu;
-  const earned = earnedMaterials(run.materials, seed.materials);
+  const materials: Record<string, number> = {};
+  const keys = new Set([
+    ...Object.keys(menu.materials),
+    ...Object.keys(run.materials),
+    ...Object.keys(seed.materials),
+  ]);
+  for (const k of keys) {
+    const n =
+      Math.floor(Number(menu.materials[k] ?? 0)) +
+      Math.floor(Number(run.materials[k] ?? 0)) -
+      Math.floor(Number(seed.materials[k] ?? 0));
+    if (Number.isFinite(n) && n > 0) materials[k] = n;
+  }
   const programs: ReadonlyArray<Program> =
     run.programs.length > 0 ? [...run.programs] : [...menu.programs];
   return {
     credits: menu.credits,
-    materials: addStacks(menu.materials, earned),
+    materials: Object.freeze(materials),
     programs,
   };
 }

@@ -14,10 +14,12 @@ import { formatRewardOption } from "../core/combat/program_affordance";
 import { programEffectExplain } from "../core/combat/program_effects";
 import { missionGradeOf } from "../core/combat/ice_scaling";
 import { offeredEquipmentDrop } from "../core/state/equipment_drops";
+import { carriedConsumable } from "../core/state/consumables";
 import {
   BURN_COST,
   LOOT_BURN_SLOT,
   LOOT_GEAR_SLOT,
+  LOOT_ITEM_SLOT,
   LOOT_INTEL_SLOT,
   LOOT_RECOVER_SLOT,
   LOOT_REPAIR_SLOT,
@@ -223,6 +225,11 @@ export function renderRunScreen(
       // ADR-0329: a salvage offer, when this stop has one.
       const gearDrop =
         !terminal && takenId === null ? offeredEquipmentDrop(state) : null;
+      // ADR-0330: a carried consumable, when the run has one.
+      const useItem =
+        !terminal && takenId === null
+          ? carriedConsumable(state.inventory.materials)
+          : null;
       // ADR-0251 rule 5: do not promise a key that does nothing. The trace exits
       // only exist while there is a trace, and both of them stay open, so a deep
       // hole can be cleared in one stop (ADR-0297) — which is worth saying.
@@ -241,6 +248,7 @@ export function renderRunScreen(
           "5: intel",
           ...traceExits,
           ...(gearDrop !== null ? ["9: gear"] : []),
+          ...(useItem !== null ? ["10: use"] : []),
         ].join(" · ") +
         (traceExits.includes("6: vent") && traceExits.includes("7: burn")
           ? " · 6+7 stack"
@@ -249,7 +257,10 @@ export function renderRunScreen(
       // short form rather than being clipped mid-word.
       const maxSlot = terminal
         ? 5
-        : 5 + traceExits.length + (gearDrop !== null ? 1 : 0);
+        : 5 +
+          traceExits.length +
+          (gearDrop !== null ? 1 : 0) +
+          (useItem !== null ? 1 : 0);
       const lootHint =
         lootHintFull.length <= cols - 4
           ? lootHintFull
@@ -280,6 +291,15 @@ export function renderRunScreen(
             narrow
               ? `${LOOT_GEAR_SLOT} GEAR ${gearDrop}`
               : `${LOOT_GEAR_SLOT} GEAR            ${gearDrop} — salvage (yours when the run ends)`,
+          );
+        }
+        // ADR-0330: spend a carried consumable.
+        if (useItem !== null) {
+          const pool = Math.floor(state.player.maxHp * (useItem.shieldPct / 100));
+          offers.push(
+            narrow
+              ? `${LOOT_ITEM_SLOT} USE ${useItem.name}`
+              : `${LOOT_ITEM_SLOT} USE             ${useItem.name} — +${pool} shield for the next fight`,
           );
         }
         // ADR-0295: the only way back from the trace, priced above what a kill

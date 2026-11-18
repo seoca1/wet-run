@@ -163,6 +163,9 @@ export const RECOVER_HP_PCT = 25;
 /** ADR-0329: a salvaged equipment drop (when the loot stop offers one). */
 export const LOOT_GEAR_SLOT = LOOT_RECOVER_SLOT + 1; // 9
 
+/** ADR-0330: spend a carried consumable (when the run has one). */
+export const LOOT_ITEM_SLOT = LOOT_GEAR_SLOT + 1; // 10
+
 /** Only a HOT trace can be bled off (ADR-0298).
  *
  * The measurement is the reason this exists. COST is surplus at the end of a
@@ -217,7 +220,16 @@ export function ventHpPrice(maxHp: number): number {
 /** The slot a loot keypress refers to, or null when it is not a loot option. */
 export function lootSlotChoice(
   slot: number,
-): "program" | "repair" | "intel" | "vent" | "burn" | "recover" | "gear" | null {
+):
+  | "program"
+  | "repair"
+  | "intel"
+  | "vent"
+  | "burn"
+  | "recover"
+  | "gear"
+  | "item"
+  | null {
   if (slot >= 1 && slot <= LOOT_PROGRAM_SLOTS) return "program";
   if (slot === LOOT_REPAIR_SLOT) return "repair";
   if (slot === LOOT_INTEL_SLOT) return "intel";
@@ -225,6 +237,7 @@ export function lootSlotChoice(
   if (slot === LOOT_BURN_SLOT) return "burn";
   if (slot === LOOT_RECOVER_SLOT) return "recover";
   if (slot === LOOT_GEAR_SLOT) return "gear";
+  if (slot === LOOT_ITEM_SLOT) return "item";
   return null;
 }
 

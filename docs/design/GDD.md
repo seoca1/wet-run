@@ -270,6 +270,8 @@
 | Pillar 4 — Grade 5→6 growth 1.20× | ⏳ 열린 질문 | ADR-0130 v1.1.0+ follow-up |
 | Pillar 5 — 보상 곡선 공식 vs 실제 55~96% | ⏳ 열린 질문 | ADR-0130 v1.1.0+ follow-up |
 | Construct 동료 시스템 | ✅ 해결 (limited) | Dixie Flatline dialogue만 구현 |
+| 전투 후 회복 자동화 뒤의 난이도 사다리 | ⏳ 열린 질문 (2026-11-18) | ADR-0319 — g3·g4 가 평평해졌고(~84%) g5 는 벽(3.1%). 싸움 안의 난이도(ICE HP 커브)로 되살려야 함 |
+| 성장이 화면에 보이는가 (비주얼) | 🟡 진행 (2026-11-18) | ADR-0320 이 손패에 **실피해**·ICE 에 **armor**·**armor_block/흔들림** 연출을 넣었다. 남은 것: 성장 HUD(P1-1), 성장 순간 연출(P1-2), EQUIPMENT 배선(P0). `docs/design/growth-plan-2026-11-18.md` |
 
 ## 7. Living Spec
 

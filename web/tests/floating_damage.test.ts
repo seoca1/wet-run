@@ -25,8 +25,11 @@ import { PALETTE } from "../src/renderer/palette";
 import { makeGrid } from "../src/core/grid";
 
 describe("P3 floating damage — kind table", () => {
-  it("covers the normal / skill / critical branches", () => {
+  it("covers the normal / skill / critical / blocked branches", () => {
+    // ADR-0320 added `blocked`: a play the armor ate says ARMOR in the same
+    // grey the hand row uses, instead of showing a hit that did not happen.
     expect([...FLOATING_DAMAGE_KINDS].sort()).toEqual([
+      "blocked",
       "critical",
       "normal",
       "skill",

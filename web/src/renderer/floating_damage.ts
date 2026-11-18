@@ -23,13 +23,14 @@ import { setText } from "../core/grid";
 import { PALETTE } from "./palette";
 
 /** The damage-number branches. */
-export type FloatingDamageKind = "normal" | "skill" | "critical";
+export type FloatingDamageKind = "normal" | "skill" | "critical" | "blocked";
 
 /** All branches, in ascending order of visual weight. */
 export const FLOATING_DAMAGE_KINDS: ReadonlyArray<FloatingDamageKind> = [
   "normal",
   "skill",
   "critical",
+  "blocked",
 ];
 
 /** How many rows the number rises over its whole lifetime. */
@@ -47,6 +48,8 @@ const KIND_STYLES: Readonly<Record<FloatingDamageKind, KindStyle>> = {
   normal: { color: PALETTE.WHITE, scale: 1, sparkles: false },
   skill: { color: PALETTE.YELLOW, scale: 2, sparkles: false },
   critical: { color: PALETTE.CRIT_COLOR, scale: 2, sparkles: true },
+  // ADR-0320: a play the armor ate says WHY, in the same grey the row uses.
+  blocked: { color: PALETTE.GRAY_MID, scale: 1, sparkles: false },
 };
 
 /** One rendered damage number. */
@@ -92,7 +95,7 @@ export function floatingDamageFor(
   const style = styleFor(kind);
   const p = clampProgress(progress);
   const amount = Math.abs(Math.trunc(Number.isFinite(damage) ? damage : 0));
-  const body = `-${amount}`;
+  const body = kind === "blocked" ? "ARMOR" : `-${amount}`;
   const text = style.sparkles ? `✦${body}✦` : body;
   const risen = Math.round(p * FLOATING_DAMAGE_RISE_ROWS);
   return {
@@ -183,6 +186,8 @@ export function floatingDamageKindFor(
     case "ice_hit":
     case "player_hit":
       return "normal";
+    case "armor_block":
+      return "blocked";
     default:
       return null;
   }

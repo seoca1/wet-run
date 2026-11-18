@@ -16,6 +16,7 @@ import type { GameState } from "../core/types";
 import { PALETTE, iceColor } from "./palette";
 import {
   COMPACT_HAND_HEADER,
+  COMPACT_HAND_HEADER_DMG,
   FULL_ROW_WIDTH,
   combatHandRow,
   formatAffordanceRow,
@@ -155,14 +156,21 @@ export function renderGrid(
           ? ice.maxHp
           : 100;
 
-      // Name line: "> [1] ICE_NAME" or "  [1] ICE_NAME"
-      const nameText = `${marker} [${i + 1}] ${ice.name.slice(0, 10)}`;
+      // Name line: "> [1] ICE_NAME  A7". ADR-0320: the armor rides here, so the
+      // thing that eats the player's damage is a number on the screen. The name
+      // gives up characters first — the armor is the part that changes what a
+      // card is worth, and it is short.
+      const armorText = ` A${ice.armor ?? 0}`;
+      const nameX = iceCol - 2;
+      const nameAvail = inner.x + inner.width - nameX;
+      const nameRoom = Math.max(4, nameAvail - armorText.length);
+      const nameText = `${marker} [${i + 1}] ${ice.name.slice(0, Math.max(3, nameRoom - 6))}`;
       grid = setInnerText(
         grid,
         inner,
-        iceCol - 2,
+        nameX,
         row,
-        nameText,
+        `${nameText.padEnd(nameRoom)}${armorText}`,
         alive ? iceColor(ice.tier) : PALETTE.GRAY_MID,
       );
 
@@ -176,15 +184,26 @@ export function renderGrid(
         PALETTE.YELLOW_AMBER,
       );
 
-      // HP bar line
+      // HP bar line. ADR-0320: the bar shrinks to fit instead of running past
+      // the panel — `healthBar` is a fixed 12 cells, and at 40 columns the ICE
+      // column starts at 20, so a fixed bar lost its digits. (This line was
+      // never under the ADR-0300 guard because the guard rendered
+      // `renderRunScreen`, which has no combat case.)
       if (alive) {
         const delta = isTarget && iceHpDelta !== null ? iceHpDelta : null;
+        const hpText = `${iceHp}/${iceMaxHp}`;
+        const hpRoom = inner.x + inner.width - iceCol;
+        // Two brackets and the space between the bar and the numbers.
+        const barCells = Math.max(
+          3,
+          Math.min(12, hpRoom - hpText.length - 3),
+        );
         grid = setInnerText(
           grid,
           inner,
           iceCol,
           row + 2,
-          `${healthBar(iceHp, iceMaxHp)} ${iceHp}/${iceMaxHp}`,
+          `${healthBar(iceHp, iceMaxHp, barCells)} ${hpText}`,
           delta !== null ? hitFlashColor(delta) : healthColor(iceHp, iceMaxHp),
         );
       } else {
@@ -281,15 +300,20 @@ function drawHand(
   const textX = inner.x + 1;
   const width = inner.x + inner.width - textX;
   const wide = width >= FULL_ROW_WIDTH;
+  // ADR-0320: in combat the narrow legend names the damage column; on a screen
+  // with no target it stays the TARGET legend.
+  const target = state.iceRoster[state.activeIceIndex] ?? null;
   let out = setInnerText(
     grid,
     inner,
     textX,
     handRow,
-    wide ? "HAND" : COMPACT_HAND_HEADER,
+    wide ? "HAND" : target === null ? COMPACT_HAND_HEADER : COMPACT_HAND_HEADER_DMG,
     PALETTE.YELLOW_AMBER,
   );
-  for (const row of programAffordances(state)) {
+  // ADR-0320: the rows state the damage each card will do to the ICE the hand
+  // is pointed at, so the deck's growth (and armor) is visible before the play.
+  for (const row of programAffordances(state, target)) {
     const y = handRow + row.slot;
     if (y >= inner.y + inner.height) break;
     out = setInnerText(

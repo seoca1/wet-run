@@ -48,6 +48,39 @@ const NO_SHAKE: ShakeState = Object.freeze({ x: 0, y: 0, magnitudePx: 0 });
 /** The VFX kind that shakes the canvas. */
 const SHAKE_VFX_KIND = "player_hit";
 
+/** ADR-0320: a hit the PLAYER landed shakes too, once it is big enough.
+ *
+ * The screen only ever moved for damage taken, so the deck's growth had no
+ * physical feedback: a 1-damage `strike` and a 50-damage `kraken` produced the
+ * same still frame. Above this much damage the ICE's hit moves the canvas, and
+ * it moves it FURTHER than the player's own hit does — landing a big card
+ * should feel bigger than taking one.
+ */
+export const ICE_HIT_SHAKE_MIN_DAMAGE = 20;
+/** Peak magnitude for a big ICE hit (the player's own hit stays at 2px). */
+export const ICE_HIT_SHAKE_MAGNITUDE_PX = 3;
+
+/** Kinds that carry ICE damage and can shake when large. */
+const ICE_HIT_KINDS: ReadonlySet<string> = new Set([
+  "ice_hit",
+  "pierce",
+  "multi_hit",
+  "heavy_attack",
+  "critical_hit",
+]);
+
+/** The damage a VFX instance carries (`payloadNum` first, then `payload`). */
+function damageOfInstance(inst: {
+  readonly payload?: string;
+  readonly payloadNum?: number;
+}): number {
+  if (inst.payloadNum !== undefined && Number.isFinite(inst.payloadNum)) {
+    return Math.abs(Math.trunc(inst.payloadNum));
+  }
+  const parsed = Number.parseInt(inst.payload ?? "", 10);
+  return Number.isFinite(parsed) ? Math.abs(parsed) : 0;
+}
+
 /** Phase offset so the first shake frame already carries a displacement. */
 const SHAKE_START_PHASE = Math.PI / 3;
 
@@ -123,6 +156,8 @@ export function shakeStateFor(
     readonly kind: string;
     readonly elapsedMs: number;
     readonly durationMs: number;
+    readonly payload?: string;
+    readonly payloadNum?: number;
   }>,
   reducedMotion: boolean = false,
 ): ShakeState {
@@ -131,12 +166,24 @@ export function shakeStateFor(
   let newest: {
     readonly elapsedMs: number;
     readonly durationMs: number;
+    readonly magnitudePx: number;
   } | null = null;
 
   for (const inst of instances) {
-    if (inst.kind !== SHAKE_VFX_KIND) continue;
+    // A hit the player took always shakes. A hit the player LANDED shakes only
+    // when it is big (ADR-0320) — small plays must stay quiet, or the shake
+    // stops meaning anything.
+    const isPlayerHit = inst.kind === SHAKE_VFX_KIND;
+    const isBigIceHit =
+      ICE_HIT_KINDS.has(inst.kind) &&
+      damageOfInstance(inst) >= ICE_HIT_SHAKE_MIN_DAMAGE;
+    if (!isPlayerHit && !isBigIceHit) continue;
     if (inst.durationMs <= 0 || inst.elapsedMs >= inst.durationMs) continue;
-    newest = inst;
+    newest = {
+      elapsedMs: inst.elapsedMs,
+      durationMs: inst.durationMs,
+      magnitudePx: isPlayerHit ? SHAKE_MAGNITUDE_PX : ICE_HIT_SHAKE_MAGNITUDE_PX,
+    };
   }
 
   if (newest === null) return NO_SHAKE;
@@ -146,11 +193,11 @@ export function shakeStateFor(
   const offset = shakeOffsetFor(
     newest.elapsedMs,
     newest.durationMs,
-    SHAKE_MAGNITUDE_PX,
+    newest.magnitudePx,
     phase,
     reducedMotion,
   );
-  return { x: offset.x, y: offset.y, magnitudePx: SHAKE_MAGNITUDE_PX };
+  return { x: offset.x, y: offset.y, magnitudePx: newest.magnitudePx };
 }
 
 /** The VFX instance shape the hit-stop helpers read. */

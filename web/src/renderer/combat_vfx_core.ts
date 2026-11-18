@@ -25,6 +25,7 @@ export type CombatVfxKind =
   | "lifesteal"
   | "detect"
   | "ice_hit"
+  | "armor_block"
   | "player_hit"
   | "critical_hit"
   | "status_apply"

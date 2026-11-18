@@ -12,7 +12,7 @@
 import { describe, expect, it } from "vitest";
 import { makeGrid, setText, takeClippedText } from "../src/core/grid";
 import { setInnerText } from "../src/renderer/panel";
-import { renderRunScreen } from "../src/renderer/run_screen";
+import { renderCombatScreen, renderRunScreen } from "../src/renderer/run_screen";
 import { renderMainMenu } from "../src/renderer/menu";
 import { renderJockeySelect } from "../src/renderer/jockey_select";
 import { renderMissionList } from "../src/renderer/mission_select";
@@ -119,6 +119,45 @@ describe.each([
     renderRunScreen(state as never, w, h);
 
     // Then
+    expect(takeClippedText()).toEqual([]);
+  });
+});
+
+// ADR-0320: the hand row grew a damage column and the ICE line grew its armor,
+// so the longest row in the game is now a card with an effect tag AND a
+// two-digit damage range against a plated, all-ICE target.
+describe("ADR-0300 · combat hand with the damage column", () => {
+  const plated = {
+    id: "foe",
+    name: "Neuromancer Prime",
+    tier: 6,
+    hp: 900,
+    maxHp: 900,
+    armor: 9,
+    aoe: false,
+  } as const;
+  const cards = [
+    { id: "exploit", name: "Exploit", tier: 3, cost: 3, effect: "armor", description: "", aoe: false },
+    { id: "sweep", name: "Sweep", tier: 5, cost: 4, effect: "damage", description: "", aoe: true },
+  ] as const;
+
+  it.each(LAYOUTS)("draws nothing past the edge at %ix%i", (w, h) => {
+    const state = {
+      ...runState(),
+      iceRoster: [plated as never],
+      ice: plated as never,
+      deck: cards as never,
+      playerCombo: 5,
+    };
+    takeClippedText();
+    // The combat screen is `renderCombatScreen`, NOT `renderRunScreen` (which
+    // routes matrix/loot/ending). Using the wrong one here would make this
+    // guard pass while rendering nothing at all.
+    renderCombatScreen(
+      { state: state as never, iceDelta: null, playerDelta: null },
+      w,
+      h,
+    );
     expect(takeClippedText()).toEqual([]);
   });
 });

@@ -16,7 +16,8 @@
  *
  * Pure: no `Math.random`, no clock, no DOM.
  */
-import type { GameState, Program } from "../types";
+import type { GameState, Ice, Program } from "../types";
+import { effectiveDamageFor, formatDamageRange, type EffectiveDamage } from "./damage_preview";
 import { programEffectTag } from "./program_effects";
 import {
   offeredCardIds,
@@ -31,6 +32,10 @@ export const COST_LIMIT = 100;
 
 /** Name column width shared by the canvas rows and the touch buttons. */
 const NAME_WIDTH = 9;
+/** Holds the longest effect tag (`ARMOR -50%`). */
+const EFFECT_WIDTH = 10;
+/** Holds a two-digit damage range (`51-80`). */
+const DAMAGE_WIDTH = 5;
 
 /** Hand slots the combat layout always reserves (the base hand size), so
  * playing a card never moves the rows that remain. */
@@ -64,15 +69,20 @@ export interface ProgramAffordance {
   /** True when the play would exceed `COST_LIMIT` and is refused. */
   readonly blocked: boolean;
   readonly target: "ICE" | "ALL ICE";
-  /** ADR-0257: what this card does besides damage, ≤ 8 chars. Empty for a
+  /** ADR-0257: what this card does besides damage, ≤ 10 chars. Empty for a
    * plain attack. Read from the mechanic (program_effects.ts), so the row
    * cannot claim an effect the reducer does not apply. */
   readonly effectTag: string;
+  /** ADR-0320: what the card will actually take off the target, AFTER armor.
+   * Null/absent on screens with no target (the loot offer). */
+  readonly damage?: EffectiveDamage | null;
 }
 
 /** Affordance rows for the current hand, in slot order. */
 export function programAffordances(
   state: Pick<GameState, "deck" | "player" | "activeMutators">,
+  /** The ICE the hand is pointed at, when there is one (ADR-0320). */
+  target: Ice | null = null,
 ): ReadonlyArray<ProgramAffordance> {
   return state.deck.map((program, i) => {
     const cost = programAlarmCost(program, state.activeMutators);
@@ -86,6 +96,7 @@ export function programAffordances(
       blocked: after > COST_LIMIT,
       target: programHitsAllIce(program) ? "ALL ICE" : "ICE",
       effectTag: programEffectTag(program),
+      damage: target === null ? null : effectiveDamageFor(state as never, program, target),
     };
   });
 }
@@ -123,8 +134,14 @@ function effectText(a: ProgramAffordance): string {
 export function formatAffordanceRow(a: ProgramAffordance): string {
   const name = a.name.padEnd(NAME_WIDTH);
   const cost = `+${a.cost}`.padEnd(3);
-  const effect = effectText(a).padEnd(8);
-  return `${a.slot} ${name} COST ${cost}  ${effect}  TARGET ${a.target}`;
+  if (a.damage === null || a.damage === undefined) {
+    // No target on this screen (the loot offer): the row is what it always was.
+    const effect = effectText(a).padEnd(8);
+    return `${a.slot} ${name} COST ${cost}  ${effect}  TARGET ${a.target}`;
+  }
+  const effect = effectText(a).padEnd(EFFECT_WIDTH);
+  const dmg = damageText(a).padEnd(DAMAGE_WIDTH);
+  return `${a.slot} ${name} COST ${cost} ${effect} ${dmg} TARGET ${a.target}`;
 }
 
 /** Narrow canvas row, e.g. `1 BARRIER   +3   SHIELD 2 ICE`; its columns line
@@ -132,14 +149,34 @@ export function formatAffordanceRow(a: ProgramAffordance): string {
 export function formatCompactAffordanceRow(a: ProgramAffordance): string {
   const name = a.name.padEnd(NAME_WIDTH);
   const cost = `+${a.cost}`.padEnd(4);
-  const effect = effectText(a).padEnd(8);
-  return `${a.slot} ${name} ${cost} ${effect} ${a.target}`;
+  if (a.damage === null || a.damage === undefined) {
+    const effect = effectText(a).padEnd(8);
+    return `${a.slot} ${name} ${cost} ${effect} ${a.target}`;
+  }
+  const effect = effectText(a).padEnd(EFFECT_WIDTH);
+  // No room for a TARGET column at 40 columns: the damage takes its place, and
+  // an all-ICE card marks itself with `*`.
+  const dmg = damageText(a, a.target === "ALL ICE").padEnd(DAMAGE_WIDTH + 1);
+  return `${a.slot} ${name} ${cost} ${effect} ${dmg}`;
 }
 
 /** Column legend for the narrow rows. */
 export const COMPACT_HAND_HEADER = `${"HAND".padEnd(NAME_WIDTH + 3)}${"COST".padEnd(5)}${"EFFECT".padEnd(9)}TARGET`;
+/** ADR-0320: the in-combat legend — the damage column replaces TARGET (there is
+ * no room for both at 40 columns, and the damage is the column that changes). */
+export const COMPACT_HAND_HEADER_DMG = `${"HAND".padEnd(NAME_WIDTH + 3)}${"COST".padEnd(5)}${"EFFECT".padEnd(EFFECT_WIDTH + 1)}DMG`;
 
-/** Longest full row a hand can produce (two-digit COST, `SHIELD 2`, `ALL ICE`). */
+/** The damage column: the range, `*`-prefixed for an all-ICE card, or `--`
+ * when there is no target to measure against (the loot offer). */
+function damageText(a: ProgramAffordance, aoeMark = false): string {
+  const d = a.damage;
+  if (d === null || d === undefined) return "--";
+  const range = formatDamageRange(d);
+  return aoeMark ? `*${range}` : range;
+}
+
+/** Longest full row a hand can produce (two-digit COST, `ARMOR -50%`, a
+ * two-digit damage range, `ALL ICE`). */
 export const FULL_ROW_WIDTH = formatAffordanceRow({
   slot: 9,
   programId: "",
@@ -148,16 +185,21 @@ export const FULL_ROW_WIDTH = formatAffordanceRow({
   after: COST_LIMIT,
   blocked: false,
   target: "ALL ICE",
-  effectTag: "SHIELD 2",
+  effectTag: "ARMOR -50%",
+  damage: { min: 51, max: 80, armor: 0, effectiveArmor: 0, blocked: false },
 }).length;
 
 /** Visible lines of a touch button (narrow enough for five in a phone row). */
 export function touchAffordanceLines(a: ProgramAffordance): readonly string[] {
+  const last =
+    a.damage === null || a.damage === undefined
+      ? a.target
+      : `${damageText(a)} ${a.target}`;
   return [
     `${a.slot} COST+${a.cost}`,
     a.name,
     a.blocked ? "BLOCKED" : a.effectTag,
-    a.target,
+    last,
   ];
 }
 
@@ -169,7 +211,11 @@ export function affordanceAriaLabel(a: ProgramAffordance): string {
     return `${a.slot} ${a.name}, COST plus ${a.cost}, blocked, over ${COST_LIMIT}, target ${a.target}`;
   }
   const effect = a.effectTag ? `, ${a.effectTag}` : "";
-  return `${a.slot} ${a.name}, COST plus ${a.cost}${effect}, target ${a.target}`;
+  const dmg =
+    a.damage === null || a.damage === undefined
+      ? ""
+      : `, damage ${formatDamageRange(a.damage)}`;
+  return `${a.slot} ${a.name}, COST plus ${a.cost}${effect}${dmg}, target ${a.target}`;
 }
 
 /**

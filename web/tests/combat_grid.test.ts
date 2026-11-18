@@ -336,7 +336,10 @@ describe("combat grid program hand (ADR-0251)", () => {
         )!;
       expect(line(1)).toContain("+2");
       expect(line(2)).toContain("+3");
-      expect(line(3)).toContain("ALL ICE");
+      // ADR-0320: at 40 columns the damage column takes the TARGET slot, so an
+      // all-ICE card marks itself with `*`; the wide row still spells it out.
+      if (cols <= 40) expect(line(3)).toContain("*");
+      else expect(line(3)).toContain("ALL ICE");
       expect(line(4)).toContain("BLOCKED");
       // No predicted remaining COST on a hand row: the killing blow charges
       // nothing, so the row may not promise an after-value (ADR-0251 rule 5).

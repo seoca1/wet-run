@@ -132,6 +132,17 @@ export function renderCombatHitVfx(ctx: VfxRenderCtx, grid: Grid): Grid | null {
       );
       return grid;
     }
+    case "armor_block": {
+      // ADR-0320: the armor wall, made audible. This is deliberately NOT the
+      // `ice_hit` frame — no full-width flash, no `HIT!` — because a play the
+      // armor ate must not feel like a play that landed. A clang and the word.
+      const clangRow = instance.targetRow ?? Math.floor(rows * 0.4);
+      const clangCol = Math.floor(cols * 0.45) - 2;
+      grid = setText(grid, clangCol, clangRow, "✧", PALETTE.GRAY_LIGHT);
+      grid = setText(grid, clangCol + 6, clangRow, "✧", PALETTE.GRAY_LIGHT);
+      grid = setText(grid, 2, 1, `ARMOR — ${instance.payload} absorbed`, PALETTE.GRAY_MID);
+      return grid;
+    }
     case "ice_hit": {
       const flashRow = instance.targetRow ?? Math.floor(rows * 0.4);
       const flashColor = t === 0 ? PALETTE.RED_BRIGHT : PALETTE.GRAY_MID;

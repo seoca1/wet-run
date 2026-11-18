@@ -143,6 +143,11 @@ export function pickProgramVfxKind(
   program: { tier: number; role?: string; effect?: string },
   damage: number,
 ): import("../../renderer/combat_vfx.ts").CombatVfxKind {
+  // ADR-0320: a hit the armor ate is its own event. It must not look like the
+  // same frame a real hit gets, or the player cannot tell growth from noise.
+  if (damage <= 1 && program.role !== "guard" && program.role !== "support") {
+    return "armor_block";
+  }
   if (program.effect === "noise_attraction") return "detect";
   if (program.effect === "reset_ap") return "buff";
   if (program.role === "strike") return "pierce";
@@ -242,6 +247,8 @@ export function durationForKind(
       return 7;
     case "ice_hit":
       return 2;
+    case "armor_block":
+      return 2;
     case "player_hit":
       return 3;
     case "critical_hit":
@@ -304,6 +311,8 @@ export function durationMsForKind(
       return 550;
     case "ice_hit":
       return 160;
+    case "armor_block":
+      return 140;
     case "player_hit":
       return 200;
     case "critical_hit":

@@ -1,12 +1,14 @@
 /** Gear curve probe — what the ADR-0326 stats do once a runner wears them.
  *
- * `npm run balance` measures the BARE runner (EMPTY_LOADOUT), so the recorded
- * curve is untouched by the defense step by design. This probe answers the
- * other question: the gear the crafting system now hands out. It replays the
- * same deterministic seeds through the real reducer (`simulateCombat`) with a
- * loadout, one non-boss encounter per mission.
+ * `npm run balance` / `npm run survival` measure the BARE runner
+ * (EMPTY_LOADOUT), so the recorded curve is untouched by the defense step by
+ * design. This probe answers the other question: the gear the crafting system
+ * now hands out. Paired seeds, so the delta is the gear, not the dice.
  *
- * Report: `win% / HP remaining %`. Paired seeds mean the delta is the gear.
+ * Two views:
+ *   - encounter — one non-boss encounter per mission, through `simulateCombat`
+ *   - mission   — the whole mission, through `playRun` (the policy `survival`
+ *                 uses), reported as mission completion % per grade
  *
  *   npm run gear
  */
@@ -27,7 +29,8 @@ import {
   type Equipment,
 } from "../src/core/state/equipment";
 import { loadIceCatalog, loadMissionsCatalog, loadProgramsCatalog } from "../src/core/data_loaders";
-import { deckForGrade, simulateCombat } from "./balance_sim";
+import { deckForGrade, mulberry32, simulateCombat } from "./balance_sim";
+import { playRun } from "./play_policy";
 import iceJson from "../src/data/ice_types.json" with { type: "json" };
 import missionsJson from "../src/data/missions.json" with { type: "json" };
 import programsJson from "../src/data/programs.json" with { type: "json" };
@@ -49,31 +52,96 @@ const SETS: ReadonlyArray<{ name: string; loadout: ReturnType<typeof makeLoadout
   { name: "T6 master+zion", loadout: gear(MASTER_BODY, ZION_TRODES) },
 ];
 
-const SEEDS = 40;
+const GRADES = [1, 2, 3, 4, 5, 6];
+const pad = (n: number, w = 3): string => n.toFixed(0).padStart(w);
 
-console.log("gear curve probe — paired seeds, one non-boss encounter per mission");
-console.log("set                              g1    g2    g3    g4    g5    g6   (win% / HP remaining %)");
+const ENC_SEEDS = 40;
+/** Matches `npm run survival -- --seeds 64` so the bare row reads as the
+ *  recorded baseline (per-cell seed: `seed + missionIndex * 31`). */
+const MIS_SEEDS = 64;
+
+function gradeBuckets(): Array<[number, Mission[]]> {
+  // No far-grid filter: `mission_survival` iterates the whole catalog, so the
+  // bare row can be read against the recorded baseline.
+  return GRADES.map((g) => [
+    g,
+    ALL.filter((m) => missionGradeOf(m) === g),
+  ]);
+}
+
+console.log("gear curve probe — paired seeds, non-boss encounter / whole mission");
+console.log("");
+
+console.log("A) encounter — win% / HP remaining %");
+console.log("set                              g1    g2    g3    g4    g5    g6");
 for (const set of SETS) {
   const cells: string[] = [];
-  for (const grade of [1, 2, 3, 4, 5, 6]) {
-    const bucket = ALL.filter(
-      (m) => m.source_universe !== "far-grid" && missionGradeOf(m) === grade,
-    );
+  for (const [grade, bucket] of gradeBuckets()) {
     const deck = deckForGrade(programs, grade);
     let wins = 0;
     let n = 0;
     let remain = 0;
     for (const mission of bucket) {
-      for (let i = 0; i < SEEDS; i += 1) {
+      for (let i = 0; i < ENC_SEEDS; i += 1) {
         const o = simulateCombat(mission, ice, deck, { seed: 1000 + i * 31 + grade }, set.loadout);
         n += 1;
         if (o.won) wins += 1;
         remain += o.hpEnd / Math.max(1, o.hpStart);
       }
     }
-    cells.push(
-      `${((wins / Math.max(1, n)) * 100).toFixed(0).padStart(3)}/${((remain / Math.max(1, n)) * 100).toFixed(0).padStart(3)}`,
-    );
+    cells.push(`${pad((wins / Math.max(1, n)) * 100)}/${pad((remain / Math.max(1, n)) * 100)}`);
   }
   console.log(`  ${set.name.padEnd(32)}${cells.join(" ")}`);
+}
+
+console.log("");
+console.log("B) mission completion % (playRun policy, same seeds as `survival`)");
+console.log("set                              g1    g2    g3    g4    g5    g6");
+const originalRandom = Math.random;
+const originalNow = Date.now;
+try {
+  for (const set of SETS) {
+    const cells: string[] = [];
+    for (const [, bucket] of gradeBuckets()) {
+      let done = 0;
+      let n = 0;
+      for (let s = 0; s < MIS_SEEDS; s += 1) {
+        const seed = 20261106 + s * 7919;
+        for (const mission of bucket) {
+          // Per-cell seed keyed on the FULL-catalog index, as `survival` does.
+          const mi = ALL.indexOf(mission);
+          const clockRef = { now: 1_700_000_000_000 + s * 100_000 };
+          Math.random = mulberry32(seed + mi * 31);
+          Date.now = () => clockRef.now;
+          const final = playRun(
+            mission,
+            ice,
+            programs,
+            clockRef,
+            "novice",
+            "best",
+            "opening",
+            "long",
+            "value",
+            0,
+            0,
+            0,
+            "stim",
+            0,
+            12,
+            false,
+            undefined,
+            set.loadout,
+          );
+          n += 1;
+          if (final?.runPhase === "ending") done += 1;
+        }
+      }
+      cells.push(pad((done / Math.max(1, n)) * 100));
+    }
+    console.log(`  ${set.name.padEnd(32)}${cells.join(" ")}`);
+  }
+} finally {
+  Math.random = originalRandom;
+  Date.now = originalNow;
 }

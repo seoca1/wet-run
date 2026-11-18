@@ -20,7 +20,11 @@ import {
   statusEventLines,
 } from "../status";
 import { AudioManager } from "../../audio/manager";
-import { calculateDamage, countRoleSynergy } from "./combat_engine";
+import {
+  calculateDamage,
+  countRoleSynergy,
+  programPowerArmorBypassPct,
+} from "./combat_engine";
 import { absorbIceDamage } from "./ice_combat_effects";
 import { programEffect } from "./program_effects";
 import {
@@ -95,9 +99,16 @@ export function useProgram(state: GameState, programId: string): GameState {
   const piercePoints = effect.kind === "pierce" ? effect.amount : 0;
   const armorKeptPct =
     effect.kind === "armor_ignore" ? 100 - effect.amount : 100;
+  // ADR-0327: the deck's programPower eats into whatever armor survives the
+  // card's own pierce / armor_ignore — a share, so it scales with the ICE's
+  // plate instead of flattening the damage curve.
+  const powerBypassPct = programPowerArmorBypassPct(equipStats.programPower);
+  const keptAfterPower = Math.floor(
+    (armorKeptPct * (100 - powerBypassPct)) / 100,
+  );
   const defenderArmor = defenderIce.armor ?? 0;
   const effectiveArmor = Math.floor(
-    (Math.max(0, defenderArmor - piercePoints) * armorKeptPct) / 100,
+    (Math.max(0, defenderArmor - piercePoints) * keptAfterPower) / 100,
   );
 
   const damageCtx = {

@@ -28,6 +28,11 @@ import {
 } from "../src/core/state/loot_choice";
 import { burnTarget } from "../src/core/state/state_actions_phases";
 import { prepGrantFor, type PrepChoice } from "../src/core/state/prep";
+import { applyEquipmentSurvival } from "../src/core/state/equipment_stats";
+import {
+  EMPTY_LOADOUT,
+  type EquipmentLoadout,
+} from "../src/core/state/loadout";
 import { programEffect } from "../src/core/combat/program_effects";
 import { deckForGrade } from "./balance_sim";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
@@ -361,6 +366,8 @@ export function playRun(
     readonly credits?: number;
     readonly uniquePickDone?: boolean;
   },
+  /** ADR-0326: the gear the runner wears. Default empty — byte-identical. */
+  loadout: EquipmentLoadout = EMPTY_LOADOUT,
 ): GameState | null {
   const fallback = Object.values(catalog)[0];
   if (!fallback) return null;
@@ -461,6 +468,12 @@ export function playRun(
       player: { ...state.player, maxHp, hp: maxHp },
     };
   }
+  // ADR-0326: gear reaches the run — defense/resistance are read live on the
+  // incoming path, hpBonus/shieldBonus apply at run start (after prep).
+  state = applyEquipmentSurvival(
+    { ...state, equipmentLoadout: loadout },
+    loadout,
+  );
   for (let step = 0; step < MAX_STEPS; step += 1) {
     if (state.runPhase === "ending" || state.runPhase === "dead") return state;
     const before = state;

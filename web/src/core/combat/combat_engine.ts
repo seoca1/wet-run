@@ -11,6 +11,17 @@ export const AUTO_ATTACK_INTERVAL_MS = 2000;
 export const AP_REGEN_INTERVAL_MS = 2000;
 export const DAMAGE_VARIANCE_MIN = 0.8;
 export const DAMAGE_VARIANCE_MAX = 1.2;
+/** ADR-0327: the deck's `programPower` bypasses a share of the ICE's armor.
+ *
+ * It never touches a card's base damage (`tier * 5`) — only how much armor
+ * applies to it — so the card-value contract (ADR-0320/0304) holds. The share
+ * is capped so a top deck can never ignore armor entirely. */
+export const PROGRAM_POWER_ARMOR_BYPASS_CAP_PCT = 60;
+
+export function programPowerArmorBypassPct(programPower: number): number {
+  if (!Number.isFinite(programPower) || programPower <= 0) return 0;
+  return Math.min(PROGRAM_POWER_ARMOR_BYPASS_CAP_PCT, Math.floor(programPower));
+}
 export const CRIT_CHANCE = 0.15;
 export const CRIT_MULTIPLIER = 2.0;
 export const CRIT_MULTIPLIER_MIN = 1.8;

@@ -29,6 +29,7 @@ import {
   DAMAGE_VARIANCE_MAX,
   DAMAGE_VARIANCE_MIN,
   ROLE_SYNERGY_BONUSES,
+  programPowerArmorBypassPct,
 } from "./combat_engine";
 import { programEffect } from "./program_effects";
 
@@ -50,6 +51,7 @@ export interface EffectiveDamage {
 function playerBonuses(state: GameState): {
   readonly attackBonus: number;
   readonly vulnerabilityPct: number;
+  readonly programPower: number;
 } {
   const powered = state.statusEffects
     .filter((e) => e.kind === "powered" && e.target === "player")
@@ -61,19 +63,28 @@ function playerBonuses(state: GameState): {
   return {
     attackBonus: powered + equip.attackBonus,
     vulnerabilityPct: vulnerable + equip.damageBonusPct,
+    programPower: equip.programPower,
   };
 }
 
-/** The armor a card actually has to get through (ADR-0255 / ADR-0277).
+/** The armor a card actually has to get through (ADR-0255 / ADR-0277 / ADR-0327).
  *
- * `backdoor` removes armor POINTS; `exploit` keeps a SHARE of it. Same order as
- * the reducer, so the preview cannot disagree with the play. */
-function effectiveArmorAgainst(program: Program, ice: Ice): number {
+ * `backdoor` removes armor POINTS; `exploit` keeps a SHARE of it; the deck's
+ * `programPower` bypasses a further share. Same order as the reducer, so the
+ * preview cannot disagree with the play. */
+function effectiveArmorAgainst(
+  program: Program,
+  ice: Ice,
+  programPower: number,
+): number {
   const effect = programEffect(program);
   const piercePoints = effect.kind === "pierce" ? effect.amount : 0;
   const armorKeptPct = effect.kind === "armor_ignore" ? 100 - effect.amount : 100;
+  const keptAfterPower = Math.floor(
+    (armorKeptPct * (100 - programPowerArmorBypassPct(programPower))) / 100,
+  );
   const armor = ice.armor ?? 0;
-  return Math.floor((Math.max(0, armor - piercePoints) * armorKeptPct) / 100);
+  return Math.floor((Math.max(0, armor - piercePoints) * keptAfterPower) / 100);
 }
 
 /**
@@ -91,10 +102,10 @@ export function effectiveDamageFor(
   ice: Ice,
 ): EffectiveDamage {
   const armor = ice.armor ?? 0;
-  const effectiveArmor = effectiveArmorAgainst(program, ice);
-  const { attackBonus, vulnerabilityPct } = playerBonuses(
+  const { attackBonus, vulnerabilityPct, programPower } = playerBonuses(
     state as GameState,
   );
+  const effectiveArmor = effectiveArmorAgainst(program, ice, programPower);
   const comboMult = COMBO_BONUSES[state.playerCombo + 1] ?? 1.0;
   const synergyMult = ROLE_SYNERGY_BONUSES[0] ?? 1.0;
   const base = program.tier * 5;

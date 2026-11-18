@@ -4110,3 +4110,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **테스트**: `adr0326_player_defense.test.ts`(15) — 순서/상한/풀 소모/hpBonus·shieldBonus.
 - **검증**: vitest **231 files / 4411 tests** · typecheck/lint 0 error · build OK.
 - **다음**: `apBonus`·`apRegenBonusPct`·`programPower`·`grantsSkillId`·`extraEffect` 5종 배선 + 장비 파워 재조정(오너).
+
+## [2026-11-18] feat(combat) | programPower armor bypass 배선 (ADR-0327)
+
+- 오너 "programPower 배선 + 재조정". 남은 5종 중 **4종은 서브시스템 부재** 확인: `apBonus`/`apRegen`(AP 자원 없음) · `grantsSkillId`(플레이어 스킬 없음) · `extraEffect`(resolver 없음).
+- **배선**: `programPower` = armor bypass share, `bypassPct=min(programPower,60)`, `effectiveArmor` 에만 적용(**카드 base damage 불변**), `damage_preview` 동기화. 9종 live.
+- **하네스**: `play_policy.playRun` 에 loadout 훅 + `gear_curve_probe` 미션 뷰(survival 과 동일 64시드·per-cell, bare = 83/83/26/42 = 기록 기준선 일치).
+- **검증**: vitest 232/4417 · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0).
+- **재조정 필요**: programPower live 로 장비가 더 강해짐(T1만으로 미션 전 등급 100%). 후속.
+- **다음**: 장비 파워 재조정(9종 live 기준) · AP/스킬/효과 서브시스템 · `buy`(오너 결정 5번) · `use_item`.

@@ -285,3 +285,80 @@ commonPileup(id) =
 [1]: https://books.google.com/books/about/Neuromancer.html?id=TiMKzwEACAAJ "Neuromancer — William Gibson, Google Books description"
 [2]: https://books.google.com/books/about/Count_Zero.html?id=dFX1xN7q-AgC "Count Zero — William Gibson, Google Books description"
 [3]: https://books.google.com/books/about/Mona_Lisa_Overdrive.html?id=wbdaAAAAMAAJ "Mona Lisa Overdrive — William Gibson, Google Books description"
+
+---
+
+# 부록 — 실측 verdict (2026-11-18, `npm run crafting`)
+
+위 비용표를 **그대로 구현하면 안 된다.** 결정적 시드를 replay 해 측정했고, 결과가 제안을 반증한다.
+
+## 측정 방법
+
+`web/scripts/crafting_probe.ts` = `npm run crafting` — 기존 시드 replay(새 시뮬레이션 없음), 등급별로
+`--runs`(기본 3)회 실행해 지갑을 누적하고, 후보 레시피 18종의 도달률과 common 적체를 계산한다.
+레시피 후보는 `web/scripts/crafting-recipes-candidate.json`.
+
+## 결과 1 — 드롭 경제 (실측)
+
+| 재료 | 드롭 ICE | **기대값/킬** | chance | qty |
+| --- | ---: | ---: | ---: | ---: |
+| `data_fragment` | 82 | **0.654** | 1.00 | 6 |
+| `ice_shard` | 81 | **1.433** | 1.00 | 10 |
+| `combat_module` | 15 | **0.125** | 1.00 | 3 |
+| `construct_shard` | 12 | 0.174 | 1.00 | 3 |
+| `ice_construct` | 7 | 0.039 | 0.70 | 1 |
+| `rom_echo` | 4 | **0.012** | 0.30 | 1 |
+| `glitch_fragment` | 4 | **0.006** | 0.18 | 1 |
+| `shield_program` | 2 | **0.003** | 0.15 | 1 |
+| `t4_program` | 1 | **0.001** | 0.10 | 1 |
+| `hosaka_archive` | 1 | **0.001** | 0.05 | 1 |
+| `wintermute_key` | 1 | 0.002 | 0.15 | 1 |
+
+미션당 킬 수는 `data_fragment` 실측(1.75/런) ÷ 기대값(0.654/킬) ≈ **3킬**로 역산된다.
+즉 `rom_echo` 는 **미션당 약 0.04개** — 하나 얻는 데 **약 25미션**이 걸린다.
+
+## 결과 2 — 도달률 **18종 전부 0.0%**
+
+```
+deck_street        T1  0.0%  data_fragment×8 ice_shard×6 rom_echo×1
+eyes_militech      T1  0.0%  data_fragment×6 combat_module×1 rom_echo×1
+…                  …   0.0%  …
+```
+
+**원인은 common이 아니라 초희귀 재료 1개다.** `deck_street` 는 `data_fragment×8 + ice_shard×6` 를
+g3에서 이미 충족하는데(3런 누적 df 9, ice_shard 15), **`rom_echo×1` 이 없어 0%** 가 된다.
+T1 세 종이 각각 `rom_echo` · `combat_module` · `glitch_fragment` 를 요구하는데, 앞뒤 둘은 사실상 안 나온다.
+
+## 결과 3 — common은 **모자란다** (적체가 아니다)
+
+| 재료 | g3–g6 3런 중앙값 | 18종 전체 제작 계획 소요 | 판정 |
+| --- | ---: | ---: | --- |
+| `data_fragment` | 16.0 | 41 | **SHORT** |
+| `ice_shard` | 18.0 | 32 | **SHORT** |
+| `combat_module` | 2.0 | 9 | SHORT |
+| `construct_shard` | 1.0 | 19 | SHORT |
+
+Manus는 common이 **쌓일 것**을 걱정했지만, 실측은 반대다 — **희귀 게이트가 제작을 막아서** common이
+쓰이지 못하고 남는다(적체의 원인은 희귀 재료 쪽이다).
+
+## 결과 4 — 시장 가격이 3자릿수 배 어긋난다
+
+실측 런 수입 중앙값: **g3 9,860cr / 3런 ≈ 3,300cr/런**(g4 14,400/3 ≈ 4,800, g5 ≈ 4,840).
+Manus의 offer `data_fragment×12 → credits 8` 은 12개를 **8크레딧**에 파는 것 — 한 런의 df(≈3)로 2크레딧을
+버는 셈이라 **의미가 없다**. 가격은 크레딧 수입과 같은 자릿수에서 다시 정해야 한다.
+
+## 교정 제안 (측정 근거)
+
+| # | 교정 | 근거 |
+| --- | --- | --- |
+| 1 | **T1은 common + `combat_module`(0.125/킬) 이하만 요구한다.** `rom_echo`·`glitch_fragment` 는 T2+로 올린다 | 기대값/킬이 0.01 미만이면 T1 게이트로 부적합 |
+| 2 | 희귀 게이트를 쓰려면 **드롭률을 올리거나**(chance/드롭 ICE 수), **수량 요구를 낮춘다** | `hosaka_archive` 0.05 chance × 1 ICE = 사실상 캠페인 1회용 |
+| 3 | **`upgrade_t*` 는 희귀 게이트로 쓰지 않는다** — 각 1개 ICE, 0.2/0.3 chance | 승급 인증이 곧 병목이 되면 승급이 죽는다 |
+| 4 | 시장 offer 가격을 **크레딧 수입 자릿수**(≈3,000cr/런)에 맞춘다 | 위 결과 4 |
+| 5 | `craftableAtTier` 목표(≥0.50)를 **측정 가능한 통과 기준**으로 유지한다 | `npm run crafting` 이 그대로 판정한다 |
+
+## 남은 것
+
+- 위 교정 1–4를 반영한 **비용표 2판**은 아직 미작성 — 이 부록의 실측이 그 입력이다.
+- `--runs` 를 늘리면(예: 5–8) 희귀 재료의 상위 분위가 드러난다(중앙값 0은 "절반이 0"이라는 뜻).
+- 재료를 실패 런에서 보존할지는 여전히 **오너 결정 1번**이다 — 이 실험은 보존을 가정했다.

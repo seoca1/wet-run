@@ -1,0 +1,49 @@
+# SSH Hosts for Distributed Test Execution
+# Configure your available SSH hosts here
+# Run: ssh-copy-id to each host for passwordless access
+
+hosts:
+  # Local machine (always available)
+  - name: "local"
+    host: "localhost"
+    user: "emilio"
+    max_parallel: 2
+    tags: ["primary", "browser"]
+    work_dir: "~/projects/claudework/wet_run_delegation"
+
+  # mini24 - mac mini M4 (Aside browser host)
+  - name: "mini24"
+    host: "192.168.0.41"
+    user: "emilio"
+    max_parallel: 4
+    tags: ["linux", "ci", "browser", "aside"]
+    key_path: "~/.ssh/id_ed25519"
+    work_dir: "~/projects/claudework/wet_run_delegation"
+
+distribution:
+  strategy: "shard_by_test_pattern"
+  patterns:
+    - "tests/edge_cases*.test.ts"
+    - "tests/fuzz_combat.test.ts"
+    - "tests/combat*.test.ts"
+    - "tests/dungeon*.test.ts"
+    - "tests/equipment*.test.ts"
+    - "tests/graphic_novel*.test.ts"
+    - "tests/state*.test.ts"
+    - "tests/*.test.ts"  # catch-all
+
+sync:
+  method: "rsync"
+  exclude:
+    - "node_modules/"
+    - "dist/"
+    - ".vite/"
+    - "*.log"
+    - "playwright-report/"
+    - "test-results/"
+  rsync_args: "-avz --delete --progress"
+
+health_check:
+  command: "cd ~/projects/claudework/wet_run_delegation/web && npm --version"
+  timeout_ms: 10000
+  interval_ms: 30000

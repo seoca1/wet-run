@@ -1,0 +1,109 @@
+[0;34m[02:47:40][0m Starting wet_run verification: wet_run_verify_20260926_024740
+[0;34m[02:47:40][0m Verifying environment...
+[0;32m[02:47:40] ✓[0m Environment verified
+[0;34m[02:47:40][0m Syncing source from /Users/emilio/projects/opencodework/Game/wet_run...
+Transfer starting: 312 files
+deleting tests/edge_cases_extended.test.ts
+./
+tests/
+tests/effects_schema.test.ts
+
+sent 17788 bytes  received 54 bytes  1265390 bytes/sec
+total size is 75034442  speedup is 4205.49
+[0;32m[02:47:40] ✓[0m Source synced
+[0;34m[02:47:40][0m Installing dependencies...
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated whatwg-encoding@3.1.1: Use @exodus/bytes instead for a more spec-conformant and faster implementation
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 273 packages, and audited 274 packages in 1s
+
+74 packages are looking for funding
+  run `npm fund` for details
+
+5 vulnerabilities (2 moderate, 2 high, 1 critical)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[0;32m[02:47:42] ✓[0m Dependencies installed
+[0;34m[02:47:42][0m Running unit tests (shard: tests/edge_cases*.test.ts)...
+
+> wetrun-web@0.1.0 test
+> vitest run tests/edge_cases*.test.ts
+
+
+ RUN  v1.6.1 /Users/emilio/projects/claudework/wet_run_delegation/web
+
+filter:  tests/edge_cases*.test.ts
+include: tests/**/*.test.ts
+exclude:  **/node_modules/**, **/dist/**, **/cypress/**, **/.{idea,git,cache,output,temp}/**, **/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build,eslint,prettier}.config.*
+watch exclude:  **/node_modules/**, **/dist/**
+
+No test files found, exiting with code 1
+[0;31m[02:47:42] ✗[0m Unit tests failed
+[0;34m[02:47:42][0m Running TypeScript typecheck...
+
+> wetrun-web@0.1.0 typecheck
+> tsc --noEmit
+
+[0;32m[02:47:44] ✓[0m Typecheck passed (0 errors)
+[0;34m[02:47:44][0m Running ESLint...
+
+> wetrun-web@0.1.0 lint
+> eslint src scripts --ext ts
+
+
+/Users/emilio/projects/claudework/wet_run_delegation/web/src/core/state_actions.ts
+  564:36  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  567:18  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  568:24  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/emilio/projects/claudework/wet_run_delegation/web/src/input/keyboard.ts
+  14:13  warning  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+✖ 4 problems (0 errors, 4 warnings)
+
+[0;32m[02:47:45] ✓[0m Lint passed
+[0;34m[02:47:45][0m Checking format with Prettier...
+
+> wetrun-web@0.1.0 format
+> prettier --write "src/**/*.{ts,tsx}" --check
+
+Checking formatting...
+All matched files use Prettier code style!
+[0;32m[02:47:45] ✓[0m Format check passed
+[0;34m[02:47:45][0m Report generated: /Users/emilio/projects/claudework/wet_run_delegation/reports/wet_run_verify_20260926_024740_report.md
+# wet_run Verification Report
+
+**Run ID**: wet_run_verify_20260926_024740
+**Timestamp**: Sat Sep 26 02:47:45 KST 2026
+**Source**: /Users/emilio/projects/opencodework/Game/wet_run
+**Target**: /Users/emilio/projects/claudework/wet_run_delegation/web
+
+## Configuration
+- E2E Tests: false
+- Balance Harness: false
+- Distributed: false
+- Shard Pattern: tests/edge_cases*.test.ts
+
+## Results
+- ❌ **Unit Tests**: FAILED
+- ✅ **TypeCheck**: PASSED
+- ✅ **Lint**: PASSED
+- ✅ **Format**: PASSED
+
+**OVERALL: SOME CHECKS FAILED** ❌
+
+## Logs
+- Full log: `/Users/emilio/projects/claudework/wet_run_delegation/logs/wet_run_verify_20260926_024740.log`
+- Vite log: `/Users/emilio/projects/claudework/wet_run_delegation/logs/vite_wet_run_verify_20260926_024740.log`
+[0;31m[02:47:45] ✗[0m Some verification checks failed

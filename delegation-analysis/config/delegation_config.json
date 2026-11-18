@@ -1,0 +1,61 @@
+{
+  "project": "wet_run_test_verification",
+  "source_repo": "/Users/emilio/projects/opencodework/Game/wet_run",
+  "working_dir": "/Users/emilio/projects/claudework/wet_run_delegation",
+  "target_dir": "web",
+  "verification": {
+    "unit_tests": {
+      "command": "npm test",
+      "expected_tests": 2654,
+      "expected_files": 107,
+      "timeout_ms": 180000
+    },
+    "typecheck": {
+      "command": "npm run typecheck",
+      "expected_errors": 0,
+      "timeout_ms": 120000
+    },
+    "lint": {
+      "command": "npm run lint",
+      "timeout_ms": 60000
+    },
+    "format": {
+      "command": "npm run format",
+      "timeout_ms": 60000
+    },
+    "e2e": {
+      "command": "npm run e2e",
+      "requires_browser": true,
+      "base_url": "http://localhost:5173",
+      "timeout_ms": 300000
+    },
+    "balance": {
+      "command": "npm run balance",
+      "args": ["--runs", "100"],
+      "timeout_ms": 120000
+    }
+  },
+  "aside_browser": {
+    "enabled": true,
+    "mcp_server": "aside",
+    "use_for": ["e2e_verification", "visual_regression", "github_pages_check"],
+    "session_persistence": true
+  },
+  "ssh_hosts": {
+    "enabled": true,
+    "hosts": [],
+    "distribution_strategy": "shard_by_test_pattern",
+    "sync_method": "rsync"
+  },
+  "cost_optimization": {
+    "use_hermes": false,
+    "use_cheaper_models": false,
+    "parallel_shards": 4,
+    "max_concurrent": 2
+  },
+  "reporting": {
+    "output_dir": "reports",
+    "format": ["json", "markdown", "html"],
+    "include_artifacts": true
+  }
+}

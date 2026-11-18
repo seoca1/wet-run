@@ -4048,3 +4048,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **Manus가 지목한 가장 위험한 가정**: *"실패 후 재료를 보존하면 common sink가 작동하면서 동시에 장기 목표가 재미를 만든다"* — 보존하면 부채처럼 쌓이고, 안 하면 드롭이 다시 inert 해진다.
 - **상태**: 🟡 제안 — **구현하지 않음**. 오너 결정 5건(실패 보존 여부·레시피 비용·정제 sink·시장 offer·스탯 배선) 대기.
 - **검증**: 게이트 7종 CLEAN · 문서 전용(동작 무변경).
+
+## [2026-11-18] test(crafting) | Manus 비용표 실측 verdict — 18종 전부 도달률 0%
+
+- 오너 *"권장대로 해줘"* → **가장 싼 반증 실험** 실행(새 시뮬레이션 없이 기존 시드 replay).
+- **새 하네스**: `web/scripts/crafting_probe.ts` = **`npm run crafting`** (등급별 `--runs` 누적 → 후보 레시피 18종 도달률 + common 적체). 후보 비용표는 `web/scripts/crafting-recipes-candidate.json`.
+- **측정 ⑴ 드롭 경제**: `data_fragment` 0.654/킬 · `ice_shard` 1.433 · `combat_module` 0.125 · `construct_shard` 0.174 · `rom_echo` **0.012** · `glitch_fragment` 0.006 · `t4_program`/**`hosaka_archive` 0.001**. 미션당 킬 ≈ 3(역산) → **`rom_echo` 하나에 약 25미션**.
+- **측정 ⑵ 도달률: 18종 전부 0.0%.** 원인은 **common이 아니라 초희귀 재료 1개** — `deck_street` 는 g3에서 common 조건을 이미 충족하는데 `rom_echo×1` 이 없어 0%.
+- **측정 ⑶ common은 적체가 아니라 SHORT** — Manus의 걱정과 반대. **희귀 게이트가 제작을 막아 common이 안 쓰인다**.
+- **측정 ⑷ 시장 가격 3자릿수 배 어긋남**: 실측 g3 ≈ **3,300cr/런** 인데 Manus의 offer 는 `df×12 → 8cr`.
+- **교정 제안 5건**을 제안서 부록에 기록(측정 근거 포함). 비용표 2판은 아직 미작성.
+- **검증**: 문서 전용 + 신규 스크립트(동작 무변경) · vitest 227/4368 · 게이트 7종 CLEAN.

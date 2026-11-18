@@ -1,0 +1,201 @@
+[
+ {
+  "id": "deck_basic",
+  "manusId": "deck_basic",
+  "tier": 0,
+  "path": "starter와 shop",
+  "cost": {}
+ },
+ {
+  "id": "head_basic",
+  "manusId": "head_basic",
+  "tier": 0,
+  "path": "starter와 shop",
+  "cost": {}
+ },
+ {
+  "id": "deck_street",
+  "manusId": "street_deck",
+  "tier": 1,
+  "path": "craft",
+  "cost": {
+   "data_fragment": 8,
+   "ice_shard": 6,
+   "rom_echo": 1
+  }
+ },
+ {
+  "id": "eyes_militech",
+  "manusId": "militech_eyes",
+  "tier": 1,
+  "path": "craft 또는 g1/g2 drop",
+  "cost": {
+   "data_fragment": 6,
+   "combat_module": 1,
+   "rom_echo": 1
+  }
+ },
+ {
+  "id": "gloves_chrome",
+  "manusId": "chrome_gloves",
+  "tier": 1,
+  "path": "craft",
+  "cost": {
+   "data_fragment": 7,
+   "combat_module": 1,
+   "glitch_fragment": 1
+  }
+ },
+ {
+  "id": "deck_corporate",
+  "manusId": "corporate_deck",
+  "tier": 2,
+  "path": "craft",
+  "cost": {
+   "ice_shard": 14,
+   "construct_shard": 4,
+   "ice_construct": 1,
+   "t4_program": 1
+  }
+ },
+ {
+  "id": "bodysuit_subdermal",
+  "manusId": "subdermal",
+  "tier": 2,
+  "path": "craft 또는 g2/g3 drop",
+  "cost": {
+   "ice_shard": 12,
+   "combat_module": 3,
+   "shield_program": 1
+  }
+ },
+ {
+  "id": "trodes_ninja",
+  "manusId": "trodes_ninja",
+  "tier": 2,
+  "path": "craft",
+  "cost": {
+   "data_fragment": 10,
+   "rom_echo": 2,
+   "glitch_fragment": 1
+  }
+ },
+ {
+  "id": "boots_ghost",
+  "manusId": "boots_ghost",
+  "tier": 2,
+  "path": "craft",
+  "cost": {
+   "data_fragment": 10,
+   "construct_shard": 2,
+   "shield_program": 1
+  }
+ },
+ {
+  "id": "deck_militech",
+  "manusId": "militech_deck",
+  "tier": 3,
+  "path": "craft 또는 rare drop",
+  "cost": {
+   "combat_module": 4,
+   "construct_shard": 5,
+   "t4_program": 1,
+   "t_a_data_fragment": 1
+  }
+ },
+ {
+  "id": "bodysuit_tactical",
+  "manusId": "tactical_body",
+  "tier": 3,
+  "path": "craft",
+  "cost": {
+   "ice_construct": 3,
+   "shield_program": 2,
+   "t_a_data_fragment": 1,
+   "upgrade_t2": 1
+  }
+ },
+ {
+  "id": "implant_nanohive",
+  "manusId": "nano_hive",
+  "tier": 3,
+  "path": "craft",
+  "cost": {
+   "construct_shard": 8,
+   "glitch_fragment": 2,
+   "loa_chip": 1
+  }
+ },
+ {
+  "id": "deck_arasaka",
+  "manusId": "arasaka_deck",
+  "tier": 4,
+  "path": "craft",
+  "cost": {
+   "ta_construct": 1,
+   "fragment.tessier_archive": 1,
+   "t4_program": 1,
+   "hosaka_chip": 1
+  }
+ },
+ {
+  "id": "head_kereznikov",
+  "manusId": "kereznikov",
+  "tier": 4,
+  "path": "craft",
+  "cost": {
+   "hosaka_chip": 1,
+   "hosaka_archive": 1,
+   "t4_program": 1,
+   "upgrade_t4": 1
+  }
+ },
+ {
+  "id": "deck_ghost",
+  "manusId": "ghost_deck",
+  "tier": 5,
+  "path": "craft 또는 g5 rare drop",
+  "cost": {
+   "unique_construct": 1,
+   "t5_program": 1,
+   "wintermute_key": 1,
+   "fragment.wintermute_echo": 1
+  }
+ },
+ {
+  "id": "deck_master",
+  "manusId": "master_deck",
+  "tier": 6,
+  "path": "craft, g6 boss drop, 또는 one-time shop",
+  "cost": {
+   "t6_program": 1,
+   "aleph_shard": 1,
+   "hosaka_archive": 1,
+   "fragment.timeline_echo": 1
+  }
+ },
+ {
+  "id": "bodysuit_master",
+  "manusId": "master_body",
+  "tier": 6,
+  "path": "craft, g6 boss drop",
+  "cost": {
+   "unique_construct": 1,
+   "t6_program": 1,
+   "peripheral_artifact": 1,
+   "upgrade_t4": 1
+  }
+ },
+ {
+  "id": "trodes_zion",
+  "manusId": "zion_trodes",
+  "tier": 6,
+  "path": "craft 또는 g6 boss drop",
+  "cost": {
+   "loa_chip": 1,
+   "fragment.wintermute_echo": 1,
+   "t6_program": 1,
+   "maas_neuropozyne_dose": 1
+  }
+ }
+]

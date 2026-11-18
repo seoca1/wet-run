@@ -4099,3 +4099,14 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **테스트**: `owned_equipment.test.ts`(8) · `recipes_data.test.ts`(8, recipe↔equipment↔material↔loot 4중 조인 + 카탈로그 드리프트 가드).
 - **검증**: vitest **230 files / 4396 tests** · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0) · e2e 영향 없음(크래프팅/장비 참조 0).
 - **다음**: `buy`(시장 offer 가격 = 오너 결정 5번) · 미사용 스탯 9종 배선(플레이어 방어 단계) · `use_item` · drop 을 획득 경로로.
+
+## [2026-11-18] feat(combat) | 플레이어 방어 단계 배선 + 장비 곡선 측정 (ADR-0326)
+
+- 오너 "커밋 + 스탯 배선" → 핸드오프 §4 "그 다음" 3.
+- **결함**: 장비 스탯 12개 중 **9개가 안 읽혔고**, 핵심은 **플레이어 방어 단계 부재**(ICE 피해가 곧바로 HP로). 하네스가 `EMPTY_LOADOUT` 이라 **장비 효과는 측정된 적 없었다**.
+- **배선**: 고정 순서 `저항(%) → 방어(flat) → 실드 pool → HP`(`player_mitigation.ts`, 카드 armor 경로와 분리, 저항 상한 75%) · `hpBonus`/`shieldBonus` run 시작 적용(`equipment_stats.ts`, `applyPrep` 형태).
+- **하네스 훅**: `simulateCombat`/`runSuite` 에 **기본 `EMPTY_LOADOUT`** 파라미터(무변경) + `npm run gear` 프로브 신규.
+- **측정**: baseline **byte-identical**(100/100/100/97.1/70.6/47.0). `npm run gear`(페어 시드, 비-보스 교전): bare g6 87%/43% → T1 100%/62% → **T4/T6 100%/100%** — **장비가 곡선을 무너뜨린다**(오너 결정 필요: 스탯 하향 vs 난이도 스케일).
+- **테스트**: `adr0326_player_defense.test.ts`(15) — 순서/상한/풀 소모/hpBonus·shieldBonus.
+- **검증**: vitest **231 files / 4411 tests** · typecheck/lint 0 error · build OK.
+- **다음**: `apBonus`·`apRegenBonusPct`·`programPower`·`grantsSkillId`·`extraEffect` 5종 배선 + 장비 파워 재조정(오너).

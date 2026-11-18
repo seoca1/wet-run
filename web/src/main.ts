@@ -199,6 +199,7 @@ import {
   writeOwnedIds,
   type OwnedSet,
 } from "./core/state/owned_equipment";
+import { applyEquipmentSurvival } from "./core/state/equipment_stats";
 import {
   mergeRunIntoWallet,
   readWalletMaterials,
@@ -1694,10 +1695,10 @@ class Game {
     this.state = openArrivalEncounter({
       // ADR-0284: whatever the stockpile paid for is spent here, so it is a
       // hoard rather than a permanent bonus.
-      ...applyPrep(
-        initial,
-        this.prepChoice,
-        this.prepWalletOutlay,
+      // ADR-0326: the gear's hpBonus/shieldBonus join it — same run-start shape.
+      ...applyEquipmentSurvival(
+        applyPrep(initial, this.prepChoice, this.prepWalletOutlay),
+        this.equipmentLoadout,
       ),
       // ADR-0315 slice 2: the run is a contract — this mission, then the rest
       // of its arc. The chosen mission decides the arc; the length is the

@@ -25,6 +25,8 @@ import { ALARM_TICK_INTERVAL_MS } from "../src/core/combat/combat_engine";
 import { iceHpForGrade, missionGradeOf } from "../src/core/combat/ice_scaling";
 import { resolveMatrixRoster } from "../src/core/dungeon/matrix";
 import { applyAction, makeInitialState } from "../src/core/state/state";
+import { applyEquipmentSurvival } from "../src/core/state/equipment_stats";
+import { EMPTY_LOADOUT, type EquipmentLoadout } from "../src/core/state/loadout";
 import type { GameState, Ice, Mission, Program } from "../src/core/types";
 
 /** Deterministic PRNG (mulberry32) — same seed always yields the same stream. */
@@ -113,6 +115,9 @@ export function simulateCombat(
   iceCatalog: Readonly<Record<string, Ice>>,
   deck: ReadonlyArray<Program>,
   config: SimConfig,
+  /** ADR-0326: gear the runner wears. Default empty — the recorded baseline
+   *  measures the bare runner, and an empty loadout is a byte-identical no-op. */
+  loadout: EquipmentLoadout = EMPTY_LOADOUT,
 ): CombatOutcome {
   const maxTurns = config.maxTurns ?? DEFAULT_MAX_TURNS;
   const originalRandom = Math.random;
@@ -152,6 +157,9 @@ export function simulateCombat(
 
     let s = makeInitialState(mission, template, deck);
     if (nodeIndex >= 0) s = { ...s, currentNodeIndex: nodeIndex };
+    // ADR-0326: the loadout has to be ON the state for the incoming path to
+    // read defense/resistance; hpBonus/shieldBonus are applied at run start.
+    s = applyEquipmentSurvival({ ...s, equipmentLoadout: loadout }, loadout);
 
     clock += AUTO_ATTACK_INTERVAL_MS;
     s = applyAction(s, { type: "confirm" });

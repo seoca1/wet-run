@@ -69,21 +69,23 @@ const BASE_SEED = 20261106;
  * table below is the measurement that shows which one a grade is. */
 export const CONTRACT_TARGETS: Readonly<Record<number, number>> = {
   1: 1.0,
-  2: 0.894,
-  3: 0.549,
-  4: 0.638,
+  2: 0.909,
+  3: 0.509,
+  4: 0.614,
   5: 0.031,
-  6: 0.198,
+  6: 0.203,
 };
 
 /** Overall contract completion, recorded the same way.
  *
- * Re-recorded after ADR-0319 (a won fight heals the body to a floor). The
- * recovery is worth most where the contract's difficulty was attrition: g4
- * went 2.5% -> 63.8% and the overall 30.3% -> 47.4%. g5 barely moved (3.0% ->
- * 3.1%) because it loses a single fight, and the floor cannot reach inside one.
+ * Re-recorded after ADR-0321 turned `cloak`'s evasion from a flat damage cut
+ * into a MISS roll: the seeded stream moved, so the campaign moved with it
+ * (overall 47.4% -> 46.4%, worst grade -4.0pp). Before that, ADR-0319's
+ * per-fight recovery re-recorded it once already (30.3% -> 47.4%, g4 2.5% ->
+ * 63.8%) — the recovery is worth most where the contract's difficulty was
+ * attrition, and g5 barely moves because it loses a single fight.
  */
-export const CONTRACT_TARGET = 0.474;
+export const CONTRACT_TARGET = 0.464;
 
 /** Tolerance before a sweep reports a miss, in percentage points. */
 const TOLERANCE_PP = 8;
@@ -317,11 +319,18 @@ function main(): void {
   console.log("");
   // Recorded, not endorsed. ADR-0318 chose the contract's shape; this is what
   // that shape does at the top of the ladder, and it is the owner's call.
-  console.log("NOTE (see ADR-0318 (e)/(f) and ADR-0319): g4 contracts complete 63.8% and");
-  console.log(" g5 completes 3.1%, while g3 completes 54.9%. ADR-0319's per-fight recovery");
-  console.log(" is what moved g4 — its difficulty was attrition, and a floor removes it.");
-  console.log(" g5 did not move, because it loses a single fight. The top of the ladder is");
-  console.log(" therefore an OPEN question: g4 is now easier than g3, and g5 is untouched.");
+  // Cite the LIVE numbers, not literals: this note went stale the moment a
+  // balance change moved the curve (ADR-0321 did), and a note that disagrees
+  // with the table above it is worse than no note.
+  const rateOf = (g: number): string =>
+    byGrade.get(g) === undefined
+      ? "n/a"
+      : pct(byGrade.get(g)!.finished, byGrade.get(g)!.contracts).trim();
+  console.log(`NOTE (see ADR-0318 (e)/(f), ADR-0319, ADR-0321): g4 contracts complete ${rateOf(4)}`);
+  console.log(` and g5 ${rateOf(5)}, while g3 completes ${rateOf(3)}. ADR-0319's recovery moved g4 —`);
+  console.log(" its difficulty was attrition, and a floor removes it. g5 barely moves,");
+  console.log(" because it loses a single fight. The top of the ladder is therefore an OPEN");
+  console.log(" question: g4 reads easier than g3, and g5 is untouched.");
 }
 
 main();

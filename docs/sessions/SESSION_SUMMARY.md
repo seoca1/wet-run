@@ -1,8 +1,10 @@
 # Wet Run — Session Index
 
-> **Latest session**: 2026-09-21 (Boss phases test coverage + Dungeon alarm cue + Boss defeat ending + jack_out runPhase fix) — see `log.md` 2026-09-21 entries
+> **Latest session**: 2026-11-18 (성장·전투 피드백·SRW 케이스·시스템 감사·Manus 설계·재료 보존, ADR-0319~0323) — [SESSION_SUMMARY_2026-11-18.md](./SESSION_SUMMARY_2026-11-18.md)
 >
-> Previous: 2026-08-31 (Gibson verification pipeline expansion — 23 checks, 14 dimensions, 953 stories, dashboard rebuilt) — no longer latest
+> Previous: 2026-09-21 (Boss phases test coverage + Dungeon alarm cue + Boss defeat ending + jack_out runPhase fix) — see `log.md` 2026-09-21 entries
+>
+> Earlier: 2026-08-31 (Gibson verification pipeline expansion — 23 checks, 14 dimensions, 953 stories, dashboard rebuilt)
 >
 > Earlier: 2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend) — [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) §"Post-Report Addendum"
 >
@@ -18,7 +20,8 @@ This is an **index** file pointing to the most recent dated session snapshot. Pe
 
 | Date | File | Summary |
 |---|---|---|
-| **2026-09-21 (Boss phases + dungeon alarm + jack_out fixes)** | `log.md` (2026-09-21 entries) | **LATEST.** Boss phases test coverage added + 3 critical fixes (dungeon alarm cue, boss defeat ending, jack_out runPhase). |
+| **2026-11-18 (성장·피드백·SRW 케이스·시스템 감사·Manus·재료 보존)** | [SESSION_SUMMARY_2026-11-18.md](./SESSION_SUMMARY_2026-11-18.md) | **LATEST.** ADR-0319~0323. 회복 자동화 · 실피해 공개 · SRW 확률 케이스(기본 0) · EQUIPMENT 배선 · 재료 보존. 설계도(`system-map`)로 **빈 출구**(크래프팅·아이템·장비) 발견 → Manus 제안 → **실측 verdict(18종 도달률 0%)**. 다음 작업 = **비용표 2판**. |
+| 2026-09-21 (Boss phases + dungeon alarm + jack_out fixes) | `log.md` (2026-09-21 entries) | Boss phases test coverage added + 3 critical fixes (dungeon alarm cue, boss defeat ending, jack_out runPhase). |
 | 2026-08-31 (Pipeline Expansion + Dashboard Rebuild) | `log.md` (2026-08-31 entries) | Previous. Dashboard rebuilt: 953 stories with 23-check `gibson_style` + 14-dimension `literary`. 5 tools patched for peripheral. S-grade threshold bug fixed. |
 | 2026-08-26 Part 2 (Tier 4 + ADR-0208 + IDB Save Backend) | [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) (Post-Report Addendum) | 3 new ADR + 8 commits. Bundle +3.53 KB. Tier 3 literal "cloud save sync" partial fulfillment (local IDB only). |
 | 2026-08-26 Part 1 (v1.4.0 Operational Release) | [SESSION_REPORT_2026-08-26.md](./SESSION_REPORT_2026-08-26.md) | v1.4.0 PyPI + GitHub release + ADR-0194/0195/0200/0201-0206. 30 atomic commits. Previous session — full report in dedicated file. |

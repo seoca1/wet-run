@@ -4068,3 +4068,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **credits는 병합하지 않는다** — 런 중 `inventory.credits` 에 들어오는 것이 없고, 미션 보상은 임무를 끝내기 전에는 런의 것이 아니다.
 - **밸런스 무영향**: 재료는 전투 수치에 닿지 않음 — `npm run balance` **byte-identical**(97.1/70.6/47.0).
 - **검증**: typecheck 0 · lint 0 errors · vitest **228 files / 4380 tests**(ADR-0323 신규 12) · 게이트 7종 CLEAN.
+
+## [2026-11-18] docs(session) | 세션 마감 + 핸드오프 — 다음은 크래프팅 비용표 2판
+
+- 오너 *"다음 세션에서 후속 진행할 수 있게 문서화하고 처리해줘."*
+- **핸드오프 문서**: `docs/sessions/SESSION_SUMMARY_2026-11-18.md` — 이번 세션(ADR-0319~0323 + 설계 3 + 하네스 1) · **현재 기준선** · **다음 첫 작업 절차/명령/합격 기준** · **함정 7건** · 오너 결정 5건 · 검증 명령 · 이월분. 세션 인덱스(`docs/sessions/SESSION_SUMMARY.md`)도 갱신.
+- **워크스페이스**: `NEXT_SESSION_TODO.md` 에 **`2026-11-18 Carry-over (active)`** 섹션 추가(frontmatter 갱신, 이전 섹션은 historical 로 강등).
+- **함께 처리한 드리프트**: ADR-0321 이 시드 스트림을 바꿔 캠페인이 47.4%→**46.4%** 로 이동 → `CONTRACT_TARGETS` **재기록**. 그리고 하네스 **NOTE 가 숫자를 하드코딩해 표와 어긋나던 것**을 **live 값 보간**으로 고침(새 노트는 리터럴 금지).
+- **현재 기준선**: balance `100/100/100/97.1/70.6/47.0` · survival `100/100/83.4/83.1/25.9/42.2` · campaign 완주 **46.4%** · vitest **228/4380** · e2e **54/0**.
+- **검증**: 게이트 7종 CLEAN · campaign delta 0.0pp.

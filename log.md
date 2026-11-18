@@ -4059,3 +4059,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **측정 ⑷ 시장 가격 3자릿수 배 어긋남**: 실측 g3 ≈ **3,300cr/런** 인데 Manus의 offer 는 `df×12 → 8cr`.
 - **교정 제안 5건**을 제안서 부록에 기록(측정 근거 포함). 비용표 2판은 아직 미작성.
 - **검증**: 문서 전용 + 신규 스크립트(동작 무변경) · vitest 227/4368 · 게이트 7종 CLEAN.
+
+## [2026-11-18] feat(economy) | 재료 지갑은 런보다 오래 산다 (ADR-0323)
+
+- **오너 결정**: *"보존해줘"* — 실패해도 재료를 보존.
+- **경계 결함 수정**: `this.inventory = initial.inventory` 가 런 시작 때 hoard를 **미션 보상으로 덮어쓰고** 런 종료 시 아무것도 안 씀 → 드롭 28종이 **보려고 존재하는 숫자**였다. 실측으로 미션 한 판이 `data_fragment` 약 3 · `ice_shard` 약 5 → **런마다 리셋하면 어떤 레시피도 한 판 분량을 못 넘는다.**
+- **결정**: 런 시작 = **hoard + 미션 보상**으로 시드, 런 종료(**JACK OUT · 엔딩 · 플랫라인 3경로**) = **런이 *번* 것만** 합침. 시드값을 기억해 빼므로 **첫 프레임 잭아웃이 미션 보상을 주조하지 않는다**(파밍 차단). hoard 는 `localStorage`(`wetrun_materials`).
+- **credits는 병합하지 않는다** — 런 중 `inventory.credits` 에 들어오는 것이 없고, 미션 보상은 임무를 끝내기 전에는 런의 것이 아니다.
+- **밸런스 무영향**: 재료는 전투 수치에 닿지 않음 — `npm run balance` **byte-identical**(97.1/70.6/47.0).
+- **검증**: typecheck 0 · lint 0 errors · vitest **228 files / 4380 tests**(ADR-0323 신규 12) · 게이트 7종 CLEAN.

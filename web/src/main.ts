@@ -192,6 +192,12 @@ import {
   readEquippedIds,
   writeEquippedIds,
 } from "./core/state/equipment_store";
+import {
+  mergeRunIntoWallet,
+  readWalletMaterials,
+  seedRunWallet,
+  writeWalletMaterials,
+} from "./core/state/wallet";
 import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
 import { formatNavIndex } from "./renderer/nav_index";
@@ -341,6 +347,9 @@ class Game {
   private _lastIceHp: number | null = null;
   private _lastPlayerHp: number | null = null;
   private inventory: Inventory;
+  /** ADR-0323: the wallet this run was seeded with, so the merge back into the
+   * hoard can tell what the run EARNED from what it inherited. */
+  private runWalletSeed: Inventory | null = null;
   private equipmentLoadout: EquipmentLoadout;
   private recipes: ReadonlyArray<Recipe>;
   private materials: ReadonlyArray<MaterialDef>;
@@ -453,7 +462,12 @@ class Game {
     });
     this.input = new KeyboardInput();
     this.gamepad = new GamepadInput();
-    this.inventory = { credits: 0, materials: {}, programs: [] };
+    // ADR-0323: the hoard outlives the session.
+    this.inventory = {
+      credits: 0,
+      materials: readWalletMaterials(),
+      programs: [],
+    };
     // ADR-0322: the menu's gear survives a reload and reaches the run.
     this.equipmentLoadout = hydrateLoadout(DEFAULT_REGISTRY, readEquippedIds());
     this.recipes = makeRecipesFromData({});
@@ -696,6 +710,8 @@ class Game {
       }
       if (runAbandoned(previous, this.state)) {
         // JACK OUT ends the run: leave the board for the main menu.
+        // ADR-0323: the run is over — bank what it earned before dropping it.
+        this.endRun();
         this.state = null;
         this.matrixTravel = null;
         this.lootCommit = null;
@@ -707,6 +723,8 @@ class Game {
       }
       if (runCompleted(previous, this.state)) {
         // ADR-0252: the ending is the end. The slot was retired on arrival.
+        // ADR-0323: the run is over — bank what it earned before dropping it.
+        this.endRun();
         this.state = null;
         this.matrixTravel = null;
         this.lootCommit = null;
@@ -724,6 +742,8 @@ class Game {
         // ADR-0263: a flatline must not trap the player. ENTER / ESC leave the
         // defeat screen and the run ends at the title, the same shape as the
         // ending. The dead frame itself was already autosaved (ADR-0252 §A).
+        // ADR-0323: the run is over — bank what it earned before dropping it.
+        this.endRun();
         this.state = null;
         this.matrixTravel = null;
         this.lootCommit = null;
@@ -1660,15 +1680,35 @@ class Game {
       runPhase: "matrix",
       phase: "approach",
     });
-    this.inventory = initial.inventory;
+    // ADR-0323: the run is seeded from the HOARD, not from the mission reward
+    // alone, so what it earns can be merged back when the run ends. The seed is
+    // kept so `mergeRunIntoWallet` can subtract it (jacking out must not mint
+    // the mission reward into the hoard).
+    this.runWalletSeed = this.inventory;
     // ADR-0322: the run reads `state.equipmentLoadout`, so the menu's gear has
     // to be ON the state — not merely next to it. `makeInitialState` builds it
     // empty, which is why the menu used to change no number at all.
-    this.state = { ...this.state, equipmentLoadout: this.equipmentLoadout };
+    this.state = {
+      ...this.state,
+      equipmentLoadout: this.equipmentLoadout,
+      inventory: seedRunWallet(this.inventory, this.state.mission.rewards),
+    };
     this.recipes = makeRecipesFromData({});
     this.materials = makeMaterialsFromData({});
     this.infoMarket = makeInfoMarket({});
     this.draw();
+  }
+
+  /** ADR-0323: bank the run's earnings into the hoard and clear the seed.
+   *
+   * Called on every way a run ends — jack out, the ending, and a flatline — so
+   * a failed run keeps what it picked up. That is the owner's decision: without
+   * it, no recipe can cost more than one run's yield. */
+  private endRun(): void {
+    const run = this.state?.inventory ?? null;
+    this.inventory = mergeRunIntoWallet(this.inventory, run, this.runWalletSeed);
+    this.runWalletSeed = null;
+    writeWalletMaterials(this.inventory.materials);
   }
 
   private startDungeonCrawl(): void {

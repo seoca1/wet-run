@@ -186,12 +186,12 @@ import {
   type MaterialDef,
   makeInfoMarket,
 } from "./core/state/crafting";
+import { equipOn, DEFAULT_REGISTRY, EQUIP_SLOTS } from "./core/state/equipment";
 import {
-  equipOn,
-  DEFAULT_REGISTRY,
-  EQUIP_SLOTS,
-  makeLoadout,
-} from "./core/state/equipment";
+  hydrateLoadout,
+  readEquippedIds,
+  writeEquippedIds,
+} from "./core/state/equipment_store";
 import type { InfoMarket } from "./core/info_market";
 import { loadPersistedLanguage } from "./renderer/settings";
 import { formatNavIndex } from "./renderer/nav_index";
@@ -454,7 +454,8 @@ class Game {
     this.input = new KeyboardInput();
     this.gamepad = new GamepadInput();
     this.inventory = { credits: 0, materials: {}, programs: [] };
-    this.equipmentLoadout = makeLoadout();
+    // ADR-0322: the menu's gear survives a reload and reaches the run.
+    this.equipmentLoadout = hydrateLoadout(DEFAULT_REGISTRY, readEquippedIds());
     this.recipes = makeRecipesFromData({});
     this.materials = makeMaterialsFromData({});
     this.infoMarket = makeInfoMarket({});
@@ -900,6 +901,7 @@ class Game {
       }
       const result = equipOn(this.equipmentLoadout, candidate);
       this.equipmentLoadout = result.loadout;
+      writeEquippedIds(this.equipmentLoadout);
       this._message = `Equipped ${candidate.name} to ${slot}`;
       this.draw();
       return;
@@ -1659,7 +1661,10 @@ class Game {
       phase: "approach",
     });
     this.inventory = initial.inventory;
-    this.equipmentLoadout = initial.equipmentLoadout;
+    // ADR-0322: the run reads `state.equipmentLoadout`, so the menu's gear has
+    // to be ON the state — not merely next to it. `makeInitialState` builds it
+    // empty, which is why the menu used to change no number at all.
+    this.state = { ...this.state, equipmentLoadout: this.equipmentLoadout };
     this.recipes = makeRecipesFromData({});
     this.materials = makeMaterialsFromData({});
     this.infoMarket = makeInfoMarket({});

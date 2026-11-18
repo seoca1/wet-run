@@ -34,6 +34,7 @@ import { DEFAULT_FACTION_SCORES } from "./faction_reputation";
 import { openArrivalEncounter } from "./encounter_verbs";
 import { missionIce } from "./mission_ice";
 import { campaignContinues, type Campaign } from "./campaign";
+import { UNIQUE_PROGRAMS } from "./card_reward";
 import { isTerminalNode } from "./run_end";
 import missionsData from "../../data/missions.json";
 import type { RunMutator } from "./run_mutators";
@@ -259,6 +260,10 @@ export function buildHudLines(state: GameState): string[] {
   ];
   const equippedCount = state.equipmentLoadout.allSlotsFilled().length;
   lines.push(`Equipped: ${equippedCount}/${EQUIP_SLOTS.length}`);
+  // ADR-0322: the growth, in one line. Measured first: a winning run takes
+  // almost no cards (mean deck 5.0 at g4), so the deck's size and tier are the
+  // honest readout of whether the runner is growing at all.
+  lines.push(growthLine(state));
   if (state.playerCombo > 1) {
     lines.push(`Combo x${state.playerCombo}`);
   }
@@ -280,6 +285,26 @@ export function buildHudLines(state: GameState): string[] {
   }
   lines.push("", ...recentLogLines(state));
   return lines;
+}
+
+/** The runner's growth in one short line: deck, its average tier, uniques.
+ *
+ * ADR-0322. The HUD already carried credits and equipped slots; nothing carried
+ * the deck's own shape, which is the axis the loot stop grows. A winning run
+ * takes almost no cards (measured mean 5.0 at g4), so this line is also the
+ * quickest way to see that growth is not happening.
+ *
+ * Pure and cheap: one pass over the three piles.
+ */
+export function growthLine(state: GameState): string {
+  const cards = [...state.deck, ...state.drawPile, ...state.discardPile];
+  const tiers = cards
+    .map((p) => p.tier)
+    .filter((t): t is number => Number.isFinite(t));
+  const avg = tiers.length > 0 ? tiers.reduce((a, b) => a + b, 0) / tiers.length : 0;
+  const uniques = cards.filter((p) => UNIQUE_PROGRAMS.has(p.id)).length;
+  const uniqueNote = uniques > 0 ? ` · UNQ ${uniques}` : "";
+  return `Deck ${cards.length} · T${avg.toFixed(1)}${uniqueNote}`;
 }
 
 /** The combat log lines to show in the HUD.

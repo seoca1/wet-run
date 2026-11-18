@@ -15,6 +15,7 @@ import {
   LOOT_INTEL_SLOT,
   LOOT_REPAIR_SLOT,
   LOOT_BURN_SLOT,
+  LOOT_GEAR_SLOT,
   LOOT_VENT_SLOT,
   VENT_COST,
   ventHpPrice,
@@ -143,6 +144,10 @@ describe("run screen composition", () => {
     offers.push(
       `${LOOT_INTEL_SLOT} INTEL           ${lootIntelPrice(grade)}cr — name the routes ahead (spends this stop)`,
     );
+    // ADR-0329: the fixture mission offers its grade's salvage.
+    offers.push(
+      `${LOOT_GEAR_SLOT} GEAR            eyes_militech — salvage (yours when the run ends)`,
+    );
     // ADR-0295: the vent is only offered while there is a trace to clear.
     if (state.player.alarm > 0) {
       const vented = Math.min(VENT_COST, state.player.alarm);
@@ -171,7 +176,7 @@ describe("run screen composition", () => {
         null,
         // ADR-0299: the panel footer is the caller's wording now, so the
         // expectation has to pass the same hint the screen uses.
-        "1-3: card · 4: repair · 5: intel",
+        "1-3: card · 4: repair · 5: intel · 9: gear",
       ).cells,
     );
     // Only ENTER and the loot digits do anything on the loot screen:
@@ -183,7 +188,7 @@ describe("run screen composition", () => {
       "",
       // ADR-0251 rule 5: a run with no trace has no vent/burn, so the HUD does
       // not promise those keys.
-      "1-3: card · 4: repair · 5: intel",
+      "1-3: card · 4: repair · 5: intel · 9: gear",
     ]);
   });
 
@@ -204,7 +209,7 @@ describe("run screen composition", () => {
     expect(view?.hud).toEqual([
       "LOOT",
       "",
-      "1-3: card · 4: repair · 5: intel · 6: vent · 7: burn · 6+7 stack",
+      "1-3: card · 4: repair · 5: intel · 6: vent · 7: burn · 9: gear · 6+7 stack",
     ]);
   });
 

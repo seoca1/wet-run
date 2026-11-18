@@ -174,6 +174,8 @@ function startNextLeg(previous: GameState, finished: GameState): GameState {
     campaign: { legs: campaign.legs, completed: campaign.completed + 1 },
     player: { ...fresh.player, credits: previous.player.credits },
     ...(previous.uniquePickDone ? { uniquePickDone: true } : {}),
+    // ADR-0329: gear salvaged earlier in the contract carries across its legs.
+    droppedEquipment: previous.droppedEquipment,
     jockeyId: previous.jockeyId,
     factionScores: finished.factionScores,
     totalRuns: previous.totalRuns,

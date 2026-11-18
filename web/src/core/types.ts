@@ -232,6 +232,9 @@ export interface GameState {
    * the acquisition and a reload cannot take a second one. Cleared on the way
    * out of loot. Optional; missing means nothing taken yet. */
   readonly cardRewardTaken?: string | null;
+  /** ADR-0329: the equipment pieces salvaged this run, granted at its end.
+   *  Optional; missing means none. */
+  readonly droppedEquipment?: ReadonlyArray<string>;
   /** ADR-0311: the tier-6 unique pick has been resolved for this win (taken or
    * skipped). Cleared by the next tier-6 victory. Optional; missing means the
    * pick is still open — but only when the run holds no unique. */

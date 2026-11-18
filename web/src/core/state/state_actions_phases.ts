@@ -33,6 +33,7 @@ import {
 import { createDeceasedJockey, generateDeathSummary } from "./death_cycle";
 import { isTerminalNode } from "./run_end";
 import { offeredCardIds, rewardProgram, uniqueChoicesFor } from "./card_reward";
+import { offeredEquipmentDrop } from "./equipment_drops";
 import { refillHand } from "../combat/hand";
 import {
   BURN_COST,
@@ -232,6 +233,7 @@ export function applyLootAction(
     if (choice === "vent") return takeLootVent(state);
     if (choice === "burn") return takeLootBurn(state);
     if (choice === "recover") return takeLootRecover(state);
+    if (choice === "gear") return takeLootGear(state);
     return takeCardReward(state, action.handIndex - 1);
   }
   if (action.type === "use_program") {
@@ -499,6 +501,24 @@ function takeLootBurn(state: GameState): GameState {
       alarm: Math.max(0, state.player.alarm - BURN_COST),
     },
     message: `Burned ${target.id} for ${cleared} COST (COST ${state.player.alarm - cleared}/100).`,
+  };
+}
+
+/** ADR-0329: salvage the offered equipment drop.
+ *
+ * Taking it does NOT cost the card — like the repair/vent/recover slots it is a
+ * purchase on the same screen, and the piece is granted when the run ends
+ * (`main.ts` merges `droppedEquipment` into the owned set, the way materials
+ * merge into the hoard). */
+function takeLootGear(state: GameState): GameState {
+  const id = offeredEquipmentDrop(state);
+  if (id === null) {
+    return { ...state, message: "Nothing on the bench." };
+  }
+  return {
+    ...state,
+    droppedEquipment: [...(state.droppedEquipment ?? []), id],
+    message: `Salvaged ${id} — yours when the run ends.`,
   };
 }
 

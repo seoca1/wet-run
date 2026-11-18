@@ -48,7 +48,8 @@ describe.each([
     expect(lines.some((l) => l.includes("VENT") && l.includes("70/100"))).toBe(true);
     expect(lines.some((l) => l.includes("BURN"))).toBe(true);
     expect(lines.some((l) => l.includes("SYPHON"))).toBe(true);
-    expect(lines.some((l) => /4-8 options/.test(l))).toBe(true);
+    expect(lines.some((l) => /4-9 options/.test(l))).toBe(true);
+    expect(lines.some((l) => l.includes("GEAR"))).toBe(true);
   });
 
   it("never prints a line wider than the panel", () => {
@@ -68,8 +69,10 @@ describe("ADR-0299 · the wide layout keeps the readable wording", () => {
     // Then: the full sentences survive where there is room, and the footer
     // names every exit instead of stopping at intel.
     expect(lines.some((l) => l.includes("name the routes ahead"))).toBe(true);
-    expect(lines.some((l) => l.includes("7: burn") && l.includes("8: syphon"))).toBe(
-      true,
-    );
+    // With a ninth option (ADR-0329's gear) the footer hint no longer fits at
+    // 80 columns and takes the short form, but the offer lines still spell
+    // themselves out.
+    expect(lines.some((l) => l.includes("VENT") && l.includes("HP"))).toBe(true);
+    expect(lines.some((l) => l.includes("SYPHON") && l.includes("HP"))).toBe(true);
   });
 });

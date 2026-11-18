@@ -4128,3 +4128,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **측정(64시드 per-cell, survival 동일)**: T1 28/49 · T2 40/64 · T4 60/77 · T6 63/81. g5 목표 근접(28/40/60/63 vs 32/40/50/65), g6 ~+11pp 초과(g6=3미션). **사다리 단조**.
 - **검증**: vitest **232/4416**(카탈로그 절대값 → 속성 기반 재작성) · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0).
 - **다음**: AP/스킬/효과 서브시스템 · `buy`(오너 결정 5번) · `use_item` · 장비 파워↔난이도 동시 설계(오너).
+
+## [2026-11-18] feat(economy) | 장비 drop 경로 — loot stop salvage 슬롯 (ADR-0329)
+
+- 오너 "장비 drop 경로". 제안서의 craft/drop/buy 중 **drop** 배선(ADR-0325 는 craft 만).
+- **결정**: loot stop 슬롯 9(GEAR) — 등급→조각 테이블, **미션당 1회 롤**을 `missionSeedOf ^ hash(id)` 로 시드해 **`Math.random` 미소비**(전투 스트림·기록 곡선 불변). 슬롯 → `state.droppedEquipment` → 런 종료 시 `ownedEquipment` 병합.
+- **측정**: g1 3/4 · g2 8/16 · g3 3/11 · g4 0/10 · g5 4/9 · g6 1/3 = **19/53** (p=0.4 에서 모든 등급 경로 생존; p≤0.3 은 g6 0/3 로 죽음).
+- **테스트**: `adr0329_equipment_drops`(6) + loot 레이아웃 테스트 2건을 새 슬롯에 맞게 갱신.
+- **검증**: vitest **233/4422** · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0) · 게이트 7종 CLEAN.
+- **다음**: `buy`(오너 결정 5번) · AP/스킬/효과 서브시스템 · `use_item`(hoard 병합 수정) · 장비 파워↔난이도 동시 설계.

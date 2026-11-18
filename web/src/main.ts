@@ -1742,6 +1742,15 @@ class Game {
     this.inventory = mergeRunIntoWallet(this.inventory, run, this.runWalletSeed);
     this.runWalletSeed = null;
     writeWalletMaterials(this.inventory.materials);
+    // ADR-0329: gear salvaged during the run becomes owned when it ends.
+    let owned = this.ownedEquipment;
+    for (const id of this.state?.droppedEquipment ?? []) {
+      owned = ownEquipment(owned, id);
+    }
+    if (owned !== this.ownedEquipment) {
+      this.ownedEquipment = owned;
+      writeOwnedIds(owned);
+    }
   }
 
   private startDungeonCrawl(): void {

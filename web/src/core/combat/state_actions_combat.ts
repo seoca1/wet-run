@@ -21,6 +21,11 @@ import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects";
 import { applyPlayerMitigation } from "./player_mitigation";
 import { playerEvasionPct } from "./player_mitigation";
 import {
+  NANO_REGEN_HP,
+  REVIVE_HP_PCT,
+  loadoutHasEffect,
+} from "../state/extra_effects";
+import {
   applyCase,
   caseNote,
   incomingOddsFor,
@@ -542,6 +547,21 @@ function processEnemyTurns(state: GameState): GameState {
   ];
 
   if (playerHp <= 0) {
+    // ADR-0332: a piece can refuse the flatline once per run (MASTER_BODY).
+    if (loadoutHasEffect(state, "revive_once") && state.reviveUsed !== true) {
+      const hp = Math.max(
+        1,
+        Math.floor((state.player.maxHp * REVIVE_HP_PCT) / 100),
+      );
+      return {
+        ...working,
+        skillCooldowns: newCooldowns,
+        iceRoster: rosterForReturn,
+        reviveUsed: true,
+        player: { ...working.player, hp },
+        message: "The body refuses to quit — one revive spent.",
+      };
+    }
     const jockey = createDeceasedJockey({
       name: state.mission.title,
       characterId: "novice",
@@ -600,6 +620,11 @@ function processEnemyTurns(state: GameState): GameState {
           ),
         ]
       : [];
+
+  // ADR-0332: a piece can knit the body back each enemy phase (NANO_HIVE).
+  if (playerHp > 0 && loadoutHasEffect(state, "nano_regen")) {
+    playerHp = Math.min(state.player.maxHp, playerHp + NANO_REGEN_HP);
+  }
 
   return {
     ...state,

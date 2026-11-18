@@ -235,6 +235,9 @@ export interface GameState {
   /** ADR-0329: the equipment pieces salvaged this run, granted at its end.
    *  Optional; missing means none. */
   readonly droppedEquipment?: ReadonlyArray<string>;
+  /** ADR-0332: the one revive a piece can grant has been spent. Optional;
+   *  missing means it is still available. */
+  readonly reviveUsed?: boolean;
   /** ADR-0311: the tier-6 unique pick has been resolved for this win (taken or
    * skipped). Cleared by the next tier-6 victory. Optional; missing means the
    * pick is still open — but only when the run holds no unique. */

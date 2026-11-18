@@ -176,6 +176,8 @@ function startNextLeg(previous: GameState, finished: GameState): GameState {
     ...(previous.uniquePickDone ? { uniquePickDone: true } : {}),
     // ADR-0329: gear salvaged earlier in the contract carries across its legs.
     droppedEquipment: previous.droppedEquipment,
+    // ADR-0332: the one revive is per RUN, not per leg.
+    ...(previous.reviveUsed ? { reviveUsed: true } : {}),
     jockeyId: previous.jockeyId,
     factionScores: finished.factionScores,
     totalRuns: previous.totalRuns,

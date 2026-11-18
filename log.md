@@ -4155,3 +4155,10 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **검증**: vitest **235/4436**(신규 `adr0331_material_market` 6) · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0).
 - **한계**: 슬롯 11개 → 80열 힌트가 `4-11 options` 짧은 형식(offer 라인이 이름 담당). 힌트 압축은 별도.
 - **다음**: AP/스킬/효과 서브시스템 · extraEffect resolver · 시장 가격 확정(오너) · 장비↔난이도 동시 설계.
+
+## [2026-11-18] feat(combat) | extraEffect whitelist resolver (ADR-0332)
+
+- 오너 "extraEffect resolver 계속" = 제안서 §4 마지막(**임의 문자열 실행 금지**).
+- **결정**: marker→동작 id **whitelist resolver** — 표에 없으면 inert. 부분 문자열 매칭(`addStats` 가 `", "` 로 합침). 동작 6종 이름 등록, **2종 배선**: `revive_once`(MASTER_BODY, 플랫라인 직전 최대HP 30% 부활, 런당 1회 `reviveUsed`) · `nano_regen`(NANO_HIVE, enemy phase당 2 HP).
+- **검증**: vitest **236/4443**(신규 `adr0332_extra_effects` 7) · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0).
+- **다음**: `matrix_stealth`/`matrix_speed`/`zion_support`/`ice_omniscience` 훅 · AP/스킬 · 시장 가격·소비 아이템 수치(오너) · 장비↔난이도 동시 설계.

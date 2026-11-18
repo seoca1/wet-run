@@ -4162,3 +4162,11 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **결정**: marker→동작 id **whitelist resolver** — 표에 없으면 inert. 부분 문자열 매칭(`addStats` 가 `", "` 로 합침). 동작 6종 이름 등록, **2종 배선**: `revive_once`(MASTER_BODY, 플랫라인 직전 최대HP 30% 부활, 런당 1회 `reviveUsed`) · `nano_regen`(NANO_HIVE, enemy phase당 2 HP).
 - **검증**: vitest **236/4443**(신규 `adr0332_extra_effects` 7) · typecheck/lint 0 error · build OK · **balance byte-identical**(100/100/100/97.1/70.6/47.0).
 - **다음**: `matrix_stealth`/`matrix_speed`/`zion_support`/`ice_omniscience` 훅 · AP/스킬 · 시장 가격·소비 아이템 수치(오너) · 장비↔난이도 동시 설계.
+
+## [2026-11-18] docs(session) | 세션 마감 — 경제·장비 배선 9개 슬라이스 (ADR-0324~0332)
+
+- **세션 요약/핸드오프**: `docs/sessions/SESSION_SUMMARY_2026-11-18_economy.md` — 9개 슬라이스 · 현재 기준선 · **핵심 발견 5건** · 다음 작업(순서) · **함정 7건** · 오너 결정 5건 · 이월분. 세션 인덱스(`docs/sessions/SESSION_SUMMARY.md`) 갱신.
+- **이번 세션 ADR**: 0324(비용표·판정 풀) · 0325(장비 소유·데이터) · 0326(방어 단계) · 0327(programPower) · 0328(장비 재조정) · 0329(drop 경로) · 0330(소비 아이템·hoard 수정) · 0331(재료 시장) · 0332(extraEffect resolver). ADR 총 **252건(0001~0332)**.
+- **현재 기준선**: balance **100/100/100/97.1/70.6/47.0** (세션 내내 byte-identical) · survival 64시드 `100/100/83.4/83.1/25.9/42.2` · vitest **236 files / 4443 tests** · 게이트 7종 CLEAN.
+- **워크스페이스**: `log.md`·`NEXT_SESSION_TODO.md` 갱신 + `_archive/sessions/`·`decisions/_session-*` 기록.
+- **다음 첫 작업**: 남은 `extraEffect` 4종 훅 → AP/스킬 서브시스템 → 장비 파워↔난이도 동시 설계(오너).

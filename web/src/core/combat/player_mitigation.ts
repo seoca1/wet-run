@@ -4,12 +4,12 @@
 // defense step on that path. These programs need one, so it lives here
 // rather than inside the enemy turn.
 //
-// Two kinds, both player-targeted status effects:
-//   shield  — an absorbing pool (the ICE already has one; `iceShieldPool`)
-//   evasive — incoming damage reduced by a percentage
+//   shield — an absorbing pool (the ICE already has one; `iceShieldPool`)
 //
-// Order: the pool absorbs first, then the percentage applies to what is
-// left. A discrete resource is spent before a continuous modifier runs.
+// **ADR-0321 moved `evasive` out of here.** It used to cut incoming damage by a
+// flat percentage, which is a tax rather than a dodge. It is now the MISS
+// chance in `attack_resolution.ts`, so `applyPlayerMitigation` runs AFTER the
+// case roll and only spends the shield pool.
 
 import type { GameState, StatusEffectInstance } from "../types";
 
@@ -33,7 +33,8 @@ export interface PlayerMitigationResult {
   readonly damage: number;
   /** Damage the shield pool absorbed. */
   readonly absorbed: number;
-  /** Damage the evasion percent removed. */
+  /** Always 0 since ADR-0321 — evasion is a MISS roll now, not a flat cut.
+   * Kept so the shape of the result does not change under its callers. */
   readonly dodged: number;
 }
 
@@ -53,14 +54,9 @@ export function applyPlayerMitigation(
   }
 
   const pool = playerShieldPool(state);
-  const evasionPct = playerEvasionPct(state);
 
   const absorbed = Math.min(pool, incoming);
-  let remaining = incoming - absorbed;
-
-  const dodged =
-    evasionPct > 0 ? Math.floor((remaining * evasionPct) / 100) : 0;
-  remaining -= dodged;
+  const remaining = incoming - absorbed;
 
   let next = state;
   if (absorbed > 0) {
@@ -82,5 +78,5 @@ export function applyPlayerMitigation(
     next = { ...next, statusEffects: kept };
   }
 
-  return { state: next, damage: remaining, absorbed, dodged };
+  return { state: next, damage: remaining, absorbed, dodged: 0 };
 }

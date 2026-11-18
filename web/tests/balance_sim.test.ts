@@ -149,7 +149,14 @@ describe("balance sim — grade scaling", () => {
     // play. The late-grade damage penalty and the lower encounter HP ceiling
     // make a fight a cost the runner can pay, so the curve now holds up at the
     // top instead of falling to zero.
-    { mode: "opening", expected: [100.0, 100.0, 100.0, 99.7, 88.3, 52.3] },
+    // ADR-0321 turns `cloak`'s evasion from a flat "-15% incoming damage" into a
+    // 15% chance the attack MISSES — the SRW shape the owner asked for. Same
+    // mean, different distribution, and the distribution is what a lethal game
+    // reads: g5 88.3 -> 72.8 (a flat cut guarantees survival across a sequence;
+    // a roll does not) while g6 52.3 -> 57.0 (one dodged lethal hit is a run
+    // that lives). The alphabetical five hold `cloak`; `INCOMING_BASE_ODDS` is
+    // still 0/0, so nothing else moved.
+    { mode: "opening", expected: [100.0, 100.0, 100.0, 98.2, 72.8, 57.0] },
     { mode: "ppl", expected: [100.0, 100.0, 100.0, 98.8, 86.1, 83.7] },
   ])(
     "reproduces the ADR-0256 baseline exactly with idle disabled ($mode)",
@@ -247,8 +254,12 @@ describe("balance sim — outcome sanity", () => {
   });
 
   it("a win and a loss are both reachable across the mission set", () => {
-    const outcomes = missions.map((m) =>
-      simulateCombat(m, iceCatalog, openingDeck, { seed: 5 }),
+    // ADR-0321: a single seed made this brittle — the deck's evasion is a roll
+    // now, so one stream can happen to win everywhere. The claim is about the
+    // mission set, not about seed 5, so it is checked across a few.
+    const seeds = [1, 2, 3, 4, 5];
+    const outcomes = seeds.flatMap((seed) =>
+      missions.map((m) => simulateCombat(m, iceCatalog, openingDeck, { seed })),
     );
     expect(outcomes.some((o) => o.won)).toBe(true);
     expect(outcomes.some((o) => !o.won)).toBe(true);

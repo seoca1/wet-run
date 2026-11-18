@@ -19,6 +19,14 @@ import { rollIceCrit } from "./ice_crit";
 import { alarmDamage } from "./idle_alarm";
 import { iceAttackBonus, tickIceEffects } from "./ice_combat_effects";
 import { applyPlayerMitigation } from "./player_mitigation";
+import { playerEvasionPct } from "./player_mitigation";
+import {
+  applyCase,
+  caseNote,
+  incomingOddsFor,
+  resolveAttackCase,
+  type AttackCase,
+} from "./attack_resolution";
 import { applyIceNonDamageEffect } from "./ice_combat_effect_apply";
 import { endedStatuses, statusEventLines } from "../status";
 import { iceDmgBonusPctForGrade, missionGradeOf } from "./ice_scaling";
@@ -203,6 +211,55 @@ function processDixieTurn(state: GameState): GameState {
   };
 }
 
+/** One incoming attack, resolved through the SRW cases (ADR-0321).
+ *
+ * The order is fixed and deliberate:
+ *
+ *   1. the CASE (miss / guard / hit) — one draw, always
+ *   2. the crit roll — the ICE's own band, on top of the case
+ *   3. the shield pool (ADR-0255)
+ *
+ * The case comes FIRST so a dodged attack never spends the barrier (the runner
+ * did not need it) and so the draw order does not depend on which archetype is
+ * attacking — a positional mock in a test can pin the ICE's rolls.
+ */
+function resolveIncomingHit(
+  state: GameState,
+  enemy: Ice,
+  rawDamage: number,
+  rng: () => number,
+): {
+  readonly state: GameState;
+  readonly damage: number;
+  readonly absorbed: number;
+  readonly attackCase: AttackCase;
+  readonly isCrit: boolean;
+} {
+  const odds = incomingOddsFor(playerEvasionPct(state));
+  // ADR-0321: with nothing to roll there is no draw, so the seeded stream — and
+  // therefore every recorded balance curve — is unchanged until a card or the
+  // owner's table gives the cases something to do.
+  const attackCase: AttackCase =
+    odds.missPct <= 0 && odds.guardPct <= 0
+      ? "hit"
+      : resolveAttackCase(rng(), odds);
+  // ADR-0161 `aggressive` archetype: +5% crit chance. Rolled after the case so
+  // the sequence is the same whatever the archetype.
+  const crit = rollIceCrit(enemy, rawDamage, rng);
+  const cased = applyCase(
+    alarmDamage(crit.damage, state.alarmLevel),
+    attackCase,
+  );
+  const mitigated = applyPlayerMitigation(state, cased);
+  return {
+    state: mitigated.state,
+    damage: mitigated.damage,
+    absorbed: mitigated.absorbed,
+    attackCase,
+    isCrit: crit.isCrit,
+  };
+}
+
 /** One enemy phase. The caller decides *when* — the turn, not a clock.
  *
  * ADR-0280. This used to open with a wall-clock gate:
@@ -220,6 +277,7 @@ function processDixieTurn(state: GameState): GameState {
  * durations (`skillCooldowns` are written in ms; one enemy phase is worth
  * `AUTO_ATTACK_INTERVAL_MS` of them), so no authored number changes meaning.
  */
+
 function processEnemyTurns(state: GameState): GameState {
   state = advanceDeadTarget(state);
 
@@ -337,16 +395,18 @@ function processEnemyTurns(state: GameState): GameState {
           // outgoing damage. The roll is a pure function of the injected RNG
           // and consumes the same `Math.random` the balance harness controls,
           // so the simulation stays deterministic.
-          const crit = rollIceCrit(enemy, baseSkillDmg, Math.random);
-          const skillDmg = alarmDamage(crit.damage, state.alarmLevel);
-          // ADR-0255: the player's shield pool and evasion stand between the
-          // ICE's hit and the player's HP.
-          const mitigated = applyPlayerMitigation(working, skillDmg);
+          // ADR-0321: the case, then the crit, then the shield.
+          const mitigated = resolveIncomingHit(
+            working,
+            enemy,
+            baseSkillDmg,
+            Math.random,
+          );
           working = mitigated.state;
           playerHp = Math.max(0, playerHp - mitigated.damage);
-          if (mitigated.absorbed > 0 || mitigated.dodged > 0) {
+          if (mitigated.absorbed > 0) {
             logMessages.push(
-              `>>> shield absorbed ${mitigated.absorbed}, evasion dodged ${mitigated.dodged}`,
+              `>>> shield absorbed ${mitigated.absorbed}`,
             );
           }
           enemyTurnVfx.push(
@@ -356,11 +416,12 @@ function processEnemyTurns(state: GameState): GameState {
               durationForKind("player_hit"),
               undefined,
               undefined,
+              // ADR-0321: the number the player sees is what reached their HP.
               mitigated.damage,
             ),
           );
           logMessages.push(
-            `>>> ${enemy.name} uses ${selectedSkill.name}: ${skillDmg} dmg${crit.isCrit ? " CRITICAL" : ""}`,
+            `>>> ${enemy.name} uses ${selectedSkill.name}: ${mitigated.damage} dmg${caseNote(mitigated.attackCase)}${mitigated.isCrit ? " CRITICAL" : ""}`,
           );
           newCooldowns[cooldownKey] = selectedSkill.cooldownMs;
           usedSkill = true;
@@ -421,17 +482,19 @@ function processEnemyTurns(state: GameState): GameState {
       // outgoing auto-attack. The roll is a pure function of the injected RNG
       // and consumes the same `Math.random` the balance harness controls, so
       // the simulation stays deterministic.
-      const crit = rollIceCrit(enemy, autoDmg, Math.random);
-      autoDmg = alarmDamage(crit.damage, state.alarmLevel);
-
-      // ADR-0255: the player's shield pool and evasion stand between the
-      // ICE's hit and the player's HP.
-      const autoMitigated = applyPlayerMitigation(working, autoDmg);
+      // ADR-0321: the case, then the crit, then the shield pool (ADR-0255).
+      const autoMitigated = resolveIncomingHit(
+        working,
+        enemy,
+        autoDmg,
+        Math.random,
+      );
       working = autoMitigated.state;
       playerHp = Math.max(0, playerHp - autoMitigated.damage);
-      if (autoMitigated.absorbed > 0 || autoMitigated.dodged > 0) {
+      const autoCase = autoMitigated.attackCase;
+      if (autoMitigated.absorbed > 0) {
         logMessages.push(
-          `>>> shield absorbed ${autoMitigated.absorbed}, evasion dodged ${autoMitigated.dodged}`,
+          `>>> shield absorbed ${autoMitigated.absorbed}`,
         );
       }
       enemyTurnVfx.push(
@@ -441,17 +504,18 @@ function processEnemyTurns(state: GameState): GameState {
           durationForKind("player_hit"),
           undefined,
           undefined,
-          autoDmg,
+          // ADR-0321: the number the player sees is what reached their HP.
+          autoMitigated.damage,
         ),
       );
 
       if (enemy.tier >= 3 && state.bossPhase >= 3) {
         logMessages.push(
-          `>>> ${enemy.name} AoE: ${autoDmg} dmg (hits all!)${crit.isCrit ? " CRITICAL" : ""}`,
+          `>>> ${enemy.name} AoE: ${autoMitigated.damage} dmg (hits all!) ${caseNote(autoCase)}${autoMitigated.isCrit ? " CRITICAL" : ""}`,
         );
       } else {
         logMessages.push(
-          `>>> ${enemy.name} attacks: ${autoDmg} dmg${crit.isCrit ? " CRITICAL" : ""}`,
+          `>>> ${enemy.name} attacks: ${autoMitigated.damage} dmg${caseNote(autoCase)}${autoMitigated.isCrit ? " CRITICAL" : ""}`,
         );
       }
     }

@@ -4252,3 +4252,12 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **P4 브리프** (ADR-0341 Draft): `npm run gear` bare g5/g6 **26/42** → T6 **95/99**(ADR-0328 목표 65/70 보다 +30/+29pp). 옵션 A 장비↓ · **B ICE↑(동시 설계, P2 와 묶음)** · C 수용 · D gear cap. 추천 B, 어려우면 C.
 - **검증**: 러틴 9/9 · doc_claims 3 guide OK(**261 ADR 0001–0341**) · audit_vault/mixed_language CLEAN · e2e desktop/mobile/soak/story green.
 - **오너 결정 대기**: ADR-0339(g4 A/B/C) · ADR-0341(장비 A/B/C/D) · `CONTROL_WEALTH` · `status_quo`.
+
+## [2026-11-21] chore(session) | Jev 자문 + 검증 작업 커밋 (ADR-0339/0341 자문 부착)
+
+- 오너 "Jev 도움 받아서 후속 진행". Jev System One 자문 + §6 가드.
+- **Jev 자문(난이도)**: 곡선 형태 mission **1.51/5**(conf 0.40)·encounter 2.66/5 · "g4 역전 = 결함?" Noul **p=0.59** · "상단 수정책?" Choice **raise_ice p=0.58**(cap 0.39) — **모두 0.6 미만 → 자동 실행 금지, 사람 surface**(정책). → ADR-0339/0341 에 자문 표 부착, 난이도 자체는 **미변경**.
+- **§6 가드**: Noul p=0.92 → 국소화 Choice = **rule4(파일 50+) p=0.81 conf 0.78**(다른 규칙 0.00~0.03). 실질은 clean, 문제는 **세션 크기**.
+- **조치(rule4)**: 커밋을 논리 단위로 분리 — wet_run `chore(format)` **137**(기계적 prettier) + `feat(verify)` **40**(의미) · workspace `feat(verify)` **3**.
+- **도구 정합**: `jev-difficulty.sh` 가 참조 정책(`--cards best --loot value`)을 쓰도록 수정 — `npm run survival` 기본(`first`/`card`)은 훨씬 어려운 다른 곡선이라 잘못된 것을 채점하고 있었다.
+- 검증: vitest 236/4446 · 러틴 9/9 · 워킹트리 clean.

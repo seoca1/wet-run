@@ -110,6 +110,9 @@ interface Result {
    * ADR-0318 replaced — the number that says whether the reorder mattered. */
   readonly wouldBeControl: number;
   readonly creditsAtEnd: number[];
+  /** Ending category the CURRENT resolver returns at each mission completion
+   * (the game resolves at every leg, with missionsCompleted = completed + 1). */
+  readonly endings: Record<string, number>;
 }
 
 function playContract(start: Mission, sweepSeed: number, index: number): Result {
@@ -127,6 +130,7 @@ function playContract(start: Mission, sweepSeed: number, index: number): Result 
   let finished = 0;
   let wouldBeControl = 0;
   const creditsAtEnd: number[] = [];
+  const endings: Record<string, number> = {};
 
   for (let leg = 0; leg < contract.legs.length && leg < CONTRACT; leg += 1) {
     const mission = contract.legs[leg]?.mission;
@@ -162,13 +166,19 @@ function playContract(start: Mission, sweepSeed: number, index: number): Result 
             ...(carry.uniquePickDone ? { uniquePickDone: true } : {}),
           },
     );
-    if (!final || final.runPhase !== "ending") break;
+    if (!final || final.runPhase !== "ending") {
+      // Died mid-contract — the shown ending is `sacrifice`.
+      endings["sacrifice"] = (endings["sacrifice"] ?? 0) + 1;
+      break;
+    }
     legs[leg]!.completed += 1;
     const credits = final.player.credits;
     creditsAtEnd.push(credits);
+    // Only the FINAL leg's resolution is SHOWN. `state.ts:200` replaces an
+    // intermediate leg's ending with the next leg (`startNextLeg`), so leg1/leg2
+    // resolutions are swallowed and never reach the player. Tally the shown one.
     if (leg === contract.legs.length - 1) {
       finished += 1;
-      // The resolver's context, exactly as `applyTerminalLoot` builds it.
       const ending = resolveEnding({
         arc: (mission.arc as 1) || 1,
         hp: final.player.hp,
@@ -179,10 +189,9 @@ function playContract(start: Mission, sweepSeed: number, index: number): Result 
         factionScores: {},
         choices: [],
       });
+      endings[ending.category] = (endings[ending.category] ?? 0) + 1;
       // Under the order ADR-0318 replaced, `credits > 5000` came first.
-      if (ending.category !== "liberation" || credits > 5000) {
-        if (credits > 5000 && final.player.hp > 0) wouldBeControl += 1;
-      }
+      if (credits > 5000 && final.player.hp > 0) wouldBeControl += 1;
     }
     carry = {
       deck: [...final.deck, ...final.drawPile, ...final.discardPile],
@@ -196,6 +205,7 @@ function playContract(start: Mission, sweepSeed: number, index: number): Result 
     finished,
     wouldBeControl,
     creditsAtEnd,
+    endings,
   };
 }
 
@@ -207,8 +217,10 @@ function main(): void {
     finished: 0,
     wouldBeControl: 0,
     creditsAtEnd: [] as number[],
+    endings: {} as Record<string, number>,
   };
   const byGrade = new Map<number, { contracts: number; finished: number }>();
+  const finals: number[] = [];
   // The per-leg rates by START grade. The aggregate leg table above mixes every
   // grade together; this is the one that shows a contract's legs are not equal,
   // which is what rules out the "coin flip three times" reading of (e).
@@ -223,6 +235,12 @@ function main(): void {
         totals.finished += result.finished;
         totals.wouldBeControl += result.wouldBeControl;
         totals.creditsAtEnd.push(...result.creditsAtEnd);
+        for (const [cat, n] of Object.entries(result.endings)) {
+          totals.endings[cat] = (totals.endings[cat] ?? 0) + n;
+        }
+        if (result.finished === 1 && result.creditsAtEnd.length > 0) {
+          finals.push(result.creditsAtEnd[result.creditsAtEnd.length - 1] ?? 0);
+        }
         result.legs.forEach((leg, i) => {
           totals.legs[i]!.reached += leg.reached;
           totals.legs[i]!.completed += leg.completed;
@@ -250,6 +268,12 @@ function main(): void {
     d === 0 ? "  n/a" : `${((n / d) * 100).toFixed(1)}%`.padStart(6);
   const mean = (xs: number[]): number =>
     xs.length === 0 ? 0 : xs.reduce((a, b) => a + b, 0) / xs.length;
+  const quantile = (xs: number[], q: number): number => {
+    if (xs.length === 0) return 0;
+    const sorted = [...xs].sort((a, b) => a - b);
+    const idx = Math.min(sorted.length - 1, Math.max(0, Math.round(q * (sorted.length - 1))));
+    return sorted[idx] ?? 0;
+  };
 
   console.log(
     `campaign survival — ${CONTRACT}-mission contracts, ${SEEDS} seeds x ${SPRAWL.length} start missions, ` +
@@ -275,11 +299,23 @@ function main(): void {
   console.log(
     `mean credits at the end of a finished contract: ${Math.round(mean(totals.creditsAtEnd))}`,
   );
+  // The control gate is read off the credits at the FINAL resolution, so the
+  // distribution that matters is the finished contract's last-leg wallet.
+  console.log(
+    `credits at a finished contract's end — p50 ${quantile(finals, 0.5)} · p75 ${quantile(finals, 0.75)} · ` +
+      `p90 ${quantile(finals, 0.9)} · p95 ${quantile(finals, 0.95)} · max ${finals.length ? Math.max(...finals) : 0}`,
+  );
   // ADR-0318 moved the campaign's ending ahead of wealth. This is how many
   // finished contracts the old order would have read as "you got rich".
   console.log(
     `finished contracts the OLD order would have called control: ${totals.wouldBeControl}/${totals.finished} = ${pct(totals.wouldBeControl, totals.finished)}`,
   );
+  const totalEndings = Object.values(totals.endings).reduce((a, b) => a + b, 0);
+  console.log("");
+  console.log(`endings resolved under the CURRENT order (every leg, ${totalEndings} resolutions):`);
+  for (const [cat, n] of Object.entries(totals.endings).sort((a, b) => b[1] - a[1])) {
+    console.log(`  ${cat.padEnd(14)} ${String(n).padStart(5)}   ${pct(n, totalEndings)}`);
+  }
   console.log("");
   console.log("leg completion by START grade (conditional on reaching that leg)");
   for (const grade of [...legByGrade.keys()].sort((a, b) => a - b)) {

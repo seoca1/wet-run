@@ -6,6 +6,7 @@ import {
   tickAlarm,
   countRoleSynergy,
   COMBO_WINDOW_MS,
+  AUTO_ATTACK_INTERVAL_MS,
   type DamageContext,
 } from "../src/core/combat/combat_engine";
 
@@ -508,5 +509,15 @@ describe("combat_engine", () => {
       const result = countRoleSynergy("strike", skills);
       expect(result).toBe(2);
     });
+  });
+});
+
+describe("auto-attack cadence", () => {
+  it("fires every 2000 ms — the cadence is a design contract, not a free knob", () => {
+    // Nothing else in the suite pins this value: the mutation spike (ADR-0333)
+    // showed `AUTO_ATTACK_INTERVAL_MS = 2000 → 1000` SURVIVED every combat test,
+    // because the tests that touch it import the constant rather than assert its
+    // value. A cadence change is a design decision, so it is recorded here.
+    expect(AUTO_ATTACK_INTERVAL_MS).toBe(2000);
   });
 });

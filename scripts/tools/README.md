@@ -11,10 +11,18 @@ build/data-export scripts went with the `prototype/` source they read.
 
 | Tool | Purpose | Usage |
 |------|---------|-------|
-| **`audit_sprawl.py`** | Project-scoped wikilink integrity check (broken links + orphans) | `python3 scripts/tools/audit_sprawl.py` |
-| **`find_broken_links.py`** | Find broken wikilinks with file:line:target detail; resolves cross-project Fiction wiki references per AGENTS.md §4.1 | `python3 scripts/tools/find_broken_links.py` |
+| **`find_broken_links.py`** | Find broken wikilinks with file:line:target detail; resolves cross-project Fiction wiki references per AGENTS.md §4.1. Exits 1 on any broken link, so it can gate. | `python3 scripts/tools/find_broken_links.py` |
 
-> Both scripts resolve paths from their own location, so they run from any cwd. `audit_sprawl.py` is the more comprehensive tool; `find_broken_links.py` provides detailed per-line output for debugging. Both include the vault-wide `audit_vault.py` cross-project resolution behavior (Fiction wiki).
+> For **orphan pages** and the vault-wide (whole-workspace) link audit, use the
+> workspace tool `scripts/audit_vault.py` (run from the workspace root) — it already
+> covers everything under `Game/wet_run/`.
+
+## Removed (2026-11-18, ADR-0334)
+
+`audit_sprawl.py` was deleted. It duplicated `find_broken_links.py` (same ROOT,
+EXCLUDE, strip, regex) **and could never fail** — `main()` had no `sys.exit`, so it
+exited 0 even with broken links. A checker that cannot fail is not a gate; keeping
+it invited false confidence. Orphan detection lives in `audit_vault.py`.
 
 ## Removed (2026-09-23)
 

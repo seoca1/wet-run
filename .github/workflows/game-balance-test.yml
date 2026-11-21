@@ -1,72 +1,32 @@
 name: Game Balance Testing
 
+# Gate, not a print-out (ADR-0335): this job diffs the balance curve against the
+# committed golden. A regression fails the PR; an improvement passes. The old
+# `balance-test` job (which ran the decks and uploaded logs with no assertion)
+# was removed — a run that cannot fail is not a gate (ADR-0334).
 on:
   push:
     branches: [main, develop]
     paths:
       - 'web/src/**'
       - 'web/scripts/**'
-      - 'data/programs/**'
-      - 'data/decks/**'
   pull_request:
     branches: [main, develop]
 
 jobs:
-  balance-test:
+  balance-regression:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: 'web/package-lock.json'
-
-      - name: Install dependencies
-        working-directory: ./web
-        run: npm ci
-
-      - name: Run balance tests - Opening Deck
-        working-directory: ./web
-        run: npm run balance -- --deck opening
-
-      - name: Run balance tests - Veteran Deck
-        working-directory: ./web
-        run: npm run balance -- --deck veteran
-
-      - name: Run balance tests - Heretic Deck
-        working-directory: ./web
-        run: npm run balance -- --deck heretic
-
-      - name: Upload test results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: balance-test-results
-          path: |
-            web/test-results/
-            web/balance-*.log
-
-  regression-check:
-    runs-on: ubuntu-latest
-    needs: balance-test
-    if: github.event_name == 'pull_request'
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
           cache: 'npm'
           cache-dependency-path: 'web/package-lock.json'
 
@@ -74,20 +34,18 @@ jobs:
         working-directory: ./web
         run: npm ci
 
-      - name: Compare with baseline
+      - name: Balance vs golden
         working-directory: ./web
-        run: |
-          npm run balance:compare -- main
+        run: npm run balance:check -- --allow-improvement
 
       - name: Comment PR with results
-        if: always()
-        uses: actions/github-script@v6
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
             const path = require('path');
             const resultsPath = path.join(process.env.GITHUB_WORKSPACE, 'web', 'test-results', 'balance-summary.txt');
-
             if (fs.existsSync(resultsPath)) {
               const results = fs.readFileSync(resultsPath, 'utf8');
               github.rest.issues.createComment({

@@ -28,6 +28,9 @@ jobs:
       - name: Lint
         working-directory: ./web
         run: npm run lint
+      - name: Format check
+        working-directory: ./web
+        run: npx prettier --check "src/**/*.{ts,tsx}"
       - name: TypeScript check
         working-directory: ./web
         run: npx tsc --noEmit

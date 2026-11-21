@@ -523,27 +523,28 @@ async function startRun(
     await page.keyboard.press("ArrowDown");
   }
   await page.keyboard.press("Enter");
-  // ADR-0317: mission select opens the BRIEFING; ADR-0283 C: ENTER there opens
-  // PREP, and one more ENTER jacks in.
-  await page.waitForFunction(
-    () =>
-      ["briefing", "prep"].includes(
-        (
-          window as unknown as {
-            wetrun: { getScreen(): string };
-          }
-        ).wetrun.getScreen(),
-      ),
-    undefined,
-    { timeout: 10000 },
-  );
-  if (
-    (await page.evaluate(
-      () =>
-        (window as unknown as { wetrun: { getScreen(): string } }).wetrun.getScreen(),
-    )) === "briefing"
-  ) {
-    await page.keyboard.press("Enter");
+  // ADR-0317: mission select opens the BRIEFING; ENTER there opens PREP, and one
+  // more ENTER jacks in. ADR-0317 3b: the fixer's briefing is a beat card — it
+  // owns the screen and EATS the next key, so it must be dismissed like a player
+  // does. Without this the screen stayed on `briefing` and the soak stalled
+  // (the other two drivers, `story_trace` and `run_end_save`, already did it).
+  for (let i = 0; i < 5; i += 1) {
+    const s = await page.evaluate(() => {
+      const w = window as unknown as {
+        wetrun?: { getBeatCard?(): unknown; getScreen(): string };
+      };
+      return {
+        beat: (w.wetrun?.getBeatCard?.() ?? null) !== null,
+        screen: w.wetrun?.getScreen() ?? "",
+      };
+    });
+    if (s.screen === "prep") break;
+    if (s.beat || s.screen === "briefing") {
+      await page.keyboard.press("Enter");
+      await page.waitForTimeout(80);
+      continue;
+    }
+    break;
   }
   await page.waitForFunction(
     () =>

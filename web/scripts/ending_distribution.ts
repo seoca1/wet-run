@@ -260,6 +260,13 @@ const base = rows.reduce((a, r) => a + r.baseCredits, 0);
 console.log(
   `ending distribution — ${rows.length} missions, seed ${SEED}, policy "expensive", resolver credits=${CREDITS_SOURCE}, tick-every=${TICK_EVERY}`,
 );
+// ⚠ This is a SINGLE-MISSION model (missionsCompleted fixed at 1) on ONE seed.
+// A real run is a 3-mission contract and the game resolves an ending at EVERY
+// leg (missionsCompleted = campaign.completed + 1), so `control` (needs < 3
+// completions) and `liberation` (needs >= 3) are NOT representative here. Read
+// the ending distribution from `npm run campaign` — it tallies every leg. This
+// tool answers the single-mission question only (ADR-0279), not the campaign's.
+console.log("[single-mission model · one seed — endings read from `npm run campaign` have the real curve]");
 console.log("");
 console.log("ending                    n   share");
 for (const [id, n] of [...counts.entries()].sort((a, b) => b[1] - a[1])) {

@@ -19,6 +19,12 @@ So this checks two things and exits non-zero on either:
 Run:
     python3 scripts/check_doc_claims.py            # fast: no test run
     python3 scripts/check_doc_claims.py --tests    # also run vitest to count
+    python3 scripts/check_doc_claims.py --guide ROADMAP.md   # add a guide
+
+Checks AGENTS.md and README.md by default (repeatable --guide). ROADMAP.md is
+**not** in the default set on purpose: its history section legitimately names
+prototype-era paths, so a strict path check there is all noise. Its *current
+status* numbers are kept honest by hand.
 
 Exit codes: 0 = every claim holds, 1 = drift found, 2 = checker error.
 """
@@ -235,8 +241,10 @@ def measure_tests() -> int | None:
 def is_vitest_line(line: str) -> bool:
     """Only vitest/npm-test lines carry the project's test counts. The guide
     also quotes prototype-era Python counts ("# 40 tests" under tests/unit/),
-    which are history and must not be read as the current suite."""
-    return "vitest" in line or "npm test" in line
+    which are history and must not be read as the current suite. Case-insensitive
+    so "Vitest (4443 tests)" in the README is still seen."""
+    low = line.lower()
+    return "vitest" in low or "npm test" in low
 
 
 # (label, regex, measurement description, resolver, line filter)
@@ -305,33 +313,66 @@ def check_claims(text: str, with_tests: bool) -> list[tuple[str, str, str, int]]
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tests", action="store_true", help="also run vitest to count tests")
-    parser.add_argument("--guide", default=str(GUIDE), help="guide to check")
+    parser.add_argument(
+        "--guide",
+        action="append",
+        default=None,
+        help="guide to check (repeatable, full checks). Default: AGENTS.md + README.md full, "
+        "ROADMAP.md counts-only",
+    )
+    parser.add_argument(
+        "--counts-only",
+        action="store_true",
+        help="skip path checks for every guide (numbers only)",
+    )
     args = parser.parse_args(argv)
 
-    guide = Path(args.guide)
-    if not guide.exists():
-        print(f"checker error: no guide at {guide}", file=sys.stderr)
-        return 2
-    text = guide.read_text(encoding="utf-8")
+    if args.guide:
+        guides: list[tuple[Path, bool]] = [(Path(g), args.counts_only) for g in args.guide]
+    else:
+        # ROADMAP's history section names prototype-era paths on purpose, so a
+        # strict path check there is all noise — but its CURRENT numbers still
+        # must not drift. Hence counts-only.
+        guides = [(GUIDE, False), (ROOT / "README.md", False), (ROOT / "ROADMAP.md", True)]
 
-    missing, historical = check_paths(guide, text)
-    drift = check_claims(text, args.tests)
+    any_dead = False
+    any_drift = False
+    total_paths = 0
+    dead_total = 0
+    drift_total = 0
+    for guide, counts_only in guides:
+        if not guide.exists():
+            print(f"checker error: no guide at {guide}", file=sys.stderr)
+            return 2
+        text = guide.read_text(encoding="utf-8")
+        missing: list[tuple[str, int]] = []
+        historical: list[tuple[str, int]] = []
+        if not counts_only:
+            missing, historical = check_paths(guide, text)
+            total_paths += len(inline_paths(text))
+        drift = check_claims(text, args.tests)
+        tag = f"{guide.name}{' (counts-only)' if counts_only else ''}"
+
+        if historical:
+            print(f"[{tag}] HISTORICAL NAMES ({len(historical)}) — described as retired (warn only):")
+            for token, line in historical:
+                print(f"  line {line}: {token}")
+        if missing:
+            any_dead = True
+            dead_total += len(missing)
+            print(f"[{tag}] DEAD PATHS ({len(missing)}) — named in {guide.name}, not on disk:")
+            for token, line in missing:
+                print(f"  line {line}: {token}")
+        if drift:
+            any_drift = True
+            drift_total += len(drift)
+            print(f"[{tag}] NUMBER DRIFT ({len(drift)}) — claimed vs measured:")
+            for label, claimed, measured, line in drift:
+                print(f"  line {line}: {label}: claimed {claimed}, measured {measured}")
+        if missing or drift:
+            print()
+
     ns_failures, ns_warnings, ns_notes = check_adr_namespace()
-
-    if historical:
-        print(f"HISTORICAL NAMES ({len(historical)}) — described as retired, not on disk (warn only):")
-        for token, line in historical:
-            print(f"  line {line}: {token}")
-        print()
-    if missing:
-        print(f"DEAD PATHS ({len(missing)}) — named in {guide.name}, not on disk:")
-        for token, line in missing:
-            print(f"  line {line}: {token}")
-    if drift:
-        print(f"\nNUMBER DRIFT ({len(drift)}) — claimed vs measured:")
-        for label, claimed, measured, line in drift:
-            print(f"  line {line}: {label}: claimed {claimed}, measured {measured}")
-
     if ns_warnings:
         print(f"ADR NAMESPACE WARNINGS ({len(ns_warnings)}) — need an owner decision, not a fix:")
         for w in ns_warnings:
@@ -342,20 +383,21 @@ def main(argv: list[str]) -> int:
             print("ADR namespace: " + note)
         print()
 
-    if missing or drift or ns_failures:
+    if any_dead or any_drift or ns_failures:
         if ns_failures:
             print(f"ADR NAMESPACE FAILURES ({len(ns_failures)}):")
             for f in ns_failures:
                 print("  " + f)
             print()
         print(
-            f"FAIL: {len(missing)} dead path(s), {len(drift)} number claim(s) drifted, "
-            f"{len(ns_failures)} namespace failure(s)."
+            f"FAIL across {len(guides)} guide(s): {dead_total} dead path(s), "
+            f"{drift_total} number claim(s) drifted, {len(ns_failures)} namespace failure(s)."
         )
         return 1
-    checked = len(inline_paths(text))
     suffix = "" if args.tests else " (test count not checked: pass --tests)"
-    print(f"OK: {checked} paths resolve; every checked count matches.{suffix}")
+    print(
+        f"OK: {len(guides)} guide(s), {total_paths} paths resolve; every checked count matches.{suffix}"
+    )
     return 0
 
 

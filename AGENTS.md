@@ -11,9 +11,9 @@
 | 디렉토리 | 에이전트의 역할 | 절대 규칙 |
 | --- | --- | --- |
 | `web/` | **활성 코드베이스** | TypeScript + Vite + Vitest. 모든 변경은 `web/` 에서. 명령은 `cd web && npm ...`. |
-| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. 하위: `docs/wiki/`(ADR·lore·world) · `docs/design/`(활성 스펙·증거) · `docs/testcases/` · `docs/sessions/`(세션 요약) · `docs/dashboard/` · `docs/playtest/`(수동 플레이 기록) · `docs/architecture/`(redirect-only) · `docs/diagnostics/`(도구 진단 기록). **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (252 ADRs, 0001–0332). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
+| `docs/` | 자유롭게 편집, 사용자 검토 영역 | 디자인 / ADR / 세션 요약 보관. 하위: `docs/wiki/`(ADR·lore·world) · `docs/design/`(활성 스펙·증거) · `docs/testcases/` · `docs/sessions/`(세션 요약) · `docs/dashboard/` · `docs/playtest/`(수동 플레이 기록) · `docs/architecture/`(redirect-only) · `docs/diagnostics/`(도구 진단 기록). **`docs/wiki/decisions/` 가 web/ ADR 단일 canonical 위치** (261 ADRs, 0001–0341). `docs/architecture/` 는 redirect-only (README.md만 존재). `docs/design/` 가 활성 스펙, `docs/wiki/` 가 LLM Wiki 계층, `docs/dashboard/` 가 파생 소설·콘텐츠 HTML 단일 진실 공급원. |
 | `data/` | **삭제됨 (2026-10-20)** | 이전 prototype/ 잔재 (sounds_test WAVs, jockeys/deceased.json). 모든 게임 데이터는 `web/src/data/*.json` 과 `web/public/sounds/` 에 존재. |
-| `scripts/` | 자유롭게 편집 | 보조 도구 (`scripts/tools/` — audit_sprawl.py, find_broken_links.py, README.md). |
+| `scripts/` | 자유롭게 편집 | 보조 도구 (`scripts/tools/` — find_broken_links.py, import_briefings.py, README.md). |
 | 루트 메타 파일 | 신중히 수정 | README, AGENTS, log, ROADMAP, CHANGELOG, MIGRATION, VALIDATION_SCENARIO, mkdocs.yml |
 
 > **2026-10-20 정합 노트**: 본 표는 현행 트리 기준이다. 이전 버전이 나열하던 `raw/`, `wiki/`, `design/`, `testcases/`, `decisions/`, `prototype/`, `dashboard/` 행은 모두 프로토타입 시절 경로로 현재 존재하지 않는다 — `raw/` 와 `prototype/` 은 2026-09-15 Python 프로토타입 통합으로 삭제되었고, `wiki/` / `design/` / `testcases/` / `decisions/` 는 `docs/` 하위로 이관되었으며, `dashboard/` 는 `docs/dashboard/` 로 이동했다. 깁슨 분석 wiki는 Fiction 프로젝트(`../../Fiction/wiki/`)에서 별도 유지된다.
@@ -28,9 +28,12 @@
    - `index.md` 갱신
    - `log.md` 에 `[YYYY-MM-DD] ingest | 제목` 형식으로 기록
 3. 위키 페이지에 원문 인용 추가 (가능하면)
-4. 검증 (새) — 변경 완료 후 **워크스페이스 루트에서** 실행 (스크립트의 GOLD·로그 경로가 루트 상대):
-   `cd ../.. && python3 scripts/wet_run_verify.py --full --out Game/wet_run/docs/design/verification-report.md`
-   → audit 0 + Jev p ≥ 0.6 확인; `log.md` 기록.
+4. 검증 (게이트) — 도구 지도·신뢰 등급: [`docs/design/verification-framework.md`](./docs/design/verification-framework.md)
+   (ADR-0333~0336). **단일 러틴**으로 한 번에 돈다:
+   `python3 scripts/wet_run_verify.py --full` — 게이트 9종(balance·gear·tests·audit·doc_claims·prose·briefings·links·lang)
+   + 격리 advisory Jev, 실패 시 exit 1. `--log` 를 주면 `log.md` 에 `[YYYY-MM-DD] verify | …` 한 줄을 남긴다.
+   밸런스를 움직였으면 러틴의 `balance:check` 가 잡는다 — 의도된 변경이면 `npm run balance:golden` 으로 재기록.
+   Jev 는 **advisory**(로컬·미보정)이며 게이트가 아니다.
 5. **문서 주장 검사** (2026-11-04, ADR-0267): `python3 scripts/check_doc_claims.py` — **exit 0 필수**.
    이 문서(AGENTS.md)가 가리키는 **경로가 실제로 있는지**, 적어둔 **수치가 실측과 같은지**를 대조한다. 수치에 `+` 를 붙이면 **하한**이 된다(`180+ files` = 180 이상) — 늘어나는 수치는 하한으로 두고, 줄어들면 실패한다(스위트 축소 알람).
    테스트 수까지 세려면 `--tests` (vitest 실행). ADR 번호 중복은 **경고**다 — 재번호는 Accepted ADR
@@ -171,7 +174,16 @@ npm run build          # tsc + vite build → dist/
 npm run dev            # vite dev server (HMR)
 npm run e2e            # playwright e2e (separated tests, requires browsers)
 npm run smoke          # e2e/smoke.spec.ts only
+npm run gear           # 장비 착용 곡선 (encounter/mission × 5세트)
+npm run gear:check     # gear 골든 대조 — 드리프트면 실패 (ADR-0336)
+npm run gear:golden    # gear 골든 재기록
 npm run balance        # 밸런스 하네스 — 시드 고정 전투 시뮬레이션 (grade별 승률/턴/HP)
+npm run balance:check  # 골든 대조 — 드리프트면 실패 (ADR-0333)
+npm run balance:golden # 골든 재기록 (의도된 밸런스 변경 시)
+npm run mutation       # mutation spike — 테스트가 상수 변이를 잡는지 (진단)
+
+cd ../..               # 워크스페이스 루트에서 — 단일 검증 러틴
+python3 scripts/wet_run_verify.py --full   # 게이트 9종 + advisory Jev, 실패 시 exit 1 (ADR-0335/0336)
 ```
 
 > **사전 알림 (2026-09-15 감사, 2026-09-19 해소)**: `tsc --noEmit`이 pristine HEAD에서 79개 strict-type 에러를 보고했음. 2026-09-19 세션에서 모두 해소 — 정확한 seed/grade 필드명 사용 (state.ts), 미커밋된 매트릭스 테스트 fallback 타입 좁히기 (matrix_ice_bug.test.ts), 그리고 데이터 경계의 런타임 검증 추가 (data_loaders.ts). 0개 에러.
@@ -207,7 +219,7 @@ Game/wet_run/
 │   └── scripts/            # balance_harness.ts / balance_sim.ts 등 보조 스크립트
 ├── docs/                   # 디자인 / ADR / 세션 요약
 ├── data/                   # 정적 데이터 (이전 prototype/ 잔재; hand-maintained JSON으로 통합됨)
-├── scripts/                # tools/ (audit_sprawl.py, find_broken_links.py, README.md)
+├── scripts/                # tools/ (find_broken_links.py, import_briefings.py, README.md)
 ├── log.md                  # 워크스페이스 활동 로그
 ├── README.md               # 최상위 개요
 └── ROADMAP.md              # 단계별 계획

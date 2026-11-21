@@ -10,7 +10,10 @@
     "build:analyze": "tsc --noEmit && vite build --mode analysis",
     "typecheck": "tsc --noEmit",
     "balance": "tsx scripts/balance_harness.ts",
-    "balance:compare": "tsx scripts/balance_compare.ts",
+    "balance:golden": "tsx scripts/balance_baseline.ts --write",
+    "balance:check": "tsx scripts/balance_baseline.ts --check",
+    "balance:compare": "tsx scripts/balance_baseline.ts --check --allow-improvement",
+    "mutation": "tsx scripts/mutation_spike.ts",
     "endings": "tsx scripts/ending_distribution.ts",
     "preview": "vite preview",
     "test": "vitest run",
@@ -26,7 +29,9 @@
     "survival": "tsx scripts/mission_survival.ts",
     "campaign": "tsx scripts/campaign_survival.ts",
     "crafting": "tsx scripts/crafting_probe.ts",
-    "gear": "tsx scripts/gear_curve_probe.ts"
+    "gear": "tsx scripts/gear_curve_probe.ts",
+    "gear:golden": "tsx scripts/gear_baseline.ts --write",
+    "gear:check": "tsx scripts/gear_baseline.ts --check"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

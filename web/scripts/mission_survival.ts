@@ -275,6 +275,16 @@ for (const grade of [...byGrade.keys()].sort((a, b) => a - b)) {
 console.log("");
 console.log(`worst miss: ${worst.toFixed(1)}pp (tolerance ${TOLERANCE_PP}pp)`);
 console.log(
+  "NOTE (ADR-0229): GRADE_TARGETS is a SUPERSEDED reference — the ICE constants describe the",
+);
+console.log(
+  "  baseline the engine achieves, not a target to chase. A delta here is a SIGNAL to read",
+);
+console.log(
+  "  (e.g. ADR-0319's per-fight heal floor made g4's attrition easy — a design question), not a",
+);
+console.log("  test failure. The one HARD invariant is the monotonicity line below.");
+console.log(
   "invariant (ADR-0229): per-encounter rates must be monotonic non-increasing by grade",
 );
 console.log(

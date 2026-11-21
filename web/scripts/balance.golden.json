@@ -1,0 +1,137 @@
+{
+  "runs": 100,
+  "decks": {
+    "opening": [
+      {
+        "grade": 1,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 3,
+        "meanHpEnd": 87
+      },
+      {
+        "grade": 2,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 4.3,
+        "meanHpEnd": 70.4
+      },
+      {
+        "grade": 3,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 5.2,
+        "meanHpEnd": 64.7
+      },
+      {
+        "grade": 4,
+        "winRate": 97.1,
+        "stalled": 0,
+        "meanTurns": 5.2,
+        "meanHpEnd": 48.9
+      },
+      {
+        "grade": 5,
+        "winRate": 70.6,
+        "stalled": 0,
+        "meanTurns": 5,
+        "meanHpEnd": 37.4
+      },
+      {
+        "grade": 6,
+        "winRate": 47,
+        "stalled": 0,
+        "meanTurns": 4.9,
+        "meanHpEnd": 23.5
+      }
+    ],
+    "veteran": [
+      {
+        "grade": 1,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 3,
+        "meanHpEnd": 86.9
+      },
+      {
+        "grade": 2,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 4.2,
+        "meanHpEnd": 70.8
+      },
+      {
+        "grade": 3,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 5.2,
+        "meanHpEnd": 64.5
+      },
+      {
+        "grade": 4,
+        "winRate": 96,
+        "stalled": 0,
+        "meanTurns": 5.2,
+        "meanHpEnd": 48.4
+      },
+      {
+        "grade": 5,
+        "winRate": 69.4,
+        "stalled": 0,
+        "meanTurns": 5,
+        "meanHpEnd": 36.8
+      },
+      {
+        "grade": 6,
+        "winRate": 46.3,
+        "stalled": 0,
+        "meanTurns": 4.9,
+        "meanHpEnd": 23.2
+      }
+    ],
+    "heretic": [
+      {
+        "grade": 1,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 3,
+        "meanHpEnd": 87
+      },
+      {
+        "grade": 2,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 4.3,
+        "meanHpEnd": 69.1
+      },
+      {
+        "grade": 3,
+        "winRate": 100,
+        "stalled": 0,
+        "meanTurns": 5.3,
+        "meanHpEnd": 62.2
+      },
+      {
+        "grade": 4,
+        "winRate": 95.2,
+        "stalled": 0,
+        "meanTurns": 5.3,
+        "meanHpEnd": 47.7
+      },
+      {
+        "grade": 5,
+        "winRate": 66.1,
+        "stalled": 0,
+        "meanTurns": 5,
+        "meanHpEnd": 34.4
+      },
+      {
+        "grade": 6,
+        "winRate": 42.3,
+        "stalled": 0,
+        "meanTurns": 5,
+        "meanHpEnd": 21.2
+      }
+    ]
+  }
+}

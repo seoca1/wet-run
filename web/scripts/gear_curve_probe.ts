@@ -10,8 +10,14 @@
  *   - mission   — the whole mission, through `playRun` (the policy `survival`
  *                 uses), reported as mission completion % per grade
  *
- *   npm run gear
+ * `gearCurve()` is exported so `gear_baseline.ts` can golden it (ADR-0336); the
+ * printer below only runs when this file is invoked directly, so importing the
+ * module has no side effects.
+ *
+ *   npm run gear            # print the tables
+ *   npm run gear -- --json  # machine-readable curve
  */
+import { pathToFileURL } from "node:url";
 import { missionGradeOf } from "../src/core/combat/ice_scaling";
 import { EMPTY_LOADOUT, equipOn, makeLoadout } from "../src/core/state/loadout";
 import {
@@ -60,88 +66,126 @@ const ENC_SEEDS = 40;
  *  recorded baseline (per-cell seed: `seed + missionIndex * 31`). */
 const MIS_SEEDS = 64;
 
+export interface GearEncounterRow {
+  readonly set: string;
+  readonly winPct: readonly number[];
+  readonly hpRemainPct: readonly number[];
+}
+export interface GearMissionRow {
+  readonly set: string;
+  readonly completionPct: readonly number[];
+}
+export interface GearCurve {
+  readonly encounter: readonly GearEncounterRow[];
+  readonly mission: readonly GearMissionRow[];
+}
+
 function gradeBuckets(): Array<[number, Mission[]]> {
   // No far-grid filter: `mission_survival` iterates the whole catalog, so the
   // bare row can be read against the recorded baseline.
-  return GRADES.map((g) => [
-    g,
-    ALL.filter((m) => missionGradeOf(m) === g),
-  ]);
+  return GRADES.map((g) => [g, ALL.filter((m) => missionGradeOf(m) === g)]);
 }
 
-console.log("gear curve probe — paired seeds, non-boss encounter / whole mission");
-console.log("");
-
-console.log("A) encounter — win% / HP remaining %");
-console.log("set                              g1    g2    g3    g4    g5    g6");
-for (const set of SETS) {
-  const cells: string[] = [];
-  for (const [grade, bucket] of gradeBuckets()) {
-    const deck = deckForGrade(programs, grade);
-    let wins = 0;
-    let n = 0;
-    let remain = 0;
-    for (const mission of bucket) {
-      for (let i = 0; i < ENC_SEEDS; i += 1) {
-        const o = simulateCombat(mission, ice, deck, { seed: 1000 + i * 31 + grade }, set.loadout);
-        n += 1;
-        if (o.won) wins += 1;
-        remain += o.hpEnd / Math.max(1, o.hpStart);
-      }
-    }
-    cells.push(`${pad((wins / Math.max(1, n)) * 100)}/${pad((remain / Math.max(1, n)) * 100)}`);
-  }
-  console.log(`  ${set.name.padEnd(32)}${cells.join(" ")}`);
-}
-
-console.log("");
-console.log("B) mission completion % (playRun policy, same seeds as `survival`)");
-console.log("set                              g1    g2    g3    g4    g5    g6");
-const originalRandom = Math.random;
-const originalNow = Date.now;
-try {
+/** The deterministic curve. Same seeds in, same numbers out — goldenable. */
+export function gearCurve(): GearCurve {
+  const encounter: GearEncounterRow[] = [];
   for (const set of SETS) {
-    const cells: string[] = [];
-    for (const [, bucket] of gradeBuckets()) {
-      let done = 0;
+    const winPct: number[] = [];
+    const hpRemainPct: number[] = [];
+    for (const [grade, bucket] of gradeBuckets()) {
+      const deck = deckForGrade(programs, grade);
+      let wins = 0;
       let n = 0;
-      for (let s = 0; s < MIS_SEEDS; s += 1) {
-        const seed = 20261106 + s * 7919;
-        for (const mission of bucket) {
-          // Per-cell seed keyed on the FULL-catalog index, as `survival` does.
-          const mi = ALL.indexOf(mission);
-          const clockRef = { now: 1_700_000_000_000 + s * 100_000 };
-          Math.random = mulberry32(seed + mi * 31);
-          Date.now = () => clockRef.now;
-          const final = playRun(
-            mission,
-            ice,
-            programs,
-            clockRef,
-            "novice",
-            "best",
-            "opening",
-            "long",
-            "value",
-            0,
-            0,
-            0,
-            "stim",
-            0,
-            12,
-            false,
-            undefined,
-            set.loadout,
-          );
+      let remain = 0;
+      for (const mission of bucket) {
+        for (let i = 0; i < ENC_SEEDS; i += 1) {
+          const o = simulateCombat(mission, ice, deck, { seed: 1000 + i * 31 + grade }, set.loadout);
           n += 1;
-          if (final?.runPhase === "ending") done += 1;
+          if (o.won) wins += 1;
+          remain += o.hpEnd / Math.max(1, o.hpStart);
         }
       }
-      cells.push(pad((done / Math.max(1, n)) * 100));
+      winPct.push((wins / Math.max(1, n)) * 100);
+      hpRemainPct.push((remain / Math.max(1, n)) * 100);
     }
-    console.log(`  ${set.name.padEnd(32)}${cells.join(" ")}`);
+    encounter.push({ set: set.name, winPct, hpRemainPct });
   }
-} finally {
-  Math.random = originalRandom;
-  Date.now = originalNow;
+
+  const mission: GearMissionRow[] = [];
+  const originalRandom = Math.random;
+  const originalNow = Date.now;
+  try {
+    for (const set of SETS) {
+      const completionPct: number[] = [];
+      for (const [, bucket] of gradeBuckets()) {
+        let done = 0;
+        let n = 0;
+        for (let s = 0; s < MIS_SEEDS; s += 1) {
+          const seed = 20261106 + s * 7919;
+          for (const mission of bucket) {
+            // Per-cell seed keyed on the FULL-catalog index, as `survival` does.
+            const mi = ALL.indexOf(mission);
+            const clockRef = { now: 1_700_000_000_000 + s * 100_000 };
+            Math.random = mulberry32(seed + mi * 31);
+            Date.now = () => clockRef.now;
+            const final = playRun(
+              mission,
+              ice,
+              programs,
+              clockRef,
+              "novice",
+              "best",
+              "opening",
+              "long",
+              "value",
+              0,
+              0,
+              0,
+              "stim",
+              0,
+              12,
+              false,
+              undefined,
+              set.loadout,
+            );
+            n += 1;
+            if (final?.runPhase === "ending") done += 1;
+          }
+        }
+        completionPct.push((done / Math.max(1, n)) * 100);
+      }
+      mission.push({ set: set.name, completionPct });
+    }
+  } finally {
+    Math.random = originalRandom;
+    Date.now = originalNow;
+  }
+  return { encounter, mission };
+}
+
+function printTables(curve: GearCurve): void {
+  console.log("gear curve probe — paired seeds, non-boss encounter / whole mission");
+  console.log("");
+  console.log("A) encounter — win% / HP remaining %");
+  console.log("set                              g1    g2    g3    g4    g5    g6");
+  for (const row of curve.encounter) {
+    const cells = row.winPct.map(
+      (w, i) => `${pad(w)}/${pad(row.hpRemainPct[i] ?? 0)}`,
+    );
+    console.log(`  ${row.set.padEnd(32)}${cells.join(" ")}`);
+  }
+  console.log("");
+  console.log("B) mission completion % (playRun policy, same seeds as `survival`)");
+  console.log("set                              g1    g2    g3    g4    g5    g6");
+  for (const row of curve.mission) {
+    console.log(`  ${row.set.padEnd(32)}${row.completionPct.map((c) => pad(c)).join(" ")}`);
+  }
+}
+
+const invokedDirectly =
+  process.argv[1] !== undefined && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (invokedDirectly) {
+  const curve = gearCurve();
+  if (process.argv.includes("--json")) console.log(JSON.stringify(curve));
+  else printTables(curve);
 }

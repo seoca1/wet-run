@@ -34,6 +34,7 @@ import { DEFAULT_FACTION_SCORES } from "./faction_reputation";
 import { openArrivalEncounter } from "./encounter_verbs";
 import { missionIce } from "./mission_ice";
 import { campaignContinues, type Campaign } from "./campaign";
+import { addStacks } from "./wallet";
 import { UNIQUE_PROGRAMS } from "./card_reward";
 import { isTerminalNode } from "./run_end";
 import missionsData from "../../data/missions.json";
@@ -82,13 +83,8 @@ export function makeInitialState(
   const gridSize = missionGrade
     ? { w: 80 + (missionGrade - 1) * 20, h: 50 + (missionGrade - 1) * 10 }
     : { w: MVP_GRID_W, h: MVP_GRID_H };
-  const matrix = generateProceduralMatrix(
-    missionGrade,
-    missionSeed,
-    mission.id,
-  );
-  const finalDrawPile =
-    drawPile.length > 0 ? drawPile : deck.slice(MVP_BASE_HAND);
+  const matrix = generateProceduralMatrix(missionGrade, missionSeed, mission.id);
+  const finalDrawPile = drawPile.length > 0 ? drawPile : deck.slice(MVP_BASE_HAND);
 
   return {
     phase: "menu",
@@ -176,6 +172,14 @@ function startNextLeg(previous: GameState, finished: GameState): GameState {
     ...(previous.uniquePickDone ? { uniquePickDone: true } : {}),
     // ADR-0329: gear salvaged earlier in the contract carries across its legs.
     droppedEquipment: previous.droppedEquipment,
+    // ADR-0338: materials the contract already picked up carry across its legs,
+    // plus the next leg's own reward. Before this the leg boundary rebuilt the
+    // inventory from scratch, so leg1/leg2 earnings evaporated and the hoard
+    // never grew enough to afford a T2+ recipe.
+    inventory: {
+      ...fresh.inventory,
+      materials: addStacks(previous.inventory.materials, fresh.inventory.materials),
+    },
     // ADR-0332: the one revive is per RUN, not per leg.
     ...(previous.reviveUsed ? { reviveUsed: true } : {}),
     jockeyId: previous.jockeyId,
@@ -283,9 +287,7 @@ export function buildHudLines(state: GameState): string[] {
     const marker = i === state.activeIceIndex ? ">" : " ";
     const alive = ice.hp > 0;
     const hpDisplay = alive ? `${ice.hp}` : "DEAD";
-    lines.push(
-      `${marker} [${i + 1}] ${ice.name.slice(0, 10)} HP: ${hpDisplay}`,
-    );
+    lines.push(`${marker} [${i + 1}] ${ice.name.slice(0, 10)} HP: ${hpDisplay}`);
   }
   lines.push("", ...recentLogLines(state));
   return lines;
@@ -302,9 +304,7 @@ export function buildHudLines(state: GameState): string[] {
  */
 export function growthLine(state: GameState): string {
   const cards = [...state.deck, ...state.drawPile, ...state.discardPile];
-  const tiers = cards
-    .map((p) => p.tier)
-    .filter((t): t is number => Number.isFinite(t));
+  const tiers = cards.map((p) => p.tier).filter((t): t is number => Number.isFinite(t));
   const avg = tiers.length > 0 ? tiers.reduce((a, b) => a + b, 0) / tiers.length : 0;
   const uniques = cards.filter((p) => UNIQUE_PROGRAMS.has(p.id)).length;
   const uniqueNote = uniques > 0 ? ` · UNQ ${uniques}` : "";
@@ -341,9 +341,7 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     playerCredits: state.player.credits,
     turnCount: state.turnCount,
     deckIds: state.deck.map((p: Program) => p.id),
-    ...(state.cardRewardTaken
-      ? { cardRewardTaken: state.cardRewardTaken }
-      : {}),
+    ...(state.cardRewardTaken ? { cardRewardTaken: state.cardRewardTaken } : {}),
     ...(state.uniquePickDone ? { uniquePickDone: true } : {}),
     ...(state.jockeyId ? { jockeyId: state.jockeyId } : {}),
     // ADR-0315 slice 2: a campaign keeps its contract. Ids only, so a slot
@@ -361,9 +359,7 @@ export function stateToSaveSlot(state: GameState): SaveSlot {
     currentNodeIndex: state.currentNodeIndex,
     clearedEncounterNodes: state.clearedEncounterNodes ?? [],
     bypassedEncounterNodes: state.bypassedEncounterNodes ?? [],
-    ...((state.intelNodes ?? []).length > 0
-      ? { intelNodes: state.intelNodes ?? [] }
-      : {}),
+    ...((state.intelNodes ?? []).length > 0 ? { intelNodes: state.intelNodes ?? [] } : {}),
   };
 }
 
@@ -435,10 +431,8 @@ export function slotToGameState(
   let graphicNovel = null;
   if (slot.graphicNovelProgress) {
     const parts = slot.graphicNovelProgress.chainId.split("_");
-    const mode = (parts[0] || "prologue") as
-      "prologue" | "novice" | "veteran" | "heretic";
-    const characterId = (parts[1] || "novice") as
-      "novice" | "veteran" | "heretic";
+    const mode = (parts[0] || "prologue") as "prologue" | "novice" | "veteran" | "heretic";
+    const characterId = (parts[1] || "novice") as "novice" | "veteran" | "heretic";
     const sceneIndex = slot.graphicNovelProgress.sceneIndex;
     const dialogueIndex = slot.graphicNovelProgress.dialogueIndex;
 
@@ -542,11 +536,8 @@ export function slotToGameState(
   // loot screen (its confirm ends the run and retires the slot), so resume
   // there; the board would offer no way to finish the run.
   const wonTerminal =
-    restored.clearedEncounterNodes?.includes(currentNodeIndex) === true &&
-    isTerminalNode(restored);
-  return wonTerminal
-    ? { ...restored, runPhase: "loot", phase: "victory" }
-    : restored;
+    restored.clearedEncounterNodes?.includes(currentNodeIndex) === true && isTerminalNode(restored);
+  return wonTerminal ? { ...restored, runPhase: "loot", phase: "victory" } : restored;
 }
 
 /** Load all missions from JSON. */

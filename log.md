@@ -4170,3 +4170,85 @@ HP 만으로는 매끄러운 gradient 불가 (transition band ~117±1). gradient
 - **현재 기준선**: balance **100/100/100/97.1/70.6/47.0** (세션 내내 byte-identical) · survival 64시드 `100/100/83.4/83.1/25.9/42.2` · vitest **236 files / 4443 tests** · 게이트 7종 CLEAN.
 - **워크스페이스**: `log.md`·`NEXT_SESSION_TODO.md` 갱신 + `_archive/sessions/`·`decisions/_session-*` 기록.
 - **다음 첫 작업**: 남은 `extraEffect` 4종 훅 → AP/스킬 서브시스템 → 장비 파워↔난이도 동시 설계(오너).
+
+## [2026-11-18] test(infra) | 검증 도구 메타 감사 — 밸런스 golden 게이트 + mutation spike (ADR-0333)
+
+- 오너 "검증 도구들을 검증해보자 … 구조화 정리". 도구 7종 실측 → **절반이 연극**.
+- **발견**: ⑴ `balance_compare.ts` 정규식이 harness 출력과 불일치 → 항상 "No regression" exit 0, 그런데 **PR 회귀 게이트가 이걸 돌리고 있었다**(자동 밸런스 게이트 0개). ⑵ `wet_run_verify.py --full` = Jev `p=0.75` 하드코딩 + 2026-10-14 수기 metrics 읽기만, 실행마다 `log.md` 오염.
+- **결정 (B→A→C 순)**: `balance_compare` 폐기 → `balance_baseline.ts` + `balance.golden.json`(3덱) · `balance:golden`/`balance:check`(기본 엄격, `--allow-improvement` 는 CI용, 위험한 git 전환 제거) · CI `regression-check` 복구 · `mutation_spike.ts`(`npm run mutation`, 진단).
+- **실증**: `CRIT_CHANCE 0.15→0` 주입 → `balance:check` 가 **18 drift / 9 regression**(heretic g5 66.1→56.1%)로 실패(옛 도구는 통과했을 것). mutation **5/6 KILLED**, 생존 `AUTO_ATTACK_INTERVAL_MS`(값을 고정하는 테스트 없음 — 커버리지 구멍).
+- **golden**: opening 100/100/100/97.1/70.6/47.0 · veteran …/96.0/69.4/46.3 · heretic …/95.2/66.1/42.3.
+- **문서**: `docs/design/verification-framework.md` 2.0 재작성(신뢰 등급 인벤토리) · ADR-0333 · AGENTS.md §3.1-4(스텁 경고)·§6(명령) · README 인덱스.
+- **검증**: vitest **236/4443** · typecheck 0 · lint 0 error(1 warning pre-existing) · build OK · `balance:check` OK · 게이트(doc_claims·audit_vault·mixed_language·sprawl·no_novel_prose·import_briefings) CLEAN.
+- **남은 것**: `AUTO_ATTACK_INTERVAL_MS` 테스트 추가 · `wet_run_verify.py` 실배선/폐기 · claim checker 를 ROADMAP 로 확장 · 혼용 감사를 소스로 확장.
+
+## [2026-11-18] chore(infra) | 검증 도구 정리 — 실패할 수 없는 검사기는 검사기가 아니다 (ADR-0334)
+
+- 오너 "정리하고 개선 방안도 제시". ADR-0333 이 남긴 숙제 3종을 실측 확정 후 정리.
+- **⑴ `scripts/wet_run_verify.py` 재작성**: `jev_check` 의 `p=0.75` **하드코딩 제거**(점수를 지어내지 않음 — 키 없으면 `advisory_no_key` p=None, 있어도 `not_wired`) · `balance_check` 를 수기 `metrics.json` 읽기 → **실 `npm run balance:check`** 대조 · `log.md` 기록은 `--log` 시에만 · audit/balance 실패 시 **exit 1**.
+- **⑵ `web/src/game/metrics.json` 삭제**: 소비자 0(스크립트뿐)·재현 불가.
+- **⑶ `scripts/tools/audit_sprawl.py` 삭제**: `sys.exit` 부재로 **항상 exit 0**(실패 못 하는 검사기) + `find_broken_links.py` 와 중복. 단일 로컬 검사기 `find_broken_links.py`(exit 1) 유지, 고아 검사는 워크스페이스 `audit_vault.py`. `tools/README.md` 에 사유 기록.
+- **CI 호환**: `balance_baseline.ts` 가 `web/test-results/balance-summary.txt` 도 기록(PR 코멘트 단계 유지).
+- **재작성 후 동작**: `--full` → audit=clean · balance=pass · `2_jev=not_wired(p=None)`, exit 0. `verification-report.md` 재생성.
+- **개선 방안(문서화만, `verification-framework.md` §3 gap 7건)**: Jev 실배선 · claim checker ROADMAP 확장 · 혼용 감사 소스 확장 · CI 잡 중복 통합 · `AUTO_ATTACK_INTERVAL_MS` 값 고정 테스트 · `delegation-analysis/` 노후화 확인.
+- **검증**: vitest **236/4443** · typecheck 0 · lint 0 · build OK · `balance:check` OK · 게이트(doc_claims 254 ADR · audit_vault 4868 · mixed_language · find_broken_links 0) CLEAN.
+
+## [2026-11-18] refactor(infra) | 검증 러틴은 한 명령이다 — 단일 진입점 (ADR-0335)
+
+- 오너 "위임할테니 검증 러틴을 전반적으로 구조적으로 개선". 8개 명령을 손으로 치던 검증을 **단일 러틴**으로.
+- **단일 진입점**: `python3 scripts/wet_run_verify.py` v3 — 위치 독립·게이트 순서 실행·**exit 1**. 영역 = balance · tests · audit · doc_claims · no_novel_prose · briefings · links · lang + **Jev(advisory)**. `--full`/`--tests`/`--log`/`--out`.
+- **Jev 실배선(advisory 전용)**: `--jev` 가 `scripts/jev-local-call.sh noul` 을 `git diff --stat` 로 실제 판정 — 이번 실행 `answer=no p=0.1 [local-uncalibrated]`. 로컬·미보정이라 게이트 아님.
+- **claim checker 다중 가이드**: 기본 AGENTS.md + README.md(`--guide` 반복). README `2654→4444 tests`·`107→236 파일` 교정. ROADMAP 은 역사 서술이라 제외(현재 수치만 수동 교정).
+- **혼용 감사 소스 확장**: `mixed_language_audit.py --root/--source`(.py/.ts/.tsx/.js). 기본 md 전용 유지(워크스페이스 전체 소스는 667 오탐). 러틴은 `--root Game/wet_run --source`.
+- **mutation 구멍 봉합**: `combat_engine.test.ts` 에 `AUTO_ATTACK_INTERVAL_MS === 2000` 계약 테스트 → **6/6 KILLED**.
+- **CI 정리**: `game-balance-test.yml` 무검증 `balance-test` job 삭제(게이트는 `balance-regression`) · `delegation-verification.yml` 수동 전용(`workflow_dispatch`) · format 단계 `continue-on-error`.
+- **prettier 미게이트(정직)**: `prettier --check` 가 **139 파일** 위반(유지 불변식 아님). `.prettierrc.json`(printWidth 100)만 추가, 일괄 재포맷은 별도 결정.
+- **검증**: 러틴 **8/8 pass** · vitest **236/4444** · typecheck 0 · lint 0 · build OK · 게이트(audit_vault 4868·mixed_language·doc_claims 255 ADR·find_broken_links) CLEAN.
+
+## [2026-11-19] refactor(infra) | 검증의 나머지 절반 — 실 Jev · gear 골든 · prettier 게이트 (ADR-0336)
+
+- 오너 "검증도구 ADR 모두 후속 진행". ADR-0335 가 남긴 5건을 전부 처리.
+- **⑴ 실 Jev 배선**: `--jev` 가 `scripts/jev-call.sh`(OpenRouter, **보정**)를 먼저, 실패/키 없음 시 `jev-local-call.sh`(로컬)로 폴백. 파서가 `{"noul":…}`·`answer=…p=…` 두 형식 모두 처리, `calibration` 표기. 이번 실행 `p=0.68 calibration=primary source=jev-call.sh`. **advisory 유지**(게이트 아님).
+- **⑵ ROADMAP counts-only**: `check_doc_claims.py --counts-only` 추가. 기본 = AGENTS(전체)+README(전체)+**ROADMAP(수치만)**. 역사 경로는 건너뛰고 현재 수치 드리프트를 잡음(ADR 범위 0335→0336 교정).
+- **⑶ mutation 확장**: 6→**10 변이** + 10 테스트 파일(adr0320·status·combat_status_feedback·idle_tick·adr0327) → **10/10 KILLED**(armor-bypass-off 는 adr0327 이 커버).
+- **⑷ gear 골든**: `gear_curve_probe.ts` 의 계산을 `gearCurve()` 로 추출(import 무부작용·`--json`). 신규 `gear_baseline.ts`+`gear.golden.json`(encounter/mission × 5세트 × 6등급). 러틴 **1b 게이트**. bare 미션행 `100/100/83/83/26/42` = 기록 기준선 일치.
+- **⑸ prettier 정규화+게이트**: `.prettierrc.json`(printWidth 100, AGENTS 의도)로 **138 파일** 정규화(`+1079/−3323`). `ci.yml` 에 format **게이트** 승격, delegation format 단계의 advisory 표기 제거.
+- **검증**: 러틴 **9/9 pass**(+실 Jev p=0.68 primary) · vitest **236/4444** · typecheck 0 · lint 0 error · build OK · `gear:check` OK · 게이트(doc_claims 3 guide·audit_vault 4868·mixed_language·find_broken_links·briefings) CLEAN.
+
+## [2026-11-19] fix(ending) | 표시되는 엔딩에 control이 없었다 — 중간 leg는 삼켜진다 (ADR-0337)
+
+- 오너 "후속 진행" = 전수 검증 P1("control 엔딩 죽은 분기 0/53") 재조정. 파고드니 **측정 도구가 두 단계로 오도**.
+- **⑴ `npm run endings`**: `missionsCompleted=1`·단일 시드라 control 표본이 없음 → 0/53 은 착시.
+- **⑵ `npm run campaign` per-leg**: control 41.5%(472/1137) 로 세지만, `state.ts:196-202` 가 **계속되는 계약의 중간 엔딩을 다음 leg로 덮어씀**(`startNextLeg`) → **표시 안 됨**.
+- **⑶ 표시 엔딩(최종 leg+사망)** 만 세면: **sacrifice 52.7% · liberation 47.3% · control 0%**. ADR-0318 의 "부유한 미완주 런"은 살아서 계약을 못 끝내므로(죽으면 sacrifice) **거짓**.
+- **결정**: 표시되는 최종 엔딩에 control 복원 — `CONTROL_WEALTH=18000`(≈완주 크레딧 p90) 초과 완주 → control, 아니면 liberation. 임계 민감도 측정: 15000→16.5% · 16000→14.2% · 17000→7.6% · **18000→2.9%**(완주 계약의 6.1%).
+- **도구 정정**: `campaign_survival.ts` 가 **표시 엔딩**만 세고 완주 크레딧 분위수 출력 · `ending_distribution.ts` 단일-미션 경고 · `ending_resolver.ts` ADR-0337 분기 + 경계 테스트.
+- **검증**: vitest **236/4445** · typecheck 0 · 러틴 9/9 pass · doc_claims 3 guide OK · audit_vault/mixed_language CLEAN · 엔딩 테스트 70 pass.
+- **남은 열린 질문**: `status_quo` 는 계약 플레이에서 여전히 미표시(레거시 전용) · `CONTROL_WEALTH` 오너 튜닝.
+
+## [2026-11-19] fix(economy) | 계약의 재료는 leg 사이에서 살아남는다 (ADR-0338)
+
+- 오너 "후속 진행" = 검증 P3 경제(재료 리셋 → T2+ 도달 0%). 코드에 **결함 2건** 확정.
+- **⑴ `startNextLeg`(state.ts)**: credits·deck·`droppedEquipment`·`reviveUsed` 는 carry 하는데 **`inventory.materials` 만 빠짐** → leg2 가 leg2 보상만 들고 시작, leg1 이 주운 것 소멸. **수정**: 다음 leg 재료 = 이전 재료 + 다음 leg 보상(`addStacks`).
+- **⑵ `main.ts` seed**: `runWalletSeed = this.inventory`(hoard) 라 `merge = hoard + (run − hoard)` 가 **미션 보상을 hoard 로 주조**(ADR-0323 테스트의 seed 의미와 호출부 불일치). **수정**: `seedRunWallet(hoard, Σ 계약 보상)` → 주조 차단 + 보상 누적.
+- **검증**: vitest **236/4446**(신규 `adr0315` ADR-0338 경계 테스트) · typecheck 0 · 러틴 9/9 · **balance/gear 골든 byte-identical**(재료는 전투에 안 닿음 — 안전 증명).
+- **한계**: 크래프팅 probe 는 자체 보존-지갑 모델이라 수치 불변 → 실제 도달률은 지갑 인지 probe 필요(후속).
+- **다음**: P2(g4 난이도 +33.1pp — 오너 결정) · P4(장비↔난이도) · P5(브라우저 e2e).
+
+## [2026-11-19] docs(balance) | g4의 "+33.1pp MISS"는 낡은 목표다 (ADR-0339 Draft)
+
+- 오너 "후속 진행" = 검증 P2(g4 난이도). 파고드니 **P1과 같은 패턴** — 도구가 낡은 목표로 경보.
+- **측정**: per-mission g4 83.1%(목표 50%) · per-encounter 100% · 캠페인 g4 64.3%(g3 50.0% → 역전).
+- **발견**: **ADR-0229 가 ADR-0211 의 per-grade 목표를 supersede**(기준선 ≠ 추격 대상) → `GRADE_TARGETS`(g4 0.5)는 낡은 목표. 진짜 신호는 **ADR-0319**(per-fight heal floor 가 g4 attrition 을 제거). HP cap 은 monotonicity 불변식에 묶임 → 레버는 g4 damage bonus(현재 0).
+- **조치**: `mission_survival.ts` 에 ADR-0229 caveat 출력("목표가 아니라 기준선; delta 는 신호, 하드 불변식은 monotonicity") — 거짓 경보 제거. 난이도 자체는 **미변경**.
+- **브리프**: ADR-0339(Draft) — 옵션 A 재기록 / B 난이도 복원(dmg) / C 유지(신호). 추천 = C + caveat, B 는 P4(장비↔난이도)와 동시 설계.
+- **검증**: vitest 236/4446 · typecheck 0 · 러틴 9/9 · doc_claims 3 guide OK(259 ADR 0001–0339).
+
+## [2026-11-19] test(e2e) | 브라우저 계층은 초록이었다 — soak 드라이버가 조용히 죽어 있었다 (ADR-0340)
+
+- 오너 "스스로 판단해서 후속 진행". 검증 P5(e2e 24종 미실행) + P4(장비↔난이도).
+- **e2e 전수 실행** (로컬 `vite preview` :5199 + chromium): desktop **54p/5s/0f** · mobile **58p/1s/0f** · soak(`SOAK=1`) **passed 프리즈 0** · story(`STORY=1`) **passed**(arc1_first_blood, 73 steps). 스킵은 전부 의도(smoke=배포 전용·touch=모바일·soak=수동).
+- **드라이버 결함 1건**: soak 가 `briefing→prep` stall — ADR-0317 3b 의 **beat card**(fixer 브리핑)가 키를 먹는데 soak 만 안 닫음(`story_trace`·`run_end_save` 는 이미 `getBeatCard()` 처리). **수정**: soak `startRun` 이 beat/briefing 을 닫으며 prep 전진. 재실행 passed.
+- **P4 브리프** (ADR-0341 Draft): `npm run gear` bare g5/g6 **26/42** → T6 **95/99**(ADR-0328 목표 65/70 보다 +30/+29pp). 옵션 A 장비↓ · **B ICE↑(동시 설계, P2 와 묶음)** · C 수용 · D gear cap. 추천 B, 어려우면 C.
+- **검증**: 러틴 9/9 · doc_claims 3 guide OK(**261 ADR 0001–0341**) · audit_vault/mixed_language CLEAN · e2e desktop/mobile/soak/story green.
+- **오너 결정 대기**: ADR-0339(g4 A/B/C) · ADR-0341(장비 A/B/C/D) · `CONTROL_WEALTH` · `status_quo`.

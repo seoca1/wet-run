@@ -122,6 +122,21 @@ describe("ADR-0315 slice 2 — the chain", () => {
     expect(next.endingChoice).not.toBeNull();
   });
 
+  it("carries the contract's materials into the next leg (ADR-0338)", () => {
+    const contract = contractFor(byId("first_jack"), MISSIONS, iceFor);
+    const base = terminalLoot(contract);
+    // What leg 1 picked up before the leg boundary.
+    const start: GameState = {
+      ...base,
+      inventory: { ...base.inventory, materials: { data_fragment: 7, ice_shard: 3 } },
+    };
+    const next = applyAction(start, { type: "confirm" });
+    const reward = contract.legs[1]?.mission.rewards.materials ?? {};
+    // Nothing evaporates at the boundary; the next leg's reward is added on top.
+    expect(next.inventory.materials.data_fragment).toBe(7 + (reward.data_fragment ?? 0));
+    expect(next.inventory.materials.ice_shard).toBe(3 + (reward.ice_shard ?? 0));
+  });
+
   it("leaves a run with no contract exactly as it was", () => {
     const next = applyAction(terminalLoot(), { type: "confirm" });
     expect(next.runPhase).toBe("ending");

@@ -13,7 +13,7 @@ Python 프로토타입에서 TypeScript Web으로 완전 마이그레이션 완�
 
 - **Frontend**: TypeScript, Canvas2D
 - **Build**: Vite
-- **Test**: Vitest (2654 tests)
+- **Test**: Vitest (4446 tests)
 - **PWA**: 서비스워커 (오프라인 플레이 지원)
 
 ## 빌드 및 실행
@@ -36,14 +36,13 @@ wet_run/
 │   │   ├── core/           # 게임 로직
 │   │   ├── data/           # JSON 데이터
 │   │   └── renderer/       # 캔버스 렌더링
-│   ├── tests/              # 107개 테스트 파일
+│   ├── tests/              # 236개 테스트 파일 (.test.ts)
 │   └── public/             # PWA 매니페스트
 ├── docs/                   # 문서
-│   ├── design/             # 설계 문서
-│   ├── architecture/       # 아키텍처 (ADR)
+│   ├── design/             # 설계 문서 (활성 스펙)
+│   ├── wiki/decisions/     # ADR 단일 canonical 위치
 │   ├── sessions/           # 세션 기록
 │   └── playtest/           # 플레이테스트
-├── data/                   # 데이터 자원
 ├── scripts/                # 빌드/배포 스크립트
 ├── README.md               # 프로젝트 개요
 ├── CHANGELOG.md            # 변경기록

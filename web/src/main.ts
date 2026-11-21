@@ -1,11 +1,7 @@
 import { AsciiRenderer } from "./renderer/canvas";
 import { KeyboardInput } from "./input/keyboard";
 import { GamepadInput, isGamepadConnected } from "./input/gamepad";
-import {
-  mountVirtualGamepad,
-  updateProgramRow,
-  isTouchDevice,
-} from "./input/touch";
+import { mountVirtualGamepad, updateProgramRow, isTouchDevice } from "./input/touch";
 import { visibleMenuOptions, type MenuEntry, type MenuOption } from "./renderer/menu";
 import { renderPreGameScreen } from "./renderer/pre_game_screen";
 import {
@@ -14,28 +10,14 @@ import {
   composeCombatScreen,
   type RunNarrative,
 } from "./renderer/run_screen";
-import {
-  beginMatrixTravel,
-  matrixTravelFrame,
-  type MatrixTravel,
-} from "./renderer/matrix_travel";
+import { beginMatrixTravel, matrixTravelFrame, type MatrixTravel } from "./renderer/matrix_travel";
 import { renderCombatHints } from "./renderer/combat_hints";
 import { filterMissionsByUniverse } from "./core/missions_filter";
-import {
-  FAR_GRID_LOCKED_MESSAGE,
-  isFarGridUnlocked,
-} from "./core/dungeon/far_grid_gate";
-import {
-  advanceVfxListBy,
-  WEB_TICK_MS,
-  type CombatVfxInstance,
-} from "./renderer/combat_vfx";
+import { FAR_GRID_LOCKED_MESSAGE, isFarGridUnlocked } from "./core/dungeon/far_grid_gate";
+import { advanceVfxListBy, WEB_TICK_MS, type CombatVfxInstance } from "./renderer/combat_vfx";
 import { hitStopActiveAt, hitStopDeadlineFor } from "./renderer/screen_shake";
 import { pickTransitionSfx } from "./core/combat/combat_sfx";
-import {
-  programAffordances,
-  rewardAffordances,
-} from "./core/combat/program_affordance";
+import { programAffordances, rewardAffordances } from "./core/combat/program_affordance";
 import { idleAlarmAction } from "./core/combat/idle_alarm";
 import { startingDeck } from "./core/state/starting_deck";
 import {
@@ -95,10 +77,7 @@ import {
   pressProgramButton,
   type PressFeedbackState,
 } from "./core/state/touch_feedback";
-import {
-  DungeonCrawler,
-  createDungeonCrawlerFromMission,
-} from "./core/dungeon/dungeon_crawler";
+import { DungeonCrawler, createDungeonCrawlerFromMission } from "./core/dungeon/dungeon_crawler";
 import {
   getInitialSettingsState,
   persistLanguage,
@@ -144,23 +123,11 @@ import {
   slotToGameState,
   stateToSaveSlot,
 } from "./core/state/state";
-import {
-  openArrivalEncounter,
-  encounterRoster,
-  runAbandoned,
-} from "./core/state/encounter_verbs";
+import { openArrivalEncounter, encounterRoster, runAbandoned } from "./core/state/encounter_verbs";
 import { missionIce } from "./core/state/mission_ice";
 import { missionGradeOf } from "./core/combat/ice_scaling";
-import {
-  applyPrep,
-  PREP_OPTIONS,
-  prepGrantFor,
-  type PrepChoice,
-} from "./core/state/prep";
-import {
-  readPrepWallet,
-  spendPrepWallet,
-} from "./core/state/prep_wallet";
+import { applyPrep, PREP_OPTIONS, prepGrantFor, type PrepChoice } from "./core/state/prep";
+import { readPrepWallet, spendPrepWallet } from "./core/state/prep_wallet";
 import {
   autosaveIntent,
   FLATLINE_MESSAGE,
@@ -187,11 +154,7 @@ import {
   makeInfoMarket,
 } from "./core/state/crafting";
 import { equipOn, DEFAULT_REGISTRY, EQUIP_SLOTS } from "./core/state/equipment";
-import {
-  hydrateLoadout,
-  readEquippedIds,
-  writeEquippedIds,
-} from "./core/state/equipment_store";
+import { hydrateLoadout, readEquippedIds, writeEquippedIds } from "./core/state/equipment_store";
 import {
   isOwned,
   ownEquipment,
@@ -201,6 +164,7 @@ import {
 } from "./core/state/owned_equipment";
 import { applyEquipmentSurvival } from "./core/state/equipment_stats";
 import {
+  addStacks,
   mergeRunIntoWallet,
   readWalletMaterials,
   seedRunWallet,
@@ -274,26 +238,20 @@ const MAX_FRAME_ADVANCE_MS = 100;
 function isAudioOff(): boolean {
   return localStorage.getItem("wetrun_audio_off") === "1";
 }
-const loadAudioSystem = () =>
-  isAudioOff() ? Promise.resolve(null) : loadAudioSystemRaw();
+const loadAudioSystem = () => (isAudioOff() ? Promise.resolve(null) : loadAudioSystemRaw());
 
 import missionsData from "./data/missions.json" with { type: "json" };
 import programsData from "./data/programs.json" with { type: "json" };
 import iceTypesData from "./data/ice_types.json" with { type: "json" };
 import recipesData from "./data/recipes.json" with { type: "json" };
 import materialsData from "./data/materials.json" with { type: "json" };
-import {
-  loadMissionsCatalog,
-  loadProgramsCatalog,
-  loadIceCatalog,
-} from "./core/data_loaders";
+import { loadMissionsCatalog, loadProgramsCatalog, loadIceCatalog } from "./core/data_loaders";
 
 /** Mission catalog (validated at module load — schema mismatches throw early). */
 const MISSIONS: ReadonlyArray<Mission> = loadMissionsCatalog(missionsData);
 
 /** Programs catalog (validated). Field aliases (ap_cost → cost) normalized. */
-const PROGRAMS: Readonly<Record<string, Program>> =
-  loadProgramsCatalog(programsData);
+const PROGRAMS: Readonly<Record<string, Program>> = loadProgramsCatalog(programsData);
 
 /** ICE types catalog (validated). Field aliases (defense → armor) normalized. */
 const ICE_TYPES: Readonly<Record<string, Ice>> = loadIceCatalog(iceTypesData);
@@ -308,12 +266,8 @@ function loadCraftingData(): {
   readonly recipes: ReadonlyArray<Recipe>;
   readonly materials: ReadonlyArray<MaterialDef>;
 } {
-  const recipes = makeRecipesFromData(
-    recipesData as unknown as Record<string, unknown>,
-  );
-  const materials = makeMaterialsFromData(
-    materialsData as unknown as Record<string, unknown>,
-  );
+  const recipes = makeRecipesFromData(recipesData as unknown as Record<string, unknown>);
+  const materials = makeMaterialsFromData(materialsData as unknown as Record<string, unknown>);
   if (recipes.length === 0 || materials.length === 0) {
     throw new Error(
       "crafting: empty registry — recipes.json / materials.json missing or malformed",
@@ -331,9 +285,7 @@ function formatMissionOption(
   const grade = `T${mission.grade_max}`;
   const credits = mission.rewards.credits.toLocaleString();
   const titleText =
-    language === "ko" &&
-    mission.title_ko !== undefined &&
-    mission.title_ko.length > 0
+    language === "ko" && mission.title_ko !== undefined && mission.title_ko.length > 0
       ? mission.title_ko
       : mission.title;
   return `${formatNavIndex(index)} ${titleText}  [${grade} | ${credits}cr]`;
@@ -393,8 +345,7 @@ class Game {
   private ownedEquipment: OwnedSet;
   private layout: Layout;
   private tutorialActive = false;
-  private tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null =
-    null;
+  private tutorialOverlay: ReturnType<typeof createTutorialOverlay> | null = null;
   /** P11 — the combat-entry hint is shown once per run, on the first combat
    * screen the player reaches. */
   private combatEntryHintShown = false;
@@ -451,15 +402,11 @@ class Game {
   /** ADR-0251 — true while the touch overlay (and its program row) is up. */
   private touchOverlayMounted = false;
   private graphicNovelPlayer:
-    import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null =
-    null;
-  private gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language =
-    "en";
-  private graphicNovelState:
-    import("./core/types.ts").GraphicNovelState | null = null;
+    import("./core/graphic_novel/graphic_novel.ts").GraphicNovelPlayer | null = null;
+  private gnLanguage: import("./core/graphic_novel/graphic_novel_types.ts").Language = "en";
+  private graphicNovelState: import("./core/types.ts").GraphicNovelState | null = null;
 
-  private settingsState: import("./renderer/settings.ts").SettingsState | null =
-    null;
+  private settingsState: import("./renderer/settings.ts").SettingsState | null = null;
   private pwaController: PwaController | null = null;
   private dungeonCrawler: DungeonCrawler | null = null;
   private _message: string = "";
@@ -475,10 +422,7 @@ class Game {
   private previousVfxInstances: ReadonlyArray<CombatVfxInstance> = [];
   private readonly fpsCounter = new FpsCounter();
 
-  constructor(
-    canvas: HTMLCanvasElement,
-    iceTypes: Readonly<Record<string, Ice>>,
-  ) {
+  constructor(canvas: HTMLCanvasElement, iceTypes: Readonly<Record<string, Ice>>) {
     this.iceTypes = iceTypes;
     this.programs = PROGRAMS;
     this.missions = MISSIONS;
@@ -580,10 +524,7 @@ class Game {
               : action.type,
         );
         if (result.action === "next" || result.action === "skip") {
-          if (
-            result.action === "skip" ||
-            this.tutorialOverlay.state.currentStep >= 6
-          ) {
+          if (result.action === "skip" || this.tutorialOverlay.state.currentStep >= 6) {
             this.tutorialActive = false;
             this.tutorialOverlay = null;
             this.screen = "menu";
@@ -667,8 +608,7 @@ class Game {
       // construct is in the deck for the whole run, so she speaks when the
       // player first fights and when they first win, and never again.
       if (revealed !== null) {
-        const storage =
-          typeof localStorage === "undefined" ? null : localStorage;
+        const storage = typeof localStorage === "undefined" ? null : localStorage;
         const language = this.settingsState?.language ?? "en";
         if (
           previous?.phase !== "combat" &&
@@ -710,9 +650,7 @@ class Game {
           const contract = revealed.campaign;
           const leg = contract?.legs[contract.completed];
           const story = leg
-            ? (language === "ko" && leg.mission.briefing_ko) ||
-              leg.mission.briefing ||
-              ""
+            ? (language === "ko" && leg.mission.briefing_ko) || leg.mission.briefing || ""
             : "";
           // ADR-0317 3b: the campaign created two moments that nothing spoke at
           // — returning from the first job, and Tessier-Ashpool noticing. Both
@@ -832,10 +770,7 @@ class Game {
             this._lastIceHp = this.state.ice.hp;
             this._lastPlayerHp = this.state.player.hp;
           }
-          if (
-            previous.runPhase === "matrix" &&
-            this.state.runPhase === "combat"
-          ) {
+          if (previous.runPhase === "matrix" && this.state.runPhase === "combat") {
             manager.playSfx(audio.SFX_IDS.COMBAT_HIT);
           }
           const burnTickDmg = this.state.player.hp - previous.player.hp;
@@ -904,11 +839,7 @@ class Game {
       }
       // ADR-0325: one transaction — spend the materials AND take ownership of
       // the piece. The recipe's itemId is a catalog equipment id.
-      const result = craftItem(
-        this.recipes,
-        recipe.itemId,
-        this.inventory.materials,
-      );
+      const result = craftItem(this.recipes, recipe.itemId, this.inventory.materials);
       if (result.ok) {
         this.inventory = { ...this.inventory, materials: result.newInventory };
         writeWalletMaterials(this.inventory.materials);
@@ -968,18 +899,8 @@ class Game {
       case "move_south":
       case "move_east":
       case "move_west": {
-        const dx =
-          action.type === "move_east"
-            ? 1
-            : action.type === "move_west"
-              ? -1
-              : 0;
-        const dy =
-          action.type === "move_south"
-            ? 1
-            : action.type === "move_north"
-              ? -1
-              : 0;
+        const dx = action.type === "move_east" ? 1 : action.type === "move_west" ? -1 : 0;
+        const dy = action.type === "move_south" ? 1 : action.type === "move_north" ? -1 : 0;
         this.dungeonCrawler.tryMovePlayer(dx, dy);
         // Drive monster AI + FOV update each player turn.
         this.dungeonCrawler.processTurn();
@@ -1052,38 +973,36 @@ class Game {
   private renderGraphicNovel(): void {
     if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
     void loadStorySystem().then((gn) => {
-      void import("./renderer/graphic_novel_screen.ts").then(
-        ({ renderGraphicNovelScreen }) => {
-          if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
-          const player = this.graphicNovelPlayer;
+      void import("./renderer/graphic_novel_screen.ts").then(({ renderGraphicNovelScreen }) => {
+        if (!this.graphicNovelState || !this.graphicNovelPlayer) return;
+        const player = this.graphicNovelPlayer;
 
-          const live = gn.currentScene(player);
-          const grid = renderGraphicNovelScreen(
-            {
-              chapter: live
-                ? {
-                    order: live.order,
-                    title: gn.currentTitle(player, this.gnLanguage),
-                    speaker: gn.currentSpeaker(player, this.gnLanguage),
-                  }
-                : null,
-              // Read from the player, not from the snapshot taken at entry:
-              // the wall-clock tick advances it and the snapshot would be stale.
-              text: gn.currentText(player, this.gnLanguage),
-              dialogueText: gn.currentDialogue(player)?.text_en ?? null,
-              progress: gn.progress(player),
-              isPaused: player.paused,
-              done: player.done,
-              // ADR-0317 3b: the story does not change between runs, so a
-              // watched prologue says so and ESC stops looking like a gamble.
-              seen: seenPrologues(this.storagePort()).has(player.mode),
-            },
-            this.layout.cols,
-            this.layout.rows,
-          );
-          this.renderer.render(grid, ["GRAPHIC NOVEL", "", ""]);
-        },
-      );
+        const live = gn.currentScene(player);
+        const grid = renderGraphicNovelScreen(
+          {
+            chapter: live
+              ? {
+                  order: live.order,
+                  title: gn.currentTitle(player, this.gnLanguage),
+                  speaker: gn.currentSpeaker(player, this.gnLanguage),
+                }
+              : null,
+            // Read from the player, not from the snapshot taken at entry:
+            // the wall-clock tick advances it and the snapshot would be stale.
+            text: gn.currentText(player, this.gnLanguage),
+            dialogueText: gn.currentDialogue(player)?.text_en ?? null,
+            progress: gn.progress(player),
+            isPaused: player.paused,
+            done: player.done,
+            // ADR-0317 3b: the story does not change between runs, so a
+            // watched prologue says so and ESC stops looking like a gamble.
+            seen: seenPrologues(this.storagePort()).has(player.mode),
+          },
+          this.layout.cols,
+          this.layout.rows,
+        );
+        this.renderer.render(grid, ["GRAPHIC NOVEL", "", ""]);
+      });
     });
   }
 
@@ -1162,8 +1081,7 @@ class Game {
         this.selectedMenuIndex = (this.selectedMenuIndex + 1) % count;
         this.draw();
       } else if (action.type === "move_north") {
-        this.selectedMenuIndex =
-          (this.selectedMenuIndex - 1 + count) % count;
+        this.selectedMenuIndex = (this.selectedMenuIndex - 1 + count) % count;
         this.draw();
       } else if (action.type === "confirm") {
         const opt = options[this.selectedMenuIndex];
@@ -1179,8 +1097,7 @@ class Game {
         this.selectedJockey = (this.selectedJockey + 1) % JOCKEYS.length;
         this.draw();
       } else if (action.type === "move_north") {
-        this.selectedJockey =
-          (this.selectedJockey - 1 + JOCKEYS.length) % JOCKEYS.length;
+        this.selectedJockey = (this.selectedJockey - 1 + JOCKEYS.length) % JOCKEYS.length;
         this.draw();
       } else if (action.type === "confirm") {
         // ADR-0317: the prologue opens the run — this jockey's story plays,
@@ -1189,9 +1106,7 @@ class Game {
         this.selectedMission = 0;
         const jockeyId = JOCKEYS[this.selectedJockey]?.id;
         this.initGraphicNovel(
-          jockeyId === "veteran" || jockeyId === "heretic"
-            ? jockeyId
-            : "novice",
+          jockeyId === "veteran" || jockeyId === "heretic" ? jockeyId : "novice",
         );
       } else if (action.type === "jack_out") {
         this.screen = "menu";
@@ -1221,11 +1136,7 @@ class Game {
         // Spend the stockpile's share, then launch.
         const mission = MISSIONS[this.selectedMission];
         if (mission) {
-          const grant = prepGrantFor(
-            missionGradeOf(mission),
-            this.prepChoice,
-            readPrepWallet(),
-          );
+          const grant = prepGrantFor(missionGradeOf(mission), this.prepChoice, readPrepWallet());
           this.prepWalletOutlay = grant.fromWallet;
           spendPrepWallet(grant.fromWallet);
         }
@@ -1241,13 +1152,11 @@ class Game {
       // only; far-grid missions live behind the gated hub.
       const sprawlMissions = filterMissionsByUniverse(MISSIONS, "sprawl");
       if (action.type === "move_south") {
-        this.selectedMission =
-          (this.selectedMission + 1) % sprawlMissions.length;
+        this.selectedMission = (this.selectedMission + 1) % sprawlMissions.length;
         this.draw();
       } else if (action.type === "move_north") {
         this.selectedMission =
-          (this.selectedMission - 1 + sprawlMissions.length) %
-          sprawlMissions.length;
+          (this.selectedMission - 1 + sprawlMissions.length) % sprawlMissions.length;
         this.draw();
       } else if (action.type === "confirm") {
         const picked = sprawlMissions[this.selectedMission];
@@ -1259,8 +1168,7 @@ class Game {
           // advance. ENTER there continues to prep; ESC comes back here.
           // ADR-0317 3b: the first time, he also introduces himself — the
           // screen is his office, and the game never opened it.
-          const storage =
-            typeof localStorage === "undefined" ? null : localStorage;
+          const storage = typeof localStorage === "undefined" ? null : localStorage;
           if (!hasHeardBeat(storage, "met_the_finn")) {
             const intro = finnIntroBeat(this.settingsState?.language ?? "en");
             if (intro !== null) {
@@ -1295,13 +1203,11 @@ class Game {
         return;
       }
       if (action.type === "move_south") {
-        this.selectedMission =
-          (this.selectedMission + 1) % farGridMissions.length;
+        this.selectedMission = (this.selectedMission + 1) % farGridMissions.length;
         this.draw();
       } else if (action.type === "move_north") {
         this.selectedMission =
-          (this.selectedMission - 1 + farGridMissions.length) %
-          farGridMissions.length;
+          (this.selectedMission - 1 + farGridMissions.length) % farGridMissions.length;
         this.draw();
       } else if (action.type === "confirm") {
         const picked = farGridMissions[this.selectedMission];
@@ -1515,9 +1421,7 @@ class Game {
     }
   }
 
-  private async selectMenuOption(
-    option: MenuOption | undefined,
-  ): Promise<void> {
+  private async selectMenuOption(option: MenuOption | undefined): Promise<void> {
     if (!option) return Promise.resolve();
     switch (option) {
       case "new_run":
@@ -1549,10 +1453,7 @@ class Game {
             this.settingsState = getInitialSettingsState();
           }
         } catch (e) {
-          console.error(
-            "[Game] Failed to initialize settingsState on menu select:",
-            e,
-          );
+          console.error("[Game] Failed to initialize settingsState on menu select:", e);
           this.settingsState = fallbackSettingsState();
         }
         this.draw();
@@ -1686,10 +1587,7 @@ class Game {
     );
     const programs = PROGRAMS;
     // ADR-0276: the jockey decides the opening deck, not just the name.
-    const deck = startingDeck(
-      programs,
-      JOCKEYS[this.selectedJockey]?.id ?? null,
-    );
+    const deck = startingDeck(programs, JOCKEYS[this.selectedJockey]?.id ?? null);
     const ice = missionIce(mission, this.iceTypes);
     const initial = makeInitialState(mission, ice, deck);
     this.state = openArrivalEncounter({
@@ -1703,20 +1601,26 @@ class Game {
       // ADR-0315 slice 2: the run is a contract — this mission, then the rest
       // of its arc. The chosen mission decides the arc; the length is the
       // resolver's (`CONTRACT_LENGTH`).
-      campaign: contractFor(mission, MISSIONS, (m) =>
-        missionIce(m, this.iceTypes),
-      ),
+      campaign: contractFor(mission, MISSIONS, (m) => missionIce(m, this.iceTypes)),
       jockeyId: JOCKEYS[this.selectedJockey]?.id ?? null,
       grid: makeGrid(this.layout.cols, this.layout.rows),
       currentNodeIndex: 0,
       runPhase: "matrix",
       phase: "approach",
     });
-    // ADR-0323: the run is seeded from the HOARD, not from the mission reward
-    // alone, so what it earns can be merged back when the run ends. The seed is
-    // kept so `mergeRunIntoWallet` can subtract it (jacking out must not mint
-    // the mission reward into the hoard).
-    this.runWalletSeed = this.inventory;
+    // ADR-0323 / ADR-0338: the run is seeded from the HOARD, and the seed spans
+    // the WHOLE contract's rewards (the run accumulates every leg's reward, see
+    // `startNextLeg`), so `mergeRunIntoWallet` banks only what the run EARNED —
+    // jacking out on frame one mints nothing.
+    const contractRewardMaterials = (this.state.campaign?.legs ?? []).reduce(
+      (acc: Record<string, number>, l) => addStacks(acc, l.mission.rewards.materials),
+      {},
+    );
+    const seedRewards =
+      this.state.campaign === undefined
+        ? this.state.mission.rewards.materials
+        : contractRewardMaterials;
+    this.runWalletSeed = seedRunWallet(this.inventory, { credits: 0, materials: seedRewards });
     // ADR-0322: the run reads `state.equipmentLoadout`, so the menu's gear has
     // to be ON the state — not merely next to it. `makeInitialState` builds it
     // empty, which is why the menu used to change no number at all.
@@ -1788,10 +1692,7 @@ class Game {
       combatEntryHintFits(this.layout.rows);
     let pressLabel: string | null = null;
     if (hasPressFeedback(this.pressFeedback)) {
-      pressLabel = pressFeedbackLabel(
-        this.pressFeedback,
-        this.pressedProgramName ?? undefined,
-      );
+      pressLabel = pressFeedbackLabel(this.pressFeedback, this.pressedProgramName ?? undefined);
     }
     // ADR-0266: state the cap when it blocks every program, so the pass is
     // discoverable instead of the screen going quiet. Same predicate the
@@ -1814,11 +1715,8 @@ class Game {
    */
   private encounterVoice(): DialogueBeat | null {
     const state = this.state;
-    if (state?.runPhase !== "matrix" || state.encounterDecision?.probed !== true)
-      return null;
-    const seen = seenIceIntros(
-      typeof localStorage === "undefined" ? null : localStorage,
-    );
+    if (state?.runPhase !== "matrix" || state.encounterDecision?.probed !== true) return null;
+    const seen = seenIceIntros(typeof localStorage === "undefined" ? null : localStorage);
     const language = this.settingsState?.language ?? "en";
     for (const ice of encounterRoster(state)) {
       if (seen.has(ice.id)) continue;
@@ -1923,12 +1821,7 @@ class Game {
     if (this.beatCard !== null) {
       updateProgramRow([]);
       this.renderer.render(
-        renderBeatCard(
-          this.beatCard.title,
-          this.beatCard.beat,
-          this.layout.cols,
-          this.layout.rows,
-        ),
+        renderBeatCard(this.beatCard.title, this.beatCard.beat, this.layout.cols, this.layout.rows),
         ["STORY", "", "ANY KEY"],
       );
       return;
@@ -1959,10 +1852,7 @@ class Game {
     }
     // Tier 5: matrix / loot / ending screens render with a real GameState
     // but their UI is non-combat. Route by runPhase.
-    if (
-      this.state !== null &&
-      ["matrix", "ending", "loot"].includes(this.state.runPhase)
-    ) {
+    if (this.state !== null && ["matrix", "ending", "loot"].includes(this.state.runPhase)) {
       // ADR-0252: a committed move, a won fight and the ending are saved
       // (or retire the slot) like combat frames are.
       if (persist) this.autosave();
@@ -1972,10 +1862,7 @@ class Game {
         this.state.runPhase === "loot" && !isTerminalNode(this.state)
           ? rewardAffordances(this.state)
           : [];
-      updateProgramRow(
-        rewards,
-        rewards.length > 0 ? (i) => this.handleRewardButton(i) : undefined,
-      );
+      updateProgramRow(rewards, rewards.length > 0 ? (i) => this.handleRewardButton(i) : undefined);
       // A traversal frame (visual only) replaces the board for ~220 ms.
       const travel = matrixTravelFrame(this.matrixTravel, performance.now());
       const growth = resolveGrowthReveal(
@@ -2027,10 +1914,7 @@ class Game {
       updateProgramRow([]); // hide row outside combat
       if (this.tutorialActive && this.tutorialOverlay) {
         // Tutorial overlay takes priority
-        const tutorialGrid = this.tutorialOverlay.render(
-          this.layout.cols,
-          this.layout.rows,
-        );
+        const tutorialGrid = this.tutorialOverlay.render(this.layout.cols, this.layout.rows);
         this.renderer.render(tutorialGrid, ["TUTORIAL", "", ""]);
         this.syncPhase("menu");
         return;
@@ -2046,10 +1930,7 @@ class Game {
           try {
             this.settingsState = getInitialSettingsState();
           } catch (e) {
-            console.error(
-              "[Game] Failed to initialize settingsState in render:",
-              e,
-            );
+            console.error("[Game] Failed to initialize settingsState in render:", e);
             this.settingsState = fallbackSettingsState();
           }
         }
@@ -2092,11 +1973,7 @@ class Game {
       if (this.screen === "jockey_select") {
         updateProgramRow([]);
         this.renderer.render(
-          renderJockeySelect(
-            this.selectedJockey,
-            this.layout.cols,
-            this.layout.rows,
-          ),
+          renderJockeySelect(this.selectedJockey, this.layout.cols, this.layout.rows),
           ["JOCKEY", "", `${this.selectedJockey + 1}/${JOCKEYS.length}`],
         );
         return;
@@ -2120,9 +1997,7 @@ class Game {
           // fiction, so the screen says what it is about.
           missionBriefing: (() => {
             if (this.screen !== "mission_select") return null;
-            const m = filterMissionsByUniverse(MISSIONS, "sprawl")[
-              this.selectedMission
-            ];
+            const m = filterMissionsByUniverse(MISSIONS, "sprawl")[this.selectedMission];
             if (!m) return null;
             return (language === "ko" && m.briefing_ko) || m.briefing || null;
           })(),
@@ -2132,22 +2007,14 @@ class Game {
           // (owner principle: no choice whose meaning cannot be grasped).
           missionContract: (() => {
             if (this.screen !== "mission_select") return null;
-            const m = filterMissionsByUniverse(MISSIONS, "sprawl")[
-              this.selectedMission
-            ];
+            const m = filterMissionsByUniverse(MISSIONS, "sprawl")[this.selectedMission];
             if (!m) return null;
-            const contract = contractFor(m, MISSIONS, (x) =>
-              missionIce(x, this.iceTypes),
-            );
-            const grades = contract.legs.map(
-              (leg) => `T${missionGradeOf(leg.mission)}`,
-            );
+            const contract = contractFor(m, MISSIONS, (x) => missionIce(x, this.iceTypes));
+            const grades = contract.legs.map((leg) => `T${missionGradeOf(leg.mission)}`);
             return `CONTRACT: ${contract.legs.length} missions · ${grades.join("→")}`;
           })(),
           farGridMissions:
-            this.screen === "far_grid_hub"
-              ? filterMissionsByUniverse(MISSIONS, "far-grid")
-              : [],
+            this.screen === "far_grid_hub" ? filterMissionsByUniverse(MISSIONS, "far-grid") : [],
           hasSave: this.hasSaveCache,
           saveMeta: this.saveMetaCache,
           message: this._message,
@@ -2158,10 +2025,7 @@ class Game {
             inventory: this.inventory,
             recipes: this.recipes,
             materials: this.materials,
-            marketItemCount:
-              this.screen === "crafting"
-                ? this.infoMarket.allItems().length
-                : 0,
+            marketItemCount: this.screen === "crafting" ? this.infoMarket.allItems().length : 0,
             message: this._message,
           },
           loadout: this.equipmentLoadout,
@@ -2178,12 +2042,9 @@ class Game {
     }
     // In-game (combat) rendering path.
     const previous = this.state;
-    const iceDelta =
-      this._lastIceHp !== null ? previous.ice.hp - this._lastIceHp : null;
+    const iceDelta = this._lastIceHp !== null ? previous.ice.hp - this._lastIceHp : null;
     const playerDelta =
-      this._lastPlayerHp !== null
-        ? previous.player.hp - this._lastPlayerHp
-        : null;
+      this._lastPlayerHp !== null ? previous.player.hp - this._lastPlayerHp : null;
     this.state = {
       ...this.state,
       grid: this.composeCombatOverlays(
@@ -2201,12 +2062,7 @@ class Game {
       ),
     };
     const combatView = composeCombatScreen(this.state, this.reducedMotion);
-    this.renderer.render(
-      combatView.grid,
-      combatView.hud,
-      undefined,
-      combatView.shake,
-    );
+    this.renderer.render(combatView.grid, combatView.hud, undefined, combatView.shake);
     updateProgramRow(
       this.state.phase === "combat" ? programAffordances(this.state) : [],
       this.state.phase === "combat"
@@ -2331,17 +2187,13 @@ class Game {
     // Matrix traversal frames run on the wall clock; the last one restores
     // the static board. Drawing only: the state already holds the arrival.
     if (this.matrixTravel !== null) {
-      if (matrixTravelFrame(this.matrixTravel, now) === null)
-        this.matrixTravel = null;
+      if (matrixTravelFrame(this.matrixTravel, now) === null) this.matrixTravel = null;
       if (this.state !== null) this.draw(false);
     }
 
     // ADR-0262 — the arrival note is a display-only window on the clock;
     // when it lapses the board redraws without it. No input is affected.
-    if (
-      this.matrixArrival !== null &&
-      !matrixArrivalActive(this.matrixArrival, now)
-    ) {
+    if (this.matrixArrival !== null && !matrixArrivalActive(this.matrixArrival, now)) {
       this.matrixArrival = null;
       if (this.state !== null) this.draw(false);
     }
@@ -2351,8 +2203,7 @@ class Game {
     // settles into its final frame and then stops (no per-frame churn).
     if (
       this.lootCommit !== null &&
-      lootCommitStage(this.lootCommit, now, this.reducedMotion) !==
-        this.lootCommitStageShown
+      lootCommitStage(this.lootCommit, now, this.reducedMotion) !== this.lootCommitStageShown
     ) {
       if (this.state !== null) this.draw(false);
     }
@@ -2484,10 +2335,7 @@ class Game {
    */
   private syncGrowthReveal(previous: GameState, next: GameState): void {
     const now = performance.now();
-    if (
-      next.cardRewardTaken &&
-      next.cardRewardTaken !== previous.cardRewardTaken
-    ) {
+    if (next.cardRewardTaken && next.cardRewardTaken !== previous.cardRewardTaken) {
       const card = rewardProgram(next.cardRewardTaken);
       const slot = offeredCardIds(next).indexOf(next.cardRewardTaken) + 1;
       this.lootCommit = beginLootCommit(
@@ -2530,15 +2378,10 @@ class Game {
     // ADR-0251: name the program this tap plays, read before the play
     // removes it from the hand (reading the hand afterwards named the card
     // that slid into the slot, not the one played).
-    this.pressedProgramName =
-      this.state.deck[handIndex - 1]?.name.toUpperCase() ?? null;
+    this.pressedProgramName = this.state.deck[handIndex - 1]?.name.toUpperCase() ?? null;
     // P12 — acknowledge the tap inside the game, not only via the button's
     // CSS `:active` state (which vanishes as soon as the finger lifts).
-    this.pressFeedback = pressProgramButton(
-      this.pressFeedback,
-      handIndex,
-      Date.now(),
-    );
+    this.pressFeedback = pressProgramButton(this.pressFeedback, handIndex, Date.now());
     const previous = this.state;
     this.state = applyAction(this.state, resolved);
     if (previous.phase === "combat" && this.state.phase === "combat") {
@@ -2596,10 +2439,7 @@ class Game {
       try {
         this.settingsState = getInitialSettingsState();
       } catch (e) {
-        console.error(
-          "[Game] Failed to initialize settingsState in getter:",
-          e,
-        );
+        console.error("[Game] Failed to initialize settingsState in getter:", e);
         this.settingsState = fallbackSettingsState();
       }
     }
@@ -2697,9 +2537,7 @@ function boot(): void {
     document.addEventListener("keydown", (ev: KeyboardEvent) => {
       if (ev.key === "m" || ev.key === "M") {
         const muted = manager.toggleMute();
-        console.info(
-          `[audio] BGM ${muted ? "muted" : "unmuted"} (M to toggle)`,
-        );
+        console.info(`[audio] BGM ${muted ? "muted" : "unmuted"} (M to toggle)`);
       }
     });
   });

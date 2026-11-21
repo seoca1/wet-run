@@ -5,6 +5,7 @@ import {
   getEndingsForArc,
   getEndingById,
   getEndingCounts,
+  CONTROL_WEALTH,
   type EndingContext,
   type ArcId,
 } from "../src/core/combat/ending_resolver";
@@ -375,6 +376,25 @@ describe("ending_resolver", () => {
       };
       const ending = resolveEnding(ctx);
       expect(ending.category).toBe("liberation");
+    });
+
+    it("ADR-0337: a finished contract buys control only when it outruns wealth", () => {
+      const at = (credits: number) =>
+        resolveEnding({
+          arc: 5,
+          hp: 60,
+          maxHp: 100,
+          credits,
+          missionsCompleted: 3,
+          totalDeaths: 0,
+          factionScores: {},
+          choices: [],
+        }).category;
+      // A normal finish reads liberation; the top decile reads control.
+      expect(at(10000)).toBe("liberation");
+      expect(at(CONTROL_WEALTH)).toBe("liberation");
+      expect(at(CONTROL_WEALTH + 1)).toBe("control");
+      expect(at(25000)).toBe("control");
     });
 
     it("missions boundary: 2 missions falls back to first arc ending", () => {

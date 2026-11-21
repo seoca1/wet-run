@@ -1,16 +1,10 @@
 name: Wet Run Delegation Verification
 
+# Manual-only (ADR-0335): the automatic push/PR gate lives in `ci.yml` +
+# `game-balance-test.yml`. This workflow re-runs the full check on demand and
+# notifies Discord. Its push/PR triggers were removed so the same suite is not
+# run three times per commit.
 on:
-  push:
-    branches: [main, develop]
-    paths:
-      - 'web/**'
-      - 'scripts/**'
-  pull_request:
-    branches: [main, develop]
-    paths:
-      - 'web/**'
-      - 'scripts/**'
   workflow_dispatch:
     inputs:
       shard_pattern:

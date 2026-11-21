@@ -15,18 +15,25 @@
  * 2330 endings, credits > 5000 and hp > 75% never co-occurred (260 and 419
  * separately, 0 together) — money is earned by fighting and fighting spends
  * HP — so the branch was structurally dead. Wealth alone decides now.
+ *
+ * ADR-0337: in a three-leg contract the leg-1/leg-2 resolutions are SWALLOWED —
+ * `state.ts` starts the next leg instead of showing them (`startNextLeg`), so
+ * only the final leg's ending reaches the player, and that leg is always
+ * `missionsCompleted >= 3` → liberation. Control was therefore unreachable as a
+ * SHOWN ending (measured: 660 contracts → sacrifice 52.7% / liberation 47.3%,
+ * control 0). A finished contract that ends extremely rich now buys control.
  */
+
+/** ADR-0337: wealth that outruns the contract. A finished contract normally
+ *  reads as liberation, but the richest finishes buy control instead. Threshold
+ *  = ~p90 of finished-contract end credits (measured 2026-11-19: p50 10705 ·
+ *  p90 17650 · max 29355), so roughly the top decile. */
+export const CONTROL_WEALTH = 18000;
 
 export type ArcId = 1 | 2 | 3 | 4 | 5;
 
 export type EndingCategory =
-  | "liberation"
-  | "control"
-  | "sacrifice"
-  | "exile"
-  | "transcendence"
-  | "status_quo"
-  | "corruption";
+  "liberation" | "control" | "sacrifice" | "exile" | "transcendence" | "status_quo" | "corruption";
 
 export interface Ending {
   readonly id: EndingChoice;
@@ -166,8 +173,7 @@ const ENDING_DATA = [
     nameKo: "생계형",
     descriptionEn:
       "You kept the lights on and your name out of the files. The city has bigger files to keep.",
-    descriptionKo:
-      "전등은 켜 두고 이름은 파일에 남기지 않았다. 도시에는 더 큰 파일이 있다.",
+    descriptionKo: "전등은 켜 두고 이름은 파일에 남기지 않았다. 도시에는 더 큰 파일이 있다.",
   },
   {
     id: "arc3_wintermute_agent",
@@ -247,8 +253,7 @@ const ENDING_DATA = [
     category: "exile",
     nameEn: "Digital Exile",
     nameKo: "디지털 추방",
-    descriptionEn:
-      "You left the meat behind. The flesh was always the weakness.",
+    descriptionEn: "You left the meat behind. The flesh was always the weakness.",
     descriptionKo: "육체를 버렸다. 육체가 항상 약점이었다.",
   },
   {
@@ -387,6 +392,9 @@ export function resolveEnding(ctx: EndingContext): Ending {
   // more, so leaving control first would make almost every completed campaign
   // read as "you got rich" instead of "you finished the job". Control is still
   // reachable — a run that ends rich without finishing the contract.
+  if (ctx.credits > CONTROL_WEALTH) {
+    return arcEndings.find((e) => e.category === "control") ?? arcEndings[0];
+  }
   if (ctx.missionsCompleted >= 3) {
     return arcEndings.find((e) => e.category === "liberation") ?? arcEndings[0];
   }

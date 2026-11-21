@@ -1,6 +1,6 @@
 # Wet-Run 검증 보고
 
-**시간**: 2026-11-19T18:59:40Z  
+**시간**: 2026-11-21T19:15:01Z  
 **버전**: 3.1.0 (ADR-0335/0336)  
 **게이트**: 9/9 pass  
 
@@ -125,12 +125,9 @@
 
 ## 9_jev_advisory
 {
-  "status": "advisory",
-  "answer": null,
-  "p": 0.58,
-  "calibration": "primary",
-  "source": "jev-call.sh (real, calibrated)",
-  "note": "ADVISORY ONLY — never gates this routine."
+  "status": "no_change",
+  "p": null,
+  "note": "no pending change to judge"
 }
 
 > 규약 준수: raw/ 미수정 · Jev 는 advisory(미보정, 게이트 아님)
